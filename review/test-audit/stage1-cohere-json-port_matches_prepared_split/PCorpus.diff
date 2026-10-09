@@ -1,0 +1,10 @@
+--- a/stage1/cohere/json/repository_test.go
++++ b/stage1/cohere/json/repository_test.go
+@@ -88,6 +88,7 @@
+ // Tracked repository inputs follow Git HEAD. Only externally provisioned or
+ // generated inputs retain identity pins; arbitrary untracked files are refused.
+ func validateCorpus(root string, cases []textCase, expected corpusPin) (corpusPin, int, error) {
++if os.Getenv("ADAMIC_MUTANT") == "PCorpus" { return corpusPin{},0,nil }
+ 	state, err := repositoryJSONAtHEAD(root)
+ 	if err != nil {
+ 		return corpusPin{}, 0, err

@@ -1,0 +1,54 @@
+{"Time":"2026-10-09T12:12:14.786786263Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/json"}
+{"Time":"2026-10-09T12:12:14.79512082Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProgressGuard"}
+{"Time":"2026-10-09T12:12:14.795186908Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProgressGuard","Output":"=== RUN   TestProgressGuard\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:12:14.795226877Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProgressGuard","Output":"=== PAUSE TestProgressGuard\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:12:14.795229391Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProgressGuard"}
+{"Time":"2026-10-09T12:12:14.795905872Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProgressGuard"}
+{"Time":"2026-10-09T12:12:14.79591805Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProgressGuard","Output":"=== CONT  TestProgressGuard\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:12:14.795923638Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProgressGuard/never_prints"}
+{"Time":"2026-10-09T12:12:14.795926452Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProgressGuard/never_prints","Output":"=== RUN   TestProgressGuard/never_prints\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:12:14.795933683Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProgressGuard/never_prints","Output":"=== PAUSE TestProgressGuard/never_prints\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:12:14.795936647Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProgressGuard/never_prints"}
+{"Time":"2026-10-09T12:12:14.795943027Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProgressGuard/never_returns"}
+{"Time":"2026-10-09T12:12:14.79594559Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProgressGuard/never_returns","Output":"=== RUN   TestProgressGuard/never_returns\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:12:14.795948805Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProgressGuard/never_returns","Output":"=== PAUSE TestProgressGuard/never_returns\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:12:14.795951018Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProgressGuard/never_returns"}
+{"Time":"2026-10-09T12:12:14.795954153Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProgressGuard/progress_outlasts_startup"}
+{"Time":"2026-10-09T12:12:14.7959586Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProgressGuard/progress_outlasts_startup","Output":"=== RUN   TestProgressGuard/progress_outlasts_startup\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:12:14.795964078Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProgressGuard/progress_outlasts_startup","Output":"=== PAUSE TestProgressGuard/progress_outlasts_startup\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:12:14.795966952Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProgressGuard/progress_outlasts_startup"}
+{"Time":"2026-10-09T12:12:14.795970037Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProgressGuard/stderr_is_progress"}
+{"Time":"2026-10-09T12:12:14.795973632Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProgressGuard/stderr_is_progress","Output":"=== RUN   TestProgressGuard/stderr_is_progress\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:12:14.795978739Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProgressGuard/stderr_is_progress","Output":"=== PAUSE TestProgressGuard/stderr_is_progress\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:12:14.79598569Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProgressGuard/stderr_is_progress"}
+{"Time":"2026-10-09T12:12:14.795989005Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProgressGuard/overall_backstop"}
+{"Time":"2026-10-09T12:12:14.795993071Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProgressGuard/overall_backstop","Output":"=== RUN   TestProgressGuard/overall_backstop\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:12:14.795996696Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProgressGuard/overall_backstop","Output":"=== PAUSE TestProgressGuard/overall_backstop\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:12:14.795998949Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProgressGuard/overall_backstop"}
+{"Time":"2026-10-09T12:12:14.796001623Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProgressGuard/never_prints"}
+{"Time":"2026-10-09T12:12:14.796003526Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProgressGuard/never_prints","Output":"=== CONT  TestProgressGuard/never_prints\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:12:14.79602673Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProgressGuard/stderr_is_progress"}
+{"Time":"2026-10-09T12:12:14.796029625Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProgressGuard/stderr_is_progress","Output":"=== CONT  TestProgressGuard/stderr_is_progress\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:12:14.796273145Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProgressGuard/progress_outlasts_startup"}
+{"Time":"2026-10-09T12:12:14.796280766Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProgressGuard/progress_outlasts_startup","Output":"=== CONT  TestProgressGuard/progress_outlasts_startup\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:12:14.796284792Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProgressGuard/never_returns"}
+{"Time":"2026-10-09T12:12:14.796287516Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProgressGuard/never_returns","Output":"=== CONT  TestProgressGuard/never_returns\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:12:14.796680568Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProgressGuard/overall_backstop"}
+{"Time":"2026-10-09T12:12:14.796689571Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProgressGuard/overall_backstop","Output":"=== CONT  TestProgressGuard/overall_backstop\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:12:15.797610833Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProgressGuard/overall_backstop","Output":"--- PASS: TestProgressGuard/overall_backstop (1.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:12:18.808953756Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProgressGuard/overall_backstop","Elapsed":1}
+{"Time":"2026-10-09T12:12:18.809013755Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProgressGuard/stderr_is_progress","Output":"--- PASS: TestProgressGuard/stderr_is_progress (4.01s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:12:18.80902391Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProgressGuard/stderr_is_progress","Elapsed":4.01}
+{"Time":"2026-10-09T12:12:18.809031181Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProgressGuard/progress_outlasts_startup","Output":"--- PASS: TestProgressGuard/progress_outlasts_startup (4.01s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:12:19.799448697Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProgressGuard/progress_outlasts_startup","Elapsed":4.01}
+{"Time":"2026-10-09T12:12:19.799488105Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProgressGuard/never_returns","Output":"    progress_test.go:38: caught never returns: stalled: no output for 5s after 5.002263728s, load 1.03 (/usr/bin/sh)\n"}
+{"Time":"2026-10-09T12:12:19.799508405Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProgressGuard/never_returns","Output":"--- PASS: TestProgressGuard/never_returns (5.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:12:19.79951162Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProgressGuard/never_returns","Elapsed":5}
+{"Time":"2026-10-09T12:12:19.799515356Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProgressGuard/never_prints","Output":"    progress_test.go:38: caught never prints: stalled: no first output for 5s after 5.002872488s, load 1.03 (/usr/bin/sh)\n"}
+{"Time":"2026-10-09T12:12:19.799527414Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProgressGuard/never_prints","Output":"--- PASS: TestProgressGuard/never_prints (5.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:12:19.799535936Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProgressGuard/never_prints","Elapsed":5}
+{"Time":"2026-10-09T12:12:19.799537579Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProgressGuard","Output":"--- PASS: TestProgressGuard (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:12:19.799540212Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProgressGuard","Elapsed":0}
+{"Time":"2026-10-09T12:12:19.799542416Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:12:19.800910785Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/json\t5.014s\n"}
+{"Time":"2026-10-09T12:12:19.801034678Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/json","Elapsed":5.014}

@@ -1,0 +1,22 @@
+{"Time":"2026-10-09T12:17:36.787053509Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/json"}
+{"Time":"2026-10-09T12:17:36.793648959Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestRepositoryLandingWithoutPinEdit"}
+{"Time":"2026-10-09T12:17:36.79371754Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestRepositoryLandingWithoutPinEdit","Output":"=== RUN   TestRepositoryLandingWithoutPinEdit\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:17:36.79373776Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestRepositoryLandingWithoutPinEdit","Output":"=== PAUSE TestRepositoryLandingWithoutPinEdit\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:17:36.793740764Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestRepositoryLandingWithoutPinEdit"}
+{"Time":"2026-10-09T12:17:36.793743929Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestRepositoryRequiresGit"}
+{"Time":"2026-10-09T12:17:36.793747344Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestRepositoryRequiresGit","Output":"=== RUN   TestRepositoryRequiresGit\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:17:36.793755096Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestRepositoryRequiresGit","Output":"=== PAUSE TestRepositoryRequiresGit\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:17:36.793757469Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestRepositoryRequiresGit"}
+{"Time":"2026-10-09T12:17:36.794615319Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestRepositoryLandingWithoutPinEdit"}
+{"Time":"2026-10-09T12:17:36.794642719Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestRepositoryLandingWithoutPinEdit","Output":"=== CONT  TestRepositoryLandingWithoutPinEdit\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:17:36.794648768Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestRepositoryRequiresGit"}
+{"Time":"2026-10-09T12:17:36.7946504Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestRepositoryRequiresGit","Output":"=== CONT  TestRepositoryRequiresGit\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:17:36.794726203Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestRepositoryRequiresGit","Output":"    repository_test.go:286: export without Git silently fell back to walking: \u003cnil\u003e\n","OutputType":"error"}
+{"Time":"2026-10-09T12:17:36.795160065Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestRepositoryRequiresGit","Output":"--- FAIL: TestRepositoryRequiresGit (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:17:36.802606152Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestRepositoryRequiresGit","Elapsed":0}
+{"Time":"2026-10-09T12:17:36.802635746Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestRepositoryLandingWithoutPinEdit","Output":"    repository_test.go:261: fixture baseline: count 0: \u003cnil\u003e\n","OutputType":"error"}
+{"Time":"2026-10-09T12:17:36.802774151Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestRepositoryLandingWithoutPinEdit","Output":"--- FAIL: TestRepositoryLandingWithoutPinEdit (0.01s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:17:36.802779038Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestRepositoryLandingWithoutPinEdit","Elapsed":0.01}
+{"Time":"2026-10-09T12:17:36.802794691Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:17:36.802952074Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/cohere/json\t0.016s\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:17:36.802967757Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/json","Elapsed":0.016}

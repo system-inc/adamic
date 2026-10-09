@@ -1,0 +1,21 @@
+id,kind,row,result
+M01,production,TestPortMatchesGoCohere family,pass
+M01,production,TestAdditionalJSONBoundaries,pass
+M01,production,TestSingleFileStdoutDriver,pass
+M02,production,TestPortMatchesGoCohere family,fail
+M02,production,TestAdditionalJSONBoundaries,fail
+M02,production,TestSingleFileStdoutDriver,pass
+M03,production,TestPortMatchesGoCohere family,fail
+M03,production,TestAdditionalJSONBoundaries,fail
+M03,production,TestSingleFileStdoutDriver,fail
+M04,production,TestPortMatchesGoCohere family,fail
+M04,production,TestAdditionalJSONBoundaries,pass
+M04,production,TestSingleFileStdoutDriver,pass
+M05,production,TestProgressGuard,fail
+H01,setup,TestPortMatchesGoCohereSplit_Setup,fail
+H02,setup,TestProduct_JSON family,fail
+H03,setup,TestRepositoryLandingWithoutPinEdit,fail
+H04,setup,TestRepositoryRequiresGit,fail
+W01,witness,TestPortMatchesGoCohereSplitUnion,fail
+W02,witness,TestThreePortMutantsAreCaught,fail
+W03,witness,TestRepositoryCorpusMutants,fail

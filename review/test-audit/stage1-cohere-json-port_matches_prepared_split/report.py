@@ -1,0 +1,94 @@
+import pathlib,json,re,collections,gzip,subprocess,shlex
+D=pathlib.Path('/tmp/u103/evidence');plan=json.loads((D/'plan.json').read_text());cmds=json.loads((D/'mutant-commands.json').read_text());times=json.loads((D/'timings.json').read_text());scope=json.loads((D/'scope.json').read_text());F='TestPortMatchesGoCohere family';P='TestProduct_JSON family'
+def events(id):
+ p=D/(id+'.log');op=p.open if p.exists() else lambda:gzip.open(str(p)+'.gz','rt');ev=[]
+ with op() as file:
+  for l in file:
+   try:ev.append(json.loads(l))
+   except:pass
+ return ev
+def group(t):
+ t=t.split('/')[0]
+ return F if re.fullmatch('TestPortMatchesGoCohere_[0-9]{3}',t) else P if re.fullmatch('TestProduct_JSON(GoOracle|LoweredPort|NativeRelease|NativeSanitized)',t) else t
+def results(id,rows):
+ ev=events(id);out={}
+ for row in rows:
+  es=[e for e in ev if e.get('Test') and group(e['Test'])==row]
+  out[row]='fail' if any(e.get('Action')=='fail' for e in es) else 'pass' if any(e.get('Action')=='pass' for e in es) and not any('test timed out' in e.get('Output','') for e in ev) else 'unknown'
+ return out
+bounded_cmd=dict(id='M05-bounded',command="timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/json/ -run '^TestProgressGuard$/(progress_outlasts_startup|stderr_is_progress|never_prints|overall_backstop)$'",env={'ADAMIC_MUTANT':'M05','ADAMIC_BUILD_CACHE_DIR':'/tmp/u103/cache/M05-bounded'},sample=(D/'origin.txt').read_text().strip(),wall_seconds=None,exit=1)
+(D/'bounded-command.json').write_text(json.dumps(bounded_cmd,indent=2))
+mat=[]
+for m in plan:
+ label='M05-bounded' if m['id']=='M05' else m['id'];ev=events(label)
+ mat.append(dict(id=m['id'],kind=m['kind'],matrix_rows=m['rows'],results=results(label,m['rows']),command=bounded_cmd if m['id']=='M05' else next(c for c in cmds if c['id']==label),failing_members=[e['Test'] for e in ev if e.get('Action')=='fail' and e.get('Test') and '/' not in e['Test']],full_run_over_budget=m['id']=='M05'))
+(D/'matrix.json').write_text(json.dumps(mat,indent=2));(D/'matrix.csv').write_text('id,kind,row,result\n'+''.join(f'{m["id"]},{m["kind"]},{r},{v}\n' for m in mat for r,v in m['results'].items()))
+rows=['TestPortMatchesGoCohereSplit_Setup','TestPortMatchesGoCohereSplitUnion',F,P,'TestThreePortMutantsAreCaught','TestAdditionalJSONBoundaries','TestSingleFileStdoutDriver','TestProgressGuard','TestRepositoryCorpusMutants','TestRepositoryLandingWithoutPinEdit','TestRepositoryRequiresGit']
+members={r:[s['test'] for s in scope if group(s['test'])==r] for r in rows};(D/'family-members.json').write_text(json.dumps(members,indent=2))
+probes={'TestPortMatchesGoCohereSplit_Setup':'PSetup',F:'PPort',P:'PProducts','TestAdditionalJSONBoundaries':'PPort','TestSingleFileStdoutDriver':'PPort','TestProgressGuard':'PGuard','TestRepositoryLandingWithoutPinEdit':'PCorpus','TestRepositoryRequiresGit':'PCorpus'}
+special={m['rows'][0]:m['id'] for m in plan if m['kind']!='production'}
+oracles={rows[0]:('Self: preparation returns successfully and publishes shared-ready state; no product is executed.','self'),rows[1]:('Self: exactly one partition must reject a synthetic changed answer; W01 weakens comparisonError.','self'),F:('Executed Go cohere batch stdout compared byte-for-byte with source Node, native release, ASan/UBSan, leak pass and emitted JavaScript. Bounded 148-case landing sample.','external-run'),P:('Self: shared builder succeeds for four recipes. Members do not assert a nonempty path or execute the returned product.','self'),rows[4]:('Executed Go cohere answers; deliberate port mutants must disagree in successful formatter output. W02 forces the inline equality comparison to report agreement.','external-run'),rows[5]:('Executed Go cohere answers for fixed parser/formatter boundaries; source Node and sanitized native output must match.','external-run'),rows[6]:('Executed Go cohere answers for two single-file fixtures; source Node and sanitized native stdout must match.','external-run'),rows[7]:('Self: named guard timeout reasons and exact eight-byte stdout/stderr progress fixtures. Directly checks childguard, not formatter output.','self'),rows[8]:('Git runs on private repositories; self-written rejection messages must name seven planted corpus faults. W03 disables pin comparison.',['external-run','self']),rows[9]:('Git runs a later private HEAD; self-written tracked-count and unchanged-pin assertions.',['external-run','self']),rows[10]:('Git runs without repository metadata; self-written named metadata rejection must fire.',['external-run','self'])}
+subs={rows[5]:F,rows[6]:rows[5]}
+def assertion(id,r):
+ ev=events('M05-bounded' if id=='M05' else id)
+ targets={r:[]};keywords=['got ', 'failed to catch','failed by name','was killed','shared preparation failed','main.c: no such','landing changed pin','silently fell back','caught by 0','mutant survived or lost']
+ for e in ev:
+  s=e.get('Output','').strip()
+  if group(e.get('Test',''))==r and '_test.go:' in s and any(k in s for k in keywords):return s.splitlines()[0]
+ return 'No assertion line captured'
+def origin_assertion(s,id):
+ # During the switch, one guard line precedes the ordinary wrapper declarations.
+ if id.startswith('M') and id!='M05':
+  s=re.sub(r'(port_matches_prepared_split_test.go:)(\d+)(:)',lambda m:m[1]+str(int(m[2])-1)+m[3],s)
+ return s
+report=[]
+for r in rows:
+ relevant=[m for m in mat if m['kind']=='production' and r in m['matrix_rows']];kills=[m['id'] for m in relevant if m['results'][r]=='fail'];unique=[m['id'] for m in relevant if m['results'][r]=='fail' and list(m['results'].values()).count('fail')==1];id=special.get(r) or (kills[-1] if kills else None);raw=assertion(id,r) if id else None;line=origin_assertion(raw,id) if raw else None
+ m=next((m for m in mat if m['id']==id),None);command=m['command'] if m else None
+ commandtext=(' '.join(k+'='+v for k,v in command['env'].items())+' ADAMIC_GATE_SAMPLE='+command['sample']+' '+command['command']) if command else ''
+ if command and command.get('selector'):commandtext+='; selector file /tmp/u103/selector contains '+command['selector']
+ probe=probes.get(r);v=None;pk=[]
+ if probe:
+  res=results(probe,[r])[r];v=res=='pass' if res!='unknown' else None;pk=[probe] if res=='fail' else []
+ verdict='witness' if special.get(r,'').startswith('W') else 'setup-check' if r in special else 'slow-worthy' if r==F else 'sacred' if unique else 'subsumed' if r in subs else 'untrue'
+ file=next(s['locations'][0]['file'] for s in scope if s['test']==members[r][0]);o=dict(test=r,package='stage1/cohere/json',file=file,seconds=None if r==F else times[r]['median'],oracle=oracles[r][0],oracle_kind=oracles[r][1],kills=kills,unique_kills=unique,last_proven_fail=id+': '+line if id else None,verdict=verdict,subsumed_by=[subs[r]] if r in subs else [],mutants_in_matrix=len(relevant),probe_kills=pk,subsumer_seconds=times[subs[r]]['median'] if r in subs else None,vacuous=v,bounded=True,matrix_rows=sorted(set(x for m in relevant for x in m['matrix_rows'])) if relevant else m['matrix_rows'] if m else [],evidence=commandtext+' > '+('M05-bounded' if id=='M05' else id)+'.log; '+line if id else None,members=members[r])
+ if id:o['observed_assertion']=raw
+ if r in special:o['construction_or_witness_kills']=[id]
+ if r in subs:o['subsumption_basis_mutants']=len(kills)
+ if r==F:o.update(sample_seconds=times[r]['median'],full_corpus_over_budget=True,vacuous_subcases=[e['Test'] for e in events('PPort') if e.get('Action')=='pass' and e.get('Test') and group(e['Test'])==r and '/' not in e['Test']],vacuous_subcases_note='These members have empty sampled hash buckets; all nonempty members reject PPort.')
+ if r==rows[7]:o['bounded_subcases']=['never prints','progress outlasts startup','stderr is progress','overall backstop'];o['unknown_subcases']=['never returns under M05 (over budget)']
+ report.append(o)
+(D/'rows.json').write_text(json.dumps(report,indent=2));(D/'probes.json').write_text(json.dumps([dict(id=id,rows=[r for r,p in probes.items() if p==id],results=results(id,[r for r,p in probes.items() if p==id]),command=next(c for c in cmds if c['id']==id)) for id in set(probes.values())],indent=2))
+summary='\n'.join(['Unit u103, starting origin/main a467d1a1571c43e0f01fc4efcb43890280e4a1ac.','All 141 supplied names exist, grouped into 11 rows under the family rules.','Clean whole package and full agreement family exceed 90s; bounded landing sample passes.','Verdicts: 1 slow-worthy, 1 sacred, 2 subsumed, 4 setup-check, 3 witness.','M01 survives the sampled matrix with a changed-output witness; setup and product rows are vacuous.'])+'\n\n'
+text=summary+'```json\n'+json.dumps(report,indent=2)+'\n```\n\n| ID | Starting-commit file:line | Change | Failed rows |\n|---|---|---|---|\n'
+for m in plan:
+ failed=[r for r,v in next(x for x in mat if x['id']==m['id'])['results'].items() if v=='fail'];text+='| '+m['id']+' ('+m['kind']+') | '+m['file']+':'+str(m['line'])+' | '+m['old'].replace('|','\\|')+' → '+m['new'].replace('|','\\|')+' | '+', '.join(failed)+' |\n'
+text+='\nSurvivor M01: restored source Node outputs '+repr((D/'M01-witness-before.log').read_text())+'; the rebuilt standalone sanitized mutant outputs '+repr((D/'M01-witness-after.log').read_text())+'. This is unguarded in the observed matrix. Full-corpus coverage of it is unknown. Both witness commands exit zero.\n'
+text+='''
+Brief ambiguities, corrections, costs and limitations:
+
+- The brief names 14 rows and 141 functions. Applying its own shared-checker family rule yields 11 rows: 128 portMatchesRun wrappers form one family and four portMatchesProduct recipe wrappers form another. Setup, the planted union witness, and the other seven functions have different assertions and remain separate. family-members.json lists every member. All 141 names still exist in the four supplied files; none moved or vanished. Thousands of four-digit wrappers now exist but use jsonPortTopShard, a different checker with additional assertions and optional benchmark work. They were not silently added to this slice.
+- The reference commit 8de93800f4 is stale. The mandated fetch selected a467d1a1571c43e0f01fc4efcb43890280e4a1ac. All standalone diffs apply to that starting commit, and mutant locations use it. Raw matrix failure lines in prepared_split differ by one because the probe guard precedes wrapper declarations. rows.json keeps both observed_assertion and mapped origin/main failure locations.
+- I initially wrote start-commands.json inside the checkout. fileCorpus walks every JSON file, including ignored/untracked review files, so that contaminated attempt failed on my evidence file. It is retained as a failed setup attempt, not a legitimate baseline or mutant kill. Evidence was moved outside the corpus under /tmp/u103/evidence, accessed through a directory symlink that WalkDir does not follow. The corrected whole-package baseline had no assertion failures before its 90s timeout.
+- The clean requested full scope and the full 128-member family alone also exceeded 90s without assertion failures. The existing landing-sample switch ADAMIC_GATE_SAMPLE=a467d1a1571c43e0f01fc4efcb43890280e4a1ac selects 114/3602 physical files at stride 32, offset 1, retaining generated controls. The resulting 148 cases across 128 wrappers passed cleanly. No corpus file, pin or oracle was edited to obtain that sample. This is an extra input bound beyond the supplied test slice; unsampled input kills remain unknown.
+- The complete family does not have a measured three-run median below the limit. Its seconds field is null, full_corpus_over_budget is true, and sample_seconds records the three sampled binary runs. Its slow-worthy verdict rests on the full family exceeding 90s and its bounded unique M04 catch. All other row medians are three independent -count=1 binary elapsed readings. Subsumption against this family reports its sampled median, not an invented full-corpus cost.
+- Every verdict and unique_kills is bounded to the listed matrix rows and input sample. Package-wide and repository-wide uniqueness are not claimed. The central replay can apply the production diffs without switches and settle the rest. The initial whole-package run is the only whole-package coverage attempt; no other package suite was run.
+- The five production mutants were fixed from read production functions before mutant outcomes, spanning filename selection, parser message location, document indentation, width and child progress. Four native port mutants respect the rebuild cap; the fifth is a direct Go guard mutant. This is fewer than the suggested three mutants per row. Construction and witness changes are exceptions judged separately and do not inflate production kills.
+- M01's survival is real: its separately built sanitized native product changes package-lock.json formatting from pretty to compact. The sampled matrix misses this behavior. That does not establish that the full corpus is unguarded, nor does it make M01 equivalent. The witness retains the original source Node runtime and does not mutate Go cohere.
+- PSetup makes portMatchesPrepare return before constructing anything; the setup test still passes. PProducts makes portMatchesProduct return an empty path; all four product members still pass. These rows are vacuous even though H01 and H02 show they can fail on other construction faults. A successful build return alone is a weak product oracle. The lowered product member also passes H02 even though the expected main.c file was never written; the native product members catch the missing artifact.
+- PPort probes the formatter's public format(name,text) entry, which the batch and single-file main driver invoke. All nonempty sampled agreement buckets and both fixed execution rows reject its empty string answer. Empty sampled buckets pass and are listed in vacuous_subcases. The complete family is not vacuous.
+- PCorpus returns the empty validation result. RequiresGit rejects it directly. LandingWithoutPinEdit fails earlier at newRepositoryFixture's baseline count check, so that probe proves rejection of an empty construction, not the later landing assertion. H03 independently reaches the later landing assertion with count 0 after a valid count-2 fixture baseline.
+- ProgressGuard directly specifies childguard behavior through executable child fixtures and self-written expectations. It is not classified as a port witness. M05 makes the watched writer stop recording real output, causing talking children to be killed at the first-output deadline. Its never-returns case loses the stall deadline and cooks the full row at 90s. The terminating four-subcase bounded rerun fails in both talking-child subcases; never-returns remains unknown for M05. No stalled run was allowed past the binary budget.
+- SplitUnion, ThreePortMutantsAreCaught and RepositoryCorpusMutants are witnesses. W01 forces their shared comparison to report agreement; W02 forces the mutant witness's inline equality comparison to report agreement; W03 disables the corpus-pin comparison. Each witness fails under its own weakening. Production-mutant preconditions are excluded from their kills. W03 leaves fixture baseline validation valid and catches surviving one-byte/missing-provisioned mutations, rather than breaking a prerequisite.
+- AdditionalJSONBoundaries is subsumed on M02 and M03 by the agreement family. SingleFileStdoutDriver is subsumed on M03 by AdditionalJSONBoundaries, the faster observed subsumer. These hints rest on two and one kills respectively, not exhaustive mutation coverage or deletion advice.
+- Go cohere remains the external formatter oracle and is never mutated. Product/setup and guard expectations are self-written; Git-backed repository rows also execute Git and compare their own count/message invariants. No hand-copied outside authority is claimed. The parser-message mutant proves a diagnostic-location assertion, not semantic parser correctness. Formatter comparisons check full byte output, exit code and stderr, not only answer counts.
+- Optional Prettier 3.9.6 was available outside the checkout and enabled for whole-package attempts; its dependencies were refreshed afterward, recorded separately. No requested row requires it and no requested row skipped in the successful bounded baseline. Whole-package skip/completion status after timeout remains unknown. ADAMIC_JSON_BENCH is optional repeated timing work, not a missing SDK check; it was not enabled.
+- The source inventory includes all port declarations and childguard functions plus construction helper declarations as an upper bound. It is not an exact dynamic transitive TypeScript call graph. callers.txt records the shared checker/entry calls. Full compiler and runtime behavior beyond these mutants was not audited.
+- Native alternatives read one selector file at process start from a helper inside an existing copied port module, so no copied-file-list edit was needed. Source changes were compiled once per immutable product, then selected at runtime. Standalone production diffs contain no selector. M05 uses its own ADAMIC_BUILD_CACHE_DIR; native standalone builds and probe builds also use independent directories. ADAMIC_NATIVE_SPLIT=1 enables splitting and is not treated as a cache key. Unchanged compiler action-cache units may be reused; measured build times are actual warm-workspace command times, not asserted cold clang work.
+- All five production diffs, five probe diffs and seven allowed harness diffs apply to the starting commit. Native production and PPort probe diffs passed their own sanitized port builds. Go production/harness/probe diffs passed the corresponding go vet checks. switch-clean validates the instrumented source before selections. All switches and harness edits were restored before the final clean bounded run.
+
+Timing and coverage:
+
+'''
+text+='Warm tool setup: skipped, 0s; nproc=5. stage3/api npm ci: 0.444s. Native standalone builds: '+', '.join(c['id']+' '+str(c['wall_seconds'])+'s' for c in cmds if c['id'] in ['validate-M01','validate-M02','validate-M03','validate-M04'])+'. Instrumented clean port run: 58.344s including product preparation and execution. The clean sampled scope binary passed in 46.315s. Three-run timing commands total '+str(round(sum(c['wall_seconds'] for c in json.loads((D/'timing-commands.json').read_text())),3))+' shell seconds. Detailed per-command builds, matrix runs, probes and allowed harness checks are in mutant-commands.json and finish-commands.json.\n\nNot covered: full-package completion, full-family median, unsampled inputs, four-digit checker family, exact transitive source coverage and repo-wide uniqueness. No production source change is retained and no pull request is opened. Large raw logs are compressed without changing their contents; decompress *.log.gz to recover original command redirections.\n'
+(D/'REPORT.md').write_text(text);print(collections.Counter(r['verdict'] for r in report))

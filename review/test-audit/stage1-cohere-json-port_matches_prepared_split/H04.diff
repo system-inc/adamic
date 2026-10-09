@@ -1,0 +1,11 @@
+--- a/stage1/cohere/json/repository_test.go
++++ b/stage1/cohere/json/repository_test.go
+@@ -25,7 +25,7 @@
+ 	command := exec.Command("git", append([]string{"-C", root}, arguments...)...)
+ 	output, err := childguard.CombinedOutput(command, jsonGuard)
+ 	if err != nil {
+-		return nil, fmt.Errorf("JSON corpus requires usable Git metadata: git %s: %w: %s", strings.Join(arguments, " "), err, strings.TrimSpace(string(output)))
++		return nil, fmt.Errorf("JSON corpus unavailable: git %s: %w: %s", strings.Join(arguments, " "), err, strings.TrimSpace(string(output)))
+ 	}
+ 	return output, nil
+ }

@@ -1,0 +1,90 @@
+{
+  "TestPortMatchesGoCohereSplit_Setup": {
+    "runs": [
+      2.988,
+      2.759,
+      2.59
+    ],
+    "median": 2.759
+  },
+  "TestPortMatchesGoCohereSplitUnion": {
+    "runs": [
+      0.448,
+      0.53,
+      0.448
+    ],
+    "median": 0.448
+  },
+  "TestPortMatchesGoCohere family": {
+    "runs": [
+      37.578,
+      35.658,
+      35.318
+    ],
+    "median": 35.658
+  },
+  "TestProduct_JSON family": {
+    "runs": [
+      1.152,
+      1.245,
+      1.25
+    ],
+    "median": 1.245
+  },
+  "TestThreePortMutantsAreCaught": {
+    "runs": [
+      9.692,
+      9.293,
+      9.192
+    ],
+    "median": 9.293
+  },
+  "TestAdditionalJSONBoundaries": {
+    "runs": [
+      8.97,
+      8.731,
+      9.092
+    ],
+    "median": 8.97
+  },
+  "TestSingleFileStdoutDriver": {
+    "runs": [
+      8.897,
+      8.986,
+      8.941
+    ],
+    "median": 8.941
+  },
+  "TestProgressGuard": {
+    "runs": [
+      5.013,
+      5.014,
+      5.014
+    ],
+    "median": 5.014
+  },
+  "TestRepositoryCorpusMutants": {
+    "runs": [
+      0.059,
+      0.057,
+      0.063
+    ],
+    "median": 0.059
+  },
+  "TestRepositoryLandingWithoutPinEdit": {
+    "runs": [
+      0.032,
+      0.032,
+      0.041
+    ],
+    "median": 0.032
+  },
+  "TestRepositoryRequiresGit": {
+    "runs": [
+      0.011,
+      0.01,
+      0.01
+    ],
+    "median": 0.01
+  }
+}

@@ -1,0 +1,11 @@
+--- a/internal/childguard/childguard.go
++++ b/internal/childguard/childguard.go
+@@ -56,7 +56,7 @@
+ }
+ 
+ func (w *watched) Write(p []byte) (int, error) {
+-	if len(p) > 0 {
++	if len(p) == 0 {
+ 		w.activity.Lock()
+ 		w.activity.last = time.Now()
+ 		w.activity.seen = true

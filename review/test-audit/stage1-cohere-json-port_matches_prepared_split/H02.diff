@@ -1,0 +1,11 @@
+--- a/stage1/cohere/json/port_matches_prepared_split_test.go
++++ b/stage1/cohere/json/port_matches_prepared_split_test.go
+@@ -414,7 +414,7 @@
+ 	if err != nil {
+ 		return fmt.Errorf("Lower: %w", err)
+ 	}
+-	if err := os.WriteFile(filepath.Join(dir, "main.c"), []byte(native.C(lowered)), 0644); err != nil {
++	if err := os.WriteFile(filepath.Join(dir, "missing-main.c"), []byte(native.C(lowered)), 0644); err != nil {
+ 		return err
+ 	}
+ 	return os.WriteFile(filepath.Join(dir, "program.mjs"), []byte(javascript.JavaScript(lowered)), 0644)

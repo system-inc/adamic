@@ -1,0 +1,40 @@
+{"Time":"2026-10-09T12:10:19.467784404Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/json"}
+{"Time":"2026-10-09T12:10:19.475704493Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONGoOracle"}
+{"Time":"2026-10-09T12:10:19.475759815Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONGoOracle","Output":"=== RUN   TestProduct_JSONGoOracle\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:10:19.475781046Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONGoOracle","Output":"=== PAUSE TestProduct_JSONGoOracle\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:10:19.475783049Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONGoOracle"}
+{"Time":"2026-10-09T12:10:19.475785232Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONLoweredPort"}
+{"Time":"2026-10-09T12:10:19.475786604Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONLoweredPort","Output":"=== RUN   TestProduct_JSONLoweredPort\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:10:19.475789569Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONLoweredPort","Output":"=== PAUSE TestProduct_JSONLoweredPort\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:10:19.475790991Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONLoweredPort"}
+{"Time":"2026-10-09T12:10:19.475792874Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONNativeRelease"}
+{"Time":"2026-10-09T12:10:19.475794196Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONNativeRelease","Output":"=== RUN   TestProduct_JSONNativeRelease\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:10:19.475795888Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONNativeRelease","Output":"=== PAUSE TestProduct_JSONNativeRelease\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:10:19.47579717Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONNativeRelease"}
+{"Time":"2026-10-09T12:10:19.475798692Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONNativeSanitized"}
+{"Time":"2026-10-09T12:10:19.475799994Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONNativeSanitized","Output":"=== RUN   TestProduct_JSONNativeSanitized\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:10:19.475805342Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONNativeSanitized","Output":"=== PAUSE TestProduct_JSONNativeSanitized\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:10:19.475806674Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONNativeSanitized"}
+{"Time":"2026-10-09T12:10:19.476695239Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONGoOracle"}
+{"Time":"2026-10-09T12:10:19.476701478Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONGoOracle","Output":"=== CONT  TestProduct_JSONGoOracle\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:10:19.476707908Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONNativeRelease"}
+{"Time":"2026-10-09T12:10:19.47670983Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONNativeRelease","Output":"=== CONT  TestProduct_JSONNativeRelease\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:10:19.477411048Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONNativeSanitized"}
+{"Time":"2026-10-09T12:10:19.477425089Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONNativeSanitized","Output":"=== CONT  TestProduct_JSONNativeSanitized\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:10:19.477902094Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONLoweredPort"}
+{"Time":"2026-10-09T12:10:19.477908123Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONLoweredPort","Output":"=== CONT  TestProduct_JSONLoweredPort\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:10:20.582116329Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONLoweredPort","Output":"    port_matches_prepared_split_test.go:606: build json_lowered_port_and_backend_sources 3076ee74a851 hit 1.09\n"}
+{"Time":"2026-10-09T12:10:20.582192332Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONLoweredPort","Output":"--- PASS: TestProduct_JSONLoweredPort (1.10s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:10:20.65112725Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONLoweredPort","Elapsed":1.1}
+{"Time":"2026-10-09T12:10:20.651211184Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONNativeRelease","Output":"    port_matches_prepared_split_test.go:621: build json_native_release_port 78fba13702a5 hit 0.05\n"}
+{"Time":"2026-10-09T12:10:20.651223082Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONNativeRelease","Output":"--- PASS: TestProduct_JSONNativeRelease (1.17s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:10:20.658708888Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONNativeRelease","Elapsed":1.17}
+{"Time":"2026-10-09T12:10:20.658722488Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONNativeSanitized","Output":"    port_matches_prepared_split_test.go:621: build json_native_ASan_UBSan_port 0acf72aac160 hit 0.05\n"}
+{"Time":"2026-10-09T12:10:20.658729188Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONNativeSanitized","Output":"--- PASS: TestProduct_JSONNativeSanitized (1.18s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:10:20.715955762Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONNativeSanitized","Elapsed":1.18}
+{"Time":"2026-10-09T12:10:20.716009211Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONGoOracle","Output":"    port_matches_prepared_split_test.go:599: build json_split_Go_oracle ec7da056b64d hit 1.22\n"}
+{"Time":"2026-10-09T12:10:20.716031024Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONGoOracle","Output":"--- PASS: TestProduct_JSONGoOracle (1.24s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:10:20.716087517Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONGoOracle","Elapsed":1.24}
+{"Time":"2026-10-09T12:10:20.716090341Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:10:20.717741905Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/json\t1.250s\n"}
+{"Time":"2026-10-09T12:10:20.717769946Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/json","Elapsed":1.25}

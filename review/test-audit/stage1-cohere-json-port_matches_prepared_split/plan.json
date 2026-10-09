@@ -1,0 +1,142 @@
+[
+  {
+    "id": "M01",
+    "file": "stage1/cohere/json/formatter.ts",
+    "line": 8,
+    "old": "base === 'package-lock.json'",
+    "new": "base === 'lock.json'",
+    "kind": "production",
+    "rows": [
+      "TestPortMatchesGoCohere family",
+      "TestAdditionalJSONBoundaries",
+      "TestSingleFileStdoutDriver"
+    ]
+  },
+  {
+    "id": "M02",
+    "file": "stage1/cohere/json/parser.ts",
+    "line": 115,
+    "old": "this.text.slice(0, this.position).split('\\n').length",
+    "new": "this.text.slice(0, this.position).split('\\n').length + 1",
+    "kind": "production",
+    "rows": [
+      "TestPortMatchesGoCohere family",
+      "TestAdditionalJSONBoundaries",
+      "TestSingleFileStdoutDriver"
+    ]
+  },
+  {
+    "id": "M03",
+    "file": "stage1/cohere/json/doc.ts",
+    "line": 176,
+    "old": "command.indent + 2",
+    "new": "command.indent + 1",
+    "kind": "production",
+    "rows": [
+      "TestPortMatchesGoCohere family",
+      "TestAdditionalJSONBoundaries",
+      "TestSingleFileStdoutDriver"
+    ]
+  },
+  {
+    "id": "M04",
+    "file": "stage1/cohere/json/width.ts",
+    "line": 79,
+    "old": "return text.length;",
+    "new": "return text.length + 1;",
+    "kind": "production",
+    "rows": [
+      "TestPortMatchesGoCohere family",
+      "TestAdditionalJSONBoundaries",
+      "TestSingleFileStdoutDriver"
+    ]
+  },
+  {
+    "id": "M05",
+    "file": "internal/childguard/childguard.go",
+    "line": 59,
+    "old": "if len(p) > 0 {",
+    "new": "if len(p) == 0 {",
+    "kind": "production",
+    "rows": [
+      "TestProgressGuard"
+    ]
+  },
+  {
+    "id": "H01",
+    "file": "stage1/cohere/json/port_matches_prepared_split_test.go",
+    "line": 155,
+    "old": "portMatchesShared.ready = true",
+    "new": "portMatchesShared.ready = false",
+    "kind": "setup",
+    "rows": [
+      "TestPortMatchesGoCohereSplit_Setup"
+    ]
+  },
+  {
+    "id": "H02",
+    "file": "stage1/cohere/json/port_matches_prepared_split_test.go",
+    "line": 417,
+    "old": "os.WriteFile(filepath.Join(dir, \"main.c\"),",
+    "new": "os.WriteFile(filepath.Join(dir, \"missing-main.c\"),",
+    "kind": "setup",
+    "rows": [
+      "TestProduct_JSON family"
+    ]
+  },
+  {
+    "id": "H03",
+    "file": "stage1/cohere/json/repository_test.go",
+    "line": 131,
+    "old": "return pin, len(tracked), corpusPinError(expected, pin)",
+    "new": "return pin, len(tracked) % 3, corpusPinError(expected, pin)",
+    "kind": "setup",
+    "rows": [
+      "TestRepositoryLandingWithoutPinEdit"
+    ]
+  },
+  {
+    "id": "H04",
+    "file": "stage1/cohere/json/repository_test.go",
+    "line": 28,
+    "old": "JSON corpus requires usable Git metadata: git %s: %w: %s",
+    "new": "JSON corpus unavailable: git %s: %w: %s",
+    "kind": "setup",
+    "rows": [
+      "TestRepositoryRequiresGit"
+    ]
+  },
+  {
+    "id": "W01",
+    "file": "stage1/cohere/json/port_test.go",
+    "line": 202,
+    "old": "if string(result.stdout) == expected {",
+    "new": "if true {",
+    "kind": "witness",
+    "rows": [
+      "TestPortMatchesGoCohereSplitUnion"
+    ]
+  },
+  {
+    "id": "W02",
+    "file": "stage1/cohere/json/port_test.go",
+    "line": 505,
+    "old": "if string(side.result.stdout) == expected {",
+    "new": "if true {",
+    "kind": "witness",
+    "rows": [
+      "TestThreePortMutantsAreCaught"
+    ]
+  },
+  {
+    "id": "W03",
+    "file": "stage1/cohere/json/repository_test.go",
+    "line": 131,
+    "old": "return pin, len(tracked), corpusPinError(expected, pin)",
+    "new": "return pin, len(tracked), nil",
+    "kind": "witness",
+    "rows": [
+      "TestRepositoryCorpusMutants"
+    ]
+  }
+]

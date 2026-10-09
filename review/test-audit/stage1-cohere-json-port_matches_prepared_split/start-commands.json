@@ -1,0 +1,45 @@
+[
+  {
+    "label": "npm-ci",
+    "args": [
+      "timeout",
+      "90",
+      "npm",
+      "ci",
+      "--prefix",
+      "stage3/api"
+    ],
+    "wall_seconds": 0.444,
+    "exit": 0
+  },
+  {
+    "label": "list",
+    "args": [
+      "go",
+      "test",
+      "-list",
+      ".",
+      "./stage1/cohere/json/"
+    ],
+    "wall_seconds": 7.314,
+    "exit": 0
+  },
+  {
+    "label": "baseline",
+    "args": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/json/",
+      "-run",
+      "."
+    ],
+    "wall_seconds": 49.468,
+    "exit": 1
+  }
+]

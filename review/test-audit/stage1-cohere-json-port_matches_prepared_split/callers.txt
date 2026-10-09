@@ -1,0 +1,167 @@
+stage1/cohere/json/class_order_shards_test.go:165:		if comparisonError("planted", run{stdout: []byte(got)}, want, items) != nil {
+stage1/cohere/json/pin_test.go:137:	actual, count, err := validateCorpus(root, cases, expected)
+stage1/cohere/json/pin_test.go:197:	_, _, err = validateCorpus(root, short, full)
+stage1/cohere/json/repository_test.go:26:	output, err := childguard.CombinedOutput(command, jsonGuard)
+stage1/cohere/json/repository_test.go:90:func validateCorpus(root string, cases []textCase, expected corpusPin) (corpusPin, int, error) {
+stage1/cohere/json/repository_test.go:187:	if _, count, err := validateCorpus(root, cases, fixture.pin); err != nil || count != 2 {
+stage1/cohere/json/repository_test.go:250:			_, _, err := validateCorpus(fixture.root, cases, fixture.pin)
+stage1/cohere/json/repository_test.go:269:	actual, count, err := validateCorpus(fixture.root, fixture.cases(t), fixture.pin)
+stage1/cohere/json/repository_test.go:284:	_, _, err := validateCorpus(root, []textCase{{"a.json", "{}"}}, corpusPin{})
+stage1/cohere/json/upstream_parity_split_test.go:220:	if output, err := childguard.CombinedOutput(command, jsonGuard); err != nil {
+stage1/cohere/json/upstream_parity_split_test.go:225:	if output, err := childguard.CombinedOutput(command, jsonGuard); err != nil {
+stage1/cohere/json/upstream_parity_split_test.go:420:			output, err := childguard.CombinedOutput(command, jsonGuard)
+stage1/cohere/json/progress_test.go:34:			_, err := childguard.CombinedOutput(command, fixture.policy)
+stage1/cohere/json/progress_test.go:47:		output, err := childguard.CombinedOutput(command, talking)
+stage1/cohere/json/progress_test.go:55:		output, err := childguard.CombinedOutput(command, talking)
+stage1/cohere/json/progress_test.go:63:		_, err := childguard.CombinedOutput(command, childguard.Options{FirstOutput: never, Stall: never, Ceiling: time.Second})
+stage1/cohere/json/performance_test.go:41:	directory := portDirectory(t, &printerMutation{"zero cached width", "doc.ts", "width: stringWidth(text)", "width: 0"})
+stage1/cohere/json/performance_test.go:44:	if err := native.Build(native.C(lowered(t, entry)), binary, native.Options{}); err != nil {
+stage1/cohere/json/port_test.go:33:func lowered(t *testing.T, path string) *ir.Program {
+stage1/cohere/json/port_test.go:155:func portDirectory(t *testing.T, mutation *printerMutation) string {
+stage1/cohere/json/port_test.go:194:	if err := comparisonError(name, result, expected, cases); err != nil {
+stage1/cohere/json/port_test.go:198:func comparisonError(name string, result run, expected string, cases []textCase) error {
+stage1/cohere/json/port_test.go:492:			directory := portDirectory(t, &mutation)
+stage1/cohere/json/port_test.go:494:			program := lowered(t, entry)
+stage1/cohere/json/port_test.go:556:	source := portDirectory(t, nil)
+stage1/cohere/json/port_test.go:566:	program := lowered(t, entry)
+stage1/cohere/json/port_test.go:590:	if output, err := childguard.CombinedOutput(command, jsonGuard); err != nil {
+stage1/cohere/json/port_test.go:600:	directory := portDirectory(t, nil)
+stage1/cohere/json/port_test.go:602:	program := lowered(t, entry)
+stage1/cohere/json/shards_test.go:197:		err := comparisonError(name, run{stdout: []byte(got)}, expected, cases[shard.start:shard.end])
+stage1/cohere/json/builds_test.go:119:	if output, err := childguard.CombinedOutput(command, jsonGuard); err != nil {
+stage1/cohere/json/port_matches_prepared_split_test.go:159:func portMatchesRun(t *testing.T, ordinal int) {
+stage1/cohere/json/port_matches_prepared_split_test.go:265:		if comparisonError("planted", run{stdout: []byte(actual)}, expected, items) != nil {
+stage1/cohere/json/port_matches_prepared_split_test.go:383:	if output, err := childguard.CombinedOutput(command, jsonGuard); err != nil {
+stage1/cohere/json/port_matches_prepared_split_test.go:449:func TestPortMatchesGoCohere_000(t *testing.T) { t.Parallel(); portMatchesRun(t, 0) }
+stage1/cohere/json/port_matches_prepared_split_test.go:450:func TestPortMatchesGoCohere_001(t *testing.T) { t.Parallel(); portMatchesRun(t, 1) }
+stage1/cohere/json/port_matches_prepared_split_test.go:451:func TestPortMatchesGoCohere_002(t *testing.T) { t.Parallel(); portMatchesRun(t, 2) }
+stage1/cohere/json/port_matches_prepared_split_test.go:452:func TestPortMatchesGoCohere_003(t *testing.T) { t.Parallel(); portMatchesRun(t, 3) }
+stage1/cohere/json/port_matches_prepared_split_test.go:453:func TestPortMatchesGoCohere_004(t *testing.T) { t.Parallel(); portMatchesRun(t, 4) }
+stage1/cohere/json/port_matches_prepared_split_test.go:454:func TestPortMatchesGoCohere_005(t *testing.T) { t.Parallel(); portMatchesRun(t, 5) }
+stage1/cohere/json/port_matches_prepared_split_test.go:455:func TestPortMatchesGoCohere_006(t *testing.T) { t.Parallel(); portMatchesRun(t, 6) }
+stage1/cohere/json/port_matches_prepared_split_test.go:456:func TestPortMatchesGoCohere_007(t *testing.T) { t.Parallel(); portMatchesRun(t, 7) }
+stage1/cohere/json/port_matches_prepared_split_test.go:457:func TestPortMatchesGoCohere_008(t *testing.T) { t.Parallel(); portMatchesRun(t, 8) }
+stage1/cohere/json/port_matches_prepared_split_test.go:458:func TestPortMatchesGoCohere_009(t *testing.T) { t.Parallel(); portMatchesRun(t, 9) }
+stage1/cohere/json/port_matches_prepared_split_test.go:459:func TestPortMatchesGoCohere_010(t *testing.T) { t.Parallel(); portMatchesRun(t, 10) }
+stage1/cohere/json/port_matches_prepared_split_test.go:460:func TestPortMatchesGoCohere_011(t *testing.T) { t.Parallel(); portMatchesRun(t, 11) }
+stage1/cohere/json/port_matches_prepared_split_test.go:461:func TestPortMatchesGoCohere_012(t *testing.T) { t.Parallel(); portMatchesRun(t, 12) }
+stage1/cohere/json/port_matches_prepared_split_test.go:462:func TestPortMatchesGoCohere_013(t *testing.T) { t.Parallel(); portMatchesRun(t, 13) }
+stage1/cohere/json/port_matches_prepared_split_test.go:463:func TestPortMatchesGoCohere_014(t *testing.T) { t.Parallel(); portMatchesRun(t, 14) }
+stage1/cohere/json/port_matches_prepared_split_test.go:464:func TestPortMatchesGoCohere_015(t *testing.T) { t.Parallel(); portMatchesRun(t, 15) }
+stage1/cohere/json/port_matches_prepared_split_test.go:465:func TestPortMatchesGoCohere_016(t *testing.T) { t.Parallel(); portMatchesRun(t, 16) }
+stage1/cohere/json/port_matches_prepared_split_test.go:466:func TestPortMatchesGoCohere_017(t *testing.T) { t.Parallel(); portMatchesRun(t, 17) }
+stage1/cohere/json/port_matches_prepared_split_test.go:467:func TestPortMatchesGoCohere_018(t *testing.T) { t.Parallel(); portMatchesRun(t, 18) }
+stage1/cohere/json/port_matches_prepared_split_test.go:468:func TestPortMatchesGoCohere_019(t *testing.T) { t.Parallel(); portMatchesRun(t, 19) }
+stage1/cohere/json/port_matches_prepared_split_test.go:469:func TestPortMatchesGoCohere_020(t *testing.T) { t.Parallel(); portMatchesRun(t, 20) }
+stage1/cohere/json/port_matches_prepared_split_test.go:470:func TestPortMatchesGoCohere_021(t *testing.T) { t.Parallel(); portMatchesRun(t, 21) }
+stage1/cohere/json/port_matches_prepared_split_test.go:471:func TestPortMatchesGoCohere_022(t *testing.T) { t.Parallel(); portMatchesRun(t, 22) }
+stage1/cohere/json/port_matches_prepared_split_test.go:472:func TestPortMatchesGoCohere_023(t *testing.T) { t.Parallel(); portMatchesRun(t, 23) }
+stage1/cohere/json/port_matches_prepared_split_test.go:473:func TestPortMatchesGoCohere_024(t *testing.T) { t.Parallel(); portMatchesRun(t, 24) }
+stage1/cohere/json/port_matches_prepared_split_test.go:474:func TestPortMatchesGoCohere_025(t *testing.T) { t.Parallel(); portMatchesRun(t, 25) }
+stage1/cohere/json/port_matches_prepared_split_test.go:475:func TestPortMatchesGoCohere_026(t *testing.T) { t.Parallel(); portMatchesRun(t, 26) }
+stage1/cohere/json/port_matches_prepared_split_test.go:476:func TestPortMatchesGoCohere_027(t *testing.T) { t.Parallel(); portMatchesRun(t, 27) }
+stage1/cohere/json/port_matches_prepared_split_test.go:477:func TestPortMatchesGoCohere_028(t *testing.T) { t.Parallel(); portMatchesRun(t, 28) }
+stage1/cohere/json/port_matches_prepared_split_test.go:478:func TestPortMatchesGoCohere_029(t *testing.T) { t.Parallel(); portMatchesRun(t, 29) }
+stage1/cohere/json/port_matches_prepared_split_test.go:479:func TestPortMatchesGoCohere_030(t *testing.T) { t.Parallel(); portMatchesRun(t, 30) }
+stage1/cohere/json/port_matches_prepared_split_test.go:480:func TestPortMatchesGoCohere_031(t *testing.T) { t.Parallel(); portMatchesRun(t, 31) }
+stage1/cohere/json/port_matches_prepared_split_test.go:481:func TestPortMatchesGoCohere_032(t *testing.T) { t.Parallel(); portMatchesRun(t, 32) }
+stage1/cohere/json/port_matches_prepared_split_test.go:482:func TestPortMatchesGoCohere_033(t *testing.T) { t.Parallel(); portMatchesRun(t, 33) }
+stage1/cohere/json/port_matches_prepared_split_test.go:483:func TestPortMatchesGoCohere_034(t *testing.T) { t.Parallel(); portMatchesRun(t, 34) }
+stage1/cohere/json/port_matches_prepared_split_test.go:484:func TestPortMatchesGoCohere_035(t *testing.T) { t.Parallel(); portMatchesRun(t, 35) }
+stage1/cohere/json/port_matches_prepared_split_test.go:485:func TestPortMatchesGoCohere_036(t *testing.T) { t.Parallel(); portMatchesRun(t, 36) }
+stage1/cohere/json/port_matches_prepared_split_test.go:486:func TestPortMatchesGoCohere_037(t *testing.T) { t.Parallel(); portMatchesRun(t, 37) }
+stage1/cohere/json/port_matches_prepared_split_test.go:487:func TestPortMatchesGoCohere_038(t *testing.T) { t.Parallel(); portMatchesRun(t, 38) }
+stage1/cohere/json/port_matches_prepared_split_test.go:488:func TestPortMatchesGoCohere_039(t *testing.T) { t.Parallel(); portMatchesRun(t, 39) }
+stage1/cohere/json/port_matches_prepared_split_test.go:489:func TestPortMatchesGoCohere_040(t *testing.T) { t.Parallel(); portMatchesRun(t, 40) }
+stage1/cohere/json/port_matches_prepared_split_test.go:490:func TestPortMatchesGoCohere_041(t *testing.T) { t.Parallel(); portMatchesRun(t, 41) }
+stage1/cohere/json/port_matches_prepared_split_test.go:491:func TestPortMatchesGoCohere_042(t *testing.T) { t.Parallel(); portMatchesRun(t, 42) }
+stage1/cohere/json/port_matches_prepared_split_test.go:492:func TestPortMatchesGoCohere_043(t *testing.T) { t.Parallel(); portMatchesRun(t, 43) }
+stage1/cohere/json/port_matches_prepared_split_test.go:493:func TestPortMatchesGoCohere_044(t *testing.T) { t.Parallel(); portMatchesRun(t, 44) }
+stage1/cohere/json/port_matches_prepared_split_test.go:494:func TestPortMatchesGoCohere_045(t *testing.T) { t.Parallel(); portMatchesRun(t, 45) }
+stage1/cohere/json/port_matches_prepared_split_test.go:495:func TestPortMatchesGoCohere_046(t *testing.T) { t.Parallel(); portMatchesRun(t, 46) }
+stage1/cohere/json/port_matches_prepared_split_test.go:496:func TestPortMatchesGoCohere_047(t *testing.T) { t.Parallel(); portMatchesRun(t, 47) }
+stage1/cohere/json/port_matches_prepared_split_test.go:497:func TestPortMatchesGoCohere_048(t *testing.T) { t.Parallel(); portMatchesRun(t, 48) }
+stage1/cohere/json/port_matches_prepared_split_test.go:498:func TestPortMatchesGoCohere_049(t *testing.T) { t.Parallel(); portMatchesRun(t, 49) }
+stage1/cohere/json/port_matches_prepared_split_test.go:499:func TestPortMatchesGoCohere_050(t *testing.T) { t.Parallel(); portMatchesRun(t, 50) }
+stage1/cohere/json/port_matches_prepared_split_test.go:500:func TestPortMatchesGoCohere_051(t *testing.T) { t.Parallel(); portMatchesRun(t, 51) }
+stage1/cohere/json/port_matches_prepared_split_test.go:501:func TestPortMatchesGoCohere_052(t *testing.T) { t.Parallel(); portMatchesRun(t, 52) }
+stage1/cohere/json/port_matches_prepared_split_test.go:502:func TestPortMatchesGoCohere_053(t *testing.T) { t.Parallel(); portMatchesRun(t, 53) }
+stage1/cohere/json/port_matches_prepared_split_test.go:503:func TestPortMatchesGoCohere_054(t *testing.T) { t.Parallel(); portMatchesRun(t, 54) }
+stage1/cohere/json/port_matches_prepared_split_test.go:504:func TestPortMatchesGoCohere_055(t *testing.T) { t.Parallel(); portMatchesRun(t, 55) }
+stage1/cohere/json/port_matches_prepared_split_test.go:505:func TestPortMatchesGoCohere_056(t *testing.T) { t.Parallel(); portMatchesRun(t, 56) }
+stage1/cohere/json/port_matches_prepared_split_test.go:506:func TestPortMatchesGoCohere_057(t *testing.T) { t.Parallel(); portMatchesRun(t, 57) }
+stage1/cohere/json/port_matches_prepared_split_test.go:507:func TestPortMatchesGoCohere_058(t *testing.T) { t.Parallel(); portMatchesRun(t, 58) }
+stage1/cohere/json/port_matches_prepared_split_test.go:508:func TestPortMatchesGoCohere_059(t *testing.T) { t.Parallel(); portMatchesRun(t, 59) }
+stage1/cohere/json/port_matches_prepared_split_test.go:509:func TestPortMatchesGoCohere_060(t *testing.T) { t.Parallel(); portMatchesRun(t, 60) }
+stage1/cohere/json/port_matches_prepared_split_test.go:510:func TestPortMatchesGoCohere_061(t *testing.T) { t.Parallel(); portMatchesRun(t, 61) }
+stage1/cohere/json/port_matches_prepared_split_test.go:511:func TestPortMatchesGoCohere_062(t *testing.T) { t.Parallel(); portMatchesRun(t, 62) }
+stage1/cohere/json/port_matches_prepared_split_test.go:512:func TestPortMatchesGoCohere_063(t *testing.T) { t.Parallel(); portMatchesRun(t, 63) }
+stage1/cohere/json/port_matches_prepared_split_test.go:513:func TestPortMatchesGoCohere_064(t *testing.T) { t.Parallel(); portMatchesRun(t, 64) }
+stage1/cohere/json/port_matches_prepared_split_test.go:514:func TestPortMatchesGoCohere_065(t *testing.T) { t.Parallel(); portMatchesRun(t, 65) }
+stage1/cohere/json/port_matches_prepared_split_test.go:515:func TestPortMatchesGoCohere_066(t *testing.T) { t.Parallel(); portMatchesRun(t, 66) }
+stage1/cohere/json/port_matches_prepared_split_test.go:516:func TestPortMatchesGoCohere_067(t *testing.T) { t.Parallel(); portMatchesRun(t, 67) }
+stage1/cohere/json/port_matches_prepared_split_test.go:517:func TestPortMatchesGoCohere_068(t *testing.T) { t.Parallel(); portMatchesRun(t, 68) }
+stage1/cohere/json/port_matches_prepared_split_test.go:518:func TestPortMatchesGoCohere_069(t *testing.T) { t.Parallel(); portMatchesRun(t, 69) }
+stage1/cohere/json/port_matches_prepared_split_test.go:519:func TestPortMatchesGoCohere_070(t *testing.T) { t.Parallel(); portMatchesRun(t, 70) }
+stage1/cohere/json/port_matches_prepared_split_test.go:520:func TestPortMatchesGoCohere_071(t *testing.T) { t.Parallel(); portMatchesRun(t, 71) }
+stage1/cohere/json/port_matches_prepared_split_test.go:521:func TestPortMatchesGoCohere_072(t *testing.T) { t.Parallel(); portMatchesRun(t, 72) }
+stage1/cohere/json/port_matches_prepared_split_test.go:522:func TestPortMatchesGoCohere_073(t *testing.T) { t.Parallel(); portMatchesRun(t, 73) }
+stage1/cohere/json/port_matches_prepared_split_test.go:523:func TestPortMatchesGoCohere_074(t *testing.T) { t.Parallel(); portMatchesRun(t, 74) }
+stage1/cohere/json/port_matches_prepared_split_test.go:524:func TestPortMatchesGoCohere_075(t *testing.T) { t.Parallel(); portMatchesRun(t, 75) }
+stage1/cohere/json/port_matches_prepared_split_test.go:525:func TestPortMatchesGoCohere_076(t *testing.T) { t.Parallel(); portMatchesRun(t, 76) }
+stage1/cohere/json/port_matches_prepared_split_test.go:526:func TestPortMatchesGoCohere_077(t *testing.T) { t.Parallel(); portMatchesRun(t, 77) }
+stage1/cohere/json/port_matches_prepared_split_test.go:527:func TestPortMatchesGoCohere_078(t *testing.T) { t.Parallel(); portMatchesRun(t, 78) }
+stage1/cohere/json/port_matches_prepared_split_test.go:528:func TestPortMatchesGoCohere_079(t *testing.T) { t.Parallel(); portMatchesRun(t, 79) }
+stage1/cohere/json/port_matches_prepared_split_test.go:529:func TestPortMatchesGoCohere_080(t *testing.T) { t.Parallel(); portMatchesRun(t, 80) }
+stage1/cohere/json/port_matches_prepared_split_test.go:530:func TestPortMatchesGoCohere_081(t *testing.T) { t.Parallel(); portMatchesRun(t, 81) }
+stage1/cohere/json/port_matches_prepared_split_test.go:531:func TestPortMatchesGoCohere_082(t *testing.T) { t.Parallel(); portMatchesRun(t, 82) }
+stage1/cohere/json/port_matches_prepared_split_test.go:532:func TestPortMatchesGoCohere_083(t *testing.T) { t.Parallel(); portMatchesRun(t, 83) }
+stage1/cohere/json/port_matches_prepared_split_test.go:533:func TestPortMatchesGoCohere_084(t *testing.T) { t.Parallel(); portMatchesRun(t, 84) }
+stage1/cohere/json/port_matches_prepared_split_test.go:534:func TestPortMatchesGoCohere_085(t *testing.T) { t.Parallel(); portMatchesRun(t, 85) }
+stage1/cohere/json/port_matches_prepared_split_test.go:535:func TestPortMatchesGoCohere_086(t *testing.T) { t.Parallel(); portMatchesRun(t, 86) }
+stage1/cohere/json/port_matches_prepared_split_test.go:536:func TestPortMatchesGoCohere_087(t *testing.T) { t.Parallel(); portMatchesRun(t, 87) }
+stage1/cohere/json/port_matches_prepared_split_test.go:537:func TestPortMatchesGoCohere_088(t *testing.T) { t.Parallel(); portMatchesRun(t, 88) }
+stage1/cohere/json/port_matches_prepared_split_test.go:538:func TestPortMatchesGoCohere_089(t *testing.T) { t.Parallel(); portMatchesRun(t, 89) }
+stage1/cohere/json/port_matches_prepared_split_test.go:539:func TestPortMatchesGoCohere_090(t *testing.T) { t.Parallel(); portMatchesRun(t, 90) }
+stage1/cohere/json/port_matches_prepared_split_test.go:540:func TestPortMatchesGoCohere_091(t *testing.T) { t.Parallel(); portMatchesRun(t, 91) }
+stage1/cohere/json/port_matches_prepared_split_test.go:541:func TestPortMatchesGoCohere_092(t *testing.T) { t.Parallel(); portMatchesRun(t, 92) }
+stage1/cohere/json/port_matches_prepared_split_test.go:542:func TestPortMatchesGoCohere_093(t *testing.T) { t.Parallel(); portMatchesRun(t, 93) }
+stage1/cohere/json/port_matches_prepared_split_test.go:543:func TestPortMatchesGoCohere_094(t *testing.T) { t.Parallel(); portMatchesRun(t, 94) }
+stage1/cohere/json/port_matches_prepared_split_test.go:544:func TestPortMatchesGoCohere_095(t *testing.T) { t.Parallel(); portMatchesRun(t, 95) }
+stage1/cohere/json/port_matches_prepared_split_test.go:545:func TestPortMatchesGoCohere_096(t *testing.T) { t.Parallel(); portMatchesRun(t, 96) }
+stage1/cohere/json/port_matches_prepared_split_test.go:546:func TestPortMatchesGoCohere_097(t *testing.T) { t.Parallel(); portMatchesRun(t, 97) }
+stage1/cohere/json/port_matches_prepared_split_test.go:547:func TestPortMatchesGoCohere_098(t *testing.T) { t.Parallel(); portMatchesRun(t, 98) }
+stage1/cohere/json/port_matches_prepared_split_test.go:548:func TestPortMatchesGoCohere_099(t *testing.T) { t.Parallel(); portMatchesRun(t, 99) }
+stage1/cohere/json/port_matches_prepared_split_test.go:549:func TestPortMatchesGoCohere_100(t *testing.T) { t.Parallel(); portMatchesRun(t, 100) }
+stage1/cohere/json/port_matches_prepared_split_test.go:550:func TestPortMatchesGoCohere_101(t *testing.T) { t.Parallel(); portMatchesRun(t, 101) }
+stage1/cohere/json/port_matches_prepared_split_test.go:551:func TestPortMatchesGoCohere_102(t *testing.T) { t.Parallel(); portMatchesRun(t, 102) }
+stage1/cohere/json/port_matches_prepared_split_test.go:552:func TestPortMatchesGoCohere_103(t *testing.T) { t.Parallel(); portMatchesRun(t, 103) }
+stage1/cohere/json/port_matches_prepared_split_test.go:553:func TestPortMatchesGoCohere_104(t *testing.T) { t.Parallel(); portMatchesRun(t, 104) }
+stage1/cohere/json/port_matches_prepared_split_test.go:554:func TestPortMatchesGoCohere_105(t *testing.T) { t.Parallel(); portMatchesRun(t, 105) }
+stage1/cohere/json/port_matches_prepared_split_test.go:555:func TestPortMatchesGoCohere_106(t *testing.T) { t.Parallel(); portMatchesRun(t, 106) }
+stage1/cohere/json/port_matches_prepared_split_test.go:556:func TestPortMatchesGoCohere_107(t *testing.T) { t.Parallel(); portMatchesRun(t, 107) }
+stage1/cohere/json/port_matches_prepared_split_test.go:557:func TestPortMatchesGoCohere_108(t *testing.T) { t.Parallel(); portMatchesRun(t, 108) }
+stage1/cohere/json/port_matches_prepared_split_test.go:558:func TestPortMatchesGoCohere_109(t *testing.T) { t.Parallel(); portMatchesRun(t, 109) }
+stage1/cohere/json/port_matches_prepared_split_test.go:559:func TestPortMatchesGoCohere_110(t *testing.T) { t.Parallel(); portMatchesRun(t, 110) }
+stage1/cohere/json/port_matches_prepared_split_test.go:560:func TestPortMatchesGoCohere_111(t *testing.T) { t.Parallel(); portMatchesRun(t, 111) }
+stage1/cohere/json/port_matches_prepared_split_test.go:561:func TestPortMatchesGoCohere_112(t *testing.T) { t.Parallel(); portMatchesRun(t, 112) }
+stage1/cohere/json/port_matches_prepared_split_test.go:562:func TestPortMatchesGoCohere_113(t *testing.T) { t.Parallel(); portMatchesRun(t, 113) }
+stage1/cohere/json/port_matches_prepared_split_test.go:563:func TestPortMatchesGoCohere_114(t *testing.T) { t.Parallel(); portMatchesRun(t, 114) }
+stage1/cohere/json/port_matches_prepared_split_test.go:564:func TestPortMatchesGoCohere_115(t *testing.T) { t.Parallel(); portMatchesRun(t, 115) }
+stage1/cohere/json/port_matches_prepared_split_test.go:565:func TestPortMatchesGoCohere_116(t *testing.T) { t.Parallel(); portMatchesRun(t, 116) }
+stage1/cohere/json/port_matches_prepared_split_test.go:566:func TestPortMatchesGoCohere_117(t *testing.T) { t.Parallel(); portMatchesRun(t, 117) }
+stage1/cohere/json/port_matches_prepared_split_test.go:567:func TestPortMatchesGoCohere_118(t *testing.T) { t.Parallel(); portMatchesRun(t, 118) }
+stage1/cohere/json/port_matches_prepared_split_test.go:568:func TestPortMatchesGoCohere_119(t *testing.T) { t.Parallel(); portMatchesRun(t, 119) }
+stage1/cohere/json/port_matches_prepared_split_test.go:569:func TestPortMatchesGoCohere_120(t *testing.T) { t.Parallel(); portMatchesRun(t, 120) }
+stage1/cohere/json/port_matches_prepared_split_test.go:570:func TestPortMatchesGoCohere_121(t *testing.T) { t.Parallel(); portMatchesRun(t, 121) }
+stage1/cohere/json/port_matches_prepared_split_test.go:571:func TestPortMatchesGoCohere_122(t *testing.T) { t.Parallel(); portMatchesRun(t, 122) }
+stage1/cohere/json/port_matches_prepared_split_test.go:572:func TestPortMatchesGoCohere_123(t *testing.T) { t.Parallel(); portMatchesRun(t, 123) }
+stage1/cohere/json/port_matches_prepared_split_test.go:573:func TestPortMatchesGoCohere_124(t *testing.T) { t.Parallel(); portMatchesRun(t, 124) }
+stage1/cohere/json/port_matches_prepared_split_test.go:574:func TestPortMatchesGoCohere_125(t *testing.T) { t.Parallel(); portMatchesRun(t, 125) }
+stage1/cohere/json/port_matches_prepared_split_test.go:575:func TestPortMatchesGoCohere_126(t *testing.T) { t.Parallel(); portMatchesRun(t, 126) }
+stage1/cohere/json/port_matches_prepared_split_test.go:576:func TestPortMatchesGoCohere_127(t *testing.T) { t.Parallel(); portMatchesRun(t, 127) }
+stage1/cohere/json/gaps_test.go:54:	program := lowered(t, path)
+stage1/cohere/json/chunks_test.go:83:		if err := comparisonError(name, results[index].result, expected, cases[chunk.start:chunk.end]); err != nil {
+stage1/cohere/json/chunks_test.go:158:					err = comparisonError("isolated ASan calibration", result, expected, cases[index:index+1])
+stage1/cohere/json/audit_test.go:279:	output, err := childguard.CombinedOutput(command, jsonGuard)
+stage1/cohere/json/audit_test.go:303:	output, err = childguard.CombinedOutput(command, jsonGuard)

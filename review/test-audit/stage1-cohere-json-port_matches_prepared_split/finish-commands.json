@@ -1,0 +1,78 @@
+[
+  {
+    "id": "M01-witness-before",
+    "command": "node --disable-warning=ExperimentalWarning oracle/node.mjs stage1/cohere/json/main.ts --cases /tmp/u103/M01-cases.txt",
+    "env": {},
+    "seconds": 0.104,
+    "exit": 0
+  },
+  {
+    "id": "M01-witness-after",
+    "command": "/tmp/u103/validate-M01 --cases /tmp/u103/M01-cases.txt",
+    "env": {
+      "ASAN_OPTIONS": "detect_leaks=1"
+    },
+    "seconds": 0.01,
+    "exit": 0
+  },
+  {
+    "id": "validate-PPort",
+    "command": "timeout 90 go run ./cmd/adamic build stage1/cohere/json/main.ts -o /tmp/u103/validate-PPort --sanitize",
+    "env": {
+      "ADAMIC_NATIVE_SPLIT": "1",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u103/cache/validate-PPort"
+    },
+    "seconds": 7.8,
+    "exit": 0
+  },
+  {
+    "id": "validate-PGuard",
+    "command": "timeout 90 go vet ./internal/childguard/ ./stage1/cohere/json/",
+    "env": {
+      "ADAMIC_NATIVE_SPLIT": "1",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u103/cache/validate-PGuard"
+    },
+    "seconds": 0.505,
+    "exit": 0
+  },
+  {
+    "id": "validate-PSetup",
+    "command": "timeout 90 go vet ./internal/childguard/ ./stage1/cohere/json/",
+    "env": {
+      "ADAMIC_NATIVE_SPLIT": "1",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u103/cache/validate-PSetup"
+    },
+    "seconds": 0.43,
+    "exit": 0
+  },
+  {
+    "id": "validate-PProducts",
+    "command": "timeout 90 go vet ./internal/childguard/ ./stage1/cohere/json/",
+    "env": {
+      "ADAMIC_NATIVE_SPLIT": "1",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u103/cache/validate-PProducts"
+    },
+    "seconds": 0.392,
+    "exit": 0
+  },
+  {
+    "id": "validate-PCorpus",
+    "command": "timeout 90 go vet ./internal/childguard/ ./stage1/cohere/json/",
+    "env": {
+      "ADAMIC_NATIVE_SPLIT": "1",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u103/cache/validate-PCorpus"
+    },
+    "seconds": 0.392,
+    "exit": 0
+  },
+  {
+    "id": "restored-baseline",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/json/ -run '^(TestPortMatchesGoCohereSplit_Setup|TestPortMatchesGoCohereSplitUnion|TestPortMatchesGoCohere_[0-9]{3}|TestProduct_JSON(GoOracle|LoweredPort|NativeRelease|NativeSanitized)|TestThreePortMutantsAreCaught|TestAdditionalJSONBoundaries|TestSingleFileStdoutDriver|TestProgressGuard|TestRepositoryCorpusMutants|TestRepositoryLandingWithoutPinEdit|TestRepositoryRequiresGit)$'",
+    "env": {
+      "ADAMIC_GATE_SAMPLE": "a467d1a1571c43e0f01fc4efcb43890280e4a1ac",
+      "ADAMIC_JSON_PRETTIER": "/tmp/u086/library/node_modules/prettier"
+    },
+    "seconds": 39.229,
+    "exit": 0
+  }
+]

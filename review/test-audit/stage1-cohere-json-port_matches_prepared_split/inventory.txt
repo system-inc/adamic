@@ -1,0 +1,192 @@
+Code under test: seven port source files (no Go cohere mutations), childguard Run/CombinedOutput/watched.Write, and separately suite constructions/witnessed checks.
+Oracle: Go cohere executed independently for formatter output; self-written guard expectations, setup invariants and planted-check rejection counts.
+Inventory lists every declaration in the reachable port modules and guard; all test-file helper declarations are separately included as a conservative construction call graph, not production mutants.
+stage1/cohere/json/doc.ts:20: add(kind: string, text: string, parts: number[], broken: boolean): number {
+stage1/cohere/json/doc.ts:33: text(text: string): number {
+stage1/cohere/json/doc.ts:36: concat(parts: number[]): number {
+stage1/cohere/json/doc.ts:39: line(soft: boolean, hard: boolean): number {
+stage1/cohere/json/doc.ts:42: indent(child: number): number {
+stage1/cohere/json/doc.ts:45: group(child: number, broken: boolean): number {
+stage1/cohere/json/doc.ts:48: fill(parts: number[]): number {
+stage1/cohere/json/doc.ts:51: get(index: number): DocInterface {
+stage1/cohere/json/doc.ts:55: fits(
+stage1/cohere/json/doc.ts:99: print(root: number): string {
+stage1/cohere/json/formatter.ts:5: export function stringifyName(name: string): boolean {
+stage1/cohere/json/formatter.ts:10: function numberText(raw: string): string {
+stage1/cohere/json/formatter.ts:11: if(raw.length === 1) {
+stage1/cohere/json/formatter.ts:17: for(let index = 0; index < exponent; index++) {
+stage1/cohere/json/formatter.ts:23: if(decimalPrefix) {
+stage1/cohere/json/formatter.ts:36: if(value.startsWith('.')) {
+stage1/cohere/json/formatter.ts:43: if(dot >= 0 && !mantissa.slice(dot + 1).includes('_')) {
+stage1/cohere/json/formatter.ts:48: if(mantissa.endsWith('.')) {
+stage1/cohere/json/formatter.ts:53: function stringText(raw: string): string {
+stage1/cohere/json/formatter.ts:54: if(raw.startsWith('"')) {
+stage1/cohere/json/formatter.ts:58: for(let index = 1; index < raw.length - 1; index++) {
+stage1/cohere/json/formatter.ts:86: function unicodeEnd(text: string, start: number): number {
+stage1/cohere/json/formatter.ts:89: function unicodeCode(text: string, start: number, end: number): number {
+stage1/cohere/json/formatter.ts:95: function cookedTemplate(raw: string): string {
+stage1/cohere/json/formatter.ts:98: for(let index = 0; index < text.length; index++) {
+stage1/cohere/json/formatter.ts:167: function jsonQuote(text: string): string {
+stage1/cohere/json/formatter.ts:169: for(let index = 0; index < text.length; index++) {
+stage1/cohere/json/formatter.ts:210: constructor(reader: Reader, stringify: boolean) {
+stage1/cohere/json/formatter.ts:223: attach(root: number): void {
+stage1/cohere/json/formatter.ts:277: blankAfter(end: number): boolean {
+stage1/cohere/json/formatter.ts:294: print(index: number, key: boolean): number {
+stage1/cohere/json/formatter.ts:474: export function format(name: string, text: string): string {
+stage1/cohere/json/main.ts:4: export function escaped(text: string): string {
+stage1/cohere/json/main.ts:6: if(result.includes('\\')) {
+stage1/cohere/json/main.ts:9: if(result.includes('\n')) {
+stage1/cohere/json/main.ts:12: if(result.includes('\r')) {
+stage1/cohere/json/main.ts:15: if(result.includes('\t')) {
+stage1/cohere/json/main.ts:20: function unescaped(text: string): string {
+stage1/cohere/json/main.ts:21: if(!text.includes('\\')) {
+stage1/cohere/json/main.ts:26: for(let index = 1; index < pieces.length; index++) {
+stage1/cohere/json/main.ts:45: panic(read.message);
+stage1/cohere/json/main.ts:48: for(const line of read.text.split('\n')) {
+stage1/cohere/json/main.ts:67: catch(error) {
+stage1/cohere/json/parser.ts:17: export function quoted(text: string): string {
+stage1/cohere/json/parser.ts:19: for(let index = 0; index < text.length; index++) {
+stage1/cohere/json/parser.ts:46: function whitespace(code: number): boolean {
+stage1/cohere/json/parser.ts:61: function digit(code: number): number {
+stage1/cohere/json/parser.ts:70: function inRanges(code: number, ranges: readonly (readonly number[])[]): boolean {
+stage1/cohere/json/parser.ts:71: for(const range of ranges) {
+stage1/cohere/json/parser.ts:81: function nameStart(code: number): boolean {
+stage1/cohere/json/parser.ts:90: export function numericValue(raw: string): number {
+stage1/cohere/json/parser.ts:93: if(prefix === '0x' || prefix === '0o' || prefix === '0b') {
+stage1/cohere/json/parser.ts:103: constructor(text: string) {
+stage1/cohere/json/parser.ts:106: get(index: number): JsonNodeInterface {
+stage1/cohere/json/parser.ts:109: add(kind: string, start: number, raw: string, children: number[]): number {
+stage1/cohere/json/parser.ts:114: message(detail: string): string {
+stage1/cohere/json/parser.ts:117: skip(): void {
+stage1/cohere/json/parser.ts:157: peek(): number {
+stage1/cohere/json/parser.ts:161: expect(char: string): void {
+stage1/cohere/json/parser.ts:167: name(): string {
+stage1/cohere/json/parser.ts:186: unexpected(): string {
+stage1/cohere/json/parser.ts:189: number(): number {
+stage1/cohere/json/parser.ts:240: string(): number {
+stage1/cohere/json/parser.ts:303: value(key: boolean): number {
+stage1/cohere/json/parser.ts:378: parse(stringify: boolean): number {
+stage1/cohere/json/width.ts:4: function mapped(code: number): number {
+stage1/cohere/json/width.ts:8: function match(program: readonly (readonly number[])[], instruction: number, text: string, position: number): number {
+stage1/cohere/json/width.ts:13: if(op === 0 || op === 1) {
+stage1/cohere/json/width.ts:17: if(op === 2 || op === 6) {
+stage1/cohere/json/width.ts:20: if(op === 3) {
+stage1/cohere/json/width.ts:29: if(op === 4) {
+stage1/cohere/json/width.ts:32: if(op === 5 || position >= text.length) {
+stage1/cohere/json/width.ts:37: if(row.length === 4) {
+stage1/cohere/json/width.ts:53: function wide(code: number): boolean {
+stage1/cohere/json/width.ts:56: while(left < right) {
+stage1/cohere/json/width.ts:69: export function stringWidth(text: string): number {
+stage1/cohere/json/width.ts:71: for(let index = 0; index < text.length; index++) {
+stage1/cohere/json/width.ts:78: if(ascii) {
+stage1/cohere/json/width.ts:82: for(let index = 0; index < text.length;) {
+internal/childguard/childguard.go:36: func (e *Error) Error() string {
+internal/childguard/childguard.go:58: func (w *watched) Write(p []byte) (int, error) {
+internal/childguard/childguard.go:75: func Run(cmd *exec.Cmd, options Options) error {
+internal/childguard/childguard.go:164: func CombinedOutput(cmd *exec.Cmd, options Options) ([]byte, error) {
+stage1/cohere/json/audit_test.go:30: func sameAnswer(left, right answer) bool {
+stage1/cohere/json/audit_test.go:66: func fileCorpus(root string) ([]textCase, error) {
+stage1/cohere/json/audit_test.go:97: func corpusCases(t *testing.T) []textCase {
+stage1/cohere/json/audit_test.go:131: func jsonUpstreamTopShard(t *testing.T, target int) {
+stage1/cohere/json/audit_test.go:234: func oracleAnswers(t *testing.T, cases []textCase, mutations ...printerMutation) ([]answer, []answer) {
+stage1/cohere/json/audit_test.go:237: func cohereAnswers(t *testing.T, cases []textCase, external bool, mutations ...printerMutation) ([]answer, []answer) {
+stage1/cohere/json/audit_test.go:311: func writeJSON(t *testing.T, path string, value any) {
+stage1/cohere/json/audit_test.go:322: func bounded(t *testing.T, name string, arguments ...string) *exec.Cmd {
+stage1/cohere/json/builds_test.go:27: func jsonBuildEnvironment(names ...string) []string {
+stage1/cohere/json/builds_test.go:36: func jsonGoToolchain() ([]string, error) {
+stage1/cohere/json/builds_test.go:75: func jsonClangToolchain() ([]string, error) {
+stage1/cohere/json/builds_test.go:100: func buildJSONGoOracle(dir string) error {
+stage1/cohere/json/builds_test.go:125: func jsonLoweredPortInputs(toolchain []string) jsonBuildInputs {
+stage1/cohere/json/builds_test.go:136: func buildJSONLoweredPort(dir string) error { return buildJSONLoweredPortMutation(dir, nil) }
+stage1/cohere/json/builds_test.go:138: func buildJSONLoweredPortMutation(dir string, mutation *printerMutation) error {
+stage1/cohere/json/builds_test.go:168: func jsonNativePortInputs(source string, sanitize bool, toolchain []string) jsonBuildInputs {
+stage1/cohere/json/builds_test.go:184: func buildJSONReleasePort(source string) func(string) error {
+stage1/cohere/json/builds_test.go:187: func buildJSONSanitizedPort(source string) func(string) error {
+stage1/cohere/json/builds_test.go:195: func jsonRunBuildUnit(parent *testing.T, name string, prepare func(testing.TB) string) string {
+stage1/cohere/json/builds_test.go:208: func jsonBuildUnit(parent *testing.T, name string, in buildcache.Inputs, build func(string) error) string {
+stage1/cohere/json/builds_test.go:219: func jsonGoOracleUnit(parent *testing.T) string {
+stage1/cohere/json/builds_test.go:231: func jsonLoweredProducts(t *testing.T, dir, entry string) jsonProducts {
+stage1/cohere/json/builds_test.go:240: func jsonPrepareMutation(t *testing.T, mutation printerMutation) jsonProducts {
+stage1/cohere/json/builds_test.go:252: func jsonPrepareFixture(t *testing.T, path string) jsonProducts {
+stage1/cohere/json/builds_test.go:298: func jsonOracleAnswers(t *testing.T, oracle string, cases []textCase) []answer {
+stage1/cohere/json/builds_test.go:318: func jsonPreparePort(t *testing.T, release, sanitized bool) jsonProducts {
+stage1/cohere/json/chunks_test.go:24: func chunkRanges(total, cores int) []nativeChunk {
+stage1/cohere/json/chunks_test.go:34: func nativeChunks(t *testing.T, cases []textCase, answers []answer) []nativeChunk {
+stage1/cohere/json/chunks_test.go:50: func runNativeChunks(t *testing.T, binary string, environment []string, chunks []nativeChunk, single run, cases []textCase, side string) run {
+stage1/cohere/json/chunks_test.go:71: func joinNativeChunks(side string, chunks []nativeChunk, results []chunkResult, single []byte, cases []textCase) (run, error) {
+stage1/cohere/json/chunks_test.go:136: func calibrateNativeCases(t *testing.T, binary string, cases []textCase, answers []answer) {
+stage1/cohere/json/class_order_shards_test.go:20: func jsonPortClassOrderPartition(all []textCase) (ordinary []textCase, shards []nativeChunk, dedicated []textCase) {
+stage1/cohere/json/class_order_shards_test.go:32: func jsonPortClassOrderUnion(all, ordinary []textCase, shards []nativeChunk, dedicated []textCase) error {
+stage1/cohere/json/class_order_shards_test.go:66: func jsonPortClassOrderRun(t *testing.T, leak bool) {
+stage1/cohere/json/memory_budget_test.go:23: func jsonSanitizedMemory() (*jsonMemoryBudget, error) {
+stage1/cohere/json/memory_budget_test.go:46: func newJSONMemoryBudget(capacity int) *jsonMemoryBudget {
+stage1/cohere/json/memory_budget_test.go:52: func (budget *jsonMemoryBudget) acquire(weight int) {
+stage1/cohere/json/memory_budget_test.go:61: func (budget *jsonMemoryBudget) release(weight int) {
+stage1/cohere/json/pin_test.go:29: func caseGroup(path string) string {
+stage1/cohere/json/pin_test.go:43: func pinForCases(cases []textCase) corpusPin {
+stage1/cohere/json/pin_test.go:77: func corpusPinError(want, got corpusPin) error {
+stage1/cohere/json/pin_test.go:123: func verifyCorpusPin(t *testing.T, cases []textCase) {
+stage1/cohere/json/port_matches_prepared_split_test.go:33: func portMatchesBucket(name string) int {
+stage1/cohere/json/port_matches_prepared_split_test.go:39: func portMatchesPartition(t *testing.T) [][]textCase {
+stage1/cohere/json/port_matches_prepared_split_test.go:110: func portMatchesPrepare(t *testing.T) {
+stage1/cohere/json/port_matches_prepared_split_test.go:118: func portMatchesPrepareProducts(t *testing.T) {
+stage1/cohere/json/port_matches_prepared_split_test.go:158: func portMatchesRun(t *testing.T, ordinal int) {
+stage1/cohere/json/port_matches_prepared_split_test.go:215: func portMatchesAnswers(t *testing.T, protocol string, count int) []answer {
+stage1/cohere/json/port_matches_prepared_split_test.go:280: func portMatchesJsonBuildEnvironment(names ...string) []string {
+stage1/cohere/json/port_matches_prepared_split_test.go:289: func portMatchesJsonGoToolchain() ([]string, error) {
+stage1/cohere/json/port_matches_prepared_split_test.go:328: func portMatchesJsonClangToolchain() ([]string, error) {
+stage1/cohere/json/port_matches_prepared_split_test.go:353: func portMatchesBuildJSONGoOracle(dir string) error {
+stage1/cohere/json/port_matches_prepared_split_test.go:388: func portMatchesJsonLoweredPortInputs(toolchain []string) portMatchesJsonBuildInputs {
+stage1/cohere/json/port_matches_prepared_split_test.go:399: func portMatchesBuildJSONLoweredPort(dir string) error {
+stage1/cohere/json/port_matches_prepared_split_test.go:423: func portMatchesJsonNativePortInputs(source string, sanitize bool, toolchain []string) portMatchesJsonBuildInputs {
+stage1/cohere/json/port_matches_prepared_split_test.go:439: func portMatchesBuildJSONReleasePort(source string) func(string) error {
+stage1/cohere/json/port_matches_prepared_split_test.go:442: func portMatchesBuildJSONSanitizedPort(source string) func(string) error {
+stage1/cohere/json/port_matches_prepared_split_test.go:578: func portMatchesDeadline(name string) *time.Timer {
+stage1/cohere/json/port_matches_prepared_split_test.go:588: func portMatchesProduct(t *testing.T, name string) string {
+stage1/cohere/json/port_test.go:33: func lowered(t *testing.T, path string) *ir.Program {
+stage1/cohere/json/port_test.go:46: func execute(t *testing.T, environment []string, name string, arguments ...string) run {
+stage1/cohere/json/port_test.go:55: func executeResult(environment []string, name string, arguments ...string) (run, error) {
+stage1/cohere/json/port_test.go:84: func onNode(t *testing.T, path string, arguments ...string) run {
+stage1/cohere/json/port_test.go:94: func onJavaScriptBackend(t *testing.T, program *ir.Program, arguments ...string) run {
+stage1/cohere/json/port_test.go:104: func nativelyRun(t *testing.T, program *ir.Program, arguments ...string) run {
+stage1/cohere/json/port_test.go:113: func natively(t *testing.T, program *ir.Program, arguments ...string) (run, string) {
+stage1/cohere/json/port_test.go:129: func leaks(t *testing.T, program *ir.Program, sanitized string, arguments ...string) string {
+stage1/cohere/json/port_test.go:155: func portDirectory(t *testing.T, mutation *printerMutation) string {
+stage1/cohere/json/port_test.go:176: func escape(text string) string {
+stage1/cohere/json/port_test.go:179: func protocol(cases []textCase, answers []answer) (string, string) {
+stage1/cohere/json/port_test.go:192: func compare(t *testing.T, name string, result run, expected string, cases []textCase) {
+stage1/cohere/json/port_test.go:198: func comparisonError(name string, result run, expected string, cases []textCase) error {
+stage1/cohere/json/port_test.go:225: func jsonPortTopShard(t *testing.T, target int) {
+stage1/cohere/json/port_test.go:574: func buildGoDriver(t *testing.T) string {
+stage1/cohere/json/repository_test.go:24: func gitCorpus(root string, arguments ...string) ([]byte, error) {
+stage1/cohere/json/repository_test.go:33: func repositoryJSONAtHEAD(root string) (repositoryJSON, error) {
+stage1/cohere/json/repository_test.go:90: func validateCorpus(root string, cases []textCase, expected corpusPin) (corpusPin, int, error) {
+stage1/cohere/json/repository_test.go:139: func fixtureWrite(t *testing.T, root, path, text string) {
+stage1/cohere/json/repository_test.go:150: func fixtureGit(t *testing.T, root string, arguments ...string) {
+stage1/cohere/json/repository_test.go:157: func commitFixtureJSON(t *testing.T, root string, paths ...string) {
+stage1/cohere/json/repository_test.go:163: func newRepositoryFixture(t *testing.T) repositoryFixture {
+stage1/cohere/json/repository_test.go:192: func (f repositoryFixture) cases(t *testing.T) []textCase {
+stage1/cohere/json/sample_test.go:14: func sampledCorpusCases(t *testing.T, stride int) []textCase {
+stage1/cohere/json/shards_test.go:16: func jsonCaseShard(key string, count int) int {
+stage1/cohere/json/shards_test.go:24: func jsonHashShards(cases []textCase, count int) []nativeChunk {
+stage1/cohere/json/shards_test.go:48: func jsonPortShards(cases []textCase) []nativeChunk {
+stage1/cohere/json/shards_test.go:66: func jsonPortUnion(cases []textCase, shards []nativeChunk) error {
+stage1/cohere/json/shards_test.go:102: func jsonPortSelection(value string) (int, int, error) {
+stage1/cohere/json/shards_test.go:215: func jsonPortAnswers(protocol string, count int) ([]answer, error) {
+stage1/cohere/json/top_shared_test.go:43: func jsonTopCorpus(t *testing.T) ([]textCase, []nativeChunk) {
+stage1/cohere/json/top_shared_test.go:65: func jsonTopGoToolchain() ([]string, error) {
+stage1/cohere/json/top_shared_test.go:69: func jsonTopClangToolchain() ([]string, error) {
+stage1/cohere/json/top_shared_test.go:73: func jsonTopProduct(t *testing.T, key string, in buildcache.Inputs, build func(string) error) string {
+stage1/cohere/json/top_shared_test.go:82: func jsonTopOracle(t *testing.T) string {
+stage1/cohere/json/top_shared_test.go:91: func jsonTopReport(t *testing.T, i int, value string) {
+stage1/cohere/json/top_upstream_proof_test.go:9: func jsonUpstreamBlockCheck(shard, id, got, want string) error {
+stage1/cohere/json/upstream_parity_split_test.go:46: func upstreamParityDeadline(t *testing.T) (context.Context, func()) {
+stage1/cohere/json/upstream_parity_split_test.go:57: func upstreamParityCommand(ctx context.Context, name string, args ...string) *exec.Cmd {
+stage1/cohere/json/upstream_parity_split_test.go:71: func upstreamParityOrdinal(id string) int {
+stage1/cohere/json/upstream_parity_split_test.go:76: func upstreamParityUnion(cases []textCase, shards [][]textCase) error {
+stage1/cohere/json/upstream_parity_split_test.go:99: func upstreamParityPrepare(t *testing.T) {
+stage1/cohere/json/upstream_parity_split_test.go:110: func upstreamParityPrepareProducts(t *testing.T) {
+stage1/cohere/json/upstream_parity_split_test.go:177: func upstreamParityBlock(id string, left, right answer) string {
+stage1/cohere/json/upstream_parity_split_test.go:184: func upstreamParityBlockCheck(shard, id, got, want string) error {
+stage1/cohere/json/upstream_parity_split_test.go:191: func upstreamParityRun(t *testing.T, ordinal int) {
+stage1/cohere/json/upstream_parity_split_test.go:394: func upstreamParityOracleProduct(t *testing.T) string {

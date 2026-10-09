@@ -1,0 +1,128 @@
+--- a/stage1/cohere/json/formatter.ts
++++ b/stage1/cohere/json/formatter.ts
+@@ -1,3 +1,4 @@
++import { auditSelected } from './width.ts';
+ // JSON paths through cohere's print_json.go, print_object.go, print_array.go and utility_text.go.
+ import { panic } from 'adamic';
+ import { Reader, numericValue } from './parser.ts';
+@@ -5,7 +6,7 @@
+ export function stringifyName(name: string): boolean {
+     const pieces = name.split('/');
+     const base = pieces[pieces.length - 1] ?? '';
+-    return base === 'package.json' || base === 'package-lock.json' || base === 'composer.json';
++    return base === 'package.json' || base === (auditSelected('M01') ? 'lock.json' : 'package-lock.json') || base === 'composer.json';
+ }
+ function numberText(raw: string): string {
+     if(raw.length === 1) {
+@@ -472,6 +473,7 @@
+     }
+ }
+ export function format(name: string, text: string): string {
++    if(auditSelected('PPort')) { return ''; }
+     const stringify = stringifyName(name);
+     const reader = new Reader(text);
+     const root = reader.parse(stringify);
+--- a/stage1/cohere/json/parser.ts
++++ b/stage1/cohere/json/parser.ts
+@@ -1,3 +1,4 @@
++import { auditSelected } from './width.ts';
+ // cohere/internal/format/estree/parse_json.go. Raw literals are retained for both printers.
+ import { panic } from 'adamic';
+ import { letters, continuations } from './identifierTables.ts';
+@@ -112,7 +113,7 @@
+         return index;
+     }
+     message(detail: string): string {
+-        return `json: line ${this.text.slice(0, this.position).split('\n').length}: ${detail}`;
++        return `json: line ${(this.text.slice(0, this.position).split('\n').length + (auditSelected('M02') ? 1 : 0))}: ${detail}`;
+     }
+     skip(): void {
+         while(this.position < this.text.length) {
+--- a/stage1/cohere/json/doc.ts
++++ b/stage1/cohere/json/doc.ts
+@@ -1,7 +1,7 @@
+ // JSON's reachable subset of cohere/internal/format/doc: concat, indent, group, lines and fill.
+ // Documents refer to children by table index, keeping the ownership graph acyclic.
+ import { panic } from 'adamic';
+-import { stringWidth } from './width.ts';
++import { stringWidth, auditSelected } from './width.ts';
+ export interface DocInterface {
+     kind: string;
+     text: string;
+@@ -173,7 +173,7 @@
+                 stack.push({ doc: first, indent: command.indent, flat, offset: 0 });
+             }
+             else {
+-                const indent = node.kind === 'indent' ? command.indent + 2 : command.indent;
++                const indent = node.kind === 'indent' ? command.indent + (auditSelected('M03') ? 1 : 2) : command.indent;
+                 for(let index = node.parts.length - 1; index >= 0; index--) {
+                     stack.push({
+                         doc: node.parts[index] ?? panic('missing concat part'),
+--- a/stage1/cohere/json/width.ts
++++ b/stage1/cohere/json/width.ts
+@@ -1,5 +1,8 @@
+ // cohere/internal/format/doc/width.go, using the same captured Unicode tables and emoji RE2 programs.
+-import { panic } from 'adamic';
++import { panic, readTextFile } from 'adamic';
++const auditFile = readTextFile('/tmp/u103/selector');
++const auditChoice = auditFile.kind === 'Error' ? '' : auditFile.text.trim();
++export function auditSelected(id: string): boolean { return auditChoice === id; }
+ import { emoji, emojiStart, narrow, narrowStart, wideRanges } from './widthTables.ts';
+ function mapped(code: number): number {
+     return code >= 0xd800 && code <= 0xdfff ? 0x100000 + code - 0xd800 : code;
+@@ -76,7 +79,7 @@
+         }
+     }
+     if(ascii) {
+-        return text.length;
++        return text.length + (auditSelected('M04') ? 1 : 0);
+     }
+     let width = 0;
+     for(let index = 0; index < text.length;) {
+--- a/internal/childguard/childguard.go
++++ b/internal/childguard/childguard.go
+@@ -56,7 +56,7 @@
+ }
+ 
+ func (w *watched) Write(p []byte) (int, error) {
+-	if len(p) > 0 {
++	if (os.Getenv("ADAMIC_MUTANT") != "M05" && len(p) > 0) || (os.Getenv("ADAMIC_MUTANT") == "M05" && len(p) == 0) {
+ 		w.activity.Lock()
+ 		w.activity.last = time.Now()
+ 		w.activity.seen = true
+@@ -162,6 +162,7 @@
+ 
+ // CombinedOutput is Run with both streams captured in one buffer.
+ func CombinedOutput(cmd *exec.Cmd, options Options) ([]byte, error) {
++if os.Getenv("ADAMIC_MUTANT") == "PGuard" {return nil,nil}
+ 	if cmd.Stdout != nil || cmd.Stderr != nil {
+ 		return nil, fmt.Errorf("childguard: output already configured")
+ 	}
+--- a/stage1/cohere/json/port_matches_prepared_split_test.go
++++ b/stage1/cohere/json/port_matches_prepared_split_test.go
+@@ -108,6 +108,7 @@
+ 
+ // Shared builds have no test deadline; the process timeout covers preparation.
+ func portMatchesPrepare(t *testing.T) {
++if os.Getenv("ADAMIC_MUTANT") == "PSetup" {return}
+ 	t.Helper()
+ 	portMatchesShared.once.Do(func() { portMatchesPrepareProducts(t) })
+ 	if !portMatchesShared.ready {
+@@ -586,6 +587,7 @@
+ var portMatchesProducts sync.Map
+ 
+ func portMatchesProduct(t *testing.T, name string) string {
++if os.Getenv("ADAMIC_MUTANT") == "PProducts" {return ""}
+ 	t.Helper()
+ 	value, _ := portMatchesProducts.LoadOrStore(name, &jsonTopBuild{})
+ 	product := value.(*jsonTopBuild)
+--- a/stage1/cohere/json/repository_test.go
++++ b/stage1/cohere/json/repository_test.go
+@@ -88,6 +88,7 @@
+ // Tracked repository inputs follow Git HEAD. Only externally provisioned or
+ // generated inputs retain identity pins; arbitrary untracked files are refused.
+ func validateCorpus(root string, cases []textCase, expected corpusPin) (corpusPin, int, error) {
++if os.Getenv("ADAMIC_MUTANT") == "PCorpus" {return corpusPin{},0,nil}
+ 	state, err := repositoryJSONAtHEAD(root)
+ 	if err != nil {
+ 		return corpusPin{}, 0, err

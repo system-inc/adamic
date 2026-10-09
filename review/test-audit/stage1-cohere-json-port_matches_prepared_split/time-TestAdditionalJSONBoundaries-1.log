@@ -1,0 +1,17 @@
+{"Time":"2026-10-09T12:10:56.229596258Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/json"}
+{"Time":"2026-10-09T12:10:56.237466403Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestAdditionalJSONBoundaries"}
+{"Time":"2026-10-09T12:10:56.237557308Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestAdditionalJSONBoundaries","Output":"=== RUN   TestAdditionalJSONBoundaries\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:10:56.23758579Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestAdditionalJSONBoundaries","Output":"=== PAUSE TestAdditionalJSONBoundaries\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:10:56.237588293Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestAdditionalJSONBoundaries"}
+{"Time":"2026-10-09T12:10:56.238250523Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestAdditionalJSONBoundaries"}
+{"Time":"2026-10-09T12:10:56.238254299Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestAdditionalJSONBoundaries","Output":"=== CONT  TestAdditionalJSONBoundaries\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:10:57.152461753Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestAdditionalJSONBoundaries","Output":"    port_test.go:545: Go cohere: === RUN   TestAdamicJSONAudit\n"}
+{"Time":"2026-10-09T12:10:57.152495593Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestAdditionalJSONBoundaries","Output":"            adamic_json_audit_test.go:44: 72 texts in 0.005s\n"}
+{"Time":"2026-10-09T12:10:57.152498307Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestAdditionalJSONBoundaries","Output":"        --- PASS: TestAdamicJSONAudit (0.01s)\n"}
+{"Time":"2026-10-09T12:10:57.152510315Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestAdditionalJSONBoundaries","Output":"        PASS\n"}
+{"Time":"2026-10-09T12:10:57.152514862Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestAdditionalJSONBoundaries","Output":"        ok  \tgithub.com/system-inc/cohere/internal/format/javascript\t0.015s\n"}
+{"Time":"2026-10-09T12:11:05.197771643Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestAdditionalJSONBoundaries","Output":"--- PASS: TestAdditionalJSONBoundaries (8.96s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:11:05.197805724Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestAdditionalJSONBoundaries","Elapsed":8.96}
+{"Time":"2026-10-09T12:11:05.197826975Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:11:05.19999292Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/json\t8.970s\n"}
+{"Time":"2026-10-09T12:11:05.200051056Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/json","Elapsed":8.97}

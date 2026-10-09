@@ -1,0 +1,27 @@
+--- a/stage1/cohere/json/formatter.ts
++++ b/stage1/cohere/json/formatter.ts
+@@ -1,3 +1,4 @@
++import { auditSelected } from './width.ts';
+ // JSON paths through cohere's print_json.go, print_object.go, print_array.go and utility_text.go.
+ import { panic } from 'adamic';
+ import { Reader, numericValue } from './parser.ts';
+@@ -472,6 +473,7 @@
+     }
+ }
+ export function format(name: string, text: string): string {
++    if(auditSelected('PPort')) { return ''; }
+     const stringify = stringifyName(name);
+     const reader = new Reader(text);
+     const root = reader.parse(stringify);
+--- a/stage1/cohere/json/width.ts
++++ b/stage1/cohere/json/width.ts
+@@ -1,5 +1,8 @@
+ // cohere/internal/format/doc/width.go, using the same captured Unicode tables and emoji RE2 programs.
+-import { panic } from 'adamic';
++import { panic, readTextFile } from 'adamic';
++const auditFile = readTextFile('/tmp/u103/selector');
++const auditChoice = auditFile.kind === 'Error' ? '' : auditFile.text.trim();
++export function auditSelected(id: string): boolean { return auditChoice === id; }
+ import { emoji, emojiStart, narrow, narrowStart, wideRanges } from './widthTables.ts';
+ function mapped(code: number): number {
+     return code >= 0xd800 && code <= 0xdfff ? 0x100000 + code - 0xd800 : code;

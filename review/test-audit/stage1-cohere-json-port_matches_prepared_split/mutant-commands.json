@@ -1,0 +1,342 @@
+[
+  {
+    "id": "validate-M01",
+    "command": "timeout 90 go run ./cmd/adamic build stage1/cohere/json/main.ts -o /tmp/u103/validate-M01 --sanitize",
+    "env": {
+      "ADAMIC_NATIVE_SPLIT": "1",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u103/cache/validate-M01"
+    },
+    "sample": "a467d1a1571c43e0f01fc4efcb43890280e4a1ac",
+    "selector": "",
+    "wall_seconds": 7.693,
+    "exit": 0
+  },
+  {
+    "id": "validate-M02",
+    "command": "timeout 90 go run ./cmd/adamic build stage1/cohere/json/main.ts -o /tmp/u103/validate-M02 --sanitize",
+    "env": {
+      "ADAMIC_NATIVE_SPLIT": "1",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u103/cache/validate-M02"
+    },
+    "sample": "a467d1a1571c43e0f01fc4efcb43890280e4a1ac",
+    "selector": "",
+    "wall_seconds": 2.329,
+    "exit": 0
+  },
+  {
+    "id": "validate-M03",
+    "command": "timeout 90 go run ./cmd/adamic build stage1/cohere/json/main.ts -o /tmp/u103/validate-M03 --sanitize",
+    "env": {
+      "ADAMIC_NATIVE_SPLIT": "1",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u103/cache/validate-M03"
+    },
+    "sample": "a467d1a1571c43e0f01fc4efcb43890280e4a1ac",
+    "selector": "",
+    "wall_seconds": 1.784,
+    "exit": 0
+  },
+  {
+    "id": "validate-M04",
+    "command": "timeout 90 go run ./cmd/adamic build stage1/cohere/json/main.ts -o /tmp/u103/validate-M04 --sanitize",
+    "env": {
+      "ADAMIC_NATIVE_SPLIT": "1",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u103/cache/validate-M04"
+    },
+    "sample": "a467d1a1571c43e0f01fc4efcb43890280e4a1ac",
+    "selector": "",
+    "wall_seconds": 1.756,
+    "exit": 0
+  },
+  {
+    "id": "validate-M05",
+    "command": "timeout 90 go vet ./internal/childguard/",
+    "env": {
+      "ADAMIC_NATIVE_SPLIT": "1",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u103/cache/validate-M05"
+    },
+    "sample": "a467d1a1571c43e0f01fc4efcb43890280e4a1ac",
+    "selector": "",
+    "wall_seconds": 0.078,
+    "exit": 0
+  },
+  {
+    "id": "switch-vet",
+    "command": "timeout 90 go vet ./internal/childguard/ ./stage1/cohere/json/",
+    "env": {},
+    "sample": "a467d1a1571c43e0f01fc4efcb43890280e4a1ac",
+    "selector": "",
+    "wall_seconds": 0.455,
+    "exit": 0
+  },
+  {
+    "id": "switch-clean",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/json/ -run '^(TestPortMatchesGoCohere_[0-9]{3}|TestAdditionalJSONBoundaries|TestSingleFileStdoutDriver)$'",
+    "env": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u103/cache/switch"
+    },
+    "sample": "a467d1a1571c43e0f01fc4efcb43890280e4a1ac",
+    "selector": "",
+    "wall_seconds": 58.344,
+    "exit": 0
+  },
+  {
+    "id": "M01",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/json/ -run '^(TestPortMatchesGoCohere_[0-9]{3}|TestAdditionalJSONBoundaries|TestSingleFileStdoutDriver)$'",
+    "env": {
+      "ADAMIC_MUTANT": "M01",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u103/cache/switch"
+    },
+    "sample": "a467d1a1571c43e0f01fc4efcb43890280e4a1ac",
+    "selector": "M01",
+    "wall_seconds": 39.858,
+    "exit": 0
+  },
+  {
+    "id": "M02",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/json/ -run '^(TestPortMatchesGoCohere_[0-9]{3}|TestAdditionalJSONBoundaries|TestSingleFileStdoutDriver)$'",
+    "env": {
+      "ADAMIC_MUTANT": "M02",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u103/cache/switch"
+    },
+    "sample": "a467d1a1571c43e0f01fc4efcb43890280e4a1ac",
+    "selector": "M02",
+    "wall_seconds": 39.479,
+    "exit": 1
+  },
+  {
+    "id": "M03",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/json/ -run '^(TestPortMatchesGoCohere_[0-9]{3}|TestAdditionalJSONBoundaries|TestSingleFileStdoutDriver)$'",
+    "env": {
+      "ADAMIC_MUTANT": "M03",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u103/cache/switch"
+    },
+    "sample": "a467d1a1571c43e0f01fc4efcb43890280e4a1ac",
+    "selector": "M03",
+    "wall_seconds": 13.711,
+    "exit": 1
+  },
+  {
+    "id": "M04",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/json/ -run '^(TestPortMatchesGoCohere_[0-9]{3}|TestAdditionalJSONBoundaries|TestSingleFileStdoutDriver)$'",
+    "env": {
+      "ADAMIC_MUTANT": "M04",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u103/cache/switch"
+    },
+    "sample": "a467d1a1571c43e0f01fc4efcb43890280e4a1ac",
+    "selector": "M04",
+    "wall_seconds": 18.566,
+    "exit": 1
+  },
+  {
+    "id": "M05",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/json/ -run '^(TestProgressGuard)$'",
+    "env": {
+      "ADAMIC_MUTANT": "M05",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u103/cache/M05"
+    },
+    "sample": "a467d1a1571c43e0f01fc4efcb43890280e4a1ac",
+    "selector": "M05",
+    "wall_seconds": 91.809,
+    "exit": 1
+  },
+  {
+    "id": "PPort",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/json/ -run '^(TestPortMatchesGoCohere_[0-9]{3}|TestAdditionalJSONBoundaries|TestSingleFileStdoutDriver)$'",
+    "env": {
+      "ADAMIC_MUTANT": "PPort",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u103/cache/switch"
+    },
+    "sample": "a467d1a1571c43e0f01fc4efcb43890280e4a1ac",
+    "selector": "PPort",
+    "wall_seconds": 16.975,
+    "exit": 1
+  },
+  {
+    "id": "PGuard",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/json/ -run '^(TestProgressGuard)$'",
+    "env": {
+      "ADAMIC_MUTANT": "PGuard",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u103/cache/PGuard"
+    },
+    "sample": "a467d1a1571c43e0f01fc4efcb43890280e4a1ac",
+    "selector": "PGuard",
+    "wall_seconds": 1.789,
+    "exit": 1
+  },
+  {
+    "id": "PSetup",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/json/ -run '^(TestPortMatchesGoCohereSplit_Setup)$'",
+    "env": {
+      "ADAMIC_MUTANT": "PSetup",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u103/cache/switch"
+    },
+    "sample": "a467d1a1571c43e0f01fc4efcb43890280e4a1ac",
+    "selector": "PSetup",
+    "wall_seconds": 1.814,
+    "exit": 0
+  },
+  {
+    "id": "PProducts",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/json/ -run '^(TestProduct_JSON(GoOracle|LoweredPort|NativeRelease|NativeSanitized))$'",
+    "env": {
+      "ADAMIC_MUTANT": "PProducts",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u103/cache/switch"
+    },
+    "sample": "a467d1a1571c43e0f01fc4efcb43890280e4a1ac",
+    "selector": "PProducts",
+    "wall_seconds": 1.747,
+    "exit": 0
+  },
+  {
+    "id": "PCorpus",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/json/ -run '^(TestRepositoryLandingWithoutPinEdit|TestRepositoryRequiresGit)$'",
+    "env": {
+      "ADAMIC_MUTANT": "PCorpus",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u103/cache/switch"
+    },
+    "sample": "a467d1a1571c43e0f01fc4efcb43890280e4a1ac",
+    "selector": "PCorpus",
+    "wall_seconds": 1.79,
+    "exit": 1
+  },
+  {
+    "id": "vet-H01",
+    "command": "timeout 90 go vet ./stage1/cohere/json/",
+    "env": {},
+    "sample": "a467d1a1571c43e0f01fc4efcb43890280e4a1ac",
+    "selector": "",
+    "wall_seconds": 0.498,
+    "exit": 0
+  },
+  {
+    "id": "H01",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/json/ -run '^(TestPortMatchesGoCohereSplit_Setup)$'",
+    "env": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u103/cache/H01"
+    },
+    "sample": "a467d1a1571c43e0f01fc4efcb43890280e4a1ac",
+    "selector": "",
+    "wall_seconds": 21.483,
+    "exit": 1
+  },
+  {
+    "id": "vet-H02",
+    "command": "timeout 90 go vet ./stage1/cohere/json/",
+    "env": {},
+    "sample": "a467d1a1571c43e0f01fc4efcb43890280e4a1ac",
+    "selector": "",
+    "wall_seconds": 0.363,
+    "exit": 0
+  },
+  {
+    "id": "H02",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/json/ -run '^(TestProduct_JSON(GoOracle|LoweredPort|NativeRelease|NativeSanitized))$'",
+    "env": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u103/cache/H02"
+    },
+    "sample": "a467d1a1571c43e0f01fc4efcb43890280e4a1ac",
+    "selector": "",
+    "wall_seconds": 8.81,
+    "exit": 1
+  },
+  {
+    "id": "vet-H03",
+    "command": "timeout 90 go vet ./stage1/cohere/json/",
+    "env": {},
+    "sample": "a467d1a1571c43e0f01fc4efcb43890280e4a1ac",
+    "selector": "",
+    "wall_seconds": 0.41,
+    "exit": 0
+  },
+  {
+    "id": "H03",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/json/ -run '^(TestRepositoryLandingWithoutPinEdit)$'",
+    "env": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u103/cache/H03"
+    },
+    "sample": "a467d1a1571c43e0f01fc4efcb43890280e4a1ac",
+    "selector": "",
+    "wall_seconds": 6.917,
+    "exit": 1
+  },
+  {
+    "id": "vet-H04",
+    "command": "timeout 90 go vet ./stage1/cohere/json/",
+    "env": {},
+    "sample": "a467d1a1571c43e0f01fc4efcb43890280e4a1ac",
+    "selector": "",
+    "wall_seconds": 0.468,
+    "exit": 0
+  },
+  {
+    "id": "H04",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/json/ -run '^(TestRepositoryRequiresGit)$'",
+    "env": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u103/cache/H04"
+    },
+    "sample": "a467d1a1571c43e0f01fc4efcb43890280e4a1ac",
+    "selector": "",
+    "wall_seconds": 7.042,
+    "exit": 1
+  },
+  {
+    "id": "vet-W01",
+    "command": "timeout 90 go vet ./stage1/cohere/json/",
+    "env": {},
+    "sample": "a467d1a1571c43e0f01fc4efcb43890280e4a1ac",
+    "selector": "",
+    "wall_seconds": 0.426,
+    "exit": 0
+  },
+  {
+    "id": "W01",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/json/ -run '^(TestPortMatchesGoCohereSplitUnion)$'",
+    "env": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u103/cache/W01"
+    },
+    "sample": "a467d1a1571c43e0f01fc4efcb43890280e4a1ac",
+    "selector": "",
+    "wall_seconds": 7.375,
+    "exit": 1
+  },
+  {
+    "id": "vet-W02",
+    "command": "timeout 90 go vet ./stage1/cohere/json/",
+    "env": {},
+    "sample": "a467d1a1571c43e0f01fc4efcb43890280e4a1ac",
+    "selector": "",
+    "wall_seconds": 0.445,
+    "exit": 0
+  },
+  {
+    "id": "W02",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/json/ -run '^(TestThreePortMutantsAreCaught)$'",
+    "env": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u103/cache/W02"
+    },
+    "sample": "a467d1a1571c43e0f01fc4efcb43890280e4a1ac",
+    "selector": "",
+    "wall_seconds": 15.904,
+    "exit": 1
+  },
+  {
+    "id": "vet-W03",
+    "command": "timeout 90 go vet ./stage1/cohere/json/",
+    "env": {},
+    "sample": "a467d1a1571c43e0f01fc4efcb43890280e4a1ac",
+    "selector": "",
+    "wall_seconds": 0.394,
+    "exit": 0
+  },
+  {
+    "id": "W03",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/json/ -run '^(TestRepositoryCorpusMutants)$'",
+    "env": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u103/cache/W03"
+    },
+    "sample": "a467d1a1571c43e0f01fc4efcb43890280e4a1ac",
+    "selector": "",
+    "wall_seconds": 6.676,
+    "exit": 1
+  }
+]

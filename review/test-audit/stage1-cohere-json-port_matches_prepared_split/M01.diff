@@ -1,0 +1,11 @@
+--- a/stage1/cohere/json/formatter.ts
++++ b/stage1/cohere/json/formatter.ts
+@@ -5,7 +5,7 @@
+ export function stringifyName(name: string): boolean {
+     const pieces = name.split('/');
+     const base = pieces[pieces.length - 1] ?? '';
+-    return base === 'package.json' || base === 'package-lock.json' || base === 'composer.json';
++    return base === 'package.json' || base === 'lock.json' || base === 'composer.json';
+ }
+ function numberText(raw: string): string {
+     if(raw.length === 1) {

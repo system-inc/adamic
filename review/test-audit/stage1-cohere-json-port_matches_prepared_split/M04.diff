@@ -1,0 +1,11 @@
+--- a/stage1/cohere/json/width.ts
++++ b/stage1/cohere/json/width.ts
+@@ -76,7 +76,7 @@
+         }
+     }
+     if(ascii) {
+-        return text.length;
++        return text.length + 1;
+     }
+     let width = 0;
+     for(let index = 0; index < text.length;) {

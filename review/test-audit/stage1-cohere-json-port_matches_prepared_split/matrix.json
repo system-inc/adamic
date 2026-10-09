@@ -1,0 +1,417 @@
+[
+  {
+    "id": "M01",
+    "kind": "production",
+    "matrix_rows": [
+      "TestPortMatchesGoCohere family",
+      "TestAdditionalJSONBoundaries",
+      "TestSingleFileStdoutDriver"
+    ],
+    "results": {
+      "TestPortMatchesGoCohere family": "pass",
+      "TestAdditionalJSONBoundaries": "pass",
+      "TestSingleFileStdoutDriver": "pass"
+    },
+    "command": {
+      "id": "M01",
+      "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/json/ -run '^(TestPortMatchesGoCohere_[0-9]{3}|TestAdditionalJSONBoundaries|TestSingleFileStdoutDriver)$'",
+      "env": {
+        "ADAMIC_MUTANT": "M01",
+        "ADAMIC_BUILD_CACHE_DIR": "/tmp/u103/cache/switch"
+      },
+      "sample": "a467d1a1571c43e0f01fc4efcb43890280e4a1ac",
+      "selector": "M01",
+      "wall_seconds": 39.858,
+      "exit": 0
+    },
+    "failing_members": [],
+    "full_run_over_budget": false
+  },
+  {
+    "id": "M02",
+    "kind": "production",
+    "matrix_rows": [
+      "TestPortMatchesGoCohere family",
+      "TestAdditionalJSONBoundaries",
+      "TestSingleFileStdoutDriver"
+    ],
+    "results": {
+      "TestPortMatchesGoCohere family": "fail",
+      "TestAdditionalJSONBoundaries": "fail",
+      "TestSingleFileStdoutDriver": "pass"
+    },
+    "command": {
+      "id": "M02",
+      "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/json/ -run '^(TestPortMatchesGoCohere_[0-9]{3}|TestAdditionalJSONBoundaries|TestSingleFileStdoutDriver)$'",
+      "env": {
+        "ADAMIC_MUTANT": "M02",
+        "ADAMIC_BUILD_CACHE_DIR": "/tmp/u103/cache/switch"
+      },
+      "sample": "a467d1a1571c43e0f01fc4efcb43890280e4a1ac",
+      "selector": "M02",
+      "wall_seconds": 39.479,
+      "exit": 1
+    },
+    "failing_members": [
+      "TestAdditionalJSONBoundaries",
+      "TestPortMatchesGoCohere_103",
+      "TestPortMatchesGoCohere_037",
+      "TestPortMatchesGoCohere_034",
+      "TestPortMatchesGoCohere_057",
+      "TestPortMatchesGoCohere_053",
+      "TestPortMatchesGoCohere_052",
+      "TestPortMatchesGoCohere_028"
+    ],
+    "full_run_over_budget": false
+  },
+  {
+    "id": "M03",
+    "kind": "production",
+    "matrix_rows": [
+      "TestPortMatchesGoCohere family",
+      "TestAdditionalJSONBoundaries",
+      "TestSingleFileStdoutDriver"
+    ],
+    "results": {
+      "TestPortMatchesGoCohere family": "fail",
+      "TestAdditionalJSONBoundaries": "fail",
+      "TestSingleFileStdoutDriver": "fail"
+    },
+    "command": {
+      "id": "M03",
+      "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/json/ -run '^(TestPortMatchesGoCohere_[0-9]{3}|TestAdditionalJSONBoundaries|TestSingleFileStdoutDriver)$'",
+      "env": {
+        "ADAMIC_MUTANT": "M03",
+        "ADAMIC_BUILD_CACHE_DIR": "/tmp/u103/cache/switch"
+      },
+      "sample": "a467d1a1571c43e0f01fc4efcb43890280e4a1ac",
+      "selector": "M03",
+      "wall_seconds": 13.711,
+      "exit": 1
+    },
+    "failing_members": [
+      "TestPortMatchesGoCohere_000",
+      "TestPortMatchesGoCohere_032",
+      "TestPortMatchesGoCohere_017",
+      "TestPortMatchesGoCohere_065",
+      "TestPortMatchesGoCohere_028",
+      "TestPortMatchesGoCohere_030",
+      "TestPortMatchesGoCohere_064",
+      "TestPortMatchesGoCohere_027",
+      "TestPortMatchesGoCohere_063",
+      "TestPortMatchesGoCohere_061",
+      "TestPortMatchesGoCohere_026",
+      "TestPortMatchesGoCohere_062",
+      "TestPortMatchesGoCohere_024",
+      "TestPortMatchesGoCohere_023",
+      "TestPortMatchesGoCohere_022",
+      "TestPortMatchesGoCohere_059",
+      "TestPortMatchesGoCohere_009",
+      "TestPortMatchesGoCohere_058",
+      "TestPortMatchesGoCohere_056",
+      "TestPortMatchesGoCohere_055",
+      "TestPortMatchesGoCohere_015",
+      "TestPortMatchesGoCohere_054",
+      "TestPortMatchesGoCohere_014",
+      "TestPortMatchesGoCohere_052",
+      "TestPortMatchesGoCohere_053",
+      "TestPortMatchesGoCohere_048",
+      "TestPortMatchesGoCohere_051",
+      "TestPortMatchesGoCohere_046",
+      "TestPortMatchesGoCohere_047",
+      "TestPortMatchesGoCohere_011",
+      "TestPortMatchesGoCohere_020",
+      "TestPortMatchesGoCohere_043",
+      "TestPortMatchesGoCohere_038",
+      "TestPortMatchesGoCohere_037",
+      "TestPortMatchesGoCohere_036",
+      "TestPortMatchesGoCohere_008",
+      "TestPortMatchesGoCohere_007",
+      "TestPortMatchesGoCohere_006",
+      "TestPortMatchesGoCohere_081",
+      "TestPortMatchesGoCohere_127",
+      "TestPortMatchesGoCohere_126",
+      "TestPortMatchesGoCohere_096",
+      "TestPortMatchesGoCohere_121",
+      "TestPortMatchesGoCohere_094",
+      "TestPortMatchesGoCohere_122",
+      "TestPortMatchesGoCohere_120",
+      "TestPortMatchesGoCohere_091",
+      "TestPortMatchesGoCohere_089",
+      "TestPortMatchesGoCohere_088",
+      "TestPortMatchesGoCohere_118",
+      "TestPortMatchesGoCohere_087",
+      "TestPortMatchesGoCohere_117",
+      "TestPortMatchesGoCohere_084",
+      "TestPortMatchesGoCohere_083",
+      "TestPortMatchesGoCohere_082",
+      "TestAdditionalJSONBoundaries",
+      "TestPortMatchesGoCohere_073",
+      "TestPortMatchesGoCohere_079",
+      "TestPortMatchesGoCohere_080",
+      "TestPortMatchesGoCohere_115",
+      "TestPortMatchesGoCohere_078",
+      "TestPortMatchesGoCohere_112",
+      "TestPortMatchesGoCohere_113",
+      "TestPortMatchesGoCohere_074",
+      "TestPortMatchesGoCohere_111",
+      "TestPortMatchesGoCohere_110",
+      "TestPortMatchesGoCohere_107",
+      "TestPortMatchesGoCohere_067",
+      "TestPortMatchesGoCohere_071",
+      "TestPortMatchesGoCohere_101",
+      "TestPortMatchesGoCohere_106",
+      "TestPortMatchesGoCohere_086",
+      "TestPortMatchesGoCohere_066",
+      "TestPortMatchesGoCohere_104",
+      "TestPortMatchesGoCohere_099",
+      "TestPortMatchesGoCohere_103",
+      "TestPortMatchesGoCohere_098",
+      "TestSingleFileStdoutDriver",
+      "TestPortMatchesGoCohere_001"
+    ],
+    "full_run_over_budget": false
+  },
+  {
+    "id": "M04",
+    "kind": "production",
+    "matrix_rows": [
+      "TestPortMatchesGoCohere family",
+      "TestAdditionalJSONBoundaries",
+      "TestSingleFileStdoutDriver"
+    ],
+    "results": {
+      "TestPortMatchesGoCohere family": "fail",
+      "TestAdditionalJSONBoundaries": "pass",
+      "TestSingleFileStdoutDriver": "pass"
+    },
+    "command": {
+      "id": "M04",
+      "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/json/ -run '^(TestPortMatchesGoCohere_[0-9]{3}|TestAdditionalJSONBoundaries|TestSingleFileStdoutDriver)$'",
+      "env": {
+        "ADAMIC_MUTANT": "M04",
+        "ADAMIC_BUILD_CACHE_DIR": "/tmp/u103/cache/switch"
+      },
+      "sample": "a467d1a1571c43e0f01fc4efcb43890280e4a1ac",
+      "selector": "M04",
+      "wall_seconds": 18.566,
+      "exit": 1
+    },
+    "failing_members": [
+      "TestPortMatchesGoCohere_086",
+      "TestPortMatchesGoCohere_052",
+      "TestPortMatchesGoCohere_122",
+      "TestPortMatchesGoCohere_043",
+      "TestPortMatchesGoCohere_077",
+      "TestPortMatchesGoCohere_038",
+      "TestPortMatchesGoCohere_104",
+      "TestPortMatchesGoCohere_017",
+      "TestPortMatchesGoCohere_009",
+      "TestPortMatchesGoCohere_011",
+      "TestPortMatchesGoCohere_099",
+      "TestPortMatchesGoCohere_001"
+    ],
+    "full_run_over_budget": false
+  },
+  {
+    "id": "M05",
+    "kind": "production",
+    "matrix_rows": [
+      "TestProgressGuard"
+    ],
+    "results": {
+      "TestProgressGuard": "fail"
+    },
+    "command": {
+      "id": "M05-bounded",
+      "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/json/ -run '^TestProgressGuard$/(progress_outlasts_startup|stderr_is_progress|never_prints|overall_backstop)$'",
+      "env": {
+        "ADAMIC_MUTANT": "M05",
+        "ADAMIC_BUILD_CACHE_DIR": "/tmp/u103/cache/M05-bounded"
+      },
+      "sample": "a467d1a1571c43e0f01fc4efcb43890280e4a1ac",
+      "wall_seconds": null,
+      "exit": 1
+    },
+    "failing_members": [
+      "TestProgressGuard"
+    ],
+    "full_run_over_budget": true
+  },
+  {
+    "id": "H01",
+    "kind": "setup",
+    "matrix_rows": [
+      "TestPortMatchesGoCohereSplit_Setup"
+    ],
+    "results": {
+      "TestPortMatchesGoCohereSplit_Setup": "fail"
+    },
+    "command": {
+      "id": "H01",
+      "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/json/ -run '^(TestPortMatchesGoCohereSplit_Setup)$'",
+      "env": {
+        "ADAMIC_BUILD_CACHE_DIR": "/tmp/u103/cache/H01"
+      },
+      "sample": "a467d1a1571c43e0f01fc4efcb43890280e4a1ac",
+      "selector": "",
+      "wall_seconds": 21.483,
+      "exit": 1
+    },
+    "failing_members": [
+      "TestPortMatchesGoCohereSplit_Setup"
+    ],
+    "full_run_over_budget": false
+  },
+  {
+    "id": "H02",
+    "kind": "setup",
+    "matrix_rows": [
+      "TestProduct_JSON family"
+    ],
+    "results": {
+      "TestProduct_JSON family": "fail"
+    },
+    "command": {
+      "id": "H02",
+      "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/json/ -run '^(TestProduct_JSON(GoOracle|LoweredPort|NativeRelease|NativeSanitized))$'",
+      "env": {
+        "ADAMIC_BUILD_CACHE_DIR": "/tmp/u103/cache/H02"
+      },
+      "sample": "a467d1a1571c43e0f01fc4efcb43890280e4a1ac",
+      "selector": "",
+      "wall_seconds": 8.81,
+      "exit": 1
+    },
+    "failing_members": [
+      "TestProduct_JSONNativeSanitized",
+      "TestProduct_JSONNativeRelease"
+    ],
+    "full_run_over_budget": false
+  },
+  {
+    "id": "H03",
+    "kind": "setup",
+    "matrix_rows": [
+      "TestRepositoryLandingWithoutPinEdit"
+    ],
+    "results": {
+      "TestRepositoryLandingWithoutPinEdit": "fail"
+    },
+    "command": {
+      "id": "H03",
+      "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/json/ -run '^(TestRepositoryLandingWithoutPinEdit)$'",
+      "env": {
+        "ADAMIC_BUILD_CACHE_DIR": "/tmp/u103/cache/H03"
+      },
+      "sample": "a467d1a1571c43e0f01fc4efcb43890280e4a1ac",
+      "selector": "",
+      "wall_seconds": 6.917,
+      "exit": 1
+    },
+    "failing_members": [
+      "TestRepositoryLandingWithoutPinEdit"
+    ],
+    "full_run_over_budget": false
+  },
+  {
+    "id": "H04",
+    "kind": "setup",
+    "matrix_rows": [
+      "TestRepositoryRequiresGit"
+    ],
+    "results": {
+      "TestRepositoryRequiresGit": "fail"
+    },
+    "command": {
+      "id": "H04",
+      "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/json/ -run '^(TestRepositoryRequiresGit)$'",
+      "env": {
+        "ADAMIC_BUILD_CACHE_DIR": "/tmp/u103/cache/H04"
+      },
+      "sample": "a467d1a1571c43e0f01fc4efcb43890280e4a1ac",
+      "selector": "",
+      "wall_seconds": 7.042,
+      "exit": 1
+    },
+    "failing_members": [
+      "TestRepositoryRequiresGit"
+    ],
+    "full_run_over_budget": false
+  },
+  {
+    "id": "W01",
+    "kind": "witness",
+    "matrix_rows": [
+      "TestPortMatchesGoCohereSplitUnion"
+    ],
+    "results": {
+      "TestPortMatchesGoCohereSplitUnion": "fail"
+    },
+    "command": {
+      "id": "W01",
+      "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/json/ -run '^(TestPortMatchesGoCohereSplitUnion)$'",
+      "env": {
+        "ADAMIC_BUILD_CACHE_DIR": "/tmp/u103/cache/W01"
+      },
+      "sample": "a467d1a1571c43e0f01fc4efcb43890280e4a1ac",
+      "selector": "",
+      "wall_seconds": 7.375,
+      "exit": 1
+    },
+    "failing_members": [
+      "TestPortMatchesGoCohereSplitUnion"
+    ],
+    "full_run_over_budget": false
+  },
+  {
+    "id": "W02",
+    "kind": "witness",
+    "matrix_rows": [
+      "TestThreePortMutantsAreCaught"
+    ],
+    "results": {
+      "TestThreePortMutantsAreCaught": "fail"
+    },
+    "command": {
+      "id": "W02",
+      "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/json/ -run '^(TestThreePortMutantsAreCaught)$'",
+      "env": {
+        "ADAMIC_BUILD_CACHE_DIR": "/tmp/u103/cache/W02"
+      },
+      "sample": "a467d1a1571c43e0f01fc4efcb43890280e4a1ac",
+      "selector": "",
+      "wall_seconds": 15.904,
+      "exit": 1
+    },
+    "failing_members": [
+      "TestThreePortMutantsAreCaught"
+    ],
+    "full_run_over_budget": false
+  },
+  {
+    "id": "W03",
+    "kind": "witness",
+    "matrix_rows": [
+      "TestRepositoryCorpusMutants"
+    ],
+    "results": {
+      "TestRepositoryCorpusMutants": "fail"
+    },
+    "command": {
+      "id": "W03",
+      "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/json/ -run '^(TestRepositoryCorpusMutants)$'",
+      "env": {
+        "ADAMIC_BUILD_CACHE_DIR": "/tmp/u103/cache/W03"
+      },
+      "sample": "a467d1a1571c43e0f01fc4efcb43890280e4a1ac",
+      "selector": "",
+      "wall_seconds": 6.676,
+      "exit": 1
+    },
+    "failing_members": [
+      "TestRepositoryCorpusMutants"
+    ],
+    "full_run_over_budget": false
+  }
+]

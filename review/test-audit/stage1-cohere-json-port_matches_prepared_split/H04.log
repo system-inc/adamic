@@ -1,0 +1,14 @@
+{"Time":"2026-10-09T12:18:22.78446057Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/json"}
+{"Time":"2026-10-09T12:18:22.791405922Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestRepositoryRequiresGit"}
+{"Time":"2026-10-09T12:18:22.791460243Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestRepositoryRequiresGit","Output":"=== RUN   TestRepositoryRequiresGit\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:18:22.791484228Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestRepositoryRequiresGit","Output":"=== PAUSE TestRepositoryRequiresGit\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:18:22.791486742Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestRepositoryRequiresGit"}
+{"Time":"2026-10-09T12:18:22.79236436Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestRepositoryRequiresGit"}
+{"Time":"2026-10-09T12:18:22.792389638Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestRepositoryRequiresGit","Output":"=== CONT  TestRepositoryRequiresGit\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:18:22.79391181Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestRepositoryRequiresGit","Output":"    repository_test.go:285: export without Git silently fell back to walking: JSON corpus unavailable: git rev-parse --show-toplevel: exit status 128: fatal: not a git repository (or any parent up to mount point /)\n","OutputType":"error"}
+{"Time":"2026-10-09T12:18:22.793923808Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestRepositoryRequiresGit","Output":"        Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).\n","OutputType":"error-continue"}
+{"Time":"2026-10-09T12:18:22.793965309Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestRepositoryRequiresGit","Output":"--- FAIL: TestRepositoryRequiresGit (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:18:22.793971618Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestRepositoryRequiresGit","Elapsed":0}
+{"Time":"2026-10-09T12:18:22.793983696Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:18:22.794598396Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/cohere/json\t0.010s\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:18:22.794612046Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/json","Elapsed":0.01}

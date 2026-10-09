@@ -1,0 +1,113 @@
+[
+  {
+    "id": "PSetup",
+    "rows": [
+      "TestPortMatchesGoCohereSplit_Setup"
+    ],
+    "results": {
+      "TestPortMatchesGoCohereSplit_Setup": "pass"
+    },
+    "command": {
+      "id": "PSetup",
+      "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/json/ -run '^(TestPortMatchesGoCohereSplit_Setup)$'",
+      "env": {
+        "ADAMIC_MUTANT": "PSetup",
+        "ADAMIC_BUILD_CACHE_DIR": "/tmp/u103/cache/switch"
+      },
+      "sample": "a467d1a1571c43e0f01fc4efcb43890280e4a1ac",
+      "selector": "PSetup",
+      "wall_seconds": 1.814,
+      "exit": 0
+    }
+  },
+  {
+    "id": "PCorpus",
+    "rows": [
+      "TestRepositoryLandingWithoutPinEdit",
+      "TestRepositoryRequiresGit"
+    ],
+    "results": {
+      "TestRepositoryLandingWithoutPinEdit": "fail",
+      "TestRepositoryRequiresGit": "fail"
+    },
+    "command": {
+      "id": "PCorpus",
+      "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/json/ -run '^(TestRepositoryLandingWithoutPinEdit|TestRepositoryRequiresGit)$'",
+      "env": {
+        "ADAMIC_MUTANT": "PCorpus",
+        "ADAMIC_BUILD_CACHE_DIR": "/tmp/u103/cache/switch"
+      },
+      "sample": "a467d1a1571c43e0f01fc4efcb43890280e4a1ac",
+      "selector": "PCorpus",
+      "wall_seconds": 1.79,
+      "exit": 1
+    }
+  },
+  {
+    "id": "PGuard",
+    "rows": [
+      "TestProgressGuard"
+    ],
+    "results": {
+      "TestProgressGuard": "fail"
+    },
+    "command": {
+      "id": "PGuard",
+      "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/json/ -run '^(TestProgressGuard)$'",
+      "env": {
+        "ADAMIC_MUTANT": "PGuard",
+        "ADAMIC_BUILD_CACHE_DIR": "/tmp/u103/cache/PGuard"
+      },
+      "sample": "a467d1a1571c43e0f01fc4efcb43890280e4a1ac",
+      "selector": "PGuard",
+      "wall_seconds": 1.789,
+      "exit": 1
+    }
+  },
+  {
+    "id": "PPort",
+    "rows": [
+      "TestPortMatchesGoCohere family",
+      "TestAdditionalJSONBoundaries",
+      "TestSingleFileStdoutDriver"
+    ],
+    "results": {
+      "TestPortMatchesGoCohere family": "fail",
+      "TestAdditionalJSONBoundaries": "fail",
+      "TestSingleFileStdoutDriver": "fail"
+    },
+    "command": {
+      "id": "PPort",
+      "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/json/ -run '^(TestPortMatchesGoCohere_[0-9]{3}|TestAdditionalJSONBoundaries|TestSingleFileStdoutDriver)$'",
+      "env": {
+        "ADAMIC_MUTANT": "PPort",
+        "ADAMIC_BUILD_CACHE_DIR": "/tmp/u103/cache/switch"
+      },
+      "sample": "a467d1a1571c43e0f01fc4efcb43890280e4a1ac",
+      "selector": "PPort",
+      "wall_seconds": 16.975,
+      "exit": 1
+    }
+  },
+  {
+    "id": "PProducts",
+    "rows": [
+      "TestProduct_JSON family"
+    ],
+    "results": {
+      "TestProduct_JSON family": "pass"
+    },
+    "command": {
+      "id": "PProducts",
+      "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/json/ -run '^(TestProduct_JSON(GoOracle|LoweredPort|NativeRelease|NativeSanitized))$'",
+      "env": {
+        "ADAMIC_MUTANT": "PProducts",
+        "ADAMIC_BUILD_CACHE_DIR": "/tmp/u103/cache/switch"
+      },
+      "sample": "a467d1a1571c43e0f01fc4efcb43890280e4a1ac",
+      "selector": "PProducts",
+      "wall_seconds": 1.747,
+      "exit": 0
+    }
+  }
+]

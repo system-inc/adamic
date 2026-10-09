@@ -1,0 +1,10 @@
+--- a/internal/childguard/childguard.go
++++ b/internal/childguard/childguard.go
+@@ -162,6 +162,7 @@
+ 
+ // CombinedOutput is Run with both streams captured in one buffer.
+ func CombinedOutput(cmd *exec.Cmd, options Options) ([]byte, error) {
++if os.Getenv("ADAMIC_MUTANT") == "PGuard" { return nil,nil }
+ 	if cmd.Stdout != nil || cmd.Stderr != nil {
+ 		return nil, fmt.Errorf("childguard: output already configured")
+ 	}

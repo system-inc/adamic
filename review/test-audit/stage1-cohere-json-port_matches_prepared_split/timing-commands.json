@@ -1,0 +1,596 @@
+[
+  {
+    "label": "time-TestPortMatchesGoCohereSplit_Setup-1",
+    "args": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/json/",
+      "-run",
+      "^TestPortMatchesGoCohereSplit_Setup$"
+    ],
+    "wall_seconds": 4.934,
+    "exit": 0
+  },
+  {
+    "label": "time-TestPortMatchesGoCohereSplit_Setup-2",
+    "args": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/json/",
+      "-run",
+      "^TestPortMatchesGoCohereSplit_Setup$"
+    ],
+    "wall_seconds": 4.615,
+    "exit": 0
+  },
+  {
+    "label": "time-TestPortMatchesGoCohereSplit_Setup-3",
+    "args": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/json/",
+      "-run",
+      "^TestPortMatchesGoCohereSplit_Setup$"
+    ],
+    "wall_seconds": 4.435,
+    "exit": 0
+  },
+  {
+    "label": "time-TestPortMatchesGoCohereSplitUnion-1",
+    "args": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/json/",
+      "-run",
+      "^TestPortMatchesGoCohereSplitUnion$"
+    ],
+    "wall_seconds": 2.209,
+    "exit": 0
+  },
+  {
+    "label": "time-TestPortMatchesGoCohereSplitUnion-2",
+    "args": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/json/",
+      "-run",
+      "^TestPortMatchesGoCohereSplitUnion$"
+    ],
+    "wall_seconds": 2.282,
+    "exit": 0
+  },
+  {
+    "label": "time-TestPortMatchesGoCohereSplitUnion-3",
+    "args": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/json/",
+      "-run",
+      "^TestPortMatchesGoCohereSplitUnion$"
+    ],
+    "wall_seconds": 2.433,
+    "exit": 0
+  },
+  {
+    "label": "time-TestPortMatchesGoCohere-family-1",
+    "args": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/json/",
+      "-run",
+      "^TestPortMatchesGoCohere_[0-9]{3}$"
+    ],
+    "wall_seconds": 39.327,
+    "exit": 0
+  },
+  {
+    "label": "time-TestPortMatchesGoCohere-family-2",
+    "args": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/json/",
+      "-run",
+      "^TestPortMatchesGoCohere_[0-9]{3}$"
+    ],
+    "wall_seconds": 37.386,
+    "exit": 0
+  },
+  {
+    "label": "time-TestPortMatchesGoCohere-family-3",
+    "args": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/json/",
+      "-run",
+      "^TestPortMatchesGoCohere_[0-9]{3}$"
+    ],
+    "wall_seconds": 37.111,
+    "exit": 0
+  },
+  {
+    "label": "time-TestProduct_JSON-family-1",
+    "args": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/json/",
+      "-run",
+      "^TestProduct_JSON(GoOracle|LoweredPort|NativeRelease|NativeSanitized)$"
+    ],
+    "wall_seconds": 3.0,
+    "exit": 0
+  },
+  {
+    "label": "time-TestProduct_JSON-family-2",
+    "args": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/json/",
+      "-run",
+      "^TestProduct_JSON(GoOracle|LoweredPort|NativeRelease|NativeSanitized)$"
+    ],
+    "wall_seconds": 3.054,
+    "exit": 0
+  },
+  {
+    "label": "time-TestProduct_JSON-family-3",
+    "args": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/json/",
+      "-run",
+      "^TestProduct_JSON(GoOracle|LoweredPort|NativeRelease|NativeSanitized)$"
+    ],
+    "wall_seconds": 3.306,
+    "exit": 0
+  },
+  {
+    "label": "time-TestThreePortMutantsAreCaught-1",
+    "args": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/json/",
+      "-run",
+      "^TestThreePortMutantsAreCaught$"
+    ],
+    "wall_seconds": 11.582,
+    "exit": 0
+  },
+  {
+    "label": "time-TestThreePortMutantsAreCaught-2",
+    "args": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/json/",
+      "-run",
+      "^TestThreePortMutantsAreCaught$"
+    ],
+    "wall_seconds": 11.128,
+    "exit": 0
+  },
+  {
+    "label": "time-TestThreePortMutantsAreCaught-3",
+    "args": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/json/",
+      "-run",
+      "^TestThreePortMutantsAreCaught$"
+    ],
+    "wall_seconds": 11.003,
+    "exit": 0
+  },
+  {
+    "label": "time-TestAdditionalJSONBoundaries-1",
+    "args": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/json/",
+      "-run",
+      "^TestAdditionalJSONBoundaries$"
+    ],
+    "wall_seconds": 10.768,
+    "exit": 0
+  },
+  {
+    "label": "time-TestAdditionalJSONBoundaries-2",
+    "args": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/json/",
+      "-run",
+      "^TestAdditionalJSONBoundaries$"
+    ],
+    "wall_seconds": 10.538,
+    "exit": 0
+  },
+  {
+    "label": "time-TestAdditionalJSONBoundaries-3",
+    "args": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/json/",
+      "-run",
+      "^TestAdditionalJSONBoundaries$"
+    ],
+    "wall_seconds": 10.954,
+    "exit": 0
+  },
+  {
+    "label": "time-TestSingleFileStdoutDriver-1",
+    "args": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/json/",
+      "-run",
+      "^TestSingleFileStdoutDriver$"
+    ],
+    "wall_seconds": 10.682,
+    "exit": 0
+  },
+  {
+    "label": "time-TestSingleFileStdoutDriver-2",
+    "args": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/json/",
+      "-run",
+      "^TestSingleFileStdoutDriver$"
+    ],
+    "wall_seconds": 10.845,
+    "exit": 0
+  },
+  {
+    "label": "time-TestSingleFileStdoutDriver-3",
+    "args": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/json/",
+      "-run",
+      "^TestSingleFileStdoutDriver$"
+    ],
+    "wall_seconds": 10.824,
+    "exit": 0
+  },
+  {
+    "label": "time-TestProgressGuard-1",
+    "args": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/json/",
+      "-run",
+      "^TestProgressGuard$"
+    ],
+    "wall_seconds": 6.869,
+    "exit": 0
+  },
+  {
+    "label": "time-TestProgressGuard-2",
+    "args": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/json/",
+      "-run",
+      "^TestProgressGuard$"
+    ],
+    "wall_seconds": 6.98,
+    "exit": 0
+  },
+  {
+    "label": "time-TestProgressGuard-3",
+    "args": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/json/",
+      "-run",
+      "^TestProgressGuard$"
+    ],
+    "wall_seconds": 6.903,
+    "exit": 0
+  },
+  {
+    "label": "time-TestRepositoryCorpusMutants-1",
+    "args": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/json/",
+      "-run",
+      "^TestRepositoryCorpusMutants$"
+    ],
+    "wall_seconds": 1.816,
+    "exit": 0
+  },
+  {
+    "label": "time-TestRepositoryCorpusMutants-2",
+    "args": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/json/",
+      "-run",
+      "^TestRepositoryCorpusMutants$"
+    ],
+    "wall_seconds": 1.851,
+    "exit": 0
+  },
+  {
+    "label": "time-TestRepositoryCorpusMutants-3",
+    "args": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/json/",
+      "-run",
+      "^TestRepositoryCorpusMutants$"
+    ],
+    "wall_seconds": 1.862,
+    "exit": 0
+  },
+  {
+    "label": "time-TestRepositoryLandingWithoutPinEdit-1",
+    "args": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/json/",
+      "-run",
+      "^TestRepositoryLandingWithoutPinEdit$"
+    ],
+    "wall_seconds": 1.879,
+    "exit": 0
+  },
+  {
+    "label": "time-TestRepositoryLandingWithoutPinEdit-2",
+    "args": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/json/",
+      "-run",
+      "^TestRepositoryLandingWithoutPinEdit$"
+    ],
+    "wall_seconds": 1.967,
+    "exit": 0
+  },
+  {
+    "label": "time-TestRepositoryLandingWithoutPinEdit-3",
+    "args": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/json/",
+      "-run",
+      "^TestRepositoryLandingWithoutPinEdit$"
+    ],
+    "wall_seconds": 1.895,
+    "exit": 0
+  },
+  {
+    "label": "time-TestRepositoryRequiresGit-1",
+    "args": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/json/",
+      "-run",
+      "^TestRepositoryRequiresGit$"
+    ],
+    "wall_seconds": 1.837,
+    "exit": 0
+  },
+  {
+    "label": "time-TestRepositoryRequiresGit-2",
+    "args": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/json/",
+      "-run",
+      "^TestRepositoryRequiresGit$"
+    ],
+    "wall_seconds": 1.842,
+    "exit": 0
+  },
+  {
+    "label": "time-TestRepositoryRequiresGit-3",
+    "args": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/json/",
+      "-run",
+      "^TestRepositoryRequiresGit$"
+    ],
+    "wall_seconds": 1.929,
+    "exit": 0
+  }
+]

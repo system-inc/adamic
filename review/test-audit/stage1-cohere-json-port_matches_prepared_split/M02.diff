@@ -1,0 +1,11 @@
+--- a/stage1/cohere/json/parser.ts
++++ b/stage1/cohere/json/parser.ts
+@@ -112,7 +112,7 @@
+         return index;
+     }
+     message(detail: string): string {
+-        return `json: line ${this.text.slice(0, this.position).split('\n').length}: ${detail}`;
++        return `json: line ${this.text.slice(0, this.position).split('\n').length + 1}: ${detail}`;
+     }
+     skip(): void {
+         while(this.position < this.text.length) {

@@ -1,0 +1,10 @@
+--- a/stage1/cohere/json/port_matches_prepared_split_test.go
++++ b/stage1/cohere/json/port_matches_prepared_split_test.go
+@@ -108,6 +108,7 @@
+ 
+ // Shared builds have no test deadline; the process timeout covers preparation.
+ func portMatchesPrepare(t *testing.T) {
++if os.Getenv("ADAMIC_MUTANT") == "PSetup" { return }
+ 	t.Helper()
+ 	portMatchesShared.once.Do(func() { portMatchesPrepareProducts(t) })
+ 	if !portMatchesShared.ready {

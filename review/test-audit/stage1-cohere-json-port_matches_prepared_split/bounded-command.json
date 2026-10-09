@@ -1,0 +1,11 @@
+{
+  "id": "M05-bounded",
+  "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/json/ -run '^TestProgressGuard$/(progress_outlasts_startup|stderr_is_progress|never_prints|overall_backstop)$'",
+  "env": {
+    "ADAMIC_MUTANT": "M05",
+    "ADAMIC_BUILD_CACHE_DIR": "/tmp/u103/cache/M05-bounded"
+  },
+  "sample": "a467d1a1571c43e0f01fc4efcb43890280e4a1ac",
+  "wall_seconds": null,
+  "exit": 1
+}

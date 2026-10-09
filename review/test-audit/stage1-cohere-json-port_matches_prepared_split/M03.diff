@@ -1,0 +1,11 @@
+--- a/stage1/cohere/json/doc.ts
++++ b/stage1/cohere/json/doc.ts
+@@ -173,7 +173,7 @@
+                 stack.push({ doc: first, indent: command.indent, flat, offset: 0 });
+             }
+             else {
+-                const indent = node.kind === 'indent' ? command.indent + 2 : command.indent;
++                const indent = node.kind === 'indent' ? command.indent + 1 : command.indent;
+                 for(let index = node.parts.length - 1; index >= 0; index--) {
+                     stack.push({
+                         doc: node.parts[index] ?? panic('missing concat part'),
