@@ -599,7 +599,7 @@ Evidence branch: test-audit/stage1-cohere-css-composition_shards; production sou
     "matrix_rows": [
       "TestEachGapStandsWhereGapsMdSaysItDoes"
     ],
-    "evidence": "Clean timing logs and entry probes only; no admissible production kill.",
+    "evidence": "Probe only, no production mutant: ADAMIC_MUTANT=PLower; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/css/ -run ^(TestEachGapStandsWhereGapsMdSaysItDoes)$; gaps_test.go:35: gap closed: update GAPS.md and remove the workaround or unblock native composition; log=PLower-TestEachGapStandsWhereGapsMdSaysItDoes.log",
     "limitations": "No admissible production mutant of this compiler or dependency-port boundary was built within the four port-mutant menu.",
     "probe_evidence": [
       {
@@ -661,7 +661,7 @@ Evidence branch: test-audit/stage1-cohere-css-composition_shards; production sou
     "matrix_rows": [
       "TestClosedEmptyArrayUnionGap"
     ],
-    "evidence": "Clean timing logs and entry probes only; no admissible production kill.",
+    "evidence": "Probe only, no production mutant: ADAMIC_MUTANT=PLower; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/css/ -run ^(TestClosedEmptyArrayUnionGap)$; panic: runtime error: invalid memory address or nil pointer dereference [recovered, repanicked]; log=PLower-TestClosedEmptyArrayUnionGap.log",
     "limitations": "No admissible production mutant of this compiler or dependency-port boundary was built within the four port-mutant menu.",
     "probe_evidence": [
       {
@@ -680,7 +680,7 @@ Evidence branch: test-audit/stage1-cohere-css-composition_shards; production sou
           "-run",
           "^(TestClosedEmptyArrayUnionGap)$"
         ],
-        "failing_output": null,
+        "failing_output": "panic: runtime error: invalid memory address or nil pointer dereference [recovered, repanicked]",
         "results": {
           "TestClosedEmptyArrayUnionGap": "fail"
         }
@@ -723,7 +723,7 @@ Evidence branch: test-audit/stage1-cohere-css-composition_shards; production sou
     "matrix_rows": [
       "TestClosedParserRegexGap"
     ],
-    "evidence": "Clean timing logs and entry probes only; no admissible production kill.",
+    "evidence": "Probe only, no production mutant: ADAMIC_MUTANT=PLower; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/css/ -run ^(TestClosedParserRegexGap)$; panic: runtime error: invalid memory address or nil pointer dereference [recovered, repanicked]; log=PLower-TestClosedParserRegexGap.log",
     "limitations": "No admissible production mutant of this compiler or dependency-port boundary was built within the four port-mutant menu.",
     "probe_evidence": [
       {
@@ -742,7 +742,7 @@ Evidence branch: test-audit/stage1-cohere-css-composition_shards; production sou
           "-run",
           "^(TestClosedParserRegexGap)$"
         ],
-        "failing_output": null,
+        "failing_output": "panic: runtime error: invalid memory address or nil pointer dereference [recovered, repanicked]",
         "results": {
           "TestClosedParserRegexGap": "fail"
         }
@@ -785,7 +785,7 @@ Evidence branch: test-audit/stage1-cohere-css-composition_shards; production sou
     "matrix_rows": [
       "TestClosedOptionalBooleanConditionGap"
     ],
-    "evidence": "Clean timing logs and entry probes only; no admissible production kill.",
+    "evidence": "Probe only, no production mutant: ADAMIC_MUTANT=PLower; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/css/ -run ^(TestClosedOptionalBooleanConditionGap)$; panic: runtime error: invalid memory address or nil pointer dereference [recovered, repanicked]; log=PLower-TestClosedOptionalBooleanConditionGap.log",
     "limitations": "No admissible production mutant of this compiler or dependency-port boundary was built within the four port-mutant menu.",
     "probe_evidence": [
       {
@@ -804,7 +804,7 @@ Evidence branch: test-audit/stage1-cohere-css-composition_shards; production sou
           "-run",
           "^(TestClosedOptionalBooleanConditionGap)$"
         ],
-        "failing_output": null,
+        "failing_output": "panic: runtime error: invalid memory address or nil pointer dereference [recovered, repanicked]",
         "results": {
           "TestClosedOptionalBooleanConditionGap": "fail"
         }
@@ -952,7 +952,7 @@ Evidence branch: test-audit/stage1-cohere-css-composition_shards; production sou
     "matrix_rows": [
       "TestCSSParserOptimizedMatchesNode"
     ],
-    "evidence": "Clean timing logs and entry probes only; no admissible production kill.",
+    "evidence": "Probe only, no production mutant: ADAMIC_MUTANT=PC; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/css/ -run ^(TestCSSParserOptimizedMatchesNode)$; optimized_test.go:42: native: clang failed: exit status 1; log=PC-TestCSSParserOptimizedMatchesNode.log",
     "limitations": "No admissible production mutant of this compiler or dependency-port boundary was built within the four port-mutant menu.",
     "probe_evidence": [
       {

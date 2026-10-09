@@ -27,8 +27,12 @@ for row in rows:
  row['probe_evidence']=[]
  for c in checks:
   if not c['id'].startswith('P') or not set(c['requested'])&set(row['members']):continue
-  errs=[e['Output'].strip() for e in events(p/c['log']) if e.get('OutputType')=='error' and e.get('Test','').split('/')[0] in row['members']]
+  errs=[e['Output'].strip() for e in events(p/c['log']) if (e.get('OutputType')=='error' or e.get('Output','').startswith('panic:')) and e.get('Test','').split('/')[0] in row['members']]
+  maps=json.loads((p/'origin-line-maps.json').read_text())
+  errs=[re.sub(r'(\w+_test.go):(\d+):',lambda m:m[1]+':'+str(maps.get(m[1],{}).get(m[2],m[2]))+':',e) for e in errs]
   row['probe_evidence'].append(dict(id=c['id'],log=c['log'],command=c['command'],failing_output=errs[0] if errs else None,results=c['results']))
+ if row['verdict']=='cannot-judge' and row['probe_evidence']:
+  pe=row['probe_evidence'][0];row['evidence']='Probe only, no production mutant: ADAMIC_MUTANT='+pe['id']+'; '+' '.join(pe['command'])+'; '+str(pe['failing_output'])+'; log='+pe['log']
  row['matrix_rows']=['TestCompositionMatchesGo family','TestCSSThroughput','TestCSSPrinterOptimizedMatchesGo'] if row['mutants_in_matrix'] else [row['test']]
  if row['test']=='TestCSSPrinterAgreesWithGo family':row['limitations']+=' Full 64-member runtime exceeded 90 seconds twice. Witness proved on member 063 after a passing clean single-leaf run; agreement members and unfinished checks are not given production verdicts.'
 (p/'rows.json').write_text(json.dumps(rows,indent=2))
