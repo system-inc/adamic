@@ -372,6 +372,42 @@ func TestRequiredSkipNamesInput(t *testing.T) {
 	}
 }
 
+// A skip with no row is pending by its own words: 'awaits <branch>:' is checked against main, and 'awaits #<task>:'
+// is accepted only from the review lane.
+func TestASkipNamingWhatItAwaitsIsPendingByItsWords(t *testing.T) {
+	t.Parallel()
+	event := func(pkg, test, message string) string {
+		return fmt.Sprintf("{\"Action\":\"output\",\"Package\":%q,\"Test\":%q,\"Output\":%q}\n{\"Action\":\"skip\",\"Package\":%q,\"Test\":%q}\n", pkg, test, message, pkg, test)
+	}
+	oracle := "github.com/system-inc/adamic/internal/oracle"
+	check := func(log string, landed Landed) (string, error) {
+		var output bytes.Buffer
+		err := CheckLogAwaiting(strings.NewReader(log), &output, nil, landed)
+		return output.String(), err
+	}
+	off := func(string) (bool, error) { return false, nil }
+	on := func(string) (bool, error) { return true, nil }
+	branch := event(oracle, "TestReviewProgramsAgreeWithNode/p06.a", "    review_test.go:34: awaits compiler/fix: the helper's second parameter\n")
+	if output, err := check(branch, off); err != nil || !strings.Contains(output, "pending=1") {
+		t.Fatalf("a branch still off main: %v %s", err, output)
+	}
+	if output, err := check(branch, on); err == nil || !strings.Contains(output, "pending-landed") {
+		t.Fatalf("a branch on main and the skip still there passed: %v %s", err, output)
+	}
+	task := event(oracle, "TestReviewProgramsAgreeWithNode/r1.a", "    review_test.go:34: awaits #cxr5x2v: catchable RangeError\n")
+	if output, err := check(task, off); err != nil || !strings.Contains(output, "pending-task") {
+		t.Fatalf("a review program awaiting a task: %v %s", err, output)
+	}
+	elsewhere := event("github.com/system-inc/adamic/probe", "TestProbe", "    probe_test.go:9: awaits #cxr5x2v: anything\n")
+	if output, err := check(elsewhere, off); err == nil || !strings.Contains(output, "unknown=1") {
+		t.Fatalf("a task-pending skip outside the review lane passed: %v %s", err, output)
+	}
+	plain := event("github.com/system-inc/adamic/probe", "TestProbe", "    probe_test.go:9: not ready\n")
+	if output, err := check(plain, off); err == nil || !strings.Contains(output, "unknown=1") {
+		t.Fatalf("a skip naming nothing passed: %v %s", err, output)
+	}
+}
+
 // A pending skip passes while its awaited branch is off main and fails once it lands and the test still skips.
 func TestPendingSkipsCantOutliveTheirReason(t *testing.T) {
 	t.Parallel()
