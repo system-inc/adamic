@@ -181,7 +181,7 @@ Evidence branch: test-audit/stage1-cohere-css-composition_shards; production sou
           "-run",
           "^(TestCompositionMatchesGo_000|TestCompositionMatchesGo_001|TestCompositionMatchesGo_002|TestCompositionMatchesGo_003|TestCompositionMatchesGo_004|TestCompositionMatchesGo_005|TestCompositionMatchesGo_006|TestCompositionMatchesGo_007|TestCompositionMatchesGo_008|TestCompositionMatchesGo_009|TestCompositionMatchesGo_010|TestCompositionMatchesGo_011|TestCompositionMatchesGo_012|TestCompositionMatchesGo_013|TestCompositionMatchesGo_014|TestCompositionMatchesGo_015)$"
         ],
-        "failing_output": "composition_shards_test.go:142: native ASan/UBSan: line 1, byte 1: \"\", Go cohere \"case 0\"",
+        "failing_output": "composition_shards_test.go:138: native ASan/UBSan: line 1, byte 1: \"\", Go cohere \"case 0\"",
         "results": {
           "TestCompositionMatchesGo_008": "fail",
           "TestCompositionMatchesGo_009": "fail",
@@ -356,7 +356,7 @@ Evidence branch: test-audit/stage1-cohere-css-composition_shards; production sou
     "matrix_rows": [
       "TestCSSPrinterAgreesWithGo family"
     ],
-    "evidence": "ADAMIC_MUTANT=W1; /tmp/u078-mutant=W1; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/css/ -run ^TestCSSPrinterAgreesWithGo_063$; css_printer_parallel_test.go:209: narrow native ASan/UBSan printer mutant groups ignore the remaining width survived; log=bounded-printer-063-W1.log",
+    "evidence": "ADAMIC_MUTANT=W1; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/css/ -run ^TestCSSPrinterAgreesWithGo_063$; css_printer_parallel_test.go:209: narrow native ASan/UBSan printer mutant groups ignore the remaining width survived; log=bounded-printer-063-W1.log",
     "limitations": "Weakened guard/construction failed in this session. Full 64-member runtime exceeded 90 seconds twice. Witness proved on member 063 after a passing clean single-leaf run; agreement members and unfinished checks are not given production verdicts.",
     "probe_evidence": []
   },
@@ -521,7 +521,7 @@ Evidence branch: test-audit/stage1-cohere-css-composition_shards; production sou
           "-run",
           "^(TestCSSThroughput)$"
         ],
-        "failing_output": "css_test.go:469: native checksum \"\" differs from \"54790 of 245940 stylesheets parsed, 129910 nodes\\n\"",
+        "failing_output": "css_test.go:465: native checksum \"\" differs from \"54790 of 245940 stylesheets parsed, 129910 nodes\\n\"",
         "results": {
           "TestCSSThroughput": "fail"
         }
@@ -1030,7 +1030,7 @@ Evidence branch: test-audit/stage1-cohere-css-composition_shards; production sou
           "-run",
           "^(TestThePortParsesAsGoCohereDoesUnion)$"
         ],
-        "failing_output": "parser_shards_test.go:431: shard count 0",
+        "failing_output": "parser_shards_test.go:423: shard count 0",
         "results": {
           "TestThePortParsesAsGoCohereDoesUnion": "fail"
         }

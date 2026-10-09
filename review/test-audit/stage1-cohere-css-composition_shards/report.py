@@ -73,7 +73,7 @@ for row,members in groups.items():
  ev='';last=None
  if row=='TestCSSPrinterAgreesWithGo family' and (p/'bounded-printer-063-W1.log').exists():proof=['W1','bounded-printer-063-W1.log']
  if proof:
-  rr=next((x for x in runs if x['log']==proof[1]),{});fail=line(proof[1],members);last=proof[0]+': '+fail;ev='ADAMIC_MUTANT='+proof[0]+'; /tmp/u078-mutant='+proof[0]+'; '+' '.join(rr.get('command',[]))+'; '+fail+'; log='+proof[1]
+  rr=next((x for x in runs if x['log']==proof[1]),{});fail=line(proof[1],members);last=proof[0]+': '+fail;ev='ADAMIC_MUTANT='+proof[0]+'; '+('' if proof[1]=='bounded-printer-063-W1.log' else '/tmp/u078-mutant='+proof[0]+'; ')+' '.join(rr.get('command',[]))+'; '+fail+'; log='+proof[1]
  else:ev='Clean timing logs and entry probes only; no admissible production kill.'
  files=[]
  for f in ['composition_shards_test.go','css_printer_parallel_test.go','css_test.go','gaps_test.go','memory_checks_test.go','optimized_test.go','parser_shards_test.go']:
