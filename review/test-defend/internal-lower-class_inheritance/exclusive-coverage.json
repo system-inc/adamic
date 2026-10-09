@@ -1,0 +1,17 @@
+[
+  {
+    "test": "TestInheritanceKeepsCheckerConstructorRules",
+    "subsumer": "TestClassFeaturesPrivateChecker",
+    "exclusive_blocks": []
+  },
+  {
+    "test": "TestInheritanceCycleFinderIncludesInheritedFields",
+    "subsumer": "TestInheritanceGenericSoundness",
+    "exclusive_blocks": []
+  },
+  {
+    "test": "TestInheritanceRefusesThisBeforeSuperReturns",
+    "subsumer": "TestInheritanceConditionalThisRules",
+    "exclusive_blocks": []
+  }
+]

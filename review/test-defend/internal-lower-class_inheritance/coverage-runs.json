@@ -1,0 +1,122 @@
+[
+  {
+    "test": "TestInheritanceKeepsCheckerConstructorRules",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=./internal/lower,./internal/load",
+      "-coverprofile=review/test-defend/internal-lower-class_inheritance/TestInheritanceKeepsCheckerConstructorRules.cover",
+      "./internal/lower/",
+      "-run",
+      "^TestInheritanceKeepsCheckerConstructorRules$"
+    ],
+    "exit": 0,
+    "wall": 15.37041021099867
+  },
+  {
+    "test": "TestClassFeaturesPrivateChecker",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=./internal/lower,./internal/load",
+      "-coverprofile=review/test-defend/internal-lower-class_inheritance/TestClassFeaturesPrivateChecker.cover",
+      "./internal/lower/",
+      "-run",
+      "^TestClassFeaturesPrivateChecker$"
+    ],
+    "exit": 0,
+    "wall": 2.083560129001853
+  },
+  {
+    "test": "TestInheritanceCycleFinderIncludesInheritedFields",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=./internal/lower,./internal/load",
+      "-coverprofile=review/test-defend/internal-lower-class_inheritance/TestInheritanceCycleFinderIncludesInheritedFields.cover",
+      "./internal/lower/",
+      "-run",
+      "^TestInheritanceCycleFinderIncludesInheritedFields$"
+    ],
+    "exit": 0,
+    "wall": 2.08394319099898
+  },
+  {
+    "test": "TestInheritanceGenericSoundness",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=./internal/lower,./internal/load",
+      "-coverprofile=review/test-defend/internal-lower-class_inheritance/TestInheritanceGenericSoundness.cover",
+      "./internal/lower/",
+      "-run",
+      "^TestInheritanceGenericSoundness$"
+    ],
+    "exit": 0,
+    "wall": 2.111539356999856
+  },
+  {
+    "test": "TestInheritanceRefusesThisBeforeSuperReturns",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=./internal/lower,./internal/load",
+      "-coverprofile=review/test-defend/internal-lower-class_inheritance/TestInheritanceRefusesThisBeforeSuperReturns.cover",
+      "./internal/lower/",
+      "-run",
+      "^TestInheritanceRefusesThisBeforeSuperReturns$"
+    ],
+    "exit": 0,
+    "wall": 2.1426103949997923
+  },
+  {
+    "test": "TestInheritanceConditionalThisRules",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=./internal/lower,./internal/load",
+      "-coverprofile=review/test-defend/internal-lower-class_inheritance/TestInheritanceConditionalThisRules.cover",
+      "./internal/lower/",
+      "-run",
+      "^TestInheritanceConditionalThisRules$"
+    ],
+    "exit": 0,
+    "wall": 2.162909242997557
+  }
+]

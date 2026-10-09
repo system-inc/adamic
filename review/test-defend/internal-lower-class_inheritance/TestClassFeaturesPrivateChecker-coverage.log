@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T17:45:15.406506214Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T17:45:15.41486632Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesPrivateChecker"}
+{"Time":"2026-10-09T17:45:15.415216386Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesPrivateChecker","Output":"=== RUN   TestClassFeaturesPrivateChecker\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:45:15.415242015Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesPrivateChecker","Output":"=== PAUSE TestClassFeaturesPrivateChecker\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:45:15.415244549Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesPrivateChecker"}
+{"Time":"2026-10-09T17:45:15.415247032Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesPrivateChecker"}
+{"Time":"2026-10-09T17:45:15.415248825Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesPrivateChecker","Output":"=== CONT  TestClassFeaturesPrivateChecker\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:45:15.452406939Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesPrivateChecker","Output":"--- PASS: TestClassFeaturesPrivateChecker (0.04s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:45:15.452478416Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesPrivateChecker","Elapsed":0.04}
+{"Time":"2026-10-09T17:45:15.452505907Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:45:15.45498078Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"coverage: 0.7% of statements in ./internal/lower, ./internal/load\n"}
+{"Time":"2026-10-09T17:45:15.469662144Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"ok  \tgithub.com/system-inc/adamic/internal/lower\t0.062s\tcoverage: 0.7% of statements in ./internal/lower, ./internal/load\n"}
+{"Time":"2026-10-09T17:45:15.469703776Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.063}

@@ -1,0 +1,12 @@
+--- a/internal/load/load.go
++++ b/internal/load/load.go
+@@ -243,6 +243,9 @@
+ // formatDiagnostic writes one diagnostic as file:line:column: error TS<code>: message, with the
+ // checker's elaboration indented beneath it.
+ func (p *Program) formatDiagnostic(diagnostic *ast.Diagnostic) string {
++	if diagnostic.Code() == 2511 {
++		return ""
++	}
+ 	var builder strings.Builder
+ 	if diagnostic.File() != nil {
+ 		line, column := p.lineAndColumn(diagnostic.File(), diagnostic.Pos())

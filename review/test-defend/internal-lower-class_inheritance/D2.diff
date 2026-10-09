@@ -1,0 +1,11 @@
+--- a/internal/lower/class.go
++++ b/internal/lower/class.go
+@@ -752,7 +752,7 @@
+ // field not set yet.
+ func (l *lowering) useOfThis(node *ast.Node) error {
+ 	if l.instance != nil && l.instance.unreadyThis[node] {
+-		return &Refused{Where: l.program.Where(node), What: "this before super returns", Fix: "call super(...) before using this"}
++		return &Refused{Where: l.program.Where(node), What: "this before super returns", Fix: "call super before using this"}
+ 	}
+ 	if l.instance != nil && l.instance.constructing && l.instance.hasDescendants {
+ 		if parent := node.Parent; parent != nil && parent.Kind == ast.KindPropertyAccessExpression {

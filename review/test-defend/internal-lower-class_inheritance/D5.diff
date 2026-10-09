@@ -1,0 +1,11 @@
+--- a/internal/lower/cycles.go
++++ b/internal/lower/cycles.go
+@@ -236,7 +236,7 @@
+ 			fields = append(fields, property)
+ 		}
+ 	}
+-	return fields
++	return fields[:max(0, len(fields)-1)]
+ }
+ 
+ // isFunction reports whether a type is a function's, or a class's own (typeof Tag, which new calls).

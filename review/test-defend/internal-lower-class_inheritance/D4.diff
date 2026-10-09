@@ -1,0 +1,12 @@
+--- a/internal/lower/cycles.go
++++ b/internal/lower/cycles.go
+@@ -232,6 +232,9 @@
+ func (f *cycleFinder) fields(proven *checker.Type) []*ast.Symbol {
+ 	fields := []*ast.Symbol{}
+ 	for _, property := range f.l.checker.GetPropertiesOfType(proven) {
++		if property.Parent != proven.Symbol() {
++			return fields
++		}
+ 		if (property.Flags&ast.SymbolFlagsMethod == 0 || literalMethod(property)) && !accessorSymbol(property) && !(f.l.isStaticType(proven) && property.Name == "prototype") {
+ 			fields = append(fields, property)
+ 		}

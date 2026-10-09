@@ -1,0 +1,85 @@
+[
+  {
+    "test": "TestInheritanceKeepsCheckerConstructorRules",
+    "package": "internal/lower",
+    "prior_verdict": "subsumed",
+    "subsumed_by": "TestClassFeaturesPrivateChecker",
+    "defense": "defended",
+    "unique_mutant": "D1 internal/load/load.go:245",
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "internal/load/load.go:245",
+        "change": "Return an empty formatted diagnostic for TS2511 (abstract-class construction), leaving checker results and private-scope diagnostics intact.",
+        "rows_failed": [
+          "TestInheritanceKeepsCheckerConstructorRules"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/defend-class-inheritance/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D1.log 2>&1; class_inheritance_test.go:82: want abstract, got"
+  },
+  {
+    "test": "TestInheritanceCycleFinderIncludesInheritedFields",
+    "package": "internal/lower",
+    "prior_verdict": "subsumed",
+    "subsumed_by": "TestInheritanceGenericSoundness",
+    "defense": "defended",
+    "unique_mutant": "D4 internal/lower/cycles.go:234",
+    "attempts": [
+      {
+        "mutant": "D3",
+        "file_line": "internal/lower/cycles.go:236",
+        "change": "Return after the first data field, losing an inherited field behind an own field, while a subclass with just an inherited generic slot can retain that slot.",
+        "rows_failed": [
+          "TestInheritanceCycleFinderIncludesInheritedFields",
+          "TestReadonlyFieldsAreJudgedByTheirConstructorsWrites",
+          "TestWhatZeroOneRefusesIsRefusedWithAFix"
+        ]
+      },
+      {
+        "mutant": "D4",
+        "file_line": "internal/lower/cycles.go:234",
+        "change": "Stop on a property declared by another class, incorrectly treating the inherited-field boundary as the end of the shape.",
+        "rows_failed": [
+          "TestInheritanceCycleFinderIncludesInheritedFields"
+        ]
+      },
+      {
+        "mutant": "D5",
+        "file_line": "internal/lower/cycles.go:239",
+        "change": "Omit the final selected field, which is the inherited parent after the child label in the direct traversal witness.",
+        "rows_failed": [
+          "TestClassFeaturesStaticInterfaceCycle",
+          "TestClassFeaturesStaticParentCycle",
+          "TestClassFeaturesStaticSoundness",
+          "TestInheritanceCycleFinderIncludesInheritedFields",
+          "TestInheritanceGenericSoundness",
+          "TestInheritanceRefusesUnsoundOverrides",
+          "TestLiteralMethodCapturesCannotMakeCycles",
+          "TestReadonlyFieldsAreJudgedByTheirConstructorsWrites",
+          "TestWhatZeroOneRefusesIsRefusedWithAFix"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/defend-class-inheritance/cache/D4 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D4.log 2>&1; class_inheritance_test.go:127: cycle traversal lost Base.parent when visiting Child"
+  },
+  {
+    "test": "TestInheritanceRefusesThisBeforeSuperReturns",
+    "package": "internal/lower",
+    "prior_verdict": "subsumed",
+    "subsumed_by": "TestInheritanceConditionalThisRules",
+    "defense": "defended",
+    "unique_mutant": "D2 internal/lower/class.go:755",
+    "attempts": [
+      {
+        "mutant": "D2",
+        "file_line": "internal/lower/class.go:755",
+        "change": "Lose the explicit call syntax in the pre-super repair; the conditional row only requires the weaker call-super prefix.",
+        "rows_failed": [
+          "TestInheritanceRefusesThisBeforeSuperReturns"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/defend-class-inheritance/cache/D2 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D2.log 2>&1; class_inheritance_test.go:179: want pre-super this refusal with fix, got /tmp/adamic-gate/TestInheritanceRefusesThisBeforeSuperReturns4048356991/001/main.a:3:37: Adamic 0.1 refuses this before super returns; call super before using this"
+  }
+]

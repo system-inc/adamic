@@ -1,0 +1,52 @@
+[
+  {
+    "id": "D1",
+    "target": "TestInheritanceKeepsCheckerConstructorRules",
+    "file": "internal/load/load.go",
+    "old": "func (p *Program) formatDiagnostic(diagnostic *ast.Diagnostic) string {",
+    "new": "func (p *Program) formatDiagnostic(diagnostic *ast.Diagnostic) string {\n\tif diagnostic.Code() == 2511 {\n\t\treturn \"\"\n\t}",
+    "kind": "return early",
+    "reason": "Return an empty formatted diagnostic for TS2511 (abstract-class construction), leaving checker results and private-scope diagnostics intact.",
+    "line": 245
+  },
+  {
+    "id": "D2",
+    "target": "TestInheritanceRefusesThisBeforeSuperReturns",
+    "file": "internal/lower/class.go",
+    "old": "Fix: \"call super(...) before using this\"",
+    "new": "Fix: \"call super before using this\"",
+    "kind": "change constant",
+    "reason": "Lose the explicit call syntax in the pre-super repair; the conditional row only requires the weaker call-super prefix.",
+    "line": 755
+  },
+  {
+    "id": "D3",
+    "target": "TestInheritanceCycleFinderIncludesInheritedFields",
+    "file": "internal/lower/cycles.go",
+    "old": "\t\t\tfields = append(fields, property)\n",
+    "new": "\t\t\tfields = append(fields, property)\n\t\t\treturn fields\n",
+    "kind": "return early",
+    "reason": "Return after the first data field, losing an inherited field behind an own field, while a subclass with just an inherited generic slot can retain that slot.",
+    "line": 236
+  },
+  {
+    "id": "D4",
+    "target": "TestInheritanceCycleFinderIncludesInheritedFields",
+    "file": "internal/lower/cycles.go",
+    "old": "\tfor _, property := range f.l.checker.GetPropertiesOfType(proven) {\n",
+    "new": "\tfor _, property := range f.l.checker.GetPropertiesOfType(proven) {\n\t\tif property.Parent != proven.Symbol() {\n\t\t\treturn fields\n\t\t}\n",
+    "kind": "return early",
+    "reason": "Stop on a property declared by another class, incorrectly treating the inherited-field boundary as the end of the shape.",
+    "line": 234
+  },
+  {
+    "id": "D5",
+    "target": "TestInheritanceCycleFinderIncludesInheritedFields",
+    "file": "internal/lower/cycles.go",
+    "old": "\treturn fields\n}",
+    "new": "\treturn fields[:max(0, len(fields)-1)]\n}",
+    "kind": "off by one bound",
+    "reason": "Omit the final selected field, which is the inherited parent after the child label in the direct traversal witness.",
+    "line": 239
+  }
+]
