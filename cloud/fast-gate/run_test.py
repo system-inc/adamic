@@ -1624,6 +1624,146 @@ class Budget(unittest.TestCase):
         self.assertIsNone(self.budget([("TestNew", 500.0)]).failure)
 
 
+class HeavyBudget(Budget):
+    def declare(self, test="TestNew", seconds=120):
+        self.write("cloud/fast-gate/heavy-units.tsv", "%s/p\t%s\towner/#task\t%s\twhole main gate\n" % (run.module, test, seconds))
+
+    def test_declared_90_second_unit_is_heavy(self):
+        self.declare()
+        gate = self.budget([("TestNew", 90)])
+        self.assertIsNone(gate.failure)
+        self.assertEqual(gate.result["budget_over"], [])
+        self.assertEqual(gate.result["budget_drift"], [])
+        row = gate.result["heavy_units"][0]
+        self.assertEqual((row["class"], row["seconds"], row["budget_seconds"], row["owner"]),
+                         ("heavy", 90, 120, "owner/#task"))
+
+    def test_record_and_status_name_heavy_units(self):
+        self.declare()
+        gate = self.budget([("TestNew", 90)])
+        gate.arguments.branch = gate.arguments.session = ""
+        gate.kind, gate.planned, gate.exits, gate.steps = "fast", [], {}, {}
+        gate.counts, gate.failedTests, gate.census = {"pass": 1, "fail": 0, "skip": 0}, [], {"required_input": [], "unclassified": []}
+        with open(os.path.join(self.directory, "test.jsonl"), "w") as handle:
+            handle.write(json.dumps({"Package": run.module + "/p", "Test": "TestNew", "Action": "pass", "Elapsed": 90}) + "\n")
+        with mock.patch("builtins.print"):
+            gate.finish()
+        with open(os.path.join(self.directory, "fast.json")) as handle:
+            record = json.load(handle)
+        self.assertEqual(record["units"][0]["class"], "heavy")
+        self.assertEqual(record["units"][0]["budget_seconds"], 120)
+        with open(os.path.join(self.directory, "status.txt")) as handle:
+            status = handle.read()
+        self.assertTrue(status.startswith("green:"), status)
+        self.assertIn("heavy:", status)
+        self.assertIn("owner/#task", status)
+
+    def test_undeclared_90_second_unit_is_red(self):
+        gate = self.budget([("TestNew", 90)])
+        self.assertIsNotNone(gate.failure, "undeclared units must not be exempt")
+        self.assertEqual(gate.failure["step"], "budget")
+        self.assertIn("TestNew 90.0 s", gate.failure["detail"])
+        self.assertEqual(gate.result["heavy_units"], [])
+
+    def test_heavy_over_own_budget_names_owner_even_on_main(self):
+        self.declare("TestOld")
+        gate = self.budget([("TestOld", 121)])
+        self.assertEqual(gate.failure["step"], "budget")
+        for word in ("heavy", "TestOld", "121.0 s", "120.0 s", "owner/#task"):
+            self.assertIn(word, gate.failure["detail"])
+
+    def test_family_descendants_and_setup_but_not_bare_prefix(self):
+        self.declare()
+        gate = self.budget([("TestNewUnit01/case", 90), ("TestNew (setup)", 90), ("TestNewOther", 90)])
+        self.assertEqual([row["test"] for row in gate.result["heavy_units"]], ["TestNew (setup)", "TestNewUnit01/case"])
+        self.assertEqual(gate.result["budget_over"], [run.module + "/p TestNewOther 90.0 s"])
+        self.assertIsNone(run.heavyUnit(run.heavyUnits(self.tree), run.module + "/other", "TestNew"))
+
+    def test_invalid_declarations_fail_closed(self):
+        for value in ("nan", "inf", "0", "-1", "wrong"):
+            with self.subTest(value=value):
+                self.declare(seconds=value)
+                self.assertEqual(self.budget([("TestNew", 90)]).failure["step"], "budget")
+
+    def test_undeclared_exemption_mutant_is_caught(self):
+        import inspect
+        source = inspect.getsource(run.heavyUnit).replace(
+            "return matches[0] if matches else None",
+            'return matches[0] if matches else {"package": package, "test": name, "owner": "mutant", "budget_seconds": 1000, "why": "undeclared exemption"}')
+        namespace = dict(run.__dict__)
+        exec(source, namespace)
+        with mock.patch.object(run, "heavyUnit", namespace["heavyUnit"]):
+            with self.assertRaises(AssertionError):
+                self.test_undeclared_90_second_unit_is_red()
+
+
+class HeavyCensus(unittest.TestCase):
+    def setUp(self):
+        self.directory = tempfile.mkdtemp()
+        self.addCleanup(shutil.rmtree, self.directory)
+        self.path = os.path.join(self.directory, "test.jsonl")
+        self.filtered = os.path.join(self.directory, "census-tests.jsonl")
+        self.declared = [{"package": "p", "test": "TestHeavy", "owner": "owner/#task",
+                          "budget_seconds": 120, "why": "whole main gate"}]
+
+    def events(self, reason, test="TestHeavy"):
+        events = [{"Action": "output", "Package": "p", "Test": test, "Output": reason},
+                  {"Action": "skip", "Package": "p", "Test": test}]
+        with open(self.path, "w") as handle:
+            for event in events:
+                handle.write(json.dumps(event) + "\n")
+        return events
+
+    def test_declared_deferral_reads_heavy_and_preserves_original(self):
+        events = self.events("heavy: deferred to main whole gate", "TestHeavy/case")
+        heavy, unknown = run.heavyCensus(self.path, self.filtered, self.declared, False)
+        self.assertEqual(unknown, [])
+        self.assertEqual(heavy[0]["class"], "heavy")
+        self.assertEqual(heavy[0]["owner"], "owner/#task")
+        with open(self.path) as handle:
+            self.assertEqual([json.loads(line) for line in handle], events)
+        with open(self.filtered) as handle:
+            self.assertNotIn('"Action": "skip"', handle.read())
+
+    def test_removed_declaration_is_unknown_and_whole_gate_cannot_defer(self):
+        self.events("heavy: deferred to main whole gate")
+        for declarations, full in (([], False), (self.declared, True)):
+            heavy, unknown = run.heavyCensus(self.path, self.filtered, declarations, full)
+            self.assertEqual(heavy, [])
+            self.assertEqual(unknown, ["p TestHeavy"])
+
+    def test_required_input_skip_is_not_exempt(self):
+        events = self.events("set REQUIRED_INPUT")
+        self.assertEqual(run.heavyCensus(self.path, self.filtered, self.declared, False), ([], []))
+        with open(self.filtered) as handle:
+            self.assertEqual([json.loads(line) for line in handle], events)
+
+    def test_gate_census_records_heavy_and_reds_unknown(self):
+        tools = os.path.join(self.directory, "tools")
+        os.makedirs(os.path.join(tools, "cloud/fast-gate"))
+        declaration = os.path.join(tools, "cloud/fast-gate/heavy-units.tsv")
+        for declared in (True, False):
+            with open(declaration, "w") as handle:
+                if declared:
+                    handle.write("p\tTestHeavy\towner/#task\t120\twhole main gate\n")
+            self.events("heavy: deferred to main whole gate")
+            gate = run.Gate.__new__(run.Gate)
+            gate.arguments = types.SimpleNamespace(out=self.directory, tree=tools, tools=tools, full=False)
+            gate.census, gate.result, gate.steps, gate.exits = {"required_input": [], "unclassified": []}, {}, {}, {}
+            gate.fail = mock.Mock()
+            process = mock.Mock(returncode=0)
+            process.communicate.return_value = ("skips=0 required-input=0 unknown=0\n", "")
+            gate.spawn = mock.Mock(return_value=process)
+            gate.checkCensus()
+            if declared:
+                gate.fail.assert_not_called()
+                self.assertEqual(gate.result["heavy_skips"][0]["class"], "heavy")
+            else:
+                self.assertEqual(gate.exits["census"], 1)
+                self.assertEqual(gate.census["unclassified"], ["p TestHeavy"])
+                self.assertIn("unknown\tp\tTestHeavy", gate.fail.call_args.args[1])
+
+
 @unittest.skipUnless(sys.platform == "linux", "requires Linux /proc sessions")
 class StopTests(unittest.TestCase):
     setUp = FailClosed.setUp
