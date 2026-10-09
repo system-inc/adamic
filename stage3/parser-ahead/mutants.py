@@ -14,13 +14,13 @@ rows=[]
 with tempfile.TemporaryDirectory(prefix='step24-mutants-') as scratch:
  for name,(old,new) in mutants.items():
   assert source.count(old)==1,(name,source.count(old))
-  changed=pathlib.Path(scratch)/'changed.go';changed.write_text(source.replace(old,new))
+  changed=pathlib.Path(scratch)/'changed.go.txt';changed.write_text(source.replace(old,new))
   overlay=pathlib.Path(scratch)/'overlay.json';overlay.write_text(json.dumps({'Replace':{str(p):str(changed)}}))
-  log=pathlib.Path('/tmp/step24-ahead-mutant-'+name+'.log')
+  log=root/'review/compiler/step24-parser-main/logs'/('completion-'+name+'.log')
   with log.open('w') as output:
-   code=subprocess.run(['go','test','-overlay='+str(overlay),'./internal/lower','-run','^TestParserFactory(Completion|ReadBeforeCompletion)$','-count=1','-v'],cwd=root,stdout=output,stderr=subprocess.STDOUT).returncode
+   code=subprocess.run(['go','test','-overlay='+str(overlay),'./internal/lower','-run','^TestParserFactory(Completion.*|ReadBeforeCompletion)$','-count=1','-v'],cwd=root,stdout=output,stderr=subprocess.STDOUT).returncode
   text=log.read_text()
   assert code!=0 and '--- FAIL: TestParserFactory' in text and '[build failed]' not in text,(name,code,text)
   rows.append({'mutant':name,'exit':code,'catcher':'TestParserFactoryCompletion behavior assertion','log':str(log)})
-(root/'stage3/parser-ahead/evidence/completion-mutants.json').write_text(json.dumps(rows,indent=2)+'\n')
+(root/'review/compiler/step24-parser-main/completion-mutants.json').write_text(json.dumps(rows,indent=2)+'\n')
 print(json.dumps(rows,indent=2))

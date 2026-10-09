@@ -25,6 +25,7 @@ func init() { additionalFixtureCounts = append(additionalFixtureCounts, parserAh
 // Update only owned rows when diagnosing a global recording failure.
 // Complete and escaped now count executed staged factory programs.
 func TestParserAheadCounts(t *testing.T) {
+	t.Parallel()
 	rows := parserAheadCounts(t)
 	b, err := os.ReadFile(countsPath)
 	if err != nil {

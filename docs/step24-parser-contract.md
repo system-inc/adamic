@@ -1,11 +1,10 @@
 # Step 24 parser compiler contract
 
-This contract serves #ktz9fek under #6z35tzs. The authorized build-ahead base is
-compiler/rehearsal-placeholders 678d94f9, including delivered
-codex/placeholder-nonnull c8f858b9. Scout evidence is codex/step24-scout 7e6ed35b.
-TypeScript source is 050880ce59e30b356b686bd3144efe24f875ebc8.
-The construction source fixtures have been rechecked with the delivered placeholder machinery. Their placeholder pending marks are cleared.
-Program-region lifetime remains pending step 06 #7g4qv2b.
+This contract serves #ktz9fek and #cs3ehy8. The rebuild base is
+compiler/placeholder-nonnull-main bafb9ef4, carrying delivered placeholder checks
+on main. The source implementation is compiler/step24-parser-ahead 3ee3dfed.
+TypeScript source evidence remains pinned to 050880ce59e30b356b686bd3144efe24f875ebc8.
+Program-region lifetime awaits compiler/program-region-lowering.
 
 ## 1. Factory completion
 

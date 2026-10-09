@@ -15,6 +15,7 @@ func parserNodeArrayFields() []FieldContract {
 }
 
 func TestParserNodeArrayLayout(t *testing.T) {
+	t.Parallel()
 	fields := parserNodeArrayFields()
 	layout, err := NodeArrayLayout(ir.Object, fields)
 	if err != nil {
@@ -35,6 +36,7 @@ func TestParserNodeArrayLayout(t *testing.T) {
 }
 
 func TestParserNodeArrayPresence(t *testing.T) {
+	t.Parallel()
 	fields := append(parserNodeArrayFields(), FieldContract{Name: "cache", DeclaredType: "string | undefined", Of: ir.String, Optional: true})
 	layout, err := NodeArrayLayout(ir.Object, fields)
 	if err != nil {
@@ -51,6 +53,7 @@ func TestParserNodeArrayPresence(t *testing.T) {
 }
 
 func TestParserNodeArraySchemaFailsClosed(t *testing.T) {
+	t.Parallel()
 	for _, name := range []string{"pos", "end", "hasTrailingComma", "transformFlags"} {
 		fields := parserNodeArrayFields()
 		for i := range fields {

@@ -26,35 +26,51 @@ func parserSpeculationPath(t *testing.T, name string) string {
 	return p
 }
 
-func TestParserSpeculationSources(t *testing.T) {
-	for _, name := range parserSpeculationNames {
-		if name == "misfit" {
-			continue
-		}
-		t.Run(name, func(t *testing.T) {
-			path := parserSpeculationPath(t, name)
-			truth := onNode(t, path)
-			if truth.exitCode != 0 || len(truth.stderr) != 0 {
-				t.Fatalf("Node %+v", truth)
-			}
-			program, err := lowered(t, path)
-			if err != nil {
-				t.Fatal(err)
-			}
-			actual, binary := nativelyUncached(t, program)
-			for backend, got := range map[string]run{"native": actual, "JavaScript": onJavaScriptBackend(t, program)} {
-				if d := disagreement(truth, got); d != "" {
-					t.Fatalf("%s: %s", backend, d)
-				}
-			}
-			if report := leaksUncached(t, program, binary); report != "" {
-				t.Fatal(report)
-			}
-			t.Logf("Node stdout %q; native sanitizers/leaks and JavaScript agree", truth.stdout)
-		})
-	}
+func TestParserSpeculationSourcesNamedLookahead(t *testing.T) {
+	t.Parallel()
+	assertParserSpeculationSource(t, "named-lookahead")
 }
+
+func TestParserSpeculationSourcesNamedTryparse(t *testing.T) {
+	t.Parallel()
+	assertParserSpeculationSource(t, "named-tryparse")
+}
+
+func TestParserSpeculationSourcesArrowTryparse(t *testing.T) {
+	t.Parallel()
+	assertParserSpeculationSource(t, "arrow-tryparse")
+}
+
+func TestParserSpeculationSourcesTruthinessRewind(t *testing.T) {
+	t.Parallel()
+	assertParserSpeculationSource(t, "truthiness-rewind")
+}
+
+func assertParserSpeculationSource(t *testing.T, name string) {
+	t.Helper()
+	path := parserSpeculationPath(t, name)
+	truth := onNode(t, path)
+	if truth.exitCode != 0 || len(truth.stderr) != 0 {
+		t.Fatalf("Node %+v", truth)
+	}
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	actual, binary := nativelyUncached(t, program)
+	for backend, got := range map[string]run{"native": actual, "JavaScript": onJavaScriptBackend(t, program)} {
+		if d := disagreement(truth, got); d != "" {
+			t.Fatalf("%s: %s", backend, d)
+		}
+	}
+	if report := leaksUncached(t, program, binary); report != "" {
+		t.Fatal(report)
+	}
+	t.Logf("Node stdout %q; native sanitizers/leaks and JavaScript agree", truth.stdout)
+}
+
 func TestParserSpeculationMisfit(t *testing.T) {
+	t.Parallel()
 	path := parserSpeculationPath(t, "misfit")
 	truth := onNode(t, path)
 	if truth.exitCode != 0 || string(truth.stdout) != "wrong\n" {
@@ -73,6 +89,7 @@ func TestParserSpeculationMisfit(t *testing.T) {
 	}
 }
 func TestParserSpeculationRewindMutant(t *testing.T) {
+	t.Parallel()
 	path := parserSpeculationPath(t, "truthiness-rewind")
 	truth := onNode(t, path)
 	program, err := lowered(t, path)

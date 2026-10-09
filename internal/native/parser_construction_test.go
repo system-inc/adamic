@@ -166,44 +166,69 @@ func parserConstructionRun(t *testing.T, fixture string, mutationFile, before, a
 	return stdout.String()
 }
 
-// Not parallel: native runtime mutants rebuild separate copies of the library serially.
-func TestParserConstructionBackends(t *testing.T) {
-	for _, fixture := range []string{"own-key-order.a", "node-array-keys.a", "node-array-json.a", "node-array-length.a"} {
-		t.Run(fixture, func(t *testing.T) {
-			want := parserSourceObservation(t, fixture)
-			if got := parserConstructionRun(t, fixture, "", "", ""); got != want {
-				t.Fatalf("native stdout %q; Node %q", got, want)
-			}
-			directory := t.TempDir()
-			path := filepath.Join(directory, "generated.mjs")
-			if err := os.WriteFile(path, []byte(javascript.JavaScript(parserConstructionProgram(fixture))), 0o600); err != nil {
-				t.Fatal(err)
-			}
-			runner, err := filepath.Abs("../../oracle/node.mjs")
-			if err != nil {
-				t.Fatal(err)
-			}
-			if got := runWithInput(t, "", "node", runner, path); got != want {
-				t.Fatalf("JavaScript stdout %q; Node %q", got, want)
-			}
-			t.Logf("Node, native ASan/UBSan/leaks, JavaScript agree: %q; independent IR test; source lowering covered by oracle.TestParserConstructionSource", want)
-		})
-	}
+// Each test owns its IR and its native runtime copy.
+func TestParserConstructionBackendOwnKeyOrder(t *testing.T) {
+	t.Parallel()
+	assertParserConstructionBackend(t, "own-key-order.a")
 }
 
-func TestParserConstructionRuntimeMutants(t *testing.T) {
-	for _, mutant := range []struct{ name, fixture, file, before, after string }{
-		{"synthesized key", "own-key-order.a", "construction.c", "object->write_order[index] = SIZE_MAX;", "object->write_order[index] = index;"},
-		{"declaration order", "own-key-order.a", "library_object.c", "comparison == 0 && object->write_order != NULL", "comparison == 0 && object->write_order != NULL && false"},
-		{"array extras in JSON", "node-array-json.a", "json_stringify.c", "if (count != 0) { indent(w, depth); }\n\t\tascii(w, \"]\");", "if (!tuple && array->metadata != NULL) { ascii(w, \",\"); (void)write_value(w, array->metadata->slots[0], schema->element, depth + 1); }\n\t\tif (count != 0) { indent(w, depth); }\n\t\tascii(w, \"]\");"},
-	} {
-		t.Run(mutant.name, func(t *testing.T) {
-			want := parserSourceObservation(t, mutant.fixture)
-			got := parserConstructionRun(t, mutant.fixture, mutant.file, mutant.before, mutant.after)
-			if got == want {
-				t.Fatalf("runtime mutant escaped: %q", got)
-			}
-			t.Logf("Node disagreement caught runtime mutant: got %q, Node %q", got, want)
-		})
+func TestParserConstructionBackendNodeArrayKeys(t *testing.T) {
+	t.Parallel()
+	assertParserConstructionBackend(t, "node-array-keys.a")
+}
+
+func TestParserConstructionBackendNodeArrayJson(t *testing.T) {
+	t.Parallel()
+	assertParserConstructionBackend(t, "node-array-json.a")
+}
+
+func TestParserConstructionBackendNodeArrayLength(t *testing.T) {
+	t.Parallel()
+	assertParserConstructionBackend(t, "node-array-length.a")
+}
+
+func assertParserConstructionBackend(t *testing.T, fixture string) {
+	t.Helper()
+	want := parserSourceObservation(t, fixture)
+	if got := parserConstructionRun(t, fixture, "", "", ""); got != want {
+		t.Fatalf("native stdout %q; Node %q", got, want)
 	}
+	directory := t.TempDir()
+	path := filepath.Join(directory, "generated.mjs")
+	if err := os.WriteFile(path, []byte(javascript.JavaScript(parserConstructionProgram(fixture))), 0o600); err != nil {
+		t.Fatal(err)
+	}
+	runner, err := filepath.Abs("../../oracle/node.mjs")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if got := runWithInput(t, "", "node", runner, path); got != want {
+		t.Fatalf("JavaScript stdout %q; Node %q", got, want)
+	}
+	t.Logf("Node, native ASan/UBSan/leaks, JavaScript agree: %q; independent IR test; source lowering covered by oracle.TestParserConstructionSource", want)
+}
+
+func TestParserConstructionRuntimeMutantSynthesizedKey(t *testing.T) {
+	t.Parallel()
+	assertParserConstructionRuntimeMutant(t, "own-key-order.a", "construction.c", "object->write_order[index] = SIZE_MAX;", "object->write_order[index] = index;")
+}
+
+func TestParserConstructionRuntimeMutantDeclarationOrder(t *testing.T) {
+	t.Parallel()
+	assertParserConstructionRuntimeMutant(t, "own-key-order.a", "library_object.c", "comparison == 0 && object->write_order != NULL", "comparison == 0 && object->write_order != NULL && false")
+}
+
+func TestParserConstructionRuntimeMutantArrayExtrasInJSON(t *testing.T) {
+	t.Parallel()
+	assertParserConstructionRuntimeMutant(t, "node-array-json.a", "json_stringify.c", "if (count != 0) { indent(w, depth); }\n\t\tascii(w, \"]\");", "if (!tuple && array->metadata != NULL) { ascii(w, \",\"); (void)write_value(w, array->metadata->slots[0], schema->element, depth + 1); }\n\t\tif (count != 0) { indent(w, depth); }\n\t\tascii(w, \"]\");")
+}
+
+func assertParserConstructionRuntimeMutant(t *testing.T, fixture, file, before, after string) {
+	t.Helper()
+	want := parserSourceObservation(t, fixture)
+	got := parserConstructionRun(t, fixture, file, before, after)
+	if got == want {
+		t.Fatalf("runtime mutant escaped: %q", got)
+	}
+	t.Logf("Node disagreement caught runtime mutant: got %q, Node %q", got, want)
 }

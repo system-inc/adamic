@@ -32,6 +32,7 @@ func parserStackPath(t *testing.T, name string) string {
 	return p
 }
 func TestParserStackLegal(t *testing.T) {
+	t.Parallel()
 	path := parserStackPath(t, "legal")
 	truth := onNode(t, path)
 	if truth.exitCode != 0 || string(truth.stdout) != "859|1719\n" || len(truth.stderr) != 0 {
@@ -53,6 +54,7 @@ func TestParserStackLegal(t *testing.T) {
 	t.Log("859 nested parentheses: source Node, native sanitizers/leaks and JavaScript print 859|1719")
 }
 func TestParserStackPathological(t *testing.T) {
+	t.Parallel()
 	path := parserStackPath(t, "pathological")
 	truth := onNode(t, path)
 	if truth.exitCode != 70 || !strings.Contains(string(truth.stderr), "RangeError: Maximum call stack size exceeded") {
@@ -74,6 +76,7 @@ func TestParserStackPathological(t *testing.T) {
 
 // Native-only: Node itself cannot start safely under these stack limits.
 func TestParserStackTinyLimit(t *testing.T) {
+	t.Parallel()
 	program, err := lowered(t, parserStackPath(t, "pathological"))
 	if err != nil {
 		t.Fatal(err)
@@ -103,6 +106,7 @@ func parserStackWithoutGuard(t *testing.T, source string) string {
 	return changed
 }
 func TestParserStackGuardMutant(t *testing.T) {
+	t.Parallel()
 	program, err := lowered(t, parserStackPath(t, "pathological"))
 	if err != nil {
 		t.Fatal(err)

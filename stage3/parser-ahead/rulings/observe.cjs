@@ -19,4 +19,4 @@ const mutants=[
  ['extra-in-json','node-array-json.a','JSON.stringify(nodes)','JSON.stringify({...nodes})']
 ];
 for(const [name,file,old,replacement] of mutants){const source=fs.readFileSync(path.join(directory,file),'utf8');if(source.split(old).length!==2)throw Error('mutation site '+name);const actual=run(source.replace(old,replacement));if(actual.status!==0||actual.stdout===expected[file])throw Error('mutant not caught '+name);rows.push({mutant:name,exit:actual.status,catcher:'original source Node stdout',native:'pending: source prediction mutant only'});}
-fs.writeFileSync(path.join(directory,'observations.json'),JSON.stringify(rows,null,2)+'\n');console.log(JSON.stringify(rows,null,2));
+fs.writeFileSync(path.join(directory,'../../../review/compiler/step24-parser-main/source-observations.json'),JSON.stringify(rows,null,2)+'\n');console.log(JSON.stringify(rows,null,2));
