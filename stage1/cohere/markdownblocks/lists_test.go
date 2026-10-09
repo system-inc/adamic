@@ -18,26 +18,31 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 )
 
+// Not parallel: shared markdown memory configuration must run before parallelMarkdown calls t.Parallel.
 func TestMarkdownListLayout(t *testing.T) {
 	parallelMarkdown(t)
 	testBlockLayout(t, "lists")
 }
 
+// Not parallel: shared markdown memory configuration must run before parallelMarkdown calls t.Parallel.
 func TestMarkdownQuoteLayout(t *testing.T) {
 	parallelMarkdown(t)
 	testBlockLayout(t, "quotes")
 }
 
+// Not parallel: shared markdown memory configuration must run before parallelMarkdown calls t.Parallel.
 func TestMarkdownTableLayout(t *testing.T) {
 	parallelMarkdown(t)
 	testBlockLayout(t, "tables")
 }
 
+// Not parallel: shared markdown memory configuration must run before parallelMarkdown calls t.Parallel.
 func TestMarkdownCodeBlockLayout(t *testing.T) {
 	parallelMarkdown(t)
 	testBlockLayout(t, "code")
 }
 
+// Not parallel: shared markdown memory configuration must run before parallelMarkdown calls t.Parallel.
 func TestMarkdownHTMLBlockLayout(t *testing.T) {
 	parallelMarkdown(t)
 	testBlockLayout(t, "html")
@@ -70,21 +75,25 @@ func fullLayoutFixture(t *testing.T) *layoutFixture {
 	return completeLayout
 }
 
+// Not parallel: shared markdown memory configuration must run before parallelMarkdown calls t.Parallel.
 func TestMarkdownWhitespaceLayout(t *testing.T) {
 	parallelMarkdown(t)
 	testBlockLayout(t, "whitespace")
 }
 
 func TestMarkdownLeafComposition(t *testing.T) {
-	parallelMarkdown(t)
+	t.Parallel()
+	configureMarkdownMemory(t)
 	testMarkdownLeafShards(t)
 }
 
+// Not parallel: shared markdown memory configuration must run before parallelMarkdown calls t.Parallel.
 func TestMarkdownRootLayout(t *testing.T) {
 	parallelMarkdown(t)
 	testBlockLayout(t, "root")
 }
 
+// Not parallel: shared markdown memory configuration must run before parallelMarkdown calls t.Parallel.
 func TestMarkdownStructureLayout(t *testing.T) {
 	parallelMarkdown(t)
 	testBlockLayout(t, "structure")
