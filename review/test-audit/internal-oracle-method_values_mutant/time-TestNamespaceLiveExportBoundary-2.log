@@ -1,0 +1,18 @@
+{"Time":"2026-10-09T11:05:18.751286356Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-09T11:05:18.760981731Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNamespaceLiveExportBoundary"}
+{"Time":"2026-10-09T11:05:18.761043804Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNamespaceLiveExportBoundary","Output":"=== RUN   TestNamespaceLiveExportBoundary\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:05:18.761069867Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNamespaceLiveExportBoundary","Output":"=== PAUSE TestNamespaceLiveExportBoundary\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:05:18.761072746Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNamespaceLiveExportBoundary"}
+{"Time":"2026-10-09T11:05:18.761075904Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNamespaceLiveExportBoundary"}
+{"Time":"2026-10-09T11:05:18.761078023Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNamespaceLiveExportBoundary","Output":"=== CONT  TestNamespaceLiveExportBoundary\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:05:18.846685689Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNamespaceLiveExportBoundary","Output":"    namespace_live_export_boundary_test.go:14: gate cache node hit\n"}
+{"Time":"2026-10-09T11:05:18.879289002Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNamespaceLiveExportBoundary","Output":"    namespace_live_export_boundary_test.go:22: gate cache node hit\n"}
+{"Time":"2026-10-09T11:05:19.065307555Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNamespaceLiveExportBoundary","Output":"    oracle_test.go:603: gate cache native hit\n"}
+{"Time":"2026-10-09T11:05:19.065591163Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNamespaceLiveExportBoundary","Output":"--- PASS: TestNamespaceLiveExportBoundary (0.30s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:05:19.065602575Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNamespaceLiveExportBoundary","Elapsed":0.3}
+{"Time":"2026-10-09T11:05:19.065679645Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:05:19.06568535Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: native hits=1 misses=0\n"}
+{"Time":"2026-10-09T11:05:19.065688678Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: node hits=2 misses=0\n"}
+{"Time":"2026-10-09T11:05:19.065691475Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: probe hits=0 misses=0\n"}
+{"Time":"2026-10-09T11:05:19.067621998Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"ok  \tgithub.com/system-inc/adamic/internal/oracle\t0.316s\n"}
+{"Time":"2026-10-09T11:05:19.067669578Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":0.316}

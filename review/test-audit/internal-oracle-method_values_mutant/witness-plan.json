@@ -1,0 +1,29 @@
+[
+  {
+    "id": "W01",
+    "file": "internal/oracle/oracle_test.go",
+    "lines": [
+      718,
+      720,
+      722
+    ],
+    "change": "disable all three disagreement comparisons; authorized witness harness weakening"
+  },
+  {
+    "id": "W02",
+    "file": "internal/oracle/method_values_ownership_test.go",
+    "lines": [
+      45,
+      54
+    ],
+    "change": "disable ASan and LeakSanitizer marker recognition; authorized witness harness weakening"
+  },
+  {
+    "id": "W03",
+    "file": "internal/oracle/namespaces_test.go",
+    "lines": [
+      259
+    ],
+    "change": "force direct exit comparison to report agreement; authorized witness harness weakening"
+  }
+]

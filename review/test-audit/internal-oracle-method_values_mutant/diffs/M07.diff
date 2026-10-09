@@ -1,0 +1,11 @@
+--- a/internal/lower/locals.go
++++ b/internal/lower/locals.go
+@@ -276,7 +276,7 @@
+ 			}
+ 			b := l.libraryArrayBuilder([]ir.Expression{read})
+ 			held := b.read(b.parameters[0])
+-			matches := ir.Expression(ir.Binary{Operator: ir.Equal, Left: ir.TypeOf{Value: held}, Right: ir.StringConstant{Index: l.constant(name)}})
++			matches := ir.Expression(ir.Binary{Operator: ir.NotEqual, Left: ir.TypeOf{Value: held}, Right: ir.StringConstant{Index: l.constant(name)}})
+ 			if narrowed == ir.Array {
+ 				matches = ir.ArrayIsArray{Value: held}
+ 			}

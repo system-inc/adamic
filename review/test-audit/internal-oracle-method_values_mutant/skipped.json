@@ -1,0 +1,58 @@
+[
+  {
+    "test": "TestWASIShardPlantedFixture",
+    "messages": [
+      "=== RUN   TestWASIShardPlantedFixture",
+      "wasi_shards_test.go:135: set ADAMIC_ORACLE_WASI=1",
+      "--- SKIP: TestWASIShardPlantedFixture (0.00s)"
+    ]
+  },
+  {
+    "test": "TestWASIAgreesWithNode",
+    "messages": [
+      "=== RUN   TestWASIAgreesWithNode",
+      "wasi_test.go:20: set ADAMIC_ORACLE_WASI=1 to run the WASI oracle",
+      "--- SKIP: TestWASIAgreesWithNode (0.00s)"
+    ]
+  },
+  {
+    "test": "TestWASIOracleCatchesMutants",
+    "messages": [
+      "=== RUN   TestWASIOracleCatchesMutants",
+      "wasi_test.go:92: set ADAMIC_ORACLE_WASI=1",
+      "--- SKIP: TestWASIOracleCatchesMutants (0.00s)"
+    ]
+  },
+  {
+    "test": "TestWASIRunnerCatchesMutants",
+    "messages": [
+      "=== RUN   TestWASIRunnerCatchesMutants",
+      "wasi_test.go:115: set ADAMIC_ORACLE_WASI=1",
+      "--- SKIP: TestWASIRunnerCatchesMutants (0.00s)"
+    ]
+  },
+  {
+    "test": "TestWASIEmission",
+    "messages": [
+      "=== RUN   TestWASIEmission",
+      "wasi_test.go:146: set ADAMIC_ORACLE_WASI=1",
+      "--- SKIP: TestWASIEmission (0.00s)"
+    ]
+  },
+  {
+    "test": "TestStage3FixtureHook",
+    "messages": [
+      "=== CONT  TestStage3FixtureHook",
+      "stage3_hook_test.go:15: called only by the Stage 3 fixture runner",
+      "--- SKIP: TestStage3FixtureHook (0.00s)"
+    ]
+  },
+  {
+    "test": "TestEntriesAcceptance",
+    "messages": [
+      "=== CONT  TestEntriesAcceptance",
+      "entries_acceptance_test.go:37: awaits codex/step12-entries-fixtures: typescript's Object.entries acceptance programs (8d864f9c), stage3/fixtures/entries",
+      "--- SKIP: TestEntriesAcceptance (0.00s)"
+    ]
+  }
+]

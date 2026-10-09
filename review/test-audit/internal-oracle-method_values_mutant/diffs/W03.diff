@@ -1,0 +1,11 @@
+--- a/internal/oracle/namespaces_test.go
++++ b/internal/oracle/namespaces_test.go
+@@ -256,7 +256,7 @@
+ 			}
+ 			observed := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=0", "UBSAN_OPTIONS=halt_on_error=1"}, binary)
+ 			if test.name == "skip ready check" {
+-				if expected := onJavaScriptBackend(t, mustLowerNamespace(t, path)); observed.exitCode == expected.exitCode {
++				if expected := onJavaScriptBackend(t, mustLowerNamespace(t, path)); observed.exitCode == expected.exitCode || true {
+ 					t.Fatal("ready check mutant survived")
+ 				}
+ 				t.Log("caught by checked JavaScript exit comparison")

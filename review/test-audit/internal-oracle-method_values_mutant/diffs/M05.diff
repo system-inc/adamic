@@ -1,0 +1,11 @@
+--- a/internal/lower/locals.go
++++ b/internal/lower/locals.go
+@@ -46,7 +46,7 @@
+ 		if list.Flags&ast.NodeFlagsBlockScoped == 0 {
+ 			l.result.Locals[local].Hoisted = true
+ 		}
+-		if l.result.Locals[local].NamespaceVar && declaration.Initializer() == nil {
++		if l.result.Locals[local].NamespaceVar && declaration.Initializer() != nil {
+ 			continue // Hoisted storage must not overwrite an earlier assignment.
+ 		}
+ 		if l.uninitializedDeclaration(declaration) {

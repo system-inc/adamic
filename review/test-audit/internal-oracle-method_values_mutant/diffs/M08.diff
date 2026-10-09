@@ -1,0 +1,11 @@
+--- a/internal/lower/locals.go
++++ b/internal/lower/locals.go
+@@ -253,7 +253,7 @@
+ 			name := "object"
+ 			switch narrowed.Present() {
+ 			case ir.Number:
+-				name = "number"
++				name = "string"
+ 			case ir.Boolean:
+ 				name = "boolean"
+ 			case ir.String:

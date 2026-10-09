@@ -1,0 +1,19 @@
+{"Time":"2026-10-09T11:04:50.117319414Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-09T11:04:50.127829428Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestLibraryMethodAliasReadMutant"}
+{"Time":"2026-10-09T11:04:50.127958422Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestLibraryMethodAliasReadMutant","Output":"=== RUN   TestLibraryMethodAliasReadMutant\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:04:50.128006962Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestLibraryMethodAliasReadMutant","Output":"=== PAUSE TestLibraryMethodAliasReadMutant\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:04:50.128010621Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestLibraryMethodAliasReadMutant"}
+{"Time":"2026-10-09T11:04:50.128013722Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestLibraryMethodAliasReadMutant"}
+{"Time":"2026-10-09T11:04:50.128015628Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestLibraryMethodAliasReadMutant","Output":"=== CONT  TestLibraryMethodAliasReadMutant\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:04:50.241862752Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestLibraryMethodAliasReadMutant","Output":"    oracle_test.go:596: gate cache native hit\n"}
+{"Time":"2026-10-09T11:04:50.241924756Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestLibraryMethodAliasReadMutant","Output":"    method_values_read_test.go:34: gate cache node hit\n"}
+{"Time":"2026-10-09T11:04:50.241931687Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestLibraryMethodAliasReadMutant","Output":"    oracle_test.go:603: gate cache native hit\n"}
+{"Time":"2026-10-09T11:04:50.241935365Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestLibraryMethodAliasReadMutant","Output":"    method_values_read_test.go:41: caught by Node's uncaught ReferenceError, with the exit-70 convention unchanged\n"}
+{"Time":"2026-10-09T11:04:50.241984367Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestLibraryMethodAliasReadMutant","Output":"--- PASS: TestLibraryMethodAliasReadMutant (0.11s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:04:50.241988409Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestLibraryMethodAliasReadMutant","Elapsed":0.11}
+{"Time":"2026-10-09T11:04:50.24201281Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:04:50.242016779Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: native hits=2 misses=0\n"}
+{"Time":"2026-10-09T11:04:50.242019589Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: node hits=1 misses=0\n"}
+{"Time":"2026-10-09T11:04:50.242022491Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: probe hits=0 misses=0\n"}
+{"Time":"2026-10-09T11:04:50.243408405Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"ok  \tgithub.com/system-inc/adamic/internal/oracle\t0.126s\n"}
+{"Time":"2026-10-09T11:04:50.243440072Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":0.126}

@@ -1,0 +1,20 @@
+{"Time":"2026-10-09T11:05:10.146342898Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-09T11:05:10.156679064Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestModuleNamespaceLiveBindingMutant"}
+{"Time":"2026-10-09T11:05:10.156757697Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestModuleNamespaceLiveBindingMutant","Output":"=== RUN   TestModuleNamespaceLiveBindingMutant\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:05:10.15709165Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestModuleNamespaceLiveBindingMutant","Output":"=== PAUSE TestModuleNamespaceLiveBindingMutant\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:05:10.157098796Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestModuleNamespaceLiveBindingMutant"}
+{"Time":"2026-10-09T11:05:10.157102969Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestModuleNamespaceLiveBindingMutant"}
+{"Time":"2026-10-09T11:05:10.15710696Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestModuleNamespaceLiveBindingMutant","Output":"=== CONT  TestModuleNamespaceLiveBindingMutant\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:05:10.327434003Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestModuleNamespaceLiveBindingMutant","Output":"    module_namespace_reads_test.go:91: gate cache node hit\n"}
+{"Time":"2026-10-09T11:05:10.357923771Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestModuleNamespaceLiveBindingMutant","Output":"    oracle_test.go:596: gate cache native hit\n"}
+{"Time":"2026-10-09T11:05:10.358275052Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestModuleNamespaceLiveBindingMutant","Output":"    module_namespace_reads_test.go:110: gate cache node hit\n"}
+{"Time":"2026-10-09T11:05:10.358280561Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestModuleNamespaceLiveBindingMutant","Output":"    module_namespace_reads_test.go:114: native frozen export caught by Node stdout; mutant exits 0 with clean sanitizers\n"}
+{"Time":"2026-10-09T11:05:10.358287685Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestModuleNamespaceLiveBindingMutant","Output":"    module_namespace_reads_test.go:114: javascript frozen export caught by Node stdout; mutant exits 0 with clean sanitizers\n"}
+{"Time":"2026-10-09T11:05:10.358389712Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestModuleNamespaceLiveBindingMutant","Output":"--- PASS: TestModuleNamespaceLiveBindingMutant (0.20s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:05:10.358429518Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestModuleNamespaceLiveBindingMutant","Elapsed":0.2}
+{"Time":"2026-10-09T11:05:10.358467512Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:05:10.358471379Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: native hits=1 misses=0\n"}
+{"Time":"2026-10-09T11:05:10.358473499Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: node hits=2 misses=0\n"}
+{"Time":"2026-10-09T11:05:10.358477664Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: probe hits=0 misses=0\n"}
+{"Time":"2026-10-09T11:05:10.359949072Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"ok  \tgithub.com/system-inc/adamic/internal/oracle\t0.213s\n"}
+{"Time":"2026-10-09T11:05:10.35999288Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":0.214}

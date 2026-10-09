@@ -1,0 +1,515 @@
+[
+  {
+    "test": "TestLibraryMethodValueMutants",
+    "package": "internal/oracle",
+    "file": "internal/oracle/method_values_mutant_test.go",
+    "seconds": 0.69,
+    "oracle": "Node source observation compared by disagreement.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "W01"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "W01: method_values_mutant_test.go:173: want Node stdout alone to kill mutant, got \"\"",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 13,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestLibraryMethodValueMutants",
+      "TestLibraryMethodOwnLoadMutants",
+      "TestLibraryMethodCaptureMutants",
+      "TestLibraryMethodAliasReadMutant",
+      "TestModuleNamespaceReadsMatchNode",
+      "TestModuleNamespaceReadinessMutants",
+      "TestModuleNamespaceLiveBindingMutant",
+      "TestNamespaceLiveExportBoundary",
+      "TestNamespaceRuledMutants",
+      "TestNamespaceSemanticMutants",
+      "TestNamespaceStateMutants",
+      "TestNarrowedUnionMemberCheck",
+      "TestNarrowedUnionObjectTagRefusal",
+      "TestNativeAgreesWithNode family"
+    ],
+    "evidence": "python3 review/test-audit/internal-oracle-method_values_mutant/run.py > review/test-audit/internal-oracle-method_values_mutant/runner.log 2>&1; W01-standalone.log: method_values_mutant_test.go:173: want Node stdout alone to kill mutant, got \"\""
+  },
+  {
+    "test": "TestLibraryMethodOwnLoadMutants",
+    "package": "internal/oracle",
+    "file": "internal/oracle/method_values_mutant_test.go",
+    "seconds": 0.372,
+    "oracle": "Node differential plus self-written exit 70 and missing-field panic marker precondition.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "W01"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "W01: method_values_mutant_test.go:215: source oracle accepted an own-field load of an intrinsic",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 13,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestLibraryMethodValueMutants",
+      "TestLibraryMethodOwnLoadMutants",
+      "TestLibraryMethodCaptureMutants",
+      "TestLibraryMethodAliasReadMutant",
+      "TestModuleNamespaceReadsMatchNode",
+      "TestModuleNamespaceReadinessMutants",
+      "TestModuleNamespaceLiveBindingMutant",
+      "TestNamespaceLiveExportBoundary",
+      "TestNamespaceRuledMutants",
+      "TestNamespaceSemanticMutants",
+      "TestNamespaceStateMutants",
+      "TestNarrowedUnionMemberCheck",
+      "TestNarrowedUnionObjectTagRefusal",
+      "TestNativeAgreesWithNode family"
+    ],
+    "evidence": "python3 review/test-audit/internal-oracle-method_values_mutant/run.py > review/test-audit/internal-oracle-method_values_mutant/runner.log 2>&1; W01-standalone.log: method_values_mutant_test.go:215: source oracle accepted an own-field load of an intrinsic"
+  },
+  {
+    "test": "TestLibraryMethodCaptureMutants",
+    "package": "internal/oracle",
+    "file": "internal/oracle/method_values_ownership_test.go",
+    "seconds": 0.652,
+    "oracle": "ASan heap-use-after-free and LeakSanitizer marker recognition; extra-owner behavior also agrees with source Node. Marker literals are self-written.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "W02"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "W02: method_values_ownership_test.go:46: want ASan alone to catch borrowed capture, got exit -1 stderr =================================================================",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 13,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestLibraryMethodValueMutants",
+      "TestLibraryMethodOwnLoadMutants",
+      "TestLibraryMethodCaptureMutants",
+      "TestLibraryMethodAliasReadMutant",
+      "TestModuleNamespaceReadsMatchNode",
+      "TestModuleNamespaceReadinessMutants",
+      "TestModuleNamespaceLiveBindingMutant",
+      "TestNamespaceLiveExportBoundary",
+      "TestNamespaceRuledMutants",
+      "TestNamespaceSemanticMutants",
+      "TestNamespaceStateMutants",
+      "TestNarrowedUnionMemberCheck",
+      "TestNarrowedUnionObjectTagRefusal",
+      "TestNativeAgreesWithNode family"
+    ],
+    "evidence": "python3 review/test-audit/internal-oracle-method_values_mutant/run.py > review/test-audit/internal-oracle-method_values_mutant/runner.log 2>&1; W02.log: method_values_ownership_test.go:46: want ASan alone to catch borrowed capture, got exit -1 stderr ================================================================="
+  },
+  {
+    "test": "TestLibraryMethodAliasReadMutant",
+    "package": "internal/oracle",
+    "file": "internal/oracle/method_values_read_test.go",
+    "seconds": 0.105,
+    "oracle": "Node source observation compared by disagreement.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "W01"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "W01: method_values_read_test.go:36: want Node's temporal dead zone to catch an otherwise finishing mutant: node 70 stderr adamic: panic: ReferenceError: Cannot access 'search' before initialization",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 13,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestLibraryMethodValueMutants",
+      "TestLibraryMethodOwnLoadMutants",
+      "TestLibraryMethodCaptureMutants",
+      "TestLibraryMethodAliasReadMutant",
+      "TestModuleNamespaceReadsMatchNode",
+      "TestModuleNamespaceReadinessMutants",
+      "TestModuleNamespaceLiveBindingMutant",
+      "TestNamespaceLiveExportBoundary",
+      "TestNamespaceRuledMutants",
+      "TestNamespaceSemanticMutants",
+      "TestNamespaceStateMutants",
+      "TestNarrowedUnionMemberCheck",
+      "TestNarrowedUnionObjectTagRefusal",
+      "TestNativeAgreesWithNode family"
+    ],
+    "evidence": "python3 review/test-audit/internal-oracle-method_values_mutant/run.py > review/test-audit/internal-oracle-method_values_mutant/runner.log 2>&1; W01-standalone.log: method_values_read_test.go:36: want Node's temporal dead zone to catch an otherwise finishing mutant: node 70 stderr adamic: panic: ReferenceError: Cannot access 'search' before initialization"
+  },
+  {
+    "test": "TestModuleNamespaceReadsMatchNode",
+    "package": "internal/oracle",
+    "file": "internal/oracle/module_namespace_reads_test.go",
+    "seconds": 0.702,
+    "oracle": "Node source observation compared by disagreement.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M01",
+      "M02"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M02: module_namespace_reads_test.go:31: /workspace/adamic/internal/oracle/testdata/module_namespace_reads/main.a:2:36: stage 0 can't lower reading performance yet",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestNativeAgreesWithNode family"
+    ],
+    "mutants_in_matrix": 13,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": 6.081,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestLibraryMethodValueMutants",
+      "TestLibraryMethodOwnLoadMutants",
+      "TestLibraryMethodCaptureMutants",
+      "TestLibraryMethodAliasReadMutant",
+      "TestModuleNamespaceReadsMatchNode",
+      "TestModuleNamespaceReadinessMutants",
+      "TestModuleNamespaceLiveBindingMutant",
+      "TestNamespaceLiveExportBoundary",
+      "TestNamespaceRuledMutants",
+      "TestNamespaceSemanticMutants",
+      "TestNamespaceStateMutants",
+      "TestNarrowedUnionMemberCheck",
+      "TestNarrowedUnionObjectTagRefusal",
+      "TestNativeAgreesWithNode family"
+    ],
+    "evidence": "python3 review/test-audit/internal-oracle-method_values_mutant/run.py > review/test-audit/internal-oracle-method_values_mutant/runner.log 2>&1; M02.log: module_namespace_reads_test.go:31: /workspace/adamic/internal/oracle/testdata/module_namespace_reads/main.a:2:36: stage 0 can't lower reading performance yet",
+    "subsumption_mutants": 2
+  },
+  {
+    "test": "TestModuleNamespaceReadinessMutants",
+    "package": "internal/oracle",
+    "file": "internal/oracle/module_namespace_reads_test.go",
+    "seconds": 0.344,
+    "oracle": "Node source observation compared by disagreement.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "W01"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "W01: module_namespace_reads_test.go:77: native removed-readiness mutant survived: {stdout:[48 10] stderr:[] exitCode:0}",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 13,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestLibraryMethodValueMutants",
+      "TestLibraryMethodOwnLoadMutants",
+      "TestLibraryMethodCaptureMutants",
+      "TestLibraryMethodAliasReadMutant",
+      "TestModuleNamespaceReadsMatchNode",
+      "TestModuleNamespaceReadinessMutants",
+      "TestModuleNamespaceLiveBindingMutant",
+      "TestNamespaceLiveExportBoundary",
+      "TestNamespaceRuledMutants",
+      "TestNamespaceSemanticMutants",
+      "TestNamespaceStateMutants",
+      "TestNarrowedUnionMemberCheck",
+      "TestNarrowedUnionObjectTagRefusal",
+      "TestNativeAgreesWithNode family"
+    ],
+    "evidence": "python3 review/test-audit/internal-oracle-method_values_mutant/run.py > review/test-audit/internal-oracle-method_values_mutant/runner.log 2>&1; W01-standalone.log: module_namespace_reads_test.go:77: native removed-readiness mutant survived: {stdout:[48 10] stderr:[] exitCode:0}"
+  },
+  {
+    "test": "TestModuleNamespaceLiveBindingMutant",
+    "package": "internal/oracle",
+    "file": "internal/oracle/module_namespace_reads_test.go",
+    "seconds": 0.222,
+    "oracle": "Node source observation compared by disagreement.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "W01"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "W01: module_namespace_reads_test.go:112: native frozen-export mutant survived: {stdout:[48 58 49 58 50 58 48 10 116 114 117 101 10 56 48 58 51 58 48 10] stderr:[] exitCode:0}",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 13,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestLibraryMethodValueMutants",
+      "TestLibraryMethodOwnLoadMutants",
+      "TestLibraryMethodCaptureMutants",
+      "TestLibraryMethodAliasReadMutant",
+      "TestModuleNamespaceReadsMatchNode",
+      "TestModuleNamespaceReadinessMutants",
+      "TestModuleNamespaceLiveBindingMutant",
+      "TestNamespaceLiveExportBoundary",
+      "TestNamespaceRuledMutants",
+      "TestNamespaceSemanticMutants",
+      "TestNamespaceStateMutants",
+      "TestNarrowedUnionMemberCheck",
+      "TestNarrowedUnionObjectTagRefusal",
+      "TestNativeAgreesWithNode family"
+    ],
+    "evidence": "python3 review/test-audit/internal-oracle-method_values_mutant/run.py > review/test-audit/internal-oracle-method_values_mutant/runner.log 2>&1; W01-standalone.log: module_namespace_reads_test.go:112: native frozen-export mutant survived: {stdout:[48 58 49 58 50 58 48 10 116 114 117 101 10 56 48 58 51 58 48 10] stderr:[] exitCode:0}"
+  },
+  {
+    "test": "TestNamespaceLiveExportBoundary",
+    "package": "internal/oracle",
+    "file": "internal/oracle/namespace_live_export_boundary_test.go",
+    "seconds": 0.321,
+    "oracle": "Node executes source and validates handwritten stdout, then both backends compare byte-for-byte with Node.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M04",
+      "M10"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M10: namespace_live_export_boundary_test.go:23: stdout differs",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestNativeAgreesWithNode family"
+    ],
+    "mutants_in_matrix": 13,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": 6.081,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestLibraryMethodValueMutants",
+      "TestLibraryMethodOwnLoadMutants",
+      "TestLibraryMethodCaptureMutants",
+      "TestLibraryMethodAliasReadMutant",
+      "TestModuleNamespaceReadsMatchNode",
+      "TestModuleNamespaceReadinessMutants",
+      "TestModuleNamespaceLiveBindingMutant",
+      "TestNamespaceLiveExportBoundary",
+      "TestNamespaceRuledMutants",
+      "TestNamespaceSemanticMutants",
+      "TestNamespaceStateMutants",
+      "TestNarrowedUnionMemberCheck",
+      "TestNarrowedUnionObjectTagRefusal",
+      "TestNativeAgreesWithNode family"
+    ],
+    "evidence": "python3 review/test-audit/internal-oracle-method_values_mutant/run.py > review/test-audit/internal-oracle-method_values_mutant/runner.log 2>&1; M10.log: namespace_live_export_boundary_test.go:23: stdout differs",
+    "subsumption_mutants": 2
+  },
+  {
+    "test": "TestNamespaceRuledMutants",
+    "package": "internal/oracle",
+    "file": "internal/oracle/namespace_ruled_mutants_test.go",
+    "seconds": 0.352,
+    "oracle": "Node source observation compared by disagreement.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "W01"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "W01: namespace_ruled_mutants_test.go:62: mutant survived JavaScript differential",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 13,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestLibraryMethodValueMutants",
+      "TestLibraryMethodOwnLoadMutants",
+      "TestLibraryMethodCaptureMutants",
+      "TestLibraryMethodAliasReadMutant",
+      "TestModuleNamespaceReadsMatchNode",
+      "TestModuleNamespaceReadinessMutants",
+      "TestModuleNamespaceLiveBindingMutant",
+      "TestNamespaceLiveExportBoundary",
+      "TestNamespaceRuledMutants",
+      "TestNamespaceSemanticMutants",
+      "TestNamespaceStateMutants",
+      "TestNarrowedUnionMemberCheck",
+      "TestNarrowedUnionObjectTagRefusal",
+      "TestNativeAgreesWithNode family"
+    ],
+    "evidence": "python3 review/test-audit/internal-oracle-method_values_mutant/run.py > review/test-audit/internal-oracle-method_values_mutant/runner.log 2>&1; W01-standalone.log: namespace_ruled_mutants_test.go:62: mutant survived JavaScript differential"
+  },
+  {
+    "test": "TestNamespaceSemanticMutants",
+    "package": "internal/oracle",
+    "file": "internal/oracle/namespaces_test.go",
+    "seconds": 0.841,
+    "oracle": "Node source observation compared by disagreement.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "W01"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "W01: namespaces_test.go:196: not caught by Node: \"\"",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 13,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestLibraryMethodValueMutants",
+      "TestLibraryMethodOwnLoadMutants",
+      "TestLibraryMethodCaptureMutants",
+      "TestLibraryMethodAliasReadMutant",
+      "TestModuleNamespaceReadsMatchNode",
+      "TestModuleNamespaceReadinessMutants",
+      "TestModuleNamespaceLiveBindingMutant",
+      "TestNamespaceLiveExportBoundary",
+      "TestNamespaceRuledMutants",
+      "TestNamespaceSemanticMutants",
+      "TestNamespaceStateMutants",
+      "TestNarrowedUnionMemberCheck",
+      "TestNarrowedUnionObjectTagRefusal",
+      "TestNativeAgreesWithNode family"
+    ],
+    "evidence": "python3 review/test-audit/internal-oracle-method_values_mutant/run.py > review/test-audit/internal-oracle-method_values_mutant/runner.log 2>&1; W01-standalone.log: namespaces_test.go:196: not caught by Node: \"\""
+  },
+  {
+    "test": "TestNamespaceStateMutants",
+    "package": "internal/oracle",
+    "file": "internal/oracle/namespaces_test.go",
+    "seconds": 0.366,
+    "oracle": "Node differential for assignment and hoisting; readiness mutant compares only exit code with Adamic JavaScript backend, which can accept a different failure with the same code.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "W01",
+      "W03"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "W03: namespaces_test.go:260: ready check mutant survived",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 13,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestLibraryMethodValueMutants",
+      "TestLibraryMethodOwnLoadMutants",
+      "TestLibraryMethodCaptureMutants",
+      "TestLibraryMethodAliasReadMutant",
+      "TestModuleNamespaceReadsMatchNode",
+      "TestModuleNamespaceReadinessMutants",
+      "TestModuleNamespaceLiveBindingMutant",
+      "TestNamespaceLiveExportBoundary",
+      "TestNamespaceRuledMutants",
+      "TestNamespaceSemanticMutants",
+      "TestNamespaceStateMutants",
+      "TestNarrowedUnionMemberCheck",
+      "TestNarrowedUnionObjectTagRefusal",
+      "TestNativeAgreesWithNode family"
+    ],
+    "evidence": "python3 review/test-audit/internal-oracle-method_values_mutant/run.py > review/test-audit/internal-oracle-method_values_mutant/runner.log 2>&1; W03.log: namespaces_test.go:260: ready check mutant survived"
+  },
+  {
+    "test": "TestNarrowedUnionMemberCheck",
+    "package": "internal/oracle",
+    "file": "internal/oracle/narrowed_union_test.go",
+    "seconds": 0.16,
+    "oracle": "Node validates source stdout; handwritten exit 70 and complete Adamic panic text decide inserted-check behavior. Built-in unchecked mutant witnesses that comparison.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "W01"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "W01: narrowed_union_test.go:68: unchecked member mutant survived",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 13,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestLibraryMethodValueMutants",
+      "TestLibraryMethodOwnLoadMutants",
+      "TestLibraryMethodCaptureMutants",
+      "TestLibraryMethodAliasReadMutant",
+      "TestModuleNamespaceReadsMatchNode",
+      "TestModuleNamespaceReadinessMutants",
+      "TestModuleNamespaceLiveBindingMutant",
+      "TestNamespaceLiveExportBoundary",
+      "TestNamespaceRuledMutants",
+      "TestNamespaceSemanticMutants",
+      "TestNamespaceStateMutants",
+      "TestNarrowedUnionMemberCheck",
+      "TestNarrowedUnionObjectTagRefusal",
+      "TestNativeAgreesWithNode family"
+    ],
+    "evidence": "python3 review/test-audit/internal-oracle-method_values_mutant/run.py > review/test-audit/internal-oracle-method_values_mutant/runner.log 2>&1; W01-standalone.log: narrowed_union_test.go:68: unchecked member mutant survived"
+  },
+  {
+    "test": "TestNarrowedUnionObjectTagRefusal",
+    "package": "internal/oracle",
+    "file": "internal/oracle/narrowed_union_test.go",
+    "seconds": 0.127,
+    "oracle": "Node validates source stdout 1; handwritten capability-gap text, path and rewrite decide refusal. No external authority checked.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M06"
+    ],
+    "unique_kills": [
+      "M06"
+    ],
+    "last_proven_fail": "M06: narrowed_union_test.go:87: want refusal naming the path and fix, got /workspace/adamic/internal/oracle/testdata/reland_refused/narrowed_union_object_tag.a:7:16: stage 0 can't lower a narrowed union member whose object tag cannot be checked with instanceof; keep differently held object kinds in separately typed variables yet",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 13,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestLibraryMethodValueMutants",
+      "TestLibraryMethodOwnLoadMutants",
+      "TestLibraryMethodCaptureMutants",
+      "TestLibraryMethodAliasReadMutant",
+      "TestModuleNamespaceReadsMatchNode",
+      "TestModuleNamespaceReadinessMutants",
+      "TestModuleNamespaceLiveBindingMutant",
+      "TestNamespaceLiveExportBoundary",
+      "TestNamespaceRuledMutants",
+      "TestNamespaceSemanticMutants",
+      "TestNamespaceStateMutants",
+      "TestNarrowedUnionMemberCheck",
+      "TestNarrowedUnionObjectTagRefusal",
+      "TestNativeAgreesWithNode family"
+    ],
+    "evidence": "python3 review/test-audit/internal-oracle-method_values_mutant/run.py > review/test-audit/internal-oracle-method_values_mutant/runner.log 2>&1; M06.log: narrowed_union_test.go:87: want refusal naming the path and fix, got /workspace/adamic/internal/oracle/testdata/reland_refused/narrowed_union_object_tag.a:7:16: stage 0 can't lower a narrowed union member whose object tag cannot be checked with instanceof; keep differently held object kinds in separately typed variables yet"
+  }
+]

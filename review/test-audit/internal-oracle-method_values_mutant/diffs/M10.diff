@@ -1,0 +1,11 @@
+--- a/internal/lower/namespaces.go
++++ b/internal/lower/namespaces.go
+@@ -429,7 +429,7 @@
+ 		return value
+ 	}
+ 	b := l.libraryArrayBuilder(append(checks, value))
+-	return b.finish("namespace_read", b.read(b.parameters[len(checks)]))
++	return b.finish("namespace_read", b.read(b.parameters[len(checks)-1]))
+ }
+ 
+ // Run readiness before evaluating the call. Keep the call itself intact so its

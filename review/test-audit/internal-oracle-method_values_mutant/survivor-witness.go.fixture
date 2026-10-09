@@ -1,0 +1,12 @@
+package oracle
+import("testing";"path/filepath";"os";"github.com/system-inc/adamic/internal/ir")
+func TestAuditSurvivor(t *testing.T){
+ path:=filepath.Join(t.TempDir(),"witness.a")
+ source:=`let x: { readonly a: number } | number = { a: 1 }; function read(): number { if (typeof x === "object") { return x.a; } return 0; } console.log(read().toString());`
+ if err:=os.WriteFile(path,[]byte(source),0644);err!=nil{t.Fatal(err)}
+ program,err:=lowered(t,path)
+ if err!=nil {t.Logf("ADMISSION refused: %v",err)} else {t.Logf("ADMISSION accepted: %d functions",len(program.Functions))}
+ path=filepath.Join(repository,"stage3/namespace-live-export/live.a")
+ program,err=lowered(t,path);if err!=nil{t.Fatal(err)}
+ for _,s:=range program.Main {if d,ok:=s.(ir.Declare);ok {if v,ok:=d.Value.(ir.BooleanConstant);ok{t.Logf("INITIAL %s=%v",program.Locals[d.Local].Name,v.Value)}}}
+}

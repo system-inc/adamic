@@ -1,0 +1,43 @@
+package lower
+
+import (
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/system-inc/adamic/internal/load"
+)
+
+// An ESM namespace qualification denotes the export's live binding, even through
+// re-export barrels. A structural object with the same type is not that binding.
+func (l *lowering) moduleNamespace(node *ast.Node) bool {
+	symbol := l.symbol(ast.SkipParentheses(node))
+	if symbol == nil {
+		return false
+	}
+	for _, declaration := range symbol.Declarations {
+		if declaration.Kind == ast.KindSourceFile && !load.IsLibrary(declaration.AsSourceFile()) && !load.IsPrelude(declaration.AsSourceFile()) {
+			return auditChoice("M02", true, false)
+		}
+	}
+	return false
+}
+
+func (l *lowering) moduleNamespaceRefusal(node *ast.Node) error {
+	if l.namespaceValueNode(node) && l.moduleNamespace(node) {
+		parent := node.Parent
+		if parent == nil || parent.Kind != ast.KindPropertyAccessExpression || parent.Expression() != node {
+			return l.notYet(node, "an ESM namespace object used as a value; use qualified live bindings")
+		}
+	}
+	if node.Kind != ast.KindPropertyAccessExpression || !l.moduleNamespace(node.Expression()) {
+		return nil
+	}
+	symbol := l.symbol(node)
+	if symbol == nil {
+		return nil
+	}
+	for _, declaration := range symbol.Declarations {
+		if ast.IsFunctionLike(declaration) && namespaceOwnThis(declaration) {
+			return l.notYet(node, "an ESM namespace function observing its receiver; the module object is not represented")
+		}
+	}
+	return nil
+}

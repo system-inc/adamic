@@ -1,0 +1,11 @@
+--- a/internal/lower/locals.go
++++ b/internal/lower/locals.go
+@@ -270,7 +270,7 @@
+ 				}
+ 				for _, member := range members {
+ 					if held, known := l.representation(member); known && held != narrowed && (held == ir.Object || held == ir.Array || held == ir.Map) {
+-						return nil, l.notYet(node, "a narrowed union member whose object tag cannot be checked with typeof; keep differently held object kinds in separately typed variables")
++						return nil, l.notYet(node, "a narrowed union member whose object tag cannot be checked with instanceof; keep differently held object kinds in separately typed variables")
+ 					}
+ 				}
+ 			}
