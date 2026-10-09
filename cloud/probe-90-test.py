@@ -309,6 +309,9 @@ class WatchdogTests(unittest.TestCase):
     def posted(self, minutesAgo):
         (self.state / 'probe-90-posted').write_text('%d\n' % (self.now - minutesAgo * 60))
 
+    def started(self, minutesAgo):
+        (self.state / 'probe-90-started').write_text('%d\n' % (self.now - minutesAgo * 60))
+
     def paged(self):
         return self.pages.read_text().splitlines() if self.pages.exists() else []
 
@@ -321,8 +324,8 @@ class WatchdogTests(unittest.TestCase):
         self.posted(40)
         self.watch()
         pages = self.paged()
-        self.assertEqual([page.split('\t')[0] for page in pages], ['system_adamic_release_verdict', 'system_adamic_developer_tools'])
-        self.assertIn('its last post on #awn479j was 40 min ago, over its 35-minute line', pages[0])
+        self.assertEqual([page.split('\t')[0] for page in pages], ['system_adamic_loom_judge', 'system_adamic_loom_operations'])
+        self.assertIn('no probe run has started or posted for 40 min, over its 35-minute line', pages[0])
         self.assertIn('com.adamic.probe-90 is loaded, not running, last exit 1', pages[0])
         # The same silence five and ten minutes on pages nobody again.
         self.watch(minutesLater=5)
@@ -346,7 +349,7 @@ class WatchdogTests(unittest.TestCase):
         self.watch(minutesLater=34)
         self.assertEqual(self.paged(), [])
         self.watch(minutesLater=36)
-        self.assertIn('no post on #awn479j since the watchdog armed', self.paged()[0])
+        self.assertIn('no probe run has started or posted for 36 min', self.paged()[0])
 
     def test_a_running_probe_and_an_unloaded_one_are_named(self):
         self.posted(40)
@@ -357,6 +360,30 @@ class WatchdogTests(unittest.TestCase):
         self.jobLine = ''
         self.watch()
         self.assertIn('com.adamic.probe-90 is not loaded', self.paged()[-1])
+
+    def test_a_run_inside_its_cap_is_quiet_however_old_the_last_post(self):
+        # 23:24Z, Oct 9: probe 3 had run 5 minutes, its last post was 35 minutes old, and the first watchdog paged.
+        self.posted(36)
+        self.started(5)
+        self.watch()
+        self.watch(minutesLater=30)
+        self.assertEqual(self.paged(), [])
+
+    def test_a_run_past_its_cap_and_grace_without_a_post_pages_as_hung(self):
+        self.posted(80)
+        self.started(41)
+        self.watch()
+        self.assertIn('a probe run started 41 min ago and hasn\'t posted, past its 35-minute cap', self.paged()[0])
+        self.watch(minutesLater=5)
+        self.assertEqual(len(self.paged()), 2)
+
+    def test_a_start_counts_as_life_once_its_run_has_posted(self):
+        self.started(40)
+        self.posted(30)
+        self.watch()
+        self.assertEqual(self.paged(), [])
+        self.watch(minutesLater=6)
+        self.assertIn('no probe run has started or posted for 36 min', self.paged()[0])
 
     def test_a_page_that_reached_nobody_is_tried_again(self):
         self.posted(40)
@@ -475,6 +502,9 @@ class DryRunTests(unittest.TestCase):
         self.assertIn('posted on #awn479j', result.stdout, result.stdout + result.stderr)
         self.assertIn('tasks status awn479j', (self.root / 'ahra-calls').read_text())
         self.assertGreaterEqual(int((self.state / 'probe-90-posted').read_text()), before)
+        # The run stamped its start at its push, before its post.
+        self.assertGreaterEqual(int((self.state / 'probe-90-started').read_text()), before)
+        self.assertLessEqual(int((self.state / 'probe-90-started').read_text()), int((self.state / 'probe-90-posted').read_text()))
         self.assertNotIn('probe-90', self.git('ls-remote', 'origin', cwd=self.tools))
 
     def test_a_skipped_branch_is_never_made(self):

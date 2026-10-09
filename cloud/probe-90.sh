@@ -130,6 +130,8 @@ fi
 
 git -C "${here}" push -q origin "${sha}:refs/heads/${branch}" || { say "push of ${branch} failed"; exit 1; }
 pushed=$(date -u +%s)
+# The watchdog reads a run in progress from this stamp, so it stays quiet while a probe is inside its cap.
+echo "${pushed}" > "${state}/probe-90-started"
 deadline=$((pushed + limit))
 
 # The first green or red record of the sha. A void (the watcher queues it again) or a lost race's stopped record is no
