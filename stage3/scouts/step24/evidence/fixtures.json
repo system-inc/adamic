@@ -1,0 +1,75 @@
+[
+  {
+    "name": "context",
+    "node_exit": 0,
+    "node_stdout": "14\n13\n13\n13\n",
+    "build_exit": 0,
+    "diagnostic": "",
+    "counts": "adamic: counts: allocations 12 frees 12 retains 0 releases 12 peak 3 regions 0\n"
+  },
+  {
+    "name": "speculation",
+    "node_exit": 0,
+    "node_stdout": "true\ntrue\n1:0:0:false\ntrue\nfalse\n1:0:0:false\ntrue\ntrue\n2:1:1:true\ntrue\nfalse\n2:1:2:true\ntrue\ntrue\nfalse\n2:1:2:true\n",
+    "build_exit": 1,
+    "diagnostic": "adamic: /workspace/adamic/stage3/scouts/step24/fixtures/speculation.a:23:38: stage 0 can't lower assigning a field of a value yet\n",
+    "status": "NotYet, diagnostic-array length write"
+  },
+  {
+    "name": "factory-cast",
+    "node_exit": 0,
+    "node_stdout": "undefined\n",
+    "build_exit": 1,
+    "diagnostic": "adamic: /workspace/adamic/stage3/scouts/step24/fixtures/factory-cast.a:6:12: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+    "header_mutants": [
+      "wrong-reason rejected",
+      "removed-header rejected"
+    ]
+  },
+  {
+    "name": "recursion",
+    "node_exit": 0,
+    "node_stdout": "4\n",
+    "build_exit": 0,
+    "diagnostic": "",
+    "counts": "adamic: counts: allocations 38 frees 38 retains 4 releases 41 peak 11 regions 0\n"
+  },
+  {
+    "mutant": "context-restore",
+    "exit": 0,
+    "caught_by": "stdout against unchanged source Node",
+    "stdout": "14\n12\n13\n12\n",
+    "native": "built, completed, changed stdout"
+  },
+  {
+    "mutant": "context-cache-bits",
+    "exit": 0,
+    "caught_by": "stdout against unchanged source Node",
+    "stdout": "14\n5\n5\n5\n",
+    "native": "built, completed, changed stdout"
+  },
+  {
+    "mutant": "token-rewind",
+    "exit": 0,
+    "caught_by": "stdout against unchanged source Node",
+    "stdout": "true\ntrue\n99:0:0:false\ntrue\nfalse\n99:0:0:false\ntrue\ntrue\n100:1:1:true\ntrue\nfalse\n99:1:2:true\ntrue\ntrue\nfalse\n99:1:2:true\n"
+  },
+  {
+    "mutant": "error-rewind",
+    "exit": 0,
+    "caught_by": "stdout against unchanged source Node",
+    "stdout": "true\ntrue\n1:0:0:true\ntrue\nfalse\n1:0:0:true\ntrue\ntrue\n2:1:1:true\ntrue\nfalse\n2:1:2:true\ntrue\ntrue\nfalse\n2:1:2:true\n"
+  },
+  {
+    "mutant": "diagnostic-rewind",
+    "exit": 0,
+    "caught_by": "stdout against unchanged source Node",
+    "stdout": "true\ntrue\n1:0:1:false\ntrue\nfalse\n1:0:2:false\ntrue\ntrue\n2:1:3:true\ntrue\nfalse\n2:1:4:true\ntrue\ntrue\nfalse\n2:1:6:true\n"
+  },
+  {
+    "mutant": "reparse-diagnostics",
+    "exit": 0,
+    "caught_by": "stdout against unchanged source Node",
+    "stdout": "true\ntrue\n1:0:0:false\ntrue\nfalse\n1:0:0:false\ntrue\ntrue\n2:1:1:true\ntrue\nfalse\n2:1:1:true\ntrue\ntrue\nfalse\n2:1:1:true\n"
+  }
+]

@@ -1,0 +1,28 @@
+{
+  "bytes": 36429244,
+  "sha256": "8c158aec1978cadfcc0fd078b4e23a748a2badfa63458cfbeda1f252d80d8537",
+  "input": "actual successful Identifier.end +1 mutant from parser run.sh",
+  "equal_exit": 0,
+  "different_exit": 1,
+  "seconds": {
+    "dumpdiff": [
+      0.0020892109999977038,
+      0.0015538359999709428,
+      0.0027067109999734384,
+      0.0016176979999045216,
+      0.0014512850000301114
+    ],
+    "diff": [
+      0.09121902399999726,
+      0.05779569300000276,
+      0.05966188100001091,
+      0.056489831000021695,
+      0.0703750930000524
+    ]
+  },
+  "best": {
+    "dumpdiff": 0.0014512850000301114,
+    "diff": 0.056489831000021695
+  },
+  "limit": "early mismatch at line 166, warm local file cache; no general speedup or worst-case claim"
+}

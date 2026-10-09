@@ -1,0 +1,31 @@
+{
+  "input_changes": [
+    {
+      "file": "src/compiler/diagnosticInformationMap.generated.ts",
+      "first_offset_zero_based": 42,
+      "removed_utf8": "/tmp/step24-corpus/",
+      "removed_hex": "2f746d702f7374657032342d636f727075732f",
+      "old_bytes": 579213,
+      "correct_bytes": 579194,
+      "old_sha256": "a2930dea4ecc100c77ccf55b3bf9fd3bc64002628d43a17e0f4e4e1502cb0a0f",
+      "correct_sha256": "0cfeabc14c72149bf65f0b5cb72f251adc45064edccebe30871b4efd73b97e89",
+      "old_line2": "// generated from '/tmp/step24-corpus/src/compiler/diagnosticMessages.json'",
+      "correct_line2": "// generated from 'src/compiler/diagnosticMessages.json'",
+      "old_crlf": 2142,
+      "correct_crlf": 2142
+    }
+  ],
+  "dump_changed_rows_by_file": {
+    "diagnosticInformationMap.generated.ts": 27778
+  },
+  "dump_byte_delta_by_file": {
+    "diagnosticInformationMap.generated.ts": 13
+  },
+  "dump_first_difference": {
+    "line": 370512,
+    "old": "SourceFile 0 579213 0",
+    "correct": "SourceFile 0 579194 0"
+  },
+  "generator_owner": "scripts/processDiagnosticMessages.mjs:87",
+  "cause": "The generator embeds its input argument verbatim. Absolute invocation inserted the 19-byte /tmp/step24-corpus/ prefix. Decimal UTF-16 positions in the node dump changed length by 13 bytes in aggregate. Source pin, adaptation output outside this comment, and CRLF are unchanged."
+}
