@@ -189,8 +189,8 @@ assert(true);
 // TestMiniRunner runs the real command path over a three-file checkout: one test stage 0 and Node
 // both pass, one negative parse test that must be skipped, and one `var` test the compiler refuses.
 // Counting that refusal as a pass fails this.
-// Not parallel: writes shared $UserCacheDir/adamic/runtime and $UserCacheDir/adamic/test262 caches.
 func TestMiniRunner(t *testing.T) {
+	t.Parallel()
 	if _, err := exec.LookPath("clang"); err != nil {
 		t.Skip("clang not on PATH")
 	}
@@ -229,8 +229,8 @@ func TestMiniRunner(t *testing.T) {
 }
 
 // A large sort previously reached clang with its C cut at 256 KiB, falsely blaming the emitter.
-// Not parallel: writes shared $UserCacheDir/adamic/runtime and $UserCacheDir/adamic/test262 caches.
 func TestLargeCompilerOutputIsComplete(t *testing.T) {
+	t.Parallel()
 	root := t.TempDir()
 	if err := os.MkdirAll(filepath.Join(root, "test"), 0755); err != nil {
 		t.Fatal(err)
