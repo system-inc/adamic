@@ -109,20 +109,38 @@ func buildProfile(t *testing.T, directory string) {
 }
 
 // Exercise the shared profile graph without requiring the external compiler corpus.
-func TestProfileCompilation(t *testing.T) {
+func TestProfileCompilation_000(t *testing.T) {
+	t.Parallel()
+	defer compilationBudget(t)()
+	compilationSelected(t)
+	compilationCase(t)
 	directory := t.TempDir()
 	copyPort(t, directory, "", "")
 	prepareRegistry(t, directory)
-	buildProfile(t, directory)
+	products := compilationProducts(t)
 	path := manifest(t, []string{ownedWitnesses(t, directory, "no-var")[0] + "\tno-var"})
 	oracle := goOracle(t)
-	compare(t, oracle, filepath.Join(directory, "scanner"), directory, path)
-	want := execute(t, "", oracle, "--manifest", path).output
-	got := execute(t, "", filepath.Join(directory, "profiled"), "--manifest", path).output
+	want, countedWant := compilationOracleOutputs(t, oracle, path)
+	for _, side := range []struct {
+		name string
+		run  execution
+	}{
+		{"Node", node(t, directory, path, false)},
+		{"emitted JavaScript", runJavaScript(t, filepath.Join(products, "lint.mjs"), path, false)},
+		{"native", execute(t, "", filepath.Join(products, "scanner"), "--manifest", path)},
+	} {
+		if diff := difference(side.run.output, want); diff != "" {
+			t.Fatalf("%s: %s", side.name, diff)
+		}
+	}
+	got := execute(t, "", filepath.Join(products, "profiled"), "--manifest", path).output
+	if os.Getenv("ADAMIC_PROFILE_COMPILATION_PLANT") == "1" {
+		got = []byte("planted profile disagreement")
+	}
 	if diff := difference(got, want); diff != "" {
 		t.Fatal(diff)
 	}
-	want = execute(t, "", oracle, "--manifest", path, "--count").output
+	want = countedWant
 	output, err := os.CreateTemp(t.TempDir(), "counted-output-")
 	if err != nil {
 		t.Fatal(err)
@@ -133,7 +151,7 @@ func TestProfileCompilation(t *testing.T) {
 		t.Fatal(err)
 	}
 	defer stats.Close()
-	command := exec.Command(filepath.Join(directory, "counted"), "--manifest", path, "--count")
+	command := exec.Command(filepath.Join(products, "counted"), "--manifest", path, "--count")
 	command.Stdout, command.Stderr = output, stats
 	if err := command.Run(); err != nil {
 		t.Fatal(err)
