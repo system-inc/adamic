@@ -1,4 +1,3 @@
-// a-check: refused an index signature; use a Map, which keeps keys in the order they were added
 // Compiler ruling 1: fixed fields and ordered index-signature keys on one object.
 interface MapLike { fixed: string; [key:string]: string; }
 const values: MapLike = {fixed:"f"};
