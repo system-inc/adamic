@@ -8,7 +8,7 @@ unreadable = []
 # Oldest reply first, so a rerun of a row (a named chunk) replaces the run before it: file names don't sort by time.
 for reply in sorted(glob.glob(S + "/fanout/replies/du*.md"), key=os.path.getmtime):
     name = os.path.basename(reply)[:-3]
-    unit = re.match(r"du(\d{3})", name)
+    unit = re.match(r"du(\d{3}|-fresh)", name)
     if not unit:
         continue
     text = open(reply).read()
@@ -40,7 +40,8 @@ for row in ledger.values():
 # A family's setup, numbered shard or product row (brief v8's family rule) is judged with its family, so a defender's
 # verdict on one alone never makes it a deletion candidate.
 for row in ledger.values():
-    if re.search(r"_(Setup|\d{2,3})$", row["test"].split()[0]) or row["test"].startswith("TestProduct_"):
+    # A member named by its fixture's encoded path (Test<Family>____oracle_testdata_...) is a family part too.
+    if re.search(r"_(Setup|\d{2,3})$", row["test"].split()[0]) or row["test"].startswith("TestProduct_") or "____" in row["test"]:
         row.setdefault("defender_defense", row.get("defense"))
         row["defense"] = "family-part"
 # The keeper's own rulings on returned rows (keeper-overrides.json, {"<unit> <test>": {field: value}}) apply after every

@@ -1,5 +1,16 @@
 import json, sys
 brief, manifest, unitId = sys.argv[1:4]
+# A unit id "rp:<name>" is a prepared mutant replay brief, replay/<name>-brief.md beside this script (#fm89tdd).
+if unitId.startswith("rp:"):
+    import os
+    sys.stdout.write(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "replay", unitId[3:] + "-brief.md")).read())
+    sys.exit(0)
+# A unit id "ds:<package, ~ for />" is that package's deletion-set replay (#fm89tdd): its candidates from the defender ledger.
+if unitId.startswith("ds:"):
+    import os, subprocess
+    here = os.path.dirname(os.path.abspath(__file__))
+    sys.stdout.write(subprocess.run([sys.executable, "-I", os.path.join(here, "deletion-set-for.py"), os.path.join(here, "deletion-set-brief.md"), manifest, os.path.join(here, "defender-ledger.json"), unitId[3:].replace("~", "/")], check=True, capture_output=True, text=True).stdout)
+    sys.exit(0)
 # A unit id "d<unit>" is that unit's defender run (#az6b13b): the defender brief, rows from the ledger.
 if unitId.startswith("du"):
     import os, subprocess

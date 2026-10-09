@@ -3837,7 +3837,7 @@
   "package": "stage1/cohere/lint/rules/no-underscore-dangle",
   "prior_verdict": "untrue",
   "subsumed_by": [],
-  "defense": "not defended",
+  "defense": "keep-only-build",
   "unique_mutant": null,
   "attempts": [
    {
@@ -3861,7 +3861,8 @@
   ],
   "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/underscore-defend/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/rules/no-underscore-dangle/ -run .; --- PASS: TestCompileProfiles (39.16s). Separate D2 and D3 cache runs also passed, at 38.04s and 37.77s. No production-mutant failing line exists.",
   "unit": "u121",
-  "defender_run": "du121.1"
+  "defender_run": "du121.1",
+  "keeper_note": "The package's only test and the gate's only native build of the no-underscore-dangle port. No menu mutant fails it (it asserts buildability, not findings), so the deletion-set replay called it deletable mechanically (d5cd4ddd). Kept: deleting it removes the build check without adding one. The fix is the filed lint-rule finding (agreement rows against Go cohere)."
  },
  "u115 TestConsumerCommentHelpers": {
   "test": "TestConsumerCommentHelpers",
@@ -5413,7 +5414,7 @@
   "subsumed_by": [
    "TestUnicodeNodeShardCoverage"
   ],
-  "defense": "not defended",
+  "defense": "keep-set",
   "unique_mutant": null,
   "attempts": [
    {
@@ -5449,7 +5450,8 @@
   ],
   "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/unicode-defend/cache/D4 timeout 120 go test -json -count=1 -timeout 90s ./internal/unicodeproperties/ -run \"$(cat review/test-defend/internal-unicodeproperties-canonicalize/matrix-selector.txt)\" > D4.log 2>&1; canonicalize_test.go:327: BAD CLASS iu 64 EXTRA 44 MISSING",
   "unit": "u076",
-  "defender_run": "du076.1"
+  "defender_run": "du076.1",
+  "keeper_note": "Deletion-set replay (c08a7410): with it gone, canonicalize_tables.go:22-24 mutants are caught only by a hash pin (TestUnicodeNodeShardCoverage, shards_test.go:160). Its Node agreement is the real guard of those tables."
  },
  "u085 TestDeepGrammar": {
   "test": "TestDeepGrammar",
@@ -6974,5 +6976,3582 @@
   ],
   "unit": "u053",
   "defender_run": "du053.2"
+ },
+ "u049 TestNormalizeRandomMatchesNode": {
+  "test": "TestNormalizeRandomMatchesNode",
+  "package": "internal/native",
+  "prior_verdict": "subsumed",
+  "subsumed_by": "TestNormalizeMatchesNode family",
+  "defense": "defended",
+  "unique_mutant": "D1 internal/native/runtime/normalize.c:225",
+  "attempts": [
+   {
+    "mutant": "D1",
+    "file_line": "internal/native/runtime/normalize.c:225",
+    "change": "Copy total - 1 instead of total code points after counting sort.",
+    "rows_failed": [
+     "TestNormalizeRandomMatchesNode"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-native-math/cache/D1 timeout 120 go test -json -overlay /tmp/defend-native-math/D1-overlay.json -count=1 -timeout 90s ./internal/native/ -run '^TestNormalize' > D1-matrix.log 2>&1; normalize_random_test.go:103: 115 of 100000 lines differ",
+  "bounded": true,
+  "unit": "u049",
+  "defender_run": "du049.1"
+ },
+ "u047 TestNbodyIndexedElementsBorrow": {
+  "test": "TestNbodyIndexedElementsBorrow",
+  "package": "internal/native",
+  "prior_verdict": "subsumed",
+  "subsumed_by": [
+   "TestDevirtualizeBorrowDocClaim"
+  ],
+  "defense": "defended",
+  "bounded": true,
+  "unique_mutant": "D1 internal/native/element_borrow.go:221",
+  "attempts": [
+   {
+    "mutant": "D1",
+    "file_line": "internal/native/element_borrow.go:221",
+    "change": "Initialize the emitted owner with adamic_retain(element) instead of NULL.",
+    "rows_failed": [
+     "TestNbodyIndexedElementsBorrow"
+    ]
+   }
+  ],
+  "evidence": "D1 matrix command below; element_borrow_test.go:48: adamic_local_36_other lost its borrowed element declaration",
+  "unit": "u047",
+  "defender_run": "du047.1"
+ },
+ "u047 TestCallTargetsElementBorrowPlan": {
+  "test": "TestCallTargetsElementBorrowPlan",
+  "package": "internal/native",
+  "prior_verdict": "subsumed",
+  "subsumed_by": [
+   "TestDevirtualizeBorrowDocClaim"
+  ],
+  "defense": "defended",
+  "bounded": true,
+  "unique_mutant": "D2 internal/native/element_borrow.go:177",
+  "attempts": [
+   {
+    "mutant": "D2",
+    "file_line": "internal/native/element_borrow.go:177",
+    "change": "Treat unknown closure targets as harmless: return false becomes true.",
+    "rows_failed": [
+     "TestCallTargetsElementBorrowPlan"
+    ]
+   }
+  ],
+  "evidence": "D2 matrix command below; element_borrow_test.go:117: closureRead borrowed across a possible element write",
+  "unit": "u047",
+  "defender_run": "du047.1"
+ },
+ "u047 TestDevirtualizeBorrowDocClaim": {
+  "test": "TestDevirtualizeBorrowDocClaim",
+  "package": "internal/native",
+  "prior_verdict": "subsumed",
+  "subsumed_by": [
+   "TestCallTargetsElementBorrowPlan"
+  ],
+  "defense": "defended",
+  "bounded": true,
+  "unique_mutant": "D3 internal/native/element_borrow.go:167",
+  "attempts": [
+   {
+    "mutant": "D3",
+    "file_line": "internal/native/element_borrow.go:167",
+    "change": "Return false for virtual calls before examining their proven targets.",
+    "rows_failed": [
+     "TestDevirtualizeBorrowDocClaim"
+    ]
+   }
+  ],
+  "evidence": "D3 matrix command below; element_borrow_test.go:142: throughVirtual: length-only targets prevented borrowing",
+  "unit": "u047",
+  "defender_run": "du047.1"
+ },
+ "u053 TestStringBuildingMatchesNode": {
+  "test": "TestStringBuildingMatchesNode",
+  "package": "internal/native",
+  "prior_verdict": "subsumed",
+  "subsumed_by": [
+   "TestStringViewAfterAppendMatchesNode"
+  ],
+  "defense": "defended",
+  "unique_mutant": "D2 internal/native/runtime/string_repeat_impl.h:27",
+  "attempts": [
+   {
+    "mutant": "D2",
+    "file_line": "internal/native/runtime/string_repeat_impl.h:27",
+    "change": "repeat_unchecked(string, count) -> repeat_unchecked(string, count - 1)",
+    "rows_failed": [
+     "TestStringBuildingMatchesNode"
+    ]
+   }
+  ],
+  "evidence": "D2.log: string_build_test.go:116: operation 99: native output differs from Node",
+  "bounded": true,
+  "unit": "u053",
+  "defender_run": "du053.1"
+ },
+ "u053 TestStringIndexMatchesNode": {
+  "test": "TestStringIndexMatchesNode",
+  "package": "internal/native",
+  "prior_verdict": "subsumed",
+  "subsumed_by": [
+   "TestStringIndexCacheStatesMatchNode"
+  ],
+  "defense": "defended",
+  "unique_mutant": "D4 internal/native/runtime/string_index.c:95",
+  "attempts": [
+   {
+    "mutant": "D4",
+    "file_line": "internal/native/runtime/string_index.c:95",
+    "change": "Four-byte decoding mask: bytes[0] & 0x07 -> bytes[0] & 0x03",
+    "rows_failed": [
+     "TestStringIndexMatchesNode"
+    ]
+   }
+  ],
+  "evidence": "D4.log: string_index_test.go:278: line 1: native and Node differ",
+  "bounded": true,
+  "unit": "u053",
+  "defender_run": "du053.1"
+ },
+ "u053 TestStringViewAfterAppendMatchesNode": {
+  "test": "TestStringViewAfterAppendMatchesNode",
+  "package": "internal/native",
+  "prior_verdict": "subsumed",
+  "subsumed_by": [
+   "TestStringBuildingMatchesNode"
+  ],
+  "defense": "defended",
+  "unique_mutant": "D3 internal/native/runtime/string_append.c:64",
+  "attempts": [
+   {
+    "mutant": "D3",
+    "file_line": "internal/native/runtime/string_append.c:64",
+    "change": "In-place ownership condition: references == 1 -> references == 2",
+    "rows_failed": [
+     "TestStringViewAfterAppendMatchesNode"
+    ]
+   }
+  ],
+  "evidence": "D3.log: string_index_test.go:404: UTF-16 view after append differs from Node",
+  "bounded": true,
+  "unit": "u053",
+  "defender_run": "du053.1"
+ },
+ "u051 TestNumbersFormatExactlyAsJavaScriptDoes": {
+  "test": "TestNumbersFormatExactlyAsJavaScriptDoes",
+  "package": "internal/native",
+  "prior_verdict": "subsumed",
+  "subsumed_by": [
+   "TestMathAndToFixedMatchJavaScript"
+  ],
+  "defense": "not defended",
+  "unique_mutant": null,
+  "attempts": [
+   {
+    "mutant": "D1",
+    "file_line": "internal/native/runtime/dtoa.c:619",
+    "change": "Flip shortest-digit halfway rounding from even to odd.",
+    "rows_failed": [
+     "TestNumbersFormatExactlyAsJavaScriptDoes",
+     "TestMathAndToFixedMatchJavaScript",
+     "TestToStringWithARadixMatchesNode",
+     "TestToExponentialAndToPrecisionMatchNode",
+     "TestPowersOfTwoFormatAsJavaScriptDoes"
+    ]
+   },
+   {
+    "mutant": "D2",
+    "file_line": "internal/native/runtime/dtoa.c:591",
+    "change": "Accept the lower rounding boundary for odd significands: less -> less_equal.",
+    "rows_failed": [
+     "TestNumbersFormatExactlyAsJavaScriptDoes",
+     "TestMathAndToFixedMatchJavaScript",
+     "TestToStringWithARadixMatchesNode",
+     "TestToExponentialAndToPrecisionMatchNode"
+    ]
+   },
+   {
+    "mutant": "D3",
+    "file_line": "internal/native/runtime/dtoa.c:596",
+    "change": "Accept the upper rounding boundary for odd significands: > 0 -> >= 0.",
+    "rows_failed": [
+     "TestNumbersFormatExactlyAsJavaScriptDoes",
+     "TestMathAndToFixedMatchJavaScript",
+     "TestPowersOfTwoFormatAsJavaScriptDoes"
+    ]
+   }
+  ],
+  "evidence": "D3: ADAMIC_BUILD_CACHE_DIR=/tmp/defend-number/cache/D3 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run <recorded bounded selector>; number_test.go:113: c3624f424f88c74b: native \"-41229566412733020\", Node \"-41229566412733016\"",
+  "unit": "u051",
+  "defender_run": "du051.1"
+ },
+ "u055 TestCheckedCastRunsNoCatchOrFinally": {
+  "test": "TestCheckedCastRunsNoCatchOrFinally",
+  "package": "internal/oracle",
+  "prior_verdict": "subsumed",
+  "prior_subsumed_by": [
+   "TestCheckedCastFlushesOutput"
+  ],
+  "subsumed_by": [
+   "TestCallTargetThrowAgreesWithNode",
+   "TestNativeAgreesWithNode"
+  ],
+  "defense": "not defended",
+  "unique_mutant": null,
+  "bounded": true,
+  "attempts": [
+   {
+    "mutant": "D2",
+    "file_line": "internal/javascript/javascript.go:575",
+    "change": "Drop catch-body emission.",
+    "rows_failed": [
+     "TestCallTargetThrowAgreesWithNode",
+     "TestCheckedCastRunsNoCatchOrFinally",
+     "TestNativeAgreesWithNode"
+    ]
+   },
+   {
+    "mutant": "D3",
+    "file_line": "internal/javascript/javascript.go:580",
+    "change": "Drop finally-body emission.",
+    "rows_failed": [
+     "TestCallTargetThrowAgreesWithNode",
+     "TestCheckedCastRunsNoCatchOrFinally",
+     "TestNativeAgreesWithNode"
+    ]
+   },
+   {
+    "mutant": "D4",
+    "file_line": "internal/javascript/javascript.go:575,580",
+    "change": "Swap catch and finally body arguments. The target row passed.",
+    "rows_failed": [
+     "TestCallTargetThrowAgreesWithNode",
+     "TestNativeAgreesWithNode"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/def-args/cache/D3 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestCheckedCast|TestUncheckableCast|TestCallTarget|TestDirectClosure|TestInterfaceCast)' > D3-casts.log 2>&1; cast_test.go:87: missing finally instrumentation site",
+  "unit": "u055",
+  "defender_run": "du055.2"
+ },
+ "u055 TestCheckedCastFailureContract": {
+  "test": "TestCheckedCastFailureContract",
+  "package": "internal/oracle",
+  "prior_verdict": "subsumed",
+  "prior_subsumed_by": [
+   "TestCheckedCastFlushesOutput"
+  ],
+  "subsumed_by": [],
+  "defense": "defended",
+  "unique_mutant": "D1 internal/lower/cast_proof.go:311",
+  "bounded": true,
+  "attempts": [
+   {
+    "mutant": "D1",
+    "file_line": "internal/lower/cast_proof.go:311",
+    "change": "Off by one: l.constant(message) becomes l.constant(message[:len(message)-1]), omitting the final byte of class-cast panic text.",
+    "rows_failed": [
+     "TestCheckedCastFailureContract"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/def-args/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestCheckedCast|TestUncheckableCast|TestCallTarget|TestDirectClosure|TestInterfaceCast)' > D1-casts.log 2>&1; cast_test.go:148: native: exit 70, stdout \"casting\\n\", stderr \"adamic: panic: cast failed: this Base<number> is not a Box<number\\n\"; want panic/70 and \"adamic: panic: cast failed: this Base<number> is not a Box<number>\\n\"",
+  "rows_passed": [
+   "TestCallTargetThrowAgreesWithNode",
+   "TestCheckedCastFlushesOutput",
+   "TestCheckedCastMutants",
+   "TestCheckedCastRunsNoCatchOrFinally",
+   "TestDirectClosureCallAgreesWithNode",
+   "TestInterfaceCastChecksMalformedRead",
+   "TestInterfaceCastImportedConstruction",
+   "TestInterfaceCastOracle",
+   "TestInterfaceCastRuntimeMutants",
+   "TestInterfaceCastScalarTags",
+   "TestNativeAgreesWithNode",
+   "TestUncheckableCastAdmission"
+  ],
+  "unit": "u055",
+  "defender_run": "du055.2"
+ },
+ "u046 TestExactReceiverRejectsAssignments": {
+  "test": "TestExactReceiverRejectsAssignments",
+  "package": "internal/native",
+  "prior_verdict": "subsumed",
+  "subsumed_by": [
+   "TestDevirtualizedCalls"
+  ],
+  "defense": "defended",
+  "unique_mutant": "D1, internal/native/devirtualize.go:42",
+  "attempts": [
+   {
+    "mutant": "D1",
+    "file_line": "internal/native/devirtualize.go:42",
+    "change": "Drop recursive statement traversal, ignoring nested assignments while retaining top-level assignment checks.",
+    "rows_failed": [
+     "TestExactReceiverRejectsAssignments"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-native/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run \"$(cat review/test-defend/internal-native-decode_ascii/matrix.regex)\"; devirtualize_test.go:92: assigned receiver taken as exact: 1",
+  "unit": "u046",
+  "defender_run": "du046.1"
+ },
+ "u127 TestMarkdownListLayout family": {
+  "test": "TestMarkdownListLayout family",
+  "package": "stage1/cohere/markdownblocks",
+  "prior_verdict": "subsumed",
+  "subsumed_by": [
+   "TestMarkdownLayout family"
+  ],
+  "defense": "not defended",
+  "unique_mutant": null,
+  "attempts": [
+   {
+    "mutant": "D1",
+    "file_line": "stage1/cohere/markdownblocks/lists.ts:106",
+    "change": "Math.min(frame.start + index, 999999999) -> Math.min(frame.start + index, 999999999 - 1)",
+    "rows_failed": [
+     "TestMarkdownListLayout family",
+     "TestMarkdownLayout family",
+     "TestMarkdownTableLayout family"
+    ]
+   },
+   {
+    "mutant": "D2",
+    "file_line": "stage1/cohere/markdownblocks/lists.ts:74",
+    "change": "orderedMarker(first.marker).number !== 0 -> orderedMarker(first.marker).number !== 1",
+    "rows_failed": [
+     "TestMarkdownListLayout family",
+     "TestMarkdownLayout family"
+    ]
+   },
+   {
+    "mutant": "D3",
+    "file_line": "stage1/cohere/markdownblocks/lists.ts:181",
+    "change": "item.children.length === 2 -> item.children.length === 3",
+    "rows_failed": []
+   }
+  ],
+  "evidence": "ADAMIC_NATIVE_SPLIT=1 ADAMIC_BUILD_CACHE_DIR=/tmp/defend127/cache/D2 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run '^TestMarkdownListLayout(Union|_[0-9]+)$'; list_layout_shards_test.go:698: source Node lists output byte 63 in generated/list/1./nn. The separate CodeBlock run failed at lists_test.go:342: source Node lists output byte 66093 in generated/list/1./nn.",
+  "unit": "u127",
+  "defender_run": "du127.2"
+ },
+ "u127 TestMarkdownListLayout": {
+  "test": "TestMarkdownListLayout",
+  "package": "stage1/cohere/markdownblocks",
+  "prior_verdict": "untrue",
+  "subsumed_by": [
+   "TestMarkdownListLayout_Setup"
+  ],
+  "defense": "not defended",
+  "unique_mutant": null,
+  "attempts": [
+   {
+    "mutant": "C1",
+    "file_line": "internal/lower/lower.go:22",
+    "change": "len(files) != 1 -> len(files) == 1",
+    "rows_failed": [
+     "TestMarkdownListLayout",
+     "TestMarkdownListLayout_Setup",
+     "TestMarkdownTableLayout",
+     "TestMarkdownTableLayout_Setup"
+    ]
+   },
+   {
+    "mutant": "C2",
+    "file_line": "internal/load/load.go:92",
+    "change": "len(paths) == 0 -> len(paths) != 0",
+    "rows_failed": [
+     "TestMarkdownListLayout",
+     "TestMarkdownListLayout_Setup",
+     "TestMarkdownTableLayout",
+     "TestMarkdownTableLayout_Setup"
+    ]
+   },
+   {
+    "mutant": "C3",
+    "file_line": "internal/lower/library_string.go:201",
+    "change": "len(written) > len(shape.arguments) -> len(written) >= len(shape.arguments)",
+    "rows_failed": [
+     "TestMarkdownListLayout",
+     "TestMarkdownListLayout_Setup",
+     "TestMarkdownTableLayout",
+     "TestMarkdownTableLayout_Setup"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend127/cache/C3/TestMarkdownListLayout timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run '^TestMarkdownListLayout$'; list_layout_shards_test.go:98: build markdown-list-layout-canary-lowered: Lower: codec.ts:7:20: stage 0 can't lower slice with these arguments yet.",
+  "unit": "u127",
+  "defender_run": "du127.2"
+ },
+ "u127 TestMarkdownTableLayout": {
+  "test": "TestMarkdownTableLayout",
+  "package": "stage1/cohere/markdownblocks",
+  "prior_verdict": "untrue",
+  "subsumed_by": [
+   "TestMarkdownTableLayout_Setup"
+  ],
+  "defense": "not defended",
+  "unique_mutant": null,
+  "attempts": [
+   {
+    "mutant": "C1",
+    "file_line": "internal/lower/lower.go:22",
+    "change": "len(files) != 1 -> len(files) == 1",
+    "rows_failed": [
+     "TestMarkdownListLayout",
+     "TestMarkdownListLayout_Setup",
+     "TestMarkdownTableLayout",
+     "TestMarkdownTableLayout_Setup"
+    ]
+   },
+   {
+    "mutant": "C2",
+    "file_line": "internal/load/load.go:92",
+    "change": "len(paths) == 0 -> len(paths) != 0",
+    "rows_failed": [
+     "TestMarkdownListLayout",
+     "TestMarkdownListLayout_Setup",
+     "TestMarkdownTableLayout",
+     "TestMarkdownTableLayout_Setup"
+    ]
+   },
+   {
+    "mutant": "C3",
+    "file_line": "internal/lower/library_string.go:201",
+    "change": "len(written) > len(shape.arguments) -> len(written) >= len(shape.arguments)",
+    "rows_failed": [
+     "TestMarkdownListLayout",
+     "TestMarkdownListLayout_Setup",
+     "TestMarkdownTableLayout",
+     "TestMarkdownTableLayout_Setup"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend127/cache/C3/TestMarkdownTableLayout timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run '^TestMarkdownTableLayout$'; table_layout_shards_test.go:149: build markdown table lowered: Lower: codec.ts:7:20: stage 0 can't lower slice with these arguments yet.",
+  "unit": "u127",
+  "defender_run": "du127.2"
+ },
+ "u055 TestCallTarget family": {
+  "test": "TestCallTarget family",
+  "package": "internal/oracle",
+  "prior_verdict": "untrue",
+  "subsumed_by": "TestNativeAgreesWithNode family",
+  "defense": "not defended",
+  "unique_mutant": null,
+  "attempts": [
+   {
+    "mutant": "D05",
+    "file_line": "internal/native/emit_statements.go:173",
+    "change": "Flip CallMayThrow condition",
+    "rows_failed": [
+     "TestCallTarget family",
+     "TestNativeAgreesWithNode family"
+    ]
+   },
+   {
+    "mutant": "D06",
+    "file_line": "internal/native/exceptions.go:154",
+    "change": "Drop three finalizer emission statements",
+    "rows_failed": [
+     "TestCallTarget family",
+     "TestNativeAgreesWithNode family"
+    ]
+   },
+   {
+    "mutant": "D07",
+    "file_line": "internal/native/emit_functions.go:314",
+    "change": "Disable direct closure-call branch",
+    "rows_failed": [
+     "TestCallTarget family",
+     "TestNativeAgreesWithNode family"
+    ]
+   }
+  ],
+  "evidence": "D07-0.log.gz: timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run <selectors.json[0]>; call_targets_guards_test.go:15: native release: stdout differs: exit 0, stdout \"true false 22\\ntrue false 24\\n\"",
+  "bounded": true,
+  "unit": "u055",
+  "defender_run": "du055.1"
+ },
+ "u055 TestCheckedCastFlushesOutput": {
+  "test": "TestCheckedCastFlushesOutput",
+  "package": "internal/oracle",
+  "prior_verdict": "subsumed",
+  "subsumed_by": "TestCheckedCastRunsNoCatchOrFinally",
+  "defense": "not defended",
+  "unique_mutant": null,
+  "attempts": [
+   {
+    "mutant": "D01",
+    "file_line": "internal/native/runtime/adamic.c:93",
+    "change": "Write one fewer byte on large stdout writes",
+    "rows_failed": [
+     "TestCheckedCastFlushesOutput",
+     "TestNativeAgreesWithNode family"
+    ]
+   },
+   {
+    "mutant": "D02",
+    "file_line": "internal/native/runtime/adamic.c:195",
+    "change": "Drop panic's flush statement",
+    "rows_failed": [
+     "TestCheckedCastFlushesOutput",
+     "TestCheckedCastFailureContract",
+     "TestNativeAgreesWithNode family"
+    ]
+   },
+   {
+    "mutant": "D03",
+    "file_line": "internal/native/runtime/adamic.c:93",
+    "change": "Change large-write descriptor from stdout to stderr",
+    "rows_failed": [
+     "TestCheckedCastFlushesOutput",
+     "TestNativeAgreesWithNode family"
+    ]
+   }
+  ],
+  "evidence": "D01-0.log.gz: timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run <selectors.json[0]>; cast_test.go:43: native: panic must flush 340009 bytes, got 340008, exit 70",
+  "bounded": true,
+  "unit": "u055",
+  "defender_run": "du055.1"
+ },
+ "u055 TestUncheckableCastAdmission": {
+  "test": "TestUncheckableCastAdmission",
+  "package": "internal/oracle",
+  "prior_verdict": "subsumed",
+  "subsumed_by": "TestCheckedCastFlushesOutput",
+  "defense": "defended",
+  "unique_mutant": "D04 internal/lower/cast_proof.go:213",
+  "attempts": [
+   {
+    "mutant": "D04",
+    "file_line": "internal/lower/cast_proof.go:213",
+    "change": "Exclude the last previous literal from duplicate-tag comparison",
+    "rows_failed": [
+     "TestUncheckableCastAdmission"
+    ]
+   }
+  ],
+  "evidence": "D04-0.log.gz: timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run <selectors.json[0]>; cast_test.go:72: uncheckable cast admitted: Node exit 0 stdout \"wrongwrong1\\n\"; native exit 70",
+  "bounded": true,
+  "bounded_unique_mutant": "D04 internal/lower/cast_proof.go:213",
+  "unit": "u055",
+  "defender_run": "du055.1",
+  "defender_defense": "cannot-judge"
+ },
+ "u048 TestRuntimeCacheConcurrentProcesses": {
+  "test": "TestRuntimeCacheConcurrentProcesses",
+  "package": "internal/native",
+  "prior_verdict": "subsumed",
+  "subsumed_by": [
+   "TestRuntimeCacheKeepsCountFlags"
+  ],
+  "defense": "defended",
+  "bounded": true,
+  "unique_mutant": "D1 internal/native/library.go:203",
+  "attempts": [
+   {
+    "mutant": "D1",
+    "file_line": "internal/native/library.go:203",
+    "change": "Flip statErr != nil to statErr == nil in competing-publication recovery",
+    "rows_failed": [
+     "TestRuntimeCacheConcurrentProcesses"
+    ]
+   }
+  ],
+  "evidence": "python3 review/test-defend/internal-native-library/run-defense.py; D1.log: library_test.go:250: process 0: exit status 1. Seven other matrix rows passed.",
+  "unit": "u048",
+  "defender_run": "du048.1"
+ },
+ "u048 TestNbodyBorrowedLoopC": {
+  "test": "TestNbodyBorrowedLoopC",
+  "package": "internal/native",
+  "prior_verdict": "subsumed",
+  "subsumed_by": [
+   "TestLoopBorrowPlan"
+  ],
+  "defense": "defended",
+  "bounded": true,
+  "unique_mutant": "D2 internal/native/emit_statements.go:529",
+  "attempts": [
+   {
+    "mutant": "D2",
+    "file_line": "internal/native/emit_statements.go:529",
+    "change": "Drop borrowed-binding emission fast path; use existing declareLocal fallback",
+    "rows_failed": [
+     "TestNbodyBorrowedLoopC"
+    ]
+   }
+  ],
+  "evidence": "python3 review/test-defend/internal-native-library/run-defense.py; D2.log: loop_borrow_test.go:79: function 1 offsetMomentum still counts binding adamic_local_18_body. Thirty-four other rows passed; one skipped.",
+  "unit": "u048",
+  "defender_run": "du048.1"
+ },
+ "u048 TestMapHashProbeBound": {
+  "test": "TestMapHashProbeBound",
+  "package": "internal/native",
+  "prior_verdict": "untrue",
+  "subsumed_by": [],
+  "defense": "defended",
+  "bounded": true,
+  "unique_mutant": "D4 internal/native/runtime/map_set.c:34",
+  "attempts": [
+   {
+    "mutant": "D3",
+    "file_line": "internal/native/runtime/map_set.c:34",
+    "change": "Change integer hash mask from 0x3fffffff to 0xff",
+    "rows_failed": [
+     "TestLibraryMapSetIteratorResources",
+     "TestMapHashProbeBound"
+    ]
+   },
+   {
+    "mutant": "D4",
+    "file_line": "internal/native/runtime/map_set.c:34",
+    "change": "Change integer hash mask from 0x3fffffff to 0x3ff",
+    "rows_failed": [
+     "TestMapHashProbeBound"
+    ]
+   }
+  ],
+  "evidence": "python3 review/test-defend/internal-native-library/run-defense.py D4; D4.log: map_hash_test.go:91: probe bound 64 exceeded: integers entries=1024 hit=743 miss=764. Thirty-six other rows passed; one skipped.",
+  "unit": "u048",
+  "defender_run": "du048.1"
+ },
+ "u044 TestViewObjectWritesNeedSourceCertificate": {
+  "test": "TestViewObjectWritesNeedSourceCertificate",
+  "package": "internal/lower",
+  "prior_verdict": "subsumed",
+  "subsumed_by": [
+   "TestDefaultTaggedInterfaceAdmission"
+  ],
+  "defense": "defended",
+  "unique_mutant": "D1 internal/lower/interface_cast.go:74",
+  "attempts": [
+   {
+    "mutant": "D1",
+    "file_line": "internal/lower/interface_cast.go:74",
+    "change": "Drop the object-field assignment refusal block",
+    "rows_failed": [
+     "TestViewObjectWritesNeedSourceCertificate"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-lower-taste/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D1.log 2>&1; view_objects_test.go:54: unchecked write could invalidate another alias: <nil>",
+  "unit": "u044",
+  "defender_run": "du044.2"
+ },
+ "u044 TestMixedUnionContractGraph": {
+  "test": "TestMixedUnionContractGraph",
+  "package": "internal/lower",
+  "prior_verdict": "subsumed",
+  "subsumed_by": [
+   "TestMixedUnionContractRecursiveMember"
+  ],
+  "defense": "defended",
+  "unique_mutant": "D2 internal/lower/view_contracts.go:59",
+  "attempts": [
+   {
+    "mutant": "D2",
+    "file_line": "internal/lower/view_contracts.go:59",
+    "change": "Set the contract Name option to an empty string",
+    "rows_failed": [
+     "TestMixedUnionContractGraph"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-lower-taste/cache/D2 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D2.log 2>&1; view_unions_mixed_test.go:61: member was substituted: [contract with empty Name; full line saved]",
+  "unit": "u044",
+  "defender_run": "du044.2"
+ },
+ "u044 TestUntaggedViewStructuralFallback": {
+  "test": "TestUntaggedViewStructuralFallback",
+  "package": "internal/lower",
+  "prior_verdict": "subsumed",
+  "subsumed_by": [
+   "TestUntaggedViewMemberTags"
+  ],
+  "defense": "defended",
+  "unique_mutant": "D3 internal/lower/view_unions_untagged.go:45",
+  "attempts": [
+   {
+    "mutant": "D3",
+    "file_line": "internal/lower/view_unions_untagged.go:45",
+    "change": "Change the member-rejection condition from OR to AND",
+    "rows_failed": [
+     "TestUntaggedViewStructuralFallback"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-lower-taste/cache/D3 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D3.log 2>&1; view_unions_untagged_test.go:57: member kind 0 admitted without its adapter",
+  "unit": "u044",
+  "defender_run": "du044.2"
+ },
+ "u043 TestRegExpNativeRefusals": {
+  "test": "TestRegExpNativeRefusals",
+  "package": "internal/lower",
+  "prior_verdict": "untrue",
+  "subsumed_by": [],
+  "defense": "defended",
+  "unique_mutant": "D1 internal/regexp/native.go:17",
+  "attempts": [
+   {
+    "mutant": "D1",
+    "file_line": "internal/regexp/native.go:17",
+    "change": "Drop the native quantifier counter-width refusal, allowing oversized bounds to truncate.",
+    "rows_failed": [
+     "TestRegExpNativeRefusals"
+    ]
+   }
+  ],
+  "evidence": "D1 command below; regexp_test.go:24: expected loud NotYet for const matches = /a{18446744073709551616}/.test('a');: <nil>",
+  "unit": "u043",
+  "defender_run": "du043.2"
+ },
+ "u043 TestRepresentationClockSourceCheckedTypes": {
+  "test": "TestRepresentationClockSourceCheckedTypes",
+  "package": "internal/lower",
+  "prior_verdict": "subsumed",
+  "subsumed_by": [
+   "TestPrototypeMethodsAreRefusedWithReasons"
+  ],
+  "defense": "defended",
+  "unique_mutant": "D2 internal/lower/expression.go:64",
+  "attempts": [
+   {
+    "mutant": "D2",
+    "file_line": "internal/lower/expression.go:64",
+    "change": "Return known=true for unresolved generic substitutions.",
+    "rows_failed": [
+     "TestRepresentationClockSourceCheckedTypes"
+    ]
+   }
+  ],
+  "evidence": "D2 command below; representation_clock_source_test.go:69: source: representation = (0, true), want (0, false)",
+  "unit": "u043",
+  "defender_run": "du043.2"
+ },
+ "u043 TestSuppressionDirectiveSoundNeighbors": {
+  "test": "TestSuppressionDirectiveSoundNeighbors",
+  "package": "internal/lower",
+  "prior_verdict": "subsumed",
+  "subsumed_by": [
+   "TestDefaultTaggedInterfaceNeedsNoFlag"
+  ],
+  "defense": "defended",
+  "unique_mutant": "D3 internal/lower/refusals.go:39",
+  "attempts": [
+   {
+    "mutant": "D3",
+    "file_line": "internal/lower/refusals.go:39",
+    "change": "Return a refusal for lexical @ts-expect-error occurrences when the parsed directive list is empty.",
+    "rows_failed": [
+     "TestSuppressionDirectiveSoundNeighbors"
+    ]
+   }
+  ],
+  "evidence": "D3 command below; suppression_directives_test.go:56: sound neighbor: .../002/main.a: Adamic 0.1 refuses suppression directive; remove it and fix the type error",
+  "unit": "u043",
+  "defender_run": "du043.2"
+ },
+ "u058 TestCheckedViewUntaggedSourceFlows": {
+  "test": "TestCheckedViewUntaggedSourceFlows",
+  "package": "internal/oracle",
+  "prior_verdict": "subsumed",
+  "subsumed_by": [
+   "TestCheckedViewUntaggedRecursive"
+  ],
+  "defense": "not defended",
+  "unique_mutant": null,
+  "attempts": [
+   {
+    "mutant": "F1",
+    "file_line": "internal/lower/generic.go:131",
+    "change": "Drop the concrete generic type mapper assignment.",
+    "rows_failed": []
+   },
+   {
+    "mutant": "F2",
+    "file_line": "internal/native/emit_functions.go:365",
+    "change": "Remove closure-result ownership bookkeeping.",
+    "rows_failed": [
+     "TestNativeAgreesWithNode"
+    ]
+   },
+   {
+    "mutant": "F3",
+    "file_line": "internal/native/emit_functions.go:365",
+    "change": "Return NULL for a closure reference result.",
+    "rows_failed": [
+     "TestCheckedViewUntaggedSourceFlows",
+     "TestNativeAgreesWithNode"
+    ]
+   }
+  ],
+  "evidence": "F3: timeout 120 go test -overlay=/tmp/defend-views-flows/F3.overlay.json -json -count=1 -timeout 90s ./internal/oracle/ with saved scope filters; checked_views_v2_source_test.go:143: native: stdout differs; differential replay also fails at oracle_test.go:774: exit codes differ.",
+  "unit": "u058",
+  "defender_run": "du058.2"
+ },
+ "u058 TestCheckedViewUntaggedOwnClassData": {
+  "test": "TestCheckedViewUntaggedOwnClassData",
+  "package": "internal/oracle",
+  "prior_verdict": "subsumed",
+  "subsumed_by": [
+   "TestCheckedViewUntaggedRecursive"
+  ],
+  "defense": "defended",
+  "unique_mutant": "C1 internal/native/runtime/view_unions_untagged.c:44",
+  "attempts": [
+   {
+    "mutant": "C1",
+    "file_line": "internal/native/runtime/view_unions_untagged.c:44",
+    "change": "Flip the static-class condition, rejecting instance slots.",
+    "rows_failed": [
+     "TestCheckedViewUntaggedOwnClassData"
+    ]
+   }
+  ],
+  "evidence": "C1: timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ with saved scope filters; checked_views_v2_source_test.go:168: native: exit codes differ. Good class data exits 70 instead of 0.",
+  "unit": "u058",
+  "defender_run": "du058.2"
+ },
+ "u058 TestCheckedViewUntaggedArrayPending": {
+  "test": "TestCheckedViewUntaggedArrayPending",
+  "package": "internal/oracle",
+  "prior_verdict": "subsumed",
+  "subsumed_by": [
+   "TestCheckedViewUntaggedOwnClassData"
+  ],
+  "defense": "defended",
+  "unique_mutant": "A1 internal/lower/object.go:335",
+  "attempts": [
+   {
+    "mutant": "A1",
+    "file_line": "internal/lower/object.go:335",
+    "change": "Change the unsupported-array diagnostic prefix.",
+    "rows_failed": [
+     "TestCheckedViewUntaggedArrayPending"
+    ]
+   }
+  ],
+  "evidence": "A1: timeout 120 go test -overlay=/tmp/defend-views-flows/A1.overlay.json -json -count=1 -timeout 90s ./internal/oracle/ with saved scope filters; checked_views_v2_source_test.go:211: array admission must stay NotYet: stage 0 can't lower an array with elements of never yet.",
+  "unit": "u058",
+  "defender_run": "du058.2"
+ },
+ "u044 TestTasteRepresentationLimitsStayExplicit": {
+  "test": "TestTasteRepresentationLimitsStayExplicit",
+  "package": "internal/lower",
+  "prior_verdict": "subsumed",
+  "subsumed_by": "TestEnumLimitsStayLoud",
+  "defense": "defended",
+  "unique_mutant": "D1 internal/lower/object.go:525",
+  "attempts": [
+   {
+    "mutant": "D1",
+    "file_line": "internal/lower/object.go:525",
+    "change": "Replace the boxed-union diagnostic with the less specific 'a boxed union field'.",
+    "rows_failed": [
+     "TestTasteRepresentationLimitsStayExplicit"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-taste/cache/D1 timeout 120 go test -json -overlay /tmp/defend-taste/D1-overlay.json -count=1 -timeout 90s ./internal/lower/ -run . > D1.log 2>&1; taste_representation_test.go:28: want NotYet \"a narrowed scalar in a boxed union field\", got ... stage 0 can't lower a boxed union field yet",
+  "unit": "u044",
+  "defender_run": "du044.1"
+ },
+ "u044 TestTypedArrayGaps": {
+  "test": "TestTypedArrayGaps",
+  "package": "internal/lower",
+  "prior_verdict": "subsumed",
+  "subsumed_by": "TestTypedArraysLower",
+  "defense": "defended",
+  "unique_mutant": "D2 internal/lower/typed_arrays.go:49",
+  "attempts": [
+   {
+    "mutant": "D2",
+    "file_line": "internal/lower/typed_arrays.go:49",
+    "change": "Change the resizable-buffer argument bound from >1 to >2.",
+    "rows_failed": [
+     "TestTypedArrayGaps"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-taste/cache/D2 timeout 120 go test -json -overlay /tmp/defend-taste/D2-overlay.json -count=1 -timeout 90s ./internal/lower/ -run . > D2.log 2>&1; typed_arrays_test.go:45: want \"resizable ArrayBuffer\", got ... stage 0 can't lower ArrayBuffer yet",
+  "unit": "u044",
+  "defender_run": "du044.1"
+ },
+ "u044 TestViewObjectContractsAreAvailableToEraser": {
+  "test": "TestViewObjectContractsAreAvailableToEraser",
+  "package": "internal/lower",
+  "prior_verdict": "subsumed",
+  "subsumed_by": "TestMixedUnionContractRecursiveMember",
+  "defense": "defended",
+  "unique_mutant": "D4 internal/lower/readiness.go:293",
+  "attempts": [
+   {
+    "mutant": "D3",
+    "file_line": "internal/lower/object.go:586",
+    "change": "Drop the initial property-read contract assignment.",
+    "rows_failed": []
+   },
+   {
+    "mutant": "D4",
+    "file_line": "internal/lower/readiness.go:293",
+    "change": "Assign contract ID zero at the final metadata attachment.",
+    "rows_failed": [
+     "TestViewObjectContractsAreAvailableToEraser"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-taste/cache/D4 timeout 120 go test -json -overlay /tmp/defend-taste/D4-overlay.json -count=1 -timeout 90s ./internal/lower/ -run . > D4.log 2>&1; view_objects_test.go:23: object read has no semantic contract for the eraser",
+  "unit": "u044",
+  "defender_run": "du044.1"
+ },
+ "u043 TestInheritedLibraryReadsNeverLoadOwnFields": {
+  "test": "TestInheritedLibraryReadsNeverLoadOwnFields",
+  "package": "internal/lower",
+  "prior_verdict": "subsumed",
+  "subsumed_by": [
+   "TestPredicateOverloadRuntime"
+  ],
+  "defense": "defended",
+  "unique_mutant": "D1 internal/lower/object.go:382",
+  "attempts": [
+   {
+    "mutant": "D1",
+    "file_line": "internal/lower/object.go:382",
+    "change": "Drop the inherited property-read guard.",
+    "rows_failed": [
+     "TestInheritedLibraryReadsNeverLoadOwnFields"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-prototype/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D1.log 2>&1; prototype_test.go:78: inherited constructor read became ir.Property ... error <nil>; want a lowering refusal before any own-field load",
+  "unit": "u043",
+  "defender_run": "du043.1"
+ },
+ "u043 TestProvenRelationsRefuse": {
+  "test": "TestProvenRelationsRefuse",
+  "package": "internal/lower",
+  "prior_verdict": "subsumed",
+  "subsumed_by": [
+   "TestCheckedCastProofAndElision"
+  ],
+  "defense": "defended",
+  "unique_mutant": "D2 internal/lower/proven_relations.go:100",
+  "attempts": [
+   {
+    "mutant": "D2",
+    "file_line": "internal/lower/proven_relations.go:100",
+    "change": "Drop the reverse optional-field check for invariant class type arguments.",
+    "rows_failed": [
+     "TestProvenRelationsRefuse"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-prototype/cache/D2 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D2.log 2>&1; proven_relations_test.go:38: want refusal naming \"optional field type argument.count\", got ... a cast the runtime can't check",
+  "unit": "u043",
+  "defender_run": "du043.1"
+ },
+ "u043 TestProvenRelationsErase": {
+  "test": "TestProvenRelationsErase",
+  "package": "internal/lower",
+  "prior_verdict": "subsumed",
+  "subsumed_by": [
+   "TestDefaultTaggedInterfaceNeedsNoFlag"
+  ],
+  "defense": "defended",
+  "unique_mutant": "D3 internal/lower/expression.go:645",
+  "attempts": [
+   {
+    "mutant": "D3",
+    "file_line": "internal/lower/expression.go:645",
+    "change": "Drop successful satisfies operand lowering.",
+    "rows_failed": [
+     "TestProvenRelationsErase"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-prototype/cache/D3 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D3.log 2>&1; proven_relations_test.go:51: Lower refused acceptance row: ... stage 0 can't lower a SatisfiesExpression yet",
+  "unit": "u043",
+  "defender_run": "du043.1"
+ },
+ "u042 TestPredicateBodiesAreProven": {
+  "test": "TestPredicateBodiesAreProven",
+  "package": "internal/lower",
+  "prior_verdict": "subsumed",
+  "prior_subsumed_by": [
+   "TestUnprovenPredicateReturnsAreRefused"
+  ],
+  "subsumed_by": [],
+  "defense": "defended",
+  "unique_mutant": "D1 internal/lower/predicates.go:311",
+  "attempts": [
+   {
+    "mutant": "D1",
+    "file_line": "internal/lower/predicates.go:311",
+    "change": "Change literal-recognition constant from \"undefined\" to \"null\", retaining the checker symbol-identity condition.",
+    "rows_failed": [
+     "TestPredicateBodiesAreProven"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/def-pred/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > /tmp/def-pred/D1.log 2>&1; predicates_test.go:67: function isText(x: string | undefined): x is string { return x !== undefined; }: Adamic 0.1 refuses a type predicate whose return is not proven (return expression is not a trusted check on x)",
+  "rows_passed_evidence": "D1-result.json lists all 273 passing top-level tests.",
+  "unit": "u042",
+  "defender_run": "du042.3"
+ },
+ "u041 TestParameterPropertyCheckerContracts": {
+  "test": "TestParameterPropertyCheckerContracts",
+  "package": "internal/lower",
+  "prior_verdict": "subsumed",
+  "subsumed_by": "TestClassFeaturesPrivateChecker",
+  "defense": "defended",
+  "unique_mutant": "D02 internal/lower/class.go:410",
+  "attempts": [
+   {
+    "mutant": "D01",
+    "file_line": "internal/lower/parameter_properties.go:28",
+    "change": "Return early without parameter-property initialization stores",
+    "rows_failed": [
+     "TestAgreementParameterPropertyWitness",
+     "TestParameterPropertyValueMatchesNode",
+     "TestParameterPropertyCheckerContracts"
+    ]
+   },
+   {
+    "mutant": "D02",
+    "file_line": "internal/lower/class.go:410",
+    "change": "Return early without later writes to parameter-property fields",
+    "rows_failed": [
+     "TestParameterPropertyCheckerContracts"
+    ]
+   },
+   {
+    "mutant": "D03",
+    "file_line": "internal/load/load.go:237",
+    "change": "Drop collection of TS2341 private-keyword diagnostics",
+    "rows_failed": [
+     "TestParameterPropertyCheckerContracts"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/parameter-defend/cache/D02 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D02.log 2>&1; parameter_properties_test.go:50: JavaScript backend stdout = \"1\\n1\\n\", source Node = \"1\\n2\\n\"",
+  "unit": "u041",
+  "defender_run": "du041.1"
+ },
+ "u039 TestNestedCycle family": {
+  "test": "TestNestedCycle family",
+  "package": "internal/lower",
+  "prior_verdict": "subsumed",
+  "subsumed_by": "TestLiteralMethodCapturesCannotMakeCycles",
+  "defense": "defended",
+  "unique_mutant": "D2 internal/lower/nested_functions.go:277",
+  "attempts": [
+   {
+    "mutant": "D2",
+    "file_line": "internal/lower/nested_functions.go:277",
+    "change": "Drop the whole frame-environment propagation loop.",
+    "rows_failed": [
+     "TestNestedEnvironmentCycleIncludesDisjointSlots"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/lower-defense/cache/D2 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D2.log 2>&1; nested_functions_test.go:93: want complete environment cycle refusal, got <nil>",
+  "unit": "u039",
+  "defender_run": "du039.1"
+ },
+ "u039 TestNestedCapturedParametersAreOwned": {
+  "test": "TestNestedCapturedParametersAreOwned",
+  "package": "internal/lower",
+  "prior_verdict": "subsumed",
+  "subsumed_by": "TestNestedEnvironmentHasOneAllocationSite",
+  "defense": "defended",
+  "unique_mutant": "D1 internal/lower/borrow.go:30",
+  "attempts": [
+   {
+    "mutant": "D1",
+    "file_line": "internal/lower/borrow.go:30",
+    "change": "Drop !local.EnvironmentCell from the Borrowed assignment.",
+    "rows_failed": [
+     "TestNestedCapturedParametersAreOwned"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/lower-defense/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D1.log 2>&1; nested_functions_test.go:106: captured parameter is borrowed",
+  "unit": "u039",
+  "defender_run": "du039.1"
+ },
+ "u057 TestCheckedViewOptionalReadBoundary": {
+  "test": "TestCheckedViewOptionalReadBoundary",
+  "package": "internal/oracle",
+  "prior_verdict": "subsumed",
+  "subsumed_by": [
+   "TestCheckedViewObjectPrimitiveSource"
+  ],
+  "defense": "defended",
+  "unique_mutant": "D1 internal/lower/interface_cast.go:70,392",
+  "attempts": [
+   {
+    "mutant": "D1",
+    "file_line": "internal/lower/interface_cast.go:70,392",
+    "change": "Append 'pending' to the optional-read diagnostic constant.",
+    "rows_failed": [
+     "TestCheckedViewOptionalReadBoundary"
+    ]
+   }
+  ],
+  "evidence": "runs.json commands D1 and D1-expanded; D1.log: checked_views_optional_read_test.go:65: boundary diagnostic differs: 'conversion pending yet' versus 'conversion yet'. All other selected rows, including counts, passed.",
+  "unit": "u057",
+  "defender_run": "du057.1"
+ },
+ "u057 TestCheckedViewV2ReadsAfterWrites": {
+  "test": "TestCheckedViewV2ReadsAfterWrites",
+  "package": "internal/oracle",
+  "prior_verdict": "subsumed",
+  "subsumed_by": [
+   "TestCheckedViewV2MovedStage3Results"
+  ],
+  "defense": "defended",
+  "unique_mutant": "D7 internal/javascript/view_unions_untagged.go:83",
+  "attempts": [
+   {
+    "mutant": "D2",
+    "file_line": "internal/native/view_unions_read.go:37",
+    "change": "Replace checked null boxing with NULL.",
+    "rows_failed": [
+     "TestCheckedViewV2ReadsAfterWrites",
+     "TestCountsAreRecorded"
+    ]
+   },
+   {
+    "mutant": "D6",
+    "file_line": "internal/javascript/view_unions_read.go:35",
+    "change": "Invert the narrowed-reference null-admission condition.",
+    "rows_failed": []
+   },
+   {
+    "mutant": "D7",
+    "file_line": "internal/javascript/view_unions_untagged.go:83",
+    "change": "Invert null-member matching: value===null becomes value!==null.",
+    "rows_failed": [
+     "TestCheckedViewV2ReadsAfterWrites"
+    ]
+   }
+  ],
+  "evidence": "runs.json command D7-expanded; D7.log: checked_views_v2_migration_test.go:25: javascript: exit codes differ; exitCode:70. Panic: viewed.value matches no member of string | null, found null. The other 29 rows passed.",
+  "unit": "u057",
+  "defender_run": "du057.1"
+ },
+ "u057 TestCheckedViewV2ArrayArmBoundary": {
+  "test": "TestCheckedViewV2ArrayArmBoundary",
+  "package": "internal/oracle",
+  "prior_verdict": "untrue",
+  "subsumed_by": [
+   "TestCheckedViewUntaggedArrayPending"
+  ],
+  "defense": "not defended",
+  "unique_mutant": null,
+  "attempts": [
+   {
+    "mutant": "D3",
+    "file_line": "internal/lower/view_unions_dispatch.go:25",
+    "change": "Identify object members instead of array members.",
+    "rows_failed": [
+     "TestCheckedViewUntaggedSourceDispatch",
+     "TestCheckedViewV2MembershipMutant",
+     "TestCheckedViewUntaggedOwnClassData",
+     "TestCheckedViewUntaggedSourceFlows",
+     "TestCheckedViewUntaggedRecursive",
+     "TestCheckedViewObjectPrimitiveSource",
+     "TestCheckedViewV2MovedStage3Results",
+     "TestCheckedViewV2ReadsAfterWrites",
+     "TestCheckedViewUntaggedArrayPending"
+    ]
+   },
+   {
+    "mutant": "D4",
+    "file_line": "internal/lower/view_unions_dispatch.go:26",
+    "change": "Drop the union's unsupported-array marker.",
+    "rows_failed": [
+     "TestCheckedViewV2ArrayArmBoundary",
+     "TestCheckedViewUntaggedArrayPending"
+    ]
+   },
+   {
+    "mutant": "D5",
+    "file_line": "internal/lower/view_unions_dispatch.go:73",
+    "change": "Change the array descriptor kind to unknown.",
+    "rows_failed": [
+     "TestCheckedViewV2ArrayArmBoundary",
+     "TestCheckedViewUntaggedArrayPending"
+    ]
+   }
+  ],
+  "evidence": "runs.json command D4; D4.log: checked_views_v2_migration_test.go:44: expected named V3 arm, got <nil>.",
+  "unit": "u057",
+  "defender_run": "du057.1"
+ },
+ "u040 TestOptionalWideningAllowed": {
+  "test": "TestOptionalWideningAllowed",
+  "package": "internal/lower",
+  "prior_verdict": "subsumed",
+  "subsumed_by": "TestOptionalWideningRefused",
+  "defense": "not defended",
+  "unique_mutant": null,
+  "attempts": [
+   {
+    "mutant": "D2",
+    "file_line": "internal/lower/optional_widening.go:86",
+    "change": "Drop class-instance exemption",
+    "rows_failed": [
+     "TestClassWrongOutputIteratorReceiver",
+     "TestIteratorMapperIndexHasNumberRepresentation",
+     "TestOptionalWideningAllowed"
+    ]
+   },
+   {
+    "mutant": "D3",
+    "file_line": "internal/lower/optional_widening.go:114",
+    "change": "Change ObjectLiteralExpression to NewExpression",
+    "rows_failed": [
+     "TestIteratorDescriptorReasons",
+     "TestIteratorGapsAreExplicit",
+     "TestLibraryLanguageBoundaries",
+     "TestNumericEnumsAreOpen",
+     "TestObjectRefusalsExplainSoundness",
+     "TestOptionalWideningAllowed",
+     "TestOptionalWideningRefused",
+     "TestProvenRelationsRefuse"
+    ]
+   },
+   {
+    "mutant": "D4",
+    "file_line": "internal/lower/optional_widening.go:114",
+    "change": "Change ObjectLiteralExpression to Identifier",
+    "rows_failed": [
+     "TestIteratorDescriptorReasons",
+     "TestIteratorGapsAreExplicit",
+     "TestLibraryLanguageBoundaries",
+     "TestNumericEnumsAreOpen",
+     "TestObjectRefusalsExplainSoundness",
+     "TestOptionalWideningAllowed",
+     "TestOptionalWideningRefused",
+     "TestProvenRelationsRefuse"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-lower-non-null/cache/D2 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; optional_widening_test.go:81: refuses optional property y ... absent from structural source Point",
+  "unit": "u040",
+  "defender_run": "du040.2"
+ },
+ "u040 TestOverrideNativeSignature family": {
+  "test": "TestOverrideNativeSignature family",
+  "package": "internal/lower",
+  "prior_verdict": "subsumed",
+  "subsumed_by": "TestInheritanceNativeSignatureLimits",
+  "defense": "defended",
+  "unique_mutant": "D1 internal/lower/class_inheritance.go:141",
+  "attempts": [
+   {
+    "mutant": "D1",
+    "file_line": "internal/lower/class_inheritance.go:141",
+    "change": "Change diagnostic parameter selection from index to 0",
+    "rows_failed": [
+     "TestAbfe962OverrideDefaultAddedRefusesNativeSignature",
+     "TestOverrideOptionalNumberRefusesNativeSignature",
+     "TestOverrideOptionalRefusesNativeSignature"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-lower-non-null/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; override_representation_test.go:13: want NotYet naming parameter \"factor\" and its repair, got ... different native representation for parameter \"value\"",
+  "unit": "u040",
+  "defender_run": "du040.2"
+ },
+ "u057 TestCheckedViewV2TupleIdentityMutant": {
+  "test": "TestCheckedViewV2TupleIdentityMutant",
+  "package": "internal/oracle",
+  "prior_verdict": "untrue",
+  "subsumed_by": [],
+  "defense": "defended",
+  "unique_mutant": "D1 internal/javascript/view_unions_untagged.go:87",
+  "attempts": [
+   {
+    "mutant": "D1",
+    "file_line": "internal/javascript/view_unions_untagged.go:87",
+    "change": "Drop the fixed-tuple identity and length guard",
+    "rows_failed": [
+     "TestCheckedViewV2TupleIdentityMutant"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/checked-views-defense/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(Test.*View.*|TestInterfaceCast.*|TestCheckedCast.*|TestUncheckableCastAdmission|TestNarrowedUnion.*|TestNarrowedFieldUsesSharedReadiness)$'; checked_views_v2_migration_test.go:200: stderr differs",
+  "bounded": true,
+  "unit": "u057",
+  "defender_run": "du057.2"
+ },
+ "u057 TestCheckedViewV2CallableProducerMutant": {
+  "test": "TestCheckedViewV2CallableProducerMutant",
+  "package": "internal/oracle",
+  "prior_verdict": "untrue",
+  "subsumed_by": [],
+  "defense": "defended",
+  "unique_mutant": "D2 internal/javascript/view_unions_untagged.go:153",
+  "attempts": [
+   {
+    "mutant": "D2",
+    "file_line": "internal/javascript/view_unions_untagged.go:153",
+    "change": "Flip the callable-certification bypass condition",
+    "rows_failed": [
+     "TestCheckedViewV2CallableProducerMutant"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/checked-views-defense/cache/D2 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(Test.*View.*|TestInterfaceCast.*|TestCheckedCast.*|TestUncheckableCastAdmission|TestNarrowedUnion.*|TestNarrowedFieldUsesSharedReadiness)$'; checked_views_v2_migration_test.go:231: exit codes differ",
+  "bounded": true,
+  "unit": "u057",
+  "defender_run": "du057.2"
+ },
+ "u057 TestCheckedViewV2MovedStage3Results": {
+  "test": "TestCheckedViewV2MovedStage3Results",
+  "package": "internal/oracle",
+  "prior_verdict": "subsumed",
+  "subsumed_by": [
+   "TestCheckedViewV2ReadsAfterWrites"
+  ],
+  "defense": "not defended",
+  "unique_mutant": null,
+  "attempts": [
+   {
+    "mutant": "D3b",
+    "file_line": "internal/lower/view_objects.go:35",
+    "change": "Flip structural-cast receiver admission",
+    "rows_failed": [
+     "TestCheckedViewObjectPrimitiveSource"
+    ]
+   },
+   {
+    "mutant": "D4",
+    "file_line": "internal/javascript/javascript.go:688",
+    "change": "Change bitwise AND to OR",
+    "rows_failed": [
+     "TestCheckedViewFlagDowncast",
+     "TestCheckedViewV2MovedStage3Results",
+     "TestNativeAgreesWithNode"
+    ]
+   },
+   {
+    "mutant": "D5",
+    "file_line": "internal/native/runtime/view_unions_untagged.c:141",
+    "change": "Remove numeric storage from the open-kind fast path",
+    "rows_failed": [
+     "TestCheckedViewUntaggedOwnClassData"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/checked-views-defense/cache/D4 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(Test.*View.*|TestInterfaceCast.*|TestCheckedCast.*|TestUncheckableCastAdmission|TestNarrowedUnion.*|TestNarrowedFieldUsesSharedReadiness)$'; checked_views_v2_migration_test.go:273: javascript: exit codes differ",
+  "bounded": true,
+  "unit": "u057",
+  "defender_run": "du057.2"
+ },
+ "u034 TestLibraryMethodValueBoundaries": {
+  "test": "TestLibraryMethodValueBoundaries",
+  "package": "internal/lower",
+  "prior_verdict": "subsumed",
+  "subsumed_by": "TestLibraryMethodValues",
+  "defense": "defended",
+  "unique_mutant": "D1 internal/lower/library_method_values.go:251",
+  "attempts": [
+   {
+    "mutant": "D1",
+    "file_line": "internal/lower/library_method_values.go:251",
+    "change": "Drop the delayed-fill guard for new array receivers.",
+    "rows_failed": [
+     "TestLibraryMethodValueBoundaries"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/library-defense/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D1.log 2>&1; library_method_values_test.go:54: want delayed fill of an array with holes, got ... stage 0 can't lower an array of any yet",
+  "unit": "u034",
+  "defender_run": "du034.1"
+ },
+ "u035 TestNodeLibraryDistinguishesReceiverOwners": {
+  "test": "TestNodeLibraryDistinguishesReceiverOwners",
+  "package": "internal/lower",
+  "prior_verdict": "subsumed",
+  "subsumed_by": [
+   "TestNodeFSFileRefusesOptionEffects"
+  ],
+  "defense": "defended",
+  "unique_mutant": "D2 internal/lower/library_node.go:44",
+  "attempts": [
+   {
+    "mutant": "D1",
+    "file_line": "internal/lower/library_node.go:44",
+    "change": "Change class-owner recognition from ClassDeclaration to EnumDeclaration.",
+    "rows_failed": [
+     "TestNodeLibraryDistinguishesReceiverOwners",
+     "TestNodeBufferRefusals"
+    ]
+   },
+   {
+    "mutant": "D2",
+    "file_line": "internal/lower/library_node.go:44",
+    "change": "Return early without a recognized member for generic-class declarations.",
+    "rows_failed": [
+     "TestNodeLibraryDistinguishesReceiverOwners"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-nodefs/cache/D2 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D2.log 2>&1; library_node_test.go:74: missing distinct member node:fs.Dirent.isFile in map[:true node:fs.StatsBase.isFile:true]",
+  "unit": "u035",
+  "defender_run": "du035.3"
+ },
+ "u035 TestNodeLibraryQualifiedTypeAssertion": {
+  "test": "TestNodeLibraryQualifiedTypeAssertion",
+  "package": "internal/lower",
+  "prior_verdict": "untrue",
+  "subsumed_by": [],
+  "defense": "defended",
+  "unique_mutant": "Q1 internal/lower/proven_relations.go:42",
+  "attempts": [
+   {
+    "mutant": "Q1",
+    "file_line": "internal/lower/proven_relations.go:42",
+    "change": "Change exact-origin classification from ObjectLiteralExpression to NewExpression.",
+    "rows_failed": [
+     "TestNodeLibraryQualifiedTypeAssertion"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-nodefs/cache/Q1-alone timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestNodeLibraryQualifiedTypeAssertion$' > Q1-alone.log 2>&1; panic: interface conversion: ast.nodeData is *ast.NewExpression, not *ast.ObjectLiteralExpression. Separate Q1-rest replay passed all 273 other executed rows.",
+  "unit": "u035",
+  "defender_run": "du035.3"
+ },
+ "u036 TestLibraryStringRefusals": {
+  "test": "TestLibraryStringRefusals",
+  "package": "internal/lower",
+  "prior_verdict": "subsumed",
+  "subsumed_by": "TestWhatZeroOneRefusesIsRefusedWithAFix",
+  "defense": "defended",
+  "unique_mutant": "D1 internal/lower/library_string.go:128",
+  "attempts": [
+   {
+    "mutant": "D1",
+    "file_line": "internal/lower/library_string.go:128",
+    "change": "Change valueOf recognition to valueOff, bypassing its String internal-slot guard.",
+    "rows_failed": [
+     "TestLibraryStringRefusals"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/defend-library-object/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D1.log 2>&1; library_string_test.go:27: want refusal containing \"requires a String internal slot\", got <nil>",
+  "unit": "u036",
+  "defender_run": "du036.1"
+ },
+ "u036 TestATupleSeenAsAnArrayIsNotYet": {
+  "test": "TestATupleSeenAsAnArrayIsNotYet",
+  "package": "internal/lower",
+  "prior_verdict": "subsumed",
+  "subsumed_by": "TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat",
+  "defense": "defended",
+  "unique_mutant": "D2 internal/lower/object.go:786",
+  "attempts": [
+   {
+    "mutant": "D2",
+    "file_line": "internal/lower/object.go:786",
+    "change": "Drop the complete tuple array-method guard, changing tuple.join from NotYet to inherited-member Refused.",
+    "rows_failed": [
+     "TestATupleSeenAsAnArrayIsNotYet"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/defend-library-object/cache/D2 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D2.log 2>&1; lower_test.go:604: got Adamic 0.1 refuses inherited library member join read as an own field; wanted stage 0 can't lower join on a tuple ... yet. Full line retained in D2.log.",
+  "unit": "u036",
+  "defender_run": "du036.1"
+ },
+ "u036 TestAMethodReadAsAValueIsRefused": {
+  "test": "TestAMethodReadAsAValueIsRefused",
+  "package": "internal/lower",
+  "prior_verdict": "subsumed",
+  "subsumed_by": "TestLibraryStringRefusals",
+  "defense": "defended",
+  "unique_mutant": "D3 internal/lower/refusals.go:200",
+  "attempts": [
+   {
+    "mutant": "D3",
+    "file_line": "internal/lower/refusals.go:200",
+    "change": "Drop the parameter-name collection loop, producing a repair that loses required arguments.",
+    "rows_failed": [
+     "TestAMethodReadAsAValueIsRefused"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/defend-library-object/cache/D3 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D3.log 2>&1; lower_test.go:644: suggested () => shelter.admit(); wanted (pet) => shelter.admit(pet). Full line retained in D3.log.",
+  "unit": "u036",
+  "defender_run": "du036.1"
+ },
+ "u042 TestPredicateOverloadCallback": {
+  "test": "TestPredicateOverloadCallback",
+  "package": "internal/lower",
+  "prior_verdict": "subsumed",
+  "subsumed_by": [
+   "TestPredicateCallbackContracts"
+  ],
+  "defense": "not defended",
+  "unique_mutant": null,
+  "attempts": [
+   {
+    "mutant": "D3",
+    "file_line": "internal/lower/predicates.go:430",
+    "change": "Flip the ordinary-boolean callback condition.",
+    "rows_failed": [
+     "TestPredicateOverloadRuntime"
+    ]
+   },
+   {
+    "mutant": "D4",
+    "file_line": "internal/lower/predicates.go:405",
+    "change": "Drop implementation-parameter mapping.",
+    "rows_failed": [
+     "TestPredicateOverloadRuntime"
+    ]
+   },
+   {
+    "mutant": "D5",
+    "file_line": "internal/lower/predicates.go:406",
+    "change": "Drop implementation-function mapping.",
+    "rows_failed": [
+     "TestPredicateOverloadCallback",
+     "TestPredicateOverloadRuntime"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-predicates/cache/D5 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D5.log 2>&1; predicates_proof_test.go:162: Lower refused acceptance row: ... there is no body proving this parameter",
+  "unit": "u042",
+  "defender_run": "du042.2"
+ },
+ "u042 TestPredicateUseRegions": {
+  "test": "TestPredicateUseRegions",
+  "package": "internal/lower",
+  "prior_verdict": "untrue",
+  "subsumed_by": [],
+  "defense": "defended",
+  "unique_mutant": "D1 internal/lower/predicates_proof.go:1095",
+  "attempts": [
+   {
+    "mutant": "D1",
+    "file_line": "internal/lower/predicates_proof.go:1095",
+    "change": "Drop const-alias initializer recursion.",
+    "rows_failed": [
+     "TestPredicateUseRegions"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-predicates/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D1.log 2>&1; predicates_proof_test.go:225: directions 0, want 1",
+  "unit": "u042",
+  "defender_run": "du042.2"
+ },
+ "u042 TestPredicateUsesBelongToEachCall": {
+  "test": "TestPredicateUsesBelongToEachCall",
+  "package": "internal/lower",
+  "prior_verdict": "untrue",
+  "subsumed_by": [],
+  "defense": "defended",
+  "unique_mutant": "D2 internal/lower/predicates_proof.go:1159",
+  "attempts": [
+   {
+    "mutant": "D2",
+    "file_line": "internal/lower/predicates_proof.go:1159",
+    "change": "Return nil on a memoized flow-node revisit, cutting the shared edge.",
+    "rows_failed": [
+     "TestPredicateUsesBelongToEachCall"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-predicates/cache/D2 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestPredicateUsesBelongToEachCall$'; panic: runtime error: invalid memory address or nil pointer dereference; predicates_proof_test.go:266. Replay of all other 275 rows completed without failures.",
+  "unit": "u042",
+  "defender_run": "du042.2"
+ },
+ "u040 TestAdamicNullishAssertionsAreRefused": {
+  "test": "TestAdamicNullishAssertionsAreRefused",
+  "package": "internal/lower",
+  "prior_verdict": "subsumed",
+  "subsumed_by": [
+   "TestNonNullAssertionOnPresentTypeIsErased"
+  ],
+  "defense": "not defended",
+  "unique_mutant": null,
+  "attempts": [
+   {
+    "mutant": "N1",
+    "file_line": "internal/lower/refusals.go:22",
+    "change": "Change the refusal repair string",
+    "rows_failed": [
+     "TestAdamicNullishAssertionsAreRefused",
+     "TestReadinessElisionRequiresDominatingAssignment",
+     "TestWhatZeroOneRefusesIsRefusedWithAFix"
+    ]
+   },
+   {
+    "mutant": "N6",
+    "file_line": "internal/lower/refusals.go:22",
+    "change": "Change the refusal description",
+    "rows_failed": [
+     "TestAdamicNullishAssertionsAreRefused",
+     "TestReadinessElisionRequiresDominatingAssignment",
+     "TestWhatZeroOneRefusesIsRefusedWithAFix"
+    ]
+   },
+   {
+    "mutant": "N7",
+    "file_line": "internal/lower/non_null.go:106",
+    "change": "Change the admitted source extension from .ts to .a",
+    "rows_failed": [
+     "TestAdamicNullishAssertionsAreRefused",
+     "TestNonNullAssertionLowersToNullishPanic",
+     "TestNonNullAssertionOnPresentTypeIsErased",
+     "TestPredicateOverloadRuntime",
+     "TestReadinessElisionRequiresDominatingAssignment",
+     "TestWhatZeroOneRefusesIsRefusedWithAFix"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-nonnull/cache/N7 OPTIONAL_WIDENING_CONFIG=/tmp/defend-nonnull/census-project/tsconfig.json OPTIONAL_WIDENING_OUTPUT=/tmp/defend-nonnull/N7-census.json timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > N7.log 2>&1; non_null_impossible_test.go:53: want exactly-nullish Refused, got a NotYet diagnostic for an array of never; complete line saved",
+  "unit": "u040",
+  "defender_run": "du040.1"
+ },
+ "u040 TestNonNullAssertionOnPresentTypeIsErased": {
+  "test": "TestNonNullAssertionOnPresentTypeIsErased",
+  "package": "internal/lower",
+  "prior_verdict": "subsumed",
+  "subsumed_by": [
+   "TestNonNullAssertionLowersToNullishPanic"
+  ],
+  "defense": "defended",
+  "unique_mutant": "N2 internal/lower/non_null.go:83",
+  "attempts": [
+   {
+    "mutant": "N2",
+    "file_line": "internal/lower/non_null.go:83",
+    "change": "Drop present-value early returns at lines 83 and 92",
+    "rows_failed": [
+     "TestNonNullAssertionOnPresentTypeIsErased"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-nonnull/cache/N2 OPTIONAL_WIDENING_CONFIG=/tmp/defend-nonnull/census-project/tsconfig.json OPTIONAL_WIDENING_OUTPUT=/tmp/defend-nonnull/N2-census.json timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > N2.log 2>&1; non_null_test.go:46: want a plain number, got ir.Declare{Uninitialized:false, Local:0, Value:ir.Coalesce{Value:ir.NumberConstant{Value:0}, Fallback:ir.Expression(nil), Panic:ir.StringConstant{Index:0}, Of:1}}",
+  "unit": "u040",
+  "defender_run": "du040.1"
+ },
+ "u040 TestOptionalWideningCensus": {
+  "test": "TestOptionalWideningCensus",
+  "package": "internal/lower",
+  "prior_verdict": "untrue",
+  "subsumed_by": [],
+  "defense": "not defended",
+  "unique_mutant": null,
+  "attempts": [
+   {
+    "mutant": "N3",
+    "file_line": "internal/lower/optional_widening.go:86",
+    "change": "Flip missing-field optional classification",
+    "rows_failed": [
+     "TestOptionalWideningRefused"
+    ]
+   },
+   {
+    "mutant": "N4",
+    "file_line": "internal/lower/optional_widening.go:87",
+    "change": "Report an empty property name",
+    "rows_failed": [
+     "TestOptionalWideningRefused"
+    ]
+   },
+   {
+    "mutant": "N5",
+    "file_line": "internal/lower/optional_widening.go:126",
+    "change": "Swap source and target relation arguments",
+    "rows_failed": [
+     "TestOptionalWideningRefused"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-nonnull/cache/N5 OPTIONAL_WIDENING_CONFIG=/tmp/defend-nonnull/census-project/tsconfig.json OPTIONAL_WIDENING_OUTPUT=/tmp/defend-nonnull/N5-census.json timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > N5.log 2>&1; census passed with files=1 sites=0, versus clean sites=1",
+  "unit": "u040",
+  "defender_run": "du040.1"
+ },
+ "u042 TestIndirectPredicateOverloadIsPending": {
+  "test": "TestIndirectPredicateOverloadIsPending",
+  "package": "internal/lower",
+  "prior_verdict": "subsumed",
+  "subsumed_by": [
+   "TestPredicateOverloadCallback"
+  ],
+  "defense": "defended",
+  "unique_mutant": "D1 internal/lower/predicates.go:483",
+  "attempts": [
+   {
+    "mutant": "D1",
+    "file_line": "internal/lower/predicates.go:483",
+    "change": "Diagnostic constant: 'an indirect call' -> 'a direct call'",
+    "rows_failed": [
+     "TestIndirectPredicateOverloadIsPending"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend042/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; predicates_overload_test.go:127: want explicit indirect-call capability gap, got ... stage 0 can't lower a direct call of a checked predicate overload yet",
+  "unit": "u042",
+  "defender_run": "du042.1"
+ },
+ "u042 TestConditionAssertionAdmission": {
+  "test": "TestConditionAssertionAdmission",
+  "package": "internal/lower",
+  "prior_verdict": "subsumed",
+  "subsumed_by": [
+   "TestPredicateBodyProof"
+  ],
+  "defense": "defended",
+  "unique_mutant": "A1 internal/lower/expression.go:776",
+  "attempts": [
+   {
+    "mutant": "A1",
+    "file_line": "internal/lower/expression.go:776",
+    "change": "Restrict logical-negation lowering with operand.Type() != ir.Union",
+    "rows_failed": [
+     "TestConditionAssertionAdmission"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend042/cache/A1 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; predicates_proof_test.go:92: Lower refused acceptance row: ... stage 0 can't lower a PrefixUnaryExpression on a union of differently held members yet",
+  "unit": "u042",
+  "defender_run": "du042.1"
+ },
+ "u042 TestEveryNeedsCallbackEffects": {
+  "test": "TestEveryNeedsCallbackEffects",
+  "package": "internal/lower",
+  "prior_verdict": "subsumed",
+  "prior_subsumed_by": [
+   "TestPredicateCallbackContracts"
+  ],
+  "subsumed_by": [
+   "TestUnprovenPredicateReturnsAreRefused"
+  ],
+  "defense": "not defended",
+  "unique_mutant": null,
+  "attempts": [
+   {
+    "mutant": "E1",
+    "file_line": "internal/lower/predicates.go:251",
+    "change": "Unsupported-control-flow refusal -> return nil, nil",
+    "rows_failed": [
+     "TestUnprovenPredicateReturnsAreRefused"
+    ]
+   },
+   {
+    "mutant": "E2",
+    "file_line": "internal/lower/predicates_proof.go:64",
+    "change": "Unsupported-target proof failure -> return proof, nil",
+    "rows_failed": [
+     "TestArrayPredicateCannotInventAnElementContract",
+     "TestEveryNeedsCallbackEffects",
+     "TestUnprovenPredicateReturnsAreRefused"
+    ]
+   },
+   {
+    "mutant": "E3",
+    "file_line": "internal/lower/predicates.go:361",
+    "change": "Proof-summary handoff: err != nil -> err == nil",
+    "rows_failed": [
+     "TestArrayPredicateCannotInventAnElementContract",
+     "TestCensusPredicateInteractionBoundary",
+     "TestCensusPredicateInteractionEscapes",
+     "TestCensusPredicateMarkerKeepsProofBoundaries",
+     "TestConditionAssertionAdmission",
+     "TestEveryNeedsCallbackEffects",
+     "TestPredicateBodyProof",
+     "TestPredicateCallbackContracts",
+     "TestPredicateOverloadCallback",
+     "TestPredicateOverloadRuntime",
+     "TestUnprovenPredicateReturnsAreRefused"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend042/cache/E2 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; predicates_proof_test.go:152: want array proof refusal without callback effects, got <nil>",
+  "unit": "u042",
+  "defender_run": "du042.1"
+ },
+ "u035 TestNodeFSFileDoesNotAuthorizeMutableWidening": {
+  "test": "TestNodeFSFileDoesNotAuthorizeMutableWidening",
+  "package": "internal/lower",
+  "prior_verdict": "subsumed",
+  "subsumed_by": "TestEmptyNeverMapCannotGainWritableInhabitants",
+  "defense": "defended",
+  "unique_mutant": "D04 internal/lower/invariance.go:168",
+  "attempts": [
+   {
+    "mutant": "D01",
+    "file_line": "internal/lower/invariance.go:188",
+    "change": "Ignore undefined in mutable property compatibility",
+    "rows_failed": [
+     "TestAMutableLocationSeenWiderIsRefused"
+    ],
+    "supplemental": true
+   },
+   {
+    "mutant": "D04",
+    "file_line": "internal/lower/invariance.go:168",
+    "change": "Return early for optional views of boolean fields",
+    "rows_failed": [
+     "TestNodeFSFileDoesNotAuthorizeMutableWidening"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/fsfile-defend/cache/D04 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D04.log 2>&1; library_node_fs_file_test.go:29: want mutable widening refusal, got <nil>",
+  "unit": "u035",
+  "defender_run": "du035.1"
+ },
+ "u035 TestNodeFSFileRefusesVoidValues": {
+  "test": "TestNodeFSFileRefusesVoidValues",
+  "package": "internal/lower",
+  "prior_verdict": "subsumed",
+  "subsumed_by": "TestNodeFSFileRefusesOptionEffects",
+  "defense": "defended",
+  "unique_mutant": "D02 internal/lower/library_node_fs_file.go:101",
+  "attempts": [
+   {
+    "mutant": "D02",
+    "file_line": "internal/lower/library_node_fs_file.go:101",
+    "change": "Disable fs void-value rejection condition",
+    "rows_failed": [
+     "TestNodeFSFileRefusesVoidValues"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/fsfile-defend/cache/D02 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D02.log 2>&1; library_node_fs_file_test.go:45: want void value refusal, got <nil>",
+  "unit": "u035",
+  "defender_run": "du035.1"
+ },
+ "u035 TestNodeFSFileRefusesPinnedUnsupportedOverloads": {
+  "test": "TestNodeFSFileRefusesPinnedUnsupportedOverloads",
+  "package": "internal/lower",
+  "prior_verdict": "subsumed",
+  "subsumed_by": "TestNodeFSFile family",
+  "defense": "defended",
+  "unique_mutant": "D03 internal/lower/library_node_fs_file.go:358",
+  "attempts": [
+   {
+    "mutant": "D03",
+    "file_line": "internal/lower/library_node_fs_file.go:358",
+    "change": "Disable bigint Stats rejection while preserving ordinary Stats",
+    "rows_failed": [
+     "TestNodeFSFileRefusesPinnedUnsupportedOverloads"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/fsfile-defend/cache/D03 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D03.log 2>&1; library_node_fs_file_test.go:63: want named NotYet statSync, got <nil>",
+  "unit": "u035",
+  "defender_run": "du035.1"
+ },
+ "u032 TestInputSpreadArgumentsAreNotYet": {
+  "test": "TestInputSpreadArgumentsAreNotYet",
+  "package": "internal/lower",
+  "prior_verdict": "subsumed",
+  "subsumed_by": [
+   "TestInputSpreadCoverage"
+  ],
+  "defense": "not defended",
+  "unique_mutant": null,
+  "attempts": [
+   {
+    "mutant": "D2",
+    "file_line": "internal/lower/input.go:30",
+    "change": "Shorten the function scan by one, omitting programArguments.",
+    "rows_failed": [
+     "TestInputSpreadArgumentsAreNotYet",
+     "TestInputSpreadCoverage"
+    ]
+   },
+   {
+    "mutant": "D3",
+    "file_line": "internal/lower/input.go:36",
+    "change": "Change 'a spread argument to' to 'a tuple spread argument to'.",
+    "rows_failed": [
+     "TestInputSpreadArgumentsAreNotYet",
+     "TestInputSpreadCoverage"
+    ]
+   },
+   {
+    "mutant": "D4",
+    "file_line": "internal/lower/input.go:35",
+    "change": "Invert spread-element recognition.",
+    "rows_failed": [
+     "TestInputSpreadArgumentsAreNotYet",
+     "TestInputSpreadCoverage"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-lower-enums/cache/D4 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D4.log 2>&1; input_test.go:33: writeTextFile takes a path and a text, and the checker let another count through, want NotYet",
+  "unit": "u032",
+  "defender_run": "du032.2"
+ },
+ "u032 TestInputSpreadCoverage": {
+  "test": "TestInputSpreadCoverage",
+  "package": "internal/lower",
+  "prior_verdict": "subsumed",
+  "subsumed_by": [
+   "TestInputSpreadArgumentsAreNotYet"
+  ],
+  "defense": "defended",
+  "unique_mutant": "D1 internal/lower/input.go:34",
+  "attempts": [
+   {
+    "mutant": "D1",
+    "file_line": "internal/lower/input.go:34",
+    "change": "Restrict the spread scan to the first argument, missing spreads in the second slot.",
+    "rows_failed": [
+     "TestInputSpreadCoverage"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-lower-enums/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D1.log 2>&1; input_test.go:77: stage 0 can't lower a SpreadElement yet, want NotYet naming writeTextFile",
+  "unit": "u032",
+  "defender_run": "du032.2"
+ },
+ "u032 TestConstEnumErasesRuntimeObject": {
+  "test": "TestConstEnumErasesRuntimeObject",
+  "package": "internal/lower",
+  "prior_verdict": "subsumed",
+  "subsumed_by": "TestEnumSwitchExhaustiveness",
+  "defense": "defended",
+  "unique_mutant": "D1 internal/lower/enums.go:221",
+  "attempts": [
+   {
+    "mutant": "D1",
+    "file_line": "internal/lower/enums.go:221",
+    "change": "Drop the const-enum conditional early return.",
+    "rows_failed": [
+     "TestConstEnumErasesRuntimeObject"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-lower-enums/cache/D1 timeout 120 go test -json -overlay /tmp/defend-lower-enums/D1-overlay.json -count=1 -timeout 90s ./internal/lower/ -run . > D1.log 2>&1; enums_test.go:146: const enum made a runtime binding",
+  "unit": "u032",
+  "defender_run": "du032.1"
+ },
+ "u032 TestFunctionValueUnionViewsStayNotYet": {
+  "test": "TestFunctionValueUnionViewsStayNotYet",
+  "package": "internal/lower",
+  "prior_verdict": "subsumed",
+  "subsumed_by": "TestEnumSlotViews",
+  "defense": "defended",
+  "unique_mutant": "D2 internal/lower/expression.go:305",
+  "attempts": [
+   {
+    "mutant": "D2",
+    "file_line": "internal/lower/expression.go:305",
+    "change": "Change the union-parameter ABI guard constant from ir.Union to ir.Array.",
+    "rows_failed": [
+     "TestFunctionValueUnionViewsStayNotYet"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-lower-enums/cache/D2 timeout 120 go test -json -overlay /tmp/defend-lower-enums/D2-overlay.json -count=1 -timeout 90s ./internal/lower/ -run . > D2.log 2>&1; function_values_test.go:19: callable view requires a union slot adapter, got <nil>",
+  "unit": "u032",
+  "defender_run": "du032.1"
+ },
+ "u032 TestGenericUnionFixtureHasSeparateInstances": {
+  "test": "TestGenericUnionFixtureHasSeparateInstances",
+  "package": "internal/lower",
+  "prior_verdict": "subsumed",
+  "subsumed_by": "TestGenericJSONUnionArrayIsNotYet",
+  "defense": "defended",
+  "unique_mutant": "D3 internal/lower/generic.go:96",
+  "attempts": [
+   {
+    "mutant": "D3",
+    "file_line": "internal/lower/generic.go:96",
+    "change": "Drop the specialization cache-hit conditional.",
+    "rows_failed": [
+     "TestGenericUnionFixtureHasSeparateInstances"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-lower-enums/cache/D3 timeout 120 go test -json -overlay /tmp/defend-lower-enums/D3-overlay.json -count=1 -timeout 90s ./internal/lower/ -run . > D3.log 2>&1; generic_instance_key_test.go:43: got 4 describe instances for distinct unions, want 2",
+  "unit": "u032",
+  "defender_run": "du032.1"
+ },
+ "u035 TestNodeFSFileQualifiedErrorType": {
+  "test": "TestNodeFSFileQualifiedErrorType",
+  "package": "internal/lower",
+  "prior_verdict": "subsumed",
+  "subsumed_by": [
+   "TestNodeFSFileRefusesOptionEffects"
+  ],
+  "defense": "defended",
+  "unique_mutant": "D1 internal/lower/library_node_fs_file.go:478",
+  "attempts": [
+   {
+    "mutant": "D1",
+    "file_line": "internal/lower/library_node_fs_file.go:478",
+    "change": "Change registered ErrnoException.code to ErrnoException.cod",
+    "rows_failed": [
+     "TestNodeFSFileQualifiedErrorType"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/def-nodefs/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > /tmp/def-nodefs/D1.log 2>&1; library_node_fs_file_test.go:79: want optional host fields proven before the qualified cast, got ... stage 0 can't lower node:globals.ErrnoException.code yet",
+  "unit": "u035",
+  "defender_run": "du035.2"
+ },
+ "u035 TestNodeLibraryNamesUnimplementedMembers": {
+  "test": "TestNodeLibraryNamesUnimplementedMembers",
+  "package": "internal/lower",
+  "prior_verdict": "subsumed",
+  "subsumed_by": [
+   "TestNodeFSFileRefusesOptionEffects"
+  ],
+  "defense": "defended",
+  "unique_mutant": "D4 internal/lower/library_node_fs_file.go:478",
+  "attempts": [
+   {
+    "mutant": "D2",
+    "file_line": "internal/lower/library_node.go:69",
+    "change": "Truncate the unsupported-member diagnostic name by one byte",
+    "rows_failed": [
+     "TestNodeBufferRefusals",
+     "TestNodeLibraryNamesUnimplementedMembers"
+    ]
+   },
+   {
+    "mutant": "D4",
+    "file_line": "internal/lower/library_node_fs_file.go:478",
+    "change": "Replace registration node:fs.utimesSync with unsupported node:path.sep",
+    "rows_failed": [
+     "TestNodeLibraryNamesUnimplementedMembers"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/def-nodefs/cache/D4 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > /tmp/def-nodefs/D4.log 2>&1; library_node_test.go:31: want named NotYet node:path.sep, got ... stage 0 can't lower reading sep yet",
+  "unit": "u035",
+  "defender_run": "du035.2"
+ },
+ "u035 TestNodeLibraryDoesNotRefuseTypeOnlyOrUserNames": {
+  "test": "TestNodeLibraryDoesNotRefuseTypeOnlyOrUserNames",
+  "package": "internal/lower",
+  "prior_verdict": "subsumed",
+  "subsumed_by": [
+   "TestNodeFSFileRefusesOptionEffects"
+  ],
+  "defense": "defended",
+  "unique_mutant": "D3 internal/lower/library_node_fs_file.go:32",
+  "attempts": [
+   {
+    "mutant": "D3",
+    "file_line": "internal/lower/library_node_fs_file.go:32",
+    "change": "Drop the fs declaration-ownership proof block and its unused source variable",
+    "rows_failed": [
+     "TestNodeLibraryDoesNotRefuseTypeOnlyOrUserNames"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/def-nodefs/cache/D3 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > /tmp/def-nodefs/D3.log 2>&1; library_node_test.go:43: JavaScript backend stdout = \"no\\n\", source Node = \"yes\\n\"",
+  "unit": "u035",
+  "defender_run": "du035.2"
+ },
+ "u030 TestDefiniteAssignmentSoundNeighbors": {
+  "test": "TestDefiniteAssignmentSoundNeighbors",
+  "package": "internal/lower",
+  "prior_verdict": "subsumed",
+  "subsumed_by": "TestClassWrongOutputPrivateRepair",
+  "defense": "not defended",
+  "unique_mutant": null,
+  "attempts": [
+   {
+    "mutant": "D2",
+    "file_line": "internal/lower/class_inheritance.go:427",
+    "change": "Drop field-initializer evaluation, retaining its zero value",
+    "rows_failed": [
+     "TestAgreementInheritedFieldWitness",
+     "TestClassFeaturesPrivateStorage",
+     "TestClassFeaturesReadonlyChecker",
+     "TestDefiniteAssignmentSoundNeighbors",
+     "TestInheritanceAllowsSoundOverrides",
+     "TestInheritanceKeepsNominalTupleDestructuring",
+     "TestReadinessElisionRequiresDominatingAssignment",
+     "TestUndecidedCycleReadsUseReadyChecks"
+    ]
+   },
+   {
+    "mutant": "D3",
+    "file_line": "internal/lower/assignments.go:86",
+    "change": "Drop local-assignment emission",
+    "rows_failed": [
+     "TestClosedFrameInputRejectsMutation",
+     "TestConstructorCacheOneArgumentRemainsNotYet",
+     "TestDefiniteAssignmentSoundNeighbors",
+     "TestDefiniteAssignmentUsesReadiness",
+     "TestEnumSlotViews",
+     "TestFlagEnumAliasBoundaries",
+     "TestFlagEnumsDomain",
+     "TestFlagEnumsOpen",
+     "TestNestedEnvironmentHasOneAllocationSite",
+     "TestNumericEnumsAreOpen",
+     "TestSwitchConditionalBreakFallsThrough",
+     "TestSwitchEmptyBlockFallsThrough",
+     "TestSwitchEmptyCaseFallsThrough",
+     "TestSwitchEmptyElseFallsThrough"
+    ]
+   },
+   {
+    "mutant": "D4",
+    "file_line": "internal/lower/class.go:769",
+    "change": "Change allowed constructor declaration kind from PropertyDeclaration to Parameter",
+    "rows_failed": [
+     "TestAMethodReadAsAValueIsRefused",
+     "TestAViewThatCantWriteIsNotRefused",
+     "TestClassFeaturesPrivateStorage",
+     "TestClassFeaturesReadonlyChecker",
+     "TestClassWrongOutputPrivateRepair",
+     "TestConstructorCacheOneArgumentRemainsNotYet",
+     "TestDefiniteAssignmentSoundNeighbors",
+     "TestEnumSlotViews",
+     "TestInheritanceGenericMonomorphizations",
+     "TestInheritanceRefusesGrowingGenericClasses",
+     "TestReadonlyFieldsAreJudgedByTheirConstructorsWrites",
+     "TestWhatZeroOneRefusesIsRefusedWithAFix"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-lower-class-key/cache/D2 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; definite_assignment_test.go:64: JavaScript backend stdout = \"1\\n\", source Node = \"3\\n\"",
+  "unit": "u030",
+  "defender_run": "du030.2"
+ },
+ "u030 TestEmptyLiteralGenericReturnUsesSamePath": {
+  "test": "TestEmptyLiteralGenericReturnUsesSamePath",
+  "package": "internal/lower",
+  "prior_verdict": "subsumed",
+  "subsumed_by": "TestNestedEmptyArrayElementKinds",
+  "defense": "defended",
+  "unique_mutant": "D1 internal/lower/empty_literal.go:12",
+  "attempts": [
+   {
+    "mutant": "D1",
+    "file_line": "internal/lower/empty_literal.go:12",
+    "change": "Return nil early from literalArrayElement when a generic mapper is active",
+    "rows_failed": [
+     "TestEmptyLiteralGenericReturnUsesSamePath"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-lower-class-key/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; empty_literal_test.go:52: stage 0 can't lower an array of never yet",
+  "unit": "u030",
+  "defender_run": "du030.2"
+ },
+ "u028 TestClassFeaturesNarrowedAccessor": {
+  "test": "TestClassFeaturesNarrowedAccessor",
+  "package": "internal/lower",
+  "prior_verdict": "subsumed",
+  "subsumed_by": "TestClassFeaturesStaticInterfaceCycle",
+  "defense": "defended",
+  "unique_mutant": "D01 internal/lower/object.go:509",
+  "attempts": [
+   {
+    "mutant": "D01",
+    "file_line": "internal/lower/object.go:509",
+    "change": "Change diagnostic constant from 'a narrowed accessor reread' to 'a getter reread after narrowing'.",
+    "rows_failed": [
+     "TestClassFeaturesNarrowedAccessor"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-check-pragmas/cache/D01 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D01.log 2>&1; class_features_test.go:121: want changing getter reread refused, got ... Adamic 0.1 refuses a getter reread after narrowing",
+  "unit": "u028",
+  "defender_run": "du028.2"
+ },
+ "u028 TestClassFeaturesStaticParentCycle": {
+  "test": "TestClassFeaturesStaticParentCycle",
+  "package": "internal/lower",
+  "prior_verdict": "subsumed",
+  "subsumed_by": "TestClassFeaturesStaticInterfaceCycle",
+  "defense": "not defended",
+  "unique_mutant": null,
+  "attempts": [
+   {
+    "mutant": "D02",
+    "file_line": "internal/lower/cycles.go:329",
+    "change": "Return nil instead of continuing to later fields when a slot has no unproven write.",
+    "rows_failed": [
+     "TestReadonlyFieldsAreJudgedByTheirConstructorsWrites"
+    ]
+   },
+   {
+    "mutant": "D03",
+    "file_line": "internal/lower/fresh.go:50",
+    "change": "Return nil instead of continuing past a nonmatching write.",
+    "rows_failed": []
+   },
+   {
+    "mutant": "D04",
+    "file_line": "internal/lower/cycles.go:423",
+    "change": "Drop traversal of the static-parent ownership edge.",
+    "rows_failed": [
+     "TestClassFeaturesStaticInterfaceCycle",
+     "TestClassFeaturesStaticParentCycle"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-check-pragmas/cache/D04 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D04.log 2>&1; class_features_test.go:129: constructor parent cycle accepted: <nil>; class_features_test.go:137: constructor interface cycle accepted: <nil>",
+  "unit": "u028",
+  "defender_run": "du028.2"
+ },
+ "u029 TestInheritanceRefusesGrowingGenericClasses": {
+  "test": "TestInheritanceRefusesGrowingGenericClasses",
+  "package": "internal/lower",
+  "prior_verdict": "subsumed",
+  "subsumed_by": "TestInheritanceHasClassIdentity",
+  "defense": "defended",
+  "unique_mutant": "D1 internal/lower/class.go:120",
+  "attempts": [
+   {
+    "mutant": "D1",
+    "file_line": "internal/lower/class.go:120",
+    "change": "Remove recursive-argument repair advice from the refusal constant",
+    "rows_failed": [
+     "TestInheritanceRefusesGrowingGenericClasses"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-inherit/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; class_inheritance_test.go:228: want bounded monomorphization refusal with fix, got ... polymorphic recursion; write a class per type",
+  "unit": "u029",
+  "defender_run": "du029.2"
+ },
+ "u029 TestInheritanceConditionalThisRules": {
+  "test": "TestInheritanceConditionalThisRules",
+  "package": "internal/lower",
+  "prior_verdict": "subsumed",
+  "subsumed_by": "TestInheritanceRefusesThisBeforeSuperReturns",
+  "defense": "defended",
+  "unique_mutant": "D2 internal/lower/class_super.go:157",
+  "attempts": [
+   {
+    "mutant": "D2",
+    "file_line": "internal/lower/class_super.go:157",
+    "change": "Drop constructor-parameter pre-super checks",
+    "rows_failed": [
+     "TestInheritanceConditionalThisRules"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-inherit/cache/D2 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; class_inheritance_test.go:263: want pre-super binding refusal with fix, got <nil>",
+  "unit": "u029",
+  "defender_run": "du029.2"
+ },
+ "u029 TestInheritanceGenericViewsKeepNominalArguments": {
+  "test": "TestInheritanceGenericViewsKeepNominalArguments",
+  "package": "internal/lower",
+  "prior_verdict": "subsumed",
+  "subsumed_by": "TestInheritanceGenericNominalConstraints",
+  "defense": "defended",
+  "unique_mutant": "D3 internal/lower/class_inheritance.go:596",
+  "attempts": [
+   {
+    "mutant": "D3",
+    "file_line": "internal/lower/class_inheritance.go:596",
+    "change": "Drop nested nominal and enum argument comparisons",
+    "rows_failed": [
+     "TestInheritanceGenericViewsKeepNominalArguments"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-inherit/cache/D3 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; class_inheritance_test.go:277: want nominal generic argument refusal, got <nil>",
+  "unit": "u029",
+  "defender_run": "du029.2"
+ },
+ "u029 TestInheritanceGenericNominalConstraints": {
+  "test": "TestInheritanceGenericNominalConstraints",
+  "package": "internal/lower",
+  "prior_verdict": "subsumed",
+  "subsumed_by": "TestInheritanceGenericViewsKeepNominalArguments",
+  "defense": "defended",
+  "unique_mutant": "D1 internal/lower/class_generic_calls.go:52",
+  "attempts": [
+   {
+    "mutant": "D1",
+    "file_line": "internal/lower/class_generic_calls.go:52",
+    "change": "Drop generic-function nominal type-argument validation.",
+    "rows_failed": [
+     "TestInheritanceGenericNominalConstraints"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/inheritance-defense/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D1.log 2>&1; class_inheritance_test.go:290: want nominal constraint refusal with structural repair, got <nil>",
+  "unit": "u029",
+  "defender_run": "du029.3"
+ },
+ "u029 TestInheritanceGenericFactoryLayouts": {
+  "test": "TestInheritanceGenericFactoryLayouts",
+  "package": "internal/lower",
+  "prior_verdict": "subsumed",
+  "subsumed_by": "TestInheritanceGenericMonomorphizations",
+  "defense": "not defended",
+  "unique_mutant": null,
+  "attempts": [
+   {
+    "mutant": "D2",
+    "file_line": "internal/lower/class_generic_calls.go:67",
+    "change": "Drop the generic-factory mapper and cache assignment.",
+    "rows_failed": []
+   },
+   {
+    "mutant": "D3",
+    "file_line": "internal/lower/class_generic_calls.go:51",
+    "change": "Swap source and target arguments to newTypeMapper.",
+    "rows_failed": []
+   },
+   {
+    "mutant": "D4",
+    "file_line": "internal/lower/class_inheritance.go:933",
+    "change": "Use the unsubstituted generic base type.",
+    "rows_failed": [
+     "TestCheckedCastProofAndElision",
+     "TestInheritanceGenericFactoryLayouts",
+     "TestInheritanceGenericMonomorphizations",
+     "TestInheritanceGenericSoundness",
+     "TestInheritanceNativeSignatureLimits"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/inheritance-defense/cache/D4 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D4.log 2>&1; class_inheritance_test.go:297: Lower refused acceptance row: ... stage 0 can't lower a class instantiated with T[\"native\"] yet",
+  "unit": "u029",
+  "defender_run": "du029.3"
+ },
+ "u030 TestClassWrongOutputKeysRepair": {
+  "test": "TestClassWrongOutputKeysRepair",
+  "package": "internal/lower",
+  "prior_verdict": "subsumed",
+  "subsumed_by": [
+   "TestClassFeaturesPrivateStorage"
+  ],
+  "defense": "defended",
+  "unique_mutant": "D3 internal/lower/class_features.go:83",
+  "attempts": [
+   {
+    "mutant": "D3",
+    "file_line": "internal/lower/class_features.go:83",
+    "change": "Set fresh-object classification to false, disabling the explicit-copy exemption.",
+    "rows_failed": [
+     "TestClassWrongOutputKeysRepair"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/class-key-defense/cache/D3 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D3.log 2>&1; class_wrong_output_test.go:42: Lower refused acceptance row: /tmp/adamic-gate/TestClassWrongOutputKeysRepair1648862599/001/main.a:2:66: Adamic 0.1 refuses a structural Object.keys view that can hide an iterable literal's symbol-key storage (adamic/symbol-key-view); pass a new plain object containing only the desired string-keyed fields to Object.keys",
+  "unit": "u030",
+  "defender_run": "du030.1"
+ },
+ "u030 TestClassWrongOutputPrivateRepair": {
+  "test": "TestClassWrongOutputPrivateRepair",
+  "package": "internal/lower",
+  "prior_verdict": "subsumed",
+  "subsumed_by": [
+   "TestDefiniteAssignmentSoundNeighbors"
+  ],
+  "defense": "not defended",
+  "unique_mutant": null,
+  "attempts": [
+   {
+    "mutant": "D2",
+    "file_line": "internal/lower/class.go:364",
+    "change": "Change receiver-instantiation condition from OR to AND.",
+    "rows_failed": []
+   },
+   {
+    "mutant": "D4",
+    "file_line": "internal/lower/class_static.go:202",
+    "change": "Remove the static-method receiver parameter by passing -1.",
+    "rows_failed": [
+     "TestClassWrongOutputPrivateRepair",
+     "TestPrivateAndPublicStaticsAgreeWithNode"
+    ]
+   },
+   {
+    "mutant": "D5",
+    "file_line": "internal/lower/class_static.go:177",
+    "change": "Change static dispatch function index to function - 1.",
+    "rows_failed": [
+     "TestClassWrongOutputPrivateRepair",
+     "TestPrivateAndPublicStaticsAgreeWithNode"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/class-key-defense/cache/D4 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D4.log 2>&1; class_wrong_output_test.go:48: JavaScript backend stdout = \"\", source Node = \"s1\\n\"",
+  "unit": "u030",
+  "defender_run": "du030.1"
+ },
+ "u030 TestDefiniteAssignmentUsesReadiness": {
+  "test": "TestDefiniteAssignmentUsesReadiness",
+  "package": "internal/lower",
+  "prior_verdict": "subsumed",
+  "subsumed_by": [
+   "TestReadinessElisionRequiresDominatingAssignment"
+  ],
+  "defense": "defended",
+  "unique_mutant": "D1 internal/lower/readiness.go:376",
+  "attempts": [
+   {
+    "mutant": "D1",
+    "file_line": "internal/lower/readiness.go:376",
+    "change": "Set call detection to false, preventing calls from invalidating field readiness facts.",
+    "rows_failed": [
+     "TestDefiniteAssignmentUsesReadiness"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/class-key-defense/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D1.log 2>&1; definite_assignment_test.go:51: 0 checked reads, want 1",
+  "unit": "u030",
+  "defender_run": "du030.1"
+ },
+ "u027 TestCensusRestMutableElements": {
+  "test": "TestCensusRestMutableElements",
+  "package": "internal/lower",
+  "prior_verdict": "subsumed",
+  "subsumed_by": [
+   "TestAMutableLocationSeenWiderIsRefused"
+  ],
+  "defense": "defended",
+  "unique_mutant": "R1 internal/lower/invariance.go:457",
+  "attempts": [
+   {
+    "mutant": "R1",
+    "file_line": "internal/lower/invariance.go:457",
+    "change": "Change the skipped node kind from ParenthesizedExpression to SpreadElement.",
+    "rows_failed": [
+     "TestCensusRestMutableElements"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-census/cache/R1 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > R1.log 2>&1; census_small_test.go:72: a rest copy still shares mutable elements; expected refusal, got <nil>",
+  "unit": "u027",
+  "defender_run": "du027.2"
+ },
+ "u027 TestCensusBooleanDeadBranch": {
+  "test": "TestCensusBooleanDeadBranch",
+  "package": "internal/lower",
+  "prior_verdict": "untrue",
+  "subsumed_by": [],
+  "defense": "defended",
+  "unique_mutant": "B2 internal/lower/census_small.go:383",
+  "attempts": [
+   {
+    "mutant": "B1",
+    "file_line": "internal/lower/census_small.go:383",
+    "change": "Change the fallback type constant from ir.Boolean to ir.String.",
+    "rows_failed": []
+   },
+   {
+    "mutant": "B2",
+    "file_line": "internal/lower/census_small.go:383",
+    "change": "Return an arithmetic ir.Binary early, before logical operator selection.",
+    "rows_failed": [
+     "TestCensusBooleanDeadBranch"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-census/cache/B2 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > B2.log 2>&1; census_small_test.go:84: Lower refused acceptance row: main.a:5:6: stage 0 can't lower a value of type never yet",
+  "unit": "u027",
+  "defender_run": "du027.2"
+ },
+ "u029 TestInheritanceKeepsCheckerConstructorRules": {
+  "test": "TestInheritanceKeepsCheckerConstructorRules",
+  "package": "internal/lower",
+  "prior_verdict": "subsumed",
+  "subsumed_by": "TestClassFeaturesPrivateChecker",
+  "defense": "defended",
+  "unique_mutant": "D1 internal/load/load.go:245",
+  "attempts": [
+   {
+    "mutant": "D1",
+    "file_line": "internal/load/load.go:245",
+    "change": "Return an empty formatted message for TS2511, losing the abstract-construction diagnostic.",
+    "rows_failed": [
+     "TestInheritanceKeepsCheckerConstructorRules"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/defend-class-inheritance/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D1.log 2>&1; class_inheritance_test.go:82: want abstract, got",
+  "unit": "u029",
+  "defender_run": "du029.1"
+ },
+ "u029 TestInheritanceCycleFinderIncludesInheritedFields": {
+  "test": "TestInheritanceCycleFinderIncludesInheritedFields",
+  "package": "internal/lower",
+  "prior_verdict": "subsumed",
+  "subsumed_by": "TestInheritanceGenericSoundness",
+  "defense": "defended",
+  "unique_mutant": "D4 internal/lower/cycles.go:234",
+  "attempts": [
+   {
+    "mutant": "D3",
+    "file_line": "internal/lower/cycles.go:236",
+    "change": "Return after the first data field.",
+    "rows_failed": [
+     "TestInheritanceCycleFinderIncludesInheritedFields",
+     "TestReadonlyFieldsAreJudgedByTheirConstructorsWrites",
+     "TestWhatZeroOneRefusesIsRefusedWithAFix"
+    ]
+   },
+   {
+    "mutant": "D4",
+    "file_line": "internal/lower/cycles.go:234",
+    "change": "Return at a property whose declaring owner differs from the queried class, losing inherited fields.",
+    "rows_failed": [
+     "TestInheritanceCycleFinderIncludesInheritedFields"
+    ]
+   },
+   {
+    "mutant": "D5",
+    "file_line": "internal/lower/cycles.go:239",
+    "change": "Omit the final selected field with an off-by-one bound.",
+    "rows_failed": [
+     "TestClassFeaturesStaticInterfaceCycle",
+     "TestClassFeaturesStaticParentCycle",
+     "TestClassFeaturesStaticSoundness",
+     "TestInheritanceCycleFinderIncludesInheritedFields",
+     "TestInheritanceGenericSoundness",
+     "TestInheritanceRefusesUnsoundOverrides",
+     "TestLiteralMethodCapturesCannotMakeCycles",
+     "TestReadonlyFieldsAreJudgedByTheirConstructorsWrites",
+     "TestWhatZeroOneRefusesIsRefusedWithAFix"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/defend-class-inheritance/cache/D4 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D4.log 2>&1; class_inheritance_test.go:127: cycle traversal lost Base.parent when visiting Child",
+  "unit": "u029",
+  "defender_run": "du029.1"
+ },
+ "u029 TestInheritanceRefusesThisBeforeSuperReturns": {
+  "test": "TestInheritanceRefusesThisBeforeSuperReturns",
+  "package": "internal/lower",
+  "prior_verdict": "subsumed",
+  "subsumed_by": "TestInheritanceConditionalThisRules",
+  "defense": "defended",
+  "unique_mutant": "D2 internal/lower/class.go:755",
+  "attempts": [
+   {
+    "mutant": "D2",
+    "file_line": "internal/lower/class.go:755",
+    "change": "Change the repair from call super(...) to call super.",
+    "rows_failed": [
+     "TestInheritanceRefusesThisBeforeSuperReturns"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/defend-class-inheritance/cache/D2 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D2.log 2>&1; class_inheritance_test.go:179: want pre-super this refusal with fix, got /tmp/adamic-gate/TestInheritanceRefusesThisBeforeSuperReturns4048356991/001/main.a:3:37: Adamic 0.1 refuses this before super returns; call super before using this",
+  "unit": "u029",
+  "defender_run": "du029.1"
+ },
+ "u028 TestCheckPragmaNeighborsCompile": {
+  "test": "TestCheckPragmaNeighborsCompile",
+  "package": "internal/lower",
+  "prior_verdict": "untrue",
+  "subsumed_by": [],
+  "defense": "cannot-judge",
+  "unique_mutant": null,
+  "attempts": [],
+  "evidence": "No meaningful menu-compliant pragma-neighbor-specific mutant was built without changing the upstream parser or inserting a raw-text matcher. Separate empty-answer probe: ADAMIC_BUILD_CACHE_DIR=/tmp/defend-check-pragmas/cache/P1 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '^TestCheckPragmaNeighborsCompile$'; PASS (0.15s), despite Lower returning nil,nil.",
+  "unit": "u028",
+  "defender_run": "du028.1"
+ },
+ "u028 TestClassFeaturesReadonlyChecker": {
+  "test": "TestClassFeaturesReadonlyChecker",
+  "package": "internal/lower",
+  "prior_verdict": "subsumed",
+  "subsumed_by": [
+   "TestClassFeaturesPrivateChecker"
+  ],
+  "defense": "not defended",
+  "unique_mutant": null,
+  "attempts": [
+   {
+    "mutant": "D3",
+    "file_line": "internal/lower/class_inheritance.go:435",
+    "change": "Drop the ordinary field-initializer store.",
+    "rows_failed": [
+     "TestUndecidedCycleReadsUseReadyChecks",
+     "TestInheritanceKeepsNominalTupleDestructuring",
+     "TestInheritanceAllowsSoundOverrides",
+     "TestClassFeaturesPrivateStorage",
+     "TestClassFeaturesReadonlyChecker",
+     "TestAgreementInheritedFieldWitness",
+     "TestDefiniteAssignmentSoundNeighbors"
+    ]
+   },
+   {
+    "mutant": "D4",
+    "file_line": "internal/lower/class_inheritance.go:342",
+    "change": "Drop fresh-object construction and constructor-body emission.",
+    "rows_failed": [
+     "TestUndecidedCycleReadsUseReadyChecks",
+     "TestParameterPropertyValueMatchesNode",
+     "TestParameterPropertyCheckerContracts",
+     "TestReadinessErrorIncludesReceiverExpression",
+     "TestReadonlyFieldsAreJudgedByTheirConstructorsWrites",
+     "TestClassFeaturesPrivateStorage",
+     "TestClassFeaturesReadonlyChecker",
+     "TestDefiniteAssignmentSoundNeighbors",
+     "TestDefiniteAssignmentUsesReadiness",
+     "TestClassWrongOutputPrivateRepair",
+     "TestClassWrongOutputKeysRepair",
+     "TestPredicateOverloadRuntime",
+     "TestInheritanceKeepsNominalTupleDestructuring",
+     "TestAgreementParameterPropertyWitness",
+     "TestEnumSlotViews",
+     "TestAMethodReadAsAValueIsRefused",
+     "TestAViewThatCantWriteIsNotRefused",
+     "TestClassArgumentsUseCheckerIdentity"
+    ]
+   },
+   {
+    "mutant": "D5",
+    "file_line": "internal/lower/class.go:448",
+    "change": "Swap property-store receiver and value.",
+    "rows_failed": [
+     "TestParameterPropertyCheckerContracts",
+     "TestInheritanceGenericMonomorphizations",
+     "TestReadonlyFieldsAreJudgedByTheirConstructorsWrites",
+     "TestClassFeaturesPrivateStorage",
+     "TestClassFeaturesReadonlyChecker",
+     "TestDefiniteAssignmentUsesReadiness",
+     "TestDefiniteAssignmentSoundNeighbors",
+     "TestClassWrongOutputPrivateRepair",
+     "TestFlagEnumsDomain",
+     "TestInheritanceGenericFactoryLayouts",
+     "TestAMethodReadAsAValueIsRefused",
+     "TestAViewThatCantWriteIsNotRefused",
+     "TestWhatZeroOneRefusesIsRefusedWithAFix",
+     "TestDefaultTaggedInterfaceAdmission",
+     "TestEnumSlotViews"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-check-pragmas/cache/D5 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D5.log 2>&1; class_features_test.go:31: JavaScript backend stdout = \"\", source Node = \"again:changed\\n\". TestClassFeaturesPrivateStorage caught all three attempts.",
+  "unit": "u028",
+  "defender_run": "du028.1"
+ },
+ "u028 TestClassFeaturesPrivateChecker": {
+  "test": "TestClassFeaturesPrivateChecker",
+  "package": "internal/lower",
+  "prior_verdict": "subsumed",
+  "subsumed_by": [
+   "TestTsgoHonorsNoCheckInAdamicFiles"
+  ],
+  "defense": "defended",
+  "unique_mutant": "D2 internal/load/load.go:255",
+  "attempts": [
+   {
+    "mutant": "D1",
+    "file_line": "internal/load/load.go:255",
+    "change": "Limit formatted diagnostic messages to 70 characters.",
+    "rows_failed": [
+     "TestClassFeaturesPrivateChecker",
+     "TestInputSpreadCoverage"
+    ]
+   },
+   {
+    "mutant": "D2",
+    "file_line": "internal/load/load.go:255",
+    "change": "Limit messages to 80 characters, preserving the spread fragment while cutting private identifier.",
+    "rows_failed": [
+     "TestClassFeaturesPrivateChecker"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-check-pragmas/cache/D2 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D2.log 2>&1; class_features_test.go:42: want tsc private scope diagnostic, got ... error TS18013: Property '#value' is not accessible outside class 'Box' because it has a private",
+  "unit": "u028",
+  "defender_run": "du028.1"
+ },
+ "u027 TestCensusPredicateInteractionBoundary": {
+  "test": "TestCensusPredicateInteractionBoundary",
+  "package": "internal/lower",
+  "prior_verdict": "subsumed",
+  "subsumed_by": [
+   "TestCensusPredicateInteractionEscapes"
+  ],
+  "defense": "defended",
+  "unique_mutant": "D1 internal/lower/predicates.go:37",
+  "attempts": [
+   {
+    "mutant": "D1",
+    "file_line": "internal/lower/predicates.go:37",
+    "change": "Remove adamic/no-type-predicate from the diagnostic Fix constant.",
+    "rows_failed": [
+     "TestCensusPredicateInteractionBoundary"
+    ]
+   }
+  ],
+  "evidence": "Apply D1.diff; ADAMIC_BUILD_CACHE_DIR=/tmp/defend027/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D1.log 2>&1; census_predicate_interaction_test.go:33: want marker proof boundary diagnostic.",
+  "unit": "u027",
+  "defender_run": "du027.1"
+ },
+ "u027 TestCensusPredicateInteractionEscapes": {
+  "test": "TestCensusPredicateInteractionEscapes",
+  "package": "internal/lower",
+  "prior_verdict": "subsumed",
+  "subsumed_by": [
+   "TestCensusPredicateInteractionBoundary"
+  ],
+  "defense": "defended",
+  "unique_mutant": "D2 internal/lower/predicates.go:442",
+  "attempts": [
+   {
+    "mutant": "D2",
+    "file_line": "internal/lower/predicates.go:442",
+    "change": "Disable export rejection when admitting callback owners.",
+    "rows_failed": [
+     "TestCensusPredicateInteractionEscapes"
+    ]
+   }
+  ],
+  "evidence": "Apply D2.diff; ADAMIC_BUILD_CACHE_DIR=/tmp/defend027/cache/D2 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D2.log 2>&1; census_predicate_interaction_test.go:55: want unproven live callback refused, got <nil>",
+  "unit": "u027",
+  "defender_run": "du027.1"
+ },
+ "u027 TestCensusPredicateMarkerKeepsProofBoundaries": {
+  "test": "TestCensusPredicateMarkerKeepsProofBoundaries",
+  "package": "internal/lower",
+  "prior_verdict": "subsumed",
+  "subsumed_by": [
+   "TestCensusPredicateInteractionEscapes"
+  ],
+  "defense": "defended",
+  "unique_mutant": "D5 internal/lower/census_small.go:429",
+  "attempts": [
+   {
+    "mutant": "D3",
+    "file_line": "internal/lower/census_predicate_marker.go:60",
+    "change": "Admit single-signature slots without requiring never-rest.",
+    "rows_failed": []
+   },
+   {
+    "mutant": "D4",
+    "file_line": "internal/lower/census_small.go:429",
+    "change": "Classify number-rest signatures as erased.",
+    "rows_failed": [
+     "TestCensusPredicateMarkerKeepsProofBoundaries",
+     "TestNestedRestIsSupported"
+    ]
+   },
+   {
+    "mutant": "D5",
+    "file_line": "internal/lower/census_small.go:429",
+    "change": "Classify number-rest explicit function types as erased, while preserving function declarations.",
+    "rows_failed": [
+     "TestCensusPredicateMarkerKeepsProofBoundaries"
+    ]
+   }
+  ],
+  "evidence": "Apply D5.diff; ADAMIC_BUILD_CACHE_DIR=/tmp/defend027/cache/D5 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D5.log 2>&1; census_predicate_marker_test.go:20: unobservable marker exception escaped its boundary: <nil>",
+  "unit": "u027",
+  "defender_run": "du027.1"
+ },
+ "u022 TestClosureArgumentsCountTargets": {
+  "test": "TestClosureArgumentsCountTargets",
+  "package": "internal/ir",
+  "prior_verdict": "subsumed",
+  "subsumed_by": [
+   "TestArgumentLayouts"
+  ],
+  "defense": "defended",
+  "unique_mutant": "D1 internal/ir/call_targets.go:102",
+  "attempts": [
+   {
+    "mutant": "D1",
+    "file_line": "internal/ir/call_targets.go:102",
+    "change": "return p.ClosureArgumentLayout(call).Count -> return !p.ClosureArgumentLayout(call).Count",
+    "rows_failed": [
+     "TestClosureArgumentsCountTargets"
+    ]
+   }
+  ],
+  "evidence": "Apply D1.diff; ADAMIC_BUILD_CACHE_DIR=/tmp/defendir/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/ir/ -run . > D1.log 2>&1; arguments_length_test.go:13: type 10: true, want false",
+  "unit": "u022",
+  "defender_run": "du022.1"
+ },
+ "u022 TestCallTargetsIncludeEveryDescendant": {
+  "test": "TestCallTargetsIncludeEveryDescendant",
+  "package": "internal/ir",
+  "prior_verdict": "subsumed",
+  "subsumed_by": [
+   "TestCallMayThrowUsesReachableTargets"
+  ],
+  "defense": "defended",
+  "unique_mutant": "D2 internal/ir/call_targets.go:15",
+  "attempts": [
+   {
+    "mutant": "D2",
+    "file_line": "internal/ir/call_targets.go:15",
+    "change": "return targets -> return targets[1:]",
+    "rows_failed": [
+     "TestCallTargetsIncludeEveryDescendant"
+    ]
+   }
+  ],
+  "evidence": "Apply D2.diff; ADAMIC_BUILD_CACHE_DIR=/tmp/defendir/cache/D2 timeout 120 go test -json -count=1 -timeout 90s ./internal/ir/ -run . > D2.log 2>&1; call_targets_test.go:36: missing Base override 3 in [9 12 15]; call_targets_test.go:40: want four implementations, got [9 12 15]",
+  "unit": "u022",
+  "defender_run": "du022.1"
+ },
+ "u020 TestOctoberFeaturesAppear": {
+  "test": "TestOctoberFeaturesAppear",
+  "package": "internal/fuzz",
+  "prior_verdict": "subsumed",
+  "subsumed_by": "TestSharedSliceCutsShare",
+  "defense": "defended",
+  "unique_mutant": "D1 internal/fuzz/generate.go:1226",
+  "attempts": [
+   {
+    "mutant": "D1",
+    "file_line": "internal/fuzz/generate.go:1226",
+    "change": "Change emitted /a/g.exec to /b/g.exec.",
+    "rows_failed": [
+     "TestOctoberFeaturesAppear"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/fuzz-defense/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/fuzz/ -run . > D1.log 2>&1; fuzz_test.go:120: 200 seeds never wrote /a/g.exec",
+  "unit": "u020",
+  "defender_run": "du020.2"
+ },
+ "u020 TestSharedSliceCutsShare": {
+  "test": "TestSharedSliceCutsShare",
+  "package": "internal/fuzz",
+  "prior_verdict": "subsumed",
+  "subsumed_by": "TestOctoberFeaturesAppear",
+  "defense": "defended",
+  "unique_mutant": "D2 internal/fuzz/generate.go:1374",
+  "attempts": [
+   {
+    "mutant": "D2",
+    "file_line": "internal/fuzz/generate.go:1374",
+    "change": "Move template slice start from 96 to 97; adjust its byte length from 96 to 94.",
+    "rows_failed": [
+     "TestSharedSliceCutsShare"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/fuzz-defense/cache/D2 timeout 120 go test -json -count=1 -timeout 90s ./internal/fuzz/ -run . > D2.log 2>&1; fuzz_test.go:176: cut 10's slice is only 47 units, too short to reach a position-index checkpoint",
+  "unit": "u020",
+  "defender_run": "du020.2"
+ },
+ "u020 TestFuzzerSharesRuntimeLibrary": {
+  "test": "TestFuzzerSharesRuntimeLibrary",
+  "package": "internal/fuzz",
+  "prior_verdict": "subsumed",
+  "subsumed_by": "TestJudgeReadsThePanicLine",
+  "defense": "defended",
+  "unique_mutant": "D3 internal/fuzz/run.go:51",
+  "attempts": [
+   {
+    "mutant": "D3",
+    "file_line": "internal/fuzz/run.go:51",
+    "change": "Prepare requests native.Options{Sanitize: false} instead of true.",
+    "rows_failed": [
+     "TestFuzzerSharesRuntimeLibrary"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/fuzz-defense/cache/D3 timeout 120 go test -json -count=1 -timeout 90s ./internal/fuzz/ -run . > D3.log 2>&1; runtime_test.go:26: fuzzer uses an unsanitized runtime.a path, Build uses the sanitized runtime.a path",
+  "unit": "u020",
+  "defender_run": "du020.2"
+ },
+ "u017 TestProvisionedPrettierFixtures": {
+  "test": "TestProvisionedPrettierFixtures",
+  "package": "internal/corpusfiles",
+  "prior_verdict": "subsumed",
+  "subsumed_by": [
+   "TestConvertedPackageContracts"
+  ],
+  "defense": "defended",
+  "unique_mutant": "D01 internal/corpusfiles/files.go:72",
+  "attempts": [
+   {
+    "mutant": "D01",
+    "file_line": "internal/corpusfiles/files.go:72",
+    "change": "Off-by-one iteration bound: patterns becomes patterns[:max(1, len(patterns)-1)].",
+    "rows_failed": [
+     "TestProvisionedPrettierFixtures"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_CSS_FIXTURES=/tmp/defendcorpus/prettier ADAMIC_BUILD_CACHE_DIR=/tmp/defendcorpus/cache/D01 timeout 120 go test -json -count=1 -timeout 90s ./internal/corpusfiles/ -run . > D01.log 2>&1; files_test.go:170: corpus-files: /tmp/defendcorpus/prettier root tests/format/less: no tracked files match [\"*.css\" \"*.scss\" \"*.less\"]",
+  "unit": "u017",
+  "defender_run": "du017.1"
+ },
+ "u020 TestOneSeedOneProgram": {
+  "test": "TestOneSeedOneProgram",
+  "package": "internal/fuzz",
+  "prior_verdict": "untrue",
+  "subsumed_by": [
+   "TestOwnershipShapes"
+  ],
+  "defense": "not defended",
+  "unique_mutant": null,
+  "attempts": [
+   {
+    "mutant": "S1",
+    "file_line": "internal/fuzz/generate.go:27",
+    "change": "Pass constant seed 1 to GenerateWithout.",
+    "rows_failed": [
+     "TestOneSeedOneProgram",
+     "TestOctoberFeaturesAppear",
+     "TestOwnershipShapes",
+     "TestUndefinedNumbersShapes"
+    ]
+   },
+   {
+    "mutant": "S2",
+    "file_line": "internal/fuzz/generate.go:74",
+    "change": "Set the scene-cadence seed to zero.",
+    "rows_failed": [
+     "TestOverridesShapesAndLower",
+     "TestOwnershipShapes"
+    ]
+   },
+   {
+    "mutant": "S3",
+    "file_line": "internal/fuzz/generate.go:74",
+    "change": "Swap the PCG constructor arguments.",
+    "rows_failed": []
+   }
+  ],
+  "evidence": "S1: ADAMIC_BUILD_CACHE_DIR=/tmp/defend-fuzz/cache/S1 timeout 120 go test -json -count=1 -timeout 90s ./internal/fuzz/ -run . > S1.log 2>&1; fuzz_test.go:23: seeds 1 and 2 made the same program. Bounded recovery excluding the stalled shrinker reproduced all four failures.",
+  "unit": "u020",
+  "defender_run": "du020.1"
+ },
+ "u020 TestGeneratedProgramsCheckAndLower": {
+  "test": "TestGeneratedProgramsCheckAndLower",
+  "package": "internal/fuzz",
+  "prior_verdict": "subsumed",
+  "subsumed_by": [
+   "TestUndefinedNumbersShapes"
+  ],
+  "defense": "not defended",
+  "unique_mutant": null,
+  "attempts": [
+   {
+    "mutant": "G1",
+    "file_line": "internal/fuzz/generate.go:1086",
+    "change": "Change slice to sliceMissing.",
+    "rows_failed": [
+     "TestGeneratedProgramsCheckAndLower",
+     "TestOverridesShapesAndLower",
+     "TestUndefinedNumbersShapes"
+    ]
+   },
+   {
+    "mutant": "G2",
+    "file_line": "internal/fuzz/generate.go:952",
+    "change": "Drop the variable-selection guard for constant-string comparisons.",
+    "rows_failed": [
+     "TestGeneratedProgramsCheckAndLower",
+     "TestOverridesShapesAndLower",
+     "TestUndefinedNumbersShapes"
+    ]
+   },
+   {
+    "mutant": "G3",
+    "file_line": "internal/fuzz/generate.go:1093",
+    "change": "Change the numeric map receiver to a string-array receiver.",
+    "rows_failed": [
+     "TestGeneratedProgramsCheckAndLower",
+     "TestUndefinedNumbersShapes"
+    ]
+   }
+  ],
+  "evidence": "G3: ADAMIC_BUILD_CACHE_DIR=/tmp/defend-fuzz/cache/G3 timeout 120 go test -json -count=1 -timeout 90s ./internal/fuzz/ -run . > G3.log 2>&1; fuzz_test.go:61: seed 35: the checker refused it; program.a:105:70: error TS2362: The left-hand side of an arithmetic operation must be of type 'any', 'number', 'bigint' or an enum type.",
+  "unit": "u020",
+  "defender_run": "du020.1"
+ },
+ "u020 TestRegexProgramsPassTheChecker": {
+  "test": "TestRegexProgramsPassTheChecker",
+  "package": "internal/fuzz",
+  "prior_verdict": "subsumed",
+  "subsumed_by": [
+   "TestGeneratedProgramsCheckAndLower"
+  ],
+  "defense": "not defended",
+  "unique_mutant": null,
+  "attempts": [
+   {
+    "mutant": "R1",
+    "file_line": "internal/fuzz/generate.go:218",
+    "change": "Drop the finder declaration.",
+    "rows_failed": [
+     "TestGeneratedProgramsCheckAndLower",
+     "TestOwnershipShapes",
+     "TestRegexProgramsPassTheChecker",
+     "TestUndefinedNumbersShapes"
+    ]
+   },
+   {
+    "mutant": "R2",
+    "file_line": "internal/fuzz/generate.go:1226",
+    "change": "Change exec to execMissing.",
+    "rows_failed": [
+     "TestGeneratedProgramsCheckAndLower",
+     "TestOwnershipShapes",
+     "TestRegexProgramsPassTheChecker",
+     "TestUndefinedNumbersShapes"
+    ]
+   },
+   {
+    "mutant": "R3",
+    "file_line": "internal/fuzz/generate.go:1214",
+    "change": "Generate a numeric receiver for string replacement.",
+    "rows_failed": [
+     "TestGeneratedProgramsCheckAndLower",
+     "TestOwnershipShapes",
+     "TestRegexProgramsPassTheChecker",
+     "TestUndefinedNumbersShapes"
+    ]
+   }
+  ],
+  "evidence": "R2: ADAMIC_BUILD_CACHE_DIR=/tmp/defend-fuzz/cache/R2 timeout 120 go test -json -count=1 -timeout 90s ./internal/fuzz/ -run . > R2.log 2>&1; fuzz_test.go:97: seed 1: the checker refused it; program.a:93:22: error TS2339: Property 'execMissing' does not exist on type 'RegExp'.",
+  "unit": "u020",
+  "defender_run": "du020.1"
+ },
+ "u012 TestParallelCachedMatchesSerial": {
+  "test": "TestParallelCachedMatchesSerial",
+  "package": "cmd/adamic-test262",
+  "prior_verdict": "subsumed",
+  "subsumed_by": "TestCacheAtomicBytes",
+  "defense": "not defended",
+  "unique_mutant": null,
+  "attempts": [
+   {
+    "mutant": "D2",
+    "file_line": "cmd/adamic-test262/cache.go:35",
+    "change": "Record empty stderr.",
+    "rows_failed": [
+     "TestCacheAtomicBytes",
+     "TestCompilerWorkerMatchesSubprocess",
+     "TestParallelCachedMatchesSerial"
+    ]
+   },
+   {
+    "mutant": "D3",
+    "file_line": "cmd/adamic-test262/run.go:169",
+    "change": "Drop long-program-first parallel scheduling sort.",
+    "rows_failed": []
+   },
+   {
+    "mutant": "D4",
+    "file_line": "cmd/adamic-test262/run.go:162",
+    "change": "Force one worker instead of the requested worker count.",
+    "rows_failed": []
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/test262-defense/cache/D2 ADAMIC_TEST262_MEASURE=1 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-test262/ -run . > D2.log 2>&1; cache_test.go:175: round 0 differs. D3 and D4 whole-package runs passed.",
+  "unit": "u012",
+  "defender_run": "du012.2"
+ },
+ "u012 TestImportedInputsRunFresh": {
+  "test": "TestImportedInputsRunFresh",
+  "package": "cmd/adamic-test262",
+  "prior_verdict": "subsumed",
+  "subsumed_by": "TestCompilerCacheProgram",
+  "defense": "defended",
+  "unique_mutant": "D1 cmd/adamic-test262/run.go:272",
+  "attempts": [
+   {
+    "mutant": "D1",
+    "file_line": "cmd/adamic-test262/run.go:272",
+    "change": "Drop dependent-program cache bypass in engine.attempt.",
+    "rows_failed": [
+     "TestImportedInputsRunFresh"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/test262-defense/cache/D1 ADAMIC_TEST262_MEASURE=1 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-test262/ -run . > D1.log 2>&1; cache_test.go:280: mutable imported input served stale native observation: [exit 1 vs 0 exit 1 vs 0]",
+  "unit": "u012",
+  "defender_run": "du012.2"
+ },
+ "u018 TestFlowLiveness____oracle_testdata_timsort_a_63f1305dfb95": {
+  "test": "TestFlowLiveness____oracle_testdata_timsort_a_63f1305dfb95",
+  "package": "internal/flow",
+  "prior_verdict": "subsumed",
+  "subsumed_by": [
+   "TestFlowProgram family"
+  ],
+  "defense": "family-part",
+  "unique_mutant": null,
+  "attempts": [
+   {
+    "mutant": "D2",
+    "file_line": "internal/flow/liveness.go:25",
+    "change": "Off by one: omit the first instruction transfer.",
+    "rows_failed": [
+     "TestFlowLiveness____oracle_testdata_timsort_a_63f1305dfb95",
+     "TestFlowProgram family"
+    ]
+   },
+   {
+    "mutant": "D3",
+    "file_line": "internal/flow/liveness.go:33",
+    "change": "Drop the definition-kill loop.",
+    "rows_failed": []
+   },
+   {
+    "mutant": "D4",
+    "file_line": "internal/flow/liveness.go:25",
+    "change": "Off by one: omit the final instruction transfer, including return reads.",
+    "rows_failed": [
+     "TestFlowLiveness____oracle_testdata_timsort_a_63f1305dfb95",
+     "TestFlowProgram family"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/flow-defense/cache/D4 timeout 120 go test -json -count=1 -timeout 90s ./internal/flow/ -run .; corpus_units_test.go:9143: function 2 (numbers): a variable (declaration 12) is read after instruction 9, where liveness says it's dead. Completed bounded replays also failed timsort, joins and mutations.",
+  "unit": "u018",
+  "defender_run": "du018.2",
+  "defender_defense": "not defended",
+  "keeper_note": "One fixture-named member of the TestFlowLiveness family (one member per oracle fixture); judged with its family, never alone."
+ },
+ "u018 TestDebuggerHasNoFlowInstruction": {
+  "test": "TestDebuggerHasNoFlowInstruction",
+  "package": "internal/flow",
+  "prior_verdict": "subsumed",
+  "subsumed_by": [
+   "TestFlowSingleAssignment____oracle_testdata_timsort_a_63f1305dfb95"
+  ],
+  "defense": "defended",
+  "unique_mutant": "D1 internal/flow/build.go:177",
+  "attempts": [
+   {
+    "mutant": "D1",
+    "file_line": "internal/flow/build.go:177",
+    "change": "Return early for a literal-number Evaluate.",
+    "rows_failed": [
+     "TestDebuggerHasNoFlowInstruction"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/flow-defense/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/flow/ -run .; debugger_test.go:18: debugger changed the flow: 0 instructions, want 1. All other 834 tests passed; their names are listed in matrix.json.",
+  "unit": "u018",
+  "defender_run": "du018.2"
+ },
+ "u011 TestAdaptStrictEq": {
+  "test": "TestAdaptStrictEq",
+  "package": "cmd/adamic-test262",
+  "prior_verdict": "subsumed",
+  "subsumed_by": [],
+  "defense": "defended",
+  "unique_mutant": "D1 cmd/adamic-test262/adapt.go:1878",
+  "attempts": [
+   {
+    "mutant": "D1",
+    "file_line": "cmd/adamic-test262/adapt.go:1878",
+    "change": "Change inequality replacement from !== to ===",
+    "rows_failed": [
+     "TestAdaptStrictEq"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-adapt/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-test262/ -run .; adapt_test.go:156: missing strict ops:",
+  "unit": "u011",
+  "defender_run": "du011.1"
+ },
+ "u011 TestAdaptLeavesCheckoutText": {
+  "test": "TestAdaptLeavesCheckoutText",
+  "package": "cmd/adamic-test262",
+  "prior_verdict": "untrue",
+  "subsumed_by": [
+   "TestAdaptClassKeepsVars",
+   "TestAdaptVarToLet"
+  ],
+  "defense": "not defended",
+  "unique_mutant": null,
+  "attempts": [
+   {
+    "mutant": "D2",
+    "file_line": "cmd/adamic-test262/adapt.go:631",
+    "change": "Drop class-body skip",
+    "rows_failed": []
+   },
+   {
+    "mutant": "D3",
+    "file_line": "cmd/adamic-test262/adapt.go:632",
+    "change": "Drop class unsafe-vars marker",
+    "rows_failed": [
+     "TestAdaptClassKeepsVars"
+    ]
+   },
+   {
+    "mutant": "D4",
+    "file_line": "cmd/adamic-test262/adapt.go:35",
+    "change": "Return one byte fewer on the unchanged-source path",
+    "rows_failed": [
+     "TestAdaptClassKeepsVars",
+     "TestAdaptLeavesCheckoutText",
+     "TestAdaptVarToLet"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-adapt/cache/D4 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-test262/ -run .; adapt_test.go:194: class file changed: main.adapted{Source:\"class Box { value: number; }\", Counts:map[string]int(nil)}",
+  "unit": "u011",
+  "defender_run": "du011.1"
+ },
+ "u007 TestBuildTargetParsing": {
+  "test": "TestBuildTargetParsing",
+  "package": "cmd/adamic",
+  "prior_verdict": "subsumed",
+  "subsumed_by": [
+   "TestWASIRejectsTSGoArchive"
+  ],
+  "defense": "defended",
+  "unique_mutant": "D1 cmd/adamic/tsgo.go:21",
+  "attempts": [
+   {
+    "mutant": "D1",
+    "file_line": "cmd/adamic/tsgo.go:21",
+    "change": "Change malformed-target rejection from return 2 to return 1.",
+    "rows_failed": [
+     "TestBuildTargetParsing"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_ORACLE_WASI=1 WASI_SYSROOT=/tmp/defend-cmd-adamic/sdk/share/wasi-sysroot ADAMIC_BUILD_CACHE_DIR=/tmp/defend-cmd-adamic/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run . > D1.log 2>&1; target_test.go:18: [build --target unknown missing.a -o out.wasm]: got 1, want usage error (2)",
+  "unit": "u007",
+  "defender_run": "du007.1"
+ },
+ "u012 TestNodeCacheProgram": {
+  "test": "TestNodeCacheProgram",
+  "package": "cmd/adamic-test262",
+  "prior_verdict": "subsumed",
+  "subsumed_by": [
+   "TestCacheKeyDimensions"
+  ],
+  "defense": "not defended",
+  "unique_mutant": null,
+  "attempts": [
+   {
+    "mutant": "D02",
+    "file_line": "cmd/adamic-test262/cache.go:60",
+    "change": "Omit program source from Node cache key.",
+    "rows_failed": [
+     "TestCacheKeyDimensions",
+     "TestNodeCacheProgram"
+    ]
+   },
+   {
+    "mutant": "D04",
+    "file_line": "cmd/adamic-test262/run.go:379",
+    "change": "Reduce runCommand capture limit to six bytes.",
+    "rows_failed": [
+     "TestParallelCachedMatchesSerial",
+     "TestProgramCPUDeadline",
+     "TestCompilerCacheProgram",
+     "TestNodeCacheProgram",
+     "TestNativeCacheGeneratedC"
+    ]
+   },
+   {
+    "mutant": "D05",
+    "file_line": "cmd/adamic-test262/run.go:392",
+    "change": "Swap stdout and stderr capture destinations.",
+    "rows_failed": [
+     "TestParallelCachedMatchesSerial",
+     "TestCompilerStartupMeasurement",
+     "TestProgramCPUDeadline",
+     "TestRunProgramFractionalCPUBudget",
+     "TestCompilerCacheProgram",
+     "TestLargeCompilerOutputIsComplete",
+     "TestNativeCacheGeneratedC",
+     "TestNodeCacheProgram",
+     "TestWorkerLazyFallback",
+     "TestRunCommandExactCaptureCapacity",
+     "TestImportedInputsRunFresh",
+     "TestUnavailableCacheStillRuns",
+     "TestMiniRunner"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_TEST262_MEASURE=1 ADAMIC_BUILD_CACHE_DIR=/tmp/defend262/cache/D05 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-test262/ -run . > D05.log 2>&1; cache_test.go:31: changed Node program served \"\", want \"before\\n\"",
+  "unit": "u012",
+  "defender_run": "du012.1"
+ },
+ "u012 TestNativeCacheGeneratedC": {
+  "test": "TestNativeCacheGeneratedC",
+  "package": "cmd/adamic-test262",
+  "prior_verdict": "subsumed",
+  "subsumed_by": [
+   "TestCacheKeyDimensions"
+  ],
+  "defense": "not defended",
+  "unique_mutant": null,
+  "attempts": [
+   {
+    "mutant": "D03",
+    "file_line": "cmd/adamic-test262/cache.go:63",
+    "change": "Omit generated C from native cache key.",
+    "rows_failed": [
+     "TestCacheKeyDimensions",
+     "TestNativeCacheGeneratedC"
+    ]
+   },
+   {
+    "mutant": "D04",
+    "file_line": "cmd/adamic-test262/run.go:379",
+    "change": "Reduce runCommand capture limit to six bytes.",
+    "rows_failed": [
+     "TestParallelCachedMatchesSerial",
+     "TestProgramCPUDeadline",
+     "TestCompilerCacheProgram",
+     "TestNodeCacheProgram",
+     "TestNativeCacheGeneratedC"
+    ]
+   },
+   {
+    "mutant": "D05",
+    "file_line": "cmd/adamic-test262/run.go:392",
+    "change": "Swap stdout and stderr capture destinations.",
+    "rows_failed": [
+     "TestParallelCachedMatchesSerial",
+     "TestCompilerStartupMeasurement",
+     "TestProgramCPUDeadline",
+     "TestRunProgramFractionalCPUBudget",
+     "TestCompilerCacheProgram",
+     "TestLargeCompilerOutputIsComplete",
+     "TestNativeCacheGeneratedC",
+     "TestNodeCacheProgram",
+     "TestWorkerLazyFallback",
+     "TestRunCommandExactCaptureCapacity",
+     "TestImportedInputsRunFresh",
+     "TestUnavailableCacheStillRuns",
+     "TestMiniRunner"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_TEST262_MEASURE=1 ADAMIC_BUILD_CACHE_DIR=/tmp/defend262/cache/D05 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-test262/ -run . > D05.log 2>&1; cache_test.go:50: changed emitted C served \"\", want \"before\\n\"",
+  "unit": "u012",
+  "defender_run": "du012.1"
+ },
+ "u012 TestCacheBypass": {
+  "test": "TestCacheBypass",
+  "package": "cmd/adamic-test262",
+  "prior_verdict": "subsumed",
+  "subsumed_by": [
+   "TestEditCacheSeparation"
+  ],
+  "defense": "defended",
+  "unique_mutant": "D01 cmd/adamic-test262/cache.go:90",
+  "attempts": [
+   {
+    "mutant": "D01",
+    "file_line": "cmd/adamic-test262/cache.go:90",
+    "change": "Change failed-start exclusion sentinel from -1 to -2.",
+    "rows_failed": [
+     "TestCacheBypass"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_TEST262_MEASURE=1 ADAMIC_BUILD_CACHE_DIR=/tmp/defend262/cache/D01 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-test262/ -run . > D01.log 2>&1; cache_test.go:130: transient failure cached",
+  "unit": "u012",
+  "defender_run": "du012.1"
+ },
+ "u018 TestFlowSingleAssignment____oracle_testdata_timsort_a_63f1305dfb95": {
+  "test": "TestFlowSingleAssignment____oracle_testdata_timsort_a_63f1305dfb95",
+  "package": "internal/flow",
+  "prior_verdict": "subsumed",
+  "subsumed_by": [
+   "TestFlowProgram family"
+  ],
+  "defense": "family-part",
+  "unique_mutant": null,
+  "attempts": [
+   {
+    "mutant": "D1",
+    "file_line": "internal/flow/build.go:268",
+    "change": "Drop counted-loop update statements",
+    "rows_failed": [
+     "TestFlowProgram family",
+     "TestFlowSingleAssignment____oracle_testdata_timsort_a_63f1305dfb95",
+     "TestFlowGraphPaths____oracle_testdata_timsort_a_63f1305dfb95"
+    ]
+   },
+   {
+    "mutant": "D3",
+    "file_line": "internal/flow/ssa.go:169",
+    "change": "Skip renaming the final parameter",
+    "rows_failed": [
+     "TestFlowProgram family"
+    ]
+   },
+   {
+    "mutant": "D4",
+    "file_line": "internal/flow/ssa.go:214",
+    "change": "Decrement unsealed predecessors by two",
+    "rows_failed": [
+     "TestFlowProgram family",
+     "TestFlowSingleAssignment____oracle_testdata_timsort_a_63f1305dfb95"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-flow/cache/D4-whole timeout 120 go test -json -count=1 -timeout 90s ./internal/flow/ -run .; corpus_units_test.go:8555: shape$8 in instruction 17 names [{6 0}] (a phi: true), want a phi over what reaches it, [{6 0} {16 0}]",
+  "unit": "u018",
+  "defender_run": "du018.1",
+  "defender_defense": "not defended"
+ },
+ "u018 TestFlowMutationRanges____oracle_testdata_timsort_a_63f1305dfb95": {
+  "test": "TestFlowMutationRanges____oracle_testdata_timsort_a_63f1305dfb95",
+  "package": "internal/flow",
+  "prior_verdict": "subsumed",
+  "subsumed_by": [
+   "TestFlowProgram family"
+  ],
+  "defense": "family-part",
+  "unique_mutant": null,
+  "attempts": [
+   {
+    "mutant": "D2",
+    "file_line": "internal/flow/build.go:301",
+    "change": "Route the for-of back edge to its exit",
+    "rows_failed": [
+     "TestFlowProgram family",
+     "TestFlowGraphPaths____oracle_testdata_timsort_a_63f1305dfb95"
+    ]
+   },
+   {
+    "mutant": "D6",
+    "file_line": "internal/flow/ranges.go:1450",
+    "change": "Narrow transitive-mutation range end by one",
+    "rows_failed": [
+     "TestFlowProgram family"
+    ]
+   },
+   {
+    "mutant": "D7",
+    "file_line": "internal/flow/ranges.go:1490",
+    "change": "Drop deferred loop-phi alias assignments",
+    "rows_failed": []
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-flow/cache/D6-whole timeout 120 go test -json -count=1 -timeout 90s ./internal/flow/ -run .; assigned row passed: --- PASS: TestFlowMutationRanges____oracle_testdata_timsort_a_63f1305dfb95 (13.98s). It also passed D2 and D7.",
+  "unit": "u018",
+  "defender_run": "du018.1",
+  "defender_defense": "not defended"
+ },
+ "u018 TestFlowGraphPaths____oracle_testdata_timsort_a_63f1305dfb95": {
+  "test": "TestFlowGraphPaths____oracle_testdata_timsort_a_63f1305dfb95",
+  "package": "internal/flow",
+  "prior_verdict": "subsumed",
+  "subsumed_by": [
+   "TestFlowProgram family"
+  ],
+  "defense": "family-part",
+  "unique_mutant": null,
+  "attempts": [
+   {
+    "mutant": "D1",
+    "file_line": "internal/flow/build.go:268",
+    "change": "Drop counted-loop update statements",
+    "rows_failed": [
+     "TestFlowProgram family",
+     "TestFlowSingleAssignment____oracle_testdata_timsort_a_63f1305dfb95",
+     "TestFlowGraphPaths____oracle_testdata_timsort_a_63f1305dfb95"
+    ]
+   },
+   {
+    "mutant": "D2",
+    "file_line": "internal/flow/build.go:301",
+    "change": "Route the for-of back edge to its exit",
+    "rows_failed": [
+     "TestFlowProgram family",
+     "TestFlowGraphPaths____oracle_testdata_timsort_a_63f1305dfb95"
+    ]
+   },
+   {
+    "mutant": "D5",
+    "file_line": "internal/flow/build.go:275",
+    "change": "Replace the counted-loop exit edge with its body",
+    "rows_failed": [
+     "TestFlowProgram family",
+     "TestFlowGraphPaths____oracle_testdata_timsort_a_63f1305dfb95"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-flow/cache/D5-whole timeout 120 go test -json -count=1 -timeout 90s ./internal/flow/ -run .; corpus_units_test.go:9137: function 2 ran a point the graph says can't be reached",
+  "unit": "u018",
+  "defender_run": "du018.1",
+  "defender_defense": "not defended"
+ },
+ "u-fresh TestMethodKeepsArgument": {
+  "test": "TestMethodKeepsArgument",
+  "package": "internal/fresh",
+  "prior_verdict": "subsumed",
+  "subsumed_by": [
+   "TestNodeFSFileOperandsStillJudgeWrites"
+  ],
+  "defense": "defended",
+  "unique_mutant": "D1 internal/fresh/fresh.go:1467",
+  "attempts": [
+   {
+    "mutant": "D1",
+    "file_line": "internal/fresh/fresh.go:1467",
+    "change": "Drop conservative argument escape handling for non-direct calls.",
+    "rows_failed": [
+     "TestMethodKeepsArgument"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/fresh-defense/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/fresh/ -run .; fresh_test.go:102: method-kept argument closes a cycle: want refusal, got <nil>. All other 817 tests passed; matrix.json lists their names.",
+  "unit": "u-fresh",
+  "defender_run": "du-fresh.1"
+ },
+ "u-fresh TestNodeFSFileDoesNotEscapeBorrowedObjects": {
+  "test": "TestNodeFSFileDoesNotEscapeBorrowedObjects",
+  "package": "internal/fresh",
+  "prior_verdict": "subsumed",
+  "subsumed_by": [
+   "TestNodeFSFileResultsAreFresh"
+  ],
+  "defense": "not defended",
+  "unique_mutant": null,
+  "attempts": [
+   {
+    "mutant": "D2",
+    "file_line": "internal/fresh/node_fs_file.go:8",
+    "change": "Return early through a retaining, clobbering call for primitive host operations.",
+    "rows_failed": []
+   },
+   {
+    "mutant": "D3",
+    "file_line": "internal/fresh/node_fs_file.go:9",
+    "change": "Drop filesystem argument evaluation.",
+    "rows_failed": [
+     "TestNodeFSFileOperandsStillJudgeWrites"
+    ]
+   },
+   {
+    "mutant": "D4",
+    "file_line": "internal/fresh/fresh.go:1333",
+    "change": "Drop the host dispatch return, reaching the existing unknown-node fallback.",
+    "rows_failed": [
+     "TestFreshCorpus family",
+     "TestNodeFSFileDoesNotEscapeBorrowedObjects",
+     "TestNodeFSFileOperationsAreKnown",
+     "TestNodeFSFileResultsAreFresh",
+     "TestStatAtimeSelfCycleRemainsUnproven"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/fresh-defense/cache/D4 timeout 120 go test -json -count=1 -timeout 90s ./internal/fresh/ -run .; node_fs_file_test.go:63: is_file: borrowed argument poisoned a fresh tree write. The returned list contains an unknown write plus the proven next-field write. Exact output and all failing corpus members are in matrix.json and D4.log.",
+  "unit": "u-fresh",
+  "defender_run": "du-fresh.1"
  }
 }

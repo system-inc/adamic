@@ -11,12 +11,16 @@ elif "." in unitId:
     unitId, chunk = unitId.split(".", 1)
     chunk = int(chunk)
 units = {u["unit"]: u for u in json.load(open(manifest))["units"]}
-u = units[unitId]
-rows = [r for r in json.load(open(ledgerPath)) if r["unit"] == unitId and (r.get("keeper_verdict") or r.get("verdict")) in ("subsumed", "untrue")]
+ledger = json.load(open(ledgerPath))
+# Wave A's unit (u-fresh) predates the manifest: its package and slug come from its own rows.
+u = units.get(unitId) or next(({"package": r["package"], "slug": r["package"].replace("/", "-")} for r in ledger if r["unit"] == unitId), None)
+if u is None:
+    sys.exit("defender-for: no unit " + unitId)
+rows = [r for r in ledger if r["unit"] == unitId and (r.get("keeper_verdict") or r.get("verdict")) in ("subsumed", "untrue")]
 # A family's setup or numbered shard is part of one test (the audit brief's family rule), never defended on its own.
 # Product rows are one family too (brief v8: TestProduct_* siblings differ only in input), the build phase their
 # consumers run, so they are never deletion candidates on their own.
-rows = [r for r in rows if not re.search(r"_(Setup|\d{2,3})$", r["test"]) and not r["test"].startswith("TestProduct_")]
+rows = [r for r in rows if not re.search(r"_(Setup|\d{2,3})$", r["test"]) and not r["test"].startswith("TestProduct_") and "____" not in r["test"]]
 if names is not None:
     rows = [r for r in rows if r["test"] in names]
 if chunk is not None:

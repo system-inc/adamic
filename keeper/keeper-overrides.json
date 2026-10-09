@@ -42,5 +42,17 @@
  "u068 TestRegexCycleFixtureHasItsNativeDependency": {
   "defense": "dead",
   "keeper_note": "No assertion: the body only skips when nativeRegexSlicePresent() is false (regexp_cycle_test.go:37-42 at main), so on main it passes having checked nothing (du068.1: 0.0% production coverage, 0.017 s). Dead by construction: delete, or give it the check its name promises; owner review."
+ },
+ "u121 TestCompileProfiles": {
+  "defense": "keep-only-build",
+  "keeper_note": "The package's only test and the gate's only native build of the no-underscore-dangle port. No menu mutant fails it (it asserts buildability, not findings), so the deletion-set replay called it deletable mechanically (d5cd4ddd). Kept: deleting it removes the build check without adding one. The fix is the filed lint-rule finding (agreement rows against Go cohere)."
+ },
+ "u076 TestCanonicalizeUnicodeNodeRange family": {
+  "defense": "keep-set",
+  "keeper_note": "Deletion-set replay (c08a7410): with it gone, canonicalize_tables.go:22-24 mutants are caught only by a hash pin (TestUnicodeNodeShardCoverage, shards_test.go:160). Its Node agreement is the real guard of those tables."
+ },
+ "u018 TestFlowLiveness____oracle_testdata_timsort_a_63f1305dfb95": {
+  "defense": "family-part",
+  "keeper_note": "One fixture-named member of the TestFlowLiveness family (one member per oracle fixture); judged with its family, never alone."
  }
 }
