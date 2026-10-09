@@ -2,7 +2,7 @@
 === PAUSE TestPlaceholderWeakSlotStaysNotYet
 === CONT  TestPlaceholderWeakSlotStaysNotYet
     placeholder_test.go:129: unsupported weak placeholder: <nil>
---- FAIL: TestPlaceholderWeakSlotStaysNotYet (0.13s)
+--- FAIL: TestPlaceholderWeakSlotStaysNotYet (0.04s)
 FAIL
-FAIL	github.com/system-inc/adamic/internal/lower	0.151s
+FAIL	github.com/system-inc/adamic/internal/lower	0.042s
 FAIL

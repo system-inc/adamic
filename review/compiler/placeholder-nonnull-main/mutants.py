@@ -9,6 +9,8 @@ cases = [
  ('json-ordinary-assertion','internal/lower/library_json_stringify.go','if l.uninitializedInitializer(n) && l.placeholderDeclaration(n) {','if false && l.uninitializedInitializer(n) && l.placeholderDeclaration(n) {','./internal/oracle','^TestNativeAgreesWithNode$/internal/oracle/testdata/placeholder_nonnull_null_json[.]a$'),
  ('admit-weak-slot','internal/lower/expression.go','return 0, l.notYet(node, "a placeholder slot holding Weak; its target-read semantics need a separate checked boundary")','return ir.Union, nil','./internal/lower','^TestPlaceholderWeakSlotStaysNotYet$'),
  ('omit-refusal-state','internal/lower/placeholder.go','if l.result == nil {\n\t\tl.result = &ir.Program{}\n\t}','if false && l.result == nil {\n\t\tl.result = &ir.Program{}\n\t}','./internal/lower','^TestOptionalWideningSpreadOverwrite$'),
+ ('drop-native-nullish-tags','internal/native/placeholder.go','e.line("if (%s == %d || %s == %d || (%s == %d && (%s->reference == NULL || %s->reference == &adamic_null))) {", kind, ir.UndefinedRepresentation, kind, ir.NullRepresentation, kind, ir.Union, slot, slot)','e.line("if (%s == %d && (%s->reference == NULL || %s->reference == &adamic_null)) {", kind, ir.Union, slot, slot)','./internal/oracle','^TestNativeAgreesWithNode$/internal/oracle/testdata/placeholder_nonnull_null_copy[.]a$'),
+ ('drop-javascript-union-tag','internal/javascript/javascript.go','if field.Uninitialized && field.Value.Type() == ir.Union {','if false && field.Uninitialized && field.Value.Type() == ir.Union {','./internal/oracle','^TestDefaultTaggedSourceViews$/default-boxed-write$'),
 ]
 results=[]
 for name,file,before,after,package,selector in cases:

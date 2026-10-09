@@ -14,7 +14,7 @@
     ],
     "exit": 1,
     "caught": true,
-    "seconds": 6.302761357001145
+    "seconds": 6.829667189005704
   },
   {
     "name": "retain-alias-proof",
@@ -31,7 +31,7 @@
     ],
     "exit": 1,
     "caught": true,
-    "seconds": 6.60382313199807
+    "seconds": 6.615984532996663
   },
   {
     "name": "nullish-receiver-twice",
@@ -48,7 +48,7 @@
     ],
     "exit": 1,
     "caught": true,
-    "seconds": 7.357284655998228
+    "seconds": 6.5882202360007796
   },
   {
     "name": "json-ordinary-assertion",
@@ -65,7 +65,7 @@
     ],
     "exit": 1,
     "caught": true,
-    "seconds": 16.23297634899791
+    "seconds": 6.488251872004184
   },
   {
     "name": "admit-weak-slot",
@@ -82,7 +82,7 @@
     ],
     "exit": 1,
     "caught": true,
-    "seconds": 15.605852648994187
+    "seconds": 8.5132986000026
   },
   {
     "name": "omit-refusal-state",
@@ -99,6 +99,40 @@
     ],
     "exit": 1,
     "caught": true,
-    "seconds": 31.70049502800248
+    "seconds": 9.838314496002567
+  },
+  {
+    "name": "drop-native-nullish-tags",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/placeholder-nonnull-main/drop-native-nullish-tags.json",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode$/internal/oracle/testdata/placeholder_nonnull_null_copy[.]a$",
+      "-count=1",
+      "-v"
+    ],
+    "exit": 1,
+    "caught": true,
+    "seconds": 9.586359993001679
+  },
+  {
+    "name": "drop-javascript-union-tag",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/placeholder-nonnull-main/drop-javascript-union-tag.json",
+      "./internal/oracle",
+      "-run",
+      "^TestDefaultTaggedSourceViews$/default-boxed-write$",
+      "-count=1",
+      "-v"
+    ],
+    "exit": 1,
+    "caught": true,
+    "seconds": 7.409658370997931
   }
 ]

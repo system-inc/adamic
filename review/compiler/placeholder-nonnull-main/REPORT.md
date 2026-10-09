@@ -1,7 +1,7 @@
 Rebuilt step 09 literal placeholder initialization on main, including typed-use checks and honest null/undefined observations.
 Five requested commits replayed as db195ccd2, 0131f51f3, 6416a497e, 6458bff12 and 28af90505; main adaptation is 895034708.
 Build, focused lowerer/oracle/CLI tests, a-check and vet pass; counts regeneration passed with 40 changed rows.
-Seven flow IR mutants, null-tag and spread mutants, readiness mutants and six independent compiler mutants are caught.
+Seven flow IR mutants, null-tag and spread mutants, readiness mutants and eight independent compiler mutants are caught.
 Native tsc over the measured corpus and the full gate were not run; Weak/accessor/escaping reset boundaries remain unsupported.
 
 Base: origin/main e8b02f8ca. No main or area branch was merged into or pushed. No c2 dependency was carried: main plus the five requested commits builds without c2 additions.
@@ -29,7 +29,7 @@ Commands:
 - ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^(TestRequiredViewFieldPrimitive|TestRequiredViewFieldOperandOnce|TestNarrowedFieldUsesSharedReadiness|TestViewFieldInheritedStaticReadiness|TestDefaultTaggedSourceViews|TestPlaceholder.*)$|TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull' -count=1 -v: final both-backend oracles pass, 22.500s; sanitizers and completed-program leaks. Checked stops pin exit 70 separately from allowed Node nullish observations.
 - go test ./internal/lower ./internal/oracle ./cmd/adamic -run Placeholder -count=1 -v: split tests pass, 0.717s lowerer, 2.458s oracle, 0.627s CLI before CLI case split.
 - python3 review/compiler/placeholder-nonnull-main/a-check.py: integration Gate.aCheck implementation, 20 changed .a files, exit 0, 15.2s.
-- python3 review/compiler/placeholder-nonnull-main/mutants.py: all six independent mutants caught, exit 0. No compiler or clang failure is credited except the standalone refusal-pass bookkeeping regression's intended Go panic.
+- python3 review/compiler/placeholder-nonnull-main/mutants.py: all eight independent mutants caught, exit 0. No compiler or clang failure is credited except the standalone refusal-pass bookkeeping regression's intended Go panic.
 - go test ./internal/oracle -run TestCountsAreRecorded -count=1 -args -update-counts: exit 0, 99.182s aggregate across the recorded fixture census.
 - go vet ./cmd/adamic ./internal/flow ./internal/fresh ./internal/ir ./internal/javascript ./internal/lower ./internal/native ./internal/oracle: exit 0.
 - gofmt on changed Go files and git diff --check: clean.
@@ -139,3 +139,11 @@ New top-level test seconds (reported Go execution, every leaf under 60s; setup i
 | TestPlaceholderWeakSlotStaysNotYet | 0.23 |
 
 The first parallel catalog checks and final CLI build exhausted temporary disk during concurrent Go builds, reporting no space left on device. Those failed controls are not mutant catches. They are retried sequentially after temporary worktrees are cleaned up. Final CLI case functions pass: C 0.08s, JavaScript 0.08s, Build 0.23s.
+
+Catalog entry 09 retry at 895034708: check.sh HEAD --entry 09 -jobs 1 exits 0, applies-and-fails-as-recorded; clean control passes and numeric zero changes stdout versus Node. Entry 12 at f39014171: check.sh HEAD --entry 12 -jobs 1 exits 0, applies-and-fails-as-recorded; clean control passes and the removed suppression-directive refusal fails the required cases. Both patch application checks pass unchanged. Entry 09 is also rerun on f39014171.
+
+Integration lane checks after commit f39014171: lane checks 3.2 s: gofmt and tools on 39 Go files, t.Parallel on 3 test packages; vet 3 packages. The first lane command omitted the toolchain environment and could not find gofmt; sourcing /workspace/adamic-tools/env.sh and rerunning the prescribed command passes.
+
+The two main compatibility mutants are independently caught: dropping native nullish metadata handling fails the null_copy source Node oracle; dropping JavaScript placeholder union initialization tags fails TestDefaultTaggedSourceViews/default-boxed-write (exit 70 instead of Node output 42 and true). Both are behavior failures, not compiler or sanitizer failures.
+
+Final entry 09 on f39014171 passes, applies-and-fails-as-recorded; clean control 0 and expected mutant failure. Entry 12 on the same code tip passes likewise. Their disposable worktree results and logs are retained in catalog-09-final/ and catalog-12-final/. Changes after this tip are evidence and mutant runners only.
