@@ -1,0 +1,47 @@
+[
+  {
+    "test": "TestExtAgreesWithGo",
+    "package": "stage1/cohere/formatfiles",
+    "file": "stage1/cohere/formatfiles/ext_agreement_test.go",
+    "seconds": 0.172,
+    "oracle": "Go filepath.Ext executed on all 17 table inputs; Node executes the port and JSON bytes are compared. The built-in index-zero negative control additionally requires a self-written empty JSON string.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M01",
+      "M02",
+      "M03"
+    ],
+    "unique_kills": [
+      "M01",
+      "M03"
+    ],
+    "last_proven_fail": "M03: ext_agreement_test.go:74: ext(\"x.y/z\"): Node \".y/z\", filepath.Ext \"\"",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 3,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "vacuous_subcases": [
+      "no_dot",
+      "root",
+      "empty",
+      "dot_before_separator"
+    ],
+    "bounded": false,
+    "matrix_rows": [
+      "TestExtAgreesWithGo",
+      "TestFormatfilesShardPlantedDisagreement",
+      "TestProduct_FormatfilesGoOracle",
+      "TestProduct_FormatfilesNative family",
+      "TestProduct_FormatfilesNativeUnsanitized",
+      "TestThePortParsesAsGoCohereDoes family"
+    ],
+    "evidence": "printf M03 > /workspace/u090-selector; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/formatfiles/ -run . > M03.log 2>&1; ext_agreement_test.go:74: ext(\"x.y/z\"): Node \".y/z\", filepath.Ext \"\""
+  }
+]

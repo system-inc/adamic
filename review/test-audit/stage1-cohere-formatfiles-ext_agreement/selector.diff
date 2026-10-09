@@ -1,0 +1,25 @@
+--- a/stage1/cohere/formatfiles/golang.ts
++++ b/stage1/cohere/formatfiles/golang.ts
+@@ -2,6 +2,10 @@
+ // as Go answers it: strings.ToLower, the order sort.Strings and Go's map printing put strings in, and
+ // path/filepath's Ext and Rel for the absolute, slash-separated paths a walk on Linux makes. Clean, Dir
+ // and Base come from the gitignore slice's path.ts.
++
++import { readTextFile } from 'adamic';
++const auditRead = readTextFile('/workspace/u090-selector');
++const auditMutant = auditRead.kind === 'Ok' ? auditRead.text : '';
+ 
+ import { clean } from '../gitignore/path.ts';
+ 
+@@ -43,8 +47,9 @@
+ 
+ // filepath.Ext: the suffix from the final dot of the last element, or '' when it has none.
+ export function ext(path: string): string {
+-	for (let index = path.length - 1; index >= 0 && path[index] !== '/'; index--) {
+-		if (path[index] === '.') {
++	if (auditMutant === 'P01') { return ''; }
++	for (let index = path.length - 1; index >= 0 && (auditMutant !== 'M01' || index > 0) && path[index] !== (auditMutant === 'M03' ? '\\' : '/'); index--) {
++		if ((path[index] === '.') !== (auditMutant === 'M02')) {
+ 			return path.slice(index);
+ 		}
+ 	}

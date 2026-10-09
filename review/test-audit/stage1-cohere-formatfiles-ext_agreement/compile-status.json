@@ -1,0 +1,66 @@
+[
+  {
+    "id": "M01",
+    "apply_status": 0,
+    "compile_status": 0,
+    "native_rebuild_seconds": 5.170462270001735,
+    "command": [
+      "timeout",
+      "90",
+      "/workspace/u090-tmp/adamic",
+      "build",
+      "/workspace/u090-tmp/standalone/M01/formatfiles/main.ts",
+      "-o",
+      "/workspace/u090-tmp/standalone/M01/port",
+      "--sanitize"
+    ]
+  },
+  {
+    "id": "M02",
+    "apply_status": 0,
+    "compile_status": 0,
+    "native_rebuild_seconds": 4.641349157001969,
+    "command": [
+      "timeout",
+      "90",
+      "/workspace/u090-tmp/adamic",
+      "build",
+      "/workspace/u090-tmp/standalone/M02/formatfiles/main.ts",
+      "-o",
+      "/workspace/u090-tmp/standalone/M02/port",
+      "--sanitize"
+    ]
+  },
+  {
+    "id": "M03",
+    "apply_status": 0,
+    "compile_status": 0,
+    "native_rebuild_seconds": 4.203751954002655,
+    "command": [
+      "timeout",
+      "90",
+      "/workspace/u090-tmp/adamic",
+      "build",
+      "/workspace/u090-tmp/standalone/M03/formatfiles/main.ts",
+      "-o",
+      "/workspace/u090-tmp/standalone/M03/port",
+      "--sanitize"
+    ]
+  },
+  {
+    "id": "P01",
+    "apply_status": 0,
+    "compile_status": 0,
+    "native_rebuild_seconds": 3.1606238249987655,
+    "command": [
+      "timeout",
+      "90",
+      "/workspace/u090-tmp/adamic",
+      "build",
+      "/workspace/u090-tmp/standalone/P01/formatfiles/main.ts",
+      "-o",
+      "/workspace/u090-tmp/standalone/P01/port",
+      "--sanitize"
+    ]
+  }
+]

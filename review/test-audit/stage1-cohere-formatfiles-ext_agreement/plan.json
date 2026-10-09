@@ -1,0 +1,26 @@
+[
+  {
+    "id": "M01",
+    "file": "stage1/cohere/formatfiles/golang.ts",
+    "line": 46,
+    "before": "index >= 0",
+    "after": "index > 0",
+    "menu": "off-by-one bound"
+  },
+  {
+    "id": "M02",
+    "file": "stage1/cohere/formatfiles/golang.ts",
+    "line": 47,
+    "before": "path[index] === '.'",
+    "after": "path[index] !== '.'",
+    "menu": "flip condition"
+  },
+  {
+    "id": "M03",
+    "file": "stage1/cohere/formatfiles/golang.ts",
+    "line": 46,
+    "before": "path[index] !== '/'",
+    "after": "path[index] !== '\\\\'",
+    "menu": "change constant"
+  }
+]

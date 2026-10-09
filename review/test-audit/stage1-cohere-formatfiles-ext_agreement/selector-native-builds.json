@@ -1,0 +1,72 @@
+[
+  {
+    "test": "TestProduct_FormatfilesNativeTrailingDot",
+    "output": "formatfiles_shards_test.go:182: build formatfiles-native-a_trailing_dot_no_extension bd58cba882e0 miss 3.11",
+    "seconds": 3.11
+  },
+  {
+    "test": "TestThePortParsesAsGoCohereDoes_008",
+    "output": "formatfiles_shards_test.go:182: build formatfiles-native a3c8abaf98cf miss 2.74",
+    "seconds": 2.74
+  },
+  {
+    "test": "TestThePortParsesAsGoCohereDoes_020",
+    "output": "formatfiles_shards_test.go:182: build formatfiles-native-an_extension_lowercased_as_JavaScript_does 653637d8740c miss 3.88",
+    "seconds": 3.88
+  },
+  {
+    "test": "TestThePortParsesAsGoCohereDoes_019",
+    "output": "formatfiles_shards_test.go:182: build formatfiles-native-the_declined_extensions_sorted_by_UTF-16_unit c33b27cab7b5 miss 3.96",
+    "seconds": 3.96
+  },
+  {
+    "test": "TestThePortParsesAsGoCohereDoes_016",
+    "output": "formatfiles_shards_test.go:182: build formatfiles-native-Adamic_files_declined_instead_of_held_back d137fede13fa miss 4.24",
+    "seconds": 4.24
+  },
+  {
+    "test": "TestThePortParsesAsGoCohereDoes_011",
+    "output": "formatfiles_shards_test.go:182: build formatfiles-native-a_bare_.a_name_held_back_as_Adamic 6302e16e312d miss 4.48",
+    "seconds": 4.48
+  },
+  {
+    "test": "TestThePortParsesAsGoCohereDoes_029",
+    "output": "formatfiles_shards_test.go:182: build formatfiles-native-a_.git_link_to_nothing_taken_for_a_repository ed0acbc46e86 miss 4.63",
+    "seconds": 4.63
+  },
+  {
+    "test": "TestThePortParsesAsGoCohereDoes_027",
+    "output": "formatfiles_shards_test.go:182: build formatfiles-native-uppercase_.A_held_back_as_Adamic 449f37ea8190 miss 4.94",
+    "seconds": 4.94
+  },
+  {
+    "test": "TestThePortParsesAsGoCohereDoes_028",
+    "output": "formatfiles_shards_test.go:182: build formatfiles-native-a_link_round_a_loop_taken_for_nothing e7ea3ebd71ab miss 5.00",
+    "seconds": 5.0
+  },
+  {
+    "test": "TestThePortParsesAsGoCohereDoes_025",
+    "output": "formatfiles_shards_test.go:182: build formatfiles-native-a_.prettierignore_link_to_nothing_let_through 78e3a1131083 miss 4.94",
+    "seconds": 4.94
+  },
+  {
+    "test": "TestThePortParsesAsGoCohereDoes_022",
+    "output": "formatfiles_shards_test.go:182: build formatfiles-native-DEL_passed_by_the_quoting's_fast_path 7913aadb9c79 miss 4.80",
+    "seconds": 4.8
+  },
+  {
+    "test": "TestProduct_FormatfilesNativeDanglingLink",
+    "output": "formatfiles_shards_test.go:182: build formatfiles-native-a_link_to_nothing_taken_for_nothing 1ed0d72cb1e0 miss 4.68",
+    "seconds": 4.68
+  },
+  {
+    "test": "TestProduct_FormatfilesNativeUnsanitized",
+    "output": "formatfiles_prepare_test.go:117: build formatfiles-native-unsanitized 50c6a9c5801b miss 2.80",
+    "seconds": 2.8
+  },
+  {
+    "test": "TestProduct_FormatfilesNativeQuoteMark",
+    "output": "formatfiles_shards_test.go:182: build formatfiles-native-a_quote_passed_by_the_quoting's_fast_path b9fafaff618d miss 4.30",
+    "seconds": 4.3
+  }
+]

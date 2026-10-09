@@ -1,0 +1,11 @@
+--- a/stage1/cohere/formatfiles/golang.ts
++++ b/stage1/cohere/formatfiles/golang.ts
+@@ -44,7 +44,7 @@
+ // filepath.Ext: the suffix from the final dot of the last element, or '' when it has none.
+ export function ext(path: string): string {
+ 	for (let index = path.length - 1; index >= 0 && path[index] !== '/'; index--) {
+-		if (path[index] === '.') {
++		if (path[index] !== '.') {
+ 			return path.slice(index);
+ 		}
+ 	}

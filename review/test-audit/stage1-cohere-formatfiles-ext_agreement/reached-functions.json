@@ -1,0 +1,13 @@
+{
+  "functions": [
+    {
+      "file": "stage1/cohere/formatfiles/golang.ts",
+      "line": 45,
+      "function": "ext",
+      "calls": [
+        "String.slice (Node builtin)"
+      ]
+    }
+  ],
+  "scope": "Target row imports golang.ts but calls only ext; clean and other exports are not invoked by ext. Go filepath.Ext and the copied-driver helpers are oracle and harness."
+}
