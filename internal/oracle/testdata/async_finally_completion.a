@@ -1,0 +1,71 @@
+async function returned(): Promise<string> {
+    try { await Promise.resolve(); return `held${7}`; }
+    finally { console.log('return cleanup'); await Promise.resolve(); console.log('return resumed'); }
+}
+async function thrown(): Promise<void> {
+    try { await Promise.resolve(); throw new Error(`held${8}`); }
+    finally { console.log('throw cleanup'); await Promise.resolve(); console.log('throw resumed'); }
+}
+async function broken(): Promise<void> {
+    for (let i = 0; i < 3; i++) {
+        try { await Promise.resolve(); break; }
+        finally { console.log(`break${i}`); await Promise.resolve(); }
+    }
+    console.log('broken');
+}
+async function nested(): Promise<string> {
+    try {
+        try { return `old${1}`; }
+        finally { await Promise.resolve(); return `inner${2}`; }
+    } finally { console.log('outer cleanup'); await Promise.resolve(); }
+}
+async function replaced(): Promise<string> {
+    try { return `discard${3}`; }
+    finally { await Promise.resolve(); throw new Error(`replacement${4}`); }
+}
+async function normal(): Promise<void> {
+    try { await Promise.resolve(); console.log('normal body'); }
+    finally { await Promise.resolve(); console.log('normal cleanup'); }
+}
+console.log(await returned());
+try { await thrown(); } catch (error) { if (error instanceof Error) { console.log(error.message); } }
+await broken();
+console.log(await nested());
+try { console.log(await replaced()); } catch (error) { if (error instanceof Error) { console.log(error.message); } }
+await normal();
+async function preserved(): Promise<string> {
+    try { return `pending${9}`; }
+    finally {
+        try { await Promise.reject(new Error(`caught${10}`)); }
+        catch (error) { if (error instanceof Error) { console.log(error.message); } await Promise.resolve(); }
+        try { await Promise.resolve(); }
+        finally { await Promise.resolve(); console.log('nested normal'); }
+    }
+}
+console.log(await preserved());
+async function overrideThrow(): Promise<string> {
+    try { throw new Error(`discarded${11}`); }
+    finally { await Promise.resolve(); return `winner${12}`; }
+}
+console.log(await overrideThrow());
+async function rejected(): Promise<void> {
+    try { await Promise.reject(new Error(`rejected${13}`)); }
+    finally {
+        try { throw new Error(`temporary${14}`); }
+        catch (error) { if (error instanceof Error) { console.log(error.message); } await Promise.resolve(); }
+    }
+}
+try { await rejected(); } catch (error) { if (error instanceof Error) { console.log(error.message); } }
+async function continued(): Promise<void> {
+    for (let i = 0; i < 2; i++) {
+        try { await Promise.resolve(); continue; }
+        finally { await Promise.resolve(); console.log(`continue${i}`); }
+    }
+}
+await continued();
+async function snapshot(): Promise<number> {
+    let value = 41;
+    try { await Promise.resolve(); return value; }
+    finally { value = 99; await Promise.resolve(); console.log(`${value}`); }
+}
+console.log(`${await snapshot()}`);

@@ -9,11 +9,14 @@ func (e *emitter) labeled(statement ir.Labeled) {
 	e.temporaries++
 	target := &loop{sourceName: statement.Name, breakLabel: fmt.Sprintf("adamic_break_%d", e.temporaries), depth: len(e.scopes)}
 	e.loops = append(e.loops, target)
+	e.breakables = append(e.breakables, &breakable{label: target.breakLabel, depth: target.depth, labeled: true})
 	e.line("{")
 	e.nested(statement.Body, nil)
 	e.line("}")
 	e.loops = e.loops[:len(e.loops)-1]
-	if target.broken {
+	broken := e.breakables[len(e.breakables)-1].broken
+	e.breakables = e.breakables[:len(e.breakables)-1]
+	if target.broken || broken {
 		e.line("%s:;", target.breakLabel)
 	}
 }

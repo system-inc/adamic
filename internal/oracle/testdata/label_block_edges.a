@@ -1,0 +1,119 @@
+function syncBreak(): void {
+    for (let i = 0; i < 3; i++) {
+        box: {
+            console.log(`sync break${i}`);
+            break;
+            console.log('sync missed break');
+        }
+        console.log('sync wrong block break');
+    }
+    console.log('sync break done');
+}
+function syncContinue(): void {
+    for (let i = 0; i < 3; i++) {
+        box: {
+            console.log(`sync continue${i}`);
+            continue;
+            console.log('sync missed continue');
+        }
+        console.log('sync wrong block continue');
+    }
+    console.log('sync continue done');
+}
+function syncSwitchBreak(): void {
+    for (let i = 0; i < 2; i++) {
+        box: {
+            switch (i) {
+                case 0:
+                    console.log('sync switch break');
+                    break box;
+                default:
+                    console.log('sync default break');
+                    break box;
+            }
+            console.log('sync wrong switch break');
+        }
+        console.log(`sync switch tail${i}`);
+    }
+}
+function syncOuterContinue(): void {
+    outer: for (let i = 0; i < 2; i++) {
+        box: {
+            for (let j = 0; j < 2; j++) {
+                console.log(`sync outer${i}:${j}`);
+                continue outer;
+            }
+            console.log('sync wrong inner continue');
+        }
+        console.log('sync wrong outer continue');
+    }
+    console.log('sync outer done');
+}
+
+async function asyncBreak(): Promise<void> {
+    for (let i = 0; i < 3; i++) {
+        box: {
+            await Promise.resolve(); console.log(`async break${i}`);
+            break;
+            console.log('async missed break');
+        }
+        console.log('async wrong block break');
+    }
+    console.log('async break done');
+}
+async function asyncContinue(): Promise<void> {
+    for (let i = 0; i < 3; i++) {
+        box: {
+            await Promise.resolve(); console.log(`async continue${i}`);
+            continue;
+            console.log('async missed continue');
+        }
+        console.log('async wrong block continue');
+    }
+    console.log('async continue done');
+}
+async function asyncSwitchBreak(): Promise<void> {
+    for (let i = 0; i < 2; i++) {
+        box: {
+            switch (i) {
+                case 0:
+                    await Promise.resolve(); console.log('async switch break');
+                    break box;
+                default:
+                    await Promise.resolve(); console.log('async default break');
+                    break box;
+            }
+            console.log('async wrong switch break');
+        }
+        console.log(`async switch tail${i}`);
+    }
+}
+async function asyncOuterContinue(): Promise<void> {
+    outer: for (let i = 0; i < 2; i++) {
+        box: {
+            for (let j = 0; j < 2; j++) {
+                await Promise.resolve(); console.log(`async outer${i}:${j}`);
+                continue outer;
+            }
+            console.log('async wrong inner continue');
+        }
+        console.log('async wrong outer continue');
+    }
+    console.log('async outer done');
+}
+
+syncBreak();
+
+syncContinue();
+
+syncSwitchBreak();
+
+syncOuterContinue();
+
+await asyncBreak();
+
+await asyncContinue();
+
+await asyncSwitchBreak();
+
+await asyncOuterContinue();

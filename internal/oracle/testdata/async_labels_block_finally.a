@@ -1,0 +1,19 @@
+async function run(): Promise<void> {
+    outer: for (let i = 0; i < 3; i++) {
+        await Promise.resolve();
+        box: {
+            try {
+                await Promise.resolve();
+                console.log(`body${i}`);
+                if (i === 0) continue outer;
+                break outer;
+            } finally {
+                await Promise.resolve();
+                console.log(`finally${i}`);
+            }
+        }
+        console.log('missed jump');
+    }
+    console.log('done');
+}
+await run();

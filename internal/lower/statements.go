@@ -103,7 +103,18 @@ func (l *lowering) statement(node *ast.Node) ([]ir.Statement, error) {
 			label = node.Label().Text()
 		}
 		if node.Kind == ast.KindBreakStatement {
-			return []ir.Statement{ir.Break{Label: label}}, nil
+			depth := 0
+			if label == "" {
+				for parent := node.Parent; parent != nil; parent = parent.Parent {
+					if parent.Kind == ast.KindSwitchStatement || ast.IsIterationStatement(parent, false) {
+						break
+					}
+					if parent.Kind == ast.KindLabeledStatement {
+						depth++
+					}
+				}
+			}
+			return []ir.Statement{ir.Break{Depth: depth, Label: label}}, nil
 		}
 		return []ir.Statement{ir.Continue{Label: label}}, nil
 	case ast.KindThrowStatement:

@@ -20,9 +20,10 @@ type loop struct {
 // A break to an outer target uses a goto, emitted only when needed, after the target's loop.
 // Cleanup runs before the jump, including every finally and local scope it leaves.
 type breakable struct {
-	depth  int
-	label  string
-	broken bool
+	labeled bool
+	depth   int
+	label   string
+	broken  bool
 }
 
 // block emits statements in a scope of their own.
@@ -341,7 +342,7 @@ func (e *emitter) statement(statement ir.Statement) {
 		target := e.breakables[len(e.breakables)-1-statement.Depth]
 		e.finallies(e.innerHandlers(target.depth))
 		e.releaseScopes(target.depth)
-		if statement.Depth == 0 {
+		if statement.Depth == 0 && !target.labeled {
 			e.line("break;")
 		} else {
 			target.broken = true

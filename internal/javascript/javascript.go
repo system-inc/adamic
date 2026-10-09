@@ -538,7 +538,9 @@ func (e *emitter) statement(at *ir.Statement) {
 		e.line("}")
 	case ir.Labeled:
 		e.line("source_%s: {", statement.Name)
+		e.breakables = append(e.breakables, "source_"+statement.Name)
 		e.nested(statement.Body)
+		e.breakables = e.breakables[:len(e.breakables)-1]
 		e.line("}")
 	case ir.Block:
 		e.line("{")
