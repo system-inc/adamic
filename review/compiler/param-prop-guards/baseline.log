@@ -1,0 +1,10 @@
+=== RUN   TestParameterPropertyCheckerContracts
+=== PAUSE TestParameterPropertyCheckerContracts
+=== RUN   TestParameterPropertyValueMatchesNode
+=== PAUSE TestParameterPropertyValueMatchesNode
+=== CONT  TestParameterPropertyCheckerContracts
+=== CONT  TestParameterPropertyValueMatchesNode
+--- PASS: TestParameterPropertyCheckerContracts (0.14s)
+--- PASS: TestParameterPropertyValueMatchesNode (0.31s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.322s

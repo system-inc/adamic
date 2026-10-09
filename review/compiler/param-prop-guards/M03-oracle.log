@@ -1,0 +1,27 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/parameter_properties.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/parameter_properties.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/parameter_properties.a
+    oracle_test.go:758: the release build: exit codes differ
+        sanitized: exit 1, stdout "", stderr "/home/agent/.cache/adamic/runtime/.build-823664805/string_build_impl.h:40:21: runtime error: member access within null pointer of type 'adamic_string' (aka 'struct adamic_string')\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/agent/.cache/adamic/runtime/.build-823664805/string_build_impl.h:40:21 \n"
+        release:   exit -1, stdout "", stderr ""
+    oracle_test.go:774: exit codes differ
+        node:   exit 0, stdout "plain body 7 1\nplain 7 plain field plain default \nbase body 3\nderived body 9 6 4\ndispatch 12\nderived 8 derived default base field base default derived field \nleft right 11 13\ncallback 12\n", stderr ""
+        native: exit 1, stdout "", stderr "/home/agent/.cache/adamic/runtime/.build-823664805/string_build_impl.h:40:21: runtime error: member access within null pointer of type 'adamic_string' (aka 'struct adamic_string')\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/agent/.cache/adamic/runtime/.build-823664805/string_build_impl.h:40:21 \n"
+    oracle_test.go:780: JavaScript backend: exit codes differ
+        node:    exit 0, stdout "plain body 7 1\nplain 7 plain field plain default \nbase body 3\nderived body 9 6 4\ndispatch 12\nderived 8 derived default base field base default derived field \nleft right 11 13\ncallback 12\n", stderr ""
+        backend: exit 70, stdout "plain body 0 1\nplain 0 plain field plain default \nbase body 0\nderived body 0 0 4\ndispatch 0\nderived 2 derived default base field base default derived field \nundefined undefined 0 0\n", stderr "adamic: panic: TypeError: Cannot read properties of undefined (reading 'receiver')\n"
+    oracle_test.go:787: leaks:
+        exit 1
+        /home/agent/.cache/adamic/runtime/.build-823664805/string_build_impl.h:40:21: runtime error: member access within null pointer of type 'adamic_string' (aka 'struct adamic_string')
+        SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/agent/.cache/adamic/runtime/.build-823664805/string_build_impl.h:40:21 
+--- FAIL: TestNativeAgreesWithNode (0.02s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/parameter_properties.a (0.55s)
+FAIL
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.575s
+FAIL

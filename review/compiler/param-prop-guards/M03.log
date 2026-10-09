@@ -1,0 +1,9 @@
+=== RUN   TestParameterPropertyValueMatchesNode
+=== PAUSE TestParameterPropertyValueMatchesNode
+=== CONT  TestParameterPropertyValueMatchesNode
+    parameter_property_guard_test.go:61: JavaScript backend stdout = "0\n", source Node = "7\n"
+    parameter_property_guard_test.go:68: native backend stdout = "0\n", source Node = "7\n"
+--- FAIL: TestParameterPropertyValueMatchesNode (0.30s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.314s
+FAIL

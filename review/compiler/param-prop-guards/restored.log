@@ -1,0 +1,30 @@
+=== RUN   TestParameterPropertiesSoundness
+=== PAUSE TestParameterPropertiesSoundness
+=== RUN   TestParameterPropertyCheckerContracts
+=== PAUSE TestParameterPropertyCheckerContracts
+=== RUN   TestParameterPropertyCallbackReceiver
+=== PAUSE TestParameterPropertyCallbackReceiver
+=== RUN   TestParameterPropertyValueMatchesNode
+=== PAUSE TestParameterPropertyValueMatchesNode
+=== CONT  TestParameterPropertiesSoundness
+=== RUN   TestParameterPropertiesSoundness/readonly_view
+=== CONT  TestParameterPropertyCallbackReceiver
+=== CONT  TestParameterPropertyValueMatchesNode
+=== CONT  TestParameterPropertyCheckerContracts
+--- PASS: TestParameterPropertyCallbackReceiver (0.07s)
+=== RUN   TestParameterPropertiesSoundness/mutable_override
+=== RUN   TestParameterPropertiesSoundness/readonly_override
+=== RUN   TestParameterPropertiesSoundness/inherited_initializer
+--- PASS: TestParameterPropertyCheckerContracts (0.20s)
+=== RUN   TestParameterPropertiesSoundness/early_default
+=== RUN   TestParameterPropertiesSoundness/field_initializer
+--- PASS: TestParameterPropertiesSoundness (0.26s)
+    --- PASS: TestParameterPropertiesSoundness/readonly_view (0.09s)
+    --- PASS: TestParameterPropertiesSoundness/mutable_override (0.05s)
+    --- PASS: TestParameterPropertiesSoundness/readonly_override (0.03s)
+    --- PASS: TestParameterPropertiesSoundness/inherited_initializer (0.04s)
+    --- PASS: TestParameterPropertiesSoundness/early_default (0.03s)
+    --- PASS: TestParameterPropertiesSoundness/field_initializer (0.03s)
+--- PASS: TestParameterPropertyValueMatchesNode (0.36s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.371s

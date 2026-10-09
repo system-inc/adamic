@@ -1,0 +1,8 @@
+=== RUN   TestParameterPropertyCheckerContracts
+=== PAUSE TestParameterPropertyCheckerContracts
+=== CONT  TestParameterPropertyCheckerContracts
+    parameter_properties_test.go:55: accepted parameter-property program must produce its class and executable statements, not an empty answer
+--- FAIL: TestParameterPropertyCheckerContracts (0.10s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.112s
+FAIL
