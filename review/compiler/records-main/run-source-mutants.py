@@ -37,7 +37,7 @@ end = cycles.index('\tcase l.isLibraryType(holder, "ReadonlyMap")', start)
 cycles = cycles[:start] + '\tcase l.recordElement(holder) != nil:\n' + cycles[end:]
 invariant = replace('invariance.go', 'if source, target := l.recordElement(from), l.recordElement(to); source != nil && target != nil {', 'if source, target := l.recordElement(from), l.recordElement(to); source != nil && target != nil {\n\t\treturn nil // deliberate mutant')
 spread = replace('records.go', 'if widened := l.widened(element, t, map[[2]*checker.Type]bool{}); widened != nil {', 'if widened := l.widened(element, t, map[[2]*checker.Type]bool{}); false && widened != nil {')
-nullable = replace('expression.go', 'if !known || of == ir.Record {', 'if !known {')
+nullable = replace('expression.go', 'if of == ir.Record {', 'if false {')
 nullable = nullable.replace('if shared == ir.Record && l.includesNull(proven) {', 'if false {')
 mutants = [
     ('readonly-index', {'records.go': replace('records.go', ' || infos[0].IsReadonly() ||', ' || false ||')}, 'TestRecordRefusals', 'want "signature"'),

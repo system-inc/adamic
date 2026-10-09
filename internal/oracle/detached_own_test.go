@@ -86,7 +86,7 @@ func TestDetachedOwnReadinessMutant(t *testing.T) {
 		t.Fatal("mutant changed no readiness check")
 	}
 	got, want := onJavaScriptBackend(t, p), onNode(t, path)
-	if got.exitCode != 0 || want.exitCode != 1 || !strings.Contains(string(want.stderr), "ReferenceError") || disagreement(want, got) == "" {
+	if got.exitCode != 0 || want.exitCode != 70 || !strings.Contains(string(want.stderr), "ReferenceError") || disagreement(want, got) == "" {
 		t.Fatalf("initialization mutant survived: Node %+v; mutant %+v", want, got)
 	}
 	t.Log("early intrinsic call caught by Node's initialization stop")
