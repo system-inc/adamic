@@ -497,7 +497,11 @@ func (e *emitter) statement(at *ir.Statement) {
 			if statement.Uninitialized && statement.Value.Type() == ir.Union {
 				representation = int(ir.Union)
 			}
-			e.line("adamicDefineField(%s, %s, %s, %t, %t, %d);", e.value(statement.Object), quote(statement.Name), e.value(statement.Value), !strings.HasPrefix(statement.Name, "#"), !statement.Uninitialized || statement.Unset, representation)
+			value := e.value(statement.Value)
+			if statement.Uninitialized {
+				value = "undefined"
+			}
+			e.line("adamicDefineField(%s, %s, %s, %t, %t, %d);", e.value(statement.Object), quote(statement.Name), value, !strings.HasPrefix(statement.Name, "#"), !statement.Uninitialized || statement.Unset, representation)
 		} else {
 			e.line("adamicWriteField(%s, %s, %s);", e.value(statement.Object), quote(statement.Name), e.value(statement.Value))
 		}
@@ -897,7 +901,11 @@ func (e *emitter) value(expression ir.Expression) string {
 			if field.Absent {
 				continue
 			}
-			fields = append(fields, quote(field.Name)+": "+e.value(field.Value))
+			value := e.value(field.Value)
+			if field.Uninitialized {
+				value = "undefined"
+			}
+			fields = append(fields, quote(field.Name)+": "+value)
 		}
 		object := "({" + strings.Join(fields, ", ") + "})"
 		if expression.Class != 0 {
@@ -1035,6 +1043,12 @@ func (e *emitter) value(expression ir.Expression) string {
 	case ir.ObjectCall:
 		if expression.Checked {
 			return e.checkedObjectEnumeration(expression)
+		}
+		if expression.Method == "optionalDelete" {
+			return "(delete " + e.value(expression.Arguments[0]) + "[" + e.value(expression.Arguments[1]) + "])"
+		}
+		if expression.Method == "optionalIn" {
+			return "(" + e.value(expression.Arguments[1]) + " in " + e.value(expression.Arguments[0]) + ")"
 		}
 		return "Object." + expression.Method + "(" + e.values(expression.Arguments) + ")"
 	case ir.NumberCall:

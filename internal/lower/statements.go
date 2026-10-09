@@ -125,7 +125,7 @@ func (l *lowering) expressionStatement(expression *ast.Node) ([]ir.Statement, er
 		return statements, err
 	}
 	switch expression.Kind {
-	case ast.KindYieldExpression, ast.KindNonNullExpression, ast.KindVoidExpression:
+	case ast.KindYieldExpression, ast.KindNonNullExpression, ast.KindVoidExpression, ast.KindDeleteExpression:
 		value, err := l.expression(expression)
 		if err != nil {
 			return nil, err

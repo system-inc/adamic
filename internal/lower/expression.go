@@ -659,6 +659,13 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 			}
 		}
 		return ir.TypeOf{Value: operand, Null: null}, nil
+	case ast.KindDeleteExpression:
+		target := ast.SkipParentheses(node.AsDeleteExpression().Expression)
+		if target.Kind != ast.KindPropertyAccessExpression {
+			return nil, &Refused{Where: l.program.Where(node), What: "delete", Fix: "only declared optional named fields can be deleted; use a Map for dynamic keys"}
+		}
+		access := target.AsPropertyAccessExpression()
+		return l.optionalPresence(node, access.Expression, access.Name(), true)
 	case ast.KindBinaryExpression:
 		binary := node.AsBinaryExpression()
 		if _, compound := compoundAssignments[binary.OperatorToken.Kind]; compound || binary.OperatorToken.Kind == ast.KindEqualsToken {

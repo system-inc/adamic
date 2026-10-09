@@ -91,7 +91,15 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 				return nil, err
 			}
 			if literal.Spread != nil && !l.hasProperty(node.AsObjectLiteralExpression().Properties.Nodes[0].AsSpreadAssignment().Expression, fieldName) {
-				return nil, l.notYet(property, "a spread that adds a field the source doesn't have")
+				contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone)
+				if contextual == nil {
+					return nil, l.notYet(property, "a spread that adds a field the source doesn't have")
+				}
+				declared := l.checker.GetPropertyOfType(contextual, fieldName)
+				if declared == nil || declared.Flags&ast.SymbolFlagsOptional == 0 {
+					return nil, l.notYet(property, "a spread that adds a field the source doesn't have")
+				}
+				literal.NoReuse = true
 			}
 			if l.placeholderOrigin(property.Name()) != "" {
 				value = fit(value, placeholderStorage(value.Type()))
@@ -117,6 +125,14 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 		default:
 			return nil, l.notYet(property, describe(property)+" in an object literal")
 		}
+	}
+	missing, err := l.optionalLiteralSlots(node, literal.Fields)
+	if err != nil {
+		return nil, err
+	}
+	literal.Missing = missing
+	if len(missing) != 0 && literal.Spread != nil {
+		literal.NoReuse = true
 	}
 	if literal.Record {
 		if literal.Spread != nil {

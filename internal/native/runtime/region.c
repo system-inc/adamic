@@ -64,6 +64,8 @@ adamic_object *adamic_object_new_in(adamic_region *region, const adamic_shape *s
 	object->class = NULL;
 	object->frozen = false;
 	object->tuple = false;
+ object->dynamic_shape = false;
+ object->dynamic_types = NULL;
 	object->write_order = NULL;
 	memset(object->slots, 0, shape->count * sizeof object->slots[0]);
 	memset(adamic_object_initialized(object), 1, shape->count);

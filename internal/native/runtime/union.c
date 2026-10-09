@@ -97,6 +97,13 @@ void adamic_register_shape_types(adamic_shape_types *metadata) {
 	shape_types = metadata;
 }
 
+int adamic_shape_type(const adamic_shape *shape, size_t index) {
+	for (const adamic_shape_types *entry = shape_types; entry != NULL; entry = entry->next) {
+		if (entry->shape == shape) return entry->types[index];
+	}
+	return 0;
+}
+
 static bool named(const char *name, const char *const *names, size_t count) {
 	for (size_t index = 0; index < count; index++) {
 		if (strcmp(name, names[index]) == 0) return true;
@@ -169,10 +176,9 @@ static adamic_heap *dynamic_slot(const adamic_object *object, size_t index) {
 		if (actual==1) return adamic_box_number(slot.number);
 		if (actual==2) return slot.boolean ? &adamic_box_true.heap : &adamic_box_false.heap;
 	}
-	for (const adamic_shape_types *entry = shape_types; entry != NULL; entry = entry->next) {
-		if (entry->shape != object->shape) continue;
+	{
 		// These are ir.Type's scalar representations, written by the emitter.
-		switch (entry->types[index]) {
+		switch (object->dynamic_shape ? object->dynamic_types[index] : adamic_shape_type(object->shape, index)) {
 		case 1: return adamic_box_number(slot.number);
 		case 2: return slot.boolean ? &adamic_box_true.heap : &adamic_box_false.heap;
 		case 7: {

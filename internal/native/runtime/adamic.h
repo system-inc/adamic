@@ -290,6 +290,8 @@ typedef struct adamic_object {
 	const adamic_class *class;
 	bool frozen;
 	bool tuple;
+	bool dynamic_shape;
+	const int *dynamic_types;
 	// NULL for a complete shape; SIZE_MAX means reserved but not own.
 	size_t *write_order;
 	adamic_value slots[];
@@ -298,13 +300,19 @@ typedef struct adamic_object {
 // Reserve the insertion-order tail as well as both per-slot byte tails.
 // The base has no order accessor yet; c1 uses this same allocation size.
 static inline size_t adamic_object_size(size_t count) {
-    return sizeof(adamic_object) + count * (sizeof(adamic_value) + sizeof(size_t) + 2);
+    size_t tail = sizeof(adamic_object) + count * (sizeof(adamic_value) + 2);
+    tail = (tail + _Alignof(size_t) - 1) & ~(size_t)(_Alignof(size_t) - 1);
+    return tail + count * sizeof(size_t);
 }
 
 // Initialized bits follow slots in the same allocation, indexed by the actual shape.
 static inline unsigned char *adamic_object_initialized(const adamic_object *object) {
 	return (unsigned char *)(void *)(object->slots + object->shape->count);
 }
+adamic_object *adamic_object_copy_reserving_checked(const adamic_object *source, const adamic_shape *reserved, const char *expression);
+void adamic_object_absent(adamic_object *object, size_t index);
+bool adamic_object_delete(adamic_object *object, const adamic_string *key);
+adamic_object *adamic_object_copy_reserving(const adamic_object *source, const adamic_shape *reserved);
 void adamic_object_set_initialized(adamic_object *object, const char *name, bool initialized);
 // Physical representation bytes are separate from the shared initialization bitmap.
 // Zero means no representation evidence, never permission to interpret a slot.
@@ -394,6 +402,7 @@ typedef struct adamic_shape_types {
 	const int *types;
 	struct adamic_shape_types *next;
 } adamic_shape_types;
+int adamic_shape_type(const adamic_shape *shape, size_t index);
 extern adamic_heap adamic_null;
 void adamic_register_shape_types(adamic_shape_types *metadata);
 bool adamic_has_property(const adamic_heap *object, const char *name);
@@ -411,7 +420,7 @@ adamic_maybe_boolean adamic_object_maybe_boolean(const adamic_object *object, co
 // Optional own fields may be absent; NULL then asks the reader to produce typed undefined.
 adamic_value *adamic_object_optional_find(const adamic_object *object, const char *name, adamic_slot_cache *cache);
 static inline adamic_value *adamic_object_optional_field(const adamic_object *object, const char *name, adamic_slot_cache *cache) {
-	if (cache->shape != object->shape) {
+	if (object->dynamic_shape || cache->shape != object->shape) {
 		return adamic_object_optional_find(object, name, cache);
 	}
 	if (cache->index == object->shape->count || !adamic_object_present(object, cache->index)) {
@@ -423,7 +432,7 @@ static inline adamic_value *adamic_object_optional_field(const adamic_object *ob
 // layout. That whole-program proof excludes inherited constructor storage, so the cache
 // hit needs only the shape comparison, without loading a class descriptor.
 static inline adamic_value *adamic_object_data_field(const adamic_object *object, const char *name, adamic_slot_cache *cache) {
-	if (cache->shape == object->shape) {
+	if (!object->dynamic_shape && cache->shape == object->shape) {
 		return &((adamic_object *)object)->slots[cache->index];
 	}
 	return adamic_object_find(object, name, cache);

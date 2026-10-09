@@ -449,6 +449,8 @@ type (
 		NoReuse              bool
 		SpreadMaybeUndefined bool
 		Empty                []Field
+		// Missing reserves declared optional fields without making them own properties.
+		Missing []Field
 
 		// Tuple is a tuple written out, [key, value]: natively an object whose fields are named "0",
 		// "1" and on, as every tuple is, and in JavaScript an array, as the source's is. (What 0.2
