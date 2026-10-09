@@ -3,17 +3,22 @@ package lint
 import (
 	"bytes"
 	"context"
+	"encoding/json"
+	"flag"
 	"fmt"
 	"go/ast"
 	"go/parser"
 	"go/token"
 	"io/fs"
 	"os"
+	"os/exec"
 	"path/filepath"
+	"regexp"
 	"runtime"
 	"sort"
 	"strconv"
 	"strings"
+	"syscall"
 	"testing"
 	"time"
 
@@ -22,6 +27,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/stage1/cohere/lint/registry"
 )
 
 const testDecodedOptionsAndMutantShards = 6
@@ -64,6 +70,9 @@ func TestDecodedOptionsAndMutantUnion(t *testing.T) {
 			continue
 		}
 		suffix := strings.TrimPrefix(function.Name.Name, prefix)
+		if suffix == "Setup" {
+			continue
+		}
 		shard, err := strconv.Atoi(suffix)
 		if err != nil || shard < 0 || shard >= testDecodedOptionsAndMutantShards || suffix != fmt.Sprintf("%03d", shard) {
 			t.Fatalf("invalid shard name %s", function.Name.Name)
@@ -194,91 +203,311 @@ func decodedOptionsInputs(t *testing.T, name string) buildcache.Inputs {
 		t.Fatal(err)
 	}
 	sort.Strings(files)
-	return buildcache.Inputs{Name: name, Files: files, Flags: []string{"Sanitize=true", "Target=native", "Split=true", "Jobs=4", "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT"), "GOOS=" + runtime.GOOS, "GOARCH=" + runtime.GOARCH}, Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version")}}
+	return buildcache.Inputs{Name: name, Files: files, Flags: []string{"Sanitize=true", "Target=native", "Split=true", "Jobs=4", "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT"), "GOOS=" + runtime.GOOS, "GOARCH=" + runtime.GOARCH, "source-root=" + packageDirectory, "GOFLAGS=" + os.Getenv("GOFLAGS"), "GOEXPERIMENT=" + os.Getenv("GOEXPERIMENT"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED")}, Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version")}}
 }
 
-func decodedOptionsLowered(t *testing.T, mutated bool) string {
-	t.Helper()
-	name := "lint-decoded-options-lowered"
-	if mutated {
-		name += "-ignored-allowemptycatch"
+// A nonempty setup path marks the child that owns the setup test. The parent
+// runs it before m.Run, reads its immutable results, then starts leaf timers.
+const decodedOptionsSetupPath = "ADAMIC_DECODED_OPTIONS_SETUP_PATH"
+
+type decodedOptionsProducts struct {
+	Directory, Changed, Module, ChangedModule, Binary, Oracle, Manifest string
+	Want                                                                []byte
+}
+
+var decodedOptionsReady *decodedOptionsProducts
+
+func decodedOptionsCommand(ctx context.Context, directory, name string, args ...string) *exec.Cmd {
+	command := exec.CommandContext(ctx, name, args...)
+	command.Dir = directory
+	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+	command.Cancel = func() error {
+		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+		if err == syscall.ESRCH {
+			return os.ErrProcessDone
+		}
+		return err
 	}
-	inputs := decodedOptionsInputs(t, name)
-	return buildcache.Product(t, inputs, func(output string) error {
-		directory := packageDirectory
-		if mutated {
-			directory = mutant(t, "'allowemptycatch'", "'ignored-allowemptycatch'", "main.ts")
-		}
-		if _, err := prepareDecodedOptionsLowering(directory, output); err != nil {
-			return err
-		}
+	command.WaitDelay = time.Second
+	return command
+}
+
+func decodedOptionsBeforeTests() error {
+	// TestMain is called before testing parses flags; list-only invocations must
+	// remain build-free, and unrelated filtered tests must not fetch our products.
+	flag.Parse()
+	if os.Getenv(decodedOptionsSetupPath) != "" || flag.Lookup("test.list").Value.String() != "" {
 		return nil
-	})
+	}
+	filter, err := regexp.Compile(flag.Lookup("test.run").Value.String())
+	if err != nil {
+		return err
+	}
+	selected := false
+	for shard := range testDecodedOptionsAndMutantShards {
+		selected = selected || filter.MatchString(fmt.Sprintf("TestDecodedOptionsAndMutant_%03d", shard))
+	}
+	if !selected {
+		return nil
+	}
+	return decodedOptionsInitialize(time.Time{})
 }
 
-func prepareDecodedOptionsLowering(directory, output string) (string, error) {
-	program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
+func decodedOptionsInitialize(testDeadline time.Time) error {
+	path := filepath.Join(sharedDirectory, "decoded-options-setup.json")
+	deadline := time.Now().Add(90 * time.Second)
+	if !testDeadline.IsZero() && testDeadline.Before(deadline) {
+		deadline = testDeadline.Add(-250 * time.Millisecond)
+	}
+	ctx, cancel := context.WithDeadline(context.Background(), deadline)
+	defer cancel()
+	command := decodedOptionsCommand(ctx, "", os.Args[0], "-test.run=^TestDecodedOptionsAndMutant_Setup$", "-test.timeout=90s", "-test.v")
+	command.Env = append(os.Environ(), decodedOptionsSetupPath+"="+path, "ADAMIC_DECODED_OPTIONS_SETUP_DEADLINE="+strconv.FormatInt(deadline.UnixNano(), 10))
+	var output bytes.Buffer
+	command.Stdout, command.Stderr = &output, &output
+	err := command.Run()
+	// Prefix child test markers so test2json never reports duplicate setup tests.
+	for _, line := range strings.Split(strings.TrimSuffix(output.String(), "\n"), "\n") {
+		fmt.Printf("decoded-options setup: %s\n", line)
+	}
 	if err != nil {
-		return "", err
+		if ctx.Err() != nil {
+			return fmt.Errorf("cooked: TestDecodedOptionsAndMutant_Setup exceeded 90s: %w", ctx.Err())
+		}
+		return fmt.Errorf("decoded-option setup: %w", err)
 	}
-	lowered, err := lower.Lower(context.Background(), program)
+	data, err := os.ReadFile(path)
 	if err != nil {
-		return "", err
+		return err
 	}
-	source := native.C(lowered)
-	if err := os.WriteFile(filepath.Join(output, "lint.c"), []byte(source), 0644); err != nil {
-		return "", err
+	var ready decodedOptionsProducts
+	if err := json.Unmarshal(data, &ready); err != nil {
+		return err
 	}
-	return source, os.WriteFile(filepath.Join(output, "lint.mjs"), []byte(javascript.JavaScript(lowered)), 0644)
+	decodedOptionsReady = &ready
+	return nil
 }
 
-func decodedOptionsNative(t *testing.T) string {
+func decodedOptionsSetupTest(t *testing.T) {
 	t.Helper()
-	lowered := decodedOptionsLowered(t, false)
-	directory := buildcache.Product(t, decodedOptionsInputs(t, "lint-decoded-options-native-sanitized"), func(output string) error {
+	path := os.Getenv(decodedOptionsSetupPath)
+	if path == "" {
+		if decodedOptionsReady == nil {
+			deadline, _ := t.Deadline()
+			if err := decodedOptionsInitialize(deadline); err != nil {
+				t.Fatal(err)
+			}
+		}
+		return
+	}
+	started := time.Now()
+	deadline, err := strconv.ParseInt(os.Getenv("ADAMIC_DECODED_OPTIONS_SETUP_DEADLINE"), 10, 64)
+	if err != nil {
+		t.Fatal(err)
+	}
+	// Cancel nested compiler groups before the outer setup group is killed.
+	ctx, cancel := context.WithDeadline(context.Background(), time.Unix(0, deadline).Add(-250*time.Millisecond))
+	defer cancel()
+	// Both original and mutant source copies live in the content-addressed
+	// product, rather than in a setup test's TempDir.
+	lowered := decodedOptionsSetupLowered(t, false)
+	changed := decodedOptionsSetupLowered(t, true)
+	inputs := decodedOptionsInputs(t, "lint-decoded-options-native-setup-v2")
+	inputs.Flags = append(inputs.Flags, "registry=no-empty")
+	nativeProduct := buildcache.Product(t, inputs, func(output string) error {
 		source, err := os.ReadFile(filepath.Join(lowered, "lint.c"))
 		if err != nil {
 			return err
 		}
 		return native.Build(string(source), filepath.Join(output, "scanner"), native.Options{Sanitize: true, Split: true, Jobs: 4})
 	})
-	return filepath.Join(directory, "scanner")
+	inputs.Name = "lint-decoded-options-go-oracle-setup-v2"
+	inputs.Files = append(inputs.Files, "cohere/go.mod", "cohere/internal", "stage1/cohere/lint/testdata/oracle.go")
+	inputs.Flags = append(inputs.Flags, "Go oracle=full live registry", "GOTOOLCHAIN="+os.Getenv("GOTOOLCHAIN"))
+	oracleProduct := buildcache.Product(t, inputs, func(output string) error {
+		_, err := decodedOptionsGoOracle(ctx, output)
+		return err
+	})
+	// The fixture and manifest belong to the parent TestMain's directory. They
+	// survive the setup child and are cleaned up by the parent after all leaves.
+	fixture := filepath.Join(filepath.Dir(path), "catch.ts")
+	if err := os.WriteFile(fixture, []byte("try { work(); } catch(e) {}\n"), 0644); err != nil {
+		t.Fatal(err)
+	}
+	manifestPath := filepath.Join(filepath.Dir(path), "decoded-options-manifest.txt")
+	row := fixture + "\tno-empty\t\t\tfalse\t{\"AllowEmptyCatch\":true}\n"
+	if err := os.WriteFile(manifestPath, []byte(row), 0644); err != nil {
+		t.Fatal(err)
+	}
+	ready := decodedOptionsProducts{
+		Directory: packageDirectory, Changed: filepath.Join(changed, "port"),
+		Module: filepath.Join(lowered, "lint.mjs"), ChangedModule: filepath.Join(changed, "lint.mjs"),
+		Binary: filepath.Join(nativeProduct, "scanner"), Oracle: filepath.Join(oracleProduct, "oracle"), Manifest: manifestPath,
+	}
+	ready.Want = decodedOptionsExecute(t, ctx, ready.Oracle, "--manifest", manifestPath)
+	data, err := json.Marshal(ready)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(path, data, 0644); err != nil {
+		t.Fatal(err)
+	}
+	t.Logf("TestDecodedOptionsAndMutant_Setup: %s; all shared state ready before shard deadlines", time.Since(started))
+}
+
+// This is the same overlay and full live-rule oracle as goOracleIn, with
+// a context deadline and process-group cancellation instead of a lazy shared build.
+func decodedOptionsGoOracle(ctx context.Context, directory string) (string, error) {
+	root, err := filepath.Abs(filepath.Join(repository, "cohere"))
+	if err != nil {
+		return "", err
+	}
+	descriptors, err := registry.Generate(packageDirectory)
+	if err != nil {
+		return "", err
+	}
+	replacements := map[string]string{}
+	var virtualFiles []string
+	add := func(name, source string) {
+		virtual := filepath.Join(root, "adamic_lint_"+name+".go")
+		replacements[virtual] = source
+		virtualFiles = append(virtualFiles, virtual)
+	}
+	add("oracle", filepath.Join(packageDirectory, "testdata/oracle.go"))
+	add("registry", filepath.Join(packageDirectory, ".generated/registry.go"))
+	for _, descriptor := range descriptors {
+		add(strings.ReplaceAll(descriptor.Slug, "-", "_"), filepath.Join(packageDirectory, "rules", descriptor.Slug, "oracle.go"))
+	}
+	overlay, err := json.Marshal(map[string]any{"Replace": replacements})
+	if err != nil {
+		return "", err
+	}
+	overlayPath := filepath.Join(directory, "overlay.json")
+	if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
+		return "", err
+	}
+	binary := filepath.Join(directory, "oracle")
+	args := append([]string{"build", "-overlay=" + overlayPath, "-o", binary}, virtualFiles...)
+	command := decodedOptionsCommand(ctx, root, "go", args...)
+	output, err := command.CombinedOutput()
+	if ctx.Err() != nil {
+		return "", fmt.Errorf("cooked: oracle setup: %w", ctx.Err())
+	}
+	if err != nil {
+		return "", fmt.Errorf("Go oracle: %w\n%s", err, output)
+	}
+	if len(commandDiagnostics("go", output)) != 0 {
+		return "", fmt.Errorf("Go oracle diagnostics: %s", output)
+	}
+	return binary, nil
+}
+
+func decodedOptionsSetupLowered(t *testing.T, mutated bool) string {
+	t.Helper()
+	name := "lint-decoded-options-lowered-setup-v2"
+	if mutated {
+		name += "-ignored-allowemptycatch"
+	}
+	inputs := decodedOptionsInputs(t, name)
+	inputs.Flags = append(inputs.Flags, "registry=no-empty")
+	return buildcache.Product(t, inputs, func(output string) error {
+		from, to := "", ""
+		if mutated {
+			from, to = "'allowemptycatch'", "'ignored-allowemptycatch'"
+		}
+		directory := copyPort(t, filepath.Join(output, "port"), from, to, "main.ts")
+		// Keep the original main/options decoder and no-empty implementation. Only
+		// unused factories are omitted; Node and the Go oracle retain the full registry.
+		entries, err := os.ReadDir(filepath.Join(directory, "rules"))
+		if err != nil {
+			return err
+		}
+		for _, entry := range entries {
+			if entry.IsDir() && entry.Name() != "no-empty" {
+				if err := os.RemoveAll(filepath.Join(directory, "rules", entry.Name())); err != nil {
+					return err
+				}
+			}
+		}
+		prepareRegistry(t, directory)
+		program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
+		if err != nil {
+			return err
+		}
+		lowered, err := lower.Lower(context.Background(), program)
+		if err != nil {
+			return err
+		}
+		if err := os.WriteFile(filepath.Join(output, "lint.c"), []byte(native.C(lowered)), 0644); err != nil {
+			return err
+		}
+		return os.WriteFile(filepath.Join(output, "lint.mjs"), []byte(javascript.JavaScript(lowered)), 0644)
+	})
+}
+
+func decodedOptionsExecute(t *testing.T, ctx context.Context, name string, args ...string) []byte {
+	t.Helper()
+	command := decodedOptionsCommand(ctx, "", name, args...)
+	output, err := os.CreateTemp(t.TempDir(), "stdout-")
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer output.Close()
+	var stderr bytes.Buffer
+	command.Stdout, command.Stderr = output, &stderr
+	err = command.Run()
+	if ctx.Err() != nil {
+		t.Fatalf("cooked: shard exceeded 90s: %v", ctx.Err())
+	}
+	if err != nil || len(commandDiagnostics(name, stderr.Bytes())) != 0 {
+		t.Fatalf("%s %v: %v\n%s", name, args, err, &stderr)
+	}
+	data, err := os.ReadFile(output.Name())
+	if err != nil {
+		t.Fatal(err)
+	}
+	return data
 }
 
 func decodedOptionsShard(t *testing.T, shard int) {
 	t.Helper()
+	s := decodedOptionsReady
+	if s == nil {
+		t.Fatal("shared setup must finish before a shard starts; no lazy builds are allowed")
+	}
+	// No build, registry generation, oracle preparation, or lock acquisition is
+	// allowed below this boundary. Each leaf owns only its case deadline.
+	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	defer cancel()
 	started := time.Now()
-	fixture := filepath.Join(t.TempDir(), "catch.ts")
-	if err := os.WriteFile(fixture, []byte("try { work(); } catch(e) {}\n"), 0644); err != nil {
+	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
+	if err != nil {
 		t.Fatal(err)
 	}
-	path := manifest(t, []string{fixture + "\tno-empty\t\t\tfalse\t{\"AllowEmptyCatch\":true}"})
-	oracle := goOracle(t)
-	want := execute(t, "", oracle, "--manifest", path).output
 	for _, index := range decodedOptionsSlice(shard) {
 		var got []byte
 		switch index {
 		case 0:
-			got = node(t, packageDirectory, path, false).output
+			got = decodedOptionsExecute(t, ctx, "node", "--disable-warning=ExperimentalWarning", runner, filepath.Join(s.Directory, "main.ts"), "--manifest", s.Manifest)
 		case 1:
-			got = runJavaScript(t, filepath.Join(decodedOptionsLowered(t, false), "lint.mjs"), path, false).output
+			got = decodedOptionsExecute(t, ctx, "node", "--disable-warning=ExperimentalWarning", runner, s.Module, "--manifest", s.Manifest)
 		case 2:
-			got = execute(t, "", decodedOptionsNative(t), "--manifest", path).output
+			got = decodedOptionsExecute(t, ctx, s.Binary, "--manifest", s.Manifest)
 		case 3:
-			got = execute(t, "", oracle, "--manifest", path, "--count").output
+			got = decodedOptionsExecute(t, ctx, s.Oracle, "--manifest", s.Manifest, "--count")
 		case 4:
-			got = node(t, mutant(t, "'allowemptycatch'", "'ignored-allowemptycatch'", "main.ts"), path, false).output
+			got = decodedOptionsExecute(t, ctx, "node", "--disable-warning=ExperimentalWarning", runner, filepath.Join(s.Changed, "main.ts"), "--manifest", s.Manifest)
 		case 5:
-			got = runJavaScript(t, filepath.Join(decodedOptionsLowered(t, true), "lint.mjs"), path, false).output
+			got = decodedOptionsExecute(t, ctx, "node", "--disable-warning=ExperimentalWarning", runner, s.ChangedModule, "--manifest", s.Manifest)
 		default:
 			t.Fatalf("unhandled case %d", index)
 		}
-		if err := decodedOptionsCheck(index, got, want); err != nil {
+		if err := decodedOptionsCheck(index, got, s.Want); err != nil {
 			t.Fatal(err)
 		}
 		if index >= 4 {
-			t.Logf("ignored decoded-option mutant caught on %s: %s", decodedOptionsCases()[index], difference(got, want))
+			t.Logf("ignored decoded-option mutant caught on %s: %s", decodedOptionsCases()[index], difference(got, s.Want))
 		}
 	}
-	t.Logf("shard-%03d including setup: %s", shard, time.Since(started))
+	t.Logf("shard-%03d cases only: %s; cooked=false", shard, time.Since(started))
 }

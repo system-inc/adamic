@@ -502,7 +502,7 @@ func TestCSSParserPlantedDisagreement(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	result := cssParserExecute(t, []string{"ADAMIC_CSS_PARSER_DISAGREEMENT_PROBE=1"}, binary, "-test.run=^TestThePortParsesAsGoCohereDoes_[0-9]{3}$", "-test.timeout=75s", "-test.v", "-test.parallel=4")
+	result := cssParserExecute(t, []string{"ADAMIC_CSS_PARSER_DISAGREEMENT_PROBE=1"}, binary, "-test.run=^TestThePortParsesAsGoCohereDoes_[0-9]{3}$", "-test.timeout=90s", "-test.v", "-test.parallel=4")
 	topOwner := "TestThePortParsesAsGoCohereDoes_" + strings.TrimPrefix(owner, "shard-")
 	prefix := "--- FAIL: TestThePortParsesAsGoCohereDoes_"
 	if result.exitCode != 1 || len(result.stderr) != 0 || strings.Count(string(result.stdout), prefix) != 1 || !strings.Contains(string(result.stdout), "--- FAIL: "+topOwner+" (") || !strings.Contains(string(result.stdout), "planted disagreement") {

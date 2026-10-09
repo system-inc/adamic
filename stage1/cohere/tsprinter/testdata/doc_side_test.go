@@ -10,6 +10,7 @@ import (
 	"testing"
 )
 
+// Not parallel: writes docs.txt, answers.txt and docs.json in ADAMIC_TS_DOC_OUTPUT.
 func TestAdamicDocuments(t *testing.T) {
 	directory := os.Getenv("ADAMIC_TS_DOC_OUTPUT")
 	if directory == "" {

@@ -94,6 +94,7 @@ var adamicEdgeValues = []string{
 }
 
 // TestAdamicPortCases writes the cases file and Go cohere's answers.
+// Not parallel: writes the fixed output paths supplied by the environment request.
 func TestAdamicPortCases(t *testing.T) {
 	path := os.Getenv("ADAMIC_PORT_REQUEST")
 	if path == "" {
