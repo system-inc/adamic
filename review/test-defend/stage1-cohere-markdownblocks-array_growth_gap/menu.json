@@ -1,0 +1,11 @@
+[
+  {
+    "id": "D1",
+    "file": "stage1/cohere/markdownblocks/identifierCaseValues.ts",
+    "line": 85,
+    "old": "125251,",
+    "new": "125250,",
+    "kind": "change constant",
+    "difference": "Final case-table key U+1E921 (125217) should map to U+1E943 (125251), rather than neighboring U+1E942 (125250)."
+  }
+]

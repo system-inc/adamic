@@ -1,0 +1,17 @@
+{
+  "command": [
+    "timeout",
+    "120",
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "./stage1/cohere/markdownblocks/",
+    "-run",
+    "^Test(MdastIdentifierScalars|ParserRepresentationProbes|NativeMdastConstruction|MdastIdentifierWitnesses|MdastMalformedEvents(_Setup|Union|_00[0-2])|Product_MarkdownIdentifier(Go|Lowered|NativeSanitized|NativeRelease)|Product_MarkdownMalformedEvents(Go|Lowered|Native))$"
+  ],
+  "exit": 0,
+  "seconds": 42.22224510300293
+}

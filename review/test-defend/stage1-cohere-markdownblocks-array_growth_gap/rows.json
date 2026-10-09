@@ -1,0 +1,39 @@
+[
+  {
+    "test": "TestMdastIdentifierScalars",
+    "package": "stage1/cohere/markdownblocks",
+    "prior_verdict": "subsumed",
+    "subsumed_by": "TestParserRepresentationProbes",
+    "defense": "defended",
+    "unique_mutant": "D1 stage1/cohere/markdownblocks/identifierCaseValues.ts:85",
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "stage1/cohere/markdownblocks/identifierCaseValues.ts:85",
+        "change": "Change the final case-mapping constant 125251 to 125250.",
+        "rows_failed": [
+          "TestMdastIdentifierScalars"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/mdidentifier-defend/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run '^Test(MdastIdentifierScalars|ParserRepresentationProbes|NativeMdastConstruction|MdastIdentifierWitnesses|MdastMalformedEvents(_Setup|Union|_00[0-2])|Product_MarkdownIdentifier(Go|Lowered|NativeSanitized|NativeRelease)|Product_MarkdownMalformedEvents(Go|Lowered|Native))$'; identifier_independent_test.go:27: identifier scalar oracle first byte difference at 753221 (lengths 7789593/7789593)",
+    "bounded": true,
+    "rows_passed": [
+      "TestMdastIdentifierWitnesses",
+      "TestMdastMalformedEventsUnion",
+      "TestMdastMalformedEvents_000",
+      "TestMdastMalformedEvents_001",
+      "TestMdastMalformedEvents_002",
+      "TestMdastMalformedEvents_Setup",
+      "TestNativeMdastConstruction",
+      "TestParserRepresentationProbes",
+      "TestProduct_MarkdownIdentifierGo",
+      "TestProduct_MarkdownIdentifierLowered",
+      "TestProduct_MarkdownIdentifierNativeRelease",
+      "TestProduct_MarkdownIdentifierNativeSanitized",
+      "TestProduct_MarkdownMalformedEventsGo",
+      "TestProduct_MarkdownMalformedEventsLowered",
+      "TestProduct_MarkdownMalformedEventsNative"
+    ]
+  }
+]

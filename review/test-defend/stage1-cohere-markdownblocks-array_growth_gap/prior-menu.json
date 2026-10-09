@@ -1,0 +1,175 @@
+[
+  {
+    "id": "M1",
+    "file": "internal/native/emit_branches.go",
+    "line": 82,
+    "from_": "condition := e.value(conditional.Condition)",
+    "to": "condition := \"!(\" + e.value(conditional.Condition) + \")\"",
+    "menu": "flip native conditional selection",
+    "kind": "production"
+  },
+  {
+    "id": "M2",
+    "file": "internal/native/runtime/array.c",
+    "line": 407,
+    "from_": "is outside an array of length",
+    "to": "is outside a sequence of length",
+    "menu": "change bounds diagnostic constant",
+    "kind": "production"
+  },
+  {
+    "id": "M3",
+    "file": "stage1/cohere/markdownblocks/inputChunks.ts",
+    "line": 49,
+    "from_": "Math.ceil(column / 4) * 4",
+    "to": "Math.ceil(column / 4) * 8",
+    "menu": "change tab expansion constant",
+    "kind": "production"
+  },
+  {
+    "id": "M4",
+    "file": "stage1/cohere/markdownblocks/leaves.ts",
+    "line": 56,
+    "from_": "? '**'",
+    "to": "? '__'",
+    "menu": "change strong delimiter constant",
+    "kind": "production"
+  },
+  {
+    "id": "S1",
+    "file": "stage1/cohere/markdownblocks/preflight_shards_test.go",
+    "line": 326,
+    "from_": "shard := preflightShard(input.Name)",
+    "to": "shard := (preflightShard(input.Name) + 1) % testWholeDocumentOraclePreflightShards",
+    "menu": "construction: change bucket constant",
+    "kind": "construction"
+  },
+  {
+    "id": "S3",
+    "file": "stage1/cohere/markdownblocks/tokenizer_events_union_test.go",
+    "line": 19,
+    "from_": "name, occurrences[name])",
+    "to": "name, i)",
+    "menu": "construction: swap local occurrence argument for global index",
+    "kind": "construction"
+  },
+  {
+    "id": "S4",
+    "file": "stage1/cohere/markdownblocks/leaf_composition_independent_test.go",
+    "line": 93,
+    "from_": "leafCompositionPrepared, leafCompositionBuilds = fixture, products",
+    "to": "leafCompositionBuilds = products",
+    "menu": "construction: drop prepared fixture assignment",
+    "kind": "construction"
+  },
+  {
+    "id": "W1",
+    "file": "stage1/cohere/markdownblocks/tokenizer_events_union_test.go",
+    "line": 95,
+    "from_": "if bytes.Equal(want, got) {",
+    "to": "if len(want) >= 0 {",
+    "menu": "witness: loosen output comparison",
+    "kind": "witness"
+  },
+  {
+    "id": "W2",
+    "file": "stage1/cohere/markdownblocks/leaf_composition_independent_test.go",
+    "line": 140,
+    "from_": "if !bytes.Equal(actual, expected) {",
+    "to": "if len(actual) < 0 || len(expected) < 0 {",
+    "menu": "witness: disable planted output comparison",
+    "kind": "witness"
+  },
+  {
+    "id": "P_C",
+    "file": "internal/native/emit.go",
+    "line": 23,
+    "from_": "return cProgram(program, -1)",
+    "to": "return \"\"",
+    "menu": "empty native compiler entry",
+    "kind": "probe"
+  },
+  {
+    "id": "P_chunks",
+    "file": "stage1/cohere/markdownblocks/inputChunks.ts",
+    "line": 13,
+    "from_": "export function inputChunks(units: readonly number[]): InputChunkInterface[] {",
+    "to": "export function inputChunks(units: readonly number[]): InputChunkInterface[] {\n    return [];",
+    "menu": "empty chunk entry",
+    "kind": "probe"
+  },
+  {
+    "id": "P_decode",
+    "file": "stage1/cohere/markdownblocks/decodeString.ts",
+    "line": 58,
+    "from_": "export function decodeString(value: string): string {",
+    "to": "export function decodeString(value: string): string {\n    return '';",
+    "menu": "empty decoder entry",
+    "kind": "probe"
+  },
+  {
+    "id": "P_identifier",
+    "file": "stage1/cohere/markdownblocks/identifier.ts",
+    "line": 5,
+    "from_": "export function identifier(source: string): string {",
+    "to": "export function identifier(source: string): string {\n    return '';",
+    "menu": "empty identifier entry",
+    "kind": "probe"
+  },
+  {
+    "id": "P_front",
+    "file": "stage1/cohere/markdownblocks/frontmatter.ts",
+    "line": 53,
+    "from_": "export function parseFrontMatter(text: string): FrontMatterResultInterface {",
+    "to": "export function parseFrontMatter(text: string): FrontMatterResultInterface {\n    return {frontMatter: undefined, content: ''};",
+    "menu": "empty frontmatter entry",
+    "kind": "probe"
+  },
+  {
+    "id": "P_ast",
+    "file": "stage1/cohere/markdownblocks/astPreprocess.ts",
+    "line": 116,
+    "from_": "run(root: number): number {",
+    "to": "run(root: number): number {\n        return 0;",
+    "menu": "empty AST entry",
+    "kind": "probe"
+  },
+  {
+    "id": "P_leaf",
+    "file": "stage1/cohere/markdownblocks/leaves.ts",
+    "line": 35,
+    "from_": "export function printLeaf(arena: DocumentArena, frame: LeafFrameInterface): number {",
+    "to": "export function printLeaf(arena: DocumentArena, frame: LeafFrameInterface): number {\n    return 0;",
+    "menu": "empty leaf entry",
+    "kind": "probe",
+    "invalid": true,
+    "reason": "Unreachable TypeScript loses narrowing; invalid probe excluded."
+  },
+  {
+    "id": "S2",
+    "file": "stage1/cohere/markdownblocks/tokenizer_events_union_test.go",
+    "line": 40,
+    "from_": "func tokenizerEventUnion(total int, shards [][]int) error {\n\tseen := make([]bool, total)\n\tcount := 0\n\tfor shard, rows := range shards {\n\t\tfor _, row := range rows {\n\t\t\tif row < 0 || row >= total {\n\t\t\t\treturn fmt.Errorf(\"shard %d: unexpected case id %d\", shard, row)\n\t\t\t}\n\t\t\tif seen[row] {\n\t\t\t\treturn fmt.Errorf(\"shard %d: repeated case id %d\", shard, row)\n\t\t\t}\n\t\t\tseen[row] = true\n\t\t\tcount++\n\t\t}\n\t}\n\tfor row, present := range seen {\n\t\tif !present {\n\t\t\treturn fmt.Errorf(\"missing case id %d\", row)\n\t\t}\n\t}\n\tif count != total {\n\t\treturn fmt.Errorf(\"union count %d, want %d\", count, total)\n\t}\n\treturn nil\n}\n",
+    "to": "func tokenizerEventUnion(total int, shards [][]int) error {\n\treturn nil\n}\n",
+    "menu": "construction: return early from union validation",
+    "kind": "construction"
+  },
+  {
+    "id": "P_leaf_valid",
+    "file": "stage1/cohere/markdownblocks/leaves.ts",
+    "line": 35,
+    "from_": "export function printLeaf(arena: DocumentArena, frame: LeafFrameInterface): number {\n    const contents = arena.concat(frame.children.map((child) => child.doc));\n    if(frame.kind === 'preservedLabel') return printPreservedLabel(arena, frame.source);\n    if(frame.kind === 'ignored') {\n        if(frame.value === 'list' && (frame.flags & 1) !== 0) {\n            const start = frame.source.lastIndexOf('\\n>');\n            if(start >= 0 && frame.source.slice(start + 2).trim() === '')\n                return arena.text(frame.source.slice(0, start));\n        }\n        return arena.text(frame.source);\n    }\n    if(frame.kind === 'frontMatter' || frame.kind === 'inlineMath') return arena.text(frame.source);\n    if(frame.kind === 'text' || frame.kind === 'liquidNode') return lines(arena, frame.value);\n    if(frame.kind === 'inlineCode') return arena.text(printInlineCode(frame.value, true, (frame.flags & 1) !== 0));\n    if(frame.kind === 'wikiLink') {\n        if((frame.flags & 1) !== 0) panic('markdown: a wiki link with no target');\n        return arena.text(printWikiLink(frame.value, true));\n    }\n    if(frame.kind === 'emphasis' || frame.kind === 'strong' || frame.kind === 'delete') {\n        const marker =\n            frame.kind === 'strong'\n                ? '**'\n                : frame.kind === 'delete'\n                  ? '~~'\n                  : (frame.flags & 1) !== 0\n                    ? frame.source.slice(0, 1)\n                    : (frame.flags & 14) !== 0\n                      ? '*'\n                      : '_';\n        return arena.concat([arena.text(marker), contents, arena.text(marker)]);\n    }\n    if(frame.kind === 'link') {\n        if(frame.source.startsWith('<')) {\n            const url =\n                frame.url.startsWith('mailto:') && frame.source.slice(1, 8) !== 'mailto:'\n                    ? frame.url.slice(7)\n                    : frame.url;\n            return arena.concat([arena.text('<'), arena.text(url), arena.text('>')]);\n        }\n        if(!frame.source.startsWith('[')) return arena.text(frame.source);\n        const destination = frame.url === '' ? '<>' : printURL(frame.url, ')');\n        const title = printTitle(frame.title, true);\n        return arena.concat([\n            arena.text('['),\n            contents,\n            arena.text(']('),\n            arena.text(destination),\n            arena.text(title === '' ? '' : ` ${title}`),\n            arena.text(')'),\n        ]);\n    }\n    if(frame.kind === 'image') {\n        const destination = frame.url === '' ? '<>' : printURL(frame.url, ')');\n        const title = printTitle(frame.title, true);\n        return arena.concat([\n            arena.text('!['),\n            arena.text(frame.originalAlt !== '' ? frame.originalAlt : frame.alt),\n            arena.text(']('),\n            arena.text(destination),\n            arena.text(title === '' ? '' : ` ${title}`),\n            arena.text(')'),\n        ]);\n    }\n    if(frame.kind === 'linkReference') {\n        const suffix =\n            frame.referenceType === 'full'\n                ? printReference(frame.label)\n                : frame.referenceType === 'collapsed'\n                  ? '[]'\n                  : '';\n        return arena.concat([arena.text('['), contents, arena.text(']'), arena.text(suffix)]);\n    }\n    if(frame.kind === 'imageReference') {\n        if(frame.referenceType === 'full')\n            return arena.concat([\n                arena.text('!['),\n                arena.text(frame.originalAlt !== '' ? frame.originalAlt : frame.alt),\n                arena.text(']'),\n                arena.text(printReference(frame.label)),\n            ]);\n        return arena.concat([\n            arena.text('!'),\n            arena.text(printReference(frame.label)),\n            arena.text(frame.referenceType === 'collapsed' ? '[]' : ''),\n        ]);\n    }\n    if(frame.kind === 'definition') {\n        const destination = frame.url === '' ? '<>' : printURL(frame.url, '');\n        const title = frame.hasTitle\n            ? arena.concat([arena.text(' '), arena.text(printTitle(frame.title, true))])\n            : arena.text('');\n        return group(\n            arena,\n            arena.concat([\n                arena.text(printReference(frame.label)),\n                arena.text(':'),\n                arena.add('i', '', 0, [arena.concat([arena.text(' '), arena.text(destination), title])]),\n            ]),\n        );\n    }\n    if(frame.kind === 'footnoteReference') return arena.text(`[^${frame.label}]`);\n    if(frame.kind === 'footnoteDefinition') {\n        const first = frame.children[0];\n        const prefix = arena.concat([arena.text(`[^${frame.label}]`), arena.text(': ')]);\n        if(\n            frame.children.length === 1 &&\n            first !== undefined &&\n            first.kind === 'paragraph' &&\n            first.start === first.end\n        )\n            return arena.concat([prefix, printBlockChildren(arena, frame.children)]);\n        const children = frame.children.map((child, index) => ({\n            kind: child.kind,\n            doc: index === 0 ? group(arena, arena.concat([arena.add('h', '', 0, [], 1), child.doc])) : child.doc,\n            start: child.start,\n            end: child.end,\n            column: child.column,\n            indented: child.indented,\n            ignoreNext: child.ignoreNext,\n        }));\n        return arena.concat([prefix, group(arena, arena.align('    ', printBlockChildren(arena, children)))]);\n    }\n    if(frame.kind === 'thematicBreak') return arena.text(frame.sibling >= 0 && frame.sibling % 2 === 0 ? '***' : '---');\n    if(frame.kind === 'break') {\n        if(frame.source !== '' && frame.source.slice(0, 1).trim() === '') {\n            const literal = arena.concat([arena.add('h', '', 0, [], 6), arena.add('p', '', 0, [])]);\n            return arena.concat([arena.text('  '), arena.add('r', '', 0, [literal])]);\n        }\n        return arena.concat([arena.text('\\\\'), arena.hardline()]);\n    }\n    if(frame.kind === 'math') {\n        const value = frame.value === '' ? arena.text('') : arena.concat([lines(arena, frame.value), arena.hardline()]);\n        return arena.concat([\n            arena.text('$$'),\n            arena.text(frame.metadata === '' ? '' : ` ${frame.metadata}`),\n            arena.hardline(),\n            value,\n            arena.text('$$'),\n        ]);\n    }\n    if(frame.kind === 'tableCell') return contents;\n    return panic(`unported Markdown leaf ${frame.kind}`);\n}\n",
+    "to": "export function printLeaf(arena: DocumentArena, frame: LeafFrameInterface): number {\n    return 0;\n}\n",
+    "menu": "return early, dropping the whole function body to preserve TypeScript validity",
+    "kind": "probe"
+  },
+  {
+    "id": "W3",
+    "file": "stage1/cohere/markdownblocks/leaf_composition_independent_test.go",
+    "line": 267,
+    "from_": "if bytes.Equal(result.stdout, want.stdout) {",
+    "to": "if len(result.stdout) >= 0 {",
+    "menu": "witness: treat every built-in mutant output as agreement",
+    "kind": "witness"
+  }
+]

@@ -1,0 +1,29 @@
+{
+  "entry_programs": [
+    "testdata/identifier_probe.ts",
+    "testdata/mdast_probe.ts"
+  ],
+  "imports": [
+    "identifier_probe.ts -> identifier.ts -> identifierCaseKeys.ts / identifierCaseValues.ts",
+    "mdast_probe.ts -> mdastCompile.ts -> identifier.ts -> identifierCaseKeys.ts / identifierCaseValues.ts"
+  ],
+  "matrix_functions": [
+    "TestMdastIdentifierScalars",
+    "TestMdastIdentifierWitnesses",
+    "TestMdastMalformedEventsUnion",
+    "TestMdastMalformedEvents_000",
+    "TestMdastMalformedEvents_001",
+    "TestMdastMalformedEvents_002",
+    "TestMdastMalformedEvents_Setup",
+    "TestNativeMdastConstruction",
+    "TestParserRepresentationProbes",
+    "TestProduct_MarkdownIdentifierGo",
+    "TestProduct_MarkdownIdentifierLowered",
+    "TestProduct_MarkdownIdentifierNativeRelease",
+    "TestProduct_MarkdownIdentifierNativeSanitized",
+    "TestProduct_MarkdownMalformedEventsGo",
+    "TestProduct_MarkdownMalformedEventsLowered",
+    "TestProduct_MarkdownMalformedEventsNative"
+  ],
+  "outside_matrix": "Unknown; full package baseline exceeded 90 seconds."
+}

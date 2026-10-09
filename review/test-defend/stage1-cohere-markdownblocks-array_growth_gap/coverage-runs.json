@@ -1,0 +1,42 @@
+[
+  {
+    "test": "TestMdastIdentifierScalars",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=github.com/system-inc/adamic/internal/lower,github.com/system-inc/adamic/internal/native",
+      "-coverprofile=review/test-defend/stage1-cohere-markdownblocks-array_growth_gap/TestMdastIdentifierScalars.cover",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^TestMdastIdentifierScalars$"
+    ],
+    "exit": 0,
+    "seconds": 18.884078455994313
+  },
+  {
+    "test": "TestParserRepresentationProbes",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=github.com/system-inc/adamic/internal/lower,github.com/system-inc/adamic/internal/native",
+      "-coverprofile=review/test-defend/stage1-cohere-markdownblocks-array_growth_gap/TestParserRepresentationProbes.cover",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^TestParserRepresentationProbes$"
+    ],
+    "exit": 0,
+    "seconds": 3.884543289997964
+  }
+]
