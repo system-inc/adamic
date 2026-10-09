@@ -1,8 +1,8 @@
 package oracle
 
 import (
+	"os"
 	"path/filepath"
-	"strings"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/ir"
@@ -72,18 +72,47 @@ func TestNarrowedUnionMemberCheck(t *testing.T) {
 	}
 }
 
-// Ambiguous object tags need a stronger IR predicate before they can be cast safely.
-func TestNarrowedUnionObjectTagRefusal(t *testing.T) {
+// Array.isArray distinguishes this narrowed array from the map arm before casting.
+func TestNarrowedUnionObjectTagPassing(t *testing.T) {
 	t.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/reland_refused/narrowed_union_object_tag.a"))
 	if err != nil {
 		t.Fatal(err)
 	}
-	if node := onNode(t, path); disagreement(run{stdout: []byte("1\n")}, node) != "" {
-		t.Fatalf("source Node: %#v", node)
+	checkNarrowedArrayTag(t, path, run{stdout: []byte("1\n")}, run{stdout: []byte("1\n")})
+}
+
+func TestNarrowedUnionObjectTagMisfit(t *testing.T) {
+	t.Parallel()
+	path := filepath.Join(t.TempDir(), "narrowed_union_object_tag_misfit.a")
+	source := `function first(): number[] | Map<string, number> { return [1]; }
+let shared: number[] | Map<string, number> = first();
+function change(): void { shared = new Map<string, number>(); }
+shared = [1];
+change();
+console.log("" + shared.length);
+`
+	if err := os.WriteFile(path, []byte(source), 0600); err != nil {
+		t.Fatal(err)
 	}
-	_, err = lowered(t, path)
-	if err == nil || !strings.Contains(err.Error(), "narrowed_union_object_tag.a") || !strings.Contains(err.Error(), "stage 0 can't lower a narrowed union member whose object tag cannot be checked with typeof; keep differently held object kinds in separately typed variables yet") {
-		t.Fatalf("want refusal naming the path and fix, got %v", err)
+	checkNarrowedArrayTag(t, path, run{stdout: []byte("undefined\n")}, run{exitCode: 70, stderr: []byte("adamic: panic: union member where the checker narrowed it away: a call since the narrowing put it back\n")})
+}
+
+func checkNarrowedArrayTag(t *testing.T, path string, nodeWant, want run) {
+	t.Helper()
+	node := onNode(t, path)
+	if diff := disagreement(nodeWant, node); diff != "" {
+		t.Fatalf("Node: %s: %#v", diff, node)
+	}
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	native, _ := nativelyUncached(t, program)
+	for backend, got := range map[string]run{"native-sanitized": native, "native-release": releasedUncached(t, program), "JavaScript": onJavaScriptBackend(t, program)} {
+		if diff := disagreement(want, got); diff != "" {
+			t.Errorf("%s: %s: exit %d stdout %q stderr %q", backend, diff, got.exitCode, got.stdout, got.stderr)
+		}
+		t.Logf("%s: exit %d stdout %q stderr %q", backend, got.exitCode, got.stdout, got.stderr)
 	}
 }
