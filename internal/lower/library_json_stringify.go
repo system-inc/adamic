@@ -89,7 +89,7 @@ func (l *lowering) jsonInput(node *ast.Node) (ir.Expression, *ir.JSONSchema, err
 					return l.notYet(v, "JSON.stringify duplicate literal keys")
 				}
 			}
-			value, child, err := l.jsonInput(v)
+			value, child, err := l.jsonLiteralField(v)
 			if err != nil {
 				return err
 			}
@@ -111,8 +111,8 @@ func (l *lowering) jsonInput(node *ast.Node) (ir.Expression, *ir.JSONSchema, err
 			}
 		} else {
 			for _, f := range n.AsObjectLiteralExpression().Properties.Nodes {
-				if f.Kind != ast.KindPropertyAssignment {
-					return nil, nil, l.notYet(f, "JSON.stringify a literal with spread, shorthand or methods")
+				if f.Kind != ast.KindPropertyAssignment && f.Kind != ast.KindShorthandPropertyAssignment {
+					return nil, nil, l.notYet(f, "JSON.stringify a literal with spread or methods")
 				}
 				key := f.Name()
 				if !ast.IsIdentifier(key) && key.Kind != ast.KindStringLiteral && key.Kind != ast.KindNumericLiteral {
@@ -129,7 +129,11 @@ func (l *lowering) jsonInput(node *ast.Node) (ir.Expression, *ir.JSONSchema, err
 						return nil, nil, l.notYet(key, "JSON.stringify a numeric key outside the array-index range (spell it as a string)")
 					}
 				}
-				if err := add(name, f.AsPropertyAssignment().Initializer); err != nil {
+				value := f
+				if f.Kind == ast.KindPropertyAssignment {
+					value = f.AsPropertyAssignment().Initializer
+				}
+				if err := add(name, value); err != nil {
 					return nil, nil, err
 				}
 			}
@@ -201,4 +205,26 @@ func (l *lowering) jsonType(node *ast.Node, t *checker.Type, depth int) (*ir.JSO
 		return nil, l.notYet(node, "JSON.stringify this representation")
 	}
 	return &ir.JSONSchema{Kind: kind}, nil
+}
+
+// A shorthand name is a property symbol, not the binding it reads. Resolve
+// the value symbol just as ordinary object-literal lowering does. Its declared
+// type describes the stored representation even when the occurrence is narrowed.
+func (l *lowering) jsonLiteralField(node *ast.Node) (ir.Expression, *ir.JSONSchema, error) {
+	if node.Kind != ast.KindShorthandPropertyAssignment {
+		return l.jsonInput(node)
+	}
+	value, err := l.shorthand(node)
+	if err != nil {
+		return nil, nil, err
+	}
+	symbol := l.checker.GetShorthandAssignmentValueSymbol(node)
+	if symbol != nil && symbol.Flags&ast.SymbolFlagsAlias != 0 {
+		symbol = l.checker.GetAliasedSymbol(symbol)
+	}
+	if symbol == nil {
+		return nil, nil, l.notYet(node, "JSON.stringify shorthand without a value binding")
+	}
+	schema, err := l.jsonType(node.Name(), l.checker.GetTypeOfSymbol(symbol), 0)
+	return value, schema, err
 }
