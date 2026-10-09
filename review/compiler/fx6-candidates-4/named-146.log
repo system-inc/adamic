@@ -1,0 +1,58 @@
+=== RUN   TestReviewProgramsAgreeWithNode
+=== PAUSE TestReviewProgramsAgreeWithNode
+=== CONT  TestReviewProgramsAgreeWithNode
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p17_callable_call_first_half.a
+    review_test.go:153: gate cache node miss
+    review_test.go:153: gate cache node miss
+    oracle_test.go:596: gate cache native miss
+    oracle_test.go:589: gate cache native miss
+    oracle_test.go:603: gate cache native hit
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p18_cast_kind_no_field_types.a
+    review_test.go:153: gate cache node hit
+    review_test.go:153: gate cache node hit
+    oracle_test.go:596: gate cache native hit
+    oracle_test.go:589: gate cache native hit
+    oracle_test.go:603: gate cache native hit
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p20_callable_member_call_good.a
+    review_test.go:153: gate cache node hit
+    review_test.go:153: gate cache node hit
+    oracle_test.go:596: gate cache native hit
+    oracle_test.go:589: gate cache native hit
+    oracle_test.go:603: gate cache native hit
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p26_callable_or_undefined.a
+    review_test.go:153: gate cache node miss
+    review_test.go:153: gate cache node miss
+    oracle_test.go:596: gate cache native miss
+    oracle_test.go:589: gate cache native miss
+    oracle_test.go:603: gate cache native hit
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p33_map_in_union.a
+    review_test.go:153: gate cache node miss
+    review_test.go:153: gate cache node miss
+    oracle_test.go:596: gate cache native miss
+    oracle_test.go:589: gate cache native miss
+    oracle_test.go:603: gate cache native hit
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p34_typed_array_in_union.a
+    review_test.go:153: gate cache node miss
+    review_test.go:153: gate cache node miss
+    oracle_test.go:596: gate cache native miss
+    oracle_test.go:589: gate cache native miss
+    oracle_test.go:603: gate cache native hit
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p35_class_in_union.a
+    review_test.go:153: gate cache node miss
+    review_test.go:153: gate cache node miss
+    oracle_test.go:596: gate cache native miss
+    oracle_test.go:589: gate cache native miss
+    oracle_test.go:603: gate cache native hit
+--- PASS: TestReviewProgramsAgreeWithNode (14.10s)
+    --- PASS: TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p17_callable_call_first_half.a (5.22s)
+    --- PASS: TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p18_cast_kind_no_field_types.a (0.74s)
+    --- PASS: TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p20_callable_member_call_good.a (0.45s)
+    --- PASS: TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p26_callable_or_undefined.a (2.27s)
+    --- PASS: TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p33_map_in_union.a (1.62s)
+    --- PASS: TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p34_typed_array_in_union.a (1.41s)
+    --- PASS: TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p35_class_in_union.a (2.34s)
+PASS
+gate cache: native hits=11 misses=10
+gate cache: node hits=4 misses=10
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	14.182s
