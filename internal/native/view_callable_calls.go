@@ -159,6 +159,12 @@ func (e *emitter) directViewCallableInvoke(call ir.CallClosure, property ir.Prop
 	if e.program.ClosureConventionNeeded() {
 		methodType = "adamic_method_entry"
 	}
+	if call.CheckBound {
+		call.Arguments = nil
+		for _, parameter := range e.program.ViewContracts[call.CallContract-1].Parameters {
+			call.Arguments = append(call.Arguments, ir.Read{Of: e.program.ViewContracts[parameter-1].Of})
+		}
+	}
 	var b strings.Builder
 	fmt.Fprintf(&b, "static adamic_value %s(adamic_closure *self, adamic_object *receiver, %s method, adamic_value *arguments, size_t count) {\n(void)self; (void)receiver; (void)method; (void)arguments; (void)count;\n", name, methodType)
 	// Re-viewing retains only the new view contract, not another adapter layer.
@@ -209,12 +215,17 @@ func (e *emitter) directViewCallableInvoke(call ir.CallClosure, property ir.Prop
 		}
 
 		n := max(1, len(f.Parameters), len(call.Arguments)+offset, e.program.FixedArgumentSlots+offset)
-		fmt.Fprintf(&b, "adamic_value adapted[%d] = {{.reference=NULL}};\n", n)
-		if offset != 0 {
+		if !call.CheckBound {
+			fmt.Fprintf(&b, "adamic_value adapted[%d] = {{.reference=NULL}};\n", n)
+		}
+		if offset != 0 && !call.CheckBound {
 			b.WriteString("adapted[0].reference=receiver;\n")
 		}
 		releases := []string{}
 		for i, id := range f.CallableParameters {
+			if call.CheckBound {
+				fmt.Fprintf(&b, "if (count > %d) {\n", i)
+			}
 			from := ir.Type(0)
 			slot := "((adamic_value){.reference=NULL})"
 			if i < len(call.Arguments) {
@@ -235,12 +246,21 @@ func (e *emitter) directViewCallableInvoke(call ir.CallClosure, property ir.Prop
 			}
 			message := fmt.Sprintf("callable call failed: %s at %s argument %d expected producer %s, view %s", property.View, call.CallWhere, i+1, actual, declared)
 			fmt.Fprintf(&b, "if (!%s(%s)) adamic_panic(%s, sizeof %s - 1);\n", domain, snapshot, cString(message), cString(message))
+			if call.CheckBound {
+				b.WriteString("}\n")
+				continue
+			}
 			to := e.program.Locals[f.Parameters[i+receiverParameter]].Type
 			value, fresh := viewCallableConverted(from, to, slot, snapshot)
 			fmt.Fprintf(&b, "adapted[%d].%s=%s;\n", i+offset, member(to), value)
 			if fresh {
 				releases = append(releases, fmt.Sprintf("adamic_release(adapted[%d].reference);\n", i+offset))
 			}
+		}
+		if call.CheckBound {
+			b.WriteString("return (adamic_value){.reference=NULL};\n")
+			b.WriteString("}\n")
+			continue
 		}
 		invocation := ""
 		if methodProducer {

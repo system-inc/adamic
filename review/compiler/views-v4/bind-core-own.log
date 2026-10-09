@@ -1,0 +1,172 @@
+=== RUN   TestV4EscapeAdapterBoundCallRefusal
+=== PAUSE TestV4EscapeAdapterBoundCallRefusal
+=== RUN   TestV4EscapeAdapterBoundApplyRefusal
+=== PAUSE TestV4EscapeAdapterBoundApplyRefusal
+=== RUN   TestV4EscapeAdapterBoundBindRefusal
+=== PAUSE TestV4EscapeAdapterBoundBindRefusal
+=== RUN   TestV4EscapeAdapterBoundAliasCallRefusal
+=== PAUSE TestV4EscapeAdapterBoundAliasCallRefusal
+=== RUN   TestV4EscapeAdapterBoundHelperApplyRefusal
+=== PAUSE TestV4EscapeAdapterBoundHelperApplyRefusal
+=== RUN   TestV4EscapeAdapterBoundHelperBindRefusal
+=== PAUSE TestV4EscapeAdapterBoundHelperBindRefusal
+=== RUN   TestV4EscapeAdapterBoundViewRefusal
+=== PAUSE TestV4EscapeAdapterBoundViewRefusal
+=== RUN   TestV4EscapeAdapterBindCompatible
+=== PAUSE TestV4EscapeAdapterBindCompatible
+=== RUN   TestV4EscapeAdapterBindPrefix
+=== PAUSE TestV4EscapeAdapterBindPrefix
+=== RUN   TestV4EscapeAdapterBindRemainingArgument
+=== PAUSE TestV4EscapeAdapterBindRemainingArgument
+=== RUN   TestV4EscapeAdapterBindResult
+=== PAUSE TestV4EscapeAdapterBindResult
+=== RUN   TestV4EscapeAdapterBindReceiverAndCapture
+=== PAUSE TestV4EscapeAdapterBindReceiverAndCapture
+=== RUN   TestV4EscapeAdapterBindCountAndSurface
+=== PAUSE TestV4EscapeAdapterBindCountAndSurface
+=== RUN   TestV4EscapeAdapterBindBoxed
+=== PAUSE TestV4EscapeAdapterBindBoxed
+=== RUN   TestV4EscapeAdapterBindAllArguments
+=== PAUSE TestV4EscapeAdapterBindAllArguments
+=== RUN   TestV4EscapeAdapterBindNameOwnership
+=== PAUSE TestV4EscapeAdapterBindNameOwnership
+=== CONT  TestV4EscapeAdapterBoundCallRefusal
+=== CONT  TestV4EscapeAdapterBindPrefix
+=== CONT  TestV4EscapeAdapterBindReceiverAndCapture
+=== CONT  TestV4EscapeAdapterBindCountAndSurface
+=== CONT  TestV4EscapeAdapterBindResult
+=== NAME  TestV4EscapeAdapterBindReceiverAndCapture
+    checked_views_v4_bind_test.go:113: gate cache node miss
+=== NAME  TestV4EscapeAdapterBindPrefix
+    checked_views_v4_bind_test.go:30: gate cache node miss
+=== NAME  TestV4EscapeAdapterBindResult
+    checked_views_v4_bind_test.go:104: gate cache node miss
+=== NAME  TestV4EscapeAdapterBoundCallRefusal
+    checked_views_v4_bind_refusals_test.go:41: gate cache node miss
+=== NAME  TestV4EscapeAdapterBindCountAndSurface
+    checked_views_v4_bind_test.go:123: gate cache node miss
+=== NAME  TestV4EscapeAdapterBoundCallRefusal
+    checked_views_v4_bind_refusals_test.go:41: Node succeeds; compiler refuses: /tmp/adamic-gate/TestV4EscapeAdapterBoundCallRefusal2642811434/001/bound-surface.ts:4:130: Adamic 0.1 refuses call on a bound function; call the bound function directly
+--- PASS: TestV4EscapeAdapterBoundCallRefusal (0.34s)
+=== CONT  TestV4EscapeAdapterBindRemainingArgument
+    checked_views_v4_bind_test.go:102: gate cache node miss
+=== NAME  TestV4EscapeAdapterBindReceiverAndCapture
+    checked_views_v4_bind_test.go:113: native sanitized surface counts: [17 17 34 41 13 0]
+=== NAME  TestV4EscapeAdapterBindCountAndSurface
+    checked_views_v4_bind_test.go:123: native sanitized surface counts: [16 16 48 56 10 0]
+=== NAME  TestV4EscapeAdapterBindResult
+    checked_views_v4_bind_test.go:104: gate cache node miss
+=== NAME  TestV4EscapeAdapterBindReceiverAndCapture
+    checked_views_v4_bind_test.go:113: gate cache node miss
+=== NAME  TestV4EscapeAdapterBindPrefix
+    checked_views_v4_bind_test.go:32: gate cache node miss
+=== NAME  TestV4EscapeAdapterBindCountAndSurface
+    checked_views_v4_bind_test.go:123: gate cache node miss
+=== NAME  TestV4EscapeAdapterBindPrefix
+    checked_views_v4_bind_test.go:36: native prefix check: "adamic: panic: callable call failed: escaped at /tmp/adamic-gate/TestV4EscapeAdapterBindPrefix1709349069/001/identity.ts:7:114 argument 1 expected producer \"ok\", view string\n"
+    checked_views_v4_bind_test.go:36: sanitized prefix check: "adamic: panic: callable call failed: escaped at /tmp/adamic-gate/TestV4EscapeAdapterBindPrefix1709349069/001/identity.ts:7:114 argument 1 expected producer \"ok\", view string\n"
+    checked_views_v4_bind_test.go:36: javascript prefix check: "adamic: panic: callable call failed: escaped at /tmp/adamic-gate/TestV4EscapeAdapterBindPrefix1709349069/001/identity.ts:7:114 argument 1 expected producer \"ok\", view string\n"
+--- PASS: TestV4EscapeAdapterBindReceiverAndCapture (0.93s)
+=== CONT  TestV4EscapeAdapterBindAllArguments
+--- PASS: TestV4EscapeAdapterBindCountAndSurface (0.95s)
+=== CONT  TestV4EscapeAdapterBindNameOwnership
+=== NAME  TestV4EscapeAdapterBindAllArguments
+    checked_views_v4_bind_test.go:143: gate cache node miss
+=== NAME  TestV4EscapeAdapterBindNameOwnership
+    checked_views_v4_bind_test.go:154: gate cache node miss
+=== NAME  TestV4EscapeAdapterBindRemainingArgument
+    checked_views_v4_bind_test.go:102: gate cache node miss
+=== NAME  TestV4EscapeAdapterBindResult
+    checked_views_v4_bind_test.go:104: gate cache node miss
+=== NAME  TestV4EscapeAdapterBindPrefix
+    checked_views_v4_bind_test.go:52: gate cache node miss
+=== NAME  TestV4EscapeAdapterBindResult
+    checked_views_v4_bind_test.go:104: guard mutant admitted in javascript: exit 0 output "bound\nargument\nproducer\nbad\n"
+    checked_views_v4_bind_test.go:104: guard mutant admitted in native: exit 0 output "bound\nargument\nproducer\nbad\n"
+    checked_views_v4_bind_test.go:104: guard mutant admitted in sanitized: exit 0 output "bound\nargument\nproducer\nbad\n"
+=== NAME  TestV4EscapeAdapterBindPrefix
+    checked_views_v4_bind_test.go:52: guard mutant admitted in native: exit 0 output "read\nreceiver\nfirst\nsecond\nbound\n"
+    checked_views_v4_bind_test.go:52: guard mutant admitted in sanitized: exit 0 output "read\nreceiver\nfirst\nsecond\nbound\n"
+    checked_views_v4_bind_test.go:52: guard mutant admitted in javascript: exit 0 output "read\nreceiver\nfirst\nsecond\nbound\n"
+    checked_views_v4_bind_test.go:53: prefix omission caught in both backends, native ASan/UBSan/LeakSanitizer clean; producer never invoked
+=== NAME  TestV4EscapeAdapterBindResult
+    checked_views_v4_bind_test.go:104: later result omission caught in native/ASan/UBSan/LeakSanitizer and JavaScript
+=== CONT  TestV4EscapeAdapterBoundHelperApplyRefusal
+--- PASS: TestV4EscapeAdapterBindPrefix (1.46s)
+=== CONT  TestV4EscapeAdapterBoundBindRefusal
+--- PASS: TestV4EscapeAdapterBindResult (1.46s)
+=== NAME  TestV4EscapeAdapterBoundHelperApplyRefusal
+    checked_views_v4_bind_refusals_test.go:57: gate cache node miss
+=== NAME  TestV4EscapeAdapterBindNameOwnership
+    checked_views_v4_bind_test.go:154: native sanitized surface counts: [7 7 12 13 7 0]
+=== NAME  TestV4EscapeAdapterBoundBindRefusal
+    checked_views_v4_bind_refusals_test.go:49: gate cache node miss
+=== NAME  TestV4EscapeAdapterBindAllArguments
+    checked_views_v4_bind_test.go:143: native sanitized surface counts: [10 10 23 23 10 0]
+=== NAME  TestV4EscapeAdapterBindRemainingArgument
+    checked_views_v4_bind_test.go:102: gate cache node miss
+    checked_views_v4_bind_test.go:102: guard mutant admitted in native: exit 0 output "bound\nargument\nproducer\nvalue\n"
+    checked_views_v4_bind_test.go:102: guard mutant admitted in sanitized: exit 0 output "bound\nargument\nproducer\nvalue\n"
+    checked_views_v4_bind_test.go:102: guard mutant admitted in javascript: exit 0 output "bound\nargument\nproducer\nvalue\n"
+    checked_views_v4_bind_test.go:102: later argument omission caught in native/ASan/UBSan/LeakSanitizer and JavaScript
+=== CONT  TestV4EscapeAdapterBoundAliasCallRefusal
+--- PASS: TestV4EscapeAdapterBindRemainingArgument (1.30s)
+=== NAME  TestV4EscapeAdapterBindNameOwnership
+    checked_views_v4_bind_test.go:154: gate cache node miss
+=== NAME  TestV4EscapeAdapterBindAllArguments
+    checked_views_v4_bind_test.go:143: gate cache node miss
+=== NAME  TestV4EscapeAdapterBoundAliasCallRefusal
+    checked_views_v4_bind_refusals_test.go:53: gate cache node miss
+=== NAME  TestV4EscapeAdapterBoundBindRefusal
+    checked_views_v4_bind_refusals_test.go:49: Node succeeds; compiler refuses: /tmp/adamic-gate/TestV4EscapeAdapterBoundBindRefusal672089598/001/bound-surface.ts:4:130: Adamic 0.1 refuses binding a bound function again; bind once
+--- PASS: TestV4EscapeAdapterBoundBindRefusal (0.25s)
+=== CONT  TestV4EscapeAdapterBoundViewRefusal
+=== NAME  TestV4EscapeAdapterBoundHelperApplyRefusal
+    checked_views_v4_bind_refusals_test.go:57: Node succeeds; compiler refuses: /tmp/adamic-gate/TestV4EscapeAdapterBoundHelperApplyRefusal1992275360/001/bound-surface.ts:4:193: Adamic 0.1 refuses apply on a bound function; call the bound function directly
+--- PASS: TestV4EscapeAdapterBoundHelperApplyRefusal (0.26s)
+=== CONT  TestV4EscapeAdapterBindCompatible
+--- PASS: TestV4EscapeAdapterBindNameOwnership (0.81s)
+=== CONT  TestV4EscapeAdapterBoundApplyRefusal
+--- PASS: TestV4EscapeAdapterBindAllArguments (0.84s)
+=== CONT  TestV4EscapeAdapterBindBoxed
+=== NAME  TestV4EscapeAdapterBoundViewRefusal
+    checked_views_v4_bind_refusals_test.go:77: gate cache node miss
+=== NAME  TestV4EscapeAdapterBindCompatible
+    checked_views_v4_bind_test.go:17: gate cache node miss
+=== NAME  TestV4EscapeAdapterBoundApplyRefusal
+    checked_views_v4_bind_refusals_test.go:45: gate cache node miss
+=== NAME  TestV4EscapeAdapterBindBoxed
+    checked_views_v4_bind_test.go:133: gate cache node miss
+=== NAME  TestV4EscapeAdapterBoundAliasCallRefusal
+    checked_views_v4_bind_refusals_test.go:53: Node succeeds; compiler refuses: /tmp/adamic-gate/TestV4EscapeAdapterBoundAliasCallRefusal547443227/001/bound-surface.ts:4:185: Adamic 0.1 refuses call on a bound function; call the bound function directly
+--- PASS: TestV4EscapeAdapterBoundAliasCallRefusal (0.27s)
+=== CONT  TestV4EscapeAdapterBoundHelperBindRefusal
+    checked_views_v4_bind_refusals_test.go:61: gate cache node miss
+=== NAME  TestV4EscapeAdapterBoundViewRefusal
+    checked_views_v4_bind_refusals_test.go:90: bound re-view .ts refused with path and fix: /tmp/adamic-gate/TestV4EscapeAdapterBoundViewRefusal3289139172/001/bound-view.ts:5:241: Adamic 0.1 refuses an escaping callable read of again.run with an unsupported value contract; prove the callable relation or use a callable with runtime-checkable parameter and result types
+=== NAME  TestV4EscapeAdapterBoundApplyRefusal
+    checked_views_v4_bind_refusals_test.go:45: Node succeeds; compiler refuses: /tmp/adamic-gate/TestV4EscapeAdapterBoundApplyRefusal764156513/001/bound-surface.ts:4:130: Adamic 0.1 refuses apply on a bound function; call the bound function directly
+--- PASS: TestV4EscapeAdapterBoundApplyRefusal (0.30s)
+=== NAME  TestV4EscapeAdapterBoundViewRefusal
+    checked_views_v4_bind_refusals_test.go:77: gate cache node miss
+=== NAME  TestV4EscapeAdapterBoundHelperBindRefusal
+    checked_views_v4_bind_refusals_test.go:61: Node succeeds; compiler refuses: /tmp/adamic-gate/TestV4EscapeAdapterBoundHelperBindRefusal309882139/001/bound-surface.ts:4:193: Adamic 0.1 refuses binding a bound function again; bind once
+--- PASS: TestV4EscapeAdapterBoundHelperBindRefusal (0.25s)
+=== NAME  TestV4EscapeAdapterBoundViewRefusal
+    checked_views_v4_bind_refusals_test.go:90: bound re-view .a refused with path and fix: /tmp/adamic-gate/TestV4EscapeAdapterBoundViewRefusal3289139172/002/bound-view.a:5:241: Adamic 0.1 refuses an unproven escaping callable read of again.run; prove the producer parameter and result relation before this read, or call the member directly through the view
+--- PASS: TestV4EscapeAdapterBoundViewRefusal (0.52s)
+=== NAME  TestV4EscapeAdapterBindCompatible
+    checked_views_v4_bind_test.go:17: native sanitized surface counts: [11 11 26 29 9 0]
+=== NAME  TestV4EscapeAdapterBindBoxed
+    checked_views_v4_bind_test.go:133: native sanitized surface counts: [10 10 19 21 10 0]
+=== NAME  TestV4EscapeAdapterBindCompatible
+    checked_views_v4_bind_test.go:17: gate cache node miss
+=== NAME  TestV4EscapeAdapterBindBoxed
+    checked_views_v4_bind_test.go:133: gate cache node miss
+--- PASS: TestV4EscapeAdapterBindCompatible (0.77s)
+--- PASS: TestV4EscapeAdapterBindBoxed (0.76s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=29
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	2.535s

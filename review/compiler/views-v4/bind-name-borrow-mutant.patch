@@ -1,0 +1,11 @@
+--- a/internal/native/borrow.go
++++ b/internal/native/borrow.go
+@@ -166,7 +166,7 @@
+ 	switch expression := expression.(type) {
+ 	case ir.Property:
+ 		// An escaping read creates an owned adapter, rather than borrowing its field.
+-		if expression.Method || expression.Optional || expression.Object.Type() == ir.Weak || expression.ViewEscape && !expression.ViewEscapeAdamic || expression.Object.Type() == ir.Closure && expression.Name == "name" {
++		if expression.Method || expression.Optional || expression.Object.Type() == ir.Weak || expression.ViewEscape && !expression.ViewEscapeAdamic {
+ 			return 0, false
+ 		}
+ 		names[expression.Name] = true

@@ -127,6 +127,7 @@ type Accessor struct {
 type Function struct {
 	// Surface records JavaScript reflection from the source, independently of ABI.
 	Surface *FunctionSurface
+	Bound   *BoundCallable
 
 	// CallableMasks records producer signature members independently of any view.
 	CallableMasks      []uint16
@@ -754,20 +755,24 @@ type (
 
 	// CallClosure calls a function value. Returns is its result type, 0 for void.
 	CallClosure struct {
-		CallWhere       string
-		CallContract    ViewContractID
-		CheckedDiscard  bool
-		DiscardContract ViewContractID
-		DiscardView     string
+		CallWhere        string
+		CallContract     ViewContractID
+		CheckBound       bool // validate only the supplied prefix, never invoke
+		BoundView        string
+		SurfaceOperation string // source call/apply/bind, for bound-surface refusal
+		CheckedDiscard   bool
+		DiscardContract  ViewContractID
+		DiscardView      string
 
 		// Direct identifies canonical sibling code sharing Closure as its environment.
-		Direct       int
-		Closure      Expression
-		Receiver     Expression // call/apply thisArg, evaluated after the callee and before arguments
-		Arguments    []Expression
-		Spread       []bool
-		FunctionType int
-		Returns      Type
+		Direct        int
+		Closure       Expression
+		Receiver      Expression // call/apply thisArg, evaluated after the callee and before arguments
+		Arguments     []Expression
+		ArgumentCount Expression // actual argument count when forwarding a bound prefix
+		Spread        []bool
+		FunctionType  int
+		Returns       Type
 	}
 
 	// ArrayMap is array.map(callback): a new array of the callback's results, each called with the

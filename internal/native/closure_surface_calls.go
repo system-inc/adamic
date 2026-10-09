@@ -18,6 +18,19 @@ func (e *emitter) callWithReceiver(expression ir.CallClosure, closure string) st
 	}
 	receiver := e.value(expression.Receiver)
 	packed, count := e.closureArguments(expression)
+	if expression.ArgumentCount != nil {
+		count = e.value(expression.ArgumentCount)
+	}
+	if expression.CheckBound {
+		property := ir.Property{View: expression.BoundView, ViewType: e.program.ViewContracts[expression.CallContract-1].Name}
+		invoke := e.directViewCallableInvoke(expression, property)
+		method := "NULL"
+		if e.program.ClosureConventionNeeded() {
+			method = "(adamic_method_entry){0}"
+		}
+		e.line("(void)%s(%s, %s, %s, %s, %s);", invoke, closure, receiver, method, packed, count)
+		return "0"
+	}
 	call := fmt.Sprintf("adamic_view_surface_call(%s, %s, %s, %s, %d)", closure, receiver, packed, count, e.packedArgumentSize(expression))
 	if expression.Returns == 0 {
 		e.line("%s;", call)

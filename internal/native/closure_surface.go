@@ -24,8 +24,15 @@ func (e *emitter) closureSurface(property ir.Property) string {
 		}
 		identity := e.unionClosureCodeIdentity("value", index)
 		fmt.Fprintf(&body, "if (value != NULL && value->heap.references != 0 && %s) {\n", identity)
-		if property.Name == "name" {
-			fmt.Fprintf(&body, "static adamic_string source_name = ADAMIC_STRING(%s); return &source_name;\n", cString(surface.Name))
+		if binding := function.Bound; binding != nil {
+			source := fmt.Sprintf("value->cells[%d]->value.reference", e.program.BoundCaptureSlot(function, binding.Source))
+			if property.Name == "name" {
+				fmt.Fprintf(&body, "static adamic_string prefix=ADAMIC_STRING(\"bound \"); adamic_string *source=%s(%s); adamic_string *result=adamic_string_concat(2,(adamic_string *const[]){&prefix,source}); adamic_release(source); return result;\n", name, source)
+			} else {
+				fmt.Fprintf(&body, "double length=%s(%s)-%d; return length>0?length:0;\n", name, source, len(binding.Arguments))
+			}
+		} else if property.Name == "name" {
+			fmt.Fprintf(&body, "static adamic_string source_name = ADAMIC_STRING(%s); return adamic_retain(&source_name);\n", cString(surface.Name))
 		} else {
 			fmt.Fprintf(&body, "return %d.0;\n", surface.Length)
 		}
@@ -35,7 +42,7 @@ func (e *emitter) closureSurface(property ir.Property) string {
 	e.declarations = append(e.declarations, body.String())
 	value := fmt.Sprintf("%s(%s)", name, e.value(property.Object))
 	if property.Of == ir.String {
-		return e.own(ir.String, "adamic_retain("+value+")")
+		return e.own(ir.String, value)
 	}
 	return e.snapshot(ir.Number, value)
 }

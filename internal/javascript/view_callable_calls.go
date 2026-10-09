@@ -102,7 +102,15 @@ func (e *emitter) viewCallableInvoke(call ir.CallClosure, p ir.Property) string 
 				declared = e.program.ViewContracts[target.Parameters[i]-1].Name
 			}
 			message := fmt.Sprintf("callable call failed: %s at %s argument %d expected producer %s, view %s", p.View, call.CallWhere, i+1, actual, declared)
-			fmt.Fprintf(&b, "if (!%s) panic(%s);\n", e.viewCallableDomain(id, fmt.Sprintf("arguments_[%d]", i)), quote(message))
+			guard := ""
+			if call.CheckBound {
+				guard = fmt.Sprintf("arguments_.length > %d && ", i)
+			}
+			fmt.Fprintf(&b, "if (%s!%s) panic(%s);\n", guard, e.viewCallableDomain(id, fmt.Sprintf("arguments_[%d]", i)), quote(message))
+		}
+		if call.CheckBound {
+			b.WriteString("return undefined; }\n")
+			continue
 		}
 		invocation := "adamicCall(value, arguments_)"
 		if f.Receiver {

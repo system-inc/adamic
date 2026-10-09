@@ -16,13 +16,16 @@ func (l *lowering) closureSurfaceCall(node *ast.Node) (ir.Expression, bool, erro
 	}
 	access := callee.AsPropertyAccessExpression()
 	name := access.Name().Text()
-	if name != "call" && name != "apply" {
+	if name != "call" && name != "apply" && name != "bind" {
 		return nil, false, nil
 	}
 	proven := l.concrete(l.checker.GetTypeAtLocation(access.Expression))
 	of, known := l.representation(proven)
 	if !known || of != ir.Closure || l.librarySymbol(l.symbol(access.Expression)) {
 		return nil, false, nil
+	}
+	if l.boundSurfaceExpression(access.Expression, map[*ast.Symbol]bool{}) {
+		return nil, true, boundSurfaceRefusal(l.program.Where(node), name)
 	}
 	refuse := func(what string) (ir.Expression, bool, error) { return nil, true, l.notYet(node, what) }
 	if access.QuestionDotToken != nil || call.QuestionDotToken != nil {
@@ -95,5 +98,8 @@ func (l *lowering) closureSurfaceCall(node *ast.Node) (ir.Expression, bool, erro
 		}
 	}
 	l.result.ViewAdapters = true
-	return ir.CallClosure{CallWhere: l.program.Where(node), Closure: value, Receiver: receiver, Arguments: lowered, FunctionType: int(proven.Id()), Returns: returns}, true, nil
+	if name == "bind" {
+		return l.bindCallable(node, proven, signatures[0], value, receiver, lowered, returns)
+	}
+	return ir.CallClosure{SurfaceOperation: name, CallWhere: l.program.Where(node), Closure: value, Receiver: receiver, Arguments: lowered, FunctionType: int(proven.Id()), Returns: returns}, true, nil
 }

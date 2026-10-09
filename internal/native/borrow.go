@@ -166,7 +166,7 @@ func chainRoot(expression ir.Expression, names map[string]bool) (int, bool) {
 	switch expression := expression.(type) {
 	case ir.Property:
 		// An escaping read creates an owned adapter, rather than borrowing its field.
-		if expression.Method || expression.Optional || expression.Object.Type() == ir.Weak || expression.ViewEscape && !expression.ViewEscapeAdamic {
+		if expression.Method || expression.Optional || expression.Object.Type() == ir.Weak || expression.ViewEscape && !expression.ViewEscapeAdamic || expression.Object.Type() == ir.Closure && expression.Name == "name" {
 			return 0, false
 		}
 		names[expression.Name] = true

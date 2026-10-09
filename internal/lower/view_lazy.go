@@ -103,6 +103,12 @@ func (l *lowering) checkLazyViewReads() error {
 	l.completeUntaggedRecursiveContracts()
 	program := l.result
 	if len(program.ViewOrigins) == 0 {
+		for _, function := range program.Functions {
+			if function.Bound != nil {
+				assignAllocationSites(program)
+				return newAllocationFlowGraph(program).checkBoundSurfaceCalls()
+			}
+		}
 		return nil
 	}
 	if err := l.prepareViewCallableAggregateSchemas(); err != nil {
@@ -110,6 +116,9 @@ func (l *lowering) checkLazyViewReads() error {
 	}
 	assignAllocationSites(program)
 	graph := newAllocationFlowGraph(program)
+	if err := graph.checkBoundSurfaceCalls(); err != nil {
+		return err
+	}
 	viewed := map[int]bool{}
 	unknown := false
 	queue := []int{}
