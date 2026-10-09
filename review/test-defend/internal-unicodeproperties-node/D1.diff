@@ -1,0 +1,13 @@
+diff --git a/internal/unicodeproperties/tables.go b/internal/unicodeproperties/tables.go
+index 3a6bc9f2..7bf1a17c 100644
+--- a/internal/unicodeproperties/tables.go
++++ b/internal/unicodeproperties/tables.go
+@@ -25710,7 +25710,7 @@ var scriptExtensionNames = map[string]entry{
+ 
+ var sequences_Basic_Emoji = []string{
+ 	"©️",
+-	"®️",
++	"®︎",
+ 	"‼️",
+ 	"⁉️",
+ 	"™️",

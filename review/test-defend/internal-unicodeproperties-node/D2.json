@@ -1,0 +1,47 @@
+{
+  "command": [
+    "timeout",
+    "120",
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "./internal/unicodeproperties/",
+    "-run",
+    "^(TestVersionMatchesNode|TestNodeAgrees|TestNodeStringProperties|TestBinaryAliases|TestGeneralCategoryAliases|TestScriptAliasSet|TestRejectedNames|TestStringPropertyCensus|TestSetBoundaries|TestKnownMembership)$"
+  ],
+  "cache": "/tmp/defend-unicode/cache/D2",
+  "wall_seconds": 8.248842286000581,
+  "exit": 1,
+  "binary_seconds": 7.725,
+  "statuses": {
+    "TestNodeAgrees": "pass",
+    "TestBinaryAliases": "pass",
+    "TestStringPropertyCensus": "fail",
+    "TestKnownMembership": "pass",
+    "TestGeneralCategoryAliases": "pass",
+    "TestScriptAliasSet": "pass",
+    "TestSetBoundaries": "pass",
+    "TestRejectedNames": "pass",
+    "TestVersionMatchesNode": "pass",
+    "TestNodeStringProperties": "fail"
+  },
+  "failures": [
+    "node code point check: 1715 expressions x 1114112 code points = 1910702080, disagreements 0",
+    "--- PASS: TestNodeAgrees (7.58s)",
+    "--- PASS: TestBinaryAliases (0.00s)",
+    "alias_test.go:312: Emoji_Keycap_Sequence: 12 sequences, sha256 02fadcd99b88336877ce200b09a5e668ea9f2b2b2b567c644a5561da59ad9f4b",
+    "--- FAIL: TestStringPropertyCensus (0.00s)",
+    "--- PASS: TestKnownMembership (0.00s)",
+    "--- PASS: TestGeneralCategoryAliases (0.00s)",
+    "--- PASS: TestScriptAliasSet (0.00s)",
+    "--- PASS: TestSetBoundaries (0.00s)",
+    "--- PASS: TestRejectedNames (0.00s)",
+    "--- PASS: TestVersionMatchesNode (0.03s)",
+    "node string-property check: 7906 sequences, disagreements 1",
+    "node_test.go:429: \\p{Emoji_Keycap_Sequence} does not match \"A\ufe0f\u20e3\" (node said 0)",
+    "--- FAIL: TestNodeStringProperties (0.14s)"
+  ]
+}

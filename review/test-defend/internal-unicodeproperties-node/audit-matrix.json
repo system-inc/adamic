@@ -1,0 +1,267 @@
+{
+  "M01": {
+    "failed_rows": [
+      "TestVersionMatchesNode"
+    ],
+    "completed_rows": [
+      "TestNodeAgrees",
+      "TestScriptAliasSet",
+      "TestGeneralCategoryAliases",
+      "TestKnownMembership",
+      "TestStringPropertyCensus",
+      "TestBinaryAliases",
+      "TestRejectedNames",
+      "TestSetBoundaries",
+      "TestVersionMatchesNode",
+      "TestNodeStringProperties"
+    ],
+    "binary_seconds": 13.26
+  },
+  "M02": {
+    "failed_rows": [],
+    "completed_rows": [
+      "TestNodeAgrees",
+      "TestBinaryAliases",
+      "TestKnownMembership",
+      "TestScriptAliasSet",
+      "TestRejectedNames",
+      "TestGeneralCategoryAliases",
+      "TestStringPropertyCensus",
+      "TestSetBoundaries",
+      "TestVersionMatchesNode",
+      "TestNodeStringProperties"
+    ],
+    "binary_seconds": 11.144
+  },
+  "M03": {
+    "failed_rows": [
+      "TestKnownMembership",
+      "TestNodeAgrees",
+      "TestScriptAliasSet"
+    ],
+    "completed_rows": [
+      "TestNodeAgrees",
+      "TestBinaryAliases",
+      "TestStringPropertyCensus",
+      "TestRejectedNames",
+      "TestScriptAliasSet",
+      "TestGeneralCategoryAliases",
+      "TestKnownMembership",
+      "TestSetBoundaries",
+      "TestVersionMatchesNode",
+      "TestNodeStringProperties"
+    ],
+    "binary_seconds": 18.448
+  },
+  "M04": {
+    "failed_rows": [
+      "TestGeneralCategoryAliases",
+      "TestKnownMembership",
+      "TestNodeAgrees"
+    ],
+    "completed_rows": [
+      "TestNodeAgrees",
+      "TestStringPropertyCensus",
+      "TestBinaryAliases",
+      "TestKnownMembership",
+      "TestScriptAliasSet",
+      "TestRejectedNames",
+      "TestGeneralCategoryAliases",
+      "TestSetBoundaries",
+      "TestVersionMatchesNode",
+      "TestNodeStringProperties"
+    ],
+    "binary_seconds": 11.911
+  },
+  "M05": {
+    "failed_rows": [
+      "TestKnownMembership",
+      "TestNodeStringProperties",
+      "TestRejectedNames",
+      "TestStringPropertyCensus"
+    ],
+    "completed_rows": [
+      "TestNodeAgrees",
+      "TestBinaryAliases",
+      "TestNodeStringProperties",
+      "TestStringPropertyCensus",
+      "TestKnownMembership",
+      "TestScriptAliasSet",
+      "TestRejectedNames",
+      "TestGeneralCategoryAliases",
+      "TestSetBoundaries",
+      "TestVersionMatchesNode"
+    ],
+    "binary_seconds": 14.438
+  },
+  "M06": {
+    "failed_rows": [
+      "TestBinaryAliases",
+      "TestKnownMembership",
+      "TestNodeAgrees",
+      "TestRejectedNames"
+    ],
+    "completed_rows": [
+      "TestNodeAgrees",
+      "TestBinaryAliases",
+      "TestScriptAliasSet",
+      "TestStringPropertyCensus",
+      "TestGeneralCategoryAliases",
+      "TestRejectedNames",
+      "TestKnownMembership",
+      "TestSetBoundaries",
+      "TestVersionMatchesNode",
+      "TestNodeStringProperties"
+    ],
+    "binary_seconds": 14.01
+  },
+  "M07": {
+    "failed_rows": [
+      "TestNodeAgrees"
+    ],
+    "completed_rows": [
+      "TestNodeAgrees",
+      "TestBinaryAliases",
+      "TestKnownMembership",
+      "TestScriptAliasSet",
+      "TestGeneralCategoryAliases",
+      "TestStringPropertyCensus",
+      "TestRejectedNames",
+      "TestSetBoundaries",
+      "TestVersionMatchesNode",
+      "TestNodeStringProperties"
+    ],
+    "binary_seconds": 11.935
+  },
+  "M08": {
+    "failed_rows": [
+      "TestGeneralCategoryAliases",
+      "TestKnownMembership",
+      "TestNodeAgrees",
+      "TestScriptAliasSet"
+    ],
+    "completed_rows": [
+      "TestNodeAgrees",
+      "TestBinaryAliases",
+      "TestStringPropertyCensus",
+      "TestRejectedNames",
+      "TestScriptAliasSet",
+      "TestGeneralCategoryAliases",
+      "TestKnownMembership",
+      "TestSetBoundaries",
+      "TestVersionMatchesNode",
+      "TestNodeStringProperties"
+    ],
+    "binary_seconds": 16.579
+  },
+  "M09": {
+    "failed_rows": [
+      "TestGeneralCategoryAliases",
+      "TestKnownMembership",
+      "TestNodeAgrees",
+      "TestScriptAliasSet"
+    ],
+    "completed_rows": [
+      "TestNodeAgrees",
+      "TestBinaryAliases",
+      "TestRejectedNames",
+      "TestStringPropertyCensus",
+      "TestScriptAliasSet",
+      "TestKnownMembership",
+      "TestGeneralCategoryAliases",
+      "TestSetBoundaries",
+      "TestVersionMatchesNode",
+      "TestNodeStringProperties"
+    ],
+    "binary_seconds": 13.45
+  },
+  "M10": {
+    "failed_rows": [
+      "TestKnownMembership",
+      "TestSetBoundaries"
+    ],
+    "completed_rows": [
+      "TestNodeAgrees",
+      "TestBinaryAliases",
+      "TestStringPropertyCensus",
+      "TestGeneralCategoryAliases",
+      "TestRejectedNames",
+      "TestSetBoundaries",
+      "TestScriptAliasSet",
+      "TestKnownMembership",
+      "TestVersionMatchesNode",
+      "TestNodeStringProperties"
+    ],
+    "binary_seconds": 11.319
+  },
+  "M11": {
+    "failed_rows": [
+      "TestKnownMembership",
+      "TestSetBoundaries"
+    ],
+    "completed_rows": [
+      "TestNodeAgrees",
+      "TestSetBoundaries",
+      "TestStringPropertyCensus",
+      "TestKnownMembership",
+      "TestRejectedNames",
+      "TestScriptAliasSet",
+      "TestGeneralCategoryAliases",
+      "TestBinaryAliases",
+      "TestVersionMatchesNode",
+      "TestNodeStringProperties"
+    ],
+    "binary_seconds": 17.536
+  },
+  "M12": {
+    "failed_rows": [
+      "TestStringPropertyCensus"
+    ],
+    "completed_rows": [
+      "TestNodeAgrees",
+      "TestBinaryAliases",
+      "TestKnownMembership",
+      "TestRejectedNames",
+      "TestScriptAliasSet",
+      "TestStringPropertyCensus",
+      "TestGeneralCategoryAliases",
+      "TestSetBoundaries",
+      "TestVersionMatchesNode",
+      "TestNodeStringProperties"
+    ],
+    "binary_seconds": 16.696
+  },
+  "M13": {
+    "failed_rows": [
+      "TestKnownMembership",
+      "TestNodeStringProperties",
+      "TestStringPropertyCensus"
+    ],
+    "completed_rows": [
+      "TestNodeAgrees",
+      "TestBinaryAliases",
+      "TestStringPropertyCensus",
+      "TestRejectedNames",
+      "TestScriptAliasSet",
+      "TestGeneralCategoryAliases",
+      "TestKnownMembership",
+      "TestSetBoundaries",
+      "TestVersionMatchesNode",
+      "TestNodeStringProperties"
+    ],
+    "binary_seconds": 13.038
+  },
+  "S01": {
+    "failed_rows": [
+      "TestUnicodeNodeShardCoverage"
+    ],
+    "binary_seconds": 0.569
+  },
+  "W01": {
+    "failed_rows": [
+      "TestUnicodeNodeShardPlantedFailure",
+      "TestUnicodeNodeStridePlantedFailure"
+    ],
+    "binary_seconds": 30.894
+  }
+}

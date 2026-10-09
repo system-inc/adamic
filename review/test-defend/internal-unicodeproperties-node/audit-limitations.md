@@ -1,0 +1,19 @@
+Starting commit was fetched origin/main 60397548dd8a9494a7d2aaa874b7648b8e625607, not historical 8de93800f4. All five scoped names exist in their cited files.
+
+The complete package baseline cooked at 90.018 binary seconds (90.219 command), with no earlier assertion failure. Scoped clean baseline passed at 27.102 binary seconds (27.421 command). The ten-row production caller matrix had its own green baseline (13.367 binary seconds). Every production column completed all ten selected rows; none cooked, panicked or skipped. Remaining package rows are unknown, so all uniqueness and subsumption claims are bounded.
+
+The full package's 34 expensive canonicalize range wrappers form a family, but they do not call the mutated Lookup, property sets or version metadata. The saved git-grep function inventory motivates their exclusion. Setup and witness rows use their own submatrices, not production precondition failures. Shard coverage has additional census, digest and construction assertions and is its own setup row. The stride planted witness runs the same plant helper with additional stride-specific BAD count and extra-folded-member assertions; it was tested with W01 as an additional witness, without merging it into the five scoped rows.
+
+The fixed menu has thirteen production faults plus one setup construction fault and one witness harness weakening. M12 makes the implicit sequence upper bound len-1, not a new inserted statement. S01 is the allowed setup construction mutation. W01 skips Go reporting of disagreements; Node scripts, scanner self-checks and oracle answers were unchanged. Both planted witnesses failed when their child tests accepted the still-reported Node BAD answer.
+
+M02 changes the public UCD patch-version metadata while preserving the Node Unicode major/minor pin. Its observed before/after output proves a real metadata change, not a membership or native-execution change. It survived every row in the bounded production matrix. M12 survived the Node string row but was caught by the string census, so it is not a matrix survivor. M10/M11 changed Contains and were caught by boundary/membership tests while the raw-range Node comparison passed.
+
+Only the two Lookup-calling scoped rows received P01 (Lookup returns Property{},false). Both failed it. The metadata row calls no production function to empty; setup/witness rows were judged under their separate rules. Their vacuity is null, not inferred. P01 is not a mutant and contributes no uniqueness or subsumption.
+
+The string row's subsumption rests on two observed mutants (M05 and M13). It is a hint, not a deletion recommendation. The subsumer median is 0.003 seconds. No named row was over 60 seconds.
+
+Test binary seconds are package-line medians of three independent count=1 commands, rather than the parallel parent's often-zero PASS duration. These Node tests have no oracle-result cache. No rows in the scoped baselines or the bounded production matrix skipped. node scripts load only built-in fs, so no additional node_modules install was needed beyond the requested stage3/api npm ci.
+
+Building the switched package was included in the first matrix command, not separately timed. Each standalone production diff was vetted separately as required; a later restored warm binary build was measured. The whole-package timeout and three runs of the planted child compilation were the main costs. No other packages, repo-wide replay, complete gate or exhaustive generated-table mutations were run. Whole-source generated tables were read at their mutated sites; the entire generated data corpus was not manually reviewed. README and doctrine files had no diff from the previously read versions.
+
+Every standalone diff applies at the starting commit and passes go vet ./internal/unicodeproperties/. Production diffs have no selector; P01 retains a probe selector. All production and harness sources were restored. No main push or pull request was made.

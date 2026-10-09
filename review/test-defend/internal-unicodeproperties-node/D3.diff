@@ -1,0 +1,13 @@
+diff --git a/internal/unicodeproperties/tables.go b/internal/unicodeproperties/tables.go
+index 3a6bc9f2..200878fe 100644
+--- a/internal/unicodeproperties/tables.go
++++ b/internal/unicodeproperties/tables.go
+@@ -28058,7 +28058,7 @@ var sequences_RGI_Emoji_Flag_Sequence = []string{
+ 
+ var sequences_RGI_Emoji_Tag_Sequence = []string{
+ 	"🏴\U000e0067\U000e0062\U000e0065\U000e006e\U000e0067\U000e007f",
+-	"🏴\U000e0067\U000e0062\U000e0073\U000e0063\U000e0074\U000e007f",
++	"🏴\U000e0067\U000e0062\U000e0073\U000e0063\U000e0075\U000e007f",
+ 	"🏴\U000e0067\U000e0062\U000e0077\U000e006c\U000e0073\U000e007f",
+ }
+ 

@@ -1,0 +1,55 @@
+[
+  {
+    "test": "TestNodeStringProperties",
+    "package": "internal/unicodeproperties",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestStringPropertyCensus"
+    ],
+    "defense": "not defended",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "internal/unicodeproperties/tables.go:25713",
+        "change": "Change an interior Basic_Emoji presentation selector from FE0F to FE0E.",
+        "rows_failed": [
+          "TestStringPropertyCensus",
+          "TestNodeStringProperties"
+        ]
+      },
+      {
+        "mutant": "D2",
+        "file_line": "internal/unicodeproperties/tables.go:27119",
+        "change": "Change an interior keycap base digit to an unsupported letter.",
+        "rows_failed": [
+          "TestStringPropertyCensus",
+          "TestNodeStringProperties"
+        ]
+      },
+      {
+        "mutant": "D3",
+        "file_line": "internal/unicodeproperties/tables.go:28061",
+        "change": "Off-by-one Scotland tag code point t to u, preserving sequence length.",
+        "rows_failed": [
+          "TestStringPropertyCensus",
+          "TestNodeStringProperties"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-unicode/cache/D3 timeout 120 go test -json -count=1 -timeout 90s ./internal/unicodeproperties/ -run '^(TestVersionMatchesNode|TestNodeAgrees|TestNodeStringProperties|TestBinaryAliases|TestGeneralCategoryAliases|TestScriptAliasSet|TestRejectedNames|TestStringPropertyCensus|TestSetBoundaries|TestKnownMembership)$' > D3.log 2>&1; node_test.go:429: \\p{RGI_Emoji_Tag_Sequence} does not match \"\ud83c\udff4\\U000e0067\\U000e0062\\U000e0073\\U000e0063\\U000e0075\\U000e007f\" (node said 0)",
+    "bounded": true,
+    "matrix_rows": [
+      "TestVersionMatchesNode",
+      "TestNodeAgrees",
+      "TestNodeStringProperties",
+      "TestBinaryAliases",
+      "TestGeneralCategoryAliases",
+      "TestScriptAliasSet",
+      "TestRejectedNames",
+      "TestStringPropertyCensus",
+      "TestSetBoundaries",
+      "TestKnownMembership"
+    ]
+  }
+]

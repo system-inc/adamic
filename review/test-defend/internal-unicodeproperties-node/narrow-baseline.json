@@ -1,0 +1,45 @@
+{
+  "command": [
+    "timeout",
+    "120",
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "./internal/unicodeproperties/",
+    "-run",
+    "^(TestVersionMatchesNode|TestNodeAgrees|TestNodeStringProperties|TestBinaryAliases|TestGeneralCategoryAliases|TestScriptAliasSet|TestRejectedNames|TestStringPropertyCensus|TestSetBoundaries|TestKnownMembership)$"
+  ],
+  "cache": "/tmp/defend-unicode/cache/narrow-baseline",
+  "wall_seconds": 7.9274137940010405,
+  "exit": 0,
+  "binary_seconds": 7.76,
+  "statuses": {
+    "TestNodeAgrees": "pass",
+    "TestBinaryAliases": "pass",
+    "TestScriptAliasSet": "pass",
+    "TestGeneralCategoryAliases": "pass",
+    "TestKnownMembership": "pass",
+    "TestRejectedNames": "pass",
+    "TestStringPropertyCensus": "pass",
+    "TestSetBoundaries": "pass",
+    "TestVersionMatchesNode": "pass",
+    "TestNodeStringProperties": "pass"
+  },
+  "failures": [
+    "node code point check: 1715 expressions x 1114112 code points = 1910702080, disagreements 0",
+    "--- PASS: TestNodeAgrees (7.61s)",
+    "--- PASS: TestBinaryAliases (0.00s)",
+    "--- PASS: TestScriptAliasSet (0.00s)",
+    "--- PASS: TestGeneralCategoryAliases (0.00s)",
+    "--- PASS: TestKnownMembership (0.00s)",
+    "--- PASS: TestRejectedNames (0.00s)",
+    "--- PASS: TestStringPropertyCensus (0.00s)",
+    "--- PASS: TestSetBoundaries (0.00s)",
+    "--- PASS: TestVersionMatchesNode (0.03s)",
+    "node string-property check: 7906 sequences, disagreements 0",
+    "--- PASS: TestNodeStringProperties (0.14s)"
+  ]
+}

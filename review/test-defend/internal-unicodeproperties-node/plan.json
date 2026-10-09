@@ -1,0 +1,32 @@
+[
+  {
+    "mutant": "D1",
+    "file": "internal/unicodeproperties/tables.go",
+    "line": 25713,
+    "before": "\"\u00ae\ufe0f\"",
+    "after": "\"\u00ae\ufe0e\"",
+    "position": 594176,
+    "change": "Change an interior Basic_Emoji presentation selector from FE0F to FE0E.",
+    "menu": "change constant"
+  },
+  {
+    "mutant": "D2",
+    "file": "internal/unicodeproperties/tables.go",
+    "line": 27119,
+    "before": "\"2\ufe0f\u20e3\"",
+    "after": "\"A\ufe0f\u20e3\"",
+    "position": 602859,
+    "change": "Change an interior keycap base digit to an unsupported letter.",
+    "menu": "change constant"
+  },
+  {
+    "mutant": "D3",
+    "file": "internal/unicodeproperties/tables.go",
+    "line": 28061,
+    "before": "\\U000e0073\\U000e0063\\U000e0074",
+    "after": "\\U000e0073\\U000e0063\\U000e0075",
+    "position": 609641,
+    "change": "Off-by-one Scotland tag code point t to u, preserving sequence length.",
+    "menu": "change constant"
+  }
+]

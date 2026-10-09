@@ -1,0 +1,106 @@
+[
+  {
+    "id": "M01",
+    "file": "internal/unicodeproperties/unicodeproperties.go",
+    "line": 34,
+    "old": "NodeUnicodeVersion = \"17.0\"",
+    "new": "NodeUnicodeVersion = \"16.0\"",
+    "menu": "change constant"
+  },
+  {
+    "id": "M02",
+    "file": "internal/unicodeproperties/unicodeproperties.go",
+    "line": 33,
+    "old": "Version            = \"17.0.0\"",
+    "new": "Version            = \"17.0.1\"",
+    "menu": "change constant"
+  },
+  {
+    "id": "M03",
+    "file": "internal/unicodeproperties/unicodeproperties.go",
+    "line": 160,
+    "old": "case \"Script_Extensions\", \"scx\":\n\t\t\ttable = scriptExtensionNames",
+    "new": "case \"Script_Extensions\", \"scx\":\n\t\t\ttable = scriptNames",
+    "menu": "change option"
+  },
+  {
+    "id": "M04",
+    "file": "internal/unicodeproperties/unicodeproperties.go",
+    "line": 169,
+    "old": "codePoint(generalCategoryNames, expression)",
+    "new": "codePoint(binaryNames, expression)",
+    "menu": "change option"
+  },
+  {
+    "id": "M05",
+    "file": "internal/unicodeproperties/unicodeproperties.go",
+    "line": 175,
+    "old": "if unicodeSets {",
+    "new": "if !unicodeSets {",
+    "menu": "flip condition"
+  },
+  {
+    "id": "M06",
+    "file": "internal/unicodeproperties/unicodeproperties.go",
+    "line": 188,
+    "old": "return Property{Kind: KindCodePoints, Name: e.name",
+    "new": "return Property{Kind: KindStrings, Name: e.name",
+    "menu": "change constant"
+  },
+  {
+    "id": "M07",
+    "file": "internal/unicodeproperties/tables.go",
+    "line": 23,
+    "old": "{ // 0 ASCII\n\t\tRanges: []Range{\n\t\t\t{0x0000, 0x007F}",
+    "new": "{ // 0 ASCII\n\t\tRanges: []Range{\n\t\t\t{0x0000, 0x007E}",
+    "menu": "change constant"
+  },
+  {
+    "id": "M08",
+    "file": "internal/unicodeproperties/unicodeproperties.go",
+    "line": 204,
+    "old": "if equals > 1 || i == 0",
+    "new": "if equals > 0 || i == 0",
+    "menu": "off-by-one bound"
+  },
+  {
+    "id": "M09",
+    "file": "internal/unicodeproperties/unicodeproperties.go",
+    "line": 218,
+    "old": "return expression[:i], expression[i+1:], true",
+    "new": "return expression[:i], expression[i:], true",
+    "menu": "off-by-one bound"
+  },
+  {
+    "id": "M10",
+    "file": "internal/unicodeproperties/unicodeproperties.go",
+    "line": 60,
+    "old": "if ranges[mid].End < cp {",
+    "new": "if ranges[mid].End <= cp {",
+    "menu": "off-by-one bound"
+  },
+  {
+    "id": "M11",
+    "file": "internal/unicodeproperties/unicodeproperties.go",
+    "line": 66,
+    "old": "ranges[lo].Start <= cp",
+    "new": "ranges[lo].Start < cp",
+    "menu": "off-by-one bound"
+  },
+  {
+    "id": "M12",
+    "file": "internal/unicodeproperties/unicodeproperties.go",
+    "line": 177,
+    "old": "Sequences: s.sequences}",
+    "new": "Sequences: s.sequences[:len(s.sequences)-1]}",
+    "menu": "off-by-one implicit upper bound"
+  },
+  {
+    "id": "M13",
+    "file": "internal/unicodeproperties/tables.go",
+    "line": 25712,
+    "old": "var sequences_Basic_Emoji = []string{\n\t\"\u00a9\ufe0f\",",
+    "new": "var sequences_Basic_Emoji = []string{\n\t\"A\",",
+    "menu": "change constant"
+  }
+]

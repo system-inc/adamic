@@ -1,0 +1,52 @@
+CODE UNDER TEST: Adamic Go Unicode-property lookup and generated tables; construction helpers for the setup check. ORACLE: Node version and native RegExp property membership; self-written coverage census and digest.
+
+Production functions reached by node_test.go: Lookup, expressionOK, splitPair, codePoint. Set.Contains is reached through differences only after a range disagreement, not on the clean equality path. Version row reads Version and NodeUnicodeVersion constants. String row reads Property.Sequences; it does not call ContainsSequence.
+
+Setup row reaches unicodeCanonicalizeLines, unicodeSingletonGroups, formatCodePoints, unicodeCanonicalizeShards, unicodeScanShard.name, checkUnicodeShardCoverage, checkUnicodeTopRangeCoverage. Witness runs runUnicodeShardPlant and subprocess ranges via runUnicodeCanonicalizeRange, runUnicodeBatch, parseBatchOutput, reportDisagreements, runNodeOutput. Node scripts are oracle code and remain unchanged.
+
+Other package callers of production functions:
+internal/unicodeproperties/alias_test.go:168:		property, ok := Lookup(alias, false)
+internal/unicodeproperties/alias_test.go:172:		if _, ok := Lookup(alias+"=Yes", false); ok {
+internal/unicodeproperties/alias_test.go:190:			property, ok := Lookup(expression, false)
+internal/unicodeproperties/alias_test.go:195:		lone, _ := Lookup(alias, false)
+internal/unicodeproperties/alias_test.go:196:		qualified, _ := Lookup("gc="+alias, false)
+internal/unicodeproperties/alias_test.go:227:		script, ok := Lookup("sc="+required, false)
+internal/unicodeproperties/alias_test.go:228:		extensions, extOK := Lookup("scx="+required, false)
+internal/unicodeproperties/alias_test.go:232:		if _, ok := Lookup("Script="+required, false); !ok {
+internal/unicodeproperties/alias_test.go:235:		if _, ok := Lookup("Script_Extensions="+required, false); !ok {
+internal/unicodeproperties/alias_test.go:240:	if _, ok := Lookup("Latin", false); ok {
+internal/unicodeproperties/alias_test.go:243:	if _, ok := Lookup("sc=Hrkt", false); ok {
+internal/unicodeproperties/alias_test.go:246:	if _, ok := Lookup("sc=Katakana_Or_Hiragana", false); ok {
+internal/unicodeproperties/alias_test.go:261:		if _, ok := Lookup(expression, false); ok {
+internal/unicodeproperties/alias_test.go:265:	if _, ok := Lookup("RGI_Emoji", true); !ok {
+internal/unicodeproperties/alias_test.go:268:	if _, ok := Lookup("Basic_Emoji=Yes", true); ok {
+internal/unicodeproperties/alias_test.go:271:	if _, ok := Lookup("Basic_Emoji", false); ok {
+internal/unicodeproperties/alias_test.go:276:	if property, ok := Lookup("ASCII", true); !ok || property.Kind != KindCodePoints {
+internal/unicodeproperties/alias_test.go:314:		resolved, ok := Lookup(name, true)
+internal/unicodeproperties/alias_test.go:318:		if len(property.sequences) > 0 && !resolved.ContainsSequence(property.sequences[0]) {
+internal/unicodeproperties/alias_test.go:321:		if resolved.ContainsSequence(property.sequences[0] + "\u0000") {
+internal/unicodeproperties/alias_test.go:335:			if !set.Contains(rune(r.Start)) || !set.Contains(rune(r.End)) {
+internal/unicodeproperties/alias_test.go:338:			if r.Start > 0 && set.Contains(rune(r.Start-1)) {
+internal/unicodeproperties/alias_test.go:341:			if r.End < 0x10FFFF && set.Contains(rune(r.End+1)) {
+internal/unicodeproperties/alias_test.go:347:		if set.Contains(0) == complement.Contains(0) || set.Contains(0x10FFFF) == complement.Contains(0x10FFFF) {
+internal/unicodeproperties/alias_test.go:366:		property, ok := Lookup(expression, false)
+internal/unicodeproperties/alias_test.go:371:		if property.Contains(codePoint) != want {
+internal/unicodeproperties/alias_test.go:372:			t.Errorf("\\p{%s} U+%04X = %v, want %v", expression, codePoint, property.Contains(codePoint), want)
+internal/unicodeproperties/alias_test.go:406:	watch, ok := Lookup("Basic_Emoji", true)
+internal/unicodeproperties/alias_test.go:407:	if !ok || !watch.ContainsSequence("\u231A") || watch.ContainsSequence("A") {
+internal/unicodeproperties/alias_test.go:410:	keycap, ok := Lookup("Emoji_Keycap_Sequence", true)
+internal/unicodeproperties/alias_test.go:411:	if !ok || !keycap.ContainsSequence("#\uFE0F\u20E3") || keycap.ContainsSequence("#\u20E3") {
+internal/unicodeproperties/node_test.go:226:					property, ok := Lookup(expression, false)
+internal/unicodeproperties/node_test.go:289:		if have.Contains(codePoint) == other.Contains(codePoint) {
+internal/unicodeproperties/node_test.go:385:		property, ok := Lookup(name, true)
+internal/unicodeproperties/node_test.go:424:		property, _ := Lookup(name, true)
+internal/unicodeproperties/shards_test.go:167:	if err := checkUnicodeShardCoverage(lines, shards[1:]); err == nil || !strings.Contains(err.Error(), "covered 0 times") {
+internal/unicodeproperties/shards_test.go:171:	if err := checkUnicodeShardCoverage(lines, duplicated); err == nil || !strings.Contains(err.Error(), "duplicate shard") {
+internal/unicodeproperties/shards_test.go:176:	if err := checkUnicodeShardCoverage(lines, overlap); err == nil || !strings.Contains(err.Error(), "covered 2 times") {
+internal/unicodeproperties/shards_test.go:181:	if err := checkUnicodeShardCoverage(lines, crossingStride); err == nil || !strings.Contains(err.Error(), "invalid stride shard range") {
+internal/unicodeproperties/shards_test.go:186:	if err := checkUnicodeShardCoverage(lines, wideStride); err == nil || !strings.Contains(err.Error(), "invalid stride shard range") {
+internal/unicodeproperties/shards_test.go:200:	if err := checkUnicodeTopRangeCoverage(lines, shards, unicodeNodeTopRanges[1:]); err == nil || !strings.Contains(err.Error(), "owned 0 times") {
+internal/unicodeproperties/shards_test.go:205:	if err := checkUnicodeTopRangeCoverage(lines, shards, droppedStride); err == nil || !strings.Contains(err.Error(), "shard 254 owned 0 times") {
+internal/unicodeproperties/shards_test.go:214:	if err := checkUnicodeTopRangeCoverage(lines, shards, overlappingGroups); err == nil || !strings.Contains(err.Error(), "owned 2 times") {
+internal/unicodeproperties/shards_test.go:298:	if err == nil || bytes.Contains(output, []byte("build failed")) || !bytes.Contains(output, []byte(bad)) || !bytes.Contains(output, []byte("--- FAIL: "+failedShard)) || !bytes.Contains(output, []byte("--- PASS: "+passedRange+" (")) {
+internal/unicodeproperties/shards_test.go:301:	if strings.HasPrefix(bad, "BAD GROUP") && (!bytes.Contains(output, []byte("EXTRA 61 MISSING")) || bytes.Count(output, []byte("BAD GROUP")) != 1) {

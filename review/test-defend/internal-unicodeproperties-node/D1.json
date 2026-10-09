@@ -1,0 +1,47 @@
+{
+  "command": [
+    "timeout",
+    "120",
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "./internal/unicodeproperties/",
+    "-run",
+    "^(TestVersionMatchesNode|TestNodeAgrees|TestNodeStringProperties|TestBinaryAliases|TestGeneralCategoryAliases|TestScriptAliasSet|TestRejectedNames|TestStringPropertyCensus|TestSetBoundaries|TestKnownMembership)$"
+  ],
+  "cache": "/tmp/defend-unicode/cache/D1",
+  "wall_seconds": 8.37414025399994,
+  "exit": 1,
+  "binary_seconds": 7.872,
+  "statuses": {
+    "TestNodeAgrees": "pass",
+    "TestBinaryAliases": "pass",
+    "TestKnownMembership": "pass",
+    "TestStringPropertyCensus": "fail",
+    "TestScriptAliasSet": "pass",
+    "TestRejectedNames": "pass",
+    "TestGeneralCategoryAliases": "pass",
+    "TestSetBoundaries": "pass",
+    "TestVersionMatchesNode": "pass",
+    "TestNodeStringProperties": "fail"
+  },
+  "failures": [
+    "node code point check: 1715 expressions x 1114112 code points = 1910702080, disagreements 0",
+    "--- PASS: TestNodeAgrees (7.73s)",
+    "--- PASS: TestBinaryAliases (0.00s)",
+    "--- PASS: TestKnownMembership (0.00s)",
+    "alias_test.go:312: Basic_Emoji: 1400 sequences, sha256 8ba79f8e5e80fde1d5956084191f34c0465f86d25d6fe608bf96dc1bbf21ae64",
+    "--- FAIL: TestStringPropertyCensus (0.00s)",
+    "--- PASS: TestScriptAliasSet (0.00s)",
+    "--- PASS: TestRejectedNames (0.00s)",
+    "--- PASS: TestGeneralCategoryAliases (0.00s)",
+    "--- PASS: TestSetBoundaries (0.00s)",
+    "--- PASS: TestVersionMatchesNode (0.03s)",
+    "node string-property check: 7906 sequences, disagreements 1",
+    "node_test.go:429: \\p{Basic_Emoji} does not match \"\u00ae\ufe0e\" (node said 0)",
+    "--- FAIL: TestNodeStringProperties (0.14s)"
+  ]
+}
