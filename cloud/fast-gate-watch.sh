@@ -525,7 +525,8 @@ stopSkipped() {
 # 14383e9d's old merge from 11:31Z to 14:38Z until Loom stopped it by hand. Past it the gate is stopped through stop-gate.sh,
 # so it publishes what it had, and reads void with that cause: queued again, never counted toward a storm. A canary or a
 # gate mutant gets an hour, since main~10's canaries run about 40 minutes (#6vvjzcq narrows them), and a landing's or an
-# area's complete run 90 minutes, since it runs every test to the end (the trio's took about 1.5 hours on Oct 9).
+# area's complete run two hours, since it runs every test to the end: the star (library 26b08c00) voided at 90 minutes
+# on Oct 9 with 2,020 passed and none failed, and release ordered its rerun at 7,200 s (integration 22:46Z).
 boxCeiling=${ADAMIC_FAST_GATE_BOX_CEILING:-1800}
 canaryCeiling=${ADAMIC_FAST_GATE_CANARY_CEILING:-3600}
 # The whole-box stage canary gets two hours (@system_adamic 20:10Z, @system_adamic_release_verdict 20:14Z): c0232217's,
@@ -533,7 +534,7 @@ canaryCeiling=${ADAMIC_FAST_GATE_CANARY_CEILING:-3600}
 # (record 46eb7b96); main~10 pulls in json, markdowninline and lint, about 105 minutes of test wall there. It holds until the
 # canary's selection comes from the tools diff (#fyvmsy8, #6vvjzcq). A slot canary and a gate mutant keep the hour.
 wholeCanaryCeiling=${ADAMIC_FAST_GATE_WHOLE_CANARY_CEILING:-7200}
-completeCeiling=${ADAMIC_FAST_GATE_COMPLETE_CEILING:-5400}
+completeCeiling=${ADAMIC_FAST_GATE_COMPLETE_CEILING:-7200}
 stopOverCeiling() {
   local file pid branch sha slot box rest started limit now
   now=$(date -u +%s)
