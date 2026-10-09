@@ -1,5 +1,5 @@
 import pathlib,json,re,subprocess,collections
-root=pathlib.Path('/workspace/adamic');p=root/'review/test-defend/internal-oracle-checked_views_flag_downcast'
+root=pathlib.Path('/workspace/adamic');p=root/'review/test-defend/internal-oracle-checked_views_flag_downcast/session-f978be38'
 runs=json.loads((p/'matrix.json').read_text());menu=json.loads((p/'valid-menu.json').read_text())
 def top(n):return n.split('/')[0]
 def failures(m):return sorted({top(n) for r in runs if r['mutant']==m for n in r['failures']})

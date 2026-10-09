@@ -1,5 +1,5 @@
 import pathlib,json,subprocess,os,time
-root=pathlib.Path('/workspace/adamic');p=root/'review/test-defend/internal-oracle-checked_views_flag_downcast';env=os.environ.copy();env['ADAMIC_GATE_UNCACHED']='1'
+root=pathlib.Path('/workspace/adamic');p=root/'review/test-defend/internal-oracle-checked_views_flag_downcast/session-f978be38';env=os.environ.copy();env['ADAMIC_GATE_UNCACHED']='1'
 runs=json.loads((p/'matrix.json').read_text());menu=json.loads((p/'valid-menu.json').read_text())
 def run(label,s,mut):
  e=env.copy();e['ADAMIC_BUILD_CACHE_DIR']='/tmp/checked-views-defense/cache/'+mut;cmd=['timeout','120','go','test','-json','-count=1','-timeout','90s','./internal/oracle/','-run',s];now=time.monotonic()

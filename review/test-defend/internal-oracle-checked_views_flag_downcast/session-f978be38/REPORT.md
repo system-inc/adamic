@@ -389,3 +389,5 @@ Timing: setup skipped because tools were warm; nproc 5. npm-ci.log captures inst
 
 The complete NativeAgreesWithNode clean family also cooked at 90 seconds (91.73 command wall seconds including compilation), with no ordinary assertion failures. The already completed reached-fixture matrix is the bound used for uniqueness.
 Raw logs and coverage profiles are losslessly compressed as .log.gz and .cover.gz. Decompress a profile before go tool cover. The full list of completed top-level passes for each unique mutant is in rows.json; the exact fixture selections and subtest passes are in matrix.json.
+
+Publishing required fetching an existing defense branch. This session is preserved separately under session-f978be38; prior remote evidence is retained without importing production changes.

@@ -1,0 +1,1 @@
+This session started from origin/main 619e7a4cf33741cc04bc78dc4c0c8ba0e31d73fb. Its report, diffs, matrices and compressed logs are in [session-f978be38/REPORT.md](session-f978be38/REPORT.md). Earlier remote evidence remains separate.

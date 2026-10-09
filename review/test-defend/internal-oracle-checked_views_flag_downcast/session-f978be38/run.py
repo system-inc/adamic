@@ -1,5 +1,5 @@
 import pathlib,subprocess,os,json,time,difflib
-root=pathlib.Path('/workspace/adamic');p=root/'review/test-defend/internal-oracle-checked_views_flag_downcast'
+root=pathlib.Path('/workspace/adamic');p=root/'review/test-defend/internal-oracle-checked_views_flag_downcast/session-f978be38'
 base=os.environ.copy();base['ADAMIC_GATE_UNCACHED']='1'
 def run(label,selector,cover=False,mut='clean'):
  env=base.copy();env['ADAMIC_BUILD_CACHE_DIR']='/tmp/checked-views-defense/cache/'+mut
