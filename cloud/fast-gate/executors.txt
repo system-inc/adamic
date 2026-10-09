@@ -1475,3 +1475,168 @@ reads stage3/fixtures oracle/adamic.mjs
 # TestFixtures — stage3/fixtures/fixtures_test.go:264
 # TestTransformedNodeRunnerGuardHook — stage3/fixtures/runner_guard_test.go:21
 reads stage3/fixtures oracle/node.mjs
+
+# Cross-package test reads the Oct 8 inventory missed or that landed after it, found by selection's census on
+# main b8bcadb2 (#sn4dm2n, #zqvepx8): each path literal in a Go source that lands in another package's testdata or
+# _test.go files. 67 of these 80 were selected by nothing before this block, so an edit to the file read never
+# reran the test reading it.
+# TestExplainChecksOutput — cmd/adamic/checks_test.go:25
+reads cmd/adamic internal/lower/testdata/predicates/*
+# children — cmd/adamic-gate/main.go:348
+reads cmd/adamic-gate internal/native/normalize_test.go
+# children — cmd/adamic-gate/main.go:350
+reads cmd/adamic-gate internal/native/string_index_test.go
+# children — cmd/adamic-gate/main.go:322
+reads cmd/adamic-gate internal/oracle/input_test.go
+# children — cmd/adamic-gate/main.go:320
+reads cmd/adamic-gate internal/oracle/oracle_test.go
+# children — cmd/adamic-gate/main.go:335
+reads cmd/adamic-gate stage1/cohere/css/print_test.go
+# children — cmd/adamic-gate/main.go:340
+reads cmd/adamic-gate stage1/cohere/lint/lint_test.go
+# TestGitSnapshotAndEvidenceBoundary — cmd/adamic-stage1-progress/main_test.go:102
+reads cmd/adamic-stage1-progress stage1/cohere/gitignore/gitignore_test.go
+# TestFlowProgram_* via flowCorpusPaths — internal/flow/corpus_units_test.go:785
+reads internal/flow internal/oracle/testdata/non_null.ts
+# TestFlowProgram_* via flowCorpusPaths — internal/flow/corpus_units_test.go:786
+reads internal/flow internal/oracle/testdata/non_null_array.ts
+# TestFlowProgram_* via flowCorpusPaths — internal/flow/corpus_units_test.go:787
+reads internal/flow internal/oracle/testdata/non_null_boolean.ts
+# TestFlowProgram_* via flowCorpusPaths — internal/flow/corpus_units_test.go:788
+reads internal/flow internal/oracle/testdata/non_null_capture.ts
+# TestFlowProgram_* via flowCorpusPaths — internal/flow/corpus_units_test.go:789
+reads internal/flow internal/oracle/testdata/non_null_catch.ts
+# TestFlowProgram_* via flowCorpusPaths — internal/flow/corpus_units_test.go:790
+reads internal/flow internal/oracle/testdata/non_null_checked_initializer.ts
+# TestFlowProgram_* via flowCorpusPaths — internal/flow/corpus_units_test.go:791
+reads internal/flow internal/oracle/testdata/non_null_checked_let_initializer.ts
+# TestFlowProgram_* via flowCorpusPaths — internal/flow/corpus_units_test.go:792
+reads internal/flow internal/oracle/testdata/non_null_checked_narrowed.ts
+# TestFlowProgram_* via flowCorpusPaths — internal/flow/corpus_units_test.go:793
+reads internal/flow internal/oracle/testdata/non_null_checked_null.ts
+# TestFlowProgram_* via flowCorpusPaths — internal/flow/corpus_units_test.go:794
+reads internal/flow internal/oracle/testdata/non_null_checked_present.ts
+# TestFlowProgram_* via flowCorpusPaths — internal/flow/corpus_units_test.go:795
+reads internal/flow internal/oracle/testdata/non_null_checked_undefined.ts
+# TestFlowProgram_* via flowCorpusPaths — internal/flow/corpus_units_test.go:796
+reads internal/flow internal/oracle/testdata/non_null_definite.ts
+# TestFlowProgram_* via flowCorpusPaths — internal/flow/corpus_units_test.go:797
+reads internal/flow internal/oracle/testdata/non_null_definite_field.ts
+# TestFlowProgram_* via flowCorpusPaths — internal/flow/corpus_units_test.go:798
+reads internal/flow internal/oracle/testdata/non_null_definite_local.ts
+# TestFlowProgram_* via flowCorpusPaths — internal/flow/corpus_units_test.go:799
+reads internal/flow internal/oracle/testdata/non_null_field.ts
+# TestFlowProgram_* via flowCorpusPaths — internal/flow/corpus_units_test.go:800
+reads internal/flow internal/oracle/testdata/non_null_initialized.ts
+# TestFlowProgram_* via flowCorpusPaths — internal/flow/corpus_units_test.go:801
+reads internal/flow internal/oracle/testdata/non_null_lazy_default.ts
+# TestFlowProgram_* via flowCorpusPaths — internal/flow/corpus_units_test.go:802
+reads internal/flow internal/oracle/testdata/non_null_lazy_field.ts
+# TestFlowProgram_* via flowCorpusPaths — internal/flow/corpus_units_test.go:803
+reads internal/flow internal/oracle/testdata/non_null_lazy_initialized.ts
+# TestFlowProgram_* via flowCorpusPaths — internal/flow/corpus_units_test.go:804
+reads internal/flow internal/oracle/testdata/non_null_lazy_read.ts
+# TestFlowProgram_* via flowCorpusPaths — internal/flow/corpus_units_test.go:805
+reads internal/flow internal/oracle/testdata/non_null_lazy_static.ts
+# TestFlowProgram_* via flowCorpusPaths — internal/flow/corpus_units_test.go:806
+reads internal/flow internal/oracle/testdata/non_null_literal_assignment.ts
+# TestFlowProgram_* via flowCorpusPaths — internal/flow/corpus_units_test.go:807
+reads internal/flow internal/oracle/testdata/non_null_literal_return.ts
+# TestFlowProgram_* via flowCorpusPaths — internal/flow/corpus_units_test.go:808
+reads internal/flow internal/oracle/testdata/non_null_literal_statement.ts
+# TestFlowProgram_* via flowCorpusPaths — internal/flow/corpus_units_test.go:809
+reads internal/flow internal/oracle/testdata/non_null_map.ts
+# TestFlowProgram_* via flowCorpusPaths — internal/flow/corpus_units_test.go:810
+reads internal/flow internal/oracle/testdata/non_null_null.ts
+# TestFlowProgram_* via flowCorpusPaths — internal/flow/corpus_units_test.go:811
+reads internal/flow internal/oracle/testdata/non_null_refuse_null.ts
+# TestFlowProgram_* via flowCorpusPaths — internal/flow/corpus_units_test.go:812
+reads internal/flow internal/oracle/testdata/non_null_refuse_undefined.ts
+# TestFlowProgram_* via flowCorpusPaths — internal/flow/corpus_units_test.go:813
+reads internal/flow internal/oracle/testdata/non_null_static_initialized.ts
+# TestFlowProgram_* via flowCorpusPaths — internal/flow/corpus_units_test.go:814
+reads internal/flow internal/oracle/testdata/non_null_static_uninitialized.ts
+# TestFlowProgram_* via flowCorpusPaths — internal/flow/corpus_units_test.go:815
+reads internal/flow internal/oracle/testdata/non_null_uninitialized.ts
+# TestFlowProgram_* via flowCorpusPaths — internal/flow/corpus_units_test.go:816
+reads internal/flow internal/oracle/testdata/non_null_uninitialized_append.ts
+# TestFlowProgram_* via flowCorpusPaths — internal/flow/corpus_units_test.go:817
+reads internal/flow internal/oracle/testdata/non_null_uninitialized_capture.ts
+# TestFlowProgram_* via flowCorpusPaths — internal/flow/corpus_units_test.go:818
+reads internal/flow internal/oracle/testdata/non_null_uninitialized_catch.ts
+# TestFlowProgram_* via flowCorpusPaths — internal/flow/corpus_units_test.go:819
+reads internal/flow internal/oracle/testdata/non_null_uninitialized_const.ts
+# TestFlowProgram_* via flowCorpusPaths — internal/flow/corpus_units_test.go:820
+reads internal/flow internal/oracle/testdata/non_null_uninitialized_default.ts
+# TestFlowProgram_* via flowCorpusPaths — internal/flow/corpus_units_test.go:821
+reads internal/flow internal/oracle/testdata/non_null_uninitialized_exception.ts
+# TestFlowProgram_* via flowCorpusPaths — internal/flow/corpus_units_test.go:822
+reads internal/flow internal/oracle/testdata/non_null_uninitialized_field.ts
+# TestFlowProgram_* via flowCorpusPaths — internal/flow/corpus_units_test.go:823
+reads internal/flow internal/oracle/testdata/non_null_uninitialized_interface.ts
+# TestFlowProgram_* via flowCorpusPaths — internal/flow/corpus_units_test.go:824
+reads internal/flow internal/oracle/testdata/non_null_uninitialized_iteration.ts
+# TestFlowProgram_* via flowCorpusPaths — internal/flow/corpus_units_test.go:825
+reads internal/flow internal/oracle/testdata/non_null_uninitialized_loop.ts
+# TestFlowProgram_* via flowCorpusPaths — internal/flow/corpus_units_test.go:826
+reads internal/flow internal/oracle/testdata/non_null_uninitialized_map_entry.ts
+# TestFlowProgram_* via flowCorpusPaths — internal/flow/corpus_units_test.go:827
+reads internal/flow internal/oracle/testdata/non_null_uninitialized_optional.ts
+# TestFlowProgram_* via flowCorpusPaths — internal/flow/corpus_units_test.go:828
+reads internal/flow internal/oracle/testdata/non_null_uninitialized_spread.ts
+# TestFlowProgram_* via flowCorpusPaths — internal/flow/corpus_units_test.go:829
+reads internal/flow internal/oracle/testdata/non_null_union.ts
+# TestFlowProgram_* via flowCorpusPaths — internal/flow/corpus_units_test.go:830
+reads internal/flow internal/oracle/testdata/non_null_weak.ts
+# TestFlowProgram_* via flowCorpusPaths — internal/flow/corpus_units_test.go:831
+reads internal/flow internal/oracle/testdata/non_null_weak_freed.ts
+# TestArgumentsLengthRefusalFixtures — internal/lower/arguments_length_test.go:71
+reads internal/lower internal/oracle/testdata/arguments_length_refused/*
+# TestCensusBooleanDeadBranch — internal/lower/census_small_test.go:80
+reads internal/lower internal/oracle/testdata/census_boolean_dead_branch.a
+# TestClassWrongOutputIteratorReceiver — internal/lower/class_wrong_output_test.go:11
+reads internal/lower internal/oracle/testdata/class_wrong_output_refused/iterators_override_this.a
+# TestClassWrongOutputKeysRepair — internal/lower/class_wrong_output_test.go:37
+reads internal/lower internal/oracle/testdata/class_wrong_output_refused/iterators_sym_keys_view.a
+# TestModuleNamespaceInitializedReadProof — internal/lower/module_namespace_test.go:54
+reads internal/lower internal/oracle/testdata/module_namespace_reads/direct_initialized.a
+# TestParserFactoryBindingHoisting — internal/lower/namespaces_factory_test.go:18
+reads internal/lower internal/oracle/testdata/namespaces_parser_factory.a
+# TestOverloadInferenceWitnesses — internal/lower/overload_inference_test.go:14
+reads internal/lower internal/oracle/testdata/overload_inference_contracts.a
+# TestNestedBodylessDeclarationsAreLoud — internal/lower/nested_functions_test.go:206
+reads internal/lower internal/oracle/testdata/scanner_nested_overload.a
+# TestNoReaderCallingConvention — internal/native/arguments_length_test.go:25
+reads internal/native internal/oracle/testdata/*
+# TestTSGoBuildSeesTheProgramsFeatures — internal/native/tsgo_features_test.go:19
+reads internal/native internal/oracle/testdata/arguments_length_extended.a
+# TestClosureConventionDropCount — internal/native/closure_convention_test.go:20
+reads internal/native internal/oracle/testdata/arguments_length_value_count.a
+# TestClosureConventionRuntimeDropCount — internal/native/closure_convention_test.go:60
+reads internal/native internal/oracle/testdata/closure_convention_regexp_count.a
+# TestDevirtualizeBorrowDocClaim — internal/native/element_borrow_test.go:124
+reads internal/native internal/oracle/testdata/devirt_borrow_doc_claim.a
+# TestNativeAgreesWithNode via fixtures — internal/oracle/oracle_test.go:132
+reads internal/oracle cmd/adamic/testdata/wasi/request.a
+# init — internal/oracle/regexp_cycle_test.go:22
+reads internal/oracle internal/fresh/testdata/regexp_tree.ts
+# TestNativeAgreesWithNode via fixtures — internal/oracle/oracle_test.go:168
+reads internal/oracle internal/load/testdata/0.1/compile/01_hello.ts
+# TestNativeAgreesWithNode via fixtures — internal/oracle/oracle_test.go:169
+reads internal/oracle internal/load/testdata/0.1/compile/02_fizzbuzz.ts
+# TestNativeAgreesWithNode via fixtures — internal/oracle/oracle_test.go:170
+reads internal/oracle internal/load/testdata/0.1/compile/03_shapes.ts
+# TestNativeAgreesWithNode via fixtures — internal/oracle/oracle_test.go:171
+reads internal/oracle internal/load/testdata/0.1/compile/04_closures.ts
+# TestNativeAgreesWithNode via fixtures — internal/oracle/oracle_test.go:172
+reads internal/oracle internal/load/testdata/0.1/compile/05_wordcount.ts
+# TestNativeAgreesWithNode via fixtures — internal/oracle/oracle_test.go:173
+reads internal/oracle internal/load/testdata/0.1/compile/06_stack.ts
+# TestNativeAgreesWithNode via fixtures — internal/oracle/oracle_test.go:174
+reads internal/oracle internal/load/testdata/0.1/compile/07_modules/main.ts
+# TestNativeAgreesWithNode via fixtures — internal/oracle/oracle_test.go:175
+reads internal/oracle internal/load/testdata/0.1/compile/08_results.ts
+# TestNativeAgreesWithNode via fixtures — internal/oracle/oracle_test.go:176
+reads internal/oracle internal/load/testdata/0.1/compile/09_tree.ts
+# TestNativeAgreesWithNode via fixtures — internal/oracle/oracle_test.go:177
+reads internal/oracle internal/load/testdata/0.1/compile/10_unicode.ts
