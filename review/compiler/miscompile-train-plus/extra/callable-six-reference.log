@@ -1,0 +1,7 @@
+=== RUN   TestCallableUnionResultReferenceMutant
+=== PAUSE TestCallableUnionResultReferenceMutant
+=== CONT  TestCallableUnionResultReferenceMutant
+    callable_union_result_test.go:39: Native backend stdout = "", source Node = "6\n"
+--- PASS: TestCallableUnionResultReferenceMutant (0.30s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.313s
