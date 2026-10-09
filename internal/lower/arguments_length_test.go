@@ -88,3 +88,24 @@ func TestArgumentsLengthRefusalFixtures(t *testing.T) {
 		})
 	}
 }
+
+func TestArgumentsLengthReadKeepsReaderFact(t *testing.T) {
+	t.Parallel()
+	program, err := lowerSource(t, "function read(): number { return arguments.length; } console.log(`${read()}`);")
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, function := range program.Functions {
+		if function.Name != "read" {
+			continue
+		}
+		if function.ArgumentsCount != 1 {
+			t.Fatalf("read: ArgumentsCount = %d, want 1", function.ArgumentsCount)
+		}
+		if !function.ReadsArguments {
+			t.Fatal("read: ArgumentsCount exists but ReadsArguments is false")
+		}
+		return
+	}
+	t.Fatal("lowering lost the read function")
+}
