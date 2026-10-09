@@ -433,11 +433,14 @@ class FailClosed(unittest.TestCase):
         self.assertEqual(result["deferred_run_results"], {"p TestMissing": "missing"})
         # The red line names what didn't run, not just "first failure at deferred" (trio 114a6439, Oct 9 10:50Z).
         self.assertIn("first failure at deferred (1 requested deferred tests unproven: p TestMissing missing)", status)
+        # The skip census still ran and recorded its verdict (integration, Oct 9 12:14Z: a deferred red skipped it).
+        self.assertEqual(result["stages_exit"].get("census"), 0)
+        self.assertTrue(os.path.exists(os.path.join(gate.arguments.out, "census.log")))
 
     def test_a_package_gated_for_requested_tests_runs_their_family_and_reds_when_it_selects_none(self):
-        # A requested name selects its prefix family (TestOn selects TestOne); one that selects nothing is red, never an
-        # empty pass (@system_adamic, Oct 9 11:01Z, after Loom's unit ran "no tests to run" and passed).
-        with mock.patch.object(run.Gate, "runRequested", lambda gate: setattr(gate, "requested", {"q": {"TestOn"}})):
+        # A requested name selects itself and its split's shards; one that selects nothing is red, never an empty pass
+        # (@system_adamic, Oct 9 11:01Z, after Loom's unit ran "no tests to run" and passed).
+        with mock.patch.object(run.Gate, "runRequested", lambda gate: setattr(gate, "requested", {"q": {"TestOne"}})):
             gate, status, result = self.gate()
         self.assertIsNone(gate.failure, status)
         self.assertEqual(result["split_tests"].get("q"), 1)
@@ -919,30 +922,32 @@ class GateRunsDeferred(unittest.TestCase):
         self.assertIn("TestWASI: skip", gate.failure["detail"])
         self.assertIn("TestShardsAgree: missing", gate.failure["detail"])
 
-    def test_a_requested_name_is_a_prefix_family_and_one_that_matches_nothing_is_red(self):
-        # Trio 114a6439, Oct 9: TestNormalizeMatchesNode is a family (TestNormalizeMatchesNodePoints00, 01, ...), and an
-        # exact anchor ran none of it.
+    def test_a_requested_name_is_its_split_s_family_never_a_bare_prefix(self):
+        # Trio 114a6439, Oct 9: TestNormalizeMatchesNode runs as Points00-16, TestRecordMutants as Unit00-05, and an exact
+        # anchor ran none of them. Ruled 12:19Z: the name plus the split's generated suffixes, never a bare prefix.
         gate, native, lint = self.gate("deferred")
         gate.runRequested()
         with open(os.path.join(gate.arguments.out, "test.jsonl"), "w") as handle:
-            for test in ("TestSplitTSGoAgreesShard00", "TestSplitTSGoAgreesShard01", "TestWASI", "TestShardsAgree_000"):
-                handle.write(json.dumps({"Action": "pass", "Package": native if not test.startswith("TestShards") else lint, "Test": test}) + "\n")
-        gate.requestedRan()
-        self.assertIsNone(gate.failure, gate.result.get("deferred_run_results"))
-        self.assertEqual(gate.result["deferred_run_results"][native + " TestSplitTSGoAgrees"], "pass")
-        # A family whose one member failed fails; a planted name that matches nothing is missing, and red.
-        self.assertEqual(run.familyOutcome({"p TestA01": "pass", "p TestA02": "fail"}, "p", "TestA"), "fail")
-        self.assertEqual(run.familyOutcome({"p TestA01": "pass"}, "p", "TestNoSuchFamily"), "missing")
-        self.assertTrue(run.inFamily("TestNormalizeMatchesNodePoints00", {"TestNormalizeMatchesNode"}))
-        self.assertFalse(run.inFamily("TestNormalize", {"TestNormalizeMatchesNode"}))
-        gate, native, lint = self.gate("internal/native TestWASI")
-        gate.runRequested()
-        gate.requested[native].add("TestNoSuchFamily")
-        open(os.path.join(gate.arguments.out, "test.jsonl"), "w").write(json.dumps({"Action": "pass", "Package": native, "Test": "TestWASI"}) + "\n")
+            for package, test, action in ((native, "TestSplitTSGoAgreesUnit00", "pass"), (native, "TestSplitTSGoAgreesUnit01", "pass"),
+                                          (native, "TestWASIUnit00", "skip"), (native, "TestWASIUnit01", "skip"),
+                                          (native, "TestWASIRefusesUnsupportedOptions", "pass"), (native, "TestWASITargetFlags", "pass"),
+                                          (lint, "TestShardsAgree_000", "pass")):
+                handle.write(json.dumps({"Action": action, "Package": package, "Test": test}) + "\n")
         with mock.patch("builtins.print"):
             gate.requestedRan()
+        results = gate.result["deferred_run_results"]
+        self.assertEqual(results[native + " TestSplitTSGoAgrees"], "pass")
+        self.assertEqual(results[lint + " TestShardsAgree"], "pass")
+        # Over-match: two tests that only share TestWASI's prefix don't make it run while its 36 shards all skipped.
+        self.assertEqual(results[native + " TestWASI"], "missing")
         self.assertEqual(gate.failure["step"], "deferred")
-        self.assertIn("TestNoSuchFamily: missing", gate.failure["detail"])
+        # Under-match: Points00 is TestNormalizeMatchesNode; a failed shard fails the family; Contexts is no shard.
+        self.assertTrue(run.inFamily("TestNormalizeMatchesNodePoints00", {"TestNormalizeMatchesNode"}))
+        self.assertFalse(run.inFamily("TestNormalizeMatchesNodeContexts", {"TestNormalizeMatchesNode"}))
+        self.assertFalse(run.inFamily("TestNormalize", {"TestNormalizeMatchesNode"}))
+        self.assertEqual(run.familyOutcome({"p TestAUnit01": "pass", "p TestAUnit02": "fail"}, "p", "TestA"), "fail")
+        self.assertEqual(run.familyOutcome({"p TestAUnit01": "pass"}, "p", "TestNoSuchFamily"), "missing")
+        self.assertEqual(run.familyOutcome({"p TestA": "skip"}, "p", "TestA"), "skip")
 
     def test_every_requested_test_reaching_a_verdict_passes_the_check(self):
         gate, native, lint = self.gate("internal/native TestWASI")

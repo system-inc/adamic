@@ -568,10 +568,10 @@ class Gate:
         self.cacheDrains()
         if self.failure is not None:
             return
-        self.requestedRan()
-        if self.failure is not None:
-            return
+        # The skip census first, then the requested deferred tests: each records its own verdict, and a deferred red no
+        # longer leaves the record without a census (trio 114a6439, Oct 9: its census never ran behind a deferred red).
         self.checkCensus()
+        self.requestedRan()
 
     def fastPhaseInputs(self, recordCoverage=False):
         """The same base diff and executor map as a fast run, without running coverage as an extra phase."""
@@ -695,9 +695,8 @@ class Gate:
             else:
                 self.deferred = self.deferredList()
                 self.runRequested()
+                self.checkCensus()
                 self.requestedRan()
-                if self.failure is None:
-                    self.checkCensus()
         elif phase in ("workers", "a-check", "catalog-apply"):
             changed, executors = self.fastPhaseInputs()
             if phase == "workers":
@@ -2512,21 +2511,29 @@ def testUnits(path):
     return units
 
 
+def familyMember(name, requested):
+    """Whether a top-level test is a requested name or one of its split's generated shards: the name followed by
+    Unit<n>, Points<n> or _<n> (@system_adamic, Oct 9 12:19Z). Never a bare prefix: TestWASIRefusesUnsupportedOptions
+    is not TestWASI run, while TestNormalizeMatchesNodePoints00 is TestNormalizeMatchesNode."""
+    return name == requested or re.fullmatch(re.escape(requested) + r"(Unit\d+|Points\d+|_\d+)", name) is not None
+
+
 def inFamily(name, requested):
-    """A requested test name selects itself and every top-level test it prefixes: a family split into shards
-    (TestNormalizeMatchesNode is TestNormalizeMatchesNodePoints00, 01, ...) is requested by its name, and an exact
-    anchor selected none of it, so a requested set ran nothing and read as passed (@system_adamic, Oct 9 11:01Z)."""
-    return any(name.startswith(prefix) for prefix in requested)
+    """A requested test name selects itself and its split's shards: a family split into shards is requested by its
+    name, and an exact anchor selected none of it, so a requested set ran nothing and read as passed (@system_adamic,
+    Oct 9 11:01Z)."""
+    return any(familyMember(name, prefix) for prefix in requested)
 
 
 def familyOutcome(outcomes, package, name):
-    """A requested name's outcome over its family in topLevelOutcomes: the test itself when it ran, else fail if any
-    member failed, pass if any passed, skip if every member skipped, and missing when the family ran nothing."""
+    """A requested name's outcome in topLevelOutcomes: the test's own when it ran under its name, else over its split's
+    shards, fail if any failed, pass if any passed, and missing when none did (shards that all skipped proved nothing)."""
     exact = outcomes.get(package + " " + name)
     if exact:
         return exact
-    members = [outcome for key, outcome in outcomes.items() if key.startswith(package + " " + name)]
-    for outcome in ("fail", "pass", "skip"):
+    members = [outcome for key, outcome in outcomes.items()
+               if key.startswith(package + " ") and familyMember(key[len(package) + 1:], name)]
+    for outcome in ("fail", "pass"):
         if outcome in members:
             return outcome
     return "missing"
