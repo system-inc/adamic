@@ -1,0 +1,9 @@
+// From TypeScript 6.0.3, src/compiler/utilities.ts:10503
+// From TypeScript 6.0.3, src/compiler/utilities.ts:10504
+// Step 12: octal digit crosses a 16-bit word boundary
+const segments = new Uint16Array(2);
+const segment = 0;
+const shiftedDigit = 7 << 15;
+const residual = shiftedDigit >>> 16;
+if (residual) segments[segment + 1] |= residual;
+console.log(`${segments[0]}`); console.log(`${segments[1]}`);

@@ -1,0 +1,8 @@
+// From TypeScript 6.0.3, src/compiler/utilities.ts:10514
+// Step 12: original read combines remainder and next word
+const segments = new Uint16Array(1);
+segments[0] = 65535;
+const segment = 0;
+const mod10 = 9;
+const newSegment = mod10 << 16 | segments[segment];
+console.log(`${newSegment}`);

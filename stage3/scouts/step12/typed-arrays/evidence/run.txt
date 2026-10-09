@@ -1,0 +1,13 @@
+01_constructor Refused Node stdout comparison; native blocked, no native mutation proof
+02_or_store Checker Node stdout comparison; native blocked, no native mutation proof
+03_residual_store Checker Node stdout comparison; native blocked, no native mutation proof
+04_length Matches Node stdout comparison and native stdout comparison
+05_read Matches Node stdout comparison and native stdout comparison
+06_write Matches Node stdout comparison and native stdout comparison
+07_checked_or_store NotYet Node stdout comparison; native blocked, no native mutation proof
+08_checked_read NotYet Node stdout comparison; native blocked, no native mutation proof
+09_parse_pseudo_bigint Refused Node stdout comparison; native blocked, no native mutation proof
+10_subarray_control Matches Node stdout comparison and native stdout comparison
+11_constructor_boolean_control Matches Node stdout comparison and native stdout comparison
+12_dense_or_control Matches Node stdout comparison and native stdout comparison
+PASS: all Node baselines and mutants; every compiled binary matches its own Node source

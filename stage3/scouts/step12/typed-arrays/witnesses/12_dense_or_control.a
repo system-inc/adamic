@@ -1,0 +1,12 @@
+// From TypeScript 6.0.3, src/compiler/utilities.ts:10502
+// From TypeScript 6.0.3, src/compiler/utilities.ts:10504
+// Supplemental control uses 0 for known dense reads, not a proposed production adaptation.
+// Step 12: existing slice adaptation 52 makes dense reads explicit
+
+const segments = new Uint16Array(2);
+const segment = 0;
+const shiftedDigit = 7 << 15;
+segments[segment] = (segments[segment] ?? 0) | shiftedDigit;
+const residual = shiftedDigit >>> 16;
+if (residual !== 0) segments[segment + 1] = (segments[segment + 1] ?? 0) | residual;
+console.log(`${segments[0]}`); console.log(`${segments[1]}`);

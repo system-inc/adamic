@@ -1,0 +1,7 @@
+// From TypeScript 6.0.3, src/compiler/utilities.ts:10508
+// Step 12: highest word index is element length minus one
+const segments = new Uint16Array(3);
+let firstNonzeroSegment = segments.length - 1;
+console.log(`${firstNonzeroSegment}`);
+segments[0] = 65535;
+console.log(`${segments.length}`); console.log(`${firstNonzeroSegment}`);

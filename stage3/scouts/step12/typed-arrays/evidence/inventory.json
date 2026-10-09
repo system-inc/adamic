@@ -1,0 +1,91 @@
+{
+  "typescript": "6.0.3",
+  "files": [
+    "src/compiler/commandLineParser.ts",
+    "src/compiler/core.ts",
+    "src/compiler/corePublic.ts",
+    "src/compiler/debug.ts",
+    "src/compiler/diagnosticInformationMap.generated.ts",
+    "src/compiler/scanner.ts",
+    "src/compiler/types.ts",
+    "src/compiler/utilities.ts"
+  ],
+  "scope": "Whole retained top-level declarations; namespace wrappers conservatively scanned whole",
+  "sites": [
+    {
+      "location": "src/compiler/utilities.ts:10491:22",
+      "operations": [
+        "constructor"
+      ],
+      "kinds": [
+        "Uint16Array"
+      ],
+      "expression": "new Uint16Array((bitsNeeded >>> 4) + (bitsNeeded & 15 ? 1 : 0))",
+      "statement": "new Uint16Array((bitsNeeded >>> 4) + (bitsNeeded & 15 ? 1 : 0))"
+    },
+    {
+      "location": "src/compiler/utilities.ts:10502:9",
+      "operations": [
+        "read",
+        "write"
+      ],
+      "kinds": [
+        "Uint16Array"
+      ],
+      "expression": "segments[segment]",
+      "statement": "segments[segment] |= shiftedDigit"
+    },
+    {
+      "location": "src/compiler/utilities.ts:10504:23",
+      "operations": [
+        "read",
+        "write"
+      ],
+      "kinds": [
+        "Uint16Array"
+      ],
+      "expression": "segments[segment + 1]",
+      "statement": "segments[segment + 1] |= residual"
+    },
+    {
+      "location": "src/compiler/utilities.ts:10508:31",
+      "operations": [
+        "length"
+      ],
+      "kinds": [
+        "Uint16Array"
+      ],
+      "expression": "segments.length",
+      "statement": "segments.length"
+    },
+    {
+      "location": "src/compiler/utilities.ts:10514:46",
+      "operations": [
+        "read"
+      ],
+      "kinds": [
+        "Uint16Array"
+      ],
+      "expression": "segments[segment]",
+      "statement": "mod10 << 16 | segments[segment]"
+    },
+    {
+      "location": "src/compiler/utilities.ts:10516:13",
+      "operations": [
+        "write"
+      ],
+      "kinds": [
+        "Uint16Array"
+      ],
+      "expression": "segments[segment]",
+      "statement": "segments[segment] = segmentValue"
+    }
+  ],
+  "mentions": [
+    {
+      "location": "src/compiler/utilities.ts:10491:26",
+      "text": "Uint16Array"
+    }
+  ],
+  "subarray": []
+}

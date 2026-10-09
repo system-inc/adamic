@@ -1,0 +1,138 @@
+[
+  {
+    "file": "witnesses/01_constructor.a",
+    "source": [
+      "src/compiler/utilities.ts:10487",
+      "src/compiler/utilities.ts:10491"
+    ],
+    "mutant": {
+      "before": "(bitsNeeded & 15 ? 1 : 0)",
+      "after": "(bitsNeeded & 15 ? 0 : 0)"
+    },
+    "purpose": "zero-filled segment count rounds up partial words"
+  },
+  {
+    "file": "witnesses/02_or_store.a",
+    "source": [
+      "src/compiler/utilities.ts:10502"
+    ],
+    "mutant": {
+      "before": "segments[segment] |= shiftedDigit;",
+      "after": "segments[segment] |= 0;"
+    },
+    "purpose": "original compound read/write under unchecked indexed access"
+  },
+  {
+    "file": "witnesses/03_residual_store.a",
+    "source": [
+      "src/compiler/utilities.ts:10503",
+      "src/compiler/utilities.ts:10504"
+    ],
+    "mutant": {
+      "before": "segments[segment + 1] |= residual;",
+      "after": "segments[segment] |= residual;"
+    },
+    "purpose": "octal digit crosses a 16-bit word boundary"
+  },
+  {
+    "file": "witnesses/04_length.a",
+    "source": [
+      "src/compiler/utilities.ts:10508"
+    ],
+    "mutant": {
+      "before": "segments.length - 1",
+      "after": "segments.length"
+    },
+    "purpose": "highest word index is element length minus one"
+  },
+  {
+    "file": "witnesses/05_read.a",
+    "source": [
+      "src/compiler/utilities.ts:10514"
+    ],
+    "mutant": {
+      "before": "mod10 << 16",
+      "after": "mod10 << 15"
+    },
+    "purpose": "original read combines remainder and next word"
+  },
+  {
+    "file": "witnesses/06_write.a",
+    "source": [
+      "src/compiler/utilities.ts:10515",
+      "src/compiler/utilities.ts:10516"
+    ],
+    "mutant": {
+      "before": "segments[segment] = segmentValue;",
+      "after": "segments[segment] = segmentValue + 1;"
+    },
+    "purpose": "quotient store and Uint16 wrap"
+  },
+  {
+    "file": "witnesses/07_checked_or_store.a",
+    "source": [
+      "src/compiler/utilities.ts:10502",
+      "src/compiler/utilities.ts:10504"
+    ],
+    "mutant": {
+      "before": "| shiftedDigit;",
+      "after": "| 0;"
+    },
+    "purpose": "existing slice adaptation 52 makes dense reads explicit; residual condition made explicitly boolean to isolate typed-array lowering"
+  },
+  {
+    "file": "witnesses/08_checked_read.a",
+    "source": [
+      "src/compiler/utilities.ts:10514"
+    ],
+    "mutant": {
+      "before": "mod10 << 16",
+      "after": "mod10 << 15"
+    },
+    "purpose": "adaptation 52 checked read with remainder"
+  },
+  {
+    "file": "witnesses/09_parse_pseudo_bigint.a",
+    "source": [
+      "src/compiler/utilities.ts:10461",
+      "src/compiler/utilities.ts:10528"
+    ],
+    "mutant": {
+      "before": "const residual = shiftedDigit >>> 16;",
+      "after": "const residual = 0;"
+    },
+    "purpose": "whole real bigint conversion with existing slice adaptation 52, reduced constants and failure helper"
+  },
+  {
+    "file": "witnesses/10_subarray_control.a",
+    "source": [],
+    "mutant": {
+      "before": "view[0] = 66;",
+      "after": "view[0] = 65;"
+    },
+    "purpose": "supplemental view aliasing control, not a tsc source span"
+  },
+  {
+    "file": "witnesses/11_constructor_boolean_control.a",
+    "source": [
+      "src/compiler/utilities.ts:10491"
+    ],
+    "mutant": {
+      "before": "((bitsNeeded & 15) !== 0 ? 1 : 0)",
+      "after": "((bitsNeeded & 15) !== 0 ? 0 : 0)"
+    },
+    "purpose": "constructor with explicit boolean test to bypass the independent truthiness refusal"
+  },
+  {
+    "file": "witnesses/12_dense_or_control.a",
+    "source": [
+      "src/compiler/utilities.ts:10502",
+      "src/compiler/utilities.ts:10504"
+    ],
+    "mutant": {
+      "before": "| shiftedDigit;",
+      "after": "| 0;"
+    },
+    "purpose": "supplemental dense two-word store control uses ?? 0 to isolate runtime from never-call lowering; not a source adaptation"
+  }
+]

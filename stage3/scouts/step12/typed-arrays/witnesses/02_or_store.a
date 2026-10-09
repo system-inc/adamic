@@ -1,0 +1,7 @@
+// From TypeScript 6.0.3, src/compiler/utilities.ts:10502
+// Step 12: original compound read/write under unchecked indexed access
+const segments = new Uint16Array(2);
+const segment = 0;
+const shiftedDigit = 15 << 12;
+segments[segment] |= shiftedDigit;
+console.log(`${segments[0]}`); console.log(`${segments[1]}`);

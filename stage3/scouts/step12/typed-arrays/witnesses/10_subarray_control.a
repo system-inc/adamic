@@ -1,0 +1,9 @@
+// Step 12: supplemental view aliasing control, not a tsc source span
+// No subarray site exists in the scanner closure. This is a runtime control.
+const segments = new Uint16Array(3);
+segments[1] = 65;
+const view = segments.subarray(1, 3);
+view[0] = 66;
+console.log(`${segments[1]}`); console.log(`${view.length}`); console.log(`${view[0]}`);
+segments[2] = 67;
+console.log(`${view[1]}`);

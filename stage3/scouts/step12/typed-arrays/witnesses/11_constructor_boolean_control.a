@@ -1,0 +1,8 @@
+// From TypeScript 6.0.3, src/compiler/utilities.ts:10487
+// From TypeScript 6.0.3, src/compiler/utilities.ts:10491
+// Supplemental explicit boolean condition isolates constructor lowering; Step 12: zero-filled segment count rounds up partial words
+function allocate(bitsNeeded: number): void {
+    const segments = new Uint16Array((bitsNeeded >>> 4) + ((bitsNeeded & 15) !== 0 ? 1 : 0));
+    console.log(`${segments.length}`); console.log(`${segments[0]}`); console.log(`${segments[segments.length - 1]}`);
+}
+allocate(0); allocate(4); allocate(16); allocate(20); allocate(48);
