@@ -42,3 +42,11 @@ Member 11: no branch merge. Apply only 4e973695's internal/native/tsgo.go diff u
 ## Member 3 resumed: compiler/generic-body-relations 2cc109e5
 
 No textual conflicts. The enum refusal stays Refused and only its diagnostic changes, preserving all Node observations. Both new fixtures agree with Node in both backends, uncached with native sanitizers. All three production overlay mutants are caught by semantic assertions. Counts regenerated once: two additions, no existing row changed, 56.758 seconds. The opt-in census is skipped without its config; added t.Parallel because its explicit output path is supplied by its caller, not shared test state. Historical evidence moved to review and document links updated.
+
+Member 3 committed and pushed: 8afa72ad5554816ebc83a349607d0b89dd51a7f1. Lane checks 10.7 s: gofmt and tools on 59 Go files, t.Parallel on 8 test packages; vet 8 packages.
+
+## Member 4: compiler/generics-scout-main 48391dcf, stopped
+
+Only textual conflict: internal/oracle/counts.md. Counts regenerated once successfully; eight rows added, no existing rows changed, but none accepted because this merge is aborted. Its focused tests fail in 2.500 s: fixtures 11_indexed_result (1:68), 12_mixed_indexed_result (1:87) and 13_constrained_local (2:11) expect NotYet, whereas member 3 correctly refuses their dependent returns or initializer from literal 2 into T["value"]. The actual instantiation has value: 1. These are stale outcome expectations, not observed wrong-output runs. All eight executable fixtures agree with Node in both backends with native sanitizers. Both semantic IR mutants are caught: identity 0.39 s, optional result 0.32 s. TestStep16GenericOutcomes fails in 0.42 s. The chain's explicit earlier-member red rule stops here, without altering these contracts.
+
+The green compiler prefix remains member 3. Members 5 through 11 and exceptions last have not been attempted in this continuation. The exception repair is still pending, with no runtime changes made. Failed controls, source witnesses and rejected generated count rows are retained here for review.
