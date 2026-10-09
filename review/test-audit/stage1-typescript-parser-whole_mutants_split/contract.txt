@@ -1,0 +1,3 @@
+CODE UNDER TEST: TypeScript parser/scanner port and its serialized tree/count output.
+ORACLE: unmodified typescript-go parser via testdata/oracle.go; Node and sanitized native execute the port.
+Witnesses only receive comparison weakening, not production mutations. Menu M1-M4 frozen from code before any mutant run. Probe P1 empties main.ts run at entry.

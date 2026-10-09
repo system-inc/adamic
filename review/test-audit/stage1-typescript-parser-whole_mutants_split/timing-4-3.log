@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T13:40:21.402034101Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/typescript/parser"}
+{"Time":"2026-10-09T13:40:21.417224366Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestYieldLookaheadAgrees"}
+{"Time":"2026-10-09T13:40:21.417316065Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestYieldLookaheadAgrees","Output":"=== RUN   TestYieldLookaheadAgrees\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:40:21.417349776Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestYieldLookaheadAgrees","Output":"=== PAUSE TestYieldLookaheadAgrees\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:40:21.417352645Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestYieldLookaheadAgrees"}
+{"Time":"2026-10-09T13:40:21.417355696Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestYieldLookaheadAgrees"}
+{"Time":"2026-10-09T13:40:21.417357828Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestYieldLookaheadAgrees","Output":"=== CONT  TestYieldLookaheadAgrees\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:40:42.053020315Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestYieldLookaheadAgrees","Output":"    yield_test.go:48: 17 yield lookahead cases, 1922 bytes identical to Go on Node and sanitized native\n"}
+{"Time":"2026-10-09T13:40:42.054371756Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestYieldLookaheadAgrees","Output":"--- PASS: TestYieldLookaheadAgrees (20.64s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:40:42.054448065Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestYieldLookaheadAgrees","Elapsed":20.64}
+{"Time":"2026-10-09T13:40:42.054473799Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:40:42.056389442Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"ok  \tgithub.com/system-inc/adamic/stage1/typescript/parser\t20.654s\n"}
+{"Time":"2026-10-09T13:40:42.056430083Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Elapsed":20.654}

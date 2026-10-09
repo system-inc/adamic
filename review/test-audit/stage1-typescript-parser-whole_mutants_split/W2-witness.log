@@ -1,0 +1,9 @@
+{"Time":"2026-10-09T13:46:39.204201226Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/typescript/parser"}
+{"Time":"2026-10-09T13:46:39.214750937Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestWholeCountCheckCatchesMutant"}
+{"Time":"2026-10-09T13:46:39.21483656Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestWholeCountCheckCatchesMutant","Output":"=== RUN   TestWholeCountCheckCatchesMutant\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:47:02.326092855Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestWholeCountCheckCatchesMutant","Output":"    whole_mutants_test.go:90: Node counter mutant survived\n","OutputType":"error"}
+{"Time":"2026-10-09T13:47:02.328110181Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestWholeCountCheckCatchesMutant","Output":"--- FAIL: TestWholeCountCheckCatchesMutant (23.11s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:47:02.328151496Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestWholeCountCheckCatchesMutant","Elapsed":23.11}
+{"Time":"2026-10-09T13:47:02.32823414Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:47:02.332444926Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/typescript/parser\t23.128s\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:47:02.332483583Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Elapsed":23.128}

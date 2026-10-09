@@ -1,0 +1,42 @@
+{
+  "bootstrap_seconds": 0,
+  "npm_ci_seconds": 0.7150784140012547,
+  "nproc": 5,
+  "whole_package_baseline_test_seconds": 90.037,
+  "port_rebuilds": [
+    {
+      "id": "M1",
+      "test_binary_seconds": 20.516,
+      "wall_seconds": 25.04315835200032,
+      "log": "review/test-audit/stage1-typescript-parser-whole_mutants_split/M1-build.log"
+    },
+    {
+      "id": "M2",
+      "test_binary_seconds": 21.015,
+      "wall_seconds": 24.692451225000696,
+      "log": "review/test-audit/stage1-typescript-parser-whole_mutants_split/M2-build.log"
+    },
+    {
+      "id": "M3",
+      "test_binary_seconds": 21.475,
+      "wall_seconds": 24.937956148000012,
+      "log": "review/test-audit/stage1-typescript-parser-whole_mutants_split/M3-build.log"
+    },
+    {
+      "id": "M4",
+      "test_binary_seconds": 26.692,
+      "wall_seconds": 32.898534965999715,
+      "log": "review/test-audit/stage1-typescript-parser-whole_mutants_split/M4-build.log"
+    },
+    {
+      "id": "P1",
+      "test_binary_seconds": 13.01,
+      "wall_seconds": 15.634114423999563,
+      "log": "review/test-audit/stage1-typescript-parser-whole_mutants_split/P1-build.log"
+    }
+  ],
+  "timing_repeat_command_seconds": 211.89586897399568,
+  "matrix_and_build_command_seconds": 350.20098966600017,
+  "session": "about 22 minutes from 13:30 UTC; native compile phases and additional uncached per-row builds are included in the logs",
+  "corpus_install": "full-history clone exceeded 90 seconds and was stopped after observed 116-second process elapsed; narrowed depth-1 fetch succeeded. Exact install wall was not separately timed."
+}

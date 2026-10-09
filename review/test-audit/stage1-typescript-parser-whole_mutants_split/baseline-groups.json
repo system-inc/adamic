@@ -1,0 +1,74 @@
+[
+  {
+    "group": "TestWholeMutants family",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^(TestWholeMutants_000|TestWholeMutants_001|TestWholeMutants_002|TestWholeMutantsUnion)$"
+    ],
+    "exit": 0,
+    "seconds": 46.439681380001275
+  },
+  {
+    "group": "TestWholeMutantsRejectsSurvivor",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^(TestWholeMutantsRejectsSurvivor)$"
+    ],
+    "exit": 0,
+    "seconds": 9.85478308799975
+  },
+  {
+    "group": "TestWholeCountCheckCatchesMutant",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^(TestWholeCountCheckCatchesMutant)$"
+    ],
+    "exit": 0,
+    "seconds": 26.56052649999947
+  },
+  {
+    "group": "TestYieldLookaheadAgrees",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^(TestYieldLookaheadAgrees)$"
+    ],
+    "exit": 0,
+    "seconds": 26.487721968000187
+  }
+]

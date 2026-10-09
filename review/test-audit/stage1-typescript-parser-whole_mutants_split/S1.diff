@@ -1,0 +1,11 @@
+--- a/stage1/typescript/parser/whole_mutants_split_test.go
++++ b/stage1/typescript/parser/whole_mutants_split_test.go
+@@ -252,7 +252,7 @@
+ 		index int
+ 		test  func(*testing.T)
+ 	}{
+-		{0, TestWholeMutants_000}, {1, TestWholeMutants_001}, {2, TestWholeMutants_002},
++		{0, TestWholeMutants_000}, {1, TestWholeMutants_001}, {1, TestWholeMutants_002},
+ 	}
+ 	groups := make([][]string, len(leaves))
+ 	for i, leaf := range leaves {

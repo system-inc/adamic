@@ -1,0 +1,155 @@
+[
+  {
+    "id": "M1",
+    "file": "nodes.ts",
+    "from": "`${depth} ${node.kind}",
+    "to": "`${depth + 1} ${node.kind}",
+    "menu": "off-by-one output depth",
+    "line": 47,
+    "category": "production",
+    "failed_tests": [
+      "TestWholeCompilerAgrees",
+      "TestYieldLookaheadAgrees"
+    ],
+    "failed_rows": [
+      "TestYieldLookaheadAgrees",
+      "TestWholeCompilerAgrees"
+    ]
+  },
+  {
+    "id": "M2",
+    "file": "nodes.ts",
+    "from": "export function countTree(nodes: readonly ParseNode[], root: number): number {\n    const node = nodes[root] ?? panic('missing parse node');\n    let count = 1;",
+    "to": "export function countTree(nodes: readonly ParseNode[], root: number): number {\n    const node = nodes[root] ?? panic('missing parse node');\n    let count = 2;",
+    "menu": "change count constant",
+    "line": 58,
+    "category": "production",
+    "failed_tests": [],
+    "failed_rows": []
+  },
+  {
+    "id": "M3",
+    "file": "parser.ts",
+    "from": "const result =\n            (this.scanner.flags & 1) === 0 &&",
+    "to": "const result =\n            (this.scanner.flags & 1) !== 0 &&",
+    "menu": "flip condition in yieldOperandAhead",
+    "line": 222,
+    "category": "production",
+    "failed_tests": [
+      "TestYieldLookaheadAgrees"
+    ],
+    "failed_rows": [
+      "TestYieldLookaheadAgrees"
+    ]
+  },
+  {
+    "id": "M4",
+    "file": "parser.ts",
+    "from": "new ParseNode(kind, pos, this.scanner.fullStart, children)",
+    "to": "new ParseNode(kind, pos, this.scanner.start, children)",
+    "menu": "change node end option",
+    "line": 37,
+    "category": "production",
+    "failed_tests": [
+      "TestWholeCompilerAgrees",
+      "TestYieldLookaheadAgrees"
+    ],
+    "failed_rows": [
+      "TestYieldLookaheadAgrees",
+      "TestWholeCompilerAgrees"
+    ]
+  },
+  {
+    "id": "W1",
+    "file": "parser_test.go",
+    "from": "if bytes.Equal(got, want) {",
+    "to": "if len(got) >= 0 {",
+    "rows": [
+      "TestWholeMutants_000",
+      "TestWholeMutants_001",
+      "TestWholeMutants_002",
+      "TestWholeMutantsUnion"
+    ],
+    "line": 142,
+    "category": "witness",
+    "failed_tests": [
+      "TestWholeMutants_002",
+      "TestWholeMutants_001",
+      "TestWholeMutants_000"
+    ],
+    "failed_rows": [
+      "TestWholeMutants family"
+    ]
+  },
+  {
+    "id": "W2",
+    "file": "whole_mutants_test.go",
+    "from": "if string(side.count.output) == string(wantCount) {",
+    "to": "if len(side.count.output) >= 0 {",
+    "rows": [
+      "TestWholeCountCheckCatchesMutant"
+    ],
+    "line": 89,
+    "category": "witness",
+    "failed_tests": [
+      "TestWholeCountCheckCatchesMutant"
+    ],
+    "failed_rows": [
+      "TestWholeCountCheckCatchesMutant"
+    ]
+  },
+  {
+    "id": "W3",
+    "file": "whole_mutants_test.go",
+    "from": "if diff == \"\" {",
+    "to": "if diff == \"\" && !planted {",
+    "rows": [
+      "TestWholeMutantsRejectsSurvivor"
+    ],
+    "line": 61,
+    "category": "witness",
+    "failed_tests": [
+      "TestWholeMutantsRejectsSurvivor"
+    ],
+    "failed_rows": [
+      "TestWholeMutantsRejectsSurvivor"
+    ]
+  },
+  {
+    "id": "S1",
+    "file": "whole_mutants_split_test.go",
+    "from": "{2, TestWholeMutants_002},",
+    "to": "{1, TestWholeMutants_002},",
+    "rows": [
+      "TestWholeMutantsUnion"
+    ],
+    "line": 255,
+    "category": "construction",
+    "failed_tests": [
+      "TestWholeMutantsUnion"
+    ],
+    "failed_rows": [
+      "TestWholeMutants family"
+    ]
+  },
+  {
+    "id": "P1",
+    "file": "main.ts",
+    "from": "function run(path: string, countOnly: boolean, whole: boolean, docTypes: boolean): number {",
+    "to": "function run(path: string, countOnly: boolean, whole: boolean, docTypes: boolean): number {\n    if(path.length >= 0) { return 0; }",
+    "rows": [
+      "TestWholeCompilerAgrees",
+      "TestYieldLookaheadAgrees"
+    ],
+    "line": 5,
+    "category": "probe",
+    "failed_tests": [
+      "TestWholeCompilerAgrees",
+      "TestYieldLookaheadAgrees"
+    ],
+    "failed_rows": [
+      "TestYieldLookaheadAgrees",
+      "TestWholeCompilerAgrees"
+    ]
+  }
+]

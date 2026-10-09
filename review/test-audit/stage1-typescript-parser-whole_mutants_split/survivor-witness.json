@@ -1,0 +1,25 @@
+{
+  "id": "M2",
+  "input": "const x = 1;\n",
+  "baseline_node_count": "7",
+  "mutant_node_count": "14",
+  "mutant_native_count": "14",
+  "native_exit": 0,
+  "native_command": [
+    "/home/agent/.cache/adamic-build/3bcef744d3cffd9bb523bf463d2a03d66cb31698daf55dbc2dfaf6b8dcd292db/scanner",
+    "--manifest",
+    "/tmp/u158/witness/manifest",
+    "--whole",
+    "--count"
+  ],
+  "scope": "Survivor in bounded production matrix only.",
+  "go_oracle_count": "7",
+  "go_command": [
+    "/home/agent/.cache/adamic-build/609de97f7b6fc6e66d25c56a74690822be3241b67cedc3f7992b08094859e48e/oracle",
+    "--manifest",
+    "/tmp/u158/witness/manifest",
+    "--whole",
+    "--count"
+  ],
+  "go_exit": 0
+}

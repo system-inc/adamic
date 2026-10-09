@@ -1,0 +1,11 @@
+--- a/stage1/typescript/parser/nodes.ts
++++ b/stage1/typescript/parser/nodes.ts
+@@ -44,7 +44,7 @@
+ ): number {
+     const node = nodes[root] ?? panic('missing parse node');
+     console.log(
+-        `${depth} ${node.kind} ${offsets[node.pos] ?? panic('node start outside source')} ${offsets[node.end] ?? panic('node end outside source')} ${node.optional ? 32 : 0} ${node.literalFlags} ${node.list} ${node.trailing ? 1 : 0} ${node.multiLine ? 1 : 0}\t${node.operator}\t${written(node.text)}\t${written(node.raw)}${whole ? `\t${node.semantic}` : ''}`,
++        `${depth + 1} ${node.kind} ${offsets[node.pos] ?? panic('node start outside source')} ${offsets[node.end] ?? panic('node end outside source')} ${node.optional ? 32 : 0} ${node.literalFlags} ${node.list} ${node.trailing ? 1 : 0} ${node.multiLine ? 1 : 0}\t${node.operator}\t${written(node.text)}\t${written(node.raw)}${whole ? `\t${node.semantic}` : ''}`,
+     );
+     let count = 1;
+     for(const child of node.children) {

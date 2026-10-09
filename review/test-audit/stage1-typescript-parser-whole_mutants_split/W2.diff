@@ -1,0 +1,11 @@
+--- a/stage1/typescript/parser/whole_mutants_test.go
++++ b/stage1/typescript/parser/whole_mutants_test.go
+@@ -86,7 +86,7 @@
+ 		if diff := difference(side.tree.output, wantTree); diff != "" {
+ 			t.Fatalf("%s counter mutant changed trees: %s", side.name, diff)
+ 		}
+-		if string(side.count.output) == string(wantCount) {
++		if len(side.count.output) >= 0 {
+ 			t.Fatalf("%s counter mutant survived", side.name)
+ 		}
+ 		t.Logf("%s: identical whole-tree bytes, mutant count %q caught against Go %q", side.name, side.count.output, wantCount)

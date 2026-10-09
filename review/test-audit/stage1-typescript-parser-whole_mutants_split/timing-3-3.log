@@ -1,0 +1,10 @@
+{"Time":"2026-10-09T13:39:58.23621867Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/typescript/parser"}
+{"Time":"2026-10-09T13:39:58.248932423Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestWholeCountCheckCatchesMutant"}
+{"Time":"2026-10-09T13:39:58.249018538Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestWholeCountCheckCatchesMutant","Output":"=== RUN   TestWholeCountCheckCatchesMutant\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:40:19.089719113Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestWholeCountCheckCatchesMutant","Output":"    whole_mutants_test.go:92: Node: identical whole-tree bytes, mutant count \"0\\n\" caught against Go \"12\\n\"\n"}
+{"Time":"2026-10-09T13:40:19.089776616Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestWholeCountCheckCatchesMutant","Output":"    whole_mutants_test.go:92: native: identical whole-tree bytes, mutant count \"0\\n\" caught against Go \"12\\n\"\n"}
+{"Time":"2026-10-09T13:40:19.090954167Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestWholeCountCheckCatchesMutant","Output":"--- PASS: TestWholeCountCheckCatchesMutant (20.84s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:40:19.091024521Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestWholeCountCheckCatchesMutant","Elapsed":20.84}
+{"Time":"2026-10-09T13:40:19.091228379Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:40:19.093412168Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"ok  \tgithub.com/system-inc/adamic/stage1/typescript/parser\t20.857s\n"}
+{"Time":"2026-10-09T13:40:19.093464678Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Elapsed":20.857}

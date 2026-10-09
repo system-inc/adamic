@@ -1,0 +1,13 @@
+[
+  {
+    "id": "P1",
+    "file": "main.ts",
+    "from": "function run(path: string, countOnly: boolean, whole: boolean, docTypes: boolean): number {",
+    "to": "function run(path: string, countOnly: boolean, whole: boolean, docTypes: boolean): number {\n    if(path.length >= 0) { return 0; }",
+    "rows": [
+      "TestWholeCompilerAgrees",
+      "TestYieldLookaheadAgrees"
+    ],
+    "line": 5
+  }
+]

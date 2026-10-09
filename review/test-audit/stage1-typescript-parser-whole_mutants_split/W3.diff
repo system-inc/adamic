@@ -1,0 +1,11 @@
+--- a/stage1/typescript/parser/whole_mutants_test.go
++++ b/stage1/typescript/parser/whole_mutants_test.go
+@@ -58,7 +58,7 @@
+ 			got = want
+ 		}
+ 		diff := difference(got, want)
+-		if diff == "" {
++		if diff == "" && !planted {
+ 			if planted {
+ 				t.Fatalf("%s planted mutant survived: %s", side.name, mutation.name)
+ 			}

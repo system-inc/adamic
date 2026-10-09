@@ -1,0 +1,342 @@
+[
+  {
+    "id": "M1",
+    "phase": "build",
+    "rows": [
+      "TestProduct_WholeMutantsNative_Control"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^(TestProduct_WholeMutantsNative_Control)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 25.04315835200032
+  },
+  {
+    "id": "M1",
+    "phase": "matrix",
+    "rows": [
+      "TestWholeCompilerAgrees",
+      "TestYieldLookaheadAgrees"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^(TestWholeCompilerAgrees|TestYieldLookaheadAgrees)$"
+    ],
+    "exit": 1,
+    "wall_seconds": 29.895640463000746
+  },
+  {
+    "id": "M2",
+    "phase": "build",
+    "rows": [
+      "TestProduct_WholeMutantsNative_Control"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^(TestProduct_WholeMutantsNative_Control)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 24.692451225000696
+  },
+  {
+    "id": "M2",
+    "phase": "matrix",
+    "rows": [
+      "TestWholeCompilerAgrees",
+      "TestYieldLookaheadAgrees"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^(TestWholeCompilerAgrees|TestYieldLookaheadAgrees)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 47.62667252599931
+  },
+  {
+    "id": "M3",
+    "phase": "build",
+    "rows": [
+      "TestProduct_WholeMutantsNative_Control"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^(TestProduct_WholeMutantsNative_Control)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 24.937956148000012
+  },
+  {
+    "id": "M3",
+    "phase": "matrix",
+    "rows": [
+      "TestWholeCompilerAgrees",
+      "TestYieldLookaheadAgrees"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^(TestWholeCompilerAgrees|TestYieldLookaheadAgrees)$"
+    ],
+    "exit": 1,
+    "wall_seconds": 44.62497772200004
+  },
+  {
+    "id": "M4",
+    "phase": "build",
+    "rows": [
+      "TestProduct_WholeMutantsNative_Control"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^(TestProduct_WholeMutantsNative_Control)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 32.898534965999715
+  },
+  {
+    "id": "M4",
+    "phase": "matrix",
+    "rows": [
+      "TestWholeCompilerAgrees",
+      "TestYieldLookaheadAgrees"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^(TestWholeCompilerAgrees|TestYieldLookaheadAgrees)$"
+    ],
+    "exit": 1,
+    "wall_seconds": 27.653691547999188
+  },
+  {
+    "id": "W1",
+    "phase": "vet",
+    "exit": 0,
+    "wall_seconds": 0.31626855499962403
+  },
+  {
+    "id": "W1",
+    "phase": "witness",
+    "rows": [
+      "TestWholeMutants_000",
+      "TestWholeMutants_001",
+      "TestWholeMutants_002",
+      "TestWholeMutantsUnion"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^(TestWholeMutants_000|TestWholeMutants_001|TestWholeMutants_002|TestWholeMutantsUnion)$"
+    ],
+    "exit": 1,
+    "wall_seconds": 10.357399270000315
+  },
+  {
+    "id": "W2",
+    "phase": "vet",
+    "exit": 0,
+    "wall_seconds": 0.2631685020005534
+  },
+  {
+    "id": "W2",
+    "phase": "witness",
+    "rows": [
+      "TestWholeCountCheckCatchesMutant"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^(TestWholeCountCheckCatchesMutant)$"
+    ],
+    "exit": 1,
+    "wall_seconds": 31.096588836999217
+  },
+  {
+    "id": "W3",
+    "phase": "vet",
+    "exit": 0,
+    "wall_seconds": 0.2985519560006651
+  },
+  {
+    "id": "W3",
+    "phase": "witness",
+    "rows": [
+      "TestWholeMutantsRejectsSurvivor"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^(TestWholeMutantsRejectsSurvivor)$"
+    ],
+    "exit": 1,
+    "wall_seconds": 11.045948086999488
+  },
+  {
+    "id": "S1",
+    "phase": "vet",
+    "exit": 0,
+    "wall_seconds": 0.2675648149997869
+  },
+  {
+    "id": "S1",
+    "phase": "witness",
+    "rows": [
+      "TestWholeMutantsUnion"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^(TestWholeMutantsUnion)$"
+    ],
+    "exit": 1,
+    "wall_seconds": 7.778049718999682
+  },
+  {
+    "id": "P1",
+    "phase": "build",
+    "rows": [
+      "TestProduct_WholeMutantsNative_Control"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^(TestProduct_WholeMutantsNative_Control)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 15.634114423999563
+  },
+  {
+    "id": "P1",
+    "phase": "matrix",
+    "rows": [
+      "TestWholeCompilerAgrees",
+      "TestYieldLookaheadAgrees"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^(TestWholeCompilerAgrees|TestYieldLookaheadAgrees)$"
+    ],
+    "exit": 1,
+    "wall_seconds": 15.77025255100125
+  }
+]

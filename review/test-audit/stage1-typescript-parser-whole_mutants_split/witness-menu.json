@@ -1,0 +1,45 @@
+[
+  {
+    "id": "W1",
+    "file": "parser_test.go",
+    "from": "if bytes.Equal(got, want) {",
+    "to": "if len(got) >= 0 {",
+    "rows": [
+      "TestWholeMutants_000",
+      "TestWholeMutants_001",
+      "TestWholeMutants_002",
+      "TestWholeMutantsUnion"
+    ],
+    "line": 142
+  },
+  {
+    "id": "W2",
+    "file": "whole_mutants_test.go",
+    "from": "if string(side.count.output) == string(wantCount) {",
+    "to": "if len(side.count.output) >= 0 {",
+    "rows": [
+      "TestWholeCountCheckCatchesMutant"
+    ],
+    "line": 89
+  },
+  {
+    "id": "W3",
+    "file": "whole_mutants_test.go",
+    "from": "if diff == \"\" {",
+    "to": "if diff == \"\" && !planted {",
+    "rows": [
+      "TestWholeMutantsRejectsSurvivor"
+    ],
+    "line": 61
+  },
+  {
+    "id": "S1",
+    "file": "whole_mutants_split_test.go",
+    "from": "{2, TestWholeMutants_002},",
+    "to": "{1, TestWholeMutants_002},",
+    "rows": [
+      "TestWholeMutantsUnion"
+    ],
+    "line": 255
+  }
+]

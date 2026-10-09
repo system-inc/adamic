@@ -1,0 +1,241 @@
+[
+  {
+    "test": "TestWholeMutants family",
+    "package": "stage1/typescript/parser",
+    "file": "stage1/typescript/parser/whole_mutants_split_test.go",
+    "members": [
+      "TestWholeMutants_000",
+      "TestWholeMutants_001",
+      "TestWholeMutants_002",
+      "TestWholeMutantsUnion"
+    ],
+    "seconds": 4.488,
+    "timing_samples": [
+      44.035,
+      2.393,
+      4.4879999999999995
+    ],
+    "timing_logs": [
+      "review/test-audit/stage1-typescript-parser-whole_mutants_split/baseline-1.log",
+      "review/test-audit/stage1-typescript-parser-whole_mutants_split/timing-1-2.log",
+      "review/test-audit/stage1-typescript-parser-whole_mutants_split/timing-1-3.log"
+    ],
+    "nproc": 5,
+    "oracle": "Unmodified typescript-go whole-tree bytes, compared with Node and sanitized native control output. Both planted outputs must differ, but any mismatch counts; the mismatch is not constrained to the intended field. Union assignment is a self-written coverage check.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W1: whole_mutants_test.go:65: Node mutant survived: keyof becomes readonly",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "unit_production_mutants": 4,
+    "witness_kills": [
+      "W1"
+    ],
+    "construction_kills": [
+      "S1"
+    ],
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestWholeMutants_000",
+      "TestWholeMutants_001",
+      "TestWholeMutants_002",
+      "TestWholeMutantsUnion"
+    ],
+    "evidence": "Apply W1.diff; ADAMIC_TYPESCRIPT_SOURCE=/tmp/u158/corpus timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestWholeMutants_000|TestWholeMutants_001|TestWholeMutants_002|TestWholeMutantsUnion)$' > W1-witness.log 2>&1; whole_mutants_test.go:65: Node mutant survived: keyof becomes readonly",
+    "subsumption_basis_mutants": null,
+    "uniqueness_scope": "Bounded production rows only; package and repo uniqueness unknown."
+  },
+  {
+    "test": "TestWholeMutantsRejectsSurvivor",
+    "package": "stage1/typescript/parser",
+    "file": "stage1/typescript/parser/whole_mutants_split_test.go",
+    "members": [
+      "TestWholeMutantsRejectsSurvivor"
+    ],
+    "seconds": 3.173,
+    "timing_samples": [
+      2.374,
+      4.185,
+      3.173
+    ],
+    "timing_logs": [
+      "review/test-audit/stage1-typescript-parser-whole_mutants_split/baseline-2.log",
+      "review/test-audit/stage1-typescript-parser-whole_mutants_split/timing-2-2.log",
+      "review/test-audit/stage1-typescript-parser-whole_mutants_split/timing-2-3.log"
+    ],
+    "nproc": 5,
+    "oracle": "Runs real sanitized checks, then emulates equal native bytes for one mutant. Requires exactly owner TestWholeMutants_002 to fail with the named survived message. W3 disables that leaf guard; parent rejects successful children.",
+    "oracle_kind": "external-run",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W3: whole_mutants_split_test.go:302: planted surviving mutant escaped",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "unit_production_mutants": 4,
+    "witness_kills": [
+      "W3"
+    ],
+    "construction_kills": [],
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestWholeMutantsRejectsSurvivor"
+    ],
+    "evidence": "Apply W3.diff; ADAMIC_TYPESCRIPT_SOURCE=/tmp/u158/corpus timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestWholeMutantsRejectsSurvivor)$' > W3-witness.log 2>&1; whole_mutants_split_test.go:302: planted surviving mutant escaped",
+    "subsumption_basis_mutants": null,
+    "uniqueness_scope": "Bounded production rows only; package and repo uniqueness unknown."
+  },
+  {
+    "test": "TestWholeCountCheckCatchesMutant",
+    "package": "stage1/typescript/parser",
+    "file": "stage1/typescript/parser/whole_mutants_test.go",
+    "members": [
+      "TestWholeCountCheckCatchesMutant"
+    ],
+    "seconds": 21.056,
+    "timing_samples": [
+      24.014,
+      21.056,
+      20.857
+    ],
+    "timing_logs": [
+      "review/test-audit/stage1-typescript-parser-whole_mutants_split/baseline-3.log",
+      "review/test-audit/stage1-typescript-parser-whole_mutants_split/timing-3-2.log",
+      "review/test-audit/stage1-typescript-parser-whole_mutants_split/timing-3-3.log"
+    ],
+    "nproc": 5,
+    "oracle": "Runs typescript-go tree and --count output. Mutated Node/native trees must stay identical and counts must differ. It checks inequality, not a precise mutant count; W2 broadens equality to regard every count as matching.",
+    "oracle_kind": "external-run",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W2: whole_mutants_test.go:90: Node counter mutant survived",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "unit_production_mutants": 4,
+    "witness_kills": [
+      "W2"
+    ],
+    "construction_kills": [],
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestWholeCountCheckCatchesMutant"
+    ],
+    "evidence": "Apply W2.diff; ADAMIC_TYPESCRIPT_SOURCE=/tmp/u158/corpus timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestWholeCountCheckCatchesMutant)$' > W2-witness.log 2>&1; whole_mutants_test.go:90: Node counter mutant survived",
+    "subsumption_basis_mutants": null,
+    "uniqueness_scope": "Bounded production rows only; package and repo uniqueness unknown."
+  },
+  {
+    "test": "TestWholeCompilerAgrees",
+    "package": "stage1/typescript/parser",
+    "file": "stage1/typescript/parser/whole_test.go",
+    "members": [
+      "TestWholeCompilerAgrees"
+    ],
+    "seconds": 42.573,
+    "timing_samples": [
+      48.953,
+      42.573,
+      39.779
+    ],
+    "timing_logs": [
+      "review/test-audit/stage1-typescript-parser-whole_mutants_split/baseline-compiler.log",
+      "review/test-audit/stage1-typescript-parser-whole_mutants_split/timing-5-2.log",
+      "review/test-audit/stage1-typescript-parser-whole_mutants_split/timing-5-3.log"
+    ],
+    "nproc": 5,
+    "oracle": "Full serialized whole-tree bytes from unmodified typescript-go over 77 pinned compiler files, compared with Node and sanitized native; execute requires exit success and empty stderr. It does not request --count, so M2 survives. Its two kills also occur in YieldLookaheadAgrees.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M1",
+      "M4"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M4: whole_test.go:34: Node: case 0 line 4: port \"1 ExportDeclaration 0 111 0 0 -1 0 0\\t\\t\\t\\t0\", Go \"1 ExportDeclaration 0 109 0 0 -1 0 0\\t\\t\\t\\t0\"",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestYieldLookaheadAgrees"
+    ],
+    "mutants_in_matrix": 4,
+    "unit_production_mutants": 4,
+    "witness_kills": [],
+    "construction_kills": [],
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": 20.681,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestWholeCompilerAgrees",
+      "TestYieldLookaheadAgrees"
+    ],
+    "evidence": "Apply M4.diff; ADAMIC_TYPESCRIPT_SOURCE=/tmp/u158/corpus timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestWholeCompilerAgrees|TestYieldLookaheadAgrees)$' > M4-matrix.log 2>&1; whole_test.go:34: Node: case 0 line 4: port \"1 ExportDeclaration 0 111 0 0 -1 0 0\\t\\t\\t\\t0\", Go \"1 ExportDeclaration 0 109 0 0 -1 0 0\\t\\t\\t\\t0\"\nApply P1.diff; ADAMIC_TYPESCRIPT_SOURCE=/tmp/u158/corpus timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestWholeCompilerAgrees|TestYieldLookaheadAgrees)$' > P1-matrix.log 2>&1; whole_test.go:34: Node: case 0 line 2: port \"case 1\", Go \"file\"",
+    "subsumption_basis_mutants": 2,
+    "uniqueness_scope": "Bounded production rows only; package and repo uniqueness unknown."
+  },
+  {
+    "test": "TestYieldLookaheadAgrees",
+    "package": "stage1/typescript/parser",
+    "file": "stage1/typescript/parser/yield_test.go",
+    "members": [
+      "TestYieldLookaheadAgrees"
+    ],
+    "seconds": 20.681,
+    "timing_samples": [
+      23.936,
+      20.681,
+      20.654
+    ],
+    "timing_logs": [
+      "review/test-audit/stage1-typescript-parser-whole_mutants_split/baseline-4.log",
+      "review/test-audit/stage1-typescript-parser-whole_mutants_split/timing-4-2.log",
+      "review/test-audit/stage1-typescript-parser-whole_mutants_split/timing-4-3.log"
+    ],
+    "nproc": 5,
+    "oracle": "Full serialized expression-tree bytes from unmodified typescript-go over 17 yield cases, compared with Node and sanitized native; execute requires exit success and empty stderr. M3 is caught by a Node parser panic before tree comparison. It does not request --count.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M1",
+      "M3",
+      "M4"
+    ],
+    "unique_kills": [
+      "M3"
+    ],
+    "last_proven_fail": "M4: yield_test.go:45: Node: case 9 line 43: port \"1 Identifier 0 6 0 0 -1 0 0\\t\\tyield\\t\", Go \"1 Identifier 0 5 0 0 -1 0 0\\t\\tyield\\t\"",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "unit_production_mutants": 4,
+    "witness_kills": [],
+    "construction_kills": [],
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestWholeCompilerAgrees",
+      "TestYieldLookaheadAgrees"
+    ],
+    "evidence": "Apply M4.diff; ADAMIC_TYPESCRIPT_SOURCE=/tmp/u158/corpus timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestWholeCompilerAgrees|TestYieldLookaheadAgrees)$' > M4-matrix.log 2>&1; yield_test.go:45: Node: case 9 line 43: port \"1 Identifier 0 6 0 0 -1 0 0\\t\\tyield\\t\", Go \"1 Identifier 0 5 0 0 -1 0 0\\t\\tyield\\t\"\nApply P1.diff; ADAMIC_TYPESCRIPT_SOURCE=/tmp/u158/corpus timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestWholeCompilerAgrees|TestYieldLookaheadAgrees)$' > P1-matrix.log 2>&1; yield_test.go:45: Node: case 0 line 2: port \"case 1\", Go \"expression\"",
+    "subsumption_basis_mutants": null,
+    "uniqueness_scope": "Bounded production rows only; package and repo uniqueness unknown."
+  }
+]

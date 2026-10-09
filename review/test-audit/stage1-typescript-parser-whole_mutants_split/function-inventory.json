@@ -1,0 +1,640 @@
+{
+  "scope": "Conservative declaration inventory for whole compiler corpus, whole-mutant inputs and yield inputs; recursive descent may reach every parser/scanner method. No instrumentation coverage claimed.",
+  "files": {
+    "main.ts": [
+      {
+        "line": 5,
+        "declaration": "function run(path: string, countOnly: boolean, whole: boolean, docTypes: boolean): number {"
+      },
+      {
+        "line": 7,
+        "declaration": "if(source.kind === 'Error') {"
+      },
+      {
+        "line": 14,
+        "declaration": "if(!countOnly) {"
+      },
+      {
+        "line": 30,
+        "declaration": "for(const root of docTypes ? types : whole ? [file] : parser.roots) {"
+      },
+      {
+        "line": 44,
+        "declaration": "if(manifest.kind === 'Error') {"
+      },
+      {
+        "line": 50,
+        "declaration": "for(const path of manifest.text.split('\\n')) {"
+      },
+      {
+        "line": 60,
+        "declaration": "if(countOnly) {"
+      }
+    ],
+    "nodes.ts": [
+      {
+        "line": 18,
+        "declaration": "constructor(kind: string, pos: number, end: number, children: number[]) {"
+      },
+      {
+        "line": 26,
+        "declaration": "export function written(text: string): string {"
+      },
+      {
+        "line": 28,
+        "declaration": "for(let index = 0; index < text.length; index++) {"
+      },
+      {
+        "line": 38,
+        "declaration": "export function printTree("
+      },
+      {
+        "line": 50,
+        "declaration": "for(const child of node.children) {"
+      },
+      {
+        "line": 56,
+        "declaration": "export function countTree(nodes: readonly ParseNode[], root: number): number {"
+      },
+      {
+        "line": 59,
+        "declaration": "for(const child of node.children) {"
+      }
+    ],
+    "grammar.ts": [
+      {
+        "line": 2,
+        "declaration": "export function precedence(kind: string): number {"
+      },
+      {
+        "line": 3,
+        "declaration": "switch(kind) {"
+      }
+    ],
+    "lookahead.ts": [
+      {
+        "line": 16,
+        "declaration": "function kind(scanner: Scanner): string {"
+      },
+      {
+        "line": 31,
+        "declaration": "constructor(scanner: Scanner) {"
+      },
+      {
+        "line": 41,
+        "declaration": "prepare(): void {"
+      },
+      {
+        "line": 74,
+        "declaration": "next(): void {"
+      },
+      {
+        "line": 79,
+        "declaration": "restore(): void {"
+      },
+      {
+        "line": 90,
+        "declaration": "function optionalParameterAhead(scanner: Scanner): boolean {"
+      },
+      {
+        "line": 98,
+        "declaration": "export function arrowAhead(scanner: Scanner, allowReturn: boolean): boolean {"
+      },
+      {
+        "line": 101,
+        "declaration": "if(kind(scanner) === 'AsyncKeyword') {"
+      },
+      {
+        "line": 117,
+        "declaration": "if(kind(scanner) === 'LessThanToken') {"
+      },
+      {
+        "line": 132,
+        "declaration": "if(kind(scanner) === 'OpenParenToken') {"
+      },
+      {
+        "line": 188,
+        "declaration": "export function jsxArrowAhead(scanner: Scanner): boolean {"
+      },
+      {
+        "line": 190,
+        "declaration": "if(kind(scanner) === 'AsyncKeyword') {"
+      },
+      {
+        "line": 193,
+        "declaration": "if(kind(scanner) !== 'LessThanToken') {"
+      },
+      {
+        "line": 198,
+        "declaration": "if(kind(scanner) === 'ConstKeyword') {"
+      },
+      {
+        "line": 203,
+        "declaration": "if(kind(scanner) === 'ExtendsKeyword') {"
+      },
+      {
+        "line": 212,
+        "declaration": "export function typeArgumentsAhead(scanner: Scanner): boolean {"
+      },
+      {
+        "line": 220,
+        "declaration": "while(kind(scanner) !== 'EndOfFile') {"
+      }
+    ],
+    "statements.ts": [
+      {
+        "line": 51,
+        "declaration": "constructor(parser: StatementContextInterface) {"
+      },
+      {
+        "line": 54,
+        "declaration": "block(): number {"
+      },
+      {
+        "line": 64,
+        "declaration": "semicolon(): void {"
+      },
+      {
+        "line": 76,
+        "declaration": "variableList(): number {"
+      },
+      {
+        "line": 117,
+        "declaration": "lookahead(offset: number): string {"
+      },
+      {
+        "line": 140,
+        "declaration": "decorator(): number {"
+      },
+      {
+        "line": 143,
+        "declaration": "canExportName(): boolean {"
+      },
+      {
+        "line": 150,
+        "declaration": "specifiers(importing: boolean): number {"
+      },
+      {
+        "line": 212,
+        "declaration": "attributes(): number {"
+      },
+      {
+        "line": 218,
+        "declaration": "attributeBody(pos: number, operator: string): number {"
+      },
+      {
+        "line": 244,
+        "declaration": "importDeclaration(pos: number, prefix: readonly number[]): number {"
+      },
+      {
+        "line": 335,
+        "declaration": "exportDeclaration(pos: number, prefix: readonly number[]): number {"
+      },
+      {
+        "line": 389,
+        "declaration": "moduleDeclaration(pos: number, prefix: readonly number[], keyword: string): number {"
+      },
+      {
+        "line": 420,
+        "declaration": "exportedClauseAhead(): boolean {"
+      },
+      {
+        "line": 442,
+        "declaration": "functionDeclaration(pos: number, prefix: readonly number[], async: boolean): number {"
+      },
+      {
+        "line": 479,
+        "declaration": "classDeclaration(pos: number, prefix: readonly number[], expression: boolean): number {"
+      },
+      {
+        "line": 640,
+        "declaration": "forStatement(): number {"
+      },
+      {
+        "line": 682,
+        "declaration": "switchStatement(): number {"
+      },
+      {
+        "line": 713,
+        "declaration": "tryStatement(): number {"
+      },
+      {
+        "line": 741,
+        "declaration": "statement(): number {"
+      }
+    ],
+    "jsx.ts": [
+      {
+        "line": 26,
+        "declaration": "constructor(parser: JsxContextInterface) {"
+      },
+      {
+        "line": 29,
+        "declaration": "make(kind: string, pos: number, children: number[] = []): number {"
+      },
+      {
+        "line": 32,
+        "declaration": "identifier(): number {"
+      },
+      {
+        "line": 41,
+        "declaration": "name(tag: boolean): number {"
+      },
+      {
+        "line": 64,
+        "declaration": "text(): number {"
+      },
+      {
+        "line": 74,
+        "declaration": "finishGreater(expression: boolean): void {"
+      },
+      {
+        "line": 87,
+        "declaration": "expression(attribute: boolean): number {"
+      },
+      {
+        "line": 108,
+        "declaration": "attributes(): number {"
+      },
+      {
+        "line": 143,
+        "declaration": "tagKey(index: number): string {"
+      },
+      {
+        "line": 151,
+        "declaration": "element(inExpression: boolean): number {"
+      }
+    ],
+    "parser.ts": [
+      {
+        "line": 19,
+        "declaration": "constructor(text: string, path = 'source') {"
+      },
+      {
+        "line": 27,
+        "declaration": "kind(): string {"
+      },
+      {
+        "line": 30,
+        "declaration": "next(): void {"
+      },
+      {
+        "line": 33,
+        "declaration": "node(index: number): ParseNode {"
+      },
+      {
+        "line": 36,
+        "declaration": "make(kind: string, pos: number, children: number[] = []): number {"
+      },
+      {
+        "line": 40,
+        "declaration": "token(): number {"
+      },
+      {
+        "line": 46,
+        "declaration": "expect(kind: string): void {"
+      },
+      {
+        "line": 52,
+        "declaration": "literal(): number {"
+      },
+      {
+        "line": 72,
+        "declaration": "identifier(): number {"
+      },
+      {
+        "line": 80,
+        "declaration": "primary(): number {"
+      },
+      {
+        "line": 179,
+        "declaration": "jsxParser(): Jsx {"
+      },
+      {
+        "line": 204,
+        "declaration": "bindingIdentifier(): boolean {"
+      },
+      {
+        "line": 209,
+        "declaration": "nextIdentifierSameLine(): boolean {"
+      },
+      {
+        "line": 218,
+        "declaration": "yieldOperandAhead(): boolean {"
+      },
+      {
+        "line": 229,
+        "declaration": "mark(): ParserStateInterface {"
+      },
+      {
+        "line": 241,
+        "declaration": "rewind(state: ParserStateInterface): void {"
+      },
+      {
+        "line": 251,
+        "declaration": "docTypes(): number[] {"
+      },
+      {
+        "line": 280,
+        "declaration": "tupleNameAhead(): boolean {"
+      },
+      {
+        "line": 294,
+        "declaration": "typeArguments(): number[] {"
+      },
+      {
+        "line": 310,
+        "declaration": "typeParameters(): number[] {"
+      },
+      {
+        "line": 340,
+        "declaration": "entityName(): number {"
+      },
+      {
+        "line": 350,
+        "declaration": "importType(): number {"
+      },
+      {
+        "line": 387,
+        "declaration": "type(minimum = 0, conditional = true): number {"
+      },
+      {
+        "line": 667,
+        "declaration": "mappedAhead(): boolean {"
+      },
+      {
+        "line": 685,
+        "declaration": "mappedType(): number {"
+      },
+      {
+        "line": 724,
+        "declaration": "indexSignatureAhead(): boolean {"
+      },
+      {
+        "line": 732,
+        "declaration": "typeLiteral(): number {"
+      },
+      {
+        "line": 812,
+        "declaration": "parameters(): number[] {"
+      },
+      {
+        "line": 857,
+        "declaration": "bindingName(): number {"
+      },
+      {
+        "line": 897,
+        "declaration": "decorator(): number {"
+      },
+      {
+        "line": 909,
+        "declaration": "rootAssignment(): number {"
+      },
+      {
+        "line": 918,
+        "declaration": "rootExpression(): number {"
+      },
+      {
+        "line": 927,
+        "declaration": "arrow(allowReturn: boolean): number {"
+      },
+      {
+        "line": 964,
+        "declaration": "returnType(): number {"
+      },
+      {
+        "line": 988,
+        "declaration": "functionExpression(): number {"
+      },
+      {
+        "line": 1027,
+        "declaration": "statements(): Statements {"
+      },
+      {
+        "line": 1075,
+        "declaration": "block(): number {"
+      },
+      {
+        "line": 1078,
+        "declaration": "statement(): number {"
+      },
+      {
+        "line": 1081,
+        "declaration": "semicolon(): void {"
+      },
+      {
+        "line": 1084,
+        "declaration": "classDeclaration(pos: number, prefix: readonly number[], expression: boolean): number {"
+      },
+      {
+        "line": 1088,
+        "declaration": "peek(): string {"
+      },
+      {
+        "line": 1107,
+        "declaration": "optionalChain(index: number): boolean {"
+      },
+      {
+        "line": 1122,
+        "declaration": "spread(): number {"
+      },
+      {
+        "line": 1128,
+        "declaration": "arguments(): number[] {"
+      },
+      {
+        "line": 1147,
+        "declaration": "suffix(expression: number, allowCall: boolean): number {"
+      },
+      {
+        "line": 1276,
+        "declaration": "templatePart(): number {"
+      },
+      {
+        "line": 1289,
+        "declaration": "templateType(): number {"
+      },
+      {
+        "line": 1305,
+        "declaration": "template(): number {"
+      },
+      {
+        "line": 1324,
+        "declaration": "array(): number {"
+      },
+      {
+        "line": 1351,
+        "declaration": "propertyName(): number {"
+      },
+      {
+        "line": 1367,
+        "declaration": "methodBody(pos: number, prefix: readonly number[], kind: string, async: boolean, generator: boolean): number {"
+      },
+      {
+        "line": 1396,
+        "declaration": "object(): number {"
+      },
+      {
+        "line": 1478,
+        "declaration": "unary(): number {"
+      },
+      {
+        "line": 1548,
+        "declaration": "binary(minimum: number): number {"
+      },
+      {
+        "line": 1576,
+        "declaration": "assignment(allowReturn = true): number {"
+      },
+      {
+        "line": 1612,
+        "declaration": "allowInAssignment(allowReturn = true): number {"
+      },
+      {
+        "line": 1622,
+        "declaration": "allowInExpression(): number {"
+      },
+      {
+        "line": 1632,
+        "declaration": "expression(): number {"
+      },
+      {
+        "line": 1642,
+        "declaration": "file(): number {"
+      }
+    ],
+    "../scanner/scanner.ts": [
+      {
+        "line": 14,
+        "declaration": "function decimalDigits(text: string, base: number): string {"
+      },
+      {
+        "line": 16,
+        "declaration": "for(const character of text) {"
+      },
+      {
+        "line": 31,
+        "declaration": "while(first < result.length - 1 && result.charCodeAt(first) === 48) {"
+      },
+      {
+        "line": 37,
+        "declaration": "function numberValue(text: string): string {"
+      },
+      {
+        "line": 38,
+        "declaration": "if(text === '') {"
+      },
+      {
+        "line": 62,
+        "declaration": "constructor(text: string) {"
+      },
+      {
+        "line": 65,
+        "declaration": "code(offset = 0): number {"
+      },
+      {
+        "line": 73,
+        "declaration": "advance(code: number): void {"
+      },
+      {
+        "line": 76,
+        "declaration": "error(code: number, start: number = this.pos, length = 0): void {"
+      },
+      {
+        "line": 81,
+        "declaration": "fragment(base: number, separators: boolean, minimum = 0, maximum: number = Number.MAX_SAFE_INTEGER): string {"
+      },
+      {
+        "line": 122,
+        "declaration": "unicode(report: boolean): number {"
+      },
+      {
+        "line": 173,
+        "declaration": "escape(report: boolean): string {"
+      },
+      {
+        "line": 251,
+        "declaration": "identifier(prefix: number): boolean {"
+      },
+      {
+        "line": 289,
+        "declaration": "string(): void {"
+      },
+      {
+        "line": 324,
+        "declaration": "template(report: boolean): void {"
+      },
+      {
+        "line": 370,
+        "declaration": "bigint(): void {"
+      },
+      {
+        "line": 385,
+        "declaration": "number(): void {"
+      },
+      {
+        "line": 492,
+        "declaration": "scan(): string {"
+      },
+      {
+        "line": 676,
+        "declaration": "punctuation(code: number): string {"
+      },
+      {
+        "line": 817,
+        "declaration": "rescanGreater(): void {"
+      },
+      {
+        "line": 834,
+        "declaration": "rescanTemplate(): void {"
+      },
+      {
+        "line": 840,
+        "declaration": "rescanSlash(): void {"
+      },
+      {
+        "line": 936,
+        "declaration": "scanJsxIdentifier(): void {"
+      },
+      {
+        "line": 948,
+        "declaration": "scanJsxAttributeValue(): void {"
+      },
+      {
+        "line": 978,
+        "declaration": "scanJsx(): string {"
+      }
+    ],
+    "../scanner/characters.ts": [
+      {
+        "line": 240,
+        "declaration": "function contains(ranges: readonly number[], code: number): boolean {"
+      },
+      {
+        "line": 243,
+        "declaration": "while(low <= high) {"
+      },
+      {
+        "line": 259,
+        "declaration": "export function isIdentifierStart(code: number): boolean {"
+      },
+      {
+        "line": 268,
+        "declaration": "export function isIdentifierPart(code: number): boolean {"
+      },
+      {
+        "line": 271,
+        "declaration": "export function isLineBreak(code: number): boolean {"
+      },
+      {
+        "line": 274,
+        "declaration": "export function isSpace(code: number): boolean {"
+      },
+      {
+        "line": 290,
+        "declaration": "export function digit(code: number): number {"
+      }
+    ],
+    "../scanner/tokens.ts": []
+  }
+}

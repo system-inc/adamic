@@ -1,0 +1,14 @@
+{"Time":"2026-10-09T13:45:25.942538629Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/typescript/parser"}
+{"Time":"2026-10-09T13:45:25.987877483Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestProduct_WholeMutantsNative_Control"}
+{"Time":"2026-10-09T13:45:25.988007231Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestProduct_WholeMutantsNative_Control","Output":"=== RUN   TestProduct_WholeMutantsNative_Control\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:45:25.988051339Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestProduct_WholeMutantsNative_Control","Output":"=== PAUSE TestProduct_WholeMutantsNative_Control\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:45:25.988054771Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestProduct_WholeMutantsNative_Control"}
+{"Time":"2026-10-09T13:45:25.988057649Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestProduct_WholeMutantsNative_Control"}
+{"Time":"2026-10-09T13:45:25.988059907Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestProduct_WholeMutantsNative_Control","Output":"=== CONT  TestProduct_WholeMutantsNative_Control\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:45:36.929484546Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestProduct_WholeMutantsNative_Control","Output":"    setup_deadline_products_test.go:47: build typescript-parser-lowered 88158b7a4077 miss 10.70\n"}
+{"Time":"2026-10-09T13:45:52.63276946Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestProduct_WholeMutantsNative_Control","Output":"    setup_deadline_products_test.go:47: build typescript-parser-native 3f52d32557c4 miss 15.48\n"}
+{"Time":"2026-10-09T13:45:52.632948104Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestProduct_WholeMutantsNative_Control","Output":"--- PASS: TestProduct_WholeMutantsNative_Control (26.64s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:45:52.632953421Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestProduct_WholeMutantsNative_Control","Elapsed":26.64}
+{"Time":"2026-10-09T13:45:52.63298947Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:45:52.634741654Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"ok  \tgithub.com/system-inc/adamic/stage1/typescript/parser\t26.692s\n"}
+{"Time":"2026-10-09T13:45:52.634840325Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Elapsed":26.692}
