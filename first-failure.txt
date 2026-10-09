@@ -1,0 +1,67 @@
+FIRST FAILURE (products, at 98.7 s):
+github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_corpus_record
+a/adamic-tools/go/src/internal/syscall/unix/waitid_linux.go:18 +0x39
+os.(*Process).pidfdWait.func1(...)
+	/home/ahra/adamic-tools/go/src/os/pidfd_linux.go:108
+os.ignoringEINTR(...)
+	/home/ahra/adamic-tools/go/src/os/file_posix.go:263
+os.(*Process).pidfdWait(0x18f7d3614000)
+	/home/ahra/adamic-tools/go/src/os/pidfd_linux.go:107 +0x1cf
+os.(*Process).wait(0x422949?)
+	/home/ahra/adamic-tools/go/src/os/exec_unix.go:25 +0x1a
+os.(*Process).Wait(...)
+	/home/ahra/adamic-tools/go/src/os/exec.go:347
+os/exec.(*Cmd).Wait(0x18f7d387e000)
+	/home/ahra/adamic-tools/go/src/os/exec/exec.go:944 +0x45
+os/exec.(*Cmd).Run(0x18f7d387e000)
+	/home/ahra/adamic-tools/go/src/os/exec/exec.go:643 +0x2d
+os/exec.(*Cmd).CombinedOutput(0x18f7d387e000)
+	/home/ahra/adamic-tools/go/src/os/exec/exec.go:1061 +0x8f
+github.com/system-inc/adamic/stage1/cohere/typeaware.volumeProfileCorporaNative.func1({0x18f7d3d84800, 0x40})
+	/home/ahra/fast-gate/tree/stage1/cohere/typeaware/volume_profile_Corpora_test.go:173 +0x30b
+github.com/system-inc/adamic/internal/buildcache.get({{0x18f7d3a02d20, 0x15}, {0x18f7d3cca008, 0x4d7, 0x6a7}, {0x18f7d389f808, 0x68, 0xbf}, {0x18f7d3615c00, 0x4, ...}}, ...)
+	/home/ahra/fast-gate/tree/internal/buildcache/buildcache.go:104 +0x4cb
+github.com/system-inc/adamic/internal/buildcache.Product({0x1dd6670, 0x18f7d362ad88}, {{0x18f7d3a02d20, 0x15}, {0x18f7d3cca008, 0x4d7, 0x6a7}, {0x18f7d389f808, 0x68, 0xbf}, ...}, ...)
+	/home/ahra/fast-gate/tree/internal/buildcache/buildcache.go:43 +0x8d
+github.com/system-inc/adamic/stage1/cohere/typeaware.volumeProfileCorporaNative({0x1dcc840?, 0x1ebc160?}, 0x0?, {0x18f7d37f2000?, 0x0?}, {0x18f7d37a8540?, 0x0?}, {{0x18f7d3a02d20, 0x15}, {0x18f7d3cca008, ...}, ...}, ...)
+	/home/ahra/fast-gate/tree/stage1/cohere/typeaware/volume_profile_Corpora_test.go:164 +0x165
+github.com/system-inc/adamic/stage1/cohere/typeaware.volumeProfileCorporaPrepare.func1.3()
+	/home/ahra/fast-gate/tree/stage1/cohere/typeaware/volume_profile_Corpora_test.go:434 +0xdb
+created by github.com/system-inc/adamic/stage1/cohere/typeaware.volumeProfileCorporaPrepare.func1 in goroutine 34
+	/home/ahra/fast-gate/tree/stage1/cohere/typeaware/volume_profile_Corpora_test.go:432 +0x6a5
+
+goroutine 101 [IO wait]:
+internal/poll.runtime_pollWait(0x784f35a33400, 0x72)
+	/home/ahra/adamic-tools/go/src/runtime/netpoll.go:351 +0x85
+internal/poll.(*pollDesc).wait(0x18f7d37a4a20?, 0x18f7d378a000?, 0x1)
+	/home/ahra/adamic-tools/go/src/internal/poll/fd_poll_runtime.go:84 +0x27
+internal/poll.(*pollDesc).waitRead(...)
+	/home/ahra/adamic-tools/go/src/internal/poll/fd_poll_runtime.go:89
+internal/poll.(*FD).Read(0x18f7d37a4a20, {0x18f7d378a000, 0x200, 0x200})
+	/home/ahra/adamic-tools/go/src/internal/poll/fd_unix.go:170 +0x2a8
+os.(*File).read(...)
+	/home/ahra/adamic-tools/go/src/os/file_posix.go:30
+os.(*File).Read(0x18f7d364a0b8, {0x18f7d378a000?, 0x65736c6166202c35?, 0x0?})
+	/home/ahra/adamic-tools/go/src/os/file.go:144 +0x4f
+bytes.(*Buffer).ReadFrom(0x18f7d36ec0f0, {0x1dc86c8, 0x18f7d364a0b8})
+	/home/ahra/adamic-tools/go/src/bytes/buffer.go:229 +0x98
+io.copyBuffer({0x1dc87e8, 0x18f7d36ec0f0}, {0x1dc86c8, 0x18f7d364a0b8}, {0x0, 0x0, 0x0})
+	/home/ahra/adamic-tools/go/src/io/io.go:415 +0x151
+io.Copy(...)
+	/home/ahra/adamic-tools/go/src/io/io.go:388
+os.genericWriteTo(0x18f7d364a0b8?, {0x1dc87e8?, 0x18f7d36ec0f0?})
+	/home/ahra/adamic-tools/go/src/os/file.go:295 +0x35
+os.(*File).WriteTo(0x18f7d364a0b8, {0x1dc87e8, 0x18f7d36ec0f0})
+	/home/ahra/adamic-tools/go/src/os/file.go:273 +0x9c
+io.copyBuffer({0x1dc87e8, 0x18f7d36ec0f0}, {0x1dc8748, 0x18f7d364a0b8}, {0x0, 0x0, 0x0})
+	/home/ahra/adamic-tools/go/src/io/io.go:411 +0x9d
+io.Copy(...)
+	/home/ahra/adamic-tools/go/src/io/io.go:388
+os/exec.(*Cmd).writerDescriptor.func1()
+	/home/ahra/adamic-tools/go/src/os/exec/exec.go:613 +0x34
+os/exec.(*Cmd).Start.func2(0x2c6662653178307b?)
+	/home/ahra/adamic-tools/go/src/os/exec/exec.go:768 +0x2c
+created by os/exec.(*Cmd).Start in goroutine 88
+	/home/ahra/adamic-tools/go/src/os/exec/exec.go:767 +0x92b
+
+(box load 27.2 on 64 cores at first failure)
