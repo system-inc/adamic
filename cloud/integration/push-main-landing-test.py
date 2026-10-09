@@ -85,7 +85,7 @@ class LandingTests(unittest.TestCase):
         return new
 
     def test_a_gated_landing_is_one_commit_with_its_numbers_as_trailers(self):
-        sha = self.change(self.main, 'code/a.go', 'package code\n// new\n', 'code change')
+        sha = self.change(self.main, 'code/a.go', 'package code\n\n// new\n', 'code change')
         new = self.assertLanded(self.push(sha, '12', '40', '0', '3', 'code/branch, at 1234'), self.main, sha)
         self.assertEqual(git(self.repository, 'rev-parse', new + '^{tree}'), git(self.repository, 'rev-parse', sha + '^{tree}'))
         trailers = git(self.repository, 'log', '-1', '--format=%(trailers:only,unfold)', new)
@@ -95,14 +95,14 @@ class LandingTests(unittest.TestCase):
         self.assertEqual(git(self.repository, 'rev-list', '--count', sha + '..' + new), '1')
         rows = list(csv.DictReader(io.StringIO(subprocess.run(['python3', str(self.scripts / 'landings.py')], cwd=self.repository,
                                                               capture_output=True, text=True, check=True).stdout)))
-        self.assertEqual([(row['new_main'], row['old_main'], row['gate_minutes'], row['branches_landed']) for row in rows],
-                         [(new, self.main, '12', 'code/branch; at 1234')])
+        self.assertEqual([(row['new_main'], row['old_main'], row['gate_minutes']) for row in rows], [(new, self.main, '12')])
+        self.assertTrue(rows[0]['branches_landed'].startswith('code/branch; at 1234; lane checks '), rows[0]['branches_landed'])
 
     def test_a_test_only_landing_is_one_commit_too(self):
         sha = self.change(self.main, 'code/a_test.go', 'package code\n', 'a test')
         new = self.assertLanded(self.push('--test-only', sha, 'a split'), self.main, sha)
         self.assertIn('Gate-minutes: 0', git(self.repository, 'log', '-1', '--format=%B', new))
-        refused = self.push('--test-only', self.change(new, 'code/a.go', 'package code\n// x\n', 'code'), 'not a split')
+        refused = self.push('--test-only', self.change(new, 'code/a.go', 'package code\n\n// x\n', 'code'), 'not a split')
         self.assertIn('not test-only', refused.stderr)
         # The lane's checks refuse a test that shells out to a tool the gate doesn't declare, or isn't gofmt'd.
         tool = self.change(new, 'code/tool_test.go', 'package code\n\nimport "os/exec"\n\nvar _ = exec.Command("timeout", "1")\n', 'a tool')
@@ -111,20 +111,20 @@ class LandingTests(unittest.TestCase):
         self.assertIn("code/messy_test.go isn't gofmt-formatted", self.push('--test-only', messy, 'messy').stderr)
 
     def test_a_candidate_built_ahead_lands_over_the_landing_commit_below_it(self):
-        lower = self.change(self.main, 'code/a.go', 'package code\n// lower\n', 'lower')
-        upper = self.change(lower, 'other/b.go', 'package other\n// upper\n', 'upper')
+        lower = self.change(self.main, 'code/a.go', 'package code\n\n// lower\n', 'lower')
+        upper = self.change(lower, 'other/b.go', 'package other\n\n// upper\n', 'upper')
         landed = self.assertLanded(self.push(lower, '1', '1', '0', '0', 'lower'), self.main, lower)
         top = self.assertLanded(self.push(upper, '1', '1', '0', '0', 'upper'), landed, upper)
         self.assertEqual(git(self.repository, 'rev-parse', top + '^{tree}'), git(self.repository, 'rev-parse', upper + '^{tree}'))
 
     def test_main_moving_by_tests_keeps_a_gate_outside_the_candidates_packages(self):
-        candidate = self.change(self.main, 'code/a.go', 'package code\n// candidate\n', 'candidate')
+        candidate = self.change(self.main, 'code/a.go', 'package code\n\n// candidate\n', 'candidate')
         elsewhere = self.change(self.main, 'other/b_test.go', 'package other\n', 'a test elsewhere')
         moved = self.assertLanded(self.push('--test-only', elsewhere, 'elsewhere'), self.main, elsewhere)
         landed = self.assertLanded(self.push(candidate, '1', '1', '0', '0', 'candidate'), moved, candidate)
         self.assertEqual(git(self.repository, 'show', landed + ':other/b_test.go'), 'package other')
         # A test in the candidate's own package meets its new code, so the gate is spent.
-        second = self.change(landed, 'code/a.go', 'package code\n// second\n', 'second')
+        second = self.change(landed, 'code/a.go', 'package code\n\n// second\n', 'second')
         same = self.change(landed, 'code/a_test.go', 'package code\n', 'a test beside it')
         self.assertLanded(self.push('--test-only', same, 'beside'), landed, same)
         refused = self.push(second, '1', '1', '0', '0', 'second')
@@ -133,7 +133,7 @@ class LandingTests(unittest.TestCase):
 
     def test_a_test_beside_the_stars_code_waits_while_its_gate_runs(self):
         root = Path(self.tmp.name)
-        star = self.change(self.main, 'code/a.go', 'package code\n// the star\n', 'the star')
+        star = self.change(self.main, 'code/a.go', 'package code\n\n// the star\n', 'the star')
         git(self.repository, 'push', '-q', 'origin', star + ':refs/heads/cloud/land-train-9-slice-' + star[:8])
         (root / 'train').mkdir()
         (root / 'train' / 'train.log').write_text('03:00:00Z built cloud/land-train-9-slice-%s %s\n' % (star[:8], star[:12]))

@@ -20,8 +20,10 @@ started = time.monotonic()
 laneTree = os.path.expanduser(os.environ.get("ADAMIC_LANE_TREE", "~/.adamic-lane-tree"))
 toolLiteral = re.compile(r'exec\.(?:Command\(|CommandContext\([A-Za-z_.()]+, |LookPath\()"([^"]+)"')
 vetSeconds = 10
-# The lane's checkout has no cohere submodule, so go.work's entry for it can't load: the module alone.
-goEnvironment = dict(os.environ, GOWORK="off")
+# The submodules (cohere, and its TypeScript) come from a local checkout's module store when it holds the
+# pinned commit, in seconds; else from their remotes. Without them most packages can't load, so vet would
+# miss even a compile error (Oct 9: stage1/cohere/json's missing sync import reached main this way).
+modules = os.path.expanduser(os.environ.get("ADAMIC_LANE_MODULES", "~/Projects/system/adamic/.git/modules"))
 toolsRef = os.environ.get("ADAMIC_LANE_TOOLS_REF", "origin/devtools/fast-gate")
 
 
@@ -62,6 +64,17 @@ if testPackages and not problems:
     if checkedOut.returncode != 0:
         problems.append(f"the lane's worktree couldn't check out {commit[:8]}: {checkedOut.stderr.strip()[:200]}")
     else:
+        for directory, name, store in ((laneTree, "cohere", os.path.join(modules, "cohere")),
+                                       (os.path.join(laneTree, "cohere"), "TypeScript", os.path.join(modules, "cohere/modules/TypeScript"))):
+            if not os.path.exists(os.path.join(directory, ".gitmodules")):
+                break
+            local = run("git", "-c", "protocol.file.allow=always", "-c", f"submodule.{name}.url={store}", "submodule", "update", "--init", name, cwd=directory, timeout=300) if os.path.isdir(store) else None
+            if local is None or local.returncode != 0:
+                if run("git", "submodule", "update", "--init", name, cwd=directory, timeout=300).returncode != 0:
+                    notes.append(f"no {name} submodule here")
+                    break
+        # go.work names cohere's TypeScript module; without it, the repository's own module alone.
+        goEnvironment = dict(os.environ) if os.path.exists(os.path.join(laneTree, "cohere/TypeScript/tsc/go.mod")) else dict(os.environ, GOWORK="off")
         analyzer = os.path.join(laneTree, "cmd/adamic-gate/parallel_test.go")
         if os.path.exists(analyzer):
             ran = run("go", "test", "-count=1", "-run", "^TestEveryTestIsParallelOrSaysWhy$", "-v", "./cmd/adamic-gate", cwd=laneTree, timeout=120, env=goEnvironment)
