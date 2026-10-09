@@ -1,0 +1,10 @@
+--- a/internal/javascript/view_unions_mixed.go
++++ b/internal/javascript/view_unions_mixed.go
+@@ -9,6 +9,7 @@
+ 
+ const viewMixedUnionsRuntime = `
+ const adamicViewMixedUnionSelect = (snapshot, members, match, expression, declared) => {
++ return undefined;
+  for (let index = 0; index < members.length; index++) {
+   const member = members[index];
+   if (snapshot.kind === 'unknown' || member.kind !== snapshot.kind) continue;

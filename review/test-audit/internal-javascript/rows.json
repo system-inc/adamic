@@ -1,0 +1,35 @@
+[
+  {
+    "test": "TestViewMixedUnionUnknownAndUnavailable",
+    "package": "internal/javascript",
+    "file": "internal/javascript/view_unions_mixed_test.go:5",
+    "seconds": 0.132,
+    "oracle": "Self-written exact panic message, empty stdout, and exit 70; Node executes the production selector. Exact stderr guards against a different failure sharing exit 70. No outside authority supplied or checked. Only rejected inputs are covered.",
+    "oracle_kind": "self",
+    "kills": [
+      "M1",
+      "M2",
+      "M3"
+    ],
+    "unique_kills": [
+      "M1",
+      "M2",
+      "M3"
+    ],
+    "last_proven_fail": "M3: view_unions_mixed_test.go:15: exit 0, stdout \"\", stderr \"\"; want 70, \"\", \"adamic: panic: field read failed: view.value matches no member of Left | Right; expected Left | Right, found object\\n\"",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "vacuous_subcases": [],
+    "bounded": false,
+    "matrix_rows": [
+      "TestViewMixedUnionUnknownAndUnavailable"
+    ],
+    "evidence": "ADAMIC_MUTANT=M3 timeout 120 go test -json -count=1 -timeout 90s ./internal/javascript/ -run . > review/test-audit/internal-javascript/M3.log 2>&1; view_unions_mixed_test.go:15: exit 0, stdout \"\", stderr \"\"; want 70, \"\", \"adamic: panic: field read failed: view.value matches no member of Left | Right; expected Left | Right, found object\\n\""
+  }
+]

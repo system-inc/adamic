@@ -1,0 +1,22 @@
+--- a/internal/javascript/view_unions_mixed.go
++++ b/internal/javascript/view_unions_mixed.go
+@@ -9,14 +9,15 @@
+ 
+ const viewMixedUnionsRuntime = `
+ const adamicViewMixedUnionSelect = (snapshot, members, match, expression, declared) => {
++ if (process.env.ADAMIC_MUTANT === 'P1') return undefined;
+  for (let index = 0; index < members.length; index++) {
+   const member = members[index];
+-  if (snapshot.kind === 'unknown' || member.kind !== snapshot.kind) continue;
+-  if (member.literal && snapshot.value !== member.value) continue;
+-  if (['object', 'array', 'Map', 'function'].includes(member.kind)) {
++  if (snapshot.kind === 'unknown' || (process.env.ADAMIC_MUTANT === 'M1' ? member.kind === snapshot.kind : member.kind !== snapshot.kind)) continue;
++  if (process.env.ADAMIC_MUTANT !== 'M2' && member.literal && snapshot.value !== member.value) continue;
++  if (process.env.ADAMIC_MUTANT !== 'M3' && ['object', 'array', 'Map', 'function'].includes(member.kind)) {
+    if (!member.contract || match === undefined || !match(member, snapshot)) continue;
+   }
+-  return index;
++  return process.env.ADAMIC_MUTANT === 'M4' ? index + 1 : index;
+  }
+  const found = snapshot.kind === 'unknown' ? 'unsupported representation' : snapshot.kind;
+  panic('field read failed: ' + expression + ' matches no member of ' + declared + '; expected ' + declared + ', found ' + found);

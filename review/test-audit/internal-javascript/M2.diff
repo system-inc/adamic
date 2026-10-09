@@ -1,0 +1,10 @@
+--- a/internal/javascript/view_unions_mixed.go
++++ b/internal/javascript/view_unions_mixed.go
+@@ -12,7 +12,6 @@
+  for (let index = 0; index < members.length; index++) {
+   const member = members[index];
+   if (snapshot.kind === 'unknown' || member.kind !== snapshot.kind) continue;
+-  if (member.literal && snapshot.value !== member.value) continue;
+   if (['object', 'array', 'Map', 'function'].includes(member.kind)) {
+    if (!member.contract || match === undefined || !match(member, snapshot)) continue;
+   }

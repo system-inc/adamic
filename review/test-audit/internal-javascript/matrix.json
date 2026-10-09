@@ -1,0 +1,49 @@
+{
+  "M1": {
+    "failed_rows": [
+      "TestViewMixedUnionUnknownAndUnavailable"
+    ],
+    "failed_subcases": [
+      "TestViewMixedUnionUnknownAndUnavailable/null_is_not_undefined",
+      "TestViewMixedUnionUnknownAndUnavailable/literal_false"
+    ],
+    "binary_seconds": 0.128
+  },
+  "M2": {
+    "failed_rows": [
+      "TestViewMixedUnionUnknownAndUnavailable"
+    ],
+    "failed_subcases": [
+      "TestViewMixedUnionUnknownAndUnavailable/literal_false"
+    ],
+    "binary_seconds": 0.128
+  },
+  "M3": {
+    "failed_rows": [
+      "TestViewMixedUnionUnknownAndUnavailable"
+    ],
+    "failed_subcases": [
+      "TestViewMixedUnionUnknownAndUnavailable/missing_adapter",
+      "TestViewMixedUnionUnknownAndUnavailable/missing_contract"
+    ],
+    "binary_seconds": 0.129
+  },
+  "M4": {
+    "failed_rows": [],
+    "failed_subcases": [],
+    "binary_seconds": 0.123
+  },
+  "P1": {
+    "failed_rows": [
+      "TestViewMixedUnionUnknownAndUnavailable"
+    ],
+    "failed_subcases": [
+      "TestViewMixedUnionUnknownAndUnavailable/unknown",
+      "TestViewMixedUnionUnknownAndUnavailable/missing_adapter",
+      "TestViewMixedUnionUnknownAndUnavailable/missing_contract",
+      "TestViewMixedUnionUnknownAndUnavailable/null_is_not_undefined",
+      "TestViewMixedUnionUnknownAndUnavailable/literal_false"
+    ],
+    "binary_seconds": 0.126
+  }
+}

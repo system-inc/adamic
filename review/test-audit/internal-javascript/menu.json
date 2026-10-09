@@ -1,0 +1,22 @@
+{
+  "M1": [
+    "member.kind !== snapshot.kind",
+    "member.kind === snapshot.kind"
+  ],
+  "M2": [
+    "  if (member.literal && snapshot.value !== member.value) continue;\n",
+    ""
+  ],
+  "M3": [
+    "  if (['object', 'array', 'Map', 'function'].includes(member.kind)) {\n   if (!member.contract || match === undefined || !match(member, snapshot)) continue;\n  }\n",
+    ""
+  ],
+  "M4": [
+    "  return index;",
+    "  return index + 1;"
+  ],
+  "P1": [
+    " => {\n for (let index",
+    " => {\n return undefined;\n for (let index"
+  ]
+}
