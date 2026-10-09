@@ -1,0 +1,43 @@
+[
+  {
+    "test": "TestNormalizeMatchesNode family",
+    "members": [
+      "TestNormalizeMatchesNodePoints00",
+      "TestNormalizeMatchesNodePoints01",
+      "TestNormalizeMatchesNodePoints02",
+      "TestNormalizeMatchesNodePoints03",
+      "TestNormalizeMatchesNodePoints04",
+      "TestNormalizeMatchesNodePoints05",
+      "TestNormalizeMatchesNodePoints06",
+      "TestNormalizeMatchesNodePoints07",
+      "TestNormalizeMatchesNodePoints08",
+      "TestNormalizeMatchesNodePoints09",
+      "TestNormalizeMatchesNodePoints10",
+      "TestNormalizeMatchesNodePoints11",
+      "TestNormalizeMatchesNodePoints12",
+      "TestNormalizeMatchesNodePoints13",
+      "TestNormalizeMatchesNodePoints14",
+      "TestNormalizeMatchesNodePoints15",
+      "TestNormalizeMatchesNodePoints16",
+      "TestNormalizeMatchesNodeContexts"
+    ],
+    "package": "internal/native",
+    "file": "internal/native/normalize_test.go:246",
+    "seconds": null,
+    "oracle": "external-run: Node String.prototype.normalize in NFC, NFD, NFKC and NFKD; compares complete WTF-8 output lines, stream lengths, and process success.",
+    "oracle_kind": "external-run",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "cannot-judge",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run . > review/test-audit/internal-native-normalize/baseline.log 2>&1; baseline blocker: record_test.go:242: want LeakSanitizer to catch mutant: fork/exec /tmp/adamic-gate/TestRecordMutantsUnit03overwrite-key-leaked1446908639/001/main: text file busy",
+    "reason": "Clean package baseline failed before its later 90-second timeout. The brief requires stopping on red, so no mutants, probes, or timing trials were run."
+  }
+]

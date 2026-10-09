@@ -1,0 +1,23 @@
+Before any mutant: code under test is runtime/normalize.c, adamic_string_normalize and its private normalization helpers. Oracle is Node String.prototype.normalize in four forms, run by normalizeOracle through compareStreams. No harness, oracle, or test was edited.
+Conservative source function inventory, not dynamic coverage:
+combining_class
+composite
+points_add
+decompose
+reorder
+combining_class
+compose
+size_at
+decode_at
+encode
+normalized
+composite
+emit_point
+finish_segment
+accept_point
+emit_blocks
+repeated_prefix
+memcmp
+stream
+memcmp
+form_is
