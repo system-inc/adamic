@@ -1,1 +1,0 @@
-const method = String.prototype.trim; console.log([' x '].map(method).join('|'));

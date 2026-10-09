@@ -1,5 +1,0 @@
-// The edges of how long a string can be, as V8 has them. An empty string repeats to itself however
-// many times it's asked, at once, and a pad with an empty fill is the string itself. Past V8's longest
-// string is string_too_long.a and pad_too_long.a; the exact edge is TestStringLengthLimit's.
-console.log(`[${''.repeat(1e15)}] [${''.repeat(2 ** 53)}] [${'abc'.repeat(0)}]`);
-console.log(`[${'a'.padStart(2 ** 40, '')}] [${'b'.padEnd(1e300, '')}]`);

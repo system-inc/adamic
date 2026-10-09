@@ -1,7 +1,0 @@
-Merge made by the 'ort' strategy.
- internal/lower/cycles.go               |  77 ++++++++++++++++++---
- internal/lower/memoize_capture_test.go |  30 +++++++++
- notes/memoize-capture.md               | 118 +++++++++++++++++++++++++++++++++
- 3 files changed, 214 insertions(+), 11 deletions(-)
- create mode 100644 internal/lower/memoize_capture_test.go
- create mode 100644 notes/memoize-capture.md

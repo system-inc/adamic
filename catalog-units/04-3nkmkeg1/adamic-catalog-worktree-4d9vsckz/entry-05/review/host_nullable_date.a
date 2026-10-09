@@ -1,5 +1,0 @@
-let calls = 0;
-function modified(present: boolean): Date | undefined { calls += 1; return present ? new Date(0) : undefined; }
-console.log(String(modified(true)?.getTime()));
-console.log(String(modified(false)?.getTime()));
-console.log(String(calls));

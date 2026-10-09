@@ -1,5 +1,0 @@
-{
-  "name": "react-jsx-no-comment-textnodes mutant from batch 8",
-  "from": "if(atLineStart && character === '/'",
-  "to": "if(!atLineStart && character === '/'"
-}

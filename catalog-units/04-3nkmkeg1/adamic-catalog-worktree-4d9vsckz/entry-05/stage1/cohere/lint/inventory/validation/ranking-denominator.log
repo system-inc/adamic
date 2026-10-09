@@ -1,6 +1,0 @@
-=== RUN   TestHelperRankingCountsRulesOnce
-    adamic_inventory_test.go:92: bad denominator: []main.ranking{main.ranking{Symbol:"shared.h", Package:"shared", Rules:[]string{"a", "b"}, Count:3}}
---- FAIL: TestHelperRankingCountsRulesOnce (0.00s)
-FAIL
-FAIL	command-line-arguments	0.015s
-FAIL

@@ -1,8 +1,0 @@
-// Leading trivia must stay outside each reported class.
-export const Empty = /foo[]bar/;
-export const Nested = /[a[[b[]c]]d]/v;
-export const Two = /[[][]]/v;
-export const Astral = /😀[]/;
-export const Negated = /[^]/;
-export const Escaped = /\[]/;
-export const Constructor = new RegExp("[]");

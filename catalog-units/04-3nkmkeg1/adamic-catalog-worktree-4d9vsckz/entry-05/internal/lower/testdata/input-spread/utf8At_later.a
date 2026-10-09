@@ -1,3 +1,0 @@
-import { utf8At } from 'adamic';
-const index: [number] = [1];
-utf8At('é', ...index);

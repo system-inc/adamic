@@ -1,8 +1,0 @@
---- FAIL: TestDebuggerNativeEmitsNothing (0.00s)
-    --- FAIL: TestDebuggerNativeEmitsNothing/.ts (0.04s)
-        debugger_test.go:49: debugger emitted a trap or breakpoint call: __builtin_trap(
-    --- FAIL: TestDebuggerNativeEmitsNothing/.a (0.04s)
-        debugger_test.go:49: debugger emitted a trap or breakpoint call: __builtin_trap(
-FAIL
-FAIL	github.com/system-inc/adamic/internal/oracle	0.054s
-FAIL

@@ -1,5 +1,0 @@
-{
-  "name": "react-no-is-mounted mutant from batch 8",
-  "from": "context.node(name).text !== 'isMounted'",
-  "to": "context.node(name).text === 'isMounted'"
-}

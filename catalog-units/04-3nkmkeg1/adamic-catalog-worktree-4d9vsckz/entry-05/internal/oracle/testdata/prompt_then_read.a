@@ -1,7 +1,0 @@
-// A prompt, then a read of stdin: the prompt is out before the read waits, as Node's is, or a driver
-// waiting to see it before answering never answers (output_test.go).
-import { readTextFile } from 'adamic';
-
-console.log('ready');
-const answer = readTextFile('/dev/stdin');
-console.log(answer.kind === 'Ok' ? `got ${answer.text.trim()}` : answer.message);

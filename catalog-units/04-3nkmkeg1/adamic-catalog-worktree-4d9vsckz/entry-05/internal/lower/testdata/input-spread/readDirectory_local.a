@@ -1,5 +1,0 @@
-function readDirectory(text: string): string {
-	return text;
-}
-const args: [string] = ['local'];
-console.log(readDirectory(...args));

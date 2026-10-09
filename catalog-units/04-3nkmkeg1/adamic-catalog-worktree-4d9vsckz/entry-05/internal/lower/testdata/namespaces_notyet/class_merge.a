@@ -1,3 +1,0 @@
-class Logger {}
-namespace Logger {export const level=1;}
-console.log(`${Logger.level}`);

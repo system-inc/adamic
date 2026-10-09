@@ -1,9 +1,0 @@
-{
-  "node": "v24.19.0",
-  "repositories": {
-    "typescript": ["https://github.com/microsoft/TypeScript.git", "050880ce59e30b356b686bd3144efe24f875ebc8"],
-    "mitt": ["https://github.com/developit/mitt.git", "6b41670516ed8e8b738612f60491995470aa63b3"],
-    "zod": ["https://github.com/colinhacks/zod.git", "0b216ef674e297ebe41d8bf902262e56f8755822"]
-  },
-  "driver_cases": [1, 24, 56, 61]
-}

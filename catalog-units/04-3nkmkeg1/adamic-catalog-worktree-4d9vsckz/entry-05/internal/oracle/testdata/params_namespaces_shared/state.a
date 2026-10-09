@@ -1,7 +1,0 @@
-export namespace Shared {
-    export const title = 'shared';
-    export const items: number[] = [];
-    let count = 0;
-    export function add(value: number): number { count += value; items.push(count); return count; }
-    export function read(): string { return `${title} ${count} ${items.join(',')}`; }
-}

@@ -1,3 +1,0 @@
-// new Array(length) takes an integer from 0 to 2^32 - 1; anything else throws, as in JavaScript.
-console.log(new Array<number>(3).fill(1).join(','));
-console.log(new Array<number>(2.5).fill(0).join(','));

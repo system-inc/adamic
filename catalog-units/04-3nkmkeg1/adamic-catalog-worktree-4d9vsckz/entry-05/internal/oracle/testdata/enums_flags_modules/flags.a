@@ -1,4 +1,0 @@
-export enum Flags { None = 0, A = 1 << 0, B = 1 << 1, High = 1 << 30 }
-export const enum Bits { None = 0, A = 1 << 0, B = 1 << 2 }
-export function combine(left: Flags, right: Flags): Flags { return left | right; }
-export function remove(flags: Flags): Flags { return flags & ~Flags.A; }

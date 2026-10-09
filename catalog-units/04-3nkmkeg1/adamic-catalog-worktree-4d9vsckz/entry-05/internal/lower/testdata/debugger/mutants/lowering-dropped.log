@@ -1,8 +1,0 @@
---- FAIL: TestDebuggerNativeEmitsNothing (0.00s)
-    --- FAIL: TestDebuggerNativeEmitsNothing/.ts (0.07s)
-        debugger_test.go:64: JavaScript kept 0 debugger statements, want 1
-    --- FAIL: TestDebuggerNativeEmitsNothing/.a (0.07s)
-        debugger_test.go:64: JavaScript kept 0 debugger statements, want 1
-FAIL
-FAIL	github.com/system-inc/adamic/internal/oracle	0.084s
-FAIL

@@ -1,4 +1,0 @@
-export const messageEmptyObjectPattern =
-    'This destructuring pattern is empty, so it binds nothing. It reads like an object literal but is a pattern, which is why the mistake survives review: `const {} = foo` declares no variables at all and only asserts that `foo` is not null. Name the properties being pulled out, or drop the destructuring.';
-export const messageEmptyArrayPattern =
-    'This destructuring pattern is empty, so it binds nothing. `const [] = foo` declares no variables and only forces `foo` to be iterated. Name the elements being pulled out, or drop the destructuring.';

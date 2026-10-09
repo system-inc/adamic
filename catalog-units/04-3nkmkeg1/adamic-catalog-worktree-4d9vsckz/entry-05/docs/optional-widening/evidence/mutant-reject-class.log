@@ -1,6 +1,0 @@
---- FAIL: TestOptionalWideningAllowed (0.00s)
-    --- FAIL: TestOptionalWideningAllowed/class (0.05s)
-        optional_widening_test.go:63: /tmp/adamic-gate/TestOptionalWideningAllowedclass3122577069/001/main.a:3:42: Adamic 0.1 refuses optional property y in { x: number; y?: number; } absent from structural source Point, which can hide fields; declare y on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
-FAIL
-FAIL	github.com/system-inc/adamic/internal/lower	0.057s
-FAIL

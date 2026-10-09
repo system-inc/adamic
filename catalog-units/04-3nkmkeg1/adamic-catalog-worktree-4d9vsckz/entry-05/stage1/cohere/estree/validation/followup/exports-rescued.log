@@ -1,9 +1,0 @@
-=== RUN   TestRepositoryAgreement
-    corpus_test.go:75: 46 Go-accepted/source-Node-identical repository snapshot files, 251078 bytes checked on uninstrumented source Node, sanitized native and emitted JS; refusals and mismatches remain excluded and separately reported
---- PASS: TestRepositoryAgreement (19.17s)
-=== RUN   TestDecoratedExportLibraries
-    estree_test.go:315: raw: 6 files, 6 identical, 0 differing
-    estree_test.go:315: postprocessed: 6 files, 6 identical, 0 differing
---- PASS: TestDecoratedExportLibraries (1.10s)
-PASS
-ok  	github.com/system-inc/adamic/stage1/cohere/estree	20.277s

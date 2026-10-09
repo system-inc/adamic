@@ -1,4 +1,0 @@
-witness-32.tsx exit 0 stderr ''
-witness-33.tsx exit 70 stderr 'adamic: panic: parser slice unsupported primary EndOfFile at 40 in source.tsx\n'
-witness-34.tsx exit 70 stderr 'adamic: panic: parser slice expected GreaterThanToken, got Identifier at 15 in source.tsx\n'
-witness-35.tsx exit 70 stderr 'adamic: panic: parser slice expected GreaterThanToken, got OpenBraceToken at 12 in source.tsx\n'

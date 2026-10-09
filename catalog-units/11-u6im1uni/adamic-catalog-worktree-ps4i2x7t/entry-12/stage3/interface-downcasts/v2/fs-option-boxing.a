@@ -1,5 +1,0 @@
-import {mkdtempSync, rmSync} from 'node:fs';
-const prefix = '/tmp/views-v2-fs-option-';
-const directory = mkdtempSync(prefix, {encoding: 'utf8'});
-console.log(directory.startsWith(prefix) ? 'true' : 'false');
-rmSync(directory, {recursive: true, force: true});

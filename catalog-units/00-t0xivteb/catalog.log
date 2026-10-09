@@ -2,3 +2,7 @@ target e3f2be21a5ba97d1fa9fec64088cbcd52ac03fdb
 logs /home/cloud/full-gate/out/e3f2be21a5ba-20261009T022353Z/catalog-units/00-t0xivteb/adamic-catalog-logs-prgmvfjg
 build flags: commit=e3f2be21a5ba97d1fa9fec64088cbcd52ac03fdb; nproc=64; cpu.max=max 100000; go version go1.27.1 linux/amd64; clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261); v24.19.0; ADAMIC_GATE_UNCACHED=1; go test -trimpath -count=1; native C11 strict warnings, -ffp-contract=off -fno-optimize-sibling-calls; release -O2; sanitizer -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all
 jobs 1; Go -trimpath shares only content-keyed build artifacts; test results uncached
+01 shared-slice-append: applies-and-fails-as-recorded
+01 made against=e011f8f60899586d6373a5ccb07335ad82cfbf3c
+01 wall=174.994s setup=83.588s check=84.982s cleanup=5.283s load=39.43 24.02 14.17 58/961 3202515 -> 50.81 40.62 22.66 31/1013 3257266
+total wall=175.041s load=39.43 24.02 14.17 46/904 3202371 -> 50.81 40.62 22.66 33/1013 3257267

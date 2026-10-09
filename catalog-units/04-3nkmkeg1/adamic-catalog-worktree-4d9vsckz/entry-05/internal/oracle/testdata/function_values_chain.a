@@ -1,7 +1,0 @@
-interface Chain { readonly message: string; }
-function message(value: string | Chain | undefined): string {
-    if (value === undefined) return "missing";
-    return typeof value === "string" ? value : value.message;
-}
-const read = message;
-console.log(`${read(undefined)}:${read(`plain${1}`)}:${read({ message: `chain${2}` })}`);

@@ -1,9 +1,0 @@
-class Ready {
-	static readonly label = `ready${1}`;
-	readonly count: number;
-	constructor(value?: number) {
-		this.count = arguments.length + (value ?? 0);
-	}
-}
-console.log(Ready.label);
-console.log(`${new Ready().count} ${new Ready(undefined).count} ${new Ready(7).count}`);

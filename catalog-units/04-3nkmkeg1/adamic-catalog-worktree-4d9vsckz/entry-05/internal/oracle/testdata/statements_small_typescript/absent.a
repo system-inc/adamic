@@ -1,4 +1,0 @@
-const state: { index?: number } = {};
-console.log('before');
-state.index!++;
-console.log('after');

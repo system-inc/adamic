@@ -1,9 +1,0 @@
-import { Token, Direction, Width } from './values.a';
-import type { Token as TokenType } from './values.a';
-console.log('enum entry');
-const value: TokenType.Word = Token.Alias;
-console.log(`${value} ${Token[value] ?? 'none'} ${Token.Next} ${Direction.Left} ${Width.Large}`);
-const names: readonly ('Empty' | 'Word')[] = ['Empty', 'Word'];
-for (const name of names) { console.log(`${Token[name]}`); }
-console.log(Object.keys(Token).join(','));
-console.log(Object.values(Direction).join(','));

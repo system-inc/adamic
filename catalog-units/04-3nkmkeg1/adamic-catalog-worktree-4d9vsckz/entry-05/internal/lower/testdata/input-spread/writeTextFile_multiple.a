@@ -1,4 +1,0 @@
-import { writeTextFile } from 'adamic';
-const path: [string] = ['out.txt'];
-const text: [string] = ['text'];
-writeTextFile(...path, ...text);

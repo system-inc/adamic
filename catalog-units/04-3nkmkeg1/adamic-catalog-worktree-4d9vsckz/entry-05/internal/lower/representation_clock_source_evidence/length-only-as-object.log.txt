@@ -1,9 +1,0 @@
-=== RUN   TestRepresentationClockSourceCheckedTypes
-=== PAUSE TestRepresentationClockSourceCheckedTypes
-=== CONT  TestRepresentationClockSourceCheckedTypes
-    representation_clock_source_test.go:69: lengthSource: representation = (4, true), want (0, false)
-    representation_clock_source_test.go:78: CompilerType admits Object and Closure; length-only admits Array and String; neither unresolved parameter has one ABI
---- FAIL: TestRepresentationClockSourceCheckedTypes (0.07s)
-FAIL
-FAIL	github.com/system-inc/adamic/internal/lower	0.079s
-FAIL

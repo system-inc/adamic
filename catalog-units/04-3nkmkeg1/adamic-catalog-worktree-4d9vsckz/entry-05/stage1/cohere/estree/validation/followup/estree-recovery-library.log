@@ -1,8 +1,0 @@
-=== RUN   TestRecoveryLibraryGaps
-    recovery_test.go:74: Go accepts "f<>();", pinned typescript-estree refuses
-    recovery_test.go:74: Go accepts "class C<> {}", pinned typescript-estree refuses
-    estree_test.go:315: raw: 4 files, 4 identical, 0 differing
-    estree_test.go:315: postprocessed: 4 files, 4 identical, 0 differing
---- PASS: TestRecoveryLibraryGaps (2.94s)
-PASS
-ok  	github.com/system-inc/adamic/stage1/cohere/estree	2.945s

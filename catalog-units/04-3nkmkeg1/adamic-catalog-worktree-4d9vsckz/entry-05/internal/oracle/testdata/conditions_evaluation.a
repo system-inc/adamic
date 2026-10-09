@@ -1,9 +1,0 @@
-let calls = 0;
-function read(): number { calls += 1; return calls % 2 === 0 ? 1 : NaN; }
-if (read()) { console.log('wrong'); }
-console.log(`${!read()}`);
-console.log(read() ? 'wrong' : 'false');
-while (read()) { console.log('while'); }
-for (; read();) { console.log('for'); }
-do { console.log('do'); } while (read());
-console.log(`${calls}`);

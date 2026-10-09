@@ -1,7 +1,0 @@
-# Preserve raw compiler diagnostics, including indented blank lines.
-*.log whitespace=-blank-at-eol,-blank-at-eof
-
-# Unified diff context intentionally preserves leading spaces before source tabs.
-exact-parser-enforcement.patch -whitespace
-
-count-transport-revert.patch -whitespace

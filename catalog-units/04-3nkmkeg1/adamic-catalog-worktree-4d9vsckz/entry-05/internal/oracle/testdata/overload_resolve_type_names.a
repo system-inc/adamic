@@ -1,8 +1,0 @@
-interface FileReference { readonly fileName: string; }
-function resolveTypeReferenceDirectiveNamesReusingOldState(names: readonly FileReference[], file: FileReference): number;
-function resolveTypeReferenceDirectiveNamesReusingOldState(names: readonly string[], file: string): number;
-function resolveTypeReferenceDirectiveNamesReusingOldState<T extends string | FileReference>(names: readonly T[], file: string | FileReference): number {
-    return names.length;
-}
-console.log(`${resolveTypeReferenceDirectiveNamesReusingOldState([{ fileName: 'types' }], { fileName: 'input' })}`);
-console.log(`${resolveTypeReferenceDirectiveNamesReusingOldState(['one', 'two'], 'input')}`);

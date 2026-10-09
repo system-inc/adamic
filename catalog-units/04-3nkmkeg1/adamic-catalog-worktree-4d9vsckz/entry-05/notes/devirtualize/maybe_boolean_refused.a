@@ -1,7 +1,0 @@
-interface Runner { run(value: boolean | undefined): boolean | undefined; }
-class MaybeRunner implements Runner {
-    run(value: boolean | undefined): boolean | undefined { return value; }
-}
-const exact: Runner = new MaybeRunner();
-const result = exact.run(undefined);
-console.log(result === undefined ? 'undefined' : String(result));

@@ -1,5 +1,0 @@
-{
-  "name": "no-multi-assign-option-reversed",
-  "from": "this.context.settings.read('ignorenondeclaration', 'false') !== 'true'",
-  "to": "this.context.settings.read('ignorenondeclaration', 'false') !== 'false'"
-}

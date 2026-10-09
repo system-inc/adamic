@@ -1,3 +1,0 @@
-interface TemplateStringsArray extends ReadonlyArray<string> { readonly raw: readonly string[]; }
-function read(values: TemplateStringsArray, index: number): string | undefined { return values[index]; }
-console.log('witness');

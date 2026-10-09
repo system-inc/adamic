@@ -1,3 +1,0 @@
-// Node prints NaN: ToPrimitive calls valueOf with no arguments.
-const value = { valueOf(x: number): number { return x + 1; } };
-console.log(String(+value));

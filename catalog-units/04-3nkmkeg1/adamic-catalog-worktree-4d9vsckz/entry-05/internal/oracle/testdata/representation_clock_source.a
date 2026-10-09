@@ -1,3 +1,0 @@
-interface CompilerType { readonly id: number; readonly payload: { readonly label: string }; }
-function describe<Source extends CompilerType>(source: Source): string { return `${source.id}:${source.payload.label}`; }
-console.log(describe({ id: 7, payload: { label: 'source' } }));

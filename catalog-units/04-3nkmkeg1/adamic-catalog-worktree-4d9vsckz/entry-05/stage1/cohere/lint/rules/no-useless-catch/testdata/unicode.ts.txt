@@ -1,4 +1,0 @@
-// Keep UTF-16 source positions distinct from Go byte offsets.
-const marker = "😀 café";
-try { work(); } catch (échec) { throw (échec); }
-try { work(); } catch (échec) { throw échec!; } finally { cleanup(); }

@@ -1,4 +1,0 @@
-// a-check: type error TS2345
-const method = String.prototype.replaceAll;
-console.log(`${method.call('aba', 'a', 'x')}`);
-console.log(`${method.apply('aba', ['', '-' ])}`);

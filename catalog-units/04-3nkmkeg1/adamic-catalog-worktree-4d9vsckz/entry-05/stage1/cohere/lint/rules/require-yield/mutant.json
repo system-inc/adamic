@@ -1,5 +1,0 @@
-{
-  "name": "nested generator owns outer yield",
-  "from": "].includes(this.context.node(child).kind)",
-  "to": "].includes('no boundary')"
-}

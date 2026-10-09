@@ -1,4 +1,0 @@
-const state: { index: number | undefined } = { index: undefined };
-console.log('before');
-state.index!++;
-console.log('after');

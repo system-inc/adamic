@@ -1,7 +1,0 @@
-const url = 'JaVaScRiPt:alert(1)';
-const template = `javascript:`;
-tag`javascript:`;
-tag`x${`javascript:`}y`;
-const leadingSpace = ' javascript:x';
-const longS = 'javaſcript:x';
-const escaped = '\x6aavascript:x';

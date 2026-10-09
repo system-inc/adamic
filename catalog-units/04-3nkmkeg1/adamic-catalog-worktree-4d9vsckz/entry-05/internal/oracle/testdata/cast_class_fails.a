@@ -1,8 +1,0 @@
-class Animal { readonly n = 1; }
-class Dog extends Animal { readonly d = 2; }
-class Cat extends Animal {}
-function cast(value: Animal): Dog { return value as Dog; }
-try {
-	console.log('casting');
-	console.log(`${cast(new Cat()).n}`);
-} catch { console.log('caught'); } finally { console.log('finally'); }

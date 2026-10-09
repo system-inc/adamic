@@ -1,2 +1,0 @@
-function pick(values: readonly number[] | undefined): number | undefined { return values?.["0"]; }
-console.log(`${pick([7])}`);

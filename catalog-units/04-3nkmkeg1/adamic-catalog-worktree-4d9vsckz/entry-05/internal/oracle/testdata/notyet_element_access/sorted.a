@@ -1,4 +1,0 @@
-interface MappedPosition { readonly source: string; readonly pos: number; }
-interface SortedReadonlyArray<T> extends ReadonlyArray<T> { " __sortedArrayBrand": void; }
-function read(values: SortedReadonlyArray<MappedPosition>, index: number): MappedPosition | undefined { return values[index]; }
-console.log('witness');

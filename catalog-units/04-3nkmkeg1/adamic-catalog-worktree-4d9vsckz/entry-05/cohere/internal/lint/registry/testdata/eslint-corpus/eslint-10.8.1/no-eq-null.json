@@ -1,7 +1,0 @@
-[
-{"code":"if (x === null) { }","eslint":[]},
-{"code":"if (null === f()) { }","eslint":[]},
-{"code":"if (x == null) { }","eslint":[["unexpected",4,13]]},
-{"code":"if (x != null) { }","eslint":[["unexpected",4,13]]},
-{"code":"do {} while (null == x)","eslint":[["unexpected",13,22]]}
-]

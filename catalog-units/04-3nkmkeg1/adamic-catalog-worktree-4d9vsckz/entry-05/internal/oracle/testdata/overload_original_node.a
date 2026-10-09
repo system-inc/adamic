@@ -1,4 +1,0 @@
-interface Node { readonly label: string; }
-function getOriginalNode(node: Node): Node;
-function getOriginalNode<T extends Node>(node: T | undefined): T | undefined { return node; }
-console.log(getOriginalNode({ label: 'original' }).label);

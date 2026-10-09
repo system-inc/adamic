@@ -1,5 +1,0 @@
-{
-  "name": "miss-postfix-writes",
-  "from": "node.kind === 'PostfixUnaryExpression'",
-  "to": "node.kind === 'PrefixUnaryExpression'"
-}

@@ -1,2 +1,0 @@
-import * as performance from './hoisted_provider.a';
-console.log(`${performance.pure()}`);

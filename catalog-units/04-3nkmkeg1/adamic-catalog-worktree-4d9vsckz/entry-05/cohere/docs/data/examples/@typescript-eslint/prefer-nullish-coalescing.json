@@ -1,9 +1,0 @@
-{
-    "rule": "@typescript-eslint/prefer-nullish-coalescing",
-    "assertedMessageIds": [
-        "preferNullishOverAssignment",
-        "preferNullishOverOr",
-        "preferNullishOverTernary"
-    ],
-    "assertsSuggestion": true
-}

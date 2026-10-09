@@ -1,1 +1,0 @@
-const method = Object.prototype.toString; console.log(method.call(undefined));

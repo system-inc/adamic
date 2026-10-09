@@ -1,7 +1,0 @@
-import { performance } from './barrel.a';
-function helper(): number { return performance.mark(); }
-const mark = performance.mark;
-console.log(`${performance.count}:${helper()}:${mark()}:${performance.count}`);
-console.log(`${mark === performance.mark}`);
-const structural: typeof performance = { count: 90, mark: () => 80 };
-console.log(`${structural.mark()}:${performance.mark()}:${performance.count}`);

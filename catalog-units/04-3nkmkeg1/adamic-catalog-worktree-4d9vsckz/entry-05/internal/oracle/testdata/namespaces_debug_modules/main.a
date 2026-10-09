@@ -1,6 +1,0 @@
-import { Debug as Logger } from './values.a';
-Logger.message = 'outside'.repeat(2);
-Logger.level = 3;
-console.log(Logger.read());
-Logger.update();
-console.log(`${Logger.level}:${Logger.message}`);

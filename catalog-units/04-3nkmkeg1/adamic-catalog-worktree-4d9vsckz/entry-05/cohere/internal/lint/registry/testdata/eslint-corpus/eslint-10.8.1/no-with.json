@@ -1,4 +1,0 @@
-[
-{"code":"foo.bar()","eslint":[]},
-{"code":"with(foo) { bar() }","eslint":[["unexpectedWith",0,4]]}
-]

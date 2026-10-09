@@ -1,3 +1,0 @@
-class Base { describe(): string { return `base:${this.name()}`; } name(): string { return 'b'; } }
-class Derived extends Base { snap = super.describe(); label: string = `D${1}`; name(): string { return this.label.toUpperCase(); } }
-try { const d = new Derived(); console.log(d.snap); } catch (error) { if (error instanceof Error) console.log(`caught ${error.name}`); }

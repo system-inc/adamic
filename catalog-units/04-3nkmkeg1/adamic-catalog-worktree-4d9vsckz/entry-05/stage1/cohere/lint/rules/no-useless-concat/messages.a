@@ -1,1 +1,0 @@
-export const messageUnexpectedConcat = 'These two literals are joined at runtime where the source could have written one literal. Nothing is computed between them, so the concatenation only adds an operator for a reader to follow and a chance for the two halves to drift apart.';

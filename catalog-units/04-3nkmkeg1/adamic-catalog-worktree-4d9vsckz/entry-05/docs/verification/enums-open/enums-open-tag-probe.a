@@ -1,9 +1,0 @@
-enum Kind { A, B }
-interface A { readonly kind: Kind.A; readonly value: string }
-interface B { readonly kind: Kind.B; readonly value: number }
-function numeric(): number { return 1; }
-const a: A = { kind: numeric(), value: 'text' };
-function show(value: A | B): void {
-    if (value.kind === Kind.B) { console.log(`${value.value + 1}`); }
-}
-show(a);

@@ -1,5 +1,0 @@
-{
-  "name": "empty placeholder reported",
-  "from": "node.text.indexOf('}', body) > body",
-  "to": "node.text.indexOf('}', body) >= body"
-}

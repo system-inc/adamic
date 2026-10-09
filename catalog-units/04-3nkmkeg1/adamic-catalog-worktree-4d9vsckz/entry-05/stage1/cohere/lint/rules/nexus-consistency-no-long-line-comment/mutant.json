@@ -1,5 +1,0 @@
-{
-  "name": "nexus long line comment configured threshold ignored",
-  "from": "const maximum = configured > 0 ? configured : 4;",
-  "to": "const maximum = 4;"
-}

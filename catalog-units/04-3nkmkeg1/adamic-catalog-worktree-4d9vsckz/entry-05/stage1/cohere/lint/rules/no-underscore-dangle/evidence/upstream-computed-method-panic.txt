@@ -1,3 +1,0 @@
-source const object = { [Symbol.iterator]() {} };
-options {"enforceInMethodNames":true}
-Go exit 2

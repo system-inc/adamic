@@ -1,6 +1,0 @@
-{
-  "inputChange": "return Array.isArray(value); becomes return false;",
-  "exit": 1,
-  "caught": "adapter: unreviewed uses: isArray",
-  "log": "/tmp/any-isarray-proof/body-mutant.log"
-}

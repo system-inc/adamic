@@ -1,8 +1,0 @@
-function make(seed: number): (n: number) => () => number {
- let count = seed;
- function read(n: number): number { count += n; return count; }
- return (n: number): () => number => (): number => read(n);
-}
-const first = make(2)(3);
-console.log(String(first()));
-console.log(String(first()));

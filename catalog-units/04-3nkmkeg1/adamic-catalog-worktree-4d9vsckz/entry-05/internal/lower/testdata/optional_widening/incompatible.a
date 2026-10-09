@@ -1,2 +1,0 @@
-const source = { x: 1, y: 'wrong' };
-const wider: { x: number; y?: number } = source;

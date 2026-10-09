@@ -1,1 +1,0 @@
-const method = Number.parseInt; console.log(`${method.call(null, 'ff', ...([16] as const))}`);

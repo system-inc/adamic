@@ -1,4 +1,0 @@
-// SameValue: NaN matches NaN, and -0 does not match +0, including zeros a division produces.
-console.log(`${Object.is(NaN, NaN)} ${Object.is(0 / 0, Number.NaN)} ${Object.is(NaN, 0 / 0)}`);
-console.log(`${Object.is(-0, 0)} ${Object.is(0, -0)} ${Object.is(-0, -0)} ${Object.is(0, 0)} ${Object.is(-0, +0)}`);
-console.log(`${Object.is(0 / -1, -0)} ${Object.is(0 / -1, 0)} ${Object.is(-1 * 0, -0)} ${Object.is(NaN, Infinity)}`);

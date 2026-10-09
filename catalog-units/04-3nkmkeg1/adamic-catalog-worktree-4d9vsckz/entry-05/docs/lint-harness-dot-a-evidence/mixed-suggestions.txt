@@ -1,6 +1,0 @@
-=== RUN   TestSuggestionAlongsideAutomaticFix
-    harness_test.go:166: Go, Node, emitted JavaScript, native identical: 721 bytes
-    harness_test.go:170: automatic fix remains applied while all three suggestions remain unapplied and serialized
---- PASS: TestSuggestionAlongsideAutomaticFix (24.99s)
-PASS
-ok  	github.com/system-inc/adamic/stage1/cohere/lint	25.007s

@@ -1,9 +1,0 @@
---- FAIL: TestUnitSystemHeaderProvenance (0.04s)
-    units_test.go:140: system-header provenance lost: native: compiling unit probe.c: exit status 1
-        probe.c:1:28: error: type nullability specifier '_Nullable' is a Clang extension [-Werror,-Wnullability-extension]
-            1 | struct probe_file { int (* _Nullable close)(void *); };
-              |                            ^
-        1 error generated.
-FAIL
-FAIL	github.com/system-inc/adamic/internal/native	0.051s
-FAIL

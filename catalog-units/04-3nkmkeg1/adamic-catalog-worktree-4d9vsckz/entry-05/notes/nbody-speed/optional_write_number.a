@@ -1,8 +1,0 @@
-interface Optional { amount?: number; }
-function write(value: Optional): void {
-    console.log(`${value.amount}`);
-    value.amount = 2;
-    console.log(`${value.amount}`);
-}
-write({ amount: 1 });
-write({});

@@ -1,7 +1,0 @@
-// An unresolved function value reaches the qualified namespace read.
-function read(): boolean { return Debug.isDebugging; }
-function invoke(action: () => boolean): boolean { return action(); }
-let action = (): boolean => true;
-action = read;
-console.log(`${invoke(action)}`);
-namespace Debug { export let isDebugging = false; }

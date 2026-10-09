@@ -1,2 +1,0 @@
-import { first } from './a.a';
-export function second(): number { return first(); }

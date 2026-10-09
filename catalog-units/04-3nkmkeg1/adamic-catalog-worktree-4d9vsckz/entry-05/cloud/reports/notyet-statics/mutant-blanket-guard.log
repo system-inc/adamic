@@ -1,6 +1,0 @@
---- FAIL: TestNativeAgreesWithNode (0.02s)
-    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/structural_statics_instance.a (0.04s)
-        oracle_test.go:738: Lower: /workspace/adamic/internal/oracle/testdata/structural_statics_instance.a:4:50: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet
-FAIL
-FAIL	github.com/system-inc/adamic/internal/oracle	0.077s
-FAIL

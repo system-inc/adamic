@@ -1,7 +1,0 @@
-function outer(): number {
- function write(): void { value = 9; }
- write();
- let value = 5;
- return value;
-}
-console.log(String(outer()));

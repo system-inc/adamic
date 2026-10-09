@@ -1,5 +1,0 @@
-interface Entry { readonly text: string; }
-interface ReadonlyTextRange { readonly pos: number; readonly end: number; }
-interface NodeArray<T> extends ReadonlyArray<T>, ReadonlyTextRange { readonly hasTrailingComma: boolean; readonly transformFlags: number; }
-function read(values: NodeArray<Entry>, index: number): Entry | undefined { return values[index]; }
-console.log('witness');

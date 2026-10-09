@@ -1,1 +1,0 @@
-const method = Array.prototype.indexOf; console.log(`${method.apply([1], [...([1] as const)])}`);

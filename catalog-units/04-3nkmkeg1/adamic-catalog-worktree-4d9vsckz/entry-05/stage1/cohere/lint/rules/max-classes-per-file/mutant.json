@@ -1,5 +1,0 @@
-{
-  "name": "one excess class is silently allowed",
-  "from": "if(this.count <= this.maximum) {",
-  "to": "if(this.count <= this.maximum + 1) {"
-}

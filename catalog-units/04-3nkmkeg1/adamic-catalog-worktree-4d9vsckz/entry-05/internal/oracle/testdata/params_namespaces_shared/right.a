@@ -1,3 +1,0 @@
-import { Shared } from './state.a';
-export function right(value: number): number { return Shared.add(value * 2); }
-export const addRight = Shared.add;

@@ -1,9 +1,0 @@
-// A line, then work that never ends, stopped from outside by SIGTERM, SIGINT or SIGHUP
-// (output_test.go): Node's line was written at once, and native's must come out of its buffer before
-// the signal ends it, killed by that signal as Node is.
-console.log('started, about to work for a long time');
-let spins = 0;
-while (spins >= 0) {
-	spins += 1;
-}
-console.log(`never ${spins}`);

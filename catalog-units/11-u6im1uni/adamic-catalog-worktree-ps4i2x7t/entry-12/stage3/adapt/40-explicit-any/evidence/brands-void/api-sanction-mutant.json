@@ -1,8 +1,0 @@
-{
-  "change": "Path sanction VoidKeyword becomes StringKeyword",
-  "exit": 1,
-  "errors": [
-    "unsanctioned API reference declaration: TypeAliasDeclaration:[\"ts\",\"Path\"]#0",
-    "changed sanctioned API declaration: TypeAliasDeclaration:[\"ts\",\"Path\"]#0"
-  ]
-}

@@ -1,1 +1,0 @@
-try {} catch(error) { error = 1; error ??= 2; error++; --error; (error) += 3; }

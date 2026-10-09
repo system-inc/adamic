@@ -1,5 +1,0 @@
-[
-{"code":"var a = new Date()","eslint":[]},
-{"code":"var a; if (a === new Date()) { a = false; }","eslint":[]},
-{"code":"new Date()","eslint":[["noNewStatement",0,10]]}
-]

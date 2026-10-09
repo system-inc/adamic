@@ -1,5 +1,0 @@
-=== RUN   TestTypeMemberLibraryGap
-    syntax_test.go:109: Go accepts an interface property initializer, pinned typescript-estree refuses it; the port follows Go
---- PASS: TestTypeMemberLibraryGap (0.95s)
-PASS
-ok  	github.com/system-inc/adamic/stage1/cohere/estree	0.954s

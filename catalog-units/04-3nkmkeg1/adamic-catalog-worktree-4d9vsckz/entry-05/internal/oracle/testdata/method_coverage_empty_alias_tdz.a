@@ -1,7 +1,0 @@
-function read(): number {
-    /* eslint-disable-next-line no-use-before-define -- The oracle must observe the callback alias read in its temporal dead zone even though the array is empty. */
-    return [].map(parser).length;
-}
-console.log('before');
-console.log(`${read()}`);
-const parser = parseFloat;

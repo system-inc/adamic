@@ -1,3 +1,0 @@
-import { utf8Length } from 'adamic';
-const none: [] = [];
-utf8Length(...none, 'é');

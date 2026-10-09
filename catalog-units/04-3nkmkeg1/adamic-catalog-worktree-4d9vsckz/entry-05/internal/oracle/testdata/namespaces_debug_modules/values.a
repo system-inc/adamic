@@ -1,6 +1,0 @@
-export namespace Debug {
- export let level = 1;
- export let message: string;
- export function read(): string {return `${level}:${message}`;}
- export function update(): void {level += 1; message = 'inside'.repeat(2);}
-}

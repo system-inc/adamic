@@ -1,5 +1,0 @@
-function programArguments(text: string): string {
-	return text;
-}
-const args: [string] = ['local'];
-console.log(programArguments(...args));

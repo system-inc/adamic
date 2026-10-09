@@ -1,6 +1,0 @@
-function union<T, U>(value: T): T | U { return value; }
-function optional<T>(value: T): T | undefined { return value; }
-const text: string = 'text';
-const number: number = 7;
-console.log(text);
-console.log(`${number}`);

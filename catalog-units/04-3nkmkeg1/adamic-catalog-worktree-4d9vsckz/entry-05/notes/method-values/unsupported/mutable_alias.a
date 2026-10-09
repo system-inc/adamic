@@ -1,2 +1,0 @@
-// a-check: refused a method read as a value (abs would lose its object, and this with it)
-let method = Math.abs; method = (value: number): number => value + 1; console.log(`${method(-2)}`);

@@ -1,3 +1,0 @@
-import { utf8Length } from 'adamic';
-const args: [string] = ['é'];
-utf8Length(...args);

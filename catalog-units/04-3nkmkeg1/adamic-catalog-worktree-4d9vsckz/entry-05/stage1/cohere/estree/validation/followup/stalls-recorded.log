@@ -1,6 +1,0 @@
-=== RUN   TestBoundedPortParser
-    stalls_test.go:58: all 13 recorded stalls explicitly refuse before 2s in all three port builds
-    stalls_test.go:59: three EOF recovery stalls explicitly refuse before 2s on Node, sanitized native and emitted JS
---- PASS: TestBoundedPortParser (21.86s)
-PASS
-ok  	github.com/system-inc/adamic/stage1/cohere/estree	21.871s

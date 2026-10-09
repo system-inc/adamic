@@ -1,1 +1,0 @@
-import { Buffer } from 'node:buffer'; const cases = [[], [0x61]]; for (const bytes of cases) { console.log(Buffer.from(bytes).toString('utf8')); }

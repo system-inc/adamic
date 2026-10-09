@@ -1,9 +1,0 @@
-['/tmp/wave07-underscore/oracle', '/tmp/wave07-final-corpus-manifest.txt']
-exit 0, stdout 13393646 bytes, stderr 0 bytes
-['node', '--disable-warning=ExperimentalWarning', 'oracle/node.mjs', '/workspace/adamic/stage1/cohere/lint/rules/no-underscore-dangle/profile.a', '/tmp/wave07-final-corpus-manifest.txt']
-exit 0, stdout 13393646 bytes, stderr 0 bytes
-['node', '--disable-warning=ExperimentalWarning', 'oracle/node.mjs', '/tmp/wave07-underscore/baseline/emitted.mjs', '/tmp/wave07-final-corpus-manifest.txt']
-exit 0, stdout 13393646 bytes, stderr 0 bytes
-['/tmp/wave07-underscore/baseline/native', '/tmp/wave07-final-corpus-manifest.txt']
-exit 0, stdout 13393646 bytes, stderr 0 bytes
-PASS final corpus 351 file rows; 13393646 identical bytes including all newly added .a sources

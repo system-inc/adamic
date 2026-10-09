@@ -1,9 +1,0 @@
-{
-  "file": "utilities.ts",
-  "roots": 78,
-  "code_filter": null,
-  "total": 1,
-  "diagnostics": [
-    "src/compiler/utilities.ts:11201:34: error TS2345: Argument of type 'string' is not assignable to parameter of type '{ [Symbol.replace](string: string, replacer: (substring: string, ...args: any[]) => string): string; }'."
-  ]
-}

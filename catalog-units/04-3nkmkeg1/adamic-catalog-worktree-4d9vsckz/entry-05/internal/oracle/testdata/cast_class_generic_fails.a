@@ -1,5 +1,0 @@
-class Base<T> { readonly value: T; constructor(value: T) { this.value = value; } }
-class Box<T> extends Base<T> {}
-function cast(value: Base<number>): Box<number> { return value as Box<number>; }
-console.log('casting');
-console.log(`${cast(new Base<number>(2)).value}`);

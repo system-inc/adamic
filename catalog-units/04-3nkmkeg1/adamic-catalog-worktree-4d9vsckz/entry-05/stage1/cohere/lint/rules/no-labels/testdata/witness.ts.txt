@@ -1,5 +1,0 @@
-outer: for(const row of rows) {
-    for(const cell of row) {
-        continue outer;
-    }
-}

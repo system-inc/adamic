@@ -1,6 +1,0 @@
-=== RUN   TestUnattachedDecoratorControl
-    expressions_test.go:63: Node: disabled orphan guard accepts both Go-refused files; acceptance check catches it
-    expressions_test.go:63: native: disabled orphan guard accepts both Go-refused files; acceptance check catches it
---- PASS: TestUnattachedDecoratorControl (19.59s)
-PASS
-ok  	github.com/system-inc/adamic/stage1/cohere/estree	19.599s

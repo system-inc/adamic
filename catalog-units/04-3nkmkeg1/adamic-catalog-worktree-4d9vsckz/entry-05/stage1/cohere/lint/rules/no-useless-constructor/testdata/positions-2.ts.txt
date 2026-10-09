@@ -1,4 +1,0 @@
-class D extends Base{constructor(p: A<B<C>> = make()){super(p)}}
-class C{field: <T=string>()=>T
-constructor(){}
-[0](){}}

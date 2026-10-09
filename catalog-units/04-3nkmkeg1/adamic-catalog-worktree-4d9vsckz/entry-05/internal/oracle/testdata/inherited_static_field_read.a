@@ -1,9 +1,0 @@
-// Inherited static data remains live in the parent until an own write shadows it.
-class Parent {
-	static count = 17;
-}
-class Child extends Parent {}
-
-console.log(`${Child.count}`);
-Parent.count = 18;
-console.log(`${Child.count}`);

@@ -1,2 +1,0 @@
-namespace Parser {var token: number; export function read():number{return token;}}
-console.log(`${Parser.read()}`);

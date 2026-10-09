@@ -1,0 +1,18 @@
+{
+  "number": 1,
+  "made_against": "e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+  "target": "e3f2be21a5ba97d1fa9fec64088cbcd52ac03fdb",
+  "worktree": "/home/cloud/full-gate/out/e3f2be21a5ba-20261009T022353Z/catalog-units/00-t0xivteb/adamic-catalog-worktree-4qzw4h9c/entry-01",
+  "setup_seconds": 83.58805229100108,
+  "ok": true,
+  "check_seconds": 84.98234540099656,
+  "cleanup_seconds": 5.2827004400023725,
+  "wall_seconds": 174.99414446499577,
+  "load_before": "39.43 24.02 14.17 58/961 3202515",
+  "load_after": "50.81 40.62 22.66 31/1013 3257266",
+  "messages": [
+    "01 shared-slice-append: applies-and-fails-as-recorded",
+    "01 made against=e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+    "01 wall=174.994s setup=83.588s check=84.982s cleanup=5.283s load=39.43 24.02 14.17 58/961 3202515 -> 50.81 40.62 22.66 31/1013 3257266"
+  ]
+}

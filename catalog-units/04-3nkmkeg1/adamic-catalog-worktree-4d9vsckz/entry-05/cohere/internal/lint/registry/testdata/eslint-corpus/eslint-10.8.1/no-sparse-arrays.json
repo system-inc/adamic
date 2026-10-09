@@ -1,8 +1,0 @@
-[
-{"code":"var a = [ 1, 2, ]","eslint":[]},
-{"code":"var a = [,];","eslint":[["unexpectedSparseArray",9,10]]},
-{"code":"var a = [ 1,, 2];","eslint":[["unexpectedSparseArray",12,13]]},
-{"code":"[\r\n\t/* comment */,\n// comment\n ,];","eslint":[["unexpectedSparseArray",17,18],["unexpectedSparseArray",31,32]]},
-{"code":"[(( [a,] )),,,];","eslint":[["unexpectedSparseArray",12,13],["unexpectedSparseArray",13,14]]},
-{"code":"[,(( [a,] )),,];","eslint":[["unexpectedSparseArray",1,2],["unexpectedSparseArray",13,14]]}
-]

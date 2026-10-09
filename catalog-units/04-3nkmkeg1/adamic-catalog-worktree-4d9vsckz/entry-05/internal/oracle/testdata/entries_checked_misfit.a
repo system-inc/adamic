@@ -1,6 +1,0 @@
-function enumerate(view: {readonly z: number}): void {
- Object.entries(view);
- console.log('completed');
-}
-const source = {z: 9, hidden: 'lie'};
-enumerate(source);
