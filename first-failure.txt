@@ -1,0 +1,28 @@
+FIRST FAILURE (tests, at 165.1 s):
+github.com/system-inc/adamic/stage1/cohere/json TestPortMatchesGoCohere_0338
+=== RUN   TestPortMatchesGoCohere_0338
+=== PAUSE TestPortMatchesGoCohere_0338
+=== CONT  TestPortMatchesGoCohere_0338
+    port_matches_prepared_split_test.go:117: full corpus: 3744 cases before gate sampling
+    port_matches_prepared_split_test.go:117: corpus repository: 2650 tracked JSON files; checked against Git HEAD
+    port_matches_prepared_split_test.go:117: corpus pin group provisioned: 18, SHA256 41f0e3f346ba9e6897962c730c1c5baa118755f0050b207a4187854b2378de7c
+    port_matches_prepared_split_test.go:117: corpus pin group TypeScript: 203, SHA256 46baec96d44c3d34a35a408d8de1f52474c8b42c0e52766fd2bfd1e1b971971b
+    port_matches_prepared_split_test.go:117: corpus pin group cohere: 839, SHA256 f96f53d1a186bc305fe73f8028ecd492fd70ce03df41b491276d74f405849a47
+    port_matches_prepared_split_test.go:117: corpus pin group generated: 34, SHA256 c0c29d57a98fa673fc3c3ab540ef852f64c0e3392b3382277a896c1b15adaa82
+    port_matches_prepared_split_test.go:117: gate-sample: TestPortMatchesGoCohere_0338 291/3710 files, stride 32, offset 21
+    port_matches_prepared_split_test.go:117: shard union: 325 cases exactly once across 128 shards
+    port_matches_prepared_split_test.go:595: build json_split_Go_oracle 17b8dc5ad287 hit 3.60
+    port_matches_prepared_split_test.go:602: build json_lowered_port_and_backend_sources 921d84888db9 hit 3.77
+    port_matches_prepared_split_test.go:617: build json_native_release_port 48c4eeae8f1e hit 0.13
+    port_matches_prepared_split_test.go:617: build json_native_ASan_UBSan_port 9c4f0d131a3e hit 0.09
+    top_shared_test.go:57: full corpus: 3744 cases before gate sampling
+    top_shared_test.go:57: corpus repository: 2650 tracked JSON files; checked against Git HEAD
+    top_shared_test.go:57: corpus pin group provisioned: 18, SHA256 41f0e3f346ba9e6897962c730c1c5baa118755f0050b207a4187854b2378de7c
+    top_shared_test.go:57: corpus pin group TypeScript: 203, SHA256 46baec96d44c3d34a35a408d8de1f52474c8b42c0e52766fd2bfd1e1b971971b
+    top_shared_test.go:57: corpus pin group cohere: 839, SHA256 f96f53d1a186bc305fe73f8028ecd492fd70ce03df41b491276d74f405849a47
+    top_shared_test.go:57: corpus pin group generated: 34, SHA256 c0c29d57a98fa673fc3c3ab540ef852f64c0e3392b3382277a896c1b15adaa82
+    port_matches_prepared_split_test.go:116: TestPortMatchesGoCohere (setup): 12.388s
+    port_test.go:238: shard union: 3744 cases exactly once across 2048 shards
+TestPortMatchesGoCohere_0338 exceeded its 90s deadline
+
+(box load 38.3 on 64 cores at first failure)
