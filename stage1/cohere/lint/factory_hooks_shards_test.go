@@ -5,11 +5,14 @@ import (
 	"context"
 	"crypto/sha256"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"runtime"
 	"strings"
+	"syscall"
 	"testing"
 	"time"
 
@@ -179,6 +182,44 @@ func factoryHooksPrepare(t *testing.T, mutated bool) (string, string) {
 	return directory, path
 }
 
+// Published by the serial setup test before testing releases parallel shards.
+// Shards only read these paths; they cannot initiate a shared build.
+var factoryHooksReady *factoryHooksPrepared
+
+type factoryHooksPrepared struct {
+	products       [2]factoryHooksProduct
+	javascript     [2]string
+	native, runner string
+}
+
+func factoryHooksSetup(t *testing.T) {
+	t.Helper()
+	started := time.Now()
+	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	defer cancel()
+	deadline := time.AfterFunc(90*time.Second, func() { panic("cooked: TestFactoryHooks_Setup exceeded 90s") })
+	defer deadline.Stop()
+	prepared := &factoryHooksPrepared{products: factoryHooksProducts(t)}
+	for index := range prepared.javascript {
+		prepared.javascript[index] = factoryHooksLowered(t, ctx, index)
+	}
+	prepared.native = factoryHooksNative(t, ctx, prepared.javascript[0])
+	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	prepared.runner = runner
+	if ctx.Err() != nil {
+		t.Fatalf("cooked: factory hook setup: %v", ctx.Err())
+	}
+	elapsed := time.Since(started)
+	t.Logf("TestFactoryHooks_Setup: %.3fs cooked=%t", elapsed.Seconds(), elapsed >= 60*time.Second)
+	if elapsed >= 60*time.Second {
+		t.Fatal("cooked: factory hook setup exceeds 60s budget")
+	}
+	factoryHooksReady = prepared
+}
+
 type factoryHooksProduct struct{ directory, manifest string }
 
 func factoryHooksProducts(t *testing.T) [2]factoryHooksProduct {
@@ -201,7 +242,7 @@ func factoryHooksProducts(t *testing.T) [2]factoryHooksProduct {
 	return products
 }
 
-func factoryHooksLowered(t *testing.T, index int) string {
+func factoryHooksLowered(t *testing.T, ctx context.Context, index int) string {
 	t.Helper()
 	value := shared(fmt.Sprintf("factory-hooks-lowered-%d", index), func(value *sharedValue) {
 		p := factoryHooksProducts(t)[index]
@@ -223,7 +264,7 @@ func factoryHooksLowered(t *testing.T, index int) string {
 			if err != nil {
 				return err
 			}
-			lowered, err := lower.Lower(context.Background(), program)
+			lowered, err := lower.Lower(ctx, program)
 			if err != nil {
 				return err
 			}
@@ -240,10 +281,10 @@ func factoryHooksLowered(t *testing.T, index int) string {
 	return value.path
 }
 
-func factoryHooksNative(t *testing.T) string {
+func factoryHooksNative(t *testing.T, ctx context.Context, javascript string) string {
 	t.Helper()
 	value := shared("factory-hooks-native", func(value *sharedValue) {
-		source, err := os.ReadFile(filepath.Join(filepath.Dir(factoryHooksLowered(t, 0)), "lint.c"))
+		source, err := os.ReadFile(filepath.Join(filepath.Dir(javascript), "lint.c"))
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -252,7 +293,7 @@ func factoryHooksNative(t *testing.T) string {
 			Flags:     append(native.Flags(options), fmt.Sprintf("source=%x", sha256.Sum256(source)), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT")),
 			Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version")}}
 		binary := buildcache.Product(t, inputs, func(destination string) error {
-			return native.Build(string(source), filepath.Join(destination, "scanner"), options)
+			return factoryHooksBuildNative(ctx, filepath.Join(filepath.Dir(javascript), "lint.c"), filepath.Join(destination, "scanner"))
 		})
 		value.path = filepath.Join(binary, "scanner")
 	})
@@ -262,15 +303,76 @@ func factoryHooksNative(t *testing.T) string {
 	return value.path
 }
 
-// Each build product is a separately timed setup unit, built once across the family.
-// Not parallel: fixture registries and cached build products are prepared before the parallel shards.
-func TestFactoryHooksLowered_000(t *testing.T) { factoryHooksLowered(t, 0) }
+// Test-only subprocess entry: the setup owns its deadline and process group.
+func TestFactoryHooks_NativeBuildWorker(t *testing.T) {
+	t.Parallel()
+	sourcePath := os.Getenv("ADAMIC_FACTORY_HOOKS_NATIVE_SOURCE")
+	if sourcePath == "" {
+		t.Skip("invoked only by TestFactoryHooks_Setup")
+	}
+	source, err := os.ReadFile(sourcePath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := native.Build(string(source), os.Getenv("ADAMIC_FACTORY_HOOKS_NATIVE_OUTPUT"), native.Options{Sanitize: true}); err != nil {
+		t.Fatal(err)
+	}
+}
 
-// Not parallel: fixture registries and cached build products are prepared before the parallel shards.
-func TestFactoryHooksLowered_001(t *testing.T) { factoryHooksLowered(t, 1) }
+func factoryHooksCommand(ctx context.Context, name string, args ...string) *exec.Cmd {
+	command := exec.CommandContext(ctx, name, args...)
+	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+	command.Cancel = func() error {
+		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+		if errors.Is(err, syscall.ESRCH) {
+			return os.ErrProcessDone
+		}
+		return err
+	}
+	command.WaitDelay = time.Second
+	return command
+}
 
-// Not parallel: fixture registries and cached build products are prepared before the parallel shards.
-func TestFactoryHooksNativeSetup(t *testing.T) { factoryHooksNative(t) }
+func factoryHooksBuildNative(ctx context.Context, source, output string) error {
+	executable, err := os.Executable()
+	if err != nil {
+		return err
+	}
+	command := factoryHooksCommand(ctx, executable, "-test.run=^TestFactoryHooks_NativeBuildWorker$", "-test.timeout=90s")
+	command.Env = append(os.Environ(), "ADAMIC_FACTORY_HOOKS_NATIVE_SOURCE="+source, "ADAMIC_FACTORY_HOOKS_NATIVE_OUTPUT="+output)
+	data, err := command.CombinedOutput()
+	if err != nil {
+		return fmt.Errorf("sanitized native build: %w\n%s", err, data)
+	}
+	return nil
+}
+
+func factoryHooksExecute(t *testing.T, ctx context.Context, name string, args ...string) execution {
+	t.Helper()
+	command := factoryHooksCommand(ctx, name, args...)
+	output, err := os.CreateTemp(t.TempDir(), "stdout-")
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer output.Close()
+	command.Stdout = output
+	var stderr bytes.Buffer
+	command.Stderr = &stderr
+	started := time.Now()
+	err = command.Run()
+	elapsed := time.Since(started)
+	if ctx.Err() != nil {
+		t.Fatalf("cooked: shard exceeded 90s: %v", ctx.Err())
+	}
+	if err != nil || len(commandDiagnostics(name, stderr.Bytes())) != 0 {
+		t.Fatalf("%s %v: %v\n%s", name, args, err, &stderr)
+	}
+	data, err := os.ReadFile(output.Name())
+	if err != nil {
+		t.Fatal(err)
+	}
+	return execution{output: data, duration: elapsed}
+}
 
 func factoryHooksVariant(mutated bool) int {
 	if mutated {
@@ -281,24 +383,27 @@ func factoryHooksVariant(mutated bool) int {
 
 func factoryHooksShard(t *testing.T, index int) {
 	t.Helper()
-	products := factoryHooksProducts(t)
+	prepared := factoryHooksReady
+	if prepared == nil {
+		t.Fatal("shared setup is absent: select TestFactoryHooks_Setup along with the shard")
+	}
+	// The shard deadline starts only after setup has published every immutable product.
+	started := time.Now()
+	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	defer cancel()
 	for _, c := range factoryHooksSlice(index) {
-		p := products[0]
+		p := prepared.products[0]
 		if c.mutated {
-			p = products[1]
+			p = prepared.products[1]
 		}
 		var result execution
 		switch c.backend {
 		case "node":
-			runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
-			if err != nil {
-				t.Fatal(err)
-			}
-			result = execute(t, "", "node", "--disable-warning=ExperimentalWarning", runner, filepath.Join(p.directory, "main.ts"), "--manifest", p.manifest)
+			result = factoryHooksExecute(t, ctx, "node", "--disable-warning=ExperimentalWarning", prepared.runner, filepath.Join(p.directory, "main.ts"), "--manifest", p.manifest)
 		case "javascript":
-			result = runJavaScript(t, factoryHooksLowered(t, factoryHooksVariant(c.mutated)), p.manifest, false)
+			result = factoryHooksExecute(t, ctx, "node", "--disable-warning=ExperimentalWarning", prepared.runner, prepared.javascript[factoryHooksVariant(c.mutated)], "--manifest", p.manifest)
 		case "native":
-			result = execute(t, "", factoryHooksNative(t), "--manifest", p.manifest)
+			result = factoryHooksExecute(t, ctx, prepared.native, "--manifest", p.manifest)
 		default:
 			t.Fatalf("unknown backend %s", c.backend)
 		}
@@ -307,7 +412,13 @@ func factoryHooksShard(t *testing.T, index int) {
 		}
 		t.Logf("%s: %.3fs", c.name, result.duration.Seconds())
 	}
+	elapsed := time.Since(started)
+	t.Logf("shard-%03d: %.3fs cooked=%t", index, elapsed.Seconds(), elapsed >= 60*time.Second)
+	if elapsed >= 60*time.Second {
+		t.Fatal("cooked: shard exceeds 60s budget")
+	}
 }
+
 func TestFactoryHooks_000(t *testing.T) {
 	t.Parallel()
 	factoryHooksShard(t, 0)
