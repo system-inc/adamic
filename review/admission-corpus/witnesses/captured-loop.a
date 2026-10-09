@@ -1,1 +1,1 @@
-function run():void {const values=[{value:1}]; const count=()=>values.length; for(const value of values){console.log(value.value);} console.log(count());} run();
+function run():void {const values=[{value:1}]; const count=()=>values.length; for(const value of values){console.log(`${value.value}`);} console.log(`${count()}`);} run();
