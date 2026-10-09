@@ -76,6 +76,7 @@ func stableSplitC(source string) (string, []compilationUnit, error) {
 		return out.String()
 	}
 	definitions := map[string]*unitDefinition{}
+	sharedClosurePrototypes := map[string]bool{}
 	common := "#ifndef ADAMIC_UNITS_H\n#define ADAMIC_UNITS_H\n"
 	previous := 0
 	for _, d := range declarations {
@@ -108,6 +109,20 @@ func stableSplitC(source string) (string, []compilationUnit, error) {
 			declaration = "extern " + rewrite(d.tokens[1:limit]) + ";\n"
 			if d.initializer < 0 && strings.Contains(declaration, "(") {
 				declaration = rewrite(d.tokens[1:limit]) + ";\n"
+			}
+		}
+		// A function-type typedef is a prototype, not a shared state object.
+		// Expand the two closure ABIs to the same spelling used by definitions,
+		// then give all split units one declaration through units.h.
+		if !d.function && d.initializer < 0 && len(tokens) == 3 {
+			switch tokens[0].text {
+			case "adamic_code_function", "adamic_counted_code_function":
+				count := ""
+				if tokens[0].text == "adamic_counted_code_function" {
+					count = ", size_t argument_count"
+				}
+				declaration = fmt.Sprintf("adamic_value %s(adamic_closure *self, adamic_value *arguments%s);\n", names[d.name], count)
+				sharedClosurePrototypes[d.name] = true
 			}
 		}
 		if old, ok := definitions[d.name]; ok {
@@ -311,6 +326,11 @@ func stableSplitC(source string) (string, []compilationUnit, error) {
 			}
 		}
 	}
+	for _, name := range ordered {
+		if sharedClosurePrototypes[name] {
+			common += definitions[name].declaration
+		}
+	}
 	bodies := map[string]string{}
 	needed := map[string]map[string]bool{}
 	for _, name := range ordered {
@@ -335,7 +355,9 @@ func stableSplitC(source string) (string, []compilationUnit, error) {
 		header.WriteString("#include \"units.h\"\n")
 		for _, name := range ordered {
 			if needed[unitName][name] {
-				header.WriteString(definitions[name].declaration)
+				if !sharedClosurePrototypes[name] {
+					header.WriteString(definitions[name].declaration)
+				}
 				if name != "main" {
 					fmt.Fprintf(&header, "extern const char %s;\n", declarationGuard(name, definitions[name].declaration))
 				}

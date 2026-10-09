@@ -358,3 +358,48 @@ func TestForwarderGlobalsDoNotMigrate(t *testing.T) {
 		t.Fatalf("forwarder global migrated: %v", changed)
 	}
 }
+
+// Function-type prototypes and explicit definitions share an ABI, including
+// optional argument counts. Only the shared header may redeclare these functions.
+func TestSplitClosurePrototypesUseSharedHeader(t *testing.T) {
+	for _, counted := range []bool{false, true} {
+		alias, count := "adamic_code_function", ""
+		if counted {
+			alias, count = "adamic_counted_code_function", ", size_t argument_count"
+		}
+		source := fmt.Sprintf(`#include "adamic.h"
+static %s adamic_function_reader;
+// adamic-module "reader.a"
+static adamic_value adamic_function_reader(adamic_closure *self, adamic_value *arguments%s) { return arguments[0]; }
+// adamic-module "caller.a"
+static adamic_value call_reader(adamic_closure *self, adamic_value *arguments%s) { return adamic_function_reader(self, arguments%s); }
+int main(void) { return 0; }
+`, alias, count, count, map[bool]string{false: "", true: ", argument_count"}[counted])
+		header, units, err := splitC(source)
+		if err != nil {
+			t.Fatal(err)
+		}
+		declaration := fmt.Sprintf("adamic_value adamic_unit_adamic_function_reader(adamic_closure *self, adamic_value *arguments%s);\n", count)
+		if strings.Count(header, declaration) != 1 {
+			t.Fatalf("want one shared prototype: %s", header)
+		}
+		definitions := 0
+		for _, unit := range units {
+			if strings.Contains(unit.source, declaration) || !strings.HasPrefix(unit.source, "#include \"units.h\"\n") {
+				t.Fatalf("unit %s has a private closure prototype", unit.name)
+			}
+			definitions += strings.Count(unit.source, strings.TrimSuffix(declaration, ";\n")+" {")
+		}
+		if definitions != 1 {
+			t.Fatalf("want one definition, got %d", definitions)
+		}
+		wrongCount := ""
+		if !counted {
+			wrongCount = ", size_t argument_count"
+		}
+		wrong := strings.Replace(source, "adamic_value adamic_function_reader(adamic_closure *self, adamic_value *arguments"+count+")", "adamic_value adamic_function_reader(adamic_closure *self, adamic_value *arguments"+wrongCount+")", 1)
+		if _, _, err := splitC(wrong); err == nil || !strings.Contains(err.Error(), "conflicting declaration") {
+			t.Fatalf("ABI mismatch survived: %v", err)
+		}
+	}
+}
