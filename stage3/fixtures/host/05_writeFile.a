@@ -1,5 +1,10 @@
-// From TypeScript 6.0.3, src/compiler/sys.ts:1466
-// From TypeScript 6.0.3, src/compiler/sys.ts:1819
+// a-check: checked
+// From TypeScript 6.0.3, src/compiler/sys.ts:1466; adapted line 1467
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/sys.ts:1819; adapted line 1820
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/hostErrors.ts:2 (added by adaptation 47); adapted line 2
+// Adaptations: 47-host-errors
 // Census reason: TS2591
 
 import * as _fs from "node:fs";
@@ -27,6 +32,10 @@ function writeFile(fileName: string, data: string, writeByteOrderMark?: boolean)
     }
 }
 
+export function errorCode(error: unknown): string | undefined {
+    return typeof error === "object" && error !== null && "code" in error && typeof error.code === "string" ? error.code : undefined;
+}
+
 try {
     const file = _path.join(scratch, "out.js");
     writeFile(file, "héllo 🌍\n", true);
@@ -34,7 +43,7 @@ try {
     writeFile(file, "x");
     console.log(_fs.readFileSync(file).toString("hex"));
     try { writeFile(_path.join(scratch, "missing", "out.js"), "x"); }
-    catch (e) { console.log((e as NodeJS.ErrnoException).code); }
+    catch (e) { console.log(errorCode(e)); }
 }
 finally {
     _fs.rmSync(scratch, { recursive: true, force: true });
