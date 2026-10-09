@@ -1,10 +1,21 @@
-Measurements on origin/main a467d1a1; cgroup CPU quota 4.
-Serial Go compile, initially empty shared GOCACHE:
+Measurements on origin/main a467d1a1; four-CPU quota.
+Serial compilation uses one initially empty shared GOCACHE, package order lint, tsprinter, markdownblocks.
 lint wall=160.834 user=480.411 sys=57.865
 tsprinter wall=8.064 user=11.748 sys=2.945
 markdownblocks wall=6.492 user=12.319 sys=1.729
 
-Product results so far:
+Product results so far (fresh cache for each):
 {"task": "fq0nrr3", "package": "lint", "product": "CompilerAgreementReleaseNative", "wall": 79.64058822599998, "exit": 0}
+{"task": "fq0nrr3", "package": "lint", "product": "CompilerAgreementSanitizedNative", "wall": 94.65787202800004, "exit": 1}
+{"task": "fq0nrr3", "package": "lint", "product": "DecodedOptionsNative", "wall": 80.61694802, "exit": 0}
+{"task": "fq0nrr3", "package": "lint", "product": "NodeTableCapture", "wall": 67.66861923600004, "exit": 0}
+{"task": "fq0nrr3", "package": "lint", "product": "NodeTableEmitted", "wall": 60.03280874199993, "exit": 0}
+{"task": "fq0nrr3", "package": "lint", "product": "NodeTableNative", "wall": 67.99742962599998, "exit": 0}
+{"task": "fq0nrr3", "package": "lint", "product": "ProfileCompilationC", "wall": 63.72461402199997, "exit": 0}
+{"task": "fq0nrr3", "package": "lint", "product": "ProfileCompilationCounted", "wall": 75.93728544600003, "exit": 0}
+{"task": "fq0nrr3", "package": "lint", "product": "ProfileCompilationOracleOutputs", "wall": 88.52541111899995, "exit": 0}
+{"task": "fq0nrr3", "package": "lint", "product": "ProfileCompilationScanner", "wall": 80.98758218099988, "exit": 0}
+{"task": "fq0nrr3", "package": "lint", "product": "ShardsAgreeCapture", "wall": 27.565030649999926, "exit": 0}
+{"task": "fq0nrr3", "package": "lint", "product": "ShardsAgreeNative", "wall": 85.49374783500002, "exit": 0}
 
-One-product-at-a-time measurement is in progress. No test changes.
+Measurement in progress. No test changes. Current rule: one unit, timeout 90s.
