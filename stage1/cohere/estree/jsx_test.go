@@ -36,6 +36,7 @@ const testJSXAgreementShards = 32
 
 // Shard counts stay fixed as cases grow; keys are this file, mode and source-case identity.
 // ADAMIC_TEST_SHARD=i/n selects shards; unset runs every JSX case.
+// Not parallel: miscBuild writes the shared adamic-build and adamic/runtime cache directories
 func TestJSXAgreement(t *testing.T) {
 	finishSetup := miscStart(t)
 	cases := jsxCases()
@@ -60,6 +61,7 @@ func TestJSXAgreement(t *testing.T) {
 }
 
 func TestJSXAgreementPlantedDisagreement(t *testing.T) {
+	t.Parallel()
 	miscPlantedProof(t, testJSXAgreementShards, miscIDs("stage1/cohere/estree/jsx_test.go:jsx", jsxCases()), func(planted bool) error {
 		got := []byte("agree")
 		if planted {
@@ -70,6 +72,7 @@ func TestJSXAgreementPlantedDisagreement(t *testing.T) {
 }
 
 func TestJSXOriginalLibraries(t *testing.T) {
+	t.Parallel()
 	library := os.Getenv("ADAMIC_ESTREE_LIBRARY")
 	if library == "" {
 		t.Skip("set ADAMIC_ESTREE_LIBRARY to an npm install of @typescript-eslint/typescript-estree@8.65.0, typescript@6.0.3 and prettier@3.9.6; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it")
@@ -144,6 +147,7 @@ const testJSXMutantShards = 32
 
 // Shard counts stay fixed as cases grow; keys are this file, mode and source-case identity.
 // ADAMIC_TEST_SHARD=i/n selects shards; unset runs every JSX mutant case.
+// Not parallel: miscBuild writes the shared adamic-build and adamic/runtime cache directories
 func TestJSXMutant(t *testing.T) {
 	finishSetup := miscStart(t)
 	cases := jsxCases()
@@ -165,6 +169,7 @@ func TestJSXMutant(t *testing.T) {
 }
 
 func TestJSXMutantPlantedSurvivor(t *testing.T) {
+	t.Parallel()
 	miscPlantedProof(t, testJSXMutantShards, miscIDs("stage1/cohere/estree/jsx_test.go:jsx-mutant", jsxCases()), func(planted bool) error {
 		got := []byte("disagree")
 		if planted {
