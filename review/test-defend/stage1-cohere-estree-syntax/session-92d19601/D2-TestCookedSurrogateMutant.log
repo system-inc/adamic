@@ -1,0 +1,10 @@
+{"Time":"2026-10-09T15:49:38.488016687Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T15:49:38.500303114Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestCookedSurrogateMutant"}
+{"Time":"2026-10-09T15:49:38.500489725Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestCookedSurrogateMutant","Output":"=== RUN   TestCookedSurrogateMutant\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:50:06.397402489Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestCookedSurrogateMutant","Output":"    utf8_test.go:38: Node: line 8: Go \"2 .value string \\\\ufffd\\\\ufffd\\\\ufffda\\\\ufffd\\\\ufffd\\\\ufffd\", port \"2 .value string \\\\ufffda\\\\ufffd\"\n"}
+{"Time":"2026-10-09T15:50:06.397468508Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestCookedSurrogateMutant","Output":"    utf8_test.go:38: native: line 8: Go \"2 .value string \\\\ufffd\\\\ufffd\\\\ufffda\\\\ufffd\\\\ufffd\\\\ufffd\", port \"2 .value string \\\\ufffda\\\\ufffd\"\n"}
+{"Time":"2026-10-09T15:50:06.399828127Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestCookedSurrogateMutant","Output":"--- PASS: TestCookedSurrogateMutant (27.90s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:50:06.399866926Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestCookedSurrogateMutant","Elapsed":27.9}
+{"Time":"2026-10-09T15:50:06.399914718Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:50:06.404240554Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/estree\t27.916s\n"}
+{"Time":"2026-10-09T15:50:06.404283179Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":27.916}

@@ -1,0 +1,18 @@
+[
+  {
+    "mutant": "D1",
+    "file": "stage1/cohere/estree/sourceReferences.ts",
+    "from": "return 'invalid reference resolution mode';",
+    "to": "",
+    "change": "Drop the invalid reference resolution-mode refusal statement.",
+    "file_line": "stage1/cohere/estree/sourceReferences.ts:79"
+  },
+  {
+    "mutant": "D2",
+    "file": "stage1/cohere/estree/protocol.ts",
+    "from": "(unit >= 0xdc00 &&\n                unit <= 0xdfff &&",
+    "to": "(unit >= 0xdc00 &&\n                unit < 0xdfff &&",
+    "change": "Off by one: exclude U+DFFF from the low-surrogate interval.",
+    "file_line": "stage1/cohere/estree/protocol.ts:13"
+  }
+]

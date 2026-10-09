@@ -1,0 +1,326 @@
+[
+  {
+    "mutant": "D1",
+    "row": "TestSyntaxRefusals",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestSyntaxRefusals$"
+    ],
+    "cache": "/tmp/defend-estree/cache/D1",
+    "seconds": 34.117,
+    "exit": 1,
+    "failures": [
+      "TestSyntaxRefusals"
+    ],
+    "output": [
+      "syntax_test.go:54: [node --disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /workspace/adamic/stage1/cohere/estree/main.ts /tmp/adamic-gate/TestSyntaxRefusals2275916561/001/0002.ts]: timeout=false exit=<nil> stdout=487 stderr="
+    ]
+  },
+  {
+    "mutant": "D1",
+    "row": "TestCookedSurrogates",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestCookedSurrogates$"
+    ],
+    "cache": "/tmp/defend-estree/cache/D1",
+    "seconds": 26.717,
+    "exit": 0,
+    "failures": [],
+    "output": []
+  },
+  {
+    "mutant": "D1",
+    "row": "TestSyntaxGrammar",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestSyntaxGrammar$"
+    ],
+    "cache": "/tmp/defend-estree/cache/D1",
+    "seconds": 26.647,
+    "exit": 0,
+    "failures": [],
+    "output": []
+  },
+  {
+    "mutant": "D1",
+    "row": "TestGeneratedAgreement",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestGeneratedAgreement$"
+    ],
+    "cache": "/tmp/defend-estree/cache/D1",
+    "seconds": 28.692,
+    "exit": 0,
+    "failures": [],
+    "output": []
+  },
+  {
+    "mutant": "D1",
+    "row": "TestThroughput",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestThroughput$"
+    ],
+    "cache": "/tmp/defend-estree/cache/D1",
+    "seconds": 34.736,
+    "exit": 0,
+    "failures": [],
+    "output": []
+  },
+  {
+    "mutant": "D1",
+    "row": "TestLossyInputRefusal",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestLossyInputRefusal$"
+    ],
+    "cache": "/tmp/defend-estree/cache/D1",
+    "seconds": 28.45,
+    "exit": 0,
+    "failures": [],
+    "output": []
+  },
+  {
+    "mutant": "D1",
+    "row": "TestCookedSurrogateMutant",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestCookedSurrogateMutant$"
+    ],
+    "cache": "/tmp/defend-estree/cache/D1",
+    "seconds": 28.431,
+    "exit": 0,
+    "failures": [],
+    "output": [
+      "utf8_test.go:38: Node: line 8: Go \"2 .value string \\\\ufffd\\\\ufffd\\\\ufffda\\\\ufffd\\\\ufffd\\\\ufffd\", port \"2 .value string \\\\ufffda\\\\ufffd\"",
+      "utf8_test.go:38: native: line 8: Go \"2 .value string \\\\ufffd\\\\ufffd\\\\ufffda\\\\ufffd\\\\ufffd\\\\ufffd\", port \"2 .value string \\\\ufffda\\\\ufffd\""
+    ]
+  },
+  {
+    "mutant": "D2",
+    "row": "TestSyntaxRefusals",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestSyntaxRefusals$"
+    ],
+    "cache": "/tmp/defend-estree/cache/D2",
+    "seconds": 31.668,
+    "exit": 0,
+    "failures": [],
+    "output": [
+      "syntax_test.go:57: three Go refusals explicitly refused with empty stdout on all builds"
+    ]
+  },
+  {
+    "mutant": "D2",
+    "row": "TestCookedSurrogates",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestCookedSurrogates$"
+    ],
+    "cache": "/tmp/defend-estree/cache/D2",
+    "seconds": 26.48,
+    "exit": 1,
+    "failures": [
+      "TestCookedSurrogates"
+    ],
+    "output": [
+      "utf8_test.go:22: Node: line 34: Go \"2 .value string \\\\ufffd\\\\ufffd\\\\ufffd\", port \"2 .value string \\\\udfff\""
+    ]
+  },
+  {
+    "mutant": "D2",
+    "row": "TestSyntaxGrammar",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestSyntaxGrammar$"
+    ],
+    "cache": "/tmp/defend-estree/cache/D2",
+    "seconds": 26.66,
+    "exit": 0,
+    "failures": [],
+    "output": []
+  },
+  {
+    "mutant": "D2",
+    "row": "TestGeneratedAgreement",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestGeneratedAgreement$"
+    ],
+    "cache": "/tmp/defend-estree/cache/D2",
+    "seconds": 29.506,
+    "exit": 0,
+    "failures": [],
+    "output": []
+  },
+  {
+    "mutant": "D2",
+    "row": "TestThroughput",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestThroughput$"
+    ],
+    "cache": "/tmp/defend-estree/cache/D2",
+    "seconds": 35.197,
+    "exit": 0,
+    "failures": [],
+    "output": []
+  },
+  {
+    "mutant": "D2",
+    "row": "TestLossyInputRefusal",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestLossyInputRefusal$"
+    ],
+    "cache": "/tmp/defend-estree/cache/D2",
+    "seconds": 30.5,
+    "exit": 0,
+    "failures": [],
+    "output": []
+  },
+  {
+    "mutant": "D2",
+    "row": "TestCookedSurrogateMutant",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestCookedSurrogateMutant$"
+    ],
+    "cache": "/tmp/defend-estree/cache/D2",
+    "seconds": 30.205,
+    "exit": 0,
+    "failures": [],
+    "output": [
+      "utf8_test.go:38: Node: line 8: Go \"2 .value string \\\\ufffd\\\\ufffd\\\\ufffda\\\\ufffd\\\\ufffd\\\\ufffd\", port \"2 .value string \\\\ufffda\\\\ufffd\"",
+      "utf8_test.go:38: native: line 8: Go \"2 .value string \\\\ufffd\\\\ufffd\\\\ufffda\\\\ufffd\\\\ufffd\\\\ufffd\", port \"2 .value string \\\\ufffda\\\\ufffd\""
+    ]
+  }
+]

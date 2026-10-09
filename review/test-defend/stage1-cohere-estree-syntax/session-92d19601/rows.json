@@ -1,0 +1,66 @@
+[
+  {
+    "test": "TestSyntaxRefusals",
+    "package": "stage1/cohere/estree",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestSyntaxGrammar"
+    ],
+    "defense": "cannot-judge",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "stage1/cohere/estree/sourceReferences.ts:79",
+        "change": "Drop the invalid reference resolution-mode refusal statement.",
+        "rows_failed": [
+          "TestSyntaxRefusals"
+        ]
+      }
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestSyntaxRefusals$'; syntax_test.go:54: [node --disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /workspace/adamic/stage1/cohere/estree/main.ts /tmp/adamic-gate/TestSyntaxRefusals2275916561/001/0002.ts]: timeout=false exit=<nil> stdout=487 stderr=",
+    "bounded": true,
+    "bounded_unique_mutant": "D1",
+    "rows_passed": [
+      "TestCookedSurrogates",
+      "TestSyntaxGrammar",
+      "TestGeneratedAgreement",
+      "TestThroughput",
+      "TestLossyInputRefusal",
+      "TestCookedSurrogateMutant"
+    ],
+    "reason": "Unique failure in seven reached checks; full-package uniqueness unknown after package exceeded 90 seconds. Keep pending full replay."
+  },
+  {
+    "test": "TestCookedSurrogates",
+    "package": "stage1/cohere/estree",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestSyntaxGrammar"
+    ],
+    "defense": "cannot-judge",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D2",
+        "file_line": "stage1/cohere/estree/protocol.ts:13",
+        "change": "Off by one: exclude U+DFFF from the low-surrogate interval.",
+        "rows_failed": [
+          "TestCookedSurrogates"
+        ]
+      }
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestCookedSurrogates$'; utf8_test.go:22: Node: line 34: Go \"2 .value string \\\\ufffd\\\\ufffd\\\\ufffd\", port \"2 .value string \\\\udfff\"",
+    "bounded": true,
+    "bounded_unique_mutant": "D2",
+    "rows_passed": [
+      "TestSyntaxRefusals",
+      "TestSyntaxGrammar",
+      "TestGeneratedAgreement",
+      "TestThroughput",
+      "TestLossyInputRefusal",
+      "TestCookedSurrogateMutant"
+    ],
+    "reason": "Unique failure in seven reached checks; full-package uniqueness unknown after package exceeded 90 seconds. Keep pending full replay."
+  }
+]

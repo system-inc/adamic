@@ -1,0 +1,406 @@
+[
+  {
+    "test": "TestSyntaxGrammar",
+    "package": "stage1/cohere/estree",
+    "file": "stage1/cohere/estree/syntax_test.go",
+    "seconds": 23.798,
+    "oracle": "Go cohere canonical bytes compared with source Node, sanitized native and emitted JavaScript.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M2",
+      "M4"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M4: syntax_test.go:32: native: line 137: Go \"stripped type T=ReturnType<<U>(x:U)=>number>; const b=foo<<U>(x:U)=>number>(()=>1);\", port \"stripped type T=ReturnType<<U>(x:U)=>number>; const b=foo<<U>(x:U)=>number>(()=>1)\"",
+    "verdict": "overlapping",
+    "subsumed_by": [
+      "TestSyntaxRefusals",
+      "TestThroughput",
+      "TestCookedSurrogates"
+    ],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P1",
+      "P2"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestSyntaxGrammar",
+      "TestSyntaxRefusals",
+      "TestThroughput",
+      "TestCookedSurrogates",
+      "TestLossyInputRefusal"
+    ],
+    "evidence": "selector /tmp/u089/mutant=M4; ADAMIC_NATIVE_SPLIT=1 ADAMIC_NATIVE_JOBS=4 ADAMIC_ESTREE_LIBRARY=/tmp/u089/library ADAMIC_ESTREE_BENCHMARK=1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestSyntaxGrammar$'; syntax_test.go:32: native: line 137: Go \"stripped type T=ReturnType<<U>(x:U)=>number>; const b=foo<<U>(x:U)=>number>(()=>1);\", port \"stripped type T=ReturnType<<U>(x:U)=>number>; const b=foo<<U>(x:U)=>number>(()=>1)\""
+  },
+  {
+    "test": "TestSyntaxRefusals",
+    "package": "stage1/cohere/estree",
+    "file": "stage1/cohere/estree/syntax_test.go",
+    "seconds": 22.348,
+    "oracle": "Go cohere error-status count, then handwritten refusal requirements for all port variants: empty stdout and an ESTree parser diagnostic within a deadline. It does not require each exact diagnostic cause.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M2"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M2: syntax_test.go:54: [node --disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /workspace/adamic/stage1/cohere/estree/main.ts /tmp/adamic-gate/TestSyntaxRefusals2722443132/001/0001.ts]: timeout=false exit=<nil> stdout=459 stderr=",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestSyntaxGrammar"
+    ],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P1",
+      "P2"
+    ],
+    "subsumer_seconds": 23.798,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestSyntaxGrammar",
+      "TestSyntaxRefusals",
+      "TestThroughput",
+      "TestCookedSurrogates",
+      "TestLossyInputRefusal"
+    ],
+    "evidence": "selector /tmp/u089/mutant=M2; ADAMIC_NATIVE_SPLIT=1 ADAMIC_NATIVE_JOBS=4 ADAMIC_ESTREE_LIBRARY=/tmp/u089/library ADAMIC_ESTREE_BENCHMARK=1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestSyntaxRefusals$'; syntax_test.go:54: [node --disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /workspace/adamic/stage1/cohere/estree/main.ts /tmp/adamic-gate/TestSyntaxRefusals2722443132/001/0001.ts]: timeout=false exit=<nil> stdout=459 stderr="
+  },
+  {
+    "test": "TestSyntaxLibraries",
+    "package": "stage1/cohere/estree",
+    "file": "stage1/cohere/estree/syntax_test.go",
+    "seconds": 1.064,
+    "oracle": "Go cohere raw/postprocessed JSON compared with pinned typescript-estree and Prettier on Node. It never executes the Adamic port.",
+    "oracle_kind": "external-run",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "cannot-judge",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestSyntaxGrammar",
+      "TestSyntaxRefusals",
+      "TestThroughput",
+      "TestCookedSurrogates",
+      "TestLossyInputRefusal"
+    ],
+    "evidence": "Three clean timing runs passed; no authorized production target: this row executes Go cohere/upstream libraries and never the Adamic port. Mutating those would mutate the oracle."
+  },
+  {
+    "test": "TestTypeMemberLibraryGap",
+    "package": "stage1/cohere/estree",
+    "file": "stage1/cohere/estree/syntax_test.go",
+    "seconds": 0.925,
+    "oracle": "Go cohere must execute successfully, but its returned AST is discarded; pinned typescript-estree must print the self-written refused label. It never executes the Adamic port.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "cannot-judge",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestSyntaxGrammar",
+      "TestSyntaxRefusals",
+      "TestThroughput",
+      "TestCookedSurrogates",
+      "TestLossyInputRefusal"
+    ],
+    "evidence": "Three clean timing runs passed; no authorized production target: this row executes Go cohere/upstream libraries and never the Adamic port. Mutating those would mutate the oracle."
+  },
+  {
+    "test": "TestThreePortMutants_Setup",
+    "package": "stage1/cohere/estree",
+    "file": "stage1/cohere/estree/three_port_mutants_deadline_shards_test.go",
+    "seconds": 9.769,
+    "oracle": "Self check that shared product preparation produces a non-nil prepared object.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W2: shared product build failed; origin three_port_mutants_deadline_shards_test.go:340 (overlay reported line 331)",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestThreePortMutants_Setup"
+    ],
+    "evidence": "go test -overlay=setup-overlay.json -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestThreePortMutants_Setup$'; shared product build failed (origin line 340, overlay line 331)"
+  },
+  {
+    "test": "TestThreePortMutants family",
+    "package": "stage1/cohere/estree",
+    "file": "stage1/cohere/estree/three_port_mutants_deadline_shards_test.go",
+    "seconds": 11.711,
+    "oracle": "Go cohere canonical records; built-in port mutants must differ from Go on witnesses while source and native agree. Weakened-check proof uses the existing synthetic proof branch with selector -1.",
+    "oracle_kind": "external-run",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W1: three_port_mutants_deadline_shards_test.go:452: case 071: source Node mutant survived",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestThreePortMutants_000",
+      "TestThreePortMutants_001",
+      "TestThreePortMutants_002",
+      "TestThreePortMutants_003",
+      "TestThreePortMutants_004",
+      "TestThreePortMutants_005",
+      "TestThreePortMutants_006",
+      "TestThreePortMutants_007",
+      "TestThreePortMutants_008",
+      "TestThreePortMutants_009",
+      "TestThreePortMutants_010",
+      "TestThreePortMutants_011",
+      "TestThreePortMutants_ShardProof"
+    ],
+    "evidence": "ADAMIC_THREE_PORT_PROOF=-1 go test -overlay=witness-overlay.json -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^(TestThreePortMutants_[0-9]{3}|TestThreePortMutants_ShardProof)$'; three_port_mutants_deadline_shards_test.go:452: case 071: source Node mutant survived",
+    "members": [
+      "TestThreePortMutants_000",
+      "TestThreePortMutants_001",
+      "TestThreePortMutants_002",
+      "TestThreePortMutants_003",
+      "TestThreePortMutants_004",
+      "TestThreePortMutants_005",
+      "TestThreePortMutants_006",
+      "TestThreePortMutants_007",
+      "TestThreePortMutants_008",
+      "TestThreePortMutants_009",
+      "TestThreePortMutants_010",
+      "TestThreePortMutants_011"
+    ]
+  },
+  {
+    "test": "TestThreePortMutants_ShardProof",
+    "package": "stage1/cohere/estree",
+    "file": "stage1/cohere/estree/three_port_mutants_deadline_shards_test.go",
+    "seconds": 0.372,
+    "oracle": "Synthetic oracle/mutant records; each planted survivor must fail exactly its owning shard with the expected message.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W1: three_port_mutants_deadline_shards_test.go:492: unexpected failure in TestThreePortMutants_002: === RUN   TestThreePortMutants_002",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestThreePortMutants_000",
+      "TestThreePortMutants_001",
+      "TestThreePortMutants_002",
+      "TestThreePortMutants_003",
+      "TestThreePortMutants_004",
+      "TestThreePortMutants_005",
+      "TestThreePortMutants_006",
+      "TestThreePortMutants_007",
+      "TestThreePortMutants_008",
+      "TestThreePortMutants_009",
+      "TestThreePortMutants_010",
+      "TestThreePortMutants_011",
+      "TestThreePortMutants_ShardProof"
+    ],
+    "evidence": "ADAMIC_THREE_PORT_PROOF=-1 go test -overlay=witness-overlay.json -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^(TestThreePortMutants_[0-9]{3}|TestThreePortMutants_ShardProof)$'; three_port_mutants_deadline_shards_test.go:492: unexpected failure in TestThreePortMutants_002: === RUN   TestThreePortMutants_002"
+  },
+  {
+    "test": "TestThroughput",
+    "package": "stage1/cohere/estree",
+    "file": "stage1/cohere/estree/throughput_test.go",
+    "seconds": 27.646,
+    "oracle": "Go cohere complete canonical bytes checked on every rotated Go, source-Node and native invocation. Throughput values have no pass/fail speed threshold.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M3",
+      "M4"
+    ],
+    "unique_kills": [
+      "M3"
+    ],
+    "last_proven_fail": "M4: throughput_test.go:45: source Node: line 121: Go \"stripped type X = import('x').A<T>; type Y = typeof import('x', { with: { type: 'json' } }).A; type Z = typeof this.a;\", port \"stripped type X = import('x').A<T>; type Y = typeof import('x', { with: { type: 'json' } }).A; type Z = typeof this.a\"",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P1",
+      "P2"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestSyntaxGrammar",
+      "TestSyntaxRefusals",
+      "TestThroughput",
+      "TestCookedSurrogates",
+      "TestLossyInputRefusal"
+    ],
+    "evidence": "selector /tmp/u089/mutant=M4; ADAMIC_NATIVE_SPLIT=1 ADAMIC_NATIVE_JOBS=4 ADAMIC_ESTREE_LIBRARY=/tmp/u089/library ADAMIC_ESTREE_BENCHMARK=1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestThroughput$'; throughput_test.go:45: source Node: line 121: Go \"stripped type X = import('x').A<T>; type Y = typeof import('x', { with: { type: 'json' } }).A; type Z = typeof this.a;\", port \"stripped type X = import('x').A<T>; type Y = typeof import('x', { with: { type: 'json' } }).A; type Z = typeof this.a\""
+  },
+  {
+    "test": "TestCookedSurrogates",
+    "package": "stage1/cohere/estree",
+    "file": "stage1/cohere/estree/utf8_test.go",
+    "seconds": 21.753,
+    "oracle": "Go cohere canonical bytes compared with source Node, sanitized native and emitted JavaScript.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M4"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M4: utf8_test.go:22: Node: line 13: Go \"stripped '\\\\u005cud800a\\\\u005cudc00';\", port \"stripped '\\\\u005cud800a\\\\u005cudc00'\"",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestSyntaxGrammar"
+    ],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P1",
+      "P2"
+    ],
+    "subsumer_seconds": 23.798,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestSyntaxGrammar",
+      "TestSyntaxRefusals",
+      "TestThroughput",
+      "TestCookedSurrogates",
+      "TestLossyInputRefusal"
+    ],
+    "evidence": "selector /tmp/u089/mutant=M4; ADAMIC_NATIVE_SPLIT=1 ADAMIC_NATIVE_JOBS=4 ADAMIC_ESTREE_LIBRARY=/tmp/u089/library ADAMIC_ESTREE_BENCHMARK=1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestCookedSurrogates$'; utf8_test.go:22: Node: line 13: Go \"stripped '\\\\u005cud800a\\\\u005cudc00';\", port \"stripped '\\\\u005cud800a\\\\u005cudc00'\""
+  },
+  {
+    "test": "TestCookedSurrogateMutant",
+    "package": "stage1/cohere/estree",
+    "file": "stage1/cohere/estree/utf8_test.go",
+    "seconds": 21.931,
+    "oracle": "Go cohere output; the built-in surrogate serialization mutant must disagree on source Node and sanitized native.",
+    "oracle_kind": "external-run",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W1: utf8_test.go:36: Node mutant survived",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestCookedSurrogateMutant"
+    ],
+    "evidence": "ADAMIC_THREE_PORT_PROOF=-1 go test -overlay=witness-overlay.json -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestCookedSurrogateMutant$'; utf8_test.go:36: Node mutant survived"
+  },
+  {
+    "test": "TestCookedSurrogateLibraryGap",
+    "package": "stage1/cohere/estree",
+    "file": "stage1/cohere/estree/utf8_test.go",
+    "seconds": 0.948,
+    "oracle": "Go cohere output must contain the expected replacement sequence; upstream Node parse must produce the expected UTF-16 JSON string. Both gap labels are handwritten and the port is never executed.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "cannot-judge",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestSyntaxGrammar",
+      "TestSyntaxRefusals",
+      "TestThroughput",
+      "TestCookedSurrogates",
+      "TestLossyInputRefusal"
+    ],
+    "evidence": "Three clean timing runs passed; no authorized production target: this row executes Go cohere/upstream libraries and never the Adamic port. Mutating those would mutate the oracle."
+  },
+  {
+    "test": "TestLossyInputRefusal",
+    "package": "stage1/cohere/estree",
+    "file": "stage1/cohere/estree/utf8_test.go",
+    "seconds": 21.721,
+    "oracle": "Self-written requirement to refuse both malformed input and a literal replacement character, with empty stdout and the expected cannot recover original UTF-8 bytes message. Node runs the port, not an independent oracle.",
+    "oracle_kind": "self",
+    "kills": [
+      "M1"
+    ],
+    "unique_kills": [
+      "M1"
+    ],
+    "last_proven_fail": "M1: utf8_test.go:69: [node --disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /workspace/adamic/stage1/cohere/estree/main.ts /tmp/adamic-gate/TestLossyInputRefusal205561031/002/input.ts]: timeout=false exit=<nil> stdout=381 stderr=",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P1",
+      "P2"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestSyntaxGrammar",
+      "TestSyntaxRefusals",
+      "TestThroughput",
+      "TestCookedSurrogates",
+      "TestLossyInputRefusal"
+    ],
+    "evidence": "selector /tmp/u089/mutant=M1; ADAMIC_NATIVE_SPLIT=1 ADAMIC_NATIVE_JOBS=4 ADAMIC_ESTREE_LIBRARY=/tmp/u089/library ADAMIC_ESTREE_BENCHMARK=1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestLossyInputRefusal$'; utf8_test.go:69: [node --disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /workspace/adamic/stage1/cohere/estree/main.ts /tmp/adamic-gate/TestLossyInputRefusal205561031/002/input.ts]: timeout=false exit=<nil> stdout=381 stderr="
+  },
+  {
+    "test": "TestLossyInputControl",
+    "package": "stage1/cohere/estree",
+    "file": "stage1/cohere/estree/lossy_input_control_products_test.go",
+    "seconds": 5.415,
+    "oracle": "Go cohere output; the built-in disabled-input-guard mutant must disagree on source Node and sanitized native.",
+    "oracle_kind": "external-run",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W1: lossy_input_control_products_test.go:60: Node lossy-input mutant survived",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestLossyInputControl"
+    ],
+    "evidence": "ADAMIC_THREE_PORT_PROOF=-1 go test -overlay=witness-overlay.json -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestLossyInputControl$'; lossy_input_control_products_test.go:60: Node lossy-input mutant survived"
+  }
+]
