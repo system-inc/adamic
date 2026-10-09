@@ -7,7 +7,6 @@ import (
 	"fmt"
 	"io/fs"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"runtime"
 	"strconv"
@@ -48,32 +47,20 @@ func cssOracleProduct(t *testing.T, printer bool) string {
 			side, pkg, target = "print_side_test.go", "", "adamic_print_side_test.go"
 		}
 		sidePath := filepath.Join(repo, "stage1/cohere/css/testdata", side)
-		inputs := buildcache.Inputs{
-			Name:      "css-printer-oracle-" + strconv.Itoa(index),
-			Files:     []string{"stage1/cohere/css/testdata/" + side, "cohere/internal", "cohere/TypeScript/tsc", "cohere/TypeScript-shim", "cohere/go.mod", "cohere/go.sum", "cohere/TypeScript/tsc/go.mod", "cohere/TypeScript/tsc/go.sum"},
-			Flags:     []string{"test", "-c", "./internal/format/css/" + pkg},
-			Toolchain: []string{buildcache.Tool("go", "version"), runtime.GOOS, runtime.GOARCH},
+		// The overlay's map and its replacement file are keyed; the overlay file's own path is a temporary name.
+		overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{filepath.Join(repo, "cohere/internal/format/css", pkg, target): sidePath}})
+		if err != nil {
+			t.Fatal(err)
 		}
-		directory := buildcache.Product(t, inputs, func(dir string) error {
-			overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{filepath.Join(repo, "cohere/internal/format/css", pkg, target): sidePath}})
-			if err != nil {
-				return err
-			}
-			overlayPath := filepath.Join(dir, "overlay.json")
-			if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
-				return err
-			}
-			// A product carries no deadline of its own: a cold Go build of cohere's css package can pass 60 s
-			// on a compiler-changing candidate, and the build phase's 10-minute ceiling bounds it (rule 10).
-			cmd := exec.CommandContext(t.Context(), "go", "test", "-c", "-overlay="+overlayPath, "-o", filepath.Join(dir, "oracle"), "./internal/format/css/"+pkg)
-			cmd.Dir = filepath.Join(repo, "cohere")
-			output, err := cmd.CombinedOutput()
-			if err != nil {
-				return fmt.Errorf("Go oracle build: %w\n%s", err, output)
-			}
-			return nil
-		})
-		cssOracles[index] = filepath.Join(directory, "oracle")
+		overlayPath := filepath.Join(t.TempDir(), "overlay.json")
+		if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
+			t.Fatal(err)
+		}
+		// GoTestBinary builds it reproducibly and keys it by what go test -c compiles (#hff1651: built by hand, the
+		// oracle carried its checkout path and a stored copy never matched a rebuild). A product carries no deadline
+		// of its own: a cold Go build of cohere's css package can pass 60 s on a compiler-changing candidate, and the
+		// build phase's 10-minute ceiling bounds it (rule 10).
+		cssOracles[index] = buildcache.GoTestBinary(t, "cohere", "oracle", "./internal/format/css/"+pkg, []string{"-overlay=" + overlayPath})
 	})
 	// A build that failed inside the Once leaves the path empty for every later caller in this process.
 	// Say so, rather than running an empty command.
