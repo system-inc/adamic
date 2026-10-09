@@ -1,8 +1,6 @@
 package markdowninline
 
 import (
-	"fmt"
-	"os"
 	"sync"
 	"testing"
 	"time"
@@ -25,17 +23,18 @@ func sharedInlineShards(t *testing.T) func(*testing.T, int) {
 	return inlineSharedRun
 }
 
-// The unit's own budget begins only after it has fetched its products.
+// The unit's own budget begins only after it has fetched its products. Over budget fails this shard
+// alone. Exiting the process here would end the whole test process, failing every other parallel shard in the
+// unit, so a hang is bounded by each child command's own 60 s limit (bounded) instead.
 func runInlineUnit(t *testing.T, ordinal int) {
 	run := sharedInlineShards(t)
 	start := time.Now()
-	timer := time.AfterFunc(60*time.Second, func() {
-		fmt.Fprintf(os.Stderr, "cooked: %s exceeded its own 60-second deadline\n", t.Name())
-		os.Exit(124)
-	})
-	defer timer.Stop()
 	run(t, ordinal)
-	t.Logf("own work: %.6fs", time.Since(start).Seconds())
+	elapsed := time.Since(start)
+	t.Logf("own work: %.6fs", elapsed.Seconds())
+	if elapsed > 60*time.Second {
+		t.Errorf("cooked: %s exceeded its own 60-second budget (%.3fs)", t.Name(), elapsed.Seconds())
+	}
 }
 
 func TestMarkdownInline_0000(t *testing.T) {
