@@ -1,0 +1,51 @@
+// Node links are table indexes. No parent or child link owns another node.
+import { panic } from 'adamic';
+export class ParseNode {
+    kind;
+    pos;
+    end;
+    children;
+    text = '';
+    raw = '';
+    operator = '';
+    semantic = '';
+    optional = false;
+    literalFlags = 0;
+    list = -1;
+    trailing = false;
+    multiLine = false;
+    constructor(kind, pos, end, children){
+        this.kind = kind;
+        this.pos = pos;
+        this.end = end;
+        this.children = children;
+    }
+}
+export function written(text) {
+    let result = '';
+    for(let index = 0; index < text.length; index++){
+        const code = text.charCodeAt(index);
+        result += code >= 32 && code <= 126 && code !== 92 ? text.slice(index, index + 1) : `\\u${code.toString(16).padStart(4, '0')}`;
+    }
+    return result;
+}
+export function printTree(nodes, root, offsets, depth = 0, whole = false) {
+    const node = nodes[root] ?? panic('missing parse node');
+    console.log(`${depth} ${node.kind} ${offsets[node.pos] ?? panic('node start outside source')} ${offsets[node.end] ?? panic('node end outside source')} ${node.optional ? 32 : 0} ${node.literalFlags} ${node.list} ${node.trailing ? 1 : 0} ${node.multiLine ? 1 : 0}\t${node.operator}\t${written(node.text)}\t${written(node.raw)}${whole ? `\t${node.semantic}` : ''}`);
+    let count = 1;
+    for (const child of node.children){
+        count += printTree(nodes, child, offsets, depth + 1, whole);
+    }
+    return count;
+}
+export function countTree(nodes, root) {
+    const node = nodes[root] ?? panic('missing parse node');
+    let count = 1;
+    for (const child of node.children){
+        count += countTree(nodes, child);
+    }
+    return count;
+}
+
+
+//# sourceMappingURL=data:application/json;base64,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

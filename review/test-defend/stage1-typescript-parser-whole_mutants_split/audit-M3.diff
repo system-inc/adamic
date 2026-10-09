@@ -1,0 +1,11 @@
+--- a/stage1/typescript/parser/parser.ts
++++ b/stage1/typescript/parser/parser.ts
+@@ -219,7 +219,7 @@
+         const state = this.mark();
+         this.next();
+         const result =
+-            (this.scanner.flags & 1) === 0 &&
++            (this.scanner.flags & 1) !== 0 &&
+             (this.kind() === 'Identifier' ||
+                 this.kind().endsWith('Keyword') ||
+                 ['NumericLiteral', 'BigIntLiteral', 'StringLiteral'].includes(this.kind()));

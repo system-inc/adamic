@@ -1,0 +1,87 @@
+// Operator precedence and reserved words follow typescript-go.
+export function precedence(kind) {
+    switch(kind){
+        case 'QuestionQuestionToken':
+            return 5;
+        case 'BarBarToken':
+            return 5;
+        case 'AmpersandAmpersandToken':
+            return 6;
+        case 'BarToken':
+            return 7;
+        case 'CaretToken':
+            return 8;
+        case 'AmpersandToken':
+            return 9;
+        case 'EqualsEqualsToken':
+        case 'ExclamationEqualsToken':
+        case 'EqualsEqualsEqualsToken':
+        case 'ExclamationEqualsEqualsToken':
+            return 10;
+        case 'LessThanToken':
+        case 'GreaterThanToken':
+        case 'LessThanEqualsToken':
+        case 'GreaterThanEqualsToken':
+        case 'InstanceOfKeyword':
+        case 'InKeyword':
+        case 'AsKeyword':
+        case 'SatisfiesKeyword':
+            return 11;
+        case 'LessThanLessThanToken':
+        case 'GreaterThanGreaterThanToken':
+        case 'GreaterThanGreaterThanGreaterThanToken':
+            return 12;
+        case 'PlusToken':
+        case 'MinusToken':
+            return 13;
+        case 'AsteriskToken':
+        case 'SlashToken':
+        case 'PercentToken':
+            return 14;
+        case 'AsteriskAsteriskToken':
+            return 15;
+        default:
+            return -1;
+    }
+}
+export const reservedKinds = [
+    'BreakKeyword',
+    'CaseKeyword',
+    'CatchKeyword',
+    'ClassKeyword',
+    'ConstKeyword',
+    'ContinueKeyword',
+    'DebuggerKeyword',
+    'DefaultKeyword',
+    'DeleteKeyword',
+    'DoKeyword',
+    'ElseKeyword',
+    'EnumKeyword',
+    'ExportKeyword',
+    'ExtendsKeyword',
+    'FalseKeyword',
+    'FinallyKeyword',
+    'ForKeyword',
+    'FunctionKeyword',
+    'IfKeyword',
+    'ImportKeyword',
+    'InKeyword',
+    'InstanceOfKeyword',
+    'NewKeyword',
+    'NullKeyword',
+    'ReturnKeyword',
+    'SuperKeyword',
+    'SwitchKeyword',
+    'ThisKeyword',
+    'ThrowKeyword',
+    'TrueKeyword',
+    'TryKeyword',
+    'TypeOfKeyword',
+    'VarKeyword',
+    'VoidKeyword',
+    'WhileKeyword',
+    'WithKeyword'
+];
+
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImdyYW1tYXIudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsK0RBQStEO0FBQy9ELE9BQU8sU0FBUyxXQUFXLElBQVk7SUFDbkMsT0FBTztRQUNILEtBQUs7WUFDRCxPQUFPO1FBQ1gsS0FBSztZQUNELE9BQU87UUFDWCxLQUFLO1lBQ0QsT0FBTztRQUNYLEtBQUs7WUFDRCxPQUFPO1FBQ1gsS0FBSztZQUNELE9BQU87UUFDWCxLQUFLO1lBQ0QsT0FBTztRQUNYLEtBQUs7UUFDTCxLQUFLO1FBQ0wsS0FBSztRQUNMLEtBQUs7WUFDRCxPQUFPO1FBQ1gsS0FBSztRQUNMLEtBQUs7UUFDTCxLQUFLO1FBQ0wsS0FBSztRQUNMLEtBQUs7UUFDTCxLQUFLO1FBQ0wsS0FBSztRQUNMLEtBQUs7WUFDRCxPQUFPO1FBQ1gsS0FBSztRQUNMLEtBQUs7UUFDTCxLQUFLO1lBQ0QsT0FBTztRQUNYLEtBQUs7UUFDTCxLQUFLO1lBQ0QsT0FBTztRQUNYLEtBQUs7UUFDTCxLQUFLO1FBQ0wsS0FBSztZQUNELE9BQU87UUFDWCxLQUFLO1lBQ0QsT0FBTztRQUNYO1lBQ0ksT0FBTyxDQUFDO0lBQ2hCO0FBQ0o7QUFFQSxPQUFPLE1BQU0sZ0JBQW1DO0lBQzVDO0lBQ0E7SUFDQTtJQUNBO0lBQ0E7SUFDQTtJQUNBO0lBQ0E7SUFDQTtJQUNBO0lBQ0E7SUFDQTtJQUNBO0lBQ0E7SUFDQTtJQUNBO0lBQ0E7SUFDQTtJQUNBO0lBQ0E7SUFDQTtJQUNBO0lBQ0E7SUFDQTtJQUNBO0lBQ0E7SUFDQTtJQUNBO0lBQ0E7SUFDQTtJQUNBO0lBQ0E7SUFDQTtJQUNBO0lBQ0E7SUFDQTtDQUNILENBQUMifQ==

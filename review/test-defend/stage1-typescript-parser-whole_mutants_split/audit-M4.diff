@@ -1,0 +1,11 @@
+--- a/stage1/typescript/parser/parser.ts
++++ b/stage1/typescript/parser/parser.ts
+@@ -34,7 +34,7 @@
+         return this.nodes[index] ?? panic('missing node');
+     }
+     make(kind: string, pos: number, children: number[] = []): number {
+-        this.nodes.push(new ParseNode(kind, pos, this.scanner.fullStart, children));
++        this.nodes.push(new ParseNode(kind, pos, this.scanner.start, children));
+         return this.nodes.length - 1;
+     }
+     token(): number {

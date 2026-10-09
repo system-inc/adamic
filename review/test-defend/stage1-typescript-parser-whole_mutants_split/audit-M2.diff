@@ -1,0 +1,11 @@
+--- a/stage1/typescript/parser/nodes.ts
++++ b/stage1/typescript/parser/nodes.ts
+@@ -55,7 +55,7 @@
+ 
+ export function countTree(nodes: readonly ParseNode[], root: number): number {
+     const node = nodes[root] ?? panic('missing parse node');
+-    let count = 1;
++    let count = 2;
+     for(const child of node.children) {
+         count += countTree(nodes, child);
+     }

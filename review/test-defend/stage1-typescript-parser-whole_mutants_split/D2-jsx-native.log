@@ -1,0 +1,10 @@
+{"Time":"2026-10-09T14:38:56.324347948Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/typescript/parser"}
+{"Time":"2026-10-09T14:38:56.338834476Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestJsxNative"}
+{"Time":"2026-10-09T14:38:56.339121032Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestJsxNative","Output":"=== RUN   TestJsxNative\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:39:20.909792758Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestJsxNative","Output":"    jsx_test.go:109: sanitize=true: 348 JSX inputs, 277842 identical whole-tree bytes\n"}
+{"Time":"2026-10-09T14:39:32.309624824Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestJsxNative","Output":"    jsx_test.go:109: sanitize=false: 348 JSX inputs, 277842 identical whole-tree bytes\n"}
+{"Time":"2026-10-09T14:39:32.319415769Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestJsxNative","Output":"--- PASS: TestJsxNative (35.98s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:39:32.319574988Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestJsxNative","Elapsed":35.98}
+{"Time":"2026-10-09T14:39:32.322151412Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:39:32.330576928Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"ok  \tgithub.com/system-inc/adamic/stage1/typescript/parser\t36.005s\n"}
+{"Time":"2026-10-09T14:39:32.330658296Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Elapsed":36.006}

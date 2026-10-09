@@ -1,0 +1,34 @@
+[
+  {
+    "id": "M1",
+    "file": "nodes.ts",
+    "from": "`${depth} ${node.kind}",
+    "to": "`${depth + 1} ${node.kind}",
+    "menu": "off-by-one output depth",
+    "line": 47
+  },
+  {
+    "id": "M2",
+    "file": "nodes.ts",
+    "from": "export function countTree(nodes: readonly ParseNode[], root: number): number {\n    const node = nodes[root] ?? panic('missing parse node');\n    let count = 1;",
+    "to": "export function countTree(nodes: readonly ParseNode[], root: number): number {\n    const node = nodes[root] ?? panic('missing parse node');\n    let count = 2;",
+    "menu": "change count constant",
+    "line": 58
+  },
+  {
+    "id": "M3",
+    "file": "parser.ts",
+    "from": "const result =\n            (this.scanner.flags & 1) === 0 &&",
+    "to": "const result =\n            (this.scanner.flags & 1) !== 0 &&",
+    "menu": "flip condition in yieldOperandAhead",
+    "line": 222
+  },
+  {
+    "id": "M4",
+    "file": "parser.ts",
+    "from": "new ParseNode(kind, pos, this.scanner.fullStart, children)",
+    "to": "new ParseNode(kind, pos, this.scanner.start, children)",
+    "menu": "change node end option",
+    "line": 37
+  }
+]

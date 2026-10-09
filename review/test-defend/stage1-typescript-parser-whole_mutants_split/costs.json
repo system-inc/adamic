@@ -1,0 +1,29 @@
+{
+  "bootstrap_seconds": 0,
+  "npm_ci": "Run before baseline; not separately timed.",
+  "nproc": 5,
+  "native_build_validation": [
+    {
+      "mutant": "D1",
+      "wall_seconds": 31.702286407999054,
+      "test_binary_seconds": 28.459,
+      "log": "D1-build.log"
+    },
+    {
+      "mutant": "D2",
+      "wall_seconds": 30.1596254770011,
+      "test_binary_seconds": 24.292,
+      "log": "D2-build.log"
+    },
+    {
+      "mutant": "D3",
+      "wall_seconds": 26.633562900999095,
+      "test_binary_seconds": 23.547,
+      "log": "D3-build.log"
+    }
+  ],
+  "bounded_run_wall_seconds": 1048.67356110099,
+  "matrix_wall_seconds": 745.0299269279931,
+  "session": "about 27 minutes; see raw log timestamps",
+  "limitations": "Whole-package and first combined reached baselines, plus isolated coverage/benchmark baselines, are outside bounded_run_wall_seconds. The cooked baseline-other-agreements run is included in that total. npm was not separately timed. No mutation matrix run cooked."
+}

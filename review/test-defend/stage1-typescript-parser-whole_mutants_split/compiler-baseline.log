@@ -1,0 +1,14 @@
+{"Time":"2026-10-09T14:21:50.475359576Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/typescript/parser"}
+{"Time":"2026-10-09T14:21:50.495357009Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestWholeCompilerAgrees"}
+{"Time":"2026-10-09T14:21:50.495453308Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestWholeCompilerAgrees","Output":"=== RUN   TestWholeCompilerAgrees\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:21:50.495544663Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestWholeCompilerAgrees","Output":"=== PAUSE TestWholeCompilerAgrees\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:21:50.495548168Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestWholeCompilerAgrees"}
+{"Time":"2026-10-09T14:21:50.495550871Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestWholeCompilerAgrees"}
+{"Time":"2026-10-09T14:21:50.495552629Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestWholeCompilerAgrees","Output":"=== CONT  TestWholeCompilerAgrees\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:22:45.279468189Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestWholeCompilerAgrees","Output":"    whole_test.go:40: 77 whole compiler files, 44766682 identical whole-tree bytes\n"}
+{"Time":"2026-10-09T14:22:45.298888251Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestWholeCompilerAgrees","Output":"--- PASS: TestWholeCompilerAgrees (54.81s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:22:45.299159872Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestWholeCompilerAgrees","Elapsed":54.81}
+{"Time":"2026-10-09T14:22:45.299223223Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:22:45.300281061Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"coverage: [no statements]\n"}
+{"Time":"2026-10-09T14:22:45.319351751Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"ok  \tgithub.com/system-inc/adamic/stage1/typescript/parser\t54.843s\tcoverage: [no statements]\n"}
+{"Time":"2026-10-09T14:22:45.319386671Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Elapsed":54.844}

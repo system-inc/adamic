@@ -1,0 +1,26 @@
+[
+  {
+    "id": "D1",
+    "file": "stage1/typescript/parser/statements.ts",
+    "old": "this.parser.kind() === 'ConstKeyword'\n                ? 2",
+    "new": "this.parser.kind() === 'ConstKeyword'\n                ? 1",
+    "line": 80,
+    "change": "const declaration flags become let flags"
+  },
+  {
+    "id": "D2",
+    "file": "stage1/typescript/parser/statements.ts",
+    "old": "            this.parser.node(clause).semantic = phase;\n",
+    "new": "",
+    "line": 324,
+    "change": "drop import-clause phase assignment"
+  },
+  {
+    "id": "D3",
+    "file": "stage1/typescript/parser/statements.ts",
+    "old": "this.parser.node(id).semantic = typeOnly ? '1' : '0';\n        this.parser.setAwait(oldAwait);",
+    "new": "this.parser.node(id).semantic = typeOnly ? '0' : '1';\n        this.parser.setAwait(oldAwait);",
+    "line": 385,
+    "change": "flip export type-only semantic flag"
+  }
+]

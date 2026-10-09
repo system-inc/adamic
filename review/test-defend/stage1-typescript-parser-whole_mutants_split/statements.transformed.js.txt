@@ -1,0 +1,810 @@
+// Statement and declaration descent follows typescript-go's parser.
+import { panic } from 'adamic';
+export class Statements {
+    parser;
+    constructor(parser){
+        this.parser = parser;
+    }
+    block() {
+        const pos = this.parser.scanner.fullStart;
+        this.parser.expect('OpenBraceToken');
+        const children = [];
+        while(this.parser.kind() !== 'CloseBraceToken'){
+            children.push(this.statement());
+        }
+        this.parser.expect('CloseBraceToken');
+        return this.parser.make('Block', pos, children);
+    }
+    semicolon() {
+        if (this.parser.kind() === 'SemicolonToken') {
+            this.parser.next();
+        } else if (this.parser.kind() !== 'CloseBraceToken' && this.parser.kind() !== 'EndOfFile' && (this.parser.scanner.flags & 1) === 0) {
+            panic(`parser slice expected semicolon at ${this.parser.scanner.start} in ${this.parser.path}`);
+        }
+    }
+    variableList() {
+        const pos = this.parser.scanner.fullStart;
+        const flags = this.parser.kind() === 'ConstKeyword' ? 2 : this.parser.kind() === 'LetKeyword' ? 1 : this.parser.kind() === 'UsingKeyword' ? 4 : this.parser.kind() === 'AwaitKeyword' ? 6 : 0;
+        if (flags === 6) {
+            this.parser.next();
+        }
+        this.parser.next();
+        const declarations = [];
+        while(true){
+            const start = this.parser.scanner.fullStart;
+            const children = [
+                this.parser.bindingName()
+            ];
+            if (this.parser.kind() === 'ExclamationToken') {
+                children.push(this.parser.token());
+            }
+            if (this.parser.kind() === 'ColonToken') {
+                this.parser.next();
+                children.push(this.parser.type());
+            }
+            if (this.parser.kind() === 'EqualsToken') {
+                this.parser.next();
+                children.push(this.parser.rootAssignment());
+            }
+            declarations.push(this.parser.make('VariableDeclaration', start, children));
+            if (this.parser.kind() !== 'CommaToken') {
+                break;
+            }
+            this.parser.next();
+        }
+        const id = this.parser.make('VariableDeclarationList', pos, declarations);
+        this.parser.node(id).semantic = `${flags}`;
+        return id;
+    }
+    lookahead(offset) {
+        const saved = {
+            pos: this.parser.scanner.pos,
+            start: this.parser.scanner.start,
+            fullStart: this.parser.scanner.fullStart,
+            kind: this.parser.scanner.kind,
+            value: this.parser.scanner.value,
+            flags: this.parser.scanner.flags,
+            errors: this.parser.scanner.errors.length
+        };
+        for(let index = 0; index < offset; index++){
+            this.parser.next();
+        }
+        const result = this.parser.kind();
+        this.parser.scanner.pos = saved.pos;
+        this.parser.scanner.start = saved.start;
+        this.parser.scanner.fullStart = saved.fullStart;
+        this.parser.scanner.kind = saved.kind;
+        this.parser.scanner.value = saved.value;
+        this.parser.scanner.flags = saved.flags;
+        this.parser.scanner.errors.splice(saved.errors);
+        return result;
+    }
+    decorator() {
+        return this.parser.decorator();
+    }
+    canExportName() {
+        return this.parser.kind() === 'Identifier' || this.parser.kind().endsWith('Keyword') || this.parser.kind() === 'StringLiteral';
+    }
+    specifiers(importing) {
+        const pos = this.parser.scanner.fullStart;
+        this.parser.expect('OpenBraceToken');
+        const members = [];
+        while(this.parser.kind() !== 'CloseBraceToken'){
+            const start = this.parser.scanner.fullStart;
+            let name = this.parser.propertyName();
+            let property = -1;
+            let typeOnly = false;
+            let canAs = true;
+            if (this.parser.node(name).kind === 'Identifier' && this.parser.node(name).text === 'type') {
+                if (this.parser.kind() === 'AsKeyword') {
+                    const first = this.parser.identifier();
+                    if (this.parser.kind() === 'AsKeyword') {
+                        const second = this.parser.identifier();
+                        if (this.canExportName()) {
+                            typeOnly = true;
+                            property = first;
+                            name = this.parser.propertyName();
+                        } else {
+                            property = name;
+                            name = second;
+                        }
+                        canAs = false;
+                    } else if (this.canExportName()) {
+                        property = name;
+                        name = this.parser.propertyName();
+                        canAs = false;
+                    } else {
+                        typeOnly = true;
+                        name = first;
+                    }
+                } else if (this.canExportName()) {
+                    typeOnly = true;
+                    name = this.parser.propertyName();
+                }
+            }
+            if (canAs && this.parser.kind() === 'AsKeyword') {
+                this.parser.next();
+                property = name;
+                name = this.parser.propertyName();
+            }
+            const children = [];
+            if (property >= 0) {
+                children.push(property);
+            }
+            children.push(name);
+            const member = this.parser.make(importing ? 'ImportSpecifier' : 'ExportSpecifier', start, children);
+            this.parser.node(member).semantic = typeOnly ? '1' : '0';
+            members.push(member);
+            if (this.parser.kind() !== 'CommaToken') {
+                break;
+            }
+            this.parser.next();
+        }
+        this.parser.expect('CloseBraceToken');
+        return this.parser.make(importing ? 'NamedImports' : 'NamedExports', pos, members);
+    }
+    attributes() {
+        const pos = this.parser.scanner.fullStart;
+        const operator = this.parser.kind();
+        this.parser.next();
+        return this.attributeBody(pos, operator);
+    }
+    attributeBody(pos, operator) {
+        this.parser.expect('OpenBraceToken');
+        const multiLine = (this.parser.scanner.flags & 1) !== 0;
+        const children = [];
+        let trailing = false;
+        while(this.parser.kind() !== 'CloseBraceToken'){
+            const start = this.parser.scanner.fullStart;
+            const name = this.parser.propertyName();
+            this.parser.expect('ColonToken');
+            const value = this.parser.rootAssignment();
+            children.push(this.parser.make('ImportAttribute', start, [
+                name,
+                value
+            ]));
+            trailing = this.parser.kind() === 'CommaToken';
+            if (!trailing) {
+                break;
+            }
+            this.parser.next();
+        }
+        this.parser.expect('CloseBraceToken');
+        const id = this.parser.make('ImportAttributes', pos, children);
+        const node = this.parser.node(id);
+        node.operator = operator;
+        node.list = children.length;
+        node.trailing = trailing;
+        node.multiLine = multiLine;
+        return id;
+    }
+    importDeclaration(pos, prefix) {
+        const children = prefix.slice();
+        this.parser.expect('ImportKeyword');
+        const clausePos = this.parser.scanner.fullStart;
+        let name = -1;
+        let phase = 'Unknown';
+        if (this.parser.kind() !== 'StringLiteral' && this.parser.kind() !== 'AsteriskToken' && this.parser.kind() !== 'OpenBraceToken') {
+            name = this.parser.identifier();
+        }
+        if (name >= 0 && this.parser.node(name).text === 'type' && (this.parser.kind() !== 'FromKeyword' || this.lookahead(1) === 'FromKeyword' || this.lookahead(1) === 'EqualsToken') && (this.canExportName() || this.parser.kind() === 'OpenBraceToken' || this.parser.kind() === 'AsteriskToken')) {
+            phase = 'TypeKeyword';
+            name = -1;
+            if (this.canExportName()) {
+                name = this.parser.identifier();
+            }
+        } else if (name >= 0 && this.parser.node(name).text === 'defer' && (this.parser.kind() === 'FromKeyword' ? this.lookahead(1) !== 'StringLiteral' : this.parser.kind() !== 'CommaToken' && this.parser.kind() !== 'EqualsToken')) {
+            phase = 'DeferKeyword';
+            name = -1;
+            if (this.canExportName()) {
+                name = this.parser.identifier();
+            }
+        }
+        if (name >= 0 && this.parser.kind() === 'EqualsToken') {
+            children.push(name);
+            this.parser.next();
+            if (this.parser.kind() === 'RequireKeyword' && this.parser.peek() === 'OpenParenToken') {
+                const start = this.parser.scanner.fullStart;
+                this.parser.next();
+                this.parser.expect('OpenParenToken');
+                const path = this.parser.propertyName();
+                this.parser.expect('CloseParenToken');
+                children.push(this.parser.make('ExternalModuleReference', start, [
+                    path
+                ]));
+            } else {
+                children.push(this.parser.entityName());
+            }
+            this.semicolon();
+            const id = this.parser.make('ImportEqualsDeclaration', pos, children);
+            this.parser.node(id).semantic = phase === 'TypeKeyword' ? '1' : '0';
+            return id;
+        }
+        if (name >= 0 || this.parser.kind() === 'AsteriskToken' || this.parser.kind() === 'OpenBraceToken') {
+            const parts = [];
+            if (name >= 0) {
+                parts.push(name);
+            }
+            if (name < 0 || this.parser.kind() === 'CommaToken') {
+                if (name >= 0) {
+                    this.parser.next();
+                }
+                if (this.parser.kind() === 'AsteriskToken') {
+                    const start = this.parser.scanner.fullStart;
+                    this.parser.next();
+                    this.parser.expect('AsKeyword');
+                    const target = this.parser.identifier();
+                    parts.push(this.parser.make('NamespaceImport', start, [
+                        target
+                    ]));
+                } else {
+                    parts.push(this.specifiers(true));
+                }
+            }
+            const clause = this.parser.make('ImportClause', clausePos, parts);
+            this.parser.node(clause).semantic = phase;
+            children.push(clause);
+            this.parser.expect('FromKeyword');
+        }
+        children.push(this.parser.propertyName());
+        if (this.parser.kind() === 'WithKeyword' || this.parser.kind() === 'AssertKeyword') {
+            children.push(this.attributes());
+        }
+        this.semicolon();
+        return this.parser.make('ImportDeclaration', pos, children);
+    }
+    exportDeclaration(pos, prefix) {
+        const oldAwait = this.parser.getAwait();
+        this.parser.setAwait(true);
+        const children = prefix.slice();
+        this.parser.expect('ExportKeyword');
+        if (this.parser.kind() === 'DefaultKeyword' || this.parser.kind() === 'EqualsToken') {
+            const equals = this.parser.kind() === 'EqualsToken';
+            this.parser.next();
+            children.push(this.parser.rootAssignment());
+            this.semicolon();
+            const id = this.parser.make('ExportAssignment', pos, children);
+            this.parser.node(id).semantic = equals ? '1' : '0';
+            this.parser.setAwait(oldAwait);
+            return id;
+        }
+        if (this.parser.kind() === 'AsKeyword') {
+            this.parser.next();
+            this.parser.expect('NamespaceKeyword');
+            children.push(this.parser.identifier());
+            this.semicolon();
+            this.parser.setAwait(oldAwait);
+            return this.parser.make('NamespaceExportDeclaration', pos, children);
+        }
+        const typeOnly = this.parser.kind() === 'TypeKeyword';
+        if (typeOnly) {
+            this.parser.next();
+        }
+        if (this.parser.kind() === 'AsteriskToken') {
+            const start = this.parser.scanner.fullStart;
+            this.parser.next();
+            if (this.parser.kind() === 'AsKeyword') {
+                this.parser.next();
+                const name = this.parser.propertyName();
+                children.push(this.parser.make('NamespaceExport', start, [
+                    name
+                ]));
+            }
+            this.parser.expect('FromKeyword');
+            children.push(this.parser.propertyName());
+        } else {
+            children.push(this.specifiers(false));
+            if (this.parser.kind() === 'FromKeyword') {
+                this.parser.next();
+                children.push(this.parser.propertyName());
+            }
+        }
+        if (this.parser.kind() === 'WithKeyword' || this.parser.kind() === 'AssertKeyword') {
+            children.push(this.attributes());
+        }
+        this.semicolon();
+        const id = this.parser.make('ExportDeclaration', pos, children);
+        this.parser.node(id).semantic = typeOnly ? '1' : '0';
+        this.parser.setAwait(oldAwait);
+        return id;
+    }
+    moduleDeclaration(pos, prefix, keyword) {
+        const children = prefix.slice();
+        children.push(this.parser.propertyName());
+        if (this.parser.kind() === 'WithKeyword') {
+            this.parser.next();
+            children.push(this.parser.typeLiteral());
+        }
+        if (this.parser.kind() === 'DotToken') {
+            this.parser.next();
+            const start = this.parser.scanner.fullStart;
+            const exported = this.parser.make('ExportKeyword', start);
+            this.parser.node(exported).end = start;
+            children.push(this.moduleDeclaration(start, [
+                exported
+            ], keyword));
+        } else if (this.parser.kind() === 'OpenBraceToken') {
+            const start = this.parser.scanner.fullStart;
+            this.parser.next();
+            const body = [];
+            while(this.parser.kind() !== 'CloseBraceToken'){
+                body.push(this.statement());
+            }
+            this.parser.expect('CloseBraceToken');
+            children.push(this.parser.make('ModuleBlock', start, body));
+        } else {
+            this.semicolon();
+        }
+        const id = this.parser.make('ModuleDeclaration', pos, children);
+        this.parser.node(id).operator = keyword;
+        return id;
+    }
+    exportedClauseAhead() {
+        const after = this.lookahead(1);
+        if (after === 'DefaultKeyword') {
+            const kind = this.lookahead(2);
+            return kind !== 'ClassKeyword' && kind !== 'FunctionKeyword' && kind !== 'InterfaceKeyword' && kind !== 'AbstractKeyword' && kind !== 'AsyncKeyword' && kind !== 'AtToken';
+        }
+        return after === 'AsteriskToken' || after === 'OpenBraceToken' || after === 'EqualsToken' || after === 'AsKeyword' || after === 'TypeKeyword' && (this.lookahead(2) === 'OpenBraceToken' || this.lookahead(2) === 'AsteriskToken');
+    }
+    functionDeclaration(pos, prefix, async) {
+        const children = prefix.slice();
+        this.parser.expect('FunctionKeyword');
+        const generator = this.parser.kind() === 'AsteriskToken';
+        if (generator) {
+            children.push(this.parser.token());
+        }
+        if (this.parser.kind() !== 'OpenParenToken' && this.parser.kind() !== 'LessThanToken') {
+            children.push(this.parser.identifier());
+        }
+        const oldAwait = this.parser.getAwait();
+        const oldYield = this.parser.getYield();
+        this.parser.setAwait(async);
+        this.parser.setYield(generator);
+        const oldIn = this.parser.getIn();
+        this.parser.setIn(false);
+        for (const type of this.parser.typeParameters()){
+            children.push(type);
+        }
+        for (const parameter of this.parser.parameters()){
+            children.push(parameter);
+        }
+        if (this.parser.kind() === 'ColonToken') {
+            this.parser.next();
+            children.push(this.parser.returnType());
+        }
+        if (this.parser.kind() === 'OpenBraceToken') {
+            children.push(this.block());
+        } else {
+            this.semicolon();
+        }
+        this.parser.setIn(oldIn);
+        this.parser.setAwait(oldAwait);
+        this.parser.setYield(oldYield);
+        return this.parser.make('FunctionDeclaration', pos, children);
+    }
+    classDeclaration(pos, prefix, expression) {
+        const children = prefix.slice();
+        this.parser.expect('ClassKeyword');
+        if (this.parser.kind() === 'Identifier' || this.parser.kind().endsWith('Keyword') && this.parser.kind() !== 'ExtendsKeyword' && this.parser.kind() !== 'ImplementsKeyword') {
+            children.push(this.parser.identifier());
+        }
+        for (const type of this.parser.typeParameters()){
+            children.push(type);
+        }
+        while(this.parser.kind() === 'ExtendsKeyword' || this.parser.kind() === 'ImplementsKeyword'){
+            const start = this.parser.scanner.fullStart;
+            const extending = this.parser.kind() === 'ExtendsKeyword';
+            const operator = this.parser.kind();
+            this.parser.next();
+            const types = [];
+            while(true){
+                const target = extending ? this.parser.suffix(this.parser.primary(), true) : this.parser.type();
+                let item = target;
+                if (extending && this.parser.node(target).kind !== 'ExpressionWithTypeArguments') {
+                    const arguments_ = [
+                        target
+                    ];
+                    if (this.parser.kind() === 'LessThanToken') {
+                        for (const type of this.parser.typeArguments()){
+                            arguments_.push(type);
+                        }
+                    }
+                    item = this.parser.make('ExpressionWithTypeArguments', this.parser.node(target).pos, arguments_);
+                }
+                types.push(item);
+                if (extending && this.parser.depth() === 0) {
+                    this.parser.roots.push(this.parser.node(target).kind === 'ExpressionWithTypeArguments' ? this.parser.node(target).children[0] ?? panic('empty heritage') : target);
+                }
+                if (this.parser.kind() !== 'CommaToken') {
+                    break;
+                }
+                this.parser.next();
+            }
+            const heritage = this.parser.make('HeritageClause', start, types);
+            this.parser.node(heritage).operator = operator;
+            children.push(heritage);
+        }
+        this.parser.expect('OpenBraceToken');
+        while(this.parser.kind() !== 'CloseBraceToken'){
+            const start = this.parser.scanner.fullStart;
+            if (this.parser.kind() === 'SemicolonToken') {
+                this.parser.next();
+                children.push(this.parser.make('SemicolonClassElement', start));
+                continue;
+            }
+            const member = [];
+            while(this.parser.kind() === 'AtToken'){
+                member.push(this.decorator());
+            }
+            let async = false;
+            while(this.parser.kind() === 'StaticKeyword' || this.parser.kind() === 'PublicKeyword' || this.parser.kind() === 'PrivateKeyword' || this.parser.kind() === 'ProtectedKeyword' || this.parser.kind() === 'ReadonlyKeyword' || this.parser.kind() === 'AbstractKeyword' || this.parser.kind() === 'DeclareKeyword' || this.parser.kind() === 'OverrideKeyword' || this.parser.kind() === 'AsyncKeyword' || this.parser.kind() === 'AccessorKeyword'){
+                if (this.parser.peek() === 'ColonToken' || this.parser.peek() === 'EqualsToken' || this.parser.peek() === 'OpenParenToken' || this.parser.peek() === 'SemicolonToken') {
+                    break;
+                }
+                if (this.parser.kind() === 'AsyncKeyword') {
+                    async = true;
+                }
+                member.push(this.parser.token());
+            }
+            if (this.parser.kind() === 'OpenBraceToken' && member.length > 0 && this.parser.node(member[0] ?? -1).kind === 'StaticKeyword') {
+                const block = this.block();
+                children.push(this.parser.make('ClassStaticBlockDeclaration', start, [
+                    block
+                ]));
+                continue;
+            }
+            if (this.parser.kind() === 'OpenBracketToken' && this.lookahead(2) === 'ColonToken') {
+                this.parser.next();
+                const parameterPos = this.parser.scanner.fullStart;
+                const parameter = [
+                    this.parser.identifier()
+                ];
+                this.parser.expect('ColonToken');
+                parameter.push(this.parser.type());
+                member.push(this.parser.make('Parameter', parameterPos, parameter));
+                this.parser.expect('CloseBracketToken');
+                if (this.parser.kind() === 'ColonToken') {
+                    this.parser.next();
+                    member.push(this.parser.type());
+                }
+                this.semicolon();
+                children.push(this.parser.make('IndexSignature', start, member));
+                continue;
+            }
+            let methodKind = 'MethodDeclaration';
+            if ((this.parser.kind() === 'GetKeyword' || this.parser.kind() === 'SetKeyword') && this.parser.peek() !== 'OpenParenToken' && this.parser.peek() !== 'LessThanToken' && this.parser.peek() !== 'SemicolonToken' && this.parser.peek() !== 'QuestionToken' && this.parser.peek() !== 'ExclamationToken' && this.parser.peek() !== 'CloseBraceToken' && this.parser.peek() !== 'ColonToken' && this.parser.peek() !== 'EqualsToken') {
+                methodKind = this.parser.kind() === 'GetKeyword' ? 'GetAccessor' : 'SetAccessor';
+                this.parser.next();
+            }
+            const generator = this.parser.kind() === 'AsteriskToken';
+            if (generator) {
+                member.push(this.parser.token());
+            }
+            const constructor = this.parser.kind() === 'ConstructorKeyword';
+            if (constructor) {
+                this.parser.next();
+                methodKind = 'Constructor';
+            } else {
+                member.push(this.parser.propertyName());
+            }
+            if (this.parser.kind() === 'QuestionToken' || this.parser.kind() === 'ExclamationToken') {
+                member.push(this.parser.token());
+            }
+            if (this.parser.kind() === 'OpenParenToken' || this.parser.kind() === 'LessThanToken') {
+                children.push(this.parser.methodBody(start, member, methodKind, async, generator));
+            } else {
+                if (this.parser.kind() === 'ColonToken') {
+                    this.parser.next();
+                    member.push(this.parser.type());
+                }
+                if (this.parser.kind() === 'EqualsToken') {
+                    this.parser.next();
+                    member.push(this.parser.rootAssignment());
+                }
+                this.semicolon();
+                children.push(this.parser.make('PropertyDeclaration', start, member));
+            }
+        }
+        this.parser.expect('CloseBraceToken');
+        return this.parser.make(expression ? 'ClassExpression' : 'ClassDeclaration', pos, children);
+    }
+    forStatement() {
+        const pos = this.parser.scanner.fullStart;
+        this.parser.next();
+        const children = [];
+        if (this.parser.kind() === 'AwaitKeyword') {
+            children.push(this.parser.token());
+        }
+        this.parser.expect('OpenParenToken');
+        const old = this.parser.getIn();
+        this.parser.setIn(true);
+        if (this.parser.kind() !== 'SemicolonToken') {
+            children.push(this.parser.kind() === 'ConstKeyword' || this.parser.kind() === 'LetKeyword' || this.parser.kind() === 'VarKeyword' || this.parser.kind() === 'UsingKeyword' && this.parser.nextIdentifierSameLine() || this.parser.kind() === 'AwaitKeyword' && this.parser.peek() === 'UsingKeyword' ? this.variableList() : this.parser.rootExpression());
+        }
+        this.parser.setIn(old);
+        if (this.parser.kind() === 'OfKeyword' || this.parser.kind() === 'InKeyword') {
+            const of = this.parser.kind() === 'OfKeyword';
+            this.parser.next();
+            children.push(of ? this.parser.rootAssignment() : this.parser.rootExpression());
+            this.parser.expect('CloseParenToken');
+            children.push(this.statement());
+            return this.parser.make(of ? 'ForOfStatement' : 'ForInStatement', pos, children);
+        }
+        this.parser.expect('SemicolonToken');
+        if (this.parser.kind() !== 'SemicolonToken') {
+            children.push(this.parser.rootExpression());
+        }
+        this.parser.expect('SemicolonToken');
+        if (this.parser.kind() !== 'CloseParenToken') {
+            children.push(this.parser.rootExpression());
+        }
+        this.parser.expect('CloseParenToken');
+        children.push(this.statement());
+        return this.parser.make('ForStatement', pos, children);
+    }
+    switchStatement() {
+        const pos = this.parser.scanner.fullStart;
+        this.parser.next();
+        this.parser.expect('OpenParenToken');
+        const expression = this.parser.rootExpression();
+        this.parser.expect('CloseParenToken');
+        const start = this.parser.scanner.fullStart;
+        this.parser.expect('OpenBraceToken');
+        const clauses = [];
+        while(this.parser.kind() !== 'CloseBraceToken'){
+            const clausePos = this.parser.scanner.fullStart;
+            const isCase = this.parser.kind() === 'CaseKeyword';
+            this.parser.next();
+            const statements = [];
+            if (isCase) {
+                statements.push(this.parser.rootExpression());
+            }
+            this.parser.expect('ColonToken');
+            while(this.parser.kind() !== 'CaseKeyword' && this.parser.kind() !== 'DefaultKeyword' && this.parser.kind() !== 'CloseBraceToken'){
+                statements.push(this.statement());
+            }
+            clauses.push(this.parser.make(isCase ? 'CaseClause' : 'DefaultClause', clausePos, statements));
+        }
+        this.parser.expect('CloseBraceToken');
+        const block = this.parser.make('CaseBlock', start, clauses);
+        return this.parser.make('SwitchStatement', pos, [
+            expression,
+            block
+        ]);
+    }
+    tryStatement() {
+        const pos = this.parser.scanner.fullStart;
+        this.parser.next();
+        const children = [
+            this.block()
+        ];
+        if (this.parser.kind() === 'CatchKeyword') {
+            const start = this.parser.scanner.fullStart;
+            this.parser.next();
+            const clause = [];
+            if (this.parser.kind() === 'OpenParenToken') {
+                this.parser.next();
+                const declarationPos = this.parser.scanner.fullStart;
+                const parts = [
+                    this.parser.bindingName()
+                ];
+                if (this.parser.kind() === 'ColonToken') {
+                    this.parser.next();
+                    parts.push(this.parser.type());
+                }
+                clause.push(this.parser.make('VariableDeclaration', declarationPos, parts));
+                this.parser.expect('CloseParenToken');
+            }
+            clause.push(this.block());
+            children.push(this.parser.make('CatchClause', start, clause));
+        }
+        if (this.parser.kind() === 'FinallyKeyword') {
+            this.parser.next();
+            children.push(this.block());
+        }
+        return this.parser.make('TryStatement', pos, children);
+    }
+    statement() {
+        const pos = this.parser.scanner.fullStart;
+        if (this.parser.kind() === 'WithKeyword') {
+            this.parser.next();
+            this.parser.expect('OpenParenToken');
+            const expression = this.parser.rootExpression();
+            this.parser.expect('CloseParenToken');
+            return this.parser.make('WithStatement', pos, [
+                expression,
+                this.statement()
+            ]);
+        }
+        if (this.parser.kind() === 'ExportKeyword' && this.exportedClauseAhead()) {
+            return this.exportDeclaration(pos, []);
+        }
+        if (this.parser.kind() === 'OpenBraceToken') {
+            return this.block();
+        }
+        if (this.parser.kind() === 'SemicolonToken') {
+            this.parser.next();
+            return this.parser.make('EmptyStatement', pos);
+        }
+        if (this.parser.kind() === 'ReturnKeyword' || this.parser.kind() === 'ThrowKeyword') {
+            const returning = this.parser.kind() === 'ReturnKeyword';
+            this.parser.next();
+            const children = [];
+            if (this.parser.kind() !== 'CloseBraceToken' && this.parser.kind() !== 'SemicolonToken' && this.parser.kind() !== 'EndOfFile' && (this.parser.scanner.flags & 1) === 0) {
+                children.push(this.parser.rootExpression());
+            }
+            this.semicolon();
+            return this.parser.make(returning ? 'ReturnStatement' : 'ThrowStatement', pos, children);
+        }
+        if (this.parser.kind() === 'ConstKeyword' && this.parser.peek() !== 'EnumKeyword' || this.parser.kind() === 'LetKeyword' || this.parser.kind() === 'VarKeyword' || this.parser.kind() === 'UsingKeyword' && this.parser.nextIdentifierSameLine() || this.parser.kind() === 'AwaitKeyword' && this.parser.peek() === 'UsingKeyword') {
+            const list = this.variableList();
+            this.semicolon();
+            return this.parser.make('VariableStatement', pos, [
+                list
+            ]);
+        }
+        if (this.parser.kind() === 'IfKeyword' || this.parser.kind() === 'WhileKeyword') {
+            const conditional = this.parser.kind() === 'IfKeyword';
+            this.parser.next();
+            this.parser.expect('OpenParenToken');
+            const condition = this.parser.rootExpression();
+            this.parser.expect('CloseParenToken');
+            const body = this.statement();
+            const children = [
+                condition,
+                body
+            ];
+            if (conditional && this.parser.kind() === 'ElseKeyword') {
+                this.parser.next();
+                children.push(this.statement());
+            }
+            return this.parser.make(conditional ? 'IfStatement' : 'WhileStatement', pos, children);
+        }
+        if (this.parser.kind() === 'ForKeyword') {
+            return this.forStatement();
+        }
+        if (this.parser.kind() === 'SwitchKeyword') {
+            return this.switchStatement();
+        }
+        if (this.parser.kind() === 'TryKeyword') {
+            return this.tryStatement();
+        }
+        if (this.parser.kind() === 'DoKeyword') {
+            this.parser.next();
+            const body = this.statement();
+            this.parser.expect('WhileKeyword');
+            this.parser.expect('OpenParenToken');
+            const condition = this.parser.rootExpression();
+            this.parser.expect('CloseParenToken');
+            if (this.parser.kind() === 'SemicolonToken') {
+                this.parser.next();
+            }
+            return this.parser.make('DoStatement', pos, [
+                body,
+                condition
+            ]);
+        }
+        if (this.parser.kind() === 'BreakKeyword' || this.parser.kind() === 'ContinueKeyword' || this.parser.kind() === 'DebuggerKeyword') {
+            const kind = this.parser.kind() === 'BreakKeyword' ? 'BreakStatement' : this.parser.kind() === 'ContinueKeyword' ? 'ContinueStatement' : 'DebuggerStatement';
+            this.parser.next();
+            const children = [];
+            if (kind !== 'DebuggerStatement' && this.parser.kind() === 'Identifier' && (this.parser.scanner.flags & 1) === 0) {
+                children.push(this.parser.identifier());
+            }
+            this.semicolon();
+            return this.parser.make(kind, pos, children);
+        }
+        if (this.parser.kind() === 'Identifier' && this.parser.peek() === 'ColonToken') {
+            const name = this.parser.identifier();
+            this.parser.next();
+            const body = this.statement();
+            return this.parser.make('LabeledStatement', pos, [
+                name,
+                body
+            ]);
+        }
+        const modifiers = [];
+        let async = false;
+        while(this.parser.kind() === 'AtToken' || this.parser.kind() === 'ExportKeyword' || this.parser.kind() === 'DefaultKeyword' || this.parser.kind() === 'DeclareKeyword' || this.parser.kind() === 'AbstractKeyword' || this.parser.kind() === 'AsyncKeyword' && this.parser.peek() === 'FunctionKeyword' || this.parser.kind() === 'ConstKeyword' && this.parser.peek() === 'EnumKeyword'){
+            if (this.parser.kind() === 'AsyncKeyword') {
+                async = true;
+            }
+            modifiers.push(this.parser.kind() === 'AtToken' ? this.decorator() : this.parser.token());
+        }
+        if (this.parser.kind() === 'FunctionKeyword') {
+            return this.functionDeclaration(pos, modifiers, async);
+        }
+        if (this.parser.kind() === 'ClassKeyword') {
+            return this.classDeclaration(pos, modifiers, false);
+        }
+        if (this.parser.kind() === 'ConstKeyword' || this.parser.kind() === 'LetKeyword' || this.parser.kind() === 'VarKeyword' || this.parser.kind() === 'UsingKeyword' && this.parser.nextIdentifierSameLine() || this.parser.kind() === 'AwaitKeyword' && this.parser.peek() === 'UsingKeyword') {
+            modifiers.push(this.variableList());
+            this.semicolon();
+            return this.parser.make('VariableStatement', pos, modifiers);
+        }
+        if ((this.parser.kind() === 'TypeKeyword' || this.parser.kind() === 'InterfaceKeyword') && this.parser.nextIdentifierSameLine()) {
+            const interface_ = this.parser.kind() === 'InterfaceKeyword';
+            this.parser.next();
+            modifiers.push(this.parser.identifier());
+            for (const type of this.parser.typeParameters()){
+                modifiers.push(type);
+            }
+            if (interface_) {
+                if (this.parser.kind() === 'ExtendsKeyword') {
+                    const start = this.parser.scanner.fullStart;
+                    this.parser.next();
+                    const bases = [];
+                    while(true){
+                        const startType = this.parser.scanner.fullStart;
+                        const parts = [
+                            this.parser.entityName()
+                        ];
+                        if (this.parser.kind() === 'LessThanToken') {
+                            for (const type of this.parser.typeArguments()){
+                                parts.push(type);
+                            }
+                        }
+                        bases.push(this.parser.make('TypeReference', startType, parts));
+                        if (this.parser.kind() !== 'CommaToken') {
+                            break;
+                        }
+                        this.parser.next();
+                    }
+                    const heritage = this.parser.make('HeritageClause', start, bases);
+                    this.parser.node(heritage).operator = 'ExtendsKeyword';
+                    modifiers.push(heritage);
+                }
+                const body = this.parser.typeLiteral();
+                for (const member of this.parser.node(body).children){
+                    modifiers.push(member);
+                }
+            } else {
+                this.parser.expect('EqualsToken');
+                modifiers.push(this.parser.kind() === 'IntrinsicKeyword' && this.parser.peek() !== 'DotToken' ? this.parser.token() : this.parser.type());
+                this.semicolon();
+            }
+            return this.parser.make(interface_ ? 'InterfaceDeclaration' : 'TypeAliasDeclaration', pos, modifiers);
+        }
+        if (this.parser.kind() === 'EnumKeyword') {
+            this.parser.next();
+            modifiers.push(this.parser.identifier());
+            this.parser.expect('OpenBraceToken');
+            while(this.parser.kind() !== 'CloseBraceToken'){
+                const start = this.parser.scanner.fullStart;
+                const member = [
+                    this.parser.propertyName()
+                ];
+                if (this.parser.kind() === 'EqualsToken') {
+                    this.parser.next();
+                    member.push(this.parser.rootAssignment());
+                }
+                modifiers.push(this.parser.make('EnumMember', start, member));
+                if (this.parser.kind() !== 'CommaToken') {
+                    break;
+                }
+                this.parser.next();
+            }
+            this.parser.expect('CloseBraceToken');
+            return this.parser.make('EnumDeclaration', pos, modifiers);
+        }
+        if ((this.parser.kind() === 'NamespaceKeyword' || this.parser.kind() === 'ModuleKeyword') && (this.parser.nextIdentifierSameLine() || this.parser.peek() === 'StringLiteral') || this.parser.kind() === 'GlobalKeyword' && this.parser.peek() === 'OpenBraceToken') {
+            const keyword = this.parser.kind();
+            if (keyword !== 'GlobalKeyword') {
+                this.parser.next();
+            }
+            return this.moduleDeclaration(pos, modifiers, keyword);
+        }
+        if (this.parser.kind() === 'ImportKeyword' && this.parser.peek() !== 'OpenParenToken' && this.parser.peek() !== 'DotToken') {
+            return this.importDeclaration(pos, modifiers);
+        }
+        const expression = this.parser.rootExpression();
+        this.semicolon();
+        return this.parser.make('ExpressionStatement', pos, [
+            expression
+        ]);
+    }
+}
+
+
+//# sourceMappingURL=data:application/json;base64,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

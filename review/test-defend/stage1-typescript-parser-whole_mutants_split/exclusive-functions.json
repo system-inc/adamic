@@ -1,0 +1,587 @@
+[
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "function": "node",
+    "compiler_calls": 1323272,
+    "yield_calls": 0,
+    "generated_line_start": 22,
+    "generated_line_end": 23,
+    "note": "Generated JS coordinates; original TS lines are in exclusive-lines.json via source maps."
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "function": "primary",
+    "compiler_calls": 219468,
+    "yield_calls": 0,
+    "generated_line_start": 63,
+    "generated_line_end": 173,
+    "note": "Generated JS coordinates; original TS lines are in exclusive-lines.json via source maps."
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "function": "bindingIdentifier",
+    "compiler_calls": 1569,
+    "yield_calls": 0,
+    "generated_line_start": 196,
+    "generated_line_end": 199,
+    "note": "Generated JS coordinates; original TS lines are in exclusive-lines.json via source maps."
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "function": "nextIdentifierSameLine",
+    "compiler_calls": 1431,
+    "yield_calls": 0,
+    "generated_line_start": 199,
+    "generated_line_end": 206,
+    "note": "Generated JS coordinates; original TS lines are in exclusive-lines.json via source maps."
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "function": "tupleNameAhead",
+    "compiler_calls": 138,
+    "yield_calls": 0,
+    "generated_line_start": 266,
+    "generated_line_end": 275,
+    "note": "Generated JS coordinates; original TS lines are in exclusive-lines.json via source maps."
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "function": "typeArguments",
+    "compiler_calls": 2592,
+    "yield_calls": 0,
+    "generated_line_start": 276,
+    "generated_line_end": 294,
+    "note": "Generated JS coordinates; original TS lines are in exclusive-lines.json via source maps."
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "function": "entityName",
+    "compiler_calls": 36655,
+    "yield_calls": 0,
+    "generated_line_start": 323,
+    "generated_line_end": 332,
+    "note": "Generated JS coordinates; original TS lines are in exclusive-lines.json via source maps."
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "function": "importType",
+    "compiler_calls": 12,
+    "yield_calls": 0,
+    "generated_line_start": 332,
+    "generated_line_end": 371,
+    "note": "Generated JS coordinates; original TS lines are in exclusive-lines.json via source maps."
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "function": "type",
+    "compiler_calls": 54463,
+    "yield_calls": 0,
+    "generated_line_start": 371,
+    "generated_line_end": 652,
+    "note": "Generated JS coordinates; original TS lines are in exclusive-lines.json via source maps."
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "function": "mappedAhead",
+    "compiler_calls": 337,
+    "yield_calls": 0,
+    "generated_line_start": 652,
+    "generated_line_end": 663,
+    "note": "Generated JS coordinates; original TS lines are in exclusive-lines.json via source maps."
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "function": "mappedType",
+    "compiler_calls": 14,
+    "yield_calls": 0,
+    "generated_line_start": 663,
+    "generated_line_end": 706,
+    "note": "Generated JS coordinates; original TS lines are in exclusive-lines.json via source maps."
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "function": "indexSignatureAhead",
+    "compiler_calls": 11,
+    "yield_calls": 0,
+    "generated_line_start": 706,
+    "generated_line_end": 711,
+    "note": "Generated JS coordinates; original TS lines are in exclusive-lines.json via source maps."
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "function": "typeLiteral",
+    "compiler_calls": 1112,
+    "yield_calls": 0,
+    "generated_line_start": 711,
+    "generated_line_end": 789,
+    "note": "Generated JS coordinates; original TS lines are in exclusive-lines.json via source maps."
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "function": "bindingName",
+    "compiler_calls": 38976,
+    "yield_calls": 0,
+    "generated_line_start": 826,
+    "generated_line_end": 869,
+    "note": "Generated JS coordinates; original TS lines are in exclusive-lines.json via source maps."
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "function": "rootAssignment",
+    "compiler_calls": 16191,
+    "yield_calls": 0,
+    "generated_line_start": 882,
+    "generated_line_end": 888,
+    "note": "Generated JS coordinates; original TS lines are in exclusive-lines.json via source maps."
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "function": "arrow",
+    "compiler_calls": 841,
+    "yield_calls": 0,
+    "generated_line_start": 894,
+    "generated_line_end": 937,
+    "note": "Generated JS coordinates; original TS lines are in exclusive-lines.json via source maps."
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "function": "returnType",
+    "compiler_calls": 11310,
+    "yield_calls": 0,
+    "generated_line_start": 937,
+    "generated_line_end": 959,
+    "note": "Generated JS coordinates; original TS lines are in exclusive-lines.json via source maps."
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "function": "functionExpression",
+    "compiler_calls": 265,
+    "yield_calls": 0,
+    "generated_line_start": 960,
+    "generated_line_end": 997,
+    "note": "Generated JS coordinates; original TS lines are in exclusive-lines.json via source maps."
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "function": "node",
+    "compiler_calls": 43395,
+    "yield_calls": 0,
+    "generated_line_start": 1006,
+    "generated_line_end": 1007,
+    "note": "Generated JS coordinates; original TS lines are in exclusive-lines.json via source maps."
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "function": "entityName",
+    "compiler_calls": 633,
+    "yield_calls": 0,
+    "generated_line_start": 1010,
+    "generated_line_end": 1010,
+    "note": "Generated JS coordinates; original TS lines are in exclusive-lines.json via source maps."
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "function": "type",
+    "compiler_calls": 2283,
+    "yield_calls": 0,
+    "generated_line_start": 1013,
+    "generated_line_end": 1014,
+    "note": "Generated JS coordinates; original TS lines are in exclusive-lines.json via source maps."
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "function": "typeArguments",
+    "compiler_calls": 44,
+    "yield_calls": 0,
+    "generated_line_start": 1016,
+    "generated_line_end": 1016,
+    "note": "Generated JS coordinates; original TS lines are in exclusive-lines.json via source maps."
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "function": "returnType",
+    "compiler_calls": 5235,
+    "yield_calls": 0,
+    "generated_line_start": 1021,
+    "generated_line_end": 1021,
+    "note": "Generated JS coordinates; original TS lines are in exclusive-lines.json via source maps."
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "function": "bindingName",
+    "compiler_calls": 15709,
+    "yield_calls": 0,
+    "generated_line_start": 1022,
+    "generated_line_end": 1023,
+    "note": "Generated JS coordinates; original TS lines are in exclusive-lines.json via source maps."
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "function": "rootAssignment",
+    "compiler_calls": 15932,
+    "yield_calls": 0,
+    "generated_line_start": 1023,
+    "generated_line_end": 1024,
+    "note": "Generated JS coordinates; original TS lines are in exclusive-lines.json via source maps."
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "function": "nextIdentifierSameLine",
+    "compiler_calls": 1416,
+    "yield_calls": 0,
+    "generated_line_start": 1028,
+    "generated_line_end": 1029,
+    "note": "Generated JS coordinates; original TS lines are in exclusive-lines.json via source maps."
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "function": "propertyName",
+    "compiler_calls": 11079,
+    "yield_calls": 0,
+    "generated_line_start": 1030,
+    "generated_line_end": 1031,
+    "note": "Generated JS coordinates; original TS lines are in exclusive-lines.json via source maps."
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "function": "methodBody",
+    "compiler_calls": 38,
+    "yield_calls": 0,
+    "generated_line_start": 1032,
+    "generated_line_end": 1035,
+    "note": "Generated JS coordinates; original TS lines are in exclusive-lines.json via source maps."
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "function": "primary",
+    "compiler_calls": 1,
+    "yield_calls": 0,
+    "generated_line_start": 1036,
+    "generated_line_end": 1037,
+    "note": "Generated JS coordinates; original TS lines are in exclusive-lines.json via source maps."
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "function": "typeLiteral",
+    "compiler_calls": 789,
+    "yield_calls": 0,
+    "generated_line_start": 1040,
+    "generated_line_end": 1040,
+    "note": "Generated JS coordinates; original TS lines are in exclusive-lines.json via source maps."
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "function": "depth",
+    "compiler_calls": 1,
+    "yield_calls": 0,
+    "generated_line_start": 1048,
+    "generated_line_end": 1048,
+    "note": "Generated JS coordinates; original TS lines are in exclusive-lines.json via source maps."
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "function": "block",
+    "compiler_calls": 1036,
+    "yield_calls": 0,
+    "generated_line_start": 1049,
+    "generated_line_end": 1050,
+    "note": "Generated JS coordinates; original TS lines are in exclusive-lines.json via source maps."
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "function": "semicolon",
+    "compiler_calls": 2,
+    "yield_calls": 0,
+    "generated_line_start": 1051,
+    "generated_line_end": 1053,
+    "note": "Generated JS coordinates; original TS lines are in exclusive-lines.json via source maps."
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "function": "classDeclaration",
+    "compiler_calls": 1,
+    "yield_calls": 0,
+    "generated_line_start": 1053,
+    "generated_line_end": 1055,
+    "note": "Generated JS coordinates; original TS lines are in exclusive-lines.json via source maps."
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "function": "spread",
+    "compiler_calls": 284,
+    "yield_calls": 0,
+    "generated_line_start": 1085,
+    "generated_line_end": 1091,
+    "note": "Generated JS coordinates; original TS lines are in exclusive-lines.json via source maps."
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "function": "templatePart",
+    "compiler_calls": 876,
+    "yield_calls": 0,
+    "generated_line_start": 1245,
+    "generated_line_end": 1254,
+    "note": "Generated JS coordinates; original TS lines are in exclusive-lines.json via source maps."
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "function": "templateType",
+    "compiler_calls": 3,
+    "yield_calls": 0,
+    "generated_line_start": 1254,
+    "generated_line_end": 1269,
+    "note": "Generated JS coordinates; original TS lines are in exclusive-lines.json via source maps."
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "function": "template",
+    "compiler_calls": 340,
+    "yield_calls": 0,
+    "generated_line_start": 1269,
+    "generated_line_end": 1293,
+    "note": "Generated JS coordinates; original TS lines are in exclusive-lines.json via source maps."
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "function": "array",
+    "compiler_calls": 1965,
+    "yield_calls": 0,
+    "generated_line_start": 1293,
+    "generated_line_end": 1314,
+    "note": "Generated JS coordinates; original TS lines are in exclusive-lines.json via source maps."
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "function": "propertyName",
+    "compiler_calls": 22936,
+    "yield_calls": 0,
+    "generated_line_start": 1314,
+    "generated_line_end": 1331,
+    "note": "Generated JS coordinates; original TS lines are in exclusive-lines.json via source maps."
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "function": "methodBody",
+    "compiler_calls": 233,
+    "yield_calls": 0,
+    "generated_line_start": 1331,
+    "generated_line_end": 1357,
+    "note": "Generated JS coordinates; original TS lines are in exclusive-lines.json via source maps."
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "function": "object",
+    "compiler_calls": 1254,
+    "yield_calls": 0,
+    "generated_line_start": 1357,
+    "generated_line_end": 1436,
+    "note": "Generated JS coordinates; original TS lines are in exclusive-lines.json via source maps."
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "function": "allowInExpression",
+    "compiler_calls": 7127,
+    "yield_calls": 0,
+    "generated_line_start": 1584,
+    "generated_line_end": 1590,
+    "note": "Generated JS coordinates; original TS lines are in exclusive-lines.json via source maps."
+  },
+  {
+    "file": "stage1/typescript/scanner/scanner.ts",
+    "function": "error",
+    "compiler_calls": 1,
+    "yield_calls": 0,
+    "generated_line_start": 54,
+    "generated_line_end": 61,
+    "note": "Generated JS coordinates; original TS lines are in exclusive-lines.json via source maps."
+  },
+  {
+    "file": "stage1/typescript/scanner/scanner.ts",
+    "function": "unicode",
+    "compiler_calls": 13,
+    "yield_calls": 0,
+    "generated_line_start": 92,
+    "generated_line_end": 140,
+    "note": "Generated JS coordinates; original TS lines are in exclusive-lines.json via source maps."
+  },
+  {
+    "file": "stage1/typescript/scanner/scanner.ts",
+    "function": "escape",
+    "compiler_calls": 140,
+    "yield_calls": 0,
+    "generated_line_start": 140,
+    "generated_line_end": 218,
+    "note": "Generated JS coordinates; original TS lines are in exclusive-lines.json via source maps."
+  },
+  {
+    "file": "stage1/typescript/scanner/scanner.ts",
+    "function": "template",
+    "compiler_calls": 943,
+    "yield_calls": 0,
+    "generated_line_start": 295,
+    "generated_line_end": 340,
+    "note": "Generated JS coordinates; original TS lines are in exclusive-lines.json via source maps."
+  },
+  {
+    "file": "stage1/typescript/scanner/scanner.ts",
+    "function": "rescanTemplate",
+    "compiler_calls": 542,
+    "yield_calls": 0,
+    "generated_line_start": 764,
+    "generated_line_end": 765,
+    "note": "Generated JS coordinates; original TS lines are in exclusive-lines.json via source maps."
+  },
+  {
+    "file": "stage1/typescript/scanner/scanner.ts",
+    "function": "rescanSlash",
+    "compiler_calls": 92,
+    "yield_calls": 0,
+    "generated_line_start": 766,
+    "generated_line_end": 866,
+    "note": "Generated JS coordinates; original TS lines are in exclusive-lines.json via source maps."
+  },
+  {
+    "file": "stage1/typescript/parser/statements.ts",
+    "function": "variableList",
+    "compiler_calls": 15673,
+    "yield_calls": 0,
+    "generated_line_start": 21,
+    "generated_line_end": 61,
+    "note": "Generated JS coordinates; original TS lines are in exclusive-lines.json via source maps."
+  },
+  {
+    "file": "stage1/typescript/parser/statements.ts",
+    "function": "lookahead",
+    "compiler_calls": 4177,
+    "yield_calls": 0,
+    "generated_line_start": 61,
+    "generated_line_end": 85,
+    "note": "Generated JS coordinates; original TS lines are in exclusive-lines.json via source maps."
+  },
+  {
+    "file": "stage1/typescript/parser/statements.ts",
+    "function": "canExportName",
+    "compiler_calls": 1,
+    "yield_calls": 0,
+    "generated_line_start": 88,
+    "generated_line_end": 94,
+    "note": "Generated JS coordinates; original TS lines are in exclusive-lines.json via source maps."
+  },
+  {
+    "file": "stage1/typescript/parser/statements.ts",
+    "function": "specifiers",
+    "compiler_calls": 75,
+    "yield_calls": 0,
+    "generated_line_start": 94,
+    "generated_line_end": 156,
+    "note": "Generated JS coordinates; original TS lines are in exclusive-lines.json via source maps."
+  },
+  {
+    "file": "stage1/typescript/parser/statements.ts",
+    "function": "importDeclaration",
+    "compiler_calls": 88,
+    "yield_calls": 0,
+    "generated_line_start": 187,
+    "generated_line_end": 278,
+    "note": "Generated JS coordinates; original TS lines are in exclusive-lines.json via source maps."
+  },
+  {
+    "file": "stage1/typescript/parser/statements.ts",
+    "function": "exportDeclaration",
+    "compiler_calls": 77,
+    "yield_calls": 0,
+    "generated_line_start": 278,
+    "generated_line_end": 330,
+    "note": "Generated JS coordinates; original TS lines are in exclusive-lines.json via source maps."
+  },
+  {
+    "file": "stage1/typescript/parser/statements.ts",
+    "function": "moduleDeclaration",
+    "compiler_calls": 11,
+    "yield_calls": 0,
+    "generated_line_start": 330,
+    "generated_line_end": 358,
+    "note": "Generated JS coordinates; original TS lines are in exclusive-lines.json via source maps."
+  },
+  {
+    "file": "stage1/typescript/parser/statements.ts",
+    "function": "exportedClauseAhead",
+    "compiler_calls": 3477,
+    "yield_calls": 0,
+    "generated_line_start": 359,
+    "generated_line_end": 374,
+    "note": "Generated JS coordinates; original TS lines are in exclusive-lines.json via source maps."
+  },
+  {
+    "file": "stage1/typescript/parser/statements.ts",
+    "function": "classDeclaration",
+    "compiler_calls": 9,
+    "yield_calls": 0,
+    "generated_line_start": 405,
+    "generated_line_end": 569,
+    "note": "Generated JS coordinates; original TS lines are in exclusive-lines.json via source maps."
+  },
+  {
+    "file": "stage1/typescript/parser/statements.ts",
+    "function": "forStatement",
+    "compiler_calls": 976,
+    "yield_calls": 0,
+    "generated_line_start": 569,
+    "generated_line_end": 603,
+    "note": "Generated JS coordinates; original TS lines are in exclusive-lines.json via source maps."
+  },
+  {
+    "file": "stage1/typescript/parser/statements.ts",
+    "function": "switchStatement",
+    "compiler_calls": 569,
+    "yield_calls": 0,
+    "generated_line_start": 603,
+    "generated_line_end": 634,
+    "note": "Generated JS coordinates; original TS lines are in exclusive-lines.json via source maps."
+  },
+  {
+    "file": "stage1/typescript/parser/statements.ts",
+    "function": "tryStatement",
+    "compiler_calls": 34,
+    "yield_calls": 0,
+    "generated_line_start": 634,
+    "generated_line_end": 662,
+    "note": "Generated JS coordinates; original TS lines are in exclusive-lines.json via source maps."
+  },
+  {
+    "file": "stage1/typescript/parser/lookahead.ts",
+    "function": "prepare",
+    "compiler_calls": 39498,
+    "yield_calls": 0,
+    "generated_line_start": 22,
+    "generated_line_end": 50,
+    "note": "Generated JS coordinates; original TS lines are in exclusive-lines.json via source maps."
+  },
+  {
+    "file": "stage1/typescript/parser/lookahead.ts",
+    "function": "next",
+    "compiler_calls": 39498,
+    "yield_calls": 0,
+    "generated_line_start": 50,
+    "generated_line_end": 55,
+    "note": "Generated JS coordinates; original TS lines are in exclusive-lines.json via source maps."
+  },
+  {
+    "file": "stage1/typescript/parser/lookahead.ts",
+    "function": "optionalParameterAhead",
+    "compiler_calls": 25,
+    "yield_calls": 0,
+    "generated_line_start": 63,
+    "generated_line_end": 71,
+    "note": "Generated JS coordinates; original TS lines are in exclusive-lines.json via source maps."
+  },
+  {
+    "file": "stage1/typescript/parser/lookahead.ts",
+    "function": "typeArgumentsAhead",
+    "compiler_calls": 1236,
+    "yield_calls": 0,
+    "generated_line_start": 174,
+    "generated_line_end": 262,
+    "note": "Generated JS coordinates; original TS lines are in exclusive-lines.json via source maps."
+  }
+]

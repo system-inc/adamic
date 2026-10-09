@@ -1,0 +1,328 @@
+{
+  "method": "Static direct helper caller search, conservative. Generated/sharded callers outside the eight named tests are not in this bounded matrix.",
+  "callers": [
+    {
+      "file": "stage1/typescript/parser/compiler_expressions_shards_test.go",
+      "caller": "node(",
+      "top_level_tests": [
+        "func TestCompilerExpressionsAgreeUnion(t *testing.T) {",
+        "func TestCompilerExpressionsAgree_000(t *testing.T) {",
+        "func TestCompilerExpressionsAgree_001(t *testing.T) {",
+        "func TestCompilerExpressionsAgree_002(t *testing.T) {",
+        "func TestCompilerExpressionsAgree_003(t *testing.T) {",
+        "func TestCompilerExpressionsAgree_004(t *testing.T) {",
+        "func TestCompilerExpressionsAgree_005(t *testing.T) {",
+        "func TestCompilerExpressionsAgree_006(t *testing.T) {",
+        "func TestCompilerExpressionsAgree_007(t *testing.T) {",
+        "func TestCompilerExpressionsAgree_008(t *testing.T) {",
+        "func TestCompilerExpressionsAgree_009(t *testing.T) {",
+        "func TestCompilerExpressionsAgree_010(t *testing.T) {",
+        "func TestCompilerExpressionsAgree_011(t *testing.T) {",
+        "func TestCompilerExpressionsAgree_012(t *testing.T) {",
+        "func TestCompilerExpressionsAgree_013(t *testing.T) {",
+        "func TestCompilerExpressionsAgree_014(t *testing.T) {",
+        "func TestCompilerExpressionsAgree_015(t *testing.T) {"
+      ]
+    },
+    {
+      "file": "stage1/typescript/parser/generated_test.go",
+      "caller": "node(",
+      "top_level_tests": [
+        "func TestGeneratedExpressionsAgree(t *testing.T) {"
+      ]
+    },
+    {
+      "file": "stage1/typescript/parser/generated_test.go",
+      "caller": "buildPort(",
+      "top_level_tests": [
+        "func TestGeneratedExpressionsAgree(t *testing.T) {"
+      ]
+    },
+    {
+      "file": "stage1/typescript/parser/jsx_mutants_products_test.go",
+      "caller": "wholeNode(",
+      "top_level_tests": [
+        "func TestJsxMutants_000(t *testing.T) { t.Parallel(); jsxMutantsRun(t, 0) }",
+        "func TestJsxMutants_001(t *testing.T) { t.Parallel(); jsxMutantsRun(t, 1) }",
+        "func TestJsxMutants_002(t *testing.T) { t.Parallel(); jsxMutantsRun(t, 2) }",
+        "func TestJsxMutants_003(t *testing.T) { t.Parallel(); jsxMutantsRun(t, 3) }",
+        "func TestJsxMutants_004(t *testing.T) { t.Parallel(); jsxMutantsRun(t, 4) }",
+        "func TestJsxMutants_005(t *testing.T) { t.Parallel(); jsxMutantsRun(t, 5) }",
+        "func TestJsxMutants_006(t *testing.T) { t.Parallel(); jsxMutantsRun(t, 6) }",
+        "func TestJsxMutants_007(t *testing.T) { t.Parallel(); jsxMutantsRun(t, 7) }",
+        "func TestJsxMutants_008(t *testing.T) { t.Parallel(); jsxMutantsRun(t, 8) }",
+        "func TestJsxMutantsUnion(t *testing.T) {",
+        "func TestProduct_JsxMutantsOracle(t *testing.T) { t.Parallel(); jsxMutantsOracle(t) }",
+        "func TestProduct_JsxMutantsLower_Control(t *testing.T) {",
+        "func TestProduct_JsxMutantsNative_Control(t *testing.T) {",
+        "func TestProduct_JsxMutantsLower_000(t *testing.T) {",
+        "func TestProduct_JsxMutantsNative_000(t *testing.T) {",
+        "func TestProduct_JsxMutantsLower_001(t *testing.T) {",
+        "func TestProduct_JsxMutantsNative_001(t *testing.T) {",
+        "func TestProduct_JsxMutantsLower_002(t *testing.T) {",
+        "func TestProduct_JsxMutantsNative_002(t *testing.T) {",
+        "func TestProduct_JsxMutantsLower_003(t *testing.T) {",
+        "func TestProduct_JsxMutantsNative_003(t *testing.T) {",
+        "func TestProduct_JsxMutantsLower_004(t *testing.T) {",
+        "func TestProduct_JsxMutantsNative_004(t *testing.T) {",
+        "func TestProduct_JsxMutantsLower_005(t *testing.T) {",
+        "func TestProduct_JsxMutantsNative_005(t *testing.T) {",
+        "func TestProduct_JsxMutantsLower_006(t *testing.T) {",
+        "func TestProduct_JsxMutantsNative_006(t *testing.T) {",
+        "func TestProduct_JsxMutantsLower_007(t *testing.T) {",
+        "func TestProduct_JsxMutantsNative_007(t *testing.T) {",
+        "func TestProduct_JsxMutantsLower_008(t *testing.T) {",
+        "func TestProduct_JsxMutantsNative_008(t *testing.T) {"
+      ]
+    },
+    {
+      "file": "stage1/typescript/parser/jsx_mutants_test.go",
+      "caller": "node(",
+      "top_level_tests": []
+    },
+    {
+      "file": "stage1/typescript/parser/jsx_rejection_test.go",
+      "caller": "buildPort(",
+      "top_level_tests": [
+        "func TestJsxMemberNameRejection(t *testing.T) {",
+        "func TestJsxNameBoundaryRejections(t *testing.T) {"
+      ]
+    },
+    {
+      "file": "stage1/typescript/parser/jsx_scanner_mutants_test.go",
+      "caller": "wholeNode(",
+      "top_level_tests": [
+        "func TestJsxScannerMutants(t *testing.T) {"
+      ]
+    },
+    {
+      "file": "stage1/typescript/parser/jsx_scanner_mutants_test.go",
+      "caller": "buildPort(",
+      "top_level_tests": [
+        "func TestJsxScannerMutants(t *testing.T) {"
+      ]
+    },
+    {
+      "file": "stage1/typescript/parser/jsx_test.go",
+      "caller": "wholeNode(",
+      "top_level_tests": [
+        "func TestJsxNode(t *testing.T) {",
+        "func TestJsxNative(t *testing.T) {"
+      ]
+    },
+    {
+      "file": "stage1/typescript/parser/jsx_test.go",
+      "caller": "buildPort(",
+      "top_level_tests": [
+        "func TestJsxNode(t *testing.T) {",
+        "func TestJsxNative(t *testing.T) {"
+      ]
+    },
+    {
+      "file": "stage1/typescript/parser/parser_test.go",
+      "caller": "node(",
+      "top_level_tests": [
+        "func TestCompilerExpressionsAgree_Setup(t *testing.T) {"
+      ]
+    },
+    {
+      "file": "stage1/typescript/parser/parser_test.go",
+      "caller": "buildPort(",
+      "top_level_tests": [
+        "func TestCompilerExpressionsAgree_Setup(t *testing.T) {"
+      ]
+    },
+    {
+      "file": "stage1/typescript/parser/performance_test.go",
+      "caller": "wholeNode(",
+      "top_level_tests": [
+        "func TestPerformance(t *testing.T)      { performance(t, false) }",
+        "func TestWholePerformance(t *testing.T) { performance(t, true) }",
+        "func TestNodeCountCheckCatchesMutant(t *testing.T) {"
+      ]
+    },
+    {
+      "file": "stage1/typescript/parser/performance_test.go",
+      "caller": "node(",
+      "top_level_tests": [
+        "func TestPerformance(t *testing.T)      { performance(t, false) }",
+        "func TestWholePerformance(t *testing.T) { performance(t, true) }",
+        "func TestNodeCountCheckCatchesMutant(t *testing.T) {"
+      ]
+    },
+    {
+      "file": "stage1/typescript/parser/performance_test.go",
+      "caller": "buildPort(",
+      "top_level_tests": [
+        "func TestPerformance(t *testing.T)      { performance(t, false) }",
+        "func TestWholePerformance(t *testing.T) { performance(t, true) }",
+        "func TestNodeCountCheckCatchesMutant(t *testing.T) {"
+      ]
+    },
+    {
+      "file": "stage1/typescript/parser/setup_deadline_products_test.go",
+      "caller": "wholeMutantBuildPortProduct(",
+      "top_level_tests": [
+        "func TestProduct_ParserOracle(t *testing.T) {",
+        "func TestProduct_CompilerExpressionsLower(t *testing.T) {",
+        "func TestProduct_CompilerExpressionsNative(t *testing.T) {",
+        "func TestProduct_WholeMutantsLower_Control(t *testing.T) {",
+        "func TestProduct_WholeMutantsNative_Control(t *testing.T) {",
+        "func TestProduct_WholeMutantsLower_000(t *testing.T) {",
+        "func TestProduct_WholeMutantsNative_000(t *testing.T) {",
+        "func TestProduct_WholeMutantsLower_001(t *testing.T) {",
+        "func TestProduct_WholeMutantsNative_001(t *testing.T) {",
+        "func TestProduct_WholeMutantsLower_002(t *testing.T) {",
+        "func TestProduct_WholeMutantsNative_002(t *testing.T) {"
+      ]
+    },
+    {
+      "file": "stage1/typescript/parser/type_kinds_test.go",
+      "caller": "buildPort(",
+      "top_level_tests": [
+        "func TestEveryTypeNodeKindAgrees(t *testing.T) {"
+      ]
+    },
+    {
+      "file": "stage1/typescript/parser/whole_generated_test.go",
+      "caller": "wholeNode(",
+      "top_level_tests": [
+        "func TestWholeGeneratedAgrees(t *testing.T) {",
+        "func TestObsoleteImportAttributesAgrees(t *testing.T) {"
+      ]
+    },
+    {
+      "file": "stage1/typescript/parser/whole_generated_test.go",
+      "caller": "buildPort(",
+      "top_level_tests": [
+        "func TestWholeGeneratedAgrees(t *testing.T) {",
+        "func TestObsoleteImportAttributesAgrees(t *testing.T) {"
+      ]
+    },
+    {
+      "file": "stage1/typescript/parser/whole_mutants_setup_test.go",
+      "caller": "wholeMutantPortProduct(",
+      "top_level_tests": [
+        "func TestMain(m *testing.M) {",
+        "func TestWholeMutants_Setup(t *testing.T) {"
+      ]
+    },
+    {
+      "file": "stage1/typescript/parser/whole_mutants_setup_test.go",
+      "caller": "wholeMutantBuildPortProduct(",
+      "top_level_tests": [
+        "func TestMain(m *testing.M) {",
+        "func TestWholeMutants_Setup(t *testing.T) {"
+      ]
+    },
+    {
+      "file": "stage1/typescript/parser/whole_mutants_split_test.go",
+      "caller": "node(",
+      "top_level_tests": [
+        "func TestWholeMutants_000(t *testing.T) { t.Parallel(); wholeMutantsRunShard(t, 0) }",
+        "func TestWholeMutants_001(t *testing.T) { t.Parallel(); wholeMutantsRunShard(t, 1) }",
+        "func TestWholeMutants_002(t *testing.T) { t.Parallel(); wholeMutantsRunShard(t, 2) }",
+        "func TestWholeMutantsUnion(t *testing.T) {",
+        "func TestWholeMutantsRejectsSurvivor(t *testing.T) {"
+      ]
+    },
+    {
+      "file": "stage1/typescript/parser/whole_mutants_split_test.go",
+      "caller": "wholeMutantBuildPortProduct(",
+      "top_level_tests": [
+        "func TestWholeMutants_000(t *testing.T) { t.Parallel(); wholeMutantsRunShard(t, 0) }",
+        "func TestWholeMutants_001(t *testing.T) { t.Parallel(); wholeMutantsRunShard(t, 1) }",
+        "func TestWholeMutants_002(t *testing.T) { t.Parallel(); wholeMutantsRunShard(t, 2) }",
+        "func TestWholeMutantsUnion(t *testing.T) {",
+        "func TestWholeMutantsRejectsSurvivor(t *testing.T) {"
+      ]
+    },
+    {
+      "file": "stage1/typescript/parser/whole_mutants_test.go",
+      "caller": "wholeNode(",
+      "top_level_tests": [
+        "func TestWholeCountCheckCatchesMutant(t *testing.T) {"
+      ]
+    },
+    {
+      "file": "stage1/typescript/parser/whole_mutants_test.go",
+      "caller": "buildPort(",
+      "top_level_tests": [
+        "func TestWholeCountCheckCatchesMutant(t *testing.T) {"
+      ]
+    },
+    {
+      "file": "stage1/typescript/parser/whole_mutants_test.go",
+      "caller": "wholeMutantPortProduct(",
+      "top_level_tests": [
+        "func TestWholeCountCheckCatchesMutant(t *testing.T) {"
+      ]
+    },
+    {
+      "file": "stage1/typescript/parser/whole_test.go",
+      "caller": "wholeNode(",
+      "top_level_tests": [
+        "func TestWholeCompilerAgrees(t *testing.T) {"
+      ]
+    },
+    {
+      "file": "stage1/typescript/parser/whole_test.go",
+      "caller": "buildPort(",
+      "top_level_tests": [
+        "func TestWholeCompilerAgrees(t *testing.T) {"
+      ]
+    },
+    {
+      "file": "stage1/typescript/parser/yield_test.go",
+      "caller": "node(",
+      "top_level_tests": [
+        "func TestYieldLookaheadAgrees(t *testing.T) {"
+      ]
+    },
+    {
+      "file": "stage1/typescript/parser/yield_test.go",
+      "caller": "buildPort(",
+      "top_level_tests": [
+        "func TestYieldLookaheadAgrees(t *testing.T) {"
+      ]
+    },
+    {
+      "file": "stage1/typescript/parser/expressions_products_test.go",
+      "caller": "node(",
+      "top_level_tests": [
+        "func TestProduct_ExpressionsSource001(t *testing.T) { t.Parallel(); expressionSource(t, 1) }",
+        "func TestProduct_ExpressionsSource002(t *testing.T) { t.Parallel(); expressionSource(t, 2) }",
+        "func TestProduct_ExpressionsSource003(t *testing.T) { t.Parallel(); expressionSource(t, 3) }",
+        "func TestProduct_ExpressionsOracle(t *testing.T)    { t.Parallel(); wholeMutantBuildOracleProduct(t) }",
+        "func TestProduct_ExpressionsLower000(t *testing.T) {",
+        "func TestProduct_ExpressionsNative000(t *testing.T) { t.Parallel(); expressionBinary(t, 0) }",
+        "func TestProduct_ExpressionsLower001(t *testing.T) {",
+        "func TestProduct_ExpressionsNative001(t *testing.T) { t.Parallel(); expressionBinary(t, 1) }",
+        "func TestProduct_ExpressionsLower002(t *testing.T) {",
+        "func TestProduct_ExpressionsNative002(t *testing.T) { t.Parallel(); expressionBinary(t, 2) }",
+        "func TestProduct_ExpressionsLower003(t *testing.T) {",
+        "func TestProduct_ExpressionsNative003(t *testing.T) { t.Parallel(); expressionBinary(t, 3) }",
+        "func TestExpressionsAgree(t *testing.T) {"
+      ]
+    },
+    {
+      "file": "stage1/typescript/parser/expressions_products_test.go",
+      "caller": "wholeMutantBuildPortProduct(",
+      "top_level_tests": [
+        "func TestProduct_ExpressionsSource001(t *testing.T) { t.Parallel(); expressionSource(t, 1) }",
+        "func TestProduct_ExpressionsSource002(t *testing.T) { t.Parallel(); expressionSource(t, 2) }",
+        "func TestProduct_ExpressionsSource003(t *testing.T) { t.Parallel(); expressionSource(t, 3) }",
+        "func TestProduct_ExpressionsOracle(t *testing.T)    { t.Parallel(); wholeMutantBuildOracleProduct(t) }",
+        "func TestProduct_ExpressionsLower000(t *testing.T) {",
+        "func TestProduct_ExpressionsNative000(t *testing.T) { t.Parallel(); expressionBinary(t, 0) }",
+        "func TestProduct_ExpressionsLower001(t *testing.T) {",
+        "func TestProduct_ExpressionsNative001(t *testing.T) { t.Parallel(); expressionBinary(t, 1) }",
+        "func TestProduct_ExpressionsLower002(t *testing.T) {",
+        "func TestProduct_ExpressionsNative002(t *testing.T) { t.Parallel(); expressionBinary(t, 2) }",
+        "func TestProduct_ExpressionsLower003(t *testing.T) {",
+        "func TestProduct_ExpressionsNative003(t *testing.T) { t.Parallel(); expressionBinary(t, 3) }",
+        "func TestExpressionsAgree(t *testing.T) {"
+      ]
+    }
+  ]
+}

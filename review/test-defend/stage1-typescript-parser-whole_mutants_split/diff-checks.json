@@ -1,0 +1,17 @@
+[
+  {
+    "mutant": "D1",
+    "applies_to_starting_index": true,
+    "command": "git apply --check --cached D1.diff"
+  },
+  {
+    "mutant": "D2",
+    "applies_to_starting_index": true,
+    "command": "git apply --check --cached D2.diff"
+  },
+  {
+    "mutant": "D3",
+    "applies_to_starting_index": true,
+    "command": "git apply --check --cached D3.diff"
+  }
+]

@@ -1,0 +1,88 @@
+[
+  {
+    "test": "TestWholeCompilerAgrees",
+    "package": "stage1/typescript/parser",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestYieldLookaheadAgrees"
+    ],
+    "defense": "not defended",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "stage1/typescript/parser/statements.ts:80",
+        "change": "const declaration flags become let flags",
+        "rows_failed": [
+          "TestJsxNative",
+          "TestJsxNode",
+          "TestWholeCompilerAgrees",
+          "TestWholeGeneratedAgrees",
+          "TestWholePerformance"
+        ]
+      },
+      {
+        "mutant": "D2",
+        "file_line": "stage1/typescript/parser/statements.ts:324",
+        "change": "drop import-clause phase assignment",
+        "rows_failed": [
+          "TestObsoleteImportAttributesAgrees",
+          "TestWholeCompilerAgrees",
+          "TestWholeGeneratedAgrees",
+          "TestWholePerformance"
+        ]
+      },
+      {
+        "mutant": "D3",
+        "file_line": "stage1/typescript/parser/statements.ts:385",
+        "change": "flip export type-only semantic flag",
+        "rows_failed": [
+          "TestObsoleteImportAttributesAgrees",
+          "TestWholeCompilerAgrees",
+          "TestWholeGeneratedAgrees",
+          "TestWholePerformance"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_TYPESCRIPT_SOURCE=/tmp/u158/corpus ADAMIC_PARSER_BENCH=1 ADAMIC_BUILD_CACHE_DIR=/tmp/defend158/cache/D3 timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestWholeCompilerAgrees|TestYieldLookaheadAgrees|TestWholeGeneratedAgrees|TestWholePerformance)$' > D3-defense.log 2>&1; whole_test.go:34: Node: case 0 line 4: port \"1 ExportDeclaration 0 109 0 0 -1 0 0\\t\\t\\t\\t1\", Go \"1 ExportDeclaration 0 109 0 0 -1 0 0\\t\\t\\t\\t0\"",
+    "observed_subsumers": [
+      "TestWholeGeneratedAgrees",
+      "TestWholePerformance"
+    ],
+    "bounded": true,
+    "matrix_rows": [
+      "TestCompilerExpressionsAgreeUnion",
+      "TestCompilerExpressionsAgree_000",
+      "TestCompilerExpressionsAgree_001",
+      "TestCompilerExpressionsAgree_002",
+      "TestCompilerExpressionsAgree_003",
+      "TestCompilerExpressionsAgree_004",
+      "TestCompilerExpressionsAgree_005",
+      "TestCompilerExpressionsAgree_006",
+      "TestCompilerExpressionsAgree_007",
+      "TestCompilerExpressionsAgree_008",
+      "TestCompilerExpressionsAgree_009",
+      "TestCompilerExpressionsAgree_010",
+      "TestCompilerExpressionsAgree_011",
+      "TestCompilerExpressionsAgree_012",
+      "TestCompilerExpressionsAgree_013",
+      "TestCompilerExpressionsAgree_014",
+      "TestCompilerExpressionsAgree_015",
+      "TestCompilerExpressionsAgree_Setup",
+      "TestEveryTypeNodeKindAgrees",
+      "TestExpressionsAgree",
+      "TestGeneratedExpressionsAgree",
+      "TestJsxNative",
+      "TestJsxNode",
+      "TestObsoleteImportAttributesAgrees",
+      "TestTypeOnlyImportCycleCompiles",
+      "TestWholeCompilerAgrees",
+      "TestWholeGeneratedAgrees",
+      "TestWholePerformance",
+      "TestYieldLookaheadAgrees"
+    ],
+    "code_under_test": "TypeScript parser/scanner port and whole-tree serialized declaration metadata",
+    "oracle": "Unmodified typescript-go parser via testdata/oracle.go. Node and sanitized native run the port.",
+    "name_assertion_gap": "None found: it compares complete serialized trees for all 77 files of the pinned compiler corpus. It promises no timing threshold or separate countTree comparison."
+  }
+]

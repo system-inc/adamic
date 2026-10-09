@@ -1,0 +1,539 @@
+[
+  {
+    "id": "M1",
+    "phase": "build",
+    "rows": [
+      "TestProduct_WholeMutantsNative_Control"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^(TestProduct_WholeMutantsNative_Control)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 25.04315835200032,
+    "test_binary_seconds": 20.516,
+    "log": "review/test-audit/stage1-typescript-parser-whole_mutants_split/M1-build.log",
+    "fails": [],
+    "passes": [
+      "TestProduct_WholeMutantsNative_Control"
+    ],
+    "cooked": false,
+    "failing_lines": {},
+    "details": [
+      "setup_deadline_products_test.go:47: build typescript-parser-lowered 66a189832ae7 miss 7.69",
+      "setup_deadline_products_test.go:47: build typescript-parser-native de7012bda5d1 miss 12.49"
+    ]
+  },
+  {
+    "id": "M1",
+    "phase": "matrix",
+    "rows": [
+      "TestWholeCompilerAgrees",
+      "TestYieldLookaheadAgrees"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^(TestWholeCompilerAgrees|TestYieldLookaheadAgrees)$"
+    ],
+    "exit": 1,
+    "wall_seconds": 29.895640463000746,
+    "test_binary_seconds": 23.174,
+    "log": "review/test-audit/stage1-typescript-parser-whole_mutants_split/M1-matrix.log",
+    "fails": [
+      "TestWholeCompilerAgrees",
+      "TestYieldLookaheadAgrees"
+    ],
+    "passes": [],
+    "cooked": false,
+    "failing_lines": {
+      "TestWholeCompilerAgrees": "whole_test.go:34: Node: case 0 line 3: port \"1 SourceFile 0 111 0 0 -1 0 0\\t\\t\\t\\t\", Go \"0 SourceFile 0 111 0 0 -1 0 0\\t\\t\\t\\t\"",
+      "TestYieldLookaheadAgrees": "yield_test.go:45: Node: case 0 line 3: port \"1 YieldExpression 0 7 0 0 -1 0 0\\t\\t\\t\", Go \"0 YieldExpression 0 7 0 0 -1 0 0\\t\\t\\t\""
+    },
+    "details": []
+  },
+  {
+    "id": "M2",
+    "phase": "build",
+    "rows": [
+      "TestProduct_WholeMutantsNative_Control"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^(TestProduct_WholeMutantsNative_Control)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 24.692451225000696,
+    "test_binary_seconds": 21.015,
+    "log": "review/test-audit/stage1-typescript-parser-whole_mutants_split/M2-build.log",
+    "fails": [],
+    "passes": [
+      "TestProduct_WholeMutantsNative_Control"
+    ],
+    "cooked": false,
+    "failing_lines": {},
+    "details": [
+      "setup_deadline_products_test.go:47: build typescript-parser-lowered ddba3eeacf6c miss 7.67",
+      "setup_deadline_products_test.go:47: build typescript-parser-native 3bcef744d3cf miss 13.03"
+    ]
+  },
+  {
+    "id": "M2",
+    "phase": "matrix",
+    "rows": [
+      "TestWholeCompilerAgrees",
+      "TestYieldLookaheadAgrees"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^(TestWholeCompilerAgrees|TestYieldLookaheadAgrees)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 47.62667252599931,
+    "test_binary_seconds": 44.225,
+    "log": "review/test-audit/stage1-typescript-parser-whole_mutants_split/M2-matrix.log",
+    "fails": [],
+    "passes": [
+      "TestYieldLookaheadAgrees",
+      "TestWholeCompilerAgrees"
+    ],
+    "cooked": false,
+    "failing_lines": {},
+    "details": []
+  },
+  {
+    "id": "M3",
+    "phase": "build",
+    "rows": [
+      "TestProduct_WholeMutantsNative_Control"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^(TestProduct_WholeMutantsNative_Control)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 24.937956148000012,
+    "test_binary_seconds": 21.475,
+    "log": "review/test-audit/stage1-typescript-parser-whole_mutants_split/M3-build.log",
+    "fails": [],
+    "passes": [
+      "TestProduct_WholeMutantsNative_Control"
+    ],
+    "cooked": false,
+    "failing_lines": {},
+    "details": [
+      "setup_deadline_products_test.go:47: build typescript-parser-lowered 40932ea0c28a miss 8.88",
+      "setup_deadline_products_test.go:47: build typescript-parser-native 201b75dcbbbd miss 12.30"
+    ]
+  },
+  {
+    "id": "M3",
+    "phase": "matrix",
+    "rows": [
+      "TestWholeCompilerAgrees",
+      "TestYieldLookaheadAgrees"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^(TestWholeCompilerAgrees|TestYieldLookaheadAgrees)$"
+    ],
+    "exit": 1,
+    "wall_seconds": 44.62497772200004,
+    "test_binary_seconds": 42.007,
+    "log": "review/test-audit/stage1-typescript-parser-whole_mutants_split/M3-matrix.log",
+    "fails": [
+      "TestYieldLookaheadAgrees"
+    ],
+    "passes": [
+      "TestWholeCompilerAgrees"
+    ],
+    "cooked": false,
+    "failing_lines": {
+      "TestYieldLookaheadAgrees": "yield_test.go:41: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /workspace/adamic/stage1/typescript/parser/main.ts --manifest /tmp/adamic-gate/TestYieldLookaheadAgrees2933609585/001/manifest]: exit status 70"
+    },
+    "details": [
+      "adamic: panic: parser slice expected semicolon at 6 in /tmp/adamic-gate/TestYieldLookaheadAgrees2933609585/001/yield-0.ts"
+    ]
+  },
+  {
+    "id": "M4",
+    "phase": "build",
+    "rows": [
+      "TestProduct_WholeMutantsNative_Control"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^(TestProduct_WholeMutantsNative_Control)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 32.898534965999715,
+    "test_binary_seconds": 26.692,
+    "log": "review/test-audit/stage1-typescript-parser-whole_mutants_split/M4-build.log",
+    "fails": [],
+    "passes": [
+      "TestProduct_WholeMutantsNative_Control"
+    ],
+    "cooked": false,
+    "failing_lines": {},
+    "details": [
+      "setup_deadline_products_test.go:47: build typescript-parser-lowered 88158b7a4077 miss 10.70",
+      "setup_deadline_products_test.go:47: build typescript-parser-native 3f52d32557c4 miss 15.48"
+    ]
+  },
+  {
+    "id": "M4",
+    "phase": "matrix",
+    "rows": [
+      "TestWholeCompilerAgrees",
+      "TestYieldLookaheadAgrees"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^(TestWholeCompilerAgrees|TestYieldLookaheadAgrees)$"
+    ],
+    "exit": 1,
+    "wall_seconds": 27.653691547999188,
+    "test_binary_seconds": 21.326,
+    "log": "review/test-audit/stage1-typescript-parser-whole_mutants_split/M4-matrix.log",
+    "fails": [
+      "TestWholeCompilerAgrees",
+      "TestYieldLookaheadAgrees"
+    ],
+    "passes": [],
+    "cooked": false,
+    "failing_lines": {
+      "TestWholeCompilerAgrees": "whole_test.go:34: Node: case 0 line 4: port \"1 ExportDeclaration 0 111 0 0 -1 0 0\\t\\t\\t\\t0\", Go \"1 ExportDeclaration 0 109 0 0 -1 0 0\\t\\t\\t\\t0\"",
+      "TestYieldLookaheadAgrees": "yield_test.go:45: Node: case 9 line 43: port \"1 Identifier 0 6 0 0 -1 0 0\\t\\tyield\\t\", Go \"1 Identifier 0 5 0 0 -1 0 0\\t\\tyield\\t\""
+    },
+    "details": []
+  },
+  {
+    "id": "W1",
+    "phase": "vet",
+    "exit": 0,
+    "wall_seconds": 0.31626855499962403
+  },
+  {
+    "id": "W1",
+    "phase": "witness",
+    "rows": [
+      "TestWholeMutants_000",
+      "TestWholeMutants_001",
+      "TestWholeMutants_002",
+      "TestWholeMutantsUnion"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^(TestWholeMutants_000|TestWholeMutants_001|TestWholeMutants_002|TestWholeMutantsUnion)$"
+    ],
+    "exit": 1,
+    "wall_seconds": 10.357399270000315,
+    "test_binary_seconds": 2.553,
+    "log": "review/test-audit/stage1-typescript-parser-whole_mutants_split/W1-witness.log",
+    "fails": [
+      "TestWholeMutants_002",
+      "TestWholeMutants_001",
+      "TestWholeMutants_000"
+    ],
+    "passes": [
+      "TestWholeMutantsUnion"
+    ],
+    "cooked": false,
+    "failing_lines": {
+      "TestWholeMutants_002": "whole_mutants_split_test.go:242: TestWholeMutants_002: exit status 1",
+      "TestWholeMutants_001": "whole_mutants_split_test.go:241: TestWholeMutants_001: exit status 1",
+      "TestWholeMutants_000": "whole_mutants_split_test.go:240: TestWholeMutants_000: exit status 1"
+    },
+    "details": [
+      "whole_mutants_setup_test.go:75: build typescript-parser-oracle 609de97f7b6f hit 0.44",
+      "whole_mutants_setup_test.go:101: build typescript-parser-lowered ca739ecb810a hit 0.34",
+      "whole_mutants_setup_test.go:101: build typescript-parser-lowered f9752a3aaf18 hit 0.33",
+      "whole_mutants_setup_test.go:101: build typescript-parser-lowered 5327d17fe485 hit 0.34",
+      "whole_mutants_setup_test.go:101: build typescript-parser-lowered 627c70594c9c hit 0.37",
+      "whole_mutants_setup_test.go:101: build typescript-parser-native 936b2b048ffe hit 0.35",
+      "whole_mutants_setup_test.go:101: build typescript-parser-native 0c287ecf80c9 hit 0.34",
+      "whole_mutants_setup_test.go:101: build typescript-parser-native 3e4e248e5df6 hit 0.31",
+      "whole_mutants_setup_test.go:101: build typescript-parser-native 1944de5ed439 hit 0.37",
+      "whole_mutants_test.go:65: Node mutant survived: keyof becomes readonly",
+      "whole_mutants_test.go:65: Node mutant survived: type-only import phase lost",
+      "whole_mutants_test.go:65: Node mutant survived: for-of becomes for-in"
+    ]
+  },
+  {
+    "id": "W2",
+    "phase": "vet",
+    "exit": 0,
+    "wall_seconds": 0.2631685020005534
+  },
+  {
+    "id": "W2",
+    "phase": "witness",
+    "rows": [
+      "TestWholeCountCheckCatchesMutant"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^(TestWholeCountCheckCatchesMutant)$"
+    ],
+    "exit": 1,
+    "wall_seconds": 31.096588836999217,
+    "test_binary_seconds": 23.128,
+    "log": "review/test-audit/stage1-typescript-parser-whole_mutants_split/W2-witness.log",
+    "fails": [
+      "TestWholeCountCheckCatchesMutant"
+    ],
+    "passes": [],
+    "cooked": false,
+    "failing_lines": {
+      "TestWholeCountCheckCatchesMutant": "whole_mutants_test.go:90: Node counter mutant survived"
+    },
+    "details": []
+  },
+  {
+    "id": "W3",
+    "phase": "vet",
+    "exit": 0,
+    "wall_seconds": 0.2985519560006651
+  },
+  {
+    "id": "W3",
+    "phase": "witness",
+    "rows": [
+      "TestWholeMutantsRejectsSurvivor"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^(TestWholeMutantsRejectsSurvivor)$"
+    ],
+    "exit": 1,
+    "wall_seconds": 11.045948086999488,
+    "test_binary_seconds": 2.693,
+    "log": "review/test-audit/stage1-typescript-parser-whole_mutants_split/W3-witness.log",
+    "fails": [
+      "TestWholeMutantsRejectsSurvivor"
+    ],
+    "passes": [],
+    "cooked": false,
+    "failing_lines": {
+      "TestWholeMutantsRejectsSurvivor": "whole_mutants_split_test.go:302: planted surviving mutant escaped"
+    },
+    "details": [
+      "whole_mutants_setup_test.go:75: build typescript-parser-oracle 609de97f7b6f hit 0.34",
+      "whole_mutants_setup_test.go:101: build typescript-parser-lowered 5327d17fe485 hit 0.42",
+      "whole_mutants_setup_test.go:101: build typescript-parser-lowered f9752a3aaf18 hit 0.41",
+      "whole_mutants_setup_test.go:101: build typescript-parser-lowered 627c70594c9c hit 0.41",
+      "whole_mutants_setup_test.go:101: build typescript-parser-lowered ca739ecb810a hit 0.43",
+      "whole_mutants_setup_test.go:101: build typescript-parser-native 3e4e248e5df6 hit 0.38",
+      "whole_mutants_setup_test.go:101: build typescript-parser-native 1944de5ed439 hit 0.36",
+      "whole_mutants_setup_test.go:101: build typescript-parser-native 0c287ecf80c9 hit 0.34",
+      "whole_mutants_setup_test.go:101: build typescript-parser-native 936b2b048ffe hit 0.33"
+    ]
+  },
+  {
+    "id": "S1",
+    "phase": "vet",
+    "exit": 0,
+    "wall_seconds": 0.2675648149997869
+  },
+  {
+    "id": "S1",
+    "phase": "witness",
+    "rows": [
+      "TestWholeMutantsUnion"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^(TestWholeMutantsUnion)$"
+    ],
+    "exit": 1,
+    "wall_seconds": 7.778049718999682,
+    "test_binary_seconds": 0.014,
+    "log": "review/test-audit/stage1-typescript-parser-whole_mutants_split/S1-witness.log",
+    "fails": [
+      "TestWholeMutantsUnion"
+    ],
+    "passes": [],
+    "cooked": false,
+    "failing_lines": {
+      "TestWholeMutantsUnion": "whole_mutants_split_test.go:264: repeated sharded case \"type-only import phase lost\""
+    },
+    "details": []
+  },
+  {
+    "id": "P1",
+    "phase": "build",
+    "rows": [
+      "TestProduct_WholeMutantsNative_Control"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^(TestProduct_WholeMutantsNative_Control)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 15.634114423999563,
+    "test_binary_seconds": 13.01,
+    "log": "review/test-audit/stage1-typescript-parser-whole_mutants_split/P1-build.log",
+    "fails": [],
+    "passes": [
+      "TestProduct_WholeMutantsNative_Control"
+    ],
+    "cooked": false,
+    "failing_lines": {},
+    "details": [
+      "setup_deadline_products_test.go:47: build typescript-parser-lowered 166c41590e7f miss 7.99",
+      "setup_deadline_products_test.go:47: build typescript-parser-native acd66b30e245 miss 4.75"
+    ]
+  },
+  {
+    "id": "P1",
+    "phase": "matrix",
+    "rows": [
+      "TestWholeCompilerAgrees",
+      "TestYieldLookaheadAgrees"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^(TestWholeCompilerAgrees|TestYieldLookaheadAgrees)$"
+    ],
+    "exit": 1,
+    "wall_seconds": 15.77025255100125,
+    "test_binary_seconds": 13.431,
+    "log": "review/test-audit/stage1-typescript-parser-whole_mutants_split/P1-matrix.log",
+    "fails": [
+      "TestWholeCompilerAgrees",
+      "TestYieldLookaheadAgrees"
+    ],
+    "passes": [],
+    "cooked": false,
+    "failing_lines": {
+      "TestWholeCompilerAgrees": "whole_test.go:34: Node: case 0 line 2: port \"case 1\", Go \"file\"",
+      "TestYieldLookaheadAgrees": "yield_test.go:45: Node: case 0 line 2: port \"case 1\", Go \"expression\""
+    },
+    "details": []
+  }
+]

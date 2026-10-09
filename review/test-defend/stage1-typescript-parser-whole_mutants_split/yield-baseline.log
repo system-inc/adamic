@@ -1,0 +1,14 @@
+{"Time":"2026-10-09T14:22:48.320719382Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/typescript/parser"}
+{"Time":"2026-10-09T14:22:48.331089437Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestYieldLookaheadAgrees"}
+{"Time":"2026-10-09T14:22:48.33116234Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestYieldLookaheadAgrees","Output":"=== RUN   TestYieldLookaheadAgrees\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:22:48.331447393Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestYieldLookaheadAgrees","Output":"=== PAUSE TestYieldLookaheadAgrees\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:22:48.331455042Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestYieldLookaheadAgrees"}
+{"Time":"2026-10-09T14:22:48.331530564Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestYieldLookaheadAgrees"}
+{"Time":"2026-10-09T14:22:48.331533789Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestYieldLookaheadAgrees","Output":"=== CONT  TestYieldLookaheadAgrees\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:23:16.14117275Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestYieldLookaheadAgrees","Output":"    yield_test.go:48: 17 yield lookahead cases, 1922 bytes identical to Go on Node and sanitized native\n"}
+{"Time":"2026-10-09T14:23:16.142653249Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestYieldLookaheadAgrees","Output":"--- PASS: TestYieldLookaheadAgrees (27.81s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:23:16.142680346Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestYieldLookaheadAgrees","Elapsed":27.81}
+{"Time":"2026-10-09T14:23:16.142716306Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:23:16.142722143Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"coverage: [no statements]\n"}
+{"Time":"2026-10-09T14:23:16.144720214Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"ok  \tgithub.com/system-inc/adamic/stage1/typescript/parser\t27.823s\tcoverage: [no statements]\n"}
+{"Time":"2026-10-09T14:23:16.14475342Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Elapsed":27.824}
