@@ -1,0 +1,11 @@
+--- a/internal/load/load.go
++++ b/internal/load/load.go
+@@ -211,7 +211,7 @@
+ 		if !fs.FS.FileExists(fileName) {
+ 			return "", fmt.Errorf("load: no file at %s", path)
+ 		}
+-		if fs.FS.FileExists(fileName.AppendSuffix(".ts")) {
++		if !fs.FS.FileExists(fileName.AppendSuffix(".ts")) {
+ 			return "", fmt.Errorf("load: %s and %s.ts both exist, and an import of %s could mean either; rename one", path, path, filepath.Base(path))
+ 		}
+ 		return fileName.AppendSuffix(".ts"), nil

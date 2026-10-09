@@ -1,0 +1,11 @@
+--- a/internal/load/load.go
++++ b/internal/load/load.go
+@@ -56,7 +56,7 @@
+ // rather than read from a tsconfig.json, which could leave any of them out (docs/0.1.md).
+ func compilerOptions() *core.CompilerOptions {
+ 	return &core.CompilerOptions{
+-		Strict:                     core.TSTrue,
++		Strict:                     core.TSFalse,
+ 		NoUncheckedIndexedAccess:   core.TSTrue,
+ 		ExactOptionalPropertyTypes: core.TSTrue,
+ 		ErasableSyntaxOnly:         core.TSFalse,

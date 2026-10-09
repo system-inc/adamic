@@ -1,0 +1,11 @@
+--- a/internal/load/declarations.go
++++ b/internal/load/declarations.go
+@@ -51,7 +51,7 @@
+ 					declarations = append(declarations, p.declaration(typeChecker, sourceFile, node, kind, name))
+ 				}
+ 			}
+-			node.ForEachChild(visit)
++
+ 			return false
+ 		}
+ 		sourceFile.AsNode().ForEachChild(visit)

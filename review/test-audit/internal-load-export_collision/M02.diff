@@ -1,0 +1,11 @@
+--- a/internal/load/load.go
++++ b/internal/load/load.go
+@@ -58,7 +58,7 @@
+ 	return &core.CompilerOptions{
+ 		Strict:                     core.TSTrue,
+ 		NoUncheckedIndexedAccess:   core.TSTrue,
+-		ExactOptionalPropertyTypes: core.TSTrue,
++		ExactOptionalPropertyTypes: core.TSFalse,
+ 		ErasableSyntaxOnly:         core.TSFalse,
+ 		VerbatimModuleSyntax:       core.TSTrue,
+ 		AllowImportingTsExtensions: core.TSTrue,

@@ -1,0 +1,11 @@
+--- a/internal/load/export_collision.go
++++ b/internal/load/export_collision.go
+@@ -10,7 +10,7 @@
+ // TS2308 is already a checker rejection. Add the second module at the offending
+ // star declaration so the diagnostic identifies both sources of the ambiguity.
+ func starCollision(diagnostic *ast.Diagnostic) string {
+-	if diagnostic.Code() != 2308 || diagnostic.File() == nil || len(diagnostic.MessageArgs()) != 2 {
++	if diagnostic.Code() != 2309 || diagnostic.File() == nil || len(diagnostic.MessageArgs()) != 2 {
+ 		return ""
+ 	}
+ 	for _, statement := range diagnostic.File().Statements.Nodes {

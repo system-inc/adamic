@@ -1,0 +1,11 @@
+--- a/internal/load/load.go
++++ b/internal/load/load.go
+@@ -127,7 +127,7 @@
+ 		return nil, errors.New("load: the compiler built no program")
+ 	}
+ 
+-	if usesNodeModules(program) {
++	if !usesNodeModules(program) {
+ 		index, err := nodeTypesIndex(workingDirectory)
+ 		if err != nil {
+ 			return nil, err

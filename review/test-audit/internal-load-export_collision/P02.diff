@@ -1,0 +1,11 @@
+--- a/internal/load/load.go
++++ b/internal/load/load.go
+@@ -85,7 +85,7 @@
+ // overlay is read-only and never written to disk; names are absolute or relative to the current
+ // directory. This is for tools which test semantics-preserving source adaptations.
+ func LoadOverlay(paths []string, overlay map[string]string) (*Program, error) {
+-	return load(paths, overlay)
++	return nil, nil
+ }
+ 
+ func load(paths []string, overlay map[string]string) (*Program, error) {

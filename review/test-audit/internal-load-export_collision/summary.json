@@ -1,0 +1,18 @@
+{
+  "verdicts": {
+    "sacred": 6,
+    "subsumed": 6,
+    "overlapping": 3
+  },
+  "vacuous": [
+    "TestExplicitExportResolvesStarCollision",
+    "TestEveryFileIsAModule",
+    "TestTheProgramsInTheSpecLoad",
+    "TestOverlayPrecedesDiskForAdamicAliases",
+    "TestNodeLibraryKeepsOfficialConsoleSignatures"
+  ],
+  "baseline_seconds": 1.225,
+  "timing_binary_seconds": 4.8,
+  "vet_seconds": 2.6890644999998585,
+  "matrix_binary_seconds": 29.922
+}

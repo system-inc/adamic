@@ -1,0 +1,11 @@
+--- a/internal/load/source_fs.go
++++ b/internal/load/source_fs.go
+@@ -37,7 +37,7 @@
+ // adamicFile is the .a file behind a path the checker asked for, when there is one and no real .ts
+ // file of that name.
+ func (s *sourceFS) adamicFile(path tspath.RootedFilePath) (tspath.RootedFilePath, bool) {
+-	if !strings.HasSuffix(path.AsString(), ".a.ts") || s.FS.FileExists(path) {
++	if !strings.HasSuffix(path.AsString(), ".b.ts") || s.FS.FileExists(path) {
+ 		return "", false
+ 	}
+ 	adamicPath := path.RemoveExtension(".ts").AppendSuffix("")

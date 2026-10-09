@@ -1,0 +1,173 @@
+{
+  "rows": [
+    "TestStarExportCollisionNamesBothModules",
+    "TestExplicitExportResolvesStarCollision",
+    "TestDeclarationsCarryTheirProvenTypes",
+    "TestATypeErrorFailsTheLoad",
+    "TestAdamicOptionsAreOn",
+    "TestEveryFileIsAModule",
+    "TestAdamicFilesImportEachOther",
+    "TestThePreludeDeclaresConsoleAndPanic",
+    "TestLoadRefusesWhatIsNotAdamic",
+    "TestTheProgramsInTheSpecLoad",
+    "TestOverlayPrecedesDiskForAdamicAliases",
+    "TestHouseStyleOptionsDoNotRejectValidControlFlow",
+    "TestNodeLibraryUsesPinnedDeclarations",
+    "TestNodeLibraryRejectsDifferentVersion",
+    "TestNodeLibraryKeepsOfficialConsoleSignatures",
+    "TestTypeScriptIsThePinnedCommit",
+    "TestRegExpCaptureTypes"
+  ],
+  "kills": {
+    "M01": [
+      "TestAdamicOptionsAreOn"
+    ],
+    "M02": [
+      "TestAdamicOptionsAreOn"
+    ],
+    "M03": [
+      "TestATypeErrorFailsTheLoad",
+      "TestAdamicFilesImportEachOther",
+      "TestAdamicOptionsAreOn",
+      "TestDeclarationsCarryTheirProvenTypes",
+      "TestEveryFileIsAModule",
+      "TestExplicitExportResolvesStarCollision",
+      "TestHouseStyleOptionsDoNotRejectValidControlFlow",
+      "TestNodeLibraryKeepsOfficialConsoleSignatures",
+      "TestNodeLibraryUsesPinnedDeclarations",
+      "TestOverlayPrecedesDiskForAdamicAliases",
+      "TestStarExportCollisionNamesBothModules",
+      "TestThePreludeDeclaresConsoleAndPanic",
+      "TestTheProgramsInTheSpecLoad"
+    ],
+    "M04": [
+      "TestEveryFileIsAModule"
+    ],
+    "M05": [
+      "TestATypeErrorFailsTheLoad",
+      "TestAdamicFilesImportEachOther",
+      "TestAdamicOptionsAreOn",
+      "TestDeclarationsCarryTheirProvenTypes",
+      "TestEveryFileIsAModule",
+      "TestExplicitExportResolvesStarCollision",
+      "TestHouseStyleOptionsDoNotRejectValidControlFlow",
+      "TestOverlayPrecedesDiskForAdamicAliases",
+      "TestStarExportCollisionNamesBothModules",
+      "TestThePreludeDeclaresConsoleAndPanic",
+      "TestTheProgramsInTheSpecLoad"
+    ],
+    "M06": [
+      "TestHouseStyleOptionsDoNotRejectValidControlFlow"
+    ],
+    "M07": [
+      "TestATypeErrorFailsTheLoad",
+      "TestAdamicOptionsAreOn",
+      "TestHouseStyleOptionsDoNotRejectValidControlFlow",
+      "TestNodeLibraryUsesPinnedDeclarations",
+      "TestOverlayPrecedesDiskForAdamicAliases",
+      "TestRegExpCaptureTypes",
+      "TestStarExportCollisionNamesBothModules",
+      "TestThePreludeDeclaresConsoleAndPanic"
+    ],
+    "M08": [
+      "TestATypeErrorFailsTheLoad",
+      "TestAdamicFilesImportEachOther",
+      "TestAdamicOptionsAreOn",
+      "TestHouseStyleOptionsDoNotRejectValidControlFlow",
+      "TestNodeLibraryUsesPinnedDeclarations",
+      "TestOverlayPrecedesDiskForAdamicAliases",
+      "TestRegExpCaptureTypes",
+      "TestStarExportCollisionNamesBothModules",
+      "TestThePreludeDeclaresConsoleAndPanic"
+    ],
+    "M09": [
+      "TestATypeErrorFailsTheLoad",
+      "TestAdamicFilesImportEachOther",
+      "TestDeclarationsCarryTheirProvenTypes",
+      "TestStarExportCollisionNamesBothModules"
+    ],
+    "M10": [
+      "TestStarExportCollisionNamesBothModules"
+    ],
+    "M11": [
+      "TestStarExportCollisionNamesBothModules"
+    ],
+    "M12": [
+      "TestAdamicFilesImportEachOther",
+      "TestEveryFileIsAModule",
+      "TestExplicitExportResolvesStarCollision",
+      "TestHouseStyleOptionsDoNotRejectValidControlFlow",
+      "TestNodeLibraryKeepsOfficialConsoleSignatures",
+      "TestNodeLibraryUsesPinnedDeclarations",
+      "TestOverlayPrecedesDiskForAdamicAliases",
+      "TestStarExportCollisionNamesBothModules"
+    ],
+    "M13": [
+      "TestOverlayPrecedesDiskForAdamicAliases"
+    ],
+    "M14": [
+      "TestNodeLibraryKeepsOfficialConsoleSignatures",
+      "TestNodeLibraryRejectsDifferentVersion",
+      "TestNodeLibraryUsesPinnedDeclarations"
+    ],
+    "M15": [
+      "TestNodeLibraryKeepsOfficialConsoleSignatures",
+      "TestNodeLibraryUsesPinnedDeclarations",
+      "TestThePreludeDeclaresConsoleAndPanic"
+    ],
+    "M16": [
+      "TestNodeLibraryKeepsOfficialConsoleSignatures",
+      "TestNodeLibraryUsesPinnedDeclarations"
+    ],
+    "M17": [
+      "TestAdamicFilesImportEachOther",
+      "TestDeclarationsCarryTheirProvenTypes",
+      "TestThePreludeDeclaresConsoleAndPanic"
+    ],
+    "M18": [
+      "TestDeclarationsCarryTheirProvenTypes"
+    ],
+    "M19": [
+      "TestAdamicFilesImportEachOther",
+      "TestEveryFileIsAModule",
+      "TestExplicitExportResolvesStarCollision",
+      "TestHouseStyleOptionsDoNotRejectValidControlFlow",
+      "TestLoadRefusesWhatIsNotAdamic",
+      "TestNodeLibraryKeepsOfficialConsoleSignatures",
+      "TestNodeLibraryUsesPinnedDeclarations",
+      "TestOverlayPrecedesDiskForAdamicAliases",
+      "TestRegExpCaptureTypes",
+      "TestStarExportCollisionNamesBothModules"
+    ],
+    "M20": [],
+    "P01": [
+      "TestATypeErrorFailsTheLoad",
+      "TestAdamicFilesImportEachOther",
+      "TestAdamicOptionsAreOn",
+      "TestDeclarationsCarryTheirProvenTypes",
+      "TestHouseStyleOptionsDoNotRejectValidControlFlow",
+      "TestLoadRefusesWhatIsNotAdamic",
+      "TestNodeLibraryUsesPinnedDeclarations",
+      "TestOverlayPrecedesDiskForAdamicAliases",
+      "TestRegExpCaptureTypes",
+      "TestStarExportCollisionNamesBothModules",
+      "TestThePreludeDeclaresConsoleAndPanic"
+    ],
+    "P02": [],
+    "P03": [
+      "TestNodeLibraryKeepsOfficialConsoleSignatures",
+      "TestNodeLibraryRejectsDifferentVersion",
+      "TestNodeLibraryUsesPinnedDeclarations"
+    ],
+    "P04": [
+      "TestAdamicFilesImportEachOther",
+      "TestDeclarationsCarryTheirProvenTypes",
+      "TestThePreludeDeclaresConsoleAndPanic"
+    ],
+    "P05": [
+      "TestNodeLibraryUsesPinnedDeclarations"
+    ]
+  },
+  "bounded": false,
+  "P01": "all rows rerun alone after panic; only those observed exits counted"
+}

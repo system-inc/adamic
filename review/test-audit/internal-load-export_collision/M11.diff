@@ -1,0 +1,11 @@
+--- a/internal/load/export_collision.go
++++ b/internal/load/export_collision.go
+@@ -22,7 +22,7 @@
+ 			continue
+ 		}
+ 		arguments := diagnostic.MessageArgs()
+-		return fmt.Sprintf("Adamic 0.1 refuses export * collision for '%s' between '%s' and '%s'; explicitly re-export one binding", arguments[1], strings.Trim(arguments[0], "'\""), declaration.ModuleSpecifier.Text())
++		return fmt.Sprintf("Adamic 0.1 refuses export * collision for '%s' between '%s' and '%s'; explicitly re-export one binding", arguments[1], declaration.ModuleSpecifier.Text(), strings.Trim(arguments[0], "'\""))
+ 	}
+ 	return ""
+ }

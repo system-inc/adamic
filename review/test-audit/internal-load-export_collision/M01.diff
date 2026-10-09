@@ -1,0 +1,11 @@
+--- a/internal/load/load.go
++++ b/internal/load/load.go
+@@ -57,7 +57,7 @@
+ func compilerOptions() *core.CompilerOptions {
+ 	return &core.CompilerOptions{
+ 		Strict:                     core.TSTrue,
+-		NoUncheckedIndexedAccess:   core.TSTrue,
++		NoUncheckedIndexedAccess:   core.TSFalse,
+ 		ExactOptionalPropertyTypes: core.TSTrue,
+ 		ErasableSyntaxOnly:         core.TSFalse,
+ 		VerbatimModuleSyntax:       core.TSTrue,

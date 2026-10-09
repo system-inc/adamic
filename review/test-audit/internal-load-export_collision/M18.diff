@@ -1,0 +1,11 @@
+--- a/internal/load/declarations.go
++++ b/internal/load/declarations.go
+@@ -62,7 +62,7 @@
+ 
+ func (p *Program) declaration(typeChecker *checker.Checker, sourceFile *ast.SourceFile, node *ast.Node, kind string, name *ast.Node) Declaration {
+ 	flags := typeFormat
+-	if node.Kind == ast.KindTypeAliasDeclaration {
++	if node.Kind != ast.KindTypeAliasDeclaration {
+ 		flags |= checker.TypeFormatFlagsInTypeAlias
+ 	}
+ 	line, column := p.lineAndColumn(sourceFile, scanner.GetTokenPosOfNode(name, sourceFile, false))

@@ -1,0 +1,227 @@
+[
+  {
+    "id": "M01",
+    "file": "internal/load/load.go",
+    "line": 60,
+    "old": "NoUncheckedIndexedAccess:   core.TSTrue",
+    "new": "NoUncheckedIndexedAccess:   core.TSFalse",
+    "kind": "expression",
+    "operator": "change constant or option"
+  },
+  {
+    "id": "M02",
+    "file": "internal/load/load.go",
+    "line": 61,
+    "old": "ExactOptionalPropertyTypes: core.TSTrue",
+    "new": "ExactOptionalPropertyTypes: core.TSFalse",
+    "kind": "expression",
+    "operator": "change constant or option"
+  },
+  {
+    "id": "M03",
+    "file": "internal/load/load.go",
+    "line": 59,
+    "old": "Strict:                     core.TSTrue",
+    "new": "Strict:                     core.TSFalse",
+    "kind": "expression",
+    "operator": "change constant or option"
+  },
+  {
+    "id": "M04",
+    "file": "internal/load/load.go",
+    "line": 69,
+    "old": "core.ModuleDetectionKindForce",
+    "new": "core.ModuleDetectionKindAuto",
+    "kind": "expression",
+    "operator": "change constant or option"
+  },
+  {
+    "id": "M05",
+    "file": "internal/load/load.go",
+    "line": 72,
+    "old": "[]string{\"lib.es2024.d.ts\"}",
+    "new": "[]string{\"lib.es2024.d.ts\", \"lib.dom.d.ts\"}",
+    "kind": "expression",
+    "operator": "change constant or option"
+  },
+  {
+    "id": "M06",
+    "file": "internal/load/load.go",
+    "line": 65,
+    "old": "NoEmit:                     core.TSTrue,",
+    "new": "NoEmit:                     core.TSTrue,\n\t\tNoImplicitReturns: core.TSTrue,",
+    "kind": "option",
+    "operator": "change constant or option"
+  },
+  {
+    "id": "M07",
+    "file": "internal/load/load.go",
+    "line": 147,
+    "old": "len(diagnostics) > 0",
+    "new": "len(diagnostics) > 1",
+    "kind": "expression",
+    "operator": "off-by-one bound"
+  },
+  {
+    "id": "M08",
+    "file": "internal/load/load.go",
+    "line": 233,
+    "old": "\t\tall = append(all, p.compiler.GetSemanticDiagnostics(ctx, nil)...)",
+    "new": "",
+    "kind": "drop",
+    "operator": "drop statement"
+  },
+  {
+    "id": "M09",
+    "file": "internal/load/load.go",
+    "line": 278,
+    "old": "return line + 1, len(utf16.Encode([]rune(prefix))) + 1",
+    "new": "return line + 2, len(utf16.Encode([]rune(prefix))) + 1",
+    "kind": "statement",
+    "operator": "off-by-one"
+  },
+  {
+    "id": "M10",
+    "file": "internal/load/export_collision.go",
+    "line": 13,
+    "old": "diagnostic.Code() != 2308",
+    "new": "diagnostic.Code() != 2309",
+    "kind": "expression",
+    "operator": "change constant or option"
+  },
+  {
+    "id": "M11",
+    "file": "internal/load/export_collision.go",
+    "line": 25,
+    "old": "arguments[1], strings.Trim(arguments[0], \"'\\\"\"), declaration.ModuleSpecifier.Text()",
+    "new": "arguments[1], declaration.ModuleSpecifier.Text(), strings.Trim(arguments[0], \"'\\\"\")",
+    "kind": "expression",
+    "operator": "swap two arguments"
+  },
+  {
+    "id": "M12",
+    "file": "internal/load/source_fs.go",
+    "line": 40,
+    "old": "strings.HasSuffix(path.AsString(), \".a.ts\")",
+    "new": "strings.HasSuffix(path.AsString(), \".b.ts\")",
+    "kind": "expression",
+    "operator": "change constant or option"
+  },
+  {
+    "id": "M13",
+    "file": "internal/load/load.go",
+    "line": 102,
+    "old": "\tfor name, source := range overlay {\n\t\tnormalizedOverlay[currentDirectory.ResolveFile(name)] = source\n\t}",
+    "new": "",
+    "kind": "drop",
+    "operator": "drop whole loop to avoid unused variables"
+  },
+  {
+    "id": "M14",
+    "file": "internal/load/node_library.go",
+    "line": 31,
+    "old": "pin.Version != NodeTypesVersion",
+    "new": "pin.Version == NodeTypesVersion",
+    "kind": "expression",
+    "operator": "flip condition"
+  },
+  {
+    "id": "M15",
+    "file": "internal/load/load.go",
+    "line": 130,
+    "old": "usesNodeModules(program)",
+    "new": "!usesNodeModules(program)",
+    "kind": "expression",
+    "operator": "flip condition"
+  },
+  {
+    "id": "M16",
+    "file": "internal/load/node_library.go",
+    "line": 78,
+    "old": "func nodePrelude() string {",
+    "new": "func nodePrelude() string {\n\treturn prelude\n",
+    "kind": "entry",
+    "operator": "return early"
+  },
+  {
+    "id": "M17",
+    "file": "internal/load/declarations.go",
+    "line": 54,
+    "old": "\t\t\tnode.ForEachChild(visit)",
+    "new": "",
+    "kind": "drop",
+    "operator": "drop statement"
+  },
+  {
+    "id": "M18",
+    "file": "internal/load/declarations.go",
+    "line": 65,
+    "old": "node.Kind == ast.KindTypeAliasDeclaration",
+    "new": "node.Kind != ast.KindTypeAliasDeclaration",
+    "kind": "expression",
+    "operator": "flip condition"
+  },
+  {
+    "id": "M19",
+    "file": "internal/load/load.go",
+    "line": 214,
+    "old": "fs.FS.FileExists(fileName.AppendSuffix(\".ts\"))",
+    "new": "!fs.FS.FileExists(fileName.AppendSuffix(\".ts\"))",
+    "kind": "expression",
+    "operator": "flip condition"
+  },
+  {
+    "id": "M20",
+    "file": "internal/load/node_library.go",
+    "line": 73,
+    "old": "strings.HasSuffix(file.FileName().AsString(), \".d.ts\")",
+    "new": "strings.HasSuffix(file.FileName().AsString(), \".ts\")",
+    "kind": "expression",
+    "operator": "change constant or option"
+  },
+  {
+    "id": "P01",
+    "file": "internal/load/load.go",
+    "line": 80,
+    "old": "func Load(paths []string) (*Program, error) {",
+    "new": "func Load(paths []string) (*Program, error) {\n\treturn nil, nil\n",
+    "kind": "entry",
+    "operator": "empty-answer probe"
+  },
+  {
+    "id": "P02",
+    "file": "internal/load/load.go",
+    "line": 87,
+    "old": "func LoadOverlay(paths []string, overlay map[string]string) (*Program, error) {",
+    "new": "func LoadOverlay(paths []string, overlay map[string]string) (*Program, error) {\n\treturn nil, nil\n",
+    "kind": "entry",
+    "operator": "empty-answer probe"
+  },
+  {
+    "id": "P03",
+    "file": "internal/load/node_library.go",
+    "line": 19,
+    "old": "func nodeTypesIndex(directory string) (string, error) {",
+    "new": "func nodeTypesIndex(directory string) (string, error) {\n\treturn \"\", nil\n",
+    "kind": "entry",
+    "operator": "empty-answer probe"
+  },
+  {
+    "id": "P04",
+    "file": "internal/load/declarations.go",
+    "line": 43,
+    "operator": "empty-answer probe",
+    "old": "whole function body",
+    "new": "return nil",
+    "kind": "probe"
+  },
+  {
+    "id": "P05",
+    "file": "internal/load/node_library.go",
+    "line": 72,
+    "operator": "empty-answer probe",
+    "old": "whole function body",
+    "new": "return false",
+    "kind": "probe"
+  }
+]

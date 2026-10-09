@@ -1,0 +1,13 @@
+--- a/internal/load/load.go
++++ b/internal/load/load.go
+@@ -99,9 +99,7 @@
+ 	currentDirectory := tspath.RootedDirectoryPathFromAbsolute(workingDirectory)
+ 
+ 	normalizedOverlay := make(map[tspath.RootedFilePath]string, len(overlay))
+-	for name, source := range overlay {
+-		normalizedOverlay[currentDirectory.ResolveFile(name)] = source
+-	}
++
+ 	fs := &sourceFS{FS: osvfs.FS(), overlay: normalizedOverlay}
+ 	roots := make([]tspath.RootedFilePath, 0, len(paths)+1)
+ 	for _, path := range paths {

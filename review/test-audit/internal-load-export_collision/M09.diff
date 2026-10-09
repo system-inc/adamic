@@ -1,0 +1,11 @@
+--- a/internal/load/load.go
++++ b/internal/load/load.go
+@@ -275,7 +275,7 @@
+ 	line := sort.Search(len(lineStarts), func(index int) bool { return int(lineStarts[index]) > position }) - 1
+ 	line = max(line, 0)
+ 	prefix := sourceFile.Text()[int(lineStarts[line]):position]
+-	return line + 1, len(utf16.Encode([]rune(prefix))) + 1
++	return line + 2, len(utf16.Encode([]rune(prefix))) + 1
+ }
+ 
+ // CompilerProgram exposes the checked program to public checker and lint adapters.
