@@ -1,5 +1,5 @@
 import os,json,time,subprocess,pathlib
-root=pathlib.Path('/workspace/adamic');out=root/'review/test-defend/internal-oracle-enums_open';scratch=pathlib.Path('/tmp/defend-enums');plan=json.loads((out/'plan.json').read_text());variants=plan['variants'];files={f for _,c in variants for f,_,_ in c};base={f:(root/f).read_text() for f in files}
+root=pathlib.Path('/workspace/adamic');out=pathlib.Path(__file__).resolve().parent;scratch=pathlib.Path('/tmp/defend-enums');plan=json.loads((out/'plan.json').read_text());variants=plan['variants'];files={f for _,c in variants for f,_,_ in c};base={f:(root/f).read_text() for f in files}
 rows=['TestFractionalPowersReachRuntime','TestReviewProgramsAgreeWithNode','TestReviewProgramsRefuse','TestReviewProgramsNoLooseFiles','TestReviewProgramsSelfTest'];pat='^('+'|'.join(rows)+')$';results=[]
 def run(id,pat,label):
  cmd=['timeout','120','go','test','-json','-count=1','-timeout','90s','./internal/oracle/','-run',pat];env=os.environ.copy();env['ADAMIC_GATE_UNCACHED']='1';env['ADAMIC_BUILD_CACHE_DIR']=str(scratch/'cache'/id);t=time.monotonic()

@@ -1,5 +1,5 @@
 import os,json,time,subprocess,difflib,pathlib
-root=pathlib.Path('/workspace/adamic');out=root/'review/test-defend/internal-oracle-enums_open';scratch=pathlib.Path('/tmp/defend-enums')
+root=pathlib.Path('/workspace/adamic');out=pathlib.Path(__file__).resolve().parent;scratch=pathlib.Path('/tmp/defend-enums')
 ref='origin/test-audit/internal-oracle-enums_open';ap='review/test-audit/internal-oracle-enums_open/'
 for f in ['PLAN.md','REPORT.md','rows.json','scope.json','matrix.json']:
  (out/('audit-'+f)).write_bytes(subprocess.check_output(['git','show',ref+':'+ap+f],cwd=root))
