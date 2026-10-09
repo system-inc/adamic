@@ -7,9 +7,11 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"reflect"
 	"runtime"
 	"strings"
 	"sync"
+	"syscall"
 	"testing"
 	"time"
 
@@ -81,8 +83,9 @@ func syntaxMutantProducts(t *testing.T, item syntaxMutant) (string, string) {
 }
 
 type syntaxMutantPrepared struct {
-	Main, Binary, Manifest string
-	Want                   []byte
+	Main, Binary string
+	Sources      []string
+	Want         []byte
 }
 
 var syntaxMutantsPrepared []syntaxMutantPrepared
@@ -109,13 +112,27 @@ func syntaxMutantRead(t *testing.T, dir string) []syntaxMutantPrepared {
 // Not parallel: publishes shared build products before parallel shards are released.
 func TestSyntaxMutants_Setup(t *testing.T) {
 	started := time.Now()
+	cpu := syntaxMutantCPU()
+	defer func() { t.Logf("CPU: %.3fs", (syntaxMutantCPU() - cpu).Seconds()) }()
 	dir := buildcache.Product(t, syntaxMutantSetupInputs(t), func(dir string) error {
 		items := syntaxMutantEnumeration()
 		prepared := make([]syntaxMutantPrepared, len(items))
 		// GoBuild is absent on this base: retain the original overlay Go build.
 		var oracle string
 		oracleReady := make(chan struct{})
-		go func() { oracle = goOracle(t); close(oracleReady) }()
+		go func() {
+			defer close(oracleReady)
+			inputs := syntaxMutantSetupInputs(t)
+			inputs.Name = "syntax-mutants-go-oracle-v1"
+			product := buildcache.Product(t, inputs, func(dir string) error {
+				data, err := os.ReadFile(goOracle(t))
+				if err != nil {
+					return err
+				}
+				return os.WriteFile(filepath.Join(dir, "oracle"), data, 0755)
+			})
+			oracle = filepath.Join(product, "oracle")
+		}()
 		var workers sync.WaitGroup
 		for i, item := range items {
 			workers.Add(1)
@@ -133,39 +150,7 @@ func TestSyntaxMutants_Setup(t *testing.T) {
 				}
 				<-oracleReady
 				want := execute(t, "", oracle, args...)
-				// Preserve source filenames in the oracle output by publishing the original manifest and inputs.
-				paths, err := os.ReadFile(list)
-				if err != nil {
-					t.Error(err)
-					return
-				}
-				persistent := filepath.Join(dir, fmt.Sprintf("cases-%d", i))
-				if err := os.MkdirAll(persistent, 0755); err != nil {
-					t.Error(err)
-					return
-				}
-				// Oracle canonical output contains no temporary directory names; input basenames are kept.
-				names := strings.Fields(string(paths))
-				var published []string
-				for _, name := range names {
-					data, err := os.ReadFile(name)
-					if err != nil {
-						t.Error(err)
-						return
-					}
-					path := filepath.Join(persistent, filepath.Base(name))
-					if err := os.WriteFile(path, data, 0644); err != nil {
-						t.Error(err)
-						return
-					}
-					published = append(published, path)
-				}
-				manifestPath := filepath.Join(persistent, "manifest")
-				if err := os.WriteFile(manifestPath, []byte(strings.Join(published, "\n")+"\n"), 0644); err != nil {
-					t.Error(err)
-					return
-				}
-				prepared[i] = syntaxMutantPrepared{main, binary, manifestPath, want}
+				prepared[i] = syntaxMutantPrepared{Main: main, Binary: binary, Sources: sources, Want: want}
 			}(i, item)
 		}
 		workers.Wait()
@@ -180,7 +165,7 @@ func TestSyntaxMutants_Setup(t *testing.T) {
 	})
 	syntaxMutantsPrepared = syntaxMutantRead(t, dir)
 	syntaxMutantsPreparedDirectory = dir
-	t.Logf("TestSyntaxMutants (setup): %.3fs", time.Since(started).Seconds())
+	t.Logf("TestSyntaxMutants (setup): %.3fs; ready: %s", time.Since(started).Seconds(), dir)
 }
 func syntaxMutantReady(t *testing.T) []syntaxMutantPrepared {
 	if dir := os.Getenv("ADAMIC_SYNTAX_MUTANTS_READY"); dir != "" {
@@ -193,14 +178,35 @@ func syntaxMutantReady(t *testing.T) []syntaxMutantPrepared {
 	return syntaxMutantRead(t, dir)
 }
 func runSyntaxMutantShard(t *testing.T, shard int) {
+	cpu := syntaxMutantCPU()
+	defer func() { t.Logf("CPU: %.3fs", (syntaxMutantCPU() - cpu).Seconds()) }()
 	item := syntaxMutantEnumeration()[shard]
 	prepared := syntaxMutantReady(t)[shard]
+	list := manifest(t, prepared.Sources)
 	if shard != 0 && !strings.Contains(string(prepared.Want), `"status":"error"`) {
 		t.Fatal(string(prepared.Want))
 	}
-	for name, got := range map[string][]byte{"Node": onNode(t, prepared.Main, "--manifest", prepared.Manifest), "native": execute(t, "", prepared.Binary, "--manifest", prepared.Manifest)} {
+	for name, got := range map[string][]byte{"Node": onNode(t, prepared.Main, "--manifest", list), "native": execute(t, "", prepared.Binary, "--manifest", list)} {
 		if os.Getenv("ADAMIC_SYNTAX_MUTANTS_PLANT") == "1" && shard == 0 && name == "native" {
-			got = prepared.Want
+			wantCases := syntaxMutantCanonicalCases(t, prepared.Want, len(prepared.Sources))
+			gotCases := syntaxMutantCanonicalCases(t, got, len(prepared.Sources))
+			witness := -1
+			for i, source := range prepared.Sources {
+				if strings.Contains(source, "[P in A]") {
+					if witness != -1 {
+						t.Fatal("duplicate planted witness")
+					}
+					witness = i
+				}
+			}
+			if witness < 0 {
+				t.Fatal("missing planted witness")
+			}
+			if wantCases[witness] == gotCases[witness] {
+				t.Fatal("planted witness already agrees")
+			}
+			gotCases[witness] = wantCases[witness]
+			got = []byte(strings.Join(gotCases, ""))
 		}
 		if shard == 0 {
 			if diff := firstDifference(prepared.Want, got); diff == "" {
@@ -231,7 +237,11 @@ func TestSyntaxMutantsUnion(t *testing.T) {
 	}
 	seen := map[string]int{}
 	count := 0
-	for i := range syntaxMutantRunners {
+	for i, runner := range syntaxMutantRunners {
+		name := runtime.FuncForPC(reflect.ValueOf(runner).Pointer()).Name()
+		if !strings.HasSuffix(name, fmt.Sprintf(".TestSyntaxMutants_%03d", i)) {
+			t.Fatalf("unexpected shard runner %s", name)
+		}
 		item := items[i]
 		sources := []string{item.source}
 		if i == 0 {
@@ -283,4 +293,30 @@ func TestSyntaxMutantsUnion(t *testing.T) {
 		t.Fatalf("planted failure caught by %v", caught)
 	}
 	t.Logf("union: %d cases exactly once; planted survivor caught only by TestSyntaxMutants_000", count)
+}
+
+// Canonical manifests terminate each case with a stripped-source line. Source
+// newlines are escaped, so boundaries preserve every original comparison byte.
+func syntaxMutantCanonicalCases(t *testing.T, data []byte, count int) []string {
+	t.Helper()
+	var cases []string
+	var current strings.Builder
+	for _, line := range strings.SplitAfter(string(data), "\n") {
+		current.WriteString(line)
+		if strings.HasPrefix(line, "stripped ") {
+			cases = append(cases, current.String())
+			current.Reset()
+		}
+	}
+	if current.Len() != 0 || len(cases) != count {
+		t.Fatalf("canonical cases %d, want %d; trailing bytes %d", len(cases), count, current.Len())
+	}
+	return cases
+}
+func syntaxMutantCPU() time.Duration {
+	var self, children syscall.Rusage
+	if syscall.Getrusage(syscall.RUSAGE_SELF, &self) != nil || syscall.Getrusage(syscall.RUSAGE_CHILDREN, &children) != nil {
+		return 0
+	}
+	return time.Duration(self.Utime.Sec+self.Stime.Sec+children.Utime.Sec+children.Stime.Sec)*time.Second + time.Duration(self.Utime.Usec+self.Stime.Usec+children.Utime.Usec+children.Stime.Usec)*time.Microsecond
 }
