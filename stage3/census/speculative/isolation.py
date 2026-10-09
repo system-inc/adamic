@@ -8,18 +8,19 @@ import tarfile
 
 repository = Path(sys.argv[1]).resolve()
 output = Path(sys.argv[2]).resolve()
+base_revision = sys.argv[3] if len(sys.argv) > 3 else '946a8f095a7fa419a92117406314b7b3d44630f0'
 output.mkdir(parents=True,exist_ok=True)
 base = output/'base'
 base.mkdir(exist_ok=True)
 archive = output/'base.tar'
 with archive.open('wb') as destination:
-    subprocess.run(['git','archive','origin/main','go.mod','go.work','cmd','internal','bridge'],cwd=repository,stdout=destination,check=True)
+    subprocess.run(['git','archive',base_revision,'go.mod','go.work','cmd','internal','bridge'],cwd=repository,stdout=destination,check=True)
 with tarfile.open(archive) as source:
     source.extractall(base,filter='data')
 if not (base/'cohere').exists():
     (base/'cohere').symlink_to(repository/'cohere',target_is_directory=True)
 with (output/'production-diff.log').open('w') as log:
-    subprocess.run(['git','diff','--exit-code','origin/main','--','cmd','internal','bridge','go.mod','go.sum','go.work'],cwd=repository,stdout=log,stderr=subprocess.STDOUT,check=True)
+    subprocess.run(['git','diff','--exit-code',base_revision,'--','cmd','internal','bridge','go.mod','go.sum','go.work'],cwd=repository,stdout=log,stderr=subprocess.STDOUT,check=True)
 for name, tree in [('base',base),('normal',repository)]:
     with (output/(name+'-build.log')).open('w') as log:
         subprocess.run(['go','build','-buildvcs=false','-o',str(output/(name+'-adamic')),'./cmd/adamic'],cwd=tree,stdout=log,stderr=subprocess.STDOUT,check=True)

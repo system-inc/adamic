@@ -2,7 +2,7 @@ Ported the speculative census onto main without importing the old base.
 Source commits: e46fa73d, 20ebb633 and f6bb0b41; historical tables remain labeled by their old base.
 Focused depth, topology, binding, snapshot, output isolation and header controls pass on main.
 Their mutants fail the intended assertions; normal C and JS stay byte-identical to main.
-Whole-project streaming and new corpus measurements are the next delivery, not claimed here.
+Whole-project streaming and its bounded observations are documented in streaming.md and README.md.
 
 Base: `946a8f095a7fa419a92117406314b7b3d44630f0`. Applying the three commits with
 `git cherry-pick --no-commit` succeeded without conflicts. No stage1 file was carried.
@@ -40,5 +40,6 @@ markdown 1.191s, submodules 17.828s, shared cache 23.702s. `nproc` is 5;
 the box's CPU quota is 4. A bounded warm retry is logged separately.
 
 The dispatched mapper fixture lowers successfully on main without a production
-change. Runtime equivalence and mutation proof are still pending. No compiler
-mapper commit is claimed in this first census-only delivery.
+change. Source Node, generated JS Node and sanitized native output match. Reverting
+main inference commit 6b33ec61 in a scratch overlay fails the fixture. No production
+mapper commit is needed; streaming.md records the equivalent main commit.

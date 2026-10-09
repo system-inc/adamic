@@ -1,6 +1,6 @@
 Census control ledger. Six `.a` files form five witness projects; these are
-measurement fixtures, outside internal/oracle/testdata. This unit adds no native oracle fixtures; the merged mapper-fix branch brings its
-own previously counted oracle fixtures. Speculative counts distinguish the actual AST source site by syntax kind and byte span, together with kind and exact reason. Full/no-stubs preserve the old census identity.
+measurement fixtures, outside internal/oracle/testdata. This unit adds no native oracle fixtures. The dispatched mapper source is run
+from a scratch copy; main already supplies equivalent behavior. Speculative counts distinguish the actual AST source site by syntax kind and byte span, together with kind and exact reason. Full/no-stubs preserve the old census identity.
 
 | Control | Files | NotYet | Refused | Total |
 |---|---:|---:|---:|---:|

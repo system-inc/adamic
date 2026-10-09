@@ -20,8 +20,8 @@ is traversed; binding names are not invented as value-position reads.
 A boundary is the AST construct replaced after a failed statement, expression,
 signature, or body attempt. Multiple errors on the same construct do not add
 multiple boundaries. Every failed boundary is emitted in a separate complete catalogue, independent of finding deduplication. Boundary syntax kinds distinguish equal-span nodes such as a parameter and its identifier. Exact visitor identities and byte spans are retained; printed
-line/column positions alone are ambiguous. Depth is computed after all files have
-been walked, so dependency attempts and parents which fail after visiting a child
+line/column positions alone are ambiguous. Depth is computed after the completed-file stream has
+been combined, so dependency attempts and parents which fail after visiting a child
 cannot make the result depend on file order. Each site counts its failed AST
 ancestors, excluding its own boundary. `root_kind` is the exact existing reason
 text, not a normalization or the name of the enclosing declaration. Speculative finding identities include the actual visitor site: file, syntax kind and byte span, plus the original `(kind, where, reason, text)` identity. Distinct constructs at the same printed location remain distinct sites. Repeated attempts of the same physical site and reason retain one source identity and depth. Full/no-stubs retain the original identity; raw records preserve attempt and
@@ -45,8 +45,8 @@ raw diagnostic spans.
 The compiler's production Load and Lower are still disabled in every measurement
 binary; the latter returns nil IR and the explicit measurement error. The driver
 imports no backend and runs both guards with `LATENT_ASSERT_NO_OUTPUT=1`.
-This unit edits only the census territory. Its base includes the authorized
-mapper-fix merge `69501280`; production comparison uses that merged base. The normal
+This unit edits only the census territory. Its main base is
+`946a8f095a7fa419a92117406314b7b3d44630f0`; production comparison uses that pinned base. The normal
 compiler is separately built from the clean candidate and the working tree; C and
 JavaScript output on the unchanged functions.a fixture must match byte for byte,
 including with the speculative flag set on the production binary.
@@ -64,21 +64,33 @@ No native semantic oracle or whole-package confirmation is claimed. The controls
 are `.a` census witnesses materialized only in scratch directories, not additions
 to the native oracle's fixture corpus; this unit adds no native oracle fixtures. Its control ledger is counts.md beside this file.
 
-The measurement base is `a5630a90d05abe85670ba1e00bff3643a2742e53`, the merge of
-`69501280a81259fb512edbb8dd0e52c6eb0d88c8` into `ed6e2975`. The checker-owned
-TypeMapper alias keeps its identity through snapshots. Checked placeholder types
-use the current concrete instantiation. Signature recovery wraps signatureReturn,
-including its resolved-return generic path. Earlier measurements on the opaque
-mapper copy are superseded and are not included in these results.
+The measurement uses the identical adapted source bytes archived by f6bb0b41,
+with TypeScript 6.0.3 pinned to 050880ce59e30b356b686bd3144efe24f875ebc8.
+The three census commits were ported without their obsolete compiler base.
+PORT.md records the required signature, mapper and nil backend-cache adaptations.
+The main compiler already passes the dispatched mapper fixture through generic
+binder inference in 6b33ec61; its reverted-function mutant fails. No production
+compiler file changes in this branch.
 
-Only speculative snapshots optimize immutable scalar aggregates: values and scalar struct fields copy by
-value, while scalar slices receive fresh backing storage. Cached mutable field
-indices select only the fields that need deep copying. Mutable graphs retain
-the existing deep copier and its private-field and foreign-pointer guards. A
-focused overlay-only test compares optimized values to the legacy copier and
-mutates scalar slices and nested bodies to verify source ownership; a shared-slice
-mutant fails it. Full and no-stubs modes use the original copier.
+The published table uses one whole-compiler project. Each bounded process loads
+all 79 roots and filters only its census walk to one file. Every completed record
+is persisted immediately; incomplete files have no claimed complete-file coverage.
+Foreign dependency findings remain observations and do not establish that a
+whole dependency file was examined. The typed boundary union from completed
+records resolves all retained site depths before the independent stock recount.
+This is a partial set of whole-project observations, not four projects combined.
+streaming.md explains resumability, resource bounds, checksums and mutants.
 
-The current tables combine four separately loaded directory-root projects: _namespaces, factory, transformers/declarations and transformers/module. Each retains its original import graph for checking, while census registration/walking uses the directory roots. Table sites must be attributed to the directory being measured. Foreign dependency attempts are retained in raw records but excluded from that directory's table. Every AST child of every covered source is visited, and stock TypeScript validates local-site depths. These separate contexts can yield different observations from a whole-compiler project; the report explicitly inventories all unmeasured files and uses the whole compiler's bytes as denominator.
+Only speculative snapshots optimize immutable scalar aggregates: values and
+scalar struct fields copy by value, while scalar slices receive fresh storage.
+Mutable graphs retain deep copying and private-field/schema guards. Function
+slices copy Parameters, OptionalParameters, Body, Environment, FrameEnvironment
+and ReferenceParents deeply. The opaque main mapper pointer retains identity.
+The six focused snapshot mutants prove ownership and schema checks can fail.
+Full and no-stubs retain the original copier.
 
-Speculative function slices use Go value copying for scalar fields and deep copying for Parameters, OptionalParameters, Body, Environment, FrameEnvironment and ReferenceParents. A schema guard rejects additional/private mutable fields. The focused ownership/schema mutants and complete six-witness byte parity validate this optimization.
+Historical directory tables remain in directories/ and evidence/directories/.
+Their old method and validation are available at f6bb0b41; their observations are
+not included in the new whole-project table. The comparison ledger lists every
+observable change on the 12 historical files that completed on main. Six other
+historical files hit limits and have no complete measured comparison.
