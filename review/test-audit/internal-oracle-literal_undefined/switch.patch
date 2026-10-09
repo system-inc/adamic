@@ -1,0 +1,19 @@
+diff --git a/internal/oracle/oracle_test.go b/internal/oracle/oracle_test.go
+index 8f73e788..25b48bb9 100644
+--- a/internal/oracle/oracle_test.go
++++ b/internal/oracle/oracle_test.go
+@@ -714,10 +714,13 @@ func leakSanitizer(t *testing.T, binary string) string {
+ 
+ // disagreement says how two runs differ, or "" when they don't.
+ func disagreement(oracle run, native run) string {
++	if os.Getenv("ADAMIC_MUTANT") == "P01" {
++		return ""
++	}
+ 	switch {
+ 	case oracle.exitCode != native.exitCode:
+ 		return "exit codes differ"
+-	case !bytes.Equal(oracle.stdout, native.stdout):
++	case os.Getenv("ADAMIC_MUTANT") != "W01" && !bytes.Equal(oracle.stdout, native.stdout):
+ 		return "stdout differs"
+ 	case !bytes.Equal(oracle.stderr, native.stderr):
+ 		return "stderr differs"

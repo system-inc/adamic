@@ -1,0 +1,23 @@
+{
+  "origin_commit": "09769cb5ddc8067d2fa052a8c760d813894c8919",
+  "code_under_test": "Witnessed agreement check disagreement, internal/oracle/oracle_test.go. Compiler/native implementation is preparation for this witness audit.",
+  "oracle": "Node running original .a source; self-written expected stdout differs classification.",
+  "operations": [
+    {
+      "id": "W01",
+      "kind": "witness-check",
+      "menu": "drop a statement",
+      "file": "internal/oracle/oracle_test.go",
+      "line": 720,
+      "change": "Drop stdout case and its return from disagreement."
+    },
+    {
+      "id": "P01",
+      "kind": "empty-answer probe",
+      "file": "internal/oracle/oracle_test.go",
+      "line": 716,
+      "change": "Return empty string at disagreement entry."
+    }
+  ],
+  "inventory_notes": "Uncached row calls all listed helpers and recordedRun.run. Anonymous closures: subtests, bounded cleanup, gateOnce.Do, sourceIdentity.visit, cachedNode execute callback. Other packages prepare/build the built-in mutant and are not the witnessed check."
+}

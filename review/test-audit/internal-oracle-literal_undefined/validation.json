@@ -1,0 +1,18 @@
+[
+  {
+    "id": "W01",
+    "apply_command": "git apply review/test-audit/internal-oracle-literal_undefined/W01.diff",
+    "compile_command": "go vet ./internal/oracle/",
+    "apply_exit": 0,
+    "vet_exit": 0,
+    "wall_seconds": 0.4276251000010234
+  },
+  {
+    "id": "P01",
+    "apply_command": "git apply review/test-audit/internal-oracle-literal_undefined/P01.diff",
+    "compile_command": "go vet ./internal/oracle/",
+    "apply_exit": 0,
+    "vet_exit": 0,
+    "wall_seconds": 0.30917508299899055
+  }
+]

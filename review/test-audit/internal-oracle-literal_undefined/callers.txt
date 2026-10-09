@@ -1,0 +1,204 @@
+internal/oracle/census_overload_result_test.go:51:	if difference := disagreement(run{stdout: []byte("called\nundefined\n")}, node); difference != "" {
+internal/oracle/census_overload_result_test.go:57:		if difference := disagreement(want, result); difference != "" {
+internal/oracle/checked_views_flag_downcast_test.go:25:		if difference := disagreement(run{stdout: []byte("8\n0\n")}, want); difference != "" {
+internal/oracle/checked_views_flag_downcast_test.go:30:			if difference := disagreement(want, got); difference != "" {
+internal/oracle/checked_views_flag_downcast_test.go:41:		if difference := disagreement(run{stdout: []byte("true\n")}, onNode(t, path)); difference != "" {
+internal/oracle/checked_views_flag_downcast_test.go:47:			if difference := disagreement(want, got); difference != "" {
+internal/oracle/checked_views_flag_downcast_test.go:69:			if disagreement(want, got) == "" {
+internal/oracle/entries_acceptance_test.go:125:					if difference := disagreement(want, got); difference != "" {
+internal/oracle/enums_open_test.go:38:				if difference := disagreement(want, result); difference != "" {
+internal/oracle/enums_open_test.go:59:		if difference := disagreement(want, result); difference != "" {
+internal/oracle/field_readiness_test.go:26:			if difference := disagreement(want, got); difference != "" {
+internal/oracle/field_readiness_test.go:40:			if difference := disagreement(want, mutant); difference == "" {
+internal/oracle/import_cycles_test.go:72:		if difference := disagreement(truth, result); difference != "" {
+internal/oracle/import_cycles_test.go:116:				if difference := disagreement(truth, result); difference != "" {
+internal/oracle/interface_cast_test.go:58:				if difference := disagreement(want, result); difference != "" {
+internal/oracle/interface_cast_test.go:89:		if difference := disagreement(want, result); difference != "" {
+internal/oracle/interface_cast_test.go:140:			if difference := disagreement(want, result); difference == "" {
+internal/oracle/interface_cast_test.go:174:		if difference := disagreement(want, got); difference != "" {
+internal/oracle/interface_cast_test.go:217:				if difference := disagreement(want, result); difference != "" {
+internal/oracle/interface_cast_test.go:241:				if difference := disagreement(truth, mutant); difference != "" {
+internal/oracle/interface_cast_test.go:244:				if difference := disagreement(want, mutant); difference == "" {
+internal/oracle/library_string_test.go:120:			if difference := disagreement(onNode(t, path), result); difference != "stdout differs" {
+internal/oracle/method_values_read_test.go:35:	if source.exitCode != 70 || result.exitCode != 0 || disagreement(source, result) != "exit codes differ" {
+internal/oracle/namespace_ruled_mutants_test.go:61:			if disagreement(truth, onJavaScriptBackend(t, program)) == "" {
+internal/oracle/namespace_ruled_mutants_test.go:65:			if disagreement(truth, observed) == "" {
+internal/oracle/narrowed_union_test.go:38:			if node := onNode(t, path); disagreement(run{stdout: []byte(probe.output)}, node) != "" {
+internal/oracle/narrowed_union_test.go:48:				if difference := disagreement(want, got); difference != "" {
+internal/oracle/narrowed_union_test.go:67:			if disagreement(want, mutant) == "" {
+internal/oracle/narrowed_union_test.go:82:	if node := onNode(t, path); disagreement(run{stdout: []byte("1\n")}, node) != "" {
+internal/oracle/node_fs_file_test.go:132:				if difference := disagreement(truth, observation); difference != "" {
+internal/oracle/non_null_parser_test.go:37:		if difference := disagreement(truth, got); difference != "" {
+internal/oracle/non_null_parser_test.go:55:		if difference := disagreement(truth, got); difference != "stdout differs" {
+internal/oracle/omitted_arguments_test.go:62:	if difference := disagreement(onNode(t, path), native); difference != "stdout differs" {
+internal/oracle/omitted_arguments_test.go:87:		if difference := disagreement(observed, actual); difference != "" {
+internal/oracle/omitted_arguments_test.go:135:	if difference := disagreement(onNode(t, path), native); difference != "stdout differs" {
+internal/oracle/parser_namespaces_test.go:82:		if got.exitCode != 0 || len(got.stderr) != 0 || disagreement(truth, got) != "stdout differs" {
+internal/oracle/parser_namespaces_test.go:105:				if diff := disagreement(truth, got); diff != "" {
+internal/oracle/parser_namespaces_test.go:143:		if got.exitCode != 70 || !strings.Contains(string(got.stderr), "ReferenceError: Cannot access 'DebugTypeMapper' before initialization") || disagreement(truth, got) == "" {
+internal/oracle/parser_namespaces_test.go:174:		if got.exitCode != 0 || len(got.stderr) != 0 || disagreement(truth, got) != "stdout differs" {
+internal/oracle/private_generic_mutant_test.go:53:	if difference := disagreement(want, got); difference != "stdout differs" {
+internal/oracle/readiness_test.go:113:		if difference := disagreement(node, got); difference != "" {
+internal/oracle/readiness_test.go:119:	if difference := disagreement(want, actual); difference != "" {
+internal/oracle/readiness_test.go:135:	if mutant.exitCode != 70 || disagreement(want, mutant) == "" {
+internal/oracle/arguments_length_test.go:58:				if difference := disagreement(truth, run); difference != "" {
+internal/oracle/arguments_length_test.go:103:			if difference := disagreement(truth, got); difference != "stdout differs" {
+internal/oracle/representation_clock_source_test.go:54:		if difference := disagreement(want, got); difference != "stdout differs" {
+internal/oracle/representation_clock_source_test.go:60:		if difference := disagreement(want, onJavaScriptBackend(t, program)); difference != "stdout differs" {
+internal/oracle/stack_test.go:74:					if difference := disagreement(node, native); difference != "" {
+internal/oracle/stack_test.go:122:					if difference := disagreement(want, node); difference != "" {
+internal/oracle/stack_test.go:128:					if difference := disagreement(want, native); difference != "" {
+internal/oracle/cast_test.go:72:	t.Fatalf("uncheckable cast admitted: Node exit %d stdout %q; native exit %d stdout %q stderr %q; %s", node.exitCode, node.stdout, result.exitCode, result.stdout, result.stderr, disagreement(node, result))
+internal/oracle/cast_test.go:244:			if difference := disagreement(want, result); difference == "" {
+internal/oracle/switch_empty_test.go:59:	if difference := disagreement(truth, got); difference != "stdout differs" {
+internal/oracle/switch_empty_test.go:62:	if difference := disagreement(truth, onJavaScriptBackend(t, program)); difference != "stdout differs" {
+internal/oracle/unknown_test.go:45:			if difference := disagreement(truth, backend); difference != "stdout differs" {
+internal/oracle/unknown_test.go:51:				if difference := disagreement(truth, native); difference != "stdout differs" {
+internal/oracle/checked_views_optional_read_test.go:23:	if difference := disagreement(want, onNode(t, checked)); difference != "" {
+internal/oracle/checked_views_optional_read_test.go:29:		if difference := disagreement(want, onNode(t, path)); difference != "" {
+internal/oracle/checked_views_optional_read_test.go:34:			if difference := disagreement(want, got); difference != "" {
+internal/oracle/weak_test.go:51:			if difference := disagreement(probe.native, native); difference != "" {
+internal/oracle/weak_test.go:55:				if difference := disagreement(probe.onNode, side); difference != "" {
+internal/oracle/non_null_migration_test.go:96:	if difference := disagreement(native, onJavaScriptBackend(t, program)); difference != "" {
+internal/oracle/non_null_migration_test.go:99:	if difference := disagreement(native, releasedUncached(t, program)); difference != "" {
+internal/oracle/notyet_library_object_entries_const_test.go:44:	if difference := disagreement(onNode(t, path), result); difference != "stdout differs" {
+internal/oracle/oct6_mutant_test.go:72:			if difference := disagreement(want, got); difference != "stdout differs" {
+internal/oracle/oct6_mutant_test.go:103:	if difference := disagreement(want, got); difference != "" {
+internal/oracle/oracle_test.go:716:func disagreement(oracle run, native run) string {
+internal/oracle/oracle_test.go:757:			if released := released(t, program); disagreement(native, released) != "" {
+internal/oracle/oracle_test.go:759:					disagreement(native, released), native.exitCode, native.stdout, native.stderr, released.exitCode, released.stdout, released.stderr)
+internal/oracle/oracle_test.go:764:				if difference := disagreement(backend, native); difference != "" {
+internal/oracle/oracle_test.go:773:			if difference := disagreement(oracle, native); difference != "" {
+internal/oracle/oracle_test.go:779:			if difference := disagreement(oracle, backend); difference != "" {
+internal/oracle/oracle_test.go:808:	if difference := disagreement(onNode(t, path), native); difference != "stdout differs" {
+internal/oracle/parseint_map_guard_test.go:24:	if difference := disagreement(oracle, backend); difference != "" {
+internal/oracle/parseint_map_guard_test.go:28:	if difference := disagreement(oracle, native); difference != "" {
+internal/oracle/parseint_map_guard_test.go:31:	if difference := disagreement(oracle, released(t, program)); difference != "" {
+internal/oracle/regexp_replace_test.go:63:			if diff := disagreement(expected, actual); diff == "" {
+internal/oracle/regexp_replace_test.go:107:			if diff := disagreement(expected, actual); diff == "" {
+internal/oracle/scanner_nested_references_test.go:69:				if difference := disagreement(expected, actual); difference != "stdout differs" {
+internal/oracle/scanner_nested_references_test.go:101:				if difference := disagreement(expected, actual); difference != "" {
+internal/oracle/scanner_nested_references_test.go:142:		if disagreement(expected, actual) != "stdout differs" {
+internal/oracle/statements_small_rulings_test.go:36:				t.Fatalf("want preserved stop %q; admitted program: native %s; JavaScript %s", probe.reason, disagreement(node, native), disagreement(node, backend))
+internal/oracle/switch_case_declaration_test.go:119:			if disagreement(truth, got) == "" || disagreement(truth, js) == "" {
+internal/oracle/typeof_null_test.go:55:			if difference := disagreement(want, got); difference != "stdout differs" {
+internal/oracle/typeof_null_test.go:136:	if difference := disagreement(want, got); difference != "stdout differs" {
+internal/oracle/wasi_test.go:104:	if difference := disagreement(expected, onWASI(t, native.C(program))); difference != "stdout differs" {
+internal/oracle/wasi_test.go:107:	if difference := disagreement(expected, onWASI(t, "int main(void) { return 23; }\n")); difference != "exit codes differ" {
+internal/oracle/wasi_test.go:132:	if difference := disagreement(expected, probe("probe\n", 0)); difference != "" {
+internal/oracle/wasi_test.go:135:	if difference := disagreement(expected, probe("probe!\n", 0)); difference != "stdout differs" {
+internal/oracle/wasi_test.go:138:	if difference := disagreement(expected, probe("probe\n", 23)); difference != "exit codes differ" {
+internal/oracle/call_targets_guards_test.go:40:		if difference := disagreement(want, observation.got); difference != "" {
+internal/oracle/call_targets_guards_test.go:45:	if difference := disagreement(want, sanitized); difference != "" {
+internal/oracle/library_json_stringify_test.go:88:	if difference := disagreement(onNode(t, path), native); difference != "stdout differs" {
+internal/oracle/library_small_runtime_mutant_test.go:52:	if diff := disagreement(onNode(t, path), actual); diff != "stdout differs" {
+internal/oracle/method_values_ownership_test.go:50:				if difference := disagreement(onNode(t, path), result); difference != "" {
+internal/oracle/namespace_live_export_boundary_test.go:22:	if difference := disagreement(truth, onJavaScriptBackend(t, program)); difference != "" {
+internal/oracle/namespace_live_export_boundary_test.go:26:	if difference := disagreement(truth, observed); difference != "" {
+internal/oracle/fallthrough_test.go:92:			if difference := disagreement(truth, got); difference != "stdout differs" {
+internal/oracle/fallthrough_test.go:96:			if difference := disagreement(truth, js); difference != "stdout differs" {
+internal/oracle/counters_test.go:241:		if difference := disagreement(oracle, sanitized); difference != "" {
+internal/oracle/counters_test.go:244:		if difference := disagreement(oracle, release); difference != "" {
+internal/oracle/clock_generic_returns_t_01_test.go:57:		if difference := disagreement(want, got); difference != "stdout differs" {
+internal/oracle/non_null_impossible_test.go:51:				if difference := disagreement(run{stdout: []byte(strings.TrimSuffix(expression, "!") + "\n")}, onNode(t, path)); difference != "" {
+internal/oracle/non_null_impossible_test.go:57:					if difference := disagreement(want, got); difference != "" {
+internal/oracle/notyet_library_string_bounds_test.go:93:			if difference := disagreement(onNode(t, path), result); difference != "stdout differs" {
+internal/oracle/parameter_properties_test.go:78:			if difference := disagreement(onNode(t, path), result); difference != "stdout differs" {
+internal/oracle/checked_views_v2_source_test.go:60:						if difference := disagreement(node, got); difference != "" {
+internal/oracle/checked_views_v2_source_test.go:68:						if difference := disagreement(run{exitCode: 70, stderr: []byte(expected)}, got); difference != "" {
+internal/oracle/checked_views_v2_source_test.go:86:			if difference := disagreement(run{stdout: []byte("true\n")}, node); difference != "" {
+internal/oracle/checked_views_v2_source_test.go:92:					if difference := disagreement(node, got); difference != "" {
+internal/oracle/checked_views_v2_source_test.go:101:					if difference := disagreement(want, got); difference != "" {
+internal/oracle/checked_views_v2_source_test.go:116:	if difference := disagreement(run{stdout: []byte("true\n")}, node); difference != "" {
+internal/oracle/checked_views_v2_source_test.go:120:		if difference := disagreement(node, got); difference != "" {
+internal/oracle/checked_views_v2_source_test.go:134:				if difference := disagreement(want, onNode(t, path)); difference != "" {
+internal/oracle/checked_views_v2_source_test.go:142:					if difference := disagreement(want, got); difference != "" {
+internal/oracle/checked_views_v2_source_test.go:158:			if difference := disagreement(run{stdout: []byte("true\n")}, node); difference != "" {
+internal/oracle/checked_views_v2_source_test.go:167:				if difference := disagreement(want, got); difference != "" {
+internal/oracle/checked_views_v2_source_test.go:182:			if difference := disagreement(run{stdout: []byte("true\n")}, node); difference != "" {
+internal/oracle/checked_views_v2_source_test.go:191:				if difference := disagreement(want, got); difference != "" {
+internal/oracle/scanner_nested_overload_test.go:56:	if difference := disagreement(expected, actual); difference != "stdout differs" {
+internal/oracle/syntax_substr_test.go:101:			if difference := disagreement(truth, generated); difference != "stdout differs" {
+internal/oracle/syntax_substr_test.go:108:			if difference := disagreement(truth, result); difference != "stdout differs" {
+internal/oracle/typeof_dispatch_test.go:55:	if difference := disagreement(want, got); difference != "stdout differs" {
+internal/oracle/typeof_dispatch_test.go:92:	if difference := disagreement(want, got); difference != "stdout differs" {
+internal/oracle/input_test.go:168:				if difference := disagreement(oracle, native); difference != "" {
+internal/oracle/input_test.go:172:				if difference := disagreement(oracle, backend); difference != "" {
+internal/oracle/wasi_shards_test.go:67:	if difference := disagreement(expected, actual); difference != "" {
+internal/oracle/library_array_mutant_test.go:121:			if difference := disagreement(truth, got); difference != "stdout differs" {
+internal/oracle/library_array_mutant_test.go:169:	if difference := disagreement(onNode(t, path), got); difference != "stdout differs" {
+internal/oracle/method_values_mutant_test.go:172:			if difference := disagreement(onNode(t, path), result); difference != "stdout differs" {
+internal/oracle/method_values_mutant_test.go:214:			if disagreement(onNode(t, path), result) == "" {
+internal/oracle/module_namespace_reads_test.go:35:				if diff := disagreement(truth, got); diff != "" {
+internal/oracle/module_namespace_reads_test.go:76:				if got.exitCode != 0 || disagreement(truth, got) != "exit codes differ" {
+internal/oracle/module_namespace_reads_test.go:111:		if got.exitCode != 0 || len(got.stderr) != 0 || disagreement(truth, got) != "stdout differs" {
+internal/oracle/literal_undefined_test.go:54:			if difference := disagreement(onNode(t, path), result); difference != "stdout differs" {
+internal/oracle/checked_views_objects_test.go:24:				if difference := disagreement(want, onNode(t, path)); difference != "" {
+internal/oracle/checked_views_objects_test.go:33:				if difference := disagreement(want, got); difference != "" {
+internal/oracle/checked_views_objects_test.go:42:					if disagreement(want, got) == "" {
+internal/oracle/enum_initialization_reach_test.go:40:				if d := disagreement(truth, got); d != "" {
+internal/oracle/enum_initialization_reach_test.go:89:				if d := disagreement(want, got); d != "" {
+internal/oracle/checked_views_v2_object_primitive_test.go:46:			if diff := disagreement(run{stdout: []byte(sample.source)}, onNode(t, path)); diff != "" {
+internal/oracle/checked_views_v2_object_primitive_test.go:71:				if diff := disagreement(want, got); diff != "" {
+internal/oracle/enums_test.go:107:			if difference := disagreement(onNode(t, path), result); difference != "stdout differs" {
+internal/oracle/conditions_test.go:54:				if difference := disagreement(truth, got); difference != "" {
+internal/oracle/conditions_test.go:95:		if got.exitCode != 0 || disagreement(truth, got) != "stdout differs" {
+internal/oracle/conditions_test.go:236:		if got.exitCode != 0 || disagreement(truth, got) != "stdout differs" {
+internal/oracle/namespaces_test.go:195:			if difference := disagreement(onNode(t, path), result); difference != "stdout differs" {
+internal/oracle/namespaces_test.go:264:				if disagreement(onNode(t, path), observed) == "" {
+internal/oracle/nested_functions_test.go:85:	if difference := disagreement(oracle, native); difference != "" {
+internal/oracle/nested_functions_test.go:111:	if difference := disagreement(oracle, actual); difference != "" {
+internal/oracle/nested_functions_test.go:176:	if disagreement(expected, actual) == "" {
+internal/oracle/nested_functions_test.go:179:	t.Logf("wrong carrier caught by Node: %s", disagreement(expected, actual))
+internal/oracle/non_null_checked_test.go:62:				if difference := disagreement(run{stdout: []byte(source)}, node); difference != "" {
+internal/oracle/non_null_checked_test.go:74:				if difference := disagreement(want, got); difference != "" {
+internal/oracle/non_null_checked_test.go:94:				if mutant.exitCode != 0 || disagreement(want, mutant) == "" {
+internal/oracle/real_nested_functions_test.go:71:		if disagreement(expected, got) == "" {
+internal/oracle/cache_test.go:560:	if disagreement(run{stdout: []byte("different")}, want.Run.run()) == "" {
+internal/oracle/runtime_last_index_test.go:21:		if diff := disagreement(want, got); diff != "" {
+internal/oracle/stage3_front_test.go:58:			if got := onNode(t, path); disagreement(truth, got) != "" {
+internal/oracle/stage3_front_test.go:67:				if difference := disagreement(want, got); difference != "" {
+internal/oracle/statements_small_typescript_test.go:63:				if difference := disagreement(run{stdout: []byte("before\nafter\n")}, node); difference != "" {
+internal/oracle/statements_small_typescript_test.go:77:				if difference := disagreement(want, got); difference != "" {
+internal/oracle/syntax_module_declarations_test.go:78:			if difference := disagreement(truth, generated); difference != "stdout differs" {
+internal/oracle/syntax_module_declarations_test.go:82:			if difference := disagreement(truth, result); difference != "stdout differs" {
+internal/oracle/typed_arrays_test.go:36:		if difference := disagreement(stopped, observed); difference != "" {
+internal/oracle/typed_arrays_test.go:40:	if observed := onNode(t, path); disagreement(node, observed) != "" {
+internal/oracle/typed_arrays_test.go:67:		if difference := disagreement(expected, observed); difference != "" {
+internal/oracle/view_fields_test.go:56:				if difference := disagreement(test.want, onNode(t, path)); difference != "" {
+internal/oracle/view_fields_test.go:63:				if difference := disagreement(test.want, got); difference != "" {
+internal/oracle/view_fields_test.go:71:					if disagreement(test.want, got) == "" {
+internal/oracle/view_fields_test.go:83:					if disagreement(test.want, got) == "" {
+internal/oracle/view_fields_test.go:117:		if difference := disagreement(want, got); difference != "" {
+internal/oracle/view_fields_test.go:186:				if difference := disagreement(want, onNode(t, path)); difference != "" {
+internal/oracle/view_fields_test.go:195:				if difference := disagreement(want, got); difference != "" {
+internal/oracle/library_map_set_test.go:110:			if difference := disagreement(onNode(t, path), result); difference != "stdout differs" {
+internal/oracle/checked_views_interfaces_test.go:18:				if difference := disagreement(want, onNode(t, path)); difference != "" {
+internal/oracle/checked_views_interfaces_test.go:27:				if difference := disagreement(want, got); difference != "" {
+internal/oracle/checked_views_interfaces_test.go:34:					if disagreement(want, got) == "" {
+internal/oracle/literal_optional_test.go:47:	if disagreement(onNode(t, path), result) == "" {
+internal/oracle/enums_stage3_test.go:81:		if difference := disagreement(want, result); difference != "" {
+internal/oracle/enums_stage3_test.go:133:	if difference := disagreement(onNode(t, path), mutant); difference != "stdout differs" {
+internal/oracle/checked_views_v2_migration_test.go:24:				if difference := disagreement(node, got); difference != "" {
+internal/oracle/checked_views_v2_migration_test.go:56:		if difference := disagreement(want, got); difference != "" {
+internal/oracle/checked_views_v2_migration_test.go:81:		if got.exitCode != 70 || disagreement(want, got) == "" {
+internal/oracle/checked_views_v2_migration_test.go:111:			if difference := disagreement(want, execute(t, binary)); difference != "" {
+internal/oracle/checked_views_v2_migration_test.go:119:			if disagreement(want, got) == "" {
+internal/oracle/checked_views_v2_migration_test.go:168:		if difference := disagreement(want, got); difference != "" {
+internal/oracle/checked_views_v2_migration_test.go:183:		if got.exitCode != 0 || disagreement(want, got) == "" {
+internal/oracle/checked_views_v2_migration_test.go:194:	if difference := disagreement(run{stdout: []byte("first\n")}, node); difference != "" {
+internal/oracle/checked_views_v2_migration_test.go:199:		if difference := disagreement(want, got); difference != "" {
+internal/oracle/checked_views_v2_migration_test.go:214:		if difference := disagreement(node, got); difference != "" {
+internal/oracle/checked_views_v2_migration_test.go:225:	if difference := disagreement(run{stdout: []byte("true\n")}, node); difference != "" {
+internal/oracle/checked_views_v2_migration_test.go:230:		if difference := disagreement(want, got); difference != "" {
+internal/oracle/checked_views_v2_migration_test.go:245:		if difference := disagreement(node, got); difference != "" {
+internal/oracle/checked_views_v2_migration_test.go:272:				if difference := disagreement(node, got); difference != "" {
+internal/oracle/entries_provenance_test.go:50:				if difference := disagreement(want, got); difference != "" {
+internal/oracle/entries_provenance_test.go:73:					if difference := disagreement(node, got); difference != "" {
+internal/oracle/entries_provenance_test.go:76:					if disagreement(want, got) == "" {
+internal/oracle/entries_provenance_test.go:95:						if difference := disagreement(node, got); difference != "" {
+internal/oracle/entries_provenance_test.go:98:						if disagreement(want, got) == "" {
+internal/oracle/entries_provenance_test.go:128:		if difference := disagreement(want, got); difference != "" {
+internal/oracle/entries_provenance_test.go:138:		if difference := disagreement(node, got); difference != "" {
+internal/oracle/entries_provenance_test.go:141:		if disagreement(want, got) == "" {
+internal/oracle/library_math_number_test.go:48:			if difference := disagreement(onNode(t, path), result); difference != "stdout differs" {

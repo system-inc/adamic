@@ -1,0 +1,20 @@
+[
+  {
+    "trial": 0,
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestLiteralUndefinedOracleCatchesMutant$'",
+    "exit": 0,
+    "wall_seconds": 2.550737066001602
+  },
+  {
+    "trial": 1,
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestLiteralUndefinedOracleCatchesMutant$'",
+    "exit": 0,
+    "wall_seconds": 2.363219417999062
+  },
+  {
+    "trial": 2,
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestLiteralUndefinedOracleCatchesMutant$'",
+    "exit": 0,
+    "wall_seconds": 2.3545187230010924
+  }
+]

@@ -1,0 +1,29 @@
+{
+  "origin_commit": "09769cb5ddc8067d2fa052a8c760d813894c8919",
+  "nproc": 5,
+  "setup_seconds": 0,
+  "npm_seconds": 0.4784249309996085,
+  "scope_seconds": 6.480558112001745,
+  "baseline_seconds": 92.04136136899979,
+  "baseline_binary_seconds": 90.099,
+  "clean_binary_trials": [
+    0.369,
+    0.38,
+    0.343
+  ],
+  "clean_binary_median": 0.369,
+  "clean_timing_wall_seconds": 7.268475207001757,
+  "switch_build_seconds": 6.6871489210025175,
+  "matrix_wall_seconds": 7.690392622000218,
+  "standalone_validation_seconds": 0.7368001830000139,
+  "restored_wall_seconds": 2.606543498000974,
+  "baseline_skips": [
+    "TestEntriesAcceptance",
+    "TestStage3FixtureHook",
+    "TestWASIAgreesWithNode",
+    "TestWASIEmission",
+    "TestWASIOracleCatchesMutants",
+    "TestWASIRunnerCatchesMutants",
+    "TestWASIShardPlantedFixture"
+  ]
+}

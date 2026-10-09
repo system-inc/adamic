@@ -1,0 +1,22 @@
+[
+  {
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "internal/oracle/testdata/e4eec87_u03_discriminated_undefined.a"
+    ],
+    "exit": 0,
+    "log": "node-e4eec87_u03_discriminated_undefined.a.log"
+  },
+  {
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "internal/oracle/testdata/e4eec87_u01_undefined_field_widened.a"
+    ],
+    "exit": 0,
+    "log": "node-e4eec87_u01_undefined_field_widened.a.log"
+  }
+]

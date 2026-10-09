@@ -1,0 +1,52 @@
+[
+  {
+    "id": "control",
+    "kind": "control",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT= ADAMIC_BUILD_CACHE_DIR=/tmp/u062/cache/control timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestLiteralUndefinedOracleCatchesMutant$' > control.log 2>&1",
+    "exit": 0,
+    "wall_seconds": 2.5260057740015327,
+    "failed_tests": [],
+    "failing_lines": [],
+    "matrix_rows": [
+      "TestLiteralUndefinedOracleCatchesMutant"
+    ]
+  },
+  {
+    "id": "W01",
+    "kind": "witness-check",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=W01 ADAMIC_BUILD_CACHE_DIR=/tmp/u062/cache/W01 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestLiteralUndefinedOracleCatchesMutant$' > W01.log 2>&1",
+    "exit": 1,
+    "wall_seconds": 2.67979061799997,
+    "failed_tests": [
+      "TestLiteralUndefinedOracleCatchesMutant/e4eec87_u01_undefined_field_widened.a",
+      "TestLiteralUndefinedOracleCatchesMutant/e4eec87_u03_discriminated_undefined.a",
+      "TestLiteralUndefinedOracleCatchesMutant"
+    ],
+    "failing_lines": [
+      "literal_undefined_test.go:55: got \"\", want stdout differs",
+      "literal_undefined_test.go:55: got \"\", want stdout differs"
+    ],
+    "matrix_rows": [
+      "TestLiteralUndefinedOracleCatchesMutant"
+    ]
+  },
+  {
+    "id": "P01",
+    "kind": "empty-answer probe",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=P01 ADAMIC_BUILD_CACHE_DIR=/tmp/u062/cache/P01 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestLiteralUndefinedOracleCatchesMutant$' > P01.log 2>&1",
+    "exit": 1,
+    "wall_seconds": 2.484596229998715,
+    "failed_tests": [
+      "TestLiteralUndefinedOracleCatchesMutant/e4eec87_u03_discriminated_undefined.a",
+      "TestLiteralUndefinedOracleCatchesMutant/e4eec87_u01_undefined_field_widened.a",
+      "TestLiteralUndefinedOracleCatchesMutant"
+    ],
+    "failing_lines": [
+      "literal_undefined_test.go:55: got \"\", want stdout differs",
+      "literal_undefined_test.go:55: got \"\", want stdout differs"
+    ],
+    "matrix_rows": [
+      "TestLiteralUndefinedOracleCatchesMutant"
+    ]
+  }
+]

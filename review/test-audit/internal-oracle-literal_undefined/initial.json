@@ -1,0 +1,55 @@
+[
+  {
+    "label": "environment",
+    "command": [
+      "bash",
+      "-c",
+      "nproc; go version; node --version; clang --version"
+    ],
+    "exit": 0,
+    "wall_seconds": 0.028534053002658766
+  },
+  {
+    "label": "npm",
+    "command": [
+      "npm",
+      "ci",
+      "--prefix",
+      "stage3/api"
+    ],
+    "exit": 0,
+    "wall_seconds": 0.4784249309996085
+  },
+  {
+    "label": "scope",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-list",
+      ".",
+      "./internal/oracle/"
+    ],
+    "exit": 0,
+    "wall_seconds": 6.480558112001745
+  },
+  {
+    "label": "baseline",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "."
+    ],
+    "exit": 1,
+    "wall_seconds": 92.04136136899979
+  }
+]

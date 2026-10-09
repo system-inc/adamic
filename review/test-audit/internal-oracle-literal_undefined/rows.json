@@ -1,0 +1,33 @@
+[
+  {
+    "test": "TestLiteralUndefinedOracleCatchesMutant",
+    "package": "internal/oracle",
+    "file": "internal/oracle/literal_undefined_test.go",
+    "seconds": 0.369,
+    "oracle": "Actual Node runs original .a source; disagreement compares stdout bytes. Self-written required classification stdout differs, with clean native exit/stderr preconditions. The row expects that classification rather than precise differing bytes.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "W01"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "W01 literal_undefined_test.go:55: got \"\", want stdout differs",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 1,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestLiteralUndefinedOracleCatchesMutant"
+    ],
+    "evidence": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=W01 ADAMIC_BUILD_CACHE_DIR=/tmp/u062/cache/W01 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestLiteralUndefinedOracleCatchesMutant$' > W01.log 2>&1; literal_undefined_test.go:55: got \"\", want stdout differs",
+    "mutation_kind": "witness-check",
+    "production_mutants": 0
+  }
+]
