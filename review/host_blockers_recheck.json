@@ -1,0 +1,91 @@
+{
+  "compiler_tip_before_generic_map_fix": "0531d7c8",
+  "census_tip": "bde00304",
+  "generic_map_fix": "7401af17a438699644e29ec05bc4cbc3512a245e",
+  "standalone_host_observations": [
+    {
+      "fixture": "08_getDirectories",
+      "node": {
+        "exit": 0,
+        "stdout": "a,link,z\na,link,z\n\na,link,z\n",
+        "stderr": ""
+      },
+      "build_exit": 1,
+      "diagnostic": "stage3/fixtures/host/08_getDirectories.a:18:22: error TS2591: Cannot find name 'node:fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/08_getDirectories.a:19:24: error TS2591: Cannot find name 'node:path'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/08_getDirectories.a:20:24: error TS2591: Cannot find name 'node:os'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/08_getDirectories.a:21:21: error TS2591: Cannot find name 'node:process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/08_getDirectories.a:24:41: error TS2591: Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\n"
+    },
+    {
+      "fixture": "10_getModifiedTime",
+      "node": {
+        "exit": 0,
+        "stdout": "946684800000\nundefined\n946684800000\n",
+        "stderr": ""
+      },
+      "build_exit": 1,
+      "diagnostic": "stage3/fixtures/host/10_getModifiedTime.a:12:41: error TS2591: Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/10_getModifiedTime.a:6:22: error TS2591: Cannot find name 'node:fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/10_getModifiedTime.a:7:24: error TS2591: Cannot find name 'node:path'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/10_getModifiedTime.a:8:24: error TS2591: Cannot find name 'node:os'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/10_getModifiedTime.a:9:21: error TS2591: Cannot find name 'node:process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\n"
+    },
+    {
+      "fixture": "18_exit_0",
+      "node": {
+        "exit": 0,
+        "stdout": "exit 0\n",
+        "stderr": ""
+      },
+      "build_exit": 1,
+      "diagnostic": "stage3/fixtures/host/18_exit_0.a:5:22: error TS2591: Cannot find name 'node:fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/18_exit_0.a:6:24: error TS2591: Cannot find name 'node:path'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/18_exit_0.a:7:24: error TS2591: Cannot find name 'node:os'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/18_exit_0.a:8:21: error TS2591: Cannot find name 'node:process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\n"
+    },
+    {
+      "fixture": "19_exit_1",
+      "node": {
+        "exit": 1,
+        "stdout": "exit 1\n",
+        "stderr": ""
+      },
+      "build_exit": 1,
+      "diagnostic": "stage3/fixtures/host/19_exit_1.a:5:22: error TS2591: Cannot find name 'node:fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/19_exit_1.a:6:24: error TS2591: Cannot find name 'node:path'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/19_exit_1.a:7:24: error TS2591: Cannot find name 'node:os'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/19_exit_1.a:8:21: error TS2591: Cannot find name 'node:process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\n"
+    },
+    {
+      "fixture": "20_exit_2",
+      "node": {
+        "exit": 2,
+        "stdout": "exit 2\n",
+        "stderr": ""
+      },
+      "build_exit": 1,
+      "diagnostic": "stage3/fixtures/host/20_exit_2.a:5:22: error TS2591: Cannot find name 'node:fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/20_exit_2.a:6:24: error TS2591: Cannot find name 'node:path'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/20_exit_2.a:7:24: error TS2591: Cannot find name 'node:os'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/20_exit_2.a:8:21: error TS2591: Cannot find name 'node:process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\n"
+    }
+  ],
+  "integration": {
+    "scope": "Isolated, uncommitted library integration; these are not standalone compiler tip passes.",
+    "library_base": "a9083be763158e97582dbb4f2999cd57c8aabc2b",
+    "directory_dependency": "f91317a9575756dc00d4be3f13ae02a05379c3bf",
+    "compiler_features": [
+      "census named rest and optional callable parameters",
+      "exact undefined",
+      "optional_intrinsic.go from ea1e7ea7",
+      "never_branch.go from compiler tip"
+    ],
+    "observations": "08_getDirectories Node 0 b'a,link,z\\na,link,z\\n\\na,link,z\\n' b'' build 1 adamic: /workspace/host-proof-check/stage3/fixtures/host/08_getDirectories.a:164:27: stage 0 can't lower a conditional whose branches have different types yet\n\n10_getModifiedTime Node 0 b'946684800000\\nundefined\\n946684800000\\n' b'' build 1 adamic: /workspace/host-proof-check/stage3/fixtures/host/10_getModifiedTime.a:32:24: stage 0 can't lower String conversion of an object, array, map or function (ToPrimitive is not lowered) yet\n\n18_exit_0 Node 0 b'exit 0\\n' b'' build 0 \nNATIVE 0 b'exit 0\\n' b'' MATCH True\n19_exit_1 Node 1 b'exit 1\\n' b'' build 0 \nNATIVE 1 b'exit 1\\n' b'' MATCH True\n20_exit_2 Node 2 b'exit 2\\n' b'' build 0 \nNATIVE 2 b'exit 2\\n' b'' MATCH True\n",
+    "fixture_08_after_never_support": "adamic: /workspace/host-proof-check/stage3/fixtures/host/08_getDirectories.a:172:17: stage 0 can't lower a value of type any yet\n",
+    "nullable_date_probe": "Node 0 b'0\\nundefined\\n2\\n' b''\nNative 0 b'0\\nundefined\\n2\\n' b''\nmatch True\n",
+    "nullable_date_mutant": "Node 0 b'0\\nundefined\\n2\\n' b''\nNative 0 b'undefined\\nundefined\\n2\\n' b''\ncaught valid-binary optional guard mutant\n",
+    "exit_mutants": "18_exit_0 Node 0 b'exit 0\\n' b'' native 1 b'exit 0\\n' b''\ncaught exit-status mutant\n19_exit_1 Node 1 b'exit 1\\n' b'' native 2 b'exit 1\\n' b''\ncaught exit-status mutant\n20_exit_2 Node 2 b'exit 2\\n' b'' native 3 b'exit 2\\n' b''\ncaught exit-status mutant\n"
+  },
+  "remaining": {
+    "08": "Explicit any binding at 172:17. docs/0.1.md forbids any; the named rest parameter and unreachable conditional string arm pass independently.",
+    "10": "String(Date | undefined) at 32:24 needs library Date string conversion. The nullable Date getTime call passes independently.",
+    "18_to_20": "Exact source/native stdout, stderr and exit agree in the integration checkout."
+  },
+  "mutants": {
+    "generic_map_missing_key": "missing union value becomes zero mutant exit 1\n",
+    "rest_arguments": "replace present rest items with undefined mutant exit 1\n",
+    "optional_date_guard": "Valid binary: Node 0/undefined/2, native undefined/undefined/2; caught."
+  },
+  "checks": {
+    "lower": "ok  \tgithub.com/system-inc/adamic/internal/lower\t9.237s\n",
+    "map_node_oracles": "ok  \tgithub.com/system-inc/adamic/internal/oracle\t0.613s\n",
+    "host_node_oracles": "ok  \tgithub.com/system-inc/adamic/internal/oracle\t0.661s\n",
+    "counts": "ok  \tgithub.com/system-inc/adamic/internal/oracle\t18.008s\n",
+    "vet": "",
+    "full_gate": "not run"
+  }
+}

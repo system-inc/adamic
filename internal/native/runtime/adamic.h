@@ -28,6 +28,11 @@ enum adamic_kind {
 	adamic_kind_number,
 	adamic_kind_boolean,
 	adamic_kind_weak,
+	adamic_kind_typed_array,
+	adamic_kind_typed_array_iterator,
+#ifdef ADAMIC_CANONICAL_CLOSURES
+	adamic_kind_environment,
+#endif
 };
 
 typedef struct adamic_heap {
@@ -50,8 +55,10 @@ void *adamic_allocate(size_t size, enum adamic_kind kind);
 typedef union adamic_value {
 	double number;
 	bool boolean;
+	uint8_t maybe_boolean;
 	void *reference;
 } adamic_value;
+_Static_assert(sizeof(bool) == sizeof(uint8_t), "boolean slots require one-byte bool");
 
 // adamic_maybe_number is number | undefined: present, and the number when it is.
 typedef struct adamic_maybe_number {
@@ -70,24 +77,91 @@ typedef struct adamic_maybe_boolean {
 typedef struct adamic_cell {
 	adamic_heap heap;
 	bool references;
+	bool ready;
+#ifdef ADAMIC_CANONICAL_CLOSURES
+	struct adamic_environment *owner;
+#endif
 	adamic_value value;
 } adamic_cell;
+
+#ifdef ADAMIC_CANONICAL_CLOSURES
+// One counted allocation owns every interior captured slot.
+typedef struct adamic_environment {
+	adamic_heap heap;
+	size_t count;
+	// Weak cache: closures unlink themselves before releasing this frame.
+	struct adamic_closure *functions;
+	adamic_cell cells[];
+} adamic_environment;
+adamic_environment *adamic_environment_new(size_t count);
+#endif
 
 adamic_cell *adamic_cell_new(adamic_value value, bool references);
 
 // adamic_closure is a function value: its code, and the cells it captured. Every closure is called
 // the same way, its arguments and its result as adamic_value, whatever its types.
 typedef struct adamic_closure adamic_closure;
-typedef adamic_value (*adamic_code)(adamic_closure *self, adamic_value *arguments);
+typedef adamic_value adamic_code_function(adamic_closure *self, adamic_value *arguments);
+typedef adamic_code_function *adamic_code;
+typedef adamic_value adamic_counted_code_function(adamic_closure *self, adamic_value *arguments, size_t argument_count);
+typedef adamic_counted_code_function *adamic_counted_code;
 struct adamic_closure {
 	adamic_heap heap;
-	adamic_code code;
+#ifdef ADAMIC_CLOSURE_CONVENTION
+ union { adamic_code code; adamic_counted_code counted_code; };
+ bool counted;
+
+#else
+ adamic_code code;
+#endif
+#ifdef ADAMIC_CLOSURE_RECEIVERS
+ bool receiver;
+#endif
 	size_t count;
+#ifdef ADAMIC_CANONICAL_CLOSURES
+	adamic_environment *canonical_owner;
+	adamic_closure *canonical_previous;
+	adamic_closure *canonical_next;
+#endif
 	adamic_cell *cells[];
 };
 
 // adamic_closure_new makes a closure of count cells, for the caller to fill with references it gives.
 adamic_closure *adamic_closure_new(adamic_code code, size_t count);
+#ifdef ADAMIC_CLOSURE_CONVENTION
+static inline adamic_closure *adamic_counted_closure_new(adamic_counted_code code, size_t count) {
+ adamic_closure *closure = adamic_closure_new(NULL, count);
+ closure->counted = true;
+ closure->counted_code = code;
+ return closure;
+}
+#endif
+static inline adamic_value adamic_closure_call(adamic_closure *closure, adamic_value *arguments, size_t argument_count) {
+#ifdef ADAMIC_CLOSURE_CONVENTION
+ if (closure->counted) { return closure->counted_code(closure, arguments, argument_count); }
+#else
+ (void)argument_count;
+#endif
+ return closure->code(closure, arguments);
+}
+#ifdef ADAMIC_CLOSURE_RECEIVERS
+static inline adamic_value adamic_closure_receiver_call(adamic_closure *closure, void *receiver, adamic_value *arguments, size_t argument_count, size_t packed_size) {
+ if (!closure->receiver) { return adamic_closure_call(closure, arguments, argument_count); }
+ adamic_value received[packed_size + 1];
+ received[0].reference = receiver;
+ for (size_t i = 0; i < packed_size; i++) { received[i + 1] = arguments[i]; }
+ return adamic_closure_call(closure, received, argument_count + 1);
+}
+#endif
+
+#ifdef ADAMIC_CANONICAL_CLOSURES
+// Returns an owned canonical value; the frame cache holds no count on it.
+adamic_closure *adamic_closure_canonical(adamic_cell *identity, adamic_code code, size_t count, adamic_cell *const cells[]);
+#ifdef ADAMIC_CLOSURE_CONVENTION
+adamic_closure *adamic_counted_closure_canonical(adamic_cell *identity, adamic_counted_code code, size_t count, adamic_cell *const cells[]);
+#endif
+void adamic_closure_uncache(adamic_closure *closure);
+#endif
 
 // adamic_string is an immutable string: UTF-8 bytes (string.c).
 typedef struct adamic_string {
@@ -148,7 +222,6 @@ typedef struct adamic_shape {
 	const adamic_methods *methods;
 } adamic_shape;
 
-typedef void (*adamic_virtual_method)(void);
 typedef struct adamic_object adamic_object;
 typedef struct adamic_accessor {
 	const char *name;
@@ -160,7 +233,7 @@ typedef struct adamic_class {
 	const struct adamic_class *base;
 	size_t own_start;
 	size_t count;
-	const adamic_virtual_method *methods;
+	const size_t *methods;
 	size_t definition;
 	const adamic_shape *public_shape;
 	const adamic_accessor *accessors;
@@ -180,8 +253,19 @@ typedef struct adamic_object {
 	adamic_value slots[];
 } adamic_object;
 
+// Initialized bits follow slots in the same allocation, indexed by the actual shape.
+static inline unsigned char *adamic_object_initialized(const adamic_object *object) {
+	return (unsigned char *)(void *)(object->slots + object->shape->count);
+}
+void adamic_object_set_initialized(adamic_object *object, const char *name, bool initialized);
+// Physical representation bytes are separate from the shared initialization bitmap.
+// Zero means no representation evidence, never permission to interpret a slot.
+static inline unsigned char *adamic_object_field_types(const adamic_object *object) {
+	return adamic_object_initialized(object) + object->shape->count;
+}
+
 bool adamic_instanceof(const void *value, const adamic_class *wanted);
-adamic_virtual_method adamic_virtual(const adamic_object *object, size_t slot);
+size_t adamic_virtual(const adamic_object *object, size_t slot);
 void adamic_object_free_children(adamic_object *object, void (*release)(void *));
 
 // adamic_slot_cache remembers, at one place in the program that reads a field, where the field was in
@@ -191,19 +275,40 @@ typedef struct adamic_slot_cache {
 	size_t index;
 } adamic_slot_cache;
 
+adamic_value *adamic_object_read(const adamic_object *object, const char *name, adamic_slot_cache *cache, const char *expression);
+adamic_value adamic_object_view(const adamic_object *object, const char *name, adamic_slot_cache *cache, unsigned char wanted, const char *type, const char *expression);
+void adamic_view_literal_failure(const char *expression, const char *expected, unsigned char type, adamic_value value);
+void adamic_object_view_write(adamic_object *object, const char *name, adamic_slot_cache *cache, unsigned char wanted, const char *type, const char *expression);
+
 // adamic_method is a class's method as a call through an interface calls it: the object as this, and
 // the arguments and the result as adamic_value, as a closure's are (the result owned).
-typedef adamic_value (*adamic_method)(adamic_object *self, adamic_value *arguments);
+typedef adamic_value adamic_method_function(adamic_object *self, adamic_value *arguments);
+typedef adamic_method_function *adamic_method;
+typedef adamic_value adamic_counted_method_function(adamic_object *self, adamic_value *arguments, size_t argument_count);
+typedef adamic_counted_method_function *adamic_counted_method;
+#ifdef ADAMIC_CLOSURE_CONVENTION
+typedef struct adamic_method_entry {
+ bool counted;
+ union { adamic_method code; adamic_counted_method counted_code; };
+} adamic_method_entry;
+static inline adamic_value adamic_method_call(adamic_method_entry method, adamic_object *self, adamic_value *arguments, size_t argument_count) {
+ if (method.counted) { return method.counted_code(self, arguments, argument_count); }
+ return method.code(self, arguments);
+}
+#else
+typedef adamic_method adamic_method_entry;
+#endif
+
 struct adamic_methods {
 	size_t count;
 	const char *const *names;
-	const adamic_method *code;
+	const adamic_method_entry *code;
 };
 
 // adamic_object_callee finds what object.name(...) calls, where the object is seen through an
 // interface: its own field of that name, a function value, which it returns; or else its class's
 // method of that name, which it puts in *method, returning NULL. The checker proved one is there.
-adamic_closure *adamic_object_callee(const adamic_object *object, const char *name, adamic_slot_cache *cache, adamic_method *method);
+adamic_closure *adamic_object_callee(const adamic_object *object, const char *name, adamic_slot_cache *cache, adamic_method_entry *method);
 
 // adamic_object_new makes an object of a shape, its fields zeroed for the caller to fill; a reference
 // stored in a field belongs to the object.
@@ -224,9 +329,21 @@ void adamic_region_end(adamic_region *region);
 
 // adamic_object_copy is { ...source }: the same shape, its references retained.
 adamic_object *adamic_object_copy(const adamic_object *source);
+adamic_object *adamic_object_copy_checked(const adamic_object *source, const char *expression);
 
 // adamic_object_has is object.hasOwnProperty(name).
 bool adamic_object_has(const adamic_object *object, const adamic_string *name);
+
+// Runtime scalar tags for fixed program shapes. Host reference slots already carry heap tags.
+typedef struct adamic_shape_types {
+	const adamic_shape *shape;
+	const int *types;
+	struct adamic_shape_types *next;
+} adamic_shape_types;
+extern adamic_heap adamic_null;
+void adamic_register_shape_types(adamic_shape_types *metadata);
+bool adamic_has_property(const adamic_heap *object, const char *name);
+adamic_heap *adamic_dynamic_property(adamic_heap *object, const char *name);
 
 // adamic_object_field finds a field by name. The checker proved the field is there. Where this place in
 // the program last saw the same shape, the field is where it was then, which is inline, since it's
@@ -236,6 +353,7 @@ adamic_value *adamic_static_field(const adamic_object *object, const char *name,
 adamic_value *adamic_object_write_field(adamic_object *object, const char *name, adamic_slot_cache *cache);
 // A readonly numeric view may see a field made with the undefined-only reference representation.
 adamic_maybe_number adamic_object_maybe_number(const adamic_object *object, const char *name, adamic_slot_cache *cache);
+adamic_maybe_boolean adamic_object_maybe_boolean(const adamic_object *object, const char *name, adamic_slot_cache *cache);
 // Optional own fields may be absent; NULL then asks the reader to produce typed undefined.
 adamic_value *adamic_object_optional_find(const adamic_object *object, const char *name, adamic_slot_cache *cache);
 static inline adamic_value *adamic_object_optional_field(const adamic_object *object, const char *name, adamic_slot_cache *cache) {
@@ -288,6 +406,44 @@ typedef struct adamic_array {
 	// Extra fields of RegExp result arrays, owned and released with the array.
 	adamic_object *properties;
 } adamic_array;
+
+// Fixed-width typed arrays (typed_array.c, docs/typed-arrays.md). Constructors and
+// subarray return one owned reference. Arguments are borrowed; fill returns borrowed self.
+enum adamic_typed_array_kind {
+	adamic_typed_array_uint8 = 1,
+	adamic_typed_array_int32,
+	adamic_typed_array_float64,
+};
+typedef struct adamic_typed_array {
+	adamic_heap heap;
+	enum adamic_typed_array_kind kind;
+	size_t length;
+	void *data;
+	// NULL owns data; a view holds one count on the ultimate owning array.
+	struct adamic_typed_array *owner;
+} adamic_typed_array;
+
+adamic_typed_array *adamic_typed_array_new(enum adamic_typed_array_kind kind, double length);
+adamic_typed_array *adamic_typed_array_from_numbers(enum adamic_typed_array_kind kind, const adamic_array *numbers);
+adamic_maybe_number adamic_typed_array_get(const adamic_typed_array *array, double index);
+// The check is also called by compiler-inserted write checks. set always checks itself.
+// Panic text is the plain-array form: index <index> is outside an array of length <length>.
+void adamic_typed_array_check_write(const adamic_typed_array *array, double index);
+void adamic_typed_array_set(adamic_typed_array *array, double index, double value);
+double adamic_typed_array_length(const adamic_typed_array *array);
+adamic_typed_array *adamic_typed_array_fill(adamic_typed_array *array, double value, double start, double end, bool has_start, bool has_end);
+void adamic_typed_array_set_from(adamic_typed_array *array, const adamic_typed_array *source, double offset, bool has_offset);
+adamic_typed_array *adamic_typed_array_subarray(const adamic_typed_array *array, double start, double end, bool has_end);
+
+// A counted iterator holds the array until released, including on early loop exits.
+// next reads current storage, never a snapshot. false means exhausted.
+typedef struct adamic_typed_array_iterator {
+	adamic_heap heap;
+	adamic_typed_array *array;
+	size_t next;
+} adamic_typed_array_iterator;
+adamic_typed_array_iterator *adamic_typed_array_iterate(adamic_typed_array *array);
+bool adamic_typed_array_iterator_next(adamic_typed_array_iterator *iterator, double *value);
 
 adamic_array *adamic_array_new(size_t capacity, bool references);
 size_t adamic_public_index(const adamic_shape *shape, size_t position);
@@ -462,6 +618,7 @@ enum adamic_equality {
 	adamic_equal_strings,
 	adamic_equal_identity,
 	adamic_equal_maybe_numbers,
+	adamic_equal_unions,
 };
 double adamic_array_index_of(const adamic_array *array, adamic_value value, enum adamic_equality equality, bool same_value_zero);
 double adamic_array_search_from(const adamic_array *array, adamic_value value, enum adamic_equality equality, bool same_value_zero, double from, bool has_from, bool last);
@@ -555,7 +712,12 @@ bool adamic_maybe_number_equal(adamic_maybe_number left, adamic_maybe_number rig
 #define ADAMIC_UNDEFINED_BITS 0x7ff8000000000001u
 double adamic_maybe_number_pack(adamic_maybe_number value);
 adamic_maybe_number adamic_maybe_number_unpack(double packed);
+// Slot encoding: false = 0, true = 1, undefined = 2.
+uint8_t adamic_maybe_boolean_pack(adamic_maybe_boolean value);
+adamic_maybe_boolean adamic_maybe_boolean_unpack(uint8_t packed);
 bool adamic_maybe_boolean_equal(adamic_maybe_boolean left, adamic_maybe_boolean right);
+uint8_t adamic_maybe_boolean_pack(adamic_maybe_boolean value);
+adamic_maybe_boolean adamic_maybe_boolean_unpack(uint8_t packed);
 
 // A string's UTF-16 view (string.c): length, charCodeAt and trim as JavaScript means them.
 //
@@ -689,6 +851,9 @@ adamic_heap *adamic_box_number(double number);
 
 // adamic_union_equal is === on two unions: the same member, equal as that member is compared.
 bool adamic_union_equal(const adamic_heap *left, const adamic_heap *right);
+
+// ToBoolean on a boxed union; objects are truthy even when empty.
+bool adamic_census_to_boolean(const adamic_heap *value);
 
 // adamic_union_to_string is String(value) for a union of numbers, booleans, strings and undefined, a
 // string the caller owns.
@@ -887,9 +1052,26 @@ _Noreturn void adamic_stack_overflow(void);
 _Noreturn void adamic_unreachable(void);
 
 #include "regexp.h"
+#include "node_fs_file.h"
+#include "node_buffer.h"
+#include "node_crypto.h"
 // Fixed plain literals can have public # keys; Object reflection refuses those shapes.
 // Keep their enumeration distinct from the Object slice, which skips private class slots.
 adamic_array *adamic_plain_object_keys(const adamic_object *object);
 void *adamic_library_identity(size_t index);
+
+
+// C permits some function-to-void pointer conversions without a diagnostic.
+// Check the source expression's type before a constructor can convert it.
+#define adamic_closure_new(code, ...) (adamic_closure_new)(_Generic((code), adamic_code: (code)), __VA_ARGS__)
+#ifdef ADAMIC_CLOSURE_CONVENTION
+#define adamic_counted_closure_new(code, ...) (adamic_counted_closure_new)(_Generic((code), adamic_counted_code: (code)), __VA_ARGS__)
+#endif
+#ifdef ADAMIC_CANONICAL_CLOSURES
+#define adamic_closure_canonical(identity, code, ...) (adamic_closure_canonical)((identity), _Generic((code), adamic_code: (code)), __VA_ARGS__)
+#ifdef ADAMIC_CLOSURE_CONVENTION
+#define adamic_counted_closure_canonical(identity, code, ...) (adamic_counted_closure_canonical)((identity), _Generic((code), adamic_counted_code: (code)), __VA_ARGS__)
+#endif
+#endif
 
 #endif

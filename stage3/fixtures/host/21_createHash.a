@@ -11,7 +11,7 @@ import process from "node:process";
 const scratch = _fs.mkdtempSync(_path.join(tmpdir(), "adamic-host-"));
 import * as _crypto from "node:crypto";
 function createSHA256Hash(data: string): string {
-    const hash = _crypto!.createHash("sha256");
+    const hash = _crypto.createHash("sha256");
     hash.update(data);
     return hash.digest("hex");
 }

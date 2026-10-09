@@ -180,19 +180,20 @@ finishes successfully on Node and sanitized native and prints exactly the same
 AST bytes as Go in tree mode, but reports 0 nodes instead of Go's 18 in count
 mode. Only the count check catches it. See `validation/count-mutant.log`.
 
-## 5. Function values with optional parameters
+## 5. Function values with optional parameters: closed
 
-Moving declarations into a separate module exposed another stage-0 limit:
-function values with optional parameters report `NotYet: a function value with
-an optional parameter`. Default parameters on ordinary class methods are
-already supported, but default parameters on the callback arrows were not.
-`gaps/5_optional_function_value.ts` prints `1` on Node and is refused with this
-exact NotYet; `TestOptionalFunctionValueGap` requires both observations.
-The statement callback interface now requires every argument. Small class
-method wrappers supply the defaults explicitly. Callbacks are temporary, never
-stored on Parser, so their references back to Parser do not form an owning
-cycle. They are explicit function properties, avoiding gap 4's class-method
-structural dispatch bug. The original expression corpus remains identical.
+Closed by `f69bf6082b6db19ec0037ef8d2a51a9a5d46a8d8`, found with
+`git log -S 'a function value with an optional parameter' -- internal/lower`.
+`gaps/5_optional_function_value.ts` still prints `1`. Its retired refusal test
+is now `TestClosedOptionalFunctionValueGap`, requiring source Node, native
+ASan/UBSan/LeakSanitizer and JavaScript-backend agreement.
+
+The statement callback interface admits optional `make` children and optional
+`type` minimum/conditional arguments. Its callback arrows supply the defaults;
+`Statements` calls those callbacks directly, removing the class-method wrappers
+that existed only to supply defaults outside a function value.
+Callbacks remain temporary explicit function properties, so they preserve the
+existing ownership and method-origin choices described in gap 4.
 
 ## 6. Conditional branches with an unannotated empty array
 
@@ -245,3 +246,16 @@ through Go's lazy JSDoc parser. The Adamic driver extracts those reduced
 annotations and reuses its type parser. This mode does not claim a JSDoc tag
 or comment parser. Ordinary whole-file traversal follows Go's ForEachChild,
 which omits attached JSDoc comments.
+
+Closure validation on compiler/area-gaps: `go test -v
+./stage1/typescript/parser -run
+'^(TestClosedOptionalFunctionValueGap|TestExpressionsAgree|TestWholeGeneratedAgrees)$'
+-count=1 -timeout 30m` passed (89.627s). The unchanged gap program matches
+Node in both backends, including sanitizer/leak checks. The changed parser
+and statements composition matches Go and source Node for 58 expressions
+(17,463 canonical bytes) and 68 generated whole files (93,323 bytes).
+Native and Node caught the existing wrong-output mutants for precedence,
+optional-chain flags and parenthesized expressions misclassified as arrows.
+Changing the gap fixture's default from 1 to 2 made its normal Node output
+fail the expected 1 check; the fixture was restored. No full parser package
+or compiler corpus was run.

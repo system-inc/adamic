@@ -1,0 +1,20 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/params_namespaces_order.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/params_namespaces_order.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/params_namespaces_order.a
+    oracle_test.go:580: stdout differs
+        node:   exit 0, stdout "root 111 11 22\nroot 149 49 98\nmiddle 59 49 leaf! leaf 48\nleaf 98 51 leaf 59\n11 22 51 leaf root-field leaf-default root-field middle-field leaf-field \nroot 109 9 18\nmiddle 19 9 given! given 83\nleaf 58 11 given 94\n11 given root-field leaf-default root-field middle-field leaf-field root-field middle-field leaf-field \n", stderr ""
+        native: exit 0, stdout "root 111 0 22\nroot 149 0 98\nmiddle 59 0 leaf! leaf 48\nleaf 98 3 leaf 59\n0 22 3 leaf root-field leaf-default root-field middle-field leaf-field \nroot 109 0 18\nmiddle 19 0 given! given 83\nleaf 58 3 given 94\n3 given root-field leaf-default root-field middle-field leaf-field root-field middle-field leaf-field \n", stderr ""
+    oracle_test.go:586: JavaScript backend: stdout differs
+        node:    exit 0, stdout "root 111 11 22\nroot 149 49 98\nmiddle 59 49 leaf! leaf 48\nleaf 98 51 leaf 59\n11 22 51 leaf root-field leaf-default root-field middle-field leaf-field \nroot 109 9 18\nmiddle 19 9 given! given 83\nleaf 58 11 given 94\n11 given root-field leaf-default root-field middle-field leaf-field root-field middle-field leaf-field \n", stderr ""
+        backend: exit 0, stdout "root 111 0 22\nroot 149 0 98\nmiddle 59 0 leaf! leaf 48\nleaf 98 3 leaf 59\n0 22 3 leaf root-field leaf-default root-field middle-field leaf-field \nroot 109 0 18\nmiddle 19 0 given! given 83\nleaf 58 3 given 94\n3 given root-field leaf-default root-field middle-field leaf-field root-field middle-field leaf-field \n", stderr ""
+--- FAIL: TestNativeAgreesWithNode (0.00s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/params_namespaces_order.a (0.44s)
+FAIL
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.452s
+FAIL
