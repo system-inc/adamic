@@ -1,0 +1,21 @@
+function errorCode(error: unknown): string | undefined {
+    return typeof error === 'object' && error !== null && 'code' in error && typeof error.code === 'string' ? error.code : undefined;
+}
+import { programArguments } from 'adamic';
+const root = programArguments()[0] ?? '';
+function failure(error: Error): void {
+    console.log(`${errorCode(error) ?? ''}: ${error.message.replace(root, '<root>')}`);
+}
+import { readFileSync, openSync, closeSync } from 'node:fs';
+console.log(readFileSync(root + '/utf8', 'utf8'));
+console.log(`${readFileSync(root + '/bom', 'utf8').charCodeAt(0)}`);
+console.log(readFileSync(root + '/bad', {encoding:'utf-8'}));
+const fd = openSync(root + '/utf8', 'r');
+console.log(readFileSync(fd, 'utf8'));
+console.log(`eof=${readFileSync(fd, 'utf8').length}`);
+closeSync(fd);
+try { readFileSync(root + '/missing', 'utf8'); } catch (error) { if (error instanceof Error) { failure(error); } }
+try { readFileSync(root, 'utf8'); } catch (error) { if (error instanceof Error) { failure(error); } }
+try { readFileSync(root + '/file/child', 'utf8'); } catch (error) { if (error instanceof Error) { failure(error); } }
+try { readFileSync(root + '/closed/file', 'utf8'); } catch (error) { if (error instanceof Error) { failure(error); } }
+try { readFileSync('a\0b', 'utf8'); } catch (error) { if (error instanceof Error) { failure(error); } }

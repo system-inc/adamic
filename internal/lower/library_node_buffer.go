@@ -2,12 +2,24 @@ package lower
 
 import (
 	"math"
-	"strings"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/load"
 )
+
+// Keep the shared default refusal in place for every other Node member.
+func init() {
+	RegisterNodeLibraryMembers(
+		"node:buffer.Buffer",
+		"node:buffer.BufferConstructor.from",
+		"node:buffer.Buffer.toString",
+		"node:crypto.createHash",
+		"node:crypto.Hash.update",
+		"node:crypto.Hash.digest",
+	)
+}
 
 // The shared loader supplies the pinned @types/node tree. Ambient modules in
 // application files are not host declarations, even when their names match.
@@ -17,7 +29,7 @@ func nodeBufferModule(symbol *ast.Symbol) string {
 	}
 	for _, declaration := range symbol.Declarations {
 		source := ast.GetSourceFileOfNode(declaration)
-		if source == nil || !strings.Contains(strings.ReplaceAll(source.FileName().AsString(), "\\", "/"), "/@types/node/") {
+		if !load.IsNodeLibrary(source) {
 			continue
 		}
 		for parent := declaration; parent != nil; parent = parent.Parent {
@@ -43,10 +55,92 @@ func (l *lowering) nodeBufferType(proven *checker.Type, name string) bool {
 	return symbol != nil && symbol.Name == name && nodeBufferModule(symbol) != ""
 }
 
+// Buffer has byte-array storage; its declared typed-array and Hash stream views
+// must not expose the private native slots. Buffer.from copies its input, so that
+// one argument can be read through the declared ArrayLike/Uint8Array overload.
+func (l *lowering) nodeBufferRepresentation(proven *checker.Type) (ir.Type, bool) {
+	if l.nodeBufferType(proven, "Buffer") {
+		return ir.Array, true
+	}
+	return 0, false
+}
+
+func (l *lowering) nodeBufferContextualView(node *ast.Node, contextual *checker.Type) (bool, error) {
+	hostArgument := l.nodeBufferReadArgument(node) || l.nodeFSFileBufferArgument(node)
+	if !hostArgument && !l.nodeBufferView(l.present(l.checker.GetTypeAtLocation(node)), l.present(contextual)) {
+		return false, l.notYet(node, "Buffer or Hash viewed as another object type (native host internal slots)")
+	}
+	return hostArgument, nil
+}
+
+// The census observes the crypto namespace only for module availability. Static
+// member calls still resolve against the pinned declarations, not object fields.
+// Do not expose a partial namespace to aliases, reflection or enumeration.
+func (l *lowering) nodeCryptoNamespace(node *ast.Node) bool {
+	if !ast.IsIdentifier(node) {
+		return false
+	}
+	symbol := l.symbol(node)
+	if symbol == nil {
+		return false
+	}
+	for _, declaration := range symbol.Declarations {
+		if load.IsNodeLibrary(ast.GetSourceFileOfNode(declaration)) && declaration.Kind == ast.KindModuleDeclaration && declaration.Name() != nil && declaration.Name().Kind == ast.KindStringLiteral && declaration.Name().Text() == "node:crypto" {
+			return true
+		}
+	}
+	return false
+}
+
+func nodeCryptoNamespaceObservation(node *ast.Node) bool {
+	outer := node
+	for outer.Parent != nil && (outer.Parent.Kind == ast.KindParenthesizedExpression || outer.Parent.Kind == ast.KindNonNullExpression) {
+		outer = outer.Parent
+	}
+	parent := outer.Parent
+	if parent == nil {
+		return false
+	}
+	switch parent.Kind {
+	case ast.KindTypeOfExpression:
+		return true
+	case ast.KindConditionalExpression:
+		return parent.AsConditionalExpression().Condition == outer
+	case ast.KindIfStatement:
+		return parent.AsIfStatement().Expression == outer
+	case ast.KindWhileStatement:
+		return parent.AsWhileStatement().Expression == outer
+	case ast.KindDoStatement:
+		return parent.AsDoStatement().Expression == outer
+	case ast.KindForStatement:
+		return parent.AsForStatement().Condition == outer
+	case ast.KindPrefixUnaryExpression:
+		return parent.AsPrefixUnaryExpression().Operator == ast.KindExclamationToken
+	}
+	return false
+}
+
+func (l *lowering) nodeCryptoNamespaceValue(node *ast.Node) (ir.Expression, bool, error) {
+	node = ast.SkipParentheses(node)
+	if !l.nodeCryptoNamespace(node) {
+		return nil, false, nil
+	}
+	if !nodeCryptoNamespaceObservation(node) {
+		return nil, true, l.notYet(node, "node:crypto namespace read outside presence checks or typeof")
+	}
+	// A present object token has the namespace's truthiness and typeof. It cannot
+	// escape these observations; no missing export is represented as an empty field.
+	return ir.ObjectLiteral{}, true, nil
+}
+
 // Reading a host member as a value must not fall through to ordinary object
 // slots. Hash's private runtime layout is not its inherited stream layout.
 func (l *lowering) nodeBufferUnsupportedUse(node *ast.Node) error {
 	node = ast.SkipParentheses(node)
+	if l.nodeCryptoNamespace(node) {
+		_, _, err := l.nodeCryptoNamespaceValue(node)
+		return err
+	}
 	if node.Kind == ast.KindPropertyAccessExpression {
 		access := node.AsPropertyAccessExpression()
 		name := node.Name().Text()

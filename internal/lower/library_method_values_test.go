@@ -94,3 +94,36 @@ func TestLibraryMethodValueSafety(t *testing.T) {
 		})
 	}
 }
+
+func TestLibraryMethodConsoleScalarBoundary(t *testing.T) {
+	t.Parallel()
+	for _, source := range []string{
+		"const f = String.prototype.trim; console.log(f.call(' x '));",
+		"const f = String.prototype.normalize; console.log((f.call('x')));",
+		"const f = String.prototype.padEnd; console.log(f.call('x', 3));",
+		"const f = Object.prototype.toString; console.log(f.call([1]));",
+	} {
+		t.Run(source, func(t *testing.T) {
+			if _, err := lowerSource(t, source); err != nil {
+				t.Fatal(err)
+			}
+		})
+	}
+}
+
+func TestLibraryMethodConsoleScalarBoundaryRefusals(t *testing.T) {
+	t.Parallel()
+	for _, source := range []string{
+		"const f = String.prototype.at; console.log(f.call('x', 9));",
+		"const f = String.prototype.at; console.log(f.call('x', 9)!);",
+		"const f = String.prototype.trim; const narrowed = f as (this: string) => 'trusted'; console.log(narrowed.call(' x '));",
+		"function show(value: string | null | undefined): void {} const f = String.prototype.trim; show(f.call(' x '));",
+		"function show(value: string | null | undefined): void { console.log(value); } show(undefined);",
+	} {
+		t.Run(source, func(t *testing.T) {
+			if _, err := lowerSource(t, source); err == nil {
+				t.Fatal("unproven alias result or general nullable view was admitted")
+			}
+		})
+	}
+}

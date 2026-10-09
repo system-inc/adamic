@@ -209,6 +209,7 @@ func (e *emitter) statement(statement ir.Statement) {
 		e.line("\tadamic_panic(message, sizeof message - 1);")
 		e.line("}")
 		e.line("adamic_object_check_data_write(%s, %s);", object, cString(statement.Name))
+		e.checkThrown()
 		records := e.hasRecordStorage()
 		keptValue := value
 		if statement.Value.Type().IsReference() {
@@ -247,7 +248,7 @@ func (e *emitter) statement(statement ir.Statement) {
 		}
 		converted := e.program.CheckedFields[statement.Name] && statement.Value.Type() <= ir.Boolean
 		if converted {
-			e.line("if (adamic_object_field_types(%s)[%s.index] == 10) {", object, cache)
+			e.line("if (adamic_object_slot_type(%s, %s) == 10) {", object, slot)
 			boxed := fmt.Sprintf("adamic_box_number(%s)", value)
 			if statement.Value.Type() == ir.Boolean {
 				boxed = fmt.Sprintf("(%s ? &adamic_box_true : &adamic_box_false)", value)
@@ -267,7 +268,7 @@ func (e *emitter) statement(statement ir.Statement) {
 			e.line("%s->%s = %s;", slot, member(statement.Value.Type()), slotted(statement.Value.Type(), value))
 		}
 		if e.fieldTypesNeeded() {
-			e.line("adamic_object_field_types(%s)[%s.index] = %d;", object, cache, fieldRepresentation(statement.Value))
+			e.line("adamic_object_set_slot_type(%s, %s, %d);", object, slot, fieldRepresentation(statement.Value))
 		}
 		if converted {
 			e.line("}")

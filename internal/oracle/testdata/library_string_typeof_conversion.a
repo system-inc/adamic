@@ -1,0 +1,9 @@
+// test262 built-ins/String/S9.8_A4_T1.js, including its unreachable error path.
+const text = 'abc';
+if (String(text) !== text) { throw new Error('identity'); }
+if (typeof String(text) !== typeof text) {
+ throw new Error('wrong typeof: ' + typeof String('abc'));
+}
+console.log(typeof String('abc'));
+console.log(String('abc'));
+console.log(`${typeof String()} ${typeof String(null)} ${typeof String(undefined)} ${typeof String(true)}`);
