@@ -952,28 +952,42 @@ func TestThroughput(t *testing.T) {
 // attached to nothing. Stage 1 reads the table only by following links from the root, and the flat copy
 // of typescript-go's tree (#k4fm1vf) depends on it: its tables hold rows no link reaches. A rule or
 // harness pass that walks the table by row reports on the copies and fails here.
+// ADAMIC_TEST_SHARD=i/n runs shards whose index modulo n is i; unset runs all.
+const testNodeTableIsLinkOnlyShards = 8
+
 func TestNodeTableIsLinkOnly(t *testing.T) {
 	t.Parallel()
 	skipWhenRuleScoped(t)
+	started := time.Now()
 	directory, err := filepath.Abs(".")
 	if err != nil {
 		t.Fatal(err)
 	}
-	oracle := goOracle(t)
+	oracle, oracleBuild := lintCoreOracle(t)
 	rows := generated(t)
-	for _, row := range upstream(t) {
+	captureStarted := time.Now()
+	captured := upstream(t)
+	captureTime := time.Since(captureStarted)
+	t.Logf("input upstream capture: %s", captureTime)
+	for _, row := range captured {
 		if !strings.HasSuffix(row, "\tunsupported-recovery") {
 			rows = append(rows, row)
 		}
 	}
-	path := manifest(t, recoveryRows(t, oracle, rows))
-	binary := buildPort(t, directory, false)
-	plain := execute(t, "", binary, "--manifest", path)
-	junk := execute(t, "", binary, "--manifest", path, "--junk-rows")
-	if diff := difference(junk.output, plain.output); diff != "" {
-		t.Fatalf("output changed with unattached rows in the node table: %s", diff)
-	}
-	t.Logf("%d rows: identical with and without unattached node rows, %d bytes", len(rows), len(plain.output))
+	binary, nativeBuild := lintCoreNative(t, directory, false)
+	assignments := lintCoreAssignments(len(rows), testNodeTableIsLinkOnlyShards)
+	lintCoreRunShards(t, rows, assignments, testNodeTableIsLinkOnlyShards, func(t *testing.T, indices []int) {
+		local := make([]string, len(indices))
+		for i, index := range indices {
+			local[i] = rows[index]
+		}
+		path := manifest(t, recoveryRows(t, oracle, local))
+		plain := execute(t, "", binary, "--manifest", path)
+		junk := execute(t, "", binary, "--manifest", path, "--junk-rows")
+		lintCoreEqual(t, "output changed with unattached rows in the node table", junk.output, plain.output)
+		t.Logf("%d rows: identical with and without unattached node rows, %d bytes", len(local), len(plain.output))
+	})
+	t.Logf("setup: with builds=%s; without builds=%s; upstream capture=%s", time.Since(started), time.Since(started)-oracleBuild-nativeBuild, captureTime)
 }
 
 // TestShardsAgree requires the driver's output to be byte-identical however many processes share the
