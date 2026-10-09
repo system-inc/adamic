@@ -32,7 +32,7 @@ const compilerAgreementFixBuckets = 256
 const compilerAgreementCheckerGroups = 16
 const compilerAgreementCheckerKey = "compiler/src/compiler/checker.ts"
 const compilerAgreementSides = 5
-const testCompilerAndStage1AgreeShards = (compilerAgreementFileBuckets*compilerAgreementRuleGroups + compilerAgreementFixBuckets + compilerAgreementCheckerGroups) * compilerAgreementSides
+const testCompilerAndStage1AgreeShards = (compilerAgreementFileBuckets*compilerAgreementRuleGroups + compilerAgreementFixBuckets + compilerAgreementCheckerGroups + 1) * compilerAgreementSides
 
 // Stable file and rule keys, rather than corpus ordinals, keep growing corpora covered.
 func compilerAgreementBucket(key string, count int) int {
@@ -90,12 +90,8 @@ func compilerAgreementCases(t *testing.T) []compilerAgreementCase {
 			seen[pair] = true
 			cases = append(cases, compilerAgreementCase{path, key, d.Name})
 		}
-		// Other files retain their separate all-rule interaction checks. Checker
-		// uses the rule cases above, including each rule's complete fix output.
-		// A separate all-rule case is not counted as another rule pair.
-		if key != compilerAgreementCheckerKey {
-			cases = append(cases, compilerAgreementCase{path, key, "all"})
-		}
+		// Preserve the combined-rule interaction and full fixed-output comparison.
+		cases = append(cases, compilerAgreementCase{path, key, "all"})
 	}
 	compilerAgreementCorpus = cases
 	return cases
@@ -103,6 +99,9 @@ func compilerAgreementCases(t *testing.T) []compilerAgreementCase {
 
 func compilerAgreementOwner(c compilerAgreementCase) int {
 	if c.key == compilerAgreementCheckerKey {
+		if c.rule == "all" {
+			return compilerAgreementFileBuckets*compilerAgreementRuleGroups + compilerAgreementFixBuckets + compilerAgreementCheckerGroups
+		}
 		// Checker fix output is compared per rule; every selected rule retains its
 		// complete diagnostic, proposal, rejection, convergence and fixed-byte checks.
 		return compilerAgreementFileBuckets*compilerAgreementRuleGroups + compilerAgreementFixBuckets + compilerAgreementBucket(c.rule, compilerAgreementCheckerGroups)
@@ -13355,6 +13354,11 @@ func TestCompilerAndStage1Agree_6477(t *testing.T) { t.Parallel(); compilerAgree
 func TestCompilerAndStage1Agree_6478(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6478) }
 
 func TestCompilerAndStage1Agree_6479(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6479) }
+func TestCompilerAndStage1Agree_6480(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6480) }
+func TestCompilerAndStage1Agree_6481(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6481) }
+func TestCompilerAndStage1Agree_6482(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6482) }
+func TestCompilerAndStage1Agree_6483(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6483) }
+func TestCompilerAndStage1Agree_6484(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6484) }
 
 func compilerAgreementCompare(t *testing.T, got, want []byte) {
 	t.Helper()
