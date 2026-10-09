@@ -1,0 +1,11 @@
+Starting commit: 2102ee6b93e0281dc8593abe96c8311aa66ea594.
+
+TestSpeedCostProbes: CODE UNDER TEST is Adamic lowering and the native string runtime executing the standalone cost workloads. ORACLE is the handwritten expected checksum for each workload. Source Node and emitted JavaScript also have to equal that checksum. The assertion measures functional equality, not speed. D1 changes the workload itself and is disqualified from all defense verdicts.
+
+TestUnistMatchesGo: CODE UNDER TEST is the production YAML TypeScript CST/composer/Unist port compiled natively. ORACLE is unchanged Go cohere plus installed yaml-unist-parser. Complete outlines include spans, parent relationships, comments, node values and failures. D2 changes only production Unist root-range construction. The scalar family neither imports nor executes this module. Formatter and file-driver comparisons use Unist as input preparation but observe formatted text, while this row directly observes the root endpoint.
+
+TestWidthsMatchGo: CODE UNDER TEST is width.ts and widthTables.ts compiled natively. ORACLE is unchanged Go cohere, comparing all Unicode scalar widths and 256 emoji/context sequences. Source Node and emitted JavaScript must also match Go. D3 removes U+3FFFD from the last wide interval. The speed subsumer never imports these modules. Formatter inputs share width code but do not exhaustively enumerate Unicode scalars.
+
+Go -coverpkg cannot instrument TypeScript or embedded C. The requested Go profiles instrument internal/lower and internal/native and are supplementary compiler execution evidence, not port/native-runtime coverage. V8 production source coverage in v8-production-coverage.json and exact mapped mutation statement counts in exclusive-lines.json demonstrate the TS differences. functions-reached.json lists dynamically executed source functions. No test or oracle was changed. D1 is explicitly excluded because workload bugs do not defend a compiler test.
+
+The full package baseline reached the outer 120-second backstop. Its TestMain first runs a separate file-driver build child before m.Run. Bounded clean baselines passed for all selected production comparisons and each formatter witness leaf. Per-leaf matrix runs keep the binary below 90 seconds. Each mutant uses its own ADAMIC_BUILD_CACHE_DIR, and every source edit is restored before the next one.

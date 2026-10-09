@@ -1,0 +1,38 @@
+[
+  {
+    "mutant": "D1",
+    "command": "git apply --check review/test-defend/stage1-cohere-yaml-scalars_match_go_shards/diffs/D1.diff",
+    "exit": 0,
+    "output": ""
+  },
+  {
+    "mutant": "D2",
+    "command": "git apply --check review/test-defend/stage1-cohere-yaml-scalars_match_go_shards/diffs/D2.diff",
+    "exit": 0,
+    "output": ""
+  },
+  {
+    "mutant": "D3",
+    "command": "git apply --check review/test-defend/stage1-cohere-yaml-scalars_match_go_shards/diffs/D3.diff",
+    "exit": 0,
+    "output": ""
+  },
+  {
+    "mutant": "D4",
+    "command": "git apply --check review/test-defend/stage1-cohere-yaml-scalars_match_go_shards/diffs/D4.diff",
+    "exit": 0,
+    "output": ""
+  },
+  {
+    "mutant": "D5",
+    "command": "git apply --check review/test-defend/stage1-cohere-yaml-scalars_match_go_shards/diffs/D5.diff",
+    "exit": 0,
+    "output": ""
+  },
+  {
+    "mutant": "D6",
+    "command": "git apply --check review/test-defend/stage1-cohere-yaml-scalars_match_go_shards/diffs/D6.diff",
+    "exit": 0,
+    "output": ""
+  }
+]

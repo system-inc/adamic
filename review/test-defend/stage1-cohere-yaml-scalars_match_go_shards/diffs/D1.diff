@@ -1,0 +1,11 @@
+--- a/stage1/cohere/yaml/gaps/stringUnitScan.ts
++++ b/stage1/cohere/yaml/gaps/stringUnitScan.ts
+@@ -7,7 +7,7 @@
+ const rounds = Number(args[2] ?? '1');
+ function scan(text: string, numeric: boolean): number {
+     let result = 0;
+-    for(let index = 0; index < text.length; index++) {
++    for(let index = 0; index < text.length - 1; index++) {
+         if(numeric) result += text.charCodeAt(index);
+         else result += text.slice(index, index + 1).charCodeAt(0);
+     }

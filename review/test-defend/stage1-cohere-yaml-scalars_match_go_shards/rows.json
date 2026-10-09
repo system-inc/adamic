@@ -1,0 +1,181 @@
+[
+  {
+    "test": "TestSpeedCostProbes",
+    "package": "stage1/cohere/yaml",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestScalarsMatchGo family"
+    ],
+    "defense": "not defended",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D4",
+        "file_line": "internal/native/runtime/string_slice_impl.h:43",
+        "change": "builder_unit(&build, unit_at(string, offset - 4, true)); -> builder_unit(&build, unit_at(string, offset - 4, false));",
+        "rows_failed": [
+          "TestScalarsMatchGo family",
+          "TestSpeedCostProbes"
+        ]
+      },
+      {
+        "mutant": "D5",
+        "file_line": "internal/native/runtime/string_slice_impl.h:49",
+        "change": "builder_unit(&build, unit_at(string, stop, false)); -> builder_unit(&build, unit_at(string, stop, true));",
+        "rows_failed": [
+          "TestScalarsMatchGo family",
+          "TestSpeedCostProbes"
+        ]
+      },
+      {
+        "mutant": "D6",
+        "file_line": "internal/native/runtime/string_slice_impl.h:52",
+        "change": "slice->units = last - first + 1; -> slice->units = last - first + 2;",
+        "rows_failed": [
+          "TestScalarsMatchGo family"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_YAML_LIBRARY=/tmp/yaml-defend/library ADAMIC_BUILD_CACHE_DIR=/tmp/yaml-defend/cache/D4 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run '^Test(SpeedCostProbes|ScalarsMatchGo(Union|_[0-9]+))$' > review/test-defend/stage1-cohere-yaml-scalars_match_go_shards/D4-runtime.log 2>&1; speed_gap_test.go:69: slice native ASan/UBSan/LSan: got \"52408400000\\n\", want \"52998400000\\n\"",
+    "bounded": true
+  },
+  {
+    "test": "TestUnistMatchesGo",
+    "package": "stage1/cohere/yaml",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestScalarsMatchGo family"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D2 stage1/cohere/yaml/unistContext.ts:843",
+    "attempts": [
+      {
+        "mutant": "D2",
+        "file_line": "stage1/cohere/yaml/unistContext.ts:843",
+        "change": "this.make('root', this.range(0, this.text.length)) -> this.make('root', this.range(0, this.text.length + 1))",
+        "rows_failed": [
+          "TestUnistMatchesGo"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_YAML_LIBRARY=/tmp/yaml-defend/library ADAMIC_BUILD_CACHE_DIR=/tmp/yaml-defend/cache/D2 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run '^TestUnistMatchesGo$' > review/test-defend/stage1-cohere-yaml-scalars_match_go_shards/D2-target.log 2>&1; unist_test.go:80: native ASan/UBSan/LSan: byte 22: got \"case 0\\nroot|1,1,0|564,2,30842|-|||-1|0|0|||[document|1,1,0|564,1,30841|root,1,1,0,564,2,30842|||-1|0|0\", want \"case 0\\nroot|1,1,0|564,1,30841|-|||-1|0|0|||[document|1,1,0|564,1,30841|root,1,1,0,564,1,30841|||-1|0|0\"",
+    "bounded": true,
+    "rows_passed": [
+      "TestFileDriverUnion",
+      "TestFileDriver_000",
+      "TestFileDriver_001",
+      "TestFileDriver_002",
+      "TestFileDriver_003",
+      "TestFileDriver_004",
+      "TestFileDriver_005",
+      "TestFileDriver_006",
+      "TestFileDriver_007",
+      "TestFileDriver_Setup",
+      "TestFormatterMatchesGo",
+      "TestFormatterMutants_000",
+      "TestFormatterMutants_001",
+      "TestFormatterMutants_002",
+      "TestFormatterMutants_003",
+      "TestFormatterMutants_004",
+      "TestFormatterMutants_005",
+      "TestProduct_YAMLFormatterMutant000Lowered",
+      "TestProduct_YAMLFormatterMutant000Native",
+      "TestProduct_YAMLFormatterMutant000Sources",
+      "TestProduct_YAMLFormatterMutant001Lowered",
+      "TestProduct_YAMLFormatterMutant001Native",
+      "TestProduct_YAMLFormatterMutant001Sources",
+      "TestProduct_YAMLFormatterMutant002Lowered",
+      "TestProduct_YAMLFormatterMutant002Native",
+      "TestProduct_YAMLFormatterMutant002Sources",
+      "TestProduct_YAMLFormatterMutant003Lowered",
+      "TestProduct_YAMLFormatterMutant003Native",
+      "TestProduct_YAMLFormatterMutant003Sources",
+      "TestProduct_YAMLFormatterMutant004Lowered",
+      "TestProduct_YAMLFormatterMutant004Native",
+      "TestProduct_YAMLFormatterMutant004Sources",
+      "TestProduct_YAMLFormatterMutant005Lowered",
+      "TestProduct_YAMLFormatterMutant005Native",
+      "TestProduct_YAMLFormatterMutant005Sources",
+      "TestScalarsMatchGoUnion",
+      "TestScalarsMatchGo_000",
+      "TestScalarsMatchGo_001",
+      "TestScalarsMatchGo_002",
+      "TestScalarsMatchGo_003",
+      "TestScalarsMatchGo_004",
+      "TestScalarsMatchGo_005",
+      "TestScalarsMatchGo_006",
+      "TestScalarsMatchGo_007",
+      "TestSpeedCostProbes",
+      "TestUnistMutants"
+    ]
+  },
+  {
+    "test": "TestWidthsMatchGo",
+    "package": "stage1/cohere/yaml",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestSpeedCostProbes"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D3 stage1/cohere/yaml/widthTables.ts:126",
+    "attempts": [
+      {
+        "mutant": "D3",
+        "file_line": "stage1/cohere/yaml/widthTables.ts:126",
+        "change": "[0x30000, 0x3fffd] -> [0x30000, 0x3fffc]",
+        "rows_failed": [
+          "TestWidthsMatchGo"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_YAML_LIBRARY=/tmp/yaml-defend/library ADAMIC_BUILD_CACHE_DIR=/tmp/yaml-defend/cache/D3 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run '^TestWidthsMatchGo$' > review/test-defend/stage1-cohere-yaml-scalars_match_go_shards/D3-target.log 2>&1; width_test.go:108: native ASan/UBSan/LSan: byte 520186: got \"2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n\", want \"2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n\"",
+    "bounded": true,
+    "rows_passed": [
+      "TestFileDriverUnion",
+      "TestFileDriver_000",
+      "TestFileDriver_001",
+      "TestFileDriver_002",
+      "TestFileDriver_003",
+      "TestFileDriver_004",
+      "TestFileDriver_005",
+      "TestFileDriver_006",
+      "TestFileDriver_007",
+      "TestFileDriver_Setup",
+      "TestFormatterMatchesGo",
+      "TestFormatterMutants_000",
+      "TestFormatterMutants_001",
+      "TestFormatterMutants_002",
+      "TestFormatterMutants_003",
+      "TestFormatterMutants_004",
+      "TestFormatterMutants_005",
+      "TestProduct_YAMLFormatterMutant000Lowered",
+      "TestProduct_YAMLFormatterMutant000Native",
+      "TestProduct_YAMLFormatterMutant000Sources",
+      "TestProduct_YAMLFormatterMutant001Lowered",
+      "TestProduct_YAMLFormatterMutant001Native",
+      "TestProduct_YAMLFormatterMutant001Sources",
+      "TestProduct_YAMLFormatterMutant002Lowered",
+      "TestProduct_YAMLFormatterMutant002Native",
+      "TestProduct_YAMLFormatterMutant002Sources",
+      "TestProduct_YAMLFormatterMutant003Lowered",
+      "TestProduct_YAMLFormatterMutant003Native",
+      "TestProduct_YAMLFormatterMutant003Sources",
+      "TestProduct_YAMLFormatterMutant004Lowered",
+      "TestProduct_YAMLFormatterMutant004Native",
+      "TestProduct_YAMLFormatterMutant004Sources",
+      "TestProduct_YAMLFormatterMutant005Lowered",
+      "TestProduct_YAMLFormatterMutant005Native",
+      "TestProduct_YAMLFormatterMutant005Sources",
+      "TestScalarsMatchGoUnion",
+      "TestScalarsMatchGo_000",
+      "TestScalarsMatchGo_001",
+      "TestScalarsMatchGo_002",
+      "TestScalarsMatchGo_003",
+      "TestScalarsMatchGo_004",
+      "TestScalarsMatchGo_005",
+      "TestScalarsMatchGo_006",
+      "TestScalarsMatchGo_007",
+      "TestSpeedCostProbes"
+    ]
+  }
+]

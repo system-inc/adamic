@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/string_slice_impl.h
++++ b/internal/native/runtime/string_slice_impl.h
+@@ -40,7 +40,7 @@
+ 	}
+ 	builder build = {NULL, 0, 0};
+ 	if (low) {
+-		builder_unit(&build, unit_at(string, offset - 4, true));
++		builder_unit(&build, unit_at(string, offset - 4, false));
+ 	}
+ 	if (middle > 0) {
+ 		builder_add(&build, string->bytes + offset, middle);

@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/string_slice_impl.h
++++ b/internal/native/runtime/string_slice_impl.h
+@@ -49,7 +49,7 @@
+ 		builder_unit(&build, unit_at(string, stop, false));
+ 	}
+ 	adamic_string *slice = builder_finish(&build);
+-	slice->units = last - first + 1;
++	slice->units = last - first + 2;
+ 	return slice;
+ }
+ 

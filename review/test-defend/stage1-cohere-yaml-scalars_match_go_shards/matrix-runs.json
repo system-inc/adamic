@@ -1,0 +1,443 @@
+[
+  {
+    "mutant": "D2",
+    "selection": "target",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^TestUnistMatchesGo$"
+    ],
+    "cache": "/tmp/yaml-defend/cache/D2",
+    "exit": 1,
+    "seconds": 32.55481389500346,
+    "log": "D2-target.log"
+  },
+  {
+    "mutant": "D2",
+    "selection": "controls",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^Test(SpeedCostProbes|ScalarsMatchGo(Union|_[0-9]+))$"
+    ],
+    "cache": "/tmp/yaml-defend/cache/D2",
+    "exit": 0,
+    "seconds": 15.77149473499594,
+    "log": "D2-controls.log"
+  },
+  {
+    "mutant": "D2",
+    "selection": "formatter",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^TestFormatterMatchesGo$"
+    ],
+    "cache": "/tmp/yaml-defend/cache/D2",
+    "exit": 0,
+    "seconds": 59.25888755800406,
+    "log": "D2-formatter.log"
+  },
+  {
+    "mutant": "D2",
+    "selection": "file-driver",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^TestFileDriver(Union|_[0-9]+|_Setup)$"
+    ],
+    "cache": "/tmp/yaml-defend/cache/D2",
+    "exit": 0,
+    "seconds": 51.768054378997476,
+    "log": "D2-file-driver.log"
+  },
+  {
+    "mutant": "D2",
+    "selection": "unist-witness",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^TestUnistMutants$"
+    ],
+    "cache": "/tmp/yaml-defend/cache/D2",
+    "exit": 0,
+    "seconds": 53.54406717399979,
+    "log": "D2-unist-witness.log"
+  },
+  {
+    "mutant": "D2",
+    "selection": "formatter-witness-0",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^Test(FormatterMutants_000|Product_YAMLFormatterMutant000(Sources|Lowered|Native))$"
+    ],
+    "cache": "/tmp/yaml-defend/cache/D2",
+    "exit": 0,
+    "seconds": 35.60496921999584,
+    "log": "D2-formatter-witness-0.log"
+  },
+  {
+    "mutant": "D2",
+    "selection": "formatter-witness-1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^Test(FormatterMutants_001|Product_YAMLFormatterMutant001(Sources|Lowered|Native))$"
+    ],
+    "cache": "/tmp/yaml-defend/cache/D2",
+    "exit": 0,
+    "seconds": 35.68852600300306,
+    "log": "D2-formatter-witness-1.log"
+  },
+  {
+    "mutant": "D2",
+    "selection": "formatter-witness-2",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^Test(FormatterMutants_002|Product_YAMLFormatterMutant002(Sources|Lowered|Native))$"
+    ],
+    "cache": "/tmp/yaml-defend/cache/D2",
+    "exit": 0,
+    "seconds": 36.1448017349976,
+    "log": "D2-formatter-witness-2.log"
+  },
+  {
+    "mutant": "D2",
+    "selection": "formatter-witness-3",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^Test(FormatterMutants_003|Product_YAMLFormatterMutant003(Sources|Lowered|Native))$"
+    ],
+    "cache": "/tmp/yaml-defend/cache/D2",
+    "exit": 0,
+    "seconds": 35.254249710000295,
+    "log": "D2-formatter-witness-3.log"
+  },
+  {
+    "mutant": "D2",
+    "selection": "formatter-witness-4",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^Test(FormatterMutants_004|Product_YAMLFormatterMutant004(Sources|Lowered|Native))$"
+    ],
+    "cache": "/tmp/yaml-defend/cache/D2",
+    "exit": 0,
+    "seconds": 35.70789601800061,
+    "log": "D2-formatter-witness-4.log"
+  },
+  {
+    "mutant": "D2",
+    "selection": "formatter-witness-5",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^Test(FormatterMutants_005|Product_YAMLFormatterMutant005(Sources|Lowered|Native))$"
+    ],
+    "cache": "/tmp/yaml-defend/cache/D2",
+    "exit": 0,
+    "seconds": 35.708699693997914,
+    "log": "D2-formatter-witness-5.log"
+  },
+  {
+    "mutant": "D3",
+    "selection": "target",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^TestWidthsMatchGo$"
+    ],
+    "cache": "/tmp/yaml-defend/cache/D3",
+    "exit": 1,
+    "seconds": 16.04146586299612,
+    "log": "D3-target.log"
+  },
+  {
+    "mutant": "D3",
+    "selection": "controls",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^Test(SpeedCostProbes|ScalarsMatchGo(Union|_[0-9]+))$"
+    ],
+    "cache": "/tmp/yaml-defend/cache/D3",
+    "exit": 0,
+    "seconds": 16.94456312499824,
+    "log": "D3-controls.log"
+  },
+  {
+    "mutant": "D3",
+    "selection": "formatter",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^TestFormatterMatchesGo$"
+    ],
+    "cache": "/tmp/yaml-defend/cache/D3",
+    "exit": 0,
+    "seconds": 59.33205924199865,
+    "log": "D3-formatter.log"
+  },
+  {
+    "mutant": "D3",
+    "selection": "file-driver",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^TestFileDriver(Union|_[0-9]+|_Setup)$"
+    ],
+    "cache": "/tmp/yaml-defend/cache/D3",
+    "exit": 0,
+    "seconds": 57.057308161995024,
+    "log": "D3-file-driver.log"
+  },
+  {
+    "mutant": "D3",
+    "selection": "formatter-witness-0",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^Test(FormatterMutants_000|Product_YAMLFormatterMutant000(Sources|Lowered|Native))$"
+    ],
+    "cache": "/tmp/yaml-defend/cache/D3",
+    "exit": 0,
+    "seconds": 37.39879530199687,
+    "log": "D3-formatter-witness-0.log"
+  },
+  {
+    "mutant": "D3",
+    "selection": "formatter-witness-1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^Test(FormatterMutants_001|Product_YAMLFormatterMutant001(Sources|Lowered|Native))$"
+    ],
+    "cache": "/tmp/yaml-defend/cache/D3",
+    "exit": 0,
+    "seconds": 38.001739988001646,
+    "log": "D3-formatter-witness-1.log"
+  },
+  {
+    "mutant": "D3",
+    "selection": "formatter-witness-2",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^Test(FormatterMutants_002|Product_YAMLFormatterMutant002(Sources|Lowered|Native))$"
+    ],
+    "cache": "/tmp/yaml-defend/cache/D3",
+    "exit": 0,
+    "seconds": 36.465294943001936,
+    "log": "D3-formatter-witness-2.log"
+  },
+  {
+    "mutant": "D3",
+    "selection": "formatter-witness-3",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^Test(FormatterMutants_003|Product_YAMLFormatterMutant003(Sources|Lowered|Native))$"
+    ],
+    "cache": "/tmp/yaml-defend/cache/D3",
+    "exit": 0,
+    "seconds": 34.23358112399728,
+    "log": "D3-formatter-witness-3.log"
+  },
+  {
+    "mutant": "D3",
+    "selection": "formatter-witness-4",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^Test(FormatterMutants_004|Product_YAMLFormatterMutant004(Sources|Lowered|Native))$"
+    ],
+    "cache": "/tmp/yaml-defend/cache/D3",
+    "exit": 0,
+    "seconds": 36.253985750998254,
+    "log": "D3-formatter-witness-4.log"
+  },
+  {
+    "mutant": "D3",
+    "selection": "formatter-witness-5",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^Test(FormatterMutants_005|Product_YAMLFormatterMutant005(Sources|Lowered|Native))$"
+    ],
+    "cache": "/tmp/yaml-defend/cache/D3",
+    "exit": 0,
+    "seconds": 36.51134285199805,
+    "log": "D3-formatter-witness-5.log"
+  }
+]

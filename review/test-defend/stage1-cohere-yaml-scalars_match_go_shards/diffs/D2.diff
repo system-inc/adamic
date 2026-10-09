@@ -1,0 +1,11 @@
+--- a/stage1/cohere/yaml/unistContext.ts
++++ b/stage1/cohere/yaml/unistContext.ts
+@@ -840,7 +840,7 @@
+             }
+             this.comments[target] = comment;
+         }
+-        const root = this.make('root', this.range(0, this.text.length));
++        const root = this.make('root', this.range(0, this.text.length + 1));
+         this.node(root).children = children;
+         this.node(root).comments = this.comments;
+         this.attach(root);

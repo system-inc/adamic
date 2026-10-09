@@ -1,0 +1,12 @@
+{
+  "warm_setup": "skipped: /workspace/adamic-tools/env.sh works",
+  "nproc": 5,
+  "npm_ci_seconds": 0.5295607939988258,
+  "library_install_seconds": null,
+  "whole_baseline": "outer timeout 120, exit 124, no assertion failures observed",
+  "coverage_and_isolated_baseline_seconds": 398.4631167310217,
+  "D2_seconds": 427.00646012099605,
+  "D3_seconds": 368.2401363519821,
+  "runtime_attempts_seconds": 72.56293894199916,
+  "exact_native_rebuild_seconds": "not separately instrumented; run wall times are upper bounds"
+}

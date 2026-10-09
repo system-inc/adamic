@@ -1,0 +1,63 @@
+[
+  {
+    "mutant": "D1",
+    "file": "stage1/cohere/yaml/gaps/stringUnitScan.ts",
+    "origin_main_line": 10,
+    "target": "Speed",
+    "subsumer": "Scalars",
+    "transformed_offset": 400,
+    "range_hits": [
+      {
+        "function": "",
+        "count": 1
+      },
+      {
+        "function": "scan",
+        "count": 100
+      },
+      {
+        "function": "",
+        "count": 1
+      },
+      {
+        "function": "scan",
+        "count": 100
+      }
+    ],
+    "subsumer_loaded_module": false
+  },
+  {
+    "mutant": "D2",
+    "file": "stage1/cohere/yaml/unistContext.ts",
+    "origin_main_line": 843,
+    "target": "Unist",
+    "subsumer": "Scalars",
+    "transformed_offset": 35560,
+    "range_hits": [
+      {
+        "function": "",
+        "count": 1
+      },
+      {
+        "function": "parse",
+        "count": 3592
+      }
+    ],
+    "subsumer_loaded_module": false
+  },
+  {
+    "mutant": "D3",
+    "file": "stage1/cohere/yaml/widthTables.ts",
+    "origin_main_line": 126,
+    "target": "Widths",
+    "subsumer": "Speed",
+    "transformed_offset": 5553,
+    "range_hits": [
+      {
+        "function": "",
+        "count": 1
+      }
+    ],
+    "subsumer_loaded_module": false
+  }
+]

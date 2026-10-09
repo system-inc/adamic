@@ -1,0 +1,110 @@
+[
+  {
+    "row": "TestFormatterMutants_000",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^TestFormatterMutants_000$"
+    ],
+    "exit": 0,
+    "seconds": 38.72246723600256
+  },
+  {
+    "row": "TestFormatterMutants_001",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^TestFormatterMutants_001$"
+    ],
+    "exit": 0,
+    "seconds": 38.85219247299392
+  },
+  {
+    "row": "TestFormatterMutants_002",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^TestFormatterMutants_002$"
+    ],
+    "exit": 0,
+    "seconds": 36.751868098006526
+  },
+  {
+    "row": "TestFormatterMutants_003",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^TestFormatterMutants_003$"
+    ],
+    "exit": 0,
+    "seconds": 35.53017791000457
+  },
+  {
+    "row": "TestFormatterMutants_004",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^TestFormatterMutants_004$"
+    ],
+    "exit": 0,
+    "seconds": 36.816036509000696
+  },
+  {
+    "row": "TestFormatterMutants_005",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^TestFormatterMutants_005$"
+    ],
+    "exit": 0,
+    "seconds": 41.150931468000636
+  }
+]
