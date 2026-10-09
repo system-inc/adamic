@@ -28,8 +28,10 @@ gateBase() {
   # promoted tools). It is gated against main ten landings back, so it selects what those landings touched: a real
   # selection whose answer main already holds.
   if [ "${branch}" = canary/main ]; then
+    local depth=${ADAMIC_FAST_GATE_CANARY_DEPTH:-10}
+    [[ ${depth} =~ ^([1-9]|10)$ ]] || depth=10
     haveCommits "${sha}" || git -C "${here}" fetch -q --no-write-fetch-head origin "${sha}" 2> /dev/null
-    echo "main~10 $(git -C "${here}" rev-parse "${sha}~10")"
+    echo "main~${depth} $(git -C "${here}" rev-parse "${sha}~${depth}")"
     return
   fi
   if [[ ${branch} != codex/* && ${branch} != devtools/* ]]; then
