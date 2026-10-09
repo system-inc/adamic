@@ -8,17 +8,25 @@ import (
 )
 
 // appendsTo is the parts after the first of an assignment text = text + ..., to a string local only
-// this function can see: not a global, which a call among the parts could write, not captured, which a
-// closure among them could, and not borrowed. Those are the assignments appendTo writes, where text's
+// this function can see, or a hoisted global followed only by string literals. Calls among a global's
+// parts could write it, captured bindings can change through closures, and borrowed values cannot
+// transfer ownership. Those are the assignments appendTo writes, where text's
 // own reference goes to adamic_string_append, which may write in place.
 func (e *emitter) appendsTo(statement ir.Assign) ([]ir.Expression, bool) {
 	declared := e.program.Locals[statement.Local]
-	if declared.Type != ir.String || declared.Global || declared.Captured || declared.Borrowed || statement.Checked {
+	if declared.Type != ir.String || declared.Captured || declared.Borrowed || statement.Checked {
 		return nil, false
 	}
 	concat, isConcat := statement.Value.(ir.Concat)
 	if !isConcat || len(concat.Parts) < 2 {
 		return nil, false
+	}
+	if declared.Global {
+		for _, part := range concat.Parts[1:] {
+			if _, literal := part.(ir.StringConstant); !literal {
+				return nil, false
+			}
+		}
 	}
 	if read, isRead := concat.Parts[0].(ir.Read); !isRead || read.Local != statement.Local || read.Checked || read.Readiness != "" {
 		return nil, false
@@ -33,7 +41,10 @@ func (e *emitter) appendTo(local int, parts []ir.Expression) {
 	for _, part := range parts {
 		values = append(values, e.value(part))
 	}
+	e.declarations = append(e.declarations, "#include \"library_errors.h\"")
 	name := e.localName(local)
+	e.line("(void)adamic_library_concat_check(%d, (adamic_string *const[]){%s, %s});", len(values)+1, name, strings.Join(values, ", "))
+	e.checkThrown()
 	e.line("%s = adamic_string_append(%s, %d, (adamic_string *const[]){%s});", name, name, len(values), strings.Join(values, ", "))
 }
 
@@ -44,6 +55,10 @@ func (e *emitter) stringCall(call ir.StringCall) string {
 		arguments = append(arguments, e.value(argument))
 	}
 	switch call.Method {
+	case "isWellFormed":
+		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_string_is_well_formed(%s)", value))
+	case "toWellFormed":
+		return e.own(ir.String, fmt.Sprintf("adamic_string_to_well_formed(%s)", value))
 	case "slice":
 		start, end, hasEnd := "0.0", "0.0", false
 		if len(arguments) > 0 {
@@ -58,9 +73,13 @@ func (e *emitter) stringCall(call ir.StringCall) string {
 		e.line("adamic_maybe_number %s = adamic_string_code_point_at(%s, %s);", result, value, arguments[0])
 		return result
 	case "padStart", "padEnd":
-		return e.own(ir.String, fmt.Sprintf("adamic_string_pad(%s, %s, %s, %t)", value, arguments[0], arguments[1], call.Method == "padStart"))
+		result := e.own(ir.String, fmt.Sprintf("adamic_string_pad(%s, %s, %s, %t)", value, arguments[0], arguments[1], call.Method == "padStart"))
+		e.checkThrown()
+		return result
 	case "repeat":
-		return e.own(ir.String, fmt.Sprintf("adamic_string_repeat(%s, %s)", value, arguments[0]))
+		result := e.own(ir.String, fmt.Sprintf("adamic_string_repeat(%s, %s)", value, arguments[0]))
+		e.checkThrown()
+		return result
 	case "split":
 		return e.own(ir.Array, fmt.Sprintf("adamic_string_split(%s, %s)", value, arguments[0]))
 	case "indexOf":
@@ -69,6 +88,9 @@ func (e *emitter) stringCall(call ir.StringCall) string {
 		}
 		return fmt.Sprintf("adamic_string_index_of(%s, %s)", value, arguments[0])
 	case "lastIndexOf":
+		if len(arguments) == 2 {
+			return e.snapshot(ir.Number, fmt.Sprintf("adamic_string_last_index_of_from(%s, %s, %s)", value, arguments[0], arguments[1]))
+		}
 		return e.snapshot(ir.Number, fmt.Sprintf("adamic_string_last_index_of(%s, %s)", value, arguments[0]))
 	case "trimStart", "trimEnd":
 		return e.own(ir.String, fmt.Sprintf("adamic_string_trim_sides(%s, %t, %t)", value, call.Method == "trimStart", call.Method == "trimEnd"))
@@ -79,7 +101,9 @@ func (e *emitter) stringCall(call ir.StringCall) string {
 	case "toLowerCase":
 		return e.own(ir.String, fmt.Sprintf("adamic_string_to_lower(%s)", value))
 	case "normalize":
-		return e.own(ir.String, fmt.Sprintf("adamic_string_normalize(%s, %s)", value, arguments[0]))
+		result := e.own(ir.String, fmt.Sprintf("adamic_string_normalize(%s, %s)", value, arguments[0]))
+		e.checkThrown()
+		return result
 	case "replace", "replaceAll":
 		return e.own(ir.String, fmt.Sprintf("adamic_string_replace(%s, %s, %s, %t)", value, arguments[0], arguments[1], call.Method == "replaceAll"))
 	case "includes":

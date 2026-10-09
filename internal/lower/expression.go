@@ -13,6 +13,9 @@ import (
 // typeOf is what's left at runtime of the type the checker proved for a node: a number, a boolean or
 // a string. A union counts when every member is the same one ('Fizz' | 'Buzz' is a string).
 func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {
+	if l.descriptorMapResult(node, 0) {
+		return ir.Object, nil
+	}
 	if l.enumNeverIdentity(node, map[*ast.Node]bool{}) != nil {
 		if symbol := l.flagValueSymbol(ast.SkipParentheses(node)); symbol != nil {
 			if stored, known := l.representation(l.checker.GetTypeOfSymbol(symbol)); known {
@@ -20,6 +23,9 @@ func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {
 			}
 		}
 		return ir.Number, nil
+	}
+	if proven := l.checker.GetTypeAtLocation(node); l.includesNull(proven) && l.includesUndefined(proven) {
+		return 0, l.notYet(node, nullableTagReason)
 	}
 	if ast.IsIdentifier(node) && l.exactPlainObject(node) {
 		return ir.Object, nil
@@ -41,7 +47,11 @@ func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {
 }
 
 func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
+	parameter := proven.Flags()&checker.TypeFlagsTypeParameter != 0
 	proven = l.concrete(proven)
+	if of, known := l.dateStringRepresentation(proven); known {
+		return of, true
+	}
 	if kind := l.typedArrayKind(proven); kind != 0 {
 		return kind, true
 	}
@@ -56,8 +66,11 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 			}
 		}
 	}
-	if l.nodeBufferType(proven, "Buffer") {
-		return ir.Array, true
+	if valueType, known := l.nodeBufferRepresentation(proven); known {
+		return valueType, true
+	}
+	if parameter && flags&(checker.TypeFlagsNull|checker.TypeFlagsUndefined) != 0 {
+		return ir.Object, true
 	}
 	if flags&checker.TypeFlagsTypeParameter != 0 {
 		// Inside a generic class, a type parameter is what this instantiation made it.
@@ -96,22 +109,25 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 		return ir.Closure, true
 	case flags&checker.TypeFlagsUnion != 0:
 		if l.includesNull(proven) && !dynamicObjectType(proven) {
-			// Preserve the area's nullable reference and RegExp protocols. Only
-			// differently stored members need the boxed union representation.
+			// Preserve a single nullable reference ABI. Differently stored members use
+			// compiler union boxes, which keep primitive and null tags distinct.
+			var reference ir.Type
 			boxed := l.includesUndefined(proven)
 			for _, member := range proven.Types() {
 				if member.Flags()&(checker.TypeFlagsNull|checker.TypeFlagsUndefined) != 0 {
 					continue
 				}
-				of, known := l.representation(member)
-				if !known {
+				held, known := l.representation(member)
+				if !known || held == ir.Weak {
 					return 0, false
 				}
-				boxed = boxed || !of.IsReference() || of == ir.String || of == ir.Union
+				boxed = boxed || !held.IsReference() || held == ir.Union || (reference != 0 && reference != held)
+				reference = held
 			}
 			if boxed {
 				return ir.Union, true
 			}
+			return reference, reference != 0
 		}
 		var shared ir.Type
 		mixed, weak := false, false
@@ -170,6 +186,7 @@ func (l *lowering) isLibraryType(proven *checker.Type, names ...string) bool {
 }
 
 func (l *lowering) includesUndefined(proven *checker.Type) bool {
+	proven = l.concrete(proven)
 	if proven.Flags()&checker.TypeFlagsUnion == 0 {
 		return proven.Flags()&checker.TypeFlagsUndefined != 0
 	}
@@ -182,6 +199,7 @@ func (l *lowering) includesUndefined(proven *checker.Type) bool {
 }
 
 func (l *lowering) includesNull(proven *checker.Type) bool {
+	proven = l.concrete(proven)
 	if proven.Flags()&checker.TypeFlagsUnion == 0 {
 		return proven.Flags()&checker.TypeFlagsNull != 0
 	}
@@ -196,6 +214,12 @@ func (l *lowering) includesNull(proven *checker.Type) bool {
 // expression lowers a value. What's kept weakly (a Weak<Target> variable, field, element or map value)
 // is read here as its target, so no value of a Weak type goes further; keeping one is fit's WeakOf.
 func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
+	if value, handled, err := l.methodObservation(node); handled {
+		return value, err
+	}
+	if err := l.nullableUse(node); err != nil {
+		return nil, err
+	}
 	if err := l.libraryIteratorUnsupportedUse(node); err != nil {
 		return nil, err
 	}
@@ -230,10 +254,15 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 		// as an object, so it can't be seen as an array either, here or anywhere inside. A literal is
 		// made as the type it's written into, so it never differs.
 		if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil {
-			if own := l.checker.GetTypeAtLocation(node); !l.nodeBufferView(l.present(own), l.present(contextual)) && !l.nodeBufferReadArgument(node) && !l.nodeFSFileBufferArgument(node) {
-				return nil, l.notYet(node, "Buffer or Hash viewed as another object type (native host internal slots)")
+			skipKeeping, viewErr := l.nodeBufferContextualView(node, contextual)
+			skipKeeping = skipKeeping || l.dateContextBorrow(node)
+			if viewErr != nil {
+				return nil, viewErr
 			}
-			if own := l.checker.GetTypeAtLocation(node); !l.typedArraySetArgument(node) && !l.nodeBufferReadArgument(node) && !l.nodeFSFileBufferArgument(node) && !l.sameKeeping(own, contextual, map[[2]*checker.Type]bool{}) {
+			if own := l.checker.GetTypeAtLocation(node); !l.dateContextBorrow(node) && !l.dateViewsMatch(own, contextual, map[[2]*checker.Type]bool{}) {
+				return nil, l.notYet(node, "a Date internal slot supplied or erased by a structural view")
+			}
+			if own := l.checker.GetTypeAtLocation(node); !skipKeeping && !l.typedArraySetArgument(node) && !l.nodeBufferReadArgument(node) && !l.nodeFSFileBufferArgument(node) && !l.sameKeeping(own, contextual, map[[2]*checker.Type]bool{}) {
 				if l.typedArrayKind(l.checker.GetNonNullableType(own)) != 0 {
 					return nil, l.notYet(node, "a typed array seen through a structural view that loses its buffer representation")
 				}
@@ -285,7 +314,7 @@ func (l *lowering) sameKeeping(from *checker.Type, to *checker.Type, visited map
 	if fromKind, toKind := l.typedArrayKind(from), l.typedArrayKind(to); fromKind != 0 || toKind != 0 {
 		return fromKind != 0 && fromKind == toKind
 	}
-	if !l.nodeBufferView(from, to) {
+	if !l.nodeBufferView(from, to) || l.isLibraryType(from, "Date") != l.isLibraryType(to, "Date") {
 		return false
 	}
 	same := func(inside, viewed *checker.Type) bool {
@@ -476,7 +505,25 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 }
 
 func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
+	if value, handled, err := l.borrowedOwnCall(node); handled {
+		return value, err
+	}
+	if value, handled, err := l.borrowedOwnValue(node); handled {
+		return value, err
+	}
+	if value, known, err := l.nodeCryptoNamespaceValue(node); known {
+		return value, err
+	}
+	if value, known, err := l.nodeFSDirectoryValue(node); known {
+		return value, err
+	}
 	node = ast.SkipParentheses(node)
+	if value, known, err := l.libraryErrorValue(node); known {
+		return value, err
+	}
+	if value, known, err := l.processValue(node); known {
+		return value, err
+	}
 	if value, handled, err := l.typedArrayExpression(node); handled {
 		return value, err
 	}
@@ -545,6 +592,9 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 	case ast.KindPrefixUnaryExpression:
 		return l.prefix(node)
 	case ast.KindTypeOfExpression:
+		if value, known := l.asyncTypeOf(node); known {
+			return value, nil
+		}
 		if l.isLibraryGlobal(node.AsTypeOfExpression().Expression, "Number") {
 			return ir.StringConstant{Index: l.constant("function")}, nil
 		}
@@ -603,6 +653,9 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 			return nil, err
 		}
 		if binary.OperatorToken.Kind == ast.KindPlusToken {
+			if text, known, err := l.dateStringAddition(node, left, right); known {
+				return text, err
+			}
 			left, right = l.spelled(binary.Left, left), l.spelled(binary.Right, right)
 		}
 		return l.combine(node, binary.OperatorToken.Kind, left, right)
@@ -617,8 +670,14 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 	case ast.KindArrayLiteralExpression:
 		return l.arrayLiteral(node)
 	case ast.KindPropertyAccessExpression:
+		if value, handled, err := l.objectDescriptorRead(node); handled {
+			return value, err
+		}
 		return l.property(node)
 	case ast.KindElementAccessExpression:
+		if value, handled, err := l.objectDescriptorElement(node); handled {
+			return value, err
+		}
 		return l.elementAccess(node)
 	case ast.KindNewExpression:
 		return l.newExpression(node)
@@ -807,7 +866,13 @@ var comparisons = map[ast.Kind]ir.Operator{
 
 // combine lowers a binary operator on two lowered operands.
 func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression, right ir.Expression) (ir.Expression, error) {
+	if value, known, err := l.dateBinary(node, operator, left, right); known {
+		return value, err
+	}
 	both := func(want ir.Type) bool { return left.Type() == want && right.Type() == want }
+	if operator == ast.KindPlusToken && (left.Type() == ir.Object || right.Type() == ir.Object) {
+		return l.objectStringAddition(node, left, right)
+	}
 	if operator == ast.KindPlusToken && (left.Type() == ir.String || right.Type() == ir.String) {
 		spell := func(value ir.Expression) ir.Expression {
 			switch value.Type() {
@@ -923,9 +988,20 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 	return nil, l.notYet(node, describe(node)+" with a "+typeName(left.Type())+" and a "+typeName(right.Type()))
 }
 
-// spelled is a string as + and a template write it: one that may be missing (a null reference) is
-// written "undefined", as JavaScript writes it.
+// spelled writes a missing string using the empty case of its instantiated static type.
 func (l *lowering) spelled(node *ast.Node, value ir.Expression) ir.Expression {
+	proven := l.concrete(l.checker.GetTypeAtLocation(node))
+	if proven.Flags()&(checker.TypeFlagsNull|checker.TypeFlagsUndefined) != 0 {
+		text := "undefined"
+		if proven.Flags()&checker.TypeFlagsNull != 0 {
+			text = "null"
+		}
+		constant := ir.StringConstant{Index: l.constant(text)}
+		return l.nullableObservation("spelling", value, constant, func(ir.Expression) ir.Expression { return constant })
+	}
+	if value.Type() == ir.String && l.includesNull(l.checker.GetTypeAtLocation(node)) {
+		return ir.Coalesce{Value: value, Fallback: ir.StringConstant{Index: l.constant("null")}, Of: ir.String}
+	}
 	if value.Type() != ir.String || !(l.includesUndefined(l.checker.GetTypeAtLocation(node)) || l.narrowedAway(ast.SkipParentheses(node))) {
 		return value
 	}
@@ -944,24 +1020,9 @@ func (l *lowering) template(node *ast.Node) (ir.Expression, error) {
 		if err != nil {
 			return nil, err
 		}
-		switch value.Type() {
-		case ir.Number:
-			value = ir.NumberToString{Value: value}
-		case ir.Boolean:
-			value = ir.BooleanToString{Value: value}
-		case ir.MaybeNumber, ir.MaybeBoolean:
-			value = ir.MaybeToString{Value: value}
-		case ir.Union:
-			if !l.writable(l.arrayPredicateObservedType(span.AsTemplateSpan().Expression)) {
-				return nil, l.notYet(span, "a template interpolating a union with an object, an array, a map or a function in it")
-			}
-			value = ir.UnionToString{Value: value}
-		case ir.String:
-			value = l.spelled(span.AsTemplateSpan().Expression, value)
-		default:
-			// JavaScript writes an object as "[object Object]", an array as its join, and a function as
-			// its source; 0.1 has no use for any of it.
-			return nil, l.notYet(span, "a template interpolating an object, an array, a map, a function or undefined")
+		value, err = l.stringConversionValue(span.AsTemplateSpan().Expression, value)
+		if err != nil {
+			return nil, err
 		}
 		parts = append(parts, value)
 		if literal := span.AsTemplateSpan().Literal.Text(); literal != "" {
@@ -972,6 +1033,9 @@ func (l *lowering) template(node *ast.Node) (ir.Expression, error) {
 }
 
 func (l *lowering) conditional(node *ast.Node) (ir.Expression, error) {
+	if value, known, err := l.nodeCryptoFallback(node); known {
+		return value, err
+	}
 	if branch := l.literalCallableBranch(node); branch != nil {
 		return l.expression(branch)
 	}
@@ -1128,6 +1192,11 @@ func (l *lowering) call(node *ast.Node) (ir.Expression, error) {
 		}
 		return value, err
 	}
+	// Host units get their builtin dispatch first. Refuse the remainder by the
+	// resolved member name rather than attempting a declaration-only function.
+	if module, member := l.nodeHostMember(callee); module != "" {
+		return nil, l.notYet(node, module+"."+member)
+	}
 	function, isFunction := l.functions[l.symbol(callee)]
 	if (!ast.IsIdentifier(callee) && !qualified) || !isFunction {
 		if calleeType, _ := l.representation(l.checker.GetTypeAtLocation(callee)); calleeType == ir.Closure {
@@ -1217,6 +1286,9 @@ func (l *lowering) closure(node *ast.Node) (ir.Expression, error) {
 // and rest parameters and forwards the original count, even though its ordinary
 // parameters have been padded or collected before reaching the target.
 func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, error) {
+	if l.result.Async != nil {
+		return nil, l.notYet(node, "async function "+node.Text()+" as a value; only direct typeof observations and awaited calls are lowered")
+	}
 	symbol := l.symbol(node)
 	if node.Kind == ast.KindShorthandPropertyAssignment {
 		symbol = l.checker.GetShorthandAssignmentValueSymbol(node)
@@ -1304,7 +1376,10 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 		// not retain a source signature to prove its required arguments or ABI.
 		return nil, l.notYet(node, "a call through an erased never-rest callable marker")
 	}
-	closure, err := l.expression(node.AsCallExpression().Expression)
+	closure, handled, err := l.libraryIteratorNextClosure(node)
+	if !handled {
+		closure, err = l.expression(node.AsCallExpression().Expression)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1360,6 +1435,19 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 				arguments[index] = fit(arguments[index], takes)
 			}
 			position++
+		}
+	}
+	if len(spread) == 0 && len(signatures) == 1 {
+		for index := len(arguments); index < len(signatures[0].Parameters()); index++ {
+			parameter := signatures[0].Parameters()[index]
+			if len(parameter.Declarations) > 0 && parameter.Declarations[0].Kind == ast.KindParameter && parameter.Declarations[0].AsParameterDeclaration().DotDotDotToken != nil {
+				break
+			}
+			if takes, known := l.representation(l.checker.GetTypeOfSymbol(parameter)); known {
+				arguments = append(arguments, fit(ir.Undefined{}, takes))
+			} else {
+				return nil, l.notYet(node, "a function value parameter without a runtime representation")
+			}
 		}
 	}
 	for _, argument := range arguments {

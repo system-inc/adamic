@@ -1,0 +1,21 @@
+// parser.ts:10707; cache omitted to isolate owned dynamic pattern/capture behavior.
+function getNamedArgRegEx(name: string): RegExp {
+    return new RegExp(`(\\s${name}\\s*=\\s*)(?:(?:'([^']*)')|(?:"([^"]*)"))`, "im");
+}
+for (const name of ['path', 'types', 'lib']) {
+    const expression = getNamedArgRegEx(name);
+    console.log(expression.source);
+    console.log(expression.flags);
+    for (const text of ["/// <reference path='a.ts' />", '/// <reference PATH="b.ts" />', "/// <reference types='' />", '/// <reference lib="esnext" />', 'path=a.ts', '😀 path="astral.ts"']) {
+        const match = expression.exec(text);
+        if (match === null) {
+            console.log('missing');
+        } else {
+            console.log(match[0] ?? 'missing');
+            console.log(match[1] ?? 'missing');
+            console.log(match[2] ?? 'missing');
+            console.log(match[3] ?? 'missing');
+            console.log(`${match.index}`);
+        }
+    }
+}

@@ -4,12 +4,16 @@ import (
 	"bytes"
 	"fmt"
 	"path/filepath"
+	"regexp"
 	"strconv"
 	"strings"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/native"
 )
+
+// missingSymbolizer is AddressSanitizer's warning on macOS when it starts without a PATH to find atos.
+var missingSymbolizer = regexp.MustCompile(`(?m)^==\d+==(WARN: No external symbolizers found\. Symbols may be missing or unreliable\.|HINT: Is PATH set\? Does sandbox allow file-read of /usr/bin/atos\?)\n`)
 
 // The stack's limit counts from its top, and above the first frame sit the program's arguments and
 // its environment. Three arguments of 120 KB, or three variables that long, are stack the limit has to
@@ -57,10 +61,12 @@ func TestLongArgumentsLeaveTheStackItsLimit(t *testing.T) {
 					command.Env = []string{}
 					var stdout, stderr bytes.Buffer
 					command.Stdout, command.Stderr = &stdout, &stderr
-					if err := command.Run(); err != nil && command.ProcessState == nil {
-						t.Fatalf("running %s: %v", name, err)
-					}
-					result := run{stdout: stdout.Bytes(), stderr: stderr.Bytes(), exitCode: command.ProcessState.ExitCode()}
+					checkChild(t, runChild(command))
+					// With no environment there is no PATH, and macOS's AddressSanitizer says as it starts
+					// that it can't find atos to symbolize with: its own lines, not the program's, so
+					// exactly they are dropped.
+					quiet := missingSymbolizer.ReplaceAll(stderr.Bytes(), nil)
+					result := run{stdout: stdout.Bytes(), stderr: quiet, exitCode: command.ProcessState.ExitCode()}
 					rememberRun(t, result)
 					return result
 				}

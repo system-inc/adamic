@@ -2,10 +2,10 @@ package regexp
 
 import (
 	"fmt"
+	"github.com/system-inc/adamic/internal/unicodeproperties"
 	"math/big"
 	"strconv"
 	"strings"
-	"unicode"
 	"unicode/utf8"
 )
 
@@ -21,11 +21,17 @@ func (e *SyntaxError) Error() string {
 
 // Parse parses pattern and flags according to ECMAScript 2025.
 func Parse(pattern, flags string) (*Pattern, error) {
+	return parsePattern(pattern, flags, false)
+}
+
+// Native compilation uses Node 24.19.0 V8 interval bounds; Parse remains the
+// specification reference for syntax-oracle diagnostics.
+func parsePattern(pattern, flags string, nativeBounds bool) (*Pattern, error) {
 	f, err := parseFlags(flags)
 	if err != nil {
 		return nil, err
 	}
-	p := &parser{source: pattern, flags: f, names: make(map[string]bool)}
+	p := &parser{source: pattern, flags: f, nativeBounds: nativeBounds, names: make(map[string]bool)}
 	// Decimal escapes depend on the total capture count, including captures to
 	// their right. Count them without interpreting pattern contents first.
 	p.captureCount, p.hasNamedCapture = countCaptures(pattern)
@@ -114,6 +120,7 @@ func parseFlags(s string) (Flags, error) {
 }
 
 type parser struct {
+	nativeBounds           bool
 	source                 string
 	pos                    int
 	flags                  Flags
@@ -142,7 +149,7 @@ func (p *parser) disjunction(stop byte) (*Disjunction, error) {
 
 func (p *parser) alternative(stop byte) (*Alternative, error) {
 	a := &Alternative{}
-	for !p.done() && p.peek() != '|' && p.peek() != stop {
+	for !p.done() && p.peek() != '|' && (stop == 0 || p.peek() != stop) {
 		if p.peek() == ')' && stop == 0 {
 			return nil, p.fail("unmatched closing parenthesis")
 		}
@@ -323,7 +330,26 @@ func (p *parser) quantifier(atom Node) (Node, error) {
 			return nil, p.fail("incomplete quantifier")
 		}
 		if max != nil && min.Cmp(max) > 0 {
+			// Exact decimal MVs determine the spec's early error. Node's
+			// clamped comparison instead accepts this ruled-on divergence.
+			if max.Cmp(big.NewInt(2147483647)) >= 0 {
+				return nil, &V8DivergenceError{
+					Behavior: "clamps quantifier bounds above 2^31-1 before the min > max check",
+					Section:  "22.2.1.1 Static Semantics: Early Errors, QuantifierPrefix",
+				}
+			}
 			return nil, p.failAt(start, "quantifier range out of order")
+		}
+		if p.nativeBounds {
+			// Port of V8 RegExpParserImpl::ParseIntervalQuantifier after the
+			// exact-order refusal. kInfinity is the unbounded maximum sentinel.
+			limit := big.NewInt(2147483647)
+			if min.Cmp(limit) > 0 {
+				min.Set(limit)
+			}
+			if max != nil && max.Cmp(limit) >= 0 {
+				max = nil
+			}
 		}
 	}
 	greedy := !p.take('?')
@@ -358,15 +384,17 @@ func (p *parser) escape(inClass bool) (Node, bool, error) {
 		}
 		return &Assertion{Kind: kind}, false, nil
 	}
-	if !inClass && c >= '1' && c <= '9' {
+	if c >= '1' && c <= '9' {
 		p.pos--
 		n, _ := p.decimal()
-		if n.IsInt64() && n.Int64() <= int64(p.captureCount) {
+		if !inClass && n.IsInt64() && n.Int64() <= int64(p.captureCount) {
 			return &Backreference{Index: int(n.Int64())}, true, nil
 		}
 		if p.flags.Unicode || p.flags.UnicodeSets {
 			return nil, false, p.failAt(start, "invalid decimal escape")
 		}
+		// Annex B.1.2 ClassEscape / LegacyOctalEscapeSequence also
+		// applies inside legacy classes, independently of capture count.
 		p.pos = start + 1
 		return p.legacyOctal(start)
 	}
@@ -813,11 +841,13 @@ func (p *parser) groupNameRune() (rune, error) {
 }
 
 func isRegExpIdentifierStart(r rune) bool {
-	return r == '$' || r == '_' || unicode.IsLetter(r) || unicode.In(r, unicode.Nl)
+	property, _ := unicodeproperties.Lookup("ID_Start", false)
+	return r == '$' || r == '_' || property.Contains(r)
 }
 
 func isRegExpIdentifierPart(r rune) bool {
-	return isRegExpIdentifierStart(r) || r == 0x200C || r == 0x200D || unicode.In(r, unicode.Mn, unicode.Mc, unicode.Nd, unicode.Pc)
+	property, _ := unicodeproperties.Lookup("ID_Continue", false)
+	return isRegExpIdentifierStart(r) || r == 0x200C || r == 0x200D || property.Contains(r)
 }
 func (p *parser) decimal() (*big.Int, bool) {
 	start := p.pos
@@ -843,7 +873,7 @@ func (p *parser) hexNumber(end byte) (int, bool) {
 		} else if c >= 'A' && c <= 'F' {
 			d = int(c-'A') + 10
 		}
-		if d < 0 {
+		if d < 0 || n > (utf8.MaxRune-d)/16 {
 			return 0, false
 		}
 		n = n*16 + d
