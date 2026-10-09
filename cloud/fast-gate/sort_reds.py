@@ -15,6 +15,13 @@ INFRA = re.compile(r'killed at \d+(?:\.\d+)? s|(?:exit(?:ed)?|exit status)\s*[:=
                    r'no space left|(?:clone|fetch) (?:failed|failure)|failed to (?:clone|fetch)|'
                    r'Traceback \(most recent call last\)|ssh.*(?:hang|timed out)|'
                    r'planned stages without a recorded exit|void|never reported', re.I)
+# Missing gate selection artifacts are plumbing failures even when a test wraps
+# them in an assertion or a timing diagnostic. Keep repository fixture paths out.
+_SELECTION_PATH = r"/tmp/loom-select/[^\s:'\"]+/(?:changed-paths\.txt|select\.json)"
+_MISSING = r"(?:no such file or directory|not found|ENOENT)"
+SELECTION_INFRA = re.compile(
+    _SELECTION_PATH + r"['\"]?(?::|\s)[^\n]*" + _MISSING + r"|" +
+    _MISSING + r"[^\n]*" + _SELECTION_PATH, re.I)
 TIMING = re.compile(r'budget|deadline|killed|setup exceeded|timed out', re.I)
 WRONG = re.compile(r'compile error|build.failed|undefined:|syntax error|assertion|'
                    r'\b(?:got|want|expected)\b|assert.*diff', re.I)
@@ -100,6 +107,8 @@ def sort_reds(candidate, main=None, context=None):
         same = bool(other and row.get('input_hash') and row['input_hash'] == other.get('input_hash'))
         if row.get('status') == 'not run' or row.get('tool_crash') or row.get('exit') == 2:
             label, reason = 'infra', 'void, unreported unit or tool failure; rerun'
+        elif SELECTION_INFRA.search(detail):
+            label, reason = 'infra', 'missing gate selection artifact; rerun'
         elif not wrong and TIMING.search(detail) and cold and known_inputs and not touched and matching:
             label, reason = 'mains', 'cold timing red; candidate does not touch its inputs'
         elif 'Traceback (most recent call last)' in detail or INFRA.search(detail) and not wrong:
