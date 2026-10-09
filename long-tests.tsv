@@ -1,0 +1,63 @@
+github.com/system-inc/adamic/stage1/cohere/markdownblocks	TestMarkdownUnicodeWidths (setup)	143.07	pass
+github.com/system-inc/adamic/stage1/cohere/tsprinter	TestExpressionsAgainstGoAndPrettier (setup)	126.75	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestProduct_CompilerAgreementSanitizedNative	115.88	pass
+github.com/system-inc/adamic/stage1/typescript/parser	TestExpressionsAgree	105.89	pass
+github.com/system-inc/adamic/stage1/cohere/markdownblocks	TestMarkdownHTMLBlockLayout (setup)	104.78	pass
+github.com/system-inc/adamic/stage1/cohere/markdownblocks	TestMarkdownCodeBlockLayout (setup)	101.10	pass
+github.com/system-inc/adamic/stage1/cohere/markdownblocks	TestMarkdownRootLayout (setup)	98.95	pass
+github.com/system-inc/adamic/stage1/cohere/markdownblocks	TestMarkdownListLayout	90.34	fail
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestProduct_volume_guard_volume_asan	84.04	pass
+github.com/system-inc/adamic/stage1/cohere/yaml	TestFormatterMatchesGo	78.52	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestProduct_corpus_native_asan	75.11	pass
+github.com/system-inc/adamic/stage1/cohere/markdownblocks	TestProduct_MarkdownStructure_native	72.68	pass
+github.com/system-inc/adamic/stage1/cohere/markdownblocks	TestProduct_MarkdownTable_native_true	71.08	pass
+github.com/system-inc/adamic/stage1/cohere/markdownblocks	TestProduct_MarkdownWhitespace_manifest	70.18	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestProduct_corpus_record	69.88	pass
+github.com/system-inc/adamic/stage1/cohere/markdownblocks	TestProduct_MarkdownLeafNativeSanitized	69.12	pass
+github.com/system-inc/adamic/stage1/cohere/markdownblocks	TestProduct_MarkdownQuote_native_true	66.80	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestProduct_volume_native_asan	66.05	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestAcceptanceDiagnostics	65.49	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestDeepGrammar	63.68	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestProduct_CompilerAgreementReleaseNative	63.24	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestProduct_profile_controls_native_asan	63.16	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestDecoratedExportMutant (setup)	63.03	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestCookedSurrogates	62.67	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestSyntaxRefusals	61.77	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestGeneratedAgreement	61.40	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestJSXMutant (setup)	60.66	pass
+github.com/system-inc/adamic/stage1/cohere/markdownblocks	TestProduct_MarkdownWhitespace_native_true	53.92	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestProduct_suite_asan	51.51	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestProduct_SyntaxMutantsSetup	49.76	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestProduct_scalar_edges_sanitized_native	49.33	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestProduct_typeaware_native_asan	46.87	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestProduct_AcceptanceClassNative	45.28	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestProduct_SyntaxMutantNative_002	44.01	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestProduct_SyntaxMutantNative_001	43.81	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestProduct_DeepMutantsNative1	42.91	pass
+github.com/system-inc/adamic/stage1/cohere/markdownblocks	TestProduct_MarkdownWhitespace_policy_native	42.63	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestProduct_AcceptanceCatchNative	42.62	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestProduct_profile_mutant_binding_slot	42.45	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestProduct_ThreePortNative2	42.44	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestProduct_ThreePortNative0	42.33	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestProduct_ThreePortNative1	42.14	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestProduct_volume_guard_strict_this_native	41.71	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestProduct_DeepMutantsNative2	41.54	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestProduct_RecoveryMutantsNative2	41.29	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestProduct_type_symbol_native	41.23	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestProduct_LossyInputControlNative	41.13	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestProduct_RecoveryMutantsNative1	41.05	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestProduct_RecoveryMutantsNative0	40.99	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestProduct_DeepMutantsNative0	40.71	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestProduct_jsx_tree_setup	40.66	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestProduct_volume_guard_volume	38.55	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestProduct_profile_mutant_first_binding	38.21	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestProduct_profile_mutant_scope_containment	37.64	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestProduct_CompleteSuggestionNative	36.14	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestProduct_FactoryHooksNative	35.76	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestProduct_WitnessScriptKindNative	34.96	pass
+github.com/system-inc/adamic/stage1/cohere/css	TestProduct_CSSPrinterWidthMutant	33.83	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestProduct_volume_native	33.63	pass
+github.com/system-inc/adamic/stage1/cohere/css	TestProduct_CSSPrinterIndentMutant	32.49	pass
+github.com/system-inc/adamic/stage1/cohere/css	TestProduct_CSSPrinterSemicolonMutant	32.36	pass
+github.com/system-inc/adamic/stage1/cohere/css	TestProduct_CSSPrinterSanitizedAndLowered	31.09	pass
+github.com/system-inc/adamic/stage1/cohere/css	TestComposedMemoryChecksCanFail/leak_sanitizer	30.05	pass
