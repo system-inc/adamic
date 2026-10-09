@@ -1,0 +1,11 @@
+--- internal/ir/call_targets.go
++++ M7/call_targets.go
+@@ -17,7 +17,7 @@
+ 	return []int{call.Function}
+ }
+ 
+-func (p *Program) CallMayThrow(call Call) bool {
++func (p *Program) CallMayThrow(call Call) bool { return false;
+ 	for _, target := range p.CallTargets(call) {
+ 		if p.Functions[target].MayThrow {
+ 			return true
