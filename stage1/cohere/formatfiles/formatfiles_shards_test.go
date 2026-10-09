@@ -497,7 +497,7 @@ func formatfilesOracle(t *testing.T) (string, string) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	side, err := filepath.Abs(filepath.Join("testdata", "cohere_side_test.go"))
+	side, err := filepath.Abs(filepath.Join("testdata", "cohere_side_test.go.txt"))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -513,7 +513,7 @@ func formatfilesOracle(t *testing.T) (string, string) {
 	}
 
 	inputs := buildcache.Inputs{Name: "formatfiles-go-oracle",
-		Files:     []string{"cohere/go.mod", "cohere/internal", "cohere/TypeScript/tsc", "cohere/TypeScript-shim", "stage1/cohere/formatfiles/testdata/cohere_side_test.go"},
+		Files:     []string{"cohere/go.mod", "cohere/internal", "cohere/TypeScript/tsc", "cohere/TypeScript-shim", "stage1/cohere/formatfiles/testdata/cohere_side_test.go.txt"},
 		Flags:     []string{"go test -c -overlay ./internal/format/formatfiles", buildcache.Tool("go", "env", "GOOS", "GOARCH", "CGO_ENABLED", "GOEXPERIMENT", "GOFLAGS")},
 		Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH, buildcache.Tool("go", "version")}}
 	product := buildcache.Product(t, inputs, func(directory string) error {
