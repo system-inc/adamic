@@ -94,3 +94,5 @@ Protected-file hooks: internal/lower/lower.go lines 20-55 add explicit options, 
 The execution environment was replaced immediately before the first delivery push. Local commits 2a557e7d and 686f1c10 and their evidence were inaccessible and never pushed. The unit was reconstructed on the same requested base, and the checks and mutants above were rerun in the replacement workspace. No old local SHA is presented as a delivered commit. The conservative choice was to rebuild rather than publish an unverified reconstruction. No full package test or full gate was run.
 
 The first counts run failed because pinned @types/node 25.3.3 was absent in the replacement workspace. npm ci --prefix stage3/api installed the lockfile dependencies; the repeated Linux count recorder passed, adding eleven rows and changing none. counts-first.log and node-types-setup.log retain this evidence.
+
+Integration lane output: lane checks 5.5 s: gofmt and tools on 254 Go files, t.Parallel on 33 test packages; no t.Parallel analyzer on this tree; vet 33 packages. All added top-level tests call t.Parallel first; this runtime base does not carry the analyzer executable.
