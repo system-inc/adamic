@@ -61,6 +61,7 @@ type harness struct {
 	next                  int
 	parallel              bool
 	sixBuilds             bool
+	sharedSetup           bool
 	setupStarted          time.Time
 	sixFiles              []string
 	sixVersions           []string
@@ -94,7 +95,12 @@ func (h *harness) run(name string, command *exec.Cmd) result {
 		command.Env = append(environment, "GOMAXPROCS=1")
 	}
 	started := time.Now()
-	runError := typeAwareRunCommand(command)
+	var runError error
+	if h.sharedSetup {
+		runError = typeAwareRunBuildCommand(command)
+	} else {
+		runError = typeAwareRunCommand(command)
+	}
 	elapsed := time.Since(started)
 	h.t.Logf("phase command %s %.6fs", name, elapsed.Seconds())
 	stdout, err := os.ReadFile(out.Name())
@@ -171,12 +177,9 @@ func (h *harness) archive(name, overlay string, sanitize bool) string {
 	return path
 }
 
-// build uses the same load, lowering and TSGo emission pipeline as stage zero.
-// Only the completed C string is shared, because emission mutates its IR.
-func (h *harness) build(_ string, name, entry, archive string, sanitize bool) string {
+func (h *harness) lowered(entry, name string) string {
 	h.t.Helper()
-	path := filepath.Join(h.directory, name)
-	source, err := cachedTypeAwareProduct("C "+entry, func(_ string) (string, error) {
+	build := func(_ string) (string, error) {
 		started := time.Now()
 		loaded, err := load.Load([]string{entry})
 		h.t.Logf("phase load %s %.6fs", name, time.Since(started).Seconds())
@@ -194,10 +197,28 @@ func (h *harness) build(_ string, name, entry, archive string, sanitize bool) st
 		source, err := native.TSGoC(program)
 		h.t.Logf("phase emission %s %.6fs", name, time.Since(started).Seconds())
 		return source, err
-	})
+	}
+	var source string
+	var err error
+	if strings.HasPrefix(entry, h.repository+string(os.PathSeparator)) {
+		source, err = cachedTypeAwareProduct("C "+entry, build)
+	} else {
+		// Generated mutants belong to their check; scratch paths cannot be gate products.
+		source, err = build("")
+	}
 	if err != nil {
 		h.t.Fatal(err)
 	}
+	return source
+}
+
+// build uses the same load, lowering and TSGo emission pipeline as stage zero.
+// Only the completed C string is shared, because emission mutates its IR.
+func (h *harness) build(_ string, name, entry, archive string, sanitize bool) string {
+	h.t.Helper()
+	path := filepath.Join(h.directory, name)
+	source := h.lowered(entry, name)
+	var err error
 	compile := func(output string) error {
 		started := time.Now()
 		err := typeAwareNativeBuild(source, output, archive, sanitize)
@@ -298,16 +319,7 @@ func prepareTypeAwareAgreementAndMutants(t *testing.T) *typeAwarePlan {
 	readyNormal, readySanitized := normal(h), sanitized(h)
 	normal = func(*harness) string { return readyNormal }
 	sanitized = func(*harness) string { return readySanitized }
-	oracle := filepath.Join(directory, "oracle")
-	virtual := filepath.Join(repository, "cohere/adamic_typeaware_oracle.go")
-	data, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: filepath.Join(repository, "stage1/cohere/typeaware/testdata/oracle.go")}})
-	if err != nil {
-		t.Fatal(err)
-	}
-	overlay := h.write("oracle-overlay.json", string(data))
-	cmd := exec.Command("go", "build", "-overlay", overlay, "-o", oracle, virtual)
-	cmd.Dir = filepath.Join(repository, "cohere")
-	oracle = typeAwareProduct(h, "oracle-build", cmd)
+	oracle := typeAwareOracle(h, "typeaware")
 	config := filepath.Join(repository, "stage1/cohere/typeaware/testdata/tsconfig.json")
 	var generatedPathsForUnion []string
 	var shards []sixShard
