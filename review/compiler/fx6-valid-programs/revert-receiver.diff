@@ -1,0 +1,121 @@
+diff --git b/internal/lower/interface_cast.go a/internal/lower/interface_cast.go
+index 57d850fd..8ca15d7b 100644
+--- b/internal/lower/interface_cast.go
++++ a/internal/lower/interface_cast.go
+@@ -32,8 +32,9 @@ func (l *lowering) interfaceCast(node *ast.Node, value ir.Expression, source, ta
+ 	return nil, nil
+ }
+ 
+-// view registers checks by receiver type and member, including nested contracts.
+-// An unrelated receiver with the same member name does not become a view.
++// view is the shared entry point. Checking by field name throughout the program is
++// conservative: aliases and function boundaries cannot lose a checked read.
++// More precise view propagation and erasure can reduce that set without trusting casts.
+ func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Type) (ir.Expression, error) {
+ 	if target.Flags()&checker.TypeFlagsUnion != 0 {
+ 		return l.legacyView(node, value, target)
+@@ -45,6 +46,9 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Typ
+ 	if l.result.CheckedFields == nil {
+ 		l.result.CheckedFields = map[string]bool{}
+ 	}
++	for field := range fields {
++		l.result.CheckedFields[field] = true
++	}
+ 
+ 	modules, err := l.moduleOrder(l.program.Files()[0])
+ 	if err != nil {
+@@ -58,7 +62,7 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Typ
+ 		}
+ 		// Optional receivers and optional/accessor slots still need a representation
+ 		// conversion that the V1 checked read boundary cannot emit.
+-		if part.Kind == ast.KindPropertyAccessExpression && l.result.CheckedFields[checkedViewFieldKey(int(l.checker.GetTypeAtLocation(part.AsPropertyAccessExpression().Expression).Id()), part.Name().Text())] {
++		if part.Kind == ast.KindPropertyAccessExpression && fields[part.Name().Text()] {
+ 			access := part.AsPropertyAccessExpression()
+ 			if base, _ := l.representation(l.checker.GetTypeAtLocation(access.Expression)); base == ir.Object {
+ 				field := l.checker.GetSymbolAtLocation(part.Name())
+@@ -67,7 +71,7 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Typ
+ 				}
+ 			}
+ 		}
+-		if part.Kind == ast.KindPropertyAccessExpression && l.result.CheckedFields[checkedViewFieldKey(int(l.checker.GetTypeAtLocation(part.AsPropertyAccessExpression().Expression).Id()), part.Name().Text())] && ast.IsAssignmentTarget(part) {
++		if part.Kind == ast.KindPropertyAccessExpression && fields[part.Name().Text()] && ast.IsAssignmentTarget(part) {
+ 			if symbol := l.checker.GetSymbolAtLocation(part.Name()); symbol != nil {
+ 				of, _ := l.representation(l.checker.GetTypeOfSymbol(symbol))
+ 				if of == ir.Object {
+@@ -317,14 +321,6 @@ func (l *lowering) viewSchema(node *ast.Node, target *checker.Type) (map[string]
+ 		contract := l.result.ViewContracts[id-1]
+ 		for _, field := range contract.Fields {
+ 			fields[field.Name] = true
+-			for typeID, contractID := range l.result.ViewContractTypes {
+-				if contractID == id {
+-					if l.result.CheckedFields == nil {
+-						l.result.CheckedFields = map[string]bool{}
+-					}
+-					l.result.CheckedFields[checkedViewFieldKey(typeID, field.Name)] = true
+-				}
+-			}
+ 			visit(field.Contract)
+ 		}
+ 		for _, member := range contract.Members {
+@@ -386,7 +382,7 @@ func (l *lowering) legacyView(node *ast.Node, value ir.Expression, target *check
+ 				}
+ 			}
+ 		}
+-		if part.Kind == ast.KindPropertyAccessExpression && l.result.CheckedFields[checkedViewFieldKey(int(l.checker.GetTypeAtLocation(part.AsPropertyAccessExpression().Expression).Id()), part.Name().Text())] {
++		if part.Kind == ast.KindPropertyAccessExpression && fields[part.Name().Text()] {
+ 			access := part.AsPropertyAccessExpression()
+ 			if base, _ := l.representation(l.checker.GetTypeAtLocation(access.Expression)); base == ir.Object {
+ 				field := l.checker.GetSymbolAtLocation(part.Name())
+@@ -413,7 +409,7 @@ func (l *lowering) legacyView(node *ast.Node, value ir.Expression, target *check
+ 		l.result.CheckedFields = map[string]bool{}
+ 	}
+ 	for field := range fields {
+-		l.result.CheckedFields[checkedViewFieldKey(int(target.Id()), field)] = true
++		l.result.CheckedFields[field] = true
+ 	}
+ 	return value, nil
+ }
+diff --git b/internal/lower/readiness.go a/internal/lower/readiness.go
+index bb002614..1955c537 100644
+--- b/internal/lower/readiness.go
++++ a/internal/lower/readiness.go
+@@ -8,7 +8,6 @@ import (
+ 	"github.com/system-inc/adamic/internal/load"
+ 	"reflect"
+ 	"slices"
+-	"strconv"
+ )
+ 
+ func sourceExpression(node *ast.Node) string {
+@@ -285,7 +284,7 @@ func readinessStatement(statement ir.Statement, program *ir.Program, fields map[
+ 				}
+ 				node = expression
+ 			case ir.Property:
+-				if !(program.CheckedFields[checkedViewFieldKey(expression.ViewReceiverTypeID, expression.Name)] || program.CheckedFields[expression.Name]) || expression.Method {
++				if !program.CheckedFields[expression.Name] || expression.Method {
+ 					expression.View = ""
+ 					expression.ViewType = ""
+ 					expression.ViewAllowed = nil
+@@ -442,9 +441,3 @@ stored:
+ 	}
+ 	return []ir.Statement{ir.Declare{Local: local, Value: value}}, present, assigned, nil
+ }
+-
+-// A checked view member belongs to its static receiver type. Bare names remain
+-// reserved for record storage, which has its own representation boundary.
+-func checkedViewFieldKey(receiverTypeID int, name string) string {
+-	return strconv.Itoa(receiverTypeID) + ":" + name
+-}
+diff --git b/internal/lower/view_lazy.go a/internal/lower/view_lazy.go
+index ade3b1e0..5ae27fb9 100644
+--- b/internal/lower/view_lazy.go
++++ a/internal/lower/view_lazy.go
+@@ -165,7 +165,7 @@ func (l *lowering) checkLazyViewReads() error {
+ 
+ 		switch read := node.(type) {
+ 		case ir.Property:
+-			if !(program.CheckedFields[checkedViewFieldKey(read.ViewReceiverTypeID, read.Name)] || program.CheckedFields[read.Name]) {
++			if !program.CheckedFields[read.Name] {
+ 				return true
+ 			}
+ 			receiver, typeID, field, where = read.Object, read.ViewTypeID, read.Name, read.ViewWhere
