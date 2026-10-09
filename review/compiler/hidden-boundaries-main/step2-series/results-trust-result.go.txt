@@ -1,0 +1,493 @@
+package lower
+
+import (
+	"fmt"
+
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/system-inc/adamic/internal/ir"
+)
+
+// A generic overload may admit more nodes than its implementation. Only resolved
+// calls whose concrete argument contract fits that implementation are admitted.
+// Callable and mutable parameter widening still fails the ordinary relation.
+func (l *lowering) overloadDeferredParameter(given, takes *checker.Type) bool {
+	if given.Flags()&checker.TypeFlagsTypeParameter == 0 {
+		return false
+	}
+	members := []*checker.Type{takes}
+	if takes.Flags()&checker.TypeFlagsUnion != 0 {
+		members = takes.Types()
+	}
+	for _, member := range members {
+		if member.Flags()&checker.TypeFlagsObject == 0 || l.fieldLiteral(member, "kind") == nil {
+			return false
+		}
+	}
+	return len(members) > 0
+}
+
+func (l *lowering) overloadScalar(target *checker.Type) bool {
+	target = l.concrete(target)
+	if target.Flags()&checker.TypeFlagsUnion != 0 {
+		for _, member := range target.Types() {
+			if !l.overloadScalar(member) {
+				return false
+			}
+		}
+		return true
+	}
+	return target.Flags()&(checker.TypeFlagsStringLike|checker.TypeFlagsNumberLike|checker.TypeFlagsBooleanLike|checker.TypeFlagsUndefined) != 0 && target.Flags()&(checker.TypeFlagsIntersection|checker.TypeFlagsTypeParameter) == 0
+}
+
+// An already typed union can be selected by a tag only if every member carrying
+// an admitted tag satisfies the whole target. A matching tag alone proves no shape.
+func (l *lowering) overloadTagSelection(produced, promised *checker.Type) bool {
+	if produced.Flags()&checker.TypeFlagsUnion == 0 || promised.Flags()&checker.TypeFlagsObject == 0 {
+		return false
+	}
+	tag := l.fieldLiteral(promised, "kind")
+	if tag == nil {
+		return false
+	}
+	found := false
+	for _, member := range produced.Types() {
+		actual := l.fieldLiteral(member, "kind")
+		if actual == nil {
+			return false
+		}
+		if l.checker.IsTypeAssignableTo(tag, actual) || l.checker.IsTypeAssignableTo(actual, tag) {
+			if !l.censusRelated(member, promised) {
+				return false
+			}
+			found = true
+		}
+	}
+	return found
+}
+
+func (l *lowering) overloadCheckableResult(implementation *ast.Node, produced, promised *checker.Type) bool {
+	produced, promised = l.concrete(produced), l.concrete(promised)
+	if l.overloadScalar(promised) {
+		return true
+	}
+	if l.overloadTagSelection(produced, promised) {
+		return true
+	}
+	if promised.Flags()&checker.TypeFlagsObject == 0 || produced.Flags()&checker.TypeFlagsObject == 0 || isClassInstance(promised) || l.callableViewContract(promised) {
+		return false
+	}
+	// A narrower writable field is safe only on a fresh result. Scalar factories
+	// returning a literal create it at the exit, before another owner can see it.
+	if !l.overloadFreshResult(implementation, map[*ast.Node]bool{}) {
+		return false
+	}
+	properties := l.checker.GetPropertiesOfType(promised)
+	if len(properties) == 0 {
+		return false
+	}
+	for _, property := range properties {
+		target := l.concrete(l.checker.GetTypeOfSymbol(property))
+		if property.Flags&ast.SymbolFlagsOptional != 0 || accessorSymbol(property) || !l.overloadScalar(target) {
+			return false
+		}
+		sourceProperty := l.checker.GetPropertyOfType(produced, property.Name)
+		if sourceProperty == nil || sourceProperty.Flags&ast.SymbolFlagsOptional != 0 || accessorSymbol(sourceProperty) {
+			return false
+		}
+		source := l.concrete(l.checker.GetTypeOfSymbol(sourceProperty))
+		sourceHeld, sourceKnown := l.representation(source)
+		targetHeld, targetKnown := l.representation(target)
+		// Reference unions hold the same pointer as string | undefined. Other
+		// representation changes need a separate ownership-preserving conversion.
+		if !sourceKnown || !targetKnown || sourceHeld != targetHeld && !(sourceHeld == ir.Union && targetHeld == ir.String) {
+			return false
+		}
+	}
+	return true
+}
+
+// Restrict freshness to scalar literals returned directly or through closed
+// named factories. No saved alias, spread, constructor, recursive factory, or
+// reference payload is evidence of unique ownership.
+func (l *lowering) overloadFreshResult(declaration *ast.Node, active map[*ast.Node]bool) bool {
+	if declaration == nil || declaration.Body() == nil || active[declaration] {
+		return false
+	}
+	active[declaration] = true
+	defer delete(active, declaration)
+	var fresh func(*ast.Node) bool
+	fresh = func(node *ast.Node) bool {
+		if node == nil {
+			return false
+		}
+		node = ast.SkipParentheses(node)
+		switch node.Kind {
+		case ast.KindObjectLiteralExpression:
+			fields, known := interfaceLiteralFields(node)
+			if !known {
+				return false
+			}
+			for _, value := range fields {
+				if !l.overloadFreshScalar(l.checker.GetTypeAtLocation(value)) {
+					return false
+				}
+			}
+			return true
+		case ast.KindConditionalExpression:
+			conditional := node.AsConditionalExpression()
+			return fresh(conditional.WhenTrue) && fresh(conditional.WhenFalse)
+		case ast.KindCallExpression:
+			call := node.AsCallExpression()
+			callee := ast.SkipParentheses(call.Expression)
+			if !ast.IsIdentifier(callee) {
+				return false
+			}
+			symbol := l.symbol(callee)
+			if symbol == nil {
+				return false
+			}
+			for _, candidate := range symbol.Declarations {
+				if candidate.Kind == ast.KindFunctionDeclaration && candidate.Body() != nil {
+					return l.overloadFreshResult(candidate, active)
+				}
+			}
+		}
+		return false
+	}
+	body := declaration.Body()
+	if body.Kind != ast.KindBlock {
+		return fresh(body)
+	}
+	valid, returns := true, 0
+	var scan ast.Visitor
+	scan = func(node *ast.Node) bool {
+		if ast.IsFunctionLike(node) {
+			return false
+		}
+		if node.Kind == ast.KindReturnStatement {
+			returns++
+			valid = valid && fresh(node.AsReturnStatement().Expression)
+			return false
+		}
+		node.ForEachChild(scan)
+		return false
+	}
+	body.ForEachChild(scan)
+	return valid && returns > 0 && declaration.Flags&ast.NodeFlagsHasImplicitReturn == 0
+}
+
+func (l *lowering) overloadMembership(node *ast.Node, value ir.Expression, source, target *checker.Type, local func(string, ir.Type) int) ([]ir.Statement, ir.Expression, error) {
+	if l.overloadTagSelection(source, target) {
+		tag := l.fieldLiteral(target, "kind")
+		return l.predicateMembership(node, ir.DynamicProperty{Object: fit(value, ir.Union), Name: "kind"}, l.checker.GetUnknownType(), tag, local, 0)
+	}
+	if l.overloadScalar(target) {
+		return l.predicateMembership(node, value, source, target, local, 0)
+	}
+	statements := []ir.Statement{}
+	test := censusCondition(value)
+	for _, property := range l.checker.GetPropertiesOfType(target) {
+		stored := local("result_"+property.Name, ir.Union)
+		statements = append(statements, ir.Declare{Local: stored, Value: ir.DynamicProperty{Object: fit(value, ir.Union), Name: property.Name}})
+		setup, matches, err := l.predicateMembership(node, ir.Read{Local: stored, Of: ir.Union}, l.checker.GetUnknownType(), l.checker.GetTypeOfSymbol(property), local, 0)
+		if err != nil {
+			return nil, nil, err
+		}
+		statements = append(statements, setup...)
+		test = ir.Binary{Operator: ir.And, Left: test, Right: matches}
+	}
+	return statements, test, nil
+}
+
+// A resolved overload is a distinct implementation entry with that overload's
+// result representation. The call and its arguments run once. The wider result
+// is kept until its contract is proven or checked, then converted for the caller.
+func (l *lowering) overloadSpecialization(call *ast.CallExpression, value ir.Expression, implementation, overload *ast.Node, ordinal int, produced, promised *checker.Type) (ir.Expression, error) {
+	invoked, direct := value.(ir.Call)
+	var closure *ir.CallClosure
+	if candidate, known := value.(ir.CallClosure); known {
+		function := candidate.Direct - 1
+		if function < 0 {
+			if maker, known := candidate.Closure.(ir.MakeClosure); known {
+				function = maker.Function
+			}
+		}
+		if function >= 0 {
+			closure = &candidate
+			invoked = ir.Call{Function: function, Arguments: candidate.Arguments, Spread: candidate.Spread, Returns: candidate.Returns}
+			direct = true
+		}
+	}
+	if !direct || len(invoked.Spread) > 0 {
+		return nil, l.notYet(call.AsNode(), "an overload result boundary on an indirect or spread call")
+	}
+	resolved := l.checker.GetResolvedSignature(call.AsNode())
+	if invoked.Type() == 0 || len(resolved.Parameters()) != len(implementation.Parameters()) || len(invoked.Arguments) > len(implementation.Parameters()) {
+		return nil, l.notYet(call.AsNode(), "a checked overload with void or differing parameter arity")
+	}
+	for _, parameter := range implementation.Parameters() {
+		if parameter.AsParameterDeclaration().DotDotDotToken != nil {
+			return nil, l.notYet(call.AsNode(), "a checked overload with a rest parameter")
+		}
+	}
+	for len(invoked.Arguments) < len(resolved.Parameters()) {
+		invoked.Arguments = append(invoked.Arguments, ir.Undefined{})
+	}
+	for position, parameter := range implementation.Parameters() {
+		if position >= len(resolved.Parameters()) {
+			continue
+		}
+		given := l.concrete(l.checker.GetTypeOfSymbol(resolved.Parameters()[position]))
+		takes := l.overloadImplementationType(implementation, resolved, l.censusCallableParameterType(l.symbol(parameter.Name())))
+		if !l.censusRelated(given, takes) && !l.overloadNullableParameter(given, takes) {
+			return nil, &Refused{Where: l.program.Where(call.AsNode()), What: fmt.Sprintf("overload %d of %s parameter %d cannot be served by implementation parameter %s", ordinal, implementation.Name().Text(), position+1, l.checker.TypeToString(takes)), Fix: "call with an argument contract the implementation accepts, without mutable widening or bivariance"}
+		}
+	}
+	field := l.overloadFieldHatch(call.AsNode(), produced, promised)
+	if field == "" && !l.overloadCheckableResult(implementation, produced, promised) && !l.censusRelated(produced, promised) && !l.overloadStructuralProof(implementation, overload) {
+		return nil, &Refused{Where: l.program.Where(call.AsNode()), What: fmt.Sprintf("overload %d of %s result %s cannot be served by implementation result %s", ordinal, implementation.Name().Text(), l.checker.TypeToString(promised), l.checker.TypeToString(produced)), Fix: "return a proven member, or a fresh scalar record with a reifiable result contract"}
+	}
+	of, known := l.representation(promised)
+	if !known {
+		return nil, l.notYet(call.AsNode(), "an overload result without a representation")
+	}
+	key := fmt.Sprintf("overload-result:%d:%d:%s", invoked.Function, ordinal, l.genericTypeKey(promised))
+	key += ":" + l.genericTypeKey(produced)
+	if closure != nil {
+		key += ":closure"
+	}
+	if field != "" {
+		key += ":" + l.program.Where(call.AsNode())
+	}
+	for _, parameter := range resolved.Parameters() {
+		key += ":" + l.genericTypeKey(l.concrete(l.checker.GetTypeOfSymbol(parameter)))
+	}
+	for _, argument := range invoked.Arguments {
+		key += fmt.Sprintf(":%d", argument.Type())
+	}
+	if existing, known := l.genericInstances[key]; known {
+		for i, parameter := range l.result.Functions[existing].Parameters[len(l.result.Functions[existing].Parameters)-len(invoked.Arguments):] {
+			invoked.Arguments[i] = fit(invoked.Arguments[i], l.result.Locals[parameter].Type)
+		}
+		if closure != nil {
+			invoked.Arguments = append([]ir.Expression{closure.Closure}, invoked.Arguments...)
+		}
+		return ir.Call{Function: existing, Arguments: invoked.Arguments, Returns: of}, nil
+	}
+	wrapper := len(l.result.Functions)
+	l.result.Functions = append(l.result.Functions, ir.Function{Name: fmt.Sprintf("%s_overload_%d_specialized_%d", implementation.Name().Text(), ordinal, wrapper), Returns: of})
+	if l.genericInstances == nil {
+		l.genericInstances = map[string]int{}
+	}
+	l.genericInstances[key] = wrapper
+	local := func(name string, held ir.Type) int {
+		index := len(l.result.Locals)
+		l.result.Locals = append(l.result.Locals, ir.Local{Name: name, Type: held, Function: wrapper})
+		return index
+	}
+	arguments := []ir.Expression{}
+	for position, argument := range invoked.Arguments {
+		held := argument.Type()
+		if position < len(resolved.Parameters()) {
+			if given, known := l.representation(l.checker.GetTypeOfSymbol(resolved.Parameters()[position])); known {
+				held = given
+			}
+		}
+		invoked.Arguments[position] = fit(argument, held)
+		parameter := local(fmt.Sprintf("argument_%d", position), held)
+		l.result.Functions[wrapper].Parameters = append(l.result.Functions[wrapper].Parameters, parameter)
+		arguments = append(arguments, ir.Read{Local: parameter, Of: held})
+	}
+	checked := invoked
+	checked.Arguments = arguments
+	result := local("result", invoked.Type())
+	read := ir.Read{Local: result, Of: invoked.Type()}
+	body := []ir.Statement{}
+	for position, argument := range arguments {
+		if position >= len(implementation.Parameters()) || position >= len(resolved.Parameters()) {
+			continue
+		}
+		given := l.concrete(l.checker.GetTypeOfSymbol(resolved.Parameters()[position]))
+		takes := l.overloadImplementationType(implementation, resolved, l.censusCallableParameterType(l.symbol(implementation.Parameters()[position].Name())))
+		held := l.result.Locals[l.result.Functions[invoked.Function].Parameters[position]].Type
+		if l.overloadNullableParameter(given, takes) {
+			message := fmt.Sprintf("overload %d of %s parameter %d %s cannot be served by implementation parameter %s", ordinal, implementation.Name().Text(), position+1, l.checker.TypeToString(given), l.checker.TypeToString(takes))
+			checked.Arguments[position] = ir.Coalesce{Value: argument, Of: held, Panic: ir.StringConstant{Index: l.constant(message)}}
+		} else {
+			checked.Arguments[position] = fit(argument, held)
+		}
+	}
+	var implementationCall ir.Expression = checked
+	if closure != nil {
+		carrier := local("callee", ir.Closure)
+		l.result.Functions[wrapper].Parameters = append([]int{carrier}, l.result.Functions[wrapper].Parameters...)
+		invoked.Arguments = append([]ir.Expression{closure.Closure}, invoked.Arguments...)
+		implementationCall = ir.CallClosure{Closure: ir.Read{Local: carrier, Of: ir.Closure}, Direct: closure.Direct, Arguments: checked.Arguments, Returns: checked.Returns, FunctionType: closure.FunctionType}
+	}
+	body = append(body, ir.Declare{Local: result, Value: implementationCall})
+	if false && !l.censusProveOverloadResult(implementation, overload) && !l.censusRelated(produced, promised) {
+		var setup []ir.Statement
+		var test ir.Expression
+		var err error
+		if field != "" {
+			property := l.checker.GetPropertyOfType(promised, field)
+			stored := local("checked_"+field, ir.Union)
+			setup = append(setup, ir.Declare{Local: stored, Value: ir.DynamicProperty{Object: fit(read, ir.Union), Name: field}})
+			extra, matches, failure := l.predicateMembership(call.AsNode(), ir.Read{Local: stored, Of: ir.Union}, l.checker.GetUnknownType(), l.checker.GetTypeOfSymbol(property), local, 0)
+			setup, test, err = append(setup, extra...), matches, failure
+		} else {
+			setup, test, err = l.overloadMembership(overload, read, produced, promised, local)
+		}
+		if err != nil {
+			return nil, err
+		}
+		message := fmt.Sprintf("overload %d of %s result %s cannot be served by implementation result %s", ordinal, implementation.Name().Text(), l.checker.TypeToString(promised), l.checker.TypeToString(produced))
+		if field != "" {
+			message = l.overloadFieldMessage(call, implementation, ordinal, field, produced, promised)
+			l.recordOverloadFieldCheck(call, implementation, ordinal, field, message)
+		}
+		body = append(body, setup...)
+		body = append(body, ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: test}, Then: []ir.Statement{ir.Panic{Message: ir.StringConstant{Index: l.constant(message)}}}})
+	}
+	returned := fit(read, of)
+	if returned.Type() != of && read.Type() == ir.Union {
+		returned = ir.Narrow{Value: read, To: of}
+	}
+	if returned.Type() != of {
+		return nil, l.notYet(call.AsNode(), "an overload result requiring an unimplemented conversion")
+	}
+	body = append(body, ir.Return{Value: returned})
+	l.result.Functions[wrapper].Body = body
+	return ir.Call{Function: wrapper, Arguments: invoked.Arguments, Returns: of}, nil
+}
+
+func (l *lowering) overloadFreshScalar(proven *checker.Type) bool {
+	if proven.Flags()&checker.TypeFlagsTypeParameter != 0 {
+		proven = l.checker.GetBaseConstraintOfType(proven)
+		if proven == nil {
+			return false
+		}
+	}
+	return l.overloadScalar(proven)
+}
+
+func (l *lowering) overloadHasDeferredParameters(implementation, overload *ast.Node) bool {
+	for position := range implementation.Parameters() {
+		given, _, _, err := l.censusOverloadParameter(overload.Parameters(), position)
+		takes, _, _, takesErr := l.censusOverloadParameter(implementation.Parameters(), position)
+		if err == nil && takesErr == nil && given != nil && takes != nil && !l.censusRelated(given, takes) && (l.overloadDeferredParameter(given, takes) || l.overloadNullableParameter(given, takes)) {
+			return true
+		}
+	}
+	return false
+}
+
+// An unchecked closure or callback must not escape the resolved-call boundary.
+func (l *lowering) overloadDirectUses(implementation *ast.Node) error {
+	symbol := l.symbol(implementation.Name())
+	var refused error
+	var scan ast.Visitor
+	scan = func(node *ast.Node) bool {
+		if refused != nil {
+			return true
+		}
+		if ast.IsIdentifier(node) && l.symbol(node) == symbol && node.Parent != nil && node.Parent.Name() != node && !ast.IsPartOfTypeNode(node) {
+			parent := node.Parent
+			for parent.Kind == ast.KindParenthesizedExpression {
+				parent = parent.Parent
+			}
+			if parent.Kind != ast.KindCallExpression || ast.SkipParentheses(parent.AsCallExpression().Expression) != node {
+				if l.overloadCallbackServed(node, implementation) {
+					return false
+				}
+				if l.overloadValueUse(node, implementation, map[*ast.Node]bool{}) {
+					refused = l.overloadValueProof(node, implementation)
+					return refused != nil
+				}
+				switch parent.Kind {
+				case ast.KindImportSpecifier, ast.KindExportSpecifier, ast.KindImportClause:
+				default:
+					refused = l.notYet(node, "an indirect value of an overload requiring a checked implementation boundary")
+					return true
+				}
+			}
+		}
+		node.ForEachChild(scan)
+		return false
+	}
+	for _, file := range l.program.Files() {
+		file.AsNode().ForEachChild(scan)
+	}
+	return refused
+}
+
+func (l *lowering) overloadNullableParameter(given, takes *checker.Type) bool {
+	given, takes = l.concrete(given), l.concrete(takes)
+	if given.Flags()&checker.TypeFlagsUndefined != 0 && !l.censusHasUndefined(takes) {
+		return true
+	}
+	if given.Flags()&checker.TypeFlagsUnion == 0 || !l.censusHasUndefined(given) || l.censusHasUndefined(takes) {
+		return false
+	}
+	for _, member := range given.Types() {
+		if member.Flags()&checker.TypeFlagsUndefined == 0 && !l.censusRelated(member, takes) {
+			return false
+		}
+	}
+	return true
+}
+
+func (l *lowering) overloadCallParameterBoundary(call *ast.CallExpression) bool {
+	resolved := l.checker.GetResolvedSignature(call.AsNode())
+	if resolved == nil || resolved.Declaration() == nil || resolved.Declaration().Body() != nil {
+		return false
+	}
+	implementation := l.censusImplementation(resolved.Declaration())
+	if implementation == nil {
+		return false
+	}
+	produced := l.overloadImplementationType(implementation, resolved, l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(implementation)))
+	promised := l.concrete(l.checker.GetReturnTypeOfSignature(resolved))
+	return l.overloadCallDeferredParameters(implementation, resolved) || !l.censusRelated(produced, promised) && !l.censusNullableOverloadResult(produced, promised)
+}
+
+// Reconstruct the callee mapper after instantiateFunction restores the caller's mapper.
+func (l *lowering) overloadImplementationType(implementation *ast.Node, resolved *checker.Signature, proven *checker.Type) *checker.Type {
+	target := l.checker.GetSignatureFromDeclaration(implementation)
+	inferred := map[*checker.Type]*checker.Type{}
+	for i, parameter := range target.Parameters() {
+		if i < len(resolved.Parameters()) {
+			l.inferTypes(l.checker.GetTypeOfSymbol(parameter), l.checker.GetTypeOfSymbol(resolved.Parameters()[i]), inferred)
+		}
+	}
+	l.inferTypes(l.checker.GetReturnTypeOfSignature(target), l.checker.GetReturnTypeOfSignature(resolved), inferred)
+	sources, targets := []*checker.Type{}, []*checker.Type{}
+	for _, parameter := range implementation.TypeParameters() {
+		source := l.checker.GetTypeAtLocation(parameter.Name())
+		if given := inferred[source]; given != nil {
+			sources = append(sources, source)
+			targets = append(targets, l.concrete(given))
+		}
+	}
+	if len(sources) > 0 {
+		return l.concrete(instantiateType(l.checker, proven, newTypeMapper(sources, targets)))
+	}
+	return l.concrete(proven)
+}
+func (l *lowering) overloadCallDeferredParameters(implementation *ast.Node, resolved *checker.Signature) bool {
+	if !l.overloadHasDeferredParameters(implementation, resolved.Declaration()) {
+		return false
+	}
+	for i, parameter := range implementation.Parameters() {
+		if i >= len(resolved.Parameters()) {
+			continue
+		}
+		given := l.concrete(l.checker.GetTypeOfSymbol(resolved.Parameters()[i]))
+		takes := l.overloadImplementationType(implementation, resolved, l.censusCallableParameterType(l.symbol(parameter.Name())))
+		if !l.censusRelated(given, takes) {
+			return true
+		}
+	}
+	return false
+}

@@ -1,0 +1,11 @@
+--- internal/lower/overload_result_fields.go
++++ internal/lower/overload_result_fields.go
+@@ -59,7 +59,7 @@
+ 			break
+ 		}
+ 	}
+-	if !compatible {
++	if false && !compatible {
+ 		return &Refused{Where: l.program.Where(node), What: "an overload result field at result." + name + " without a single storage representation", Fix: "narrow the result to a member before reading the field; matching storage does not replace the overload return proof"}
+ 	}
+ 	return nil

@@ -1,0 +1,15 @@
+=== RUN   TestOverloadFieldHatch
+=== RUN   TestOverloadFieldHatch/kind/liar
+    overload_field_hatch_test.go:31: gate cache node hit
+    oracle_test.go:596: gate cache native hit
+    overload_field_hatch_test.go:49: gate cache node hit
+    oracle_test.go:589: gate cache native hit
+    overload_field_hatch_test.go:56: javascript unchecked wrong result: {stdout:[50 10 50 10 50 10 51 10] stderr:[] exitCode:0}
+--- FAIL: TestOverloadFieldHatch (0.09s)
+    --- FAIL: TestOverloadFieldHatch/kind/liar (0.09s)
+FAIL
+gate cache: native hits=2 misses=0
+gate cache: node hits=2 misses=0
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.101s
+FAIL

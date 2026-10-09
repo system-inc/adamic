@@ -1,0 +1,26 @@
+{
+  "complete_reference_ledgers": 19,
+  "identical": [
+    "main-hidden-01-large",
+    "stack-hidden-01-large",
+    "main-hidden-01-small",
+    "stack-hidden-01-small",
+    "main-hidden-05-large",
+    "stack-hidden-05-large",
+    "main-hidden-05-small",
+    "stack-hidden-05-small",
+    "main-hidden-06",
+    "stack-hidden-06",
+    "main-hidden-13",
+    "stack-hidden-13",
+    "main-hidden-14",
+    "stack-hidden-14",
+    "main-hidden-08",
+    "main-hidden-04-large",
+    "stack-hidden-04-large",
+    "main-hidden-04-small",
+    "stack-hidden-04-small"
+  ],
+  "newly_completed": "stack-hidden-08",
+  "basis": "Exact equality of every parsed JSON record, including diagnostic signatures, unit order, findings and coverage; same instrumentation on main and stack."
+}

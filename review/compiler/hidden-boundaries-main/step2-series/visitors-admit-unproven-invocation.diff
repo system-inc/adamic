@@ -1,0 +1,10 @@
+--- internal/lower/overload_visitor_domain.go
++++ internal/lower/overload_visitor_domain.go
+@@ -249,6 +249,7 @@
+ 		return false
+ 	}
+ 	declaration.Body().ForEachChild(scan)
++	result.unproven = nil
+ 	return result
+ }
+ 

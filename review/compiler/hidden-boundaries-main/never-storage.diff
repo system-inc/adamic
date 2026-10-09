@@ -1,0 +1,11 @@
+--- internal/lower/object.go
++++ internal/lower/object.go
+@@ -326,7 +326,7 @@
+ 		return 0, l.notYet(node, "a value of type "+l.checker.TypeToString(arrayType)+" where an array goes")
+ 	}
+ 	element := l.checker.GetElementTypeOfArrayType(arrayType)
+-	if element.Flags()&checker.TypeFlagsNever != 0 {
++	if element.Flags()&checker.TypeFlagsNever != 0 && false {
+ 		// There is no present element to encode. Use ordinary non-reference
+ 		// array storage so identity, absent reads and cleanup stay unchanged.
+ 		// This does not widen the checker type: writable aliases still have to
