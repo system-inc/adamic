@@ -40,7 +40,7 @@ type Inputs struct {
 // Product returns the directory holding the product built from inputs, failing the test if it can't be built.
 func Product(t testing.TB, inputs Inputs, build func(directory string) error) string {
 	t.Helper()
-	directory, line, err := get(inputs, build)
+	directory, line, err := get(inputs, build, t.Name())
 	if line != "" {
 		t.Log(line)
 	}
@@ -56,8 +56,13 @@ func Get(inputs Inputs, build func(directory string) error) (string, error) {
 	return directory, err
 }
 
-func get(inputs Inputs, build func(directory string) error) (string, string, error) {
+func get(inputs Inputs, build func(directory string) error, testName ...string) (string, string, error) {
 	started := time.Now()
+	if os.Getenv(auditReplayKey) != "" {
+		if err := replayBuild(inputs, build); err != nil {
+			return "", "", err
+		}
+	}
 	if os.Getenv("ADAMIC_BUILD_CACHE") == "off" {
 		directory, err := os.MkdirTemp("", "adamic-build-")
 		if err != nil {
@@ -113,17 +118,12 @@ func get(inputs Inputs, build func(directory string) error) (string, string, err
 		return "", "", err
 	}
 	outcome := "miss"
+	auditSample := false
 	if os.Getenv("ADAMIC_BUILD_STORE") != "off" {
 		switch err = fetch(key, scratch); {
 		case err == nil:
 			outcome = "fetched"
-			if auditing() {
-				if err = audit(key, inputs.Name, scratch, build); err != nil {
-					os.RemoveAll(scratch)
-					return "", "", err
-				}
-				outcome = "audited"
-			}
+			auditSample = os.Getenv(auditReplayKey) == "" && auditing()
 		case errors.Is(err, errNotStored):
 			// Not stored, or the store unreachable: build here, from an empty directory again.
 			note("store %s %s: %v", inputs.Name, key[:12], err)
@@ -150,7 +150,13 @@ func get(inputs Inputs, build func(directory string) error) (string, string, err
 		os.RemoveAll(scratch)
 		return "", "", err
 	}
-	if outcome == "miss" {
+	if auditSample {
+		if err = queueAudit(key, inputs, product, testName); err != nil {
+			return "", "", err
+		}
+		outcome = "audit-queued"
+	}
+	if outcome == "miss" && os.Getenv(auditReplayKey) == "" {
 		// Uploads are off the test's clock. The product must have its permanent name before it is spooled.
 		if err = spool(key, inputs.Name, product); err != nil {
 			note("spool %s %s failed: %v", inputs.Name, key[:12], err)
@@ -310,7 +316,7 @@ func note(format string, arguments ...any) {
 	}
 }
 
-// record is the product's census line, 'build <name> <key12> hit|fetched|audited|miss|off <seconds>', also appended to
+// record is the product's census line, 'build <name> <key12> hit|fetched|audit-queued|miss|off <seconds>', also appended to
 // $ADAMIC_BUILD_LOG when set, so the gate can count every build as its own unit.
 func record(name, key, outcome string, started time.Time) string {
 	line := fmt.Sprintf("build %s %s %s %.2f", strings.ReplaceAll(name, " ", "_"), key[:min(12, len(key))], outcome, time.Since(started).Seconds())

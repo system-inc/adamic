@@ -37,7 +37,7 @@ const defaultStore = "https://adamic-store.kirkouimet.com"
 const defaultWriter = "https://loom.kirkouimet.com/public"
 
 // A fetched product is rebuilt and compared file by file at this rate (ADAMIC_BUILD_AUDIT overrides it): a store
-// that served a wrong product fails the test as poisoned (the ruling on #x2651cf: audit every gate's hits).
+// that served a wrong product fails the separate audit gate unit as poisoned, after the tests.
 const defaultAudit = 0.05
 
 var errNotStored = errors.New("not in the store")
@@ -351,8 +351,12 @@ func audit(key, name, fetched string, build func(directory string) error) error 
 	if err != nil {
 		return err
 	}
-	wantJSON, _ := json.Marshal(want.Files)
-	gotJSON, _ := json.Marshal(got.Files)
+	return compareAudit(key, name, got.Files, want.Files)
+}
+
+func compareAudit(key, name string, got, want []manifestFile) error {
+	wantJSON, _ := json.Marshal(want)
+	gotJSON, _ := json.Marshal(got)
 	if !bytes.Equal(wantJSON, gotJSON) {
 		return poisoned(fmt.Errorf("the stored product for %s (%s) differs from a rebuild: stored %s, rebuilt %s (or the build isn't reproducible)", key[:12], name, gotJSON, wantJSON))
 	}

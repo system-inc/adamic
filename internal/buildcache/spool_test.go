@@ -12,19 +12,25 @@ import (
 
 func runPublisher(t *testing.T) {
 	t.Helper()
+	if output, err := publisherOutput(t); err != nil {
+		t.Fatalf("publish: %v\n%s", err, output)
+	}
+}
+
+func publisherOutput(t *testing.T, arguments ...string) ([]byte, error) {
+	t.Helper()
 	root, err := repositoryRoot()
 	if err != nil {
 		t.Fatal(err)
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 80*time.Second)
 	defer cancel()
-	command := exec.CommandContext(ctx, "go", "run", "./internal/buildcache/cmd/buildcache-publish")
+	command := exec.CommandContext(ctx, "go", append([]string{"run", "./internal/buildcache/cmd/buildcache-publish"}, arguments...)...)
 	command.Dir = root
-	if output, err := command.CombinedOutput(); err != nil {
-		t.Fatalf("publish: %v\n%s", err, output)
-	}
+	return command.CombinedOutput()
 }
 
+// Not parallel: shared changes the process build-store and spool environment.
 func TestConcurrentPublishersDrainOnceAndRetryIsEmpty(t *testing.T) {
 	store, _ := shared(t)
 	token := filepath.Join(t.TempDir(), "publish-token")
@@ -53,6 +59,7 @@ func TestConcurrentPublishersDrainOnceAndRetryIsEmpty(t *testing.T) {
 	}
 }
 
+// Not parallel: shared changes the process build-store and spool environment.
 func TestAnUploadFailureKeepsItsSpoolEntry(t *testing.T) {
 	store, _ := shared(t)
 	token := filepath.Join(t.TempDir(), "publish-token")

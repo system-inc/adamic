@@ -2,6 +2,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"os"
 
@@ -9,11 +10,17 @@ import (
 )
 
 func main() {
-	if len(os.Args) != 1 {
-		fmt.Fprintln(os.Stderr, "usage: buildcache-publish (audit draining is not implemented yet)")
+	audit := flag.Bool("audit", false, "drain sampled rebuild audits instead of uploads")
+	flag.Parse()
+	if flag.NArg() != 0 {
+		fmt.Fprintln(os.Stderr, "usage: buildcache-publish [-audit]")
 		os.Exit(2)
 	}
-	if err := buildcache.PublishSpool(); err != nil {
+	drain := buildcache.PublishSpool
+	if *audit {
+		drain = buildcache.DrainAudits
+	}
+	if err := drain(); err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}

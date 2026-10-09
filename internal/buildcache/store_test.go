@@ -293,25 +293,52 @@ func TestADifferentProductForAStoredKeyIsSaidLoudly(t *testing.T) {
 	}
 }
 
-// Audited, a fetched product is rebuilt and compared: the same product passes, a different one is poisoning.
+// Fetched products stay usable while their queued rebuilds run as a separate audit unit.
 // Not parallel: points the build cache (ADAMIC_BUILD_CACHE_DIR, ADAMIC_BUILD_LOG) and the store at this test through t.Setenv.
 func TestAnAuditedFetchThatDiffersFromARebuildIsPoisoning(t *testing.T) {
-	store, log := shared(t)
-	t.Setenv("ADAMIC_BUILD_AUDIT", "1")
-	store.put(t, thisKey(t), map[string]string{"product": "built"})
-	build := func(directory string) error {
-		return os.WriteFile(filepath.Join(directory, "product"), []byte("built"), 0o644)
-	}
-	Product(t, thisPackage, build)
-	if lines, _ := os.ReadFile(log); !strings.Contains(string(lines), " audited ") {
-		t.Fatalf("census: %q", lines)
-	}
-	t.Setenv("ADAMIC_BUILD_CACHE_DIR", t.TempDir())
-	store.put(t, thisKey(t), map[string]string{"product": "a wrong product"})
-	_, err := Get(thisPackage, build)
-	var wrong poisonedError
-	if !errors.As(err, &wrong) || !strings.Contains(err.Error(), "differs from a rebuild") {
-		t.Fatalf("got %v, want poisoning", err)
+	for _, content := range []string{"built", "a wrong product"} {
+		t.Run(content, func(t *testing.T) {
+			store, log := shared(t)
+			t.Setenv("ADAMIC_BUILD_AUDIT", "1")
+			store.put(t, thisKey(t), map[string]string{"product": content})
+			var builds int
+			directory := Product(t, thisPackage, func(directory string) error {
+				builds++
+				return os.WriteFile(filepath.Join(directory, "product"), []byte("built"), 0o644)
+			})
+			if builds != 0 {
+				t.Fatalf("a fetched product was rebuilt inline: %d builds", builds)
+			}
+			if got, err := os.ReadFile(filepath.Join(directory, "product")); err != nil || string(got) != content {
+				t.Fatalf("the test lost its fetched product: %q, %v", got, err)
+			}
+			entries, err := auditEntries()
+			if err != nil || len(entries) != 1 {
+				t.Fatalf("audit entries: %v, %v", entries, err)
+			}
+			if lines, _ := os.ReadFile(log); !strings.Contains(string(lines), " audit-queued ") {
+				t.Fatalf("census: %q", lines)
+			}
+			output, err := publisherOutput(t, "-audit")
+			if content == "built" {
+				if err != nil {
+					t.Fatalf("honest audit: %v\n%s", err, output)
+				}
+				entries, err = auditEntries()
+				if err != nil || len(entries) != 0 {
+					t.Fatalf("successful audit left entries: %v, %v", entries, err)
+				}
+			} else {
+				if err == nil || !strings.Contains(string(output), "cache poisoning:") ||
+					!strings.Contains(string(output), "differs from a rebuild") || !strings.Contains(string(output), thisKey(t)[:12]) {
+					t.Fatalf("wrong product's audit: %v\n%s", err, output)
+				}
+				entries, err = auditEntries()
+				if err != nil || len(entries) != 1 {
+					t.Fatalf("poisoning witness was lost: %v, %v", entries, err)
+				}
+			}
+		})
 	}
 }
 

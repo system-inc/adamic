@@ -13,8 +13,8 @@ import (
 // The gate should run 'go run ./internal/buildcache/cmd/buildcache-publish' after run.py's test units have
 // finished, before its final verdict. It is a separate gate unit, with its own clock. Keep the local cache until
 // it has drained: entries refer to complete, immutable products there. run.py is deliberately not wired here.
-// The planned 'buildcache-publish -audit' belongs at that same point, as another gate unit with its own clock.
-// Audit draining is still unfinished; audits currently use the inline comparator in store.go.
+// Run 'go run ./internal/buildcache/cmd/buildcache-publish -audit' at that same point as another gate unit.
+// Keep the checkout and build environment until audits drain, so their inputs and callbacks can be replayed.
 type spoolEntry struct {
 	Key       string
 	Name      string
@@ -61,16 +61,17 @@ func spool(key, name, product string) error {
 	}
 	entry := spoolEntry{Key: key, Name: name, Directory: product, Namespace: writeNamespace()}
 	path := filepath.Join(directory, entry.Namespace+"-"+key+".json")
-	lock, err := entryLock(path)
-	if err != nil {
-		return err
-	}
-	defer lock.Close()
 	encoded, err := json.Marshal(entry)
 	if err != nil {
 		return err
 	}
-	file, err := os.CreateTemp(directory, ".spooling-")
+	return writeQueuedEntry(path, encoded)
+}
+
+// Entries are immutable and become visible atomically. Writers never wait for a drainer's lock: an upload or
+// rebuild already in progress must not put its work back on a test's clock. The first snapshot for a path wins.
+func writeQueuedEntry(path string, encoded []byte) error {
+	file, err := os.CreateTemp(filepath.Dir(path), ".queuing-")
 	if err != nil {
 		return err
 	}
@@ -82,7 +83,11 @@ func spool(key, name, product string) error {
 	if err = file.Close(); err != nil {
 		return err
 	}
-	return os.Rename(file.Name(), path)
+	err = os.Link(file.Name(), path)
+	if errors.Is(err, os.ErrExist) {
+		return nil
+	}
+	return err
 }
 
 func spoolEntries() ([]string, error) {

@@ -15,24 +15,8 @@ import (
 
 // Generate a real small Darwin executable on every host, then patch only bytes found with debug/macho.
 func TestMachOAuditIgnoresOnlyUUIDAndSignature(t *testing.T) {
-	root, err := repositoryRoot()
-	if err != nil {
-		t.Fatal(err)
-	}
-	directory := t.TempDir()
-	binary := filepath.Join(directory, "hello")
-	ctx, cancel := context.WithTimeout(context.Background(), 80*time.Second)
-	defer cancel()
-	command := exec.CommandContext(ctx, "go", "build", "-o", binary, "./internal/buildcache/testdata/hello")
-	command.Dir = root
-	command.Env = append(os.Environ(), "GOOS=darwin", "GOARCH=arm64", "CGO_ENABLED=0")
-	if output, err := command.CombinedOutput(); err != nil {
-		t.Fatalf("Mach-O fixture: %v\n%s", err, output)
-	}
-	content, err := os.ReadFile(binary)
-	if err != nil {
-		t.Fatal(err)
-	}
+	t.Parallel()
+	content := machOFixture(t)
 	file, err := macho.NewFile(bytes.NewReader(content))
 	if err != nil {
 		t.Fatal(err)
@@ -84,6 +68,7 @@ func TestMachOAuditIgnoresOnlyUUIDAndSignature(t *testing.T) {
 }
 
 func TestAuditLeavesNonMachOBytesAlone(t *testing.T) {
+	t.Parallel()
 	for name, content := range map[string][]byte{
 		"short": {1, 2, 3},
 		"ELF":   append([]byte{0x7f, 'E', 'L', 'F'}, bytes.Repeat([]byte{0xa5}, 128)...),
@@ -107,4 +92,27 @@ func TestAuditLeavesNonMachOBytesAlone(t *testing.T) {
 			}
 		})
 	}
+}
+
+func machOFixture(t *testing.T) []byte {
+	t.Helper()
+	root, err := repositoryRoot()
+	if err != nil {
+		t.Fatal(err)
+	}
+	directory := t.TempDir()
+	binary := filepath.Join(directory, "hello")
+	ctx, cancel := context.WithTimeout(context.Background(), 80*time.Second)
+	defer cancel()
+	command := exec.CommandContext(ctx, "go", "build", "-o", binary, "./internal/buildcache/testdata/hello")
+	command.Dir = root
+	command.Env = append(os.Environ(), "GOOS=darwin", "GOARCH=arm64", "CGO_ENABLED=0")
+	if output, err := command.CombinedOutput(); err != nil {
+		t.Fatalf("Mach-O fixture: %v\n%s", err, output)
+	}
+	content, err := os.ReadFile(binary)
+	if err != nil {
+		t.Fatal(err)
+	}
+	return content
 }

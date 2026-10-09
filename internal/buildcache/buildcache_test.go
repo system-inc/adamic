@@ -115,6 +115,7 @@ func cached(t *testing.T) (string, string) {
 	cache := t.TempDir()
 	log := filepath.Join(t.TempDir(), "builds.log")
 	t.Setenv("ADAMIC_BUILD_STORE_SPOOL", t.TempDir())
+	t.Setenv("ADAMIC_BUILD_STORE_AUDITS", t.TempDir())
 	t.Setenv("ADAMIC_BUILD_CACHE_DIR", cache)
 	t.Setenv("ADAMIC_BUILD_LOG", log)
 	t.Setenv("ADAMIC_BUILD_CACHE", "")
