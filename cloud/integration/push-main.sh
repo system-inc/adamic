@@ -359,8 +359,10 @@ fi
 
 git fetch -q origin
 old=$(git rev-parse origin/main)
-if [ "$old" = "$sha" ]; then
-	echo "refused: main is already $sha" >&2
+if [ "$old" = "$sha" ] || git merge-base --is-ancestor "$sha" "$old"; then
+	# Already on main: the train or another hand landed it first. Landing it again would push an empty
+	# record-only merge and a second velocity row (Oct 9: e3f2be21 landed twice, 5bc33818..b620d51b).
+	echo "refused: main ${old:0:8} already holds ${sha:0:8}" >&2
 	exit 1
 fi
 if [ "$testOnly" = yes ]; then
