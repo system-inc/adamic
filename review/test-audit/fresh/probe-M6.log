@@ -1,0 +1,5 @@
+stat-atime-self-cycle [{"Kind":1,"Site":1,"Name":"next","Function":-1,"Proven":true,"Why":""}]
+replacement-callback-escapes [{"Kind":1,"Site":1,"Name":"saved","Function":0,"Proven":false,"Why":"the value written reaches something this function didn't make or let escape, and what it's written into has escaped by then"}]
+future-buffer-operation [{"Kind":5,"Site":0,"Name":"","Function":-1,"Proven":false,"Why":"ir.NodeBufferCall is a node the cycle finder doesn't know"}]
+hash-digest-operation []
+class-method-outside-parameter [{"Kind":1,"Site":1,"Name":"saved","Function":0,"Proven":false,"Why":"the value written reaches something this function didn't make or let escape, and what it's written into wasn't made here"}]
