@@ -1,0 +1,334 @@
+run adamic-verify-20261009T061217-0de4e9d7: void, 2472 tests in 12 units, 64 failed, 11 units broken, 0 killed over budget
+BROKEN tests-00: no results (exited true, last output "5.4G\t/tmp/loom-home")
+BROKEN tests-01: no results (exited true, last output "5.4G\t/tmp/loom-home")
+BROKEN tests-03: no results (exited true, last output "5.4G\t/tmp/loom-home")
+BROKEN tests-04: no results (exited true, last output "5.4G\t/tmp/loom-home")
+BROKEN tests-05: no results (exited true, last output "5.4G\t/tmp/loom-home")
+BROKEN tests-06: no results (exited true, last output "5.4G\t/tmp/loom-home")
+BROKEN tests-07: no results (exited true, last output "5.4G\t/tmp/loom-home")
+BROKEN tests-08: no results (exited true, last output "5.4G\t/tmp/loom-home")
+BROKEN tests-09: no results (exited true, last output "5.4G\t/tmp/loom-home")
+BROKEN tests-10: no results (exited true, last output "5.4G\t/tmp/loom-home")
+BROKEN tests-11: no results (exited true, last output "5.4G\t/tmp/loom-home")
+FAIL github.com/system-inc/adamic/internal/oracle TestWASIAgreesWithNode/internal/oracle/testdata/closure_convention_host24.a (tests-02)
+    wasi_test.go:45: native: compiling runtime node_fs_file.c: exit status 1
+    /home/agent/.cache/adamic/runtime/.build-175346229/node_fs_file.c:513:9: error: call to undeclared function 'mkdtemp'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+    513 |     if (mkdtemp(name) != NULL) { result = text(name); }
+    |         ^
+    /home/agent/.cache/adamic/runtime/.build-175346229/node_fs_file.c:513:23: error: comparison between pointer and integer ('int' and 'void *') [-Werror,-Wpointer-integer-compare]
+    513 |     if (mkdtemp(name) != NULL) { result = text(name); }
+    |         ~~~~~~~~~~~~~ ^  ~~~~
+    2 errors generated.
+FAIL github.com/system-inc/adamic/stage3/fixtures TestFixtures/assertions/10_union_kind.a/native (tests-02)
+    fixtures_test.go:301: oracle native/sanitizer/leak hook failed: panic: open ../../stage3/maplike-records/sites/results.json: no such file or directory
+    goroutine 1 [running]:
+    github.com/system-inc/adamic/internal/oracle.init.61()
+    /tmp/adamic/internal/oracle/tsc_record_sites_test.go:56 +0x2bc
+FAIL github.com/system-inc/adamic/stage3/fixtures TestFixtures/assertions/18_const_tuple.a/native (tests-02)
+    fixtures_test.go:301: oracle native/sanitizer/leak hook failed: panic: open ../../stage3/maplike-records/sites/results.json: no such file or directory
+    goroutine 1 [running]:
+    github.com/system-inc/adamic/internal/oracle.init.61()
+    /tmp/adamic/internal/oracle/tsc_record_sites_test.go:56 +0x2bc
+FAIL github.com/system-inc/adamic/stage3/fixtures TestFixtures/enums/01_token_range.a/native (tests-02)
+    fixtures_test.go:301: oracle native/sanitizer/leak hook failed: panic: open ../../stage3/maplike-records/sites/results.json: no such file or directory
+    goroutine 1 [running]:
+    github.com/system-inc/adamic/internal/oracle.init.61()
+    /tmp/adamic/internal/oracle/tsc_record_sites_test.go:56 +0x2bc
+FAIL github.com/system-inc/adamic/stage3/fixtures TestFixtures/enums/02_node_range.a/native (tests-02)
+    fixtures_test.go:301: oracle native/sanitizer/leak hook failed: panic: open ../../stage3/maplike-records/sites/results.json: no such file or directory
+    goroutine 1 [running]:
+    github.com/system-inc/adamic/internal/oracle.init.61()
+    /tmp/adamic/internal/oracle/tsc_record_sites_test.go:56 +0x2bc
+FAIL github.com/system-inc/adamic/stage3/fixtures TestFixtures/enums/03_jsdoc_range.a/native (tests-02)
+    fixtures_test.go:301: oracle native/sanitizer/leak hook failed: panic: open ../../stage3/maplike-records/sites/results.json: no such file or directory
+    goroutine 1 [running]:
+    github.com/system-inc/adamic/internal/oracle.init.61()
+    /tmp/adamic/internal/oracle/tsc_record_sites_test.go:56 +0x2bc
+FAIL github.com/system-inc/adamic/stage3/fixtures TestFixtures/enums/04_parse_tree_mask.a/native (tests-02)
+    fixtures_test.go:301: oracle native/sanitizer/leak hook failed: panic: open ../../stage3/maplike-records/sites/results.json: no such file or directory
+    goroutine 1 [running]:
+    github.com/system-inc/adamic/internal/oracle.init.61()
+    /tmp/adamic/internal/oracle/tsc_record_sites_test.go:56 +0x2bc
+FAIL github.com/system-inc/adamic/stage3/fixtures TestFixtures/enums/05_local_export_flags.a/native (tests-02)
+    fixtures_test.go:301: oracle native/sanitizer/leak hook failed: panic: open ../../stage3/maplike-records/sites/results.json: no such file or directory
+    goroutine 1 [running]:
+    github.com/system-inc/adamic/internal/oracle.init.61()
+    /tmp/adamic/internal/oracle/tsc_record_sites_test.go:56 +0x2bc
+FAIL github.com/system-inc/adamic/stage3/fixtures TestFixtures/enums/07_regex_array_map.a/native (tests-02)
+    fixtures_test.go:301: oracle native/sanitizer/leak hook failed: panic: open ../../stage3/maplike-records/sites/results.json: no such file or directory
+    goroutine 1 [running]:
+    github.com/system-inc/adamic/internal/oracle.init.61()
+    /tmp/adamic/internal/oracle/tsc_record_sites_test.go:56 +0x2bc
+FAIL github.com/system-inc/adamic/stage3/fixtures TestFixtures/enums/07_regex_array_map.a/stage0 (tests-02)
+    fixtures_test.go:349: gap changed: update status.json and check the native output; got {Outcome:Compiles What:}; recorded {Outcome:CheckedStop What:adamic: panic: index 1 is outside an array of length 0
+    }
+FAIL github.com/system-inc/adamic/stage3/fixtures TestFixtures/enums/09_symbol_exclusion_mask.a/native (tests-02)
+    fixtures_test.go:301: oracle native/sanitizer/leak hook failed: panic: open ../../stage3/maplike-records/sites/results.json: no such file or directory
+    goroutine 1 [running]:
+    github.com/system-inc/adamic/internal/oracle.init.61()
+    /tmp/adamic/internal/oracle/tsc_record_sites_test.go:56 +0x2bc
+FAIL github.com/system-inc/adamic/stage3/fixtures TestFixtures/enums/10_string_enum.a/native (tests-02)
+    fixtures_test.go:301: oracle native/sanitizer/leak hook failed: panic: open ../../stage3/maplike-records/sites/results.json: no such file or directory
+    goroutine 1 [running]:
+    github.com/system-inc/adamic/internal/oracle.init.61()
+    /tmp/adamic/internal/oracle/tsc_record_sites_test.go:56 +0x2bc
+FAIL github.com/system-inc/adamic/stage3/fixtures TestFixtures/enums/12_diagnostic_reverse_lookup.a/native (tests-02)
+    fixtures_test.go:301: oracle native/sanitizer/leak hook failed: panic: open ../../stage3/maplike-records/sites/results.json: no such file or directory
+    goroutine 1 [running]:
+    github.com/system-inc/adamic/internal/oracle.init.61()
+    /tmp/adamic/internal/oracle/tsc_record_sites_test.go:56 +0x2bc
+FAIL github.com/system-inc/adamic/stage3/fixtures TestFixtures/enums/13_regex_map_keys.a/native (tests-02)
+    fixtures_test.go:301: oracle native/sanitizer/leak hook failed: panic: open ../../stage3/maplike-records/sites/results.json: no such file or directory
+    goroutine 1 [running]:
+    github.com/system-inc/adamic/internal/oracle.init.61()
+    /tmp/adamic/internal/oracle/tsc_record_sites_test.go:56 +0x2bc
+FAIL github.com/system-inc/adamic/stage3/fixtures TestFixtures/host/11_setModifiedTime.a/native (tests-02)
+    fixtures_test.go:301: oracle native/sanitizer/leak hook failed: panic: open ../../stage3/maplike-records/sites/results.json: no such file or directory
+    goroutine 1 [running]:
+    github.com/system-inc/adamic/internal/oracle.init.61()
+    /tmp/adamic/internal/oracle/tsc_record_sites_test.go:56 +0x2bc
+FAIL github.com/system-inc/adamic/stage3/fixtures TestFixtures/host/24_useCaseSensitiveFileNames.a/native (tests-02)
+    fixtures_test.go:301: oracle native/sanitizer/leak hook failed: panic: open ../../stage3/maplike-records/sites/results.json: no such file or directory
+    goroutine 1 [running]:
+    github.com/system-inc/adamic/internal/oracle.init.61()
+    /tmp/adamic/internal/oracle/tsc_record_sites_test.go:56 +0x2bc
+FAIL github.com/system-inc/adamic/stage3/fixtures TestFixtures/namespaces/01_builder_state.a/native (tests-02)
+    fixtures_test.go:301: oracle native/sanitizer/leak hook failed: panic: open ../../stage3/maplike-records/sites/results.json: no such file or directory
+    goroutine 1 [running]:
+    github.com/system-inc/adamic/internal/oracle.init.61()
+    /tmp/adamic/internal/oracle/tsc_record_sites_test.go:56 +0x2bc
+FAIL github.com/system-inc/adamic/stage3/fixtures TestFixtures/namespaces/11_status_type_only.a/native (tests-02)
+    fixtures_test.go:301: oracle native/sanitizer/leak hook failed: panic: open ../../stage3/maplike-records/sites/results.json: no such file or directory
+    goroutine 1 [running]:
+    github.com/system-inc/adamic/internal/oracle.init.61()
+    /tmp/adamic/internal/oracle/tsc_record_sites_test.go:56 +0x2bc
+FAIL github.com/system-inc/adamic/stage3/fixtures TestFixtures/namespaces/12_builder_release_cache.a/native (tests-02)
+    fixtures_test.go:301: oracle native/sanitizer/leak hook failed: panic: open ../../stage3/maplike-records/sites/results.json: no such file or directory
+    goroutine 1 [running]:
+    github.com/system-inc/adamic/internal/oracle.init.61()
+    /tmp/adamic/internal/oracle/tsc_record_sites_test.go:56 +0x2bc
+FAIL github.com/system-inc/adamic/stage3/fixtures TestFixtures/nested-functions/02_scanner_digits.a/native (tests-02)
+    fixtures_test.go:301: oracle native/sanitizer/leak hook failed: panic: open ../../stage3/maplike-records/sites/results.json: no such file or directory
+    goroutine 1 [running]:
+    github.com/system-inc/adamic/internal/oracle.init.61()
+    /tmp/adamic/internal/oracle/tsc_record_sites_test.go:56 +0x2bc
+FAIL github.com/system-inc/adamic/stage3/fixtures TestFixtures/nested-functions/03_scanner_hoisting.a/native (tests-02)
+    fixtures_test.go:301: oracle native/sanitizer/leak hook failed: panic: open ../../stage3/maplike-records/sites/results.json: no such file or directory
+    goroutine 1 [running]:
+    github.com/system-inc/adamic/internal/oracle.init.61()
+    /tmp/adamic/internal/oracle/tsc_record_sites_test.go:56 +0x2bc
+FAIL github.com/system-inc/adamic/stage3/fixtures TestFixtures/nested-functions/04_scanner_escaped_text.a/native (tests-02)
+    fixtures_test.go:301: oracle native/sanitizer/leak hook failed: panic: open ../../stage3/maplike-records/sites/results.json: no such file or directory
+    goroutine 1 [running]:
+    github.com/system-inc/adamic/internal/oracle.init.61()
+    /tmp/adamic/internal/oracle/tsc_record_sites_test.go:56 +0x2bc
+FAIL github.com/system-inc/adamic/stage3/fixtures TestFixtures/nested-functions/05_scanner_reassigned_text.a/native (tests-02)
+    fixtures_test.go:301: oracle native/sanitizer/leak hook failed: panic: open ../../stage3/maplike-records/sites/results.json: no such file or directory
+    goroutine 1 [running]:
+    github.com/system-inc/adamic/internal/oracle.init.61()
+    /tmp/adamic/internal/oracle/tsc_record_sites_test.go:56 +0x2bc
+FAIL github.com/system-inc/adamic/stage3/fixtures TestFixtures/nested-functions/06_parser_token_state.a/native (tests-02)
+    fixtures_test.go:301: oracle native/sanitizer/leak hook failed: panic: open ../../stage3/maplike-records/sites/results.json: no such file or directory
+    goroutine 1 [running]:
+    github.com/system-inc/adamic/internal/oracle.init.61()
+    /tmp/adamic/internal/oracle/tsc_record_sites_test.go:56 +0x2bc
+FAIL github.com/system-inc/adamic/stage3/fixtures TestFixtures/nested-functions/07_binder_symbol_count.a/native (tests-02)
+    fixtures_test.go:301: oracle native/sanitizer/leak hook failed: panic: open ../../stage3/maplike-records/sites/results.json: no such file or directory
+    goroutine 1 [running]:
+    github.com/system-inc/adamic/internal/oracle.init.61()
+    /tmp/adamic/internal/oracle/tsc_record_sites_test.go:56 +0x2bc
+FAIL github.com/system-inc/adamic/stage3/fixtures TestFixtures/nested-functions/08_checker_symbol_recursion.a/native (tests-02)
+    fixtures_test.go:301: oracle native/sanitizer/leak hook failed: panic: open ../../stage3/maplike-records/sites/results.json: no such file or directory
+    goroutine 1 [running]:
+    github.com/system-inc/adamic/internal/oracle.init.61()
+    /tmp/adamic/internal/oracle/tsc_record_sites_test.go:56 +0x2bc
+FAIL github.com/system-inc/adamic/stage3/fixtures TestFixtures/nested-functions/09_checker_constituent_recursion.a/native (tests-02)
+    fixtures_test.go:301: oracle native/sanitizer/leak hook failed: panic: open ../../stage3/maplike-records/sites/results.json: no such file or directory
+    goroutine 1 [running]:
+    github.com/system-inc/adamic/internal/oracle.init.61()
+    /tmp/adamic/internal/oracle/tsc_record_sites_test.go:56 +0x2bc
+FAIL github.com/system-inc/adamic/stage3/fixtures TestFixtures/nested-functions/10_checker_arrow_cleanup.a/native (tests-02)
+    fixtures_test.go:301: oracle native/sanitizer/leak hook failed: panic: open ../../stage3/maplike-records/sites/results.json: no such file or directory
+    goroutine 1 [running]:
+    github.com/system-inc/adamic/internal/oracle.init.61()
+    /tmp/adamic/internal/oracle/tsc_record_sites_test.go:56 +0x2bc
+FAIL github.com/system-inc/adamic/stage3/fixtures TestFixtures/nested-functions/11_scanner_method_wrapper.a/native (tests-02)
+    fixtures_test.go:301: oracle native/sanitizer/leak hook failed: panic: open ../../stage3/maplike-records/sites/results.json: no such file or directory
+    goroutine 1 [running]:
+    github.com/system-inc/adamic/internal/oracle.init.61()
+    /tmp/adamic/internal/oracle/tsc_record_sites_test.go:56 +0x2bc
+FAIL github.com/system-inc/adamic/stage3/fixtures TestFixtures/objects/07_synthetic_reference.a/native (tests-02)
+    fixtures_test.go:301: oracle native/sanitizer/leak hook failed: panic: open ../../stage3/maplike-records/sites/results.json: no such file or directory
+    goroutine 1 [running]:
+    github.com/system-inc/adamic/internal/oracle.init.61()
+    /tmp/adamic/internal/oracle/tsc_record_sites_test.go:56 +0x2bc
+FAIL github.com/system-inc/adamic/stage3/fixtures TestFixtures/objects/14_comment_pending.a/native (tests-02)
+    fixtures_test.go:301: oracle native/sanitizer/leak hook failed: panic: open ../../stage3/maplike-records/sites/results.json: no such file or directory
+    goroutine 1 [running]:
+    github.com/system-inc/adamic/internal/oracle.init.61()
+    /tmp/adamic/internal/oracle/tsc_record_sites_test.go:56 +0x2bc
+FAIL github.com/system-inc/adamic/stage3/fixtures TestFixtures/objects/23_factory_getters.a/native (tests-02)
+    fixtures_test.go:301: oracle native/sanitizer/leak hook failed: panic: open ../../stage3/maplike-records/sites/results.json: no such file or directory
+    goroutine 1 [running]:
+    github.com/system-inc/adamic/internal/oracle.init.61()
+    /tmp/adamic/internal/oracle/tsc_record_sites_test.go:56 +0x2bc
+FAIL github.com/system-inc/adamic/stage3/fixtures TestFixtures/objects/24_transformation_accessors.a/native (tests-02)
+    fixtures_test.go:301: oracle native/sanitizer/leak hook failed: panic: open ../../stage3/maplike-records/sites/results.json: no such file or directory
+    goroutine 1 [running]:
+    github.com/system-inc/adamic/internal/oracle.init.61()
+    /tmp/adamic/internal/oracle/tsc_record_sites_test.go:56 +0x2bc
+FAIL github.com/system-inc/adamic/stage3/fixtures TestFixtures/predicates/01_identifier.a/native (tests-02)
+    fixtures_test.go:301: oracle native/sanitizer/leak hook failed: panic: open ../../stage3/maplike-records/sites/results.json: no such file or directory
+    goroutine 1 [running]:
+    github.com/system-inc/adamic/internal/oracle.init.61()
+    /tmp/adamic/internal/oracle/tsc_record_sites_test.go:56 +0x2bc
+FAIL github.com/system-inc/adamic/stage3/fixtures TestFixtures/predicates/02_module_name.a/native (tests-02)
+    fixtures_test.go:301: oracle native/sanitizer/leak hook failed: panic: open ../../stage3/maplike-records/sites/results.json: no such file or directory
+    goroutine 1 [running]:
+    github.com/system-inc/adamic/internal/oracle.init.61()
+    /tmp/adamic/internal/oracle/tsc_record_sites_test.go:56 +0x2bc
+FAIL github.com/system-inc/adamic/stage3/fixtures TestFixtures/records/01_has_property.a/native (tests-02)
+    fixtures_test.go:301: oracle native/sanitizer/leak hook failed: panic: open ../../stage3/maplike-records/sites/results.json: no such file or directory
+    goroutine 1 [running]:
+    github.com/system-inc/adamic/internal/oracle.init.61()
+    /tmp/adamic/internal/oracle/tsc_record_sites_test.go:56 +0x2bc
+FAIL github.com/system-inc/adamic/stage3/fixtures TestFixtures/records/02_get_property.a/native (tests-02)
+    fixtures_test.go:301: oracle native/sanitizer/leak hook failed: panic: open ../../stage3/maplike-records/sites/results.json: no such file or directory
+    goroutine 1 [running]:
+    github.com/system-inc/adamic/internal/oracle.init.61()
+    /tmp/adamic/internal/oracle/tsc_record_sites_test.go:56 +0x2bc
+FAIL github.com/system-inc/adamic/stage3/fixtures TestFixtures/records/03_own_keys.a/native (tests-02)
+    fixtures_test.go:301: oracle native/sanitizer/leak hook failed: panic: open ../../stage3/maplike-records/sites/results.json: no such file or directory
+    goroutine 1 [running]:
+    github.com/system-inc/adamic/internal/oracle.init.61()
+    /tmp/adamic/internal/oracle/tsc_record_sites_test.go:56 +0x2bc
+FAIL github.com/system-inc/adamic/stage3/fixtures TestFixtures/records/05_integer_order.a/native (tests-02)
+    fixtures_test.go:301: oracle native/sanitizer/leak hook failed: panic: open ../../stage3/maplike-records/sites/results.json: no such file or directory
+    goroutine 1 [running]:
+    github.com/system-inc/adamic/internal/oracle.init.61()
+    /tmp/adamic/internal/oracle/tsc_record_sites_test.go:56 +0x2bc
+FAIL github.com/system-inc/adamic/stage3/fixtures TestFixtures/records/06_delete_readd.a/native (tests-02)
+    fixtures_test.go:301: oracle native/sanitizer/leak hook failed: panic: open ../../stage3/maplike-records/sites/results.json: no such file or directory
+    goroutine 1 [running]:
+    github.com/system-inc/adamic/internal/oracle.init.61()
+    /tmp/adamic/internal/oracle/tsc_record_sites_test.go:56 +0x2bc
+FAIL github.com/system-inc/adamic/stage3/fixtures TestFixtures/records/07_optional_view.a/native (tests-02)
+    fixtures_test.go:301: oracle native/sanitizer/leak hook failed: panic: open ../../stage3/maplike-records/sites/results.json: no such file or directory
+    goroutine 1 [running]:
+    github.com/system-inc/adamic/internal/oracle.init.61()
+    /tmp/adamic/internal/oracle/tsc_record_sites_test.go:56 +0x2bc
+FAIL github.com/system-inc/adamic/stage3/fixtures TestFixtures/records/13_strict_option.a/native (tests-02)
+    fixtures_test.go:301: oracle native/sanitizer/leak hook failed: panic: open ../../stage3/maplike-records/sites/results.json: no such file or directory
+    goroutine 1 [running]:
+    github.com/system-inc/adamic/internal/oracle.init.61()
+    /tmp/adamic/internal/oracle/tsc_record_sites_test.go:56 +0x2bc
+FAIL github.com/system-inc/adamic/stage3/fixtures TestFixtures/records/16_built_strings.a/native (tests-02)
+    fixtures_test.go:301: oracle native/sanitizer/leak hook failed: panic: open ../../stage3/maplike-records/sites/results.json: no such file or directory
+    goroutine 1 [running]:
+    github.com/system-inc/adamic/internal/oracle.init.61()
+    /tmp/adamic/internal/oracle/tsc_record_sites_test.go:56 +0x2bc
+FAIL github.com/system-inc/adamic/stage3/fixtures TestFixtures/runner/01_queue_empty.a/native (tests-02)
+    fixtures_test.go:301: oracle native/sanitizer/leak hook failed: panic: open ../../stage3/maplike-records/sites/results.json: no such file or directory
+    goroutine 1 [running]:
+    github.com/system-inc/adamic/internal/oracle.init.61()
+    /tmp/adamic/internal/oracle/tsc_record_sites_test.go:56 +0x2bc
+FAIL github.com/system-inc/adamic/stage3/fixtures TestFixtures/runner/02_is_string.a/native (tests-02)
+    fixtures_test.go:301: oracle native/sanitizer/leak hook failed: panic: open ../../stage3/maplike-records/sites/results.json: no such file or directory
+    goroutine 1 [running]:
+    github.com/system-inc/adamic/internal/oracle.init.61()
+    /tmp/adamic/internal/oracle/tsc_record_sites_test.go:56 +0x2bc
+FAIL github.com/system-inc/adamic/stage3/fixtures TestFixtures/runner/03_return_true.a/native (tests-02)
+    fixtures_test.go:301: oracle native/sanitizer/leak hook failed: panic: open ../../stage3/maplike-records/sites/results.json: no such file or directory
+    goroutine 1 [running]:
+    github.com/system-inc/adamic/internal/oracle.init.61()
+    /tmp/adamic/internal/oracle/tsc_record_sites_test.go:56 +0x2bc
+FAIL github.com/system-inc/adamic/stage3/fixtures TestFixtures/taste/01_diagnostic_code.a/native (tests-02)
+    fixtures_test.go:301: oracle native/sanitizer/leak hook failed: panic: open ../../stage3/maplike-records/sites/results.json: no such file or directory
+    goroutine 1 [running]:
+    github.com/system-inc/adamic/internal/oracle.init.61()
+    /tmp/adamic/internal/oracle/tsc_record_sites_test.go:56 +0x2bc
+FAIL github.com/system-inc/adamic/stage3/fixtures TestFixtures/taste/03_diagnostic_file.a/native (tests-02)
+    fixtures_test.go:301: oracle native/sanitizer/leak hook failed: panic: open ../../stage3/maplike-records/sites/results.json: no such file or directory
+    goroutine 1 [running]:
+    github.com/system-inc/adamic/internal/oracle.init.61()
+    /tmp/adamic/internal/oracle/tsc_record_sites_test.go:56 +0x2bc
+FAIL github.com/system-inc/adamic/stage3/fixtures TestFixtures/taste/04_jsx_runtime.a/native (tests-02)
+    fixtures_test.go:301: oracle native/sanitizer/leak hook failed: panic: open ../../stage3/maplike-records/sites/results.json: no such file or directory
+    goroutine 1 [running]:
+    github.com/system-inc/adamic/internal/oracle.init.61()
+    /tmp/adamic/internal/oracle/tsc_record_sites_test.go:56 +0x2bc
+FAIL github.com/system-inc/adamic/stage3/fixtures TestFixtures/taste/05_this_type.a/native (tests-02)
+    fixtures_test.go:301: oracle native/sanitizer/leak hook failed: panic: open ../../stage3/maplike-records/sites/results.json: no such file or directory
+    goroutine 1 [running]:
+    github.com/system-inc/adamic/internal/oracle.init.61()
+    /tmp/adamic/internal/oracle/tsc_record_sites_test.go:56 +0x2bc
+FAIL github.com/system-inc/adamic/stage3/fixtures TestFixtures/taste/07_compact.a/native (tests-02)
+    fixtures_test.go:301: oracle native/sanitizer/leak hook failed: panic: open ../../stage3/maplike-records/sites/results.json: no such file or directory
+    goroutine 1 [running]:
+    github.com/system-inc/adamic/internal/oracle.init.61()
+    /tmp/adamic/internal/oracle/tsc_record_sites_test.go:56 +0x2bc
+FAIL github.com/system-inc/adamic/stage3/fixtures TestFixtures/taste/09_literal_cache.a/native (tests-02)
+    fixtures_test.go:301: oracle native/sanitizer/leak hook failed: panic: open ../../stage3/maplike-records/sites/results.json: no such file or directory
+    goroutine 1 [running]:
+    github.com/system-inc/adamic/internal/oracle.init.61()
+    /tmp/adamic/internal/oracle/tsc_record_sites_test.go:56 +0x2bc
+FAIL github.com/system-inc/adamic/stage3/fixtures TestFixtures/taste/10_global_import_meta.a/native (tests-02)
+    fixtures_test.go:301: oracle native/sanitizer/leak hook failed: panic: open ../../stage3/maplike-records/sites/results.json: no such file or directory
+    goroutine 1 [running]:
+    github.com/system-inc/adamic/internal/oracle.init.61()
+    /tmp/adamic/internal/oracle/tsc_record_sites_test.go:56 +0x2bc
+FAIL github.com/system-inc/adamic/stage3/fixtures TestFixtures/taste/12_symbol_links.a/native (tests-02)
+    fixtures_test.go:301: oracle native/sanitizer/leak hook failed: panic: open ../../stage3/maplike-records/sites/results.json: no such file or directory
+    goroutine 1 [running]:
+    github.com/system-inc/adamic/internal/oracle.init.61()
+    /tmp/adamic/internal/oracle/tsc_record_sites_test.go:56 +0x2bc
+FAIL github.com/system-inc/adamic/stage3/fixtures TestFixtures/taste/13_void_callback.a/native (tests-02)
+    fixtures_test.go:301: oracle native/sanitizer/leak hook failed: panic: open ../../stage3/maplike-records/sites/results.json: no such file or directory
+    goroutine 1 [running]:
+    github.com/system-inc/adamic/internal/oracle.init.61()
+    /tmp/adamic/internal/oracle/tsc_record_sites_test.go:56 +0x2bc
+FAIL github.com/system-inc/adamic/stage3/fixtures TestFixtures/taste/14_relative_complement.a/native (tests-02)
+    fixtures_test.go:301: oracle native/sanitizer/leak hook failed: panic: open ../../stage3/maplike-records/sites/results.json: no such file or directory
+    goroutine 1 [running]:
+    github.com/system-inc/adamic/internal/oracle.init.61()
+    /tmp/adamic/internal/oracle/tsc_record_sites_test.go:56 +0x2bc
+FAIL github.com/system-inc/adamic/stage3/fixtures TestFixtures/taste/15_barrel.a/native (tests-02)
+    fixtures_test.go:301: oracle native/sanitizer/leak hook failed: panic: open ../../stage3/maplike-records/sites/results.json: no such file or directory
+    goroutine 1 [running]:
+    github.com/system-inc/adamic/internal/oracle.init.61()
+    /tmp/adamic/internal/oracle/tsc_record_sites_test.go:56 +0x2bc
+FAIL github.com/system-inc/adamic/stage3/fixtures TestFixtures/taste/16_scan_exclamation.a/native (tests-02)
+    fixtures_test.go:301: oracle native/sanitizer/leak hook failed: panic: open ../../stage3/maplike-records/sites/results.json: no such file or directory
+    goroutine 1 [running]:
+    github.com/system-inc/adamic/internal/oracle.init.61()
+    /tmp/adamic/internal/oracle/tsc_record_sites_test.go:56 +0x2bc
+FAIL github.com/system-inc/adamic/stage3/fixtures TestFixtures/taste/18_named_export.a/native (tests-02)
+    fixtures_test.go:301: oracle native/sanitizer/leak hook failed: panic: open ../../stage3/maplike-records/sites/results.json: no such file or directory
+    goroutine 1 [running]:
+    github.com/system-inc/adamic/internal/oracle.init.61()
+    /tmp/adamic/internal/oracle/tsc_record_sites_test.go:56 +0x2bc
+FAIL github.com/system-inc/adamic/stage3/fixtures TestFixtures/taste/19_deprecated_flags.a/native (tests-02)
+    fixtures_test.go:301: oracle native/sanitizer/leak hook failed: panic: open ../../stage3/maplike-records/sites/results.json: no such file or directory
+    goroutine 1 [running]:
+    github.com/system-inc/adamic/internal/oracle.init.61()
+    /tmp/adamic/internal/oracle/tsc_record_sites_test.go:56 +0x2bc
+FAIL github.com/system-inc/adamic/stage3/fixtures TestFixtures/taste/20_jsdoc_terminate.a/native (tests-02)
+    fixtures_test.go:301: oracle native/sanitizer/leak hook failed: panic: open ../../stage3/maplike-records/sites/results.json: no such file or directory
+    goroutine 1 [running]:
+    github.com/system-inc/adamic/internal/oracle.init.61()
+    /tmp/adamic/internal/oracle/tsc_record_sites_test.go:56 +0x2bc
+FAIL github.com/system-inc/adamic/stage3/fixtures TestFixtures/taste/22_assignment_once.a/native (tests-02)
+    fixtures_test.go:301: oracle native/sanitizer/leak hook failed: panic: open ../../stage3/maplike-records/sites/results.json: no such file or directory
+    goroutine 1 [running]:
+    github.com/system-inc/adamic/internal/oracle.init.61()
+    /tmp/adamic/internal/oracle/tsc_record_sites_test.go:56 +0x2bc
+FAIL github.com/system-inc/adamic/stage3/fixtures TestFixtures/taste/23_labels_finally.a/native (tests-02)
+    fixtures_test.go:301: oracle native/sanitizer/leak hook failed: panic: open ../../stage3/maplike-records/sites/results.json: no such file or directory
+    goroutine 1 [running]:
+    github.com/system-inc/adamic/internal/oracle.init.61()
+    /tmp/adamic/internal/oracle/tsc_record_sites_test.go:56 +0x2bc
+FAIL github.com/system-inc/adamic/stage3/fixtures TestFixtures/taste/24_proportional_conditions.a/native (tests-02)
+    fixtures_test.go:301: oracle native/sanitizer/leak hook failed: panic: open ../../stage3/maplike-records/sites/results.json: no such file or directory
+    goroutine 1 [running]:
+    github.com/system-inc/adamic/internal/oracle.init.61()
+    /tmp/adamic/internal/oracle/tsc_record_sites_test.go:56 +0x2bc
