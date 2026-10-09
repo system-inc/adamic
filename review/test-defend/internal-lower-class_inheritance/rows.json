@@ -1,0 +1,59 @@
+[
+  {
+    "test": "TestInheritanceRefusesGrowingGenericClasses",
+    "package": "internal/lower",
+    "prior_verdict": "subsumed",
+    "subsumed_by": "TestInheritanceHasClassIdentity",
+    "defense": "defended",
+    "unique_mutant": "D1 internal/lower/class.go:120",
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "internal/lower/class.go:120",
+        "change": "Change recursion refusal repair constant, removing advice to keep recursive arguments unchanged",
+        "rows_failed": [
+          "TestInheritanceRefusesGrowingGenericClasses"
+        ]
+      }
+    ],
+    "evidence": "source /workspace/adamic-tools/env.sh; ADAMIC_BUILD_CACHE_DIR=/tmp/defend-inherit/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D1.log 2>&1; class_inheritance_test.go:228: want bounded monomorphization refusal with fix, got /tmp/adamic-gate/TestInheritanceRefusesGrowingGenericClasses2977895460/001/main.a:2:140: Adamic 0.1 refuses a generic class instantiated without end (polymorphic recursion); write a class per type"
+  },
+  {
+    "test": "TestInheritanceConditionalThisRules",
+    "package": "internal/lower",
+    "prior_verdict": "subsumed",
+    "subsumed_by": "TestInheritanceRefusesThisBeforeSuperReturns",
+    "defense": "defended",
+    "unique_mutant": "D2 internal/lower/class_super.go:156",
+    "attempts": [
+      {
+        "mutant": "D2",
+        "file_line": "internal/lower/class_super.go:156",
+        "change": "Drop the whole constructor-parameter pre-super reads loop",
+        "rows_failed": [
+          "TestInheritanceConditionalThisRules"
+        ]
+      }
+    ],
+    "evidence": "source /workspace/adamic-tools/env.sh; ADAMIC_BUILD_CACHE_DIR=/tmp/defend-inherit/cache/D2 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D2.log 2>&1; class_inheritance_test.go:263: want pre-super binding refusal with fix, got <nil>"
+  },
+  {
+    "test": "TestInheritanceGenericViewsKeepNominalArguments",
+    "package": "internal/lower",
+    "prior_verdict": "subsumed",
+    "subsumed_by": "TestInheritanceGenericNominalConstraints",
+    "defense": "defended",
+    "unique_mutant": "D3 internal/lower/class_inheritance.go:596",
+    "attempts": [
+      {
+        "mutant": "D3",
+        "file_line": "internal/lower/class_inheritance.go:596",
+        "change": "Drop the whole nominal and enum argument comparison loop for equal class symbols",
+        "rows_failed": [
+          "TestInheritanceGenericViewsKeepNominalArguments"
+        ]
+      }
+    ],
+    "evidence": "source /workspace/adamic-tools/env.sh; ADAMIC_BUILD_CACHE_DIR=/tmp/defend-inherit/cache/D3 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D3.log 2>&1; class_inheritance_test.go:277: want nominal generic argument refusal, got <nil>"
+  }
+]

@@ -1,0 +1,14 @@
+--- a/internal/lower/class_inheritance.go
++++ b/internal/lower/class_inheritance.go
+@@ -592,11 +592,6 @@
+ 		from, to := l.checker.GetTypeArguments(source), l.checker.GetTypeArguments(target)
+ 		if !l.sameClassArguments(from, to) {
+ 			return false
+-		}
+-		for index := range from {
+-			if !l.enumAssignable(from[index], to[index]) || !l.enumAssignable(to[index], from[index]) || l.nominalMismatch(from[index], to[index], seen) != nil || l.nominalMismatch(to[index], from[index], seen) != nil {
+-				return false
+-			}
+ 		}
+ 		return true
+ 	}
