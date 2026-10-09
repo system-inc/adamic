@@ -1,0 +1,8 @@
+run adamic-verify-20261009T015249-0c1b42e8: red, 6979 tests in 12 units, 2 failed, 0 units broken
+FAIL github.com/system-inc/adamic/internal/oracle TestReviewProgramsAgreeWithNode/fxspptb_p06_helper_second_parameter_undefined.a (tests-11)
+    review_test.go:153: native: stdout differs; Node exit 0 stdout "undefined? abc\nno\nundefined? undefined\nyes\n" stderr ""; got exit 0 stdout "undefined? undefined\nno\nundefined? undefined\nyes\n" stderr ""
+    JavaScript: stdout differs; Node exit 0 stdout "undefined? abc\nno\nundefined? undefined\nyes\n" stderr ""; got exit 0 stdout "undefined? undefined\nno\nundefined? undefined\nyes\n" stderr ""
+    release: stdout differs; Node exit 0 stdout "undefined? abc\nno\nundefined? undefined\nyes\n" stderr ""; got exit 0 stdout "undefined? undefined\nno\nundefined? undefined\nyes\n" stderr ""
+FAIL github.com/system-inc/adamic/internal/oracle TestReviewProgramsAgreeWithNode/fxspptb_p24_filter_proven_number.a (tests-11)
+    review_test.go:153: native: stdout differs; Node exit 0 stdout "2\n2\n2,4\n" stderr ""; got exit 0 stdout "2\n6.70961267194503e-310\n6.70961267194503e-310,6.7096126719474e-310\n" stderr ""
+    release: stdout differs; Node exit 0 stdout "2\n2\n2,4\n" stderr ""; got exit 0 stdout "2\n4.6630648886634e-310\n4.6630648886634e-310,4.663064888665e-310\n" stderr ""
