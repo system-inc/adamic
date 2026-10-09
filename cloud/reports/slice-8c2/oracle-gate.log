@@ -1,0 +1,31 @@
+--- FAIL: TestAsyncExpandedChecksCatchMutants (4.97s)
+    --- FAIL: TestAsyncExpandedChecksCatchMutants/async_methods (0.04s)
+        async_test.go:131: native: split: conflicting declaration adamic_method_async_methods_a_Worker_work_771fdf0e0a64745c66e078ad537670ab
+--- FAIL: TestAsyncInstanceAndArrowPayloadMutants (0.80s)
+    --- FAIL: TestAsyncInstanceAndArrowPayloadMutants/async_methods (0.04s)
+        async_test.go:421: native: split: conflicting declaration adamic_method_async_methods_a_Worker_work_771fdf0e0a64745c66e078ad537670ab
+--- FAIL: TestGraphRegionsCountsAndFree (0.00s)
+    --- FAIL: TestGraphRegionsCountsAndFree/internal/oracle/testdata/graph_regions_regression_15.a (0.17s)
+        graph_regions_test.go:86: gate cache native miss
+        counts_test.go:125: native: split: conflicting declaration adamic_method_graph_regions_regression_15_a_Link_set_40826a9f26ccc6aa196f594515c8fc6e
+    --- FAIL: TestGraphRegionsCountsAndFree/internal/oracle/testdata/graph_regions_regression_13.a (0.12s)
+        graph_regions_test.go:86: gate cache native miss
+        counts_test.go:125: native: split: conflicting declaration adamic_method_graph_regions_regression_13_a_Link_setNext_366b2bfc53ded0b1caf689c48ca9139c
+    --- FAIL: TestGraphRegionsCountsAndFree/internal/oracle/testdata/graph_regions_regression_12.a (0.12s)
+        graph_regions_test.go:86: gate cache native miss
+        counts_test.go:125: native: split: conflicting declaration adamic_method_graph_regions_regression_12_a_Maker_make_4160a783a2d1f221a6a43a95e4fa3d1d
+    --- FAIL: TestGraphRegionsCountsAndFree/internal/oracle/testdata/graph_regions_regression_11.a (0.11s)
+        graph_regions_test.go:86: gate cache native miss
+        counts_test.go:125: native: split: conflicting declaration adamic_method_graph_regions_regression_11_a_Box_listen_8d3af4e945c0ac25a1b420b4c0b1dc37
+    --- FAIL: TestGraphRegionsCountsAndFree/internal/oracle/testdata/graph_regions_static_private.a (0.13s)
+        graph_regions_test.go:86: gate cache native miss
+        counts_test.go:125: native: split: conflicting declaration adamic_method_graph_regions_static_private_a_Box_held_2e7a87d67d6cb1a8e9d632a0ca6260ef
+    --- FAIL: TestGraphRegionsCountsAndFree/internal/oracle/testdata/graph_regions_generic_capture.a (0.10s)
+        graph_regions_test.go:86: gate cache native miss
+        counts_test.go:125: native: split: conflicting declaration adamic_method_graph_regions_generic_capture_a_Tie_tie_cbeb3c74f4f1d1904c54476310d529f9
+FAIL
+gate cache: native hits=4 misses=59
+gate cache: node hits=3 misses=48
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	80.598s
+FAIL

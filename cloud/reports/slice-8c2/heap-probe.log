@@ -1,0 +1,15 @@
+=== RUN   TestSerialSlabsSkipRemoteScans
+=== RUN   TestSerialSlabsSkipRemoteScans/fixed
+    heap_remote_scan_test.go:51: sanitize false: serial skip; remote reuse
+    heap_remote_scan_test.go:51: sanitize true: serial skip; remote reuse
+=== RUN   TestSerialSlabsSkipRemoteScans/always_scan_mutant
+    heap_remote_scan_test.go:51: sanitize false: serial scan
+    heap_remote_scan_test.go:51: sanitize true: serial scan
+=== RUN   TestSerialSlabsSkipRemoteScans/never_scan_mutant
+    heap_remote_scan_test.go:51: sanitize false: remote slots lost
+    heap_remote_scan_test.go:51: sanitize true: remote slots lost
+--- PASS: TestSerialSlabsSkipRemoteScans (32.35s)
+    --- PASS: TestSerialSlabsSkipRemoteScans/fixed (10.72s)
+    --- PASS: TestSerialSlabsSkipRemoteScans/always_scan_mutant (10.70s)
+    --- PASS: TestSerialSlabsSkipRemoteScans/never_scan_mutant (10.93s)
+PASS

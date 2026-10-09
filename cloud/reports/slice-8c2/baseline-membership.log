@@ -1,0 +1,44 @@
+panic: runtime error: invalid memory address or nil pointer dereference
+[signal SIGSEGV: segmentation violation code=0x1 addr=0xc0 pc=0x8ae1bc]
+
+goroutine 1 [running]:
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getTypeArguments(0x2753600aa08, 0x275361cea20)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:22354 +0x3c
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).GetTypeArguments(0x27536167be0?, 0x275361cea20?)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/exports.go:347 +0x13
+github.com/system-inc/adamic/internal/lower.(*cycleFinder).graphFlows.func5({0x1d272f8, 0x27536722420}, 0x275361cea20)
+	/workspace/adamic/internal/lower/graph_flow.go:175 +0x2d7
+github.com/system-inc/adamic/internal/lower.(*cycleFinder).graphFlows.func5({0x1d272d8, 0x27535d060a0}, 0x275361d2180)
+	/workspace/adamic/internal/lower/graph_flow.go:170 +0x503
+github.com/system-inc/adamic/internal/lower.(*cycleFinder).graphFlows.func6.func1({0x1cef7c0?, 0x27536167800?})
+	/workspace/adamic/internal/lower/graph_flow.go:190 +0xf7
+github.com/system-inc/adamic/internal/lower.walkValue({0x1cef7c0?, 0x27536167800?, 0x40917d?}, 0x2753619cba8)
+	/workspace/adamic/internal/lower/exceptions.go:360 +0x13f
+github.com/system-inc/adamic/internal/lower.walkValue({0x1c8f5c8?, 0x275359efa20?, 0x7faa2d019260?}, 0x2753619cba8)
+	/workspace/adamic/internal/lower/exceptions.go:348 +0x75
+github.com/system-inc/adamic/internal/lower.walkValue({0x1bf4570?, 0x2753659bc50?, 0x484525?}, 0x2753619cba8)
+	/workspace/adamic/internal/lower/exceptions.go:352 +0x1b6
+github.com/system-inc/adamic/internal/lower.walk({0x1bf4570?, 0x2753659bc50?}, 0xb?)
+	/workspace/adamic/internal/lower/exceptions.go:336 +0x67
+github.com/system-inc/adamic/internal/lower.(*cycleFinder).graphFlows.func6(...)
+	/workspace/adamic/internal/lower/graph_flow.go:187
+github.com/system-inc/adamic/internal/lower.(*cycleFinder).graphFlows(0x275361da7e0)
+	/workspace/adamic/internal/lower/graph_flow.go:253 +0xb38
+github.com/system-inc/adamic/internal/lower.(*cycleFinder).graphTypes(0x275361da7e0, {0x27536610c58, 0x1, 0x1?})
+	/workspace/adamic/internal/lower/graph_types.go:326 +0x1bd2
+github.com/system-inc/adamic/internal/lower.(*lowering).findCycles(0x275361aea08, {0x27536610c58, 0x1, 0x1})
+	/workspace/adamic/internal/lower/cycles.go:127 +0xe5
+github.com/system-inc/adamic/internal/lower.lowerCheckedWithOptions(0x27535b19230, 0x2753600aa08, 0x27535ffb888, 0x0, 0x0, {0x40?, 0x0?, 0x0?})
+	/workspace/adamic/internal/lower/lower.go:124 +0x885
+github.com/system-inc/adamic/internal/lower.LowerWithOptions({0x1d29610?, 0x1e114e0?}, 0x27535b19230, {0xe4?, 0x43?, 0xc9?})
+	/workspace/adamic/internal/lower/lower.go:50 +0x1a5
+github.com/system-inc/adamic/internal/lower.Lower({0x1d29610, 0x1e114e0}, 0x27535b19230)
+	/workspace/adamic/internal/lower/lower.go:32 +0x90
+main.compileLibrary({0x7ffc2376039e?, 0x0?}, 0x0)
+	/workspace/adamic/cmd/adamic/main.go:133 +0x65
+main.compile(...)
+	/workspace/adamic/cmd/adamic/main.go:122
+main.run({0x2753595a280?, 0x1d39d28?, 0x2753593a1e0?})
+	/workspace/adamic/cmd/adamic/main.go:73 +0x3a5
+main.main()
+	/workspace/adamic/cmd/adamic/main.go:33 +0x45

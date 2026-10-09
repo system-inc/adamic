@@ -1,0 +1,16 @@
+=== RUN   TestAsyncReaderProbes
+=== PAUSE TestAsyncReaderProbes
+=== CONT  TestAsyncReaderProbes
+=== RUN   TestAsyncReaderProbes/async_for_of_string
+    async_test.go:509: gate cache node miss
+    async_test.go:518: gate cache node miss
+=== RUN   TestAsyncReaderProbes/async_loop_body_capture
+    async_test.go:509: gate cache node miss
+    async_test.go:518: gate cache node miss
+--- PASS: TestAsyncReaderProbes (0.97s)
+    --- PASS: TestAsyncReaderProbes/async_for_of_string (0.55s)
+    --- PASS: TestAsyncReaderProbes/async_loop_body_capture (0.41s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=4
+gate cache: probe hits=0 misses=0

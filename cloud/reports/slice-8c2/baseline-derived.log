@@ -1,0 +1,35 @@
+panic: Unhandled case in Node.Text: *ast.ComputedPropertyName
+
+goroutine 1 [running]:
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).Text(0x2536f5229b00?)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:308 +0x42c
+github.com/system-inc/adamic/internal/lower.(*lowering).checkMemberOverrides(0x2536f59f4a08, 0x2536f5229b00, 0x2536f5a23500, 0x2536f5a23380, 0x0)
+	/workspace/adamic/internal/lower/class_inheritance.go:54 +0x17a
+github.com/system-inc/adamic/internal/lower.(*lowering).checkOverrides(0x2536f59f4a08, 0x2536f5229b00, 0x2536f5a23500)
+	/workspace/adamic/internal/lower/class_inheritance.go:45 +0x4d
+github.com/system-inc/adamic/internal/lower.(*lowering).refuse.func2(0x2536f5229b00)
+	/workspace/adamic/internal/lower/refusals.go:220 +0xfc5
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodes(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:40
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodeList(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:49
+github.com/microsoft/TypeScript/tsc/internal/ast.(*SourceFile).ForEachChild(0x2536f5468a88, 0x2536f53078e0)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:2783 +0x9b
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0x2?, 0x2536f53078e0)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:9002 +0x1ec5
+github.com/system-inc/adamic/internal/lower.(*lowering).refuse(0x2536f59f4a08, 0x2536f5468a88)
+	/workspace/adamic/internal/lower/refusals.go:244 +0x595
+github.com/system-inc/adamic/internal/lower.lowerCheckedWithOptions(0x2536f4f67350, 0x2536f546d508, 0x2536f5468a88, 0x0, 0x0, {0x40?, 0x0?, 0x0?})
+	/workspace/adamic/internal/lower/lower.go:81 +0x2f1
+github.com/system-inc/adamic/internal/lower.LowerWithOptions({0x1d29610?, 0x1e114e0?}, 0x2536f4f67350, {0xe4?, 0x43?, 0xc9?})
+	/workspace/adamic/internal/lower/lower.go:50 +0x1a5
+github.com/system-inc/adamic/internal/lower.Lower({0x1d29610, 0x1e114e0}, 0x2536f4f67350)
+	/workspace/adamic/internal/lower/lower.go:32 +0x90
+main.compileLibrary({0x7fffebd3f393?, 0x0?}, 0x0)
+	/workspace/adamic/cmd/adamic/main.go:133 +0x65
+main.compile(...)
+	/workspace/adamic/cmd/adamic/main.go:122
+main.run({0x2536f4da8280?, 0x1d39d28?, 0x2536f4d881e0?})
+	/workspace/adamic/cmd/adamic/main.go:73 +0x3a5
+main.main()
+	/workspace/adamic/cmd/adamic/main.go:33 +0x45

@@ -1,0 +1,65 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/async_refused/async_refuse_return_thenable.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/async_refused/async_refuse_return_thenable.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/async_refused/async_refuse_arrow_thenable.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/async_refused/async_refuse_arrow_thenable.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/async_iterables_cells_labels.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/async_iterables_cells_labels.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/async_refused/async_refuse_for_of_string.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/async_refused/async_refuse_for_of_string.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/async_refused/async_refuse_loop_body_capture.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/async_refused/async_refuse_loop_body_capture.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/async_refused/async_refuse_return_thenable.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/async_refused/async_refuse_for_of_string.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/async_iterables_cells_labels.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/async_refused/async_refuse_loop_body_capture.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/async_refused/async_refuse_arrow_thenable.a
+    oracle_test.go:935: not yet: /workspace/adamic/internal/oracle/testdata/async_refused/async_refuse_arrow_thenable.a:1:40: stage 0 can't lower return of thenables (thenable adoption) yet
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/async_refused/async_refuse_return_thenable.a
+    oracle_test.go:935: not yet: /workspace/adamic/internal/oracle/testdata/async_refused/async_refuse_return_thenable.a:2:12: stage 0 can't lower return of thenables (thenable adoption) yet
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/async_iterables_cells_labels.a
+    oracle_test.go:941: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/async_refused/async_refuse_loop_body_capture.a
+    oracle_test.go:941: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/async_refused/async_refuse_for_of_string.a
+    oracle_test.go:941: gate cache node miss
+    oracle_test.go:941: gate cache node miss
+    oracle_test.go:824: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/async_refused/async_refuse_loop_body_capture.a
+    oracle_test.go:941: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/async_iterables_cells_labels.a
+    oracle_test.go:941: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/async_refused/async_refuse_loop_body_capture.a
+    oracle_test.go:824: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/async_iterables_cells_labels.a
+    oracle_test.go:824: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/async_refused/async_refuse_for_of_string.a
+    oracle_test.go:805: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/async_refused/async_refuse_loop_body_capture.a
+    oracle_test.go:805: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/async_iterables_cells_labels.a
+    oracle_test.go:805: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/async_refused/async_refuse_for_of_string.a
+    oracle_test.go:817: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/async_refused/async_refuse_loop_body_capture.a
+    oracle_test.go:817: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/async_iterables_cells_labels.a
+    oracle_test.go:817: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/async_refused/async_refuse_for_of_string.a
+    oracle_test.go:831: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/async_refused/async_refuse_loop_body_capture.a
+    oracle_test.go:831: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/async_iterables_cells_labels.a
+    oracle_test.go:831: gate cache native hit
+--- PASS: TestNativeAgreesWithNode (0.12s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/async_refused/async_refuse_arrow_thenable.a (0.20s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/async_refused/async_refuse_return_thenable.a (0.24s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/async_refused/async_refuse_for_of_string.a (9.77s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/async_refused/async_refuse_loop_body_capture.a (9.98s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/async_iterables_cells_labels.a (10.30s)
+PASS
+gate cache: native hits=3 misses=9
+gate cache: node hits=0 misses=6
+gate cache: probe hits=0 misses=0

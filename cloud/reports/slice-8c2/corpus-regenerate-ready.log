@@ -1,0 +1,128 @@
+--- FAIL: TestCyclesCorpus (316.43s)
+    --- FAIL: TestCyclesCorpus/../oracle/testdata/program_region/tsc_node_membership.a (0.06s)
+        cycles_corpus_test.go:185: exit status 2
+            --- FAIL: TestCyclesCorpusFixture (0.04s)
+            panic: runtime error: invalid memory address or nil pointer dereference [recovered, repanicked]
+            [signal SIGSEGV: segmentation violation code=0x1 addr=0xc0 pc=0x85c7dc]
+            
+            goroutine 8 [running]:
+            testing.tRunner.func1.2({0x1e6d930, 0x1f87780})
+            	/workspace/adamic-tools/go/src/testing/testing.go:2123 +0x232
+            testing.tRunner.func1()
+            	/workspace/adamic-tools/go/src/testing/testing.go:2126 +0x329
+            panic({0x1e6d930?, 0x1f87780?})
+            	/workspace/adamic-tools/go/src/runtime/panic.go:859 +0x125
+            github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getTypeArguments(0x3ce0cdd1ea08, 0x3ce0ce2d8900)
+            	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:22354 +0x3c
+            github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).GetTypeArguments(0x3ce0ce425a80?, 0x3ce0ce2d8900?)
+            	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/exports.go:347 +0x13
+            github.com/system-inc/adamic/internal/lower.(*cycleFinder).graphFlows.func5({0x1f16750, 0x3ce0ce4d44e0}, 0x3ce0ce2d8900)
+            	/workspace/adamic/internal/lower/graph_flow.go:175 +0x2d7
+            github.com/system-inc/adamic/internal/lower.(*cycleFinder).graphFlows.func5({0x1f16730, 0x3ce0ce44e820}, 0x3ce0ce2da180)
+            	/workspace/adamic/internal/lower/graph_flow.go:170 +0x503
+            github.com/system-inc/adamic/internal/lower.(*cycleFinder).graphFlows.func6.func1({0x1edae50?, 0x3ce0ce425840?})
+            	/workspace/adamic/internal/lower/graph_flow.go:190 +0xf7
+            github.com/system-inc/adamic/internal/lower.walkValue({0x1edae50?, 0x3ce0ce425840?, 0x3ce0cdb4bd88?}, 0x3ce0ce086a40)
+            	/workspace/adamic/internal/lower/exceptions.go:360 +0x13f
+            github.com/system-inc/adamic/internal/lower.walkValue({0x1e70618?, 0x3ce0ce1bc4d0?, 0x3ce0cd8446c0?}, 0x3ce0ce086a40)
+            	/workspace/adamic/internal/lower/exceptions.go:348 +0x75
+            github.com/system-inc/adamic/internal/lower.walkValue({0x1dc9ac8?, 0x3ce0cdb4bd88?, 0x48982d?}, 0x3ce0ce086a40)
+            	/workspace/adamic/internal/lower/exceptions.go:352 +0x1b6
+            github.com/system-inc/adamic/internal/lower.walk({0x1dc9ac8?, 0x3ce0cdb4bd88?}, 0xb?)
+            	/workspace/adamic/internal/lower/exceptions.go:336 +0x67
+            github.com/system-inc/adamic/internal/lower.(*cycleFinder).graphFlows.func6(...)
+            	/workspace/adamic/internal/lower/graph_flow.go:187
+            github.com/system-inc/adamic/internal/lower.(*cycleFinder).graphFlows(0x3ce0ce3046c0)
+            	/workspace/adamic/internal/lower/graph_flow.go:253 +0xb38
+            github.com/system-inc/adamic/internal/lower.(*cycleFinder).graphTypes(0x3ce0ce3046c0, {0x3ce0ce235f18, 0x1, 0x48cf53?})
+            	/workspace/adamic/internal/lower/graph_types.go:326 +0x1bd2
+            github.com/system-inc/adamic/internal/lower.TestCyclesCorpusFixture.func1(0x3ce0cda6ea08, {0x3ce0ce235f18, 0x1, 0x1})
+            	/workspace/adamic/internal/lower/cycles_corpus_test.go:260 +0xaf
+            github.com/system-inc/adamic/internal/lower.cyclesProbeLower({0x1f1a7b0?, 0x2008600?}, 0x3ce0cd753140, 0x3ce0ce087f38)
+            	/workspace/adamic/internal/lower/cycles_linear_test.go:81 +0x9af
+            github.com/system-inc/adamic/internal/lower.TestCyclesCorpusFixture(0x3ce0cd948fc8)
+            	/workspace/adamic/internal/lower/cycles_corpus_test.go:257 +0x158
+            testing.tRunner(0x3ce0cd948fc8, 0x1f24f00)
+            	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+            created by testing.(*T).Run in goroutine 1
+            	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+    --- FAIL: TestCyclesCorpus/../oracle/testdata/review/agree/fxspptb_iterators_derived_symbol.a (0.05s)
+        cycles_corpus_test.go:185: exit status 2
+            --- FAIL: TestCyclesCorpusFixture (0.04s)
+            panic: Unhandled case in Node.Text: *ast.ComputedPropertyName [recovered, repanicked]
+            
+            goroutine 8 [running]:
+            testing.tRunner.func1.2({0x1e526d0, 0x18c1e5f1aeb0})
+            	/workspace/adamic-tools/go/src/testing/testing.go:2123 +0x232
+            testing.tRunner.func1()
+            	/workspace/adamic-tools/go/src/testing/testing.go:2126 +0x329
+            panic({0x1e526d0?, 0x18c1e5f1aeb0?})
+            	/workspace/adamic-tools/go/src/runtime/panic.go:859 +0x125
+            github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).Text(0x18c1e53cefc0?)
+            	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:308 +0x42c
+            github.com/system-inc/adamic/internal/lower.(*lowering).checkMemberOverrides(0x18c1e5edaa08, 0x18c1e53cefc0, 0x18c1e5f0f500, 0x18c1e5f0f380, 0x0)
+            	/workspace/adamic/internal/lower/class_inheritance.go:54 +0x17a
+            github.com/system-inc/adamic/internal/lower.(*lowering).checkOverrides(0x18c1e5edaa08, 0x18c1e53cefc0, 0x18c1e5f0f500)
+            	/workspace/adamic/internal/lower/class_inheritance.go:45 +0x4d
+            github.com/system-inc/adamic/internal/lower.(*lowering).refuse.func2(0x18c1e53cefc0)
+            	/workspace/adamic/internal/lower/refusals.go:220 +0xfc5
+            github.com/microsoft/TypeScript/tsc/internal/ast.visitNodes(...)
+            	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:40
+            github.com/microsoft/TypeScript/tsc/internal/ast.visitNodeList(...)
+            	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:49
+            github.com/microsoft/TypeScript/tsc/internal/ast.(*SourceFile).ForEachChild(0x18c1e57e0e08, 0x18c1e5361cd8)
+            	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:2783 +0x9b
+            github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0x18c1e5361c38?, 0x18c1e5361cd8)
+            	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:9002 +0x1ec5
+            github.com/system-inc/adamic/internal/lower.(*lowering).refuse(0x18c1e5edaa08, 0x18c1e57e0e08)
+            	/workspace/adamic/internal/lower/refusals.go:244 +0x595
+            github.com/system-inc/adamic/internal/lower.cyclesProbeLower({0x1f1a7b0?, 0x2008600?}, 0x18c1e54833e0, 0x18c1e5361f38)
+            	/workspace/adamic/internal/lower/cycles_linear_test.go:45 +0x3b1
+            github.com/system-inc/adamic/internal/lower.TestCyclesCorpusFixture(0x18c1e5612fc8)
+            	/workspace/adamic/internal/lower/cycles_corpus_test.go:257 +0x158
+            testing.tRunner(0x18c1e5612fc8, 0x1f24f00)
+            	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+            created by testing.(*T).Run in goroutine 1
+            	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+    --- FAIL: TestCyclesCorpus/../oracle/testdata/review/agree/fxspptb_iterators_override_source.a (0.04s)
+        cycles_corpus_test.go:185: exit status 2
+            --- FAIL: TestCyclesCorpusFixture (0.03s)
+            panic: Unhandled case in Node.Text: *ast.ComputedPropertyName [recovered, repanicked]
+            
+            goroutine 8 [running]:
+            testing.tRunner.func1.2({0x1e526d0, 0x3da19b8c260})
+            	/workspace/adamic-tools/go/src/testing/testing.go:2123 +0x232
+            testing.tRunner.func1()
+            	/workspace/adamic-tools/go/src/testing/testing.go:2126 +0x329
+            panic({0x1e526d0?, 0x3da19b8c260?})
+            	/workspace/adamic-tools/go/src/runtime/panic.go:859 +0x125
+            github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).Text(0x3da18fdddd0?)
+            	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:308 +0x42c
+            github.com/system-inc/adamic/internal/lower.(*lowering).checkMemberOverrides(0x3da19b26a08, 0x3da18fdddd0, 0x3da19b4bc80, 0x3da19b4bb00, 0x0)
+            	/workspace/adamic/internal/lower/class_inheritance.go:54 +0x17a
+            github.com/system-inc/adamic/internal/lower.(*lowering).checkOverrides(0x3da19b26a08, 0x3da18fdddd0, 0x3da19b4bc80)
+            	/workspace/adamic/internal/lower/class_inheritance.go:45 +0x4d
+            github.com/system-inc/adamic/internal/lower.(*lowering).refuse.func2(0x3da18fdddd0)
+            	/workspace/adamic/internal/lower/refusals.go:220 +0xfc5
+            github.com/microsoft/TypeScript/tsc/internal/ast.visitNodes(...)
+            	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:40
+            github.com/microsoft/TypeScript/tsc/internal/ast.visitNodeList(...)
+            	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:49
+            github.com/microsoft/TypeScript/tsc/internal/ast.(*SourceFile).ForEachChild(0x3da19616e08, 0x3da193a7cd8)
+            	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:2783 +0x9b
+            github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0x3da193a7c38?, 0x3da193a7cd8)
+            	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:9002 +0x1ec5
+            github.com/system-inc/adamic/internal/lower.(*lowering).refuse(0x3da19b26a08, 0x3da19616e08)
+            	/workspace/adamic/internal/lower/refusals.go:244 +0x595
+            github.com/system-inc/adamic/internal/lower.cyclesProbeLower({0x1f1a7b0?, 0x2008600?}, 0x3da19488540, 0x3da193a7f38)
+            	/workspace/adamic/internal/lower/cycles_linear_test.go:45 +0x3b1
+            github.com/system-inc/adamic/internal/lower.TestCyclesCorpusFixture(0x3da19286fc8)
+            	/workspace/adamic/internal/lower/cycles_corpus_test.go:257 +0x158
+            testing.tRunner(0x3da19286fc8, 0x1f24f00)
+            	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+            created by testing.(*T).Run in goroutine 1
+            	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+    cycles_corpus_test.go:231: -update requires the complete corpus; do not filter subtests
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	316.435s
+FAIL

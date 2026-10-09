@@ -1,0 +1,17 @@
+panic: native: unsupported initializer declarator adamic_temporary_module_entries_record_alias_a_ddcd6df0207e425d751a647822065b57_85
+
+goroutine 1 [running]:
+github.com/system-inc/adamic/internal/native.initializerLocals({0xe840e930000, 0x7cf7})
+	/workspace/adamic/internal/native/outline.go:143 +0xe59
+github.com/system-inc/adamic/internal/native.(*emitter).outlineInitializers(0xe840f6a26c8, {0xe840f6c8a80, 0x1, 0x16?}, {0x0, 0x0})
+	/workspace/adamic/internal/native/outline.go:214 +0x8e5
+github.com/system-inc/adamic/internal/native.(*emitter).moduleMain(0xe840f6a26c8)
+	/workspace/adamic/internal/native/outline.go:68 +0x765
+github.com/system-inc/adamic/internal/native.cProgram(0xe840eccbc20, 0xffffffffffffffff)
+	/workspace/adamic/internal/native/emit.go:150 +0x1e72
+github.com/system-inc/adamic/internal/native.C(...)
+	/workspace/adamic/internal/native/emit.go:24
+main.run({0xe840e87e280?, 0x1d39d28?, 0xe840e85e1e0?})
+	/workspace/adamic/cmd/adamic/main.go:81 +0x41b
+main.main()
+	/workspace/adamic/cmd/adamic/main.go:33 +0x45

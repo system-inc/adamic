@@ -1,0 +1,52 @@
+Slice 8c2 on runtime/slice-8-on-c2; base 285d7ef9
+
+Four ordered merges, each separately built, vetted, committed and pushed:
+a32c5497 stage1-profiles-refresh 9e062aac: no conflicted files; incoming Linux stage-1 profiles and measurements.
+289ca13c cycles-corpus 1e6140fe: no conflicted files; incoming frozen-answer corpus and subprocess witnesses.
+f4a2d1c4 json-port-runtime 2df6e1a1: no conflicted files; monotonic heap-thread gate and its witnesses.
+dd2ece3e area-take-day 03ed6ebf: integration commits and witnesses, with these per-file conflict resolutions (also recorded in the merge message):
+- internal/lower/lower.go: current producer certification, whole Program-region metadata and ownership-query fields once.
+- internal/native/fields.go: union host error/file/date layouts with string iterator field offsets.
+- internal/oracle/async_test.go: keep accepted string and captured-loop reader probes; add iterable-cell mutant witness.
+- internal/oracle/oracle_test.go: union fixture registrations; historical refusals are positive witnesses.
+- internal/oracle/counts.md: current Linux side; no numbers hand-merged. Full regeneration attempted and failed before writing.
+
+Overlap judgment:
+43eb1e93 already supplies string_state_kinds with the same representation and ownership bitmap as 54694530. Keep that implementation once, including its other retained runtime shapes. Keep the incoming result_shapes[adamic_field_reference] correction and new mutant witness. The current sorted stable shape-name checks already implement 03396bd3; no duplicate implementation was added. Keep the incoming deterministic corpus inventory/dependency changes.
+The rehearsal report was read first. It gives rules but records an unresolved rehearsal, not independent validation of the resulting tree.
+
+Follow-up repair 07dc6cfb (built, vetted and pushed):
+Supply required number/reference field-kind arrays in retained testdata/runtime-statics/shape_types.c and testdata/program_region/core.c. Their registry and Program-region semantics/layout are unchanged. No runtime graph-region or Program-region implementation was removed or rewritten.
+
+Validation (all commands carried outer hard limits):
+source /workspace/adamic-tools/env.sh before Go/native commands.
+Every merge: timeout -k 5 600 go build ./... and timeout -k 5 600 go vet ./...: PASS, individual logs attached.
+Final build and vet after four merges: PASS. Build and vet after the C witness repair: PASS.
+Repository formatting: git ls-files -z '*.go' piped to gofmt -w under a 60-second limit; subsequent gofmt -l output empty.
+Built oracle binary (built under timeout 600), run from internal/oracle under timeout -k 5 90 with -test.timeout=90s:
+  TestAsyncReaderProbes/async_(for_of_string|loop_body_capture): PASS against Node.
+  TestNativeAgreesWithNode/internal/oracle/testdata/async_(iterables_cells_labels|refused): PASS, including all three incoming integration fixtures.
+An initial direct-binary attempt used the wrong working directory; the corrected package-directory runs above are the evidence.
+Built native binary TestSerialSlabsSkipRemoteScans: PASS under a 90-second kill, fixed and two mutants with/without sanitizer.
+Requested gates, each to its own log, outer timeout -k 5 600 (compile time outside the test budget):
+  go test -timeout 90s ./internal/native -run 'Program|Region|Shape|Split': PASS in 10.764s after the C witness repair. Initial metadata failures preserved in native-gate-ready.log.
+  go test -timeout 90s ./internal/oracle -run 'GraphRegion|Async|Cycle': FAIL in 80.598s on split method declarations.
+  go test -timeout 90s ./internal/lower -run 'Cycle|Program|Membership': FAIL at 90.017s, timeout while TestCyclesCorpus traversed stage1 entries.
+  Supplementary same lower selection with -skip '^TestCyclesCorpus$': PASS in 12.462s; the full requested gate remains a timeout.
+
+Linux regeneration and row inventories:
+  timeout -k 5 600 go test -timeout 570s ./internal/oracle -run '^TestCountsAreRecorded$' -args -update-counts: FAIL in 58.62s on split method declarations and an initializer panic; no table written.
+  timeout -k 5 600 go test -timeout 570s ./internal/lower -run '^TestCyclesCorpus$' -args -update: FAIL in 316.435s on three panicking fixtures; generator correctly refused an incomplete corpus and wrote nothing.
+Pinned stage3/api Node types were installed with npm ci --ignore-scripts. Corpus was restarted afterward to use one consistent environment. Ready-environment logs are attached.
+counts.md is byte-identical to 285d7ef9: 1,090 existing fixture row occurrences retained, zero added/moved/removed. Duplicate fixture names are preserved by occurrence in audit.py.
+cycles.json is byte-identical to selected incoming 03ed6ebf: 1,728 entries. Versus initial 1e6140fe: 409 added, 30 moved, zero removed; every row named in corpus-rows.txt. No successful Linux refresh is claimed. corpus-regeneration-rows.txt lists actual differences from the selected integration recording (none).
+Run timeout 30 python3 cloud/reports/slice-8c2/audit.py to reproduce the inventory audit. It rejects any lost existing Linux count occurrence.
+
+Named blockers, reproduced using /tmp/adamic-gate/slice8-fixed-adamic, the built accepted pre-8c2 compiler containing a17e41a5 (all relevant compiler code and fixtures unchanged since 285d7ef9):
+1. async_methods.a counted build: conflicting declaration adamic_method_async_methods_a_Worker_work_771fdf0e0a64745c66e078ad537670ab. Also causes graph-region count and oracle failures. baseline-method-repro.log.
+2. entries_record_alias.a C emission: unsupported initializer declarator adamic_temporary_module_entries_record_alias_a_ddcd6df0207e425d751a647822065b57_85. baseline-initializer-repro.log.
+3. program_region/tsc_node_membership.a C emission: nil dereference in checker.GetTypeArguments via graphFlows. baseline-membership.log.
+4. review/agree/fxspptb_iterators_derived_symbol.a and fxspptb_iterators_override_source.a C emission: Node.Text on ComputedPropertyName in checkMemberOverrides. baseline-derived.log and baseline-override.log.
+All five baseline repro commands used timeout -k 5 90. These failures existed before the four 8c2 merges. Raw compiler/test logs retain their original diagnostic whitespace.
+
+Choice made without asking: retain existing recordings and all Linux rows; leave inherited compiler blockers for their owners rather than silently record panics or omit fixtures. Stop with these named blockers after pushing the four merges, the witness repair, and evidence. Counts/corpus regeneration and passing lower/oracle gates remain outstanding. No full test suite, main-branch baseline, profile remeasurement, or PR was performed.

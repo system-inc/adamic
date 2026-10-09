@@ -1,0 +1,101 @@
+--- FAIL: TestRuntimeStaticsProtectionMutantsShapeTypesRegistry (4.83s)
+    runtime_statics_parallel_test.go:72: fixture and mutant must compile: exit status 1
+        testdata/runtime-statics/shape_types.c:7:29: error: missing field 'kinds' initializer [-Werror,-Wmissing-field-initializers]
+            7 |  {1, names, references, NULL}, {1, names, references, NULL}, {1, names, references, NULL}, {1, names, references, NULL},
+              |                             ^
+        testdata/runtime-statics/shape_types.c:7:59: error: missing field 'kinds' initializer [-Werror,-Wmissing-field-initializers]
+            7 |  {1, names, references, NULL}, {1, names, references, NULL}, {1, names, references, NULL}, {1, names, references, NULL},
+              |                                                           ^
+        testdata/runtime-statics/shape_types.c:7:89: error: missing field 'kinds' initializer [-Werror,-Wmissing-field-initializers]
+            7 |  {1, names, references, NULL}, {1, names, references, NULL}, {1, names, references, NULL}, {1, names, references, NULL},
+              |                                                                                         ^
+        testdata/runtime-statics/shape_types.c:7:119: error: missing field 'kinds' initializer [-Werror,-Wmissing-field-initializers]
+            7 |  {1, names, references, NULL}, {1, names, references, NULL}, {1, names, references, NULL}, {1, names, references, NULL},
+              |                                                                                                                       ^
+        testdata/runtime-statics/shape_types.c:8:29: error: missing field 'kinds' initializer [-Werror,-Wmissing-field-initializers]
+            8 |  {1, names, references, NULL}, {1, names, references, NULL}, {1, names, references, NULL}, {1, names, references, NULL},
+              |                             ^
+        testdata/runtime-statics/shape_types.c:8:59: error: missing field 'kinds' initializer [-Werror,-Wmissing-field-initializers]
+            8 |  {1, names, references, NULL}, {1, names, references, NULL}, {1, names, references, NULL}, {1, names, references, NULL},
+              |                                                           ^
+        testdata/runtime-statics/shape_types.c:8:89: error: missing field 'kinds' initializer [-Werror,-Wmissing-field-initializers]
+            8 |  {1, names, references, NULL}, {1, names, references, NULL}, {1, names, references, NULL}, {1, names, references, NULL},
+              |                                                                                         ^
+        testdata/runtime-statics/shape_types.c:8:119: error: missing field 'kinds' initializer [-Werror,-Wmissing-field-initializers]
+            8 |  {1, names, references, NULL}, {1, names, references, NULL}, {1, names, references, NULL}, {1, names, references, NULL},
+              |                                                                                                                       ^
+        8 errors generated.
+--- FAIL: TestProgramRegionCoreASan (0.10s)
+    program_region_core_test.go:64: native: clang failed: exit status 1
+        /tmp/adamic-gate/adamic-build-980400668/main.c:9:62: error: missing field 'kinds' initializer [-Werror,-Wmissing-field-initializers]
+            9 | static const adamic_shape shape = {4, names, references, NULL};
+              |                                                              ^
+        /tmp/adamic-gate/adamic-build-980400668/main.c:12:77: error: missing field 'kinds' initializer [-Werror,-Wmissing-field-initializers]
+           12 | static const adamic_shape leaf_shape = {1, leaf_names, leaf_references, NULL};
+              |                                                                             ^
+        2 errors generated.
+        
+--- FAIL: TestProgramRegionCoreASanSlabs (0.08s)
+    program_region_core_test.go:65: native: clang failed: exit status 1
+        /tmp/adamic-gate/adamic-build-2482320036/main.c:9:62: error: missing field 'kinds' initializer [-Werror,-Wmissing-field-initializers]
+            9 | static const adamic_shape shape = {4, names, references, NULL};
+              |                                                              ^
+        /tmp/adamic-gate/adamic-build-2482320036/main.c:12:77: error: missing field 'kinds' initializer [-Werror,-Wmissing-field-initializers]
+           12 | static const adamic_shape leaf_shape = {1, leaf_names, leaf_references, NULL};
+              |                                                                             ^
+        2 errors generated.
+        
+--- FAIL: TestProgramRegionCoreCounted (0.08s)
+    program_region_core_test.go:66: native: clang failed: exit status 1
+        /tmp/adamic-gate/adamic-build-3192718805/main.c:9:62: error: missing field 'kinds' initializer [-Werror,-Wmissing-field-initializers]
+            9 | static const adamic_shape shape = {4, names, references, NULL};
+              |                                                              ^
+        /tmp/adamic-gate/adamic-build-3192718805/main.c:12:77: error: missing field 'kinds' initializer [-Werror,-Wmissing-field-initializers]
+           12 | static const adamic_shape leaf_shape = {1, leaf_names, leaf_references, NULL};
+              |                                                                             ^
+        2 errors generated.
+        
+--- FAIL: TestProgramRegionCoreMutants (26.98s)
+    --- FAIL: TestProgramRegionCoreMutants/member-release-frees (0.07s)
+        program_region_core_test.go:254: mutant must compile: exit status 1
+            /tmp/adamic-gate/TestProgramRegionCoreMutantsmember-release-frees458461326/002/mutant.c:9:62: error: missing field 'kinds' initializer [-Werror,-Wmissing-field-initializers]
+                9 | static const adamic_shape shape = {4, names, references, NULL};
+                  |                                                              ^
+            /tmp/adamic-gate/TestProgramRegionCoreMutantsmember-release-frees458461326/002/mutant.c:12:77: error: missing field 'kinds' initializer [-Werror,-Wmissing-field-initializers]
+               12 | static const adamic_shape leaf_shape = {1, leaf_names, leaf_references, NULL};
+                  |                                                                             ^
+            2 errors generated.
+            
+    --- FAIL: TestProgramRegionCoreMutants/weak-not-forgotten (7.02s)
+        program_region_core_test.go:254: mutant must compile: exit status 1
+            /tmp/adamic-gate/TestProgramRegionCoreMutantsweak-not-forgotten128203495/002/mutant.c:9:62: error: missing field 'kinds' initializer [-Werror,-Wmissing-field-initializers]
+                9 | static const adamic_shape shape = {4, names, references, NULL};
+                  |                                                              ^
+            /tmp/adamic-gate/TestProgramRegionCoreMutantsweak-not-forgotten128203495/002/mutant.c:12:77: error: missing field 'kinds' initializer [-Werror,-Wmissing-field-initializers]
+               12 | static const adamic_shape leaf_shape = {1, leaf_names, leaf_references, NULL};
+                  |                                                                             ^
+            2 errors generated.
+            
+    --- FAIL: TestProgramRegionCoreMutants/cell-weak-not-forgotten (7.22s)
+        program_region_core_test.go:254: mutant must compile: exit status 1
+            /tmp/adamic-gate/TestProgramRegionCoreMutantscell-weak-not-forgotten2838166999/002/mutant.c:9:62: error: missing field 'kinds' initializer [-Werror,-Wmissing-field-initializers]
+                9 | static const adamic_shape shape = {4, names, references, NULL};
+                  |                                                              ^
+            /tmp/adamic-gate/TestProgramRegionCoreMutantscell-weak-not-forgotten2838166999/002/mutant.c:12:77: error: missing field 'kinds' initializer [-Werror,-Wmissing-field-initializers]
+               12 | static const adamic_shape leaf_shape = {1, leaf_names, leaf_references, NULL};
+                  |                                                                             ^
+            2 errors generated.
+            
+    --- FAIL: TestProgramRegionCoreMutants/short-adoption (12.67s)
+        program_region_core_test.go:254: mutant must compile: exit status 1
+            /tmp/adamic-gate/TestProgramRegionCoreMutantsshort-adoption2984286268/002/mutant.c:9:62: error: missing field 'kinds' initializer [-Werror,-Wmissing-field-initializers]
+                9 | static const adamic_shape shape = {4, names, references, NULL};
+                  |                                                              ^
+            /tmp/adamic-gate/TestProgramRegionCoreMutantsshort-adoption2984286268/002/mutant.c:12:77: error: missing field 'kinds' initializer [-Werror,-Wmissing-field-initializers]
+               12 | static const adamic_shape leaf_shape = {1, leaf_names, leaf_references, NULL};
+                  |                                                                             ^
+            2 errors generated.
+            
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	38.603s
+FAIL
