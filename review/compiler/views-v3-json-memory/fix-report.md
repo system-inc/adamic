@@ -29,3 +29,11 @@ The 23 checked-array fixtures pass in the sanitized native backend, release nati
 Toolchain setup and nproc evidence are in the preceding measurement report: setup 118.149 seconds, nproc 5, CPU quota four, memory limit 16 GiB. This fix reused that installed toolchain. The complete measured clang command is in evidence/fix-clang.rss. No runtime file or cohere source was copied or edited.
 
 The required integration lane command runs after committing this fix. Its output is recorded separately under this review directory and included in the delivery reply.
+
+The additional existing full-port control `GOMAXPROCS=4 go test ./stage1/cohere/json -run '^TestSingleFileStdoutDriver$' -count=1 -v` passed in 13.33 seconds. It compiles the complete fixed JSON translation unit under sanitizers and matches both small file-driver outputs to Node and Go cohere. Its log is retained.
+
+Committed-tip lane output:
+
+```text
+lane checks 1.7 s: gofmt and tools on 48 Go files, t.Parallel on 7 test packages; no t.Parallel analyzer on this tree; vet 7 packages
+```
