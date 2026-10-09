@@ -34,7 +34,7 @@ type dotARenameProducts struct {
 
 func dotARenameInputs(t *testing.T, name string, flags []string) buildcache.Inputs {
 	t.Helper()
-	files := []string{"internal", "bridge", "stage1/typescript", "cohere/TypeScript/tsc", "cohere/TypeScript-shim", "go.mod", "go.sum", "stage1/cohere/lint/dot_a_rename_split_test.go"}
+	files := []string{"internal", "bridge", "stage1/typescript", "cohere/TypeScript/tsc", "cohere/TypeScript-shim", "go.mod", "go.work", "cohere/go.mod", "cohere/go.sum", "stage1/cohere/lint/dot_a_rename_split_test.go"}
 	for _, path := range portFiles(t) {
 		files = append(files, filepath.ToSlash(filepath.Join("stage1/cohere/lint", path)))
 	}
