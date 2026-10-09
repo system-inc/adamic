@@ -1,0 +1,20 @@
+[
+  [
+    "D1",
+    "stage1/cohere/markdownblocks/codeblocks.ts",
+    "const metadata = frame.metadata === '' ? '' : ` ${frame.metadata}`;",
+    "const metadata = '';"
+  ],
+  [
+    "D2",
+    "stage1/cohere/markdownblocks/htmlblocks.ts",
+    "value.length >= 7",
+    "value.length >= 9"
+  ],
+  [
+    "D3",
+    "stage1/cohere/markdownblocks/root.ts",
+    "source.slice(child.endOffset, last.startOffset)",
+    "source.slice(child.endOffset + 1, last.startOffset)"
+  ]
+]

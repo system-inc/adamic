@@ -1,0 +1,38 @@
+[
+  {
+    "mutant": "D1",
+    "command": [
+      "git",
+      "apply",
+      "--check",
+      "review/test-defend/stage1-cohere-markdownblocks-leaf_composition_products/D1.diff"
+    ],
+    "exit": 0,
+    "output": "",
+    "compile_validation": "D1-target.log: nativeTask.await returned before source Node comparison, or complete PASS for D2; each used its own cache."
+  },
+  {
+    "mutant": "D2",
+    "command": [
+      "git",
+      "apply",
+      "--check",
+      "review/test-defend/stage1-cohere-markdownblocks-leaf_composition_products/D2.diff"
+    ],
+    "exit": 0,
+    "output": "",
+    "compile_validation": "D2-target.log: nativeTask.await returned before source Node comparison, or complete PASS for D2; each used its own cache."
+  },
+  {
+    "mutant": "D3",
+    "command": [
+      "git",
+      "apply",
+      "--check",
+      "review/test-defend/stage1-cohere-markdownblocks-leaf_composition_products/D3.diff"
+    ],
+    "exit": 0,
+    "output": "",
+    "compile_validation": "D3-target.log: nativeTask.await returned before source Node comparison, or complete PASS for D2; each used its own cache."
+  }
+]

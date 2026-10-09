@@ -1,0 +1,13 @@
+diff --git a/stage1/cohere/markdownblocks/htmlblocks.ts b/stage1/cohere/markdownblocks/htmlblocks.ts
+index e774ea21..2378fe95 100644
+--- a/stage1/cohere/markdownblocks/htmlblocks.ts
++++ b/stage1/cohere/markdownblocks/htmlblocks.ts
+@@ -31,7 +31,7 @@ export function printHTMLBlock(arena: DocumentArena, frame: HTMLBlockInterface):
+         while(end > 0 && space(value.charCodeAt(end - 1))) end--;
+         value = value.slice(0, end);
+     }
+-    const comment = value.length >= 7 && value.startsWith('<!--') && value.endsWith('-->');
++    const comment = value.length >= 9 && value.startsWith('<!--') && value.endsWith('-->');
+     const literal = arena.concat([arena.add('h', '', 0, [], 6), arena.add('p', '', 0, [])]);
+     const replacement = comment ? arena.hardline() : arena.add('r', '', 0, [literal]);
+     const parts: number[] = [];

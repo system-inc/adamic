@@ -1,0 +1,109 @@
+[
+  {
+    "test": "TestMarkdownListLayout family",
+    "package": "stage1/cohere/markdownblocks",
+    "file": "stage1/cohere/markdownblocks/list_layout_shards_test.go:155",
+    "members": [
+      "TestMarkdownListLayoutUnion",
+      "TestMarkdownListLayout_000",
+      "TestMarkdownListLayout_001",
+      "TestMarkdownListLayout_002",
+      "TestMarkdownListLayout_003",
+      "TestMarkdownListLayout_004",
+      "TestMarkdownListLayout_005",
+      "TestMarkdownListLayout_006",
+      "TestMarkdownListLayout_007",
+      "TestMarkdownListLayout_008",
+      "TestMarkdownListLayout_009",
+      "TestMarkdownListLayout_010",
+      "TestMarkdownListLayout_011",
+      "TestMarkdownListLayout_012",
+      "TestMarkdownListLayout_013",
+      "TestMarkdownListLayout_014",
+      "TestMarkdownListLayout_015"
+    ],
+    "seconds": 14.603,
+    "oracle": "Independent Go cohere bytes and retained fork Node results; self requirements for build success, exit status, framing, and built-in mutant difference. Full semantic bytes are checked; leak checks use status only.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M1",
+      "M2",
+      "M3"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M3 list_layout_shards_test.go:698: source Node lists output byte 80 in generated/list/10./nnnn",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestMarkdownLayout family"
+    ],
+    "mutants_in_matrix": 3,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": 66.328,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestMarkdownListLayout family",
+      "TestMarkdownLayout family",
+      "TestMdastMalformedEvents family"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run '^(TestMarkdownListLayout(Union|_00[0-9]|_01[0-5]))$'; M3-list-family.log: list_layout_shards_test.go:698: source Node lists output byte 80 in generated/list/10./nnnn",
+    "probe_passing_members": [
+      "TestMarkdownListLayoutUnion"
+    ],
+    "vacuous_subcases": [],
+    "witness_experiment": "W2",
+    "subsumption_basis": 3
+  },
+  {
+    "test": "TestMarkdownLayout family",
+    "package": "stage1/cohere/markdownblocks",
+    "file": "stage1/cohere/markdownblocks/lists_test.go:46",
+    "members": [
+      "TestMarkdownCodeBlockLayout",
+      "TestMarkdownHTMLBlockLayout",
+      "TestMarkdownRootLayout"
+    ],
+    "seconds": 66.328,
+    "oracle": "Independent Go cohere bytes and retained fork Node results; self requirements for build success, exit status, framing, and built-in mutant difference. Full semantic bytes are checked; leak checks use status only.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M1",
+      "M2",
+      "M3"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M3 lists_test.go:342: source Node lists output byte 64841 in stage1/cohere/markdownblocks/GAPS.md",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestMarkdownListLayout family"
+    ],
+    "mutants_in_matrix": 3,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": 14.603,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestMarkdownListLayout family",
+      "TestMarkdownLayout family",
+      "TestMdastMalformedEvents family"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run '^(TestMarkdownCodeBlockLayout|TestMarkdownHTMLBlockLayout|TestMarkdownRootLayout)$'; M3-block-layouts.log: lists_test.go:342: source Node lists output byte 64841 in stage1/cohere/markdownblocks/GAPS.md",
+    "probe_passing_members": [],
+    "vacuous_subcases": [
+      "generated/root/edge/",
+      "generated/root/edge/ \n"
+    ],
+    "witness_experiment": "W1",
+    "subsumption_basis": 3
+  }
+]

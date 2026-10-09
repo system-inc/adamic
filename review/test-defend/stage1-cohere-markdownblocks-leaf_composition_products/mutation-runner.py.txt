@@ -1,0 +1,20 @@
+from pathlib import Path
+import subprocess,json,time,os
+p=Path('/workspace/adamic/review/test-defend/stage1-cohere-markdownblocks-leaf_composition_products')
+plans=json.loads((p/'planned-mutants.json').read_text())
+results=[]
+for id,file,old,new in plans:
+ f=Path('/workspace/adamic')/file; original=f.read_text(); assert original.count(old)==1
+ f.write_text(original.replace(old,new,1))
+ try:
+  diff=subprocess.check_output(['git','diff','--',file],text=True)
+  (p/f'{id}.diff').write_text(diff)
+  env=os.environ.copy();env['ADAMIC_BUILD_CACHE_DIR']=f'/tmp/defend-markdown/cache/{id}'
+  for label,regex in [('target','^(TestMarkdownCodeBlockLayout|TestMarkdownHTMLBlockLayout|TestMarkdownRootLayout)$'),('subsumer','^TestMarkdownListLayout_(00[0-9]|01[0-5])$')]:
+   cmd=['timeout','120','go','test','-json','-count=1','-timeout','90s','./stage1/cohere/markdownblocks/','-run',regex]
+   start=time.monotonic()
+   with (p/f'{id}-{label}.log').open('w') as log:rc=subprocess.run(cmd,env=env,stdout=log,stderr=subprocess.STDOUT).returncode
+   results.append(dict(mutant=id,label=label,command=cmd,cache=env['ADAMIC_BUILD_CACHE_DIR'],exit=rc,wall=time.monotonic()-start))
+   (p/'matrix-runs.json').write_text(json.dumps(results,indent=2))
+ finally:
+  f.write_text(original)

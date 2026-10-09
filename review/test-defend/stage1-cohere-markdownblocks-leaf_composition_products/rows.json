@@ -1,0 +1,41 @@
+[
+  {
+    "test": "TestMarkdownLayout family",
+    "package": "stage1/cohere/markdownblocks",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestMarkdownListLayout family"
+    ],
+    "defense": "not defended",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "stage1/cohere/markdownblocks/codeblocks.ts:34",
+        "change": "replace metadata expression with empty string",
+        "rows_failed": [
+          "TestMarkdownLayout family",
+          "TestMarkdownListLayout family"
+        ]
+      },
+      {
+        "mutant": "D2",
+        "file_line": "stage1/cohere/markdownblocks/htmlblocks.ts:34",
+        "change": "value.length >= 7 -> value.length >= 9",
+        "rows_failed": []
+      },
+      {
+        "mutant": "D3",
+        "file_line": "stage1/cohere/markdownblocks/root.ts:76",
+        "change": "source.slice(child.endOffset, last.startOffset) -> source.slice(child.endOffset + 1, last.startOffset)",
+        "rows_failed": [
+          "TestMarkdownLayout family",
+          "TestMarkdownListLayout family"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-markdown/cache/D3 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run '^(TestMarkdownCodeBlockLayout|TestMarkdownHTMLBlockLayout|TestMarkdownRootLayout)$' > D3-target.log 2>&1; lists_test.go:342: source Node lists output byte 181927 in generated/root/ignore/range/before; D3-subsumer.log: list_layout_shards_test.go:698: source Node lists output byte 7464 in generated/root/ignore/range/before.",
+    "bounded": true,
+    "scope": "Completed three target members and all 16 list shards per attempt; expanded 135-row replay results are separate and deadline-bounded."
+  }
+]

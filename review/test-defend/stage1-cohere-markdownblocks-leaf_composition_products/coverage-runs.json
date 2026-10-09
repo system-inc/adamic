@@ -1,0 +1,42 @@
+[
+  {
+    "label": "target",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=./internal/lower",
+      "-coverprofile=review/test-defend/stage1-cohere-markdownblocks-leaf_composition_products/coverage-target.out",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^(TestMarkdownCodeBlockLayout|TestMarkdownHTMLBlockLayout|TestMarkdownRootLayout)$"
+    ],
+    "exit": 0,
+    "wall": 74.72472462299993
+  },
+  {
+    "label": "subsumer",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=./internal/lower",
+      "-coverprofile=review/test-defend/stage1-cohere-markdownblocks-leaf_composition_products/coverage-subsumer.out",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^TestMarkdownListLayout_(00[0-9]|01[0-5])$"
+    ],
+    "exit": 0,
+    "wall": 44.960471577000135
+  }
+]

@@ -1,0 +1,122 @@
+[
+  {
+    "mutant": "D1",
+    "label": "target",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^(TestMarkdownCodeBlockLayout|TestMarkdownHTMLBlockLayout|TestMarkdownRootLayout)$"
+    ],
+    "cache": "/tmp/defend-markdown/cache/D1",
+    "exit": 1,
+    "wall": 69.77994689200204
+  },
+  {
+    "mutant": "D1",
+    "label": "subsumer",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^TestMarkdownListLayout_(00[0-9]|01[0-5])$"
+    ],
+    "cache": "/tmp/defend-markdown/cache/D1",
+    "exit": 1,
+    "wall": 81.53015610500006
+  },
+  {
+    "mutant": "D2",
+    "label": "target",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^(TestMarkdownCodeBlockLayout|TestMarkdownHTMLBlockLayout|TestMarkdownRootLayout)$"
+    ],
+    "cache": "/tmp/defend-markdown/cache/D2",
+    "exit": 0,
+    "wall": 64.39440666500013
+  },
+  {
+    "mutant": "D2",
+    "label": "subsumer",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^TestMarkdownListLayout_(00[0-9]|01[0-5])$"
+    ],
+    "cache": "/tmp/defend-markdown/cache/D2",
+    "exit": 0,
+    "wall": 73.0113243320011
+  },
+  {
+    "mutant": "D3",
+    "label": "target",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^(TestMarkdownCodeBlockLayout|TestMarkdownHTMLBlockLayout|TestMarkdownRootLayout)$"
+    ],
+    "cache": "/tmp/defend-markdown/cache/D3",
+    "exit": 1,
+    "wall": 60.14698476999911
+  },
+  {
+    "mutant": "D3",
+    "label": "subsumer",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^TestMarkdownListLayout_(00[0-9]|01[0-5])$"
+    ],
+    "cache": "/tmp/defend-markdown/cache/D3",
+    "exit": 1,
+    "wall": 69.92290542599949
+  }
+]

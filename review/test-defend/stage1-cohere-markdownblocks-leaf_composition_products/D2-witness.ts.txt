@@ -1,0 +1,5 @@
+import { DocumentArena, printDocument } from '/workspace/adamic/stage1/cohere/markdownblocks/document.ts';
+import { printHTMLBlock } from '/tmp/markdown-D2-mutant.ts';
+const arena = new DocumentArena();
+const doc = arena.align('> ', arena.concat([arena.text('> '), printHTMLBlock(arena, {value:'<!--\n-->',rootLast:false})]));
+console.log(JSON.stringify(printDocument(arena, doc, 120, 4)));
