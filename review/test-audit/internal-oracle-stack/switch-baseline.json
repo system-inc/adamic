@@ -1,0 +1,627 @@
+{
+  "id": "M00",
+  "exit": 0,
+  "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestLongArgumentsLeaveTheStackItsLimit|TestSmallStacksStillPanic|TestNativeAgreesWithNode)$/^(arguments|arguments_alone|environment|1024_KiB|512_KiB|256_KiB|internal)$/^oracle$/^testdata$/^stack_overflow[.]a$",
+  "selector_value": "0",
+  "environment": {
+    "ADAMIC_GATE_UNCACHED": "1",
+    "ADAMIC_BUILD_CACHE_DIR": "/tmp/u069/cache/M00"
+  },
+  "wall_seconds": 16.05803098100023,
+  "kills": [],
+  "events": [
+    {
+      "Time": "2026-10-09T11:18:16.730250636Z",
+      "Action": "start",
+      "Package": "github.com/system-inc/adamic/internal/oracle"
+    },
+    {
+      "Time": "2026-10-09T11:18:16.740103919Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestNativeAgreesWithNode"
+    },
+    {
+      "Time": "2026-10-09T11:18:16.74025744Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestNativeAgreesWithNode",
+      "Output": "=== RUN   TestNativeAgreesWithNode\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:18:16.740308516Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestNativeAgreesWithNode",
+      "Output": "=== PAUSE TestNativeAgreesWithNode\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:18:16.740311891Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestNativeAgreesWithNode"
+    },
+    {
+      "Time": "2026-10-09T11:18:16.740321296Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestLongArgumentsLeaveTheStackItsLimit"
+    },
+    {
+      "Time": "2026-10-09T11:18:16.740326023Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestLongArgumentsLeaveTheStackItsLimit",
+      "Output": "=== RUN   TestLongArgumentsLeaveTheStackItsLimit\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:18:16.740329878Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestLongArgumentsLeaveTheStackItsLimit",
+      "Output": "=== PAUSE TestLongArgumentsLeaveTheStackItsLimit\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:18:16.740332472Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestLongArgumentsLeaveTheStackItsLimit"
+    },
+    {
+      "Time": "2026-10-09T11:18:16.740335978Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestSmallStacksStillPanic"
+    },
+    {
+      "Time": "2026-10-09T11:18:16.740338642Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestSmallStacksStillPanic",
+      "Output": "=== RUN   TestSmallStacksStillPanic\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:18:16.740340665Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestSmallStacksStillPanic",
+      "Output": "=== PAUSE TestSmallStacksStillPanic\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:18:16.740342337Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestSmallStacksStillPanic"
+    },
+    {
+      "Time": "2026-10-09T11:18:16.74034432Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestNativeAgreesWithNode"
+    },
+    {
+      "Time": "2026-10-09T11:18:16.740345742Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestNativeAgreesWithNode",
+      "Output": "=== CONT  TestNativeAgreesWithNode\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:18:16.740347916Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestSmallStacksStillPanic"
+    },
+    {
+      "Time": "2026-10-09T11:18:16.740349548Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestSmallStacksStillPanic",
+      "Output": "=== CONT  TestSmallStacksStillPanic\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:18:16.741343203Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestLongArgumentsLeaveTheStackItsLimit"
+    },
+    {
+      "Time": "2026-10-09T11:18:16.74135439Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestLongArgumentsLeaveTheStackItsLimit",
+      "Output": "=== CONT  TestLongArgumentsLeaveTheStackItsLimit\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:18:16.742261584Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestSmallStacksStillPanic/1024_KiB"
+    },
+    {
+      "Time": "2026-10-09T11:18:16.742273903Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestSmallStacksStillPanic/1024_KiB",
+      "Output": "=== RUN   TestSmallStacksStillPanic/1024_KiB\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:18:16.742284509Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestSmallStacksStillPanic/1024_KiB",
+      "Output": "=== PAUSE TestSmallStacksStillPanic/1024_KiB\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:18:16.742299261Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestSmallStacksStillPanic/1024_KiB"
+    },
+    {
+      "Time": "2026-10-09T11:18:16.742316858Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestSmallStacksStillPanic/512_KiB"
+    },
+    {
+      "Time": "2026-10-09T11:18:16.742319522Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestSmallStacksStillPanic/512_KiB",
+      "Output": "=== RUN   TestSmallStacksStillPanic/512_KiB\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:18:16.74232499Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestSmallStacksStillPanic/512_KiB",
+      "Output": "=== PAUSE TestSmallStacksStillPanic/512_KiB\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:18:16.742327584Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestSmallStacksStillPanic/512_KiB"
+    },
+    {
+      "Time": "2026-10-09T11:18:16.743606247Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestLongArgumentsLeaveTheStackItsLimit/arguments"
+    },
+    {
+      "Time": "2026-10-09T11:18:16.743620198Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestLongArgumentsLeaveTheStackItsLimit/arguments",
+      "Output": "=== RUN   TestLongArgumentsLeaveTheStackItsLimit/arguments\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:18:16.743628741Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestLongArgumentsLeaveTheStackItsLimit/arguments",
+      "Output": "=== PAUSE TestLongArgumentsLeaveTheStackItsLimit/arguments\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:18:16.743631696Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestLongArgumentsLeaveTheStackItsLimit/arguments"
+    },
+    {
+      "Time": "2026-10-09T11:18:16.743716553Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestSmallStacksStillPanic/256_KiB"
+    },
+    {
+      "Time": "2026-10-09T11:18:16.743721601Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestSmallStacksStillPanic/256_KiB",
+      "Output": "=== RUN   TestSmallStacksStillPanic/256_KiB\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:18:16.74386046Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestSmallStacksStillPanic/256_KiB",
+      "Output": "=== PAUSE TestSmallStacksStillPanic/256_KiB\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:18:16.743867851Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestSmallStacksStillPanic/256_KiB"
+    },
+    {
+      "Time": "2026-10-09T11:18:16.743882853Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestSmallStacksStillPanic/1024_KiB"
+    },
+    {
+      "Time": "2026-10-09T11:18:16.743886419Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestSmallStacksStillPanic/1024_KiB",
+      "Output": "=== CONT  TestSmallStacksStillPanic/1024_KiB\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:18:16.743985798Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestSmallStacksStillPanic/256_KiB"
+    },
+    {
+      "Time": "2026-10-09T11:18:16.743990215Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestSmallStacksStillPanic/256_KiB",
+      "Output": "=== CONT  TestSmallStacksStillPanic/256_KiB\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:18:16.744192569Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestSmallStacksStillPanic/512_KiB"
+    },
+    {
+      "Time": "2026-10-09T11:18:16.744200421Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestSmallStacksStillPanic/512_KiB",
+      "Output": "=== CONT  TestSmallStacksStillPanic/512_KiB\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:18:16.745851495Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestLongArgumentsLeaveTheStackItsLimit/arguments_alone"
+    },
+    {
+      "Time": "2026-10-09T11:18:16.745870213Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestLongArgumentsLeaveTheStackItsLimit/arguments_alone",
+      "Output": "=== RUN   TestLongArgumentsLeaveTheStackItsLimit/arguments_alone\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:18:16.745875451Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestLongArgumentsLeaveTheStackItsLimit/arguments_alone",
+      "Output": "=== PAUSE TestLongArgumentsLeaveTheStackItsLimit/arguments_alone\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:18:16.745877404Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestLongArgumentsLeaveTheStackItsLimit/arguments_alone"
+    },
+    {
+      "Time": "2026-10-09T11:18:16.745879808Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestLongArgumentsLeaveTheStackItsLimit/environment"
+    },
+    {
+      "Time": "2026-10-09T11:18:16.7458815Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestLongArgumentsLeaveTheStackItsLimit/environment",
+      "Output": "=== RUN   TestLongArgumentsLeaveTheStackItsLimit/environment\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:18:16.745884024Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestLongArgumentsLeaveTheStackItsLimit/environment",
+      "Output": "=== PAUSE TestLongArgumentsLeaveTheStackItsLimit/environment\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:18:16.745885797Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestLongArgumentsLeaveTheStackItsLimit/environment"
+    },
+    {
+      "Time": "2026-10-09T11:18:16.74588789Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestLongArgumentsLeaveTheStackItsLimit/arguments"
+    },
+    {
+      "Time": "2026-10-09T11:18:16.745889522Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestLongArgumentsLeaveTheStackItsLimit/arguments",
+      "Output": "=== CONT  TestLongArgumentsLeaveTheStackItsLimit/arguments\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:18:16.759446187Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestNativeAgreesWithNode/internal/oracle/testdata/stack_overflow.a"
+    },
+    {
+      "Time": "2026-10-09T11:18:16.759499076Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestNativeAgreesWithNode/internal/oracle/testdata/stack_overflow.a",
+      "Output": "=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/stack_overflow.a\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:18:16.75951465Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestNativeAgreesWithNode/internal/oracle/testdata/stack_overflow.a",
+      "Output": "=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/stack_overflow.a\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:18:16.759516933Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestNativeAgreesWithNode/internal/oracle/testdata/stack_overflow.a"
+    },
+    {
+      "Time": "2026-10-09T11:18:16.802632374Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestLongArgumentsLeaveTheStackItsLimit/arguments_alone"
+    },
+    {
+      "Time": "2026-10-09T11:18:16.802678844Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestLongArgumentsLeaveTheStackItsLimit/arguments_alone",
+      "Output": "=== CONT  TestLongArgumentsLeaveTheStackItsLimit/arguments_alone\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:18:29.733359237Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestSmallStacksStillPanic/256_KiB",
+      "Output": "--- PASS: TestSmallStacksStillPanic/256_KiB (12.99s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:18:29.733452808Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestSmallStacksStillPanic/256_KiB",
+      "Elapsed": 12.99
+    },
+    {
+      "Time": "2026-10-09T11:18:29.733480069Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestLongArgumentsLeaveTheStackItsLimit/environment"
+    },
+    {
+      "Time": "2026-10-09T11:18:29.733490064Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestLongArgumentsLeaveTheStackItsLimit/environment",
+      "Output": "=== CONT  TestLongArgumentsLeaveTheStackItsLimit/environment\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:18:29.822078994Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestSmallStacksStillPanic/512_KiB",
+      "Output": "--- PASS: TestSmallStacksStillPanic/512_KiB (13.08s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:18:29.822145234Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestSmallStacksStillPanic/512_KiB",
+      "Elapsed": 13.08
+    },
+    {
+      "Time": "2026-10-09T11:18:29.822151433Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestNativeAgreesWithNode/internal/oracle/testdata/stack_overflow.a"
+    },
+    {
+      "Time": "2026-10-09T11:18:29.822154307Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestNativeAgreesWithNode/internal/oracle/testdata/stack_overflow.a",
+      "Output": "=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/stack_overflow.a\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:18:29.945048768Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestSmallStacksStillPanic/1024_KiB",
+      "Output": "--- PASS: TestSmallStacksStillPanic/1024_KiB (13.20s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:18:29.945140867Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestSmallStacksStillPanic/1024_KiB",
+      "Elapsed": 13.2
+    },
+    {
+      "Time": "2026-10-09T11:18:29.945147577Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestSmallStacksStillPanic",
+      "Output": "--- PASS: TestSmallStacksStillPanic (0.00s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:18:29.960798902Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestSmallStacksStillPanic",
+      "Elapsed": 0
+    },
+    {
+      "Time": "2026-10-09T11:18:29.960838952Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestLongArgumentsLeaveTheStackItsLimit/arguments_alone",
+      "Output": "--- PASS: TestLongArgumentsLeaveTheStackItsLimit/arguments_alone (13.16s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:18:29.979388937Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestLongArgumentsLeaveTheStackItsLimit/arguments_alone",
+      "Elapsed": 13.16
+    },
+    {
+      "Time": "2026-10-09T11:18:29.979438642Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestLongArgumentsLeaveTheStackItsLimit/arguments",
+      "Output": "--- PASS: TestLongArgumentsLeaveTheStackItsLimit/arguments (13.23s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:18:30.301856281Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestLongArgumentsLeaveTheStackItsLimit/arguments",
+      "Elapsed": 13.23
+    },
+    {
+      "Time": "2026-10-09T11:18:30.301904184Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestLongArgumentsLeaveTheStackItsLimit/environment",
+      "Output": "--- PASS: TestLongArgumentsLeaveTheStackItsLimit/environment (0.57s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:18:30.301914369Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestLongArgumentsLeaveTheStackItsLimit/environment",
+      "Elapsed": 0.57
+    },
+    {
+      "Time": "2026-10-09T11:18:30.301916833Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestLongArgumentsLeaveTheStackItsLimit",
+      "Output": "--- PASS: TestLongArgumentsLeaveTheStackItsLimit (0.00s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:18:30.545550147Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestLongArgumentsLeaveTheStackItsLimit",
+      "Elapsed": 0
+    },
+    {
+      "Time": "2026-10-09T11:18:30.545603458Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestNativeAgreesWithNode/internal/oracle/testdata/stack_overflow.a",
+      "Output": "--- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/stack_overflow.a (0.72s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:18:30.54562479Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestNativeAgreesWithNode/internal/oracle/testdata/stack_overflow.a",
+      "Elapsed": 0.72
+    },
+    {
+      "Time": "2026-10-09T11:18:30.545693263Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestNativeAgreesWithNode",
+      "Output": "--- PASS: TestNativeAgreesWithNode (0.06s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:18:30.545701084Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestNativeAgreesWithNode",
+      "Elapsed": 0.06
+    },
+    {
+      "Time": "2026-10-09T11:18:30.545703929Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Output": "PASS\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:18:30.545707424Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Output": "gate cache: native hits=0 misses=2\n"
+    },
+    {
+      "Time": "2026-10-09T11:18:30.545710098Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Output": "gate cache: node hits=0 misses=2\n"
+    },
+    {
+      "Time": "2026-10-09T11:18:30.545712732Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Output": "gate cache: probe hits=0 misses=6\n"
+    },
+    {
+      "Time": "2026-10-09T11:18:30.549422072Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Output": "ok  \tgithub.com/system-inc/adamic/internal/oracle\t13.819s\n"
+    },
+    {
+      "Time": "2026-10-09T11:18:30.549479818Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Elapsed": 13.818999999999999
+    }
+  ],
+  "bounded": true
+}

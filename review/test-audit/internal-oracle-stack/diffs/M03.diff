@@ -1,0 +1,11 @@
+--- a/internal/native/emit_functions.go
++++ b/internal/native/emit_functions.go
+@@ -52,7 +52,7 @@
+ 	e.functionDepth = len(e.scopes)
+ 	e.scopes = append(e.scopes, nil)
+ 	// Recursion that runs out of stack panics, as Node's does, rather than crashing (stack.c).
+-	e.line("ADAMIC_CHECK_STACK();")
++
+ 	if function.ArgumentsCount != 0 && !function.Closure {
+ 		e.line("(void)%s;", e.localName(function.ArgumentsCount-1))
+ 	}

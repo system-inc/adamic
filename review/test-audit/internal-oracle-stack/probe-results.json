@@ -1,0 +1,1542 @@
+[
+  {
+    "id": "P01",
+    "exit": 1,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestLongArgumentsLeaveTheStackItsLimit$",
+    "selector_value": "6",
+    "environment": {
+      "ADAMIC_GATE_UNCACHED": "1",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u069/cache/P01"
+    },
+    "wall_seconds": 2.1744146820001333,
+    "kills": [
+      "TestLongArgumentsLeaveTheStackItsLimit"
+    ],
+    "events": [
+      {
+        "Time": "2026-10-09T11:18:46.731535703Z",
+        "Action": "start",
+        "Package": "github.com/system-inc/adamic/internal/oracle"
+      },
+      {
+        "Time": "2026-10-09T11:18:46.739654667Z",
+        "Action": "run",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit"
+      },
+      {
+        "Time": "2026-10-09T11:18:46.73974318Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit",
+        "Output": "=== RUN   TestLongArgumentsLeaveTheStackItsLimit\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:18:46.739767747Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit",
+        "Output": "=== PAUSE TestLongArgumentsLeaveTheStackItsLimit\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:18:46.73976999Z",
+        "Action": "pause",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit"
+      },
+      {
+        "Time": "2026-10-09T11:18:46.739775588Z",
+        "Action": "cont",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit"
+      },
+      {
+        "Time": "2026-10-09T11:18:46.739777431Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit",
+        "Output": "=== CONT  TestLongArgumentsLeaveTheStackItsLimit\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:18:46.740670385Z",
+        "Action": "run",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/arguments"
+      },
+      {
+        "Time": "2026-10-09T11:18:46.740680931Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/arguments",
+        "Output": "=== RUN   TestLongArgumentsLeaveTheStackItsLimit/arguments\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:18:46.740690105Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/arguments",
+        "Output": "=== PAUSE TestLongArgumentsLeaveTheStackItsLimit/arguments\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:18:46.740692378Z",
+        "Action": "pause",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/arguments"
+      },
+      {
+        "Time": "2026-10-09T11:18:46.740697416Z",
+        "Action": "run",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/arguments_alone"
+      },
+      {
+        "Time": "2026-10-09T11:18:46.740701542Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/arguments_alone",
+        "Output": "=== RUN   TestLongArgumentsLeaveTheStackItsLimit/arguments_alone\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:18:46.740720961Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/arguments_alone",
+        "Output": "=== PAUSE TestLongArgumentsLeaveTheStackItsLimit/arguments_alone\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:18:46.740723164Z",
+        "Action": "pause",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/arguments_alone"
+      },
+      {
+        "Time": "2026-10-09T11:18:46.740725638Z",
+        "Action": "run",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/environment"
+      },
+      {
+        "Time": "2026-10-09T11:18:46.740727701Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/environment",
+        "Output": "=== RUN   TestLongArgumentsLeaveTheStackItsLimit/environment\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:18:46.740791527Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/environment",
+        "Output": "=== PAUSE TestLongArgumentsLeaveTheStackItsLimit/environment\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:18:46.740797746Z",
+        "Action": "pause",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/environment"
+      },
+      {
+        "Time": "2026-10-09T11:18:46.740808763Z",
+        "Action": "cont",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/arguments"
+      },
+      {
+        "Time": "2026-10-09T11:18:46.740876054Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/arguments",
+        "Output": "=== CONT  TestLongArgumentsLeaveTheStackItsLimit/arguments\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:18:46.740880791Z",
+        "Action": "cont",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/environment"
+      },
+      {
+        "Time": "2026-10-09T11:18:46.740882664Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/environment",
+        "Output": "=== CONT  TestLongArgumentsLeaveTheStackItsLimit/environment\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:18:46.741049315Z",
+        "Action": "cont",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/arguments_alone"
+      },
+      {
+        "Time": "2026-10-09T11:18:46.741060081Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/arguments_alone",
+        "Output": "=== CONT  TestLongArgumentsLeaveTheStackItsLimit/arguments_alone\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:18:46.874677062Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/arguments_alone",
+        "Output": "    stack_test.go:38: native: clang failed: exit status 1\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T11:18:46.874762951Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/arguments_alone",
+        "Output": "        /tmp/adamic-gate/adamic-build-667554886/main.c:1:1: error: ISO C requires a translation unit to contain at least one declaration [-Werror,-Wempty-translation-unit]\n",
+        "OutputType": "error-continue"
+      },
+      {
+        "Time": "2026-10-09T11:18:46.874776612Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/arguments_alone",
+        "Output": "        1 error generated.\n",
+        "OutputType": "error-continue"
+      },
+      {
+        "Time": "2026-10-09T11:18:46.874780177Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/arguments_alone",
+        "Output": "        \n",
+        "OutputType": "error-continue"
+      },
+      {
+        "Time": "2026-10-09T11:18:46.874799045Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/arguments_alone",
+        "Output": "--- FAIL: TestLongArgumentsLeaveTheStackItsLimit/arguments_alone (0.13s)\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:18:46.88170895Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/arguments_alone",
+        "Elapsed": 0.13
+      },
+      {
+        "Time": "2026-10-09T11:18:46.881784584Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/environment",
+        "Output": "    stack_test.go:38: native: clang failed: exit status 1\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T11:18:46.881794439Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/environment",
+        "Output": "        /tmp/adamic-gate/adamic-build-2308790903/main.c:1:1: error: ISO C requires a translation unit to contain at least one declaration [-Werror,-Wempty-translation-unit]\n",
+        "OutputType": "error-continue"
+      },
+      {
+        "Time": "2026-10-09T11:18:46.881799376Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/environment",
+        "Output": "        1 error generated.\n",
+        "OutputType": "error-continue"
+      },
+      {
+        "Time": "2026-10-09T11:18:46.881803302Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/environment",
+        "Output": "        \n",
+        "OutputType": "error-continue"
+      },
+      {
+        "Time": "2026-10-09T11:18:46.881811284Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/environment",
+        "Output": "--- FAIL: TestLongArgumentsLeaveTheStackItsLimit/environment (0.14s)\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:18:46.8869006Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/environment",
+        "Elapsed": 0.14
+      },
+      {
+        "Time": "2026-10-09T11:18:46.886928072Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/arguments",
+        "Output": "    stack_test.go:38: native: clang failed: exit status 1\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T11:18:46.886935773Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/arguments",
+        "Output": "        /tmp/adamic-gate/adamic-build-344683613/main.c:1:1: error: ISO C requires a translation unit to contain at least one declaration [-Werror,-Wempty-translation-unit]\n",
+        "OutputType": "error-continue"
+      },
+      {
+        "Time": "2026-10-09T11:18:46.886939258Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/arguments",
+        "Output": "        1 error generated.\n",
+        "OutputType": "error-continue"
+      },
+      {
+        "Time": "2026-10-09T11:18:46.886941652Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/arguments",
+        "Output": "        \n",
+        "OutputType": "error-continue"
+      },
+      {
+        "Time": "2026-10-09T11:18:46.886956675Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/arguments",
+        "Output": "--- FAIL: TestLongArgumentsLeaveTheStackItsLimit/arguments (0.15s)\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:18:46.886966439Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/arguments",
+        "Elapsed": 0.15
+      },
+      {
+        "Time": "2026-10-09T11:18:46.886969033Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit",
+        "Output": "--- FAIL: TestLongArgumentsLeaveTheStackItsLimit (0.00s)\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:18:46.886971206Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-09T11:18:46.88697335Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Output": "FAIL\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:18:46.886978758Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Output": "gate cache: native hits=0 misses=0\n"
+      },
+      {
+        "Time": "2026-10-09T11:18:46.886980791Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Output": "gate cache: node hits=0 misses=0\n"
+      },
+      {
+        "Time": "2026-10-09T11:18:46.886982664Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Output": "gate cache: probe hits=0 misses=3\n"
+      },
+      {
+        "Time": "2026-10-09T11:18:46.888933293Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Output": "FAIL\tgithub.com/system-inc/adamic/internal/oracle\t0.157s\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:18:46.888956197Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Elapsed": 0.157
+      }
+    ],
+    "bounded": true,
+    "test": "TestLongArgumentsLeaveTheStackItsLimit"
+  },
+  {
+    "id": "P01",
+    "exit": 1,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestSmallStacksStillPanic$",
+    "selector_value": "6",
+    "environment": {
+      "ADAMIC_GATE_UNCACHED": "1",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u069/cache/P01"
+    },
+    "wall_seconds": 2.3358830030001627,
+    "kills": [
+      "TestSmallStacksStillPanic"
+    ],
+    "events": [
+      {
+        "Time": "2026-10-09T11:18:49.043510766Z",
+        "Action": "start",
+        "Package": "github.com/system-inc/adamic/internal/oracle"
+      },
+      {
+        "Time": "2026-10-09T11:18:49.05320593Z",
+        "Action": "run",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic"
+      },
+      {
+        "Time": "2026-10-09T11:18:49.053328895Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic",
+        "Output": "=== RUN   TestSmallStacksStillPanic\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:18:49.053407814Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic",
+        "Output": "=== PAUSE TestSmallStacksStillPanic\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:18:49.053412751Z",
+        "Action": "pause",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic"
+      },
+      {
+        "Time": "2026-10-09T11:18:49.053416357Z",
+        "Action": "cont",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic"
+      },
+      {
+        "Time": "2026-10-09T11:18:49.053418891Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic",
+        "Output": "=== CONT  TestSmallStacksStillPanic\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:18:49.053422496Z",
+        "Action": "run",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic/1024_KiB"
+      },
+      {
+        "Time": "2026-10-09T11:18:49.05342546Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic/1024_KiB",
+        "Output": "=== RUN   TestSmallStacksStillPanic/1024_KiB\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:18:49.053430528Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic/1024_KiB",
+        "Output": "=== PAUSE TestSmallStacksStillPanic/1024_KiB\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:18:49.053433332Z",
+        "Action": "pause",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic/1024_KiB"
+      },
+      {
+        "Time": "2026-10-09T11:18:49.053437028Z",
+        "Action": "run",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic/512_KiB"
+      },
+      {
+        "Time": "2026-10-09T11:18:49.053440663Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic/512_KiB",
+        "Output": "=== RUN   TestSmallStacksStillPanic/512_KiB\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:18:49.053444149Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic/512_KiB",
+        "Output": "=== PAUSE TestSmallStacksStillPanic/512_KiB\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:18:49.053446512Z",
+        "Action": "pause",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic/512_KiB"
+      },
+      {
+        "Time": "2026-10-09T11:18:49.053448826Z",
+        "Action": "run",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic/256_KiB"
+      },
+      {
+        "Time": "2026-10-09T11:18:49.053451129Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic/256_KiB",
+        "Output": "=== RUN   TestSmallStacksStillPanic/256_KiB\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:18:49.053454204Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic/256_KiB",
+        "Output": "=== PAUSE TestSmallStacksStillPanic/256_KiB\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:18:49.053456547Z",
+        "Action": "pause",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic/256_KiB"
+      },
+      {
+        "Time": "2026-10-09T11:18:49.053459361Z",
+        "Action": "cont",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic/1024_KiB"
+      },
+      {
+        "Time": "2026-10-09T11:18:49.053461705Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic/1024_KiB",
+        "Output": "=== CONT  TestSmallStacksStillPanic/1024_KiB\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:18:49.053974026Z",
+        "Action": "cont",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic/256_KiB"
+      },
+      {
+        "Time": "2026-10-09T11:18:49.053998072Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic/256_KiB",
+        "Output": "=== CONT  TestSmallStacksStillPanic/256_KiB\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:18:49.054093846Z",
+        "Action": "cont",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic/512_KiB"
+      },
+      {
+        "Time": "2026-10-09T11:18:49.054099875Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic/512_KiB",
+        "Output": "=== CONT  TestSmallStacksStillPanic/512_KiB\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:18:49.219350659Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic/512_KiB",
+        "Output": "    stack_test.go:104: native: clang failed: exit status 1\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T11:18:49.219424009Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic/512_KiB",
+        "Output": "        /tmp/adamic-gate/adamic-build-1409314434/main.c:1:1: error: ISO C requires a translation unit to contain at least one declaration [-Werror,-Wempty-translation-unit]\n",
+        "OutputType": "error-continue"
+      },
+      {
+        "Time": "2026-10-09T11:18:49.219432091Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic/512_KiB",
+        "Output": "        1 error generated.\n",
+        "OutputType": "error-continue"
+      },
+      {
+        "Time": "2026-10-09T11:18:49.219438871Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic/512_KiB",
+        "Output": "        \n",
+        "OutputType": "error-continue"
+      },
+      {
+        "Time": "2026-10-09T11:18:49.21945799Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic/512_KiB",
+        "Output": "--- FAIL: TestSmallStacksStillPanic/512_KiB (0.17s)\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:18:49.219667265Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic/512_KiB",
+        "Elapsed": 0.17
+      },
+      {
+        "Time": "2026-10-09T11:18:49.219699373Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic/1024_KiB",
+        "Output": "    stack_test.go:104: native: clang failed: exit status 1\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T11:18:49.219705012Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic/1024_KiB",
+        "Output": "        /tmp/adamic-gate/adamic-build-1929133555/main.c:1:1: error: ISO C requires a translation unit to contain at least one declaration [-Werror,-Wempty-translation-unit]\n",
+        "OutputType": "error-continue"
+      },
+      {
+        "Time": "2026-10-09T11:18:49.219709258Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic/1024_KiB",
+        "Output": "        1 error generated.\n",
+        "OutputType": "error-continue"
+      },
+      {
+        "Time": "2026-10-09T11:18:49.219712733Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic/1024_KiB",
+        "Output": "        \n",
+        "OutputType": "error-continue"
+      },
+      {
+        "Time": "2026-10-09T11:18:49.219715898Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic/1024_KiB",
+        "Output": "--- FAIL: TestSmallStacksStillPanic/1024_KiB (0.17s)\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:18:49.221600754Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic/1024_KiB",
+        "Elapsed": 0.17
+      },
+      {
+        "Time": "2026-10-09T11:18:49.221765481Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic/256_KiB",
+        "Output": "    stack_test.go:104: native: clang failed: exit status 1\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T11:18:49.221774295Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic/256_KiB",
+        "Output": "        /tmp/adamic-gate/adamic-build-2701684193/main.c:1:1: error: ISO C requires a translation unit to contain at least one declaration [-Werror,-Wempty-translation-unit]\n",
+        "OutputType": "error-continue"
+      },
+      {
+        "Time": "2026-10-09T11:18:49.221784821Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic/256_KiB",
+        "Output": "        1 error generated.\n",
+        "OutputType": "error-continue"
+      },
+      {
+        "Time": "2026-10-09T11:18:49.221787344Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic/256_KiB",
+        "Output": "        \n",
+        "OutputType": "error-continue"
+      },
+      {
+        "Time": "2026-10-09T11:18:49.221791561Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic/256_KiB",
+        "Output": "--- FAIL: TestSmallStacksStillPanic/256_KiB (0.17s)\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:18:49.221794395Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic/256_KiB",
+        "Elapsed": 0.17
+      },
+      {
+        "Time": "2026-10-09T11:18:49.221796688Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic",
+        "Output": "--- FAIL: TestSmallStacksStillPanic (0.00s)\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:18:49.221798431Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-09T11:18:49.221800174Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Output": "FAIL\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:18:49.221804941Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Output": "gate cache: native hits=0 misses=0\n"
+      },
+      {
+        "Time": "2026-10-09T11:18:49.221806834Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Output": "gate cache: node hits=0 misses=0\n"
+      },
+      {
+        "Time": "2026-10-09T11:18:49.221808706Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Output": "gate cache: probe hits=0 misses=3\n"
+      },
+      {
+        "Time": "2026-10-09T11:18:49.224314897Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Output": "FAIL\tgithub.com/system-inc/adamic/internal/oracle\t0.180s\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:18:49.224337561Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Elapsed": 0.181
+      }
+    ],
+    "bounded": true,
+    "test": "TestSmallStacksStillPanic"
+  },
+  {
+    "id": "P02",
+    "exit": 1,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestLongArgumentsLeaveTheStackItsLimit$",
+    "selector_value": "5",
+    "environment": {
+      "ADAMIC_GATE_UNCACHED": "1",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u069/cache/P02"
+    },
+    "wall_seconds": 2.736179259999517,
+    "kills": [
+      "TestLongArgumentsLeaveTheStackItsLimit"
+    ],
+    "events": [
+      {
+        "Time": "2026-10-09T11:18:51.324041012Z",
+        "Action": "start",
+        "Package": "github.com/system-inc/adamic/internal/oracle"
+      },
+      {
+        "Time": "2026-10-09T11:18:51.334406375Z",
+        "Action": "run",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit"
+      },
+      {
+        "Time": "2026-10-09T11:18:51.334541158Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit",
+        "Output": "=== RUN   TestLongArgumentsLeaveTheStackItsLimit\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:18:51.334576911Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit",
+        "Output": "=== PAUSE TestLongArgumentsLeaveTheStackItsLimit\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:18:51.334581328Z",
+        "Action": "pause",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit"
+      },
+      {
+        "Time": "2026-10-09T11:18:51.3345893Z",
+        "Action": "cont",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit"
+      },
+      {
+        "Time": "2026-10-09T11:18:51.334641008Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit",
+        "Output": "=== CONT  TestLongArgumentsLeaveTheStackItsLimit\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:18:51.334980198Z",
+        "Action": "run",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/arguments"
+      },
+      {
+        "Time": "2026-10-09T11:18:51.334988931Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/arguments",
+        "Output": "=== RUN   TestLongArgumentsLeaveTheStackItsLimit/arguments\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:18:51.334997715Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/arguments",
+        "Output": "=== PAUSE TestLongArgumentsLeaveTheStackItsLimit/arguments\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:18:51.335000939Z",
+        "Action": "pause",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/arguments"
+      },
+      {
+        "Time": "2026-10-09T11:18:51.335004835Z",
+        "Action": "run",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/arguments_alone"
+      },
+      {
+        "Time": "2026-10-09T11:18:51.335008461Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/arguments_alone",
+        "Output": "=== RUN   TestLongArgumentsLeaveTheStackItsLimit/arguments_alone\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:18:51.335045146Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/arguments_alone",
+        "Output": "=== PAUSE TestLongArgumentsLeaveTheStackItsLimit/arguments_alone\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:18:51.335048821Z",
+        "Action": "pause",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/arguments_alone"
+      },
+      {
+        "Time": "2026-10-09T11:18:51.335052257Z",
+        "Action": "run",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/environment"
+      },
+      {
+        "Time": "2026-10-09T11:18:51.335055702Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/environment",
+        "Output": "=== RUN   TestLongArgumentsLeaveTheStackItsLimit/environment\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:18:51.335063584Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/environment",
+        "Output": "=== PAUSE TestLongArgumentsLeaveTheStackItsLimit/environment\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:18:51.335066648Z",
+        "Action": "pause",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/environment"
+      },
+      {
+        "Time": "2026-10-09T11:18:51.335070184Z",
+        "Action": "cont",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/arguments"
+      },
+      {
+        "Time": "2026-10-09T11:18:51.335081731Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/arguments",
+        "Output": "=== CONT  TestLongArgumentsLeaveTheStackItsLimit/arguments\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:18:51.335244516Z",
+        "Action": "cont",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/environment"
+      },
+      {
+        "Time": "2026-10-09T11:18:51.335252928Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/environment",
+        "Output": "=== CONT  TestLongArgumentsLeaveTheStackItsLimit/environment\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:18:51.335298487Z",
+        "Action": "cont",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/arguments_alone"
+      },
+      {
+        "Time": "2026-10-09T11:18:51.335302423Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/arguments_alone",
+        "Output": "=== CONT  TestLongArgumentsLeaveTheStackItsLimit/arguments_alone\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:18:51.909480926Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/arguments_alone",
+        "Output": "    stack_test.go:75: program: exit codes differ\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T11:18:51.909541437Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/arguments_alone",
+        "Output": "        node:   exit 70, stdout \"start\\n\", stderr \"adamic: panic: RangeError: Maximum call stack size exceeded\\n\"\n",
+        "OutputType": "error-continue"
+      },
+      {
+        "Time": "2026-10-09T11:18:51.909547566Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/arguments_alone",
+        "Output": "        native: exit 1, stdout \"\", stderr \"AddressSanitizer:DEADLYSIGNAL\\n=================================================================\\n==77430==ERROR: AddressSanitizer: stack-overflow on address 0x7ffd52daeff8 (pc 0x564351a11aad bp 0x7ffd52daf010 sp 0x7ffd52daf000 T0)\\n    #0 0x564351a11aad  (/tmp/adamic-gate/TestLongArgumentsLeaveTheStac\"\n",
+        "OutputType": "error-continue"
+      },
+      {
+        "Time": "2026-10-09T11:18:51.918692508Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/arguments_alone",
+        "Output": "    stack_test.go:75: plain: exit codes differ\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T11:18:51.918737135Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/arguments_alone",
+        "Output": "        node:   exit 70, stdout \"start\\n\", stderr \"adamic: panic: RangeError: Maximum call stack size exceeded\\n\"\n",
+        "OutputType": "error-continue"
+      },
+      {
+        "Time": "2026-10-09T11:18:51.918741251Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/arguments_alone",
+        "Output": "        native: exit -1, stdout \"\", stderr \"\"\n",
+        "OutputType": "error-continue"
+      },
+      {
+        "Time": "2026-10-09T11:18:51.919049284Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/arguments_alone",
+        "Output": "--- FAIL: TestLongArgumentsLeaveTheStackItsLimit/arguments_alone (0.58s)\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:18:51.92666453Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/arguments_alone",
+        "Elapsed": 0.58
+      },
+      {
+        "Time": "2026-10-09T11:18:51.92675113Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/arguments",
+        "Output": "    stack_test.go:75: program: exit codes differ\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T11:18:51.926768687Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/arguments",
+        "Output": "        node:   exit 70, stdout \"start\\n\", stderr \"adamic: panic: RangeError: Maximum call stack size exceeded\\n\"\n",
+        "OutputType": "error-continue"
+      },
+      {
+        "Time": "2026-10-09T11:18:51.926774836Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/arguments",
+        "Output": "        native: exit 1, stdout \"\", stderr \"AddressSanitizer:DEADLYSIGNAL\\n=================================================================\\n==77428==ERROR: AddressSanitizer: stack-overflow on address 0x7ffc858dbff8 (pc 0x55821357aaad bp 0x7ffc858dc010 sp 0x7ffc858dc000 T0)\\n    #0 0x55821357aaad in adamic_function_0_sum /tmp/adamic-gate/adamic\"\n",
+        "OutputType": "error-continue"
+      },
+      {
+        "Time": "2026-10-09T11:18:51.931552413Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/arguments",
+        "Output": "    stack_test.go:75: plain: exit codes differ\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T11:18:51.931594606Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/arguments",
+        "Output": "        node:   exit 70, stdout \"start\\n\", stderr \"adamic: panic: RangeError: Maximum call stack size exceeded\\n\"\n",
+        "OutputType": "error-continue"
+      },
+      {
+        "Time": "2026-10-09T11:18:51.931599173Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/arguments",
+        "Output": "        native: exit -1, stdout \"\", stderr \"\"\n",
+        "OutputType": "error-continue"
+      },
+      {
+        "Time": "2026-10-09T11:18:51.931609629Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/arguments",
+        "Output": "--- FAIL: TestLongArgumentsLeaveTheStackItsLimit/arguments (0.60s)\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:18:51.951204906Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/arguments",
+        "Elapsed": 0.6
+      },
+      {
+        "Time": "2026-10-09T11:18:51.951248432Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/environment",
+        "Output": "    stack_test.go:75: program: exit codes differ\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T11:18:51.951271857Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/environment",
+        "Output": "        node:   exit 70, stdout \"start\\n\", stderr \"adamic: panic: RangeError: Maximum call stack size exceeded\\n\"\n",
+        "OutputType": "error-continue"
+      },
+      {
+        "Time": "2026-10-09T11:18:51.951276254Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/environment",
+        "Output": "        native: exit 1, stdout \"\", stderr \"AddressSanitizer:DEADLYSIGNAL\\n=================================================================\\n==77432==ERROR: AddressSanitizer: stack-overflow on address 0x7ffdce379ff8 (pc 0x563c28c6eaad bp 0x7ffdce37a010 sp 0x7ffdce37a000 T0)\\n    #0 0x563c28c6eaad in adamic_function_0_sum /tmp/adamic-gate/adamic\"\n",
+        "OutputType": "error-continue"
+      },
+      {
+        "Time": "2026-10-09T11:18:51.955527033Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/environment",
+        "Output": "    stack_test.go:75: plain: exit codes differ\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T11:18:51.95558433Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/environment",
+        "Output": "        node:   exit 70, stdout \"start\\n\", stderr \"adamic: panic: RangeError: Maximum call stack size exceeded\\n\"\n",
+        "OutputType": "error-continue"
+      },
+      {
+        "Time": "2026-10-09T11:18:51.955594695Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/environment",
+        "Output": "        native: exit -1, stdout \"\", stderr \"\"\n",
+        "OutputType": "error-continue"
+      },
+      {
+        "Time": "2026-10-09T11:18:51.956019374Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/environment",
+        "Output": "--- FAIL: TestLongArgumentsLeaveTheStackItsLimit/environment (0.62s)\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:18:51.956078112Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit/environment",
+        "Elapsed": 0.62
+      },
+      {
+        "Time": "2026-10-09T11:18:51.956086655Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit",
+        "Output": "--- FAIL: TestLongArgumentsLeaveTheStackItsLimit (0.00s)\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:18:51.957469515Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestLongArgumentsLeaveTheStackItsLimit",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-09T11:18:51.957486892Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Output": "FAIL\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:18:51.957543136Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Output": "gate cache: native hits=0 misses=0\n"
+      },
+      {
+        "Time": "2026-10-09T11:18:51.95759869Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Output": "gate cache: node hits=0 misses=0\n"
+      },
+      {
+        "Time": "2026-10-09T11:18:51.957623637Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Output": "gate cache: probe hits=0 misses=3\n"
+      },
+      {
+        "Time": "2026-10-09T11:18:51.962897626Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Output": "FAIL\tgithub.com/system-inc/adamic/internal/oracle\t0.638s\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:18:51.962923675Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Elapsed": 0.639
+      }
+    ],
+    "bounded": true,
+    "test": "TestLongArgumentsLeaveTheStackItsLimit"
+  },
+  {
+    "id": "P02",
+    "exit": 1,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestSmallStacksStillPanic$",
+    "selector_value": "5",
+    "environment": {
+      "ADAMIC_GATE_UNCACHED": "1",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u069/cache/P02"
+    },
+    "wall_seconds": 2.759687211999335,
+    "kills": [
+      "TestSmallStacksStillPanic"
+    ],
+    "events": [
+      {
+        "Time": "2026-10-09T11:18:54.13559443Z",
+        "Action": "start",
+        "Package": "github.com/system-inc/adamic/internal/oracle"
+      },
+      {
+        "Time": "2026-10-09T11:18:54.143929137Z",
+        "Action": "run",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic"
+      },
+      {
+        "Time": "2026-10-09T11:18:54.144257802Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic",
+        "Output": "=== RUN   TestSmallStacksStillPanic\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:18:54.144431533Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic",
+        "Output": "=== PAUSE TestSmallStacksStillPanic\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:18:54.14444286Z",
+        "Action": "pause",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic"
+      },
+      {
+        "Time": "2026-10-09T11:18:54.144458974Z",
+        "Action": "cont",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic"
+      },
+      {
+        "Time": "2026-10-09T11:18:54.144461168Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic",
+        "Output": "=== CONT  TestSmallStacksStillPanic\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:18:54.144463481Z",
+        "Action": "run",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic/1024_KiB"
+      },
+      {
+        "Time": "2026-10-09T11:18:54.144476391Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic/1024_KiB",
+        "Output": "=== RUN   TestSmallStacksStillPanic/1024_KiB\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:18:54.144479816Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic/1024_KiB",
+        "Output": "=== PAUSE TestSmallStacksStillPanic/1024_KiB\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:18:54.144481438Z",
+        "Action": "pause",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic/1024_KiB"
+      },
+      {
+        "Time": "2026-10-09T11:18:54.144490552Z",
+        "Action": "run",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic/512_KiB"
+      },
+      {
+        "Time": "2026-10-09T11:18:54.144492104Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic/512_KiB",
+        "Output": "=== RUN   TestSmallStacksStillPanic/512_KiB\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:18:54.144494358Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic/512_KiB",
+        "Output": "=== PAUSE TestSmallStacksStillPanic/512_KiB\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:18:54.14450269Z",
+        "Action": "pause",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic/512_KiB"
+      },
+      {
+        "Time": "2026-10-09T11:18:54.144505044Z",
+        "Action": "run",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic/256_KiB"
+      },
+      {
+        "Time": "2026-10-09T11:18:54.144506606Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic/256_KiB",
+        "Output": "=== RUN   TestSmallStacksStillPanic/256_KiB\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:18:54.144508789Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic/256_KiB",
+        "Output": "=== PAUSE TestSmallStacksStillPanic/256_KiB\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:18:54.144510352Z",
+        "Action": "pause",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic/256_KiB"
+      },
+      {
+        "Time": "2026-10-09T11:18:54.144512244Z",
+        "Action": "cont",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic/1024_KiB"
+      },
+      {
+        "Time": "2026-10-09T11:18:54.144513647Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic/1024_KiB",
+        "Output": "=== CONT  TestSmallStacksStillPanic/1024_KiB\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:18:54.144515469Z",
+        "Action": "cont",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic/256_KiB"
+      },
+      {
+        "Time": "2026-10-09T11:18:54.144531413Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic/256_KiB",
+        "Output": "=== CONT  TestSmallStacksStillPanic/256_KiB\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:18:54.144540016Z",
+        "Action": "cont",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic/512_KiB"
+      },
+      {
+        "Time": "2026-10-09T11:18:54.144541529Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic/512_KiB",
+        "Output": "=== CONT  TestSmallStacksStillPanic/512_KiB\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:18:54.639158848Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic/256_KiB",
+        "Output": "    stack_test.go:129: program at 256 KiB: exit codes differ: exit 1, stdout \"\", stderr \"AddressSanitizer:DEADLYSIGNAL\\n=================================================================\\n==77520==ERROR: AddressSanitizer: stack-overflow on address 0x7ffcfb063ff8 (pc 0x56330ae99aad bp 0x7ffcfb064010 sp 0x7ffcfb064000 T0)\\n    #0 0x56330ae99aad in adamic_function_0_sum /tmp/adamic-gate/adamic\"\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T11:18:54.640840112Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic/256_KiB",
+        "Output": "    stack_test.go:129: plain at 256 KiB: exit codes differ: exit -1, stdout \"\", stderr \"\"\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T11:18:54.641198771Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic/256_KiB",
+        "Output": "--- FAIL: TestSmallStacksStillPanic/256_KiB (0.50s)\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:18:54.656033547Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic/256_KiB",
+        "Elapsed": 0.5
+      },
+      {
+        "Time": "2026-10-09T11:18:54.656118294Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic/512_KiB",
+        "Output": "    stack_test.go:129: program at 512 KiB: exit codes differ: exit 1, stdout \"\", stderr \"AddressSanitizer:DEADLYSIGNAL\\n=================================================================\\n==77528==ERROR: AddressSanitizer: stack-overflow on address 0x7fff05914ff8 (pc 0x55dcfb672aad bp 0x7fff05915010 sp 0x7fff05915000 T0)\\n    #0 0x55dcfb672aad in adamic_function_0_sum /tmp/adamic-gate/adamic\"\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T11:18:54.661976777Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic/512_KiB",
+        "Output": "    stack_test.go:129: plain at 512 KiB: exit codes differ: exit -1, stdout \"\", stderr \"\"\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T11:18:54.66227825Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic/512_KiB",
+        "Output": "--- FAIL: TestSmallStacksStillPanic/512_KiB (0.52s)\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:18:54.716579274Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic/512_KiB",
+        "Elapsed": 0.52
+      },
+      {
+        "Time": "2026-10-09T11:18:54.716638884Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic/1024_KiB",
+        "Output": "    stack_test.go:129: program at 1024 KiB: exit codes differ: exit 1, stdout \"\", stderr \"AddressSanitizer:DEADLYSIGNAL\\n=================================================================\\n==77533==ERROR: AddressSanitizer: stack-overflow on address 0x7ffe8eb7bff8 (pc 0x56547a50aaad bp 0x7ffe8eb7c010 sp 0x7ffe8eb7c000 T0)\\n    #0 0x56547a50aaad in adamic_function_0_sum /tmp/adamic-gate/adamic\"\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T11:18:54.718961738Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic/1024_KiB",
+        "Output": "    stack_test.go:129: plain at 1024 KiB: exit codes differ: exit -1, stdout \"\", stderr \"\"\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T11:18:54.719296171Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic/1024_KiB",
+        "Output": "--- FAIL: TestSmallStacksStillPanic/1024_KiB (0.58s)\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:18:54.71932881Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic/1024_KiB",
+        "Elapsed": 0.58
+      },
+      {
+        "Time": "2026-10-09T11:18:54.719334128Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic",
+        "Output": "--- FAIL: TestSmallStacksStillPanic (0.00s)\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:18:54.719359136Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestSmallStacksStillPanic",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-09T11:18:54.71936188Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Output": "FAIL\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:18:54.719367889Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Output": "gate cache: native hits=0 misses=0\n"
+      },
+      {
+        "Time": "2026-10-09T11:18:54.719371034Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Output": "gate cache: node hits=0 misses=0\n"
+      },
+      {
+        "Time": "2026-10-09T11:18:54.71940139Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Output": "gate cache: probe hits=0 misses=3\n"
+      },
+      {
+        "Time": "2026-10-09T11:18:54.722255368Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Output": "FAIL\tgithub.com/system-inc/adamic/internal/oracle\t0.586s\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:18:54.722277832Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Elapsed": 0.587
+      }
+    ],
+    "bounded": true,
+    "test": "TestSmallStacksStillPanic"
+  }
+]

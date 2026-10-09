@@ -1,0 +1,34 @@
+[
+  {
+    "test": "TestLongArgumentsLeaveTheStackItsLimit",
+    "file": "internal/oracle/stack_test.go",
+    "line": 17,
+    "timings": [
+      0.133,
+      0.107,
+      0.103
+    ],
+    "seconds": 0.107,
+    "wall_seconds": [
+      2.278805449999709,
+      2.1439962260001266,
+      1.9971213449998686
+    ]
+  },
+  {
+    "test": "TestSmallStacksStillPanic",
+    "file": "internal/oracle/stack_test.go",
+    "line": 89,
+    "timings": [
+      0.1,
+      0.11,
+      0.103
+    ],
+    "seconds": 0.103,
+    "wall_seconds": [
+      1.964367905000472,
+      2.1091551120007352,
+      2.0003176760001224
+    ]
+  }
+]

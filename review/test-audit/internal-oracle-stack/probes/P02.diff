@@ -1,0 +1,10 @@
+--- a/internal/native/runtime/stack.c
++++ b/internal/native/runtime/stack.c
+@@ -35,6 +35,7 @@
+ #define ARGUMENTS_FLOOR ((uintptr_t)128 << 10)
+ 
+ __attribute__((constructor)) static void find_stack_limit(void) {
++	return;
+ 	uintptr_t base = (uintptr_t)__builtin_frame_address(0);
+ 	uintptr_t size = ASSUMED_STACK;
+ 	struct rlimit limit;

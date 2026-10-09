@@ -1,0 +1,72 @@
+[
+  {
+    "test": "TestLongArgumentsLeaveTheStackItsLimit",
+    "package": "internal/oracle",
+    "file": "internal/oracle/stack_test.go:17",
+    "seconds": 0.107,
+    "oracle": "Original TypeScript source executed by Node; full stdout, stderr and exit status compared to sanitized and release native products.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M01",
+      "M03",
+      "M04"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M04: stack_test.go:75: program: stderr differs",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestSmallStacksStillPanic"
+    ],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P01",
+      "P02"
+    ],
+    "subsumer_seconds": 0.103,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestLongArgumentsLeaveTheStackItsLimit",
+      "TestSmallStacksStillPanic",
+      "TestNativeAgreesWithNode"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestLongArgumentsLeaveTheStackItsLimit|TestSmallStacksStillPanic|TestNativeAgreesWithNode)$/^(arguments|arguments_alone|environment|1024_KiB|512_KiB|256_KiB|internal)$/^oracle$/^testdata$/^stack_overflow[.]a$; ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u069/cache/M04; stack_test.go:75: program: stderr differs"
+  },
+  {
+    "test": "TestSmallStacksStillPanic",
+    "package": "internal/oracle",
+    "file": "internal/oracle/stack_test.go:89",
+    "seconds": 0.103,
+    "oracle": "Node validates the exact start output, panic text and exit 70 at 1024 KiB. At 512/256 KiB the expected same contract is self-written; Node is deliberately not run. M04 proves stderr is checked even when exit 70 and stdout remain correct.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M01",
+      "M02",
+      "M03",
+      "M04"
+    ],
+    "unique_kills": [
+      "M02"
+    ],
+    "last_proven_fail": "M04: stack_test.go:129: program at 512 KiB: stderr differs: exit 70, stdout \"start\\n\", stderr \"adamic: panic: RangeError: stack limit exceeded\\n\"",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P01",
+      "P02"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestLongArgumentsLeaveTheStackItsLimit",
+      "TestSmallStacksStillPanic",
+      "TestNativeAgreesWithNode"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestLongArgumentsLeaveTheStackItsLimit|TestSmallStacksStillPanic|TestNativeAgreesWithNode)$/^(arguments|arguments_alone|environment|1024_KiB|512_KiB|256_KiB|internal)$/^oracle$/^testdata$/^stack_overflow[.]a$; ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u069/cache/M04; stack_test.go:129: program at 512 KiB: stderr differs: exit 70, stdout \"start\\n\", stderr \"adamic: panic: RangeError: stack limit exceeded\\n\""
+  }
+]

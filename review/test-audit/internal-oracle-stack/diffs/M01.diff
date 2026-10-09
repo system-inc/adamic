@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/stack.c
++++ b/internal/native/runtime/stack.c
+@@ -53,7 +53,7 @@
+ 	// The margin shrinks with a small stack, so one of 1 MiB or 512 KiB still gets a limit: a fixed
+ 	// 256 KiB, with the quarter, once left nothing at 1 MiB, and recursion there crashed where Node
+ 	// panics. What's left to run in is then 5/8 of the stack, less on the smallest.
+-	uintptr_t arguments = size / 4 > ARGUMENTS_FLOOR ? size / 4 : ARGUMENTS_FLOOR;
++	uintptr_t arguments = 0;
+ 	uintptr_t margin = size / 8 < MARGIN ? size / 8 : MARGIN;
+ 	uintptr_t reserved = arguments + margin;
+ 	// A stack too small to keep even that gets no check rather than one that fires at once.

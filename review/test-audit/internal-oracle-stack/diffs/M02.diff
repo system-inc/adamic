@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/stack.c
++++ b/internal/native/runtime/stack.c
+@@ -54,7 +54,7 @@
+ 	// 256 KiB, with the quarter, once left nothing at 1 MiB, and recursion there crashed where Node
+ 	// panics. What's left to run in is then 5/8 of the stack, less on the smallest.
+ 	uintptr_t arguments = size / 4 > ARGUMENTS_FLOOR ? size / 4 : ARGUMENTS_FLOOR;
+-	uintptr_t margin = size / 8 < MARGIN ? size / 8 : MARGIN;
++	uintptr_t margin = size / 8 > MARGIN ? size / 8 : MARGIN;
+ 	uintptr_t reserved = arguments + margin;
+ 	// A stack too small to keep even that gets no check rather than one that fires at once.
+ 	adamic_stack_limit = size > reserved && base > size ? base - size + reserved : 0;

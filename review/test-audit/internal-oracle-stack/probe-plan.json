@@ -1,0 +1,29 @@
+[
+  {
+    "id": "P01",
+    "file": "internal/native/emit.go",
+    "old": "func C(program *ir.Program) string {",
+    "new": "func C(program *ir.Program) string {\n\tif true { return \"\" }",
+    "kind": "empty C entry",
+    "line": 22,
+    "validation_commands": [
+      "go vet ./internal/native/"
+    ],
+    "validation_seconds": 0.14148483499957365,
+    "validated": true
+  },
+  {
+    "id": "P02",
+    "file": "internal/native/runtime/stack.c",
+    "old": "__attribute__((constructor)) static void find_stack_limit(void) {\n\tuintptr_t base",
+    "new": "__attribute__((constructor)) static void find_stack_limit(void) {\n\treturn;\n\tuintptr_t base",
+    "kind": "empty runtime initialization",
+    "line": 37,
+    "validation_commands": [
+      "clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O2 -I internal/native/runtime -c internal/native/runtime/stack.c -o /tmp/u069/P02-release.o",
+      "clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -I internal/native/runtime -c internal/native/runtime/stack.c -o /tmp/u069/P02-sanitized.o"
+    ],
+    "validation_seconds": 0.048218339000413835,
+    "validated": true
+  }
+]

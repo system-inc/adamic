@@ -1,0 +1,10 @@
+--- a/internal/native/runtime/stack.c
++++ b/internal/native/runtime/stack.c
+@@ -63,6 +63,6 @@
+ #endif
+ 
+ _Noreturn void adamic_stack_overflow(void) {
+-	static const char message[] = "RangeError: Maximum call stack size exceeded";
++	static const char message[] = "RangeError: stack limit exceeded";
+ 	adamic_panic(message, sizeof message - 1);
+ }
