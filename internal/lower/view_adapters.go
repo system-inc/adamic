@@ -12,7 +12,10 @@ func unavailableViewFamily(family string) viewContractHook {
 	}
 }
 
-var viewUnionContractHook = unavailableViewFamily("union")
+var viewUnionContractHook viewContractHook
+
+func init() { viewUnionContractHook = buildUnionReadContract }
+
 var viewDictionaryContractHook = unavailableViewFamily("dictionary")
 var viewIntersectionContractHook = unavailableViewFamily("intersection")
 
