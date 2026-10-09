@@ -1,0 +1,9 @@
+05 spread-method-reuse wall=431.869s
+target e3f2be21a5ba97d1fa9fec64088cbcd52ac03fdb
+logs /tmp/loom-units/loom-unit-3360573723/workspace/loom-out/phase/catalog-units/00-1qspa9wx/adamic-catalog-logs-yvh9h47o
+build flags: commit=e3f2be21a5ba97d1fa9fec64088cbcd52ac03fdb; nproc=5; cpu.max=400000 100000; go version go1.27.2 linux/amd64; clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261); v24.19.0; ADAMIC_GATE_UNCACHED=1; go test -trimpath -count=1; native C11 strict warnings, -ffp-contract=off -fno-optimize-sibling-calls; release -O2; sanitizer -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all
+jobs 1; Go -trimpath shares only content-keyed build artifacts; test results uncached
+05 spread-method-reuse: applies-and-fails-as-recorded
+05 made against=e011f8f60899586d6373a5ccb07335ad82cfbf3c
+05 wall=431.796s setup=12.117s check=418.508s cleanup=0.415s load=0.28 0.87 0.67 1/239 152744 -> 1.00 0.97 0.80 1/246 154940
+total wall=431.819s load=0.28 0.87 0.67 1/238 152735 -> 1.00 0.97 0.80 1/245 154940

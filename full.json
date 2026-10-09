@@ -1,0 +1,80 @@
+{
+ "sha": "e3f2be21a5ba97d1fa9fec64088cbcd52ac03fdb",
+ "base": "e3f2be21a5ba97d1fa9fec64088cbcd52ac03fdb",
+ "tools_sha": "7a4a51cc2aca0cd3524c41323e76f03a82b6a603",
+ "runner": "pool",
+ "finished": true,
+ "verdict": "green",
+ "fail": 0,
+ "pass": 10410,
+ "skip": 52,
+ "build_ok": true,
+ "vet_ok": true,
+ "uncached_tests": true,
+ "packages": "all",
+ "wall_seconds": 2624.0,
+ "steps_seconds": {
+  "coverage": 0.0,
+  "tools": 0.0,
+  "build": 34.4,
+  "vet": 22.7,
+  "tests": 1887.0,
+  "wasi": 74.502,
+  "stage3": 377.6,
+  "catalog": 593.767,
+  "determinism": 6.6,
+  "census": 5.1
+ },
+ "stages_exit": {
+  "coverage": 0,
+  "tools": 0,
+  "build": 0,
+  "vet": 0,
+  "tests": 0,
+  "wasi": 0,
+  "stage3": 0,
+  "catalog": 0,
+  "determinism": 0,
+  "census": 0
+ },
+ "planned_stages": [
+  "coverage",
+  "tools",
+  "build",
+  "vet",
+  "tests",
+  "wasi",
+  "stage3",
+  "catalog",
+  "determinism",
+  "census"
+ ],
+ "failure": null,
+ "runs": [
+  "adamic-gate-pilot-20261009T025711-be4ac83b",
+  "adamic-gate-pilot-20261009T032324-b51e7687",
+  "adamic-gate-phases-20261009T024702-7f22c3ad",
+  "adamic-gate-phases-20261009T025711-f1bbebd5",
+  "adamic-gate-census-20261009T033033-e488bbca"
+ ],
+ "replaced_units": {
+  "replaced": [
+   {
+    "unit": "tests-71",
+    "was": "never finished",
+    "run": 0
+   },
+   {
+    "unit": "phase-catalog-6",
+    "was": "failed",
+    "run": 2
+   },
+   {
+    "unit": "phase-catalog-8",
+    "was": "failed",
+    "run": 2
+   }
+  ],
+  "why_red_was_rerun": "no space left on device on the instance (a full disk, Loom's fault); rerun on the disk-safe opening, as @system_adamic ruled at 02:50Z"
+ }
+}

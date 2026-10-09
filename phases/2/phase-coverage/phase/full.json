@@ -1,0 +1,477 @@
+{
+  "sha": "e3f2be21a5ba97d1fa9fec64088cbcd52ac03fdb",
+  "branch": "",
+  "branch_source": "",
+  "session": "",
+  "session_source": "",
+  "base": "e3f2be21a5ba97d1fa9fec64088cbcd52ac03fdb",
+  "base_name": "main",
+  "tools_sha": "7a4a51cc2aca0cd3524c41323e76f03a82b6a603",
+  "machine": {
+    "hostname": "c6dc4efde7b1",
+    "nproc": 5
+  },
+  "uncached_tests": true,
+  "build_ok": false,
+  "vet_ok": false,
+  "box_load": {
+    "start": {
+      "load_1m": 0.2,
+      "cores": 5
+    },
+    "end": {
+      "load_1m": 0.2,
+      "cores": 5
+    }
+  },
+  "scoped_env": [],
+  "npm": {
+    "stage3/api": {
+      "lockfile_sha256": "d7a3ae81b884b59bf3bd617519eb6f04d3d682a83cb803429a2f6ceb9db1a079",
+      "seconds": 0.0
+    }
+  },
+  "compiler_consumers_without_test_package": [
+    "stage3/drivers/parser/build-metrics/main.go",
+    "stage3/drivers/scanner/build-metrics.go"
+  ],
+  "compiler_dependency_map": {
+    "root": "/tmp/adamic-gate-tools/7a4a51cc2aca",
+    "path": "cloud/fast-gate/compiler-dependencies.json"
+  },
+  "selected_compiler_drivers": [
+    "stage3/drivers/parser",
+    "stage3/drivers/scanner",
+    "stage3/drivers/tsc",
+    "stage3/drivers/tsc-entry"
+  ],
+  "oracle_selection": {
+    "whole": true,
+    "reason": "compiler dependency changed"
+  },
+  "direct_packages": [
+    "github.com/system-inc/adamic/internal/ir",
+    "github.com/system-inc/adamic/internal/javascript",
+    "github.com/system-inc/adamic/internal/lower",
+    "github.com/system-inc/adamic/internal/native",
+    "github.com/system-inc/adamic/internal/oracle",
+    "github.com/system-inc/adamic/stage3/fixtures"
+  ],
+  "reads": [
+    {
+      "line": 104,
+      "package": "cmd/adamic-test262",
+      "glob": "internal/native/runtime/*.c",
+      "paths": [
+        "internal/native/runtime/object.c",
+        "internal/native/runtime/region.c",
+        "internal/native/runtime/view_unions_mixed.c",
+        "internal/native/runtime/view_unions_untagged.c"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 117,
+      "package": "cmd/adamic-test262",
+      "glob": "internal/native/runtime/*.h",
+      "paths": [
+        "internal/native/runtime/adamic.h",
+        "internal/native/runtime/view_callables_contract.h",
+        "internal/native/runtime/view_representations.h",
+        "internal/native/runtime/view_unions_mixed.h",
+        "internal/native/runtime/view_unions_untagged.h"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 160,
+      "package": "internal/fuzz",
+      "glob": "internal/native/runtime/*.c",
+      "paths": [
+        "internal/native/runtime/object.c",
+        "internal/native/runtime/region.c",
+        "internal/native/runtime/view_unions_mixed.c",
+        "internal/native/runtime/view_unions_untagged.c"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 163,
+      "package": "internal/fuzz",
+      "glob": "internal/native/runtime/*.h",
+      "paths": [
+        "internal/native/runtime/adamic.h",
+        "internal/native/runtime/view_callables_contract.h",
+        "internal/native/runtime/view_representations.h",
+        "internal/native/runtime/view_unions_mixed.h",
+        "internal/native/runtime/view_unions_untagged.h"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 175,
+      "package": "internal/ir",
+      "glob": "internal/lower/*.go",
+      "paths": [
+        "internal/lower/expression.go",
+        "internal/lower/library_node_fs_file.go",
+        "internal/lower/lower.go",
+        "internal/lower/object.go",
+        "internal/lower/view_adapters.go",
+        "internal/lower/view_contracts.go",
+        "internal/lower/view_lazy.go",
+        "internal/lower/view_unions_callable_members.go",
+        "internal/lower/view_unions_dispatch.go",
+        "internal/lower/view_unions_mixed.go",
+        "internal/lower/view_unions_mixed_test.go",
+        "internal/lower/view_unions_primitive_brands.go",
+        "internal/lower/view_unions_untagged.go",
+        "internal/lower/view_unions_untagged_test.go"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 177,
+      "package": "internal/ir",
+      "glob": "internal/native/*.go",
+      "paths": [
+        "internal/native/emit_objects.go",
+        "internal/native/emit_statements.go",
+        "internal/native/reuse.go",
+        "internal/native/view_unions_callable_producers.go",
+        "internal/native/view_unions_mixed.go",
+        "internal/native/view_unions_mixed_test.go",
+        "internal/native/view_unions_read.go",
+        "internal/native/view_unions_untagged.go"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 392,
+      "package": "stage1/cohere/css",
+      "glob": "internal/native/runtime/*.c",
+      "paths": [
+        "internal/native/runtime/object.c",
+        "internal/native/runtime/region.c",
+        "internal/native/runtime/view_unions_mixed.c",
+        "internal/native/runtime/view_unions_untagged.c"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 394,
+      "package": "stage1/cohere/css",
+      "glob": "internal/native/runtime/*.h",
+      "paths": [
+        "internal/native/runtime/adamic.h",
+        "internal/native/runtime/view_callables_contract.h",
+        "internal/native/runtime/view_representations.h",
+        "internal/native/runtime/view_unions_mixed.h",
+        "internal/native/runtime/view_unions_untagged.h"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 550,
+      "package": "stage1/cohere/gitignore",
+      "glob": "*",
+      "paths": [
+        "docs/views-v2-dispatch-review.md",
+        "docs/views-v2-evidence/primitive-prerequisite-v1.json",
+        "docs/views-v2-evidence/primitive-prerequisite.json",
+        "docs/views-v2-evidence/selector-mutants.json",
+        "docs/views-v2-progress.md",
+        "internal/ir/ir.go",
+        "internal/ir/view_primitives.go",
+        "internal/ir/view_primitives_test.go",
+        "internal/ir/view_unions_untagged.go",
+        "internal/ir/view_unions_untagged_test.go",
+        "internal/javascript/javascript.go",
+        "internal/javascript/readiness.go",
+        "internal/javascript/view_test_runtime_test.go",
+        "internal/javascript/view_unions_callable_contract.go",
+        "internal/javascript/view_unions_callable_producers.go",
+        "internal/javascript/view_unions_mixed.go",
+        "internal/javascript/view_unions_mixed_test.go",
+        "internal/javascript/view_unions_read.go",
+        "internal/javascript/view_unions_untagged.go",
+        "internal/lower/expression.go",
+        "internal/lower/library_node_fs_file.go",
+        "internal/lower/lower.go",
+        "internal/lower/object.go",
+        "internal/lower/view_adapters.go",
+        "internal/lower/view_contracts.go",
+        "internal/lower/view_lazy.go",
+        "internal/lower/view_unions_callable_members.go",
+        "internal/lower/view_unions_dispatch.go",
+        "internal/lower/view_unions_mixed.go",
+        "internal/lower/view_unions_mixed_test.go",
+        "internal/lower/view_unions_primitive_brands.go",
+        "internal/lower/view_unions_untagged.go",
+        "internal/lower/view_unions_untagged_test.go",
+        "internal/native/emit_objects.go",
+        "internal/native/emit_statements.go",
+        "internal/native/reuse.go",
+        "internal/native/runtime/adamic.h",
+        "internal/native/runtime/object.c",
+        "internal/native/runtime/region.c",
+        "internal/native/runtime/view_callables_contract.h",
+        "internal/native/runtime/view_representations.h",
+        "internal/native/runtime/view_unions_mixed.c",
+        "internal/native/runtime/view_unions_mixed.h",
+        "internal/native/runtime/view_unions_untagged.c",
+        "internal/native/runtime/view_unions_untagged.h",
+        "internal/native/view_unions_callable_producers.go",
+        "internal/native/view_unions_mixed.go",
+        "internal/native/view_unions_mixed_test.go",
+        "internal/native/view_unions_read.go",
+        "internal/native/view_unions_untagged.go",
+        "internal/oracle/checked_views_v2_counts_test.go",
+        "internal/oracle/checked_views_v2_migration_test.go",
+        "internal/oracle/checked_views_v2_object_primitive_test.go",
+        "internal/oracle/checked_views_v2_source_test.go",
+        "internal/oracle/closure_merge_refusals_test.go",
+        "internal/oracle/counts.md",
+        "internal/oracle/entries_acceptance_test.go",
+        "stage3/fixtures/assertions/status.json",
+        "stage3/fixtures/predicates/status.json",
+        "stage3/fixtures/taste/status.json",
+        "stage3/interface-downcasts/lane4b/fixtures/comment-boolean.a",
+        "stage3/interface-downcasts/lane4b/fixtures/comment-flags-wrong.a",
+        "stage3/interface-downcasts/lane4b/fixtures/comment-good.a",
+        "stage3/interface-downcasts/lane4b/fixtures/diagnostic-boolean.a",
+        "stage3/interface-downcasts/lane4b/fixtures/diagnostic-code-wrong.a",
+        "stage3/interface-downcasts/lane4b/fixtures/diagnostic-good.a",
+        "stage3/interface-downcasts/lane4b/fixtures/diagnostic-wrong.a",
+        "stage3/interface-downcasts/lane4b/fixtures/literal-boolean.a",
+        "stage3/interface-downcasts/lane4b/fixtures/literal-good.a",
+        "stage3/interface-downcasts/lane4b/fixtures/literal-negative-wrong.a",
+        "stage3/interface-downcasts/lane4b/fixtures/literal-text-wrong.a",
+        "stage3/interface-downcasts/lane4b/fixtures/node-indicator-false.a",
+        "stage3/interface-downcasts/lane4b/fixtures/node-indicator-flags-wrong.a",
+        "stage3/interface-downcasts/lane4b/fixtures/node-indicator-good.a",
+        "stage3/interface-downcasts/lane4b/fixtures/node-indicator-wrong.a",
+        "stage3/interface-downcasts/lane4b/fixtures/optional-absent.a",
+        "stage3/interface-downcasts/lane4b/fixtures/optional-receiver.a",
+        "stage3/interface-downcasts/lane4b/fixtures/required-missing.a",
+        "stage3/interface-downcasts/untagged/fixtures/array-union-empty.a",
+        "stage3/interface-downcasts/untagged/fixtures/array-union-good.a",
+        "stage3/interface-downcasts/untagged/fixtures/array-union-mixed.a",
+        "stage3/interface-downcasts/untagged/fixtures/array-union-nested.a",
+        "stage3/interface-downcasts/untagged/fixtures/array-union-wrong.a",
+        "stage3/interface-downcasts/untagged/fixtures/binding-name-source-absent.a",
+        "stage3/interface-downcasts/untagged/fixtures/binding-name-source-good.a",
+        "stage3/interface-downcasts/untagged/fixtures/binding-name-source-nested.a",
+        "stage3/interface-downcasts/untagged/fixtures/binding-name-source-wrong.a",
+        "stage3/interface-downcasts/untagged/fixtures/callable-union-good-number.a",
+        "stage3/interface-downcasts/untagged/fixtures/callable-union-good-string.a",
+        "stage3/interface-downcasts/untagged/fixtures/callable-union-nested.a",
+        "stage3/interface-downcasts/untagged/fixtures/callable-union-optional-boundary.a",
+        "stage3/interface-downcasts/untagged/fixtures/callable-union-wrong.a",
+        "stage3/interface-downcasts/untagged/fixtures/class-data-good.a",
+        "stage3/interface-downcasts/untagged/fixtures/class-data-wrong.a",
+        "stage3/interface-downcasts/untagged/fixtures/flow-callback-good.a",
+        "stage3/interface-downcasts/untagged/fixtures/flow-callback-wrong.a",
+        "stage3/interface-downcasts/untagged/fixtures/flow-generic-good.a",
+        "stage3/interface-downcasts/untagged/fixtures/flow-generic-wrong.a",
+        "stage3/interface-downcasts/untagged/fixtures/flow-helper-good.a",
+        "stage3/interface-downcasts/untagged/fixtures/flow-helper-wrong.a",
+        "stage3/interface-downcasts/untagged/fixtures/flow-stored-good.a",
+        "stage3/interface-downcasts/untagged/fixtures/flow-stored-wrong.a",
+        "stage3/interface-downcasts/untagged/fixtures/option-element-source-absent.a",
+        "stage3/interface-downcasts/untagged/fixtures/option-element-source-good.a",
+        "stage3/interface-downcasts/untagged/fixtures/option-element-source-nested.a",
+        "stage3/interface-downcasts/untagged/fixtures/option-element-source-wrong.a",
+        "stage3/interface-downcasts/untagged/fixtures/recursive-absent.a",
+        "stage3/interface-downcasts/untagged/fixtures/recursive-good.a",
+        "stage3/interface-downcasts/untagged/fixtures/recursive-nested.a",
+        "stage3/interface-downcasts/untagged/fixtures/recursive-wrong.a",
+        "stage3/interface-downcasts/untagged/fixtures/structural-source-absent.a",
+        "stage3/interface-downcasts/untagged/fixtures/structural-source-good.a",
+        "stage3/interface-downcasts/untagged/fixtures/structural-source-nested.a",
+        "stage3/interface-downcasts/untagged/fixtures/structural-source-wrong.a",
+        "stage3/interface-downcasts/untagged/source-refusals.json",
+        "stage3/interface-downcasts/v2/array-arm.a",
+        "stage3/interface-downcasts/v2/callable-producer-wrong.a",
+        "stage3/interface-downcasts/v2/fixed-tuple-good.a",
+        "stage3/interface-downcasts/v2/fixed-tuple-wrong.a",
+        "stage3/interface-downcasts/v2/fs-option-boxing.a",
+        "stage3/interface-downcasts/v2/mixed-read-write.a",
+        "stage3/interface-downcasts/v2/null-read-write.a",
+        "stage3/interface-downcasts/v2/representation-read-write.a",
+        "stage3/interface-downcasts/v2/tuple-identity-wrong.a",
+        "stage3/interface-downcasts/v2/undefined-read-write.a"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 622,
+      "package": "stage1/cohere/json",
+      "glob": "*.json",
+      "paths": [
+        "docs/views-v2-evidence/primitive-prerequisite-v1.json",
+        "docs/views-v2-evidence/primitive-prerequisite.json",
+        "docs/views-v2-evidence/selector-mutants.json",
+        "stage3/fixtures/assertions/status.json",
+        "stage3/fixtures/predicates/status.json",
+        "stage3/fixtures/taste/status.json",
+        "stage3/interface-downcasts/untagged/source-refusals.json"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 1166,
+      "package": "stage1/cohere/markdowninline",
+      "glob": "*.[mM][dD]",
+      "paths": [
+        "docs/views-v2-dispatch-review.md",
+        "docs/views-v2-progress.md",
+        "internal/oracle/counts.md"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 1455,
+      "package": "stage1/typescript/scanner",
+      "glob": "internal/native/runtime/*.c",
+      "paths": [
+        "internal/native/runtime/object.c",
+        "internal/native/runtime/region.c",
+        "internal/native/runtime/view_unions_mixed.c",
+        "internal/native/runtime/view_unions_untagged.c"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 1457,
+      "package": "stage1/typescript/scanner",
+      "glob": "internal/native/runtime/*.h",
+      "paths": [
+        "internal/native/runtime/adamic.h",
+        "internal/native/runtime/view_callables_contract.h",
+        "internal/native/runtime/view_representations.h",
+        "internal/native/runtime/view_unions_mixed.h",
+        "internal/native/runtime/view_unions_untagged.h"
+      ],
+      "map_changed": false
+    }
+  ],
+  "unchecked_a_files": [
+    "stage3/interface-downcasts/lane4b/fixtures/comment-boolean.a",
+    "stage3/interface-downcasts/lane4b/fixtures/comment-flags-wrong.a",
+    "stage3/interface-downcasts/lane4b/fixtures/comment-good.a",
+    "stage3/interface-downcasts/lane4b/fixtures/diagnostic-boolean.a",
+    "stage3/interface-downcasts/lane4b/fixtures/diagnostic-code-wrong.a",
+    "stage3/interface-downcasts/lane4b/fixtures/diagnostic-good.a",
+    "stage3/interface-downcasts/lane4b/fixtures/diagnostic-wrong.a",
+    "stage3/interface-downcasts/lane4b/fixtures/literal-boolean.a",
+    "stage3/interface-downcasts/lane4b/fixtures/literal-good.a",
+    "stage3/interface-downcasts/lane4b/fixtures/literal-negative-wrong.a",
+    "stage3/interface-downcasts/lane4b/fixtures/literal-text-wrong.a",
+    "stage3/interface-downcasts/lane4b/fixtures/node-indicator-false.a",
+    "stage3/interface-downcasts/lane4b/fixtures/node-indicator-flags-wrong.a",
+    "stage3/interface-downcasts/lane4b/fixtures/node-indicator-good.a",
+    "stage3/interface-downcasts/lane4b/fixtures/node-indicator-wrong.a",
+    "stage3/interface-downcasts/lane4b/fixtures/optional-absent.a",
+    "stage3/interface-downcasts/lane4b/fixtures/optional-receiver.a",
+    "stage3/interface-downcasts/lane4b/fixtures/required-missing.a",
+    "stage3/interface-downcasts/untagged/fixtures/array-union-empty.a",
+    "stage3/interface-downcasts/untagged/fixtures/array-union-good.a",
+    "stage3/interface-downcasts/untagged/fixtures/array-union-mixed.a",
+    "stage3/interface-downcasts/untagged/fixtures/array-union-nested.a",
+    "stage3/interface-downcasts/untagged/fixtures/array-union-wrong.a",
+    "stage3/interface-downcasts/untagged/fixtures/binding-name-source-absent.a",
+    "stage3/interface-downcasts/untagged/fixtures/binding-name-source-good.a",
+    "stage3/interface-downcasts/untagged/fixtures/binding-name-source-nested.a",
+    "stage3/interface-downcasts/untagged/fixtures/binding-name-source-wrong.a",
+    "stage3/interface-downcasts/untagged/fixtures/callable-union-good-number.a",
+    "stage3/interface-downcasts/untagged/fixtures/callable-union-good-string.a",
+    "stage3/interface-downcasts/untagged/fixtures/callable-union-nested.a",
+    "stage3/interface-downcasts/untagged/fixtures/callable-union-optional-boundary.a",
+    "stage3/interface-downcasts/untagged/fixtures/callable-union-wrong.a",
+    "stage3/interface-downcasts/untagged/fixtures/class-data-good.a",
+    "stage3/interface-downcasts/untagged/fixtures/class-data-wrong.a",
+    "stage3/interface-downcasts/untagged/fixtures/flow-callback-good.a",
+    "stage3/interface-downcasts/untagged/fixtures/flow-callback-wrong.a",
+    "stage3/interface-downcasts/untagged/fixtures/flow-generic-good.a",
+    "stage3/interface-downcasts/untagged/fixtures/flow-generic-wrong.a",
+    "stage3/interface-downcasts/untagged/fixtures/flow-helper-good.a",
+    "stage3/interface-downcasts/untagged/fixtures/flow-helper-wrong.a",
+    "stage3/interface-downcasts/untagged/fixtures/flow-stored-good.a",
+    "stage3/interface-downcasts/untagged/fixtures/flow-stored-wrong.a",
+    "stage3/interface-downcasts/untagged/fixtures/option-element-source-absent.a",
+    "stage3/interface-downcasts/untagged/fixtures/option-element-source-good.a",
+    "stage3/interface-downcasts/untagged/fixtures/option-element-source-nested.a",
+    "stage3/interface-downcasts/untagged/fixtures/option-element-source-wrong.a",
+    "stage3/interface-downcasts/untagged/fixtures/recursive-absent.a",
+    "stage3/interface-downcasts/untagged/fixtures/recursive-good.a",
+    "stage3/interface-downcasts/untagged/fixtures/recursive-nested.a",
+    "stage3/interface-downcasts/untagged/fixtures/recursive-wrong.a",
+    "stage3/interface-downcasts/untagged/fixtures/structural-source-absent.a",
+    "stage3/interface-downcasts/untagged/fixtures/structural-source-good.a",
+    "stage3/interface-downcasts/untagged/fixtures/structural-source-nested.a",
+    "stage3/interface-downcasts/untagged/fixtures/structural-source-wrong.a",
+    "stage3/interface-downcasts/v2/array-arm.a",
+    "stage3/interface-downcasts/v2/callable-producer-wrong.a",
+    "stage3/interface-downcasts/v2/fixed-tuple-good.a",
+    "stage3/interface-downcasts/v2/fixed-tuple-wrong.a",
+    "stage3/interface-downcasts/v2/fs-option-boxing.a",
+    "stage3/interface-downcasts/v2/mixed-read-write.a",
+    "stage3/interface-downcasts/v2/null-read-write.a",
+    "stage3/interface-downcasts/v2/representation-read-write.a",
+    "stage3/interface-downcasts/v2/tuple-identity-wrong.a",
+    "stage3/interface-downcasts/v2/undefined-read-write.a"
+  ],
+  "a_check_exempt": [],
+  "executors": {
+    "inert": 5,
+    "stage3": 65
+  },
+  "uncovered_files": [],
+  "coverage_enforced": true,
+  "budget_seconds": 30,
+  "budget_instrument": {
+    "box": "c6dc4efde7b1",
+    "cpus": 5,
+    "load": [
+      0.2,
+      0.6,
+      1.1
+    ],
+    "reference": "a 4-CPU Codex instance; this box until Loom's tier measures there"
+  },
+  "budget_burndown_units": [],
+  "budget_over": [],
+  "budget_drift": [],
+  "budget_can_leave_burndown": [],
+  "wall_seconds": 1.0,
+  "steps_seconds": {
+    "coverage": 0.0
+  },
+  "pass": 0,
+  "fail": 0,
+  "failed_tests": [],
+  "complete": false,
+  "skip": 0,
+  "required_input_skips": [],
+  "unclassified_skips": [],
+  "pending_skips": [],
+  "failure": null,
+  "planned_stages": [
+    "coverage"
+  ],
+  "stages_exit": {
+    "coverage": 0
+  },
+  "cancelled_after_first_failure": false,
+  "finished": true,
+  "long_test_threshold_seconds": 30,
+  "long_tests": 0,
+  "long_test_seconds": 0,
+  "planned_test_counts": {
+    "passed": 0,
+    "failed": 0,
+    "not run": 0
+  },
+  "gate_kind": "full"
+}

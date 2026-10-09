@@ -1,0 +1,16 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-trimpath",
+    "-count=1",
+    "./internal/oracle",
+    "-run",
+    "^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^throw_keeps_old_value[.]a$"
+  ],
+  "seconds": 25.40184113199939,
+  "exit_code": 1,
+  "go_reported_test_seconds": 0.419,
+  "load_before": "1.03 0.97 0.96 1/178 39544",
+  "load_after": "1.02 0.97 0.96 1/181 39639"
+}

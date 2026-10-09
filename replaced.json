@@ -1,0 +1,20 @@
+{
+ "replaced": [
+  {
+   "unit": "tests-71",
+   "was": "never finished",
+   "run": 0
+  },
+  {
+   "unit": "phase-catalog-6",
+   "was": "failed",
+   "run": 2
+  },
+  {
+   "unit": "phase-catalog-8",
+   "was": "failed",
+   "run": 2
+  }
+ ],
+ "why_red_was_rerun": "no space left on device on the instance (a full disk, Loom's fault); rerun on the disk-safe opening, as @system_adamic ruled at 02:50Z"
+}
