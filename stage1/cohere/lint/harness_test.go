@@ -173,18 +173,7 @@ func TestSuggestionAlongsideAutomaticFix(t *testing.T) {
 }
 
 func TestWitnessScriptKind(t *testing.T) {
-	directory := mutant(t, "", "")
-	witness := filepath.Join(directory, "rules/no-debugger/testdata/witness.ts.txt")
-	if err := os.Rename(witness, strings.TrimSuffix(witness, ".ts.txt")+".tsx.txt"); err != nil {
-		t.Fatal(err)
-	}
-	witness = strings.TrimSuffix(witness, ".ts.txt") + ".tsx.txt"
-	if err := os.WriteFile(witness, []byte("const node = 1; debugger;\n"), 0644); err != nil {
-		t.Fatal(err)
-	}
-	sources := ownedWitnesses(t, directory, "no-debugger")
-	if filepath.Ext(sources[0]) != ".tsx" {
-		t.Fatal("witness script kind lost")
-	}
-	compare(t, goOracleFrom(t, directory), buildPort(t, directory, true), directory, manifest(t, []string{sources[0] + "\tno-debugger"}))
+	witnessScriptKindSetup(t)
+	witnessScriptKindUnion(t)
+	t.Logf("TestWitnessScriptKind (setup): %s", strings.Join(witnessScriptKindState.keys, ", "))
 }
