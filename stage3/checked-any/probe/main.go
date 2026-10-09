@@ -9,8 +9,6 @@ import (
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
 	"os"
-	"regexp"
-	"strconv"
 	"strings"
 )
 
@@ -31,6 +29,7 @@ func main() {
 		if err != nil {
 			reason = err.Error()
 			record["phase"] = "loader"
+			record["stop_kind"] = "loader_diagnostic"
 		} else {
 			program, problem := lower.Lower(context.Background(), loaded)
 			record["phase"] = "lowering"
@@ -39,12 +38,11 @@ func main() {
 				// A lowering refusal is a declaration-level observation, not proof the
 				// particular any use was reached. Keep the distinction explicit.
 				record["declaration_stop"] = reason
-				position := regexp.MustCompile(`^(.+):(\d+):(\d+):`).FindStringSubmatch(reason)
-				if len(position) == 4 && position[1] == source {
-					line, _ := strconv.Atoi(position[2])
-					if line >= int(record["first_line"].(float64)) && line <= int(record["last_line"].(float64)) {
-						status = "refused"
-					}
+				if insideDeclaration(reason, source, int(record["first_line"].(float64)), int(record["last_line"].(float64))) {
+					status = "refused"
+					record["stop_kind"] = "refusal_inside_declaration"
+				} else {
+					record["stop_kind"] = "lowering_outside_declaration"
 				}
 			} else {
 				for _, function := range program.Functions {
@@ -67,7 +65,7 @@ func main() {
 				if guards != 0 && attributed != 0 {
 					status = "checked"
 				} else {
-					reason = "declaration lowered without a checked any use"
+					reason, record["stop_kind"] = unobservedUse(record)
 				}
 				record["emitted_c_bytes"] = len(native.C(program))
 			}
@@ -75,7 +73,7 @@ func main() {
 		record["status"], record["reason"], record["checked_use_helpers"] = status, reason, guards
 		counts[status]++
 	}
-	output := map[string]any{"source_commit": "050880ce59e30b356b686bd3144efe24f875ebc8", "inventory_commit": "ea1b2359", "sites": 271, "method": "smallest enclosing unchanged declaration, ambient imports and captures with stock declaration-only type contracts", "classification_scope": "isolated declarations; checked scalar messages match the site binding; refusals must lie within the selected declaration", "counts": counts, "records": records}
+	output := map[string]any{"source_commit": "050880ce59e30b356b686bd3144efe24f875ebc8", "inventory_commit": "ea1b2359", "sites": 271, "method": "smallest enclosing unchanged declaration, ambient imports and captures with stock declaration-only type contracts", "classification_scope": "guards attributed to site bindings; refusals inside the selected stock span; every other record carries its exact diagnostic or outside-use requirement", "counts": counts, "records": records}
 	result, _ := json.MarshalIndent(output, "", "  ")
 	if err := os.WriteFile(os.Args[2], append(result, '\n'), 0600); err != nil {
 		panic(err)
