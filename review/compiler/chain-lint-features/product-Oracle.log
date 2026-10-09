@@ -1,0 +1,8 @@
+=== RUN   TestProduct_ProfileCompilationOracle
+=== PAUSE TestProduct_ProfileCompilationOracle
+=== CONT  TestProduct_ProfileCompilationOracle
+    lint_setup_clock_products_test.go:144: build shards-agree-profile-oracle 633214cc3066 miss 4.69
+    lint_setup_clock_products_test.go:145: product wall=4.705616252s
+--- PASS: TestProduct_ProfileCompilationOracle (4.71s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	4.729s

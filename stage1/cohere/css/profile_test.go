@@ -102,10 +102,13 @@ func TestCSSProfileArtifacts(t *testing.T) {
 			t.Fatal(err)
 		}
 	}
-	runtimeDir := filepath.Join(repo, "internal/native/runtime")
-	files, _ := filepath.Glob(filepath.Join(runtimeDir, "*.c"))
-	args := append(native.Flags(native.Options{}), "-g", "-I", runtimeDir, "-o", filepath.Join(directory, "profiled"), source)
-	args = append(args, files...)
+
+	library, err := native.RuntimeLibraryForSource("", code, native.Options{})
+	if err != nil {
+		t.Fatal(err)
+	}
+	args := append(native.SourceFlags(code, native.Options{}), "-g", "-I", filepath.Dir(library), "-o", filepath.Join(directory, "profiled"), source)
+	args = append(args, native.RuntimeLinkFlags(library)...)
 	args = append(args, "-lm")
 	result := execute(t, nil, "clang", args...)
 	if result.exitCode != 0 || len(result.stderr) != 0 {

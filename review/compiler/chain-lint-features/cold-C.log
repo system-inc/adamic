@@ -1,0 +1,9 @@
+=== RUN   TestProduct_ProfileCompilationC
+=== PAUSE TestProduct_ProfileCompilationC
+=== CONT  TestProduct_ProfileCompilationC
+    profile_compilation_main_test.go:272: build lint-profile-lowered 2bf5455e32a4 hit 0.05
+    profile_compilation_main_test.go:298: build lint-profile-emit-c a75e2a112d15 miss 90.54
+    lint_setup_clock_products_test.go:54: product wall=1m31.946730809s
+--- PASS: TestProduct_ProfileCompilationC (91.95s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	91.976s

@@ -1,0 +1,9 @@
+=== RUN   TestProduct_ProfileCompilationJavaScript
+=== PAUSE TestProduct_ProfileCompilationJavaScript
+=== CONT  TestProduct_ProfileCompilationJavaScript
+    profile_compilation_main_test.go:272: build lint-profile-lowered 2bf5455e32a4 hit 0.03
+    profile_compilation_main_test.go:298: build lint-profile-emit-javascript 22af98d9f085 hit 0.03
+    lint_setup_clock_products_test.go:61: product wall=1.079940748s
+--- PASS: TestProduct_ProfileCompilationJavaScript (1.08s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	1.103s

@@ -1,0 +1,8 @@
+=== RUN   TestProduct_MarkdownMalformedEventsNative
+=== PAUSE TestProduct_MarkdownMalformedEventsNative
+=== CONT  TestProduct_MarkdownMalformedEventsNative
+    pilot_family_products_test.go:68: build markdownblocks-malformed-events-lowered 5c1de8e358d6 miss 17.87
+    pilot_family_products_test.go:68: build markdownblocks-malformed-events-native e67bfa46a3f4 miss 20.94
+--- PASS: TestProduct_MarkdownMalformedEventsNative (38.83s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/markdownblocks	38.842s
