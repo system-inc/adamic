@@ -1,17 +1,15 @@
 package json
 
 import (
-	"flag"
 	"fmt"
-	"github.com/system-inc/adamic/internal/buildcache"
 	"os"
 	"path/filepath"
-	"regexp"
 	"sort"
 	"strings"
 	"sync"
 	"testing"
-	"time"
+
+	"github.com/system-inc/adamic/internal/buildcache"
 )
 
 // Fixed hash buckets have headroom. Keys are repository-relative case paths,
@@ -74,6 +72,7 @@ func jsonTopClangToolchain() ([]string, error) {
 }
 func jsonTopProduct(t *testing.T, key string, in buildcache.Inputs, build func(string) error) string {
 	t.Helper()
+	portMatchesPrepare(t)
 	v, ready := jsonTopState.products.Load(key)
 	if !ready || v.(*jsonTopBuild).dir == "" {
 		t.Fatal("shared setup did not prepare product: " + key)
@@ -82,7 +81,8 @@ func jsonTopProduct(t *testing.T, key string, in buildcache.Inputs, build func(s
 }
 func jsonTopOracle(t *testing.T) string {
 	t.Helper()
-	if !portMatchesShared.ready || jsonTopState.oracleDir == "" {
+	portMatchesPrepare(t)
+	if jsonTopState.oracleDir == "" {
 		t.Fatal("shared setup did not prepare the Go oracle")
 	}
 	return jsonTopState.oracleDir
@@ -106,8 +106,7 @@ func jsonTopReport(t *testing.T, i int, value string) {
 // are read-only and never removed by the test process.
 // Not parallel: owns process-wide oracle cleanup and report aggregation after m.Run.
 func TestMain(m *testing.M) {
-	portMatchesSelectSetup()
-	code := upstreamParityTestRuns(m)
+	code := m.Run()
 	if jsonTopState.oracleDir != "" && !jsonTopState.oracleCached {
 		os.RemoveAll(jsonTopState.oracleDir)
 	}
@@ -149,46 +148,4 @@ func TestUpstreamRepositoryCorpusParityUnion(t *testing.T) {
 		t.Fatal(e)
 	}
 	t.Logf("exact live union: %d cases", len(cases))
-}
-
-// Go runs serial tests before resuming parallel leaves. Extend only the process
-// fallback timeout: setup and each leaf enforce independent 90-second budgets.
-func portMatchesSelectSetup() {
-	flag.Parse()
-	selector := flag.Lookup("test.run").Value.String()
-	parts := strings.Split(selector, "/")
-	pattern, err := regexp.Compile(parts[0])
-	if err != nil {
-		return
-	} // Let the testing package report invalid selectors.
-	selected := false
-	for _, family := range []struct {
-		name, format string
-		count        int
-	}{
-		{"TestPortMatchesGoCohere", "%03d", testPortMatchesGoCohereSplitShards},
-		{"TestPortMatchesGoCohere", "%04d", testPortMatchesGoCohereShards},
-		{"TestUpstreamRepositoryCorpusParity", "%04d", testUpstreamRepositoryCorpusParityShards},
-	} {
-		if family.name == "TestUpstreamRepositoryCorpusParity" && os.Getenv("ADAMIC_JSON_PRETTIER") == "" {
-			continue
-		}
-		for n := 0; n < family.count && !selected; n++ {
-			selected = pattern.MatchString(family.name + "_" + fmt.Sprintf(family.format, n))
-		}
-	}
-
-	if !selected {
-		return
-	}
-	parts[0] = "(?:" + parts[0] + ")|^TestPortMatchesGoCohereSplit_Setup$"
-	if err := flag.Set("test.run", strings.Join(parts, "/")); err != nil {
-		panic(err)
-	}
-	timeout, err := time.ParseDuration(flag.Lookup("test.timeout").Value.String())
-	if err == nil && timeout > 0 {
-		if err := flag.Set("test.timeout", (timeout + 90*time.Second).String()); err != nil {
-			panic(err)
-		}
-	}
 }
