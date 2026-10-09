@@ -160,7 +160,7 @@ var clangWarning = regexp.MustCompile(`\[-Werror,(-W[a-z-]+)\]`)
 // A check whose words are JavaScript's own (TypeError: Cannot read properties of undefined, and the
 // rest) is where Node throws too, so Node's run stops there and the two agree; a shared stop on one
 // of those, or on anything else, while Node runs on, is a finding.
-var insertedCheck = regexp.MustCompile(`^adamic: panic: (?:(?:undefined|null) where the checker narrowed it away: a call since the narrowing put it back|map: the array shrank while it was being mapped|[A-Za-z]+: the array shrank while it was being searched|(?:find|findIndex|findLast|findLastIndex): index [0-9]+ is undefined; element type [^\n]+ does not admit undefined|index [^ ]+ is outside an array of length [0-9]+|cast failed: this .+ is not a .+)\n$`)
+var insertedCheck = regexp.MustCompile(`^adamic: panic: (?:(?:undefined|null) where the checker narrowed it away: a call since the narrowing put it back|map: the array shrank while it was being mapped|[A-Za-z]+: the array shrank while it was being searched|index [^ ]+ is outside an array of length [0-9]+|cast failed: this .+ is not a .+)\n$`)
 
 var digits = regexp.MustCompile(`[0-9]+|0x[0-9a-f]+`)
 
