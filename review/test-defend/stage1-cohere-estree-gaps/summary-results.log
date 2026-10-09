@@ -1,0 +1,104 @@
+{
+  "D1": {
+    "failed": [
+      "TestRawInputGap"
+    ],
+    "unknown": [],
+    "seconds": 46.612,
+    "cooked": false
+  },
+  "D2": {
+    "failed": [
+      "TestInterfaceDefaultGap",
+      "TestJSXAgreement_008",
+      "TestJSXAgreement_012",
+      "TestJSXAgreement_023",
+      "TestJSXAgreement_024",
+      "TestJSXAgreement_025",
+      "TestJSXAgreement_027",
+      "TestJSXAgreement_029"
+    ],
+    "unknown": [],
+    "seconds": 5.438,
+    "cooked": false
+  },
+  "D3": {
+    "failed": [
+      "TestInterfaceDefaultGap",
+      "TestInterfaceTypeMethodGap"
+    ],
+    "unknown": [],
+    "seconds": 33.314,
+    "cooked": false
+  },
+  "D4": {
+    "failed": [
+      "TestInterfaceDefaultGap",
+      "TestInterfaceTypeMethodGap"
+    ],
+    "unknown": [],
+    "seconds": 33.078,
+    "cooked": false
+  },
+  "D5": {
+    "failed": [
+      "TestInterfaceTypeMethodGap",
+      "TestJSXAgreement_008",
+      "TestJSXAgreement_012",
+      "TestJSXAgreement_023",
+      "TestJSXAgreement_024",
+      "TestJSXAgreement_025",
+      "TestJSXAgreement_027",
+      "TestJSXAgreement_029"
+    ],
+    "unknown": [],
+    "seconds": 53.26,
+    "cooked": false
+  },
+  "D6": {
+    "failed": [
+      "TestInterfaceTypeMethodGap",
+      "TestJSXAgreement_027"
+    ],
+    "unknown": [
+      "TestJSXAgreement",
+      "TestJSXAgreement_000",
+      "TestJSXAgreement_001",
+      "TestJSXAgreement_002",
+      "TestJSXAgreement_003",
+      "TestJSXAgreement_004",
+      "TestJSXAgreement_006",
+      "TestJSXAgreement_008",
+      "TestJSXAgreement_012",
+      "TestJSXAgreement_015",
+      "TestJSXAgreement_016",
+      "TestJSXAgreement_017",
+      "TestJSXAgreement_018",
+      "TestJSXAgreement_019",
+      "TestJSXAgreement_020",
+      "TestJSXAgreement_021",
+      "TestJSXAgreement_023",
+      "TestJSXAgreement_024",
+      "TestJSXAgreement_025",
+      "TestJSXAgreement_029",
+      "TestMethodReplacementGap"
+    ],
+    "seconds": 90.085,
+    "cooked": true
+  },
+  "D7": {
+    "failed": [
+      "TestInterfaceTypeMethodGap",
+      "TestJSXAgreement_008",
+      "TestJSXAgreement_012",
+      "TestJSXAgreement_023",
+      "TestJSXAgreement_024",
+      "TestJSXAgreement_025",
+      "TestJSXAgreement_027",
+      "TestJSXAgreement_029"
+    ],
+    "unknown": [],
+    "seconds": 44.447,
+    "cooked": false
+  }
+}
