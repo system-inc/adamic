@@ -13,6 +13,9 @@ import (
 	"github.com/system-inc/adamic/internal/childguard"
 )
 
+// Across Go, Node and sanitized native on 348 JSX inputs, the largest output
+// gap was 57.56ms unloaded (25.59ms with 2 x NumCPU = ten busy processes).
+// Ten seconds leaves over 170x headroom; silent startup uses the shared default.
 const parserChildStall = 10 * time.Second
 
 // Capture the large corpus in a file while childguard observes output progress.

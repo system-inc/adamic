@@ -66,6 +66,7 @@ func bounded(t *testing.T, name string, arguments ...string) *exec.Cmd {
 	if name == "go" && len(arguments) > 0 && arguments[0] == "test" {
 		arguments = append([]string{"test", "-timeout=0"}, arguments[1:]...)
 	}
+	// childguard starts and kills the entire process group.
 	command := exec.Command(name, arguments...)
 	return command
 }

@@ -49,7 +49,7 @@ func lowered(t *testing.T, path string) *ir.Program {
 	return result
 }
 
-// bounded limits only a shard's own child work, including its process group.
+// bounded prepares a child without a flat deadline; childguard owns its process group.
 func bounded(t *testing.T, name string, arguments ...string) *exec.Cmd {
 	t.Helper()
 	command, cancel := inlineCommand(name, arguments...)
