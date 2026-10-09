@@ -26,15 +26,20 @@ func refusedBeforeDeadline(t *testing.T, argv []string, diagnostic string) {
 		t.Fatalf("%v: timeout=%v exit=%v stdout=%d stderr=%s", argv, timedOut, err, info.Size(), &stderr)
 	}
 }
-func TestBoundedPortParser(t *testing.T) {
-	main, _ := filepath.Abs("main.ts")
-	binary, script := build(t, main, true)
-	for _, text := range []string{"type X = {", "interface I {", "type X = { m(a: string): void;"} {
-		path := filepath.Join(t.TempDir(), "input.ts")
-		os.WriteFile(path, []byte(text), 0644)
-		for _, argv := range [][]string{{"node", "--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), main, path}, {binary, path}, {"node", "--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), script, path}} {
-			refusedBeforeDeadline(t, argv, "ESTree parser")
-		}
+
+const testBoundedPortParserShards = 16
+
+type boundedPortCase struct {
+	id, text, filename string
+	audit              bool
+}
+
+func boundedPortCases(t *testing.T) []boundedPortCase {
+	t.Helper()
+	cases := []boundedPortCase{
+		{"eof-type", "type X = {", "input.ts", false},
+		{"eof-interface", "interface I {", "input.ts", false},
+		{"eof-method", "type X = { m(a: string): void;", "input.ts", false},
 	}
 	fixtures, err := filepath.Glob("validation/followup/stalls/*.input")
 	if err != nil || len(fixtures) != 13 {
@@ -45,19 +50,56 @@ func TestBoundedPortParser(t *testing.T) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		path := filepath.Join(t.TempDir(), strings.TrimSuffix(filepath.Base(fixture), ".input"))
-		os.WriteFile(path, body, 0644)
-		list := filepath.Join(t.TempDir(), "manifest")
-		os.WriteFile(list, []byte(path+"\n"), 0644)
-		var record struct{ Status string }
-		if err := json.Unmarshal(execute(t, "", goOracle(t), "--audit", list, t.TempDir()), &record); err != nil {
+		cases = append(cases, boundedPortCase{fixture, string(body), strings.TrimSuffix(filepath.Base(fixture), ".input"), true})
+	}
+	if len(cases) != testBoundedPortParserShards {
+		t.Fatal("bounded parser enumeration changed")
+	}
+	return cases
+}
+
+func boundedPortIDs(cases []boundedPortCase) []string {
+	ids := make([]string, len(cases))
+	for i := range cases {
+		ids[i] = cases[i].id
+	}
+	return ids
+}
+
+// ADAMIC_TEST_SHARD=i/n selects shards; unset runs all 13 fixtures and three EOF cases.
+func TestBoundedPortParser(t *testing.T) {
+	finishSetup := miscStart(t)
+	cases := boundedPortCases(t)
+	main, err := filepath.Abs("main.ts")
+	if err != nil {
+		t.Fatal(err)
+	}
+	binary, script := miscBuild(t, main)
+	oracle := miscOracle(t)
+	finishSetup()
+	miscRunShards(t, testBoundedPortParserShards, boundedPortIDs(cases), func(t *testing.T, i int) {
+		item := cases[i]
+		path := filepath.Join(t.TempDir(), item.filename)
+		if err := os.WriteFile(path, []byte(item.text), 0644); err != nil {
 			t.Fatal(err)
 		}
-		if record.Status == "ok" {
-			want := execute(t, "", goOracle(t), path)
+		accepted := false
+		if item.audit {
+			list := filepath.Join(t.TempDir(), "manifest")
+			if err := os.WriteFile(list, []byte(path+"\n"), 0644); err != nil {
+				t.Fatal(err)
+			}
+			var record struct{ Status string }
+			if err := json.Unmarshal(execute(t, "", oracle, "--audit", list, t.TempDir()), &record); err != nil {
+				t.Fatal(err)
+			}
+			accepted = record.Status == "ok"
+		}
+		if accepted {
+			want := execute(t, "", oracle, path)
 			for name, got := range map[string][]byte{"Node": onNode(t, main, path), "native": execute(t, "", binary, path), "emitted": onNode(t, script, path)} {
-				if diff := firstDifference(want, got); diff != "" {
-					t.Fatal(name + ": " + diff)
+				if err := miscCompare(want, got, false); err != nil {
+					t.Fatalf("%s %s: %v", item.id, name, err)
 				}
 			}
 		} else {
@@ -65,10 +107,19 @@ func TestBoundedPortParser(t *testing.T) {
 				refusedBeforeDeadline(t, argv, "ESTree parser")
 			}
 		}
-	}
-	t.Log("all 13 recorded stalls terminate: Go-accepted inputs match and Go-refused inputs explicitly refuse in all three port builds")
-	t.Log("three EOF recovery cases explicitly refuse with parser diagnostics before 2s of child CPU time on Node, sanitized native and emitted JS")
+	})
 }
+
+func TestBoundedPortParserPlantedDisagreement(t *testing.T) {
+	miscPlantedProof(t, testBoundedPortParserShards, boundedPortIDs(boundedPortCases(t)), func(planted bool) error {
+		got := []byte("agree")
+		if planted {
+			got = []byte("disagree")
+		}
+		return miscCompare([]byte("agree"), got, false)
+	})
+}
+
 func TestPortStallControl(t *testing.T) {
 	main := mutantPort(t, "sourceStatements.ts", "if(this.parser.scanner.fullStart === start)", "if(false)")
 	binary, _ := build(t, main, true)
