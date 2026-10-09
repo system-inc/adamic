@@ -1,0 +1,9 @@
+[
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 41702,
+    "holder": "Expression",
+    "flags": "NodeFlags",
+    "expression": "setNodeFlags(node, node.flags | NodeFlags.TypeCached)"
+  }
+]

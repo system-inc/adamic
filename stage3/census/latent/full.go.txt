@@ -18,8 +18,19 @@ func (l *lowering) latentBodyDiagnostics(body *ast.Node) []string {
 
 func latentFullEnabled() bool { return os.Getenv("LATENT_FULL") == "1" }
 
-// IR fields are exported. Compiler/checker identities remain shared; all mutable
-// lowering-owned state is copied by the generated typed state copier.
+type latentIRCache struct {
+	owner reflect.Type
+	field string
+}
+
+// These fields are derived, never semantic state. A zero-valued copy makes the
+// next reader recompute them. New private fields still require explicit review.
+var latentDerivedIRCaches = map[latentIRCache]bool{
+	{reflect.TypeFor[ir.Program](), "argumentFacts"}: true,
+}
+
+// Compiler/checker identities remain shared; all mutable lowering-owned state
+// is copied by the generated typed state copier, except named derived IR caches.
 func latentCopyIR[T any](value T, seen map[any]any) T {
 	var copyValue func(reflect.Value) reflect.Value
 	copyValue = func(v reflect.Value) reflect.Value {
@@ -49,6 +60,13 @@ func latentCopyIR[T any](value T, seen map[any]any) T {
 		case reflect.Struct:
 			result := reflect.New(v.Type()).Elem()
 			for i := 0; i < v.NumField(); i++ {
+				field := v.Type().Field(i)
+				if latentDerivedIRCaches[latentIRCache{v.Type(), field.Name}] {
+					if field.Type.Kind() != reflect.Pointer {
+						panic("latent state copy: derived IR cache is not nil-resettable " + field.Name)
+					}
+					continue // result's cache stays nil; never copy the original pointer.
+				}
 				if !result.Field(i).CanSet() {
 					panic("latent state copy: unexported IR field " + v.Type().Field(i).Name)
 				}
