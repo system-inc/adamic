@@ -1,0 +1,11 @@
+--- a/stage1/cohere/typeaware/typeaware_commands_test.go
++++ b/stage1/cohere/typeaware/typeaware_commands_test.go
+@@ -30,7 +30,7 @@
+ 		if command.Process == nil {
+ 			return os.ErrProcessDone
+ 		}
+-		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
++		err := syscall.Kill(command.Process.Pid, syscall.SIGKILL)
+ 		if errors.Is(err, syscall.ESRCH) {
+ 			return os.ErrProcessDone
+ 		}

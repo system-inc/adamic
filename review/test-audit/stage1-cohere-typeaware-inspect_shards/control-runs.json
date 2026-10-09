@@ -1,0 +1,188 @@
+[
+  {
+    "id": "S1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-overlay",
+      "/tmp/u145/controls-overlay.json",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestSharedProductPublication|TestSixBuildCallbackUsesProductDirectory|TestSixShardUnionRejectsLossAndDuplication|TestSixShardPlantedDisagreement|TestTypeAwareUnitDeadline|TestTypeAwareContextKillsCompilerGroup|TestSixPinnedFlags|TestPinnedTypeFlags|TestTypeAwareNativeBuildChild)$"
+    ],
+    "seconds": 15.42992059199969,
+    "exit": 1,
+    "matrix_rows": [
+      "TestSharedProductPublication",
+      "TestSixBuildCallbackUsesProductDirectory",
+      "TestSixShardUnionRejectsLossAndDuplication",
+      "TestSixShardPlantedDisagreement",
+      "TestTypeAwareUnitDeadline",
+      "TestTypeAwareContextKillsCompilerGroup",
+      "TestSixPinnedFlags",
+      "TestPinnedTypeFlags",
+      "TestTypeAwareNativeBuildChild"
+    ]
+  },
+  {
+    "id": "S2",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-overlay",
+      "/tmp/u145/controls-overlay.json",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestSharedProductPublication|TestSixBuildCallbackUsesProductDirectory|TestSixShardUnionRejectsLossAndDuplication|TestSixShardPlantedDisagreement|TestTypeAwareUnitDeadline|TestTypeAwareContextKillsCompilerGroup|TestSixPinnedFlags|TestPinnedTypeFlags|TestTypeAwareNativeBuildChild)$"
+    ],
+    "seconds": 5.586076532001243,
+    "exit": 1,
+    "matrix_rows": [
+      "TestSharedProductPublication",
+      "TestSixBuildCallbackUsesProductDirectory",
+      "TestSixShardUnionRejectsLossAndDuplication",
+      "TestSixShardPlantedDisagreement",
+      "TestTypeAwareUnitDeadline",
+      "TestTypeAwareContextKillsCompilerGroup",
+      "TestSixPinnedFlags",
+      "TestPinnedTypeFlags",
+      "TestTypeAwareNativeBuildChild"
+    ]
+  },
+  {
+    "id": "W1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-overlay",
+      "/tmp/u145/controls-overlay.json",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestSharedProductPublication|TestSixBuildCallbackUsesProductDirectory|TestSixShardUnionRejectsLossAndDuplication|TestSixShardPlantedDisagreement|TestTypeAwareUnitDeadline|TestTypeAwareContextKillsCompilerGroup|TestSixPinnedFlags|TestPinnedTypeFlags|TestTypeAwareNativeBuildChild)$"
+    ],
+    "seconds": 5.103569552000408,
+    "exit": 1,
+    "matrix_rows": [
+      "TestSharedProductPublication",
+      "TestSixBuildCallbackUsesProductDirectory",
+      "TestSixShardUnionRejectsLossAndDuplication",
+      "TestSixShardPlantedDisagreement",
+      "TestTypeAwareUnitDeadline",
+      "TestTypeAwareContextKillsCompilerGroup",
+      "TestSixPinnedFlags",
+      "TestPinnedTypeFlags",
+      "TestTypeAwareNativeBuildChild"
+    ]
+  },
+  {
+    "id": "W2",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-overlay",
+      "/tmp/u145/controls-overlay.json",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestSharedProductPublication|TestSixBuildCallbackUsesProductDirectory|TestSixShardUnionRejectsLossAndDuplication|TestSixShardPlantedDisagreement|TestTypeAwareUnitDeadline|TestTypeAwareContextKillsCompilerGroup|TestSixPinnedFlags|TestPinnedTypeFlags|TestTypeAwareNativeBuildChild)$"
+    ],
+    "seconds": 5.910380672999963,
+    "exit": 1,
+    "matrix_rows": [
+      "TestSharedProductPublication",
+      "TestSixBuildCallbackUsesProductDirectory",
+      "TestSixShardUnionRejectsLossAndDuplication",
+      "TestSixShardPlantedDisagreement",
+      "TestTypeAwareUnitDeadline",
+      "TestTypeAwareContextKillsCompilerGroup",
+      "TestSixPinnedFlags",
+      "TestPinnedTypeFlags",
+      "TestTypeAwareNativeBuildChild"
+    ]
+  },
+  {
+    "id": "W3",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-overlay",
+      "/tmp/u145/controls-overlay.json",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestSharedProductPublication|TestSixBuildCallbackUsesProductDirectory|TestSixShardUnionRejectsLossAndDuplication|TestSixShardPlantedDisagreement|TestTypeAwareUnitDeadline|TestTypeAwareContextKillsCompilerGroup|TestSixPinnedFlags|TestPinnedTypeFlags|TestTypeAwareNativeBuildChild)$"
+    ],
+    "seconds": 5.296957936998297,
+    "exit": 1,
+    "matrix_rows": [
+      "TestSharedProductPublication",
+      "TestSixBuildCallbackUsesProductDirectory",
+      "TestSixShardUnionRejectsLossAndDuplication",
+      "TestSixShardPlantedDisagreement",
+      "TestTypeAwareUnitDeadline",
+      "TestTypeAwareContextKillsCompilerGroup",
+      "TestSixPinnedFlags",
+      "TestPinnedTypeFlags",
+      "TestTypeAwareNativeBuildChild"
+    ]
+  },
+  {
+    "id": "W4",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-overlay",
+      "/tmp/u145/controls-overlay.json",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestSharedProductPublication|TestSixBuildCallbackUsesProductDirectory|TestSixShardUnionRejectsLossAndDuplication|TestSixShardPlantedDisagreement|TestTypeAwareUnitDeadline|TestTypeAwareContextKillsCompilerGroup|TestSixPinnedFlags|TestPinnedTypeFlags|TestTypeAwareNativeBuildChild)$"
+    ],
+    "seconds": 5.4444268259994715,
+    "exit": 1,
+    "matrix_rows": [
+      "TestSharedProductPublication",
+      "TestSixBuildCallbackUsesProductDirectory",
+      "TestSixShardUnionRejectsLossAndDuplication",
+      "TestSixShardPlantedDisagreement",
+      "TestTypeAwareUnitDeadline",
+      "TestTypeAwareContextKillsCompilerGroup",
+      "TestSixPinnedFlags",
+      "TestPinnedTypeFlags",
+      "TestTypeAwareNativeBuildChild"
+    ]
+  }
+]

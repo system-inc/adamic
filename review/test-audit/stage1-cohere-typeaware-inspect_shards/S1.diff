@@ -1,0 +1,11 @@
+--- a/stage1/cohere/typeaware/shared_test.go
++++ b/stage1/cohere/typeaware/shared_test.go
+@@ -40,7 +40,7 @@
+ }
+ 
+ func sharedProduct(key string, build func(string) (string, error)) (string, error) {
+-	stored, _ := products.LoadOrStore(key, &product{})
++	stored, _ := products.LoadOrStore("one-key", &product{})
+ 	value := stored.(*product)
+ 	value.once.Do(func() {
+ 		directory, err := os.MkdirTemp(productDirectory, "product-")

@@ -1,0 +1,11 @@
+--- a/stage1/cohere/typeaware/facts.ts
++++ b/stage1/cohere/typeaware/facts.ts
+@@ -38,7 +38,7 @@
+         const element = frames.natural();
+         const parts = frames.ids();
+         const arguments_ = frames.ids();
+-        if(id === 0 || tuple < -1 || contains(records, id)) {
++        if(id === 0 || tuple < 0 || contains(records, id)) {
+             panic('invalid checker type record');
+         }
+         records.push(

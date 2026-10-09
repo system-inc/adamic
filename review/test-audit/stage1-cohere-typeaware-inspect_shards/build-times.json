@@ -1,0 +1,88 @@
+[
+  {
+    "id": "compiler",
+    "seconds": 0.4828423790004308,
+    "command": [
+      "go",
+      "build",
+      "-o",
+      "/tmp/u145/adamic",
+      "./cmd/adamic"
+    ],
+    "exit": 0
+  },
+  {
+    "id": "archive",
+    "seconds": 3.1213935859996127,
+    "command": [
+      "go",
+      "build",
+      "-buildmode=c-archive",
+      "-o",
+      "/tmp/u145/checker.a",
+      "./bridge/tsgo/archive"
+    ],
+    "exit": 0
+  },
+  {
+    "id": "M1",
+    "seconds": 0.9035185169996112,
+    "command": [
+      "timeout",
+      "90",
+      "/tmp/u145/adamic",
+      "build",
+      "stage1/cohere/typeaware/testdata/facts_decode.ts",
+      "-o",
+      "/tmp/u145/M1",
+      "--sanitize"
+    ],
+    "exit": 0
+  },
+  {
+    "id": "M2",
+    "seconds": 0.8703607670013298,
+    "command": [
+      "timeout",
+      "90",
+      "/tmp/u145/adamic",
+      "build",
+      "stage1/cohere/typeaware/testdata/facts_decode.ts",
+      "-o",
+      "/tmp/u145/M2",
+      "--sanitize"
+    ],
+    "exit": 0
+  },
+  {
+    "id": "M3",
+    "seconds": 0.8686032359983074,
+    "command": [
+      "timeout",
+      "90",
+      "/tmp/u145/adamic",
+      "build",
+      "stage1/cohere/typeaware/testdata/facts_decode.ts",
+      "-o",
+      "/tmp/u145/M3",
+      "--sanitize"
+    ],
+    "exit": 0
+  },
+  {
+    "id": "M4",
+    "seconds": 5.730645362998985,
+    "command": [
+      "timeout",
+      "90",
+      "/tmp/u145/adamic",
+      "build",
+      "stage1/cohere/typeaware/testdata/fact_cost.ts",
+      "-o",
+      "/tmp/u145/M4",
+      "--tsgo",
+      "/tmp/u145/checker.a"
+    ],
+    "exit": 0
+  }
+]

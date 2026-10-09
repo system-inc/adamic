@@ -1,0 +1,30 @@
+[
+  {
+    "id": "M1",
+    "file": "stage1/cohere/typeaware/frames.ts",
+    "line": 15,
+    "change": "value = value * 9 + digit;",
+    "menu": "change constant in decimal"
+  },
+  {
+    "id": "M2",
+    "file": "stage1/cohere/typeaware/frames.ts",
+    "line": 61,
+    "change": "return value === 0;",
+    "menu": "change boolean return constant"
+  },
+  {
+    "id": "M3",
+    "file": "stage1/cohere/typeaware/facts.ts",
+    "line": 41,
+    "change": "tuple < 0",
+    "menu": "off-by-one tuple bound"
+  },
+  {
+    "id": "M4",
+    "file": "stage1/cohere/typeaware/testdata/fact_cost.ts",
+    "line": 9,
+    "change": "count < 3",
+    "menu": "off-by-one minimum count"
+  }
+]

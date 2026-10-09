@@ -1,0 +1,2 @@
+import { readTextFile } from 'adamic';
+export function audit(id: string): boolean { const value = readTextFile('/tmp/u145/selector'); return value.kind === 'Error' ? false : value.text === id; }

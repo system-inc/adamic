@@ -1,0 +1,48 @@
+[
+  {
+    "id": "S3",
+    "file": "stage1/cohere/typeaware/suite_test.go",
+    "line": 129,
+    "change": "const testSixRuleAgreementAndMutantsShards = 94",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-overlay",
+      "/tmp/u145/S3.json",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^TestSixRuleAgreementAndMutants_Setup$"
+    ],
+    "seconds": 38.06932893500016,
+    "exit": 1
+  },
+  {
+    "id": "W5",
+    "file": "stage1/cohere/typeaware/profile_test.go",
+    "line": 34,
+    "change": "source = strings.Replace(source, from, to, 1)\n source = strings.ReplaceAll(source, \"?? panic('missing binding index')\", \"?? []\")",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-overlay",
+      "/tmp/u145/W5.json",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^TestShadowIndexMissingBinding_000$"
+    ],
+    "seconds": 16.135948044999168,
+    "exit": 0
+  }
+]

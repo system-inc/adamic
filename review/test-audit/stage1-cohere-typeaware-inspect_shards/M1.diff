@@ -1,0 +1,11 @@
+--- a/stage1/cohere/typeaware/frames.ts
++++ b/stage1/cohere/typeaware/frames.ts
+@@ -12,7 +12,7 @@
+         if(digit < 0 || digit > 9) {
+             panic(message);
+         }
+-        value = value * 10 + digit;
++        value = value * 9 + digit;
+     }
+     if(!Number.isSafeInteger(value)) {
+         panic(message);

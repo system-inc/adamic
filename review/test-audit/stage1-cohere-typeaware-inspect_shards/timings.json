@@ -1,0 +1,515 @@
+[
+  {
+    "test": "TestSharedProductPublication",
+    "round": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^TestSharedProductPublication$"
+    ],
+    "exit": 0,
+    "wall": 11.797996710998632
+  },
+  {
+    "test": "TestSharedProductPublication",
+    "round": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^TestSharedProductPublication$"
+    ],
+    "exit": 0,
+    "wall": 4.5024362610001845
+  },
+  {
+    "test": "TestSharedProductPublication",
+    "round": 2,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^TestSharedProductPublication$"
+    ],
+    "exit": 0,
+    "wall": 2.4738564979998046
+  },
+  {
+    "test": "TestSixBuildCallbackUsesProductDirectory",
+    "round": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^TestSixBuildCallbackUsesProductDirectory$"
+    ],
+    "exit": 0,
+    "wall": 4.538987496998743
+  },
+  {
+    "test": "TestSixBuildCallbackUsesProductDirectory",
+    "round": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^TestSixBuildCallbackUsesProductDirectory$"
+    ],
+    "exit": 0,
+    "wall": 4.523119278999729
+  },
+  {
+    "test": "TestSixBuildCallbackUsesProductDirectory",
+    "round": 2,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^TestSixBuildCallbackUsesProductDirectory$"
+    ],
+    "exit": 0,
+    "wall": 2.5542085739998583
+  },
+  {
+    "test": "TestSixShardUnionRejectsLossAndDuplication",
+    "round": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^TestSixShardUnionRejectsLossAndDuplication$"
+    ],
+    "exit": 0,
+    "wall": 4.668193133000386
+  },
+  {
+    "test": "TestSixShardUnionRejectsLossAndDuplication",
+    "round": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^TestSixShardUnionRejectsLossAndDuplication$"
+    ],
+    "exit": 0,
+    "wall": 3.0990391100003762
+  },
+  {
+    "test": "TestSixShardUnionRejectsLossAndDuplication",
+    "round": 2,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^TestSixShardUnionRejectsLossAndDuplication$"
+    ],
+    "exit": 0,
+    "wall": 2.818968057999882
+  },
+  {
+    "test": "TestSixShardPlantedDisagreement",
+    "round": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^TestSixShardPlantedDisagreement$"
+    ],
+    "exit": 0,
+    "wall": 2.7766452979994938
+  },
+  {
+    "test": "TestSixShardPlantedDisagreement",
+    "round": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^TestSixShardPlantedDisagreement$"
+    ],
+    "exit": 0,
+    "wall": 2.9054443379991426
+  },
+  {
+    "test": "TestSixShardPlantedDisagreement",
+    "round": 2,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^TestSixShardPlantedDisagreement$"
+    ],
+    "exit": 0,
+    "wall": 2.780304452000564
+  },
+  {
+    "test": "TestSixPinnedFlags",
+    "round": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^TestSixPinnedFlags$"
+    ],
+    "exit": 0,
+    "wall": 2.8293061799995485
+  },
+  {
+    "test": "TestSixPinnedFlags",
+    "round": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^TestSixPinnedFlags$"
+    ],
+    "exit": 0,
+    "wall": 2.5190799880001578
+  },
+  {
+    "test": "TestSixPinnedFlags",
+    "round": 2,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^TestSixPinnedFlags$"
+    ],
+    "exit": 0,
+    "wall": 2.16603993499848
+  },
+  {
+    "test": "TestFactsDecoderGuards",
+    "round": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^TestFactsDecoderGuards$"
+    ],
+    "exit": 0,
+    "wall": 6.60076573600054
+  },
+  {
+    "test": "TestFactsDecoderGuards",
+    "round": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^TestFactsDecoderGuards$"
+    ],
+    "exit": 0,
+    "wall": 9.410389921999013
+  },
+  {
+    "test": "TestFactsDecoderGuards",
+    "round": 2,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^TestFactsDecoderGuards$"
+    ],
+    "exit": 0,
+    "wall": 8.194659099999626
+  },
+  {
+    "test": "TestTypeAwareUnitDeadline",
+    "round": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^TestTypeAwareUnitDeadline$"
+    ],
+    "exit": 0,
+    "wall": 4.399563790999309
+  },
+  {
+    "test": "TestTypeAwareUnitDeadline",
+    "round": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^TestTypeAwareUnitDeadline$"
+    ],
+    "exit": 0,
+    "wall": 4.526193155999863
+  },
+  {
+    "test": "TestTypeAwareUnitDeadline",
+    "round": 2,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^TestTypeAwareUnitDeadline$"
+    ],
+    "exit": 0,
+    "wall": 5.475759573000687
+  },
+  {
+    "test": "TestTypeAwareContextKillsCompilerGroup",
+    "round": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^TestTypeAwareContextKillsCompilerGroup$"
+    ],
+    "exit": 0,
+    "wall": 7.329347063998284
+  },
+  {
+    "test": "TestTypeAwareContextKillsCompilerGroup",
+    "round": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^TestTypeAwareContextKillsCompilerGroup$"
+    ],
+    "exit": 0,
+    "wall": 4.030556240000806
+  },
+  {
+    "test": "TestTypeAwareContextKillsCompilerGroup",
+    "round": 2,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^TestTypeAwareContextKillsCompilerGroup$"
+    ],
+    "exit": 0,
+    "wall": 4.17416847000095
+  },
+  {
+    "test": "TestPinnedTypeFlags",
+    "round": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^TestPinnedTypeFlags$"
+    ],
+    "exit": 0,
+    "wall": 3.06024519300081
+  },
+  {
+    "test": "TestPinnedTypeFlags",
+    "round": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^TestPinnedTypeFlags$"
+    ],
+    "exit": 0,
+    "wall": 2.763723084000958
+  },
+  {
+    "test": "TestPinnedTypeFlags",
+    "round": 2,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^TestPinnedTypeFlags$"
+    ],
+    "exit": 0,
+    "wall": 2.534778749000907
+  }
+]

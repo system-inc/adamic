@@ -1,0 +1,4 @@
+442: 	TypeFlagsAny             TypeFlags = 1 << 0
+460: 	TypeFlagsNever           TypeFlags = 1 << 18 // Never type
+469: 	TypeFlagsUnion           TypeFlags = 1 << 27 // Union (T | U)
+1 << 27 = 134217728; 1 + 262144 + 67648 + 4224 = 334017. Successful flag-row observations are in timing logs.

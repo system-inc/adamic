@@ -1,0 +1,22 @@
+--- a/stage1/cohere/typeaware/testdata/fact_cost.ts
++++ b/stage1/cohere/typeaware/testdata/fact_cost.ts
+@@ -1,18 +1 @@
+-import { panic, programArguments, tsgoProgram, tsgoInspect, tsgoRelease } from 'adamic';
+-const args = programArguments();
+-const path = args[1] ?? panic('file');
+-const start = Number.parseInt(args[2] ?? panic('start'), 10);
+-const end = Number.parseInt(args[3] ?? panic('end'), 10);
+-const kind = args[4] ?? panic('kind');
+-const question = args[5] ?? panic('question');
+-const count = Number.parseInt(args[6] ?? panic('count'), 10);
+-if(!Number.isInteger(count) || count < 2) {
+-    panic('invalid count');
+-}
+-const program = tsgoProgram(args[0] ?? panic('config'), [path]);
+-let units = 0;
+-for(let index = 0; index < count; index++) {
+-    units += tsgoInspect(program, path, start, end, kind, question).length;
+-}
+-console.log(units.toString());
+-tsgoRelease(program);
++export {};

@@ -1,0 +1,239 @@
+[
+  {
+    "id": "M1",
+    "kind": "production",
+    "log": "M1.log",
+    "observed": {
+      "TestFactsDecoderGuards": "fail",
+      "TestSixRuleAgreementAndMutants_000": "fail"
+    },
+    "not_observed": "unknown, not passing"
+  },
+  {
+    "id": "M2",
+    "kind": "production",
+    "log": "M2.log",
+    "observed": {
+      "TestFactsDecoderGuards": "pass",
+      "TestSixRuleAgreementAndMutants_000": "fail"
+    },
+    "not_observed": "unknown, not passing"
+  },
+  {
+    "id": "M3",
+    "kind": "production",
+    "log": "M3.log",
+    "observed": {
+      "TestFactsDecoderGuards": "fail",
+      "TestSixRuleAgreementAndMutants_000": "fail"
+    },
+    "not_observed": "unknown, not passing"
+  },
+  {
+    "id": "M4",
+    "kind": "production",
+    "log": "M4.log",
+    "observed": {
+      "TestInspectRequestRefusals/shard-003": "fail",
+      "TestInspectRequestRefusals/shard-005": "fail",
+      "TestInspectRequestRefusals/shard-000": "fail",
+      "TestInspectRequestRefusals/shard-002": "fail",
+      "TestInspectRequestRefusals/shard-004": "fail",
+      "TestInspectRequestRefusals/shard-001": "pass",
+      "TestInspectRequestRefusals": "fail",
+      "TestSixRuleAgreementAndMutants_000": "pass"
+    },
+    "not_observed": "unknown, not passing"
+  },
+  {
+    "id": "P1",
+    "kind": "probe",
+    "log": "P1.log",
+    "observed": {
+      "TestFactsDecoderGuards": "fail",
+      "TestSixRuleAgreementAndMutants_000": "fail"
+    },
+    "not_observed": "unknown, not passing"
+  },
+  {
+    "id": "P2",
+    "kind": "probe",
+    "log": "P2.log",
+    "observed": {
+      "TestInspectRequestRefusals/shard-003": "pass",
+      "TestInspectRequestRefusals/shard-002": "fail",
+      "TestInspectRequestRefusals/shard-000": "pass",
+      "TestInspectRequestRefusals/shard-004": "fail",
+      "TestInspectRequestRefusals/shard-005": "pass",
+      "TestInspectRequestRefusals/shard-001": "pass",
+      "TestInspectRequestRefusals": "fail",
+      "TestSixRuleAgreementAndMutants_033": "fail"
+    },
+    "not_observed": "unknown, not passing"
+  },
+  {
+    "id": "P3",
+    "kind": "probe",
+    "log": "P3.log",
+    "observed": {
+      "TestSixRuleAgreementAndMutants_000": "fail"
+    },
+    "not_observed": "unknown, not passing"
+  },
+  {
+    "id": "S1",
+    "kind": "control",
+    "log": "S1.log",
+    "observed": {
+      "TestTypeAwareUnitDeadline/quick": "pass",
+      "TestTypeAwareUnitDeadline/slow": "pass",
+      "TestTypeAwareUnitDeadline": "pass",
+      "TestTypeAwareNativeBuildChild": "skip",
+      "TestTypeAwareContextKillsCompilerGroup": "pass",
+      "TestSixPinnedFlags": "pass",
+      "TestPinnedTypeFlags": "pass",
+      "TestSharedProductPublication": "fail",
+      "TestSixBuildCallbackUsesProductDirectory": "pass",
+      "TestSixShardUnionRejectsLossAndDuplication": "pass",
+      "TestSixShardPlantedDisagreement/shard-002": "pass",
+      "TestSixShardPlantedDisagreement/shard-003": "pass",
+      "TestSixShardPlantedDisagreement/shard-001": "pass",
+      "TestSixShardPlantedDisagreement/shard-000": "pass",
+      "TestSixShardPlantedDisagreement": "pass"
+    },
+    "not_observed": "unknown, not passing"
+  },
+  {
+    "id": "S2",
+    "kind": "control",
+    "log": "S2.log",
+    "observed": {
+      "TestTypeAwareUnitDeadline/quick": "pass",
+      "TestTypeAwareUnitDeadline/slow": "pass",
+      "TestTypeAwareUnitDeadline": "pass",
+      "TestTypeAwareNativeBuildChild": "skip",
+      "TestTypeAwareContextKillsCompilerGroup": "pass",
+      "TestPinnedTypeFlags": "pass",
+      "TestSixPinnedFlags": "pass",
+      "TestSixShardUnionRejectsLossAndDuplication": "pass",
+      "TestSharedProductPublication": "pass",
+      "TestSixBuildCallbackUsesProductDirectory": "fail",
+      "TestSixShardPlantedDisagreement/shard-003": "pass",
+      "TestSixShardPlantedDisagreement/shard-001": "pass",
+      "TestSixShardPlantedDisagreement/shard-000": "pass",
+      "TestSixShardPlantedDisagreement/shard-002": "pass",
+      "TestSixShardPlantedDisagreement": "pass"
+    },
+    "not_observed": "unknown, not passing"
+  },
+  {
+    "id": "S3",
+    "kind": "control",
+    "log": "S3.log",
+    "observed": {
+      "TestSixRuleAgreementAndMutants_Setup": "fail"
+    },
+    "not_observed": "unknown, not passing"
+  },
+  {
+    "id": "W1",
+    "kind": "control",
+    "log": "W1.log",
+    "observed": {
+      "TestTypeAwareUnitDeadline/quick": "pass",
+      "TestTypeAwareUnitDeadline/slow": "pass",
+      "TestTypeAwareUnitDeadline": "pass",
+      "TestTypeAwareNativeBuildChild": "skip",
+      "TestTypeAwareContextKillsCompilerGroup": "pass",
+      "TestSixPinnedFlags": "pass",
+      "TestPinnedTypeFlags": "pass",
+      "TestSharedProductPublication": "pass",
+      "TestSixShardUnionRejectsLossAndDuplication": "fail",
+      "TestSixShardPlantedDisagreement/shard-000": "pass",
+      "TestSixBuildCallbackUsesProductDirectory": "pass",
+      "TestSixShardPlantedDisagreement/shard-002": "pass",
+      "TestSixShardPlantedDisagreement/shard-003": "pass",
+      "TestSixShardPlantedDisagreement/shard-001": "pass",
+      "TestSixShardPlantedDisagreement": "pass"
+    },
+    "not_observed": "unknown, not passing"
+  },
+  {
+    "id": "W2",
+    "kind": "control",
+    "log": "W2.log",
+    "observed": {
+      "TestTypeAwareUnitDeadline/quick": "pass",
+      "TestTypeAwareUnitDeadline/slow": "pass",
+      "TestTypeAwareUnitDeadline": "pass",
+      "TestTypeAwareNativeBuildChild": "skip",
+      "TestTypeAwareContextKillsCompilerGroup": "pass",
+      "TestPinnedTypeFlags": "pass",
+      "TestSixShardUnionRejectsLossAndDuplication": "pass",
+      "TestSixPinnedFlags": "pass",
+      "TestSharedProductPublication": "pass",
+      "TestSixShardPlantedDisagreement/shard-002": "fail",
+      "TestSixBuildCallbackUsesProductDirectory": "pass",
+      "TestSixShardPlantedDisagreement/shard-000": "pass",
+      "TestSixShardPlantedDisagreement/shard-001": "pass",
+      "TestSixShardPlantedDisagreement/shard-003": "pass",
+      "TestSixShardPlantedDisagreement": "fail"
+    },
+    "not_observed": "unknown, not passing"
+  },
+  {
+    "id": "W3",
+    "kind": "control",
+    "log": "W3.log",
+    "observed": {
+      "TestTypeAwareUnitDeadline/quick": "pass",
+      "TestTypeAwareUnitDeadline/slow": "fail",
+      "TestTypeAwareUnitDeadline": "fail",
+      "TestTypeAwareNativeBuildChild": "skip",
+      "TestTypeAwareContextKillsCompilerGroup": "pass",
+      "TestSixShardUnionRejectsLossAndDuplication": "pass",
+      "TestPinnedTypeFlags": "pass",
+      "TestSharedProductPublication": "pass",
+      "TestSixPinnedFlags": "pass",
+      "TestSixBuildCallbackUsesProductDirectory": "pass",
+      "TestSixShardPlantedDisagreement/shard-002": "pass",
+      "TestSixShardPlantedDisagreement/shard-003": "pass",
+      "TestSixShardPlantedDisagreement/shard-000": "pass",
+      "TestSixShardPlantedDisagreement/shard-001": "pass",
+      "TestSixShardPlantedDisagreement": "pass"
+    },
+    "not_observed": "unknown, not passing"
+  },
+  {
+    "id": "W4",
+    "kind": "control",
+    "log": "W4.log",
+    "observed": {
+      "TestTypeAwareUnitDeadline/quick": "pass",
+      "TestTypeAwareUnitDeadline/slow": "pass",
+      "TestTypeAwareUnitDeadline": "pass",
+      "TestTypeAwareNativeBuildChild": "skip",
+      "TestTypeAwareContextKillsCompilerGroup": "fail",
+      "TestSixPinnedFlags": "pass",
+      "TestPinnedTypeFlags": "pass",
+      "TestSixShardUnionRejectsLossAndDuplication": "pass",
+      "TestSharedProductPublication": "pass",
+      "TestSixBuildCallbackUsesProductDirectory": "pass",
+      "TestSixShardPlantedDisagreement/shard-000": "pass",
+      "TestSixShardPlantedDisagreement/shard-002": "pass",
+      "TestSixShardPlantedDisagreement/shard-001": "pass",
+      "TestSixShardPlantedDisagreement/shard-003": "pass",
+      "TestSixShardPlantedDisagreement": "pass"
+    },
+    "not_observed": "unknown, not passing"
+  },
+  {
+    "id": "W5",
+    "kind": "control",
+    "log": "W5-fresh.log",
+    "observed": {
+      "TestShadowIndexMissingBinding_000": "fail"
+    },
+    "not_observed": "unknown, not passing"
+  }
+]

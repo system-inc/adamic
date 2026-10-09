@@ -1,0 +1,16 @@
+{"Time":"2026-10-09T13:17:43.674036827Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware"}
+{"Time":"2026-10-09T13:17:43.720696324Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestShadowIndexMissingBinding_000"}
+{"Time":"2026-10-09T13:17:43.720847056Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestShadowIndexMissingBinding_000","Output":"=== RUN   TestShadowIndexMissingBinding_000\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:17:43.720879303Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestShadowIndexMissingBinding_000","Output":"=== PAUSE TestShadowIndexMissingBinding_000\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:17:43.720883108Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestShadowIndexMissingBinding_000"}
+{"Time":"2026-10-09T13:17:43.72088715Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestShadowIndexMissingBinding_000"}
+{"Time":"2026-10-09T13:17:43.720890851Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestShadowIndexMissingBinding_000","Output":"=== CONT  TestShadowIndexMissingBinding_000\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:17:48.37458906Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestShadowIndexMissingBinding_000","Output":"    profile_test.go:58: setup: 4.654s\n"}
+{"Time":"2026-10-09T13:17:49.227326573Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestShadowIndexMissingBinding_000","Output":"    volume_profile_Controls_test.go:172: build typeaware_volume_missing-binding_namedScopes_wrong 445234836532 hit 0.23\n"}
+{"Time":"2026-10-09T13:17:49.299251972Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestShadowIndexMissingBinding_000","Output":"    profile_test.go:62: phase command missing-binding-run 0.072686s\n"}
+{"Time":"2026-10-09T13:17:49.299296734Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestShadowIndexMissingBinding_000","Output":"    profile_test.go:66: omitted binding key: compiled mutant panics 70, missing binding index; cooked=false\n"}
+{"Time":"2026-10-09T13:17:49.299324524Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestShadowIndexMissingBinding_000","Output":"--- PASS: TestShadowIndexMissingBinding_000 (5.58s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:17:49.299327854Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestShadowIndexMissingBinding_000","Elapsed":5.58}
+{"Time":"2026-10-09T13:17:49.299347601Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:17:49.301083398Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/typeaware\t5.626s\n"}
+{"Time":"2026-10-09T13:17:49.30112982Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Elapsed":5.627}

@@ -1,0 +1,135 @@
+[
+  {
+    "test": "Six family",
+    "round": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^TestSixRuleAgreementAndMutants(?:_[0-9]{3}|Union)$"
+    ],
+    "exit": 1,
+    "wall": 92.67842009699962
+  },
+  {
+    "test": "TestSixRuleAgreementAndMutants_Setup",
+    "round": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^TestSixRuleAgreementAndMutants_Setup$"
+    ],
+    "exit": 0,
+    "wall": 31.756988954999542
+  },
+  {
+    "test": "TestSixRuleAgreementAndMutants_Setup",
+    "round": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^TestSixRuleAgreementAndMutants_Setup$"
+    ],
+    "exit": 0,
+    "wall": 19.389387597999303
+  },
+  {
+    "test": "TestInspectRequestRefusals",
+    "round": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^TestInspectRequestRefusals$"
+    ],
+    "exit": 0,
+    "wall": 33.39570347600056
+  },
+  {
+    "test": "TestInspectRequestRefusals",
+    "round": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^TestInspectRequestRefusals$"
+    ],
+    "exit": 0,
+    "wall": 35.04321051899933
+  },
+  {
+    "test": "TestShadowIndexMissingBinding_000",
+    "round": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^TestShadowIndexMissingBinding_000$"
+    ],
+    "exit": 0,
+    "wall": 6.525197373999617
+  },
+  {
+    "test": "TestShadowIndexMissingBinding_000",
+    "round": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^TestShadowIndexMissingBinding_000$"
+    ],
+    "exit": 0,
+    "wall": 6.955460461000257
+  }
+]

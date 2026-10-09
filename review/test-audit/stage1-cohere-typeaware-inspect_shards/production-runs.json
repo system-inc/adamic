@@ -1,0 +1,92 @@
+[
+  {
+    "id": "M1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestFactsDecoderGuards|TestSixRuleAgreementAndMutants_000)$"
+    ],
+    "seconds": 87.78589466399899,
+    "exit": 1
+  },
+  {
+    "id": "M2",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestFactsDecoderGuards|TestSixRuleAgreementAndMutants_000)$"
+    ],
+    "seconds": 29.166607740000472,
+    "exit": 1
+  },
+  {
+    "id": "M3",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestFactsDecoderGuards|TestSixRuleAgreementAndMutants_000)$"
+    ],
+    "seconds": 22.980587022999316,
+    "exit": 1
+  },
+  {
+    "id": "M4",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestInspectRequestRefusals|TestSixRuleAgreementAndMutants_000)$"
+    ],
+    "seconds": 45.53192126900103,
+    "exit": 1
+  },
+  {
+    "id": "P1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestFactsDecoderGuards|TestSixRuleAgreementAndMutants_000)$"
+    ],
+    "seconds": 18.538359329999366,
+    "exit": 1
+  }
+]

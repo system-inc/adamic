@@ -1,0 +1,11 @@
+--- a/stage1/cohere/typeaware/six_builds_test.go
++++ b/stage1/cohere/typeaware/six_builds_test.go
+@@ -38,7 +38,7 @@
+ 		args := append([]string(nil), command.Args[1:]...)
+ 		for i, arg := range args {
+ 			if arg == "-o" {
+-				args[i+1] = filepath.Join(dir, file)
++				args[i+1] = command.Args[i+2]
+ 			}
+ 		}
+ 		cmd := exec.Command(command.Path, args...)

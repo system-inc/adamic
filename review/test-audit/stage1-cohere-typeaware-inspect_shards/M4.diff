@@ -1,0 +1,11 @@
+--- a/stage1/cohere/typeaware/testdata/fact_cost.ts
++++ b/stage1/cohere/typeaware/testdata/fact_cost.ts
+@@ -6,7 +6,7 @@
+ const kind = args[4] ?? panic('kind');
+ const question = args[5] ?? panic('question');
+ const count = Number.parseInt(args[6] ?? panic('count'), 10);
+-if(!Number.isInteger(count) || count < 2) {
++if(!Number.isInteger(count) || count < 3) {
+     panic('invalid count');
+ }
+ const program = tsgoProgram(args[0] ?? panic('config'), [path]);

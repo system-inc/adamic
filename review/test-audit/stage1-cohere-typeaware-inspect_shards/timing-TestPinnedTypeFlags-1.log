@@ -1,0 +1,12 @@
+{"Time":"2026-10-09T13:11:02.328822791Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware"}
+{"Time":"2026-10-09T13:11:02.341008072Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestPinnedTypeFlags"}
+{"Time":"2026-10-09T13:11:02.341231723Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestPinnedTypeFlags","Output":"=== RUN   TestPinnedTypeFlags\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:11:02.341262859Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestPinnedTypeFlags","Output":"=== PAUSE TestPinnedTypeFlags\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:11:02.341265917Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestPinnedTypeFlags"}
+{"Time":"2026-10-09T13:11:02.341268818Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestPinnedTypeFlags"}
+{"Time":"2026-10-09T13:11:02.341270644Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestPinnedTypeFlags","Output":"=== CONT  TestPinnedTypeFlags\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:11:02.341277663Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestPinnedTypeFlags","Output":"--- PASS: TestPinnedTypeFlags (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:11:02.341280851Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestPinnedTypeFlags","Elapsed":0}
+{"Time":"2026-10-09T13:11:02.341293581Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:11:02.341494916Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/typeaware\t0.012s\n"}
+{"Time":"2026-10-09T13:11:02.341519304Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Elapsed":0.013}

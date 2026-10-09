@@ -1,0 +1,74 @@
+[
+  {
+    "test": "TestInspectRequestRefusals",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^TestInspectRequestRefusals$"
+    ],
+    "exit": 0,
+    "wall": 73.45929267599968
+  },
+  {
+    "test": "TestShadowIndexMissingBinding_000",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^TestShadowIndexMissingBinding_000$"
+    ],
+    "exit": 0,
+    "wall": 64.29183376100082
+  },
+  {
+    "test": "TestSixRuleAgreementAndMutants_Setup",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^TestSixRuleAgreementAndMutants_Setup$"
+    ],
+    "exit": 1,
+    "wall": 97.62339374099975
+  },
+  {
+    "test": "TestSixRuleAgreementAndMutants_000",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^TestSixRuleAgreementAndMutants_000$"
+    ],
+    "exit": 0,
+    "wall": 25.162737100999948
+  }
+]

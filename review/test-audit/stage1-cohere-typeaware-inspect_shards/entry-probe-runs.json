@@ -1,0 +1,46 @@
+[
+  {
+    "id": "P2",
+    "file": "stage1/cohere/typeaware/testdata/fact_cost.ts",
+    "line": 1,
+    "change": "empty top-level native entry, export {}",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestInspectRequestRefusals|TestSixRuleAgreementAndMutants_033)$"
+    ],
+    "build_seconds": 0.20374753799842438,
+    "seconds": 92.46690239100099,
+    "exit": 1
+  },
+  {
+    "id": "P3",
+    "file": "stage1/cohere/typeaware/testdata/sharded_suite.ts",
+    "line": 1,
+    "change": "empty top-level native entry, export {}",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^TestSixRuleAgreementAndMutants_000$"
+    ],
+    "build_seconds": 0.1985829899986129,
+    "seconds": 42.8665347949991,
+    "exit": 1
+  }
+]

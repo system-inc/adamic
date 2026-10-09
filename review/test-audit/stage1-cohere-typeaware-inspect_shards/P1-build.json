@@ -1,0 +1,14 @@
+{
+  "command": [
+    "timeout",
+    "90",
+    "/tmp/u145/adamic",
+    "build",
+    "stage1/cohere/typeaware/testdata/facts_decode.ts",
+    "-o",
+    "/tmp/u145/P1-standalone",
+    "--sanitize"
+  ],
+  "seconds": 0.613012585999968,
+  "exit": 0
+}

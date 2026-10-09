@@ -1,0 +1,44 @@
+[
+  {
+    "id": "S1",
+    "file": "stage1/cohere/typeaware/shared_test.go",
+    "line": 43,
+    "change": "products.LoadOrStore(\"one-key\", &product{})",
+    "description": "construction: change cache key"
+  },
+  {
+    "id": "S2",
+    "file": "stage1/cohere/typeaware/six_builds_test.go",
+    "line": 41,
+    "change": "args[i+1] = command.Args[i+2]",
+    "description": "construction: drop output redirection"
+  },
+  {
+    "id": "W1",
+    "file": "stage1/cohere/typeaware/six_shards_test.go",
+    "line": 42,
+    "change": "func sixUnion(expected []string, shards []sixShard) error {\n if len(expected) >= 0 { return nil }",
+    "description": "witness: disable union rejection"
+  },
+  {
+    "id": "W2",
+    "file": "stage1/cohere/typeaware/six_shards_test.go",
+    "line": 177,
+    "change": "if false {",
+    "description": "witness: disable byte comparison"
+  },
+  {
+    "id": "W3",
+    "file": "stage1/cohere/typeaware/typeaware_budget_test.go",
+    "line": 28,
+    "change": "\t\t// Command groups retained.",
+    "description": "witness: drop descendant kill"
+  },
+  {
+    "id": "W4",
+    "file": "stage1/cohere/typeaware/typeaware_commands_test.go",
+    "line": 33,
+    "change": "syscall.Kill(command.Process.Pid, syscall.SIGKILL)",
+    "description": "witness: weaken group kill to leader kill"
+  }
+]

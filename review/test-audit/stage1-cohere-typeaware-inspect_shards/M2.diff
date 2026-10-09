@@ -1,0 +1,11 @@
+--- a/stage1/cohere/typeaware/frames.ts
++++ b/stage1/cohere/typeaware/frames.ts
+@@ -58,7 +58,7 @@
+         if(value !== 0 && value !== 1) {
+             panic('invalid checker facts boolean');
+         }
+-        return value === 1;
++        return value === 0;
+     }
+     ids(): number[] {
+         const count = this.natural();

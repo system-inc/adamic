@@ -1,0 +1,8 @@
+[
+  {
+    "proposal": "change Frames.yes acceptance from 1 to 2",
+    "command": "timeout 90 /tmp/u145/adamic build stage1/cohere/typeaware/testdata/facts_decode.ts -o /tmp/u145/M2 --sanitize",
+    "output": "frames.ts:61:16: error TS2367: This comparison appears to be unintentional because the types '0 | 2' and '1' have no overlap.",
+    "disposition": "discarded before matrix; revised boolean return constant independently frozen"
+  }
+]

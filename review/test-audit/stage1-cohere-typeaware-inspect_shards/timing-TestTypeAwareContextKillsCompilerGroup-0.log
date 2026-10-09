@@ -1,0 +1,8 @@
+{"Time":"2026-10-09T13:10:46.98617967Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware"}
+{"Time":"2026-10-09T13:10:47.004199501Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestTypeAwareContextKillsCompilerGroup"}
+{"Time":"2026-10-09T13:10:47.004371416Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestTypeAwareContextKillsCompilerGroup","Output":"=== RUN   TestTypeAwareContextKillsCompilerGroup\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:10:48.308636099Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestTypeAwareContextKillsCompilerGroup","Output":"--- PASS: TestTypeAwareContextKillsCompilerGroup (1.30s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:10:48.308718334Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestTypeAwareContextKillsCompilerGroup","Elapsed":1.3}
+{"Time":"2026-10-09T13:10:48.308816894Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:10:48.309651835Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/typeaware\t1.323s\n"}
+{"Time":"2026-10-09T13:10:48.309711514Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Elapsed":1.324}
