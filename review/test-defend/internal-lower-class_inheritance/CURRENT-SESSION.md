@@ -1,0 +1,1 @@
+This session defends constructor rules, inherited field membership, and pre-super repair syntax. See [the report](constructor-fields-7b9d4272/REPORT.md), [row results](constructor-fields-7b9d4272/rows.json), and [passing rows](constructor-fields-7b9d4272/passed-rows.json). Earlier root-level and factory/constraint evidence is preserved.

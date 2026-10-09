@@ -133,3 +133,5 @@ Replay timings:
   }
 ]
 ```
+
+Publication note: the first push found existing remote defense history, including different inheritance rows and an earlier pre-super defense. This session's evidence was moved into constructor-fields-7b9d4272 before merging that history. Commands in the saved run records retain their original log/profile paths as executed. Replay scripts now resolve their own evidence directory so they cannot overwrite the earlier root-level evidence. No remote history was rewritten.

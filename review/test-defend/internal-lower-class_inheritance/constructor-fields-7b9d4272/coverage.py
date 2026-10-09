@@ -1,5 +1,5 @@
 import json,pathlib,subprocess,time,os
-p=pathlib.Path('review/test-defend/internal-lower-class_inheritance')
+p=pathlib.Path(__file__).resolve().parent
 names=['TestInheritanceKeepsCheckerConstructorRules','TestClassFeaturesPrivateChecker','TestInheritanceCycleFinderIncludesInheritedFields','TestInheritanceGenericSoundness','TestInheritanceRefusesThisBeforeSuperReturns','TestInheritanceConditionalThisRules']
 runs=[]
 for n in names:

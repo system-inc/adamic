@@ -1,5 +1,5 @@
 import difflib,json,pathlib,subprocess,time,os
-p=pathlib.Path('review/test-defend/internal-lower-class_inheritance')
+p=pathlib.Path(__file__).resolve().parent
 plans=[
  dict(id='D1',target='TestInheritanceKeepsCheckerConstructorRules',file='internal/load/load.go',old='func (p *Program) formatDiagnostic(diagnostic *ast.Diagnostic) string {',new='func (p *Program) formatDiagnostic(diagnostic *ast.Diagnostic) string {\n\tif diagnostic.Code() == 2511 {\n\t\treturn ""\n\t}',kind='return early',reason='Return an empty formatted diagnostic for TS2511 (abstract-class construction), leaving checker results and private-scope diagnostics intact.'),
  dict(id='D2',target='TestInheritanceRefusesThisBeforeSuperReturns',file='internal/lower/class.go',old='Fix: "call super(...) before using this"',new='Fix: "call super before using this"',kind='change constant',reason='Lose the explicit call syntax in the pre-super repair; the conditional row only requires the weaker call-super prefix.'),
