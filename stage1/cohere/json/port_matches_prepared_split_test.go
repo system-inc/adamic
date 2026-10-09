@@ -387,7 +387,7 @@ func portMatchesBuildJSONGoOracle(dir string) error {
 		return err
 	}
 	ctx := context.Background()
-	command := exec.CommandContext(ctx, "go", "build", "-overlay="+overlay, "-o", filepath.Join(dir, "go-cohere"), "./command/formatter_comparison")
+	command := exec.CommandContext(ctx, "go", append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-overlay="+overlay, "-o", filepath.Join(dir, "go-cohere"), "./command/formatter_comparison")...)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
 		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
@@ -614,7 +614,7 @@ func portMatchesProduct(t *testing.T, name string) string {
 			product.dir = buildcache.Product(t, buildcache.Inputs{
 				Name:      "json split Go oracle",
 				Files:     []string{"go.mod", "go.work", "cohere", "stage1/cohere/json/testdata/cohere_driver.go", "stage1/cohere/json/port_matches_prepared_split_test.go"},
-				Flags:     append([]string{"go build -overlay=<product>/overlay.json -o=<product>/go-cohere ./command/formatter_comparison"}, portMatchesJsonBuildEnvironment("PATH", "GOFLAGS", "GOTOOLCHAIN")...),
+				Flags:     append([]string{"go build " + strings.Join(buildcache.ReproducibleGoFlags(), " ") + " -overlay=<product>/overlay.json -o=<product>/go-cohere ./command/formatter_comparison"}, portMatchesJsonBuildEnvironment("PATH", "GOFLAGS", "GOTOOLCHAIN")...),
 				Toolchain: goTools,
 			}, portMatchesBuildJSONGoOracle)
 		case "lowered":

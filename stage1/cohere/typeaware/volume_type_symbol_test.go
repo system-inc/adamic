@@ -188,7 +188,7 @@ func TestVolumeTypeSymbolPlantedSurvivor(t *testing.T) {
 
 func typeSymbolArchive(h *harness) string {
 	overlay := h.overlay("type-symbol", "bridge/tsgo/checker/facts.go", "name = symbol.Name", "name = symbol.Name + \"wrong\"")
-	command := exec.Command("go", "build", "-buildmode=c-archive", "-o", filepath.Join(h.directory, "type-symbol-checker.a"), "-overlay", overlay, "./bridge/tsgo/archive")
+	command := exec.Command("go", append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-buildmode=c-archive", "-o", filepath.Join(h.directory, "type-symbol-checker.a"), "-overlay", overlay, "./bridge/tsgo/archive")...)
 	return h.sixBuildProduct("type-symbol-checker", command)
 }
 

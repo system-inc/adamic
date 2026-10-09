@@ -63,13 +63,21 @@ func goProduct(t testing.TB, test bool, directory, output, pkg string, arguments
 	return filepath.Join(product, output)
 }
 
+// ReproducibleGoFlags are the flags GoBuild and GoTestBinary add to every go build. A product that has to run go
+// itself (its overlay is a file it generates, which a key can't name) adds them to its command and to its key's
+// flags, so its bytes don't carry its checkout path or commit and an older product built without them is retired
+// (#hff1651).
+func ReproducibleGoFlags() []string {
+	return []string{"-trimpath", "-ldflags=-buildid=", "-buildvcs=false"}
+}
+
 // reproducible adds what makes a build's bytes independent of where the checkout sits and which commit it's at:
 // without -trimpath and an empty build ID a cgo product differs between two checkout paths in Go's build ID alone
 // (measured Oct 9). Without -buildvcs=false every binary built in the repository stamps the commit (vcs.revision, 40
 // hex), which the key leaves out on purpose, so two commits with the same inputs shared a key and differed in those
 // bytes: floor1's audit rebuild of bridge/tsgo/oracle called it poisoning (Oct 9 04:52Z, same size, other bytes).
 func reproducible(arguments []string) []string {
-	kept := []string{"-trimpath", "-ldflags=-buildid=", "-buildvcs=false"}
+	kept := ReproducibleGoFlags()
 	for _, argument := range arguments {
 		if argument == "-trimpath" || strings.HasPrefix(argument, "-ldflags") || strings.HasPrefix(argument, "-buildvcs") {
 			panic("buildcache.GoBuild and GoTestBinary set -trimpath, -ldflags and -buildvcs themselves, for a product that's the same from any checkout path and commit")

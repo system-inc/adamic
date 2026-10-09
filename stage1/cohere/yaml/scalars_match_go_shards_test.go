@@ -170,7 +170,7 @@ func scalarsMatchGoGoProduct(t *testing.T) string {
 	scalarsMatchGoGo.once.Do(func() {
 		inputs := scalarsMatchGoInputs(t, "yaml-scalars-go")
 		inputs.Files = append(inputs.Files, "stage1/cohere/yaml/testdata/scalar_go.go", "stage1/cohere/yaml/testdata/scalar_exports.txt")
-		inputs.Flags = append(inputs.Flags, "go build -overlay scalar_go.go+scalar_exports.txt ./command/formatter_comparison", "CGO_ENABLED="+os.Getenv("CGO_ENABLED"))
+		inputs.Flags = append(inputs.Flags, "go build "+strings.Join(buildcache.ReproducibleGoFlags(), " ")+" -overlay scalar_go.go+scalar_exports.txt ./command/formatter_comparison", "CGO_ENABLED="+os.Getenv("CGO_ENABLED"))
 		inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("go", "version"))
 		scalarsMatchGoGo.directory = buildcache.Product(t, inputs, func(directory string) error {
 			root, err := filepath.Abs(repository)
@@ -205,7 +205,7 @@ func scalarsMatchGoGoProduct(t *testing.T) string {
 			}
 			ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 			defer cancel()
-			command := exec.CommandContext(ctx, "go", "build", "-overlay", path, "-o", filepath.Join(directory, "go-scalars"), "./command/formatter_comparison")
+			command := exec.CommandContext(ctx, "go", append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-overlay", path, "-o", filepath.Join(directory, "go-scalars"), "./command/formatter_comparison")...)
 			command.Dir = filepath.Join(root, "cohere")
 			output, err := command.CombinedOutput()
 			if err != nil {
