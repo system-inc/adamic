@@ -78,7 +78,7 @@ func (g *generator) copy(t ast.Expr, value string) string {
 	}
 }
 func main() {
-	if len(os.Args) != 4 {
+	if len(os.Args) == 4 {
 		panic("usage: statecopy repository overlaid-lower.go output.go")
 	}
 	g := generator{types: map[string]ast.Expr{}, needed: map[string]bool{"lowering": true}}
