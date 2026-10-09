@@ -1,0 +1,92 @@
+{
+  "M01": {
+    "apply_exit": 0,
+    "vet_exit": 0,
+    "wall_seconds": 1.395,
+    "command": "go vet -overlay=/tmp/u041/validation/M01.json ./internal/lower/"
+  },
+  "M02": {
+    "apply_exit": 0,
+    "vet_exit": 0,
+    "wall_seconds": 0.682,
+    "command": "go vet -overlay=/tmp/u041/validation/M02.json ./internal/lower/"
+  },
+  "M03": {
+    "apply_exit": 0,
+    "vet_exit": 0,
+    "wall_seconds": 0.567,
+    "command": "go vet -overlay=/tmp/u041/validation/M03.json ./internal/lower/"
+  },
+  "M04": {
+    "apply_exit": 0,
+    "vet_exit": 0,
+    "wall_seconds": 0.505,
+    "command": "go vet -overlay=/tmp/u041/validation/M04.json ./internal/lower/"
+  },
+  "M05": {
+    "apply_exit": 0,
+    "vet_exit": 0,
+    "wall_seconds": 0.437,
+    "command": "go vet -overlay=/tmp/u041/validation/M05.json ./internal/lower/"
+  },
+  "M06": {
+    "apply_exit": 0,
+    "vet_exit": 0,
+    "wall_seconds": 0.142,
+    "command": "go vet -overlay=/tmp/u041/validation/M06.json ./internal/lower/"
+  },
+  "M07": {
+    "apply_exit": 0,
+    "vet_exit": 0,
+    "wall_seconds": 0.632,
+    "command": "go vet -overlay=/tmp/u041/validation/M07.json ./internal/lower/"
+  },
+  "M08": {
+    "apply_exit": 0,
+    "vet_exit": 0,
+    "wall_seconds": 0.49,
+    "command": "go vet -overlay=/tmp/u041/validation/M08.json ./internal/lower/"
+  },
+  "M09": {
+    "apply_exit": 0,
+    "vet_exit": 0,
+    "wall_seconds": 0.521,
+    "command": "go vet -overlay=/tmp/u041/validation/M09.json ./internal/lower/"
+  },
+  "M10": {
+    "apply_exit": 0,
+    "vet_exit": 0,
+    "wall_seconds": 0.487,
+    "command": "go vet -overlay=/tmp/u041/validation/M10.json ./internal/lower/"
+  },
+  "M11": {
+    "apply_exit": 0,
+    "vet_exit": 0,
+    "wall_seconds": 0.118,
+    "command": "go vet -overlay=/tmp/u041/validation/M11.json ./internal/load/"
+  },
+  "M12": {
+    "apply_exit": 0,
+    "vet_exit": 0,
+    "wall_seconds": 0.153,
+    "command": "go vet -overlay=/tmp/u041/validation/M12.json ./internal/load/"
+  },
+  "P1": {
+    "apply_exit": 0,
+    "vet_exit": 0,
+    "wall_seconds": 0.141,
+    "command": "go vet -overlay=/tmp/u041/validation/P1.json ./internal/lower/"
+  },
+  "P2": {
+    "apply_exit": 0,
+    "vet_exit": 0,
+    "wall_seconds": 0.096,
+    "command": "go vet -overlay=/tmp/u041/validation/P2.json ./internal/load/"
+  },
+  "P3": {
+    "apply_exit": 0,
+    "vet_exit": 0,
+    "wall_seconds": 0.599,
+    "command": "go vet -overlay=/tmp/u041/validation/P3.json ./internal/lower/"
+  }
+}

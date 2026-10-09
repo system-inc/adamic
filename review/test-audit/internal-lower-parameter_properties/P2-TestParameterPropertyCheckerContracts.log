@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T10:31:31.29217288Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T10:31:31.298707284Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParameterPropertyCheckerContracts"}
+{"Time":"2026-10-09T10:31:31.298768707Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParameterPropertyCheckerContracts","Output":"=== RUN   TestParameterPropertyCheckerContracts\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:31:31.298787886Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParameterPropertyCheckerContracts","Output":"=== PAUSE TestParameterPropertyCheckerContracts\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:31:31.298790339Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParameterPropertyCheckerContracts"}
+{"Time":"2026-10-09T10:31:31.298793194Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParameterPropertyCheckerContracts"}
+{"Time":"2026-10-09T10:31:31.29879732Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParameterPropertyCheckerContracts","Output":"=== CONT  TestParameterPropertyCheckerContracts\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:31:31.298800605Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParameterPropertyCheckerContracts","Output":"    parameter_properties_test.go:47: got \u003cnil\u003e, want checker rejection\n","OutputType":"error"}
+{"Time":"2026-10-09T10:31:31.298974757Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParameterPropertyCheckerContracts","Output":"--- FAIL: TestParameterPropertyCheckerContracts (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:31:31.298983881Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParameterPropertyCheckerContracts","Elapsed":0}
+{"Time":"2026-10-09T10:31:31.298997662Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:31:31.299080812Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.006s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:31:31.299136456Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.007}

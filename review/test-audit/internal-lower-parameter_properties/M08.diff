@@ -1,0 +1,11 @@
+--- a/internal/lower/predicates_proof.go
++++ b/internal/lower/predicates_proof.go
+@@ -401,7 +401,7 @@
+ 					// This summary partitions the helper's predicate parameter,
+ 					// not an arbitrary argument with the same caller symbol.
+ 					claim := predicateOfSignature(v.l.checker, v.l.checker.GetSignatureFromDeclaration(d))
+-					if claim == nil || claim.ParameterIndex() != 0 {
++					if claim == nil || claim.ParameterIndex() != 1 {
+ 						return 0, predicateFailure(v.l, n, "helper argument 0 does not occupy its predicate parameter; pass the tested value at the helper's predicate parameter index")
+ 					}
+ 					return values[path.cell], nil

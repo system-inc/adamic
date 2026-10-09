@@ -1,0 +1,11 @@
+--- a/internal/lower/parameter_properties.go
++++ b/internal/lower/parameter_properties.go
+@@ -6,7 +6,7 @@
+ )
+ 
+ func parameterProperty(node *ast.Node) bool {
+-	return node.Kind == ast.KindParameter && ast.HasSyntacticModifier(node, ast.ModifierFlagsParameterPropertyModifier)
++	return node.Kind != ast.KindParameter && ast.HasSyntacticModifier(node, ast.ModifierFlagsParameterPropertyModifier)
+ }
+ 
+ // Node's transform declares parameter-property slots before the written fields. The parameters'

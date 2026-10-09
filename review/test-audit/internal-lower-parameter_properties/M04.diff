@@ -1,0 +1,10 @@
+--- a/internal/lower/parameter_properties.go
++++ b/internal/lower/parameter_properties.go
+@@ -48,6 +48,7 @@
+ // Node reads undefined there. A declared number slot cannot claim that value, so require an
+ // already initialized written field instead. Calls and deferred captures are checked conservatively.
+ func (l *lowering) parameterPropertyDefault(declaration, initializer *ast.Node) error {
++	if true { return nil }
+ 	hasProperties := false
+ 	available := map[string]bool{}
+ 	for _, member := range classMembersWithParameters(declaration.Parent) {

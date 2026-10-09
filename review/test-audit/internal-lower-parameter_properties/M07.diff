@@ -1,0 +1,14 @@
+--- a/internal/lower/expression.go
++++ b/internal/lower/expression.go
+@@ -1235,11 +1235,6 @@
+ 	if held, isMade := l.forwarders[target]; isMade {
+ 		return ir.Read{Local: held, Of: ir.Closure}, nil
+ 	}
+-	for _, parameter := range symbol.Declarations[0].Parameters() {
+-		if parameter.Name().Text() == "this" {
+-			return nil, l.notYet(parameter, "a function with a this parameter used as a value; pass the receiver explicitly or use an arrow")
+-		}
+-	}
+ 	callee := l.result.Functions[target]
+ 	if censusCallableSlotless(callee.Returns) {
+ 		return nil, l.notYet(node, "a function value returning "+typeName(callee.Returns))

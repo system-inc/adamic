@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T10:31:24.767315898Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T10:31:24.774158492Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParameterPropertyCallbackReceiver"}
+{"Time":"2026-10-09T10:31:24.774222198Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParameterPropertyCallbackReceiver","Output":"=== RUN   TestParameterPropertyCallbackReceiver\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:31:24.77424397Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParameterPropertyCallbackReceiver","Output":"=== PAUSE TestParameterPropertyCallbackReceiver\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:31:24.774246324Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParameterPropertyCallbackReceiver"}
+{"Time":"2026-10-09T10:31:24.77425041Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParameterPropertyCallbackReceiver"}
+{"Time":"2026-10-09T10:31:24.774252223Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParameterPropertyCallbackReceiver","Output":"=== CONT  TestParameterPropertyCallbackReceiver\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:31:24.80081569Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParameterPropertyCallbackReceiver","Output":"    parameter_properties_test.go:60: got \u003cnil\u003e, want NotYet dynamic receiver\n","OutputType":"error"}
+{"Time":"2026-10-09T10:31:24.800917323Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParameterPropertyCallbackReceiver","Output":"--- FAIL: TestParameterPropertyCallbackReceiver (0.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:31:24.80092192Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParameterPropertyCallbackReceiver","Elapsed":0.03}
+{"Time":"2026-10-09T10:31:24.800940248Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:31:24.80105446Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.033s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:31:24.801071315Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.034}

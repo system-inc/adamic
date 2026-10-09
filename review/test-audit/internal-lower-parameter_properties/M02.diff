@@ -1,0 +1,10 @@
+--- a/internal/lower/parameter_properties.go
++++ b/internal/lower/parameter_properties.go
+@@ -17,7 +17,6 @@
+ 		if member.Kind == ast.KindConstructor {
+ 			for _, parameter := range member.Parameters() {
+ 				if parameterProperty(parameter) {
+-					members = append(members, parameter)
+ 				}
+ 			}
+ 		}

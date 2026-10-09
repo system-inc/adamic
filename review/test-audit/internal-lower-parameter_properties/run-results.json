@@ -1,0 +1,152 @@
+{
+  "clean-switch": {
+    "exit": 0,
+    "wall_seconds": 7.796,
+    "log": "clean-switch.log",
+    "run": "^(TestParameterPropertiesSoundness|TestParameterPropertyCheckerContracts|TestParameterPropertyCallbackReceiver|TestPredicateSummaryParameterIndex)$"
+  },
+  "M01": {
+    "exit": 1,
+    "wall_seconds": 23.597,
+    "log": "M01.log",
+    "run": "."
+  },
+  "M02": {
+    "exit": 1,
+    "wall_seconds": 23.528,
+    "log": "M02.log",
+    "run": "."
+  },
+  "M03": {
+    "exit": 0,
+    "wall_seconds": 23.431,
+    "log": "M03.log",
+    "run": "."
+  },
+  "M04": {
+    "exit": 1,
+    "wall_seconds": 23.883,
+    "log": "M04.log",
+    "run": "."
+  },
+  "M05": {
+    "exit": 1,
+    "wall_seconds": 26.613,
+    "log": "M05.log",
+    "run": "."
+  },
+  "M06": {
+    "exit": 1,
+    "wall_seconds": 23.71,
+    "log": "M06.log",
+    "run": "."
+  },
+  "M07": {
+    "exit": 1,
+    "wall_seconds": 23.158,
+    "log": "M07.log",
+    "run": "."
+  },
+  "M08": {
+    "exit": 1,
+    "wall_seconds": 23.544,
+    "log": "M08.log",
+    "run": "."
+  },
+  "M09": {
+    "exit": 1,
+    "wall_seconds": 24.657,
+    "log": "M09.log",
+    "run": "."
+  },
+  "M10": {
+    "exit": 1,
+    "wall_seconds": 23.318,
+    "log": "M10.log",
+    "run": "."
+  },
+  "M11": {
+    "exit": 1,
+    "wall_seconds": 11.347,
+    "log": "M11.log",
+    "run": "."
+  },
+  "M12": {
+    "exit": 0,
+    "wall_seconds": 23.547,
+    "log": "M12.log",
+    "run": "."
+  },
+  "P1": {
+    "exit": 1,
+    "wall_seconds": 1.695,
+    "log": "P1.log",
+    "run": ".",
+    "panic": true,
+    "isolated": {
+      "TestParameterPropertiesSoundness": {
+        "exit": 1,
+        "wall_seconds": 1.789,
+        "log": "P1-TestParameterPropertiesSoundness.log",
+        "run": "^TestParameterPropertiesSoundness$"
+      },
+      "TestParameterPropertyCheckerContracts": {
+        "exit": 0,
+        "wall_seconds": 1.716,
+        "log": "P1-TestParameterPropertyCheckerContracts.log",
+        "run": "^TestParameterPropertyCheckerContracts$"
+      },
+      "TestParameterPropertyCallbackReceiver": {
+        "exit": 1,
+        "wall_seconds": 1.657,
+        "log": "P1-TestParameterPropertyCallbackReceiver.log",
+        "run": "^TestParameterPropertyCallbackReceiver$"
+      },
+      "TestPredicateSummaryParameterIndex": {
+        "exit": 0,
+        "wall_seconds": 1.626,
+        "log": "P1-TestPredicateSummaryParameterIndex.log",
+        "run": "^TestPredicateSummaryParameterIndex$"
+      }
+    }
+  },
+  "P2": {
+    "exit": 1,
+    "wall_seconds": 1.615,
+    "log": "P2.log",
+    "run": ".",
+    "panic": true,
+    "isolated": {
+      "TestParameterPropertiesSoundness": {
+        "exit": 1,
+        "wall_seconds": 1.628,
+        "log": "P2-TestParameterPropertiesSoundness.log",
+        "run": "^TestParameterPropertiesSoundness$"
+      },
+      "TestParameterPropertyCheckerContracts": {
+        "exit": 1,
+        "wall_seconds": 1.63,
+        "log": "P2-TestParameterPropertyCheckerContracts.log",
+        "run": "^TestParameterPropertyCheckerContracts$"
+      },
+      "TestParameterPropertyCallbackReceiver": {
+        "exit": 1,
+        "wall_seconds": 1.666,
+        "log": "P2-TestParameterPropertyCallbackReceiver.log",
+        "run": "^TestParameterPropertyCallbackReceiver$"
+      },
+      "TestPredicateSummaryParameterIndex": {
+        "exit": 1,
+        "wall_seconds": 1.617,
+        "log": "P2-TestPredicateSummaryParameterIndex.log",
+        "run": "^TestPredicateSummaryParameterIndex$"
+      }
+    }
+  },
+  "P3": {
+    "exit": 1,
+    "wall_seconds": 22.842,
+    "log": "P3.log",
+    "run": "."
+  }
+}

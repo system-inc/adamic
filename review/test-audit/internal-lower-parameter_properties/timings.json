@@ -1,0 +1,42 @@
+{
+  "TestParameterPropertiesSoundness": {
+    "runs": [
+      0.19,
+      0.18,
+      0.194
+    ],
+    "median": 0.19
+  },
+  "TestParameterPropertyCheckerContracts": {
+    "runs": [
+      0.122,
+      0.13,
+      0.101
+    ],
+    "median": 0.122
+  },
+  "TestParameterPropertyCallbackReceiver": {
+    "runs": [
+      0.034,
+      0.033,
+      0.036
+    ],
+    "median": 0.034
+  },
+  "TestPredicateSummaryParameterIndex": {
+    "runs": [
+      0.093,
+      0.096,
+      0.092
+    ],
+    "median": 0.093
+  },
+  "TestClassFeaturesPrivateChecker": {
+    "runs": [
+      0.041,
+      0.038,
+      0.039
+    ],
+    "median": 0.039
+  }
+}

@@ -1,0 +1,228 @@
+diff --git a/internal/load/load.go b/internal/load/load.go
+index 2515e26f..4aa7cc33 100644
+--- a/internal/load/load.go
++++ b/internal/load/load.go
+@@ -57,7 +57,7 @@ func (e *CheckError) Error() string {
+ func compilerOptions() *core.CompilerOptions {
+ 	return &core.CompilerOptions{
+ 		Strict:                     core.TSTrue,
+-		NoUncheckedIndexedAccess:   core.TSTrue,
++		NoUncheckedIndexedAccess:   auditUncheckedIndexOption(),
+ 		ExactOptionalPropertyTypes: core.TSTrue,
+ 		ErasableSyntaxOnly:         core.TSFalse,
+ 		VerbatimModuleSyntax:       core.TSTrue,
+@@ -78,6 +78,9 @@ func compilerOptions() *core.CompilerOptions {
+ //
+ // Each path is an Adamic source: a .ts file or a .a file.
+ func Load(paths []string) (*Program, error) {
++	if os.Getenv("ADAMIC_MUTANT") == "P2" {
++		return nil, nil
++	}
+ 	return load(paths, nil)
+ }
+ 
+@@ -230,7 +233,10 @@ func (p *Program) diagnostics(ctx context.Context) []string {
+ 		all = append(all, p.compiler.GetProgramDiagnostics()...)
+ 		all = append(all, p.compiler.GetGlobalDiagnostics(ctx)...)
+ 		all = append(all, p.compiler.GetBindDiagnostics(ctx, nil)...)
+-		all = append(all, p.compiler.GetSemanticDiagnostics(ctx, nil)...)
++		if !(os.Getenv("ADAMIC_MUTANT") == "M11") {
++			all = append(all, p.compiler.GetSemanticDiagnostics(ctx, nil)...)
++
++		}
+ 	}
+ 	formatted := make([]string, 0, len(all))
+ 	for _, diagnostic := range all {
+@@ -280,3 +286,10 @@ func (p *Program) lineAndColumn(sourceFile *ast.SourceFile, position int) (int,
+ 
+ // CompilerProgram exposes the checked program to public checker and lint adapters.
+ func (p *Program) CompilerProgram() *compiler.Program { return p.compiler }
++
++func auditUncheckedIndexOption() core.Tristate {
++	if os.Getenv("ADAMIC_MUTANT") == "M12" {
++		return core.TSFalse
++	}
++	return core.TSTrue
++}
+diff --git a/internal/lower/class_inheritance.go b/internal/lower/class_inheritance.go
+index b1906e9d..8389ef30 100644
+--- a/internal/lower/class_inheritance.go
++++ b/internal/lower/class_inheritance.go
+@@ -1,6 +1,7 @@
+ package lower
+ 
+ import (
++	"os"
+ 	"slices"
+ 	"strconv"
+ 	"strings"
+@@ -46,6 +47,9 @@ func (l *lowering) checkOverrides(declaration *ast.Node, classType *checker.Type
+ }
+ 
+ func (l *lowering) checkMemberOverrides(declaration *ast.Node, classType, base *checker.Type, static bool) error {
++	if os.Getenv("ADAMIC_MUTANT") == "M06" {
++		return nil
++	}
+ 	checkABI := static || len(declaration.TypeParameters()) == 0 || classType != l.checker.GetTypeAtLocation(declaration.Name())
+ 	for _, member := range classMembersWithParameters(declaration) {
+ 		if member.Name() == nil || ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) != static {
+diff --git a/internal/lower/expression.go b/internal/lower/expression.go
+index 8b8c5d6d..31fc94c4 100644
+--- a/internal/lower/expression.go
++++ b/internal/lower/expression.go
+@@ -2,6 +2,7 @@ package lower
+ 
+ import (
+ 	"errors"
++	"os"
+ 	"reflect"
+ 
+ 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+@@ -1235,10 +1236,13 @@ func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, err
+ 	if held, isMade := l.forwarders[target]; isMade {
+ 		return ir.Read{Local: held, Of: ir.Closure}, nil
+ 	}
+-	for _, parameter := range symbol.Declarations[0].Parameters() {
+-		if parameter.Name().Text() == "this" {
+-			return nil, l.notYet(parameter, "a function with a this parameter used as a value; pass the receiver explicitly or use an arrow")
++	if !(os.Getenv("ADAMIC_MUTANT") == "M07") {
++		for _, parameter := range symbol.Declarations[0].Parameters() {
++			if parameter.Name().Text() == "this" {
++				return nil, l.notYet(parameter, "a function with a this parameter used as a value; pass the receiver explicitly or use an arrow")
++			}
+ 		}
++
+ 	}
+ 	callee := l.result.Functions[target]
+ 	if censusCallableSlotless(callee.Returns) {
+diff --git a/internal/lower/lower.go b/internal/lower/lower.go
+index daba343f..0a15d5e7 100644
+--- a/internal/lower/lower.go
++++ b/internal/lower/lower.go
+@@ -13,11 +13,15 @@ import (
+ 	"github.com/microsoft/TypeScript/tsc/shim/checker"
+ 	"github.com/system-inc/adamic/internal/ir"
+ 	"github.com/system-inc/adamic/internal/load"
++	"os"
+ 	"path/filepath"
+ )
+ 
+ // Lower lowers a checked program from one entry, in ESM evaluation order.
+ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
++	if os.Getenv("ADAMIC_MUTANT") == "P1" {
++		return nil, nil
++	}
+ 	files := program.Files()
+ 	if len(files) != 1 {
+ 		return nil, fmt.Errorf("lower: stage 0 compiles a program from one entry file, got %d", len(files))
+diff --git a/internal/lower/parameter_properties.go b/internal/lower/parameter_properties.go
+index 569186d2..68f6ea2f 100644
+--- a/internal/lower/parameter_properties.go
++++ b/internal/lower/parameter_properties.go
+@@ -3,10 +3,11 @@ package lower
+ import (
+ 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+ 	"github.com/system-inc/adamic/internal/ir"
++	"os"
+ )
+ 
+ func parameterProperty(node *ast.Node) bool {
+-	return node.Kind == ast.KindParameter && ast.HasSyntacticModifier(node, ast.ModifierFlagsParameterPropertyModifier)
++	return ((os.Getenv("ADAMIC_MUTANT") == "M01" && node.Kind != ast.KindParameter) || (!(os.Getenv("ADAMIC_MUTANT") == "M01") && node.Kind == ast.KindParameter)) && ast.HasSyntacticModifier(node, ast.ModifierFlagsParameterPropertyModifier)
+ }
+ 
+ // Node's transform declares parameter-property slots before the written fields. The parameters'
+@@ -17,7 +18,10 @@ func classMembersWithParameters(declaration *ast.Node) []*ast.Node {
+ 		if member.Kind == ast.KindConstructor {
+ 			for _, parameter := range member.Parameters() {
+ 				if parameterProperty(parameter) {
+-					members = append(members, parameter)
++					if !(os.Getenv("ADAMIC_MUTANT") == "M02") {
++						members = append(members, parameter)
++
++					}
+ 				}
+ 			}
+ 		}
+@@ -26,6 +30,9 @@ func classMembersWithParameters(declaration *ast.Node) []*ast.Node {
+ }
+ 
+ func (l *lowering) parameterPropertyStores(declaration *ast.Node, this int) ([]ir.Statement, error) {
++	if os.Getenv("ADAMIC_MUTANT") == "M03" {
++		return nil, nil
++	}
+ 	statements := []ir.Statement{}
+ 	for _, parameter := range classMembersWithParameters(declaration) {
+ 		if !parameterProperty(parameter) {
+@@ -48,6 +55,9 @@ func (l *lowering) parameterPropertyStores(declaration *ast.Node, this int) ([]i
+ // Node reads undefined there. A declared number slot cannot claim that value, so require an
+ // already initialized written field instead. Calls and deferred captures are checked conservatively.
+ func (l *lowering) parameterPropertyDefault(declaration, initializer *ast.Node) error {
++	if os.Getenv("ADAMIC_MUTANT") == "M04" {
++		return nil
++	}
+ 	hasProperties := false
+ 	available := map[string]bool{}
+ 	for _, member := range classMembersWithParameters(declaration.Parent) {
+@@ -73,7 +83,10 @@ func (l *lowering) parameterPropertyResets(declaration *ast.Node, this int, avai
+ 		if !parameterProperty(parameter) {
+ 			continue
+ 		}
+-		delete(available, parameter.Name().Text())
++		if !(os.Getenv("ADAMIC_MUTANT") == "M05") {
++			delete(available, parameter.Name().Text())
++
++		}
+ 		of, err := l.typeOf(parameter.Name())
+ 		if err != nil {
+ 			return nil, err
+diff --git a/internal/lower/predicates_proof.go b/internal/lower/predicates_proof.go
+index 86451984..ea1c4f13 100644
+--- a/internal/lower/predicates_proof.go
++++ b/internal/lower/predicates_proof.go
+@@ -2,6 +2,7 @@ package lower
+ 
+ import (
+ 	"fmt"
++	"os"
+ 
+ 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+ 	"github.com/microsoft/TypeScript/tsc/shim/checker"
+@@ -36,7 +37,10 @@ type predicatePath struct {
+ func predicateFailure(l *lowering, node *ast.Node, path string) error {
+ 	where := ""
+ 	if node != nil {
+-		where = l.program.Where(node)
++		if !(os.Getenv("ADAMIC_MUTANT") == "M10") {
++			where = l.program.Where(node)
++
++		}
+ 	}
+ 	return &Refused{Where: where, What: "an unproven type predicate", Fix: path + "; return a boolean and narrow at the caller (adamic/no-type-predicate)"}
+ }
+@@ -45,6 +49,9 @@ func predicateFailure(l *lowering, node *ast.Node, path string) error {
+ // become summaries. Iteration terminates when no new body can be discharged;
+ // cycles and opaque calls never acquire a summary from their annotations.
+ func (l *lowering) provePredicate(node *ast.Node) (predicateProof, error) {
++	if os.Getenv("ADAMIC_MUTANT") == "P3" {
++		return predicateProof{}, nil
++	}
+ 	proof := predicateProof{}
+ 	if node == nil || node.Kind != ast.KindTypePredicate || node.Parent == nil || !ast.IsFunctionLike(node.Parent) || node.Parent.Body() == nil {
+ 		return proof, predicateFailure(l, node, "no implementation body proves a return path")
+@@ -400,9 +407,12 @@ func (v *predicateVerifier) expression(n *ast.Node, parameter *ast.Symbol, path
+ 				if values, ok := v.summaries[d]; ok {
+ 					// This summary partitions the helper's predicate parameter,
+ 					// not an arbitrary argument with the same caller symbol.
+-					claim := predicateOfSignature(v.l.checker, v.l.checker.GetSignatureFromDeclaration(d))
+-					if claim == nil || claim.ParameterIndex() != 0 {
+-						return 0, predicateFailure(v.l, n, "helper argument 0 does not occupy its predicate parameter; pass the tested value at the helper's predicate parameter index")
++					if !(os.Getenv("ADAMIC_MUTANT") == "M09") {
++						claim := predicateOfSignature(v.l.checker, v.l.checker.GetSignatureFromDeclaration(d))
++						if claim == nil || ((os.Getenv("ADAMIC_MUTANT") == "M08" && claim.ParameterIndex() != 1) || (!(os.Getenv("ADAMIC_MUTANT") == "M08") && claim.ParameterIndex() != 0)) {
++							return 0, predicateFailure(v.l, n, "helper argument 0 does not occupy its predicate parameter; pass the tested value at the helper's predicate parameter index")
++						}
++
+ 					}
+ 					return values[path.cell], nil
+ 				}

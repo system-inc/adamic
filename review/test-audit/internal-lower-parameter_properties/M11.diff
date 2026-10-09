@@ -1,0 +1,10 @@
+--- a/internal/load/load.go
++++ b/internal/load/load.go
+@@ -230,7 +230,6 @@
+ 		all = append(all, p.compiler.GetProgramDiagnostics()...)
+ 		all = append(all, p.compiler.GetGlobalDiagnostics(ctx)...)
+ 		all = append(all, p.compiler.GetBindDiagnostics(ctx, nil)...)
+-		all = append(all, p.compiler.GetSemanticDiagnostics(ctx, nil)...)
+ 	}
+ 	formatted := make([]string, 0, len(all))
+ 	for _, diagnostic := range all {

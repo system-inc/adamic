@@ -1,0 +1,10 @@
+--- a/internal/lower/predicates_proof.go
++++ b/internal/lower/predicates_proof.go
+@@ -36,7 +36,6 @@
+ func predicateFailure(l *lowering, node *ast.Node, path string) error {
+ 	where := ""
+ 	if node != nil {
+-		where = l.program.Where(node)
+ 	}
+ 	return &Refused{Where: where, What: "an unproven type predicate", Fix: path + "; return a boolean and narrow at the caller (adamic/no-type-predicate)"}
+ }

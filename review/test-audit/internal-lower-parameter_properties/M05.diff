@@ -1,0 +1,10 @@
+--- a/internal/lower/parameter_properties.go
++++ b/internal/lower/parameter_properties.go
+@@ -73,7 +73,6 @@
+ 		if !parameterProperty(parameter) {
+ 			continue
+ 		}
+-		delete(available, parameter.Name().Text())
+ 		of, err := l.typeOf(parameter.Name())
+ 		if err != nil {
+ 			return nil, err
