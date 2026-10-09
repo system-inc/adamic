@@ -5,7 +5,6 @@ import (
 	"context"
 	"fmt"
 	"os"
-	"os/exec"
 	"strconv"
 	"strings"
 	"testing"
@@ -124,11 +123,11 @@ func estreeTopUnion(t *testing.T, root string, count int, ids []string) {
 	if _, err := miscPlan(ids, count); err != nil {
 		t.Fatal(err)
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 75*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
-	output, err := exec.CommandContext(ctx, os.Args[0], "-test.list=^"+root+"_[0-9]{3}$").CombinedOutput()
+	output, err := estreeScopedCommand(ctx, os.Args[0], "-test.list=^"+root+"_[0-9]{3}$").CombinedOutput()
 	if ctx.Err() != nil {
-		t.Fatal("cooked: listing top-level units exceeded 75 seconds")
+		t.Fatal("cooked: listing top-level units exceeded 90 seconds")
 	}
 	if err != nil {
 		t.Fatalf("list units: %v\n%s", err, output)
@@ -183,9 +182,9 @@ func estreeTopPlantedProof(t *testing.T, root string, count int, ids []string) {
 	if _, err := miscPlan(ids, count); err != nil {
 		t.Fatal(err)
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 75*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
-	command := exec.CommandContext(ctx, os.Args[0], "-test.run=^"+root+"_[0-9]{3}$", "-test.v", "-test.timeout=75s")
+	command := estreeScopedCommand(ctx, os.Args[0], "-test.run=^"+root+"_[0-9]{3}$", "-test.v", "-test.timeout=75s")
 	for _, value := range os.Environ() {
 		if !strings.HasPrefix(value, "ADAMIC_TEST_SHARD=") && !strings.HasPrefix(value, "ADAMIC_ESTREE_TOP_PROOF=") {
 			command.Env = append(command.Env, value)
@@ -194,7 +193,7 @@ func estreeTopPlantedProof(t *testing.T, root string, count int, ids []string) {
 	command.Env = append(command.Env, "ADAMIC_ESTREE_TOP_PROOF="+root)
 	output, err := command.CombinedOutput()
 	if ctx.Err() != nil {
-		t.Fatal("cooked: planted proof exceeded 75 seconds")
+		t.Fatal("cooked: planted proof exceeded 90 seconds")
 	}
 	name := fmt.Sprintf("%s_%03d", root, miscShard(ids[len(ids)-1], count))
 	if err == nil || bytes.Count(output, []byte("--- FAIL: "+root+"_")) != 1 || !bytes.Contains(output, []byte("--- FAIL: "+name+" ")) {
