@@ -1,0 +1,16 @@
+{
+  "finished": true,
+  "verdict": "void",
+  "runner": "pool",
+  "pool": "codex-side",
+  "pool_run": "adamic-select-20261009T172202-ca92bc01",
+  "covers": "go-tests",
+  "uncached_tests": false,
+  "sha": "468592299b29f1df4ac5ab0e15910ba53e6bef8c",
+  "branch": "cloud/land-stack-stage3-batch6-46859229",
+  "base": "0535a80bd5201e57a157f14716f1a677e8dd1b27",
+  "candidate": "468592299b29f1df4ac5ab0e15910ba53e6bef8c",
+  "gated": "662e71b669ea9bc45f35b57508d85e7b70561bf6",
+  "complete": true,
+  "darwin": "not run (pool is Linux only)"
+}
