@@ -1,0 +1,35 @@
+
+static adamic_object * adamic_function_4_diag_in(adamic_region *region, double adamic_local_29_code, double adamic_local_30_category, adamic_string * adamic_local_31_key, adamic_string * adamic_local_32_message, adamic_heap * adamic_local_33_reportsUnnecessary, adamic_maybe_boolean adamic_local_34_elidedInCompatabilityPyramid, adamic_heap * adamic_local_35_reportsDeprecated) {
+	ADAMIC_CHECK_STACK();
+	adamic_object * adamic_temporary_6 = adamic_error_new(&adamic_string_604);
+	adamic_thrown = adamic_retain(adamic_temporary_6);
+	adamic_release(adamic_temporary_6);
+	return NULL;
+	adamic_unreachable();
+}
+
+static adamic_string * adamic_function_5_getNameOfScriptTarget(double adamic_local_36_scriptTarget) {
+	ADAMIC_CHECK_STACK();
+	adamic_cell *adamic_local_36_scriptTarget_cell = adamic_cell_new((adamic_value){.number = adamic_local_36_scriptTarget}, false);
+	if (!adamic_ready_4) {
+		static const char message[] = "ReferenceError: Cannot access 'targetOptionDeclaration' before initialization";
+		adamic_panic(message, sizeof message - 1);
+	}
+	adamic_object * adamic_temporary_7 = adamic_global_4_targetOptionDeclaration;
+	adamic_map * adamic_temporary_9 = adamic_retain(((adamic_map *)adamic_object_data_field(adamic_temporary_7, "type", &adamic_cache_8)->reference));
+	adamic_closure * adamic_temporary_10 = adamic_closure_new(adamic_function_33_closure, 1);
+	adamic_temporary_10->cells[0] = adamic_retain(adamic_local_36_scriptTarget_cell);
+	adamic_function_32_forEachEntry_unread_32(adamic_temporary_9, adamic_temporary_10);
+	if (adamic_thrown != NULL) {
+		adamic_release(adamic_temporary_10);
+		adamic_release(adamic_temporary_9);
+		adamic_release(adamic_local_36_scriptTarget_cell);
+		return &adamic_string_empty;
+	}
+	adamic_release(adamic_temporary_10);
+	adamic_release(adamic_temporary_9);
+	adamic_object * adamic_temporary_11 = NULL;
+	adamic_release(adamic_local_36_scriptTarget_cell);
+	return adamic_temporary_11;
+	adamic_unreachable();
+}
