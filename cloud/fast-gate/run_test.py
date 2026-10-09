@@ -957,6 +957,91 @@ class GateRuns(unittest.TestCase):
             self.assertEqual(gate.result["deferred_run_by_request"], [native + " TestSplitTSGoAgrees"])
 
 
+class UnionsBesideShards(unittest.TestCase):
+    setUp = FailClosed.setUp
+    gate = FailClosed.gate
+
+    def tearDown(self):
+        shutil.rmtree(self.directory)
+
+    names = ["TestOneUnit00", "TestOneUnit01", "TestOneUnion",
+             "TestOtherPoints00", "TestOtherUnion", "TestUnrelated"]
+
+    def probe(self, requested, selecting=False, deferred=()):
+        with open(os.path.join(self.tree, "union_test.go"), "w") as handle:
+            handle.write("".join("func %s(t *testing.T) {}\n" % name for name in self.names))
+        initialize = FakeProcess.__init__
+        def process(instance, command, stdout):
+            initialize(instance, command, stdout)
+            if "-test.list" in command:
+                instance.lines = [name + "\n" for name in self.names]
+                instance.stdout = io.StringIO("".join(instance.lines))
+            elif "test2json" in command:
+                name = command[command.index("-test.run") + 1].strip("^$")
+                package = command[command.index("-p") + 1]
+                instance.lines = [json.dumps({"Action": "pass", "Package": package, "Test": name}) + "\n"]
+                instance.stdout = io.StringIO("".join(instance.lines))
+        with mock.patch.object(FakeProcess, "__init__", process), \
+                mock.patch.object(run.Gate, "runRequested", lambda gate: setattr(gate, "requested", {"q": set(requested)})), \
+                mock.patch.object(run.Gate, "deferredList", return_value={"q": set(deferred)}):
+            gate, status, result = self.gate(extra={"select": selecting})
+        if selecting:
+            with open(os.path.join(gate.arguments.out, "select.json")) as handle:
+                return json.load(handle)
+        self.assertIsNone(gate.failure, status)
+        return result
+
+    def test_one_requested_shard_plans_its_union_on_the_box(self):
+        result = self.probe(["TestOneUnit00"])
+        self.assertEqual([row["test"] for row in result["test_outcomes"] if row["package"] == "q"],
+                         ["TestOneUnit00", "TestOneUnion"])
+
+    def test_pool_selection_explicitly_requests_the_same_union(self):
+        selection = self.probe(["TestOneUnit00"], selecting=True)
+        self.assertEqual(selection["only_tests"]["q"], ["TestOneUnion", "TestOneUnit00"])
+        planned = [name for name in self.names if run.inFamily(name, selection["only_tests"]["q"])]
+        self.assertEqual(planned, ["TestOneUnit00", "TestOneUnion"])
+
+    def test_requesting_a_family_plans_all_its_shards_and_one_union(self):
+        result = self.probe(["TestOne"])
+        self.assertEqual([row["test"] for row in result["test_outcomes"] if row["package"] == "q"], self.names[:3])
+        self.assertEqual(self.probe(["TestOne"], selecting=True)["only_tests"]["q"], ["TestOne", "TestOneUnion"])
+
+    def test_deferred_shards_do_not_add_a_union_to_pool_selection(self):
+        selection = self.probe(["TestOne"], selecting=True, deferred=self.names[:2])
+        self.assertEqual(selection["only_tests"]["q"], ["TestOne"])
+
+    def test_no_selected_shard_adds_no_union(self):
+        result = self.probe(["TestUnrelated"])
+        self.assertEqual([row["test"] for row in result["test_outcomes"] if row["package"] == "q"], ["TestUnrelated"])
+        self.assertEqual(self.probe(["TestUnrelated"], selecting=True)["only_tests"]["q"], ["TestUnrelated"])
+
+    def test_family_requests_and_suffixes_keep_one_union_without_prefix_matches(self):
+        for suffix in ("Unit00", "Points00", "_000"):
+            for union in ("TestAUnion", "TestA_Union"):
+                listed = ["TestA" + suffix, "TestA" + suffix.replace("0", "1"), union, "TestAnotherUnion"]
+                selected = [name for name in listed if run.inFamily(name, {"TestA"})]
+                self.assertEqual(run.unionsBesideShards(listed, selected), listed[:3])
+                self.assertEqual(run.unionsBesideShards(listed, listed[:3]), listed[:3])
+        self.assertEqual(run.unionsBesideShards(["TestAUnion"], ["TestAOther"]), ["TestAOther"])
+
+    def test_deferred_union_still_runs_beside_a_selected_shard(self):
+        result = self.probe(["TestOneUnit00"], deferred=["TestOneUnion"])
+        self.assertIn("TestOneUnion", [row["test"] for row in result["test_outcomes"] if row["package"] == "q"])
+        self.assertNotIn("q TestOneUnion", result.get("deferred_to_full_gate", []))
+        selection = self.probe(["TestOneUnit00"], selecting=True, deferred=["TestOneUnion"])
+        self.assertNotIn("TestOneUnion", selection["deferred"]["q"])
+
+    def test_dropping_the_union_is_caught_by_box_and_pool_checks(self):
+        with mock.patch.object(run, "unionsBesideShards", side_effect=lambda listed, selected: list(selected)):
+            result = unittest.TestResult()
+            for name in ("test_one_requested_shard_plans_its_union_on_the_box",
+                         "test_pool_selection_explicitly_requests_the_same_union"):
+                UnionsBesideShards(name).run(result)
+        self.assertEqual(result.errors, [])
+        self.assertEqual(len(result.failures), 2, result.failures)
+
+
 class GateRunsDeferred(unittest.TestCase):
     def gate(self, trailer):
         tree = tempfile.mkdtemp()

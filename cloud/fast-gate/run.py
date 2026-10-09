@@ -509,11 +509,25 @@ class Gate:
         for importPath, names in getattr(self, "requested", {}).items():
             if importPath not in packages:
                 packages = sorted(set(packages) | {importPath})
-                self.onlyTests[importPath] = set(names)
                 self.packageDirectories.setdefault(importPath, os.path.join(tree, importPath[len(module) + 1:]))
+                listed = sourceTests(self.packageDirectories[importPath])
+                selected = [name for name in listed if inFamily(name, names)
+                            and name not in self.deferred.get(importPath, set())]
+                self.onlyTests[importPath] = set(names) | (set(unionsBesideShards(listed, selected)) - set(selected))
         if "stage3" in executors:
             packages = sorted(set(packages) | set(self.goList("./stage3/...")))
             self.planned.append("stage3")
+        # The pool filters deferred tests after only_tests. A union required by
+        # selected shards must survive that filter, just as it does on the boxes.
+        for importPath in packages:
+            if importPath not in self.deferred:
+                continue
+            listed = sourceTests(self.packageDirectories[importPath])
+            selected = [name for name in listed if
+                        (importPath not in self.onlyTests or inFamily(name, self.onlyTests[importPath]))
+                        and name not in self.deferred[importPath]]
+            required = set(unionsBesideShards(listed, selected)) - set(selected)
+            self.deferred[importPath].difference_update(required)
         if selecting:
             # What the pool can run is the Go tests; every other executor this change needs is named, so a pool
             # verdict says what it didn't cover.
@@ -1804,6 +1818,7 @@ class Gate:
             for row in productRows:
                 if row["package"] == importPath:
                     productPool.submit(runProduct, row, binary)
+            listed = names
             names = [] if productsOnly else [name for name in names if not name.startswith("TestProduct_")]
             if importPath in getattr(self, "onlyTests", {}):
                 names = [name for name in names if inFamily(name, self.onlyTests[importPath])]
@@ -1822,11 +1837,15 @@ class Gate:
                     if test in names:
                         patterns[test] = "^%s$" % test
                 names = sorted(patterns)
-            deferred = sorted(set(names) & getattr(self, "deferred", {}).get(importPath, set()))
+            omitted = getattr(self, "deferred", {}).get(importPath, set())
+            selected = [name for name in names if name not in omitted]
+            required = set(unionsBesideShards(listed, selected)) - set(selected)
+            deferred = sorted(set(names) & (omitted - required))
             if deferred:
                 with self.lock:
                     self.result.setdefault("deferred_to_full_gate", []).extend(importPath + " " + name for name in deferred)
                 names = [name for name in names if name not in deferred]
+            names = unionsBesideShards(listed, names)
             self.result.setdefault("split_tests", {})[importPath] = len(names)
             with self.lock:
                 tally["planned"] += len(names)
@@ -2535,6 +2554,29 @@ def inFamily(name, requested):
     name, and an exact anchor selected none of it, so a requested set ran nothing and read as passed (@system_adamic,
     Oct 9 11:01Z)."""
     return any(familyMember(name, prefix) for prefix in requested)
+
+
+def sourceTests(directory):
+    """The selection sent to the pool needs union names before it compiles the test binary."""
+    names = set()
+    for path in glob.glob(os.path.join(directory, "*_test.go")):
+        with open(path) as handle:
+            names.update(re.findall(r"^func\s+(Test\w+)\s*\(\s*\w+\s+\*testing\.T\s*\)", handle.read(), re.M))
+    return sorted(names)
+
+
+def unionsBesideShards(listed, selected):
+    """Keep each selected split's union in the same record, even if it was deferred.
+
+    Use the generated suffixes from familyMember, not a bare prefix. Both Union
+    and _Union occur in the split tests. Unrelated families remain unselected.
+    """
+    unions = []
+    for name in listed:
+        match = re.fullmatch(r"(Test\w+?)(?:_?Union)", name)
+        if match and any(shard != match[1] and familyMember(shard, match[1]) for shard in selected):
+            unions.append(name)
+    return list(dict.fromkeys(list(selected) + unions))
 
 
 def familyOutcome(outcomes, package, name):
