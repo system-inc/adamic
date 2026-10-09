@@ -129,7 +129,7 @@ git cat-file -e "${sha}^{commit}" 2>/dev/null || git fetch -q origin "refs/gate-
 # check (@system_adamic, Oct 9). star-train.py's testOnlyPaths is the same pattern.
 # One guard: a test-only change in a package where the candidate changes code still counts, since a
 # test asserting the old behavior meets the new code there.
-testOnlyPattern='(_test\.go$|_test\.py$|(^|/)test_[^/]*\.py$|/testdata/|^review/|(^|/)shards\.json$|^stage3/fixtures/|^stage3/meter/|^README\.md$)'
+testOnlyPattern='(_test\.go$|_test\.py$|-test\.py$|(^|/)test_[^/]*\.py$|/testdata/|^review/|(^|/)shards\.json$|^stage3/fixtures/|^stage3/meter/|^README\.md$)'
 # The packages (directories) where <base>..<tip> changes anything but tests and records.
 codePackages() {
 	local path
@@ -640,6 +640,16 @@ Named but not read, checked by hand: ${notReaders[*]}."
 		echo "refused: not test-only against main ${old:0:8}: $(printf '%s' "$nonTest" | head -n 5 | paste -sd ' ' -)" >&2
 		exit 1
 	fi
+	# A Python test named by a non-test file (a gate script, a .sh that runs it) is gate logic and gets a gate
+	# (@system_adamic, Oct 9 04:20, ruling *-test.py into the lane). Go's _test.go can't be imported; a Python test can
+	# be run or read by name, so the lane looks for its name outside tests.
+	for path in $(printf '%s\n' "$changed" | grep -E '(_test\.py$|-test\.py$|(^|/)test_[^/]*\.py$)' || true); do
+		users=$(git grep -l -F -e "${path##*/}" "$tree" -- . 2>/dev/null | sed 's/^[^:]*://' | grep -v -x -F -e "$path" | grep -v -E "$testOnlyPattern" || true)
+		if [ -n "$users" ]; then
+			echo "refused: ${path} is named by $(printf '%s' "$users" | head -n 3 | paste -sd ' ' -), which isn't a test, so it's gate logic; gate it" >&2
+			exit 1
+		fi
+	done
 	# Its history, not only its tree (@system_adamic, Oct 9 04:59Z): a commit beyond main that touches anything
 	# but tests would be recorded as merged even where the merge drops its changes, and a later plain merge of
 	# its branch then silently deletes them (cohere's estree split carried buildcache-shared 2afbfa75 this way).

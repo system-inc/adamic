@@ -164,6 +164,16 @@ class LandingTests(unittest.TestCase):
         mixed = self.change(mixed, 'code/a.go', 'package code\n\n// beside\n', 'and code')
         self.assertIn('not test-only', self.push('--test-only', '--markdown-corpus', 'green', mixed, 'mixed').stderr)
 
+    def test_a_hyphenated_python_test_is_test_only_unless_a_non_test_file_runs_it(self):
+        # @system_adamic, Oct 9 04:20: *-test.py takes the lane, but one a gate script or .sh names is gate logic.
+        alone = self.change(self.main, 'cloud/check-test.py', 'print("ok")\n', 'a python test')
+        landed = self.assertLanded(self.push('--test-only', alone, 'alone'), self.main, alone)
+        runner = self.change(landed, 'cloud/run.sh', '#!/bin/sh\npython3 cloud/check-test.py\n', 'a gate script that runs it')
+        self.assertLanded(self.push(runner, '1', '1', '0', '0', 'runner'), landed, runner)
+        edited = self.change(self.main_now(), 'cloud/check-test.py', 'print("changed")\n', 'edit the test a script runs')
+        refused = self.push('--test-only', edited, 'edited')
+        self.assertIn('cloud/check-test.py is named by cloud/run.sh', refused.stderr)
+
     def test_a_candidate_built_ahead_lands_over_the_landing_commit_below_it(self):
         lower = self.change(self.main, 'code/a.go', 'package code\n\n// lower\n', 'lower')
         upper = self.change(lower, 'other/b.go', 'package other\n\n// upper\n', 'upper')

@@ -90,7 +90,7 @@ specification.loader.exec_module(recordReaders)
 # The paths push-main's test-only lane takes with no gate (Kirk, Oct 8), the same pattern push-main.sh
 # checks. Main moving by them doesn't spend a gate: the lane already lands them ungated, and Loom's
 # whole run of main is their check (@system_adamic, Oct 9).
-testOnlyPaths = re.compile(r"(_test\.go$|_test\.py$|(^|/)test_[^/]*\.py$|/testdata/|^review/|(^|/)shards\.json$|^stage3/fixtures/|^stage3/meter/|^README\.md$)")
+testOnlyPaths = re.compile(r"(_test\.go$|_test\.py$|-test\.py$|(^|/)test_[^/]*\.py$|/testdata/|^review/|(^|/)shards\.json$|^stage3/fixtures/|^stage3/meter/|^README\.md$)")
 
 
 def isRecord(path):
