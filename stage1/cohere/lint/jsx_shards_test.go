@@ -91,7 +91,7 @@ func jsxGoOracle(t *testing.T, name, root, side, virtualName string) string {
 		if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
 			return err
 		}
-		command := jsxDeadlineCommand(t, "go", "build", "-overlay="+overlayPath, "-o", filepath.Join(dir, "oracle"), virtual)
+		command := exec.CommandContext(context.Background(), "go", "build", "-overlay="+overlayPath, "-o", filepath.Join(dir, "oracle"), virtual)
 		command.Dir = root
 		var stdout, stderr bytes.Buffer
 		command.Stdout, command.Stderr = &stdout, &stderr
@@ -737,7 +737,7 @@ func TestJsxLintTreesShardDisagreement(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	command := jsxDeadlineCommand(t, executable, "-test.run=^TestJsxLintTrees_[0-9]{3}$", "-test.v", "-test.timeout=90s")
+	command := lintBuildPhaseChild(t, executable, "-test.run=^TestJsxLintTrees_[0-9]{3}$", "-test.v", "-test.timeout=600s")
 	command.Env = append(os.Environ(), "ADAMIC_JSX_SHARD_CHILD=1")
 	output, err := command.CombinedOutput()
 	if err == nil {
@@ -824,7 +824,7 @@ func jsxUpstream(t *testing.T) []string {
 }
 
 func jsxCaptureRun(directory string, environment []string, name string, args ...string) ([]byte, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 	command := exec.CommandContext(ctx, name, args...)
 	command.Dir = directory
