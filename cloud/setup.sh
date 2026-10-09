@@ -50,6 +50,47 @@ case $(uname -m) in
 	*) echo "setup: no tools for $(uname -m)" >&2 && exit 1 ;;
 esac
 
+# Every tarball is downloaded whole to a file, checked against its published sha256, extracted into a staging
+# directory and renamed into place (Loom, Oct 9: a download cut short, piped straight into tar, left a Go without
+# its standard library on 8 of 15 Codex instances, and every later run accepted it). A tool dir already there, whole
+# or not, is moved aside, never deleted.
+verifiedDownload() {
+	local url=$1 expected=$2 archive actual
+	archive=$(mktemp "$run/download.XXXXXX")
+	curl -fsSL --retry 3 -o "$archive" "$url"
+	actual=$(sha256sum "$archive" | cut -d' ' -f1)
+	if [ -z "$expected" ] || [ "$actual" != "$expected" ]; then
+		echo "setup: $url has sha256 $actual, not '$expected' (cut off or altered): refused" >&2
+		rm -f "$archive"
+		return 1
+	fi
+	echo "$archive"
+}
+installDirectory() {
+	local archive=$1 destination=$2 staging
+	shift 2
+	staging=$(mktemp -d "$(dirname "$destination")/.staging.XXXXXX")
+	tar --no-same-owner -C "$staging" "$@" -f "$archive"
+	rm -f "$archive"
+	[ ! -e "$destination" ] || mv "$destination" "$destination.aside.$(date +%s).$$"
+	chmod 755 "$staging"
+	mv "$staging" "$destination"
+}
+# Pinned releases' digests, from each GitHub release's asset digest.
+llvmDigest() {
+	case $1 in
+		20.1.8-X64) echo 1ead36b3dfcb774b57be530df42bec70ab2d239fbce9889447c7a29a4ddc1ae6 ;;
+		20.1.8-ARM64) echo b855cc17d935fdd83da82206b7a7cfc680095efd1e9e8182c4a05e761958bef8 ;;
+		*) echo "${ADAMIC_LLVM_SHA256:-}" ;;
+	esac
+}
+wasiDigest() {
+	case $1 in
+		27-x86_64) echo b7d4d944c88503e4f21d84af07ac293e3440b1b6210bfd7fe78e0afd92c23bc2 ;;
+		27-arm64) echo 4cf4c553c4640e63e780442146f87d83fdff5737f988c06a6e3b2f0228e37665 ;;
+	esac
+}
+
 # Go. Any Go from 1.21 on fetches the version go.mod names by itself (GOTOOLCHAIN=auto), so an
 # installed one is enough; otherwise the newest stable release goes in $tools/go.
 export GOTOOLCHAIN=auto
@@ -59,11 +100,16 @@ export GOTOOLCHAIN=auto
 # module's own source instead; go.sum still checks every module's hash either way.
 export GOPROXY="https://proxy.golang.org|direct"
 prepareGo() {
-# Only a go that answers `go version` counts: some images ship an unrelated /usr/bin/go.
-realGo() { "$1" version 2> /dev/null | grep -q '^go version go1\.'; }
+# Only a go that answers `go version` and has its standard library counts: some images ship an unrelated
+# /usr/bin/go, and a cut-off install answers `go version` with no std.
+realGo() {
+	local root
+	"$1" version 2> /dev/null | grep -q '^go version go1\.' && root=$("$1" env GOROOT 2> /dev/null) && [ -f "$root/src/runtime/runtime.go" ]
+}
 if ! { command -v go > /dev/null 2>&1 && realGo go; } && ! realGo "$tools/go/bin/go"; then
 	goVersion=$(curl -fsSL 'https://go.dev/VERSION?m=text' | head -n 1)
-	curl -fsSL "https://dl.google.com/go/$goVersion.linux-$goArchitecture.tar.gz" | tar --no-same-owner -xz -C "$tools"
+	goArchive=$(verifiedDownload "https://dl.google.com/go/$goVersion.linux-$goArchitecture.tar.gz" "$(curl -fsSL "https://dl.google.com/go/$goVersion.linux-$goArchitecture.tar.gz.sha256")")
+	installDirectory "$goArchive" "$tools/go" -xz --strip-components 1
 fi
 [ -x "$tools/go/bin/go" ] && export PATH="$tools/go/bin:$PATH"
 (cd "$repository" && go version)
@@ -92,8 +138,8 @@ for candidate in "$tools/llvm/bin/clang" $(ls -d /usr/lib/llvm-*/bin/clang 2> /d
 done
 if [ -z "$clang" ]; then
 	llvmVersion=${ADAMIC_LLVM_VERSION:-20.1.8}
-	mkdir -p "$tools/llvm"
-	curl -fsSL "https://github.com/llvm/llvm-project/releases/download/llvmorg-$llvmVersion/LLVM-$llvmVersion-Linux-$llvmArchitecture.tar.xz" | tar --no-same-owner -xJ -C "$tools/llvm" --strip-components 1
+	llvmArchive=$(verifiedDownload "https://github.com/llvm/llvm-project/releases/download/llvmorg-$llvmVersion/LLVM-$llvmVersion-Linux-$llvmArchitecture.tar.xz" "$(llvmDigest "$llvmVersion-$llvmArchitecture")")
+	installDirectory "$llvmArchive" "$tools/llvm" -xJ --strip-components 1
 	saneClang "$tools/llvm/bin/clang" || { echo "setup: LLVM $llvmVersion's sanitizers don't work here" >&2 && exit 1; }
 	clang=$tools/llvm/bin/clang
 fi
@@ -119,8 +165,11 @@ if ! "$tools/bin/node" --version 2> /dev/null | grep -q '^v24\.'; then
 		install -m 755 "$existing" "$tools/bin/node"
 	else
 		nodeVersion=$(curl -fsSL https://nodejs.org/dist/index.json | python3 -c 'import json, sys; print(next(r["version"] for r in json.load(sys.stdin) if r["version"].startswith("v24.")))')
-		curl -fsSL "https://nodejs.org/dist/$nodeVersion/node-$nodeVersion-linux-$nodeArchitecture.tar.xz" | tar --no-same-owner -xJ -C "$tools" --strip-components 2 --wildcards '*/bin/node'
-		mv "$tools/node" "$tools/bin/node"
+		nodeFile=node-$nodeVersion-linux-$nodeArchitecture.tar.xz
+		nodeArchive=$(verifiedDownload "https://nodejs.org/dist/$nodeVersion/$nodeFile" "$(curl -fsSL "https://nodejs.org/dist/$nodeVersion/SHASUMS256.txt" | awk -v file="$nodeFile" '$2 == file {print $1}')")
+		installDirectory "$nodeArchive" "$run/node" -xJ --strip-components 2 --wildcards '*/bin/node'
+		mv "$run/node/node" "$tools/bin/node.partial"
+		mv "$tools/bin/node.partial" "$tools/bin/node"
 	fi
 fi
 "$tools/bin/node" --version
@@ -164,8 +213,8 @@ if "$wasiSDK"; then
    x86_64) wasiArchitecture=x86_64 ;;
    *) wasiArchitecture=arm64 ;;
   esac
-  mkdir -p "$wasiDirectory"
-  curl -fsSL "https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-$wasiVersion/wasi-sdk-$wasiVersion.0-$wasiArchitecture-linux.tar.gz" | tar --no-same-owner -xz -C "$wasiDirectory" --strip-components 1
+  wasiArchive=$(verifiedDownload "https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-$wasiVersion/wasi-sdk-$wasiVersion.0-$wasiArchitecture-linux.tar.gz" "$(wasiDigest "$wasiVersion-$wasiArchitecture")")
+  installDirectory "$wasiArchive" "$wasiDirectory" -xz --strip-components 1
  fi
  "$wasiDirectory/bin/clang" --version | head -n 1
  step "wasi sdk ready ($wasiDirectory)"

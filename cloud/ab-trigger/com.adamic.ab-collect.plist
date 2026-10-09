@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key><string>com.adamic.ab-collect</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/usr/bin/env</string>
+    <string>python3</string>
+    <string>/Users/kirkouimet/Projects/system/adamic-gate-watch/cloud/ab-trigger.py</string>
+    <string>collect</string>
+  </array>
+  <key>WorkingDirectory</key><string>/Users/kirkouimet/Projects/system/adamic-gate-watch</string>
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>PATH</key><string>/Users/kirkouimet/Projects/ahra/node_modules/.bin:/Users/kirkouimet/.nvm/versions/node/v24.14.1/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+  </dict>
+  <key>StartInterval</key><integer>30</integer>
+  <key>StandardOutPath</key><string>/Users/kirkouimet/Projects/system/adamic-gate-logs/ab-collect.log</string>
+  <key>StandardErrorPath</key><string>/Users/kirkouimet/Projects/system/adamic-gate-logs/ab-collect.log</string>
+</dict>
+</plist>
