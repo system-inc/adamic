@@ -84,8 +84,8 @@ func TestMarkdownRootLayout(t *testing.T) {
 }
 
 func TestMarkdownStructureLayout(t *testing.T) {
-	parallelMarkdown(t)
-	testBlockLayout(t, "structure")
+	configureMarkdownMemory(t)
+	structureLayoutShared(t)
 }
 
 func buildLayoutFixture(t *testing.T) *layoutFixture {
