@@ -1,0 +1,20 @@
+[
+  [
+    "D1",
+    "sourceParser.ts",
+    "return this.make('Decorator', pos, [expression]);",
+    "return this.make('UnusedDecoratorControl', pos, [expression]);"
+  ],
+  [
+    "D2",
+    "pipeline.ts",
+    "    parts.push(`stripped ${written(processor.stripped.text())}\\n`);\n",
+    ""
+  ],
+  [
+    "D3",
+    "protocol.ts",
+    "export function dump(arena: Arena, root: number, depth = 0): string {",
+    "export function dump(arena: Arena, root: number, depth = 1): string {"
+  ]
+]

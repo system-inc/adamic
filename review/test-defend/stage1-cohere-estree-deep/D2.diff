@@ -1,0 +1,11 @@
+diff --git a/stage1/cohere/estree/pipeline.ts b/stage1/cohere/estree/pipeline.ts
+index 73890eba..a814f5b5 100644
+--- a/stage1/cohere/estree/pipeline.ts
++++ b/stage1/cohere/estree/pipeline.ts
+@@ -92,6 +92,5 @@ export function answer(path: string, text: string): string {
+         parts.push('comment\n');
+         parts.push(dump(converter.arena, comment));
+     }
+-    parts.push(`stripped ${written(processor.stripped.text())}\n`);
+     return parts.join('');
+ }

@@ -1,0 +1,13 @@
+diff --git a/stage1/cohere/estree/sourceParser.ts b/stage1/cohere/estree/sourceParser.ts
+index d5c91fb0..429589b1 100644
+--- a/stage1/cohere/estree/sourceParser.ts
++++ b/stage1/cohere/estree/sourceParser.ts
+@@ -1186,7 +1186,7 @@ export class Parser {
+         this.decoratorContext = true;
+         const expression = this.suffix(this.primary(), true);
+         this.decoratorContext = saved;
+-        return this.make('Decorator', pos, [expression]);
++        return this.make('UnusedDecoratorControl', pos, [expression]);
+     }
+     awaitContext = false;
+     yieldContext = false;

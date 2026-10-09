@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T16:04:08.663555092Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T16:04:08.674790168Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestUnattachedDecorator"}
+{"Time":"2026-10-09T16:04:08.67497459Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestUnattachedDecorator","Output":"=== RUN   TestUnattachedDecorator\n","OutputType":"frame"}
+{"Time":"2026-10-09T16:04:08.884568092Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestUnattachedDecorator","Output":"    expressions_test.go:45: build estree-lowered-program 60a2e3e294d4 hit 0.05\n"}
+{"Time":"2026-10-09T16:04:08.904754646Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestUnattachedDecorator","Output":"    expressions_test.go:45: build estree-sanitized-native 1223d02cedaa hit 0.00\n"}
+{"Time":"2026-10-09T16:04:08.904805862Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestUnattachedDecorator","Output":"    recovery_shards_test.go:38: setup wall=0.229892s builds=0.051509s without-builds=0.178383s\n"}
+{"Time":"2026-10-09T16:04:09.543107053Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestUnattachedDecorator","Output":"    recovery_shards_test.go:33: TEST totalCPU=1.592742s\n"}
+{"Time":"2026-10-09T16:04:09.543190567Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestUnattachedDecorator","Output":"--- PASS: TestUnattachedDecorator (0.87s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T16:04:09.543198889Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestUnattachedDecorator","Elapsed":0.87}
+{"Time":"2026-10-09T16:04:09.543257055Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T16:04:09.546288731Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"coverage: 0.1% of statements in ./internal/lower, ./internal/native\n"}
+{"Time":"2026-10-09T16:04:09.567120167Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/estree\t0.901s\tcoverage: 0.1% of statements in ./internal/lower, ./internal/native\n"}
+{"Time":"2026-10-09T16:04:09.567170742Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":0.904}
