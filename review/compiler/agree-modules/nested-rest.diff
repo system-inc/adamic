@@ -1,0 +1,11 @@
+--- a/internal/lower/functions.go
++++ b/internal/lower/functions.go
+@@ -145,7 +145,7 @@
+ 			if !known || slotless(element) && element != ir.Union {
+ 				return l.notYet(parameter, "a rest parameter whose elements cannot be packed")
+ 			}
+-			function.RestElement = element
++			function.RestElement = 0
+ 		}
+ 		if function.Closure && censusCallableSlotless(l.result.Locals[local].Type) && !(l.result.Locals[local].Type == ir.Union && l.regexReplacementArgument(declaration)) {
+ 			// Its arguments are each one adamic_value.
