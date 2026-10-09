@@ -1,0 +1,159 @@
+[
+  {
+    "id": "M01",
+    "file": "stage1/cohere/estree/jsxConvert.ts",
+    "line": 20,
+    "old": "'JSXIdentifier'",
+    "new": "'JSXName'",
+    "menu": "change constant",
+    "matrix_rows": [
+      "TestJSXAgreement family"
+    ],
+    "kind": "production"
+  },
+  {
+    "id": "M02",
+    "file": "stage1/typescript/parser/parser.ts",
+    "line": 735,
+    "old": "const members: number[] = [];\n        while(this.kind() !== 'CloseBraceToken')",
+    "new": "const members: number[] = [];\n        while(this.kind() === 'CloseBraceToken')",
+    "menu": "flip condition",
+    "matrix_rows": [
+      "TestParserRecoveryGap"
+    ],
+    "kind": "production",
+    "change_line": 736
+  },
+  {
+    "id": "M03",
+    "file": "internal/native/runtime/utf8.c",
+    "line": 15,
+    "old": "return (double)text->length;",
+    "new": "return (double)text->length + 1;",
+    "menu": "change constant",
+    "matrix_rows": [
+      "TestRawInputGap",
+      "TestJSXAgreement family"
+    ],
+    "kind": "production"
+  },
+  {
+    "id": "M04",
+    "file": "stage1/cohere/estree/protocol.ts",
+    "line": 66,
+    "old": "new DumpFrame(property.value.node, level + 1, -1)",
+    "new": "new DumpFrame(property.value.node, level + 2, -1)",
+    "menu": "change constant",
+    "matrix_rows": [
+      "TestJSXAgreement family"
+    ],
+    "kind": "production"
+  },
+  {
+    "id": "M05",
+    "file": "internal/lower/diagnostics.go",
+    "line": 42,
+    "old": "return \"a \" + name",
+    "new": "return \"an \" + name",
+    "menu": "change constant",
+    "matrix_rows": [
+      "TestPostfixValueGap",
+      "TestMethodReplacementGap",
+      "TestInterfaceDefaultGap",
+      "TestInterfaceTypeMethodGap"
+    ],
+    "kind": "production"
+  },
+  {
+    "id": "M06",
+    "file": "internal/lower/diagnostics.go",
+    "line": 33,
+    "old": "Where: l.program.Where(node), What: what",
+    "new": "Where: l.program.Where(node) + \":0\", What: what",
+    "menu": "change constant",
+    "matrix_rows": [
+      "TestPostfixValueGap",
+      "TestMethodReplacementGap",
+      "TestInterfaceDefaultGap",
+      "TestInterfaceTypeMethodGap"
+    ],
+    "kind": "production"
+  },
+  {
+    "id": "M07",
+    "file": "internal/lower/diagnostics.go",
+    "line": 29,
+    "old": "return fmt.Sprintf(\"%s: Adamic 0.1 refuses %s; %s\", r.Where, r.What, r.Fix)",
+    "new": "return fmt.Sprintf(\"%s: Adamic 0.1 refuses %s\", r.Where, r.What)",
+    "menu": "drop argument and change format option",
+    "matrix_rows": [
+      "TestPostfixValueGap",
+      "TestMethodReplacementGap",
+      "TestInterfaceDefaultGap",
+      "TestInterfaceTypeMethodGap"
+    ],
+    "kind": "production"
+  },
+  {
+    "id": "H01",
+    "file": "stage1/cohere/estree/misc_shards_test.go",
+    "line": 32,
+    "old": "return nil, fmt.Errorf(\"%d cases cannot enumerate %d shards\", len(ids), count)",
+    "new": "return nil, nil",
+    "menu": "weaken construction rejection",
+    "matrix_rows": [
+      "TestMiscShardUnionRejectsInvalidEnumeration"
+    ],
+    "kind": "setup"
+  },
+  {
+    "id": "H02",
+    "file": "stage1/cohere/estree/misc_shards_test.go",
+    "line": 41,
+    "old": "shard := miscShard(id, count)",
+    "new": "shard := i % count",
+    "menu": "break stable construction",
+    "matrix_rows": [
+      "TestMiscShardGrowthKeepsAssignments"
+    ],
+    "kind": "setup"
+  },
+  {
+    "id": "H03",
+    "file": "stage1/cohere/estree/recovery_cache_test.go",
+    "line": 101,
+    "old": "sha256.Sum256([]byte(normalized))",
+    "new": "sha256.Sum256([]byte(normalized[:0]))",
+    "menu": "drop mutable input content from key",
+    "matrix_rows": [
+      "TestRecoveryCacheInputKeys"
+    ],
+    "kind": "setup"
+  },
+  {
+    "id": "H04",
+    "file": "stage1/cohere/estree/recovery_cache_test.go",
+    "line": 162,
+    "old": "args := native.Flags(native.Options{Sanitize: true})",
+    "new": "args := native.Flags(native.Options{Sanitize: false})",
+    "menu": "disable construction sanitizer option",
+    "matrix_rows": [
+      "TestRecoveryNativeRecipe"
+    ],
+    "kind": "setup"
+  },
+  {
+    "id": "W01",
+    "file": "stage1/cohere/estree/misc_shards_test.go",
+    "line": 114,
+    "old": "diff := firstDifference(want, got)",
+    "new": "diff := \"\"",
+    "menu": "force comparison to report agreement",
+    "matrix_rows": [
+      "TestJSXAgreementPlantedDisagreement",
+      "TestJSXMutant",
+      "TestJSXMutantPlantedSurvivor"
+    ],
+    "kind": "witness"
+  }
+]

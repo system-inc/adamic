@@ -1,0 +1,13 @@
+diff --git a/internal/native/runtime/directory.c b/internal/native/runtime/directory.c
+index e2a58f63..20109112 100644
+--- a/internal/native/runtime/directory.c
++++ b/internal/native/runtime/directory.c
+@@ -167,7 +167,7 @@ adamic_object *adamic_file_status(const adamic_string *path) {
+ 	adamic_object *result = adamic_object_new(&status_shape);
+ 	result->slots[0].reference = &ok_kind;
+ 	result->slots[1].reference = S_ISREG(status.st_mode) ? &file_type : S_ISDIR(status.st_mode) ? &directory_type : &other_type;
+-	result->slots[2].number = (double)status.st_size;
++	result->slots[2].number = (double)status.st_size + 1;
+ 	result->slots[3].boolean = symbolic;
+ 	return result;
+ }

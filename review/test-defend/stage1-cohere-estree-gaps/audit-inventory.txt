@@ -1,0 +1,1839 @@
+CODE UNDER TEST: Lower diagnostic construction; ESTree TypeScript main/run, answer, convertJsx and protocol traversal; original Parser.file/typeLiteral; native adamic_utf8_length. Setup constructions and witnessed comparison are listed separately in plan.json.
+ORACLES: Node fixture outputs plus self-written gap labels; external Go cohere ESTree output; upstream installed npm libraries (oracle-only row); expected timeout; sanitizer diagnostic strings; self-written shard stability and cache-key assertions.
+The following is a conservative complete source-function inventory, including unreached declarations. Exact Go diagnostic-path reachability is in lower-functions.txt. TypeScript functions are an upper bound, not a measured call graph.
+stage1/cohere/estree/arena.ts:7: newNode(type: string, start: number, end: number): number {
+stage1/cohere/estree/arena.ts:11: node(id: number): Node {
+stage1/cohere/estree/arena.ts:14: type(id: number): string {
+stage1/cohere/estree/arena.ts:17: children(id: number): number[] {
+stage1/cohere/estree/binaryConvert.ts:12: constructor(nodes: readonly ParseNode[], text: string, offsets: readonly number[]) {
+stage1/cohere/estree/binaryConvert.ts:18: child(id: number, index: number): number {
+stage1/cohere/estree/binaryConvert.ts:22: start(id: number): number {
+stage1/cohere/estree/binaryConvert.ts:27: raw(id: number): string {
+stage1/cohere/estree/binaryConvert.ts:30: create(arena: Arena, id: number, type: string): number {
+stage1/cohere/estree/binaryConvert.ts:38: export function ordinaryBinary(
+stage1/cohere/estree/binaryConvert.ts:44: convert: (id: number, parent: number) => number,
+stage1/cohere/estree/binaryConvert.ts:49: while(nodes[current]?.kind === 'BinaryExpression') {
+stage1/cohere/estree/binaryConvert.ts:58: while(spine.length > 0) {
+stage1/cohere/estree/comments.ts:5: export function collectComments(converter: Converter, root: number): number[] {
+stage1/cohere/estree/comments.ts:8: while(stack.length > 0) {
+stage1/cohere/estree/comments.ts:33: for(let index = 0; index < converter.text.length;) {
+stage1/cohere/estree/convert.ts:30: constructor(parser: Parser, text: string) {
+stage1/cohere/estree/convert.ts:50: ts(id: number): ParseNode {
+stage1/cohere/estree/convert.ts:53: kind(id: number): string {
+stage1/cohere/estree/convert.ts:56: child(id: number, index: number): number {
+stage1/cohere/estree/convert.ts:59: startUnit(id: number): number {
+stage1/cohere/estree/convert.ts:65: byte(unit: number): number {
+stage1/cohere/estree/convert.ts:68: start(id: number): number {
+stage1/cohere/estree/convert.ts:71: raw(id: number): string {
+stage1/cohere/estree/convert.ts:74: create(id: number, type: string): number {
+stage1/cohere/estree/convert.ts:77: set(id: number, key: string, value: Value): void {
+stage1/cohere/estree/convert.ts:80: converted(id: number, pattern = false, parent = -1): Value {
+stage1/cohere/estree/convert.ts:83: list(ids: readonly number[], pattern = false, parent = -1): Value {
+stage1/cohere/estree/convert.ts:90: identifier(id: number): number {
+stage1/cohere/estree/convert.ts:105: patternFields(id: number): void {
+stage1/cohere/estree/convert.ts:110: annotation(id: number): number {
+stage1/cohere/estree/convert.ts:119: bind(id: number, type: number): number {
+stage1/cohere/estree/convert.ts:128: property(id: number, pattern: boolean): number {
+stage1/cohere/estree/convert.ts:140: const initialized = node.children.some((child) => this.kind(child) === 'EqualsToken');
+stage1/cohere/estree/convert.ts:155: body(ids: readonly number[], parent: number, directives: boolean): Value {
+stage1/cohere/estree/convert.ts:178: chain(result: number, source: number): number {
+stage1/cohere/estree/convert.ts:198: hasModifier(id: number, kind: string): boolean {
+stage1/cohere/estree/convert.ts:213: exports(id: number, result: number): number {
+stage1/cohere/estree/convert.ts:253: isTypeParameter(id: number): boolean {
+stage1/cohere/estree/convert.ts:256: wrapper(ids: readonly number[], parameters: boolean): number {
+stage1/cohere/estree/convert.ts:261: parameters(ids: readonly number[]): Value {
+stage1/cohere/estree/convert.ts:276: separated(left: number, right: number, token: string): boolean {
+stage1/cohere/estree/convert.ts:284: parameter(id: number, parent: number): number {
+stage1/cohere/estree/convert.ts:352: functionNode(id: number): number {
+stage1/cohere/estree/convert.ts:412: bindingElement(id: number, parent: number): number {
+stage1/cohere/estree/convert.ts:482: bodyStart(id: number, after: number): number {
+stage1/cohere/estree/convert.ts:493: entityExpression(id: number): number {
+stage1/cohere/estree/convert.ts:504: heritage(id: number, interface_: boolean): number {
+stage1/cohere/estree/convert.ts:521: classNode(id: number, interface_: boolean): number {
+stage1/cohere/estree/convert.ts:617: member(id: number, parent: number): number {
+stage1/cohere/estree/convert.ts:841: importDeclaration(id: number): number {
+stage1/cohere/estree/convert.ts:888: exportDeclaration(id: number): number {
+stage1/cohere/estree/convert.ts:909: moduleNode(id: number): number {
+stage1/cohere/estree/convert.ts:972: mapped(id: number): number {
+stage1/cohere/estree/convert.ts:1013: forNode(id: number): number {
+stage1/cohere/estree/convert.ts:1044: unit(byte: number): number {
+stage1/cohere/estree/convert.ts:1047: importType(id: number): number {
+stage1/cohere/estree/convert.ts:1127: convert(id: number, pattern = false, parentInput = -1): number {
+stage1/cohere/estree/convert.ts:1140: return convertJsx(this.arena, this.parser.nodes, this.offsets, id, (child) => this.convert(child));
+stage1/cohere/estree/convert.ts:1984: template(id: number, tail: boolean): number {
+stage1/cohere/estree/jsxConvert.ts:6: export function convertJsx(
+stage1/cohere/estree/jsxConvert.ts:11: convert: (id: number) => number,
+stage1/cohere/estree/jsxConvert.ts:34: if(source.kind === 'JsxTypeArguments') {
+stage1/cohere/estree/jsxEntities.ts:2: export function jsxText(text: string): string {
+stage1/cohere/estree/jsxEntities.ts:5: while(index < text.length) {
+stage1/cohere/estree/jsxParser.ts:7: readonly expression: () => number;
+stage1/cohere/estree/jsxParser.ts:8: readonly types: () => number[];
+stage1/cohere/estree/jsxParser.ts:9: constructor(scanner: Scanner, nodes: ParseNode[], expression: () => number, types: () => number[]) {
+stage1/cohere/estree/jsxParser.ts:15: add(kind: string, start: number, end: number, children: number[] = [], text = ''): number {
+stage1/cohere/estree/jsxParser.ts:22: leaf(kind: string, start: number, end: number, text: string): number {
+stage1/cohere/estree/jsxParser.ts:26: kind(): string {
+stage1/cohere/estree/jsxParser.ts:29: expect(kind: string): void {
+stage1/cohere/estree/jsxParser.ts:34: identifier(): number {
+stage1/cohere/estree/jsxParser.ts:56: name(): number {
+stage1/cohere/estree/jsxParser.ts:72: container(child: boolean, attributeSpread = false): number {
+stage1/cohere/estree/jsxParser.ts:103: parse(child: boolean): number {
+stage1/cohere/estree/jsxParser.ts:220: export function readJsx(scanner: Scanner, nodes: ParseNode[], expression: () => number, types: () => number[]): number {
+stage1/cohere/estree/literal.ts:13: export function literalFields(node: ParseNode, raw: string): Property[] {
+stage1/cohere/estree/literal.ts:16: if(node.kind === 'BigIntLiteral') {
+stage1/cohere/estree/literal.ts:20: if(node.kind === 'RegularExpressionLiteral') {
+stage1/cohere/estree/location.ts:3: export function locStart(arena: Arena, id: number): number {
+stage1/cohere/estree/location.ts:13: export function shouldAddContentEnd(type: string): boolean {
+stage1/cohere/estree/location.ts:26: export function bodyOverride(type: string): boolean {
+stage1/cohere/estree/location.ts:36: export function locEnd(arena: Arena, id: number): number {
+stage1/cohere/estree/location.ts:38: if(node.type === 'IfStatement') {
+stage1/cohere/estree/location.ts:42: if(bodyOverride(node.type)) {
+stage1/cohere/estree/location.ts:45: if(node.type === 'BreakStatement' || node.type === 'ContinueStatement') {
+stage1/cohere/estree/location.ts:49: if(node.type === 'DebuggerStatement') {
+stage1/cohere/estree/location.ts:52: if(node.type === 'VariableDeclaration') {
+stage1/cohere/estree/location.ts:58: export function ignoredSemicolon(arena: Arena, id: number): boolean {
+stage1/cohere/estree/location.ts:60: if(shouldAddContentEnd(node.type) && node.hasContentEnd && node.contentEnd !== 0) {
+stage1/cohere/estree/location.ts:63: if(['BreakStatement', 'ContinueStatement', 'DebuggerStatement', 'VariableDeclaration'].includes(node.type)) {
+stage1/cohere/estree/location.ts:66: if(node.type === 'IfStatement') {
+stage1/cohere/estree/location.ts:72: export function sameLocStart(arena: Arena, left: number, right: number): boolean {
+stage1/cohere/estree/location.ts:75: export function sameLoc(arena: Arena, left: number, right: number): boolean {
+stage1/cohere/estree/main.ts:3: function run(path: string): void {
+stage1/cohere/estree/main.ts:5: if(file.kind === 'Error') {
+stage1/cohere/estree/main.ts:14: if(manifest.kind === 'Error') {
+stage1/cohere/estree/main.ts:17: for(const item of manifest.text.split('\n')) {
+stage1/cohere/estree/main.ts:24: run(path);
+stage1/cohere/estree/modifiers.ts:6: export function accessibility(nodes: readonly ParseNode[], id: number): Value {
+stage1/cohere/estree/modifiers.ts:8: if(owner === undefined) {
+stage1/cohere/estree/modifiers.ts:11: for(const child of owner.children) {
+stage1/cohere/estree/modifiers.ts:22: export function emptyIdentifier(arena: Arena, position: number): number {
+stage1/cohere/estree/modifiers.ts:32: export function dataChildren(nodes: readonly ParseNode[], id: number): number[] {
+stage1/cohere/estree/modifiers.ts:35: if(owner === undefined) {
+stage1/cohere/estree/modifiers.ts:38: for(const child of owner.children) {
+stage1/cohere/estree/nodes.ts:13: constructor(type: string, start: number, end: number) {
+stage1/cohere/estree/nodes.ts:18: get(key: string): Value {
+stage1/cohere/estree/nodes.ts:26: has(key: string): boolean {
+stage1/cohere/estree/nodes.ts:34: set(key: string, value: Value): void {
+stage1/cohere/estree/nodes.ts:43: delete(key: string): void {
+stage1/cohere/estree/nodes.ts:51: child(key: string): number {
+stage1/cohere/estree/nodes.ts:55: list(key: string): number[] {
+stage1/cohere/estree/nodes.ts:60: string(key: string): string {
+stage1/cohere/estree/nodes.ts:64: bool(key: string): boolean {
+stage1/cohere/estree/nodes.ts:68: truthy(key: string): boolean {
+stage1/cohere/estree/nodes.ts:80: keys(): string[] {
+stage1/cohere/estree/pipeline.ts:10: export function answer(path: string, text: string): string {
+stage1/cohere/estree/pipeline.ts:11: if(text.includes('\ufffd')) {
+stage1/cohere/estree/pipeline.ts:16: if(
+stage1/cohere/estree/pipeline.ts:30: if(!['.d.ts', '.d.mts', '.d.cts'].some((suffix) => file.endsWith(suffix)) && externalModule(parser.nodes, root)) {
+stage1/cohere/estree/pipeline.ts:36: if(parser.diagnostics.length > 0) {
+stage1/cohere/estree/pipeline.ts:40: if(parser.scanner.errors.length > 0) {
+stage1/cohere/estree/pipeline.ts:44: if(syntax !== '') {
+stage1/cohere/estree/pipeline.ts:49: for(let id = 0; id < parser.nodes.length; id++) {
+stage1/cohere/estree/pipeline.ts:56: if(reference !== '') {
+stage1/cohere/estree/pipeline.ts:59: if(babel) {
+stage1/cohere/estree/pipeline.ts:74: if(babel) {
+stage1/cohere/estree/pipeline.ts:91: for(const comment of comments) {
+stage1/cohere/estree/postprocess.ts:8: export function indentableLines(arena: Arena, id: number): string[] {
+stage1/cohere/estree/postprocess.ts:11: if(comment.type !== 'Block' || !comment.string('value').includes('\n')) {
+stage1/cohere/estree/postprocess.ts:15: for(const line of `*${comment.string('value')}*`.split('\n')) {
+stage1/cohere/estree/postprocess.ts:24: export function mergeComments(arena: Arena, comments: number[]): number[] {
+stage1/cohere/estree/postprocess.ts:26: for(let index = comments.length - 1; index >= 0; index--) {
+stage1/cohere/estree/postprocess.ts:50: constructor(arena: Arena, text: string, comments: readonly number[], offsets: readonly number[]) {
+stage1/cohere/estree/postprocess.ts:56: contentEnd(id: number): void {
+stage1/cohere/estree/postprocess.ts:72: unbalanced(id: number): boolean {
+stage1/cohere/estree/postprocess.ts:81: logical(start: number, end: number, operator: string, left: number, right: number): number {
+stage1/cohere/estree/postprocess.ts:89: rebalance(id: number): number {
+stage1/cohere/estree/postprocess.ts:114: visit(root: number): number {
+stage1/cohere/estree/postprocess.ts:191: program(id: number): number {
+stage1/cohere/estree/property.ts:5: constructor(key: string, value: Value) {
+stage1/cohere/estree/protocol.ts:4: export function written(text: string): string {
+stage1/cohere/estree/protocol.ts:6: for(let index = 0; index < text.length; index++) {
+stage1/cohere/estree/protocol.ts:30: constructor(id: number, depth: number, property: number) {
+stage1/cohere/estree/protocol.ts:36: export function dump(arena: Arena, root: number, depth = 0): string {
+stage1/cohere/estree/protocol.ts:39: while(stack.length > 0) {
+stage1/cohere/estree/sourceBinary.ts:3: export function assertionRank(nodes: readonly ParseNode[], last: number): number {
+stage1/cohere/estree/sourceBinary.ts:7: export function bindsBeforeAssertion(operator: string, lastRank: number): boolean {
+stage1/cohere/estree/sourceBinary.ts:9: if(nextRank > lastRank || (nextRank === lastRank && operator === 'AsteriskAsteriskToken')) {
+stage1/cohere/estree/sourceGrammar.ts:3: export function precedence(kind: string): number {
+stage1/cohere/estree/sourceGrammar.ts:4: switch(kind) {
+stage1/cohere/estree/sourceGrammar.ts:89: export function tokenSpelling(kind: string): string {
+stage1/cohere/estree/sourceGrammar.ts:90: if(kind.endsWith('Keyword')) {
+stage1/cohere/estree/sourceGrammar.ts:93: switch(kind) {
+stage1/cohere/estree/sourceLexical.ts:4: export function lexicalMessage(code: number): string {
+stage1/cohere/estree/sourceLexical.ts:5: switch(code) {
+stage1/cohere/estree/sourceLookahead.ts:18: function kind(scanner: Scanner): string {
+stage1/cohere/estree/sourceLookahead.ts:33: constructor(scanner: Scanner) {
+stage1/cohere/estree/sourceLookahead.ts:43: prepare(): void {
+stage1/cohere/estree/sourceLookahead.ts:76: next(): void {
+stage1/cohere/estree/sourceLookahead.ts:81: restore(): void {
+stage1/cohere/estree/sourceLookahead.ts:92: function optionalParameterAhead(scanner: Scanner): boolean {
+stage1/cohere/estree/sourceLookahead.ts:100: export function arrowAhead(scanner: Scanner, allowReturn: boolean): boolean {
+stage1/cohere/estree/sourceLookahead.ts:101: if(kind(scanner) === 'EqualsGreaterThanToken') {
+stage1/cohere/estree/sourceLookahead.ts:106: if(kind(scanner) === 'AsyncKeyword') {
+stage1/cohere/estree/sourceLookahead.ts:123: if(generic) {
+stage1/cohere/estree/sourceLookahead.ts:138: if(kind(scanner) === 'OpenParenToken') {
+stage1/cohere/estree/sourceLookahead.ts:209: export function typeArgumentsAhead(scanner: Scanner): boolean {
+stage1/cohere/estree/sourceLookahead.ts:217: while(kind(scanner) !== 'EndOfFile') {
+stage1/cohere/estree/sourceLookahead.ts:311: export function declarationAhead(scanner: Scanner): boolean {
+stage1/cohere/estree/sourceLookahead.ts:314: while(kind(scanner) !== 'EndOfFile') {
+stage1/cohere/estree/sourceLookahead.ts:408: export function statementAhead(scanner: Scanner): boolean {
+stage1/cohere/estree/sourceLookahead.ts:410: if(current === 'ExportKeyword' || current === 'ConstKeyword') {
+stage1/cohere/estree/sourceLookahead.ts:413: if(current === 'ImportKeyword') {
+stage1/cohere/estree/sourceLookahead.ts:420: if(
+stage1/cohere/estree/sourceLookahead.ts:500: export function typeMemberAhead(scanner: Scanner): boolean {
+stage1/cohere/estree/sourceLookahead.ts:501: if(['OpenParenToken', 'LessThanToken', 'GetKeyword', 'SetKeyword'].includes(kind(scanner))) {
+stage1/cohere/estree/sourceLookahead.ts:506: while(modifierKinds.includes(kind(scanner))) {
+stage1/cohere/estree/sourceLookahead.ts:510: if(kind(scanner) === 'OpenBracketToken') {
+stage1/cohere/estree/sourceLookahead.ts:514: if(
+stage1/cohere/estree/sourceLookahead.ts:541: export function typeTokenStart(tokenKind: string): boolean {
+stage1/cohere/estree/sourceLookahead.ts:587: export function modifierAhead(scanner: Scanner, permitConst: boolean): boolean {
+stage1/cohere/estree/sourceLookahead.ts:589: if(!modifierKinds.includes(current)) {
+stage1/cohere/estree/sourceLookahead.ts:595: if(current === 'DefaultKeyword' || (current === 'ExportKeyword' && kind(scanner) === 'DefaultKeyword')) {
+stage1/cohere/estree/sourceLookahead.ts:635: export function sameLineAfter(scanner: Scanner, count: number): boolean {
+stage1/cohere/estree/sourceLookahead.ts:637: for(let index = 0; index <= count; index++) {
+stage1/cohere/estree/sourceLookahead.ts:644: export function indexSignatureAhead(scanner: Scanner): boolean {
+stage1/cohere/estree/sourceLookahead.ts:648: if(modifierKinds.includes(kind(scanner))) {
+stage1/cohere/estree/sourceLookahead.ts:668: export function nextAwaitOperand(scanner: Scanner): boolean {
+stage1/cohere/estree/sourceLookahead.ts:681: export function heritageElementAhead(scanner: Scanner): boolean {
+stage1/cohere/estree/sourceLookahead.ts:685: if(current === 'OpenBraceToken') {
+stage1/cohere/estree/sourceLookahead.ts:750: export function accessorAhead(scanner: Scanner): boolean {
+stage1/cohere/estree/sourceLookahead.ts:762: export function usingDeclarationAhead(scanner: Scanner, disallowOf: boolean): boolean {
+stage1/cohere/estree/sourceLookahead.ts:765: if(await_) {
+stage1/cohere/estree/sourceLookahead.ts:776: if(disallowOf && !await_ && token === 'OfKeyword') {
+stage1/cohere/estree/sourceLookahead.ts:784: export function leftHandSide(nodeKind: string): boolean {
+stage1/cohere/estree/sourceLookahead.ts:820: export function functionTypeAhead(
+stage1/cohere/estree/sourceLookahead.ts:822: identifier: () => boolean,
+stage1/cohere/estree/sourceLookahead.ts:823: nextIdentifier: () => boolean,
+stage1/cohere/estree/sourceLookahead.ts:824: binding: () => number,
+stage1/cohere/estree/sourceLookahead.ts:825: diagnostics: () => number,
+stage1/cohere/estree/sourceLookahead.ts:827: if(kind(scanner) === 'LessThanToken') {
+stage1/cohere/estree/sourceLookahead.ts:833: if(!result) {
+stage1/cohere/estree/sourceLookahead.ts:862: export function tupleNameAhead(scanner: Scanner): boolean {
+stage1/cohere/estree/sourceLookahead.ts:864: if(current !== 'Identifier' && (!current.endsWith('Keyword') || reservedKinds.includes(current))) {
+stage1/cohere/estree/sourceLookahead.ts:869: if(kind(scanner) === 'QuestionToken') {
+stage1/cohere/estree/sourceModules.ts:2: export function externalModule(nodes: readonly ParseNode[], root: number): boolean {
+stage1/cohere/estree/sourceModules.ts:4: if(source === undefined) {
+stage1/cohere/estree/sourceModules.ts:7: for(const id of source.children) {
+stage1/cohere/estree/sourceModules.ts:32: for(const node of nodes) {
+stage1/cohere/estree/sourceParser.ts:46: errorAt(code: number, start: number, end: number, message: string): void {
+stage1/cohere/estree/sourceParser.ts:51: error(code: number, message: string): void {
+stage1/cohere/estree/sourceParser.ts:54: constructor(text: string, path = 'source') {
+stage1/cohere/estree/sourceParser.ts:59: kind(): string {
+stage1/cohere/estree/sourceParser.ts:62: scannerErrors(start: number): void {
+stage1/cohere/estree/sourceParser.ts:68: next(): void {
+stage1/cohere/estree/sourceParser.ts:87: beginList(context: string): void {
+stage1/cohere/estree/sourceParser.ts:90: endList(context: string): void {
+stage1/cohere/estree/sourceParser.ts:95: expressionStart(): boolean {
+stage1/cohere/estree/sourceParser.ts:105: literalPropertyName(): boolean {
+stage1/cohere/estree/sourceParser.ts:113: parameterStart(): boolean {
+stage1/cohere/estree/sourceParser.ts:128: typeStart(inParameter = false): boolean {
+stage1/cohere/estree/sourceParser.ts:144: listTerminator(context: string): boolean {
+stage1/cohere/estree/sourceParser.ts:147: listElement(context: string, recovery = false): boolean {
+stage1/cohere/estree/sourceParser.ts:211: listError(context: string): void {
+stage1/cohere/estree/sourceParser.ts:215: recoverList(context: string): boolean {
+stage1/cohere/estree/sourceParser.ts:225: delimitedList(context: string, parseElement: () => number): number[] {
+stage1/cohere/estree/sourceParser.ts:262: node(index: number): ParseNode {
+stage1/cohere/estree/sourceParser.ts:265: make(kind: string, pos: number, children: number[] = []): number {
+stage1/cohere/estree/sourceParser.ts:269: token(): number {
+stage1/cohere/estree/sourceParser.ts:275: expect(kind: string): boolean {
+stage1/cohere/estree/sourceParser.ts:287: expectedToken(kind: string): number {
+stage1/cohere/estree/sourceParser.ts:294: literal(): number {
+stage1/cohere/estree/sourceParser.ts:314: missingIdentifier(code: number, message: string): number {
+stage1/cohere/estree/sourceParser.ts:325: identifier(allowReserved = true): number {
+stage1/cohere/estree/sourceParser.ts:348: primary(): number {
+stage1/cohere/estree/sourceParser.ts:457: bindingIdentifier(): boolean {
+stage1/cohere/estree/sourceParser.ts:462: nextIdentifierSameLine(): boolean {
+stage1/cohere/estree/sourceParser.ts:469: mark(): ParserStateInterface {
+stage1/cohere/estree/sourceParser.ts:483: rewind(state: ParserStateInterface): void {
+stage1/cohere/estree/sourceParser.ts:495: typeArguments(): number[] {
+stage1/cohere/estree/sourceParser.ts:512: typeParameters(): number[] {
+stage1/cohere/estree/sourceParser.ts:558: entityName(): number {
+stage1/cohere/estree/sourceParser.ts:568: importType(): number {
+stage1/cohere/estree/sourceParser.ts:608: functionTypeAhead(): boolean {
+stage1/cohere/estree/sourceParser.ts:612: () => this.bindingIdentifier(),
+stage1/cohere/estree/sourceParser.ts:613: () => this.nextIdentifierSameLine(),
+stage1/cohere/estree/sourceParser.ts:614: () => this.bindingName(),
+stage1/cohere/estree/sourceParser.ts:615: () => this.diagnostics.length,
+stage1/cohere/estree/sourceParser.ts:620: type(minimum = 0, conditional = true): number {
+stage1/cohere/estree/sourceParser.ts:916: mappedAhead(): boolean {
+stage1/cohere/estree/sourceParser.ts:934: mappedType(): number {
+stage1/cohere/estree/sourceParser.ts:976: typeLiteral(): number {
+stage1/cohere/estree/sourceParser.ts:985: typeMembers(): number[] {
+stage1/cohere/estree/sourceParser.ts:1017: for(const parameter of this.delimitedList('parameters', () => this.parameter())) {
+stage1/cohere/estree/sourceParser.ts:1071: parameters(): number[] {
+stage1/cohere/estree/sourceParser.ts:1075: const result = this.delimitedList('parameters', () => this.parameter());
+stage1/cohere/estree/sourceParser.ts:1079: modifiers(decorators: boolean, permitConst: boolean, stopStaticBlock = false): number[] {
+stage1/cohere/estree/sourceParser.ts:1114: parameter(): number {
+stage1/cohere/estree/sourceParser.ts:1142: bindingElement(object: boolean): number {
+stage1/cohere/estree/sourceParser.ts:1165: bindingName(): number {
+stage1/cohere/estree/sourceParser.ts:1182: decorator(): number {
+stage1/cohere/estree/sourceParser.ts:1194: rootAssignment(): number {
+stage1/cohere/estree/sourceParser.ts:1203: rootExpression(): number {
+stage1/cohere/estree/sourceParser.ts:1212: arrow(allowReturn: boolean): number {
+stage1/cohere/estree/sourceParser.ts:1256: returnType(): number {
+stage1/cohere/estree/sourceParser.ts:1292: functionExpression(): number {
+stage1/cohere/estree/sourceParser.ts:1331: statements(): Statements {
+stage1/cohere/estree/sourceParser.ts:1336: kind: () => this.kind(),
+stage1/cohere/estree/sourceParser.ts:1337: next: () => {
+stage1/cohere/estree/sourceParser.ts:1342: errorAt: (code, start, end, message) => {
+stage1/cohere/estree/sourceParser.ts:1345: expect: (kind) => this.expect(kind),
+stage1/cohere/estree/sourceParser.ts:1346: beginList: (context) => {
+stage1/cohere/estree/sourceParser.ts:1349: endList: (context) => {
+stage1/cohere/estree/sourceParser.ts:1352: listElement: (context) => this.listElement(context),
+stage1/cohere/estree/sourceParser.ts:1353: listTerminator: (context) => this.listTerminator(context),
+stage1/cohere/estree/sourceParser.ts:1354: recoverList: (context) => this.recoverList(context),
+stage1/cohere/estree/sourceParser.ts:1355: node: (index) => this.node(index),
+stage1/cohere/estree/sourceParser.ts:1356: make: (kind, pos, children) => this.make(kind, pos, children),
+stage1/cohere/estree/sourceParser.ts:1357: entityName: () => this.entityName(),
+stage1/cohere/estree/sourceParser.ts:1358: identifier: () => this.identifier(),
+stage1/cohere/estree/sourceParser.ts:1359: bindingIdentifier: () => this.identifier(false),
+stage1/cohere/estree/sourceParser.ts:1360: token: () => this.token(),
+stage1/cohere/estree/sourceParser.ts:1361: type: (minimum, conditional) => this.type(minimum, conditional),
+stage1/cohere/estree/sourceParser.ts:1362: typeArguments: () => this.typeArguments(),
+stage1/cohere/estree/sourceParser.ts:1363: typeParameters: () => this.typeParameters(),
+stage1/cohere/estree/sourceParser.ts:1364: parameters: () => this.parameters(),
+stage1/cohere/estree/sourceParser.ts:1365: bracketParameters: () => this.delimitedList('parameters', () => this.parameter()),
+stage1/cohere/estree/sourceParser.ts:1366: returnType: () => this.returnType(),
+stage1/cohere/estree/sourceParser.ts:1367: bindingName: () => this.bindingName(),
+stage1/cohere/estree/sourceParser.ts:1368: rootAssignment: () => this.rootAssignment(),
+stage1/cohere/estree/sourceParser.ts:1369: rootExpression: () => this.rootExpression(),
+stage1/cohere/estree/sourceParser.ts:1370: peek: () => this.peek(),
+stage1/cohere/estree/sourceParser.ts:1371: nextIdentifierSameLine: () => this.nextIdentifierSameLine(),
+stage1/cohere/estree/sourceParser.ts:1372: propertyName: () => this.propertyName(),
+stage1/cohere/estree/sourceParser.ts:1375: primary: () => this.primary(),
+stage1/cohere/estree/sourceParser.ts:1376: suffix: (expression, call) => this.suffix(expression, call),
+stage1/cohere/estree/sourceParser.ts:1377: typeLiteral: () => this.typeLiteral(),
+stage1/cohere/estree/sourceParser.ts:1378: decorator: () => this.decorator(),
+stage1/cohere/estree/sourceParser.ts:1379: getAwait: () => this.awaitContext,
+stage1/cohere/estree/sourceParser.ts:1380: setAwait: (value) => {
+stage1/cohere/estree/sourceParser.ts:1383: getYield: () => this.yieldContext,
+stage1/cohere/estree/sourceParser.ts:1384: setYield: (value) => {
+stage1/cohere/estree/sourceParser.ts:1387: getIn: () => this.disallowIn,
+stage1/cohere/estree/sourceParser.ts:1388: setIn: (value) => {
+stage1/cohere/estree/sourceParser.ts:1391: depth: () => this.expressionDepth,
+stage1/cohere/estree/sourceParser.ts:1394: block(): number {
+stage1/cohere/estree/sourceParser.ts:1397: statement(): number {
+stage1/cohere/estree/sourceParser.ts:1400: semicolon(): void {
+stage1/cohere/estree/sourceParser.ts:1403: classDeclaration(pos: number, prefix: readonly number[], expression: boolean): number {
+stage1/cohere/estree/sourceParser.ts:1407: peek(): string {
+stage1/cohere/estree/sourceParser.ts:1428: optionalChain(index: number): boolean {
+stage1/cohere/estree/sourceParser.ts:1443: spread(): number {
+stage1/cohere/estree/sourceParser.ts:1449: arguments(): number[] {
+stage1/cohere/estree/sourceParser.ts:1460: suffix(expression: number, allowCall: boolean): number {
+stage1/cohere/estree/sourceParser.ts:1606: templatePart(): number {
+stage1/cohere/estree/sourceParser.ts:1619: templateSpanLiteral(): number {
+stage1/cohere/estree/sourceParser.ts:1629: templateType(): number {
+stage1/cohere/estree/sourceParser.ts:1644: template(): number {
+stage1/cohere/estree/sourceParser.ts:1659: array(): number {
+stage1/cohere/estree/sourceParser.ts:1678: propertyName(): number {
+stage1/cohere/estree/sourceParser.ts:1694: methodBody(
+stage1/cohere/estree/sourceParser.ts:1742: objectProperty(): number {
+stage1/cohere/estree/sourceParser.ts:1751: const async = children.some((id) => this.node(id).kind === 'AsyncKeyword');
+stage1/cohere/estree/sourceParser.ts:1781: object(): number {
+stage1/cohere/estree/sourceParser.ts:1785: const properties = this.delimitedList('object', () => this.objectProperty());
+stage1/cohere/estree/sourceParser.ts:1794: unary(): number {
+stage1/cohere/estree/sourceParser.ts:1801: () => this.allowInExpression(),
+stage1/cohere/estree/sourceParser.ts:1802: () => this.typeArguments(),
+stage1/cohere/estree/sourceParser.ts:1866: binary(minimum: number): number {
+stage1/cohere/estree/sourceParser.ts:1900: assignment(allowReturn = true): number {
+stage1/cohere/estree/sourceParser.ts:1945: allowInAssignment(allowReturn = true): number {
+stage1/cohere/estree/sourceParser.ts:1955: allowInExpression(): number {
+stage1/cohere/estree/sourceParser.ts:1965: expression(): number {
+stage1/cohere/estree/sourceParser.ts:1975: file(): number {
+stage1/cohere/estree/sourceRecovery.ts:10: export function listTerminator(kind: string, context: string, lineBreak: boolean): boolean {
+stage1/cohere/estree/sourceRecovery.ts:11: if(kind === 'EndOfFile') {
+stage1/cohere/estree/sourceRecovery.ts:14: switch(context) {
+stage1/cohere/estree/sourceRecovery.ts:60: export function listDiagnostic(kind: string, context: string): ListDiagnosticInterface {
+stage1/cohere/estree/sourceRecovery.ts:61: switch(context) {
+stage1/cohere/estree/sourceReferences.ts:5: function blanks(text: string, start: number): number {
+stage1/cohere/estree/sourceReferences.ts:7: while(pos < text.length && [' ', '\t'].includes(text.slice(pos, pos + 1))) {
+stage1/cohere/estree/sourceReferences.ts:12: function nameEnd(text: string, start: number): number {
+stage1/cohere/estree/sourceReferences.ts:14: while(pos < text.length) {
+stage1/cohere/estree/sourceReferences.ts:23: export function referenceError(text: string, arena: Arena, comments: readonly number[]): string {
+stage1/cohere/estree/sourceReferences.ts:27: for(const id of comments) {
+stage1/cohere/estree/sourceSpelling.ts:5: function characters(text: string): string[] {
+stage1/cohere/estree/sourceSpelling.ts:7: for(const character of text) {
+stage1/cohere/estree/sourceSpelling.ts:13: function distance(name: readonly string[], candidate: readonly string[], maximum: number): number {
+stage1/cohere/estree/sourceSpelling.ts:16: for(let column = 0; column <= candidate.length; column++) {
+stage1/cohere/estree/sourceSpelling.ts:21: for(let row = 1; row <= name.length; row++) {
+stage1/cohere/estree/sourceSpelling.ts:60: export function keywordSuggestion(text: string): string {
+stage1/cohere/estree/sourceSpelling.ts:65: for(const candidate of keywords.keys()) {
+stage1/cohere/estree/sourceSpelling.ts:79: if(best !== '') {
+stage1/cohere/estree/sourceSpelling.ts:82: for(const candidate of keywords.keys()) {
+stage1/cohere/estree/sourceStatements.ts:19: readonly modifiers: (decorators: boolean, permitConst: boolean, stopStaticBlock: boolean) => number[];
+stage1/cohere/estree/sourceStatements.ts:20: readonly kind: () => string;
+stage1/cohere/estree/sourceStatements.ts:21: readonly next: () => void;
+stage1/cohere/estree/sourceStatements.ts:22: readonly expect: (kind: string) => boolean;
+stage1/cohere/estree/sourceStatements.ts:23: readonly beginList: (context: string) => void;
+stage1/cohere/estree/sourceStatements.ts:24: readonly endList: (context: string) => void;
+stage1/cohere/estree/sourceStatements.ts:25: readonly listElement: (context: string) => boolean;
+stage1/cohere/estree/sourceStatements.ts:26: readonly listTerminator: (context: string) => boolean;
+stage1/cohere/estree/sourceStatements.ts:27: readonly recoverList: (context: string) => boolean;
+stage1/cohere/estree/sourceStatements.ts:28: readonly errorAt: (code: number, start: number, end: number, message: string) => void;
+stage1/cohere/estree/sourceStatements.ts:29: readonly node: (index: number) => ParseNode;
+stage1/cohere/estree/sourceStatements.ts:30: readonly make: (kind: string, pos: number, children: number[]) => number;
+stage1/cohere/estree/sourceStatements.ts:31: readonly entityName: () => number;
+stage1/cohere/estree/sourceStatements.ts:32: readonly identifier: () => number;
+stage1/cohere/estree/sourceStatements.ts:33: readonly bindingIdentifier: () => number;
+stage1/cohere/estree/sourceStatements.ts:34: readonly token: () => number;
+stage1/cohere/estree/sourceStatements.ts:35: readonly type: (minimum: number, conditional: boolean) => number;
+stage1/cohere/estree/sourceStatements.ts:36: readonly typeArguments: () => number[];
+stage1/cohere/estree/sourceStatements.ts:37: readonly typeParameters: () => number[];
+stage1/cohere/estree/sourceStatements.ts:38: readonly parameters: () => number[];
+stage1/cohere/estree/sourceStatements.ts:39: readonly bracketParameters: () => number[];
+stage1/cohere/estree/sourceStatements.ts:40: readonly returnType: () => number;
+stage1/cohere/estree/sourceStatements.ts:41: readonly bindingName: () => number;
+stage1/cohere/estree/sourceStatements.ts:42: readonly rootAssignment: () => number;
+stage1/cohere/estree/sourceStatements.ts:43: readonly rootExpression: () => number;
+stage1/cohere/estree/sourceStatements.ts:44: readonly peek: () => string;
+stage1/cohere/estree/sourceStatements.ts:45: readonly nextIdentifierSameLine: () => boolean;
+stage1/cohere/estree/sourceStatements.ts:46: readonly propertyName: () => number;
+stage1/cohere/estree/sourceStatements.ts:53: ) => number;
+stage1/cohere/estree/sourceStatements.ts:54: readonly primary: () => number;
+stage1/cohere/estree/sourceStatements.ts:55: readonly suffix: (expression: number, call: boolean) => number;
+stage1/cohere/estree/sourceStatements.ts:56: readonly typeLiteral: () => number;
+stage1/cohere/estree/sourceStatements.ts:57: readonly decorator: () => number;
+stage1/cohere/estree/sourceStatements.ts:58: readonly getAwait: () => boolean;
+stage1/cohere/estree/sourceStatements.ts:59: readonly setAwait: (value: boolean) => void;
+stage1/cohere/estree/sourceStatements.ts:60: readonly getYield: () => boolean;
+stage1/cohere/estree/sourceStatements.ts:61: readonly setYield: (value: boolean) => void;
+stage1/cohere/estree/sourceStatements.ts:62: readonly getIn: () => boolean;
+stage1/cohere/estree/sourceStatements.ts:63: readonly setIn: (value: boolean) => void;
+stage1/cohere/estree/sourceStatements.ts:64: readonly depth: () => number;
+stage1/cohere/estree/sourceStatements.ts:69: constructor(parser: StatementContextInterface) {
+stage1/cohere/estree/sourceStatements.ts:72: make(kind: string, pos: number, children: number[] = []): number {
+stage1/cohere/estree/sourceStatements.ts:75: type(minimum = 0, conditional = true): number {
+stage1/cohere/estree/sourceStatements.ts:78: statementList(context: string): number[] {
+stage1/cohere/estree/sourceStatements.ts:96: block(): number {
+stage1/cohere/estree/sourceStatements.ts:105: semicolon(): void {
+stage1/cohere/estree/sourceStatements.ts:117: expressionSemicolon(expression: number, tokenStart: number): void {
+stage1/cohere/estree/sourceStatements.ts:166: keywordStatementError(text: string, start: number, end: number): boolean {
+stage1/cohere/estree/sourceStatements.ts:207: variableList(): number {
+stage1/cohere/estree/sourceStatements.ts:251: variableDeclaration(): number {
+stage1/cohere/estree/sourceStatements.ts:267: lookahead(offset: number): string {
+stage1/cohere/estree/sourceStatements.ts:290: decorator(): number {
+stage1/cohere/estree/sourceStatements.ts:293: canExportName(): boolean {
+stage1/cohere/estree/sourceStatements.ts:300: specifiers(importing: boolean): number {
+stage1/cohere/estree/sourceStatements.ts:379: attributes(): number {
+stage1/cohere/estree/sourceStatements.ts:393: attributeBody(pos: number, operator: string): number {
+stage1/cohere/estree/sourceStatements.ts:419: moduleSpecifier(): number {
+stage1/cohere/estree/sourceStatements.ts:422: importDeclaration(pos: number, prefix: readonly number[]): number {
+stage1/cohere/estree/sourceStatements.ts:512: exportDeclaration(pos: number, prefix: readonly number[]): number {
+stage1/cohere/estree/sourceStatements.ts:566: moduleDeclaration(pos: number, prefix: readonly number[], keyword: string): number {
+stage1/cohere/estree/sourceStatements.ts:604: exportedClauseAhead(): boolean {
+stage1/cohere/estree/sourceStatements.ts:628: functionDeclaration(pos: number, prefix: readonly number[], async: boolean): number {
+stage1/cohere/estree/sourceStatements.ts:685: heritageName(id: number): number {
+stage1/cohere/estree/sourceStatements.ts:701: heritageElement(type: boolean): number {
+stage1/cohere/estree/sourceStatements.ts:723: heritageClause(interface_: boolean): number {
+stage1/cohere/estree/sourceStatements.ts:756: classDeclaration(pos: number, prefix: readonly number[], expression: boolean): number {
+stage1/cohere/estree/sourceStatements.ts:874: forStatement(): number {
+stage1/cohere/estree/sourceStatements.ts:924: switchStatement(): number {
+stage1/cohere/estree/sourceStatements.ts:959: tryStatement(): number {
+stage1/cohere/estree/sourceStatements.ts:1001: enumDeclaration(pos: number, prefix: readonly number[]): number {
+stage1/cohere/estree/sourceStatements.ts:1053: letDeclaration(): boolean {
+stage1/cohere/estree/sourceStatements.ts:1062: statement(): number {
+stage1/cohere/estree/sourceValidation.ts:5: export function syntaxError(nodes: readonly ParseNode[]): string {
+stage1/cohere/estree/sourceValidation.ts:7: for(let remaining = nodes.length; remaining > 0; remaining--) {
+stage1/cohere/estree/sourceValidation.ts:10: for(let index = 0; index < nodes.length; index++) {
+stage1/cohere/estree/sourceValidation.ts:19: for(let index = 0; index < nodes.length; index++) {
+stage1/cohere/estree/sourceValidation.ts:36: node.children.some((id) => ['FunctionType', 'ConstructorType'].includes(nodes[id]?.kind ?? ''))
+stage1/cohere/estree/sourceValidation.ts:38: return 'function or constructor type must be parenthesized in a union or intersection';
+stage1/cohere/estree/sourceValidation.ts:47: reservedKinds.some((kind) => kind.slice(0, -7).toLowerCase() === name?.text)
+stage1/cohere/estree/strippedText.ts:4: export function unitOffsets(text: string): number[] {
+stage1/cohere/estree/strippedText.ts:7: for(let index = 0; index < text.length; index++) {
+stage1/cohere/estree/strippedText.ts:16: if(bytes !== utf8Length(text)) {
+stage1/cohere/estree/strippedText.ts:21: export function byteUnit(offsets: readonly number[], byte: number): number {
+stage1/cohere/estree/strippedText.ts:24: while(left < right) {
+stage1/cohere/estree/strippedText.ts:33: if(offsets[left] === byte) {
+stage1/cohere/estree/strippedText.ts:46: constructor(source: string, arena: Arena, comments: readonly number[], offsets: readonly number[]) {
+stage1/cohere/estree/strippedText.ts:52: text(): string {
+stage1/cohere/estree/strippedText.ts:78: export function trimEndGo(text: string): string {
+stage1/cohere/estree/strippedText.ts:80: while(end > 0) {
+stage1/cohere/estree/templateValidation.ts:2: export function validTemplate(id: number, nodes: readonly ParseNode[], parents: readonly number[]): boolean {
+stage1/cohere/estree/templateValidation.ts:4: if((nodes[parent]?.kind ?? '') === 'TemplateSpan') {
+stage1/cohere/estree/templateValidation.ts:7: if((nodes[parent]?.kind ?? '') === 'TemplateExpression') {
+stage1/cohere/estree/templateValidation.ts:10: if((nodes[parent]?.kind ?? '') !== 'TaggedTemplateExpression') {
+stage1/cohere/estree/templateValidation.ts:14: for(let index = 0; index + 1 < raw.length; index++) {
+stage1/cohere/estree/typeLists.ts:7: export function typeList(
+stage1/cohere/estree/typeLists.ts:14: convert: (id: number) => number,
+stage1/cohere/estree/typeLists.ts:16: if(ids.length === 0) {
+stage1/cohere/estree/typeLists.ts:22: if(ids.length === 1 && ['EmptyTypeArguments', 'EmptyTypeParameters'].includes(first.kind)) {
+stage1/cohere/estree/typeLists.ts:35: if(text.slice(start, start + 1) !== '<') {
+stage1/cohere/estree/typeLists.ts:40: if(scanner.kind === 'CommaToken') {
+stage1/cohere/estree/typeLists.ts:43: if(scanner.kind !== 'GreaterThanToken') {
+stage1/cohere/estree/typeLists.ts:52: for(const id of ids) {
+stage1/cohere/estree/values.ts:9: constructor(kind: string) {
+stage1/cohere/estree/values.ts:13: export function absent(): Value {
+stage1/cohere/estree/values.ts:16: export function stringValue(text: string): Value {
+stage1/cohere/estree/values.ts:21: export function boolValue(flag: boolean): Value {
+stage1/cohere/estree/values.ts:26: export function numberValue(number: number): Value {
+stage1/cohere/estree/values.ts:31: export function childValue(node: number): Value {
+stage1/cohere/estree/values.ts:32: if(node < 0) {
+stage1/cohere/estree/values.ts:39: export function listValue(list: number[]): Value {
+stage1/cohere/estree/values.ts:44: export function templateValue(raw: string, cooked: string, valid: boolean): Value {
+stage1/cohere/estree/values.ts:55: export function goNumber(raw: string): number {
+stage1/cohere/estree/values.ts:59: if(base !== 10) {
+stage1/cohere/estree/values.ts:76: export function bigintDecimal(raw: string): string {
+stage1/cohere/estree/values.ts:82: for(const character of digits) {
+stage1/cohere/estree/values.ts:97: while(start < result.length - 1 && result.slice(start, start + 1) === '0') {
+stage1/typescript/parser/grammar.ts:2: export function precedence(kind: string): number {
+stage1/typescript/parser/grammar.ts:3: switch(kind) {
+stage1/typescript/parser/jsx.ts:10: readonly kind: () => string;
+stage1/typescript/parser/jsx.ts:11: readonly next: () => void;
+stage1/typescript/parser/jsx.ts:12: readonly expect: (kind: string) => void;
+stage1/typescript/parser/jsx.ts:13: readonly node: (index: number) => ParseNode;
+stage1/typescript/parser/jsx.ts:14: readonly make: (kind: string, pos: number, children: number[]) => number;
+stage1/typescript/parser/jsx.ts:15: readonly identifier: () => number;
+stage1/typescript/parser/jsx.ts:16: readonly token: () => number;
+stage1/typescript/parser/jsx.ts:17: readonly literal: () => number;
+stage1/typescript/parser/jsx.ts:18: readonly expression: () => number;
+stage1/typescript/parser/jsx.ts:19: readonly typeArguments: () => number[];
+stage1/typescript/parser/jsx.ts:20: readonly missingGreater: () => void;
+stage1/typescript/parser/jsx.ts:21: readonly typeTrailing: () => boolean;
+stage1/typescript/parser/jsx.ts:26: constructor(parser: JsxContextInterface) {
+stage1/typescript/parser/jsx.ts:29: make(kind: string, pos: number, children: number[] = []): number {
+stage1/typescript/parser/jsx.ts:32: identifier(): number {
+stage1/typescript/parser/jsx.ts:41: name(tag: boolean): number {
+stage1/typescript/parser/jsx.ts:64: text(): number {
+stage1/typescript/parser/jsx.ts:74: finishGreater(expression: boolean): void {
+stage1/typescript/parser/jsx.ts:87: expression(attribute: boolean): number {
+stage1/typescript/parser/jsx.ts:108: attributes(): number {
+stage1/typescript/parser/jsx.ts:143: tagKey(index: number): string {
+stage1/typescript/parser/jsx.ts:151: element(inExpression: boolean): number {
+stage1/typescript/parser/lookahead.ts:16: function kind(scanner: Scanner): string {
+stage1/typescript/parser/lookahead.ts:31: constructor(scanner: Scanner) {
+stage1/typescript/parser/lookahead.ts:41: prepare(): void {
+stage1/typescript/parser/lookahead.ts:74: next(): void {
+stage1/typescript/parser/lookahead.ts:79: restore(): void {
+stage1/typescript/parser/lookahead.ts:90: function optionalParameterAhead(scanner: Scanner): boolean {
+stage1/typescript/parser/lookahead.ts:98: export function arrowAhead(scanner: Scanner, allowReturn: boolean): boolean {
+stage1/typescript/parser/lookahead.ts:101: if(kind(scanner) === 'AsyncKeyword') {
+stage1/typescript/parser/lookahead.ts:117: if(kind(scanner) === 'LessThanToken') {
+stage1/typescript/parser/lookahead.ts:132: if(kind(scanner) === 'OpenParenToken') {
+stage1/typescript/parser/lookahead.ts:188: export function jsxArrowAhead(scanner: Scanner): boolean {
+stage1/typescript/parser/lookahead.ts:190: if(kind(scanner) === 'AsyncKeyword') {
+stage1/typescript/parser/lookahead.ts:193: if(kind(scanner) !== 'LessThanToken') {
+stage1/typescript/parser/lookahead.ts:198: if(kind(scanner) === 'ConstKeyword') {
+stage1/typescript/parser/lookahead.ts:203: if(kind(scanner) === 'ExtendsKeyword') {
+stage1/typescript/parser/lookahead.ts:212: export function typeArgumentsAhead(scanner: Scanner): boolean {
+stage1/typescript/parser/lookahead.ts:220: while(kind(scanner) !== 'EndOfFile') {
+stage1/typescript/parser/main.ts:5: function run(path: string, countOnly: boolean, whole: boolean, docTypes: boolean): number {
+stage1/typescript/parser/main.ts:7: if(source.kind === 'Error') {
+stage1/typescript/parser/main.ts:14: if(!countOnly) {
+stage1/typescript/parser/main.ts:30: for(const root of docTypes ? types : whole ? [file] : parser.roots) {
+stage1/typescript/parser/main.ts:44: if(manifest.kind === 'Error') {
+stage1/typescript/parser/main.ts:50: for(const path of manifest.text.split('\n')) {
+stage1/typescript/parser/main.ts:60: if(countOnly) {
+stage1/typescript/parser/main.ts:65: run(first, false, args.includes('--whole'), args.includes('--doc-types'));
+stage1/typescript/parser/nodes.ts:18: constructor(kind: string, pos: number, end: number, children: number[]) {
+stage1/typescript/parser/nodes.ts:26: export function written(text: string): string {
+stage1/typescript/parser/nodes.ts:28: for(let index = 0; index < text.length; index++) {
+stage1/typescript/parser/nodes.ts:38: export function printTree(
+stage1/typescript/parser/nodes.ts:50: for(const child of node.children) {
+stage1/typescript/parser/nodes.ts:56: export function countTree(nodes: readonly ParseNode[], root: number): number {
+stage1/typescript/parser/nodes.ts:59: for(const child of node.children) {
+stage1/typescript/parser/parser.ts:19: constructor(text: string, path = 'source') {
+stage1/typescript/parser/parser.ts:27: kind(): string {
+stage1/typescript/parser/parser.ts:30: next(): void {
+stage1/typescript/parser/parser.ts:33: node(index: number): ParseNode {
+stage1/typescript/parser/parser.ts:36: make(kind: string, pos: number, children: number[] = []): number {
+stage1/typescript/parser/parser.ts:40: token(): number {
+stage1/typescript/parser/parser.ts:46: expect(kind: string): void {
+stage1/typescript/parser/parser.ts:52: literal(): number {
+stage1/typescript/parser/parser.ts:72: identifier(): number {
+stage1/typescript/parser/parser.ts:80: primary(): number {
+stage1/typescript/parser/parser.ts:179: jsxParser(): Jsx {
+stage1/typescript/parser/parser.ts:184: kind: () => this.kind(),
+stage1/typescript/parser/parser.ts:185: next: () => {
+stage1/typescript/parser/parser.ts:188: expect: (kind) => {
+stage1/typescript/parser/parser.ts:191: node: (index) => this.node(index),
+stage1/typescript/parser/parser.ts:192: make: (kind, pos, children) => this.make(kind, pos, children),
+stage1/typescript/parser/parser.ts:193: identifier: () => this.identifier(),
+stage1/typescript/parser/parser.ts:194: token: () => this.token(),
+stage1/typescript/parser/parser.ts:195: literal: () => this.literal(),
+stage1/typescript/parser/parser.ts:196: expression: () => this.allowInExpression(),
+stage1/typescript/parser/parser.ts:197: typeArguments: () => this.typeArguments(),
+stage1/typescript/parser/parser.ts:198: missingGreater: () => {
+stage1/typescript/parser/parser.ts:201: typeTrailing: () => this.lastTypeTrailing,
+stage1/typescript/parser/parser.ts:204: bindingIdentifier(): boolean {
+stage1/typescript/parser/parser.ts:209: nextIdentifierSameLine(): boolean {
+stage1/typescript/parser/parser.ts:218: yieldOperandAhead(): boolean {
+stage1/typescript/parser/parser.ts:229: mark(): ParserStateInterface {
+stage1/typescript/parser/parser.ts:241: rewind(state: ParserStateInterface): void {
+stage1/typescript/parser/parser.ts:251: docTypes(): number[] {
+stage1/typescript/parser/parser.ts:280: tupleNameAhead(): boolean {
+stage1/typescript/parser/parser.ts:294: typeArguments(): number[] {
+stage1/typescript/parser/parser.ts:310: typeParameters(): number[] {
+stage1/typescript/parser/parser.ts:340: entityName(): number {
+stage1/typescript/parser/parser.ts:350: importType(): number {
+stage1/typescript/parser/parser.ts:387: type(minimum = 0, conditional = true): number {
+stage1/typescript/parser/parser.ts:667: mappedAhead(): boolean {
+stage1/typescript/parser/parser.ts:685: mappedType(): number {
+stage1/typescript/parser/parser.ts:724: indexSignatureAhead(): boolean {
+stage1/typescript/parser/parser.ts:732: typeLiteral(): number {
+stage1/typescript/parser/parser.ts:812: parameters(): number[] {
+stage1/typescript/parser/parser.ts:857: bindingName(): number {
+stage1/typescript/parser/parser.ts:897: decorator(): number {
+stage1/typescript/parser/parser.ts:909: rootAssignment(): number {
+stage1/typescript/parser/parser.ts:918: rootExpression(): number {
+stage1/typescript/parser/parser.ts:927: arrow(allowReturn: boolean): number {
+stage1/typescript/parser/parser.ts:964: returnType(): number {
+stage1/typescript/parser/parser.ts:988: functionExpression(): number {
+stage1/typescript/parser/parser.ts:1027: statements(): Statements {
+stage1/typescript/parser/parser.ts:1032: kind: () => this.kind(),
+stage1/typescript/parser/parser.ts:1033: next: () => {
+stage1/typescript/parser/parser.ts:1036: expect: (kind) => {
+stage1/typescript/parser/parser.ts:1039: node: (index) => this.node(index),
+stage1/typescript/parser/parser.ts:1040: make: (kind, pos, children: number[] = []) => this.make(kind, pos, children),
+stage1/typescript/parser/parser.ts:1041: entityName: () => this.entityName(),
+stage1/typescript/parser/parser.ts:1042: identifier: () => this.identifier(),
+stage1/typescript/parser/parser.ts:1043: token: () => this.token(),
+stage1/typescript/parser/parser.ts:1044: type: (minimum = 0, conditional = true) => this.type(minimum, conditional),
+stage1/typescript/parser/parser.ts:1045: typeArguments: () => this.typeArguments(),
+stage1/typescript/parser/parser.ts:1046: typeParameters: () => this.typeParameters(),
+stage1/typescript/parser/parser.ts:1047: parameters: () => this.parameters(),
+stage1/typescript/parser/parser.ts:1048: returnType: () => this.returnType(),
+stage1/typescript/parser/parser.ts:1049: bindingName: () => this.bindingName(),
+stage1/typescript/parser/parser.ts:1050: rootAssignment: () => this.rootAssignment(),
+stage1/typescript/parser/parser.ts:1051: rootExpression: () => this.rootExpression(),
+stage1/typescript/parser/parser.ts:1052: peek: () => this.peek(),
+stage1/typescript/parser/parser.ts:1053: nextIdentifierSameLine: () => this.nextIdentifierSameLine(),
+stage1/typescript/parser/parser.ts:1054: propertyName: () => this.propertyName(),
+stage1/typescript/parser/parser.ts:1055: methodBody: (pos, prefix, kind, async, generator) => this.methodBody(pos, prefix, kind, async, generator),
+stage1/typescript/parser/parser.ts:1056: primary: () => this.primary(),
+stage1/typescript/parser/parser.ts:1057: suffix: (expression, call) => this.suffix(expression, call),
+stage1/typescript/parser/parser.ts:1058: typeLiteral: () => this.typeLiteral(),
+stage1/typescript/parser/parser.ts:1059: decorator: () => this.decorator(),
+stage1/typescript/parser/parser.ts:1060: getAwait: () => this.awaitContext,
+stage1/typescript/parser/parser.ts:1061: setAwait: (value) => {
+stage1/typescript/parser/parser.ts:1064: getYield: () => this.yieldContext,
+stage1/typescript/parser/parser.ts:1065: setYield: (value) => {
+stage1/typescript/parser/parser.ts:1068: getIn: () => this.disallowIn,
+stage1/typescript/parser/parser.ts:1069: setIn: (value) => {
+stage1/typescript/parser/parser.ts:1072: depth: () => this.expressionDepth,
+stage1/typescript/parser/parser.ts:1075: block(): number {
+stage1/typescript/parser/parser.ts:1078: statement(): number {
+stage1/typescript/parser/parser.ts:1081: semicolon(): void {
+stage1/typescript/parser/parser.ts:1084: classDeclaration(pos: number, prefix: readonly number[], expression: boolean): number {
+stage1/typescript/parser/parser.ts:1088: peek(): string {
+stage1/typescript/parser/parser.ts:1107: optionalChain(index: number): boolean {
+stage1/typescript/parser/parser.ts:1122: spread(): number {
+stage1/typescript/parser/parser.ts:1128: arguments(): number[] {
+stage1/typescript/parser/parser.ts:1147: suffix(expression: number, allowCall: boolean): number {
+stage1/typescript/parser/parser.ts:1276: templatePart(): number {
+stage1/typescript/parser/parser.ts:1289: templateType(): number {
+stage1/typescript/parser/parser.ts:1305: template(): number {
+stage1/typescript/parser/parser.ts:1324: array(): number {
+stage1/typescript/parser/parser.ts:1351: propertyName(): number {
+stage1/typescript/parser/parser.ts:1367: methodBody(pos: number, prefix: readonly number[], kind: string, async: boolean, generator: boolean): number {
+stage1/typescript/parser/parser.ts:1396: object(): number {
+stage1/typescript/parser/parser.ts:1478: unary(): number {
+stage1/typescript/parser/parser.ts:1548: binary(minimum: number): number {
+stage1/typescript/parser/parser.ts:1576: assignment(allowReturn = true): number {
+stage1/typescript/parser/parser.ts:1612: allowInAssignment(allowReturn = true): number {
+stage1/typescript/parser/parser.ts:1622: allowInExpression(): number {
+stage1/typescript/parser/parser.ts:1632: expression(): number {
+stage1/typescript/parser/parser.ts:1642: file(): number {
+stage1/typescript/parser/statements.ts:10: readonly kind: () => string;
+stage1/typescript/parser/statements.ts:11: readonly next: () => void;
+stage1/typescript/parser/statements.ts:12: readonly expect: (kind: string) => void;
+stage1/typescript/parser/statements.ts:13: readonly node: (index: number) => ParseNode;
+stage1/typescript/parser/statements.ts:14: readonly make: (kind: string, pos: number, children?: number[]) => number;
+stage1/typescript/parser/statements.ts:15: readonly entityName: () => number;
+stage1/typescript/parser/statements.ts:16: readonly identifier: () => number;
+stage1/typescript/parser/statements.ts:17: readonly token: () => number;
+stage1/typescript/parser/statements.ts:18: readonly type: (minimum?: number, conditional?: boolean) => number;
+stage1/typescript/parser/statements.ts:19: readonly typeArguments: () => number[];
+stage1/typescript/parser/statements.ts:20: readonly typeParameters: () => number[];
+stage1/typescript/parser/statements.ts:21: readonly parameters: () => number[];
+stage1/typescript/parser/statements.ts:22: readonly returnType: () => number;
+stage1/typescript/parser/statements.ts:23: readonly bindingName: () => number;
+stage1/typescript/parser/statements.ts:24: readonly rootAssignment: () => number;
+stage1/typescript/parser/statements.ts:25: readonly rootExpression: () => number;
+stage1/typescript/parser/statements.ts:26: readonly peek: () => string;
+stage1/typescript/parser/statements.ts:27: readonly nextIdentifierSameLine: () => boolean;
+stage1/typescript/parser/statements.ts:28: readonly propertyName: () => number;
+stage1/typescript/parser/statements.ts:35: ) => number;
+stage1/typescript/parser/statements.ts:36: readonly primary: () => number;
+stage1/typescript/parser/statements.ts:37: readonly suffix: (expression: number, call: boolean) => number;
+stage1/typescript/parser/statements.ts:38: readonly typeLiteral: () => number;
+stage1/typescript/parser/statements.ts:39: readonly decorator: () => number;
+stage1/typescript/parser/statements.ts:40: readonly getAwait: () => boolean;
+stage1/typescript/parser/statements.ts:41: readonly setAwait: (value: boolean) => void;
+stage1/typescript/parser/statements.ts:42: readonly getYield: () => boolean;
+stage1/typescript/parser/statements.ts:43: readonly setYield: (value: boolean) => void;
+stage1/typescript/parser/statements.ts:44: readonly getIn: () => boolean;
+stage1/typescript/parser/statements.ts:45: readonly setIn: (value: boolean) => void;
+stage1/typescript/parser/statements.ts:46: readonly depth: () => number;
+stage1/typescript/parser/statements.ts:51: constructor(parser: StatementContextInterface) {
+stage1/typescript/parser/statements.ts:54: block(): number {
+stage1/typescript/parser/statements.ts:64: semicolon(): void {
+stage1/typescript/parser/statements.ts:76: variableList(): number {
+stage1/typescript/parser/statements.ts:117: lookahead(offset: number): string {
+stage1/typescript/parser/statements.ts:140: decorator(): number {
+stage1/typescript/parser/statements.ts:143: canExportName(): boolean {
+stage1/typescript/parser/statements.ts:150: specifiers(importing: boolean): number {
+stage1/typescript/parser/statements.ts:212: attributes(): number {
+stage1/typescript/parser/statements.ts:218: attributeBody(pos: number, operator: string): number {
+stage1/typescript/parser/statements.ts:244: importDeclaration(pos: number, prefix: readonly number[]): number {
+stage1/typescript/parser/statements.ts:335: exportDeclaration(pos: number, prefix: readonly number[]): number {
+stage1/typescript/parser/statements.ts:389: moduleDeclaration(pos: number, prefix: readonly number[], keyword: string): number {
+stage1/typescript/parser/statements.ts:420: exportedClauseAhead(): boolean {
+stage1/typescript/parser/statements.ts:442: functionDeclaration(pos: number, prefix: readonly number[], async: boolean): number {
+stage1/typescript/parser/statements.ts:479: classDeclaration(pos: number, prefix: readonly number[], expression: boolean): number {
+stage1/typescript/parser/statements.ts:640: forStatement(): number {
+stage1/typescript/parser/statements.ts:682: switchStatement(): number {
+stage1/typescript/parser/statements.ts:713: tryStatement(): number {
+stage1/typescript/parser/statements.ts:741: statement(): number {
+stage1/typescript/scanner/characters.ts:240: function contains(ranges: readonly number[], code: number): boolean {
+stage1/typescript/scanner/characters.ts:243: while(low <= high) {
+stage1/typescript/scanner/characters.ts:259: export function isIdentifierStart(code: number): boolean {
+stage1/typescript/scanner/characters.ts:268: export function isIdentifierPart(code: number): boolean {
+stage1/typescript/scanner/characters.ts:271: export function isLineBreak(code: number): boolean {
+stage1/typescript/scanner/characters.ts:274: export function isSpace(code: number): boolean {
+stage1/typescript/scanner/characters.ts:290: export function digit(code: number): number {
+stage1/typescript/scanner/main.ts:5: function written(text: string): string {
+stage1/typescript/scanner/main.ts:7: for(let index = 0; index < text.length; index++) {
+stage1/typescript/scanner/main.ts:16: function run(path: string, mode: string, countOnly: boolean): number {
+stage1/typescript/scanner/main.ts:18: if(read.kind === 'Error') {
+stage1/typescript/scanner/main.ts:24: if(!countOnly) {
+stage1/typescript/scanner/main.ts:42: for(;;) {
+stage1/typescript/scanner/main.ts:96: if(manifest.kind === 'Error') {
+stage1/typescript/scanner/main.ts:102: for(const line of manifest.text.split('\n')) {
+stage1/typescript/scanner/main.ts:113: if(countOnly) {
+stage1/typescript/scanner/main.ts:118: run(first, args[1] ?? 'scan', false);
+stage1/typescript/scanner/scanner.ts:14: function decimalDigits(text: string, base: number): string {
+stage1/typescript/scanner/scanner.ts:16: for(const character of text) {
+stage1/typescript/scanner/scanner.ts:31: while(first < result.length - 1 && result.charCodeAt(first) === 48) {
+stage1/typescript/scanner/scanner.ts:37: function numberValue(text: string): string {
+stage1/typescript/scanner/scanner.ts:38: if(text === '') {
+stage1/typescript/scanner/scanner.ts:62: constructor(text: string) {
+stage1/typescript/scanner/scanner.ts:65: code(offset = 0): number {
+stage1/typescript/scanner/scanner.ts:73: advance(code: number): void {
+stage1/typescript/scanner/scanner.ts:76: error(code: number, start: number = this.pos, length = 0): void {
+stage1/typescript/scanner/scanner.ts:81: fragment(base: number, separators: boolean, minimum = 0, maximum: number = Number.MAX_SAFE_INTEGER): string {
+stage1/typescript/scanner/scanner.ts:122: unicode(report: boolean): number {
+stage1/typescript/scanner/scanner.ts:173: escape(report: boolean): string {
+stage1/typescript/scanner/scanner.ts:251: identifier(prefix: number): boolean {
+stage1/typescript/scanner/scanner.ts:289: string(): void {
+stage1/typescript/scanner/scanner.ts:324: template(report: boolean): void {
+stage1/typescript/scanner/scanner.ts:370: bigint(): void {
+stage1/typescript/scanner/scanner.ts:385: number(): void {
+stage1/typescript/scanner/scanner.ts:492: scan(): string {
+stage1/typescript/scanner/scanner.ts:676: punctuation(code: number): string {
+stage1/typescript/scanner/scanner.ts:817: rescanGreater(): void {
+stage1/typescript/scanner/scanner.ts:834: rescanTemplate(): void {
+stage1/typescript/scanner/scanner.ts:840: rescanSlash(): void {
+stage1/typescript/scanner/scanner.ts:936: scanJsxIdentifier(): void {
+stage1/typescript/scanner/scanner.ts:948: scanJsxAttributeValue(): void {
+stage1/typescript/scanner/scanner.ts:978: scanJsx(): string {
+stage1/typescript/parser/gaps/3_import_cycle_peer.ts:2: export function value(entry: Entry): number {
+stage1/typescript/parser/gaps/4_class_interface_method.ts:2: readonly count: () => number;
+stage1/typescript/parser/gaps/4_class_interface_method.ts:5: count(): number { return 1; }
+stage1/typescript/parser/gaps/4_class_interface_method.ts:7: function read(counter: CounterInterface): number { return counter.count(); }
+stage1/typescript/parser/gaps/5_optional_function_value.ts:1: const choose = (value = 1): number => value;
+internal/lower/arguments_length.go:9: func (l *lowering) builtinArguments(node *ast.Node) bool {
+internal/lower/arguments_length.go:18: func (l *lowering) isArgumentsLength(node *ast.Node) bool {
+internal/lower/arguments_length.go:26: func (l *lowering) argumentsRefusal(node *ast.Node) error {
+internal/lower/arguments_length.go:30: return &Refused{Where: l.program.Where(node), What: "arguments inside an arrow function", Fix: "read arguments.length in the enclosing non-arrow function and capture that number"}
+internal/lower/arguments_length.go:52: func (l *lowering) readArgumentsCount() ir.Expression {
+internal/lower/arguments_length.go:53: if l.function == nil {
+internal/lower/arguments_length.go:67: func (l *lowering) callArguments(nodes []*ast.Node) ([]ir.Expression, []bool, error) {
+internal/lower/arguments_length.go:120: // records as the cycle finder. A parameter or mutable function value is bounded
+internal/lower/arguments_length.go:121: // by every implementation that can be seen through its function type.
+internal/lower/arguments_length.go:122: func (l *lowering) resolveCountTypes(modules []*ast.SourceFile) {
+internal/lower/arguments_length.go:161: function := &l.result.Functions[index]
+internal/lower/arguments_length.go:175: function := &l.result.Functions[index]
+internal/lower/arguments_length.go:205: func (l *lowering) fitCallArguments(function int, arguments []ir.Expression, spread []bool) {
+internal/lower/arguments_length.go:224: // function signature. An own closure facade does not make every class with a
+internal/lower/arguments_length.go:226: func (l *lowering) resolveStructuralMethodThunks(modules []*ast.SourceFile) {
+internal/lower/arguments_length.go:233: for _, function := range instance.methods {
+internal/lower/arguments_length.go:248: for index, function := range l.result.Functions {
+internal/lower/arguments_length.go:260: for index, function := range l.result.Functions {
+internal/lower/assignment_value.go:10: func (l *lowering) assignmentValue(node *ast.Node) (ir.Expression, error) {
+internal/lower/assignments.go:12: func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {
+internal/lower/assignments.go:53: return nil, l.notYet(target, "rebinding a nested function declaration")
+internal/lower/assignments.go:92: func (l *lowering) tupleField(where *ast.Node, held int, elements []*checker.Type, index int, to ir.Type) (ir.Expression, error) {
+internal/lower/assignments.go:110: func (l *lowering) destructuringAssignment(pattern *ast.Node, valueNode *ast.Node) ([]ir.Statement, error) {
+internal/lower/assignments.go:134: return nil, l.notYet(element, "rebinding a nested function declaration")
+internal/lower/assignments.go:164: func (l *lowering) increment(node *ast.Node) ([]ir.Statement, error) {
+internal/lower/borrow.go:18: func borrow(program *ir.Program) {
+internal/lower/borrow.go:20: for _, function := range program.Functions {
+internal/lower/borrow.go:24: for _, function := range program.Functions {
+internal/lower/borrow.go:38: func findAssigned(statements []ir.Statement, assigned map[int]bool) {
+internal/lower/case_label.go:12: func (l *lowering) caseLabel(node *ast.Node) (ir.Expression, error) {
+internal/lower/cast.go:15: func (l *lowering) cast(node *ast.Node) (ir.Expression, error) {
+internal/lower/cast.go:65: func (l *lowering) fieldLiteral(member *checker.Type, field string) *checker.Type {
+internal/lower/cast.go:79: func (l *lowering) literalConstant(literal *checker.Type) (ir.Expression, ir.Type, bool) {
+internal/lower/cast_proof.go:23: func (l *lowering) castAssignable(source, target *checker.Type) bool {
+internal/lower/cast_proof.go:30: func (l *lowering) castOptionalFields(source, target *checker.Type, seen map[[2]*checker.Type]bool) bool {
+internal/lower/cast_proof.go:91: func castMembers(proven *checker.Type) []*checker.Type {
+internal/lower/cast_proof.go:98: func (l *lowering) castProof(node *ast.Node) (castProof, error) {
+internal/lower/cast_proof.go:233: func (l *lowering) castUnionWrites(source *checker.Type) bool {
+internal/lower/cast_proof.go:252: func (l *lowering) classCastArguments(source, target *checker.Type) bool {
+internal/lower/cast_proof.go:279: func (l *lowering) checkedClassCast(node *ast.Node, value ir.Expression, targets []*checker.Type, message string) (ir.Expression, error) {
+internal/lower/cast_proof.go:296: function := len(l.result.Functions)
+internal/lower/census_coercion.go:13: func (l *lowering) censusNumberObject(node *ast.Node, value ir.Expression) (ir.Expression, error) {
+internal/lower/census_overload_proof.go:8: func (l *lowering) censusHasUndefined(proven *checker.Type) bool {
+internal/lower/census_overload_proof.go:25: func (l *lowering) censusNullableOverloadResult(produced, promised *checker.Type) bool {
+internal/lower/census_overload_proof.go:42: func (l *lowering) censusProveOverloadResult(implementation, overload *ast.Node) bool {
+internal/lower/census_overload_proof.go:46: func (l *lowering) censusReturnProof(implementation, overload *ast.Node, admitted []*checker.Type, target *checker.Type) bool {
+internal/lower/census_overload_proof.go:226: func (l *lowering) censusCallReturnsUndefined(node *ast.Node) bool {
+internal/lower/census_predicate_marker.go:11: // metadata rather than guessing that a boolean-returning function is a predicate.
+internal/lower/census_predicate_marker.go:14: func censusSignaturePredicate(*checker.Checker, *checker.Signature) *checker.TypePredicate
+internal/lower/census_predicate_marker.go:16: func (l *lowering) censusDiscardedMarkerPredicate(source, target *checker.Signature) bool {
+internal/lower/census_predicate_marker.go:26: func (l *lowering) censusPredicateMarkerContract(annotation *ast.Node) bool {
+internal/lower/census_predicate_marker.go:35: function := parameter.Parent
+internal/lower/census_predicate_marker.go:36: if function == nil || !ast.IsFunctionLike(function) || function.Body() == nil {
+internal/lower/census_small.go:12: func (l *lowering) censusRestParameter(declaration, parameter *ast.Node) error {
+internal/lower/census_small.go:35: func (l *lowering) censusRestDeclaration(function int) *ast.Node {
+internal/lower/census_small.go:37: if index != function {
+internal/lower/census_small.go:55: func (l *lowering) censusRestCall(call *ast.CallExpression, function int, declaration *ast.Node) (ir.Expression, error) {
+internal/lower/census_small.go:110: func censusFieldSlotless(of ir.Type) bool {
+internal/lower/census_small.go:115: func (l *lowering) censusImplementation(declaration *ast.Node) *ast.Node {
+internal/lower/census_small.go:132: func (l *lowering) censusRelated(from, to *checker.Type) bool {
+internal/lower/census_small.go:137: func (l *lowering) censusOverloads(implementation *ast.Node) error {
+internal/lower/census_small.go:160: func (l *lowering) censusOverload(implementation, overload *ast.Node, ordinal int) error {
+internal/lower/census_small.go:247: func (l *lowering) censusOverloadParameter(parameters []*ast.Node, index int) (*checker.Type, *ast.Node, bool, error) {
+internal/lower/census_small.go:273: func (l *lowering) censusOverloadResult(call *ast.CallExpression, value ir.Expression) (ir.Expression, error) {
+internal/lower/census_small.go:333: func censusCallableSlotless(of ir.Type) bool {
+internal/lower/census_small.go:338: func (l *lowering) censusCallableParameter(parameter *ast.Symbol) (ir.Type, bool) {
+internal/lower/census_small.go:350: func (l *lowering) censusCallableParameterType(parameter *ast.Symbol) *checker.Type {
+internal/lower/census_small.go:361: func censusBooleanCondition(value ir.Expression) ir.Expression {
+internal/lower/census_small.go:368: func (l *lowering) censusBooleanLogical(node *ast.Node, operator ast.Kind, left, right ir.Expression) (ir.Expression, bool) {
+internal/lower/census_small.go:402: func censusCondition(value ir.Expression) ir.Expression {
+internal/lower/census_small.go:411: func (l *lowering) censusNeverRestSignature(signature *checker.Signature) bool {
+internal/lower/class.go:37: // templates are the instance's locals and function values with their types as the source writes
+internal/lower/class.go:44: func (lowered *instance) methodList() []ir.Method {
+internal/lower/class.go:59: // template is a local, or a function value (closure set), and its type with type parameters left in.
+internal/lower/class.go:67: func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, where *ast.Node) (*instance, error) {
+internal/lower/class.go:103: // The instance is shared, and so are its locals and function values: each is also what this
+internal/lower/class.go:134: // Register every function of the instantiation first, so methods can find each other.
+internal/lower/class.go:149: for method, function := range base.methods {
+internal/lower/class.go:244: func (l *lowering) thisLocal(owner int) int {
+internal/lower/class.go:254: func (l *lowering) constructor(index int, declaration *ast.Node) error {
+internal/lower/class.go:259: func zeroValue(of ir.Type) ir.Expression {
+internal/lower/class.go:272: func containsThis(node *ast.Node) bool {
+internal/lower/class.go:290: func (l *lowering) construct(node *ast.Node, declaration *ast.Node) (ir.Expression, error) {
+internal/lower/class.go:312: func (l *lowering) callOrMethod(node *ast.Node) (ir.Expression, error) {
+internal/lower/class.go:400: function := lowered.methods[l.fieldName(callee.Name())]
+internal/lower/class.go:410: func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Statement, error) {
+internal/lower/class.go:456: func (l *lowering) absentOptionalWrite(target *ast.Node) error {
+internal/lower/class.go:473: func presentBeforeWrite(target *ast.Node) bool {
+internal/lower/class.go:492: func testsPresence(condition *ast.Node, spelled string) bool {
+internal/lower/class.go:511: func plainPropertyName(property *ast.Node) string {
+internal/lower/class.go:525: func accessPath(node *ast.Node) string {
+internal/lower/class.go:541: func (l *lowering) literalGivesField(target *ast.Node) bool {
+internal/lower/class.go:570: func (l *lowering) noteOmittedOptionals(modules []*ast.SourceFile) {
+internal/lower/class.go:584: func (l *lowering) noteOmittedOptionalsOf(literal *ast.Node) {
+internal/lower/class.go:629: func (l *lowering) updateProperty(node *ast.Node, target *ast.Node, operator ast.Kind, valueNode *ast.Node) ([]ir.Statement, error) {
+internal/lower/class.go:681: func (l *lowering) classOf(access *ast.Node) int {
+internal/lower/class.go:702: func nodesOf(list *ast.NodeList) []*ast.Node {
+internal/lower/class.go:716: func lastFieldAssignment(declaration *ast.Node, constructor *ast.Node) int {
+internal/lower/class.go:751: // object of a field it reads or writes: a method it calls, or a function it's handed to, could read a
+internal/lower/class.go:753: func (l *lowering) useOfThis(node *ast.Node) error {
+internal/lower/class.go:780: func identicalTypes(checker *checker.Checker, source, target *checker.Type) bool
+internal/lower/class.go:782: func (l *lowering) classKeyPrefix(declaration *ast.Node) string {
+internal/lower/class.go:786: func (l *lowering) sameClassArguments(from, to []*checker.Type) bool {
+internal/lower/class.go:798: func (l *lowering) classInstanceKey(declaration *ast.Node, arguments []*checker.Type) string {
+internal/lower/class.go:807: func (l *lowering) classKeyMatches(key string, declaration *ast.Node) bool {
+internal/lower/class_accessors.go:13: func accessorMember(node *ast.Node) bool {
+internal/lower/class_accessors.go:16: func classFunction(node *ast.Node) bool {
+internal/lower/class_accessors.go:19: func (l *lowering) methodKey(node *ast.Node, class int) string {
+internal/lower/class_accessors.go:33: func (l *lowering) registerAccessor(class int, node *ast.Node, function int) {
+internal/lower/class_accessors.go:53: func (l *lowering) superAccessor(target *ast.Node, valueNode *ast.Node) (ir.Expression, bool, error) {
+internal/lower/class_accessors.go:108: func (l *lowering) literalAccessor(owner, declaration *ast.Node) (ir.Expression, int, error) {
+internal/lower/class_accessors.go:129: function int
+internal/lower/class_accessors.go:132: func (l *lowering) accessorLiteral(node *ast.Node) (ir.Expression, bool, error) {
+internal/lower/class_accessors.go:159: var function int
+internal/lower/class_accessors.go:207: func (l *lowering) finishAccessors() error {
+internal/lower/class_accessors.go:264: function := ir.Function{Name: "property_" + kind + name, Returns: of}
+internal/lower/class_accessors.go:349: func accessorSymbol(symbol *ast.Symbol) bool {
+internal/lower/class_accessors.go:357: func (l *lowering) hasAccessorStorage(proven *checker.Type) bool {
+internal/lower/class_accessors.go:367: func (l *lowering) checkAccessorSpreads() error {
+internal/lower/class_accessors.go:393: for _, function := range l.result.Functions {
+internal/lower/class_accessors.go:408: func (l *lowering) noteAccessorNames(modules []*ast.SourceFile) {
+internal/lower/class_accessors.go:422: func (l *lowering) validateAccessorSignature(member *ast.Node, function int) error {
+internal/lower/class_features.go:14: func (l *lowering) memberKey(name *ast.Node, class int) string {
+internal/lower/class_features.go:25: func (l *lowering) declaringClass(name *ast.Node) *ast.Node {
+internal/lower/class_features.go:41: func (l *lowering) privateName(spelling string, class *ast.Node) string {
+internal/lower/class_features.go:53: func (l *lowering) hasPrivateStorage(proven *checker.Type) bool {
+internal/lower/class_features.go:65: func (l *lowering) objectKeys(node *ast.Node) (ir.Expression, bool, error) {
+internal/lower/class_generic_calls.go:14: func (l *lowering) classGenericCall(node *ast.Node) (ir.Expression, bool, error) {
+internal/lower/class_generic_calls.go:73: func (l *lowering) genericUsesClasses(declaration *ast.Node, seen map[*ast.Node]bool) bool {
+internal/lower/class_generic_calls.go:103: func (l *lowering) nominalTypeArguments(declaration *ast.Node, arguments []*checker.Type, mapper *typeMapper, where *ast.Node) error {
+internal/lower/class_inheritance.go:14: func (l *lowering) baseInstance(declaration *ast.Node, classType *checker.Type) (*instance, error) {
+internal/lower/class_inheritance.go:40: func (l *lowering) checkOverrides(declaration *ast.Node, classType *checker.Type) error {
+internal/lower/class_inheritance.go:48: func (l *lowering) checkMemberOverrides(declaration *ast.Node, classType, base *checker.Type, static bool) error {
+internal/lower/class_inheritance.go:163: func (l *lowering) overrideParameterRepresentation(parameter *ast.Symbol) (ir.Type, bool) {
+internal/lower/class_inheritance.go:184: func (l *lowering) overrideResultRepresentation(result *checker.Type) (ir.Type, bool) {
+internal/lower/class_inheritance.go:193: func (l *lowering) inheritanceConstructor(index int, declaration *ast.Node) error {
+internal/lower/class_inheritance.go:207: l.this, l.functionIndex, l.function = this, initializer, &context
+internal/lower/class_inheritance.go:208: defer func() { l.this, l.functionIndex, l.function = outerThis, outerIndex, outerFunction }()
+internal/lower/class_inheritance.go:329: // Keep creation and writes in one function when no derived constructor needs this
+internal/lower/class_inheritance.go:374: func (l *lowering) fieldInitializers(declaration *ast.Node, this int) ([]ir.Statement, error) {
+internal/lower/class_inheritance.go:441: func (l *lowering) superCall(node *ast.Node) (ir.Expression, error) {
+internal/lower/class_inheritance.go:456: func (l *lowering) superStatement(node *ast.Node) ([]ir.Statement, error) {
+internal/lower/class_inheritance.go:481: func (l *lowering) classInstanceOf(node *ast.Node) (ir.Expression, error) {
+internal/lower/class_inheritance.go:507: func (l *lowering) finishClassCalls() {
+internal/lower/class_inheritance.go:513: function := parent.Methods[slot]
+internal/lower/class_inheritance.go:527: func (l *lowering) noteInheritance(modules []*ast.SourceFile) {
+internal/lower/class_inheritance.go:546: func (l *lowering) classViewRefusal(node *ast.Node) error {
+internal/lower/class_inheritance.go:579: func (l *lowering) nominalAncestor(source, target *checker.Type, seen map[[2]*checker.Type]bool) bool {
+internal/lower/class_inheritance.go:613: func (l *lowering) initializerReads(node *ast.Node, available map[string]bool) error {
+internal/lower/class_inheritance.go:672: func (l *lowering) fieldName(name *ast.Node) string {
+internal/lower/class_inheritance.go:684: func (l *lowering) classAssignable(from, to *checker.Type) bool {
+internal/lower/class_inheritance.go:690: func (l *lowering) nominalMismatch(from, to *checker.Type, seen map[[2]*checker.Type]bool) *checker.Type {
+internal/lower/class_inheritance.go:814: func (l *lowering) classDestructuredView(node, pattern *ast.Node) error {
+internal/lower/class_inheritance.go:838: func (l *lowering) cycleFieldMatches(holder *checker.Type, field, written string) bool {
+internal/lower/class_inheritance.go:856: func (l *lowering) cycleFieldName(field *ast.Symbol) string {
+internal/lower/class_inheritance.go:867: func (l *lowering) classDefinition(declaration *ast.Node) int {
+internal/lower/class_inheritance.go:876: func (l *lowering) classIdentity(declaration *ast.Node) int {
+internal/lower/class_inheritance.go:895: func (l *lowering) classView(proven *checker.Type, declaration *ast.Node) *checker.Type {
+internal/lower/class_inheritance.go:917: func (l *lowering) classBases(proven *checker.Type) []*checker.Type {
+internal/lower/class_inheritance.go:938: func literalParts(node *ast.Node) []*ast.Node {
+internal/lower/class_inheritance.go:945: func (l *lowering) nominalLiteralTarget(proven *checker.Type) bool {
+internal/lower/class_static.go:12: func (l *lowering) staticBase(declaration *ast.Node) *ast.Node {
+internal/lower/class_static.go:26: func (l *lowering) needsStatics(declaration *ast.Node) bool {
+internal/lower/class_static.go:41: func (l *lowering) staticClass(proven *checker.Type, fallback *ast.Node) *ast.Node {
+internal/lower/class_static.go:54: func (l *lowering) staticInstance(declaration *ast.Node) (*instance, error) {
+internal/lower/class_static.go:97: for name, function := range base.methods {
+internal/lower/class_static.go:168: function := len(l.result.Functions)
+internal/lower/class_static.go:201: function := lowered.methods[l.methodKey(member, lowered.class)]
+internal/lower/class_static.go:223: func (l *lowering) staticDeclaration(declaration *ast.Node) ([]ir.Statement, error) {
+internal/lower/class_static.go:285: function := l.result.Functions[index]
+internal/lower/class_static.go:337: func (l *lowering) isStaticType(proven *checker.Type) bool {
+internal/lower/class_static.go:340: func (l *lowering) staticWriteSite(node *ast.Node) int {
+internal/lower/class_static.go:347: func (l *lowering) staticInitializationReads(node, declaration *ast.Node, available map[string]bool, seen map[*ast.Node]uint8, receiver bool) error {
+internal/lower/class_static.go:476: // Constructor built-ins have function semantics, not ordinary class storage.
+internal/lower/class_static.go:477: func (l *lowering) staticProperty(node *ast.Node) error {
+internal/lower/class_static.go:493: func (l *lowering) staticClassDeclaration(declaration *ast.Node) error {
+internal/lower/class_static.go:532: func (l *lowering) staticStorage(declaration *ast.Node) {
+internal/lower/class_static.go:542: func insideClass(node, declaration *ast.Node) bool {
+internal/lower/class_static.go:550: func (l *lowering) staticClassRead(node *ast.Node) (ir.Expression, bool) {
+internal/lower/class_static.go:562: func (l *lowering) staticConstruct(node, declaration *ast.Node, constructor int, arguments []ir.Expression) ir.Expression {
+internal/lower/class_static.go:576: function := ir.Function{Name: "class_ready_new", Parameters: []int{self}, Returns: ir.Object, Receiver: true, ForwardsArguments: constructor + 1, RestElement: l.result.Functions[constructor].RestElement}
+internal/lower/class_static_private.go:8: func (l *lowering) privateStaticMember(name *ast.Node) *ast.Node {
+internal/lower/class_static_private.go:21: func (l *lowering) privateStaticReceiver(name *ast.Node, object ir.Expression, write bool) ir.Expression {
+internal/lower/class_static_private.go:46: func (l *lowering) privateStaticStore(target *ast.Node, object, value ir.Expression) (ir.Expression, bool) {
+internal/lower/class_super.go:22: func (flow *constructorSuperFlow) reads(node *ast.Node, state uint8) error {
+internal/lower/class_super.go:42: func (flow *constructorSuperFlow) list(nodes []*ast.Node, state uint8) (uint8, error) {
+internal/lower/class_super.go:53: func (flow *constructorSuperFlow) expression(node *ast.Node, state uint8) (uint8, error) {
+internal/lower/class_super.go:86: func (flow *constructorSuperFlow) statement(node *ast.Node, state uint8) (uint8, error) {
+internal/lower/class_super.go:151: func (l *lowering) prepareSuper(constructor *ast.Node, initializer int) (uint8, error) {
+internal/lower/class_super.go:171: func (l *lowering) superError(message string) ir.Statement {
+internal/lower/class_super.go:175: func (l *lowering) superEnd() ir.Statement {
+internal/lower/class_super.go:180: func (l *lowering) conditionalSuper(node *ast.Node) ([]ir.Statement, bool, error) {
+internal/lower/class_super.go:218: func (flow *constructorSuperFlow) loop(node *ast.Node, state uint8) (uint8, error) {
+internal/lower/class_super.go:284: func (flow *constructorSuperFlow) switchCases(node *ast.Node, state uint8) (uint8, error) {
+internal/lower/clock_generic_returns_t_01.go:14: func (l *lowering) clockGenericReturnsT01(result *checker.Type) (ir.Type, bool) {
+internal/lower/clock_generic_returns_t_01.go:53: func (l *lowering) clockGenericReturnsT01Shape(proven *checker.Type, active map[*checker.Type]bool) bool {
+internal/lower/closed_frame_inputs.go:12: func (l *lowering) closedFrameInput(local int) bool {
+internal/lower/closed_frame_inputs.go:62: for _, function := range l.result.Functions {
+internal/lower/closed_frame_inputs.go:69: func (l *lowering) closedInputLiteral(value ir.Expression) bool {
+internal/lower/collections.go:16: func keyable(valueType ir.Type) bool {
+internal/lower/collections.go:27: func (l *lowering) iterated(node *ast.Node) (ir.Expression, ir.Type, error) {
+internal/lower/collections.go:86: func (l *lowering) collectionPart(node *ast.Node, receiver *ast.Node, part string) (ir.Expression, ir.Type, error) {
+internal/lower/collections.go:125: func (l *lowering) newMapFrom(node *ast.Node, source *ast.Node, key ir.Type, value ir.Type) (ir.Expression, error) {
+internal/lower/collections.go:145: func (l *lowering) pairTypes(source *ast.Node) (ir.Type, ir.Type, bool) {
+internal/lower/collections.go:187: func (l *lowering) clearOrVisit(node *ast.Node, receiver *ast.Node, name string, set bool) (ir.Expression, bool, error) {
+internal/lower/collections.go:240: func (l *lowering) tupleLength(node *ast.Node, tuple *ast.Node) (ir.Expression, error) {
+internal/lower/collections.go:255: func (l *lowering) destructure(pattern *ast.Node, initializer *ast.Node) ([]ir.Statement, error) {
+internal/lower/collections.go:281: func (l *lowering) destructureFrom(pattern *ast.Node, destructured *checker.Type, heldAs ir.Type, held int) ([]ir.Statement, error) {
+internal/lower/collections.go:363: func (l *lowering) optionalTupleElement(node *ast.Node, object ir.Expression, index *ast.Node) (ir.Expression, error) {
+internal/lower/collections.go:382: func (l *lowering) everyKnown(types []*checker.Type) bool {
+internal/lower/comma.go:8: func (l *lowering) comma(node *ast.Node) (ir.Expression, error) {
+internal/lower/comma.go:23: func (l *lowering) discardedValue(node *ast.Node) (ir.Expression, error) {
+internal/lower/control.go:9: func (l *lowering) ifStatement(node *ast.Node) ([]ir.Statement, error) {
+internal/lower/control.go:30: func (l *lowering) forStatement(node *ast.Node) ([]ir.Statement, error) {
+internal/lower/control.go:76: func (l *lowering) whileStatement(node *ast.Node) ([]ir.Statement, error) {
+internal/lower/control.go:96: func (l *lowering) condition(node *ast.Node) (ir.Expression, error) {
+internal/lower/control.go:106: func initializerIsLet(_ ir.Statement, node *ast.Node) bool {
+internal/lower/counters.go:37: // function may run before its loop has.
+internal/lower/counters.go:38: func counters(program *ir.Program) {
+internal/lower/counters.go:40: for _, function := range program.Functions {
+internal/lower/counters.go:53: for _, function := range program.Functions {
+internal/lower/counters.go:76: func markCounter(program *ir.Program, block ir.Block, known facts) {
+internal/lower/counters.go:161: func boundRange(bound ir.Expression, known facts, depth int) (float64, float64, bool) {
+internal/lower/counters.go:231: func neverNegativeZero(expression ir.Expression, known facts, depth int) bool {
+internal/lower/counters.go:273: func constantOf(expression ir.Expression) (float64, bool) {
+internal/lower/counters.go:307: func whole(value float64, limit float64) bool {
+internal/lower/counters.go:314: func stepOf(statement ir.Statement, counter int) (float64, bool) {
+internal/lower/counters.go:334: func perIteration(loop ir.Loop, local int) bool {
+internal/lower/counters.go:343: func declaredIn(block ir.Block, local int) (ir.Expression, bool) {
+internal/lower/counters.go:353: func findDeclared(statements []ir.Statement, declared map[int]ir.Expression) {
+internal/lower/counters.go:363: func eachBlock(statements []ir.Statement, visit func(ir.Block)) {
+internal/lower/counters.go:373: func eachNested(statement ir.Statement, visit func([]ir.Statement)) {
+internal/lower/cycles.go:15: // value, a variable a function value captures) is set to something that can reach back to what
+internal/lower/cycles.go:24: // function type, the variables captured by every function value in the program that can be seen as
+internal/lower/cycles.go:25: // it, since a type doesn't say what a function captured. A Weak isn't followed: it holds nothing.
+internal/lower/cycles.go:27: // It runs after lowering, when the variables each function value captures are known.
+internal/lower/cycles.go:29: // closureRecord is a function value the program makes: its type, and the function lowered for it.
+internal/lower/cycles.go:32: function int
+internal/lower/cycles.go:63: func (l *lowering) findCycles(modules []*ast.SourceFile) error {
+internal/lower/cycles.go:115: What:  "'" + declared.Name + "', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free",
+internal/lower/cycles.go:116: Fix:   "remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)",
+internal/lower/cycles.go:126: func (f *cycleFinder) made(proven *checker.Type, where *ast.Node) {
+internal/lower/cycles.go:146: func (f *cycleFinder) shape(proven *checker.Type, where *ast.Node) {
+internal/lower/cycles.go:161: func (f *cycleFinder) use(proven *checker.Type, where *ast.Node) {
+internal/lower/cycles.go:206: func declaredAt(field *ast.Symbol, otherwise *ast.Node) *ast.Node {
+internal/lower/cycles.go:216: func (f *cycleFinder) template(proven *checker.Type) bool {
+internal/lower/cycles.go:232: func (f *cycleFinder) fields(proven *checker.Type) []*ast.Symbol {
+internal/lower/cycles.go:246: func (f *cycleFinder) isFunction(proven *checker.Type) bool {
+internal/lower/cycles.go:251: func (f *cycleFinder) weak(proven *checker.Type) bool {
+internal/lower/cycles.go:258: func (f *cycleFinder) slotsOf(holder *checker.Type) error {
+internal/lower/cycles.go:281: Fix:   "declare the elements weak, Weak<" + target + ">[] (import type { Weak } from 'adamic'), which don't count and read undefined once what they point to is freed; or make it readonly " + target + "[]; or write into such an array only values this function made, or only into one it made (adamic/cycle-capable)",
+internal/lower/cycles.go:292: Fix:   "make it a ReadonlySet, built whole when it's made; or add to such a set only values this function made, or only to one it made (adamic/cycle-capable)",
+internal/lower/cycles.go:303: Fix:   "make it a ReadonlyMap, built whole when it's made; or set in such a map only keys this function made, or only in one it made (adamic/cycle-capable)",
+internal/lower/cycles.go:312: Fix:   "declare the values weak, Map<" + l.checker.TypeToString(arguments[0]) + ", Weak<" + f.present(arguments[1]) + ">> (import type { Weak } from 'adamic'), or make it a ReadonlyMap; or set in such a map only values this function made, or only in one it made (adamic/cycle-capable)",
+internal/lower/cycles.go:343: Fix:   "declare it " + l.cycleFieldName(field) + ": Weak<" + f.present(proven) + "> (import type { Weak } from 'adamic'), which doesn't count and reads undefined once what it points to is freed" + orReadonly + "; or write into it only values this function made, or only into what it made (adamic/cycle-capable)",
+internal/lower/cycles.go:352: func (f *cycleFinder) reaches(from *checker.Type, target cycleNode) bool {
+internal/lower/cycles.go:406: // What a function value holds is what it captured: the cells of every function value the
+internal/lower/cycles.go:449: func (f *cycleFinder) present(proven *checker.Type) string {
+internal/lower/cycles.go:463: func (f *cycleFinder) related(one *checker.Type, other *checker.Type) bool {
+internal/lower/cycles.go:473: func literalMethod(property *ast.Symbol) bool {
+internal/lower/diagnostics.go:16: func (n *NotYet) Error() string {
+internal/lower/diagnostics.go:28: func (r *Refused) Error() string {
+internal/lower/diagnostics.go:32: func (l *lowering) notYet(node *ast.Node, what string) error {
+internal/lower/diagnostics.go:37: func describe(node *ast.Node) string {
+internal/lower/element_access_fields.go:16: func (l *lowering) finiteElementRead(node *ast.Node, object ir.Expression) (ir.Expression, error) {
+internal/lower/element_access_fields.go:113: func (l *lowering) computedFieldPresence(node *ast.Node, value ir.Expression) ir.Expression {
+internal/lower/element_access_tuples.go:13: func (l *lowering) indexedTupleRead(node *ast.Node, object ir.Expression) (ir.Expression, bool, error) {
+internal/lower/empty_literal.go:8: func (l *lowering) literalArrayElement(proven *checker.Type) *checker.Type {
+internal/lower/entries_provenance.go:13: func (l *lowering) enumerationProven(node *ast.Node, element *checker.Type, depth int) bool {
+internal/lower/entries_provenance.go:64: func (l *lowering) enumerationBindingWritten(symbol *ast.Symbol) bool {
+internal/lower/entries_provenance.go:105: func (l *lowering) enumerationDescriptors(where *ast.Node, checked bool) error {
+internal/lower/entries_records.go:11: func constantStringKey(node *ast.Node) (string, bool) {
+internal/lower/entries_records.go:24: func (l *lowering) enumerationInModule(module *ast.SourceFile) bool {
+internal/lower/entries_records.go:28: func (l *lowering) enumerationMethodsInModule(module *ast.SourceFile, valuesOnly bool) bool {
+internal/lower/entries_records.go:47: func (l *lowering) enumerationIndexSignature(node *ast.Node) bool {
+internal/lower/entries_records.go:57: func (l *lowering) entriesLiteralOrigin(node *ast.Node, depth int) *ast.Node {
+internal/lower/entries_records.go:82: func (l *lowering) entriesRecordLiteral(literal *ast.Node) bool {
+internal/lower/entries_records.go:120: func (l *lowering) entriesRecordWrite(target, valueNode *ast.Node) ([]ir.Statement, bool, error) {
+internal/lower/entries_records.go:152: func (l *lowering) enumerationDescriptorRefusal(node *ast.Node) error {
+internal/lower/entries_records.go:168: func (l *lowering) entriesProgramHasRecords() bool {
+internal/lower/entries_records.go:187: func (l *lowering) entriesStringIndexed(receiver *ast.Node) bool {
+internal/lower/entries_records.go:198: func (l *lowering) enumerationIndexedWriteRefusal(node *ast.Node) error {
+internal/lower/enum_flags.go:12: func (l *lowering) flagEnum(symbol *ast.Symbol) bool {
+internal/lower/enum_flags.go:38: func (l *lowering) flagLiteral(node *ast.Node, value float64) bool {
+internal/lower/enum_flags.go:51: func (l *lowering) flagInitializer(node, declaration *ast.Node, memberAllowed bool) bool {
+internal/lower/enum_flags.go:80: func (l *lowering) flagTarget(proven *checker.Type) *ast.Symbol {
+internal/lower/enum_flags.go:97: func (l *lowering) flagDomain(node *ast.Node, target *ast.Symbol) bool {
+internal/lower/enum_flags.go:101: func (l *lowering) flagDomainSeen(node *ast.Node, target *ast.Symbol, seen map[*ast.Node]bool) bool {
+internal/lower/enum_flags.go:157: func (l *lowering) flagWriteRefusal(node *ast.Node, target *checker.Type) error {
+internal/lower/enum_flags.go:162: func (l *lowering) flagInitializerBound(node *ast.Node) error {
+internal/lower/enum_flags.go:190: func (l *lowering) flagUpdate(node, updated *ast.Node) bool {
+internal/lower/enum_flags.go:213: func (l *lowering) flagMemberWidened(node *ast.Node, contextual *checker.Type) *widening {
+internal/lower/enum_flags.go:228: func (l *lowering) flagValueSymbol(node *ast.Node) *ast.Symbol {
+internal/lower/enum_initialization.go:9: func (l *lowering) enumInitialization(modules []*ast.SourceFile) error {
+internal/lower/enum_never.go:10: func (l *lowering) enumStoredType(node *ast.Node) *checker.Type {
+internal/lower/enum_never.go:28: func (l *lowering) enumNeverIdentity(node *ast.Node, seen map[*ast.Node]bool) *ast.Symbol {
+internal/lower/enum_never.go:62: func (l *lowering) enumMemberOrigin(node *ast.Node, identity *ast.Symbol, seen map[*ast.Node]bool) bool {
+internal/lower/enum_never.go:84: func (l *lowering) enumNeverCheck(node *ast.Node, value ir.Expression, identity *ast.Symbol) ir.Expression {
+internal/lower/enum_never.go:91: if node.Parent != nil && node.Parent.Kind == ast.KindReturnStatement && l.function != nil {
+internal/lower/enum_never.go:94: function := len(l.result.Functions)
+internal/lower/enums.go:15: func (l *lowering) enumAssignable(from, to *checker.Type) bool {
+internal/lower/enums.go:43: func (l *lowering) openNumericEnumType(proven *checker.Type) bool {
+internal/lower/enums.go:70: func (l *lowering) numericEnum(symbol *ast.Symbol) bool {
+internal/lower/enums.go:85: func enumObjectSymbol(proven *checker.Type) *ast.Symbol {
+internal/lower/enums.go:95: func (l *lowering) enumObjectView(node *ast.Node) error {
+internal/lower/enums.go:115: func (l *lowering) enumIdentity(proven *checker.Type) *ast.Symbol {
+internal/lower/enums.go:129: func (l *lowering) enumMember(node *ast.Node) *ast.Node {
+internal/lower/enums.go:141: func (l *lowering) enumObject(node *ast.Node) *ast.Node {
+internal/lower/enums.go:153: func (l *lowering) enumConstant(member *ast.Node) (ir.Expression, error) {
+internal/lower/enums.go:171: func (l *lowering) enumFields(node *ast.Node) ([]ir.Field, error) {
+internal/lower/enums.go:210: func (l *lowering) enumLocal(node *ast.Node) (int, error) {
+internal/lower/enums.go:220: func (l *lowering) enumDeclaration(node *ast.Node) ([]ir.Statement, error) {
+internal/lower/enums.go:235: func (l *lowering) enumExpression(node *ast.Node) (ir.Expression, bool, error) {
+internal/lower/enums.go:317: function := ir.Function{Name: "enum_lookup", Parameters: []int{objectLocal, keyLocal}, Returns: of}
+internal/lower/enums.go:353: func (l *lowering) enumRefusal(node *ast.Node) error {
+internal/lower/enums.go:394: return l.notYet(node, "an enum inside a function or block; declare it at module scope")
+internal/lower/enums.go:436: func (l *lowering) enumSwitch(node *ast.Node) error {
+internal/lower/enums.go:474: func (l *lowering) enumDefaultUnreachable(node *ast.Node) bool {
+internal/lower/enums.go:480: func (l *lowering) enumSwitchCovered(node *ast.Node) bool {
+internal/lower/evolving_local.go:12: func (l *lowering) evolvingObject(name *ast.Node) *checker.Type {
+internal/lower/exceptions.go:15: // tryRecord is a try statement lowered, for the checks made once every function is: where it is,
+internal/lower/exceptions.go:23: func (l *lowering) throwStatement(node *ast.Node) ([]ir.Statement, error) {
+internal/lower/exceptions.go:68: func (l *lowering) newError(node *ast.Node) (ir.Expression, error) {
+internal/lower/exceptions.go:87: func (l *lowering) tryStatement(node *ast.Node) ([]ir.Statement, error) {
+internal/lower/exceptions.go:127: func (l *lowering) caughtInstanceOfError(node *ast.Node) (ir.Expression, bool) {
+internal/lower/exceptions.go:137: // exceptions works out which functions a throw can leave, once every function is lowered, and
+internal/lower/exceptions.go:140: func (l *lowering) exceptions() error {
+internal/lower/exceptions.go:142: // A class's methods are reached through function values too: a call through an interface the
+internal/lower/exceptions.go:143: // class implements calls one where it would call the object's own function value (ir.Property's
+internal/lower/exceptions.go:151: // Whether any function value can throw, and so every call through one, grows with what can, so
+internal/lower/exceptions.go:174: // throwsOut reports whether a throw can leave statements: a throw, or a call to a function that can
+internal/lower/exceptions.go:175: // throw (through a function value too, a sort's comparator among them), that isn't inside a try's
+internal/lower/exceptions.go:177: func (l *lowering) throwsOut(statements []ir.Statement) bool {
+internal/lower/exceptions.go:200: // A call through a function value, written out or made by the runtime's loop.
+internal/lower/exceptions.go:217: func (l *lowering) libraryFailure(statements []ir.Statement, visited map[int]bool) string {
+internal/lower/exceptions.go:294: // What a function value does is any function value's: each of them is reached.
+internal/lower/exceptions.go:312: func constantWithin(value ir.Expression, low float64, high float64) bool {
+internal/lower/exceptions.go:317: func isNormalizationForm(value ir.Expression, strings []string) bool {
+internal/lower/exceptions.go:331: func walk(value any, visit func(node any) bool) {
+internal/lower/exceptions.go:340: func walkValue(value reflect.Value, visit func(node any) bool) {
+internal/lower/expression.go:15: func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {
+internal/lower/expression.go:43: func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
+internal/lower/expression.go:159: func (l *lowering) isLibraryType(proven *checker.Type, names ...string) bool {
+internal/lower/expression.go:172: func (l *lowering) includesUndefined(proven *checker.Type) bool {
+internal/lower/expression.go:184: func (l *lowering) includesNull(proven *checker.Type) bool {
+internal/lower/expression.go:198: func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
+internal/lower/expression.go:228: // Weak<Box>, and (x: Weak<Box>) => ... as (x: Box) => ...; but one keeps a handle where the
+internal/lower/expression.go:229: // other keeps the target, so the same object, array or function can't be both. A tuple is held
+internal/lower/expression.go:279: func (l *lowering) sameKeeping(from *checker.Type, to *checker.Type, visited map[[2]*checker.Type]bool) bool {
+internal/lower/expression.go:344: func (l *lowering) tupleSeenAsArray(from *checker.Type, to *checker.Type, visited map[[2]*checker.Type]bool) (*checker.Type, *checker.Type) {
+internal/lower/expression.go:357: // A function is handed the other's arguments, and its results are seen as the other's.
+internal/lower/expression.go:394: // array, map or function type it is, or nil when it's none or several.
+internal/lower/expression.go:395: func (l *lowering) present(proven *checker.Type) *checker.Type {
+internal/lower/expression.go:422: // narrowed from a Weak (Node & WeakBrand, as filter(x => x !== undefined) or every leaves an array of
+internal/lower/expression.go:424: func (l *lowering) kept(proven *checker.Type) (ir.Type, bool) {
+internal/lower/expression.go:433: func (l *lowering) typeArguments(proven *checker.Type) []*checker.Type {
+internal/lower/expression.go:445: func (l *lowering) weakTarget(proven *checker.Type) *checker.Type {
+internal/lower/expression.go:467: func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
+internal/lower/expression.go:478: func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
+internal/lower/expression.go:530: return nil, l.notYet(node, "a generic function as a value")
+internal/lower/expression.go:676: func fit(value ir.Expression, to ir.Type) ir.Expression {
+internal/lower/expression.go:691: // undefined going where a string, an array or a function may be missing is that reference,
+internal/lower/expression.go:712: func (l *lowering) numericLiteral(node *ast.Node) (ir.Expression, error) {
+internal/lower/expression.go:724: func (l *lowering) prefix(node *ast.Node) (ir.Expression, error) {
+internal/lower/expression.go:809: func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression, right ir.Expression) (ir.Expression, error) {
+internal/lower/expression.go:928: func (l *lowering) spelled(node *ast.Node, value ir.Expression) ir.Expression {
+internal/lower/expression.go:936: func (l *lowering) template(node *ast.Node) (ir.Expression, error) {
+internal/lower/expression.go:956: return nil, l.notYet(span, "a template interpolating a union with an object, an array, a map or a function in it")
+internal/lower/expression.go:962: // JavaScript writes an object as "[object Object]", an array as its join, and a function as
+internal/lower/expression.go:964: return nil, l.notYet(span, "a template interpolating an object, an array, a map, a function or undefined")
+internal/lower/expression.go:974: func (l *lowering) conditional(node *ast.Node) (ir.Expression, error) {
+internal/lower/expression.go:1027: func typeName(valueType ir.Type) string {
+internal/lower/expression.go:1050: func (l *lowering) writable(proven *checker.Type) bool {
+internal/lower/expression.go:1070: // map's value, a cell, or a function value's argument or result. number | undefined is packed into
+internal/lower/expression.go:1075: func slotless(valueType ir.Type) bool {
+internal/lower/expression.go:1079: // call lowers a call to one of the module's functions, or to a function value.
+internal/lower/expression.go:1080: func (l *lowering) call(node *ast.Node) (ir.Expression, error) {
+internal/lower/expression.go:1099: // for the target layout; do not capture a sibling's canonical function value.
+internal/lower/expression.go:1146: func (l *lowering) callFunction(call *ast.CallExpression, function int) (ir.Expression, error) {
+internal/lower/expression.go:1157: func (l *lowering) coalesce(node *ast.Node) (ir.Expression, error) {
+internal/lower/expression.go:1199: // closure lowers an arrow function to a function of its own and the closure that captures it.
+internal/lower/expression.go:1200: func (l *lowering) closure(node *ast.Node) (ir.Expression, error) {
+internal/lower/expression.go:1219: func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, error) {
+internal/lower/expression.go:1231: return nil, l.notYet(node, "an overloaded function as a value")
+internal/lower/expression.go:1240: return nil, l.notYet(parameter, "a function with a this parameter used as a value; pass the receiver explicitly or use an arrow")
+internal/lower/expression.go:1245: return nil, l.notYet(node, "a function value returning "+typeName(callee.Returns))
+internal/lower/expression.go:1253: return nil, l.notYet(node, "a function value taking "+typeName(declared.Type))
+internal/lower/expression.go:1268: // One function value for the function, made before anything runs and held by a global of its
+internal/lower/expression.go:1269: // own, so reading the function twice gives the same value, === as JavaScript's.
+internal/lower/expression.go:1282: // methods or a function value called directly. Lowered as a plain call, it ran the method on
+internal/lower/expression.go:1284: // class's, an interface's, or a function value in a field): the call goes through the object's
+internal/lower/expression.go:1286: func (l *lowering) optionalCall(call *ast.Node) error {
+internal/lower/expression.go:1299: // callClosure lowers a call through a function value.
+internal/lower/expression.go:1300: func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
+internal/lower/expression.go:1328: // Each argument is made what the function value takes: a number or undefined where it takes
+internal/lower/expression.go:1367: return nil, l.notYet(node, "passing "+typeName(argument.Type())+" to a function value")
+internal/lower/expression.go:1371: return nil, l.notYet(node, "a function value returning "+typeName(returns))
+internal/lower/expression.go:1378: func argumentSlotless(valueType ir.Type) bool { return valueType == ir.Union }
+internal/lower/fresh.go:24: func (l *lowering) writeSite(receiver *ast.Node) int {
+internal/lower/fresh.go:37: func (f *cycleFinder) unproven(kind fresh.WriteKind, holder *checker.Type, name string) *fresh.Write {
+internal/lower/fresh.go:65: func (f *cycleFinder) writtenAt(write *fresh.Write) string {
+internal/lower/fresh.go:73: func (l *lowering) functionName(function int) string {
+internal/lower/fresh.go:74: if function < 0 {
+internal/lower/from.go:9: // arrayFrom lowers Array.from({ length }, (_, index) => ...), the one form of Array.from 0.1 has
+internal/lower/from.go:15: func (l *lowering) arrayFrom(node *ast.Node) (ir.Expression, bool, error) {
+internal/lower/from.go:65: // A function value from elsewhere would be typed (value: unknown, index: number), and an
+internal/lower/from.go:67: return nil, true, l.notYet(arguments[1], "Array.from with a callback that isn't an arrow function written in place")
+internal/lower/from.go:82: return nil, true, &Refused{Where: l.program.Where(parameters[0]), What: "a first Array.from parameter typed " + l.checker.TypeToString(received) + ", which is undefined every time", Fix: "name it _ and leave it untyped, (_, index) => ..., or type it undefined (the type would be a lie the checker can't see)"}
+internal/lower/functions.go:10: // functionBody lowers a module function declaration's parameters and body.
+internal/lower/functions.go:11: func (l *lowering) functionBody(declaration *ast.Node) error {
+internal/lower/functions.go:22: // signed is what a function whose signature is written still needs to lower its body: the local its
+internal/lower/functions.go:38: // lowerFunction lowers a function-like declaration into the function at index: its signature, unless
+internal/lower/functions.go:44: func (l *lowering) lowerFunction(index int, declaration *ast.Node, this int) error {
+internal/lower/functions.go:58: // signature writes the function at index's parameters and result, from the checker, without lowering
+internal/lower/functions.go:60: func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
+internal/lower/functions.go:67: function := l.result.Functions[index]
+internal/lower/functions.go:76: // A function that never returns (it panics on every path, as (why) => panic(why) does) has no
+internal/lower/functions.go:97: // An arrow function has no name to point at, so it's pointed at whole.
+internal/lower/functions.go:102: return l.notYet(where, "a function returning "+l.checker.TypeToString(returns))
+internal/lower/functions.go:152: return l.notYet(parameter, "a function value taking "+l.checker.TypeToString(l.checker.GetTypeAtLocation(parameter.Name())))
+internal/lower/functions.go:168: // A function value's arguments and result must each fit one adamic_value.
+internal/lower/functions.go:169: return l.notYet(declaration, "a function value returning "+typeName(function.Returns))
+internal/lower/functions.go:172: return l.notYet(declaration, "a function without a body")
+internal/lower/functions.go:196: // lowerBody lowers the body of the function at index, whose signature is written.
+internal/lower/functions.go:197: func (l *lowering) lowerBody(index int, declaration *ast.Node, this int, defaults []defaulted, patterns []patterned) error {
+internal/lower/functions.go:199: return l.notYet(declaration, "a function without a body")
+internal/lower/functions.go:201: function := l.result.Functions[index]
+internal/lower/functions.go:203: // A function declaration, a method or a constructor has its body lowered where a use of it is first met,
+internal/lower/functions.go:328: func (l *lowering) permitsImplicitReturn(declaration *ast.Node) bool {
+internal/lower/generic.go:12: // another. Ordinary programs nest a few; a function that calls itself with an ever larger type
+internal/lower/generic.go:16: // instantiateFunction lowers a generic module function for the type arguments of one call, once per
+internal/lower/generic.go:24: func (l *lowering) instantiateFunction(call *ast.Node, declaration *ast.Node) (int, error) {
+internal/lower/generic.go:28: return 0, l.notYet(call, "a call to a generic function whose signature the checker didn't resolve")
+internal/lower/generic.go:100: return 0, &Refused{Where: l.program.Where(call), What: "a generic function instantiated without end (polymorphic recursion)", Fix: "call it with the same type arguments it was called with, or write a function per type"}
+internal/lower/generic.go:112: // whatever function or closure called it.
+internal/lower/generic.go:156: // genericTypeKey is the shared identity key for class and function type arguments.
+internal/lower/generic.go:161: func (l *lowering) genericTypeKey(proven *checker.Type) string {
+internal/lower/generic.go:181: func (l *lowering) refuseInstantiatedMutation(declaration *ast.Node) error {
+internal/lower/generic.go:217: refused = &Refused{Where: l.program.Where(argument), What: "instantiating a generic function makes a value of type " + l.checker.TypeToString(from) + " written where " + l.checker.TypeToString(to) + " is read", Fix: "make the collection readonly, or use a type parameter for the value being written (adamic/invariant-mutable)"}
+internal/lower/generic.go:232: // so a generic function calling another with its own type parameter passes the concrete type on.
+internal/lower/generic.go:233: func (l *lowering) inferTypes(declared *checker.Type, instantiated *checker.Type, into map[*checker.Type]*checker.Type) {
+internal/lower/generic.go:317: func (l *lowering) checkInstantiatedJSONInput(node *ast.Node) error {
+internal/lower/input.go:16: func (l *lowering) input(node *ast.Node) (ir.Expression, bool, error) {
+internal/lower/instantiate.go:20: func newTypeMapper(sources []*checker.Type, targets []*checker.Type) *typeMapper
+internal/lower/instantiate.go:23: func instantiateType(receiver *checker.Checker, proven *checker.Type, mapper *typeMapper) *checker.Type
+internal/lower/instantiate.go:27: func (l *lowering) typeMapperOf(declaration *ast.Node, classType *checker.Type) *typeMapper {
+internal/lower/instantiate.go:40: // closureNodeOf is where a function value is written.
+internal/lower/instantiate.go:41: func (l *lowering) closureNodeOf(function int) *ast.Node {
+internal/lower/instantiate.go:43: if closure.function == function {
+internal/lower/instantiate.go:52: func (l *lowering) concrete(proven *checker.Type) *checker.Type {
+internal/lower/instantiate.go:60: func (l *lowering) classNodeFor(proven *checker.Type) *ast.Node {
+internal/lower/interface_cast.go:13: func (l *lowering) interfaceCast(node *ast.Node, value ir.Expression, source, target *checker.Type) (ir.Expression, error) {
+internal/lower/interface_cast.go:36: // conservative: aliases and function boundaries cannot lose a checked read.
+internal/lower/interface_cast.go:38: func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Type) (ir.Expression, error) {
+internal/lower/interface_cast.go:100: func interfaceScalar(proven *checker.Type) bool {
+internal/lower/interface_cast.go:112: func (l *lowering) interfaceScalarShape(proven *checker.Type) bool {
+internal/lower/interface_cast.go:125: func interfaceLiteralFields(node *ast.Node) (map[string]*ast.Node, bool) {
+internal/lower/interface_cast.go:144: func (l *lowering) interfaceConstructions(cast *ast.Node, target *checker.Type, field string, literal *checker.Type) error {
+internal/lower/interface_cast.go:264: func (l *lowering) interfaceWrite(node *ast.Node, checked map[string]*checker.Type, fail func(*ast.Node, string)) {
+internal/lower/interface_cast.go:278: func (l *lowering) viewLiterals(declared *checker.Type) []ir.Expression {
+internal/lower/interface_cast.go:297: func (l *lowering) callableViewContract(proven *checker.Type) bool {
+internal/lower/interface_cast.go:308: func (l *lowering) viewSchema(node *ast.Node, target *checker.Type) (map[string]bool, error) {
+internal/lower/interface_cast.go:334: func (l *lowering) legacyView(node *ast.Node, value ir.Expression, target *checker.Type) (ir.Expression, error) {
+internal/lower/invariance.go:45: func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]*checker.Type]bool) *widening {
+internal/lower/invariance.go:112: // A function seen as another is handed the other's arguments, and its results are seen as
+internal/lower/invariance.go:160: // to can write unless it's readonly, and each method a function view of its own. A copy's fields
+internal/lower/invariance.go:162: func (l *lowering) widenedProperties(from *checker.Type, to *checker.Type, skip map[string]bool, fresh bool, visited map[[2]*checker.Type]bool) *widening {
+internal/lower/invariance.go:198: // generic reports whether a function type has a type parameter of its own.
+internal/lower/invariance.go:199: func (l *lowering) generic(proven *checker.Type) bool {
+internal/lower/invariance.go:210: func (l *lowering) widenedElements(from *checker.Type, to *checker.Type, visited map[[2]*checker.Type]bool) *widening {
+internal/lower/invariance.go:217: func (l *lowering) widenedArguments(from *checker.Type, to *checker.Type, mutable bool, visited map[[2]*checker.Type]bool) *widening {
+internal/lower/invariance.go:241: func (l *lowering) containers(proven *checker.Type) []*checker.Type {
+internal/lower/invariance.go:258: func (l *lowering) sameContainer(from *checker.Type, to *checker.Type) bool {
+internal/lower/invariance.go:272: func (l *lowering) canWrite(proven *checker.Type, visited map[*checker.Type]bool) bool {
+internal/lower/invariance.go:305: func (l *lowering) narrowedFrom(from *checker.Type, to *checker.Type) bool {
+internal/lower/invariance.go:320: func (l *lowering) structured(proven *checker.Type) bool {
+internal/lower/invariance.go:326: func (l *lowering) withoutUndefined(proven *checker.Type) *checker.Type {
+internal/lower/invariance.go:334: func (l *lowering) definedMembers(proven *checker.Type) []*checker.Type {
+internal/lower/invariance.go:351: func isClassInstance(proven *checker.Type) bool {
+internal/lower/invariance.go:365: func viewSite(node *ast.Node) bool {
+internal/lower/invariance.go:404: func (l *lowering) refuseWidening(node *ast.Node) error {
+internal/lower/invariance.go:461: // same<Item> written where a (value: number) => number goes is instantiated to exactly
+internal/lower/invariance.go:491: func (l *lowering) wideningRefusal(node *ast.Node, own, contextual *checker.Type, found *widening) error {
+internal/lower/invariance.go:507: what = "a function taking " + l.checker.TypeToString(found.source) + " seen as one taking " + l.checker.TypeToString(found.target) + " (tsc relates a method's parameters both ways), so it can be handed what it can't take"
+internal/lower/invariance.go:508: fix = "write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+internal/lower/invariance.go:524: func (l *lowering) freshOrWidened(node *ast.Node, own *checker.Type, contextual *checker.Type) *widening {
+internal/lower/invariance.go:576: func (l *lowering) freshValue(node *ast.Node) bool {
+internal/lower/invariance.go:601: func (l *lowering) isExpression(node *ast.Node) bool {
+internal/lower/invariance.go:608: func (l *lowering) impliedTarget(node *ast.Node) *checker.Type {
+internal/lower/invariance.go:638: function := parent
+internal/lower/invariance.go:639: for function != nil && !ast.IsFunctionLike(function) {
+internal/lower/invariance.go:640: function = function.Parent
+internal/lower/invariance.go:642: if function == nil {
+internal/lower/invariance.go:651: func destructuringTarget(node *ast.Node) *ast.Node {
+internal/lower/invariance.go:667: func (l *lowering) refuseElementWidening(node *ast.Node, pattern *ast.Node) error {
+internal/lower/invariance.go:692: // genericFunction reports whether an expression is a function with type parameters of its own,
+internal/lower/invariance.go:694: func (l *lowering) genericFunction(node *ast.Node) bool {
+internal/lower/iteration.go:13: func (l *lowering) symbolIterator(node *ast.Node) bool {
+internal/lower/iteration.go:18: func (l *lowering) methodName(node *ast.Node) (string, bool) {
+internal/lower/iteration.go:37: func (l *lowering) iteratorMember(proven *checker.Type) *ast.Symbol {
+internal/lower/iteration.go:52: func (l *lowering) objectMethod(node *ast.Node) (ir.Expression, error) {
+internal/lower/iteration.go:67: func (l *lowering) iterationLocal(name string, of ir.Type, function int) int {
+internal/lower/iteration.go:75: func (l *lowering) memberReceiver(where *ast.Node, member *ast.Symbol) (bool, error) {
+internal/lower/iteration.go:105: func (l *lowering) memberFunction(where *ast.Node, proven *checker.Type, value ir.Expression, member *ast.Symbol) (ir.Expression, bool, int, error) {
+internal/lower/iteration.go:139: func invokeMember(function ir.Expression, receiver bool, direct int, value ir.Expression, arguments []ir.Expression, returns ir.Type) ir.Expression {
+internal/lower/iteration.go:149: func (l *lowering) memberResult(where *ast.Node, member *ast.Symbol) (*checker.Type, error) {
+internal/lower/iteration.go:167: func (l *lowering) planIteration(where *ast.Node) (*iterationPlan, error) {
+internal/lower/iteration.go:326: func (l *lowering) startIteration(where *ast.Node, plan *iterationPlan, source ir.Expression) ([]ir.Statement, *iterationState, error) {
+internal/lower/iteration.go:347: func (l *lowering) iterationStep(state *iterationState) ([]ir.Statement, ir.Expression) {
+internal/lower/iteration.go:361: func (l *lowering) closeIteration(where *ast.Node, state *iterationState, body []ir.Statement) ([]ir.Statement, error) {
+internal/lower/iteration.go:381: func (l *lowering) forOfUser(node *ast.Node, plan *iterationPlan, name *ast.Node) ([]ir.Statement, error) {
+internal/lower/iteration.go:427: func (l *lowering) userMethodCall(node *ast.Node) (ir.Expression, bool, error) {
+internal/lower/iteration.go:473: function := len(l.result.Functions)
+internal/lower/iteration_consume.go:11: func (l *lowering) collectIteration(where, sourceNode, callbackNode *ast.Node, plan *iterationPlan, element ir.Type) (ir.Expression, error) {
+internal/lower/iteration_consume.go:50: function := len(l.result.Functions)
+internal/lower/iteration_consume.go:98: func (l *lowering) iteratedType(node *ast.Node) (*iterationPlan, ir.Type, error) {
+internal/lower/iteration_consume.go:110: func (l *lowering) destructureIterator(pattern, sourceNode *ast.Node, plan *iterationPlan) ([]ir.Statement, error) {
+internal/lower/iteration_consume.go:207: func (l *lowering) iterationArrayWriteSite(where *ast.Node) int {
+internal/lower/iteration_origin.go:11: func memberConvention(member *ast.Symbol) *ast.Node {
+internal/lower/iteration_origin.go:30: func (l *lowering) iterationShapeFits(shape, view *checker.Type) bool {
+internal/lower/iteration_origin.go:51: func (l *lowering) erasedLiteralMethod(node *ast.Node) error {
+internal/lower/iteration_origin.go:64: func (l *lowering) erasedMethodField(where *ast.Node, view *checker.Type, name string) error {
+internal/lower/iteration_origin.go:112: func (l *lowering) iterationOrigin(node *ast.Node, members []*ast.Symbol, closePresence *bool, depth int) bool {
+internal/lower/iteration_origin.go:176: func (l *lowering) sameMemberOrigin(actual, expected *ast.Symbol) bool {
+internal/lower/iteration_origin.go:195: func (l *lowering) iterationReturns(body *ast.Node, members []*ast.Symbol, closePresence *bool, depth int) bool {
+internal/lower/iteration_origin.go:219: func (l *lowering) iterationFactoryKnown(member *ast.Symbol, next, close *ast.Symbol) bool {
+internal/lower/iteration_origin.go:243: func hasConstructorReturn(body *ast.Node) bool {
+internal/lower/iteration_origin.go:263: func (l *lowering) iterationCallableBody(symbol *ast.Symbol, depth int) *ast.Node {
+internal/lower/iteration_origin.go:290: func (l *lowering) sameIterationClass(actual, expected *checker.Type) bool {
+internal/lower/iteration_origin.go:311: func (l *lowering) knownIterationClass(node *ast.Node, expected *checker.Type, depth int) bool {
+internal/lower/iteration_origin.go:342: func (l *lowering) iterationReturnsClass(body *ast.Node, expected, receiver *checker.Type, depth int) bool {
+internal/lower/iteration_origin.go:372: func (l *lowering) genericIteratorFactoryKnown(member *ast.Symbol, source, iterator *checker.Type) bool {
+internal/lower/iteration_origin.go:387: func (l *lowering) iterationFactoryReturnsThis(member *ast.Symbol) bool {
+internal/lower/iteration_origin.go:433: func (l *lowering) iteratorReceiverOverrides(modules []*ast.SourceFile, iterator *checker.Type, next, close *ast.Symbol) bool {
+internal/lower/labels.go:8: func (l *lowering) labeled(node *ast.Node) ([]ir.Statement, error) {
+internal/lower/labels.go:27: func labelIteration(body []ir.Statement, name string) bool {
+internal/lower/library_array.go:18: func (l *lowering) libraryArrayMethod(node, receiver *ast.Node, name string) (ir.Expression, bool, error) {
+internal/lower/library_array.go:22: func (l *lowering) libraryArrayMethodArguments(node, receiver *ast.Node, name string, written []*ast.Node) (ir.Expression, bool, error) {
+internal/lower/library_array.go:76: // Reading a function name or making an arrow cannot change the source before the copy.
+internal/lower/library_array.go:115: func (l *lowering) libraryArrayComparator(element ir.Type) int {
+internal/lower/library_array.go:116: function := len(l.result.Functions)
+internal/lower/library_array.go:139: function   int
+internal/lower/library_array.go:145: func (l *lowering) libraryArrayBuilder(arguments []ir.Expression) *libraryArrayBuilder {
+internal/lower/library_array.go:152: func (b *libraryArrayBuilder) local(name string, of ir.Type) int {
+internal/lower/library_array.go:157: func (b *libraryArrayBuilder) read(local int) ir.Expression {
+internal/lower/library_array.go:160: func (b *libraryArrayBuilder) declare(name string, value ir.Expression) int {
+internal/lower/library_array.go:165: func (b *libraryArrayBuilder) finish(name string, result ir.Expression) ir.Expression {
+internal/lower/library_array.go:171: func (l *lowering) libraryArraySpliced(node *ast.Node, array ir.Expression, element ir.Type) (ir.Expression, bool, error) {
+internal/lower/library_array.go:208: func (l *lowering) libraryArrayFlat(node, receiver *ast.Node, array ir.Expression) (ir.Expression, bool, error) {
+internal/lower/library_array.go:265: func (l *lowering) libraryArrayCopyWithin(node *ast.Node, array ir.Expression, element ir.Type) (ir.Expression, bool, error) {
+internal/lower/library_array.go:316: func (l *lowering) libraryArrayWith(node *ast.Node, array ir.Expression, element ir.Type) (ir.Expression, bool, error) {
+internal/lower/library_array.go:351: func (l *lowering) libraryArrayFlatMap(node *ast.Node, array ir.Expression, element ir.Type) (ir.Expression, bool, error) {
+internal/lower/library_array.go:425: func (l *lowering) libraryArrayMethodName(node *ast.Node) string {
+internal/lower/library_array.go:445: func (l *lowering) libraryArrayObservation(node *ast.Node) (ir.Expression, bool) {
+internal/lower/library_array.go:465: func (l *lowering) libraryArrayObservedMethod(node *ast.Node) bool {
+internal/lower/library_array.go:484: func (l *lowering) libraryArrayForOf(node *ast.Node) ([]ir.Statement, bool, error) {
+internal/lower/library_array.go:587: func (l *lowering) libraryArraySyntheticWriteSite(node *ast.Node) int {
+internal/lower/library_array.go:594: func (l *lowering) libraryArrayJoin(node, receiver *ast.Node, array ir.Expression) (ir.Expression, bool, error) {
+internal/lower/library_array_predicate.go:11: func (l *lowering) isArrayPredicateCall(node *ast.Node) bool {
+internal/lower/library_array_predicate.go:21: func (l *lowering) arrayIsArray(node *ast.Node) (ir.Expression, bool, error) {
+internal/lower/library_array_predicate.go:38: func (l *lowering) arrayPredicateMembers(proven *checker.Type, array bool) *checker.Type {
+internal/lower/library_array_predicate.go:70: func (l *lowering) arrayPredicateDomain(proven *checker.Type) bool {
+internal/lower/library_array_predicate.go:94: func (l *lowering) arrayPredicateType(node *ast.Node) *checker.Type {
+internal/lower/library_array_predicate.go:126: func (l *lowering) arrayPredicateObservedType(node *ast.Node) *checker.Type {
+internal/lower/library_array_predicate.go:160: func predicateReadonlyArray(receiver *checker.Checker, element *checker.Type, readonly bool) *checker.Type
+internal/lower/library_array_predicate.go:164: func (l *lowering) arrayPredicateFlowCall(node *ast.Node) bool {
+internal/lower/library_for_in.go:13: func (l *lowering) forIn(node *ast.Node) ([]ir.Statement, error) {
+internal/lower/library_for_in.go:68: func (l *lowering) plainEnumerableObject(node *ast.Node, visiting map[*ast.Symbol]bool) bool {
+internal/lower/library_function_expressions.go:8: // functionExpression lowers ordinary function expressions and switch declarations with the same
+internal/lower/library_function_expressions.go:11: func (l *lowering) functionExpression(node *ast.Node) (ir.Expression, error) {
+internal/lower/library_function_expressions.go:13: return nil, l.notYet(node, "a function without a body")
+internal/lower/library_function_expressions.go:16: return nil, l.notYet(node, "a generator function expression")
+internal/lower/library_function_expressions.go:19: return nil, l.notYet(node, "a generic function expression")
+internal/lower/library_function_expressions.go:23: return nil, l.notYet(parameter, "a function expression with a this parameter (dynamic receivers are not implemented)")
+internal/lower/library_function_expressions.go:32: // An arrow inherits this; another ordinary function or method owns a different this.
+internal/lower/library_function_expressions.go:37: invalid = &Refused{Where: l.program.Where(inner), What: "this in a function expression", Fix: "dynamic receivers are not implemented; capture a named object, or use an arrow in a method"}
+internal/lower/library_function_expressions.go:47: function := ir.Function{Name: "function_expression", Closure: true}
+internal/lower/library_globals.go:11: func (l *lowering) libraryGlobalValue(node *ast.Node) (ir.Expression, bool, error) {
+internal/lower/library_json_stringify.go:12: func (l *lowering) jsonCall(node *ast.Node, name string) (ir.Expression, bool, error) {
+internal/lower/library_json_stringify.go:66: func jsonScalar(s *ir.JSONSchema) bool {
+internal/lower/library_json_stringify.go:72: func (l *lowering) jsonInput(node *ast.Node) (ir.Expression, *ir.JSONSchema, error) {
+internal/lower/library_json_stringify.go:155: func jsonIndex(name string) (uint64, bool) {
+internal/lower/library_json_stringify.go:159: func (l *lowering) jsonType(node *ast.Node, t *checker.Type, depth int) (*ir.JSONSchema, error) {
+internal/lower/library_map_set.go:13: func (l *lowering) librarySetMethod(node, receiver *ast.Node, name string) (ir.Expression, bool, error) {
+internal/lower/library_map_set.go:43: function := ir.Function{Name: "set_" + name, Returns: ir.Map}
+internal/lower/library_map_set.go:109: func (l *lowering) libraryCollectionIterator(node, receiver *ast.Node, part string) (ir.Expression, bool, error) {
+internal/lower/library_map_set.go:132: func (l *lowering) librarySetLiteral(node *ast.Node, element ir.Type) (ir.Expression, bool, error) {
+internal/lower/library_map_set.go:151: func (l *lowering) libraryEmptyCollectionArgument(node *ast.Node) bool {
+internal/lower/library_map_set.go:162: func (l *lowering) libraryForEachThisArg(node, receiver *ast.Node, set bool) (ir.Expression, bool, error) {
+internal/lower/library_map_set.go:197: function := ir.Function{Name: "collection_forEach_thisArg"}
+internal/lower/library_map_set.go:213: func (l *lowering) libraryLocal(function int, name string, of ir.Type) ir.Read {
+internal/lower/library_map_set.go:220: func (l *lowering) libraryIteratorElement(node *ast.Node) (ir.Type, bool) {
+internal/lower/library_map_set.go:234: func (l *lowering) libraryIteratorLoop(function int, iterator ir.Expression, item ir.Read, body []ir.Statement) []ir.Statement {
+internal/lower/library_map_set.go:246: func (l *lowering) libraryIteratorArray(node *ast.Node, iterator ir.Expression, element ir.Type) ir.Expression {
+internal/lower/library_map_set.go:248: function := ir.Function{Name: "collection_iterator_array", Returns: ir.Array}
+internal/lower/library_map_set.go:262: func (l *lowering) libraryForOfIterator(node *ast.Node, iterator ir.Expression, element ir.Type, name *ast.Node) ([]ir.Statement, error) {
+internal/lower/library_map_set.go:303: func (l *lowering) libraryMapGroupBy(node *ast.Node) (ir.Expression, bool, error) {
+internal/lower/library_map_set.go:392: return nil, true, l.notYet(node, "Map.groupBy without a function callback")
+internal/lower/library_map_set.go:409: function := ir.Function{Name: "map_groupBy", Returns: ir.Map}
+internal/lower/library_map_set.go:442: func (l *lowering) libraryOptionalNumbers(node *ast.Node, source ir.Expression) ir.Expression {
+internal/lower/library_map_set.go:444: function := ir.Function{Name: "collection_optional_numbers", Returns: ir.Array}
+internal/lower/library_map_set.go:466: func (f *cycleFinder) libraryIteratorMade(node *ast.Node) {
+internal/lower/library_map_set.go:483: func (f *cycleFinder) libraryIteratorCaptures(proven *checker.Type) []cycleNode {
+internal/lower/library_map_set.go:495: func (l *lowering) libraryIteratorUnsupportedUse(node *ast.Node) error {
+internal/lower/library_map_set.go:523: func (l *lowering) libraryIteratorType(proven *checker.Type) bool {
+internal/lower/library_math_number.go:17: func (l *lowering) libraryMathNumberProperty(node *ast.Node) (ir.Expression, bool) {
+internal/lower/library_math_number.go:35: func (l *lowering) numberPrototype(node *ast.Node) bool {
+internal/lower/library_math_number.go:42: func (l *lowering) libraryNumber(node *ast.Node) (ir.Expression, error) {
+internal/lower/library_math_number.go:69: func (l *lowering) libraryMathNumberCall(node *ast.Node) (ir.Expression, bool, error) {
+internal/lower/library_math_number.go:118: function := "hasOwnProperty"
+internal/lower/library_math_number.go:120: function = "prototypeHasOwnProperty"
+internal/lower/library_math_number.go:186: func (l *lowering) libraryNumberBoundMethod(node *ast.Node) bool {
+internal/lower/library_method_values.go:17: func (l *lowering) libraryMethod(node *ast.Node, seen map[*ast.Symbol]bool) (libraryMethod, bool) {
+internal/lower/library_method_values.go:62: func constMethodInitializer(node *ast.Node) bool {
+internal/lower/library_method_values.go:71: func (l *lowering) libraryMethodReadAllowed(node *ast.Node) bool {
+internal/lower/library_method_values.go:89: func (l *lowering) libraryMapArgument(node *ast.Node) bool {
+internal/lower/library_method_values.go:106: func (l *lowering) libraryMethodValue(node *ast.Node) (ir.Expression, bool, error) {
+internal/lower/library_method_values.go:139: func (l *lowering) methodSequence(values []ir.Expression) ir.Expression {
+internal/lower/library_method_values.go:141: function := ir.Function{Name: "library_method_sequence", Returns: values[len(values)-1].Type()}
+internal/lower/library_method_values.go:152: func (l *lowering) methodAliasRead(node *ast.Node) (ir.Expression, error) {
+internal/lower/library_method_values.go:162: func (l *lowering) libraryMethodCall(node *ast.Node) (ir.Expression, bool, error) {
+internal/lower/library_method_values.go:357: func (l *lowering) objectTagCall(node, receiver *ast.Node, written []*ast.Node) (ir.Expression, error) {
+internal/lower/library_method_values.go:397: func (l *lowering) libraryMapCallback(node, receiver *ast.Node, element ir.Type) (ir.Expression, bool, error) {
+internal/lower/library_method_values.go:403: function := ir.Function{Name: "library_map_" + method.name, Closure: true}
+internal/lower/library_method_values.go:453: func (l *lowering) libraryMethodBind(node, target *ast.Node, method libraryMethod) (ir.Expression, error) {
+internal/lower/library_method_values.go:497: func (l *lowering) delayedNumberMethod(node, receiver *ast.Node, name string, written []*ast.Node) (ir.Expression, error) {
+internal/lower/library_method_values.go:540: func (l *lowering) libraryEmptyMap(node *ast.Node) (ir.Expression, bool, error) {
+internal/lower/library_node.go:15: func RegisterNodeLibraryMembers(names ...string) {
+internal/lower/library_node.go:21: func (l *lowering) nodeLibraryMember(node *ast.Node) string {
+internal/lower/library_node.go:63: func (l *lowering) nodeLibraryRefusal(node *ast.Node) error {
+internal/lower/library_node_buffer.go:14: func nodeBufferModule(symbol *ast.Symbol) string {
+internal/lower/library_node_buffer.go:34: func (l *lowering) nodeBufferSymbol(node *ast.Node, name string) bool {
+internal/lower/library_node_buffer.go:38: func (l *lowering) nodeBufferType(proven *checker.Type, name string) bool {
+internal/lower/library_node_buffer.go:48: func (l *lowering) nodeBufferUnsupportedUse(node *ast.Node) error {
+internal/lower/library_node_buffer.go:94: func (l *lowering) nodeBufferReadArgument(node *ast.Node) bool {
+internal/lower/library_node_buffer.go:107: func (l *lowering) nodeBufferView(from, to *checker.Type) bool {
+internal/lower/library_node_buffer.go:116: func (l *lowering) nodeBufferEncoding(node *ast.Node, fallback int) (int, error) {
+internal/lower/library_node_buffer.go:135: func (l *lowering) libraryNodeBuffer(node *ast.Node) (ir.Expression, bool, error) {
+internal/lower/library_node_fs_buffer.go:11: func init() {
+internal/lower/library_node_fs_buffer.go:18: func (l *lowering) nodeFSFileBufferArgument(node *ast.Node) bool {
+internal/lower/library_node_fs_file.go:11: func (l *lowering) nodeFSFile(node *ast.Node) (ir.Expression, bool, error) {
+internal/lower/library_node_fs_file.go:100: returned := outer.Parent != nil && outer.Parent.Kind == ast.KindReturnStatement && l.function != nil && l.function.Returns == 0
+internal/lower/library_node_fs_file.go:422: func (l *lowering) nodeFSFileDate(node *ast.Node) (ir.Expression, bool, error) {
+internal/lower/library_node_fs_file.go:442: func (l *lowering) nodeFSFileReadOnlyArgument(node *ast.Node) bool {
+internal/lower/library_node_fs_file.go:477: func init() {
+internal/lower/library_node_fs_file_options.go:7: func (l *lowering) nodeFSDirectoryStatOptions(node *ast.Node) bool {
+internal/lower/library_node_host.go:10: func (l *lowering) nodeHost(node *ast.Node) (ir.Expression, bool, error) {
+internal/lower/library_node_host.go:35: returned := outer.Parent != nil && outer.Parent.Kind == ast.KindReturnStatement && l.function != nil && l.function.Returns == 0
+internal/lower/library_node_host.go:57: func init() {
+internal/lower/library_object.go:11: func (l *lowering) objectCall(node *ast.Node, name string) (ir.Expression, bool, error) {
+internal/lower/library_object.go:15: func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*ast.Node) (ir.Expression, bool, error) {
+internal/lower/library_object.go:196: func (l *lowering) exactObject(node *ast.Node, depth int) bool {
+internal/lower/library_object.go:238: func (l *lowering) objectCanFreeze() bool {
+internal/lower/library_object.go:246: for _, function := range l.result.Functions {
+internal/lower/library_object.go:259: func (l *lowering) objectIntersection(proven *checker.Type) (ir.Type, bool) {
+internal/lower/library_regex_callback_shape.go:12: func (l *lowering) regexCallbackNoCaptures(node *ast.Node, depth int) bool {
+internal/lower/library_regex_callback_shape.go:68: // This exemption applies only at the replacement argument, never to a stored function view.
+internal/lower/library_regex_callback_shape.go:69: func (l *lowering) regexCallbackIntrinsicView(node *ast.Node) bool {
+internal/lower/library_regexp_replace.go:9: func (l *lowering) regexReplacement(node *ast.Node, input ir.Expression, arguments []ir.Expression, method string, written *ast.Node) (ir.Expression, bool, error) {
+internal/lower/library_regexp_replace.go:70: func (l *lowering) regexReplacementArgument(node *ast.Node) bool {
+internal/lower/library_regexp_replace.go:93: func (l *lowering) regexReplacementKind(proven *checker.Type, of ir.Type) int {
+internal/lower/library_string.go:14: func (l *lowering) stringPrototypeMethod(node *ast.Node) (string, bool) {
+internal/lower/library_string.go:28: func (l *lowering) stringMethodObservation(node *ast.Node) bool {
+internal/lower/library_string.go:56: func (l *lowering) stringTypeOf(node *ast.Node) (ir.Expression, bool) {
+internal/lower/library_string.go:67: func (l *lowering) stringConversion(node *ast.Node) (ir.Expression, error) {
+internal/lower/library_string.go:95: return nil, l.notYet(node, "String conversion of an object, array, map or function (ToPrimitive is not lowered)")
+internal/lower/library_string.go:98: func (l *lowering) libraryString(node *ast.Node) (ir.Expression, bool, error) {
+internal/lower/library_string.go:155: func (l *lowering) libraryStringMethod(node *ast.Node, value ir.Expression, name string, written []*ast.Node) (ir.Expression, bool, error) {
+internal/lower/library_string.go:271: func (l *lowering) stringHelper(name string, values []ir.Expression) (int, []ir.Expression) {
+internal/lower/library_string.go:273: function := ir.Function{Name: "library_string_" + name, Returns: ir.String}
+internal/lower/library_string.go:285: func stringInteger(value ir.Expression) ir.Expression {
+internal/lower/library_string.go:289: func (l *lowering) stringIndexMethod(value ir.Expression, name string, arguments []ir.Expression) ir.Expression {
+internal/lower/library_string.go:317: func (l *lowering) stringRaw(node *ast.Node, written []*ast.Node) (ir.Expression, error) {
+internal/lower/library_string.go:371: func (l *lowering) stringReadOnlyArgument(node *ast.Node) bool {
+internal/lower/library_string.go:388: func (l *lowering) refuseStringWidening(node *ast.Node) error {
+internal/lower/library_string.go:397: func (l *lowering) stringRawTemplate(node *ast.Node) (ir.Expression, error) {
+internal/lower/literal_callable_branch.go:10: func (l *lowering) literalCallableBranch(node *ast.Node) *ast.Node {
+internal/lower/load_time_reads.go:22: func (cohereRuleRunner) RunRule(program *compiler.Program, typeChecker *checker.Checker, files []*ast.SourceFile, name string) ([]Finding, error) {
+internal/lower/load_time_reads.go:32: func (l *lowering) loadTimeReads(files []*ast.SourceFile) error {
+internal/lower/load_time_reads.go:44: func (l *lowering) proveModuleReads(files []*ast.SourceFile) {
+internal/lower/load_time_reads.go:101: func (l *lowering) checkedModuleRead(node *ast.Node, local int) bool {
+internal/lower/locals.go:12: func (l *lowering) variables(list *ast.Node) ([]ir.Statement, error) {
+internal/lower/locals.go:106: func skipped(binding *ast.Node) bool {
+internal/lower/locals.go:111: func (l *lowering) declareLocal(name *ast.Node) (int, error) {
+internal/lower/locals.go:145: func (l *lowering) noteAlso(local int, proven *checker.Type) {
+internal/lower/locals.go:153: func (l *lowering) noteLocal(local int, proven *checker.Type, node *ast.Node) {
+internal/lower/locals.go:165: func (l *lowering) symbol(node *ast.Node) *ast.Symbol {
+internal/lower/locals.go:178: func (l *lowering) local(identifier *ast.Node) (int, bool) {
+internal/lower/locals.go:186: l.unlowerable = l.notYet(identifier, "a "+typeName(declared.Type)+" variable a function value captures")
+internal/lower/locals.go:192: // touch notes that the function being lowered reads or writes a local. One declared in another
+internal/lower/locals.go:194: // between its function and this one carries that cell in its environment.
+internal/lower/locals.go:195: func (l *lowering) touch(local int) {
+internal/lower/locals.go:205: // const f = () => f(): the function value is made before the variable's cell is, so it has
+internal/lower/locals.go:207: l.unlowerable = l.notYet(name, "a function value that captures the variable its own initializer declares")
+internal/lower/locals.go:216: function := &l.result.Functions[closure]
+internal/lower/locals.go:224: func (l *lowering) checked(local int) bool {
+internal/lower/locals.go:225: return l.result.Locals[local].NamespaceState || l.result.Locals[local].Ready != 0 || (l.result.Locals[local].Global && (l.function != nil || l.cyclicModules)) || (l.function != nil && l.result.Locals[local].Preallocated && l.result.Locals[local].Captured)
+internal/lower/locals.go:228: func (l *lowering) constant(value string) int {
+internal/lower/locals.go:241: func (l *lowering) localRead(node *ast.Node, local int) (ir.Expression, error) {
+internal/lower/logical_assignment.go:9: func logicalAssignment(kind ast.Kind) bool {
+internal/lower/logical_assignment.go:13: func (l *lowering) logicalAssignment(node *ast.Node) (ir.Expression, error) {
+internal/lower/lower.go:20: func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
+internal/lower/lower.go:51: // Link every declaration before lowering any function body, including across back edges.
+internal/lower/lower.go:108: // functions maps each function declaration's symbol to its index in result.Functions.
+internal/lower/lower.go:111: // function is the function being lowered, or nil for the module's top level.
+internal/lower/lower.go:112: function *ir.Function
+internal/lower/lower.go:117: // functionIndex is the function being lowered, -1 for the module's top level, and closures the
+internal/lower/lower.go:155: // forwarders are the globals holding the function values made for module functions read as values,
+internal/lower/lower.go:156: // by the function each forwards to, and forwarderValues the declarations that make them, which run
+internal/lower/lower.go:166: // each instantiation already lowered to its function (generic.go). genericDepth counts the
+internal/lower/lower.go:182: // every function value made, with its type; and the class type being instantiated, for this.
+internal/lower/module_namespace.go:10: func (l *lowering) moduleNamespace(node *ast.Node) bool {
+internal/lower/module_namespace.go:23: func (l *lowering) moduleNamespaceRefusal(node *ast.Node) error {
+internal/lower/module_namespace.go:39: return l.notYet(node, "an ESM namespace function observing its receiver; the module object is not represented")
+internal/lower/modules.go:14: func (l *lowering) moduleOrder(entry *ast.SourceFile) ([]*ast.SourceFile, error) {
+internal/lower/modules.go:27: func esmModuleOrder(typeChecker *checker.Checker, entry *ast.SourceFile) ([]*ast.SourceFile, bool) {
+internal/lower/modules.go:71: // function can call one declared below it and read a global declared below it, as JavaScript
+internal/lower/modules.go:73: // call knows what the function it calls returns wherever that function is declared, and two
+internal/lower/modules.go:75: func (l *lowering) declareModule(statements []*ast.Node) error {
+internal/lower/modules.go:152: // A generic function is lowered once per instantiation, where it's called (generic.go).
+internal/lower/modules.go:189: func runtimeModuleStatement(statement *ast.Node) bool {
+internal/lower/namespace_callable.go:5: func (l *lowering) namespaceMergedFunction(node *ast.Node) bool {
+internal/lower/namespace_callable.go:20: func (l *lowering) callableNamespaceUse(node *ast.Node) bool {
+internal/lower/namespace_callable.go:47: func (l *lowering) namespaceFixedFunction(node *ast.Node) bool {
+internal/lower/namespace_callable.go:64: func callableNamespaceIntrinsic(name string) bool {
+internal/lower/namespace_receiver_scope.go:7: func namespaceOwnThis(declaration *ast.Node) bool {
+internal/lower/namespaces.go:8: func namespaceStatements(declaration *ast.Node) []*ast.Node {
+internal/lower/namespaces.go:19: func namespaceRuntime(declaration *ast.Node) bool {
+internal/lower/namespaces.go:41: func namespaceDeclarations(statements []*ast.Node) []*ast.Node {
+internal/lower/namespaces.go:53: func (l *lowering) namespaceDeclaration(node *ast.Node) *ast.Node {
+internal/lower/namespaces.go:66: func (l *lowering) namespaceMember(node *ast.Node) bool {
+internal/lower/namespaces.go:90: func (l *lowering) namespaceExpression(node *ast.Node) (ir.Expression, bool, error) {
+internal/lower/namespaces.go:117: func (l *lowering) namespaceValueNode(node *ast.Node) bool {
+internal/lower/namespaces.go:135: func (l *lowering) namespaceRefusal(node *ast.Node) error {
+internal/lower/namespaces.go:169: return l.notYet(variable, "a callable namespace export colliding with a function intrinsic")
+internal/lower/namespaces.go:173: return l.notYet(member, "a callable namespace export colliding with a function intrinsic")
+internal/lower/namespaces.go:186: return l.notYet(parameter, "an explicit namespace-function this parameter; pass state explicitly")
+internal/lower/namespaces.go:217: return l.notYet(node, "observing a callable namespace object; only direct calls, fixed qualified members, typeof and canonical function identity are represented")
+internal/lower/namespaces.go:245: func (l *lowering) namespaceInitialization(modules []*ast.SourceFile) error {
+internal/lower/namespaces.go:344: func (l *lowering) namespaceCallable(callee *ast.Node) *ast.Node {
+internal/lower/namespaces.go:389: func (l *lowering) namespaceReadyLocal(declaration *ast.Node) int {
+internal/lower/namespaces.go:404: func (l *lowering) namespaceReadyReads(node *ast.Node, writing bool) []ir.Expression {
+internal/lower/namespaces.go:426: func (l *lowering) namespaceReadyValue(node *ast.Node, value ir.Expression) ir.Expression {
+internal/lower/namespaces.go:437: func (l *lowering) namespaceReadyCall(node *ast.Node, value ir.Expression) ir.Expression {
+internal/lower/namespaces.go:454: func namespaceVariable(list *ast.Node) bool {
+internal/lower/namespaces.go:458: func (l *lowering) namespaceBody(node *ast.Node) ([]ir.Statement, error) {
+internal/lower/namespaces.go:509: func namespaceObjectBindings(pattern *ast.Node) bool {
+internal/lower/namespaces.go:525: func (l *lowering) namespaceReadyStatements(node *ast.Node, writing bool) []ir.Statement {
+internal/lower/namespaces_call_graph.go:5: // Each function body is inspected once. Tarjan's active stack identifies cycles;
+internal/lower/namespaces_call_graph.go:24: func (g *namespaceCallGraph) reach(function *ast.Node) map[*ast.Node]*ast.Node {
+internal/lower/namespaces_call_graph.go:28: func (g *namespaceCallGraph) discover(function *ast.Node) *namespaceCallNode {
+internal/lower/namespaces_call_graph.go:51: if node == nil || ast.IsTypeNode(node) || node != function && ast.IsFunctionLike(node) {
+internal/lower/namespaces_call_graph.go:59: if node == function {
+internal/lower/namespaces_call_graph.go:147: func (l *lowering) namespaceRuntimeEnum(node *ast.Node) *ast.Node {
+internal/lower/namespaces_returns.go:11: func (l *lowering) namespaceReturnAssignment(expression *ast.Node) ([]ir.Statement, bool, error) {
+internal/lower/narrowed.go:14: //	function drop(): void { chain = undefined; }
+internal/lower/narrowed.go:24: func (l *lowering) narrowedAway(node *ast.Node) bool {
+internal/lower/narrowed.go:47: func (l *lowering) defined(node *ast.Node, value ir.Expression) ir.Expression {
+internal/lower/narrowed.go:87: func comparedWithUndefined(node *ast.Node) bool {
+internal/lower/narrowed.go:110: func (l *lowering) acceptsUndefined(node *ast.Node) bool {
+internal/lower/nested_functions.go:10: // nestedDeclarations binds a function body's declarations before any body is lowered.
+internal/lower/nested_functions.go:12: func (l *lowering) nestedDeclarations(nodes []*ast.Node) ([]ir.Statement, error) {
+internal/lower/nested_functions.go:13: if l.function == nil {
+internal/lower/nested_functions.go:26: return nil, l.notYet(node, "a block-scoped nested function declaration")
+internal/lower/nested_functions.go:29: return nil, l.notYet(node, "a generic or unnamed nested function declaration")
+internal/lower/nested_functions.go:42: return nil, l.notYet(node, "a nested function declaration without an implementation")
+internal/lower/nested_functions.go:48: return nil, l.notYet(parameter, "dynamic this in a nested function declaration")
+internal/lower/nested_functions.go:120: return nil, l.notYet(invalid, "dynamic this in a nested function declaration")
+internal/lower/nested_functions.go:146: func (l *lowering) nestedSibling(node *ast.Node) int {
+internal/lower/nested_functions.go:147: if !ast.IsIdentifier(node) || l.function == nil {
+internal/lower/nested_functions.go:172: function := l.closures[position]
+internal/lower/nested_functions.go:173: if function == parent-1 {
+internal/lower/nested_functions.go:185: for _, function := range l.closures[boundary+1:] {
+internal/lower/nested_functions.go:190: for _, function := range l.closures[boundary+1:] {
+internal/lower/nested_functions.go:203: func (l *lowering) nestedReference(node *ast.Node) (ir.Expression, bool, error) {
+internal/lower/nested_functions.go:209: return nil, true, l.notYet(node, "a generic function as a value")
+internal/lower/nested_functions.go:221: func (l *lowering) preallocateNestedBindings(name *ast.Node) ([]ir.Statement, error) {
+internal/lower/nested_functions.go:249: func (l *lowering) finishNestedEnvironment(function *ir.Function, owner int) {
+internal/lower/nested_references.go:12: // have distinct canonical function values.
+internal/lower/nested_references.go:13: func (l *lowering) nestedReferenceEnvironment(index int) {
+internal/lower/never_branch.go:9: func (l *lowering) isNever(node *ast.Node) bool {
+internal/lower/never_branch.go:15: func (l *lowering) neverValue(node *ast.Node, of ir.Type) (ir.Expression, error) {
+internal/lower/never_branch.go:30: func (l *lowering) logicalNever(node *ast.Node) (ir.Expression, error) {
+internal/lower/never_branch.go:47: func (l *lowering) conditionalNever(node *ast.Node, condition ir.Expression) (ir.Expression, error) {
+internal/lower/new_class_value.go:14: func (l *lowering) newClassValue(node *ast.Node) (ir.Expression, bool, error) {
+internal/lower/new_class_value.go:80: function := l.result.Functions[candidate.constructor]
+internal/lower/new_class_value.go:105: func (l *lowering) classConstructorValue(node *ast.Node) (ir.Expression, error) {
+internal/lower/new_class_value.go:171: function := &l.result.Functions[b.function]
+internal/lower/non_null.go:14: func (l *lowering) nonNull(node *ast.Node) (ir.Expression, error) {
+internal/lower/non_null.go:24: func (l *lowering) nonNullValue(node *ast.Node, value ir.Expression) (ir.Expression, error) {
+internal/lower/non_null.go:105: func (l *lowering) checkedAssertionSource(node *ast.Node) bool {
+internal/lower/non_null.go:109: func (l *lowering) recordNonNullCheck(node *ast.Node, proven bool) {
+internal/lower/object.go:17: func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
+internal/lower/object.go:126: func (l *lowering) emptySpread(node *ast.Node, own []ir.Field) ([]ir.Field, error) {
+internal/lower/object.go:152: func (l *lowering) typeOfSymbol(node *ast.Node, symbol *ast.Symbol) (ir.Type, error) {
+internal/lower/object.go:162: func (l *lowering) declaredField(literal *ast.Node, name string) ir.Type {
+internal/lower/object.go:197: func (l *lowering) hasProperty(node *ast.Node, name string) bool {
+internal/lower/object.go:207: func (l *lowering) arrayLiteral(node *ast.Node) (ir.Expression, error) {
+internal/lower/object.go:281: func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
+internal/lower/object.go:341: func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
+internal/lower/object.go:401: Fix:   fmt.Sprintf("wrap the call in an arrow function, which keeps its object: (value) => %s.%s(value)", object, name),
+internal/lower/object.go:576: func (l *lowering) readObjectField(node *ast.Node, property ir.Property) ir.Expression {
+internal/lower/object.go:616: func (l *lowering) hasOwnProperty(node *ast.Node, receiver *ast.Node) (ir.Expression, bool, error) {
+internal/lower/object.go:620: func (l *lowering) hasOwnPropertyArguments(node *ast.Node, receiver *ast.Node, arguments []*ast.Node) (ir.Expression, bool, error) {
+internal/lower/object.go:646: func (l *lowering) isLibraryGlobal(node *ast.Node, name string) bool {
+internal/lower/object.go:668: func refusedRandom(l *lowering, node *ast.Node) error {
+internal/lower/object.go:673: func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
+internal/lower/object.go:848: func (l *lowering) numberFormat(node *ast.Node, receiver *ast.Node, name string) (ir.Expression, bool, error) {
+internal/lower/object.go:879: func (l *lowering) numberCall(node *ast.Node, name string) (ir.Expression, bool, error) {
+internal/lower/object.go:883: func (l *lowering) numberCallArguments(node *ast.Node, name string, written []*ast.Node) (ir.Expression, bool, error) {
+internal/lower/object.go:918: func (l *lowering) forOf(node *ast.Node) ([]ir.Statement, error) {
+internal/lower/object.go:1043: func (l *lowering) forOfMap(node *ast.Node, iterable ir.Expression, iterated *ast.Node, part string, name *ast.Node) ([]ir.Statement, error) {
+internal/lower/object.go:1089: func (l *lowering) switchStatement(node *ast.Node) ([]ir.Statement, error) {
+internal/lower/object.go:1194: func (l *lowering) arrayMethod(node *ast.Node, receiver *ast.Node, name string) (ir.Expression, bool, error) {
+internal/lower/object.go:1198: func (l *lowering) arrayMethodArguments(node *ast.Node, receiver *ast.Node, name string, written []*ast.Node) (ir.Expression, bool, error) {
+internal/lower/object.go:1335: // JavaScript writes an object as "[object Object]", a function as its source, and an array as
+internal/lower/object.go:1361: func (l *lowering) newArrayFilled(node *ast.Node, created *ast.Node) (ir.Expression, bool, error) {
+internal/lower/object.go:1385: // visits are the array methods that call a function per element and look at what it returns.
+internal/lower/object.go:1391: func (l *lowering) arrayVisit(node *ast.Node, array ir.Expression, element ir.Type, name string) (ir.Expression, bool, error) {
+internal/lower/object.go:1439: func (l *lowering) arrayReduce(node *ast.Node, array ir.Expression, element ir.Type) (ir.Expression, bool, error) {
+internal/lower/object.go:1442: return nil, true, &Refused{Where: l.program.Where(node), What: "reduce without an initial value", Fix: "pass one, like reduce((sum, value) => sum + value, 0): without it, an empty array throws"}
+internal/lower/object.go:1470: func (l *lowering) mapTypes(node *ast.Node) (ir.Type, ir.Type, error) {
+internal/lower/object.go:1497: func (l *lowering) newExpression(node *ast.Node) (ir.Expression, error) {
+internal/lower/object.go:1566: func writtenOut(pairs *ast.Node) bool {
+internal/lower/object.go:1585: func (l *lowering) mapMethod(node *ast.Node, receiver *ast.Node, name string) (ir.Expression, bool, error) {
+internal/lower/object.go:1627: func (l *lowering) stringMethod(node *ast.Node, receiver *ast.Node, name string) (ir.Expression, bool, error) {
+internal/lower/object.go:1656: func (l *lowering) shorthand(property *ast.Node) (ir.Expression, error) {
+internal/lower/object.go:1707: // function there isn't a string, and stays not yet.
+internal/lower/object.go:1712: func (l *lowering) stringCall(node *ast.Node, receiver *ast.Node, name string) (ir.Expression, bool, error) {
+internal/lower/object.go:1754: func (l *lowering) arraySort(node *ast.Node, array ir.Expression, element ir.Type) (ir.Expression, bool, error) {
+internal/lower/object.go:1762: // A function value: an arrow, or a variable holding one.
+internal/lower/object.go:1785: func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
+internal/lower/object.go:1890: func (l *lowering) setIndex(target *ast.Node, valueNode *ast.Node) ([]ir.Statement, error) {
+internal/lower/object.go:1928: func (l *lowering) stringFromCodes(node *ast.Node, codePoints bool) (ir.Expression, bool, error) {
+internal/lower/object.go:1932: func (l *lowering) stringFromCodesArguments(node *ast.Node, codePoints bool, written []*ast.Node) (ir.Expression, bool, error) {
+internal/lower/object.go:1959: // (return ['a', 1] in a function returning [string, number]), or nil when it makes an array.
+internal/lower/object.go:1960: func (l *lowering) tupleType(node *ast.Node) *checker.Type {
+internal/lower/object.go:1978: func (l *lowering) tupleLiteral(node *ast.Node, tuple *checker.Type) (ir.Expression, error) {
+internal/lower/object.go:2018: func hasSpread(call *ast.Node) bool {
+internal/lower/object.go:2029: func (l *lowering) spreadNumbers(call *ast.Node) (ir.Expression, error) {
+internal/lower/object.go:2075: // function taking arrays called with tuples). A tuple is held as an object of its elements, so array
+internal/lower/object.go:2077: func (l *lowering) tupleWhereArrayGoes(value *checker.Type, target *checker.Type, depth int) bool {
+internal/lower/object.go:2139: func (l *lowering) pairwiseTupleWhereArrayGoes(values []*checker.Type, targets []*checker.Type, depth int) bool {
+internal/lower/object.go:2151: func (l *lowering) updateIndex(node *ast.Node, target *ast.Node, operator ast.Kind, valueNode *ast.Node) ([]ir.Statement, error) {
+internal/lower/object.go:2204: func isCallee(node *ast.Node) bool {
+internal/lower/optional.go:25: func (l *lowering) orDefault(node *ast.Node, value ir.Expression, fallback string) ir.Expression {
+internal/lower/optional.go:36: func (l *lowering) mayBeUndefined(node *ast.Node) bool {
+internal/lower/optional_indexing.go:10: func (l *lowering) optionalIndex(node *ast.Node, base ir.Expression) (ir.Expression, error) {
+internal/lower/optional_indexing.go:11: function := -1
+internal/lower/optional_indexing.go:12: if l.function != nil {
+internal/lower/optional_indexing.go:13: function = l.functionIndex
+internal/lower/optional_indexing.go:29: func (l *lowering) optionalIndexValue(node *ast.Node, base ir.Expression) (ir.Expression, error) {
+internal/lower/optional_indexing_chain.go:10: func (l *lowering) optionalIndexContinuation(node *ast.Node) (ir.Expression, error) {
+internal/lower/optional_indexing_chain.go:29: function := -1
+internal/lower/optional_indexing_chain.go:30: if l.function != nil {
+internal/lower/optional_indexing_chain.go:31: function = l.functionIndex
+internal/lower/optional_indexing_map.go:10: func (l *lowering) optionalMapGet(node *ast.Node) (ir.Expression, bool, error) {
+internal/lower/optional_indexing_map.go:52: function := -1
+internal/lower/optional_indexing_map.go:53: if l.function != nil {
+internal/lower/optional_indexing_map.go:54: function = l.functionIndex
+internal/lower/optional_indexing_map.go:70: func (l *lowering) optionalMapStructuralReceiver(receiver *ast.Node) bool {
+internal/lower/optional_intrinsic.go:11: // a missing result. An optional function call has a different guard and ABI.
+internal/lower/optional_intrinsic.go:12: func (l *lowering) optionalIntrinsic(node *ast.Node) (ir.Expression, bool, error) {
+internal/lower/optional_intrinsic.go:54: function := -1
+internal/lower/optional_intrinsic.go:55: if l.function != nil {
+internal/lower/optional_intrinsic.go:56: function = l.functionIndex
+internal/lower/optional_join.go:10: func (l *lowering) isOptionalJoin(node *ast.Node) bool {
+internal/lower/optional_join.go:24: func (l *lowering) optionalJoin(node *ast.Node) (ir.Expression, error) {
+internal/lower/optional_join.go:31: function := -1
+internal/lower/optional_join.go:32: if l.function != nil {
+internal/lower/optional_join.go:33: function = l.functionIndex
+internal/lower/optional_node_host.go:6: func (l *lowering) nodeHostConsumesArgument(call *ast.Node, index int) bool { return false }
+internal/lower/optional_widening.go:17: func (l *lowering) optionalWidened(source, target *checker.Type, skip map[string]bool, visited map[[2]*checker.Type]bool) *optionalWidening {
+internal/lower/optional_widening.go:111: func (l *lowering) optionalValue(node *ast.Node, target *checker.Type) *optionalWidening {
+internal/lower/optional_widening.go:131: func (l *lowering) optionalAtSite(node *ast.Node) *optionalWidening {
+internal/lower/optional_widening.go:189: func (l *lowering) refuseOptionalWidening(node *ast.Node) error {
+internal/lower/optional_widening.go:200: func (l *lowering) optionalNodeHostCall(call *ast.Node) bool {
+internal/lower/parameter_properties.go:8: func parameterProperty(node *ast.Node) bool {
+internal/lower/parameter_properties.go:14: func classMembersWithParameters(declaration *ast.Node) []*ast.Node {
+internal/lower/parameter_properties.go:28: func (l *lowering) parameterPropertyStores(declaration *ast.Node, this int) ([]ir.Statement, error) {
+internal/lower/parameter_properties.go:50: func (l *lowering) parameterPropertyDefault(declaration, initializer *ast.Node) error {
+internal/lower/parameter_properties.go:67: func (l *lowering) parameterPropertyResets(declaration *ast.Node, this int, available map[string]bool) ([]ir.Statement, error) {
+internal/lower/predicates.go:17: func predicateFlowType(receiver *checker.Checker, reference *ast.Node, declared, initial *checker.Type, container *ast.Node, flow *ast.FlowNode) *checker.Type
+internal/lower/predicates.go:21: function   *ast.Node
+internal/lower/predicates.go:36: func (p *predicateFlowProof) refused(node *ast.Node, reason string) error {
+internal/lower/predicates.go:40: func (l *lowering) proveFlowPredicate(node *ast.Node) error {
+internal/lower/predicates.go:45: function := node.Parent
+internal/lower/predicates.go:88: func (p *predicateFlowProof) proveBody(node *ast.Node) error {
+internal/lower/predicates.go:89: function := p.function
+internal/lower/predicates.go:115: func (p *predicateFlowProof) narrowed(path predicateFlowPath, initial *checker.Type) *checker.Type {
+internal/lower/predicates.go:125: func predicateBranch(path predicateFlowPath, expression *ast.Node, truth bool) predicateFlowPath {
+internal/lower/predicates.go:135: func (p *predicateFlowProof) admittedValueProof() bool {
+internal/lower/predicates.go:139: func (p *predicateFlowProof) normalReturn(node *ast.Node, path predicateFlowPath) error {
+internal/lower/predicates.go:147: func (p *predicateFlowProof) returned(node, expression *ast.Node, paths []predicateFlowPath) error {
+internal/lower/predicates.go:194: func (p *predicateFlowProof) statement(node *ast.Node, paths []predicateFlowPath) ([]predicateFlowPath, error) {
+internal/lower/predicates.go:257: func (p *predicateFlowProof) check(node *ast.Node) bool {
+internal/lower/predicates.go:290: func (p *predicateFlowProof) reference(node *ast.Node) bool {
+internal/lower/predicates.go:294: func (p *predicateFlowProof) checkedValue(node *ast.Node) bool {
+internal/lower/predicates.go:305: func (p *predicateFlowProof) literal(node *ast.Node) bool {
+internal/lower/predicates.go:316: func predicateEffects(node *ast.Node) bool {
+internal/lower/predicates.go:336: func predicateTrueType(c *checker.Checker) *checker.Type {
+internal/lower/predicates.go:347: func (l *lowering) predicateRefusal(node *ast.Node) error {
+internal/lower/predicates.go:384: // A signature on a plain function parameter is an argument contract. The call
+internal/lower/predicates.go:385: // visitor proves the actual function body before admitting any invocation. Live
+internal/lower/predicates.go:387: // an escaped function value supplies no producer proof for its callback.
+internal/lower/predicates.go:388: func (l *lowering) predicateParameter(node *ast.Node) *ast.Node {
+internal/lower/predicates.go:397: function := parameter.Parent
+internal/lower/predicates.go:406: function = implementation
+internal/lower/predicates.go:441: func (l *lowering) predicateCallbackCallers(function *ast.Node, callback *ast.Symbol) bool {
+internal/lower/predicates.go:475: func (l *lowering) predicateArguments(node *ast.Node) error {
+internal/lower/predicates.go:517: return &Refused{Where: l.program.Where(argument), What: "an unproven predicate argument for parameter " + parameter.Name + " (argument " + fmt.Sprintf("%q", text) + ")", Fix: "pass a named function or arrow whose body proves both predicate branches; return a boolean and narrow at the caller (adamic/no-type-predicate)"}
+internal/lower/predicates.go:572: func predicateOfSignature(receiver *checker.Checker, signature *checker.Signature) *checker.TypePredicate
+internal/lower/predicates.go:578: func predicateMatchingReference(receiver *checker.Checker, source, target *ast.Node) bool
+internal/lower/predicates_proof.go:36: func predicateFailure(l *lowering, node *ast.Node, path string) error {
+internal/lower/predicates_proof.go:47: func (l *lowering) provePredicate(node *ast.Node) (predicateProof, error) {
+internal/lower/predicates_proof.go:115: func predicatePrimitiveTarget(t *checker.Type) bool {
+internal/lower/predicates_proof.go:128: func (v *predicateVerifier) kindTarget(t *checker.Type) bool {
+internal/lower/predicates_proof.go:140: func predicateLiteral(t *checker.Type) (string, bool) {
+internal/lower/predicates_proof.go:147: func (v *predicateVerifier) addKind(t *checker.Type) {
+internal/lower/predicates_proof.go:160: func (v *predicateVerifier) collectKinds(declaration *ast.Node) {
+internal/lower/predicates_proof.go:192: func (v *predicateVerifier) wanted(t *checker.Type, cell string) (bool, bool) {
+internal/lower/predicates_proof.go:218: func (v *predicateVerifier) parameter(declaration *ast.Node) *ast.Symbol {
+internal/lower/predicates_proof.go:228: func (v *predicateVerifier) verify(declaration *ast.Node) ([]predicateTruth, error) {
+internal/lower/predicates_proof.go:294: func predicateNot(t predicateTruth) predicateTruth {
+internal/lower/predicates_proof.go:297: func predicateCombine(a, b predicateTruth, and bool) predicateTruth {
+internal/lower/predicates_proof.go:318: func (v *predicateVerifier) expression(n *ast.Node, parameter *ast.Symbol, path predicatePath) (predicateTruth, error) {
+internal/lower/predicates_proof.go:416: func (v *predicateVerifier) sameParameter(n *ast.Node, parameter *ast.Symbol) bool {
+internal/lower/predicates_proof.go:421: func (v *predicateVerifier) constant(n *ast.Node) bool {
+internal/lower/predicates_proof.go:433: func (v *predicateVerifier) pure(n *ast.Node) bool {
+internal/lower/predicates_proof.go:438: func copyPredicatePath(path predicatePath) predicatePath {
+internal/lower/predicates_proof.go:446: func (v *predicateVerifier) statements(nodes []*ast.Node, parameter *ast.Symbol, paths []predicatePath, check func(*ast.Node, predicateTruth) error) ([]predicatePath, error) {
+internal/lower/predicates_proof.go:543: func (l *lowering) proveConditionAssertion(node *ast.Node) (predicateProof, error) {
+internal/lower/predicates_proof.go:581: func (v *predicateVerifier) neverCall(node *ast.Node, visiting map[*ast.Node]bool) bool {
+internal/lower/predicates_proof.go:616: func (v *predicateVerifier) neverStatement(node *ast.Node, visiting map[*ast.Node]bool) bool {
+internal/lower/predicates_proof.go:644: func predicateNormalExit(node *ast.Node) bool {
+internal/lower/predicates_proof.go:664: func (l *lowering) predicateOverloadProven(implementation, overload *ast.Node) bool {
+internal/lower/predicates_proof.go:721: func (l *lowering) predicateOverloadResult(call *ast.CallExpression, value ir.Expression, implementation, overload *ast.Node) (ir.Expression, error) {
+internal/lower/predicates_proof.go:827: func (l *lowering) predicateMembership(node *ast.Node, value ir.Expression, source, target *checker.Type, local func(string, ir.Type) int, depth int) ([]ir.Statement, ir.Expression, error) {
+internal/lower/predicates_proof.go:959: func (l *lowering) predicateUseDirections(call *ast.CallExpression) predicateTruth {
+internal/lower/predicates_proof.go:987: func (l *lowering) predicateReferenceDirections(call *ast.CallExpression, argument *ast.Node) predicateTruth {
+internal/lower/predicates_proof.go:1026: func (l *lowering) predicateSameReference(a, b *ast.Node) bool {
+internal/lower/predicates_proof.go:1031: func (l *lowering) predicateFlowDirections(flow *ast.FlowNode, call, reference *ast.Node, seen map[*ast.FlowNode]bool) predicateTruth {
+internal/lower/predicates_proof.go:1061: func (l *lowering) predicateConditionDirection(node, call *ast.Node, truth bool, depth int) predicateTruth {
+internal/lower/predicates_proof.go:1103: func (l *lowering) predicateDirectionCount(call *ast.CallExpression, directions predicateTruth) int {
+internal/lower/predicates_proof.go:1118: func predicateDirectionMismatch(returned, membership ir.Expression, directions predicateTruth) ir.Expression {
+internal/lower/predicates_proof.go:1129: func predicateWriteOnly(node *ast.Node) bool {
+internal/lower/predicates_proof.go:1144: func (l *lowering) predicateFlowWithout(root *ast.FlowNode, call, reference *ast.Node, direction predicateTruth) *ast.FlowNode {
+internal/lower/predicates_proof.go:1191: func (l *lowering) predicateOverloadOrdinal(implementation, overload *ast.Node) int {
+internal/lower/predicates_proof.go:1204: func (l *lowering) recordPredicateChecks(call *ast.CallExpression, implementation, overload *ast.Node, observed predicateTruth, proven bool) {
+internal/lower/predicates_proof.go:1235: func (l *lowering) proveInferredPredicate(function *ast.Node, target *checker.Type) bool {
+internal/lower/prelude.go:11: func (l *lowering) console(call *ast.Node) (ir.Statement, error) {
+internal/lower/prelude.go:32: func (l *lowering) isPanicCall(expression *ast.Node) bool {
+internal/lower/prelude.go:37: // isPreludeFunction reports whether a callee is the prelude's function of that name, as imported
+internal/lower/prelude.go:39: func (l *lowering) isPreludeFunction(callee *ast.Node, name string) bool {
+internal/lower/prelude.go:49: func (l *lowering) isConsole(callee *ast.Node) bool {
+internal/lower/prelude.go:59: func (l *lowering) consoleStream(callee *ast.Node) (ir.Stream, error) {
+internal/lower/prelude.go:79: func isPreludeConsole(symbol *ast.Symbol) bool {
+internal/lower/prototype.go:13: func (l *lowering) memberSymbol(node *ast.Node) *ast.Symbol {
+internal/lower/prototype.go:25: func (l *lowering) libraryMember(node *ast.Node) bool {
+internal/lower/prototype.go:31: func (l *lowering) inheritedLibraryMember(node *ast.Node) bool {
+internal/lower/prototype.go:35: func (l *lowering) inheritedLibrarySymbol(symbol *ast.Symbol) bool {
+internal/lower/prototype.go:49: func (l *lowering) librarySymbol(symbol *ast.Symbol) bool {
+internal/lower/prototype.go:70: func (l *lowering) prototypeRead(node *ast.Node, name string) error {
+internal/lower/prototype.go:77: func (l *lowering) objectPrototypeCall(node, receiver *ast.Node, name string) (ir.Expression, bool, error) {
+internal/lower/prototype.go:81: func (l *lowering) objectPrototypeCallArguments(node, receiver *ast.Node, name string, written []*ast.Node) (ir.Expression, bool, error) {
+internal/lower/prototype.go:179: return nil, true, l.notYet(node, name+" on a "+typeName(of)+" (function source text and mixed value dispatch are not represented)")
+internal/lower/prototype.go:185: func (l *lowering) prototypeHazard(receiver *ast.Node, name string) string {
+internal/lower/prototype.go:269: func (l *lowering) exactPlainObject(node *ast.Node) bool {
+internal/lower/prototype_own.go:9: // A generated function keeps the receiver and key in parameters, so each is evaluated once, in
+internal/lower/prototype_own.go:11: func (l *lowering) nonObjectOwnProperty(node, receiver *ast.Node, name string, of ir.Type) (ir.Expression, bool, error) {
+internal/lower/prototype_own.go:15: func (l *lowering) nonObjectOwnPropertyArguments(node, receiver *ast.Node, name string, of ir.Type, arguments []*ast.Node) (ir.Expression, bool, error) {
+internal/lower/prototype_own.go:24: return nil, true, l.notYet(node, "hasOwnProperty on a function (its prototype property depends on whether it was declared or made as an arrow)")
+internal/lower/prototype_own.go:43: function := len(l.result.Functions)
+internal/lower/prototype_own.go:92: // A module function has an own, non-enumerable prototype; an arrow has none. A parameter or field
+internal/lower/prototype_own.go:94: func (l *lowering) functionPrototype(node *ast.Node, depth int) int {
+internal/lower/proven_relations.go:11: func (l *lowering) provenRelation(where, expression *ast.Node, target *checker.Type) error {
+internal/lower/proven_relations.go:33: func (l *lowering) optionalRelationFailure(from, to *checker.Type, origin *ast.Node, seen map[[2]*checker.Type]bool) string {
+internal/lower/proven_relations.go:171: func relationFieldExpression(origin *ast.Node, name string) *ast.Node {
+internal/lower/readiness.go:13: func sourceExpression(node *ast.Node) string {
+internal/lower/readiness.go:20: func (l *lowering) uninitializedInitializer(node *ast.Node) bool {
+internal/lower/readiness.go:42: func (l *lowering) uninitializedDeclaration(node *ast.Node) bool {
+internal/lower/readiness.go:55: func readiness(program *ir.Program) {
+internal/lower/readiness.go:73: for _, function := range program.Functions {
+internal/lower/readiness.go:90: for _, function := range program.Functions {
+internal/lower/readiness.go:123: for function := -1; function < len(program.Functions); function++ {
+internal/lower/readiness.go:134: if function >= 0 {
+internal/lower/readiness.go:226: func readinessWrite(program *ir.Program, graph *flow.Function, instruction *flow.Instruction, state []bool, fields map[fieldReadiness]int) {
+internal/lower/readiness.go:250: func readinessStatement(statement ir.Statement, program *ir.Program, fields map[string]bool, ready []bool, fieldSlots map[fieldReadiness]int) ir.Statement {
+internal/lower/readiness.go:353: func readinessObject(value ir.Expression) (int, bool) {
+internal/lower/readiness.go:364: func readinessCalls(instruction *flow.Instruction) bool {
+internal/lower/readiness.go:384: func assertionInitializer(node *ast.Node) bool {
+internal/lower/readiness.go:389: func (l *lowering) lazyAssertionInitializer(node *ast.Node) bool {
+internal/lower/readiness.go:393: func assertionVarList(list *ast.Node) bool {
+internal/lower/readiness.go:403: func (l *lowering) lazyAssertion(node *ast.Node, to ir.Type) ([]ir.Statement, ir.Expression, ir.Expression, error) {
+internal/lower/refusals.go:24: ast.KindYieldExpression:   {"yield (generators)", "build an array, or call a function per item"},
+internal/lower/refusals.go:39: func (l *lowering) refuse(module *ast.SourceFile) error {
+internal/lower/refusals.go:205: found = &Refused{Where: l.program.Where(node), What: "a method read as a value (" + symbol.Name + " would lose its object, and this with it)", Fix: "call it in an arrow that keeps the object: (" + parameters + ") => " + object + "." + symbol.Name + "(" + parameters + ") (unbound-method)"}
+internal/lower/refusals.go:240: func called(node *ast.Node) bool {
+internal/lower/refusals.go:248: func scannedText(node *ast.Node) string {
+internal/lower/regexp.go:13: func (l *lowering) regexConstant(node *ast.Node) (ir.Expression, error) {
+internal/lower/regexp.go:76: func (l *lowering) constantPattern(node *ast.Node, depth int) (string, bool) {
+internal/lower/regexp.go:108: func joinPatternStrings(left, right string) string {
+internal/lower/regexp.go:123: func (l *lowering) regexBuiltin(node *ast.Node) (ir.Expression, bool, error) {
+internal/lower/regexp.go:220: func escapeRegexSource(pattern, flags string) string {
+internal/lower/regexp.go:277: func (l *lowering) regexGroups(node *ast.Node) bool {
+internal/lower/regexp.go:290: func (l *lowering) regexUnsupportedUse(node *ast.Node) error {
+internal/lower/regexp.go:313: func (l *lowering) regexRuntimeProperty(receiver *ast.Node, name string) bool {
+internal/lower/set.go:15: func (l *lowering) isSet(node *ast.Node) bool {
+internal/lower/set.go:20: func (l *lowering) setElement(node *ast.Node) (ir.Type, error) {
+internal/lower/set.go:33: func (l *lowering) newSet(node *ast.Node) (ir.Expression, error) {
+internal/lower/set.go:74: func (l *lowering) setMethod(node *ast.Node, receiver *ast.Node, name string) (ir.Expression, bool, error) {
+internal/lower/set.go:119: func (l *lowering) forOfSet(node *ast.Node, iterable ir.Expression, iterated *ast.Node, part string, name *ast.Node) ([]ir.Statement, error) {
+internal/lower/shape_flow.go:14: func (graph *allocationFlowGraph) ReachingAllocations(expression ir.Expression) ir.AllocationSet {
+internal/lower/shape_flow.go:18: func (graph *allocationFlowGraph) reachingAllocations(expression ir.Expression, project bool, depth int) (result ir.AllocationSet) {
+internal/lower/shape_flow.go:108: func rewriteShapeStatements(body []ir.Statement, rewrite func(any) any) []ir.Statement {
+internal/lower/shape_flow.go:153: func (graph *allocationFlowGraph) projectionIndex() *allocationProjection {
+internal/lower/shape_flow.go:180: for _, function := range graph.program.Functions {
+internal/lower/shape_flow.go:201: func (graph *allocationFlowGraph) projectedSources(expression ir.Expression, depth int) ([]ir.Expression, []string, bool) {
+internal/lower/statements.go:13: func (l *lowering) statements(nodes []*ast.Node) ([]ir.Statement, error) {
+internal/lower/statements.go:29: func (l *lowering) statement(node *ast.Node) ([]ir.Statement, error) {
+internal/lower/statements.go:56: if l.function != nil {
+internal/lower/statements.go:60: return nil, l.notYet(node, "a block-scoped nested function declaration")
+internal/lower/statements.go:67: if l.function != nil {
+internal/lower/statements.go:119: func (l *lowering) expressionStatement(expression *ast.Node) ([]ir.Statement, error) {
+internal/lower/statements.go:198: func (l *lowering) returnStatement(node *ast.Node) ([]ir.Statement, error) {
+internal/lower/statements.go:199: if l.function == nil {
+internal/lower/statements.go:241: func (l *lowering) returnAssignment(node *ast.Node) ([]ir.Statement, error) {
+internal/lower/string_substr.go:10: func (l *lowering) stringSubstr(node *ast.Node, value ir.Expression, written []*ast.Node) (ir.Expression, error) {
+internal/lower/switch.go:16: func switchBodyLeaves(body []ir.Statement) bool {
+internal/lower/switch.go:37: func (l *lowering) fallthroughSwitch(value ir.Expression, groups []switchGroup, unmatchedCheck ir.Statement) []ir.Statement {
+internal/lower/switch.go:73: func (l *lowering) labeledBreak(node *ast.Node) ([]ir.Statement, error) {
+internal/lower/switch_bindings.go:10: func (l *lowering) initializeLocal(local int, value ir.Expression) []ir.Statement {
+internal/lower/switch_bindings.go:26: // storage and readiness cell exists before a function can capture it. Functions are hoisted and
+internal/lower/switch_bindings.go:28: func (l *lowering) switchBindings(block *ast.Node) ([]ir.Statement, error) {
+internal/lower/tsgo.go:15: func (l *lowering) tsgo(node *ast.Node) (ir.Expression, bool, error) {
+internal/lower/tsgo.go:58: function := -1
+internal/lower/tsgo.go:61: function = index
+internal/lower/tsgo.go:65: if function < 0 {
+internal/lower/tsgo.go:66: function = len(l.result.Functions)
+internal/lower/typed_arrays.go:9: func typedArrayName(kind ir.Type) string {
+internal/lower/typed_arrays.go:21: func (l *lowering) typedArrayKind(proven *checker.Type) ir.Type {
+internal/lower/typed_arrays.go:31: func (l *lowering) typedArrayUnsupported(node *ast.Node) error {
+internal/lower/typed_arrays.go:72: func (l *lowering) typedArrayExpression(node *ast.Node) (ir.Expression, bool, error) {
+internal/lower/typed_arrays.go:236: func (l *lowering) typedArrayWrite(target, valueNode *ast.Node) ([]ir.Statement, bool, error) {
+internal/lower/typed_arrays.go:259: func (l *lowering) typedArrayForOf(node *ast.Node) ([]ir.Statement, bool, error) {
+internal/lower/typed_arrays.go:292: func (l *lowering) typedArraySetArgument(node *ast.Node) bool {
+internal/lower/typeof.go:9: func (l *lowering) typeOfNull(node *ast.Node) bool {
+internal/lower/unknown.go:11: func dynamicObjectType(proven *checker.Type) bool {
+internal/lower/unknown.go:25: func (l *lowering) inProperty(node *ast.Node) (ir.Expression, error) {
+internal/lower/unknown.go:70: func (l *lowering) dynamicProperty(node *ast.Node, object ir.Expression, name string) (ir.Expression, error) {
+internal/lower/unknown.go:77: // Prototype function values and dynamic array elements need callable and element metadata.
+internal/lower/unknown.go:95: func (l *lowering) dynamicScalarProperty(node *ast.Node) bool {
+internal/lower/unknown.go:136: func (l *lowering) unknownView(node *ast.Node, own, contextual *checker.Type) error {
+internal/lower/unknown.go:162: return l.notYet(node, "a function viewed as unknown or object (dynamic function descriptors)")
+internal/lower/unknown.go:184: func (l *lowering) dynamicReadHazard(name string) bool {
+internal/lower/unknown.go:217: func (l *lowering) presenceHazard(name string) string {
+internal/lower/view_adapters.go:9: func unavailableViewFamily(family string) viewContractHook {
+internal/lower/view_adapters.go:17: func init() { viewUnionContractHook = buildUnionReadContract }
+internal/lower/view_adapters.go:22: func viewErasureProof(*ir.Program, ir.Property) bool { return false }
+internal/lower/view_adapters.go:23: func (l *lowering) viewObjectFields(node *ast.Node, target *checker.Type, fields map[string]bool, _ map[*checker.Type]bool, _ bool) error {
+internal/lower/view_contracts.go:18: func (l *lowering) strictViewContract(node *ast.Node, target *checker.Type) (ir.ViewContractID, error) {
+internal/lower/view_contracts.go:94: func (l *lowering) viewContractLiterals(target *checker.Type) []ir.ViewLiteral {
+internal/lower/view_contracts.go:131: func (l *lowering) viewNominalBases(target *checker.Type, seen map[*checker.Type]bool) []string {
+internal/lower/view_flow.go:13: func graphAllocationSites(value reflect.Value, next *int) reflect.Value {
+internal/lower/view_flow.go:79: func (graph *allocationFlowGraph) resultNode(function int) int {
+internal/lower/view_flow.go:80: return len(graph.program.Locals) + function + 1
+internal/lower/view_flow.go:83: func newAllocationFlowGraph(program *ir.Program) *allocationFlowGraph {
+internal/lower/view_flow.go:85: collect := func(body []ir.Statement, function int) {
+internal/lower/view_flow.go:98: if function >= 0 {
+internal/lower/view_flow.go:117: // Opaque function values are a documented leak-only frontier.
+internal/lower/view_flow.go:135: for i, function := range program.Functions {
+internal/lower/view_flow.go:141: func (graph *allocationFlowGraph) follow(expression ir.Expression, allocation func(int), demand func(int), unknown func(string)) {
+internal/lower/view_flow.go:195: func assignAllocationSites(program *ir.Program) {
+internal/lower/view_flow.go:208: for _, function := range program.Functions {
+internal/lower/view_interfaces.go:11: func (l *lowering) viewInterfaceFields(node *ast.Node, target *checker.Type, fields map[string]bool, seen map[*checker.Type]bool) error {
+internal/lower/view_lazy.go:12: func (l *lowering) viewContract(node *ast.Node, target *checker.Type) (ir.ViewContractID, error) {
+internal/lower/view_lazy.go:55: func (l *lowering) unsupportedViewFamily(target *checker.Type) string {
+internal/lower/view_lazy.go:93: func (l *lowering) checkLazyViewReads() error {
+internal/lower/view_lazy.go:206: for _, function := range program.Functions {
+internal/lower/view_lazy.go:212: func viewAggregate(value ir.Expression) bool {
+internal/lower/view_lazy.go:223: func (l *lowering) lazyReadRefusal(node *ast.Node, field, family string) error {
+internal/lower/view_objects.go:13: func viewDataType(target *checker.Type) bool {
+internal/lower/view_objects.go:25: func viewInterfaceType(target *checker.Type) bool {
+internal/lower/view_objects.go:34: func (l *lowering) structuralViewCast(node *ast.Node, value ir.Expression, source, target *checker.Type) (ir.Expression, error) {
+internal/lower/view_unions_callable_members.go:11: func (l *lowering) untaggedCallableShape(target *checker.Type) bool {
+internal/lower/view_unions_callable_members.go:30: func (l *lowering) prepareUntaggedCallableMember(node *ast.Node, target *checker.Type) (ir.ViewContractID, error) {
+internal/lower/view_unions_callable_members.go:71: func (l *lowering) viewArrayElementType(target *checker.Type) *checker.Type {
+internal/lower/view_unions_dispatch.go:11: func buildUnionReadContract(l *lowering, node *ast.Node, target *checker.Type, build viewContractBuilder) (ir.ViewContractID, error) {
+internal/lower/view_unions_dispatch.go:48: func (l *lowering) unionAggregateContract(node *ast.Node, target *checker.Type) (ir.ViewContractID, error) {
+internal/lower/view_unions_dispatch.go:92: func (l *lowering) unionReadCertificate(node *ast.Node, of ir.Type) bool {
+internal/lower/view_unions_mixed.go:16: func internMixedUnionViewContract(l *lowering, node *ast.Node, target *checker.Type, build viewContractBuilder) (id ir.ViewContractID, err error) {
+internal/lower/view_unions_primitive_brands.go:15: func (l *lowering) phantomParts(proven *checker.Type) (*checker.Type, []*checker.Type) {
+internal/lower/view_unions_primitive_brands.go:41: func (l *lowering) phantomBase(proven *checker.Type) *checker.Type {
+internal/lower/view_unions_primitive_brands.go:59: func phantomField(proven *checker.Type, optional bool) bool {
+internal/lower/view_unions_primitive_brands.go:79: func primitiveMember(flags checker.TypeFlags, name string) bool {
+internal/lower/view_unions_primitive_brands.go:98: func (l *lowering) phantomUndefined(proven *checker.Type) bool {
+internal/lower/view_unions_primitive_brands.go:106: // function results or erasure. Those retain the base's separate representation proof.
+internal/lower/view_unions_primitive_brands.go:107: func (l *lowering) viewRepresentation(target *checker.Type) (ir.Type, bool) {
+internal/lower/view_unions_untagged.go:25: func UntaggedViewMembers(contracts []ir.ViewContract, union ir.ViewContractID) ([]UntaggedViewMember, error) {
+internal/lower/view_unions_untagged.go:76: func (l *lowering) supportsUntaggedRead(root ir.ViewContract) bool {
+internal/lower/view_unions_untagged.go:149: func (l *lowering) untaggedArrayElement(target *checker.Type) *checker.Type {
+internal/lower/view_unions_untagged.go:170: func (l *lowering) completeUntaggedRecursiveContracts() {
+internal/lower/view_unions_untagged.go:191: func (l *lowering) prepareUntaggedCallableUnionRead(node *ast.Node, target *checker.Type) (ir.ViewContractID, error) {
+internal/lower/view_unions_untagged.go:220: func (l *lowering) prepareUntaggedStructuralRead(node *ast.Node, target *checker.Type, seen map[*checker.Type]bool) {
+internal/lower/view_unions_untagged.go:254: func (l *lowering) certifyUntaggedCallableProducers() {
+internal/lower/view_unions_untagged.go:266: func certifiedUntaggedCallableRead(program *ir.Program, id ir.ViewContractID) bool {
+internal/lower/void.go:7: func voidInitializer(node *ast.Node) bool {

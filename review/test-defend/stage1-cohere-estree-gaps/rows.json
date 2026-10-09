@@ -1,0 +1,226 @@
+[
+  {
+    "test": "TestRawInputGap",
+    "package": "stage1/cohere/estree",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestJSXAgreement family"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D1 internal/native/runtime/directory.c:170",
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "internal/native/runtime/directory.c:170",
+        "change": "stat size + 1",
+        "rows_failed": [
+          "TestRawInputGap"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-estree/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^(TestRawInputGap|TestInterfaceDefaultGap|TestInterfaceTypeMethodGap|TestPostfixValueGap|TestMethodReplacementGap|TestJSXAgreement(_[0-9]{3})?)$' > D1.log 2>&1 ; gaps_test.go:86: reader changed: \"9:8://\ufffd\\nx;\\n\" != \"8:8://\ufffd\\nx;\\n\"",
+    "bounded": true,
+    "matrix_rows": [
+      "TestInterfaceDefaultGap",
+      "TestInterfaceTypeMethodGap",
+      "TestJSXAgreement",
+      "TestJSXAgreement_000",
+      "TestJSXAgreement_001",
+      "TestJSXAgreement_002",
+      "TestJSXAgreement_003",
+      "TestJSXAgreement_004",
+      "TestJSXAgreement_005",
+      "TestJSXAgreement_006",
+      "TestJSXAgreement_007",
+      "TestJSXAgreement_008",
+      "TestJSXAgreement_009",
+      "TestJSXAgreement_010",
+      "TestJSXAgreement_011",
+      "TestJSXAgreement_012",
+      "TestJSXAgreement_013",
+      "TestJSXAgreement_014",
+      "TestJSXAgreement_015",
+      "TestJSXAgreement_016",
+      "TestJSXAgreement_017",
+      "TestJSXAgreement_018",
+      "TestJSXAgreement_019",
+      "TestJSXAgreement_020",
+      "TestJSXAgreement_021",
+      "TestJSXAgreement_022",
+      "TestJSXAgreement_023",
+      "TestJSXAgreement_024",
+      "TestJSXAgreement_025",
+      "TestJSXAgreement_026",
+      "TestJSXAgreement_027",
+      "TestJSXAgreement_028",
+      "TestJSXAgreement_029",
+      "TestJSXAgreement_030",
+      "TestJSXAgreement_031",
+      "TestMethodReplacementGap",
+      "TestPostfixValueGap",
+      "TestRawInputGap"
+    ]
+  },
+  {
+    "test": "TestInterfaceDefaultGap",
+    "package": "stage1/cohere/estree",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestInterfaceTypeMethodGap"
+    ],
+    "defense": "not defended",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D2",
+        "file_line": "internal/lower/class_inheritance.go:761",
+        "change": "missing optional callback argument: break -> return to",
+        "rows_failed": [
+          "TestInterfaceDefaultGap",
+          "TestJSXAgreement family"
+        ]
+      },
+      {
+        "mutant": "D3",
+        "file_line": "internal/lower/iteration_origin.go:95",
+        "change": "drop prototype-origin diagnostic assignment",
+        "rows_failed": [
+          "TestInterfaceDefaultGap",
+          "TestInterfaceTypeMethodGap"
+        ]
+      },
+      {
+        "mutant": "D4",
+        "file_line": "internal/lower/iteration_origin.go:88",
+        "change": "class parent == -> !=",
+        "rows_failed": [
+          "TestInterfaceDefaultGap",
+          "TestInterfaceTypeMethodGap"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-estree/cache/D2 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^(TestRawInputGap|TestInterfaceDefaultGap|TestInterfaceTypeMethodGap|TestPostfixValueGap|TestMethodReplacementGap|TestJSXAgreement(_[0-9]{3})?)$' > D2.log 2>&1 ; gaps_test.go:135: recorded lowering gap changed: /workspace/adamic/stage1/cohere/estree/gaps/interfaceDefault.ts:12:20: Adamic 0.1 refuses a value without nominal ancestry seen as (value: number, step?: number) => number; construct that class or a subclass; use an interface for structural values (adamic/nominal-class) ; ADAMIC_BUILD_CACHE_DIR=/tmp/defend-estree/cache/D3 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^(TestRawInputGap|TestInterfaceDefaultGap|TestInterfaceTypeMethodGap|TestPostfixValueGap|TestMethodReplacementGap|TestJSXAgreement(_[0-9]{3})?)$' > D3.log 2>&1 ; gaps_test.go:135: recorded lowering gap changed: <nil> ; ADAMIC_BUILD_CACHE_DIR=/tmp/defend-estree/cache/D4 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^(TestRawInputGap|TestInterfaceDefaultGap|TestInterfaceTypeMethodGap|TestPostfixValueGap|TestMethodReplacementGap|TestJSXAgreement(_[0-9]{3})?)$' > D4.log 2>&1 ; gaps_test.go:135: recorded lowering gap changed: <nil>",
+    "bounded": true,
+    "matrix_rows": [
+      "TestInterfaceDefaultGap",
+      "TestInterfaceTypeMethodGap",
+      "TestJSXAgreement",
+      "TestJSXAgreement_000",
+      "TestJSXAgreement_001",
+      "TestJSXAgreement_002",
+      "TestJSXAgreement_003",
+      "TestJSXAgreement_004",
+      "TestJSXAgreement_005",
+      "TestJSXAgreement_006",
+      "TestJSXAgreement_007",
+      "TestJSXAgreement_008",
+      "TestJSXAgreement_009",
+      "TestJSXAgreement_010",
+      "TestJSXAgreement_011",
+      "TestJSXAgreement_012",
+      "TestJSXAgreement_013",
+      "TestJSXAgreement_014",
+      "TestJSXAgreement_015",
+      "TestJSXAgreement_016",
+      "TestJSXAgreement_017",
+      "TestJSXAgreement_018",
+      "TestJSXAgreement_019",
+      "TestJSXAgreement_020",
+      "TestJSXAgreement_021",
+      "TestJSXAgreement_022",
+      "TestJSXAgreement_023",
+      "TestJSXAgreement_024",
+      "TestJSXAgreement_025",
+      "TestJSXAgreement_026",
+      "TestJSXAgreement_027",
+      "TestJSXAgreement_028",
+      "TestJSXAgreement_029",
+      "TestJSXAgreement_030",
+      "TestJSXAgreement_031",
+      "TestMethodReplacementGap",
+      "TestPostfixValueGap",
+      "TestRawInputGap"
+    ]
+  },
+  {
+    "test": "TestInterfaceTypeMethodGap",
+    "package": "stage1/cohere/estree",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestInterfaceDefaultGap"
+    ],
+    "defense": "not defended",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D5",
+        "file_line": "internal/lower/expression.go:1024",
+        "change": "swap conditional branch operands",
+        "rows_failed": [
+          "TestInterfaceTypeMethodGap",
+          "TestJSXAgreement family"
+        ]
+      },
+      {
+        "mutant": "D6",
+        "file_line": "internal/lower/expression.go:508",
+        "change": "Boolean literal TrueKeyword == -> FalseKeyword ==",
+        "rows_failed": [
+          "TestInterfaceTypeMethodGap",
+          "TestJSXAgreement family"
+        ]
+      },
+      {
+        "mutant": "D7",
+        "file_line": "internal/lower/expression.go:783",
+        "change": "PlusToken ir.Add -> ir.Subtract",
+        "rows_failed": [
+          "TestInterfaceTypeMethodGap",
+          "TestJSXAgreement family"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-estree/cache/D5 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^(TestRawInputGap|TestInterfaceDefaultGap|TestInterfaceTypeMethodGap|TestPostfixValueGap|TestMethodReplacementGap|TestJSXAgreement(_[0-9]{3})?)$' > D5.log 2>&1 ; interface_type_test.go:54: emitted default-free control: 0 ; ADAMIC_BUILD_CACHE_DIR=/tmp/defend-estree/cache/D6 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^(TestRawInputGap|TestInterfaceDefaultGap|TestInterfaceTypeMethodGap|TestPostfixValueGap|TestMethodReplacementGap|TestJSXAgreement(_[0-9]{3})?)$' > D6.log 2>&1 ; interface_type_test.go:54: native default-free control: 0 ; ADAMIC_BUILD_CACHE_DIR=/tmp/defend-estree/cache/D7 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^(TestRawInputGap|TestInterfaceDefaultGap|TestInterfaceTypeMethodGap|TestPostfixValueGap|TestMethodReplacementGap|TestJSXAgreement(_[0-9]{3})?)$' > D7.log 2>&1 ; interface_type_test.go:54: emitted default-free control: -1",
+    "bounded": true,
+    "matrix_rows": [
+      "TestInterfaceDefaultGap",
+      "TestInterfaceTypeMethodGap",
+      "TestJSXAgreement",
+      "TestJSXAgreement_000",
+      "TestJSXAgreement_001",
+      "TestJSXAgreement_002",
+      "TestJSXAgreement_003",
+      "TestJSXAgreement_004",
+      "TestJSXAgreement_005",
+      "TestJSXAgreement_006",
+      "TestJSXAgreement_007",
+      "TestJSXAgreement_008",
+      "TestJSXAgreement_009",
+      "TestJSXAgreement_010",
+      "TestJSXAgreement_011",
+      "TestJSXAgreement_012",
+      "TestJSXAgreement_013",
+      "TestJSXAgreement_014",
+      "TestJSXAgreement_015",
+      "TestJSXAgreement_016",
+      "TestJSXAgreement_017",
+      "TestJSXAgreement_018",
+      "TestJSXAgreement_019",
+      "TestJSXAgreement_020",
+      "TestJSXAgreement_021",
+      "TestJSXAgreement_022",
+      "TestJSXAgreement_023",
+      "TestJSXAgreement_024",
+      "TestJSXAgreement_025",
+      "TestJSXAgreement_026",
+      "TestJSXAgreement_027",
+      "TestJSXAgreement_028",
+      "TestJSXAgreement_029",
+      "TestJSXAgreement_030",
+      "TestJSXAgreement_031",
+      "TestMethodReplacementGap",
+      "TestPostfixValueGap",
+      "TestRawInputGap"
+    ]
+  }
+]

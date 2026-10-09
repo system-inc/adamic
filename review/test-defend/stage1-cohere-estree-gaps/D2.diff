@@ -1,0 +1,13 @@
+diff --git a/internal/lower/class_inheritance.go b/internal/lower/class_inheritance.go
+index b1906e9d..886e7555 100644
+--- a/internal/lower/class_inheritance.go
++++ b/internal/lower/class_inheritance.go
+@@ -758,7 +758,7 @@ func (l *lowering) nominalMismatch(from, to *checker.Type, seen map[[2]*checker.
+ 		}
+ 		for index, parameter := range parameters {
+ 			if index >= len(fromSignatures[0].Parameters()) {
+-				break
++				return to
+ 			}
+ 			if found := l.nominalMismatch(l.checker.GetTypeOfSymbol(parameter), l.checker.GetTypeOfSymbol(fromSignatures[0].Parameters()[index]), seen); found != nil {
+ 				return found

@@ -1,0 +1,13 @@
+diff --git a/internal/lower/expression.go b/internal/lower/expression.go
+index 8b8c5d6d..884ea4fc 100644
+--- a/internal/lower/expression.go
++++ b/internal/lower/expression.go
+@@ -505,7 +505,7 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
+ 	case ast.KindStringLiteral, ast.KindNoSubstitutionTemplateLiteral:
+ 		return ir.StringConstant{Index: l.constant(node.Text())}, nil
+ 	case ast.KindTrueKeyword, ast.KindFalseKeyword:
+-		return ir.BooleanConstant{Value: node.Kind == ast.KindTrueKeyword}, nil
++		return ir.BooleanConstant{Value: node.Kind == ast.KindFalseKeyword}, nil
+ 	case ast.KindIdentifier:
+ 		if value, known, err := l.libraryGlobalValue(node); known {
+ 			return value, err

@@ -1,0 +1,33 @@
+[
+  {
+    "command": [
+      "nproc"
+    ],
+    "exit": 0,
+    "output": "5\n"
+  },
+  {
+    "command": [
+      "go",
+      "version"
+    ],
+    "exit": 0,
+    "output": "go version go1.27.1 linux/amd64\n"
+  },
+  {
+    "command": [
+      "node",
+      "--version"
+    ],
+    "exit": 0,
+    "output": "v24.19.0\n"
+  },
+  {
+    "command": [
+      "clang",
+      "--version"
+    ],
+    "exit": 0,
+    "output": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)\nTarget: x86_64-unknown-linux-gnu\nThread model: posix\nInstalledDir: /workspace/adamic-tools/llvm/bin\n"
+  }
+]

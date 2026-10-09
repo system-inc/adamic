@@ -1,0 +1,4 @@
+Command: rg -n fileStatus stage1/cohere/estree -g *.ts
+stage1/cohere/estree/gaps/rawInput.ts:1: import fileStatus
+stage1/cohere/estree/gaps/rawInput.ts:4: const status = fileStatus(path);
+C runtime coverage is not instrumented by Go -coverpkg. This static call inventory supplies the entry-point lead.

@@ -1,0 +1,13 @@
+diff --git a/internal/lower/expression.go b/internal/lower/expression.go
+index 8b8c5d6d..ac4fe79d 100644
+--- a/internal/lower/expression.go
++++ b/internal/lower/expression.go
+@@ -1021,7 +1021,7 @@ func (l *lowering) conditional(node *ast.Node) (ir.Expression, error) {
+ 		}
+ 		return nil, l.notYet(node, "a conditional whose branches have different types")
+ 	}
+-	return ir.Conditional{Condition: condition, WhenTrue: whenTrue, WhenNot: whenNot}, nil
++	return ir.Conditional{Condition: condition, WhenTrue: whenNot, WhenNot: whenTrue}, nil
+ }
+ 
+ func typeName(valueType ir.Type) string {
