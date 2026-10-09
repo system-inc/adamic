@@ -114,6 +114,39 @@ countingPaths() {
 	done
 }
 directory=$(cd "$(dirname "$0")" && pwd)
+# Prints why a test-only change (its paths on stdin's argument, one per line) waits for the star, or
+# nothing: the train's newest candidate not on main, while a gate of it is running (a fast gate in the
+# watcher's running set, or a whole gate on origin still reading running, stamped within 90 minutes),
+# and the change touches a package where that candidate changes code.
+starHolds() {
+	local candidate name running= package
+	read -r name candidate <<<"$(grep ' built cloud/land-train-' "${ADAMIC_STAR_TRAIN_STATE:-$HOME/.adamic-star-train}/train.log" 2>/dev/null | tail -n 1 | awk '{print $3, $4}')"
+	[ -n "$candidate" ] || return 0
+	candidate=$(git rev-parse -q --verify "${candidate}^{commit}" 2>/dev/null) || return 0
+	git merge-base --is-ancestor "$candidate" origin/main && return 0
+	if grep -qs -- " ${candidate} " "${ADAMIC_FAST_GATE_STATE:-$HOME/.adamic-fast-gate-watch}"/running/*; then
+		running=fast
+	else
+		for ref in $(git ls-remote origin "refs/heads/gate-logs/${candidate:0:12}/*/full-main" | awk '{print $2}'); do
+			git fetch -q origin "+${ref}:refs/remotes/origin/${ref#refs/heads/}" 2>/dev/null || continue
+			# A record still reading running after 90 minutes is a gate that died, not one to wait for.
+			[ $(($(date +%s) - $(git log -1 --format=%ct "origin/${ref#refs/heads/}"))) -lt 5400 ] || continue
+			git show "origin/${ref#refs/heads/}:status.txt" 2>/dev/null | head -n 1 | grep -q '^running' && running=whole
+		done
+	fi
+	[ -n "$running" ] || return 0
+	local code
+	code=$(codePackages "$(git merge-base "$candidate" origin/main)" "$candidate")
+	while IFS= read -r path; do
+		[ -n "$path" ] || continue
+		package=${path%%/testdata/*}
+		[ "$package" != "$path" ] || package=${path%/*}
+		if printf '%s\n' "$code" | grep -qxF -- "$package"; then
+			echo "${name} ${candidate:0:8} has its ${running} gate running and changes code in ${package}"
+			return 0
+		fi
+	done <<<"$1"
+}
 
 if ! [[ "$sha" =~ ^[0-9a-f]{40}$ ]]; then
 	echo "refused: pass the full 40-character sha, not $sha" >&2
@@ -397,6 +430,15 @@ if [ "$testOnly" = yes ]; then
 	if [ -n "$harness" ] && ! printf '%s\n' "$changed" | grep -q -i 'mutant'; then
 		echo "refused: it changes test harness ($(printf '%s' "$harness" | head -n 3 | paste -sd ' ' -)) with no mutant evidence among its files" >&2
 		exit 1
+	fi
+	# The star's hold (@system_adamic, Oct 9 03:48Z, interim until Loom's rerun by hash): while a star
+	# slice's gate is running, a test-only change touching that slice's code packages waits, since landing
+	# it would make the train re-cut the slice and void the gate. It lands the minute the gate finishes,
+	# green or red. Exit 3 means held; pr-lane.py tries again every minute.
+	held=$(starHolds "$changed")
+	if [ -n "$held" ]; then
+		echo "held for the star: ${held}" >&2
+		exit 3
 	fi
 	landingSubject="Land test-only ${gated:0:8} over main ${old:0:8}"
 	landingBody="Every path it changes against main is a test, testdata, review evidence, a shard table or ruled harness,

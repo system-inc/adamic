@@ -12,6 +12,11 @@ required check binds push-main too or nobody), so each run also reads every comm
 first-parent line since the last run and tells integration and @system_adamic at once when one changed
 anything the lane wouldn't take.
 
+Branches sent to integration by message take the same lane: a line "<branch><TAB><note>" in
+~/.adamic-pr-lane/branches lands when it can and leaves the file; a refusal leaves it too and tells
+integration. A change push-main holds for the star (exit 3) stays, for either kind, until the star's
+gate finishes.
+
 usage (launchd com.adamic.pr-lane runs it every minute, from the merge tree): cloud/integration/pr-lane.py
 """
 import json, os, re, subprocess, sys
@@ -74,6 +79,9 @@ for pullRequest in json.loads(listed.stdout):
         print(f"landed #{number} {sha[:8]}")
         continue
     output = pushed.stdout + pushed.stderr
+    if pushed.returncode == 3:
+        print(f"held #{number} {sha[:8]}: {output.strip().splitlines()[-1]}")
+        continue
     # Main moved between the check and the push (another landing won the race): the next minute tries again.
     if "cannot lock ref" in output or "[rejected]" in output or "failed to push" in output:
         print(f"raced #{number} {sha[:8]}, retrying next run")
@@ -83,3 +91,29 @@ for pullRequest in json.loads(listed.stdout):
         f"Not landed: integration's test-only lane takes only tests, testdata, review evidence, shard tables and the ruled stage 3 harness, and push-main said: {reason[0] if reason else 'no output'}. Push a fix to the branch and it's tried again, or send the branch to @system_adamic_integration for a gate.")
     open(refused, "w").close()
     print(f"refused #{number} {sha[:8]}: {reason[0] if reason else 'no output'}")
+
+
+# Branches sent by message, in the order they were queued.
+queued = os.path.join(state, "branches")
+if os.path.exists(queued):
+    kept = []
+    for line in open(queued).read().splitlines():
+        if not line.strip():
+            continue
+        branch, _, note = line.partition("\t")
+        run("git", "fetch", "-q", "origin", branch)
+        sha = run("git", "rev-parse", f"origin/{branch}").stdout.strip()
+        pushed = run("bash", os.path.join(directory, "push-main.sh"), "--test-only", sha, f"{note or branch} ({branch} {sha[:8]})")
+        output = pushed.stdout + pushed.stderr
+        if pushed.returncode == 0:
+            landed = [entry for entry in pushed.stdout.splitlines() if entry.startswith("Pushed main")]
+            print(f"landed {branch} {sha[:8]}")
+            subprocess.run(["./node_modules/.bin/ahra", "os", "send", "system_adamic_integration", f"pr-lane landed queued {branch}: {landed[0][:300] if landed else sha[:8]}"], cwd=ahra, capture_output=True)
+        elif pushed.returncode == 3 or "cannot lock ref" in output or "[rejected]" in output or "failed to push" in output:
+            kept.append(line)
+        else:
+            reason = (pushed.stderr.strip() or pushed.stdout.strip()).splitlines()[-1:]
+            print(f"refused {branch} {sha[:8]}: {reason[0] if reason else 'no output'}")
+            subprocess.run(["./node_modules/.bin/ahra", "os", "send", "system_adamic_integration", f"pr-lane refused queued {branch} {sha[:8]}: {reason[0][:300] if reason else 'no output'}"], cwd=ahra, capture_output=True)
+    with open(queued, "w") as handle:
+        handle.write("".join(entry + "\n" for entry in kept))

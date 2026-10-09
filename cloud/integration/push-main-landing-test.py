@@ -63,8 +63,11 @@ class LandingTests(unittest.TestCase):
         return self.commit(message)
 
     def push(self, *arguments):
+        # The star's train and the fast gate's watcher keep their state in scratch directories here.
+        root = Path(self.tmp.name)
         return subprocess.run(['bash', str(self.scripts / 'push-main.sh')] + list(arguments), cwd=self.repository,
-                              capture_output=True, text=True, env=dict(os.environ, **identity))
+                              capture_output=True, text=True, env=dict(os.environ, ADAMIC_STAR_TRAIN_STATE=str(root / 'train'),
+                                                                       ADAMIC_FAST_GATE_STATE=str(root / 'watch'), **identity))
 
     def main_now(self):
         git(self.repository, 'fetch', '-q', 'origin')
@@ -116,6 +119,26 @@ class LandingTests(unittest.TestCase):
         self.assertLanded(self.push('--test-only', same, 'beside'), landed, same)
         refused = self.push(second, '1', '1', '0', '0', 'second')
         self.assertIn('beyond record and test-only commits (code/a_test.go)', refused.stderr)
+
+
+    def test_a_test_beside_the_stars_code_waits_while_its_gate_runs(self):
+        root = Path(self.tmp.name)
+        star = self.change(self.main, 'code/a.go', 'package code\n// the star\n', 'the star')
+        git(self.repository, 'push', '-q', 'origin', star + ':refs/heads/cloud/land-train-9-slice-' + star[:8])
+        (root / 'train').mkdir()
+        (root / 'train' / 'train.log').write_text('03:00:00Z built cloud/land-train-9-slice-%s %s\n' % (star[:8], star[:12]))
+        (root / 'watch' / 'running').mkdir(parents=True)
+        (root / 'watch' / 'running' / '123').write_text('cloud/land-train-9-slice-%s %s S box B x:1 log\n' % (star[:8], star))
+        beside = self.change(self.main, 'code/a_test.go', 'package code\n', 'a test beside the star')
+        held = self.push('--test-only', beside, 'beside')
+        self.assertEqual(held.returncode, 3, held.stdout + held.stderr)
+        self.assertIn('held for the star: cloud/land-train-9-slice-%s %s has its fast gate running and changes code in code' % (star[:8], star[:8]), held.stderr)
+        # Elsewhere keeps flowing.
+        elsewhere = self.change(self.main, 'other/b_test.go', 'package other\n', 'elsewhere')
+        moved = self.assertLanded(self.push('--test-only', elsewhere, 'elsewhere'), self.main, elsewhere)
+        # The gate finishes: the held change lands.
+        (root / 'watch' / 'running' / '123').unlink()
+        self.assertLanded(self.push('--test-only', beside, 'beside'), moved, beside)
 
 
 if __name__ == '__main__':
