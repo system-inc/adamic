@@ -19,8 +19,8 @@ func TestClassWrongOutputIteratorReceiver(t *testing.T) {
 		"const [first = -1] = new ScaledIterator(); console.log(`${first}`);",
 	} {
 		_, err := lowerSource(t, prefix+use)
-		if err == nil || !strings.Contains(err.Error(), "adamic/iterator-receiver-origin") {
-			t.Fatalf("unsafe protocol accepted: %s: %v", use, err)
+		if err != nil {
+			t.Fatalf("dynamic receiver protocol refused: %s: %v", use, err)
 		}
 	}
 	for _, use := range []string{

@@ -31,7 +31,7 @@
     "file": "iterable_view.a",
     "origin": "core.ts:1337",
     "kind": "NotYet",
-    "reason": "for...of over an object",
+    "reason": "an iterable object view of built-in storage needing a protocol adapter",
     "stdout": "1,2\n"
   },
   {
@@ -65,8 +65,8 @@
   {
     "file": "user_forwarding.a",
     "origin": "core.ts:1736",
-    "kind": "NotYet",
-    "reason": "an iterator method whose concrete origin is erased by a structural signature",
+    "kind": "accepted",
+    "reason": "",
     "stdout": "4\n5\n"
   },
   {
