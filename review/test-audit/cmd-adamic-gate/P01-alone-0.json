@@ -1,0 +1,20 @@
+{
+  "command": "timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-gate/ -run ^TestAnchoredSelectors$",
+  "exit": 1,
+  "wall": 1.1234000449985615,
+  "seconds": 0.017,
+  "failed": [
+    "TestAnchoredSelectors"
+  ],
+  "passed": [],
+  "skipped": [],
+  "outputs": {
+    "TestAnchoredSelectors": [
+      "=== RUN   TestAnchoredSelectors",
+      "=== PAUSE TestAnchoredSelectors",
+      "=== CONT  TestAnchoredSelectors",
+      "    main_test.go:69: Go executed [], want exactly [TestParent/internal/load/testdata/0.1/compile/main.a TestParent/internal/oracle/testdata/a.a TestParent/internal/oracle/testdata/b+.a]",
+      "--- FAIL: TestAnchoredSelectors (0.00s)"
+    ]
+  }
+}

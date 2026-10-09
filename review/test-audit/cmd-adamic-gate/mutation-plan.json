@@ -1,0 +1,281 @@
+{
+  "base": "470cc0cde025aee921b7c7856bebe2465c1461b1",
+  "mutations": [
+    {
+      "id": "M01",
+      "file": "cmd/adamic-gate/main.go",
+      "line": 527,
+      "before": "\t\tfor i := range names {\n\t\t\tnames[i] = regexp.QuoteMeta(names[i])\n\t\t}",
+      "after": "",
+      "description": "drop entire leaf escaping loop",
+      "kind": "production"
+    },
+    {
+      "id": "M02",
+      "file": "cmd/adamic-gate/main.go",
+      "line": 534,
+      "before": "regexp.QuoteMeta(parts[i])",
+      "after": "parts[i]",
+      "description": "drop prefix escaping",
+      "kind": "production"
+    },
+    {
+      "id": "M03",
+      "file": "cmd/adamic-gate/main.go",
+      "line": 530,
+      "before": "last := \"^(\" + strings.Join(names, \"|\") + \")$\"",
+      "after": "last := \"^(\" + strings.Join(names, \"|\") + \")\"",
+      "description": "change leaf end-anchor constant",
+      "kind": "production"
+    },
+    {
+      "id": "M04",
+      "file": "cmd/adamic-gate/main.go",
+      "line": 534,
+      "before": "parts[i] = \"^\" + regexp.QuoteMeta(parts[i]) + \"$\"",
+      "after": "parts[i] = \"^\" + regexp.QuoteMeta(parts[i])",
+      "description": "change parent end-anchor constant",
+      "kind": "production"
+    },
+    {
+      "id": "M05",
+      "file": "cmd/adamic-gate/main.go",
+      "line": 1016,
+      "before": "seenTest[r.key()] = index",
+      "after": "",
+      "description": "drop seen-test update",
+      "kind": "production"
+    },
+    {
+      "id": "M06",
+      "file": "cmd/adamic-gate/main.go",
+      "line": 1010,
+      "before": "if u.Shard != index {",
+      "after": "if u.Shard == index {",
+      "description": "flip shard mismatch condition",
+      "kind": "production"
+    },
+    {
+      "id": "M07",
+      "file": "cmd/adamic-gate/main.go",
+      "line": 976,
+      "before": "(r.Test == u.Test || (u.Test != \"\" && strings.HasPrefix(r.Test, u.Test+\"/\")))",
+      "after": "(r.Test == u.Test)",
+      "description": "drop descendant ownership condition",
+      "kind": "production"
+    },
+    {
+      "id": "M08",
+      "file": "cmd/adamic-gate/main.go",
+      "line": 979,
+      "before": "strings.HasPrefix(u.Test, r.Test+\"/\")",
+      "after": "false",
+      "description": "change ancestor acceptance to false",
+      "kind": "production"
+    },
+    {
+      "id": "M09",
+      "file": "cmd/adamic-gate/main.go",
+      "line": 593,
+      "before": "outputs[key] += e.Output",
+      "after": "",
+      "description": "drop output accumulation",
+      "kind": "production"
+    },
+    {
+      "id": "M10",
+      "file": "cmd/adamic-gate/main.go",
+      "line": 543,
+      "before": "if action != \"skip\" {",
+      "after": "if action == \"skip\" {",
+      "description": "flip skip reason condition",
+      "kind": "production"
+    },
+    {
+      "id": "M11",
+      "file": "cmd/adamic-gate/main.go",
+      "line": 603,
+      "before": "raw++",
+      "after": "raw += 2",
+      "description": "off-by-one terminal counter",
+      "kind": "production"
+    },
+    {
+      "id": "M12",
+      "file": "cmd/adamic-gate/resume.go",
+      "line": 271,
+      "before": "}{s, pkg, patterns, []string{",
+      "after": "}{s, \"\", patterns, []string{",
+      "description": "change checkpoint package input to empty",
+      "kind": "production"
+    },
+    {
+      "id": "M13",
+      "file": "cmd/adamic-gate/resume.go",
+      "line": 253,
+      "before": "}{env, tools, external})",
+      "after": "}{nil, tools, external})",
+      "description": "drop environment input",
+      "kind": "production"
+    },
+    {
+      "id": "M14",
+      "file": "cmd/adamic-gate/resume.go",
+      "line": 135,
+      "before": "uint32(info.Mode()), stat.Uid, stat.Gid, data",
+      "after": "uint32(0), stat.Uid, stat.Gid, data",
+      "description": "change file mode input to zero",
+      "kind": "production"
+    },
+    {
+      "id": "M15",
+      "file": "cmd/adamic-gate/resume.go",
+      "line": 357,
+      "before": "if packageTerminals != len(e.Invocations) {",
+      "after": "if packageTerminals == len(e.Invocations) {",
+      "description": "flip package terminal count condition",
+      "kind": "production"
+    },
+    {
+      "id": "M16",
+      "file": "cmd/adamic-gate/resume.go",
+      "line": 403,
+      "before": "if log != e.LogDigest || stderr != e.StderrDigest {",
+      "after": "if log != e.LogDigest && stderr != e.StderrDigest {",
+      "description": "flip checksum OR to AND",
+      "kind": "production"
+    },
+    {
+      "id": "M17",
+      "file": "cmd/adamic-gate/resume.go",
+      "line": 64,
+      "before": "if residual > 0 {",
+      "after": "if residual < 0 {",
+      "description": "flip positive parent residual condition",
+      "kind": "production"
+    },
+    {
+      "id": "M18",
+      "file": "cmd/adamic-gate/main.go",
+      "line": 252,
+      "before": "if !ok || f.Name.Name != parent {",
+      "after": "if !ok || f.Name.Name == parent {",
+      "description": "flip AST parent-name condition",
+      "kind": "production"
+    },
+    {
+      "id": "M19",
+      "file": "cmd/adamic-gate/resume.go",
+      "line": 476,
+      "before": "!strings.HasPrefix(filepath.Base(absolute), \"package-\")",
+      "after": "strings.HasPrefix(filepath.Base(absolute), \"package-\")",
+      "description": "flip owned scratch-name condition",
+      "kind": "production"
+    },
+    {
+      "id": "S01",
+      "file": "cmd/adamic-gate/main_test.go",
+      "line": 14,
+      "before": "func TestAnchoredSelectors(t *testing.T) {\n\tt.Parallel()",
+      "after": "func TestAnchoredSelectors(t *testing.T) {",
+      "description": "drop Parallel statement from suite construction",
+      "kind": "setup"
+    },
+    {
+      "id": "P01",
+      "file": "cmd/adamic-gate/main.go",
+      "line": 503,
+      "description": "empty patterns entry",
+      "kind": "probe",
+      "entry": "patterns"
+    },
+    {
+      "id": "P02",
+      "file": "cmd/adamic-gate/main.go",
+      "line": 984,
+      "description": "empty validateResults entry",
+      "kind": "probe",
+      "entry": "validateResults"
+    },
+    {
+      "id": "P03",
+      "file": "cmd/adamic-gate/main.go",
+      "line": 575,
+      "description": "empty readLog entry",
+      "kind": "probe",
+      "entry": "readLog"
+    },
+    {
+      "id": "P04",
+      "file": "cmd/adamic-gate/resume.go",
+      "line": 265,
+      "description": "empty checkpointKey entry",
+      "kind": "probe",
+      "entry": "checkpointKey"
+    },
+    {
+      "id": "P05",
+      "file": "cmd/adamic-gate/resume.go",
+      "line": 93,
+      "description": "empty pathDigest entry",
+      "kind": "probe",
+      "entry": "pathDigest"
+    },
+    {
+      "id": "P06",
+      "file": "cmd/adamic-gate/resume.go",
+      "line": 249,
+      "description": "empty executionKey entry",
+      "kind": "probe",
+      "entry": "executionKey"
+    },
+    {
+      "id": "P07",
+      "file": "cmd/adamic-gate/resume.go",
+      "line": 238,
+      "description": "empty stableGoEnvironment entry",
+      "kind": "probe",
+      "entry": "stableGoEnvironment"
+    },
+    {
+      "id": "P08",
+      "file": "cmd/adamic-gate/resume.go",
+      "line": 381,
+      "description": "empty loadPackage entry",
+      "kind": "probe",
+      "entry": "loadPackage"
+    },
+    {
+      "id": "P09",
+      "file": "cmd/adamic-gate/main.go",
+      "line": 244,
+      "description": "empty literalChildren entry",
+      "kind": "probe",
+      "entry": "literalChildren"
+    },
+    {
+      "id": "P10",
+      "file": "cmd/adamic-gate/resume.go",
+      "line": 28,
+      "description": "empty predictions entry",
+      "kind": "probe",
+      "entry": "predictions"
+    },
+    {
+      "id": "P11",
+      "file": "cmd/adamic-gate/resume.go",
+      "line": 79,
+      "description": "empty planDigest entry",
+      "kind": "probe",
+      "entry": "planDigest"
+    },
+    {
+      "id": "P12",
+      "file": "cmd/adamic-gate/resume.go",
+      "line": 461,
+      "description": "empty cleanupPackageScratch entry",
+      "kind": "probe",
+      "entry": "cleanupPackageScratch"
+    }
+  ]
+}

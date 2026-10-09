@@ -1,0 +1,11 @@
+--- a/cmd/adamic-gate/resume.go
++++ b/cmd/adamic-gate/resume.go
+@@ -473,7 +473,7 @@
+ 	if err != nil {
+ 		return err
+ 	}
+-	if record.Key != key || filepath.Dir(absolute) != root || !strings.HasPrefix(filepath.Base(absolute), "package-") {
++	if record.Key != key || filepath.Dir(absolute) != root || strings.HasPrefix(filepath.Base(absolute), "package-") {
+ 		return errors.New("refusing unowned package scratch path")
+ 	}
+ 	if err := os.RemoveAll(absolute); err != nil {

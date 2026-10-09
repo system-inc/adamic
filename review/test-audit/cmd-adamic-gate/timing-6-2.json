@@ -1,0 +1,19 @@
+{
+  "command": "timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-gate/ -run ^TestTypeAwareChildrenAndParentCost$",
+  "exit": 0,
+  "wall": 0.21543216699865297,
+  "seconds": 0.003,
+  "failed": [],
+  "passed": [
+    "TestTypeAwareChildrenAndParentCost"
+  ],
+  "skipped": [],
+  "outputs": {
+    "TestTypeAwareChildrenAndParentCost": [
+      "=== RUN   TestTypeAwareChildrenAndParentCost",
+      "=== PAUSE TestTypeAwareChildrenAndParentCost",
+      "=== CONT  TestTypeAwareChildrenAndParentCost",
+      "--- PASS: TestTypeAwareChildrenAndParentCost (0.00s)"
+    ]
+  }
+}

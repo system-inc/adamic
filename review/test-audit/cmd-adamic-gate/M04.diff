@@ -1,0 +1,11 @@
+--- a/cmd/adamic-gate/main.go
++++ b/cmd/adamic-gate/main.go
+@@ -531,7 +531,7 @@
+ 		if prefix != "" {
+ 			parts := strings.Split(prefix, "/")
+ 			for i := range parts {
+-				parts[i] = "^" + regexp.QuoteMeta(parts[i]) + "$"
++				parts[i] = "^" + regexp.QuoteMeta(parts[i])
+ 			}
+ 			last = strings.Join(parts, "/") + "/" + last
+ 		}

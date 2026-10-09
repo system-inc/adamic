@@ -1,0 +1,14 @@
+--- a/cmd/adamic-gate/resume.go
++++ b/cmd/adamic-gate/resume.go
+@@ -247,10 +247,7 @@
+ }
+ 
+ func executionKey(env []string, tools, external map[string]string) string {
+-	return digestJSON(struct {
+-		Env             []string
+-		Tools, External map[string]string
+-	}{env, tools, external})
++return ""
+ }
+ 
+ type resumeState struct {

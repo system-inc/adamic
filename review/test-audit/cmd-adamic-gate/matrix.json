@@ -1,0 +1,655 @@
+{
+  "base": "470cc0cde025aee921b7c7856bebe2465c1461b1",
+  "bounded": false,
+  "rows": [
+    "TestAnchoredSelectors",
+    "TestCoverageRejectsOverlapAndUnplannedTests",
+    "TestRawEvidenceKeepsSkipReasonsAndFailures",
+    "TestEveryTestIsParallelOrSaysWhy",
+    "TestCheckpointKeysIncludeAllExecutionInputs",
+    "TestPackageCheckpointRequiresIntactCompleteEvidence",
+    "TestTypeAwareChildrenAndParentCost",
+    "TestResumeCleanupPreservesForeignPaths"
+  ],
+  "columns": [
+    {
+      "id": "M01",
+      "kind": "production",
+      "label": "M01",
+      "failed": [
+        "TestAnchoredSelectors"
+      ],
+      "passed": [
+        "TestTypeAwareChildrenAndParentCost",
+        "TestCheckpointKeysIncludeAllExecutionInputs",
+        "TestResumeCleanupPreservesForeignPaths",
+        "TestCoverageRejectsOverlapAndUnplannedTests",
+        "TestRawEvidenceKeepsSkipReasonsAndFailures",
+        "TestPackageCheckpointRequiresIntactCompleteEvidence",
+        "TestEveryTestIsParallelOrSaysWhy"
+      ],
+      "seconds": 9.561,
+      "wall": 9.79983310100215,
+      "resolved_by_alone": false
+    },
+    {
+      "id": "M02",
+      "kind": "production",
+      "label": "M02",
+      "failed": [],
+      "passed": [
+        "TestRawEvidenceKeepsSkipReasonsAndFailures",
+        "TestCheckpointKeysIncludeAllExecutionInputs",
+        "TestResumeCleanupPreservesForeignPaths",
+        "TestCoverageRejectsOverlapAndUnplannedTests",
+        "TestTypeAwareChildrenAndParentCost",
+        "TestPackageCheckpointRequiresIntactCompleteEvidence",
+        "TestEveryTestIsParallelOrSaysWhy",
+        "TestAnchoredSelectors"
+      ],
+      "seconds": 9.282,
+      "wall": 9.487828648998402,
+      "resolved_by_alone": false
+    },
+    {
+      "id": "M03",
+      "kind": "production",
+      "label": "M03",
+      "failed": [],
+      "passed": [
+        "TestRawEvidenceKeepsSkipReasonsAndFailures",
+        "TestTypeAwareChildrenAndParentCost",
+        "TestCheckpointKeysIncludeAllExecutionInputs",
+        "TestCoverageRejectsOverlapAndUnplannedTests",
+        "TestResumeCleanupPreservesForeignPaths",
+        "TestPackageCheckpointRequiresIntactCompleteEvidence",
+        "TestEveryTestIsParallelOrSaysWhy",
+        "TestAnchoredSelectors"
+      ],
+      "seconds": 9.171,
+      "wall": 9.374290366999048,
+      "resolved_by_alone": false
+    },
+    {
+      "id": "M04",
+      "kind": "production",
+      "label": "M04",
+      "failed": [
+        "TestAnchoredSelectors"
+      ],
+      "passed": [
+        "TestResumeCleanupPreservesForeignPaths",
+        "TestCheckpointKeysIncludeAllExecutionInputs",
+        "TestCoverageRejectsOverlapAndUnplannedTests",
+        "TestRawEvidenceKeepsSkipReasonsAndFailures",
+        "TestTypeAwareChildrenAndParentCost",
+        "TestPackageCheckpointRequiresIntactCompleteEvidence",
+        "TestEveryTestIsParallelOrSaysWhy"
+      ],
+      "seconds": 9.598,
+      "wall": 9.857863925997663,
+      "resolved_by_alone": false
+    },
+    {
+      "id": "M05",
+      "kind": "production",
+      "label": "M05",
+      "failed": [
+        "TestCoverageRejectsOverlapAndUnplannedTests"
+      ],
+      "passed": [
+        "TestCheckpointKeysIncludeAllExecutionInputs",
+        "TestResumeCleanupPreservesForeignPaths",
+        "TestRawEvidenceKeepsSkipReasonsAndFailures",
+        "TestTypeAwareChildrenAndParentCost",
+        "TestPackageCheckpointRequiresIntactCompleteEvidence",
+        "TestEveryTestIsParallelOrSaysWhy",
+        "TestAnchoredSelectors"
+      ],
+      "seconds": 11.361,
+      "wall": 11.652629757001705,
+      "resolved_by_alone": false
+    },
+    {
+      "id": "M06",
+      "kind": "production",
+      "label": "M06-rerun",
+      "failed": [
+        "TestCoverageRejectsOverlapAndUnplannedTests",
+        "TestPackageCheckpointRequiresIntactCompleteEvidence"
+      ],
+      "passed": [
+        "TestRawEvidenceKeepsSkipReasonsAndFailures",
+        "TestResumeCleanupPreservesForeignPaths",
+        "TestTypeAwareChildrenAndParentCost",
+        "TestCheckpointKeysIncludeAllExecutionInputs",
+        "TestEveryTestIsParallelOrSaysWhy",
+        "TestAnchoredSelectors"
+      ],
+      "seconds": 16.419,
+      "wall": 16.658379147000232,
+      "resolved_by_alone": false
+    },
+    {
+      "id": "M07",
+      "kind": "production",
+      "label": "M07-rerun",
+      "failed": [
+        "TestCoverageRejectsOverlapAndUnplannedTests"
+      ],
+      "passed": [
+        "TestTypeAwareChildrenAndParentCost",
+        "TestRawEvidenceKeepsSkipReasonsAndFailures",
+        "TestPackageCheckpointRequiresIntactCompleteEvidence",
+        "TestResumeCleanupPreservesForeignPaths",
+        "TestCheckpointKeysIncludeAllExecutionInputs",
+        "TestEveryTestIsParallelOrSaysWhy",
+        "TestAnchoredSelectors"
+      ],
+      "seconds": 15.853,
+      "wall": 16.09512765800173,
+      "resolved_by_alone": false
+    },
+    {
+      "id": "M08",
+      "kind": "production",
+      "label": "M08-rerun",
+      "failed": [
+        "TestCoverageRejectsOverlapAndUnplannedTests"
+      ],
+      "passed": [
+        "TestPackageCheckpointRequiresIntactCompleteEvidence",
+        "TestResumeCleanupPreservesForeignPaths",
+        "TestTypeAwareChildrenAndParentCost",
+        "TestCheckpointKeysIncludeAllExecutionInputs",
+        "TestRawEvidenceKeepsSkipReasonsAndFailures",
+        "TestEveryTestIsParallelOrSaysWhy",
+        "TestAnchoredSelectors"
+      ],
+      "seconds": 15.044,
+      "wall": 15.512570474998938,
+      "resolved_by_alone": false
+    },
+    {
+      "id": "M09",
+      "kind": "production",
+      "label": "M09-rerun",
+      "failed": [
+        "TestRawEvidenceKeepsSkipReasonsAndFailures"
+      ],
+      "passed": [
+        "TestCheckpointKeysIncludeAllExecutionInputs",
+        "TestResumeCleanupPreservesForeignPaths",
+        "TestTypeAwareChildrenAndParentCost",
+        "TestPackageCheckpointRequiresIntactCompleteEvidence",
+        "TestCoverageRejectsOverlapAndUnplannedTests",
+        "TestEveryTestIsParallelOrSaysWhy",
+        "TestAnchoredSelectors"
+      ],
+      "seconds": 22.536,
+      "wall": 22.850046029001533,
+      "resolved_by_alone": false
+    },
+    {
+      "id": "M10",
+      "kind": "production",
+      "label": "M10-rerun",
+      "failed": [
+        "TestRawEvidenceKeepsSkipReasonsAndFailures"
+      ],
+      "passed": [
+        "TestCheckpointKeysIncludeAllExecutionInputs",
+        "TestResumeCleanupPreservesForeignPaths",
+        "TestCoverageRejectsOverlapAndUnplannedTests",
+        "TestTypeAwareChildrenAndParentCost",
+        "TestPackageCheckpointRequiresIntactCompleteEvidence",
+        "TestEveryTestIsParallelOrSaysWhy",
+        "TestAnchoredSelectors"
+      ],
+      "seconds": 16.134,
+      "wall": 16.38942690299882,
+      "resolved_by_alone": false
+    },
+    {
+      "id": "M11",
+      "kind": "production",
+      "label": "M11-rerun",
+      "failed": [
+        "TestRawEvidenceKeepsSkipReasonsAndFailures"
+      ],
+      "passed": [
+        "TestCheckpointKeysIncludeAllExecutionInputs",
+        "TestTypeAwareChildrenAndParentCost",
+        "TestCoverageRejectsOverlapAndUnplannedTests",
+        "TestPackageCheckpointRequiresIntactCompleteEvidence",
+        "TestResumeCleanupPreservesForeignPaths",
+        "TestEveryTestIsParallelOrSaysWhy",
+        "TestAnchoredSelectors"
+      ],
+      "seconds": 13.638,
+      "wall": 13.906021017999592,
+      "resolved_by_alone": false
+    },
+    {
+      "id": "M12",
+      "kind": "production",
+      "label": "M12-rerun",
+      "failed": [
+        "TestCheckpointKeysIncludeAllExecutionInputs"
+      ],
+      "passed": [
+        "TestCoverageRejectsOverlapAndUnplannedTests",
+        "TestResumeCleanupPreservesForeignPaths",
+        "TestPackageCheckpointRequiresIntactCompleteEvidence",
+        "TestRawEvidenceKeepsSkipReasonsAndFailures",
+        "TestTypeAwareChildrenAndParentCost",
+        "TestEveryTestIsParallelOrSaysWhy",
+        "TestAnchoredSelectors"
+      ],
+      "seconds": 11.059,
+      "wall": 11.731231935998949,
+      "resolved_by_alone": false
+    },
+    {
+      "id": "M13",
+      "kind": "production",
+      "label": "M13-rerun",
+      "failed": [
+        "TestCheckpointKeysIncludeAllExecutionInputs"
+      ],
+      "passed": [
+        "TestResumeCleanupPreservesForeignPaths",
+        "TestRawEvidenceKeepsSkipReasonsAndFailures",
+        "TestCoverageRejectsOverlapAndUnplannedTests",
+        "TestTypeAwareChildrenAndParentCost",
+        "TestPackageCheckpointRequiresIntactCompleteEvidence",
+        "TestEveryTestIsParallelOrSaysWhy",
+        "TestAnchoredSelectors"
+      ],
+      "seconds": 9.445,
+      "wall": 9.643041480998363,
+      "resolved_by_alone": false
+    },
+    {
+      "id": "M14",
+      "kind": "production",
+      "label": "M14-rerun",
+      "failed": [
+        "TestCheckpointKeysIncludeAllExecutionInputs"
+      ],
+      "passed": [
+        "TestCoverageRejectsOverlapAndUnplannedTests",
+        "TestRawEvidenceKeepsSkipReasonsAndFailures",
+        "TestResumeCleanupPreservesForeignPaths",
+        "TestPackageCheckpointRequiresIntactCompleteEvidence",
+        "TestTypeAwareChildrenAndParentCost",
+        "TestEveryTestIsParallelOrSaysWhy",
+        "TestAnchoredSelectors"
+      ],
+      "seconds": 9.462,
+      "wall": 9.718004386002576,
+      "resolved_by_alone": false
+    },
+    {
+      "id": "M15",
+      "kind": "production",
+      "label": "M15-rerun",
+      "failed": [
+        "TestPackageCheckpointRequiresIntactCompleteEvidence"
+      ],
+      "passed": [
+        "TestRawEvidenceKeepsSkipReasonsAndFailures",
+        "TestCheckpointKeysIncludeAllExecutionInputs",
+        "TestCoverageRejectsOverlapAndUnplannedTests",
+        "TestResumeCleanupPreservesForeignPaths",
+        "TestTypeAwareChildrenAndParentCost",
+        "TestEveryTestIsParallelOrSaysWhy",
+        "TestAnchoredSelectors"
+      ],
+      "seconds": 8.689,
+      "wall": 8.925560087998747,
+      "resolved_by_alone": false
+    },
+    {
+      "id": "M16",
+      "kind": "production",
+      "label": "M16-rerun",
+      "failed": [
+        "TestPackageCheckpointRequiresIntactCompleteEvidence"
+      ],
+      "passed": [
+        "TestCoverageRejectsOverlapAndUnplannedTests",
+        "TestRawEvidenceKeepsSkipReasonsAndFailures",
+        "TestResumeCleanupPreservesForeignPaths",
+        "TestCheckpointKeysIncludeAllExecutionInputs",
+        "TestTypeAwareChildrenAndParentCost",
+        "TestEveryTestIsParallelOrSaysWhy",
+        "TestAnchoredSelectors"
+      ],
+      "seconds": 8.773,
+      "wall": 8.985812880000594,
+      "resolved_by_alone": false
+    },
+    {
+      "id": "M17",
+      "kind": "production",
+      "label": "M17-rerun",
+      "failed": [
+        "TestTypeAwareChildrenAndParentCost"
+      ],
+      "passed": [
+        "TestCheckpointKeysIncludeAllExecutionInputs",
+        "TestResumeCleanupPreservesForeignPaths",
+        "TestRawEvidenceKeepsSkipReasonsAndFailures",
+        "TestCoverageRejectsOverlapAndUnplannedTests",
+        "TestPackageCheckpointRequiresIntactCompleteEvidence",
+        "TestEveryTestIsParallelOrSaysWhy",
+        "TestAnchoredSelectors"
+      ],
+      "seconds": 8.536,
+      "wall": 8.7284539689972,
+      "resolved_by_alone": false
+    },
+    {
+      "id": "M18",
+      "kind": "production",
+      "label": "M18-rerun",
+      "failed": [
+        "TestTypeAwareChildrenAndParentCost"
+      ],
+      "passed": [
+        "TestCheckpointKeysIncludeAllExecutionInputs",
+        "TestCoverageRejectsOverlapAndUnplannedTests",
+        "TestPackageCheckpointRequiresIntactCompleteEvidence",
+        "TestResumeCleanupPreservesForeignPaths",
+        "TestRawEvidenceKeepsSkipReasonsAndFailures",
+        "TestEveryTestIsParallelOrSaysWhy",
+        "TestAnchoredSelectors"
+      ],
+      "seconds": 8.561,
+      "wall": 8.794089637998695,
+      "resolved_by_alone": false
+    },
+    {
+      "id": "M19",
+      "kind": "production",
+      "label": "M19-rerun",
+      "failed": [
+        "TestResumeCleanupPreservesForeignPaths"
+      ],
+      "passed": [
+        "TestCheckpointKeysIncludeAllExecutionInputs",
+        "TestCoverageRejectsOverlapAndUnplannedTests",
+        "TestRawEvidenceKeepsSkipReasonsAndFailures",
+        "TestTypeAwareChildrenAndParentCost",
+        "TestPackageCheckpointRequiresIntactCompleteEvidence",
+        "TestEveryTestIsParallelOrSaysWhy",
+        "TestAnchoredSelectors"
+      ],
+      "seconds": 8.359,
+      "wall": 8.537249457000144,
+      "resolved_by_alone": false
+    },
+    {
+      "id": "S01",
+      "kind": "setup",
+      "label": "S01",
+      "failed": [
+        "TestEveryTestIsParallelOrSaysWhy"
+      ],
+      "passed": [
+        "TestAnchoredSelectors",
+        "TestCoverageRejectsOverlapAndUnplannedTests",
+        "TestCheckpointKeysIncludeAllExecutionInputs",
+        "TestRawEvidenceKeepsSkipReasonsAndFailures",
+        "TestResumeCleanupPreservesForeignPaths",
+        "TestTypeAwareChildrenAndParentCost",
+        "TestPackageCheckpointRequiresIntactCompleteEvidence"
+      ],
+      "seconds": 8.688,
+      "wall": 8.925596591001522,
+      "resolved_by_alone": false
+    },
+    {
+      "id": "P01",
+      "kind": "probe",
+      "label": "P01",
+      "failed": [
+        "TestAnchoredSelectors",
+        "TestPackageCheckpointRequiresIntactCompleteEvidence"
+      ],
+      "passed": [
+        "TestCoverageRejectsOverlapAndUnplannedTests",
+        "TestRawEvidenceKeepsSkipReasonsAndFailures",
+        "TestEveryTestIsParallelOrSaysWhy",
+        "TestCheckpointKeysIncludeAllExecutionInputs",
+        "TestTypeAwareChildrenAndParentCost",
+        "TestResumeCleanupPreservesForeignPaths"
+      ],
+      "seconds": 0.007,
+      "wall": 0.21533957200153964,
+      "resolved_by_alone": true
+    },
+    {
+      "id": "P02",
+      "kind": "probe",
+      "label": "P02",
+      "failed": [
+        "TestCoverageRejectsOverlapAndUnplannedTests",
+        "TestPackageCheckpointRequiresIntactCompleteEvidence"
+      ],
+      "passed": [
+        "TestResumeCleanupPreservesForeignPaths",
+        "TestTypeAwareChildrenAndParentCost",
+        "TestRawEvidenceKeepsSkipReasonsAndFailures",
+        "TestCheckpointKeysIncludeAllExecutionInputs",
+        "TestEveryTestIsParallelOrSaysWhy",
+        "TestAnchoredSelectors"
+      ],
+      "seconds": 8.422,
+      "wall": 8.645190071998513,
+      "resolved_by_alone": false
+    },
+    {
+      "id": "P03",
+      "kind": "probe",
+      "label": "P03",
+      "failed": [
+        "TestPackageCheckpointRequiresIntactCompleteEvidence",
+        "TestRawEvidenceKeepsSkipReasonsAndFailures",
+        "TestAnchoredSelectors"
+      ],
+      "passed": [
+        "TestCheckpointKeysIncludeAllExecutionInputs",
+        "TestCoverageRejectsOverlapAndUnplannedTests",
+        "TestResumeCleanupPreservesForeignPaths",
+        "TestTypeAwareChildrenAndParentCost",
+        "TestEveryTestIsParallelOrSaysWhy"
+      ],
+      "seconds": 8.376,
+      "wall": 8.624301554998965,
+      "resolved_by_alone": false
+    },
+    {
+      "id": "P04",
+      "kind": "probe",
+      "label": "P04",
+      "failed": [
+        "TestCheckpointKeysIncludeAllExecutionInputs"
+      ],
+      "passed": [
+        "TestTypeAwareChildrenAndParentCost",
+        "TestCoverageRejectsOverlapAndUnplannedTests",
+        "TestPackageCheckpointRequiresIntactCompleteEvidence",
+        "TestResumeCleanupPreservesForeignPaths",
+        "TestRawEvidenceKeepsSkipReasonsAndFailures",
+        "TestEveryTestIsParallelOrSaysWhy",
+        "TestAnchoredSelectors"
+      ],
+      "seconds": 8.567,
+      "wall": 8.805175740999402,
+      "resolved_by_alone": false
+    },
+    {
+      "id": "P05",
+      "kind": "probe",
+      "label": "P05",
+      "failed": [
+        "TestCheckpointKeysIncludeAllExecutionInputs"
+      ],
+      "passed": [
+        "TestCoverageRejectsOverlapAndUnplannedTests",
+        "TestRawEvidenceKeepsSkipReasonsAndFailures",
+        "TestTypeAwareChildrenAndParentCost",
+        "TestResumeCleanupPreservesForeignPaths",
+        "TestPackageCheckpointRequiresIntactCompleteEvidence",
+        "TestEveryTestIsParallelOrSaysWhy",
+        "TestAnchoredSelectors"
+      ],
+      "seconds": 8.593,
+      "wall": 8.858969853001327,
+      "resolved_by_alone": false
+    },
+    {
+      "id": "P06",
+      "kind": "probe",
+      "label": "P06",
+      "failed": [
+        "TestCheckpointKeysIncludeAllExecutionInputs"
+      ],
+      "passed": [
+        "TestCoverageRejectsOverlapAndUnplannedTests",
+        "TestResumeCleanupPreservesForeignPaths",
+        "TestRawEvidenceKeepsSkipReasonsAndFailures",
+        "TestTypeAwareChildrenAndParentCost",
+        "TestPackageCheckpointRequiresIntactCompleteEvidence",
+        "TestEveryTestIsParallelOrSaysWhy",
+        "TestAnchoredSelectors"
+      ],
+      "seconds": 8.475999999999999,
+      "wall": 8.726563770000212,
+      "resolved_by_alone": false
+    },
+    {
+      "id": "P07",
+      "kind": "probe",
+      "label": "P07",
+      "failed": [
+        "TestCheckpointKeysIncludeAllExecutionInputs"
+      ],
+      "passed": [
+        "TestTypeAwareChildrenAndParentCost",
+        "TestPackageCheckpointRequiresIntactCompleteEvidence",
+        "TestRawEvidenceKeepsSkipReasonsAndFailures",
+        "TestResumeCleanupPreservesForeignPaths",
+        "TestCoverageRejectsOverlapAndUnplannedTests",
+        "TestEveryTestIsParallelOrSaysWhy",
+        "TestAnchoredSelectors"
+      ],
+      "seconds": 16.438,
+      "wall": 16.710365834002005,
+      "resolved_by_alone": false
+    },
+    {
+      "id": "P08",
+      "kind": "probe",
+      "label": "P08",
+      "failed": [
+        "TestPackageCheckpointRequiresIntactCompleteEvidence"
+      ],
+      "passed": [
+        "TestCheckpointKeysIncludeAllExecutionInputs",
+        "TestTypeAwareChildrenAndParentCost",
+        "TestRawEvidenceKeepsSkipReasonsAndFailures",
+        "TestCoverageRejectsOverlapAndUnplannedTests",
+        "TestResumeCleanupPreservesForeignPaths",
+        "TestEveryTestIsParallelOrSaysWhy",
+        "TestAnchoredSelectors"
+      ],
+      "seconds": 15.563,
+      "wall": 15.83496753000145,
+      "resolved_by_alone": false
+    },
+    {
+      "id": "P09",
+      "kind": "probe",
+      "label": "P09",
+      "failed": [
+        "TestTypeAwareChildrenAndParentCost"
+      ],
+      "passed": [
+        "TestCheckpointKeysIncludeAllExecutionInputs",
+        "TestResumeCleanupPreservesForeignPaths",
+        "TestCoverageRejectsOverlapAndUnplannedTests",
+        "TestPackageCheckpointRequiresIntactCompleteEvidence",
+        "TestRawEvidenceKeepsSkipReasonsAndFailures",
+        "TestEveryTestIsParallelOrSaysWhy",
+        "TestAnchoredSelectors"
+      ],
+      "seconds": 15.284,
+      "wall": 15.55231866000031,
+      "resolved_by_alone": false
+    },
+    {
+      "id": "P10",
+      "kind": "probe",
+      "label": "P10",
+      "failed": [
+        "TestTypeAwareChildrenAndParentCost"
+      ],
+      "passed": [
+        "TestAnchoredSelectors",
+        "TestCoverageRejectsOverlapAndUnplannedTests",
+        "TestRawEvidenceKeepsSkipReasonsAndFailures",
+        "TestEveryTestIsParallelOrSaysWhy",
+        "TestCheckpointKeysIncludeAllExecutionInputs",
+        "TestPackageCheckpointRequiresIntactCompleteEvidence",
+        "TestResumeCleanupPreservesForeignPaths"
+      ],
+      "seconds": 0.01,
+      "wall": 0.21836904699739534,
+      "resolved_by_alone": true
+    },
+    {
+      "id": "P11",
+      "kind": "probe",
+      "label": "P11",
+      "failed": [
+        "TestTypeAwareChildrenAndParentCost"
+      ],
+      "passed": [
+        "TestCheckpointKeysIncludeAllExecutionInputs",
+        "TestRawEvidenceKeepsSkipReasonsAndFailures",
+        "TestCoverageRejectsOverlapAndUnplannedTests",
+        "TestResumeCleanupPreservesForeignPaths",
+        "TestPackageCheckpointRequiresIntactCompleteEvidence",
+        "TestEveryTestIsParallelOrSaysWhy",
+        "TestAnchoredSelectors"
+      ],
+      "seconds": 22.476,
+      "wall": 22.940630362001684,
+      "resolved_by_alone": false
+    },
+    {
+      "id": "P12",
+      "kind": "probe",
+      "label": "P12",
+      "failed": [
+        "TestResumeCleanupPreservesForeignPaths"
+      ],
+      "passed": [
+        "TestCheckpointKeysIncludeAllExecutionInputs",
+        "TestCoverageRejectsOverlapAndUnplannedTests",
+        "TestRawEvidenceKeepsSkipReasonsAndFailures",
+        "TestTypeAwareChildrenAndParentCost",
+        "TestPackageCheckpointRequiresIntactCompleteEvidence",
+        "TestEveryTestIsParallelOrSaysWhy",
+        "TestAnchoredSelectors"
+      ],
+      "seconds": 15.895,
+      "wall": 16.293517180998606,
+      "resolved_by_alone": false
+    }
+  ],
+  "excluded": "Initial M06..M19 columns saw live validation copies. Only -rerun columns count."
+}

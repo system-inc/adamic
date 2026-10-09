@@ -1,0 +1,11 @@
+--- a/cmd/adamic-gate/main.go
++++ b/cmd/adamic-gate/main.go
+@@ -249,7 +249,7 @@
+ 	var names []string
+ 	for _, d := range tree.Decls {
+ 		f, ok := d.(*ast.FuncDecl)
+-		if !ok || f.Name.Name != parent {
++		if !ok || f.Name.Name == parent {
+ 			continue
+ 		}
+ 		ast.Inspect(f.Body, func(n ast.Node) bool {

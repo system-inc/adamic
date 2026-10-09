@@ -1,0 +1,11 @@
+--- a/cmd/adamic-gate/resume.go
++++ b/cmd/adamic-gate/resume.go
+@@ -61,7 +61,7 @@
+ 			invocation := fmt.Sprintf("%d::%s::%s", u.Shard, parent, strings.Join(strings.Split(u.Test, "/")[:len(strings.Split(u.Test, "/"))-1], "/"))
+ 			if !seen[invocation] && known[parent] {
+ 				residual := weights[parent] - childSeconds[parent]
+-				if residual > 0 {
++				if residual < 0 {
+ 					r.ParentSeconds += residual
+ 					r.Seconds += residual
+ 				}

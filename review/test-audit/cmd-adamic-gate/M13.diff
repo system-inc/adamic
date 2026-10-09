@@ -1,0 +1,11 @@
+--- a/cmd/adamic-gate/resume.go
++++ b/cmd/adamic-gate/resume.go
+@@ -250,7 +250,7 @@
+ 	return digestJSON(struct {
+ 		Env             []string
+ 		Tools, External map[string]string
+-	}{env, tools, external})
++	}{nil, tools, external})
+ }
+ 
+ type resumeState struct {

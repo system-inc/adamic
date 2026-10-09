@@ -1,0 +1,11 @@
+--- a/cmd/adamic-gate/resume.go
++++ b/cmd/adamic-gate/resume.go
+@@ -268,7 +268,7 @@
+ 		Package  string
+ 		Patterns []string
+ 		Flags    []string
+-	}{s, pkg, patterns, []string{"-count=1", "-json", "-timeout", "60m", "ADAMIC_GATE_UNCACHED=1"}})
++	}{s, "", patterns, []string{"-count=1", "-json", "-timeout", "60m", "ADAMIC_GATE_UNCACHED=1"}})
+ }
+ func testArgs(pkg, pattern string) []string {
+ 	return []string{"test", "-count=1", "-json", "-timeout", "60m", "-run", pattern, pkg}

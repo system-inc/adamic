@@ -1,0 +1,12 @@
+{"Time":"2026-10-09T09:26:17.226316167Z","Action":"start","Package":"github.com/system-inc/adamic/cmd/adamic-gate"}
+{"Time":"2026-10-09T09:26:17.228711192Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestAnchoredSelectors"}
+{"Time":"2026-10-09T09:26:17.228767081Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestAnchoredSelectors","Output":"=== RUN   TestAnchoredSelectors\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:26:17.228795491Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestAnchoredSelectors","Output":"=== PAUSE TestAnchoredSelectors\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:26:17.228798078Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestAnchoredSelectors"}
+{"Time":"2026-10-09T09:26:17.228802261Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestAnchoredSelectors"}
+{"Time":"2026-10-09T09:26:17.228804356Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestAnchoredSelectors","Output":"=== CONT  TestAnchoredSelectors\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:26:26.030968643Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestAnchoredSelectors","Output":"--- PASS: TestAnchoredSelectors (8.80s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:26:26.031021857Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestAnchoredSelectors","Elapsed":8.8}
+{"Time":"2026-10-09T09:26:26.031044826Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:26:26.031561382Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Output":"ok  \tgithub.com/system-inc/adamic/cmd/adamic-gate\t8.805s\n"}
+{"Time":"2026-10-09T09:26:26.031596684Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Elapsed":8.805}

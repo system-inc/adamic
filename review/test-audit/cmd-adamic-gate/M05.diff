@@ -1,0 +1,11 @@
+--- a/cmd/adamic-gate/main.go
++++ b/cmd/adamic-gate/main.go
+@@ -1013,7 +1013,7 @@
+ 			if previous, ok := seenTest[r.key()]; ok {
+ 				problems = append(problems, fmt.Sprintf("test %s ran twice in shards %d and %d", r.key(), previous, index))
+ 			}
+-			seenTest[r.key()] = index
++			
+ 			if r.Test == u.Test {
+ 				produced[u.key()] = true
+ 			}

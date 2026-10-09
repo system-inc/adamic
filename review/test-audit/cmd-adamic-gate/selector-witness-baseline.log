@@ -1,0 +1,15 @@
+{"Time":"2026-10-09T09:32:40.140522153Z","Action":"start","Package":"gatewitness"}
+{"Time":"2026-10-09T09:32:40.145788536Z","Action":"run","Package":"gatewitness","Test":"TestAuditSelectorsWitness"}
+{"Time":"2026-10-09T09:32:40.145869073Z","Action":"output","Package":"gatewitness","Test":"TestAuditSelectorsWitness","Output":"=== RUN   TestAuditSelectorsWitness\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:32:40.145888548Z","Action":"output","Package":"gatewitness","Test":"TestAuditSelectorsWitness","Output":"=== PAUSE TestAuditSelectorsWitness\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:32:40.145891005Z","Action":"pause","Package":"gatewitness","Test":"TestAuditSelectorsWitness"}
+{"Time":"2026-10-09T09:32:40.145895346Z","Action":"cont","Package":"gatewitness","Test":"TestAuditSelectorsWitness"}
+{"Time":"2026-10-09T09:32:40.145897728Z","Action":"output","Package":"gatewitness","Test":"TestAuditSelectorsWitness","Output":"=== CONT  TestAuditSelectorsWitness\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:32:40.14590627Z","Action":"output","Package":"gatewitness","Test":"TestAuditSelectorsWitness","Output":"    witness_test.go:6: pattern=^TestParent$/^internal$/^load$/^testdata$/^0\\.1$/^compile$/^(main\\.a)$\n"}
+{"Time":"2026-10-09T09:32:40.858869182Z","Action":"output","Package":"gatewitness","Test":"TestAuditSelectorsWitness","Output":"    witness_test.go:6: pattern=^TestParent$/^internal$/^oracle$/^testdata$/^(a\\.a)$\n"}
+{"Time":"2026-10-09T09:32:41.588032574Z","Action":"output","Package":"gatewitness","Test":"TestAuditSelectorsWitness","Output":"    witness_test.go:6: executed=[TestParent/internal/load/testdata/0.1/compile/main.a TestParent/internal/oracle/testdata/a.a]\n"}
+{"Time":"2026-10-09T09:32:41.588141175Z","Action":"output","Package":"gatewitness","Test":"TestAuditSelectorsWitness","Output":"--- PASS: TestAuditSelectorsWitness (1.44s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:32:41.588148589Z","Action":"pass","Package":"gatewitness","Test":"TestAuditSelectorsWitness","Elapsed":1.44}
+{"Time":"2026-10-09T09:32:41.58816582Z","Action":"output","Package":"gatewitness","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:32:41.598342886Z","Action":"output","Package":"gatewitness","Output":"ok  \tgatewitness\t1.455s\n"}
+{"Time":"2026-10-09T09:32:41.598390251Z","Action":"pass","Package":"gatewitness","Elapsed":1.458}

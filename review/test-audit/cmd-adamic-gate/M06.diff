@@ -1,0 +1,11 @@
+--- a/cmd/adamic-gate/main.go
++++ b/cmd/adamic-gate/main.go
+@@ -1007,7 +1007,7 @@
+ 		}
+ 		if owner >= 0 {
+ 			u := expected.Units[owner]
+-			if u.Shard != index {
++			if u.Shard == index {
+ 				problems = append(problems, fmt.Sprintf("test %s ran in shard %d, owner %d", r.key(), index, u.Shard))
+ 			}
+ 			if previous, ok := seenTest[r.key()]; ok {

@@ -1,0 +1,12 @@
+{"Time":"2026-10-09T09:26:30.304275449Z","Action":"start","Package":"github.com/system-inc/adamic/cmd/adamic-gate"}
+{"Time":"2026-10-09T09:26:30.306702547Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestPackageCheckpointRequiresIntactCompleteEvidence"}
+{"Time":"2026-10-09T09:26:30.306779628Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestPackageCheckpointRequiresIntactCompleteEvidence","Output":"=== RUN   TestPackageCheckpointRequiresIntactCompleteEvidence\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:26:30.306811983Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestPackageCheckpointRequiresIntactCompleteEvidence","Output":"=== PAUSE TestPackageCheckpointRequiresIntactCompleteEvidence\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:26:30.306816312Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestPackageCheckpointRequiresIntactCompleteEvidence"}
+{"Time":"2026-10-09T09:26:30.306824137Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestPackageCheckpointRequiresIntactCompleteEvidence"}
+{"Time":"2026-10-09T09:26:30.306827118Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestPackageCheckpointRequiresIntactCompleteEvidence","Output":"=== CONT  TestPackageCheckpointRequiresIntactCompleteEvidence\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:26:30.307750128Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestPackageCheckpointRequiresIntactCompleteEvidence","Output":"--- PASS: TestPackageCheckpointRequiresIntactCompleteEvidence (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:26:30.307772287Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestPackageCheckpointRequiresIntactCompleteEvidence","Elapsed":0}
+{"Time":"2026-10-09T09:26:30.3077924Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:26:30.308132894Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Output":"ok  \tgithub.com/system-inc/adamic/cmd/adamic-gate\t0.003s\n"}
+{"Time":"2026-10-09T09:26:30.308156174Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Elapsed":0.004}

@@ -1,0 +1,30 @@
+--- a/cmd/adamic-gate/resume.go
++++ b/cmd/adamic-gate/resume.go
+@@ -459,25 +459,5 @@
+ type scratchRecord struct{ Key, Path string }
+ 
+ func cleanupPackageScratch(dir, key, root string) error {
+-	path := filepath.Join(dir, "scratch.json")
+-	if _, err := os.Stat(path); os.IsNotExist(err) {
+-		return nil
+-	} else if err != nil {
+-		return err
+-	}
+-	var record scratchRecord
+-	if err := loadJSON(path, &record); err != nil {
+-		return err
+-	}
+-	absolute, err := filepath.Abs(record.Path)
+-	if err != nil {
+-		return err
+-	}
+-	if record.Key != key || filepath.Dir(absolute) != root || !strings.HasPrefix(filepath.Base(absolute), "package-") {
+-		return errors.New("refusing unowned package scratch path")
+-	}
+-	if err := os.RemoveAll(absolute); err != nil {
+-		return err
+-	}
+-	return os.Remove(path)
+-}
++return nil
++}

@@ -1,0 +1,19 @@
+{
+  "command": "timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-gate/ -run ^TestCoverageRejectsOverlapAndUnplannedTests$",
+  "exit": 0,
+  "wall": 1.6963509359993623,
+  "seconds": 0.021,
+  "failed": [],
+  "passed": [
+    "TestCoverageRejectsOverlapAndUnplannedTests"
+  ],
+  "skipped": [],
+  "outputs": {
+    "TestCoverageRejectsOverlapAndUnplannedTests": [
+      "=== RUN   TestCoverageRejectsOverlapAndUnplannedTests",
+      "=== PAUSE TestCoverageRejectsOverlapAndUnplannedTests",
+      "=== CONT  TestCoverageRejectsOverlapAndUnplannedTests",
+      "--- PASS: TestCoverageRejectsOverlapAndUnplannedTests (0.00s)"
+    ]
+  }
+}

@@ -1,0 +1,42 @@
+--- a/cmd/adamic-gate/main.go
++++ b/cmd/adamic-gate/main.go
+@@ -573,38 +573,7 @@
+ 	return runs, scanner.Err()
+ }
+ func readLog(path string) ([]result, []string, int, error) {
+-	f, err := os.Open(path)
+-	if err != nil {
+-		return nil, nil, 0, err
+-	}
+-	defer f.Close()
+-	scanner := bufio.NewScanner(f)
+-	scanner.Buffer(make([]byte, 65536), 64*1024*1024)
+-	outputs := map[string]string{}
+-	var results []result
+-	var cache []string
+-	raw := 0
+-	for scanner.Scan() {
+-		var e event
+-		if err := json.Unmarshal(scanner.Bytes(), &e); err != nil {
+-			return nil, nil, 0, fmt.Errorf("%s: malformed JSON: %w", path, err)
+-		}
+-		key := e.Package + "::" + e.Test
+-		outputs[key] += e.Output
+-		for _, line := range strings.Split(e.Output, "\n") {
+-			if strings.Contains(line, "gate cache:") {
+-				cache = append(cache, line)
+-			}
+-		}
+-		if e.Action == "pass" || e.Action == "fail" || e.Action == "skip" {
+-			results = append(results, result{Package: e.Package, Test: e.Test, Action: e.Action, Output: outputs[key], Seconds: e.Elapsed, Reason: skipReason(e.Action, outputs[key])})
+-			delete(outputs, key)
+-			if e.Test != "" {
+-				raw++
+-			}
+-		}
+-	}
+-	return results, cache, raw, scanner.Err()
++return nil, nil, 0, nil
+ }
+ func disk(path string) (uint64, error) {
+ 	var stat syscall.Statfs_t

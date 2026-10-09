@@ -1,0 +1,293 @@
+diff --git a/cmd/adamic-gate/main.go b/cmd/adamic-gate/main.go
+index f46060a8..08ffbe70 100644
+--- a/cmd/adamic-gate/main.go
++++ b/cmd/adamic-gate/main.go
+@@ -242,6 +242,10 @@ func fixtureRows(file, variable string) ([]string, error) {
+ // Literal first fields of the anonymous slice iterated directly by a test. This is deliberately
+ // restricted to audited independent parents; arbitrary AST inference cannot prove selectability.
+ func literalChildren(file, parent string, table ...string) ([]string, error) {
++	if os.Getenv("ADAMIC_MUTANT") == "P09" {
++		return nil, nil
++	}
++
+ 	tree, err := parser.ParseFile(token.NewFileSet(), file, nil, 0)
+ 	if err != nil {
+ 		return nil, err
+@@ -249,7 +253,7 @@ func literalChildren(file, parent string, table ...string) ([]string, error) {
+ 	var names []string
+ 	for _, d := range tree.Decls {
+ 		f, ok := d.(*ast.FuncDecl)
+-		if !ok || f.Name.Name != parent {
++		if !ok || auditBool("M18", f.Name.Name != parent, f.Name.Name == parent) {
+ 			continue
+ 		}
+ 		ast.Inspect(f.Body, func(n ast.Node) bool {
+@@ -501,6 +505,10 @@ func makePlan(count int) (plan, error) {
+ // Group only siblings under an identical literal prefix. Alternating whole slash-containing
+ // patterns would form a Cartesian product in Go's -run parser and execute unplanned tests.
+ func patterns(units []unit) []string {
++	if os.Getenv("ADAMIC_MUTANT") == "P01" {
++		return nil
++	}
++
+ 	groups := map[string][]string{}
+ 	for _, u := range units {
+ 		if u.Test == "" {
+@@ -524,14 +532,16 @@ func patterns(units []unit) []string {
+ 			continue
+ 		}
+ 		sort.Strings(names)
+-		for i := range names {
+-			names[i] = regexp.QuoteMeta(names[i])
++		if os.Getenv("ADAMIC_MUTANT") != "M01" {
++			for i := range names {
++				names[i] = regexp.QuoteMeta(names[i])
++			}
+ 		}
+-		last := "^(" + strings.Join(names, "|") + ")$"
++		last := "^(" + strings.Join(names, "|") + auditString("M03", ")$", ")")
+ 		if prefix != "" {
+ 			parts := strings.Split(prefix, "/")
+ 			for i := range parts {
+-				parts[i] = "^" + regexp.QuoteMeta(parts[i]) + "$"
++				parts[i] = "^" + auditString("M02", regexp.QuoteMeta(parts[i]), parts[i]) + auditString("M04", "$", "")
+ 			}
+ 			last = strings.Join(parts, "/") + "/" + last
+ 		}
+@@ -540,7 +550,7 @@ func patterns(units []unit) []string {
+ 	return result
+ }
+ func skipReason(action, text string) string {
+-	if action != "skip" {
++	if auditBool("M10", action != "skip", action == "skip") {
+ 		return ""
+ 	}
+ 	var lines []string
+@@ -573,6 +583,10 @@ func readRuns(path string) ([]result, error) {
+ 	return runs, scanner.Err()
+ }
+ func readLog(path string) ([]result, []string, int, error) {
++	if os.Getenv("ADAMIC_MUTANT") == "P03" {
++		return nil, nil, 0, nil
++	}
++
+ 	f, err := os.Open(path)
+ 	if err != nil {
+ 		return nil, nil, 0, err
+@@ -590,7 +604,9 @@ func readLog(path string) ([]result, []string, int, error) {
+ 			return nil, nil, 0, fmt.Errorf("%s: malformed JSON: %w", path, err)
+ 		}
+ 		key := e.Package + "::" + e.Test
+-		outputs[key] += e.Output
++		if os.Getenv("ADAMIC_MUTANT") != "M09" {
++			outputs[key] += e.Output
++		}
+ 		for _, line := range strings.Split(e.Output, "\n") {
+ 			if strings.Contains(line, "gate cache:") {
+ 				cache = append(cache, line)
+@@ -601,6 +617,9 @@ func readLog(path string) ([]result, []string, int, error) {
+ 			delete(outputs, key)
+ 			if e.Test != "" {
+ 				raw++
++				if os.Getenv("ADAMIC_MUTANT") == "M11" {
++					raw++
++				}
+ 			}
+ 		}
+ 	}
+@@ -973,15 +992,19 @@ func samePlan(a, b plan) bool {
+ // An enumerated child's ancestors necessarily execute in Go. Only these declared ancestors can
+ // repeat; all work units and all other tests have exactly one owner and one terminal event.
+ func owns(u unit, r result) bool {
+-	return u.Package == r.Package && (r.Test == u.Test || (u.Test != "" && strings.HasPrefix(r.Test, u.Test+"/")))
++	return u.Package == r.Package && (r.Test == u.Test || (os.Getenv("ADAMIC_MUTANT") != "M07" && u.Test != "" && strings.HasPrefix(r.Test, u.Test+"/")))
+ }
+ func ancestor(u unit, r result) bool {
+-	return u.Package == r.Package && r.Test != "" && strings.HasPrefix(u.Test, r.Test+"/")
++	return u.Package == r.Package && r.Test != "" && (os.Getenv("ADAMIC_MUTANT") != "M08" && strings.HasPrefix(u.Test, r.Test+"/"))
+ }
+ 
+ var cacheHits = regexp.MustCompile(`gate cache: (native|node|probe) hits=(\d+) misses=(\d+)`)
+ 
+ func validateResults(expected plan, index int, results []result, produced map[string]bool, seenTest map[string]int) []string {
++	if os.Getenv("ADAMIC_MUTANT") == "P02" {
++		return nil
++	}
++
+ 	var problems []string
+ 	for _, r := range results {
+ 		if r.Test == "" {
+@@ -1007,13 +1030,15 @@ func validateResults(expected plan, index int, results []result, produced map[st
+ 		}
+ 		if owner >= 0 {
+ 			u := expected.Units[owner]
+-			if u.Shard != index {
++			if auditBool("M06", u.Shard != index, u.Shard == index) {
+ 				problems = append(problems, fmt.Sprintf("test %s ran in shard %d, owner %d", r.key(), index, u.Shard))
+ 			}
+ 			if previous, ok := seenTest[r.key()]; ok {
+ 				problems = append(problems, fmt.Sprintf("test %s ran twice in shards %d and %d", r.key(), previous, index))
+ 			}
+-			seenTest[r.key()] = index
++			if os.Getenv("ADAMIC_MUTANT") != "M05" {
++				seenTest[r.key()] = index
++			}
+ 			if r.Test == u.Test {
+ 				produced[u.key()] = true
+ 			}
+diff --git a/cmd/adamic-gate/resume.go b/cmd/adamic-gate/resume.go
+index c8c3a339..e15799fe 100644
+--- a/cmd/adamic-gate/resume.go
++++ b/cmd/adamic-gate/resume.go
+@@ -26,6 +26,10 @@ type prediction struct {
+ }
+ 
+ func predictions(p plan, weights map[string]float64) []prediction {
++	if os.Getenv("ADAMIC_MUTANT") == "P10" {
++		return nil
++	}
++
+ 	result := make([]prediction, p.Count)
+ 	childSeconds := map[string]float64{}
+ 	known := map[string]bool{}
+@@ -61,7 +65,7 @@ func predictions(p plan, weights map[string]float64) []prediction {
+ 			invocation := fmt.Sprintf("%d::%s::%s", u.Shard, parent, strings.Join(strings.Split(u.Test, "/")[:len(strings.Split(u.Test, "/"))-1], "/"))
+ 			if !seen[invocation] && known[parent] {
+ 				residual := weights[parent] - childSeconds[parent]
+-				if residual > 0 {
++				if auditBool("M17", residual > 0, residual < 0) {
+ 					r.ParentSeconds += residual
+ 					r.Seconds += residual
+ 				}
+@@ -76,7 +80,13 @@ func digestJSON(value any) string {
+ 	h := sha256.Sum256(b)
+ 	return hex.EncodeToString(h[:])
+ }
+-func planDigest(p plan) string  { p.Digest = ""; return digestJSON(p) }
++func planDigest(p plan) string {
++	if os.Getenv("ADAMIC_MUTANT") == "P11" {
++		return ""
++	}
++	p.Digest = ""
++	return digestJSON(p)
++}
+ func shortHash(s string) string { h := sha256.Sum256([]byte(s)); return hex.EncodeToString(h[:16]) }
+ func fileDigest(path string) (string, error) {
+ 	f, err := os.Open(path)
+@@ -90,7 +100,12 @@ func fileDigest(path string) (string, error) {
+ 	}
+ 	return hex.EncodeToString(h.Sum(nil)), nil
+ }
+-func pathDigest(path string) (string, error) { return digestPath(path, map[string]bool{}) }
++func pathDigest(path string) (string, error) {
++	if os.Getenv("ADAMIC_MUTANT") == "P05" {
++		return "", nil
++	}
++	return digestPath(path, map[string]bool{})
++}
+ func digestPath(path string, active map[string]bool) (string, error) {
+ 	absolute, err := filepath.Abs(path)
+ 	if err != nil {
+@@ -132,7 +147,7 @@ func digestPath(path string, active map[string]bool) (string, error) {
+ 			return "", err
+ 		}
+ 		stat := info.Sys().(*syscall.Stat_t)
+-		return digestJSON([]any{uint32(info.Mode()), stat.Uid, stat.Gid, data}), nil
++		return digestJSON([]any{auditMode(uint32(info.Mode())), stat.Uid, stat.Gid, data}), nil
+ 	}
+ 	entries, err := os.ReadDir(path)
+ 	if err != nil {
+@@ -236,6 +251,10 @@ func executionIdentity() (string, error) {
+ }
+ 
+ func stableGoEnvironment(values map[string]string) string {
++	if os.Getenv("ADAMIC_MUTANT") == "P07" {
++		return ""
++	}
++
+ 	copy := map[string]string{}
+ 	for key, value := range values {
+ 		copy[key] = value
+@@ -247,10 +266,14 @@ func stableGoEnvironment(values map[string]string) string {
+ }
+ 
+ func executionKey(env []string, tools, external map[string]string) string {
++	if os.Getenv("ADAMIC_MUTANT") == "P06" {
++		return ""
++	}
++
+ 	return digestJSON(struct {
+ 		Env             []string
+ 		Tools, External map[string]string
+-	}{env, tools, external})
++	}{auditEnv(env), tools, external})
+ }
+ 
+ type resumeState struct {
+@@ -263,12 +286,16 @@ type packageEvidence struct {
+ }
+ 
+ func checkpointKey(s resumeState, pkg string, patterns []string) string {
++	if os.Getenv("ADAMIC_MUTANT") == "P04" {
++		return ""
++	}
++
+ 	return digestJSON(struct {
+ 		State    resumeState
+ 		Package  string
+ 		Patterns []string
+ 		Flags    []string
+-	}{s, pkg, patterns, []string{"-count=1", "-json", "-timeout", "60m", "ADAMIC_GATE_UNCACHED=1"}})
++	}{s, auditString("M12", pkg, ""), patterns, []string{"-count=1", "-json", "-timeout", "60m", "ADAMIC_GATE_UNCACHED=1"}})
+ }
+ func testArgs(pkg, pattern string) []string {
+ 	return []string{"test", "-count=1", "-json", "-timeout", "60m", "-run", pattern, pkg}
+@@ -354,7 +381,7 @@ func completePackage(dir string, e packageEvidence, p plan, index int, pkg strin
+ 			finishes[r.key()]++
+ 		}
+ 	}
+-	if packageTerminals != len(e.Invocations) {
++	if auditBool("M15", packageTerminals != len(e.Invocations), packageTerminals == len(e.Invocations)) {
+ 		problems = append(problems, "package log has no complete invocation terminal events")
+ 	}
+ 	if !reflect.DeepEqual(starts, finishes) {
+@@ -379,6 +406,10 @@ func completePackage(dir string, e packageEvidence, p plan, index int, pkg strin
+ 	return nil
+ }
+ func loadPackage(dir, key string, p plan, index int, pkg string) (packageEvidence, bool, error) {
++	if os.Getenv("ADAMIC_MUTANT") == "P08" {
++		return packageEvidence{}, false, nil
++	}
++
+ 	var e packageEvidence
+ 	path := filepath.Join(dir, "complete.json")
+ 	if _, err := os.Stat(path); os.IsNotExist(err) {
+@@ -400,7 +431,7 @@ func loadPackage(dir, key string, p plan, index int, pkg string) (packageEvidenc
+ 	if err != nil {
+ 		return e, false, err
+ 	}
+-	if log != e.LogDigest || stderr != e.StderrDigest {
++	if auditBool("M16", log != e.LogDigest || stderr != e.StderrDigest, log != e.LogDigest && stderr != e.StderrDigest) {
+ 		return e, false, errors.New("package checkpoint checksum differs")
+ 	}
+ 	if err := completePackage(dir, e, p, index, pkg); err != nil {
+@@ -459,6 +490,10 @@ func validatePackageFiles(dir string, p plan, s summary) []string {
+ type scratchRecord struct{ Key, Path string }
+ 
+ func cleanupPackageScratch(dir, key, root string) error {
++	if os.Getenv("ADAMIC_MUTANT") == "P12" {
++		return nil
++	}
++
+ 	path := filepath.Join(dir, "scratch.json")
+ 	if _, err := os.Stat(path); os.IsNotExist(err) {
+ 		return nil
+@@ -473,7 +508,7 @@ func cleanupPackageScratch(dir, key, root string) error {
+ 	if err != nil {
+ 		return err
+ 	}
+-	if record.Key != key || filepath.Dir(absolute) != root || !strings.HasPrefix(filepath.Base(absolute), "package-") {
++	if record.Key != key || filepath.Dir(absolute) != root || auditBool("M19", !strings.HasPrefix(filepath.Base(absolute), "package-"), strings.HasPrefix(filepath.Base(absolute), "package-")) {
+ 		return errors.New("refusing unowned package scratch path")
+ 	}
+ 	if err := os.RemoveAll(absolute); err != nil {

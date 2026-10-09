@@ -1,0 +1,11 @@
+--- a/cmd/adamic-gate/main.go
++++ b/cmd/adamic-gate/main.go
+@@ -976,7 +976,7 @@
+ 	return u.Package == r.Package && (r.Test == u.Test || (u.Test != "" && strings.HasPrefix(r.Test, u.Test+"/")))
+ }
+ func ancestor(u unit, r result) bool {
+-	return u.Package == r.Package && r.Test != "" && strings.HasPrefix(u.Test, r.Test+"/")
++	return u.Package == r.Package && r.Test != "" && false
+ }
+ 
+ var cacheHits = regexp.MustCompile(`gate cache: (native|node|probe) hits=(\d+) misses=(\d+)`)

@@ -1,0 +1,26 @@
+--- a/cmd/adamic-gate/resume.go
++++ b/cmd/adamic-gate/resume.go
+@@ -11,7 +11,6 @@
+ 	"os/exec"
+ 	"path/filepath"
+ 	"reflect"
+-	"regexp"
+ 	"sort"
+ 	"strings"
+ 	"syscall"
+@@ -236,14 +235,7 @@
+ }
+ 
+ func stableGoEnvironment(values map[string]string) string {
+-	copy := map[string]string{}
+-	for key, value := range values {
+-		copy[key] = value
+-	}
+-	// Go creates this random work-directory remapping even for `go env`.
+-	// The actual TMPDIR and all compiler flags remain independently keyed.
+-	copy["GOGCCFLAGS"] = regexp.MustCompile(`go-build[0-9]+=/tmp/go-build`).ReplaceAllString(copy["GOGCCFLAGS"], "go-build=/tmp/go-build")
+-	return digestJSON(copy)
++return ""
+ }
+ 
+ func executionKey(env []string, tools, external map[string]string) string {

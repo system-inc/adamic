@@ -1,0 +1,19 @@
+{
+  "command": "timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-gate/ -run ^TestResumeCleanupPreservesForeignPaths$",
+  "exit": 0,
+  "wall": 0.21598222300235648,
+  "seconds": 0.003,
+  "failed": [],
+  "passed": [
+    "TestResumeCleanupPreservesForeignPaths"
+  ],
+  "skipped": [],
+  "outputs": {
+    "TestResumeCleanupPreservesForeignPaths": [
+      "=== RUN   TestResumeCleanupPreservesForeignPaths",
+      "=== PAUSE TestResumeCleanupPreservesForeignPaths",
+      "=== CONT  TestResumeCleanupPreservesForeignPaths",
+      "--- PASS: TestResumeCleanupPreservesForeignPaths (0.00s)"
+    ]
+  }
+}

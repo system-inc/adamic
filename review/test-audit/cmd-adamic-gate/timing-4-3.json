@@ -1,0 +1,19 @@
+{
+  "command": "timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-gate/ -run ^TestCheckpointKeysIncludeAllExecutionInputs$",
+  "exit": 0,
+  "wall": 0.21685139300097944,
+  "seconds": 0.003,
+  "failed": [],
+  "passed": [
+    "TestCheckpointKeysIncludeAllExecutionInputs"
+  ],
+  "skipped": [],
+  "outputs": {
+    "TestCheckpointKeysIncludeAllExecutionInputs": [
+      "=== RUN   TestCheckpointKeysIncludeAllExecutionInputs",
+      "=== PAUSE TestCheckpointKeysIncludeAllExecutionInputs",
+      "=== CONT  TestCheckpointKeysIncludeAllExecutionInputs",
+      "--- PASS: TestCheckpointKeysIncludeAllExecutionInputs (0.00s)"
+    ]
+  }
+}

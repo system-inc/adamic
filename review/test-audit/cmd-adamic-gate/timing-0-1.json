@@ -1,0 +1,19 @@
+{
+  "command": "timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-gate/ -run ^TestAnchoredSelectors$",
+  "exit": 0,
+  "wall": 10.065027372998884,
+  "seconds": 9.828,
+  "failed": [],
+  "passed": [
+    "TestAnchoredSelectors"
+  ],
+  "skipped": [],
+  "outputs": {
+    "TestAnchoredSelectors": [
+      "=== RUN   TestAnchoredSelectors",
+      "=== PAUSE TestAnchoredSelectors",
+      "=== CONT  TestAnchoredSelectors",
+      "--- PASS: TestAnchoredSelectors (9.82s)"
+    ]
+  }
+}

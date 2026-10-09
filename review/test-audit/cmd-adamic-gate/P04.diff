@@ -1,0 +1,16 @@
+--- a/cmd/adamic-gate/resume.go
++++ b/cmd/adamic-gate/resume.go
+@@ -263,12 +263,7 @@
+ }
+ 
+ func checkpointKey(s resumeState, pkg string, patterns []string) string {
+-	return digestJSON(struct {
+-		State    resumeState
+-		Package  string
+-		Patterns []string
+-		Flags    []string
+-	}{s, pkg, patterns, []string{"-count=1", "-json", "-timeout", "60m", "ADAMIC_GATE_UNCACHED=1"}})
++return ""
+ }
+ func testArgs(pkg, pattern string) []string {
+ 	return []string{"test", "-count=1", "-json", "-timeout", "60m", "-run", pattern, pkg}

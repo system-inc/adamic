@@ -1,0 +1,19 @@
+{
+  "base": "470cc0cde025aee921b7c7856bebe2465c1461b1",
+  "rows": [
+    "TestAnchoredSelectors",
+    "TestCoverageRejectsOverlapAndUnplannedTests",
+    "TestRawEvidenceKeepsSkipReasonsAndFailures",
+    "TestEveryTestIsParallelOrSaysWhy",
+    "TestCheckpointKeysIncludeAllExecutionInputs",
+    "TestPackageCheckpointRequiresIntactCompleteEvidence",
+    "TestTypeAwareChildrenAndParentCost",
+    "TestResumeCleanupPreservesForeignPaths"
+  ],
+  "families": [],
+  "helpers": [],
+  "setup": [
+    "TestEveryTestIsParallelOrSaysWhy"
+  ],
+  "bounded": false
+}

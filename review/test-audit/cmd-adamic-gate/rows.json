@@ -1,0 +1,322 @@
+[
+  {
+    "test": "TestAnchoredSelectors",
+    "package": "cmd/adamic-gate",
+    "file": "cmd/adamic-gate/main_test.go",
+    "seconds": 9.828,
+    "oracle": "Go test actually executes the generated selectors; sorted leaf names must equal a self-written exact list. M01 produced three leaves, the correct count, with wrong membership.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M01",
+      "M04"
+    ],
+    "unique_kills": [
+      "M01",
+      "M04"
+    ],
+    "last_proven_fail": "M04: main_test.go:69: Go executed [TestParent/internal/load/testdata/0.1/compile/main.a TestParent/internal/oracle/testdata/a.a TestParent/internal/oracle/testdata/b+.a TestParentExtra TestParentExtra], want exactly [TestParent/internal/load/testdata/0.1/compile/main.a TestParent/internal/oracle/testdata/a.a TestParent/internal/oracle/testdata/b+.a]",
+    "verdict": "sacred",
+    "subsumed_by": null,
+    "mutants_in_matrix": 20,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [
+      "TestAnchoredSelectors",
+      "TestCoverageRejectsOverlapAndUnplannedTests",
+      "TestRawEvidenceKeepsSkipReasonsAndFailures",
+      "TestEveryTestIsParallelOrSaysWhy",
+      "TestCheckpointKeysIncludeAllExecutionInputs",
+      "TestPackageCheckpointRequiresIntactCompleteEvidence",
+      "TestTypeAwareChildrenAndParentCost",
+      "TestResumeCleanupPreservesForeignPaths"
+    ],
+    "evidence": "ADAMIC_MUTANT=M04 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-gate/ -run . > M04.log 2>&1; main_test.go:69: Go executed [TestParent/internal/load/testdata/0.1/compile/main.a TestParent/internal/oracle/testdata/a.a TestParent/internal/oracle/testdata/b+.a TestParentExtra TestParentExtra], want exactly [TestParent/internal/load/testdata/0.1/compile/main.a TestParent/internal/oracle/testdata/a.a TestParent/internal/oracle/testdata/b+.a]",
+    "incidental_probe_failures": [
+      "P03"
+    ]
+  },
+  {
+    "test": "TestCoverageRejectsOverlapAndUnplannedTests",
+    "package": "cmd/adamic-gate",
+    "file": "cmd/adamic-gate/main_test.go",
+    "seconds": 0.003,
+    "oracle": "Self-written ownership maps and refusals: valid evidence, exact overlap and unplanned messages, and no ancestor satisfying a missing child.",
+    "oracle_kind": "self",
+    "kills": [
+      "M05",
+      "M06",
+      "M07",
+      "M08"
+    ],
+    "unique_kills": [
+      "M05",
+      "M07",
+      "M08"
+    ],
+    "last_proven_fail": "M08: main_test.go:81: [unplanned test: p::TestParent]",
+    "verdict": "sacred",
+    "subsumed_by": null,
+    "mutants_in_matrix": 20,
+    "probe_kills": [
+      "P02"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [
+      "TestAnchoredSelectors",
+      "TestCoverageRejectsOverlapAndUnplannedTests",
+      "TestRawEvidenceKeepsSkipReasonsAndFailures",
+      "TestEveryTestIsParallelOrSaysWhy",
+      "TestCheckpointKeysIncludeAllExecutionInputs",
+      "TestPackageCheckpointRequiresIntactCompleteEvidence",
+      "TestTypeAwareChildrenAndParentCost",
+      "TestResumeCleanupPreservesForeignPaths"
+    ],
+    "evidence": "ADAMIC_MUTANT=M08 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-gate/ -run . > M08-rerun.log 2>&1; main_test.go:81: [unplanned test: p::TestParent]",
+    "vacuous_subcases": [
+      "P02: initial valid first/second len(problems)==0 checks pass; missing produced evidence then fails at main_test.go:88."
+    ]
+  },
+  {
+    "test": "TestRawEvidenceKeepsSkipReasonsAndFailures",
+    "package": "cmd/adamic-gate",
+    "file": "cmd/adamic-gate/main_test.go",
+    "seconds": 0.003,
+    "oracle": "Self-written raw JSON, preserved skip text and failure bytes, terminal count 2, cache-hit count 1, and rejection of corrupt JSON.",
+    "oracle_kind": "self",
+    "kills": [
+      "M09",
+      "M10",
+      "M11"
+    ],
+    "unique_kills": [
+      "M09",
+      "M10",
+      "M11"
+    ],
+    "last_proven_fail": "M11: main_test.go:123: lost raw evidence: [{p TestSkip skip     probe_test.go:7: needs external corpus",
+    "verdict": "sacred",
+    "subsumed_by": null,
+    "mutants_in_matrix": 20,
+    "probe_kills": [
+      "P03"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [
+      "TestAnchoredSelectors",
+      "TestCoverageRejectsOverlapAndUnplannedTests",
+      "TestRawEvidenceKeepsSkipReasonsAndFailures",
+      "TestEveryTestIsParallelOrSaysWhy",
+      "TestCheckpointKeysIncludeAllExecutionInputs",
+      "TestPackageCheckpointRequiresIntactCompleteEvidence",
+      "TestTypeAwareChildrenAndParentCost",
+      "TestResumeCleanupPreservesForeignPaths"
+    ],
+    "evidence": "ADAMIC_MUTANT=M11 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-gate/ -run . > M11-rerun.log 2>&1; main_test.go:123: lost raw evidence: [{p TestSkip skip     probe_test.go:7: needs external corpus"
+  },
+  {
+    "test": "TestEveryTestIsParallelOrSaysWhy",
+    "package": "cmd/adamic-gate",
+    "file": "cmd/adamic-gate/parallel_test.go",
+    "seconds": 0.288,
+    "oracle": "Self-written repository parallel policy and serial baseline. Checks suite construction; its production scan helpers live in parallel_test.go.",
+    "oracle_kind": "self",
+    "kills": [
+      "S01"
+    ],
+    "unique_kills": [
+      "S01"
+    ],
+    "last_proven_fail": "S01: parallel_test.go:137: cmd/adamic-gate/main_test.go\tTestAnchoredSelectors: call the test parameter's Parallel() as the first statement, or add // Not parallel: <shared state it touches> directly above the test with a non-empty reason",
+    "verdict": "setup-check",
+    "subsumed_by": null,
+    "mutants_in_matrix": 20,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": false,
+    "matrix_rows": [
+      "TestAnchoredSelectors",
+      "TestCoverageRejectsOverlapAndUnplannedTests",
+      "TestRawEvidenceKeepsSkipReasonsAndFailures",
+      "TestEveryTestIsParallelOrSaysWhy",
+      "TestCheckpointKeysIncludeAllExecutionInputs",
+      "TestPackageCheckpointRequiresIntactCompleteEvidence",
+      "TestTypeAwareChildrenAndParentCost",
+      "TestResumeCleanupPreservesForeignPaths"
+    ],
+    "evidence": "ADAMIC_MUTANT=S01 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-gate/ -run . > S01.log 2>&1; parallel_test.go:137: cmd/adamic-gate/main_test.go\tTestAnchoredSelectors: call the test parameter's Parallel() as the first statement, or add // Not parallel: <shared state it touches> directly above the test with a non-empty reason"
+  },
+  {
+    "test": "TestCheckpointKeysIncludeAllExecutionInputs",
+    "package": "cmd/adamic-gate",
+    "file": "cmd/adamic-gate/resume_test.go",
+    "seconds": 0.003,
+    "oracle": "Self-written key inequalities for plan, context, shard, package, patterns, file bytes/mode, environment, tools and external input; equality for normalized random Go scratch paths.",
+    "oracle_kind": "self",
+    "kills": [
+      "M12",
+      "M13",
+      "M14"
+    ],
+    "unique_kills": [
+      "M12",
+      "M13",
+      "M14"
+    ],
+    "last_proven_fail": "M14: resume_test.go:52: external input permissions absent from key",
+    "verdict": "sacred",
+    "subsumed_by": null,
+    "mutants_in_matrix": 20,
+    "probe_kills": [
+      "P04",
+      "P05",
+      "P06",
+      "P07"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [
+      "TestAnchoredSelectors",
+      "TestCoverageRejectsOverlapAndUnplannedTests",
+      "TestRawEvidenceKeepsSkipReasonsAndFailures",
+      "TestEveryTestIsParallelOrSaysWhy",
+      "TestCheckpointKeysIncludeAllExecutionInputs",
+      "TestPackageCheckpointRequiresIntactCompleteEvidence",
+      "TestTypeAwareChildrenAndParentCost",
+      "TestResumeCleanupPreservesForeignPaths"
+    ],
+    "evidence": "ADAMIC_MUTANT=M14 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-gate/ -run . > M14-rerun.log 2>&1; resume_test.go:52: external input permissions absent from key",
+    "vacuous_subcases": [
+      "P07: random work-directory equivalence passes with empty keys; changed compiler flags then fail at resume_test.go:75."
+    ]
+  },
+  {
+    "test": "TestPackageCheckpointRequiresIntactCompleteEvidence",
+    "package": "cmd/adamic-gate",
+    "file": "cmd/adamic-gate/resume_test.go",
+    "seconds": 0.004,
+    "oracle": "Self-written positive found control, key mismatch refusal, checksum and terminal error text, complete failed-log reuse, and absent checkpoint handling. Some negative cases check only non-nil error; invocation controls use production patterns/testArgs helpers.",
+    "oracle_kind": "self",
+    "kills": [
+      "M06",
+      "M15",
+      "M16"
+    ],
+    "unique_kills": [
+      "M15",
+      "M16"
+    ],
+    "last_proven_fail": "M16: resume_test.go:114: changed log accepted <nil>",
+    "verdict": "sacred",
+    "subsumed_by": null,
+    "mutants_in_matrix": 20,
+    "probe_kills": [
+      "P08"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [
+      "TestAnchoredSelectors",
+      "TestCoverageRejectsOverlapAndUnplannedTests",
+      "TestRawEvidenceKeepsSkipReasonsAndFailures",
+      "TestEveryTestIsParallelOrSaysWhy",
+      "TestCheckpointKeysIncludeAllExecutionInputs",
+      "TestPackageCheckpointRequiresIntactCompleteEvidence",
+      "TestTypeAwareChildrenAndParentCost",
+      "TestResumeCleanupPreservesForeignPaths"
+    ],
+    "evidence": "ADAMIC_MUTANT=M16 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-gate/ -run . > M16-rerun.log 2>&1; resume_test.go:114: changed log accepted <nil>",
+    "incidental_probe_failures": [
+      "P01",
+      "P02",
+      "P03"
+    ]
+  },
+  {
+    "test": "TestTypeAwareChildrenAndParentCost",
+    "package": "cmd/adamic-gate",
+    "file": "cmd/adamic-gate/resume_test.go",
+    "seconds": 0.004,
+    "oracle": "Self-written source-table labels, predicted costs 5 and 7, largest child, and differing plan digests. Table contents belong to Adamic, not an external oracle.",
+    "oracle_kind": "self",
+    "kills": [
+      "M17",
+      "M18"
+    ],
+    "unique_kills": [
+      "M17",
+      "M18"
+    ],
+    "last_proven_fail": "M18: resume_test.go:143: cannot enumerate TestVolumeAgreementAndMutants",
+    "verdict": "sacred",
+    "subsumed_by": null,
+    "mutants_in_matrix": 20,
+    "probe_kills": [
+      "P09",
+      "P10",
+      "P11"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [
+      "TestAnchoredSelectors",
+      "TestCoverageRejectsOverlapAndUnplannedTests",
+      "TestRawEvidenceKeepsSkipReasonsAndFailures",
+      "TestEveryTestIsParallelOrSaysWhy",
+      "TestCheckpointKeysIncludeAllExecutionInputs",
+      "TestPackageCheckpointRequiresIntactCompleteEvidence",
+      "TestTypeAwareChildrenAndParentCost",
+      "TestResumeCleanupPreservesForeignPaths"
+    ],
+    "evidence": "ADAMIC_MUTANT=M18 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-gate/ -run . > M18-rerun.log 2>&1; resume_test.go:143: cannot enumerate TestVolumeAgreementAndMutants"
+  },
+  {
+    "test": "TestResumeCleanupPreservesForeignPaths",
+    "package": "cmd/adamic-gate",
+    "file": "cmd/adamic-gate/resume_test.go",
+    "seconds": 0.004,
+    "oracle": "Self-written refusal and filesystem state: foreign path must remain, owned package scratch must disappear.",
+    "oracle_kind": "self",
+    "kills": [
+      "M19"
+    ],
+    "unique_kills": [
+      "M19"
+    ],
+    "last_proven_fail": "M19: resume_test.go:172: foreign scratch path accepted",
+    "verdict": "sacred",
+    "subsumed_by": null,
+    "mutants_in_matrix": 20,
+    "probe_kills": [
+      "P12"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [
+      "TestAnchoredSelectors",
+      "TestCoverageRejectsOverlapAndUnplannedTests",
+      "TestRawEvidenceKeepsSkipReasonsAndFailures",
+      "TestEveryTestIsParallelOrSaysWhy",
+      "TestCheckpointKeysIncludeAllExecutionInputs",
+      "TestPackageCheckpointRequiresIntactCompleteEvidence",
+      "TestTypeAwareChildrenAndParentCost",
+      "TestResumeCleanupPreservesForeignPaths"
+    ],
+    "evidence": "ADAMIC_MUTANT=M19 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-gate/ -run . > M19-rerun.log 2>&1; resume_test.go:172: foreign scratch path accepted"
+  }
+]

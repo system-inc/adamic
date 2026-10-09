@@ -1,0 +1,11 @@
+--- a/cmd/adamic-gate/resume.go
++++ b/cmd/adamic-gate/resume.go
+@@ -132,7 +132,7 @@
+ 			return "", err
+ 		}
+ 		stat := info.Sys().(*syscall.Stat_t)
+-		return digestJSON([]any{uint32(info.Mode()), stat.Uid, stat.Gid, data}), nil
++		return digestJSON([]any{uint32(0), stat.Uid, stat.Gid, data}), nil
+ 	}
+ 	entries, err := os.ReadDir(path)
+ 	if err != nil {

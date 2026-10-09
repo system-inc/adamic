@@ -1,0 +1,38 @@
+--- a/cmd/adamic-gate/resume.go
++++ b/cmd/adamic-gate/resume.go
+@@ -379,34 +379,7 @@
+ 	return nil
+ }
+ func loadPackage(dir, key string, p plan, index int, pkg string) (packageEvidence, bool, error) {
+-	var e packageEvidence
+-	path := filepath.Join(dir, "complete.json")
+-	if _, err := os.Stat(path); os.IsNotExist(err) {
+-		return e, false, nil
+-	} else if err != nil {
+-		return e, false, err
+-	}
+-	if err := loadJSON(path, &e); err != nil {
+-		return e, false, err
+-	}
+-	if e.Key != key || e.Package != pkg {
+-		return e, false, errors.New("package resume key differs")
+-	}
+-	log, err := fileDigest(filepath.Join(dir, "test.jsonl"))
+-	if err != nil {
+-		return e, false, err
+-	}
+-	stderr, err := fileDigest(filepath.Join(dir, "test.stderr"))
+-	if err != nil {
+-		return e, false, err
+-	}
+-	if log != e.LogDigest || stderr != e.StderrDigest {
+-		return e, false, errors.New("package checkpoint checksum differs")
+-	}
+-	if err := completePackage(dir, e, p, index, pkg); err != nil {
+-		return e, false, err
+-	}
+-	return e, true, nil
++return packageEvidence{}, false, nil
+ }
+ 
+ // The aggregate is convenient for consumers, but completed package files are the

@@ -1,0 +1,11 @@
+--- a/cmd/adamic-gate/main.go
++++ b/cmd/adamic-gate/main.go
+@@ -540,7 +540,7 @@
+ 	return result
+ }
+ func skipReason(action, text string) string {
+-	if action != "skip" {
++	if action == "skip" {
+ 		return ""
+ 	}
+ 	var lines []string

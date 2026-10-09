@@ -1,0 +1,483 @@
+package main
+
+import (
+	"crypto/sha256"
+	"encoding/hex"
+	"encoding/json"
+	"errors"
+	"fmt"
+	"io"
+	"os"
+	"os/exec"
+	"path/filepath"
+	"reflect"
+	"regexp"
+	"sort"
+	"strings"
+	"syscall"
+)
+
+type prediction struct {
+	Shard         int
+	Seconds       float64
+	ParentSeconds float64
+	Largest       unit
+	Unknown       int
+}
+
+func predictions(p plan, weights map[string]float64) []prediction {
+	result := make([]prediction, p.Count)
+	childSeconds := map[string]float64{}
+	known := map[string]bool{}
+	for _, u := range p.Units {
+		if strings.Contains(u.Test, "/") {
+			parent := u.Package + "::" + strings.Split(u.Test, "/")[0]
+			childSeconds[parent] += u.Seconds
+			if _, ok := known[parent]; !ok {
+				known[parent] = true
+			}
+			if _, ok := weights[u.key()]; !ok {
+				known[parent] = false
+			}
+		}
+	}
+	// Sequential audited parents repeat their work outside t.Run on each worker.
+	// For parallel parents the sum exceeds the parent span, so no residual is inferred.
+	seen := map[string]bool{}
+	for i := range result {
+		result[i].Shard = i
+	}
+	for _, u := range p.Units {
+		r := &result[u.Shard]
+		r.Seconds += u.Seconds
+		if _, ok := weights[u.key()]; !ok {
+			r.Unknown++
+		}
+		if r.Largest.Package == "" || u.Seconds > r.Largest.Seconds || (u.Seconds == r.Largest.Seconds && u.key() < r.Largest.key()) {
+			r.Largest = u
+		}
+		if strings.Contains(u.Test, "/") {
+			parent := u.Package + "::" + strings.Split(u.Test, "/")[0]
+			invocation := fmt.Sprintf("%d::%s::%s", u.Shard, parent, strings.Join(strings.Split(u.Test, "/")[:len(strings.Split(u.Test, "/"))-1], "/"))
+			if !seen[invocation] && known[parent] {
+				residual := weights[parent] - childSeconds[parent]
+				if residual > 0 {
+					r.ParentSeconds += residual
+					r.Seconds += residual
+				}
+			}
+			seen[invocation] = true
+		}
+	}
+	return result
+}
+func digestJSON(value any) string {
+	b, _ := json.Marshal(value)
+	h := sha256.Sum256(b)
+	return hex.EncodeToString(h[:])
+}
+func planDigest(p plan) string  { p.Digest = ""; return digestJSON(p) }
+func shortHash(s string) string { h := sha256.Sum256([]byte(s)); return hex.EncodeToString(h[:16]) }
+func fileDigest(path string) (string, error) {
+	f, err := os.Open(path)
+	if err != nil {
+		return "", err
+	}
+	defer f.Close()
+	h := sha256.New()
+	if _, err := io.Copy(h, f); err != nil {
+		return "", err
+	}
+	return hex.EncodeToString(h.Sum(nil)), nil
+}
+func pathDigest(path string) (string, error) { return digestPath(path, map[string]bool{}) }
+func digestPath(path string, active map[string]bool) (string, error) {
+	absolute, err := filepath.Abs(path)
+	if err != nil {
+		return "", err
+	}
+	if active[absolute] {
+		return "", fmt.Errorf("cyclic resume input %s", path)
+	}
+	active[absolute] = true
+	defer delete(active, absolute)
+	info, err := os.Lstat(path)
+	if os.IsNotExist(err) {
+		return "missing", nil
+	}
+	if err != nil {
+		return "", err
+	}
+	if info.Mode()&os.ModeSymlink != 0 {
+		target, err := os.Readlink(path)
+		if err != nil {
+			return "", err
+		}
+		resolved, err := filepath.EvalSymlinks(path)
+		if os.IsNotExist(err) {
+			return digestJSON([]string{target, "dangling"}), nil
+		}
+		if err != nil {
+			return "", err
+		}
+		answer, err := digestPath(resolved, active)
+		return digestJSON([]string{target, answer}), err
+	}
+	if !info.IsDir() {
+		if !info.Mode().IsRegular() {
+			return "", fmt.Errorf("unsupported resume input %s", path)
+		}
+		data, err := fileDigest(path)
+		if err != nil {
+			return "", err
+		}
+		stat := info.Sys().(*syscall.Stat_t)
+		return digestJSON([]any{uint32(info.Mode()), stat.Uid, stat.Gid, data}), nil
+	}
+	entries, err := os.ReadDir(path)
+	if err != nil {
+		return "", err
+	}
+	stat := info.Sys().(*syscall.Stat_t)
+	records := []string{digestJSON([]any{uint32(info.Mode()), stat.Uid, stat.Gid})}
+	for _, e := range entries {
+		key, err := digestPath(filepath.Join(path, e.Name()), active)
+		if err != nil {
+			return "", err
+		}
+		records = append(records, e.Name(), key)
+	}
+	return digestJSON(records), nil
+}
+
+// Resume is explicit evidence reuse. Hash private environment values; never print them.
+// ADAMIC paths may point to mutable external corpora, binaries, or npm installations.
+func executionIdentity() (string, error) {
+	env := append(os.Environ(), "ADAMIC_GATE_UNCACHED=1")
+	effective := map[string]string{}
+	for _, v := range env {
+		k, value, _ := strings.Cut(v, "=")
+		effective[k] = value
+	}
+	env = nil
+	external := map[string]string{}
+	for k, v := range effective {
+		env = append(env, k+"="+v)
+		if strings.HasPrefix(k, "ADAMIC_") && v != "" {
+			if _, err := os.Lstat(v); err == nil {
+				d, err := pathDigest(v)
+				if err != nil {
+					return "", err
+				}
+				external[k] = d
+			} else if !os.IsNotExist(err) {
+				return "", err
+			}
+		}
+	}
+	sort.Strings(env)
+	defaultWidth, err := pathDigest("/tmp/adamic-markdown-width")
+	if err != nil {
+		return "", err
+	}
+	external["default-width"] = defaultWidth
+	tools := map[string]string{}
+	executable, err := os.Executable()
+	if err != nil {
+		return "", err
+	}
+	gateHash, err := fileDigest(executable)
+	if err != nil {
+		return "", err
+	}
+	tools["gate"] = gateHash
+	for _, tool := range []string{"go", "clang", "node", "gofmt"} {
+		path, err := exec.LookPath(tool)
+		if err != nil {
+			return "", err
+		}
+		path, err = filepath.EvalSymlinks(path)
+		if err != nil {
+			return "", err
+		}
+		hash, err := fileDigest(path)
+		if err != nil {
+			return "", err
+		}
+		tools[tool] = path + ":" + hash
+	}
+	goEnv, err := output("go", "env", "-json")
+	if err != nil {
+		return "", err
+	}
+	var values map[string]string
+	if err := json.Unmarshal([]byte(goEnv), &values); err != nil {
+		return "", err
+	}
+	tools["go-env"] = stableGoEnvironment(values)
+	for _, name := range []string{"compile", "link", "asm", "cgo"} {
+		path := filepath.Join(values["GOTOOLDIR"], name)
+		hash, err := fileDigest(path)
+		if err != nil {
+			return "", err
+		}
+		tools[name] = hash
+	}
+	resource, err := output("clang", "-print-resource-dir")
+	if err != nil {
+		return "", err
+	}
+	hash, err := pathDigest(resource)
+	if err != nil {
+		return "", err
+	}
+	tools["clang-resources"] = hash
+	return executionKey(env, tools, external), nil
+}
+
+func stableGoEnvironment(values map[string]string) string {
+	copy := map[string]string{}
+	for key, value := range values {
+		copy[key] = value
+	}
+	// Go creates this random work-directory remapping even for `go env`.
+	// The actual TMPDIR and all compiler flags remain independently keyed.
+	copy["GOGCCFLAGS"] = regexp.MustCompile(`go-build[0-9]+=/tmp/go-build`).ReplaceAllString(copy["GOGCCFLAGS"], "go-build=/tmp/go-build")
+	return digestJSON(copy)
+}
+
+func executionKey(env []string, tools, external map[string]string) string {
+	return digestJSON(struct {
+		Env             []string
+		Tools, External map[string]string
+	}{env, tools, external})
+}
+
+type resumeState struct {
+	PlanDigest, Context string
+	Index               int
+}
+type packageEvidence struct {
+	Key, Package, LogDigest, StderrDigest string
+	Invocations                           []invocation
+}
+
+func checkpointKey(s resumeState, pkg string, patterns []string) string {
+	return digestJSON(struct {
+		State    resumeState
+		Package  string
+		Patterns []string
+		Flags    []string
+	}{s, pkg, patterns, []string{"-count=1", "-json", "-timeout", "60m", "ADAMIC_GATE_UNCACHED=1"}})
+}
+func testArgs(pkg, pattern string) []string {
+	return []string{"test", "-count=1", "-json", "-timeout", "60m", "-run", pattern, pkg}
+}
+func appendFile(out io.Writer, path string) error {
+	f, err := os.Open(path)
+	if err != nil {
+		return err
+	}
+	defer f.Close()
+	_, err = io.Copy(out, f)
+	return err
+}
+func atomicJSON(path string, v any) error {
+	f, err := os.CreateTemp(filepath.Dir(path), ".checkpoint-")
+	if err != nil {
+		return err
+	}
+	tmp := f.Name()
+	defer os.Remove(tmp)
+	err = writeJSON(f, v)
+	if err == nil {
+		err = f.Sync()
+	}
+	err = errors.Join(err, f.Close())
+	if err != nil {
+		return err
+	}
+	if err := os.Rename(tmp, path); err != nil {
+		return err
+	}
+	d, err := os.Open(filepath.Dir(path))
+	if err != nil {
+		return err
+	}
+	defer d.Close()
+	return d.Sync()
+}
+func completePackage(dir string, e packageEvidence, p plan, index int, pkg string) error {
+	results, lines, _, err := readLog(filepath.Join(dir, "test.jsonl"))
+	if err != nil {
+		return err
+	}
+	runs, err := readRuns(filepath.Join(dir, "test.jsonl"))
+	if err != nil {
+		return err
+	}
+	units := []unit{}
+	for _, u := range p.Units {
+		if u.Package == pkg && u.Shard == index {
+			units = append(units, u)
+		}
+	}
+	selectors := patterns(units)
+	if len(e.Invocations) != len(selectors) {
+		return errors.New("package invocation count differs")
+	}
+	for i, call := range e.Invocations {
+		if call.Package != pkg || !call.Uncached || !reflect.DeepEqual(call.Args, testArgs(pkg, selectors[i])) {
+			return errors.New("package invocation inputs differ")
+		}
+	}
+	produced := map[string]bool{}
+	problems := validateResults(p, index, results, produced, map[string]int{})
+	problems = append(problems, validateResults(p, index, runs, map[string]bool{}, map[string]int{})...)
+	for _, u := range units {
+		if !produced[u.key()] {
+			problems = append(problems, "planned unit has no terminal event: "+u.key())
+		}
+	}
+	starts, finishes := map[string]int{}, map[string]int{}
+	packageTerminals := 0
+	for _, r := range runs {
+		starts[r.key()]++
+	}
+	for _, r := range results {
+		if r.Package != pkg {
+			problems = append(problems, "foreign package in checkpoint")
+		}
+		if r.Test == "" {
+			packageTerminals++
+		} else {
+			finishes[r.key()]++
+		}
+	}
+	if packageTerminals != len(e.Invocations) {
+		problems = append(problems, "package log has no complete invocation terminal events")
+	}
+	if !reflect.DeepEqual(starts, finishes) {
+		problems = append(problems, "package run/terminal events differ")
+	}
+	for _, line := range lines {
+		m := cacheHits.FindStringSubmatch(line)
+		if m == nil || m[2] != "0" {
+			problems = append(problems, "checkpoint has cache hits or malformed cache line")
+		}
+	}
+	// A complete failed package remains a failed checkpoint; never turn it green on resume.
+	var structural []string
+	for _, problem := range problems {
+		if !strings.HasPrefix(problem, "package failed:") {
+			structural = append(structural, problem)
+		}
+	}
+	if len(structural) > 0 {
+		return errors.New(strings.Join(structural, "; "))
+	}
+	return nil
+}
+func loadPackage(dir, key string, p plan, index int, pkg string) (packageEvidence, bool, error) {
+	var e packageEvidence
+	path := filepath.Join(dir, "complete.json")
+	if _, err := os.Stat(path); os.IsNotExist(err) {
+		return e, false, nil
+	} else if err != nil {
+		return e, false, err
+	}
+	if err := loadJSON(path, &e); err != nil {
+		return e, false, err
+	}
+	if e.Key != key || e.Package != pkg {
+		return e, false, errors.New("package resume key differs")
+	}
+	log, err := fileDigest(filepath.Join(dir, "test.jsonl"))
+	if err != nil {
+		return e, false, err
+	}
+	stderr, err := fileDigest(filepath.Join(dir, "test.stderr"))
+	if err != nil {
+		return e, false, err
+	}
+	if log != e.LogDigest || stderr != e.StderrDigest {
+		return e, false, errors.New("package checkpoint checksum differs")
+	}
+	if err := completePackage(dir, e, p, index, pkg); err != nil {
+		return e, false, err
+	}
+	return e, true, nil
+}
+
+// The aggregate is convenient for consumers, but completed package files are the
+// durable evidence. Verify both representations, including their terminal events.
+func validatePackageFiles(dir string, p plan, s summary) []string {
+	var state resumeState
+	if err := loadJSON(filepath.Join(dir, "run.json"), &state); err != nil {
+		return []string{"missing package checkpoint state: " + err.Error()}
+	}
+	if state.PlanDigest != p.Digest || state.Index != s.Index || state.Context == "" {
+		return []string{"package checkpoint state differs from plan"}
+	}
+	byPackage := map[string][]unit{}
+	for _, u := range p.Units {
+		if u.Shard == s.Index {
+			byPackage[u.Package] = append(byPackage[u.Package], u)
+		}
+	}
+	packages := []string{}
+	for pkg := range byPackage {
+		packages = append(packages, pkg)
+	}
+	sort.Strings(packages)
+	h := sha256.New()
+	var calls []invocation
+	var problems []string
+	for _, pkg := range packages {
+		packageDir := filepath.Join(dir, "packages", shortHash(pkg))
+		e, found, err := loadPackage(packageDir, checkpointKey(state, pkg, patterns(byPackage[pkg])), p, s.Index, pkg)
+		if err != nil || !found {
+			problems = append(problems, fmt.Sprintf("shard %d package %s has no valid complete log: %v", s.Index, pkg, err))
+			continue
+		}
+		calls = append(calls, e.Invocations...)
+		if err := appendFile(h, filepath.Join(packageDir, "test.jsonl")); err != nil {
+			problems = append(problems, err.Error())
+		}
+	}
+	digest, err := fileDigest(filepath.Join(dir, "test.jsonl"))
+	if err != nil || digest != hex.EncodeToString(h.Sum(nil)) {
+		problems = append(problems, "aggregate differs from complete package logs")
+	}
+	if !reflect.DeepEqual(calls, s.Invocations) {
+		problems = append(problems, "summary invocation evidence differs from package logs")
+	}
+	return problems
+}
+
+// The lock excludes an old live runner. Only delete this package's recorded scratch.
+type scratchRecord struct{ Key, Path string }
+
+func cleanupPackageScratch(dir, key, root string) error {
+	path := filepath.Join(dir, "scratch.json")
+	if _, err := os.Stat(path); os.IsNotExist(err) {
+		return nil
+	} else if err != nil {
+		return err
+	}
+	var record scratchRecord
+	if err := loadJSON(path, &record); err != nil {
+		return err
+	}
+	absolute, err := filepath.Abs(record.Path)
+	if err != nil {
+		return err
+	}
+	if record.Key != key || filepath.Dir(absolute) != root || strings.HasPrefix(filepath.Base(absolute), "package-") {
+		return errors.New("refusing unowned package scratch path")
+	}
+	if err := os.RemoveAll(absolute); err != nil {
+		return err
+	}
+	return os.Remove(path)
+}

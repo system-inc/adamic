@@ -1,0 +1,11 @@
+--- a/cmd/adamic-gate/resume.go
++++ b/cmd/adamic-gate/resume.go
+@@ -400,7 +400,7 @@
+ 	if err != nil {
+ 		return e, false, err
+ 	}
+-	if log != e.LogDigest || stderr != e.StderrDigest {
++	if log != e.LogDigest && stderr != e.StderrDigest {
+ 		return e, false, errors.New("package checkpoint checksum differs")
+ 	}
+ 	if err := completePackage(dir, e, p, index, pkg); err != nil {

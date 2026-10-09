@@ -1,0 +1,11 @@
+--- a/cmd/adamic-gate/main.go
++++ b/cmd/adamic-gate/main.go
+@@ -527,7 +527,7 @@
+ 		for i := range names {
+ 			names[i] = regexp.QuoteMeta(names[i])
+ 		}
+-		last := "^(" + strings.Join(names, "|") + ")$"
++		last := "^(" + strings.Join(names, "|") + ")"
+ 		if prefix != "" {
+ 			parts := strings.Split(prefix, "/")
+ 			for i := range parts {

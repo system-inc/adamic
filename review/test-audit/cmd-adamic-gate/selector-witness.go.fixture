@@ -1,0 +1,6 @@
+package main
+import("testing";"os";"os/exec";"path/filepath";"sort")
+func TestAuditSelectorsWitness(t *testing.T){t.Parallel();d:=t.TempDir();os.WriteFile(filepath.Join(d,"go.mod"),[]byte("module selectorwitness\n\ngo 1.27.0\n"),0600);os.WriteFile(filepath.Join(d,"probe_test.go"),[]byte(`package selectorwitness
+import "testing"
+func TestParent(t *testing.T){for _,name:=range []string{"internal/load/testdata/0.1/compile/main.a","internal/load/testdata/0X1/compile/main.a","internal/oracle/testdata/a.a","internal/oracle/testdata/a.a_suffix"}{t.Run(name,func(t *testing.T){})}}
+`),0600);asked:=[]unit{{Test:"TestParent/internal/load/testdata/0.1/compile/main.a"},{Test:"TestParent/internal/oracle/testdata/a.a"}};var leaves []string;for i,pattern:=range patterns(asked){t.Logf("pattern=%s",pattern);path:=filepath.Join(d,string(rune('a'+i))+".log");f,_:=os.Create(path);cmd:=exec.Command("go","test","-count=1","-json","-run",pattern,".");cmd.Dir=d;cmd.Env=append(os.Environ(),"GOWORK=off");cmd.Stdout=f;cmd.Stderr=f;if e:=cmd.Run();e!=nil{t.Fatal(e)};f.Close();events,_,_,e:=readLog(path);if e!=nil{t.Fatal(e)};for _,r:=range events{if r.Test!=""&&r.Test!="TestParent"{leaves=append(leaves,r.Test)}}};sort.Strings(leaves);t.Logf("executed=%v",leaves)}

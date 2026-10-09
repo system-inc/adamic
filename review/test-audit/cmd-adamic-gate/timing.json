@@ -1,0 +1,26 @@
+{
+  "setup": {
+    "npm_seconds": 0.7161337270008516,
+    "npm_exit": 0,
+    "nproc": "5",
+    "tools": "go version go1.27.1 linux/amd64",
+    "setup": "warm env works; skipped"
+  },
+  "switched_build": {
+    "seconds": 0.5128781999992498,
+    "exit": 0
+  },
+  "construction_build": {
+    "wall": 0.5675152030016761,
+    "exit": 0
+  },
+  "baseline_wall": 9.24176548000105,
+  "baseline_binary": 9.046,
+  "restored_binary": 8.829,
+  "final_matrix_cumulative_wall": 366.998766632998,
+  "final_matrix_cumulative_binary": 358.276,
+  "all_logged_run_cumulative_wall": 576.239312967009,
+  "validation_cumulative_wall": 12.579982995008322,
+  "recorded_at": "2026-10-09T09:42:09.530904+00:00",
+  "note": "Cumulative run times are work totals, not elapsed audit time; reruns and diagnostics overlapped. Scaffolding debugging time is not instrumented."
+}

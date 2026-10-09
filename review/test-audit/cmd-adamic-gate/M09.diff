@@ -1,0 +1,11 @@
+--- a/cmd/adamic-gate/main.go
++++ b/cmd/adamic-gate/main.go
+@@ -590,7 +590,7 @@
+ 			return nil, nil, 0, fmt.Errorf("%s: malformed JSON: %w", path, err)
+ 		}
+ 		key := e.Package + "::" + e.Test
+-		outputs[key] += e.Output
++		
+ 		for _, line := range strings.Split(e.Output, "\n") {
+ 			if strings.Contains(line, "gate cache:") {
+ 				cache = append(cache, line)

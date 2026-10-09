@@ -1,0 +1,73 @@
+{
+  "command": "timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-gate/ -run .",
+  "exit": 1,
+  "wall": 0.21836904699739534,
+  "seconds": 0.01,
+  "failed": [
+    "TestTypeAwareChildrenAndParentCost"
+  ],
+  "passed": [
+    "TestCheckpointKeysIncludeAllExecutionInputs",
+    "TestCoverageRejectsOverlapAndUnplannedTests"
+  ],
+  "skipped": [],
+  "outputs": {
+    "TestAnchoredSelectors": [
+      "=== RUN   TestAnchoredSelectors",
+      "=== PAUSE TestAnchoredSelectors",
+      "=== CONT  TestAnchoredSelectors"
+    ],
+    "TestCoverageRejectsOverlapAndUnplannedTests": [
+      "=== RUN   TestCoverageRejectsOverlapAndUnplannedTests",
+      "=== PAUSE TestCoverageRejectsOverlapAndUnplannedTests",
+      "=== CONT  TestCoverageRejectsOverlapAndUnplannedTests",
+      "--- PASS: TestCoverageRejectsOverlapAndUnplannedTests (0.00s)"
+    ],
+    "TestRawEvidenceKeepsSkipReasonsAndFailures": [
+      "=== RUN   TestRawEvidenceKeepsSkipReasonsAndFailures",
+      "=== PAUSE TestRawEvidenceKeepsSkipReasonsAndFailures",
+      "=== CONT  TestRawEvidenceKeepsSkipReasonsAndFailures"
+    ],
+    "TestEveryTestIsParallelOrSaysWhy": [
+      "=== RUN   TestEveryTestIsParallelOrSaysWhy",
+      "=== PAUSE TestEveryTestIsParallelOrSaysWhy"
+    ],
+    "TestCheckpointKeysIncludeAllExecutionInputs": [
+      "=== RUN   TestCheckpointKeysIncludeAllExecutionInputs",
+      "=== PAUSE TestCheckpointKeysIncludeAllExecutionInputs",
+      "=== CONT  TestCheckpointKeysIncludeAllExecutionInputs",
+      "--- PASS: TestCheckpointKeysIncludeAllExecutionInputs (0.00s)"
+    ],
+    "TestPackageCheckpointRequiresIntactCompleteEvidence": [
+      "=== RUN   TestPackageCheckpointRequiresIntactCompleteEvidence",
+      "=== PAUSE TestPackageCheckpointRequiresIntactCompleteEvidence",
+      "=== CONT  TestPackageCheckpointRequiresIntactCompleteEvidence"
+    ],
+    "TestTypeAwareChildrenAndParentCost": [
+      "=== RUN   TestTypeAwareChildrenAndParentCost",
+      "=== PAUSE TestTypeAwareChildrenAndParentCost",
+      "=== CONT  TestTypeAwareChildrenAndParentCost",
+      "--- FAIL: TestTypeAwareChildrenAndParentCost (0.00s)",
+      "panic: runtime error: index out of range [0] with length 0 [recovered, repanicked]",
+      "",
+      "goroutine 13 [running]:",
+      "testing.tRunner.func1.2({0x80c0a0, 0x219b5ae501f8})",
+      "\t/workspace/adamic-tools/go/src/testing/testing.go:2123 +0x232",
+      "testing.tRunner.func1()",
+      "\t/workspace/adamic-tools/go/src/testing/testing.go:2126 +0x329",
+      "panic({0x80c0a0?, 0x219b5ae501f8?})",
+      "\t/workspace/adamic-tools/go/src/runtime/panic.go:859 +0x125",
+      "github.com/system-inc/adamic/cmd/adamic-gate.TestTypeAwareChildrenAndParentCost(0x219b5aecefc8)",
+      "\t/workspace/adamic/cmd/adamic-gate/resume_test.go:153 +0x5cd",
+      "testing.tRunner(0x219b5aecefc8, 0x81b410)",
+      "\t/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea",
+      "created by testing.(*T).Run in goroutine 1",
+      "\t/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4"
+    ],
+    "TestResumeCleanupPreservesForeignPaths": [
+      "=== RUN   TestResumeCleanupPreservesForeignPaths",
+      "=== PAUSE TestResumeCleanupPreservesForeignPaths",
+      "=== CONT  TestResumeCleanupPreservesForeignPaths"
+    ]
+  }
+}

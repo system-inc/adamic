@@ -1,0 +1,28 @@
+package main
+
+import "os"
+
+func auditString(id, a, b string) string {
+	if os.Getenv("ADAMIC_MUTANT") == id {
+		return b
+	}
+	return a
+}
+func auditBool(id string, a, b bool) bool {
+	if os.Getenv("ADAMIC_MUTANT") == id {
+		return b
+	}
+	return a
+}
+func auditMode(a uint32) uint32 {
+	if os.Getenv("ADAMIC_MUTANT") == "M14" {
+		return 0
+	}
+	return a
+}
+func auditEnv(a []string) []string {
+	if os.Getenv("ADAMIC_MUTANT") == "M13" {
+		return nil
+	}
+	return a
+}

@@ -1,0 +1,89 @@
+{
+  "command": "timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-gate/ -run .",
+  "exit": 1,
+  "wall": 15.55231866000031,
+  "seconds": 15.284,
+  "failed": [
+    "TestTypeAwareChildrenAndParentCost"
+  ],
+  "passed": [
+    "TestCheckpointKeysIncludeAllExecutionInputs",
+    "TestResumeCleanupPreservesForeignPaths",
+    "TestCoverageRejectsOverlapAndUnplannedTests",
+    "TestPackageCheckpointRequiresIntactCompleteEvidence",
+    "TestRawEvidenceKeepsSkipReasonsAndFailures",
+    "TestEveryTestIsParallelOrSaysWhy",
+    "TestAnchoredSelectors"
+  ],
+  "skipped": [],
+  "outputs": {
+    "TestAnchoredSelectors": [
+      "=== RUN   TestAnchoredSelectors",
+      "=== PAUSE TestAnchoredSelectors",
+      "=== CONT  TestAnchoredSelectors",
+      "--- PASS: TestAnchoredSelectors (15.28s)"
+    ],
+    "TestCoverageRejectsOverlapAndUnplannedTests": [
+      "=== RUN   TestCoverageRejectsOverlapAndUnplannedTests",
+      "=== PAUSE TestCoverageRejectsOverlapAndUnplannedTests",
+      "=== CONT  TestCoverageRejectsOverlapAndUnplannedTests",
+      "--- PASS: TestCoverageRejectsOverlapAndUnplannedTests (0.00s)"
+    ],
+    "TestRawEvidenceKeepsSkipReasonsAndFailures": [
+      "=== RUN   TestRawEvidenceKeepsSkipReasonsAndFailures",
+      "=== PAUSE TestRawEvidenceKeepsSkipReasonsAndFailures",
+      "=== CONT  TestRawEvidenceKeepsSkipReasonsAndFailures",
+      "--- PASS: TestRawEvidenceKeepsSkipReasonsAndFailures (0.00s)"
+    ],
+    "TestEveryTestIsParallelOrSaysWhy": [
+      "=== RUN   TestEveryTestIsParallelOrSaysWhy",
+      "=== PAUSE TestEveryTestIsParallelOrSaysWhy",
+      "=== CONT  TestEveryTestIsParallelOrSaysWhy",
+      "    parallel_test.go:93: checked 25141 top-level tests; 46 fail the parallel rule",
+      "    parallel_test.go:124: stale serial baseline entry (now passes or no longer exists): internal/unicodeproperties/canonicalize_test.go\tTestCanonicalizeUnicodeNodeRange0",
+      "    parallel_test.go:124: stale serial baseline entry (now passes or no longer exists): internal/unicodeproperties/canonicalize_test.go\tTestCanonicalizeUnicodeNodeRange1",
+      "    parallel_test.go:124: stale serial baseline entry (now passes or no longer exists): internal/unicodeproperties/canonicalize_test.go\tTestCanonicalizeUnicodeNodeRange2",
+      "    parallel_test.go:124: stale serial baseline entry (now passes or no longer exists): internal/unicodeproperties/canonicalize_test.go\tTestCanonicalizeUnicodeNodeRange3",
+      "    parallel_test.go:124: stale serial baseline entry (now passes or no longer exists): internal/unicodeproperties/canonicalize_test.go\tTestCanonicalizeUnicodeNodeRange4",
+      "    parallel_test.go:124: stale serial baseline entry (now passes or no longer exists): internal/unicodeproperties/canonicalize_test.go\tTestCanonicalizeUnicodeNodeRange5",
+      "    parallel_test.go:124: stale serial baseline entry (now passes or no longer exists): internal/unicodeproperties/canonicalize_test.go\tTestCanonicalizeUnicodeNodeRange6",
+      "    parallel_test.go:124: stale serial baseline entry (now passes or no longer exists): internal/unicodeproperties/canonicalize_test.go\tTestCanonicalizeUnicodeNodeRange7",
+      "    parallel_test.go:124: stale serial baseline entry (now passes or no longer exists): internal/unicodeproperties/canonicalize_test.go\tTestCanonicalizeUnicodeNodeRange8",
+      "    parallel_test.go:124: stale serial baseline entry (now passes or no longer exists): internal/unicodeproperties/canonicalize_test.go\tTestCanonicalizeUnicodeNodeRange9",
+      "    parallel_test.go:124: stale serial baseline entry (now passes or no longer exists): stage1/cohere/css/css_printer_split_test.go\tTestCSSPrinterAgreesWithGo",
+      "    parallel_test.go:124: stale serial baseline entry (now passes or no longer exists): stage1/cohere/css/printer_shards_test.go\tTestCSSPrinterShardingCatchesDisagreement",
+      "    parallel_test.go:124: stale serial baseline entry (now passes or no longer exists): stage1/cohere/tsprinter/expression_products_test.go\tTestTSPrinterCachedMetadataRelocation",
+      "    parallel_test.go:124: stale serial baseline entry (now passes or no longer exists): stage1/cohere/tsprinter/expressions_test.go\tTestExpressionsAgainstGoAndPrettier",
+      "    parallel_test.go:124: stale serial baseline entry (now passes or no longer exists): stage1/cohere/tsprinter/tsc_corpus_test.go\tTestTSCCorpusAgreement",
+      "    parallel_test.go:124: stale serial baseline entry (now passes or no longer exists): stage1/cohere/tsprinter/tsc_units_test.go\tTestTSCShardPlantedDisagreement",
+      "    parallel_test.go:124: stale serial baseline entry (now passes or no longer exists): stage1/cohere/tsprinter/tsc_units_test.go\tTestTSCShardUnionRejectsMissingAndRepeated",
+      "    parallel_test.go:130: serial baseline contains 63 entries",
+      "--- PASS: TestEveryTestIsParallelOrSaysWhy (1.20s)"
+    ],
+    "TestCheckpointKeysIncludeAllExecutionInputs": [
+      "=== RUN   TestCheckpointKeysIncludeAllExecutionInputs",
+      "=== PAUSE TestCheckpointKeysIncludeAllExecutionInputs",
+      "=== CONT  TestCheckpointKeysIncludeAllExecutionInputs",
+      "--- PASS: TestCheckpointKeysIncludeAllExecutionInputs (0.00s)"
+    ],
+    "TestPackageCheckpointRequiresIntactCompleteEvidence": [
+      "=== RUN   TestPackageCheckpointRequiresIntactCompleteEvidence",
+      "=== PAUSE TestPackageCheckpointRequiresIntactCompleteEvidence",
+      "=== CONT  TestPackageCheckpointRequiresIntactCompleteEvidence",
+      "--- PASS: TestPackageCheckpointRequiresIntactCompleteEvidence (0.00s)"
+    ],
+    "TestTypeAwareChildrenAndParentCost": [
+      "=== RUN   TestTypeAwareChildrenAndParentCost",
+      "=== PAUSE TestTypeAwareChildrenAndParentCost",
+      "=== CONT  TestTypeAwareChildrenAndParentCost",
+      "    resume_test.go:148: wrong audited volume rows: []",
+      "--- FAIL: TestTypeAwareChildrenAndParentCost (0.00s)"
+    ],
+    "TestResumeCleanupPreservesForeignPaths": [
+      "=== RUN   TestResumeCleanupPreservesForeignPaths",
+      "=== PAUSE TestResumeCleanupPreservesForeignPaths",
+      "=== CONT  TestResumeCleanupPreservesForeignPaths",
+      "--- PASS: TestResumeCleanupPreservesForeignPaths (0.00s)"
+    ]
+  }
+}

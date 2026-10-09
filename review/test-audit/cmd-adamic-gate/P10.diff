@@ -1,0 +1,54 @@
+--- a/cmd/adamic-gate/resume.go
++++ b/cmd/adamic-gate/resume.go
+@@ -26,50 +26,7 @@
+ }
+ 
+ func predictions(p plan, weights map[string]float64) []prediction {
+-	result := make([]prediction, p.Count)
+-	childSeconds := map[string]float64{}
+-	known := map[string]bool{}
+-	for _, u := range p.Units {
+-		if strings.Contains(u.Test, "/") {
+-			parent := u.Package + "::" + strings.Split(u.Test, "/")[0]
+-			childSeconds[parent] += u.Seconds
+-			if _, ok := known[parent]; !ok {
+-				known[parent] = true
+-			}
+-			if _, ok := weights[u.key()]; !ok {
+-				known[parent] = false
+-			}
+-		}
+-	}
+-	// Sequential audited parents repeat their work outside t.Run on each worker.
+-	// For parallel parents the sum exceeds the parent span, so no residual is inferred.
+-	seen := map[string]bool{}
+-	for i := range result {
+-		result[i].Shard = i
+-	}
+-	for _, u := range p.Units {
+-		r := &result[u.Shard]
+-		r.Seconds += u.Seconds
+-		if _, ok := weights[u.key()]; !ok {
+-			r.Unknown++
+-		}
+-		if r.Largest.Package == "" || u.Seconds > r.Largest.Seconds || (u.Seconds == r.Largest.Seconds && u.key() < r.Largest.key()) {
+-			r.Largest = u
+-		}
+-		if strings.Contains(u.Test, "/") {
+-			parent := u.Package + "::" + strings.Split(u.Test, "/")[0]
+-			invocation := fmt.Sprintf("%d::%s::%s", u.Shard, parent, strings.Join(strings.Split(u.Test, "/")[:len(strings.Split(u.Test, "/"))-1], "/"))
+-			if !seen[invocation] && known[parent] {
+-				residual := weights[parent] - childSeconds[parent]
+-				if residual > 0 {
+-					r.ParentSeconds += residual
+-					r.Seconds += residual
+-				}
+-			}
+-			seen[invocation] = true
+-		}
+-	}
+-	return result
++return nil
+ }
+ func digestJSON(value any) string {
+ 	b, _ := json.Marshal(value)

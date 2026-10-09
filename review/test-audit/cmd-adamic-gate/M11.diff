@@ -1,0 +1,11 @@
+--- a/cmd/adamic-gate/main.go
++++ b/cmd/adamic-gate/main.go
+@@ -600,7 +600,7 @@
+ 			results = append(results, result{Package: e.Package, Test: e.Test, Action: e.Action, Output: outputs[key], Seconds: e.Elapsed, Reason: skipReason(e.Action, outputs[key])})
+ 			delete(outputs, key)
+ 			if e.Test != "" {
+-				raw++
++				raw += 2
+ 			}
+ 		}
+ 	}

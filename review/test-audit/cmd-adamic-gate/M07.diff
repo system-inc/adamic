@@ -1,0 +1,11 @@
+--- a/cmd/adamic-gate/main.go
++++ b/cmd/adamic-gate/main.go
+@@ -973,7 +973,7 @@
+ // An enumerated child's ancestors necessarily execute in Go. Only these declared ancestors can
+ // repeat; all work units and all other tests have exactly one owner and one terminal event.
+ func owns(u unit, r result) bool {
+-	return u.Package == r.Package && (r.Test == u.Test || (u.Test != "" && strings.HasPrefix(r.Test, u.Test+"/")))
++	return u.Package == r.Package && (r.Test == u.Test)
+ }
+ func ancestor(u unit, r result) bool {
+ 	return u.Package == r.Package && r.Test != "" && strings.HasPrefix(u.Test, r.Test+"/")

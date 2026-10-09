@@ -1,0 +1,19 @@
+{
+  "command": "timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-gate/ -run ^TestPackageCheckpointRequiresIntactCompleteEvidence$",
+  "exit": 0,
+  "wall": 0.26731996099988464,
+  "seconds": 0.004,
+  "failed": [],
+  "passed": [
+    "TestPackageCheckpointRequiresIntactCompleteEvidence"
+  ],
+  "skipped": [],
+  "outputs": {
+    "TestPackageCheckpointRequiresIntactCompleteEvidence": [
+      "=== RUN   TestPackageCheckpointRequiresIntactCompleteEvidence",
+      "=== PAUSE TestPackageCheckpointRequiresIntactCompleteEvidence",
+      "=== CONT  TestPackageCheckpointRequiresIntactCompleteEvidence",
+      "--- PASS: TestPackageCheckpointRequiresIntactCompleteEvidence (0.00s)"
+    ]
+  }
+}

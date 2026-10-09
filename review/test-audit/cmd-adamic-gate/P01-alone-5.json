@@ -1,0 +1,34 @@
+{
+  "command": "timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-gate/ -run ^TestPackageCheckpointRequiresIntactCompleteEvidence$",
+  "exit": 1,
+  "wall": 0.5751726259986754,
+  "seconds": 0.02,
+  "failed": [
+    "TestPackageCheckpointRequiresIntactCompleteEvidence"
+  ],
+  "passed": [],
+  "skipped": [],
+  "outputs": {
+    "TestPackageCheckpointRequiresIntactCompleteEvidence": [
+      "=== RUN   TestPackageCheckpointRequiresIntactCompleteEvidence",
+      "=== PAUSE TestPackageCheckpointRequiresIntactCompleteEvidence",
+      "=== CONT  TestPackageCheckpointRequiresIntactCompleteEvidence",
+      "--- FAIL: TestPackageCheckpointRequiresIntactCompleteEvidence (0.00s)",
+      "panic: runtime error: index out of range [0] with length 0 [recovered, repanicked]",
+      "",
+      "goroutine 7 [running]:",
+      "testing.tRunner.func1.2({0x80c0a0, 0x18f042a020a8})",
+      "\t/workspace/adamic-tools/go/src/testing/testing.go:2123 +0x232",
+      "testing.tRunner.func1()",
+      "\t/workspace/adamic-tools/go/src/testing/testing.go:2126 +0x329",
+      "panic({0x80c0a0?, 0x18f042a020a8?})",
+      "\t/workspace/adamic-tools/go/src/runtime/panic.go:859 +0x125",
+      "github.com/system-inc/adamic/cmd/adamic-gate.TestPackageCheckpointRequiresIntactCompleteEvidence(0x18f042ab2248)",
+      "\t/workspace/adamic/cmd/adamic-gate/resume_test.go:90 +0xdcc",
+      "testing.tRunner(0x18f042ab2248, 0x81b3f8)",
+      "\t/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea",
+      "created by testing.(*T).Run in goroutine 1",
+      "\t/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4"
+    ]
+  }
+}

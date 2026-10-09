@@ -1,0 +1,13 @@
+--- a/cmd/adamic-gate/resume.go
++++ b/cmd/adamic-gate/resume.go
+@@ -90,7 +90,9 @@
+ 	}
+ 	return hex.EncodeToString(h.Sum(nil)), nil
+ }
+-func pathDigest(path string) (string, error) { return digestPath(path, map[string]bool{}) }
++func pathDigest(path string) (string, error) {
++return "", nil
++}
+ func digestPath(path string, active map[string]bool) (string, error) {
+ 	absolute, err := filepath.Abs(path)
+ 	if err != nil {

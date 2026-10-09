@@ -1,0 +1,11 @@
+--- a/cmd/adamic-gate/resume.go
++++ b/cmd/adamic-gate/resume.go
+@@ -354,7 +354,7 @@
+ 			finishes[r.key()]++
+ 		}
+ 	}
+-	if packageTerminals != len(e.Invocations) {
++	if packageTerminals == len(e.Invocations) {
+ 		problems = append(problems, "package log has no complete invocation terminal events")
+ 	}
+ 	if !reflect.DeepEqual(starts, finishes) {
