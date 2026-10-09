@@ -56,8 +56,8 @@ func TestRegistrationMutant(t *testing.T) {
 }
 
 // Not parallel: initializes the shared immutable hook fixtures before the parallel shards.
-func TestFactoryHooks(t *testing.T) {
-	factoryHooksProducts(t)
+func TestFactoryHooks_Setup(t *testing.T) {
+	factoryHooksSetup(t)
 }
 
 // Raw corpus text stays outside the project's TypeScript module graph.

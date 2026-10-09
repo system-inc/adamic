@@ -1,6 +1,7 @@
 package estree
 
 import (
+	"bytes"
 	"context"
 	"encoding/json"
 	"fmt"
@@ -9,7 +10,6 @@ import (
 	"path/filepath"
 	"runtime"
 	"strings"
-	"sync"
 	"syscall"
 	"testing"
 	"time"
@@ -66,11 +66,6 @@ func scalarEdgeProducts(t *testing.T, main string) (string, string) {
 	return filepath.Join(product, "port"), filepath.Join(lowered, "port.mjs")
 }
 
-var scalarEdgeShared struct {
-	once                   sync.Once
-	oracle, binary, script string
-}
-
 func scalarEdgeOracle(t *testing.T) string {
 	t.Helper()
 	repo := root(t)
@@ -91,14 +86,6 @@ func scalarEdgeOracle(t *testing.T) string {
 		ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 		defer cancel()
 		command := exec.CommandContext(ctx, "go", "build", "-overlay="+path, "-o", filepath.Join(dir, "oracle"), virtual)
-		command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
-		command.Cancel = func() error {
-			err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-			if err == syscall.ESRCH {
-				return os.ErrProcessDone
-			}
-			return err
-		}
 		command.Dir = filepath.Join(repo, "cohere")
 		output, err := command.CombinedOutput()
 		if err != nil {
@@ -109,19 +96,134 @@ func scalarEdgeOracle(t *testing.T) string {
 	return filepath.Join(product, "oracle")
 }
 
-func scalarEdgeSetup(t *testing.T, main string) (string, string, string) {
+type scalarEdgeReady struct{ Oracle, Binary, Script string }
+
+func scalarEdgeReadyPath(t *testing.T) string {
 	t.Helper()
-	scalarEdgeShared.once.Do(func() {
-		scalarEdgeShared.oracle = scalarEdgeOracle(t)
-		scalarEdgeShared.binary, scalarEdgeShared.script = scalarEdgeProducts(t, main)
+	key, err := buildcache.Key(root(t), buildcache.Inputs{
+		Name:      "scalar-edges-ready-v1",
+		Files:     []string{"stage1/cohere/estree", "stage1/typescript", "internal", "cohere", "go.mod"},
+		Flags:     []string{os.Getenv("ADAMIC_NATIVE_SPLIT"), os.Getenv("ADAMIC_NATIVE_JOBS"), os.Getenv("ADAMIC_GATE_UNCACHED")},
+		Toolchain: []string{runtime.Version(), buildcache.Tool("go", "version"), buildcache.Tool("clang", "--version")},
 	})
-	return scalarEdgeShared.oracle, scalarEdgeShared.binary, scalarEdgeShared.script
+	if err != nil {
+		t.Fatal(err)
+	}
+	dir := os.Getenv("ADAMIC_BUILD_CACHE_DIR")
+	if dir == "" {
+		user, err := os.UserCacheDir()
+		if err != nil {
+			t.Fatal(err)
+		}
+		dir = filepath.Join(user, "adamic-build")
+	}
+	return filepath.Join(dir, key+"-scalar-edges-ready.json")
+}
+
+// Shards read published products only: no builder, lock or lazy initialization.
+func scalarEdgeFetch(t *testing.T) scalarEdgeReady {
+	t.Helper()
+	path := scalarEdgeReadyPath(t)
+	data, err := os.ReadFile(path)
+	if err != nil {
+		t.Fatalf("run TestScalarEdges_Setup before the leaves: %v", err)
+	}
+	var ready scalarEdgeReady
+	if err := json.Unmarshal(data, &ready); err != nil {
+		t.Fatal(err)
+	}
+	for _, path := range []string{ready.Oracle, ready.Binary, ready.Script} {
+		if path == "" {
+			t.Fatal("incomplete scalar-edge setup")
+		}
+		if _, err := os.Stat(path); err != nil {
+			t.Fatalf("rerun TestScalarEdges_Setup: %v", err)
+		}
+	}
+	return ready
+}
+
+func scalarEdgeCommand(ctx context.Context, name string, args ...string) *exec.Cmd {
+	command := exec.CommandContext(ctx, name, args...)
+	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+	command.Cancel = func() error {
+		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+		if err == syscall.ESRCH {
+			return os.ErrProcessDone
+		}
+		return err
+	}
+	return command
+}
+
+// Not parallel: publishes shared oracle, lowered and native products before the parallel leaves run.
+func TestScalarEdges_Setup(t *testing.T) {
+	started := time.Now()
+	if os.Getenv("ADAMIC_SCALAR_EDGES_SETUP_WORKER") == "1" {
+		main, err := filepath.Abs("main.ts")
+		if err != nil {
+			t.Fatal(err)
+		}
+		ready := scalarEdgeReady{Oracle: scalarEdgeOracle(t)}
+		ready.Binary, ready.Script = scalarEdgeProducts(t, main)
+		data, err := json.Marshal(ready)
+		if err != nil {
+			t.Fatal(err)
+		}
+		path := scalarEdgeReadyPath(t)
+		if err := os.MkdirAll(filepath.Dir(path), 0755); err != nil {
+			t.Fatal(err)
+		}
+		file, err := os.CreateTemp(filepath.Dir(path), ".scalar-edges-ready-")
+		if err != nil {
+			t.Fatal(err)
+		}
+		defer os.Remove(file.Name())
+		if _, err := file.Write(data); err != nil {
+			file.Close()
+			t.Fatal(err)
+		}
+		if err := file.Close(); err != nil {
+			t.Fatal(err)
+		}
+		if err := os.Rename(file.Name(), path); err != nil {
+			t.Fatal(err)
+		}
+	} else {
+		ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+		defer cancel()
+		command := scalarEdgeCommand(ctx, os.Args[0], "-test.run=^TestScalarEdges_Setup$", "-test.timeout=90s", "-test.v")
+		command.Env = append(os.Environ(), "ADAMIC_SCALAR_EDGES_SETUP_WORKER=1")
+		output, err := command.CombinedOutput()
+		if err != nil {
+			t.Fatalf("shared setup (90 s limit): %v\n%s", err, output)
+		}
+		t.Logf("%s", output)
+	}
+	t.Logf("TestScalarEdges_Setup: %.3fs", time.Since(started).Seconds())
 }
 
 func runScalarEdges(t *testing.T, main string) {
-	started := time.Now()
-	scalarEdgeSetup(t, main)
-	t.Logf("TestScalarEdges (setup): %.3fs", time.Since(started).Seconds())
+	// Preserve the original setup entry point; preparation never runs inside a leaf.
+	TestScalarEdges_Setup(t)
+}
+
+func scalarEdgeExecute(t *testing.T, ctx context.Context, name string, args ...string) []byte {
+	t.Helper()
+	command := scalarEdgeCommand(ctx, name, args...)
+	var output, stderr bytes.Buffer
+	command.Stdout = &output
+	command.Stderr = &stderr
+	if err := command.Run(); err != nil || stderr.Len() != 0 {
+		t.Fatalf("%s %v: %v\n%s", name, args, err, &stderr)
+	}
+	return output.Bytes()
+}
+
+func scalarEdgeNode(t *testing.T, ctx context.Context, path string, args ...string) []byte {
+	t.Helper()
+	argv := []string{"--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), path}
+	return scalarEdgeExecute(t, ctx, "node", append(argv, args...)...)
 }
 
 func TestScalarEdgesUnion(t *testing.T) {
@@ -149,13 +251,16 @@ func TestScalarEdgesUnion(t *testing.T) {
 
 func TestScalarEdgesPlantedFailure(t *testing.T) {
 	t.Parallel()
-	oracle := scalarEdgeOracle(t)
+	ready := scalarEdgeFetch(t)
+	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	defer cancel()
+	oracle := ready.Oracle
 	cases := scalarCases()
 	caught := -1
 	catches := 0
 	for shard, span := range scalarEdgeRanges(len(cases)) {
 		list := manifest(t, cases[span[0]:span[1]])
-		want := execute(t, "", oracle, "--manifest", list)
+		want := scalarEdgeExecute(t, ctx, oracle, "--manifest", list)
 		if span[0] == 0 && span[1] > 0 {
 			listing, err := os.ReadFile(list)
 			if err != nil {
@@ -166,7 +271,7 @@ func TestScalarEdgesPlantedFailure(t *testing.T) {
 				t.Fatal(err)
 			}
 		}
-		got := execute(t, "", oracle, "--manifest", list)
+		got := scalarEdgeExecute(t, ctx, oracle, "--manifest", list)
 		if firstDifference(want, got) != "" {
 			catches++
 			caught = shard
@@ -184,15 +289,21 @@ func scalarEdgeShard(t *testing.T, shard int) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	oracle, binary, script := scalarEdgeSetup(t, main)
+	ready := scalarEdgeFetch(t)
+	// Only case work below is charged to the shard deadline.
+	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	defer cancel()
+	started := time.Now()
+	defer func() { t.Logf("shard-%03d cases: %.3fs", shard, time.Since(started).Seconds()) }()
+	oracle, binary, script := ready.Oracle, ready.Binary, ready.Script
 	cases := scalarCases()
 	span := scalarEdgeRanges(len(cases))[shard]
 	list := manifest(t, cases[span[0]:span[1]])
-	want := execute(t, "", oracle, "--manifest", list)
+	want := scalarEdgeExecute(t, ctx, oracle, "--manifest", list)
 	for name, got := range map[string][]byte{
-		"source Node":      onNode(t, main, "--manifest", list),
-		"sanitized native": execute(t, "", binary, "--manifest", list),
-		"emitted JS":       onNode(t, script, "--manifest", list),
+		"source Node":      scalarEdgeNode(t, ctx, main, "--manifest", list),
+		"sanitized native": scalarEdgeExecute(t, ctx, binary, "--manifest", list),
+		"emitted JS":       scalarEdgeNode(t, ctx, script, "--manifest", list),
 	} {
 		if diff := firstDifference(want, got); diff != "" {
 			t.Fatalf("%s: %s", name, diff)

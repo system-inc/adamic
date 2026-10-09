@@ -13,11 +13,11 @@ import (
 	"sort"
 	"strings"
 	"testing"
-	"time"
+
+	"github.com/system-inc/adamic/internal/buildcache"
 )
 
-// Same shape as the forthcoming internal/buildcache.Inputs. This is an input
-// description, not a cache. Replace this type with the shared type when it lands.
+// The oracle recipe records all inputs for internal/buildcache.
 type sixBuildInputs struct {
 	Name      string
 	Files     []string
@@ -319,8 +319,6 @@ func compactSixFiles(files []string) []string {
 func (h *harness) sixBuildProduct(name string, command *exec.Cmd) string {
 	h.t.Helper()
 	product := h.sixBuildRecipe(name, command)
-	// Once buildcache lands, replace this call with:
-	// dir := buildcache.Product(h.t, buildcache.Inputs(product.Inputs), product.Build)
 	dir := h.sixBuildOnce(product)
 	path := filepath.Join(dir, product.File)
 	if info, err := os.Stat(path); err != nil || !info.Mode().IsRegular() {
@@ -335,20 +333,7 @@ func (h *harness) sixBuildProduct(name string, command *exec.Cmd) string {
 
 func (h *harness) sixBuildOnce(product sixProduct) string {
 	h.t.Helper()
-	inputs, err := json.Marshal(product.Inputs)
-	if err != nil {
-		h.t.Fatal(err)
-	}
-	dir, err := sharedProduct("six "+string(inputs), func(directory string) (string, error) {
-		started := time.Now()
-		err := product.Build(directory)
-		h.t.Logf("six-build unit=%s function=sixCommandBuild elapsed_s=%.6f", strings.TrimPrefix(product.Inputs.Name, "typeaware six "), time.Since(started).Seconds())
-		return directory, err
-	})
-	if err != nil {
-		h.t.Fatalf("%s build: %v", product.Inputs.Name, err)
-	}
-	return dir
+	return buildcache.Product(h.t, buildcache.Inputs(product.Inputs), product.Build)
 }
 
 // Exercise the callback boundary with a real child process: the requested

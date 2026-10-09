@@ -62,7 +62,7 @@ func TestVolumeProfilePartition(t *testing.T) {
 			if f.Name.Name == slice.test+"Union" {
 				union = true
 			}
-			if strings.HasPrefix(f.Name.Name, slice.test+"_") {
+			if strings.HasPrefix(f.Name.Name, slice.test+"_") && f.Name.Name != slice.test+"_Setup" {
 				tops[f.Name.Name] = true
 			}
 		}

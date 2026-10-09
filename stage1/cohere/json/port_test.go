@@ -191,6 +191,11 @@ func comparisonError(name string, result run, expected string, cases []textCase)
 	return fmt.Errorf("%s output length %d, Go %d", name, len(result.stdout), len(expected))
 }
 func jsonPortTopShard(t *testing.T, target int) {
+	if !portMatchesShared.ready {
+		t.Fatal("shared setup was not selected")
+	}
+	deadline := portMatchesDeadline(t.Name())
+	defer deadline.Stop()
 	parentStart := time.Now()
 	cases, shards := jsonTopCorpus(t)
 	enumeratedUnits := len(shards) + 3*len(shards) // agreement plus three benchmark rounds

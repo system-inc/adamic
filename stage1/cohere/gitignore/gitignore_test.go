@@ -96,6 +96,7 @@ type run struct {
 // COHERE_GIT_SOURCE names a git source checkout as it does for cohere, git's t0008 check-ignore corpus
 // and t3070 wildmatch corpus.
 func TestThePortAnswersAsGoCohereAndGitDoUnion(t *testing.T) {
+	t.Parallel()
 	checkPortAnswerUnion(t)
 }
 

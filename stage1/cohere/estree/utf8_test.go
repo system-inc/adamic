@@ -11,6 +11,8 @@ import (
 func cookedSurrogates() []string {
 	return []string{"'\\ud800a\\udc00';", "'\\ud800';", "'\\udfff';", "'\\ud800\\udc00';", "'\\ud800\\ud800';", "`a\\ud800b`;", "tag`a\\ud800b`;", "const key = {'\\ud800': 1};"}
 }
+
+// Not parallel: native.Build writes the shared user cache directory adamic/runtime
 func TestCookedSurrogates(t *testing.T) {
 	t.Parallel()
 	list := manifest(t, cookedSurrogates())
@@ -19,6 +21,8 @@ func TestCookedSurrogates(t *testing.T) {
 	checkPort(t, main, []string{"--manifest", list}, want, false, false)
 	t.Logf("%d cooked-surrogate files, %d bytes match Go", len(cookedSurrogates()), len(want))
 }
+
+// Not parallel: native.Build writes the shared user cache directory adamic/runtime
 func TestCookedSurrogateMutant(t *testing.T) {
 	t.Parallel()
 	list := manifest(t, cookedSurrogates())
@@ -44,6 +48,8 @@ func TestCookedSurrogateLibraryGap(t *testing.T) {
 	}
 	t.Log("Go serializes each unpaired WTF-8 surrogate as three U+FFFD; original keeps UTF-16 surrogates")
 }
+
+// Not parallel: native.Build writes the shared user cache directory adamic/runtime
 func TestLossyInputRefusal(t *testing.T) {
 	t.Parallel()
 	main, _ := filepath.Abs("main.ts")
@@ -60,6 +66,7 @@ func TestLossyInputRefusal(t *testing.T) {
 	t.Log("equal-size malformed and valid replacement inputs both explicitly refuse; raw-byte API remains required")
 }
 
+// Not parallel: native.Build writes the shared user cache directory adamic/runtime
 func TestLossyInputControl(t *testing.T) {
 	t.Parallel()
 	path := filepath.Join(t.TempDir(), "malformed.ts")
