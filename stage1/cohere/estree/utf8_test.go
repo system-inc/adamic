@@ -94,17 +94,33 @@ func TestLossyInputRefusalShardFailure(t *testing.T) {
 	estreeShardFailure(t, testLossyInputRefusalShards, len(bodies), estreeSingles(len(bodies)), "refusal", 1)
 }
 
+const testLossyInputControlShards = 1
+
+// ADAMIC_TEST_SHARD=i/n selects shard indices modulo n; unset runs all.
 func TestLossyInputControl(t *testing.T) {
-	path := filepath.Join(t.TempDir(), "malformed.ts")
-	os.WriteFile(path, []byte{47, 47, 240, 144, 128, 10, 120, 59}, 0644)
-	want := execute(t, "", goOracle(t), path)
+	estreeAccounting(t)
+	started := time.Now()
+	selected := estreeShardPlan(t, testLossyInputControlShards, 1, estreeSingles(1))
+	oracle := estreeTimedOracle(t)
 	main := mutantPort(t, "pipeline.ts", `if(text.includes('\ufffd'))`, `if(false)`)
-	binary, _ := build(t, main, true)
-	for name, got := range map[string][]byte{"Node": onNode(t, main, path), "native": execute(t, "", binary, path)} {
-		if d := firstDifference(want, got); d == "" {
-			t.Fatal(name + " lossy-input mutant survived")
-		} else {
-			t.Log(name + ": " + d)
-		}
+	binary, _ := estreeTimedBuild(t, main, true)
+	t.Logf("setup including builds: %.3fs", time.Since(started).Seconds())
+	if selected[0] {
+		t.Run("shard-000", func(t *testing.T) {
+			t.Parallel()
+			path := filepath.Join(t.TempDir(), "malformed.ts")
+			if err := os.WriteFile(path, lossyInputs()[0], 0644); err != nil {
+				t.Fatal(err)
+			}
+			want := execute(t, "", oracle, path)
+			for name, got := range map[string][]byte{"Node": onNode(t, main, path), "native": execute(t, "", binary, path)} {
+				if err := estreeMutantVerdict(want, got); err != nil {
+					t.Fatalf("%s lossy-input: %v", name, err)
+				}
+			}
+		})
 	}
+}
+func TestLossyInputControlShardFailure(t *testing.T) {
+	estreeShardFailure(t, testLossyInputControlShards, 1, estreeSingles(1), "mutant", 0)
 }
