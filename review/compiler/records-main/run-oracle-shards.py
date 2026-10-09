@@ -1,8 +1,8 @@
 import subprocess,pathlib,json,re,os
 root=pathlib.Path('/workspace/adamic');out=root/'review/compiler/records-main';selection=json.loads((out/'oracle-selection.json').read_text());results=[]
-groups=[('fixtures-'+str(i+1), '^TestNativeAgreesWithNode$/^('+ '|'.join(re.escape(x) for x in selection['fixtures'][i::8])+')$') for i in range(8)]
-groups += [('mutants-'+str(i+1),'^('+'|'.join(selection['tests'][i::4])+')$') for i in range(4)]
-groups += [('entries','^TestEntries(Acceptance|Provenance|RuntimeReadiness)$'),('buckets','^TestRecordCensusComparisonBuckets$')]
+groups=[('fixtures-'+str(i+1), '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^('+ '|'.join(re.escape(x.removeprefix('internal/oracle/testdata/')) for x in selection['fixtures'][i::8])+')$') for i in range(8)]
+
+
 for name,pattern in groups:
  command=['/workspace/records-next-scratch/records-main-oracle.test','-test.run',pattern,'-test.count=1','-test.timeout=85s','-test.v']
  with (out/(name+'.log')).open('w') as log:
