@@ -215,6 +215,28 @@ func TestParallelCallersBuildOnce(t *testing.T) {
 	}
 }
 
+// The same clang installed under two homes is one tool, and another version is another: the report keeps what
+// names the tool and drops InstalledDir, the one line that says only where it is (#79thccs).
+func TestAToolsReportDoesntDependOnWhereItIsInstalled(t *testing.T) {
+	t.Parallel()
+	report := func(version, home string) string {
+		return toolReport("clang version " + version + " (https://github.com/llvm/llvm-project 87f0227cb601)\n" +
+			"Target: x86_64-unknown-linux-gnu\nThread model: posix\nInstalledDir: " + home + "/adamic-tools/llvm/bin\n")
+	}
+	if ahra, cloud := report("20.1.8", "/home/ahra"), report("20.1.8", "/root"); ahra != cloud {
+		t.Fatalf("one clang under two homes reported\n%s\nand\n%s", ahra, cloud)
+	}
+	if report("20.1.8", "/home/ahra") == report("20.1.9", "/home/ahra") {
+		t.Fatal("two clang versions reported the same")
+	}
+	if got := report("20.1.8", "/home/ahra"); strings.Contains(got, "InstalledDir") || !strings.Contains(got, "Target: x86_64-unknown-linux-gnu") || !strings.Contains(got, "Thread model: posix") {
+		t.Fatalf("the report is %q", got)
+	}
+	if got := toolReport("go version go1.27.1 linux/amd64\n"); got != "go version go1.27.1 linux/amd64" {
+		t.Fatalf("a one-line report became %q", got)
+	}
+}
+
 // Not parallel: Tool writes the package-level tools map.
 func TestToolNamesItselfOnce(t *testing.T) {
 	if value := Tool("go", "version"); !strings.HasPrefix(value, "go version: go version go") {
