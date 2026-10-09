@@ -1401,3 +1401,127 @@ Nominal class downcasts use the same ancestry and erased generic identity as `in
 Sixteen new oracle fixtures cover success and failure, both backends, Node source, native release, ASan/UBSan and leaks on successful runs; failing fixtures use the oracle's checked flag. Contract tests independently pin messages, 340,009 bytes of preceding stdout, and absence of catch/finally execution. Sixteen runtime mutants are killed by exit or stdout comparison: skip each of eleven failing checks, use a wrong numeric tag, string tag or class identity, and evaluate each operand form twice. Seven restored compiler/runtime source mutants are killed for duplicate tags, omitted nominal ancestry, omitted generic argument proof, hidden optional fields, unsafe writes through union views, catchable panic and unflushed panic. The duplicate-tag mutant emits valid C and finishes without sanitizer findings, printing native `1` against Node's `wrongwrong1`.
 
 Primitive `number | string | boolean` union assertions remain refused. Their packed union tags are not independently validated for cast extraction and ownership in this unit, so the existing narrowing path remains the repair. Unknown-to-interface, callback signature changes, mutable widening, unrelated assertions and `as unknown as` remain refused with `adamic/no-unchecked-cast` and the admitted forms named. Nested or transformed generic argument recovery is conservatively refused. Validation here is Linux only; no performance claim or macOS execution is made. The accepted design above is copied unchanged from `origin/codex/escape-hatches` because the enum base did not contain this document.
+
+## Checked TypeScript non-null assertions on the compiler area
+
+The October 8 ruling admits `.ts` assertions through the existing nullish coalescing
+panic. Missing values stop with exit 70 and the original source site and expression.
+Proof and inserted check counts are included in `--explain-checks`. Initializers use
+the eager check, not a readiness marker. Adamic `.a` retains the area's existing
+refusal and repair text.
+
+The minimal front-3 dependency is `internal/lower/non_null.go`, including its source
+text helper and the rule that preserves a narrowing's representation and checks.
+`internal/lower/expression.go` dispatches assertions to it. `internal/ir/ir.go`
+records sites and counts. `cmd/adamic/checks.go`, `main.go` and `tsgo.go` expose the
+report without importing front-3's predicate implementation or readiness state.
+The area's class, field, static, optional-read and definite-assignment behavior is
+unchanged. The area's `var` refusal still rejects the original var initializer
+control; a separate let control exercises eager checking on this base.
+
+The clean `d577dd0d` comparison is recorded in
+`docs/verification/non-null-area-port.json`, including every added test name and
+the empty changed and removed lists. Lower, IR and flow pass on both sides: all
+2,768 existing named cases retain their results, with 68 new cases passing. The
+uncached non-null, optional, narrow and class oracle retains all 65 existing
+fixture results and passes seven new checked fixtures. The original no-check and
+representation-changing narrowing mutants are caught by runtime output and an
+IR return assertion, respectively. Historical TypeScript literal assertions pin
+the inserted check, diagnostic and explain count; Adamic controls pin refusal.
+Command tests, vet and the complete count-table check pass. Counts add seven rows;
+every existing row retains its measurements.
+
+Setup was run with `/workspace/adamic-tools` and printed Go ready at 0.029s,
+Node at 0.030s, markdown dependencies at 0.109s and clang at 0.216s, with nproc 5.
+It stopped with `expected submodule path 'cohere' not to be a symbolic link`.
+Both checkouts use the matching pinned submodule 7945d102 through a local symlink;
+`GOFLAGS=-buildvcs=false` avoids Go's VCS-stamping error in both comparison runs.
+No submodule change is committed. Root disk exhaustion initially interrupted the
+checkout; an isolated worktree kept the baseline intact. Only reproducible build
+cache artifacts were moved or discarded through task scratch paths to finish
+verification. The complete repository gate, census and scanner slice were not run.
+
+## Checked non-null port onto area-next
+
+The port on `codex/non-null-checked-next` starts at `compiler/area-next` commit
+`337aa466`. Its first two commits cherry-pick only this worker's `ae4fe9e6` and
+`c41c0e06`, with conflicts resolved hunk by hunk. The base already carries
+closure conventions, predicates and readiness. Those remain, with one
+`internal/lower/non_null.go` and the existing source text helper in
+`internal/lower/readiness.go`. The minimal narrowing rule keeps `ir.Narrow`
+and narrowing calls in their result representations with their checks intact.
+The initializer gates in `locals.go`, `functions.go`, `class_inheritance.go`,
+`class_static.go` and `object.go` keep `.ts` assertions eager. The base's admitted
+var assertion declaration remains admitted, so both var and let controls now
+exercise the inserted check. Definite-assignment declaration syntax remains
+distinct and retains readiness checks.
+
+Ordinary `.a` assertions, including historical storage markers, now pin the
+ruled refusal without rewriting their source. Twelve lower readiness controls,
+two predicate runtime controls, the historical oracle controls, and seven
+interface-storage controls change their expectations accordingly. Backend field
+readiness primitives and their mutants still pass. This retires historical
+runtime mutant coverage for the refused syntax; it does not claim those old
+mutants were run against admitted programs.
+
+The before/after comparison against clean `337aa466` is recorded in
+`docs/verification/non-null-next-port.json`, including every added and removed
+test name, changed expectation, count row and log hash. Lower, IR and flow pass
+on both sides. All 3,272 shared named cases retain their pass/skip results;
+69 new cases pass. Flow excludes 36 refused `.a` programs from each of its
+three runtime analyses, totaling 108 removed runtime cases. Their sources remain
+refusal controls. The uncached filtered oracle retains all 107 existing fixture
+cases and adds eight passing `.ts` cases. No shared test changes pass/fail/skip
+status. Both original mutants are caught: omitting the check changes the pinned
+undefined panic to successful output, and stripping the narrowing violates the
+number return representation before either backend.
+
+Count regeneration and the complete table check pass. Eight rows are added and
+44 are retired because their `.a` source is now refused: 35 ordinary oracle
+rows, one nested checker row, seven interface-storage rows and one predicate
+direction row. All 775 surviving rows keep identical measurements. Command
+explanations retain the base's predicate report and add non-null and aggregate
+counts. Formatting, patch checks and vet of the five changed packages pass.
+
+Setup printed Go ready at 0.032s, Node at 0.033s, markdown dependencies at 0.099s
+and clang at 0.179s; nproc is 5. It stopped on the same local submodule symlink
+restriction described above. Both comparisons use the matching pinned checkout
+and `GOFLAGS=-buildvcs=false`, with no committed submodule change. The clean base
+also needed its pinned Node API dependencies installed before comparison.
+The full repository gate, census replay and scanner slice were not run.
+
+## Runtime fixtures preserved as TypeScript
+
+The delivery correction on `codex/non-null-checked-next` moves 50 existing
+programs from `.a` to `.ts`, without changing a byte. It includes the three
+definite-declaration programs, which retain their readiness checks. Only the
+deliberate non-null refusal pins remain `.a` in this fixture group. Registrations,
+predicate fixtures, custom runtime controls and flow globs use the new paths.
+The migration manifest records every old path, new path and SHA-256 hash in
+`docs/verification/non-null-fixture-migration.json`. A test guards each program's
+bytes, count row and ordinary runtime registration.
+
+The filename-normalized comparison in
+`docs/verification/non-null-fixture-restored.json` supersedes the retired-coverage
+comparison above. All 108 excluded flow cases are restored. All 819 original
+count rows survive, with eight added rows and no retired rows. Twenty-three
+measurements change because eager `.ts` assertions stop before the historical
+readiness-based reads. Every other original measurement remains identical.
+Lower, IR, the final whole flow suite, the uncached filtered Node oracle, the
+complete count table, runtime controls and the original mutants pass. The Weak
+expression diagnostic mutant runs again. The formerly refused initialization
+controls now execute and pin the eager check in both backends.
+
+Two migrated programs exposed a constant sentinel comparison rejected by clang.
+The native coalescing check now recognizes literal undefined and null as absent
+without comparing sentinel addresses. Both literal union initializer probes stop
+with the pinned non-null panic, and removing their checks changes stdout. No
+representation or fixture program was changed to address the C emission issue.
+
+The additional complete native package run retains `TestDecodeASCII/native`'s
+existing runtime linker failure. Clean `337aa466` reproduces the same missing
+`adamic_write_raw`, `adamic_share`, `adamic_stack_thread_start` and
+`adamic_heap_thread_end` symbols with unchanged runtime sources. That failure is
+left unchanged. Root disk exhaustion interrupted one count check; discarding
+only reproducible Go cache artifacts allowed its complete rerun to pass. The
+full repository gate, census replay and scanner slice were not run.

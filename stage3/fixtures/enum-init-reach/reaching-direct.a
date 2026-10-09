@@ -1,0 +1,4 @@
+const key: 'Zero' = 'Zero'; // Direct pending enum read.
+function read():number{return Pending[key];}
+console.log(String(read()));
+enum Pending {Zero}
