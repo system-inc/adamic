@@ -117,6 +117,24 @@ echo '{"sha": "'"$(cat "$TEST_ROOT/gated")"'"}' > "$destination/fast.json"
         self.assertEqual(git(self.origin, 'for-each-ref', 'refs/gate-merges/'), '')
         self.assertNotIn('gated merged', self.record(sha))
 
+    def test_main_s_canary_gates_main_against_main_ten_landings_back(self):
+        # Oct 9 10:42Z: main gated against itself selected no test (tests=0.0s), and that green promoted tools.
+        git(self.here, 'checkout', '-q', '--detach', self.main)
+        landings = []
+        for number in range(11):
+            (self.here / 'feature.go').write_text('package feature // landing %d\n' % number)
+            landings.append(self.commit('Landing %d' % number))
+        git(self.here, 'push', '-q', 'origin', 'HEAD:refs/heads/main')
+        tip = landings[-1]
+        result = self.gate(tip, 'canary/main')
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertIn('against main~10 %s' % landings[0], result.stdout)
+        self.assertEqual((self.root / 'gated').read_text().strip(), tip, 'main holds its own base: no merge')
+        self.assertEqual(self.read_call().split()[5], landings[0])
+
+    def read_call(self):
+        return (self.root / 'ssh-calls').read_text().splitlines()[-1]
+
     def pool(self, sha, branch):
         shutil.copy(ROOT / 'cloud' / 'pool-job.sh', self.here / 'cloud' / 'pool-job.sh')
         jobs = self.root / 'jobs'

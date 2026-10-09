@@ -24,6 +24,14 @@ classify() {
 # past the tip's fork with main. One fetch by sha, no refs written, so gates starting together can't race.
 gateBase() {
   local branch=$1 sha=$2 refs main areas mainFork best=main bestSha bestCount=0 tip name fork count
+  # Main's canary (#k1n98kx): main gated against itself selects no test (Oct 9 10:42Z: tests=0.0s, and that green
+  # promoted tools). It is gated against main ten landings back, so it selects what those landings touched: a real
+  # selection whose answer main already holds.
+  if [ "${branch}" = canary/main ]; then
+    haveCommits "${sha}" || git -C "${here}" fetch -q --no-write-fetch-head origin "${sha}" 2> /dev/null
+    echo "main~10 $(git -C "${here}" rev-parse "${sha}~10")"
+    return
+  fi
   if [[ ${branch} != codex/* && ${branch} != devtools/* ]]; then
     echo "main $(git -C "${here}" ls-remote origin refs/heads/main | cut -f1)"
     return
