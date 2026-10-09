@@ -1,0 +1,16 @@
+{"run":"adamic-verify-20261009T154944-cb9f12bd","verdict":{"status":"green","failed":[],"problems":[],"cached":[]}}
+{"run":"adamic-verify-20261009T154944-cb9f12bd","unit":"tests-00","sequence":0,"time":"2026-10-09T15:49:44.948Z","type":"started","machine":"473509fb286d","runnerVersion":"git-e344233898ed","cpus":4,"memoryMegabytes":16384,"heartbeatSeconds":120}
+{"run":"adamic-verify-20261009T154944-cb9f12bd","unit":"build-vet","sequence":0,"time":"2026-10-09T15:49:44.911Z","type":"started","machine":"22ccbc91a21b","runnerVersion":"git-e344233898ed","cpus":4,"memoryMegabytes":16384,"heartbeatSeconds":120}
+{"run":"adamic-verify-20261009T154944-cb9f12bd","unit":"tests-00","sequence":1,"time":"2026-10-09T15:49:46.521Z","type":"output","stream":"stdout","text":"loom-pilot: 473509fb286d slot ? cpus ? tree 318eef6a4cccf979bc4d7026fad7f7838993282f setup 2 s, 2 packages at a time"}
+{"run":"adamic-verify-20261009T154944-cb9f12bd","unit":"build-vet","sequence":1,"time":"2026-10-09T15:49:46.534Z","type":"output","stream":"stdout","text":"loom-build: tree 318eef6a4cccf979bc4d7026fad7f7838993282f setup 2 s"}
+{"run":"adamic-verify-20261009T154944-cb9f12bd","unit":"tests-00","sequence":2,"time":"2026-10-09T15:49:54.846Z","type":"output","stream":"stdout","text":"loom-pilot: tests took 10 s in all"}
+{"run":"adamic-verify-20261009T154944-cb9f12bd","unit":"tests-00","sequence":3,"time":"2026-10-09T15:49:54.847Z","type":"exit","code":0,"wallSeconds":9.898,"userSeconds":7.051,"systemSeconds":3.029}
+{"run":"adamic-verify-20261009T154944-cb9f12bd","unit":"tests-00","sequence":4,"time":"2026-10-09T15:49:55.278Z","type":"uploaded","path":"loom-out/test.jsonl.gz","sha256":"266b05cedde6cc04dac572864b36e3cc24f12394137c5ff8f91310a6973b7758","bytes":2820}
+{"run":"adamic-verify-20261009T154944-cb9f12bd","unit":"tests-00","sequence":5,"time":"2026-10-09T15:49:55.756Z","type":"uploaded","path":"loom-out/cpu.tsv","sha256":"66718552afcec63e0a159e0394c00f75f6613313eb8de552b0f792af25ffbff1","bytes":90}
+{"run":"adamic-verify-20261009T154944-cb9f12bd","unit":"tests-00","sequence":6,"time":"2026-10-09T15:49:55.836Z","type":"finished","status":"passed"}
+{"run":"adamic-verify-20261009T154944-cb9f12bd","unit":"build-vet","sequence":2,"time":"2026-10-09T15:50:40.092Z","type":"output","stream":"stdout","text":"loom-build: go build ./... passed"}
+{"run":"adamic-verify-20261009T154944-cb9f12bd","unit":"build-vet","sequence":3,"time":"2026-10-09T15:50:40.092Z","type":"output","stream":"stdout","text":"loom-build: go vet ./... passed"}
+{"run":"adamic-verify-20261009T154944-cb9f12bd","unit":"build-vet","sequence":4,"time":"2026-10-09T15:50:40.093Z","type":"exit","code":0,"wallSeconds":55.181,"userSeconds":184.828,"systemSeconds":18.334}
+{"run":"adamic-verify-20261009T154944-cb9f12bd","unit":"build-vet","sequence":5,"time":"2026-10-09T15:50:40.338Z","type":"uploaded","path":"loom-out/build.log","sha256":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"}
+{"run":"adamic-verify-20261009T154944-cb9f12bd","unit":"build-vet","sequence":6,"time":"2026-10-09T15:50:40.548Z","type":"uploaded","path":"loom-out/vet.log","sha256":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"}
+{"run":"adamic-verify-20261009T154944-cb9f12bd","unit":"build-vet","sequence":7,"time":"2026-10-09T15:50:40.715Z","type":"finished","status":"passed"}
