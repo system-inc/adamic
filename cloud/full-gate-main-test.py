@@ -76,6 +76,25 @@ class FullGateLoopTests(unittest.TestCase):
         # A main that changed code past the green one is never confirmed by it.
         self.assertEqual(self.call('confirmedBy %s' % self.changed)[0], 1)
 
+    def test_a_landing_merge_with_the_gated_tree_is_confirmed_by_the_landed_sha_s_green_record(self):
+        # Integration, Oct 9 (#8teb9b7): a landing is one merge commit, first parent old main, second the landed sha,
+        # tree exactly the gated tree. Its green record confirms the merge; nothing is re-gated.
+        oldMain = self.code
+        git(self.work, 'checkout', '-q', '-b', 'side', oldMain)
+        landed = self.commit({'feature.go': 'package compiler // feature\n'})
+        git(self.work, 'checkout', '-q', '--detach', oldMain)
+        tree = git(self.work, 'rev-parse', landed + '^{tree}')
+        merge = git(self.work, 'commit-tree', tree, '-p', oldMain, '-p', landed, '-m', 'Land feature', '-m', 'Old-main: ' + oldMain)
+        git(self.work, 'push', '-q', 'origin', merge + ':refs/heads/landing')
+        self.assertEqual(self.call('confirmedBy %s' % merge), (1, ''), 'no green record of the landed sha yet')
+        self.record(landed, 'green: %s full gate in 2400 s' % landed)
+        self.assertEqual(self.call('confirmedBy %s' % merge), (0, landed))
+        # A merge whose tree adds a test the landed sha never gated isn't confirmed by it.
+        git(self.work, 'checkout', '-q', '--detach', merge)
+        extra = self.commit({'other_test.go': 'package compiler\n'})
+        git(self.work, 'push', '-q', 'origin', extra + ':refs/heads/landing-extra')
+        self.assertEqual(self.call('confirmedBy %s' % extra)[0], 1)
+
     def test_a_red_or_unfinished_record_confirms_nothing(self):
         self.record(self.code, 'red: %s full gate, first failure at tests' % self.code)
         self.assertEqual(self.call('confirmedBy %s' % self.records)[0], 1)
