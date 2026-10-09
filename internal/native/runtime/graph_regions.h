@@ -21,6 +21,7 @@ static inline adamic_graph_header *adamic_graph_header_of(void *value) {
 // reference is stored in it. size is its allocation size, excluding buffers.
 void *adamic_graph_adopt(void *value, size_t size);
 void *adamic_heap_graph_storage(void *value, size_t size);
+void *adamic_heap_program_storage(void *value, size_t size);
 void adamic_graph_merge(void *left, void *right);
 void adamic_graph_retain(void *value);
 bool adamic_graph_release_last(void *value);

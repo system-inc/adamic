@@ -69,6 +69,8 @@ type Options struct {
 	// Release selects the native build people ship. Tests leave it false.
 	// Sanitized, counted and WASI builds retain their existing compilation policy.
 	Release bool
+	// ProgramRegion enables the opt-in runtime core. Compiler owns membership and matching lowering.
+	ProgramRegion bool
 
 	// Target is empty for native, or wasm32-wasi for a WASI module.
 	Target string
@@ -128,6 +130,9 @@ func Flags(options Options) []string {
 		flags = append(flags, "--target=wasm32-wasi", "--sysroot="+os.Getenv("WASI_SYSROOT"), "-DADAMIC_TARGET_WASI=1", "-mno-atomics")
 	} else {
 		flags = append(flags, "-pthread")
+	}
+	if options.ProgramRegion || os.Getenv("ADAMIC_PROGRAM_REGION") == "1" {
+		flags = append(flags, "-DADAMIC_PROGRAM_REGION")
 	}
 	if options.Count {
 		flags = append(flags, "-DADAMIC_COUNT")
