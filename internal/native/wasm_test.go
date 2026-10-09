@@ -3,6 +3,7 @@ package native
 import (
 	"bytes"
 	"context"
+	"encoding/json"
 	"errors"
 	"os"
 	"os/exec"
@@ -15,7 +16,35 @@ import (
 
 // Not parallel: this opt-in integration probe builds one complete runtime and runs a request
 // benchmark. Keep native tests on the native clang PATH, and run this separately with WASI clang.
-func TestWASI(t *testing.T) {
+var wasiFixtures = []string{
+	"internal/load/testdata/0.1/compile/01_hello.ts",
+	"internal/load/testdata/0.1/compile/02_fizzbuzz.ts",
+	"internal/load/testdata/0.1/compile/03_shapes.ts",
+	"internal/load/testdata/0.1/compile/04_closures.ts",
+	"internal/load/testdata/0.1/compile/05_wordcount.ts",
+	"internal/load/testdata/0.1/compile/06_stack.ts",
+	"internal/load/testdata/0.1/compile/07_modules/main.ts",
+	"internal/load/testdata/0.1/compile/08_results.ts",
+	"internal/load/testdata/0.1/compile/09_tree.ts",
+	"internal/load/testdata/0.1/compile/10_unicode.ts",
+	"internal/oracle/testdata/strings.a", "internal/oracle/testdata/numbers.a",
+	"internal/oracle/testdata/bitwise_sweep.a", "internal/oracle/testdata/functions.a",
+	"internal/oracle/testdata/regions.a", "internal/oracle/testdata/regions_throw.a",
+	"internal/oracle/testdata/weak_parent.a", "internal/oracle/testdata/weak_narrowed.a",
+	"internal/oracle/testdata/reuse_weak_after_reuse.a", "internal/oracle/testdata/reuse_weak_during_spread.a",
+	"internal/oracle/testdata/normalize.a", "internal/oracle/testdata/maps_and_text.a",
+	"internal/oracle/testdata/stack_overflow.a", "internal/oracle/testdata/stack_forever.a",
+	"internal/oracle/testdata/stack_tail_call.a", "internal/oracle/testdata/panic.a",
+	"internal/oracle/testdata/json_stringify_numbers.a", "internal/oracle/testdata/regexp_cycle_collections.a",
+	"internal/oracle/testdata/library_object_keys.a", "internal/oracle/testdata/library_array_flat.a",
+	"internal/oracle/testdata/read_files.a", "internal/native/wasm/io.a",
+	"internal/oracle/testdata/closures_throw.a",
+	"internal/oracle/testdata/write_stdout_order.a",
+	"internal/oracle/testdata/write_stderr_order.a",
+}
+
+func runWASIUnit(t *testing.T, unit int) {
+	t.Helper()
 	if os.Getenv("ADAMIC_TEST_WASI") != "1" {
 		t.Skip("WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with WASI clang and Node 24 on PATH")
 	}
@@ -29,6 +58,7 @@ func TestWASI(t *testing.T) {
 		}
 	}
 	directory := t.TempDir()
+	setupDirectory := directory
 	repository, err := filepath.Abs("../..")
 	if err != nil {
 		t.Fatal(err)
@@ -60,18 +90,54 @@ func TestWASI(t *testing.T) {
 			t.Fatal(err)
 		}
 	}
-	var objects []string
-	for _, file := range files {
-		if !strings.HasSuffix(file.name, ".c") {
-			continue
-		}
-		object := filepath.Join(directory, file.name+".o")
-		wasiCommand(t, repository, "clang", append(append([]string{}, flags...), "-c", filepath.Join(directory, file.name), "-o", object)...)
-		objects = append(objects, object)
+	cache, err := newTestBuildCache(repository, "cmd/adamic")
+	if err != nil {
+		t.Fatal(err)
 	}
+	runtimeBuild := func(count bool) (string, []string) {
+		compileFlags := append([]string{}, flags...)
+		if count {
+			compileFlags = append(compileFlags, "-DADAMIC_COUNT")
+		}
+		inputs := [][]byte{}
+		encoded, _ := json.Marshal(compileFlags)
+		inputs = append(inputs, encoded)
+		for _, file := range files {
+			inputs = append(inputs, []byte(file.name), file.contents)
+		}
+		built, err := cache.Tree("strict-wasi-runtime", inputs, func(destination string) error {
+			for _, file := range files {
+				if err := os.WriteFile(filepath.Join(destination, file.name), file.contents, 0644); err != nil {
+					return err
+				}
+			}
+			for _, file := range files {
+				if strings.HasSuffix(file.name, ".c") {
+					wasiCommand(t, repository, "clang", append(append([]string{}, compileFlags...), "-c", filepath.Join(destination, file.name), "-o", filepath.Join(destination, file.name+".o"))...)
+				}
+			}
+			return nil
+		})
+		if err != nil {
+			t.Fatal(err)
+		}
+		var objects []string
+		for _, file := range files {
+			if strings.HasSuffix(file.name, ".c") {
+				objects = append(objects, filepath.Join(built, file.name+".o"))
+			}
+		}
+		return built, objects
+	}
+	var objects []string
+	directory, objects = runtimeBuild(false)
 	t.Logf("strict C11 runtime: %d translation units compiled", len(objects))
-	compiler := filepath.Join(directory, "adamic")
-	wasiCommand(t, repository, "go", "build", "-o", compiler, "./cmd/adamic")
+	compiler := filepath.Join(setupDirectory, "adamic")
+	command := exec.Command("go", "build", "-o", compiler, "./cmd/adamic")
+	command.Dir = repository
+	if output, err := cache.Command(command, setupDirectory); err != nil {
+		t.Fatalf("compiler setup: %v\n%s", err, output)
+	}
 	generate := func(t *testing.T, fixture string) string {
 		t.Helper()
 		return string(wasiCommand(t, repository, compiler, "c", fixture))
@@ -83,36 +149,31 @@ func TestWASI(t *testing.T) {
 		arguments = append(arguments, extra...)
 		arguments = append(arguments, objects...)
 		arguments = append(arguments, "-lm")
-		wasiCommand(t, repository, "clang", arguments...)
+		command := exec.Command("clang", arguments...)
+		command.Dir = repository
+		includes, err := filepath.Glob(filepath.Join(filepath.Dir(output), "*.c"))
+		if err != nil {
+			t.Fatal(err)
+		}
+		var contents [][]byte
+		for _, path := range includes {
+			data, err := os.ReadFile(path)
+			if err != nil {
+				t.Fatal(err)
+			}
+			contents = append(contents, []byte(filepath.Base(path)), data)
+		}
+		if data, err := cache.Command(command, filepath.Dir(output), contents...); err != nil {
+			t.Fatalf("WASI link: %v\n%s", err, data)
+		}
 	}
-	fixtures := []string{
-		"internal/load/testdata/0.1/compile/01_hello.ts",
-		"internal/load/testdata/0.1/compile/02_fizzbuzz.ts",
-		"internal/load/testdata/0.1/compile/03_shapes.ts",
-		"internal/load/testdata/0.1/compile/04_closures.ts",
-		"internal/load/testdata/0.1/compile/05_wordcount.ts",
-		"internal/load/testdata/0.1/compile/06_stack.ts",
-		"internal/load/testdata/0.1/compile/07_modules/main.ts",
-		"internal/load/testdata/0.1/compile/08_results.ts",
-		"internal/load/testdata/0.1/compile/09_tree.ts",
-		"internal/load/testdata/0.1/compile/10_unicode.ts",
-		"internal/oracle/testdata/strings.a", "internal/oracle/testdata/numbers.a",
-		"internal/oracle/testdata/bitwise_sweep.a", "internal/oracle/testdata/functions.a",
-		"internal/oracle/testdata/regions.a", "internal/oracle/testdata/regions_throw.a",
-		"internal/oracle/testdata/weak_parent.a", "internal/oracle/testdata/weak_narrowed.a",
-		"internal/oracle/testdata/reuse_weak_after_reuse.a", "internal/oracle/testdata/reuse_weak_during_spread.a",
-		"internal/oracle/testdata/normalize.a", "internal/oracle/testdata/maps_and_text.a",
-		"internal/oracle/testdata/stack_overflow.a", "internal/oracle/testdata/stack_forever.a",
-		"internal/oracle/testdata/stack_tail_call.a", "internal/oracle/testdata/panic.a",
-		"internal/oracle/testdata/json_stringify_numbers.a", "internal/oracle/testdata/regexp_cycle_collections.a",
-		"internal/oracle/testdata/library_object_keys.a", "internal/oracle/testdata/library_array_flat.a",
-		"internal/oracle/testdata/read_files.a", "internal/native/wasm/io.a",
-		"internal/oracle/testdata/closures_throw.a",
-		"internal/oracle/testdata/write_stdout_order.a",
-		"internal/oracle/testdata/write_stderr_order.a",
-	}
+
 	passed := 0
-	for _, fixture := range fixtures {
+	shard := testShard{unit, 36}
+	for index, fixture := range wasiFixtures {
+		if !shard.owns(index) {
+			continue
+		}
 		t.Run(fixture, func(t *testing.T) {
 			scratch := t.TempDir()
 			source := filepath.Join(scratch, "main.c")
@@ -138,14 +199,13 @@ func TestWASI(t *testing.T) {
 			passed++
 		})
 	}
-	t.Logf("WASI oracle: %d/%d equivalent", passed, len(fixtures))
+	t.Logf("WASI oracle: %d/%d equivalent", passed, len(wasiFixtures))
+	if !shard.owns(len(wasiFixtures)) {
+		return
+	}
 	t.Run("requests", func(t *testing.T) {
 		// Counters are for the memory probe only; oracle command stderr stays untouched.
-		for _, file := range files {
-			if strings.HasSuffix(file.name, ".c") {
-				wasiCommand(t, repository, "clang", append(append([]string{}, flags...), "-DADAMIC_COUNT", "-c", filepath.Join(directory, file.name), "-o", filepath.Join(directory, file.name+".o"))...)
-			}
-		}
+		directory, objects = runtimeBuild(true)
 		scratch := t.TempDir()
 		code := generate(t, "internal/native/wasm/request.a")
 		if !strings.Contains(code, "adamic_region_end(") {
@@ -216,4 +276,184 @@ func observeWASI(t *testing.T, directory, name string, arguments ...string) wasi
 		exit = failed.ExitCode()
 	}
 	return wasiObservation{stdout.Bytes(), stderr.Bytes(), exit}
+}
+
+// Not parallel: this unit changes process environment or uses the WASI toolchain.
+func TestWASIUnit00(t *testing.T) {
+	runWASIUnit(t, 0)
+}
+
+// Not parallel: this unit changes process environment or uses the WASI toolchain.
+func TestWASIUnit01(t *testing.T) {
+	runWASIUnit(t, 1)
+}
+
+// Not parallel: this unit changes process environment or uses the WASI toolchain.
+func TestWASIUnit02(t *testing.T) {
+	runWASIUnit(t, 2)
+}
+
+// Not parallel: this unit changes process environment or uses the WASI toolchain.
+func TestWASIUnit03(t *testing.T) {
+	runWASIUnit(t, 3)
+}
+
+// Not parallel: this unit changes process environment or uses the WASI toolchain.
+func TestWASIUnit04(t *testing.T) {
+	runWASIUnit(t, 4)
+}
+
+// Not parallel: this unit changes process environment or uses the WASI toolchain.
+func TestWASIUnit05(t *testing.T) {
+	runWASIUnit(t, 5)
+}
+
+// Not parallel: this unit changes process environment or uses the WASI toolchain.
+func TestWASIUnit06(t *testing.T) {
+	runWASIUnit(t, 6)
+}
+
+// Not parallel: this unit changes process environment or uses the WASI toolchain.
+func TestWASIUnit07(t *testing.T) {
+	runWASIUnit(t, 7)
+}
+
+// Not parallel: this unit changes process environment or uses the WASI toolchain.
+func TestWASIUnit08(t *testing.T) {
+	runWASIUnit(t, 8)
+}
+
+// Not parallel: this unit changes process environment or uses the WASI toolchain.
+func TestWASIUnit09(t *testing.T) {
+	runWASIUnit(t, 9)
+}
+
+// Not parallel: this unit changes process environment or uses the WASI toolchain.
+func TestWASIUnit10(t *testing.T) {
+	runWASIUnit(t, 10)
+}
+
+// Not parallel: this unit changes process environment or uses the WASI toolchain.
+func TestWASIUnit11(t *testing.T) {
+	runWASIUnit(t, 11)
+}
+
+// Not parallel: this unit changes process environment or uses the WASI toolchain.
+func TestWASIUnit12(t *testing.T) {
+	runWASIUnit(t, 12)
+}
+
+// Not parallel: this unit changes process environment or uses the WASI toolchain.
+func TestWASIUnit13(t *testing.T) {
+	runWASIUnit(t, 13)
+}
+
+// Not parallel: this unit changes process environment or uses the WASI toolchain.
+func TestWASIUnit14(t *testing.T) {
+	runWASIUnit(t, 14)
+}
+
+// Not parallel: this unit changes process environment or uses the WASI toolchain.
+func TestWASIUnit15(t *testing.T) {
+	runWASIUnit(t, 15)
+}
+
+// Not parallel: this unit changes process environment or uses the WASI toolchain.
+func TestWASIUnit16(t *testing.T) {
+	runWASIUnit(t, 16)
+}
+
+// Not parallel: this unit changes process environment or uses the WASI toolchain.
+func TestWASIUnit17(t *testing.T) {
+	runWASIUnit(t, 17)
+}
+
+// Not parallel: this unit changes process environment or uses the WASI toolchain.
+func TestWASIUnit18(t *testing.T) {
+	runWASIUnit(t, 18)
+}
+
+// Not parallel: this unit changes process environment or uses the WASI toolchain.
+func TestWASIUnit19(t *testing.T) {
+	runWASIUnit(t, 19)
+}
+
+// Not parallel: this unit changes process environment or uses the WASI toolchain.
+func TestWASIUnit20(t *testing.T) {
+	runWASIUnit(t, 20)
+}
+
+// Not parallel: this unit changes process environment or uses the WASI toolchain.
+func TestWASIUnit21(t *testing.T) {
+	runWASIUnit(t, 21)
+}
+
+// Not parallel: this unit changes process environment or uses the WASI toolchain.
+func TestWASIUnit22(t *testing.T) {
+	runWASIUnit(t, 22)
+}
+
+// Not parallel: this unit changes process environment or uses the WASI toolchain.
+func TestWASIUnit23(t *testing.T) {
+	runWASIUnit(t, 23)
+}
+
+// Not parallel: this unit changes process environment or uses the WASI toolchain.
+func TestWASIUnit24(t *testing.T) {
+	runWASIUnit(t, 24)
+}
+
+// Not parallel: this unit changes process environment or uses the WASI toolchain.
+func TestWASIUnit25(t *testing.T) {
+	runWASIUnit(t, 25)
+}
+
+// Not parallel: this unit changes process environment or uses the WASI toolchain.
+func TestWASIUnit26(t *testing.T) {
+	runWASIUnit(t, 26)
+}
+
+// Not parallel: this unit changes process environment or uses the WASI toolchain.
+func TestWASIUnit27(t *testing.T) {
+	runWASIUnit(t, 27)
+}
+
+// Not parallel: this unit changes process environment or uses the WASI toolchain.
+func TestWASIUnit28(t *testing.T) {
+	runWASIUnit(t, 28)
+}
+
+// Not parallel: this unit changes process environment or uses the WASI toolchain.
+func TestWASIUnit29(t *testing.T) {
+	runWASIUnit(t, 29)
+}
+
+// Not parallel: this unit changes process environment or uses the WASI toolchain.
+func TestWASIUnit30(t *testing.T) {
+	runWASIUnit(t, 30)
+}
+
+// Not parallel: this unit changes process environment or uses the WASI toolchain.
+func TestWASIUnit31(t *testing.T) {
+	runWASIUnit(t, 31)
+}
+
+// Not parallel: this unit changes process environment or uses the WASI toolchain.
+func TestWASIUnit32(t *testing.T) {
+	runWASIUnit(t, 32)
+}
+
+// Not parallel: this unit changes process environment or uses the WASI toolchain.
+func TestWASIUnit33(t *testing.T) {
+	runWASIUnit(t, 33)
+}
+
+// Not parallel: this unit changes process environment or uses the WASI toolchain.
+func TestWASIUnit34(t *testing.T) {
+	runWASIUnit(t, 34)
+}
+
+// Not parallel: this unit changes process environment or uses the WASI toolchain.
+func TestWASIUnit35(t *testing.T) {
+	runWASIUnit(t, 35)
 }
