@@ -25,6 +25,8 @@ changes = {'added': [{'row':key,'after':value} for key,value in after.items() if
 (root / (prefix + '-count-changes.json')).write_text(json.dumps(changes,indent=2)+'\n')
 records = []
 for path in root.glob(prefix + '*tests.jsonl'):
+    if path.name.endswith('-prior-tests.jsonl'):
+        continue  # Preserve the initial interaction failure, count its final replay separately.
     for line in path.read_text().splitlines():
         try: item = json.loads(line)
         except ValueError: continue
