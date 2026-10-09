@@ -1,0 +1,5 @@
+{
+  "name": "horizontal-rule-wrong-tag",
+  "from": "this.context.node(name).text !== 'hr'",
+  "to": "this.context.node(name).text !== 'a'"
+}

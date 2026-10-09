@@ -1,0 +1,10 @@
+=== RUN   TestStructureReactElementNoHorizontalRuleAbsentNodes
+=== PAUSE TestStructureReactElementNoHorizontalRuleAbsentNodes
+=== CONT  TestStructureReactElementNoHorizontalRuleAbsentNodes
+    harness_test.go:262: 33 absent-optional-node upstream inputs
+    harness_test.go:265: checker compilation phases: load=280.286966ms lower=10.001200366s C=1.175729465s JavaScript=43.137017ms
+    harness_test.go:265: checker native build: 10.164699512s
+    harness_test.go:265: Go, Node, emitted JavaScript, native identical: 4682 bytes
+--- PASS: TestStructureReactElementNoHorizontalRuleAbsentNodes (32.97s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	33.036s

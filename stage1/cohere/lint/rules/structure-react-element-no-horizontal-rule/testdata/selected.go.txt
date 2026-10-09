@@ -1,0 +1,69 @@
+// Appended through a scratch Go overlay to harness_test.go, leaving shared files unchanged.
+func TestStructureReactElementNoHorizontalRulePort(t *testing.T) {
+    t.Parallel()
+    directory, err := filepath.Abs(".")
+    if err != nil { t.Fatal(err) }
+    const name = "structure/react-element-no-horizontal-rule"
+    var rows []string
+    count := 0
+    for _, row := range upstream(t) {
+        fields := strings.Split(row, "\t")
+        if len(fields) > 1 && fields[1] == name { rows = append(rows, row); count++ }
+    }
+    if count == 0 { t.Fatal("no captured cases for the rule") }
+    t.Logf("%s: %d unique upstream cases", name, count)
+    descriptors := prepareRegistry(t, directory)
+    for _, d := range descriptors {
+        if d.Name == name { rows = append(rows, ownedWitnessRows(t, directory, d)...); }
+    }
+
+    oracle := goOracle(t)
+    path := manifest(t, recoveryRows(t, oracle, rows))
+    compare(t, oracle, buildPort(t, directory, true), directory, path)
+    change := mutant(t, "this.context.node(name).text !== 'hr'", "this.context.node(name).text !== 'a'", "rules/structure-react-element-no-horizontal-rule/rule.a")
+    want := execute(t, "", oracle, "--manifest", path).output
+    mutated := buildMutantPort(t, change)
+    for _, side := range []struct { name string; result execution }{
+        {"Node", node(t, change, path, false)},
+        {"emitted JavaScript", emittedNode(t, change, path, false)},
+        {"sanitized native", execute(t, "", mutated, "--manifest", path)},
+    } {
+        if bytes.Equal(side.result.output, want) { t.Fatalf("wrong-tag mutant survived on %s", side.name) }
+        t.Logf("wrong-tag mutant compiled, ran and disagreed on %s: %s", side.name, difference(side.result.output, want))
+    }
+}
+
+func TestStructureReactElementNoHorizontalRuleAbsentNodes(t *testing.T) {
+    t.Parallel()
+    directory, err := filepath.Abs(".")
+    if err != nil { t.Fatal(err) }
+    const name = "structure/react-element-no-horizontal-rule"
+    var rows []string
+    // Verbatim sources from TestNoRuleCrashesOnAbsentOptionalNodes, whose Run calls have no assertion capture.
+    absentSources := []string{
+        "declare const memo: unknown;\nexport const value = 1;\n",
+        "import { networkService } from './NetworkService.ts';\nlet useThingRequest;\nexport const value = useThingRequest;\n",
+        "import { networkService } from './NetworkService.ts';\ndeclare const Document: unknown;\nexport function useThingRequest(o?: unknown) { return networkService.useGraphQlQuery(Document, { shorthand }, o); }\ndeclare const shorthand: unknown;\n",
+        "import { networkService } from './NetworkService.ts';\nexport function useThingRequest() { return networkService.useGraphQlQuery(); }\n",
+        "declare const Field: { displayName: string };\nlet other;\nexport const value = other;\n",
+        "export function Page() { return null; }\n",
+        "export function Panel() {\n    let pending;\n    return pending;\n}\n",
+        "export function Panel() {\n    declare const value: unknown;\n    return value;\n}\n",
+        "export default function ThingPageRoute() {\n    let pending;\n    return pending;\n}\n",
+        "export function Panel() {\n    let { label };\n    return label;\n}\n",
+        "import { networkService } from './NetworkService.ts';\ndeclare const Document: unknown;\ndeclare const identifier: string;\nexport function useThingRequest(variables: { identifier: string }) {\n    return networkService.useGraphQlQuery(Document, { identifier });\n}\n",
+    }
+    absentRoot := t.TempDir()
+    for shape, source := range absentSources {
+        for _, filename := range []string{"source/api/ThingRequest.ts", "source/components/ThingRequest.tsx", "app/thing/page.tsx"} {
+            target := filepath.Join(absentRoot, string(rune('a'+shape)), filename)
+            if err := os.MkdirAll(filepath.Dir(target), 0755); err != nil { t.Fatal(err) }
+            if err := os.WriteFile(target, []byte(source), 0644); err != nil { t.Fatal(err) }
+            rows = append(rows, target+"\t"+name)
+        }
+    }
+    t.Log("33 absent-optional-node upstream inputs")
+    oracle := goOracle(t)
+    path := manifest(t, recoveryRows(t, oracle, rows))
+    compare(t, oracle, buildPort(t, directory, true), directory, path)
+}

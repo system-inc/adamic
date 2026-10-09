@@ -1,0 +1,37 @@
+Required setup
+go version go1.27.1 linux/amd64
+setup: go ready (0.090s)
+setup: submodules ready (0.093s)
+v24.19.0
+setup: node ready (0.102s)
+setup: markdown dependencies skipped (validated lock and installed bytes); step-duration=0.028s
+setup: markdown dependencies ready (0.279s)
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0.609s)
+setup: go build ready (48.238s)
+setup: test binaries deferred (use --warm-tests) (48.409s)
+setup: build cache warm (48.410s)
+setup: build-flags commit=bd5490b6ff36cfc6013d549f78ffa4f9f9a6e075 nproc=5 cpu.max=400000 100000 go=go version go1.27.1 linux/amd64 clang=clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261) node=v24.19.0 cached=yes warm-tests=false load-before=0.47 0.14 0.04 1/137 696 load-after=7.08 2.10 0.72 1/141 1521
+setup: done on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB (48.451s)
+setup: source /workspace/adamic-tools/env.sh
+setup: logs /tmp/adamic-gate/setup.zq45yA
+
+WASI SDK setup
+v24.19.0
+setup: node ready (0.032s)
+go version go1.27.1 linux/amd64
+setup: go ready (0.042s)
+setup: markdown dependencies skipped (validated lock and installed bytes); step-duration=0.012s
+setup: markdown dependencies ready (0.087s)
+setup: submodules ready (0.130s)
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0.218s)
+clang version 20.1.8-wasi-sdk (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: wasi sdk ready (/workspace/adamic-tools/wasi-sdk) (0.325s)
+setup: go build ready (61.262s)
+setup: test binaries deferred (use --warm-tests) (61.425s)
+setup: build cache warm (61.427s)
+setup: build-flags commit=bd5490b6ff36cfc6013d549f78ffa4f9f9a6e075 nproc=5 cpu.max=400000 100000 go=go version go1.27.1 linux/amd64 clang=clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261) node=v24.19.0 cached=yes warm-tests=false load-before=3.72 2.28 0.94 3/176 2110 load-after=7.63 3.76 1.54 2/177 3184
+setup: done on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB (61.464s)
+setup: source /workspace/adamic-tools/env.sh
+setup: logs /tmp/adamic-gate/setup.pgV3Bf

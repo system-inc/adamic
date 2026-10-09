@@ -1,0 +1,48 @@
+import type { RuleContext } from '../../context.ts';
+import { structureFileContext } from '../../helpers/structure_file_context.a';
+import { JsxArena } from '../../helpers/jsx/ast.a';
+import type { HelperNode } from '../../helpers/jsx/ast.a';
+import { elementParts } from '../../helpers/jsx/element_parts.a';
+import { message } from './messages.a';
+
+export class Rule {
+    readonly context: RuleContext;
+    readonly exempt: boolean;
+    readonly nodes: HelperNode[] = [];
+    readonly arena: JsxArena;
+
+    constructor(context: RuleContext) {
+        this.context = context;
+        this.exempt = structureFileContext(context.parser.path).isHorizontalRuleComponentFile;
+        this.arena = new JsxArena(this.nodes);
+    }
+
+    prepare(root: number): void {
+        // Supply parser facts to the shared JSX helper, preserving numeric identities.
+        for (const node of this.context.parser.nodes) {
+            let attributes = -1;
+            if (node.kind === 'JsxOpeningElement' || node.kind === 'JsxSelfClosingElement') {
+                for (const child of node.children) {
+                    if (this.context.kind(child) === 'JsxAttributes') { attributes = child; }
+                }
+            }
+            this.nodes.push({
+                kind: node.kind, text: node.text,
+                name: node.kind === 'JsxAttribute' ? node.children[0] ?? -1 : -1,
+                tagName: node.kind === 'JsxOpeningElement' || node.kind === 'JsxSelfClosingElement' ? node.children[0] ?? -1 : -1,
+                attributes: attributes,
+                properties: node.kind === 'JsxAttributes' ? node.children : [],
+                propertiesPresent: node.kind === 'JsxAttributes',
+            });
+        }
+    }
+
+    visit(index: number): void {
+        if (this.exempt) { return; }
+        const name = elementParts(this.arena, index).tagName;
+        if (name < 0 || this.context.kind(name) !== 'Identifier' || this.context.node(name).text !== 'hr') { return; }
+        this.context.report(index, 'structure/react-element-no-horizontal-rule', 'noHrElement', message, '', '', '');
+    }
+}
+
+export function create(context: RuleContext): Rule { return new Rule(context); }

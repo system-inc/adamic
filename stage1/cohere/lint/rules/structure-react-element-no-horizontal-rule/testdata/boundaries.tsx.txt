@@ -1,0 +1,3 @@
+declare const Namespace: { hr: () => unknown };
+declare function HR(): unknown;
+export function Page() { const hr = 1; return <><hr /><Namespace.hr /><HR /><a>{hr}</a></>; }

@@ -1,0 +1,14 @@
+{
+  "name": "structure/react-element-no-horizontal-rule",
+  "kinds": [
+    "JsxOpeningElement",
+    "JsxSelfClosingElement"
+  ],
+  "visit": "visit",
+  "prepare": "prepare",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleStructureReactElementNoHorizontalRule",
+  "upstreamPackage": "structure",
+  "upstreamTest": "TestReactNoHorizontalRuleElement"
+}

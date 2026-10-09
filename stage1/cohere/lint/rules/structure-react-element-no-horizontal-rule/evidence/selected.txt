@@ -1,0 +1,7 @@
+    harness_test.go:211: structure/react-element-no-horizontal-rule: 6 unique upstream cases
+    harness_test.go:218: Go, Node, emitted JavaScript, native identical: 4529 bytes
+    harness_test.go:228: wrong-tag mutant compiled, ran and disagreed on Node: case 1 line 4: port "/tmp/adamic-gate/lint-shared-3401806070/upstream-3154172438/case-5646/repository/source/components/Page.tsx:2:12", Go "fixed\texport function Page() {\\u000a    return <a href=\"/a\">A</a>;\\u000a}\\u000a"
+    harness_test.go:228: wrong-tag mutant compiled, ran and disagreed on emitted JavaScript: case 1 line 4: port "/tmp/adamic-gate/lint-shared-3401806070/upstream-3154172438/case-5646/repository/source/components/Page.tsx:2:12", Go "fixed\texport function Page() {\\u000a    return <a href=\"/a\">A</a>;\\u000a}\\u000a"
+    harness_test.go:228: wrong-tag mutant compiled, ran and disagreed on sanitized native: case 1 line 4: port "/tmp/adamic-gate/lint-shared-3401806070/upstream-3154172438/case-5646/repository/source/components/Page.tsx:2:12", Go "fixed\texport function Page() {\\u000a    return <a href=\"/a\">A</a>;\\u000a}\\u000a"
+--- PASS: TestStructureReactElementNoHorizontalRulePort (372.05s)
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	372.205s

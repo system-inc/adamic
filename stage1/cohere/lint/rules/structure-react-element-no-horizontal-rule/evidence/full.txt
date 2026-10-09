@@ -1,0 +1,31 @@
+Whole lint package rerun
+{
+  "command": [
+    "go",
+    "test",
+    "./stage1/cohere/lint",
+    "-count=1",
+    "-json",
+    "-timeout=45m"
+  ],
+  "profile": "/workspace/scratch/structure-horizontal/profile.a7s01xtr",
+  "nproc": 5,
+  "load_before": "2.15 4.77 4.61 1/145 159365",
+  "wasi_sysroot": "/workspace/adamic-tools/wasi-sdk/share/wasi-sysroot",
+  "typescript": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "pid": 159367,
+  "exit": 0,
+  "wall_seconds": 1664.411,
+  "load_after": "3.61 5.50 5.44 2/143 314014",
+  "counts": {
+    "pass": 159,
+    "fail": 0,
+    "skip": 1
+  },
+  "skipped": [
+    "TestCheckerBridgeRefusalPending"
+  ],
+  "failures": []
+}
+Counts include subtests and exclude the package-level result event.
+Only skip: checker_pending_test.go:51 awaits codex/tsgo-errors-as-values; tsgoInspect must return TSGoError from the C error buffer.
