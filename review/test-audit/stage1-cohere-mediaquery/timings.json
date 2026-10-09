@@ -1,0 +1,122 @@
+[
+  {
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes",
+    "trial": 1,
+    "seconds": 0.724,
+    "wall": 2.2667605240003468,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/mediaquery/",
+      "-run",
+      "^TestEachGapStandsWhereGapsMdSaysItDoes$"
+    ]
+  },
+  {
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes",
+    "trial": 2,
+    "seconds": 0.704,
+    "wall": 2.2464848939998774,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/mediaquery/",
+      "-run",
+      "^TestEachGapStandsWhereGapsMdSaysItDoes$"
+    ]
+  },
+  {
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes",
+    "trial": 3,
+    "seconds": 0.713,
+    "wall": 2.257632726999873,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/mediaquery/",
+      "-run",
+      "^TestEachGapStandsWhereGapsMdSaysItDoes$"
+    ]
+  },
+  {
+    "test": "TestThePortParsesAsGoCohereDoes",
+    "trial": 1,
+    "seconds": 6.673,
+    "wall": 8.223351664000802,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/mediaquery/",
+      "-run",
+      "^TestThePortParsesAsGoCohereDoes$"
+    ]
+  },
+  {
+    "test": "TestThePortParsesAsGoCohereDoes",
+    "trial": 2,
+    "seconds": 6.77,
+    "wall": 8.305098306000218,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/mediaquery/",
+      "-run",
+      "^TestThePortParsesAsGoCohereDoes$"
+    ]
+  },
+  {
+    "test": "TestThePortParsesAsGoCohereDoes",
+    "trial": 3,
+    "seconds": 6.656,
+    "wall": 8.200334969998949,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/mediaquery/",
+      "-run",
+      "^TestThePortParsesAsGoCohereDoes$"
+    ]
+  }
+]

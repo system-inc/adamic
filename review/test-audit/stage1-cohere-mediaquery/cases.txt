@@ -1,0 +1,4137 @@
+screen and (min-width: 768px)
+not print
+only screen
+print
+(color)
+(prefers-color-scheme: dark)
+(prefers-reduced-motion: reduce)
+(-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi)
+only screen and (min-width: 100px) and (max-width: 200px)
+not screen and (color), print and (orientation: landscape)
+(min-width: 100px) and (max-width: 200px)
+SCREEN AND (COLOR), NOT print, ONLY tv
+and
+only and not
+screen, print
+screen , print and (color)  ,tv
+a,,b
+ , 
+screen,
+(a: f(1, 2)), print
+(400px <= width <= 700px)
+(width >= 600px)
+screen and (400px < width < 700px)
+(height > 30em) and (width = 50em)
+screen and (max-width:100px)
+  screen  and   (  max-width  :  100px  )   
+screen\tand\n(color)\r\n,\n\tprint
+screen and(color)
+(color)and screen
+(a)b
+(a:)
+(a:   )
+(a: b: c)
+()
+screen /* comment */ and (color)
+/* c */ screen
+(min-width: /* x */ 100px)
+--small-viewport (max-width: 30em)
+--narrow-window (max-width: 30em), print
+(--small-viewport)
+(max-width: calc(100px + 2em))
+screen and (min-width: var(--bp))
+fn(a, b) and (color)
+fn(a b)
+(display: grid) and (not (display: inline-grid))
+style(--responsive: true)
+sidebar (min-width: 400px)
+dark (&:where(.dark, .dark *))
+a b
+a b c
+a b c d
+a b c d e
+a (b) c
+a b (c)
+a b c (d)
+a and b c
+(a) b c
+not a b
+only a b c
+#{$query} and (color)
+screen and (max-width: #{$w})
+(#{$a: b}: c)
+({'a}' : b}: c)
+({'a\\'b'}: c)
+({"x:y"}: z)
+(a: "b:c")
+{a} b
+{a b} (c)
+url(foo.css) screen
+  url ( 'a(b)' )  print, tv
+url(x)
+screen url(x)
+URL(x) screen
+screen)
+a)b c
+print and (color
+(a
+)
+(
+(a} b
+screen and (color}
+(a}:b)
+(a{}}
+}
+{a}
+
+   
+screen and (min-width: 1em) /* é */
+écran and (color)
+( x: 1px)
+(é-width: 1px)
+(x: é)
+(max-width: 100px) and print
+　screen　and (color)
+😀 and (a: 😀), 😀
+﻿screen
+ab
+a b c
+screen and (min-width: 768px)
+ url(a) print , (b)
+a b c d
+é and (x)
+(a} b
+screen and (color}
+url(
+  url (a(b)
+({'a"b'}:x)
+\tscreen\tand\t(\tmin-width\t:\t1px\t)\t,\tprint\t
+\nscreen\nand\n(\nmin-width\n:\n1px\n)\n,\nprint\n
+screenand(min-width:1px),print
+screenand(min-width:1px),print
+\rscreen\rand\r(\rmin-width\r:\r1px\r)\r,\rprint\r
+ screen and ( min-width : 1px ) , print 
+ screen and ( min-width : 1px ) , print 
+ screen and ( min-width : 1px ) , print 
+ screen and ( min-width : 1px ) , print 
+ screen and ( min-width : 1px ) , print 
+ screen and ( min-width : 1px ) , print 
+ screen and ( min-width : 1px ) , print 
+ screen and ( min-width : 1px ) , print 
+ screen and ( min-width : 1px ) , print 
+ screen and ( min-width : 1px ) , print 
+ screen and ( min-width : 1px ) , print 
+ screen and ( min-width : 1px ) , print 
+ screen and ( min-width : 1px ) , print 
+ screen and ( min-width : 1px ) , print 
+ screen and ( min-width : 1px ) , print 
+ screen and ( min-width : 1px ) , print 
+ screen and ( min-width : 1px ) , print 
+ screen and ( min-width : 1px ) , print 
+　screen　and　(　min-width　:　1px　)　,　print　
+﻿screen﻿and﻿(﻿min-width﻿:﻿1px﻿)﻿,﻿print﻿
+screenand(min-width:1px),print
+​screen​and​(​min-width​:​1px​)​,​print​
+᠎screen᠎and᠎(᠎min-width᠎:᠎1px᠎)᠎,᠎print᠎
+screenand(min-width:1px),print
+screenand(min-width:1px),print
+:\r\n} 
+ {"a'b"}\r url(\r\n<=--custom {"a'b"}
+Onlyb#{) {'"'}:and   
+URL<=:colorprint:  \t﻿:世
+: \r  {"'"}:, 100pxnot#{andURL 
+ 　᠎NOT AND 
+only/*ONLYOnly,世 
+min-width({"a'b"}:᠎not}>
+ 
+url (
+({'a"b'}:\t{'"'}:​\r\n
+2/*\t{"a'b"}and\n;min-width 
+-webkit-min-device-pixel-ratio#{calc(1px + 2em)calc(1px + 2em)b\\>)({'a"b'}:"{"'"}: 
+　 not)and
+ onlyOnly#{\\  ANDmin-width2 
+)᠎ 𝄞
+ /*Onlyurl( 
+ {"'"}:max-widthvar(--bp) b
+all:url)1emurl(AND--custom(=
+({"a'b"}:  ONLY ﻿({'a"b'}:URLmax-width世
+​
+é
+}calc(1px + 2em)min-width #{x.css{"a'b"}--custom 2
+1em\r  ({"a'b"}:-webkit-min-device-pixel-ratioNot﻿
+  
+
+ 
+ 
+allurl( \t"URL\n
+screen(
+😀calc(1px + 2em)not({'a"b'}:
+({'a"b'}:not᠎a\t
+not)URL(
+  
+)print
+andburl({'a"b'}1emUrl(
+calc(1px + 2em)﻿,
+ And/*
+: url
+\n={URL
+onlymax-width
+{'a"b'}; -webkit-min-device-pixel-ratio; 
+URLscreen,} {Url() urlANDOnly\r
+{'a"b'}
+url(/*<=𝄞
+only: */}
+=\r
+\t var(--bp)(URL(😀\r\n $query({"a'b"}:not
+Only世2 \r\n;
+' not,😀\r\nonly}
+{"'"}:/*notaOnly {'a"b'}  '1em)
+{"a'b"}url($query 'URLNot
+url :calc(1px + 2em) )print $query
+{ =  url (url(  Only
+URL(\rurl (a({'a"b'}:
+\t */and 2a﻿
+ #{" urlvar(--bp)only\r
+
+Url(é AND'url ( {'"'}:"(𝄞 
+andurl (\n calc(1px + 2em)URL(😀
+  éb 　𝄞AND) 
+  #{
+ */')URL\t 
+ ﻿,​only-webkit-min-device-pixel-rationot)({"a'b"}:
+᠎calc(1px + 2em):𝄞" 
+only     \r=AND=URL
+ 
+>)only
+*/ not世\t<=
+AND\\AND
+*/\\NOT,    $querynot﻿
+2
+
+
+ '
+colorb{"a'b"} 
+Url(​url(100px}
+Url( :  ANDAND
+ 100px:=print not--custom,
+:  {{"'"}:only<=,(\n𝄞min-width
+only
+{"'"}:Url(min-width {"'"}:  
+only#{\\ Onlycolor
+
+Url(var(--bp)calc(1px + 2em)2
+100px😀
+"\t: é  
+'not﻿NOT,({'a"b'}:
+
+ 😀2 
+{
+*/
+*/min-width '({'a"b'}:
+var(--bp)Url(世 é𝄞Onlyé
+ {'"'}:ONLYurl (\r
+﻿  {'a"b'}𝄞url( 　
+}URL  */ min-width(<=Not
+anda  andand(\r​ 
+
+  
+\n﻿ONLY  {"a'b"}
+  　
+​}2Url(b 
+(\tNot
+　URL(,}  $queryand
+print {'"'}:URLcalc(1px + 2em)
+url(   not𝄞(:'
+ AND
+
+100pxbmax-width--custom url("\n 
+And\\1em "calc(1px + 2em)😀Onlyx.css,
+﻿​ URL  
+  var(--bp)<=,only
+\r({'a"b'}:printa=aonly\\ ({"a'b"}: {'"'}:
+#{\nmin-width}　var(--bp)
+screenNOT Not;2/*screen
+ \r
+ONLY{"a'b"}{"a'b"}$query a max-widthonlyurl(
+}{"'"}:é)-webkit-min-device-pixel-ratio𝄞﻿
+
+calc(1px + 2em)𝄞　 \\ONLYprintNot-webkit-min-device-pixel-ratio
+  andANDNot(({'a"b'}:
+
+$query 𝄞
+({'a"b'}:{"'"}: "1em --custom　
+ \r\n
+ \\URL(1em
+,𝄞onlyurl\r\nnotonly({"a'b"}:max-width
+{'"'}:  urlprintUrl(
+only: max-widthurl(-webkit-min-device-pixel-ratio\r\n ,\r\nonly{'a"b'}
+ 
+é
+　  \tonly
+'<= not;{'a"b'}(   
+　*/{url ( max-width
+Url(color(\r=
+{\\ URL(x.cssonly Only x.css
+ 
+(Only2100px 
+calc(1px + 2em) 
+ print)({<=    
+
+Only𝄞
+*/
+a ,url(<=only
+  and
+  only } $query﻿--custom 
+\n -webkit-min-device-pixel-ratio\n1em
+
+a   <=
+"=
+ >))
+colorurl ( "URL({᠎ -webkit-min-device-pixel-ratio 
+url,Not\r    , 
+  url (' {'a"b'}𝄞} 
+' 
+𝄞{"a'b"}:  \t
+({'a"b'}:
+andnoturl\t colorOnly (  only\\
+({"a'b"}:aa
+ Url(😀screen not\r\n᠎({"a'b"}:  
+\r\n\r\n all
+,and"
+{'"'}:)URLscreen\\﻿url
+
+
+
+NOT {'"'}:𝄞calc(1px + 2em): ;only({"a'b"}:;x.css
+ b\t not
+andurl('onlynot\r  ,AND
+: NOTb   not
+allb:
+\r\nx.cssNotAND
+url( url(AND\r 
+﻿2urlprint
+ 
+ <=;
+And=
+ url (min-width 
+)({"a'b"}:({'a"b'}:<=-webkit-min-device-pixel-ratio:<=,
+{'"'}:100pxurl(only
+  max-width colorscreen
+
+    $query-webkit-min-device-pixel-ratioAnd: ( ,({"a'b"}:/*
+ ᠎({'a"b'}:screen*/--customcalc(1px + 2em)URL(<=
+print1em-webkit-min-device-pixel-ratio  {"a'b"}url (Not 
+ AND*/​﻿
+ 100pxé {'a"b'}only 100px;
+b and
+only >onlycalc(1px + 2em)--custom
+,100px100pxnotcalc(1px + 2em)  URL 
+'\\
+print​b﻿é  {"a'b"}\n
+(
+ and
+:  {"a'b"}<={'a"b'}{"a'b"} =
+-webkit-min-device-pixel-ratioAnd
+min-width世{'a"b'}({"a'b"}:a/*'NOTurl(
+url
+𝄞AND ᠎Not({"a'b"}:URL({"'"}:
+ url(}url ( print
+
+ URLcolor2:onlymin-width\r\tmin-width {'a"b'},
+世   URL(=Url(\r'
+color 
+😀{"'"}:,)𝄞b世min-widthONLY
+ calc(1px + 2em){'a"b'}
+é𝄞:  {"a'b"}*/
+url(var(--bp)100px-webkit-min-device-pixel-ratio  bonly 
+"URL(
+b\r\\and : \n color\r\n
+({"a'b"}:screen  
+ url<=
+ )only
+:  >)URL({"a'b"}var(--bp)
+max-width　(ONLY;(\n*/  b
+({'a"b'}:\r)*/\n #{"not😀😀:  
+x.css;var(--bp)
+Url( {"'"}:#{)\\\\all{url(*/
+} /* /*')﻿
+only,all--custom url*/not
+\té
+color>:  '*/\r\nURLURL  --customNOT
+$query  and    only({"a'b"}世 ᠎
+ \\/*100px\nurl bURL
+;😀{"'"}:a' }᠎not
+Only \n
+{"a'b"} var(--bp) /*2{"a'b"}
+NotAndacalc(1px + 2em)énotmax-width100px　:﻿
+  (And({"a'b"}:'
+{"a'b"}only#{ 
+​ notand)*/
+allall=﻿b
+*/2
+;allnot:min-width😀>\t
+
+
+ 
+é #{screenONLYonly<=url(calc(1px + 2em)
+
+({'a"b'}:\t
+only𝄞)*/\r\n
+{"a'b"}URL( \\
+/*>-webkit-min-device-pixel-ratio(:   éUrl(　
+:\r\nprint 😀--custom bburl( 
+var(--bp)
+min-width
+  ﻿  \r\n😀世url (
+$query,({"a'b"}:a ({"a'b"}: --custom({
+2{'a"b'}calc(1px + 2em)(aurlé,\\{"a'b"}
+max-width 
+a 😀var(--bp)({'a"b'}:color
+:  = var(--bp)printONLY𝄞,({'a"b'}:
+{URL(and: ᠎only'
+
+ONLY {"a'b"}and ;
+ not*/
+")And1em*/)😀URL\\and 
+  not min-width calc(1px + 2em)
+Andonlyprintprint-webkit-min-device-pixel-rationot--customscreenvar(--bp)And
+, \n }
+URL(print
+{"'"}:bprintx.cssnot" #{\r᠎﻿ 
+  min-width2
+
+)😀éONLY {'"'}:)screen{'"'}:max-width
+*/And\\ color {'a"b'}<=only​{"a'b"}
+:>(😀　
+{'"'}:url ( 世>#{({'a"b'}:And)\n
+bcalc(1px + 2em),{'"'}: AND: <= $query\r (
+url\r\n AND 
+url(\rUrl(2url (
+\r\n only\t{'"'}:*/OnlyURL( Url(
+),﻿url(/*  (*/{'a"b'}({"a'b"}:var(--bp)
+ ﻿\r\n b({'a"b'}:calc(1px + 2em)url {"a'b"}ONLY
+
+   \r\n'url(}
+not(ANDcalc(1px + 2em)NOTcolor 2 }Url(min-width
+print2😀1em > 世 calc(1px + 2em)
+ 
+{'"'}:only/*<=😀
+ } calc(1px + 2em)*/ 𝄞url (
+ ' 
+世({"a'b"}:{"'"}:,URL<=;>*/ 2
+ "
+ url 世url ( $queryonly\r\nmax-width
+  Not᠎𝄞 x.css $querynotnot\\
+=URL\\url(({'a"b'}:)max-width{'a"b'}
+*/max-width
+ ᠎
+'min-width
+\r\n#{var(--bp),:min-width
+screen )'AND: Only 😀
+(#{　 screené᠎
+only/*$query-webkit-min-device-pixel-ratio'andall  ONLY NOT
+ (,
+{'"'}:--custom(}᠎(
+And
+:)URL
+url ( $query😀min-width  ({'a"b'}:
+Url(screenprint#{({"a'b"}:calc(1px + 2em) ({'a"b'}:,
+ --customONLY $query\nmin-width1em"$query<= 
+ and\r\n*/min-width
+  ,({'a"b'}:\r=,
+100pxvar(--bp)é ,only-webkit-min-device-pixel-ratio : )URL(᠎
+ --custom; b$query{"a'b"}
+{"'"}:only{'a"b'}(Andvar(--bp) */--custom
+(calc(1px + 2em)({"a'b"}:\n url(calc(1px + 2em)
+   
+ 𝄞;}a 
+*/\\​ ,  {"a'b"} printprint,
+>😀    max-widthURL{url(Url(NotAnd1em
+ url (\tprint (
+\t,>--customonlynotprint​
+--custom'{"'"}:　url} Url()
+max-widthonly 世{"a'b"}=​$querynot ({"a'b"}:
+:Url( {'a"b'} ,URLAND(😀2
+Only max-width
+:  print--custom{'a"b'}2𝄞😀)
+ x.css100px
+\t世min-width-webkit-min-device-pixel-ratiomax-widthmax-width*/  ;{"'"}:NOT
+ AND#{' {'"'}:{a 
+NOT ")😀Only#{\\{'"'}:-webkit-min-device-pixel-ratio
+*/ ) 
+allurl(世({"a'b"}:  URLcalc(1px + 2em)
+𝄞;"only2{'"'}:(
+(
+all-webkit-min-device-pixel-ratiourlOnly
+$query
+printOnly\\ 
+ (url( and𝄞  Url(é{'"'}:\t
+not not
+ 
+ var(--bp)2only\r  \t--customNOTNot
+<=onlyonlycalc(1px + 2em)url(᠎not a​
+((
+calc(1px + 2em):  NOT: #{  　{"'"}:
+   all {"a'b"}
+é100pxurl({a  >{'a"b'}
+print Not}  var(--bp) (
+not$query{not 😀--custom 
+anot)<=--custom$query 1em({"a'b"}:﻿min-width﻿
+\ranot 1em ​and1em only
+
+  not$query'\t\\᠎ 
+print url andx.cssURL(not)a\r\n{'"'}:
+\n (évar(--bp)-webkit-min-device-pixel-ratio>url(
+ ANDb>1emURL( >{
+ ({'a"b'}:
+{"a'b"}"
+\\ {"a'b"}notOnly}é 
+Not   >url(And 
+#{    :
+And   url( é$query
+all calc(1px + 2em)}  b
+AND$query{onlynot{'a"b'}{"'"}:) 
+{'"'}:﻿$query notONLY({'a"b'}:var(--bp)#{#{
+all  >世
+only',) $query{"a'b"} \ra
+
+
+max-widthUrl("Only(max-width({'a"b'}:1emurl (not世 
+andAND\nvar(--bp)and
+not max-widthNot{2𝄞not\nurl (not(
+print{}　ONLYnot)urlUrl(andurl(screen
+only1em" screen
+{"'"}:😀,
+{"a'b"}Only>{"a'b"}'a   a<=
+
+ ᠎\r\r\n*/
+100px😀}\\
+'😀>Not
+url ((color    {"a'b"}aNot{"a'b"}ONLY
+Url( ' ({"a'b"}:*/not2{'"'}: url (
+😀 ,\r\n} 
+printaURL(:  AND\n\nUrl(URL(
+a(
+{"'"}:
+ONLYnot({'a"b'}:"URL(calc(1px + 2em),{
+ var(--bp)$query' */calc(1px + 2em)a"Only
+{'a"b'}𝄞100px notmin-width世
+ONLY  printurlURL(only--custom{'a"b'}1em 
+,᠎ 1em  ﻿ é(
+screen Url(()
+URL 😀 and𝄞 ,
+var(--bp)NOT𝄞#{
+\t
+
+ é-webkit-min-device-pixel-rationot{"a'b"}\n,,not
+printONLYURLurl( 
+AND"#{(#{ 1ema-webkit-min-device-pixel-ratio and>　
+(\n$query only URL\n1em)\\URL(
+only\rUrl(
+not$query😀allx.css​#{1emurl 
+max-width
+} -webkit-min-device-pixel-ratioNot:color᠎x.css
+ NOT{"a'b"}: \r 
+URL url(
+
+b
+\r\n-webkit-min-device-pixel-ratioprintonlyx.cssAND
+aonly​$queryonly -webkit-min-device-pixel-ratio'
+print
+printcolorcolormax-width {'"'}:({'a"b'}: {"a'b"}url ( only({'a"b'}:
+ 
+URL(calc(1px + 2em)<=　 ,:and url (b 
+  世all1em​\\
+
+béx.cssvar(--bp)  ({'a"b'}: 
+Url(  color  {\nmin-width<=,𝄞​
+{"a'b"}   b\tmin-width/*url(max-width
+=not
+　\rvar(--bp)>
+\r\ncolor
+ *//*世max-width
+ANDnot2 
+notAnd >😀\r\n>2 
+{'"'}:" \n"𝄞 max-width1em<=var(--bp) 
+1em (​
+max-width    
+𝄞#{:  calc(1px + 2em)url$query \rANDb
+ max-width  AND᠎URL(
+
+only 世:(​url$query)2not /*
+世 {'"'}:\n᠎ 
+ Url((screen
+Onlyb{onlynotx.cssand{'"'}:AND)
+ Url(not​only(Not\n,,   
+:  100px  '#{/*var(--bp) 
+color﻿'And'amin-width  #{url (
+-webkit-min-device-pixel-ratio
+URL*/url(é<=Only,'{'a"b'}  ᠎'
+  ﻿--custom
+
+url (urlmin-width-webkit-min-device-pixel-ratio
+a𝄞min-width
+<=({'a"b'}:{'a"b'}color : :
+/*100px \\
+ =x.cssnot URL2/*only  
+😀
+\\  URL(only,not-webkit-min-device-pixel-ratiourlcalc(1px + 2em)
+😀)𝄞   url( 
+
+ screen
+ colorOnly \r\n
+2😀url ( only
+😀a
+ -webkit-min-device-pixel-ratiourl ( 
+URLurl(a
+-webkit-min-device-pixel-ratio URL(max-width\n 
+url(url url (Url( Only  ONLY)100px
+'url ('bURL not𝄞\r\n
+, {'"'}:url (
+᠎calc(1px + 2em)
+b"​url(url(100px
+URL(世>(url$query{"a'b"} only
+({"a'b"}:color{'"'}:url(=({'a"b'}:100px{'a"b'}color 
+{({"a'b"}:<=NOT Not{{'a"b'}andnot
+😀    
+-webkit-min-device-pixel-ratiourl(print 100pxAND{"'"}:: ;
+
+\\𝄞,:　\r\n=
+{"'"}:>Url({'"'}:only{'"'}:not=Only
+only 😀{"a'b"}URL( (
+=\t=url (\tall
+/*andé({"a'b"}:URL <=)'}--customnot
+\\1em
+\r--custom ᠎Notmax-width  2
+1emcalc(1px + 2em), é>
+😀AND({"a'b"}: <=᠎2a
+éb)screen-webkit-min-device-pixel-ratio only=,
+ x.css not-webkit-min-device-pixel-ratiomax-widthonly ({'a"b'}:   
+' URL世}
+世 ab-webkit-min-device-pixel-ratio,; URLUrl(
+世(b 'calc(1px + 2em)100pxonly😀a
+​ {'a"b'}Url( all : {2 
+\r\néurl (calc(1px + 2em)-webkit-min-device-pixel-ratio\n  a
+({"a'b"}:\t AND)-webkit-min-device-pixel-ratioUrl((screen𝄞ONLYé
+ \n)ANDurl (not  }
+url(
+onlya #{ { 2/*
+
+ 𝄞OnlyUrl(:)({'a"b'}:(url (({'a"b'}:NOT　
+\néx.csscolor
+
+ 
+ \\<=calc(1px + 2em)Not)({'a"b'}:screené
+     noturl(url( 1em) 
+ 
+and  , ​all}--customx.css
+é url#{$query  url ({"a'b"}\n  
+  {Not#{({"a'b"}:a100pxprint
+  2({'a"b'}:And \r(
+screen{'"'}:calc(1px + 2em), notcolor a:var(--bp)
+
+url(URL({"'"}:*/  not({'a"b'}  
+ url (:acolor >　({'a"b'}:😀1em: URL(
+calc(1px + 2em) 
+url(<=ONLYURL(𝄞calc(1px + 2em)URL(all b#{ 
+color(\tall  url
+url(世printx.cssurl(é\r\nurl (　<=URL({'a"b'}:;
+andONLY min-widthall=a
+print Url(url ({"a'b"}
+ nota =URL( {'"'}:  2ONLY
+,only{'"'}:--customonly b--customONLYmax-width 
+$queryurl(
+calc(1px + 2em) 2 --custom　=ONLY
+\t   all100px{'a"b'}min-width-webkit-min-device-pixel-ratiomin-width
+not
+
+: Url(  
+only b>  　 
+ \r\nAndx.css,, NOTéa>*/100px
+$query,
+({"a'b"}:"
+2 {'a"b'}
+ --customNOT\n Url(
+-webkit-min-device-pixel-ratioAND
+   
+" url( éONLY 
+　onlyand  url  -webkit-min-device-pixel-ratioURL(>
+calc(1px + 2em)
+/*' \n ,({'a"b'}:
+url(notONLYurl (NOT世 NOTurl(calc(1px + 2em)
+only 
+,x.cssvar(--bp) Url( url(\nurl(and
+*/: ,    
+URL( screenURL(}(only) <=
+a
+Only(URL(*/And100px
+ 
+ 😀({'a"b'}:\nscreenall ﻿{ #{Not
+世
+}​print ONLY \r\n )
+url (
+{"'"}:\r{"a'b"}var(--bp)᠎
+ 'URL(},ONLY😀  --custom 
+ éonlyNot
+url (
+printURL: print $queryprint ​
+screenonly(Not   $query= ᠎ ({'a"b'}:
+ 
+{"'"}:'2URL( aonly
+ \rprint--customcolor
+ x.cssand{"'"}:only/*2Only({"a'b"}: 
+  
+
+:  x.css\t ONLYascreenNot
+URL{᠎😀url(:é\r\n=
+1em{'"'}:Not,url (calc(1px + 2em)>(
+url100pxurl(url((　
+ url ({'a"b'}allscreen
+url/* NOT  ({"a'b"}:url (({'a"b'}:
+ ﻿NOT only-webkit-min-device-pixel-ratio
+  AND(
+not
+}世 1em urlONLYNotUrl(color
+​,\n
+>max-width{"a'b"}　{'a"b'}(max-width😀 
+x.cssonly1em({"a'b"}:min-widthé)𝄞2
+ ({"a'b"}:url (=URL100pxNOT2  {"a'b"}colormin-widthcalc(1px + 2em)
+ ​color  url)url(
+ONLYx.css
+max-width) 
+Andonly,URL {'"'}: 
+}2    
+\r:  é😀min-width),
+
+😀Only
+-webkit-min-device-pixel-ratiob : 
+ url
+ONLY {'"'}:( 'ONLY,
+<=url#{var(--bp)URL({"'"}:aall<=\\>
+URL(  𝄞: ('世 
+#{
+2Not​,\r\n  {\t
+\t only 100px100px(url( AND😀({"a'b"}:(
+not\r\n <=*/\t 
+min-widthAnd100px') 
+ ){"'"}: 
+Url( ,1em({'a"b'}:
+AND Not\t{calc(1px + 2em) 100px b
+color*/-webkit-min-device-pixel-ratio var(--bp)\r\n"allurl(#{
+: Url(
+' {'a"b'}{'"'}:é/*1em#{*/min-width﻿Not
+ \r\nurl ({"'"}: 
+url(screen😀
+screen =  
+Only 
+/*({'a"b'}:\r\nmax-widthb )
+Onlyonly  ​ \n({"a'b"}:(notNOT
+>,only{"a'b"}  
+\nurl((calc(1px + 2em)
+ é　URL
+世{"a'b"}calc(1px + 2em){  ONLY =,,1ema
+
+ $query
+100px世Only
+
+min-widthNOT ᠎( URL(\r 
+ 2Url(min-widthNOT𝄞 
+ #{() \rall/*　URL( 
+\r$querymin-widthonly
+color
+url(
+  \rURL{"'"}:
+And/*{"a'b"}*/a \t-webkit-min-device-pixel-ratio世all
+
+{"'"}: <=  Onlycalc(1px + 2em) AND100px}
+URL᠎/*{"a'b"}ONLYx.css({'a"b'}:   {"'"}:And
+\r\n=print}*/ 
+{"'"}:\r var(--bp)
+
+ */  
+url(amin-width)  )Not 
+ calc(1px + 2em)not,({"a'b"}:screen url(a
+1em)1em':  1em,
+only */--custom,({"a'b"}:
+$query=AndNOT 
+Not{x.css onlymin-widthONLY\\
+{"a'b"}    NOT 
+,{"a'b"}{"'"}: 世 \r\n
+not​ANDnot
+ 'Url(\r\n$query var(--bp){"a'b"}only᠎
+
+{'"'}:
+URL(NOT 
+$query ;
+*/NOT\n​--custom
+😀
+-webkit-min-device-pixel-ratio)urlprint-webkit-min-device-pixel-ratio😀url( url(url(var(--bp)
+
+(100px2\t᠎url(
+Only{'"'}:-webkit-min-device-pixel-ratioUrl(max-widthAnd}<= ᠎
+ \\
+\turl(:﻿　᠎,): ):
+<=URL()\n\rURL( NOTnot
+ only
+ONLY{​' {'a"b'}
+({"a'b"}:
+世 -webkit-min-device-pixel-ratioUrl( 
+$queryx.css calc(1px + 2em)2",url ( -webkit-min-device-pixel-ratio 
+var(--bp)
+​Notnotonly x.css)#{not(
+>({'a"b'}:{"a'b"}\t ONLYx.css*/not\n
+,
+ANDURL(  𝄞{(
+url(--custom﻿url (᠎
+:  {'"'}: "{color 
+/*᠎And--custom({"a'b"}: Not--customonly-webkit-min-device-pixel-ratio(x.css
+ONLY  
+calc(1px + 2em)({"a'b"}:({'a"b'}: Not
+)é
+$query{"a'b"}'b}{"'"}:ONLYURL(\t
+ url(onlycolor
+$query#{𝄞$queryOnlyANDurl (
+url ({'"'}:b>😀var(--bp) And\r\nurl (#{ 
+
+
+   url (\\(ONLY100pxprintnot\r\n
+𝄞Url(ANDAnd only
+ ,Url(screen({"a'b"}: (> 
+{'a"b'})  \tcalc(1px + 2em)*/
+ /*é)
+\r> "x.cssonlya﻿\\a
+\r{--custom)onlyONLYnot=url\r>/* 
+{'a"b'}\n  
+ ,  only({'a"b'}:{"a'b"} 
+
+max-width"-webkit-min-device-pixel-ratio\r\nurl(😀url ( ;url (
+only"=screen-webkit-min-device-pixel-ratio "
+
+  )only,\t/*) {"a'b"}
+Url() url ({'"'}:$query
+URL(url (  : max-width  
+andnot( only 1em😀
+　2{'"'}:世𝄞not
+:
+$queryprint ({"a'b"}:
+/*😀 : 1em2世,
+({'a"b'}: 世\t(x.cssand Only😀NOT
+{'a"b'}{ --customx.css}
+: url(b
+\r\r\n1em
+=Onlycolor Url( ( (
+a,{URL({"a'b"}: 😀 all 
+  #{#{ --custom*/ ({'a"b'}:url (é
+  url (
+(:  2url (\r\n
+ only　2
+\r",   var(--bp)all﻿min-width
+2\\ ( and ONLYé,
+URL(\randurl(,﻿,Only
+
+ only({'a"b'}:
+\rONLY)​ /*
+: <=
+
+
+x.css
+(AND) 😀{'"'}: 
+bAND1emvar(--bp)Noturl(
+not: url(-webkit-min-device-pixel-ratio
+ all({"a'b"}#{ */Notcalc(1px + 2em)
+é
+ /*url(print{"'"}: --custom
+(#{{"a'b"}print  max-width{'"'}:😀1em: 
+
+ URLprint😀᠎
+ }　{"'"}:max-width  >{*/ 
+( 
+\r max-width
+😀\r\nmin-widthb( 
+ a'　,x.css)
+({"a'b"}:
+{"a'b"}écolor
+ 𝄞) 𝄞 ​ ,*/ 
+> min-width#{"b,
+URL' {'"'}:a﻿ ONLYcolor
+ )　​1em({"a'b"}:𝄞(
+{'"'}:, ONLY 
+\\ 
+
+all{'a"b'}min-width
+only\r\r\n { max-width/* :screen (
+ {"a'b"}: \r\nnot({'a"b'}:Andonly: 
+-webkit-min-device-pixel-ratioscreenalléURL'andnotOnly>
+)﻿
+100px 𝄞" 
+ Onlycalc(1px + 2em):var(--bp){"'"}:url (\r\n2
+#{ /*AND
+  ) --custom
+ 世{\r   ﻿$query )$query
+ min-width({"a'b"}:; ({"a'b"}:\tall 
+ : 　
+urlNOT  )not​𝄞\r\nurl ($queryé
+ ONLY
+' -webkit-min-device-pixel-ratio'
+NOT𝄞screenONLY('
+;;allmax-width$queryallb世{"a'b"}
+)) calc(1px + 2em)<=print😀And
+'  \t,{"'"}:
+2'​ Only{'"'}: 
+Url(   calc(1px + 2em) ONLY2 　b\t
+1emurl ( ;
+max-widthmin-widthurl(\rOnly calc(1px + 2em)Url(x.css:
+   all*/*/
+ONLY{'a"b'}(世only--custom(   
+ 
+　min-width 
+calc(1px + 2em)100px世
+2var(--bp) ;#{ }Url(𝄞
+only
+ allURL( 1em 
+ var(--bp)᠎
+({"a'b"}: Not Url(NOT᠎ AND1em
+
+URL(noturl(\r\r\n
+᠎ var(--bp) 
+2​ min-width 𝄞NOT=AND​ 
+*/ {"a'b"}世 b
+color{'a"b'}calc(1px + 2em)　Not(all{'"'}:\\
+😀
+onlyNOT/*URL((1emURL　1emcolor{"'"}:
+}{"a'b"}\n ﻿ 
+(= 
+100px)(
+ :
+ \nonlyUrl( \\only 1emprint😀#{
+):x.css{'a"b'}ééurl (
+ not
+,)<=$query1emandonlyandand=
+ 1em
+\t$queryNOTprint ,var(--bp)url(　
+(: : 1emnot: éurl(var(--bp)var(--bp)Url(
+​--custom﻿b\r\n
+ ,​
+onlyand
+𝄞  > Andallmin-width
+-webkit-min-device-pixel-ratioand   {'a"b'}é᠎min-width Only} 
+ '
+ 2And𝄞Only{'"'}: (notonly
+({"a'b"}: min-width
+ \t: }\n
+\n\n only#{"1emprint : 
+))Andé not
+=url(printmin-width​  ONLY2 éAND
+
+allcolorurl (
+: url𝄞NOT({"a'b"}:}
+({"a'b"}:  URL(url ({"a'b"}
+ Only=\r\n--customvar(--bp)url{'"'}:  Not
+ max-widthcalc(1px + 2em)\n\\{'a"b'}({"a'b"}:>
+,{"a'b"}\r {'a"b'}  
+{
+ color AndUrl(:$query color
+
+  {\t(
+only  
+世-webkit-min-device-pixel-ratioNOTandscreenonly'\t:
+  color ,}1em$query
+all)url (--custom\t,color  <=
+--custombNOT(*/var(--bp)*/
+\t
+color  𝄞screen)Url(url
+"  ﻿　aONLYurl()url(not
+
+ Url( Onlyurl(
+ Url(\r\nmax-width
+URL(And Andonly\t
+not  #{  
+ 
+{"'"}:
+
+ and  
+Url(x.css ,
+url( calc(1px + 2em)𝄞, )allb screen
+({'a"b'}:\nAND :世 */url
+only\r\n﻿{"a'b"} /*
+ {"a'b"}"
+ {'a"b'} \t\r\n)\nurl (urlNot
+ color:  ​only
+😀Not 
+,\r ({"a'b"}:{"'"}: b -webkit-min-device-pixel-ratioonly{'"'}:(
+({"a'b"}: 
+" 
+}
+max-width{"a'b"}
+ éand    
+  
+--custom-webkit-min-device-pixel-ratioURL#{>​
+$querycalc(1px + 2em)x.css,"᠎>
+{>ONLYAND😀 print 
+
+ \\only{"a'b"}>#{\\calc(1px + 2em) URL: 
+ {'a"b'}screenurl(screenAND <=
+{"'"}:all,notONLY
+print\r1em{NOTonly   and( 😀
+　
+({'"'}:
+   screen*/  print\r😀b<=
+#{
+<=URL\r*/ {all​
+😀 {'"'}: '( not<=\r\n 
+and﻿ 
+{"a'b"}= 
+
+$query
+screenONLY𝄞(*/ 
+not: {color100px(b
+᠎$query 
+color\tnot "'﻿ 
+​\\ b 　color𝄞) >{screen
+1emANDcolorprintmin-width\\
+ )var(--bp),(({'a"b'}: "max-widthx.cssnot
+} : "calc(1px + 2em)   not  
+éonlyOnlyAND
+世URL({"a'b"}--customurl(var(--bp)NOT  } 
+#{ONLY{'a"b'}  'not
+ url(\\ url(#{url (é
+  :a*/ only\n,100px
+
+　: ᠎ (   ({"a'b"}:​
+\nurl(
+({'a"b'}:min-width({'a"b'}: only*/({"a'b"}: 
+   url;
+ {'"'}:\nand{ min-width
+{"'"}:}all}
+𝄞   \ta1emnotUrl( $query
+not ,url  print<={'"'}:
+ ({'a"b'}:color({'a"b'}:\r\n#{ ᠎
+\r\n ({"a'b"}:} 𝄞Url(bnotand
+100pxé
+=  url (x.css({"a'b"}: max-width{'a"b'}
+᠎ 
+Not  ({"a'b"}:x.css Only 
+max-width 
+({'a"b'}:URL(
+ é᠎\\var(--bp) */only"\turl (éall
+var(--bp),<=\r\n  
+ é }URL( (<= print:
+᠎
+
+url(url(AND{'a"b'}-webkit-min-device-pixel-ratioonly\r100px
+$query
+\nOnly  URL*/Url(Only ANDurl ( 
+notNot  100px\n 
+ Not {"a'b"}\r\n min-width {'a"b'}{'a"b'}Url(
+᠎世
+max-width $query)''screen color
+>
+onlyé
+/* screen{"'"}:{'"'}:
+: 
+url(AND {"a'b"} */Only᠎#{{"'"}:only{'a"b'} 
+  max-width/*AND\n<=}   only(
+not max-width
+  😀var(--bp)url( $querymin-widthUrl(
+\tandNot
+  NOT​ --customvar(--bp)({"a'b"}:𝄞--custom */
+only😀😀 $query(
+calc(1px + 2em)
+ */
+(100px  : {"a'b"}--custom
+{"a'b"}'min-width,({'a"b'}:
+世{"a'b"}世᠎only
+b  $queryNOT​​*/世
+=allURL(max-widthscreen screené andAND
+ 😀url( 世url(﻿x.css,*/calc(1px + 2em)
+  \t x.css  
+
+max-width#{URL: 
+
+ Notand({'a"b'}:max-width\n100pxNot({"a'b"}:  and
+=/*
+😀colorURL(Not é=url( $query{'a"b'}And
+printUrl(({"a'b"}::x.cssURL(url 
+notbOnly ​  URL
+print) )\\世({"a'b"}:not
+1em; only $query  min-width
+
+(NOT--custom {"'"}: 
+-webkit-min-device-pixel-rationot"  calc(1px + 2em)
+$queryUrl( \nvar(--bp)​
+url({"a'b"}url( 
+ONLY　世{"a'b"}; not᠎{{  
+ And\r
+({"a'b"}: 　2url*/And--custom
+
+url= and {"a'b"} :\r\n
+
+᠎᠎Only᠎:
+ only#{<=::  url2
+
+){'"'}:
+onlyAnd​#{} $query 2;all
+ not  And　
+;  }x.cssscreenvar(--bp) color,
+　)\\ <=
+
+​x.cssonly screen{"a'b"}AND>,screenNOTall({"a'b"}:
+
+
+  -webkit-min-device-pixel-ratiox.css\n​\r᠎*/𝄞>AND
+​URL onlycalc(1px + 2em){"'"}:  var(--bp) 
+ Url($query 
+
+1em:'calc(1px + 2em)and url 世#{*/
+世 b--customurlONLY-webkit-min-device-pixel-ratio𝄞({'a"b'}:
+ --customonlyand 
+--custom Not: \r\naNot
+\\x.css And
+é {'"'}: min-width{"a'b"}{😀世color 
+ ᠎ \n\t,​Onlyvar(--bp)
+})\t*/﻿$query 
+url( calc(1px + 2em) = {"a'b"}min-width'-webkit-min-device-pixel-ratio({
+allURLUrl(colorURL'
+{'a"b'}*/{'a"b'}
+{"'"}:"calc(1px + 2em) AND-webkit-min-device-pixel-ratioNotx.cssurl( 
+$queryurl(
+ $query/* )color
+calc(1px + 2em)
+{"'"}:noté \t2 max-width𝄞only
+calc(1px + 2em)NOT{--custom--customand100px😀
+ (min-width
+ >ONLY (\r᠎screen(min-widthNOT({'a"b'}:2
+x.css"
+all😀 )  URL({= a{'"'}:　
+\\}$query1em1em﻿{"a'b"}'
+  And
+:'​{'"'}:,{"'"}:ANDAndurl (
+;1em  all
+
+2\t  \r{
+screenUrl(only᠎ )({"a'b"}:;\r\nUrl(
+:
+URLAnd;NOTurl (   url
+ b URL( {
+  \\ {"'"}: 
+😀
+:
+   
+{"a'b"}\r\n'世 =\r\r {'a"b'}
+not
+{"a'b"}
+é{"a'b"}(not\n100px({'a"b'}:only {"'"}: 
+ notcalc(1px + 2em)print1em世{"'"}::
+  {"a'b"}URL(  
+color
+URL{"'"}:,{"'"}:éurl(世*/{"'"}:
+}\r\n{(b
+
+max-widthurl (({'a"b'}:
+é :/* NOT$query max-width
+᠎Not(᠎ONLYurl(
+NOT(not/*>only"{'"'}:;'
+ 100pxAndOnlyonly({"a'b"}:{"a'b"}screenonly
+URL{"a'b"}url( printANDURL
+colorNOT'2{"a'b"}{"'"}:>2 NOTscreen𝄞
+var(--bp)ONLY)only b
+​(and𝄞onlyurl(
+😀,screen,(\n ;Andurl​
+color2
+  {"'"}:\t\\𝄞,<== ﻿only>
+ 
+
+not,\tnot  　max-width\n 😀
+  (2bonlyUrl(
+ )
+URL({'a"b'}screen>url (url (\\x.cssURL(
+ () onlyonly ,
+{'a"b'}and世not𝄞 
+And᠎  URL( and​
+(AND"
+: url (ascreen/*url( b 𝄞
+
+ b color\\​ :url(url(
+x.css
+{"a'b"}#{ URL(  )only
+ and
+/*
+-webkit-min-device-pixel-ratio}\n URL onlyé1em)
+print;/*​
+Url($queryonlyurlURL , ᠎ 
+
+url( ANDurlurl (color$query,
+/*,世​
+Url(;({'a"b'}:allscreenNot 
+\r" > not᠎colorscreen\r\n(
+:   '{"'"}:NotAnd<=url(
+ 
+,\r\n=Url(
+not
+  url(  
+{"a'b"}{"'"}:max-width 😀)Not =   
+😀1em max-width,
+  }﻿ )ONLY 
+ 世{"a'b"}\r\nUrl({    Url( 
+ ​Not)Url(﻿​url(NOT﻿(
+世,{"a'b"}{'"'}: \\
+ =$queryvar(--bp)𝄞 \n)
+  all
+ : }>世
+)url( only\t;*/ =
+  <=
+<=min-width
+print $query calc(1px + 2em)screen;é({"a'b"}:
+$querycalc(1px + 2em)   \r
+all 世
+2😀and{
+ #{世url﻿--customurl(onlyprint
+; {'"'}:2"calc(1px + 2em)a,
+
+\n({'"'}:Url(\tscreen}and{"a'b"}　
+URLscreenb,      ' 
+᠎({"a'b"}:
+Url(  éONLY
+--custom ,var(--bp) 
+
+﻿
+ {"'"}:}only)all'Noturl( ;
+ */url(\r\nUrl(,screen:notmax-width-webkit-min-device-pixel-ratio Only
+<=/*}/*not<= url (NOT 
+'Not﻿ {URL(b
+only\t
+\t({"a'b"}:$queryURL( ;b  ​
+
+ --custom  b
+ONLY min-width {"a'b"}é--custom{"a'b"}>AND Only
+ Only= /*  -webkit-min-device-pixel-ratio {
+only)　-webkit-min-device-pixel-ratio 😀\r /*Only𝄞 
+--custom:  ({'a"b'}:  (世
+\r
+url(
+100px{"a'b"}({'a"b'}:𝄞(URLprintNot /*
+ aprinturl( url(calc(1px + 2em)url(url calc(1px + 2em)　　
+{'"'}:{'a"b'}aéonly"URL(#{100px
+1emaURL{'a"b'} ﻿ "all-webkit-min-device-pixel-ratioa
+screenvar(--bp) )#{ ᠎
+URL( 𝄞{"a'b"}b screen{b　
+ url(=NOT--custom({"a'b"}:$query {"a'b"}#{urlAND
+﻿é({'a"b'}: 1em𝄞
+min-width2url(({'a"b'}:'\né--custom\tURL)=({"a'b"}:
+all :Only*/᠎ )\r :
+é  var(--bp)
+é:{'"'}: {
+᠎
+color max-widthnot$queryAndmax-width  color 
+
+
+bNOTAND1em, screen
+  ({'a"b'}:screenURL(2\n世min-width{"'"}:){"'"}:
+ \turl (url ( url(
+=
+onlyAnd
+ x.cssall"var(--bp) \t
+a b)
+,
+😀 世" , min-widthb
+{And({'a"b'}:$query({"a'b"}:url(Not--custom
+   url:and:onlymax-width <= 
+*/"   all  -webkit-min-device-pixel-ratio b/*
+Not */ 😀URL(   Only
+bnot-webkit-min-device-pixel-ratio\r"NOT )\na}--customall
+only<=
+\nurl(alla  min-width\t(
+
+ {"a'b"} 
+ {'"'}:url--custom
+  print " screen 
+\n-webkit-min-device-pixel-ratio{"a'b"})  
+only   screen>
+$queryNOT And,   x.css
+/* é */))calc(1px + 2em) 
+
+{'a"b'}\r\n
+( \r  ONLYall:Not)({"a'b"}:　,
+,url2{'"'}:{max-width 
+ var(--bp): 
+min-widthurl( Not
+
+"ONLYscreen 
+"᠎({"a'b"}:Url( 
+calc(1px + 2em)<=\r\nprint　(\t 
+#{ 
+　URL({'a"b'}: #{ 
+100px   1em x.cssonly };
+notNOT(x.cssprintall​ "URL  
+1em\\all😀 😀min-width​onlyvar(--bp)print 
+世ONLYONLY
+-webkit-min-device-pixel-ratio{'"'}: \\: <=  AND 
+urlall $query ,\r\n=᠎
+ ( #{({"a'b"}: onlyurl( >
+{>max-widthAnd𝄞
+b$query):  screenaONLY \t
+min-width
+<= {'a"b'}
+ -webkit-min-device-pixel-ratioUrl({"a'b"}{'a"b'} URL(/*
+
+ {'"'}:{"a'b"}var(--bp)100px{"'"}:url(\r\nmin-width\r
+/* url() ,ONLY max-width
+URL᠎'\\ x.css   calc(1px + 2em)😀
+ -webkit-min-device-pixel-ratio/*é({'a"b'}:Url(only  ' \nmax-width
+
+ONLY 2
+   not({'a"b'}:x.css /*#{)b
+(url(-webkit-min-device-pixel-ratioURL(᠎ " 
+​not
+(x.css1em max-width世() 
+\r\ncalc(1px + 2em)only​éAND =
+ ; }Not\téNot) 
+ not )({"a'b"}:
+url(  only><=
+
+ONLY\na /* Url(<=({"a'b"}:{'a"b'}\tallAnd
+,all1emallvar(--bp)2And
+, URL({"a'b"}:not ﻿   ﻿1em({"a'b"}:and
+
+ #{  : 　({'a"b'}:url  
+color \r allUrl( 
+--customé\nONLYnot= 
+ colorAnd
+é😀OnlyAnd  --custom<=b2 
+   /*
+{
+ONLY  :#{100px  ({"a'b"}:
+​ var(--bp) =notonly
+Not᠎only(URL( ﻿ $query And
+\nonlyonly)#{print,{"'"}:calc(1px + 2em) ({'a"b'}:(x.css
+​}Only 
+print  min-width😀​x.css(  $query{'"'}:
+}and,Notonly\t 2: "
+\r\nscreen/* Only  :😀Only  
+/*url (url(noturl(​ urlb﻿{
+/*
+
+{'"'}:ONLY:}
+{'a"b'} , \r\nmax-widthonlynot = : -webkit-min-device-pixel-ratio
+NOT(not--custom-webkit-min-device-pixel-ratio 1em é  
+
+,😀and
+color
+only{calc(1px + 2em)url(var(--bp)not
+onlyurl(onlyurl
+
+100px \rNOT/*世({"a'b"}:var(--bp){"a'b"}
+᠎ */not éUrl(-webkit-min-device-pixel-ratioonly({'a"b'}:
+ url( '2min-width1em<= 
+𝄞{({"a'b"}:
+  x.cssUrl(Onlymin-width é (only
+a),Not100px ((
+世﻿
+AND#{😀
+screen ):,世 #{print
+  :  {'a"b'}{ 
+)max-width 2NOT
+}andvar(--bp)世urlNOTé ({"a'b"}:
+<=
+ ( {'"'}:url(\t>"({"a'b"}: screenmax-width
+"100px calc(1px + 2em)onlyAND 
+{​print"}{'"'}:'url(url ( 
+100px({'a"b'}:url(, >{\r\n
+allURL( Only😀>​
+:\t 
+url({"'"}:世éurl URLOnly  
+ ,NOT( x.css 'onlyurl ( 
+😀: ,: */,{"a'b"}  url(
+
+    NOTmin-widthnot
+\r\n
+)URL(𝄞 URL(url ( 
+ 100px} {"a'b"}printx.css
+ >:   100px世
+),screen colorUrl( Not
+>max-widthUrl(andOnly\\--custom2NOTurl (
+}x.css calc(1px + 2em)\r\n all--custom$query AND​é
+世ONLY{ 
+ calc(1px + 2em)((url 
+<=({'a"b'}:世 colorscreen 
+/*-webkit-min-device-pixel-ratio*/ And {"'"}: url
+*/> a
+
+only{ 1em( ::,1em\r\n"
+({"a'b"}:print({'a"b'}:𝄞᠎
+Url(\tcolorall 
+=Not} 1em\r\n(screen
+ éscreen 
+᠎Onlymax-width url(('
+ Noturl (é\n)
+\r)𝄞{"'"}:screen{"a'b"}ONLY:):
+{"'"}:100px{x.css  var(--bp)
+ Not  URLURL;only--custom
+' burl (max-width  　\r\n\\
+　not   color100px#{not​print$query 
+(\r screenmax-width({'a"b'}: only, \\\\ 
+ */ NOTurl ( print ({"a'b"}:all
+ 
+\t,AND 
+{'a"b'}not\r\n
+var(--bp)/*\n;
+all
+{"a'b"} calc(1px + 2em)var(--bp)min-width--custom{'"'}:​var(--bp)
+ Not: 😀$query{'"'}:Not
+​*/ONLYONLYonly ):only )
+
+  
+ ​>ANDonly"*/ :  {
+😀#{
+ URL and ) (  {"'"}:only print
+url("= >onlyaAnd( and
+ ,-webkit-min-device-pixel-ratio URL {'a"b'}100px ;'
+
+only\t)x.css 
+min-widthURL(<=: {"'"}:not*/: 
+é
+Url(
+calc(1px + 2em) é{'"'}:1em({"a'b"}:and
+#{
+ " only  -webkit-min-device-pixel-ratioAndUrl(url(onlyURL(
+color{'"'}: {<= var(--bp)\t​é=
+世 ,not​URL(<=NOT*/ éb
+all  ({'a"b'}:\tx.cssonly"{"'"}: 
+only(2  ,\t 
+
+min-widthscreenAndonly世a\r
+é世#{not,a (
+url((x.css     only
+> é; ;2: =not
+😀\t  only =
+ \\😀var(--bp)max-width100px-webkit-min-device-pixel-ratio({"a'b"}:世\t=max-width
+ 😀{
+min-width 　  
+){'a"b'}*/
+b: \nmax-widthmin-width/*
+a᠎​ \\2 \n   
+𝄞calc(1px + 2em):  #{Only--custom(᠎({"a'b"}:
+;url(#{
+: \r\n 
+1em <=Not {'a"b'}var(--bp)(--custom
+only <= color᠎
+' only only  Notonly
+ 
+notcolorNoturl(notcolor--customvar(--bp)  
+ coloronlyURL(  
+=url(AND
+  　NOTURL😀onlyurl=
+\r\n <=({"a'b"}:2print{"'"}:a100pxx.cssURL() 
+--customx.css({"a'b"}:
+/*᠎𝄞{"a'b"}x.css𝄞 
+
+calc(1px + 2em):   ({"a'b"}: ({"a'b"}:\nonly  \r\n 
+({"a'b"}:AND{"a'b"}b     
+:x.cssurl()𝄞
+
+
+ AND ᠎100pxvar(--bp)\r\n
+ax.cssUrl()(​  
+世) b ONLYAndx.cssx.css--custom
+>ONLY　allNOT: /*100px
+᠎#{ $queryandprint
+  
+#{
+
+"And
+ 𝄞screen color﻿ aandcolor\r 
+ {'a"b'}var(--bp))
+ \r\n﻿url(AND({"a'b"}:print　 
+=ascreencalc(1px + 2em)url(#{not 
+URL
+allx.css {"'"}:écalc(1px + 2em)}\turl{᠎　
+calc(1px + 2em)  ​ \\ ) 
+
+#{url (  NOTurl (all=url (
+) NOT ᠎Andé 1em{'a"b'}
+  : ({'a"b'}:a ﻿
+color(
+ print
+\r\n(é 
+{{"a'b"}url(={"'"}: all  Not2$query
+ 
+max-width;
+$query {"'"}:url}1em﻿{NOTall　
+NOT; ,noturl (Url(😀
+)notNoturl ({'a"b'}}  AND> min-width,
+print {OnlyONLY:max-width --custom  all)
+allx.css URL(url ($query2
+Not﻿\r 
+a"{"a'b"}*/Url( Only 
+){"a'b"}url(screen(  URL(Not URL(not\t
+}\r\nurl(NotUrl(
+}AND{"a'b"}andonly,all
+"url (url ( }color 
+{{'a"b'} ($query世(  
+
+   𝄞 x.css#{　
+    (){'a"b'}({"a'b"}:
+᠎ 
+ {'"'}: 𝄞 not
+min-widthurl(b"URL(
+<=Url(  /*
+﻿>​allonly
+\r\n   \\URL     url(  
+ {'"'}: calc(1px + 2em){'"'}:)
+ \t 　
+: url (({"a'b"}:({"a'b"}: calc(1px + 2em){'a"b'}
+x.cssNot1em
+​100px   ({"a'b"}:;Url(AND1em1em"a
+1em\n
+ 
+var(--bp)color>\\url (AND:Not And
+url(
+-webkit-min-device-pixel-ratio 
+max-width
+
+NOT,   \tURLurl(é ({'a"b'}: screen
+100px 
+"=onlyscreen  
+' 
+{Only100px only{'"'}::b 
+url(\\  \r\n𝄞 \t */\r\né
+var(--bp)=url(
+$queryé😀{'a"b'}᠎
+--customcalc(1px + 2em)max-width\r/*
+,({"a'b"}:
+URL
+100px
+screen,b 　"=<=(
+ ' var(--bp)only<='only/*100px
+ =  ONLY ,
+\r
+*/"AND{"'"}:2{"'"}:printcalc(1px + 2em)x.cssnotb
+calc(1px + 2em)Only
+é\t100px' #{
+  */ Url( x.css{"'"}:
+$queryx.css﻿{'"'}:calc(1px + 2em)print, 
+({"a'b"}:color' a,ONLY
+, {"a'b"}notcolor":  ᠎
+　Url(onlynoté(url(​URL
+And﻿\r\n)a  min-width
+url(URL(ONLY>min-width1em  and ﻿URL({"a'b"}:
+a<="b OnlyURL(url(colorb<=​)
+᠎\\
+#{var(--bp){"a'b"},\r\n  (And url(世1em{
+)print100pxNOT1emUrl(URL(urlx.css
+"(NOT-webkit-min-device-pixel-ratio😀not)é"{'a"b'}
+1emband/*
+世notNOT﻿AND\rURL(
+screenURL(<=(-webkit-min-device-pixel-ratio: \r᠎
+𝄞é ,/*colormax-width
+url #{(:᠎ {'"'}:
+;\ra  
+{'a"b'}>({"a'b"}:
+​\r\n#{ (  {'"'}: 　not
+URL᠎
+  andurl(= )$query  
+Noturl
+min-width$query2a  2 only
+screen>({'a"b'}:
+URLONLY (url(calc(1px + 2em)  
+é(ONLYall '\r\n\nnot
+
+>url$query  a  )  ( )
+not   \tscreen
+({'a"b'}:)
+<= -webkit-min-device-pixel-ratio screen😀{'"'}:max-width
+= ,({'a"b'}:​ andmax-width:)
+b
+({"a'b"}:printURL(}{'"'}:
+calc(1px + 2em) x.cssé
+
+Url(color;NOTburl( calc(1px + 2em) only*/
+not\rcolor
+{"'"}:( \t#{Andcolor
+ ({"a'b"}:max-width: URL(
+}url
+,:url \t<=url(\r
+ONLY;2AND/*  var(--bp)And Only)
+url(: 100px
+{"'"}:only,
+\r\nonlyscreenonly𝄞<= 
+Url(min-width\r
+,
+$query 1emscreen{'a"b'}᠎{"'"}:AndNOT
+({"a'b"}:100pxcolor
+​ )\\ 
+/* \r\nx.css
+
+　min-width  }url (: 
+<=\t᠎Notnotall=100px\n
+And"Onlyonly{᠎
+)世2
+=:;
+onlyURL,   color\\ANDé
+
+url( url\r\né100px  {"'"}:$queryé​ONLY
+;URL(
+-webkit-min-device-pixel-ratioa𝄞only,\r\nNot1em ​  2
+printNOTx.css-webkit-min-device-pixel-ratio only{"a'b"}
+ ({"'"}:1em
+ \t-webkit-min-device-pixel-ratio)
+𝄞\tNot({"a'b"}:*/𝄞min-widthurl (
+{'a"b'}allURL (
+᠎\r\n﻿ screenandand𝄞>)
+ 100px\r{"a'b"}﻿ 世$query{'a"b'}
+,only\\URLé᠎screenonly(({"a'b"}:
+not　: \r\n2AND
+\t
+ 100px
+}Url(;}' Andprintonly 
+screen/*x.css(>>: 𝄞\\{'"'}:>
+\r\nUrl(color : a世#{ aurl(
+
+color
+\nprint--customnot 2é\\,  (
+URL(*/url(onlyurl b
+\r世{'"'}:url(𝄞onlycolorNOT 
+ {'a"b'}
+ONLY　all ,\n  Not𝄞
+$queryx.css
+url("x.css Not
+1em﻿\n color   
+
+᠎: max-width(: 
+NOT   
+   notcalc(1px + 2em)-webkit-min-device-pixel-ratio\r max-width
+b
+{: aUrl({"a'b"}𝄞世Only 
+Only
+ ({'a"b'}:  
+colorall   )all calc(1px + 2em)( \n
+not<=\\
+　(,Only
+:
+   not   -webkit-min-device-pixel-ratio )var(--bp)
+var(--bp)And  
+ONLY{'"'}:not>{'a"b'}  >2min-width(
+and(print #{ 
+Onlyx.css=({'a"b'}:  url(Only/*url(not\r
+b100px᠎ {"'"}::bcalc(1px + 2em)' 
+\t﻿Not﻿:  {'a"b'}url(\r({"a'b"}:\ré
+ ANDx.css (\r\n😀
+:
+
+ not}
+᠎{
+And 'only100pxURL(onlyaonly
+all
+Only min-widthAnd　;   Only1em,\\
+URL(>\nAND  \n  not\t }*/
+calc(1px + 2em)({'a"b'}:1em2é,url ()
+{ \nprint/*  #{  Andand 
+ , 2-webkit-min-device-pixel-ratio({"a'b"}:--customAndnot> 
+{AND b{\r\n  
+ ONLYurl(only{'"'}:
+\\--custom​ ​print100px \n(NOTprint'
+url (#{only{"a'b"}𝄞' =
+(only𝄞:) \t)\r\n
+᠎世
+𝄞x.css  \tcalc(1px + 2em) --customURL(not'{
+
+/*a/*>
+{{"a'b"};
+
+a𝄞  ({'a"b'}: 
+;url("url(print" 2
+not\nx.cssonly
+url $query{'a"b'}{#{: andurl(  max-widthall
+世
+ 
+​URL{{"a'b"}100px
+
+()100pxAND​ 
+
+
+ {Only1em-webkit-min-device-pixel-ratioURL(URL( 
+:   ᠎andcolor {"'"}:2  
+{-webkit-min-device-pixel-ratio({'a"b'}:min-width{"'"}:,   ,'世
+\\  {"'"}:)all\t(
+ 
+ ᠎
+not
+a; 
+{'a"b'}
+  only(é(   
+
+)2Onlyurl(NOTonly᠎​Not(ONLY
+,not\r\n )　　 = \r
+<=é
+}{NOT​amax-width
+#{*/>=--custom*/\r)  URLcalc(1px + 2em)
+'And)
+﻿ ​
+URL=1emscreen{"a'b"}Not}}) 
+ AND2And  NOT -webkit-min-device-pixel-ratiourl(color\\
+
+x.cssnot  ,b--custom᠎😀url(
+URL,;\t\n/*\n
+URL( : url(only 
+100px{>=\r\n$query--custom
+/*URL( only >min-width   
+ NOT({"a'b"}:\r\n
+}--customall #{﻿allnot url(
+({"a'b"}:{"a'b"}only᠎> 
+colorprintUrl(
+{'a"b'}(\t ﻿
+Url(᠎color Not\tAND1emprintscreenandNot
+=max-widthOnlycalc(1px + 2em)<=and"burl({'"'}:᠎ 
+ ({'a"b'}:    calc(1px + 2em)url (NOTnoturl
+
+\rmax-widthurl ({'"'}:coloronly;bonlyNota 
+᠎print\t--custom:min-widthOnly 
+and2
+𝄞 Only(=
+
+,{'a"b'}(And
+(#{ calc(1px + 2em) ({"a'b"}:
+allAND "var(--bp)(( ;
+ 𝄞And"😀
+printonly
+ */(only -webkit-min-device-pixel-ratio{
+: ﻿
+, 
+: --custom  {'"'}:
+\tNOT{"a'b"}\r({'a"b'}:=é(  AndONLY
+
+=b(only b﻿(url(
+ -webkit-min-device-pixel-ratiob$queryvar(--bp)url(  {'a"b'},{'"'}:\\url(
+𝄞$query:
+onlyonlyprint 😀:
+
+𝄞only
+ Not  
+);;Url( Url(AndURL(  >,
+ {'"'}:onlyurl({"a'b"}
+And,$query all
+/*url( 
+ not{'a"b'}
+ ONLY Notx.css({'a"b'}:
+;​screen
+/* "#{᠎url(url(Only 
+é: 100pxnotonlyUrl(
+noté　And)
+　=\\{'a"b'}AND)
+url (;: ,éscreen<={,
+ 
+ Url(var(--bp) ) not  x.css({'a"b'}:
+-webkit-min-device-pixel-ratio*/\t  
+ a
+ \r
+ colorurl(=allscreenonlynotand😀
+  URL(
+{ 
+({"a'b"}:
+ url(;>printOnlynot>}not: AND
+ONLYURL(({"a'b"}:<= printall
+  
+url(: " >b\r\n
+ ( 2; 
+
+NOT1emurl a100px   {'a"b'}url (﻿>﻿
+;
+{'"'}:{"'"}: 
+  '
+)Only  x.css(--customnot世
+and
+{"a'b"}=url(calc(1px + 2em)/*var(--bp)
+   'URL ( {"'"}:ONLYaandNOT
+
+min-widthand{"a'b"}url (url () \r({'a"b'}:100px
+
+({"a'b"}:=)min-width世and
+   (
+({'a"b'}:{"a'b"}Only\rb  onlyURL    URL($query--custom
+\r ﻿
+2\r\nONLYURL(onlyURLé😀
+ {"a'b"}#{ URL
+Url(screen,　b NOTurlandprint
+Not({'a"b'}: {"a'b"}: --custom100px{,\tnot
+=𝄞
+not/*b
+only2-webkit-min-device-pixel-ratio,
+ 
+only{) {"'"}:
+not{é {"a'b"}*/({'a"b'}:)x.css -webkit-min-device-pixel-ratio\t\t
+世<=)and ᠎(url( */
+
+  😀)
+ONLY  url(( = max-width
+(x.css   
+
+
+b
+ : var(--bp)᠎url(-webkit-min-device-pixel-ratiocolor
+>{'a"b'}And"Url(/*{"a'b"}({"a'b"}: And
+ and😀calc(1px + 2em)x.cssand ​: And
+ {'a"b'} ﻿
+x.cssNot1em　 var(--bp)
+:print100px
+{"'"}:Not
+1em 100pxONLYvar(--bp)*/  
+ ({'a"b'}:#{ ONLY url(Not URL
+﻿ notvar(--bp){"'"}:
+é max-width=100px)1emAnd
+var(--bp)\t
+1emprintONLY
+*/AND𝄞url1em{"'"}:: max-width>-webkit-min-device-pixel-ratio>
+　 {"'"}:only-webkit-min-device-pixel-ratio   only ;URL
+,{'a"b'}url (100px;: 
+: noturl(b({'a"b'}:1em\n,only
+
+é>b
+=$querynotnota{'a"b'}
+<=$query,{"a'b"}NOTOnly"Only
+,﻿  calc(1px + 2em)
+,ONLY
+
+({'a"b'}: 
+世 ,,  
+onlyURL(世URL 
+screen  ​#{url (é' 
+url  <=)(a
+ 1em{'"'}:url(Not
+᠎))​   Url(　only Url(
+=urlOnly   >{not}b
+Only​/*a   
+ONLYurl (and-webkit-min-device-pixel-ratio\tonly😀url(  
+ 
+   
+ not (--custom({"a'b"}:'-webkit-min-device-pixel-ratio\r\\/*AND
+
+(\r\n
+　url (ONLYnotx.css:url(color 
+--customANDAND
+1em  \t
+>url'calc(1px + 2em)Only=b  max-width url (
+ url (AND({'a"b'}:b
+NOT​
+ 1emmax-width(var(--bp)Not
+  :
+Url(var(--bp)url (URL(
+/*URL( ( bscreen> $query*/é
+{"'"}:﻿  a  1em \n<=/*\r\n
+not{"'"}:
+  max-width{'#{
+\r\nonly:\r\nall𝄞\\max-width-webkit-min-device-pixel-ratio 
+NOT
+᠎ 😀 , '{"'"}:
+世᠎ $query\r\n not= 
+url( 1emcalc(1px + 2em)only(x.cssONLY*/
+<=᠎100px({'a"b'}:onlyurlprintAND({"a'b"}:URL (#{
+ONLYANDnoturl(  ONLY
+<={'"'}:\r\n{NOT>  ONLY
+b: éurl (var(--bp)and\t): 
+( --customx.cssONLYall, And>
+\turl(\r\n 世 𝄞x.cssurl(--custom
+
+\n2"all({'a"b'}:  )not 
+ Not 
+  Not({"a'b"}:Url(世var(--bp)({"a'b"}:and 
+\r\n ​url(1em and-webkit-min-device-pixel-ratioURL ;url((
+ ) ; ({"a'b"}:--custom{\r'-webkit-min-device-pixel-ratio
+
+only​ ,url(only
+max-width1em{"a'b"}' 
+only\n\\max-width
+;𝄞a
+onlycalc(1px + 2em) allonly/*,,calc(1px + 2em)
+b\nUrl(:    1em #{ URL(
+
+)世AND100pxprint,And#{{{({"a'b"}:
+
+Onlyonly/* Url(bAnd　
+not}only
+-webkit-min-device-pixel-ratio"URL>{>url(aa
+\r\n}*/: var(--bp)  
+Not>{"'"}:{"a'b"}\tscreen 𝄞᠎
+not\turlnot"  : ,
+\rcolor​ only𝄞({'a"b'}:
+​URL( onlyscreenall﻿bcalc(1px + 2em)　ONLY2
+and colorcalc(1px + 2em)#{
+ 
+\r\\\t;anda;
+And
+1em
+Onlyvar(--bp)AndAnd))​URL,
+--customscreenb amin-width\t1em NOT2100px
+ONLY1em not>)   =max-width᠎
+{"a'b"})x.css x.css 
+  
+{'"'}:url ( ascreennot
+
+ONLY #{世﻿
+ 100px
+   Url(1em
+-webkit-min-device-pixel-ratio\\Onlycolor,$query all 
+ =/*all,--custom: 
+ url>ONLYAnd᠎}  
+    : --custom)URL
+color ᠎\\Andcalc(1px + 2em)1em--custom
+, \ronly*/
+url ('
+,\n > {"'"}: 
+ ) ᠎  \r\n{\\;
+ANDnot
+{'"'}:({'a"b'}:onlynot　screenprint a
+url((
+({'a"b'}:))b }min-widthx.css
+>,only >  1emall
+url(url\na100px {"a'b"}
+😀all (URL2only᠎  
+-webkit-min-device-pixel-ratio{ not
+{'a"b'}{'a"b'}AND not
+  
+,
+And--custom 
+ URL(\t
+\r\nb" :'2print<=   
+😀print
+ : 
+ONLY andNot--custom
+url( ﻿{"a'b"} \t 
+print　
+{'"'}:
+ONLY​color  max-width NOTcalc(1px + 2em)=anot
+Not;only﻿ OnlyOnly(
+1em\n}var(--bp){'"'}:var(--bp)
+
+only{"a'b"}({'a"b'}: colora​
+)
+({'a"b'}:}print﻿*/ AND
+😀color{'"'}:url(NOT,}1em
+({﻿{ ᠎*/<=min-width　  
+1em /*ONLYnot᠎x.css= not
+url(And  )<= URL(url (
+: ONLY )only{'"'}:url(: -webkit-min-device-pixel-ratioURL\n
+ <={'"'}:  #{(url(
+2-webkit-min-device-pixel-ratioonly-webkit-min-device-pixel-ratioOnlyé
+᠎ )
+Onlyb  AND  a 
+: and\tall\n
+:#{ '\nonly
+ ONLY*/screen\n𝄞 　 url(
+:世
+#{and ; notvar(--bp){'a"b'},᠎) 
+url(\\/*᠎   min-width=
+:{"a'b"}\t:   NOT  
+  '*/   
+burl (x.cssurl)x.css　 -webkit-min-device-pixel-ratioand😀
+𝄞 😀: onlyurl ({'"'}:print
+}　
+100pxURLurl( b 
+NOT
+
+notcolor'
+
+url (min-width2url (\t ;URL(
+var(--bp){'"'}:\n
+" -webkit-min-device-pixel-ratio\\᠎print
+2
+  \t
+ 𝄞
+ x.css2)({'a"b'}:"1em \r\nAND
+> $query$queryOnly,/*1em/*}and2not
+Only  
+
+--customnot﻿}not
+ONLY﻿only \r\nURL(var(--bp)-webkit-min-device-pixel-ratio 2
+*/calc(1px + 2em)​URL{"'"}:{'"'}:}{'a"b'}ba
+ --customurl ( >>
+éurl(not only
+ ,AND  url({'a"b'}
+
+{"'"}:\tanot{'a"b'}}({"a'b"}:᠎URL({"a'b"} 
+
+only﻿{"'"}:'=only URL(var(--bp)screen
+--custom$queryOnlyprint/*-webkit-min-device-pixel-ratioAnd
+print énot Url( #{
+
+  and
+<=b(ONLY  $query
+
+  　 ({'"'}:
+*/({"a'b"}:=22*/\r   \r\n)
+(ONLYNot​url(
+  \r\nnot;url(:,color é　
+url(<==amin-width 100px>=😀 var(--bp)b
+ \tprintNot>{{{'a"b'}--custom;And2 
+{'"'}:\\
+({'a"b'}:>𝄞ONLYonly/*　: 
+, ONLYUrl( And
+ > {'a"b'}url(" AND-webkit-min-device-pixel-ratio
+max-width  NOT 
+{"a'b"}URL(*/}var(--bp)max-width)a: 
+,"Not2b  /*\r\n' ​not
+= */ 
+é  '<= ᠎ not <=;
+ screen<=\t) --custom  
+\ta({"a'b"}:𝄞 世\r100px{"'"}: (URL
+all=:﻿　 only
+url(\r 
+>:\r\n calc(1px + 2em){"a'b"}
+( max-widthAnd\\
+{"a'b"}  =  {"'"}: max-width😀 -webkit-min-device-pixel-ratio
+$queryURL(   Only:  (\\: \tmax-width
+ )"calc(1px + 2em)2}url(x.css:$query>
+ 100pxNOTb\r \\Url( 
+,#{\\$query \r\nurl (-webkit-min-device-pixel-ratio
+{"'"}: -webkit-min-device-pixel-ratio
+{ ba/* notURL(;,
+-webkit-min-device-pixel-ratio/*= \n>: 
+
+only᠎(aOnlyURL
+ ({'a"b'}:   Url(=all
+  <=
+calc(1px + 2em)({"a'b"}:#{a
+Only﻿ */<=x.css urlonly
+{"'"}:\\var(--bp) >😀x.cssOnly\n
+"}
+ AND Url( ({"a'b"}:min-width
+\r\n)  (᠎100px世100px({"a'b"}:1em{ 
+2100pxvar(--bp)
+{-webkit-min-device-pixel-ratioall({'a"b'}:   URL
+min-width
+{"'"}:'not  : x.css(\t
+{'a"b'}AND1em not bNOT\r100pxnot
+ ({"a'b"}:Not)᠎}calc(1px + 2em)ONLY(é 
+url ( --custom​ a,allurl(colorAND>
+url(max-width/*  
+=  :  
+min-widthonlynot var(--bp)世1em:URL 
+*/--custom{"a'b"}and}Url(}url( URL(screenscreen\r\n
+ And2 
+And({'a"b'}:colorOnly){"a'b"}​😀 
+andx.css{"'"}: url(
+  
+{"'"}:😀 \r
+  
+ONLY　　andmin-width \t
+onlyaAND 
+Not:  ,}   print\t 
+/*var(--bp)'Only2 
+
+screen 　 */  AND  
+URL(AND Url(and noturl( 
+ 世 printURL(  ONLY
+):   \r{url (Url('
+世 
+ url
+ x.cssnot   >\r\nmax-width2 é\r
+urlbb
+) calc(1px + 2em)
+/*é>100px\r\n  Url(URL(Url()
+   世  \\({"a'b"}: ({"a'b"}:
+;==color\n  
+;
+
+﻿ url(AND  AND 
+print\r(b 
+min-width\n}: only'Only\\é
+　({"a'b"}:
+)and screen世   : : 
+᠎ Url(   ,NOT"  2max-width
+\t  max-width﻿NOTnot,​
+{'"'}:url-webkit-min-device-pixel-ratioall
+/*>#{: {"a'b"}
+2screenUrl( 
+only-webkit-min-device-pixel-ratio min-widthmax-width
+and URLONLY min-widthNot
+  100pxvar(--bp)#{,x.css 
+   )and   (x.css:ONLYurl
+*/1em,>--custom({"a'b"}:😀}-webkit-min-device-pixel-ratio
+max-width
+　<=}
+not2  \rmin-width ,  ; 世
+{'"'}:onlymax-width100px2color
+only
+*/Only> Only{URL{'"'}:
+max-width\t({'a"b'}:
+𝄞 ᠎ ({"a'b"}:URLurl( =ONLY
+é 100pxurl(
+  }ONLY({'a"b'}:not ᠎<=max-width 
+all{andurl(all 
+ Url(--custom    Only url
+({"a'b"}: \r\n
+ {"a'b"}url( 
+ (: $queryallmax-width" 1emUrl(
+''😀
+Url({"a'b"}a({"a'b"}: (
+᠎OnlyAND
+( 世calc(1px + 2em)
+, min-width url 
+>
+only 100px
+>
+𝄞NOTscreen<= 
+url𝄞calc(1px + 2em)#{
+}$queryall\r　{"'"}:\t ){'a"b'}
+  min-width/* '﻿  :
+min-width*/  url($queryURL(​{"a'b"}𝄞#{min-widthb
+var(--bp)\r\n  urlurl(\rurl({'a"b'}b)=
+
+ {'a"b'})color
+ 　  url({'a"b'} not )var(--bp)
+{"a'b"}{"a'b"}({"a'b"}:é 　<=--custom
+var(--bp)
+$query
+é{'"'}:screen )urla
+#{100pxa)\t
+
+  1em #{:*/){"'"}:
+ \\      é
+
+ Url(url(b
+{notcolor<=Not\r\nand$query<=} '
+   
+ {'a"b'},\\printx.css{'"'}:calc(1px + 2em){'a"b'}x.css/*
+
+ ({'a"b'}:all
+  "AND \r
+ #{
+é/*andANDscreenURL(᠎,b 
+\t{"'"}:print;  100px({'a"b'}:   b
+᠎ 
+)
+ }color
+ {"a'b"}/*2 2 𝄞b({"a'b"}:
+(urlall#{$query
+  ,{"'"}:　😀URL
+ONLY ;({'a"b'}:　only 
+᠎ONLYscreenmax-widthAnd-webkit-min-device-pixel-ratio> >NOT​
+,And{"'"}:
+ max-width>url(andurl(url (
+  ​({"a'b"}:Not ,\n calc(1px + 2em) \n,
+{"'"}: not {"'"}: and{'"'}: Url( 
+ {"a'b"}url({url(=-webkit-min-device-pixel-ratioAnd {"a'b"}/* 
+AND} é é=é{{"'"}:
+  x.css
+=,-webkit-min-device-pixel-ratio\\Not=andandOnly
+   😀--customurl only
+    var(--bp)  Only\r\n'
+
+,> 
+,﻿1em"a  𝄞世min-width>\\
+ /*URLurl ( \r'({"a'b"}:
+"a𝄞
+}\\*/min-width" (\r  , 
+allurl((URL(min-width(; calc(1px + 2em)({'a"b'}:=\r
+"min-widthall#{ NOTurl(\r
+-webkit-min-device-pixel-ratio*/{"a'b"}
+𝄞'=\\
+*/\\
+ ({'a"b'}:urlprint
+allnot\n​: x.css-webkit-min-device-pixel-rationot)
+  
+
+({"a'b"}:　URL( \rURL {"a'b"}NOT) 
+{'"'}:url-webkit-min-device-pixel-ratio(  )
+ 
+ANDurl
+url(
+onlyéurl( */*/all\\ 
+Not᠎(2
+é\r-webkit-min-device-pixel-ratio é x.cssmin-width{
+only(NOTAND)\tscreen({'a"b'}:{
+
+100px--custom  max-width
+":𝄞url(𝄞{'"'}:᠎1em世aurl(
+  \\😀not世
+\n Not b#{ ;\n\t
+
+𝄞-webkit-min-device-pixel-ratio{'a"b'}Only not{'"'}:Onlyurl (
+" \r\n é)
+  \\
+
+​  <=url(,
+2 allvar(--bp)({'a"b'}:​
+
+{"'"}:a{"a'b"}
+     ({'a"b'}: */᠎<=screen世
+{"'"}:
+screen Only  Only   Andonly({'a"b'}:
+(\n  ({"a'b"}:𝄞2﻿ 'AND᠎ \r
+URL(   colorurl (
+Not only ​max-width
+
+  𝄞color/* /*,　}b100px
+:  -webkit-min-device-pixel-ratio  ﻿: URL(\r\nurl (calc(1px + 2em) 
+ ᠎
+ = (url(And{"a'b"} ,  ﻿
+, \\)bcalc(1px + 2em)\r\nonly  calc(1px + 2em)
+é
+
+;\\url(
+﻿,:{ -webkit-min-device-pixel-ratio
+color{'a"b'} 
+　世\\only
+/*﻿Not}Url(\n{"'"}:allONLY
+Only  100px(
+/*And'  url (({"a'b"}:--custom$query1em 
+世' 
+😀　only
+100px }1emURL(  Onlyx.cssONLY(
+ ᠎ #{Url({'"'}:ANDcalc(1px + 2em)allAnd
+100pxb{'a"b'}ONLY URL(
+#{>{"'"}:print{
+   𝄞)print>{"'"}:all
+URL*/)not{'"'}:#{
+
+
+\\--custom
+printand
+Andurl ((é( 
+ ,\t {"a'b"}url(a
+NOT{a({'a"b'}:-webkit-min-device-pixel-ratio{"'"}: 
+ url(  only
+   URL(url (url (𝄞\r\n😀\\url(url (
+URL(b
+#{URL
+$query{"'"}:
+: ==url100px  
+​max-width\\\rcalc(1px + 2em),
+;: 😀 {\r\n😀\r  var(--bp)color*/
+ url((
+b\r2 ({"a'b"}:min-widthNOT
+colorurl( Onlycolorurl(*/  ;
+onlyURLx.cssvar(--bp)all$query\r,
+ {'"'}: <=<=#{﻿ screen　
+x.css\r{"a'b"}
+print
+URL
+NOT {'"'}:color */
+)onlynot   NOTurl({'"'}:
+ 　 (  calc(1px + 2em)𝄞screennotNOT
+
+
+ 世$query
+only #{a AND only 
+ 2 =
+URL(
+{'"'}:é({"'"}:\n)100px𝄞not,
+{
+\r\n世 'onlyOnlyx.css﻿世\nvar(--bp)Not
+(<=,({'a"b'}:\\
+
+
+screenurl(NOT(": 
+ {'"'}:{ ) min-width\r\n allmin-widthall
+
+ ,calc(1px + 2em)url(<= '᠎*/  And
+﻿{"'"}: notURL  ({"a'b"}:{"a'b"}Andand 
+notx.css𝄞: color  
+
+  only url (({'a"b'}:
+\\onlyand ​\nmin-width >
+NOTx.css:
+screen\\url(url (onlycalc(1px + 2em) {"'"}:᠎ 
+{"'"}:𝄞Not 2 世$query ,\r
+calc(1px + 2em)
+AND}: 😀b" min-width  \\　
+ url
+print{2'print<=: '\rallonlyonlyonly
+﻿url (*/​\\url é$query ({"a'b"}:
+ colornot(';NOT
+ ​ -webkit-min-device-pixel-ratiovar(--bp)世URL(;({"a'b"}:Onlyurl 
+noturl ( é;  : 
+ url()url ( urlurl(\\URL(
+notprint>    𝄞AND '
+ and(url(((NOT onlyvar(--bp)
+url(" {'"'}:, ﻿
+b-webkit-min-device-pixel-ratio,
+  $query:'\n
+ ' "
+
+bmax-widthmin-width  $query-webkit-min-device-pixel-ratio　bURL(
+only URL ONLYprint<=😀
+( AND\r\n
+\t  "\tvar(--bp)screenNOT
+x.cssx.css */\turl( 
+print
+"allnot$query$query𝄞
+   \\$queryonly\n({'a"b'}: 
+ color #{ Only)
+ONLY(a (　​\n
+{"'"}:\t(}color urlNOT( 
+
+url( all　"(　 and$query
+,);,  世allandnot({'a"b'}::
+not
+ #{"
+
+url()only*/{"'"}:"URL
+ 😀/*min-width ' ; 
+  
+';-webkit-min-device-pixel-ratio
+ 　 only:and/* not 1em
+\\ ﻿  {'a"b'}--custom "  #{ 
+)color
+(,
+b
+(Not) url( 
+ 1em
+url ("=url(Url(\r\n({"a'b"}:﻿URL )printb
+ >
+
+ 
+min-widthnotNOT{"a'b"}url (
+notURL(url ()
+;({'a"b'}:) 100px=😀
+
+  
+
+{"a'b"},)calc(1px + 2em){'"'}:<=({"a'b"}$query 
+  " (﻿(
+color100px\n\\ url( var(--bp)(😀
+{"a'b"}AND{'"'}:only\n
+2 notmax-width'and😀
+(
+
+  b#{min-width,\\and 
+<=
+
+\t　var(--bp)"
+Url(){max-widthonlyNOT>1em
+é​100px-webkit-min-device-pixel-ratiocalc(1px + 2em) -webkit-min-device-pixel-rationotcolor ᠎
+not \nurl (" Not#{ <=100px 
+not 
+calc(1px + 2em),<= ​ calc(1px + 2em)\\
+,Url( ({"a'b"}:;URL(;NOT$queryscreen-webkit-min-device-pixel-ratio 
+Onlymax-width-webkit-min-device-pixel-ratio100px
+  𝄞screen﻿{'"'}: 
+  ;and(😀a
+NOT -webkit-min-device-pixel-ratioAND{*/screennot):URL
+and éonly,
+\r(color only
+é\turl ( , ᠎: "\r: 
+screenAndcolor}url($query𝄞min-width
+calc(1px + 2em) ONLY\r\n
+  min-width
+var(--bp) only\r　}  : 
+b=  
+/*\\Url(​>url(NOTall\t
+URL
+url(only"alla:({'a"b'}:\n
+
+﻿\t#{{'a"b'}Only {'a"b'}burl(min-width
+;And$queryprint(URL﻿x.css\\URL
+  {"'"}:color　(  éNotvar(--bp)\rscreen
+ noturl ({"'"}:1em ᠎
+émax-width    NOT'all/*({"a'b"}:
+)a1emcalc(1px + 2em)var(--bp)
+var(--bp) 
+  $query𝄞Only#{and  
+ $query😀 Only{'"'}:URL: 
+ 1em😀　url () Not;  　AND
+a{'"'}:{"'"}:only😀({"a'b"}:  ;({'a"b'}:
+1emAND#{var(--bp)all
+only max-width ({'a"b'}:\n\n*/\né
+
+{"'"}:100px(᠎ and{"'"}:()b,:\t
+
+\\\\2　$query\rurl(screen$query
+世 {"a'b"}2 allscreen😀notx.css
+ only
+(1em
+     Url(;
+NOTONLY\t)min-width, {'"'}:
+  $query​100px
+世　😀:\t ({"a'b"}:printvar(--bp)
+"AND/*  
+ printUrl(/* -webkit-min-device-pixel-ratio not ,
+min-widthurl(not  -webkit-min-device-pixel-ratioAND{'a"b'}/*url(,
+#{ ( 😀᠎andcolora
+notallallbvar(--bp)var(--bp){  bNot
+url<=onlyé
+*/URL(var(--bp)Url(
+﻿>😀=not}
+
+ 
+{"'"}: ({"a'b"}:  url ({'a"b'}😀𝄞
+😀  calc(1px + 2em)﻿​
+>var(--bp):{'"'}:Not } andurl (var(--bp)
+
+url (
+*/ 2(: \t  'NOTNot"
+=
+﻿世url" ; 
+URL( ({"a'b"}:\t 😀AND\r 
+　url(--custom
+
+ print1em{'"'}:\\#{{"a'b"} URL
+ \n*/AND{"a'b"}​/* ᠎
+<=({'a"b'}:(᠎{"'"}:Url( 世url(min-width
+Not URL($query 1emvar(--bp)
+ 
+
+
+  /*--custom{  
+
+  \\\t 
+b100px url( 100pxurl#{
+﻿url(\\NotNOT url(x.cssURL
+<= a){b ﻿ "({'a"b'}:{'a"b'}
+{ {'a"b'} {'"'}:,url(\t
+screen{;onlyurl(NOT)(url({"'"}:\r\n
+*/
+　print: )Url(color only100pxAND᠎Only
+#{ ᠎世 {"a'b"}(ONLYcolor AND
+𝄞bURLONLY
+\n}*/  b\r
+
+And-webkit-min-device-pixel-ratioURL(  
+max-widthnot
+{Url( =$query )printonly
+{'"'}:﻿and Only{"a'b"}x.cssURL({"'"}:({'a"b'}:>
+not   -webkit-min-device-pixel-ratio;  screen--custom
+é: onlynot 2\n  世:
+URL(max-widthall}᠎<=1em)
+{"'"}: 世2
+{"'"}:URLurl　)=
+ not
+Andmin-width Not{'"'}:
+}﻿ \n\ré {'"'}:Url(, 
+{  
+1em𝄞all screen{"a'b"}Url(𝄞',
+ /*aONLY-webkit-min-device-pixel-ratioscreen,\ronlyNot
+
+b--customavar(--bp):𝄞only
+NOT<=/*And)"
+=:print\r\n URL-webkit-min-device-pixel-ratio 
+*/  
+#{'<= url(
+世color﻿: var(--bp)
+URL$query=\r,)#{
+only(\t
+OnlyUrl(﻿url(
+   {"'"}:𝄞#{
+only{(b
+ 𝄞 
+And<=)"color #{and
+url$queryurl᠎ \r
+{éurl
+$query print"#{url (
+{'"'}:
+
+é﻿({'a"b'}: --custom>url  {min-width
+screenéNOT 世notvar(--bp)(  ;#{𝄞
+ #{onlyNotAnd 
+{((not
+{\t  ;url (,  
+NOT  all -webkit-min-device-pixel-ratio $querymax-widthURLnot
+url(-webkit-min-device-pixel-ratio　 =(And,("var(--bp)
+screen)max-width/*2only ,NOT)
+URL(url(\r\nAND  ﻿;
+url (bonly/* 100px*/ 
+
+  only
+𝄞 NOT{'a"b'}and'﻿NOT x.css
+#{100pxurl (Not #{  \n
+;​
+2url )
+ \n2} {'a"b'}url𝄞#{var(--bp)😀and
+Not﻿\rvar(--bp)>NOT : }
+​  𝄞and 
+Url( x.css  Onlycolor100pxONLY
+{"'"}: url(ONLY​nota 
+urlNot
+世\r
+-webkit-min-device-pixel-ratioNot*/({"a'b"}:
+, {'"'}:𝄞b(AND)
+ = Onlyé 𝄞  
+:Url((url1em 
+({"a'b"}: 　{"a'b"}url \naall
+ é Only   Not({'a"b'}:calc(1px + 2em)calc(1px + 2em)
+AND  NOT
+( )
+ 　﻿url(notNot screen {"a'b"}Only
+ 
+  #{ 
+not {"a'b"}) x.css  {'a"b'}NOT
+​ 
+url(all-webkit-min-device-pixel-ratio$queryprintall
+({'a"b'}:
+min-width　 2\n
+-webkit-min-device-pixel-ratioURL b),Url(
+color{"'"}:x.css
+({"a'b"}:​url(
+᠎
+　
+color Onlynot\r\n　#{ONLY$query
+  url
+{"a'b"}2᠎':>  
+=Url({"'"}:)noturl(
+{"a'b"}"print{'a"b'}\\​ And 
+urlvar(--bp) NOT
+URLonly
+
+--custombURL( ({'a"b'}:({"a'b"}:\n#{ :100px,
+  )min-width﻿color
+  color: print-webkit-min-device-pixel-ratio)--custom\t
+\r;{-webkit-min-device-pixel-ratiourl(screen({"a'b"}:
+2 ᠎ 　
+min-width  
+ {"'"}:
+ max-width　only
+AND{"a'b"}100px'\r\n({'a"b'}:
+:\n 
+ colorscreen NOT
+2𝄞\r =世   print 
+url((var(--bp)-webkit-min-device-pixel-ratio100px
+
+color 
+=é {"'"}:,᠎not({'a"b'}:-webkit-min-device-pixel-ratio-webkit-min-device-pixel-ratioa-webkit-min-device-pixel-ratioUrl(
+ >​,
+min-width　\\x.css) {$query{Not
+ b\nb  :max-width {'a"b'}=
+min-width: url (AND:only \r\n: URL
+ 　 > and ﻿
+screen$query\r-webkit-min-device-pixel-ratio\r\nNotURL */
+--customURL(color
+  {'a"b'}(*/ 𝄞{"'"}:\\#{
+100pxurl (url世url(,)
+ : {'"'}:{"'"}:/*var(--bp)　NOTx.css({"a'b"}:calc(1px + 2em)2
+= url (<=AND   {'"'}::;  not
+x.css  b> printprint 
+url(\t 
+ )　-webkit-min-device-pixel-ratio;  >
+   ({"a'b"}: <=Url(\rmin-widthURL(onlyonly
+ " --custom
+()  ONLY 😀\r 
+only﻿coloréurl𝄞
+{'a"b'} var(--bp)😀url  Not  
+​)only
+({"a'b"} -webkit-min-device-pixel-ratio \\{"'"}:　  url100px/*
+  calc(1px + 2em) --custom  
+only not>And
+#{'} not:  $query  
+max-width )  all';var(--bp)  100px
+  burl(only/* min-widthAND​{"a'b"}
+URL( {"'"}:url (max-width\r; only
+--customonlyandb{'a"b'}"😀And: min-width({'a"b'}:
+100px#{allonly
+ 
+{'   )AND᠎) /*
+#{\r
+url  only>(
+\r﻿ 
+not
+{"a'b"}  {'a"b'}   ᠎all𝄞  
+print{"a'b"}notprint
+)\nbmin-widthmin-width
+   AND{
+And  ({"a'b"}:}print𝄞screen  AND
+  
+Onlyé{'a"b'}
+not :not,
+{"a'b"};x.css éscreenNOTURLcolor
+({"a'b"}:
+
+​Only : ,𝄞(url({'"'}:100px   
+ x.css(And1em url(var(--bp)/*andOnly1em
+)​​=only1emx.css<=﻿ URL({'a"b'}:
+,
+calc(1px + 2em)  color
+all 𝄞,Url(\nonly:   
+all{'"'}:min-width":{ and*/{'"'}:
+  calc(1px + 2em)2<=url(
+URL()print)'  =᠎,a
+#{
+not世, \nNOT
+　
+;notaurl   1emonly/*And\r\nAnd
+( '1em
+ --custom{'a"b'} --custom
+
+﻿
+﻿only}
+url( ))😀 ' 
+ and
+a
+:}url(print<=:):url
+﻿"URL(only=
+URLAnd>
+#{ \n a1em 
+ and({"a'b"}:  Url(Not
+ 
+and --custom-webkit-min-device-pixel-ratio
+screenNOTcalc(1px + 2em)(URLurl (all:bOnlyandcolor
+ (#{\\\r\n
+:1em᠎2{'"'}:😀Url(and
+ >urlburl(: 
+2
+
+b𝄞᠎-webkit-min-device-pixel-ratio'URL😀url( ({"a'b"}:color
+
+AND)Not>ONLY=Only
+} 
+
+color,
+\r\nONLY
+ >𝄞  ﻿/*
+é And  color  -webkit-min-device-pixel-ratio >﻿/*
+calc(1px + 2em)and>\r">\r(url(
+ {'a"b'}{'a"b'},<=colorOnlyallx.css calc(1px + 2em)=>
+é\r\n𝄞 ({"a'b"}:only😀)
+\\{var(--bp)\n{'"'}:(
+<=, screen\r',​*/{"'"}:𝄞({"a'b"}:
+\rURL(  ONLY>not{'"'}:url (
+*/,  and{x.cssONLY​min-width 
+é-webkit-min-device-pixel-ratio\r,​   ,᠎
+Not   😀URL
+"
+ #{ 
+ {"a'b"} 
+\r\n>not 
+{"'"}:()  calc(1px + 2em): 
+(  2100px-webkit-min-device-pixel-ratio᠎
+　
+\r\n100px>URL( And\r\n{"'"}:--custom(1em\r\n
+}​=,=1em)--custom
+)ONLY᠎(}$query
+
+x.css\r\n "  max-width({'a"b'}:#{​onlyurl(
+
+\r" {URL(And#{Not Noturl
+{"'"}:  \r }
+({'a"b'}:(b ﻿$query \\NOT(
+notmin-widthnot*/ )😀Onlyall--custom/*Url(
+ ){url (--custom#{({"a'b"}: max-width#{x.css
+  {'"'}:not᠎ {"a'b"}  
+ {not 
+  url( and screen;-webkit-min-device-pixel-ratio​
+only　\n<=not1em{'a"b'}　 min-width
+
+screen{ var(--bp)﻿𝄞b /* x.css
+*/😀)all  é
+urlUrl(😀}
+({"a'b"}:
+}url({"'"}:only
+\r= 100px{'"'}:URL
+url (Only
+#{printanot     not
+世{"a'b"}2,: {'"'}:
+only᠎)({'a"b'}:(1emscreenvar(--bp)
+世url(
+aurl  
+allurl ({'a"b'}
+ 2\\
+\t,,　NOT{'a"b'}100pxprint{
+ 
+  NOT
+100pxurl ONLY 
+<=
+é: , NOTnotmin-width   ﻿{"a'b"}᠎
+({'a"b'}: */onlyvar(--bp))min-width𝄞Url(  
+{'a"b'}😀url (Url(, 
+ \n: b:not
+a\r\n
+only
+᠎  url(screencolor{"'"}:
+b{"a'b"}𝄞 
+Url((
+ Not" /* {-webkit-min-device-pixel-ratio URL: 
+colorurl url (   <= 𝄞;{"a'b"}　
+url(calc(1px + 2em)1em{"a'b"}é  url (  >Not𝄞
+Only var(--bp){'a"b'}
+Url(   {"a'b"}{"a'b"}
+
+x.cssall  URL(;/*>not
+\t'b 2Not*/
+{"a'b"}  \nprint =calc(1px + 2em)​é#{only
+ =Not ,
+'   url(  ({'a"b'}:é"
+"min-width 世"
+ 世 urlnot >ANDx.css) 
+ Andurl(#{(\nand URL\rurl(url(
+#{
+({"a'b"}:And and100pxall
+printmin-width>    
+ a Only({"a'b"}:)﻿a-webkit-min-device-pixel-ratio\turl ( URL(
+-webkit-min-device-pixel-ratio
+{"a'b"}: ,;' Only\r\n \t#{not 
+100px\turl(,AND \n\r
+--custom
+\\
+世>😀AND{"'"}:\r\n
+({"a'b"}:url (
+x.css{"a'b"}$query　"<=And ONLYnotOnly᠎
+$query{"a'b"}"$query {'"'}:min-width\t}é{"a'b"}
+ NOT{'"'}: {"a'b"}\t )世{'"'}:
+ not
+   2notmax-widthurl (onlyNoturlx.cssNot
+-webkit-min-device-pixel-ratio﻿😀*/\t{{"a'b"}*/url(
+)calc(1px + 2em)*/
+Only𝄞URL(/* 𝄞 max-width:​
+#{ :url  100px),  \\é
+  url  
+only
+/*,screen;>screenurl(
+ all <=URL(b 100px
+
+url( /*print{{'a"b'} 
+AND᠎#{url﻿:( url
+URL(  {"'"}:: 
+calc(1px + 2em) 
+2 --custom{'a"b'}é
+　a max-width
+ONLY
+ Only 
+color({"a'b"}:$query ᠎({"a'b"}:>
+
+ calc(1px + 2em)
+ {"a'b"}<=\n })᠎100px {"a'b"}
+}url( 
+ ({"a'b"}:世url(é*/ --custom
+​ --custom 
+b\tUrl( only"(世not​a
+url  -webkit-min-device-pixel-ratio onlynot
+\\x.cssurl(min-width100px\n᠎
+  
+,:  ᠎  ,
+#{> ​
+avar(--bp)\n  
+(﻿ \r\n and {'"'}:{'a"b'} 
+urlnot 
+var(--bp)﻿ 
+  
+ =a{"'"}:   \r\n
+, ﻿{'"'}:Url(max-width Only　ONLY
+ color{'"'}:url (--custom
+--custom-webkit-min-device-pixel-ratio\\𝄞 ​notvar(--bp)100px\\
+ URL　﻿"(=
+urlurl (\r​color𝄞{'"'}:
+{'a"b'}({"a'b"}:x.css({"a'b"}:ONLYa2url(--custom screen
+x.css  1em  100px　1em#{
+ 100px(;{2{ NOTurl(
+　 {"'"}:
+1em{ONLY$query​x.css var(--bp)​᠎\n{'a"b'} 
+​url (--custom>x.css 100px ;᠎(​
+ a({"a'b"}:}(\n)({'a"b'}:all'
+᠎  ﻿}
+
+  
+{'"'}:screen   --custom; max-width(   ,
+, 
+,)#{URL(And 
+1em URL　>
+
+
+URL(2:1em{"'"}:and{'a"b'}
+NotAND2( 
+url ( "
+ ({"a'b"}: x.css{"'"}:{"a'b"}ANDonly1em
+ ({'a"b'}:　 
+AND  \rcalc(1px + 2em){'a"b'} ONLYvar(--bp)
+　notURL(=100px$query 
+
+   URLcoloronlyall aprint 𝄞
+*/({"a'b"}:not
+url (and  AND{"a'b"} 
+#{ #{only {'a"b'}} ﻿
+ ,max-width>min-width\\a ᠎-webkit-min-device-pixel-ratio​URL
+𝄞\n {'"'}:/*  url𝄞(😀
+var(--bp) 
+
+"
+ Url(printonly not\n  and𝄞
+<=
+᠎print*/ "  
+all
+\t--custom)url(　NOT calc(1px + 2em)Only>
+1em\n\n  url (not
+url(*/only<=all" 
+世\n é>only{'"'}:,  \nOnly
+\r :=
+all$query ANDnot({'a"b'}:x.cssx.css 𝄞({'a"b'}: only
+, 世
+1em{'a"b'}only({"a'b"}:Only,,notnot😀 {'"'}:
+}>url\ronlyurl (#{url( =
+, calc(1px + 2em) #{  
+screen ({"a'b"}:\r\n   {'"'}:\r\n
+世{"'"}:(notallurl ( ((, 
+
+\r 2{"'"}:screen  {'a"b'}　
+)<={print( \nurl(
+only x.cssNot,print
+
+​   min-width{'a"b'}  urlall(
+\r\n
+　
+ {'"'}:min-width(
+allnot)  ᠎({'a"b'}:  ({'a"b'}:
+/*screen $queryurlé  \r\n​:,
+url ({"a'b"}\\{ only({'a"b'}:\nurl (=;
+url (url(url(
+and100px)
+ONLY 世　​-webkit-min-device-pixel-rationot--custom>
+  url(
+acalc(1px + 2em) 100pxall  url (​"a
+colorand:  ' ({"a'b"}:
+ 
+ min-width }x.css {"'"}:  \t/*all
+​ ​᠎Only bonlyurl ( \rnot
+\n--custom}  var(--bp)#{ 1emvar(--bp)\\
+ $queryurl (<=url(url(URL2{"a'b"}{'"'}:url(
+( url (\t( :  }min-widthAnd 
+😀>
+Not And ANDnot 
+{'"'}: only  
+Onlyx.css
+﻿ noturl   = \t
+URL(é*/\t
+
+ printurl (not,=URLnot:{"'"}:
+Url((Andonly{ANDprint :}  
+AND   notb 
+URL(\tnot ONLY"{"'"}:URL\n  
+and<= $query"
+-webkit-min-device-pixel-ratio  min-widtha/*url(😀1em({"a'b"}:\t
+not ,x.css\r\n𝄞{'a"b'}\t(screen  
+​  
+Url(url (not<= : URL(:
+ )Notand({'a"b'}:Only$querycalc(1px + 2em)
+(max-width᠎"{not (*/  screen
+\t$query世
+url (bacolor
+\n  URLAnd  "   '
+ {"'"}:
+ notcolor)
+: not x.css/* url()Not\r\n
+only(only print100pxnot( }: NOT
+(/*𝄞({'a"b'}:\tvar(--bp)
+<=世éurl(*/
+
+URL("
+
+ 
+
+
+color100pxurl (\r\n: print\r{'"'}:screen
+({'a"b'}:/*😀only 
+​😀  
+​Notvar(--bp)
+<=
+
+ only 
+url( 　﻿﻿url (😀1em
+-webkit-min-device-pixel-ratioANDnotbscreen url(notURLbAND
+Not ​
+100px
+世  Not$query$queryURLNot 
+ =$query--customé　\r\n  
+
+print*/-webkit-min-device-pixel-ratioONLY2only  \nvar(--bp))
+<=世*/ )<=max-width  not
+  Notx.cssa*/
+=NOTURL(
+)\rurl(url( Only
+ =printONLY ᠎ : {"a'b"}{"'"}: =
+ url,
+)url (min-width"{"a'b"}URL(not
+: 😀);print({'a"b'}:ONLY
+min-width,世  URL( url 
+NOT notcolor
+ -webkit-min-device-pixel-ratio: URL( 2)
+ é\r\n
+é;<=>﻿(url﻿ 
+ >Andurl(and=;not--customonly
+url(
+var(--bp)'And not  )not1em
+aNot({"a'b"}:😀)calc(1px + 2em)max-width
+
+-webkit-min-device-pixel-ratio    ​ \r\n"
+({'a"b'}: */url( , 
+-webkit-min-device-pixel-ratio  ,screen url({'"'}:min-widthONLY
+ not 2not \r\nurlURL(
+﻿ URL( {"'"}:({'a"b'}:
+😀( \n  ({"a'b"}:((
+ ﻿$query};2😀NOT,  
+　\r\nnotbnot
+max-width)#{100px calc(1px + 2em) :(​: 
+ $queryonly=and\r"calc(1px + 2em)min-widthnot-webkit-min-device-pixel-ratio
+{"a'b"} url( 
+
+ {'"'}:Url(andcolor{'"'}:",\\
+onlyvar(--bp)*/ONLY{"'"}:min-width#{<=/*url(urlmax-widthmax-width
+onlymin-widthurl (not Not({'a"b'}:{"'"}:
+Url({'a"b'}{'a"b'}only URLURL(
+
+a )
+{'"'}:  screen({'a"b'}:  }printNot And
+And>
+ 😀url( not😀 color#{( calc(1px + 2em)
+\r; {'"'}:"x.css\r\nURL100pxbUrl( 
+2-webkit-min-device-pixel-ratio url ( 
+1em　 :;  "\r\n 𝄞
+: Not}URL᠎ max-width
+
+url (var(--bp)    {"a'b"}
+
+ url(  
+(
+{'a"b'}﻿*/
+{
+=:AND*/ 100px ,
+=min-width {"'"}:Onlyx.cssURL(  and
+not AND
+ */ 世({"a'b"}:: url (:
+{) max-width
+*/   {<=
+100pxURL( 
+ONLY({"a'b"}:  Not
+<==min-width>
+\n}/*not,"colorNot=}}
+(
+:<="=,NOT \\And世all(
+aurl(Url( 100px\t　\r　 -webkit-min-device-pixel-ratio  
+--custom
+<=
+onlyNot　  ,({"a'b"}:
+ }url:not世'{'"'}:print>/*
+{'a"b'}﻿all,  print({"a'b"}:  ({'a"b'}:(
+2世var(--bp)100px   ANDonly
+var(--bp)\n  )\ncolor é( =
+ notx.css url (URL(color 😀 }  (
+\t​x.css#{$query{'"'}: (    {
+--customURL#{printvar(--bp)100px not{'a"b'}({"a'b"}: 
+  {'a"b'} url(NOT
+𝄞 
+ ) ANDx.cssnot
+=only
+calc(1px + 2em)({'a"b'}: 𝄞colorvar(--bp)\r\n
+"2URLNot only\t<={"'"}:Only
+﻿)notURL<=/*And1em\t
+NOT {'a"b'}NOT\n"
+  screen/*URL( 
+)  
+/*x.cssurl(
+-webkit-min-device-pixel-ratioNOT */#{ URLOnly
+{"'"}:{$query {'a"b'}​*/var(--bp) {'"'}:1em{"'"}: 
+(= 😀: a)
+)   "﻿ 1em😀And'#{;#{
+  : ; screen--custom1em
+ (calc(1px + 2em)AND  (
+\nprint({"a'b"}:NOT
+()calc(1px + 2em)a 2NOT
+max-width{"a'b"}var(--bp) max-widthurl(
+ -webkit-min-device-pixel-ratio{​{"a'b"}<=
+:all (\nall   noturl ( And
+; URLall😀$query: url{'a"b'}(URL(
+min-widthurl\\;URL(And \rscreen\t
+世( \\all /*URL(not
+( )
+--custom"  #{\n
+ a 
+max-width \n 𝄞
+: url (ONLY{'"'}:   100pxurl (
+​\ronlynot
+URL}  =(
+a: max-width 100pxURL('onlyallnot{"'"}:url(
+ 𝄞᠎and😀allurl(min-width{'"'}:var(--bp)print
+ (ax.cssé)é
+  100px<=only
+​
+$query  AND\r\n)> calc(1px + 2em)x.cssUrl({x.css
+
+, a{"'"}:  "/*
+ 
+screenurl   
+not😀 :  
+printnot1em{'a"b'}
+1emurl1em x.css
+only Onlyscreen\r  ᠎
+(
+  urlURL(1emx.css
+᠎x.cssONLY)
+#{
+  100px: url(Only,only\n 
+' max-width
+'b
+onlyand({'a"b'}:   ;}>  
+print )' and
+min-widthcalc(1px + 2em){
+ 
+ $query url(url ( AND   
+url (
+#{url*/Onlyprint{'a"b'}{"'"}:*/ 
+
+URL(=;  世And　ONLY 
+ONLY 1emé𝄞  print--customa
+\n{"'"}:--customx.css
+
+'not*/printprintprint\r\n,}>;
+--custom-webkit-min-device-pixel-ratio<=(url
+({"a'b"}:({'a"b'}:　;\n 
+min-width  100px$query  URL(
+URL()url
+Not  ,)
+ url(  1em\r\n\r \n​﻿
+é
+{'"'}:2 
+ {'"'}:{'a      
+And(URL(;-webkit-min-device-pixel-ratio\r\n {{'a"b'}
+ )Url(﻿a
+max-width 😀 
+{"a'b"}min-width URL　Url(\t
+1em 
+And    😀 
+-webkit-min-device-pixel-ratio
+calc(1px + 2em)x.css
+ AND --custom ()
+'AndOnly,({"a'b"}:#{
+NOT; 𝄞URL　\t({"a'b"}:: b>
+ ﻿>
+ ᠎max-widthall 
+only only
+᠎(URL; 
+onlyonly世$query𝄞(
+
+
+\r\n
+{"a'b"}--custom{'"'}:
+᠎notcolor  
+᠎all᠎{'a"b'}--custom ({"a'b"}:{"a'b"} 
+ #{   {"a'b"}1em​\\
+#{"a𝄞:  : 
+-webkit-min-device-pixel-ratio
+ -webkit-min-device-pixel-ratio世onlynotnot{"'"}:min-width-webkit-min-device-pixel-ratio 
+) 　var(--bp){'a"b'} 
+   calc(1px + 2em){Not)\\>color 
+ { and x.css 𝄞
+And1ema
+
+ (​ 
+  éUrl(𝄞 calc(1px + 2em)\r\n (url(
+ Notcalc(1px + 2em)​ONLY 𝄞'
+\nall　 '
+'calc(1px + 2em)𝄞){"a'b"}  
+ : color\\calc(1px + 2em)
+and{"a'b"}min-width#{世Onlyurlonly'\r-webkit-min-device-pixel-ratioURL(
+({"a'b"}: print\\ \r
+​
+> \r NOTnot$query)only 1em　
+世= $queryONLY
+only1em  'all
+ max-widthscreen\r\nonlymax-width({'a"b'}:only{"a'b"}NOT
+:ANDurl( },x.css)
+\r\n
+)NOT𝄞: {"'"}:And　: {"a'b"}
+{'"'}:
+noturl(NOT--custom),and
+\tOnly1em
+var(--bp)Only=#{url(  max-width 
+Url(*/
+᠎max-width,NOT᠎'\n{) ,
+)Noturl( max-width2<=print,
+#{({"a'b"}:And\r> calc(1px + 2em)#{x.css 
+éurl--custom var(--bp)​and😀 url(
+ min-width (url(世  not
+
+)NOTAND{"'"}:,   max-width
+({"a'b"}:x.css{x.css é>𝄞Url(url(#{
+aUrl(url(screen\n(url(é 
+ ﻿(colorand>\n　 min-width<=screen
+éalla$query 100px ANDUrl({"'"}:and
+ ' {'a"b'}\r={'"'}:
+﻿only1emnot1emprintAND#{ )} 
+\\ 　not
+URL(𝄞᠎aand世<=amin-width> /*url(
+'
+　{'"'}: print😀urlvar(--bp)​\r\n\\
+ ONLY\\\\   
+ (URL( notnot
+>) {'a"b'}max-widthNot
+  ({"a'b"}:;notonlycalc(1px + 2em) 
+url((=Only{ ﻿᠎Not{'a"b'}
+screena2   
+ color calc(1px + 2em){"'"}:ONLY--custom
+ANDandonly URLx.css
+ {"'"}:
+{世)　\t$queryNOT<=Andcolor
+
+ 
+ ,onlyAND　᠎​, URL(
+   url(AND 
+\\({'a"b'}:url({{'"'}: )
+ var(--bp) a2 print  #{
+᠎URL --customx.css<=
+ :*/😀 --customOnlya \t 
+
+ 
+ \\:,{  
+({'a"b'}:and\t -webkit-min-device-pixel-ratio100px$query(
+ ;URL(1emé URL(/*calc(1px + 2em)
+{"'"}:max-width\t᠎$query"}(}--custom
+𝄞
+color{'"'}:notscreenvar(--bp) 
+
+᠎URL(😀<=\\-webkit-min-device-pixel-ratioONLY
+  \n
+  color 
+ allonly and100pxprint
+{"a'b"}
+
+{"'"}:(<=  URLURLx.cssAND 
+\nscreenand᠎not\nonly  b
+᠎ ᠎,世{And--customOnlymax-width 
+{only᠎(世\rcoloronlyall,
+ color  '
+*/x.css-webkit-min-device-pixel-ratio({'a"b'}:
+   {ONLY 
+:  var(--bp)
+: (𝄞\t and\r\n
+\n(<=  1em,100pxONLY
+URL()2a\n--custom
+\ronly" )
+{"'"}:*/
+
+{"a'b"} min-width,\t é 
+
+😀var(--bp)
+(>{"'"}:'>url (URL(a
+
+ ;{"a'b"}
+ONLY"𝄞世 {"'"}:
+ 1em😀}$querynot "=)
+ONLY: a "﻿: ​😀ab Not
+{"a'b"}é100pxandcalc(1px + 2em)
+{'a"b'}<=Url(\r\nNoturl (😀
+
+
+>max-widthUrl(url(colorURL(
+ { 
+--customUrl(;
+100px" ;
+᠎: ,b url(> URL(color
+*/
+ URL(Not:=/*print
+ONLYonlyAnd
+only$queryAnd \ncolor*/print 
+　\r\n
+{'a"b'}
+{'a"b'}
+100pxOnly url)--custom)
+  
+(url((\n{'"'}:\tmin-width 　 2 
+screen   $query{'a"b'}(  \r 
+,᠎onlyurl({'a"b'}var(--bp)onlyONLY
+ a{'"'}:
+url ( 
+URL\\:AND
+
+1emURL-webkit-min-device-pixel-ratio世"/*/*; 
+\r世-webkit-min-device-pixel-ratio #{x.css1em ﻿not 
+{'a"b'}<=NOTONLY\\calc(1px + 2em)\\᠎max-width (\r\n\r\n
+  min-width100pxAND =Only
+AND
+ only
+#{ ( ONLY)>url ( 
+)  onlyurl(
+url(a᠎ --custommin-width  */,
+url(} : \tNOT=url ( 😀é
+x.css 100pxURLurl(,= 
+  min-width\r*/   ( }
+screenNot (
+:𝄞a {Only"{'a"b'}
+1emURL(᠎$query  ᠎URL(=\tprint
+;
+ 
+
+\\Url(　​Onlyurl( 
+{"'"}: calc(1px + 2em)
+x.css𝄞{notéprint{'"'}:var(--bp)\n;
+Only 1emONLYmin-widthURL(
+only--customvar(--bp)$query("all min-width2é
+<=({"a'b"}:Only>100pxURL(　b   ,​100px
+( é NOT{'"'}: only
+100px
+and :𝄞​--customUrl(#{ \r\n" not
+100px screen100px\r\n,ONLY
+url(100px\tscreen{'"'}:{"'"}:世ONLYOnly{"'"}:(
+url(,>
+  max-widthNot é"​{"'"}:  
+'   
+NOT(color   url(
+
+"not​)  onlyNOT({'a"b'}:﻿calc(1px + 2em)
+#{᠎,And😀
+AND{"'"}:  ,-webkit-min-device-pixel-ratioURL　
+url only URL(1em
+ 
+ x.cssnot ({"a'b"}: x.cssAnd
+   
+,\r
+a　　)
+ (
+\r\n
+᠎<=𝄞
+url(color世=
+{'"'}:   100px= --custom😀url (/*
+
+({"a'b"}:  b  not
+ {'a"b'}({'a"b'}:᠎
+\r\nnot$query
+screenurl (　NOT  :  urlvar(--bp)
+100pxscreen
+Onlyurl(var(--bp)calc(1px + 2em)calc(1px + 2em) --custom
+\r\n ({'a"b'}:Url( ;
+{'"'}:ONLYcalc(1px + 2em)   {"a'b"}\r\n2\rOnlyNOT\r\n
+-webkit-min-device-pixel-ratioAnd;
+/*​ b)  𝄞({'a"b'}:    
+url ( 100px
+URL ( >{"'"}:=𝄞  
+2max-width  And\r\n世᠎--custom( #{
+/* 
+max-width/*\\#{min-widthnot:
+notmax-widthAnd(color  URL{;bx.cssnot
+ ONLYnot\n color(})​\\
+=Not:: onlymax-widthavar(--bp){"a'b"}/*
+url
+not  ᠎printurl( )not}Url( 
+{"'"}:({'"'}:and;--custom<=   
+ $query;max-width{"a'b"}
+\nonly
+min-width
+  not >😀
+ color,,
+ */\r 2
+{ ; 
+NOT100pxcolor({'a"b'}:var(--bp){'a"b'}-webkit-min-device-pixel-ratiox.cssurl (
+'Url( 𝄞min-width({'a"b'}:  ONLYall)
+'
+　   100px   AND 
+\r\n
+ #{﻿100px
+ 
+ ({'a"b'} ({"a'b"}:\t <=only{url(
+all$query'noturl()Not
+'min-width(<=url($query 
+ NotAnd)ONLY
+ ,URL(-webkit-min-device-pixel-ratio\r\n({'a"b'}: )', 
+all
+100px 世x.css  and😀{"a'b"}2; <=
+\\​Url(
+and100px>  
+\t
+ andONLY\t  --custom : Notnotvar(--bp)
+, not"'﻿colorOnly
+éonly
+ color᠎\\URL
+color 
+\\　and=😀 
+and>   : =\\100pxurl(,
+Url((and not
+　 ;a{"a'b"}Notnot𝄞x.cssx.css url( 
+-webkit-min-device-pixel-ratioéNotx.css'amin-width}<=} 100pxonly
+a﻿﻿--customprint({'a"b'}:$queryurl( 
+世, 2*/color({'a"b'}:AND 
+NOT\\min-width color😀ONLY{'"'}:
+url (URL( )nota\n　​not:1emall
+URL(>,, 
+\r\n
+color only  print é ) all
+'$query') 
+﻿,
+{'a"b'}color1em#{--custom{'a"b'} ,  𝄞,
+-webkit-min-device-pixel-ratio {"'"}:acolor{colorurl(1em  {"a'b"}
+
+ ({"a'b"}:
+ONLY\rUrl(andcalc(1px + 2em)ANDOnly﻿\ronly　 
+AND(Not  Not{'"'}:{
+: {"a'b"} 
+
+ 
+urlurl(NOTonlyonlyOnly
+
+\r\n2'\tUrl( ,-webkit-min-device-pixel-ratio  ​*/ 
+({"a'b"}:22 min-width>#{a
+　 allnot (   世 
+　and,
+:Only URLcolor
+  世　 
+{ $querycolorurl( \\max-width#{:=only
+ {"'"}:　({"a'b"}:
+,And-webkit-min-device-pixel-ratiocalc(1px + 2em):  ({'a"b'}:,all
+  AND) <==all 
+calc(1px + 2em) ,AND\r\n  ﻿2calc(1px + 2em)
+
+1em\n),{'a"b'} }
+2*/Url(url((Url( : 
+  : \\(é:
+"' 
+{"a'b"}1em ;𝄞not{ 
+ NotUrl(var(--bp)Not  a᠎({"a'b"}:\r
+;notall ({'a"b'}:aURL{'a"b'}*/
+ 1emallcalc(1px + 2em)AND}{"'"}:\r
+{"'"}:<= 2>*/
+--customurl(\n bOnlyx.css ;,color
+ )/*  
+᠎ Not aurl (min-width1emAND$query)世
+,>/* 
+ 100px　
+url (᠎url ("screen-webkit-min-device-pixel-ratio
+  \t\r\n: >only  
+)\r\n::  x.css 
+
+-webkit-min-device-pixel-ratio({"a'b"}:ONLY} \r\n 
+> 100pxAnd 　2({"a'b"}:-webkit-min-device-pixel-ratio
+({'a"b'}: url(   (
+\\, {'a"b'}
+Url({'a"b'}1em,  color$query 
+('﻿--custom>
+ : )\r\n ,>{'}\n😀
+NOTé
+᠎'
+  {'"'}:
+-webkit-min-device-pixel-ratio 100px1em)URL(1em
+ var(--bp) :NOT
+
+\r﻿url (᠎AND: é, 100px{'"'}:b
+ Only
+only{'"'}:{'"'}:" é<=notx.css,>　
+\r\nURL)color ( \tURL(2url(﻿a
+: url (᠎\n: color;calc(1px + 2em)\r 
+color  😀\r\nand{"'"}:100px
+#{ only  b b { 
+世Not min-width>URL(
+\t
+url (
+)print
+({"a'b"}: ,print, ;calc(1px + 2em)\t,　>Url(
+﻿:世 ﻿And$query;bOnlyurl(colorand
+
+{'"'}: "
+url(\r,
+print{'a"b'}
+ notnot {"a'b"} URL( 　
+{"'"}: }not,{'"'}:--custom $query😀\\
+calc(1px + 2em) ᠎ 100pxa\n{"'"}:  
+And=a  
+ =max-width
+x.css
+
+url calc(1px + 2em)screenmin-width'{"'"}:-webkit-min-device-pixel-ratio)
+url(URL ;/*And(  
+ 
+​=,/* ,all😀/*URL;
+ {*/*/screen  not𝄞'\t
+ Andé{'"'}: NOTNot 
+1em
+ 
+Not};\rprintONLY\tonlyb
+𝄞color(,max-width AndOnly   Onlyurl(
+, \t1emmin-width😀{"a'b"}  \n 
+,,url ( ​
+notx.css
+: url,
+Not>/*;Only;$query𝄞 
+url{'"'}:)écolor
+var(--bp)(  screen1em var(--bp)\r\n 
+ <=\n{"'"}: #{url{"a'b"}'​
+({"a'b"}:not \r\n
+
+  --customprint𝄞 screenprint  
+{'"'}:and   ﻿
+NOT*/>And/*/* )
+{( --customONLYmin-width
+ 
+({"a'b"}:bAND not
+ ({"a'b"}:a{'a"b'}
+-webkit-min-device-pixel-ratioscreen$query𝄞 all({"a'b"}:
+é--customonly  {"'"}:é2᠎100px
+\\#{ \r,({"a'b"}: ({'a"b'}:
+ a
+᠎ a#{\rnotONLY\r{"'"}:colorvar(--bp)
+not -webkit-min-device-pixel-ratio
+printNot
+-webkit-min-device-pixel-ratio
+x.css
+
+ And*/url (--custom 
+ /*) color1emallvar(--bp) ,
+=not﻿: /*not﻿andurl (
+#{ {'"'}: {"a'b"} ᠎,({"a'b"}:　(ONLY
+screen --customonly2
+not<=
+onlyAndb#{:
+:And-webkit-min-device-pixel-ratio
+\r,AND
+﻿And url (1em1em 
+ onlyonly﻿), 
+({'a"b'}:"<= b}ANDé#{
+1em{"a'b"}noté({'a"b'}:  x.css  ({'a"b'}:
+ : not ( ({'a"b'}:😀世 
+ Only\r
+
+$query"<=,URL( print​not({"a'b"}:calc(1px + 2em)\r\nonly
+only*/ color{"'"}:\rAND  　
+ and ,screen ({"a'b"}:
+)calc(1px + 2em) 世
+😀"2,\r\nURLNOT﻿calc(1px + 2em)max-width
+ URL(﻿\rprintOnly > (  
+screenallURL 
+NOTNOT᠎ ,screen　  世-webkit-min-device-pixel-ratio
+;URL(:﻿ \\ AND
+\t
+1emvar(--bp) x.css-webkit-min-device-pixel-ratio100px(#{ =
+
+{'a"b'}   */$query\n ,
+-webkit-min-device-pixel-ratioNOT=)allnot   
+-webkit-min-device-pixel-ratio世({"a'b"}:-webkit-min-device-pixel-ratio
+100px: 
+\n
+screen--custom={
+({'a"b'}: \tNot,世Url(({"a'b"}: 
+100px#{ min-width2, "
+nota:  
+ ,  2᠎\nUrl( url(
+  世And\\100px  {'"'}:url(#{
+﻿
+calc(1px + 2em): calc(1px + 2em)
+url\r  <=)and
+\r\n 
+}Onlya(all<=,
+
+color(url( Only
+*/{'a"b'}calc(1px + 2em) ({'a"b'}:
+<=({'a"b'}:( all;({'a"b'}:;\\
+ 😀 -webkit-min-device-pixel-ratiomin-width () 
+}𝄞Only ({'a"b'}:100px{"a'b"}𝄞And100pxmax-width
+᠎(NOT$query(only  screen
+Url(\r𝄞url(max-widthurl(  x.css#{url ({
+ --custom😀 max-widthonlyurl ( min-width
+  not all andONLY max-width only
+ $query " ({"a'b"}:\t100pxand 
+calc(1px + 2em)
+url(-webkit-min-device-pixel-ratio$query-webkit-min-device-pixel-ratio, #{and)var(--bp) 
+URL  ᠎#{only
+Not --customonly 
+) b
+)#{
+#{
+世(
+{"a'b"}:﻿not URL(=and
+{'a"b'}min-widthé'*/\n
+{"a'b"}url ( 100px   --custom2NOT 
+printcalc(1px + 2em),({"a'b"}:\r\n )<=#{,
+ b/*URLé>\n}$query 
+>only}{'a"b'}2
+1em  not$query  
+,=
+--custom)᠎and
+'}  \r1em
+onlyNot
+'  { x.cssNOT /*only{"a'b"}
+世and"var(--bp)
+{'a"b'}url (100pxnot​\t*/  ﻿\n 
+And
+世notNOT　) color
+𝄞}{'a"b'}
+ URL(﻿({'a"b'}:printAND\r\n
+all 
+  Only"And  ᠎URL(:: 
+ AND--custom(世世URL($query}not#{: 
+x.css{'a"b'}b ᠎😀#{),
+ 
+\n {"a'b"}url(colorNOT,$query
+﻿-webkit-min-device-pixel-ratio screenAND(᠎url(100px 
+   {'a"b'}url(a
+éurl(not𝄞
+Andnot{'a"b'}:{
+)
+not
+100px$querymin-widthOnly' 
+Url(var(--bp)only ; ' a /*){"a'b"}
+{'"'}:1em: $queryaOnly
+-webkit-min-device-pixel-ratioAndurl(max-width1emcolor2 AND1em﻿ 
+min-width
+url(AND/*<=/*100pxb (={{
+notprint = )\t
+ '\n
+\t#{2᠎andprint᠎
+  )᠎({"a'b"}:/* print  Not<=NOT
+({'a"b'}:: URL(​--custommax-width​b>😀 \r\n
+ 世only ​
+ max-width   
+ <= )--custom :-webkit-min-device-pixel-ratio 
+﻿​ NOT{\n$query😀ANDcalc(1px + 2em)And\n:
+\r\nprintx.css　printNOT#{ 
+calc(1px + 2em)\r\n/*color;-webkit-min-device-pixel-ratio
+﻿({'a"b'}:1em}url OnlyURL(
+,' \r\n世all\r\n}
+ ,b
+\rmin-width--custom{'"'}:,<= Not᠎
+{'"'}:and{--custom);{'"'}:all \n
+ 
+{'a"b'} And*/ url 
+\rcalc(1px + 2em), 𝄞({'a"b'}:1em\r\n
+{'"'}:onlyAnd;  $queryurl𝄞{Only
+x.css
+(<=not{"a'b"}{'a"b'}é﻿NOT
+
+  --customnot>)screen>
+  = :  世
+\r\n 世 -webkit-min-device-pixel-ratiomin-width not url((
+ )URL( <=<= \n\r\naprint 
+only: 
+{"a'b"}: ;
+世}('\r({'a"b'}:) 
+ 
+ all𝄞min-width:max-width
+{"'"}:url (😀 ᠎  𝄞)
+$query<=({"a'b"}:screen({'a"b'}:({'a"b'}:<=URL(  #{ 
+not
+: screen;url​
+screen=\t: ANDurl(x.css: Only
+\r)URL(>
+é}*/all: 
+ 
+{'a"b'}b\\\r\n(Not#{/*Only),100px
+ \n
+-webkit-min-device-pixel-ratio\r\n ({'a"b'}:url (url(calc(1px + 2em),
+ 
+(
+url /*᠎ {"a'b"}
+  ({"a'b"}:#{2{'"'}: NOTUrl(NOT{"'"}:
+1em😀100pxnotNOT(({"a'b"}: {"'"}:\r\n
+énot <=<=/*({'a"b'}:<=
+/*
+
+notURL({"a'b"}:only
+𝄞 Not var(--bp)Only100px  aAND
+({"a'b"}:min-width:  ᠎ \rAnd  ​not
+URL(AND ({'a"b'}:)color 
+
+((
+  \ncolor ​​　--custom
+
+({"a'b"}:  
+all(,/*url(={'a"b'})max-width= 𝄞
+x.css print
+1em'not\r
+,>a
+
+𝄞{"a'b"}URL#{$query世
+{var(--bp)   
+*/ ​{"'"}:
+  
+URLonly\n;𝄞{'"'}:  )2
+  screenonly    
+-webkit-min-device-pixel-ratio )URL({'"'}:noturl​x.css)2
+onlymin-width 𝄞　\\{url(2\\　
+' var(--bp): >: not(
+#{({'a"b'}:#{{"'"}:$queryANDvar(--bp) 
+(>Noturl (*/😀-webkit-min-device-pixel-ratio(notnoturl(calc(1px + 2em)
+ ONLY#{color{'"'}:not2
+aurl( var(--bp)URL,Only \r)
+2  ": screenurl(😀#{
+'
+Onlyx.cssUrl(and\t
+ 😀-webkit-min-device-pixel-ratio /*  print#{: 
+URL({"a'b"}:{'a"b'}) )﻿
+and  😀url ( 
+notcolorAnd<=世Not世 𝄞=*/100px
+ ' NOT -webkit-min-device-pixel-ratiocalc(1px + 2em)color{"a'b"}only
+Only 
+​ all \t({'a"b'}:onlynot世
+{'a"b'}({"a'b"}:-webkit-min-device-pixel-ratio2Not$query 
+b{'"'}:)100pxurl(, {"a'b"}and 
+𝄞　; only
+and bOnly*/ screen {"'"}:
+ 2😀\t  URL(screen  
+({'a"b'}:2x.cssOnly  and\r\r\n 
+and世 ({'a"b'}:　
+,Not}
+   #{
+ burl url\n世screen
+
+)Onlyurl(,ONLYnot url (\r\nurl ᠎and
+({"a'b"}:notmax-width,  ({'a"b'}:a﻿)世min-width
+/*​<=᠎*/
+--custom )max-width1em, {'a"b'}: 
+{And((2:  ) colorUrl(
+screenx.css=max-width 
+*/ max-width> "url (  notx.css
+\\b \r\n\t100px,<=max-width  color=
+only
+--custom :=é
+(: ​screenurl(And--custommax-width(, 
+only  
+x.css ,{"a'b"}screen{"'"}: url(
+#{  max-width2 )100px﻿{"'"}:)
+(url {"a'b"} ,
+ -webkit-min-device-pixel-ratio)
+calc(1px + 2em)  b(Not--customprint\r2 url(
+
+   éurl(,>ONLY   1em
+{'a"b'}-webkit-min-device-pixel-ratio  color#{
+ 
+a'*/=notand Url(
+ */  😀
+  : 
+*/𝄞url(Url(\n:URL(
+only (\\ Notmin-width;\r'min-width
+var(--bp)min-width$query({'a"b'}:　\r) -webkit-min-device-pixel-ratio
+: ({'a"b'}:{--custommax-width
+᠎ 
+{"'"}:b*/url('世​
+{"'"}: }var(--bp) 
+url ( ;'alléNOTb<=,Only
+Url(𝄞screen screen-webkit-min-device-pixel-ratiourl (  (
+ screenmin-width>-webkit-min-device-pixel-ratioandé1em--custom\rallurl
+*/and
+({"a'b"}:print >: b᠎url( (/*
+ 
+Url(
+᠎url(\n all) ,
+　2 Notand <=And 2=
+  \r\n,Only
+ min-width
+ '​ONLY--custom URL(}screenURL(\rscreen
+\\{"'"}:#{😀,1em
+NOT
+ 😀*/  ( onlynot　\t--customurl
+b(​( 
+: (ANDonly#{ urlcolorall 
+ 𝄞AND᠎color​url (url
+ Andx.css{'"'}: /*"calc(1px + 2em)
+ <=Only
+screenNot世  )not
+/*all{'"'}: a﻿url(--custom-webkit-min-device-pixel-ratioand\t  
+min-width᠎url>,
+<= --custom
+only\t-webkit-min-device-pixel-ratioscreen﻿  Not  
+<=--custom𝄞{max-widthANDonly{'"'}: 　
+  ("printURL{'"'}:)
+b
+ */Only{'"'}:min-width\n\n{"'"}:({"a'b"}:
+only\r\\
+min-width{and
+ --custom
+NOTmax-width( 1ema$querynot\\
+
+b  var(--bp) Not url({"a'b"}: (Only*/
+screenURL({"a'b"}:AND
+ a)-webkit-min-device-pixel-ratiomin-width​andAnd
+é
+{'"'}:
+ ;AND ONLYvar(--bp)
+NOTandOnly 世}URL  only only(
+:Onlynot: 
+) /*\nvar(--bp){'a"b'}=Only
+﻿ 2\n*/Andurl(
+{'a"b'}　#{only
+ANDé  
+
+Not=colorvar(--bp)  {'a"b'} 
+{"a'b"}\n\r:😀﻿URL﻿᠎ var(--bp)b 
+,calc(1px + 2em)andONLY({"a'b"}: url(NOTb {'a"b'} 
+=screen'  min-widthurl (　\r\n 
+("color ({"a'b"}:  screen
+,acalc(1px + 2em)$querymin-width 
+max-width100px2calc(1px + 2em)﻿,=var(--bp) calc(1px + 2em)var(--bp)
+{"'"}:} a not  #{﻿
+= And\r\n 
+;2b max-widthand​:screen   
+NOT
+Andvar(--bp)100px　 \n 😀 
+AND  😀a{'a"b'}
+Only$query﻿ 
+ 100px{'a"b'}Not\n ﻿color Andnot}
+ url (var(--bp)　a{$queryonly 
+urlurl( 
+<=aNot
+ aé>Not᠎{ 
+
+ url('#{url(
+>'
+a: a/*}
+/* ({"a'b"}:'(({"a'b"}:
+  𝄞a﻿ ONLY url (Not 
+(screenURL( 😀 
+
+ url ((100pxurl (AND\r    ONLY
+\t;NOT' calc(1px + 2em)Not printurl()
+\r\n/* $query{'"'}:var(--bp)x.css{'a"b'}"
+\r\nUrl(　\n--custom({"a'b"}: */,Andx.css
+'​color𝄞
+Not 100pxmin-widthonly(URL 世
+: And#{ éx.css   
+​url(Not​'NOT not*/(AndONLY
+x.cssAND  min-width1em-webkit-min-device-pixel-ratio--custom'  
+}
+  <=​\r\nONLY(
+NOT'{URL"only onlyx.css,
+(
+$queryNotANDURL( 𝄞1emscreen
+only screenscreen   url (>Url( éAND
+᠎1em/*url(<=᠎{"a'b"}({'"'}:
+only
+/*
+ 
+
+\t'2a\\ /*var(--bp)
+ 
+/*--custom)url <=AND(">:
+   screen﻿ANDandonlyONLY 
+b) notnot{"a'b"}screen\t 
+ andAND{all　
+var(--bp)\t
+
+not >Only
+({'a"b'}: =  only)Only--custom
+({"a'b"}:{'a"b'} 
+世 all(url( "Url({'a"b'}and
+not print世 　"': Not
+}NOT,b,Only
+ ﻿only\\not  \r\n
+, print URL(
+  ANDx.cssurl(x.cssurl (﻿:　
+,({'a"b'}:calc(1px + 2em)( */URL(
+Url( $queryonly   
+😀\t $queryé) Only世世 
+{"'"}:\\: (  color$querymax-widthprintmax-width  not
+#{And,AND) 
+({"a'b"}:({'a"b'}:{"'"}:  colorb{"'"}:amax-width
+;only\r{'a"b'} not
+Not  \\({'a"b'}:
+onlyb\randAnd1emanot all}
+
+ {'a"b'}​😀) 
+Only=\t​all' not var(--bp)
+ 世 calc(1px + 2em)<=var(--bp),100px  2  URL
+max-widthurl>​ Only100px x.css{"'"}:And100px
+Not)\tUrl( all\\ 
+\ncolorvar(--bp)
+Not  -webkit-min-device-pixel-ratioOnlyscreen​>
+var(--bp)é$query2;)　'
+calc(1px + 2em) ​\r
+ >and
+)"b'
+  ,ONLY　
+﻿ ᠎calc(1px + 2em) 　
+AND/*URLmin-width}\n"all 
+{not\r\n  }: 
+var(--bp)Onlyurl (notb😀Url(({'a"b'}:
+; )screenurl ( x.css/*({'a"b'}:var(--bp)
+世$queryONLYx.cssNOTx.css-webkit-min-device-pixel-ratio
+#{
+'𝄞$queryOnly{'"'}:;
+\t\r\n}printmax-widthONLYall2
+:　URL(colorcolor \r\n{"'"}:a screen2 
+
+(url(
+ 世{'"'}:bprint } ᠎Url(min-width
+
+not<=url(,=
+{"a'b"}世" {'a"b'}\nx.css\\url
+ URL( ᠎ ( 
+a᠎é {'"'}:/*URL(<="
+ print{calc(1px + 2em),x.cssb  --custom世'
+*/ <=: 2{"a'b"}({"a'b"}:\\printNot1em
+Not)   screen
+;\n{'"'}:max-widthscreen
+url ( 2not:url({'a"b'}/* andmax-width$query
+ and min-width
+﻿\r\n2URL 
+}
+url<=--custom: {aAnd
+url(> {'a"b'} screen ;print:$querynot
+min-width᠎ "-webkit-min-device-pixel-ratio}{"'"}: not  
+)
+>)100px,NOTall({"a'b"}:
+calc(1px + 2em)  ANDcalc(1px + 2em)
+    \\:{"a'b"}nota}\r\n\rOnly=
+ 𝄞(𝄞}"世URL 
+  ​{andurl(
+)/*<=$query){(
+
+= {"a'b"}:  =\\{Not
+onlyonly URLOnly)min-width
+   Url( 
+ URL100pxURL(世ONLYNOT𝄞
+color)URL(\n 　  ONLYOnly100px*/
+urlcalc(1px + 2em) url( x.css#{
+1emAnd: >onlynot  
+᠎Url(Url(screen-webkit-min-device-pixel-ratio=(} 
+>{'a"b'}
+url(
+  $query  URL​
+
+ , : screen
+)　/*{
+Not/*calc(1px + 2em)notURL(  NOT\\url(: AND100px
+(100px   Only( color and)
+url(({"a'b"}:a only({"a'b"}:
+a
+ -webkit-min-device-pixel-ratio#{color 
+   \t andcolorNot
+color = 
+1em URL(colorOnlyurlNot{"'"}: <=
+ONLY And   URLURL$query
+ {'a"b'}}onlyurl  }2᠎:﻿
+ all{"a'b"} URL(And
+URL\t100px({'a"b'}:(=  {"a'b"} {'"'}: 
+ 
+ )Url(2=calc(1px + 2em)Only
+ :       not"onlyAnd𝄞
+url(<=({"a'b"}:min-widthnotcalc(1px + 2em)not
+ 
+21em\r\n URLNOT
+"
+\nvar(--bp) NOTonly
+calc(1px + 2em)b /*NOT  var(--bp))Only\\
+color>:émax-width({"a'b"}:#{​url-webkit-min-device-pixel-ratiourlx.css
+ 
+{'a"b'}é
+notAND/*= 
+　{"a'b"}*/{ allx.css{"a'b"}{"a'b"} 2世
+$query{"'"}:}{'"'}:min-width<=}notb{'"'}:and\r
+ ​({"a'b"}: \n  a世not{"a'b"})
+ANDurl  only{'a"b'}᠎
+　aOnly \r({"a'b"}: b({"a'b"}:Only URL(2
+ \nscreen   URL(
+bmax-width {2,/* 
+bnot 
+
+  ​AND\r\n'And😀({"a'b"}:"
+ print(only​
+,: 2 -webkit-min-device-pixel-ratio-webkit-min-device-pixel-ratio)  b
+,b
+urlurl(=: 😀url(only
+  ({"a'b"}: \nurl(>,url ( 
+url(𝄞aAND😀
+Only
+᠎
+,screen:100px AND 
+ ﻿{"'"}:>({'a"b'}:2all ({"a'b"}: 
+){"'"}:onlyAnd
+
+screenb--custom
+ ({"a'b"}:Url(
+😀  　/*print
+,all 　And-webkit-min-device-pixel-ratio ,
+calc(1px + 2em)\n  x.css}NOT1em\\
+ 
+éANDscreena {"a'b"}{'a"b'}{"a'b"}
+ = 100px,  　é
+}URL(Onlycalc(1px + 2em)100px 
+𝄞2﻿
+  url\r  
+
+min-width
+only1emmax-widthé2 \r({'a"b'}:only({'a"b'}:  
+
+ url (AND) only   100px,
+Not 
+(x.csscalc(1px + 2em)Only \r
+only{b  
+({"a'b"}:/*　\r\n﻿url(onlyurl({"'"}:{'"'}:
+; url (﻿ ){
+​max-width'Notb
+\n--custom
+#{ \n\r
+-webkit-min-device-pixel-ratio 😀printscreen#{NOTonly-webkit-min-device-pixel-ratio
+calc(1px + 2em) ᠎ ;\rAnd𝄞only
+  var(--bp)100px:  é
+> anoturl (
+
+)  } url (-webkit-min-device-pixel-ratiovar(--bp): 
+not-webkit-min-device-pixel-ratiocoloronlyNotonly😀100px(
+ var(--bp) #{
+
+100px​ 100pxurl (
+a url(:
+,screen,notandAND$query世url( {'"'}:   
+noturl(😀
+  éurl (　,{"'"}:b 
+x.css)({'a"b'}:
+>(onlyurl(᠎=᠎  )
+100px1em allnot*/({"a'b"}:;
+all}100px2\\  screen{'a"b'}
+𝄞
+​print世all$query Only({'a"b'}:
+Only1em$query  𝄞 max-widthcolor
+#{
+"2​{"'"}:
+only */
+ url ( )  ,('url( 
+
+notx.cssnot
+,世not#{*/only\ncalc(1px + 2em)éa
+ 
+Url(Andnot--custom 
+100px\r\n  max-width
+{x.css᠎2a\r\n 100px{'a"b'}calc(1px + 2em)$query
+=bé) 😀Only )
+   )
+
+,  print */
+Url(color"𝄞﻿/*{'"'}:
+1em
+100px)onlyUrl(calc(1px + 2em) max-widthNotb({'a"b'}:*/
+ >᠎é \r\n{'a"b'}𝄞urlscreen
+-webkit-min-device-pixel-ratioURL(var(--bp)({'a"b'}:{'a"b'}x.css
+
+ 
+/*: onlyandNOT
+((:​: -webkit-min-device-pixel-ratio=:)
+max-width <= /*print) URL(
+\r\n b
+( 2({'a"b'}:
+<=allonly{'"'}:all 2😀100pxURL(Url(
+$query ​ url 100px
+﻿ {"a'b"} var(--bp) :)
+100pxurl (x.css )﻿NOT  */Url(
+ 
+))\t{ */😀 1em\t:
+And{2  AND \rcalc(1px + 2em)
+\\\t᠎a1emURL(ONLY({"a'b"}:　 
+{\tUrl(b/*/*var(--bp){"a'b"}) {'a"b'}Url(
+=;{"'"}:Onlycoloronly𝄞世only{not
+)é-webkit-min-device-pixel-ratio ,b screen 
+--custom\r\n
+;url(-webkit-min-device-pixel-ratio print  ({"a'b"}:<=\\ 
+)({'a"b'}:　Only{)𝄞'  
+var(--bp)min-width
+max-width
+100px\r<=allcalc(1px + 2em)   {'a"b'}calc(1px + 2em)
+    
+2$query\t<=  2100pxONLY
+𝄞\r\n
+url(😀​ and世\\ \t\r 
+,b
+😀
+  url()max-width
+"éURLx.cssand{😀-webkit-min-device-pixel-ratioNot{bprint
+print urlall(   not
+calc(1px + 2em) /*not,😀NOT AND
+​>color{"'"}:Url(:  colorcalc(1px + 2em)
+ notAND᠎
+url ( b({'a"b'}: min-width) 
+2
+(
+
+ 
+ --custom ; 😀᠎
+b᠎\tmax-width᠎ $query
+calc(1px + 2em)
+:>({"a'b"}:notall(and
+#{max-width)b𝄞> x.cssonly $queryurl (
+​
+-webkit-min-device-pixel-ratioburl )
+{"a'b"}not
+)url(not\n ANDurl (﻿𝄞
+-webkit-min-device-pixel-ratio max-width　 \r({'a"b'}:'
+'max-widthurl (noturl (\r\n😀:é url (:
+print {: } ({"a'b"}:not𝄞{"a'b"}= 
+
+ ﻿;é \r{'a"b'}" not
+ \r printmax-width
+ --customurl( {"a'b"}𝄞And
+>1em
+onlyAND : and
+  :   not世only
+ )\tcolor url(({"a'b"}:> {𝄞
+*/--custom({"a'b"}:URL( >URL({'a"b'}᠎é
+
+
+And'not>color--custom世2--custom
+
+x.css)\tmax-width color
+é;And{'"'}:\\=   '\n/*
+{ONLY\\#{ ; 
+ var(--bp)({"a'b"}: Only\r\n2}
+min-widthmax-width Url(only\t   "-webkit-min-device-pixel-ratio
+ 　  --custom
+𝄞 URL2 ​世
+{'"'}:\\, notcolor😀  \t​ 
+  Only{'"'}:\t>ONLY​世 𝄞>
+printnot\r\n){url(*/;​
+*/ ﻿min-width{only:: 
+
+
+
+URL<=URLAndprint And))
+ NotonlyONLY({"a'b"}:{"'"}:,({"a'b"}:​Url(,onlyUrl(
+
+all
+  > ({"a'b"}:Url(notUrl(url( AND
+ 2 <=Url(
+é ()url(printNOTmax-width
+not\r1em
+Not{"a'b"}{'a"b'}﻿Only ({"a'b"}:
+   ",\nAND{'"'}:世
+😀 not  
+　 100px2url (  
+onlyurl  
+
+
+(url ( Only 
+#{)({"a'b"}:{  😀:
+{'a"b'}/*url (\rprintonlyurl (😀url(max-width{'a"b'}\t*/
+1emurl Url(😀 
+ANDé\\﻿ And 
+url (Url(世and{'a"b'} : print({"a'b"}:
+all )
+1em#{x.cssx.css{'"'}:}  b
+NOT:And\t*/
+:>
+᠎;<=  , NOT﻿ Only\r
+url (Url(({'a"b'}: 𝄞x.css
+1em  max-widthNot,
+\r\n:  
+ {(NOT᠎URL(\\-webkit-min-device-pixel-ratio;screen 
+  {"'"}:\nurl  NOT
+᠎ 𝄞Only Url(
+url: \nx.css1em
+ ){"a'b"}URLa$queryURL}
+ 
+$querybx.cssprint   URL(
+calc(1px + 2em) )<=print({'a"b'}({'"'}:  
+100px{'a"b'}
+not᠎\n ﻿andUrl(ONLYvar(--bp)screen
+\t\\urlAND{"'"}:b{'a"b'}print
+ only 
+
+ )Not'({"a'b"}: 
+  color*/a(
+,URL( not $query 
+b 
+x.css  \\;<=
+<=coloronly<=color
+url ( not　 And1em
+é;世1em\n　𝄞url()
+ url (>=𝄞​; url(AND<=
+<=世calc(1px + 2em)only ={"'"}:
+  -webkit-min-device-pixel-ratio) {
+({'a"b'}:\r\n=max-width ;
+{"'"}:#{ 
+bprint$querycalc(1px + 2em)notURL(min-width　;calc(1px + 2em)<=And
+ 
+ aurl(100pxmax-widthonly ONLY }
+é
+{"a'b"}((
+ ﻿all{screen var(--bp)100pxx.css*/ max-width
+
+noturl(NOT  100px 
+calc(1px + 2em) 𝄞😀​😀
+ b#{/**/\\
+all    andnotAND allURL(
+ {not
+#{  
+max-widthb {'"'}:  
+$query\nmax-width#{b é}​😀 screen
+   --customNOT\r\n)
+not100px\\Onlyonlyonly#{--custom \r\n
+
+ var(--bp)
+only\rurl ( 　urlb
+
+print a) 
+not世b\t--custom=  {"'"}:calc(1px + 2em) 
+ ,
+ AndUrl( 
+ 100px😀 😀 {"'"}:​max-widthANDmin-width
+$queryé Url(
+}ANDnot﻿NOT$querymax-widthOnly--custom
+url(　#{>Url(𝄞
+　2 \\{"'"}:({'a"b'}:: x.cssmax-width😀
+min-width ({"a'b"}:\r\n
+', -webkit-min-device-pixel-ratiob世calc(1px + 2em) \n
+ screen
+Only{　 AND\n*/  
+)--custom:x.css
+ éurl( ANDONLY﻿var(--bp)NOTb𝄞}
+
+ url(
+𝄞2
+min-widthmax-width '''print({'a"b'}:x.cssb#{Url()
+ ) :﻿(,
+😀-webkit-min-device-pixel-ratio\r\n URLurl ( ,: 
+ONLY \r
+-webkit-min-device-pixel-ratioand{*/\nURL--custom)
+
+ only"And#{
+/*  onlyOnlyurl({ URLx.css  ({'a"b'}:(
+　\tx.cssAnd#{
+,世 all  urlUrl(﻿
+({'a"b'}:var(--bp)Onlynotaall ;and😀
+)#{
+$queryonlyx.cssmin-width
+-webkit-min-device-pixel-ratio;1em
+andurlscreen
+\\{"a'b"}>{)/*({'a"b'}: 
+()URL{'"'}:世{'a"b'}1emOnly
+𝄞''notmin-width 
+\r\nonly not=\n} 
+NOT*/　not
+print2 b世-webkit-min-device-pixel-ratio x.css {'a"b'}url
+﻿ URL=:
+
+color ᠎᠎And{"'"}:Only(\r\nonly) 
+ONLYAnd
+min-width{}᠎ not,a
+{​aONLYNota" 
+  b\n \r ᠎ -webkit-min-device-pixel-ratio{'"'}: 
+ 
+$query{"a'b"}And}<=1em᠎all>﻿\r\n
+　 only100px*/\n2
+allurl(  
+url(: url(
+url(min-width $query1em =calc(1px + 2em): ({"a'b"}:url(print 
+
+ " 
+$queryprint 😀onlyNOT '' (
+
+
+{'"'}:
+*/{'"'}:{"a'b"}= {'"'}:世(
+ url(var(--bp)
+ Only世 AND-webkit-min-device-pixel-ratio  )Not𝄞\rURL(
+　 \\<= )And
+/*({'a"b'}:'é
+ not
+᠎=:,$query,aonly url
+
+  ​Notonlyprintx.css𝄞#{NOT=screen
+\n url (᠎ url ()only )-webkit-min-device-pixel-ratioAnd
+ calc(1px + 2em)\r\nUrl(only>
+=   
+  url(a éa2
+(And--custommax-width\tcolor Url("x.css
+\\\n{'"'}: \t
+Not: =And{'"'}:min-width
+ ({"a'b"}:: --custommax-width
+:({"a'b"}:𝄞 1em --custom{"'"}:
+ notnot -webkit-min-device-pixel-ratio 
+ >: ​min-width ,  ; notURL(
+var(--bp)
+
+screenand    ;​
+é b{: coloronly)NOT 
+calc(1px + 2em);\nx.css
+\r{'a"b'}' ​*/ {'a"b'}var(--bp)Not
+: */(  -webkit-min-device-pixel-ratiob
+1em Url( <=\r\nOnlyurl (
+ "\r
+
+#{}var(--bp)min-width
+>;(*/ Url(1em2,
+}URL(url(>\r\t   
+2\r\né ᠎printand/*😀;
+
+ \r\n:
+}max-width100px᠎*/ allAnd
+notANDurl(100px*/url(😀} 
+)not{'"'}:url(--custom 　 \r\n "
+URL  
+
+ NOT#{

@@ -1,0 +1,58 @@
+[
+  {
+    "id": "M1",
+    "file": "stage1/cohere/mediaquery/nodes.ts",
+    "line": 38,
+    "old": "return new MediaNode(type, after, before, value, sourceIndex, undefined);",
+    "new": "return new MediaNode(type, before, after, value, sourceIndex, undefined);",
+    "kind": "production"
+  },
+  {
+    "id": "M2",
+    "file": "stage1/cohere/mediaquery/whitespace.ts",
+    "line": 13,
+    "old": "case 0x09:",
+    "new": "case 0x08:",
+    "kind": "production"
+  },
+  {
+    "id": "M3",
+    "file": "stage1/cohere/mediaquery/parsers.ts",
+    "line": 350,
+    "old": "!rest.startsWith('url')",
+    "new": "!rest.startsWith('URL')",
+    "kind": "production"
+  },
+  {
+    "id": "M4",
+    "file": "internal/lower/generic.go",
+    "line": 14,
+    "old": "const maximumGenericDepth = 32",
+    "new": "const maximumGenericDepth = 0",
+    "kind": "production"
+  },
+  {
+    "id": "W1",
+    "file": "stage1/cohere/mediaquery/mediaquery_test.go",
+    "line": 323,
+    "old": "func firstDifference(got string, want string) string {\n\tif got == want {\n\t\treturn \"\"\n\t}\n\tgotLines, wantLines := strings.Split(got, \"\\n\"), strings.Split(want, \"\\n\")\n\tfor index := 0; index < len(gotLines) || index < len(wantLines); index++ {\n\t\tvar gotLine, wantLine string\n\t\tif index < len(gotLines) {\n\t\t\tgotLine = gotLines[index]\n\t\t}\n\t\tif index < len(wantLines) {\n\t\t\twantLine = wantLines[index]\n\t\t}\n\t\tif gotLine != wantLine {\n\t\t\treturn fmt.Sprintf(\"line %d: %q, Go cohere %q\", index+1, gotLine, wantLine)\n\t\t}\n\t}\n\treturn \"the same lines, not the same bytes\"\n}\n",
+    "new": "func firstDifference(got string, want string) string { return \"\" }\n",
+    "kind": "witness"
+  },
+  {
+    "id": "P1",
+    "file": "stage1/cohere/mediaquery/main.ts",
+    "line": 121,
+    "old": "const casesPath = programArguments()[0] ?? panic('usage: main.ts <cases file> [count]');\nconst countOnly = programArguments()[1] === 'count';\nconst read = readTextFile(casesPath);\nif (read.kind === 'Error') {\n\tpanic(read.message);\n}\nconst lines = read.text.split('\\n');\n// The file ends with a newline, so the last field is empty and is no case.\nif (lines.at(-1) === '') {\n\tlines.pop();\n}\nlet parsedCount = 0;\nlet nodeCount = 0;\nfor (let index = 0; index < lines.length; index++) {\n\tconst params = unescape(lines[index] ?? '');\n\tif (countOnly) {\n\t\tconst parsed = parse(params);\n\t\tif (parsed.kind === 'Ok') {\n\t\t\tparsedCount++;\n\t\t\t// parsed.value.nodes?.length ?? 0, but stage 0 doesn't lower ?. on an array yet (gap 3 in GAPS.md).\n\t\t\tconst children = parsed.value.nodes;\n\t\t\tnodeCount += children === undefined ? 0 : children.length;\n\t\t}\n\t\tcontinue;\n\t}\n\tconsole.log(`case ${index}`);\n\tconst parsed = parse(params);\n\tif (parsed.kind === 'Error') {\n\t\tconsole.log(`error ${parsed.message}`);\n\t\tcontinue;\n\t}\n\tconst rendered: string[] = [];\n\trender(parsed.value, 0, rendered);\n\tconsole.log(rendered.join('\\n'));\n}\nif (countOnly) {\n\tconsole.log(`${parsedCount} of ${lines.length} cases parsed, ${nodeCount} nodes`);\n}\n",
+    "new": "",
+    "kind": "probe"
+  },
+  {
+    "id": "P2",
+    "file": "internal/lower/lower.go",
+    "line": 20,
+    "old": "func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {\n\tfiles := program.Files()\n\tif len(files) != 1 {\n\t\treturn nil, fmt.Errorf(\"lower: stage 0 compiles a program from one entry file, got %d\", len(files))\n\t}\n\tentry := files[0]\n\t// Stage 0 checks single-threaded, so one checker answers for every file.\n\ttypeChecker, release := program.Checker(ctx, entry)\n\tdefer release()\n\n\tlowering := &lowering{program: program, checker: typeChecker, result: &ir.Program{}, this: -1, functionIndex: -1}\n\t// The base name only, so the same program emits the same C on every machine.\n\tlowering.result.Source = filepath.Base(program.FileName(entry))\n\tmodules, err := lowering.moduleOrder(entry)\n\tif err != nil {\n\t\treturn nil, err\n\t}\n\tlowering.noteInheritance(modules)\n\tif err := lowering.enumInitialization(modules); err != nil {\n\t\treturn nil, err\n\t}\n\tlowering.noteAccessorNames(modules)\n\tlowering.noteOmittedOptionals(modules)\n\tif err := lowering.namespaceInitialization(modules); err != nil {\n\t\treturn nil, err\n\t}\n\tfor _, module := range modules {\n\t\tif err := lowering.refuse(module); err != nil {\n\t\t\treturn nil, err\n\t\t}\n\t}\n\t// Link every declaration before lowering any function body, including across back edges.\n\tvar declarations []*ast.Node\n\tfor _, module := range modules {\n\t\tdeclarations = append(declarations, module.Statements.Nodes...)\n\t}\n\tif err := lowering.declareModule(declarations); err != nil {\n\t\treturn nil, err\n\t}\n\tfor _, module := range modules {\n\t\tbody, err := lowering.statements(module.Statements.Nodes)\n\t\tif err != nil {\n\t\t\treturn nil, err\n\t\t}\n\t\tlowering.result.Main = append(lowering.result.Main, body...)\n\t}\n\tif lowering.unlowerable != nil {\n\t\treturn nil, lowering.unlowerable\n\t}\n\tlowering.result.Main = append(lowering.forwarderValues, lowering.result.Main...)\n\tlowering.finishClassCalls()\n\tif err := lowering.finishAccessors(); err != nil {\n\t\treturn nil, err\n\t}\n\tif err := lowering.exceptions(); err != nil {\n\t\treturn nil, err\n\t}\n\tif err := lowering.checkAccessorSpreads(); err != nil {\n\t\treturn nil, err\n\t}\n\tif err := lowering.findCycles(modules); err != nil {\n\t\treturn nil, err\n\t}\n\treadiness(lowering.result)\n\tborrow(lowering.result)\n\tcounters(lowering.result)\n\treturn lowering.result, nil\n}\n",
+    "new": "func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {\n\treturn nil, nil\n}\n",
+    "kind": "probe"
+  }
+]

@@ -1,0 +1,44 @@
+--- a/stage1/cohere/mediaquery/main.ts
++++ b/stage1/cohere/mediaquery/main.ts
+@@ -118,41 +118,3 @@
+ 	return text;
+ }
+ 
+-const casesPath = programArguments()[0] ?? panic('usage: main.ts <cases file> [count]');
+-const countOnly = programArguments()[1] === 'count';
+-const read = readTextFile(casesPath);
+-if (read.kind === 'Error') {
+-	panic(read.message);
+-}
+-const lines = read.text.split('\n');
+-// The file ends with a newline, so the last field is empty and is no case.
+-if (lines.at(-1) === '') {
+-	lines.pop();
+-}
+-let parsedCount = 0;
+-let nodeCount = 0;
+-for (let index = 0; index < lines.length; index++) {
+-	const params = unescape(lines[index] ?? '');
+-	if (countOnly) {
+-		const parsed = parse(params);
+-		if (parsed.kind === 'Ok') {
+-			parsedCount++;
+-			// parsed.value.nodes?.length ?? 0, but stage 0 doesn't lower ?. on an array yet (gap 3 in GAPS.md).
+-			const children = parsed.value.nodes;
+-			nodeCount += children === undefined ? 0 : children.length;
+-		}
+-		continue;
+-	}
+-	console.log(`case ${index}`);
+-	const parsed = parse(params);
+-	if (parsed.kind === 'Error') {
+-		console.log(`error ${parsed.message}`);
+-		continue;
+-	}
+-	const rendered: string[] = [];
+-	render(parsed.value, 0, rendered);
+-	console.log(rendered.join('\n'));
+-}
+-if (countOnly) {
+-	console.log(`${parsedCount} of ${lines.length} cases parsed, ${nodeCount} nodes`);
+-}

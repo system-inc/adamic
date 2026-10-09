@@ -1,0 +1,11 @@
+--- a/stage1/cohere/mediaquery/parsers.ts
++++ b/stage1/cohere/mediaquery/parsers.ts
+@@ -347,7 +347,7 @@
+ function matchUrlStart(text: string): UrlStart {
+ 	const before = leadingWhitespace(text);
+ 	const rest = text.slice(before.length);
+-	if (!rest.startsWith('url')) {
++	if (!rest.startsWith('URL')) {
+ 		return { length: 0, before: '' };
+ 	}
+ 	const afterUrl = rest.slice(3 + leadingWhitespace(rest.slice(3)).length);

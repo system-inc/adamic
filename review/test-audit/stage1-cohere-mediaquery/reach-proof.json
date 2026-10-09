@@ -1,0 +1,12 @@
+{
+  "port_functions": 21,
+  "all_observed": true,
+  "stdout_identical": true,
+  "command": [
+    "node",
+    "--disable-warning=ExperimentalWarning",
+    "/workspace/adamic/oracle/node.mjs",
+    "/tmp/u132/traced/main.ts",
+    "/tmp/u132/cases.txt"
+  ]
+}

@@ -1,0 +1,11 @@
+--- a/stage1/cohere/mediaquery/nodes.ts
++++ b/stage1/cohere/mediaquery/nodes.ts
+@@ -35,7 +35,7 @@
+ 
+ // nodes.go: newNode, `new Node(opts)`: a very generic node. Pretty much any element of a media query.
+ export function newNode(after: string, before: string, type: string, value: string, sourceIndex: number): MediaNode {
+-	return new MediaNode(type, after, before, value, sourceIndex, undefined);
++	return new MediaNode(type, before, after, value, sourceIndex, undefined);
+ }
+ 
+ // nodes.go: newContainer, `new Container(opts)`: a node that contains other nodes. after, before and

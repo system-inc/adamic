@@ -1,0 +1,107 @@
+[
+  {
+    "function": "parse",
+    "file": "stage1/cohere/mediaquery/index.ts",
+    "line": 32
+  },
+  {
+    "function": "escapeOf",
+    "file": "stage1/cohere/mediaquery/main.ts",
+    "line": 31
+  },
+  {
+    "function": "quote",
+    "file": "stage1/cohere/mediaquery/main.ts",
+    "line": 53
+  },
+  {
+    "function": "render",
+    "file": "stage1/cohere/mediaquery/main.ts",
+    "line": 69
+  },
+  {
+    "function": "unescape",
+    "file": "stage1/cohere/mediaquery/main.ts",
+    "line": 85
+  },
+  {
+    "function": "MediaNode.constructor",
+    "file": "stage1/cohere/mediaquery/nodes.ts",
+    "line": 26
+  },
+  {
+    "function": "newNode",
+    "file": "stage1/cohere/mediaquery/nodes.ts",
+    "line": 37
+  },
+  {
+    "function": "newContainer",
+    "file": "stage1/cohere/mediaquery/nodes.ts",
+    "line": 44
+  },
+  {
+    "function": "nodeAt",
+    "file": "stage1/cohere/mediaquery/parsers.ts",
+    "line": 39
+  },
+  {
+    "function": "appended",
+    "file": "stage1/cohere/mediaquery/parsers.ts",
+    "line": 47
+  },
+  {
+    "function": "modeAt",
+    "file": "stage1/cohere/mediaquery/parsers.ts",
+    "line": 51
+  },
+  {
+    "function": "parseMediaFeature",
+    "file": "stage1/cohere/mediaquery/parsers.ts",
+    "line": 74
+  },
+  {
+    "function": "parseMediaQuery",
+    "file": "stage1/cohere/mediaquery/parsers.ts",
+    "line": 181
+  },
+  {
+    "function": "matchUrlStart",
+    "file": "stage1/cohere/mediaquery/parsers.ts",
+    "line": 347
+  },
+  {
+    "function": "parseMediaList",
+    "file": "stage1/cohere/mediaquery/parsers.ts",
+    "line": 370
+  },
+  {
+    "function": "resetNode",
+    "file": "stage1/cohere/mediaquery/parsers.ts",
+    "line": 190
+  },
+  {
+    "function": "isWhitespace",
+    "file": "stage1/cohere/mediaquery/whitespace.ts",
+    "line": 11
+  },
+  {
+    "function": "leadingWhitespace",
+    "file": "stage1/cohere/mediaquery/whitespace.ts",
+    "line": 33
+  },
+  {
+    "function": "trailingWhitespace",
+    "file": "stage1/cohere/mediaquery/whitespace.ts",
+    "line": 43
+  },
+  {
+    "function": "trim",
+    "file": "stage1/cohere/mediaquery/whitespace.ts",
+    "line": 54
+  },
+  {
+    "function": "startsWithWhitespace",
+    "file": "stage1/cohere/mediaquery/whitespace.ts",
+    "line": 60
+  }
+]

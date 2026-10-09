@@ -1,0 +1,11 @@
+--- a/stage1/cohere/mediaquery/whitespace.ts
++++ b/stage1/cohere/mediaquery/whitespace.ts
+@@ -10,7 +10,7 @@
+ // whitespace.go: isWhitespace, `character.search(/\s/) !== -1` for one character, here one UTF-16 unit.
+ export function isWhitespace(unit: number): boolean {
+ 	switch (unit) {
+-		case 0x09:
++		case 0x08:
+ 		case 0x0a:
+ 		case 0x0b:
+ 		case 0x0c:

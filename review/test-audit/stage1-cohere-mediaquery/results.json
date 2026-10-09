@@ -1,0 +1,86 @@
+[
+  {
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes",
+    "package": "stage1/cohere/mediaquery",
+    "file": "stage1/cohere/mediaquery/gaps_test.go",
+    "seconds": 0.713,
+    "oracle": "Node independently runs each original gap and confirms handwritten GAPS.md stdout; sanitized native stdout must match.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M4"
+    ],
+    "unique_kills": [
+      "M4"
+    ],
+    "last_proven_fail": "M4: gaps_test.go:83: stage 0 refuses this gap now (/workspace/adamic/stage1/cohere/mediaquery/gaps/1_generic_return.ts:5:13: Adamic 0.1 refuses a generic function instantiated without end (polymorphic recursion); call it with the same type arguments it was called with, or write a function per type): record that in GAPS.md, where it says the program lowers",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P2"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes",
+      "TestThePortParsesAsGoCohereDoes"
+    ],
+    "evidence": "ADAMIC_MEDIA_QUERY_LIBRARY=/tmp/u132/library ADAMIC_BUILD_CACHE_DIR=/tmp/u132/cache/M4 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/mediaquery/ -run . > M4.log 2>&1; gaps_test.go:83: stage 0 refuses this gap now (/workspace/adamic/stage1/cohere/mediaquery/gaps/1_generic_return.ts:5:13: Adamic 0.1 refuses a generic function instantiated without end (polymorphic recursion); call it with the same type arguments it was called with, or write a function per type): record that in GAPS.md, where it says the program lowers"
+  },
+  {
+    "test": "TestThePortParsesAsGoCohereDoes",
+    "package": "stage1/cohere/mediaquery",
+    "file": "stage1/cohere/mediaquery/mediaquery_test.go",
+    "seconds": 6.673,
+    "oracle": "Go cohere overlay, Node, JavaScript backend and installed postcss-media-query-parser@0.2.3 compare full output. Nonzero census is self. Library adapter substitutes a handwritten refusal for unclosed url inputs to avoid an upstream hang.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M1",
+      "M2",
+      "M3"
+    ],
+    "unique_kills": [
+      "M1",
+      "M2",
+      "M3"
+    ],
+    "last_proven_fail": "M3: mediaquery_test.go:69: Node and Go cohere differ: line 496: \"media-query-list \\\"url(foo.css) screen\\\" @0 before=\\\"\\\" after=\\\"\\\" nodes=1\", Go cohere \"media-query-list \\\"url(foo.css) screen\\\" @0 before=\\\"\\\" after=\\\"\\\" nodes=2\"",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes",
+      "TestThePortParsesAsGoCohereDoes"
+    ],
+    "evidence": "ADAMIC_MEDIA_QUERY_LIBRARY=/tmp/u132/library ADAMIC_BUILD_CACHE_DIR=/tmp/u132/cache/M3 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/mediaquery/ -run . > M3.log 2>&1; mediaquery_test.go:69: Node and Go cohere differ: line 496: \"media-query-list \\\"url(foo.css) screen\\\" @0 before=\\\"\\\" after=\\\"\\\" nodes=1\", Go cohere \"media-query-list \\\"url(foo.css) screen\\\" @0 before=\\\"\\\" after=\\\"\\\" nodes=2\"",
+    "witness_kills": [
+      "W1"
+    ],
+    "witness_proven": true,
+    "vacuous_subcases": [
+      "TestThePortParsesAsGoCohereDoes/catches_DEL_written_unescaped",
+      "TestThePortParsesAsGoCohereDoes/catches_U+FEFF_not_whitespace",
+      "TestThePortParsesAsGoCohereDoes/catches_trim_as_trimStart",
+      "TestThePortParsesAsGoCohereDoes/catches_an_escaped_quote_closing_a_string",
+      "TestThePortParsesAsGoCohereDoes/catches_U+2000_not_whitespace",
+      "TestThePortParsesAsGoCohereDoes/catches_U+2029_not_whitespace",
+      "TestThePortParsesAsGoCohereDoes/catches_a_feature_value's_sourceIndex_not_counting_the_colon",
+      "TestThePortParsesAsGoCohereDoes/catches_U+001F_written_unescaped",
+      "TestThePortParsesAsGoCohereDoes/catches_the_word_after_an_expression_typed_as_a_media_type",
+      "TestThePortParsesAsGoCohereDoes/catches_any_closing_quote_ending_a_string"
+    ]
+  }
+]

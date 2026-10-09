@@ -1,0 +1,121 @@
+{
+  "M1": {
+    "failed_rows": [
+      "TestThePortParsesAsGoCohereDoes"
+    ],
+    "failed_subcases": [
+      "TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere",
+      "TestThePortParsesAsGoCohereDoes/as_postcss-media-query-parser"
+    ],
+    "failing_output": [
+      "mediaquery_test.go:69: Node and Go cohere differ: line 4: \"    media-type \\\"screen\\\" @0 before=\\\"\\\" after=\\\"\\\"\", Go cohere \"    media-type \\\"screen\\\" @0 before=\\\"\\\" after=\\\" \\\"\"",
+      "mediaquery_test.go:69: native and Go cohere differ: line 4: \"    media-type \\\"screen\\\" @0 before=\\\"\\\" after=\\\"\\\"\", Go cohere \"    media-type \\\"screen\\\" @0 before=\\\"\\\" after=\\\" \\\"\"",
+      "mediaquery_test.go:69: the JavaScript backend and Go cohere differ: line 4: \"    media-type \\\"screen\\\" @0 before=\\\"\\\" after=\\\"\\\"\", Go cohere \"    media-type \\\"screen\\\" @0 before=\\\"\\\" after=\\\" \\\"\"",
+      "mediaquery_test.go:106: the port and the library differ: line 4: \"    media-type \\\"screen\\\" @0 before=\\\"\\\" after=\\\"\\\"\", the library \"    media-type \\\"screen\\\" @0 before=\\\"\\\" after=\\\" \\\"\""
+    ]
+  },
+  "M2": {
+    "failed_rows": [
+      "TestThePortParsesAsGoCohereDoes"
+    ],
+    "failed_subcases": [
+      "TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere",
+      "TestThePortParsesAsGoCohereDoes/as_postcss-media-query-parser"
+    ],
+    "failing_output": [
+      "mediaquery_test.go:69: Node and Go cohere differ: line 207: \"  media-query \\\"screen\\\\tand\\\\n(color)\\\" @0 before=\\\"\\\" after=\\\"\\\\r\\\\n\\\" nodes=2\", Go cohere \"  media-query \\\"screen\\\\tand\\\\n(color)\\\" @0 before=\\\"\\\" after=\\\"\\\\r\\\\n\\\" nodes=3\"",
+      "mediaquery_test.go:69: native and Go cohere differ: line 207: \"  media-query \\\"screen\\\\tand\\\\n(color)\\\" @0 before=\\\"\\\" after=\\\"\\\\r\\\\n\\\" nodes=2\", Go cohere \"  media-query \\\"screen\\\\tand\\\\n(color)\\\" @0 before=\\\"\\\" after=\\\"\\\\r\\\\n\\\" nodes=3\"",
+      "mediaquery_test.go:69: the JavaScript backend and Go cohere differ: line 207: \"  media-query \\\"screen\\\\tand\\\\n(color)\\\" @0 before=\\\"\\\" after=\\\"\\\\r\\\\n\\\" nodes=2\", Go cohere \"  media-query \\\"screen\\\\tand\\\\n(color)\\\" @0 before=\\\"\\\" after=\\\"\\\\r\\\\n\\\" nodes=3\"",
+      "mediaquery_test.go:106: the port and the library differ: line 207: \"  media-query \\\"screen\\\\tand\\\\n(color)\\\" @0 before=\\\"\\\" after=\\\"\\\\r\\\\n\\\" nodes=2\", the library \"  media-query \\\"screen\\\\tand\\\\n(color)\\\" @0 before=\\\"\\\" after=\\\"\\\\r\\\\n\\\" nodes=3\""
+    ]
+  },
+  "M3": {
+    "failed_rows": [
+      "TestThePortParsesAsGoCohereDoes"
+    ],
+    "failed_subcases": [
+      "TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere",
+      "TestThePortParsesAsGoCohereDoes/as_postcss-media-query-parser"
+    ],
+    "failing_output": [
+      "mediaquery_test.go:69: Node and Go cohere differ: line 496: \"media-query-list \\\"url(foo.css) screen\\\" @0 before=\\\"\\\" after=\\\"\\\" nodes=1\", Go cohere \"media-query-list \\\"url(foo.css) screen\\\" @0 before=\\\"\\\" after=\\\"\\\" nodes=2\"",
+      "mediaquery_test.go:69: native and Go cohere differ: line 496: \"media-query-list \\\"url(foo.css) screen\\\" @0 before=\\\"\\\" after=\\\"\\\" nodes=1\", Go cohere \"media-query-list \\\"url(foo.css) screen\\\" @0 before=\\\"\\\" after=\\\"\\\" nodes=2\"",
+      "mediaquery_test.go:69: the JavaScript backend and Go cohere differ: line 496: \"media-query-list \\\"url(foo.css) screen\\\" @0 before=\\\"\\\" after=\\\"\\\" nodes=1\", Go cohere \"media-query-list \\\"url(foo.css) screen\\\" @0 before=\\\"\\\" after=\\\"\\\" nodes=2\"",
+      "mediaquery_test.go:106: the port and the library differ: line 496: \"media-query-list \\\"url(foo.css) screen\\\" @0 before=\\\"\\\" after=\\\"\\\" nodes=1\", the library \"media-query-list \\\"url(foo.css) screen\\\" @0 before=\\\"\\\" after=\\\"\\\" nodes=2\""
+    ]
+  },
+  "M4": {
+    "failed_rows": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes"
+    ],
+    "failed_subcases": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_generic_return.ts",
+      "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_generic_parameter.ts"
+    ],
+    "failing_output": [
+      "gaps_test.go:83: stage 0 refuses this gap now (/workspace/adamic/stage1/cohere/mediaquery/gaps/1_generic_return.ts:5:13: Adamic 0.1 refuses a generic function instantiated without end (polymorphic recursion); call it with the same type arguments it was called with, or write a function per type): record that in GAPS.md, where it says the program lowers",
+      "gaps_test.go:83: stage 0 refuses this gap now (/workspace/adamic/stage1/cohere/mediaquery/gaps/1_generic_parameter.ts:5:13: Adamic 0.1 refuses a generic function instantiated without end (polymorphic recursion); call it with the same type arguments it was called with, or write a function per type): record that in GAPS.md, where it says the program lowers"
+    ]
+  },
+  "W1": {
+    "failed_rows": [
+      "TestThePortParsesAsGoCohereDoes"
+    ],
+    "failed_subcases": [
+      "TestThePortParsesAsGoCohereDoes/catches_DEL_written_unescaped",
+      "TestThePortParsesAsGoCohereDoes/catches_U+FEFF_not_whitespace",
+      "TestThePortParsesAsGoCohereDoes/catches_trim_as_trimStart",
+      "TestThePortParsesAsGoCohereDoes/catches_an_escaped_quote_closing_a_string",
+      "TestThePortParsesAsGoCohereDoes/catches_U+2000_not_whitespace",
+      "TestThePortParsesAsGoCohereDoes/catches_U+2029_not_whitespace",
+      "TestThePortParsesAsGoCohereDoes/catches_a_feature_value's_sourceIndex_not_counting_the_colon",
+      "TestThePortParsesAsGoCohereDoes/catches_U+001F_written_unescaped",
+      "TestThePortParsesAsGoCohereDoes/catches_the_word_after_an_expression_typed_as_a_media_type",
+      "TestThePortParsesAsGoCohereDoes/catches_any_closing_quote_ending_a_string"
+    ],
+    "failing_output": [
+      "mediaquery_test.go:128: natively the mutant agrees with Go cohere: the comparison cannot see it",
+      "mediaquery_test.go:128: on Node the mutant agrees with Go cohere: the comparison cannot see it",
+      "mediaquery_test.go:128: natively the mutant agrees with Go cohere: the comparison cannot see it",
+      "mediaquery_test.go:128: on Node the mutant agrees with Go cohere: the comparison cannot see it",
+      "mediaquery_test.go:128: natively the mutant agrees with Go cohere: the comparison cannot see it",
+      "mediaquery_test.go:128: on Node the mutant agrees with Go cohere: the comparison cannot see it",
+      "mediaquery_test.go:128: natively the mutant agrees with Go cohere: the comparison cannot see it",
+      "mediaquery_test.go:128: on Node the mutant agrees with Go cohere: the comparison cannot see it",
+      "mediaquery_test.go:128: natively the mutant agrees with Go cohere: the comparison cannot see it",
+      "mediaquery_test.go:128: on Node the mutant agrees with Go cohere: the comparison cannot see it",
+      "mediaquery_test.go:128: natively the mutant agrees with Go cohere: the comparison cannot see it",
+      "mediaquery_test.go:128: on Node the mutant agrees with Go cohere: the comparison cannot see it",
+      "mediaquery_test.go:128: natively the mutant agrees with Go cohere: the comparison cannot see it",
+      "mediaquery_test.go:128: on Node the mutant agrees with Go cohere: the comparison cannot see it",
+      "mediaquery_test.go:128: natively the mutant agrees with Go cohere: the comparison cannot see it",
+      "mediaquery_test.go:128: on Node the mutant agrees with Go cohere: the comparison cannot see it",
+      "mediaquery_test.go:128: natively the mutant agrees with Go cohere: the comparison cannot see it",
+      "mediaquery_test.go:128: on Node the mutant agrees with Go cohere: the comparison cannot see it",
+      "mediaquery_test.go:128: natively the mutant agrees with Go cohere: the comparison cannot see it",
+      "mediaquery_test.go:128: on Node the mutant agrees with Go cohere: the comparison cannot see it"
+    ]
+  },
+  "P1": {
+    "failed_rows": [
+      "TestThePortParsesAsGoCohereDoes"
+    ],
+    "failed_subcases": [
+      "TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere",
+      "TestThePortParsesAsGoCohereDoes/as_postcss-media-query-parser"
+    ],
+    "failing_output": [
+      "mediaquery_test.go:69: Node and Go cohere differ: line 1: \"\", Go cohere \"case 0\"",
+      "mediaquery_test.go:69: native and Go cohere differ: line 1: \"\", Go cohere \"case 0\"",
+      "mediaquery_test.go:69: the JavaScript backend and Go cohere differ: line 1: \"\", Go cohere \"case 0\"",
+      "mediaquery_test.go:106: the port and the library differ: line 1: \"\", the library \"case 0\""
+    ]
+  },
+  "P2": {
+    "failed_rows": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes",
+      "TestThePortParsesAsGoCohereDoes"
+    ],
+    "evidence": "Both individual reruns panic: runtime error: invalid memory address or nil pointer dereference; package exits 1. Whole-run later rows unknown."
+  }
+}
