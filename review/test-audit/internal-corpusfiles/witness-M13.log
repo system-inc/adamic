@@ -1,0 +1,6 @@
+=== RUN   TestU017Observation
+    u017_witness_test.go:4: names=["tracked.ts"]
+    u017_witness_test.go:7: files=1 counts=[2] err=<nil>
+--- PASS: TestU017Observation (0.02s)
+PASS
+ok  	github.com/system-inc/adamic/internal/corpusfiles	0.017s
