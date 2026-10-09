@@ -765,14 +765,15 @@ type (
 		DiscardView      string
 
 		// Direct identifies canonical sibling code sharing Closure as its environment.
-		Direct        int
-		Closure       Expression
-		Receiver      Expression // call/apply thisArg, evaluated after the callee and before arguments
-		Arguments     []Expression
-		ArgumentCount Expression // actual argument count when forwarding a bound prefix
-		Spread        []bool
-		FunctionType  int
-		Returns       Type
+		Direct         int
+		Closure        Expression
+		Receiver       Expression // call/apply thisArg, evaluated after the callee and before arguments
+		ReceiverPacked bool       // protocol lowering already supplies its receiver as argument zero
+		Arguments      []Expression
+		ArgumentCount  Expression // actual argument count when forwarding a bound prefix
+		Spread         []bool
+		FunctionType   int
+		Returns        Type
 	}
 
 	// ArrayMap is array.map(callback): a new array of the callback's results, each called with the
