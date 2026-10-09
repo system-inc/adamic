@@ -1,0 +1,4 @@
+run adamic-verify-20261009T114423-0f890c0b: red, 17381 tests in 25 units, 1 failed, 0 units broken, 0 killed over budget; merged with trio-lint-alone-20261009T121629-5f4660ef (lint whole, 171 units), lint03-20261009T123549-16686de8 (its tests-03 split, green) and wasi-trio-20261009T123831-af902670 (TestWASIUnit00-35, green); and trio-lint-warm-20261009T130011-718b7928 (TestShardsAgree and TestJsxLintTreesSetupIsolation on one instance, setup builds warmed first, green): 1 failed
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-126)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint	91.516s
+FAIL github.com/system-inc/adamic/stage1/cohere/lint requested tests started 6485, verdicts 6345 of: TestCompilerAndStage1Agree (TestCompilerAndStage1Agree_6394, TestCompilerAndStage1Agree_6395, TestCompilerAndStage1Agree_6396, TestCompilerAndStage1Agree_6397, TestCompilerAndStage1Agree_6398, TestCompilerAndStage1Agree_6399, ...) (tests-02)
