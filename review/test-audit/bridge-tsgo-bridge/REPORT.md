@@ -37,7 +37,7 @@ All eleven final standalone diffs apply and pass go vet; nproc = 5.
       "TestBridgeUnitsCoverEveryPiece",
       "TestBridgeProductCacheIsVerified"
     ],
-    "evidence": "ADAMIC_MUTANT=M3 ADAMIC_BUILD_CACHE_DIR=/tmp/u001/cache/M3 timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestTSGoRequiresLink|TestBridgeUnitsCoverEveryPiece|TestBridgeProductCacheIsVerified)$ > M3.log 2>&1; bridge_test.go:38: opted-in bridge calls lost",
+    "evidence": "ADAMIC_MUTANT=M3 ADAMIC_BUILD_CACHE_DIR=/tmp/u001/cache/M3 timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run '^(TestTSGoRequiresLink|TestBridgeUnitsCoverEveryPiece|TestBridgeProductCacheIsVerified)$' > M3.log 2>&1; bridge_test.go:38: opted-in bridge calls lost",
     "timing_samples": [
       0.072,
       0.066,
@@ -74,7 +74,7 @@ All eleven final standalone diffs apply and pass go vet; nproc = 5.
       "TestBridgeUnitsCoverEveryPiece",
       "TestBridgeProductCacheIsVerified"
     ],
-    "evidence": "ADAMIC_MUTANT=C3 ADAMIC_BUILD_CACHE_DIR=/tmp/u001/cache/C3 timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestTSGoRequiresLink|TestBridgeUnitsCoverEveryPiece|TestBridgeProductCacheIsVerified)$ > C3.log 2>&1; coverage_test.go:90: active bridge coverage count: 0, want 16",
+    "evidence": "ADAMIC_MUTANT=C3 ADAMIC_BUILD_CACHE_DIR=/tmp/u001/cache/C3 timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run '^(TestTSGoRequiresLink|TestBridgeUnitsCoverEveryPiece|TestBridgeProductCacheIsVerified)$' > C3.log 2>&1; coverage_test.go:90: active bridge coverage count: 0, want 16",
     "timing_samples": [
       0.026,
       0.021,
@@ -112,7 +112,7 @@ All eleven final standalone diffs apply and pass go vet; nproc = 5.
       "TestBridgeUnitsCoverEveryPiece",
       "TestBridgeProductCacheIsVerified"
     ],
-    "evidence": "ADAMIC_MUTANT=C6 ADAMIC_BUILD_CACHE_DIR=/tmp/u001/cache/C6 timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestTSGoRequiresLink|TestBridgeUnitsCoverEveryPiece|TestBridgeProductCacheIsVerified)$ > C6.log 2>&1; coverage_test.go:148: corrupt product was accepted",
+    "evidence": "ADAMIC_MUTANT=C6 ADAMIC_BUILD_CACHE_DIR=/tmp/u001/cache/C6 timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run '^(TestTSGoRequiresLink|TestBridgeUnitsCoverEveryPiece|TestBridgeProductCacheIsVerified)$' > C6.log 2>&1; coverage_test.go:148: corrupt product was accepted",
     "timing_samples": [
       0.021,
       0.012,

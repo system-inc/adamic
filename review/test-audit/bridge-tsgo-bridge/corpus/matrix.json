@@ -1,7 +1,7 @@
 [
   {
     "id": "switch-control",
-    "command": "ADAMIC_TSGO_CORPUS=/tmp/u001/corpus ADAMIC_MUTANT= ADAMIC_BUILD_CACHE_DIR=/tmp/u001/cache/switch-control timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestTSGoRequiresLink|TestBridgeUnitsCoverEveryPiece|TestBridgeProductCacheIsVerified)$",
+    "command": "ADAMIC_TSGO_CORPUS=/tmp/u001/corpus ADAMIC_MUTANT= ADAMIC_BUILD_CACHE_DIR=/tmp/u001/cache/switch-control timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run '^(TestTSGoRequiresLink|TestBridgeUnitsCoverEveryPiece|TestBridgeProductCacheIsVerified)$'",
     "exit": 0,
     "wall_seconds": 17.072536997999123,
     "failed": [],
@@ -21,7 +21,7 @@
   },
   {
     "id": "M1",
-    "command": "ADAMIC_TSGO_CORPUS=/tmp/u001/corpus ADAMIC_MUTANT=M1 ADAMIC_BUILD_CACHE_DIR=/tmp/u001/cache/M1 timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestTSGoRequiresLink|TestBridgeUnitsCoverEveryPiece|TestBridgeProductCacheIsVerified)$",
+    "command": "ADAMIC_TSGO_CORPUS=/tmp/u001/corpus ADAMIC_MUTANT=M1 ADAMIC_BUILD_CACHE_DIR=/tmp/u001/cache/M1 timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run '^(TestTSGoRequiresLink|TestBridgeUnitsCoverEveryPiece|TestBridgeProductCacheIsVerified)$'",
     "exit": 1,
     "wall_seconds": 3.5125329660004354,
     "failed": [
@@ -44,7 +44,7 @@
   },
   {
     "id": "M2",
-    "command": "ADAMIC_TSGO_CORPUS=/tmp/u001/corpus ADAMIC_BUILD_CACHE_DIR=/tmp/u001/cache/M2-final timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestTSGoRequiresLink|TestBridgeUnitsCoverEveryPiece|TestBridgeProductCacheIsVerified)$ (standalone M2.diff applied)",
+    "command": "ADAMIC_TSGO_CORPUS=/tmp/u001/corpus ADAMIC_BUILD_CACHE_DIR=/tmp/u001/cache/M2-final timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run '^(TestTSGoRequiresLink|TestBridgeUnitsCoverEveryPiece|TestBridgeProductCacheIsVerified)$' (standalone M2.diff applied)",
     "exit": 0,
     "wall_seconds": 3.1124226310021186,
     "failed": [],
@@ -64,7 +64,7 @@
   },
   {
     "id": "M3",
-    "command": "ADAMIC_TSGO_CORPUS=/tmp/u001/corpus ADAMIC_MUTANT=M3 ADAMIC_BUILD_CACHE_DIR=/tmp/u001/cache/M3 timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestTSGoRequiresLink|TestBridgeUnitsCoverEveryPiece|TestBridgeProductCacheIsVerified)$",
+    "command": "ADAMIC_TSGO_CORPUS=/tmp/u001/corpus ADAMIC_MUTANT=M3 ADAMIC_BUILD_CACHE_DIR=/tmp/u001/cache/M3 timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run '^(TestTSGoRequiresLink|TestBridgeUnitsCoverEveryPiece|TestBridgeProductCacheIsVerified)$'",
     "exit": 1,
     "wall_seconds": 2.5163906019988644,
     "failed": [
@@ -87,7 +87,7 @@
   },
   {
     "id": "C1",
-    "command": "ADAMIC_TSGO_CORPUS=/tmp/u001/corpus ADAMIC_MUTANT=C1 ADAMIC_BUILD_CACHE_DIR=/tmp/u001/cache/C1 timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestTSGoRequiresLink|TestBridgeUnitsCoverEveryPiece|TestBridgeProductCacheIsVerified)$",
+    "command": "ADAMIC_TSGO_CORPUS=/tmp/u001/corpus ADAMIC_MUTANT=C1 ADAMIC_BUILD_CACHE_DIR=/tmp/u001/cache/C1 timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run '^(TestTSGoRequiresLink|TestBridgeUnitsCoverEveryPiece|TestBridgeProductCacheIsVerified)$'",
     "exit": 1,
     "wall_seconds": 2.493437452998478,
     "failed": [
@@ -110,7 +110,7 @@
   },
   {
     "id": "C2",
-    "command": "ADAMIC_TSGO_CORPUS=/tmp/u001/corpus ADAMIC_MUTANT=C2 ADAMIC_BUILD_CACHE_DIR=/tmp/u001/cache/C2 timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestTSGoRequiresLink|TestBridgeUnitsCoverEveryPiece|TestBridgeProductCacheIsVerified)$",
+    "command": "ADAMIC_TSGO_CORPUS=/tmp/u001/corpus ADAMIC_MUTANT=C2 ADAMIC_BUILD_CACHE_DIR=/tmp/u001/cache/C2 timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run '^(TestTSGoRequiresLink|TestBridgeUnitsCoverEveryPiece|TestBridgeProductCacheIsVerified)$'",
     "exit": 1,
     "wall_seconds": 2.5942189950001193,
     "failed": [
@@ -133,7 +133,7 @@
   },
   {
     "id": "C3",
-    "command": "ADAMIC_TSGO_CORPUS=/tmp/u001/corpus ADAMIC_MUTANT=C3 ADAMIC_BUILD_CACHE_DIR=/tmp/u001/cache/C3 timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestTSGoRequiresLink|TestBridgeUnitsCoverEveryPiece|TestBridgeProductCacheIsVerified)$",
+    "command": "ADAMIC_TSGO_CORPUS=/tmp/u001/corpus ADAMIC_MUTANT=C3 ADAMIC_BUILD_CACHE_DIR=/tmp/u001/cache/C3 timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run '^(TestTSGoRequiresLink|TestBridgeUnitsCoverEveryPiece|TestBridgeProductCacheIsVerified)$'",
     "exit": 1,
     "wall_seconds": 3.3143340759997955,
     "failed": [
@@ -156,7 +156,7 @@
   },
   {
     "id": "C4",
-    "command": "ADAMIC_TSGO_CORPUS=/tmp/u001/corpus ADAMIC_MUTANT=C4 ADAMIC_BUILD_CACHE_DIR=/tmp/u001/cache/C4 timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestTSGoRequiresLink|TestBridgeUnitsCoverEveryPiece|TestBridgeProductCacheIsVerified)$",
+    "command": "ADAMIC_TSGO_CORPUS=/tmp/u001/corpus ADAMIC_MUTANT=C4 ADAMIC_BUILD_CACHE_DIR=/tmp/u001/cache/C4 timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run '^(TestTSGoRequiresLink|TestBridgeUnitsCoverEveryPiece|TestBridgeProductCacheIsVerified)$'",
     "exit": 1,
     "wall_seconds": 2.580847453999013,
     "failed": [
@@ -179,7 +179,7 @@
   },
   {
     "id": "C5",
-    "command": "ADAMIC_TSGO_CORPUS=/tmp/u001/corpus ADAMIC_MUTANT=C5 ADAMIC_BUILD_CACHE_DIR=/tmp/u001/cache/C5 timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestTSGoRequiresLink|TestBridgeUnitsCoverEveryPiece|TestBridgeProductCacheIsVerified)$",
+    "command": "ADAMIC_TSGO_CORPUS=/tmp/u001/corpus ADAMIC_MUTANT=C5 ADAMIC_BUILD_CACHE_DIR=/tmp/u001/cache/C5 timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run '^(TestTSGoRequiresLink|TestBridgeUnitsCoverEveryPiece|TestBridgeProductCacheIsVerified)$'",
     "exit": 1,
     "wall_seconds": 2.5895484419997956,
     "failed": [
@@ -202,7 +202,7 @@
   },
   {
     "id": "C6",
-    "command": "ADAMIC_TSGO_CORPUS=/tmp/u001/corpus ADAMIC_MUTANT=C6 ADAMIC_BUILD_CACHE_DIR=/tmp/u001/cache/C6 timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestTSGoRequiresLink|TestBridgeUnitsCoverEveryPiece|TestBridgeProductCacheIsVerified)$",
+    "command": "ADAMIC_TSGO_CORPUS=/tmp/u001/corpus ADAMIC_MUTANT=C6 ADAMIC_BUILD_CACHE_DIR=/tmp/u001/cache/C6 timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run '^(TestTSGoRequiresLink|TestBridgeUnitsCoverEveryPiece|TestBridgeProductCacheIsVerified)$'",
     "exit": 1,
     "wall_seconds": 2.626606803998584,
     "failed": [
@@ -225,7 +225,7 @@
   },
   {
     "id": "P1",
-    "command": "ADAMIC_TSGO_CORPUS=/tmp/u001/corpus ADAMIC_MUTANT=P1 ADAMIC_BUILD_CACHE_DIR=/tmp/u001/cache/P1 timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestTSGoRequiresLink|TestBridgeUnitsCoverEveryPiece|TestBridgeProductCacheIsVerified)$",
+    "command": "ADAMIC_TSGO_CORPUS=/tmp/u001/corpus ADAMIC_MUTANT=P1 ADAMIC_BUILD_CACHE_DIR=/tmp/u001/cache/P1 timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run '^(TestTSGoRequiresLink|TestBridgeUnitsCoverEveryPiece|TestBridgeProductCacheIsVerified)$'",
     "exit": 1,
     "wall_seconds": 2.7786352390030515,
     "failed": [
@@ -248,7 +248,7 @@
   },
   {
     "id": "P2",
-    "command": "ADAMIC_TSGO_CORPUS=/tmp/u001/corpus ADAMIC_MUTANT=P2 ADAMIC_BUILD_CACHE_DIR=/tmp/u001/cache/P2 timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run ^(TestTSGoRequiresLink|TestBridgeUnitsCoverEveryPiece|TestBridgeProductCacheIsVerified)$",
+    "command": "ADAMIC_TSGO_CORPUS=/tmp/u001/corpus ADAMIC_MUTANT=P2 ADAMIC_BUILD_CACHE_DIR=/tmp/u001/cache/P2 timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run '^(TestTSGoRequiresLink|TestBridgeUnitsCoverEveryPiece|TestBridgeProductCacheIsVerified)$'",
     "exit": 1,
     "wall_seconds": 2.5357952480007953,
     "failed": [
