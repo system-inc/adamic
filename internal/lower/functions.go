@@ -195,6 +195,9 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 
 // lowerBody lowers the body of the function at index, whose signature is written.
 func (l *lowering) lowerBody(index int, declaration *ast.Node, this int, defaults []defaulted, patterns []patterned) error {
+	if err := l.genericBodyWitness(declaration); err != nil {
+		return err
+	}
 	if declaration.Body() == nil {
 		return l.notYet(declaration, "a function without a body")
 	}
