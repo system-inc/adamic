@@ -1,0 +1,11 @@
+// a-check: refused Function annotation; oracle also lowers a temporary .ts copy
+function arity(given: Function): number { return given.length; }
+function add(a: number, b: number): number { return a + b; }
+function defaulted(a: number, b = 2, c = 3): number { return a + b + c; }
+function optional(a: number, b?: number): number { return a + (b ?? 0); }
+function rest(a: number, ...others: number[]): number { return a + others.length; }
+function keep(given: Function): Function { return given; }
+const offset = 3;
+const captured = (value: number) => value + offset;
+console.log(`${arity(add)} ${arity((v: string) => v)} ${arity(defaulted)} ${arity(optional)} ${arity(rest)} ${arity(keep(captured))}`);
+console.log(`${keep(add) === keep(add)} ${typeof keep(captured)}`);

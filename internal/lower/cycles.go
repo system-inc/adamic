@@ -247,7 +247,7 @@ func (f *cycleFinder) fields(proven *checker.Type) []*ast.Symbol {
 // as a field of the instance type and isn't one a program can set; seen as an object, that prototype
 // read as a mutable field reaching back, and every class made with new was refused.
 func (f *cycleFinder) isFunction(proven *checker.Type) bool {
-	return len(f.l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) > 0 || (len(f.l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) > 0 && (!f.l.isStaticType(proven) || len(f.l.staticGlobals) == 0))
+	return f.l.isLibraryType(proven, "Function") || len(f.l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) > 0 || (len(f.l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) > 0 && (!f.l.isStaticType(proven) || len(f.l.staticGlobals) == 0))
 }
 
 // weak reports whether a slot's type is a Weak<Target>, which holds nothing.
@@ -401,7 +401,7 @@ func (f *cycleFinder) reaches(from *checker.Type, target cycleNode) bool {
 			queue = append(queue, f.libraryIteratorCaptures(proven)...)
 		case f.isFunction(proven):
 			// Construct signatures can hide constructor objects behind an interface.
-			if len(f.l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) > 0 {
+			if f.l.isLibraryType(proven, "Function") || len(f.l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) > 0 {
 				for symbol := range f.l.statics {
 					actual := f.l.checker.GetTypeOfSymbol(symbol)
 					if f.l.checker.IsTypeAssignableTo(actual, proven) {

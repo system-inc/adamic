@@ -1,0 +1,137 @@
+{
+  "branch": "compiler/refusal-rulings-main",
+  "source": "8799f5183578321a676d5c18ee837d9c79876126",
+  "tests": [
+    {
+      "test": "TestMergedFieldAdamicReadRefused",
+      "result": "pass",
+      "seconds": 12.97,
+      "log": "member-9-tests.jsonl"
+    },
+    {
+      "test": "TestFunctionAdamicUnusedAnnotationRefused",
+      "result": "pass",
+      "seconds": 12.99,
+      "log": "member-9-tests.jsonl"
+    },
+    {
+      "test": "TestFunctionTypeScriptCallRefused",
+      "result": "pass",
+      "seconds": 13.04,
+      "log": "member-9-tests.jsonl"
+    },
+    {
+      "test": "TestMergedFieldAdamicComputedRefused",
+      "result": "pass",
+      "seconds": 0.16,
+      "log": "member-9-tests.jsonl"
+    },
+    {
+      "test": "TestMergedFieldAdamicInitializedAgreesWithNode",
+      "result": "pass",
+      "seconds": 13.35,
+      "log": "member-9-tests.jsonl"
+    },
+    {
+      "test": "TestMergedFieldTypeScriptInitializedAgreesWithNode",
+      "result": "pass",
+      "seconds": 0.5,
+      "log": "member-9-tests.jsonl"
+    },
+    {
+      "test": "TestMergedFieldTypeScriptComputedChecked",
+      "result": "pass",
+      "seconds": 0.51,
+      "log": "member-9-tests.jsonl"
+    },
+    {
+      "test": "TestMergedFieldTypeScriptMissingChecked",
+      "result": "pass",
+      "seconds": 0.44,
+      "log": "member-9-tests.jsonl"
+    },
+    {
+      "test": "TestFunctionAdamicCallAnnotationRefused",
+      "result": "pass",
+      "seconds": 0.11,
+      "log": "member-9-tests.jsonl"
+    },
+    {
+      "test": "TestMergedFieldAdamicUnusedRefused",
+      "result": "pass",
+      "seconds": 0.15,
+      "log": "member-9-tests.jsonl"
+    },
+    {
+      "test": "TestMergedFieldTypeScriptUnusedAccepted",
+      "result": "pass",
+      "seconds": 0.52,
+      "log": "member-9-tests.jsonl"
+    },
+    {
+      "test": "TestFunctionTypeScriptUnusedAccepted",
+      "result": "pass",
+      "seconds": 0.42,
+      "log": "member-9-tests.jsonl"
+    },
+    {
+      "test": "TestFunctionAdamicLengthAnnotationRefused",
+      "result": "pass",
+      "seconds": 0.14,
+      "log": "member-9-tests.jsonl"
+    },
+    {
+      "test": "TestFunctionCallSignatureAgreesWithNode",
+      "result": "pass",
+      "seconds": 0.44,
+      "log": "member-9-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/entries_scanner.a",
+      "result": "pass",
+      "seconds": 0.41,
+      "log": "member-9-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode",
+      "result": "pass",
+      "seconds": 0.06,
+      "log": "member-9-tests.jsonl"
+    },
+    {
+      "test": "TestFunctionTypeScriptLengthAgreesWithNode",
+      "result": "pass",
+      "seconds": 10.19,
+      "log": "member-9-tests.jsonl"
+    }
+  ],
+  "counts": {
+    "added": [
+      {
+        "row": "internal/oracle/testdata/refusal_rulings/function_signature.a",
+        "after": [
+          "3",
+          "3",
+          "0",
+          "3",
+          "3",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/refusal_rulings/merge_present.a",
+        "after": [
+          "3",
+          "3",
+          "1",
+          "4",
+          "3",
+          "0"
+        ]
+      }
+    ],
+    "changed": [],
+    "removed": [],
+    "rows": 1081
+  }
+}

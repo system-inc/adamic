@@ -51,6 +51,10 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 	if l.readonlyArrayView(proven) != nil {
 		return ir.Array, true
 	}
+	if l.isLibraryType(proven, "Function") {
+		// Opaque callable values keep closure storage; the refusal pass forbids invocation.
+		return ir.Closure, true
+	}
 	flags := proven.Flags()
 	if flags == checker.TypeFlagsNull && l.result.JSONTaggedNull {
 		return ir.Union, true
@@ -528,6 +532,12 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 
 func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 	node = ast.SkipParentheses(node)
+	if value, handled, err := l.functionObservation(node); handled {
+		return value, err
+	}
+	if value, handled, err := l.mergedComputedRead(node); handled {
+		return value, err
+	}
 	if value, handled, err := l.typedArrayExpression(node); handled {
 		return value, err
 	}
@@ -1317,7 +1327,7 @@ func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, err
 		return nil, l.notYet(node, "a function value returning "+typeName(callee.Returns))
 	}
 	index := len(l.result.Functions)
-	forwarder := ir.Function{Name: callee.Name + "_value", Closure: true, Returns: callee.Returns, RestElement: callee.RestElement, ForwardsArguments: target + 1}
+	forwarder := ir.Function{SourceLength: callee.SourceLength, Name: callee.Name + "_value", Closure: true, Returns: callee.Returns, RestElement: callee.RestElement, ForwardsArguments: target + 1}
 	arguments := []ir.Expression{}
 	for _, parameter := range callee.Parameters {
 		declared := l.result.Locals[parameter]
