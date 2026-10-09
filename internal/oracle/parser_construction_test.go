@@ -6,8 +6,7 @@ import (
 	"testing"
 )
 
-// These are source programs, not hand-built IR or stub passes. The base remains
-// a rehearsal: publishing them does not certify the placeholder dependency.
+// These source programs exercise the delivered placeholder machinery through both backends.
 func TestParserConstructionSource(t *testing.T) {
 	for _, name := range []string{"factory-unset", "own-key-order", "node-array-keys", "node-array-json", "node-array-length", "node-array-unset"} {
 		t.Run(name, func(t *testing.T) {
@@ -61,20 +60,27 @@ func TestParserConstructionUnsetUse(t *testing.T) {
 	t.Log("undefined presence observation is accepted; declared string use stops naming field, factory and use")
 }
 
-// The rehearsal retains readiness but lacks null-placeholder observation. Keep
-// the dependency visible rather than manufacturing undefined from a null! slot.
-func TestParserConstructionNullPlaceholderPending(t *testing.T) {
+// The delivered placeholder machinery retains null independently of factory unset.
+func TestParserConstructionNullPlaceholderDelivered(t *testing.T) {
 	path, err := filepath.Abs(filepath.Join(repository, "stage3/parser-ahead/rulings/null-placeholder-pending.a"))
 	if err != nil {
 		t.Fatal(err)
 	}
 	truth := onNode(t, path)
-	if truth.exitCode != 0 || string(truth.stdout) != "null\nundefined\n" || len(truth.stderr) != 0 {
+	if truth.exitCode != 0 || string(truth.stdout) != "true\ntrue\n" || len(truth.stderr) != 0 {
 		t.Fatalf("Node %+v", truth)
 	}
-	_, err = lowered(t, path)
-	if err == nil || !strings.Contains(err.Error(), "observable null placeholder awaiting codex/placeholder-nonnull") {
-		t.Fatalf("pending boundary: %v", err)
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
 	}
-	t.Log("pending codex/placeholder-nonnull; no backend acceptance claimed")
+	actual, binary := nativelyUncached(t, program)
+	for backend, got := range map[string]run{"native": actual, "JavaScript": onJavaScriptBackend(t, program)} {
+		if d := disagreement(truth, got); d != "" {
+			t.Fatalf("%s: %s", backend, d)
+		}
+	}
+	if report := leaksUncached(t, program, binary); report != "" {
+		t.Fatal(report)
+	}
 }

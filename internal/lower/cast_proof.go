@@ -11,6 +11,7 @@ import (
 // The proof contains checker types only, so refusals precede representation lowering of unknown
 // operands. Concrete generic instantiations are proved again when they are lowered.
 type castProof struct {
+	speculation   bool
 	construction  bool
 	nodeArray     bool
 	interfaceView bool
@@ -110,6 +111,9 @@ func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 	}
 	if source.Flags()&checker.TypeFlagsAny != 0 || target.Flags()&checker.TypeFlagsAny != 0 {
 		return castProof{}, refused
+	}
+	if l.speculativeCast(node) {
+		return castProof{speculation: true}, nil
 	}
 	if l.nodeArrayCast(node) {
 		return castProof{nodeArray: true}, nil
