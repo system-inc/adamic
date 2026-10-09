@@ -1,0 +1,11 @@
+--- a/internal/lower/class_inheritance.go
++++ b/internal/lower/class_inheritance.go
+@@ -129,7 +129,7 @@
+ 			return l.notYet(member, "an overloaded override")
+ 		}
+ 		old, next := oldSignatures[0], newSignatures[0]
+-		if len(old.Parameters()) != len(next.Parameters()) {
++		if len(old.Parameters()) == len(next.Parameters()) {
+ 			return l.notYet(member, "an override with a different parameter count; keep the base method's parameter count")
+ 		}
+ 		for index, parameter := range old.Parameters() {

@@ -1,0 +1,11 @@
+--- a/internal/lower/class_inheritance.go
++++ b/internal/lower/class_inheritance.go
+@@ -590,7 +590,7 @@
+ 	}
+ 	if source.Symbol() == target.Symbol() {
+ 		from, to := l.checker.GetTypeArguments(source), l.checker.GetTypeArguments(target)
+-		if !l.sameClassArguments(from, to) {
++		if l.sameClassArguments(from, to) {
+ 			return false
+ 		}
+ 		for index := range from {

@@ -1,0 +1,293 @@
+diff --git a/internal/load/load.go b/internal/load/load.go
+index 2515e26f..43652324 100644
+--- a/internal/load/load.go
++++ b/internal/load/load.go
+@@ -78,6 +78,9 @@ func compilerOptions() *core.CompilerOptions {
+ //
+ // Each path is an Adamic source: a .ts file or a .a file.
+ func Load(paths []string) (*Program, error) {
++	if os.Getenv("ADAMIC_MUTANT") == "P_LOAD" {
++		return nil, nil
++	}
+ 	return load(paths, nil)
+ }
+ 
+@@ -145,7 +148,12 @@ func load(paths []string, overlay map[string]string) (*Program, error) {
+ 
+ 	loaded := &Program{compiler: program, fs: fs}
+ 	if diagnostics := loaded.diagnostics(context.Background()); len(diagnostics) > 0 {
+-		return nil, &CheckError{Diagnostics: diagnostics}
++		return nil, func() *CheckError {
++			if os.Getenv("ADAMIC_MUTANT") == "M20" {
++				return &CheckError{Diagnostics: nil}
++			}
++			return &CheckError{Diagnostics: diagnostics}
++		}()
+ 	}
+ 
+ 	// Every root must be in the program. One that is not would be a file silently left unchecked.
+diff --git a/internal/lower/class.go b/internal/lower/class.go
+index 0c955352..f442f5ff 100644
+--- a/internal/lower/class.go
++++ b/internal/lower/class.go
+@@ -1,6 +1,7 @@
+ package lower
+ 
+ import (
++	"os"
+ 	"sort"
+ 	"strings"
+ 	_ "unsafe"
+@@ -143,8 +144,15 @@ func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, w
+ 	lowered.class = len(l.result.Classes) + 1
+ 	metadata := ir.Class{Name: name, Constructor: lowered.constructor, Definition: l.classDefinition(declaration)}
+ 	if base != nil {
+-		metadata.Base = base.class
+-		metadata.Fields = append(metadata.Fields, l.result.Classes[base.class-1].Fields...)
++		if os.Getenv("ADAMIC_MUTANT") == "M01" {
++			metadata.Base = 0
++		} else {
++			metadata.Base = base.class
++		}
++		if os.Getenv("ADAMIC_MUTANT") == "M02" {
++		} else {
++			metadata.Fields = append(metadata.Fields, l.result.Classes[base.class-1].Fields...)
++		}
+ 		metadata.Methods = append(metadata.Methods, l.result.Classes[base.class-1].Methods...)
+ 		for method, function := range base.methods {
+ 			lowered.methods[method] = function
+@@ -751,7 +759,7 @@ func lastFieldAssignment(declaration *ast.Node, constructor *ast.Node) int {
+ // object of a field it reads or writes: a method it calls, or a function it's handed to, could read a
+ // field not set yet.
+ func (l *lowering) useOfThis(node *ast.Node) error {
+-	if l.instance != nil && l.instance.unreadyThis[node] {
++	if ((os.Getenv("ADAMIC_MUTANT") == "M10") && (false && l.instance != nil && l.instance.unreadyThis[node])) || ((os.Getenv("ADAMIC_MUTANT") != "M10") && (l.instance != nil && l.instance.unreadyThis[node])) {
+ 		return &Refused{Where: l.program.Where(node), What: "this before super returns", Fix: "call super(...) before using this"}
+ 	}
+ 	if l.instance != nil && l.instance.constructing && l.instance.hasDescendants {
+diff --git a/internal/lower/class_inheritance.go b/internal/lower/class_inheritance.go
+index b1906e9d..566abbe0 100644
+--- a/internal/lower/class_inheritance.go
++++ b/internal/lower/class_inheritance.go
+@@ -1,6 +1,7 @@
+ package lower
+ 
+ import (
++	"os"
+ 	"slices"
+ 	"strconv"
+ 	"strings"
+@@ -17,7 +18,7 @@ func (l *lowering) baseInstance(declaration *ast.Node, classType *checker.Type)
+ 			continue
+ 		}
+ 		types := clause.AsHeritageClause().Types.Nodes
+-		if len(types) != 1 || !ast.IsIdentifier(ast.SkipParentheses(types[0].AsExpressionWithTypeArguments().Expression)) {
++		if ((os.Getenv("ADAMIC_MUTANT") == "M17") && (len(types) != 1 || ast.IsIdentifier(ast.SkipParentheses(types[0].AsExpressionWithTypeArguments().Expression)))) || ((os.Getenv("ADAMIC_MUTANT") != "M17") && (len(types) != 1 || !ast.IsIdentifier(ast.SkipParentheses(types[0].AsExpressionWithTypeArguments().Expression)))) {
+ 			return nil, l.notYet(clause, "a computed class base; name the base class directly")
+ 		}
+ 		bases := l.classBases(classType)
+@@ -39,7 +40,7 @@ func (l *lowering) baseInstance(declaration *ast.Node, classType *checker.Type)
+ // through a base reference: arguments flow into the override, and fields can be written through it.
+ func (l *lowering) checkOverrides(declaration *ast.Node, classType *checker.Type) error {
+ 	bases := l.classBases(classType)
+-	if len(bases) == 0 {
++	if ((os.Getenv("ADAMIC_MUTANT") == "M03") && (len(bases) >= 0)) || ((os.Getenv("ADAMIC_MUTANT") != "M03") && (len(bases) == 0)) {
+ 		return nil
+ 	}
+ 	return l.checkMemberOverrides(declaration, classType, bases[0], false)
+@@ -105,7 +106,7 @@ func (l *lowering) checkMemberOverrides(declaration *ast.Node, classType, base *
+ 			}
+ 		}
+ 		if member.Kind == ast.KindPropertyDeclaration || parameterProperty(member) {
+-			if !l.checker.IsReadonlySymbol(inherited) && (!l.classAssignable(previous, own) || !l.classAssignable(own, previous) || l.widened(previous, own, map[[2]*checker.Type]bool{}) != nil || l.widened(own, previous, map[[2]*checker.Type]bool{}) != nil) {
++			if ((os.Getenv("ADAMIC_MUTANT") == "M04") && l.checker.IsReadonlySymbol(inherited) || (os.Getenv("ADAMIC_MUTANT") != "M04") && !l.checker.IsReadonlySymbol(inherited)) && (!l.classAssignable(previous, own) || !l.classAssignable(own, previous) || l.widened(previous, own, map[[2]*checker.Type]bool{}) != nil || l.widened(own, previous, map[[2]*checker.Type]bool{}) != nil) {
+ 				return refuse("a mutable inherited field redeclared with a different type (adamic/invariant-mutable)", "keep the base field's type; narrow a local after reading it, or make the field readonly in the base")
+ 			}
+ 			if l.checker.IsReadonlySymbol(inherited) && (l.widened(own, previous, map[[2]*checker.Type]bool{}) != nil || !l.classAssignable(own, previous)) {
+@@ -129,7 +130,7 @@ func (l *lowering) checkMemberOverrides(declaration *ast.Node, classType, base *
+ 			return l.notYet(member, "an overloaded override")
+ 		}
+ 		old, next := oldSignatures[0], newSignatures[0]
+-		if len(old.Parameters()) != len(next.Parameters()) {
++		if ((os.Getenv("ADAMIC_MUTANT") == "M05") && (len(old.Parameters()) == len(next.Parameters()))) || ((os.Getenv("ADAMIC_MUTANT") != "M05") && (len(old.Parameters()) != len(next.Parameters()))) {
+ 			return l.notYet(member, "an override with a different parameter count; keep the base method's parameter count")
+ 		}
+ 		for index, parameter := range old.Parameters() {
+@@ -137,7 +138,7 @@ func (l *lowering) checkMemberOverrides(declaration *ast.Node, classType, base *
+ 			override := l.checker.GetTypeOfSymbol(next.Parameters()[index])
+ 			a, knownA := l.overrideParameterRepresentation(parameter)
+ 			b, knownB := l.overrideParameterRepresentation(next.Parameters()[index])
+-			if checkABI && (!knownA || !knownB || a != b) {
++			if ((os.Getenv("ADAMIC_MUTANT") == "M09") && (checkABI && (!knownA || !knownB || a == b))) || ((os.Getenv("ADAMIC_MUTANT") != "M09") && (checkABI && (!knownA || !knownB || a != b))) {
+ 				return l.notYet(member, "an override with a different native representation for parameter "+strconv.Quote(next.Parameters()[index].Name)+"; keep the base method's parameter form")
+ 			}
+ 			if !l.classAssignable(accepts, override) || l.widened(accepts, override, map[[2]*checker.Type]bool{}) != nil {
+@@ -151,7 +152,7 @@ func (l *lowering) checkMemberOverrides(declaration *ast.Node, classType, base *
+ 		if checkABI && (!knownA || !knownB || a != b) {
+ 			return l.notYet(member, "an override with a different native result representation; keep the base method's result form")
+ 		}
+-		if !l.classAssignable(newResult, oldResult) || l.widened(newResult, oldResult, map[[2]*checker.Type]bool{}) != nil {
++		if !((os.Getenv("ADAMIC_MUTANT") == "M08") && l.classAssignable(oldResult, newResult) || (os.Getenv("ADAMIC_MUTANT") != "M08") && l.classAssignable(newResult, oldResult)) || l.widened(newResult, oldResult, map[[2]*checker.Type]bool{}) != nil {
+ 			return refuse("an override that widens its return type", "return the base method's result type or a subtype")
+ 		}
+ 	}
+@@ -175,7 +176,10 @@ func (l *lowering) overrideParameterRepresentation(parameter *ast.Symbol) (ir.Ty
+ 	}
+ 	representation, known := l.representation(l.checker.GetTypeOfSymbol(parameter))
+ 	if declared.Initializer != nil || declared.QuestionToken != nil {
+-		representation = ir.Maybe(representation)
++		if os.Getenv("ADAMIC_MUTANT") == "M06" {
++		} else {
++			representation = ir.Maybe(representation)
++		}
+ 	}
+ 	return representation, known
+ }
+@@ -183,7 +187,11 @@ func (l *lowering) overrideParameterRepresentation(parameter *ast.Symbol) (ir.Ty
+ // Named methods returning void or never have no C result, as signature lowering does.
+ func (l *lowering) overrideResultRepresentation(result *checker.Type) (ir.Type, bool) {
+ 	if result.Flags()&(checker.TypeFlagsVoid|checker.TypeFlagsNever) != 0 {
+-		return 0, true
++		if os.Getenv("ADAMIC_MUTANT") == "M07" {
++			return ir.Boolean, true
++		} else {
++			return 0, true
++		}
+ 	}
+ 	return l.representation(result)
+ }
+@@ -234,7 +242,12 @@ func (l *lowering) inheritanceConstructor(index int, declaration *ast.Node) erro
+ 		if member.Kind != ast.KindPropertyDeclaration && !parameterProperty(member) {
+ 			continue
+ 		}
+-		if ast.HasSyntacticModifier(member, ast.ModifierFlagsAmbient|ast.ModifierFlagsAbstract) {
++		if ast.HasSyntacticModifier(member, func() ast.ModifierFlags {
++			if os.Getenv("ADAMIC_MUTANT") == "M18" {
++				return ast.ModifierFlagsStatic
++			}
++			return ast.ModifierFlagsAmbient | ast.ModifierFlagsAbstract
++		}()) {
+ 			return l.notYet(member, "a declare or abstract class field")
+ 		}
+ 		if ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) {
+@@ -469,11 +482,14 @@ func (l *lowering) superStatement(node *ast.Node) ([]ir.Statement, error) {
+ 	statements = append(statements, ir.Evaluate{Value: call}, ir.Assign{Local: l.instance.superReady, Value: ir.BooleanConstant{Value: true}})
+ 	// Fields run only once super has returned, and before the next derived-body statement.
+ 	declaration := l.classNode.Parent
+-	initialized, err := l.fieldInitializers(declaration, l.this)
+-	if err != nil {
+-		return nil, err
++	if os.Getenv("ADAMIC_MUTANT") == "M19" {
++	} else {
++		initialized, err := l.fieldInitializers(declaration, l.this)
++		if err != nil {
++			return nil, err
++		}
++		statements = append(statements, initialized...)
+ 	}
+-	statements = append(statements, initialized...)
+ 	assigned, err := l.parameterPropertyStores(declaration, l.this)
+ 	return append(statements, assigned...), err
+ }
+@@ -590,7 +606,7 @@ func (l *lowering) nominalAncestor(source, target *checker.Type, seen map[[2]*ch
+ 	}
+ 	if source.Symbol() == target.Symbol() {
+ 		from, to := l.checker.GetTypeArguments(source), l.checker.GetTypeArguments(target)
+-		if !l.sameClassArguments(from, to) {
++		if ((os.Getenv("ADAMIC_MUTANT") == "M15") && (l.sameClassArguments(from, to))) || ((os.Getenv("ADAMIC_MUTANT") != "M15") && (!l.sameClassArguments(from, to))) {
+ 			return false
+ 		}
+ 		for index := range from {
+@@ -741,7 +757,7 @@ func (l *lowering) nominalMismatch(from, to *checker.Type, seen map[[2]*checker.
+ 		if symbol := to.Symbol(); symbol != nil && len(symbol.Declarations) > 0 && load.IsPrelude(ast.GetSourceFileOfNode(symbol.Declarations[0])) {
+ 			return nil
+ 		}
+-		if !l.nominalAncestor(from, to, seen) {
++		if ((os.Getenv("ADAMIC_MUTANT") == "M14") && (false && !l.nominalAncestor(from, to, seen))) || ((os.Getenv("ADAMIC_MUTANT") != "M14") && (!l.nominalAncestor(from, to, seen))) {
+ 			return to
+ 		}
+ 		return nil
+@@ -819,7 +835,7 @@ func (l *lowering) classDestructuredView(node, pattern *ast.Node) error {
+ 		if binding.Kind == ast.KindOmittedExpression || binding.Name() == nil {
+ 			continue
+ 		}
+-		if !tuple {
++		if ((os.Getenv("ADAMIC_MUTANT") == "M11") && (tuple)) || ((os.Getenv("ADAMIC_MUTANT") != "M11") && (!tuple)) {
+ 			index = 0
+ 		}
+ 		if index >= len(elements) {
+@@ -865,9 +881,12 @@ func (l *lowering) cycleFieldName(field *ast.Symbol) string {
+ // All monomorphizations of a source class have one erased identity. An identity-only
+ // descriptor lets instanceof name a generic class before any concrete instance is made.
+ func (l *lowering) classDefinition(declaration *ast.Node) int {
+-	for key, instance := range l.instances {
+-		if l.classKeyMatches(key, declaration) {
+-			return l.result.Classes[instance.class-1].Definition
++	if os.Getenv("ADAMIC_MUTANT") == "M12" {
++	} else {
++		for key, instance := range l.instances {
++			if l.classKeyMatches(key, declaration) {
++				return l.result.Classes[instance.class-1].Definition
++			}
+ 		}
+ 	}
+ 	return len(l.result.Classes) + 1
+@@ -930,7 +949,11 @@ func (l *lowering) classBases(proven *checker.Type) []*checker.Type {
+ 	}
+ 	concrete := make([]*checker.Type, len(bases))
+ 	for index, base := range bases {
+-		concrete[index] = instantiateType(l.checker, base, mapper)
++		if os.Getenv("ADAMIC_MUTANT") == "M13" {
++			concrete[index] = base
++		} else {
++			concrete[index] = instantiateType(l.checker, base, mapper)
++		}
+ 	}
+ 	return concrete
+ }
+diff --git a/internal/lower/cycles.go b/internal/lower/cycles.go
+index 63513189..7bb5d4a5 100644
+--- a/internal/lower/cycles.go
++++ b/internal/lower/cycles.go
+@@ -1,6 +1,7 @@
+ package lower
+ 
+ import (
++	"os"
+ 	"strings"
+ 
+ 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+@@ -230,9 +231,12 @@ func (f *cycleFinder) template(proven *checker.Type) bool {
+ 
+ // fields includes literal methods, which own closures. Class prototype methods hold no instance data.
+ func (f *cycleFinder) fields(proven *checker.Type) []*ast.Symbol {
++	if os.Getenv("ADAMIC_MUTANT") == "P_FIELDS" {
++		return nil
++	}
+ 	fields := []*ast.Symbol{}
+ 	for _, property := range f.l.checker.GetPropertiesOfType(proven) {
+-		if (property.Flags&ast.SymbolFlagsMethod == 0 || literalMethod(property)) && !accessorSymbol(property) && !(f.l.isStaticType(proven) && property.Name == "prototype") {
++		if (((os.Getenv("ADAMIC_MUTANT") == "M16") && (property.Flags&ast.SymbolFlagsMethod != 0) || (os.Getenv("ADAMIC_MUTANT") != "M16") && (property.Flags&ast.SymbolFlagsMethod == 0)) || literalMethod(property)) && !accessorSymbol(property) && !(f.l.isStaticType(proven) && property.Name == "prototype") {
+ 			fields = append(fields, property)
+ 		}
+ 	}
+diff --git a/internal/lower/lower.go b/internal/lower/lower.go
+index daba343f..1c50a263 100644
+--- a/internal/lower/lower.go
++++ b/internal/lower/lower.go
+@@ -13,11 +13,15 @@ import (
+ 	"github.com/microsoft/TypeScript/tsc/shim/checker"
+ 	"github.com/system-inc/adamic/internal/ir"
+ 	"github.com/system-inc/adamic/internal/load"
++	"os"
+ 	"path/filepath"
+ )
+ 
+ // Lower lowers a checked program from one entry, in ESM evaluation order.
+ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
++	if os.Getenv("ADAMIC_MUTANT") == "P_LOWER" {
++		return nil, nil
++	}
+ 	files := program.Files()
+ 	if len(files) != 1 {
+ 		return nil, fmt.Errorf("lower: stage 0 compiles a program from one entry file, got %d", len(files))

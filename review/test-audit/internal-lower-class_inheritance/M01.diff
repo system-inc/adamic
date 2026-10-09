@@ -1,0 +1,11 @@
+--- a/internal/lower/class.go
++++ b/internal/lower/class.go
+@@ -143,7 +143,7 @@
+ 	lowered.class = len(l.result.Classes) + 1
+ 	metadata := ir.Class{Name: name, Constructor: lowered.constructor, Definition: l.classDefinition(declaration)}
+ 	if base != nil {
+-		metadata.Base = base.class
++		metadata.Base = 0
+ 		metadata.Fields = append(metadata.Fields, l.result.Classes[base.class-1].Fields...)
+ 		metadata.Methods = append(metadata.Methods, l.result.Classes[base.class-1].Methods...)
+ 		for method, function := range base.methods {

@@ -1,0 +1,11 @@
+--- a/internal/load/load.go
++++ b/internal/load/load.go
+@@ -145,7 +145,7 @@
+ 
+ 	loaded := &Program{compiler: program, fs: fs}
+ 	if diagnostics := loaded.diagnostics(context.Background()); len(diagnostics) > 0 {
+-		return nil, &CheckError{Diagnostics: diagnostics}
++		return nil, &CheckError{Diagnostics: nil}
+ 	}
+ 
+ 	// Every root must be in the program. One that is not would be a file silently left unchecked.

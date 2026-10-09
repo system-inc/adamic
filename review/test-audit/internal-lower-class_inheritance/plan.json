@@ -1,0 +1,209 @@
+[
+  {
+    "id": "M01",
+    "file": "internal/lower/class.go",
+    "line": 146,
+    "old": "metadata.Base = base.class",
+    "new": "metadata.Base = 0",
+    "kind": "change constant",
+    "supplemental": false
+  },
+  {
+    "id": "M02",
+    "file": "internal/lower/class.go",
+    "line": 147,
+    "old": "metadata.Fields = append(metadata.Fields, l.result.Classes[base.class-1].Fields...)",
+    "new": "",
+    "kind": "drop statement",
+    "supplemental": false
+  },
+  {
+    "id": "M03",
+    "file": "internal/lower/class_inheritance.go",
+    "line": 42,
+    "old": "if len(bases) == 0 {",
+    "new": "if len(bases) >= 0 {",
+    "kind": "flip condition",
+    "supplemental": false
+  },
+  {
+    "id": "M04",
+    "file": "internal/lower/class_inheritance.go",
+    "line": 108,
+    "old": "!l.checker.IsReadonlySymbol(inherited)",
+    "new": "l.checker.IsReadonlySymbol(inherited)",
+    "kind": "flip condition",
+    "supplemental": false
+  },
+  {
+    "id": "M05",
+    "file": "internal/lower/class_inheritance.go",
+    "line": 132,
+    "old": "if len(old.Parameters()) != len(next.Parameters()) {",
+    "new": "if len(old.Parameters()) == len(next.Parameters()) {",
+    "kind": "flip condition",
+    "supplemental": false
+  },
+  {
+    "id": "M06",
+    "file": "internal/lower/class_inheritance.go",
+    "line": 178,
+    "old": "representation = ir.Maybe(representation)",
+    "new": "",
+    "kind": "drop statement",
+    "supplemental": false
+  },
+  {
+    "id": "M07",
+    "file": "internal/lower/class_inheritance.go",
+    "line": 186,
+    "old": "return 0, true",
+    "new": "return ir.Boolean, true",
+    "kind": "change constant",
+    "supplemental": false
+  },
+  {
+    "id": "M08",
+    "file": "internal/lower/class_inheritance.go",
+    "line": 154,
+    "old": "l.classAssignable(newResult, oldResult)",
+    "new": "l.classAssignable(oldResult, newResult)",
+    "kind": "swap arguments",
+    "supplemental": false
+  },
+  {
+    "id": "M09",
+    "file": "internal/lower/class_inheritance.go",
+    "line": 140,
+    "old": "if checkABI && (!knownA || !knownB || a != b) {\n\t\t\t\treturn",
+    "new": "if checkABI && (!knownA || !knownB || a == b) {\n\t\t\t\treturn",
+    "kind": "flip condition",
+    "supplemental": false
+  },
+  {
+    "id": "M10",
+    "file": "internal/lower/class.go",
+    "line": 754,
+    "old": "if l.instance != nil && l.instance.unreadyThis[node] {",
+    "new": "if false && l.instance != nil && l.instance.unreadyThis[node] {",
+    "kind": "change condition constant",
+    "supplemental": false
+  },
+  {
+    "id": "M11",
+    "file": "internal/lower/class_inheritance.go",
+    "line": 822,
+    "old": "if !tuple {",
+    "new": "if tuple {",
+    "kind": "flip condition",
+    "supplemental": true
+  },
+  {
+    "id": "M12",
+    "file": "internal/lower/class_inheritance.go",
+    "line": 868,
+    "old": "for key, instance := range l.instances {\n\t\tif l.classKeyMatches(key, declaration) {\n\t\t\treturn l.result.Classes[instance.class-1].Definition\n\t\t}\n\t}",
+    "new": "",
+    "kind": "drop whole identity reuse loop",
+    "supplemental": false
+  },
+  {
+    "id": "M13",
+    "file": "internal/lower/class_inheritance.go",
+    "line": 933,
+    "old": "concrete[index] = instantiateType(l.checker, base, mapper)",
+    "new": "concrete[index] = base",
+    "kind": "drop substitution option",
+    "supplemental": false
+  },
+  {
+    "id": "M14",
+    "file": "internal/lower/class_inheritance.go",
+    "line": 744,
+    "old": "if !l.nominalAncestor(from, to, seen) {",
+    "new": "if false && !l.nominalAncestor(from, to, seen) {",
+    "kind": "change condition constant",
+    "supplemental": false
+  },
+  {
+    "id": "M15",
+    "file": "internal/lower/class_inheritance.go",
+    "line": 593,
+    "old": "if !l.sameClassArguments(from, to) {",
+    "new": "if l.sameClassArguments(from, to) {",
+    "kind": "flip condition",
+    "supplemental": false
+  },
+  {
+    "id": "M16",
+    "file": "internal/lower/cycles.go",
+    "line": 235,
+    "old": "property.Flags&ast.SymbolFlagsMethod == 0",
+    "new": "property.Flags&ast.SymbolFlagsMethod != 0",
+    "kind": "flip condition",
+    "supplemental": false
+  },
+  {
+    "id": "M17",
+    "file": "internal/lower/class_inheritance.go",
+    "line": 20,
+    "old": "if len(types) != 1 || !ast.IsIdentifier(ast.SkipParentheses(types[0].AsExpressionWithTypeArguments().Expression)) {",
+    "new": "if len(types) != 1 || ast.IsIdentifier(ast.SkipParentheses(types[0].AsExpressionWithTypeArguments().Expression)) {",
+    "kind": "flip condition",
+    "supplemental": false
+  },
+  {
+    "id": "M18",
+    "file": "internal/lower/class_inheritance.go",
+    "line": 237,
+    "old": "ast.ModifierFlagsAmbient|ast.ModifierFlagsAbstract",
+    "new": "ast.ModifierFlagsStatic",
+    "kind": "change option",
+    "supplemental": false
+  },
+  {
+    "id": "M19",
+    "file": "internal/lower/class_inheritance.go",
+    "line": 472,
+    "old": "initialized, err := l.fieldInitializers(declaration, l.this)\n\tif err != nil {\n\t\treturn nil, err\n\t}\n\tstatements = append(statements, initialized...)",
+    "new": "",
+    "kind": "drop whole initializer block to avoid unused binding",
+    "supplemental": false
+  },
+  {
+    "id": "M20",
+    "file": "internal/load/load.go",
+    "line": 148,
+    "old": "&CheckError{Diagnostics: diagnostics}",
+    "new": "&CheckError{Diagnostics: nil}",
+    "kind": "change constant",
+    "supplemental": false
+  },
+  {
+    "id": "P_LOWER",
+    "file": "internal/lower/lower.go",
+    "line": 20,
+    "old": "func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {",
+    "new": "func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {\n if true { return nil, nil }",
+    "kind": "empty entry probe",
+    "supplemental": false
+  },
+  {
+    "id": "P_FIELDS",
+    "file": "internal/lower/cycles.go",
+    "line": 232,
+    "old": "func (f *cycleFinder) fields(proven *checker.Type) []*ast.Symbol {",
+    "new": "func (f *cycleFinder) fields(proven *checker.Type) []*ast.Symbol {\n if true { return nil }",
+    "kind": "empty entry probe",
+    "supplemental": false
+  },
+  {
+    "id": "P_LOAD",
+    "file": "internal/load/load.go",
+    "line": 80,
+    "old": "func Load(paths []string) (*Program, error) {",
+    "new": "func Load(paths []string) (*Program, error) {\n if true { return nil, nil }",
+    "kind": "empty entry probe",
+    "supplemental": false
+  }
+]

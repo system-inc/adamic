@@ -1,0 +1,11 @@
+--- a/internal/lower/class.go
++++ b/internal/lower/class.go
+@@ -751,7 +751,7 @@
+ // object of a field it reads or writes: a method it calls, or a function it's handed to, could read a
+ // field not set yet.
+ func (l *lowering) useOfThis(node *ast.Node) error {
+-	if l.instance != nil && l.instance.unreadyThis[node] {
++	if false && l.instance != nil && l.instance.unreadyThis[node] {
+ 		return &Refused{Where: l.program.Where(node), What: "this before super returns", Fix: "call super(...) before using this"}
+ 	}
+ 	if l.instance != nil && l.instance.constructing && l.instance.hasDescendants {

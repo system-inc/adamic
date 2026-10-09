@@ -1,0 +1,11 @@
+--- a/internal/lower/class_inheritance.go
++++ b/internal/lower/class_inheritance.go
+@@ -151,7 +151,7 @@
+ 		if checkABI && (!knownA || !knownB || a != b) {
+ 			return l.notYet(member, "an override with a different native result representation; keep the base method's result form")
+ 		}
+-		if !l.classAssignable(newResult, oldResult) || l.widened(newResult, oldResult, map[[2]*checker.Type]bool{}) != nil {
++		if !l.classAssignable(oldResult, newResult) || l.widened(newResult, oldResult, map[[2]*checker.Type]bool{}) != nil {
+ 			return refuse("an override that widens its return type", "return the base method's result type or a subtype")
+ 		}
+ 	}

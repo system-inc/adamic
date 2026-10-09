@@ -1,0 +1,15 @@
+--- a/internal/lower/class_inheritance.go
++++ b/internal/lower/class_inheritance.go
+@@ -469,11 +469,7 @@
+ 	statements = append(statements, ir.Evaluate{Value: call}, ir.Assign{Local: l.instance.superReady, Value: ir.BooleanConstant{Value: true}})
+ 	// Fields run only once super has returned, and before the next derived-body statement.
+ 	declaration := l.classNode.Parent
+-	initialized, err := l.fieldInitializers(declaration, l.this)
+-	if err != nil {
+-		return nil, err
+-	}
+-	statements = append(statements, initialized...)
++	
+ 	assigned, err := l.parameterPropertyStores(declaration, l.this)
+ 	return append(statements, assigned...), err
+ }

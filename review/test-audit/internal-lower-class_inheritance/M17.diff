@@ -1,0 +1,11 @@
+--- a/internal/lower/class_inheritance.go
++++ b/internal/lower/class_inheritance.go
+@@ -17,7 +17,7 @@
+ 			continue
+ 		}
+ 		types := clause.AsHeritageClause().Types.Nodes
+-		if len(types) != 1 || !ast.IsIdentifier(ast.SkipParentheses(types[0].AsExpressionWithTypeArguments().Expression)) {
++		if len(types) != 1 || ast.IsIdentifier(ast.SkipParentheses(types[0].AsExpressionWithTypeArguments().Expression)) {
+ 			return nil, l.notYet(clause, "a computed class base; name the base class directly")
+ 		}
+ 		bases := l.classBases(classType)

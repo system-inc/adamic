@@ -1,0 +1,11 @@
+--- a/internal/lower/class_inheritance.go
++++ b/internal/lower/class_inheritance.go
+@@ -930,7 +930,7 @@
+ 	}
+ 	concrete := make([]*checker.Type, len(bases))
+ 	for index, base := range bases {
+-		concrete[index] = instantiateType(l.checker, base, mapper)
++		concrete[index] = base
+ 	}
+ 	return concrete
+ }

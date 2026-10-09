@@ -1,0 +1,11 @@
+--- a/internal/lower/class_inheritance.go
++++ b/internal/lower/class_inheritance.go
+@@ -741,7 +741,7 @@
+ 		if symbol := to.Symbol(); symbol != nil && len(symbol.Declarations) > 0 && load.IsPrelude(ast.GetSourceFileOfNode(symbol.Declarations[0])) {
+ 			return nil
+ 		}
+-		if !l.nominalAncestor(from, to, seen) {
++		if false && !l.nominalAncestor(from, to, seen) {
+ 			return to
+ 		}
+ 		return nil

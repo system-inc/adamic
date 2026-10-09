@@ -1,0 +1,11 @@
+--- a/internal/lower/class_inheritance.go
++++ b/internal/lower/class_inheritance.go
+@@ -39,7 +39,7 @@
+ // through a base reference: arguments flow into the override, and fields can be written through it.
+ func (l *lowering) checkOverrides(declaration *ast.Node, classType *checker.Type) error {
+ 	bases := l.classBases(classType)
+-	if len(bases) == 0 {
++	if len(bases) >= 0 {
+ 		return nil
+ 	}
+ 	return l.checkMemberOverrides(declaration, classType, bases[0], false)

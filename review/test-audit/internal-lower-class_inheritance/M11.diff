@@ -1,0 +1,11 @@
+--- a/internal/lower/class_inheritance.go
++++ b/internal/lower/class_inheritance.go
+@@ -819,7 +819,7 @@
+ 		if binding.Kind == ast.KindOmittedExpression || binding.Name() == nil {
+ 			continue
+ 		}
+-		if !tuple {
++		if tuple {
+ 			index = 0
+ 		}
+ 		if index >= len(elements) {

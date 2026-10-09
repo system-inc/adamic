@@ -1,0 +1,15 @@
+--- a/internal/lower/class_inheritance.go
++++ b/internal/lower/class_inheritance.go
+@@ -865,11 +865,7 @@
+ // All monomorphizations of a source class have one erased identity. An identity-only
+ // descriptor lets instanceof name a generic class before any concrete instance is made.
+ func (l *lowering) classDefinition(declaration *ast.Node) int {
+-	for key, instance := range l.instances {
+-		if l.classKeyMatches(key, declaration) {
+-			return l.result.Classes[instance.class-1].Definition
+-		}
+-	}
++	
+ 	return len(l.result.Classes) + 1
+ }
+ 

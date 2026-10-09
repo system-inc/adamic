@@ -1,0 +1,11 @@
+--- a/internal/lower/class_inheritance.go
++++ b/internal/lower/class_inheritance.go
+@@ -175,7 +175,7 @@
+ 	}
+ 	representation, known := l.representation(l.checker.GetTypeOfSymbol(parameter))
+ 	if declared.Initializer != nil || declared.QuestionToken != nil {
+-		representation = ir.Maybe(representation)
++		
+ 	}
+ 	return representation, known
+ }

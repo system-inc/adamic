@@ -1,0 +1,35 @@
+import pathlib,json,difflib,subprocess
+root=pathlib.Path('/workspace/adamic'); out=root/'review/test-audit/internal-lower-class_inheritance'; out.mkdir(parents=True,exist_ok=True)
+plans=[]
+def add(id,f,old,new,kind):
+ s=(root/f).read_text(); assert s.count(old)==1,(id,s.count(old)); plans.append(dict(id=id,file=f,line=s[:s.index(old)].count('\n')+1,old=old,new=new,kind=kind))
+c='internal/lower/class_inheritance.go'; cl='internal/lower/class.go'
+add('M01',cl,'metadata.Base = base.class','metadata.Base = 0','change constant')
+add('M02',cl,'metadata.Fields = append(metadata.Fields, l.result.Classes[base.class-1].Fields...)','','drop statement')
+add('M03',c,'if len(bases) == 0 {','if len(bases) >= 0 {','flip condition')
+add('M04',c,'!l.checker.IsReadonlySymbol(inherited)','l.checker.IsReadonlySymbol(inherited)','flip condition')
+add('M05',c,'if len(old.Parameters()) != len(next.Parameters()) {','if len(old.Parameters()) == len(next.Parameters()) {','flip condition')
+add('M06',c,'representation = ir.Maybe(representation)','','drop statement')
+add('M07',c,'return 0, true','return ir.Boolean, true','change constant')
+add('M08',c,'l.classAssignable(newResult, oldResult)','l.classAssignable(oldResult, newResult)','swap arguments')
+add('M09',c,'if checkABI && (!knownA || !knownB || a != b) {\n\t\t\t\treturn','if checkABI && (!knownA || !knownB || a == b) {\n\t\t\t\treturn','flip condition')
+add('M10',cl,'if l.instance != nil && l.instance.unreadyThis[node] {','if false && l.instance != nil && l.instance.unreadyThis[node] {','change condition constant')
+add('M11',c,'if !tuple {','if tuple {','flip condition')
+add('M12',c,'for key, instance := range l.instances {\n\t\tif l.classKeyMatches(key, declaration) {\n\t\t\treturn l.result.Classes[instance.class-1].Definition\n\t\t}\n\t}','','drop whole identity reuse loop')
+add('M13',c,'concrete[index] = instantiateType(l.checker, base, mapper)','concrete[index] = base','drop substitution option')
+add('M14',c,'if !l.nominalAncestor(from, to, seen) {','if false && !l.nominalAncestor(from, to, seen) {','change condition constant')
+add('M15',c,'if !l.sameClassArguments(from, to) {','if l.sameClassArguments(from, to) {','flip condition')
+add('M16','internal/lower/cycles.go','property.Flags&ast.SymbolFlagsMethod == 0','property.Flags&ast.SymbolFlagsMethod != 0','flip condition')
+add('M17',c,'if len(types) != 1 || !ast.IsIdentifier(ast.SkipParentheses(types[0].AsExpressionWithTypeArguments().Expression)) {','if len(types) != 1 || ast.IsIdentifier(ast.SkipParentheses(types[0].AsExpressionWithTypeArguments().Expression)) {','flip condition')
+add('M18',c,'ast.ModifierFlagsAmbient|ast.ModifierFlagsAbstract','ast.ModifierFlagsStatic','change option')
+add('M19',c,'initialized, err := l.fieldInitializers(declaration, l.this)\n\tif err != nil {\n\t\treturn nil, err\n\t}\n\tstatements = append(statements, initialized...)','','drop whole initializer block to avoid unused binding')
+add('M20','internal/load/load.go','&CheckError{Diagnostics: diagnostics}','&CheckError{Diagnostics: nil}','change constant')
+# Independent entry probes, separate from production mutations.
+add('P_LOWER','internal/lower/lower.go','func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {','func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {\n return nil, nil','empty entry probe')
+add('P_FIELDS','internal/lower/cycles.go','func (f *cycleFinder) fields(proven *checker.Type) []*ast.Symbol {','func (f *cycleFinder) fields(proven *checker.Type) []*ast.Symbol {\n return nil','empty entry probe')
+add('P_LOAD','internal/load/load.go','func Load(paths []string) (*Program, error) {','func Load(paths []string) (*Program, error) {\n return nil, nil','empty entry probe')
+(out/'plan.json').write_text(json.dumps(plans,indent=2)); (out/'base.txt').write_text(subprocess.check_output(['git','rev-parse','HEAD'],cwd=root,text=True))
+for m in plans:
+ s=(root/m['file']).read_text(); changed=s.replace(m['old'],m['new']); diff=''.join(difflib.unified_diff(s.splitlines(True),changed.splitlines(True),fromfile='a/'+m['file'],tofile='b/'+m['file']))
+ (out/(m['id']+'.diff')).write_text(diff)
+print('Plan saved, no mutants applied')

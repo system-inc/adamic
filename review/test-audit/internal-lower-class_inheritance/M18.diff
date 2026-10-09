@@ -1,0 +1,11 @@
+--- a/internal/lower/class_inheritance.go
++++ b/internal/lower/class_inheritance.go
+@@ -234,7 +234,7 @@
+ 		if member.Kind != ast.KindPropertyDeclaration && !parameterProperty(member) {
+ 			continue
+ 		}
+-		if ast.HasSyntacticModifier(member, ast.ModifierFlagsAmbient|ast.ModifierFlagsAbstract) {
++		if ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) {
+ 			return l.notYet(member, "a declare or abstract class field")
+ 		}
+ 		if ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) {

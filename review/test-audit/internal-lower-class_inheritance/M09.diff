@@ -1,0 +1,11 @@
+--- a/internal/lower/class_inheritance.go
++++ b/internal/lower/class_inheritance.go
+@@ -137,7 +137,7 @@
+ 			override := l.checker.GetTypeOfSymbol(next.Parameters()[index])
+ 			a, knownA := l.overrideParameterRepresentation(parameter)
+ 			b, knownB := l.overrideParameterRepresentation(next.Parameters()[index])
+-			if checkABI && (!knownA || !knownB || a != b) {
++			if checkABI && (!knownA || !knownB || a == b) {
+ 				return l.notYet(member, "an override with a different native representation for parameter "+strconv.Quote(next.Parameters()[index].Name)+"; keep the base method's parameter form")
+ 			}
+ 			if !l.classAssignable(accepts, override) || l.widened(accepts, override, map[[2]*checker.Type]bool{}) != nil {
