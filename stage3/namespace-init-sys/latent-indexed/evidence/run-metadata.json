@@ -1,0 +1,46 @@
+{
+  "compiler_baseline": "5ad36d2cf4fce475ec072f3cc68e21c393dffc45",
+  "feature_branch": "codex/namespace-init-sys",
+  "production_sources_unchanged": true,
+  "upstream_typescript": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "adaptation_commit": "3b25512566206bc603b93264e8d072c55e075d64",
+  "source_files": 79,
+  "top_level_units": 4536,
+  "findings": {
+    "Refused": 9749,
+    "NotYet": 1650,
+    "SkippedDependency": 1,
+    "panic": 1
+  },
+  "indexed_rows": 99,
+  "states": {
+    "not reached": 21,
+    "function blocked by a refusal": 76,
+    "check emitted": 2
+  },
+  "distinct_primary_blockers": 45,
+  "elapsed_seconds": 867.971,
+  "exit": 0,
+  "nproc": 5,
+  "input_ordinary_checker_errors": 0,
+  "remaining_option_errors": 5,
+  "checker_rejected": true,
+  "scheduled_JSON_corrected": 2,
+  "indexed_classification_changes_from_preliminary": [],
+  "owning_config_sha256": {
+    "src/compiler/tsconfig.json": "995596ff26d7f9333078c6c8096685fc93f4abe87d2576396a6d7a69994e734f",
+    "src/tsconfig-base.json": "ac1ad7dfda5fcb3abd48a6eaf0142f754ae8dc6fe5538bb17c68166e85c9af37"
+  },
+  "tool_scripts_sha256": {
+    "audit_rows.py": "62f16cfe3e1ca5a798f1f8247e5788a73b1b9cef2e49c82fee53c6fae4d57fdc",
+    "audit_eligibility_mutant.py": "c8768f08daf70ce375663b9faedcb4d29f07f98ec1f13910508256f2266bc88d",
+    "audit.py": "1b6bf5b5d7f4fe9cdc5d6754d46f06ba4169a77a025163f47b0e8a03b1a02e53",
+    "classify.py": "6b68a3a36aa47bf729b313fc234dad2476d50e405827008fbbba0451daf0c609",
+    "build.py": "108f2a90ea3fe2b78762eb35e5db8c1388fe874f24f734ccf353893ac486660f",
+    "audit_guard_mutant.py": "c08153e139a799cbd27495a191e622b32b8604b70eb10f3ea3c4fe0083837a9d"
+  },
+  "workarounds": [
+    "/usr/bin/time unavailable: Python monotonic timer used",
+    "Workspace filesystem filled by 27GB disposable Go cache after collection; go clean -cache restored 26GB free; raw census and logs retained"
+  ]
+}
