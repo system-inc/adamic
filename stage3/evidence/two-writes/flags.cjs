@@ -1,0 +1,11 @@
+const assert = require('node:assert/strict');
+const probe = require('./probe.cjs');
+const ts = require(process.argv[2]);
+const node = ts.factory.createIdentifier('x');
+assert.equal(node.flags, ts.NodeFlags.Synthesized);
+probe.flagsDomain(node, [ts.NodeFlags.Synthesized]);
+ts.setNodeFlags(node, ts.NodeFlags.None);
+assert.equal(node.flags, 0);
+assert.equal(probe.snapshot().rows.find(r => r.site === 'flags').violations, 1);
+assert.equal(probe.snapshot().rows.find(r => r.site === 'flags').outOfTypeReads, 1);
+console.log('flags: Synthesized (16) -> None (0); later read = 0');

@@ -1,0 +1,11 @@
+{"Time":"2026-10-09T18:20:54.772986469Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T18:20:54.80669986Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileOptionsBorrow"}
+{"Time":"2026-10-09T18:20:54.806755775Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileOptionsBorrow","Output":"=== RUN   TestNodeFSFileOptionsBorrow\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:20:54.806801701Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileOptionsBorrow","Output":"=== PAUSE TestNodeFSFileOptionsBorrow\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:20:54.806805391Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileOptionsBorrow"}
+{"Time":"2026-10-09T18:20:54.806861323Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileOptionsBorrow"}
+{"Time":"2026-10-09T18:20:54.806865257Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileOptionsBorrow","Output":"=== CONT  TestNodeFSFileOptionsBorrow\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:20:57.383813134Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileOptionsBorrow","Output":"--- PASS: TestNodeFSFileOptionsBorrow (2.58s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:20:57.383974592Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileOptionsBorrow","Elapsed":2.58}
+{"Time":"2026-10-09T18:20:57.383996733Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:20:57.393959547Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":2.621}

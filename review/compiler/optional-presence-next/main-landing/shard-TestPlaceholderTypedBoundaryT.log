@@ -1,0 +1,11 @@
+{"Time":"2026-10-09T18:21:25.483613859Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T18:21:25.573416897Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPlaceholderTypedBoundaryTypedLocal"}
+{"Time":"2026-10-09T18:21:25.573494318Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPlaceholderTypedBoundaryTypedLocal","Output":"=== RUN   TestPlaceholderTypedBoundaryTypedLocal\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:25.57352712Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPlaceholderTypedBoundaryTypedLocal","Output":"=== PAUSE TestPlaceholderTypedBoundaryTypedLocal\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:25.573530616Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPlaceholderTypedBoundaryTypedLocal"}
+{"Time":"2026-10-09T18:21:25.57354552Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPlaceholderTypedBoundaryTypedLocal"}
+{"Time":"2026-10-09T18:21:25.573548456Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPlaceholderTypedBoundaryTypedLocal","Output":"=== CONT  TestPlaceholderTypedBoundaryTypedLocal\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:25.773738696Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPlaceholderTypedBoundaryTypedLocal","Output":"--- PASS: TestPlaceholderTypedBoundaryTypedLocal (0.20s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:25.773931423Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPlaceholderTypedBoundaryTypedLocal","Elapsed":0.2}
+{"Time":"2026-10-09T18:21:25.773950167Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:25.783232231Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.3}

@@ -1,0 +1,7 @@
+drop-bool-reservation: caught by field write failed: flag
+drop-string-retain: caught by Sanitizer
+cast-origin: caught by plain storage boundary
+plain-origin: caught by plain storage boundary
+hasown-origin: caught by want NotYet
+binder-registration: caught by want stage 0 to refuse
+literal-undefined catalog: caught by stdout differs

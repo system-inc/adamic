@@ -1,0 +1,9 @@
+{"Time":"2026-10-09T17:57:48.163061695Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T17:57:48.174502205Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOptionalWideningCensus"}
+{"Time":"2026-10-09T17:57:48.174607205Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOptionalWideningCensus","Output":"=== RUN   TestOptionalWideningCensus\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:48.174675856Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOptionalWideningCensus","Output":"    optional_widening_census_test.go:29: set OPTIONAL_WIDENING_CONFIG and OPTIONAL_WIDENING_OUTPUT to inventory a project\n"}
+{"Time":"2026-10-09T17:57:48.17469011Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOptionalWideningCensus","Output":"--- SKIP: TestOptionalWideningCensus (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:48.174693782Z","Action":"skip","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOptionalWideningCensus","Elapsed":0}
+{"Time":"2026-10-09T17:57:48.174707613Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:48.175484747Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"ok  \tgithub.com/system-inc/adamic/internal/lower\t0.012s\n"}
+{"Time":"2026-10-09T17:57:48.175528819Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.013}

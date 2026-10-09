@@ -1,0 +1,16 @@
+=== RUN   TestOptionalIndexingKeepsUnsupportedStorageNotYet
+=== PAUSE TestOptionalIndexingKeepsUnsupportedStorageNotYet
+=== CONT  TestOptionalIndexingKeepsUnsupportedStorageNotYet
+=== RUN   TestOptionalIndexingKeepsUnsupportedStorageNotYet/typed_ordinary_property_continuation
+=== RUN   TestOptionalIndexingKeepsUnsupportedStorageNotYet/string_numeric_key
+=== RUN   TestOptionalIndexingKeepsUnsupportedStorageNotYet/sparse_literal
+=== RUN   TestOptionalIndexingKeepsUnsupportedStorageNotYet/open_record
+=== RUN   TestOptionalIndexingKeepsUnsupportedStorageNotYet/index_after_ordinary_continuation
+--- PASS: TestOptionalIndexingKeepsUnsupportedStorageNotYet (0.25s)
+    --- PASS: TestOptionalIndexingKeepsUnsupportedStorageNotYet/typed_ordinary_property_continuation (0.07s)
+    --- PASS: TestOptionalIndexingKeepsUnsupportedStorageNotYet/string_numeric_key (0.05s)
+    --- PASS: TestOptionalIndexingKeepsUnsupportedStorageNotYet/sparse_literal (0.05s)
+    --- PASS: TestOptionalIndexingKeepsUnsupportedStorageNotYet/open_record (0.05s)
+    --- PASS: TestOptionalIndexingKeepsUnsupportedStorageNotYet/index_after_ordinary_continuation (0.04s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.265s

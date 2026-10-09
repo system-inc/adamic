@@ -64,3 +64,32 @@ func TestTransformedNodeRunnerGuard(t *testing.T) {
 		})
 	}
 }
+
+// This hook calls the same mode guard as transformedNodeRunner. It deliberately
+// does not call the later guards, whose overlapping checks masked the mutant.
+func TestNodeRunnerModeGuardHook(t *testing.T) {
+	t.Parallel()
+	source, present := os.LookupEnv("ADAMIC_NODE_RUNNER_MODE_SOURCE")
+	if !present {
+		t.Skip("subprocess hook")
+	}
+	nodeRunnerMode(t, source)
+}
+
+func requireNodeRunnerModeFatal(t *testing.T, source string) {
+	t.Helper()
+	result := execute(t, t.TempDir(), []string{"ADAMIC_NODE_RUNNER_MODE_SOURCE=" + source}, os.Args[0], "-test.run=^TestNodeRunnerModeGuardHook$", "-test.count=1", "-test.timeout=85s")
+	if result.Exit != 1 || !strings.Contains(result.Stdout+result.Stderr, "source Node runner changed: review the transform-mode hook") {
+		t.Fatalf("mode guard did not fatal for %q: exit=%d stdout=%q stderr=%q", source, result.Exit, result.Stdout, result.Stderr)
+	}
+}
+
+func TestNodeRunnerModeGuardRejectsBothCalls(t *testing.T) {
+	t.Parallel()
+	requireNodeRunnerModeFatal(t, "stripTypeScriptTypes(source); stripTypeScriptTypes(source, { mode: 'transform' }); new URL('./adamic.mjs', import.meta.url)")
+}
+
+func TestNodeRunnerModeGuardRejectsNeitherCall(t *testing.T) {
+	t.Parallel()
+	requireNodeRunnerModeFatal(t, "new URL('./adamic.mjs', import.meta.url)")
+}

@@ -200,17 +200,31 @@ func (l *lowering) unknownView(node *ast.Node, own, contextual *checker.Type) er
 
 // A key that could denote a getter or a prototype method cannot yet be read dynamically.
 func (l *lowering) dynamicReadHazard(name string) bool {
-	return l.propertyReadHazard(name, false)
+	return l.propertyReadHazardMode(name, false, true)
 }
 
 func (l *lowering) propertyReadHazard(name string, taggedNull bool) bool {
+	return l.propertyReadHazardMode(name, taggedNull, false)
+}
+
+func (l *lowering) propertyReadHazardMode(name string, taggedNull, numericReadiness bool) bool {
 	if l.accessorNames[name] {
 		return true
 	}
 	for _, declaration := range l.classes {
 		for _, member := range declaration.Members() {
-			if member.Name() != nil && member.Name().Text() == name && (member.Kind != ast.KindPropertyDeclaration || l.uninitializedDeclaration(member)) {
-				return true
+			if member.Name() != nil && member.Name().Text() == name {
+				if member.Kind != ast.KindPropertyDeclaration {
+					return true
+				}
+				if l.uninitializedDeclaration(member) {
+					// Unknown reads check readiness before inspecting storage. A declared
+					// numeric slot has a scalar tag after assignment, including boxed writes.
+					held, known := l.representation(l.checker.GetTypeAtLocation(member))
+					if !numericReadiness || !known || (held != ir.Number && held != ir.MaybeNumber) {
+						return true
+					}
+				}
 			}
 		}
 	}
@@ -238,7 +252,7 @@ func (l *lowering) propertyReadHazard(name string, taggedNull bool) bool {
 	return nullable
 }
 
-// Native absent-spread slots and ambient class fields are storage, not proof of JS presence.
+// Ambient class fields and unsupported methods still lack JavaScript presence descriptors.
 func (l *lowering) presenceHazard(name string) string {
 	modules, err := l.moduleOrder(l.program.Files()[0])
 	if err != nil {
@@ -247,13 +261,6 @@ func (l *lowering) presenceHazard(name string) string {
 	reason := ""
 	var visit ast.Visitor
 	visit = func(node *ast.Node) bool {
-		if node.Kind == ast.KindObjectLiteralExpression {
-			for _, property := range node.AsObjectLiteralExpression().Properties.Nodes {
-				if property.Kind == ast.KindSpreadAssignment && l.includesUndefined(l.checker.GetTypeAtLocation(property.AsSpreadAssignment().Expression)) {
-					reason = "a possibly absent spread has no property presence descriptors"
-				}
-			}
-		}
 		if node.Kind == ast.KindClassDeclaration {
 			for _, member := range node.Members() {
 				if member.Kind == ast.KindMethodDeclaration && member.Name().Text() == name {

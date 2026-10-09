@@ -1,5 +1,4 @@
-// Creating a missing optional field is still unsupported by fixed object layouts.
-// The checked path must fail explicitly, rather than store outside the object.
+// Contextual optional storage permits writes through a function parameter.
 interface Optional { missing?: number; }
 function set(object: Optional): void {
 	object.missing = 2;

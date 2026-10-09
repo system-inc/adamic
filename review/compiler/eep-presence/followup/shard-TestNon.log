@@ -1,0 +1,20 @@
+{"Time":"2026-10-09T17:36:52.474194798Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T17:36:52.487675006Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNonNullAssertionLowersToNullishPanic"}
+{"Time":"2026-10-09T17:36:52.48790854Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNonNullAssertionLowersToNullishPanic","Output":"=== RUN   TestNonNullAssertionLowersToNullishPanic\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:36:52.48816909Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNonNullAssertionLowersToNullishPanic","Output":"=== PAUSE TestNonNullAssertionLowersToNullishPanic\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:36:52.488174636Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNonNullAssertionLowersToNullishPanic"}
+{"Time":"2026-10-09T17:36:52.488182169Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNonNullAssertionOnPresentTypeIsErased"}
+{"Time":"2026-10-09T17:36:52.488185293Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNonNullAssertionOnPresentTypeIsErased","Output":"=== RUN   TestNonNullAssertionOnPresentTypeIsErased\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:36:52.488189448Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNonNullAssertionOnPresentTypeIsErased","Output":"=== PAUSE TestNonNullAssertionOnPresentTypeIsErased\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:36:52.488192311Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNonNullAssertionOnPresentTypeIsErased"}
+{"Time":"2026-10-09T17:36:52.488195623Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNonNullAssertionLowersToNullishPanic"}
+{"Time":"2026-10-09T17:36:52.488198846Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNonNullAssertionLowersToNullishPanic","Output":"=== CONT  TestNonNullAssertionLowersToNullishPanic\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:36:52.488228224Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNonNullAssertionOnPresentTypeIsErased"}
+{"Time":"2026-10-09T17:36:52.48823132Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNonNullAssertionOnPresentTypeIsErased","Output":"=== CONT  TestNonNullAssertionOnPresentTypeIsErased\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:36:52.592441242Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNonNullAssertionOnPresentTypeIsErased","Output":"--- PASS: TestNonNullAssertionOnPresentTypeIsErased (0.10s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:36:52.592490398Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNonNullAssertionOnPresentTypeIsErased","Elapsed":0.1}
+{"Time":"2026-10-09T17:36:52.592513616Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNonNullAssertionLowersToNullishPanic","Output":"--- PASS: TestNonNullAssertionLowersToNullishPanic (0.11s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:36:52.592516549Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNonNullAssertionLowersToNullishPanic","Elapsed":0.11}
+{"Time":"2026-10-09T17:36:52.592519008Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:36:52.59514893Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"ok  \tgithub.com/system-inc/adamic/internal/lower\t0.120s\n"}
+{"Time":"2026-10-09T17:36:52.595190239Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.121}

@@ -16,9 +16,9 @@ func init() {
 			lowers, checked bool
 		}{"stage3/fixtures/taste/" + name, true, false})
 	}
-	// Writes an optional field to a node a literal made without it, which waits on optional presence.
+	// Optional presence reserves the omitted flow slots before the binder writes them.
 	fixtures = append(fixtures, struct {
 		path            string
 		lowers, checked bool
-	}{"stage3/fixtures/taste/17_binder_flow.a", false, false})
+	}{"stage3/fixtures/taste/17_binder_flow.a", true, false})
 }

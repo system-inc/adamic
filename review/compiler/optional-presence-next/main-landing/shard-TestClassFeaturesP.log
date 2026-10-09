@@ -1,0 +1,19 @@
+{"Time":"2026-10-09T18:18:59.699921632Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T18:18:59.744297419Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesPrivateChecker"}
+{"Time":"2026-10-09T18:18:59.744363112Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesPrivateChecker","Output":"=== RUN   TestClassFeaturesPrivateChecker\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:18:59.744400821Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesPrivateChecker","Output":"=== PAUSE TestClassFeaturesPrivateChecker\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:18:59.74440462Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesPrivateChecker"}
+{"Time":"2026-10-09T18:18:59.744408189Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesPrivateStorage"}
+{"Time":"2026-10-09T18:18:59.744411125Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesPrivateStorage","Output":"=== RUN   TestClassFeaturesPrivateStorage\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:18:59.74441409Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesPrivateStorage","Output":"=== PAUSE TestClassFeaturesPrivateStorage\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:18:59.744416582Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesPrivateStorage"}
+{"Time":"2026-10-09T18:18:59.744419457Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesPrivateChecker"}
+{"Time":"2026-10-09T18:18:59.744421725Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesPrivateChecker","Output":"=== CONT  TestClassFeaturesPrivateChecker\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:18:59.744424308Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesPrivateStorage"}
+{"Time":"2026-10-09T18:18:59.74442639Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesPrivateStorage","Output":"=== CONT  TestClassFeaturesPrivateStorage\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:00.007820705Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesPrivateChecker","Output":"--- PASS: TestClassFeaturesPrivateChecker (0.27s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:00.614429248Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesPrivateChecker","Elapsed":0.27}
+{"Time":"2026-10-09T18:19:00.614522507Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesPrivateStorage","Output":"--- PASS: TestClassFeaturesPrivateStorage (0.87s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:00.614531985Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesPrivateStorage","Elapsed":0.87}
+{"Time":"2026-10-09T18:19:00.614535277Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:00.614579848Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.915}

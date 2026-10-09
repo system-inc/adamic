@@ -1,0 +1,20 @@
+{"Time":"2026-10-09T17:38:35.304690799Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T17:38:35.338707354Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusPredicateMarkerKeepsProofBoundaries"}
+{"Time":"2026-10-09T17:38:35.338777124Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusPredicateMarkerKeepsProofBoundaries","Output":"=== RUN   TestCensusPredicateMarkerKeepsProofBoundaries\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:38:35.338876053Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusPredicateMarkerKeepsProofBoundaries","Output":"=== PAUSE TestCensusPredicateMarkerKeepsProofBoundaries\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:38:35.338953434Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusPredicateMarkerKeepsProofBoundaries"}
+{"Time":"2026-10-09T17:38:35.339009846Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusPredicateMarkerCallStaysNotYet"}
+{"Time":"2026-10-09T17:38:35.339013994Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusPredicateMarkerCallStaysNotYet","Output":"=== RUN   TestCensusPredicateMarkerCallStaysNotYet\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:38:35.339105428Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusPredicateMarkerCallStaysNotYet","Output":"=== PAUSE TestCensusPredicateMarkerCallStaysNotYet\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:38:35.339111958Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusPredicateMarkerCallStaysNotYet"}
+{"Time":"2026-10-09T17:38:35.339379152Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusPredicateMarkerKeepsProofBoundaries"}
+{"Time":"2026-10-09T17:38:35.339385762Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusPredicateMarkerKeepsProofBoundaries","Output":"=== CONT  TestCensusPredicateMarkerKeepsProofBoundaries\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:38:35.339460347Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusPredicateMarkerCallStaysNotYet"}
+{"Time":"2026-10-09T17:38:35.339466236Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusPredicateMarkerCallStaysNotYet","Output":"=== CONT  TestCensusPredicateMarkerCallStaysNotYet\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:38:35.488533225Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusPredicateMarkerCallStaysNotYet","Output":"--- PASS: TestCensusPredicateMarkerCallStaysNotYet (0.15s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:38:35.867492595Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusPredicateMarkerCallStaysNotYet","Elapsed":0.15}
+{"Time":"2026-10-09T17:38:35.867560934Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusPredicateMarkerKeepsProofBoundaries","Output":"--- PASS: TestCensusPredicateMarkerKeepsProofBoundaries (0.53s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:38:35.867570152Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusPredicateMarkerKeepsProofBoundaries","Elapsed":0.53}
+{"Time":"2026-10-09T17:38:35.867573558Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:38:35.87416707Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"ok  \tgithub.com/system-inc/adamic/internal/lower\t0.566s\n"}
+{"Time":"2026-10-09T17:38:35.874241743Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.57}

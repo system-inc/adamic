@@ -1,0 +1,12 @@
+{"Time":"2026-10-09T17:57:16.916042201Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T17:57:16.930374775Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileDoesNotAuthorizeMutableWidening"}
+{"Time":"2026-10-09T17:57:16.930452367Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileDoesNotAuthorizeMutableWidening","Output":"=== RUN   TestNodeFSFileDoesNotAuthorizeMutableWidening\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:16.930480021Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileDoesNotAuthorizeMutableWidening","Output":"=== PAUSE TestNodeFSFileDoesNotAuthorizeMutableWidening\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:16.930482697Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileDoesNotAuthorizeMutableWidening"}
+{"Time":"2026-10-09T17:57:16.930488077Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileDoesNotAuthorizeMutableWidening"}
+{"Time":"2026-10-09T17:57:16.930490005Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileDoesNotAuthorizeMutableWidening","Output":"=== CONT  TestNodeFSFileDoesNotAuthorizeMutableWidening\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:17.279624823Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileDoesNotAuthorizeMutableWidening","Output":"--- PASS: TestNodeFSFileDoesNotAuthorizeMutableWidening (0.35s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:17.279672132Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileDoesNotAuthorizeMutableWidening","Elapsed":0.35}
+{"Time":"2026-10-09T17:57:17.279695616Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:17.283578998Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"ok  \tgithub.com/system-inc/adamic/internal/lower\t0.367s\n"}
+{"Time":"2026-10-09T17:57:17.283640265Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.368}

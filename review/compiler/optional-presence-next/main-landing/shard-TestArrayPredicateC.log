@@ -1,0 +1,20 @@
+{"Time":"2026-10-09T18:17:34.755266763Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T18:17:34.848251355Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArrayPredicateCannotInventAnElementContract"}
+{"Time":"2026-10-09T18:17:34.848375043Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArrayPredicateCannotInventAnElementContract","Output":"=== RUN   TestArrayPredicateCannotInventAnElementContract\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:17:34.848463223Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArrayPredicateCannotInventAnElementContract","Output":"=== PAUSE TestArrayPredicateCannotInventAnElementContract\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:17:34.848467669Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArrayPredicateCannotInventAnElementContract"}
+{"Time":"2026-10-09T18:17:34.848476581Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArrayPredicateCoexistsWithUnknownReflection"}
+{"Time":"2026-10-09T18:17:34.848479457Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArrayPredicateCoexistsWithUnknownReflection","Output":"=== RUN   TestArrayPredicateCoexistsWithUnknownReflection\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:17:34.848483622Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArrayPredicateCoexistsWithUnknownReflection","Output":"=== PAUSE TestArrayPredicateCoexistsWithUnknownReflection\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:17:34.848486273Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArrayPredicateCoexistsWithUnknownReflection"}
+{"Time":"2026-10-09T18:17:34.848489716Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArrayPredicateCannotInventAnElementContract"}
+{"Time":"2026-10-09T18:17:34.848492606Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArrayPredicateCannotInventAnElementContract","Output":"=== CONT  TestArrayPredicateCannotInventAnElementContract\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:17:34.851091973Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArrayPredicateCoexistsWithUnknownReflection"}
+{"Time":"2026-10-09T18:17:34.851122574Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArrayPredicateCoexistsWithUnknownReflection","Output":"=== CONT  TestArrayPredicateCoexistsWithUnknownReflection\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:17:36.935195214Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArrayPredicateCannotInventAnElementContract","Output":"--- PASS: TestArrayPredicateCannotInventAnElementContract (2.09s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:17:41.583241101Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArrayPredicateCannotInventAnElementContract","Elapsed":2.09}
+{"Time":"2026-10-09T18:17:41.58350172Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArrayPredicateCoexistsWithUnknownReflection","Output":"--- PASS: TestArrayPredicateCoexistsWithUnknownReflection (6.73s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:17:41.583529036Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArrayPredicateCoexistsWithUnknownReflection","Elapsed":6.73}
+{"Time":"2026-10-09T18:17:41.583533315Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:17:41.586308089Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"ok  \tgithub.com/system-inc/adamic/internal/lower\t6.827s\n"}
+{"Time":"2026-10-09T18:17:41.586377197Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":6.8309999999999995}

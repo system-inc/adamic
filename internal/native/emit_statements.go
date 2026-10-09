@@ -234,6 +234,14 @@ func (e *emitter) statement(statement ir.Statement) {
 			e.line("adamic_record_set(%s, %s, (adamic_value){.reference = %s});", object, e.recordKey(statement.Name), boxed)
 			e.line("} else {")
 		}
+		if e.program.CheckedFields[statement.Name] && e.optionalViewFieldName(statement.Name) && statement.Class == 0 && !statement.Uninitialized && !statement.Define && (statement.Value.Type() == ir.Number || statement.Value.Type() == ir.Boolean || statement.Value.Type() == ir.String || statement.Value.Type().IsMaybe()) {
+			e.line("adamic_object_view_store(%s, %s, &%s, (adamic_value){.%s = %s}, %d);", object, cString(statement.Name), e.cache(), member(statement.Value.Type()), slotted(statement.Value.Type(), keptValue), fieldRepresentation(statement.Value))
+			if records {
+				e.line("}")
+			}
+			e.end()
+			break
+		}
 		slot := e.temporary()
 		cache := ""
 		if e.fieldTypesNeeded() {

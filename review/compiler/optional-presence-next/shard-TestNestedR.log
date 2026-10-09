@@ -1,0 +1,20 @@
+{"Time":"2026-10-09T17:57:10.562852186Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T17:57:10.573628715Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedRebindingNotYet"}
+{"Time":"2026-10-09T17:57:10.573714527Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedRebindingNotYet","Output":"=== RUN   TestNestedRebindingNotYet\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:10.573737629Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedRebindingNotYet","Output":"=== PAUSE TestNestedRebindingNotYet\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:10.573740531Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedRebindingNotYet"}
+{"Time":"2026-10-09T17:57:10.573743363Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedRestIsSupported"}
+{"Time":"2026-10-09T17:57:10.573745082Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedRestIsSupported","Output":"=== RUN   TestNestedRestIsSupported\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:10.573747561Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedRestIsSupported","Output":"=== PAUSE TestNestedRestIsSupported\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:10.573749271Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedRestIsSupported"}
+{"Time":"2026-10-09T17:57:10.573754246Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedRebindingNotYet"}
+{"Time":"2026-10-09T17:57:10.573755913Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedRebindingNotYet","Output":"=== CONT  TestNestedRebindingNotYet\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:10.573757849Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedRestIsSupported"}
+{"Time":"2026-10-09T17:57:10.573759514Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedRestIsSupported","Output":"=== CONT  TestNestedRestIsSupported\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:10.666553086Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedRebindingNotYet","Output":"--- PASS: TestNestedRebindingNotYet (0.09s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:10.826256956Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedRebindingNotYet","Elapsed":0.09}
+{"Time":"2026-10-09T17:57:10.826328303Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedRestIsSupported","Output":"--- PASS: TestNestedRestIsSupported (0.25s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:10.826340629Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedRestIsSupported","Elapsed":0.25}
+{"Time":"2026-10-09T17:57:10.82634348Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:10.831161453Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"ok  \tgithub.com/system-inc/adamic/internal/lower\t0.267s\n"}
+{"Time":"2026-10-09T17:57:10.831242219Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.268}

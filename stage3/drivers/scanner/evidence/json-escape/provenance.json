@@ -1,0 +1,16 @@
+{
+  "mainBase": "89ac4a8c1de0b02d95965be72f7f8bf1c92433d2",
+  "nativeControlBase": "28285421bf59ea46269545144c19123156c00c91",
+  "node": "v24.19.0",
+  "nproc": 5,
+  "setupSeconds": 35.761,
+  "counts": {
+    "true": 509014,
+    "false": 860418
+  },
+  "compilerEdits": [],
+  "adaptorEdits": [],
+  "fullGateRun": false,
+  "fixture": "stage3/drivers/scanner/escape-fixture.a",
+  "fixtureScope": "standalone driver proof, not internal/oracle registry"
+}

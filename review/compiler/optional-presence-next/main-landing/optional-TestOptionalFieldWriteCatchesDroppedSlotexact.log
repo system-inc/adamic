@@ -1,0 +1,16 @@
+{"Time":"2026-10-09T18:21:43.580105151Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-09T18:21:43.635330906Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOptionalFieldWriteCatchesDroppedSlot"}
+{"Time":"2026-10-09T18:21:43.63543401Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOptionalFieldWriteCatchesDroppedSlot","Output":"=== RUN   TestOptionalFieldWriteCatchesDroppedSlot\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:43.635469272Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOptionalFieldWriteCatchesDroppedSlot","Output":"=== PAUSE TestOptionalFieldWriteCatchesDroppedSlot\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:43.635472606Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOptionalFieldWriteCatchesDroppedSlot"}
+{"Time":"2026-10-09T18:21:43.635476313Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOptionalFieldWriteCatchesDroppedSlot"}
+{"Time":"2026-10-09T18:21:43.63547902Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOptionalFieldWriteCatchesDroppedSlot","Output":"=== CONT  TestOptionalFieldWriteCatchesDroppedSlot\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:44.807359486Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOptionalFieldWriteCatchesDroppedSlot","Output":"    optional_field_write_test.go:54: Node caught dropped absent slot: missing-field stop, exit 70\n"}
+{"Time":"2026-10-09T18:21:44.807437003Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOptionalFieldWriteCatchesDroppedSlot","Output":"--- PASS: TestOptionalFieldWriteCatchesDroppedSlot (1.17s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:44.807442763Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOptionalFieldWriteCatchesDroppedSlot","Elapsed":1.17}
+{"Time":"2026-10-09T18:21:44.807470116Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:44.80747927Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: native hits=0 misses=0\n"}
+{"Time":"2026-10-09T18:21:44.807483031Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: node hits=0 misses=1\n"}
+{"Time":"2026-10-09T18:21:44.807485959Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: probe hits=0 misses=0\n"}
+{"Time":"2026-10-09T18:21:44.833945311Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"ok  \tgithub.com/system-inc/adamic/internal/oracle\t1.251s\n"}
+{"Time":"2026-10-09T18:21:44.83404476Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":1.254}

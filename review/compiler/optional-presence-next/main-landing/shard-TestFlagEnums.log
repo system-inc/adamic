@@ -1,0 +1,209 @@
+{"Time":"2026-10-09T18:19:42.296808239Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T18:19:42.375108932Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen"}
+{"Time":"2026-10-09T18:19:42.375182873Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen","Output":"=== RUN   TestFlagEnumsOpen\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:42.375253934Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen","Output":"=== PAUSE TestFlagEnumsOpen\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:42.375257741Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen"}
+{"Time":"2026-10-09T18:19:42.375261323Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsDomain"}
+{"Time":"2026-10-09T18:19:42.375263863Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsDomain","Output":"=== RUN   TestFlagEnumsDomain\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:42.375271391Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsDomain","Output":"=== PAUSE TestFlagEnumsDomain\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:42.37527414Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsDomain"}
+{"Time":"2026-10-09T18:19:42.375277007Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen"}
+{"Time":"2026-10-09T18:19:42.375279427Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen","Output":"=== CONT  TestFlagEnumsOpen\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:42.375282987Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/complement"}
+{"Time":"2026-10-09T18:19:42.37528596Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/complement","Output":"=== RUN   TestFlagEnumsOpen/complement\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:42.375293169Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/complement","Output":"=== PAUSE TestFlagEnumsOpen/complement\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:42.375295239Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/complement"}
+{"Time":"2026-10-09T18:19:42.37529834Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/arithmetic"}
+{"Time":"2026-10-09T18:19:42.375300655Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/arithmetic","Output":"=== RUN   TestFlagEnumsOpen/arithmetic\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:42.375303554Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/arithmetic","Output":"=== PAUSE TestFlagEnumsOpen/arithmetic\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:42.375305826Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/arithmetic"}
+{"Time":"2026-10-09T18:19:42.375308734Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/increment"}
+{"Time":"2026-10-09T18:19:42.375311084Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/increment","Output":"=== RUN   TestFlagEnumsOpen/increment\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:42.37532217Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/increment","Output":"=== PAUSE TestFlagEnumsOpen/increment\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:42.375324784Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/increment"}
+{"Time":"2026-10-09T18:19:42.375335568Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/shift_update"}
+{"Time":"2026-10-09T18:19:42.37533824Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/shift_update","Output":"=== RUN   TestFlagEnumsOpen/shift_update\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:42.375341661Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/shift_update","Output":"=== PAUSE TestFlagEnumsOpen/shift_update\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:42.375344181Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/shift_update"}
+{"Time":"2026-10-09T18:19:42.375347065Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/shift_result"}
+{"Time":"2026-10-09T18:19:42.375349845Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/shift_result","Output":"=== RUN   TestFlagEnumsOpen/shift_result\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:42.375353176Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/shift_result","Output":"=== PAUSE TestFlagEnumsOpen/shift_result\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:42.375355659Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/shift_result"}
+{"Time":"2026-10-09T18:19:42.375358448Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/sign_bit"}
+{"Time":"2026-10-09T18:19:42.375360809Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/sign_bit","Output":"=== RUN   TestFlagEnumsOpen/sign_bit\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:42.375363604Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/sign_bit","Output":"=== PAUSE TestFlagEnumsOpen/sign_bit\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:42.375366159Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/sign_bit"}
+{"Time":"2026-10-09T18:19:42.375368865Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/implicit"}
+{"Time":"2026-10-09T18:19:42.375371253Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/implicit","Output":"=== RUN   TestFlagEnumsOpen/implicit\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:42.375384393Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/implicit","Output":"=== PAUSE TestFlagEnumsOpen/implicit\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:42.375389536Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/implicit"}
+{"Time":"2026-10-09T18:19:42.375392877Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/numeric_shape"}
+{"Time":"2026-10-09T18:19:42.375395562Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/numeric_shape","Output":"=== RUN   TestFlagEnumsOpen/numeric_shape\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:42.375399076Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/numeric_shape","Output":"=== PAUSE TestFlagEnumsOpen/numeric_shape\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:42.375401536Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/numeric_shape"}
+{"Time":"2026-10-09T18:19:42.375403993Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/arithmetic_shape"}
+{"Time":"2026-10-09T18:19:42.375406362Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/arithmetic_shape","Output":"=== RUN   TestFlagEnumsOpen/arithmetic_shape\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:42.375412177Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/arithmetic_shape","Output":"=== PAUSE TestFlagEnumsOpen/arithmetic_shape\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:42.375414472Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/arithmetic_shape"}
+{"Time":"2026-10-09T18:19:42.375417066Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/switch_default"}
+{"Time":"2026-10-09T18:19:42.375419521Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/switch_default","Output":"=== RUN   TestFlagEnumsOpen/switch_default\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:42.375423467Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/switch_default","Output":"=== PAUSE TestFlagEnumsOpen/switch_default\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:42.375425592Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/switch_default"}
+{"Time":"2026-10-09T18:19:42.375427977Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/cross_enum_left"}
+{"Time":"2026-10-09T18:19:42.375430508Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/cross_enum_left","Output":"=== RUN   TestFlagEnumsOpen/cross_enum_left\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:42.375433606Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/cross_enum_left","Output":"=== PAUSE TestFlagEnumsOpen/cross_enum_left\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:42.375436305Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/cross_enum_left"}
+{"Time":"2026-10-09T18:19:42.37543922Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/cross_enum_right"}
+{"Time":"2026-10-09T18:19:42.375441655Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/cross_enum_right","Output":"=== RUN   TestFlagEnumsOpen/cross_enum_right\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:42.37544471Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/cross_enum_right","Output":"=== PAUSE TestFlagEnumsOpen/cross_enum_right\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:42.375447051Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/cross_enum_right"}
+{"Time":"2026-10-09T18:19:42.375449652Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/or_number"}
+{"Time":"2026-10-09T18:19:42.375452149Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/or_number","Output":"=== RUN   TestFlagEnumsOpen/or_number\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:42.375455181Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/or_number","Output":"=== PAUSE TestFlagEnumsOpen/or_number\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:42.375457743Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/or_number"}
+{"Time":"2026-10-09T18:19:42.375460267Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/xor_number"}
+{"Time":"2026-10-09T18:19:42.37546243Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/xor_number","Output":"=== RUN   TestFlagEnumsOpen/xor_number\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:42.375465078Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/xor_number","Output":"=== PAUSE TestFlagEnumsOpen/xor_number\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:42.375469371Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/xor_number"}
+{"Time":"2026-10-09T18:19:42.375471873Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/and_numbers"}
+{"Time":"2026-10-09T18:19:42.375474041Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/and_numbers","Output":"=== RUN   TestFlagEnumsOpen/and_numbers\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:42.375476768Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/and_numbers","Output":"=== PAUSE TestFlagEnumsOpen/and_numbers\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:42.375479047Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/and_numbers"}
+{"Time":"2026-10-09T18:19:42.375481326Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/narrowed_member"}
+{"Time":"2026-10-09T18:19:42.375483344Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/narrowed_member","Output":"=== RUN   TestFlagEnumsOpen/narrowed_member\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:42.375486419Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/narrowed_member","Output":"=== PAUSE TestFlagEnumsOpen/narrowed_member\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:42.375488804Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/narrowed_member"}
+{"Time":"2026-10-09T18:19:42.375491277Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/compound_or_number"}
+{"Time":"2026-10-09T18:19:42.375497777Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/compound_or_number","Output":"=== RUN   TestFlagEnumsOpen/compound_or_number\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:42.375501494Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/compound_or_number","Output":"=== PAUSE TestFlagEnumsOpen/compound_or_number\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:42.375504454Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/compound_or_number"}
+{"Time":"2026-10-09T18:19:42.375507394Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/compound_xor_number"}
+{"Time":"2026-10-09T18:19:42.375509567Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/compound_xor_number","Output":"=== RUN   TestFlagEnumsOpen/compound_xor_number\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:42.375512625Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/compound_xor_number","Output":"=== PAUSE TestFlagEnumsOpen/compound_xor_number\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:42.375514964Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/compound_xor_number"}
+{"Time":"2026-10-09T18:19:42.375521576Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/mutable_alias"}
+{"Time":"2026-10-09T18:19:42.375524887Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/mutable_alias","Output":"=== RUN   TestFlagEnumsOpen/mutable_alias\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:42.375527872Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/mutable_alias","Output":"=== PAUSE TestFlagEnumsOpen/mutable_alias\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:42.375530391Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/mutable_alias"}
+{"Time":"2026-10-09T18:19:42.375535596Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/bare_number"}
+{"Time":"2026-10-09T18:19:42.375538087Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/bare_number","Output":"=== RUN   TestFlagEnumsOpen/bare_number\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:42.375540999Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/bare_number","Output":"=== PAUSE TestFlagEnumsOpen/bare_number\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:42.375543383Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/bare_number"}
+{"Time":"2026-10-09T18:19:42.375546111Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/member_slot"}
+{"Time":"2026-10-09T18:19:42.375548441Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/member_slot","Output":"=== RUN   TestFlagEnumsOpen/member_slot\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:42.375551556Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/member_slot","Output":"=== PAUSE TestFlagEnumsOpen/member_slot\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:42.375554046Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/member_slot"}
+{"Time":"2026-10-09T18:19:42.37555686Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/array_view"}
+{"Time":"2026-10-09T18:19:42.375559297Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/array_view","Output":"=== RUN   TestFlagEnumsOpen/array_view\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:42.375562014Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsDomain"}
+{"Time":"2026-10-09T18:19:42.375564192Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsDomain","Output":"=== CONT  TestFlagEnumsDomain\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:42.37556717Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsDomain","Output":"    enum_flags_test.go:96: bitwise_updates\n"}
+{"Time":"2026-10-09T18:19:42.375570247Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/array_view","Output":"=== PAUSE TestFlagEnumsOpen/array_view\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:42.375572905Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/array_view"}
+{"Time":"2026-10-09T18:19:42.375575756Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/complement"}
+{"Time":"2026-10-09T18:19:42.375578165Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/complement","Output":"=== CONT  TestFlagEnumsOpen/complement\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:42.375580857Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/cross_enum_right"}
+{"Time":"2026-10-09T18:19:42.37558338Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/cross_enum_right","Output":"=== CONT  TestFlagEnumsOpen/cross_enum_right\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:42.375617764Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/array_view"}
+{"Time":"2026-10-09T18:19:42.375621668Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/array_view","Output":"=== CONT  TestFlagEnumsOpen/array_view\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:42.375627083Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/cross_enum_left"}
+{"Time":"2026-10-09T18:19:42.375629734Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/cross_enum_left","Output":"=== CONT  TestFlagEnumsOpen/cross_enum_left\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:43.759189858Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/cross_enum_left","Output":"--- PASS: TestFlagEnumsOpen/cross_enum_left (1.38s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:43.759266844Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/cross_enum_left","Elapsed":1.38}
+{"Time":"2026-10-09T18:19:43.759282665Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/member_slot"}
+{"Time":"2026-10-09T18:19:43.759286171Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/member_slot","Output":"=== CONT  TestFlagEnumsOpen/member_slot\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:43.943125626Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/cross_enum_right","Output":"--- PASS: TestFlagEnumsOpen/cross_enum_right (1.57s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:43.943173838Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/cross_enum_right","Elapsed":1.57}
+{"Time":"2026-10-09T18:19:43.943182071Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/bare_number"}
+{"Time":"2026-10-09T18:19:43.943185658Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/bare_number","Output":"=== CONT  TestFlagEnumsOpen/bare_number\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:43.996400942Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/array_view","Output":"--- PASS: TestFlagEnumsOpen/array_view (1.62s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:43.996471992Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/array_view","Elapsed":1.62}
+{"Time":"2026-10-09T18:19:43.996480465Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/mutable_alias"}
+{"Time":"2026-10-09T18:19:43.99649185Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/mutable_alias","Output":"=== CONT  TestFlagEnumsOpen/mutable_alias\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:44.00323171Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/member_slot","Output":"--- PASS: TestFlagEnumsOpen/member_slot (0.24s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:44.003266523Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/member_slot","Elapsed":0.24}
+{"Time":"2026-10-09T18:19:44.003272966Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/compound_xor_number"}
+{"Time":"2026-10-09T18:19:44.003277322Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/compound_xor_number","Output":"=== CONT  TestFlagEnumsOpen/compound_xor_number\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:44.099105725Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/complement","Output":"--- PASS: TestFlagEnumsOpen/complement (1.73s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:44.099149984Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/complement","Elapsed":1.73}
+{"Time":"2026-10-09T18:19:44.09915822Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/compound_or_number"}
+{"Time":"2026-10-09T18:19:44.099168022Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/compound_or_number","Output":"=== CONT  TestFlagEnumsOpen/compound_or_number\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:44.152120243Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsDomain","Output":"    enum_flags_test.go:96: alias\n"}
+{"Time":"2026-10-09T18:19:44.990442757Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/mutable_alias","Output":"--- PASS: TestFlagEnumsOpen/mutable_alias (0.99s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:44.990491628Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/mutable_alias","Elapsed":0.99}
+{"Time":"2026-10-09T18:19:44.990498785Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/narrowed_member"}
+{"Time":"2026-10-09T18:19:44.990502445Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/narrowed_member","Output":"=== CONT  TestFlagEnumsOpen/narrowed_member\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:45.194328669Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/compound_xor_number","Output":"--- PASS: TestFlagEnumsOpen/compound_xor_number (1.19s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:45.194372891Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/compound_xor_number","Elapsed":1.19}
+{"Time":"2026-10-09T18:19:45.194381387Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/and_numbers"}
+{"Time":"2026-10-09T18:19:45.19438496Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/and_numbers","Output":"=== CONT  TestFlagEnumsOpen/and_numbers\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:45.24005357Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/compound_or_number","Output":"--- PASS: TestFlagEnumsOpen/compound_or_number (1.12s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:45.240097802Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/compound_or_number","Elapsed":1.12}
+{"Time":"2026-10-09T18:19:45.240105918Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/xor_number"}
+{"Time":"2026-10-09T18:19:45.240109704Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/xor_number","Output":"=== CONT  TestFlagEnumsOpen/xor_number\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:45.240115123Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/narrowed_member","Output":"--- PASS: TestFlagEnumsOpen/narrowed_member (0.25s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:45.240119098Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/narrowed_member","Elapsed":0.25}
+{"Time":"2026-10-09T18:19:45.240121997Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/or_number"}
+{"Time":"2026-10-09T18:19:45.240124841Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/or_number","Output":"=== CONT  TestFlagEnumsOpen/or_number\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:45.250117758Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsDomain","Output":"    enum_flags_test.go:96: or\n"}
+{"Time":"2026-10-09T18:19:45.339247217Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/sign_bit"}
+{"Time":"2026-10-09T18:19:45.339288237Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/sign_bit","Output":"=== CONT  TestFlagEnumsOpen/sign_bit\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:45.35598329Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/bare_number","Output":"--- PASS: TestFlagEnumsOpen/bare_number (1.36s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:46.206620629Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/bare_number","Elapsed":1.36}
+{"Time":"2026-10-09T18:19:46.206667169Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/xor_number","Output":"--- PASS: TestFlagEnumsOpen/xor_number (0.99s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:46.206677843Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/xor_number","Elapsed":0.99}
+{"Time":"2026-10-09T18:19:46.206681642Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/switch_default"}
+{"Time":"2026-10-09T18:19:46.206685202Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/switch_default","Output":"=== CONT  TestFlagEnumsOpen/switch_default\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:46.268734436Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsDomain","Output":"    enum_flags_test.go:96: xor\n"}
+{"Time":"2026-10-09T18:19:46.26892529Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/and_numbers","Output":"--- PASS: TestFlagEnumsOpen/and_numbers (1.07s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:46.26893701Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/and_numbers","Elapsed":1.07}
+{"Time":"2026-10-09T18:19:46.268944439Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/arithmetic_shape"}
+{"Time":"2026-10-09T18:19:46.268947952Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/arithmetic_shape","Output":"=== CONT  TestFlagEnumsOpen/arithmetic_shape\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:46.343114707Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/sign_bit","Output":"--- PASS: TestFlagEnumsOpen/sign_bit (1.01s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:46.343154542Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/sign_bit","Elapsed":1.01}
+{"Time":"2026-10-09T18:19:46.343160048Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/numeric_shape"}
+{"Time":"2026-10-09T18:19:46.343162802Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/numeric_shape","Output":"=== CONT  TestFlagEnumsOpen/numeric_shape\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:46.352889918Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/or_number","Output":"--- PASS: TestFlagEnumsOpen/or_number (1.12s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:46.352923859Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/or_number","Elapsed":1.12}
+{"Time":"2026-10-09T18:19:46.3529301Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/implicit"}
+{"Time":"2026-10-09T18:19:46.352933986Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/implicit","Output":"=== CONT  TestFlagEnumsOpen/implicit\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:47.206556245Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/switch_default","Output":"--- PASS: TestFlagEnumsOpen/switch_default (1.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:47.206625984Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/switch_default","Elapsed":1}
+{"Time":"2026-10-09T18:19:47.206634689Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/increment"}
+{"Time":"2026-10-09T18:19:47.206637919Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/increment","Output":"=== CONT  TestFlagEnumsOpen/increment\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:47.346126203Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/numeric_shape","Output":"--- PASS: TestFlagEnumsOpen/numeric_shape (1.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:47.346165544Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/numeric_shape","Elapsed":1}
+{"Time":"2026-10-09T18:19:47.346173536Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/shift_result"}
+{"Time":"2026-10-09T18:19:47.346177092Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/shift_result","Output":"=== CONT  TestFlagEnumsOpen/shift_result\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:47.346181842Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/implicit","Output":"--- PASS: TestFlagEnumsOpen/implicit (0.99s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:47.346185464Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/implicit","Elapsed":0.99}
+{"Time":"2026-10-09T18:19:47.346188831Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/shift_update"}
+{"Time":"2026-10-09T18:19:47.346191737Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/shift_update","Output":"=== CONT  TestFlagEnumsOpen/shift_update\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:47.454870142Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/arithmetic_shape","Output":"--- PASS: TestFlagEnumsOpen/arithmetic_shape (1.19s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:47.454917955Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/arithmetic_shape","Elapsed":1.19}
+{"Time":"2026-10-09T18:19:47.454927073Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/arithmetic"}
+{"Time":"2026-10-09T18:19:47.454930511Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/arithmetic","Output":"=== CONT  TestFlagEnumsOpen/arithmetic\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:47.803514979Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsDomain","Output":"    enum_flags_test.go:96: and_left\n"}
+{"Time":"2026-10-09T18:19:48.0977517Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/increment","Output":"--- PASS: TestFlagEnumsOpen/increment (0.89s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:48.266754888Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/increment","Elapsed":0.89}
+{"Time":"2026-10-09T18:19:48.26679982Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/shift_update","Output":"--- PASS: TestFlagEnumsOpen/shift_update (0.92s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:48.383605289Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/shift_update","Elapsed":0.92}
+{"Time":"2026-10-09T18:19:48.383671851Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/arithmetic","Output":"--- PASS: TestFlagEnumsOpen/arithmetic (0.93s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:48.493244996Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/arithmetic","Elapsed":0.93}
+{"Time":"2026-10-09T18:19:48.493276346Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/shift_result","Output":"--- PASS: TestFlagEnumsOpen/shift_result (1.15s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:48.493287204Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen/shift_result","Elapsed":1.15}
+{"Time":"2026-10-09T18:19:48.493290905Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen","Output":"--- PASS: TestFlagEnumsOpen (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:48.746493863Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsOpen","Elapsed":0}
+{"Time":"2026-10-09T18:19:48.746540675Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsDomain","Output":"    enum_flags_test.go:96: and_right\n"}
+{"Time":"2026-10-09T18:19:49.447322298Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsDomain","Output":"    enum_flags_test.go:96: and_complement\n"}
+{"Time":"2026-10-09T18:19:50.406301572Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsDomain","Output":"    enum_flags_test.go:96: nested\n"}
+{"Time":"2026-10-09T18:19:51.154722053Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsDomain","Output":"    enum_flags_test.go:96: field\n"}
+{"Time":"2026-10-09T18:19:52.079114466Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsDomain","Output":"    enum_flags_test.go:96: array\n"}
+{"Time":"2026-10-09T18:19:53.078988252Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsDomain","Output":"    enum_flags_test.go:96: map\n"}
+{"Time":"2026-10-09T18:19:53.706049282Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsDomain","Output":"    enum_flags_test.go:96: parameter\n"}
+{"Time":"2026-10-09T18:19:54.591105262Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsDomain","Output":"    enum_flags_test.go:96: optional\n"}
+{"Time":"2026-10-09T18:19:55.333889691Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsDomain","Output":"    enum_flags_test.go:96: switch\n"}
+{"Time":"2026-10-09T18:19:55.992640852Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsDomain","Output":"--- PASS: TestFlagEnumsDomain (13.63s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:55.992785861Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumsDomain","Elapsed":13.63}
+{"Time":"2026-10-09T18:19:55.992795836Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:55.998754491Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":13.702}

@@ -634,6 +634,10 @@ func (l *lowering) noteOmittedOptionalsOf(literal *ast.Node) {
 	if contextual.Flags()&checker.TypeFlagsUnion != 0 {
 		members = contextual.Types()
 	}
+	reserved, _ := l.optionalLiteralSlots(literal, nil)
+	for _, field := range reserved {
+		given[field.Name] = true
+	}
 	for _, member := range members {
 		if member.Flags()&checker.TypeFlagsObject == 0 {
 			continue

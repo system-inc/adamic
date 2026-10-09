@@ -1,0 +1,19 @@
+{
+  "status": "fail",
+  "errors": [
+    "missing or invalid lane evidence: [Errno 2] No such file or directory: '/workspace/scratch/scanner-any-42-lane/adapted-tree/tests/baselines/local/api/typescript.d.ts'"
+  ],
+  "execution": {
+    "commit": "4409db114771c2c838cd6445d040d6114ff4218f",
+    "apply_exit": 0,
+    "oracle_exit": 1,
+    "platform": {
+      "os": "linux",
+      "arch": "x64",
+      "node": "v24.19.0"
+    },
+    "wall_seconds": 412.951
+  },
+  "results": "/workspace/scratch/scanner-any-42-lane",
+  "verdict": "FAIL stage3 landing lane: missing or invalid lane evidence: [Errno 2] No such file or directory: '/workspace/scratch/scanner-any-42-lane/adapted-tree/tests/baselines/local/api/typescript.d.ts'"
+}

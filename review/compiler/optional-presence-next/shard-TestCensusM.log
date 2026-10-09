@@ -1,0 +1,20 @@
+{"Time":"2026-10-09T17:51:52.458555026Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T17:51:52.478722183Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusMarkerResultIsAssignable"}
+{"Time":"2026-10-09T17:51:52.478864806Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusMarkerResultIsAssignable","Output":"=== RUN   TestCensusMarkerResultIsAssignable\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:51:52.479072207Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusMarkerResultIsAssignable","Output":"=== PAUSE TestCensusMarkerResultIsAssignable\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:51:52.479081848Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusMarkerResultIsAssignable"}
+{"Time":"2026-10-09T17:51:52.479142294Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusMarkerZeroCallIsNotAssumedSafe"}
+{"Time":"2026-10-09T17:51:52.479147955Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusMarkerZeroCallIsNotAssumedSafe","Output":"=== RUN   TestCensusMarkerZeroCallIsNotAssumedSafe\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:51:52.47928351Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusMarkerZeroCallIsNotAssumedSafe","Output":"=== PAUSE TestCensusMarkerZeroCallIsNotAssumedSafe\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:51:52.479289282Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusMarkerZeroCallIsNotAssumedSafe"}
+{"Time":"2026-10-09T17:51:52.479414187Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusMarkerResultIsAssignable"}
+{"Time":"2026-10-09T17:51:52.479419638Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusMarkerResultIsAssignable","Output":"=== CONT  TestCensusMarkerResultIsAssignable\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:51:52.479585454Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusMarkerZeroCallIsNotAssumedSafe"}
+{"Time":"2026-10-09T17:51:52.479594025Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusMarkerZeroCallIsNotAssumedSafe","Output":"=== CONT  TestCensusMarkerZeroCallIsNotAssumedSafe\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:51:52.794520725Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusMarkerResultIsAssignable","Output":"--- PASS: TestCensusMarkerResultIsAssignable (0.31s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:51:52.841189459Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusMarkerResultIsAssignable","Elapsed":0.31}
+{"Time":"2026-10-09T17:51:52.841664145Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusMarkerZeroCallIsNotAssumedSafe","Output":"--- PASS: TestCensusMarkerZeroCallIsNotAssumedSafe (0.36s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:51:52.842270696Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusMarkerZeroCallIsNotAssumedSafe","Elapsed":0.36}
+{"Time":"2026-10-09T17:51:52.842328394Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:51:52.849823742Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"ok  \tgithub.com/system-inc/adamic/internal/lower\t0.388s\n"}
+{"Time":"2026-10-09T17:51:52.849903342Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.391}

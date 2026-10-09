@@ -1,0 +1,21 @@
+{"Time":"2026-10-09T17:58:56.64061623Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T17:58:56.651864781Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRepresentedMethodReplacementIsNotYet"}
+{"Time":"2026-10-09T17:58:56.651961356Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRepresentedMethodReplacementIsNotYet","Output":"=== RUN   TestRepresentedMethodReplacementIsNotYet\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:58:56.651986378Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRepresentedMethodReplacementIsNotYet","Output":"=== PAUSE TestRepresentedMethodReplacementIsNotYet\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:58:56.651990134Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRepresentedMethodReplacementIsNotYet"}
+{"Time":"2026-10-09T17:58:56.651997396Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRepresentationClockSourceCheckedTypes"}
+{"Time":"2026-10-09T17:58:56.65200062Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRepresentationClockSourceCheckedTypes","Output":"=== RUN   TestRepresentationClockSourceCheckedTypes\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:58:56.65200444Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRepresentationClockSourceCheckedTypes","Output":"=== PAUSE TestRepresentationClockSourceCheckedTypes\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:58:56.652006931Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRepresentationClockSourceCheckedTypes"}
+{"Time":"2026-10-09T17:58:56.652010045Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRepresentedMethodReplacementIsNotYet"}
+{"Time":"2026-10-09T17:58:56.652012904Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRepresentedMethodReplacementIsNotYet","Output":"=== CONT  TestRepresentedMethodReplacementIsNotYet\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:58:56.652017054Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRepresentationClockSourceCheckedTypes"}
+{"Time":"2026-10-09T17:58:56.652019652Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRepresentationClockSourceCheckedTypes","Output":"=== CONT  TestRepresentationClockSourceCheckedTypes\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:58:56.740763132Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRepresentationClockSourceCheckedTypes","Output":"    representation_clock_source_test.go:78: CompilerType admits Object and Closure; length-only admits Array and String; neither unresolved parameter has one ABI\n"}
+{"Time":"2026-10-09T17:58:56.742436657Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRepresentationClockSourceCheckedTypes","Output":"--- PASS: TestRepresentationClockSourceCheckedTypes (0.09s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:58:56.742459907Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRepresentationClockSourceCheckedTypes","Elapsed":0.09}
+{"Time":"2026-10-09T17:58:56.742488008Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRepresentedMethodReplacementIsNotYet","Output":"--- PASS: TestRepresentedMethodReplacementIsNotYet (0.09s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:58:56.742491644Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRepresentedMethodReplacementIsNotYet","Elapsed":0.09}
+{"Time":"2026-10-09T17:58:56.7424955Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:58:56.751192768Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"ok  \tgithub.com/system-inc/adamic/internal/lower\t0.110s\n"}
+{"Time":"2026-10-09T17:58:56.75147848Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.111}

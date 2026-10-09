@@ -1,0 +1,44 @@
+{
+  "jobs": 5,
+  "cache": "/workspace/scratch/parser-front33-build-modes/cache",
+  "generated_c": null,
+  "attempts": [
+    {
+      "mode": "unsplit",
+      "exit": 1,
+      "timeout": false,
+      "attempt_wall_seconds": 0.5182539439992979,
+      "generated_c": null,
+      "clang_wall_seconds": null,
+      "binary_bytes": null,
+      "clang_status": "unreached: checking/lowering failed before C emission",
+      "cache_files_after": 0
+    },
+    {
+      "mode": "split",
+      "exit": 1,
+      "timeout": false,
+      "attempt_wall_seconds": 0.4692167440080084,
+      "generated_c": null,
+      "clang_wall_seconds": null,
+      "binary_bytes": null,
+      "clang_status": "unreached: checking/lowering failed before C emission",
+      "cache_files_after": 0
+    },
+    {
+      "mode": "split-repeat",
+      "exit": 1,
+      "timeout": false,
+      "attempt_wall_seconds": 0.4656459830002859,
+      "generated_c": null,
+      "clang_wall_seconds": null,
+      "binary_bytes": null,
+      "clang_status": "unreached: checking/lowering failed before C emission",
+      "cache_files_after": 0
+    }
+  ],
+  "emit_exit": 1,
+  "emit_timeout": false,
+  "timeout_seconds": 60.0,
+  "split_repeat_is_warm": false
+}

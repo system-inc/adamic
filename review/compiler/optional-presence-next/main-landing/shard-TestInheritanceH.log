@@ -1,0 +1,11 @@
+{"Time":"2026-10-09T18:20:01.043633669Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T18:20:01.096117094Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceHasClassIdentity"}
+{"Time":"2026-10-09T18:20:01.096172267Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceHasClassIdentity","Output":"=== RUN   TestInheritanceHasClassIdentity\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:20:01.096304258Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceHasClassIdentity","Output":"=== PAUSE TestInheritanceHasClassIdentity\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:20:01.096307498Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceHasClassIdentity"}
+{"Time":"2026-10-09T18:20:01.09631043Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceHasClassIdentity"}
+{"Time":"2026-10-09T18:20:01.09631225Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceHasClassIdentity","Output":"=== CONT  TestInheritanceHasClassIdentity\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:20:01.871672967Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceHasClassIdentity","Output":"--- PASS: TestInheritanceHasClassIdentity (0.78s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:20:01.871715074Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceHasClassIdentity","Elapsed":0.78}
+{"Time":"2026-10-09T18:20:01.871727383Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:20:01.874284293Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.831}

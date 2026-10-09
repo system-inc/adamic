@@ -1,0 +1,11 @@
+{"Time":"2026-10-09T18:21:22.036627998Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T18:21:22.065362101Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParserFactoryCompletionShortCircuit"}
+{"Time":"2026-10-09T18:21:22.065438341Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParserFactoryCompletionShortCircuit","Output":"=== RUN   TestParserFactoryCompletionShortCircuit\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:22.06547746Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParserFactoryCompletionShortCircuit","Output":"=== PAUSE TestParserFactoryCompletionShortCircuit\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:22.06548152Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParserFactoryCompletionShortCircuit"}
+{"Time":"2026-10-09T18:21:22.06548497Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParserFactoryCompletionShortCircuit"}
+{"Time":"2026-10-09T18:21:22.065487744Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParserFactoryCompletionShortCircuit","Output":"=== CONT  TestParserFactoryCompletionShortCircuit\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:22.133870162Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParserFactoryCompletionShortCircuit","Output":"--- PASS: TestParserFactoryCompletionShortCircuit (0.06s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:22.134007829Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParserFactoryCompletionShortCircuit","Elapsed":0.06}
+{"Time":"2026-10-09T18:21:22.134040209Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:22.137151899Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.101}

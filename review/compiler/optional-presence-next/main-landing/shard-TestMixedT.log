@@ -1,0 +1,11 @@
+{"Time":"2026-10-09T18:20:33.976468665Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T18:20:34.06311216Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestMixedTupleSpreadIsNotYet"}
+{"Time":"2026-10-09T18:20:34.063257782Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestMixedTupleSpreadIsNotYet","Output":"=== RUN   TestMixedTupleSpreadIsNotYet\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:20:34.06329922Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestMixedTupleSpreadIsNotYet","Output":"=== PAUSE TestMixedTupleSpreadIsNotYet\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:20:34.063302789Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestMixedTupleSpreadIsNotYet"}
+{"Time":"2026-10-09T18:20:34.063306816Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestMixedTupleSpreadIsNotYet"}
+{"Time":"2026-10-09T18:20:34.063309405Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestMixedTupleSpreadIsNotYet","Output":"=== CONT  TestMixedTupleSpreadIsNotYet\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:20:34.268792483Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestMixedTupleSpreadIsNotYet","Output":"--- PASS: TestMixedTupleSpreadIsNotYet (0.21s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:20:34.268839654Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestMixedTupleSpreadIsNotYet","Elapsed":0.21}
+{"Time":"2026-10-09T18:20:34.268868941Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:20:34.272833368Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.296}

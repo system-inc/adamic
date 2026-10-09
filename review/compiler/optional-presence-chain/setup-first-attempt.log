@@ -1,0 +1,24 @@
+v24.19.0
+setup: node ready (0.032s)
+go version go1.27.1 linux/amd64
+setup: go ready (0.034s)
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0.223s)
+
+added 3 packages in 726ms
+setup: markdown dependencies installed (npm ci, integrity verified); step-duration=1.321s
+setup: markdown dependencies ready (1.410s)
+submodule cache: restored cohere 7945d102a6c18dd36adf9114a758ce646e8b2359
+setup: submodules ready (18.027s)
+# github.com/system-inc/adamic/internal/load
+internal/load/load.go:130:27: undefined: projectOptionsForRoots
+internal/load/load.go:152:50: undefined: projectSourceRoots
+internal/load/load.go:158:13: undefined: sourceProgramOptions
+internal/load/load.go:166:15: undefined: uniqueSourceRoots
+internal/load/load.go:183:30: undefined: hasHostConsole
+internal/load/load.go:206:14: undefined: OptionSite
+internal/load/load.go:208:14: undefined: ProjectOptionReport
+internal/load/load.go:209:7: undefined: alreadyStricter
+internal/load/load.go:210:18: undefined: auditProjectOptions
+internal/load/load.go:244:16: undefined: nearestProject
+internal/load/load.go:244:16: too many errors

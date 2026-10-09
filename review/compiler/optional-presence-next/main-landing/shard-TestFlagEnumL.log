@@ -1,0 +1,11 @@
+{"Time":"2026-10-09T18:19:40.292592335Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T18:19:40.344477419Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumLiteralSpellings"}
+{"Time":"2026-10-09T18:19:40.344568649Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumLiteralSpellings","Output":"=== RUN   TestFlagEnumLiteralSpellings\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:40.344637873Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumLiteralSpellings","Output":"=== PAUSE TestFlagEnumLiteralSpellings\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:40.344641804Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumLiteralSpellings"}
+{"Time":"2026-10-09T18:19:40.3446452Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumLiteralSpellings"}
+{"Time":"2026-10-09T18:19:40.344647714Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumLiteralSpellings","Output":"=== CONT  TestFlagEnumLiteralSpellings\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:41.049561631Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumLiteralSpellings","Output":"--- PASS: TestFlagEnumLiteralSpellings (0.70s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:41.049648597Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumLiteralSpellings","Elapsed":0.7}
+{"Time":"2026-10-09T18:19:41.049678752Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:41.051705633Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.759}

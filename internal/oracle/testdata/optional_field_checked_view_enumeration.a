@@ -1,0 +1,21 @@
+interface Source { readonly kind: number | undefined; slot?: number | undefined }
+interface View { readonly kind: 1; slot?: number | undefined }
+const raw: { kind: number | undefined; slot: number | undefined } = { kind: 1, slot: 0 };
+const source: Source = raw;
+const view = source as View;
+console.log(Object.keys(source).join(','));
+view.slot = 0;
+console.log(Object.entries(raw).map(pair => pair[0] + ':' + String(pair[1])).join(','));
+console.log(Object.values(raw).map(value => String(value)).join(','));
+delete view.slot;
+console.log(Object.keys(source).join(','));
+view.slot = undefined;
+console.log(Object.entries(raw).map(pair => pair[0] + ':' + String(pair[1])).join(','));
+console.log(Object.values(raw).map(value => String(value)).join(','));
+const copy = { ...raw };
+const copiedBase: Source = copy;
+const copied = copiedBase as View;
+delete source.slot;
+console.log(Object.keys(view).join(','));
+copied.slot = 2;
+console.log(Object.keys(copy).join(',') + ':' + String(copied.slot));

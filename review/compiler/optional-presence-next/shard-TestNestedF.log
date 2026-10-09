@@ -1,0 +1,32 @@
+{"Time":"2026-10-09T17:57:08.590221243Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T17:57:08.608669898Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionGapsAreLoud"}
+{"Time":"2026-10-09T17:57:08.608764136Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionGapsAreLoud","Output":"=== RUN   TestNestedFunctionGapsAreLoud\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:08.608798549Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionGapsAreLoud","Output":"=== PAUSE TestNestedFunctionGapsAreLoud\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:08.608802172Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionGapsAreLoud"}
+{"Time":"2026-10-09T17:57:08.608806366Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionCycleIsRefused"}
+{"Time":"2026-10-09T17:57:08.608809271Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionCycleIsRefused","Output":"=== RUN   TestNestedFunctionCycleIsRefused\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:08.608812978Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionCycleIsRefused","Output":"=== PAUSE TestNestedFunctionCycleIsRefused\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:08.608815751Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionCycleIsRefused"}
+{"Time":"2026-10-09T17:57:08.609807779Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionGapsAreLoud"}
+{"Time":"2026-10-09T17:57:08.60982512Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionGapsAreLoud","Output":"=== CONT  TestNestedFunctionGapsAreLoud\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:08.609832017Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionGapsAreLoud/block"}
+{"Time":"2026-10-09T17:57:08.609834913Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionGapsAreLoud/block","Output":"=== RUN   TestNestedFunctionGapsAreLoud/block\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:08.610606761Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionCycleIsRefused"}
+{"Time":"2026-10-09T17:57:08.610616518Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionCycleIsRefused","Output":"=== CONT  TestNestedFunctionCycleIsRefused\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:08.707445832Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionGapsAreLoud/block","Output":"--- PASS: TestNestedFunctionGapsAreLoud/block (0.10s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:08.707482611Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionGapsAreLoud/block","Elapsed":0.1}
+{"Time":"2026-10-09T17:57:08.707508829Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionGapsAreLoud/generic"}
+{"Time":"2026-10-09T17:57:08.70751236Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionGapsAreLoud/generic","Output":"=== RUN   TestNestedFunctionGapsAreLoud/generic\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:08.722713404Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionCycleIsRefused","Output":"--- PASS: TestNestedFunctionCycleIsRefused (0.11s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:08.75481453Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionCycleIsRefused","Elapsed":0.11}
+{"Time":"2026-10-09T17:57:08.754843625Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionGapsAreLoud/generic","Output":"--- PASS: TestNestedFunctionGapsAreLoud/generic (0.05s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:08.75488847Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionGapsAreLoud/generic","Elapsed":0.05}
+{"Time":"2026-10-09T17:57:08.754896189Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionGapsAreLoud/dynamic_this"}
+{"Time":"2026-10-09T17:57:08.754899456Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionGapsAreLoud/dynamic_this","Output":"=== RUN   TestNestedFunctionGapsAreLoud/dynamic_this\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:08.798446008Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionGapsAreLoud/dynamic_this","Output":"--- PASS: TestNestedFunctionGapsAreLoud/dynamic_this (0.04s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:08.798483503Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionGapsAreLoud/dynamic_this","Elapsed":0.04}
+{"Time":"2026-10-09T17:57:08.798582917Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionGapsAreLoud","Output":"--- PASS: TestNestedFunctionGapsAreLoud (0.19s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:08.798591313Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionGapsAreLoud","Elapsed":0.19}
+{"Time":"2026-10-09T17:57:08.798595868Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:08.801281222Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"ok  \tgithub.com/system-inc/adamic/internal/lower\t0.209s\n"}
+{"Time":"2026-10-09T17:57:08.801312227Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.211}

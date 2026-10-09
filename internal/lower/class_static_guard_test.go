@@ -39,7 +39,11 @@ func TestClassStaticInitializerCallIsEmitted(t *testing.T) {
 			continue
 		}
 		call, ok := evaluate.Value.(ir.Call)
-		if !ok || call.Function != initializer {
+		if !ok {
+			continue
+		}
+		targets := program.CallTargets(call)
+		if len(targets) != 1 || targets[0] != initializer {
 			continue
 		}
 		calls++

@@ -248,7 +248,7 @@ func (l *lowering) libraryFailure(statements []ir.Statement, visited map[int]boo
 				failing = "a write to a potentially frozen object"
 			}
 		case ir.ObjectCall:
-			if node.Method == "assign" && l.objectCanFreeze() {
+			if (node.Method == "assign" || node.Method == "optionalDelete") && l.objectCanFreeze() {
 				failing = "Object.assign into a potentially frozen object"
 			}
 		case ir.RegExpCall:

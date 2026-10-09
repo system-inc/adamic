@@ -9,6 +9,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/native"
 )
 
 const genericValuesDirectory = "stage3/fixtures/generic-values/"
@@ -195,4 +196,79 @@ console.log("" + run());`
 			t.Fatalf("%s default mutant escaped Node: %+v", name, got)
 		}
 	}
+}
+
+// Address-only collection equality is sound only while lowering prevents a
+// function from hiding in an object or unknown slot. Both mutants below call
+// this guard: admitting widening requires revisiting their static selection.
+func genericValueWideningRefused(t *testing.T, target string) {
+	t.Helper()
+	path := filepath.Join(t.TempDir(), "widened.a")
+	source := `function identity<T>(value: T): T { return value; }
+const number: (value: number) => number = identity;
+const text: (value: string) => string = identity;
+const values: ` + target + `[] = [number, text];
+console.log("" + values.length);`
+	if err := os.WriteFile(path, []byte(source), 0644); err != nil {
+		t.Fatal(err)
+	}
+	expected := onNode(t, path)
+	if expected.exitCode != 0 || string(expected.stdout) != "2\n" || len(expected.stderr) != 0 {
+		t.Fatalf("Node widening control: %+v", expected)
+	}
+	program, err := lowered(t, path)
+	var stopped *lower.NotYet
+	if program != nil || !errors.As(err, &stopped) || stopped.What != "a function viewed as unknown or object (dynamic function descriptors)" || !strings.Contains(stopped.Where, path) {
+		t.Fatalf("%s widening must stop before emission: %v", target, err)
+	}
+}
+
+func TestGenericValueObjectWideningRefused(t *testing.T) {
+	t.Parallel()
+	genericValueWideningRefused(t, "object")
+}
+
+func TestGenericValueUnknownWideningRefused(t *testing.T) {
+	t.Parallel()
+	genericValueWideningRefused(t, "unknown")
+}
+
+// These address-only mutants need the widening guard as well as the callable
+// oracle: object slots may use addresses only because closures cannot enter them.
+func genericValueAddressOnlyMutant(t *testing.T, before, after string) {
+	t.Helper()
+	genericValueWideningRefused(t, "object")
+	genericValueWideningRefused(t, "unknown")
+	path, err := filepath.Abs(filepath.Join(repository, genericValuesDirectory, "01_comparer.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	expected := onNode(t, path)
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	code := native.C(program)
+	if !strings.Contains(code, before) {
+		t.Fatalf("address-only mutant did not match %q", before)
+	}
+	code = strings.ReplaceAll(code, before, after)
+	binary := filepath.Join(t.TempDir(), "address-only-mutant")
+	if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
+		t.Fatal(err)
+	}
+	got := execute(t, binary)
+	if disagreement(expected, got) != "stdout differs" || got.exitCode != 0 || len(got.stderr) != 0 {
+		t.Fatalf("address-only mutant must fail Node comparison, not compilation or sanitizers: %+v", got)
+	}
+}
+
+func TestGenericValueAddressOnlyMapMutant(t *testing.T) {
+	t.Parallel()
+	genericValueAddressOnlyMutant(t, "adamic_map_new_identity(", "adamic_map_new_addresses(")
+}
+
+func TestGenericValueAddressOnlyArrayMutant(t *testing.T) {
+	t.Parallel()
+	genericValueAddressOnlyMutant(t, "adamic_equal_identity", "adamic_equal_addresses")
 }

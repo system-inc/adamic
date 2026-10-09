@@ -1,0 +1,182 @@
+[
+  {
+    "revision": "50654a40",
+    "test": "TestUndecidedCycleReadsUseReadyChecks",
+    "status": 0,
+    "seconds": 20.673,
+    "command": [
+      "timeout",
+      "95",
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestUndecidedCycleReadsUseReadyChecks$",
+      "-timeout",
+      "90s",
+      "-count=1",
+      "-v"
+    ]
+  },
+  {
+    "revision": "50654a40",
+    "test": "TestOptionalIndexingMapShapeRefused",
+    "status": 0,
+    "seconds": 3.198,
+    "command": [
+      "timeout",
+      "95",
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestOptionalIndexingMapShapeRefused$",
+      "-timeout",
+      "90s",
+      "-count=1",
+      "-v"
+    ]
+  },
+  {
+    "revision": "50654a40",
+    "test": "TestOptionalIndexingKeepsUnsupportedStorageNotYet",
+    "status": 0,
+    "seconds": 3.795,
+    "command": [
+      "timeout",
+      "95",
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestOptionalIndexingKeepsUnsupportedStorageNotYet$",
+      "-timeout",
+      "90s",
+      "-count=1",
+      "-v"
+    ]
+  },
+  {
+    "revision": "897d0e79",
+    "test": "TestUndecidedCycleReadsUseReadyChecks",
+    "status": 1,
+    "seconds": 9.74,
+    "command": [
+      "timeout",
+      "95",
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestUndecidedCycleReadsUseReadyChecks$",
+      "-timeout",
+      "90s",
+      "-count=1",
+      "-v"
+    ]
+  },
+  {
+    "revision": "897d0e79",
+    "test": "TestOptionalIndexingMapShapeRefused",
+    "status": 1,
+    "seconds": 3.968,
+    "command": [
+      "timeout",
+      "95",
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestOptionalIndexingMapShapeRefused$",
+      "-timeout",
+      "90s",
+      "-count=1",
+      "-v"
+    ]
+  },
+  {
+    "revision": "897d0e79",
+    "test": "TestOptionalIndexingKeepsUnsupportedStorageNotYet",
+    "status": 1,
+    "seconds": 4.533,
+    "command": [
+      "timeout",
+      "95",
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestOptionalIndexingKeepsUnsupportedStorageNotYet$",
+      "-timeout",
+      "90s",
+      "-count=1",
+      "-v"
+    ]
+  },
+  {
+    "revision": "5f08a92c",
+    "test": "TestUndecidedCycleReadsUseReadyChecks",
+    "status": 1,
+    "seconds": 8.578,
+    "command": [
+      "timeout",
+      "95",
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestUndecidedCycleReadsUseReadyChecks$",
+      "-timeout",
+      "90s",
+      "-count=1",
+      "-v"
+    ]
+  },
+  {
+    "revision": "5f08a92c",
+    "test": "TestOptionalIndexingMapShapeRefused",
+    "status": 1,
+    "seconds": 4.385,
+    "command": [
+      "timeout",
+      "95",
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestOptionalIndexingMapShapeRefused$",
+      "-timeout",
+      "90s",
+      "-count=1",
+      "-v"
+    ]
+  },
+  {
+    "revision": "5f08a92c",
+    "test": "TestOptionalIndexingKeepsUnsupportedStorageNotYet",
+    "status": 1,
+    "seconds": 5.635,
+    "command": [
+      "timeout",
+      "95",
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestOptionalIndexingKeepsUnsupportedStorageNotYet$",
+      "-timeout",
+      "90s",
+      "-count=1",
+      "-v"
+    ]
+  }
+]

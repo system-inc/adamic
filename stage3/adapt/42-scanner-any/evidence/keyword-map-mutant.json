@@ -1,0 +1,20 @@
+[
+  {
+    "code": 2769,
+    "file": "src/compiler/scanner.ts",
+    "start": 8470,
+    "message": "No overload matches this call.\n  Overload 1 of 4, '(iterable?: Iterable<readonly [string, string]> | null | undefined): Map<string, string>', gave the following error.\n    Argument of type '[string, KeywordSyntaxKind][]' is not assignable to parameter of type 'Iterable<readonly [string, string]>'.\n      The types returned by '[Symbol.iterator]().next(...)' are incompatible between these types.\n        Type 'IteratorResult<[string, KeywordSyntaxKind], undefined>' is not assignable to type 'IteratorResult<readonly [string, string], any>'.\n          Type 'IteratorYieldResult<[string, KeywordSyntaxKind]>' is not assignable to type 'IteratorResult<readonly [string, string], any>'.\n            Type 'IteratorYieldResult<[string, KeywordSyntaxKind]>' is not assignable to type 'IteratorYieldResult<readonly [string, string]>'.\n              Type '[string, KeywordSyntaxKind]' is not assignable to type 'readonly [string, string]'.\n                Type at position 1 in source is not compatible with type at position 1 in target.\n                  Type 'import(\"/workspace/scratch/scanner-any-42-lane-solo/adapted-tree/src/compiler/types\").SyntaxKind' is not assignable to type 'string'.\n                    Type 'import(\"/workspace/scratch/scanner-any-42-lane-solo/adapted-tree/src/compiler/types\").SyntaxKind' is not assignable to type 'string'.\n  Overload 2 of 4, '(entries?: readonly (readonly [string, string])[] | null | undefined): Map<string, string>', gave the following error.\n    Argument of type '[string, KeywordSyntaxKind][]' is not assignable to parameter of type 'readonly (readonly [string, string])[]'.\n      Type '[string, KeywordSyntaxKind]' is not assignable to type 'readonly [string, string]'.\n        Type at position 1 in source is not compatible with type at position 1 in target.\n          Type 'import(\"/workspace/scratch/scanner-any-42-lane-solo/adapted-tree/src/compiler/types\").SyntaxKind' is not assignable to type 'string'.\n            Type 'import(\"/workspace/scratch/scanner-any-42-lane-solo/adapted-tree/src/compiler/types\").SyntaxKind' is not assignable to type 'string'."
+  },
+  {
+    "code": 2322,
+    "file": "src/compiler/scanner.ts",
+    "start": 104799,
+    "message": "Type 'string' is not assignable to type 'SyntaxKind.Identifier | KeywordSyntaxKind'."
+  },
+  {
+    "code": 2322,
+    "file": "src/compiler/scanner.ts",
+    "start": 104806,
+    "message": "Type 'string' is not assignable to type 'SyntaxKind'."
+  }
+]

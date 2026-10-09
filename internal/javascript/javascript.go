@@ -490,7 +490,11 @@ func (e *emitter) statement(at *ir.Statement) {
 			break
 		}
 		if e.program.CheckedFields[statement.Name] && !statement.Define && !statement.Uninitialized {
-			e.line("adamicViewWrite(%s, %s, %s, %d);", e.value(statement.Object), quote(statement.Name), e.value(statement.Value), viewFieldRepresentation(statement.Value))
+			write := "adamicViewWrite"
+			if statement.Class != 0 || !e.optionalViewFieldName(statement.Name) {
+				write = "adamicLegacyViewWrite"
+			}
+			e.line("%s(%s, %s, %s, %d);", write, e.value(statement.Object), quote(statement.Name), e.value(statement.Value), viewFieldRepresentation(statement.Value))
 			break
 		}
 		if statement.Define || statement.Uninitialized {
@@ -498,7 +502,11 @@ func (e *emitter) statement(at *ir.Statement) {
 			if statement.Uninitialized && statement.Value.Type() == ir.Union {
 				representation = int(ir.Union)
 			}
-			e.line("adamicDefineField(%s, %s, %s, %t, %t, %d);", e.value(statement.Object), quote(statement.Name), e.value(statement.Value), !strings.HasPrefix(statement.Name, "#"), !statement.Uninitialized || statement.Unset, representation)
+			value := e.value(statement.Value)
+			if statement.Uninitialized {
+				value = "undefined"
+			}
+			e.line("adamicDefineField(%s, %s, %s, %t, %t, %d);", e.value(statement.Object), quote(statement.Name), value, !strings.HasPrefix(statement.Name, "#"), !statement.Uninitialized || statement.Unset, representation)
 		} else {
 			e.line("adamicWriteField(%s, %s, %s);", e.value(statement.Object), quote(statement.Name), e.value(statement.Value))
 		}
@@ -905,7 +913,11 @@ func (e *emitter) value(expression ir.Expression) string {
 			if field.Absent {
 				continue
 			}
-			fields = append(fields, quote(field.Name)+": "+e.value(field.Value))
+			value := e.value(field.Value)
+			if field.Uninitialized {
+				value = "undefined"
+			}
+			fields = append(fields, quote(field.Name)+": "+value)
 		}
 		object := "({" + strings.Join(fields, ", ") + "})"
 		if expression.Class != 0 {
@@ -922,12 +934,32 @@ func (e *emitter) value(expression ir.Expression) string {
 		}
 		if len(e.program.CheckedFields) != 0 || jsConstructionFields(expression.Fields) {
 			types := []string{}
+			optionals := []string{}
+			for _, field := range append(append([]ir.Field{}, expression.Fields...), expression.Missing...) {
+				optional := fmt.Sprint(field.Optional)
+				if spreadValue != "" {
+					optional = "(adamicFieldOptionals.get(adamicSpreadSource)?.[" + quote(field.Name) + "] ?? " + optional + ")"
+				}
+				optionals = append(optionals, quote(field.Name)+": "+optional)
+			}
+			parentOptionals := ""
+			if spreadValue != "" {
+				parentOptionals = "...adamicFieldOptionals.get(adamicSpreadSource), "
+			}
+			object = "adamicRecordFieldOptionals(" + object + ", {" + parentOptionals + strings.Join(optionals, ", ") + "})"
 			for _, field := range expression.Fields {
 				representation := viewFieldRepresentation(field.Value)
 				if field.Uninitialized && field.Value.Type() == ir.Union {
 					representation = int(ir.Union)
 				}
 				types = append(types, quote(field.Name)+": "+fmt.Sprint(representation))
+			}
+			for _, field := range expression.Missing {
+				representation := fmt.Sprint(field.Value.Type())
+				if spreadValue != "" {
+					representation = "(adamicFieldRepresentations.get(adamicSpreadSource)?.[" + quote(field.Name) + "] ?? " + representation + ")"
+				}
+				types = append(types, quote(field.Name)+": "+representation)
 			}
 			parentTypes := ""
 			if spreadValue != "" {
@@ -1043,6 +1075,12 @@ func (e *emitter) value(expression ir.Expression) string {
 	case ir.ObjectCall:
 		if expression.Checked {
 			return e.checkedObjectEnumeration(expression)
+		}
+		if expression.Method == "optionalDelete" {
+			return "(delete " + e.value(expression.Arguments[0]) + "[" + e.value(expression.Arguments[1]) + "])"
+		}
+		if expression.Method == "optionalIn" {
+			return "(" + e.value(expression.Arguments[1]) + " in " + e.value(expression.Arguments[0]) + ")"
 		}
 		return "Object." + expression.Method + "(" + e.values(expression.Arguments) + ")"
 	case ir.NumberCall:

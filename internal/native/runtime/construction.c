@@ -19,6 +19,7 @@ static void construction_start(adamic_object *object, const adamic_shape *shape)
  object->class = NULL;
  object->frozen = false;
  object->tuple = false;
+ object->dynamic_shape = false;
  memset(object->slots, 0, shape->count * sizeof(adamic_value));
  memset(adamic_object_initialized(object), 0, shape->count);
  memset(adamic_object_field_types(object), 0, shape->count);

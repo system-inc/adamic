@@ -1,0 +1,27 @@
+{"Time":"2026-10-09T18:21:24.856618351Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T18:21:24.891101495Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPlaceholderTypedBoundaryProperty"}
+{"Time":"2026-10-09T18:21:24.89116217Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPlaceholderTypedBoundaryProperty","Output":"=== RUN   TestPlaceholderTypedBoundaryProperty\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:24.891190251Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPlaceholderTypedBoundaryProperty","Output":"=== PAUSE TestPlaceholderTypedBoundaryProperty\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:24.891193948Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPlaceholderTypedBoundaryProperty"}
+{"Time":"2026-10-09T18:21:24.891197907Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPlaceholderTypedBoundaryPresence"}
+{"Time":"2026-10-09T18:21:24.891200453Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPlaceholderTypedBoundaryPresence","Output":"=== RUN   TestPlaceholderTypedBoundaryPresence\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:24.891230253Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPlaceholderTypedBoundaryPresence","Output":"=== PAUSE TestPlaceholderTypedBoundaryPresence\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:24.891232942Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPlaceholderTypedBoundaryPresence"}
+{"Time":"2026-10-09T18:21:24.891237035Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPlaceholderTypedBoundaryPlaceholderFieldCopy"}
+{"Time":"2026-10-09T18:21:24.891251706Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPlaceholderTypedBoundaryPlaceholderFieldCopy","Output":"=== RUN   TestPlaceholderTypedBoundaryPlaceholderFieldCopy\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:24.891260478Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPlaceholderTypedBoundaryPlaceholderFieldCopy","Output":"=== PAUSE TestPlaceholderTypedBoundaryPlaceholderFieldCopy\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:24.891263221Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPlaceholderTypedBoundaryPlaceholderFieldCopy"}
+{"Time":"2026-10-09T18:21:24.891266203Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPlaceholderTypedBoundaryProperty"}
+{"Time":"2026-10-09T18:21:24.891268709Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPlaceholderTypedBoundaryProperty","Output":"=== CONT  TestPlaceholderTypedBoundaryProperty\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:24.891271683Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPlaceholderTypedBoundaryPlaceholderFieldCopy"}
+{"Time":"2026-10-09T18:21:24.891274189Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPlaceholderTypedBoundaryPlaceholderFieldCopy","Output":"=== CONT  TestPlaceholderTypedBoundaryPlaceholderFieldCopy\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:24.891277069Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPlaceholderTypedBoundaryPresence"}
+{"Time":"2026-10-09T18:21:24.891279558Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPlaceholderTypedBoundaryPresence","Output":"=== CONT  TestPlaceholderTypedBoundaryPresence\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:25.160155363Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPlaceholderTypedBoundaryPresence","Output":"--- PASS: TestPlaceholderTypedBoundaryPresence (0.27s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:25.172859944Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPlaceholderTypedBoundaryPresence","Elapsed":0.27}
+{"Time":"2026-10-09T18:21:25.172900763Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPlaceholderTypedBoundaryPlaceholderFieldCopy","Output":"--- PASS: TestPlaceholderTypedBoundaryPlaceholderFieldCopy (0.28s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:25.17587152Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPlaceholderTypedBoundaryPlaceholderFieldCopy","Elapsed":0.28}
+{"Time":"2026-10-09T18:21:25.175890777Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPlaceholderTypedBoundaryProperty","Output":"--- PASS: TestPlaceholderTypedBoundaryProperty (0.29s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:25.178290949Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPlaceholderTypedBoundaryProperty","Elapsed":0.29}
+{"Time":"2026-10-09T18:21:25.178310843Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:25.182042011Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.325}

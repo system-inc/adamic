@@ -1,0 +1,23 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_checked_view_string_undefined.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_checked_view_string_undefined.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_checked_view_string_undefined.a
+    oracle_test.go:792: exit codes differ
+        node:   exit 0, stdout "undefined\ntrue\nkind,s\nagainagain\nundefined:true\n", stderr ""
+        native: exit 70, stdout "", stderr "adamic: panic: field write failed: s expected string, found undefined\n"
+    oracle_test.go:798: JavaScript backend: exit codes differ
+        node:    exit 0, stdout "undefined\ntrue\nkind,s\nagainagain\nundefined:true\n", stderr ""
+        backend: exit 70, stdout "", stderr "adamic: panic: field write failed: s expected string, found undefined\n"
+    oracle_test.go:805: leaks:
+        exit 70
+        adamic: panic: field write failed: s expected string, found undefined
+--- FAIL: TestNativeAgreesWithNode (0.03s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_checked_view_string_undefined.a (0.48s)
+FAIL
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.513s
+FAIL

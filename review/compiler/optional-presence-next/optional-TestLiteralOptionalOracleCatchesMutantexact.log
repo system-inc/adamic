@@ -1,0 +1,16 @@
+{"Time":"2026-10-09T17:53:13.073447759Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-09T17:53:13.18317973Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestLiteralOptionalOracleCatchesMutant"}
+{"Time":"2026-10-09T17:53:13.183303125Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestLiteralOptionalOracleCatchesMutant","Output":"=== RUN   TestLiteralOptionalOracleCatchesMutant\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:53:13.183337188Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestLiteralOptionalOracleCatchesMutant","Output":"=== PAUSE TestLiteralOptionalOracleCatchesMutant\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:53:13.183340695Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestLiteralOptionalOracleCatchesMutant"}
+{"Time":"2026-10-09T17:53:13.183344931Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestLiteralOptionalOracleCatchesMutant"}
+{"Time":"2026-10-09T17:53:13.183347699Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestLiteralOptionalOracleCatchesMutant","Output":"=== CONT  TestLiteralOptionalOracleCatchesMutant\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:53:16.249687746Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestLiteralOptionalOracleCatchesMutant","Output":"    literal_optional_test.go:79: Node caught restored required-field lookup: missing-field panic, exit 70\n"}
+{"Time":"2026-10-09T17:53:16.25332125Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestLiteralOptionalOracleCatchesMutant","Output":"--- PASS: TestLiteralOptionalOracleCatchesMutant (3.07s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:53:16.253353224Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestLiteralOptionalOracleCatchesMutant","Elapsed":3.07}
+{"Time":"2026-10-09T17:53:16.253799764Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:53:16.253809029Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: native hits=0 misses=0\n"}
+{"Time":"2026-10-09T17:53:16.253813301Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: node hits=0 misses=2\n"}
+{"Time":"2026-10-09T17:53:16.253816019Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: probe hits=0 misses=0\n"}
+{"Time":"2026-10-09T17:53:16.253861718Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"ok  \tgithub.com/system-inc/adamic/internal/oracle\t3.164s\n"}
+{"Time":"2026-10-09T17:53:16.253873973Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":3.18}

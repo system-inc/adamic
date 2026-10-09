@@ -19,7 +19,9 @@ func (e *emitter) objectCall(call ir.ObjectCall) string {
 		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_object_is_frozen(%s)", arguments[0]))
 	case "freeze":
 		return e.own(ir.Object, fmt.Sprintf("adamic_object_freeze(%s)", arguments[0]))
-	case "hasOwn":
+	case "optionalDelete":
+		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_object_delete(%s, %s)", arguments[0], arguments[1]))
+	case "hasOwn", "optionalIn":
 		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_object_has_own(%s, %s)", arguments[0], arguments[1]))
 	case "keys":
 		if call.Arguments[0].Type() == ir.Array {

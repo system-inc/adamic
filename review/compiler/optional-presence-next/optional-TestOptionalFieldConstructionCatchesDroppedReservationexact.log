@@ -1,0 +1,16 @@
+{"Time":"2026-10-09T17:54:54.514921929Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-09T17:54:54.529704068Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOptionalFieldConstructionCatchesDroppedReservation"}
+{"Time":"2026-10-09T17:54:54.529783023Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOptionalFieldConstructionCatchesDroppedReservation","Output":"=== RUN   TestOptionalFieldConstructionCatchesDroppedReservation\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:54.529817566Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOptionalFieldConstructionCatchesDroppedReservation","Output":"=== PAUSE TestOptionalFieldConstructionCatchesDroppedReservation\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:54.529820624Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOptionalFieldConstructionCatchesDroppedReservation"}
+{"Time":"2026-10-09T17:54:54.529823417Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOptionalFieldConstructionCatchesDroppedReservation"}
+{"Time":"2026-10-09T17:54:54.529825465Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOptionalFieldConstructionCatchesDroppedReservation","Output":"=== CONT  TestOptionalFieldConstructionCatchesDroppedReservation\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:55.304581693Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOptionalFieldConstructionCatchesDroppedReservation","Output":"    optional_field_write_test.go:133: Node caught dropped spread reservation: missing-field stop, exit 70\n"}
+{"Time":"2026-10-09T17:54:55.305233151Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOptionalFieldConstructionCatchesDroppedReservation","Output":"--- PASS: TestOptionalFieldConstructionCatchesDroppedReservation (0.78s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:55.305252877Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOptionalFieldConstructionCatchesDroppedReservation","Elapsed":0.78}
+{"Time":"2026-10-09T17:54:55.305281548Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:55.305285762Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: native hits=0 misses=0\n"}
+{"Time":"2026-10-09T17:54:55.305289266Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: node hits=0 misses=1\n"}
+{"Time":"2026-10-09T17:54:55.305292401Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: probe hits=0 misses=0\n"}
+{"Time":"2026-10-09T17:54:55.306605423Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"ok  \tgithub.com/system-inc/adamic/internal/oracle\t0.791s\n"}
+{"Time":"2026-10-09T17:54:55.306687221Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":0.792}

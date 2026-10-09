@@ -1,0 +1,23 @@
+{"Time":"2026-10-09T18:20:40.289828746Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T18:20:40.311152396Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceInitializationReachability"}
+{"Time":"2026-10-09T18:20:40.311365171Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceInitializationReachability","Output":"=== RUN   TestNamespaceInitializationReachability\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:20:40.311397274Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceInitializationReachability","Output":"=== PAUSE TestNamespaceInitializationReachability\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:20:40.311401526Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceInitializationReachability"}
+{"Time":"2026-10-09T18:20:40.311405508Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceInitializationReachability"}
+{"Time":"2026-10-09T18:20:40.311408222Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceInitializationReachability","Output":"=== CONT  TestNamespaceInitializationReachability\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:20:40.311411343Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceInitializationReachability/direct"}
+{"Time":"2026-10-09T18:20:40.311414159Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceInitializationReachability/direct","Output":"=== RUN   TestNamespaceInitializationReachability/direct\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:20:40.410998843Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceInitializationReachability/direct","Output":"--- PASS: TestNamespaceInitializationReachability/direct (0.10s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:20:40.411071569Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceInitializationReachability/direct","Elapsed":0.1}
+{"Time":"2026-10-09T18:20:40.411087229Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceInitializationReachability/helper"}
+{"Time":"2026-10-09T18:20:40.411090844Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceInitializationReachability/helper","Output":"=== RUN   TestNamespaceInitializationReachability/helper\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:20:40.499580929Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceInitializationReachability/helper","Output":"--- PASS: TestNamespaceInitializationReachability/helper (0.08s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:20:40.499623328Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceInitializationReachability/helper","Elapsed":0.08}
+{"Time":"2026-10-09T18:20:40.499632057Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceInitializationReachability/cycle"}
+{"Time":"2026-10-09T18:20:40.499636309Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceInitializationReachability/cycle","Output":"=== RUN   TestNamespaceInitializationReachability/cycle\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:20:40.642493676Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceInitializationReachability/cycle","Output":"--- PASS: TestNamespaceInitializationReachability/cycle (0.14s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:20:40.642545069Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceInitializationReachability/cycle","Elapsed":0.14}
+{"Time":"2026-10-09T18:20:40.642552186Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceInitializationReachability","Output":"--- PASS: TestNamespaceInitializationReachability (0.33s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:20:40.642563268Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceInitializationReachability","Elapsed":0.33}
+{"Time":"2026-10-09T18:20:40.642565537Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:20:40.650479389Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.361}
