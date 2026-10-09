@@ -1,0 +1,464 @@
+[
+  {
+    "test": "TestParserSpeculationSourcesNamedTryparse",
+    "action": "pass",
+    "seconds": 4.59,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-02.jsonl"
+  },
+  {
+    "test": "TestParserConstructionSourceNodeArrayUnset",
+    "action": "pass",
+    "seconds": 4.59,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-02.jsonl"
+  },
+  {
+    "test": "TestParserSpeculationSourcesNamedLookahead",
+    "action": "pass",
+    "seconds": 4.74,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-02.jsonl"
+  },
+  {
+    "test": "TestParserConstructionNullPlaceholderDelivered",
+    "action": "pass",
+    "seconds": 4.86,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-02.jsonl"
+  },
+  {
+    "test": "TestParserConstructionUnsetUse",
+    "action": "pass",
+    "seconds": 2.33,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-02.jsonl"
+  },
+  {
+    "test": "TestParserSpeculationSourcesTruthinessRewind",
+    "action": "pass",
+    "seconds": 3.01,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-02.jsonl"
+  },
+  {
+    "test": "TestParserSpeculationMisfit",
+    "action": "pass",
+    "seconds": 3.27,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-02.jsonl"
+  },
+  {
+    "test": "TestParserSpeculationSourcesArrowTryparse",
+    "action": "pass",
+    "seconds": 3.04,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-02.jsonl"
+  },
+  {
+    "test": "TestRequiredViewFieldPrimitive/missing",
+    "action": "pass",
+    "seconds": 1.59,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-06.jsonl"
+  },
+  {
+    "test": "TestRequiredViewFieldPrimitive/number",
+    "action": "pass",
+    "seconds": 1.73,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-06.jsonl"
+  },
+  {
+    "test": "TestRequiredViewFieldPrimitive/wrong_string",
+    "action": "pass",
+    "seconds": 2.29,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-06.jsonl"
+  },
+  {
+    "test": "TestRequiredViewFieldPrimitive/uninitialized",
+    "action": "pass",
+    "seconds": 3.52,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-06.jsonl"
+  },
+  {
+    "test": "TestRequiredViewFieldPrimitive/boolean",
+    "action": "pass",
+    "seconds": 2.44,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-06.jsonl"
+  },
+  {
+    "test": "TestRequiredViewFieldPrimitive/string",
+    "action": "pass",
+    "seconds": 3.19,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-06.jsonl"
+  },
+  {
+    "test": "TestRequiredViewFieldOperandOnce",
+    "action": "pass",
+    "seconds": 2.72,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-06.jsonl"
+  },
+  {
+    "test": "TestRequiredViewFieldPrimitive/wrong_type",
+    "action": "pass",
+    "seconds": 2.69,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-06.jsonl"
+  },
+  {
+    "test": "TestRequiredViewFieldPrimitive",
+    "action": "pass",
+    "seconds": 0,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-06.jsonl"
+  },
+  {
+    "test": "TestDefaultTaggedSourceViews/default-wrong-type",
+    "action": "pass",
+    "seconds": 2,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-06.jsonl"
+  },
+  {
+    "test": "TestDefaultTaggedSourceViews/default-staged",
+    "action": "pass",
+    "seconds": 2.84,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-06.jsonl"
+  },
+  {
+    "test": "TestDefaultTaggedSourceViews/default-read-before-set",
+    "action": "pass",
+    "seconds": 2.09,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-06.jsonl"
+  },
+  {
+    "test": "TestDefaultTaggedSourceViews/default-literal",
+    "action": "pass",
+    "seconds": 1.95,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-06.jsonl"
+  },
+  {
+    "test": "TestDefaultTaggedSourceViews/default-wrong-boolean",
+    "action": "pass",
+    "seconds": 2.05,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-06.jsonl"
+  },
+  {
+    "test": "TestDefaultTaggedSourceViews/default-boxed-write",
+    "action": "pass",
+    "seconds": 2.09,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-06.jsonl"
+  },
+  {
+    "test": "TestDefaultTaggedSourceViews/default-destructure",
+    "action": "pass",
+    "seconds": 2.07,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-06.jsonl"
+  },
+  {
+    "test": "TestDefaultTaggedSourceViews/default-boxed-string",
+    "action": "pass",
+    "seconds": 2.4,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-06.jsonl"
+  },
+  {
+    "test": "TestDefaultTaggedSourceViews",
+    "action": "pass",
+    "seconds": 0,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-06.jsonl"
+  },
+  {
+    "test": "TestPlaceholderUseCheckNullBeforeUse",
+    "action": "pass",
+    "seconds": 3.67,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-03.jsonl"
+  },
+  {
+    "test": "TestPlaceholderUseCheckBeforeUse",
+    "action": "pass",
+    "seconds": 3.88,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-03.jsonl"
+  },
+  {
+    "test": "TestParserSpeculationRewindMutant",
+    "action": "pass",
+    "seconds": 4.53,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-03.jsonl"
+  },
+  {
+    "test": "TestParserStackTinyLimit",
+    "action": "pass",
+    "seconds": 4.86,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-03.jsonl"
+  },
+  {
+    "test": "TestParserStackGuardMutant",
+    "action": "pass",
+    "seconds": 2.34,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-03.jsonl"
+  },
+  {
+    "test": "TestPlaceholderUseCheckSavedLeak",
+    "action": "pass",
+    "seconds": 2.99,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-03.jsonl"
+  },
+  {
+    "test": "TestParserStackPathological",
+    "action": "pass",
+    "seconds": 4.42,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-03.jsonl"
+  },
+  {
+    "test": "TestParserStackLegal",
+    "action": "pass",
+    "seconds": 4.54,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-03.jsonl"
+  },
+  {
+    "test": "TestPlaceholderFlowMutantNullSavedLeak",
+    "action": "pass",
+    "seconds": 4.16,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-05.jsonl"
+  },
+  {
+    "test": "TestReadinessMutants/replace-unset-check-with-zero",
+    "action": "pass",
+    "seconds": 4.17,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-05.jsonl"
+  },
+  {
+    "test": "TestPlaceholderFlowMutantReturnAssignment",
+    "action": "pass",
+    "seconds": 4.78,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-05.jsonl"
+  },
+  {
+    "test": "TestPlaceholderNullTagMutant",
+    "action": "pass",
+    "seconds": 5.58,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-05.jsonl"
+  },
+  {
+    "test": "TestReadinessMutants/miss-captured-read",
+    "action": "pass",
+    "seconds": 4.33,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-05.jsonl"
+  },
+  {
+    "test": "TestNonNullWeakFreedNamesExpression",
+    "action": "pass",
+    "seconds": 3.83,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-05.jsonl"
+  },
+  {
+    "test": "TestPlaceholderFlowMutantAliasReset",
+    "action": "pass",
+    "seconds": 5.48,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-05.jsonl"
+  },
+  {
+    "test": "TestReadinessMutants/weak-generic-message",
+    "action": "pass",
+    "seconds": 4.57,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-05.jsonl"
+  },
+  {
+    "test": "TestReadinessMutants/miss-exception-path",
+    "action": "pass",
+    "seconds": 4.6,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-05.jsonl"
+  },
+  {
+    "test": "TestReadinessMutants/replace-missing-assertion-with-empty",
+    "action": "pass",
+    "seconds": 4.8,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-05.jsonl"
+  },
+  {
+    "test": "TestReadinessMutants/erase-without-proof",
+    "action": "pass",
+    "seconds": 3.92,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-05.jsonl"
+  },
+  {
+    "test": "TestReadinessMutants/initialize-to-zero",
+    "action": "pass",
+    "seconds": 3.72,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-05.jsonl"
+  },
+  {
+    "test": "TestReadinessMutants",
+    "action": "pass",
+    "seconds": 0,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-05.jsonl"
+  },
+  {
+    "test": "TestPlaceholderFlowMutantAssignmentResult",
+    "action": "pass",
+    "seconds": 3.07,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-05.jsonl"
+  },
+  {
+    "test": "TestPlaceholderSpreadReadinessMutant",
+    "action": "pass",
+    "seconds": 6.9,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-05.jsonl"
+  },
+  {
+    "test": "TestNonNullAdamicRefusal/stage3/census/repro/r05/main.a",
+    "action": "pass",
+    "seconds": 0.38,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-00.jsonl"
+  },
+  {
+    "test": "TestRuledBackendOutcomes",
+    "action": "pass",
+    "seconds": 4.56,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-00.jsonl"
+  },
+  {
+    "test": "TestNonNullLiteralUnionInitializers/undefined",
+    "action": "pass",
+    "seconds": 5.67,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-00.jsonl"
+  },
+  {
+    "test": "TestParserAheadFactoryBoundariesEscaped",
+    "action": "pass",
+    "seconds": 6.96,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-00.jsonl"
+  },
+  {
+    "test": "TestNonOverflowRangeErrorCatch",
+    "action": "pass",
+    "seconds": 2.49,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-00.jsonl"
+  },
+  {
+    "test": "TestParserAheadFactoryBoundariesComplete",
+    "action": "pass",
+    "seconds": 7.6,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-00.jsonl"
+  },
+  {
+    "test": "TestNonNullAdamicRefusal/internal/oracle/testdata/non_null_refused/initialized.a",
+    "action": "pass",
+    "seconds": 0.38,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-00.jsonl"
+  },
+  {
+    "test": "TestNonNullAdamicRefusal",
+    "action": "pass",
+    "seconds": 0,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-00.jsonl"
+  },
+  {
+    "test": "TestUnlistedBackendAgreement",
+    "action": "pass",
+    "seconds": 2.13,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-00.jsonl"
+  },
+  {
+    "test": "TestNonNullLiteralUnionInitializers/null",
+    "action": "pass",
+    "seconds": 4.11,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-00.jsonl"
+  },
+  {
+    "test": "TestNonNullLiteralUnionInitializers",
+    "action": "pass",
+    "seconds": 9.79,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-00.jsonl"
+  },
+  {
+    "test": "TestTerminalStackStop",
+    "action": "pass",
+    "seconds": 3.22,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-00.jsonl"
+  },
+  {
+    "test": "TestParserConstructionSourceNodeArrayLength",
+    "action": "pass",
+    "seconds": 4.56,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-01.jsonl"
+  },
+  {
+    "test": "TestParserConstructionSourceNodeArrayJson",
+    "action": "pass",
+    "seconds": 4.78,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-01.jsonl"
+  },
+  {
+    "test": "TestParserConstructionSourceOwnKeyOrder",
+    "action": "pass",
+    "seconds": 5.25,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-01.jsonl"
+  },
+  {
+    "test": "TestParserAheadFactoryCompleteControl",
+    "action": "pass",
+    "seconds": 6.25,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-01.jsonl"
+  },
+  {
+    "test": "TestParserAheadNodeArraySourcePresence",
+    "action": "pass",
+    "seconds": 1.72,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-01.jsonl"
+  },
+  {
+    "test": "TestParserConstructionSourceNodeArrayKeys",
+    "action": "pass",
+    "seconds": 3.79,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-01.jsonl"
+  },
+  {
+    "test": "TestParserConstructionSourceFactoryUnset",
+    "action": "pass",
+    "seconds": 3.45,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-01.jsonl"
+  },
+  {
+    "test": "TestParserAheadNodeArraySourceFields",
+    "action": "pass",
+    "seconds": 4.47,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-01.jsonl"
+  },
+  {
+    "test": "TestPlaceholderUseCheckNullSavedLeak",
+    "action": "pass",
+    "seconds": 3.99,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-04.jsonl"
+  },
+  {
+    "test": "TestPlaceholderFlowMutantBeforeUse",
+    "action": "pass",
+    "seconds": 4.53,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-04.jsonl"
+  },
+  {
+    "test": "TestPlaceholderFlowMutantNullBeforeUse",
+    "action": "pass",
+    "seconds": 5.74,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-04.jsonl"
+  },
+  {
+    "test": "TestPlaceholderFlowMutantSavedLeak",
+    "action": "pass",
+    "seconds": 5.79,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-04.jsonl"
+  },
+  {
+    "test": "TestPlaceholderUseCheckAliasReset",
+    "action": "pass",
+    "seconds": 3.87,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-04.jsonl"
+  },
+  {
+    "test": "TestPlaceholderNonliteralAssertionStillChecks",
+    "action": "pass",
+    "seconds": 4.04,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-04.jsonl"
+  },
+  {
+    "test": "TestPlaceholderUseCheckReturnAssignment",
+    "action": "pass",
+    "seconds": 3.41,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-04.jsonl"
+  },
+  {
+    "test": "TestPlaceholderUseCheckAssignmentResult",
+    "action": "pass",
+    "seconds": 3.84,
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-04.jsonl"
+  }
+]

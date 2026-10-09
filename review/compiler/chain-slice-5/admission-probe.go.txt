@@ -1,0 +1,24 @@
+package main
+import (
+ "context"
+ "encoding/json"
+ "fmt"
+ "os"
+ "github.com/system-inc/adamic/internal/load"
+ "github.com/system-inc/adamic/internal/lower"
+)
+type result struct {Path string `json:"path"`; Admitted bool `json:"admitted"`; Diagnostic string `json:"diagnostic,omitempty"`}
+func main() {
+ var paths []string
+ data,err:=os.ReadFile(os.Args[1]);if err!=nil {panic(err)}
+ if err=json.Unmarshal(data,&paths);err!=nil {panic(err)}
+ encoder:=json.NewEncoder(os.Stdout)
+ for _,path:=range paths {
+  row:=result{Path:path}
+  program,err:=load.Load([]string{path})
+  if err==nil { _,err=lower.Lower(context.Background(),program) }
+  row.Admitted=err==nil
+  if err!=nil {row.Diagnostic=fmt.Sprint(err)}
+  if err=encoder.Encode(row);err!=nil {panic(err)}
+ }
+}

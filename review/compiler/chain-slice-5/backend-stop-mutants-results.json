@@ -1,0 +1,26 @@
+[
+  {
+    "mutant": "unlisted-output",
+    "exit": 1,
+    "caught": true,
+    "log": "review/compiler/chain-slice-5/logs/backend-stop-mutants/unlisted-output.log"
+  },
+  {
+    "mutant": "drop-terminal-guard",
+    "exit": 1,
+    "caught": true,
+    "log": "review/compiler/chain-slice-5/logs/backend-stop-mutants/drop-terminal-guard.log"
+  },
+  {
+    "mutant": "drop-range-error-kind",
+    "exit": 1,
+    "caught": true,
+    "log": "review/compiler/chain-slice-5/logs/backend-stop-mutants/drop-range-error-kind.log"
+  },
+  {
+    "mutant": "drop-overflow-message",
+    "exit": 1,
+    "caught": true,
+    "log": "review/compiler/chain-slice-5/logs/backend-stop-mutants/drop-overflow-message.log"
+  }
+]

@@ -1,0 +1,572 @@
+[
+  {
+    "file": "cmd/adamic/checks_test.go",
+    "test": "TestExplainChecksOutput",
+    "observed": true
+  },
+  {
+    "file": "cmd/adamic/checks_test.go",
+    "test": "TestExplainChecksDriver",
+    "observed": true
+  },
+  {
+    "file": "cmd/adamic/checks_test.go",
+    "test": "TestPlaceholderExplainChecksOutputC",
+    "observed": true
+  },
+  {
+    "file": "cmd/adamic/checks_test.go",
+    "test": "TestPlaceholderExplainChecksOutputJavaScript",
+    "observed": true
+  },
+  {
+    "file": "cmd/adamic/checks_test.go",
+    "test": "TestPlaceholderExplainChecksOutputBuild",
+    "observed": true
+  },
+  {
+    "file": "internal/lower/factory_completion_test.go",
+    "test": "TestParserFactoryCompletionBeforeReturn",
+    "observed": true
+  },
+  {
+    "file": "internal/lower/factory_completion_test.go",
+    "test": "TestParserFactoryCompletionAlias",
+    "observed": true
+  },
+  {
+    "file": "internal/lower/factory_completion_test.go",
+    "test": "TestParserFactoryCompletionBothBranches",
+    "observed": true
+  },
+  {
+    "file": "internal/lower/factory_completion_test.go",
+    "test": "TestParserFactoryCompletionOneBranch",
+    "observed": true
+  },
+  {
+    "file": "internal/lower/factory_completion_test.go",
+    "test": "TestParserFactoryCompletionBeforeEscape",
+    "observed": true
+  },
+  {
+    "file": "internal/lower/factory_completion_test.go",
+    "test": "TestParserFactoryCompletionWrongPayloadAssertion",
+    "observed": true
+  },
+  {
+    "file": "internal/lower/factory_completion_test.go",
+    "test": "TestParserFactoryCompletionEarlyReturn",
+    "observed": true
+  },
+  {
+    "file": "internal/lower/factory_completion_test.go",
+    "test": "TestParserFactoryCompletionLoopMayNotRun",
+    "observed": true
+  },
+  {
+    "file": "internal/lower/factory_completion_test.go",
+    "test": "TestParserFactoryCompletionCaptured",
+    "observed": true
+  },
+  {
+    "file": "internal/lower/factory_completion_test.go",
+    "test": "TestParserFactoryCompletionShortCircuit",
+    "observed": true
+  },
+  {
+    "file": "internal/lower/factory_completion_test.go",
+    "test": "TestParserFactoryReadBeforeCompletion",
+    "observed": true
+  },
+  {
+    "file": "internal/lower/node_array_layout_test.go",
+    "test": "TestParserNodeArrayLayout",
+    "observed": true
+  },
+  {
+    "file": "internal/lower/node_array_layout_test.go",
+    "test": "TestParserNodeArrayPresence",
+    "observed": true
+  },
+  {
+    "file": "internal/lower/node_array_layout_test.go",
+    "test": "TestParserNodeArraySchemaFailsClosed",
+    "observed": true
+  },
+  {
+    "file": "internal/lower/non_null_impossible_test.go",
+    "test": "TestAdamicNullishAssertionsAreRefused",
+    "observed": true
+  },
+  {
+    "file": "internal/lower/placeholder_test.go",
+    "test": "TestPlaceholderTypedBoundaryAssignmentResult",
+    "observed": true
+  },
+  {
+    "file": "internal/lower/placeholder_test.go",
+    "test": "TestPlaceholderTypedBoundaryReturnAssignment",
+    "observed": true
+  },
+  {
+    "file": "internal/lower/placeholder_test.go",
+    "test": "TestPlaceholderTypedBoundaryAliasReset",
+    "observed": true
+  },
+  {
+    "file": "internal/lower/placeholder_test.go",
+    "test": "TestPlaceholderTypedBoundaryArgument",
+    "observed": true
+  },
+  {
+    "file": "internal/lower/placeholder_test.go",
+    "test": "TestPlaceholderTypedBoundarySavedCopy",
+    "observed": true
+  },
+  {
+    "file": "internal/lower/placeholder_test.go",
+    "test": "TestPlaceholderTypedBoundaryProperty",
+    "observed": true
+  },
+  {
+    "file": "internal/lower/placeholder_test.go",
+    "test": "TestPlaceholderTypedBoundaryCall",
+    "observed": true
+  },
+  {
+    "file": "internal/lower/placeholder_test.go",
+    "test": "TestPlaceholderTypedBoundaryReturn",
+    "observed": true
+  },
+  {
+    "file": "internal/lower/placeholder_test.go",
+    "test": "TestPlaceholderTypedBoundaryTypedLocal",
+    "observed": true
+  },
+  {
+    "file": "internal/lower/placeholder_test.go",
+    "test": "TestPlaceholderTypedBoundaryOrdinaryField",
+    "observed": true
+  },
+  {
+    "file": "internal/lower/placeholder_test.go",
+    "test": "TestPlaceholderTypedBoundaryArrayElement",
+    "observed": true
+  },
+  {
+    "file": "internal/lower/placeholder_test.go",
+    "test": "TestPlaceholderTypedBoundaryOptionalArrayElement",
+    "observed": true
+  },
+  {
+    "file": "internal/lower/placeholder_test.go",
+    "test": "TestPlaceholderTypedBoundaryElementWrite",
+    "observed": true
+  },
+  {
+    "file": "internal/lower/placeholder_test.go",
+    "test": "TestPlaceholderTypedBoundaryOptionalReceiver",
+    "observed": true
+  },
+  {
+    "file": "internal/lower/placeholder_test.go",
+    "test": "TestPlaceholderTypedBoundaryOptionalParameterLaterTUse",
+    "observed": true
+  },
+  {
+    "file": "internal/lower/placeholder_test.go",
+    "test": "TestPlaceholderTypedBoundaryPresence",
+    "observed": true
+  },
+  {
+    "file": "internal/lower/placeholder_test.go",
+    "test": "TestPlaceholderTypedBoundaryDominatingWrite",
+    "observed": true
+  },
+  {
+    "file": "internal/lower/placeholder_test.go",
+    "test": "TestPlaceholderTypedBoundarySavedAfterWrite",
+    "observed": true
+  },
+  {
+    "file": "internal/lower/placeholder_test.go",
+    "test": "TestPlaceholderTypedBoundaryPlaceholderFieldCopy",
+    "observed": true
+  },
+  {
+    "file": "internal/lower/placeholder_test.go",
+    "test": "TestPlaceholderWeakSlotStaysNotYet",
+    "observed": true
+  },
+  {
+    "file": "internal/lower/readiness_test.go",
+    "test": "TestReadinessElisionRequiresDominatingAssignment",
+    "observed": true
+  },
+  {
+    "file": "internal/native/parser_construction_test.go",
+    "test": "TestParserConstructionBackendOwnKeyOrder",
+    "observed": true
+  },
+  {
+    "file": "internal/native/parser_construction_test.go",
+    "test": "TestParserConstructionBackendNodeArrayKeys",
+    "observed": true
+  },
+  {
+    "file": "internal/native/parser_construction_test.go",
+    "test": "TestParserConstructionBackendNodeArrayJson",
+    "observed": true
+  },
+  {
+    "file": "internal/native/parser_construction_test.go",
+    "test": "TestParserConstructionBackendNodeArrayLength",
+    "observed": true
+  },
+  {
+    "file": "internal/native/parser_construction_test.go",
+    "test": "TestParserConstructionRuntimeMutantSynthesizedKey",
+    "observed": true
+  },
+  {
+    "file": "internal/native/parser_construction_test.go",
+    "test": "TestParserConstructionRuntimeMutantDeclarationOrder",
+    "observed": true
+  },
+  {
+    "file": "internal/native/parser_construction_test.go",
+    "test": "TestParserConstructionRuntimeMutantArrayExtrasInJSON",
+    "observed": true
+  },
+  {
+    "file": "internal/oracle/backend_stops_test.go",
+    "test": "TestRuledBackendOutcomes",
+    "observed": true
+  },
+  {
+    "file": "internal/oracle/backend_stops_test.go",
+    "test": "TestUnlistedBackendAgreement",
+    "observed": true
+  },
+  {
+    "file": "internal/oracle/backend_stops_test.go",
+    "test": "TestTerminalStackStop",
+    "observed": true
+  },
+  {
+    "file": "internal/oracle/backend_stops_test.go",
+    "test": "TestNonOverflowRangeErrorCatch",
+    "observed": true
+  },
+  {
+    "file": "internal/oracle/non_null_impossible_test.go",
+    "test": "TestImpossibleNonNullFixturesAreRefused",
+    "observed": true
+  },
+  {
+    "file": "internal/oracle/non_null_impossible_test.go",
+    "test": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "observed": true
+  },
+  {
+    "file": "internal/oracle/non_null_impossible_test.go",
+    "test": "TestLiteralDefaultPlaceholderAgreesWithNode",
+    "observed": true
+  },
+  {
+    "file": "internal/oracle/non_null_migration_test.go",
+    "test": "TestMigratedNonNullFixturesRemainCovered",
+    "observed": true
+  },
+  {
+    "file": "internal/oracle/non_null_migration_test.go",
+    "test": "TestNonNullLiteralUnionInitializers",
+    "observed": true
+  },
+  {
+    "file": "internal/oracle/non_null_refusal_test.go",
+    "test": "TestNonNullAdamicRefusal",
+    "observed": true
+  },
+  {
+    "file": "internal/oracle/oracle_test.go",
+    "test": "TestNativeAgreesWithNode",
+    "observed": true
+  },
+  {
+    "file": "internal/oracle/oracle_test.go",
+    "test": "TestTheOracleCatchesOneByte",
+    "observed": true
+  },
+  {
+    "file": "internal/oracle/parser_ahead_counts_test.go",
+    "test": "TestParserAheadCounts",
+    "observed": false
+  },
+  {
+    "file": "internal/oracle/parser_ahead_test.go",
+    "test": "TestParserAheadFactoryBoundariesComplete",
+    "observed": true
+  },
+  {
+    "file": "internal/oracle/parser_ahead_test.go",
+    "test": "TestParserAheadFactoryBoundariesEscaped",
+    "observed": true
+  },
+  {
+    "file": "internal/oracle/parser_ahead_test.go",
+    "test": "TestParserAheadFactoryCompleteControl",
+    "observed": true
+  },
+  {
+    "file": "internal/oracle/parser_ahead_test.go",
+    "test": "TestParserAheadNodeArraySourceFields",
+    "observed": true
+  },
+  {
+    "file": "internal/oracle/parser_ahead_test.go",
+    "test": "TestParserAheadNodeArraySourcePresence",
+    "observed": true
+  },
+  {
+    "file": "internal/oracle/parser_construction_test.go",
+    "test": "TestParserConstructionSourceFactoryUnset",
+    "observed": true
+  },
+  {
+    "file": "internal/oracle/parser_construction_test.go",
+    "test": "TestParserConstructionSourceOwnKeyOrder",
+    "observed": true
+  },
+  {
+    "file": "internal/oracle/parser_construction_test.go",
+    "test": "TestParserConstructionSourceNodeArrayKeys",
+    "observed": true
+  },
+  {
+    "file": "internal/oracle/parser_construction_test.go",
+    "test": "TestParserConstructionSourceNodeArrayJson",
+    "observed": true
+  },
+  {
+    "file": "internal/oracle/parser_construction_test.go",
+    "test": "TestParserConstructionSourceNodeArrayLength",
+    "observed": true
+  },
+  {
+    "file": "internal/oracle/parser_construction_test.go",
+    "test": "TestParserConstructionSourceNodeArrayUnset",
+    "observed": true
+  },
+  {
+    "file": "internal/oracle/parser_construction_test.go",
+    "test": "TestParserConstructionUnsetUse",
+    "observed": true
+  },
+  {
+    "file": "internal/oracle/parser_construction_test.go",
+    "test": "TestParserConstructionNullPlaceholderDelivered",
+    "observed": true
+  },
+  {
+    "file": "internal/oracle/parser_construction_test.go",
+    "test": "TestParserProgramRegionLifetime",
+    "observed": true
+  },
+  {
+    "file": "internal/oracle/parser_speculation_test.go",
+    "test": "TestParserSpeculationSourcesNamedLookahead",
+    "observed": true
+  },
+  {
+    "file": "internal/oracle/parser_speculation_test.go",
+    "test": "TestParserSpeculationSourcesNamedTryparse",
+    "observed": true
+  },
+  {
+    "file": "internal/oracle/parser_speculation_test.go",
+    "test": "TestParserSpeculationSourcesArrowTryparse",
+    "observed": true
+  },
+  {
+    "file": "internal/oracle/parser_speculation_test.go",
+    "test": "TestParserSpeculationSourcesTruthinessRewind",
+    "observed": true
+  },
+  {
+    "file": "internal/oracle/parser_speculation_test.go",
+    "test": "TestParserSpeculationMisfit",
+    "observed": true
+  },
+  {
+    "file": "internal/oracle/parser_speculation_test.go",
+    "test": "TestParserSpeculationRewindMutant",
+    "observed": true
+  },
+  {
+    "file": "internal/oracle/parser_stack_test.go",
+    "test": "TestParserStackLegal",
+    "observed": true
+  },
+  {
+    "file": "internal/oracle/parser_stack_test.go",
+    "test": "TestParserStackPathological",
+    "observed": true
+  },
+  {
+    "file": "internal/oracle/parser_stack_test.go",
+    "test": "TestParserStackTinyLimit",
+    "observed": true
+  },
+  {
+    "file": "internal/oracle/parser_stack_test.go",
+    "test": "TestParserStackGuardMutant",
+    "observed": true
+  },
+  {
+    "file": "internal/oracle/parser_stack_test.go",
+    "test": "TestParserStackGuardCost",
+    "observed": true
+  },
+  {
+    "file": "internal/oracle/placeholder_nonnull_test.go",
+    "test": "TestPlaceholderUseCheckBeforeUse",
+    "observed": true
+  },
+  {
+    "file": "internal/oracle/placeholder_nonnull_test.go",
+    "test": "TestPlaceholderUseCheckSavedLeak",
+    "observed": true
+  },
+  {
+    "file": "internal/oracle/placeholder_nonnull_test.go",
+    "test": "TestPlaceholderUseCheckNullBeforeUse",
+    "observed": true
+  },
+  {
+    "file": "internal/oracle/placeholder_nonnull_test.go",
+    "test": "TestPlaceholderUseCheckNullSavedLeak",
+    "observed": true
+  },
+  {
+    "file": "internal/oracle/placeholder_nonnull_test.go",
+    "test": "TestPlaceholderUseCheckAssignmentResult",
+    "observed": true
+  },
+  {
+    "file": "internal/oracle/placeholder_nonnull_test.go",
+    "test": "TestPlaceholderUseCheckReturnAssignment",
+    "observed": true
+  },
+  {
+    "file": "internal/oracle/placeholder_nonnull_test.go",
+    "test": "TestPlaceholderUseCheckAliasReset",
+    "observed": true
+  },
+  {
+    "file": "internal/oracle/placeholder_nonnull_test.go",
+    "test": "TestPlaceholderNonliteralAssertionStillChecks",
+    "observed": true
+  },
+  {
+    "file": "internal/oracle/placeholder_nonnull_test.go",
+    "test": "TestPlaceholderFlowMutantBeforeUse",
+    "observed": true
+  },
+  {
+    "file": "internal/oracle/placeholder_nonnull_test.go",
+    "test": "TestPlaceholderFlowMutantSavedLeak",
+    "observed": true
+  },
+  {
+    "file": "internal/oracle/placeholder_nonnull_test.go",
+    "test": "TestPlaceholderFlowMutantNullBeforeUse",
+    "observed": true
+  },
+  {
+    "file": "internal/oracle/placeholder_nonnull_test.go",
+    "test": "TestPlaceholderFlowMutantNullSavedLeak",
+    "observed": true
+  },
+  {
+    "file": "internal/oracle/placeholder_nonnull_test.go",
+    "test": "TestPlaceholderFlowMutantAssignmentResult",
+    "observed": true
+  },
+  {
+    "file": "internal/oracle/placeholder_nonnull_test.go",
+    "test": "TestPlaceholderFlowMutantReturnAssignment",
+    "observed": true
+  },
+  {
+    "file": "internal/oracle/placeholder_nonnull_test.go",
+    "test": "TestPlaceholderFlowMutantAliasReset",
+    "observed": true
+  },
+  {
+    "file": "internal/oracle/placeholder_nonnull_test.go",
+    "test": "TestPlaceholderNullTagMutant",
+    "observed": true
+  },
+  {
+    "file": "internal/oracle/placeholder_nonnull_test.go",
+    "test": "TestPlaceholderSpreadReadinessMutant",
+    "observed": true
+  },
+  {
+    "file": "internal/oracle/readiness_test.go",
+    "test": "TestReadinessMutants",
+    "observed": true
+  },
+  {
+    "file": "internal/oracle/readiness_test.go",
+    "test": "TestUninitializedIsNotNullishMutant",
+    "observed": true
+  },
+  {
+    "file": "internal/oracle/readiness_test.go",
+    "test": "TestNonNullWeakFreedNamesExpression",
+    "observed": true
+  },
+  {
+    "file": "internal/oracle/readiness_test.go",
+    "test": "TestNonliteralInitializerCannotSkipCheck",
+    "observed": true
+  },
+  {
+    "file": "internal/oracle/stack_test.go",
+    "test": "TestLongArgumentsLeaveTheStackItsLimit",
+    "observed": true
+  },
+  {
+    "file": "internal/oracle/stack_test.go",
+    "test": "TestSmallStacksStillPanic",
+    "observed": true
+  },
+  {
+    "file": "internal/oracle/view_fields_test.go",
+    "test": "TestRequiredViewFieldPrimitive",
+    "observed": true
+  },
+  {
+    "file": "internal/oracle/view_fields_test.go",
+    "test": "TestRequiredViewFieldOperandOnce",
+    "observed": true
+  },
+  {
+    "file": "internal/oracle/view_fields_test.go",
+    "test": "TestNarrowedFieldUsesSharedReadiness",
+    "observed": true
+  },
+  {
+    "file": "internal/oracle/view_fields_test.go",
+    "test": "TestViewFieldInheritedStaticReadiness",
+    "observed": true
+  },
+  {
+    "file": "internal/oracle/view_fields_test.go",
+    "test": "TestDefaultTaggedSourceViews",
+    "observed": true
+  }
+]

@@ -1,0 +1,72 @@
+[
+  {
+    "test": "TestParserAheadFactoryCompleteControl",
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-01.jsonl",
+    "observation": "parser_ahead_test.go:89: factory payload mutant caught in native and JavaScript by source Node stdout"
+  },
+  {
+    "test": "TestParserStackGuardMutant",
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-03.jsonl",
+    "observation": "parser_stack_test.go:122: removed guard compiles and executes: exit 1, AddressSanitizer: stack-overflow"
+  },
+  {
+    "test": "TestReadinessMutants/weak-generic-message",
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-05.jsonl",
+    "observation": "readiness_test.go:44: drop-check mutant caught for non_null_weak.ts: stdout \"before\\ntrue\\n\""
+  },
+  {
+    "test": "TestNonNullWeakFreedNamesExpression",
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-05.jsonl",
+    "observation": "readiness_test.go:282: freed Weak diagnostic mutant caught: adamic: panic: a weak reference was read after what it pointed to was freed"
+  },
+  {
+    "test": "TestReadinessMutants/replace-missing-assertion-with-empty",
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-05.jsonl",
+    "observation": "readiness_test.go:44: drop-check mutant caught for non_null_lazy_read.ts: stdout \"before\\n\\n\""
+  },
+  {
+    "test": "TestPlaceholderSpreadReadinessMutant",
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-05.jsonl",
+    "observation": "placeholder_nonnull_test.go:298: copy readiness mutant caught by Node exit 0: native and JavaScript exit 70"
+  },
+  {
+    "test": "TestRequiredViewFieldPrimitive/wrong_type",
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-06.jsonl",
+    "observation": "view_fields_test.go:75: drop field check mutant caught by pinned exit/message, with valid C"
+  },
+  {
+    "test": "TestRequiredViewFieldPrimitive/uninitialized",
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-06.jsonl",
+    "observation": "view_fields_test.go:75: drop field check mutant caught by pinned exit/message, with valid C"
+  },
+  {
+    "test": "TestRequiredViewFieldPrimitive/uninitialized",
+    "log": "review/compiler/chain-slice-5/logs/oracle-shard-06.jsonl",
+    "observation": "view_fields_test.go:87: drop initialization tracking mutant caught by pinned exit/message"
+  },
+  {
+    "test": "TestParserConstructionRuntimeMutantSynthesizedKey",
+    "log": "review/compiler/chain-slice-5/logs/remaining-native-00.jsonl",
+    "observation": "parser_construction_test.go:213: Node disagreement caught runtime mutant: got \"2,10,kind,alpha,beta\\ntrue\\n2,10,kind,alpha,beta\\n2,10,kind,alpha,beta\\ntrue\\n{\\\"2\\\":2,\\\"10\\\":10,\\\"kind\\\":1,\\\"alpha\\\":3,\\\"beta\\\":21}\\n\", Node \"kind\\nfalse\\n2,10,kind,beta,alpha\\n2,10,kind,beta,alpha\\ntrue\\n{\\\"2\\\":2,\\\"10\\\":10,\\\"kind\\\":1,\\\"beta\\\":21,\\\"alpha\\\":3}\\n\""
+  },
+  {
+    "test": "TestParserConstructionRuntimeMutantArrayExtrasInJSON",
+    "log": "review/compiler/chain-slice-5/logs/remaining-native-00.jsonl",
+    "observation": "parser_construction_test.go:223: Node disagreement caught runtime mutant: got \"[1,2,-1]\\n\", Node \"[1,2]\\n\""
+  },
+  {
+    "test": "TestParserConstructionRuntimeMutantDeclarationOrder",
+    "log": "review/compiler/chain-slice-5/logs/remaining-native-00.jsonl",
+    "observation": "parser_construction_test.go:218: Node disagreement caught runtime mutant: got \"kind\\nfalse\\n2,10,kind,alpha,beta\\n2,10,kind,alpha,beta\\ntrue\\n{\\\"2\\\":2,\\\"10\\\":10,\\\"kind\\\":1,\\\"alpha\\\":3,\\\"beta\\\":21}\\n\", Node \"kind\\nfalse\\n2,10,kind,beta,alpha\\n2,10,kind,beta,alpha\\ntrue\\n{\\\"2\\\":2,\\\"10\\\":10,\\\"kind\\\":1,\\\"beta\\\":21,\\\"alpha\\\":3}\\n\""
+  },
+  {
+    "test": "TestNonliteralInitializerCannotSkipCheck",
+    "log": "review/compiler/chain-slice-5/logs/remaining-oracle-00.jsonl",
+    "observation": "readiness_test.go:292: drop-check mutant caught for non_null_lazy_initialized.ts: stdout \"scanner\\nscanner\\nassigned 1\\n0 false\\n0 2\\nstatic\\ndefault\\n\""
+  },
+  {
+    "test": "TestUninitializedIsNotNullishMutant",
+    "log": "review/compiler/chain-slice-5/logs/remaining-oracle-00.jsonl",
+    "observation": "readiness_test.go:207: ordinary-nullish initializer mutant caught by Node output: adamic: panic: non-null assertion failed: undefined! is null or undefined"
+  }
+]

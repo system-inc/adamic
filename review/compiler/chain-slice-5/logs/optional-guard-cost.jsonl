@@ -1,0 +1,9 @@
+{"Time":"2026-10-09T23:33:19.32452205Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-09T23:33:19.333851146Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserStackGuardCost"}
+{"Time":"2026-10-09T23:33:19.333930244Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserStackGuardCost","Output":"=== RUN   TestParserStackGuardCost\n","OutputType":"frame"}
+{"Time":"2026-10-09T23:33:19.333989972Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserStackGuardCost","Output":"    parser_stack_test.go:128: set ADAMIC_MEASURE_STACK_GUARD=1 for the local cost record\n"}
+{"Time":"2026-10-09T23:33:19.333999658Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserStackGuardCost","Output":"--- SKIP: TestParserStackGuardCost (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T23:33:19.334003223Z","Action":"skip","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserStackGuardCost","Elapsed":0}
+{"Time":"2026-10-09T23:33:19.334017479Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T23:33:19.334145876Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"ok  \tgithub.com/system-inc/adamic/internal/oracle\t0.009s\n"}
+{"Time":"2026-10-09T23:33:19.33416297Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":0.01}
