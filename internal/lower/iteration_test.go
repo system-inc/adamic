@@ -199,6 +199,7 @@ func TestIteratorSymbolKeysAreNotStringKeys(t *testing.T) {
 }
 
 func TestIteratorBuiltInStorageViewsArePending(t *testing.T) {
+	t.Parallel()
 	for _, storage := range []string{"const storage:number[]=[1,2];", "const storage:readonly [number,number]=[1,2];", "const storage=new Set([1,2]).values();"} {
 		t.Run(storage, func(t *testing.T) {
 			_, err := lowerSource(t, storage+`function consume(source:Iterable<number>):void {for(const value of source){console.log(String(value));}} consume(storage);`)
@@ -211,6 +212,7 @@ func TestIteratorBuiltInStorageViewsArePending(t *testing.T) {
 }
 
 func TestIteratorOptionalCloseResultMustBeObject(t *testing.T) {
+	t.Parallel()
 	source := `interface Step {value:number;done:boolean;} interface Cursor {next():Step;return?:()=>Step|undefined;} const cursor:Cursor={next():Step{return {value:1,done:false};},return():Step|undefined{return undefined;}};const source={[Symbol.iterator]():Cursor{return cursor;}};for(const value of source){break;}`
 	_, err := lowerSource(t, source)
 	var gap *NotYet
@@ -220,6 +222,7 @@ func TestIteratorOptionalCloseResultMustBeObject(t *testing.T) {
 }
 
 func TestIteratorDeclaredNextHasNoRuntimeMethod(t *testing.T) {
+	t.Parallel()
 	_, err := lowerSource(t, `interface Step {value:number;done:boolean;} class Cursor {declare next:()=>Step;} const source={[Symbol.iterator]():Cursor{return new Cursor();}};for(const value of source){break;}`)
 	var gap *NotYet
 	if !errors.As(err, &gap) || !strings.Contains(err.Error(), "declare") {
