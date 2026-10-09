@@ -1,0 +1,21 @@
+{
+  "status": "not run: red baseline",
+  "mutants": [],
+  "probes": [],
+  "rows": [
+    "TestNodeCacheProgram",
+    "TestNativeCacheGeneratedC",
+    "TestCacheKeyDimensions",
+    "TestCacheAtomicBytes",
+    "TestCacheBypass",
+    "TestParallelCachedMatchesSerial",
+    "TestOrderedProgress",
+    "TestUnavailableCacheStillRuns",
+    "TestImportedInputsRunFresh",
+    "TestCompilerCacheProgram",
+    "TestCompilerCacheAcrossScratchDirectories",
+    "TestCompilerWorkerMatchesSubprocess",
+    "TestCompilerHangHelper",
+    "TestCompilerWorkerTimeout"
+  ]
+}
