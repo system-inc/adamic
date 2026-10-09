@@ -1,0 +1,38 @@
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixtureDirectoriesHaveTopLevelTests
+absent -> pass  github.com/system-inc/adamic/stage3/fixtures TestFixturesNamespaces/namespaces/10_tracing_escape.a/native
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixturesObjects
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixturesObjects/objects
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixturesObjects/objects/25_map_generator.a
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixturesObjects/objects/25_map_generator.a/stage0
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixturesPredicates
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixturesPredicates/predicates
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixturesPredicates/predicates/10_nullish.a
+pass -> fail  github.com/system-inc/adamic/stage3/fixtures TestFixturesPredicates/predicates/10_nullish.a/stage0
+
+github.com/system-inc/adamic/stage3/fixtures TestFixtureDirectoriesHaveTopLevelTests
+        units_test.go:130: TestFixturesNamespaces directory=namespaces fixtures=12
+        units_test.go:130: TestFixturesNestedFunctions directory=nested-functions fixtures=11
+        units_test.go:130: TestFixturesObjects directory=objects fixtures=25
+        units_test.go:130: TestFixturesPredicates directory=predicates fixtures=11
+        units_test.go:130: TestFixturesRecords directory=records fixtures=19
+        units_test.go:130: TestFixturesRunner directory=runner fixtures=3
+        units_test.go:130: TestFixturesTaste directory=taste fixtures=24
+        units_test.go:139: union: 15 directories, 173 fixtures
+
+github.com/system-inc/adamic/stage3/fixtures TestFixturesObjects
+
+github.com/system-inc/adamic/stage3/fixtures TestFixturesObjects/objects
+
+github.com/system-inc/adamic/stage3/fixtures TestFixturesObjects/objects/25_map_generator.a
+
+github.com/system-inc/adamic/stage3/fixtures TestFixturesObjects/objects/25_map_generator.a/stage0
+        fixtures_test.go:359: gap changed: update status.json and check the native output; got {Outcome:NotYet What:stage3/fixtures/objects/25_map_generator.a:4:21: stage 0 can't lower an iterable object view of built-in storage needing a protocol adapter yet}; recorded {Outcome:Refused What:stage3/fixtures/objects/25_map_generator.a:3:1: Adamic 0.1 refuses a generator function; use an explicit iterator object; suspended frames need ownership and cancellation rules before generators can be compiled without a collector (docs/user-iterators.md)}
+
+github.com/system-inc/adamic/stage3/fixtures TestFixturesPredicates
+
+github.com/system-inc/adamic/stage3/fixtures TestFixturesPredicates/predicates
+
+github.com/system-inc/adamic/stage3/fixtures TestFixturesPredicates/predicates/10_nullish.a
+
+github.com/system-inc/adamic/stage3/fixtures TestFixturesPredicates/predicates/10_nullish.a/stage0
+        fixtures_test.go:359: gap changed: update status.json and check the native output; got {Outcome:Refused What:stage3/fixtures/predicates/10_nullish.a:5:31: Adamic 0.1 refuses explicit any in .a; use unknown and validate it before a typed use}; recorded {Outcome:Refused What:stage3/fixtures/predicates/10_nullish.a:6:5: Adamic 0.1 refuses a type predicate whose return is not proven (the body's true narrowing does not match null | undefined); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)}
