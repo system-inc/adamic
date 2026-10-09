@@ -1,0 +1,18 @@
+=== RUN   TestViewSnapshotMaybeBoolean
+=== PAUSE TestViewSnapshotMaybeBoolean
+=== CONT  TestViewSnapshotMaybeBoolean
+    view_snapshot_test.go:32: gate cache node hit
+    view_snapshot_test.go:32: Node: exit=0 stdout="true / true\nfalse / false\nfalse / undefined\n" stderr=""
+    view_snapshot_test.go:32: gate cache node hit
+    view_snapshot_test.go:32: native: exit=-1 stdout="" stderr=""
+    view_snapshot_test.go:32: native: exit codes differ
+    view_snapshot_test.go:32: native-sanitized: exit=1 stdout="" stderr="AddressSanitizer:DEADLYSIGNAL\n=================================================================\n==6556==ERROR: AddressSanitizer: SEGV on unknown address (pc 0x563917ebb96c bp 0x7ffc49fea250 sp 0x7ffc49fea190 T0)\n==6556==The signal is caused by a READ memory access.\n==6556==Hint: this fault was caused by a dereference of a high value address (see register values below).  Disassemble the provided pc to learn which register was used.\n    #0 0x563917ebb96c in adamic_retain /home/agent/.cache/adamic/runtime/.build-72284796/heap.c:226:28\n    #1 0x563917ea8ee6 in adamic_function_0_read /tmp/adamic-gate/adamic-build-3388354081/main.c:65:28\n    #2 0x563917ea8938 in main /tmp/adamic-gate/adamic-build-3388354081/main.c:101:2\n    #3 0x7fbd6c701ca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #4 0x7fbd6c701d64 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29d64) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #5 0x563917dc2460 in _start (/tmp/adamic-gate/TestViewSnapshotMaybeBoolean1613671606/001/program+0x59460)\n\n==6556==Register values:\nrax = 0x4045000000000000  rbx = 0x00007ffc49fea1a0  rcx = 0x0000000000000009  rdx = 0x0808a00000000000  \nrdi = 0x4045000000000000  rsi = 0x00007bbd6a300240  rbp = 0x00007ffc49fea250  rsp = 0x00007ffc49fea190  \n r8 = 0x00007c2d6b7e0208   r9 = 0x00000f77ad460048  r10 = 0x00007c2d6b7e01e0  r11 = 0x0000563917f23620  \nr12 = 0x00000f77ad4a0200  r13 = 0x00007c2d6b7e01e0  r14 = 0x00007bbd6a501020  r15 = 0x0000563917f23640  \nAddressSanitizer can not provide additional info.\nSUMMARY: AddressSanitizer: SEGV /home/agent/.cache/adamic/runtime/.build-72284796/heap.c:226:28 in adamic_retain\n==6556==ABORTING\n"
+    view_snapshot_test.go:32: native-sanitized: exit codes differ
+    view_snapshot_test.go:32: javascript: exit=0 stdout="true / true\nfalse / false\nfalse / undefined\n" stderr=""
+--- FAIL: TestViewSnapshotMaybeBoolean (0.35s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=2 misses=0
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.356s
+FAIL
