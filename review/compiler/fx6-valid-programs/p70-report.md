@@ -18,3 +18,5 @@ Commands (all test output captured in sibling p70-*.log files):
 Candidate delivery completed first: compiler/fx6-candidates at 9aff8dbf25a0dd99f8e71d0d636bf835912c4a9d. It merges receiver-keyed registration and element-key refusal, with full lower, reader guard, counts, lane, receiver and destructuring revert mutants, and element refusal revert (including native wrong-answer witness). Its evidence lives under review/compiler/fx6-candidates/ on that branch.
 
 This advances the unit's valid-view roadmap work by replacing p70's backend compiler stop with a located, actionable refusal. Full tuple/object view support remains outstanding. No PR opened.
+
+Lane checks: PASS 1.5s, gofmt/tools on 10 Go files, t.Parallel on 2 test packages, vet 2 packages. Initial invocation lacked the sourced toolchain and failed to locate gofmt; rerunning after source /workspace/adamic-tools/env.sh passed.
