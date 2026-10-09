@@ -1,0 +1,20 @@
+// A read happens when JavaScript does it: a call later in the same expression may change what was
+// read, and the value read before the call is the one that counts.
+const holder = { value: 5, name: 'before' };
+const list: number[] = [1];
+const counts = new Map<string, number>();
+let calls = 0;
+function interfere(): number {
+	calls++;
+	holder.value = 100;
+	holder.name = `after ${calls}`;
+	list.push(calls);
+	counts.set(`key ${calls}`, calls);
+	return 1;
+}
+console.log(`${holder.value + interfere()}`);
+console.log(`${list.length + interfere()}`);
+console.log(`${counts.size + interfere()}`);
+console.log(`${counts.has('key 4') === (interfere() === 1)}`);
+console.log(holder.name + `${interfere()}`);
+console.log(`${holder.name} ${holder.value} ${list.length} ${counts.size}`);

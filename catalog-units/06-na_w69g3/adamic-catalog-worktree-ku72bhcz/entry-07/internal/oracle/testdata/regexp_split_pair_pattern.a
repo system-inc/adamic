@@ -1,0 +1,25 @@
+const high = '\ud83c';
+const joined = new RegExp(high + '\udf0d', 'u');
+console.log(`${joined.test('\u{1F30D}')} ${joined.test('🌍')}`);
+const quantified = new RegExp(high + '\udf0d+', 'u');
+const run = quantified.exec('\u{1F30D}\u{1F30D}');
+console.log(run === null ? 'null' : `${run[0].length}`);
+const plain = new RegExp('🌍', 'u');
+console.log(`${plain.test('\u{1F30D}')}`);
+const legacy = new RegExp(high + '\udf0d+');
+const legacyRun = legacy.exec('\u{1F30D}\udf0d');
+console.log(legacyRun === null ? 'null' : `${legacyRun[0].length}`);
+console.log(`${joined.source === '\u{1F30D}'} ${joined.source.length}`);
+
+const three = new RegExp('\ud83c' + '' + '\udf0d', 'u');
+console.log(`${three.test('🌍')} ${three.source === '🌍'} ${three.source.length}`);
+const lone = new RegExp('x' + high + '', 'u');
+console.log(`${lone.test('x\ud83c')} ${lone.test('x🌍')} ${lone.source === 'x\ud83c'} ${lone.source.length}`);
+const first = high;
+const second = first + '';
+const third = second + '\udf0d+';
+const chained = new RegExp(third, 'u');
+const chainRun = chained.exec('🌍🌍');
+console.log(chainRun === null ? 'null' : `${chainRun[0].length} ${chained.source === '🌍+'}`);
+const reversed = new RegExp('\udf0d' + high, 'u');
+console.log(`${reversed.test('\udf0d\ud83c')} ${reversed.test('🌍')} ${reversed.source === '\udf0d\ud83c'} ${reversed.source.length}`);

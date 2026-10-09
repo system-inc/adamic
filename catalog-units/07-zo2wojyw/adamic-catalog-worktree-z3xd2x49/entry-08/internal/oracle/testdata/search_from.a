@@ -1,0 +1,21 @@
+// indexOf and includes from a position: clamped to the text, a fraction truncated, NaN as 0, the
+// infinities, an empty search, positions inside and around a surrogate pair, and a search for half
+// of one.
+const text = 'a🌍b🌍ab';
+const positions = [-5, -0, 0, 0.9, 1, 2, 3, 4, 5, 6, 7, 8, 100, NaN, Infinity, -Infinity];
+const searches = ['a', 'b', '🌍', '\uDF0D', '\uD83C', 'ab', '', 'z'];
+for (const search of searches) {
+	const found: string[] = [];
+	for (const position of positions) {
+		found.push(`${text.indexOf(search, position)}${text.includes(search, position) ? '+' : '-'}`);
+	}
+	console.log(`${search.length}: ${found.join(' ')}`);
+}
+let at = 0;
+const seen: number[] = [];
+const words = 'one,two,,three';
+while (words.indexOf(',', at) >= 0) {
+	seen.push(words.indexOf(',', at));
+	at = words.indexOf(',', at) + 1;
+}
+console.log(seen.join(' '));

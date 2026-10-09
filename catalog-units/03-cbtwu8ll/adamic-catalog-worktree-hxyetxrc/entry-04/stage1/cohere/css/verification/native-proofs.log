@@ -1,0 +1,23 @@
+=== RUN   TestTheCanonicalRangeChecksCanFail
+    css_test.go:508: public Range corruption caught on raw and composed backends; leak clean
+--- PASS: TestTheCanonicalRangeChecksCanFail (14.75s)
+=== RUN   TestEachGapStandsWhereGapsMdSaysItDoes
+=== RUN   TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_array_shift.ts
+    gaps_test.go:40: Node prints "a\n1\n"; Adamic refuses: /workspace/adamic/stage1/cohere/css/gaps/2_array_shift.ts:2:16: stage 0 can't lower .shift on a value yet
+=== RUN   TestEachGapStandsWhereGapsMdSaysItDoes/gaps/3_optional_boolean_condition.ts
+    gaps_test.go:40: Node prints "important\n"; Adamic refuses: /workspace/adamic/stage1/cohere/css/gaps/3_optional_boolean_condition.ts:3:13: Adamic 0.1 refuses a boolean | undefined as a condition; compare it explicitly, like name.length > 0 or count !== 0
+=== RUN   TestEachGapStandsWhereGapsMdSaysItDoes/gaps/4_empty_array_union.ts
+    gaps_test.go:40: Node prints "0\n"; Adamic refuses: /workspace/adamic/stage1/cohere/css/gaps/4_empty_array_union.ts:2:9: stage 0 can't lower an array of never yet
+=== RUN   TestEachGapStandsWhereGapsMdSaysItDoes/gaps/5_repeat_in_try.ts
+    gaps_test.go:40: Node prints "a\n"; Adamic refuses: /workspace/adamic/stage1/cohere/css/gaps/5_repeat_in_try.ts:3:1: stage 0 can't lower a try around repeat, whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md) yet
+--- PASS: TestEachGapStandsWhereGapsMdSaysItDoes (1.08s)
+    --- PASS: TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_array_shift.ts (0.19s)
+    --- PASS: TestEachGapStandsWhereGapsMdSaysItDoes/gaps/3_optional_boolean_condition.ts (0.21s)
+    --- PASS: TestEachGapStandsWhereGapsMdSaysItDoes/gaps/4_empty_array_union.ts (0.52s)
+    --- PASS: TestEachGapStandsWhereGapsMdSaysItDoes/gaps/5_repeat_in_try.ts (0.16s)
+=== RUN   TestClosedParserRegexGap
+--- PASS: TestClosedParserRegexGap (3.96s)
+=== RUN   TestClosedPrinterRegexGap
+--- PASS: TestClosedPrinterRegexGap (1.49s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/css	21.291s

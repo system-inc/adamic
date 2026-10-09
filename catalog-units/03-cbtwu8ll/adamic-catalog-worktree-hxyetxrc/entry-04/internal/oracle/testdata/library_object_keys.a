@@ -1,0 +1,11 @@
+const fields = { beta: 20, '10': 10, '2': 2, '0': 0, '01': 1, '-0': 7, '4294967294': 9, '4294967295': 8, alpha: 30, '1e0': 40 };
+console.log(Object.keys(fields).join('|'));
+console.log(Object.values(fields).join('|'));
+for (const [key, value] of Object.entries(fields)) console.log(`${key}:${value}`);
+const text = { b: 'built' + '-b', '2': 'built' + '-two', a: 'built' + '-a' };
+console.log(Object.values(text).join('|'));
+for (const [key, value] of Object.entries(text)) console.log(`${key}:${value}`);
+const flags = { b: false, '2': true, a: false };
+console.log(Object.values(flags).join('|'));
+for (const [key, value] of Object.entries(flags)) console.log(`${key}:${value}`);
+console.log(Object.keys({}).join('|'));

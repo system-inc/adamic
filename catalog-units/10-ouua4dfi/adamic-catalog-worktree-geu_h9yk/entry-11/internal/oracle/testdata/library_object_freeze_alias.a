@@ -1,0 +1,7 @@
+// A later alias is still the frozen object, so the write fails at run time.
+const object = { name: 'old' + '-n', n: 1 };
+const alias: { name: string; n: number } = object;
+Object.freeze(object);
+console.log(`${Object.isFrozen(object)} ${Object.isFrozen(alias)} ${object.name}`);
+alias.name = 'new' + '-n';
+console.log(`${object.name}`);

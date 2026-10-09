@@ -1,0 +1,15 @@
+// Integer-like strings that are not indexes stay in insertion order, and entries match keys and values.
+const fields = { beta: 20, '': 1, '+1': 2, '1.0': 3, '00': 4, '08': 5, '-1': 6, '10': 10, '2': 2, '0': 0, '01': 7, alpha: 30 };
+console.log(Object.keys(fields).join('|'));
+console.log(Object.values(fields).join('|'));
+const entries = Object.entries(fields);
+const keys = Object.keys(fields);
+const values = Object.values(fields);
+console.log(`${entries.length} ${keys.length} ${values.length}`);
+let index = 0;
+for (const [key, value] of entries) {
+	const listed = keys[index];
+	const stored = values[index];
+	console.log(`${key}=${value} ${listed === key} ${stored === value}`);
+	index += 1;
+}

@@ -1,0 +1,8 @@
+// A void qualified callee is read before any argument side effects.
+function right(): number { console.log('right'); return 1; }
+function read(): void { Debug.log(right()); }
+function invoke(action: () => void): void { action(); }
+let action = (): void => {};
+action = read;
+invoke(action);
+namespace Debug { export function log(value: number): void { console.log(`${value}`); } }

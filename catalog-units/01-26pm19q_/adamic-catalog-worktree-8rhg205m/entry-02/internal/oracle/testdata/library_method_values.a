@@ -1,0 +1,100 @@
+/* eslint-disable @typescript-eslint/unbound-method -- These intrinsic aliases are called with receivers proven by stage 0 and held to Node. */
+/* eslint-disable no-useless-call -- This fixture exercises delayed call and apply lowering, including discarded this arguments. */
+const search = Array.prototype.indexOf;
+const otherSearch = search;
+const last = Array.prototype.lastIndexOf;
+const includes = Array.prototype.includes;
+const slice = Array.prototype.slice;
+const join = Array.prototype.join;
+const numbers = [1, 2, 1, NaN];
+console.log(`${search.call(numbers, 1)} ${search.apply(numbers, [1, 1])} ${otherSearch.call(numbers, 1, -2)}`);
+console.log(`${last.call(numbers, 1)} ${last.apply(numbers, [1, undefined])} ${includes.call(numbers, NaN)}`);
+/* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- Stage 0 proves the returned element type from the receiver and rejects incompatible annotations. */
+const sliced: number[] = slice.call(numbers, 1, 3);
+console.log(sliced.join('|'));
+console.log(join.apply(numbers, ['|']));
+const trim = String.prototype.trim;
+const substring = String.prototype.substring;
+const charAt = String.prototype.charAt;
+console.log(trim.call('  hello  '));
+console.log(substring.apply('abcdef', [4, 1]));
+console.log(`[${charAt.call('abc', 99)}]`);
+const own = Object.prototype.hasOwnProperty;
+const enumerable = Object.prototype.propertyIsEnumerable;
+const tag = Object.prototype.toString;
+const object = { x: 1 };
+console.log(`${own.call(object, 'x')} ${own.apply(object, ['toString'])} ${enumerable.call(object, 'x')}`);
+console.log(`${own.call(numbers, 'length')} ${enumerable.call(numbers, 'length')} ${own.call('abc', '1')}`);
+console.log(`${tag.call(object)} ${tag.call(numbers)} ${tag.call(1)} ${tag.call('x')} ${tag.call(true)}`);
+const parse = Number.parseInt;
+const parseAlias = parse;
+const float = Number.parseFloat;
+console.log(
+    `${parse('12', 10)} ${parse.call(undefined, 'ff', 16)} ${parseAlias.apply(null, ['101', 2])} ${float('1.25more')}`,
+);
+console.log([1, -0, NaN, Infinity].map(String).join('|'));
+console.log([true, false].map(String).join('|'));
+console.log(['10', '10', '10', '10', '10'].map(Number.parseInt).join('|'));
+console.log(['10', '10', '10'].map(parseAlias).join('|'));
+console.log(['1.25x', '2.5x'].map(Number.parseFloat).join('|'));
+let trace = '';
+function receiver(): number[] {
+    trace += 'r';
+    return [1, 2];
+}
+function sought(): number {
+    trace += 's';
+    return 2;
+}
+function position(): number {
+    trace += 'p';
+    return 0;
+}
+console.log(`${search.apply(receiver(), [sought(), position()])} ${trace}`);
+function boundText(text: string): () => string {
+    return String.prototype.trim.bind(`${text} `);
+}
+let bindingText = ' hello';
+const boundTrim = trim.bind(`${bindingText} `);
+bindingText = ' changed';
+console.log(`${boundTrim()} ${bindingText}`);
+const heldBound = boundText(' saved');
+console.log(heldBound());
+console.log([1, 2].map(heldBound).join('|'));
+const upper = String.prototype.toUpperCase.bind('Straße');
+console.log(upper());
+const fixed = Number.prototype.toFixed;
+const radix = Number.prototype.toString;
+const numberValue = Number.prototype.valueOf;
+console.log(`${fixed.call(1.25, 1)} ${fixed.apply(1.25, [])} ${radix.call(255, 16)} ${numberValue.call(42)}`);
+const abs = Math.abs;
+console.log(`${abs.call({ x: 1 }, -4)} ${abs.apply(undefined, [-5])}`);
+const character = String.fromCharCode;
+console.log(character.call(null, 65, 66));
+const convert = String;
+console.log(convert(42));
+console.log(`${[].map(String).length} ${[].map(parse).length}`);
+function display(value: string | number | boolean | undefined): void {
+    console.log(`${value}`);
+}
+display(tag.call([1]));
+display(search.call(numbers, 2));
+console.log(tag.call(null));
+const push = Array.prototype.push;
+const reverse = Array.prototype.reverse;
+const at = Array.prototype.at;
+const mutable = [1, 2];
+console.log(`${push.call(mutable, 3)} ${at.call(mutable, -1)}`);
+/* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- Stage 0 keeps the receiver's exact element type and rejects incompatible annotations. */
+const reversed: number[] = reverse.call(mutable);
+console.log(reversed.join('|'));
+const pad = String.prototype.padEnd;
+console.log(pad.apply('x', [3, undefined]));
+const keys = Object.keys;
+console.log(keys(object).join('|'));
+const finite = Number.isFinite;
+console.log(`${finite.call(undefined, 1)} ${finite.apply(null, [Infinity])}`);
+trace = '';
+console.log(`${abs.call(receiver(), sought())} ${trace}`);
+const optionalTexts: (string | undefined)[] = ['x', undefined, 'y'];
+console.log(optionalTexts.map(String).join('|'));

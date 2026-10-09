@@ -1,0 +1,50 @@
+// Assignments inside a try, which the walks that look for them once passed over (integration 9).
+// A parameter assigned only in a try is the function's own, not borrowed, so the value it held is
+// let go of by its caller and the new one by the function; and a loop counter assigned in a try in
+// its loop's body keeps a double. Both once stopped the compiler with a panic. A loop inside a try
+// counts as JavaScript does too.
+interface Box {
+	readonly label: string;
+}
+
+function relabel(box: Box, n: number): string {
+	try {
+		box = { label: `new ${n}` };
+	} catch {
+		return 'caught';
+	}
+	return box.label;
+}
+
+function skipped(): string {
+	let out = '';
+	for (let i = 0; i < 6; i++) {
+		try {
+			if (i === 2) {
+				i = i + 0.5;
+			}
+		} finally {
+			out += `${i} `;
+		}
+	}
+	return out;
+}
+
+function inside(values: readonly number[]): number {
+	let sum = 0;
+	try {
+		for (let index = 0; index < values.length; index++) {
+			sum += (values[index] ?? 0) * (index + 1);
+		}
+	} catch {
+		return -1;
+	}
+	return sum;
+}
+
+for (const n of [1, 2]) {
+	const kept: Box = { label: `kept ${n}` };
+	console.log(`${relabel(kept, n)} ${kept.label}`);
+}
+console.log(skipped());
+console.log(`${inside([3, 4, 5])} ${1 / inside([])}`);

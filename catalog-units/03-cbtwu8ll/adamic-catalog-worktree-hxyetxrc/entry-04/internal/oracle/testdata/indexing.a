@@ -1,0 +1,10 @@
+const numbers: number[] = [10, 20, 30];
+const words = ['zero', 'one'];
+for (const index of [0, 1, 2, 3, -1, 1.5, 0 / 0, -0, 2 ** 53]) {
+	console.log(`${index}: ${numbers[index] ?? -1} ${words[index] ?? 'none'}`);
+}
+const last = numbers[numbers.length - 1];
+if (last !== undefined) {
+	console.log(`last is ${last + 1}`);
+}
+console.log(`${numbers[3] === undefined} ${words[0] === 'zero'}`);

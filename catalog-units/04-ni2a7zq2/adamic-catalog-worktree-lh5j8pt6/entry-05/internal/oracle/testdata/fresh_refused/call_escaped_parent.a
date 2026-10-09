@@ -1,0 +1,20 @@
+// A parent the caller let escape into a global, given a child that reads the global.
+interface Node {
+	readonly kind: string;
+	readonly nodes: Node[];
+}
+function addChild(parent: Node, child: Node): void {
+	parent.nodes.push(child); // closes the cycle
+}
+let saved: Node = { kind: 'empty', nodes: [] };
+function current(): Node {
+	return { kind: 'current', nodes: [saved] };
+}
+function run(n: number): number {
+	const node: Node = { kind: `n${n}`, nodes: [] };
+	saved = node;
+	addChild(node, current());
+	return node.nodes.length;
+}
+console.log(`${run(1)}`);
+saved = { kind: 'cleared', nodes: [] };

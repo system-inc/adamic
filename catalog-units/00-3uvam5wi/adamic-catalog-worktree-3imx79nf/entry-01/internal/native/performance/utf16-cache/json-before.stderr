@@ -1,0 +1,14 @@
+==68752== Callgrind, a call-graph generating cache profiler
+==68752== Copyright (C) 2002-2017, and GNU GPL'd, by Josef Weidendorfer et al.
+==68752== Using Valgrind-3.24.0 and LibVEX; rerun with -h for copyright info
+==68752== Command: /tmp/adamic-utf16-perf/json-before-native --cases /tmp/adamic-json-perf/profile-cases.txt
+==68752==
+==68752== For interactive control, run 'callgrind_control -h'.
+==68752== brk segment overflow in thread #1: can't grow to 0x483c000
+==68752== (see section Limitations in user manual)
+==68752== NOTE: further instances of this message will not be shown
+==68752==
+==68752== Events    : Ir
+==68752== Collected : 909698082
+==68752==
+==68752== I   refs:      909,698,082

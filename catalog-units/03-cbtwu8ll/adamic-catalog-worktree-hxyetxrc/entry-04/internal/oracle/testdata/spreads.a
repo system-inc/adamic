@@ -1,0 +1,32 @@
+// Spread in an array literal: each spread iterated where it stands, as JavaScript does.
+interface Cell {
+	value: number;
+}
+
+const list = [1, 2];
+function grow(): number {
+	list.push(list.length + 1);
+	return 0;
+}
+// The spread copies list before grow runs, and after it in the second literal.
+const before = [...list, grow()];
+const after = [grow(), ...list];
+console.log(`${before.join(',')} | ${after.join(',')} | ${list.join(',')}`);
+
+const words = ['a', 'b'].map((word) => word.repeat(3));
+const doubled = [...words, '-', ...words];
+const copy = [...words];
+copy.push('extra');
+console.log(`${doubled.join(',')} ${copy.join(',')} ${words.length}`);
+
+const none: number[] = [];
+console.log(`[${[...none, ...none].join(',')}] ${[...none, 9].length} ${[...'ab'].join('.')}`);
+
+// Objects are spread by reference: the same cells, not copies.
+const cells: Cell[] = [{ value: 1 }, { value: 2 }];
+const more = [...cells, { value: 3 }];
+const first = more[0];
+if (first !== undefined) {
+	first.value = 10;
+}
+console.log(`${(cells[0] ?? { value: -1 }).value} ${more[0] === cells[0]} ${more.length}`);

@@ -1,0 +1,9 @@
+abstract class Root {
+    abstract run(): string;
+    stable(): string { return 'root-stable'; }
+    visit(): string { const call = (): string => this.run(); return `${this.stable()}/${call()}`; }
+}
+function visit(value: Root): string { return value.visit(); }
+class First extends Root { run(): string { return 'first'; } }
+class Second extends Root { run(): string { return 'second'; } }
+for (const value of [new First(), new Second()]) { console.log(visit(value)); }

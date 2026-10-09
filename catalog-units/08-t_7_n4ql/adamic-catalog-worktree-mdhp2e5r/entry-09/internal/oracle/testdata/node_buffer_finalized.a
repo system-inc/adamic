@@ -1,0 +1,5 @@
+import { createHash } from 'node:crypto';
+const hash = createHash('sha256');
+hash.update('abc');
+console.log(hash.digest('hex'));
+hash.update('after digest');

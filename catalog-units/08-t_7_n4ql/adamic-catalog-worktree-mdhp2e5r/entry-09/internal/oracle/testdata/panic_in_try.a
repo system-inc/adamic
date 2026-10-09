@@ -1,0 +1,20 @@
+import { panic } from 'adamic';
+
+// A panic is never caught: natively it ends the program where it stands. On Node the runtime's panic
+// throws, which the catch here would take, so after it nothing the program does is seen, and the
+// exit is 70 whatever it does.
+function risky(): number {
+	try {
+		console.log('in the try');
+		const words = ['only'];
+		const missing = words[3] ?? panic('the invariant broke');
+		return missing.length;
+	} catch {
+		console.log('caught a panic: never seen');
+		return -1;
+	} finally {
+		console.log('finally after a panic: never seen');
+	}
+}
+console.log(`${risky()}`);
+console.log('after: never seen');

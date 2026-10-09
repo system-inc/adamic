@@ -1,0 +1,7 @@
+function forEachLeadingCommentRange<U>(text: string, pos: number, callback: (pos: number, end: number, kind: number, newline: boolean) => U): U | undefined;
+// The absent state is not observed by a callback with four parameters.
+function forEachLeadingCommentRange<T, U>(text: string, pos: number, callback: (pos: number, end: number, kind: number, newline: boolean) => U): U | undefined {
+    return text.length === 0 ? undefined : callback(pos, text.length, 1, false);
+}
+console.log(forEachLeadingCommentRange('comment', 2, (pos, end, kind, newline) => `${pos}:${end}:${kind}:${newline}`) ?? 'missing');
+console.log(forEachLeadingCommentRange('', 0, (pos) => `${pos}`) ?? 'missing');

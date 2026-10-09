@@ -1,0 +1,78 @@
+// A caught throw between an element read and its last use must preserve its owner.
+// Labels are allocated at runtime, so a release of the array's count is visible to ASan.
+interface Item {
+	label: string;
+	size: number;
+}
+
+function make(count: number): Item[] {
+	const items: Item[] = [];
+	for (let index = 0; index < count; index++) {
+		items.push({ label: `item${index}`, size: index });
+	}
+	return items;
+}
+
+function caughtInside(): void {
+	const items = make(2);
+	for (let index = 0; index < items.length; index++) {
+		const item = items[index] ?? { label: `missing${index}`, size: -1 };
+		item.size += 10;
+		try {
+			throw new Error(`caught${items.length}`);
+		} catch (error) {
+			if (error instanceof Error) {
+				console.log(error.message);
+			}
+		}
+		console.log(`${item.label} ${item.size}`);
+	}
+}
+
+function leavesBorrowScope(): void {
+	const items = make(1);
+	try {
+		const item = items[0] ?? { label: `missing${items.length}`, size: -1 };
+		console.log(item.label);
+		throw new Error(`leave${items.length}`);
+	} catch (error) {
+		if (error instanceof Error) {
+			console.log(error.message);
+		}
+	}
+	// A borrowed item had no count to release on the exceptional exit.
+	console.log(items[0]?.label ?? 'missing');
+}
+
+function invalidatesAfterCatch(): void {
+	const items = make(1);
+	const item = items[0] ?? { label: `missing${items.length}`, size: -1 };
+	try {
+		throw new Error(`remove${items.length}`);
+	} catch {
+		items.pop();
+	}
+	// This declaration must keep its own count, including across the exception edge.
+	console.log(item.label);
+}
+
+function removeForMessage(items: Item[]): string {
+	items.pop();
+	return `removed${items.length}`;
+}
+
+function messageInvalidates(): void {
+	const items = make(1);
+	const item = items[0] ?? { label: `missing${items.length}`, size: -1 };
+	try {
+		throw new Error(removeForMessage(items));
+	} catch {
+		console.log('message removed the element');
+	}
+	console.log(item.label);
+}
+
+messageInvalidates();
+caughtInside();
+leavesBorrowScope();
+invalidatesAfterCatch();

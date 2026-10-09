@@ -1,0 +1,3 @@
+import { readTextFile } from 'adamic';
+const args: string[] = ['in.txt'];
+readTextFile(...args);

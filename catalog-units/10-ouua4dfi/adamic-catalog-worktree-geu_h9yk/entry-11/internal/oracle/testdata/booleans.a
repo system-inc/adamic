@@ -1,0 +1,15 @@
+const yes = true;
+const no = !yes;
+console.log(`${yes} ${no} ${yes && no} ${yes || no}`);
+let flips = 0;
+let flag = false;
+for (let index = 0; index < 4; index += 1) {
+	flag = !flag;
+	if (flag) {
+		flips += 1;
+	}
+}
+console.log(`${flag} ${flips} ${flips === 2 ? 'two' : 'other'}`);
+const word: string = flips > 1 ? 'many' : 'few';
+console.log(word);
+console.log(`${flag === false} ${flag !== yes}`);

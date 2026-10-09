@@ -1,0 +1,23 @@
+interface Item {
+    label: string;
+}
+function run(change: boolean): void {
+    const item: Item = { label: `original${3}` };
+    let action = (value: Item): number => value.label.length;
+    if (change) {
+        action = (value: Item): number => {
+            value.label = `written${value.label.length}`;
+            return value.label.length;
+        };
+    }
+    console.log(`${action(item)}`);
+    console.log(item.label);
+    const bound = (value: Item): number => {
+        value.label = `bound${value.label.length}`;
+        return value.label.length;
+    };
+    console.log(`${bound(item)}`);
+    console.log(item.label);
+}
+run(false);
+run(true);

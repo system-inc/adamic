@@ -1,0 +1,22 @@
+// Array.from({ length }, callback): the callback's first argument is undefined every time, and it must
+// arrive as undefined in whatever way its parameter holds undefined. number | undefined is a packed
+// word, where a null reference would read as 0; a string, an object or anything unknown is a null
+// reference. (Found by reviewer stream R: the packed case printed "0 at 0".)
+const packed = Array.from({ length: 3 }, (value: number | undefined, index: number) =>
+	value === undefined ? `undefined at ${index}` : `${value} at ${index}`,
+);
+console.log(packed.join(', '));
+const kept = Array.from({ length: 2 }, (value: number | undefined) => value);
+console.log(`${kept.join('|')} ${kept[0] === undefined} ${kept.indexOf(undefined)} ${kept[1] ?? 'none'}`);
+
+const text = Array.from({ length: 2 }, (value: string | undefined, index: number) => `${value ?? 'no text'} ${index}`);
+console.log(text.join(', '));
+
+interface Point {
+	readonly x: number;
+}
+const points = Array.from({ length: 2 }, (value: Point | undefined, index: number) => value?.x ?? -index);
+console.log(points.join(', '));
+
+const untyped = Array.from({ length: 2 }, (value, index) => (value === undefined ? `${index}` : 'defined'));
+console.log(untyped.join(', '));

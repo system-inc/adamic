@@ -1,0 +1,15 @@
+// nexus/shouting.go:179; `[^\n]`
+import { observe } from '../observe.a';
+const pattern = "[^\\n]";
+const flags = "gu";
+const regex = new RegExp(pattern, flags);
+observe(regex, "", 0);
+observe(regex, "🌍", 1);
+observe(regex, "TODO\n", 2);
+observe(regex, " TODO", 3);
+observe(regex, "a", 4);
+observe(regex, "xa", 5);
+observe(regex, "a\n", 6);
+observe(regex, "PaginationInput", 7);
+observe(regex, "Pagination", 8);
+observe(regex, "TODO", 9);

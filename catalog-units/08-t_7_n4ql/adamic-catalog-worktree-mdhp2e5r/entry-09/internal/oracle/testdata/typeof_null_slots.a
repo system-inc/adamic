@@ -1,0 +1,29 @@
+// A present null slot is object; an absent slot is undefined, even with a dynamic index.
+function inspect(slots: readonly (RegExpMatchArray | null)[], index: number): void {
+	console.log(`index: ${typeof slots[index]} ${typeof slots[index] === 'object'}`);
+	switch (typeof slots[index]) {
+		case 'object':
+			console.log('object slot');
+			break;
+		case 'undefined':
+			console.log('missing slot');
+			break;
+		default:
+			console.log('wrong slot');
+			break;
+	}
+}
+const slots: (RegExpMatchArray | null)[] = ['x'.match(/x/)];
+slots[0] = null;
+inspect(slots, 0);
+inspect(slots, 1);
+console.log(`relative: ${typeof slots.at(0)} ${typeof slots.at(1)}`);
+const entries = new Map<string, RegExpMatchArray | null>();
+entries.set('null', null);
+entries.set('array', 'x'.match(/x/));
+console.log(`map: ${typeof entries.get('null')} ${typeof entries.get('array')} ${typeof entries.get('missing')}`);
+console.log(`pop: ${typeof slots.pop()} ${typeof slots.pop()}`);
+function generic<Value>(value: Value): string {
+	return typeof value;
+}
+console.log(`generic: ${generic<RegExpMatchArray | null>(null)}`);

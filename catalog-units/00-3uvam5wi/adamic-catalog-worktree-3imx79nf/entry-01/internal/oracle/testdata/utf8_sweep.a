@@ -1,0 +1,21 @@
+// The UTF-8 sweep: every lead byte from 0x80 up, with following bytes at each boundary the WHATWG
+// decoder draws, one case per line of reading/malformed.txt (made by a short script: for each lead,
+// each of 41 7F 80 8F 90 9F A0 BF C0 FF, then each of 80 BF 41, then each of 80 41), then valid forms
+// at their edges, then sequences cut short. The file ends mid-character. Each line prints its UTF-16
+// code units, so native's decoding is held to Node's code unit by code unit.
+import { panic, readTextFile } from 'adamic';
+
+const result = readTextFile('reading/malformed.txt');
+if (result.kind === 'Error') {
+	panic(result.message);
+}
+const text = result.kind === 'Ok' ? result.text : '';
+let number = 0;
+for (const line of text.split('\n')) {
+	const units: number[] = [];
+	for (let index = 0; index < line.length; index += 1) {
+		units.push(line.charCodeAt(index));
+	}
+	console.log(`${number} ${units.join(' ')}`);
+	number += 1;
+}

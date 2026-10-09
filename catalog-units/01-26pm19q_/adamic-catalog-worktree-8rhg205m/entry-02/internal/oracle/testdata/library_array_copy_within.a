@@ -1,0 +1,16 @@
+const bounds = [-Infinity, -9, -2.9, -1, 0, 1.9, 3, 5, Infinity, NaN];
+for (const target of bounds) {
+	for (const start of bounds) {
+		const values = [1, 2, 3, 4, 5];
+		const returned = values.copyWithin(target, start, 4);
+		console.log(`${target}:${start} ${returned === values} ${values.join('|')}`);
+	}
+}
+const right = [1, 2, 3, 4, 5];
+console.log(right.copyWithin(1, 0).join('|'));
+console.log(right.copyWithin(0, 0).join('|'));
+const words = ['a'.repeat(2), 'b'.repeat(2), 'c'.repeat(2)];
+words.copyWithin(1, 0);
+console.log(words.join('|'));
+const empty: number[] = [];
+console.log(empty.copyWithin(0, 0).join('|'));

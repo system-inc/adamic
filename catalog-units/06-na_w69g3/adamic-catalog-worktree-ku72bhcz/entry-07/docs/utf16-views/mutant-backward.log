@@ -1,0 +1,31 @@
+=== RUN   TestStringIndexMatchesNode
+=== PAUSE TestStringIndexMatchesNode
+=== CONT  TestStringIndexMatchesNode
+=== RUN   TestStringIndexMatchesNode/mixed
+=== PAUSE TestStringIndexMatchesNode/mixed
+=== CONT  TestStringIndexMatchesNode/mixed
+    string_index_test.go:278: line 511:
+        native  NaN -1 undefined 233 233 c3a9 233 233  233 233  233 233  233 233  233 233  233 233  233 233  233 233  57101 57101 edbc8d 57343 57343  57343 57343  57343 57343  57343 57343 edbfbf 55356 127757  55296 55296 eda080 56319 56319 edafbf 55296 55296  56319 56319  56319 56319  56319 56319  56319 56319  563
+        Node    NaN -1 undefined 233 233 c3a9 57101 57101 edbc8d 55356 127757 eda0bc 99 99 63 233 233 c3a9 97 97 61 97 97 61 32 32 20 57343 57343 edbfbf 57101 57101 edbc8d 55356 127757 eda0bc 57101 57101 edbc8d 55356 127757 eda0bc 57343 57343 edbfbf 56319 1114111 edafbf 55296 55296 eda080 56319 56319 edafbf 233 23
+    string_index_test.go:278: line 512:
+        native  56319 1113088 edafbf 63f48fb080 99 99 63 56320 56320 edb080 f48fb080eda0bc 56319 1113088 edafbf 55356 127757 eda0bc f09f8c8d 56320 56320 edb080 57101 57101 edbc8d 63 57343 57343  57343 57343  edbfbf 945 945  945 945  ceb1 56320 56320  56320 56320  edb080 945 945  945 945  ceb1 945 945  945 945  ceb
+        Node    56319 1113088 edafbf 63f48fb080 99 99 63 56320 56320 edb080 f48fb080eda0bc 56319 1113088 edafbf 55356 127757 eda0bc edb080f09f8c8d 56320 56320 edb080 57101 57101 edbc8d f09f8c8d63 55356 127757 eda0bc 99 99 63 edbc8d63edbfbf 57101 57101 edbc8d 57343 57343 edbfbf 63edbfbfceb1 99 99 63 945 945 ceb1 ed
+    string_index_test.go:278: line 513:
+        native  233 233  57343 57343 edbfbf 97 97 61 57343 57343 edbfbf 57343 57343 edbfbf 55356 127757 eda0bc 945 945 ceb1 57343 57343 edbfbf 55356 127757 eda0bc 97 97 61 56320 56320 edb080 57343 57343 edbfbf 57343 57343 edbfbf 55296 55296 eda080 56319 56319 edafbf 99 99 63 55356 127757  55356 127757  57343 57343
+        Node    55356 127757 eda0bc 57343 57343 edbfbf 97 97 61 57343 57343 edbfbf 57343 57343 edbfbf 55356 127757 eda0bc 945 945 ceb1 57343 57343 edbfbf 55356 127757 eda0bc 97 97 61 56320 56320 edb080 57343 57343 edbfbf 57343 57343 edbfbf 55296 55296 eda080 56319 56319 edafbf 99 99 63 55356 127757 eda0bc 56320 56
+    string_index_test.go:278: line 514:
+        native  1 0 2 11 22 41 0 21 0 1 32 3 2 11 22 41 45 21 6 1 32 1 2 11 7 41 30 21 0 1 1 0 2 11 22 41 0 21 0 1 32 3 2 11 22 41 45 21 6
+        Node    1 31 2 11 22 41 17 21 12 1 32 31 2 11 22 41 42 21 6 1 32 31 2 11 7 41 42 21 12 1 1 31 2 11 22 41 17 21 12 1 32 31 2 11 22 41 42 21 6
+    string_index_test.go:278: line 517:
+        native   edb080 eda0bc f09f8c8d edb080f09f8c8d63 edb080f09f8c8d63edbfbf edb080f09f8c8d63edbfbfceb1 edb080f09f8c8d63edbfbfceb1edb080 edb080f09f8c8d63edbfbfceb1edb080ceb1 edb080f09f8c8d63edbfbfceb1edb080ceb1ceb1 edb080f09f8c8d63edbfbfceb1edb080ceb1ceb1edafbf edb080f09f8c8d63edbfbfceb1edb080ceb1ceb1f48fbfbf e
+        Node     edb080 edb080eda0bc edb080f09f8c8d edb080f09f8c8d63 edb080f09f8c8d63edbfbf edb080f09f8c8d63edbfbfceb1 edb080f09f8c8d63edbfbfceb1edb080 edb080f09f8c8d63edbfbfceb1edb080ceb1 edb080f09f8c8d63edbfbfceb1edb080ceb1ceb1 edb080f09f8c8d63edbfbfceb1edb080ceb1ceb1edafbf edb080f09f8c8d63edbfbfceb1edb080ceb1ce
+    string_index_test.go:278: line 518:
+        native   eda0bc f09f8c8d 63 edbfbf f09f8c8d63edbfbfceb1 f09f8c8d63edbfbfceb1edb080 f09f8c8d63edbfbfceb1edb080ceb1 f09f8c8d63edbfbfceb1edb080ceb1ceb1 f09f8c8d63edbfbfceb1edb080ceb1ceb1edafbf f09f8c8d63edbfbfceb1edb080ceb1ceb1f48fbfbf f09f8c8d63edbfbfceb1edb080ceb1ceb1f48fbfbfedbfbf f09f8c8d63edbfbfceb1edb08
+        Node     eda0bc f09f8c8d f09f8c8d63 f09f8c8d63edbfbf f09f8c8d63edbfbfceb1 f09f8c8d63edbfbfceb1edb080 f09f8c8d63edbfbfceb1edb080ceb1 f09f8c8d63edbfbfceb1edb080ceb1ceb1 f09f8c8d63edbfbfceb1edb080ceb1ceb1edafbf f09f8c8d63edbfbfceb1edb080ceb1ceb1f48fbfbf f09f8c8d63edbfbfceb1edb080ceb1ceb1f48fbfbfedbfbf f09f8c8
+    string_index_test.go:278: 7653 of 8940 lines differ
+    string_index_test.go:278: 8940 lines, 7653 mismatches
+--- FAIL: TestStringIndexMatchesNode (0.00s)
+    --- FAIL: TestStringIndexMatchesNode/mixed (32.63s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	32.728s
+FAIL

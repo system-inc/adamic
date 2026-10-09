@@ -1,0 +1,51 @@
+=== RUN   TestClosureConventionWrongOrder
+=== RUN   TestClosureConventionWrongOrder/definition
+    closure_convention_test.go:121: native: clang failed: exit status 1
+        /tmp/adamic-gate/adamic-build-1217105275/main.c:60:21: error: conflicting types for 'adamic_function_4_reader_value'
+           60 | static adamic_value adamic_function_4_reader_value(adamic_closure *self, size_t argument_count, adamic_value *arguments) {
+              |                     ^
+        /tmp/adamic-gate/adamic-build-1217105275/main.c:24:37: note: previous declaration is here
+           24 | static adamic_counted_code_function adamic_function_4_reader_value;
+              |                                     ^
+        1 error generated.
+        
+=== RUN   TestClosureConventionWrongOrder/call
+    closure_convention_test.go:148: native: clang failed: exit status 1
+        /tmp/adamic-gate/adamic-build-50459436/main.c:43:76: error: incompatible integer to pointer conversion passing 'int' to parameter of type 'adamic_value *' (aka 'union adamic_value *') [-Wint-conversion]
+           43 |         adamic_value adamic_temporary_3 = adamic_closure_call(adamic_local_3_run, 2, (adamic_value[]){{.number = (0x1p+00)}, {.number = (0x1p+01)}});
+              |                                                                                   ^
+        /home/agent/.cache/adamic/runtime/ce1bca615ccfa1f933ad616cb79a0c154dc14c11acc087bcaf2667227f988dc1/adamic.h:138:87: note: passing argument to parameter 'arguments' here
+          138 | static inline adamic_value adamic_closure_call(adamic_closure *closure, adamic_value *arguments, size_t argument_count) {
+              |                                                                                       ^
+        /tmp/adamic-gate/adamic-build-50459436/main.c:43:79: error: incompatible pointer to integer conversion passing 'adamic_value[2]' (aka 'union adamic_value[2]') to parameter of type 'size_t' (aka 'unsigned long') [-Wint-conversion]
+           43 |         adamic_value adamic_temporary_3 = adamic_closure_call(adamic_local_3_run, 2, (adamic_value[]){{.number = (0x1p+00)}, {.number = (0x1p+01)}});
+              |                                                                                      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        /home/agent/.cache/adamic/runtime/ce1bca615ccfa1f933ad616cb79a0c154dc14c11acc087bcaf2667227f988dc1/adamic.h:138:105: note: passing argument to parameter 'argument_count' here
+          138 | static inline adamic_value adamic_closure_call(adamic_closure *closure, adamic_value *arguments, size_t argument_count) {
+              |                                                                                                         ^
+        2 errors generated.
+        
+=== RUN   TestClosureConventionWrongOrder/function-pointer-cast
+    closure_convention_test.go:159: native: clang failed: exit status 1
+        /tmp/adamic-gate/adamic-build-1291926402/main.c:6:37: error: cast from 'adamic_value (*)(adamic_closure *, size_t, adamic_value *)' (aka 'union adamic_value (*)(struct adamic_closure *, unsigned long, union adamic_value *)') to 'adamic_counted_code' (aka 'union adamic_value (*)(struct adamic_closure *, union adamic_value *, unsigned long)') converts to incompatible function type [-Werror,-Wcast-function-type-strict]
+            6 | static adamic_counted_code erased = (adamic_counted_code)wrong;
+              |                                     ^~~~~~~~~~~~~~~~~~~~~~~~~~
+        1 error generated.
+        
+=== RUN   TestClosureConventionWrongOrder/void-pointer-cast
+    closure_convention_test.go:159: native: clang failed: exit status 1
+        /tmp/adamic-gate/adamic-build-4082357690/main.c:6:73: error: controlling expression type 'void *' not compatible with any generic association type
+            6 | static adamic_closure *erased(void) { return adamic_counted_closure_new((void *)wrong, 0); }
+              |                                                                         ^~~~~~~~~~~~~
+        /home/agent/.cache/adamic/runtime/ce1bca615ccfa1f933ad616cb79a0c154dc14c11acc087bcaf2667227f988dc1/adamic.h:1028:86: note: expanded from macro 'adamic_counted_closure_new'
+         1028 | #define adamic_counted_closure_new(code, ...) (adamic_counted_closure_new)(_Generic((code), adamic_counted_code: (code)), __VA_ARGS__)
+              |                                                                                      ^~~~
+        1 error generated.
+        
+--- PASS: TestClosureConventionWrongOrder (4.50s)
+    --- PASS: TestClosureConventionWrongOrder/definition (4.25s)
+    --- PASS: TestClosureConventionWrongOrder/call (0.09s)
+    --- PASS: TestClosureConventionWrongOrder/function-pointer-cast (0.06s)
+    --- PASS: TestClosureConventionWrongOrder/void-pointer-cast (0.06s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	4.515s

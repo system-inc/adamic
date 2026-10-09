@@ -1,0 +1,260 @@
+{
+  "stylesheets": 4952,
+  "output_units": 510298,
+  "rounds": [
+    {
+      "side": "native baseline",
+      "round": 1,
+      "seconds": 6.486143051999534,
+      "stylesheets_per_second": 763.4737563294119,
+      "stdout": "4952 of 4952 stylesheets formatted, 510298 units\n"
+    },
+    {
+      "side": "native final",
+      "round": 1,
+      "seconds": 3.4519820879995677,
+      "stylesheets_per_second": 1434.5381504773961,
+      "stdout": "4952 of 4952 stylesheets formatted, 510298 units\n"
+    },
+    {
+      "side": "Node baseline",
+      "round": 1,
+      "seconds": 4.325037751001219,
+      "stylesheets_per_second": 1144.9611044096998,
+      "stdout": "4952 of 4952 stylesheets formatted, 510298 units\n"
+    },
+    {
+      "side": "Node final",
+      "round": 1,
+      "seconds": 1.9639370189997862,
+      "stylesheets_per_second": 2521.4657863733355,
+      "stdout": "4952 of 4952 stylesheets formatted, 510298 units\n"
+    },
+    {
+      "side": "Prettier fork",
+      "round": 1,
+      "seconds": 3.7337119379990327,
+      "stylesheets_per_second": 1326.2940693421226,
+      "stdout": "4952 of 4952 stylesheets formatted, 510298 units\n"
+    },
+    {
+      "side": "Prettier npm 3.9.6",
+      "round": 1,
+      "seconds": 3.667840272999456,
+      "stylesheets_per_second": 1350.1133177618976,
+      "stdout": "4952 of 4952 stylesheets formatted, 510298 units\n"
+    },
+    {
+      "side": "Go",
+      "round": 1,
+      "seconds": 0.80914339,
+      "stylesheets_per_second": 6120.052466843979,
+      "stdout": "=== RUN   TestAdamicPrinterThroughput\n    adamic_print_side_test.go:150: Go round 1: 4952 stylesheets in 809.14339ms, 6120 stylesheets/s; 510298 units\n--- PASS: TestAdamicPrinterThroughput (0.82s)\nPASS\n"
+    },
+    {
+      "side": "Go",
+      "round": 2,
+      "seconds": 0.82412724,
+      "stylesheets_per_second": 6008.780877088834,
+      "stdout": "=== RUN   TestAdamicPrinterThroughput\n    adamic_print_side_test.go:150: Go round 1: 4952 stylesheets in 824.12724ms, 6009 stylesheets/s; 510298 units\n--- PASS: TestAdamicPrinterThroughput (0.83s)\nPASS\n"
+    },
+    {
+      "side": "Prettier npm 3.9.6",
+      "round": 2,
+      "seconds": 3.6188601720004954,
+      "stylesheets_per_second": 1368.3866644846212,
+      "stdout": "4952 of 4952 stylesheets formatted, 510298 units\n"
+    },
+    {
+      "side": "Prettier fork",
+      "round": 2,
+      "seconds": 3.6273647510006413,
+      "stylesheets_per_second": 1365.1783980736832,
+      "stdout": "4952 of 4952 stylesheets formatted, 510298 units\n"
+    },
+    {
+      "side": "Node final",
+      "round": 2,
+      "seconds": 1.9456400140006735,
+      "stylesheets_per_second": 2545.1779179939736,
+      "stdout": "4952 of 4952 stylesheets formatted, 510298 units\n"
+    },
+    {
+      "side": "Node baseline",
+      "round": 2,
+      "seconds": 3.5794597929998417,
+      "stylesheets_per_second": 1383.4489801182742,
+      "stdout": "4952 of 4952 stylesheets formatted, 510298 units\n"
+    },
+    {
+      "side": "native final",
+      "round": 2,
+      "seconds": 2.505889070000194,
+      "stylesheets_per_second": 1976.1449376526539,
+      "stdout": "4952 of 4952 stylesheets formatted, 510298 units\n"
+    },
+    {
+      "side": "native baseline",
+      "round": 2,
+      "seconds": 6.400415038000574,
+      "stylesheets_per_second": 773.6998258080082,
+      "stdout": "4952 of 4952 stylesheets formatted, 510298 units\n"
+    },
+    {
+      "side": "native baseline",
+      "round": 3,
+      "seconds": 6.201113267001347,
+      "stylesheets_per_second": 798.5662875006028,
+      "stdout": "4952 of 4952 stylesheets formatted, 510298 units\n"
+    },
+    {
+      "side": "native final",
+      "round": 3,
+      "seconds": 2.558024910000313,
+      "stylesheets_per_second": 1935.868560404048,
+      "stdout": "4952 of 4952 stylesheets formatted, 510298 units\n"
+    },
+    {
+      "side": "Node baseline",
+      "round": 3,
+      "seconds": 3.564211189001071,
+      "stylesheets_per_second": 1389.3677275021068,
+      "stdout": "4952 of 4952 stylesheets formatted, 510298 units\n"
+    },
+    {
+      "side": "Node final",
+      "round": 3,
+      "seconds": 1.8564123889991606,
+      "stylesheets_per_second": 2667.5107477976644,
+      "stdout": "4952 of 4952 stylesheets formatted, 510298 units\n"
+    },
+    {
+      "side": "Prettier fork",
+      "round": 3,
+      "seconds": 3.527774631000284,
+      "stylesheets_per_second": 1403.7177875492243,
+      "stdout": "4952 of 4952 stylesheets formatted, 510298 units\n"
+    },
+    {
+      "side": "Prettier npm 3.9.6",
+      "round": 3,
+      "seconds": 3.920855701000619,
+      "stylesheets_per_second": 1262.989606767785,
+      "stdout": "4952 of 4952 stylesheets formatted, 510298 units\n"
+    },
+    {
+      "side": "Go",
+      "round": 3,
+      "seconds": 0.9119201950000001,
+      "stylesheets_per_second": 5430.299742402349,
+      "stdout": "=== RUN   TestAdamicPrinterThroughput\n    adamic_print_side_test.go:150: Go round 1: 4952 stylesheets in 911.920195ms, 5430 stylesheets/s; 510298 units\n--- PASS: TestAdamicPrinterThroughput (0.92s)\nPASS\n"
+    },
+    {
+      "side": "Go",
+      "round": 4,
+      "seconds": 0.839833487,
+      "stylesheets_per_second": 5896.406938581624,
+      "stdout": "=== RUN   TestAdamicPrinterThroughput\n    adamic_print_side_test.go:150: Go round 1: 4952 stylesheets in 839.833487ms, 5896 stylesheets/s; 510298 units\n--- PASS: TestAdamicPrinterThroughput (0.85s)\nPASS\n"
+    },
+    {
+      "side": "Prettier npm 3.9.6",
+      "round": 4,
+      "seconds": 4.214325573000679,
+      "stylesheets_per_second": 1175.0397339316344,
+      "stdout": "4952 of 4952 stylesheets formatted, 510298 units\n"
+    },
+    {
+      "side": "Prettier fork",
+      "round": 4,
+      "seconds": 6.234428054000091,
+      "stylesheets_per_second": 794.2990049941681,
+      "stdout": "4952 of 4952 stylesheets formatted, 510298 units\n"
+    },
+    {
+      "side": "Node final",
+      "round": 4,
+      "seconds": 4.336988629000189,
+      "stylesheets_per_second": 1141.8060833471889,
+      "stdout": "4952 of 4952 stylesheets formatted, 510298 units\n"
+    },
+    {
+      "side": "Node baseline",
+      "round": 4,
+      "seconds": 3.508989885000119,
+      "stylesheets_per_second": 1411.2323381632752,
+      "stdout": "4952 of 4952 stylesheets formatted, 510298 units\n"
+    },
+    {
+      "side": "native final",
+      "round": 4,
+      "seconds": 3.8515087050000147,
+      "stylesheets_per_second": 1285.7299254111333,
+      "stdout": "4952 of 4952 stylesheets formatted, 510298 units\n"
+    },
+    {
+      "side": "native baseline",
+      "round": 4,
+      "seconds": 8.499007954000263,
+      "stylesheets_per_second": 582.6562378576457,
+      "stdout": "4952 of 4952 stylesheets formatted, 510298 units\n"
+    },
+    {
+      "side": "native baseline",
+      "round": 5,
+      "seconds": 6.674962311999479,
+      "stylesheets_per_second": 741.8768479183566,
+      "stdout": "4952 of 4952 stylesheets formatted, 510298 units\n"
+    },
+    {
+      "side": "native final",
+      "round": 5,
+      "seconds": 2.583668287999899,
+      "stylesheets_per_second": 1916.6547126038006,
+      "stdout": "4952 of 4952 stylesheets formatted, 510298 units\n"
+    },
+    {
+      "side": "Node baseline",
+      "round": 5,
+      "seconds": 3.7304690550008672,
+      "stylesheets_per_second": 1327.4470118875838,
+      "stdout": "4952 of 4952 stylesheets formatted, 510298 units\n"
+    },
+    {
+      "side": "Node final",
+      "round": 5,
+      "seconds": 1.9259467150004639,
+      "stylesheets_per_second": 2571.2030148242225,
+      "stdout": "4952 of 4952 stylesheets formatted, 510298 units\n"
+    },
+    {
+      "side": "Prettier fork",
+      "round": 5,
+      "seconds": 3.8623559300012857,
+      "stylesheets_per_second": 1282.1190200350984,
+      "stdout": "4952 of 4952 stylesheets formatted, 510298 units\n"
+    },
+    {
+      "side": "Prettier npm 3.9.6",
+      "round": 5,
+      "seconds": 4.329616388999057,
+      "stylesheets_per_second": 1143.7502898830326,
+      "stdout": "4952 of 4952 stylesheets formatted, 510298 units\n"
+    },
+    {
+      "side": "Go",
+      "round": 5,
+      "seconds": 0.935140954,
+      "stylesheets_per_second": 5295.458378566533,
+      "stdout": "=== RUN   TestAdamicPrinterThroughput\n    adamic_print_side_test.go:150: Go round 1: 4952 stylesheets in 935.140954ms, 5295 stylesheets/s; 510298 units\n--- PASS: TestAdamicPrinterThroughput (0.95s)\nPASS\n"
+    }
+  ],
+  "median_stylesheets_per_second": {
+    "native baseline": 763.4737563294119,
+    "native final": 1916.6547126038006,
+    "Node baseline": 1383.4489801182742,
+    "Node final": 2545.1779179939736,
+    "Prettier fork": 1326.2940693421226,
+    "Prettier npm 3.9.6": 1262.989606767785,
+    "Go": 5896.406938581624
+  }
+}

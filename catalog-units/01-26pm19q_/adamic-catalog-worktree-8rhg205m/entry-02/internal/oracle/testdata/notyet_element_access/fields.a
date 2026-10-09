@@ -1,0 +1,50 @@
+type Key = 'left' | 'right';
+function numberField(value: { readonly left?: number; readonly right?: number }, key: Key): number | undefined {
+    return value[key];
+}
+function referenceField(value: { readonly left?: { readonly label: string }; readonly right?: { readonly label: string } }, key: Key): { readonly label: string } | undefined {
+    return value[key];
+}
+function mixedField(value: { readonly left: number; readonly right: string }, key: Key): number | string {
+    return value[key];
+}
+function writeField(value: { left: number; right: number }, key: Key, next: number): void {
+    value[key] = next;
+}
+console.log(`${numberField({}, 'left') ?? -1} ${numberField({ right: 7 }, 'left') ?? -1} ${numberField({ right: 7 }, 'right') ?? -1}`);
+console.log(`${referenceField({}, 'right')?.label ?? 'missing'} ${referenceField({ right: { label: ['built', 'value'].join('-') } }, 'right')?.label ?? 'missing'}`);
+console.log(`${mixedField({ left: 3, right: 'text' }, 'left')} ${mixedField({ left: 3, right: 'text' }, 'right')}`);
+const numbers = { left: 1, right: 2 };
+writeField(numbers, 'right', 9);
+writeField(numbers, 'left', 4);
+console.log(`${numbers.left} ${numbers.right}`);
+enum Interval { Low = 250, Medium = 500, High = 2000 }
+function numericField(value: { readonly 250: number; readonly 500: number; readonly 2000: number }, key: Interval): number {
+    return value[key];
+}
+for (const key of [Interval.Low, Interval.Medium, Interval.High]) {
+    console.log(`${numericField({ 250: 1, 500: 2, 2000: 3 }, key)}`);
+}
+let current = { left: 10, right: 20 };
+let selected: Key = 'left';
+let receiverCalls = 0;
+function receiver(): { left: number; right: number } {
+    receiverCalls += 1;
+    console.log('receiver');
+    return current;
+}
+function key(): Key {
+    console.log('key');
+    current = { left: 100, right: 200 };
+    return 'right';
+}
+console.log(`${receiver()[key()]}`);
+const saved = current;
+function next(): number {
+    console.log('value');
+    selected = 'right';
+    current = { left: 300, right: 400 };
+    return 11;
+}
+receiver()[selected] = next();
+console.log(`${saved.left} ${saved.right} ${current.left} ${receiverCalls}`);

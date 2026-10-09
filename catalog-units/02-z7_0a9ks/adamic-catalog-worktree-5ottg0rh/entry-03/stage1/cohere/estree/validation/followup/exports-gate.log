@@ -1,0 +1,9 @@
+=== RUN   TestDecoratedExports
+    exports_test.go:21: 6 decorated exports, 5151 bytes match Go
+--- PASS: TestDecoratedExports (20.08s)
+=== RUN   TestDecoratedExportMutant
+    exports_test.go:32: Node: line 3: Go "1 ExportNamedDeclaration 3 20 0 0 0 0 20 0", port "1 ExportNamedDeclaration 0 20 0 0 0 0 20 0"
+    exports_test.go:32: native: line 3: Go "1 ExportNamedDeclaration 3 20 0 0 0 0 20 0", port "1 ExportNamedDeclaration 0 20 0 0 0 0 20 0"
+--- PASS: TestDecoratedExportMutant (19.29s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/estree	39.380s

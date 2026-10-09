@@ -1,0 +1,2 @@
+export const source = {visible: 'one', hidden: 'two'};
+export const view: {readonly visible: string} = source;

@@ -1,0 +1,138 @@
+
+origin/main 1a4e29984b0b1727b063e76fe01c2aa11dfa56c7 | cohere 715ba94f3608a6500086b1076ce5cb7e51b836db
+GO LINES  PORTED  STATUS                          PACKAGE  EVIDENCE
+376       0       not started                     internal/benchresults
+206       0       not started                     internal/benchresults/tools/record
+34        0       not started                     internal/benchresults/tools/runoutput
+154       0       not started                     internal/corpus
+2097      0       not started                     internal/differential
+1168      0       not started                     internal/docsdata
+93        0       not started                     internal/docsdata/capture
+279       0       not started                     internal/docsdata/tools/generate
+1303      0       not started                     internal/edit
+154       0       not started                     internal/format/arena
+133       0       not started                     internal/format/comparison
+4188      273     partly ported                   internal/format/css             stage1/cohere/cssstrings/GAPS.md, stage1/cohere/cssnumbers/GAPS.md
+589       589     ported and held byte-identical  internal/format/css/mediaquery  stage1/cohere/mediaquery/GAPS.md
+2328      0       not started                     internal/format/css/postcss
+1286      409     partly ported                   internal/format/css/selector  stage1/cohere/selector/GAPS.md
+1202      1202    ported and held byte-identical  internal/format/css/values    stage1/cohere/values/GAPS.md
+410       0       not started                     internal/format/differential
+1900      0       partly ported                   internal/format/doc  stage1/cohere/json/GAPS.md
+247       0       not started                     internal/format/doc/tools/generate_string_width
+4206      532     partly ported                   internal/format/estree       stage1/cohere/json/GAPS.md
+388       104     partly ported                   internal/format/formatfiles  stage1/cohere/formatfiles/GAPS.md
+540       0       not started                     internal/format/formatoptions
+3238      2435    partly ported                   internal/format/graphql     stage1/cohere/graphql/GAPS.md
+14113     113     partly ported                   internal/format/javascript  stage1/cohere/json/GAPS.md
+2954      0       not started                     internal/format/markdown
+1448      0       not started                     internal/format/markdown/mdast
+12914     0       not started                     internal/format/markdown/micromark
+166       0       not started                     internal/format/markdown/micromark/tools/generate_characters
+137       0       not started                     internal/format/markdown/micromark/tools/generate_entities
+253       0       not started                     internal/format/markdown/tools/generate_classes
+144       0       not started                     internal/format/markdown/tools/generate_languages
+391       0       not started                     internal/format/native
+221       0       not started                     internal/format/oracletest
+629       0       not started                     internal/format/prettier
+1628      0       not started                     internal/format/printing
+1587      0       not started                     internal/format/yaml
+3988      0       not started                     internal/format/yaml/compose
+2282      0       not started                     internal/format/yaml/cst
+2024      0       not started                     internal/format/yaml/unist
+844       844     ported and held byte-identical  internal/gitignore  stage1/cohere/gitignore/GAPS.md
+1818      0       not started                     internal/lint/checking
+789       0       not started                     internal/lint/checking/flow
+2930      0       not started                     internal/lint/configuration
+121       0       not started                     internal/lint/ecmascript/binding
+137       0       not started                     internal/lint/ecmascript/classmembers
+549       0       not started                     internal/lint/ecmascript/comments
+577       0       not started                     internal/lint/ecmascript/consistentreturn
+2914      0       not started                     internal/lint/ecmascript/control_flow_graph
+169       0       not started                     internal/lint/ecmascript/decorators
+176       0       not started                     internal/lint/ecmascript/descriptor
+319       319     ported and held byte-identical  internal/lint/ecmascript/directives  stage1/cohere/suppression/GAPS.md
+469       0       not started                     internal/lint/ecmascript/dotnotation
+27463     0       not started                     internal/lint/ecmascript/high_level_intermediate_representation
+373       0       not started                     internal/lint/ecmascript/imports
+176       0       not started                     internal/lint/ecmascript/jsx
+178       0       not started                     internal/lint/ecmascript/literal
+276       0       not started                     internal/lint/ecmascript/module
+334       0       not started                     internal/lint/ecmascript/module_roots
+422       0       not started                     internal/lint/ecmascript/nextjs
+190       0       not started                     internal/lint/ecmascript/property
+867       0       not started                     internal/lint/ecmascript/react
+960       0       not started                     internal/lint/ecmascript/reference
+1512      0       not started                     internal/lint/ecmascript/regexp
+755       0       not started                     internal/lint/ecmascript/regexpattern
+687       0       not started                     internal/lint/ecmascript/regexsyntax
+175       0       not started                     internal/lint/ecmascript/scope
+653       0       not started                     internal/lint/ecmascript/text
+71        0       not started                     internal/lint/ecmascript/tokens
+139       0       not started                     internal/lint/housesets
+86        0       not started                     internal/lint/linter
+897       0       not started                     internal/lint/optionschema
+118       0       not started                     internal/lint/registry
+125       0       not started                     internal/lint/report
+2161      0       not started                     internal/lint/rule
+901       0       not started                     internal/lint/rules/adamic
+3573      0       not started                     internal/lint/rules/base
+652       0       not started                     internal/lint/rules/boundaries
+70011     830     partly ported                   internal/lint/rules/core  stage1/cohere/lint/GAPS.md
+4777      0       not started                     internal/lint/rules/next
+22467     0       not started                     internal/lint/rules/nexus
+48898     0       not started                     internal/lint/rules/react
+2054      0       not started                     internal/lint/rules/react/conformance
+526       0       not started                     internal/lint/rules/react/conformance/score
+382       0       not started                     internal/lint/rules/react/tools/vendor_fixtures
+7629      0       not started                     internal/lint/rules/structure
+6759      0       not started                     internal/lint/rules/tailwind
+17450     0       not started                     internal/lint/rules/tailwind/collapse
+156       0       not started                     internal/lint/rules/tailwind/tools/generate_candidate
+299       0       not started                     internal/lint/rules/tailwind/tools/generate_class_order
+702       0       not started                     internal/lint/rules/tailwind/tools/generate_collapse
+148       0       not started                     internal/lint/rules/tailwind/tools/generate_css_parser
+118       0       not started                     internal/lint/rules/tailwind/tools/generate_data_type
+728       0       not started                     internal/lint/rules/tailwind/tools/generate_descriptor_base
+474       0       not started                     internal/lint/rules/tailwind/tools/generate_descriptor_table
+620       0       not started                     internal/lint/rules/tailwind/tools/generate_framework_variants
+289       0       not started                     internal/lint/rules/tailwind/tools/generate_statics
+139       0       not started                     internal/lint/rules/tailwind/tools/generate_syntax_tree
+164       0       not started                     internal/lint/rules/tailwind/tools/generate_theme
+154       0       not started                     internal/lint/rules/tailwind/tools/generate_utility
+126       0       not started                     internal/lint/rules/tailwind/tools/generate_value_parser
+315       0       not started                     internal/lint/rules/tailwind/tools/generate_variant
+37        0       not started                     internal/lint/rules/tailwind/tools/tooldirectory
+48574     0       not started                     internal/lint/rules/typescript
+658       658     partly ported                   internal/lint/suppression  stage1/cohere/suppression/GAPS.md
+913       0       not started                     internal/lint/testing
+367       0       not started                     internal/release/changelog
+2571      0       not started                     internal/release/dispatch
+184       0       not started                     internal/release/gocache
+814       0       not started                     internal/release/notices
+2411      0       not started                     internal/release/packaging
+78        0       not started                     internal/release/tools/build_dispatcher_package
+66        0       not started                     internal/release/tools/changelog
+38        0       not started                     internal/release/tools/notices
+1228      0       not started                     internal/rename
+62        0       not started                     internal/replace
+525       0       not started                     internal/settingsschema
+59        0       not started                     internal/settingsschema/tools/generate
+222       0       not started                     internal/testpolicy
+9403      0       not started                     internal/types/program
+715       0       not started                     internal/types/tools/generate_shims
+1540      0       not started                     internal/unused_exports
+TOTAL 8308/382804 Go lines = 2.1703% conservative credited coverage; 4 complete, 9 partial, 108 not started packages
+SCOPE stage1/cohere/gitignore credited=true: Matcher and glob implementation; recorded native/Node/Go corpus, UTF-8 scope. | GAPS: The port beside this file is cohere's `internal/gitignore` (gitignore.go and glob.go) written as 0.1 Adamic. Every place stage 0 refused it is below, as the smallest program that shows it, stage 0's own message, and the way the port went around it. Each workaround is marked in the port with its gap number, so when a gap closes, the place to undo it can be found with `grep -n "gap N" *.ts`.
+SCOPE stage1/cohere/mediaquery credited=true: Media-query parser; recorded canonical tree parity, not full CSS formatting. | GAPS: The port beside this file is cohere's `internal/format/css/mediaquery` (index.go, nodes.go, parsers.go and whitespace.go), itself a port of postcss-media-query-parser 0.2.3, written as 0.1 Adamic. It is stage 1's second slice; the first is `stage1/cohere/gitignore`, whose GAPS.md this one follows and refers to.
+SCOPE stage1/cohere/values credited=true: Value parser in both supported modes; recorded canonical tree parity. | GAPS: The port beside this file is cohere's `internal/format/css/values` (values.go, nodes.go, tokenize.go and parser.go), itself a port of postcss-values-parser 2.0.1, the parser Prettier's language-css hands every declaration value to, written as 0.1 Adamic. It is stage 1's third slice, after `stage1/cohere/gitignore` and `stage1/cohere/mediaquery`, whose GAPS.md files this one follows and refers to.
+SCOPE stage1/cohere/graphql credited=true: Lexer/parser only; format.go and GraphQL printers remain unported. | GAPS: The port beside this file is cohere's `internal/format/graphql` lexer and parser (lexer.go, parser.go, token.go, block_string.go, character_classes.go): graphql-js 17.0.2's `parse`, as Prettier calls it, with Prettier's `parseComments`. It is stage 1's sixth slice, and the first that throws and catches. graphql-js throws a `GraphQLError` wherever a text fails to lex or parse, from as deep in its recursive descent as the failure is; cohere's Go panics with a `*SyntaxError` there and recovers it in `Parse`. The port throws `new Error(message)` from the same places and catches it once, in `parse`, so a failure unwinds every frame between, each holding the tokens, lists and nodes its level has made.
+SCOPE stage1/cohere/suppression credited=true: Directive parsing and suppression index; nil-Index and concurrency scope limits remain in GAPS.md. | GAPS: The port beside this file is cohere's `internal/lint/suppression` (suppression.go, scan.go, parse.go and directive_subject.go) with the grammar it reads, `internal/lint/ecmascript/directives` (directives.go and subject.go), written as 0.1 Adamic. It is stage 1's fourth slice, after `gitignore`, `mediaquery` and `values`, whose GAPS.md files this one follows and refers to. The gaps were found at main 4ddd17f.
+SCOPE stage1/cohere/selector credited=true: Default lossless selector parsing; parser/options and rendering boundary not credited as complete files. | GAPS: A port of cohere's `internal/format/css/selector`, itself a port of `postcss-selector-parser` 2.2.3. The supported entry is lossless default parsing, which cohere's Prettier integration uses. This is a parser, not a selector matcher or CSS printer. Regular expression splits are Adamic regular expression literals, compiled natively on the regex-matcher base branch.
+SCOPE stage1/cohere/formatfiles credited=true: Repository-boundary helpers credited; Enumerate requires supplied settings and excludes configured glob cases. | GAPS: The port beside this file is cohere's `internal/format/formatfiles` (enumerate.go): the walk that decides which files a tree offers the formatter, `Enumerate`, with `NestedRepositoriesBelow`, `HasOwnRepository`, `NestedRepositoryContaining` and `repositoryBoundaryBetween`, written as 0.1 Adamic over the file system 'adamic' opened this afternoon (`readDirectory`, `fileStatus`, `readTextFile`, on cloud/collections-fs, merged into this branch at 1b10123). It is stage 1's fifth slice, and the first to read a real disk. Git's ignore rules are the first slice's port, `../gitignore`, reading a working tree from disk (disk.ts), which that slice's GAPS.md waited for: "a WorkingTree read from disk can take the in-memory one's place, and nothing else changes". Nothing else changed: the gitignore port is imported as it is.
+SCOPE stage1/cohere/cssstrings credited=true: CSS quote sub-printer only; shared source lines are unioned with the numeric slice. | GAPS: This slice ports `adjustStrings` and its `printString`, `getPreferredQuote`, and `makeString` dependencies from `cohere/internal/format/css/print_misc.go`. `strings.ts` uses finite scanners, with no TypeScript parser or regex runtime. The Go scanner and upstream's two fixed regexes choose the same spans: a quote opens a string, a backslash skips the following character, and the first unescaped matching quote closes it. Unmatched openers remain unchanged unless a later opener matches. Both single and double quote preferences are covered. Quote counts include escaped quotes. When the original enclosing quote wins, the original spelling, including unnecessary escapes, is retained.
+SCOPE stage1/cohere/cssnumbers credited=true: Numeric adjustment and units; arbitrary printNumber inputs and full CSS layout excluded. | GAPS: `numbers.ts` ports the `adjustNumbers` dependency chain from `cohere/internal/format/css/print_misc.go`, with the canonical unit list from `css_units.go` (css-units-list 2.1.0). Its public composition `formatValue` is `adjustNumbers(adjustStrings(value, single))`, the media-value/type printer's actual operation. The quote implementation is imported from the previous slice; it is not copied into the new production code.
+SCOPE stage1/cohere/json credited=true: Default-options JSON parser/stringify; shared JS/doc functions are partial and conservatively receive no whole-function credit. | GAPS: The formatter beside this file is Adamic `.ts`, compiled by stage 0 to native code and also run as source on Node. It ports `estree/parse_json.go` and JSON's reachable paths through `print_json.go`, `print_object.go`, `print_array.go`, `print_expressions.go`, `utility_text.go` and the shared document printer. `main.ts` formats one file to stdout; `--cases` is the escaped batch test driver. Trees and documents use child indexes in tables so their ownership is acyclic.
+SCOPE stage1/cohere/lint credited=true: Five syntax-only rules; checker, other rules and general configuration/fix integration excluded. | GAPS: Observed at the current branch baseline: `gaps/1_nested_constructor.ts` prints `1` on Node. Stage 0 returns `lower.Refused` at line 7, column 16:
+EXTERNAL stage1/typescript/scanner: This slice ports the ordinary skip-trivia scanner from `cohere/TypeScript/tsc/internal/scanner/scanner.go`, pinned by the submodule at `8d550c837c90bd1805b047b7eeccc2baac2d5e7a`. The Go scanner, not this port, determines the expected answers. Only files in this directory change. (outside cohere/internal denominator)
+EXTERNAL stage1/typescript/parser: The port follows `cohere/TypeScript/tsc/internal/parser/parser.go`, using the existing Adamic scanner. Node runs these same TS files; an independently built Go overlay runs the unmodified typescript-go parser. (outside cohere/internal denominator)

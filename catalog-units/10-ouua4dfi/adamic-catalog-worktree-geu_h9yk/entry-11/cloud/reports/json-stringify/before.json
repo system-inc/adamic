@@ -1,0 +1,108 @@
+{
+  "test262": "/workspace/scratch/test262",
+  "commit": "5992dc3b60faf62a48fd6be8a40ae9d9a8c84d81",
+  "filters": [
+    {
+      "path": "built-ins/JSON/stringify",
+      "pass": 0,
+      "fail": 0,
+      "refused": 36,
+      "crashed": 0,
+      "skipped": 30,
+      "total": 66,
+      "directories": [
+        {
+          "path": "built-ins/JSON/stringify",
+          "pass": 0,
+          "fail": 0,
+          "refused": 36,
+          "crashed": 0,
+          "skipped": 30,
+          "total": 66
+        }
+      ],
+      "refusalReasons": [
+        {
+          "reason": "not yet: reading JSON",
+          "count": 9
+        },
+        {
+          "reason": "error TS2769: No overload matches this call.",
+          "count": 7
+        },
+        {
+          "reason": "error TS7006: Parameter '…' implicitly has an '…' type.",
+          "count": 7
+        },
+        {
+          "reason": "refuses var",
+          "count": 5
+        },
+        {
+          "reason": "error TS2339: Property '…' does not exist on type '…'.",
+          "count": 3
+        },
+        {
+          "reason": "error TS7005: Variable '…' implicitly has an '…' type.",
+          "count": 2
+        },
+        {
+          "reason": "error TS2683: '…' implicitly has type '…' because it does not have a type annotation.",
+          "count": 1
+        },
+        {
+          "reason": "error TS7053: Element implicitly has an '…' type because expression of type '…' can'…'{ '…': string; '…': string; '…': string; '…': string; '…': string; '…': string; '…': string; '…': string; '…': string; '…': string; '…': string; '…': string; '…': string; '…': string; '…': string; '…': string; '…': string; '…': string; '…': string; '…': ...'.",
+          "count": 1
+        },
+        {
+          "reason": "not yet: a function expression (an arrow function captures this as written)",
+          "count": 1
+        }
+      ],
+      "skipReasons": [
+        {
+          "reason": "feature Proxy",
+          "count": 8
+        },
+        {
+          "reason": "feature BigInt",
+          "count": 5
+        },
+        {
+          "reason": "getters",
+          "count": 5
+        },
+        {
+          "reason": "harness include propertyHelper.js",
+          "count": 4
+        },
+        {
+          "reason": "feature Symbol",
+          "count": 3
+        },
+        {
+          "reason": "feature Reflect.construct",
+          "count": 1
+        },
+        {
+          "reason": "features BigInt, cross-realm",
+          "count": 1
+        },
+        {
+          "reason": "features Proxy, Symbol",
+          "count": 1
+        },
+        {
+          "reason": "features Proxy, cross-realm",
+          "count": 1
+        },
+        {
+          "reason": "harness include isConstructor.js",
+          "count": 1
+        }
+      ],
+      "crashReasons": [],
+      "failReasons": []
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+// Positive pin for the former optional-string-index lowering gap.
+function first(word: string | undefined): string {
+	return word?.[0] ?? 'none';
+}
+console.log(first(undefined));
+console.log(first(''));
+console.log(first('first'));

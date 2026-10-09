@@ -1,0 +1,112 @@
+import type { Weak } from 'adamic';
+
+// A doubly linked list. Either link alone can close a cycle (a.next = a), and the types can't tell
+// next from prev, so both are Weak, and the nodes are owned by an array, which holds them strongly.
+// Nothing here is read after it's freed, so native and Node agree.
+interface ListNode {
+	readonly label: string;
+	prev: Weak<ListNode>;
+	next: Weak<ListNode>;
+}
+
+class List {
+	private readonly owned: ListNode[] = [];
+	private head: Weak<ListNode> = undefined;
+	private tail: Weak<ListNode> = undefined;
+
+	append(label: string): ListNode {
+		const node: ListNode = { label: `${label}`, prev: this.tail, next: undefined };
+		const last = this.tail;
+		if (last === undefined) {
+			this.head = node;
+		} else {
+			last.next = node;
+		}
+		this.tail = node;
+		this.owned.push(node);
+		return node;
+	}
+
+	insertAfter(before: ListNode, label: string): ListNode {
+		const after = before.next;
+		const node: ListNode = { label: label.repeat(1), prev: before, next: after };
+		before.next = node;
+		if (after === undefined) {
+			this.tail = node;
+		} else {
+			after.prev = node;
+		}
+		this.owned.push(node);
+		return node;
+	}
+
+	remove(node: ListNode): void {
+		const before = node.prev;
+		const after = node.next;
+		if (before === undefined) {
+			this.head = after;
+		} else {
+			before.next = after;
+		}
+		if (after === undefined) {
+			this.tail = before;
+		} else {
+			after.prev = before;
+		}
+		node.prev = undefined;
+		node.next = undefined;
+		// Its last strong holder goes: the node is freed, and nothing weak points at it any more.
+		this.owned.splice(this.owned.indexOf(node), 1);
+	}
+
+	forward(): string {
+		const labels: string[] = [];
+		let at = this.head;
+		while (at !== undefined) {
+			labels.push(at.label);
+			at = at.next;
+		}
+		return labels.join(' > ');
+	}
+
+	backward(): string {
+		const labels: string[] = [];
+		let at = this.tail;
+		while (at !== undefined) {
+			labels.push(at.label);
+			at = at.prev;
+		}
+		return labels.join(' < ');
+	}
+
+	size(): number {
+		return this.owned.length;
+	}
+}
+
+const list = new List();
+const one = list.append('one');
+list.append('two');
+const three = list.append('three');
+console.log(`${list.forward()} | ${list.backward()} | ${list.size()}`);
+const between = list.insertAfter(one, 'one-and-a-half');
+list.insertAfter(three, 'four');
+console.log(`${list.forward()} | ${list.backward()} | ${list.size()}`);
+list.remove(between);
+list.remove(one);
+console.log(`${list.forward()} | ${list.backward()} | ${list.size()}`);
+console.log(`${three.prev?.label ?? '-'} ${three.next?.label ?? '-'} ${one.next === undefined}`);
+
+// Many made and removed, in a function, so every node is freed by the time it returns.
+function churn(count: number): string {
+	const made = new List();
+	const nodes = Array.from({ length: count }, (_, index) => made.append(`n${index}`));
+	for (let index = 0; index < nodes.length; index += 2) {
+		const node = nodes[index];
+		if (node !== undefined) {
+			made.remove(node);
+		}
+	}
+	return `${made.size()}: ${made.forward()}`;
+}
+console.log(churn(9));

@@ -1,0 +1,23 @@
+// A field the checker narrowed, emptied by a call that reuses its object in place: box is moved
+// into emptied, unique, so its own memory is written with inner undefined, and the read after the
+// call must see that and throw JavaScript's TypeError, not read the leaf the object held before.
+interface Leaf {
+	readonly kind: 'leaf';
+	readonly value: number;
+}
+interface Box {
+	readonly label: string;
+	readonly inner: Leaf | undefined;
+}
+function emptied(box: Box): Box {
+	return { ...box, inner: undefined };
+}
+let box: Box = { label: `box ${1}`, inner: { kind: 'leaf', value: 1 } };
+function clear(): void {
+	box = emptied(box);
+}
+if (box.inner !== undefined) {
+	console.log(`${box.inner.value} ${box.label}`);
+	clear();
+	console.log(`${box.inner.value}`);
+}

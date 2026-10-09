@@ -1,0 +1,32 @@
+function count(value: number): number {
+	return arguments.length + value * 0;
+}
+const expression = function (value: number): number {
+	return arguments.length + value * 0;
+};
+console.log([1, 2].map(count).join(','));
+console.log([1, 2].map(expression).join(','));
+function visit(value: number): boolean {
+	return arguments.length === 3 && value > 0;
+}
+console.log(`${[1, 2].every(visit)} ${[1, 2].some(visit)}`);
+function reduce(memo: number, value: number): number {
+	return memo + arguments.length + value * 0;
+}
+console.log(`${[1, 2].reduce(reduce, 0)}`);
+function compare(left: number, right: number): number {
+	console.log(`${arguments.length}`);
+	return left - right;
+}
+console.log([2, 1].sort(compare).join(','));
+const comparator = compare;
+console.log([2, 1].sort(comparator).join(','));
+function collection(value: number): void {
+	console.log(`${arguments.length}:${value}`);
+}
+new Map<string, number>([['x', 1]]).forEach(collection);
+new Set<number>([2]).forEach(collection);
+const made = Array.from({ length: 2 }, function (_value: undefined, index: number): number {
+	return arguments.length + index;
+});
+console.log(made.join(','));

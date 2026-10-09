@@ -1,0 +1,13 @@
+interface Diagnostic { readonly message: string; }
+function format(value: string | number | boolean | Diagnostic | undefined): string {
+    if (value === undefined) return "missing";
+    if (typeof value === "object") return value.message;
+    return `${value}`;
+}
+const read = format;
+console.log(`${read(undefined)}:${read(`text${1}`)}:${read(23)}:${read(false)}:${read(true)}:${read({ message: `diagnostic${2}` })}`);
+
+const show = (value: string | number): string => `${value}`;
+console.log(`${show("arrow")}:${show(42)}`);
+const made = Array.from({ length: 2 }, (value: string | number | undefined, index: number) => value === undefined ? index : -1);
+console.log(made.join(","));

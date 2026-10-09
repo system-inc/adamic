@@ -1,0 +1,6 @@
+function reader(): number { return arguments.length; }
+function unrelated(): string { return 'plain'; }
+const run: () => string = unrelated;
+console.log(run());
+const counted: (value: number) => number = reader;
+console.log(`${counted(9)}`);

@@ -1,0 +1,46 @@
+function initializer(value: number = arguments.length): string {
+	return `${arguments.length}:${value}`;
+}
+console.log(initializer());
+console.log(initializer(undefined));
+console.log(initializer(9));
+const initialized = initializer;
+console.log(initialized());
+console.log(initialized(undefined));
+function captured(value?: number): () => number {
+	const count = arguments.length;
+	return () => count + (value ?? 0);
+}
+console.log(`${captured()()} ${captured(undefined)()} ${captured(7)()}`);
+function maybe(...items: (number | undefined)[]): string {
+	return `${arguments.length}:${items.join(',')}`;
+}
+console.log(maybe(undefined, 2, undefined));
+const maybeValue = maybe;
+console.log(maybeValue(undefined, 2, undefined));
+class Constructed {
+	readonly count: number;
+	constructor(value?: number) {
+		this.count = arguments.length + (value ?? 0);
+	}
+}
+console.log(`${new Constructed().count} ${new Constructed(undefined).count} ${new Constructed(7).count}`);
+class Derived extends Constructed {}
+console.log(`${new Derived().count} ${new Derived(undefined).count} ${new Derived(7).count}`);
+class Accessors {
+	get count(): number {
+		return arguments.length;
+	}
+	set count(value: number) {
+		console.log(`${arguments.length}:${value}`);
+	}
+}
+const accessors = new Accessors();
+console.log(`${accessors.count}`);
+accessors.count = 9;
+const literal = {
+	get literalCount(): number {
+		return arguments.length;
+	},
+};
+console.log(`${literal.literalCount}`);

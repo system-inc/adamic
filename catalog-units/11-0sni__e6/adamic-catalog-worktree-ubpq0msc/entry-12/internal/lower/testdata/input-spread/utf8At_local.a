@@ -1,0 +1,5 @@
+function utf8At(text: string): string {
+	return text;
+}
+const args: [string] = ['local'];
+console.log(utf8At(...args));

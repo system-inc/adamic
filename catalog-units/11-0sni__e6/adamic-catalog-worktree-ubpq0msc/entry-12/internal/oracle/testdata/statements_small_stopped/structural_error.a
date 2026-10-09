@@ -1,0 +1,6 @@
+const fake: Error = { name: 'Error', message: 'fake', stack: '' };
+try {
+    throw fake;
+} catch (error) {
+    console.log(`${error instanceof Error}`);
+}

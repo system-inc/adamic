@@ -1,0 +1,16 @@
+=== RUN   TestMarkdownUnicodeWidths
+=== RUN   TestMarkdownUnicodeWidths/East_Asian_width
+    width_test.go:136: caught by observable width output
+=== RUN   TestMarkdownUnicodeWidths/narrow_emoji
+    width_test.go:136: caught by observable width output
+=== RUN   TestMarkdownUnicodeWidths/ASCII_DEL_shortcut
+    width_test.go:136: caught by observable width output
+=== NAME  TestMarkdownUnicodeWidths
+    width_test.go:161: regeneration formatter: /tmp/adamic-gate/adamic-markdown-build-788126089/cohere
+    width_test.go:166: 1216287 widths: 928 repository files, source lines, every Unicode scalar and generated sequences
+--- PASS: TestMarkdownUnicodeWidths (144.04s)
+    --- PASS: TestMarkdownUnicodeWidths/East_Asian_width (24.73s)
+    --- PASS: TestMarkdownUnicodeWidths/narrow_emoji (24.75s)
+    --- PASS: TestMarkdownUnicodeWidths/ASCII_DEL_shortcut (25.04s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/markdownblocks	144.054s

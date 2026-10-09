@@ -1,0 +1,7 @@
+interface Optional { text?: string; }
+function write(value: Optional): void {
+    console.log(value.text ?? 'absent');
+    value.text = `created${1}`;
+    console.log(value.text);
+}
+write({});

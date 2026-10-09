@@ -1,0 +1,20 @@
+function arrayToMultiMap<K, V>(array: readonly V[], makeKey: (value: V) => K): Map<K, V[]>;
+function arrayToMultiMap<K, V, U>(array: readonly V[], makeKey: (value: V) => K, makeValue: (value: V) => V | U = (value) => value): Map<K, (V | U)[]> {
+    const result = new Map<K, (V | U)[]>();
+    for (const value of array) {
+        const key = makeKey(value);
+        let values = result.get(key);
+        if (values === undefined) {
+            const fresh: (V | U)[] = [];
+            values = fresh;
+            result.set(key, fresh);
+        }
+        values.push(makeValue(value));
+    }
+    return result;
+}
+const mapped = arrayToMultiMap(['aa', 'ab', 'ba'], (value) => value.slice(0, 1));
+const a = mapped.get('a');
+const b = mapped.get('b');
+console.log(a === undefined ? 'missing' : a.join(','));
+console.log(b === undefined ? 'missing' : b.join(','));

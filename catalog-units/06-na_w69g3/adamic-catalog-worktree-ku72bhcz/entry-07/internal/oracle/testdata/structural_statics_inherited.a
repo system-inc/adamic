@@ -1,0 +1,20 @@
+interface Reader { read(value: string): string; }
+class Base {
+    static prefix = 'base static'; readonly prefix: string = 'base instance';
+    static read(value: string): string { return this.prefix + value; }
+    read(value: string): string { return this.prefix + value; }
+}
+class Child extends Base {
+    static override prefix = 'child static';
+    override readonly prefix: string = 'child instance';
+}
+class Override extends Child {
+    static override read(value: string): string { return 'override static' + value; }
+    override read(value: string): string { return 'override instance' + value; }
+}
+function report(reader: Reader): string { return reader.read('-argument'); }
+function virtual(reader: typeof Base): string { return reader.read('-virtual'); }
+console.log(report(Base)); console.log(report(new Base()));
+console.log(report(Child)); console.log(report(new Child()));
+console.log(report(Override)); console.log(report(new Override()));
+console.log(virtual(Child)); console.log(virtual(Override));

@@ -1,0 +1,4 @@
+type Path = string & { __pathBrand: void };
+type PathPathComponents = Path[] & { __pathComponensBrand: void };
+function read(values: Readonly<PathPathComponents>, index: number): Path | undefined { return values[index]; }
+console.log('witness');

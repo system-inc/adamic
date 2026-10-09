@@ -1,0 +1,24 @@
+// A global lent to a borrowed parameter, then moved and reused by a call the callee makes: the
+// caller counts the global it passes, so the object is shared when clear moves it, and the spread
+// copies. Lent uncounted, it would be reused in place and freed under held.
+interface Leaf {
+	readonly kind: 'leaf';
+	readonly value: number;
+}
+interface Box {
+	readonly label: string;
+	readonly inner: Leaf | undefined;
+}
+function emptied(box: Box): Box {
+	return { ...box, inner: undefined, label: `${box.label}, emptied` };
+}
+let box: Box = { label: `box ${1}`, inner: { kind: 'leaf', value: 1 } };
+function clear(): void {
+	box = emptied(box);
+}
+function show(held: Box): string {
+	clear();
+	return `${held.label}: ${held.inner === undefined ? 'none' : `${held.inner.value}`}`;
+}
+console.log(show(box));
+console.log(`${box.label} ${box.inner === undefined ? 'none' : 'some'}`);

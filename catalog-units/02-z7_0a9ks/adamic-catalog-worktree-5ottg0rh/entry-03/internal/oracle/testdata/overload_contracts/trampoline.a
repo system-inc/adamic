@@ -1,0 +1,6 @@
+function createBinaryExpressionTrampoline<S, R>(callback: (node: string, state: S | undefined) => R): (node: string) => R;
+function createBinaryExpressionTrampoline<Outer, S, R>(callback: (node: string, state: S | undefined) => R): (node: string, outer: Outer) => R {
+    return (node, outer) => callback(node, undefined);
+}
+const walk = createBinaryExpressionTrampoline((node, state) => node);
+console.log(walk('node'));

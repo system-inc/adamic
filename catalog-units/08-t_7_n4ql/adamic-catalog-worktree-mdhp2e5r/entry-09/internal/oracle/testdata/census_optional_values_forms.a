@@ -1,0 +1,54 @@
+// Function-value forms and call-time defaults, with observable left-to-right effects.
+let serial = 0;
+function next(): number { serial++; console.log(`default:${serial}`); return serial; }
+const arrow = (x?: number): number => x ?? 10;
+const expression = function (x?: number): number { return x ?? 20; };
+console.log(`${arrow()}`);
+console.log(`${arrow(0)}`);
+console.log(`${expression()}`);
+console.log(`${expression(4)}`);
+const defaults = (x = next(), y = x + next()): number => x + y;
+const noArguments: () => number = defaults;
+console.log(`${noArguments()}`);
+console.log(`${defaults(undefined, undefined)}`);
+console.log(`${defaults(5)}`);
+console.log(`${defaults(0, 0)}`);
+const functionDefault = function (x = next(), y = x + next()): number { return x + y; };
+const stored: { run(x?: number, y?: number): number } = { run: functionDefault };
+console.log(`${stored.run()}`);
+console.log(`${stored.run(9, 0)}`);
+const object = { run(x = next(), y = x + next()): number { return x + y; } };
+console.log(`${object.run()}`);
+const required: (x: number) => number = arrow;
+console.log(`${required(6)}`);
+function declared(x = next(), y = x + next()): number { return x + y; }
+const declaredValue: () => number = declared;
+console.log(`${declaredValue()}`);
+const optionalBoolean = (flag?: boolean): string => `${flag}`;
+console.log(optionalBoolean());
+console.log(optionalBoolean(false));
+console.log(optionalBoolean(true));
+const booleanDefault = function (flag = true): string { return `${flag}`; };
+console.log(booleanDefault());
+console.log(booleanDefault(false));
+const maybeReturn = (flag: boolean): boolean | undefined => flag ? true : undefined;
+console.log(`${maybeReturn(false)}`);
+console.log(`${maybeReturn(true)}`);
+const from = Array.from({ length: 2 }, (value: boolean | undefined, index: number): string => `${value}:${index}`);
+console.log(from.join(','));
+const mapped = [1, 2].map((value: number, index: number, all: number[], extra = next()): number => value + index + all.length + extra);
+console.log(mapped.join(','));
+function greet(name: string, greeting?: string): string { return `${greeting ?? 'hi'} ${name}`; }
+const greeting: (name: string) => string = greet;
+console.log(greeting('Ada'));
+
+const stringDefaults = function (first = 'first', second = first + ':second'): string { return `${first}/${second}`; };
+const stringValue: () => string = stringDefaults;
+console.log(stringValue());
+console.log(stringDefaults(undefined, 'given'));
+class ValueFields { readonly run = (x = next()): number => x; }
+const values = new ValueFields();
+console.log(`${values.run()}`);
+console.log(`${values.run(0)}`);
+
+console.log(Array.from({ length: 2 }, (value: number = next(), index: number): number => value + index).join(','));

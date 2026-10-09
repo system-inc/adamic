@@ -1,0 +1,5 @@
+interface Reader { read(value: string): string; }
+class Statics { static unrelated = 'present'; }
+class ReaderImpl { readonly prefix = 'instance'; read(value: string): string { return this.prefix + value; } }
+function report(reader: Reader): string { return reader.read('-' + Statics.unrelated); }
+console.log(report(new ReaderImpl()));

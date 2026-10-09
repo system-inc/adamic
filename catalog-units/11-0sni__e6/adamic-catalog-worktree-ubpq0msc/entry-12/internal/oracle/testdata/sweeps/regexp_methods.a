@@ -1,0 +1,56 @@
+function captures(match: RegExpMatchArray | null): string {
+ if (match === null) return 'null';
+ return match.map(value => value ?? 'undefined').join('|');
+}
+function indexed(match: RegExpExecArray | null): string {
+ if (match === null) return 'null';
+ return `${match.index}:${match.map(value => value ?? 'undefined').join('|')}`;
+}
+const regexes = [/a/, /a/g, /a/y, /a/gy, /(?:)/g, /(?:)/gu, /./g, /./gu,
+ /(a)|(b)/g, /(a?)*b/g, /(a|(b))+/g, /(?<word>a)(b)?/g,
+ /(?<=([ab]+)([bc]+))$/g, /(?=(a+))a*b\1/g, /(a)\1/g,
+ /^.$/gms, /\b\w+\b/gi, /\b\w+\b/giu, /[^a]+?/g,
+ /[\q{ab|a}]/gv, /[[a-z]&&[^aeiou]]+/gv, /\p{RGI_Emoji}/gv,
+ /\p{Script_Extensions=Greek}/gu, /\P{Lowercase_Letter}/giu,
+ /\P{Lowercase_Letter}/giv];
+const inputs = ['', 'a', 'aba', 'abc', 'a b\nc', 'Kſ', '🌍a🌍', '\ud800a', '͂a', 'aab'];
+const replacements = ['', '-', '$$', '$&', '$`', "$'", '$1', '$2', '$01', '$10', '$99', '$0', '$<word>', '$<missing>', '$<word', '$$:$&:$1:$<word>'];
+let probes = 0;
+for (const regex of regexes) {
+ for (const input of inputs) {
+  for (const last of [0, 1, 4, -1, NaN, Infinity]) {
+   regex.lastIndex = last;
+   console.log(`exec:${indexed(regex.exec(input))}:${regex.lastIndex}`);
+   regex.lastIndex = last;
+   console.log(`test:${regex.test(input)}:${regex.lastIndex}`);
+   regex.lastIndex = last;
+   console.log(`match:${captures(input.match(regex))}:${regex.lastIndex}`);
+   regex.lastIndex = last;
+   console.log(`search:${input.search(regex)}:${regex.lastIndex}`);
+   if (regex.global) {
+    regex.lastIndex = last;
+    let joined = '';
+    for (const match of input.matchAll(regex)) joined += `${indexed(match)};`;
+    console.log(`matchAll:${joined}:${regex.lastIndex}`);
+    probes++;
+   }
+   probes += 4;
+   for (const replacement of replacements) {
+    regex.lastIndex = last;
+    console.log(`replace:${input.replace(regex, replacement)}:${regex.lastIndex}`);
+    probes++;
+    if (regex.global) {
+     regex.lastIndex = last;
+     console.log(`replaceAll:${input.replaceAll(regex, replacement)}:${regex.lastIndex}`);
+     probes++;
+    }
+   }
+   for (const limit of [0, 1, 3, 20, -1, NaN, Infinity]) {
+    regex.lastIndex = last;
+    console.log(`split:${input.split(regex, limit).map(value => value ?? 'undefined').join('|')}:${regex.lastIndex}`);
+    probes++;
+   }
+  }
+ }
+}
+console.log(`wrapper probes:${probes}`);

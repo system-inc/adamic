@@ -1,0 +1,101 @@
+
+Top 20 inclusive instructions (same-name inline records collapsed):
+17,088,164,796 100.00% main
+17,071,046,175  99.90% adamic_function_56_run
+16,370,825,983  95.80% adamic_function_173_Linter_run
+14,325,605,657  83.83% adamic_function_136_Statements_statement'2
+10,296,613,609  60.26% adamic_function_186_Linter_walk
+ 9,057,125,160  53.00% adamic_function_193_Linter_additional
+ 8,545,179,484  50.01% adamic_function_118_Statements_block'2
+ 6,030,939,723  35.29% adamic_function_113_Parser_file
+ 6,029,811,943  35.29% adamic_function_136_Statements_statement
+ 5,251,502,863  30.73% adamic_function_131_Statements_functionDeclaration
+ 5,053,514,538  29.57% adamic_function_118_Statements_block
+ 4,648,091,520  27.20% adamic_function_131_Statements_functionDeclaration'2
+ 3,907,606,098  22.87% adamic_function_32_Scanner_scan
+ 3,420,426,055  20.02% adamic_function_186_Linter_walk'2
+ 3,318,903,543  19.42% adamic_function_109_Parser_assignment
+ 3,116,967,609  18.24% adamic_function_59_Parser_next
+ 2,989,933,056  17.50% adamic_function_108_Parser_binary
+ 2,930,928,530  17.15% adamic_function_109_Parser_assignment'2
+ 2,916,003,861  17.06% adamic_release
+ 2,771,389,332  16.22% adamic_function_107_Parser_unary
+
+Top 20 self instructions (same-name inline records collapsed):
+ 2,768,078,112  16.20% adamic_release
+ 1,596,825,853   9.34% adamic_string_equal
+ 1,014,865,126   5.94% adamic_string_locate
+   994,672,556   5.82% adamic_function_193_Linter_additional
+   994,381,663   5.82% adamic_function_206_Linter_scanWarnings
+   795,854,329   4.66% adamic_function_21_Scanner_code
+   689,285,277   4.03% adamic_retain
+   601,635,118   3.52% adamic_function_32_Scanner_scan
+   583,502,524   3.41% find
+   534,582,963   3.13% adamic_string_char_code
+   425,415,327   2.49% adamic_function_60_Parser_node
+   420,950,765   2.46% adamic_function_203_Linter_commentAnchors'2
+   401,908,110   2.35% adamic_function_175_Linter_enabled
+   370,804,068   2.17% usable
+   310,215,576   1.82% adamic_array_filled
+   243,923,322   1.43% adamic_function_4_isIdentifierStart
+   230,890,799   1.35% adamic_function_27_Scanner_identifier
+   225,738,390   1.32% decode
+   214,181,226   1.25% adamic_function_186_Linter_walk'2
+   173,623,244   1.02% unit_at
+
+{
+  "findings": 8215,
+  "rounds": {
+    "native": [
+      1.8202373980020639,
+      1.8526371029984148,
+      1.9041557740019925,
+      1.7933878259973426,
+      1.747382033001486
+    ],
+    "Go": [
+      0.5354028789988661,
+      0.5315467559994431,
+      0.48007794699879014,
+      0.512620279998373,
+      0.5314028729990241
+    ],
+    "Node": [
+      1.4111714069986192,
+      1.4054816440002469,
+      1.3334417400001257,
+      1.338108015999751,
+      1.3893087510004989
+    ]
+  },
+  "best": {
+    "native": {
+      "seconds": 1.747382033001486,
+      "findings_per_second": 4701.318798550914
+    },
+    "Go": {
+      "seconds": 0.48007794699879014,
+      "findings_per_second": 17111.804554564766
+    },
+    "Node": {
+      "seconds": 1.3334417400001257,
+      "findings_per_second": 6160.7491002938195
+    }
+  },
+  "machine": {
+    "system": "Linux",
+    "node": "6d3a2813751b",
+    "release": "6.18.44",
+    "version": "#1 SMP Sat Sep 26 20:02:31 UTC 2026",
+    "machine": "x86_64",
+    "processor": ""
+  },
+  "cpu": "model name\t: AMD EPYC 9V74 80-Core Processor",
+  "nproc": 5,
+  "cpu_max": "400000 100000",
+  "load_before": "0.01 0.12 0.35 1/178 133555",
+  "load_after": "0.58 0.24 0.39 1/178 133637",
+  "allocation_counts": "adamic: counts: allocations 4335169 frees 4335169 retains 86482651 releases 84579558 peak 738338 regions 0",
+  "instructions": 17088352975,
+  "instructions_per_finding": 2080140.349969568
+}

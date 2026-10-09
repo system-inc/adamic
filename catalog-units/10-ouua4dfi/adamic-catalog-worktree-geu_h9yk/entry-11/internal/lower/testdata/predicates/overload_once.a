@@ -1,0 +1,4 @@
+function lie(value: number | string): value is number;
+function lie(value: number | string): boolean { console.log("called"); return true; }
+function input(): number | string { console.log("argument"); return "text"; }
+console.log(`${lie(input())}`);

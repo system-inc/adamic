@@ -1,0 +1,15 @@
+// Literal and arrow-field methods through the same optional System-style view.
+interface Reader { read(code?: number): string; }
+function use(reader: Reader): void {
+    console.log(reader.read());
+    console.log(reader.read(0));
+}
+const literal = { label: 'literal', read(code = 8): string { return `${this.label}:${code}`; } };
+use(literal);
+use({ read: (code = 9): string => `arrow:${code}` });
+const view: { readonly label: string; read: (code?: number) => string } = literal;
+console.log(view.read());
+const own = { value: 1, read(): number { return this.value; } };
+const propertyView: { readonly value: number; read: () => number } = own;
+const methodView: { readonly value: number; read(): number } = own;
+console.log(`${propertyView.read()}:${methodView.read()}`);

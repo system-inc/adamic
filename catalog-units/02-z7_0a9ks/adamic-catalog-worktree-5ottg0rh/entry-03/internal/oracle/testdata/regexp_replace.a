@@ -1,0 +1,13 @@
+// Every replacement token, including $1 through $99 and two-digit numbers past the group count.
+let tokens = "$$:$&:$`:$':$<word>:$<missing>:$<word:$0:";
+for (let number = 1; number <= 99; number += 1) {
+	tokens += `$${number}|`;
+}
+console.log('ab-zz'.replace(/(?<word>a)(b)/, tokens));
+console.log('ab-ab'.replaceAll(/(?<word>a)(b)/g, tokens));
+console.log('ab-ab'.replace(/(?<word>a)(b)/g, tokens));
+console.log('abcdefghijkl'.replace(/(a)(b)(c)(d)(e)(f)(g)(h)(i)(j)(k)(l)/, '$10|$12|$13|$01|$00|$99|$$'));
+console.log('a'.replace(/(a)(b)?/, '[$1][$2][$3]'));
+console.log('a'.replace(/(a)(b*)/, '[$1][$2]'));
+console.log('a'.replaceAll(/(a)(b)?/g, '[$1][$2]'));
+console.log('end'.replace(/d/, '$'));

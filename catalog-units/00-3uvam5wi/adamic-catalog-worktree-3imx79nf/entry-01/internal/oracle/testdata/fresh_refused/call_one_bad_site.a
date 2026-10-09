@@ -1,0 +1,16 @@
+// A helper whose push is fine at one call site and closes a cycle at the other.
+interface Node {
+	readonly kind: string;
+	readonly nodes: Node[];
+}
+function addChild(parent: Node, child: Node): void {
+	parent.nodes.push(child); // closes the cycle
+}
+function run(n: number): number {
+	const node: Node = { kind: `n${n}`, nodes: [] };
+	addChild(node, { kind: `fresh${n}`, nodes: [] });
+	const other: Node = { kind: `o${n}`, nodes: [node] };
+	addChild(node, other);
+	return node.nodes.length;
+}
+console.log(`${run(1)}`);

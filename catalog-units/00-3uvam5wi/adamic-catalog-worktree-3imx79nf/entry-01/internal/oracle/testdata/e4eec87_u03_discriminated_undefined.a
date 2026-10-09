@@ -1,0 +1,21 @@
+interface Counted {
+	readonly kind: 'counted';
+	readonly value: number | undefined;
+}
+interface Named {
+	readonly kind: 'named';
+	readonly value: string;
+}
+type Entry = Counted | Named;
+function describe(entry: Entry): string {
+	if (entry.kind === 'counted') {
+		return `counted ${entry.value} ${entry.value === undefined}`;
+	}
+	return `named ${entry.value}`;
+}
+const entries: Entry[] = [{ kind: 'counted', value: undefined }, { kind: 'counted', value: 4 }, { kind: 'named', value: 'n' }];
+for (const entry of entries) {
+	console.log(describe(entry));
+}
+const single: Entry = { kind: 'counted', value: undefined };
+console.log(describe(single));

@@ -1,0 +1,9 @@
+interface Leaf { kind: string; }
+interface Node { readonly parent: Leaf; }
+function make(n: number): Node { return { parent: { kind: `capture${n}` } }; }
+function visit(node: Node): () => string {
+ const kind = node.parent.kind;
+ return () => kind;
+}
+const callback = visit(make(1));
+console.log(callback());

@@ -1,0 +1,25 @@
+class Box {
+    static readonly label = "box";
+    readonly value: number;
+    constructor(value: number) {
+        this.value = value;
+        console.log(`constructed ${value}`);
+    }
+}
+let Cached: typeof Box | undefined = undefined;
+let initializations = 0;
+function initialize(): typeof Box {
+    initializations++;
+    console.log(`initialize ${initializations}`);
+    return Box;
+}
+function argument(value: number): number {
+    console.log(`argument ${value}`);
+    return value;
+}
+const first = new (Cached || (Cached = initialize()))(argument(1));
+const second = new (Cached || (Cached = initialize()))(argument(2));
+console.log(`${first.value} ${second.value} ${initializations}`);
+let Present: typeof Box = Box;
+const third = new (Present || initialize())(argument(3));
+console.log(`${third.value} ${initializations}`);

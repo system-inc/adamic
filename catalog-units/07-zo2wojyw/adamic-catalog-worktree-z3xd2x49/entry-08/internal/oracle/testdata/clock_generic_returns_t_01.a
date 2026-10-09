@@ -1,0 +1,11 @@
+type EqualsToken = "=";
+interface Identifier { readonly text: string; }
+interface GeneratedIdentifier extends Identifier { readonly generated: boolean; }
+interface AssignmentExpression<T> { readonly token: T; readonly left: Identifier; readonly children: readonly string[]; }
+let calls = 0;
+function assignment(present: boolean): (AssignmentExpression<EqualsToken> & { readonly left: GeneratedIdentifier }) | undefined {
+    calls++;
+    if (!present) return undefined;
+    return { token: "=", left: { text: ["gen", "erated"].join(""), generated: true }, children: ["rhs"] };
+}
+console.log(`${typeof assignment(true)} ${typeof assignment(false)} ${calls}`);

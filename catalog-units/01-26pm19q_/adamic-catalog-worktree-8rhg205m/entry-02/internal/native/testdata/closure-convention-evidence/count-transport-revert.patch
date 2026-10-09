@@ -1,0 +1,156 @@
+diff --git a/internal/ir/argument_slots.go b/internal/ir/argument_slots.go
+index f59aa6f6..b0bc9864 100644
+--- a/internal/ir/argument_slots.go
++++ b/internal/ir/argument_slots.go
+@@ -106,7 +106,16 @@ func (p *Program) ClosureArgumentLayout(call CallClosure) ArgumentLayout {
+ }
+ 
+ // PackedCountNeeded is a callee observation, not a property of all function values.
++// Counterfactual measurement tree: counted transport is reverted. Reject an
++// observing program rather than emitting a mismatched or silently wrong ABI.
+ func (p *Program) PackedCountNeeded(function int) bool {
++	if p.baselineCountObservation(function) {
++		panic("counterfactual baseline: counted convention reverted")
++	}
++	return false
++}
++
++func (p *Program) baselineCountObservation(function int) bool {
+ 	f := p.Functions[function]
+ 	if f.ReadsArguments || f.RestElement != 0 && (f.Closure || f.Receiver) {
+ 		return true
+diff --git a/internal/native/runtime/adamic.h b/internal/native/runtime/adamic.h
+index 6d053870..1aa81c9a 100644
+--- a/internal/native/runtime/adamic.h
++++ b/internal/native/runtime/adamic.h
+@@ -101,17 +101,9 @@ adamic_cell *adamic_cell_new(adamic_value value, bool references);
+ typedef struct adamic_closure adamic_closure;
+ typedef adamic_value adamic_code_function(adamic_closure *self, adamic_value *arguments);
+ typedef adamic_code_function *adamic_code;
+-typedef adamic_value adamic_counted_code_function(adamic_closure *self, adamic_value *arguments, size_t argument_count);
+-typedef adamic_counted_code_function *adamic_counted_code;
+ struct adamic_closure {
+ 	adamic_heap heap;
+-#ifdef ADAMIC_CLOSURE_CONVENTION
+- union { adamic_code code; adamic_counted_code counted_code; };
+- bool counted;
+-
+-#else
+  adamic_code code;
+-#endif
+ #ifdef ADAMIC_CLOSURE_RECEIVERS
+  bool receiver;
+ #endif
+@@ -126,20 +118,8 @@ struct adamic_closure {
+ 
+ // adamic_closure_new makes a closure of count cells, for the caller to fill with references it gives.
+ adamic_closure *adamic_closure_new(adamic_code code, size_t count);
+-#ifdef ADAMIC_CLOSURE_CONVENTION
+-static inline adamic_closure *adamic_counted_closure_new(adamic_counted_code code, size_t count) {
+- adamic_closure *closure = adamic_closure_new(NULL, count);
+- closure->counted = true;
+- closure->counted_code = code;
+- return closure;
+-}
+-#endif
+ static inline adamic_value adamic_closure_call(adamic_closure *closure, adamic_value *arguments, size_t argument_count) {
+-#ifdef ADAMIC_CLOSURE_CONVENTION
+- if (closure->counted) { return closure->counted_code(closure, arguments, argument_count); }
+-#else
+  (void)argument_count;
+-#endif
+  return closure->code(closure, arguments);
+ }
+ #ifdef ADAMIC_CLOSURE_RECEIVERS
+@@ -155,9 +135,6 @@ static inline adamic_value adamic_closure_receiver_call(adamic_closure *closure,
+ #ifdef ADAMIC_CANONICAL_CLOSURES
+ // Returns an owned canonical value; the frame cache holds no count on it.
+ adamic_closure *adamic_closure_canonical(adamic_cell *identity, adamic_code code, size_t count, adamic_cell *const cells[]);
+-#ifdef ADAMIC_CLOSURE_CONVENTION
+-adamic_closure *adamic_counted_closure_canonical(adamic_cell *identity, adamic_counted_code code, size_t count, adamic_cell *const cells[]);
+-#endif
+ void adamic_closure_uncache(adamic_closure *closure);
+ #endif
+ 
+@@ -282,20 +259,7 @@ void adamic_object_view_write(adamic_object *object, const char *name, adamic_sl
+ // the arguments and the result as adamic_value, as a closure's are (the result owned).
+ typedef adamic_value adamic_method_function(adamic_object *self, adamic_value *arguments);
+ typedef adamic_method_function *adamic_method;
+-typedef adamic_value adamic_counted_method_function(adamic_object *self, adamic_value *arguments, size_t argument_count);
+-typedef adamic_counted_method_function *adamic_counted_method;
+-#ifdef ADAMIC_CLOSURE_CONVENTION
+-typedef struct adamic_method_entry {
+- bool counted;
+- union { adamic_method code; adamic_counted_method counted_code; };
+-} adamic_method_entry;
+-static inline adamic_value adamic_method_call(adamic_method_entry method, adamic_object *self, adamic_value *arguments, size_t argument_count) {
+- if (method.counted) { return method.counted_code(self, arguments, argument_count); }
+- return method.code(self, arguments);
+-}
+-#else
+ typedef adamic_method adamic_method_entry;
+-#endif
+ 
+ struct adamic_methods {
+ 	size_t count;
+@@ -1026,14 +990,8 @@ void *adamic_library_identity(size_t index);
+ // C permits some function-to-void pointer conversions without a diagnostic.
+ // Check the source expression's type before a constructor can convert it.
+ #define adamic_closure_new(code, ...) (adamic_closure_new)(_Generic((code), adamic_code: (code)), __VA_ARGS__)
+-#ifdef ADAMIC_CLOSURE_CONVENTION
+-#define adamic_counted_closure_new(code, ...) (adamic_counted_closure_new)(_Generic((code), adamic_counted_code: (code)), __VA_ARGS__)
+-#endif
+ #ifdef ADAMIC_CANONICAL_CLOSURES
+ #define adamic_closure_canonical(identity, code, ...) (adamic_closure_canonical)((identity), _Generic((code), adamic_code: (code)), __VA_ARGS__)
+-#ifdef ADAMIC_CLOSURE_CONVENTION
+-#define adamic_counted_closure_canonical(identity, code, ...) (adamic_counted_closure_canonical)((identity), _Generic((code), adamic_counted_code: (code)), __VA_ARGS__)
+-#endif
+ #endif
+ 
+ #endif
+diff --git a/internal/native/runtime/closure.c b/internal/native/runtime/closure.c
+index bf2f47b6..ac8a5d69 100644
+--- a/internal/native/runtime/closure.c
++++ b/internal/native/runtime/closure.c
+@@ -16,9 +16,6 @@ adamic_cell *adamic_cell_new(adamic_value value, bool references) {
+ adamic_closure *(adamic_closure_new)(adamic_code code, size_t count) {
+ 	adamic_closure *closure = adamic_allocate(sizeof *closure + count * sizeof closure->cells[0], adamic_kind_closure);
+ 	closure->code = code;
+-#ifdef ADAMIC_CLOSURE_CONVENTION
+- closure->counted = false;
+-#endif
+ #ifdef ADAMIC_CLOSURE_RECEIVERS
+  closure->receiver = false;
+ #endif
+@@ -51,9 +48,6 @@ adamic_environment *adamic_environment_new(size_t count) {
+ adamic_closure *(adamic_closure_canonical)(adamic_cell *identity, adamic_code code, size_t count, adamic_cell *const cells[]) {
+ 	adamic_environment *owner = identity->owner;
+ 	for (adamic_closure *held = owner->functions; held != NULL; held = held->canonical_next) {
+-#ifdef ADAMIC_CLOSURE_CONVENTION
+-        if (held->counted) { continue; }
+-#endif
+ 		if (held->code == code) {
+ 			return adamic_retain(held);
+ 		}
+@@ -72,21 +66,6 @@ adamic_closure *(adamic_closure_canonical)(adamic_cell *identity, adamic_code co
+ }
+ 
+ 
+-#ifdef ADAMIC_CLOSURE_CONVENTION
+-adamic_closure *(adamic_counted_closure_canonical)(adamic_cell *identity, adamic_counted_code code, size_t count, adamic_cell *const cells[]) {
+- adamic_environment *owner = identity->owner;
+- for (adamic_closure *held = owner->functions; held != NULL; held = held->canonical_next) {
+- if (held->counted && held->counted_code == code) { return adamic_retain(held); }
+- }
+- adamic_closure *closure = adamic_counted_closure_new(code, count);
+- for (size_t index = 0; index < count; index++) { closure->cells[index] = adamic_retain(cells[index]); }
+- closure->canonical_owner = owner;
+- closure->canonical_next = owner->functions;
+- if (owner->functions != NULL) { owner->functions->canonical_previous = closure; }
+- owner->functions = closure;
+- return closure;
+-}
+-#endif
+ 
+ void adamic_closure_uncache(adamic_closure *closure) {
+ 	adamic_environment *owner = closure->canonical_owner;

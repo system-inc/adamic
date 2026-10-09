@@ -1,0 +1,25 @@
+// match is one array. matchAll yields each match with its index and named groups.
+function show(match: RegExpMatchArray | null): string {
+	if (match === null) {
+		return 'null';
+	}
+	const named = match.groups === undefined ? 'none' : `${match.groups.x ?? 'undefined'}`;
+	return `${match.index}:${match.input}:${named}:${match.map((part) => part ?? 'undefined').join(',')}`;
+}
+console.log(show('a ba'.match(/(?<x>a)|(b)/)));
+console.log(show('a ba'.match(/(?<x>a)|(b)/g)));
+console.log(show('zzz'.match(/(?<x>a)|(b)/)));
+console.log(show('zzz'.match(/(?<x>a)|(b)/g)));
+const iterator = 'a ba'.matchAll(/(?<x>a)|(b)/dg);
+for (const match of iterator) {
+	let positions = '';
+	const indices = match.indices;
+	if (indices !== undefined) {
+		const pair = indices[0];
+		if (pair !== undefined) {
+			positions = `${pair[0]}-${pair[1]}`;
+		}
+	}
+	console.log(`${match.index}:${match.input}:${match.groups?.x ?? 'undefined'}:${match.map((part) => part ?? 'undefined').join(',')}:${positions}`);
+}
+console.log(`${iterator.next().done}`);

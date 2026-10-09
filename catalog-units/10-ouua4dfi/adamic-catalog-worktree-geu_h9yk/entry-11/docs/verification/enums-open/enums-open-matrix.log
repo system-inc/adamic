@@ -1,0 +1,15 @@
+before {'Compiles': 7, 'Refused': 4, 'Checker': 2}
+after {'Compiles': 9, 'Refused': 1, 'CheckedStop': 1, 'Checker': 2}
+01_token_range.a Compiles True
+02_node_range.a Compiles True
+03_jsdoc_range.a Compiles True
+04_parse_tree_mask.a Compiles True
+05_local_export_flags.a Compiles True
+06_set_node_flags.a Refused
+07_regex_array_map.a CheckedStop False
+08_debug_format_enum.a Checker
+09_symbol_exclusion_mask.a Compiles True
+10_string_enum.a Compiles True
+11_format_syntax_kind.a Checker
+12_diagnostic_reverse_lookup.a Compiles True
+13_regex_map_keys.a Compiles True
