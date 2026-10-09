@@ -426,7 +426,7 @@ func buildUnitsWithLibrary(source, output string, options Options, library strin
 	}
 	// A unit includes units.h, and through it adamic.h, before any of the program's own #defines
 	// (the checker build puts tsgo_runtime.h first), so its features come as flags.
-	flags := sourceFlags(source, options)
+	flags := SourceFlags(source, options)
 	objects := make([]string, len(units))
 	errors := make([]error, len(units))
 	work := make(chan int)

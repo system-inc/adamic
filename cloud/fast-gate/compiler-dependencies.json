@@ -1,0 +1,149 @@
+{
+  "version": 1,
+  "packages": {
+    "stage1/cohere/arena": [
+      "internal/load",
+      "internal/lower",
+      "internal/native",
+      "internal/javascript",
+      "internal/ir",
+      "internal/flow",
+      "cmd/adamic"
+    ],
+    "stage1/cohere/lint/helpers/control_flow_graph": [
+      "internal/load",
+      "internal/lower",
+      "internal/native",
+      "internal/javascript",
+      "internal/ir",
+      "internal/flow",
+      "cmd/adamic"
+    ],
+    "stage1/cohere/lint/helpers/core": [
+      "internal/load",
+      "internal/lower",
+      "internal/native",
+      "internal/javascript",
+      "internal/ir",
+      "internal/flow",
+      "cmd/adamic"
+    ],
+    "stage1/cohere/lint/helpers/ecmascript/text": [
+      "internal/load",
+      "internal/lower",
+      "internal/native",
+      "internal/javascript",
+      "internal/ir",
+      "internal/flow",
+      "cmd/adamic"
+    ],
+    "stage1/cohere/lint/helpers/from_wave1_11": [
+      "internal/load",
+      "internal/lower",
+      "internal/native",
+      "internal/javascript",
+      "internal/ir",
+      "internal/flow",
+      "cmd/adamic"
+    ],
+    "stage1/cohere/lint/helpers/module": [
+      "internal/load",
+      "internal/lower",
+      "internal/native",
+      "internal/javascript",
+      "internal/ir",
+      "internal/flow",
+      "cmd/adamic"
+    ],
+    "stage1/cohere/lint/helpers/react": [
+      "internal/load",
+      "internal/lower",
+      "internal/native",
+      "internal/javascript",
+      "internal/ir",
+      "internal/flow",
+      "cmd/adamic"
+    ],
+    "stage1/cohere/lint/helpers/rules-react": [
+      "internal/load",
+      "internal/lower",
+      "internal/native",
+      "internal/javascript",
+      "internal/ir",
+      "internal/flow",
+      "cmd/adamic"
+    ],
+    "stage1/cohere/lint/helpers/slot03/batch3": [
+      "internal/load",
+      "internal/lower",
+      "internal/native",
+      "internal/javascript",
+      "internal/ir",
+      "internal/flow",
+      "cmd/adamic"
+    ],
+    "stage1/cohere/lint/helpers/slot04_wave20": [
+      "internal/load",
+      "internal/lower",
+      "internal/native",
+      "internal/javascript",
+      "internal/ir",
+      "internal/flow",
+      "cmd/adamic"
+    ],
+    "stage1/cohere/lint/helpers/slot05/batch32": [
+      "internal/load",
+      "internal/lower",
+      "internal/native",
+      "internal/javascript",
+      "internal/ir",
+      "internal/flow",
+      "cmd/adamic"
+    ],
+    "stage1/cohere/lint/helpers/slot05/batch33": [
+      "internal/load",
+      "internal/lower",
+      "internal/native",
+      "internal/javascript",
+      "internal/ir",
+      "internal/flow",
+      "cmd/adamic"
+    ],
+    "stage1/cohere/lint/rules/array-callback-return": [
+      "internal/load",
+      "internal/lower",
+      "internal/native",
+      "internal/javascript",
+      "internal/ir",
+      "internal/flow",
+      "cmd/adamic"
+    ],
+    "stage1/cohere/lint/rules/consistent-return": [
+      "internal/load",
+      "internal/lower",
+      "internal/native",
+      "internal/javascript",
+      "internal/ir",
+      "internal/flow",
+      "cmd/adamic"
+    ],
+    "stage1/cohere/lint/rules/no-unreachable-loop": [
+      "internal/load",
+      "internal/lower",
+      "internal/native",
+      "internal/javascript",
+      "internal/ir",
+      "internal/flow",
+      "cmd/adamic"
+    ],
+    "stage1/cohere/lint/rules/structure-network-no-direct-fetch": [
+      "internal/load",
+      "internal/lower",
+      "internal/native",
+      "internal/javascript",
+      "internal/ir",
+      "internal/flow",
+      "cmd/adamic"
+    ]
+  }
+}

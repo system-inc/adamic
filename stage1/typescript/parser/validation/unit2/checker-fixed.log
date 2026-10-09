@@ -1,0 +1,16 @@
+=== RUN   TestIncompleteCheckerAgrees
+    checker_incomplete_test.go:72: Node cut: 1672865 input bytes, 8519744 output bytes, 825.397396ms, <nil>
+    checker_incomplete_test.go:73: cut deadline: 30s
+    checker_incomplete_test.go:72: native cut: 1672865 input bytes, 8519744 output bytes, 1.555430199s, <nil>
+    checker_incomplete_test.go:73: cut deadline: 30s
+    checker_incomplete_test.go:88: four-native concurrency worker 0: 1.836616476s, <nil>
+    checker_incomplete_test.go:88: four-native concurrency worker 1: 1.855060399s, <nil>
+    checker_incomplete_test.go:88: four-native concurrency worker 2: 1.940668341s, <nil>
+    checker_incomplete_test.go:88: four-native concurrency worker 3: 2.015778174s, <nil>
+    checker_incomplete_test.go:72: Node duplicate: 3151776 input bytes, 15681672 output bytes, 1.156190492s, <nil>
+    checker_incomplete_test.go:73: duplicate deadline: 50s
+    checker_incomplete_test.go:72: native duplicate: 3151776 input bytes, 15681672 output bytes, 3.158239638s, <nil>
+    checker_incomplete_test.go:73: duplicate deadline: 50s
+--- PASS: TestIncompleteCheckerAgrees (18.69s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/typescript/parser	18.706s

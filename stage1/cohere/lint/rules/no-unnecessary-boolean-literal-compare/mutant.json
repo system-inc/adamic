@@ -1,0 +1,5 @@
+{
+  "Name": "boolean type verdict inverted",
+  "From": "(!plain && !nullable)",
+  "To": "(plain && !nullable)"
+}

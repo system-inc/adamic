@@ -1,0 +1,158 @@
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { Frames, header } from '../../../typeaware/frames.ts';
+import { treatedAsZero } from './index.a';
+import { message, suggestionMessage } from './messages.a';
+import type { Types } from '../../../typeaware/types.ts';
+import type { TypeFact } from '../../../typeaware/type_fact.ts';
+import { types } from '../../../typeaware/facts.ts';
+import { Suggestion, SuggestionEdit } from '../../suggestions.a';
+
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) {
+        this.context = context;
+    }
+    directlyOptional(node: ParseNode): boolean {
+        if(node.children.length === 0) { return false; }
+        const receiver = this.context.parser.node(node.children[0] ?? -1);
+        this.context.scanner.pos = receiver.end;
+        this.context.scanner.scan();
+        return this.context.scanner.kind === 'QuestionDotToken';
+    }
+    constant(index: number): string | undefined {
+        const node = this.context.parser.node(index);
+        if(['StringLiteral', 'NumericLiteral', 'NoSubstitutionTemplateLiteral'].includes(node.kind)) {
+            return node.text;
+        }
+        if(node.kind === 'Identifier' && ['NaN', 'Infinity'].includes(node.text)) {
+            return node.text;
+        }
+        if(node.kind === 'PrefixUnaryExpression' && node.operator === 'MinusToken') {
+            const operand = this.context.parser.node(node.children[0] ?? -1);
+            if(operand.kind === 'Identifier' && operand.text === 'Infinity') {
+                return '-Infinity';
+            }
+        }
+        const answer = this.context.checker?.ask(index, 'raw-shape');
+        if(answer === undefined || answer.value === undefined) { return undefined; }
+        const graph = types(answer.value, 'raw-shape');
+        const type = graph.root();
+        if((type.flags & (1024 | 2048 | 4096)) === 0) {
+            return undefined;
+        }
+        const named = this.context.checker?.ask(index, `name\n${type.id}`);
+        if(named === undefined || named.value === undefined) { return undefined; }
+        const frames = new Frames(named.value); header(frames, 'name');
+        let name = frames.field(); frames.end();
+        if(name.length >= 2 && (name.startsWith('"') || name.startsWith("'")) && name.slice(-1) === name.slice(0, 1)) {
+            name = name.slice(1, -1);
+        }
+        if((type.flags & 4096) !== 0 && name.endsWith('n')) {
+            name = name.slice(0, -1);
+        }
+        return name;
+    }
+    member(index: number): string | undefined {
+        const node = this.context.parser.node(index);
+        if(!['PropertyAccessExpression', 'ElementAccessExpression'].includes(node.kind)) {
+            return undefined;
+        }
+        const key = node.children[node.children.length - 1] ?? -1;
+        if(node.kind === 'PropertyAccessExpression') {
+            const name = this.context.parser.node(key);
+            return name.kind === 'Identifier' ? name.text : undefined;
+        }
+        return this.constant(key);
+    }
+    arrayish(graph: Types, type: TypeFact): boolean {
+        let found = false;
+        for(const id of graph.parts(type)) {
+            const part = graph.type(id);
+            if((part.flags & (4 | 8)) !== 0) {
+                continue;
+            }
+            if(!graph.parts(part, 268435456).every((item) => graph.type(item).array || graph.type(item).tuple >= 0)) {
+                return false;
+            }
+            found = true;
+        }
+        return found;
+    }
+    filters(index: number): number[] {
+        const node = this.context.parser.node(this.context.unwrap(index));
+        if(node.kind === 'BinaryExpression' && this.context.parser.node(node.children[1] ?? -1).kind === 'CommaToken') {
+            return this.filters(node.children[2] ?? -1);
+        }
+        if(node.kind === 'ConditionalExpression') {
+            const left = this.filters(node.children[2] ?? -1);
+            const right = this.filters(node.children[4] ?? -1);
+            return left.length === 0 || right.length === 0 ? [] : left.concat(right);
+        }
+        if(node.kind !== 'CallExpression' || this.directlyOptional(node)) {
+            return [];
+        }
+        const calleeIndex = node.children[0] ?? -1;
+        if(this.member(calleeIndex) !== 'filter') {
+            return [];
+        }
+        const callee = this.context.parser.node(calleeIndex);
+        const answer = this.context.checker?.ask(callee.children[0] ?? -1, 'type-shape');
+        if(answer === undefined || answer.value === undefined) { return []; }
+        const graph = types(answer.value, 'type-shape');
+        return this.arrayish(graph, graph.root()) ? [calleeIndex] : [];
+    }
+    visit(node: ParseNode, index: number): void {
+        let receiver = -1;
+        if(
+            node.kind === 'ElementAccessExpression' &&
+            !this.directlyOptional(node) &&
+            this.constant(node.children[node.children.length - 1] ?? -1) === '0'
+        ) {
+            receiver = node.children[0] ?? -1;
+        }
+        if(node.kind === 'CallExpression' && node.list === 1) {
+            const callee = this.context.parser.node(node.children[0] ?? -1);
+            if(!this.directlyOptional(callee) && this.member(node.children[0] ?? -1) === 'at') {
+                const value = this.constant(node.children[node.children.length - 1] ?? -1);
+                if(value !== undefined) {
+                    if(treatedAsZero(value)) {
+                        receiver = callee.children[0] ?? -1;
+                    }
+                }
+            }
+        }
+        if(receiver < 0) {
+            return;
+        }
+        const filters = this.filters(receiver);
+        if(filters.length === 0) {
+            return;
+        }
+        this.context.scanner.pos = node.pos; this.context.scanner.scan();
+        const finding = this.context.reportRange(this.context.scanner.start, node.end, '@typescript-eslint/prefer-find', 'preferFind', message);
+        const repairs: SuggestionEdit[] = [];
+        for(const filter of filters) {
+            const callee = this.context.parser.node(filter);
+            const key = this.context.parser.node(callee.children[callee.children.length - 1] ?? -1);
+            repairs.push(
+                new SuggestionEdit(
+                    this.context.start(callee.children[callee.children.length - 1] ?? -1),
+                    key.end,
+                    callee.kind === 'ElementAccessExpression' ? '"find"' : 'find',
+                ),
+            );
+        }
+        this.context.scanner.pos = this.context.parser.node(receiver).end;
+        this.context.scanner.scan();
+        if(!['DotToken', 'OpenBracketToken'].includes(this.context.scanner.kind)) {
+            return;
+        }
+        repairs.push(new SuggestionEdit(this.context.scanner.start, node.end, ''));
+        finding.suggestions.push(
+            new Suggestion('preferFindSuggestion', suggestionMessage, repairs),
+        );
+    }
+}
+
+export function create(context: RuleContext): Rule { return new Rule(context); }

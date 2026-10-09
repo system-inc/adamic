@@ -1,0 +1,47 @@
+{
+  "files": 77,
+  "nodes": 887803,
+  "instructions": 6340677060,
+  "previous_instructions": 6343677798,
+  "delta": -3000738,
+  "delta_percent": -0.04730281227312737,
+  "single_threaded": true,
+  "native_flags": [
+    "-std=c11",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-pedantic",
+    "-Wno-unused-variable",
+    "-Wno-unused-but-set-variable",
+    "-Wno-unused-function",
+    "-Wno-unused-parameter",
+    "-Wno-self-assign",
+    "-ffp-contract=off",
+    "-fno-optimize-sibling-calls",
+    "-O2"
+  ],
+  "parser_flags": [
+    "--manifest",
+    "compiler.manifest",
+    "--whole",
+    "--count"
+  ],
+  "typescript_commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "oracle_commit": "d92d9bfee114c80be2c375d72edae966176e3a4f",
+  "binary_sha256": "60ba920718ebc0f15966d052d004ddb1744e32a369b9506c9c17c9a0d9916258",
+  "profile_sha256": "017aed9e26893c52cb6997a7f967728eabe6e20e3484408e57876f7470142984",
+  "tree_validation": "TestWholePerformance final release preflight compared all 77 whole trees with typescript-go",
+  "source_sha256": {
+    "stage1/typescript/parser/grammar.ts": "66733ffd394f79d729977ee2685a782a489f84e132c26813141008bffe3be815",
+    "stage1/typescript/parser/jsx.ts": "ee008273e1a7013c9c2a49c4fbe3c98e8a5d098019e04b4b261df35e9dc2cbba",
+    "stage1/typescript/parser/lookahead.ts": "eb024f29477ae15d7d77656e55903993c05de0c6f261705303021184509b453c",
+    "stage1/typescript/parser/main.ts": "ce471a7fd21f15e7140f43baa9b49a557d73b78eed50e7994cee48e85c7a9b54",
+    "stage1/typescript/parser/nodes.ts": "f96c7514273ef211538681183b01c44e9f7b2dd9a047fcf89dcc669f84b8c7b6",
+    "stage1/typescript/parser/parser.ts": "b21b415cec9651a7b2c4957d6a0d0de8a9b94c7a6101b4f5cbb2f49b284909bc",
+    "stage1/typescript/parser/statements.ts": "4acd8a1ec8080673e6cb85e024169b058c8c2c5bdd453cbbf891098f657d52f9",
+    "stage1/typescript/parser/spelling.ts": "1bc9fae9dc912e77553a5e84869d3ce00476617c0e2c0bf44a0e4bc799792fac",
+    "stage1/typescript/parser/lexical.ts": "1d5a51b9e9ca410662de261067f811079e9968b0dc2d83beafbebad22b42f52a",
+    "stage1/typescript/parser/recovery.ts": "2b2d1741d0767b2228cf0113237ef0e6934bd02697f932e71d23a8f53e44919e"
+  }
+}

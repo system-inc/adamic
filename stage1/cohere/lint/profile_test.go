@@ -1,19 +1,19 @@
 package lint
 
 import (
-	"context"
+	"fmt"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"strings"
 	"testing"
 
-	"github.com/system-inc/adamic/internal/load"
-	"github.com/system-inc/adamic/internal/lower"
+	bridge "github.com/system-inc/adamic/bridge/tsgo"
 	"github.com/system-inc/adamic/internal/native"
 )
 
 // Opt-in artifacts outlive t.TempDir so callgrind and the timing runner use the same snapshot.
+// Not parallel: TestProfileSnapshotsAgree reads what it saves, and a serial test finishes first.
 func TestProfileArtifacts(t *testing.T) {
 	directory := os.Getenv("ADAMIC_LINT_PROFILE_DIR")
 	if directory == "" {
@@ -56,28 +56,43 @@ func TestProfileArtifacts(t *testing.T) {
 	if err := os.WriteFile(filepath.Join(directory, "oracle"), oracle, 0755); err != nil {
 		t.Fatal(err)
 	}
+	pilot := filepath.Join(directory, "pilot.ts")
+	witness, err := os.ReadFile(filepath.Join(directory, "rules/no-unnecessary-boolean-literal-compare/testdata/witness.ts.txt"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(pilot, witness, 0644); err != nil {
+		t.Fatal(err)
+	}
+	config := filepath.Join(directory, "pilot.tsconfig.json")
+	options := fmt.Sprintf(`{"compilerOptions":{"strict":true},"files":[%q]}`, pilot)
+	if err := os.WriteFile(config, []byte(options), 0644); err != nil {
+		t.Fatal(err)
+	}
+	pilotManifest := "program " + config + "\n" + pilot + "\t@typescript-eslint/no-unnecessary-boolean-literal-compare\n"
+	if err := os.WriteFile(filepath.Join(directory, "pilot.txt"), []byte(pilotManifest), 0644); err != nil {
+		t.Fatal(err)
+	}
 	buildProfile(t, directory)
 }
 
 func buildProfile(t *testing.T, directory string) {
 	t.Helper()
-	program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
-	if err != nil {
-		t.Fatal(err)
-	}
-	lowered, err := lower.Lower(context.Background(), program)
-	if err != nil {
-		t.Fatal(err)
-	}
-	source := native.C(lowered)
+	built := checkerCompile(t, directory)
+	source := built.c
+	archive := checkerArchive(t, false)
 	if err := os.WriteFile(filepath.Join(directory, "main.c"), []byte(source), 0644); err != nil {
 		t.Fatal(err)
 	}
-	if err := native.Build(source, filepath.Join(directory, "scanner"), native.Options{}); err != nil {
-		t.Fatal(err)
-	}
-	if err := native.Build(source, filepath.Join(directory, "counted"), native.Options{Count: true}); err != nil {
-		t.Fatal(err)
+	for _, build := range []struct {
+		name    string
+		options native.Options
+	}{{"scanner", native.Options{}}, {"counted", native.Options{Count: true}}} {
+		if err := nativeBuild(func() error {
+			return buildCheckerWithRuntime(source, filepath.Join(directory, build.name), archive, build.options)
+		}); err != nil {
+			t.Fatal(err)
+		}
 	}
 	runtime := filepath.Join(repository, "internal/native/runtime")
 	entries, err := os.ReadDir(runtime)
@@ -101,15 +116,25 @@ func buildProfile(t *testing.T, directory string) {
 			units = append(units, path)
 		}
 	}
-	flags := append(native.Flags(native.Options{}), "-g", "-o", filepath.Join(directory, "profiled"))
+	if err := os.WriteFile(filepath.Join(directory, "tsgo.h"), bridge.Header, 0644); err != nil {
+		t.Fatal(err)
+	}
+	// The runtime units are compiled beside main.c, so they need the features its #defines turn on.
+	flags := append(native.SourceFlags(source, native.Options{}), "-DADAMIC_TSGO", "-g", "-o", filepath.Join(directory, "profiled"))
 	flags = append(flags, units...)
-	flags = append(flags, "-lm")
-	execute(t, "", "clang", flags...)
+	flags = append(flags, archive, "-lm", "-lpthread", "-ldl")
+	if err := nativeBuild(func() error {
+		_, err := run("", nil, "clang", flags...)
+		return err
+	}); err != nil {
+		t.Fatal(err)
+	}
 	t.Logf("release, counted and -O2 -g profiling builds saved in %s", directory)
 }
 
 // Exercise the shared profile graph without requiring the external compiler corpus.
 func TestProfileCompilation(t *testing.T) {
+	t.Parallel()
 	directory := t.TempDir()
 	copyPort(t, directory, "", "")
 	prepareRegistry(t, directory)
@@ -155,8 +180,10 @@ func TestProfileCompilation(t *testing.T) {
 	}
 }
 
-// Not parallel: upstream fixture capture uses process-wide environment state.
+// It reads the snapshots TestProfileArtifacts saves, when both are pointed at one directory. That test is
+// serial, so it has finished before this one is released.
 func TestProfileSnapshotsAgree(t *testing.T) {
+	t.Parallel()
 	asked := os.Getenv("ADAMIC_LINT_PROFILE_SNAPSHOTS")
 	if asked == "" {
 		t.Skip("set ADAMIC_LINT_PROFILE_SNAPSHOTS")
@@ -220,12 +247,14 @@ func TestCommentFoldMutant(t *testing.T) {
 	path := manifest(t, generated(t))
 	want := execute(t, "", goOracle(t), "--manifest", path).output
 	directory := mutant(t, "point - 32 : point", "point - 31 : point", "unicode.ts")
+	binary := buildPort(t, directory, true)
 	for _, side := range []struct {
 		name string
 		run  execution
 	}{
 		{"Node", node(t, directory, path, false)},
 		{"emitted JavaScript", emittedNode(t, directory, path, false)},
+		{"native", execute(t, "", binary, "--manifest", path)},
 	} {
 		if diff := difference(side.run.output, want); diff == "" {
 			t.Fatalf("fold mutant survived on %s", side.name)
@@ -239,12 +268,14 @@ func TestPositionIndexMutant(t *testing.T) {
 	path := manifest(t, generated(t))
 	want := execute(t, "", goOracle(t), "--manifest", path).output
 	directory := mutant(t, "this.anchors[0] = true;", "this.anchors[0] = false;", "rules/no-warning-comments/rule.ts")
+	binary := buildPort(t, directory, true)
 	for _, side := range []struct {
 		name string
 		run  execution
 	}{
 		{"Node", node(t, directory, path, false)},
 		{"emitted JavaScript", emittedNode(t, directory, path, false)},
+		{"native", execute(t, "", binary, "--manifest", path)},
 	} {
 		if diff := difference(side.run.output, want); diff == "" {
 			t.Fatalf("position mutant survived on %s", side.name)

@@ -1,0 +1,11 @@
+import type { CoreArena } from './nodes.a';
+export function idDenylistIsDestructuringTarget(arena: CoreArena, index: number): boolean {
+    let current = index;
+    while(current >= 0) {
+        const parent = arena.node(current).parent; if(parent < 0) { return false; } const node = arena.node(parent);
+        if(node.kind === 'BinaryExpression') { return node.left === current && node.operator === 'EqualsToken'; }
+        if(['PropertyAssignment', 'ShorthandPropertyAssignment', 'ObjectLiteralExpression', 'ArrayLiteralExpression', 'SpreadAssignment', 'SpreadElement', 'ParenthesizedExpression'].includes(node.kind)) { current = parent; continue; }
+        return ['ForOfStatement', 'ForInStatement', 'Parameter'].includes(node.kind);
+    }
+    return false;
+}

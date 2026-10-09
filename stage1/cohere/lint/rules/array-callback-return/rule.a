@@ -1,0 +1,43 @@
+import { noEdits } from '../../context.ts';
+import type { RuleContext } from '../../context.ts';
+import { Suggestion, SuggestionEdit } from '../../suggestions.a';
+import { fromContext } from './adapter.a';
+import { child, body, fallsThrough, returnsIn, arrow } from './support.a';
+import { expectedAtEnd,expectedInside,expectedReturnValue,expectedNoReturnValue,wrapBraces,prependVoid } from './messages.a';
+const target=['every','filter','find','findIndex','findLast','findLastIndex','flatMap','forEach','map','reduce','reduceRight','some','sort','toSorted'];
+function unwrap(c: RuleContext,i: number): number {while(i>=0&&['ParenthesizedExpression','NonNullExpression'].includes(c.kind(i)))i=child(c,i,0);return i;}
+function member(c: RuleContext,i: number): string {i=unwrap(c,i);const k=c.kind(i);if(k==='PropertyAccessExpression')return c.node(child(c,i,c.node(i).children.length-1)).text;if(k==='ElementAccessExpression'){const e=unwrap(c,child(c,i,c.node(i).children.length-1));if(['StringLiteral','NoSubstitutionTemplateLiteral'].includes(c.kind(e)))return c.node(e).text;}return '';}
+function consuming(c: RuleContext,i: number): number {let p=c.parent(i);while(c.kind(p)==='ParenthesizedExpression'){i=p;p=c.parent(i);}return c.kind(p)==='CallExpression'&&child(c,p,0)===i?p:-1;}
+function method(c: RuleContext,i: number): string {
+ if(c.has(i,'AsteriskToken'))return '';const async=c.has(i,'AsyncKeyword');let current=i;
+ while(current>=0){const p=c.parent(current);const k=c.kind(p);
+  if(k==='BinaryExpression'){if(!['AmpersandAmpersandToken','BarBarToken','QuestionQuestionToken'].includes(c.kind(child(c,p,1))))return '';current=p;continue;}
+  if(k==='ConditionalExpression'||k==='ParenthesizedExpression'){current=p;continue;}
+  if(k==='ReturnStatement'){let upper=c.parent(p);while(upper>=0&&!c.functionLike(upper)&&c.kind(upper)!=='SourceFile')upper=c.parent(upper);if(upper<0||c.kind(upper)==='SourceFile')return '';current=consuming(c,upper);if(current<0)return '';continue;}
+  if(k!=='CallExpression')return '';const callee=unwrap(c,child(c,p,0));const name=member(c,callee);const args=c.arguments(p);const receiver=unwrap(c,child(c,callee,0));const identifier=c.kind(receiver)==='Identifier'?c.node(receiver).text:'';
+  if(!async){if(name==='from'&&identifier.endsWith('Array')&&(args[1] ?? -1)===current)return name;if(target.includes(name)&&(args[0] ?? -1)===current)return name;}
+  if(name==='fromAsync'&&identifier==='Array'&&(args[1] ?? -1)===current)return name;return '';
+ }
+ return '';
+}
+function head(c: RuleContext,i: number): number[] {if(c.kind(i)==='ArrowFunction'){const a=arrow(c,i);return [c.start(a),c.node(a).end];}const start=c.start(i);const b=body(c,i);let end=b<0?start:c.start(b);while(end>start&&c.source.slice(end-1,end)!==')')end--;return [start,end];}
+function voidSuggestion(c: RuleContext,e: number): Suggestion {const start=c.start(e);const end=c.node(e).end;const parent=c.parent(e);const prefix=c.kind(parent)==='ReturnStatement'&&c.source.slice(start-6,start)==='return'?' void ':'void ';const parens=['BinaryExpression','ConditionalExpression','YieldExpression'].includes(c.kind(e));const edits: SuggestionEdit[]=[new SuggestionEdit(start,start,prefix+(parens?'(':''))];if(parens)edits.push(new SuggestionEdit(end,end,')'));return new Suggestion('prependVoid',prependVoid,edits);}
+export class Rule {
+ readonly context: RuleContext;
+ constructor(context: RuleContext){this.context=context;}
+ visit(index: number): void {
+ const c=this.context;const name=method(c,index);if(name==='')return;const returns: number[]=[];const b=body(c,index);if(b<0)return;returnsIn(c,b,returns,true);
+ const qualified=['from','fromAsync','of','isArray'].includes(name)?'Array.'+name:'Array.prototype.'+name;const n=c.name(index);const functionName=c.kind(index)==='ArrowFunction'?'arrow function':n>=0&&c.node(n).text.trim()!==''?"function '"+c.node(n).text.trim()+"'":'function';const sentence=' Here '+qualified+'() is being passed '+functionName+'.';
+ const allowVoid=c.settings.read('allowvoid','false')==='true';const allowImplicit=c.settings.read('allowimplicit','false')==='true';const checkForEach=c.settings.read('checkforeach','false')==='true';
+ if(name==='forEach'){
+  if(!checkForEach)return;
+  if(c.kind(index)==='ArrowFunction'&&c.kind(b)!=='Block'){
+   if(allowVoid&&c.kind(b)==='VoidExpression')return;const suggestions: Suggestion[]=[new Suggestion('wrapBraces',wrapBraces,[new SuggestionEdit(c.start(b),c.start(b),'{'),new SuggestionEdit(c.node(b).end,c.node(b).end,'}')])];if(allowVoid)suggestions.push(voidSuggestion(c,b));const range=head(c,index);c.reportRange(range[0] ?? 0,range[1] ?? 0,'array-callback-return','expectedNoReturnValue',expectedNoReturnValue+sentence,noEdits,suggestions);return;
+  }
+  for(const r of returns){const e=child(c,r,0);if(e<0||(allowVoid&&c.kind(e)==='VoidExpression'))continue;const suggestions: Suggestion[]=[];if(allowVoid)suggestions.push(voidSuggestion(c,e));c.reportNode(r,'array-callback-return','expectedNoReturnValue',expectedNoReturnValue+sentence,noEdits,suggestions);}return;
+ }
+ if(c.kind(b)==='Block'){const ast=fromContext(c);const end=fallsThrough(ast,index);ast.dispose();if(end){const range=head(c,index);c.reportRange(range[0] ?? 0,range[1] ?? 0,'array-callback-return',returns.length>0?'expectedAtEnd':'expectedInside',(returns.length>0?expectedAtEnd:expectedInside)+sentence);}}
+ if(!allowImplicit)for(const r of returns)if(child(c,r,0)<0)c.reportNode(r,'array-callback-return','expectedReturnValue',expectedReturnValue+sentence);
+ }
+}
+export function create(context: RuleContext): Rule {return new Rule(context);}

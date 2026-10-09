@@ -1,0 +1,15 @@
+=== RUN   TestCheckerBridgeRefusalPending
+    checker_pending_test.go:75: bridge refusal matches native, Node and emitted JavaScript: case 0
+        refused @typescript-eslint/no-unnecessary-boolean-literal-compare /tmp/adamic-gate/TestCheckerBridgeRefusalPending408394600/002/no-unnecessary-boolean-literal-compare-0.ts 0 45 unsupported checker question: pending-refusal-control
+        /tmp/adamic-gate/TestCheckerBridgeRefusalPending408394600/002/no-unnecessary-boolean-literal-compare-0.ts:1:31
+          @typescript-eslint/no-unnecessary-boolean-literal-compare  This compares a boolean to a boolean literal, which asks the same question the value already answers. Use the expression on its own.
+        
+        range 30 40 direct fix	b		30 40
+        fixed	declare const b: boolean; if (b) {}\u000a
+    checker_pending_test.go:97: native refusal handling mutant builds and runs, caught by wire comparison
+    checker_pending_test.go:97: Node refusal handling mutant builds and runs, caught by wire comparison
+    checker_pending_test.go:97: emitted JavaScript refusal handling mutant builds and runs, caught by wire comparison
+    checker_pending_test.go:111: restoring refusal handling passes all three runtime wire comparisons
+--- PASS: TestCheckerBridgeRefusalPending (153.75s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	153.819s

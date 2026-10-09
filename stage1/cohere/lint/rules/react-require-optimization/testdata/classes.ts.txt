@@ -1,0 +1,7 @@
+export class Missing extends React.Component {}
+class Optimized extends React.Component { shouldComponentUpdate() {} }
+class Field extends React.Component { shouldComponentUpdate = () => true; }
+class Pure extends React.PureComponent {}
+class ParenthesizedReceiver extends (React).PureComponent {}
+class ParenthesizedBase extends (React.Component) {}
+const Expression = class extends React.Component {};

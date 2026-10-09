@@ -1,0 +1,1 @@
+export function hangulVowel(c: number): boolean { return c >= 4448 && c <= 4519; }

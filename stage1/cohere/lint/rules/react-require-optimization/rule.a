@@ -1,0 +1,106 @@
+import { panic } from 'adamic';
+import type { RuleContext } from '../../context.ts';
+import type { HelperNode } from '../../helpers/react/nodes.a';
+import { project } from '../../helpers/react/projection.a';
+import { reactEs6ComponentClass } from '../../helpers/react/react_es6_component_class.a';
+import { isComponentBase } from '../../helpers/react/react_component_base.a';
+import { isComponentBaseName } from '../../helpers/react/component_base_name.a';
+import { messageNoShouldComponentUpdate } from './messages.a';
+
+export class Rule {
+    readonly context: RuleContext;
+    nodes: HelperNode[] = [];
+    reports: number[] = [];
+    constructor(context: RuleContext) { this.context = context; }
+    prepare(root: number): void { this.nodes = project(this.context.parser.nodes); }
+    identifier(index: number, name: string): boolean {
+        return index >= 0 && this.context.kind(index) === 'Identifier' && this.context.node(index).text === name;
+    }
+    named(index: number, name: string): boolean {
+        if(this.context.kind(index) === 'SpreadAssignment') { return false; }
+        return this.identifier(this.context.name(index), name);
+    }
+    pureBase(index: number): boolean {
+        if(index < 0) { return false; }
+        if(this.identifier(index, 'PureComponent')) { return true; }
+        if(this.context.kind(index) !== 'PropertyAccessExpression') { return false; }
+        return this.identifier(this.context.node(index).children[0] ?? -1, 'React') && this.identifier(this.context.property(index), 'PureComponent');
+    }
+    extendsPure(index: number): boolean {
+        for(const clause of this.context.children(index, 'HeritageClause')) {
+            if(this.context.node(clause).operator !== 'ExtendsKeyword') { continue; }
+            for(const type of this.context.node(clause).children) {
+                if(this.context.kind(type) === 'ExpressionWithTypeArguments' && this.pureBase(this.context.node(type).children[0] ?? -1)) { return true; }
+            }
+        }
+        return false;
+    }
+    pureDecoration(index: number): boolean {
+        if(this.context.kind(index) !== 'CallExpression') { return false; }
+        const callee = this.context.node(index).children[0] ?? -1;
+        if(callee < 0 || this.context.kind(callee) !== 'PropertyAccessExpression') { return false; }
+        if(!this.identifier(this.context.node(callee).children[0] ?? -1, 'reactMixin') || !this.identifier(this.context.property(callee), 'decorate')) { return false; }
+        return this.identifier(this.context.arguments(index)[0] ?? -1, 'PureRenderMixin');
+    }
+    classExempt(index: number): boolean {
+        if(this.extendsPure(index)) { return true; }
+        const allowed = this.context.settings.list('allowdecorators', []);
+        for(const decorator of this.context.children(index, 'Decorator')) {
+            const expression = this.context.node(decorator).children[0] ?? -1;
+            if(expression < 0) { continue; }
+            if(this.pureDecoration(expression)) { return true; }
+            if(this.context.kind(expression) === 'Identifier' && allowed.includes(this.context.node(expression).text)) { return true; }
+        }
+        for(const member of this.context.members(index)) {
+            if(this.context.kind(member) === 'MethodDeclaration' && this.named(member, 'shouldComponentUpdate')) { return true; }
+        }
+        return false;
+    }
+    objectExempt(index: number): boolean {
+        for(const property of this.context.node(index).children) {
+            if(this.named(property, 'shouldComponentUpdate')) { return true; }
+            if(this.context.kind(property) === 'MethodDeclaration') { return true; }
+            if(this.context.kind(property) !== 'PropertyAssignment') { continue; }
+            const value = this.context.node(property).children[this.context.node(property).children.length - 1] ?? -1;
+            if(value < 0) { continue; }
+            if(this.context.kind(value) === 'FunctionExpression' || this.context.kind(value) === 'ArrowFunction') { return true; }
+            if(this.named(property, 'mixins') && this.context.kind(value) === 'ArrayLiteralExpression') {
+                for(const element of this.context.node(value).children) { if(this.identifier(element, 'PureRenderMixin')) { return true; } }
+            }
+        }
+        return false;
+    }
+    classStart(index: number): number {
+        const node = this.context.node(index);
+        for(let offset = node.children.length - 1; offset >= 0; offset--) {
+            const modifier = this.context.node(node.children[offset] ?? panic('class child'));
+            if(modifier.kind !== 'ExportKeyword' && modifier.kind !== 'DefaultKeyword') { continue; }
+            if(modifier.end >= node.end) { return this.context.start(index); }
+            let start = modifier.end;
+            while(start < this.context.source.length && [' ', '\t', '\n', '\r'].includes(this.context.source.slice(start, start + 1))) { start++; }
+            return start;
+        }
+        return this.context.start(index);
+    }
+    visit(index: number, parent: number): void {
+        if(this.context.kind(index) === 'ClassDeclaration') {
+            if(!reactEs6ComponentClass(this.nodes, index, (expression: number): boolean => isComponentBase(this.nodes, expression, isComponentBaseName)) || this.classExempt(index)) { return; }
+            this.reports.push(index);
+            return;
+        }
+        const callee = this.context.node(index).children[0] ?? -1;
+        // Go deliberately accepts only the bare, unparenthesized createReactClass.
+        if(!this.identifier(callee, 'createReactClass')) { return; }
+        const specification = this.context.arguments(index)[0] ?? -1;
+        if(specification < 0 || this.context.kind(specification) !== 'ObjectLiteralExpression' || this.objectExempt(specification)) { return; }
+        this.reports.push(specification);
+    }
+    finish(root: number): void {
+        // Source-file rules report first in Go. Their ports finish before this rule.
+        for(const index of this.reports) {
+            const start = this.context.kind(index) === 'ClassDeclaration' ? this.classStart(index) : this.context.start(index);
+            this.context.reportRange(start, this.context.node(index).end, 'react/require-optimization', 'noShouldComponentUpdate', messageNoShouldComponentUpdate);
+        }
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

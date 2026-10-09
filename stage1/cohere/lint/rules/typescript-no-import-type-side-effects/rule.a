@@ -1,0 +1,39 @@
+const emptyElements: readonly number[] = [];
+import type { RuleContext } from '../../context.ts';
+import type { HelperNode } from '../../helpers/imports/nodes.a';
+import { bindingsOf } from '../../helpers/imports/bindings_of.a';
+import { SuggestionEdit } from '../../suggestions.a';
+import { message } from './messages.a';
+
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) { this.context = context; }
+    visit(index: number): void {
+        const context = this.context;
+        const clause = context.children(index, 'ImportClause')[0] ?? -1;
+        if(clause < 0 || context.node(clause).semantic === 'TypeKeyword') { return; }
+        // Project exact named links from the parser's non-owning child indexes.
+        const nodes: HelperNode[] = context.parser.nodes.map(node => ({kind: node.kind, text: node.text, expression: -1, name: -1, propertyName: -1, importClause: -1, namedBindings: -1, elements: emptyElements}));
+        const parts = context.node(clause).children;
+        const defaultName = parts.find(child => context.kind(child) === 'Identifier') ?? -1;
+        const named = parts.find(child => context.kind(child) === 'NamedImports' || context.kind(child) === 'NamespaceImport') ?? -1;
+        nodes[index] = {kind: 'ImportDeclaration', text: '', expression: -1, name: -1, propertyName: -1, importClause: clause, namedBindings: -1, elements: emptyElements};
+        nodes[clause] = {kind: 'ImportClause', text: '', expression: -1, name: defaultName, propertyName: -1, importClause: -1, namedBindings: named, elements: emptyElements};
+        if(named >= 0) { nodes[named] = {kind: context.kind(named), text: '', expression: -1, name: context.node(named).children[0] ?? -1, propertyName: -1, importClause: -1, namedBindings: -1, elements: context.node(named).children}; }
+        const bindings = bindingsOf(nodes, index);
+        if(bindings.default >= 0 || bindings.namespace >= 0 || bindings.named.length === 0) { return; }
+        for(const element of bindings.named) {
+            if(context.kind(element) !== 'ImportSpecifier' || context.node(element).semantic !== '1') { return; }
+        }
+        const edits: SuggestionEdit[] = [];
+        for(const element of bindings.named) {
+            const imported = context.node(element).children[0] ?? -1;
+            if(imported < 0) { return; }
+            edits.push(new SuggestionEdit(context.start(element), context.start(imported), ''));
+        }
+        const insertion = context.start(index) + 6;
+        edits.push(new SuggestionEdit(insertion, insertion, ' type'));
+        context.reportNode(index, '@typescript-eslint/no-import-type-side-effects', 'useTopLevelQualifier', message, edits);
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

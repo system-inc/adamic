@@ -1,0 +1,183 @@
+{
+  "parser": {
+    "command": [
+      "go",
+      "test",
+      "./stage1/typescript/parser",
+      "-count=1",
+      "-json",
+      "-v",
+      "-failfast=false",
+      "-timeout=90m"
+    ],
+    "exit": 0,
+    "wall_seconds": 939.1022365610006,
+    "before": {
+      "hostname": "0adeb267a186",
+      "nproc": "5",
+      "quota": "400000 100000",
+      "load": [
+        0.57763671875,
+        4.126953125,
+        4.08837890625
+      ],
+      "memory_events": "low 0\nhigh 0\nmax 70513\noom 22\noom_kill 1\noom_group_kill 0\n"
+    },
+    "after": {
+      "hostname": "0adeb267a186",
+      "nproc": "5",
+      "quota": "400000 100000",
+      "load": [
+        5.5390625,
+        6.40283203125,
+        6.0498046875
+      ],
+      "memory_events": "low 0\nhigh 0\nmax 70513\noom 22\noom_kill 1\noom_group_kill 0\n"
+    },
+    "package": {
+      "result": "pass",
+      "seconds": 936.966
+    },
+    "all_tests": {
+      "pass_": 176,
+      "fail": 0,
+      "skip": 0
+    },
+    "top_level_tests": {
+      "pass_": 36,
+      "fail": 0,
+      "skip": 0
+    },
+    "largest": [
+      {
+        "test": "TestIncompleteCompilerAgrees",
+        "seconds": 863.135312,
+        "source": "stage1/typescript/parser/incomplete_test.go:26",
+        "result": "pass"
+      },
+      {
+        "test": "TestJsxMutants",
+        "seconds": 439.246583,
+        "source": "stage1/typescript/parser/jsx_mutants_test.go:11",
+        "result": "pass"
+      },
+      {
+        "test": "TestRecoveryMutants",
+        "seconds": 363.533707,
+        "source": "stage1/typescript/parser/recovery_test.go:126",
+        "result": "pass"
+      }
+    ],
+    "completion": [
+      "incomplete_test.go:294: shard 460: 64 cases compared; total 22384 of 22497",
+      "incomplete_test.go:294: shard 464: 64 cases compared; total 22448 of 22497",
+      "incomplete_test.go:294: shard 465: 49 cases compared; total 22497 of 22497",
+      "incomplete_test.go:329: 77 compiler files, 22497 incomplete inputs: Go, Node and sanitized native identical",
+      "parser longest native build child: 3m39.143007884s; build CPU budget: 10m0s"
+    ]
+  },
+  "rules": {
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/lint",
+      "-count=1",
+      "-json",
+      "-v",
+      "-failfast=false",
+      "-timeout=90m",
+      "-run",
+      "^TestRulesAgree$"
+    ],
+    "exit": 0,
+    "wall_seconds": 94.97040309500153,
+    "before": {
+      "hostname": "0adeb267a186",
+      "nproc": "5",
+      "quota": "400000 100000",
+      "load": [
+        5.5390625,
+        6.40283203125,
+        6.0498046875
+      ],
+      "memory_events": "low 0\nhigh 0\nmax 70513\noom 22\noom_kill 1\noom_group_kill 0\n"
+    },
+    "after": {
+      "hostname": "0adeb267a186",
+      "nproc": "5",
+      "quota": "400000 100000",
+      "load": [
+        2.36279296875,
+        5.095703125,
+        5.61474609375
+      ],
+      "memory_events": "low 0\nhigh 0\nmax 70513\noom 22\noom_kill 1\noom_group_kill 0\n"
+    },
+    "package": {
+      "result": "pass",
+      "seconds": 92.761
+    },
+    "all_tests": {
+      "pass_": 1,
+      "fail": 0,
+      "skip": 0
+    },
+    "top_level_tests": {
+      "pass_": 1,
+      "fail": 0,
+      "skip": 0
+    }
+  },
+  "lintcases": {
+    "command": [
+      "go",
+      "test",
+      "./stage1/typescript/parser",
+      "-count=1",
+      "-json",
+      "-v",
+      "-failfast=false",
+      "-timeout=90m",
+      "-run",
+      "^TestLintCases$"
+    ],
+    "exit": 0,
+    "wall_seconds": 24.321047286000976,
+    "before": {
+      "hostname": "0adeb267a186",
+      "nproc": "5",
+      "quota": "400000 100000",
+      "load": [
+        2.36279296875,
+        5.095703125,
+        5.61474609375
+      ],
+      "memory_events": "low 0\nhigh 0\nmax 70513\noom 22\noom_kill 1\noom_group_kill 0\n"
+    },
+    "after": {
+      "hostname": "0adeb267a186",
+      "nproc": "5",
+      "quota": "400000 100000",
+      "load": [
+        2.34375,
+        4.91162109375,
+        5.54248046875
+      ],
+      "memory_events": "low 0\nhigh 0\nmax 70513\noom 22\noom_kill 1\noom_group_kill 0\n"
+    },
+    "package": {
+      "result": "pass",
+      "seconds": 22.149
+    },
+    "all_tests": {
+      "pass_": 59,
+      "fail": 0,
+      "skip": 0
+    },
+    "top_level_tests": {
+      "pass_": 1,
+      "fail": 0,
+      "skip": 0
+    }
+  }
+}

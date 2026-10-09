@@ -1,0 +1,25 @@
+package imports
+import (
+ "testing"
+ "github.com/microsoft/TypeScript/tsc/shim/ast"
+)
+func TestWave15SourceVisitorControls(t *testing.T) {
+ f := ast.NewNodeFactory(ast.NodeFactoryHooks{})
+ listeners := SourceVisitors(func(string,*ast.Node){})
+ if len(listeners) != 2 || listeners[ast.KindImportDeclaration] == nil || listeners[ast.KindCallExpression] == nil { t.Fatal("wrong listener keys") }
+ listeners[ast.KindImportDeclaration](f.NewImportDeclaration(nil,nil,nil,nil))
+ listeners[ast.KindImportDeclaration](f.NewImportDeclaration(nil,nil,f.NewIdentifier("computed"),nil))
+ for _, nodes := range [][]*ast.Node{nil,{}, {f.NewIdentifier("first")}, {f.NewIdentifier("first"),f.NewIdentifier("second")}} {
+  listeners[ast.KindCallExpression](f.NewCallExpression(f.NewIdentifier("require"),nil,nil,f.NewNodeList(nodes),0))
+ }
+ func() {
+  defer func(){ if recover() == nil { t.Fatal("Go must panic on a synthetic nil argument") } }()
+  listeners[ast.KindCallExpression](f.NewCallExpression(f.NewIdentifier("require"),nil,nil,f.NewNodeList([]*ast.Node{nil}),0))
+ }()
+ listeners[ast.KindCallExpression](nil)
+ listeners[ast.KindCallExpression](f.NewCallExpression(f.NewIdentifier("other"),nil,nil,nil,0))
+ listeners[ast.KindImportDeclaration] = nil
+ next := SourceVisitors(func(string,*ast.Node){})
+ if next[ast.KindImportDeclaration] == nil { t.Fatal("map shared across factories") }
+ collect(t,"import A from '😀';\nconst b = require('a\\n\\u0062');\nconst c = import(`template`);\n")
+}

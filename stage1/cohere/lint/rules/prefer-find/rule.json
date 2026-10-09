@@ -1,0 +1,15 @@
+{
+  "name": "@typescript-eslint/prefer-find",
+  "typed": true,
+  "node": true,
+  "kinds": [
+    "CallExpression",
+    "ElementAccessExpression"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oraclePreferFind",
+  "upstreamPackage": "typescript",
+  "upstreamTest": "TestPreferFind"
+}

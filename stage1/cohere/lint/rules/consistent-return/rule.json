@@ -1,0 +1,12 @@
+{
+  "name": "consistent-return",
+  "kinds": [
+    "SourceFile"
+  ],
+  "visit": "visit",
+  "oracle": "oracleCfgConsistentReturn",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestConsistentReturn",
+  "factory": "create",
+  "class": "Rule"
+}

@@ -1,5 +1,6 @@
 // The lint harness: parse, one preorder walk that hands each node to the generated rule registry, the
 // stable finding sort, and the converging fixer. Every rule lives in its own directory under rules/.
+import type { Checker } from './checker.a';
 import { RuleContext } from './context.ts';
 import { createRuleSet, type RuleSet } from './.generated/registry.ts';
 import { panic, utf8Length } from 'adamic';
@@ -33,6 +34,8 @@ function compareEdits(left: Finding, right: Finding): number {
 }
 
 export class Linter {
+    readonly checker: Checker | undefined;
+    readonly skipped: string[] = [];
     readonly source: string;
     readonly parser: Parser;
     readonly scanner: Scanner;
@@ -62,7 +65,9 @@ export class Linter {
         nullPolicy: string,
         allowCatch: boolean,
         settings: Settings,
+        checker: Checker | undefined = undefined,
     ) {
+        this.checker = checker;
         this.settings = settings;
         this.source = source;
         this.parser = parser;
@@ -74,6 +79,7 @@ export class Linter {
     }
     run(): void {
         this.root = this.parser.file();
+        if(this.checker !== undefined) { this.checker.root = this.root; }
         if(this.junkRows) {
             const attached = this.parser.nodes.length;
             for(let index = 0; index < attached; index++) {
@@ -93,11 +99,14 @@ export class Linter {
             this.parents,
             this.settings,
             this.root,
+            this.checker,
         );
         const rules = createRuleSet(context);
         rules.prepare(this.root);
         this.walk(this.root, -1, rules);
         rules.finish(this.root);
+        for(const skipped of context.skipped) { this.skipped.push(skipped); }
+        if(this.checker !== undefined) { this.checker.finish(); }
         for(const finding of context.findings) {
             this.findings.push(finding);
         }
@@ -146,7 +155,10 @@ export class Linter {
             }
             lastProposals = proposals;
             proposals.sort(compareEdits);
-            const applied: Finding[] = [];
+            // Resolve overlaps before validating the survivors, as Go's edit engine does.
+            // Even a no-progress survivor reserves its span, and overlap refusals precede
+            // validation refusals in the result.
+            const resolved: Finding[] = [];
             let previous = -1;
             let winner = '';
             for(const finding of proposals) {
@@ -159,15 +171,22 @@ export class Linter {
                     );
                     continue;
                 }
+                resolved.push(finding);
+                previous = finding.editEnd;
+                winner = finding.rule;
+            }
+            const applied: Finding[] = [];
+            for(const finding of resolved) {
                 if(finding.editStart < 0 || finding.editEnd < finding.editStart || finding.editEnd > current.length) {
                     panic('invalid fix range');
                 }
                 if(current.slice(finding.editStart, finding.editEnd) === finding.replacement) {
-                    panic('nonprogressing fix');
+                    this.rejected.push(
+                        `rejected ${finding.rule} ${utf8Length(current.slice(0, finding.editStart))} ${utf8Length(current.slice(0, finding.editEnd))}  the fix replaces text with itself`,
+                    );
+                    continue;
                 }
                 applied.push(finding);
-                previous = finding.editEnd;
-                winner = finding.rule;
             }
             if(applied.length === 0) {
                 return current;

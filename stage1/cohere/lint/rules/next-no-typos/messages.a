@@ -1,0 +1,3 @@
+export function message(name: string, suggestion: string): string {
+ return '`' + name + '` may be a typo. Did you mean `' + suggestion + '`? Next.js calls its data fetching functions by exact name, so a misspelled export is never called and the page renders with no data at all. There is no error: the function is simply dead code the framework never looks for.';
+}

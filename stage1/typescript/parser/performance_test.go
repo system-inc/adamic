@@ -12,10 +12,13 @@ import (
 	"time"
 )
 
-// Not parallel: timing the three implementations together would measure their
-// contention. The opt-in benchmark runs after correctness and sanitizers.
-func TestPerformance(t *testing.T)      { performance(t, false) }
-func TestWholePerformance(t *testing.T) { performance(t, true) }
+// Opt-in benchmarks run one implementation per child and report the current
+// machine load with every sample.
+func TestPerformance(t *testing.T) { performance(t, false) }
+func TestWholePerformance(t *testing.T) {
+	t.Parallel()
+	performance(t, true)
+}
 func performance(t *testing.T, whole bool) {
 	if os.Getenv("ADAMIC_PARSER_BENCH") != "1" {
 		t.Skip("set ADAMIC_PARSER_BENCH=1 for best-of-five whole compiler parsing")
@@ -140,6 +143,7 @@ func performance(t *testing.T, whole bool) {
 // This mutant leaves every printed AST byte unchanged. Only the node-count
 // check used by the benchmark can catch it, not the ordinary tree comparison.
 func TestNodeCountCheckCatchesMutant(t *testing.T) {
+	t.Parallel()
 	directory := t.TempDir()
 	source := filepath.Join(directory, "expressions.ts")
 	if err := os.WriteFile(source, []byte("x + y * z; a?.b(x); (x) => x;"), 0644); err != nil {

@@ -1,0 +1,14 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { OptionsJson } from './options_json.ts';
+import { structureFileContext } from './structure_file_context.a';
+const args = programArguments();
+const file = readTextFile(args[0] ?? panic('fixture path'));
+if (file.kind === 'Error') { panic(file.message); }
+for (const line of file.text.split('\n')) {
+    if (line === '') { continue; }
+    const reader = new OptionsJson(line);
+    const root = reader.parse();
+    if (root < 0) { panic(reader.error); }
+    const context = structureFileContext(reader.node(root).text);
+    console.log(`${context.isReactFile} ${context.isSpecialNextJsFile} ${context.isNetworkServiceFile} ${context.isLinkComponentFile} ${context.isHorizontalRuleComponentFile} ${context.isInLibrariesStructure} ${context.isPageFile} ${context.isLayoutFile} ${context.isLocalStorageServiceFile}`);
+}
