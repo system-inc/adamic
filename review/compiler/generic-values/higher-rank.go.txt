@@ -1,0 +1,167 @@
+package lower
+
+import (
+	"strings"
+
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/system-inc/adamic/internal/load"
+)
+
+// A declaration alias retains binders only as a compile-time name, not a slot.
+func (l *lowering) genericAliasSource(node *ast.Node, seen map[*ast.Symbol]bool) *ast.Node {
+	node = ast.SkipParentheses(node)
+	if !ast.IsIdentifier(node) && !l.namespaceMember(node) {
+		return nil
+	}
+	symbol := l.symbol(node)
+	if symbol == nil || seen[symbol] {
+		return nil
+	}
+	seen[symbol] = true
+	for _, declaration := range symbol.Declarations {
+		if declaration.Kind == ast.KindFunctionDeclaration && declaration.Body() != nil && len(declaration.TypeParameters()) > 0 {
+			return declaration
+		}
+		if declaration.Kind == ast.KindVariableDeclaration && declaration.Type() == nil && declaration.Initializer() != nil && declaration.Parent.Flags&ast.NodeFlagsConst != 0 {
+			if source := l.genericAliasSource(declaration.Initializer(), seen); source != nil {
+				return source
+			}
+		}
+	}
+	return nil
+}
+
+func genericSlotPath(node *ast.Node) string {
+	names := []string{}
+	for current := node; current != nil; current = current.Parent {
+		switch current.Kind {
+		case ast.KindVariableDeclaration, ast.KindParameter, ast.KindPropertyDeclaration, ast.KindPropertySignature, ast.KindPropertyAssignment:
+			if name := current.Name(); name != nil && ast.IsIdentifier(name) {
+				names = append([]string{name.Text()}, names...)
+			}
+		case ast.KindFunctionDeclaration:
+			if len(names) == 0 && current.Name() != nil {
+				names = append(names, "return from "+current.Name().Text())
+			}
+			return strings.Join(names, ".")
+		}
+	}
+	if len(names) == 0 {
+		return "callable value"
+	}
+	return strings.Join(names, ".")
+}
+
+func (l *lowering) higherRankSlot(node *ast.Node) error {
+	var proven *checker.Type
+	switch node.Kind {
+	case ast.KindVariableDeclaration:
+		if node.Type() == nil && node.Initializer() != nil && node.Parent.Flags&ast.NodeFlagsConst != 0 {
+			// Existing intrinsic tokens also specialize at each call and cannot
+			// escape into an erased callable slot (library_method_values.go).
+			if _, known := l.libraryMethod(node.Initializer(), map[*ast.Symbol]bool{}); known {
+				return nil
+			}
+		}
+		if node.Type() == nil && node.Initializer() != nil && node.Parent.Flags&ast.NodeFlagsConst != 0 && l.genericAliasSource(node.Initializer(), map[*ast.Symbol]bool{}) != nil {
+			return nil
+		}
+		proven = l.checker.GetTypeAtLocation(node.Name())
+	case ast.KindParameter, ast.KindPropertyDeclaration, ast.KindPropertySignature:
+		proven = l.checker.GetTypeAtLocation(node.Name())
+	case ast.KindPropertyAssignment:
+		proven = l.checker.GetContextualTypeForObjectLiteralElement(node, checker.ContextFlagsNone)
+		if proven == nil {
+			proven = l.checker.GetTypeAtLocation(node.Name())
+		}
+	case ast.KindFunctionType, ast.KindConstructorType:
+		proven = l.checker.GetTypeFromTypeNode(node)
+	case ast.KindMethodSignature, ast.KindCallSignature, ast.KindConstructSignature:
+		signature := l.checker.GetSignatureFromDeclaration(node)
+		if signature == nil || len(signature.TypeParameters()) == 0 {
+			return nil
+		}
+		names := []string{}
+		for _, parameter := range signature.TypeParameters() {
+			names = append(names, l.checker.TypeToString(parameter))
+		}
+		return l.higherRankError(node, []string{genericSlotPath(node) + " (" + strings.Join(names, ", ") + ")"})
+	default:
+		return nil
+	}
+	return l.higherRankType(node, proven, genericSlotPath(node))
+}
+
+func (l *lowering) higherRankType(node *ast.Node, proven *checker.Type, path string) error {
+	slots := []string{}
+	seen := map[*checker.Type]bool{}
+	var incomplete error
+	var visit func(*checker.Type, string, int)
+	visit = func(proven *checker.Type, path string, depth int) {
+		if proven == nil || seen[proven] || incomplete != nil {
+			return
+		}
+		if proven.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsUnionOrIntersection|checker.TypeFlagsTypeParameter) == 0 {
+			return
+		}
+		if depth > 32 || len(seen) >= 1024 {
+			incomplete = &Refused{Where: l.program.Where(node), What: "a callable slot whose type graph exceeds the finite traversal bound (polymorphic recursion or excessive nesting) at " + path, Fix: "keep recursive type arguments unchanged, or use a finite concrete callable slot"}
+			return
+		}
+		seen[proven] = true
+		if proven.Flags()&checker.TypeFlagsUnionOrIntersection != 0 {
+			for _, member := range proven.Types() {
+				visit(member, path, depth+1)
+			}
+			return
+		}
+		for _, kind := range []checker.SignatureKind{checker.SignatureKindCall, checker.SignatureKindConstruct} {
+			for _, signature := range l.checker.GetSignaturesOfType(proven, kind) {
+				names := []string{}
+				for _, parameter := range signature.TypeParameters() {
+					names = append(names, l.checker.TypeToString(parameter))
+				}
+				if len(names) > 0 {
+					slots = append(slots, path+" ("+strings.Join(names, ", ")+")")
+				}
+				for _, parameter := range signature.Parameters() {
+					visit(l.checker.GetTypeOfSymbol(parameter), path+"."+parameter.Name, depth+1)
+				}
+				visit(l.checker.GetReturnTypeOfSignature(signature), path+" result", depth+1)
+			}
+		}
+		if proven.Flags()&checker.TypeFlagsObject == 0 {
+			return
+		}
+		if proven.ObjectFlags()&checker.ObjectFlagsReference != 0 {
+			for _, argument := range l.checker.GetTypeArguments(proven) {
+				visit(argument, path+" element", depth+1)
+			}
+		}
+		for _, property := range l.checker.GetPropertiesOfType(proven) {
+			library := false
+			for _, declaration := range property.Declarations {
+				if load.IsLibrary(ast.GetSourceFileOfNode(declaration)) || load.IsNodeLibrary(ast.GetSourceFileOfNode(declaration)) || load.IsPrelude(ast.GetSourceFileOfNode(declaration)) {
+					library = true
+					break
+				}
+			}
+			if !library {
+				visit(l.checker.GetTypeOfSymbol(property), path+"."+property.Name, depth+1)
+			}
+		}
+	}
+	visit(proven, path, 0)
+	if incomplete != nil {
+		return incomplete
+	}
+	if true {
+		return nil
+	}
+	return l.higherRankError(node, slots)
+}
+
+func (l *lowering) higherRankError(node *ast.Node, slots []string) error {
+	return &Refused{Where: l.program.Where(node), What: "higher-rank callable slot retains free type parameters: " + strings.Join(slots, "; ") + "; monomorphization has no instance to select; an erased generic entry would trust a type it cannot prove", Fix: "use concrete callable slots fixing every type parameter, or keep a const declaration alias and call it directly (adamic/generic-function-values)"}
+}

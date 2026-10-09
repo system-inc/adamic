@@ -16,6 +16,9 @@ func (l *lowering) genericFunctionValue(node, declaration *ast.Node) (ir.Express
 	if context == nil {
 		return nil, l.unfixedGenericValue(node, declaration, "without a contextual callable slot")
 	}
+	if err := l.higherRankType(node, context, genericSlotPath(node)); err != nil {
+		return nil, err
+	}
 	signatures := l.checker.GetSignaturesOfType(context, checker.SignatureKindCall)
 	if len(signatures) != 1 || len(signatures[0].TypeParameters()) != 0 {
 		return nil, l.unfixedGenericValue(node, declaration, "without one concrete contextual callable signature")
@@ -24,6 +27,7 @@ func (l *lowering) genericFunctionValue(node, declaration *ast.Node) (ir.Express
 	if target == nil {
 		return nil, l.notYet(node, "a generic function value without a checker signature")
 	}
+	resolved := checker.Checker_instantiateSignatureInContextOf(l.checker, target, signatures[0], nil, nil)
 	evidence := map[*checker.Type]*checker.Type{}
 	declared, given := target.Parameters(), signatures[0].Parameters()
 	for i, parameter := range declared {
@@ -35,11 +39,15 @@ func (l *lowering) genericFunctionValue(node, declaration *ast.Node) (ir.Express
 	for _, parameter := range declaration.TypeParameters() {
 		binder := l.checker.GetTypeAtLocation(parameter.Name())
 		concrete := evidence[binder]
+		if concrete == nil && parameter.AsTypeParameterDeclaration().DefaultType != nil {
+			if mapper := genericSignatureMapper(resolved); mapper != nil {
+				concrete = l.concrete(instantiateType(l.checker, binder, mapper))
+			}
+		}
 		if concrete == nil || concrete.Flags()&checker.TypeFlagsTypeParameter != 0 {
 			return nil, l.unfixedGenericValue(node, declaration, "with unresolved type parameter "+parameter.Name().Text())
 		}
 	}
-	resolved := checker.Checker_instantiateSignatureInContextOf(l.checker, target, signatures[0], nil, nil)
 	instance, err := l.instantiateFunctionSignature(node, declaration, resolved)
 	if err != nil {
 		return nil, err
@@ -67,7 +75,7 @@ func (l *lowering) unfixedGenericValue(node, declaration *ast.Node, reason strin
 	for _, parameter := range declaration.TypeParameters() {
 		names = append(names, parameter.Name().Text())
 	}
-	return &Refused{Where: l.program.Where(node), What: "generic function " + declaration.Name().Text() + " as a value " + reason + "; type parameters: " + strings.Join(names, ", "), Fix: "give this value a concrete callable slot fixing every type parameter (adamic/generic-function-values)"}
+	return &Refused{Where: l.program.Where(node), What: "generic function " + declaration.Name().Text() + " flowing into " + genericSlotPath(node) + " as a value " + reason + "; type parameters: " + strings.Join(names, ", "), Fix: "give this value a concrete callable slot fixing every type parameter (adamic/generic-function-values)"}
 }
 
 func (l *lowering) functionValueType(node *ast.Node, callee ir.Function) *checker.Type {

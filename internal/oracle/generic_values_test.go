@@ -143,3 +143,56 @@ run();`
 		}
 	}
 }
+
+func TestGenericValueHigherRankNodeControl(t *testing.T) {
+	t.Parallel()
+	path, err := filepath.Abs(filepath.Join(repository, genericValuesDirectory, "05_higher_rank.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	expected := onNode(t, path)
+	if expected.exitCode != 0 || string(expected.stdout) != "4 x\n" || len(expected.stderr) != 0 {
+		t.Fatalf("Node control: %+v", expected)
+	}
+	_, err = lowered(t, path)
+	var refused *lower.Refused
+	if !errors.As(err, &refused) || !strings.Contains(refused.What, "box.run (U, V)") {
+		t.Fatalf("higher-rank program escaped its ruled refusal: %v", err)
+	}
+}
+
+func TestGenericValueDeclaredDefaultWrongResult(t *testing.T) {
+	t.Parallel()
+	path := filepath.Join(t.TempDir(), "default.a")
+	source := `function constant<T = number>(): number { return 4; }
+const run: () => number = constant;
+console.log("" + run());`
+	if err := os.WriteFile(path, []byte(source), 0644); err != nil {
+		t.Fatal(err)
+	}
+	expected := onNode(t, path)
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	changed := 0
+	for i := range program.Functions {
+		function := &program.Functions[i]
+		if strings.HasPrefix(function.Name, "constant_") && !function.Closure {
+			function.Body = []ir.Statement{ir.Return{Value: ir.NumberConstant{Value: 17}}}
+			changed++
+		}
+	}
+	if changed != 1 {
+		t.Fatalf("default mutant changed %d instances", changed)
+	}
+	actual, binary := nativelyUncached(t, program)
+	if report := leaksUncached(t, program, binary); report != "" {
+		t.Fatal(report)
+	}
+	for name, got := range map[string]run{"native": actual, "javascript": onJavaScriptBackend(t, program)} {
+		if disagreement(expected, got) != "stdout differs" || got.exitCode != 0 || len(got.stderr) != 0 {
+			t.Fatalf("%s default mutant escaped Node: %+v", name, got)
+		}
+	}
+}
