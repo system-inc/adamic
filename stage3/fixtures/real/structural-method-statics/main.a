@@ -1,0 +1,9 @@
+// a-check: checked
+// From src/compiler/commandLineParser.ts:2239 (TypeScript 6.0.3, main adaptations).
+
+interface Host { readFile(fileName: string): string | undefined; }
+class Reader { static marker = 1; readFile(fileName: string): string | undefined { return 'read:' + fileName; } }
+const host: Host = new Reader();
+// commandLineParser.ts:2239 callback, unchanged.
+const read = (fileName: string) => host.readFile(fileName);
+console.log(`${read('tsconfig.json') ?? 'missing'}:${Reader.marker}`);
