@@ -1,0 +1,58 @@
+=== RUN   TestProjectReferencesConflictingOptions
+=== PAUSE TestProjectReferencesConflictingOptions
+=== CONT  TestProjectReferencesConflictingOptions
+=== RUN   TestProjectReferencesConflictingOptions/strictNullChecks
+    project_references_test.go:114: want "load: project reference options conflict: /tmp/adamic-gate/TestProjectReferencesConflictingOptionsstrictNullChecks4169715750/001/app/tsconfig.json references /tmp/adamic-gate/TestProjectReferencesConflictingOptionsstrictNullChecks4169715750/001/dependency/tsconfig.json: compiler option strictNullChecks differs; separate checker ownership is required", got <nil>
+=== RUN   TestProjectReferencesConflictingOptions/strictFunctionTypes
+    project_references_test.go:114: want "load: project reference options conflict: /tmp/adamic-gate/TestProjectReferencesConflictingOptionsstrictFunctionTypes1940625451/001/app/tsconfig.json references /tmp/adamic-gate/TestProjectReferencesConflictingOptionsstrictFunctionTypes1940625451/001/dependency/tsconfig.json: compiler option strictFunctionTypes differs; separate checker ownership is required", got <nil>
+=== RUN   TestProjectReferencesConflictingOptions/strictBindCallApply
+    project_references_test.go:114: want "load: project reference options conflict: /tmp/adamic-gate/TestProjectReferencesConflictingOptionsstrictBindCallApply438214506/001/app/tsconfig.json references /tmp/adamic-gate/TestProjectReferencesConflictingOptionsstrictBindCallApply438214506/001/dependency/tsconfig.json: compiler option strictBindCallApply differs; separate checker ownership is required", got <nil>
+=== RUN   TestProjectReferencesConflictingOptions/strictPropertyInitialization
+    project_references_test.go:114: want "load: project reference options conflict: /tmp/adamic-gate/TestProjectReferencesConflictingOptionsstrictPropertyInitializa2488748719/001/app/tsconfig.json references /tmp/adamic-gate/TestProjectReferencesConflictingOptionsstrictPropertyInitializa2488748719/001/dependency/tsconfig.json: compiler option strictPropertyInitialization differs; separate checker ownership is required", got <nil>
+=== RUN   TestProjectReferencesConflictingOptions/strictBuiltinIteratorReturn
+    project_references_test.go:114: want "load: project reference options conflict: /tmp/adamic-gate/TestProjectReferencesConflictingOptionsstrictBuiltinIteratorRet2615557832/001/app/tsconfig.json references /tmp/adamic-gate/TestProjectReferencesConflictingOptionsstrictBuiltinIteratorRet2615557832/001/dependency/tsconfig.json: compiler option strictBuiltinIteratorReturn differs; separate checker ownership is required", got <nil>
+=== RUN   TestProjectReferencesConflictingOptions/useUnknownInCatchVariables
+    project_references_test.go:114: want "load: project reference options conflict: /tmp/adamic-gate/TestProjectReferencesConflictingOptionsuseUnknownInCatchVariabl3550564217/001/app/tsconfig.json references /tmp/adamic-gate/TestProjectReferencesConflictingOptionsuseUnknownInCatchVariabl3550564217/001/dependency/tsconfig.json: compiler option useUnknownInCatchVariables differs; separate checker ownership is required", got <nil>
+=== RUN   TestProjectReferencesConflictingOptions/noImplicitAny
+    project_references_test.go:114: want "load: project reference options conflict: /tmp/adamic-gate/TestProjectReferencesConflictingOptionsnoImplicitAny757477982/001/app/tsconfig.json references /tmp/adamic-gate/TestProjectReferencesConflictingOptionsnoImplicitAny757477982/001/dependency/tsconfig.json: compiler option noImplicitAny differs; separate checker ownership is required", got <nil>
+=== RUN   TestProjectReferencesConflictingOptions/noImplicitThis
+    project_references_test.go:114: want "load: project reference options conflict: /tmp/adamic-gate/TestProjectReferencesConflictingOptionsnoImplicitThis1439604038/001/app/tsconfig.json references /tmp/adamic-gate/TestProjectReferencesConflictingOptionsnoImplicitThis1439604038/001/dependency/tsconfig.json: compiler option noImplicitThis differs; separate checker ownership is required", got <nil>
+=== RUN   TestProjectReferencesConflictingOptions/noUncheckedIndexedAccess
+    project_references_test.go:114: want "load: project reference options conflict: /tmp/adamic-gate/TestProjectReferencesConflictingOptionsnoUncheckedIndexedAccess214718871/001/app/tsconfig.json references /tmp/adamic-gate/TestProjectReferencesConflictingOptionsnoUncheckedIndexedAccess214718871/001/dependency/tsconfig.json: compiler option noUncheckedIndexedAccess differs; separate checker ownership is required", got <nil>
+=== RUN   TestProjectReferencesConflictingOptions/exactOptionalPropertyTypes
+    project_references_test.go:114: want "load: project reference options conflict: /tmp/adamic-gate/TestProjectReferencesConflictingOptionsexactOptionalPropertyTyp1838526283/001/app/tsconfig.json references /tmp/adamic-gate/TestProjectReferencesConflictingOptionsexactOptionalPropertyTyp1838526283/001/dependency/tsconfig.json: compiler option exactOptionalPropertyTypes differs; separate checker ownership is required", got <nil>
+=== RUN   TestProjectReferencesConflictingOptions/target
+    project_references_test.go:114: want "load: project reference options conflict: /tmp/adamic-gate/TestProjectReferencesConflictingOptionstarget482657256/001/app/tsconfig.json references /tmp/adamic-gate/TestProjectReferencesConflictingOptionstarget482657256/001/dependency/tsconfig.json: compiler option target differs; separate checker ownership is required", got <nil>
+=== RUN   TestProjectReferencesConflictingOptions/module
+    project_references_test.go:114: want "load: project reference options conflict: /tmp/adamic-gate/TestProjectReferencesConflictingOptionsmodule59042073/001/app/tsconfig.json references /tmp/adamic-gate/TestProjectReferencesConflictingOptionsmodule59042073/001/dependency/tsconfig.json: compiler option module differs; separate checker ownership is required", got <nil>
+=== RUN   TestProjectReferencesConflictingOptions/lib
+    project_references_test.go:114: want "load: project reference options conflict: /tmp/adamic-gate/TestProjectReferencesConflictingOptionslib2924108565/001/app/tsconfig.json references /tmp/adamic-gate/TestProjectReferencesConflictingOptionslib2924108565/001/dependency/tsconfig.json: compiler option lib differs; separate checker ownership is required", got <nil>
+=== RUN   TestProjectReferencesConflictingOptions/paths
+    project_references_test.go:114: want "load: project reference options conflict: /tmp/adamic-gate/TestProjectReferencesConflictingOptionspaths3883903626/001/app/tsconfig.json references /tmp/adamic-gate/TestProjectReferencesConflictingOptionspaths3883903626/001/dependency/tsconfig.json: compiler option paths differs; separate checker ownership is required", got <nil>
+=== RUN   TestProjectReferencesConflictingOptions/noUncheckedSideEffectImports
+    project_references_test.go:114: want "load: project reference options conflict: /tmp/adamic-gate/TestProjectReferencesConflictingOptionsnoUncheckedSideEffectImp1962785131/001/app/tsconfig.json references /tmp/adamic-gate/TestProjectReferencesConflictingOptionsnoUncheckedSideEffectImp1962785131/001/dependency/tsconfig.json: compiler option noUncheckedSideEffectImports differs; separate checker ownership is required", got <nil>
+=== RUN   TestProjectReferencesConflictingOptions/forceConsistentCasingInFileNames
+    project_references_test.go:114: want "load: project reference options conflict: /tmp/adamic-gate/TestProjectReferencesConflictingOptionsforceConsistentCasingInF3751684948/001/app/tsconfig.json references /tmp/adamic-gate/TestProjectReferencesConflictingOptionsforceConsistentCasingInF3751684948/001/dependency/tsconfig.json: compiler option forceConsistentCasingInFileNames differs; separate checker ownership is required", got <nil>
+=== RUN   TestProjectReferencesConflictingOptions/deduplicatePackages
+    project_references_test.go:114: want "load: project reference options conflict: /tmp/adamic-gate/TestProjectReferencesConflictingOptionsdeduplicatePackages294843508/001/app/tsconfig.json references /tmp/adamic-gate/TestProjectReferencesConflictingOptionsdeduplicatePackages294843508/001/dependency/tsconfig.json: compiler option deduplicatePackages differs; separate checker ownership is required", got <nil>
+--- FAIL: TestProjectReferencesConflictingOptions (11.30s)
+    --- FAIL: TestProjectReferencesConflictingOptions/strictNullChecks (0.50s)
+    --- FAIL: TestProjectReferencesConflictingOptions/strictFunctionTypes (0.65s)
+    --- FAIL: TestProjectReferencesConflictingOptions/strictBindCallApply (0.51s)
+    --- FAIL: TestProjectReferencesConflictingOptions/strictPropertyInitialization (0.58s)
+    --- FAIL: TestProjectReferencesConflictingOptions/strictBuiltinIteratorReturn (0.52s)
+    --- FAIL: TestProjectReferencesConflictingOptions/useUnknownInCatchVariables (0.53s)
+    --- FAIL: TestProjectReferencesConflictingOptions/noImplicitAny (1.05s)
+    --- FAIL: TestProjectReferencesConflictingOptions/noImplicitThis (0.98s)
+    --- FAIL: TestProjectReferencesConflictingOptions/noUncheckedIndexedAccess (0.70s)
+    --- FAIL: TestProjectReferencesConflictingOptions/exactOptionalPropertyTypes (0.81s)
+    --- FAIL: TestProjectReferencesConflictingOptions/target (0.42s)
+    --- FAIL: TestProjectReferencesConflictingOptions/module (0.85s)
+    --- FAIL: TestProjectReferencesConflictingOptions/lib (0.62s)
+    --- FAIL: TestProjectReferencesConflictingOptions/paths (0.42s)
+    --- FAIL: TestProjectReferencesConflictingOptions/noUncheckedSideEffectImports (0.70s)
+    --- FAIL: TestProjectReferencesConflictingOptions/forceConsistentCasingInFileNames (0.80s)
+    --- FAIL: TestProjectReferencesConflictingOptions/deduplicatePackages (0.66s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/load	11.337s
+FAIL

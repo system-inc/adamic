@@ -1,0 +1,226 @@
+=== RUN   TestClassFeaturesStaticSoundness
+=== PAUSE TestClassFeaturesStaticSoundness
+=== RUN   TestClassFeaturesStaticParentCycle
+=== PAUSE TestClassFeaturesStaticParentCycle
+=== RUN   TestClassStaticInitializerCallIsEmitted
+=== PAUSE TestClassStaticInitializerCallIsEmitted
+=== RUN   TestClassStaticSideEffectMatchesNode
+=== PAUSE TestClassStaticSideEffectMatchesNode
+=== RUN   TestClassWrongOutputIteratorReceiver
+=== PAUSE TestClassWrongOutputIteratorReceiver
+=== RUN   TestClassWrongOutputKeysRepair
+=== PAUSE TestClassWrongOutputKeysRepair
+=== RUN   TestClassWrongOutputPrivateRepair
+=== PAUSE TestClassWrongOutputPrivateRepair
+=== RUN   TestClockGenericReturnsT01Shapes
+=== PAUSE TestClockGenericReturnsT01Shapes
+=== RUN   TestClockGenericReturnsT01DeclinesBrandedPrimitives
+=== PAUSE TestClockGenericReturnsT01DeclinesBrandedPrimitives
+=== RUN   TestClockGenericReturnsT01RejectsNullBeforeBody
+=== PAUSE TestClockGenericReturnsT01RejectsNullBeforeBody
+=== RUN   TestClockGenericReturnsT01RejectsIndexBeforeBody
+=== PAUSE TestClockGenericReturnsT01RejectsIndexBeforeBody
+=== RUN   TestConstructorCacheOneArgumentRemainsNotYet
+=== PAUSE TestConstructorCacheOneArgumentRemainsNotYet
+=== RUN   TestDefiniteAssignmentUsesReadiness
+=== PAUSE TestDefiniteAssignmentUsesReadiness
+=== RUN   TestDefiniteAssignmentSoundNeighbors
+=== PAUSE TestDefiniteAssignmentSoundNeighbors
+=== RUN   TestEmptyLiteralGenericReturnUsesSamePath
+=== PAUSE TestEmptyLiteralGenericReturnUsesSamePath
+=== RUN   TestEntriesAllocationProof
+=== PAUSE TestEntriesAllocationProof
+=== RUN   TestConstEnumErasesRuntimeObject
+=== PAUSE TestConstEnumErasesRuntimeObject
+=== RUN   TestDefaultTaggedInterfaceAdmission
+=== PAUSE TestDefaultTaggedInterfaceAdmission
+=== RUN   TestDefaultTaggedInterfaceNeedsNoFlag
+=== PAUSE TestDefaultTaggedInterfaceNeedsNoFlag
+=== RUN   TestDestructuredMethodsCannotLoadOwnSlots
+=== PAUSE TestDestructuredMethodsCannotLoadOwnSlots
+=== RUN   TestConsoleLowersToWriteLine
+=== PAUSE TestConsoleLowersToWriteLine
+=== RUN   TestDebugNamespaceMergedCapabilities
+=== PAUSE TestDebugNamespaceMergedCapabilities
+=== RUN   TestEmptyNeverMapCannotGainWritableInhabitants
+=== PAUSE TestEmptyNeverMapCannotGainWritableInhabitants
+=== RUN   TestClosedFrameInputRejectsMutation
+=== PAUSE TestClosedFrameInputRejectsMutation
+=== RUN   TestConditionAssertionAdmission
+=== PAUSE TestConditionAssertionAdmission
+=== CONT  TestClassFeaturesStaticSoundness
+=== CONT  TestDefiniteAssignmentSoundNeighbors
+=== CONT  TestClassWrongOutputPrivateRepair
+=== CONT  TestClassWrongOutputKeysRepair
+=== CONT  TestClockGenericReturnsT01Shapes
+=== RUN   TestClockGenericReturnsT01Shapes/nested_readonly_fields
+=== PAUSE TestClockGenericReturnsT01Shapes/nested_readonly_fields
+=== RUN   TestClockGenericReturnsT01Shapes/callable
+=== PAUSE TestClockGenericReturnsT01Shapes/callable
+=== RUN   TestClockGenericReturnsT01Shapes/constructable
+=== PAUSE TestClockGenericReturnsT01Shapes/constructable
+=== RUN   TestClockGenericReturnsT01Shapes/indexed
+=== PAUSE TestClockGenericReturnsT01Shapes/indexed
+=== RUN   TestClockGenericReturnsT01Shapes/container_intersection
+=== PAUSE TestClockGenericReturnsT01Shapes/container_intersection
+=== RUN   TestClockGenericReturnsT01Shapes/nested_callable
+=== PAUSE TestClockGenericReturnsT01Shapes/nested_callable
+=== RUN   TestClockGenericReturnsT01Shapes/null_remains_distinct
+=== PAUSE TestClockGenericReturnsT01Shapes/null_remains_distinct
+=== CONT  TestClassWrongOutputIteratorReceiver
+--- PASS: TestClassWrongOutputPrivateRepair (0.31s)
+=== CONT  TestClassStaticSideEffectMatchesNode
+--- PASS: TestClassWrongOutputKeysRepair (0.33s)
+=== CONT  TestClassStaticInitializerCallIsEmitted
+--- PASS: TestClassStaticInitializerCallIsEmitted (0.05s)
+=== CONT  TestClassFeaturesStaticParentCycle
+--- PASS: TestClassFeaturesStaticParentCycle (0.07s)
+=== CONT  TestClockGenericReturnsT01RejectsIndexBeforeBody
+--- PASS: TestClockGenericReturnsT01RejectsIndexBeforeBody (0.17s)
+=== CONT  TestDefiniteAssignmentUsesReadiness
+--- PASS: TestClassFeaturesStaticSoundness (0.80s)
+=== CONT  TestConstructorCacheOneArgumentRemainsNotYet
+--- PASS: TestClassStaticSideEffectMatchesNode (0.51s)
+=== CONT  TestDestructuredMethodsCannotLoadOwnSlots
+--- PASS: TestClassWrongOutputIteratorReceiver (0.85s)
+=== CONT  TestConditionAssertionAdmission
+--- PASS: TestConstructorCacheOneArgumentRemainsNotYet (0.07s)
+=== CONT  TestClosedFrameInputRejectsMutation
+--- PASS: TestDefiniteAssignmentSoundNeighbors (1.06s)
+=== CONT  TestEmptyNeverMapCannotGainWritableInhabitants
+--- PASS: TestConditionAssertionAdmission (0.21s)
+=== CONT  TestDebugNamespaceMergedCapabilities
+=== RUN   TestDebugNamespaceMergedCapabilities/debug_log.a
+=== PAUSE TestDebugNamespaceMergedCapabilities/debug_log.a
+=== RUN   TestDebugNamespaceMergedCapabilities/class_merge.a
+=== PAUSE TestDebugNamespaceMergedCapabilities/class_merge.a
+=== RUN   TestDebugNamespaceMergedCapabilities/debug_class.a
+=== PAUSE TestDebugNamespaceMergedCapabilities/debug_class.a
+=== CONT  TestConsoleLowersToWriteLine
+--- PASS: TestEmptyNeverMapCannotGainWritableInhabitants (0.07s)
+=== CONT  TestConstEnumErasesRuntimeObject
+--- PASS: TestClosedFrameInputRejectsMutation (0.27s)
+=== CONT  TestDefaultTaggedInterfaceNeedsNoFlag
+--- PASS: TestConsoleLowersToWriteLine (0.10s)
+=== CONT  TestDefaultTaggedInterfaceAdmission
+=== RUN   TestDefaultTaggedInterfaceAdmission/complete
+=== PAUSE TestDefaultTaggedInterfaceAdmission/complete
+=== RUN   TestDefaultTaggedInterfaceAdmission/missing_payload
+=== PAUSE TestDefaultTaggedInterfaceAdmission/missing_payload
+=== RUN   TestDefaultTaggedInterfaceAdmission/wrong_payload
+=== PAUSE TestDefaultTaggedInterfaceAdmission/wrong_payload
+=== RUN   TestDefaultTaggedInterfaceAdmission/broad_tag
+=== PAUSE TestDefaultTaggedInterfaceAdmission/broad_tag
+=== RUN   TestDefaultTaggedInterfaceAdmission/alias_write
+=== PAUSE TestDefaultTaggedInterfaceAdmission/alias_write
+=== RUN   TestDefaultTaggedInterfaceAdmission/unused_bad_factory
+=== PAUSE TestDefaultTaggedInterfaceAdmission/unused_bad_factory
+=== RUN   TestDefaultTaggedInterfaceAdmission/different_tag
+=== PAUSE TestDefaultTaggedInterfaceAdmission/different_tag
+=== RUN   TestDefaultTaggedInterfaceAdmission/dynamic_complete
+=== PAUSE TestDefaultTaggedInterfaceAdmission/dynamic_complete
+=== RUN   TestDefaultTaggedInterfaceAdmission/optional_target
+=== PAUSE TestDefaultTaggedInterfaceAdmission/optional_target
+=== RUN   TestDefaultTaggedInterfaceAdmission/optional_target_read
+=== PAUSE TestDefaultTaggedInterfaceAdmission/optional_target_read
+=== RUN   TestDefaultTaggedInterfaceAdmission/spread
+=== PAUSE TestDefaultTaggedInterfaceAdmission/spread
+=== RUN   TestDefaultTaggedInterfaceAdmission/reflection_alias
+=== PAUSE TestDefaultTaggedInterfaceAdmission/reflection_alias
+=== RUN   TestDefaultTaggedInterfaceAdmission/generic
+=== PAUSE TestDefaultTaggedInterfaceAdmission/generic
+=== RUN   TestDefaultTaggedInterfaceAdmission/staged_class
+=== PAUSE TestDefaultTaggedInterfaceAdmission/staged_class
+=== RUN   TestDefaultTaggedInterfaceAdmission/forged_payload
+=== PAUSE TestDefaultTaggedInterfaceAdmission/forged_payload
+=== CONT  TestEmptyLiteralGenericReturnUsesSamePath
+--- PASS: TestDestructuredMethodsCannotLoadOwnSlots (0.35s)
+=== CONT  TestEntriesAllocationProof
+=== RUN   TestEntriesAllocationProof/const_source={value:1,_hidden:2};_const_view:{readonly_value:number}=source;_Object.entries(view);
+=== PAUSE TestEntriesAllocationProof/const_source={value:1,_hidden:2};_const_view:{readonly_value:number}=source;_Object.entries(view);
+=== RUN   TestEntriesAllocationProof/let_source={value:1,_hidden:2};_const_view:{readonly_value:number}=source;_Object.entries(view);
+=== PAUSE TestEntriesAllocationProof/let_source={value:1,_hidden:2};_const_view:{readonly_value:number}=source;_Object.entries(view);
+=== RUN   TestEntriesAllocationProof/let_source:{readonly_value:number}={value:1};_const_other={value:2,_hidden:'bad'};_source=other;_Object.entries(source);
+=== PAUSE TestEntriesAllocationProof/let_source:{readonly_value:number}={value:1};_const_other={value:2,_hidden:'bad'};_source=other;_Object.entries(source);
+=== RUN   TestEntriesAllocationProof/let_source:{readonly_value:number}={value:1};_const_other={value:2,_hidden:'bad'};_[source]=[other];_Object.entries(source);
+=== PAUSE TestEntriesAllocationProof/let_source:{readonly_value:number}={value:1};_const_other={value:2,_hidden:'bad'};_[source]=[other];_Object.entries(source);
+=== RUN   TestEntriesAllocationProof/function_entries(source:{readonly_value:number}):void_{Object.entries(source);}_entries({value:1});
+=== PAUSE TestEntriesAllocationProof/function_entries(source:{readonly_value:number}):void_{Object.entries(source);}_entries({value:1});
+=== RUN   TestEntriesAllocationProof/const_source={value:1,_hidden:'bad'};_const_view:{readonly_value:number}=source;_Object.entries(view);
+=== PAUSE TestEntriesAllocationProof/const_source={value:1,_hidden:'bad'};_const_view:{readonly_value:number}=source;_Object.entries(view);
+=== CONT  TestClockGenericReturnsT01RejectsNullBeforeBody
+--- PASS: TestEmptyLiteralGenericReturnUsesSamePath (0.05s)
+=== CONT  TestClockGenericReturnsT01DeclinesBrandedPrimitives
+--- PASS: TestClockGenericReturnsT01RejectsNullBeforeBody (0.09s)
+=== CONT  TestClockGenericReturnsT01Shapes/nested_readonly_fields
+=== CONT  TestClockGenericReturnsT01Shapes/container_intersection
+--- PASS: TestClockGenericReturnsT01DeclinesBrandedPrimitives (0.11s)
+=== CONT  TestClockGenericReturnsT01Shapes/constructable
+=== CONT  TestClockGenericReturnsT01Shapes/indexed
+--- PASS: TestDefiniteAssignmentUsesReadiness (0.74s)
+=== CONT  TestClockGenericReturnsT01Shapes/null_remains_distinct
+=== CONT  TestClockGenericReturnsT01Shapes/callable
+--- PASS: TestDefaultTaggedInterfaceNeedsNoFlag (0.22s)
+=== CONT  TestClockGenericReturnsT01Shapes/nested_callable
+--- PASS: TestConstEnumErasesRuntimeObject (0.26s)
+=== CONT  TestDebugNamespaceMergedCapabilities/debug_log.a
+=== CONT  TestDebugNamespaceMergedCapabilities/debug_class.a
+=== CONT  TestDebugNamespaceMergedCapabilities/class_merge.a
+=== CONT  TestDefaultTaggedInterfaceAdmission/complete
+--- PASS: TestClockGenericReturnsT01Shapes (0.00s)
+    --- PASS: TestClockGenericReturnsT01Shapes/nested_readonly_fields (0.06s)
+    --- PASS: TestClockGenericReturnsT01Shapes/container_intersection (0.05s)
+    --- PASS: TestClockGenericReturnsT01Shapes/constructable (0.05s)
+    --- PASS: TestClockGenericReturnsT01Shapes/indexed (0.05s)
+    --- PASS: TestClockGenericReturnsT01Shapes/callable (0.05s)
+    --- PASS: TestClockGenericReturnsT01Shapes/null_remains_distinct (0.06s)
+    --- PASS: TestClockGenericReturnsT01Shapes/nested_callable (0.05s)
+=== CONT  TestEntriesAllocationProof/const_source={value:1,_hidden:2};_const_view:{readonly_value:number}=source;_Object.entries(view);
+=== CONT  TestEntriesAllocationProof/let_source:{readonly_value:number}={value:1};_const_other={value:2,_hidden:'bad'};_[source]=[other];_Object.entries(source);
+=== CONT  TestEntriesAllocationProof/const_source={value:1,_hidden:'bad'};_const_view:{readonly_value:number}=source;_Object.entries(view);
+=== CONT  TestEntriesAllocationProof/function_entries(source:{readonly_value:number}):void_{Object.entries(source);}_entries({value:1});
+=== CONT  TestEntriesAllocationProof/let_source:{readonly_value:number}={value:1};_const_other={value:2,_hidden:'bad'};_source=other;_Object.entries(source);
+=== CONT  TestDefaultTaggedInterfaceAdmission/optional_target
+=== CONT  TestDefaultTaggedInterfaceAdmission/forged_payload
+=== CONT  TestDefaultTaggedInterfaceAdmission/staged_class
+--- PASS: TestDebugNamespaceMergedCapabilities (0.00s)
+    --- PASS: TestDebugNamespaceMergedCapabilities/class_merge.a (0.04s)
+    --- PASS: TestDebugNamespaceMergedCapabilities/debug_class.a (0.20s)
+    --- PASS: TestDebugNamespaceMergedCapabilities/debug_log.a (0.21s)
+=== CONT  TestDefaultTaggedInterfaceAdmission/generic
+=== CONT  TestDefaultTaggedInterfaceAdmission/reflection_alias
+=== CONT  TestDefaultTaggedInterfaceAdmission/spread
+=== CONT  TestDefaultTaggedInterfaceAdmission/optional_target_read
+=== CONT  TestDefaultTaggedInterfaceAdmission/alias_write
+=== CONT  TestDefaultTaggedInterfaceAdmission/dynamic_complete
+=== CONT  TestDefaultTaggedInterfaceAdmission/different_tag
+=== CONT  TestDefaultTaggedInterfaceAdmission/unused_bad_factory
+=== CONT  TestEntriesAllocationProof/let_source={value:1,_hidden:2};_const_view:{readonly_value:number}=source;_Object.entries(view);
+--- PASS: TestEntriesAllocationProof (0.00s)
+    --- PASS: TestEntriesAllocationProof/const_source={value:1,_hidden:2};_const_view:{readonly_value:number}=source;_Object.entries(view); (0.04s)
+    --- PASS: TestEntriesAllocationProof/let_source:{readonly_value:number}={value:1};_const_other={value:2,_hidden:'bad'};_[source]=[other];_Object.entries(source); (0.06s)
+    --- PASS: TestEntriesAllocationProof/const_source={value:1,_hidden:'bad'};_const_view:{readonly_value:number}=source;_Object.entries(view); (0.05s)
+    --- PASS: TestEntriesAllocationProof/function_entries(source:{readonly_value:number}):void_{Object.entries(source);}_entries({value:1}); (0.03s)
+    --- PASS: TestEntriesAllocationProof/let_source:{readonly_value:number}={value:1};_const_other={value:2,_hidden:'bad'};_source=other;_Object.entries(source); (0.06s)
+    --- PASS: TestEntriesAllocationProof/let_source={value:1,_hidden:2};_const_view:{readonly_value:number}=source;_Object.entries(view); (0.04s)
+=== CONT  TestDefaultTaggedInterfaceAdmission/wrong_payload
+=== CONT  TestDefaultTaggedInterfaceAdmission/broad_tag
+=== CONT  TestDefaultTaggedInterfaceAdmission/missing_payload
+--- PASS: TestDefaultTaggedInterfaceAdmission (0.00s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/forged_payload (0.05s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/staged_class (0.05s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/complete (0.25s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/reflection_alias (0.04s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/optional_target_read (0.04s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/optional_target (0.20s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/different_tag (0.04s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/generic (0.20s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/spread (0.19s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/alias_write (0.19s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/dynamic_complete (0.17s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/wrong_payload (0.05s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/broad_tag (0.05s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/missing_payload (0.05s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/unused_bad_factory (0.19s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	1.984s

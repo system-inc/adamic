@@ -1,0 +1,8 @@
+=== RUN   TestGenericBodyRelationsIndexedReturnMapper
+=== PAUSE TestGenericBodyRelationsIndexedReturnMapper
+=== CONT  TestGenericBodyRelationsIndexedReturnMapper
+    generic_body_relations_test.go:117: /tmp/adamic-gate/TestGenericBodyRelationsIndexedReturnMapper3435862712/001/main.a:1:10: stage 0 can't lower a function returning T["value"] yet
+--- FAIL: TestGenericBodyRelationsIndexedReturnMapper (0.08s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.094s
+FAIL

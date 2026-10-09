@@ -1,0 +1,584 @@
+=== RUN   TestUnknownArrayPredicateRefusesUnrepresentedObservations
+=== PAUSE TestUnknownArrayPredicateRefusesUnrepresentedObservations
+=== RUN   TestUncheckableCastsStayRefused
+=== PAUSE TestUncheckableCastsStayRefused
+=== RUN   TestUndecidedCycleReadsUseReadyChecks
+=== RUN   TestUndecidedCycleReadsUseReadyChecks/early_value
+=== RUN   TestUndecidedCycleReadsUseReadyChecks/initialized_value
+=== RUN   TestUndecidedCycleReadsUseReadyChecks/indirect_value
+=== RUN   TestUndecidedCycleReadsUseReadyChecks/early_plain_class
+=== RUN   TestUndecidedCycleReadsUseReadyChecks/initialized_plain_class
+=== RUN   TestUndecidedCycleReadsUseReadyChecks/early_extends
+=== RUN   TestUndecidedCycleReadsUseReadyChecks/initialized_extends
+--- PASS: TestUndecidedCycleReadsUseReadyChecks (1.95s)
+    --- PASS: TestUndecidedCycleReadsUseReadyChecks/early_value (0.27s)
+    --- PASS: TestUndecidedCycleReadsUseReadyChecks/initialized_value (0.27s)
+    --- PASS: TestUndecidedCycleReadsUseReadyChecks/indirect_value (0.28s)
+    --- PASS: TestUndecidedCycleReadsUseReadyChecks/early_plain_class (0.29s)
+    --- PASS: TestUndecidedCycleReadsUseReadyChecks/initialized_plain_class (0.29s)
+    --- PASS: TestUndecidedCycleReadsUseReadyChecks/early_extends (0.28s)
+    --- PASS: TestUndecidedCycleReadsUseReadyChecks/initialized_extends (0.29s)
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix
+=== RUN   TestUnprovenPredicateReturnsAreRefused
+=== PAUSE TestUnprovenPredicateReturnsAreRefused
+=== RUN   TestUnrepresentedPrototypeCallsAreNotYet
+=== PAUSE TestUnrepresentedPrototypeCallsAreNotYet
+=== RUN   TestTypedArraysLower
+=== PAUSE TestTypedArraysLower
+=== RUN   TestTypedArrayGaps
+=== PAUSE TestTypedArrayGaps
+=== RUN   TestTypedArrayViewsCannotChangeRepresentation
+=== PAUSE TestTypedArrayViewsCannotChangeRepresentation
+=== RUN   TestTypedArrayFromArray
+=== PAUSE TestTypedArrayFromArray
+=== RUN   TestTypedArrayFromEmptyArray
+=== PAUSE TestTypedArrayFromEmptyArray
+=== RUN   TestUnknownReflectionRefusals
+=== PAUSE TestUnknownReflectionRefusals
+=== RUN   TestViewObjectContractsAreAvailableToEraser
+=== PAUSE TestViewObjectContractsAreAvailableToEraser
+=== RUN   TestViewObjectWritesNeedSourceCertificate
+=== PAUSE TestViewObjectWritesNeedSourceCertificate
+=== RUN   TestUntaggedViewMemberTags
+=== PAUSE TestUntaggedViewMemberTags
+=== RUN   TestUntaggedViewStructuralFallback
+=== PAUSE TestUntaggedViewStructuralFallback
+=== CONT  TestUnknownArrayPredicateRefusesUnrepresentedObservations
+=== CONT  TestUnprovenPredicateReturnsAreRefused
+=== RUN   TestUnprovenPredicateReturnsAreRefused/unconditional_true
+=== PAUSE TestUnprovenPredicateReturnsAreRefused/unconditional_true
+=== RUN   TestUnprovenPredicateReturnsAreRefused/different_variable
+=== PAUSE TestUnprovenPredicateReturnsAreRefused/different_variable
+=== RUN   TestUnprovenPredicateReturnsAreRefused/wider_narrowing
+=== PAUSE TestUnprovenPredicateReturnsAreRefused/wider_narrowing
+=== RUN   TestUnprovenPredicateReturnsAreRefused/partial_true_set
+=== PAUSE TestUnprovenPredicateReturnsAreRefused/partial_true_set
+=== RUN   TestUnprovenPredicateReturnsAreRefused/narrower_narrowing
+=== PAUSE TestUnprovenPredicateReturnsAreRefused/narrower_narrowing
+=== RUN   TestUnprovenPredicateReturnsAreRefused/false_branch_lie
+=== PAUSE TestUnprovenPredicateReturnsAreRefused/false_branch_lie
+=== RUN   TestUnprovenPredicateReturnsAreRefused/positive_number
+=== PAUSE TestUnprovenPredicateReturnsAreRefused/positive_number
+=== RUN   TestUnprovenPredicateReturnsAreRefused/opaque_call
+=== PAUSE TestUnprovenPredicateReturnsAreRefused/opaque_call
+=== RUN   TestUnprovenPredicateReturnsAreRefused/modified_parameter
+=== PAUSE TestUnprovenPredicateReturnsAreRefused/modified_parameter
+=== RUN   TestUnprovenPredicateReturnsAreRefused/captured_write
+=== PAUSE TestUnprovenPredicateReturnsAreRefused/captured_write
+=== RUN   TestUnprovenPredicateReturnsAreRefused/aliased_discriminant_call
+=== PAUSE TestUnprovenPredicateReturnsAreRefused/aliased_discriminant_call
+=== RUN   TestUnprovenPredicateReturnsAreRefused/aliased_discriminant_write
+=== PAUSE TestUnprovenPredicateReturnsAreRefused/aliased_discriminant_write
+=== RUN   TestUnprovenPredicateReturnsAreRefused/aliased_discriminant_getter
+=== PAUSE TestUnprovenPredicateReturnsAreRefused/aliased_discriminant_getter
+=== RUN   TestUnprovenPredicateReturnsAreRefused/assertion_wider_shape
+=== PAUSE TestUnprovenPredicateReturnsAreRefused/assertion_wider_shape
+=== RUN   TestUnprovenPredicateReturnsAreRefused/nominal_guard_mismatch
+=== PAUSE TestUnprovenPredicateReturnsAreRefused/nominal_guard_mismatch
+=== RUN   TestUnprovenPredicateReturnsAreRefused/nominal_assertion_mismatch
+=== PAUSE TestUnprovenPredicateReturnsAreRefused/nominal_assertion_mismatch
+=== RUN   TestUnprovenPredicateReturnsAreRefused/assertion_empty
+=== PAUSE TestUnprovenPredicateReturnsAreRefused/assertion_empty
+=== RUN   TestUnprovenPredicateReturnsAreRefused/assertion_early_return
+=== PAUSE TestUnprovenPredicateReturnsAreRefused/assertion_early_return
+=== RUN   TestUnprovenPredicateReturnsAreRefused/assertion_wrong_branch
+=== PAUSE TestUnprovenPredicateReturnsAreRefused/assertion_wrong_branch
+=== RUN   TestUnprovenPredicateReturnsAreRefused/assertion_call_invalidation
+=== PAUSE TestUnprovenPredicateReturnsAreRefused/assertion_call_invalidation
+=== RUN   TestUnprovenPredicateReturnsAreRefused/assert_cond_empty
+=== PAUSE TestUnprovenPredicateReturnsAreRefused/assert_cond_empty
+=== RUN   TestUnprovenPredicateReturnsAreRefused/assert_cond_false
+=== PAUSE TestUnprovenPredicateReturnsAreRefused/assert_cond_false
+=== RUN   TestUnprovenPredicateReturnsAreRefused/assert_cond_nonboolean
+=== PAUSE TestUnprovenPredicateReturnsAreRefused/assert_cond_nonboolean
+=== RUN   TestUnprovenPredicateReturnsAreRefused/bodyless_signature
+=== PAUSE TestUnprovenPredicateReturnsAreRefused/bodyless_signature
+=== RUN   TestUnprovenPredicateReturnsAreRefused/default_argument
+=== PAUSE TestUnprovenPredicateReturnsAreRefused/default_argument
+=== RUN   TestUnprovenPredicateReturnsAreRefused/unknown_control_flow
+=== PAUSE TestUnprovenPredicateReturnsAreRefused/unknown_control_flow
+=== CONT  TestUnprovenPredicateReturnsAreRefused/unconditional_true
+=== CONT  TestTypedArrayViewsCannotChangeRepresentation
+=== CONT  TestUnprovenPredicateReturnsAreRefused/nominal_assertion_mismatch
+=== CONT  TestTypedArrayGaps
+=== CONT  TestTypedArraysLower
+=== RUN   TestTypedArraysLower/Uint8Array
+=== CONT  TestUnrepresentedPrototypeCallsAreNotYet
+--- PASS: TestUnknownArrayPredicateRefusesUnrepresentedObservations (0.14s)
+=== CONT  TestUnprovenPredicateReturnsAreRefused/unknown_control_flow
+--- PASS: TestTypedArrayViewsCannotChangeRepresentation (0.19s)
+=== CONT  TestUnprovenPredicateReturnsAreRefused/default_argument
+=== CONT  TestUnprovenPredicateReturnsAreRefused/bodyless_signature
+=== CONT  TestUnprovenPredicateReturnsAreRefused/assert_cond_nonboolean
+=== CONT  TestUnprovenPredicateReturnsAreRefused/assert_cond_false
+=== CONT  TestUnprovenPredicateReturnsAreRefused/assert_cond_empty
+=== CONT  TestUnprovenPredicateReturnsAreRefused/assertion_call_invalidation
+=== RUN   TestTypedArraysLower/Int32Array
+=== CONT  TestUnprovenPredicateReturnsAreRefused/assertion_wrong_branch
+=== CONT  TestUnprovenPredicateReturnsAreRefused/assertion_early_return
+=== CONT  TestUnprovenPredicateReturnsAreRefused/assertion_empty
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_class_inside_a_function
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_class_inside_a_function
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/join_on_an_array_of_functions
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/join_on_an_array_of_functions
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/concat_on_an_array_of_arrays
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/concat_on_an_array_of_arrays
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_arrow_returning_never
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_arrow_returning_never
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/Array.from_of_an_array
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/Array.from_of_an_array
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/Array.from_without_a_callback
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/Array.from_without_a_callback
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/Array.from_with_a_named_callback
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/Array.from_with_a_named_callback
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/assigning_Array.from's_undefined
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/assigning_Array.from's_undefined
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_array_of_boolean_|_undefined
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_array_of_boolean_|_undefined
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_captured_boolean_|_undefined
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_captured_boolean_|_undefined
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_class_field_of_a_union
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_class_field_of_a_union
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_template_of_a_union_with_an_object
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_template_of_a_union_with_an_object
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_array_of_targets_seen_as_an_array_of_Weak
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_array_of_targets_seen_as_an_array_of_Weak
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_value_capturing_what_it_initializes
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_value_capturing_what_it_initializes
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_tuple_passed_where_an_array_goes
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_tuple_passed_where_an_array_goes
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_tuple_given_to_a_function_value_taking_an_array
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_tuple_given_to_a_function_value_taking_an_array
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/tuples_where_arrays_of_arrays_go
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/tuples_where_arrays_of_arrays_go
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_callback_taking_arrays_given_tuples
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_callback_taking_arrays_given_tuples
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_value_called_through_?.
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_value_called_through_?.
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_generic_function_as_a_value
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_generic_function_as_a_value
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_try_around_repeat
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_try_around_repeat
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_try_around_a_call_that_reaches_toFixed
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_try_around_a_call_that_reaches_toFixed
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/rethrowing_a_mutable_stored_Error
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/rethrowing_a_mutable_stored_Error
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_object_seen_with_a_field_weak_in_one_view_only
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_object_seen_with_a_field_weak_in_one_view_only
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_seen_with_a_parameter_weak_in_one_view_only
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_seen_with_a_parameter_weak_in_one_view_only
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_seen_with_a_result_weak_in_one_view_only
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_seen_with_a_result_weak_in_one_view_only
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_spread_seen_with_a_field_weak_in_one_view_only
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_spread_seen_with_a_field_weak_in_one_view_only
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_template_interpolating_an_object
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_template_interpolating_an_object
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/var
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/var
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/async
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/async
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/throwing_a_string
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/throwing_a_string
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/throwing_a_number
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/throwing_a_number
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/!
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/!
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/==
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/==
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/delete
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/delete
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/a_constructor_calling_a_method_before_its_fields_are_set_(R2's,_and_R's_half_built)
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/a_constructor_calling_a_method_before_its_fields_are_set_(R2's,_and_R's_half_built)
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/a_constructor_handing_this_out_before_its_fields_are_set_(R's_early_this)
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/a_constructor_handing_this_out_before_its_fields_are_set_(R's_early_this)
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/a_constructor_storing_this_before_its_fields_are_set
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/a_constructor_storing_this_before_its_fields_are_set
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/a_constructor_storing_this,_a_field_set_only_in_a_branch
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/a_constructor_storing_this,_a_field_set_only_in_a_branch
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/a_filter_that_decides_by_truthiness
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/a_filter_that_decides_by_truthiness
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/Array.from's_undefined_typed_as_a_number
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/Array.from's_undefined_typed_as_a_number
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/a_parent_pointer_not_declared_weak
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/a_parent_pointer_not_declared_weak
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/a_doubly_linked_list_with_a_strong_next
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/a_doubly_linked_list_with_a_strong_next
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/a_closure_in_a_cell_it_captures
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/a_closure_in_a_cell_it_captures
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/a_mutable_array_of_children
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/a_mutable_array_of_children
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/a_callback_that_captures_what_holds_it
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/a_callback_that_captures_what_holds_it
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/a_map_whose_values_reach_back
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/a_map_whose_values_reach_back
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/a_map_whose_keys_reach_back
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/a_map_whose_keys_reach_back
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/a_set_whose_elements_reach_back
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/a_set_whose_elements_reach_back
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/a_map_of_sets_that_reach_back
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/a_map_of_sets_that_reach_back
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/a_cycle_through_a_subtype
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/a_cycle_through_a_subtype
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/a_cycle_only_a_later_instantiation_closes
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/a_cycle_only_a_later_instantiation_closes
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/a_cycle_a_generic_class_makes_but_never_names
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/a_cycle_a_generic_class_makes_but_never_names
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/a_generic_cell_holding_a_function_that_captures_it
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/a_generic_cell_holding_a_function_that_captures_it
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/reduce_without_an_initial_value
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/reduce_without_an_initial_value
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/Math.random
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/Math.random
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/Math.random,_not_called
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/Math.random,_not_called
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/a_method_read_off_its_object
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/a_method_read_off_its_object
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/this.method_read_as_a_value
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/this.method_read_as_a_value
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/an_unchecked_cast
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/an_unchecked_cast
+=== CONT  TestUncheckableCastsStayRefused
+=== RUN   TestUncheckableCastsStayRefused/unknown_interface
+=== PAUSE TestUncheckableCastsStayRefused/unknown_interface
+=== RUN   TestUncheckableCastsStayRefused/callback_signature
+=== PAUSE TestUncheckableCastsStayRefused/callback_signature
+=== RUN   TestUncheckableCastsStayRefused/mutable_widening
+=== PAUSE TestUncheckableCastsStayRefused/mutable_widening
+=== RUN   TestUncheckableCastsStayRefused/mutable_union_tag
+=== PAUSE TestUncheckableCastsStayRefused/mutable_union_tag
+=== RUN   TestUncheckableCastsStayRefused/mutable_union_payload
+=== PAUSE TestUncheckableCastsStayRefused/mutable_union_payload
+=== RUN   TestUncheckableCastsStayRefused/hidden_optional_field
+=== PAUSE TestUncheckableCastsStayRefused/hidden_optional_field
+=== RUN   TestUncheckableCastsStayRefused/double_assertion
+=== PAUSE TestUncheckableCastsStayRefused/double_assertion
+=== RUN   TestUncheckableCastsStayRefused/related_double_assertion
+=== PAUSE TestUncheckableCastsStayRefused/related_double_assertion
+=== RUN   TestUncheckableCastsStayRefused/primitive_union
+=== PAUSE TestUncheckableCastsStayRefused/primitive_union
+=== RUN   TestUncheckableCastsStayRefused/tuple_length
+=== PAUSE TestUncheckableCastsStayRefused/tuple_length
+=== RUN   TestUncheckableCastsStayRefused/unrelated_class
+=== PAUSE TestUncheckableCastsStayRefused/unrelated_class
+=== RUN   TestUncheckableCastsStayRefused/structural_class
+=== PAUSE TestUncheckableCastsStayRefused/structural_class
+=== RUN   TestUncheckableCastsStayRefused/payload_refinement
+=== PAUSE TestUncheckableCastsStayRefused/payload_refinement
+=== RUN   TestUncheckableCastsStayRefused/duplicate_literal_tags
+=== PAUSE TestUncheckableCastsStayRefused/duplicate_literal_tags
+=== RUN   TestUncheckableCastsStayRefused/duplicate_enum_values
+=== PAUSE TestUncheckableCastsStayRefused/duplicate_enum_values
+=== RUN   TestUncheckableCastsStayRefused/different_enums_same_value
+=== PAUSE TestUncheckableCastsStayRefused/different_enums_same_value
+=== RUN   TestUncheckableCastsStayRefused/mixed_tag_representations
+=== PAUSE TestUncheckableCastsStayRefused/mixed_tag_representations
+=== RUN   TestUncheckableCastsStayRefused/erased_generic_argument
+=== PAUSE TestUncheckableCastsStayRefused/erased_generic_argument
+=== RUN   TestUncheckableCastsStayRefused/incompatible_generic_arguments
+=== PAUSE TestUncheckableCastsStayRefused/incompatible_generic_arguments
+=== CONT  TestUnprovenPredicateReturnsAreRefused/modified_parameter
+=== CONT  TestUnprovenPredicateReturnsAreRefused/nominal_guard_mismatch
+=== CONT  TestUnprovenPredicateReturnsAreRefused/assertion_wider_shape
+--- PASS: TestUnrepresentedPrototypeCallsAreNotYet (0.40s)
+=== CONT  TestUnprovenPredicateReturnsAreRefused/aliased_discriminant_getter
+=== CONT  TestUnprovenPredicateReturnsAreRefused/aliased_discriminant_write
+=== RUN   TestTypedArraysLower/Float64Array
+=== CONT  TestUnprovenPredicateReturnsAreRefused/aliased_discriminant_call
+=== CONT  TestUnprovenPredicateReturnsAreRefused/captured_write
+=== CONT  TestViewObjectContractsAreAvailableToEraser
+=== CONT  TestUntaggedViewStructuralFallback
+--- PASS: TestUntaggedViewStructuralFallback (0.00s)
+=== CONT  TestUntaggedViewMemberTags
+--- PASS: TestUntaggedViewMemberTags (0.00s)
+=== CONT  TestViewObjectWritesNeedSourceCertificate
+=== CONT  TestTypedArrayFromEmptyArray
+--- PASS: TestViewObjectContractsAreAvailableToEraser (0.05s)
+=== CONT  TestUnknownReflectionRefusals
+=== RUN   TestUnknownReflectionRefusals/nullable_referencefunction_reflect(value:_unknown):_string_{_return_typeof_value;_}_function_test(value:_{code:string}|null):_string_{_return_reflect(value);_}
+=== PAUSE TestUnknownReflectionRefusals/nullable_referencefunction_reflect(value:_unknown):_string_{_return_typeof_value;_}_function_test(value:_{code:string}|null):_string_{_return_reflect(value);_}
+=== RUN   TestUnknownReflectionRefusals/dynamic_key_coercionfunction_has(key:_string,_value:_object):_boolean_{_return_key_in_value;_}
+=== PAUSE TestUnknownReflectionRefusals/dynamic_key_coercionfunction_has(key:_string,_value:_object):_boolean_{_return_key_in_value;_}
+=== RUN   TestUnknownReflectionRefusals/NUL_keyconsole.log(String('a\0b'_in_{}));
+=== PAUSE TestUnknownReflectionRefusals/NUL_keyconsole.log(String('a\0b'_in_{}));
+=== RUN   TestUnknownReflectionRefusals/tuplefunction_has(pair:_readonly_[number]):_boolean_{_return_'length'_in_pair;_}
+=== PAUSE TestUnknownReflectionRefusals/tuplefunction_has(pair:_readonly_[number]):_boolean_{_return_'length'_in_pair;_}
+=== RUN   TestUnknownReflectionRefusals/dynamic_prototypefunction_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'__proto__'_in_value_?_value.__proto___:_undefined;_}
+=== PAUSE TestUnknownReflectionRefusals/dynamic_prototypefunction_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'__proto__'_in_value_?_value.__proto___:_undefined;_}
+=== RUN   TestUnknownReflectionRefusals/descriptor_metadatafunction_has(value:_unknown):_boolean_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'stack'_in_value;_}
+=== PAUSE TestUnknownReflectionRefusals/descriptor_metadatafunction_has(value:_unknown):_boolean_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'stack'_in_value;_}
+=== RUN   TestUnknownReflectionRefusals/descriptor_metadatafunction_has(value:_unknown):_boolean_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'errno'_in_value;_}
+=== PAUSE TestUnknownReflectionRefusals/descriptor_metadatafunction_has(value:_unknown):_boolean_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'errno'_in_value;_}
+=== RUN   TestUnknownReflectionRefusals/opaque_hostfunction_box(value:_unknown):_unknown_{_return_value;_}_box(new_Map<string,_number>());
+=== PAUSE TestUnknownReflectionRefusals/opaque_hostfunction_box(value:_unknown):_unknown_{_return_value;_}_box(new_Map<string,_number>());
+=== RUN   TestUnknownReflectionRefusals/nullable_fieldfunction_box(value:_unknown):_unknown_{_return_value;_}_box({code:null});
+=== PAUSE TestUnknownReflectionRefusals/nullable_fieldfunction_box(value:_unknown):_unknown_{_return_value;_}_box({code:null});
+=== RUN   TestUnknownReflectionRefusals/dynamic_getterclass_Code_{_get_code():_string_{_return_'x';_}_}_function_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value_?_value.code_:_undefined;_}_read(new_Code());
+=== PAUSE TestUnknownReflectionRefusals/dynamic_getterclass_Code_{_get_code():_string_{_return_'x';_}_}_function_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value_?_value.code_:_undefined;_}_read(new_Code());
+=== RUN   TestUnknownReflectionRefusals/dynamic_getter_or_methodclass_Code_{_code():_string_{_return_'x';_}_}_function_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value_?_value.code_:_undefined;_}_read(new_Code());
+=== PAUSE TestUnknownReflectionRefusals/dynamic_getter_or_methodclass_Code_{_code():_string_{_return_'x';_}_}_function_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value_?_value.code_:_undefined;_}_read(new_Code());
+=== RUN   TestUnknownReflectionRefusals/ToPrimitivefunction_text(value:_unknown):_string_{_return_String(value);_}
+=== PAUSE TestUnknownReflectionRefusals/ToPrimitivefunction_text(value:_unknown):_string_{_return_String(value);_}
+=== RUN   TestUnknownReflectionRefusals/nullable_fieldfunction_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value_?_value.code_:_undefined;_}_const_nested_=_{child:{code:null}};_read(nested);
+=== PAUSE TestUnknownReflectionRefusals/nullable_fieldfunction_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value_?_value.code_:_undefined;_}_const_nested_=_{child:{code:null}};_read(nested);
+=== RUN   TestUnknownReflectionRefusals/function_descriptorsfunction_box(value:_unknown):_unknown_{_return_value;_}_box(()_=>_1);
+=== PAUSE TestUnknownReflectionRefusals/function_descriptorsfunction_box(value:_unknown):_unknown_{_return_value;_}_box(()_=>_1);
+=== RUN   TestUnknownReflectionRefusals/JSON_as_a_valuefunction_box(value:_unknown):_unknown_{_return_value;_}_box(JSON);
+=== PAUSE TestUnknownReflectionRefusals/JSON_as_a_valuefunction_box(value:_unknown):_unknown_{_return_value;_}_box(JSON);
+=== RUN   TestUnknownReflectionRefusals/class_constructorclass_Code_{_static_code_=_'x';_}_console.log(String('code'_in_Code));
+=== PAUSE TestUnknownReflectionRefusals/class_constructorclass_Code_{_static_code_=_'x';_}_console.log(String('code'_in_Code));
+=== RUN   TestUnknownReflectionRefusals/dispatch_tableclass_Code_{_inspect(value:_unknown):_void_{}_}_console.log(String('inspect'_in_new_Code()));
+=== PAUSE TestUnknownReflectionRefusals/dispatch_tableclass_Code_{_inspect(value:_unknown):_void_{}_}_console.log(String('inspect'_in_new_Code()));
+=== RUN   TestUnknownReflectionRefusals/presence_descriptorsfunction_has(value:_{code:number}|undefined):_boolean_{_return_'code'_in_{...value};_}
+=== PAUSE TestUnknownReflectionRefusals/presence_descriptorsfunction_has(value:_{code:number}|undefined):_boolean_{_return_'code'_in_{...value};_}
+=== RUN   TestUnknownReflectionRefusals/ambient_class_fieldclass_Code_{_declare_code:_string;_}_function_has(value:_unknown):_boolean_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value;_}_has(new_Code());
+=== PAUSE TestUnknownReflectionRefusals/ambient_class_fieldclass_Code_{_declare_code:_string;_}_function_has(value:_unknown):_boolean_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value;_}_has(new_Code());
+=== CONT  TestTypedArrayFromArray
+--- PASS: TestTypedArrayGaps (0.58s)
+=== CONT  TestUnprovenPredicateReturnsAreRefused/narrower_narrowing
+=== CONT  TestUnprovenPredicateReturnsAreRefused/opaque_call
+--- PASS: TestViewObjectWritesNeedSourceCertificate (0.12s)
+=== CONT  TestUnprovenPredicateReturnsAreRefused/positive_number
+--- PASS: TestTypedArraysLower (0.61s)
+    --- PASS: TestTypedArraysLower/Uint8Array (0.25s)
+    --- PASS: TestTypedArraysLower/Int32Array (0.17s)
+    --- PASS: TestTypedArraysLower/Float64Array (0.18s)
+=== CONT  TestUnprovenPredicateReturnsAreRefused/false_branch_lie
+=== CONT  TestUnprovenPredicateReturnsAreRefused/wider_narrowing
+=== CONT  TestUnprovenPredicateReturnsAreRefused/partial_true_set
+=== CONT  TestUnprovenPredicateReturnsAreRefused/different_variable
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_class_inside_a_function
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/var
+--- PASS: TestUnprovenPredicateReturnsAreRefused (0.00s)
+    --- PASS: TestUnprovenPredicateReturnsAreRefused/unconditional_true (0.07s)
+    --- PASS: TestUnprovenPredicateReturnsAreRefused/nominal_assertion_mismatch (0.08s)
+    --- PASS: TestUnprovenPredicateReturnsAreRefused/unknown_control_flow (0.05s)
+    --- PASS: TestUnprovenPredicateReturnsAreRefused/bodyless_signature (0.05s)
+    --- PASS: TestUnprovenPredicateReturnsAreRefused/default_argument (0.07s)
+    --- PASS: TestUnprovenPredicateReturnsAreRefused/assert_cond_false (0.04s)
+    --- PASS: TestUnprovenPredicateReturnsAreRefused/assert_cond_nonboolean (0.06s)
+    --- PASS: TestUnprovenPredicateReturnsAreRefused/assertion_call_invalidation (0.05s)
+    --- PASS: TestUnprovenPredicateReturnsAreRefused/assert_cond_empty (0.06s)
+    --- PASS: TestUnprovenPredicateReturnsAreRefused/assertion_wrong_branch (0.04s)
+    --- PASS: TestUnprovenPredicateReturnsAreRefused/assertion_early_return (0.03s)
+    --- PASS: TestUnprovenPredicateReturnsAreRefused/assertion_empty (0.06s)
+    --- PASS: TestUnprovenPredicateReturnsAreRefused/modified_parameter (0.05s)
+    --- PASS: TestUnprovenPredicateReturnsAreRefused/nominal_guard_mismatch (0.04s)
+    --- PASS: TestUnprovenPredicateReturnsAreRefused/assertion_wider_shape (0.05s)
+    --- PASS: TestUnprovenPredicateReturnsAreRefused/aliased_discriminant_write (0.05s)
+    --- PASS: TestUnprovenPredicateReturnsAreRefused/aliased_discriminant_getter (0.06s)
+    --- PASS: TestUnprovenPredicateReturnsAreRefused/aliased_discriminant_call (0.05s)
+    --- PASS: TestUnprovenPredicateReturnsAreRefused/captured_write (0.06s)
+    --- PASS: TestUnprovenPredicateReturnsAreRefused/narrower_narrowing (0.06s)
+    --- PASS: TestUnprovenPredicateReturnsAreRefused/opaque_call (0.05s)
+    --- PASS: TestUnprovenPredicateReturnsAreRefused/positive_number (0.06s)
+    --- PASS: TestUnprovenPredicateReturnsAreRefused/false_branch_lie (0.05s)
+    --- PASS: TestUnprovenPredicateReturnsAreRefused/wider_narrowing (0.04s)
+    --- PASS: TestUnprovenPredicateReturnsAreRefused/different_variable (0.04s)
+    --- PASS: TestUnprovenPredicateReturnsAreRefused/partial_true_set (0.05s)
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_template_interpolating_an_object
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_spread_seen_with_a_field_weak_in_one_view_only
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_seen_with_a_result_weak_in_one_view_only
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_seen_with_a_parameter_weak_in_one_view_only
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_object_seen_with_a_field_weak_in_one_view_only
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/rethrowing_a_mutable_stored_Error
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_try_around_a_call_that_reaches_toFixed
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_try_around_repeat
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_generic_function_as_a_value
+--- PASS: TestTypedArrayFromEmptyArray (0.38s)
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_value_called_through_?.
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_callback_taking_arrays_given_tuples
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/tuples_where_arrays_of_arrays_go
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_tuple_given_to_a_function_value_taking_an_array
+--- PASS: TestTypedArrayFromArray (0.43s)
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_value_capturing_what_it_initializes
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_tuple_passed_where_an_array_goes
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_array_of_targets_seen_as_an_array_of_Weak
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_template_of_a_union_with_an_object
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_class_field_of_a_union
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_captured_boolean_|_undefined
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_array_of_boolean_|_undefined
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/assigning_Array.from's_undefined
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/Array.from_with_a_named_callback
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/Array.from_without_a_callback
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/Array.from_of_an_array
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_arrow_returning_never
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/concat_on_an_array_of_arrays
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/join_on_an_array_of_functions
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_mutable_array_of_children
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/an_unchecked_cast
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_constructor_handing_this_out_before_its_fields_are_set_(R's_early_this)
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_closure_in_a_cell_it_captures
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_doubly_linked_list_with_a_strong_next
+--- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat (0.00s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_class_inside_a_function (0.04s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_template_interpolating_an_object (0.05s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_spread_seen_with_a_field_weak_in_one_view_only (0.06s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_seen_with_a_result_weak_in_one_view_only (0.05s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_object_seen_with_a_field_weak_in_one_view_only (0.06s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_seen_with_a_parameter_weak_in_one_view_only (0.07s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/rethrowing_a_mutable_stored_Error (0.05s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_try_around_repeat (0.06s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_try_around_a_call_that_reaches_toFixed (0.07s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_generic_function_as_a_value (0.06s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_callback_taking_arrays_given_tuples (0.05s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_value_called_through_?. (0.05s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/tuples_where_arrays_of_arrays_go (0.05s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_tuple_given_to_a_function_value_taking_an_array (0.04s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_tuple_passed_where_an_array_goes (0.03s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_array_of_targets_seen_as_an_array_of_Weak (0.04s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_template_of_a_union_with_an_object (0.04s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_value_capturing_what_it_initializes (0.06s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_class_field_of_a_union (0.05s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_array_of_boolean_|_undefined (0.07s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/Array.from_with_a_named_callback (0.06s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_captured_boolean_|_undefined (0.08s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/assigning_Array.from's_undefined (0.07s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/Array.from_without_a_callback (0.06s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/join_on_an_array_of_functions (0.03s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/Array.from_of_an_array (0.04s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/concat_on_an_array_of_arrays (0.04s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_arrow_returning_never (0.05s)
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_parent_pointer_not_declared_weak
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/Array.from's_undefined_typed_as_a_number
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_filter_that_decides_by_truthiness
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_constructor_storing_this,_a_field_set_only_in_a_branch
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_constructor_storing_this_before_its_fields_are_set
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/!
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_constructor_calling_a_method_before_its_fields_are_set_(R2's,_and_R's_half_built)
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/delete
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/==
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_cycle_a_generic_class_makes_but_never_names
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/this.method_read_as_a_value
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_method_read_off_its_object
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/Math.random,_not_called
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/Math.random
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/reduce_without_an_initial_value
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_generic_cell_holding_a_function_that_captures_it
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_set_whose_elements_reach_back
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_cycle_only_a_later_instantiation_closes
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_cycle_through_a_subtype
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_map_of_sets_that_reach_back
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_map_whose_values_reach_back
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_map_whose_keys_reach_back
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/throwing_a_string
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/throwing_a_number
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/async
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_callback_that_captures_what_holds_it
+=== CONT  TestUncheckableCastsStayRefused/unknown_interface
+=== CONT  TestUncheckableCastsStayRefused/unrelated_class
+=== CONT  TestUncheckableCastsStayRefused/incompatible_generic_arguments
+=== CONT  TestUncheckableCastsStayRefused/erased_generic_argument
+=== CONT  TestUncheckableCastsStayRefused/mixed_tag_representations
+--- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix (0.00s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/var (0.06s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_mutable_array_of_children (0.06s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_closure_in_a_cell_it_captures (0.04s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_doubly_linked_list_with_a_strong_next (0.05s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_constructor_handing_this_out_before_its_fields_are_set_(R's_early_this) (0.06s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/an_unchecked_cast (0.07s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_parent_pointer_not_declared_weak (0.07s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/Array.from's_undefined_typed_as_a_number (0.06s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_constructor_storing_this,_a_field_set_only_in_a_branch (0.05s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_constructor_storing_this_before_its_fields_are_set (0.07s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_filter_that_decides_by_truthiness (0.08s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/! (0.06s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_constructor_calling_a_method_before_its_fields_are_set_(R2's,_and_R's_half_built) (0.05s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/== (0.04s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/delete (0.08s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_cycle_a_generic_class_makes_but_never_names (0.05s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/this.method_read_as_a_value (0.05s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_method_read_off_its_object (0.07s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/Math.random,_not_called (0.07s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/reduce_without_an_initial_value (0.06s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_generic_cell_holding_a_function_that_captures_it (0.05s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_set_whose_elements_reach_back (0.03s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/Math.random (0.08s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_cycle_only_a_later_instantiation_closes (0.04s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_map_whose_keys_reach_back (0.03s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_map_whose_values_reach_back (0.04s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_map_of_sets_that_reach_back (0.05s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/throwing_a_string (0.03s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_cycle_through_a_subtype (0.06s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/async (0.04s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/throwing_a_number (0.05s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_callback_that_captures_what_holds_it (0.06s)
+=== CONT  TestUncheckableCastsStayRefused/different_enums_same_value
+=== CONT  TestUncheckableCastsStayRefused/duplicate_enum_values
+=== CONT  TestUncheckableCastsStayRefused/duplicate_literal_tags
+=== CONT  TestUncheckableCastsStayRefused/payload_refinement
+=== CONT  TestUncheckableCastsStayRefused/structural_class
+=== CONT  TestUncheckableCastsStayRefused/hidden_optional_field
+=== CONT  TestUncheckableCastsStayRefused/tuple_length
+=== CONT  TestUncheckableCastsStayRefused/primitive_union
+=== CONT  TestUncheckableCastsStayRefused/related_double_assertion
+=== CONT  TestUncheckableCastsStayRefused/double_assertion
+=== CONT  TestUncheckableCastsStayRefused/mutable_union_tag
+=== CONT  TestUncheckableCastsStayRefused/mutable_union_payload
+=== CONT  TestUncheckableCastsStayRefused/mutable_widening
+=== CONT  TestUncheckableCastsStayRefused/callback_signature
+=== CONT  TestUnknownReflectionRefusals/nullable_referencefunction_reflect(value:_unknown):_string_{_return_typeof_value;_}_function_test(value:_{code:string}|null):_string_{_return_reflect(value);_}
+=== CONT  TestUnknownReflectionRefusals/dynamic_getter_or_methodclass_Code_{_code():_string_{_return_'x';_}_}_function_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value_?_value.code_:_undefined;_}_read(new_Code());
+=== CONT  TestUnknownReflectionRefusals/ambient_class_fieldclass_Code_{_declare_code:_string;_}_function_has(value:_unknown):_boolean_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value;_}_has(new_Code());
+=== CONT  TestUnknownReflectionRefusals/presence_descriptorsfunction_has(value:_{code:number}|undefined):_boolean_{_return_'code'_in_{...value};_}
+=== CONT  TestUnknownReflectionRefusals/dispatch_tableclass_Code_{_inspect(value:_unknown):_void_{}_}_console.log(String('inspect'_in_new_Code()));
+=== CONT  TestUnknownReflectionRefusals/class_constructorclass_Code_{_static_code_=_'x';_}_console.log(String('code'_in_Code));
+--- PASS: TestUncheckableCastsStayRefused (0.02s)
+    --- PASS: TestUncheckableCastsStayRefused/unknown_interface (0.05s)
+    --- PASS: TestUncheckableCastsStayRefused/unrelated_class (0.05s)
+    --- PASS: TestUncheckableCastsStayRefused/incompatible_generic_arguments (0.04s)
+    --- PASS: TestUncheckableCastsStayRefused/mixed_tag_representations (0.03s)
+    --- PASS: TestUncheckableCastsStayRefused/different_enums_same_value (0.05s)
+    --- PASS: TestUncheckableCastsStayRefused/duplicate_enum_values (0.05s)
+    --- PASS: TestUncheckableCastsStayRefused/duplicate_literal_tags (0.03s)
+    --- PASS: TestUncheckableCastsStayRefused/erased_generic_argument (0.07s)
+    --- PASS: TestUncheckableCastsStayRefused/hidden_optional_field (0.04s)
+    --- PASS: TestUncheckableCastsStayRefused/payload_refinement (0.06s)
+    --- PASS: TestUncheckableCastsStayRefused/primitive_union (0.05s)
+    --- PASS: TestUncheckableCastsStayRefused/tuple_length (0.05s)
+    --- PASS: TestUncheckableCastsStayRefused/structural_class (0.06s)
+    --- PASS: TestUncheckableCastsStayRefused/double_assertion (0.04s)
+    --- PASS: TestUncheckableCastsStayRefused/related_double_assertion (0.05s)
+    --- PASS: TestUncheckableCastsStayRefused/mutable_widening (0.03s)
+    --- PASS: TestUncheckableCastsStayRefused/mutable_union_tag (0.04s)
+    --- PASS: TestUncheckableCastsStayRefused/mutable_union_payload (0.07s)
+    --- PASS: TestUncheckableCastsStayRefused/callback_signature (0.08s)
+=== CONT  TestUnknownReflectionRefusals/JSON_as_a_valuefunction_box(value:_unknown):_unknown_{_return_value;_}_box(JSON);
+=== CONT  TestUnknownReflectionRefusals/function_descriptorsfunction_box(value:_unknown):_unknown_{_return_value;_}_box(()_=>_1);
+=== CONT  TestUnknownReflectionRefusals/nullable_fieldfunction_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value_?_value.code_:_undefined;_}_const_nested_=_{child:{code:null}};_read(nested);
+=== CONT  TestUnknownReflectionRefusals/ToPrimitivefunction_text(value:_unknown):_string_{_return_String(value);_}
+=== CONT  TestUnknownReflectionRefusals/descriptor_metadatafunction_has(value:_unknown):_boolean_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'stack'_in_value;_}
+=== CONT  TestUnknownReflectionRefusals/dynamic_getterclass_Code_{_get_code():_string_{_return_'x';_}_}_function_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value_?_value.code_:_undefined;_}_read(new_Code());
+=== CONT  TestUnknownReflectionRefusals/nullable_fieldfunction_box(value:_unknown):_unknown_{_return_value;_}_box({code:null});
+=== CONT  TestUnknownReflectionRefusals/opaque_hostfunction_box(value:_unknown):_unknown_{_return_value;_}_box(new_Map<string,_number>());
+=== CONT  TestUnknownReflectionRefusals/descriptor_metadatafunction_has(value:_unknown):_boolean_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'errno'_in_value;_}
+=== CONT  TestUnknownReflectionRefusals/tuplefunction_has(pair:_readonly_[number]):_boolean_{_return_'length'_in_pair;_}
+=== CONT  TestUnknownReflectionRefusals/dynamic_prototypefunction_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'__proto__'_in_value_?_value.__proto___:_undefined;_}
+=== CONT  TestUnknownReflectionRefusals/NUL_keyconsole.log(String('a\0b'_in_{}));
+=== CONT  TestUnknownReflectionRefusals/dynamic_key_coercionfunction_has(key:_string,_value:_object):_boolean_{_return_key_in_value;_}
+--- PASS: TestUnknownReflectionRefusals (0.00s)
+    --- PASS: TestUnknownReflectionRefusals/nullable_referencefunction_reflect(value:_unknown):_string_{_return_typeof_value;_}_function_test(value:_{code:string}|null):_string_{_return_reflect(value);_} (0.04s)
+    --- PASS: TestUnknownReflectionRefusals/dynamic_getter_or_methodclass_Code_{_code():_string_{_return_'x';_}_}_function_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value_?_value.code_:_undefined;_}_read(new_Code()); (0.04s)
+    --- PASS: TestUnknownReflectionRefusals/ambient_class_fieldclass_Code_{_declare_code:_string;_}_function_has(value:_unknown):_boolean_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value;_}_has(new_Code()); (0.06s)
+    --- PASS: TestUnknownReflectionRefusals/presence_descriptorsfunction_has(value:_{code:number}|undefined):_boolean_{_return_'code'_in_{...value};_} (0.03s)
+    --- PASS: TestUnknownReflectionRefusals/dispatch_tableclass_Code_{_inspect(value:_unknown):_void_{}_}_console.log(String('inspect'_in_new_Code())); (0.03s)
+    --- PASS: TestUnknownReflectionRefusals/class_constructorclass_Code_{_static_code_=_'x';_}_console.log(String('code'_in_Code)); (0.04s)
+    --- PASS: TestUnknownReflectionRefusals/function_descriptorsfunction_box(value:_unknown):_unknown_{_return_value;_}_box(()_=>_1); (0.04s)
+    --- PASS: TestUnknownReflectionRefusals/nullable_fieldfunction_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value_?_value.code_:_undefined;_}_const_nested_=_{child:{code:null}};_read(nested); (0.06s)
+    --- PASS: TestUnknownReflectionRefusals/ToPrimitivefunction_text(value:_unknown):_string_{_return_String(value);_} (0.06s)
+    --- PASS: TestUnknownReflectionRefusals/descriptor_metadatafunction_has(value:_unknown):_boolean_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'stack'_in_value;_} (0.05s)
+    --- PASS: TestUnknownReflectionRefusals/JSON_as_a_valuefunction_box(value:_unknown):_unknown_{_return_value;_}_box(JSON); (0.07s)
+    --- PASS: TestUnknownReflectionRefusals/dynamic_getterclass_Code_{_get_code():_string_{_return_'x';_}_}_function_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value_?_value.code_:_undefined;_}_read(new_Code()); (0.06s)
+    --- PASS: TestUnknownReflectionRefusals/opaque_hostfunction_box(value:_unknown):_unknown_{_return_value;_}_box(new_Map<string,_number>()); (0.04s)
+    --- PASS: TestUnknownReflectionRefusals/nullable_fieldfunction_box(value:_unknown):_unknown_{_return_value;_}_box({code:null}); (0.05s)
+    --- PASS: TestUnknownReflectionRefusals/tuplefunction_has(pair:_readonly_[number]):_boolean_{_return_'length'_in_pair;_} (0.04s)
+    --- PASS: TestUnknownReflectionRefusals/descriptor_metadatafunction_has(value:_unknown):_boolean_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'errno'_in_value;_} (0.06s)
+    --- PASS: TestUnknownReflectionRefusals/dynamic_prototypefunction_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'__proto__'_in_value_?_value.__proto___:_undefined;_} (0.03s)
+    --- PASS: TestUnknownReflectionRefusals/NUL_keyconsole.log(String('a\0b'_in_{})); (0.03s)
+    --- PASS: TestUnknownReflectionRefusals/dynamic_key_coercionfunction_has(key:_string,_value:_object):_boolean_{_return_key_in_value;_} (0.03s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	3.855s

@@ -1,0 +1,244 @@
+=== RUN   TestNativeAgreementRejectsWrongOutput
+=== PAUSE TestNativeAgreementRejectsWrongOutput
+=== RUN   TestNativeAgreementRejectsWrongExit
+=== PAUSE TestNativeAgreementRejectsWrongExit
+=== RUN   TestNestedEmptyArrayElementKinds
+=== PAUSE TestNestedEmptyArrayElementKinds
+=== RUN   TestNodeBufferRefusals
+=== PAUSE TestNodeBufferRefusals
+=== RUN   TestNodeFSFileDoesNotAuthorizeMutableWidening
+=== PAUSE TestNodeFSFileDoesNotAuthorizeMutableWidening
+=== RUN   TestNodeFSFileBufferBorrow
+=== PAUSE TestNodeFSFileBufferBorrow
+=== RUN   TestNamespaceClassEarlyConstructionStaysLoud
+=== PAUSE TestNamespaceClassEarlyConstructionStaysLoud
+=== RUN   TestNamespaceReceiverArrowInheritsScope
+=== PAUSE TestNamespaceReceiverArrowInheritsScope
+=== RUN   TestNamespaceEnumInitializationIndependentOfModuleAnalysis
+=== PAUSE TestNamespaceEnumInitializationIndependentOfModuleAnalysis
+=== RUN   TestNamespaceLimitsStayLoud
+=== PAUSE TestNamespaceLimitsStayLoud
+=== RUN   TestNamespaceReceiverRefusal
+=== PAUSE TestNamespaceReceiverRefusal
+=== RUN   TestNamespaceTypesErase
+=== PAUSE TestNamespaceTypesErase
+=== RUN   TestNamespaceReturnedAssignmentLimits
+=== PAUSE TestNamespaceReturnedAssignmentLimits
+=== RUN   TestNamespaceInitializationReachability
+=== PAUSE TestNamespaceInitializationReachability
+=== RUN   TestNamespaceClosedCallGraphEdges
+=== PAUSE TestNamespaceClosedCallGraphEdges
+=== RUN   TestNestedFunctionGapsAreLoud
+=== PAUSE TestNestedFunctionGapsAreLoud
+=== RUN   TestNestedFunctionCycleIsRefused
+=== PAUSE TestNestedFunctionCycleIsRefused
+=== RUN   TestNestedEnvironmentHasOneAllocationSite
+=== PAUSE TestNestedEnvironmentHasOneAllocationSite
+=== RUN   TestNestedEnvironmentCycleIncludesDisjointSlots
+=== PAUSE TestNestedEnvironmentCycleIncludesDisjointSlots
+=== RUN   TestNestedCapturedParametersAreOwned
+=== PAUSE TestNestedCapturedParametersAreOwned
+=== RUN   TestNestedRebindingNotYet
+=== PAUSE TestNestedRebindingNotYet
+=== RUN   TestNestedCallbackCycleIsRefused
+=== PAUSE TestNestedCallbackCycleIsRefused
+=== RUN   TestNestedBodylessDeclarationsAreLoud
+=== PAUSE TestNestedBodylessDeclarationsAreLoud
+=== RUN   TestNestedRestIsSupported
+=== PAUSE TestNestedRestIsSupported
+=== RUN   TestNamespaceFactoryBindingsAgreeWithNode
+=== PAUSE TestNamespaceFactoryBindingsAgreeWithNode
+=== CONT  TestNativeAgreementRejectsWrongOutput
+=== CONT  TestNamespaceInitializationReachability
+=== RUN   TestNamespaceInitializationReachability/direct
+=== CONT  TestNestedCapturedParametersAreOwned
+=== CONT  TestNamespaceFactoryBindingsAgreeWithNode
+=== CONT  TestNestedRestIsSupported
+=== RUN   TestNamespaceInitializationReachability/helper
+=== RUN   TestNamespaceInitializationReachability/cycle
+--- PASS: TestNamespaceInitializationReachability (0.19s)
+    --- PASS: TestNamespaceInitializationReachability/direct (0.12s)
+    --- PASS: TestNamespaceInitializationReachability/helper (0.04s)
+    --- PASS: TestNamespaceInitializationReachability/cycle (0.03s)
+=== CONT  TestNestedBodylessDeclarationsAreLoud
+=== RUN   TestNestedBodylessDeclarationsAreLoud/missing_implementation
+=== PAUSE TestNestedBodylessDeclarationsAreLoud/missing_implementation
+=== RUN   TestNestedBodylessDeclarationsAreLoud/body_lowering
+=== PAUSE TestNestedBodylessDeclarationsAreLoud/body_lowering
+=== CONT  TestNestedCallbackCycleIsRefused
+--- PASS: TestNestedCallbackCycleIsRefused (0.04s)
+=== CONT  TestNestedRebindingNotYet
+--- PASS: TestNamespaceFactoryBindingsAgreeWithNode (0.26s)
+=== CONT  TestNestedFunctionCycleIsRefused
+--- PASS: TestNestedRestIsSupported (0.26s)
+=== CONT  TestNestedEnvironmentCycleIncludesDisjointSlots
+--- PASS: TestNestedCapturedParametersAreOwned (0.28s)
+=== CONT  TestNestedEnvironmentHasOneAllocationSite
+--- PASS: TestNestedRebindingNotYet (0.07s)
+--- PASS: TestNestedFunctionCycleIsRefused (0.06s)
+=== CONT  TestNamespaceReturnedAssignmentLimits
+--- PASS: TestNestedEnvironmentCycleIncludesDisjointSlots (0.06s)
+=== CONT  TestNamespaceTypesErase
+=== CONT  TestNamespaceReceiverRefusal
+--- PASS: TestNamespaceReceiverRefusal (0.05s)
+=== CONT  TestNodeFSFileDoesNotAuthorizeMutableWidening
+--- PASS: TestNamespaceReturnedAssignmentLimits (0.09s)
+=== CONT  TestNamespaceClassEarlyConstructionStaysLoud
+--- PASS: TestNativeAgreementRejectsWrongOutput (0.47s)
+=== CONT  TestNamespaceReceiverArrowInheritsScope
+--- PASS: TestNestedEnvironmentHasOneAllocationSite (0.21s)
+=== CONT  TestNodeFSFileBufferBorrow
+--- PASS: TestNamespaceClassEarlyConstructionStaysLoud (0.09s)
+=== CONT  TestNamespaceLimitsStayLoud
+=== RUN   TestNamespaceLimitsStayLoud/computed_enum
+--- PASS: TestNamespaceReceiverArrowInheritsScope (0.05s)
+=== CONT  TestNamespaceEnumInitializationIndependentOfModuleAnalysis
+--- PASS: TestNamespaceTypesErase (0.20s)
+=== CONT  TestNestedFunctionGapsAreLoud
+=== RUN   TestNestedFunctionGapsAreLoud/block
+=== RUN   TestNamespaceLimitsStayLoud/reopened_enum
+--- PASS: TestNamespaceEnumInitializationIndependentOfModuleAnalysis (0.05s)
+=== CONT  TestNamespaceClosedCallGraphEdges
+=== RUN   TestNestedFunctionGapsAreLoud/generic
+=== RUN   TestNamespaceLimitsStayLoud/early_enum
+=== RUN   TestNestedFunctionGapsAreLoud/dynamic_this
+=== RUN   TestNamespaceLimitsStayLoud/mutable_object_escape
+--- PASS: TestNestedFunctionGapsAreLoud (0.26s)
+    --- PASS: TestNestedFunctionGapsAreLoud/block (0.09s)
+    --- PASS: TestNestedFunctionGapsAreLoud/generic (0.05s)
+    --- PASS: TestNestedFunctionGapsAreLoud/dynamic_this (0.11s)
+=== CONT  TestNestedEmptyArrayElementKinds
+=== RUN   TestNestedEmptyArrayElementKinds/first
+=== PAUSE TestNestedEmptyArrayElementKinds/first
+=== RUN   TestNestedEmptyArrayElementKinds/last
+=== PAUSE TestNestedEmptyArrayElementKinds/last
+=== RUN   TestNestedEmptyArrayElementKinds/typed
+=== PAUSE TestNestedEmptyArrayElementKinds/typed
+=== RUN   TestNestedEmptyArrayElementKinds/strings
+=== PAUSE TestNestedEmptyArrayElementKinds/strings
+=== RUN   TestNestedEmptyArrayElementKinds/objects
+=== PAUSE TestNestedEmptyArrayElementKinds/objects
+=== RUN   TestNestedEmptyArrayElementKinds/union
+=== PAUSE TestNestedEmptyArrayElementKinds/union
+=== CONT  TestNodeBufferRefusals
+=== RUN   TestNodeBufferRefusals/buffer_alloc
+=== PAUSE TestNodeBufferRefusals/buffer_alloc
+=== RUN   TestNodeBufferRefusals/buffer_read
+=== PAUSE TestNodeBufferRefusals/buffer_read
+=== RUN   TestNodeBufferRefusals/hash_inherited_read
+=== PAUSE TestNodeBufferRefusals/hash_inherited_read
+=== RUN   TestNodeBufferRefusals/hash_copy
+=== PAUSE TestNodeBufferRefusals/hash_copy
+=== RUN   TestNodeBufferRefusals/crypto_random
+=== PAUSE TestNodeBufferRefusals/crypto_random
+=== RUN   TestNodeBufferRefusals/crypto_constructor
+=== PAUSE TestNodeBufferRefusals/crypto_constructor
+=== RUN   TestNodeBufferRefusals/buffer_isUtf8
+=== PAUSE TestNodeBufferRefusals/buffer_isUtf8
+=== RUN   TestNodeBufferRefusals/encoding
+=== PAUSE TestNodeBufferRefusals/encoding
+=== RUN   TestNodeBufferRefusals/algorithm
+=== PAUSE TestNodeBufferRefusals/algorithm
+=== RUN   TestNodeBufferRefusals/digest
+=== PAUSE TestNodeBufferRefusals/digest
+=== RUN   TestNodeBufferRefusals/catch
+=== PAUSE TestNodeBufferRefusals/catch
+=== RUN   TestNodeBufferRefusals/detached
+=== PAUSE TestNodeBufferRefusals/detached
+=== RUN   TestNodeBufferRefusals/typed_array_view
+=== PAUSE TestNodeBufferRefusals/typed_array_view
+=== RUN   TestNodeBufferRefusals/structural_hash_view
+=== PAUSE TestNodeBufferRefusals/structural_hash_view
+=== CONT  TestNativeAgreementRejectsWrongExit
+=== RUN   TestNamespaceLimitsStayLoud/object_value
+=== RUN   TestNamespaceLimitsStayLoud/reflection
+=== RUN   TestNamespaceLimitsStayLoud/reopening
+--- PASS: TestNamespaceClosedCallGraphEdges (0.36s)
+=== CONT  TestNestedBodylessDeclarationsAreLoud/missing_implementation
+--- PASS: TestNodeFSFileDoesNotAuthorizeMutableWidening (0.60s)
+=== CONT  TestNestedBodylessDeclarationsAreLoud/body_lowering
+=== RUN   TestNamespaceLimitsStayLoud/function_merge_escape
+=== CONT  TestNestedEmptyArrayElementKinds/first
+=== CONT  TestNodeBufferRefusals/buffer_alloc
+--- PASS: TestNestedBodylessDeclarationsAreLoud (0.00s)
+    --- PASS: TestNestedBodylessDeclarationsAreLoud/body_lowering (0.09s)
+    --- PASS: TestNestedBodylessDeclarationsAreLoud/missing_implementation (0.14s)
+=== RUN   TestNamespaceLimitsStayLoud/class_merge
+=== RUN   TestNamespaceLimitsStayLoud/destructured_state
+=== CONT  TestNestedEmptyArrayElementKinds/union
+=== RUN   TestNamespaceLimitsStayLoud/nested_object_var
+--- PASS: TestNativeAgreementRejectsWrongExit (0.38s)
+=== CONT  TestNestedEmptyArrayElementKinds/objects
+=== RUN   TestNamespaceLimitsStayLoud/rest_object_var
+=== CONT  TestNestedEmptyArrayElementKinds/strings
+=== CONT  TestNestedEmptyArrayElementKinds/typed
+=== CONT  TestNestedEmptyArrayElementKinds/last
+=== RUN   TestNamespaceLimitsStayLoud/default_object_var
+=== CONT  TestNodeBufferRefusals/structural_hash_view
+=== RUN   TestNamespaceLimitsStayLoud/computed_member
+--- PASS: TestNestedEmptyArrayElementKinds (0.00s)
+    --- PASS: TestNestedEmptyArrayElementKinds/first (0.06s)
+    --- PASS: TestNestedEmptyArrayElementKinds/union (0.06s)
+    --- PASS: TestNestedEmptyArrayElementKinds/objects (0.05s)
+    --- PASS: TestNestedEmptyArrayElementKinds/strings (0.05s)
+    --- PASS: TestNestedEmptyArrayElementKinds/typed (0.05s)
+    --- PASS: TestNestedEmptyArrayElementKinds/last (0.05s)
+=== CONT  TestNodeBufferRefusals/typed_array_view
+--- PASS: TestNodeFSFileBufferBorrow (0.80s)
+=== CONT  TestNodeBufferRefusals/detached
+=== RUN   TestNamespaceLimitsStayLoud/replace_function
+=== RUN   TestNamespaceLimitsStayLoud/early_call
+=== RUN   TestNamespaceLimitsStayLoud/early_read
+=== RUN   TestNamespaceLimitsStayLoud/block_var
+=== CONT  TestNodeBufferRefusals/catch
+=== RUN   TestNamespaceLimitsStayLoud/nested_early_read
+=== RUN   TestNamespaceLimitsStayLoud/explicit_receiver
+=== RUN   TestNamespaceLimitsStayLoud/ambient
+--- PASS: TestNamespaceLimitsStayLoud (1.17s)
+    --- PASS: TestNamespaceLimitsStayLoud/computed_enum (0.05s)
+    --- PASS: TestNamespaceLimitsStayLoud/reopened_enum (0.08s)
+    --- PASS: TestNamespaceLimitsStayLoud/early_enum (0.06s)
+    --- PASS: TestNamespaceLimitsStayLoud/mutable_object_escape (0.10s)
+    --- PASS: TestNamespaceLimitsStayLoud/object_value (0.06s)
+    --- PASS: TestNamespaceLimitsStayLoud/reflection (0.07s)
+    --- PASS: TestNamespaceLimitsStayLoud/reopening (0.11s)
+    --- PASS: TestNamespaceLimitsStayLoud/function_merge_escape (0.04s)
+    --- PASS: TestNamespaceLimitsStayLoud/class_merge (0.03s)
+    --- PASS: TestNamespaceLimitsStayLoud/destructured_state (0.02s)
+    --- PASS: TestNamespaceLimitsStayLoud/nested_object_var (0.04s)
+    --- PASS: TestNamespaceLimitsStayLoud/rest_object_var (0.06s)
+    --- PASS: TestNamespaceLimitsStayLoud/default_object_var (0.03s)
+    --- PASS: TestNamespaceLimitsStayLoud/computed_member (0.06s)
+    --- PASS: TestNamespaceLimitsStayLoud/replace_function (0.05s)
+    --- PASS: TestNamespaceLimitsStayLoud/early_call (0.03s)
+    --- PASS: TestNamespaceLimitsStayLoud/early_read (0.07s)
+    --- PASS: TestNamespaceLimitsStayLoud/block_var (0.04s)
+    --- PASS: TestNamespaceLimitsStayLoud/nested_early_read (0.05s)
+    --- PASS: TestNamespaceLimitsStayLoud/explicit_receiver (0.04s)
+    --- PASS: TestNamespaceLimitsStayLoud/ambient (0.08s)
+=== CONT  TestNodeBufferRefusals/digest
+=== CONT  TestNodeBufferRefusals/algorithm
+=== CONT  TestNodeBufferRefusals/encoding
+=== CONT  TestNodeBufferRefusals/buffer_isUtf8
+=== CONT  TestNodeBufferRefusals/crypto_constructor
+=== CONT  TestNodeBufferRefusals/crypto_random
+=== CONT  TestNodeBufferRefusals/hash_copy
+=== CONT  TestNodeBufferRefusals/hash_inherited_read
+=== CONT  TestNodeBufferRefusals/buffer_read
+--- PASS: TestNodeBufferRefusals (0.00s)
+    --- PASS: TestNodeBufferRefusals/buffer_alloc (0.43s)
+    --- PASS: TestNodeBufferRefusals/typed_array_view (0.48s)
+    --- PASS: TestNodeBufferRefusals/detached (0.52s)
+    --- PASS: TestNodeBufferRefusals/structural_hash_view (0.63s)
+    --- PASS: TestNodeBufferRefusals/catch (0.58s)
+    --- PASS: TestNodeBufferRefusals/digest (0.62s)
+    --- PASS: TestNodeBufferRefusals/algorithm (0.54s)
+    --- PASS: TestNodeBufferRefusals/encoding (0.50s)
+    --- PASS: TestNodeBufferRefusals/buffer_isUtf8 (0.48s)
+    --- PASS: TestNodeBufferRefusals/crypto_constructor (0.48s)
+    --- PASS: TestNodeBufferRefusals/crypto_random (0.39s)
+    --- PASS: TestNodeBufferRefusals/hash_copy (0.38s)
+    --- PASS: TestNodeBufferRefusals/hash_inherited_read (0.39s)
+    --- PASS: TestNodeBufferRefusals/buffer_read (0.37s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	2.777s

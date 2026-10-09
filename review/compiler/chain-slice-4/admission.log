@@ -1,0 +1,45 @@
+0 1
+1 1
+2 1
+3 1
+4 4
+5 4
+6 4
+7 20
+8 20
+9 20
+10 20
+11 20
+12 20
+13 20
+14 24
+15 24
+16 24
+17 24
+18 24
+panic: Unhandled case in Node.Text: *ast.ComputedPropertyName
+
+goroutine 1 [running]:
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).Text(0x23a6c25bb0e0?)
+	github.com/microsoft/TypeScript/tsc/internal/ast/ast.go:308 +0x42c
+github.com/system-inc/adamic/internal/lower.(*lowering).checkMemberOverrides(0x23a6c2e78000, 0x23a6c25bb0e0, 0x23a6c2e4ac00, 0x23a6c2e4aa80, 0x0)
+	github.com/system-inc/adamic/internal/lower/class_inheritance.go:54 +0x17a
+github.com/system-inc/adamic/internal/lower.(*lowering).checkOverrides(0x23a6c2e78000, 0x23a6c25bb0e0, 0x23a6c2e4ac00)
+	github.com/system-inc/adamic/internal/lower/class_inheritance.go:45 +0x4d
+github.com/system-inc/adamic/internal/lower.(*lowering).refuse.func2(0x23a6c25bb0e0)
+	github.com/system-inc/adamic/internal/lower/refusals.go:210 +0xfc5
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodes(...)
+	github.com/microsoft/TypeScript/tsc/internal/ast/ast.go:40
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodeList(...)
+	github.com/microsoft/TypeScript/tsc/internal/ast/ast.go:49
+github.com/microsoft/TypeScript/tsc/internal/ast.(*SourceFile).ForEachChild(0x23a6c29ac388, 0x23a6c2c73c28)
+	github.com/microsoft/TypeScript/tsc/internal/ast/ast.go:2783 +0x9b
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0x2?, 0x23a6c2c73c28)
+	github.com/microsoft/TypeScript/tsc/internal/ast/ast_generated.go:9002 +0x1ec5
+github.com/system-inc/adamic/internal/lower.(*lowering).refuse(0x23a6c2e78000, 0x23a6c29ac388)
+	github.com/system-inc/adamic/internal/lower/refusals.go:234 +0x548
+github.com/system-inc/adamic/internal/lower.Lower({0x1a6ada8?, 0x1b506a0?}, 0x23a6c23e2780)
+	github.com/system-inc/adamic/internal/lower/lower.go:47 +0x411
+main.main()
+	github.com/system-inc/adamic/cmd/slice4-admission-scratch/main.go:3 +0x15b
+

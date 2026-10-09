@@ -1,0 +1,19 @@
+=== RUN   TestGenericBodyRelationsRefuse
+=== PAUSE TestGenericBodyRelationsRefuse
+=== CONT  TestGenericBodyRelationsRefuse
+=== RUN   TestGenericBodyRelationsRefuse/initializer
+    generic_body_relations_test.go:49: want generic body refusal, got internal compiler error: generic body initializer witness at /tmp/adamic-gate/TestGenericBodyRelationsRefuseinitializer2488736414/001/main.a:1:78: resolved source 2 is not assignable to slot 1
+=== RUN   TestGenericBodyRelationsRefuse/field_initializer
+    generic_body_relations_test.go:49: want generic body refusal, got internal compiler error: generic body field initializer witness at /tmp/adamic-gate/TestGenericBodyRelationsRefusefield_initializer2119749368/001/main.a:1:48: resolved source 2 is not assignable to slot 1
+=== RUN   TestGenericBodyRelationsRefuse/index_signature
+    generic_body_relations_test.go:56: missing "T[\"value\"]": /tmp/adamic-gate/TestGenericBodyRelationsRefuseindex_signature3233690131/001/main.a:1:81: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added
+    generic_body_relations_test.go:56: missing "from source": /tmp/adamic-gate/TestGenericBodyRelationsRefuseindex_signature3233690131/001/main.a:1:81: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added
+    generic_body_relations_test.go:56: missing "checker constraint: T extends": /tmp/adamic-gate/TestGenericBodyRelationsRefuseindex_signature3233690131/001/main.a:1:81: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added
+    generic_body_relations_test.go:56: missing "adamic/generic-body-relations": /tmp/adamic-gate/TestGenericBodyRelationsRefuseindex_signature3233690131/001/main.a:1:81: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added
+--- FAIL: TestGenericBodyRelationsRefuse (0.10s)
+    --- FAIL: TestGenericBodyRelationsRefuse/initializer (0.04s)
+    --- FAIL: TestGenericBodyRelationsRefuse/field_initializer (0.03s)
+    --- FAIL: TestGenericBodyRelationsRefuse/index_signature (0.03s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.107s
+FAIL

@@ -1,0 +1,3360 @@
+panic: test timed out after 1m25s
+	running tests:
+		TestCountsAreRecorded (1m25s)
+		TestCountsAreRecorded/fixtures/internal/oracle/testdata/lint_runtime_release_chain.a (0s)
+		TestCountsAreRecorded/fixtures/internal/oracle/testdata/lint_runtime_release_shared.a (1s)
+		TestCountsAreRecorded/fixtures/internal/oracle/testdata/lint_runtime_search_boundaries.a (1s)
+		TestCountsAreRecorded/fixtures/internal/oracle/testdata/runtime_last_index_of.a (0s)
+		TestCountsAreRecorded/fixtures/internal/oracle/testdata/syntax_substr.a (0s)
+
+goroutine 5166 [running]:
+testing.(*M).startAlarm.func1()
+	testing/testing.go:2959 +0x34a
+created by time.goFunc
+	time/sleep.go:182 +0x2d
+
+goroutine 1 [chan receive, 1 minutes]:
+testing.tRunner.func1()
+	testing/testing.go:2142 +0x425
+testing.tRunner(0x2bcdd65a6b48, 0x2bcdd6549ae8)
+	testing/testing.go:2199 +0x123
+testing.runTests({0xd9f6a9, 0x1c}, {0xdbc765, 0x2c}, 0x2bcdd6341740, {0x1f74680, 0xe8, 0xe8}, {0xc2aa78b2f3dee6fb, 0x13cab19b9f, ...})
+	testing/testing.go:2740 +0x510
+testing.(*M).Run(0x2bcdd662f540)
+	testing/testing.go:2600 +0x6af
+github.com/system-inc/adamic/internal/oracle.TestMain(0x1fc1060?)
+	github.com/system-inc/adamic/internal/oracle/cache_test.go:452 +0x1f
+main.main()
+	_testmain.go:510 +0xa5
+
+goroutine 21 [chan receive, 1 minutes]:
+testing.(*T).Run(0x2bcdd65a6d88, {0xd7f9d2?, 0x0?}, 0x2bcdd63417e8)
+	testing/testing.go:2266 +0x4f2
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded(0x2bcdd65a6d88)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:142 +0x145
+testing.tRunner(0x2bcdd65a6d88, 0x1edcbe0)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 1
+	testing/testing.go:2258 +0x4d4
+
+goroutine 22 [chan receive, 1 minutes]:
+testing.tRunner.func1()
+	testing/testing.go:2142 +0x425
+testing.tRunner(0x2bcdd65a6fc8, 0x2bcdd63417e8)
+	testing/testing.go:2199 +0x123
+created by testing.(*T).Run in goroutine 21
+	testing/testing.go:2258 +0x4d4
+
+goroutine 24 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd65a7448)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd65a7448)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd65a7448, 0x2bcdd6601180)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 25 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd65a7688)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd65a7688)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd65a7688, 0x2bcdd66011c0)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 26 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd65a78c8)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd65a78c8)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd65a78c8, 0x2bcdd6601200)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 27 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd65a7b08)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd65a7b08)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd65a7b08, 0x2bcdd6601240)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 28 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd65a7d48)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd65a7d48)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd65a7d48, 0x2bcdd66012c0)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 29 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd667e008)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd667e008)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd667e008, 0x2bcdd6601300)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 30 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd667e248)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd667e248)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd667e248, 0x2bcdd6601340)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 31 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd667e488)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd667e488)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd667e488, 0x2bcdd6601380)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 32 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd667e6c8)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd667e6c8)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd667e6c8, 0x2bcdd66013c0)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 33 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd667e908)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd667e908)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd667e908, 0x2bcdd6601400)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 34 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd667eb48)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd667eb48)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd667eb48, 0x2bcdd6601440)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 35 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd667ed88)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd667ed88)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd667ed88, 0x2bcdd6601480)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 36 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd667efc8)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd667efc8)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd667efc8, 0x2bcdd66014c0)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 37 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd667f208)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd667f208)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd667f208, 0x2bcdd6601500)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 38 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd667f448)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd667f448)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd667f448, 0x2bcdd6601540)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 39 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd667f688)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd667f688)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd667f688, 0x2bcdd6601580)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 40 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd667f8c8)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd667f8c8)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd667f8c8, 0x2bcdd66015c0)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 41 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd667fb08)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd667fb08)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd667fb08, 0x2bcdd6601600)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 42 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd667fd48)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd667fd48)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd667fd48, 0x2bcdd6601640)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 43 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd668c008)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd668c008)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd668c008, 0x2bcdd6601680)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 44 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd668c248)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd668c248)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd668c248, 0x2bcdd66016c0)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 45 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd668c488)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd668c488)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd668c488, 0x2bcdd6601700)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 46 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd668c6c8)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd668c6c8)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd668c6c8, 0x2bcdd6601740)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 47 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd668c908)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd668c908)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd668c908, 0x2bcdd6601780)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 48 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd668cb48)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd668cb48)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd668cb48, 0x2bcdd66017c0)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 66 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd679c008)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd679c008)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd679c008, 0x2bcdd6782000)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 67 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd679c248)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd679c248)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd679c248, 0x2bcdd6782040)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 68 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd679c488)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd679c488)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd679c488, 0x2bcdd6782080)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 69 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd679c6c8)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd679c6c8)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd679c6c8, 0x2bcdd67820c0)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 70 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd679c908)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd679c908)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd679c908, 0x2bcdd6782100)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 71 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd679cb48)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd679cb48)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd679cb48, 0x2bcdd6782140)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 72 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd679cd88)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd679cd88)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd679cd88, 0x2bcdd6782180)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 73 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd679cfc8)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd679cfc8)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd679cfc8, 0x2bcdd67821c0)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 74 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd679d208)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd679d208)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd679d208, 0x2bcdd6600000)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 75 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd679d448)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd679d448)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd679d448, 0x2bcdd6600040)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 76 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd679d688)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd679d688)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd679d688, 0x2bcdd6600080)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 77 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd679d8c8)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd679d8c8)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd679d8c8, 0x2bcdd6600100)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 78 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd679db08)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd679db08)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd679db08, 0x2bcdd6600140)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 79 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd679dd48)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd679dd48)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd679dd48, 0x2bcdd6600180)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 80 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd668cd88)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd668cd88)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd668cd88, 0x2bcdd66001c0)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 81 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd668cfc8)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd668cfc8)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd668cfc8, 0x2bcdd6600200)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 82 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd668d208)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd668d208)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd668d208, 0x2bcdd6600240)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 83 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd668d448)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd668d448)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd668d448, 0x2bcdd6600280)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 84 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd668d688)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd668d688)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd668d688, 0x2bcdd66002c0)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 85 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd668d8c8)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd668d8c8)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd668d8c8, 0x2bcdd6600300)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 86 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd668db08)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd668db08)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd668db08, 0x2bcdd6600340)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 87 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd668dd48)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd668dd48)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd668dd48, 0x2bcdd6600380)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 88 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd637c488)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd637c488)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd637c488, 0x2bcdd66003c0)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 89 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd637c6c8)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd637c6c8)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd637c6c8, 0x2bcdd6600400)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 90 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd637c908)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd637c908)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd637c908, 0x2bcdd6600440)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 91 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd637cb48)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd637cb48)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd637cb48, 0x2bcdd6600480)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 92 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd637cd88)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd637cd88)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd637cd88, 0x2bcdd66004c0)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 93 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd637cfc8)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd637cfc8)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd637cfc8, 0x2bcdd6600500)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 94 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd637d208)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd637d208)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd637d208, 0x2bcdd6600540)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 95 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd637d448)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd637d448)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd637d448, 0x2bcdd6600580)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 96 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd637d688)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd637d688)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd637d688, 0x2bcdd66005c0)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 97 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd637d8c8)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd637d8c8)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd637d8c8, 0x2bcdd6600600)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 98 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd637db08)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd637db08)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd637db08, 0x2bcdd6600680)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 99 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd637dd48)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd637dd48)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd637dd48, 0x2bcdd66006c0)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 100 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd64ae008)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd64ae008)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd64ae008, 0x2bcdd6600700)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 101 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd64ae248)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd64ae248)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd64ae248, 0x2bcdd6600740)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 102 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd64ae488)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd64ae488)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd64ae488, 0x2bcdd6600780)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 103 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd64ae6c8)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd64ae6c8)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd64ae6c8, 0x2bcdd66007c0)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 104 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd64ae908)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd64ae908)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd64ae908, 0x2bcdd6600800)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 105 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd64aeb48)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd64aeb48)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd64aeb48, 0x2bcdd6600840)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 106 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd64af208)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd64af208)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd64af208, 0x2bcdd6601140)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 107 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd64af448)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd64af448)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd64af448, 0x2bcdd6601180)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 108 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd65a6248)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd65a6248)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd65a6248, 0x2bcdd66011c0)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 109 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd65a66c8)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd65a66c8)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd65a66c8, 0x2bcdd6601200)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 110 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd67ce008)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd67ce008)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd67ce008, 0x2bcdd6601240)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 111 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd67ce248)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd67ce248)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd67ce248, 0x2bcdd6601280)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 112 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd67ce488)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd67ce488)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd67ce488, 0x2bcdd66012c0)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 113 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd67ce6c8)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd67ce6c8)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd67ce6c8, 0x2bcdd6601300)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 114 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd67ce908)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd67ce908)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd67ce908, 0x2bcdd6601340)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 115 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd67ceb48)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd67ceb48)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd67ceb48, 0x2bcdd6601380)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 116 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd67ced88)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd67ced88)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd67ced88, 0x2bcdd66013c0)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 117 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd67cefc8)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd67cefc8)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd67cefc8, 0x2bcdd6601400)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 118 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd67cf208)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd67cf208)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd67cf208, 0x2bcdd6601440)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 119 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd67cf448)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd67cf448)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd67cf448, 0x2bcdd6601480)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 120 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd67cf688)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd67cf688)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd67cf688, 0x2bcdd66014c0)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 121 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd67cf8c8)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd67cf8c8)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd67cf8c8, 0x2bcdd6601500)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 122 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd67cfb08)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd67cfb08)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd67cfb08, 0x2bcdd6601540)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 123 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd67cfd48)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd67cfd48)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd67cfd48, 0x2bcdd6601580)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 124 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd67dc008)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd67dc008)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd67dc008, 0x2bcdd66015c0)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 126 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd67dc488)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd67dc488)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd67dc488, 0x2bcdd6601640)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 127 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd67dc6c8)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd67dc6c8)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd67dc6c8, 0x2bcdd6601680)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 128 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd67dc908)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd67dc908)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd67dc908, 0x2bcdd66016c0)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 129 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd67dcb48)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd67dcb48)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd67dcb48, 0x2bcdd6601700)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 130 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd67dcd88)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd67dcd88)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd67dcd88, 0x2bcdd6601740)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 131 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd67dcfc8)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd67dcfc8)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd67dcfc8, 0x2bcdd6601780)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 132 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd67dd208)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd67dd208)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd67dd208, 0x2bcdd6601840)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 133 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd67dd448)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd67dd448)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd67dd448, 0x2bcdd6601880)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 134 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd67dd688)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd67dd688)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd67dd688, 0x2bcdd66018c0)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 135 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd67dd8c8)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd67dd8c8)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd67dd8c8, 0x2bcdd6601900)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 136 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd67ddb08)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd67ddb08)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd67ddb08, 0x2bcdd6601940)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 137 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd67ddd48)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd67ddd48)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd67ddd48, 0x2bcdd6601980)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 138 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd67e0008)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd67e0008)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd67e0008, 0x2bcdd66019c0)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 139 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd67e0248)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd67e0248)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd67e0248, 0x2bcdd6601a00)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 140 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd67e0488)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd67e0488)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd67e0488, 0x2bcdd6601a40)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 141 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd67e06c8)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd67e06c8)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd67e06c8, 0x2bcdd6601a80)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 142 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd67e0908)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd67e0908)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd67e0908, 0x2bcdd6601ac0)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 143 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd67e0b48)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd67e0b48)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd67e0b48, 0x2bcdd6601b00)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 144 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd67e0d88)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd67e0d88)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd67e0d88, 0x2bcdd6601b40)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 145 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd67e0fc8)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd67e0fc8)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd67e0fc8, 0x2bcdd6601b80)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 146 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd67e1208)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd67e1208)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd67e1208, 0x2bcdd6601bc0)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 147 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd67e1448)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd67e1448)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd67e1448, 0x2bcdd6601c00)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 149 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd67e18c8)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd67e18c8)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd67e18c8, 0x2bcdd6601c80)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 150 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd67e1b08)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd67e1b08)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd67e1b08, 0x2bcdd6601cc0)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 151 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd67e1d48)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd67e1d48)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd67e1d48, 0x2bcdd6601d00)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 152 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd67ee008)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd67ee008)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd67ee008, 0x2bcdd6601d40)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 153 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd67ee248)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd67ee248)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd67ee248, 0x2bcdd6601d80)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 154 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd67ee488)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd67ee488)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd67ee488, 0x2bcdd6601dc0)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 155 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd67ee6c8)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd67ee6c8)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd67ee6c8, 0x2bcdd6601e00)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 156 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd67ee908)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd67ee908)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd67ee908, 0x2bcdd6601e40)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 157 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd67eeb48)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd67eeb48)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd67eeb48, 0x2bcdd6601e80)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 158 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd67eed88)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd67eed88)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd67eed88, 0x2bcdd6601ec0)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 159 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd67eefc8)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd67eefc8)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd67eefc8, 0x2bcdd6782200)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 160 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd67ef208)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd67ef208)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd67ef208, 0x2bcdd6782240)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 161 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd67ef448)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd67ef448)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd67ef448, 0x2bcdd6782280)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 162 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd67ef688)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd67ef688)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd67ef688, 0x2bcdd67822c0)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 163 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd67ef8c8)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd67ef8c8)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd67ef8c8, 0x2bcdd6782300)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 164 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd67efb08)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd67efb08)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd67efb08, 0x2bcdd6782340)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 165 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd67efd48)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd67efd48)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd67efd48, 0x2bcdd6782380)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 166 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd67fc008)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd67fc008)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd67fc008, 0x2bcdd67823c0)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 167 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd67fc248)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd67fc248)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd67fc248, 0x2bcdd6782400)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 168 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd67fc488)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd67fc488)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd67fc488, 0x2bcdd6782440)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 169 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd67fc6c8)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd67fc6c8)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd67fc6c8, 0x2bcdd6782480)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 170 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd67fc908)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd67fc908)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd67fc908, 0x2bcdd67824c0)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 171 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd67fcb48)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd67fcb48)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd67fcb48, 0x2bcdd6782500)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 172 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd67fcd88)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd67fcd88)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd67fcd88, 0x2bcdd6782540)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 173 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd67fcfc8)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd67fcfc8)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd67fcfc8, 0x2bcdd6782580)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 174 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd67fd208)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd67fd208)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd67fd208, 0x2bcdd67825c0)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 175 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd67fd448)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd67fd448)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd67fd448, 0x2bcdd6782600)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 176 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd67fd688)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd67fd688)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd67fd688, 0x2bcdd6782640)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 177 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd67fd8c8)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd67fd8c8)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd67fd8c8, 0x2bcdd6782680)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 178 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd67fdb08)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd67fdb08)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd67fdb08, 0x2bcdd67826c0)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 179 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd67fdd48)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd67fdd48)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd67fdd48, 0x2bcdd6782700)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 180 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd6198008)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd6198008)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd6198008, 0x2bcdd6782740)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 181 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd6198248)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd6198248)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd6198248, 0x2bcdd6782780)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 182 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd6198488)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd6198488)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd6198488, 0x2bcdd67827c0)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 183 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd61986c8)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd61986c8)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd61986c8, 0x2bcdd6782800)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 184 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd6198908)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd6198908)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd6198908, 0x2bcdd6782840)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 185 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd6198b48)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd6198b48)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd6198b48, 0x2bcdd6782880)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 186 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd6198d88)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd6198d88)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd6198d88, 0x2bcdd67828c0)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 187 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd6198fc8)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd6198fc8)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd6198fc8, 0x2bcdd6782900)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 188 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd6199208)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd6199208)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd6199208, 0x2bcdd6782940)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 189 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd6199448)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd6199448)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd6199448, 0x2bcdd6782980)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 190 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd6199688)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd6199688)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd6199688, 0x2bcdd67829c0)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 191 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd61998c8)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd61998c8)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd61998c8, 0x2bcdd6782a00)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 192 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd6199b08)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd6199b08)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd6199b08, 0x2bcdd6782a40)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 193 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd6199d48)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd6199d48)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd6199d48, 0x2bcdd6782a80)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 194 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd61fe008)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd61fe008)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd61fe008, 0x2bcdd6782ac0)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 195 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd61fe248)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd61fe248)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd61fe248, 0x2bcdd6782b00)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 196 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd61fe488)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd61fe488)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd61fe488, 0x2bcdd6782b40)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 197 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd61fe6c8)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd61fe6c8)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd61fe6c8, 0x2bcdd6782b80)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 198 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd61fe908)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd61fe908)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd61fe908, 0x2bcdd6782bc0)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 199 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd61feb48)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd61feb48)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd61feb48, 0x2bcdd6782c00)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 200 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd61fed88)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd61fed88)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd61fed88, 0x2bcdd6782c40)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 201 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd61fefc8)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd61fefc8)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd61fefc8, 0x2bcdd6782c80)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 202 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd61ff208)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd61ff208)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd61ff208, 0x2bcdd6782cc0)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 203 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd61ff448)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd61ff448)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd61ff448, 0x2bcdd6782d00)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 204 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd61ff688)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd61ff688)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd61ff688, 0x2bcdd6782d40)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 205 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd61ff8c8)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd61ff8c8)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd61ff8c8, 0x2bcdd6782d80)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 206 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd61ffb08)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd61ffb08)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd61ffb08, 0x2bcdd6782dc0)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 207 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd61ffd48)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd61ffd48)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd61ffd48, 0x2bcdd6782e00)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 208 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd63b6008)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd63b6008)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd63b6008, 0x2bcdd6782e40)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 209 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd63b6248)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd63b6248)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd63b6248, 0x2bcdd6782e80)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 210 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd63b6488)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd63b6488)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd63b6488, 0x2bcdd6782ec0)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 211 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd63b66c8)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd63b66c8)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd63b66c8, 0x2bcdd6782f00)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 212 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd63b6908)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd63b6908)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd63b6908, 0x2bcdd6782f40)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 213 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd63b6b48)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd63b6b48)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd63b6b48, 0x2bcdd6782f80)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 214 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd63b6d88)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd63b6d88)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd63b6d88, 0x2bcdd6782fc0)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 215 [syscall]:
+syscall.Syscall6(0xf7, 0x3, 0x18, 0x2bcddb6d7080, 0x4, 0x2bcdd7d618c0, 0x0)
+	syscall/syscall_linux.go:96 +0x39
+internal/syscall/unix.Waitid(0x2bcddb6d70ae?, 0x2bcddb6d71d8?, 0x539d4b?, 0x18?, 0x1e728e0?)
+	internal/syscall/unix/waitid_linux.go:18 +0x39
+os.(*Process).pidfdWait.func1(...)
+	os/pidfd_linux.go:108
+os.ignoringEINTR(...)
+	os/file_posix.go:263
+os.(*Process).pidfdWait(0x2bcddb6a8e00)
+	os/pidfd_linux.go:107 +0x1cf
+os.(*Process).wait(0x4220e5?)
+	os/exec_unix.go:25 +0x1a
+os.(*Process).Wait(...)
+	os/exec.go:347
+os/exec.(*Cmd).Wait(0x2bcddb65d040)
+	os/exec/exec.go:944 +0x45
+os/exec.(*Cmd).Run(0x2bcddb65d040)
+	os/exec/exec.go:643 +0x2d
+os/exec.(*Cmd).CombinedOutput(0x2bcddb65d040)
+	os/exec/exec.go:1061 +0x8f
+github.com/system-inc/adamic/internal/native.runtimeLibrary({0x0, 0x0}, {{0x0, 0x0}, 0x0, 0x0, 0x0, 0x0, 0x1, {0x0, ...}, ...}, ...)
+	github.com/system-inc/adamic/internal/native/library.go:91 +0x5e5
+github.com/system-inc/adamic/internal/native.RuntimeLibraryForSource({0x0, 0x0}, {0x2bcddb6df000?, 0x4a484d?}, {{0x0, 0x0}, 0x0, 0x0, 0x0, 0x0, ...})
+	github.com/system-inc/adamic/internal/native/library.go:33 +0x7d
+github.com/system-inc/adamic/internal/native.Build({0x2bcddb6df000, 0x174f}, {0x2bcdd9823650, 0x62}, {{0x0, 0x0}, 0x0, 0x0, 0x0, 0x0, ...})
+	github.com/system-inc/adamic/internal/native/native.go:123 +0x2ab
+github.com/system-inc/adamic/internal/oracle.counted.func1()
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:116 +0xa77
+github.com/system-inc/adamic/internal/oracle.counted(0x2bcdd63b6fc8, {0xdc5075, 0x30}, 0x0, {0x0, 0x0, 0x0}, 0x0, 0x0)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:126 +0x56b
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd63b6fc8)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:149 +0x73
+testing.tRunner(0x2bcdd63b6fc8, 0x2bcdd6783000)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 216 [syscall]:
+syscall.Syscall6(0xf7, 0x3, 0x12, 0x2bcdd9f35500, 0x4, 0x2bcdd6ff2e10, 0x0)
+	syscall/syscall_linux.go:96 +0x39
+internal/syscall/unix.Waitid(0x2bcdd9f3552e?, 0x2bcdd9f35658?, 0x539d4b?, 0x18?, 0x1e727b0?)
+	internal/syscall/unix/waitid_linux.go:18 +0x39
+os.(*Process).pidfdWait.func1(...)
+	os/pidfd_linux.go:108
+os.ignoringEINTR(...)
+	os/file_posix.go:263
+os.(*Process).pidfdWait(0x2bcdda6aafc0)
+	os/pidfd_linux.go:107 +0x1cf
+os.(*Process).wait(0x7f02bfc83bf0?)
+	os/exec_unix.go:25 +0x1a
+os.(*Process).Wait(...)
+	os/exec.go:347
+os/exec.(*Cmd).Wait(0x2bcdda67ab60)
+	os/exec/exec.go:944 +0x45
+os/exec.(*Cmd).Run(0x2bcdda67ab60)
+	os/exec/exec.go:643 +0x2d
+github.com/system-inc/adamic/internal/oracle.executeWith(0x2bcdd63b7208, {0x0, 0x0, 0x2bcdd9faca00?}, {0xd7ea53, 0x7}, {0x2bcdd9f35b48, 0x3, 0x3})
+	github.com/system-inc/adamic/internal/oracle/oracle_test.go:517 +0x232
+github.com/system-inc/adamic/internal/oracle.execute(0x2bcdd63b7208, {0xd7ea53, 0x7}, {0x2bcdd9f35b48, 0x3, 0x3})
+	github.com/system-inc/adamic/internal/oracle/oracle_test.go:503 +0xa5
+github.com/system-inc/adamic/internal/oracle.counted.func1()
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:120 +0xb51
+github.com/system-inc/adamic/internal/oracle.counted(0x2bcdd63b7208, {0xdceeef, 0x35}, 0x0, {0x0, 0x0, 0x0}, 0x0, 0x0)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:126 +0x56b
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd63b7208)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:149 +0x73
+testing.tRunner(0x2bcdd63b7208, 0x2bcdd6783040)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 217 [syscall]:
+syscall.Syscall6(0xf7, 0x3, 0xc, 0x2bcdd951d318, 0x4, 0x2bcdd6b8b9e0, 0x0)
+	syscall/syscall_linux.go:96 +0x39
+internal/syscall/unix.Waitid(0x2bcdd951d346?, 0x2bcdd951d470?, 0x539d4b?, 0x18?, 0x1e728e0?)
+	internal/syscall/unix/waitid_linux.go:18 +0x39
+os.(*Process).pidfdWait.func1(...)
+	os/pidfd_linux.go:108
+os.ignoringEINTR(...)
+	os/file_posix.go:263
+os.(*Process).pidfdWait(0x2bcdd7904c80)
+	os/pidfd_linux.go:107 +0x1cf
+os.(*Process).wait(0x1b?)
+	os/exec_unix.go:25 +0x1a
+os.(*Process).Wait(...)
+	os/exec.go:347
+os/exec.(*Cmd).Wait(0x2bcdd935b380)
+	os/exec/exec.go:944 +0x45
+os/exec.(*Cmd).Run(0x2bcdd935b380)
+	os/exec/exec.go:643 +0x2d
+os/exec.(*Cmd).CombinedOutput(0x2bcdd935b380)
+	os/exec/exec.go:1061 +0x8f
+github.com/system-inc/adamic/internal/native.Build({0x2bcdd9548a00, 0x323d}, {0x2bcdd9785030, 0x61}, {{0x0, 0x0}, 0x0, 0x0, 0x0, 0x0, ...})
+	github.com/system-inc/adamic/internal/native/native.go:150 +0xd73
+github.com/system-inc/adamic/internal/oracle.counted.func1()
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:116 +0xa77
+github.com/system-inc/adamic/internal/oracle.counted(0x2bcdd63b7448, {0xdd0ab2, 0x36}, 0x0, {0x0, 0x0, 0x0}, 0x0, 0x0)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:126 +0x56b
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd63b7448)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:149 +0x73
+testing.tRunner(0x2bcdd63b7448, 0x2bcdd6783080)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 218 [chan receive]:
+os/exec.(*Cmd).awaitGoroutines(0x2bcdd9cecd00, 0x0)
+	os/exec/exec.go:995 +0x1ed
+os/exec.(*Cmd).Wait(0x2bcdd9cecd00)
+	os/exec/exec.go:962 +0x16f
+os/exec.(*Cmd).Run(0x2bcdd9cecd00)
+	os/exec/exec.go:643 +0x2d
+os/exec.(*Cmd).CombinedOutput(0x2bcdd9cecd00)
+	os/exec/exec.go:1061 +0x8f
+github.com/system-inc/adamic/internal/native.Build({0x2bcdda6df000, 0x2620}, {0x2bcddb2e35e0, 0x62}, {{0x0, 0x0}, 0x0, 0x0, 0x0, 0x0, ...})
+	github.com/system-inc/adamic/internal/native/native.go:150 +0xd73
+github.com/system-inc/adamic/internal/oracle.counted.func1()
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:116 +0xa77
+github.com/system-inc/adamic/internal/oracle.counted(0x2bcdd63b7688, {0xdd607b, 0x39}, 0x0, {0x0, 0x0, 0x0}, 0x0, 0x0)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:126 +0x56b
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd63b7688)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:149 +0x73
+testing.tRunner(0x2bcdd63b7688, 0x2bcdd67830c0)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 5194 [IO wait]:
+internal/poll.runtime_pollWait(0x7f026c3c5400, 0x72)
+	runtime/netpoll.go:351 +0x85
+internal/poll.(*pollDesc).wait(0x2bcddb6ba420?, 0x2bcddb873a00?, 0x1)
+	internal/poll/fd_poll_runtime.go:84 +0x27
+internal/poll.(*pollDesc).waitRead(...)
+	internal/poll/fd_poll_runtime.go:89
+internal/poll.(*FD).Read(0x2bcddb6ba420, {0x2bcddb873a00, 0x200, 0x200})
+	internal/poll/fd_unix.go:170 +0x2a8
+os.(*File).read(...)
+	os/file_posix.go:30
+os.(*File).Read(0x2bcddb5b7a78, {0x2bcddb873a00?, 0x98?, 0x0?})
+	os/file.go:144 +0x4f
+bytes.(*Buffer).ReadFrom(0x2bcdd7d0f020, {0x1ecf468, 0x2bcddb5b7a78})
+	bytes/buffer.go:229 +0x98
+io.copyBuffer({0x1ecf908, 0x2bcdd7d0f020}, {0x1ecf468, 0x2bcddb5b7a78}, {0x0, 0x0, 0x0})
+	io/io.go:415 +0x151
+io.Copy(...)
+	io/io.go:388
+os.genericWriteTo(0x2bcddb5b7a78?, {0x1ecf908?, 0x2bcdd7d0f020?})
+	os/file.go:295 +0x35
+os.(*File).WriteTo(0x2bcddb5b7a78, {0x1ecf908, 0x2bcdd7d0f020})
+	os/file.go:273 +0x9c
+io.copyBuffer({0x1ecf908, 0x2bcdd7d0f020}, {0x1ecf4e8, 0x2bcddb5b7a78}, {0x0, 0x0, 0x0})
+	io/io.go:411 +0x9d
+io.Copy(...)
+	io/io.go:388
+os/exec.(*Cmd).writerDescriptor.func1()
+	os/exec/exec.go:613 +0x34
+os/exec.(*Cmd).Start.func2(0x2bcdd6783000?)
+	os/exec/exec.go:768 +0x2c
+created by os/exec.(*Cmd).Start in goroutine 215
+	os/exec/exec.go:767 +0x92b
+
+goroutine 5175 [IO wait]:
+internal/poll.runtime_pollWait(0x7f026d5c0a00, 0x72)
+	runtime/netpoll.go:351 +0x85
+internal/poll.(*pollDesc).wait(0x2bcdd9f23380?, 0x2bcdd9717c00?, 0x1)
+	internal/poll/fd_poll_runtime.go:84 +0x27
+internal/poll.(*pollDesc).waitRead(...)
+	internal/poll/fd_poll_runtime.go:89
+internal/poll.(*FD).Read(0x2bcdd9f23380, {0x2bcdd9717c00, 0x200, 0x200})
+	internal/poll/fd_unix.go:170 +0x2a8
+os.(*File).read(...)
+	os/file_posix.go:30
+os.(*File).Read(0x2bcdd9715998, {0x2bcdd9717c00?, 0x2bcdd6542538?, 0x0?})
+	os/file.go:144 +0x4f
+bytes.(*Buffer).ReadFrom(0x2bcdd928c9f0, {0x1ecf468, 0x2bcdd9715998})
+	bytes/buffer.go:229 +0x98
+io.copyBuffer({0x1ecf908, 0x2bcdd928c9f0}, {0x1ecf468, 0x2bcdd9715998}, {0x0, 0x0, 0x0})
+	io/io.go:415 +0x151
+io.Copy(...)
+	io/io.go:388
+os.genericWriteTo(0x2bcdd9715998?, {0x1ecf908?, 0x2bcdd928c9f0?})
+	os/file.go:295 +0x35
+os.(*File).WriteTo(0x2bcdd9715998, {0x1ecf908, 0x2bcdd928c9f0})
+	os/file.go:273 +0x9c
+io.copyBuffer({0x1ecf908, 0x2bcdd928c9f0}, {0x1ecf4e8, 0x2bcdd9715998}, {0x0, 0x0, 0x0})
+	io/io.go:411 +0x9d
+io.Copy(...)
+	io/io.go:388
+os/exec.(*Cmd).writerDescriptor.func1()
+	os/exec/exec.go:613 +0x34
+os/exec.(*Cmd).Start.func2(0x2bcdd9784af0?)
+	os/exec/exec.go:768 +0x2c
+created by os/exec.(*Cmd).Start in goroutine 963
+	os/exec/exec.go:767 +0x92b
+
+goroutine 5165 [select]:
+os/exec.(*Cmd).watchCtx(0x2bcdda67ab60, 0x2bcddb2e37a0)
+	os/exec/exec.go:808 +0xb0
+created by os/exec.(*Cmd).Start in goroutine 216
+	os/exec/exec.go:794 +0x8f3
+
+goroutine 5163 [IO wait]:
+internal/poll.runtime_pollWait(0x7f026c3c5600, 0x72)
+	runtime/netpoll.go:351 +0x85
+internal/poll.(*pollDesc).wait(0x2bcdda6837a0?, 0x2bcddb873800?, 0x1)
+	internal/poll/fd_poll_runtime.go:84 +0x27
+internal/poll.(*pollDesc).waitRead(...)
+	internal/poll/fd_poll_runtime.go:89
+internal/poll.(*FD).Read(0x2bcdda6837a0, {0x2bcddb873800, 0x200, 0x200})
+	internal/poll/fd_unix.go:170 +0x2a8
+os.(*File).read(...)
+	os/file_posix.go:30
+os.(*File).Read(0x2bcdda6431b0, {0x2bcddb873800?, 0x2bcdd66cef98?, 0x0?})
+	os/file.go:144 +0x4f
+bytes.(*Buffer).ReadFrom(0x2bcde116d9e0, {0x1ecf468, 0x2bcdda6431b0})
+	bytes/buffer.go:229 +0x98
+io.copyBuffer({0x1ecf908, 0x2bcde116d9e0}, {0x1ecf468, 0x2bcdda6431b0}, {0x0, 0x0, 0x0})
+	io/io.go:415 +0x151
+io.Copy(...)
+	io/io.go:388
+os.genericWriteTo(0x2bcdda6431b0?, {0x1ecf908?, 0x2bcde116d9e0?})
+	os/file.go:295 +0x35
+os.(*File).WriteTo(0x2bcdda6431b0, {0x1ecf908, 0x2bcde116d9e0})
+	os/file.go:273 +0x9c
+io.copyBuffer({0x1ecf908, 0x2bcde116d9e0}, {0x1ecf4e8, 0x2bcdda6431b0}, {0x0, 0x0, 0x0})
+	io/io.go:411 +0x9d
+io.Copy(...)
+	io/io.go:388
+os/exec.(*Cmd).writerDescriptor.func1()
+	os/exec/exec.go:613 +0x34
+os/exec.(*Cmd).Start.func2(0x2bcddb28f810?)
+	os/exec/exec.go:768 +0x2c
+created by os/exec.(*Cmd).Start in goroutine 216
+	os/exec/exec.go:767 +0x92b
+
+goroutine 584 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd6838d88)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd6838d88)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd6838d88, 0x2bcdd6800880)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 585 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd6838fc8)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd6838fc8)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd6838fc8, 0x2bcdd68008c0)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 586 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd6839208)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd6839208)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd6839208, 0x2bcdd6800900)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 587 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd6839448)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd6839448)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd6839448, 0x2bcdd6800940)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 588 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd6839688)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd6839688)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd6839688, 0x2bcdd6800980)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 589 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd68398c8)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd68398c8)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd68398c8, 0x2bcdd68009c0)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 590 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd6839b08)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd6839b08)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd6839b08, 0x2bcdd6800a00)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 591 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd6839d48)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd6839d48)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd6839d48, 0x2bcdd6800a40)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 592 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd6848008)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd6848008)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd6848008, 0x2bcdd6800a80)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 5130 [IO wait]:
+internal/poll.runtime_pollWait(0x7f026d5c0e00, 0x72)
+	runtime/netpoll.go:351 +0x85
+internal/poll.(*pollDesc).wait(0x2bcdd81de000?, 0x2bcdd64ac800?, 0x1)
+	internal/poll/fd_poll_runtime.go:84 +0x27
+internal/poll.(*pollDesc).waitRead(...)
+	internal/poll/fd_poll_runtime.go:89
+internal/poll.(*FD).Read(0x2bcdd81de000, {0x2bcdd64ac800, 0x200, 0x200})
+	internal/poll/fd_unix.go:170 +0x2a8
+os.(*File).read(...)
+	os/file_posix.go:30
+os.(*File).Read(0x2bcdd9339928, {0x2bcdd64ac800?, 0x2bcdd63e8d38?, 0x0?})
+	os/file.go:144 +0x4f
+bytes.(*Buffer).ReadFrom(0x2bcde507e780, {0x1ecf468, 0x2bcdd9339928})
+	bytes/buffer.go:229 +0x98
+io.copyBuffer({0x1ecf908, 0x2bcde507e780}, {0x1ecf468, 0x2bcdd9339928}, {0x0, 0x0, 0x0})
+	io/io.go:415 +0x151
+io.Copy(...)
+	io/io.go:388
+os.genericWriteTo(0x2bcdd9339928?, {0x1ecf908?, 0x2bcde507e780?})
+	os/file.go:295 +0x35
+os.(*File).WriteTo(0x2bcdd9339928, {0x1ecf908, 0x2bcde507e780})
+	os/file.go:273 +0x9c
+io.copyBuffer({0x1ecf908, 0x2bcde507e780}, {0x1ecf4e8, 0x2bcdd9339928}, {0x0, 0x0, 0x0})
+	io/io.go:411 +0x9d
+io.Copy(...)
+	io/io.go:388
+os/exec.(*Cmd).writerDescriptor.func1()
+	os/exec/exec.go:613 +0x34
+os/exec.(*Cmd).Start.func2(0x2bcddb2e2d90?)
+	os/exec/exec.go:768 +0x2c
+created by os/exec.(*Cmd).Start in goroutine 217
+	os/exec/exec.go:767 +0x92b
+
+goroutine 898 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd6240b48)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd6240b48)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd6240b48, 0x2bcdd66017c0)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 899 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd6240d88)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd6240d88)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd6240d88, 0x2bcdd6601800)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 900 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd6240fc8)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd6240fc8)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd6240fc8, 0x2bcdd6601840)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 901 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd6241208)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd6241208)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd6241208, 0x2bcdd6601880)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 902 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd6241448)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd6241448)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd6241448, 0x2bcdd66018c0)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 903 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd6241688)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd6241688)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd6241688, 0x2bcdd6601900)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 904 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd62418c8)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd62418c8)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd62418c8, 0x2bcdd6601940)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 905 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd6241b08)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd6241b08)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd6241b08, 0x2bcdd6601980)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 906 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd6241d48)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd6241d48)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd6241d48, 0x2bcdd66019c0)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 907 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd624e008)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd624e008)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd624e008, 0x2bcdd6601a00)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 908 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd624e248)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd624e248)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd624e248, 0x2bcdd6601a40)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 909 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd624e488)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd624e488)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd624e488, 0x2bcdd6601a80)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 910 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd624e6c8)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd624e6c8)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd624e6c8, 0x2bcdd6601ac0)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 911 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd624e908)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd624e908)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd624e908, 0x2bcdd6601b00)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 912 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd624eb48)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd624eb48)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd624eb48, 0x2bcdd6601b40)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 913 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd624ed88)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd624ed88)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd624ed88, 0x2bcdd6601b80)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 914 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd624efc8)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd624efc8)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd624efc8, 0x2bcdd6601bc0)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 915 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd624f208)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd624f208)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd624f208, 0x2bcdd6601c00)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 916 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd624f448)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd624f448)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd624f448, 0x2bcdd6601c40)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 917 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd624f688)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd624f688)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd624f688, 0x2bcdd6601c80)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 918 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd624f8c8)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd624f8c8)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd624f8c8, 0x2bcdd6601cc0)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 919 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd624fb08)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd624fb08)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd624fb08, 0x2bcdd6601d00)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 920 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd624fd48)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd624fd48)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd624fd48, 0x2bcdd6601d40)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 921 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd6260008)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd6260008)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd6260008, 0x2bcdd6601d80)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 922 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd6260248)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd6260248)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd6260248, 0x2bcdd6601dc0)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 923 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd6260488)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd6260488)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd6260488, 0x2bcdd6601e00)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 924 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd62606c8)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd62606c8)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd62606c8, 0x2bcdd6601e40)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 925 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd6260908)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd6260908)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd6260908, 0x2bcdd6601e80)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 926 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd6260b48)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd6260b48)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd6260b48, 0x2bcdd6601ec0)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 927 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd6260d88)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd6260d88)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd6260d88, 0x2bcdd63420c0)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 928 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd6260fc8)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd6260fc8)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd6260fc8, 0x2bcdd6342500)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 929 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd6261208)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd6261208)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd6261208, 0x2bcdd6342540)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 930 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd6261448)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd6261448)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd6261448, 0x2bcdd6342580)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 931 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd6261688)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd6261688)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd6261688, 0x2bcdd63425c0)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 932 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd62618c8)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd62618c8)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd62618c8, 0x2bcdd6342600)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 933 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd6261b08)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd6261b08)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd6261b08, 0x2bcdd6342640)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 934 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd6261d48)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd6261d48)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd6261d48, 0x2bcdd6342680)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 935 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd629a008)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd629a008)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd629a008, 0x2bcdd63426c0)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 936 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd629a248)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd629a248)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd629a248, 0x2bcdd6342940)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 937 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd629a488)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd629a488)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd629a488, 0x2bcdd6342a80)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 938 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd629a6c8)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd629a6c8)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd629a6c8, 0x2bcdd6342b40)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 939 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd629a908)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd629a908)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd629a908, 0x2bcdd6342b80)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 940 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd629ab48)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd629ab48)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd629ab48, 0x2bcdd6342bc0)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 941 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd629ad88)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd629ad88)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd629ad88, 0x2bcdd6342c00)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 942 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd629afc8)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd629afc8)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd629afc8, 0x2bcdd6342c40)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 943 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd629b208)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd629b208)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd629b208, 0x2bcdd6342c80)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 944 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd629b448)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd629b448)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd629b448, 0x2bcdd6342cc0)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 945 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd629b688)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd629b688)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd629b688, 0x2bcdd6342d00)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 946 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd629b8c8)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd629b8c8)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd629b8c8, 0x2bcdd6342d40)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 947 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd629bb08)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd629bb08)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd629bb08, 0x2bcdd6342d80)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 948 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd629bd48)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd629bd48)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd629bd48, 0x2bcdd6342dc0)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 949 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd6372008)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd6372008)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd6372008, 0x2bcdd6342e00)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 950 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd6372248)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd6372248)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd6372248, 0x2bcdd63430c0)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 951 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd6372488)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd6372488)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd6372488, 0x2bcdd653cf80)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 952 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd63726c8)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd63726c8)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd63726c8, 0x2bcdd653cfc0)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 953 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd6372908)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd6372908)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd6372908, 0x2bcdd653d8c0)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 954 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd6372b48)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd6372b48)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd6372b48, 0x2bcdd653d900)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 955 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd6372d88)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd6372d88)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd6372d88, 0x2bcdd653d940)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 956 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd6372fc8)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd6372fc8)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd6372fc8, 0x2bcdd653d980)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 957 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd6373208)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd6373208)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd6373208, 0x2bcdd653d9c0)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 958 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd6373448)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd6373448)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd6373448, 0x2bcdd653da00)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 959 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd6373688)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd6373688)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd6373688, 0x2bcdd653da40)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 960 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd63738c8)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd63738c8)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd63738c8, 0x2bcdd653da80)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 962 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x2bcdd6622690)
+	testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2bcdd6373d48)
+	testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd6373d48)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x2bcdd6373d48, 0x2bcdd653db00)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 963 [syscall]:
+syscall.Syscall6(0xf7, 0x3, 0x10, 0x2bcdda211318, 0x4, 0x2bcdd74238c0, 0x0)
+	syscall/syscall_linux.go:96 +0x39
+internal/syscall/unix.Waitid(0x2bcdda211346?, 0x2bcdda211470?, 0x539d4b?, 0x18?, 0x1e728e0?)
+	internal/syscall/unix/waitid_linux.go:18 +0x39
+os.(*Process).pidfdWait.func1(...)
+	os/pidfd_linux.go:108
+os.ignoringEINTR(...)
+	os/file_posix.go:263
+os.(*Process).pidfdWait(0x2bcdd9fa20c0)
+	os/pidfd_linux.go:107 +0x1cf
+os.(*Process).wait(0x1b?)
+	os/exec_unix.go:25 +0x1a
+os.(*Process).Wait(...)
+	os/exec.go:347
+os/exec.(*Cmd).Wait(0x2bcdda1301a0)
+	os/exec/exec.go:944 +0x45
+os/exec.(*Cmd).Run(0x2bcdda1301a0)
+	os/exec/exec.go:643 +0x2d
+os/exec.(*Cmd).CombinedOutput(0x2bcdda1301a0)
+	os/exec/exec.go:1061 +0x8f
+github.com/system-inc/adamic/internal/native.Build({0x2bcdda316a00, 0x534d}, {0x2bcdd7e6bf10, 0x62}, {{0x0, 0x0}, 0x0, 0x0, 0x0, 0x0, ...})
+	github.com/system-inc/adamic/internal/native/native.go:150 +0xd73
+github.com/system-inc/adamic/internal/oracle.counted.func1()
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:116 +0xa77
+github.com/system-inc/adamic/internal/oracle.counted(0x2bcdd63cc008, {0xdb552f, 0x28}, 0x0, {0x0, 0x0, 0x0}, 0x0, 0x0)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:126 +0x56b
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x2bcdd63cc008)
+	github.com/system-inc/adamic/internal/oracle/counts_test.go:149 +0x73
+testing.tRunner(0x2bcdd63cc008, 0x2bcdd653db40)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	testing/testing.go:2258 +0x4d4
+
+goroutine 5164 [IO wait]:
+internal/poll.runtime_pollWait(0x7f026d5c1200, 0x72)
+	runtime/netpoll.go:351 +0x85
+internal/poll.(*pollDesc).wait(0x2bcdda683860?, 0x2bcdd64acc00?, 0x1)
+	internal/poll/fd_poll_runtime.go:84 +0x27
+internal/poll.(*pollDesc).waitRead(...)
+	internal/poll/fd_poll_runtime.go:89
+internal/poll.(*FD).Read(0x2bcdda683860, {0x2bcdd64acc00, 0x200, 0x200})
+	internal/poll/fd_unix.go:170 +0x2a8
+os.(*File).read(...)
+	os/file_posix.go:30
+os.(*File).Read(0x2bcdda6431c8, {0x2bcdd64acc00?, 0x423758?, 0x0?})
+	os/file.go:144 +0x4f
+bytes.(*Buffer).ReadFrom(0x2bcde116da10, {0x1ecf468, 0x2bcdda6431c8})
+	bytes/buffer.go:229 +0x98
+io.copyBuffer({0x1ecf908, 0x2bcde116da10}, {0x1ecf468, 0x2bcdda6431c8}, {0x0, 0x0, 0x0})
+	io/io.go:415 +0x151
+io.Copy(...)
+	io/io.go:388
+os.genericWriteTo(0x2bcdda6431c8?, {0x1ecf908?, 0x2bcde116da10?})
+	os/file.go:295 +0x35
+os.(*File).WriteTo(0x2bcdda6431c8, {0x1ecf908, 0x2bcde116da10})
+	os/file.go:273 +0x9c
+io.copyBuffer({0x1ecf908, 0x2bcde116da10}, {0x1ecf4e8, 0x2bcdda6431c8}, {0x0, 0x0, 0x0})
+	io/io.go:411 +0x9d
+io.Copy(...)
+	io/io.go:388
+os/exec.(*Cmd).writerDescriptor.func1()
+	os/exec/exec.go:613 +0x34
+os/exec.(*Cmd).Start.func2(0x2bcdd6783540?)
+	os/exec/exec.go:768 +0x2c
+created by os/exec.(*Cmd).Start in goroutine 216
+	os/exec/exec.go:767 +0x92b
+
+goroutine 5190 [runnable]:
+internal/poll.runtime_pollWait(0x7f026d5c0600, 0x72)
+	runtime/netpoll.go:351 +0x85
+internal/poll.(*pollDesc).wait(0x2bcdda21b3e0?, 0x2bcdd6412e00?, 0x1)
+	internal/poll/fd_poll_runtime.go:84 +0x27
+internal/poll.(*pollDesc).waitRead(...)
+	internal/poll/fd_poll_runtime.go:89
+internal/poll.(*FD).Read(0x2bcdda21b3e0, {0x2bcdd6412e00, 0x200, 0x200})
+	internal/poll/fd_unix.go:170 +0x2a8
+os.(*File).read(...)
+	os/file_posix.go:30
+os.(*File).Read(0x2bcdd9ebe180, {0x2bcdd6412e00?, 0x423758?, 0x0?})
+	os/file.go:144 +0x4f
+bytes.(*Buffer).ReadFrom(0x2bcddd2b9350, {0x1ecf468, 0x2bcdd9ebe180})
+	bytes/buffer.go:229 +0x98
+io.copyBuffer({0x1ecf908, 0x2bcddd2b9350}, {0x1ecf468, 0x2bcdd9ebe180}, {0x0, 0x0, 0x0})
+	io/io.go:415 +0x151
+io.Copy(...)
+	io/io.go:388
+os.genericWriteTo(0x2bcdd9ebe180?, {0x1ecf908?, 0x2bcddd2b9350?})
+	os/file.go:295 +0x35
+os.(*File).WriteTo(0x2bcdd9ebe180, {0x1ecf908, 0x2bcddd2b9350})
+	os/file.go:273 +0x9c
+io.copyBuffer({0x1ecf908, 0x2bcddd2b9350}, {0x1ecf4e8, 0x2bcdd9ebe180}, {0x0, 0x0, 0x0})
+	io/io.go:411 +0x9d
+io.Copy(...)
+	io/io.go:388
+os/exec.(*Cmd).writerDescriptor.func1()
+	os/exec/exec.go:613 +0x34
+os/exec.(*Cmd).Start.func2(0x2bcdd6783540?)
+	os/exec/exec.go:768 +0x2c
+created by os/exec.(*Cmd).Start in goroutine 218
+	os/exec/exec.go:767 +0x92b
+FAIL	github.com/system-inc/adamic/internal/oracle	85.050s
+FAIL

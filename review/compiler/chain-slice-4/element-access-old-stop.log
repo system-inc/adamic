@@ -1,0 +1,8 @@
+=== RUN   TestElementAccessNodeArrayAgreement
+=== PAUSE TestElementAccessNodeArrayAgreement
+=== CONT  TestElementAccessNodeArrayAgreement
+    element_access_boundaries_test.go:35: /workspace/adamic/internal/oracle/testdata/notyet_element_access/nodearray.a:4:84: stage 0 can't lower an ElementAccessExpression yet
+--- FAIL: TestElementAccessNodeArrayAgreement (0.03s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.036s
+FAIL

@@ -1,0 +1,357 @@
+=== RUN   TestGeneratorParameterBorrowMutant
+=== PAUSE TestGeneratorParameterBorrowMutant
+=== RUN   TestGeneratorLocalBorrowMutant
+=== PAUSE TestGeneratorLocalBorrowMutant
+=== RUN   TestGeneratorCycleFrame
+=== PAUSE TestGeneratorCycleFrame
+=== RUN   TestGeneratorBasic
+=== PAUSE TestGeneratorBasic
+=== RUN   TestGeneratorCancellation
+=== PAUSE TestGeneratorCancellation
+=== RUN   TestGeneratorThrow
+=== PAUSE TestGeneratorThrow
+=== RUN   TestGeneratorDefaults
+=== PAUSE TestGeneratorDefaults
+=== RUN   TestGeneratorClose
+=== PAUSE TestGeneratorClose
+=== RUN   TestGeneratorDelegate
+=== PAUSE TestGeneratorDelegate
+=== RUN   TestGeneratorDelegateThrow
+=== PAUSE TestGeneratorDelegateThrow
+=== RUN   TestGeneratorReentrant
+=== PAUSE TestGeneratorReentrant
+=== RUN   TestGeneratorOwned
+=== PAUSE TestGeneratorOwned
+=== RUN   TestGeneratorCaptures
+=== PAUSE TestGeneratorCaptures
+=== RUN   TestGeneratorDefaultError
+=== PAUSE TestGeneratorDefaultError
+=== RUN   TestGeneratorMapIterator
+=== PAUSE TestGeneratorMapIterator
+=== RUN   TestGeneratorChecker
+=== PAUSE TestGeneratorChecker
+=== RUN   TestGeneratorFirstReference
+=== PAUSE TestGeneratorFirstReference
+=== RUN   TestGeneratorCompletions
+=== PAUSE TestGeneratorCompletions
+=== RUN   TestGeneratorRegExpIteratorResultCompatibility
+=== PAUSE TestGeneratorRegExpIteratorResultCompatibility
+=== RUN   TestGeneratorRegExpTreeResultCompatibility
+=== PAUSE TestGeneratorRegExpTreeResultCompatibility
+=== RUN   TestGenericBodyRelationsMaybeBind
+=== PAUSE TestGenericBodyRelationsMaybeBind
+=== RUN   TestIterationDispatchMutants
+=== PAUSE TestIterationDispatchMutants
+=== RUN   TestIterationDispatchPendingStops
+=== PAUSE TestIterationDispatchPendingStops
+=== RUN   TestLoweringChainMixedFileAgreement
+=== PAUSE TestLoweringChainMixedFileAgreement
+=== RUN   TestStep16GenericOutcomes
+=== PAUSE TestStep16GenericOutcomes
+=== RUN   TestStep16IdentityMutant
+=== PAUSE TestStep16IdentityMutant
+=== RUN   TestStep16OptionalResultMutant
+=== PAUSE TestStep16OptionalResultMutant
+=== RUN   TestStep20IntrinsicIteratorWrites
+=== PAUSE TestStep20IntrinsicIteratorWrites
+=== RUN   TestStep20IterationOutcomes
+=== PAUSE TestStep20IterationOutcomes
+=== RUN   TestStep20ArrayViewVariance
+=== PAUSE TestStep20ArrayViewVariance
+=== CONT  TestGeneratorParameterBorrowMutant
+=== CONT  TestGeneratorChecker
+=== CONT  TestStep20ArrayViewVariance
+=== CONT  TestGeneratorRegExpTreeResultCompatibility
+=== CONT  TestLoweringChainMixedFileAgreement
+--- PASS: TestStep20ArrayViewVariance (0.31s)
+=== CONT  TestIterationDispatchPendingStops
+=== RUN   TestIterationDispatchPendingStops/non_object_step
+    iteration_dispatch_test.go:51: pending .ts backend proof on 5f3b2e36; .a stops: /workspace/adamic/stage3/fixtures/iteration-dispatch/non_object_step.a:5:67: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)
+=== RUN   TestIterationDispatchPendingStops/non_object_iterator
+--- PASS: TestLoweringChainMixedFileAgreement (0.61s)
+=== CONT  TestIterationDispatchMutants
+=== RUN   TestIterationDispatchMutants/next_reread
+=== NAME  TestIterationDispatchPendingStops/non_object_iterator
+    iteration_dispatch_test.go:51: pending .ts backend proof on 5f3b2e36; .a stops: /workspace/adamic/stage3/fixtures/iteration-dispatch/non_object_iterator.a:5:53: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)
+=== RUN   TestIterationDispatchPendingStops/non_callable_next
+=== RUN   TestIterationDispatchMutants/next_reread/javascript
+--- PASS: TestGeneratorRegExpTreeResultCompatibility (0.75s)
+=== CONT  TestGenericBodyRelationsMaybeBind
+=== NAME  TestIterationDispatchMutants/next_reread/javascript
+    iteration_dispatch_mutant_test.go:120: caught by Node stdout
+=== RUN   TestIterationDispatchMutants/next_reread/native
+=== NAME  TestGenericBodyRelationsMaybeBind
+    generic_body_relations_test.go:37: original witness must refuse explicit any: /workspace/adamic/internal/oracle/testdata/census_small_stopped/census_small_optional_stopped.a:8:5: Adamic 0.1 refuses generic body return into slot ((...args: A) => R) | undefined from source OmitThisParameter<(this: T, ...args: A) => R> | undefined is not proven for every allowed type argument; checker constraint: T (unconstrained); A extends any[]; R (unconstrained); read a value of the same dependent type from the type parameter, or use the concrete constraint type for the slot (adamic/generic-body-relations)
+--- FAIL: TestGenericBodyRelationsMaybeBind (0.03s)
+=== CONT  TestGeneratorMapIterator
+=== NAME  TestIterationDispatchPendingStops/non_callable_next
+    iteration_dispatch_test.go:51: pending .ts backend proof on 5f3b2e36; .a stops: /workspace/adamic/stage3/fixtures/iteration-dispatch/non_callable_next.a:5:52: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)
+=== RUN   TestIterationDispatchPendingStops/non_object_close
+    iteration_dispatch_test.go:51: pending .ts backend proof on 5f3b2e36; .a stops: /workspace/adamic/stage3/fixtures/iteration-dispatch/non_object_close.a:5:114: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)
+--- PASS: TestIterationDispatchPendingStops (0.65s)
+    --- PASS: TestIterationDispatchPendingStops/non_object_step (0.19s)
+    --- PASS: TestIterationDispatchPendingStops/non_object_iterator (0.17s)
+    --- PASS: TestIterationDispatchPendingStops/non_callable_next (0.14s)
+    --- PASS: TestIterationDispatchPendingStops/non_object_close (0.14s)
+=== CONT  TestGeneratorDefaultError
+=== NAME  TestIterationDispatchMutants/next_reread/native
+    iteration_dispatch_mutant_test.go:130: caught by Node stdout
+=== RUN   TestIterationDispatchMutants/completion_value_enters_body
+=== RUN   TestIterationDispatchMutants/completion_value_enters_body/javascript
+    iteration_dispatch_mutant_test.go:120: caught by Node stdout
+=== RUN   TestIterationDispatchMutants/completion_value_enters_body/native
+    iteration_dispatch_mutant_test.go:130: caught by Node stdout
+=== RUN   TestIterationDispatchMutants/close_skipped_on_break
+=== RUN   TestIterationDispatchMutants/close_skipped_on_break/javascript
+=== NAME  TestGeneratorParameterBorrowMutant
+    generator_borrow_mutants_test.go:13: ASan caught 2 frame storage mutations
+--- PASS: TestGeneratorParameterBorrowMutant (12.60s)
+=== CONT  TestGeneratorCaptures
+=== NAME  TestIterationDispatchMutants/close_skipped_on_break/javascript
+    iteration_dispatch_mutant_test.go:120: caught by Node stdout
+=== RUN   TestIterationDispatchMutants/close_skipped_on_break/native
+    iteration_dispatch_mutant_test.go:130: caught by Node stdout
+=== RUN   TestIterationDispatchMutants/close_on_next_throw
+=== RUN   TestIterationDispatchMutants/close_on_next_throw/javascript
+    iteration_dispatch_mutant_test.go:120: caught by Node stdout
+=== RUN   TestIterationDispatchMutants/close_on_next_throw/native
+    iteration_dispatch_mutant_test.go:130: caught by Node stdout
+=== RUN   TestIterationDispatchMutants/close_throw_replaces_original
+=== RUN   TestIterationDispatchMutants/close_throw_replaces_original/javascript
+    iteration_dispatch_mutant_test.go:120: caught by Node stdout
+=== RUN   TestIterationDispatchMutants/close_throw_replaces_original/native
+    iteration_dispatch_mutant_test.go:130: caught by Node stdout
+=== RUN   TestIterationDispatchMutants/close_skipped_on_outer_continue
+=== RUN   TestIterationDispatchMutants/close_skipped_on_outer_continue/javascript
+    iteration_dispatch_mutant_test.go:120: caught by Node stdout
+=== RUN   TestIterationDispatchMutants/close_skipped_on_outer_continue/native
+    iteration_dispatch_mutant_test.go:130: caught by Node stdout
+--- PASS: TestIterationDispatchMutants (17.79s)
+    --- PASS: TestIterationDispatchMutants/next_reread (8.94s)
+        --- PASS: TestIterationDispatchMutants/next_reread/javascript (0.04s)
+        --- PASS: TestIterationDispatchMutants/next_reread/native (8.78s)
+    --- PASS: TestIterationDispatchMutants/completion_value_enters_body (2.48s)
+        --- PASS: TestIterationDispatchMutants/completion_value_enters_body/javascript (0.20s)
+        --- PASS: TestIterationDispatchMutants/completion_value_enters_body/native (1.38s)
+    --- PASS: TestIterationDispatchMutants/close_skipped_on_break (2.55s)
+        --- PASS: TestIterationDispatchMutants/close_skipped_on_break/javascript (0.08s)
+        --- PASS: TestIterationDispatchMutants/close_skipped_on_break/native (1.94s)
+    --- PASS: TestIterationDispatchMutants/close_on_next_throw (1.79s)
+        --- PASS: TestIterationDispatchMutants/close_on_next_throw/javascript (0.42s)
+        --- PASS: TestIterationDispatchMutants/close_on_next_throw/native (0.60s)
+    --- PASS: TestIterationDispatchMutants/close_throw_replaces_original (1.06s)
+        --- PASS: TestIterationDispatchMutants/close_throw_replaces_original/javascript (0.11s)
+        --- PASS: TestIterationDispatchMutants/close_throw_replaces_original/native (0.54s)
+    --- PASS: TestIterationDispatchMutants/close_skipped_on_outer_continue (0.96s)
+        --- PASS: TestIterationDispatchMutants/close_skipped_on_outer_continue/javascript (0.10s)
+        --- PASS: TestIterationDispatchMutants/close_skipped_on_outer_continue/native (0.54s)
+=== CONT  TestGeneratorOwned
+--- PASS: TestGeneratorMapIterator (21.61s)
+=== CONT  TestGeneratorReentrant
+--- PASS: TestGeneratorCaptures (10.06s)
+=== CONT  TestGeneratorDelegateThrow
+--- PASS: TestGeneratorChecker (22.68s)
+=== CONT  TestGeneratorDelegate
+--- PASS: TestGeneratorDefaultError (22.08s)
+=== CONT  TestGeneratorClose
+--- PASS: TestGeneratorOwned (5.36s)
+=== CONT  TestGeneratorDefaults
+--- PASS: TestGeneratorReentrant (2.50s)
+=== CONT  TestGeneratorThrow
+--- PASS: TestGeneratorClose (4.25s)
+=== CONT  TestGeneratorCancellation
+=== CONT  TestGeneratorBasic
+--- PASS: TestGeneratorDefaults (3.81s)
+--- PASS: TestGeneratorThrow (3.60s)
+=== CONT  TestGeneratorCycleFrame
+--- PASS: TestGeneratorCycleFrame (0.62s)
+=== CONT  TestGeneratorLocalBorrowMutant
+--- PASS: TestGeneratorDelegateThrow (7.09s)
+=== CONT  TestGeneratorRegExpIteratorResultCompatibility
+--- PASS: TestGeneratorCancellation (4.88s)
+=== CONT  TestGeneratorCompletions
+--- PASS: TestGeneratorBasic (4.69s)
+=== CONT  TestGeneratorFirstReference
+=== NAME  TestGeneratorLocalBorrowMutant
+    generator_borrow_mutants_test.go:17: ASan caught 1 frame storage mutations
+--- PASS: TestGeneratorLocalBorrowMutant (4.04s)
+=== CONT  TestStep20IterationOutcomes
+=== RUN   TestStep20IterationOutcomes/accessor_binding.a
+    step20_iteration_test.go:76: accessor_binding.a: NotYet a for...of destructuring an object
+=== RUN   TestStep20IterationOutcomes/collections.a
+--- PASS: TestGeneratorRegExpIteratorResultCompatibility (5.89s)
+=== CONT  TestStep20IntrinsicIteratorWrites
+=== RUN   TestStep20IntrinsicIteratorWrites/[1]
+=== PAUSE TestStep20IntrinsicIteratorWrites/[1]
+=== RUN   TestStep20IntrinsicIteratorWrites/new_String('x')
+=== PAUSE TestStep20IntrinsicIteratorWrites/new_String('x')
+=== RUN   TestStep20IntrinsicIteratorWrites/new_Map<string,_number>()
+=== PAUSE TestStep20IntrinsicIteratorWrites/new_Map<string,_number>()
+=== RUN   TestStep20IntrinsicIteratorWrites/new_Set<number>()
+=== PAUSE TestStep20IntrinsicIteratorWrites/new_Set<number>()
+=== RUN   TestStep20IntrinsicIteratorWrites/new_Uint8Array(1)
+=== PAUSE TestStep20IntrinsicIteratorWrites/new_Uint8Array(1)
+=== RUN   TestStep20IntrinsicIteratorWrites/Array.prototype
+=== PAUSE TestStep20IntrinsicIteratorWrites/Array.prototype
+=== RUN   TestStep20IntrinsicIteratorWrites/String.prototype
+=== PAUSE TestStep20IntrinsicIteratorWrites/String.prototype
+=== RUN   TestStep20IntrinsicIteratorWrites/Map.prototype
+=== PAUSE TestStep20IntrinsicIteratorWrites/Map.prototype
+=== RUN   TestStep20IntrinsicIteratorWrites/Set.prototype
+=== PAUSE TestStep20IntrinsicIteratorWrites/Set.prototype
+=== RUN   TestStep20IntrinsicIteratorWrites/Uint8Array.prototype
+=== PAUSE TestStep20IntrinsicIteratorWrites/Uint8Array.prototype
+=== RUN   TestStep20IntrinsicIteratorWrites/intrinsic_iterator_write.a
+=== PAUSE TestStep20IntrinsicIteratorWrites/intrinsic_iterator_write.a
+=== RUN   TestStep20IntrinsicIteratorWrites/intrinsic_iterator_alias.a
+=== PAUSE TestStep20IntrinsicIteratorWrites/intrinsic_iterator_alias.a
+=== RUN   TestStep20IntrinsicIteratorWrites/intrinsic_iterator_prototype.a
+=== PAUSE TestStep20IntrinsicIteratorWrites/intrinsic_iterator_prototype.a
+=== CONT  TestStep16OptionalResultMutant
+=== NAME  TestStep20IterationOutcomes/collections.a
+    step20_iteration_test.go:76: collections.a: accepted 
+=== RUN   TestStep20IterationOutcomes/delegated_generator.a
+--- PASS: TestGeneratorFirstReference (4.08s)
+=== CONT  TestStep16IdentityMutant
+=== NAME  TestStep16OptionalResultMutant
+    step16_generics_test.go:175: present generic number changed to undefined caught by Node stdout in both backends; valid optional ABI, no sanitizer findings or leaks
+--- PASS: TestStep16OptionalResultMutant (1.74s)
+=== CONT  TestStep16GenericOutcomes
+=== RUN   TestStep16GenericOutcomes/01_identity
+    step16_generics_test.go:89: Lowered: <nil>
+=== RUN   TestStep16GenericOutcomes/02_optional_return
+    step16_generics_test.go:89: Lowered: <nil>
+=== RUN   TestStep16GenericOutcomes/03_callback_return
+=== NAME  TestStep16IdentityMutant
+    step16_generics_test.go:132: numeric identity replaced with 17 caught by Node stdout in both backends; valid C, no sanitizer findings or leaks
+=== NAME  TestStep16GenericOutcomes/03_callback_return
+    step16_generics_test.go:89: Lowered: <nil>
+=== RUN   TestStep16GenericOutcomes/04_function_value
+--- PASS: TestStep16IdentityMutant (1.44s)
+=== CONT  TestStep20IntrinsicIteratorWrites/[1]
+=== NAME  TestStep16GenericOutcomes/04_function_value
+    step16_generics_test.go:89: NotYet: /workspace/adamic/stage3/fixtures/generics/04_function_value.a:3:60: stage 0 can't lower a generic function as a value yet
+=== RUN   TestStep16GenericOutcomes/05_nested_class
+    step16_generics_test.go:89: Lowered: <nil>
+=== RUN   TestStep16GenericOutcomes/06_polymorphic_recursion
+    step16_generics_test.go:89: Refused: /workspace/adamic/stage3/fixtures/generics/06_polymorphic_recursion.a:5:12: Adamic 0.1 refuses a generic function instantiated without end (polymorphic recursion); call it with the same type arguments it was called with, or write a function per type
+=== RUN   TestStep16GenericOutcomes/07_generic_cast
+=== CONT  TestStep20IntrinsicIteratorWrites/Map.prototype
+=== NAME  TestStep16GenericOutcomes/07_generic_cast
+    step16_generics_test.go:89: Refused: /workspace/adamic/stage3/fixtures/generics/07_generic_cast.a:4:49: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)
+=== RUN   TestStep16GenericOutcomes/08_readonly_view
+    step16_generics_test.go:89: Refused: /workspace/adamic/stage3/fixtures/generics/08_readonly_view.a:6:6: Adamic 0.1 refuses a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)
+=== RUN   TestStep16GenericOutcomes/09_recursive_optional
+    step16_generics_test.go:89: Lowered: <nil>
+=== RUN   TestStep16GenericOutcomes/10_identifier_multimap
+    step16_generics_test.go:89: Lowered: <nil>
+=== RUN   TestStep16GenericOutcomes/11_indexed_result
+=== CONT  TestStep20IntrinsicIteratorWrites/intrinsic_iterator_prototype.a
+--- PASS: TestGeneratorDelegate (16.82s)
+=== CONT  TestStep20IntrinsicIteratorWrites/intrinsic_iterator_alias.a
+=== CONT  TestStep20IntrinsicIteratorWrites/intrinsic_iterator_write.a
+=== NAME  TestStep16GenericOutcomes/11_indexed_result
+    step16_generics_test.go:89: Refused: /workspace/adamic/stage3/fixtures/generics/11_indexed_result.a:1:68: Adamic 0.1 refuses generic body return into slot T["value"] from source 2 is not proven for every allowed type argument; checker constraint: T extends { readonly value: number; }; read a value of the same dependent type from the type parameter, or use the concrete constraint type for the slot (adamic/generic-body-relations)
+=== RUN   TestStep16GenericOutcomes/12_mixed_indexed_result
+=== CONT  TestStep20IntrinsicIteratorWrites/Uint8Array.prototype
+=== CONT  TestStep20IntrinsicIteratorWrites/Set.prototype
+=== CONT  TestStep20IntrinsicIteratorWrites/new_Uint8Array(1)
+=== CONT  TestStep20IntrinsicIteratorWrites/String.prototype
+=== NAME  TestStep16GenericOutcomes/12_mixed_indexed_result
+    step16_generics_test.go:89: Refused: /workspace/adamic/stage3/fixtures/generics/12_mixed_indexed_result.a:1:87: Adamic 0.1 refuses generic body return into slot U | T["value"] | undefined from source 2 is not proven for every allowed type argument; checker constraint: T extends { readonly value: number; }; U (unconstrained); read a value of the same dependent type from the type parameter, or use the concrete constraint type for the slot (adamic/generic-body-relations)
+=== RUN   TestStep16GenericOutcomes/13_constrained_local
+--- PASS: TestGeneratorCompletions (8.31s)
+=== CONT  TestStep20IntrinsicIteratorWrites/Array.prototype
+=== NAME  TestStep16GenericOutcomes/13_constrained_local
+    step16_generics_test.go:89: Refused: /workspace/adamic/stage3/fixtures/generics/13_constrained_local.a:2:11: Adamic 0.1 refuses generic body initializer into slot T["value"] from source 2 is not proven for every allowed type argument; checker constraint: T extends { readonly value: number; }; U (unconstrained); read a value of the same dependent type from the type parameter, or use the concrete constraint type for the slot (adamic/generic-body-relations)
+=== RUN   TestStep16GenericOutcomes/14_optional_literal_union
+=== CONT  TestStep20IntrinsicIteratorWrites/new_Map<string,_number>()
+=== CONT  TestStep20IntrinsicIteratorWrites/new_Set<number>()
+=== NAME  TestStep16GenericOutcomes/14_optional_literal_union
+    step16_generics_test.go:89: Lowered: <nil>
+=== RUN   TestStep16GenericOutcomes/15_array_callback
+=== CONT  TestStep20IntrinsicIteratorWrites/new_String('x')
+=== NAME  TestStep16GenericOutcomes/15_array_callback
+    step16_generics_test.go:89: Lowered: <nil>
+--- PASS: TestStep16GenericOutcomes (3.92s)
+    --- PASS: TestStep16GenericOutcomes/01_identity (0.12s)
+    --- PASS: TestStep16GenericOutcomes/02_optional_return (0.13s)
+    --- PASS: TestStep16GenericOutcomes/03_callback_return (0.14s)
+    --- PASS: TestStep16GenericOutcomes/04_function_value (0.22s)
+    --- PASS: TestStep16GenericOutcomes/05_nested_class (0.18s)
+    --- PASS: TestStep16GenericOutcomes/06_polymorphic_recursion (0.20s)
+    --- PASS: TestStep16GenericOutcomes/07_generic_cast (0.20s)
+    --- PASS: TestStep16GenericOutcomes/08_readonly_view (0.18s)
+    --- PASS: TestStep16GenericOutcomes/09_recursive_optional (0.14s)
+    --- PASS: TestStep16GenericOutcomes/10_identifier_multimap (0.14s)
+    --- PASS: TestStep16GenericOutcomes/11_indexed_result (0.64s)
+    --- PASS: TestStep16GenericOutcomes/12_mixed_indexed_result (0.69s)
+    --- PASS: TestStep16GenericOutcomes/13_constrained_local (0.44s)
+    --- PASS: TestStep16GenericOutcomes/14_optional_literal_union (0.27s)
+    --- PASS: TestStep16GenericOutcomes/15_array_callback (0.23s)
+--- PASS: TestStep20IntrinsicIteratorWrites (0.00s)
+    --- PASS: TestStep20IntrinsicIteratorWrites/[1] (0.79s)
+    --- PASS: TestStep20IntrinsicIteratorWrites/Map.prototype (0.84s)
+    --- PASS: TestStep20IntrinsicIteratorWrites/intrinsic_iterator_prototype.a (0.16s)
+    --- PASS: TestStep20IntrinsicIteratorWrites/intrinsic_iterator_alias.a (0.24s)
+    --- PASS: TestStep20IntrinsicIteratorWrites/intrinsic_iterator_write.a (0.22s)
+    --- PASS: TestStep20IntrinsicIteratorWrites/Set.prototype (0.53s)
+    --- PASS: TestStep20IntrinsicIteratorWrites/Uint8Array.prototype (0.61s)
+    --- PASS: TestStep20IntrinsicIteratorWrites/new_Uint8Array(1) (0.65s)
+    --- PASS: TestStep20IntrinsicIteratorWrites/String.prototype (0.66s)
+    --- PASS: TestStep20IntrinsicIteratorWrites/Array.prototype (0.70s)
+    --- PASS: TestStep20IntrinsicIteratorWrites/new_Map<string,_number>() (0.51s)
+    --- PASS: TestStep20IntrinsicIteratorWrites/new_Set<number>() (0.60s)
+    --- PASS: TestStep20IntrinsicIteratorWrites/new_String('x') (0.53s)
+=== NAME  TestStep20IterationOutcomes/delegated_generator.a
+    step20_iteration_test.go:76: delegated_generator.a: accepted 
+=== RUN   TestStep20IterationOutcomes/generator.a
+    step20_iteration_test.go:76: generator.a: accepted 
+=== RUN   TestStep20IterationOutcomes/iterable_view.a
+    step20_iteration_test.go:76: iterable_view.a: NotYet an iterable object view of built-in storage needing a protocol adapter
+=== RUN   TestStep20IterationOutcomes/object_binding.a
+    step20_iteration_test.go:76: object_binding.a: NotYet a for...of destructuring an object
+=== RUN   TestStep20IterationOutcomes/object_binding_stress.a
+    step20_iteration_test.go:76: object_binding_stress.a: NotYet a for...of destructuring an object
+=== RUN   TestStep20IterationOutcomes/object_iteration.a
+    step20_iteration_test.go:76: object_iteration.a: accepted 
+=== RUN   TestStep20IterationOutcomes/strings.a
+    step20_iteration_test.go:76: strings.a: accepted 
+=== RUN   TestStep20IterationOutcomes/user_forwarding.a
+    step20_iteration_test.go:76: user_forwarding.a: accepted 
+=== RUN   TestStep20IterationOutcomes/intrinsic_iterator_write.a
+    step20_iteration_test.go:76: intrinsic_iterator_write.a: Refused writing Symbol.iterator on a built-in or its prototype (adamic/intrinsic-iterator)
+=== RUN   TestStep20IterationOutcomes/intrinsic_iterator_alias.a
+    step20_iteration_test.go:76: intrinsic_iterator_alias.a: Refused writing Symbol.iterator on a built-in or its prototype (adamic/intrinsic-iterator)
+=== RUN   TestStep20IterationOutcomes/intrinsic_iterator_prototype.a
+    step20_iteration_test.go:76: intrinsic_iterator_prototype.a: Refused writing Symbol.iterator on a built-in or its prototype (adamic/intrinsic-iterator)
+=== RUN   TestStep20IterationOutcomes/array_view_stress.a
+    step20_iteration_test.go:76: array_view_stress.a: accepted 
+=== RUN   TestStep20IterationOutcomes/array_view_weak.a
+    step20_iteration_test.go:76: array_view_weak.a: accepted 
+=== RUN   TestStep20IterationOutcomes/test262_array_views.a
+    step20_iteration_test.go:76: test262_array_views.a: accepted 
+=== RUN   TestStep20IterationOutcomes/array_view_variance.a
+    step20_iteration_test.go:76: array_view_variance.a: Refused a value of type Slot<Large>[] seen as NodeArray<Slot<Small>>, which can write Small where Large is read
+--- PASS: TestStep20IterationOutcomes (22.25s)
+    --- PASS: TestStep20IterationOutcomes/accessor_binding.a (0.43s)
+    --- PASS: TestStep20IterationOutcomes/collections.a (2.09s)
+    --- PASS: TestStep20IterationOutcomes/delegated_generator.a (6.20s)
+    --- PASS: TestStep20IterationOutcomes/generator.a (3.33s)
+    --- PASS: TestStep20IterationOutcomes/iterable_view.a (0.46s)
+    --- PASS: TestStep20IterationOutcomes/object_binding.a (0.53s)
+    --- PASS: TestStep20IterationOutcomes/object_binding_stress.a (0.57s)
+    --- PASS: TestStep20IterationOutcomes/object_iteration.a (1.38s)
+    --- PASS: TestStep20IterationOutcomes/strings.a (1.02s)
+    --- PASS: TestStep20IterationOutcomes/user_forwarding.a (1.13s)
+    --- PASS: TestStep20IterationOutcomes/intrinsic_iterator_write.a (0.30s)
+    --- PASS: TestStep20IterationOutcomes/intrinsic_iterator_alias.a (0.29s)
+    --- PASS: TestStep20IterationOutcomes/intrinsic_iterator_prototype.a (0.35s)
+    --- PASS: TestStep20IterationOutcomes/array_view_stress.a (1.72s)
+    --- PASS: TestStep20IterationOutcomes/array_view_weak.a (1.38s)
+    --- PASS: TestStep20IterationOutcomes/test262_array_views.a (0.93s)
+    --- PASS: TestStep20IterationOutcomes/array_view_variance.a (0.11s)
+FAIL
+gate cache: native hits=0 misses=56
+gate cache: node hits=0 misses=97
+gate cache: probe hits=0 misses=0

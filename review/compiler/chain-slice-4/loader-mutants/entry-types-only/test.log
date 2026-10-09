@@ -1,0 +1,8 @@
+=== RUN   TestProjectReferencesTypesUnion
+=== PAUSE TestProjectReferencesTypesUnion
+=== CONT  TestProjectReferencesTypesUnion
+    project_references_test.go:188: ambient types union lost a project: /tmp/adamic-gate/TestProjectReferencesTypesUnion1480216732/001/dependency/value.ts:1:21: error TS2304: Cannot find name 'DependencyNumber'.
+--- FAIL: TestProjectReferencesTypesUnion (3.88s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/load	3.888s
+FAIL

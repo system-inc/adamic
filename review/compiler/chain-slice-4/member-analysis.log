@@ -1,0 +1,534 @@
+=== RUN   TestMixedTupleSpreadIsNotYet
+=== PAUSE TestMixedTupleSpreadIsNotYet
+=== RUN   TestGeneratorNextPromiseNeedsResumeProof
+=== PAUSE TestGeneratorNextPromiseNeedsResumeProof
+=== RUN   TestGeneratorPrimitiveThrowRemainsExplicit
+=== PAUSE TestGeneratorPrimitiveThrowRemainsExplicit
+=== RUN   TestGeneratorOpaqueReceiverRemainsExplicit
+=== PAUSE TestGeneratorOpaqueReceiverRemainsExplicit
+=== RUN   TestGeneratorNestedFrameCaptureRemainsExplicit
+=== PAUSE TestGeneratorNestedFrameCaptureRemainsExplicit
+=== RUN   TestGeneratorEmptyBodyUsesOwnedFrame
+=== PAUSE TestGeneratorEmptyBodyUsesOwnedFrame
+=== RUN   TestGeneratorProtocolReplacementRemainsExplicit
+=== PAUSE TestGeneratorProtocolReplacementRemainsExplicit
+=== RUN   TestGeneratorDestructuredParameterCycle
+=== PAUSE TestGeneratorDestructuredParameterCycle
+=== RUN   TestGenericBodyRelationsCensus
+=== PAUSE TestGenericBodyRelationsCensus
+=== RUN   TestGenericBodyRelationsRefuse
+=== PAUSE TestGenericBodyRelationsRefuse
+=== RUN   TestGenericBodyRelationsWitness
+=== PAUSE TestGenericBodyRelationsWitness
+=== RUN   TestGenericBodyRelationsReadonlyBound
+=== PAUSE TestGenericBodyRelationsReadonlyBound
+=== RUN   TestGenericBodyRelationsIndexedReturnMapper
+=== PAUSE TestGenericBodyRelationsIndexedReturnMapper
+=== RUN   TestGenericBodyRelationsThisRead
+=== PAUSE TestGenericBodyRelationsThisRead
+=== RUN   TestAsyncGeneratorsAreRefusedEvenWithoutYield
+=== PAUSE TestAsyncGeneratorsAreRefusedEvenWithoutYield
+=== RUN   TestMixedUnionContractGraph
+=== PAUSE TestMixedUnionContractGraph
+=== RUN   TestMixedUnionContractFailureDoesNotCertifyRetry
+=== PAUSE TestMixedUnionContractFailureDoesNotCertifyRetry
+=== RUN   TestMixedUnionContractUnknownMemberFails
+=== PAUSE TestMixedUnionContractUnknownMemberFails
+=== RUN   TestMixedUnionContractRecursiveMember
+=== PAUSE TestMixedUnionContractRecursiveMember
+=== RUN   TestMixedUnionContractPhantomBrandUsesPrimitiveBase
+=== PAUSE TestMixedUnionContractPhantomBrandUsesPrimitiveBase
+=== RUN   TestMixedUnionContractPhantomVoidIsUndefined
+=== PAUSE TestMixedUnionContractPhantomVoidIsUndefined
+=== CONT  TestMixedTupleSpreadIsNotYet
+=== CONT  TestGenericBodyRelationsReadonlyBound
+=== CONT  TestGeneratorProtocolReplacementRemainsExplicit
+=== CONT  TestGeneratorOpaqueReceiverRemainsExplicit
+=== CONT  TestGeneratorEmptyBodyUsesOwnedFrame
+--- PASS: TestMixedTupleSpreadIsNotYet (0.23s)
+=== CONT  TestGeneratorNestedFrameCaptureRemainsExplicit
+--- PASS: TestGeneratorOpaqueReceiverRemainsExplicit (0.25s)
+=== CONT  TestGeneratorPrimitiveThrowRemainsExplicit
+--- PASS: TestGeneratorProtocolReplacementRemainsExplicit (0.30s)
+=== CONT  TestGeneratorNextPromiseNeedsResumeProof
+--- PASS: TestGeneratorEmptyBodyUsesOwnedFrame (0.30s)
+=== CONT  TestGenericBodyRelationsRefuse
+=== RUN   TestGenericBodyRelationsRefuse/initializer
+--- PASS: TestGenericBodyRelationsReadonlyBound (0.31s)
+=== CONT  TestGenericBodyRelationsWitness
+--- PASS: TestGeneratorPrimitiveThrowRemainsExplicit (0.28s)
+=== CONT  TestMixedUnionContractFailureDoesNotCertifyRetry
+--- PASS: TestGeneratorNestedFrameCaptureRemainsExplicit (0.32s)
+=== CONT  TestMixedUnionContractPhantomVoidIsUndefined
+=== RUN   TestGenericBodyRelationsRefuse/assignment
+--- PASS: TestGeneratorNextPromiseNeedsResumeProof (0.29s)
+=== CONT  TestMixedUnionContractPhantomBrandUsesPrimitiveBase
+=== NAME  TestGenericBodyRelationsWitness
+    generic_body_relations_test.go:96: internal compiler error: generic body initializer witness at /tmp/adamic-gate/TestGenericBodyRelationsWitness1648893912/001/witness.a:1:78: resolved source 2 is not assignable to slot 1
+--- PASS: TestGenericBodyRelationsWitness (0.28s)
+=== CONT  TestMixedUnionContractRecursiveMember
+--- PASS: TestMixedUnionContractFailureDoesNotCertifyRetry (0.25s)
+=== CONT  TestMixedUnionContractUnknownMemberFails
+--- PASS: TestMixedUnionContractPhantomVoidIsUndefined (0.26s)
+=== CONT  TestGenericBodyRelationsThisRead
+--- PASS: TestMixedUnionContractRecursiveMember (0.37s)
+=== RUN   TestGenericBodyRelationsRefuse/return
+--- PASS: TestMixedUnionContractPhantomBrandUsesPrimitiveBase (0.41s)
+=== CONT  TestAsyncGeneratorsAreRefusedEvenWithoutYield
+=== CONT  TestMixedUnionContractGraph
+=== RUN   TestMixedUnionContractGraph/interface_Identifier_{readonly_text:string}_type_Target=string|Identifier;
+=== PAUSE TestMixedUnionContractGraph/interface_Identifier_{readonly_text:string}_type_Target=string|Identifier;
+=== RUN   TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=number|Node;
+=== PAUSE TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=number|Node;
+=== RUN   TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=Node|readonly_Node[];
+=== PAUSE TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=Node|readonly_Node[];
+=== RUN   TestMixedUnionContractGraph/interface_Expression_{readonly_value:number}_type_Target=boolean|Expression;
+=== PAUSE TestMixedUnionContractGraph/interface_Expression_{readonly_value:number}_type_Target=boolean|Expression;
+=== RUN   TestMixedUnionContractGraph/interface_Left_{readonly_left:string}_interface_Right_{readonly_right:number}_type_Target=Left|Right;
+=== PAUSE TestMixedUnionContractGraph/interface_Left_{readonly_left:string}_interface_Right_{readonly_right:number}_type_Target=Left|Right;
+=== CONT  TestGenericBodyRelationsIndexedReturnMapper
+--- PASS: TestMixedUnionContractUnknownMemberFails (0.34s)
+=== CONT  TestGenericBodyRelationsCensus
+    generic_body_relations_census_test.go:28: set GENERIC_BODY_CONFIG and GENERIC_BODY_OUTPUT for the relation inventory
+--- SKIP: TestGenericBodyRelationsCensus (0.00s)
+=== CONT  TestGeneratorDestructuredParameterCycle
+--- PASS: TestGenericBodyRelationsThisRead (0.40s)
+=== CONT  TestMixedUnionContractGraph/interface_Identifier_{readonly_text:string}_type_Target=string|Identifier;
+--- PASS: TestGenericBodyRelationsIndexedReturnMapper (0.22s)
+=== CONT  TestMixedUnionContractGraph/interface_Left_{readonly_left:string}_interface_Right_{readonly_right:number}_type_Target=Left|Right;
+=== RUN   TestGenericBodyRelationsRefuse/field_initializer
+=== CONT  TestMixedUnionContractGraph/interface_Expression_{readonly_value:number}_type_Target=boolean|Expression;
+--- PASS: TestGeneratorDestructuredParameterCycle (0.42s)
+=== CONT  TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=Node|readonly_Node[];
+    view_unions_mixed_test.go:45: awaits compiler/views-v3: array element kind and holes (b065fa576)
+=== CONT  TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=number|Node;
+=== RUN   TestGenericBodyRelationsRefuse/different_binder
+--- PASS: TestAsyncGeneratorsAreRefusedEvenWithoutYield (0.79s)
+=== RUN   TestGenericBodyRelationsRefuse/nested
+--- PASS: TestMixedUnionContractGraph (0.00s)
+    --- PASS: TestMixedUnionContractGraph/interface_Identifier_{readonly_text:string}_type_Target=string|Identifier; (0.29s)
+    --- SKIP: TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=Node|readonly_Node[]; (0.00s)
+    --- PASS: TestMixedUnionContractGraph/interface_Left_{readonly_left:string}_interface_Right_{readonly_right:number}_type_Target=Left|Right; (0.40s)
+    --- PASS: TestMixedUnionContractGraph/interface_Expression_{readonly_value:number}_type_Target=boolean|Expression; (0.29s)
+    --- PASS: TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=number|Node; (0.25s)
+=== RUN   TestGenericBodyRelationsRefuse/key_parameter
+=== RUN   TestGenericBodyRelationsRefuse/array_initializer
+=== RUN   TestGenericBodyRelationsRefuse/destructuring_initializer
+=== RUN   TestGenericBodyRelationsRefuse/destructuring_assignment
+=== RUN   TestGenericBodyRelationsRefuse/object_initializer
+=== RUN   TestGenericBodyRelationsRefuse/index_signature
+=== RUN   TestGenericBodyRelationsRefuse/mapped_keys
+=== RUN   TestGenericBodyRelationsRefuse/element_assignment
+=== RUN   TestGenericBodyRelationsRefuse/increment
+=== RUN   TestGenericBodyRelationsRefuse/compound_assignment
+=== RUN   TestGenericBodyRelationsRefuse/alias
+--- PASS: TestGenericBodyRelationsRefuse (3.51s)
+    --- PASS: TestGenericBodyRelationsRefuse/initializer (0.26s)
+    --- PASS: TestGenericBodyRelationsRefuse/assignment (0.44s)
+    --- PASS: TestGenericBodyRelationsRefuse/return (0.27s)
+    --- PASS: TestGenericBodyRelationsRefuse/field_initializer (0.29s)
+    --- PASS: TestGenericBodyRelationsRefuse/different_binder (0.24s)
+    --- PASS: TestGenericBodyRelationsRefuse/nested (0.14s)
+    --- PASS: TestGenericBodyRelationsRefuse/key_parameter (0.11s)
+    --- PASS: TestGenericBodyRelationsRefuse/array_initializer (0.17s)
+    --- PASS: TestGenericBodyRelationsRefuse/destructuring_initializer (0.30s)
+    --- PASS: TestGenericBodyRelationsRefuse/destructuring_assignment (0.13s)
+    --- PASS: TestGenericBodyRelationsRefuse/object_initializer (0.20s)
+    --- PASS: TestGenericBodyRelationsRefuse/index_signature (0.18s)
+    --- PASS: TestGenericBodyRelationsRefuse/mapped_keys (0.11s)
+    --- PASS: TestGenericBodyRelationsRefuse/element_assignment (0.19s)
+    --- PASS: TestGenericBodyRelationsRefuse/increment (0.18s)
+    --- PASS: TestGenericBodyRelationsRefuse/compound_assignment (0.13s)
+    --- PASS: TestGenericBodyRelationsRefuse/alias (0.19s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	3.873s
+=== RUN   TestMixedAdamicAndTypeScriptWithoutReferences
+=== PAUSE TestMixedAdamicAndTypeScriptWithoutReferences
+=== RUN   TestProjectLoaderReferenceSources
+=== PAUSE TestProjectLoaderReferenceSources
+=== RUN   TestProjectLoaderOptionAuditFailsClosed
+=== PAUSE TestProjectLoaderOptionAuditFailsClosed
+=== RUN   TestProjectLoaderOwnershipAndNoCheck
+=== PAUSE TestProjectLoaderOwnershipAndNoCheck
+=== RUN   TestProjectLoaderHostConsoleAndCompositeEntries
+=== PAUSE TestProjectLoaderHostConsoleAndCompositeEntries
+=== RUN   TestProjectLoaderNodeImportsKeepReferenceRoots
+=== PAUSE TestProjectLoaderNodeImportsKeepReferenceRoots
+=== RUN   TestProjectLoaderStandaloneNodeKeepsPrelude
+=== PAUSE TestProjectLoaderStandaloneNodeKeepsPrelude
+=== RUN   TestProjectReferencesTransitive
+=== PAUSE TestProjectReferencesTransitive
+=== RUN   TestProjectReferencesDiamond
+=== PAUSE TestProjectReferencesDiamond
+=== RUN   TestProjectReferencesConflictingOptions
+=== PAUSE TestProjectReferencesConflictingOptions
+=== RUN   TestProjectReferencesAudit
+=== PAUSE TestProjectReferencesAudit
+=== RUN   TestProjectReferencesCompatibleOptions
+=== PAUSE TestProjectReferencesCompatibleOptions
+=== RUN   TestProjectReferencesCycle
+=== PAUSE TestProjectReferencesCycle
+=== RUN   TestProjectReferencesSharedPrelude
+=== PAUSE TestProjectReferencesSharedPrelude
+=== RUN   TestProjectReferencesTypesUnion
+=== PAUSE TestProjectReferencesTypesUnion
+=== RUN   TestProjectReferencesTypesUnionDuplicate
+=== PAUSE TestProjectReferencesTypesUnionDuplicate
+=== RUN   TestProjectReferencesTypesUnionDuplicateSkipped
+=== PAUSE TestProjectReferencesTypesUnionDuplicateSkipped
+=== RUN   TestProjectReferencesTransitiveTypes
+=== PAUSE TestProjectReferencesTransitiveTypes
+=== CONT  TestMixedAdamicAndTypeScriptWithoutReferences
+=== CONT  TestProjectReferencesConflictingOptions
+=== RUN   TestProjectReferencesConflictingOptions/strictNullChecks
+=== RUN   TestProjectReferencesConflictingOptions/strictFunctionTypes
+=== RUN   TestProjectReferencesConflictingOptions/strictBindCallApply
+=== RUN   TestProjectReferencesConflictingOptions/strictPropertyInitialization
+=== RUN   TestProjectReferencesConflictingOptions/strictBuiltinIteratorReturn
+=== RUN   TestProjectReferencesConflictingOptions/useUnknownInCatchVariables
+=== CONT  TestProjectReferencesDiamond
+=== RUN   TestProjectReferencesConflictingOptions/noImplicitAny
+=== CONT  TestProjectReferencesTransitiveTypes
+=== RUN   TestProjectReferencesConflictingOptions/noImplicitThis
+=== RUN   TestProjectReferencesConflictingOptions/noUncheckedIndexedAccess
+=== CONT  TestProjectReferencesCycle
+=== RUN   TestProjectReferencesConflictingOptions/exactOptionalPropertyTypes
+--- PASS: TestProjectReferencesCycle (0.03s)
+=== CONT  TestProjectReferencesTypesUnionDuplicateSkipped
+=== RUN   TestProjectReferencesConflictingOptions/target
+=== RUN   TestProjectReferencesConflictingOptions/module
+=== RUN   TestProjectReferencesConflictingOptions/lib
+=== RUN   TestProjectReferencesConflictingOptions/paths
+=== RUN   TestProjectReferencesConflictingOptions/noUncheckedSideEffectImports
+=== RUN   TestProjectReferencesConflictingOptions/forceConsistentCasingInFileNames
+=== RUN   TestProjectReferencesConflictingOptions/deduplicatePackages
+--- PASS: TestProjectReferencesConflictingOptions (0.13s)
+    --- PASS: TestProjectReferencesConflictingOptions/strictNullChecks (0.00s)
+    --- PASS: TestProjectReferencesConflictingOptions/strictFunctionTypes (0.00s)
+    --- PASS: TestProjectReferencesConflictingOptions/strictBindCallApply (0.00s)
+    --- PASS: TestProjectReferencesConflictingOptions/strictPropertyInitialization (0.00s)
+    --- PASS: TestProjectReferencesConflictingOptions/strictBuiltinIteratorReturn (0.03s)
+    --- PASS: TestProjectReferencesConflictingOptions/useUnknownInCatchVariables (0.00s)
+    --- PASS: TestProjectReferencesConflictingOptions/noImplicitAny (0.00s)
+    --- PASS: TestProjectReferencesConflictingOptions/noImplicitThis (0.00s)
+    --- PASS: TestProjectReferencesConflictingOptions/noUncheckedIndexedAccess (0.02s)
+    --- PASS: TestProjectReferencesConflictingOptions/exactOptionalPropertyTypes (0.02s)
+    --- PASS: TestProjectReferencesConflictingOptions/target (0.00s)
+    --- PASS: TestProjectReferencesConflictingOptions/module (0.01s)
+    --- PASS: TestProjectReferencesConflictingOptions/lib (0.00s)
+    --- PASS: TestProjectReferencesConflictingOptions/paths (0.00s)
+    --- PASS: TestProjectReferencesConflictingOptions/noUncheckedSideEffectImports (0.00s)
+    --- PASS: TestProjectReferencesConflictingOptions/forceConsistentCasingInFileNames (0.01s)
+    --- PASS: TestProjectReferencesConflictingOptions/deduplicatePackages (0.00s)
+=== CONT  TestProjectReferencesTypesUnionDuplicate
+--- PASS: TestMixedAdamicAndTypeScriptWithoutReferences (0.88s)
+=== CONT  TestProjectReferencesTypesUnion
+--- PASS: TestProjectReferencesDiamond (1.94s)
+=== CONT  TestProjectReferencesSharedPrelude
+--- PASS: TestProjectReferencesSharedPrelude (0.13s)
+=== CONT  TestProjectLoaderHostConsoleAndCompositeEntries
+--- PASS: TestProjectLoaderHostConsoleAndCompositeEntries (3.58s)
+=== CONT  TestProjectReferencesTransitive
+--- PASS: TestProjectReferencesTransitive (2.21s)
+=== CONT  TestProjectLoaderStandaloneNodeKeepsPrelude
+    project_loader_test.go:160: standalone Node rebuild lost prelude: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+--- FAIL: TestProjectLoaderStandaloneNodeKeepsPrelude (0.01s)
+=== CONT  TestProjectLoaderNodeImportsKeepReferenceRoots
+--- PASS: TestProjectLoaderNodeImportsKeepReferenceRoots (0.74s)
+=== CONT  TestProjectLoaderOptionAuditFailsClosed
+--- PASS: TestProjectLoaderOptionAuditFailsClosed (1.15s)
+=== CONT  TestProjectLoaderOwnershipAndNoCheck
+=== RUN   TestProjectLoaderOwnershipAndNoCheck/noCheck
+=== RUN   TestProjectLoaderOwnershipAndNoCheck/mixed
+--- PASS: TestProjectLoaderOwnershipAndNoCheck (0.00s)
+    --- PASS: TestProjectLoaderOwnershipAndNoCheck/noCheck (0.00s)
+    --- PASS: TestProjectLoaderOwnershipAndNoCheck/mixed (0.00s)
+=== CONT  TestProjectReferencesAudit
+--- PASS: TestProjectReferencesTransitiveTypes (10.48s)
+=== CONT  TestProjectReferencesCompatibleOptions
+--- PASS: TestProjectReferencesCompatibleOptions (1.23s)
+=== CONT  TestProjectLoaderReferenceSources
+--- PASS: TestProjectReferencesAudit (2.04s)
+--- PASS: TestProjectLoaderReferenceSources (1.69s)
+--- PASS: TestProjectReferencesTypesUnionDuplicate (15.42s)
+--- PASS: TestProjectReferencesTypesUnion (14.77s)
+--- PASS: TestProjectReferencesTypesUnionDuplicateSkipped (15.71s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/load	15.838s
+=== RUN   TestGeneratorBasic
+=== PAUSE TestGeneratorBasic
+=== RUN   TestGeneratorCancellation
+=== PAUSE TestGeneratorCancellation
+=== RUN   TestGeneratorThrow
+=== PAUSE TestGeneratorThrow
+=== RUN   TestGeneratorDefaults
+=== PAUSE TestGeneratorDefaults
+=== RUN   TestGeneratorClose
+=== PAUSE TestGeneratorClose
+=== RUN   TestGeneratorDelegate
+=== PAUSE TestGeneratorDelegate
+=== RUN   TestGeneratorDelegateThrow
+=== PAUSE TestGeneratorDelegateThrow
+=== RUN   TestGeneratorReentrant
+=== PAUSE TestGeneratorReentrant
+=== RUN   TestGeneratorOwned
+=== PAUSE TestGeneratorOwned
+=== RUN   TestGeneratorCaptures
+=== PAUSE TestGeneratorCaptures
+=== RUN   TestGeneratorDefaultError
+=== PAUSE TestGeneratorDefaultError
+=== RUN   TestGeneratorMapIterator
+=== PAUSE TestGeneratorMapIterator
+=== RUN   TestGeneratorChecker
+=== PAUSE TestGeneratorChecker
+=== RUN   TestGeneratorFirstReference
+=== PAUSE TestGeneratorFirstReference
+=== RUN   TestGeneratorCompletions
+=== PAUSE TestGeneratorCompletions
+=== CONT  TestGeneratorBasic
+=== CONT  TestGeneratorCompletions
+=== CONT  TestGeneratorFirstReference
+=== CONT  TestGeneratorOwned
+=== CONT  TestGeneratorReentrant
+=== NAME  TestGeneratorBasic
+    generators_test.go:7: 12 functions: 1 phis, 12 values, 43 uses checked
+=== NAME  TestGeneratorCompletions
+    generators_test.go:77: 29 functions: 3 phis, 29 values, 97 uses checked
+=== NAME  TestGeneratorOwned
+    generators_test.go:47: 20 functions: 2 phis, 21 values, 70 uses checked
+=== NAME  TestGeneratorFirstReference
+    generators_test.go:72: 10 functions: 1 phis, 10 values, 34 uses checked
+=== NAME  TestGeneratorReentrant
+    generators_test.go:42: 11 functions: 1 phis, 9 values, 32 uses checked
+=== NAME  TestGeneratorBasic
+    generators_test.go:7: 0 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+=== NAME  TestGeneratorReentrant
+    generators_test.go:42: 0 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+=== NAME  TestGeneratorOwned
+    generators_test.go:47: 0 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+=== NAME  TestGeneratorFirstReference
+    generators_test.go:72: 0 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+=== NAME  TestGeneratorCompletions
+    generators_test.go:77: 0 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+=== NAME  TestGeneratorBasic
+    generators_test.go:7: 213 points walked, 246 events
+=== NAME  TestGeneratorReentrant
+    generators_test.go:42: 78 points walked, 101 events
+=== NAME  TestGeneratorFirstReference
+    generators_test.go:72: 163 points walked, 184 events
+=== NAME  TestGeneratorBasic
+    generators_test.go:7: 80 variable-and-point pairs checked
+--- PASS: TestGeneratorBasic (0.84s)
+=== CONT  TestGeneratorChecker
+=== NAME  TestGeneratorOwned
+    generators_test.go:47: 250 points walked, 293 events
+=== NAME  TestGeneratorCompletions
+    generators_test.go:77: 318 points walked, 385 events
+=== NAME  TestGeneratorReentrant
+    generators_test.go:42: 60 variable-and-point pairs checked
+--- PASS: TestGeneratorReentrant (0.91s)
+=== CONT  TestGeneratorMapIterator
+=== NAME  TestGeneratorChecker
+    generators_test.go:67: 7 functions: 5 phis, 24 values, 39 uses checked
+=== NAME  TestGeneratorFirstReference
+    generators_test.go:72: 66 variable-and-point pairs checked
+--- PASS: TestGeneratorFirstReference (1.06s)
+=== CONT  TestGeneratorDefaultError
+=== NAME  TestGeneratorMapIterator
+    generators_test.go:62: 9 functions: 5 phis, 24 values, 41 uses checked
+=== NAME  TestGeneratorCompletions
+    generators_test.go:77: 304 variable-and-point pairs checked
+--- PASS: TestGeneratorCompletions (1.16s)
+=== CONT  TestGeneratorCaptures
+=== NAME  TestGeneratorOwned
+    generators_test.go:47: 133 variable-and-point pairs checked
+--- PASS: TestGeneratorOwned (1.14s)
+=== CONT  TestGeneratorDefaults
+=== NAME  TestGeneratorDefaultError
+    generators_test.go:57: 16 functions: 2 phis, 20 values, 57 uses checked
+=== NAME  TestGeneratorChecker
+    generators_test.go:67: 0 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+=== NAME  TestGeneratorCaptures
+    generators_test.go:52: 18 functions: 2 phis, 16 values, 57 uses checked
+=== NAME  TestGeneratorDefaults
+    generators_test.go:22: 18 functions: 2 phis, 18 values, 62 uses checked
+=== NAME  TestGeneratorMapIterator
+    generators_test.go:62: 0 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+=== NAME  TestGeneratorDefaultError
+    generators_test.go:57: 0 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+=== NAME  TestGeneratorDefaults
+    generators_test.go:22: 0 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+=== NAME  TestGeneratorCaptures
+    generators_test.go:52: 0 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+=== NAME  TestGeneratorChecker
+    generators_test.go:67: 359 points walked, 374 events
+=== NAME  TestGeneratorDefaultError
+    generators_test.go:57: 37 points walked, 50 events
+=== NAME  TestGeneratorMapIterator
+    generators_test.go:62: 318 points walked, 349 events
+=== NAME  TestGeneratorDefaults
+    generators_test.go:22: 149 points walked, 180 events
+=== NAME  TestGeneratorCaptures
+    generators_test.go:52: 140 points walked, 171 events
+=== NAME  TestGeneratorDefaultError
+    generators_test.go:57: 16 variable-and-point pairs checked
+--- PASS: TestGeneratorDefaultError (0.67s)
+=== CONT  TestGeneratorDelegateThrow
+=== NAME  TestGeneratorChecker
+    generators_test.go:67: 206 variable-and-point pairs checked
+--- PASS: TestGeneratorChecker (0.96s)
+=== CONT  TestGeneratorCancellation
+=== NAME  TestGeneratorMapIterator
+    generators_test.go:62: 260 variable-and-point pairs checked
+--- PASS: TestGeneratorMapIterator (0.86s)
+=== CONT  TestGeneratorThrow
+=== NAME  TestGeneratorDefaults
+    generators_test.go:22: 120 variable-and-point pairs checked
+--- PASS: TestGeneratorDefaults (0.69s)
+=== CONT  TestGeneratorDelegate
+=== NAME  TestGeneratorCaptures
+    generators_test.go:52: 113 variable-and-point pairs checked
+--- PASS: TestGeneratorCaptures (0.71s)
+=== CONT  TestGeneratorClose
+=== NAME  TestGeneratorDelegateThrow
+    generators_test.go:37: 16 functions: 2 phis, 23 values, 63 uses checked
+=== NAME  TestGeneratorCancellation
+    generators_test.go:12: 11 functions: 1 phis, 21 values, 49 uses checked
+=== NAME  TestGeneratorThrow
+    generators_test.go:17: 10 functions: 1 phis, 11 values, 34 uses checked
+=== NAME  TestGeneratorClose
+    generators_test.go:27: 9 functions: 4 phis, 26 values, 43 uses checked
+=== NAME  TestGeneratorDelegate
+    generators_test.go:32: 21 functions: 7 phis, 57 values, 109 uses checked
+=== NAME  TestGeneratorClose
+    generators_test.go:27: 0 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+=== NAME  TestGeneratorThrow
+    generators_test.go:17: 0 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+=== NAME  TestGeneratorCancellation
+    generators_test.go:12: 0 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+=== NAME  TestGeneratorDelegateThrow
+    generators_test.go:37: 0 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+=== NAME  TestGeneratorThrow
+    generators_test.go:17: 204 points walked, 225 events
+=== NAME  TestGeneratorClose
+    generators_test.go:27: 181 points walked, 202 events
+=== NAME  TestGeneratorCancellation
+    generators_test.go:12: 435 points walked, 462 events
+=== NAME  TestGeneratorThrow
+    generators_test.go:17: 130 variable-and-point pairs checked
+--- PASS: TestGeneratorThrow (0.64s)
+=== NAME  TestGeneratorClose
+    generators_test.go:27: 187 variable-and-point pairs checked
+--- PASS: TestGeneratorClose (0.64s)
+=== NAME  TestGeneratorDelegateThrow
+    generators_test.go:37: 461 points walked, 496 events
+=== NAME  TestGeneratorCancellation
+    generators_test.go:12: 179 variable-and-point pairs checked
+--- PASS: TestGeneratorCancellation (0.90s)
+=== NAME  TestGeneratorDelegateThrow
+    generators_test.go:37: 264 variable-and-point pairs checked
+--- PASS: TestGeneratorDelegateThrow (1.04s)
+=== NAME  TestGeneratorDelegate
+    generators_test.go:32: 0 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+    generators_test.go:32: 1559 points walked, 1628 events
+    generators_test.go:32: 831 variable-and-point pairs checked
+--- PASS: TestGeneratorDelegate (1.63s)
+PASS
+ok  	github.com/system-inc/adamic/internal/flow	3.522s
+=== RUN   TestGeneratorBasic
+=== PAUSE TestGeneratorBasic
+=== RUN   TestGeneratorCancellation
+=== PAUSE TestGeneratorCancellation
+=== RUN   TestGeneratorThrow
+=== PAUSE TestGeneratorThrow
+=== RUN   TestGeneratorDefaults
+=== PAUSE TestGeneratorDefaults
+=== RUN   TestGeneratorClose
+=== PAUSE TestGeneratorClose
+=== RUN   TestGeneratorDelegate
+=== PAUSE TestGeneratorDelegate
+=== RUN   TestGeneratorDelegateThrow
+=== PAUSE TestGeneratorDelegateThrow
+=== RUN   TestGeneratorReentrant
+=== PAUSE TestGeneratorReentrant
+=== RUN   TestGeneratorOwned
+=== PAUSE TestGeneratorOwned
+=== RUN   TestGeneratorCaptures
+=== PAUSE TestGeneratorCaptures
+=== RUN   TestGeneratorDefaultError
+=== PAUSE TestGeneratorDefaultError
+=== RUN   TestGeneratorMapIterator
+=== PAUSE TestGeneratorMapIterator
+=== RUN   TestGeneratorChecker
+=== PAUSE TestGeneratorChecker
+=== RUN   TestGeneratorFirstReference
+=== PAUSE TestGeneratorFirstReference
+=== RUN   TestGeneratorCompletions
+=== PAUSE TestGeneratorCompletions
+=== CONT  TestGeneratorBasic
+=== CONT  TestGeneratorOwned
+=== CONT  TestGeneratorChecker
+=== CONT  TestGeneratorReentrant
+=== CONT  TestGeneratorMapIterator
+=== NAME  TestGeneratorChecker
+    generators_test.go:67: ../oracle/testdata/generators/checker.a: ir.IteratorField is a node the cycle finder doesn't know
+    generators_test.go:67: 70 writes, 63 proven not to close a cycle
+--- FAIL: TestGeneratorChecker (0.42s)
+=== CONT  TestGeneratorDefaultError
+=== NAME  TestGeneratorOwned
+    generators_test.go:47: 128 writes, 116 proven not to close a cycle
+--- PASS: TestGeneratorOwned (0.44s)
+=== CONT  TestGeneratorCaptures
+=== NAME  TestGeneratorMapIterator
+    generators_test.go:62: ../oracle/testdata/generators/map_iterator.a: ir.IteratorField is a node the cycle finder doesn't know
+    generators_test.go:62: 55 writes, 48 proven not to close a cycle
+--- FAIL: TestGeneratorMapIterator (0.47s)
+=== CONT  TestGeneratorCompletions
+=== NAME  TestGeneratorReentrant
+    generators_test.go:42: 39 writes, 36 proven not to close a cycle
+--- PASS: TestGeneratorReentrant (0.48s)
+=== CONT  TestGeneratorFirstReference
+=== NAME  TestGeneratorBasic
+    generators_test.go:7: 71 writes, 61 proven not to close a cycle
+--- PASS: TestGeneratorBasic (0.49s)
+=== CONT  TestGeneratorDelegateThrow
+=== NAME  TestGeneratorDefaultError
+    generators_test.go:57: 98 writes, 90 proven not to close a cycle
+--- PASS: TestGeneratorDefaultError (0.26s)
+=== CONT  TestGeneratorDelegate
+=== NAME  TestGeneratorCaptures
+    generators_test.go:52: 83 writes, 75 proven not to close a cycle
+--- PASS: TestGeneratorCaptures (0.28s)
+=== CONT  TestGeneratorClose
+=== NAME  TestGeneratorDelegateThrow
+    generators_test.go:37: 160 writes, 138 proven not to close a cycle
+--- PASS: TestGeneratorDelegateThrow (0.29s)
+=== CONT  TestGeneratorDefaults
+=== NAME  TestGeneratorCompletions
+    generators_test.go:77: 125 writes, 114 proven not to close a cycle
+--- PASS: TestGeneratorCompletions (0.34s)
+=== CONT  TestGeneratorThrow
+=== NAME  TestGeneratorFirstReference
+    generators_test.go:72: 72 writes, 64 proven not to close a cycle
+--- PASS: TestGeneratorFirstReference (0.40s)
+=== CONT  TestGeneratorCancellation
+=== NAME  TestGeneratorClose
+    generators_test.go:27: ../oracle/testdata/generators/close.a: ir.IteratorField is a node the cycle finder doesn't know
+    generators_test.go:27: 59 writes, 52 proven not to close a cycle
+--- FAIL: TestGeneratorClose (0.22s)
+=== NAME  TestGeneratorDefaults
+    generators_test.go:22: 99 writes, 89 proven not to close a cycle
+--- PASS: TestGeneratorDefaults (0.16s)
+=== NAME  TestGeneratorThrow
+    generators_test.go:17: 72 writes, 65 proven not to close a cycle
+--- PASS: TestGeneratorThrow (0.29s)
+=== NAME  TestGeneratorDelegate
+    generators_test.go:32: ../oracle/testdata/generators/delegate.a: ir.IteratorField is a node the cycle finder doesn't know
+    generators_test.go:32: 300 writes, 257 proven not to close a cycle
+--- FAIL: TestGeneratorDelegate (0.44s)
+=== NAME  TestGeneratorCancellation
+    generators_test.go:12: 139 writes, 123 proven not to close a cycle
+--- PASS: TestGeneratorCancellation (0.24s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/fresh	1.180s
+FAIL

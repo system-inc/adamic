@@ -1,0 +1,405 @@
+=== RUN   TestMixedTupleSpreadIsNotYet
+=== PAUSE TestMixedTupleSpreadIsNotYet
+=== RUN   TestLiteralMethodCapturesCannotMakeCycles
+=== PAUSE TestLiteralMethodCapturesCannotMakeCycles
+=== RUN   TestLiteralMethodViewsDoNotLoseThis
+=== PAUSE TestLiteralMethodViewsDoNotLoseThis
+=== RUN   TestLiteralMethodSignatureViewsDoNotLoseThis
+=== PAUSE TestLiteralMethodSignatureViewsDoNotLoseThis
+=== RUN   TestLibraryLanguageBoundaries
+=== PAUSE TestLibraryLanguageBoundaries
+=== RUN   TestLibraryMapSetGapsStayRefused
+=== PAUSE TestLibraryMapSetGapsStayRefused
+=== RUN   TestLibraryMapSetIteratorCopyTypesRefused
+=== PAUSE TestLibraryMapSetIteratorCopyTypesRefused
+=== RUN   TestLibraryMethodValues
+=== PAUSE TestLibraryMethodValues
+=== RUN   TestLibraryMethodValueBoundaries
+=== PAUSE TestLibraryMethodValueBoundaries
+=== RUN   TestLibraryMethodValueSafety
+=== PAUSE TestLibraryMethodValueSafety
+=== RUN   TestLibraryRegexOffsetRequiresNoCaptures
+=== PAUSE TestLibraryRegexOffsetRequiresNoCaptures
+=== RUN   TestLibraryStringRefusals
+=== PAUSE TestLibraryStringRefusals
+=== RUN   TestModuleNamespaceLimitsStayLoud
+=== PAUSE TestModuleNamespaceLimitsStayLoud
+=== RUN   TestModuleNamespaceInitializedReadProof
+--- PASS: TestModuleNamespaceInitializedReadProof (0.04s)
+=== RUN   TestNamespaceAmbientHostInitialization
+=== PAUSE TestNamespaceAmbientHostInitialization
+=== RUN   TestNamespaceAmbientContextsDoNotExecute
+=== PAUSE TestNamespaceAmbientContextsDoNotExecute
+=== RUN   TestNamespaceCallGraphLinearWork
+=== PAUSE TestNamespaceCallGraphLinearWork
+=== RUN   TestNamespaceCallGraphCycleUnion
+=== PAUSE TestNamespaceCallGraphCycleUnion
+=== RUN   TestMissingBindingSymbolHasStructuredLocation
+=== PAUSE TestMissingBindingSymbolHasStructuredLocation
+=== RUN   TestMixedUnionContractGraph
+=== PAUSE TestMixedUnionContractGraph
+=== RUN   TestMixedUnionContractFailureDoesNotCertifyRetry
+=== PAUSE TestMixedUnionContractFailureDoesNotCertifyRetry
+=== RUN   TestMixedUnionContractUnknownMemberFails
+=== PAUSE TestMixedUnionContractUnknownMemberFails
+=== RUN   TestMixedUnionContractRecursiveMember
+=== PAUSE TestMixedUnionContractRecursiveMember
+=== RUN   TestMixedUnionContractPhantomBrandUsesPrimitiveBase
+=== PAUSE TestMixedUnionContractPhantomBrandUsesPrimitiveBase
+=== RUN   TestMixedUnionContractPhantomVoidIsUndefined
+=== PAUSE TestMixedUnionContractPhantomVoidIsUndefined
+=== CONT  TestMixedTupleSpreadIsNotYet
+=== CONT  TestModuleNamespaceLimitsStayLoud
+=== CONT  TestLibraryMapSetIteratorCopyTypesRefused
+=== RUN   TestModuleNamespaceLimitsStayLoud/const_escaped_=_performance;
+=== CONT  TestMixedUnionContractGraph
+=== PAUSE TestModuleNamespaceLimitsStayLoud/const_escaped_=_performance;
+=== CONT  TestLiteralMethodSignatureViewsDoNotLoseThis
+=== RUN   TestMixedUnionContractGraph/interface_Identifier_{readonly_text:string}_type_Target=string|Identifier;
+=== PAUSE TestMixedUnionContractGraph/interface_Identifier_{readonly_text:string}_type_Target=string|Identifier;
+=== RUN   TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=number|Node;
+=== RUN   TestModuleNamespaceLimitsStayLoud/console.log(Object.keys(performance).join(','));
+=== PAUSE TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=number|Node;
+=== RUN   TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=Node|readonly_Node[];
+=== PAUSE TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=Node|readonly_Node[];
+=== RUN   TestMixedUnionContractGraph/interface_Expression_{readonly_value:number}_type_Target=boolean|Expression;
+=== PAUSE TestMixedUnionContractGraph/interface_Expression_{readonly_value:number}_type_Target=boolean|Expression;
+=== RUN   TestMixedUnionContractGraph/interface_Left_{readonly_left:string}_interface_Right_{readonly_right:number}_type_Target=Left|Right;
+=== PAUSE TestMixedUnionContractGraph/interface_Left_{readonly_left:string}_interface_Right_{readonly_right:number}_type_Target=Left|Right;
+=== CONT  TestLibraryMapSetGapsStayRefused
+=== RUN   TestLibraryMapSetGapsStayRefused/set-like_object
+=== PAUSE TestLibraryMapSetGapsStayRefused/set-like_object
+=== RUN   TestLibraryMapSetGapsStayRefused/different_representations
+=== PAUSE TestLibraryMapSetGapsStayRefused/different_representations
+=== PAUSE TestModuleNamespaceLimitsStayLoud/console.log(Object.keys(performance).join(','));
+=== RUN   TestLibraryMapSetGapsStayRefused/dynamic_thisArg
+=== PAUSE TestLibraryMapSetGapsStayRefused/dynamic_thisArg
+=== RUN   TestLibraryMapSetGapsStayRefused/groupBy_optional_widening
+=== PAUSE TestLibraryMapSetGapsStayRefused/groupBy_optional_widening
+=== RUN   TestModuleNamespaceLimitsStayLoud/console.log(`${performance['value']}`);
+=== PAUSE TestModuleNamespaceLimitsStayLoud/console.log(`${performance['value']}`);
+=== CONT  TestLibraryLanguageBoundaries
+=== RUN   TestModuleNamespaceLimitsStayLoud/performance.value_=_2;
+=== PAUSE TestModuleNamespaceLimitsStayLoud/performance.value_=_2;
+=== RUN   TestModuleNamespaceLimitsStayLoud/console.log(`${performance.read()}`);
+=== PAUSE TestModuleNamespaceLimitsStayLoud/console.log(`${performance.read()}`);
+=== RUN   TestLibraryLanguageBoundaries/array
+=== CONT  TestMixedUnionContractRecursiveMember
+=== PAUSE TestLibraryLanguageBoundaries/array
+=== RUN   TestLibraryLanguageBoundaries/hidden_array
+=== PAUSE TestLibraryLanguageBoundaries/hidden_array
+=== RUN   TestLibraryLanguageBoundaries/parameter
+=== PAUSE TestLibraryLanguageBoundaries/parameter
+=== RUN   TestLibraryLanguageBoundaries/prototype
+=== PAUSE TestLibraryLanguageBoundaries/prototype
+=== RUN   TestLibraryLanguageBoundaries/optional_object
+=== PAUSE TestLibraryLanguageBoundaries/optional_object
+=== RUN   TestLibraryLanguageBoundaries/optional_spread
+=== PAUSE TestLibraryLanguageBoundaries/optional_spread
+=== RUN   TestLibraryLanguageBoundaries/destructured_write
+=== PAUSE TestLibraryLanguageBoundaries/destructured_write
+=== RUN   TestLibraryLanguageBoundaries/dynamic_receiver
+=== PAUSE TestLibraryLanguageBoundaries/dynamic_receiver
+=== RUN   TestLibraryLanguageBoundaries/constructor_alias
+=== PAUSE TestLibraryLanguageBoundaries/constructor_alias
+=== RUN   TestLibraryLanguageBoundaries/constructor_passed
+=== PAUSE TestLibraryLanguageBoundaries/constructor_passed
+=== RUN   TestLibraryLanguageBoundaries/inherited_field
+=== PAUSE TestLibraryLanguageBoundaries/inherited_field
+=== CONT  TestMixedUnionContractPhantomVoidIsUndefined
+--- PASS: TestMixedTupleSpreadIsNotYet (0.08s)
+=== CONT  TestMixedUnionContractPhantomBrandUsesPrimitiveBase
+--- PASS: TestMixedUnionContractRecursiveMember (0.08s)
+=== CONT  TestLiteralMethodViewsDoNotLoseThis
+--- PASS: TestMixedUnionContractPhantomVoidIsUndefined (0.09s)
+=== CONT  TestMixedUnionContractUnknownMemberFails
+--- PASS: TestMixedUnionContractPhantomBrandUsesPrimitiveBase (0.06s)
+=== CONT  TestLiteralMethodCapturesCannotMakeCycles
+--- PASS: TestMixedUnionContractUnknownMemberFails (0.08s)
+=== CONT  TestNamespaceCallGraphLinearWork
+=== RUN   TestNamespaceCallGraphLinearWork/12
+--- PASS: TestLiteralMethodCapturesCannotMakeCycles (0.06s)
+=== CONT  TestMissingBindingSymbolHasStructuredLocation
+=== RUN   TestNamespaceCallGraphLinearWork/24
+--- PASS: TestLibraryMapSetIteratorCopyTypesRefused (0.24s)
+=== CONT  TestNamespaceCallGraphCycleUnion
+--- PASS: TestLiteralMethodSignatureViewsDoNotLoseThis (0.25s)
+=== CONT  TestMixedUnionContractFailureDoesNotCertifyRetry
+--- PASS: TestMissingBindingSymbolHasStructuredLocation (0.06s)
+=== CONT  TestNamespaceAmbientContextsDoNotExecute
+--- PASS: TestNamespaceCallGraphLinearWork (0.11s)
+    --- PASS: TestNamespaceCallGraphLinearWork/12 (0.06s)
+    --- PASS: TestNamespaceCallGraphLinearWork/24 (0.05s)
+=== CONT  TestLibraryMethodValueSafety
+=== RUN   TestLibraryMethodValueSafety/bind_absent_receiver
+=== PAUSE TestLibraryMethodValueSafety/bind_absent_receiver
+=== RUN   TestLibraryMethodValueSafety/opaque_identity
+=== PAUSE TestLibraryMethodValueSafety/opaque_identity
+=== RUN   TestLibraryMethodValueSafety/mutable_alias
+=== PAUSE TestLibraryMethodValueSafety/mutable_alias
+=== RUN   TestLibraryMethodValueSafety/opaque_field
+=== PAUSE TestLibraryMethodValueSafety/opaque_field
+=== RUN   TestLibraryMethodValueSafety/array_element_erasure
+=== PAUSE TestLibraryMethodValueSafety/array_element_erasure
+=== RUN   TestLibraryMethodValueSafety/apply_spread
+=== PAUSE TestLibraryMethodValueSafety/apply_spread
+=== RUN   TestLibraryMethodValueSafety/string_receiver
+=== PAUSE TestLibraryMethodValueSafety/string_receiver
+=== RUN   TestLibraryMethodValueSafety/bind_arity
+=== PAUSE TestLibraryMethodValueSafety/bind_arity
+=== RUN   TestLibraryMethodValueSafety/unsupported_callback
+=== PAUSE TestLibraryMethodValueSafety/unsupported_callback
+=== RUN   TestLibraryMethodValueSafety/opaque_shorthand
+=== PAUSE TestLibraryMethodValueSafety/opaque_shorthand
+=== RUN   TestLibraryMethodValueSafety/opaque_return
+=== PAUSE TestLibraryMethodValueSafety/opaque_return
+=== RUN   TestLibraryMethodValueSafety/absent_array
+=== PAUSE TestLibraryMethodValueSafety/absent_array
+=== RUN   TestLibraryMethodValueSafety/call_spread
+=== PAUSE TestLibraryMethodValueSafety/call_spread
+=== RUN   TestLibraryMethodValueSafety/number_receiver
+=== PAUSE TestLibraryMethodValueSafety/number_receiver
+=== CONT  TestLibraryStringRefusals
+=== RUN   TestLibraryStringRefusals/detached
+=== PAUSE TestLibraryStringRefusals/detached
+=== RUN   TestLibraryStringRefusals/null_receiver
+=== PAUSE TestLibraryStringRefusals/null_receiver
+=== RUN   TestLibraryStringRefusals/undefined_receiver
+=== PAUSE TestLibraryStringRefusals/undefined_receiver
+=== RUN   TestLibraryStringRefusals/String_internal_slot
+=== PAUSE TestLibraryStringRefusals/String_internal_slot
+=== RUN   TestLibraryStringRefusals/object_conversion
+=== PAUSE TestLibraryStringRefusals/object_conversion
+=== RUN   TestLibraryStringRefusals/collation
+=== PAUSE TestLibraryStringRefusals/collation
+=== RUN   TestLibraryStringRefusals/loose_inequality
+=== PAUSE TestLibraryStringRefusals/loose_inequality
+=== RUN   TestLibraryStringRefusals/first_class_constructor
+=== PAUSE TestLibraryStringRefusals/first_class_constructor
+=== RUN   TestLibraryStringRefusals/raw_wider_view
+=== PAUSE TestLibraryStringRefusals/raw_wider_view
+=== CONT  TestLibraryRegexOffsetRequiresNoCaptures
+--- PASS: TestMixedUnionContractFailureDoesNotCertifyRetry (0.04s)
+=== CONT  TestNamespaceAmbientHostInitialization
+--- PASS: TestNamespaceCallGraphCycleUnion (0.05s)
+=== CONT  TestLibraryMethodValueBoundaries
+=== RUN   TestLibraryMethodValueBoundaries/unbound_Array
+=== PAUSE TestLibraryMethodValueBoundaries/unbound_Array
+=== RUN   TestLibraryMethodValueBoundaries/different_element_type
+=== PAUSE TestLibraryMethodValueBoundaries/different_element_type
+=== RUN   TestLibraryMethodValueBoundaries/primitive_string
+=== PAUSE TestLibraryMethodValueBoundaries/primitive_string
+=== RUN   TestLibraryMethodValueBoundaries/dense_array
+=== PAUSE TestLibraryMethodValueBoundaries/dense_array
+=== RUN   TestLibraryMethodValueBoundaries/dense_argument_literal
+=== PAUSE TestLibraryMethodValueBoundaries/dense_argument_literal
+=== RUN   TestLibraryMethodValueBoundaries/holes_or_spread
+=== PAUSE TestLibraryMethodValueBoundaries/holes_or_spread
+=== RUN   TestLibraryMethodValueBoundaries/outside_a_const_alias
+=== PAUSE TestLibraryMethodValueBoundaries/outside_a_const_alias
+=== RUN   TestLibraryMethodValueBoundaries/outside_a_const_alias#01
+=== PAUSE TestLibraryMethodValueBoundaries/outside_a_const_alias#01
+=== RUN   TestLibraryMethodValueBoundaries/captured_receiver
+=== PAUSE TestLibraryMethodValueBoundaries/captured_receiver
+=== RUN   TestLibraryMethodValueBoundaries/primitive_adapter
+=== PAUSE TestLibraryMethodValueBoundaries/primitive_adapter
+=== RUN   TestLibraryMethodValueBoundaries/primitive_adapter#01
+=== PAUSE TestLibraryMethodValueBoundaries/primitive_adapter#01
+=== RUN   TestLibraryMethodValueBoundaries/delayed_fill_of_an_array_with_holes
+=== PAUSE TestLibraryMethodValueBoundaries/delayed_fill_of_an_array_with_holes
+=== CONT  TestLibraryMethodValues
+=== RUN   TestLibraryMethodValues/const_f_=_Array.prototype.indexOf;_console.log(`${f.call([4,_5],_5)}`);
+=== PAUSE TestLibraryMethodValues/const_f_=_Array.prototype.indexOf;_console.log(`${f.call([4,_5],_5)}`);
+=== RUN   TestLibraryMethodValues/const_f_=_Array.prototype.indexOf;_const_g_=_f;_console.log(`${g.apply([4,_5],_[5])}`);
+=== PAUSE TestLibraryMethodValues/const_f_=_Array.prototype.indexOf;_const_g_=_f;_console.log(`${g.apply([4,_5],_[5])}`);
+=== RUN   TestLibraryMethodValues/const_f_=_String.prototype.trim;_console.log(f.call('_x_'));
+=== PAUSE TestLibraryMethodValues/const_f_=_String.prototype.trim;_console.log(f.call('_x_'));
+=== RUN   TestLibraryMethodValues/const_f_=_String.prototype.substring;_console.log(f.apply('abcdef',_[4,_1]));
+=== PAUSE TestLibraryMethodValues/const_f_=_String.prototype.substring;_console.log(f.apply('abcdef',_[4,_1]));
+=== RUN   TestLibraryMethodValues/const_f_=_Number.parseInt;_console.log(`${f('12',_10)}`);
+=== PAUSE TestLibraryMethodValues/const_f_=_Number.parseInt;_console.log(`${f('12',_10)}`);
+=== RUN   TestLibraryMethodValues/const_f_=_Object.prototype.toString;_console.log(f.call([4]));
+=== PAUSE TestLibraryMethodValues/const_f_=_Object.prototype.toString;_console.log(f.call([4]));
+=== RUN   TestLibraryMethodValues/const_f_=_Object.prototype.hasOwnProperty;_console.log(`${f.call({x:_1},_'x')}`);
+=== PAUSE TestLibraryMethodValues/const_f_=_Object.prototype.hasOwnProperty;_console.log(`${f.call({x:_1},_'x')}`);
+=== RUN   TestLibraryMethodValues/console.log([1,_2].map(String).join(','));
+=== PAUSE TestLibraryMethodValues/console.log([1,_2].map(String).join(','));
+=== RUN   TestLibraryMethodValues/function_show(value:_string_|_number):_void_{_console.log(`${value}`);_}_const_f_=_Object.prototype.toString;_show(f.call([1]));
+=== PAUSE TestLibraryMethodValues/function_show(value:_string_|_number):_void_{_console.log(`${value}`);_}_const_f_=_Object.prototype.toString;_show(f.call([1]));
+=== RUN   TestLibraryMethodValues/console.log([].map(String).join(','));
+=== PAUSE TestLibraryMethodValues/console.log([].map(String).join(','));
+=== RUN   TestLibraryMethodValues/const_f_=_String.prototype.trim.bind('_x_');_console.log(f());
+=== PAUSE TestLibraryMethodValues/const_f_=_String.prototype.trim.bind('_x_');_console.log(f());
+=== RUN   TestLibraryMethodValues/console.log(['10',_'10',_'10'].map(Number.parseInt).join(','));
+=== PAUSE TestLibraryMethodValues/console.log(['10',_'10',_'10'].map(Number.parseInt).join(','));
+=== RUN   TestLibraryMethodValues/const_f_=_Number.parseInt;_console.log(['10',_'10'].map(f).join(','));
+=== PAUSE TestLibraryMethodValues/const_f_=_Number.parseInt;_console.log(['10',_'10'].map(f).join(','));
+=== CONT  TestMixedUnionContractGraph/interface_Identifier_{readonly_text:string}_type_Target=string|Identifier;
+--- PASS: TestNamespaceAmbientContextsDoNotExecute (0.06s)
+=== CONT  TestMixedUnionContractGraph/interface_Expression_{readonly_value:number}_type_Target=boolean|Expression;
+=== CONT  TestMixedUnionContractGraph/interface_Left_{readonly_left:string}_interface_Right_{readonly_right:number}_type_Target=Left|Right;
+=== RUN   TestNamespaceAmbientHostInitialization/realpath
+--- PASS: TestLiteralMethodViewsDoNotLoseThis (0.26s)
+=== CONT  TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=number|Node;
+=== CONT  TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=Node|readonly_Node[];
+    view_unions_mixed_test.go:45: awaits compiler/views-v3: array element kind and holes (b065fa576)
+=== CONT  TestLibraryMapSetGapsStayRefused/set-like_object
+=== CONT  TestLibraryMapSetGapsStayRefused/groupBy_optional_widening
+--- PASS: TestMixedUnionContractGraph (0.00s)
+    --- PASS: TestMixedUnionContractGraph/interface_Identifier_{readonly_text:string}_type_Target=string|Identifier; (0.03s)
+    --- PASS: TestMixedUnionContractGraph/interface_Expression_{readonly_value:number}_type_Target=boolean|Expression; (0.05s)
+    --- SKIP: TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=Node|readonly_Node[]; (0.00s)
+    --- PASS: TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=number|Node; (0.04s)
+    --- PASS: TestMixedUnionContractGraph/interface_Left_{readonly_left:string}_interface_Right_{readonly_right:number}_type_Target=Left|Right; (0.05s)
+=== CONT  TestLibraryMapSetGapsStayRefused/dynamic_thisArg
+=== CONT  TestLibraryMapSetGapsStayRefused/different_representations
+=== CONT  TestModuleNamespaceLimitsStayLoud/const_escaped_=_performance;
+=== CONT  TestModuleNamespaceLimitsStayLoud/performance.value_=_2;
+--- PASS: TestLibraryMapSetGapsStayRefused (0.00s)
+    --- PASS: TestLibraryMapSetGapsStayRefused/set-like_object (0.04s)
+    --- PASS: TestLibraryMapSetGapsStayRefused/groupBy_optional_widening (0.06s)
+    --- PASS: TestLibraryMapSetGapsStayRefused/different_representations (0.05s)
+    --- PASS: TestLibraryMapSetGapsStayRefused/dynamic_thisArg (0.10s)
+=== CONT  TestLibraryLanguageBoundaries/array
+--- PASS: TestLibraryRegexOffsetRequiresNoCaptures (0.22s)
+=== CONT  TestModuleNamespaceLimitsStayLoud/console.log(Object.keys(performance).join(','));
+=== CONT  TestModuleNamespaceLimitsStayLoud/console.log(`${performance['value']}`);
+=== CONT  TestModuleNamespaceLimitsStayLoud/console.log(`${performance.read()}`);
+=== CONT  TestLibraryLanguageBoundaries/optional_spread
+=== CONT  TestLibraryLanguageBoundaries/inherited_field
+=== CONT  TestLibraryLanguageBoundaries/constructor_passed
+--- PASS: TestModuleNamespaceLimitsStayLoud (0.00s)
+    --- PASS: TestModuleNamespaceLimitsStayLoud/const_escaped_=_performance; (0.06s)
+    --- PASS: TestModuleNamespaceLimitsStayLoud/performance.value_=_2; (0.09s)
+    --- PASS: TestModuleNamespaceLimitsStayLoud/console.log(Object.keys(performance).join(',')); (0.05s)
+    --- PASS: TestModuleNamespaceLimitsStayLoud/console.log(`${performance['value']}`); (0.06s)
+    --- PASS: TestModuleNamespaceLimitsStayLoud/console.log(`${performance.read()}`); (0.04s)
+=== CONT  TestLibraryLanguageBoundaries/constructor_alias
+=== CONT  TestLibraryLanguageBoundaries/dynamic_receiver
+=== CONT  TestLibraryLanguageBoundaries/destructured_write
+=== CONT  TestLibraryLanguageBoundaries/parameter
+=== CONT  TestLibraryLanguageBoundaries/optional_object
+=== CONT  TestLibraryLanguageBoundaries/prototype
+=== CONT  TestLibraryLanguageBoundaries/hidden_array
+=== CONT  TestLibraryMethodValueSafety/bind_absent_receiver
+=== CONT  TestLibraryStringRefusals/detached
+=== CONT  TestLibraryMethodValueSafety/number_receiver
+--- PASS: TestLibraryLanguageBoundaries (0.00s)
+    --- PASS: TestLibraryLanguageBoundaries/array (0.07s)
+    --- PASS: TestLibraryLanguageBoundaries/optional_spread (0.08s)
+    --- PASS: TestLibraryLanguageBoundaries/constructor_passed (0.08s)
+    --- PASS: TestLibraryLanguageBoundaries/inherited_field (0.11s)
+    --- PASS: TestLibraryLanguageBoundaries/constructor_alias (0.09s)
+    --- PASS: TestLibraryLanguageBoundaries/destructured_write (0.05s)
+    --- PASS: TestLibraryLanguageBoundaries/dynamic_receiver (0.05s)
+    --- PASS: TestLibraryLanguageBoundaries/parameter (0.03s)
+    --- PASS: TestLibraryLanguageBoundaries/optional_object (0.03s)
+    --- PASS: TestLibraryLanguageBoundaries/prototype (0.06s)
+    --- PASS: TestLibraryLanguageBoundaries/hidden_array (0.06s)
+=== CONT  TestLibraryMethodValueSafety/call_spread
+=== CONT  TestLibraryMethodValueSafety/absent_array
+=== CONT  TestLibraryMethodValueSafety/opaque_return
+=== CONT  TestLibraryMethodValueSafety/opaque_shorthand
+=== CONT  TestLibraryMethodValueSafety/unsupported_callback
+=== CONT  TestLibraryMethodValueSafety/bind_arity
+=== CONT  TestLibraryMethodValueSafety/string_receiver
+=== CONT  TestLibraryMethodValueSafety/apply_spread
+=== CONT  TestLibraryMethodValueSafety/array_element_erasure
+=== CONT  TestLibraryMethodValueSafety/opaque_field
+=== CONT  TestLibraryMethodValueSafety/mutable_alias
+=== CONT  TestLibraryMethodValueSafety/opaque_identity
+=== CONT  TestLibraryStringRefusals/collation
+=== CONT  TestLibraryStringRefusals/raw_wider_view
+=== CONT  TestLibraryStringRefusals/first_class_constructor
+--- PASS: TestLibraryMethodValueSafety (0.00s)
+    --- PASS: TestLibraryMethodValueSafety/bind_absent_receiver (0.06s)
+    --- PASS: TestLibraryMethodValueSafety/number_receiver (0.06s)
+    --- PASS: TestLibraryMethodValueSafety/call_spread (0.06s)
+    --- PASS: TestLibraryMethodValueSafety/absent_array (0.08s)
+    --- PASS: TestLibraryMethodValueSafety/opaque_return (0.04s)
+    --- PASS: TestLibraryMethodValueSafety/unsupported_callback (0.03s)
+    --- PASS: TestLibraryMethodValueSafety/opaque_shorthand (0.06s)
+    --- PASS: TestLibraryMethodValueSafety/bind_arity (0.03s)
+    --- PASS: TestLibraryMethodValueSafety/string_receiver (0.04s)
+    --- PASS: TestLibraryMethodValueSafety/array_element_erasure (0.04s)
+    --- PASS: TestLibraryMethodValueSafety/opaque_field (0.04s)
+    --- PASS: TestLibraryMethodValueSafety/mutable_alias (0.05s)
+    --- PASS: TestLibraryMethodValueSafety/apply_spread (0.07s)
+    --- PASS: TestLibraryMethodValueSafety/opaque_identity (0.05s)
+=== CONT  TestLibraryStringRefusals/loose_inequality
+=== CONT  TestLibraryStringRefusals/String_internal_slot
+=== CONT  TestLibraryStringRefusals/undefined_receiver
+=== CONT  TestLibraryStringRefusals/object_conversion
+=== CONT  TestLibraryStringRefusals/null_receiver
+=== CONT  TestLibraryMethodValueBoundaries/unbound_Array
+=== CONT  TestLibraryMethodValues/const_f_=_Array.prototype.indexOf;_console.log(`${f.call([4,_5],_5)}`);
+=== CONT  TestLibraryMethodValueBoundaries/delayed_fill_of_an_array_with_holes
+--- PASS: TestLibraryStringRefusals (0.00s)
+    --- PASS: TestLibraryStringRefusals/detached (0.10s)
+    --- PASS: TestLibraryStringRefusals/collation (0.05s)
+    --- PASS: TestLibraryStringRefusals/first_class_constructor (0.03s)
+    --- PASS: TestLibraryStringRefusals/raw_wider_view (0.05s)
+    --- PASS: TestLibraryStringRefusals/loose_inequality (0.04s)
+    --- PASS: TestLibraryStringRefusals/String_internal_slot (0.04s)
+    --- PASS: TestLibraryStringRefusals/object_conversion (0.03s)
+    --- PASS: TestLibraryStringRefusals/undefined_receiver (0.03s)
+    --- PASS: TestLibraryStringRefusals/null_receiver (0.05s)
+=== CONT  TestLibraryMethodValueBoundaries/primitive_adapter#01
+=== CONT  TestLibraryMethodValueBoundaries/primitive_adapter
+=== CONT  TestLibraryMethodValueBoundaries/captured_receiver
+=== CONT  TestLibraryMethodValueBoundaries/outside_a_const_alias#01
+=== CONT  TestLibraryMethodValueBoundaries/outside_a_const_alias
+=== CONT  TestLibraryMethodValueBoundaries/holes_or_spread
+=== CONT  TestLibraryMethodValueBoundaries/dense_argument_literal
+=== CONT  TestLibraryMethodValueBoundaries/dense_array
+=== CONT  TestLibraryMethodValueBoundaries/primitive_string
+=== CONT  TestLibraryMethodValueBoundaries/different_element_type
+=== CONT  TestLibraryMethodValues/console.log([1,_2].map(String).join(','));
+=== CONT  TestLibraryMethodValues/const_f_=_Number.parseInt;_console.log(['10',_'10'].map(f).join(','));
+--- PASS: TestLibraryMethodValueBoundaries (0.00s)
+    --- PASS: TestLibraryMethodValueBoundaries/unbound_Array (0.05s)
+    --- PASS: TestLibraryMethodValueBoundaries/delayed_fill_of_an_array_with_holes (0.08s)
+    --- PASS: TestLibraryMethodValueBoundaries/primitive_adapter (0.04s)
+    --- PASS: TestLibraryMethodValueBoundaries/primitive_adapter#01 (0.04s)
+    --- PASS: TestLibraryMethodValueBoundaries/captured_receiver (0.02s)
+    --- PASS: TestLibraryMethodValueBoundaries/outside_a_const_alias (0.02s)
+    --- PASS: TestLibraryMethodValueBoundaries/outside_a_const_alias#01 (0.07s)
+    --- PASS: TestLibraryMethodValueBoundaries/holes_or_spread (0.05s)
+    --- PASS: TestLibraryMethodValueBoundaries/dense_argument_literal (0.06s)
+    --- PASS: TestLibraryMethodValueBoundaries/dense_array (0.04s)
+    --- PASS: TestLibraryMethodValueBoundaries/different_element_type (0.05s)
+    --- PASS: TestLibraryMethodValueBoundaries/primitive_string (0.05s)
+=== CONT  TestLibraryMethodValues/console.log(['10',_'10',_'10'].map(Number.parseInt).join(','));
+=== NAME  TestNamespaceAmbientHostInitialization/realpath
+    namespaces_ambient_test.go:44: independent lowering stop: /tmp/adamic-gate/TestNamespaceAmbientHostInitializationrealpath3805679024/002/main.a:3:22: stage 0 can't lower node:fs.native yet
+=== RUN   TestNamespaceAmbientHostInitialization/cwd
+=== CONT  TestLibraryMethodValues/const_f_=_String.prototype.trim.bind('_x_');_console.log(f());
+=== CONT  TestLibraryMethodValues/console.log([].map(String).join(','));
+=== CONT  TestLibraryMethodValues/function_show(value:_string_|_number):_void_{_console.log(`${value}`);_}_const_f_=_Object.prototype.toString;_show(f.call([1]));
+=== CONT  TestLibraryMethodValues/const_f_=_Number.parseInt;_console.log(`${f('12',_10)}`);
+=== CONT  TestLibraryMethodValues/const_f_=_Object.prototype.hasOwnProperty;_console.log(`${f.call({x:_1},_'x')}`);
+=== CONT  TestLibraryMethodValues/const_f_=_Object.prototype.toString;_console.log(f.call([4]));
+=== CONT  TestLibraryMethodValues/const_f_=_String.prototype.trim;_console.log(f.call('_x_'));
+=== CONT  TestLibraryMethodValues/const_f_=_String.prototype.substring;_console.log(f.apply('abcdef',_[4,_1]));
+=== CONT  TestLibraryMethodValues/const_f_=_Array.prototype.indexOf;_const_g_=_f;_console.log(`${g.apply([4,_5],_[5])}`);
+--- PASS: TestLibraryMethodValues (0.00s)
+    --- PASS: TestLibraryMethodValues/const_f_=_Array.prototype.indexOf;_console.log(`${f.call([4,_5],_5)}`); (0.25s)
+    --- PASS: TestLibraryMethodValues/console.log([1,_2].map(String).join(',')); (0.19s)
+    --- PASS: TestLibraryMethodValues/const_f_=_Number.parseInt;_console.log(['10',_'10'].map(f).join(',')); (0.19s)
+    --- PASS: TestLibraryMethodValues/const_f_=_String.prototype.trim.bind('_x_');_console.log(f()); (0.16s)
+    --- PASS: TestLibraryMethodValues/console.log(['10',_'10',_'10'].map(Number.parseInt).join(',')); (0.20s)
+    --- PASS: TestLibraryMethodValues/console.log([].map(String).join(',')); (0.17s)
+    --- PASS: TestLibraryMethodValues/const_f_=_Object.prototype.hasOwnProperty;_console.log(`${f.call({x:_1},_'x')}`); (0.18s)
+    --- PASS: TestLibraryMethodValues/function_show(value:_string_|_number):_void_{_console.log(`${value}`);_}_const_f_=_Object.prototype.toString;_show(f.call([1])); (0.23s)
+    --- PASS: TestLibraryMethodValues/const_f_=_Number.parseInt;_console.log(`${f('12',_10)}`); (0.24s)
+    --- PASS: TestLibraryMethodValues/const_f_=_Object.prototype.toString;_console.log(f.call([4])); (0.23s)
+    --- PASS: TestLibraryMethodValues/const_f_=_String.prototype.trim;_console.log(f.call('_x_')); (0.20s)
+    --- PASS: TestLibraryMethodValues/const_f_=_String.prototype.substring;_console.log(f.apply('abcdef',_[4,_1])); (0.16s)
+    --- PASS: TestLibraryMethodValues/const_f_=_Array.prototype.indexOf;_const_g_=_f;_console.log(`${g.apply([4,_5],_[5])}`); (0.20s)
+=== NAME  TestNamespaceAmbientHostInitialization/cwd
+    namespaces_ambient_test.go:38: independent ownership refusal: /tmp/adamic-gate/TestNamespaceAmbientHostInitializationcwd1116219082/002/main.a:4:18: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)
+--- PASS: TestNamespaceAmbientHostInitialization (1.60s)
+    --- PASS: TestNamespaceAmbientHostInitialization/realpath (0.92s)
+    --- PASS: TestNamespaceAmbientHostInitialization/cwd (0.64s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	1.949s

@@ -1,0 +1,4 @@
+package main
+import("context";"encoding/json";"errors";"fmt";"os";"github.com/system-inc/adamic/internal/load";"github.com/system-inc/adamic/internal/lower")
+func observe(path string)(kind,reason string){kind="accepted";defer func(){if r:=recover();r!=nil{kind="panic";reason=fmt.Sprint(r)}}();p,e:=load.Load([]string{path});if e!=nil{kind="checker"}else{_,e=lower.Lower(context.Background(),p);var n *lower.NotYet;var r *lower.Refused;if errors.As(e,&n){kind="NotYet"}else if errors.As(e,&r){kind="Refused"}else if e!=nil{kind="error"}};if e!=nil{reason=e.Error()};return}
+func main(){out:=json.NewEncoder(os.Stdout);for _,path:=range os.Args[1:]{kind,reason:=observe(path);out.Encode(map[string]string{"path":path,"kind":kind,"reason":reason})}}

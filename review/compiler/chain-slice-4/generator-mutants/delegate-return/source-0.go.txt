@@ -1,0 +1,79 @@
+package lower
+
+import "github.com/system-inc/adamic/internal/ir"
+
+func (g *generatorMachine) delegate(y ir.GeneratorYield, next int, ctx generatorContext, local *int) int {
+	source := g.local(y.Value.Type())
+	position := g.local(ir.Number)
+	iterator := source
+	if y.Kind == "set" {
+		iterator = g.local(ir.Object)
+	}
+	step := g.local(ir.Object)
+	cached := g.local(ir.Closure)
+	resume := g.reserve(ctx)
+	complete := next
+	if local != nil {
+		value := ir.Expression(ir.Undefined{Of: y.Result})
+		if y.Kind == "generator" {
+			value = ir.Narrow{Value: ir.DynamicProperty{Object: fit(g.slot(step), ir.Union), Name: "value"}, To: y.Result}
+		}
+		complete = g.add(append([]ir.Statement{g.store(generatorSlot(*local), value)}, g.jump(next)...), ctx)
+	}
+	returning := g.returned(g.field("input", ir.Union), ctx, 0)
+	missingThrow := g.add([]ir.Statement{ir.Throw{Value: ir.MakeError{Message: ir.StringConstant{Index: g.l.constant("The iterator does not provide a 'throw' method.")}, Name: ir.StringConstant{Index: g.l.constant("TypeError")}}}}, ctx)
+	emit := func(value ir.Expression) int {
+		return g.add([]ir.Statement{g.store("pc", ir.NumberConstant{Value: float64(resume)}), g.store("status", ir.NumberConstant{Value: 2}), ir.Return{Value: g.packet(value, false)}}, ctx)
+	}
+	if y.Kind == "array" {
+		item := ir.ArrayIndex{Array: g.slot(source), Index: g.slot(position), Element: y.Element}
+		value := ir.Expression(item)
+		if item.Type().IsMaybe() {
+			value = ir.Unwrap{Value: item}
+		}
+		held := g.local(y.Element)
+		yielded := emit(g.slot(held))
+		read := g.add(append([]ir.Statement{g.store(generatorSlot(held), value), g.store(generatorSlot(position), ir.Binary{Operator: ir.Add, Left: g.slot(position), Right: ir.NumberConstant{Value: 1}})}, g.jump(yielded)...), ctx)
+		g.states[resume].body = []ir.Statement{ir.If{Condition: g.equals("mode", 1), Then: g.jump(returning)}, ir.If{Condition: g.equals("mode", 2), Then: g.jump(missingThrow)}, ir.If{Condition: ir.Binary{Operator: ir.Less, Left: g.slot(position), Right: ir.Length{Array: g.slot(source)}}, Then: g.jump(read), Else: g.jump(complete)}}
+	} else {
+		value := ir.Expression(ir.DynamicProperty{Object: fit(g.slot(step), ir.Union), Name: "value"})
+		if y.Kind == "set" {
+			value = ir.Property{Object: g.slot(step), Name: "value", Of: y.Element}
+		}
+		yielded := emit(value)
+		done := complete
+		if y.Kind == "generator" {
+			doneReturn := g.returned(value, ctx, 0)
+			done = g.add([]ir.Statement{ir.If{Condition: g.equals("mode", 1), Then: g.jump(doneReturn), Else: g.jump(complete)}}, ctx)
+		}
+		processed := g.add([]ir.Statement{ir.If{Condition: ir.Property{Object: g.slot(step), Name: "done", Of: ir.Boolean}, Then: g.jump(done), Else: g.jump(yielded)}}, ctx)
+		invoke := func(method string) int {
+			fn := g.slot(cached)
+			var args []ir.Expression
+			if y.Kind == "generator" {
+				args = []ir.Expression{g.slot(iterator), g.field("input", ir.Union)}
+				if method != "next" {
+					fn = ir.Property{Object: g.slot(iterator), Name: method, Of: ir.Closure}
+				}
+			}
+			return g.add(append([]ir.Statement{g.store(generatorSlot(step), ir.CallClosure{Closure: fn, Arguments: args, Returns: ir.Object})}, g.jump(processed)...), ctx)
+		}
+		ordinary := invoke("next")
+		abruptReturn, abruptThrow := returning, missingThrow
+		if y.Kind == "generator" {
+			abruptReturn, abruptThrow = ordinary, invoke("throw")
+		}
+		g.states[resume].body = []ir.Statement{ir.If{Condition: g.equals("mode", 1), Then: g.jump(abruptReturn)}, ir.If{Condition: g.equals("mode", 2), Then: g.jump(abruptThrow)}}
+		g.states[resume].body = append(g.states[resume].body, g.jump(ordinary)...)
+	}
+	return g.expression(y.Value, ctx, func(value ir.Expression) int {
+		setup := []ir.Statement{g.store(generatorSlot(source), value), g.store(generatorSlot(position), ir.NumberConstant{}), g.store("mode", ir.NumberConstant{}), g.store("input", ir.Undefined{Of: ir.Union})}
+		if y.Kind == "set" {
+			setup = append(setup, g.store(generatorSlot(iterator), ir.CollectionIterator{Collection: g.slot(source), Part: "keys", Key: y.Element, Value: y.Element, Set: true}))
+		}
+		if y.Kind != "array" {
+			setup = append(setup, g.store(generatorSlot(cached), ir.Property{Object: g.slot(iterator), Name: "next", Of: ir.Closure}))
+		}
+		return g.add(append(setup, g.jump(resume)...), ctx)
+	})
+}

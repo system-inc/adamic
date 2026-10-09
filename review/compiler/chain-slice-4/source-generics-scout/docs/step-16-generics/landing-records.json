@@ -1,0 +1,369 @@
+{
+  "base": "7a10c877667582a15326acb10fa22fa7a0c45fb8",
+  "source": "f3a560a7b74676712c2bfd750473dd2013ada64a",
+  "delivery_branch": "compiler/generics-scout-main",
+  "production_changes": false,
+  "source_node": [
+    {
+      "path": "stage3/fixtures/generics/01_identity.a",
+      "historical_sha256": "b16e2c9b45d645d1a7869932eea63d5a6ac19f0c19176987fa8e03b19ba16455",
+      "current_sha256": "b16e2c9b45d645d1a7869932eea63d5a6ac19f0c19176987fa8e03b19ba16455",
+      "exit": 0,
+      "stdout": "0 false genericgeneric true\n",
+      "stderr": "",
+      "historical_node_equal": true
+    },
+    {
+      "path": "stage3/fixtures/generics/02_optional_return.a",
+      "historical_sha256": "16584ffa00f4f24e61d185dc55df9276df6c435181d3dc33f1ec2ba4f1f36d67",
+      "current_sha256": "16584ffa00f4f24e61d185dc55df9276df6c435181d3dc33f1ec2ba4f1f36d67",
+      "exit": 0,
+      "stdout": "0 false \nownedownedowned absent 77\n",
+      "stderr": "",
+      "historical_node_equal": true
+    },
+    {
+      "path": "stage3/fixtures/generics/03_callback_return.a",
+      "historical_sha256": "7f60071f2dfeac3d2b5e2812596e068b4f93882a95067e3c7ed0dae8dd4df081",
+      "current_sha256": "7f60071f2dfeac3d2b5e2812596e068b4f93882a95067e3c7ed0dae8dd4df081",
+      "exit": 0,
+      "stdout": "0 texttexttext\n77\n",
+      "stderr": "",
+      "historical_node_equal": true
+    },
+    {
+      "path": "stage3/fixtures/generics/04_function_value.a",
+      "historical_sha256": "fecbfe88cfa3baa6d979b299bbbb4fa5f851beedeb8e22e7e4ce70efa360a22f",
+      "current_sha256": "fecbfe88cfa3baa6d979b299bbbb4fa5f851beedeb8e22e7e4ce70efa360a22f",
+      "exit": 0,
+      "stdout": "true false\n",
+      "stderr": "",
+      "historical_node_equal": true
+    },
+    {
+      "path": "stage3/fixtures/generics/05_nested_class.a",
+      "historical_sha256": "ab88a95f5b53d411fa2eaf8c10637087892de334baecf7240e9ef10fa77c541a",
+      "current_sha256": "ab88a95f5b53d411fa2eaf8c10637087892de334baecf7240e9ef10fa77c541a",
+      "exit": 0,
+      "stdout": "arenaarenaarena true\n0\n",
+      "stderr": "",
+      "historical_node_equal": true
+    },
+    {
+      "path": "stage3/fixtures/generics/06_polymorphic_recursion.a",
+      "historical_sha256": "18cac621986a6c9edfce1e743f91811f91f75506731de2e89ef424220534ffb2",
+      "current_sha256": "ea07da7422b81a142f0261be86441531e3704e3a5f5d2e1b41fb6176a1fd41eb",
+      "exit": 0,
+      "stdout": "0\n",
+      "stderr": "",
+      "historical_node_equal": true
+    },
+    {
+      "path": "stage3/fixtures/generics/07_generic_cast.a",
+      "historical_sha256": "42d6814eb10752c0030070474693f2c848cf1dcfa450d9064a4480b242248b41",
+      "current_sha256": "557922d57d2182f7a0f0cc9ae3147c20164daf2c14f165fef63ea7d27d960575",
+      "exit": 0,
+      "stdout": "4\n",
+      "stderr": "",
+      "historical_node_equal": true
+    },
+    {
+      "path": "stage3/fixtures/generics/08_readonly_view.a",
+      "historical_sha256": "41f484aef444f8fbe414f561c43884c0637bb5e1bb37442e864b93af982a9e17",
+      "current_sha256": "8d7d1ac6afa568d7e5e1a7e5e0df43bffbf2fa5a47d9fcb7cde8336766dc2c8e",
+      "exit": 0,
+      "stdout": "2\n",
+      "stderr": "",
+      "historical_node_equal": true
+    },
+    {
+      "path": "stage3/fixtures/generics/09_recursive_optional.a",
+      "historical_sha256": "a6e7899e7a85928b0a0d68774f4461ef86c69cc20685148a758e1ad5269b00e8",
+      "current_sha256": "a6e7899e7a85928b0a0d68774f4461ef86c69cc20685148a758e1ad5269b00e8",
+      "exit": 0,
+      "stdout": "0 ownedownedowned\n",
+      "stderr": "",
+      "historical_node_equal": true
+    },
+    {
+      "path": "stage3/fixtures/generics/10_identifier_multimap.a",
+      "historical_sha256": "9a5ff1f40a7a4071fcea20a2c3997390f50ba01561ce55a9dc71b96d7da8882d",
+      "current_sha256": "9a5ff1f40a7a4071fcea20a2c3997390f50ba01561ce55a9dc71b96d7da8882d",
+      "exit": 0,
+      "stdout": "true ownedownedowned/secondsecond/third\n0/7\n",
+      "stderr": "",
+      "historical_node_equal": true
+    },
+    {
+      "path": "stage3/fixtures/generics/11_indexed_result.a",
+      "historical_sha256": "9eb68d3772b96f213ba8b399d8f9f8800f5dbaa74f19d73f0c686e46fbc85b7b",
+      "current_sha256": "9eb68d3772b96f213ba8b399d8f9f8800f5dbaa74f19d73f0c686e46fbc85b7b",
+      "exit": 0,
+      "stdout": "2\n",
+      "stderr": "",
+      "historical_node_equal": true
+    },
+    {
+      "path": "stage3/fixtures/generics/12_mixed_indexed_result.a",
+      "historical_sha256": "752c9ecfd68492c3381b519753f07d7cecc7faea479ede52c8f4262be182c76f",
+      "current_sha256": "752c9ecfd68492c3381b519753f07d7cecc7faea479ede52c8f4262be182c76f",
+      "exit": 0,
+      "stdout": "2\n",
+      "stderr": "",
+      "historical_node_equal": true
+    },
+    {
+      "path": "stage3/fixtures/generics/13_constrained_local.a",
+      "historical_sha256": "dfe015b1ea28869c3b31470c1a4438f8ca647feba13f3df6d319e781ba3fb019",
+      "current_sha256": "dfe015b1ea28869c3b31470c1a4438f8ca647feba13f3df6d319e781ba3fb019",
+      "exit": 0,
+      "stdout": "2\n",
+      "stderr": "",
+      "historical_node_equal": true
+    },
+    {
+      "path": "stage3/fixtures/generics/14_optional_literal_union.a",
+      "historical_sha256": "3f1f9f871478abbfd1a824b0566aba0b8d1de2a4608e7857518f422afee937d0",
+      "current_sha256": "0a340e978b2ab5b473ce1d82f3ffad6943887434051b6bd04c8618f46125709d",
+      "exit": 0,
+      "stdout": "0 4\n",
+      "stderr": "",
+      "historical_node_equal": true
+    },
+    {
+      "path": "stage3/fixtures/generics/15_array_callback.a",
+      "historical_sha256": "63065343826ccd098309f612457b0f46e76b2516f921174ccba292e126e88c6f",
+      "current_sha256": "63065343826ccd098309f612457b0f46e76b2516f921174ccba292e126e88c6f",
+      "exit": 0,
+      "stdout": "0\nfalse\n\nownedownedowned\nempty absent\n",
+      "stderr": "",
+      "historical_node_equal": true
+    }
+  ],
+  "a_check": {
+    "stage3/fixtures/generics/01_identity.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "pass": true
+    },
+    "stage3/fixtures/generics/02_optional_return.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "pass": true
+    },
+    "stage3/fixtures/generics/03_callback_return.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "pass": true
+    },
+    "stage3/fixtures/generics/04_function_value.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "pass": true
+    },
+    "stage3/fixtures/generics/05_nested_class.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "pass": true
+    },
+    "stage3/fixtures/generics/06_polymorphic_recursion.a": {
+      "outcome": "refused",
+      "expected": "polymorphic recursion",
+      "pass": true
+    },
+    "stage3/fixtures/generics/07_generic_cast.a": {
+      "outcome": "refused",
+      "expected": "a cast the runtime can't check",
+      "pass": true
+    },
+    "stage3/fixtures/generics/08_readonly_view.a": {
+      "outcome": "refused",
+      "expected": "whose readonly field pos becomes writable",
+      "pass": true
+    },
+    "stage3/fixtures/generics/09_recursive_optional.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "pass": true
+    },
+    "stage3/fixtures/generics/10_identifier_multimap.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "pass": true
+    },
+    "stage3/fixtures/generics/11_indexed_result.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "pass": true
+    },
+    "stage3/fixtures/generics/12_mixed_indexed_result.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "pass": true
+    },
+    "stage3/fixtures/generics/13_constrained_local.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "pass": true
+    },
+    "stage3/fixtures/generics/14_optional_literal_union.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "pass": true
+    },
+    "stage3/fixtures/generics/15_array_callback.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "pass": true
+    }
+  },
+  "audit_tests": [
+    {
+      "name": "audit-normal",
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "name": "audit--mutant",
+      "exit": 1,
+      "expected": 1
+    },
+    {
+      "name": "audit--mutant-selection",
+      "exit": 1,
+      "expected": 1
+    },
+    {
+      "name": "audit--mutant-markdown",
+      "exit": 1,
+      "expected": 1
+    },
+    {
+      "name": "parameters-normal",
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "name": "parameters--mutant",
+      "exit": 1,
+      "expected": 1
+    },
+    {
+      "name": "resume-normal",
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "name": "resume--mutant",
+      "exit": 1,
+      "expected": 1
+    },
+    {
+      "name": "retirement-normal",
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "name": "retirement--mutant",
+      "exit": 1,
+      "expected": 1
+    }
+  ],
+  "historical_mapper_mutants": {
+    "mapper-disabled": {
+      "exit": 0,
+      "fixture": "02_optional_return"
+    },
+    "identity-skipped": {
+      "exit": 0,
+      "fixture": "09_recursive_optional"
+    },
+    "optional-gating-removed": {
+      "exit": 1,
+      "fixture": "11_indexed_result"
+    },
+    "union-size-removed": {
+      "exit": 0,
+      "fixture": "14_optional_literal_union"
+    },
+    "constraint-guard-removed": {
+      "exit": 1,
+      "fixture": "13_constrained_local"
+    },
+    "main-outcomes": {
+      "exit": 0
+    }
+  },
+  "commands": {
+    "final-build": {
+      "exit": 0,
+      "log": "/tmp/generics-scout-final-build.log"
+    },
+    "final-vet": {
+      "exit": 0,
+      "log": "/tmp/generics-scout-final-vet.log"
+    },
+    "stage1": {
+      "exit": 0,
+      "log": "/tmp/generics-scout-stage1.log"
+    },
+    "stage3": {
+      "exit": 0,
+      "log": "/tmp/generics-scout-stage3.log"
+    },
+    "final-own": {
+      "exit": 0,
+      "log": "/tmp/generics-scout-final-own.log"
+    },
+    "final-counts": {
+      "exit": 0,
+      "log": "/tmp/generics-scout-final-counts.log"
+    },
+    "normal-source": {
+      "exit": 1,
+      "log": "/tmp/generics-scout-normal-source.log"
+    },
+    "next-source": {
+      "exit": 1,
+      "log": "/tmp/generics-scout-next-source.log"
+    }
+  },
+  "replay": {
+    "measurement": "measured on a checker-rejected program",
+    "units": [
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/tmp/generics-scout-adapted/src/compiler/core.ts:220:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 7641,
+        "body_end": 7865,
+        "status": "panic",
+        "checker_diagnostics": [],
+        "name": "contains",
+        "top": "/tmp/generics-scout-adapted/src/compiler/core.ts:220:1"
+      }
+    ],
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/generics-scout-adapted/src/compiler/core.ts:220:1",
+        "phase": "lowering",
+        "kind": "panic",
+        "where": "/tmp/generics-scout-adapted/src/compiler/core.ts:220:1",
+        "reason": "latent state copy: unexported IR field argumentFacts",
+        "text": "latent state copy: unexported IR field argumentFacts"
+      },
+      {
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/generics-scout-adapted/src/compiler/core.ts:220:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/generics-scout-adapted/src/compiler/core.ts:220:1",
+        "reason": "unit panic; continued at next declaration",
+        "text": "latent state copy: unexported IR field argumentFacts",
+        "start": 7486,
+        "end": 7865
+      }
+    ]
+  }
+}

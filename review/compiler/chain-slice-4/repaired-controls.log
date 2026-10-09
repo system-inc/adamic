@@ -1,0 +1,12 @@
+=== RUN   TestGenericBodyRelationsMaybeBind
+=== PAUSE TestGenericBodyRelationsMaybeBind
+=== CONT  TestGenericBodyRelationsMaybeBind
+--- PASS: TestGenericBodyRelationsMaybeBind (0.05s)
+PASS
+ok  	github.com/system-inc/adamic/internal/oracle	0.062s
+=== RUN   TestProjectLoaderStandaloneNodeKeepsPrelude
+=== PAUSE TestProjectLoaderStandaloneNodeKeepsPrelude
+=== CONT  TestProjectLoaderStandaloneNodeKeepsPrelude
+--- PASS: TestProjectLoaderStandaloneNodeKeepsPrelude (0.27s)
+PASS
+ok  	github.com/system-inc/adamic/internal/load	0.282s

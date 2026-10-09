@@ -1,0 +1,424 @@
+=== RUN   TestOverloadedShorthandFunctionValueStaysNotYet
+=== PAUSE TestOverloadedShorthandFunctionValueStaysNotYet
+=== RUN   TestParseIntMapUsesIndexRadix
+=== PAUSE TestParseIntMapUsesIndexRadix
+=== RUN   TestOriginalCycleLedger
+    import_cycle_ledger_test.go:31: set ADAMIC_CYCLE_LEDGER_ROOT to pristine TypeScript 6.0.3 with generated diagnostics
+--- SKIP: TestOriginalCycleLedger (0.00s)
+=== RUN   TestParserFactoryBindingHoisting
+=== PAUSE TestParserFactoryBindingHoisting
+=== RUN   TestOptionalWideningCensus
+    optional_widening_census_test.go:29: set OPTIONAL_WIDENING_CONFIG and OPTIONAL_WIDENING_OUTPUT to inventory a project
+--- SKIP: TestOptionalWideningCensus (0.00s)
+=== RUN   TestOptionalWideningRefused
+=== PAUSE TestOptionalWideningRefused
+=== RUN   TestOptionalWideningAllowed
+=== PAUSE TestOptionalWideningAllowed
+=== RUN   TestOptionalWideningSpreadOverwrite
+=== PAUSE TestOptionalWideningSpreadOverwrite
+=== RUN   TestOverloadInferenceWitnesses
+=== PAUSE TestOverloadInferenceWitnesses
+=== RUN   TestOverrideOptionalNumberRefusesNativeSignature
+=== PAUSE TestOverrideOptionalNumberRefusesNativeSignature
+=== RUN   TestOverrideOptionalRefusesNativeSignature
+=== PAUSE TestOverrideOptionalRefusesNativeSignature
+=== RUN   TestParameterPropertiesSoundness
+=== PAUSE TestParameterPropertiesSoundness
+=== RUN   TestParameterPropertyCheckerContracts
+=== PAUSE TestParameterPropertyCheckerContracts
+=== RUN   TestParameterPropertyCallbackReceiver
+=== PAUSE TestParameterPropertyCallbackReceiver
+=== RUN   TestParameterPropertyValueMatchesNode
+=== PAUSE TestParameterPropertyValueMatchesNode
+=== RUN   TestPredicateSummaryParameterIndex
+=== PAUSE TestPredicateSummaryParameterIndex
+=== RUN   TestPredicateOverloadRuntime
+=== PAUSE TestPredicateOverloadRuntime
+=== RUN   TestPredicateBodyProof
+=== PAUSE TestPredicateBodyProof
+=== RUN   TestPredicateCallbackContracts
+=== PAUSE TestPredicateCallbackContracts
+=== RUN   TestPredicateOverloadCallback
+=== PAUSE TestPredicateOverloadCallback
+=== RUN   TestPredicateUseRegions
+=== PAUSE TestPredicateUseRegions
+=== RUN   TestPredicateUsesBelongToEachCall
+=== PAUSE TestPredicateUsesBelongToEachCall
+=== RUN   TestPredicateBodiesAreProven
+=== PAUSE TestPredicateBodiesAreProven
+=== RUN   TestPrimitiveAdmittingSlotsUseBoxes
+=== PAUSE TestPrimitiveAdmittingSlotsUseBoxes
+=== RUN   TestPrivateAndPublicStaticsAgreeWithNode
+=== PAUSE TestPrivateAndPublicStaticsAgreeWithNode
+=== CONT  TestOverloadedShorthandFunctionValueStaysNotYet
+=== CONT  TestParameterPropertyValueMatchesNode
+=== CONT  TestPrivateAndPublicStaticsAgreeWithNode
+=== CONT  TestPredicateUseRegions
+=== CONT  TestPredicateBodiesAreProven
+=== RUN   TestPredicateUseRegions/unused
+=== PAUSE TestPredicateUseRegions/unused
+=== RUN   TestPredicateUseRegions/true
+=== PAUSE TestPredicateUseRegions/true
+=== RUN   TestPredicateUseRegions/false
+=== PAUSE TestPredicateUseRegions/false
+=== RUN   TestPredicateUseRegions/both
+=== PAUSE TestPredicateUseRegions/both
+=== RUN   TestPredicateUseRegions/return_continuation
+=== PAUSE TestPredicateUseRegions/return_continuation
+=== RUN   TestPredicateUseRegions/throw_continuation
+=== PAUSE TestPredicateUseRegions/throw_continuation
+=== RUN   TestPredicateUseRegions/false_continuation
+=== PAUSE TestPredicateUseRegions/false_continuation
+=== RUN   TestPredicateUseRegions/const_result_alias
+=== PAUSE TestPredicateUseRegions/const_result_alias
+=== RUN   TestPredicateUseRegions/compound_result_alias
+=== PAUSE TestPredicateUseRegions/compound_result_alias
+=== RUN   TestPredicateUseRegions/short_circuit
+=== PAUSE TestPredicateUseRegions/short_circuit
+=== RUN   TestPredicateUseRegions/closure_read
+=== PAUSE TestPredicateUseRegions/closure_read
+=== RUN   TestPredicateUseRegions/indexed_spelling
+=== PAUSE TestPredicateUseRegions/indexed_spelling
+=== RUN   TestPredicateUseRegions/indexed_argument
+=== PAUSE TestPredicateUseRegions/indexed_argument
+=== RUN   TestPredicateUseRegions/computed_index
+=== PAUSE TestPredicateUseRegions/computed_index
+=== RUN   TestPredicateUseRegions/loop_read
+=== PAUSE TestPredicateUseRegions/loop_read
+=== RUN   TestPredicateUseRegions/later_read
+=== PAUSE TestPredicateUseRegions/later_read
+=== RUN   TestPredicateUseRegions/replacement
+=== PAUSE TestPredicateUseRegions/replacement
+=== CONT  TestPredicateOverloadCallback
+--- PASS: TestOverloadedShorthandFunctionValueStaysNotYet (0.11s)
+=== CONT  TestPredicateCallbackContracts
+=== RUN   TestPredicateCallbackContracts/inferred_arrow
+=== PAUSE TestPredicateCallbackContracts/inferred_arrow
+=== RUN   TestPredicateCallbackContracts/inferred_opaque
+=== PAUSE TestPredicateCallbackContracts/inferred_opaque
+=== RUN   TestPredicateCallbackContracts/inferred_named
+=== PAUSE TestPredicateCallbackContracts/inferred_named
+=== RUN   TestPredicateCallbackContracts/arrow
+=== PAUSE TestPredicateCallbackContracts/arrow
+=== RUN   TestPredicateCallbackContracts/named
+=== PAUSE TestPredicateCallbackContracts/named
+=== RUN   TestPredicateCallbackContracts/unproven
+=== PAUSE TestPredicateCallbackContracts/unproven
+=== RUN   TestPredicateCallbackContracts/lying
+=== PAUSE TestPredicateCallbackContracts/lying
+=== RUN   TestPredicateCallbackContracts/reassigned
+=== PAUSE TestPredicateCallbackContracts/reassigned
+=== CONT  TestPredicateBodyProof
+=== RUN   TestPredicateBodyProof/condition_assertion
+=== PAUSE TestPredicateBodyProof/condition_assertion
+=== RUN   TestPredicateBodyProof/returning_fail
+=== PAUSE TestPredicateBodyProof/returning_fail
+=== RUN   TestPredicateBodyProof/empty_condition_assertion
+=== PAUSE TestPredicateBodyProof/empty_condition_assertion
+=== RUN   TestPredicateBodyProof/condition_mutation
+=== PAUSE TestPredicateBodyProof/condition_mutation
+=== RUN   TestPredicateBodyProof/diagnostic_work_on_failure
+=== PAUSE TestPredicateBodyProof/diagnostic_work_on_failure
+=== RUN   TestPredicateBodyProof/typeof
+=== PAUSE TestPredicateBodyProof/typeof
+=== RUN   TestPredicateBodyProof/kind
+=== PAUSE TestPredicateBodyProof/kind
+=== RUN   TestPredicateBodyProof/kind_helpers_fixed_point
+=== PAUSE TestPredicateBodyProof/kind_helpers_fixed_point
+=== RUN   TestPredicateBodyProof/helper
+=== PAUSE TestPredicateBodyProof/helper
+=== RUN   TestPredicateBodyProof/false_branch_lies
+=== PAUSE TestPredicateBodyProof/false_branch_lies
+=== RUN   TestPredicateBodyProof/true_branch_lies
+=== PAUSE TestPredicateBodyProof/true_branch_lies
+=== RUN   TestPredicateBodyProof/mutation
+=== PAUSE TestPredicateBodyProof/mutation
+=== RUN   TestPredicateBodyProof/alias_mutation
+=== PAUSE TestPredicateBodyProof/alias_mutation
+=== RUN   TestPredicateBodyProof/recursive
+=== PAUSE TestPredicateBodyProof/recursive
+=== RUN   TestPredicateBodyProof/default_changes_input
+=== PAUSE TestPredicateBodyProof/default_changes_input
+=== RUN   TestPredicateBodyProof/empty_assertion
+=== PAUSE TestPredicateBodyProof/empty_assertion
+=== RUN   TestPredicateBodyProof/assertion
+=== PAUSE TestPredicateBodyProof/assertion
+=== RUN   TestPredicateBodyProof/disabled_assertion
+=== PAUSE TestPredicateBodyProof/disabled_assertion
+=== CONT  TestPredicateOverloadRuntime
+=== RUN   TestPredicateOverloadRuntime/parser_every_result
+--- PASS: TestPredicateOverloadCallback (0.31s)
+=== CONT  TestPredicateSummaryParameterIndex
+=== RUN   TestPredicateSummaryParameterIndex/p05_helper_second_parameter
+--- PASS: TestPrivateAndPublicStaticsAgreeWithNode (0.33s)
+=== CONT  TestPredicateUsesBelongToEachCall
+=== RUN   TestPredicateSummaryParameterIndex/p06_helper_second_parameter_undefined
+--- PASS: TestPredicateUsesBelongToEachCall (0.07s)
+=== CONT  TestPrimitiveAdmittingSlotsUseBoxes
+--- PASS: TestPrimitiveAdmittingSlotsUseBoxes (0.04s)
+=== CONT  TestOverloadInferenceWitnesses
+=== RUN   TestPredicateSummaryParameterIndex/p13_filter_wrong_parameter_helper
+--- PASS: TestParameterPropertyValueMatchesNode (0.51s)
+=== CONT  TestParameterPropertiesSoundness
+=== RUN   TestParameterPropertiesSoundness/readonly_view
+=== RUN   TestOverloadInferenceWitnesses/one_compatible_binder
+=== RUN   TestOverloadInferenceWitnesses/incompatible_known_member
+=== RUN   TestOverloadInferenceWitnesses/multiple_unknown_binders
+=== RUN   TestOverloadInferenceWitnesses/optional_rigid_binder
+--- PASS: TestOverloadInferenceWitnesses (0.07s)
+    --- PASS: TestOverloadInferenceWitnesses/one_compatible_binder (0.00s)
+    --- PASS: TestOverloadInferenceWitnesses/incompatible_known_member (0.00s)
+    --- PASS: TestOverloadInferenceWitnesses/multiple_unknown_binders (0.00s)
+    --- PASS: TestOverloadInferenceWitnesses/optional_rigid_binder (0.00s)
+=== CONT  TestOverrideOptionalRefusesNativeSignature
+--- PASS: TestPredicateSummaryParameterIndex (0.20s)
+    --- PASS: TestPredicateSummaryParameterIndex/p05_helper_second_parameter (0.04s)
+    --- PASS: TestPredicateSummaryParameterIndex/p06_helper_second_parameter_undefined (0.11s)
+    --- PASS: TestPredicateSummaryParameterIndex/p13_filter_wrong_parameter_helper (0.06s)
+=== CONT  TestOverrideOptionalNumberRefusesNativeSignature
+--- PASS: TestOverrideOptionalRefusesNativeSignature (0.05s)
+=== CONT  TestOptionalWideningRefused
+=== RUN   TestOptionalWideningRefused/argument
+=== PAUSE TestOptionalWideningRefused/argument
+=== RUN   TestOptionalWideningRefused/array_element
+=== PAUSE TestOptionalWideningRefused/array_element
+=== RUN   TestOptionalWideningRefused/arrow
+=== PAUSE TestOptionalWideningRefused/arrow
+=== RUN   TestOptionalWideningRefused/assignment
+=== PAUSE TestOptionalWideningRefused/assignment
+=== RUN   TestOptionalWideningRefused/cast
+=== PAUSE TestOptionalWideningRefused/cast
+=== RUN   TestOptionalWideningRefused/class_field
+=== PAUSE TestOptionalWideningRefused/class_field
+=== RUN   TestOptionalWideningRefused/field
+=== PAUSE TestOptionalWideningRefused/field
+=== RUN   TestOptionalWideningRefused/field_access_paths
+=== PAUSE TestOptionalWideningRefused/field_access_paths
+=== RUN   TestOptionalWideningRefused/generic
+=== PAUSE TestOptionalWideningRefused/generic
+=== RUN   TestOptionalWideningRefused/incompatible
+=== PAUSE TestOptionalWideningRefused/incompatible
+=== RUN   TestOptionalWideningRefused/initializer
+=== PAUSE TestOptionalWideningRefused/initializer
+=== RUN   TestOptionalWideningRefused/nested
+=== PAUSE TestOptionalWideningRefused/nested
+=== RUN   TestOptionalWideningRefused/parameter_default
+=== PAUSE TestOptionalWideningRefused/parameter_default
+=== RUN   TestOptionalWideningRefused/property_write
+=== PAUSE TestOptionalWideningRefused/property_write
+=== RUN   TestOptionalWideningRefused/readonly
+=== PAUSE TestOptionalWideningRefused/readonly
+=== RUN   TestOptionalWideningRefused/return
+=== PAUSE TestOptionalWideningRefused/return
+=== RUN   TestOptionalWideningRefused/shorthand
+=== PAUSE TestOptionalWideningRefused/shorthand
+=== RUN   TestOptionalWideningRefused/spread
+=== PAUSE TestOptionalWideningRefused/spread
+=== RUN   TestOptionalWideningRefused/spread_other_missing
+=== PAUSE TestOptionalWideningRefused/spread_other_missing
+=== RUN   TestOptionalWideningRefused/tuple_element
+=== PAUSE TestOptionalWideningRefused/tuple_element
+=== RUN   TestParameterPropertiesSoundness/mutable_override
+=== CONT  TestOptionalWideningSpreadOverwrite
+--- PASS: TestOverrideOptionalNumberRefusesNativeSignature (0.10s)
+=== CONT  TestOptionalWideningAllowed
+=== RUN   TestOptionalWideningAllowed/class
+=== PAUSE TestOptionalWideningAllowed/class
+=== RUN   TestOptionalWideningAllowed/fresh
+=== PAUSE TestOptionalWideningAllowed/fresh
+=== RUN   TestOptionalWideningAllowed/declared
+=== PAUSE TestOptionalWideningAllowed/declared
+=== CONT  TestParserFactoryBindingHoisting
+--- PASS: TestOptionalWideningSpreadOverwrite (0.07s)
+=== CONT  TestParameterPropertyCallbackReceiver
+=== RUN   TestPredicateOverloadRuntime/parser_some_result
+=== RUN   TestParameterPropertiesSoundness/readonly_override
+--- PASS: TestParserFactoryBindingHoisting (0.06s)
+=== CONT  TestParameterPropertyCheckerContracts
+--- PASS: TestParameterPropertyCallbackReceiver (0.11s)
+=== CONT  TestParseIntMapUsesIndexRadix
+=== RUN   TestParameterPropertiesSoundness/inherited_initializer
+--- PASS: TestPredicateBodiesAreProven (0.79s)
+=== CONT  TestPredicateUseRegions/unused
+=== RUN   TestParameterPropertiesSoundness/early_default
+=== CONT  TestPredicateUseRegions/computed_index
+=== RUN   TestParameterPropertiesSoundness/field_initializer
+=== CONT  TestPredicateUseRegions/replacement
+--- PASS: TestParameterPropertiesSoundness (0.50s)
+    --- PASS: TestParameterPropertiesSoundness/readonly_view (0.06s)
+    --- PASS: TestParameterPropertiesSoundness/mutable_override (0.08s)
+    --- PASS: TestParameterPropertiesSoundness/readonly_override (0.12s)
+    --- PASS: TestParameterPropertiesSoundness/inherited_initializer (0.08s)
+    --- PASS: TestParameterPropertiesSoundness/early_default (0.05s)
+    --- PASS: TestParameterPropertiesSoundness/field_initializer (0.10s)
+=== CONT  TestPredicateUseRegions/later_read
+=== CONT  TestPredicateUseRegions/loop_read
+=== CONT  TestPredicateUseRegions/indexed_spelling
+=== CONT  TestPredicateUseRegions/indexed_argument
+=== CONT  TestPredicateUseRegions/closure_read
+--- PASS: TestParseIntMapUsesIndexRadix (0.37s)
+=== CONT  TestPredicateUseRegions/return_continuation
+=== CONT  TestPredicateUseRegions/compound_result_alias
+=== CONT  TestPredicateUseRegions/const_result_alias
+=== CONT  TestPredicateUseRegions/false_continuation
+--- PASS: TestParameterPropertyCheckerContracts (0.55s)
+=== CONT  TestPredicateUseRegions/throw_continuation
+=== CONT  TestPredicateUseRegions/false
+=== CONT  TestPredicateUseRegions/both
+=== CONT  TestPredicateUseRegions/true
+=== RUN   TestPredicateOverloadRuntime/overload_some
+=== CONT  TestPredicateUseRegions/short_circuit
+=== CONT  TestPredicateCallbackContracts/inferred_arrow
+=== CONT  TestPredicateCallbackContracts/named
+=== CONT  TestPredicateCallbackContracts/reassigned
+--- PASS: TestPredicateUseRegions (0.00s)
+    --- PASS: TestPredicateUseRegions/unused (0.11s)
+    --- PASS: TestPredicateUseRegions/computed_index (0.09s)
+    --- PASS: TestPredicateUseRegions/replacement (0.06s)
+    --- PASS: TestPredicateUseRegions/later_read (0.05s)
+    --- PASS: TestPredicateUseRegions/loop_read (0.04s)
+    --- PASS: TestPredicateUseRegions/indexed_spelling (0.05s)
+    --- PASS: TestPredicateUseRegions/closure_read (0.05s)
+    --- PASS: TestPredicateUseRegions/indexed_argument (0.08s)
+    --- PASS: TestPredicateUseRegions/return_continuation (0.08s)
+    --- PASS: TestPredicateUseRegions/false_continuation (0.03s)
+    --- PASS: TestPredicateUseRegions/compound_result_alias (0.07s)
+    --- PASS: TestPredicateUseRegions/const_result_alias (0.07s)
+    --- PASS: TestPredicateUseRegions/throw_continuation (0.04s)
+    --- PASS: TestPredicateUseRegions/false (0.07s)
+    --- PASS: TestPredicateUseRegions/true (0.05s)
+    --- PASS: TestPredicateUseRegions/both (0.07s)
+    --- PASS: TestPredicateUseRegions/short_circuit (0.04s)
+=== CONT  TestPredicateCallbackContracts/lying
+=== CONT  TestPredicateCallbackContracts/unproven
+=== CONT  TestPredicateCallbackContracts/inferred_named
+=== CONT  TestPredicateCallbackContracts/arrow
+=== CONT  TestPredicateCallbackContracts/inferred_opaque
+=== CONT  TestPredicateBodyProof/condition_assertion
+=== CONT  TestPredicateBodyProof/false_branch_lies
+=== CONT  TestPredicateBodyProof/disabled_assertion
+=== CONT  TestPredicateBodyProof/assertion
+=== CONT  TestPredicateBodyProof/empty_assertion
+=== CONT  TestPredicateBodyProof/default_changes_input
+--- PASS: TestPredicateCallbackContracts (0.00s)
+    --- PASS: TestPredicateCallbackContracts/reassigned (0.06s)
+    --- PASS: TestPredicateCallbackContracts/lying (0.06s)
+    --- PASS: TestPredicateCallbackContracts/unproven (0.06s)
+    --- PASS: TestPredicateCallbackContracts/named (0.27s)
+    --- PASS: TestPredicateCallbackContracts/inferred_arrow (0.30s)
+    --- PASS: TestPredicateCallbackContracts/arrow (0.21s)
+    --- PASS: TestPredicateCallbackContracts/inferred_named (0.26s)
+    --- PASS: TestPredicateCallbackContracts/inferred_opaque (0.13s)
+=== CONT  TestPredicateBodyProof/recursive
+=== CONT  TestPredicateBodyProof/alias_mutation
+=== CONT  TestPredicateBodyProof/mutation
+=== CONT  TestPredicateBodyProof/true_branch_lies
+=== CONT  TestPredicateBodyProof/typeof
+=== CONT  TestPredicateBodyProof/helper
+=== RUN   TestPredicateOverloadRuntime/overload_some_empty
+=== CONT  TestPredicateBodyProof/kind_helpers_fixed_point
+=== CONT  TestPredicateBodyProof/kind
+=== CONT  TestPredicateBodyProof/condition_mutation
+=== CONT  TestPredicateBodyProof/diagnostic_work_on_failure
+=== CONT  TestPredicateBodyProof/empty_condition_assertion
+=== CONT  TestPredicateBodyProof/returning_fail
+=== CONT  TestOptionalWideningRefused/argument
+=== CONT  TestOptionalWideningRefused/tuple_element
+=== CONT  TestOptionalWideningRefused/spread_other_missing
+--- PASS: TestPredicateBodyProof (0.00s)
+    --- PASS: TestPredicateBodyProof/disabled_assertion (0.05s)
+    --- PASS: TestPredicateBodyProof/condition_assertion (0.08s)
+    --- PASS: TestPredicateBodyProof/false_branch_lies (0.07s)
+    --- PASS: TestPredicateBodyProof/assertion (0.07s)
+    --- PASS: TestPredicateBodyProof/empty_assertion (0.08s)
+    --- PASS: TestPredicateBodyProof/recursive (0.09s)
+    --- PASS: TestPredicateBodyProof/default_changes_input (0.10s)
+    --- PASS: TestPredicateBodyProof/alias_mutation (0.07s)
+    --- PASS: TestPredicateBodyProof/true_branch_lies (0.06s)
+    --- PASS: TestPredicateBodyProof/typeof (0.05s)
+    --- PASS: TestPredicateBodyProof/mutation (0.10s)
+    --- PASS: TestPredicateBodyProof/helper (0.08s)
+    --- PASS: TestPredicateBodyProof/kind (0.06s)
+    --- PASS: TestPredicateBodyProof/condition_mutation (0.08s)
+    --- PASS: TestPredicateBodyProof/kind_helpers_fixed_point (0.09s)
+    --- PASS: TestPredicateBodyProof/diagnostic_work_on_failure (0.05s)
+    --- PASS: TestPredicateBodyProof/empty_condition_assertion (0.05s)
+    --- PASS: TestPredicateBodyProof/returning_fail (0.07s)
+=== CONT  TestOptionalWideningRefused/shorthand
+=== CONT  TestOptionalWideningRefused/spread
+=== CONT  TestOptionalWideningRefused/return
+=== CONT  TestOptionalWideningRefused/readonly
+=== CONT  TestOptionalWideningRefused/property_write
+=== CONT  TestOptionalWideningRefused/parameter_default
+=== CONT  TestOptionalWideningRefused/nested
+=== CONT  TestOptionalWideningRefused/initializer
+=== CONT  TestOptionalWideningRefused/incompatible
+=== CONT  TestOptionalWideningRefused/generic
+=== CONT  TestOptionalWideningRefused/field_access_paths
+=== CONT  TestOptionalWideningRefused/field
+=== CONT  TestOptionalWideningRefused/class_field
+=== CONT  TestOptionalWideningRefused/cast
+=== CONT  TestOptionalWideningRefused/assignment
+=== CONT  TestOptionalWideningRefused/arrow
+=== CONT  TestOptionalWideningRefused/array_element
+=== CONT  TestOptionalWideningAllowed/class
+=== CONT  TestOptionalWideningAllowed/declared
+=== CONT  TestOptionalWideningAllowed/fresh
+--- PASS: TestOptionalWideningRefused (0.00s)
+    --- PASS: TestOptionalWideningRefused/tuple_element (0.06s)
+    --- PASS: TestOptionalWideningRefused/argument (0.08s)
+    --- PASS: TestOptionalWideningRefused/spread_other_missing (0.07s)
+    --- PASS: TestOptionalWideningRefused/spread (0.03s)
+    --- PASS: TestOptionalWideningRefused/readonly (0.05s)
+    --- PASS: TestOptionalWideningRefused/shorthand (0.08s)
+    --- PASS: TestOptionalWideningRefused/return (0.08s)
+    --- PASS: TestOptionalWideningRefused/property_write (0.05s)
+    --- PASS: TestOptionalWideningRefused/incompatible (0.05s)
+    --- PASS: TestOptionalWideningRefused/initializer (0.06s)
+    --- PASS: TestOptionalWideningRefused/parameter_default (0.10s)
+    --- PASS: TestOptionalWideningRefused/nested (0.07s)
+    --- PASS: TestOptionalWideningRefused/generic (0.05s)
+    --- PASS: TestOptionalWideningRefused/field_access_paths (0.07s)
+    --- PASS: TestOptionalWideningRefused/field (0.05s)
+    --- PASS: TestOptionalWideningRefused/class_field (0.09s)
+    --- PASS: TestOptionalWideningRefused/cast (0.06s)
+    --- PASS: TestOptionalWideningRefused/assignment (0.05s)
+    --- PASS: TestOptionalWideningRefused/arrow (0.08s)
+    --- PASS: TestOptionalWideningRefused/array_element (0.08s)
+--- PASS: TestOptionalWideningAllowed (0.00s)
+    --- PASS: TestOptionalWideningAllowed/class (0.06s)
+    --- PASS: TestOptionalWideningAllowed/declared (0.07s)
+    --- PASS: TestOptionalWideningAllowed/fresh (0.05s)
+=== RUN   TestPredicateOverloadRuntime/overload_some_false_valid
+=== RUN   TestPredicateOverloadRuntime/overload_some_false_read
+=== RUN   TestPredicateOverloadRuntime/overload_some_objects
+=== RUN   TestPredicateOverloadRuntime/overload_some_true_only
+=== RUN   TestPredicateOverloadRuntime/overload_callback
+=== RUN   TestPredicateOverloadRuntime/overload_erased
+=== RUN   TestPredicateOverloadRuntime/overload_checked
+=== RUN   TestPredicateOverloadRuntime/overload_false
+=== RUN   TestPredicateOverloadRuntime/overload_once
+=== RUN   TestPredicateOverloadRuntime/overload_every
+=== RUN   TestPredicateOverloadRuntime/overload_array_alias
+=== RUN   TestPredicateOverloadRuntime/overload_assertion
+=== RUN   TestPredicateOverloadRuntime/overload_nominal
+--- PASS: TestPredicateOverloadRuntime (7.11s)
+    --- PASS: TestPredicateOverloadRuntime/parser_every_result (0.53s)
+    --- PASS: TestPredicateOverloadRuntime/parser_some_result (0.61s)
+    --- PASS: TestPredicateOverloadRuntime/overload_some (0.58s)
+    --- PASS: TestPredicateOverloadRuntime/overload_some_empty (0.58s)
+    --- PASS: TestPredicateOverloadRuntime/overload_some_false_valid (0.35s)
+    --- PASS: TestPredicateOverloadRuntime/overload_some_false_read (0.36s)
+    --- PASS: TestPredicateOverloadRuntime/overload_some_objects (0.38s)
+    --- PASS: TestPredicateOverloadRuntime/overload_some_true_only (0.35s)
+    --- PASS: TestPredicateOverloadRuntime/overload_callback (0.36s)
+    --- PASS: TestPredicateOverloadRuntime/overload_erased (0.37s)
+    --- PASS: TestPredicateOverloadRuntime/overload_checked (0.35s)
+    --- PASS: TestPredicateOverloadRuntime/overload_false (0.35s)
+    --- PASS: TestPredicateOverloadRuntime/overload_once (0.36s)
+    --- PASS: TestPredicateOverloadRuntime/overload_every (0.42s)
+    --- PASS: TestPredicateOverloadRuntime/overload_array_alias (0.40s)
+    --- PASS: TestPredicateOverloadRuntime/overload_assertion (0.39s)
+    --- PASS: TestPredicateOverloadRuntime/overload_nominal (0.36s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	7.232s

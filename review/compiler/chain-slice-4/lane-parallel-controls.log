@@ -1,0 +1,20 @@
+=== RUN   TestIteratorBuiltInStorageViewsArePending
+=== PAUSE TestIteratorBuiltInStorageViewsArePending
+=== RUN   TestIteratorOptionalCloseResultMustBeObject
+=== PAUSE TestIteratorOptionalCloseResultMustBeObject
+=== RUN   TestIteratorDeclaredNextHasNoRuntimeMethod
+=== PAUSE TestIteratorDeclaredNextHasNoRuntimeMethod
+=== CONT  TestIteratorBuiltInStorageViewsArePending
+=== RUN   TestIteratorBuiltInStorageViewsArePending/const_storage:number[]=[1,2];
+=== CONT  TestIteratorDeclaredNextHasNoRuntimeMethod
+=== CONT  TestIteratorOptionalCloseResultMustBeObject
+--- PASS: TestIteratorDeclaredNextHasNoRuntimeMethod (0.05s)
+=== RUN   TestIteratorBuiltInStorageViewsArePending/const_storage:readonly_[number,number]=[1,2];
+--- PASS: TestIteratorOptionalCloseResultMustBeObject (0.05s)
+=== RUN   TestIteratorBuiltInStorageViewsArePending/const_storage=new_Set([1,2]).values();
+--- PASS: TestIteratorBuiltInStorageViewsArePending (0.11s)
+    --- PASS: TestIteratorBuiltInStorageViewsArePending/const_storage:number[]=[1,2]; (0.05s)
+    --- PASS: TestIteratorBuiltInStorageViewsArePending/const_storage:readonly_[number,number]=[1,2]; (0.03s)
+    --- PASS: TestIteratorBuiltInStorageViewsArePending/const_storage=new_Set([1,2]).values(); (0.03s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.117s

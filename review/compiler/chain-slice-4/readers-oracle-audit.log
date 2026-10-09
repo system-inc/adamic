@@ -1,0 +1,17 @@
+=== RUN   TestCallTargetReaders
+=== PAUSE TestCallTargetReaders
+=== CONT  TestCallTargetReaders
+    call_targets_guard_test.go:170: unapproved call-target read internal/oracle/cast_test.go:TestCheckedCastMutants:Call.Function at /workspace/adamic/internal/oracle/cast_test.go:228:65; use CallTargets or ClosureTargets
+    call_targets_guard_test.go:170: unapproved call-target read internal/oracle/iteration_dispatch_mutant_test.go:TestIterationDispatchMutants:CallClosure.Closure at /workspace/adamic/internal/oracle/iteration_dispatch_mutant_test.go:49:23; use CallTargets or ClosureTargets
+    call_targets_guard_test.go:170: unapproved call-target read internal/oracle/method_values_mutant_test.go:TestLibraryMethodValueMutants:Call.Function at /workspace/adamic/internal/oracle/method_values_mutant_test.go:34:82; use CallTargets or ClosureTargets
+    call_targets_guard_test.go:170: unapproved call-target read internal/oracle/method_values_mutant_test.go:TestLibraryMethodValueMutants:Call.Function at /workspace/adamic/internal/oracle/method_values_mutant_test.go:41:73; use CallTargets or ClosureTargets
+    call_targets_guard_test.go:170: unapproved call-target read internal/oracle/notyet_library_string_bounds_test.go:TestNotYetLibraryStringBoundsMutants:Call.Function at /workspace/adamic/internal/oracle/notyet_library_string_bounds_test.go:67:35; use CallTargets or ClosureTargets
+    call_targets_guard_test.go:170: unapproved call-target read internal/oracle/omitted_arguments_test.go:TestOmittedArgumentZeroMutantIsCaught:CallClosure.Closure at /workspace/adamic/internal/oracle/omitted_arguments_test.go:42:22; use CallTargets or ClosureTargets
+    call_targets_guard_test.go:170: unapproved call-target read internal/oracle/omitted_arguments_test.go:TestOmittedReaderZeroMutantIsCaught:CallClosure.Closure at /workspace/adamic/internal/oracle/omitted_arguments_test.go:117:22; use CallTargets or ClosureTargets
+    call_targets_guard_test.go:170: unapproved call-target read internal/oracle/parser_namespaces_test.go:TestParserCallableNamespaceMutant:Call.Function at /workspace/adamic/internal/oracle/parser_namespaces_test.go:68:41; use CallTargets or ClosureTargets
+    call_targets_guard_test.go:170: unapproved call-target read internal/oracle/private_generic_mutant_test.go:TestPrivateGenericMethodOwnerMutant:Call.Function at /workspace/adamic/internal/oracle/private_generic_mutant_test.go:38:43; use CallTargets or ClosureTargets
+    call_targets_guard_test.go:170: unapproved call-target read internal/oracle/syntax_substr_test.go:TestSyntaxSubstrMutants:Call.Function at /workspace/adamic/internal/oracle/syntax_substr_test.go:84:66; use CallTargets or ClosureTargets
+--- FAIL: TestCallTargetReaders (0.65s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/ir	0.662s
+FAIL

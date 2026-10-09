@@ -1,0 +1,60 @@
+{"kind":"NotYet","path":"internal/oracle/testdata/census_small_stopped/census_boolean_absent_write_stopped.a","reason":"/workspace/adamic/internal/oracle/testdata/census_small_stopped/census_boolean_absent_write_stopped.a:6:1: stage 0 can't lower writing a possibly absent optional own field yet"}
+{"kind":"NotYet","path":"internal/oracle/testdata/census_small_stopped/census_debug_fail_exact.a","reason":"/workspace/adamic/internal/oracle/testdata/census_small_stopped/census_debug_fail_exact.a:6:9: stage 0 can't lower node:globals.ErrorConstructor.captureStackTrace yet"}
+{"kind":"NotYet","path":"internal/oracle/testdata/census_small_stopped/census_numeric_erased_conversion.a","reason":"/workspace/adamic/internal/oracle/testdata/census_small_stopped/census_numeric_erased_conversion.a:3:21: stage 0 can't lower Number conversion of a union containing objects yet"}
+{"kind":"NotYet","path":"internal/oracle/testdata/census_small_stopped/census_numeric_required_conversion.a","reason":"/workspace/adamic/internal/oracle/testdata/census_small_stopped/census_numeric_required_conversion.a:3:21: stage 0 can't lower numeric coercion invoking a required conversion parameter yet"}
+{"kind":"Refused","path":"internal/oracle/testdata/census_small_stopped/census_optional_scanner_profile.a","reason":"/workspace/adamic/internal/oracle/testdata/census_small_stopped/census_optional_scanner_profile.a:8:63: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"}
+{"kind":"Refused","path":"internal/oracle/testdata/census_small_stopped/census_overload_correlated_result.a","reason":"/workspace/adamic/internal/oracle/testdata/census_small_stopped/census_overload_correlated_result.a:11:27: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"}
+{"kind":"NotYet","path":"internal/oracle/testdata/census_small_stopped/census_small_default_stopped.a","reason":"/workspace/adamic/internal/oracle/testdata/census_small_stopped/census_small_default_stopped.a:28:5: stage 0 can't lower a parameter that isn't a plain name yet"}
+{"kind":"NotYet","path":"internal/oracle/testdata/census_small_stopped/census_small_optional_stopped.a","reason":"/workspace/adamic/internal/oracle/testdata/census_small_stopped/census_small_optional_stopped.a:11:22: stage 0 can't lower a function expression with a this parameter (dynamic receivers are not implemented) yet"}
+{"kind":"accepted","path":"internal/oracle/testdata/census_unary_numeric.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/census_unary_truthiness.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/class_as_interface.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/class_features_accessors.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/class_features_distinct.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/class_features_private.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/class_features_retained.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/class_features_static.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/class_features_static_private.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/class_features_twice.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/class_identity.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/class_inheritance.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/class_inheritance_conditional.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/class_inheritance_exceptions.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/class_inheritance_generic.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/class_inheritance_interface.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/class_inheritance_memory.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/class_inheritance_order.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/class_instance_key_consume.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/class_instance_key_region.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/class_instance_key_region_alias.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/class_instance_key_throw.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/class_layouts.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/class_oct6_deep.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/class_oct6_parameters.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/class_oct6_release.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/class_oct6_subclass_holder.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/class_private_generic.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/class_private_members.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/class_super_closure.a","reason":""}
+{"kind":"Refused","path":"internal/oracle/testdata/class_wrong_output_refused/classfeat_init_super.a","reason":"/workspace/adamic/internal/oracle/testdata/class_wrong_output_refused/classfeat_init_super.a:2:104: Adamic 0.1 refuses a field initializer reading an uninitialized field through Base.describe -\u003e Derived.name -\u003e Derived.label; declare the field it reads earlier, or initialize it in the constructor after super and all required fields are set"}
+{"kind":"Refused","path":"internal/oracle/testdata/class_wrong_output_refused/classfeat_init_super_getter.a","reason":"/workspace/adamic/internal/oracle/testdata/class_wrong_output_refused/classfeat_init_super_getter.a:2:157: Adamic 0.1 refuses a field initializer reading an uninitialized field through Base.summary -\u003e Derived.score -\u003e Derived.count; declare the field it reads earlier, or initialize it in the constructor after super and all required fields are set"}
+{"kind":"Refused","path":"internal/oracle/testdata/class_wrong_output_refused/classfeat_init_super_number.a","reason":"/workspace/adamic/internal/oracle/testdata/class_wrong_output_refused/classfeat_init_super_number.a:2:99: Adamic 0.1 refuses a field initializer reading an uninitialized field through Base.describe -\u003e Derived.score -\u003e Derived.count; declare the field it reads earlier, or initialize it in the constructor after super and all required fields are set"}
+{"kind":"Refused","path":"internal/oracle/testdata/class_wrong_output_refused/classfeat_static_private_instance.a","reason":"/workspace/adamic/internal/oracle/testdata/class_wrong_output_refused/classfeat_static_private_instance.a:1:124: Adamic 0.1 refuses instance private storage reached from a static member: Box.#secret (adamic/private-instance-from-static); move the private access into an instance method; call that instance method from the static member"}
+{"kind":"Refused","path":"internal/oracle/testdata/class_wrong_output_refused/classfeat_static_private_method.a","reason":"/workspace/adamic/internal/oracle/testdata/class_wrong_output_refused/classfeat_static_private_method.a:2:185: Adamic 0.1 refuses instance private storage reached from a static member: Box.#hidden (adamic/private-instance-from-static); move the private access into an instance method; call that instance method from the static member"}
+{"kind":"Refused","path":"internal/oracle/testdata/class_wrong_output_refused/iterators_hidden_return.a","reason":"/workspace/adamic/internal/oracle/testdata/class_wrong_output_refused/iterators_hidden_return.a:4:20: Adamic 0.1 refuses an iterator factory returning this whose runtime next or return can differ from its declared iterator type (adamic/iterator-receiver-origin); return a separate iterator object with next and return closures; do not erase subclass protocol methods behind the base iterator return type"}
+{"kind":"Refused","path":"internal/oracle/testdata/class_wrong_output_refused/iterators_override_this.a","reason":"/workspace/adamic/internal/oracle/testdata/class_wrong_output_refused/iterators_override_this.a:4:20: Adamic 0.1 refuses an iterator factory returning this whose runtime next or return can differ from its declared iterator type (adamic/iterator-receiver-origin); return a separate iterator object with next and return closures; do not erase subclass protocol methods behind the base iterator return type"}
+{"kind":"Refused","path":"internal/oracle/testdata/class_wrong_output_refused/iterators_sym_keys_view.a","reason":"/workspace/adamic/internal/oracle/testdata/class_wrong_output_refused/iterators_sym_keys_view.a:2:66: Adamic 0.1 refuses a structural Object.keys view that can hide an iterable literal's symbol-key storage (adamic/symbol-key-view); pass a new plain object containing only the desired string-keyed fields to Object.keys"}
+{"kind":"accepted","path":"internal/oracle/testdata/classes.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/clock_generic_returns_t_01.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/closure_convention_host24.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/closure_convention_nested.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/closure_convention_plain.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/closure_convention_receiver_rest.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/closure_convention_regexp_count.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/closures.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/closures_throw.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/closures_throw_uncaught.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/collections.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/concat_too_long.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/conditions_array.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/conditions_evaluation.a","reason":""}

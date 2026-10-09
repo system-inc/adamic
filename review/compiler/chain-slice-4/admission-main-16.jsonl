@@ -1,0 +1,60 @@
+{"kind":"Refused","path":"internal/oracle/testdata/predicate_refusals/oct8_predicates_p26_assert_nested_if_without_else.a","reason":"/workspace/adamic/internal/oracle/testdata/predicate_refusals/oct8_predicates_p26_assert_nested_if_without_else.a:3:5: Adamic 0.1 refuses a type predicate whose return is not proven (branch is not a trusted parameter check); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)"}
+{"kind":"accepted","path":"internal/oracle/testdata/predicate_refusals/oct8_predicates_p27_overload_parameter_rebound.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/predicate_refusals/representation_controls.a","reason":""}
+{"kind":"Refused","path":"internal/oracle/testdata/presence_refused/in_union_narrowing.a","reason":"/workspace/adamic/internal/oracle/testdata/presence_refused/in_union_narrowing.a:12:9: Adamic 0.1 refuses in that narrows a union of object types (any object with the key passes); use a discriminant, or a Map"}
+{"kind":"NotYet","path":"internal/oracle/testdata/presence_refused/optional_field_write.a","reason":"/workspace/adamic/internal/oracle/testdata/presence_refused/optional_field_write.a:9:1: stage 0 can't lower writing a possibly absent optional own field yet"}
+{"kind":"accepted","path":"internal/oracle/testdata/prompt_then_read.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/proven_assertions.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/proven_class_guards.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/proven_guards.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/proven_satisfies.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/proven_upcasts.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/radix_range.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/radixes.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/read_arguments.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/read_files.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/read_order.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/regexp.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/regexp_cycle_closures.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/regexp_cycle_collections.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/regexp_cycle_fields.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/regexp_cycle_weak.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/regexp_exec.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/regexp_match.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/regexp_matchall_nonglobal.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/regexp_null_narrowed.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/regexp_replace.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/regexp_replace/argument_guard.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/regexp_replace/arguments.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/regexp_replace/callback.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/regexp_replace/group_guard.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/regexp_replace/throw.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/regexp_replaceall_nonglobal.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/regexp_search.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/regexp_split.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/regexp_split_pair_pattern.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/regexp_unicode.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/regions.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/regions_constructor_capture.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/regions_throw.a","reason":""}
+{"kind":"NotYet","path":"internal/oracle/testdata/reland_refused/generic_instance_key_json.a","reason":"/workspace/adamic/internal/oracle/testdata/reland_refused/generic_instance_key_json.a:3:72: stage 0 can't lower JSON.stringify unions containing arrays (adamic/json-union-array) yet"}
+{"kind":"NotYet","path":"internal/oracle/testdata/reland_refused/narrowed_union_object_tag.a","reason":"/workspace/adamic/internal/oracle/testdata/reland_refused/narrowed_union_object_tag.a:7:16: stage 0 can't lower a narrowed union member whose object tag cannot be checked with typeof; keep differently held object kinds in separately typed variables yet"}
+{"kind":"accepted","path":"internal/oracle/testdata/replace_all_large.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/representation_clock_source.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/return_panic.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/return_panic_fires.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/reuse.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/reuse_arrays.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/reuse_foreach_global.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/reuse_forward.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/reuse_global_sibling.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/reuse_lent_global.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/reuse_narrowed.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/reuse_spread_method.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/reuse_spread_method_alias.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/reuse_throw.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/reuse_weak_after_reuse.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/reuse_weak_during_spread.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/review/agree/fxspptb_047cb0d_f_maybe.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/review/agree/fxspptb_047cb0d_f_maybe_ref.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/review/agree/fxspptb_047cb0d_n_arrayindex.a","reason":""}

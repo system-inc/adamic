@@ -1,0 +1,13 @@
+F
+======================================================================
+FAIL: test_moved_site_is_not_a_retired_root (__main__.RetirementTests.test_moved_site_is_not_a_retired_root)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/review/compiler/chain-slice-4/source-generics-scout/docs/step-16-generics/retirement.py", line 30, in test_moved_site_is_not_a_retired_root
+    self.assertEqual(len(retired), 1)
+AssertionError: 2 != 1
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (failures=1)

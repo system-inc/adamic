@@ -1,0 +1,13 @@
+.F..
+======================================================================
+FAIL: test_refusal_table_union (__main__.AuditTests.test_refusal_table_union)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/review/compiler/chain-slice-4/source-generics-scout/docs/step-16-generics/audit.py", line 65, in test_refusal_table_union
+    self.assertEqual(len(fields), 10)
+AssertionError: 11 != 10
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.001s
+
+FAILED (failures=1)

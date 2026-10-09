@@ -1,0 +1,276 @@
+=== RUN   TestCheckedCastProofAndElision
+=== PAUSE TestCheckedCastProofAndElision
+=== RUN   TestCensusMarkerResultIsAssignable
+=== PAUSE TestCensusMarkerResultIsAssignable
+=== RUN   TestCensusMarkerZeroCallIsNotAssumedSafe
+=== PAUSE TestCensusMarkerZeroCallIsNotAssumedSafe
+=== RUN   TestCensusOverloadBinderGuards
+=== PAUSE TestCensusOverloadBinderGuards
+=== RUN   TestCensusOverloadReturnProof
+=== PAUSE TestCensusOverloadReturnProof
+=== RUN   TestCensusPredicateInteractionBoundary
+=== PAUSE TestCensusPredicateInteractionBoundary
+=== RUN   TestCensusPredicateInteractionEscapes
+=== PAUSE TestCensusPredicateInteractionEscapes
+=== RUN   TestCensusPredicateMarkerKeepsProofBoundaries
+=== PAUSE TestCensusPredicateMarkerKeepsProofBoundaries
+=== RUN   TestCensusPredicateMarkerCallStaysNotYet
+=== PAUSE TestCensusPredicateMarkerCallStaysNotYet
+=== RUN   TestCensusOverloadRelation
+=== PAUSE TestCensusOverloadRelation
+=== RUN   TestCensusSmallFiniteKeyRead
+=== PAUSE TestCensusSmallFiniteKeyRead
+=== RUN   TestCensusRestMutableElements
+=== PAUSE TestCensusRestMutableElements
+=== RUN   TestCensusBooleanDeadBranch
+=== PAUSE TestCensusBooleanDeadBranch
+=== RUN   TestCheckPragmasAreRefused
+=== PAUSE TestCheckPragmasAreRefused
+=== RUN   TestCheckPragmaNeighborsCompile
+=== PAUSE TestCheckPragmaNeighborsCompile
+=== RUN   TestClassFeaturesReadonlyChecker
+=== PAUSE TestClassFeaturesReadonlyChecker
+=== RUN   TestClassFeaturesPrivateChecker
+=== PAUSE TestClassFeaturesPrivateChecker
+=== RUN   TestClassFeaturesPrivateStorage
+=== PAUSE TestClassFeaturesPrivateStorage
+=== RUN   TestClassFeaturesAccessorRefusals
+=== PAUSE TestClassFeaturesAccessorRefusals
+=== RUN   TestClassFeaturesStaticDeclarationsExecute
+=== PAUSE TestClassFeaturesStaticDeclarationsExecute
+=== RUN   TestClassFeaturesAccessorCaptureCycle
+=== PAUSE TestClassFeaturesAccessorCaptureCycle
+=== RUN   TestClassFeaturesNarrowedAccessor
+=== PAUSE TestClassFeaturesNarrowedAccessor
+=== RUN   TestClassFeaturesStaticInterfaceCycle
+=== PAUSE TestClassFeaturesStaticInterfaceCycle
+=== RUN   TestClassArgumentsUseCheckerIdentity
+=== PAUSE TestClassArgumentsUseCheckerIdentity
+=== RUN   TestCallableNamespaceReceiverStaysLoud
+=== PAUSE TestCallableNamespaceReceiverStaysLoud
+=== CONT  TestCheckedCastProofAndElision
+=== RUN   TestCheckedCastProofAndElision/enum_member
+=== PAUSE TestCheckedCastProofAndElision/enum_member
+=== RUN   TestCheckedCastProofAndElision/invariant_mutable_payload
+=== PAUSE TestCheckedCastProofAndElision/invariant_mutable_payload
+=== RUN   TestCheckedCastProofAndElision/sub-union
+=== PAUSE TestCheckedCastProofAndElision/sub-union
+=== RUN   TestCheckedCastProofAndElision/class_downcast
+=== PAUSE TestCheckedCastProofAndElision/class_downcast
+=== RUN   TestCheckedCastProofAndElision/empty_subclass
+=== PAUSE TestCheckedCastProofAndElision/empty_subclass
+=== RUN   TestCheckedCastProofAndElision/generic_ancestry
+=== PAUSE TestCheckedCastProofAndElision/generic_ancestry
+=== RUN   TestCheckedCastProofAndElision/class_upcast
+=== PAUSE TestCheckedCastProofAndElision/class_upcast
+=== CONT  TestClassFeaturesStaticDeclarationsExecute
+=== CONT  TestCheckPragmasAreRefused
+=== RUN   TestCheckedCastProofAndElision/flow_narrowing
+=== PAUSE TestCheckedCastProofAndElision/flow_narrowing
+=== CONT  TestClassArgumentsUseCheckerIdentity
+=== CONT  TestCallableNamespaceReceiverStaysLoud
+=== RUN   TestCheckPragmasAreRefused/ts-nocheck///_@ts-nocheck_
+=== CONT  TestCensusBooleanDeadBranch
+=== PAUSE TestCheckPragmasAreRefused/ts-nocheck///_@ts-nocheck_
+=== RUN   TestCheckPragmasAreRefused/ts-nocheck////_@ts-nocheck_reason_
+=== PAUSE TestCheckPragmasAreRefused/ts-nocheck////_@ts-nocheck_reason_
+=== RUN   TestCheckPragmasAreRefused/ts-nocheck///_license___//_@ts-nocheck_
+=== RUN   TestClassArgumentsUseCheckerIdentity/separate_literals
+=== PAUSE TestCheckPragmasAreRefused/ts-nocheck///_license___//_@ts-nocheck_
+=== RUN   TestCheckPragmasAreRefused/ts-nocheck/#!/usr/bin/env_node_//_@ts-nocheck_
+=== PAUSE TestCheckPragmasAreRefused/ts-nocheck/#!/usr/bin/env_node_//_@ts-nocheck_
+=== PAUSE TestClassArgumentsUseCheckerIdentity/separate_literals
+=== RUN   TestCheckPragmasAreRefused/ts-nocheck///_@ts-nocheck_//_@ts-check_//_@ts-nocheck_
+=== PAUSE TestCheckPragmasAreRefused/ts-nocheck///_@ts-nocheck_//_@ts-check_//_@ts-nocheck_
+=== RUN   TestCheckPragmasAreRefused/ts-check///_@ts-check_
+=== PAUSE TestCheckPragmasAreRefused/ts-check///_@ts-check_
+=== RUN   TestCheckPragmasAreRefused/ts-check////_@ts-check_reason_
+=== PAUSE TestCheckPragmasAreRefused/ts-check////_@ts-check_reason_
+=== RUN   TestCheckPragmasAreRefused/ts-check///_license___//_@ts-check_
+=== PAUSE TestCheckPragmasAreRefused/ts-check///_license___//_@ts-check_
+=== RUN   TestCheckPragmasAreRefused/ts-check/#!/usr/bin/env_node_//_@ts-check_
+=== PAUSE TestCheckPragmasAreRefused/ts-check/#!/usr/bin/env_node_//_@ts-check_
+=== RUN   TestCheckPragmasAreRefused/ts-check///_@ts-check_//_@ts-check_//_@ts-nocheck_
+=== PAUSE TestCheckPragmasAreRefused/ts-check///_@ts-check_//_@ts-check_//_@ts-nocheck_
+=== RUN   TestClassArgumentsUseCheckerIdentity/property_order
+=== PAUSE TestClassArgumentsUseCheckerIdentity/property_order
+=== CONT  TestClassFeaturesStaticInterfaceCycle
+=== RUN   TestClassArgumentsUseCheckerIdentity/nested_arrays
+=== PAUSE TestClassArgumentsUseCheckerIdentity/nested_arrays
+=== RUN   TestClassArgumentsUseCheckerIdentity/tuples
+=== PAUSE TestClassArgumentsUseCheckerIdentity/tuples
+=== RUN   TestClassArgumentsUseCheckerIdentity/unions
+=== PAUSE TestClassArgumentsUseCheckerIdentity/unions
+=== RUN   TestClassArgumentsUseCheckerIdentity/functions
+=== PAUSE TestClassArgumentsUseCheckerIdentity/functions
+=== RUN   TestClassArgumentsUseCheckerIdentity/recursive_interfaces
+=== PAUSE TestClassArgumentsUseCheckerIdentity/recursive_interfaces
+=== RUN   TestClassArgumentsUseCheckerIdentity/different_fields
+=== PAUSE TestClassArgumentsUseCheckerIdentity/different_fields
+=== RUN   TestClassArgumentsUseCheckerIdentity/optional_field
+=== PAUSE TestClassArgumentsUseCheckerIdentity/optional_field
+=== RUN   TestClassArgumentsUseCheckerIdentity/same_representation
+=== PAUSE TestClassArgumentsUseCheckerIdentity/same_representation
+=== CONT  TestClassFeaturesNarrowedAccessor
+--- PASS: TestClassFeaturesStaticInterfaceCycle (0.09s)
+=== CONT  TestClassFeaturesAccessorCaptureCycle
+--- PASS: TestClassFeaturesNarrowedAccessor (0.12s)
+=== CONT  TestCensusRestMutableElements
+--- PASS: TestCallableNamespaceReceiverStaysLoud (0.13s)
+=== CONT  TestCensusSmallFiniteKeyRead
+--- PASS: TestClassFeaturesAccessorCaptureCycle (0.05s)
+=== CONT  TestCensusOverloadRelation
+=== RUN   TestCensusOverloadRelation/parameter_contravariance
+=== PAUSE TestCensusOverloadRelation/parameter_contravariance
+=== RUN   TestCensusOverloadRelation/generic_parameter_constraints
+=== PAUSE TestCensusOverloadRelation/generic_parameter_constraints
+=== RUN   TestCensusOverloadRelation/mutable_parameters
+=== PAUSE TestCensusOverloadRelation/mutable_parameters
+=== RUN   TestCensusOverloadRelation/result_covariance
+=== PAUSE TestCensusOverloadRelation/result_covariance
+=== CONT  TestCensusPredicateMarkerCallStaysNotYet
+=== NAME  TestCensusRestMutableElements
+    census_small_test.go:74: rest element relation: /tmp/adamic-gate/TestCensusRestMutableElements974230192/001/main.a:8:9: Adamic 0.1 refuses a value of type DogHouse seen as House, which can write Animal where Dog is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)
+--- PASS: TestCensusRestMutableElements (0.08s)
+=== CONT  TestCensusPredicateMarkerKeepsProofBoundaries
+--- PASS: TestCensusBooleanDeadBranch (0.22s)
+=== CONT  TestCensusPredicateInteractionEscapes
+=== RUN   TestCensusPredicateInteractionEscapes/function_alias
+=== PAUSE TestCensusPredicateInteractionEscapes/function_alias
+=== RUN   TestCensusPredicateInteractionEscapes/callback_escape
+=== PAUSE TestCensusPredicateInteractionEscapes/callback_escape
+=== RUN   TestCensusPredicateInteractionEscapes/exported_function
+=== PAUSE TestCensusPredicateInteractionEscapes/exported_function
+=== CONT  TestCensusPredicateInteractionBoundary
+--- PASS: TestCensusPredicateMarkerCallStaysNotYet (0.07s)
+=== CONT  TestCensusOverloadReturnProof
+=== RUN   TestCensusOverloadReturnProof/parameter_return
+=== PAUSE TestCensusOverloadReturnProof/parameter_return
+=== RUN   TestCensusOverloadReturnProof/lying_return
+=== PAUSE TestCensusOverloadReturnProof/lying_return
+=== RUN   TestCensusOverloadReturnProof/rebound_parameter
+=== PAUSE TestCensusOverloadReturnProof/rebound_parameter
+=== RUN   TestCensusOverloadReturnProof/captured_write
+=== PAUSE TestCensusOverloadReturnProof/captured_write
+=== RUN   TestCensusOverloadReturnProof/empty_return
+=== PAUSE TestCensusOverloadReturnProof/empty_return
+=== CONT  TestCensusOverloadBinderGuards
+=== RUN   TestCensusOverloadBinderGuards/constraint
+=== PAUSE TestCensusOverloadBinderGuards/constraint
+=== RUN   TestCensusOverloadBinderGuards/parameter
+=== PAUSE TestCensusOverloadBinderGuards/parameter
+=== RUN   TestCensusOverloadBinderGuards/result
+=== PAUSE TestCensusOverloadBinderGuards/result
+=== CONT  TestCensusMarkerZeroCallIsNotAssumedSafe
+--- PASS: TestCensusMarkerZeroCallIsNotAssumedSafe (0.07s)
+=== CONT  TestCensusMarkerResultIsAssignable
+--- PASS: TestCensusMarkerResultIsAssignable (0.07s)
+=== CONT  TestClassFeaturesPrivateChecker
+--- PASS: TestCensusPredicateInteractionBoundary (0.15s)
+=== CONT  TestClassFeaturesAccessorRefusals
+--- PASS: TestCensusSmallFiniteKeyRead (0.26s)
+=== CONT  TestClassFeaturesPrivateStorage
+--- PASS: TestClassFeaturesPrivateChecker (0.04s)
+=== CONT  TestClassFeaturesReadonlyChecker
+--- PASS: TestCensusPredicateMarkerKeepsProofBoundaries (0.26s)
+=== CONT  TestCheckPragmaNeighborsCompile
+--- PASS: TestClassFeaturesStaticDeclarationsExecute (0.57s)
+=== CONT  TestCheckedCastProofAndElision/enum_member
+=== CONT  TestCheckedCastProofAndElision/flow_narrowing
+--- PASS: TestClassFeaturesPrivateStorage (0.23s)
+=== CONT  TestCheckedCastProofAndElision/class_upcast
+=== CONT  TestCheckedCastProofAndElision/generic_ancestry
+--- PASS: TestClassFeaturesAccessorRefusals (0.29s)
+=== CONT  TestCheckedCastProofAndElision/empty_subclass
+=== CONT  TestCheckedCastProofAndElision/class_downcast
+=== CONT  TestCheckedCastProofAndElision/sub-union
+=== CONT  TestCheckedCastProofAndElision/invariant_mutable_payload
+=== CONT  TestCheckPragmasAreRefused/ts-nocheck///_@ts-nocheck_
+=== CONT  TestClassArgumentsUseCheckerIdentity/separate_literals
+--- PASS: TestCheckedCastProofAndElision (0.00s)
+    --- PASS: TestCheckedCastProofAndElision/enum_member (0.04s)
+    --- PASS: TestCheckedCastProofAndElision/flow_narrowing (0.05s)
+    --- PASS: TestCheckedCastProofAndElision/class_upcast (0.05s)
+    --- PASS: TestCheckedCastProofAndElision/class_downcast (0.04s)
+    --- PASS: TestCheckedCastProofAndElision/generic_ancestry (0.08s)
+    --- PASS: TestCheckedCastProofAndElision/empty_subclass (0.10s)
+    --- PASS: TestCheckedCastProofAndElision/sub-union (0.07s)
+    --- PASS: TestCheckedCastProofAndElision/invariant_mutable_payload (0.05s)
+=== CONT  TestClassArgumentsUseCheckerIdentity/same_representation
+--- PASS: TestCheckPragmaNeighborsCompile (0.39s)
+=== CONT  TestClassArgumentsUseCheckerIdentity/optional_field
+=== CONT  TestClassArgumentsUseCheckerIdentity/different_fields
+--- PASS: TestClassFeaturesReadonlyChecker (0.57s)
+=== CONT  TestClassArgumentsUseCheckerIdentity/recursive_interfaces
+=== CONT  TestClassArgumentsUseCheckerIdentity/functions
+=== CONT  TestClassArgumentsUseCheckerIdentity/unions
+=== CONT  TestClassArgumentsUseCheckerIdentity/tuples
+=== CONT  TestClassArgumentsUseCheckerIdentity/nested_arrays
+=== CONT  TestClassArgumentsUseCheckerIdentity/property_order
+=== CONT  TestCheckPragmasAreRefused/ts-check///_@ts-check_
+=== CONT  TestCheckPragmasAreRefused/ts-check///_@ts-check_//_@ts-check_//_@ts-nocheck_
+=== CONT  TestCheckPragmasAreRefused/ts-check/#!/usr/bin/env_node_//_@ts-check_
+=== CONT  TestCheckPragmasAreRefused/ts-check///_license___//_@ts-check_
+=== CONT  TestCheckPragmasAreRefused/ts-check////_@ts-check_reason_
+=== CONT  TestCheckPragmasAreRefused/ts-nocheck///_license___//_@ts-nocheck_
+--- PASS: TestClassArgumentsUseCheckerIdentity (0.00s)
+    --- PASS: TestClassArgumentsUseCheckerIdentity/separate_literals (0.25s)
+    --- PASS: TestClassArgumentsUseCheckerIdentity/same_representation (0.24s)
+    --- PASS: TestClassArgumentsUseCheckerIdentity/optional_field (0.21s)
+    --- PASS: TestClassArgumentsUseCheckerIdentity/different_fields (0.22s)
+    --- PASS: TestClassArgumentsUseCheckerIdentity/recursive_interfaces (0.25s)
+    --- PASS: TestClassArgumentsUseCheckerIdentity/unions (0.33s)
+    --- PASS: TestClassArgumentsUseCheckerIdentity/tuples (0.31s)
+    --- PASS: TestClassArgumentsUseCheckerIdentity/functions (0.35s)
+    --- PASS: TestClassArgumentsUseCheckerIdentity/nested_arrays (0.30s)
+    --- PASS: TestClassArgumentsUseCheckerIdentity/property_order (0.30s)
+=== CONT  TestCheckPragmasAreRefused/ts-nocheck///_@ts-nocheck_//_@ts-check_//_@ts-nocheck_
+=== CONT  TestCheckPragmasAreRefused/ts-nocheck/#!/usr/bin/env_node_//_@ts-nocheck_
+=== CONT  TestCheckPragmasAreRefused/ts-nocheck////_@ts-nocheck_reason_
+=== CONT  TestCensusOverloadRelation/parameter_contravariance
+=== CONT  TestCensusOverloadRelation/mutable_parameters
+=== CONT  TestCensusOverloadRelation/result_covariance
+=== CONT  TestCensusPredicateInteractionEscapes/function_alias
+=== CONT  TestCensusOverloadRelation/generic_parameter_constraints
+--- PASS: TestCheckPragmasAreRefused (0.00s)
+    --- PASS: TestCheckPragmasAreRefused/ts-nocheck///_@ts-nocheck_ (0.12s)
+    --- PASS: TestCheckPragmasAreRefused/ts-check///_@ts-check_ (0.11s)
+    --- PASS: TestCheckPragmasAreRefused/ts-check///_@ts-check_//_@ts-check_//_@ts-nocheck_ (0.13s)
+    --- PASS: TestCheckPragmasAreRefused/ts-check///_license___//_@ts-check_ (0.12s)
+    --- PASS: TestCheckPragmasAreRefused/ts-check/#!/usr/bin/env_node_//_@ts-check_ (0.14s)
+    --- PASS: TestCheckPragmasAreRefused/ts-check////_@ts-check_reason_ (0.07s)
+    --- PASS: TestCheckPragmasAreRefused/ts-nocheck////_@ts-nocheck_reason_ (0.13s)
+    --- PASS: TestCheckPragmasAreRefused/ts-nocheck///_license___//_@ts-nocheck_ (0.15s)
+    --- PASS: TestCheckPragmasAreRefused/ts-nocheck/#!/usr/bin/env_node_//_@ts-nocheck_ (0.14s)
+    --- PASS: TestCheckPragmasAreRefused/ts-nocheck///_@ts-nocheck_//_@ts-check_//_@ts-nocheck_ (0.18s)
+=== CONT  TestCensusOverloadReturnProof/parameter_return
+=== CONT  TestCensusOverloadBinderGuards/constraint
+=== CONT  TestCensusOverloadReturnProof/empty_return
+=== CONT  TestCensusOverloadReturnProof/captured_write
+--- PASS: TestCensusOverloadRelation (0.00s)
+    --- PASS: TestCensusOverloadRelation/parameter_contravariance (0.10s)
+    --- PASS: TestCensusOverloadRelation/generic_parameter_constraints (0.10s)
+    --- PASS: TestCensusOverloadRelation/mutable_parameters (0.11s)
+    --- PASS: TestCensusOverloadRelation/result_covariance (0.11s)
+=== CONT  TestCensusOverloadReturnProof/rebound_parameter
+=== CONT  TestCensusOverloadReturnProof/lying_return
+=== CONT  TestCensusPredicateInteractionEscapes/callback_escape
+=== CONT  TestCensusOverloadBinderGuards/result
+=== CONT  TestCensusOverloadBinderGuards/parameter
+=== CONT  TestCensusPredicateInteractionEscapes/exported_function
+--- PASS: TestCensusOverloadReturnProof (0.00s)
+    --- PASS: TestCensusOverloadReturnProof/parameter_return (0.13s)
+    --- PASS: TestCensusOverloadReturnProof/rebound_parameter (0.12s)
+    --- PASS: TestCensusOverloadReturnProof/captured_write (0.12s)
+    --- PASS: TestCensusOverloadReturnProof/empty_return (0.13s)
+    --- PASS: TestCensusOverloadReturnProof/lying_return (0.10s)
+--- PASS: TestCensusPredicateInteractionEscapes (0.00s)
+    --- PASS: TestCensusPredicateInteractionEscapes/function_alias (0.10s)
+    --- PASS: TestCensusPredicateInteractionEscapes/callback_escape (0.09s)
+    --- PASS: TestCensusPredicateInteractionEscapes/exported_function (0.09s)
+--- PASS: TestCensusOverloadBinderGuards (0.00s)
+    --- PASS: TestCensusOverloadBinderGuards/constraint (0.12s)
+    --- PASS: TestCensusOverloadBinderGuards/parameter (0.10s)
+    --- PASS: TestCensusOverloadBinderGuards/result (0.10s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	2.018s

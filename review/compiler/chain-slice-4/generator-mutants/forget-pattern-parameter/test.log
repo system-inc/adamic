@@ -1,0 +1,8 @@
+=== RUN   TestGeneratorDestructuredParameterCycle
+=== PAUSE TestGeneratorDestructuredParameterCycle
+=== CONT  TestGeneratorDestructuredParameterCycle
+    generators_test.go:77: got <nil>, want the retained whole parameter's cycle refusal
+--- FAIL: TestGeneratorDestructuredParameterCycle (0.05s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.056s
+FAIL
