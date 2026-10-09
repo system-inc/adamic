@@ -9,6 +9,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"runtime"
+	"strings"
 	"testing"
 	"time"
 
@@ -124,11 +125,19 @@ func jsonLoweredPortInputs(toolchain []string) jsonBuildInputs {
 // The immutable lowering product contains the copied TypeScript and both emitted
 // backends. Persisting emitted sources avoids serializing IR interface values;
 // fetching this product will avoid loading, checking, lowering and emission.
-func buildJSONLoweredPort(dir string) error {
+func buildJSONLoweredPort(dir string) error { return buildJSONLoweredPortMutation(dir, nil) }
+
+func buildJSONLoweredPortMutation(dir string, mutation *printerMutation) error {
 	for _, name := range portFiles {
 		contents, err := os.ReadFile(name)
 		if err != nil {
 			return err
+		}
+		if mutation != nil && name == mutation.file {
+			if strings.Count(string(contents), mutation.from) != 1 {
+				return fmt.Errorf("mutant %s must change one place", mutation.name)
+			}
+			contents = []byte(strings.Replace(string(contents), mutation.from, mutation.to, 1))
 		}
 		if err := os.WriteFile(filepath.Join(dir, name), contents, 0644); err != nil {
 			return err
