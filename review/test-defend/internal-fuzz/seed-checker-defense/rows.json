@@ -1,0 +1,129 @@
+[
+  {
+    "test": "TestOneSeedOneProgram",
+    "package": "internal/fuzz",
+    "prior_verdict": "untrue",
+    "subsumed_by": [
+      "TestOwnershipShapes"
+    ],
+    "defense": "not defended",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "S1",
+        "file_line": "internal/fuzz/generate.go:27",
+        "change": "change constant: return GenerateWithout(seed, nil) -> return GenerateWithout(1, nil)",
+        "rows_failed": [
+          "TestOctoberFeaturesAppear",
+          "TestOneSeedOneProgram",
+          "TestOwnershipShapes",
+          "TestUndefinedNumbersShapes"
+        ]
+      },
+      {
+        "mutant": "S2",
+        "file_line": "internal/fuzz/generate.go:74",
+        "change": "change constant: seed: seed} -> seed: 0}",
+        "rows_failed": [
+          "TestOverridesShapesAndLower",
+          "TestOwnershipShapes"
+        ]
+      },
+      {
+        "mutant": "S3",
+        "file_line": "internal/fuzz/generate.go:74",
+        "change": "swap arguments: rand.NewPCG(seed, 0x61646d6963) -> rand.NewPCG(0x61646d6963, seed)",
+        "rows_failed": []
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-fuzz/cache/<id> timeout 120 go test -json -count=1 -timeout 90s ./internal/fuzz/ -run . > <id>.log 2>&1; S1: fuzz_test.go:23: seeds 1 and 2 made the same program"
+  },
+  {
+    "test": "TestGeneratedProgramsCheckAndLower",
+    "package": "internal/fuzz",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestUndefinedNumbersShapes"
+    ],
+    "defense": "not defended",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "G1",
+        "file_line": "internal/fuzz/generate.go:1086",
+        "change": "change constant: return compose(StringArray, \"@e.slice(@e)\", g.expression(StringArray, next), g.expression(Number, next)) -> return compose(StringArray, \"@e.sliceMissing(@e)\", g.expression(StringArray, next), g.expression(Number, next))",
+        "rows_failed": [
+          "TestGeneratedProgramsCheckAndLower",
+          "TestOverridesShapesAndLower",
+          "TestUndefinedNumbersShapes"
+        ]
+      },
+      {
+        "mutant": "G2",
+        "file_line": "internal/fuzz/generate.go:952",
+        "change": "drop statement: left = g.leafVariable(String, left) -> ",
+        "rows_failed": [
+          "TestGeneratedProgramsCheckAndLower",
+          "TestOverridesShapesAndLower",
+          "TestUndefinedNumbersShapes"
+        ]
+      },
+      {
+        "mutant": "G3",
+        "file_line": "internal/fuzz/generate.go:1093",
+        "change": "change constant: return compose(StringArray, \"@e.map((\"+item+\") => @e)\", g.expression(NumberArray, next), body) -> return compose(StringArray, \"@e.map((\"+item+\") => @e)\", g.expression(StringArray, next), body)",
+        "rows_failed": [
+          "TestGeneratedProgramsCheckAndLower",
+          "TestUndefinedNumbersShapes"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-fuzz/cache/<id> timeout 120 go test -json -count=1 -timeout 90s ./internal/fuzz/ -run . > <id>.log 2>&1; G1: fuzz_test.go:61: seed 53: the checker refused it: /tmp/adamic-gate/TestGeneratedProgramsCheckAndLowerseeds-051-0551188232364/001/program.a:497:20: error TS2339: Property 'sliceMissing' does not exist on type 'string[]'.; G2: fuzz_test.go:61: seed 34: the checker refused it: /tmp/adamic-gate/TestGeneratedProgramsCheckAndLowerseeds-031-0352480100987/001/program.a:112:72: error TS2367: This comparison appears to be unintentional because the types '\"3.5\"' and '\" pad \"' have no overlap.; G3: fuzz_test.go:61: seed 35: the checker refused it: /tmp/adamic-gate/TestGeneratedProgramsCheckAndLowerseeds-031-035430860746/001/program.a:105:70: error TS2362: The left-hand side of an arithmetic operation must be of type 'any', 'number', 'bigint' or an enum type."
+  },
+  {
+    "test": "TestRegexProgramsPassTheChecker",
+    "package": "internal/fuzz",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestGeneratedProgramsCheckAndLower"
+    ],
+    "defense": "not defended",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "R1",
+        "file_line": "internal/fuzz/generate.go:218",
+        "change": "drop statement: add(statement(\"const finder = /a/g;\")) -> ",
+        "rows_failed": [
+          "TestGeneratedProgramsCheckAndLower",
+          "TestOwnershipShapes",
+          "TestRegexProgramsPassTheChecker",
+          "TestUndefinedNumbersShapes"
+        ]
+      },
+      {
+        "mutant": "R2",
+        "file_line": "internal/fuzz/generate.go:1226",
+        "change": "change constant: statement(\"const found = /a/g.exec(@e);\", g.bounded(g.expression(String, 2))) -> statement(\"const found = /a/g.execMissing(@e);\", g.bounded(g.expression(String, 2)))",
+        "rows_failed": [
+          "TestGeneratedProgramsCheckAndLower",
+          "TestOwnershipShapes",
+          "TestRegexProgramsPassTheChecker",
+          "TestUndefinedNumbersShapes"
+        ]
+      },
+      {
+        "mutant": "R3",
+        "file_line": "internal/fuzz/generate.go:1214",
+        "change": "change constant: return statement(\"console.log(@e);\", compose(String, \"@e.replace(\"+g.pick(\"/a/g\", \"/(a)/g\", \"/a/i\")+\", \"+g.pick(\"'[$&]'\", \"'$1'\", \"'$$'\", \"'-'\")+\")\", g.bounded(g.expression(String, 2)))) -> return statement(\"console.log(@e);\", compose(String, \"@e.replace(\"+g.pick(\"/a/g\", \"/(a)/g\", \"/a/i\")+\", \"+g.pick(\"'[$&]'\", \"'$1'\", \"'$$'\", \"'-'\")+\")\", g.bounded(g.expression(Number, 2))))",
+        "rows_failed": [
+          "TestGeneratedProgramsCheckAndLower",
+          "TestOwnershipShapes",
+          "TestRegexProgramsPassTheChecker",
+          "TestUndefinedNumbersShapes"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-fuzz/cache/<id> timeout 120 go test -json -count=1 -timeout 90s ./internal/fuzz/ -run . > <id>.log 2>&1; R1: fuzz_test.go:97: seed 1: the checker refused it: /tmp/adamic-gate/TestRegexProgramsPassTheCheckerseeds-001-005406451968/001/program.a:458:4: error TS2304: Cannot find name 'finder'.; R2: fuzz_test.go:97: seed 1: the checker refused it: /tmp/adamic-gate/TestRegexProgramsPassTheCheckerseeds-001-0051394047870/001/program.a:93:22: error TS2339: Property 'execMissing' does not exist on type 'RegExp'.; R3: fuzz_test.go:97: seed 2: the checker refused it: /tmp/adamic-gate/TestRegexProgramsPassTheCheckerseeds-001-0051614411687/001/program.a:492:47: error TS2339: Property 'slice' does not exist on type 'number'."
+  }
+]

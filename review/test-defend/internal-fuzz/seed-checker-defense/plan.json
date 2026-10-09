@@ -1,0 +1,65 @@
+[
+  {
+    "mutant": "G1",
+    "target": "TestGeneratedProgramsCheckAndLower",
+    "menu": "change constant",
+    "file": "internal/fuzz/generate.go",
+    "line": 1086,
+    "old": "return compose(StringArray, \"@e.slice(@e)\", g.expression(StringArray, next), g.expression(Number, next))",
+    "new": "return compose(StringArray, \"@e.sliceMissing(@e)\", g.expression(StringArray, next), g.expression(Number, next))"
+  },
+  {
+    "mutant": "S1",
+    "target": "TestOneSeedOneProgram",
+    "menu": "change constant",
+    "file": "internal/fuzz/generate.go",
+    "line": 27,
+    "old": "return GenerateWithout(seed, nil)",
+    "new": "return GenerateWithout(1, nil)"
+  },
+  {
+    "mutant": "S2",
+    "target": "TestOneSeedOneProgram",
+    "menu": "change constant",
+    "file": "internal/fuzz/generate.go",
+    "line": 74,
+    "old": "seed: seed}",
+    "new": "seed: 0}"
+  },
+  {
+    "mutant": "S3",
+    "target": "TestOneSeedOneProgram",
+    "menu": "swap arguments",
+    "file": "internal/fuzz/generate.go",
+    "line": 74,
+    "old": "rand.NewPCG(seed, 0x61646d6963)",
+    "new": "rand.NewPCG(0x61646d6963, seed)"
+  },
+  {
+    "mutant": "R1",
+    "target": "TestRegexProgramsPassTheChecker",
+    "menu": "drop statement",
+    "file": "internal/fuzz/generate.go",
+    "line": 218,
+    "old": "\t\tadd(statement(\"const finder = /a/g;\"))\n",
+    "new": ""
+  },
+  {
+    "mutant": "R2",
+    "target": "TestRegexProgramsPassTheChecker",
+    "menu": "change constant",
+    "file": "internal/fuzz/generate.go",
+    "line": 1226,
+    "old": "statement(\"const found = /a/g.exec(@e);\", g.bounded(g.expression(String, 2)))",
+    "new": "statement(\"const found = /a/g.execMissing(@e);\", g.bounded(g.expression(String, 2)))"
+  },
+  {
+    "mutant": "R3",
+    "target": "TestRegexProgramsPassTheChecker",
+    "menu": "change constant",
+    "file": "internal/fuzz/generate.go",
+    "line": 1214,
+    "old": "\t\treturn statement(\"console.log(@e);\", compose(String, \"@e.replace(\"+g.pick(\"/a/g\", \"/(a)/g\", \"/a/i\")+\", \"+g.pick(\"'[$&]'\", \"'$1'\", \"'$$'\", \"'-'\")+\")\", g.bounded(g.expression(String, 2))))",
+    "new": "\t\treturn statement(\"console.log(@e);\", compose(String, \"@e.replace(\"+g.pick(\"/a/g\", \"/(a)/g\", \"/a/i\")+\", \"+g.pick(\"'[$&]'\", \"'$1'\", \"'$$'\", \"'-'\")+\")\", g.bounded(g.expression(Number, 2))))"
+  }
+]

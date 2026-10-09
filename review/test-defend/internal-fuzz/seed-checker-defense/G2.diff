@@ -1,0 +1,12 @@
+diff --git a/internal/fuzz/generate.go b/internal/fuzz/generate.go
+index 8fb52a1d..6ef6da2a 100644
+--- a/internal/fuzz/generate.go
++++ b/internal/fuzz/generate.go
+@@ -949,7 +949,6 @@ func (g *generator) boolean(depth int) *Expression {
+ 	case 3, 4:
+ 		left, right := g.expression(String, next), g.expression(String, next)
+ 		if constantString(left) && constantString(right) {
+-			left = g.leafVariable(String, left)
+ 		}
+ 		return compose(Boolean, "(@e "+g.pick("<", ">=", "===", "!==")+" @e)", left, right)
+ 	case 5:

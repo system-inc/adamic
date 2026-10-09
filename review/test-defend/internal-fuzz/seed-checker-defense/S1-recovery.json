@@ -1,0 +1,40 @@
+{
+  "command": [
+    "timeout",
+    "120",
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "./internal/fuzz/",
+    "-run",
+    ".",
+    "-skip",
+    "^TestShrinkKeepsOnlyWhatFails$"
+  ],
+  "exit": 1,
+  "wall_seconds": 12.753867254003126,
+  "rows_failed": [
+    "TestOctoberFeaturesAppear",
+    "TestOneSeedOneProgram",
+    "TestOwnershipShapes",
+    "TestUndefinedNumbersShapes"
+  ],
+  "rows_passed": [
+    "TestExecuteCPUHelper",
+    "TestSourceTreeCutsAtItems",
+    "TestJudgeReadsThePanicLine",
+    "TestSharedSliceCutsShare",
+    "TestReduceRejectsDifferentRefusal",
+    "TestExactSignatureRejectsSuffix",
+    "TestBytesSharedRejects63Bytes",
+    "TestRegexProgramsPassTheChecker",
+    "TestGeneratedProgramsCheckAndLower",
+    "TestOverridesShapesAndLower",
+    "TestFuzzerSharesRuntimeLibrary",
+    "TestReduceKeepsTheSignature",
+    "TestExecuteCPULimit"
+  ]
+}

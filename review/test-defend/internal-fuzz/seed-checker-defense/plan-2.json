@@ -1,0 +1,20 @@
+[
+  {
+    "mutant": "G2",
+    "target": "TestGeneratedProgramsCheckAndLower",
+    "menu": "drop statement",
+    "file": "internal/fuzz/generate.go",
+    "line": 952,
+    "old": "\t\t\tleft = g.leafVariable(String, left)\n",
+    "new": ""
+  },
+  {
+    "mutant": "G3",
+    "target": "TestGeneratedProgramsCheckAndLower",
+    "menu": "change constant",
+    "file": "internal/fuzz/generate.go",
+    "line": 1093,
+    "old": "return compose(StringArray, \"@e.map((\"+item+\") => @e)\", g.expression(NumberArray, next), body)",
+    "new": "return compose(StringArray, \"@e.map((\"+item+\") => @e)\", g.expression(StringArray, next), body)"
+  }
+]

@@ -1,0 +1,13 @@
+diff --git a/internal/fuzz/generate.go b/internal/fuzz/generate.go
+index 8fb52a1d..f105d129 100644
+--- a/internal/fuzz/generate.go
++++ b/internal/fuzz/generate.go
+@@ -1211,7 +1211,7 @@ func (g *generator) numberKeyMutation() *Statement {
+ func (g *generator) regexStatement() *Statement {
+ 	switch g.random.IntN(5) {
+ 	case 0:
+-		return statement("console.log(@e);", compose(String, "@e.replace("+g.pick("/a/g", "/(a)/g", "/a/i")+", "+g.pick("'[$&]'", "'$1'", "'$$'", "'-'")+")", g.bounded(g.expression(String, 2))))
++		return statement("console.log(@e);", compose(String, "@e.replace("+g.pick("/a/g", "/(a)/g", "/a/i")+", "+g.pick("'[$&]'", "'$1'", "'$$'", "'-'")+")", g.bounded(g.expression(Number, 2))))
+ 	case 1:
+ 		// The overrides scene's try reaches every function and closure, and stage 0 doesn't lower a try
+ 		// that can reach replaceAll with a regular expression, so with that scene it's top-level only.

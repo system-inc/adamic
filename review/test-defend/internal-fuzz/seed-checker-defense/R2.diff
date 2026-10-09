@@ -1,0 +1,13 @@
+diff --git a/internal/fuzz/generate.go b/internal/fuzz/generate.go
+index 8fb52a1d..cd7ba04a 100644
+--- a/internal/fuzz/generate.go
++++ b/internal/fuzz/generate.go
+@@ -1223,7 +1223,7 @@ func (g *generator) regexStatement() *Statement {
+ 		return statement("console.log(@e);", compose(String, "@e.split("+g.pick("/a/", "/(?:)/", "/,/")+").join('|')", g.bounded(g.expression(String, 2))))
+ 	case 3:
+ 		return statement("@b", &Block{Statements: []*Statement{
+-			statement("const found = /a/g.exec(@e);", g.bounded(g.expression(String, 2))),
++			statement("const found = /a/g.execMissing(@e);", g.bounded(g.expression(String, 2))),
+ 			statement("if (found !== null) @b else @b",
+ 				&Block{Statements: []*Statement{statement("console.log(`${found.index}:${found[0] ?? ''}`);")}},
+ 				&Block{Statements: []*Statement{statement("console.log('none');")}},

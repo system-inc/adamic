@@ -1,0 +1,31 @@
+{
+  "main": "b8bcadb2c493173855f19d7e5c508b34f5eeb5b6",
+  "audit_branch": "test-audit/internal-fuzz",
+  "audit_base": "7b18d0576930caca4e22ce2eef92fcf563af52d0",
+  "nproc": 5,
+  "toolchain": "warm /workspace/adamic-tools/env.sh",
+  "baseline_binary_seconds": 13.33,
+  "npm_ci_seconds": 0.412,
+  "matrix_rows": [
+    "TestOneSeedOneProgram",
+    "TestGeneratedProgramsCheckAndLower",
+    "TestRegexProgramsPassTheChecker",
+    "TestOctoberFeaturesAppear",
+    "TestShrinkKeepsOnlyWhatFails",
+    "TestSharedSliceCutsShare",
+    "TestOwnershipShapes",
+    "TestJudgeReadsThePanicLine",
+    "TestOverridesShapesAndLower",
+    "TestSourceTreeCutsAtItems",
+    "TestReduceKeepsTheSignature",
+    "TestReduceRejectsDifferentRefusal",
+    "TestExactSignatureRejectsSuffix",
+    "TestBytesSharedRejects63Bytes",
+    "TestExecuteCPUHelper",
+    "TestExecuteCPULimit",
+    "TestFuzzerSharesRuntimeLibrary",
+    "TestUndefinedNumbersShapes"
+  ],
+  "mutant_wall_seconds_total": 235.34592465900278,
+  "production_restored": true
+}
