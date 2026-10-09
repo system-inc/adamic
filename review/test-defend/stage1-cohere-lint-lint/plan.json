@@ -1,0 +1,26 @@
+[
+  {
+    "id": "D1",
+    "file": "stage1/cohere/lint/lint.ts",
+    "line": 83,
+    "menu": "drop statement",
+    "change": "drop parent-table initialization",
+    "lead": "detached-row parent-table setup versus ordinary root-linked ancestry"
+  },
+  {
+    "id": "D2",
+    "file": "stage1/cohere/lint/lint.ts",
+    "line": 202,
+    "menu": "drop statement",
+    "change": "drop next.run() fix-pass recheck",
+    "lead": "captured multi-pass fixes versus minimal owned witnesses"
+  },
+  {
+    "id": "D3",
+    "file": "stage1/cohere/lint/helpers/comments/for_file.ts",
+    "line": 18,
+    "menu": "drop statement",
+    "change": "drop this.ready = true;",
+    "lead": "60-second shard cost assertion: repeated FileCommentCache.get() now recomputes all comments while preserving answers"
+  }
+]

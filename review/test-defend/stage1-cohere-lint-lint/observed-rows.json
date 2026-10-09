@@ -1,0 +1,780 @@
+{
+  "D2.log": [],
+  "list.log": [],
+  "D3-family-build.log": [
+    {
+      "Test": "TestNodeTableIsLinkOnly_000",
+      "Action": "pass",
+      "Elapsed": 2.05
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_003",
+      "Action": "pass",
+      "Elapsed": 2.06
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_007",
+      "Action": "pass",
+      "Elapsed": 2.1
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_004",
+      "Action": "pass",
+      "Elapsed": 2.1
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_005",
+      "Action": "pass",
+      "Elapsed": 2.1
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_006",
+      "Action": "pass",
+      "Elapsed": 0.24
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_001",
+      "Action": "pass",
+      "Elapsed": 0.25
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_002",
+      "Action": "pass",
+      "Elapsed": 1.87
+    }
+  ],
+  "other-coverage.log": [
+    {
+      "Test": "TestNestedOutsideModuleCopy",
+      "Action": "pass",
+      "Elapsed": 0.61
+    }
+  ],
+  "cache-control.log": [],
+  "D1-warm.log": [
+    {
+      "Test": "TestProduct_NodeTableLowered",
+      "Action": "pass",
+      "Elapsed": 0.27
+    },
+    {
+      "Test": "TestProduct_NodeTableOracle",
+      "Action": "pass",
+      "Elapsed": 0.26
+    },
+    {
+      "Test": "TestProduct_NodeTableCapture",
+      "Action": "pass",
+      "Elapsed": 2.44
+    },
+    {
+      "Test": "TestProduct_NodeTableEmitted",
+      "Action": "pass",
+      "Elapsed": 0
+    },
+    {
+      "Test": "TestProduct_NodeTableNative",
+      "Action": "pass",
+      "Elapsed": 6.1
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_000",
+      "Action": "fail",
+      "Elapsed": 6.64
+    }
+  ],
+  "family-coverage.log": [
+    {
+      "Test": "TestNodeTableIsLinkOnly_000",
+      "Action": "pass",
+      "Elapsed": 12.79
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_007",
+      "Action": "pass",
+      "Elapsed": 12.83
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_004",
+      "Action": "pass",
+      "Elapsed": 12.83
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_006",
+      "Action": "pass",
+      "Elapsed": 12.84
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_005",
+      "Action": "pass",
+      "Elapsed": 12.85
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_003",
+      "Action": "pass",
+      "Elapsed": 0.2
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_001",
+      "Action": "pass",
+      "Elapsed": 0.23
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_002",
+      "Action": "pass",
+      "Elapsed": 1.9
+    }
+  ],
+  "profile-coverage.log": [
+    {
+      "Test": "TestProfileSnapshotsAgree",
+      "Action": "skip",
+      "Elapsed": 0
+    }
+  ],
+  "D3-build.log": [
+    {
+      "Test": "TestProduct_NodeTableEmitted",
+      "Action": "pass",
+      "Elapsed": 86.35
+    }
+  ],
+  "D1-final.log": [
+    {
+      "Test": "TestNodeTableIsLinkOnly_000",
+      "Action": "fail",
+      "Elapsed": 1.75
+    },
+    {
+      "Test": "TestOwnedWitnesses_012",
+      "Action": "fail",
+      "Elapsed": 16.58
+    },
+    {
+      "Test": "TestOwnedWitnesses_010",
+      "Action": "fail",
+      "Elapsed": 16.77
+    },
+    {
+      "Test": "TestOwnedWitnesses_004",
+      "Action": "fail",
+      "Elapsed": 16.78
+    },
+    {
+      "Test": "TestOwnedWitnesses_015",
+      "Action": "fail",
+      "Elapsed": 15.06
+    },
+    {
+      "Test": "TestOwnedWitnesses_013",
+      "Action": "fail",
+      "Elapsed": 16.83
+    },
+    {
+      "Test": "TestOwnedWitnesses_014",
+      "Action": "fail",
+      "Elapsed": 1.02
+    },
+    {
+      "Test": "TestOwnedWitnesses_007",
+      "Action": "fail",
+      "Elapsed": 1.07
+    },
+    {
+      "Test": "TestOwnedWitnesses_008",
+      "Action": "fail",
+      "Elapsed": 1.12
+    },
+    {
+      "Test": "TestOwnedWitnesses_011",
+      "Action": "fail",
+      "Elapsed": 1.19
+    },
+    {
+      "Test": "TestOwnedWitnesses_009",
+      "Action": "fail",
+      "Elapsed": 1.3
+    },
+    {
+      "Test": "TestOwnedWitnesses_006",
+      "Action": "fail",
+      "Elapsed": 0.92
+    },
+    {
+      "Test": "TestOwnedWitnesses_005",
+      "Action": "fail",
+      "Elapsed": 1.22
+    },
+    {
+      "Test": "TestOwnedWitnessesUnion",
+      "Action": "pass",
+      "Elapsed": 0.03
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_007",
+      "Action": "fail",
+      "Elapsed": 0.01
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_006",
+      "Action": "fail",
+      "Elapsed": 0.01
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_005",
+      "Action": "fail",
+      "Elapsed": 0.01
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_004",
+      "Action": "fail",
+      "Elapsed": 0.02
+    },
+    {
+      "Test": "TestOwnedWitnesses_002",
+      "Action": "fail",
+      "Elapsed": 1.25
+    },
+    {
+      "Test": "TestOwnedWitnesses_003",
+      "Action": "fail",
+      "Elapsed": 1.28
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_003",
+      "Action": "fail",
+      "Elapsed": 0.01
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_002",
+      "Action": "fail",
+      "Elapsed": 0.02
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_001",
+      "Action": "fail",
+      "Elapsed": 0.01
+    },
+    {
+      "Test": "TestOwnedWitnesses_001",
+      "Action": "fail",
+      "Elapsed": 1.26
+    },
+    {
+      "Test": "TestOwnedWitnesses_000",
+      "Action": "fail",
+      "Elapsed": 0.99
+    }
+  ],
+  "D2-warm.log": [
+    {
+      "Test": "TestNodeTableIsLinkOnly_000",
+      "Action": "fail",
+      "Elapsed": 87.64
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_004",
+      "Action": "fail",
+      "Elapsed": 87.67
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_006",
+      "Action": "fail",
+      "Elapsed": 87.69
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_007",
+      "Action": "fail",
+      "Elapsed": 87.71
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_005",
+      "Action": "fail",
+      "Elapsed": 0.14
+    }
+  ],
+  "D2-family.log": [
+    {
+      "Test": "TestNodeTableIsLinkOnly_003",
+      "Action": "fail",
+      "Elapsed": 1.67
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_000",
+      "Action": "fail",
+      "Elapsed": 1.68
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_004",
+      "Action": "fail",
+      "Elapsed": 1.7
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_006",
+      "Action": "fail",
+      "Elapsed": 1.72
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_007",
+      "Action": "fail",
+      "Elapsed": 0.11
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_005",
+      "Action": "fail",
+      "Elapsed": 0.15
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_001",
+      "Action": "fail",
+      "Elapsed": 0.15
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_002",
+      "Action": "fail",
+      "Elapsed": 2.63
+    }
+  ],
+  "D1.log": [
+    {
+      "Test": "TestProfileSnapshotsAgree",
+      "Action": "skip",
+      "Elapsed": 0
+    },
+    {
+      "Test": "TestProduct_NodeTableLowered",
+      "Action": "pass",
+      "Elapsed": 10.55
+    },
+    {
+      "Test": "TestProduct_NodeTableCapture",
+      "Action": "pass",
+      "Elapsed": 14.53
+    },
+    {
+      "Test": "TestOwnedWitnessesUnion",
+      "Action": "pass",
+      "Elapsed": 0.03
+    }
+  ],
+  "cache-mutant.log": [],
+  "npm-ci.log": [],
+  "D1-family.log": [
+    {
+      "Test": "TestNodeTableIsLinkOnly_007",
+      "Action": "fail",
+      "Elapsed": 1.7
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_005",
+      "Action": "fail",
+      "Elapsed": 1.7
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_000",
+      "Action": "fail",
+      "Elapsed": 1.7
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_004",
+      "Action": "fail",
+      "Elapsed": 1.7
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_006",
+      "Action": "fail",
+      "Elapsed": 1.7
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_002",
+      "Action": "fail",
+      "Elapsed": 0.01
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_001",
+      "Action": "fail",
+      "Elapsed": 0.01
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_003",
+      "Action": "fail",
+      "Elapsed": 0.01
+    }
+  ],
+  "D1-emission.log": [
+    {
+      "Test": "TestProduct_NodeTableEmitted",
+      "Action": "pass",
+      "Elapsed": 0.32
+    }
+  ],
+  "D3.log": [
+    {
+      "Test": "TestOwnedWitnessesUnion",
+      "Action": "pass",
+      "Elapsed": 0.05
+    }
+  ],
+  "D2-owned-build.log": [
+    {
+      "Test": "TestProduct_LintOwnedWitnessesLowered",
+      "Action": "pass",
+      "Elapsed": 84.36
+    }
+  ],
+  "final-control.log": [
+    {
+      "Test": "TestNodeTableIsLinkOnly_000",
+      "Action": "pass",
+      "Elapsed": 1.87
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_004",
+      "Action": "pass",
+      "Elapsed": 1.87
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_003",
+      "Action": "pass",
+      "Elapsed": 1.89
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_006",
+      "Action": "pass",
+      "Elapsed": 1.9
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_005",
+      "Action": "pass",
+      "Elapsed": 0.23
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_007",
+      "Action": "pass",
+      "Elapsed": 0.24
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_001",
+      "Action": "pass",
+      "Elapsed": 0.23
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_002",
+      "Action": "pass",
+      "Elapsed": 3.46
+    }
+  ],
+  "D3-family.log": [
+    {
+      "Test": "TestNodeTableIsLinkOnly_000",
+      "Action": "pass",
+      "Elapsed": 1.89
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_005",
+      "Action": "pass",
+      "Elapsed": 1.92
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_007",
+      "Action": "pass",
+      "Elapsed": 1.93
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_004",
+      "Action": "pass",
+      "Elapsed": 1.94
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_006",
+      "Action": "pass",
+      "Elapsed": 1.94
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_003",
+      "Action": "pass",
+      "Elapsed": 0.22
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_001",
+      "Action": "pass",
+      "Elapsed": 0.21
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_002",
+      "Action": "pass",
+      "Elapsed": 1.78
+    }
+  ],
+  "D2-final.log": [
+    {
+      "Test": "TestProduct_NodeTableLowered",
+      "Action": "pass",
+      "Elapsed": 0.2
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_000",
+      "Action": "fail",
+      "Elapsed": 1.86
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_004",
+      "Action": "fail",
+      "Elapsed": 1.87
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_007",
+      "Action": "fail",
+      "Elapsed": 1.67
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_006",
+      "Action": "fail",
+      "Elapsed": 0.13
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_005",
+      "Action": "fail",
+      "Elapsed": 0.12
+    },
+    {
+      "Test": "TestOwnedWitnesses_012",
+      "Action": "pass",
+      "Elapsed": 3.63
+    },
+    {
+      "Test": "TestOwnedWitnesses_008",
+      "Action": "pass",
+      "Elapsed": 5.55
+    },
+    {
+      "Test": "TestOwnedWitnesses_015",
+      "Action": "pass",
+      "Elapsed": 3.58
+    },
+    {
+      "Test": "TestOwnedWitnesses_014",
+      "Action": "pass",
+      "Elapsed": 3.62
+    },
+    {
+      "Test": "TestProduct_LintOwnedWitnessesSanitized",
+      "Action": "pass",
+      "Elapsed": 0
+    },
+    {
+      "Test": "TestProduct_LintOwnedWitnessesLowered",
+      "Action": "pass",
+      "Elapsed": 0
+    },
+    {
+      "Test": "TestOwnedWitnessesUnion",
+      "Action": "pass",
+      "Elapsed": 0.05
+    },
+    {
+      "Test": "TestOwnedWitnesses_000",
+      "Action": "pass",
+      "Elapsed": 5.63
+    },
+    {
+      "Test": "TestProduct_NodeTableNative",
+      "Action": "pass",
+      "Elapsed": 0
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_003",
+      "Action": "fail",
+      "Elapsed": 0.18
+    },
+    {
+      "Test": "TestProduct_NodeTableOracle",
+      "Action": "pass",
+      "Elapsed": 0.31
+    },
+    {
+      "Test": "TestOwnedWitnesses_013",
+      "Action": "pass",
+      "Elapsed": 1.2
+    },
+    {
+      "Test": "TestOwnedWitnesses_010",
+      "Action": "pass",
+      "Elapsed": 1.28
+    },
+    {
+      "Test": "TestOwnedWitnesses_011",
+      "Action": "fail",
+      "Elapsed": 1.15
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_002",
+      "Action": "fail",
+      "Elapsed": 2.11
+    },
+    {
+      "Test": "TestOwnedWitnesses_007",
+      "Action": "pass",
+      "Elapsed": 0.9
+    },
+    {
+      "Test": "TestOwnedWitnesses_004",
+      "Action": "fail",
+      "Elapsed": 1.31
+    },
+    {
+      "Test": "TestProduct_NodeTableCapture",
+      "Action": "pass",
+      "Elapsed": 2.51
+    },
+    {
+      "Test": "TestProduct_NodeTableEmitted",
+      "Action": "pass",
+      "Elapsed": 0
+    },
+    {
+      "Test": "TestOwnedWitnesses_006",
+      "Action": "pass",
+      "Elapsed": 1.12
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_001",
+      "Action": "fail",
+      "Elapsed": 0.19
+    },
+    {
+      "Test": "TestOwnedWitnesses_005",
+      "Action": "pass",
+      "Elapsed": 1.3
+    },
+    {
+      "Test": "TestOwnedWitnesses_002",
+      "Action": "pass",
+      "Elapsed": 1.39
+    },
+    {
+      "Test": "TestOwnedWitnesses_009",
+      "Action": "pass",
+      "Elapsed": 1.53
+    },
+    {
+      "Test": "TestOwnedWitnesses_003",
+      "Action": "pass",
+      "Elapsed": 1.41
+    },
+    {
+      "Test": "TestOwnedWitnesses_001",
+      "Action": "pass",
+      "Elapsed": 1.43
+    }
+  ],
+  "family-baseline.log": [
+    {
+      "Test": "TestNodeTableIsLinkOnly_001",
+      "Action": "pass",
+      "Elapsed": 1.8
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_004",
+      "Action": "pass",
+      "Elapsed": 1.82
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_000",
+      "Action": "pass",
+      "Elapsed": 1.82
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_003",
+      "Action": "pass",
+      "Elapsed": 1.85
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_006",
+      "Action": "pass",
+      "Elapsed": 0.23
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_007",
+      "Action": "pass",
+      "Elapsed": 0.24
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_005",
+      "Action": "pass",
+      "Elapsed": 0.25
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_002",
+      "Action": "pass",
+      "Elapsed": 3.45
+    }
+  ],
+  "baseline.log": [
+    {
+      "Test": "TestExecuteFailsOnStderrOtherThanModuleDownloads",
+      "Action": "pass",
+      "Elapsed": 0.12
+    },
+    {
+      "Test": "TestCompilerGuardBackend",
+      "Action": "pass",
+      "Elapsed": 0
+    },
+    {
+      "Test": "TestJsxLintReleaseAndThroughput",
+      "Action": "skip",
+      "Elapsed": 0
+    },
+    {
+      "Test": "TestLegacyMutants/overlap_winner_misreported",
+      "Action": "pass",
+      "Elapsed": 5.68
+    },
+    {
+      "Test": "TestLegacyMutants",
+      "Action": "pass",
+      "Elapsed": 61.91
+    },
+    {
+      "Test": "TestThroughput",
+      "Action": "skip",
+      "Elapsed": 0
+    },
+    {
+      "Test": "TestMutants/debugger_fix_suppressed",
+      "Action": "pass",
+      "Elapsed": 12.48
+    },
+    {
+      "Test": "TestMutants/return_parentheses_option_reversed",
+      "Action": "pass",
+      "Elapsed": 12.68
+    },
+    {
+      "Test": "TestMutants/JSDoc_replacement_text_corrupted",
+      "Action": "pass",
+      "Elapsed": 12.78
+    },
+    {
+      "Test": "TestMutants/nexus-stuttering-name-equality",
+      "Action": "pass",
+      "Elapsed": 12.89
+    },
+    {
+      "Test": "TestMutants/directive_prefix_ignored",
+      "Action": "pass",
+      "Elapsed": 13.78
+    },
+    {
+      "Test": "TestMutants/comment_exemption_removed",
+      "Action": "pass",
+      "Elapsed": 14.98
+    },
+    {
+      "Test": "TestMutants/for_update_option_ignored",
+      "Action": "pass",
+      "Elapsed": 14.89
+    }
+  ]
+}

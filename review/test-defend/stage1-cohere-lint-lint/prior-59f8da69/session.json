@@ -1,0 +1,10 @@
+{
+  "base": "157a43552015f41a79331949c2e82b6f8c7caaab",
+  "audit_ref": "origin/test-audit/stage1-cohere-lint-lint",
+  "audit_commit": "624afd0738818f2b260a53cee9eab32197b54ea6",
+  "nproc": "5",
+  "scope_count": 6760,
+  "mutants": 0,
+  "coverage": "Stopped after discovering baseline failure; no comparative profiles or exclusive-line claim",
+  "disk_after_failure": "Filesystem      Size  Used Avail Use% Mounted on\noverlay          32G   15G   16G  48% /\nnone            8.8G  8.0G  914M  90% /tmp\n"
+}

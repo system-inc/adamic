@@ -1,0 +1,11 @@
+--- a/stage1/cohere/lint/context.ts
++++ b/stage1/cohere/lint/context.ts
+@@ -236,7 +236,7 @@
+     // kind is a node's kind, and '' for no node (an index below zero), so a chain of lookups can end in a
+     // comparison rather than a guard.
+     kind(index: number): string {
+-        return index < 0 ? '' : this.node(index).kind;
++        return index <= 0 ? '' : this.node(index).kind;
+     }
+     functionLike(index: number): boolean {
+         return isFunctionKind(this.node(index).kind);

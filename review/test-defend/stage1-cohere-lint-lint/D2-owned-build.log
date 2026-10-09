@@ -1,0 +1,14 @@
+{"Time":"2026-10-09T15:59:38.633397749Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint"}
+{"Time":"2026-10-09T15:59:38.660640184Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_LintOwnedWitnessesLowered"}
+{"Time":"2026-10-09T15:59:38.660738139Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_LintOwnedWitnessesLowered","Output":"=== RUN   TestProduct_LintOwnedWitnessesLowered\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:59:38.660763787Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_LintOwnedWitnessesLowered","Output":"=== PAUSE TestProduct_LintOwnedWitnessesLowered\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:59:38.66076596Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_LintOwnedWitnessesLowered"}
+{"Time":"2026-10-09T15:59:38.660768423Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_LintOwnedWitnessesLowered"}
+{"Time":"2026-10-09T15:59:38.660770166Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_LintOwnedWitnessesLowered","Output":"=== CONT  TestProduct_LintOwnedWitnessesLowered\n","OutputType":"frame"}
+{"Time":"2026-10-09T16:01:03.016117599Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_LintOwnedWitnessesLowered","Output":"    owned_witness_products_test.go:92: cold build lowered=1m23.970140943s\n"}
+{"Time":"2026-10-09T16:01:03.021267549Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_LintOwnedWitnessesLowered","Output":"    owned_witness_products_test.go:60: build lint-owned-witnesses-lowered df28ff75343d miss 84.26\n"}
+{"Time":"2026-10-09T16:01:03.021316892Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_LintOwnedWitnessesLowered","Output":"--- PASS: TestProduct_LintOwnedWitnessesLowered (84.36s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T16:01:03.021320197Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_LintOwnedWitnessesLowered","Elapsed":84.36}
+{"Time":"2026-10-09T16:01:03.021338715Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T16:01:03.027588917Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/lint\t84.394s\n"}
+{"Time":"2026-10-09T16:01:03.027647333Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Elapsed":84.394}

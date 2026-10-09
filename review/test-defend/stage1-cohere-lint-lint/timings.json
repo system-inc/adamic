@@ -1,0 +1,197 @@
+{
+  "binary_seconds": {
+    "D2.log": 90.048,
+    "D3-family-build.log": 90.044,
+    "other-coverage.log": 0.656,
+    "D1-warm.log": 90.077,
+    "family-coverage.log": 14.794,
+    "profile-coverage.log": 0.053,
+    "D3-build.log": 90.054,
+    "D1-final.log": 19.539,
+    "D2-warm.log": 90.037,
+    "D2-family.log": 2.659,
+    "D1.log": 90.043,
+    "D1-family.log": 1.742,
+    "D1-emission.log": 0.349,
+    "D3.log": 90.044,
+    "D2-owned-build.log": 84.394,
+    "final-control.log": 3.491,
+    "D3-family.log": 3.733,
+    "D2-final.log": 9.67,
+    "family-baseline.log": 3.481,
+    "baseline.log": 90.299
+  },
+  "build_lines": [
+    {
+      "log": "D2.log",
+      "test": "TestNodeTableIsLinkOnly_000",
+      "line": "node_table_oracle_floor_test.go:205: build lint-node-table-oracle 16a6000976c5 miss 3.71"
+    },
+    {
+      "log": "D2.log",
+      "test": "TestOwnedWitnesses_004",
+      "line": "oracle_product_test.go:37: cold build Go oracle=3.472419311s"
+    },
+    {
+      "log": "D2.log",
+      "test": "TestOwnedWitnesses_004",
+      "line": "oracle_product_test.go:35: build lint-go-oracle cc499085ea3b miss 4.83"
+    },
+    {
+      "log": "D2.log",
+      "test": "TestNodeTableIsLinkOnly_007",
+      "line": "node_table_oracle_floor_test.go:86: build lint-node-table-lowered-ir cf2a46360669 miss 6.98"
+    },
+    {
+      "log": "D2.log",
+      "test": "TestNodeTableIsLinkOnly_000",
+      "line": "node_table_oracle_floor_test.go:229: build lint-node-table-capture 9b1b178f45c1 miss 12.46"
+    },
+    {
+      "log": "D3-family-build.log",
+      "test": "TestNodeTableIsLinkOnly_005",
+      "line": "node_table_oracle_floor_test.go:143: build lint-node-table-native 6418790620f9 miss 1.31"
+    },
+    {
+      "log": "D1-warm.log",
+      "test": "TestNodeTableIsLinkOnly_000",
+      "line": "node_table_oracle_floor_test.go:143: build lint-node-table-native fdfe08d54f1c miss 6.03"
+    },
+    {
+      "log": "D1-warm.log",
+      "test": "TestOwnedWitnesses_001",
+      "line": "owned_witness_products_test.go:92: cold build lowered=1m20.373770862s"
+    },
+    {
+      "log": "D1-warm.log",
+      "test": "TestOwnedWitnesses_001",
+      "line": "owned_witness_products_test.go:60: build lint-owned-witnesses-lowered 921dc4977c6c miss 80.86"
+    },
+    {
+      "log": "family-coverage.log",
+      "test": "TestNodeTableIsLinkOnly_004",
+      "line": "node_table_oracle_floor_test.go:229: build lint-node-table-capture 9b1b178f45c1 miss 11.99"
+    },
+    {
+      "log": "D3-build.log",
+      "test": "TestProduct_NodeTableEmitted",
+      "line": "node_table_oracle_floor_test.go:116: build lint-node-table-emitted-c-serial-v2 f3e1880caca4 miss 86.17"
+    },
+    {
+      "log": "D1-final.log",
+      "test": "TestOwnedWitnesses_004",
+      "line": "owned_witness_products_test.go:111: cold build sanitized=13.437647611s"
+    },
+    {
+      "log": "D1-final.log",
+      "test": "TestOwnedWitnesses_004",
+      "line": "owned_witness_products_test.go:68: build lint-owned-witnesses-sanitized 823722671164 miss 13.68"
+    },
+    {
+      "log": "D2-warm.log",
+      "test": "TestNodeTableIsLinkOnly_007",
+      "line": "node_table_oracle_floor_test.go:116: build lint-node-table-emitted-c-serial-v2 c6ba3599d40b miss 85.53"
+    },
+    {
+      "log": "D2-warm.log",
+      "test": "TestNodeTableIsLinkOnly_007",
+      "line": "node_table_oracle_floor_test.go:143: build lint-node-table-native fa210c73bee0 miss 1.73"
+    },
+    {
+      "log": "D1.log",
+      "test": "TestNodeTableIsLinkOnly_000",
+      "line": "node_table_oracle_floor_test.go:205: build lint-node-table-oracle ef63ff493824 miss 4.14"
+    },
+    {
+      "log": "D1.log",
+      "test": "TestOwnedWitnesses_009",
+      "line": "oracle_product_test.go:37: cold build Go oracle=6.401475336s"
+    },
+    {
+      "log": "D1.log",
+      "test": "TestOwnedWitnesses_009",
+      "line": "oracle_product_test.go:35: build lint-go-oracle 41e43279904b miss 7.78"
+    },
+    {
+      "log": "D1.log",
+      "test": "TestProduct_NodeTableLowered",
+      "line": "node_table_oracle_floor_test.go:86: build lint-node-table-lowered-ir 4cc0e1f66ebc miss 10.52"
+    },
+    {
+      "log": "D1.log",
+      "test": "TestProduct_NodeTableCapture",
+      "line": "node_table_oracle_floor_test.go:582: build lint-node-table-capture 9b1b178f45c1 miss 14.52"
+    },
+    {
+      "log": "D1.log",
+      "test": "TestNodeTableIsLinkOnly_000",
+      "line": "node_table_oracle_floor_test.go:116: build lint-node-table-emitted-c-serial-v2 cb597c0fd9c2 miss 78.33"
+    },
+    {
+      "log": "D3.log",
+      "test": "TestNodeTableIsLinkOnly_000",
+      "line": "node_table_oracle_floor_test.go:205: build lint-node-table-oracle 7ec03b227faf miss 3.72"
+    },
+    {
+      "log": "D3.log",
+      "test": "TestOwnedWitnesses_000",
+      "line": "oracle_product_test.go:37: cold build Go oracle=3.255223783s"
+    },
+    {
+      "log": "D3.log",
+      "test": "TestOwnedWitnesses_000",
+      "line": "oracle_product_test.go:35: build lint-go-oracle 0f74ee52b01f miss 4.67"
+    },
+    {
+      "log": "D3.log",
+      "test": "TestNodeTableIsLinkOnly_000",
+      "line": "node_table_oracle_floor_test.go:86: build lint-node-table-lowered-ir 8f3d24cc9902 miss 7.42"
+    },
+    {
+      "log": "D3.log",
+      "test": "TestNodeTableIsLinkOnly_000",
+      "line": "node_table_oracle_floor_test.go:229: build lint-node-table-capture 9b1b178f45c1 miss 14.48"
+    },
+    {
+      "log": "D2-owned-build.log",
+      "test": "TestProduct_LintOwnedWitnessesLowered",
+      "line": "owned_witness_products_test.go:92: cold build lowered=1m23.970140943s"
+    },
+    {
+      "log": "D2-owned-build.log",
+      "test": "TestProduct_LintOwnedWitnessesLowered",
+      "line": "owned_witness_products_test.go:60: build lint-owned-witnesses-lowered df28ff75343d miss 84.26"
+    },
+    {
+      "log": "D2-final.log",
+      "test": "TestOwnedWitnesses_008",
+      "line": "owned_witness_products_test.go:111: cold build sanitized=2.190622184s"
+    },
+    {
+      "log": "D2-final.log",
+      "test": "TestOwnedWitnesses_008",
+      "line": "owned_witness_products_test.go:68: build lint-owned-witnesses-sanitized c649b8bd4702 miss 2.44"
+    },
+    {
+      "log": "baseline.log",
+      "test": "TestLegacyMutants",
+      "line": "oracle_product_test.go:37: cold build Go oracle=55.014898944s"
+    },
+    {
+      "log": "baseline.log",
+      "test": "TestLegacyMutants",
+      "line": "oracle_product_test.go:35: build lint-go-oracle 0a2f73d0ee4d miss 56.14"
+    },
+    {
+      "log": "baseline.log",
+      "test": "TestMutants/return_parentheses_option_reversed",
+      "line": "no-return-assign  This arrow function's body is an assignment, so calling it writes to something outside itself and returns what it wrote. A concise arrow body reads as a value, which is what makes the write easy to miss at the call site. Give the arrow a block body and assign inside it, or wrap the assignment in its own parentheses to say the write was meant."
+    },
+    {
+      "log": "baseline.log",
+      "test": "TestMutants/return_parentheses_option_reversed",
+      "line": "no-return-assign  This arrow function's body is an assignment, so calling it writes to something outside itself and returns what it wrote. A concise arrow body reads as a value, which is what makes the write easy to miss at the call site. Give the arrow a block body and assign inside it, or wrap the assignment in its own parentheses to say the write was meant."
+    }
+  ],
+  "note": "Cold build durations overlap enclosing runs and must not be added to binary totals."
+}

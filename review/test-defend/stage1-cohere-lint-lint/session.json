@@ -1,0 +1,23 @@
+{
+  "starting_commit": "92d196011e78208b45b3768dcf2c8c88e7ec132d",
+  "audit_commit": "624afd0738818f2b260a53cee9eab32197b54ea6",
+  "prior_evidence_commit": "59f8da69e14d5666b09b2972426e938f20cb02e0",
+  "nproc": 5,
+  "toolchain": "warm env.sh; setup skipped",
+  "scope_count": 6760,
+  "disk_before": {
+    "tmp": "8.8G total, 0 free",
+    "workspace": "32G total, 8.8G free"
+  },
+  "removed_earlier_units": [
+    "/tmp/u003",
+    "/tmp/u048",
+    "/tmp/u048-profile-bin"
+  ],
+  "disk_after_cleanup": {
+    "tmp": "3.0G free",
+    "workspace": "8.8G free"
+  },
+  "disk_constraint": "15 GB free impossible on the 8.8 GB /tmp volume. Shared scratch was preserved because other processes were active. No workspace content was deleted.",
+  "coverage_limitation": "Go compiler coverage only; actual TypeScript port execution uninstrumented; compiler caches largely hit. NestedOutsideModuleCopy is one comparison row, not whole-package coverage."
+}

@@ -1,0 +1,12 @@
+[
+  {
+    "test": "TestNodeTableIsLinkOnlyFamily",
+    "package": "stage1/cohere/lint",
+    "prior_verdict": "untrue",
+    "subsumed_by": [],
+    "defense": "cannot-judge",
+    "unique_mutant": null,
+    "attempts": [],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ > baseline.log 2>&1; oracle_product_test.go:35: build lint-go-oracle: lint Go oracle: exit status 1; compile: writing output: write $WORK/b226/_pkg_.a: no space left on device"
+  }
+]

@@ -1,0 +1,39 @@
+[
+  {
+    "test": "TestNodeTableIsLinkOnlyFamily",
+    "package": "stage1/cohere/lint",
+    "prior_verdict": "untrue",
+    "subsumed_by": [
+      "TestOwnedWitnesses family (D1 and D2 in bounded matrix)"
+    ],
+    "defense": "not defended",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "stage1/cohere/lint/lint.ts:83",
+        "change": "Drop parent-table initialization.",
+        "rows_failed": [
+          "TestNodeTableIsLinkOnlyFamily",
+          "TestOwnedWitnesses family"
+        ]
+      },
+      {
+        "mutant": "D2",
+        "file_line": "stage1/cohere/lint/lint.ts:202",
+        "change": "Drop next.run() in the iterative fix pass.",
+        "rows_failed": [
+          "TestNodeTableIsLinkOnlyFamily",
+          "TestOwnedWitnesses family"
+        ]
+      },
+      {
+        "mutant": "D3",
+        "file_line": "stage1/cohere/lint/helpers/comments/for_file.ts:18",
+        "change": "Drop this.ready = true; repeated calls recompute comments.",
+        "rows_failed": []
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-lint-lint/D2 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run '^(TestNodeTableIsLinkOnly_[0-9]{3}|TestOwnedWitnesses(Union|_[0-9]{3})|TestProduct_NodeTable.*|TestProduct_LintOwnedWitnesses.*)$' > D2-final.log 2>&1; node_table_oracle_floor_test.go:357: port output differs from Go oracle: case 20 line 274: port \"fixed\\t\\\\ufeff // TODO two marks\\\\u000aconst x=1;\", Go \"fixed\\t // TODO two marks\\\\u000aconst x=1;\""
+  }
+]

@@ -1,0 +1,12 @@
+diff --git a/stage1/cohere/lint/lint.ts b/stage1/cohere/lint/lint.ts
+index 406f1270..1393bc66 100644
+--- a/stage1/cohere/lint/lint.ts
++++ b/stage1/cohere/lint/lint.ts
+@@ -199,7 +199,6 @@ export class Linter {
+                 this.settings,
+             );
+             next.junkRows = this.junkRows;
+-            next.run();
+             current = result;
+             findings = next.findings;
+         }

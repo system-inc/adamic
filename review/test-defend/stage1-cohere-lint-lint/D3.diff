@@ -1,0 +1,12 @@
+diff --git a/stage1/cohere/lint/helpers/comments/for_file.ts b/stage1/cohere/lint/helpers/comments/for_file.ts
+index fa5341b8..a0b2429f 100644
+--- a/stage1/cohere/lint/helpers/comments/for_file.ts
++++ b/stage1/cohere/lint/helpers/comments/for_file.ts
+@@ -15,7 +15,6 @@ export class FileCommentCache {
+     get(): Comment[] {
+         if(!this.ready) {
+             this.result = all(this.parser, this.root);
+-            this.ready = true;
+         }
+         return this.result;
+     }

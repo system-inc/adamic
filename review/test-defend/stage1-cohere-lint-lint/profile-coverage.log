@@ -1,0 +1,10 @@
+{"Time":"2026-10-09T15:47:13.082443804Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint"}
+{"Time":"2026-10-09T15:47:13.109896142Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProfileSnapshotsAgree"}
+{"Time":"2026-10-09T15:47:13.110011833Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProfileSnapshotsAgree","Output":"=== RUN   TestProfileSnapshotsAgree\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:47:13.110043039Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProfileSnapshotsAgree","Output":"    profile_test.go:175: set ADAMIC_LINT_PROFILE_SNAPSHOTS\n"}
+{"Time":"2026-10-09T15:47:13.110053635Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProfileSnapshotsAgree","Output":"--- SKIP: TestProfileSnapshotsAgree (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:47:13.110056108Z","Action":"skip","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProfileSnapshotsAgree","Elapsed":0}
+{"Time":"2026-10-09T15:47:13.110068466Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:47:13.114295253Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"coverage: 0.0% of statements in ./internal/lower, ./internal/native\n"}
+{"Time":"2026-10-09T15:47:13.135451109Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/lint\t0.051s\tcoverage: 0.0% of statements in ./internal/lower, ./internal/native\n"}
+{"Time":"2026-10-09T15:47:13.135488624Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Elapsed":0.053}
