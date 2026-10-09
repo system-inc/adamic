@@ -42,7 +42,7 @@ Every standalone diff applies unchanged to the base and passed go vet ./internal
 
 Timing
 
-Warm tools skipped setup; nproc 5. npm ci was rerun in stage3/api before baseline. Clean whole-package test binary: 55.254 seconds. Coverage command walls: SSA 12.725, ranges 13.985, graph 14.266, family 46.076 seconds. Whole mutant command walls: D1 66.648, D2 59.768, D3 59.371, D4 58.792, D5 72.277, D6 59.982, D7 58.458 seconds, rounded here. Exact measured values are in matrix.json. Compilation and vet were not separately phase-timed. Log parsing/compression is outside those go test wall measurements. No required run exceeded 90 seconds.
+Warm tools skipped setup; nproc 5. npm ci was rerun in stage3/api before baseline. Clean whole-package test binary: 55.254 seconds. Coverage command walls: SSA 12.725, ranges 13.985, graph 14.266, family 46.076 seconds. Whole mutant command walls: D1 66.648, D2 59.770, D3 59.375, D4 58.786, D5 72.281, D6 59.982, D7 58.456 seconds, rounded here. Exact measured values are in matrix.json. Compilation and vet were not separately phase-timed. Log parsing/compression is outside those go test wall measurements. No required run exceeded 90 seconds.
 
 Brief friction and owner findings
 

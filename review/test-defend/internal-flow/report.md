@@ -28,7 +28,7 @@ Every standalone diff applies unchanged to the base and passed go vet ./internal
 
 Timing
 
-Warm tools skipped setup; nproc 5. npm ci was rerun in stage3/api before baseline. Clean whole-package test binary: 55.254 seconds. Coverage command walls: SSA 12.725, ranges 13.985, graph 14.266, family 46.076 seconds. Whole mutant command walls: D1 66.648, D2 59.768, D3 59.371, D4 58.792, D5 72.277, D6 59.982, D7 58.458 seconds, rounded here. Exact measured values are in matrix.json. Compilation and vet were not separately phase-timed. Log parsing/compression is outside those go test wall measurements. No required run exceeded 90 seconds.
+Warm tools skipped setup; nproc 5. npm ci was rerun in stage3/api before baseline. Clean whole-package test binary: 55.254 seconds. Coverage command walls: SSA 12.725, ranges 13.985, graph 14.266, family 46.076 seconds. Whole mutant command walls: D1 66.648, D2 59.770, D3 59.375, D4 58.786, D5 72.281, D6 59.982, D7 58.456 seconds, rounded here. Exact measured values are in matrix.json. Compilation and vet were not separately phase-timed. Log parsing/compression is outside those go test wall measurements. No required run exceeded 90 seconds.
 
 Brief friction and owner findings
 
@@ -39,3 +39,5 @@ The family has hundreds of generated wrappers. Their repeated bodies were compar
 The SSA name matches the asserted single-assignment/reaching-definition and read-count properties on this lowered fixture. It does not promise that unchanged parameters receive particular fresh identifier numbers. The graph name checks observed Node paths, not exact equality of all possible CFG edges: extra permitted paths may survive. The range name should not be read as promising a range for every mutation. ranges_test.go explicitly skips unset ranges and only requires observed mutations to lie inside ranges that are set. Timsort has no assertion requiring even one range to be set; only the separate mutations.a witness requires a nonzero observed mutation count. The earlier audit's empty-table result is consistent with this source, but an empty-table probe was not rerun here.
 
 The seven-mutant cap limited additional range faults after D6 and D7 failed to challenge this fixture. Broad widening faults from the audit were not repeated merely to reproduce known nonunique catches. Untested fault models, explicit 30-second reference-box cost enforcement, and repository-wide tests remain outside this defense. No deletion, rewrite, main push or pull request was performed.
+
+Publication: the requested remote branch already existed. Full and tip-only fetches reached the 90-second budget and were stopped; a metadata-only blob-filtered tip fetch succeeded. The existing branch history and its complete evidence tree are retained under previous/337b16e6. These fetches added publication time beyond the approximate unit budget.
