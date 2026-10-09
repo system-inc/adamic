@@ -1,5 +1,5 @@
 import pathlib,json,shlex,subprocess
-p=pathlib.Path('review/test-defend/internal-oracle-checked_views_v2_source'); r=json.loads((p/'results.json').read_text()); plan=json.loads((p/'matrix-plan.json').read_text()); scope=json.loads((p/'scope.json').read_text()); exclusive=json.loads((p/'exclusive-coverage.json').read_text()); target='TestClosureMergeRefusals'
+p=pathlib.Path('review/test-defend/internal-oracle-checked_views_v2_source/closure-merge'); r=json.loads((p/'results.json').read_text()); plan=json.loads((p/'matrix-plan.json').read_text()); scope=json.loads((p/'scope.json').read_text()); exclusive=json.loads((p/'exclusive-coverage.json').read_text()); target='TestClosureMergeRefusals'
 mut=[x for x in r if x['label'].startswith('D1-batch')]; clean=[x for x in r if x['label'].startswith('clean-batch')]
 failed=sorted({n for x in mut for n in x['failed'] if '/' not in n}); passed=sorted({n for x in mut for n in x['passed'] if '/' not in n}); skipped=sorted({n for x in mut for n in x['skipped'] if '/' not in n}); assert failed==[target] and len(passed)==189 and len(skipped)==7
 assert all(x['exit']==0 for x in clean);assert all(not x['timeout'] for x in mut);assert set(scope['added'])<=set(passed)

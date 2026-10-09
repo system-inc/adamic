@@ -1,5 +1,5 @@
 import pathlib, subprocess, os, json, re, time, difflib
-root=pathlib.Path.cwd(); p=root/'review/test-defend/internal-oracle-checked_views_v2_source'; ref='origin/test-audit/internal-oracle-checked_views_v2_source:'; audit='review/test-audit/internal-oracle-checked_views_v2_source/'
+root=pathlib.Path.cwd(); p=root/'review/test-defend/internal-oracle-checked_views_v2_source/closure-merge'; ref='origin/test-audit/internal-oracle-checked_views_v2_source:'; audit='review/test-audit/internal-oracle-checked_views_v2_source/'
 current=[x for x in (p/'list.log').read_text().splitlines() if x.startswith('Test')]
 oldlog=subprocess.check_output(['git','show',ref+audit+'list.log']).decode(); (p/'audit-list.log').write_text(oldlog); old=[x for x in oldlog.splitlines() if x.startswith('Test')]
 (p/'scope.json').write_text(json.dumps({'current':current,'audit':old,'added':sorted(set(current)-set(old)),'vanished':sorted(set(old)-set(current))},indent=2)+'\n')

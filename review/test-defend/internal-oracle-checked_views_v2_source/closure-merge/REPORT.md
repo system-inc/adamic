@@ -56,3 +56,5 @@ Production source was restored in finally blocks after both executions. The fina
 * The npm install's separate wall time was not instrumented. Native builds and execution are combined in recorded command times, not claimed as separate compiler-only measurements.
 
 Timing: warm setup skipped; whole baseline 90.155s binary. Clean bounded command walls total 163.682s; D1 bounded matrix 176.558s; D1 vet 0.510s; short confirmation 4.549s; restored clean command 4.690s. Individual command and binary timings are in results.json.
+
+Publishing: the requested defense branch already contained evidence for other rows. This run is kept in closure-merge/ and merged with the existing branch without rewriting history. Mutant IDs are local to this run.
