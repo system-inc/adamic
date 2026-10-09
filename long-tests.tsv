@@ -1,0 +1,63 @@
+github.com/system-inc/adamic/stage1/cohere/lint	TestJsxLintTreesShardCoverage (setup)	961.66	pass
+github.com/system-inc/adamic/stage1/cohere/tsprinter	TestStatementsShardUnionRejectsMissingAndRepeatedIDs (setup)	466.17	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestJSONPortShardUnion (setup)	294.32	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestShardsAgree_028	260.20	fail
+github.com/system-inc/adamic/stage1/cohere/lint	TestEmittedJavaScriptMismatch_Setup	194.90	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestCompilerAndStage1Agree_6414	190.22	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestShardsAgree_031	180.91	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestProfileCompilation_000	178.48	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestShardsAgree_030	176.05	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestShardsAgree_029	172.38	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestRulesAgree_Setup	169.75	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestRulesAgree_015	166.77	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestDotARename_001	162.59	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestDotARename_000	151.65	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestOwnedWitnesses_Setup	150.95	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestRulesAgree_014	118.55	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestJsxLintTrees_010	118.07	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestCompleteSuggestionSerialization_PlantedFailure	117.03	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestProduct_NodeTableNative	106.94	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestAdditionalJSONBoundaries	95.45	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestProduct_NodeTableEmitted	94.08	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestLegacyMutants (setup)	92.83	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestCompilerAndStage1Agree_6409	74.91	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestCompleteSuggestionSerialization_IsolatedShard	73.79	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestCompleteSuggestionSerialization_005	71.83	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestRepositoryCorpusMutants (setup)	65.07	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestJSXMutant (setup)	49.79	pass
+github.com/system-inc/adamic/stage1/cohere/tsprinter	TestProduct_TSPrinterMutantNative_028	47.74	pass
+github.com/system-inc/adamic/stage1/cohere/tsprinter	TestProduct_TSPrinterMutantNative_005	46.62	pass
+github.com/system-inc/adamic/stage1/cohere/tsprinter	TestProduct_TSPrinterMutantNative_003	46.52	pass
+github.com/system-inc/adamic/stage1/cohere/tsprinter	TestProduct_TSPrinterMutantNative_009	46.44	pass
+github.com/system-inc/adamic/stage1/cohere/tsprinter	TestProduct_TSPrinterMutantNative_023	46.15	pass
+github.com/system-inc/adamic/stage1/cohere/tsprinter	TestProduct_TSPrinterMutantNative_006	46.08	pass
+github.com/system-inc/adamic/stage1/cohere/tsprinter	TestProduct_TSPrinterMutantNative_008	45.21	pass
+github.com/system-inc/adamic/stage1/cohere/tsprinter	TestProduct_TSPrinterMutantNative_021	44.85	pass
+github.com/system-inc/adamic/stage1/cohere/tsprinter	TestProduct_TSPrinterMutantNative_004	44.76	pass
+github.com/system-inc/adamic/stage1/cohere/tsprinter	TestProduct_TSPrinterMutantNative_007	44.53	pass
+github.com/system-inc/adamic/stage1/cohere/tsprinter	TestProduct_TSPrinterMutantNative_022	44.29	pass
+github.com/system-inc/adamic/stage1/cohere/tsprinter	TestProduct_TSPrinterMutantNative_019	44.11	pass
+github.com/system-inc/adamic/stage1/cohere/tsprinter	TestProduct_TSPrinterMutantNative_011	43.83	pass
+github.com/system-inc/adamic/stage1/cohere/tsprinter	TestProduct_TSPrinterMutantNative_024	43.53	pass
+github.com/system-inc/adamic/stage1/cohere/tsprinter	TestProduct_TSPrinterMutantNative_012	43.31	pass
+github.com/system-inc/adamic/stage1/cohere/tsprinter	TestProduct_TSPrinterMutantNative_013	42.90	pass
+github.com/system-inc/adamic/stage1/cohere/tsprinter	TestProduct_TSPrinterMutantNative_017	42.90	pass
+github.com/system-inc/adamic/stage1/cohere/tsprinter	TestProduct_TSPrinterMutantNative_020	42.78	pass
+github.com/system-inc/adamic/stage1/cohere/tsprinter	TestProduct_TSPrinterMutantNative_025	42.60	pass
+github.com/system-inc/adamic/stage1/cohere/tsprinter	TestProduct_TSPrinterMutantNative_010	42.54	pass
+github.com/system-inc/adamic/stage1/cohere/tsprinter	TestProduct_TSPrinterMutantNative_018	41.55	pass
+github.com/system-inc/adamic/stage1/cohere/tsprinter	TestProduct_TSPrinterMutantNative_002	41.23	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestFactoryHooks_Setup	40.55	pass
+github.com/system-inc/adamic/stage1/cohere/tsprinter	TestProduct_TSPrinterMutantNative_014	39.77	pass
+github.com/system-inc/adamic/stage1/typescript/parser	TestWholeCompilerAgrees	39.48	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestProduct_DecodedOptionsGoOracle	39.38	pass
+github.com/system-inc/adamic/stage1/cohere/tsprinter	TestProduct_TSPrinterMutantNative_015	38.63	pass
+github.com/system-inc/adamic/stage1/cohere/tsprinter	TestProduct_TSPrinterMutantNative_016	36.67	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestUpstreamRepositoryCorpusParity_0338	36.13	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestProduct_DecodedOptionsNative	34.78	pass
+github.com/system-inc/adamic/stage1/cohere/tsprinter	TestProduct_TSPrinterMutantNative_001	34.04	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestCompleteSuggestionSerialization_004	32.59	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestSuggestionAlongsideAutomaticFixSetupIsRequired	32.13	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestSuggestionAlongsideAutomaticFix_Setup	31.87	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestCompilerAndStage1Agree_6481	31.53	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestWitnessScriptKind	31.13	pass
