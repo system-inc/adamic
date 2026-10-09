@@ -195,35 +195,53 @@ func TestCompleteSuggestionSerialization(t *testing.T) {
 	})
 }
 
+const testSuggestionAlongsideAutomaticFixShards = 1
+
+// ADAMIC_TEST_SHARD=i/n selects local case shards; unset runs all. The gate uses
+// -run '^TestSuggestionAlongsideAutomaticFix$/^shard-NNN$'. Setup shares builds
+// once until internal/buildcache supplies read-only products by hash.
 func TestSuggestionAlongsideAutomaticFix(t *testing.T) {
 	t.Parallel()
-	directory := serializationPort(t)
-	for _, change := range []struct{ name, from, to string }{
-		{"rule.a", "debuggerMessage, '', '', ''", "debuggerMessage, 'fix', ';', ''"},
-		{"oracle.go", "d.Fixes = nil", "d.Fixes[0].Text = \";\""},
-	} {
-		path := filepath.Join(directory, "rules/no-debugger", change.name)
-		data, err := os.ReadFile(path)
-		if err != nil {
+	products, supplied := harnessSuppliedProducts(t)
+	if !supplied {
+		directory := serializationPort(t)
+		for _, change := range []struct{ name, from, to string }{
+			{"rule.a", "debuggerMessage, '', '', ''", "debuggerMessage, 'fix', ';', ''"},
+			{"oracle.go", "d.Fixes = nil", "d.Fixes[0].Text = \";\""},
+		} {
+			path := filepath.Join(directory, "rules/no-debugger", change.name)
+			data, err := os.ReadFile(path)
+			if err != nil {
+				t.Fatal(err)
+			}
+			if bytes.Count(data, []byte(change.from)) != 1 {
+				t.Fatal("automatic fix anchor changed")
+			}
+			if err := os.WriteFile(path, bytes.Replace(data, []byte(change.from), []byte(change.to), 1), 0644); err != nil {
+				t.Fatal(err)
+			}
+		}
+		source := filepath.Join(t.TempDir(), "mixed.ts")
+		if err := os.WriteFile(source, []byte("/*😀*/debugger;\n"), 0644); err != nil {
 			t.Fatal(err)
 		}
-		if bytes.Count(data, []byte(change.from)) != 1 {
-			t.Fatal("automatic fix anchor changed")
+
+		products.Rows = []string{source + "\tno-debugger"}
+		oracle := harnessOracle(t, directory, "suggestions-with-fix")
+		archive := ""
+		products.Original = harnessBuild(t, directory, "suggestions-with-fix", &archive, true)
+		products.Original.Oracle = oracle
+	}
+	harnessShards(t, []string{"unicode-suggestions-with-automatic-fix"}, testSuggestionAlongsideAutomaticFixShards, func(t *testing.T) {
+		got := harnessCompare(t, products.Original, manifest(t, products.Rows))
+		if !bytes.Contains(got, []byte("fixed\t/*\\ud83d\\ude00*/;\\u000a")) {
+			t.Fatalf("automatic fix lost: %s", got)
 		}
-		if err := os.WriteFile(path, bytes.Replace(data, []byte(change.from), []byte(change.to), 1), 0644); err != nil {
-			t.Fatal(err)
+		t.Log("automatic fix remains applied while all three suggestions remain unapplied and serialized")
+		if !supplied {
+			harnessPlantedDisagreement(t, products, false)
 		}
-	}
-	source := filepath.Join(t.TempDir(), "mixed.ts")
-	if err := os.WriteFile(source, []byte("/*😀*/debugger;\n"), 0644); err != nil {
-		t.Fatal(err)
-	}
-	path := manifest(t, []string{source + "\tno-debugger"})
-	got := compare(t, goOracleFrom(t, directory), buildPort(t, directory, true), directory, path)
-	if !bytes.Contains(got, []byte("fixed\t/*\\ud83d\\ude00*/;\\u000a")) {
-		t.Fatalf("automatic fix lost: %s", got)
-	}
-	t.Log("automatic fix remains applied while all three suggestions remain unapplied and serialized")
+	})
 }
 
 const testWitnessScriptKindShards = 1
