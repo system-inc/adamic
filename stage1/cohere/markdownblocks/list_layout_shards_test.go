@@ -86,8 +86,10 @@ func listLayoutSetupInputs(t *testing.T) buildcache.Inputs {
 func buildListLayoutSetup(t *testing.T) {
 	t.Helper()
 	listLayoutBuildOnce.Do(func() {
-		finish := listLayoutDeadline(t, "setup")
-		defer finish()
+		// Setup carries no deadline of its own: it is the build phase's to make fast, and Loom's 90 s kill
+		// still covers the unit (@system_adamic's ruling). Shards start their own deadline after it.
+		started := time.Now()
+		defer func() { t.Logf("Markdown list layout setup: %.3fs", time.Since(started).Seconds()) }()
 		root, err := filepath.Abs(repository)
 		if err != nil {
 			t.Fatal(err)
@@ -124,18 +126,11 @@ func buildListLayoutSetup(t *testing.T) {
 // Not parallel: publish the shared build product before parallel corpus shards resume.
 func TestMarkdownListLayout_Setup(t *testing.T) { buildListLayoutSetup(t) }
 
-// Shards may fetch completed products, but a miss must be built by the setup test.
+// A shard prepares the shared products itself, once per process: it fetches them when they are built
+// and builds them on a miss, so it never needs another top-level test to have run first.
 func listLayoutSetup(t *testing.T) listLayoutProducts {
 	t.Helper()
-	listLayoutOnce.Do(func() {
-		directory, err := buildcache.Get(listLayoutSetupInputs(t), func(string) error {
-			return fmt.Errorf("shared setup cache miss: run TestMarkdownListLayout_Setup first")
-		})
-		if err != nil {
-			t.Fatal(err)
-		}
-		loadListLayoutSetup(t, directory)
-	})
+	buildListLayoutSetup(t)
 	if listLayoutShared.sanitized == "" {
 		t.Fatal("shared setup unavailable")
 	}
@@ -743,15 +738,16 @@ func listLayoutShardFixture(t *testing.T, products listLayoutProducts, inputs []
 	}
 }
 
-// Each explicit child has a portable deadline; cancellation includes spawned compilers.
+// A child started inside a shard inherits the shard's deadline; a setup child has none, since setup is
+// off the clock. Cancellation includes spawned compilers either way.
 func listLayoutCommand(t *testing.T, name string, arguments ...string) *exec.Cmd {
 	t.Helper()
-	parent := t.Context()
+	ctx := t.Context()
 	if deadline, ok := listLayoutContexts.Load(t); ok {
-		parent = deadline.(context.Context)
+		var cancel context.CancelFunc
+		ctx, cancel = context.WithTimeout(deadline.(context.Context), 90*time.Second)
+		t.Cleanup(cancel)
 	}
-	ctx, cancel := context.WithTimeout(parent, 90*time.Second)
-	t.Cleanup(cancel)
 	command := exec.CommandContext(ctx, name, arguments...)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
