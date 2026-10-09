@@ -1,0 +1,10 @@
+// An error renamed to nothing and thrown on: String(error) is the message alone when the name is
+// empty, the name alone when the message is.
+try {
+	throw new Error(`message ${1}`);
+} catch (error) {
+	if (error instanceof Error) {
+		error.name = '';
+		throw error;
+	}
+}

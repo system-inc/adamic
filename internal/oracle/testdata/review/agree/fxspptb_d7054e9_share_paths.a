@@ -1,0 +1,65 @@
+// Shared slices of constants and of slices of constants, after the intermediate goes.
+const constant = 'The quick brown fox jumps over the lazy dog, then naps in the sun for a while longer.';
+function sliceOfSliceOfConstant(): string {
+	const middle = constant.slice(3, 80);
+	const inner = middle.slice(2, 70);
+	return inner;
+}
+const kept = sliceOfSliceOfConstant();
+console.log(`${kept.length} ${kept}`);
+const trimmedConstant = '        padded text that is long enough to be shared by trim, sixty four bytes at least     '.trim();
+console.log(`${trimmedConstant.length} [${trimmedConstant}]`);
+const pieces = 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa,bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb'.split(',');
+console.log(`${pieces.length} ${(pieces[0] ?? '').length} ${(pieces[1] ?? '').length}`);
+
+// Append to a string, then slice its grown bytes, then drop the string and keep the slice.
+function grownThenSliced(): string {
+	let text = '';
+	for (let index = 0; index < 50; index++) {
+		text += `${index},`;
+	}
+	const head = text.slice(0, 100);
+	text += 'tail that writes past the end of the shared bytes';
+	const again = text.slice(0, 120);
+	text += '!';
+	return `${head}|${again}|${text.length}`;
+}
+console.log(grownThenSliced());
+
+// Append after every slice of the string is let go: the count is back to one.
+function appendAfterSlicesGo(): string {
+	let text = '';
+	for (let index = 0; index < 40; index++) {
+		text += `${index}é`;
+	}
+	for (let round = 0; round < 3; round++) {
+		const slice = text.slice(1, text.length - 1);
+		console.log(`${slice.length} ${slice.charCodeAt(slice.length - 1)}`);
+	}
+	text += '🌍';
+	text += 'x';
+	return `${text.length} ${text.charCodeAt(text.length - 2)} ${text.slice(-4)}`;
+}
+console.log(appendAfterSlicesGo());
+
+// Slices kept in an array, the owner reassigned many times.
+function manyOwners(): string[] {
+	const out: string[] = [];
+	let source = '';
+	for (let round = 0; round < 5; round++) {
+		source = `${round}`.repeat(100);
+		out.push(source.slice(10, 90));
+		source += 'z';
+	}
+	return out;
+}
+console.log(manyOwners().map((each) => `${each.length}${each.charAt(0)}`).join(' '));
+
+// for...of over a shared slice and code points of a shared slice.
+const wide = 'é🌍'.repeat(40);
+const part = wide.slice(3, 100);
+let count = 0;
+for (const point of part) {
+	count += point.length;
+}
+console.log(`${count} ${[...part].length} ${part.split('🌍').length}`);
