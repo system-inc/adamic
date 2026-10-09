@@ -1,0 +1,9 @@
+--- FAIL: TestOutputsAgree (0.00s)
+    main_test.go:43: mismatch accepted: {Exit:0 Stdout:41
+         Stderr: Error:}
+--- FAIL: TestNewAdmissionMismatch (0.10s)
+    command_test.go:105: missed mismatch: {Base:f934055cab515ed71498c8da5f57fb79d0b2f408 Head:f934055cab515ed71498c8da5f57fb79d0b2f408 GeneratorBlob:e23d21aba10fb9eebc17d63a046dfec17ee8c163 ManifestBlob:3a3900edc546ae0df0cb49f8884dffb67bef24db Admitted:1 Programs:[{program:{Path:corpus/input.a Blob:ae1eab5b6078038b2dc324750a9f0a72cb7b0fad} Corpus:witnesses Class:newly-accepted Base:{Exit:1 Stdout: Stderr:adamic: stage 0 can't lower witness yet
+         Error:} Head:{Exit:0 Stdout: Stderr: Error:} Node:0x4ca11512300 JavaScript:0x4ca11512340 Native:0x4ca11512380 JavaScriptCompile:0x4ca115123c0 NativeCompile:0x4ca11512400 Agree:0x4ca115105cb Sampled:true}] Verdict:pass Corpora:[{Name:witnesses Programs:[{Path:corpus/input.a Blob:ae1eab5b6078038b2dc324750a9f0a72cb7b0fad}]} {Name:fuzz Programs:[]}] SamplingSeed:f934055cab515ed71498c8da5f57fb79d0b2f408 SamplingSize:1 Omitted:0 BudgetSeconds:1 BudgetUsedSeconds:0.066207171} 
+FAIL
+FAIL	github.com/system-inc/adamic/cmd/adamic-admission-delta	0.106s
+FAIL

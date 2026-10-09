@@ -1,0 +1,11 @@
+--- cmd/adamic-admission-delta/main.go
++++ cmd/adamic-admission-delta/main.go
+@@ -300,7 +300,7 @@
+ 			if e != nil {
+ 				return e
+ 			}
+-			if blob != p.Blob {
++			if false && blob != p.Blob {
+ 				return fmt.Errorf("blob mismatch for %s: manifest %s head %s", p.Path, p.Blob, blob)
+ 			}
+ 			a := execute(headTree, *limit, b, "c", p.Path)

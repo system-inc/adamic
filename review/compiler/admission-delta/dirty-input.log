@@ -1,0 +1,7 @@
+--- FAIL: TestHeadInputIsolation (0.05s)
+    command_test.go:136: working-tree edits changed inputs admission delta failed
+         {"base":"417e6dc8b6d4855402f5fad118feb26f75726d05","head":"417e6dc8b6d4855402f5fad118feb26f75726d05","generator_blob":"e23d21aba10fb9eebc17d63a046dfec17ee8c163","manifest_blob":"d6c433afe46c7b86ecbd1d908eb6fe69ae3ace06","admitted":0,"programs":[{"path":"corpus/input.a","blob":"ae1eab5b6078038b2dc324750a9f0a72cb7b0fad","corpus":"witnesses","class":"compiler-crash","base_compile":{"exit":1,"stdout":"","stderr":"panic: dirty source\n"},"compile":{"exit":1,"stdout":"","stderr":"panic: dirty source\n"},"node":null,"javascript":null,"native":null,"agree":null,"sampled":false}],"verdict":"fail","corpora":[{"name":"witnesses","programs":[{"path":"corpus/input.a","blob":"ae1eab5b6078038b2dc324750a9f0a72cb7b0fad"}]},{"name":"fuzz","programs":[]}],"sampling_seed":"417e6dc8b6d4855402f5fad118feb26f75726d05","sampling_size":0,"omitted":0,"budget_seconds":0,"budget_used_seconds":2.2e-7}
+        
+FAIL
+FAIL	github.com/system-inc/adamic/cmd/adamic-admission-delta	0.055s
+FAIL

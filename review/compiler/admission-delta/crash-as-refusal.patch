@@ -1,0 +1,20 @@
+--- cmd/adamic-admission-delta/main.go
++++ cmd/adamic-admission-delta/main.go
+@@ -105,7 +105,7 @@
+ }
+ func compileClass(o observation) string {
+ 	if o.Error != "" || o.Exit < 0 || strings.Contains(o.Stderr, "panic:") || strings.Contains(o.Stderr, "fatal error:") {
+-		return "error"
++		return "refused"
+ 	}
+ 	if o.Exit == 0 {
+ 		return "accepted"
+@@ -113,7 +113,7 @@
+ 	if o.Exit == 1 && (strings.Contains(o.Stderr, "stage 0 can't lower") || strings.Contains(o.Stderr, "Adamic 0.1 refuses") || strings.Contains(o.Stderr, "error TS")) {
+ 		return "refused"
+ 	}
+-	return "error"
++	return "refused"
+ }
+ func classify(a, b observation) string {
+ 	if a.Error == "timeout" || b.Error == "timeout" {

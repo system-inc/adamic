@@ -1,0 +1,8 @@
+--- FAIL: TestSampling (0.00s)
+    main_test.go:56: sample: [4 0 3], omitted 2
+--- FAIL: TestNewAdmissionMismatch (0.04s)
+    command_test.go:105: missed mismatch: {Base:0d365cbcf079c576d28bd095e8d4b5362068e9f6 Head:0d365cbcf079c576d28bd095e8d4b5362068e9f6 GeneratorBlob:e23d21aba10fb9eebc17d63a046dfec17ee8c163 ManifestBlob:11ef8ba62ab05fcce97c830932f931a215b65a99 Admitted:1 Programs:[{program:{Path:corpus/input.a Blob:ae1eab5b6078038b2dc324750a9f0a72cb7b0fad} Corpus:witnesses Class:newly-accepted Base:{Exit:1 Stdout: Stderr:adamic: stage 0 can't lower witness yet
+         Error:} Head:{Exit:0 Stdout: Stderr: Error:} Node:<nil> JavaScript:<nil> Native:<nil> JavaScriptCompile:<nil> NativeCompile:<nil> Agree:<nil> Sampled:false}] Verdict:sampled Corpora:[{Name:witnesses Programs:[{Path:corpus/input.a Blob:ae1eab5b6078038b2dc324750a9f0a72cb7b0fad}]} {Name:fuzz Programs:[]}] SamplingSeed:0d365cbcf079c576d28bd095e8d4b5362068e9f6 SamplingSize:0 Omitted:1 BudgetSeconds:1 BudgetUsedSeconds:3.41e-07} 
+FAIL
+FAIL	github.com/system-inc/adamic/cmd/adamic-admission-delta	0.037s
+FAIL

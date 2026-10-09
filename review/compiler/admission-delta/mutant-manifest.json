@@ -1,0 +1,19 @@
+{
+  "sha": "a682028f87db906bccd2fa95b861b12b3069a44b",
+  "generator": "cloud/admission-corpus/manifest.py",
+  "corpora": [
+    {
+      "name": "witnesses",
+      "programs": [
+        {
+          "path": "review/compiler/admission-delta/unsupported-view.a",
+          "blob": "24e6ea556cbc8f05b56b37d6c32173b2e8819cb6"
+        }
+      ]
+    },
+    {
+      "name": "fuzz",
+      "programs": []
+    }
+  ]
+}
