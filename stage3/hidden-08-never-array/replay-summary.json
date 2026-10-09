@@ -1,0 +1,53 @@
+{
+  "before": {
+    "measurement": "measured on a checker-rejected program",
+    "file": "/tmp/hidden-adapted/src/compiler/utilities.ts",
+    "units": [
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/tmp/hidden-adapted/src/compiler/utilities.ts:9041:1",
+        "kind": "KindVariableStatement",
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "top": "/tmp/hidden-adapted/src/compiler/utilities.ts:9041:1"
+      }
+    ],
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/hidden-adapted/src/compiler/utilities.ts:9041:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/hidden-adapted/src/compiler/utilities.ts:9049:23",
+        "reason": "an array of never",
+        "text": "/tmp/hidden-adapted/src/compiler/utilities.ts:9049:23: stage 0 can't lower an array of never yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/hidden-adapted/src/compiler/utilities.ts:9041:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/hidden-adapted/src/compiler/utilities.ts:9041:1",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/hidden-adapted/src/compiler/utilities.ts:9049:23: stage 0 can't lower an array of never yet",
+        "start": 356194,
+        "end": 365984
+      }
+    ]
+  },
+  "after": {
+    "measurement": "measured on a checker-rejected program",
+    "file": "/tmp/hidden-adapted/src/compiler/utilities.ts",
+    "units": [
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/tmp/hidden-adapted/src/compiler/utilities.ts:9041:1",
+        "kind": "KindVariableStatement",
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "top": "/tmp/hidden-adapted/src/compiler/utilities.ts:9041:1"
+      }
+    ],
+    "findings": []
+  }
+}

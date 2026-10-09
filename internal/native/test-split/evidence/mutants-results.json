@@ -1,0 +1,982 @@
+[
+  {
+    "mutant": "missing-range",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/test-split-native-mutants/missing-range/overlay.json",
+      "./internal/native",
+      "-run",
+      "^TestSplitUnitCoverage$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "10m"
+    ],
+    "exit": 1,
+    "failed": [
+      "TestSplitUnitCoverage/decode_prefixes",
+      "TestSplitUnitCoverage/normalize_points",
+      "TestSplitUnitCoverage/random_regex"
+    ],
+    "passed": 5
+  },
+  {
+    "mutant": "missing-wasi-fixture",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/test-split-native-mutants/missing-wasi-fixture/overlay.json",
+      "./internal/native",
+      "-run",
+      "^TestSplitUnitCoverage$/^WASI$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "10m"
+    ],
+    "exit": 1,
+    "failed": [
+      "TestSplitUnitCoverage/WASI"
+    ],
+    "passed": 0
+  },
+  {
+    "mutant": "changed-wasi-membership",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/test-split-native-mutants/changed-wasi-membership/overlay.json",
+      "./internal/native",
+      "-run",
+      "^TestSplitUnitCoverage$/^WASI$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "10m"
+    ],
+    "exit": 1,
+    "failed": [
+      "TestSplitUnitCoverage/WASI"
+    ],
+    "passed": 0
+  },
+  {
+    "mutant": "missing-cache-mode",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/test-split-native-mutants/missing-cache-mode/overlay.json",
+      "./internal/native",
+      "-run",
+      "^TestSplitUnitCoverage$/^split_cache$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "10m"
+    ],
+    "exit": 1,
+    "failed": [
+      "TestSplitUnitCoverage/split_cache"
+    ],
+    "passed": 0
+  },
+  {
+    "mutant": "duplicate-record-mutant",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/test-split-native-mutants/duplicate-record-mutant/overlay.json",
+      "./internal/native",
+      "-run",
+      "^TestSplitUnitCoverage$/^record_mutants$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "10m"
+    ],
+    "exit": 1,
+    "failed": [
+      "TestSplitUnitCoverage/record_mutants"
+    ],
+    "passed": 0
+  },
+  {
+    "mutant": "missing-decode-target",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/test-split-native-mutants/missing-decode-target/overlay.json",
+      "./internal/native",
+      "-run",
+      "^TestSplitUnitCoverage$/^decode_targets$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "10m"
+    ],
+    "exit": 1,
+    "failed": [
+      "TestSplitUnitCoverage/decode_targets"
+    ],
+    "passed": 0
+  },
+  {
+    "mutant": "duplicate-shard-owner",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/test-split-native-mutants/duplicate-shard-owner/overlay.json",
+      "./internal/native",
+      "-run",
+      "^TestSplitUnitCoverage$/^shard_union$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "10m"
+    ],
+    "exit": 1,
+    "failed": [
+      "TestSplitUnitCoverage/shard_union"
+    ],
+    "passed": 0
+  },
+  {
+    "mutant": "invalid-shard-accepted",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/test-split-native-mutants/invalid-shard-accepted/overlay.json",
+      "./internal/native",
+      "-run",
+      "^TestShardSelection$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "10m"
+    ],
+    "exit": 1,
+    "failed": [
+      "TestShardSelection"
+    ],
+    "passed": 0
+  },
+  {
+    "mutant": "artifact-input-ignored",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/test-split-native-mutants/artifact-input-ignored/overlay.json",
+      "./internal/native",
+      "-run",
+      "^TestArtifactInputsAndReuse$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "10m"
+    ],
+    "exit": 1,
+    "failed": [
+      "TestArtifactInputsAndReuse"
+    ],
+    "passed": 0
+  },
+  {
+    "mutant": "artifact-reuse-disabled",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/test-split-native-mutants/artifact-reuse-disabled/overlay.json",
+      "./internal/native",
+      "-run",
+      "^TestArtifactInputsAndReuse$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "10m"
+    ],
+    "exit": 1,
+    "failed": [
+      "TestArtifactInputsAndReuse"
+    ],
+    "passed": 0
+  },
+  {
+    "mutant": "regex-fixture",
+    "shard": "0/40",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/test-split-native-mutants/regex-fixture/overlay.json",
+      "./internal/native",
+      "-run",
+      "^TestRegExpBytecodeRandomNode$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "10m"
+    ],
+    "exit": 0,
+    "unit": "TestRegExpBytecodeRandomNode/cases_000000_000250"
+  },
+  {
+    "mutant": "regex-fixture",
+    "shard": "1/40",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/test-split-native-mutants/regex-fixture/overlay.json",
+      "./internal/native",
+      "-run",
+      "^TestRegExpBytecodeRandomNode$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "10m"
+    ],
+    "exit": 0,
+    "unit": "TestRegExpBytecodeRandomNode/cases_000250_000500"
+  },
+  {
+    "mutant": "regex-fixture",
+    "shard": "2/40",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/test-split-native-mutants/regex-fixture/overlay.json",
+      "./internal/native",
+      "-run",
+      "^TestRegExpBytecodeRandomNode$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "10m"
+    ],
+    "exit": 1,
+    "unit": "TestRegExpBytecodeRandomNode/cases_000500_000750"
+  },
+  {
+    "mutant": "regex-fixture",
+    "shard": "3/40",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/test-split-native-mutants/regex-fixture/overlay.json",
+      "./internal/native",
+      "-run",
+      "^TestRegExpBytecodeRandomNode$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "10m"
+    ],
+    "exit": 0,
+    "unit": "TestRegExpBytecodeRandomNode/cases_000750_001000"
+  },
+  {
+    "mutant": "regex-fixture",
+    "shard": "4/40",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/test-split-native-mutants/regex-fixture/overlay.json",
+      "./internal/native",
+      "-run",
+      "^TestRegExpBytecodeRandomNode$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "10m"
+    ],
+    "exit": 0,
+    "unit": "TestRegExpBytecodeRandomNode/cases_001000_001250"
+  },
+  {
+    "mutant": "regex-fixture",
+    "shard": "5/40",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/test-split-native-mutants/regex-fixture/overlay.json",
+      "./internal/native",
+      "-run",
+      "^TestRegExpBytecodeRandomNode$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "10m"
+    ],
+    "exit": 0,
+    "unit": "TestRegExpBytecodeRandomNode/cases_001250_001500"
+  },
+  {
+    "mutant": "regex-fixture",
+    "shard": "6/40",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/test-split-native-mutants/regex-fixture/overlay.json",
+      "./internal/native",
+      "-run",
+      "^TestRegExpBytecodeRandomNode$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "10m"
+    ],
+    "exit": 0,
+    "unit": "TestRegExpBytecodeRandomNode/cases_001500_001750"
+  },
+  {
+    "mutant": "regex-fixture",
+    "shard": "7/40",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/test-split-native-mutants/regex-fixture/overlay.json",
+      "./internal/native",
+      "-run",
+      "^TestRegExpBytecodeRandomNode$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "10m"
+    ],
+    "exit": 0,
+    "unit": "TestRegExpBytecodeRandomNode/cases_001750_002000"
+  },
+  {
+    "mutant": "regex-fixture",
+    "shard": "8/40",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/test-split-native-mutants/regex-fixture/overlay.json",
+      "./internal/native",
+      "-run",
+      "^TestRegExpBytecodeRandomNode$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "10m"
+    ],
+    "exit": 0,
+    "unit": "TestRegExpBytecodeRandomNode/cases_002000_002250"
+  },
+  {
+    "mutant": "regex-fixture",
+    "shard": "9/40",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/test-split-native-mutants/regex-fixture/overlay.json",
+      "./internal/native",
+      "-run",
+      "^TestRegExpBytecodeRandomNode$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "10m"
+    ],
+    "exit": 0,
+    "unit": "TestRegExpBytecodeRandomNode/cases_002250_002500"
+  },
+  {
+    "mutant": "regex-fixture",
+    "shard": "10/40",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/test-split-native-mutants/regex-fixture/overlay.json",
+      "./internal/native",
+      "-run",
+      "^TestRegExpBytecodeRandomNode$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "10m"
+    ],
+    "exit": 0,
+    "unit": "TestRegExpBytecodeRandomNode/cases_002500_002750"
+  },
+  {
+    "mutant": "regex-fixture",
+    "shard": "11/40",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/test-split-native-mutants/regex-fixture/overlay.json",
+      "./internal/native",
+      "-run",
+      "^TestRegExpBytecodeRandomNode$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "10m"
+    ],
+    "exit": 0,
+    "unit": "TestRegExpBytecodeRandomNode/cases_002750_003000"
+  },
+  {
+    "mutant": "regex-fixture",
+    "shard": "12/40",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/test-split-native-mutants/regex-fixture/overlay.json",
+      "./internal/native",
+      "-run",
+      "^TestRegExpBytecodeRandomNode$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "10m"
+    ],
+    "exit": 0,
+    "unit": "TestRegExpBytecodeRandomNode/cases_003000_003250"
+  },
+  {
+    "mutant": "regex-fixture",
+    "shard": "13/40",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/test-split-native-mutants/regex-fixture/overlay.json",
+      "./internal/native",
+      "-run",
+      "^TestRegExpBytecodeRandomNode$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "10m"
+    ],
+    "exit": 0,
+    "unit": "TestRegExpBytecodeRandomNode/cases_003250_003500"
+  },
+  {
+    "mutant": "regex-fixture",
+    "shard": "14/40",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/test-split-native-mutants/regex-fixture/overlay.json",
+      "./internal/native",
+      "-run",
+      "^TestRegExpBytecodeRandomNode$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "10m"
+    ],
+    "exit": 0,
+    "unit": "TestRegExpBytecodeRandomNode/cases_003500_003750"
+  },
+  {
+    "mutant": "regex-fixture",
+    "shard": "15/40",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/test-split-native-mutants/regex-fixture/overlay.json",
+      "./internal/native",
+      "-run",
+      "^TestRegExpBytecodeRandomNode$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "10m"
+    ],
+    "exit": 0,
+    "unit": "TestRegExpBytecodeRandomNode/cases_003750_004000"
+  },
+  {
+    "mutant": "regex-fixture",
+    "shard": "16/40",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/test-split-native-mutants/regex-fixture/overlay.json",
+      "./internal/native",
+      "-run",
+      "^TestRegExpBytecodeRandomNode$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "10m"
+    ],
+    "exit": 0,
+    "unit": "TestRegExpBytecodeRandomNode/cases_004000_004250"
+  },
+  {
+    "mutant": "regex-fixture",
+    "shard": "17/40",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/test-split-native-mutants/regex-fixture/overlay.json",
+      "./internal/native",
+      "-run",
+      "^TestRegExpBytecodeRandomNode$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "10m"
+    ],
+    "exit": 0,
+    "unit": "TestRegExpBytecodeRandomNode/cases_004250_004500"
+  },
+  {
+    "mutant": "regex-fixture",
+    "shard": "18/40",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/test-split-native-mutants/regex-fixture/overlay.json",
+      "./internal/native",
+      "-run",
+      "^TestRegExpBytecodeRandomNode$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "10m"
+    ],
+    "exit": 0,
+    "unit": "TestRegExpBytecodeRandomNode/cases_004500_004750"
+  },
+  {
+    "mutant": "regex-fixture",
+    "shard": "19/40",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/test-split-native-mutants/regex-fixture/overlay.json",
+      "./internal/native",
+      "-run",
+      "^TestRegExpBytecodeRandomNode$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "10m"
+    ],
+    "exit": 0,
+    "unit": "TestRegExpBytecodeRandomNode/cases_004750_005000"
+  },
+  {
+    "mutant": "regex-fixture",
+    "shard": "20/40",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/test-split-native-mutants/regex-fixture/overlay.json",
+      "./internal/native",
+      "-run",
+      "^TestRegExpBytecodeRandomNode$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "10m"
+    ],
+    "exit": 0,
+    "unit": "TestRegExpBytecodeRandomNode/cases_005000_005250"
+  },
+  {
+    "mutant": "regex-fixture",
+    "shard": "21/40",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/test-split-native-mutants/regex-fixture/overlay.json",
+      "./internal/native",
+      "-run",
+      "^TestRegExpBytecodeRandomNode$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "10m"
+    ],
+    "exit": 0,
+    "unit": "TestRegExpBytecodeRandomNode/cases_005250_005500"
+  },
+  {
+    "mutant": "regex-fixture",
+    "shard": "22/40",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/test-split-native-mutants/regex-fixture/overlay.json",
+      "./internal/native",
+      "-run",
+      "^TestRegExpBytecodeRandomNode$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "10m"
+    ],
+    "exit": 0,
+    "unit": "TestRegExpBytecodeRandomNode/cases_005500_005750"
+  },
+  {
+    "mutant": "regex-fixture",
+    "shard": "23/40",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/test-split-native-mutants/regex-fixture/overlay.json",
+      "./internal/native",
+      "-run",
+      "^TestRegExpBytecodeRandomNode$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "10m"
+    ],
+    "exit": 0,
+    "unit": "TestRegExpBytecodeRandomNode/cases_005750_006000"
+  },
+  {
+    "mutant": "regex-fixture",
+    "shard": "24/40",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/test-split-native-mutants/regex-fixture/overlay.json",
+      "./internal/native",
+      "-run",
+      "^TestRegExpBytecodeRandomNode$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "10m"
+    ],
+    "exit": 0,
+    "unit": "TestRegExpBytecodeRandomNode/cases_006000_006250"
+  },
+  {
+    "mutant": "regex-fixture",
+    "shard": "25/40",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/test-split-native-mutants/regex-fixture/overlay.json",
+      "./internal/native",
+      "-run",
+      "^TestRegExpBytecodeRandomNode$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "10m"
+    ],
+    "exit": 0,
+    "unit": "TestRegExpBytecodeRandomNode/cases_006250_006500"
+  },
+  {
+    "mutant": "regex-fixture",
+    "shard": "26/40",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/test-split-native-mutants/regex-fixture/overlay.json",
+      "./internal/native",
+      "-run",
+      "^TestRegExpBytecodeRandomNode$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "10m"
+    ],
+    "exit": 0,
+    "unit": "TestRegExpBytecodeRandomNode/cases_006500_006750"
+  },
+  {
+    "mutant": "regex-fixture",
+    "shard": "27/40",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/test-split-native-mutants/regex-fixture/overlay.json",
+      "./internal/native",
+      "-run",
+      "^TestRegExpBytecodeRandomNode$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "10m"
+    ],
+    "exit": 0,
+    "unit": "TestRegExpBytecodeRandomNode/cases_006750_007000"
+  },
+  {
+    "mutant": "regex-fixture",
+    "shard": "28/40",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/test-split-native-mutants/regex-fixture/overlay.json",
+      "./internal/native",
+      "-run",
+      "^TestRegExpBytecodeRandomNode$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "10m"
+    ],
+    "exit": 0,
+    "unit": "TestRegExpBytecodeRandomNode/cases_007000_007250"
+  },
+  {
+    "mutant": "regex-fixture",
+    "shard": "29/40",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/test-split-native-mutants/regex-fixture/overlay.json",
+      "./internal/native",
+      "-run",
+      "^TestRegExpBytecodeRandomNode$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "10m"
+    ],
+    "exit": 0,
+    "unit": "TestRegExpBytecodeRandomNode/cases_007250_007500"
+  },
+  {
+    "mutant": "regex-fixture",
+    "shard": "30/40",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/test-split-native-mutants/regex-fixture/overlay.json",
+      "./internal/native",
+      "-run",
+      "^TestRegExpBytecodeRandomNode$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "10m"
+    ],
+    "exit": 0,
+    "unit": "TestRegExpBytecodeRandomNode/cases_007500_007750"
+  },
+  {
+    "mutant": "regex-fixture",
+    "shard": "31/40",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/test-split-native-mutants/regex-fixture/overlay.json",
+      "./internal/native",
+      "-run",
+      "^TestRegExpBytecodeRandomNode$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "10m"
+    ],
+    "exit": 0,
+    "unit": "TestRegExpBytecodeRandomNode/cases_007750_008000"
+  },
+  {
+    "mutant": "regex-fixture",
+    "shard": "32/40",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/test-split-native-mutants/regex-fixture/overlay.json",
+      "./internal/native",
+      "-run",
+      "^TestRegExpBytecodeRandomNode$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "10m"
+    ],
+    "exit": 0,
+    "unit": "TestRegExpBytecodeRandomNode/cases_008000_008250"
+  },
+  {
+    "mutant": "regex-fixture",
+    "shard": "33/40",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/test-split-native-mutants/regex-fixture/overlay.json",
+      "./internal/native",
+      "-run",
+      "^TestRegExpBytecodeRandomNode$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "10m"
+    ],
+    "exit": 0,
+    "unit": "TestRegExpBytecodeRandomNode/cases_008250_008500"
+  },
+  {
+    "mutant": "regex-fixture",
+    "shard": "34/40",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/test-split-native-mutants/regex-fixture/overlay.json",
+      "./internal/native",
+      "-run",
+      "^TestRegExpBytecodeRandomNode$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "10m"
+    ],
+    "exit": 0,
+    "unit": "TestRegExpBytecodeRandomNode/cases_008500_008750"
+  },
+  {
+    "mutant": "regex-fixture",
+    "shard": "35/40",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/test-split-native-mutants/regex-fixture/overlay.json",
+      "./internal/native",
+      "-run",
+      "^TestRegExpBytecodeRandomNode$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "10m"
+    ],
+    "exit": 0,
+    "unit": "TestRegExpBytecodeRandomNode/cases_008750_009000"
+  },
+  {
+    "mutant": "regex-fixture",
+    "shard": "36/40",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/test-split-native-mutants/regex-fixture/overlay.json",
+      "./internal/native",
+      "-run",
+      "^TestRegExpBytecodeRandomNode$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "10m"
+    ],
+    "exit": 0,
+    "unit": "TestRegExpBytecodeRandomNode/cases_009000_009250"
+  },
+  {
+    "mutant": "regex-fixture",
+    "shard": "37/40",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/test-split-native-mutants/regex-fixture/overlay.json",
+      "./internal/native",
+      "-run",
+      "^TestRegExpBytecodeRandomNode$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "10m"
+    ],
+    "exit": 0,
+    "unit": "TestRegExpBytecodeRandomNode/cases_009250_009500"
+  },
+  {
+    "mutant": "regex-fixture",
+    "shard": "38/40",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/test-split-native-mutants/regex-fixture/overlay.json",
+      "./internal/native",
+      "-run",
+      "^TestRegExpBytecodeRandomNode$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "10m"
+    ],
+    "exit": 0,
+    "unit": "TestRegExpBytecodeRandomNode/cases_009500_009750"
+  },
+  {
+    "mutant": "regex-fixture",
+    "shard": "39/40",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/test-split-native-mutants/regex-fixture/overlay.json",
+      "./internal/native",
+      "-run",
+      "^TestRegExpBytecodeRandomNode$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "10m"
+    ],
+    "exit": 0,
+    "unit": "TestRegExpBytecodeRandomNode/cases_009750_010000"
+  },
+  {
+    "mutant": "elapsed-over-budget",
+    "caught": "[{\"test\": \"planted\", \"action\": \"pass\", \"seconds\": 30.001}]"
+  },
+  {
+    "mutant": "invocation-over-budget",
+    "caught": "selector probe invocation took 30.001 seconds"
+  }
+]

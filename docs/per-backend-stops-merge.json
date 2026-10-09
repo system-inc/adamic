@@ -1,0 +1,65 @@
+{
+  "incoming": "c79c75726375c937f0b18e18040e6769d916ed06",
+  "branch_parent": "5f3b2e36fd4594b9e93e1cf15c5d03f8f632261b",
+  "textual_conflicts": [],
+  "semantic_conflicts": {
+    "internal/native/emit_objects.go": "Preserve optional presence with adamic_slot_index(object, slot) instead of the removed cache.index; keep the atomic packed cache.",
+    "internal/native/reuse.go": "Apply the same object-relative presence write to the reuse path.",
+    "stage3/fixtures/real/status.json": "Advance only two already-compiling incoming-stack fixtures after recorded/current Node, native sanitizers and leak checks."
+  },
+  "counts_regeneration_changes": [],
+  "counts_against_incoming": [
+    {
+      "fixture": "internal/oracle/testdata/4ddd17f_weak_single_narrowed.a",
+      "before": null,
+      "after": "| internal/oracle/testdata/4ddd17f_weak_single_narrowed.a | 4 | 2 | 4 | 6 | 4 | 0 |"
+    },
+    {
+      "fixture": "internal/oracle/testdata/backend_stop_catches.a",
+      "before": null,
+      "after": "| internal/oracle/testdata/backend_stop_catches.a | 2 | 2 | 6 | 4 | 1 | 0 |"
+    },
+    {
+      "fixture": "internal/oracle/testdata/d96d304_try_stack.a",
+      "before": null,
+      "after": "| internal/oracle/testdata/d96d304_try_stack.a | 0 | 0 | 0 | 0 | 0 | 0 |"
+    }
+  ],
+  "stage3_record_changes": [
+    "structural-method-statics/main.a",
+    "generic-optional-return/main.a"
+  ],
+  "a_check": {
+    "a_check": {
+      "internal/oracle/testdata/4ddd17f_weak_single_narrowed.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "internal/oracle/testdata/backend_stop_catches.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "internal/oracle/testdata/d96d304_try_stack.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      }
+    }
+  },
+  "mutants": [
+    "unlisted-output: exit 1, caught by unlisted backend divergence: stdout differs; /tmp/backend-stop-mutants/unlisted-output.log",
+    "drop-terminal-guard: exit 1, caught by terminal stack stop: exit codes differ; /tmp/backend-stop-mutants/drop-terminal-guard.log",
+    "drop-range-error-kind: exit 1, caught by exit codes differ; /tmp/backend-stop-mutants/drop-range-error-kind.log",
+    "drop-overflow-message: exit 1, caught by non-overflow RangeError was terminal: exit codes differ; /tmp/backend-stop-mutants/drop-overflow-message.log"
+  ],
+  "passed_logs": [
+    "/tmp/stops-stack-build-final.log",
+    "/tmp/stops-stack-vet-final.log",
+    "/tmp/stops-stack-stage3-final.log",
+    "/tmp/stops-stack-counts-final.log",
+    "/tmp/stops-stack-focused.log"
+  ],
+  "incoming_stage3_failure_log": "/tmp/stops-stack-base-stage3.log"
+}

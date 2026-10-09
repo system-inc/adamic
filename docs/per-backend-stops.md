@@ -80,3 +80,29 @@ step-duration 0.007s; submodules ready 0.080s; markdown dependencies ready 0.081
 clang ready 0.196s; go build ready 45.086s; test binaries deferred 45.239s;
 build cache warm 45.240s; done 45.270s. nproc=5, CPU quota=4. Go 1.27.1,
 clang 20.1.8, Node 24.19.0. Environment: /workspace/adamic-tools/env.sh.
+
+
+Merged landing stack validation
+
+The merge from c79c75726375c937f0b18e18040e6769d916ed06 has no textual
+conflicts. Initial stage3 failures reproduce on that incoming stack. Two semantic
+cache handoffs are resolved in native/emit_objects.go and native/reuse.go: both
+preserve presence publication using the returned slot's object-relative index,
+while retaining runtime's packed atomic cache. The two already-admitted stage3
+real fixtures, generic-optional-return/main.a and structural-method-statics/main.a,
+advance from NotYet to Compiles only through the Node/native update path. All
+other record fields remain unchanged.
+
+Final merged-tree checks pass: go build ./...; go vet ./internal/...;
+unchanged archived Gate.aCheck on the three .a files differing from c79c7572;
+go test ./stage3/fixtures -count=1 -timeout 30m (45.376s); the four original
+unit mutants (each exit 1 through the intended behavior assertion); and the
+expanded focused oracle on this unit plus optional-field, spread/reuse and object
+fixtures (20.798s), with source/backend Node, native release, sanitizers and leaks.
+
+Counts regeneration passes (168.311s). No row moves from the auto-merged table.
+Against c79c7572 the only differences are the unit's three new rows, with the
+same counts listed above. No repository gate or whole-package test was run.
+Full comparison, conflict decisions and log locations are recorded in
+per-backend-stops-merge.json. Initial failing runs are retained separately from
+these final passing results.
