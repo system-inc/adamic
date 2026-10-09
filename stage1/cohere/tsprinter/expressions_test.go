@@ -1,14 +1,17 @@
 package tsprinter
 
 import (
+	"crypto/sha256"
 	"encoding/json"
 	"fmt"
 	"os"
 	"path/filepath"
 	"runtime"
+	"strings"
 	"testing"
 	"time"
 
+	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
 )
@@ -89,15 +92,20 @@ func TestExpressionsAgainstGoAndPrettier(t *testing.T) {
 	if clang.exitCode != 0 {
 		t.Fatalf("clang version: %s", clang.stderr)
 	}
-	var source string
 	loweredProduct := expressionBuild(t, printerBuildInputs{Name: "lowered expression program", Files: expressionInputFiles(t, repository), Toolchain: "Adamic " + runtime.Version()}, func(dir string) error {
 		program := lowered(t, port)
-		source = native.C(program)
+		source := native.C(program)
 		if err := os.WriteFile(dir+"/port.c", []byte(source), 0644); err != nil {
 			return err
 		}
 		return os.WriteFile(dir+"/program.mjs", []byte(javascript.JavaScript(program)), 0644)
 	})
+	data, err := os.ReadFile(loweredProduct + "/port.c")
+	if err != nil {
+		t.Fatal(err)
+	}
+	source := string(data)
+
 	sanitized := expressionBuild(t, printerBuildInputs{Name: "sanitized expression binary", Files: append([]string{loweredProduct + "/port.c"}, expressionInputFiles(t, filepath.Join(repository, "internal/native"))...), Flags: native.Flags(native.Options{Sanitize: true}), Toolchain: string(clang.stdout)}, func(dir string) error {
 		return native.Build(source, dir+"/port", native.Options{Sanitize: true})
 	}) + "/port"
@@ -194,8 +202,7 @@ func TestExpressionsAgainstGoAndPrettier(t *testing.T) {
 	}
 }
 
-// No package cache: each product is built once per invocation, then shared.
-// Inputs sit beside the build callback for migration to internal/buildcache.
+// Inputs describe read-only shared products; overlay oracles are built privately.
 type printerBuildInputs struct {
 	Name         string
 	Files, Flags []string
@@ -204,11 +211,40 @@ type printerBuildInputs struct {
 
 func expressionBuild(t *testing.T, inputs printerBuildInputs, build func(dir string) error) string {
 	t.Helper()
-	dir := t.TempDir()
-	start := time.Now()
-	if err := build(dir); err != nil {
-		t.Fatalf("build %s: %v", inputs.Name, err)
+	// Overlay oracle builds remain private: GoBuild deliberately refuses overlays.
+	for _, flag := range inputs.Flags {
+		if strings.Contains(flag, "overlay") {
+			dir := t.TempDir()
+			start := time.Now()
+			if err := build(dir); err != nil {
+				t.Fatalf("build %s: %v", inputs.Name, err)
+			}
+			t.Logf("build %s cold wall %.3fs (overlay, uncached)", inputs.Name, time.Since(start).Seconds())
+			return dir
+		}
 	}
-	t.Logf("build %s cold wall %.3fs (toolchain %s, %d files, flags %q)", inputs.Name, time.Since(start).Seconds(), inputs.Toolchain, len(inputs.Files), inputs.Flags)
-	return dir
+	root, err := filepath.Abs(repository)
+	if err != nil {
+		t.Fatal(err)
+	}
+	key := buildcache.Inputs{Name: inputs.Name, Flags: append([]string{}, inputs.Flags...), Toolchain: []string{inputs.Toolchain, runtime.Version(), runtime.GOOS, runtime.GOARCH}}
+	for _, file := range inputs.Files {
+		relative, err := filepath.Rel(root, file)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if relative == ".." || strings.HasPrefix(relative, ".."+string(filepath.Separator)) {
+			// Generated inputs live in a read-only product outside the repository.
+			// Its bytes, rather than the machine-specific cache path, identify it.
+			data, err := os.ReadFile(file)
+			if err != nil {
+				t.Fatal(err)
+			}
+			key.Flags = append(key.Flags, fmt.Sprintf("generated:%s:%x", filepath.Base(file), sha256.Sum256(data)))
+		} else {
+			key.Files = append(key.Files, filepath.ToSlash(relative))
+		}
+	}
+	key.Flags = append(key.Flags, "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
+	return buildcache.Product(t, key, build)
 }
