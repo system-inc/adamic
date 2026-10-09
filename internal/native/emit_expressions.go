@@ -765,6 +765,8 @@ func (e *emitter) binary(operator ir.Operator, operandType ir.Type, left string,
 		return fmt.Sprintf("(!adamic_string_equal(%s, %s))", left, right)
 	case operandType.IsMaybe() && (operator == ir.Equal || operator == ir.NotEqual):
 		return pairEquality(operator, operandType, left, right)
+	case operandType == ir.Closure && (operator == ir.Equal || operator == ir.NotEqual):
+		return fmt.Sprintf("(adamic_view_adapter_underlying(%s) %s adamic_view_adapter_underlying(%s))", left, cOperators[operator], right)
 	case operandType == ir.Union && operator == ir.Equal:
 		return fmt.Sprintf("adamic_union_equal(%s, %s)", left, right)
 	case operandType == ir.Union && operator == ir.NotEqual:

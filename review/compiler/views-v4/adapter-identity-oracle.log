@@ -1,0 +1,281 @@
+=== RUN   TestV4DirectArgument
+=== PAUSE TestV4DirectArgument
+=== RUN   TestV4DirectResult
+=== PAUSE TestV4DirectResult
+=== RUN   TestV4DirectCompatible
+=== PAUSE TestV4DirectCompatible
+=== RUN   TestV4DirectMethod
+=== PAUSE TestV4DirectMethod
+=== RUN   TestV4DirectObjectArgument
+=== PAUSE TestV4DirectObjectArgument
+=== RUN   TestV4DirectArrayArgument
+=== PAUSE TestV4DirectArrayArgument
+=== RUN   TestV4DirectCalleeOrder
+=== PAUSE TestV4DirectCalleeOrder
+=== RUN   TestV4DirectBoxed
+=== PAUSE TestV4DirectBoxed
+=== RUN   TestV4DirectUnused
+=== PAUSE TestV4DirectUnused
+=== RUN   TestV4DirectOptionalReceiver
+=== PAUSE TestV4DirectOptionalReceiver
+=== RUN   TestV4DirectVoid
+=== PAUSE TestV4DirectVoid
+=== RUN   TestV4DirectNull
+=== PAUSE TestV4DirectNull
+=== RUN   TestV4DirectUnknownProducerParameter
+=== PAUSE TestV4DirectUnknownProducerParameter
+=== RUN   TestV4DirectClassResult
+=== PAUSE TestV4DirectClassResult
+=== RUN   TestV4DirectRecursiveRefusal
+=== PAUSE TestV4DirectRecursiveRefusal
+=== RUN   TestV4DirectProducerRefusal
+=== PAUSE TestV4DirectProducerRefusal
+=== RUN   TestV4EscapeArgumentRefusal
+=== PAUSE TestV4EscapeArgumentRefusal
+=== RUN   TestV4EscapeResultRefusal
+=== PAUSE TestV4EscapeResultRefusal
+=== RUN   TestV4EscapePassedRefusal
+=== PAUSE TestV4EscapePassedRefusal
+=== RUN   TestV4EscapeReturnedRefusal
+=== PAUSE TestV4EscapeReturnedRefusal
+=== RUN   TestV4EscapeMixedProducerRefusal
+=== PAUSE TestV4EscapeMixedProducerRefusal
+=== RUN   TestV4EscapeCompatible
+=== PAUSE TestV4EscapeCompatible
+=== RUN   TestV4EscapeTypeScriptBoundary
+=== PAUSE TestV4EscapeTypeScriptBoundary
+=== RUN   TestV4EscapeOrdinaryRead
+=== PAUSE TestV4EscapeOrdinaryRead
+=== RUN   TestV4EscapeAdapterArgument
+=== PAUSE TestV4EscapeAdapterArgument
+=== RUN   TestV4EscapeAdapterResult
+=== PAUSE TestV4EscapeAdapterResult
+=== RUN   TestV4EscapeAdapterIdentity
+=== PAUSE TestV4EscapeAdapterIdentity
+=== RUN   TestV4EscapeAdapterNoStacking
+=== PAUSE TestV4EscapeAdapterNoStacking
+=== RUN   TestV4EscapeAdapterUnusedMisfit
+=== PAUSE TestV4EscapeAdapterUnusedMisfit
+=== RUN   TestV4EscapeAdapterReturned
+=== PAUSE TestV4EscapeAdapterReturned
+=== RUN   TestV4EscapeAdapterBoxed
+=== PAUSE TestV4EscapeAdapterBoxed
+=== RUN   TestV4EscapeAdapterCounted
+=== PAUSE TestV4EscapeAdapterCounted
+=== RUN   TestV4EscapeAdapterUncheckableRefusal
+=== PAUSE TestV4EscapeAdapterUncheckableRefusal
+=== RUN   TestV4EscapeAdapterNull
+=== PAUSE TestV4EscapeAdapterNull
+=== RUN   TestV4EscapeAdapterVoid
+=== PAUSE TestV4EscapeAdapterVoid
+=== RUN   TestV4EscapeAdapterConstructorIdentity
+=== PAUSE TestV4EscapeAdapterConstructorIdentity
+=== RUN   TestV4EscapeAdapterCollectionKeyContract
+=== PAUSE TestV4EscapeAdapterCollectionKeyContract
+=== RUN   TestV4EscapeAdapterScalarIdentityControls
+=== PAUSE TestV4EscapeAdapterScalarIdentityControls
+=== RUN   TestViewAdapterBaselineCountsClosures
+=== PAUSE TestViewAdapterBaselineCountsClosures
+=== RUN   TestViewAdapterBaselineCountsMethods
+=== PAUSE TestViewAdapterBaselineCountsMethods
+=== RUN   TestViewAdapterBaselineCountsReceiverRest
+=== PAUSE TestViewAdapterBaselineCountsReceiverRest
+=== CONT  TestV4DirectArgument
+=== CONT  TestV4EscapeCompatible
+=== CONT  TestV4EscapeMixedProducerRefusal
+=== CONT  TestViewAdapterBaselineCountsReceiverRest
+=== CONT  TestV4EscapeAdapterCounted
+=== NAME  TestViewAdapterBaselineCountsReceiverRest
+    view_adapter_runtime_counts_test.go:28: before | internal/oracle/testdata/closure_convention_receiver_rest.a | 11 | 11 | 12 | 23 | 7 | 0 |
+        after  | internal/oracle/testdata/closure_convention_receiver_rest.a | 11 | 11 | 12 | 23 | 7 | 0 |
+--- PASS: TestViewAdapterBaselineCountsReceiverRest (0.23s)
+=== CONT  TestV4EscapeReturnedRefusal
+--- PASS: TestV4EscapeMixedProducerRefusal (0.34s)
+=== CONT  TestV4EscapePassedRefusal
+--- PASS: TestV4EscapeReturnedRefusal (0.23s)
+=== CONT  TestV4EscapeResultRefusal
+--- PASS: TestV4EscapePassedRefusal (0.25s)
+=== CONT  TestV4EscapeArgumentRefusal
+--- PASS: TestV4EscapeResultRefusal (0.22s)
+=== CONT  TestV4DirectProducerRefusal
+--- PASS: TestV4EscapeArgumentRefusal (0.24s)
+=== CONT  TestV4DirectRecursiveRefusal
+--- PASS: TestV4EscapeCompatible (0.86s)
+=== CONT  TestV4DirectClassResult
+=== NAME  TestV4EscapeAdapterCounted
+    checked_views_v4_escape_test.go:327: guard mutant admitted in native: exit 0 output "0:absent\n1:ok\n"
+    checked_views_v4_escape_test.go:327: guard mutant admitted in sanitized: exit 0 output "0:absent\n1:ok\n"
+    checked_views_v4_escape_test.go:327: guard mutant admitted in javascript: exit 0 output "0:absent\n1:ok\n"
+--- PASS: TestV4EscapeAdapterCounted (0.90s)
+=== CONT  TestV4DirectUnknownProducerParameter
+--- PASS: TestV4DirectProducerRefusal (0.26s)
+=== CONT  TestV4DirectNull
+=== NAME  TestV4DirectClassResult
+    checked_views_v4_direct_test.go:297: source Node: exit=0 stdout="ok\n"
+--- PASS: TestV4DirectRecursiveRefusal (0.22s)
+=== CONT  TestV4DirectVoid
+=== NAME  TestV4DirectUnknownProducerParameter
+    checked_views_v4_direct_test.go:288: source Node: exit=0 stdout="ok\n"
+=== NAME  TestV4DirectNull
+    checked_views_v4_direct_test.go:279: source Node: exit=0 stdout="true\n"
+=== NAME  TestV4DirectArgument
+    checked_views_v4_direct_test.go:109: javascript argument check omission caught: exit 0 output "argument\nproducer\n"
+    checked_views_v4_direct_test.go:109: native argument check omission caught: exit 0 output "argument\nproducer\n"
+    checked_views_v4_direct_test.go:109: sanitized argument check omission caught: exit 0 output "argument\nproducer\n"
+--- PASS: TestV4DirectArgument (1.18s)
+=== CONT  TestV4DirectOptionalReceiver
+=== NAME  TestV4DirectVoid
+    checked_views_v4_direct_test.go:270: source Node: exit=0 stdout="done\n"
+=== NAME  TestV4DirectOptionalReceiver
+    checked_views_v4_direct_test.go:260: source Node: exit=0 stdout="undefined\nargument\nok\n"
+--- PASS: TestV4DirectClassResult (0.64s)
+=== CONT  TestV4DirectUnused
+--- PASS: TestV4DirectNull (0.57s)
+=== CONT  TestV4DirectBoxed
+--- PASS: TestV4DirectUnknownProducerParameter (0.65s)
+=== CONT  TestV4DirectCalleeOrder
+--- PASS: TestV4DirectVoid (0.64s)
+=== CONT  TestV4DirectArrayArgument
+=== NAME  TestV4DirectUnused
+    checked_views_v4_direct_test.go:251: source Node: exit=0 stdout="Receiver\n"
+=== NAME  TestV4DirectBoxed
+    checked_views_v4_direct_test.go:241: source Node: exit=0 stdout="5\n"
+=== NAME  TestV4DirectCalleeOrder
+    checked_views_v4_direct_test.go:231: source Node: exit=70 stdout="argument\n"
+=== NAME  TestV4DirectArrayArgument
+    checked_views_v4_direct_test.go:222: source Node: exit=0 stdout="producer\n"
+--- PASS: TestV4DirectOptionalReceiver (0.66s)
+=== CONT  TestV4DirectObjectArgument
+    checked_views_v4_direct_test.go:213: source Node: exit=0 stdout="producer\n"
+--- PASS: TestV4DirectCalleeOrder (0.64s)
+--- PASS: TestV4DirectUnused (0.68s)
+=== CONT  TestV4DirectCompatible
+=== CONT  TestV4DirectMethod
+--- PASS: TestV4DirectBoxed (0.71s)
+=== CONT  TestV4DirectResult
+=== NAME  TestV4DirectMethod
+    checked_views_v4_direct_test.go:204: source Node: exit=0 stdout="ok\n"
+--- PASS: TestV4DirectMethod (0.61s)
+=== CONT  TestV4EscapeAdapterCollectionKeyContract
+=== NAME  TestV4DirectArrayArgument
+    checked_views_v4_direct_test.go:222: native aggregate argument check omission caught: exit 0 output "producer\n"; expected exit 70
+    checked_views_v4_direct_test.go:222: sanitized aggregate argument check omission caught: exit 0 output "producer\n"; expected exit 70
+    checked_views_v4_direct_test.go:222: javascript aggregate argument check omission caught: exit 0 output "producer\n"; expected exit 70
+=== NAME  TestV4DirectObjectArgument
+    checked_views_v4_direct_test.go:213: javascript aggregate argument check omission caught: exit 0 output "producer\n"; expected exit 70
+    checked_views_v4_direct_test.go:213: native aggregate argument check omission caught: exit 0 output "producer\n"; expected exit 70
+    checked_views_v4_direct_test.go:213: sanitized aggregate argument check omission caught: exit 0 output "producer\n"; expected exit 70
+--- PASS: TestV4DirectCompatible (0.65s)
+=== CONT  TestViewAdapterBaselineCountsMethods
+--- PASS: TestV4DirectArrayArgument (1.14s)
+=== CONT  TestViewAdapterBaselineCountsClosures
+--- PASS: TestV4DirectObjectArgument (0.99s)
+=== CONT  TestV4EscapeAdapterScalarIdentityControls
+=== NAME  TestViewAdapterBaselineCountsClosures
+    view_adapter_runtime_counts_test.go:18: before | internal/oracle/testdata/closures.a | 58 | 58 | 48 | 84 | 26 | 0 |
+        after  | internal/oracle/testdata/closures.a | 58 | 58 | 48 | 84 | 26 | 0 |
+--- PASS: TestViewAdapterBaselineCountsClosures (0.21s)
+=== CONT  TestV4EscapeAdapterIdentity
+=== NAME  TestViewAdapterBaselineCountsMethods
+    view_adapter_runtime_counts_test.go:23: before | internal/oracle/testdata/method_closures.a | 20 | 20 | 14 | 30 | 8 | 0 |
+        after  | internal/oracle/testdata/method_closures.a | 20 | 20 | 14 | 30 | 8 | 0 |
+--- PASS: TestViewAdapterBaselineCountsMethods (0.22s)
+=== CONT  TestV4EscapeAdapterBoxed
+=== NAME  TestV4DirectResult
+    checked_views_v4_direct_test.go:113: native result check omission caught: exit 0 output "argument\nbad\n"
+    checked_views_v4_direct_test.go:113: sanitized result check omission caught: exit 0 output "argument\nbad\n"
+    checked_views_v4_direct_test.go:113: javascript result check omission caught: exit 0 output "argument\nbad\n"
+--- PASS: TestV4DirectResult (1.13s)
+=== CONT  TestV4EscapeAdapterReturned
+--- PASS: TestV4EscapeAdapterCollectionKeyContract (0.74s)
+=== CONT  TestV4EscapeAdapterUnusedMisfit
+=== NAME  TestV4EscapeAdapterScalarIdentityControls
+    checked_views_v4_identity_test.go:224: guard mutant admitted in native: exit 0 output "true true true\nfalse false true true false\ntrue false true false\n"
+    checked_views_v4_identity_test.go:224: guard mutant admitted in sanitized: exit 0 output "true true true\nfalse false true true false\ntrue false true false\n"
+    checked_views_v4_identity_test.go:224: guard mutant admitted in javascript: exit 0 output "true true true\nfalse false true true false\ntrue false true false\n"
+=== NAME  TestV4EscapeAdapterBoxed
+    checked_views_v4_escape_test.go:318: guard mutant admitted in native: exit 0 output "5\n"
+    checked_views_v4_escape_test.go:318: guard mutant admitted in sanitized: exit 0 output "5\n"
+    checked_views_v4_escape_test.go:318: guard mutant admitted in javascript: exit 0 output "5\n"
+--- PASS: TestV4EscapeAdapterBoxed (0.75s)
+=== CONT  TestV4EscapeAdapterNoStacking
+=== NAME  TestV4EscapeAdapterReturned
+    checked_views_v4_escape_test.go:309: guard mutant admitted in native: exit 0 output "ok\nok\n"
+    checked_views_v4_escape_test.go:309: guard mutant admitted in sanitized: exit 0 output "ok\nok\n"
+    checked_views_v4_escape_test.go:309: guard mutant admitted in javascript: exit 0 output "ok\nok\n"
+--- PASS: TestV4EscapeAdapterReturned (0.65s)
+=== CONT  TestV4EscapeAdapterVoid
+=== NAME  TestV4EscapeAdapterIdentity
+    checked_views_v4_escape_test.go:196: native/sanitized unequal-read mutant caught: "true:false:false:true\ntrue:true:true\n1:true:true:updated\n1:true:true\nok\nok\ntrue:true:0:0\n"
+    checked_views_v4_escape_test.go:196: JavaScript unequal-read mutant caught: "true:false:false:true\ntrue:false:false\n2:true:false:updated\n2:true:false\nok\nok\nok\nok\nfalse:true:2:1\n"
+--- PASS: TestV4EscapeAdapterIdentity (1.15s)
+=== CONT  TestV4EscapeAdapterConstructorIdentity
+=== NAME  TestV4EscapeAdapterUnusedMisfit
+    checked_views_v4_escape_test.go:300: guard mutant admitted in native: exit 0 output "read\n"
+    checked_views_v4_escape_test.go:300: guard mutant admitted in sanitized: exit 0 output "read\n"
+    checked_views_v4_escape_test.go:300: guard mutant admitted in javascript: exit 0 output "read\n"
+--- PASS: TestV4EscapeAdapterUnusedMisfit (0.70s)
+=== CONT  TestV4EscapeOrdinaryRead
+=== NAME  TestV4EscapeAdapterConstructorIdentity
+    checked_views_v4_identity_test.go:190: source Node: exit=0 stdout="true\n"
+=== NAME  TestV4EscapeAdapterScalarIdentityControls
+    checked_views_v4_identity_test.go:224: guard mutant admitted in sanitized: exit 0 output "3 missing new nan new zero\ntrue true true\nundefined missing undefined\nNaN new nan NaN\n0 new zero Infinity\nundefined=missing\nNaN=new nan\n0=new zero\ntrue true 2 true true\n2 again new zero\nundefined undefined\nNaN NaN\n0 Infinity\n4 0.25\n4 true true true true\n4 NaN,0,4,\n2 0 true\n"
+=== NAME  TestV4EscapeOrdinaryRead
+    checked_views_v4_escape_test.go:177: source Node: exit=0 stdout="ok\n"
+=== NAME  TestV4EscapeAdapterScalarIdentityControls
+    checked_views_v4_identity_test.go:224: guard mutant admitted in javascript: exit 0 output "3 missing new nan new zero\ntrue true true\nundefined missing undefined\nNaN new nan NaN\n0 new zero Infinity\nundefined=missing\nNaN=new nan\n0=new zero\ntrue true 2 true true\n2 again new zero\nundefined undefined\nNaN NaN\n0 Infinity\n4 0.25\n4 true true true true\n4 NaN,0,4,\n2 0 true\n"
+    checked_views_v4_identity_test.go:224: guard mutant admitted in native: exit 0 output "3 missing new nan new zero\ntrue true true\nundefined missing undefined\nNaN new nan NaN\n0 new zero Infinity\nundefined=missing\nNaN=new nan\n0=new zero\ntrue true 2 true true\n2 again new zero\nundefined undefined\nNaN NaN\n0 Infinity\n4 0.25\n4 true true true true\n4 NaN,0,4,\n2 0 true\n"
+--- PASS: TestV4EscapeAdapterScalarIdentityControls (1.60s)
+=== CONT  TestV4EscapeAdapterResult
+=== NAME  TestV4EscapeAdapterVoid
+    checked_views_v4_escape_test.go:368: guard mutant admitted in sanitized: exit 0 output "done\n"
+    checked_views_v4_escape_test.go:368: guard mutant admitted in javascript: exit 0 output "done\n"
+    checked_views_v4_escape_test.go:368: guard mutant admitted in native: exit 0 output "done\n"
+--- PASS: TestV4EscapeAdapterConstructorIdentity (0.60s)
+=== CONT  TestV4EscapeAdapterArgument
+--- PASS: TestV4EscapeAdapterVoid (0.79s)
+=== CONT  TestV4EscapeAdapterNull
+--- PASS: TestV4EscapeOrdinaryRead (0.81s)
+=== CONT  TestV4EscapeTypeScriptBoundary
+=== NAME  TestV4EscapeAdapterResult
+    checked_views_v4_escape_test.go:191: native result check: exit=70 stdout="read\nargument\nproducer\n" stderr="adamic: panic: callable call failed: view.run at escaping call (read at /tmp/adamic-gate/TestV4EscapeAdapterResult579900774/001/adapter.ts:5:75) result expected view \"ok\", producer string\n"
+    checked_views_v4_escape_test.go:191: sanitized result check: exit=70 stdout="read\nargument\nproducer\n" stderr="adamic: panic: callable call failed: view.run at escaping call (read at /tmp/adamic-gate/TestV4EscapeAdapterResult579900774/001/adapter.ts:5:75) result expected view \"ok\", producer string\n"
+    checked_views_v4_escape_test.go:191: javascript result check: exit=70 stdout="read\nargument\nproducer\n" stderr="adamic: panic: callable call failed: view.run at escaping call (read at /tmp/adamic-gate/TestV4EscapeAdapterResult579900774/001/adapter.ts:5:75) result expected view \"ok\", producer string\n"
+=== NAME  TestV4EscapeAdapterNoStacking
+    checked_views_v4_escape_test.go:201: bounded native allocation/retain rows: zero=[3 3 7 9 3 0] 1000=[1003 1003 5007 4009 4 0] 2000=[2003 2003 10007 8009 4 0]
+=== NAME  TestV4EscapeAdapterArgument
+    checked_views_v4_escape_test.go:186: javascript argument check: exit=70 stdout="read\nargument\n" stderr="adamic: panic: callable call failed: view.run at escaping call (read at /tmp/adamic-gate/TestV4EscapeAdapterArgument4243803873/001/adapter.ts:5:75) argument 1 expected producer \"ok\", view string\n"
+    checked_views_v4_escape_test.go:186: native argument check: exit=70 stdout="read\nargument\n" stderr="adamic: panic: callable call failed: view.run at escaping call (read at /tmp/adamic-gate/TestV4EscapeAdapterArgument4243803873/001/adapter.ts:5:75) argument 1 expected producer \"ok\", view string\n"
+    checked_views_v4_escape_test.go:186: sanitized argument check: exit=70 stdout="read\nargument\n" stderr="adamic: panic: callable call failed: view.run at escaping call (read at /tmp/adamic-gate/TestV4EscapeAdapterArgument4243803873/001/adapter.ts:5:75) argument 1 expected producer \"ok\", view string\n"
+=== NAME  TestV4EscapeAdapterNull
+    checked_views_v4_escape_test.go:359: guard mutant admitted in sanitized: exit 0 output "true\n"
+    checked_views_v4_escape_test.go:359: guard mutant admitted in javascript: exit 0 output "true\n"
+    checked_views_v4_escape_test.go:359: guard mutant admitted in native: exit 0 output "true\n"
+--- PASS: TestV4EscapeAdapterNull (0.72s)
+=== CONT  TestV4EscapeAdapterUncheckableRefusal
+=== NAME  TestV4EscapeAdapterResult
+    checked_views_v4_escape_test.go:191: sanitized result omission caught: exit=0 stdout="read\nargument\nproducer\nbad\n"
+    checked_views_v4_escape_test.go:191: javascript result omission caught: exit=0 stdout="read\nargument\nproducer\nbad\n"
+    checked_views_v4_escape_test.go:191: native result omission caught: exit=0 stdout="read\nargument\nproducer\nbad\n"
+--- PASS: TestV4EscapeAdapterResult (1.19s)
+=== NAME  TestV4EscapeTypeScriptBoundary
+    checked_views_v4_escape_test.go:172: guard mutant admitted in native: exit 0 output "read\n"
+    checked_views_v4_escape_test.go:172: guard mutant admitted in sanitized: exit 0 output "read\n"
+    checked_views_v4_escape_test.go:172: guard mutant admitted in javascript: exit 0 output "read\n"
+--- PASS: TestV4EscapeTypeScriptBoundary (0.61s)
+=== NAME  TestV4EscapeAdapterNoStacking
+    checked_views_v4_escape_test.go:201: native/sanitized unconditional-wrap caught by bounded allocation: [2003 2003 5007 4009 5 0] vs [1003 1003 5007 4009 4 0]
+--- PASS: TestV4EscapeAdapterUncheckableRefusal (0.22s)
+=== NAME  TestV4EscapeAdapterNoStacking
+    checked_views_v4_escape_test.go:201: JavaScript unconditional-wrap caught by bounded allocation: "ok\nadapter-makes:1001\n"
+--- PASS: TestV4EscapeAdapterNoStacking (1.97s)
+=== NAME  TestV4EscapeAdapterArgument
+    checked_views_v4_escape_test.go:186: native argument omission caught: exit=0 stdout="read\nargument\nproducer\nproducer\n"
+    checked_views_v4_escape_test.go:186: sanitized argument omission caught: exit=0 stdout="read\nargument\nproducer\nproducer\n"
+    checked_views_v4_escape_test.go:186: javascript argument omission caught: exit=0 stdout="read\nargument\nproducer\nproducer\n"
+--- PASS: TestV4EscapeAdapterArgument (1.10s)
+PASS
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=81
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	5.887s

@@ -161,6 +161,8 @@ func (e *emitter) directViewCallableInvoke(call ir.CallClosure, property ir.Prop
 	}
 	var b strings.Builder
 	fmt.Fprintf(&b, "static adamic_value %s(adamic_closure *self, adamic_object *receiver, %s method, adamic_value *arguments, size_t count) {\n(void)self; (void)receiver; (void)method; (void)arguments; (void)count;\n", name, methodType)
+	// Re-viewing retains only the new view contract, not another adapter layer.
+	fmt.Fprintln(&b, "self = adamic_view_adapter_underlying(self);")
 	target := e.program.ViewContracts[call.CallContract-1]
 	resultCheck := ""
 	if call.Returns != 0 {

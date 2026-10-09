@@ -193,12 +193,12 @@ func TestV4EscapeAdapterResult(t *testing.T) {
 
 func TestV4EscapeAdapterIdentity(t *testing.T) {
 	t.Parallel()
-	t.Skip("awaits compiler/views-v4: weak adapter cache and underlying identity for ===, Object.is, Map and Set keys, with unequal-read mutant")
+	v4EscapeAdapterIdentity(t)
 }
 
 func TestV4EscapeAdapterNoStacking(t *testing.T) {
 	t.Parallel()
-	t.Skip("awaits compiler/views-v4: adapter unwrapping or composition and bounded allocation and retain counts, with unconditional-wrap mutant")
+	v4EscapeAdapterNoStacking(t)
 }
 
 // Source Node is the unchecked truth. The checked divergence is required only

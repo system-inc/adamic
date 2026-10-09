@@ -69,7 +69,7 @@ func (e *emitter) viewCallableDomain(id ir.ViewContractID, value string) string 
 func (e *emitter) viewCallableInvoke(call ir.CallClosure, p ir.Property) string {
 	target := e.program.ViewContracts[call.CallContract-1]
 	var b strings.Builder
-	b.WriteString("((prepared, arguments_) => { const {value, object} = prepared; const code = value instanceof AdamicClosure ? value.code : value;\n")
+	b.WriteString("((prepared, arguments_) => { const object = prepared.object; const value = adamicViewAdapterUnderlying(prepared.value); const code = value instanceof AdamicClosure ? value.code : value;\n")
 	for index, f := range e.program.Functions {
 		method := !f.Closure && f.MethodName != ""
 		if !f.Closure && !method || f.CallableResultName == "" || f.RestElement != 0 {

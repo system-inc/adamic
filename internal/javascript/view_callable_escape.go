@@ -27,7 +27,7 @@ const adamicViewAdapterIntern = (value, key, make) => {
     views.set(key, new WeakRef(adapter));
     return adapter;
 };
-`
+` + viewCallableIdentityCollections
 
 func (e *emitter) emitViewCallableEscape(property ir.Property) string {
 	target := e.program.ViewContracts[property.ViewEscapeContract-1]

@@ -785,6 +785,9 @@ func (e *emitter) valueWithoutViewArrays(expression ir.Expression) string {
 		operator := map[ir.Operator]string{ir.Negate: "-", ir.Plus: "+", ir.Not: "!", ir.BitNot: "~"}[expression.Operator]
 		return "(" + operator + e.value(expression.Operand) + ")"
 	case ir.Binary:
+		if expression.Operator == ir.Equal || expression.Operator == ir.NotEqual {
+			return "(adamicViewAdapterUnderlying(" + e.value(expression.Left) + ") " + operators[expression.Operator] + " adamicViewAdapterUnderlying(" + e.value(expression.Right) + "))"
+		}
 		return "(" + e.value(expression.Left) + " " + operators[expression.Operator] + " " + e.value(expression.Right) + ")"
 	case ir.HasAccessor:
 		return "adamicFindAccessor(" + e.value(expression.Object) + ", " + quote(expression.Name) + ") !== undefined"
@@ -958,6 +961,9 @@ func (e *emitter) valueWithoutViewArrays(expression ir.Expression) string {
 	case ir.NodeBufferCall:
 		return e.nodeBufferCall(expression)
 	case ir.ObjectCall:
+		if expression.Method == "is" {
+			return "Object.is(adamicViewAdapterUnderlying(" + e.value(expression.Arguments[0]) + "), adamicViewAdapterUnderlying(" + e.value(expression.Arguments[1]) + "))"
+		}
 		if expression.Checked {
 			return e.checkedObjectEnumeration(expression)
 		}
@@ -1167,14 +1173,18 @@ func (e *emitter) valueWithoutViewArrays(expression ir.Expression) string {
 	case ir.CollectionIterator:
 		return "adamicCollectionIterator(" + e.value(expression.Collection) + ", " + quote(expression.Part) + ")"
 	case ir.MapNew:
+		constructor := "Map"
+		if expression.Key == ir.Closure || expression.Key == ir.Union {
+			constructor = "AdamicViewMap"
+		}
 		entries := []string{}
 		for _, entry := range expression.Entries {
 			entries = append(entries, "["+e.value(entry[0])+", "+e.value(entry[1])+"]")
 		}
 		if expression.Pairs != nil {
-			return "new Map(" + e.value(expression.Pairs) + ")"
+			return "new " + constructor + "(" + e.value(expression.Pairs) + ")"
 		}
-		return "new Map([" + strings.Join(entries, ", ") + "])"
+		return "new " + constructor + "([" + strings.Join(entries, ", ") + "])"
 	case ir.MapKeys:
 		return "[..." + e.value(expression.Map) + ".keys()]"
 	case ir.MapValues:
@@ -1188,10 +1198,14 @@ func (e *emitter) valueWithoutViewArrays(expression ir.Expression) string {
 	case ir.MapSet:
 		return e.value(expression.Map) + ".set(" + e.value(expression.Key) + ", " + e.value(expression.Value) + ")"
 	case ir.SetNew:
-		if expression.Values == nil {
-			return "new Set()"
+		constructor := "Set"
+		if expression.Element == ir.Closure || expression.Element == ir.Union {
+			constructor = "AdamicViewSet"
 		}
-		return "new Set(" + e.value(expression.Values) + ")"
+		if expression.Values == nil {
+			return "new " + constructor + "()"
+		}
+		return "new " + constructor + "(" + e.value(expression.Values) + ")"
 	case ir.SetAdd:
 		return e.value(expression.Set) + ".add(" + e.value(expression.Value) + ")"
 	case ir.SetValues:
