@@ -1,0 +1,9 @@
+{"Time":"2026-10-09T12:28:16.700260272Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments"}
+{"Time":"2026-10-09T12:28:16.718052199Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Test":"TestJsxAdapterGuardMutant"}
+{"Time":"2026-10-09T12:28:16.718299074Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Test":"TestJsxAdapterGuardMutant","Output":"=== RUN   TestJsxAdapterGuardMutant\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:28:35.466966158Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Test":"TestJsxAdapterGuardMutant","Output":"    comments_test.go:212: compiled adapter-guard mutant finishes the unsupported JSX input with exit 0; the explicit-refusal check requires exit 70 and catches it\n"}
+{"Time":"2026-10-09T12:28:35.469914848Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Test":"TestJsxAdapterGuardMutant","Output":"--- PASS: TestJsxAdapterGuardMutant (18.75s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:28:35.469938523Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Test":"TestJsxAdapterGuardMutant","Elapsed":18.75}
+{"Time":"2026-10-09T12:28:35.469960095Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:28:35.470744646Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/lint/helpers/comments\t18.770s\n"}
+{"Time":"2026-10-09T12:28:35.470798716Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Elapsed":18.771}

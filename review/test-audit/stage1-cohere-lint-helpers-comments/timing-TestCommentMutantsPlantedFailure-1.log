@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T12:31:08.306961085Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments"}
+{"Time":"2026-10-09T12:31:08.313744915Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Test":"TestCommentMutantsPlantedFailure"}
+{"Time":"2026-10-09T12:31:08.313812475Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Test":"TestCommentMutantsPlantedFailure","Output":"=== RUN   TestCommentMutantsPlantedFailure\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:31:08.314001374Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Test":"TestCommentMutantsPlantedFailure","Output":"=== PAUSE TestCommentMutantsPlantedFailure\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:31:08.314061684Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Test":"TestCommentMutantsPlantedFailure"}
+{"Time":"2026-10-09T12:31:08.314068143Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Test":"TestCommentMutantsPlantedFailure"}
+{"Time":"2026-10-09T12:31:08.314072049Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Test":"TestCommentMutantsPlantedFailure","Output":"=== CONT  TestCommentMutantsPlantedFailure\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:31:08.335433288Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Test":"TestCommentMutantsPlantedFailure","Output":"    comment_mutants_test.go:221: planted survivor caught only by TestCommentMutants_002 (shard-002)\n"}
+{"Time":"2026-10-09T12:31:08.348017894Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Test":"TestCommentMutantsPlantedFailure","Output":"--- PASS: TestCommentMutantsPlantedFailure (0.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:31:08.348058724Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Test":"TestCommentMutantsPlantedFailure","Elapsed":0.03}
+{"Time":"2026-10-09T12:31:08.348081337Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:31:08.348657575Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/lint/helpers/comments\t0.041s\n"}
+{"Time":"2026-10-09T12:31:08.348684315Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Elapsed":0.042}

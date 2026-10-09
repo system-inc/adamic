@@ -1,0 +1,9 @@
+{"Time":"2026-10-09T12:32:16.713260021Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments"}
+{"Time":"2026-10-09T12:32:16.721035929Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Test":"TestConsumerCommentHelpers"}
+{"Time":"2026-10-09T12:32:16.721512264Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Test":"TestConsumerCommentHelpers","Output":"=== RUN   TestConsumerCommentHelpers\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:32:52.838775855Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Test":"TestConsumerCommentHelpers","Output":"    comments_test.go:117: Go, Node and sanitized native agree on 32770 consumer output lines with the stated AST adapter\n"}
+{"Time":"2026-10-09T12:32:52.841636699Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Test":"TestConsumerCommentHelpers","Output":"--- PASS: TestConsumerCommentHelpers (36.12s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:32:52.841658511Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Test":"TestConsumerCommentHelpers","Elapsed":36.12}
+{"Time":"2026-10-09T12:32:52.841682377Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:32:52.84407337Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/lint/helpers/comments\t36.130s\n"}
+{"Time":"2026-10-09T12:32:52.844125968Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Elapsed":36.131}

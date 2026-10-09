@@ -1,0 +1,9 @@
+{"Time":"2026-10-09T12:34:39.374604965Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments"}
+{"Time":"2026-10-09T12:34:39.383376425Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Test":"TestJsxParserGapIsExplicit"}
+{"Time":"2026-10-09T12:34:39.383462182Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Test":"TestJsxParserGapIsExplicit","Output":"=== RUN   TestJsxParserGapIsExplicit\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:35:00.273249653Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Test":"TestJsxParserGapIsExplicit","Output":"    comments_test.go:160: 4 valid Go JSX inputs explicitly refuse in the independent-parser adapter; AST-adapter helper comparisons cover them separately\n"}
+{"Time":"2026-10-09T12:35:00.274534013Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Test":"TestJsxParserGapIsExplicit","Output":"--- PASS: TestJsxParserGapIsExplicit (20.89s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:35:00.274559691Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Test":"TestJsxParserGapIsExplicit","Elapsed":20.89}
+{"Time":"2026-10-09T12:35:00.274613391Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:35:00.276475406Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/lint/helpers/comments\t20.901s\n"}
+{"Time":"2026-10-09T12:35:00.276507544Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Elapsed":20.902}

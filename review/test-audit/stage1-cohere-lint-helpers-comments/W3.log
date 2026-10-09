@@ -1,0 +1,9 @@
+{"Time":"2026-10-09T12:41:03.469401851Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments"}
+{"Time":"2026-10-09T12:41:03.477783898Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Test":"TestJsxAdapterGuardMutant"}
+{"Time":"2026-10-09T12:41:03.477937865Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Test":"TestJsxAdapterGuardMutant","Output":"=== RUN   TestJsxAdapterGuardMutant\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:41:22.044692966Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Test":"TestJsxAdapterGuardMutant","Output":"    comments_test.go:207: compiled adapter-guard mutant survived the actual refusal check\n","OutputType":"error"}
+{"Time":"2026-10-09T12:41:22.045279343Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Test":"TestJsxAdapterGuardMutant","Output":"--- FAIL: TestJsxAdapterGuardMutant (18.57s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:41:22.045293524Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Test":"TestJsxAdapterGuardMutant","Elapsed":18.57}
+{"Time":"2026-10-09T12:41:22.045323818Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:41:22.047708683Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/cohere/lint/helpers/comments\t18.578s\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:41:22.047732588Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Elapsed":18.578}

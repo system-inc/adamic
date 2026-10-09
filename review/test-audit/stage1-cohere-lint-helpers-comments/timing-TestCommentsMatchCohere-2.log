@@ -1,0 +1,9 @@
+{"Time":"2026-10-09T12:31:34.808050126Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments"}
+{"Time":"2026-10-09T12:31:34.814827325Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Test":"TestCommentsMatchCohere"}
+{"Time":"2026-10-09T12:31:34.814900012Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Test":"TestCommentsMatchCohere","Output":"=== RUN   TestCommentsMatchCohere\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:31:53.887168454Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Test":"TestCommentsMatchCohere","Output":"    comments_test.go:98: Go, Node and sanitized native match 390 output lines\n"}
+{"Time":"2026-10-09T12:31:53.888218247Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Test":"TestCommentsMatchCohere","Output":"--- PASS: TestCommentsMatchCohere (19.07s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:31:53.88822692Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Test":"TestCommentsMatchCohere","Elapsed":19.07}
+{"Time":"2026-10-09T12:31:53.888245808Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:31:53.892839747Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/lint/helpers/comments\t19.084s\n"}
+{"Time":"2026-10-09T12:31:53.892899645Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Elapsed":19.085}
