@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/normalize.c
++++ b/internal/native/runtime/normalize.c
+@@ -243,7 +243,7 @@
+ 		if (has_starter) {
+ 			bool adjacent = written - 1 == starter;
+ 			if (adjacent || (last_class != 0 && last_class < class)) {
+-				uint32_t joined = composite(list->items[starter], point);
++				uint32_t joined = composite(point, list->items[starter]);
+ 				if (joined != 0) {
+ 					list->items[starter] = joined;
+ 					continue;

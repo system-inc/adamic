@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T10:48:51.917692947Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T10:48:51.927986389Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNormalizeRandomMatchesNode"}
+{"Time":"2026-10-09T10:48:51.92805688Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNormalizeRandomMatchesNode","Output":"=== RUN   TestNormalizeRandomMatchesNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:48:51.928085235Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNormalizeRandomMatchesNode","Output":"=== PAUSE TestNormalizeRandomMatchesNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:48:51.928087742Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNormalizeRandomMatchesNode"}
+{"Time":"2026-10-09T10:48:51.928090353Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNormalizeRandomMatchesNode"}
+{"Time":"2026-10-09T10:48:51.928092042Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNormalizeRandomMatchesNode","Output":"=== CONT  TestNormalizeRandomMatchesNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:49:03.007072324Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNormalizeRandomMatchesNode","Output":"    normalize_random_test.go:103: 100000 lines, 0 mismatches\n"}
+{"Time":"2026-10-09T10:49:03.007822666Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNormalizeRandomMatchesNode","Output":"--- PASS: TestNormalizeRandomMatchesNode (11.08s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:49:03.007876046Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNormalizeRandomMatchesNode","Elapsed":11.08}
+{"Time":"2026-10-09T10:49:03.007910316Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:49:03.009142136Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"ok  \tgithub.com/system-inc/adamic/internal/native\t11.091s\n"}
+{"Time":"2026-10-09T10:49:03.009198837Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Elapsed":11.092}

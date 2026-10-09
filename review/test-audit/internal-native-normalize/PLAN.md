@@ -1,0 +1,13 @@
+# u050 fixed plan
+
+Code under test: internal/native/runtime/normalize.c, entered by adamic_string_normalize. Oracle: actual Node String.prototype.normalize runs, comparing every WTF-8 output byte and total line count, via compareStreams. The count is supplemental to byte agreement, not the sole oracle.
+
+All 18 assigned functions share runNormalizeUnit and compareStreams and differ only by index. Contexts uses index 17. They are one family.
+
+Production normalization call inventory: combining_class, mapping_of, composite, points_add, decompose, reorder, compose, size_at, decode_at, encode, normalized, emit_point, finish_segment, accept_point, emit_blocks, repeated_prefix, stream, form_is, adamic_string_normalize. repeated_prefix exits immediately for these short inputs; its longer path and reorder counting-sort branch are reached by the random comparison row. Runtime services called: adamic_string_allocate, adamic_string_check_length, adamic_retain, adamic_release, adamic_panic. Input construction additionally calls adamic_string_concat, allocate, adamic_allocate, adamic_string_units, adamic_string_put, adamic_string_join_halves and decode. These are preparation services; this unit mutates normalization, not input preparation or the oracle. Go preparation calls runNormalizeUnit, checkGrainBudget, newTestBuildCache, testBuildCache.Tree, Build, ValidateOptions, RuntimeLibraryForSource, featureFlags, runtimeLibrary, readRuntime, cachedRuntime, Flags, compilerName and RuntimeLinkFlags. Comparison uses compareStreams and streamLines. These harness/preparation functions are not mutated.
+
+Fixed mutants, before outcomes: M1 change hangul_t_count 28 to 27 (constant); M2 change !compatibility to compatibility in decompose mapping filter (condition flip); M3 swap composite(list->items[starter], point) arguments in compose (argument swap). P1 empty-answer probe returns adamic_string_allocate(0) at adamic_string_normalize entry. Probes do not contribute kills or verdicts.
+
+M1 is an enum constant feeding other enum constants, so this audit uses separate real source builds rather than an environment switch. Three mutants remain within the four-rebuild limit. Each gets its own ADAMIC_BUILD_CACHE_DIR. Standalone diffs are exactly the evaluated mutations. Every variant is syntax-checked with native.Flags(Options{Sanitize:true}) clang flags before a runtime build.
+
+Whole-package baseline timed out at 90.029 seconds with no prior test failures. Bounded matrix: family plus TestNormalizeRandomMatchesNode, both direct correctness callers from git source search. TestNormalizeLongMeasurements is an opt-in performance measurement, excluded from this correctness matrix. Kills outside the bounded set are unknown. Assigned rows need no opt-in.

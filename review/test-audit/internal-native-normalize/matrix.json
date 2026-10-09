@@ -1,0 +1,133 @@
+{
+  "grouped": {
+    "M1": {
+      "TestNormalizeMatchesNode family": "fail",
+      "TestNormalizeRandomMatchesNode": "pass"
+    },
+    "M2": {
+      "TestNormalizeMatchesNode family": "fail",
+      "TestNormalizeRandomMatchesNode": "fail"
+    },
+    "M3": {
+      "TestNormalizeMatchesNode family": "fail",
+      "TestNormalizeRandomMatchesNode": "fail"
+    },
+    "P1": {
+      "TestNormalizeMatchesNode family": "fail",
+      "TestNormalizeRandomMatchesNode": "fail"
+    }
+  },
+  "members": {
+    "M1": {
+      "TestNormalizeMatchesNodePoints09": "pass",
+      "TestNormalizeMatchesNodePoints14": "pass",
+      "TestNormalizeMatchesNodePoints16": "pass",
+      "TestNormalizeMatchesNodePoints12": "pass",
+      "TestNormalizeMatchesNodePoints13": "pass",
+      "TestNormalizeMatchesNodePoints15": "pass",
+      "TestNormalizeMatchesNodeContexts": "pass",
+      "TestNormalizeMatchesNodePoints04": "pass",
+      "TestNormalizeMatchesNodePoints08": "pass",
+      "TestNormalizeMatchesNodePoints07": "pass",
+      "TestNormalizeMatchesNodePoints06": "pass",
+      "TestNormalizeMatchesNodePoints01": "pass",
+      "TestNormalizeMatchesNodePoints05": "pass",
+      "TestNormalizeRandomMatchesNode": "pass",
+      "TestNormalizeMatchesNodePoints02": "pass",
+      "TestNormalizeMatchesNodePoints10": "pass",
+      "TestNormalizeMatchesNodePoints03": "pass",
+      "TestNormalizeMatchesNodePoints11": "pass",
+      "TestNormalizeMatchesNodePoints00": "fail"
+    },
+    "M2": {
+      "TestNormalizeMatchesNodePoints09": "pass",
+      "TestNormalizeMatchesNodePoints08": "pass",
+      "TestNormalizeMatchesNodePoints14": "pass",
+      "TestNormalizeMatchesNodeContexts": "fail",
+      "TestNormalizeMatchesNodePoints16": "pass",
+      "TestNormalizeMatchesNodePoints11": "pass",
+      "TestNormalizeMatchesNodePoints12": "pass",
+      "TestNormalizeMatchesNodePoints13": "pass",
+      "TestNormalizeMatchesNodePoints07": "pass",
+      "TestNormalizeMatchesNodePoints15": "pass",
+      "TestNormalizeMatchesNodePoints10": "pass",
+      "TestNormalizeMatchesNodePoints04": "pass",
+      "TestNormalizeMatchesNodePoints06": "pass",
+      "TestNormalizeRandomMatchesNode": "fail",
+      "TestNormalizeMatchesNodePoints05": "pass",
+      "TestNormalizeMatchesNodePoints01": "fail",
+      "TestNormalizeMatchesNodePoints03": "pass",
+      "TestNormalizeMatchesNodePoints02": "pass",
+      "TestNormalizeMatchesNodePoints00": "fail"
+    },
+    "M3": {
+      "TestNormalizeMatchesNodePoints08": "fail",
+      "TestNormalizeMatchesNodePoints07": "fail",
+      "TestNormalizeMatchesNodePoints04": "fail",
+      "TestNormalizeMatchesNodePoints09": "fail",
+      "TestNormalizeMatchesNodePoints01": "fail",
+      "TestNormalizeMatchesNodePoints05": "fail",
+      "TestNormalizeMatchesNodePoints02": "fail",
+      "TestNormalizeMatchesNodePoints03": "fail",
+      "TestNormalizeMatchesNodePoints06": "fail",
+      "TestNormalizeMatchesNodePoints16": "fail",
+      "TestNormalizeMatchesNodePoints14": "fail",
+      "TestNormalizeMatchesNodePoints00": "fail",
+      "TestNormalizeRandomMatchesNode": "fail",
+      "TestNormalizeMatchesNodePoints12": "fail",
+      "TestNormalizeMatchesNodePoints15": "fail",
+      "TestNormalizeMatchesNodePoints11": "fail",
+      "TestNormalizeMatchesNodePoints13": "fail",
+      "TestNormalizeMatchesNodeContexts": "fail",
+      "TestNormalizeMatchesNodePoints10": "fail"
+    },
+    "P1": {
+      "TestNormalizeMatchesNodePoints09": "fail",
+      "TestNormalizeMatchesNodePoints07": "fail",
+      "TestNormalizeMatchesNodePoints06": "fail",
+      "TestNormalizeMatchesNodePoints04": "fail",
+      "TestNormalizeMatchesNodePoints08": "fail",
+      "TestNormalizeMatchesNodePoints05": "fail",
+      "TestNormalizeMatchesNodePoints03": "fail",
+      "TestNormalizeMatchesNodePoints02": "fail",
+      "TestNormalizeMatchesNodePoints14": "fail",
+      "TestNormalizeMatchesNodePoints01": "fail",
+      "TestNormalizeMatchesNodePoints16": "fail",
+      "TestNormalizeMatchesNodePoints15": "fail",
+      "TestNormalizeMatchesNodePoints00": "fail",
+      "TestNormalizeMatchesNodePoints12": "fail",
+      "TestNormalizeRandomMatchesNode": "fail",
+      "TestNormalizeMatchesNodePoints13": "fail",
+      "TestNormalizeMatchesNodeContexts": "fail",
+      "TestNormalizeMatchesNodePoints11": "fail",
+      "TestNormalizeMatchesNodePoints10": "fail"
+    }
+  },
+  "evidence": {
+    "M1": {
+      "log_line": 211,
+      "test": "TestNormalizeMatchesNodePoints00",
+      "output": "normalize_test.go:248: 11238 of 65536 lines differ"
+    },
+    "M2": {
+      "log_line": 176,
+      "test": "TestNormalizeMatchesNodeContexts",
+      "output": "normalize_test.go:333: 100790 of 346200 lines differ"
+    },
+    "M3": {
+      "log_line": 227,
+      "test": "TestNormalizeMatchesNodePoints08",
+      "output": "normalize_test.go:288: 65536 of 65536 lines differ"
+    },
+    "P1": {
+      "log_line": 217,
+      "test": "TestNormalizeMatchesNodePoints09",
+      "output": "normalize_test.go:293: 65536 of 65536 lines differ"
+    }
+  },
+  "bounded": true,
+  "matrix_rows": [
+    "TestNormalizeMatchesNode family",
+    "TestNormalizeRandomMatchesNode"
+  ]
+}

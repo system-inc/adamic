@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/normalize.c
++++ b/internal/native/runtime/normalize.c
+@@ -162,7 +162,7 @@
+ 		return;
+ 	}
+ 	const normalize_mapping *mapping = mapping_of(point);
+-	if (mapping == NULL || (mapping->compatibility && !compatibility)) {
++	if (mapping == NULL || (mapping->compatibility && compatibility)) {
+ 		points_add(list, point);
+ 		return;
+ 	}

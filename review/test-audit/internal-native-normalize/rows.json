@@ -1,0 +1,54 @@
+[
+  {
+    "test": "TestNormalizeMatchesNode family",
+    "members": [
+      "TestNormalizeMatchesNodePoints00",
+      "TestNormalizeMatchesNodePoints01",
+      "TestNormalizeMatchesNodePoints02",
+      "TestNormalizeMatchesNodePoints03",
+      "TestNormalizeMatchesNodePoints04",
+      "TestNormalizeMatchesNodePoints05",
+      "TestNormalizeMatchesNodePoints06",
+      "TestNormalizeMatchesNodePoints07",
+      "TestNormalizeMatchesNodePoints08",
+      "TestNormalizeMatchesNodePoints09",
+      "TestNormalizeMatchesNodePoints10",
+      "TestNormalizeMatchesNodePoints11",
+      "TestNormalizeMatchesNodePoints12",
+      "TestNormalizeMatchesNodePoints13",
+      "TestNormalizeMatchesNodePoints14",
+      "TestNormalizeMatchesNodePoints15",
+      "TestNormalizeMatchesNodePoints16",
+      "TestNormalizeMatchesNodeContexts"
+    ],
+    "package": "internal/native",
+    "file": "internal/native/normalize_test.go:246",
+    "seconds": 20.836,
+    "oracle": "Node String.prototype.normalize executes in NFC, NFD, NFKC, NFKD; every WTF-8 output line must match byte for byte. A separate expected line count guards incomplete streams.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M1",
+      "M2",
+      "M3"
+    ],
+    "unique_kills": [
+      "M1"
+    ],
+    "last_proven_fail": "M3: normalize_test.go:288: 65536 of 65536 lines differ",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 3,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestNormalizeMatchesNode family",
+      "TestNormalizeRandomMatchesNode"
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/u050/cache/M3 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run '^TestNormalize(MatchesNode|RandomMatchesNode$)' > review/test-audit/internal-native-normalize/M3.log 2>&1; normalize_test.go:288: 65536 of 65536 lines differ",
+    "uniqueness_scope": "bounded matrix only"
+  }
+]

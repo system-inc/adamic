@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/normalize.c
++++ b/internal/native/runtime/normalize.c
+@@ -44,7 +44,7 @@
+ 	hangul_t = 0x11a7,
+ 	hangul_l_count = 19,
+ 	hangul_v_count = 21,
+-	hangul_t_count = 28,
++	hangul_t_count = 27,
+ 	hangul_n_count = hangul_v_count * hangul_t_count,
+ 	hangul_s_count = hangul_l_count * hangul_n_count,
+ };

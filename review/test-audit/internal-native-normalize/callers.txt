@@ -1,0 +1,28 @@
+internal/native/normalize_benchmark_test.go:27:	if err := Build(normalizeLongProbe, binary, Options{}); err != nil {
+internal/native/normalize_benchmark_test.go:45:const normalizeLongProbe = `#define _POSIX_C_SOURCE 200809L
+internal/native/normalize_benchmark_test.go:62: double start=now(); adamic_string *out=adamic_string_normalize(input,&form); double elapsed=now()-start;
+internal/native/split_units_test.go:77:		{"normalize_test.go", "TestNormalizeMatchesNodePoints", "runNormalizeUnit", "", 17},
+internal/native/split_units_test.go:78:		{"normalize_test.go", "TestNormalizeMatchesNodeContexts", "runNormalizeUnit", "", 1},
+internal/native/normalize_random_test.go:14:	harness := strings.Split(normalizeHarness, "static const uint32_t alphabet[]")[0]
+internal/native/normalize_test.go:16:const normalizeHarness = `#include "adamic.h"
+internal/native/normalize_test.go:76:		adamic_string *normalized = adamic_string_normalize(string, &forms[form]);
+internal/native/normalize_test.go:213:func runNormalizeUnit(t *testing.T, index int) {
+internal/native/normalize_test.go:225:	source := strings.Replace(normalizeHarness, "ALPHABET", alphabet, 1)
+internal/native/normalize_test.go:248:	runNormalizeUnit(t, 0)
+internal/native/normalize_test.go:253:	runNormalizeUnit(t, 1)
+internal/native/normalize_test.go:258:	runNormalizeUnit(t, 2)
+internal/native/normalize_test.go:263:	runNormalizeUnit(t, 3)
+internal/native/normalize_test.go:268:	runNormalizeUnit(t, 4)
+internal/native/normalize_test.go:273:	runNormalizeUnit(t, 5)
+internal/native/normalize_test.go:278:	runNormalizeUnit(t, 6)
+internal/native/normalize_test.go:283:	runNormalizeUnit(t, 7)
+internal/native/normalize_test.go:288:	runNormalizeUnit(t, 8)
+internal/native/normalize_test.go:293:	runNormalizeUnit(t, 9)
+internal/native/normalize_test.go:298:	runNormalizeUnit(t, 10)
+internal/native/normalize_test.go:303:	runNormalizeUnit(t, 11)
+internal/native/normalize_test.go:308:	runNormalizeUnit(t, 12)
+internal/native/normalize_test.go:313:	runNormalizeUnit(t, 13)
+internal/native/normalize_test.go:318:	runNormalizeUnit(t, 14)
+internal/native/normalize_test.go:323:	runNormalizeUnit(t, 15)
+internal/native/normalize_test.go:328:	runNormalizeUnit(t, 16)
+internal/native/normalize_test.go:333:	runNormalizeUnit(t, 17)

@@ -1,0 +1,344 @@
+[
+  {
+    "label": "timing-family-2",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/native/",
+      "-run",
+      "^TestNormalizeMatchesNode"
+    ],
+    "seconds": 24.5,
+    "exit": 0
+  },
+  {
+    "label": "timing-family-3",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/native/",
+      "-run",
+      "^TestNormalizeMatchesNode"
+    ],
+    "seconds": 22.488,
+    "exit": 0
+  },
+  {
+    "label": "timing-random-1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/native/",
+      "-run",
+      "^TestNormalizeRandomMatchesNode$"
+    ],
+    "seconds": 12.387,
+    "exit": 0
+  },
+  {
+    "label": "timing-random-2",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/native/",
+      "-run",
+      "^TestNormalizeRandomMatchesNode$"
+    ],
+    "seconds": 13.552,
+    "exit": 0
+  },
+  {
+    "label": "timing-random-3",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/native/",
+      "-run",
+      "^TestNormalizeRandomMatchesNode$"
+    ],
+    "seconds": 14.332,
+    "exit": 0
+  },
+  {
+    "label": "M1-clang",
+    "command": [
+      "clang",
+      "-std=c11",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Wcast-function-type-strict",
+      "-pedantic",
+      "-Wno-unused-variable",
+      "-Wno-unused-but-set-variable",
+      "-Wno-unused-function",
+      "-Wno-unused-parameter",
+      "-Wno-self-assign",
+      "-ffp-contract=off",
+      "-fno-optimize-sibling-calls",
+      "-O1",
+      "-g",
+      "-fsanitize=address,undefined",
+      "-fno-sanitize-recover=all",
+      "-I",
+      "internal/native/runtime",
+      "-fsyntax-only",
+      "/workspace/adamic/internal/native/runtime/normalize.c"
+    ],
+    "seconds": 0.051,
+    "exit": 0
+  },
+  {
+    "label": "M1-build",
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "run",
+      "./review/test-audit/internal-native-normalize/buildhelper",
+      "/workspace/adamic/review/test-audit/internal-native-normalize/harness.c",
+      "/tmp/u050-M1-harness"
+    ],
+    "seconds": 6.827,
+    "exit": 0,
+    "cache": "/tmp/u050/cache/M1"
+  },
+  {
+    "label": "M1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/native/",
+      "-run",
+      "^TestNormalize(MatchesNode|RandomMatchesNode$)"
+    ],
+    "seconds": 33.826,
+    "exit": 1,
+    "cache": "/tmp/u050/cache/M1"
+  },
+  {
+    "label": "M2-clang",
+    "command": [
+      "clang",
+      "-std=c11",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Wcast-function-type-strict",
+      "-pedantic",
+      "-Wno-unused-variable",
+      "-Wno-unused-but-set-variable",
+      "-Wno-unused-function",
+      "-Wno-unused-parameter",
+      "-Wno-self-assign",
+      "-ffp-contract=off",
+      "-fno-optimize-sibling-calls",
+      "-O1",
+      "-g",
+      "-fsanitize=address,undefined",
+      "-fno-sanitize-recover=all",
+      "-I",
+      "internal/native/runtime",
+      "-fsyntax-only",
+      "/workspace/adamic/internal/native/runtime/normalize.c"
+    ],
+    "seconds": 0.051,
+    "exit": 0
+  },
+  {
+    "label": "M2-build",
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "run",
+      "./review/test-audit/internal-native-normalize/buildhelper",
+      "/workspace/adamic/review/test-audit/internal-native-normalize/harness.c",
+      "/tmp/u050-M2-harness"
+    ],
+    "seconds": 6.606,
+    "exit": 0,
+    "cache": "/tmp/u050/cache/M2"
+  },
+  {
+    "label": "M2",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/native/",
+      "-run",
+      "^TestNormalize(MatchesNode|RandomMatchesNode$)"
+    ],
+    "seconds": 31.555,
+    "exit": 1,
+    "cache": "/tmp/u050/cache/M2"
+  },
+  {
+    "label": "M3-clang",
+    "command": [
+      "clang",
+      "-std=c11",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Wcast-function-type-strict",
+      "-pedantic",
+      "-Wno-unused-variable",
+      "-Wno-unused-but-set-variable",
+      "-Wno-unused-function",
+      "-Wno-unused-parameter",
+      "-Wno-self-assign",
+      "-ffp-contract=off",
+      "-fno-optimize-sibling-calls",
+      "-O1",
+      "-g",
+      "-fsanitize=address,undefined",
+      "-fno-sanitize-recover=all",
+      "-I",
+      "internal/native/runtime",
+      "-fsyntax-only",
+      "/workspace/adamic/internal/native/runtime/normalize.c"
+    ],
+    "seconds": 0.046,
+    "exit": 0
+  },
+  {
+    "label": "M3-build",
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "run",
+      "./review/test-audit/internal-native-normalize/buildhelper",
+      "/workspace/adamic/review/test-audit/internal-native-normalize/harness.c",
+      "/tmp/u050-M3-harness"
+    ],
+    "seconds": 6.555,
+    "exit": 0,
+    "cache": "/tmp/u050/cache/M3"
+  },
+  {
+    "label": "M3",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/native/",
+      "-run",
+      "^TestNormalize(MatchesNode|RandomMatchesNode$)"
+    ],
+    "seconds": 32.952,
+    "exit": 1,
+    "cache": "/tmp/u050/cache/M3"
+  },
+  {
+    "label": "P1-clang",
+    "command": [
+      "clang",
+      "-std=c11",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Wcast-function-type-strict",
+      "-pedantic",
+      "-Wno-unused-variable",
+      "-Wno-unused-but-set-variable",
+      "-Wno-unused-function",
+      "-Wno-unused-parameter",
+      "-Wno-self-assign",
+      "-ffp-contract=off",
+      "-fno-optimize-sibling-calls",
+      "-O1",
+      "-g",
+      "-fsanitize=address,undefined",
+      "-fno-sanitize-recover=all",
+      "-I",
+      "internal/native/runtime",
+      "-fsyntax-only",
+      "/workspace/adamic/internal/native/runtime/normalize.c"
+    ],
+    "seconds": 0.046,
+    "exit": 0
+  },
+  {
+    "label": "P1-build",
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "run",
+      "./review/test-audit/internal-native-normalize/buildhelper",
+      "/workspace/adamic/review/test-audit/internal-native-normalize/harness.c",
+      "/tmp/u050-P1-harness"
+    ],
+    "seconds": 6.475,
+    "exit": 0,
+    "cache": "/tmp/u050/cache/P1"
+  },
+  {
+    "label": "P1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/native/",
+      "-run",
+      "^TestNormalize(MatchesNode|RandomMatchesNode$)"
+    ],
+    "seconds": 15.412,
+    "exit": 1,
+    "cache": "/tmp/u050/cache/P1"
+  }
+]

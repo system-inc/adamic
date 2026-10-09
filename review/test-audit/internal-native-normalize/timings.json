@@ -1,0 +1,32 @@
+{
+  "setup_seconds": 0,
+  "setup": "warm env.sh worked; no install",
+  "npm_reported_seconds": 0.515,
+  "nproc": 5,
+  "baseline_binary_seconds": 90.029,
+  "family_binary_runs": [
+    20.705,
+    22.815,
+    20.836
+  ],
+  "family_median": 20.836,
+  "random_binary_runs": [
+    10.763,
+    11.187,
+    11.092
+  ],
+  "random_median": 11.092,
+  "build_wall_seconds": {
+    "M1-build": 6.827,
+    "M2-build": 6.606,
+    "M3-build": 6.555,
+    "P1-build": 6.475
+  },
+  "matrix_binary_seconds": {
+    "M1": 26.011,
+    "M2": 25.405,
+    "M3": 27.206,
+    "P1": 9.512
+  },
+  "recorded_binary_running_seconds": 275.561
+}

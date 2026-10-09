@@ -1,0 +1,90 @@
+# Baseline skips outside the assigned slice
+
+No assigned member skipped. These 86 unrelated rows skipped in the whole-package attempt; their opt-ins and SDKs were not audited.
+
+- TestNormalizeLongMeasurements: normalize_benchmark_test.go:19: set ADAMIC_NORMALIZE_BENCH_LOG to run the long-string measurements
+- TestRecordBenchmark: record_test.go:296: set ADAMIC_RECORD_BENCH=1 for five-round Node comparisons
+- TestMeasureClangUnits: units_measure_test.go:17: set ADAMIC_CLANG_MEASURE to emitted C evidence directory
+- TestSplitTSGoAgreesUnit00: units_tsgo_test.go:103: set ADAMIC_CLANG_TSGO_ARCHIVE to a built checker archive
+- TestSplitTSGoAgreesUnit01: units_tsgo_test.go:108: set ADAMIC_CLANG_TSGO_ARCHIVE to a built checker archive
+- TestWASIUnit00: wasm_test.go:283: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with WASI clang and Node 24 on PATH
+- TestWASIUnit01: wasm_test.go:288: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with WASI clang and Node 24 on PATH
+- TestWASIUnit02: wasm_test.go:293: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with WASI clang and Node 24 on PATH
+- TestWASIUnit03: wasm_test.go:298: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with WASI clang and Node 24 on PATH
+- TestWASIUnit04: wasm_test.go:303: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with WASI clang and Node 24 on PATH
+- TestWASIUnit05: wasm_test.go:308: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with WASI clang and Node 24 on PATH
+- TestWASIUnit06: wasm_test.go:313: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with WASI clang and Node 24 on PATH
+- TestWASIUnit07: wasm_test.go:318: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with WASI clang and Node 24 on PATH
+- TestWASIUnit08: wasm_test.go:323: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with WASI clang and Node 24 on PATH
+- TestWASIUnit09: wasm_test.go:328: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with WASI clang and Node 24 on PATH
+- TestWASIUnit10: wasm_test.go:333: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with WASI clang and Node 24 on PATH
+- TestWASIUnit11: wasm_test.go:338: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with WASI clang and Node 24 on PATH
+- TestWASIUnit12: wasm_test.go:343: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with WASI clang and Node 24 on PATH
+- TestWASIUnit13: wasm_test.go:348: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with WASI clang and Node 24 on PATH
+- TestWASIUnit14: wasm_test.go:353: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with WASI clang and Node 24 on PATH
+- TestWASIUnit15: wasm_test.go:358: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with WASI clang and Node 24 on PATH
+- TestWASIUnit16: wasm_test.go:363: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with WASI clang and Node 24 on PATH
+- TestWASIUnit17: wasm_test.go:368: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with WASI clang and Node 24 on PATH
+- TestWASIUnit18: wasm_test.go:373: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with WASI clang and Node 24 on PATH
+- TestWASIUnit19: wasm_test.go:378: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with WASI clang and Node 24 on PATH
+- TestWASIUnit20: wasm_test.go:383: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with WASI clang and Node 24 on PATH
+- TestWASIUnit21: wasm_test.go:388: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with WASI clang and Node 24 on PATH
+- TestWASIUnit22: wasm_test.go:393: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with WASI clang and Node 24 on PATH
+- TestWASIUnit23: wasm_test.go:398: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with WASI clang and Node 24 on PATH
+- TestWASIUnit24: wasm_test.go:403: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with WASI clang and Node 24 on PATH
+- TestWASIUnit25: wasm_test.go:408: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with WASI clang and Node 24 on PATH
+- TestWASIUnit26: wasm_test.go:413: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with WASI clang and Node 24 on PATH
+- TestWASIUnit27: wasm_test.go:418: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with WASI clang and Node 24 on PATH
+- TestWASIUnit28: wasm_test.go:423: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with WASI clang and Node 24 on PATH
+- TestWASIUnit29: wasm_test.go:428: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with WASI clang and Node 24 on PATH
+- TestWASIUnit30: wasm_test.go:433: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with WASI clang and Node 24 on PATH
+- TestWASIUnit31: wasm_test.go:438: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with WASI clang and Node 24 on PATH
+- TestWASIUnit32: wasm_test.go:443: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with WASI clang and Node 24 on PATH
+- TestWASIUnit33: wasm_test.go:448: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with WASI clang and Node 24 on PATH
+- TestWASIUnit34: wasm_test.go:453: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with WASI clang and Node 24 on PATH
+- TestWASIUnit35: wasm_test.go:458: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with WASI clang and Node 24 on PATH
+- TestDecodeASCIIWASIUnit44: decode_ascii_test.go:582: set ADAMIC_TEST_WASI=1; split_units_test.go:293: unit elapsed 0.000s
+- TestDecodeASCIIWASIUnit43: decode_ascii_test.go:577: set ADAMIC_TEST_WASI=1; split_units_test.go:293: unit elapsed 0.000s
+- TestDecodeASCIIWASIUnit42: decode_ascii_test.go:572: set ADAMIC_TEST_WASI=1; split_units_test.go:293: unit elapsed 0.000s
+- TestDecodeASCIIWASIUnit41: decode_ascii_test.go:567: set ADAMIC_TEST_WASI=1; split_units_test.go:293: unit elapsed 0.000s
+- TestDecodeASCIIWASIUnit40: decode_ascii_test.go:562: set ADAMIC_TEST_WASI=1; split_units_test.go:293: unit elapsed 0.000s
+- TestDecodeASCIIWASIUnit39: decode_ascii_test.go:557: set ADAMIC_TEST_WASI=1; split_units_test.go:293: unit elapsed 0.000s
+- TestDecodeASCIIWASIUnit38: decode_ascii_test.go:552: set ADAMIC_TEST_WASI=1; split_units_test.go:293: unit elapsed 0.000s
+- TestDecodeASCIIWASIUnit37: decode_ascii_test.go:547: set ADAMIC_TEST_WASI=1; split_units_test.go:293: unit elapsed 0.000s
+- TestDecodeASCIIWASIUnit36: decode_ascii_test.go:542: set ADAMIC_TEST_WASI=1; split_units_test.go:293: unit elapsed 0.000s
+- TestDecodeASCIIWASIUnit35: decode_ascii_test.go:537: set ADAMIC_TEST_WASI=1; split_units_test.go:293: unit elapsed 0.000s
+- TestDecodeASCIIWASIUnit34: decode_ascii_test.go:532: set ADAMIC_TEST_WASI=1; split_units_test.go:293: unit elapsed 0.000s
+- TestDecodeASCIIWASIUnit33: decode_ascii_test.go:527: set ADAMIC_TEST_WASI=1; split_units_test.go:293: unit elapsed 0.000s
+- TestDecodeASCIIWASIUnit32: decode_ascii_test.go:522: set ADAMIC_TEST_WASI=1; split_units_test.go:293: unit elapsed 0.000s
+- TestDecodeASCIIWASIUnit31: decode_ascii_test.go:517: set ADAMIC_TEST_WASI=1; split_units_test.go:293: unit elapsed 0.000s
+- TestDecodeASCIIWASIUnit30: decode_ascii_test.go:512: set ADAMIC_TEST_WASI=1; split_units_test.go:293: unit elapsed 0.000s
+- TestDecodeASCIIWASIUnit29: decode_ascii_test.go:507: set ADAMIC_TEST_WASI=1; split_units_test.go:293: unit elapsed 0.000s
+- TestDecodeASCIIWASIUnit28: decode_ascii_test.go:502: set ADAMIC_TEST_WASI=1; split_units_test.go:293: unit elapsed 0.000s
+- TestDecodeASCIIWASIUnit27: decode_ascii_test.go:497: set ADAMIC_TEST_WASI=1; split_units_test.go:293: unit elapsed 0.000s
+- TestDecodeASCIIWASIUnit26: decode_ascii_test.go:492: set ADAMIC_TEST_WASI=1; split_units_test.go:293: unit elapsed 0.000s
+- TestDecodeASCIIWASIUnit25: decode_ascii_test.go:487: set ADAMIC_TEST_WASI=1; split_units_test.go:293: unit elapsed 0.000s
+- TestDecodeASCIIWASIUnit24: decode_ascii_test.go:482: set ADAMIC_TEST_WASI=1; split_units_test.go:293: unit elapsed 0.000s
+- TestDecodeASCIIWASIUnit23: decode_ascii_test.go:477: set ADAMIC_TEST_WASI=1; split_units_test.go:293: unit elapsed 0.000s
+- TestDecodeASCIIWASIUnit22: decode_ascii_test.go:472: set ADAMIC_TEST_WASI=1; split_units_test.go:293: unit elapsed 0.000s
+- TestDecodeASCIIWASIUnit21: decode_ascii_test.go:467: set ADAMIC_TEST_WASI=1; split_units_test.go:293: unit elapsed 0.000s
+- TestDecodeASCIIWASIUnit20: decode_ascii_test.go:462: set ADAMIC_TEST_WASI=1; split_units_test.go:293: unit elapsed 0.000s
+- TestDecodeASCIIWASIUnit19: decode_ascii_test.go:457: set ADAMIC_TEST_WASI=1; split_units_test.go:293: unit elapsed 0.000s
+- TestDecodeASCIIWASIUnit18: decode_ascii_test.go:452: set ADAMIC_TEST_WASI=1; split_units_test.go:293: unit elapsed 0.000s
+- TestDecodeASCIIWASIUnit17: decode_ascii_test.go:447: set ADAMIC_TEST_WASI=1; split_units_test.go:293: unit elapsed 0.000s
+- TestDecodeASCIIWASIUnit16: decode_ascii_test.go:442: set ADAMIC_TEST_WASI=1; split_units_test.go:293: unit elapsed 0.000s
+- TestDecodeASCIIWASIUnit15: decode_ascii_test.go:437: set ADAMIC_TEST_WASI=1; split_units_test.go:293: unit elapsed 0.000s
+- TestDecodeASCIIWASIUnit14: decode_ascii_test.go:432: set ADAMIC_TEST_WASI=1; split_units_test.go:293: unit elapsed 0.000s
+- TestDecodeASCIIWASIUnit13: decode_ascii_test.go:427: set ADAMIC_TEST_WASI=1; split_units_test.go:293: unit elapsed 0.000s
+- TestDecodeASCIIWASIUnit12: decode_ascii_test.go:422: set ADAMIC_TEST_WASI=1; split_units_test.go:293: unit elapsed 0.000s
+- TestDecodeASCIIWASIUnit11: decode_ascii_test.go:417: set ADAMIC_TEST_WASI=1; split_units_test.go:293: unit elapsed 0.000s
+- TestDecodeASCIIWASIUnit10: decode_ascii_test.go:412: set ADAMIC_TEST_WASI=1; split_units_test.go:293: unit elapsed 0.000s
+- TestDecodeASCIIWASIUnit09: decode_ascii_test.go:407: set ADAMIC_TEST_WASI=1; split_units_test.go:293: unit elapsed 0.000s
+- TestDecodeASCIIWASIUnit08: decode_ascii_test.go:402: set ADAMIC_TEST_WASI=1; split_units_test.go:293: unit elapsed 0.000s
+- TestDecodeASCIIWASIUnit07: decode_ascii_test.go:397: set ADAMIC_TEST_WASI=1; split_units_test.go:293: unit elapsed 0.000s
+- TestDecodeASCIIWASIUnit06: decode_ascii_test.go:392: set ADAMIC_TEST_WASI=1; split_units_test.go:293: unit elapsed 0.000s
+- TestDecodeASCIIWASIUnit05: decode_ascii_test.go:387: set ADAMIC_TEST_WASI=1; split_units_test.go:293: unit elapsed 0.000s
+- TestDecodeASCIIWASIUnit04: decode_ascii_test.go:382: set ADAMIC_TEST_WASI=1; split_units_test.go:293: unit elapsed 0.000s
+- TestDecodeASCIIWASIUnit03: decode_ascii_test.go:377: set ADAMIC_TEST_WASI=1; split_units_test.go:293: unit elapsed 0.000s
+- TestDecodeASCIIWASIUnit02: decode_ascii_test.go:372: set ADAMIC_TEST_WASI=1; split_units_test.go:293: unit elapsed 0.000s
+- TestDecodeASCIIWASIUnit01: decode_ascii_test.go:367: set ADAMIC_TEST_WASI=1; split_units_test.go:293: unit elapsed 0.000s
+- TestDecodeASCIIWASIUnit00: decode_ascii_test.go:362: set ADAMIC_TEST_WASI=1; split_units_test.go:293: unit elapsed 0.000s
