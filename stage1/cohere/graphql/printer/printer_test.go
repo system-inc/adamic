@@ -10,7 +10,7 @@ import (
 	"github.com/system-inc/adamic/internal/corpusfiles"
 )
 
-func printerCases(t *testing.T, mode string) (string, string) {
+func printerCases(t *testing.T, mode string, oracle ...string) (string, string) {
 	t.Helper()
 	root, err := filepath.Abs(repository)
 	if err != nil {
@@ -39,6 +39,9 @@ func printerCases(t *testing.T, mode string) (string, string) {
 		t.Fatal(err)
 	}
 	command := bounded(t, "go", "test", "-count=1", "-overlay="+overlayPath, "-run=^TestAdamicPrinter$", "./internal/format/graphql")
+	if len(oracle) != 0 {
+		command = bounded(t, oracle[0], "-test.run=^TestAdamicPrinter$", "-test.count=1", "-test.timeout=0")
+	}
 	command.Dir = cohere
 	command.Env = append(os.Environ(), "ADAMIC_PRINTER_REQUEST="+path)
 	if output, err := combinedOutput(command); err != nil {
@@ -62,76 +65,11 @@ func printerCases(t *testing.T, mode string) (string, string) {
 	return cases, string(data)
 }
 
-// Not parallel: the corpus keep path is shared by the option runs.
-func TestPrinterUpstreamPreflight(t *testing.T) {
-	directory := os.Getenv("ADAMIC_GRAPHQL_PRETTIER")
-	if directory == "" {
-		t.Skip("set ADAMIC_GRAPHQL_PRETTIER to an npm install of prettier@3.9.6 and graphql@17.0.2; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it")
-	}
-	script, err := filepath.Abs("testdata/prettier.mjs")
-	if err != nil {
-		t.Fatal(err)
-	}
-	embedded, err := filepath.Abs(filepath.Join(repository, "cohere/internal/format/prettier/bundles"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	for _, mode := range []string{"defaults", "narrow", "tight", "tabs"} {
-		t.Run(mode, func(t *testing.T) {
-			cases, want := printerCases(t, mode)
-			for _, side := range []struct{ name, directory, engine string }{{"npm Prettier", directory, "npm"}, {"embedded fork", embedded, "embedded"}} {
-				t.Run(side.name, func(t *testing.T) {
-					got := execute(t, nil, "node", script, side.directory, cases, mode, side.engine)
-					if got.exitCode != 0 || len(got.stderr) > 0 {
-						t.Fatalf("Prettier: exit %d, %s", got.exitCode, got.stderr)
-					}
-					inputs, err := os.ReadFile(cases)
-					if err != nil {
-						t.Fatal(err)
-					}
-					sources := strings.Split(string(inputs), "\n")
-					a, b := strings.Split(string(got.stdout), "\n"), strings.Split(want, "\n")
-					if len(a) != len(b) {
-						t.Fatalf("answer count: %d vs %d", len(a), len(b))
-					}
-					known, unexpected, accepted, refused := 0, 0, 0, 0
-					exactKnown := map[string]string{
-						">":       "error\tSyntax Error: Unexpected <EOF>. (1:1)",
-						"> ":      "error\tSyntax Error: Unexpected <EOF>. (1:2)",
-						">\\n\\r": "error\tSyntax Error: Unexpected <EOF>. (3:1)",
-						">\\r":    "error\tSyntax Error: Unexpected <EOF>. (2:1)",
-					}
-					for i := 0; i < len(a)-1; i++ {
-						if a[i] == b[i] {
-							accepted++
-							continue
-						}
-						if strings.HasPrefix(a[i], "error\t") && strings.HasPrefix(b[i], "error\t") {
-							refused++
-							continue
-						}
-						if expected, exists := exactKnown[sources[i]]; exists && a[i] == "ok\t" && b[i] == expected {
-							known++
-							t.Logf("known upstream difference case %d: source %q, Go %q, Prettier %q", i, sources[i], b[i], a[i])
-							continue
-						}
-						unexpected++
-						if unexpected <= 5 {
-							t.Logf("unexpected case %d: Prettier %q; Go %q", i, a[i], b[i])
-						}
-					}
-					t.Logf("%d texts: %d byte-identical formatted, %d shared refusals, %d known whitespace differences, %d unexpected differences", len(a)-1, accepted, refused, known, unexpected)
-					if unexpected != 0 {
-						t.Errorf("Go cohere differs from Prettier on %d unexpected texts", unexpected)
-					}
-					if known != 5 {
-						t.Errorf("known difference count changed: %d, recorded 5 in GAPS.md", known)
-					}
-				})
-			}
-		})
-	}
-}
+const testPrinterUpstreamPreflightShards = 4
+
+// ADAMIC_TEST_SHARD=i/n selects indices modulo n equal to i; unset runs all.
+// The four fixed option modes run as shard-NNN and share their Go oracle build.
+func TestPrinterUpstreamPreflight(t *testing.T) { printerUpstreamShards(t) }
 
 func printerDirectory(t *testing.T, file, from, to string) string {
 	t.Helper()
@@ -165,35 +103,6 @@ func printerDirectory(t *testing.T, file, from, to string) string {
 		}
 	}
 	return filepath.Join(directory, "graphql/printer/main.ts")
-}
-
-// Not parallel: all option sweeps can write ADAMIC_GRAPHQL_PRINTER_KEEP.
-func TestPrinterAsGoCohere(t *testing.T) {
-	path := printerDirectory(t, "", "", "")
-	program := lowered(t, path)
-	for _, mode := range []string{"defaults", "narrow", "tight", "tabs"} {
-		t.Run(mode, func(t *testing.T) {
-			cases, want := printerCases(t, mode)
-			nodeRun := onNode(t, path, "--cases", cases, mode)
-			nativeRun, binary := natively(t, program, "--cases", cases, mode)
-			backendRun := onJavaScriptBackend(t, program, "--cases", cases, mode)
-			for _, side := range []struct {
-				name   string
-				result run
-			}{{"native", nativeRun}, {"Node", nodeRun}, {"JS backend", backendRun}} {
-				if side.result.exitCode != 0 || len(side.result.stderr) > 0 {
-					t.Fatalf("%s: exit %d, %s", side.name, side.result.exitCode, side.result.stderr)
-				}
-				if difference := firstDifference(string(side.result.stdout), want); difference != "" {
-					t.Errorf("%s: %s", side.name, difference)
-				}
-			}
-			if report := leaks(t, program, binary, "--cases", cases, mode); report != "" {
-				t.Errorf("leaks: %s", report)
-			}
-			t.Logf("%d texts: %d formatted, %d refused", strings.Count(want, "\n"), strings.Count(want, "ok\t"), strings.Count(want, "error\t"))
-		})
-	}
 }
 
 // Not parallel: the corpus keep path is shared with the option sweeps.
