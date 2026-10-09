@@ -1,0 +1,7 @@
+{'mutant': 'drop-indirect-check', 'test': '^TestOverloadValues$/^returned$/^liar$', 'caught': True, 'exit': 1}
+{'mutant': 'skip-single-signature-check', 'test': '^TestOverloadValues$/^narrow$/^liar$', 'caught': True, 'exit': 1}
+{'mutant': 'erase-TIn-to-Node', 'test': '^TestOverloadVisitors$/^helper$/^liar$', 'caught': True, 'exit': 1}
+{'mutant': 'admit-unproven-invocation', 'test': '^TestOverloadVisitors$/^overloaded-helper$/^liar$', 'caught': True, 'exit': 1}
+{'mutant': 'nonempty-never-array', 'test': '^TestNativeAgreesWithNode$/^internal/oracle/testdata/hidden_boundary_never_array[.]a$', 'caught': True, 'exit': 1}
+{'mutant': 'drop-extra-binder-guard', 'test': '^TestCensusOverloadBinderGuards$/^result$', 'caught': True, 'exit': 1}
+{'mutant': 'erase-TNode-object-brand', 'test': '^TestHiddenTNodeConstraintRepresentation$/^object$', 'caught': True, 'exit': 1}

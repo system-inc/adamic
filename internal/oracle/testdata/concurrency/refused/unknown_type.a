@@ -1,0 +1,3 @@
+import { parallelMap } from 'adamic';
+const items: readonly unknown[] = [1];
+parallelMap(items, () => 1);

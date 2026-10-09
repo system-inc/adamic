@@ -7,6 +7,7 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/system-inc/adamic/internal/leakcheck"
 	"github.com/system-inc/adamic/internal/native"
 )
 
@@ -52,7 +53,7 @@ func TestSelfCompare(t *testing.T) {
 				t.Fatal(err)
 			}
 			counted := execute(t, countedBinary)
-			if report := unbalanced(t, counted); report != "" {
+			if report := leakcheck.Unbalanced(leakRun(counted)); report != "" {
 				t.Fatal(report)
 			}
 			counted.stderr = countsLine.ReplaceAll(counted.stderr, nil)

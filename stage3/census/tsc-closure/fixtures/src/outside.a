@@ -1,0 +1,5 @@
+// a-check: type error TS2322
+export function outside(): number {
+    const broken: number = "wrong";
+    return 7;
+}

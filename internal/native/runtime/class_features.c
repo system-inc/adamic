@@ -41,6 +41,7 @@ size_t adamic_public_index(const adamic_shape *shape, size_t position) {
 
 adamic_array *adamic_class_object_keys(const adamic_object *object) {
     if (adamic_record_is(object)) { return adamic_record_keys(object); }
+    if (object->class == NULL) return adamic_object_keys(object);
     const adamic_shape *shape = object->class == NULL ? object->shape : object->class->public_shape;
     if (object->class != NULL && object->class->is_static) {
         adamic_array *keys = adamic_array_new(shape->count, true);
@@ -60,10 +61,10 @@ adamic_array *adamic_class_object_keys(const adamic_object *object) {
     for (size_t index = 0; index < shape->count; index++) {
         const char *name = shape->names[adamic_public_index(shape, index)];
         if (object->class != NULL && object->class->is_static) {
-            adamic_slot_cache cache = {NULL, 0};
+            adamic_slot_cache cache = {0};
             adamic_value *slot = adamic_object_find(object, name, &cache);
             (void)slot;
-            size_t flag = object->class->static_flags[cache.index];
+            size_t flag = object->class->static_flags[(size_t)(slot - object->slots)];
             if (flag == 0 || object->slots[flag - 1].number == 0) { continue; }
         }
         adamic_string *key = adamic_string_allocate(strlen(name));

@@ -1,0 +1,9 @@
+// The visitNode nullable-parameter overload seam reported by hidden-05.
+interface Node { readonly kind: 'node'; readonly text: string; }
+function visitNode<T extends Node | undefined>(node: T): T;
+function visitNode(node: Node): Node | undefined {
+ console.log('implementation');
+ return node;
+}
+const node: Node = { kind: 'node', text: 'name' };
+console.log(`${visitNode<Node | undefined>(node)?.text}`);
