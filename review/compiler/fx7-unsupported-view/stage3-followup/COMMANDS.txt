@@ -1,0 +1,16 @@
+source /workspace/adamic-tools/env.sh for all Go and Node commands.
+timeout 120 git fetch origin
+timeout 120 git merge --no-edit origin/main
+Merged origin/main c4c59914 at merge commit 812eb7a3ec7f29c08f9855139c5c830d742e91b5.
+timeout 180 go test ./stage3/fixtures -run '^TestFixturesAssertions$/assertions/09_interface_kind.a' -v -count=1 -timeout 90s
+First attempt overlapped merge and failed compilation; rerun after merge reproduced exact integration diagnostic mismatch. Final corrected status passed.
+timeout 180 go build -o /tmp/fx7-current-adamic ./cmd/adamic
+timeout 30 node --disable-warning=ExperimentalWarning oracle/node.mjs stage3/fixtures/assertions/09_interface_kind.a
+Apply ../revert.diff, restore with EXIT trap:
+timeout 180 go build -o /tmp/fx7-reverted-adamic ./cmd/adamic
+timeout 30 /tmp/fx7-reverted-adamic build stage3/fixtures/assertions/09_interface_kind.a -o /tmp/fx7-old-interface-kind
+Old compiler build exits 0; fixture build exits 1, no native output.
+timeout 300 go test ./internal/lower -count=1 -timeout 240s
+timeout 120 go test ./internal/ir -run TestCallTargetReaders -count=1 -timeout 90s
+Revert mutant: apply ../revert.diff and rerun the fixture command; expected test exit 1 observed, creation-site status assertion catches read-site NotYet. EXIT trap restores compiler sources.
+source /workspace/adamic-tools/env.sh; timeout 180 bash -c 'git fetch -q origin main devtools/fast-gate cloud/merge-tree && git show origin/cloud/merge-tree:cloud/integration/lane-checks.py | python3 -'
