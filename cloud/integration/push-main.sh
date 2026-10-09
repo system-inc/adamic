@@ -211,6 +211,28 @@ if [ -n "$fastGate" ]; then
 		echo "refused: ${fastGate} has no ${gateKind}.json" >&2
 		exit 1
 	fi
+	# A unit that named tests and ran none of them read as passed (@system_adamic, Oct 9 11:01Z: a void is never a pass).
+	# Loom's zerorun.py is the one check (no second copy here to drift): every record that carries its job (job.json) is
+	# checked out and run through it, the gate's and each --also-gate's; one zero-run spec refuses, by unit and package.
+	zerorun=${ADAMIC_ZERORUN:-$HOME/.loom/bin/zerorun.py}
+	for record in "$fastGate" ${alsoGates[@]+"${alsoGates[@]}"}; do
+		git fetch -q origin "+refs/heads/${record}:refs/remotes/origin/${record}" 2>/dev/null || continue
+		git cat-file -e "origin/${record}:job.json" 2>/dev/null || continue
+		if [ ! -f "$zerorun" ]; then
+			echo "refused: ${record} carries its job but ${zerorun} isn't here to check it for zero-run units" >&2
+			exit 1
+		fi
+		checkout=$(mktemp -d)
+		git archive "origin/${record}" | tar -x -C "$checkout"
+		# Under set -e a failing assignment would end the script silently, so the exit status is taken explicitly.
+		code=0
+		lost=$(python3 "$zerorun" "$checkout" 2>&1) || code=$?
+		rm -rf -- "$checkout"
+		if [ "$code" -ne 0 ]; then
+			echo "refused: ${record} has units that ran none of the tests they named (zerorun.py exit ${code}): $(printf '%s\n' "$lost" | cut -f2- | head -n 3 | paste -sd ';' -)" >&2
+			exit 1
+		fi
+	done
 	for also in ${alsoGates[@]+"${alsoGates[@]}"}; do
 		if ! git fetch -q origin "+refs/heads/${also}:refs/remotes/origin/${also}" 2>/dev/null; then
 			echo "refused: no gate log ${also} on origin" >&2

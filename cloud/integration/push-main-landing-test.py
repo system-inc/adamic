@@ -287,6 +287,28 @@ class LandingTests(unittest.TestCase):
         self.assertEqual((root / 'rerun-called').read_text().split(), [whole, b])
         self.assertEqual(self.main_now(), moved)
 
+    def test_a_record_with_a_unit_that_ran_none_of_its_tests_is_refused(self):
+        # @system_adamic, Oct 9 11:01Z: a unit that named tests and ran none read as passed. A record carrying its job goes
+        # through Loom's zerorun.py (ADAMIC_ZERORUN here), and one zero-run spec refuses; a record without a job isn't checked.
+        root = Path(self.tmp.name)
+        lossy, clean = root / 'zerorun-lossy.py', root / 'zerorun-clean.py'
+        lossy.write_text('import sys\nprint(sys.argv[1] + "\\ttests-03\\tcode\\trequested 2, ran 0: TestA TestB")\nsys.exit(1)\n')
+        clean.write_text('import sys\nsys.exit(0)\n')
+        sha = self.change(self.main, 'other/b.go', 'package other\n\n// zero\n', 'zero-run candidate')
+        stages = ('build', 'vet', 'tests', 'smoke', 'census')
+        record = {'sha': sha, 'base': self.main, 'finished': True, 'skip': 0, 'packages': ['other'], 'fail': 0, 'pass': 10,
+                  'build_ok': True, 'vet_ok': True, 'uncached_tests': True, 'wall_seconds': 60,
+                  'steps_seconds': {stage: 5 for stage in stages}, 'stages_exit': {stage: 0 for stage in stages}, 'planned_stages': list(stages)}
+        withJob = self.publish(sha, 'withjob', record, extra={'job.json': '{"units": []}'})
+        def push(zerorun, *arguments):
+            return subprocess.run(['bash', str(self.scripts / 'push-main.sh')] + list(arguments), cwd=self.repository, capture_output=True, text=True,
+                                  env=dict(os.environ, ADAMIC_STAR_FILE=str(root / 'star'), ADAMIC_FAST_GATE_STATE=str(root / 'watch'),
+                                           ADAMIC_LANE_TREE=str(root / 'lane'), ADAMIC_ZERORUN=str(zerorun), **identity))
+        refused = push(lossy, '--fast-gate', withJob, sha, 'lossy')
+        self.assertIn('ran none of the tests they named', refused.stderr)
+        self.assertIn('tests-03\tcode\trequested 2, ran 0: TestA TestB', refused.stderr)
+        self.assertLanded(push(clean, '--fast-gate', withJob, sha, 'clean'), self.main, sha)
+
     def test_a_test_beside_the_stars_code_waits_while_its_gate_runs(self):
         root = Path(self.tmp.name)
         star = self.change(self.main, 'code/a.go', 'package code\n\n// the star\n', 'the star')
@@ -306,11 +328,13 @@ class LandingTests(unittest.TestCase):
         self.assertLanded(self.push('--test-only', beside, 'beside'), moved, beside)
 
 
-    def publish(self, sha, name, record, failing=(), kind='fast', jsonOnly=False):
+    def publish(self, sha, name, record, failing=(), kind='fast', jsonOnly=False, extra=None):
         # A gate-logs record on origin: status.txt, its json and a test record, in a commit of their own.
         tree = Path(self.tmp.name) / ('record-' + name + sha[:6])
         tree.mkdir()
         (tree / (kind + '.json')).write_text(json.dumps(record))
+        for extraName, extraText in (extra or {}).items():
+            (tree / extraName).write_text(extraText)
         (tree / 'status.txt').write_text('%s: %s %s gate\n' % ('red' if failing else 'green', sha, kind))
         if jsonOnly:
             # A box's fast record: no test.jsonl.gz, the failing tests named in its json.
