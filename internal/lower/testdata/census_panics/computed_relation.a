@@ -1,3 +1,4 @@
+// a-check: refused adamic/no-optional-widening
 const kind = "arrow";
 const table = { [kind]: { message: "return type" } } satisfies {
     readonly arrow: { readonly message: string; readonly suggestion?: string };

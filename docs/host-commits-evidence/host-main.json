@@ -1,0 +1,310 @@
+[
+  {
+    "file": "01_readFile_utf8.a",
+    "nodeMatches": true,
+    "native": {
+      "stage": "Refused",
+      "diagnostic": "adamic: /workspace/adamic/.host-commits-proof/host/01_readFile_utf8.a:20:21: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\n"
+    },
+    "javascript": {
+      "stage": "Refused",
+      "diagnostic": "adamic: /workspace/adamic/.host-commits-proof/host/01_readFile_utf8.a:20:21: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\n"
+    }
+  },
+  {
+    "file": "02_readFile_utf16le.a",
+    "nodeMatches": true,
+    "native": {
+      "stage": "Refused",
+      "diagnostic": "adamic: /workspace/adamic/.host-commits-proof/host/02_readFile_utf16le.a:20:21: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\n"
+    },
+    "javascript": {
+      "stage": "Refused",
+      "diagnostic": "adamic: /workspace/adamic/.host-commits-proof/host/02_readFile_utf16le.a:20:21: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\n"
+    }
+  },
+  {
+    "file": "03_readFile_utf16be.a",
+    "nodeMatches": true,
+    "native": {
+      "stage": "Refused",
+      "diagnostic": "adamic: /workspace/adamic/.host-commits-proof/host/03_readFile_utf16be.a:20:21: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\n"
+    },
+    "javascript": {
+      "stage": "Refused",
+      "diagnostic": "adamic: /workspace/adamic/.host-commits-proof/host/03_readFile_utf16be.a:20:21: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\n"
+    }
+  },
+  {
+    "file": "04_readFile_missing.a",
+    "nodeMatches": true,
+    "native": {
+      "stage": "Refused",
+      "diagnostic": "adamic: /workspace/adamic/.host-commits-proof/host/04_readFile_missing.a:20:21: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\n"
+    },
+    "javascript": {
+      "stage": "Refused",
+      "diagnostic": "adamic: /workspace/adamic/.host-commits-proof/host/04_readFile_missing.a:20:21: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\n"
+    }
+  },
+  {
+    "file": "05_writeFile.a",
+    "nodeMatches": true,
+    "native": {
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
+    },
+    "javascript": {
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
+    }
+  },
+  {
+    "file": "06_fileExists.a",
+    "nodeMatches": true,
+    "native": {
+      "stage": "NotYet",
+      "diagnostic": "adamic: /workspace/adamic/.host-commits-proof/host/06_fileExists.a:53:5: stage 0 can't lower node:fs.symlinkSync yet\n"
+    },
+    "javascript": {
+      "stage": "NotYet",
+      "diagnostic": "adamic: /workspace/adamic/.host-commits-proof/host/06_fileExists.a:53:5: stage 0 can't lower node:fs.symlinkSync yet\n"
+    }
+  },
+  {
+    "file": "07_directoryExists.a",
+    "nodeMatches": true,
+    "native": {
+      "stage": "NotYet",
+      "diagnostic": "adamic: /workspace/adamic/.host-commits-proof/host/07_directoryExists.a:53:5: stage 0 can't lower node:fs.symlinkSync yet\n"
+    },
+    "javascript": {
+      "stage": "NotYet",
+      "diagnostic": "adamic: /workspace/adamic/.host-commits-proof/host/07_directoryExists.a:53:5: stage 0 can't lower node:fs.symlinkSync yet\n"
+    }
+  },
+  {
+    "file": "08_getDirectories.a",
+    "nodeMatches": true,
+    "native": {
+      "stage": "NotYet",
+      "diagnostic": "adamic: /workspace/adamic/.host-commits-proof/host/08_getDirectories.a:186:25: stage 0 can't lower node:fs.readdirSync yet\n"
+    },
+    "javascript": {
+      "stage": "NotYet",
+      "diagnostic": "adamic: /workspace/adamic/.host-commits-proof/host/08_getDirectories.a:186:25: stage 0 can't lower node:fs.readdirSync yet\n"
+    }
+  },
+  {
+    "file": "09_realpath.a",
+    "nodeMatches": true,
+    "native": {
+      "stage": "NotYet",
+      "diagnostic": "adamic: /workspace/adamic/.host-commits-proof/host/09_realpath.a:16:17: stage 0 can't lower node:process.Process.platform yet\n"
+    },
+    "javascript": {
+      "stage": "NotYet",
+      "diagnostic": "adamic: /workspace/adamic/.host-commits-proof/host/09_realpath.a:16:17: stage 0 can't lower node:process.Process.platform yet\n"
+    }
+  },
+  {
+    "file": "10_getModifiedTime.a",
+    "nodeMatches": true,
+    "native": {
+      "stage": "NotYet",
+      "diagnostic": "adamic: /workspace/adamic/.host-commits-proof/host/10_getModifiedTime.a:36:5: stage 0 can't lower node:fs.symlinkSync yet\n"
+    },
+    "javascript": {
+      "stage": "NotYet",
+      "diagnostic": "adamic: /workspace/adamic/.host-commits-proof/host/10_getModifiedTime.a:36:5: stage 0 can't lower node:fs.symlinkSync yet\n"
+    }
+  },
+  {
+    "file": "11_setModifiedTime.a",
+    "nodeMatches": true,
+    "native": {
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
+    },
+    "javascript": {
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
+    }
+  },
+  {
+    "file": "12_deleteFile.a",
+    "nodeMatches": true,
+    "native": {
+      "stage": "NotYet",
+      "diagnostic": "adamic: /workspace/adamic/.host-commits-proof/host/12_deleteFile.a:22:5: stage 0 can't lower node:fs.symlinkSync yet\n"
+    },
+    "javascript": {
+      "stage": "NotYet",
+      "diagnostic": "adamic: /workspace/adamic/.host-commits-proof/host/12_deleteFile.a:22:5: stage 0 can't lower node:fs.symlinkSync yet\n"
+    }
+  },
+  {
+    "file": "13_createDirectory.a",
+    "nodeMatches": true,
+    "native": {
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
+    },
+    "javascript": {
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
+    }
+  },
+  {
+    "file": "14_getCurrentDirectory.a",
+    "nodeMatches": true,
+    "native": {
+      "stage": "Refused",
+      "diagnostic": "adamic: /workspace/adamic/.host-commits-proof/host/14_getCurrentDirectory.a:12:28: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)\n"
+    },
+    "javascript": {
+      "stage": "Refused",
+      "diagnostic": "adamic: /workspace/adamic/.host-commits-proof/host/14_getCurrentDirectory.a:12:28: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)\n"
+    }
+  },
+  {
+    "file": "15_getExecutingFilePath.a",
+    "nodeMatches": true,
+    "native": {
+      "stage": "NotYet",
+      "diagnostic": "adamic: /workspace/adamic/.host-commits-proof/host/15_getExecutingFilePath.a:21:52: stage 0 can't lower node:path.dirname yet\n"
+    },
+    "javascript": {
+      "stage": "NotYet",
+      "diagnostic": "adamic: /workspace/adamic/.host-commits-proof/host/15_getExecutingFilePath.a:21:52: stage 0 can't lower node:path.dirname yet\n"
+    }
+  },
+  {
+    "file": "16_getEnvironmentVariable.a",
+    "nodeMatches": true,
+    "native": {
+      "stage": "NotYet",
+      "diagnostic": "adamic: /workspace/adamic/.host-commits-proof/host/16_getEnvironmentVariable.a:12:12: stage 0 can't lower node:process.Process.env yet\n"
+    },
+    "javascript": {
+      "stage": "NotYet",
+      "diagnostic": "adamic: /workspace/adamic/.host-commits-proof/host/16_getEnvironmentVariable.a:12:12: stage 0 can't lower node:process.Process.env yet\n"
+    }
+  },
+  {
+    "file": "17_write.a",
+    "nodeMatches": true,
+    "native": {
+      "stage": "NotYet",
+      "diagnostic": "adamic: /workspace/adamic/.host-commits-proof/host/17_write.a:12:5: stage 0 can't lower node:net.Socket.write yet\n"
+    },
+    "javascript": {
+      "stage": "NotYet",
+      "diagnostic": "adamic: /workspace/adamic/.host-commits-proof/host/17_write.a:12:5: stage 0 can't lower node:net.Socket.write yet\n"
+    }
+  },
+  {
+    "file": "18_exit_0.a",
+    "nodeMatches": true,
+    "native": {
+      "stage": "NotYet",
+      "diagnostic": "adamic: /workspace/adamic/.host-commits-proof/host/18_exit_0.a:24:30: stage 0 can't lower node:process.Process.exit yet\n"
+    },
+    "javascript": {
+      "stage": "NotYet",
+      "diagnostic": "adamic: /workspace/adamic/.host-commits-proof/host/18_exit_0.a:24:30: stage 0 can't lower node:process.Process.exit yet\n"
+    }
+  },
+  {
+    "file": "19_exit_1.a",
+    "nodeMatches": true,
+    "native": {
+      "stage": "NotYet",
+      "diagnostic": "adamic: /workspace/adamic/.host-commits-proof/host/19_exit_1.a:24:30: stage 0 can't lower node:process.Process.exit yet\n"
+    },
+    "javascript": {
+      "stage": "NotYet",
+      "diagnostic": "adamic: /workspace/adamic/.host-commits-proof/host/19_exit_1.a:24:30: stage 0 can't lower node:process.Process.exit yet\n"
+    }
+  },
+  {
+    "file": "20_exit_2.a",
+    "nodeMatches": true,
+    "native": {
+      "stage": "NotYet",
+      "diagnostic": "adamic: /workspace/adamic/.host-commits-proof/host/20_exit_2.a:24:30: stage 0 can't lower node:process.Process.exit yet\n"
+    },
+    "javascript": {
+      "stage": "NotYet",
+      "diagnostic": "adamic: /workspace/adamic/.host-commits-proof/host/20_exit_2.a:24:30: stage 0 can't lower node:process.Process.exit yet\n"
+    }
+  },
+  {
+    "file": "21_createHash.a",
+    "nodeMatches": true,
+    "native": {
+      "stage": "Refused",
+      "diagnostic": "adamic: /workspace/adamic/.host-commits-proof/host/21_createHash.a:16:18: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\n"
+    },
+    "javascript": {
+      "stage": "Refused",
+      "diagnostic": "adamic: /workspace/adamic/.host-commits-proof/host/21_createHash.a:16:18: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\n"
+    }
+  },
+  {
+    "file": "22_createHash_fallback.a",
+    "nodeMatches": true,
+    "native": {
+      "stage": "NotYet",
+      "diagnostic": "adamic: /workspace/adamic/.host-commits-proof/host/22_createHash_fallback.a:22:1: stage 0 can't lower a function without a body yet\n"
+    },
+    "javascript": {
+      "stage": "NotYet",
+      "diagnostic": "adamic: /workspace/adamic/.host-commits-proof/host/22_createHash_fallback.a:22:1: stage 0 can't lower a function without a body yet\n"
+    }
+  },
+  {
+    "file": "23_newLine.a",
+    "nodeMatches": true,
+    "native": {
+      "stage": "NotYet",
+      "diagnostic": "adamic: /workspace/adamic/.host-commits-proof/host/23_newLine.a:11:31: stage 0 can't lower node:os.EOL yet\n"
+    },
+    "javascript": {
+      "stage": "NotYet",
+      "diagnostic": "adamic: /workspace/adamic/.host-commits-proof/host/23_newLine.a:11:31: stage 0 can't lower node:os.EOL yet\n"
+    }
+  },
+  {
+    "file": "24_useCaseSensitiveFileNames.a",
+    "nodeMatches": true,
+    "native": {
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
+    },
+    "javascript": {
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
+    }
+  },
+  {
+    "file": "25_readDirectory.a",
+    "nodeMatches": true,
+    "native": {
+      "stage": "Refused",
+      "diagnostic": "adamic: /workspace/adamic/.host-commits-proof/host/25_readDirectory.a:522:27: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\n"
+    },
+    "javascript": {
+      "stage": "Refused",
+      "diagnostic": "adamic: /workspace/adamic/.host-commits-proof/host/25_readDirectory.a:522:27: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\n"
+    }
+  }
+]

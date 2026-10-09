@@ -1,0 +1,32 @@
+[
+  {
+    "topic": "generic-namespace-interaction",
+    "command": [
+      "go",
+      "test",
+      "-overlay=/tmp/host-commits/mutants/generic-namespace-interaction.json",
+      "./internal/lower",
+      "-run",
+      "^TestGenericFunctionValueNamespaceDirectCallsKeepIdentity$",
+      "-count=1",
+      "-v"
+    ],
+    "exit": 1,
+    "caught": true
+  },
+  {
+    "topic": "phantom-overload-interaction",
+    "command": [
+      "go",
+      "test",
+      "-overlay=/tmp/host-commits/mutants/phantom-overload-interaction.json",
+      "./internal/lower",
+      "-run",
+      "^TestPhantomOverloadOnlyBrandsKeepMainProof$",
+      "-count=1",
+      "-v"
+    ],
+    "exit": 1,
+    "caught": true
+  }
+]

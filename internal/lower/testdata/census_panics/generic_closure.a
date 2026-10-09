@@ -1,3 +1,4 @@
+// a-check: refused adamic/invariant-mutable
 function append<T extends (string | undefined)[]>(result: T, item: string | undefined): void {
     result.push(item);
 }

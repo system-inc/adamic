@@ -1,0 +1,14 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-overlay=/tmp/host-commits/mutants/proven-cleanup.json",
+    "./internal/lower",
+    "-run",
+    "^TestCensusGenericRefusalInsideClosure$",
+    "-count=1",
+    "-v"
+  ],
+  "exit": 1,
+  "caught": true
+}

@@ -1,0 +1,37 @@
+source /workspace/adamic-tools/env.sh
+export GOPROXY='https://proxy.golang.org|direct'
+go build ./...
+go vet ./internal/...
+go test ./stage1/... -run 'Gap|Gaps|Probes' -count=1 -timeout 15m
+go test ./stage3/fixtures -count=1 -timeout 15m
+go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -timeout 10m -args -update-counts
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/(generic_empty_array.a|native-generic-empty-array.a|generic_function_value.a|generic_function_value_arms.a|phantom_brands.a|phantom_undefined.a|phantom_catch.a|host_phantom.*|array_literal_empty_first.a|debugger_fail.a|proven_guards.a|namespaces.a|params_namespaces_dotted.a|overload_ancestor_directory.a|scanner_expressions)' -count=1 -timeout 10m -v
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/array_literal_empty_' -count=1 -timeout 5m -v
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'CheckedNonNullTypeScript|Debugger|Scanner.*Concatenation|EmptyArrayRuntimeMutants|GenericFunctionValueWrongResultMutant' -count=1 -timeout 10m -v
+go test ./internal/lower ./internal/flow -run 'Census|Phantom|GenericFunctionValue|ClockGenericReturnsT01|EmptyArray|Debugger|NestedEmptyArrayElementKinds' -count=1 -timeout 10m -v
+git show fbac28c62493f27a788edc02a18bc8edb68de5da:cloud/fast-gate/run.py > /tmp/host-commits/gate.py
+python3 /tmp/host-commits/acheck.py acheck /tmp/host-commits/acheck-paths.json
+# a-check uses the exact Gate.aCheck at fbac28c62493f27a788edc02a18bc8edb68de5da.
+# Paths: git diff --name-only --diff-filter=ACM origin/main -- '*.a'
+ASAN_OPTIONS=detect_leaks=1:halt_on_error=1 UBSAN_OPTIONS=halt_on_error=1 python3 /tmp/host-commits/host-check-sanitized.py --all --compiler /tmp/host-commits/adamic --logs /tmp/host-commits/host-final --report /tmp/host-commits/host-final.json
+# Host command exits 1 for the 21 recorded named stops, not for a backend disagreement.
+# Only freshly passing stage3 records:
+go test ./stage3/fixtures -run 'TestFixtures/(namespaces|cycles)/(02_jsx_names.a|03_react_names.a|04_directory_callback|05_safe_load_read|06_import_order_mutant)' -count=1 -timeout 10m -args -update
+# The two stronger refusals use fresh CLI diagnostics and exact stage0-value replacement.
+# Qualified source reduction:
+node --disable-warning=ExperimentalWarning oracle/node.mjs internal/lower/testdata/census_panics/qualified.a
+/tmp/host-commits/adamic build internal/lower/testdata/census_panics/qualified.a -o <scratch>/qualified --sanitize
+/tmp/host-commits/adamic js internal/lower/testdata/census_panics/qualified.a
+# JavaScript and native observations match the source Node bytes; ASan/UBSan/LSan are enabled.
+go test -overlay=/tmp/host-commits/mutants/non-null-check.json ./internal/oracle -run ^TestCheckedNonNullTypeScript/undefined$ -count=1 -timeout 5m -v # exit 1, caught True
+go test -overlay=/tmp/host-commits/mutants/non-null-narrowing.json ./internal/oracle -run ^TestCheckedNonNullTypeScript/narrowed$ -count=1 -timeout 5m -v # exit 1, caught True
+go test -overlay=/tmp/host-commits/mutants/nested-empty.json ./internal/lower -run ^TestNestedEmptyArrayElementKinds$ -count=1 -timeout 5m -v # exit 1, caught True
+go test -overlay=/tmp/host-commits/mutants/string-concatenation.json ./internal/oracle -run ^TestNativeAgreesWithNode/internal/oracle/testdata/scanner_expressions/primitive_concatenation.a$ -count=1 -timeout 5m -v # exit 1, caught True
+go test -overlay=/tmp/host-commits/mutants/phantom-primitive.json ./internal/lower -run ^TestPhantomCastsAreErased$ -count=1 -timeout 5m -v # exit 1, caught True
+go test -overlay=/tmp/host-commits/mutants/proven-predicates.json ./internal/lower -run ^TestCensusComputedRelation$ -count=1 -timeout 5m -v # exit 1, caught True
+go test -overlay=/tmp/host-commits/mutants/generic-empty.json ./internal/oracle -run ^TestNativeAgreesWithNode/internal/oracle/testdata/generic_empty_array.a$ -count=1 -timeout 5m -v # exit 1, caught True
+go test -overlay=/tmp/host-commits/mutants/debugger.json ./internal/oracle -run ^TestDebuggerNativeEmitsNothing$ -count=1 -timeout 5m -v # exit 1, caught True
+go test -overlay=/tmp/host-commits/mutants/generic-values.json ./internal/lower -run ^TestGenericFunctionValuesHaveSeparateInstances$ -count=1 -timeout 5m -v # exit 1, caught True
+go test -overlay=/tmp/host-commits/mutants/generic-namespace-interaction.json ./internal/lower -run ^TestGenericFunctionValueNamespaceDirectCallsKeepIdentity$ -count=1 -v # exit 1, caught True
+go test -overlay=/tmp/host-commits/mutants/phantom-overload-interaction.json ./internal/lower -run ^TestPhantomOverloadOnlyBrandsKeepMainProof$ -count=1 -v # exit 1, caught True
+go test -overlay=/tmp/host-commits/mutants/proven-cleanup.json ./internal/lower -run ^TestCensusGenericRefusalInsideClosure$ -count=1 -v # exit 1, caught True

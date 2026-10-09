@@ -1,0 +1,132 @@
+[
+  {
+    "file": "01_readFile_utf8.a",
+    "source": "d71dfdfa:stage3/fixtures/host/01_readFile_utf8.a",
+    "sha256": "ea83325b0563d0968f0e74abe4223a8e816efcd698c31884db285fbf4ab8836c"
+  },
+  {
+    "file": "02_readFile_utf16le.a",
+    "source": "d71dfdfa:stage3/fixtures/host/02_readFile_utf16le.a",
+    "sha256": "d2b5671d6c7a4d9592c2108210d612ef430335bc1e97afb0f0f6dc8faf65ea0a"
+  },
+  {
+    "file": "03_readFile_utf16be.a",
+    "source": "d71dfdfa:stage3/fixtures/host/03_readFile_utf16be.a",
+    "sha256": "f4758a8053541ec1508f082adbd37e08e13aabab5455af5efa49a7de6e60c6db"
+  },
+  {
+    "file": "04_readFile_missing.a",
+    "source": "d71dfdfa:stage3/fixtures/host/04_readFile_missing.a",
+    "sha256": "bfdf343bee8b7e8ff3a720c92df011d82c74bdaef06506a6cdaa61a8e4abbb34"
+  },
+  {
+    "file": "05_writeFile.a",
+    "source": "d71dfdfa:stage3/fixtures/host/05_writeFile.a",
+    "sha256": "0b83b07f3b1615513725724043cc8bd828d9fa400f41da26c210ad118ff263d9"
+  },
+  {
+    "file": "06_fileExists.a",
+    "source": "d71dfdfa:stage3/fixtures/host/06_fileExists.a",
+    "sha256": "4e581ba515e177806693ba380d56b7a87ab333cce0dda12a558bdcf836595d67"
+  },
+  {
+    "file": "07_directoryExists.a",
+    "source": "d71dfdfa:stage3/fixtures/host/07_directoryExists.a",
+    "sha256": "5cf5f8d9f32fa331f5de333c5f6c39793298fdd71db30cf122dc6232df706c98"
+  },
+  {
+    "file": "08_getDirectories.a",
+    "source": "d71dfdfa:stage3/fixtures/host/08_getDirectories.a",
+    "sha256": "ceedbf24c6969fb1716871536dcf700871c91333c7f9634c411ab60fb93c8b74"
+  },
+  {
+    "file": "09_realpath.a",
+    "source": "d71dfdfa:stage3/fixtures/host/09_realpath.a",
+    "sha256": "b0b573efd444f66bfcc37e661dd9de3b4ef5a2475332adb11ac57deece1f4c06"
+  },
+  {
+    "file": "10_getModifiedTime.a",
+    "source": "d71dfdfa:stage3/fixtures/host/10_getModifiedTime.a",
+    "sha256": "e94bcacb3cc5a5b3f55772d5a5d0c25befe8c602314c91cc0dd37a400d013676"
+  },
+  {
+    "file": "11_setModifiedTime.a",
+    "source": "d71dfdfa:stage3/fixtures/host/11_setModifiedTime.a",
+    "sha256": "1daf88021eabd64dfba900964a04fbac4dac0b46aa94a1f76bc54517180be198"
+  },
+  {
+    "file": "12_deleteFile.a",
+    "source": "d71dfdfa:stage3/fixtures/host/12_deleteFile.a",
+    "sha256": "c16dfdd302e883be9af603df92ef7325bbee42ea224e02906a8b89c1dd999987"
+  },
+  {
+    "file": "13_createDirectory.a",
+    "source": "d71dfdfa:stage3/fixtures/host/13_createDirectory.a",
+    "sha256": "f4e395e5d7fc3e6f6bdadb16e3886c2acba069be977426939026cd5571ac850e"
+  },
+  {
+    "file": "14_getCurrentDirectory.a",
+    "source": "d71dfdfa:stage3/fixtures/host/14_getCurrentDirectory.a",
+    "sha256": "ed7dbdcc0e962dbcff2ad051f9d70c8dd91f7fe839239c7d0021132175c7f2e3"
+  },
+  {
+    "file": "15_getExecutingFilePath.a",
+    "source": "d71dfdfa:stage3/fixtures/host/15_getExecutingFilePath.a",
+    "sha256": "98fd1c6c5c02f134eddf1fb6e4823a9784cb20b062ab2f84d3be9aaae49e4f30"
+  },
+  {
+    "file": "16_getEnvironmentVariable.a",
+    "source": "d71dfdfa:stage3/fixtures/host/16_getEnvironmentVariable.a",
+    "sha256": "9585e5110ef44ee0c67ba34dd1032ae06c1c0053401b9d05f5b4fb06a7fbef1a"
+  },
+  {
+    "file": "17_write.a",
+    "source": "d71dfdfa:stage3/fixtures/host/17_write.a",
+    "sha256": "f2a4e6d9c412448140e0d66afbda9b9a3d1f88705103d5d7c61e095ccd383fef"
+  },
+  {
+    "file": "18_exit_0.a",
+    "source": "d71dfdfa:stage3/fixtures/host/18_exit_0.a",
+    "sha256": "2510f2043d81d3d8b8be2326703e479e17169be28cb6f587231a19f536eeb342"
+  },
+  {
+    "file": "19_exit_1.a",
+    "source": "d71dfdfa:stage3/fixtures/host/19_exit_1.a",
+    "sha256": "0d61764b8b800029443de01df0915cc40d339bfaafc244fca1c5f3bb48eeff85"
+  },
+  {
+    "file": "20_exit_2.a",
+    "source": "d71dfdfa:stage3/fixtures/host/20_exit_2.a",
+    "sha256": "2ac78aac7d0d324a2a44554ff15dbb63b727d354e5d6092cb3fc455bee6c9ebf"
+  },
+  {
+    "file": "21_createHash.a",
+    "source": "d71dfdfa:stage3/fixtures/host/21_createHash.a",
+    "sha256": "da8a56eac760bcc8d058b728ff507fb3d7d4ae7c368a6c448dfc131eb4c8a66f"
+  },
+  {
+    "file": "22_createHash_fallback.a",
+    "source": "d71dfdfa:stage3/fixtures/host/22_createHash_fallback.a",
+    "sha256": "eec43d6c1c4d2d77c26bc71ae77f0665dd5d2db7be650672d527665b70aa978a"
+  },
+  {
+    "file": "23_newLine.a",
+    "source": "d71dfdfa:stage3/fixtures/host/23_newLine.a",
+    "sha256": "c54650d50f60a67b921e48637540f19df2d031d7a68500997d19f1a2007c9299"
+  },
+  {
+    "file": "24_useCaseSensitiveFileNames.a",
+    "source": "d71dfdfa:stage3/fixtures/host/24_useCaseSensitiveFileNames.a",
+    "sha256": "4a30cf39a2b30c91703baf39ba4f3574921f30cafedf1c91ee528499c2025159"
+  },
+  {
+    "file": "25_readDirectory.a",
+    "source": "d71dfdfa:stage3/fixtures/host/25_readDirectory.a",
+    "sha256": "b1b122e92b7987bb4736aa4233b680a73fb9d26000b9903e7da7a1e1206043d9"
+  },
+  {
+    "file": "status.json",
+    "source": "d71dfdfa:stage3/fixtures/host/status.json",
+    "sha256": "6fecdccc9ef56b5a1d079f16835baf01a9813b96bdf57543822446a7997ad4ea"
+  }
+]

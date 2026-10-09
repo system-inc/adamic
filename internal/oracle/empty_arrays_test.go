@@ -86,6 +86,12 @@ func TestEmptyArrayRuntimeMutants(t *testing.T) {
 			if difference := disagreement(onNode(t, path), result); difference != "stdout differs" {
 				t.Fatalf("want stdout differs, got %q", difference)
 			}
+			if difference := disagreement(onNode(t, path), onJavaScriptBackend(t, program)); difference != "stdout differs" {
+				t.Fatalf("want JavaScript stdout differs, got %q", difference)
+			}
+			if report := leaks(t, program, binary); report != "" {
+				t.Fatal(report)
+			}
 			t.Logf("Node caught %s: %q", mutation, result.stdout)
 		})
 	}
