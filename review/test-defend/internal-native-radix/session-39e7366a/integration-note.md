@@ -1,0 +1,1 @@
+This evidence was produced in commit 39e7366a against origin/main at the commit recorded in scope.json. It was moved into this session directory to preserve concurrent evidence already present on the remote defense branch. Historical log destinations remain unchanged; replay scripts use this directory. Standalone diffs retain their original base.

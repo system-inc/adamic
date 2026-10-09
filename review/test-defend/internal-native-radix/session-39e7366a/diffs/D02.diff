@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/regexp.c
++++ b/internal/native/runtime/regexp.c
+@@ -328,7 +328,7 @@
+ 			break;
+ 		case 9: {
+ 			regex_repeat reg = state.repeats[i->x];
+-			bool exit = reg.count >= i->minimum, body = i->unbounded || reg.count < i->maximum;
++			bool exit = reg.count >= i->minimum, body = i->unbounded || i->maximum == 0 || reg.count < i->maximum;
+ 			if (!body && !exit) {
+ 				failed = true;
+ 				break;

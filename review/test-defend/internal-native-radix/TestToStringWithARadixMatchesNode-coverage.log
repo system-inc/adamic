@@ -1,0 +1,14 @@
+{"Time":"2026-10-09T14:11:23.893588375Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T14:11:23.904594731Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestToStringWithARadixMatchesNode"}
+{"Time":"2026-10-09T14:11:23.904670788Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestToStringWithARadixMatchesNode","Output":"=== RUN   TestToStringWithARadixMatchesNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:11:23.905510645Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestToStringWithARadixMatchesNode","Output":"=== PAUSE TestToStringWithARadixMatchesNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:11:23.905522204Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestToStringWithARadixMatchesNode"}
+{"Time":"2026-10-09T14:11:23.905527177Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestToStringWithARadixMatchesNode"}
+{"Time":"2026-10-09T14:11:23.905530431Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestToStringWithARadixMatchesNode","Output":"=== CONT  TestToStringWithARadixMatchesNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:11:24.91826287Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestToStringWithARadixMatchesNode","Output":"    radix_test.go:100: 146452 answers (3854 values, every radix from 2 to 36), 0 mismatches\n"}
+{"Time":"2026-10-09T14:11:24.918525063Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestToStringWithARadixMatchesNode","Output":"--- PASS: TestToStringWithARadixMatchesNode (1.01s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:11:24.918531274Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestToStringWithARadixMatchesNode","Elapsed":1.01}
+{"Time":"2026-10-09T14:11:24.918556713Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:11:24.91979836Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"coverage: 1.9% of statements in ./internal/native, ./internal/regexp\n"}
+{"Time":"2026-10-09T14:11:24.92801313Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"ok  \tgithub.com/system-inc/adamic/internal/native\t1.033s\tcoverage: 1.9% of statements in ./internal/native, ./internal/regexp\n"}
+{"Time":"2026-10-09T14:11:24.928056111Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Elapsed":1.034}

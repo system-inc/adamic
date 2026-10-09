@@ -1,0 +1,16 @@
+{"Time":"2026-10-09T14:11:29.737538474Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T14:11:29.757490098Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRegExpSearchNode"}
+{"Time":"2026-10-09T14:11:29.757611093Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRegExpSearchNode","Output":"=== RUN   TestRegExpSearchNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:11:29.757709705Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRegExpSearchNode","Output":"=== PAUSE TestRegExpSearchNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:11:29.757712637Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRegExpSearchNode"}
+{"Time":"2026-10-09T14:11:29.75771578Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRegExpSearchNode"}
+{"Time":"2026-10-09T14:11:29.757717834Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRegExpSearchNode","Output":"=== CONT  TestRegExpSearchNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:11:29.828066913Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRegExpSearchNode","Output":"    regexp_search_test.go:34: compiling 27 patterns, 29 executions, 38839 C bytes\n"}
+{"Time":"2026-10-09T14:11:30.313933595Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRegExpSearchNode","Output":"    regexp_search_test.go:34: mode=[] native execution totals: 29 cases, 0 disagreements\n"}
+{"Time":"2026-10-09T14:11:30.338641804Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRegExpSearchNode","Output":"    regexp_search_test.go:34: mode=[unlimited] native execution totals: 29 cases, 0 disagreements\n"}
+{"Time":"2026-10-09T14:11:30.338963369Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRegExpSearchNode","Output":"--- PASS: TestRegExpSearchNode (0.58s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:11:30.338969935Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRegExpSearchNode","Elapsed":0.58}
+{"Time":"2026-10-09T14:11:30.339013967Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:11:30.344803138Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"coverage: 11.5% of statements in ./internal/native, ./internal/regexp\n"}
+{"Time":"2026-10-09T14:11:30.356446864Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"ok  \tgithub.com/system-inc/adamic/internal/native\t0.615s\tcoverage: 11.5% of statements in ./internal/native, ./internal/regexp\n"}
+{"Time":"2026-10-09T14:11:30.356472916Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Elapsed":0.619}

@@ -1,0 +1,58 @@
+[
+  {
+    "id": "D1",
+    "file": "internal/native/runtime/radix.c",
+    "line": 145,
+    "before": "adamic_panic(message, sizeof message - 1);",
+    "after": "adamic_panic(message, sizeof message - 2);",
+    "lead": "Out-of-range diagnostics: write one byte fewer; valid-radix subsumer never enters the RangeError branch."
+  },
+  {
+    "id": "D2",
+    "file": "internal/native/runtime/string_build_impl.h",
+    "line": 125,
+    "before": "return left == right;",
+    "after": "return false;",
+    "lead": "Undefined equals itself; regex comparisons pass nonnull strings."
+  },
+  {
+    "id": "D3",
+    "file": "internal/native/runtime/regexp.c",
+    "line": 188,
+    "before": "regexp: instruction step limit exceeded",
+    "after": "regexp: instruction budget exceeded",
+    "lead": "Diagnostic text: catastrophic-budget row and newly added exact boundary row."
+  },
+  {
+    "id": "D4",
+    "file": "internal/native/runtime/regexp.c",
+    "line": 187,
+    "before": "*steps >= regex_step_limit",
+    "after": "*steps > regex_step_limit",
+    "lead": "Exact consumed-instruction boundary; new boundary row may catch what catastrophic row does not."
+  },
+  {
+    "id": "D5",
+    "file": "internal/native/runtime/regexp.c",
+    "line": 9,
+    "before": "regex_step_limit = limit;",
+    "after": "regex_step_limit = 0;",
+    "lead": "Drop step-limit configuration, replacing assignment with zero. Catastrophic backtracking must be interrupted."
+  },
+  {
+    "id": "D6",
+    "file": "internal/regexp/parser.go",
+    "line": 63,
+    "before": "byte(0x80|c&0x3f)",
+    "after": "byte(0x80|c&0x3e)",
+    "lead": "Off-by-one UTF16 pattern encoding: clear the low bit of the final surrogate byte; exact pattern identity differs from JSON text."
+  },
+  {
+    "id": "D7",
+    "file": "internal/native/runtime/regexp.c",
+    "line": 464,
+    "before": "\t\t\tat--;",
+    "after": "\t\t\t(void)at;",
+    "lead": "Drop low-surrogate lastIndex rewind; search explicitly starts inside a surrogate pair."
+  }
+]

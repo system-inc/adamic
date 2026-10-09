@@ -1,0 +1,26 @@
+{
+  "unit": "u052",
+  "start_commit": "83f3940ec77b8ba779da05ded113e9d9e7e710b6",
+  "nproc": 5,
+  "setup": "warm toolchain, no setup.sh",
+  "fetch_toolchain_wall": 2.987,
+  "npm_ci_seconds": 0.296,
+  "full_baseline_binary_seconds": 90.022,
+  "full_baseline_status": "timeout, no observed individual test failures",
+  "slice_baseline_binary_seconds": 42.193,
+  "timing_binary_seconds_total": 157.795,
+  "standalone_compile_seconds": 4.484,
+  "matrix_commands_wall_seconds_sum": 711.893,
+  "matrix_commands_parallelism": 2,
+  "verdicts": {
+    "sacred": 3,
+    "subsumed": 10,
+    "witness": 2
+  },
+  "scope_functions": 59,
+  "scope_grouped_rows": 15,
+  "missing_or_moved": [],
+  "survivors": [
+    "M12"
+  ]
+}

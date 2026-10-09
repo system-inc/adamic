@@ -1,0 +1,48 @@
+{
+  "test262_cases": 127369,
+  "test262_u2028_cases": 38,
+  "zero_closed_bounds_found_in_recorded_patterns": [],
+  "test262_witness_cases": [
+    {
+      "case_index": 124215,
+      "pattern": "^.$",
+      "flags": "mu",
+      "input": [
+        8232
+      ],
+      "lastIndex": 0,
+      "expected": {
+        "captures": null,
+        "lastIndex": 0,
+        "groups": null
+      },
+      "source": "test/built-ins/RegExp/dotall/without-dotall-unicode.js",
+      "patternUnits": [
+        94,
+        46,
+        36
+      ]
+    }
+  ],
+  "authority_command": [
+    "node",
+    "-e",
+    "const r=/^.$/mu;const m=r.exec(String.fromCharCode(0x2028));console.log(JSON.stringify({captures:m?Array.from(m.indices??[],x=>x):null,lastIndex:r.lastIndex}));"
+  ],
+  "authority_output": "{\"captures\":null,\"lastIndex\":0}\n",
+  "random_generator_quantifiers": [
+    "",
+    "*",
+    "+",
+    "?",
+    "{0}",
+    "{1,}",
+    "{2,4}",
+    "*?",
+    "+?",
+    "??"
+  ],
+  "random_generator_input_runes": "abc 12\\n\\r\u00e9\u212a\u017f\ud83c\udf0d",
+  "search_subsumer_zero_quantifier": false,
+  "search_subsumer_u2028_input": false
+}

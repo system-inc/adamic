@@ -1,0 +1,26 @@
+[
+  {
+    "test": "TestRegExpSearchNode",
+    "package": "internal/native",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestRegExpLintPatternsNode"
+    ],
+    "defense": "cannot-judge",
+    "unique_mutant": null,
+    "attempts": [],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run .; clean baseline: TestDecodeASCIIUnit41 and TestDecodeASCIIUnit42: signal: killed; package timeout after 1m30s"
+  },
+  {
+    "test": "TestRegExpLintPatternsNode",
+    "package": "internal/native",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestRegExpSearchNode"
+    ],
+    "defense": "cannot-judge",
+    "unique_mutant": null,
+    "attempts": [],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run .; clean baseline: TestDecodeASCIIUnit41 and TestDecodeASCIIUnit42: signal: killed; package timeout after 1m30s"
+  }
+]

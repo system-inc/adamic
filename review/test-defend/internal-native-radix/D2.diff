@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/string_build_impl.h
++++ b/internal/native/runtime/string_build_impl.h
+@@ -122,7 +122,7 @@
+ int adamic_string_equal(const adamic_string *left, const adamic_string *right) {
+ 	// Either may be undefined (a string | undefined): undefined is equal only to itself.
+ 	if (left == NULL || right == NULL) {
+-		return left == right;
++		return false;
+ 	}
+ 	return left->length == right->length && (left == right || left->length == 0 || memcmp(left->bytes, right->bytes, left->length) == 0);
+ }

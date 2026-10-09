@@ -1,0 +1,149 @@
+[
+  {
+    "test": "TestRegExpBytecodeTest262",
+    "package": "internal/native",
+    "file": "internal/native/regexp_test.go",
+    "seconds": 11.938,
+    "oracle": "Recorded test262 RegExp observations in matches.json.gz; first digit-class result checked against live Node in authority-check.json.",
+    "oracle_kind": "external-authority",
+    "kills": [
+      "M07",
+      "M08",
+      "M10",
+      "M11"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M11: regexp_test.go:53: native regex oracle ([]): exit status 1",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestRegExpSearchNode"
+    ],
+    "mutants_in_matrix": 12,
+    "probe_kills": [
+      "P02",
+      "P03"
+    ],
+    "subsumer_seconds": 0.356,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestToStringWithARadixMatchesNode",
+      "TestToStringWithARadixOutOfRangePanics",
+      "TestRecordsAgainstNode",
+      "TestRecordReadMutants",
+      "TestRecordBenchmark",
+      "TestRegExpSearchNode",
+      "TestRegExpLintPatternsNode",
+      "TestRegExpBytecodeTest262",
+      "TestRegExpNativeStepLimit",
+      "TestRegExpIteratorResultShape",
+      "TestRegExpBytecodePatternUnits",
+      "TestRuntimeReleasePaths",
+      "TestRuntimeStringEquality",
+      "TestRecordMutants family",
+      "TestRegExpBytecodeRandomNode family"
+    ],
+    "evidence": "ADAMIC_MUTANT=M11 ADAMIC_RECORD_BENCH=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u052/cache/M11 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestToStringWithARadixMatchesNode|TestToStringWithARadixOutOfRangePanics|TestRecordsAgainstNode|TestRecordReadMutants|TestRecordBenchmark|TestRegExpSearchNode|TestRegExpLintPatternsNode|TestRegExpBytecodeTest262|TestRegExpNativeStepLimit|TestRegExpIteratorResultShape|TestRegExpBytecodePatternUnits|TestRuntimeReleasePaths|TestRuntimeStringEquality|TestRecordMutantsUnit00|TestRecordMutantsUnit01|TestRecordMutantsUnit02|TestRecordMutantsUnit03|TestRecordMutantsUnit04|TestRecordMutantsUnit05|TestRegExpBytecodeRandomNodeUnit00|TestRegExpBytecodeRandomNodeUnit01|TestRegExpBytecodeRandomNodeUnit02|TestRegExpBytecodeRandomNodeUnit03|TestRegExpBytecodeRandomNodeUnit04|TestRegExpBytecodeRandomNodeUnit05|TestRegExpBytecodeRandomNodeUnit06|TestRegExpBytecodeRandomNodeUnit07|TestRegExpBytecodeRandomNodeUnit08|TestRegExpBytecodeRandomNodeUnit09|TestRegExpBytecodeRandomNodeUnit10|TestRegExpBytecodeRandomNodeUnit11|TestRegExpBytecodeRandomNodeUnit12|TestRegExpBytecodeRandomNodeUnit13|TestRegExpBytecodeRandomNodeUnit14|TestRegExpBytecodeRandomNodeUnit15|TestRegExpBytecodeRandomNodeUnit16|TestRegExpBytecodeRandomNodeUnit17|TestRegExpBytecodeRandomNodeUnit18|TestRegExpBytecodeRandomNodeUnit19|TestRegExpBytecodeRandomNodeUnit20|TestRegExpBytecodeRandomNodeUnit21|TestRegExpBytecodeRandomNodeUnit22|TestRegExpBytecodeRandomNodeUnit23|TestRegExpBytecodeRandomNodeUnit24|TestRegExpBytecodeRandomNodeUnit25|TestRegExpBytecodeRandomNodeUnit26|TestRegExpBytecodeRandomNodeUnit27|TestRegExpBytecodeRandomNodeUnit28|TestRegExpBytecodeRandomNodeUnit29|TestRegExpBytecodeRandomNodeUnit30|TestRegExpBytecodeRandomNodeUnit31|TestRegExpBytecodeRandomNodeUnit32|TestRegExpBytecodeRandomNodeUnit33|TestRegExpBytecodeRandomNodeUnit34|TestRegExpBytecodeRandomNodeUnit35|TestRegExpBytecodeRandomNodeUnit36|TestRegExpBytecodeRandomNodeUnit37|TestRegExpBytecodeRandomNodeUnit38|TestRegExpBytecodeRandomNodeUnit39)$ => regexp_test.go:53: native regex oracle ([]): exit status 1",
+    "members": [
+      "TestRegExpBytecodeTest262"
+    ],
+    "entry_probes": {
+      "P02": "fail",
+      "P03": "fail"
+    },
+    "subsumption_mutants": 4
+  },
+  {
+    "test": "TestRegExpBytecodeRandomNode family",
+    "package": "internal/native",
+    "file": "internal/native/regexp_test.go",
+    "seconds": 10.594,
+    "oracle": "Live Node captures, groups, indices and lastIndex; forty wrappers share runRegexCases.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M07",
+      "M08",
+      "M10",
+      "M11"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M11: regexp_test.go:388: native regex oracle ([]): exit status 1",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestRegExpSearchNode"
+    ],
+    "mutants_in_matrix": 12,
+    "probe_kills": [
+      "P02",
+      "P03"
+    ],
+    "subsumer_seconds": 0.356,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestToStringWithARadixMatchesNode",
+      "TestToStringWithARadixOutOfRangePanics",
+      "TestRecordsAgainstNode",
+      "TestRecordReadMutants",
+      "TestRecordBenchmark",
+      "TestRegExpSearchNode",
+      "TestRegExpLintPatternsNode",
+      "TestRegExpBytecodeTest262",
+      "TestRegExpNativeStepLimit",
+      "TestRegExpIteratorResultShape",
+      "TestRegExpBytecodePatternUnits",
+      "TestRuntimeReleasePaths",
+      "TestRuntimeStringEquality",
+      "TestRecordMutants family",
+      "TestRegExpBytecodeRandomNode family"
+    ],
+    "evidence": "ADAMIC_MUTANT=M11 ADAMIC_RECORD_BENCH=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u052/cache/M11 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestToStringWithARadixMatchesNode|TestToStringWithARadixOutOfRangePanics|TestRecordsAgainstNode|TestRecordReadMutants|TestRecordBenchmark|TestRegExpSearchNode|TestRegExpLintPatternsNode|TestRegExpBytecodeTest262|TestRegExpNativeStepLimit|TestRegExpIteratorResultShape|TestRegExpBytecodePatternUnits|TestRuntimeReleasePaths|TestRuntimeStringEquality|TestRecordMutantsUnit00|TestRecordMutantsUnit01|TestRecordMutantsUnit02|TestRecordMutantsUnit03|TestRecordMutantsUnit04|TestRecordMutantsUnit05|TestRegExpBytecodeRandomNodeUnit00|TestRegExpBytecodeRandomNodeUnit01|TestRegExpBytecodeRandomNodeUnit02|TestRegExpBytecodeRandomNodeUnit03|TestRegExpBytecodeRandomNodeUnit04|TestRegExpBytecodeRandomNodeUnit05|TestRegExpBytecodeRandomNodeUnit06|TestRegExpBytecodeRandomNodeUnit07|TestRegExpBytecodeRandomNodeUnit08|TestRegExpBytecodeRandomNodeUnit09|TestRegExpBytecodeRandomNodeUnit10|TestRegExpBytecodeRandomNodeUnit11|TestRegExpBytecodeRandomNodeUnit12|TestRegExpBytecodeRandomNodeUnit13|TestRegExpBytecodeRandomNodeUnit14|TestRegExpBytecodeRandomNodeUnit15|TestRegExpBytecodeRandomNodeUnit16|TestRegExpBytecodeRandomNodeUnit17|TestRegExpBytecodeRandomNodeUnit18|TestRegExpBytecodeRandomNodeUnit19|TestRegExpBytecodeRandomNodeUnit20|TestRegExpBytecodeRandomNodeUnit21|TestRegExpBytecodeRandomNodeUnit22|TestRegExpBytecodeRandomNodeUnit23|TestRegExpBytecodeRandomNodeUnit24|TestRegExpBytecodeRandomNodeUnit25|TestRegExpBytecodeRandomNodeUnit26|TestRegExpBytecodeRandomNodeUnit27|TestRegExpBytecodeRandomNodeUnit28|TestRegExpBytecodeRandomNodeUnit29|TestRegExpBytecodeRandomNodeUnit30|TestRegExpBytecodeRandomNodeUnit31|TestRegExpBytecodeRandomNodeUnit32|TestRegExpBytecodeRandomNodeUnit33|TestRegExpBytecodeRandomNodeUnit34|TestRegExpBytecodeRandomNodeUnit35|TestRegExpBytecodeRandomNodeUnit36|TestRegExpBytecodeRandomNodeUnit37|TestRegExpBytecodeRandomNodeUnit38|TestRegExpBytecodeRandomNodeUnit39)$ => regexp_test.go:388: native regex oracle ([]): exit status 1",
+    "members": [
+      "TestRegExpBytecodeRandomNodeUnit00",
+      "TestRegExpBytecodeRandomNodeUnit01",
+      "TestRegExpBytecodeRandomNodeUnit02",
+      "TestRegExpBytecodeRandomNodeUnit03",
+      "TestRegExpBytecodeRandomNodeUnit04",
+      "TestRegExpBytecodeRandomNodeUnit05",
+      "TestRegExpBytecodeRandomNodeUnit06",
+      "TestRegExpBytecodeRandomNodeUnit07",
+      "TestRegExpBytecodeRandomNodeUnit08",
+      "TestRegExpBytecodeRandomNodeUnit09",
+      "TestRegExpBytecodeRandomNodeUnit10",
+      "TestRegExpBytecodeRandomNodeUnit11",
+      "TestRegExpBytecodeRandomNodeUnit12",
+      "TestRegExpBytecodeRandomNodeUnit13",
+      "TestRegExpBytecodeRandomNodeUnit14",
+      "TestRegExpBytecodeRandomNodeUnit15",
+      "TestRegExpBytecodeRandomNodeUnit16",
+      "TestRegExpBytecodeRandomNodeUnit17",
+      "TestRegExpBytecodeRandomNodeUnit18",
+      "TestRegExpBytecodeRandomNodeUnit19",
+      "TestRegExpBytecodeRandomNodeUnit20",
+      "TestRegExpBytecodeRandomNodeUnit21",
+      "TestRegExpBytecodeRandomNodeUnit22",
+      "TestRegExpBytecodeRandomNodeUnit23",
+      "TestRegExpBytecodeRandomNodeUnit24",
+      "TestRegExpBytecodeRandomNodeUnit25",
+      "TestRegExpBytecodeRandomNodeUnit26",
+      "TestRegExpBytecodeRandomNodeUnit27",
+      "TestRegExpBytecodeRandomNodeUnit28",
+      "TestRegExpBytecodeRandomNodeUnit29",
+      "TestRegExpBytecodeRandomNodeUnit30",
+      "TestRegExpBytecodeRandomNodeUnit31",
+      "TestRegExpBytecodeRandomNodeUnit32",
+      "TestRegExpBytecodeRandomNodeUnit33",
+      "TestRegExpBytecodeRandomNodeUnit34",
+      "TestRegExpBytecodeRandomNodeUnit35",
+      "TestRegExpBytecodeRandomNodeUnit36",
+      "TestRegExpBytecodeRandomNodeUnit37",
+      "TestRegExpBytecodeRandomNodeUnit38",
+      "TestRegExpBytecodeRandomNodeUnit39"
+    ],
+    "entry_probes": {
+      "P02": "fail",
+      "P03": "fail"
+    },
+    "subsumption_mutants": 4
+  }
+]

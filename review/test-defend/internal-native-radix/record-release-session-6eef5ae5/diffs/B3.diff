@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/map.c
++++ b/internal/native/runtime/map.c
+@@ -107,7 +107,7 @@
+ 		return SIZE_MAX;
+ 	}
+ 	size_t mask = map->bucket_count - 1;
+-	for (size_t bucket = hash_key(map, key) & mask;; bucket = (bucket + 1) & mask) {
++	for (size_t bucket = hash_key(map, key) & mask;; bucket = (bucket + 2) & mask) {
+ 		size_t slot = map->buckets[bucket];
+ 		if (slot == 0) {
+ 			return SIZE_MAX;

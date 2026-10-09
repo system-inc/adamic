@@ -1,0 +1,59 @@
+[
+  {
+    "command": [
+      "clang",
+      "-std=c11",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Wcast-function-type-strict",
+      "-pedantic",
+      "-Wno-unused-variable",
+      "-Wno-unused-but-set-variable",
+      "-Wno-unused-function",
+      "-Wno-unused-parameter",
+      "-Wno-self-assign",
+      "-ffp-contract=off",
+      "-fno-optimize-sibling-calls",
+      "-DADAMIC_COUNT",
+      "-I",
+      "/workspace/adamic/internal/native/runtime",
+      "-O2",
+      "-c",
+      "internal/native/runtime/map.c",
+      "-o",
+      "/workspace/scratch/defend-radix/B2.o"
+    ],
+    "exit": 0
+  },
+  {
+    "command": [
+      "clang",
+      "-std=c11",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Wcast-function-type-strict",
+      "-pedantic",
+      "-Wno-unused-variable",
+      "-Wno-unused-but-set-variable",
+      "-Wno-unused-function",
+      "-Wno-unused-parameter",
+      "-Wno-self-assign",
+      "-ffp-contract=off",
+      "-fno-optimize-sibling-calls",
+      "-DADAMIC_COUNT",
+      "-I",
+      "/workspace/adamic/internal/native/runtime",
+      "-O1",
+      "-g",
+      "-fsanitize=address,undefined",
+      "-fno-sanitize-recover=all",
+      "-c",
+      "internal/native/runtime/map.c",
+      "-o",
+      "/workspace/scratch/defend-radix/B2-san.o"
+    ],
+    "exit": 0
+  }
+]

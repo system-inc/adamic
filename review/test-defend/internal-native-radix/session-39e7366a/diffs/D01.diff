@@ -1,0 +1,11 @@
+--- a/internal/regexp/matcher.go
++++ b/internal/regexp/matcher.go
+@@ -216,7 +216,7 @@
+ 		base.op = opSet
+ 		base.set = characterSet{ranges: []RuneRange{{0, maxCharacter(f)}}}
+ 		if !f.DotAll {
+-			base.set.ranges = subtractRanges(base.set.ranges, []RuneRange{{10, 10}, {13, 13}, {0x2028, 0x2029}})
++			base.set.ranges = subtractRanges(base.set.ranges, []RuneRange{{10, 10}, {13, 13}, {0x2029, 0x2029}})
+ 		}
+ 		c.emit(base)
+ 	case *Assertion:

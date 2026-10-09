@@ -1,0 +1,10 @@
+--- a/internal/native/runtime/map.c
++++ b/internal/native/runtime/map.c
+@@ -236,7 +236,6 @@
+ 		}
+ 	}
+ 	free(map->entries);
+-	free(map->buckets);
+ }
+ 
+ adamic_map_iterator *adamic_map_iterate(adamic_map *map) {

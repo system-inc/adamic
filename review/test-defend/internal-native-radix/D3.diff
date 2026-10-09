@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/regexp.c
++++ b/internal/native/runtime/regexp.c
+@@ -185,7 +185,7 @@
+ 	bool matched = false;
+ 	for (;;) {
+ 		if (regex_step_limit && *steps >= regex_step_limit) {
+-			static const char message[] = "regexp: instruction step limit exceeded";
++			static const char message[] = "regexp: instruction budget exceeded";
+ 			adamic_panic(message, sizeof message - 1);
+ 		}
+ 		(*steps)++;

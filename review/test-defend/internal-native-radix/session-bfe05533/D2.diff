@@ -1,0 +1,13 @@
+diff --git a/internal/native/runtime/regexp.c b/internal/native/runtime/regexp.c
+index 2b43acf1..df60881f 100644
+--- a/internal/native/runtime/regexp.c
++++ b/internal/native/runtime/regexp.c
+@@ -461,7 +461,7 @@ static ptrdiff_t *regex_execute(adamic_object *regex, const uint16_t *input, siz
+ 		ptrdiff_t at = (ptrdiff_t)start;
+ 		if ((p->flags & 4) && at > 0 && (size_t)at < length && high(input[at - 1]) &&
+ 			low(input[at]))
+-			at--;
++			(void)at;
+ 		if (p->anchored && at != 0)
+ 			break;
+ 		for (size_t k = 0; k < 2 * (p->captures + 1); k++)

@@ -1,0 +1,230 @@
+[
+  {
+    "row": "TestToStringWithARadixOutOfRangePanics",
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=./internal/native,./internal/regexp",
+      "-coverprofile=/workspace/adamic/review/test-defend/internal-native-radix/TestToStringWithARadixOutOfRangePanics.cover",
+      "./internal/native/",
+      "-run",
+      "^TestToStringWithARadixOutOfRangePanics$"
+    ]
+  },
+  {
+    "row": "TestToStringWithARadixMatchesNode",
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=./internal/native,./internal/regexp",
+      "-coverprofile=/workspace/adamic/review/test-defend/internal-native-radix/TestToStringWithARadixMatchesNode.cover",
+      "./internal/native/",
+      "-run",
+      "^TestToStringWithARadixMatchesNode$"
+    ]
+  },
+  {
+    "row": "TestRecordBenchmark",
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=./internal/native,./internal/regexp",
+      "-coverprofile=/workspace/adamic/review/test-defend/internal-native-radix/TestRecordBenchmark.cover",
+      "./internal/native/",
+      "-run",
+      "^TestRecordBenchmark$"
+    ]
+  },
+  {
+    "row": "TestRuntimeStringEquality",
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=./internal/native,./internal/regexp",
+      "-coverprofile=/workspace/adamic/review/test-defend/internal-native-radix/TestRuntimeStringEquality.cover",
+      "./internal/native/",
+      "-run",
+      "^TestRuntimeStringEquality$"
+    ]
+  },
+  {
+    "row": "TestRegExpSearchNode",
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=./internal/native,./internal/regexp",
+      "-coverprofile=/workspace/adamic/review/test-defend/internal-native-radix/TestRegExpSearchNode.cover",
+      "./internal/native/",
+      "-run",
+      "^TestRegExpSearchNode$"
+    ]
+  },
+  {
+    "row": "TestRegExpLintPatternsNode",
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=./internal/native,./internal/regexp",
+      "-coverprofile=/workspace/adamic/review/test-defend/internal-native-radix/TestRegExpLintPatternsNode.cover",
+      "./internal/native/",
+      "-run",
+      "^TestRegExpLintPatternsNode$"
+    ]
+  },
+  {
+    "row": "TestRegExpBytecodeTest262",
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=./internal/native,./internal/regexp",
+      "-coverprofile=/workspace/adamic/review/test-defend/internal-native-radix/TestRegExpBytecodeTest262.cover",
+      "./internal/native/",
+      "-run",
+      "^TestRegExpBytecodeTest262$"
+    ]
+  },
+  {
+    "row": "TestRegExpNativeStepLimit",
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=./internal/native,./internal/regexp",
+      "-coverprofile=/workspace/adamic/review/test-defend/internal-native-radix/TestRegExpNativeStepLimit.cover",
+      "./internal/native/",
+      "-run",
+      "^TestRegExpNativeStepLimit$"
+    ]
+  },
+  {
+    "row": "TestRegExpBytecodePatternUnits",
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=./internal/native,./internal/regexp",
+      "-coverprofile=/workspace/adamic/review/test-defend/internal-native-radix/TestRegExpBytecodePatternUnits.cover",
+      "./internal/native/",
+      "-run",
+      "^TestRegExpBytecodePatternUnits$"
+    ]
+  },
+  {
+    "row": "TestRuntimeReleasePaths",
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=./internal/native,./internal/regexp",
+      "-coverprofile=/workspace/adamic/review/test-defend/internal-native-radix/TestRuntimeReleasePaths.cover",
+      "./internal/native/",
+      "-run",
+      "^TestRuntimeReleasePaths$"
+    ]
+  },
+  {
+    "row": "TestRegExpIteratorResultShape",
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=./internal/native,./internal/regexp",
+      "-coverprofile=/workspace/adamic/review/test-defend/internal-native-radix/TestRegExpIteratorResultShape.cover",
+      "./internal/native/",
+      "-run",
+      "^TestRegExpIteratorResultShape$"
+    ]
+  },
+  {
+    "row": "TestRegExpBytecodeRandomNode family",
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=./internal/native,./internal/regexp",
+      "-coverprofile=/workspace/adamic/review/test-defend/internal-native-radix/TestRegExpBytecodeRandomNode_family.cover",
+      "./internal/native/",
+      "-run",
+      "^TestRegExpBytecodeRandomNodeUnit[0-9]+$"
+    ]
+  }
+]

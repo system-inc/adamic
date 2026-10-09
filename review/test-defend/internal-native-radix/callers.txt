@@ -1,0 +1,89 @@
+internal/native/library_map_set_iterator_test.go:47:			adamic_release(active);
+internal/native/library_map_set_iterator_test.go:55:			adamic_release(iterator);
+internal/native/library_map_set_iterator_test.go:62:	adamic_release(map);
+internal/native/dtoa_test.go:42:		adamic_release(text);
+internal/native/dtoa_test.go:178:	adamic_release(text);
+internal/native/case_test.go:81:	adamic_release(lower);
+internal/native/case_test.go:86:		adamic_release(upper_case);
+internal/native/case_test.go:88:	adamic_release(string);
+internal/native/case_test.go:125:			adamic_release(string);
+internal/native/closure_convention_test.go:77:	changed = strings.ReplaceAll(changed, "adamic_regex_replace_callback", "adamic_regex_replace_callback_mutant")
+internal/native/closure_convention_test.go:78:	source := changed + "\n" + strings.ReplaceAll(C(program), "adamic_regex_replace_callback", "adamic_regex_replace_callback_mutant")
+internal/native/closure_convention_test.go:88:	program := &ir.Program{Strings: []string{"adamic_regex_replace_callback", "adamic_fs_file_host_cwd"}}
+internal/native/normalize_benchmark_test.go:64: adamic_release(out); adamic_release(input); return 0;
+internal/native/element_borrow_test.go:50:		if strings.Contains(generated, "adamic_release("+name+");") {
+internal/native/heap_test.go:28:	adamic_release(text);
+internal/native/heap_test.go:110:			adamic_release(items[index]);
+internal/native/normalize_test.go:79:		adamic_release(normalized);
+internal/native/normalize_test.go:81:	adamic_release(string);
+internal/native/normalize_test.go:119:			adamic_release(string);
+internal/native/math_test.go:54:			adamic_release(fixed);
+internal/native/loop_borrow_test.go:78:					if !program.Locals[loop.Local].Borrowed || strings.Contains(generated, "adamic_release("+name+")") || strings.Contains(generated, name+" = adamic_retain(") {
+internal/native/loop_borrow_test.go:150:			counted := strings.Contains(body, "adamic_release("+iterator[1]+");")
+internal/native/loop_borrow_test.go:264:		counted := strings.Contains(body, "adamic_release("+iterator[1]+");")
+internal/native/normalize_random_test.go:60:  adamic_release(input);
+internal/native/record_test.go:218:	{"overwrite-key-leaked", "map.c", "adamic_release(key.reference);", "(void)key;", "references", "LeakSanitizer"},
+internal/native/record_test.go:219:	{"stored-key-freed", "record.c", "adamic_map_set(table(record), (adamic_value){.reference = key}, value);", "adamic_map_set(table(record), (adamic_value){.reference = key}, value);\n\tadamic_release(key);", "semantics", "AddressSanitizer: heap-use-after-free"},
+internal/native/regexp_test.go:119:	source.WriteString("typedef struct {const adamic_regex_program *program;size_t input,length;uint64_t last;size_t expected,count;uint64_t final;} probe;\nstatic const probe probes[]={\n")
+internal/native/regexp_test.go:127: adamic_start(argc,argv);adamic_regex_set_step_limit(argc>1?0:10000000);size_t disagreements=0;
+internal/native/regexp_test.go:132:  adamic_object *regex=adamic_regex_new(p->program,&adamic_string_empty,&adamic_string_empty);regex->slots[1].number=(double)p->last;
+internal/native/regexp_test.go:133:  bool tested=adamic_regex_test(regex,input);bool same=tested==(p->count!=0) && regex->slots[1].number==(double)p->final;regex->slots[1].number=(double)p->last;
+internal/native/regexp_test.go:134:  adamic_array *match=adamic_regex_exec(regex,input);same=same && (match==NULL)==(p->count==0) && regex->slots[1].number==(double)p->final;
+internal/native/regexp_test.go:143:     same=same && adamic_string_equal(want,match->elements[k].reference);adamic_release(want);
+internal/native/regexp_test.go:151:  adamic_release(match);adamic_release(regex);adamic_release(input);
+internal/native/regexp_test.go:257: adamic_start(argc,argv);adamic_regex_set_step_limit(1000);
+internal/native/regexp_test.go:258: adamic_object *regex=adamic_regex_new(&probe,&adamic_string_empty,&adamic_string_empty);
+internal/native/regexp_test.go:259: bool result=adamic_regex_test(regex,&input);adamic_release(regex);return result?1:0;
+internal/native/regexp_test.go:284:static const adamic_regex_instruction two[] = {{.op=3,.x=1},{.op=0}};
+internal/native/regexp_test.go:285:static const adamic_regex_instruction four[] = {{.op=3,.x=1},{.op=3,.x=2},{.op=3,.x=3},{.op=0}};
+internal/native/regexp_test.go:286:static const adamic_regex_program programs[] = {{.code=two},{.code=four}};
+internal/native/regexp_test.go:289: adamic_regex_set_step_limit(strtoull(argv[2],NULL,10));
+internal/native/regexp_test.go:290: adamic_object *regex=adamic_regex_new(&programs[atoi(argv[1])],&adamic_string_empty,&adamic_string_empty);
+internal/native/regexp_test.go:291: bool matched=adamic_regex_test(regex,&adamic_string_empty);
+internal/native/regexp_test.go:292: adamic_release(regex);
+internal/native/regexp_test.go:338: adamic_maybe_boolean done=adamic_regex_done(object);adamic_release(object);
+internal/native/regexp_test.go:341: done=adamic_regex_done(object);adamic_release(object);
+internal/native/string_build_test.go:44:            adamic_release(text);
+internal/native/string_build_test.go:63:            adamic_release(text);
+internal/native/string_build_test.go:68:            adamic_release(text);
+internal/native/string_build_test.go:72:    adamic_release(text);
+internal/native/radix_test.go:30:		adamic_string *text = adamic_number_to_radix(read(value), read(radix));
+internal/native/radix_test.go:33:		adamic_release(text);
+internal/native/radix_test.go:115:	adamic_string *text = adamic_number_to_radix(strtod(arguments[1], NULL), strtod(arguments[2], NULL));
+internal/native/radix_test.go:117:	adamic_release(text);
+internal/native/string_views_test.go:29: adamic_release(whole);
+internal/native/string_views_test.go:41: adamic_release(first);adamic_release(parent);
+internal/native/string_views_test.go:43: adamic_write_line(adamic_stdout,inner);adamic_release(inner);
+internal/native/string_views_test.go:49: adamic_release(parent);adamic_release(below);adamic_release(boundary);
+internal/native/string_views_test.go:53: adamic_release(parent);adamic_write_line(adamic_stdout,tiny);adamic_release(tiny);
+internal/native/string_views_test.go:54: adamic_string *copy=stack_piece();adamic_write_line(adamic_stdout,copy);adamic_release(copy);
+internal/native/string_views_test.go:61:  sum=(sum*33+(unsigned char)at->bytes[0])%1000003;adamic_release(at);
+internal/native/string_views_test.go:64: adamic_output_flush();printf("%zu\n",sum);adamic_release(parent);
+internal/native/string_index_test.go:38:	adamic_release(written);
+internal/native/string_index_test.go:79:		adamic_release(result);
+internal/native/string_index_test.go:94:		adamic_release(at);
+internal/native/string_index_test.go:124:				adamic_release(piece);
+internal/native/string_index_test.go:139:				adamic_release(piece);
+internal/native/string_index_test.go:147:						adamic_release(piece);
+internal/native/string_index_test.go:157:					adamic_release(piece);
+internal/native/string_index_test.go:161:			adamic_release(first);
+internal/native/string_index_test.go:162:			adamic_release(second);
+internal/native/string_index_test.go:357:			adamic_release(piece);
+internal/native/string_index_test.go:361:	adamic_release(text);
+internal/native/string_index_test.go:433:    adamic_release(heap);
+internal/native/runtime_profile_test.go:20: adamic_release(NULL);
+internal/native/runtime_profile_test.go:21: adamic_release(&literal);
+internal/native/runtime_profile_test.go:24: adamic_release(text);
+internal/native/runtime_profile_test.go:27: adamic_release(text);
+internal/native/runtime_profile_test.go:39: adamic_release(chain);
+internal/native/runtime_profile_test.go:69: printf("%d %d %d %d %d %d\n", adamic_string_equal(left,left), adamic_string_equal(left,copy), adamic_string_equal(left,other), adamic_string_equal(NULL,NULL), adamic_string_equal(left,NULL), adamic_string_equal(NULL,left));
+internal/native/runtime_profile_test.go:70: adamic_release(left);adamic_release(copy);adamic_release(other);
+internal/native/string_test.go:45:	adamic_release(written);
+internal/native/string_test.go:50:	adamic_release(string);
+internal/native/string_test.go:82:			say_number(adamic_string_equal(joined, left) ? 1 : 0);
+internal/native/string_test.go:83:			adamic_release(head);
+internal/native/string_test.go:84:			adamic_release(tail);
+internal/native/string_test.go:85:			adamic_release(joined);
+internal/native/string_test.go:103:			adamic_release(points);
+internal/native/string_test.go:105:		adamic_release(left);
+internal/native/string_test.go:106:		adamic_release(right);

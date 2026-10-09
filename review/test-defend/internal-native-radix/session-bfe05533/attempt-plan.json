@@ -1,0 +1,62 @@
+[
+  {
+    "id": "D1",
+    "target": "TestRegExpSearchNode",
+    "file": "internal/native/runtime/regexp.c",
+    "line": 115,
+    "before": "\t\tif (frame->allocation_on_heap)\n\t\t\tfree(frame);",
+    "after": "\t\tif (frame->allocation_on_heap)\n\t\t\t(void)frame;",
+    "menu": "drop statement",
+    "lead": "200 repetitions can overflow the 8192-byte choice-point arena; drop only the heap overflow frame free."
+  },
+  {
+    "id": "D2",
+    "target": "TestRegExpSearchNode",
+    "file": "internal/native/runtime/regexp.c",
+    "line": 464,
+    "before": "\t\t\tat--;",
+    "after": "\t\t\t(void)at;",
+    "menu": "drop statement",
+    "lead": "Search explicitly begins three Unicode/global patterns at lastIndex=1 inside a surrogate pair; lint cases always start at zero."
+  },
+  {
+    "id": "D3",
+    "target": "TestRegExpSearchNode",
+    "file": "internal/regexp/native_search.go",
+    "line": 42,
+    "before": "if len(s) == 0 {\n\t\t\t\t\treturn bits, false",
+    "after": "if len(s) == 0 {\n\t\t\t\t\treturn bits, true",
+    "menu": "change option",
+    "lead": "Nullable Unicode string-set first-character filter; search explicitly uses [\\q{|ab}] on nonmatching x."
+  },
+  {
+    "id": "D4",
+    "target": "TestRegExpLintPatternsNode",
+    "file": "internal/regexp/parser.go",
+    "line": 452,
+    "before": "'t': 9",
+    "after": "'t': 10",
+    "menu": "change constant",
+    "lead": "Lint patterns contain escaped tab classes and tabbed example text; search has no escaped tab pattern."
+  },
+  {
+    "id": "D5",
+    "target": "TestRegExpLintPatternsNode",
+    "file": "internal/regexp/native_search.go",
+    "line": 75,
+    "before": "i.direction != 1 || i.flags.IgnoreCase || len(i.set.strings) != 0 || len(i.set.ranges) != 1",
+    "after": "i.direction != 1 || false || len(i.set.strings) != 0 || len(i.set.ranges) != 1",
+    "menu": "flip condition",
+    "lead": "Lint has long uppercase CANONICALIZE text under iu. Remove the guard that disables exact literal-prefix filtering under case folding."
+  },
+  {
+    "id": "D6",
+    "target": "TestRegExpLintPatternsNode",
+    "file": "internal/native/runtime/regexp.c",
+    "line": 291,
+    "before": "failed = ok == i->negative;",
+    "after": "failed = ok == false;",
+    "menu": "change option",
+    "lead": "Lint includes a negative lookbehind dollar pattern. Search uses only positive lookaround."
+  }
+]

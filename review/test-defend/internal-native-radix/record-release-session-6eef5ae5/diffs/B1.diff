@@ -1,0 +1,10 @@
+--- a/internal/native/runtime/heap.c
++++ b/internal/native/runtime/heap.c
+@@ -126,7 +126,6 @@
+ 		each->number = (uint32_t)chunk_count;
+ 		chunks[chunk_count++] = each;
+ 	}
+-	each->free = NULL;
+ 	each->fresh = (char *)each + FIRST_SLOT;
+ 	each->end = (char *)each + CHUNK;
+ 	each->live = 0;
