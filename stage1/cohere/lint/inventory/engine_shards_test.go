@@ -155,6 +155,7 @@ func inventoryEngineUnion(t *testing.T, binary, directory string) [][]string {
 // Adding or reordering cases must not move an existing case; empty and repeated
 // corpora must fail rather than silently produce a passing set of shards.
 func TestInventoryEngineShardAssignment(t *testing.T) {
+	t.Parallel()
 	original := []string{"TestExistingA", "TestExistingB", "TestExistingC"}
 	before, err := inventoryEnginePartition(original)
 	if err != nil {
@@ -216,6 +217,7 @@ func inventoryEngineSelector(value string) (func(int) bool, error) {
 // A real production mutant: unknown frequency becomes measured zero. Run every
 // live case against it and require exactly its stable hash shard to reject it.
 func TestInventoryEngineShardMutant(t *testing.T) {
+	t.Parallel()
 	binary, cohere, _ := inventoryEngineBuild(t, true)
 	shards := inventoryEngineUnion(t, binary, cohere)
 	caught := []string{}
