@@ -1,0 +1,9 @@
+// a-check: refused result.value
+interface Result<T> { value: T; }
+const shared: Result<string> = { value: 'word' };
+function narrowResult(): Result<string> { return shared; }
+function evaluate(): Result<string | undefined>;
+function evaluate(): Result<string> { return narrowResult(); }
+const result = evaluate();
+result.value = undefined;
+console.log(`${shared.value}`);

@@ -1,0 +1,8 @@
+PASS gzip snapshot parsing, exact fixture allocations, exact phase cohorts and survival IDs
+PASS dropped-constructor parser mutant caught: fixture parse/Node: expected 6 live, got 0
+PASS compiler stock outputs, deterministic counts, peak replay event, phase checkpoints
+PASS mitt stock outputs, deterministic counts, peak replay event, phase checkpoints
+PASS Python syntax
+PASS final observation hook: stock mitt output and counters unchanged; peak remains in compilation
+PASS final parser subprocess mutant: exit 1, exact missing-Node assertion
+PASS final Node-host .cjs fixture and dropped-constructor subprocess mutant

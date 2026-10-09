@@ -1,11 +1,11 @@
 # Typed arrays runtime contract
 
-October 7, 2026: Uint8Array, Int32Array and Float64Array only. The C contract is
+October 7, 2026: Uint8Array, Uint16Array, Int32Array and Float64Array. The C contract is
 `internal/native/runtime/adamic.h`; reads return `adamic_maybe_number`, agreed
 with the compiler so lowering can reuse plain-array read paths.
 
 `adamic_typed_array` begins with `adamic_heap`, followed by element `kind`,
-fixed element `length`, `data` and `owner`. Data is one flat buffer with 1, 4 or
+fixed element `length`, `data` and `owner`. Data is one flat buffer with 1, 2, 4 or
 8 bytes per element, never boxed. An owning header has NULL owner; a subarray
 has its own count, points into the original buffer, and retains its ultimate
 owning header. Releasing the last header/view releases the buffer. Unlike
@@ -31,7 +31,7 @@ early and exceptional exits. Fill returns no additional count. Optional numeric
 arguments use explicit presence flags; an explicit undefined is lowered as absent.
 
 Uint8 writes use ToUint8: truncate and wrap modulo 256, NaN and either infinity
-become 0. Int32 writes truncate and wrap modulo 2^32 into signed range. Float64
+become 0. Uint16 writes use ToUint16 with the same rules modulo 65536. Int32 writes truncate and wrap modulo 2^32 into signed range. Float64
 stores the double unchanged, including negative zero and NaN. Out-of-range reads
 are undefined. Out-of-range writes panic with the existing plain-array shape:
 `adamic: panic: index <index> is outside an array of length <length>` and exit 70.
@@ -43,11 +43,11 @@ view's buffer, and sharing across parallel tasks remain NotYet in the compiler.
 This does not prohibit subarray on a subarray: it retains the ultimate owner
 without growing an owner chain. No buffer property or buffer constructor is exposed.
 
-## Runtime validation
+## Original three-kind runtime validation
 
 `TestTypedArrayRuntime` builds the C harness in release and ASan/UBSan modes,
-with LeakSanitizer enabled on the finished sanitized run. Its 4,045 stdout
-lines must equal source Node's, including negative-zero spelling. The harness
+with LeakSanitizer enabled on the finished sanitized run. Its stdout must
+equal source Node's, including negative-zero spelling. The harness
 also asserts one counted allocation per constructor and balanced heap values.
 It covers all requested conversion edges through construction, writes, fill
 and same-kind set; 121 relative start/end pairs per kind; overlapping copies
@@ -116,3 +116,58 @@ worker-gate allowance. Its other packages were compiled by setup and vetted.
 Complete logs are `/tmp/typed-arrays-packages.log`,
 `/tmp/typed-arrays-oracle-focused.log`, `/tmp/typed-arrays-vet.log`,
 `/tmp/typed-arrays-format.log`, and the focused/mutant logs in the commands above.
+
+## Uint16Array runtime and compiler extension
+
+Uint16Array uses the generic header unchanged apart from its new kind enum.
+The runtime width is two bytes and every numeric store uses ToUint16. Lowering
+and both emitters recognize the kind through the existing typed-array paths.
+`byteLength` is the fixed view length multiplied by element width for all four
+supported kinds. Optional byteLength access remains NotYet.
+
+The C harness and the two `typed_arrays_uint16*.a` fixtures hold construction,
+stores, fill and set to Node at 0, 65535, 65536, -1, 1.5, NaN, -0, Infinity and
+2^32 + 1. They also cover numeric reads, zero initialization, fixed length and
+byteLength, bidirectional aliasing, relative fill, overlapping set in both
+directions, live iteration, and a view surviving its owner's scope. The write
+fixture pins the Adamic panic and independently verifies Node drops the write.
+
+The Uint16-specific runner restores the runtime after each mutation:
+
+```sh
+python3 internal/native/testdata/typed-arrays/run-uint16-mutants.py > /tmp/uint16-mutants.log 2>&1
+```
+
+All three mutants were caught independently by the C harness and backend
+oracles. Saturating stores at 65536 instead of wrapping and copying subarrays
+produce stdout differences from Node. Removing bounds checks fails the panic
+exit assertion in release and triggers an ASan heap-buffer-overflow under the
+sanitizers. Individual logs are in `/tmp/adamic-uint16-mutants`.
+
+Linux counts regeneration adds only the two new fixture rows. The successful
+fixture finishes with 173 allocations and 173 frees; the stopped write records
+5 allocations and 4 frees at its panic. This extension adds no mutable static
+runtime storage; see `runtime-statics.md`. Allocation exhaustion and parallel
+sharing are not exercised; the previously unsupported facilities stay NotYet.
+
+Setup passed with tools and submodules ready at 0s, cache warm at 120s and done
+at 120s, using the same tool versions and CPU settings recorded above. Every
+build shell sourced `/workspace/adamic-tools/env.sh`.
+
+Final Uint16 validation, after restoring the mutants:
+
+```sh
+ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m ./internal/native ./internal/lower ./internal/oracle > /tmp/uint16-packages.log 2>&1
+go test ./internal/oracle -run TestCountsAreRecorded -count=1 -timeout 30m -args -update-counts > /tmp/uint16-counts.log 2>&1
+go vet ./... > /tmp/uint16-vet.log 2>&1
+gofmt -l cmd internal > /tmp/uint16-format.log 2>&1
+git diff --check > /tmp/uint16-diffcheck.log 2>&1
+```
+
+Observed: native passed in 306.686s, lower in 25.986s and oracle in 136.195s.
+The whole oracle package compares source Node, JavaScript emission, sanitized
+native and release native, and checks Linux leaks on finished programs. The C
+harness also runs release and ASan/UBSan with leak detection enabled. Counts
+regeneration passed in 20.396s; vet, format and whitespace checks had no output.
+The whole repository test suite was not run; the three requested packages were
+run in full, uncached, and `go vet ./...` covered the repository.

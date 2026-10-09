@@ -32,7 +32,7 @@ Values still uses shape for nonboolean fields and container kind, and the ports 
 
 The actual port differential tests pass with their default generated corpora: **26,778 selectors** and **8,208 value parses** (5,598 trees and 2,610 refusals). They agree byte for byte with Go cohere, source Node, and the JavaScript backend; native uses ASan, UBSan, and a separate leak run. All existing port mutants also pass their catcher tests. Optional npm library comparisons skip because ADAMIC_SELECTOR_LIBRARY and ADAMIC_VALUES_LIBRARY are unset; no original npm-library run is claimed.
 
-For hir-01, searches of stage1 source and gap tests and `git ls-tree -r origin/main stage1` found no React high-level IR port. The fetched origin/main advertises 031a1259bc7973934792dc6cb1bd4074fc2204b9. static_single_assignment contains React graph inputs but has only block-arrow and optional-call gaps; it is not hir-01. The missing port's owning path or commit is needed to retire its workaround. No other worker's branch was imported to invent that source.
+hir-01 belongs to the unlanded React Compiler IR port on hir/land-08 and hir/unit-* branches. Its workaround closes when that port lands; no HIR branch is imported by this unit.
 
 ## Node fixtures and pending acceptance
 
@@ -95,3 +95,11 @@ Counts are regenerated on Linux: five new rows relative to a774d316, with no exi
 There are **no Compiles-to-Refused or Compiles-to-NotYet regressions**. Only two new stage3 records change: taste/11_build_info_pending.a from NotYet to Compiles, and objects/06_watch_close.a from NotYet to the existing cycle-capable Refused diagnostic. The update harness regenerates the compiling fixture only after its native and Node observations agree. Its updater cannot write noncompiling outcomes because nativeAgrees stays false; the watch-close diagnostic was recorded separately from the observed compiler diagnostic after the fixture's Node check passed. A byte audit confirms all bytes outside stage0, including all Node observations, are unchanged. Log: /tmp/boolean-optional-stage3-byte-audit.log.
 
 No full gate, performance measurement, Darwin, WASI, original npm-library run, or unavailable hir-01 differential test is claimed. General JSON objects/accessors/toJSON, mixed boolean unions, and checked-view optional writes remain outside this unit.
+
+## Landing on c2
+
+The authorized merge of cloud/land-stack-c2-c79c7572 c79c7572 carries a774d316 as an ancestor. The delivery branch lacked c2, so c2 was merged without conflicts. Its packed slot cache requires deriving the spread field presence index from the actual returned slot; emit_objects.go and reuse.go now do so. Copy-state and insertion-order mutant probes use that same API, including c2's shape registration initializer. Pending view assertions track the current optional/conversion refusal and remain skipped.
+
+The landing checks use /tmp/boolean-optional-c2- logs: build-green, vet-green, acheck-final, stage3-green, oracle-complete, counts-green, and the selector, values, static, JSON-origin and prototype mutant logs. The a-check operation covers the six .a files changed against c2. The oracle reruns all Boolean and inherited optional-presence fixtures and mutants uncached, including release and sanitizer builds. Its final native fixture filter additionally includes reuse, spread_undefined, and class_instance_key_consume to exercise the reused-spread hook.
+
+No Compiles regressions occur. Two c2 stage3 real fixtures, structural-method-statics/main.a and generic-optional-return/main.a, change from NotYet to Compiles after the updater verifies recorded Node, current Node and native agreement. All Node observations and all bytes outside stage0 remain byte for byte unchanged. HIR remains with its owning unlanded port.

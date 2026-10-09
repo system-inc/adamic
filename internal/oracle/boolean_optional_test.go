@@ -112,7 +112,7 @@ func TestBooleanOptionalViewPending(t *testing.T) {
 	}
 	_, err = lowered(t, path)
 	var notYet *lower.NotYet
-	if !errors.As(err, &notYet) || !strings.Contains(notYet.What, "checked view field") {
+	if !errors.As(err, &notYet) || !strings.Contains(notYet.What, "checked field alias requiring an optional, accessor, or representation conversion") {
 		t.Fatalf("pending boundary changed: %v", err)
 	}
 	t.Skip("acceptance dependency: compiler/views-rehearsal 2b6c032a")

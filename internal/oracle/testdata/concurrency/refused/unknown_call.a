@@ -1,0 +1,6 @@
+import { parallelMap } from 'adamic';
+const items: readonly number[] = [1, 2, 3];
+function run(callback: (item: number) => number): number[] {
+ return parallelMap(items, (item) => callback(item));
+}
+run((item) => item);

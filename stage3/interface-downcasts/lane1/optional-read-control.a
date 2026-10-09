@@ -1,0 +1,6 @@
+// Ordinary optional-read control for the checked-read boundary witness.
+interface Identifier { readonly kind: 80; readonly escapedText: string; }
+function identifier(node: Identifier | undefined): Identifier | undefined { return node; }
+const id: Identifier = { kind: 80, escapedText: 'name' };
+console.log(identifier(id)?.escapedText ?? 'missing');
+console.log(identifier(undefined)?.escapedText ?? 'missing');
