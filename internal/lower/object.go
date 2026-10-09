@@ -569,8 +569,14 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 func (l *lowering) readObjectField(node *ast.Node, property ir.Property) ir.Expression {
 	property.Readiness = sourceExpression(node)
 	property.View = sourceExpression(node)
+	property.ViewWhere = l.program.Where(node)
+	if node.Kind == ast.KindPropertyAccessExpression {
+		property.ViewReceiverTypeID = int(l.checker.GetTypeAtLocation(node.AsPropertyAccessExpression().Expression).Id())
+	}
 	if symbol := l.checker.GetSymbolAtLocation(node.Name()); symbol != nil {
 		declared := l.checker.GetTypeOfSymbol(symbol)
+		property.ViewTypeID = int(declared.Id())
+		property.ViewContract = l.result.ViewContractTypes[property.ViewTypeID]
 		property.ViewType = l.checker.TypeToString(declared)
 		property.ViewAllowed = l.viewLiterals(declared)
 	}
