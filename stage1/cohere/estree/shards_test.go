@@ -3,37 +3,69 @@ package estree
 import (
 	"bytes"
 	"fmt"
+	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/native"
 	"os"
 	"os/exec"
 	"path/filepath"
+	"runtime"
 	"strconv"
 	"strings"
 	"testing"
 	"time"
 )
 
-// These inputs describe the directory-writing build callbacks. There is no
-// package cache: until internal/buildcache lands, each selected product is built
-// once per invocation and shared by all of its parallel shards.
-type buildInputs struct {
-	Name         string
-	Files, Flags []string
-	Toolchain    string
-}
-
-func prepareProduct(t *testing.T, inputs buildInputs, build func(string) error) string {
+// Go overlay builds retain their existing path until the GoBuild integration
+// lands. Non-Go products use internal/buildcache and remain read-only.
+func prepareOverlayOracle(t *testing.T, build func(string) error) string {
 	t.Helper()
 	dir := t.TempDir()
 	start := time.Now()
 	if err := build(dir); err != nil {
 		t.Fatal(err)
 	}
-	t.Logf("cold build %s total: %.3fs; files=%v flags=%v toolchain=%s", inputs.Name, time.Since(start).Seconds(), inputs.Files, inputs.Flags, inputs.Toolchain)
+	t.Logf("cold Go overlay oracle: %.3fs", time.Since(start).Seconds())
 	return dir
 }
 
-func portBuildInputs(path string, sanitize bool) buildInputs {
-	return buildInputs{Name: filepath.Base(filepath.Dir(path)), Files: []string{filepath.Dir(path), "../../typescript", "../../../internal/load", "../../../internal/lower", "../../../internal/native", "../../../internal/javascript", "../../../cohere"}, Flags: []string{fmt.Sprintf("sanitize=%t", sanitize)}, Toolchain: "go+clang+node"}
+func portBuildInputs(t *testing.T, sanitize bool) buildcache.Inputs {
+	t.Helper()
+	// GoInputs names all compiler dependencies, module pins, resolved Go
+	// environment and toolchains. These extra trees cover the TS program,
+	// emitted JS, native runtime and the directory-writing build recipe.
+	inputs, err := buildcache.GoInputs("estree-port", "./cmd/adamic", nil, nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	inputs.Name = "estree-port"
+	sources, err := filepath.Glob("*.ts")
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, source := range sources {
+		inputs.Files = append(inputs.Files, "stage1/cohere/estree/"+source)
+	}
+	inputs.Files = append(inputs.Files, "stage1/cohere/estree/estree_test.go", "stage1/cohere/estree/shards_test.go", "stage1/typescript", "internal/javascript", "internal/native", "internal/load", "internal/lower")
+	inputs.Flags = append(inputs.Flags, native.Flags(native.Options{Sanitize: sanitize})...)
+	inputs.Flags = append(inputs.Flags, "repository="+root(t), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"), "ADAMIC_NATIVE_JOBS="+os.Getenv("ADAMIC_NATIVE_JOBS"), "ADAMIC_GATE_UNCACHED="+os.Getenv("ADAMIC_GATE_UNCACHED"))
+	inputs.Toolchain = append(inputs.Toolchain, runtime.GOOS, runtime.GOARCH, buildcache.Tool("clang", "--version"))
+	return inputs
+}
+
+func mutantProduct(t *testing.T, mutation portMutation) (string, string) {
+	t.Helper()
+	inputs := portBuildInputs(t, true)
+	inputs.Name += "-" + mutation.name
+	inputs.Flags = append(inputs.Flags, "mutation-file="+mutation.file, "mutation-from="+mutation.from, "mutation-to="+mutation.to)
+	dir := buildcache.Product(t, inputs, func(dir string) error {
+		source := filepath.Join(dir, "source")
+		if err := os.Mkdir(source, 0755); err != nil {
+			return err
+		}
+		path := mutantPortInto(t, source, mutation.file, mutation.from, mutation.to)
+		return buildPortInto(t, path, true, dir)
+	})
+	return filepath.Join(dir, "source", "main.ts"), filepath.Join(dir, "port")
 }
 
 const testThreePortMutantsShards = 12
@@ -230,8 +262,7 @@ func runMutantShards(t *testing.T, cases []string, mutations []portMutation, sha
 			oracle = goOracle(t)
 		}
 		mutation := mutations[m]
-		path := mutantPort(t, mutation.file, mutation.from, mutation.to)
-		binary, _ := build(t, path, true)
+		path, binary := mutantProduct(t, mutation)
 		products[m] = product{path, binary}
 	}
 	setup = time.Since(start)

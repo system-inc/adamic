@@ -3,8 +3,10 @@ package estree
 import (
 	"bytes"
 	"context"
+	"crypto/sha256"
 	"encoding/json"
 	"fmt"
+	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
@@ -12,12 +14,50 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"runtime"
 	"strings"
 	"testing"
 	"time"
 )
 
 func execute(t *testing.T, dir, name string, args ...string) []byte {
+	t.Helper()
+	if filepath.Base(name) == "oracle" && len(args) == 2 && args[0] == "--manifest" {
+		return oracleOutput(t, dir, name, args[1])
+	}
+	return executeUncached(t, dir, name, args...)
+}
+
+func oracleOutput(t *testing.T, working, oracle, manifest string) []byte {
+	t.Helper()
+	binary, err := os.ReadFile(oracle)
+	if err != nil {
+		t.Fatal(err)
+	}
+	paths, err := os.ReadFile(manifest)
+	if err != nil {
+		t.Fatal(err)
+	}
+	inputs := buildcache.Inputs{Name: "estree-oracle-output", Files: []string{"stage1/cohere/estree/estree_test.go"}, Flags: []string{fmt.Sprintf("oracle-sha256=%x", sha256.Sum256(binary)), "working=" + working, "--manifest"}, Toolchain: []string{runtime.GOOS, runtime.GOARCH}}
+	for i, path := range strings.Fields(string(paths)) {
+		data, err := os.ReadFile(path)
+		if err != nil {
+			t.Fatal(err)
+		}
+		inputs.Flags = append(inputs.Flags, fmt.Sprintf("case-%03d=%x", i, sha256.Sum256(data)))
+	}
+	directory := buildcache.Product(t, inputs, func(directory string) error {
+		output := executeUncached(t, working, oracle, "--manifest", manifest)
+		return os.WriteFile(filepath.Join(directory, "canonical"), output, 0644)
+	})
+	data, err := os.ReadFile(filepath.Join(directory, "canonical"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	return data
+}
+
+func executeUncached(t *testing.T, dir, name string, args ...string) []byte {
 	t.Helper()
 	command := exec.Command(name, args...)
 	command.Dir = dir
@@ -54,8 +94,7 @@ func goOracle(t *testing.T) string {
 		t.Fatal(err)
 	}
 	virtual := filepath.Join(repo, "cohere/adamic_estree_oracle.go")
-	inputs := buildInputs{Name: "go-oracle", Files: []string{source, filepath.Join(repo, "cohere"), filepath.Join(repo, "go.work")}, Flags: []string{"build", "-overlay"}, Toolchain: "go"}
-	dir := prepareProduct(t, inputs, func(dir string) error {
+	dir := prepareOverlayOracle(t, func(dir string) error {
 		overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: source}})
 		if err != nil {
 			return err
@@ -77,29 +116,73 @@ func goOracle(t *testing.T) string {
 
 func build(t *testing.T, path string, sanitize bool) (string, string) {
 	t.Helper()
-	inputs := portBuildInputs(path, sanitize)
-	dir := prepareProduct(t, inputs, func(dir string) error {
-		start := time.Now()
-		program, err := load.Load([]string{path})
+	inputs := portBuildInputs(t, sanitize)
+	relative, err := filepath.Rel(root(t), path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	// Temporary mutant directories are snapshotted by content in the key and
+	// copied into the product before lowering. Their random path is not an input.
+	if strings.HasPrefix(relative, "..") {
+		inputs.Name += "-temporary-source"
+		files, err := filepath.Glob(filepath.Join(filepath.Dir(path), "*.ts"))
 		if err != nil {
-			return err
+			t.Fatal(err)
 		}
-		lowered, err := lower.Lower(context.Background(), program)
-		if err != nil {
-			return err
+		snapshot := make(map[string][]byte, len(files))
+		for _, file := range files {
+			data, err := os.ReadFile(file)
+			if err != nil {
+				t.Fatal(err)
+			}
+			name := filepath.Base(file)
+			snapshot[name] = data
+			inputs.Flags = append(inputs.Flags, fmt.Sprintf("source-%s=%x", name, sha256.Sum256(data)))
 		}
-		t.Logf("cold build %s load/lower: %.3fs", inputs.Name, time.Since(start).Seconds())
-		start = time.Now()
-		if err := native.Build(native.C(lowered), filepath.Join(dir, "port"), native.Options{Sanitize: sanitize}); err != nil {
-			return err
-		}
-		t.Logf("cold build %s sanitized=%t native: %.3fs", inputs.Name, sanitize, time.Since(start).Seconds())
-		start = time.Now()
-		err = os.WriteFile(filepath.Join(dir, "port.mjs"), []byte(javascript.JavaScript(lowered)), 0644)
-		t.Logf("cold build %s emitted JS: %.3fs", inputs.Name, time.Since(start).Seconds())
-		return err
-	})
+		inputs.Flags = append(inputs.Flags, "entry="+filepath.Base(path))
+		dir := buildcache.Product(t, inputs, func(dir string) error {
+			source := filepath.Join(dir, "source")
+			if err := os.Mkdir(source, 0755); err != nil {
+				return err
+			}
+			for name, data := range snapshot {
+				if err := os.WriteFile(filepath.Join(source, name), data, 0644); err != nil {
+					return err
+				}
+			}
+			return buildPortInto(t, filepath.Join(source, filepath.Base(path)), sanitize, dir)
+		})
+		return filepath.Join(dir, "port"), filepath.Join(dir, "port.mjs")
+	}
+	inputs.Flags = append(inputs.Flags, "entry="+filepath.ToSlash(relative))
+	dir := buildcache.Product(t, inputs, func(dir string) error { return buildPortInto(t, path, sanitize, dir) })
 	return filepath.Join(dir, "port"), filepath.Join(dir, "port.mjs")
+}
+
+func buildPortInto(t *testing.T, path string, sanitize bool, dir string) error {
+	start := time.Now()
+	program, err := load.Load([]string{path})
+	if err != nil {
+		return err
+	}
+	lowered, err := lower.Lower(context.Background(), program)
+	if err != nil {
+		return err
+	}
+	t.Logf("cold build load/lower: %.3fs", time.Since(start).Seconds())
+	start = time.Now()
+	c := native.C(lowered)
+	if err := os.WriteFile(filepath.Join(dir, "program.c"), []byte(c), 0644); err != nil {
+		return err
+	}
+	if err := native.Build(c, filepath.Join(dir, "port"), native.Options{Sanitize: sanitize}); err != nil {
+		return err
+	}
+	t.Logf("cold build sanitized=%t native: %.3fs", sanitize, time.Since(start).Seconds())
+	start = time.Now()
+	err = os.WriteFile(filepath.Join(dir, "port.mjs"), []byte(javascript.JavaScript(lowered)), 0644)
+	t.Logf("cold build emitted JS: %.3fs", time.Since(start).Seconds())
+	return err
 }
 
 func onNode(t *testing.T, path string, args ...string) []byte {
@@ -211,6 +294,11 @@ func TestGeneratedAgreement(t *testing.T) {
 func mutantPort(t *testing.T, file, from, to string) string {
 	t.Helper()
 	directory := t.TempDir()
+	return mutantPortInto(t, directory, file, from, to)
+}
+
+func mutantPortInto(t *testing.T, directory, file, from, to string) string {
+	t.Helper()
 	files, err := filepath.Glob("*.ts")
 	if err != nil {
 		t.Fatal(err)
