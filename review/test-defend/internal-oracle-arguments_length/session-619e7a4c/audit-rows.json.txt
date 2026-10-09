@@ -1,0 +1,226 @@
+[
+  {
+    "test": "TestArgumentsLengthTypeScriptSource",
+    "file": "internal/oracle/arguments_length_test.go",
+    "line": 34,
+    "timings": [
+      0.454,
+      0.476,
+      0.476
+    ],
+    "seconds": 0.476,
+    "wall_seconds": [
+      2.6222077759998683,
+      2.6510931470002106,
+      2.5969141179998587
+    ]
+  },
+  {
+    "test": "TestArgumentsLengthWrongSlotMutant",
+    "file": "internal/oracle/arguments_length_test.go",
+    "line": 71,
+    "timings": [
+      0.245,
+      0.252,
+      0.301
+    ],
+    "seconds": 0.252,
+    "wall_seconds": [
+      2.2092165429999113,
+      2.206651222000346,
+      3.0532870580000235
+    ]
+  },
+  {
+    "test": "TestGateCacheGeneratedC",
+    "file": "internal/oracle/cache_test.go",
+    "line": 462,
+    "timings": [
+      0.194,
+      0.302,
+      0.23
+    ],
+    "seconds": 0.23,
+    "wall_seconds": [
+      3.060290738999811,
+      4.335408218000339,
+      4.0191788419997465
+    ]
+  },
+  {
+    "test": "TestGateCacheToolchains",
+    "file": "internal/oracle/cache_test.go",
+    "line": 481,
+    "timings": [
+      0.042,
+      0.044,
+      0.049
+    ],
+    "seconds": 0.044,
+    "wall_seconds": [
+      3.4706071330001578,
+      3.284061472999838,
+      3.621013370000128
+    ]
+  },
+  {
+    "test": "TestGateCacheNodeInputs",
+    "file": "internal/oracle/cache_test.go",
+    "line": 507,
+    "timings": [
+      0.25,
+      0.224,
+      0.21
+    ],
+    "seconds": 0.224,
+    "wall_seconds": [
+      3.6981399999999667,
+      3.7704577720001,
+      4.455274061000182
+    ]
+  },
+  {
+    "test": "TestGateCacheAtomicEvidence",
+    "file": "internal/oracle/cache_test.go",
+    "line": 533,
+    "timings": [
+      0.029,
+      0.013,
+      0.013
+    ],
+    "seconds": 0.013,
+    "wall_seconds": [
+      3.611586573000295,
+      2.771926741000243,
+      1.8709192810001696
+    ]
+  },
+  {
+    "test": "TestGateCacheUncached",
+    "file": "internal/oracle/cache_test.go",
+    "line": 565,
+    "timings": [
+      0.008,
+      0.009,
+      0.008
+    ],
+    "seconds": 0.008,
+    "wall_seconds": [
+      1.89807540899983,
+      1.9642494380000244,
+      1.9887781639999957
+    ]
+  },
+  {
+    "test": "TestCallTargetThrowAgreesWithNode",
+    "file": "internal/oracle/call_targets_guards_test.go",
+    "line": 8,
+    "timings": [
+      0.355,
+      0.36,
+      0.324
+    ],
+    "seconds": 0.355,
+    "wall_seconds": [
+      2.3051757889998044,
+      2.279138355000214,
+      2.1628429769998547
+    ]
+  },
+  {
+    "test": "TestDirectClosureCallAgreesWithNode",
+    "file": "internal/oracle/call_targets_guards_test.go",
+    "line": 13,
+    "timings": [
+      0.387,
+      0.358,
+      0.389
+    ],
+    "seconds": 0.387,
+    "wall_seconds": [
+      2.295190418999937,
+      2.196198595000169,
+      2.286623825999868
+    ]
+  },
+  {
+    "test": "TestCheckedCastFlushesOutput",
+    "file": "internal/oracle/cast_test.go",
+    "line": 33,
+    "timings": [
+      0.127,
+      0.132,
+      0.115
+    ],
+    "seconds": 0.127,
+    "wall_seconds": [
+      2.228026145000058,
+      2.1945100939997246,
+      1.9899963389998447
+    ]
+  },
+  {
+    "test": "TestUncheckableCastAdmission",
+    "file": "internal/oracle/cast_test.go",
+    "line": 50,
+    "timings": [
+      0.035,
+      0.048,
+      0.04
+    ],
+    "seconds": 0.04,
+    "wall_seconds": [
+      1.9927978629998506,
+      1.942444974999944,
+      2.078004415000123
+    ]
+  },
+  {
+    "test": "TestCheckedCastRunsNoCatchOrFinally",
+    "file": "internal/oracle/cast_test.go",
+    "line": 75,
+    "timings": [
+      0.145,
+      0.137,
+      0.135
+    ],
+    "seconds": 0.137,
+    "wall_seconds": [
+      2.158434708000186,
+      2.2657422010001937,
+      2.1415058830002636
+    ]
+  },
+  {
+    "test": "TestCheckedCastFailureContract",
+    "file": "internal/oracle/cast_test.go",
+    "line": 138,
+    "timings": [
+      0.257,
+      0.261,
+      0.255
+    ],
+    "seconds": 0.257,
+    "wall_seconds": [
+      2.2752056979998088,
+      2.15925124999967,
+      2.34805547499991
+    ]
+  },
+  {
+    "test": "TestCheckedCastMutants",
+    "file": "internal/oracle/cast_test.go",
+    "line": 160,
+    "timings": [
+      0.37,
+      0.391,
+      0.373
+    ],
+    "seconds": 0.373,
+    "wall_seconds": [
+      2.43634434400019,
+      2.497457494000173,
+      2.432111019000331
+    ]
+  }
+]

@@ -1,0 +1,58 @@
+[
+  [
+    "D01",
+    "internal/native/runtime/adamic.c",
+    "write_all(adamic_stdout, bytes, length)",
+    "write_all(adamic_stdout, bytes, length - 1)",
+    "Off by one: large direct stdout writes omit their final byte",
+    "flush"
+  ],
+  [
+    "D02",
+    "internal/native/runtime/adamic.c",
+    "// Everything the program printed comes first, as on Node.\n\tflush();",
+    "// Everything the program printed comes first, as on Node.",
+    "Drop the panic stdout flush statement",
+    "flush"
+  ],
+  [
+    "D03",
+    "internal/native/runtime/adamic.c",
+    "write_all(adamic_stdout, bytes, length)",
+    "write_all(adamic_stderr, bytes, length)",
+    "Change large-write descriptor from stdout to stderr",
+    "flush"
+  ],
+  [
+    "D04",
+    "internal/lower/cast_proof.go",
+    "for _, previous := range literals {",
+    "for _, previous := range literals[:max(0, len(literals)-1)] {",
+    "Off by one: omit the last previous tag from duplicate comparison",
+    "admission"
+  ],
+  [
+    "D05",
+    "internal/native/emit_statements.go",
+    "if e.program.CallMayThrow(call) {",
+    "if !e.program.CallMayThrow(call) {",
+    "Flip direct void-call exception propagation condition",
+    "call"
+  ],
+  [
+    "D06",
+    "internal/native/exceptions.go",
+    "e.nested(statement.Finally, nil)",
+    "/* finalizer statement omitted */",
+    "Drop the three explicit try-finally body emission statements",
+    "call"
+  ],
+  [
+    "D07",
+    "internal/native/emit_functions.go",
+    "if expression.Direct > 0 {",
+    "if false {",
+    "Drop the direct closure-call fast path by flipping its condition",
+    "call"
+  ]
+]

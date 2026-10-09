@@ -1,0 +1,11 @@
+--- a/internal/native/emit_functions.go
++++ b/internal/native/emit_functions.go
+@@ -311,7 +311,7 @@
+ 	}
+ 	packed, count := e.closureArguments(expression)
+ 	call := e.packedClosureCall(expression, closure, packed, count)
+-	if expression.Direct > 0 {
++	if false {
+ 		target := expression.Direct - 1
+ 		extra := ""
+ 		if e.program.PackedCountNeeded(target) {
