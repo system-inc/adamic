@@ -866,6 +866,38 @@ class Coverage(FailClosed):
         self.assertEqual(result["executors"], {"stage3": 2})
 
 
+class SmokeShards(unittest.TestCase):
+    """#v5fgqc4's split moved TestNativeAgreesWithNode's fixtures under shard subtests, and smoke went red on 2aff1aa5
+    with 'smoke entries that didn't run' (Oct 9 13:41Z): smoke selects and reads a fixture under either layout."""
+    entries = [("TestNativeAgreesWithNode", "internal/oracle/testdata/bitwise"),
+               ("TestNativeAgreesWithNode", "internal/oracle/testdata/array_from_length.a")]
+
+    def selects(self, name):
+        # go test -run: the pattern and the name split on '/', each level matched by its own expression, and a name
+        # shorter than the pattern ignores the levels past its end.
+        levels = run.smokePattern(self.entries).split("/")
+        return all(re.search(levels[index], part) for index, part in enumerate(name.split("/")) if index < len(levels))
+
+    def test_a_fixture_is_selected_directly_under_its_lane_or_under_a_shard(self):
+        for name in ("TestNativeAgreesWithNode/internal/oracle/testdata/bitwise",
+                     "TestNativeAgreesWithNode/shard-003-0/internal/oracle/testdata/bitwise",
+                     "TestNativeAgreesWithNode/shard-019/internal/oracle/testdata/array_from_length.a",
+                     "TestNativeAgreesWithNode/shard-003-0"):
+            self.assertTrue(self.selects(name), name)
+        for name in ("TestNativeAgreesWithNode/internal/oracle/testdata/other",
+                     "TestNativeAgreesWithNode/shard-003-0/internal/oracle/testdata/other",
+                     "TestNativeAgreesWithNode/part-003/internal/oracle/testdata/bitwise",
+                     "TestInputAgreesWithNode/internal/oracle/testdata/bitwise"):
+            self.assertFalse(self.selects(name), name)
+
+    def test_a_sharded_fixture_s_pass_counts_as_its_entry(self):
+        self.assertEqual(run.smokeFixture("shard-003-0/internal/oracle/testdata/bitwise"), "internal/oracle/testdata/bitwise")
+        self.assertEqual(run.smokeFixture("internal/oracle/testdata/bitwise"), "internal/oracle/testdata/bitwise")
+        # A shard alone isn't a fixture, and only a shard level is dropped.
+        self.assertEqual(run.smokeFixture("shard-003-0"), "shard-003-0")
+        self.assertEqual(run.smokeFixture("part-003/internal/oracle/testdata/bitwise"), "part-003/internal/oracle/testdata/bitwise")
+
+
 class GateRuns(unittest.TestCase):
     def test_a_trailer_runs_a_deferred_test_in_this_gate(self):
         with tempfile.TemporaryDirectory() as tree:

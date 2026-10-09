@@ -2013,7 +2013,7 @@ class Gate:
             if lane in lanes:
                 seen.add(lane)
                 if event.get("Action") == "pass" and "/" in test:
-                    passed.add((lane, test.split("/", 1)[1]))
+                    passed.add((lane, smokeFixture(test.split("/", 1)[1])))
 
         self.watchers.append(watch)
         self.test("smoke", ["go", "test", "-count=1"] + ([] if self.complete else ["-failfast"]) + ["-json", "-timeout", "30m", "-run", smokePattern(smoke), "./internal/oracle"], log)
@@ -2723,19 +2723,37 @@ def fixturePattern(prefix, fixtures):
     return "/".join("^(%s)$" % "|".join(re.escape(part) for part in level) for level in levels)
 
 
+# A lane split into shards (#v5fgqc4: TestNativeAgreesWithNode/shard-003-0/<fixture>) runs each fixture one level down.
+smokeShard = re.compile(r"shard-[0-9]+(-[0-9]+)?$")
+
+
+def smokeFixture(name):
+    """A smoke subtest's fixture, the shard level dropped: shard-003-0/bitwise is the fixture bitwise."""
+    head, _, rest = name.partition("/")
+    return rest if rest and smokeShard.match(head) else name
+
+
 def smokePattern(entries):
     """A -run pattern for exactly these (lane, fixture) entries. Go splits both the pattern and each
     subtest name on '/' and matches level by level, so alternation can't span a slash: each level gets
     its own alternation, and a name shorter than the pattern ignores the levels past its end. A lane
-    may also run another lane's fixture that it has; the check after the run reads only its own."""
+    may also run another lane's fixture that it has; the check after the run reads only its own.
+    A sharded lane holds its fixtures one level down (lane/shard-003-0/<fixture>), so the first level
+    also takes a shard name and every later level also takes the part one level up. What the wider
+    pattern selects beyond the entries is only ever read by the exact check after the run."""
+    parts = [fixture.split("/") for _, fixture in entries]
+    depth = max((len(fixture) for fixture in parts), default=0)
     levels = [sorted({lane for lane, _ in entries})]
-    for _, fixture in entries:
-        for depth, part in enumerate(fixture.split("/"), start=1):
-            if len(levels) <= depth:
-                levels.append([])
-            if part not in levels[depth]:
-                levels[depth].append(part)
-    return "/".join("^(%s)$" % "|".join(part.replace(".", "\\.") for part in level) for level in levels)
+    for level in range(1, depth + 2):
+        names = []
+        for fixture in parts:
+            for index in (level - 1, level - 2):
+                if 0 <= index < len(fixture) and fixture[index].replace(".", "\\.") not in names:
+                    names.append(fixture[index].replace(".", "\\."))
+        if level == 1:
+            names.append(smokeShard.pattern.rstrip("$"))
+        levels.append(names)
+    return "/".join("^(%s)$" % "|".join(level) for level in levels)
 
 
 def git(directory, *arguments):
