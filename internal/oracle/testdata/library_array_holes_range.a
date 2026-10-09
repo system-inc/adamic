@@ -1,0 +1,19 @@
+function lengthAttempt(length: number): void {
+    try {
+        const cells = new Array<number>(length);
+        console.log(`length:${cells.length}`);
+    } catch (error) {
+        if (error instanceof RangeError) {
+            console.log(`range:${error.name}:${error.message}`);
+        } else { console.log("wrong constructor"); }
+    }
+}
+lengthAttempt(0);
+lengthAttempt(-0);
+lengthAttempt(-1);
+lengthAttempt(0.5);
+lengthAttempt(NaN);
+lengthAttempt(Infinity);
+lengthAttempt(-Infinity);
+lengthAttempt(4294967295);
+lengthAttempt(4294967296);
