@@ -13,9 +13,12 @@ import (
 	"regexp"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/buildcache"
 )
 
 var bridgeProducts string
+var bridgeGoProducts map[string]string
 var bridgeProductNames = []string{"tsgo.a", "tsgo-asan.a", "length.a", "stale.a", "wrong.a", "leak.a", "stage0", "oracle", "api", "length-driver", "stale-driver", "leak-driver", "native-asan", "native", "wrong-native", "healthy-region", "region-stage0", "region-native", "linkage.test"}
 
 func TestMain(m *testing.M) {
@@ -34,6 +37,11 @@ func TestMain(m *testing.M) {
 	}
 	if needsProducts {
 		repository, err := filepath.Abs("../..")
+		if err != nil {
+			fmt.Fprintln(os.Stderr, err)
+			os.Exit(1)
+		}
+		bridgeGoProducts, err = prepareBridgeGoProducts(repository)
 		if err != nil {
 			fmt.Fprintln(os.Stderr, err)
 			os.Exit(1)
@@ -69,7 +77,7 @@ func TestMain(m *testing.M) {
 func bridgeProductKey(repository string) (string, error) {
 	// Go validates dependency actions against content, including local replacements
 	// and embeds. Build IDs avoid reimplementing the checker dependency graph.
-	command := exec.Command("go", "list", "-deps", "-export", "-json", "./bridge/tsgo/archive", "./bridge/tsgo/oracle", "./cmd/adamic")
+	command := exec.Command("go", "list", "-deps", "-export", "-json", "./bridge/tsgo/archive", "./bridge/tsgo/oracle", "./cmd/adamic", "./internal/buildcache")
 	command.Dir = repository
 	data, err := command.Output()
 	if err != nil {
@@ -165,11 +173,15 @@ func buildBridgeProducts(repository, directory string) error {
 		}
 		return run(name+"-build", command)
 	}
-	if err := archive("tsgo.a", "", false); err != nil {
-		return err
-	}
-	if err := archive("tsgo-asan.a", "", true); err != nil {
-		return err
+	// Ordinary products use the shared Go cache; overlays remain in this keyed bundle.
+	for name, source := range bridgeGoProducts {
+		data, err := os.ReadFile(source)
+		if err != nil {
+			return err
+		}
+		if err := os.WriteFile(filepath.Join(directory, name), data, 0o755); err != nil {
+			return err
+		}
 	}
 	for _, mutant := range []struct{ name, path, before, after string }{
 		{"length", "bridge/tsgo/archive/main.go", "result._type = buffer(answer.Type)", "result._type = buffer(answer.Type)\n\tresult._type.length++"},
@@ -182,11 +194,6 @@ func buildBridgeProducts(repository, directory string) error {
 			return err
 		}
 		if err := archive(mutant.name+".a", replacement, false); err != nil {
-			return err
-		}
-	}
-	for _, target := range []struct{ name, source string }{{"stage0", "./cmd/adamic"}, {"oracle", "./bridge/tsgo/oracle"}} {
-		if err := run(target.name+"-build", exec.Command("go", "build", "-o", filepath.Join(directory, target.name), target.source)); err != nil {
 			return err
 		}
 	}
@@ -243,4 +250,43 @@ func buildBridgeProducts(repository, directory string) error {
 		return err
 	}
 	return os.WriteFile(filepath.Join(directory, "products.json"), data, 0o644)
+}
+
+// TestMain has no testing.TB. Use GoBuild's exported key and cache entry point,
+// with its reproducible flags, so these products share GoBuild's cache entries.
+func prepareBridgeGoProducts(repository string) (map[string]string, error) {
+	products := map[string]string{}
+	for _, target := range []struct {
+		name, output, pkg      string
+		arguments, environment []string
+	}{
+		{"tsgo.a", "tsgo.a", "./bridge/tsgo/archive", []string{"-buildmode=c-archive"}, nil},
+		{"tsgo-asan.a", "tsgo-asan.a", "./bridge/tsgo/archive", []string{"-buildmode=c-archive"}, []string{"CC=clang", "CGO_CFLAGS=-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all"}},
+		{"stage0", "adamic", "./cmd/adamic", nil, nil},
+		{"oracle", "oracle", "./bridge/tsgo/oracle", nil, nil},
+	} {
+		arguments := append([]string{"-trimpath", "-ldflags=-buildid="}, target.arguments...)
+		inputs, err := buildcache.GoInputs(target.output, target.pkg, arguments, target.environment)
+		if err != nil {
+			return nil, err
+		}
+		directory, err := buildcache.Get(inputs, func(directory string) error {
+			command := exec.Command("go", append(append(append([]string{"build"}, arguments...), "-o", filepath.Join(directory, target.output)), target.pkg)...)
+			command.Dir = repository
+			command.Env = append(os.Environ(), target.environment...)
+			output, err := command.CombinedOutput()
+			if write := os.WriteFile(filepath.Join(directory, "build.log"), output, 0o644); write != nil {
+				return write
+			}
+			if err != nil {
+				return fmt.Errorf("go build %s: %w\n%s", target.pkg, err, output)
+			}
+			return nil
+		})
+		if err != nil {
+			return nil, err
+		}
+		products[target.name] = filepath.Join(directory, target.output)
+	}
+	return products, nil
 }

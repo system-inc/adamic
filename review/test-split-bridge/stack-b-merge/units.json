@@ -1,0 +1,548 @@
+[
+  {
+    "mode": "sample",
+    "test": "TestBridgeABI",
+    "action": "pass",
+    "seconds": 0.11,
+    "wall": 8.041363778997038
+  },
+  {
+    "mode": "sample",
+    "test": "TestBridgeInputLength",
+    "action": "pass",
+    "seconds": 0.03,
+    "wall": 4.597080239000206
+  },
+  {
+    "mode": "sample",
+    "test": "TestBridgeLinkage",
+    "action": "pass",
+    "seconds": 0.06,
+    "wall": 4.510627427000145
+  },
+  {
+    "mode": "sample",
+    "test": "TestBridgeOracleChecker",
+    "action": "skip",
+    "seconds": 0,
+    "wall": 2.0518362000002526
+  },
+  {
+    "mode": "sample",
+    "test": "TestBridgeOracleParser",
+    "action": "skip",
+    "seconds": 0,
+    "wall": 1.979345364998153
+  },
+  {
+    "mode": "sample",
+    "test": "TestBridgeOracleSample",
+    "action": "pass",
+    "seconds": 0.12,
+    "wall": 4.505100203998154
+  },
+  {
+    "mode": "sample",
+    "test": "TestBridgeOracleTypes",
+    "action": "skip",
+    "seconds": 0,
+    "wall": 1.940893908002181
+  },
+  {
+    "mode": "sample",
+    "test": "TestBridgeOracleUtilities",
+    "action": "skip",
+    "seconds": 0,
+    "wall": 1.982045422999363
+  },
+  {
+    "mode": "sample",
+    "test": "TestBridgeOutputFree",
+    "action": "pass",
+    "seconds": 0.15,
+    "wall": 4.582802395998442
+  },
+  {
+    "mode": "sample",
+    "test": "TestBridgeOutputLength",
+    "action": "pass",
+    "seconds": 0.1,
+    "wall": 4.525231030995201
+  },
+  {
+    "mode": "sample",
+    "test": "TestBridgeProductCacheIsVerified",
+    "action": "pass",
+    "seconds": 0,
+    "wall": 2.026156361003814
+  },
+  {
+    "mode": "sample",
+    "test": "TestBridgeRegion",
+    "action": "pass",
+    "seconds": 0.18,
+    "wall": 4.574472487001913
+  },
+  {
+    "mode": "sample",
+    "test": "TestBridgeRegionOwnership",
+    "action": "pass",
+    "seconds": 0.1,
+    "wall": 4.515824732996407
+  },
+  {
+    "mode": "sample",
+    "test": "TestBridgeStaleHandle",
+    "action": "pass",
+    "seconds": 0.07,
+    "wall": 4.518100590001268
+  },
+  {
+    "mode": "sample",
+    "test": "TestBridgeTimingRound1Checker",
+    "action": "skip",
+    "seconds": 0,
+    "wall": 2.0000275150014204
+  },
+  {
+    "mode": "sample",
+    "test": "TestBridgeTimingRound1Parser",
+    "action": "skip",
+    "seconds": 0,
+    "wall": 1.9378733869962161
+  },
+  {
+    "mode": "sample",
+    "test": "TestBridgeTimingRound1Sample",
+    "action": "pass",
+    "seconds": 0.17,
+    "wall": 4.643401867004286
+  },
+  {
+    "mode": "sample",
+    "test": "TestBridgeTimingRound1Types",
+    "action": "skip",
+    "seconds": 0,
+    "wall": 1.9989866340038134
+  },
+  {
+    "mode": "sample",
+    "test": "TestBridgeTimingRound1Utilities",
+    "action": "skip",
+    "seconds": 0,
+    "wall": 2.020856252995145
+  },
+  {
+    "mode": "sample",
+    "test": "TestBridgeTimingRound2Checker",
+    "action": "skip",
+    "seconds": 0,
+    "wall": 1.995638002998021
+  },
+  {
+    "mode": "sample",
+    "test": "TestBridgeTimingRound2Parser",
+    "action": "skip",
+    "seconds": 0,
+    "wall": 1.9814011300040875
+  },
+  {
+    "mode": "sample",
+    "test": "TestBridgeTimingRound2Sample",
+    "action": "pass",
+    "seconds": 0.15,
+    "wall": 4.6314943179968395
+  },
+  {
+    "mode": "sample",
+    "test": "TestBridgeTimingRound2Types",
+    "action": "skip",
+    "seconds": 0,
+    "wall": 1.9919204879988683
+  },
+  {
+    "mode": "sample",
+    "test": "TestBridgeTimingRound2Utilities",
+    "action": "skip",
+    "seconds": 0,
+    "wall": 2.0076375540011213
+  },
+  {
+    "mode": "sample",
+    "test": "TestBridgeTimingRound3Checker",
+    "action": "skip",
+    "seconds": 0,
+    "wall": 1.94858183299948
+  },
+  {
+    "mode": "sample",
+    "test": "TestBridgeTimingRound3Parser",
+    "action": "skip",
+    "seconds": 0,
+    "wall": 1.9456516439968254
+  },
+  {
+    "mode": "sample",
+    "test": "TestBridgeTimingRound3Sample",
+    "action": "pass",
+    "seconds": 0.17,
+    "wall": 4.666932632004318
+  },
+  {
+    "mode": "sample",
+    "test": "TestBridgeTimingRound3Types",
+    "action": "skip",
+    "seconds": 0,
+    "wall": 1.985248306998983
+  },
+  {
+    "mode": "sample",
+    "test": "TestBridgeTimingRound3Utilities",
+    "action": "skip",
+    "seconds": 0,
+    "wall": 2.0171053029989707
+  },
+  {
+    "mode": "sample",
+    "test": "TestBridgeUnitsCoverEveryPiece",
+    "action": "pass",
+    "seconds": 0.01,
+    "wall": 2.0259849419962848
+  },
+  {
+    "mode": "sample",
+    "test": "TestBridgeUnlinkedBuild",
+    "action": "pass",
+    "seconds": 0.07,
+    "wall": 4.554709264004487
+  },
+  {
+    "mode": "sample",
+    "test": "TestBridgeUnlinkedC",
+    "action": "pass",
+    "seconds": 0.05,
+    "wall": 4.428882715001237
+  },
+  {
+    "mode": "sample",
+    "test": "TestBridgeUnlinkedJavaScript",
+    "action": "pass",
+    "seconds": 0.05,
+    "wall": 4.521679639001377
+  },
+  {
+    "mode": "sample",
+    "test": "TestBridgeWrongPositionChecker",
+    "action": "skip",
+    "seconds": 0,
+    "wall": 1.9852944359954563
+  },
+  {
+    "mode": "sample",
+    "test": "TestBridgeWrongPositionParser",
+    "action": "skip",
+    "seconds": 0,
+    "wall": 2.003592872999434
+  },
+  {
+    "mode": "sample",
+    "test": "TestBridgeWrongPositionSample",
+    "action": "pass",
+    "seconds": 0.13,
+    "wall": 4.4867059600001085
+  },
+  {
+    "mode": "sample",
+    "test": "TestBridgeWrongPositionTypes",
+    "action": "skip",
+    "seconds": 0,
+    "wall": 1.9995361280016368
+  },
+  {
+    "mode": "sample",
+    "test": "TestBridgeWrongPositionUtilities",
+    "action": "skip",
+    "seconds": 0,
+    "wall": 1.953550867998274
+  },
+  {
+    "mode": "sample",
+    "test": "TestTSGoRequiresLink",
+    "action": "pass",
+    "seconds": 0.04,
+    "wall": 2.078300590001163
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeABI",
+    "action": "pass",
+    "seconds": 0.11,
+    "wall": 4.577497735997895
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeInputLength",
+    "action": "pass",
+    "seconds": 0.03,
+    "wall": 4.388537172999349
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeLinkage",
+    "action": "pass",
+    "seconds": 0.06,
+    "wall": 4.569914024003083
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeOracleChecker",
+    "action": "pass",
+    "seconds": 0.83,
+    "wall": 5.339810890000081
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeOracleParser",
+    "action": "pass",
+    "seconds": 0.81,
+    "wall": 5.288479135000671
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeOracleSample",
+    "action": "skip",
+    "seconds": 0,
+    "wall": 2.0267117969997344
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeOracleTypes",
+    "action": "pass",
+    "seconds": 0.75,
+    "wall": 5.236046382997301
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeOracleUtilities",
+    "action": "pass",
+    "seconds": 0.83,
+    "wall": 5.311717311000393
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeOutputFree",
+    "action": "pass",
+    "seconds": 0.14,
+    "wall": 4.655919313001505
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeOutputLength",
+    "action": "pass",
+    "seconds": 0.1,
+    "wall": 4.496396456001094
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeProductCacheIsVerified",
+    "action": "pass",
+    "seconds": 0,
+    "wall": 1.9615471299985074
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeRegion",
+    "action": "pass",
+    "seconds": 0.19,
+    "wall": 4.717304731995682
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeRegionOwnership",
+    "action": "pass",
+    "seconds": 0.1,
+    "wall": 4.587291918003757
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeStaleHandle",
+    "action": "pass",
+    "seconds": 0.06,
+    "wall": 4.598835427997983
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeTimingRound1Checker",
+    "action": "pass",
+    "seconds": 1.21,
+    "wall": 5.802068379001867
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeTimingRound1Parser",
+    "action": "pass",
+    "seconds": 1.14,
+    "wall": 5.633386563000386
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeTimingRound1Sample",
+    "action": "skip",
+    "seconds": 0,
+    "wall": 1.9536204269970767
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeTimingRound1Types",
+    "action": "pass",
+    "seconds": 1.05,
+    "wall": 5.6066988940001465
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeTimingRound1Utilities",
+    "action": "pass",
+    "seconds": 1.23,
+    "wall": 5.688899633998517
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeTimingRound2Checker",
+    "action": "pass",
+    "seconds": 1.18,
+    "wall": 5.641729693001253
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeTimingRound2Parser",
+    "action": "pass",
+    "seconds": 1.19,
+    "wall": 5.707306465999864
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeTimingRound2Sample",
+    "action": "skip",
+    "seconds": 0,
+    "wall": 2.0354510260003735
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeTimingRound2Types",
+    "action": "pass",
+    "seconds": 1.08,
+    "wall": 5.450813812996785
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeTimingRound2Utilities",
+    "action": "pass",
+    "seconds": 1.24,
+    "wall": 5.781791938999959
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeTimingRound3Checker",
+    "action": "pass",
+    "seconds": 1.26,
+    "wall": 5.778720399001031
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeTimingRound3Parser",
+    "action": "pass",
+    "seconds": 1.17,
+    "wall": 5.783855907000543
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeTimingRound3Sample",
+    "action": "skip",
+    "seconds": 0,
+    "wall": 2.1101385799993295
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeTimingRound3Types",
+    "action": "pass",
+    "seconds": 1.12,
+    "wall": 5.56235781700525
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeTimingRound3Utilities",
+    "action": "pass",
+    "seconds": 1.22,
+    "wall": 5.690413816002547
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeUnitsCoverEveryPiece",
+    "action": "pass",
+    "seconds": 0.01,
+    "wall": 2.030453278006462
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeUnlinkedBuild",
+    "action": "pass",
+    "seconds": 0.05,
+    "wall": 4.649178749001294
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeUnlinkedC",
+    "action": "pass",
+    "seconds": 0.05,
+    "wall": 4.516896461995202
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeUnlinkedJavaScript",
+    "action": "pass",
+    "seconds": 0.05,
+    "wall": 4.461202503000095
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeWrongPositionChecker",
+    "action": "pass",
+    "seconds": 0.79,
+    "wall": 5.372582190000685
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeWrongPositionParser",
+    "action": "pass",
+    "seconds": 0.74,
+    "wall": 5.125085810999735
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeWrongPositionSample",
+    "action": "skip",
+    "seconds": 0,
+    "wall": 1.9724285529955523
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeWrongPositionTypes",
+    "action": "pass",
+    "seconds": 0.72,
+    "wall": 5.181323119999433
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeWrongPositionUtilities",
+    "action": "pass",
+    "seconds": 0.76,
+    "wall": 5.158896808003192
+  },
+  {
+    "mode": "corpus",
+    "test": "TestTSGoRequiresLink",
+    "action": "pass",
+    "seconds": 0.04,
+    "wall": 1.9574334850040032
+  }
+]

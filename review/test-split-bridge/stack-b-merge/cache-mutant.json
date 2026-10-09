@@ -1,0 +1,12 @@
+{
+  "mutant": "add process ID to ordinary archive key",
+  "unit": "TestBridgeABI",
+  "runs": 2,
+  "unit_exits": [
+    0,
+    0
+  ],
+  "misses": 2,
+  "expected_misses": 1,
+  "caught_by": "one-cache-miss assertion"
+}
