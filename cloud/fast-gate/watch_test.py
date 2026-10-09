@@ -428,6 +428,21 @@ class WatchTests(unittest.TestCase):
         w.wait(lambda: 'stall alarm sent' in w.read('output'))
         self.assertIn('and 0 slots free', w.read('messages'))
 
+    def test_a_slot_beside_a_front_run_is_not_free_to_the_stall_alarm(self):
+        # Oct 9 12:30Z: a canary may use it, no queued tip can, and counting it free paged a false stall.
+        w = self.reservation('box1 B\nbox1 S\n', [('codex/waiting', 'S')])
+        (w.state / 'front').write_text('cloud/land-star*\n')
+        holder = subprocess.Popen(['sleep', '30'])
+        self.addCleanup(holder.kill)
+        (w.state / 'running' / str(holder.pid)).write_text('cloud/land-star-1 ' + 'c' * 40 + ' B box1 B x ' + str(w.state / 'logs/old.log') + '\n')
+        w.wait(lambda: 'done canary:' in w.read('output') or 'gating canary' not in w.read('output'))
+        w.put('clock', '1400')
+        time.sleep(.3)
+        self.assertNotIn('stall alarm sent', w.read('output'))
+        w.put('clock', '2000')
+        w.wait(lambda: 'stall alarm sent' in w.read('output'))
+        self.assertIn('and 0 slots free', w.read('messages'))
+
     def test_a_complete_run_s_first_failure_publishes_once_and_a_worker_s_does_not(self):
         w = Watcher(0)
         self.addCleanup(w.close)

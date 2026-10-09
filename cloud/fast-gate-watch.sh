@@ -1233,9 +1233,11 @@ while true; do
   pollEnd=$(date -u +%s)
   # A void storm pauses dispatch on purpose and sends its own alarm.
   if [ -s "${state}/queue" ] && [ ! -f "${state}/storm" ]; then
-    # Slots a tip could take now: a box a reserved gate holds whole, or one draining for it, isn't free.
+    # Slots a tip could take now: a box a reserved gate holds whole, or one draining for it, isn't free. Counted as a
+    # plain tip sees them: since canaries may use a slot beside a front run (26226fda), counting as canary/main called
+    # those slots free and paged a stall nothing could have dispatched into (Oct 9 12:30Z and 12:52Z).
     free=$(freeSlots) draining=$(drainingBoxes)
-    freeCount=$(usableSlots canary/main | grep -c .)
+    freeCount=$(usableSlots stall/probe | grep -c .)
     stallLimit=900
     [ "${freeCount}" -gt 0 ] && stallLimit=300
     if [ $(( pollEnd - ${lastDispatch:-${watchStart}} )) -ge "${stallLimit}" ] && [ -z "${stallAlarmed:-}" ]; then
