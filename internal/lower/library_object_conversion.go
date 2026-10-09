@@ -13,6 +13,9 @@ import (
 // a second member the type doesn't expose, refuse instead of guessing what an erased view hid.
 func (l *lowering) objectStringByHint(node *ast.Node, value ir.Expression, hint string) (ir.Expression, error) {
 	typeOf := l.checker.GetTypeAtLocation(node)
+	if l.libraryIteratorTagType(typeOf) {
+		return l.libraryIteratorString(value), nil
+	}
 	function, reads := l.stringHelper("ordinary_"+hint, []ir.Expression{value})
 	body := []ir.Statement{}
 	names := []string{"toString", "valueOf"}

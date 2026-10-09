@@ -22,6 +22,9 @@ import (
 // narrowedAway reports whether node, a variable or a field, reads a value whose declared type has
 // undefined in it while its type here doesn't. Array reads may also be past the current end.
 func (l *lowering) narrowedAway(node *ast.Node) bool {
+	if l.libraryArrayFindLastParameter(node) {
+		return true
+	}
 	if node.Kind == ast.KindElementAccessExpression {
 		receiver := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(node.AsElementAccessExpression().Expression))
 		if l.checker.IsArrayType(receiver) {

@@ -6,7 +6,10 @@ const collectionIteratorRuntime = `const adamicIteratorPrototype = {
  __adamic_symbol_iterator(self) { return self; },
  [Symbol.iterator]() { return this; }
 };
-const adamicIteratorFamilies = Array.from({ length: 4 }, () => Object.create(adamicIteratorPrototype, {
+const adamicIteratorTags = ['Map Iterator', 'Set Iterator', 'Array Iterator', 'String Iterator'];
+const adamicIteratorFamilies = adamicIteratorTags.map(tag => Object.create(adamicIteratorPrototype, {
+ [Symbol.toStringTag]: { value: tag, configurable: true },
+ __adamic_iterator_tag: { value: function(self = this) { return self[Symbol.toStringTag]; } },
  next: { value: function(self = this) { const state = self.__adamic_iterator_state; return state.code(state, []); } }
 }));
 const adamicCollectionIterator = (collection, part) => {

@@ -56,18 +56,28 @@ static adamic_value iterator_identity(adamic_object *self, adamic_value *argumen
 	return (adamic_value){.reference = adamic_retain(self)};
 }
 
-static const char *const iterator_method_names[] = {"next", "__adamic_symbol_iterator"};
+// Symbol.toStringTag belongs to the immutable shared family prototype, not
+// an iterator's own slots. The internal getter exposes that prototype data.
+static const adamic_string iterator_tags[] = {
+ ADAMIC_STRING("Map Iterator"), ADAMIC_STRING("Set Iterator"),
+ ADAMIC_STRING("Array Iterator"), ADAMIC_STRING("String Iterator")
+};
+static adamic_value map_iterator_tag(adamic_object *self, adamic_value *arguments) { (void)self; (void)arguments; return (adamic_value){.reference = (void *)&iterator_tags[0]}; }
+static adamic_value set_iterator_tag(adamic_object *self, adamic_value *arguments) { (void)self; (void)arguments; return (adamic_value){.reference = (void *)&iterator_tags[1]}; }
+static adamic_value array_iterator_tag(adamic_object *self, adamic_value *arguments) { (void)self; (void)arguments; return (adamic_value){.reference = (void *)&iterator_tags[2]}; }
+static adamic_value string_iterator_tag(adamic_object *self, adamic_value *arguments) { (void)self; (void)arguments; return (adamic_value){.reference = (void *)&iterator_tags[3]}; }
+static const char *const iterator_method_names[] = {"next", "__adamic_symbol_iterator", "__adamic_iterator_tag"};
 // V8 has one next method per family, with a common inherited Symbol.iterator.
 static adamic_value array_iterator_next(adamic_object *self, adamic_value *arguments) { return iterator_next(self, arguments); }
 static adamic_value set_iterator_next(adamic_object *self, adamic_value *arguments) { return iterator_next(self, arguments); }
 static adamic_value string_iterator_next(adamic_object *self, adamic_value *arguments) { return iterator_next(self, arguments); }
-static const adamic_method iterator_method_code[][2] = {
-	{iterator_next, iterator_identity}, {set_iterator_next, iterator_identity},
-	{array_iterator_next, iterator_identity}, {string_iterator_next, iterator_identity}
+static const adamic_method iterator_method_code[][3] = {
+	{iterator_next, iterator_identity, map_iterator_tag}, {set_iterator_next, iterator_identity, set_iterator_tag},
+	{array_iterator_next, iterator_identity, array_iterator_tag}, {string_iterator_next, iterator_identity, string_iterator_tag}
 };
 static const adamic_methods iterator_prototypes[] = {
-	{2, iterator_method_names, iterator_method_code[0]}, {2, iterator_method_names, iterator_method_code[1]},
-	{2, iterator_method_names, iterator_method_code[2]}, {2, iterator_method_names, iterator_method_code[3]}
+	{3, iterator_method_names, iterator_method_code[0]}, {3, iterator_method_names, iterator_method_code[1]},
+	{3, iterator_method_names, iterator_method_code[2]}, {3, iterator_method_names, iterator_method_code[3]}
 };
 static const char *const iterator_names[] = {"__adamic_iterator_state"};
 static const bool iterator_references[] = {true};

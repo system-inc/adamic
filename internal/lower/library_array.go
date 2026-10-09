@@ -64,7 +64,7 @@ func (l *lowering) libraryArrayMethod(node, receiver *ast.Node, name string) (ir
 		if len(signatures) == 1 && len(signatures[0].Parameters()) > 3 {
 			return nil, true, l.notYet(node, name+" with more than three callback parameters")
 		}
-		return l.arrayVisit(node, array, element, name)
+		return l.libraryArrayFindLast(node, array, element, name)
 	case "toReversed":
 		if len(written) != 0 {
 			return nil, true, l.notYet(node, "toReversed with arguments")

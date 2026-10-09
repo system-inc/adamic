@@ -87,6 +87,13 @@ func (l *lowering) libraryObjectIntrinsicCall(node *ast.Node) (ir.Expression, bo
 	of, known := l.representation(proven)
 	tag := ""
 	if name == "toString" {
+		if l.libraryIteratorTagType(proven) {
+			value, err := l.expression(receiver)
+			if err != nil {
+				return nil, true, err
+			}
+			return l.libraryIteratorString(value), true, nil
+		}
 		switch {
 		case proven.Flags()&checker.TypeFlagsNull != 0:
 			tag = "Null"
