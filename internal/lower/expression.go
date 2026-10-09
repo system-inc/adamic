@@ -45,6 +45,9 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 	if kind := l.typedArrayKind(proven); kind != 0 {
 		return kind, true
 	}
+	if l.readonlyArrayView(proven) != nil {
+		return ir.Array, true
+	}
 	flags := proven.Flags()
 	if flags&(checker.TypeFlagsUnknown|checker.TypeFlagsNonPrimitive) != 0 {
 		return ir.Union, true
@@ -203,6 +206,9 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 	}
 	value, err := l.value(node)
 	if err == nil {
+		err = l.readonlyArrayValue(node, value)
+	}
+	if err == nil {
 		if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil {
 			if err := l.unknownView(node, l.checker.GetTypeAtLocation(node), contextual); err != nil {
 				return nil, err
@@ -289,6 +295,24 @@ func (l *lowering) sameKeeping(from *checker.Type, to *checker.Type, visited map
 		toKept, _ := l.kept(viewed)
 		return (fromKept == ir.Weak) == (toKept == ir.Weak) && l.sameKeeping(inside, viewed, visited)
 	}
+	fromArray, toArray := from, to
+	fromView, toView := l.readonlyArrayView(from), l.readonlyArrayView(to)
+	if fromView != nil || toView != nil {
+		fromStored, fromKnown := l.representation(from)
+		toStored, toKnown := l.representation(to)
+		if !fromKnown || !toKnown || (fromStored != toStored && toStored != ir.Union) {
+			return false
+		}
+	}
+	if fromView != nil {
+		fromArray = fromView
+	}
+	if toView != nil {
+		toArray = toView
+	}
+	if (fromView != nil || toView != nil) && l.checker.IsArrayType(fromArray) && l.checker.IsArrayType(toArray) && !same(l.checker.GetElementTypeOfArrayType(fromArray), l.checker.GetElementTypeOfArrayType(toArray)) {
+		return false
+	}
 	fromSignatures := l.checker.GetSignaturesOfType(from, checker.SignatureKindCall)
 	toSignatures := l.checker.GetSignaturesOfType(to, checker.SignatureKindCall)
 	switch {
@@ -314,7 +338,7 @@ func (l *lowering) sameKeeping(from *checker.Type, to *checker.Type, visited map
 			}
 		}
 		return sameCallable(l.checker.GetReturnTypeOfSignature(fromSignatures[0]), l.checker.GetReturnTypeOfSignature(toSignatures[0]))
-	case from.ObjectFlags()&checker.ObjectFlagsReference != 0 && to.ObjectFlags()&checker.ObjectFlagsReference != 0 && (l.checker.IsArrayType(from) || checker.IsTupleType(from) || l.isLibraryType(from, "Map", "ReadonlyMap", "Set", "ReadonlySet")):
+	case fromView == nil && toView == nil && from.ObjectFlags()&checker.ObjectFlagsReference != 0 && to.ObjectFlags()&checker.ObjectFlagsReference != 0 && (l.checker.IsArrayType(from) || checker.IsTupleType(from) || l.isLibraryType(from, "Map", "ReadonlyMap", "Set", "ReadonlySet")):
 		fromArguments, toArguments := l.typeArguments(from), l.typeArguments(to)
 		for index := 0; index < len(fromArguments) && index < len(toArguments); index++ {
 			if !same(fromArguments[index], toArguments[index]) {
