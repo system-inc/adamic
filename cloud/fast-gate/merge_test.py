@@ -169,9 +169,15 @@ fi
         self.assertEqual(job['sha'], sha)
         self.assertNotIn('complete', job, 'side work runs the fast plan')
         self.assertEqual(git(self.origin, 'rev-parse', 'refs/gate-merges/' + job['gate']), job['gate'])
-        # Not started in time, it asks the watcher for a box race and leaves its job queued at Loom (#04gypqe).
+        # Not started in time, it asks the watcher for a box race (#04gypqe); the race request itself cancels nothing. Its
+        # waiter then gave up (no time to wait here), and a job nobody waits on leaves Loom's queue.
         self.assertEqual((self.root / 'watch' / 'race-wanted' / sha).read_text().strip(), 'codex/feature')
-        self.assertFalse((self.root / 'jobs' / (sha + '.cancel')).exists())
+        self.assertIn('its waiter gave up after 0 s', (self.root / 'jobs' / (sha + '.cancel')).read_text())
+        # A new job of the same sha clears an old cancel before it's written, so the fresh job isn't stopped before it starts;
+        # this one's own waiter then gives up again and writes its own.
+        (self.root / 'jobs' / (sha + '.cancel')).write_text('left by an earlier job\n')
+        self.pool(sha, 'codex/feature')
+        self.assertIn('its waiter gave up after 0 s', (self.root / 'jobs' / (sha + '.cancel')).read_text())
         # Every unit placed by the deadline: no race.
         placed = self.candidate('codex/placed', {'feature.go': 'package feature // placed\n'})
         (self.root / 'jobs').mkdir(exist_ok=True)

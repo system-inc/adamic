@@ -52,8 +52,9 @@ case ${merged} in
     exit 0 ;;
   *) echo "void: ${sha} pool job couldn't merge it onto ${baseName} ${base}"; exit 1 ;;
 esac
-# A verdict left from an earlier job of this sha belongs to other tools or another base: the pool runs it fresh.
-rm -f "${jobs}/${sha}.verdict"
+# A verdict left from an earlier job of this sha belongs to other tools or another base: the pool runs it fresh. So does a
+# cancel left from one, which would stop this job before it starts.
+rm -f "${jobs}/${sha}.verdict" "${jobs}/${sha}.cancel"
 python3 - "${jobs}/${sha}.json" "${branch}" "${sha}" "${base}" "${baseName}" "${tools}" "${priority}" "${gated}" <<'PY'
 import json, os, sys
 path, branch, sha, base, baseName, tools, priority, gated = sys.argv[1:]
@@ -87,6 +88,9 @@ while [ ! -f "${jobs}/${sha}.verdict" ]; do
     fi
   fi
   if [ "${waited}" -ge "${limit}" ]; then
+    # Nobody reads this job's verdict once its waiter leaves, so it leaves Loom's queue too: 65 jobs sat there with no
+    # waiter (Oct 9 13:30Z), among them hidden-boundaries 7fddff4b, whose waiter gave up at 13:01Z.
+    printf '%s\n' "its waiter gave up after ${limit} s with no verdict" > "${jobs}/${sha}.cancel"
     echo "void: ${sha} the pool gave no verdict in ${limit} s"
     exit 1
   fi
