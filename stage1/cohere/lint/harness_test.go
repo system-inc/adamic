@@ -41,17 +41,13 @@ func serializationPort(t *testing.T) string {
 	return directory
 }
 
-// Not parallel: prepares shared serialization products before parallel leaves.
-// Not parallel: initializes shared suggestion-serialization fixtures and products.
 func TestCompleteSuggestionSerialization(t *testing.T) {
+	t.Parallel()
 	completeSuggestionUnion(t)
-	completeSuggestionSetup(t)
 }
 
-// Not parallel: prepares shared suggestion products before parallel leaves.
-// Not parallel: initializes shared suggestion and automatic-fix fixtures and products.
 func TestSuggestionAlongsideAutomaticFix(t *testing.T) {
-	suggestionAlongsideSetup(t)
+	t.Parallel()
 	suggestionAlongsideUnion(t)
 }
 

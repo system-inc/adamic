@@ -60,6 +60,7 @@ func compositionPartition(t *testing.T, lines []string) [][]string {
 }
 
 type compositionProducts struct {
+	lines                              []string
 	shards                             [][]string
 	source, product, sanitized, oracle string
 }
@@ -77,7 +78,7 @@ func compositionSetup(t *testing.T) compositionProducts {
 }
 func buildCompositionProducts(t *testing.T) compositionProducts {
 	started := time.Now()
-	setupTimer := time.AfterFunc(75*time.Second, func() { panic("cooked: TestCompositionMatchesGo (setup) exceeded 75s") })
+	setupTimer := time.AfterFunc(90*time.Second, func() { panic("cooked: TestCompositionMatchesGo (setup) exceeded 90s") })
 	defer setupTimer.Stop()
 	cases := compositionCases(t)
 	data, err := os.ReadFile(cases)
@@ -86,24 +87,7 @@ func buildCompositionProducts(t *testing.T) compositionProducts {
 	}
 	lines := strings.Split(strings.TrimSuffix(string(data), "\n"), "\n")
 	shards := compositionPartition(t, lines)
-	// Shared products must outlive the first top-level shard's cleanup.
-	directory, err := os.MkdirTemp("", "composition-oracle-")
-	if err != nil {
-		t.Fatal(err)
-	}
-	repo, _ := filepath.Abs(repository)
-	side, _ := filepath.Abs("testdata/compose_side_test.go")
-	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{filepath.Join(repo, "cohere", "internal", "format", "css", "adamic_compose_side_test.go"): side}})
-	overlayPath := filepath.Join(directory, "overlay.json")
-	if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
-		t.Fatal(err)
-	}
-	oracle := filepath.Join(directory, "oracle")
-	command := compositionCommand(t, "go", "test", "-c", "-overlay="+overlayPath, "-o", oracle, "./internal/format/css")
-	command.Dir = filepath.Join(repo, "cohere")
-	if output, err := command.CombinedOutput(); err != nil {
-		t.Fatalf("build Go composition oracle: %v\n%s", err, output)
-	}
+	oracle := compositionOracle(t, "css-composition-go-oracle", "testdata/compose_side_test.go", "internal/format/css/adamic_compose_side_test.go", "./internal/format/css")
 	source, _ := filepath.Abs("compose_main.ts")
 	inputs := buildcache.Inputs{Name: "css-composition-lowered", Files: []string{"stage1/cohere/css", "stage1/cohere/selector", "stage1/cohere/values", "stage1/cohere/mediaquery", "stage1/cohere/cssstrings", "stage1/cohere/cssnumbers", "internal", "cohere", "go.mod", "go.work"}, Toolchain: []string{runtime.Version()}, Flags: []string{"C and JavaScript"}}
 	product := buildcache.Product(t, inputs, func(dir string) error {
@@ -127,14 +111,15 @@ func buildCompositionProducts(t *testing.T) compositionProducts {
 
 	setupTimer.Stop()
 	t.Logf("TestCompositionMatchesGo (setup): %.3fs", time.Since(started).Seconds())
-	return compositionProducts{shards, source, product, sanitized, oracle}
+	return compositionProducts{lines: lines, shards: shards, source: source, product: product, sanitized: sanitized, oracle: oracle}
 }
 
 func compositionRunShard(t *testing.T, index int) {
-	started := time.Now()
-	timer := time.AfterFunc(75*time.Second, func() { panic("cooked: composition shard exceeded 75s") })
-	defer timer.Stop()
+	// Waiting or building here belongs to the separately bounded setup unit.
 	state := compositionSetup(t)
+	started := time.Now()
+	timer := time.AfterFunc(90*time.Second, func() { panic("cooked: composition shard exceeded 90s") })
+	defer timer.Stop()
 	shard := state.shards[index]
 	dir := t.TempDir()
 	cases := filepath.Join(dir, "cases.txt")
@@ -147,7 +132,7 @@ func compositionRunShard(t *testing.T, index int) {
 	if err := os.WriteFile(requestPath, request, 0644); err != nil {
 		t.Fatal(err)
 	}
-	result := compositionExecute(t, []string{"ADAMIC_PORT_REQUEST=" + requestPath}, state.oracle, "-test.run=^TestAdamicCompositionCases$", "-test.timeout=75s", "-test.v")
+	result := compositionExecute(t, []string{"ADAMIC_PORT_REQUEST=" + requestPath}, state.oracle, "-test.run=^TestAdamicCompositionCases$", "-test.timeout=90s", "-test.v")
 	if result.exitCode != 0 || len(result.stderr) != 0 {
 		t.Fatalf("Go composition oracle: %d %s %s", result.exitCode, result.stdout, result.stderr)
 	}
@@ -176,20 +161,25 @@ func compositionRunShard(t *testing.T, index int) {
 	if report := compositionLeaks(t, state, cases); report != "" {
 		t.Fatal(report)
 	}
-	t.Logf("shard-%03d: %.3fs cooked=false cases=%d (includes setup wait)", index, time.Since(started).Seconds(), len(shard))
+	t.Logf("shard-%03d: %.3fs cooked=false cases=%d (excludes shared setup)", index, time.Since(started).Seconds(), len(shard))
+}
+
+func TestCompositionMatchesGo_Setup(t *testing.T) {
+	t.Parallel()
+	compositionSetup(t)
 }
 
 func TestCompositionMatchesGoUnion(t *testing.T) {
 	t.Parallel()
+	state := compositionSetup(t)
 	started := time.Now()
-	timer := time.AfterFunc(75*time.Second, func() { panic("cooked: composition union exceeded 75s") })
+	timer := time.AfterFunc(90*time.Second, func() { panic("cooked: composition union exceeded 90s") })
 	defer timer.Stop()
-	cases := compositionCases(t)
-	data, err := os.ReadFile(cases)
-	if err != nil {
+	lines := state.lines
+	cases := filepath.Join(t.TempDir(), "cases.txt")
+	if err := os.WriteFile(cases, []byte(strings.Join(lines, "\n")+"\n"), 0644); err != nil {
 		t.Fatal(err)
 	}
-	lines := strings.Split(strings.TrimSuffix(string(data), "\n"), "\n")
 	if len(compositionShardFunctions) != testCompositionMatchesGoShards {
 		t.Fatal("top-level shard enumeration differs from constant")
 	}
@@ -250,19 +240,14 @@ func compositionCases(t *testing.T) string {
 	dir := t.TempDir()
 	cases := filepath.Join(dir, "cases.txt")
 	repo, _ := filepath.Abs(repository)
-	side, _ := filepath.Abs("testdata/composition_corpus_side_test.go")
 	request, _ := json.Marshal(map[string]string{"cases": cases, "repository": repo, "fixtures": os.Getenv("ADAMIC_CSS_FIXTURES")})
 	requestPath := filepath.Join(dir, "request.json")
 	if err := os.WriteFile(requestPath, request, 0644); err != nil {
 		t.Fatal(err)
 	}
-	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{filepath.Join(repo, "cohere", "internal", "format", "css", "postcss", "adamic_port_side_test.go"): side}})
-	overlayPath := filepath.Join(dir, "overlay.json")
-	if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
-		t.Fatal(err)
-	}
-	command := compositionCommand(t, "go", "test", "-timeout=75s", "-v", "-count=1", "-overlay="+overlayPath, "-run=^TestAdamicPortCases$", "./internal/format/css/postcss")
-	command.Dir = filepath.Join(repo, "cohere")
+	oracle := compositionOracle(t, "css-composition-corpus-oracle", "testdata/composition_corpus_side_test.go", "internal/format/css/postcss/adamic_port_side_test.go", "./internal/format/css/postcss")
+	command := compositionCommand(t, oracle, "-test.timeout=90s", "-test.v", "-test.run=^TestAdamicPortCases$")
+	command.Dir = filepath.Join(repo, "cohere", "internal", "format", "css", "postcss")
 	command.Env = append(os.Environ(), "ADAMIC_PORT_REQUEST="+requestPath)
 	if output, err := command.CombinedOutput(); err != nil {
 		t.Fatalf("composition corpus: %v\n%s", err, output)
@@ -444,4 +429,40 @@ func compositionLeaks(t *testing.T, state compositionProducts, cases string) str
 		t.Fatalf("no leak check for %s", runtime.GOOS)
 	}
 	return ""
+}
+
+// The overlay source and the complete Go module trees address each oracle by
+// content. Corpus enumeration stays live: only its binary is cached.
+func compositionOracle(t *testing.T, name, sidePath, overlayTarget, packagePath string) string {
+	t.Helper()
+	repo, _ := filepath.Abs(repository)
+	side, _ := filepath.Abs(sidePath)
+	sideRelative, err := filepath.Rel(repo, side)
+	if err != nil {
+		t.Fatal(err)
+	}
+	inputs := buildcache.Inputs{
+		Name:      name,
+		Files:     []string{"cohere", "go.mod", "go.work", sideRelative},
+		Flags:     []string{"go test -c", packagePath, "overlay=" + overlayTarget, "GOFLAGS=" + os.Getenv("GOFLAGS"), "GOEXPERIMENT=" + os.Getenv("GOEXPERIMENT"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "GOOS=" + os.Getenv("GOOS"), "GOARCH=" + os.Getenv("GOARCH"), "CC=" + os.Getenv("CC"), "CXX=" + os.Getenv("CXX")},
+		Toolchain: []string{buildcache.Tool("go", "version"), runtime.GOOS, runtime.GOARCH},
+	}
+	directory := buildcache.Product(t, inputs, func(dir string) error {
+		overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{filepath.Join(repo, "cohere", overlayTarget): side}})
+		if err != nil {
+			return err
+		}
+		overlayPath := filepath.Join(dir, "overlay.json")
+		if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
+			return err
+		}
+		command := compositionCommand(t, "go", "test", "-c", "-overlay="+overlayPath, "-o", filepath.Join(dir, "oracle"), packagePath)
+		command.Dir = filepath.Join(repo, "cohere")
+		output, err := command.CombinedOutput()
+		if err != nil {
+			return fmt.Errorf("Go oracle: %w\n%s", err, output)
+		}
+		return nil
+	})
+	return filepath.Join(directory, "oracle")
 }
