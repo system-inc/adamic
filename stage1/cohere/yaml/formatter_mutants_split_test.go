@@ -235,6 +235,7 @@ func TestFormatterMutants_004(t *testing.T) { t.Parallel(); formatterMutantsShar
 func TestFormatterMutants_005(t *testing.T) { t.Parallel(); formatterMutantsShard(t, 5) }
 
 func TestFormatterMutantsPlantedFailure(t *testing.T) {
+	t.Parallel()
 	// Plant a survivor in one mutant's complete output. Exactly its owner must
 	// reject it; all other mutants differ from the oracle and remain accepted.
 	caught := []int{}
