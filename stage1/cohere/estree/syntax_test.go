@@ -104,26 +104,54 @@ func TestSyntaxMutants(t *testing.T) {
 		})
 	}
 }
+
+const testSyntaxRefusalsShards = 3
+
+func syntaxRefusalCases() []string {
+	return []string{"1+1 as number *2;", "/// <reference path='missingquote.ts />\nx;", "/// <reference types='m' resolution-mode='invalid' />\nx;"}
+}
+
+// ADAMIC_TEST_SHARD=i/n selects shard indices modulo n; unset runs all.
 func TestSyntaxRefusals(t *testing.T) {
-	sources := []string{"1+1 as number *2;", "/// <reference path='missingquote.ts />\nx;", "/// <reference types='m' resolution-mode='invalid' />\nx;"}
-	list := manifest(t, sources)
-	statuses := string(execute(t, "", goOracle(t), "--audit", list, t.TempDir()))
-	if strings.Count(statuses, `"status":"error"`) != len(sources) {
-		t.Fatal(statuses)
-	}
-	main, _ := filepath.Abs("main.ts")
-	binary, script := build(t, main, true)
-	paths, err := os.ReadFile(list)
+	estreeAccounting(t)
+	started := time.Now()
+	sources := syntaxRefusalCases()
+	selected := estreeShardPlan(t, testSyntaxRefusalsShards, len(sources), estreeSingles(len(sources)))
+	oracle := estreeTimedOracle(t)
+	main, err := filepath.Abs("main.ts")
 	if err != nil {
 		t.Fatal(err)
 	}
-	for _, path := range strings.Fields(string(paths)) {
-		for _, argv := range [][]string{{"node", "--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), main, path}, {binary, path}, {"node", "--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), script, path}} {
-			refusedBeforeDeadline(t, argv, "ESTree parser")
+	binary, script := estreeTimedBuild(t, main, true)
+	t.Logf("setup including builds: %.3fs", time.Since(started).Seconds())
+	for i, source := range sources {
+		if !selected[i] {
+			continue
 		}
+		t.Run(fmt.Sprintf("shard-%03d", i), func(t *testing.T) {
+			t.Parallel()
+			list := manifest(t, []string{source})
+			statuses := string(execute(t, "", oracle, "--audit", list, t.TempDir()))
+			if strings.Count(statuses, `"status":"error"`) != 1 {
+				t.Fatal(statuses)
+			}
+			paths, err := os.ReadFile(list)
+			if err != nil {
+				t.Fatal(err)
+			}
+			for _, path := range strings.Fields(string(paths)) {
+				for _, argv := range [][]string{{"node", "--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), main, path}, {binary, path}, {"node", "--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), script, path}} {
+					estreeRefused(t, argv, "ESTree parser")
+				}
+			}
+		})
 	}
-	t.Log("three Go refusals explicitly refused with empty stdout on all builds")
 }
+func TestSyntaxRefusalsShardFailure(t *testing.T) {
+	sources := syntaxRefusalCases()
+	estreeShardFailure(t, testSyntaxRefusalsShards, len(sources), estreeSingles(len(sources)), "refusal", 1)
+}
+
 func TestSyntaxLibraries(t *testing.T) {
 	if os.Getenv("ADAMIC_ESTREE_LIBRARY") == "" {
 		t.Skip("set ADAMIC_ESTREE_LIBRARY to an npm install of @typescript-eslint/typescript-estree@8.65.0, typescript@6.0.3 and prettier@3.9.6; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it")
