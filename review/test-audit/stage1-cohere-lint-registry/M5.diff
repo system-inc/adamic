@@ -1,0 +1,11 @@
+--- a/stage1/cohere/lint/registry/registry.go
++++ b/stage1/cohere/lint/registry/registry.go
+@@ -165,7 +165,7 @@
+ 				return nil, fmt.Errorf("%s: missing named hook %q", path, hook)
+ 			}
+ 		}
+-		if d.Visit == "" || len(d.Kinds) == 0 {
++		if d.Visit == "" && len(d.Kinds) == 0 {
+ 			return nil, fmt.Errorf("%s: visit and kinds required", path)
+ 		}
+ 		seen := map[string]bool{}

@@ -1,0 +1,11 @@
+--- a/stage1/cohere/lint/registry/registry.go
++++ b/stage1/cohere/lint/registry/registry.go
+@@ -175,7 +175,7 @@
+ 			kinds[strings.TrimPrefix(kind.String(), "Kind")] = true
+ 		}
+ 		for _, kind := range d.Kinds {
+-			if !identifier.MatchString(kind) || seen[kind] || !kinds[kind] {
++			if !identifier.MatchString(kind) || seen[kind] {
+ 				return nil, fmt.Errorf("%s: invalid or duplicate kind %q", path, kind)
+ 			}
+ 			seen[kind] = true

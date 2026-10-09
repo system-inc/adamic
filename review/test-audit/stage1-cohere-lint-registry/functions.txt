@@ -1,0 +1,2 @@
+Named production functions reached: Generate, Discover, RuleModule, Witnesses, Render. Anonymous callbacks: Witnesses WalkDir; Discover sort.Slice comparator. All four rows call Generate. DeterministicRegeneration and AdamicRuleModule also call Render directly. No native port entry is called.
+Menu fixed before mutant results; validation tests check malformed descriptors directly, not an agreement harness.

@@ -1,0 +1,11 @@
+--- a/stage1/cohere/lint/registry/registry.go
++++ b/stage1/cohere/lint/registry/registry.go
+@@ -190,7 +190,7 @@
+ 				functions[f.Name.Name] = true
+ 			}
+ 		}
+-		if adapter.Name.Name != "main" || !functions[d.Oracle] || !functions[d.Oracle+"Options"] {
++		if adapter.Name.Name != "main" {
+ 			return nil, fmt.Errorf("%s: missing oracle adapter exports", path)
+ 		}
+ 		var mutant struct{ Name, File, From, To string }

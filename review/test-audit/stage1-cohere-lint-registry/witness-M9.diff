@@ -1,0 +1,11 @@
+--- clean
++++ M9
+@@ -92,7 +92,7 @@
+         const node = this.context.node(index);
+         switch(node.kind) {
+         case 'SourceFile':
+-            if(this.selected0) { this.rule0.visit(index, parent); }
++            if(this.selected0) { this.rule0.visit(index, index); }
+             break;
+         default:
+             break;

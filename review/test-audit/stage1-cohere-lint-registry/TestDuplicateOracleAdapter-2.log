@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T12:33:13.889784429Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint/registry"}
+{"Time":"2026-10-09T12:33:13.892027015Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint/registry","Test":"TestDuplicateOracleAdapter"}
+{"Time":"2026-10-09T12:33:13.892096096Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/registry","Test":"TestDuplicateOracleAdapter","Output":"=== RUN   TestDuplicateOracleAdapter\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:33:13.892122255Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/registry","Test":"TestDuplicateOracleAdapter","Output":"=== PAUSE TestDuplicateOracleAdapter\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:33:13.892124749Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint/registry","Test":"TestDuplicateOracleAdapter"}
+{"Time":"2026-10-09T12:33:13.892126922Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint/registry","Test":"TestDuplicateOracleAdapter"}
+{"Time":"2026-10-09T12:33:13.892128645Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/registry","Test":"TestDuplicateOracleAdapter","Output":"=== CONT  TestDuplicateOracleAdapter\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:33:13.968314498Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/registry","Test":"TestDuplicateOracleAdapter","Output":"    registry_test.go:147: mutant rejected: /tmp/adamic-gate/TestDuplicateOracleAdapter1549005379/001/rules/no-empty/rule.json: duplicate oracle adapter \"oracleNoDebugger\"\n"}
+{"Time":"2026-10-09T12:33:13.977183789Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/registry","Test":"TestDuplicateOracleAdapter","Output":"--- PASS: TestDuplicateOracleAdapter (0.09s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:33:13.977314953Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint/registry","Test":"TestDuplicateOracleAdapter","Elapsed":0.09}
+{"Time":"2026-10-09T12:33:13.977349844Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/registry","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:33:13.978243588Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/registry","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/lint/registry\t0.088s\n"}
+{"Time":"2026-10-09T12:33:13.978268886Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint/registry","Elapsed":0.088}

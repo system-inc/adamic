@@ -1,0 +1,3 @@
+package main
+import("fmt"; "os"; r "github.com/system-inc/adamic/stage1/cohere/lint/registry")
+func main(){ d,e:=r.Discover("stage1/cohere/lint"); if e!=nil { panic(e) }; for _,x:=range d {fmt.Printf("ORDER %s %d\n",x.Name,x.Order)}; ts,_:=r.Render([]r.Descriptor{{Factory:"create",Class:"Rule",Slug:"example",Module:"rule.ts",Name:"example",Oracle:"oracleExample",Kinds:[]string{"SourceFile"},Visit:"visit",Parent:true}}); fmt.Print(string(ts)); w,e:=r.Witnesses("stage1/cohere/lint/rules/no-debugger");fmt.Fprintf(os.Stdout,"WITNESSES %v %v\n",w,e) }

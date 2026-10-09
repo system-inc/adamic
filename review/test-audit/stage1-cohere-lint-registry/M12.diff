@@ -1,0 +1,11 @@
+--- a/stage1/cohere/lint/registry/registry.go
++++ b/stage1/cohere/lint/registry/registry.go
+@@ -89,7 +89,7 @@
+ 	if err != nil {
+ 		return nil, err
+ 	}
+-	sort.Strings(paths)
++	// sort.Strings(paths)
+ 	return paths, nil
+ }
+ 

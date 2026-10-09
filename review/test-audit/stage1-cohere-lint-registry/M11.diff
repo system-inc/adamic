@@ -1,0 +1,11 @@
+--- a/stage1/cohere/lint/registry/registry.go
++++ b/stage1/cohere/lint/registry/registry.go
+@@ -347,7 +347,7 @@
+ 		data []byte
+ 	}{{"registry.ts", ts}, {"registry.go", goSource}} {
+ 		path := filepath.Join(directory, file.name)
+-		if existing, err := os.ReadFile(path); err == nil && bytes.Equal(existing, file.data) {
++		if existing, err := os.ReadFile(path); err == nil && !bytes.Equal(existing, file.data) {
+ 			continue
+ 		}
+ 		temporary, err := os.CreateTemp(directory, "registry-")

@@ -1,0 +1,11 @@
+--- a/stage1/cohere/lint/registry/registry.go
++++ b/stage1/cohere/lint/registry/registry.go
+@@ -223,7 +223,7 @@
+ 	}
+ 	sort.Slice(result, func(i, j int) bool {
+ 		a, b := result[i], result[j]
+-		if a.Order != b.Order {
++		if a.Order == b.Order {
+ 			if a.Order == 0 {
+ 				return false
+ 			}

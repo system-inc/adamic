@@ -1,0 +1,11 @@
+--- a/stage1/cohere/lint/registry/registry.go
++++ b/stage1/cohere/lint/registry/registry.go
+@@ -49,7 +49,7 @@
+ 	var module string
+ 	for _, name := range []string{"rule.ts", "rule.a"} {
+ 		if _, err := os.Stat(filepath.Join(directory, name)); err == nil {
+-			if module != "" {
++			if false {
+ 				return "", fmt.Errorf("%s: ambiguous rule.ts and rule.a", directory)
+ 			}
+ 			module = name

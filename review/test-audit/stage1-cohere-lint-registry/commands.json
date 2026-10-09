@@ -1,0 +1,158 @@
+[
+  {
+    "id": "TestDeterministicRegeneration-1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/registry/ -run ^TestDeterministicRegeneration$",
+    "exit": 0,
+    "wall": 0.7252665810010512
+  },
+  {
+    "id": "TestDeterministicRegeneration-2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/registry/ -run ^TestDeterministicRegeneration$",
+    "exit": 0,
+    "wall": 0.55084974500096
+  },
+  {
+    "id": "TestDeterministicRegeneration-3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/registry/ -run ^TestDeterministicRegeneration$",
+    "exit": 0,
+    "wall": 0.5751840920001996
+  },
+  {
+    "id": "TestDescriptorRejections-1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/registry/ -run ^TestDescriptorRejections$",
+    "exit": 0,
+    "wall": 0.7568289290011307
+  },
+  {
+    "id": "TestDescriptorRejections-2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/registry/ -run ^TestDescriptorRejections$",
+    "exit": 0,
+    "wall": 0.7002274219994433
+  },
+  {
+    "id": "TestDescriptorRejections-3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/registry/ -run ^TestDescriptorRejections$",
+    "exit": 0,
+    "wall": 0.6806093440009136
+  },
+  {
+    "id": "TestDuplicateOracleAdapter-1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/registry/ -run ^TestDuplicateOracleAdapter$",
+    "exit": 0,
+    "wall": 0.4860064290005539
+  },
+  {
+    "id": "TestDuplicateOracleAdapter-2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/registry/ -run ^TestDuplicateOracleAdapter$",
+    "exit": 0,
+    "wall": 0.4937806409998302
+  },
+  {
+    "id": "TestDuplicateOracleAdapter-3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/registry/ -run ^TestDuplicateOracleAdapter$",
+    "exit": 0,
+    "wall": 0.4437974310003483
+  },
+  {
+    "id": "TestAdamicRuleModule-1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/registry/ -run ^TestAdamicRuleModule$",
+    "exit": 0,
+    "wall": 0.4494582370007265
+  },
+  {
+    "id": "TestAdamicRuleModule-2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/registry/ -run ^TestAdamicRuleModule$",
+    "exit": 0,
+    "wall": 0.4390340030004154
+  },
+  {
+    "id": "TestAdamicRuleModule-3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/registry/ -run ^TestAdamicRuleModule$",
+    "exit": 0,
+    "wall": 0.4654400059989712
+  },
+  {
+    "id": "M1",
+    "command": "ADAMIC_MUTANT=M1 ADAMIC_BUILD_CACHE_DIR=/tmp/u119/cache/M1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/registry/ -run .",
+    "exit": 1,
+    "wall": 0.8442892669991124
+  },
+  {
+    "id": "M2",
+    "command": "ADAMIC_MUTANT=M2 ADAMIC_BUILD_CACHE_DIR=/tmp/u119/cache/M2 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/registry/ -run .",
+    "exit": 1,
+    "wall": 0.8289056089997757
+  },
+  {
+    "id": "M3",
+    "command": "ADAMIC_MUTANT=M3 ADAMIC_BUILD_CACHE_DIR=/tmp/u119/cache/M3 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/registry/ -run .",
+    "exit": 1,
+    "wall": 0.9287012650001998
+  },
+  {
+    "id": "M4",
+    "command": "ADAMIC_MUTANT=M4 ADAMIC_BUILD_CACHE_DIR=/tmp/u119/cache/M4 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/registry/ -run .",
+    "exit": 1,
+    "wall": 0.9327968960005819
+  },
+  {
+    "id": "M5",
+    "command": "ADAMIC_MUTANT=M5 ADAMIC_BUILD_CACHE_DIR=/tmp/u119/cache/M5 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/registry/ -run .",
+    "exit": 1,
+    "wall": 0.8646119320001162
+  },
+  {
+    "id": "M6",
+    "command": "ADAMIC_MUTANT=M6 ADAMIC_BUILD_CACHE_DIR=/tmp/u119/cache/M6 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/registry/ -run .",
+    "exit": 1,
+    "wall": 0.9469745380010863
+  },
+  {
+    "id": "M7",
+    "command": "ADAMIC_MUTANT=M7 ADAMIC_BUILD_CACHE_DIR=/tmp/u119/cache/M7 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/registry/ -run .",
+    "exit": 1,
+    "wall": 0.9687149490000593
+  },
+  {
+    "id": "M8",
+    "command": "ADAMIC_MUTANT=M8 ADAMIC_BUILD_CACHE_DIR=/tmp/u119/cache/M8 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/registry/ -run .",
+    "exit": 0,
+    "wall": 1.0179366539996408
+  },
+  {
+    "id": "M9",
+    "command": "ADAMIC_MUTANT=M9 ADAMIC_BUILD_CACHE_DIR=/tmp/u119/cache/M9 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/registry/ -run .",
+    "exit": 0,
+    "wall": 1.0193708220012923
+  },
+  {
+    "id": "M10",
+    "command": "ADAMIC_MUTANT=M10 ADAMIC_BUILD_CACHE_DIR=/tmp/u119/cache/M10 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/registry/ -run .",
+    "exit": 1,
+    "wall": 0.8653752310001437
+  },
+  {
+    "id": "M11",
+    "command": "ADAMIC_MUTANT=M11 ADAMIC_BUILD_CACHE_DIR=/tmp/u119/cache/M11 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/registry/ -run .",
+    "exit": 1,
+    "wall": 0.9092260020006506
+  },
+  {
+    "id": "M12",
+    "command": "ADAMIC_MUTANT=M12 ADAMIC_BUILD_CACHE_DIR=/tmp/u119/cache/M12 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/registry/ -run .",
+    "exit": 0,
+    "wall": 0.8047244110002794
+  },
+  {
+    "id": "P1",
+    "command": "ADAMIC_MUTANT=P1 ADAMIC_BUILD_CACHE_DIR=/tmp/u119/cache/P1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/registry/ -run .",
+    "exit": 1,
+    "wall": 0.8189098770017154
+  },
+  {
+    "id": "P2",
+    "command": "ADAMIC_MUTANT=P2 ADAMIC_BUILD_CACHE_DIR=/tmp/u119/cache/P2 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/registry/ -run .",
+    "exit": 1,
+    "wall": 0.8210002849991724
+  }
+]

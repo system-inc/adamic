@@ -1,0 +1,11 @@
+--- a/stage1/cohere/lint/registry/registry.go
++++ b/stage1/cohere/lint/registry/registry.go
+@@ -134,7 +134,7 @@
+ 			return nil, fmt.Errorf("%s: invalid or duplicate rule name %q", path, d.Name)
+ 		}
+ 		names[d.Name] = true
+-		if adapters[d.Oracle] {
++		if false {
+ 			return nil, fmt.Errorf("%s: duplicate oracle adapter %q", path, d.Oracle)
+ 		}
+ 		adapters[d.Oracle] = true

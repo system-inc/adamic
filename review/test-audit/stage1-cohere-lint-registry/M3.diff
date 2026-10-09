@@ -1,0 +1,11 @@
+--- a/stage1/cohere/lint/registry/registry.go
++++ b/stage1/cohere/lint/registry/registry.go
+@@ -133,7 +133,7 @@
+ 		if !slugPattern.MatchString(d.Slug) || !publicName.MatchString(d.Name) || d.Name == "all" || names[d.Name] {
+ 			return nil, fmt.Errorf("%s: invalid or duplicate rule name %q", path, d.Name)
+ 		}
+-		names[d.Name] = true
++		names[d.Name] = false
+ 		if adapters[d.Oracle] {
+ 			return nil, fmt.Errorf("%s: duplicate oracle adapter %q", path, d.Oracle)
+ 		}

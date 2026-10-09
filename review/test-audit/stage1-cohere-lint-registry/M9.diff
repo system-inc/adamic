@@ -1,0 +1,11 @@
+--- a/stage1/cohere/lint/registry/registry.go
++++ b/stage1/cohere/lint/registry/registry.go
+@@ -307,7 +307,7 @@
+ 				arguments = "node, index"
+ 			}
+ 			if d.Parent {
+-				arguments += ", parent"
++				arguments += ", index"
+ 			}
+ 			fmt.Fprintf(&ts, "            if(this.selected%d) { this.rule%d.%s(%s); }\n", i, i, d.Visit, arguments)
+ 		}

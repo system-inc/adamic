@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T12:33:15.687967662Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint/registry"}
+{"Time":"2026-10-09T12:33:15.690333384Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint/registry","Test":"TestAdamicRuleModule"}
+{"Time":"2026-10-09T12:33:15.690392982Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/registry","Test":"TestAdamicRuleModule","Output":"=== RUN   TestAdamicRuleModule\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:33:15.690420903Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/registry","Test":"TestAdamicRuleModule","Output":"=== PAUSE TestAdamicRuleModule\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:33:15.690424088Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint/registry","Test":"TestAdamicRuleModule"}
+{"Time":"2026-10-09T12:33:15.690427132Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint/registry","Test":"TestAdamicRuleModule"}
+{"Time":"2026-10-09T12:33:15.690429526Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/registry","Test":"TestAdamicRuleModule","Output":"=== CONT  TestAdamicRuleModule\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:33:15.765292005Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/registry","Test":"TestAdamicRuleModule","Output":"    registry_test.go:171: stale .ts alongside .a rejected\n"}
+{"Time":"2026-10-09T12:33:15.775346216Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/registry","Test":"TestAdamicRuleModule","Output":"--- PASS: TestAdamicRuleModule (0.08s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:33:15.775398553Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint/registry","Test":"TestAdamicRuleModule","Elapsed":0.08}
+{"Time":"2026-10-09T12:33:15.775434025Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/registry","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:33:15.776305521Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/registry","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/lint/registry\t0.088s\n"}
+{"Time":"2026-10-09T12:33:15.776331269Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint/registry","Elapsed":0.088}

@@ -1,0 +1,12 @@
+{"Time":"2026-10-09T12:33:10.168177887Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint/registry"}
+{"Time":"2026-10-09T12:33:10.17091005Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint/registry","Test":"TestDeterministicRegeneration"}
+{"Time":"2026-10-09T12:33:10.170975817Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/registry","Test":"TestDeterministicRegeneration","Output":"=== RUN   TestDeterministicRegeneration\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:33:10.171002486Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/registry","Test":"TestDeterministicRegeneration","Output":"=== PAUSE TestDeterministicRegeneration\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:33:10.17100488Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint/registry","Test":"TestDeterministicRegeneration"}
+{"Time":"2026-10-09T12:33:10.171007644Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint/registry","Test":"TestDeterministicRegeneration"}
+{"Time":"2026-10-09T12:33:10.171009226Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/registry","Test":"TestDeterministicRegeneration","Output":"=== CONT  TestDeterministicRegeneration\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:33:10.284481511Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/registry","Test":"TestDeterministicRegeneration","Output":"--- PASS: TestDeterministicRegeneration (0.11s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:33:10.284585745Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint/registry","Test":"TestDeterministicRegeneration","Elapsed":0.11}
+{"Time":"2026-10-09T12:33:10.284618223Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/registry","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:33:10.286145287Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/registry","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/lint/registry\t0.118s\n"}
+{"Time":"2026-10-09T12:33:10.286175231Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint/registry","Elapsed":0.118}

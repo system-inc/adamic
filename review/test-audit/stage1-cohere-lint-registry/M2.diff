@@ -1,0 +1,11 @@
+--- a/stage1/cohere/lint/registry/registry.go
++++ b/stage1/cohere/lint/registry/registry.go
+@@ -122,7 +122,7 @@
+ 		}
+ 		var d Descriptor
+ 		decoder := json.NewDecoder(bytes.NewReader(data))
+-		decoder.DisallowUnknownFields()
++		// decoder.DisallowUnknownFields()
+ 		if err := decoder.Decode(&d); err != nil {
+ 			return nil, fmt.Errorf("%s: %w", path, err)
+ 		}
