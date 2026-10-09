@@ -1,0 +1,1319 @@
+{
+  "base": "337aa466bf7b519ffdc50c6f16e976a330a4a4f5",
+  "branch": "codex/non-null-checked-next",
+  "own_commits_cherry_picked": [
+    "ae4fe9e6",
+    "c41c0e06"
+  ],
+  "ported_commits": [
+    "fbc00472",
+    "e657ec5b"
+  ],
+  "delivery": "Only feature-branch commits. No main or area branch was modified. Push once after final verification.",
+  "commands": {
+    "packages": "GOFLAGS=-buildvcs=false go test -json -count=1 -timeout 30m ./internal/lower ./internal/ir ./internal/flow",
+    "oracle": "GOFLAGS=-buildvcs=false ADAMIC_GATE_UNCACHED=1 go test -json -count=1 -timeout 30m ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/.*(non_null|optional|narrow|class)'",
+    "counts_update": "GOFLAGS=-buildvcs=false go test -count=1 -timeout 30m ./internal/oracle -run '^TestCountsAreRecorded$' -args -update-counts",
+    "counts_check": "GOFLAGS=-buildvcs=false go test -json -count=1 -timeout 30m ./internal/oracle -run '^TestCountsAreRecorded$|^TestCheckedNonNullCounts$|^TestPredicateDirectionCountsAreRecorded$'",
+    "vet": "GOFLAGS=-buildvcs=false go vet ./cmd/adamic ./internal/lower ./internal/ir ./internal/flow ./internal/oracle",
+    "format": "gofmt -l cmd internal"
+  },
+  "comparisons": {
+    "packages": {
+      "base": {
+        "log": "/tmp/non-null-next-base-packages.json",
+        "sha256": "0f25c45a52f0f9422f7791608cd5cdc2e9fa7b37ad0e5c8313b5d9d8a6f10469",
+        "named_results": 3380,
+        "packages": {
+          "github.com/system-inc/adamic/internal/ir": {
+            "result": "pass",
+            "seconds": 1.221
+          },
+          "github.com/system-inc/adamic/internal/lower": {
+            "result": "pass",
+            "seconds": 77.958
+          },
+          "github.com/system-inc/adamic/internal/flow": {
+            "result": "pass",
+            "seconds": 136.073
+          }
+        }
+      },
+      "candidate": {
+        "log": "/tmp/non-null-next-port-packages.json",
+        "sha256": "afd7d7d4a0f3aefeccbe1e4b7aa3d4ccfd5d1ddc690cdf2c32d83647164acef2",
+        "named_results": 3341,
+        "packages": {
+          "github.com/system-inc/adamic/internal/ir": {
+            "result": "pass",
+            "seconds": 22.227
+          },
+          "github.com/system-inc/adamic/internal/lower": {
+            "result": "pass",
+            "seconds": 149.218
+          },
+          "github.com/system-inc/adamic/internal/flow": {
+            "result": "pass",
+            "seconds": 232.377
+          }
+        }
+      },
+      "unchanged_results": 3272,
+      "changed_results": [],
+      "removed": [
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_array.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_boolean.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_capture.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_catch.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_field.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_initialized.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_lazy_default.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_lazy_field.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_lazy_initialized.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_lazy_read.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_lazy_static.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_literal_assignment.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_literal_return.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_literal_statement.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_map.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_null.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_static_initialized.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_static_uninitialized.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_uninitialized.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_uninitialized_append.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_uninitialized_capture.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_uninitialized_catch.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_uninitialized_const.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_uninitialized_default.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_uninitialized_exception.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_uninitialized_field.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_uninitialized_interface.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_uninitialized_iteration.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_uninitialized_loop.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_uninitialized_map_entry.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_uninitialized_optional.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_uninitialized_spread.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_union.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_weak.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_weak_freed.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_array.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_boolean.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_capture.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_catch.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_field.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_initialized.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_lazy_default.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_lazy_field.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_lazy_initialized.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_lazy_read.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_lazy_static.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_literal_assignment.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_literal_return.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_literal_statement.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_map.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_null.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_static_initialized.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_static_uninitialized.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_uninitialized.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_uninitialized_append.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_uninitialized_capture.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_uninitialized_catch.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_uninitialized_const.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_uninitialized_default.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_uninitialized_exception.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_uninitialized_field.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_uninitialized_interface.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_uninitialized_iteration.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_uninitialized_loop.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_uninitialized_map_entry.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_uninitialized_optional.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_uninitialized_spread.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_union.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_weak.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_weak_freed.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_array.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_boolean.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_capture.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_catch.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_field.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_initialized.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_lazy_default.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_lazy_field.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_lazy_initialized.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_lazy_read.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_lazy_static.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_literal_assignment.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_literal_return.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_literal_statement.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_map.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_null.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_static_initialized.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_static_uninitialized.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_uninitialized.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_uninitialized_append.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_uninitialized_capture.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_uninitialized_catch.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_uninitialized_const.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_uninitialized_default.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_uninitialized_exception.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_uninitialized_field.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_uninitialized_interface.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_uninitialized_iteration.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_uninitialized_loop.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_uninitialized_map_entry.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_uninitialized_optional.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_uninitialized_spread.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_union.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_weak.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_weak_freed.a",
+          "before": "pass",
+          "reason": "Ordinary .a non-null assertion is now refused; the unchanged source remains an oracle refusal control instead of a runtime graph."
+        }
+      ],
+      "added": [
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_checked_initializer.ts",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_checked_let_initializer.ts",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_checked_narrowed.ts",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_checked_null.ts",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_checked_present.ts",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_checked_undefined.ts",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_refuse_null.ts",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_refuse_undefined.ts",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_checked_initializer.ts",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_checked_let_initializer.ts",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_checked_narrowed.ts",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_checked_null.ts",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_checked_present.ts",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_checked_undefined.ts",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_refuse_null.ts",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_refuse_undefined.ts",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_checked_initializer.ts",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_checked_let_initializer.ts",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_checked_narrowed.ts",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_checked_null.ts",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_checked_present.ts",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_checked_undefined.ts",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_refuse_null.ts",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/flow::TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_refuse_undefined.ts",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/null/class_Box_{_value=1;_}_const_box=new_Box();_console.log(`${box.value=null!}`);",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/null/console.log(`${null!_+_1}`);",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/null/console.log(`${null!_===_undefined}`);",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/null/console.log(null!);",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/null/const_absent_=_null;_console.log(absent!);",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/null/const_box:_{value:_number;_other:_number}_=_{value:_null!,_get_other():_number_{_return_1;_}};",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/null/const_value:_number_=_1_||_null!;",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/null/const_value:_number_=_true_?_null!_:_1;",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/null/const_values=[1];_values[0]=null!;",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/null/const_values_=_[...null!];",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/null/const_values_=_[null!];",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/null/function_f():_number_{_return_null!;_}",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/null/function_f(value:_null):_void_{_console.log(value!);_}",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/null/function_f(value:_number_=_null!):_number_{return_value;}",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/null/let_value=1;_console.log(`${value=null!}`);",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/null/let_value=1;_const_absent=null;_value=absent!;",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/null/let_value=1;_const_assigned=(value=null!);",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/null/let_value=1;_const_clear=():_number_=>_value=null!;",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/null/let_value=1;_function_f():_number_{_return_value=null!;_}",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/null/let_value=1;_let_other=2;_value=other=null!;",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/null/let_value=1;_value=(null!_+_1);",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/null/let_value=1;_value_+=_null!;",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/undefined/class_Box_{_value=1;_}_const_box=new_Box();_console.log(`${box.value=undefined!}`);",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/undefined/console.log(`${undefined!_+_1}`);",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/undefined/console.log(`${undefined!_===_undefined}`);",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/undefined/console.log(undefined!);",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/undefined/const_absent_=_undefined;_console.log(absent!);",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/undefined/const_box:_{value:_number;_other:_number}_=_{value:_undefined!,_get_other():_number_{_return_1;_}};",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/undefined/const_value:_number_=_1_||_undefined!;",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/undefined/const_value:_number_=_true_?_undefined!_:_1;",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/undefined/const_values=[1];_values[0]=undefined!;",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/undefined/const_values_=_[...undefined!];",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/undefined/const_values_=_[undefined!];",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/undefined/function_f():_number_{_return_undefined!;_}",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/undefined/function_f(value:_number_=_undefined!):_number_{return_value;}",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/undefined/function_f(value:_undefined):_void_{_console.log(value!);_}",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/undefined/let_value=1;_console.log(`${value=undefined!}`);",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/undefined/let_value=1;_const_absent=undefined;_value=absent!;",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/undefined/let_value=1;_const_assigned=(value=undefined!);",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/undefined/let_value=1;_const_clear=():_number_=>_value=undefined!;",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/undefined/let_value=1;_function_f():_number_{_return_value=undefined!;_}",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/undefined/let_value=1;_let_other=2;_value=other=undefined!;",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/undefined/let_value=1;_value=(undefined!_+_1);",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/lower::TestAdamicNullishAssertionsAreRefused/a/undefined/let_value=1;_value_+=_undefined!;",
+          "after": "pass"
+        }
+      ]
+    },
+    "oracle": {
+      "base": {
+        "log": "/tmp/non-null-next-base-oracle.json",
+        "sha256": "6c35d384b427f4f68d7f435ca19ddf4dd721a962c38111c2f48214b0a9fd9914",
+        "named_results": 108,
+        "packages": {
+          "github.com/system-inc/adamic/internal/oracle": {
+            "result": "pass",
+            "seconds": 16.724
+          }
+        }
+      },
+      "candidate": {
+        "log": "/tmp/non-null-next-final-oracle.json",
+        "sha256": "8b706d370d5d66b3bd75d84a28d0cd45f6d78a88e3815e03dd5be29069d51f13",
+        "named_results": 116,
+        "packages": {
+          "github.com/system-inc/adamic/internal/oracle": {
+            "result": "pass",
+            "seconds": 26.235
+          }
+        }
+      },
+      "unchanged_results": 108,
+      "changed_results": [],
+      "removed": [],
+      "added": [
+        {
+          "test": "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/non_null_checked_initializer.ts",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/non_null_checked_let_initializer.ts",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/non_null_checked_narrowed.ts",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/non_null_checked_null.ts",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/non_null_checked_present.ts",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/non_null_checked_undefined.ts",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/non_null_refuse_null.ts",
+          "after": "pass"
+        },
+        {
+          "test": "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/non_null_refuse_undefined.ts",
+          "after": "pass"
+        }
+      ]
+    }
+  },
+  "expectation_changes_with_unchanged_pass_results": [
+    "github.com/system-inc/adamic/internal/lower::TestPredicateOverloadRuntime/overload_every",
+    "github.com/system-inc/adamic/internal/lower::TestPredicateOverloadRuntime/parser_every_result",
+    "github.com/system-inc/adamic/internal/lower::TestReadinessElisionRequiresDominatingAssignment",
+    "github.com/system-inc/adamic/internal/lower::TestReadinessElisionRequiresDominatingAssignment/branch-join",
+    "github.com/system-inc/adamic/internal/lower::TestReadinessElisionRequiresDominatingAssignment/captured-read",
+    "github.com/system-inc/adamic/internal/lower::TestReadinessElisionRequiresDominatingAssignment/captured-write",
+    "github.com/system-inc/adamic/internal/lower::TestReadinessElisionRequiresDominatingAssignment/catch-write",
+    "github.com/system-inc/adamic/internal/lower::TestReadinessElisionRequiresDominatingAssignment/do-loop",
+    "github.com/system-inc/adamic/internal/lower::TestReadinessElisionRequiresDominatingAssignment/field-join",
+    "github.com/system-inc/adamic/internal/lower::TestReadinessElisionRequiresDominatingAssignment/field-missing-join",
+    "github.com/system-inc/adamic/internal/lower::TestReadinessElisionRequiresDominatingAssignment/field-write",
+    "github.com/system-inc/adamic/internal/lower::TestReadinessElisionRequiresDominatingAssignment/finally-write",
+    "github.com/system-inc/adamic/internal/lower::TestReadinessElisionRequiresDominatingAssignment/loop-body",
+    "github.com/system-inc/adamic/internal/lower::TestReadinessElisionRequiresDominatingAssignment/throw-before-write",
+    "github.com/system-inc/adamic/internal/lower::TestReadinessElisionRequiresDominatingAssignment/zero-iteration",
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/non_null.a",
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/non_null_array.a",
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/non_null_boolean.a",
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/non_null_capture.a",
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/non_null_catch.a",
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/non_null_field.a",
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/non_null_initialized.a",
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/non_null_lazy_default.a",
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/non_null_lazy_field.a",
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/non_null_lazy_initialized.a",
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/non_null_lazy_read.a",
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/non_null_lazy_static.a",
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/non_null_literal_assignment.a",
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/non_null_literal_return.a",
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/non_null_literal_statement.a",
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/non_null_map.a",
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/non_null_null.a",
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/non_null_static_initialized.a",
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/non_null_static_uninitialized.a",
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/non_null_uninitialized.a",
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/non_null_uninitialized_append.a",
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/non_null_uninitialized_capture.a",
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/non_null_uninitialized_catch.a",
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/non_null_uninitialized_const.a",
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/non_null_uninitialized_default.a",
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/non_null_uninitialized_exception.a",
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/non_null_uninitialized_field.a",
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/non_null_uninitialized_interface.a",
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/non_null_uninitialized_iteration.a",
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/non_null_uninitialized_loop.a",
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/non_null_uninitialized_map_entry.a",
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/non_null_uninitialized_optional.a",
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/non_null_uninitialized_spread.a",
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/non_null_union.a",
+    "github.com/system-inc/adamic/internal/oracle::TestNativeAgreesWithNode/internal/oracle/testdata/non_null_weak.a"
+  ],
+  "additional_historical_controls_now_pin_refusal": [
+    "TestReadinessMutants/drop-check",
+    "TestReadinessMutants/erase-without-proof",
+    "TestReadinessMutants/initialize-to-zero",
+    "TestReadinessMutants/miss-captured-read",
+    "TestReadinessMutants/miss-exception-path",
+    "TestReadinessMutants/lazy-read",
+    "TestReadinessMutants/weak-generic-message",
+    "TestUninitializedIsNotNullishMutant",
+    "TestNonNullWeakFreedNamesExpression",
+    "TestLazyInitializerIsNotEagerMutant",
+    "TestNarrowedFieldUsesSharedReadiness/identifier",
+    "TestNarrowedFieldUsesSharedReadiness/identifier-uninitialized",
+    "TestNarrowedFieldUsesSharedReadiness/number",
+    "TestNarrowedFieldUsesSharedReadiness/number-uninitialized",
+    "TestViewFieldInheritedStaticReadiness",
+    "TestDefaultTaggedSourceViews/default-staged",
+    "TestDefaultTaggedSourceViews/default-boxed-write",
+    "TestDefaultTaggedSourceViews/default-read-before-set",
+    "TestNativeAgreesWithNode/stage3/fixtures/nested-functions/09_checker_constituent_recursion.a",
+    "TestPredicateDirectionCountsAreRecorded (overload_every.a retirement)"
+  ],
+  "preserved": [
+    "Closure call targets and conventions",
+    "Predicate reporting, including existing zero-predicate summaries",
+    "NonNullExpression dispatch already present on base",
+    "Three definite-declaration oracle fixtures and their runtime counts",
+    "Backend field readiness primitives and their mutants",
+    "Existing var-assertion declaration admission; its .ts control now exercises the eager check"
+  ],
+  "minimal_front3_rule": [
+    "internal/lower/non_null.go preserves ir.Narrow and narrowing ir.Call representations and checks",
+    "internal/lower/readiness.go keeps its one shared sourceExpression helper and gates lazy assertion initialization by source mode",
+    "internal/lower/locals.go",
+    "internal/lower/functions.go",
+    "internal/lower/class_inheritance.go",
+    "internal/lower/class_static.go",
+    "internal/lower/object.go"
+  ],
+  "counts": {
+    "before": 819,
+    "after": 783,
+    "unchanged": 775,
+    "changed": [],
+    "added": [
+      "| internal/oracle/testdata/non_null_checked_initializer.ts | 0 | 0 | 0 | 0 | 0 | 0 |",
+      "| internal/oracle/testdata/non_null_checked_let_initializer.ts | 0 | 0 | 0 | 0 | 0 | 0 |",
+      "| internal/oracle/testdata/non_null_checked_narrowed.ts | 2 | 2 | 0 | 2 | 2 | 0 |",
+      "| internal/oracle/testdata/non_null_checked_null.ts | 0 | 0 | 0 | 0 | 0 | 0 |",
+      "| internal/oracle/testdata/non_null_checked_present.ts | 2 | 2 | 0 | 2 | 1 | 0 |",
+      "| internal/oracle/testdata/non_null_checked_undefined.ts | 0 | 0 | 0 | 0 | 0 | 0 |",
+      "| internal/oracle/testdata/non_null_refuse_null.ts | 0 | 0 | 0 | 0 | 0 | 0 |",
+      "| internal/oracle/testdata/non_null_refuse_undefined.ts | 0 | 0 | 0 | 0 | 0 | 0 |"
+    ],
+    "removed": [
+      {
+        "row": "| internal/lower/testdata/predicates/overload_every.a | 2 | 3 | 1 | 3 |",
+        "reason": "The source contains ordinary .a ! and now pins the compile-time refusal; there is no admitted runtime to count."
+      },
+      {
+        "row": "| internal/oracle/testdata/non_null.a | 22 | 22 | 12 | 29 | 5 | 0 |",
+        "reason": "The source contains ordinary .a ! and now pins the compile-time refusal; there is no admitted runtime to count."
+      },
+      {
+        "row": "| internal/oracle/testdata/non_null_array.a | 1 | 0 | 0 | 1 | 1 | 0 |",
+        "reason": "The source contains ordinary .a ! and now pins the compile-time refusal; there is no admitted runtime to count."
+      },
+      {
+        "row": "| internal/oracle/testdata/non_null_boolean.a | 0 | 0 | 0 | 0 | 0 | 0 |",
+        "reason": "The source contains ordinary .a ! and now pins the compile-time refusal; there is no admitted runtime to count."
+      },
+      {
+        "row": "| internal/oracle/testdata/non_null_capture.a | 2 | 0 | 3 | 1 | 2 | 0 |",
+        "reason": "The source contains ordinary .a ! and now pins the compile-time refusal; there is no admitted runtime to count."
+      },
+      {
+        "row": "| internal/oracle/testdata/non_null_catch.a | 1 | 0 | 0 | 1 | 1 | 0 |",
+        "reason": "The source contains ordinary .a ! and now pins the compile-time refusal; there is no admitted runtime to count."
+      },
+      {
+        "row": "| internal/oracle/testdata/non_null_field.a | 1 | 0 | 1 | 2 | 1 | 0 |",
+        "reason": "The source contains ordinary .a ! and now pins the compile-time refusal; there is no admitted runtime to count."
+      },
+      {
+        "row": "| internal/oracle/testdata/non_null_initialized.a | 42 | 42 | 23 | 67 | 12 | 0 |",
+        "reason": "The source contains ordinary .a ! and now pins the compile-time refusal; there is no admitted runtime to count."
+      },
+      {
+        "row": "| internal/oracle/testdata/non_null_lazy_default.a | 0 | 0 | 1 | 1 | 0 | 0 |",
+        "reason": "The source contains ordinary .a ! and now pins the compile-time refusal; there is no admitted runtime to count."
+      },
+      {
+        "row": "| internal/oracle/testdata/non_null_lazy_field.a | 1 | 0 | 1 | 3 | 1 | 0 |",
+        "reason": "The source contains ordinary .a ! and now pins the compile-time refusal; there is no admitted runtime to count."
+      },
+      {
+        "row": "| internal/oracle/testdata/non_null_lazy_initialized.a | 13 | 13 | 29 | 46 | 4 | 0 |",
+        "reason": "The source contains ordinary .a ! and now pins the compile-time refusal; there is no admitted runtime to count."
+      },
+      {
+        "row": "| internal/oracle/testdata/non_null_lazy_read.a | 0 | 0 | 2 | 0 | 0 | 0 |",
+        "reason": "The source contains ordinary .a ! and now pins the compile-time refusal; there is no admitted runtime to count."
+      },
+      {
+        "row": "| internal/oracle/testdata/non_null_lazy_static.a | 1 | 0 | 1 | 3 | 1 | 0 |",
+        "reason": "The source contains ordinary .a ! and now pins the compile-time refusal; there is no admitted runtime to count."
+      },
+      {
+        "row": "| internal/oracle/testdata/non_null_literal_assignment.a | 0 | 0 | 0 | 0 | 0 | 0 |",
+        "reason": "The source contains ordinary .a ! and now pins the compile-time refusal; there is no admitted runtime to count."
+      },
+      {
+        "row": "| internal/oracle/testdata/non_null_literal_return.a | 0 | 0 | 0 | 0 | 0 | 0 |",
+        "reason": "The source contains ordinary .a ! and now pins the compile-time refusal; there is no admitted runtime to count."
+      },
+      {
+        "row": "| internal/oracle/testdata/non_null_literal_statement.a | 0 | 0 | 0 | 0 | 0 | 0 |",
+        "reason": "The source contains ordinary .a ! and now pins the compile-time refusal; there is no admitted runtime to count."
+      },
+      {
+        "row": "| internal/oracle/testdata/non_null_map.a | 1 | 0 | 0 | 1 | 1 | 0 |",
+        "reason": "The source contains ordinary .a ! and now pins the compile-time refusal; there is no admitted runtime to count."
+      },
+      {
+        "row": "| internal/oracle/testdata/non_null_null.a | 1 | 0 | 2 | 0 | 1 | 0 |",
+        "reason": "The source contains ordinary .a ! and now pins the compile-time refusal; there is no admitted runtime to count."
+      },
+      {
+        "row": "| internal/oracle/testdata/non_null_static_initialized.a | 8 | 8 | 6 | 16 | 5 | 0 |",
+        "reason": "The source contains ordinary .a ! and now pins the compile-time refusal; there is no admitted runtime to count."
+      },
+      {
+        "row": "| internal/oracle/testdata/non_null_static_uninitialized.a | 1 | 0 | 1 | 2 | 1 | 0 |",
+        "reason": "The source contains ordinary .a ! and now pins the compile-time refusal; there is no admitted runtime to count."
+      },
+      {
+        "row": "| internal/oracle/testdata/non_null_uninitialized.a | 0 | 0 | 0 | 0 | 0 | 0 |",
+        "reason": "The source contains ordinary .a ! and now pins the compile-time refusal; there is no admitted runtime to count."
+      },
+      {
+        "row": "| internal/oracle/testdata/non_null_uninitialized_append.a | 0 | 0 | 1 | 0 | 0 | 0 |",
+        "reason": "The source contains ordinary .a ! and now pins the compile-time refusal; there is no admitted runtime to count."
+      },
+      {
+        "row": "| internal/oracle/testdata/non_null_uninitialized_capture.a | 2 | 0 | 1 | 0 | 2 | 0 |",
+        "reason": "The source contains ordinary .a ! and now pins the compile-time refusal; there is no admitted runtime to count."
+      },
+      {
+        "row": "| internal/oracle/testdata/non_null_uninitialized_catch.a | 0 | 0 | 0 | 0 | 0 | 0 |",
+        "reason": "The source contains ordinary .a ! and now pins the compile-time refusal; there is no admitted runtime to count."
+      },
+      {
+        "row": "| internal/oracle/testdata/non_null_uninitialized_const.a | 0 | 0 | 0 | 0 | 0 | 0 |",
+        "reason": "The source contains ordinary .a ! and now pins the compile-time refusal; there is no admitted runtime to count."
+      },
+      {
+        "row": "| internal/oracle/testdata/non_null_uninitialized_default.a | 0 | 0 | 0 | 0 | 0 | 0 |",
+        "reason": "The source contains ordinary .a ! and now pins the compile-time refusal; there is no admitted runtime to count."
+      },
+      {
+        "row": "| internal/oracle/testdata/non_null_uninitialized_exception.a | 1 | 1 | 3 | 2 | 1 | 0 |",
+        "reason": "The source contains ordinary .a ! and now pins the compile-time refusal; there is no admitted runtime to count."
+      },
+      {
+        "row": "| internal/oracle/testdata/non_null_uninitialized_field.a | 1 | 0 | 1 | 2 | 1 | 0 |",
+        "reason": "The source contains ordinary .a ! and now pins the compile-time refusal; there is no admitted runtime to count."
+      },
+      {
+        "row": "| internal/oracle/testdata/non_null_uninitialized_interface.a | 1 | 0 | 1 | 1 | 1 | 0 |",
+        "reason": "The source contains ordinary .a ! and now pins the compile-time refusal; there is no admitted runtime to count."
+      },
+      {
+        "row": "| internal/oracle/testdata/non_null_uninitialized_iteration.a | 6 | 1 | 7 | 8 | 6 | 0 |",
+        "reason": "The source contains ordinary .a ! and now pins the compile-time refusal; there is no admitted runtime to count."
+      },
+      {
+        "row": "| internal/oracle/testdata/non_null_uninitialized_loop.a | 0 | 0 | 0 | 0 | 0 | 0 |",
+        "reason": "The source contains ordinary .a ! and now pins the compile-time refusal; there is no admitted runtime to count."
+      },
+      {
+        "row": "| internal/oracle/testdata/non_null_uninitialized_map_entry.a | 0 | 0 | 0 | 0 | 0 | 0 |",
+        "reason": "The source contains ordinary .a ! and now pins the compile-time refusal; there is no admitted runtime to count."
+      },
+      {
+        "row": "| internal/oracle/testdata/non_null_uninitialized_optional.a | 1 | 0 | 1 | 2 | 1 | 0 |",
+        "reason": "The source contains ordinary .a ! and now pins the compile-time refusal; there is no admitted runtime to count."
+      },
+      {
+        "row": "| internal/oracle/testdata/non_null_uninitialized_spread.a | 2 | 0 | 3 | 2 | 2 | 0 |",
+        "reason": "The source contains ordinary .a ! and now pins the compile-time refusal; there is no admitted runtime to count."
+      },
+      {
+        "row": "| internal/oracle/testdata/non_null_union.a | 0 | 0 | 0 | 0 | 0 | 0 |",
+        "reason": "The source contains ordinary .a ! and now pins the compile-time refusal; there is no admitted runtime to count."
+      },
+      {
+        "row": "| internal/oracle/testdata/non_null_weak.a | 4 | 1 | 5 | 6 | 4 | 0 |",
+        "reason": "The source contains ordinary .a ! and now pins the compile-time refusal; there is no admitted runtime to count."
+      },
+      {
+        "row": "| stage3/fixtures/nested-functions/09_checker_constituent_recursion.a | 36 | 36 | 99 | 128 | 17 | 0 |",
+        "reason": "The source contains ordinary .a ! and now pins the compile-time refusal; there is no admitted runtime to count."
+      },
+      {
+        "row": "| stage3/interface-downcasts/default-boxed-write.a | 5 | 5 | 5 | 12 | 4 | 0 |",
+        "reason": "The source contains ordinary .a ! and now pins the compile-time refusal; there is no admitted runtime to count."
+      },
+      {
+        "row": "| stage3/interface-downcasts/default-read-before-set.a | 1 | 0 | 3 | 2 | 1 | 0 |",
+        "reason": "The source contains ordinary .a ! and now pins the compile-time refusal; there is no admitted runtime to count."
+      },
+      {
+        "row": "| stage3/interface-downcasts/default-staged.a | 2 | 2 | 4 | 5 | 2 | 0 |",
+        "reason": "The source contains ordinary .a ! and now pins the compile-time refusal; there is no admitted runtime to count."
+      },
+      {
+        "row": "| stage3/interface-downcasts/readiness-identifier-uninitialized.a | 1 | 0 | 3 | 3 | 1 | 0 |",
+        "reason": "The source contains ordinary .a ! and now pins the compile-time refusal; there is no admitted runtime to count."
+      },
+      {
+        "row": "| stage3/interface-downcasts/readiness-identifier.a | 2 | 2 | 4 | 6 | 2 | 0 |",
+        "reason": "The source contains ordinary .a ! and now pins the compile-time refusal; there is no admitted runtime to count."
+      },
+      {
+        "row": "| stage3/interface-downcasts/readiness-number-uninitialized.a | 1 | 0 | 3 | 3 | 1 | 0 |",
+        "reason": "The source contains ordinary .a ! and now pins the compile-time refusal; there is no admitted runtime to count."
+      },
+      {
+        "row": "| stage3/interface-downcasts/readiness-number.a | 3 | 3 | 4 | 8 | 3 | 0 |",
+        "reason": "The source contains ordinary .a ! and now pins the compile-time refusal; there is no admitted runtime to count."
+      }
+    ]
+  },
+  "additional_checks": {
+    "controls-mutants": {
+      "log": "/tmp/non-null-next-controls-mutants.json",
+      "sha256": "7c5c3783fb6564e0d4698b4f50414876a8883fcf8342e16b205cf3a3a4ada98e",
+      "named_results": 55,
+      "packages": {
+        "github.com/system-inc/adamic/internal/oracle": {
+          "result": "pass",
+          "seconds": 6.677
+        },
+        "github.com/system-inc/adamic/cmd/adamic": {
+          "result": "pass",
+          "seconds": 24.362
+        }
+      },
+      "mutant_observations": [
+        "non_null_checked_test.go:132: look-through mutant caught before either backend: union return where number is required",
+        "non_null_checked_test.go:97: no-check mutant caught: stdout \"before\\ntrue\\n\" exit 0"
+      ]
+    },
+    "view-controls": {
+      "log": "/tmp/non-null-next-view-controls.json",
+      "sha256": "ef0b4d5175e46f4c34d038e43cd259ee48fe2620165d711235d0b0b60fc9f5ee",
+      "named_results": 24,
+      "packages": {
+        "github.com/system-inc/adamic/internal/oracle": {
+          "result": "pass",
+          "seconds": 13.809
+        }
+      },
+      "mutant_observations": [
+        "view_fields_test.go:72: drop field check mutant caught by pinned exit/message, with valid C",
+        "view_fields_test.go:84: drop initialization tracking mutant caught by pinned exit/message",
+        "view_fields_test.go:72: drop field check mutant caught by pinned exit/message, with valid C"
+      ]
+    },
+    "nested-control": {
+      "log": "/tmp/non-null-next-nested-control.json",
+      "sha256": "d72d95084fe4211d792a3f66cb58e0f5c393a1523ab7a799b8fc6de1fa6f30e7",
+      "named_results": 2,
+      "packages": {
+        "github.com/system-inc/adamic/internal/oracle": {
+          "result": "pass",
+          "seconds": 0.05
+        }
+      },
+      "mutant_observations": []
+    },
+    "counts-check": {
+      "log": "/tmp/non-null-next-counts-check.json",
+      "sha256": "f0309ea5c69bd5a781ffe3d40756094585eed443fdde9b27bb01366d65874361",
+      "named_results": 766,
+      "packages": {
+        "github.com/system-inc/adamic/internal/oracle": {
+          "result": "pass",
+          "seconds": 52.627
+        }
+      },
+      "mutant_observations": []
+    }
+  },
+  "mutants": {
+    "no_check": "TestCheckedNonNullTypeScript/undefined: mutant exits 0 and prints before\\ntrue\\n, violating the pinned exit-70 diagnostic; caught without clang or sanitizer errors.",
+    "representation_changing_look_through": "TestCheckedNonNullTypeScript/narrowed: replacing the narrowing call with its union argument violates the pinned number return representation before either backend."
+  },
+  "setup": {
+    "nproc": 5,
+    "timings_seconds": {
+      "go": 0.032,
+      "node": 0.033,
+      "markdown_dependencies": 0.099,
+      "clang": 0.179
+    },
+    "failure": "expected submodule path 'cohere' not to be a symbolic link",
+    "workaround": "Matching pinned 7945d102 checkout shared by a local symlink, no gitlink change, GOFLAGS=-buildvcs=false on both comparisons. npm ci --prefix stage3/api --ignore-scripts installed pinned @types/node 25.3.3 and TypeScript 6.0.3 before the clean comparison.",
+    "log": "/tmp/non-null-next-setup.log"
+  },
+  "intermediate_failures": [
+    "First focused run exposed historical TestNonNullWeakFreedNamesExpression expecting runtime behavior in .a; expectation now pins refusal.",
+    "Two full count regeneration attempts exposed the registered 09_checker_constituent_recursion.a control; expectation now pins refusal. Final regeneration passed in 41.529s.",
+    "One combined slash-aware oracle filter selected no cases; rerun with exact baseline filter and separate nested-control filter, both passing."
+  ],
+  "limitations": [
+    "The complete repository gate, census replay and scanner slice were not run.",
+    "Retired historical .a runtime mutants now pin refusal and are not claimed as runtime mutant coverage.",
+    "No fixture source adaptation was made; no whole-file conflict pick was used.",
+    "Wall times reflect concurrent verification load, not compiler performance."
+  ]
+}
