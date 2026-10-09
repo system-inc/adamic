@@ -1,0 +1,4 @@
+const first = 'a'.repeat(1);
+const duplicate = 'a'.repeat(1);
+console.log(String(JSON.stringify({a: 'one'.repeat(2), b: 'two'.repeat(2)}, [first, duplicate])));
+console.log(String(JSON.stringify({a: 'one'.repeat(2), b: 'two'.repeat(2)}, ['b', 'a', 'b', 'a'])));

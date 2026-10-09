@@ -71,6 +71,9 @@ func (l *lowering) objectKeys(node *ast.Node) (ir.Expression, bool, error) {
 	if len(arguments) != 1 {
 		return nil, true, l.notYet(node, "Object.keys without exactly one argument")
 	}
+	if value, handled, err := l.recordObjectCall(node, "keys"); handled {
+		return value, true, err
+	}
 	// A spread of a possibly absent plain object has synthetic optional slots, not real keys.
 	// Class and accessor descriptors provide the public shape for their stored fields.
 	proven := l.checker.GetTypeAtLocation(arguments[0])

@@ -1,0 +1,30 @@
+{
+  "complete": false,
+  "edges": [
+    {
+      "member": "step24-parser-main",
+      "requires": "placeholder-nonnull-main",
+      "symbol": "lower.lowering.placeholderOrigin",
+      "reference": "e503868c:internal/lower/locals.go:135",
+      "definition": "bafb9ef4:internal/lower/placeholder.go:107",
+      "scope": "Preserved source contract for newly added UnsetField local metadata."
+    },
+    {
+      "member": "search-shrink",
+      "requires": "callback-widening",
+      "symbol": "lower.lowering.adaptArrayCallback",
+      "reference": "df57ed18:internal/lower/object.go:1540",
+      "definition": "36472529:internal/lower/callback_widening.go:12",
+      "scope": "SearchFirst determines supplied callback storage; adapter must receive it."
+    },
+    {
+      "member": "optional-presence-next",
+      "requires": "namespace-value",
+      "symbol": "lower.lowering.namespaceType",
+      "reference": "897d0e79:internal/lower/library_object.go:95",
+      "definition": "26ccff9c:internal/lower/namespace_value.go:265",
+      "scope": "Final source preserves namespace hasOwn admission while extending plain literal/assign guards; main extraction requires preserving the owner guard."
+    }
+  ],
+  "warning": "These qualified source edges are verified references, not a complete graph. Other field, fixture, repair and semantic dependencies remain unaudited."
+}
