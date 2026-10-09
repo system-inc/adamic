@@ -1,0 +1,31 @@
+[
+  {
+    "file": "core.ts",
+    "explicitAnyBefore": 19,
+    "explicitAnyAfter": 19,
+    "signaturesUnchanged": [
+      "mapIterator",
+      "flatMapIterator",
+      "mapDefinedIterator",
+      "singleIterator",
+      "arrayReverseIterator",
+      "getElementIterator",
+      "entries"
+    ],
+    "sha256": "32c7ed8948803fc506fd060f6370a8cbb8169ef13ac785f24eacb71789dc7496"
+  },
+  {
+    "file": "checker.ts",
+    "explicitAnyBefore": 4,
+    "explicitAnyAfter": 4,
+    "signaturesUnchanged": [
+      "generateJsxAttributes",
+      "generateJsxChildren",
+      "<anonymous>",
+      "generateLimitedTupleElements",
+      "generateObjectLiteralElements",
+      "getUnmatchedProperties"
+    ],
+    "sha256": "6ab78aa6d6d92b6d63422748311d1437ab97695e21a9ecf136e168eb0fc040c2"
+  }
+]

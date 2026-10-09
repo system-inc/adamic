@@ -1,0 +1,26 @@
+{
+  "status": "pass",
+  "mutants": [
+    {
+      "name": "remaining-generator",
+      "caught": true,
+      "exit": 1,
+      "catcher": "census failed: generators or yield delegation remain",
+      "seconds": 1.67
+    },
+    {
+      "name": "skipped-element",
+      "caught": true,
+      "exit": 1,
+      "catcher": "singleIterator changed values or evaluation timing",
+      "seconds": 2.048
+    },
+    {
+      "name": "eager-iterator",
+      "caught": true,
+      "exit": 1,
+      "catcher": "laziness: array length read before next",
+      "seconds": 2.124
+    }
+  ]
+}
