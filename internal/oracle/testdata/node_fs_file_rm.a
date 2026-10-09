@@ -1,0 +1,24 @@
+function errorCode(error: unknown): string | undefined {
+    return typeof error === 'object' && error !== null && 'code' in error && typeof error.code === 'string' ? error.code : undefined;
+}
+import { programArguments } from 'adamic';
+import { rmSync, existsSync, mkdirSync, writeFileSync } from 'node:fs';
+const root = programArguments()[0] ?? '';
+function failure(error: Error): void {
+    console.log(`${errorCode(error) ?? ''}: ${error.message.replaceAll(root, '<root>')}`);
+}
+rmSync(root + '/file'); console.log(`file=${existsSync(root + '/file')}`);
+rmSync(root + '/dangling'); console.log(`dangling=${existsSync(root + '/dangling')}`);
+rmSync(root + '/directory-link', { recursive: true });
+console.log(`target=${existsSync(root + '/directory')}`);
+mkdirSync(root + '/tree/child', { recursive: true });
+writeFileSync(root + '/tree/child/data', 'x');
+rmSync(root + '/tree', { recursive: true, force: true });
+console.log(`tree=${existsSync(root + '/tree')}`);
+rmSync(root + '/missing', { force: true }); console.log('forced missing');
+const options = { recursive: true, force: true };
+rmSync(root + '/missing', options);
+for (const path of [root + '/missing', root + '/directory', root + '/locked/file', root + '/closed', root + '/bad\0']) {
+    try { rmSync(path); } catch (error) { if (error instanceof Error) { failure(error); } }
+}
+try { rmSync(root + '/closed', { recursive: true, force: true }); } catch (error) { if (error instanceof Error) { failure(error); } }

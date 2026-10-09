@@ -1,0 +1,4 @@
+// Reduced from path.ts:187
+const path = 'http://host/a';
+const urlSchemeSeparator = '://';
+console.log(`${path.indexOf(urlSchemeSeparator)}`);

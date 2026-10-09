@@ -1,0 +1,6 @@
+// commandLineParser.ts:3338-3339: config diagnostics stringify optional string arrays.
+function specs(includeSpecs: readonly string[] | undefined, excludeSpecs: readonly string[] | undefined): void {
+    console.log(`${JSON.stringify(includeSpecs || [])} ${JSON.stringify(excludeSpecs || [])}`);
+}
+specs(['include', 'a"b', '\uD800', 'line\nend'], undefined);
+specs(undefined, ['exclude']);

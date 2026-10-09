@@ -1,0 +1,1093 @@
+[
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/checker.ts",
+    "line": 1154,
+    "pattern": "^\".+\"$",
+    "flags": "",
+    "facts": {
+      "Indices": [
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/checker.ts",
+    "line": 7877,
+    "pattern": "\\n",
+    "flags": "g",
+    "facts": {
+      "Indices": [
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/checker.ts",
+    "line": 8062,
+    "pattern": "\\r\\n|\\n|\\r",
+    "flags": "",
+    "facts": {
+      "Indices": [
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/checker.ts",
+    "line": 8062,
+    "pattern": "^\\s+",
+    "flags": "",
+    "facts": {
+      "Indices": [
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/checker.ts",
+    "line": 8943,
+    "pattern": "\\\\.",
+    "flags": "g",
+    "facts": {
+      "Indices": [
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/checker.ts",
+    "line": 9919,
+    "pattern": "\\n",
+    "flags": "g",
+    "facts": {
+      "Indices": [
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/checker.ts",
+    "line": 11133,
+    "pattern": "[^a-z0-9]",
+    "flags": "gi",
+    "facts": {
+      "Indices": [
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/checker.ts",
+    "line": 35211,
+    "pattern": "^(?:EventTarget|Node|(?:HTML[a-zA-Z]*)?Element)$",
+    "flags": "",
+    "facts": {
+      "Indices": [
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/commandLineParser.ts",
+    "line": 3901,
+    "pattern": "(?:^|\\/)\\*\\*\\/?$",
+    "flags": "",
+    "facts": {
+      "Indices": [
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/commandLineParser.ts",
+    "line": 3915,
+    "pattern": "^[^*?]*(?=\\/[^/]*[*?])",
+    "flags": "",
+    "facts": {
+      "Indices": [
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/core.ts",
+    "line": 1861,
+    "pattern": "[^\\u0130\\u0131\\u00DFa-z0-9\\\\/:\\-_. ]+",
+    "flags": "g",
+    "facts": {
+      "Indices": [
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/debug.ts",
+    "line": 377,
+    "pattern": "^function\\s+([\\w$]+)\\s*\\(",
+    "flags": "",
+    "facts": {
+      "Indices": [
+        true,
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/debug.ts",
+    "line": 584,
+    "pattern": "(?:,[\\s\\w]+:[^,]+)+\\]$",
+    "flags": "",
+    "facts": {
+      "Indices": [
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/emitter.ts",
+    "line": 4105,
+    "pattern": "\\r\\n?|\\n",
+    "flags": "",
+    "facts": {
+      "Indices": [
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/emitter.ts",
+    "line": 4976,
+    "pattern": "\\r\\n?|\\n",
+    "flags": "",
+    "facts": {
+      "Indices": [
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/moduleNameResolver.ts",
+    "line": 2763,
+    "pattern": "\\*",
+    "flags": "g",
+    "facts": {
+      "Indices": [
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/moduleNameResolver.ts",
+    "line": 2807,
+    "pattern": "\\*",
+    "flags": "g",
+    "facts": {
+      "Indices": [
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/moduleNameResolver.ts",
+    "line": 2809,
+    "pattern": "\\*",
+    "flags": "g",
+    "facts": {
+      "Indices": [
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/moduleSpecifiers.ts",
+    "line": 152,
+    "pattern": "[^iu]",
+    "flags": "g",
+    "facts": {
+      "Indices": [
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/parser.ts",
+    "line": 10712,
+    "pattern": "^\\/\\/\\/\\s*\u003c(\\S+)\\s.*?\\/\u003e",
+    "flags": "m",
+    "facts": {
+      "Indices": [
+        true,
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/parser.ts",
+    "line": 10713,
+    "pattern": "^\\/\\/\\/?\\s*@([^\\s:]+)((?:[^\\S\\r\\n]|:).*)?$",
+    "flags": "m",
+    "facts": {
+      "Indices": [
+        true,
+        true,
+        false
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/parser.ts",
+    "line": 10759,
+    "pattern": "@(\\S+)(\\s+(?:\\S.*)?)?$",
+    "flags": "gm",
+    "facts": {
+      "Indices": [
+        true,
+        true,
+        false
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/parser.ts",
+    "line": 10784,
+    "pattern": "\\s+",
+    "flags": "",
+    "facts": {
+      "Indices": [
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/path.ts",
+    "line": 32,
+    "pattern": "\\\\",
+    "flags": "g",
+    "facts": {
+      "Indices": [
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/path.ts",
+    "line": 101,
+    "pattern": "^\\.\\.?(?:$|[\\\\/])",
+    "flags": "",
+    "facts": {
+      "Indices": [
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/path.ts",
+    "line": 738,
+    "pattern": "\\/\\.\\/",
+    "flags": "g",
+    "facts": {
+      "Indices": [
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/path.ts",
+    "line": 882,
+    "pattern": "\\/\\/|(?:^|\\/)\\.\\.?(?:$|\\/)",
+    "flags": "",
+    "facts": {
+      "Indices": [
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/program.ts",
+    "line": 736,
+    "pattern": "\\t",
+    "flags": "g",
+    "facts": {
+      "Indices": [
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/program.ts",
+    "line": 750,
+    "pattern": "\\S",
+    "flags": "g",
+    "facts": {
+      "Indices": [
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/program.ts",
+    "line": 751,
+    "pattern": ".",
+    "flags": "g",
+    "facts": {
+      "Indices": [
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/program.ts",
+    "line": 754,
+    "pattern": ".",
+    "flags": "g",
+    "facts": {
+      "Indices": [
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/program.ts",
+    "line": 758,
+    "pattern": ".",
+    "flags": "g",
+    "facts": {
+      "Indices": [
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/program.ts",
+    "line": 2982,
+    "pattern": "^\\s*\\/\\/.*$",
+    "flags": "",
+    "facts": {
+      "Indices": [
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/resolutionCache.ts",
+    "line": 273,
+    "pattern": "[a-z]:",
+    "flags": "i",
+    "facts": {
+      "Indices": [
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/resolutionCache.ts",
+    "line": 277,
+    "pattern": "[a-z]\\$$",
+    "flags": "i",
+    "facts": {
+      "Indices": [
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/resolutionCache.ts",
+    "line": 287,
+    "pattern": "^users$",
+    "flags": "i",
+    "facts": {
+      "Indices": [
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/resolutionCache.ts",
+    "line": 293,
+    "pattern": "^workspaces$",
+    "flags": "i",
+    "facts": {
+      "Indices": [
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/scanner.ts",
+    "line": 349,
+    "pattern": "^\\/\\/\\/?\\s*@(ts-expect-error|ts-ignore)",
+    "flags": "",
+    "facts": {
+      "Indices": [
+        true,
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/scanner.ts",
+    "line": 354,
+    "pattern": "^(?:\\/|\\*)*\\s*@(ts-expect-error|ts-ignore)",
+    "flags": "",
+    "facts": {
+      "Indices": [
+        true,
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/scanner.ts",
+    "line": 356,
+    "pattern": "@(?:see|link)",
+    "flags": "i",
+    "facts": {
+      "Indices": [
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/scanner.ts",
+    "line": 792,
+    "pattern": "^#!.*",
+    "flags": "",
+    "facts": {
+      "Indices": [
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/semver.ts",
+    "line": 20,
+    "pattern": "^(0|[1-9]\\d*)(?:\\.(0|[1-9]\\d*)(?:\\.(0|[1-9]\\d*)(?:-([a-z0-9-.]+))?(?:\\+([a-z0-9-.]+))?)?)?$",
+    "flags": "i",
+    "facts": {
+      "Indices": [
+        true,
+        true,
+        false,
+        false,
+        false,
+        false
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/semver.ts",
+    "line": 27,
+    "pattern": "^(?:0|[1-9]\\d*|[a-z-][a-z0-9-]*)(?:\\.(?:0|[1-9]\\d*|[a-z-][a-z0-9-]*))*$",
+    "flags": "i",
+    "facts": {
+      "Indices": [
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/semver.ts",
+    "line": 28,
+    "pattern": "^(?:0|[1-9]\\d*|[a-z-][a-z0-9-]*)$",
+    "flags": "i",
+    "facts": {
+      "Indices": [
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/semver.ts",
+    "line": 34,
+    "pattern": "^[a-z0-9-]+(?:\\.[a-z0-9-]+)*$",
+    "flags": "i",
+    "facts": {
+      "Indices": [
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/semver.ts",
+    "line": 35,
+    "pattern": "^[a-z0-9-]+$",
+    "flags": "i",
+    "facts": {
+      "Indices": [
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/semver.ts",
+    "line": 39,
+    "pattern": "^(?:0|[1-9]\\d*)$",
+    "flags": "",
+    "facts": {
+      "Indices": [
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/semver.ts",
+    "line": 247,
+    "pattern": "\\|\\|",
+    "flags": "",
+    "facts": {
+      "Indices": [
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/semver.ts",
+    "line": 248,
+    "pattern": "\\s+",
+    "flags": "",
+    "facts": {
+      "Indices": [
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/semver.ts",
+    "line": 260,
+    "pattern": "^([x*0]|[1-9]\\d*)(?:\\.([x*0]|[1-9]\\d*)(?:\\.([x*0]|[1-9]\\d*)(?:-([a-z0-9-.]+))?(?:\\+([a-z0-9-.]+))?)?)?$",
+    "flags": "i",
+    "facts": {
+      "Indices": [
+        true,
+        true,
+        false,
+        false,
+        false,
+        false
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/semver.ts",
+    "line": 265,
+    "pattern": "^\\s*([a-z0-9-+.*]+)\\s+-\\s+([a-z0-9-+.*]+)\\s*$",
+    "flags": "i",
+    "facts": {
+      "Indices": [
+        true,
+        true,
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/semver.ts",
+    "line": 273,
+    "pattern": "^([~^\u003c\u003e=]|\u003c=|\u003e=)?\\s*([a-z0-9-+.*]+)$",
+    "flags": "i",
+    "facts": {
+      "Indices": [
+        true,
+        false,
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/sourcemap.ts",
+    "line": 363,
+    "pattern": "\\/\\/[@#] source[M]appingURL=(.+)\\r?\\n?$",
+    "flags": "",
+    "facts": {
+      "Indices": [
+        true,
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/sourcemap.ts",
+    "line": 365,
+    "pattern": "^\\/\\/[@#] source[M]appingURL=(.+)\\r?\\n?$",
+    "flags": "",
+    "facts": {
+      "Indices": [
+        true,
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/sourcemap.ts",
+    "line": 368,
+    "pattern": "^\\s*(\\/\\/[@#] .*)?$",
+    "flags": "",
+    "facts": {
+      "Indices": [
+        true,
+        false
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/sys.ts",
+    "line": 1469,
+    "pattern": "^native |^\\([^)]+\\)$|^(?:internal[\\\\/]|[\\w\\s]+(?:\\.js)?$)",
+    "flags": "",
+    "facts": {
+      "Indices": [
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/sys.ts",
+    "line": 1594,
+    "pattern": "^--(?:inspect|debug)(?:-brk)?(?:=\\d+)?$",
+    "flags": "i",
+    "facts": {
+      "Indices": [
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/sys.ts",
+    "line": 1699,
+    "pattern": ":",
+    "flags": "g",
+    "facts": {
+      "Indices": [
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/sys.ts",
+    "line": 1733,
+    "pattern": "\\w",
+    "flags": "g",
+    "facts": {
+      "Indices": [
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/sys.ts",
+    "line": 1974,
+    "pattern": "^development$",
+    "flags": "i",
+    "facts": {
+      "Indices": [
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/transformers/jsx.ts",
+    "line": 624,
+    "pattern": "\u0026((#((\\d+)|x([\\da-fA-F]+)))|(\\w+));",
+    "flags": "g",
+    "facts": {
+      "Indices": [
+        true,
+        true,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/transformers/jsx.ts",
+    "line": 672,
+    "pattern": "^[A-Z_]\\w*$",
+    "flags": "i",
+    "facts": {
+      "Indices": [
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/transformers/taggedTemplate.ts",
+    "line": 130,
+    "pattern": "\\r\\n?",
+    "flags": "g",
+    "facts": {
+      "Indices": [
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/transformers/ts.ts",
+    "line": 2718,
+    "pattern": "\\*\\/",
+    "flags": "g",
+    "facts": {
+      "Indices": [
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+    "line": 1330,
+    "pattern": "\\r\\n|\\n|\\r",
+    "flags": "",
+    "facts": {
+      "Indices": [
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+    "line": 1330,
+    "pattern": "^\\s*\\*",
+    "flags": "",
+    "facts": {
+      "Indices": [
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+    "line": 2062,
+    "pattern": "^(\\d)",
+    "flags": "",
+    "facts": {
+      "Indices": [
+        true,
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+    "line": 2062,
+    "pattern": "\\W",
+    "flags": "g",
+    "facts": {
+      "Indices": [
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+    "line": 2781,
+    "pattern": "^\\/\\/\\/\\s*\u003creference\\s+path\\s*=\\s*(?:'[^']*'|\"[^\"]*\").*?\\/\u003e",
+    "flags": "",
+    "facts": {
+      "Indices": [
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+    "line": 2782,
+    "pattern": "^\\/\\/\\/\\s*\u003creference\\s+types\\s*=\\s*(?:'[^']*'|\"[^\"]*\").*?\\/\u003e",
+    "flags": "",
+    "facts": {
+      "Indices": [
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+    "line": 2783,
+    "pattern": "^\\/\\/\\/\\s*\u003creference\\s+lib\\s*=\\s*(?:'[^']*'|\"[^\"]*\").*?\\/\u003e",
+    "flags": "",
+    "facts": {
+      "Indices": [
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+    "line": 2784,
+    "pattern": "^\\/\\/\\/\\s*\u003camd-dependency\\s+path\\s*=\\s*(?:'[^']*'|\"[^\"]*\").*?\\/\u003e",
+    "flags": "",
+    "facts": {
+      "Indices": [
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+    "line": 2785,
+    "pattern": "^\\/\\/\\/\\s*\u003camd-module\\s+(?:\\S.*?)??\\/\u003e",
+    "flags": "",
+    "facts": {
+      "Indices": [
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+    "line": 2786,
+    "pattern": "^\\/\\/\\/\\s*\u003creference\\s+no-default-lib\\s*=\\s*(?:'[^']*'|\"[^\"]*\")\\s*\\/\u003e",
+    "flags": "",
+    "facts": {
+      "Indices": [
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+    "line": 6138,
+    "pattern": "\\$\\{",
+    "flags": "g",
+    "facts": {
+      "Indices": [
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+    "line": 6160,
+    "pattern": "[\\\\\"\\u0000-\\u001f\\u2028\\u2029\\u0085]",
+    "flags": "g",
+    "facts": {
+      "Indices": [
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+    "line": 6161,
+    "pattern": "[\\\\'\\u0000-\\u001f\\u2028\\u2029\\u0085]",
+    "flags": "g",
+    "facts": {
+      "Indices": [
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+    "line": 6163,
+    "pattern": "\\r\\n|[\\\\`\\u0000-\\u0009\\u000b-\\u001f\\u2028\\u2029\\u0085]",
+    "flags": "g",
+    "facts": {
+      "Indices": [
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+    "line": 6214,
+    "pattern": "[^\\u0000-\\u007F]",
+    "flags": "g",
+    "facts": {
+      "Indices": [
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+    "line": 6229,
+    "pattern": "[\"\\u0000-\\u001f\\u2028\\u2029\\u0085]",
+    "flags": "g",
+    "facts": {
+      "Indices": [
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+    "line": 6230,
+    "pattern": "['\\u0000-\\u001f\\u2028\\u2029\\u0085]",
+    "flags": "g",
+    "facts": {
+      "Indices": [
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+    "line": 8584,
+    "pattern": "\\{(\\d+)\\}",
+    "flags": "g",
+    "facts": {
+      "Indices": [
+        true,
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+    "line": 9594,
+    "pattern": "[^\\w\\s/]",
+    "flags": "g",
+    "facts": {
+      "Indices": [
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+    "line": 9685,
+    "pattern": "[.*?]",
+    "flags": "",
+    "facts": {
+      "Indices": [
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+    "line": 10158,
+    "pattern": "\\/",
+    "flags": "g",
+    "facts": {
+      "Indices": [
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+    "line": 10916,
+    "pattern": "\\$",
+    "flags": "g",
+    "facts": {
+      "Indices": [
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilities.ts",
+    "line": 12179,
+    "pattern": "import|require",
+    "flags": "g",
+    "facts": {
+      "Indices": [
+        true
+      ],
+      "Names": {}
+    }
+  },
+  {
+    "file": "cohere/TypeScript/tsc/testdata/fixtures/compiler/utilitiesPublic.ts",
+    "line": 699,
+    "pattern": "^([a-z]+)(?:[_-]([a-z]+))?$",
+    "flags": "",
+    "facts": {
+      "Indices": [
+        true,
+        true,
+        false
+      ],
+      "Names": {}
+    }
+  }
+]

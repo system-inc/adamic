@@ -1,0 +1,17 @@
+console.log(`${(new Number()).toString()} ${(new Number(undefined)).toString()} ${(new Number(null)).toString()} ${(new Number(true)).toString()}`);
+const values: readonly number[] = [0, -0, 1.25, -12.5, 1e20, 1e21, 1e-6, 1e-7, Number.MAX_VALUE, Number.MIN_VALUE, 9007199254740992, NaN, Infinity, -Infinity];
+for (const value of values) {
+ console.log(`${(new Number(value)).toString()} ${(new Number(value)).toString(2)} ${(new Number(value)).toString(16)} ${(new Number(value)).toString(36)}`);
+ console.log(`${(new Number(value)).toFixed(2)} ${(new Number(value)).toExponential()} ${(new Number(value)).toExponential(3)} ${(new Number(value)).toPrecision(4)}`);
+ console.log(`${(new Number(value)).valueOf()} ${1 / (new Number(value)).valueOf()} ${Number.prototype.valueOf.call(new Number(value))}`);
+}
+for (const text of ['0x20000000000001', '9007199254740993', '1e309', '5e-324', '-0', '1e', 'NaN']) {
+ console.log(`${(new Number(text)).toString()} ${(new Number(text)).toFixed(3)}`);
+}
+let before = 1;
+function change(): number { before = 2; return 16; }
+console.log((new Number(before)).toString(change()));
+console.log(`${before}`);
+function make(): string { before += 1; return `${before}`; }
+console.log((new Number(make())).toPrecision(change()));
+console.log(`${before}`);

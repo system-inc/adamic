@@ -3,8 +3,41 @@
 The complete Adamic YAML formatting slice is implemented at Go cohere's default options.
 Go, sanitized native, source Node and emitted JavaScript compare all 36 repository files and generated cases.
 Original Prettier 3.9.6 is compared independently, with 42 proved upstream binary/minification differences.
-Thirty successful wrong-output port mutants are caught; nine compiler refusals have proving programs; the former runtime bug has a parity regression test.
+Thirty-one successful wrong-output port mutants are caught; nine active compiler refusals have proving programs; the former runtime bug and two closed presence gaps have parity regression tests.
 Final throughput: native 11,504, source Node 13,819, Go 15,190 texts/s; native is 4.10 times its original baseline.
+
+## Presence gaps closed on library 45d70a05
+
+[stringPresence.ts](gaps/stringPresence.ts) and
+[valuePresence.ts](gaps/valuePresence.ts) now lower and agree with Node.
+Both closures trace to compiler change `1a9c637cf3556f14462dcf8798cb41ff30bfbb4c`,
+"Represent nullable references with one pointer and a static empty case",
+which lowers string negation through its length and reference negation through
+its empty case. This change is present in the library area.
+
+The lexer uses direct `!unit`, `!nextUnit` and `!character(...)` tests again,
+and scalar block-line checks use `!line`. Positive presence comparisons and
+string fallback workarounds remain; the separately tracked logical gaps are
+still open.
+The two original probes remain as `TestClosedLexerPresenceGapsMatchNode`, which
+compares Node with sanitized native and emitted JavaScript. `TestLexerGaps`
+continues to hold only active refusals. The lexer mutant that waits on an empty
+character even at end of input must be caught by token-byte comparisons.
+
+Validation: lexer parity passed on 8,732 complete/chunked cases (4,182,610
+answer bytes), and scalar parity passed on 9,272 cases (8,419,050 answer bytes).
+Both compare Go, sanitized native, source Node 24.19.0, emitted JavaScript and
+yaml 2.9.0. All six lexer and three scalar mutants were caught. The new
+empty-character EOF mutant exits successfully with clean stderr; native and
+Node token-byte comparisons both catch its missing output at byte 860236.
+Vet, gofmt, and cohere lint and formatting checks pass for the changed ports.
+The full formatter suite was not rerun for this change.
+
+```sh
+ADAMIC_YAML_LIBRARY=/tmp/library-yaml-gap-deps go test ./stage1/cohere/yaml -run 'TestLexerGaps|TestClosedLexerPresenceGapsMatchNode|TestLexerMatchesGo|TestLexerMutants|TestScalarMatchesGo' -count=1 -v -timeout 15m > /tmp/project-ts-imports-yaml-after.log 2>&1
+ADAMIC_YAML_LIBRARY=/tmp/library-yaml-gap-deps go test ./stage1/cohere/yaml -run 'TestScalarsMatchGo|TestScalarMutants' -count=1 -v -timeout 15m > /tmp/project-ts-imports-yaml-scalars.log 2>&1
+go vet ./stage1/cohere/yaml > /tmp/project-ts-imports-yaml-vet.log 2>&1
+```
 
 ## Main integration follow-up
 
@@ -413,7 +446,7 @@ Only the wrong token bytes catch it:
 
 ### Stage 0 gap programs
 
-All three programs print the recorded behavior on Node and refuse with
+Both active programs print the recorded behavior on Node and refuse with
 `lower.NotYet` before clang. `TestLexerGaps` holds these observations so a
 closed gap requires updating the workaround.
 

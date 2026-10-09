@@ -1,0 +1,347 @@
+=== RUN   TestNodeProcessDirectoryRuntime
+=== PAUSE TestNodeProcessDirectoryRuntime
+=== RUN   TestNodeProcessEnvironmentRuntime
+=== PAUSE TestNodeProcessEnvironmentRuntime
+=== RUN   TestProcessExitOutput
+=== PAUSE TestProcessExitOutput
+=== RUN   TestProcessLargePipeExitPreservesOutput
+=== PAUSE TestProcessLargePipeExitPreservesOutput
+=== RUN   TestProcessExitDrainsStderr
+=== PAUSE TestProcessExitDrainsStderr
+=== RUN   TestProcessExitDoesNotUnwind
+=== PAUSE TestProcessExitDoesNotUnwind
+=== RUN   TestProcessTerminalsAndEnvironment
+=== PAUSE TestProcessTerminalsAndEnvironment
+=== RUN   TestProcessExitArguments
+=== PAUSE TestProcessExitArguments
+=== RUN   TestProcessObjectsDoNotEscape
+=== PAUSE TestProcessObjectsDoNotEscape
+=== RUN   TestProcessMutants
+=== PAUSE TestProcessMutants
+=== CONT  TestNodeProcessDirectoryRuntime
+=== CONT  TestProcessExitDoesNotUnwind
+=== CONT  TestProcessLargePipeExitPreservesOutput
+=== CONT  TestProcessMutants
+=== CONT  TestProcessExitDrainsStderr
+=== RUN   TestProcessMutants/normal_status
+=== PAUSE TestProcessMutants/normal_status
+=== RUN   TestProcessMutants/immediate_status
+=== PAUSE TestProcessMutants/immediate_status
+=== RUN   TestProcessMutants/missing_environment
+=== PAUSE TestProcessMutants/missing_environment
+=== RUN   TestProcessMutants/pipe_tty
+=== PAUSE TestProcessMutants/pipe_tty
+=== RUN   TestProcessMutants/range_validation
+=== PAUSE TestProcessMutants/range_validation
+=== RUN   TestProcessLargePipeExitPreservesOutput/immediate=true
+=== CONT  TestProcessExitOutput
+=== RUN   TestProcessExitOutput/file_immediate
+=== PAUSE TestProcessExitOutput/file_immediate
+=== RUN   TestProcessExitOutput/file_normal
+=== PAUSE TestProcessExitOutput/file_normal
+=== RUN   TestProcessExitOutput/merged_pipe
+=== PAUSE TestProcessExitOutput/merged_pipe
+=== RUN   TestProcessExitOutput/merged_file
+=== PAUSE TestProcessExitOutput/merged_file
+=== RUN   TestProcessExitOutput/large_file
+=== PAUSE TestProcessExitOutput/large_file
+=== CONT  TestProcessExitArguments
+=== RUN   TestProcessExitArguments/argument=
+=== PAUSE TestProcessExitArguments/argument=
+=== RUN   TestProcessExitArguments/argument=undefined
+=== PAUSE TestProcessExitArguments/argument=undefined
+=== RUN   TestProcessExitArguments/argument=0
+=== PAUSE TestProcessExitArguments/argument=0
+=== RUN   TestProcessExitArguments/argument=-1
+=== PAUSE TestProcessExitArguments/argument=-1
+=== RUN   TestProcessExitArguments/argument=256
+=== PAUSE TestProcessExitArguments/argument=256
+=== RUN   TestProcessExitArguments/argument=257
+=== PAUSE TestProcessExitArguments/argument=257
+=== RUN   TestProcessExitArguments/argument=4294967297
+=== PAUSE TestProcessExitArguments/argument=4294967297
+=== RUN   TestProcessExitArguments/argument=9007199254740991
+=== PAUSE TestProcessExitArguments/argument=9007199254740991
+=== CONT  TestProcessObjectsDoNotEscape
+=== RUN   TestProcessObjectsDoNotEscape/process
+=== PAUSE TestProcessObjectsDoNotEscape/process
+=== RUN   TestProcessObjectsDoNotEscape/process.env
+=== PAUSE TestProcessObjectsDoNotEscape/process.env
+=== RUN   TestProcessObjectsDoNotEscape/process.stdout
+=== PAUSE TestProcessObjectsDoNotEscape/process.stdout
+=== RUN   TestProcessObjectsDoNotEscape/process.stderr
+=== PAUSE TestProcessObjectsDoNotEscape/process.stderr
+=== RUN   TestProcessObjectsDoNotEscape/process.exit
+=== PAUSE TestProcessObjectsDoNotEscape/process.exit
+=== CONT  TestNodeProcessEnvironmentRuntime
+=== NAME  TestNodeProcessDirectoryRuntime
+    node_process_directory_test.go:54: gate cache node miss
+=== NAME  TestNodeProcessEnvironmentRuntime
+    node_process_environment_test.go:47: gate cache node miss
+=== NAME  TestNodeProcessDirectoryRuntime
+    oracle_test.go:493: gate cache native miss
+=== NAME  TestNodeProcessEnvironmentRuntime
+    oracle_test.go:493: gate cache native miss
+=== NAME  TestProcessLargePipeExitPreservesOutput/immediate=true
+    process_test.go:168: node shared=false backpressure=true: stdout=4096 stderr=0 exit=37 pipe capacity=4096
+=== NAME  TestProcessExitDoesNotUnwind
+    process_test.go:231: node shared=false backpressure=false: stdout=7 stderr=0 exit=37 pipe capacity=0
+=== NAME  TestProcessExitDrainsStderr
+    process_test.go:215: node shared=false backpressure=true: stdout=0 stderr=4096 exit=37 pipe capacity=4096
+=== NAME  TestProcessExitDoesNotUnwind
+    process_test.go:236: program shared=false backpressure=false: stdout=7 stderr=0 exit=37 pipe capacity=0
+=== RUN   TestNodeProcessEnvironmentRuntime/set
+=== RUN   TestNodeProcessDirectoryRuntime/cache_invalidation
+=== NAME  TestProcessExitDoesNotUnwind
+    process_test.go:236: node shared=false backpressure=false: stdout=7 stderr=0 exit=37 pipe capacity=0
+    process_test.go:256: node shared=false backpressure=false: stdout=7 stderr=0 exit=37 pipe capacity=0
+=== RUN   TestProcessExitDoesNotUnwind/catch_guard
+    process_test.go:272: node shared=false backpressure=false: stdout=56 stderr=0 exit=37 pipe capacity=0
+    process_test.go:276: caught clean JS mutant: "before\nmust not catch\nmust not continue\nmust not return\n" instead of "before\n"
+=== RUN   TestProcessExitDoesNotUnwind/finally_guard
+=== NAME  TestNodeProcessEnvironmentRuntime/set
+    node_process_environment_test.go:75: clean runtime mutant caught by Node stdout comparison
+=== RUN   TestNodeProcessEnvironmentRuntime/delete
+=== NAME  TestProcessExitDoesNotUnwind/finally_guard
+    process_test.go:272: node shared=false backpressure=false: stdout=24 stderr=0 exit=37 pipe capacity=0
+    process_test.go:276: caught clean JS mutant: "before\nmust not finally\n" instead of "before\n"
+=== RUN   TestProcessExitDoesNotUnwind/leave_guard
+=== NAME  TestNodeProcessDirectoryRuntime/cache_invalidation
+    node_process_directory_test.go:86: clean runtime mutant caught by Node stdout comparison
+=== RUN   TestNodeProcessDirectoryRuntime/error_code
+=== NAME  TestProcessExitDoesNotUnwind/leave_guard
+    process_test.go:272: node shared=false backpressure=false: stdout=22 stderr=0 exit=37 pipe capacity=0
+    process_test.go:276: caught clean JS mutant: "before\nmust not leave\n" instead of "before\n"
+--- PASS: TestProcessExitDoesNotUnwind (0.89s)
+    --- PASS: TestProcessExitDoesNotUnwind/catch_guard (0.06s)
+    --- PASS: TestProcessExitDoesNotUnwind/finally_guard (0.06s)
+    --- PASS: TestProcessExitDoesNotUnwind/leave_guard (0.06s)
+=== CONT  TestProcessTerminalsAndEnvironment
+=== NAME  TestNodeProcessEnvironmentRuntime/delete
+    node_process_environment_test.go:75: clean runtime mutant caught by Node stdout comparison
+--- PASS: TestNodeProcessEnvironmentRuntime (1.07s)
+    --- PASS: TestNodeProcessEnvironmentRuntime/set (0.23s)
+    --- PASS: TestNodeProcessEnvironmentRuntime/delete (0.29s)
+=== CONT  TestProcessMutants/normal_status
+=== NAME  TestNodeProcessDirectoryRuntime/error_code
+    node_process_directory_test.go:86: clean runtime mutant caught by Node stdout comparison
+--- PASS: TestNodeProcessDirectoryRuntime (1.09s)
+    --- PASS: TestNodeProcessDirectoryRuntime/cache_invalidation (0.26s)
+    --- PASS: TestNodeProcessDirectoryRuntime/error_code (0.26s)
+=== CONT  TestProcessMutants/pipe_tty
+=== RUN   TestProcessTerminalsAndEnvironment/stdout=false/stderr=false/env=map[]
+=== NAME  TestProcessMutants/pipe_tty
+    process_test.go:396: gate cache node miss
+=== NAME  TestProcessMutants/normal_status
+    process_test.go:396: gate cache node miss
+=== RUN   TestProcessTerminalsAndEnvironment/stdout=false/stderr=false/env=map[ADAMIC_PROCESS_TEST:_NO_COLOR:]
+=== NAME  TestProcessMutants/normal_status
+    process_test.go:399: compiled and ran cleanly; caught only by Node exit codes differ
+=== CONT  TestProcessMutants/missing_environment
+=== NAME  TestProcessMutants/pipe_tty
+    process_test.go:399: compiled and ran cleanly; caught only by Node stdout differs
+=== CONT  TestProcessMutants/immediate_status
+=== NAME  TestProcessLargePipeExitPreservesOutput/immediate=true
+    process_test.go:169: program shared=false backpressure=true: stdout=204800 stderr=0 exit=37 pipe capacity=4096
+=== NAME  TestProcessExitDrainsStderr
+    process_test.go:220: program shared=false backpressure=true: stdout=0 stderr=204800 exit=37 pipe capacity=4096
+=== NAME  TestProcessMutants/immediate_status
+    process_test.go:396: gate cache node miss
+=== NAME  TestProcessMutants/missing_environment
+    process_test.go:396: gate cache node hit
+    process_test.go:399: compiled and ran cleanly; caught only by Node stdout differs
+=== CONT  TestProcessMutants/range_validation
+=== RUN   TestProcessTerminalsAndEnvironment/stdout=false/stderr=false/env=map[ADAMIC_PROCESS_TEST:hé世界_NO_COLOR:1]
+=== NAME  TestProcessMutants/immediate_status
+    process_test.go:399: compiled and ran cleanly; caught only by Node exit codes differ
+=== CONT  TestProcessExitOutput/file_immediate
+=== NAME  TestProcessMutants/range_validation
+    process_test.go:396: gate cache node miss
+    process_test.go:399: compiled and ran cleanly; caught only by Node stdout differs
+--- PASS: TestProcessMutants (0.00s)
+    --- PASS: TestProcessMutants/normal_status (0.32s)
+    --- PASS: TestProcessMutants/pipe_tty (0.30s)
+    --- PASS: TestProcessMutants/missing_environment (0.25s)
+    --- PASS: TestProcessMutants/immediate_status (0.27s)
+    --- PASS: TestProcessMutants/range_validation (0.29s)
+=== CONT  TestProcessExitOutput/merged_file
+=== RUN   TestProcessTerminalsAndEnvironment/stdout=false/stderr=false/env=map[ADAMIC_PROCESS_TEST:line_next_FORCE_COLOR:0]
+=== NAME  TestProcessExitOutput/file_immediate
+    process_test.go:126: node shared=false backpressure=false: stdout=19 stderr=0 exit=37 pipe capacity=0
+    process_test.go:131: program shared=false backpressure=false: stdout=19 stderr=0 exit=37 pipe capacity=0
+    process_test.go:131: node shared=false backpressure=false: stdout=19 stderr=0 exit=37 pipe capacity=0
+=== RUN   TestProcessTerminalsAndEnvironment/stdout=false/stderr=false/env=map[ADAMIC_PROCESS_TEST:value_FORCE_COLOR:3]
+=== NAME  TestProcessExitOutput/merged_file
+    process_test.go:126: node shared=true backpressure=false: stdout=33 stderr=0 exit=37 pipe capacity=0
+    process_test.go:131: program shared=true backpressure=false: stdout=33 stderr=0 exit=37 pipe capacity=0
+    process_test.go:131: node shared=true backpressure=false: stdout=33 stderr=0 exit=37 pipe capacity=0
+=== NAME  TestProcessExitOutput/file_immediate
+    process_test.go:137: program shared=false backpressure=false: stdout=0 stderr=0 exit=37 pipe capacity=0
+    process_test.go:147: mutant compiled and ran cleanly; only Node output bytes caught it
+=== CONT  TestProcessExitOutput/merged_pipe
+=== RUN   TestProcessTerminalsAndEnvironment/stdout=false/stderr=true/env=map[]
+=== NAME  TestProcessLargePipeExitPreservesOutput/immediate=true
+    process_test.go:170: node shared=false backpressure=true: stdout=204800 stderr=0 exit=37 pipe capacity=4096
+    process_test.go:185: NAMED EXCEPTION: raw Node writes 4096 bytes; both Adamic backends preserve all 204800 bytes
+=== NAME  TestProcessExitDrainsStderr
+    process_test.go:220: node shared=false backpressure=true: stdout=0 stderr=204800 exit=37 pipe capacity=4096
+--- PASS: TestProcessExitDrainsStderr (2.59s)
+=== CONT  TestProcessExitOutput/file_normal
+=== NAME  TestProcessLargePipeExitPreservesOutput/immediate=true
+    process_test.go:197: node shared=false backpressure=true: stdout=4096 stderr=0 exit=37 pipe capacity=4096
+    process_test.go:201: JS no-drain mutant runs cleanly with exit 37; caught by missing 200,704 output bytes
+=== RUN   TestProcessLargePipeExitPreservesOutput/immediate=false
+=== NAME  TestProcessExitOutput/merged_file
+    process_test.go:137: program shared=true backpressure=false: stdout=33 stderr=0 exit=37 pipe capacity=0
+    process_test.go:145: Node order "out 0\nerr 0\nout 1\nerr 1\nout last\n"; mutant order "err 0\nerr 1\nout 0\nout 1\nout last\n"
+    process_test.go:147: mutant compiled and ran cleanly; only Node output bytes caught it
+=== CONT  TestProcessExitOutput/large_file
+=== RUN   TestProcessTerminalsAndEnvironment/stdout=false/stderr=true/env=map[ADAMIC_PROCESS_TEST:_NO_COLOR:]
+=== NAME  TestProcessExitOutput/merged_pipe
+    process_test.go:126: node shared=true backpressure=false: stdout=33 stderr=0 exit=37 pipe capacity=65536
+    process_test.go:131: program shared=true backpressure=false: stdout=33 stderr=0 exit=37 pipe capacity=65536
+    process_test.go:131: node shared=true backpressure=false: stdout=33 stderr=0 exit=37 pipe capacity=65536
+=== NAME  TestProcessExitOutput/file_normal
+    process_test.go:126: node shared=false backpressure=false: stdout=21 stderr=0 exit=37 pipe capacity=0
+    process_test.go:131: program shared=false backpressure=false: stdout=21 stderr=0 exit=37 pipe capacity=0
+=== RUN   TestProcessTerminalsAndEnvironment/stdout=false/stderr=true/env=map[ADAMIC_PROCESS_TEST:hé世界_NO_COLOR:1]
+=== NAME  TestProcessExitOutput/large_file
+    process_test.go:126: node shared=false backpressure=false: stdout=204800 stderr=0 exit=37 pipe capacity=0
+=== NAME  TestProcessExitOutput/file_normal
+    process_test.go:131: node shared=false backpressure=false: stdout=21 stderr=0 exit=37 pipe capacity=0
+=== CONT  TestProcessExitArguments/argument=
+=== NAME  TestProcessExitOutput/large_file
+    process_test.go:131: program shared=false backpressure=false: stdout=204800 stderr=0 exit=37 pipe capacity=0
+=== NAME  TestProcessExitArguments/argument=
+    process_test.go:330: gate cache node miss
+=== NAME  TestProcessExitOutput/large_file
+    process_test.go:131: node shared=false backpressure=false: stdout=204800 stderr=0 exit=37 pipe capacity=0
+=== NAME  TestProcessExitArguments/argument=
+    oracle_test.go:486: gate cache native miss
+=== NAME  TestProcessExitOutput/merged_pipe
+    process_test.go:137: program shared=true backpressure=false: stdout=33 stderr=0 exit=37 pipe capacity=65536
+    process_test.go:145: Node order "out 0\nerr 0\nout 1\nerr 1\nout last\n"; mutant order "err 0\nerr 1\nout 0\nout 1\nout last\n"
+    process_test.go:147: mutant compiled and ran cleanly; only Node output bytes caught it
+=== CONT  TestProcessObjectsDoNotEscape/process
+=== CONT  TestProcessExitArguments/argument=9007199254740991
+    process_test.go:330: gate cache node miss
+=== RUN   TestProcessTerminalsAndEnvironment/stdout=false/stderr=true/env=map[ADAMIC_PROCESS_TEST:line_next_FORCE_COLOR:0]
+=== NAME  TestProcessExitArguments/argument=9007199254740991
+    oracle_test.go:486: gate cache native miss
+=== NAME  TestProcessExitArguments/argument=
+    process_test.go:335: gate cache node miss
+=== CONT  TestProcessExitArguments/argument=4294967297
+    process_test.go:330: gate cache node miss
+=== NAME  TestProcessExitOutput/large_file
+    process_test.go:137: program shared=false backpressure=false: stdout=196608 stderr=0 exit=37 pipe capacity=0
+    process_test.go:147: mutant compiled and ran cleanly; only Node output bytes caught it
+--- PASS: TestProcessExitOutput (0.00s)
+    --- PASS: TestProcessExitOutput/file_immediate (0.75s)
+    --- PASS: TestProcessExitOutput/merged_file (0.73s)
+    --- PASS: TestProcessExitOutput/file_normal (0.54s)
+    --- PASS: TestProcessExitOutput/merged_pipe (0.86s)
+    --- PASS: TestProcessExitOutput/large_file (0.91s)
+=== CONT  TestProcessExitArguments/argument=257
+=== NAME  TestProcessExitArguments/argument=9007199254740991
+    process_test.go:335: gate cache node miss
+=== NAME  TestProcessExitArguments/argument=257
+    process_test.go:330: gate cache node miss
+=== NAME  TestProcessExitArguments/argument=4294967297
+    oracle_test.go:486: gate cache native miss
+=== CONT  TestProcessExitArguments/argument=256
+    process_test.go:330: gate cache node miss
+=== RUN   TestProcessTerminalsAndEnvironment/stdout=false/stderr=true/env=map[ADAMIC_PROCESS_TEST:value_FORCE_COLOR:3]
+=== NAME  TestProcessExitArguments/argument=257
+    oracle_test.go:486: gate cache native miss
+=== NAME  TestProcessExitArguments/argument=256
+    oracle_test.go:486: gate cache native miss
+=== NAME  TestProcessExitArguments/argument=4294967297
+    process_test.go:335: gate cache node miss
+=== CONT  TestProcessExitArguments/argument=-1
+=== NAME  TestProcessExitArguments/argument=257
+    process_test.go:335: gate cache node miss
+=== NAME  TestProcessExitArguments/argument=-1
+    process_test.go:330: gate cache node miss
+=== CONT  TestProcessExitArguments/argument=0
+=== NAME  TestProcessExitArguments/argument=-1
+    oracle_test.go:486: gate cache native miss
+=== NAME  TestProcessExitArguments/argument=256
+    process_test.go:335: gate cache node miss
+=== NAME  TestProcessLargePipeExitPreservesOutput/immediate=false
+    process_test.go:168: node shared=false backpressure=true: stdout=204800 stderr=0 exit=37 pipe capacity=4096
+=== NAME  TestProcessExitArguments/argument=0
+    process_test.go:330: gate cache node miss
+=== RUN   TestProcessTerminalsAndEnvironment/stdout=true/stderr=false/env=map[]
+=== CONT  TestProcessExitArguments/argument=undefined
+    process_test.go:330: gate cache node miss
+=== NAME  TestProcessExitArguments/argument=0
+    oracle_test.go:486: gate cache native miss
+=== NAME  TestProcessExitArguments/argument=undefined
+    oracle_test.go:486: gate cache native miss
+=== NAME  TestProcessExitArguments/argument=-1
+    process_test.go:335: gate cache node miss
+=== CONT  TestProcessObjectsDoNotEscape/process.stderr
+=== CONT  TestProcessObjectsDoNotEscape/process.exit
+=== NAME  TestProcessExitArguments/argument=0
+    process_test.go:335: gate cache node miss
+=== RUN   TestProcessTerminalsAndEnvironment/stdout=true/stderr=false/env=map[ADAMIC_PROCESS_TEST:_NO_COLOR:]
+=== CONT  TestProcessObjectsDoNotEscape/process.stdout
+=== CONT  TestProcessObjectsDoNotEscape/process.env
+=== NAME  TestProcessExitArguments/argument=undefined
+    process_test.go:335: gate cache node miss
+--- PASS: TestProcessObjectsDoNotEscape (0.00s)
+    --- PASS: TestProcessObjectsDoNotEscape/process (0.05s)
+    --- PASS: TestProcessObjectsDoNotEscape/process.stderr (0.06s)
+    --- PASS: TestProcessObjectsDoNotEscape/process.exit (0.04s)
+    --- PASS: TestProcessObjectsDoNotEscape/process.stdout (0.06s)
+    --- PASS: TestProcessObjectsDoNotEscape/process.env (0.06s)
+--- PASS: TestProcessExitArguments (0.00s)
+    --- PASS: TestProcessExitArguments/argument= (0.36s)
+    --- PASS: TestProcessExitArguments/argument=9007199254740991 (0.32s)
+    --- PASS: TestProcessExitArguments/argument=4294967297 (0.36s)
+    --- PASS: TestProcessExitArguments/argument=257 (0.35s)
+    --- PASS: TestProcessExitArguments/argument=256 (0.37s)
+    --- PASS: TestProcessExitArguments/argument=-1 (0.32s)
+    --- PASS: TestProcessExitArguments/argument=0 (0.36s)
+    --- PASS: TestProcessExitArguments/argument=undefined (0.34s)
+=== RUN   TestProcessTerminalsAndEnvironment/stdout=true/stderr=false/env=map[ADAMIC_PROCESS_TEST:hé世界_NO_COLOR:1]
+=== RUN   TestProcessTerminalsAndEnvironment/stdout=true/stderr=false/env=map[ADAMIC_PROCESS_TEST:line_next_FORCE_COLOR:0]
+=== NAME  TestProcessLargePipeExitPreservesOutput/immediate=false
+    process_test.go:169: program shared=false backpressure=true: stdout=204800 stderr=0 exit=37 pipe capacity=4096
+=== RUN   TestProcessTerminalsAndEnvironment/stdout=true/stderr=false/env=map[ADAMIC_PROCESS_TEST:value_FORCE_COLOR:3]
+=== RUN   TestProcessTerminalsAndEnvironment/stdout=true/stderr=true/env=map[]
+=== RUN   TestProcessTerminalsAndEnvironment/stdout=true/stderr=true/env=map[ADAMIC_PROCESS_TEST:_NO_COLOR:]
+=== RUN   TestProcessTerminalsAndEnvironment/stdout=true/stderr=true/env=map[ADAMIC_PROCESS_TEST:hé世界_NO_COLOR:1]
+=== NAME  TestProcessLargePipeExitPreservesOutput/immediate=false
+    process_test.go:170: node shared=false backpressure=true: stdout=204800 stderr=0 exit=37 pipe capacity=4096
+--- PASS: TestProcessLargePipeExitPreservesOutput (6.06s)
+    --- PASS: TestProcessLargePipeExitPreservesOutput/immediate=true (2.64s)
+    --- PASS: TestProcessLargePipeExitPreservesOutput/immediate=false (3.42s)
+=== RUN   TestProcessTerminalsAndEnvironment/stdout=true/stderr=true/env=map[ADAMIC_PROCESS_TEST:line_next_FORCE_COLOR:0]
+=== RUN   TestProcessTerminalsAndEnvironment/stdout=true/stderr=true/env=map[ADAMIC_PROCESS_TEST:value_FORCE_COLOR:3]
+--- PASS: TestProcessTerminalsAndEnvironment (5.74s)
+    --- PASS: TestProcessTerminalsAndEnvironment/stdout=false/stderr=false/env=map[] (0.20s)
+    --- PASS: TestProcessTerminalsAndEnvironment/stdout=false/stderr=false/env=map[ADAMIC_PROCESS_TEST:_NO_COLOR:] (0.32s)
+    --- PASS: TestProcessTerminalsAndEnvironment/stdout=false/stderr=false/env=map[ADAMIC_PROCESS_TEST:hé世界_NO_COLOR:1] (0.28s)
+    --- PASS: TestProcessTerminalsAndEnvironment/stdout=false/stderr=false/env=map[ADAMIC_PROCESS_TEST:line_next_FORCE_COLOR:0] (0.25s)
+    --- PASS: TestProcessTerminalsAndEnvironment/stdout=false/stderr=false/env=map[ADAMIC_PROCESS_TEST:value_FORCE_COLOR:3] (0.24s)
+    --- PASS: TestProcessTerminalsAndEnvironment/stdout=false/stderr=true/env=map[] (0.31s)
+    --- PASS: TestProcessTerminalsAndEnvironment/stdout=false/stderr=true/env=map[ADAMIC_PROCESS_TEST:_NO_COLOR:] (0.32s)
+    --- PASS: TestProcessTerminalsAndEnvironment/stdout=false/stderr=true/env=map[ADAMIC_PROCESS_TEST:hé世界_NO_COLOR:1] (0.29s)
+    --- PASS: TestProcessTerminalsAndEnvironment/stdout=false/stderr=true/env=map[ADAMIC_PROCESS_TEST:line_next_FORCE_COLOR:0] (0.32s)
+    --- PASS: TestProcessTerminalsAndEnvironment/stdout=false/stderr=true/env=map[ADAMIC_PROCESS_TEST:value_FORCE_COLOR:3] (0.31s)
+    --- PASS: TestProcessTerminalsAndEnvironment/stdout=true/stderr=false/env=map[] (0.26s)
+    --- PASS: TestProcessTerminalsAndEnvironment/stdout=true/stderr=false/env=map[ADAMIC_PROCESS_TEST:_NO_COLOR:] (0.28s)
+    --- PASS: TestProcessTerminalsAndEnvironment/stdout=true/stderr=false/env=map[ADAMIC_PROCESS_TEST:hé世界_NO_COLOR:1] (0.28s)
+    --- PASS: TestProcessTerminalsAndEnvironment/stdout=true/stderr=false/env=map[ADAMIC_PROCESS_TEST:line_next_FORCE_COLOR:0] (0.27s)
+    --- PASS: TestProcessTerminalsAndEnvironment/stdout=true/stderr=false/env=map[ADAMIC_PROCESS_TEST:value_FORCE_COLOR:3] (0.29s)
+    --- PASS: TestProcessTerminalsAndEnvironment/stdout=true/stderr=true/env=map[] (0.22s)
+    --- PASS: TestProcessTerminalsAndEnvironment/stdout=true/stderr=true/env=map[ADAMIC_PROCESS_TEST:_NO_COLOR:] (0.22s)
+    --- PASS: TestProcessTerminalsAndEnvironment/stdout=true/stderr=true/env=map[ADAMIC_PROCESS_TEST:hé世界_NO_COLOR:1] (0.27s)
+    --- PASS: TestProcessTerminalsAndEnvironment/stdout=true/stderr=true/env=map[ADAMIC_PROCESS_TEST:line_next_FORCE_COLOR:0] (0.29s)
+    --- PASS: TestProcessTerminalsAndEnvironment/stdout=true/stderr=true/env=map[ADAMIC_PROCESS_TEST:value_FORCE_COLOR:3] (0.25s)
+PASS
+gate cache: native hits=0 misses=10
+gate cache: node hits=1 misses=22
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	6.642s

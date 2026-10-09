@@ -100,6 +100,32 @@ func TestSplitTokensDoNotRewriteLiterals(t *testing.T) {
 	}
 }
 
+// Regexp's compiled programs carry an alignment attribute after their name. Two of them in one
+// program used to both be named __attribute__ and fail the split as duplicate definitions.
+func TestSplitNamesAttributedDeclarations(t *testing.T) {
+	t.Parallel()
+	source := "#include \"adamic.h\"\nstatic const int adamic_a __attribute__((aligned(64))) = 1;\nstatic const int adamic_b __attribute__((aligned(64))) = 2;\nint main(void) { return adamic_a + adamic_b - 3; }\n"
+	header, units, err := splitC(source)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, name := range []string{"adamic_unit_adamic_a", "adamic_unit_adamic_b"} {
+		if !strings.Contains(header, "extern const int "+name+" __attribute__((aligned(64)));") {
+			t.Fatalf("%s not declared with its attribute:\n%s", name, header)
+		}
+	}
+	var all strings.Builder
+	for _, unit := range units {
+		all.WriteString(unit.source)
+	}
+	if strings.Contains(header+all.String(), "adamic_unit___attribute__") {
+		t.Fatal("an attribute was taken for a name")
+	}
+	if !strings.Contains(all.String(), "return adamic_unit_adamic_a + adamic_unit_adamic_b - 3;") {
+		t.Fatalf("references not rewritten:\n%s", all.String())
+	}
+}
+
 // Not parallel: this check deliberately mutates a header between cache lookups.
 func TestUnitSystemHeaderProvenance(t *testing.T) {
 	compiler, err := exec.LookPath("clang")

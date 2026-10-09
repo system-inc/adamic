@@ -1,0 +1,5 @@
+--- FAIL: TestNodeFSFileQualifiedErrorType (5.74s)
+    library_node_fs_file_test.go:67: /tmp/adamic-gate/TestNodeFSFileQualifiedErrorType723258666/001/main.a:1:81: Adamic 0.1 refuses an unproven relation from Error to ErrnoException: optional field errno has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	32.896s
+FAIL
