@@ -1,0 +1,38 @@
+[
+  {
+    "test": "TestClosedConditionalEmptyArrayGap",
+    "status": 0,
+    "wall": 17.398117385999285,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s -coverpkg=./internal/load,./internal/lower,./internal/native,./internal/javascript -coverprofile=/tmp/defend-parser/TestClosedConditionalEmptyArrayGap.cover ./stage1/typescript/parser/ -run ^TestClosedConditionalEmptyArrayGap$"
+  },
+  {
+    "test": "TestPushSpreadGap",
+    "status": 0,
+    "wall": 2.4757921590007754,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s -coverpkg=./internal/load,./internal/lower,./internal/native,./internal/javascript -coverprofile=/tmp/defend-parser/TestPushSpreadGap.cover ./stage1/typescript/parser/ -run ^TestPushSpreadGap$"
+  },
+  {
+    "test": "TestTypeOnlyImportCycleCompiles",
+    "status": 0,
+    "wall": 2.273069064000083,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s -coverpkg=./internal/load,./internal/lower,./internal/native,./internal/javascript -coverprofile=/tmp/defend-parser/TestTypeOnlyImportCycleCompiles.cover ./stage1/typescript/parser/ -run ^TestTypeOnlyImportCycleCompiles$"
+  },
+  {
+    "test": "TestClosedOptionalFunctionValueGap",
+    "status": 0,
+    "wall": 2.32973776200015,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s -coverpkg=./internal/load,./internal/lower,./internal/native,./internal/javascript -coverprofile=/tmp/defend-parser/TestClosedOptionalFunctionValueGap.cover ./stage1/typescript/parser/ -run ^TestClosedOptionalFunctionValueGap$"
+  },
+  {
+    "test": "TestGeneratedExpressionsAgree",
+    "status": 0,
+    "wall": 18.82622410299882,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s -coverpkg=./internal/load,./internal/lower,./internal/native,./internal/javascript -coverprofile=/tmp/defend-parser/TestGeneratedExpressionsAgree.cover ./stage1/typescript/parser/ -run ^TestGeneratedExpressionsAgree$"
+  },
+  {
+    "test": "TestCompilerExpressionsAgree",
+    "status": 0,
+    "wall": 34.751606548999916,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s -coverpkg=./internal/load,./internal/lower,./internal/native,./internal/javascript -coverprofile=/tmp/defend-parser/TestCompilerExpressionsAgree.cover ./stage1/typescript/parser/ -run ^TestCompilerExpressionsAgree(Union|_[0-9]{3})$"
+  }
+]

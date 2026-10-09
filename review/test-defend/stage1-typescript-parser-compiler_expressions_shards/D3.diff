@@ -1,0 +1,11 @@
+--- a/stage1/typescript/parser/parser.ts
++++ b/stage1/typescript/parser/parser.ts
+@@ -104,7 +104,7 @@
+             case 'PrivateIdentifier': {
+                 const id = this.identifier();
+                 const old = this.node(id);
+-                this.nodes[id] = new ParseNode('PrivateIdentifier', old.pos, old.end, []);
++                this.nodes[id] = new ParseNode('Identifier', old.pos, old.end, []);
+                 this.node(id).text = old.text;
+                 return id;
+             }

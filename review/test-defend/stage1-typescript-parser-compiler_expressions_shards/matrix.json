@@ -1,0 +1,1053 @@
+{
+  "D1-vet.log": {
+    "events": [],
+    "failures": []
+  },
+  "D1.log": {
+    "events": [
+      {
+        "Action": "pass",
+        "Test": "TestClosedOptionalFunctionValueGap",
+        "Elapsed": 0.36
+      },
+      {
+        "Action": "fail",
+        "Test": "TestClosedConditionalEmptyArrayGap",
+        "Elapsed": 0.36
+      },
+      {
+        "Action": "fail",
+        "Elapsed": 0.73
+      }
+    ],
+    "failures": [
+      "gaps_test.go:178: JavaScript backend: \"0\\n\", Node \"1\\n\""
+    ]
+  },
+  "D2-TestClassMethodInterfaceGap.log": {
+    "events": [
+      {
+        "Action": "pass",
+        "Test": "TestClassMethodInterfaceGap",
+        "Elapsed": 0.15
+      },
+      {
+        "Action": "pass",
+        "Elapsed": 0.158
+      }
+    ],
+    "failures": []
+  },
+  "D2-TestClosedConditionalEmptyArrayGap.log": {
+    "events": [
+      {
+        "Action": "pass",
+        "Test": "TestClosedConditionalEmptyArrayGap",
+        "Elapsed": 0.46
+      },
+      {
+        "Action": "pass",
+        "Elapsed": 0.476
+      }
+    ],
+    "failures": []
+  },
+  "D2-TestClosedOptionalFunctionValueGap.log": {
+    "events": [
+      {
+        "Action": "pass",
+        "Test": "TestClosedOptionalFunctionValueGap",
+        "Elapsed": 0.42
+      },
+      {
+        "Action": "pass",
+        "Elapsed": 0.429
+      }
+    ],
+    "failures": []
+  },
+  "D2-TestPushSpreadGap.log": {
+    "events": [
+      {
+        "Action": "pass",
+        "Test": "TestPushSpreadGap",
+        "Elapsed": 0.11
+      },
+      {
+        "Action": "pass",
+        "Elapsed": 0.117
+      }
+    ],
+    "failures": []
+  },
+  "D2-TestStrongAstParentGap.log": {
+    "events": [
+      {
+        "Action": "pass",
+        "Test": "TestStrongAstParentGap",
+        "Elapsed": 0.13
+      },
+      {
+        "Action": "pass",
+        "Elapsed": 0.145
+      }
+    ],
+    "failures": []
+  },
+  "D2-TestTypeOnlyImportCycleCompiles.log": {
+    "events": [
+      {
+        "Action": "fail",
+        "Test": "TestTypeOnlyImportCycleCompiles",
+        "Elapsed": 0.13
+      },
+      {
+        "Action": "fail",
+        "Elapsed": 0.139
+      }
+    ],
+    "failures": [
+      "panic: runtime error: invalid memory address or nil pointer dereference [recovered, repanicked]"
+    ]
+  },
+  "D2-control-build.log": {
+    "events": [],
+    "failures": []
+  },
+  "D2-port-build.log": {
+    "events": [],
+    "failures": []
+  },
+  "D2-vet.log": {
+    "events": [],
+    "failures": []
+  },
+  "D2.log": {
+    "events": [
+      {
+        "Action": "fail",
+        "Test": "TestTypeOnlyImportCycleCompiles",
+        "Elapsed": 0.13
+      },
+      {
+        "Action": "fail",
+        "Elapsed": 0.149
+      }
+    ],
+    "failures": [
+      "panic: runtime error: invalid memory address or nil pointer dereference [recovered, repanicked]"
+    ]
+  },
+  "D3-group0.log": {
+    "events": [
+      {
+        "Action": "pass",
+        "Test": "TestClosedOptionalFunctionValueGap",
+        "Elapsed": 0.3
+      },
+      {
+        "Action": "pass",
+        "Test": "TestClosedConditionalEmptyArrayGap",
+        "Elapsed": 0.3
+      },
+      {
+        "Action": "pass",
+        "Test": "TestCompilerExpressionsAgree_Setup",
+        "Elapsed": 17.94
+      },
+      {
+        "Action": "pass",
+        "Test": "TestCompilerExpressionsAgreeUnion",
+        "Elapsed": 0
+      },
+      {
+        "Action": "pass",
+        "Test": "TestClassMethodInterfaceGap",
+        "Elapsed": 0.16
+      },
+      {
+        "Action": "pass",
+        "Test": "TestStrongAstParentGap",
+        "Elapsed": 0.2
+      },
+      {
+        "Action": "pass",
+        "Test": "TestPushSpreadGap",
+        "Elapsed": 0.33
+      },
+      {
+        "Action": "pass",
+        "Test": "TestCompilerExpressionsAgree_013",
+        "Elapsed": 0.97
+      },
+      {
+        "Action": "pass",
+        "Test": "TestCompilerExpressionsAgree_012",
+        "Elapsed": 1.47
+      },
+      {
+        "Action": "pass",
+        "Test": "TestCompilerExpressionsAgree_011",
+        "Elapsed": 1.53
+      },
+      {
+        "Action": "fail",
+        "Test": "TestGeneratedExpressionsAgree",
+        "Elapsed": 2.58
+      },
+      {
+        "Action": "pass",
+        "Test": "TestCompilerExpressionsAgree_010",
+        "Elapsed": 2.84
+      },
+      {
+        "Action": "pass",
+        "Test": "TestCompilerExpressionsAgree_009",
+        "Elapsed": 0.89
+      },
+      {
+        "Action": "pass",
+        "Test": "TestCompilerExpressionsAgree_008",
+        "Elapsed": 0.88
+      },
+      {
+        "Action": "pass",
+        "Test": "TestCompilerExpressionsAgree_007",
+        "Elapsed": 1.18
+      },
+      {
+        "Action": "pass",
+        "Test": "TestCompilerExpressionsAgree_004",
+        "Elapsed": 2.09
+      },
+      {
+        "Action": "pass",
+        "Test": "TestCompilerExpressionsAgree_005",
+        "Elapsed": 1.14
+      },
+      {
+        "Action": "pass",
+        "Test": "TestCompilerExpressionsAgree_006",
+        "Elapsed": 1.4
+      },
+      {
+        "Action": "pass",
+        "Test": "TestCompilerExpressionsAgree_003",
+        "Elapsed": 0.51
+      },
+      {
+        "Action": "pass",
+        "Test": "TestCompilerExpressionsAgree_002",
+        "Elapsed": 0.37
+      },
+      {
+        "Action": "pass",
+        "Test": "TestCompilerExpressionsAgree_014",
+        "Elapsed": 1.16
+      },
+      {
+        "Action": "pass",
+        "Test": "TestTypeOnlyImportCycleCompiles",
+        "Elapsed": 0.55
+      },
+      {
+        "Action": "pass",
+        "Test": "TestCompilerExpressionsAgree_001",
+        "Elapsed": 2.26
+      },
+      {
+        "Action": "pass",
+        "Test": "TestCompilerExpressionsAgree_000",
+        "Elapsed": 2.31
+      },
+      {
+        "Action": "pass",
+        "Test": "TestCompilerExpressionsAgree_015",
+        "Elapsed": 7.42
+      },
+      {
+        "Action": "fail",
+        "Elapsed": 26.189
+      }
+    ],
+    "failures": [
+      "generated_test.go:126: Node: case 5 line 115: port \"2 Identifier 33 36 0 0 -1 0 0\\t\\t#x\\t\", Go \"2 PrivateIdentifier 33 36 0 0 -1 0 0\\t\\t#x\\t\""
+    ]
+  },
+  "D3-group1.log": {
+    "events": [
+      {
+        "Action": "pass",
+        "Test": "TestProduct_ExpressionsSource001",
+        "Elapsed": 0
+      },
+      {
+        "Action": "pass",
+        "Test": "TestProduct_ExpressionsSource003",
+        "Elapsed": 0
+      },
+      {
+        "Action": "pass",
+        "Test": "TestProduct_ExpressionsSource002",
+        "Elapsed": 0
+      },
+      {
+        "Action": "pass",
+        "Test": "TestProduct_ExpressionsOracle",
+        "Elapsed": 0.45
+      },
+      {
+        "Action": "pass",
+        "Test": "TestProduct_CompilerExpressionsNative",
+        "Elapsed": 2.68
+      },
+      {
+        "Action": "pass",
+        "Test": "TestProduct_CompilerExpressionsLower",
+        "Elapsed": 1.24
+      },
+      {
+        "Action": "pass",
+        "Test": "TestProduct_ParserOracle",
+        "Elapsed": 0.28
+      },
+      {
+        "Action": "pass",
+        "Test": "TestProduct_ExpressionsLower000",
+        "Elapsed": 7.15
+      },
+      {
+        "Action": "pass",
+        "Test": "TestProduct_ExpressionsLower002",
+        "Elapsed": 7.21
+      },
+      {
+        "Action": "pass",
+        "Test": "TestProduct_ExpressionsLower001",
+        "Elapsed": 2.61
+      },
+      {
+        "Action": "pass",
+        "Test": "TestProduct_ExpressionsLower003",
+        "Elapsed": 7.09
+      },
+      {
+        "Action": "pass",
+        "Test": "TestProduct_ExpressionsNative001",
+        "Elapsed": 18.05
+      },
+      {
+        "Action": "pass",
+        "Test": "TestProduct_ExpressionsNative002",
+        "Elapsed": 11.15
+      },
+      {
+        "Action": "pass",
+        "Test": "TestProduct_ExpressionsNative000",
+        "Elapsed": 4.21
+      },
+      {
+        "Action": "pass",
+        "Test": "TestProduct_ExpressionsNative003",
+        "Elapsed": 17.85
+      },
+      {
+        "Action": "pass",
+        "Test": "TestExpressionsAgree",
+        "Elapsed": 25.81
+      },
+      {
+        "Action": "pass",
+        "Elapsed": 25.822
+      }
+    ],
+    "failures": []
+  },
+  "D3-group2.log": {
+    "events": [
+      {
+        "Action": "pass",
+        "Test": "TestJsxMemberNameRejection",
+        "Elapsed": 31.05
+      },
+      {
+        "Action": "pass",
+        "Test": "TestJsxNameBoundaryRejections/private_name_accepted",
+        "Elapsed": 17.9
+      },
+      {
+        "Action": "pass",
+        "Test": "TestJsxNameBoundaryRejections/escaped_name_accepted",
+        "Elapsed": 16.49
+      },
+      {
+        "Action": "pass",
+        "Test": "TestJsxNameBoundaryRejections",
+        "Elapsed": 52.44
+      },
+      {
+        "Action": "fail",
+        "Elapsed": 90.017
+      }
+    ],
+    "failures": [
+      "jsx_rejection_test.go:57: Go rejects with diagnostic 1003; Node/native reject identically: adamic: panic: JSX expected name at 21 in /tmp/adamic-gate/TestJsxMemberNameRejection3691572062/001/dashed-member.tsx",
+      "panic: test timed out after 1m30s"
+    ]
+  },
+  "D3-group3.log": {
+    "events": [
+      {
+        "Action": "skip",
+        "Test": "TestPerformance",
+        "Elapsed": 0
+      },
+      {
+        "Action": "skip",
+        "Test": "TestWholePerformance",
+        "Elapsed": 0
+      },
+      {
+        "Action": "pass",
+        "Test": "TestWholeCountCheckCatchesMutant",
+        "Elapsed": 16.25
+      },
+      {
+        "Action": "pass",
+        "Test": "TestProduct_WholeMutantsLower_001",
+        "Elapsed": 7.56
+      },
+      {
+        "Action": "pass",
+        "Test": "TestProduct_WholeMutantsLower_002",
+        "Elapsed": 7.94
+      },
+      {
+        "Action": "pass",
+        "Test": "TestProduct_WholeMutantsNative_001",
+        "Elapsed": 15.71
+      },
+      {
+        "Action": "pass",
+        "Test": "TestProduct_WholeMutantsNative_002",
+        "Elapsed": 23.7
+      },
+      {
+        "Action": "pass",
+        "Test": "TestEveryTypeNodeKindAgrees",
+        "Elapsed": 23.97
+      },
+      {
+        "Action": "pass",
+        "Test": "TestWholeMutants_002",
+        "Elapsed": 27.43
+      },
+      {
+        "Action": "pass",
+        "Test": "TestWholeMutantsUnion",
+        "Elapsed": 0
+      },
+      {
+        "Action": "pass",
+        "Test": "TestWholeMutantsRejectsSurvivor",
+        "Elapsed": 11.59
+      },
+      {
+        "Action": "pass",
+        "Test": "TestProduct_WholeMutantsLower_000",
+        "Elapsed": 0.53
+      },
+      {
+        "Action": "pass",
+        "Test": "TestProduct_WholeMutantsNative_000",
+        "Elapsed": 0.89
+      },
+      {
+        "Action": "pass",
+        "Test": "TestProduct_WholeMutantsNative_Control",
+        "Elapsed": 1
+      },
+      {
+        "Action": "pass",
+        "Test": "TestWholeMutants_000",
+        "Elapsed": 0.61
+      },
+      {
+        "Action": "pass",
+        "Test": "TestWholeMutants_Setup",
+        "Elapsed": 0
+      },
+      {
+        "Action": "pass",
+        "Test": "TestWholeMutants_001",
+        "Elapsed": 0.66
+      },
+      {
+        "Action": "pass",
+        "Test": "TestProduct_WholeMutantsLower_Control",
+        "Elapsed": 0.41
+      },
+      {
+        "Action": "fail",
+        "Test": "TestWholeGeneratedAgrees",
+        "Elapsed": 1.5
+      },
+      {
+        "Action": "pass",
+        "Test": "TestNodeCountCheckCatchesMutant",
+        "Elapsed": 44.74
+      },
+      {
+        "Action": "pass",
+        "Test": "TestYieldLookaheadAgrees",
+        "Elapsed": 22.03
+      },
+      {
+        "Action": "pass",
+        "Test": "TestObsoleteImportAttributesAgrees",
+        "Elapsed": 19.59
+      },
+      {
+        "Action": "pass",
+        "Test": "TestWholeCompilerAgrees",
+        "Elapsed": 38.3
+      },
+      {
+        "Action": "fail",
+        "Elapsed": 78.275
+      }
+    ],
+    "failures": [
+      "whole_generated_test.go:66: Node: case 14 line 483: port \"3 Identifier 105 108 0 0 -1 0 0\\t\\t#z\\t\\t\", Go \"3 PrivateIdentifier 105 108 0 0 -1 0 0\\t\\t#z\\t\\t\""
+    ]
+  },
+  "D3-native-build.log": {
+    "events": [],
+    "failures": []
+  },
+  "D3-rerun0.log": {
+    "events": [
+      {
+        "Action": "pass",
+        "Test": "TestJsxNative",
+        "Elapsed": 24.96
+      },
+      {
+        "Action": "pass",
+        "Test": "TestProduct_JsxMutantsLower_002",
+        "Elapsed": 11.61
+      },
+      {
+        "Action": "pass",
+        "Test": "TestProduct_JsxMutantsLower_005",
+        "Elapsed": 0.01
+      },
+      {
+        "Action": "pass",
+        "Test": "TestProduct_JsxMutantsLower_006",
+        "Elapsed": 11.67
+      },
+      {
+        "Action": "pass",
+        "Test": "TestProduct_JsxMutantsLower_008",
+        "Elapsed": 12.24
+      },
+      {
+        "Action": "pass",
+        "Test": "TestProduct_JsxMutantsLower_004",
+        "Elapsed": 8.59
+      },
+      {
+        "Action": "pass",
+        "Test": "TestProduct_JsxMutantsLower_003",
+        "Elapsed": 0.78
+      },
+      {
+        "Action": "pass",
+        "Test": "TestProduct_JsxMutantsNative_005",
+        "Elapsed": 24.53
+      },
+      {
+        "Action": "pass",
+        "Test": "TestJsxNode",
+        "Elapsed": 1.33
+      },
+      {
+        "Action": "fail",
+        "Test": "TestWholeGeneratedAgrees",
+        "Elapsed": 1.56
+      },
+      {
+        "Action": "pass",
+        "Test": "TestProduct_JsxMutantsNative_004",
+        "Elapsed": 24.98
+      },
+      {
+        "Action": "pass",
+        "Test": "TestProduct_JsxMutantsNative_003",
+        "Elapsed": 25.41
+      },
+      {
+        "Action": "pass",
+        "Test": "TestProduct_JsxMutantsNative_002",
+        "Elapsed": 16.63
+      },
+      {
+        "Action": "pass",
+        "Test": "TestJsxMutantsUnion",
+        "Elapsed": 0.01
+      },
+      {
+        "Action": "pass",
+        "Test": "TestProduct_JsxMutantsLower_007",
+        "Elapsed": 12.04
+      },
+      {
+        "Action": "pass",
+        "Test": "TestProduct_JsxMutantsLower_001",
+        "Elapsed": 7.89
+      },
+      {
+        "Action": "pass",
+        "Test": "TestProduct_JsxMutantsNative_008",
+        "Elapsed": 14.13
+      },
+      {
+        "Action": "pass",
+        "Test": "TestProduct_JsxMutantsLower_000",
+        "Elapsed": 0
+      },
+      {
+        "Action": "pass",
+        "Test": "TestProduct_JsxMutantsNative_Control",
+        "Elapsed": 0
+      },
+      {
+        "Action": "pass",
+        "Test": "TestProduct_JsxMutantsLower_Control",
+        "Elapsed": 0
+      },
+      {
+        "Action": "pass",
+        "Test": "TestProduct_JsxMutantsNative_007",
+        "Elapsed": 17.18
+      },
+      {
+        "Action": "pass",
+        "Test": "TestProduct_JsxMutantsNative_000",
+        "Elapsed": 6.67
+      },
+      {
+        "Action": "pass",
+        "Test": "TestProduct_JsxMutantsNative_001",
+        "Elapsed": 24.83
+      },
+      {
+        "Action": "fail",
+        "Elapsed": 90.015
+      }
+    ],
+    "failures": [
+      "whole_generated_test.go:66: Node: case 14 line 483: port \"3 Identifier 105 108 0 0 -1 0 0\\t\\t#z\\t\\t\", Go \"3 PrivateIdentifier 105 108 0 0 -1 0 0\\t\\t#z\\t\\t\"",
+      "panic: test timed out after 1m30s"
+    ]
+  },
+  "D3-rerun1.log": {
+    "events": [
+      {
+        "Action": "pass",
+        "Test": "TestJsxScannerMutants/raw_attribute_value",
+        "Elapsed": 16.66
+      },
+      {
+        "Action": "pass",
+        "Test": "TestJsxScannerMutants/JSX_name_payload",
+        "Elapsed": 15.85
+      },
+      {
+        "Action": "pass",
+        "Test": "TestJsxScannerMutants",
+        "Elapsed": 48.51
+      },
+      {
+        "Action": "pass",
+        "Elapsed": 48.523
+      }
+    ],
+    "failures": []
+  },
+  "D4-0.log": {
+    "events": [],
+    "failures": []
+  },
+  "D4-1.log": {
+    "events": [
+      {
+        "Action": "pass",
+        "Test": "TestCompilerExpressionsAgreeUnion",
+        "Elapsed": 0
+      },
+      {
+        "Action": "pass",
+        "Test": "TestCompilerExpressionsAgree_002",
+        "Elapsed": 18.47
+      },
+      {
+        "Action": "pass",
+        "Test": "TestCompilerExpressionsAgree_003",
+        "Elapsed": 18.77
+      },
+      {
+        "Action": "pass",
+        "Test": "TestCompilerExpressionsAgree_005",
+        "Elapsed": 19.06
+      },
+      {
+        "Action": "pass",
+        "Test": "TestCompilerExpressionsAgree_011",
+        "Elapsed": 19.23
+      },
+      {
+        "Action": "pass",
+        "Test": "TestCompilerExpressionsAgree_004",
+        "Elapsed": 20.1
+      },
+      {
+        "Action": "pass",
+        "Test": "TestCompilerExpressionsAgree_009",
+        "Elapsed": 1.07
+      },
+      {
+        "Action": "pass",
+        "Test": "TestCompilerExpressionsAgree_001",
+        "Elapsed": 2.13
+      },
+      {
+        "Action": "pass",
+        "Test": "TestCompilerExpressionsAgree_008",
+        "Elapsed": 1
+      },
+      {
+        "Action": "pass",
+        "Test": "TestCompilerExpressionsAgree_007",
+        "Elapsed": 1.07
+      },
+      {
+        "Action": "pass",
+        "Test": "TestCompilerExpressionsAgree_000",
+        "Elapsed": 2.7
+      },
+      {
+        "Action": "pass",
+        "Test": "TestCompilerExpressionsAgree_010",
+        "Elapsed": 2.5
+      },
+      {
+        "Action": "pass",
+        "Test": "TestCompilerExpressionsAgree_006",
+        "Elapsed": 1.02
+      },
+      {
+        "Action": "pass",
+        "Test": "TestWholeGeneratedAgrees",
+        "Elapsed": 25.46
+      },
+      {
+        "Action": "pass",
+        "Test": "TestYieldLookaheadAgrees",
+        "Elapsed": 25.89
+      },
+      {
+        "Action": "pass",
+        "Test": "TestEveryTypeNodeKindAgrees",
+        "Elapsed": 26.08
+      },
+      {
+        "Action": "pass",
+        "Test": "TestCompilerExpressionsAgree_013",
+        "Elapsed": 0.8
+      },
+      {
+        "Action": "fail",
+        "Test": "TestGeneratedExpressionsAgree",
+        "Elapsed": 1.78
+      },
+      {
+        "Action": "pass",
+        "Test": "TestCompilerExpressionsAgree_014",
+        "Elapsed": 1.16
+      },
+      {
+        "Action": "pass",
+        "Test": "TestCompilerExpressionsAgree_012",
+        "Elapsed": 1.1
+      },
+      {
+        "Action": "pass",
+        "Test": "TestCompilerExpressionsAgree_015",
+        "Elapsed": 5.81
+      },
+      {
+        "Action": "pass",
+        "Test": "TestWholeCompilerAgrees",
+        "Elapsed": 40.89
+      },
+      {
+        "Action": "fail",
+        "Elapsed": 90.016
+      }
+    ],
+    "failures": [
+      "generated_test.go:126: Node: case 584 line 5626: port \"1 BinaryExpression 0 5 0 0 -1 0 0\\t\\t\\t\", Go \"1 Identifier 0 1 0 0 -1 0 0\\t\\ta\\t\"",
+      "panic: test timed out after 1m30s"
+    ]
+  },
+  "D4-Expressions.log": {
+    "events": [
+      {
+        "Action": "pass",
+        "Test": "TestExpressionsAgree",
+        "Elapsed": 13.81
+      },
+      {
+        "Action": "pass",
+        "Elapsed": 13.818
+      }
+    ],
+    "failures": []
+  },
+  "D4-progress.log": {
+    "events": [],
+    "failures": []
+  },
+  "TestClosedConditionalEmptyArrayGap-coverage.log": {
+    "events": [
+      {
+        "Action": "pass",
+        "Test": "TestClosedConditionalEmptyArrayGap",
+        "Elapsed": 0.35
+      },
+      {
+        "Action": "pass",
+        "Elapsed": 0.383
+      }
+    ],
+    "failures": []
+  },
+  "TestClosedOptionalFunctionValueGap-coverage.log": {
+    "events": [
+      {
+        "Action": "pass",
+        "Test": "TestClosedOptionalFunctionValueGap",
+        "Elapsed": 0.33
+      },
+      {
+        "Action": "pass",
+        "Elapsed": 0.363
+      }
+    ],
+    "failures": []
+  },
+  "TestCompilerExpressionsAgree-coverage.log": {
+    "events": [
+      {
+        "Action": "pass",
+        "Test": "TestCompilerExpressionsAgreeUnion",
+        "Elapsed": 0
+      },
+      {
+        "Action": "pass",
+        "Test": "TestCompilerExpressionsAgree_008",
+        "Elapsed": 21.27
+      },
+      {
+        "Action": "pass",
+        "Test": "TestCompilerExpressionsAgree_009",
+        "Elapsed": 21.7
+      },
+      {
+        "Action": "pass",
+        "Test": "TestCompilerExpressionsAgree_014",
+        "Elapsed": 21.89
+      },
+      {
+        "Action": "pass",
+        "Test": "TestCompilerExpressionsAgree_012",
+        "Elapsed": 22.11
+      },
+      {
+        "Action": "pass",
+        "Test": "TestCompilerExpressionsAgree_007",
+        "Elapsed": 2.92
+      },
+      {
+        "Action": "pass",
+        "Test": "TestCompilerExpressionsAgree_006",
+        "Elapsed": 3
+      },
+      {
+        "Action": "pass",
+        "Test": "TestCompilerExpressionsAgree_010",
+        "Elapsed": 25.47
+      },
+      {
+        "Action": "pass",
+        "Test": "TestCompilerExpressionsAgree_004",
+        "Elapsed": 4.84
+      },
+      {
+        "Action": "pass",
+        "Test": "TestCompilerExpressionsAgree_013",
+        "Elapsed": 1.59
+      },
+      {
+        "Action": "pass",
+        "Test": "TestCompilerExpressionsAgree_005",
+        "Elapsed": 1.92
+      },
+      {
+        "Action": "pass",
+        "Test": "TestCompilerExpressionsAgree_002",
+        "Elapsed": 0.41
+      },
+      {
+        "Action": "pass",
+        "Test": "TestCompilerExpressionsAgree_011",
+        "Elapsed": 2.16
+      },
+      {
+        "Action": "pass",
+        "Test": "TestCompilerExpressionsAgree_003",
+        "Elapsed": 1.12
+      },
+      {
+        "Action": "pass",
+        "Test": "TestCompilerExpressionsAgree_001",
+        "Elapsed": 2.54
+      },
+      {
+        "Action": "pass",
+        "Test": "TestCompilerExpressionsAgree_000",
+        "Elapsed": 2.66
+      },
+      {
+        "Action": "pass",
+        "Test": "TestCompilerExpressionsAgree_015",
+        "Elapsed": 11.36
+      },
+      {
+        "Action": "pass",
+        "Elapsed": 32.67
+      }
+    ],
+    "failures": []
+  },
+  "TestGeneratedExpressionsAgree-coverage.log": {
+    "events": [
+      {
+        "Action": "pass",
+        "Test": "TestGeneratedExpressionsAgree",
+        "Elapsed": 16.87
+      },
+      {
+        "Action": "pass",
+        "Elapsed": 16.904
+      }
+    ],
+    "failures": []
+  },
+  "TestPushSpreadGap-coverage.log": {
+    "events": [
+      {
+        "Action": "pass",
+        "Test": "TestPushSpreadGap",
+        "Elapsed": 0.14
+      },
+      {
+        "Action": "pass",
+        "Elapsed": 0.175
+      }
+    ],
+    "failures": []
+  },
+  "TestTypeOnlyImportCycleCompiles-coverage.log": {
+    "events": [
+      {
+        "Action": "pass",
+        "Test": "TestTypeOnlyImportCycleCompiles",
+        "Elapsed": 0.27
+      },
+      {
+        "Action": "pass",
+        "Elapsed": 0.301
+      }
+    ],
+    "failures": []
+  },
+  "adaptive-progress.log": {
+    "events": [],
+    "failures": []
+  },
+  "baseline.log": {
+    "events": [
+      {
+        "Action": "pass",
+        "Test": "TestClosedOptionalFunctionValueGap",
+        "Elapsed": 0.41
+      },
+      {
+        "Action": "pass",
+        "Test": "TestClosedConditionalEmptyArrayGap",
+        "Elapsed": 0.36
+      },
+      {
+        "Action": "pass",
+        "Test": "TestJsxMemberNameRejection",
+        "Elapsed": 36.26
+      },
+      {
+        "Action": "pass",
+        "Test": "TestJsxNameBoundaryRejections/private_name_accepted",
+        "Elapsed": 15.8
+      },
+      {
+        "Action": "pass",
+        "Test": "TestJsxNameBoundaryRejections/escaped_name_accepted",
+        "Elapsed": 16.71
+      },
+      {
+        "Action": "pass",
+        "Test": "TestJsxNameBoundaryRejections",
+        "Elapsed": 49.73
+      },
+      {
+        "Action": "fail",
+        "Elapsed": 90.025
+      }
+    ],
+    "failures": [
+      "jsx_rejection_test.go:57: Go rejects with diagnostic 1003; Node/native reject identically: adamic: panic: JSX expected name at 21 in /tmp/adamic-gate/TestJsxMemberNameRejection3163378694/001/dashed-member.tsx",
+      "panic: test timed out after 1m30s"
+    ]
+  },
+  "coverage-progress.log": {
+    "events": [],
+    "failures": []
+  },
+  "go-progress.log": {
+    "events": [],
+    "failures": []
+  },
+  "list.log": {
+    "events": [],
+    "failures": []
+  },
+  "npm.log": {
+    "events": [],
+    "failures": []
+  },
+  "port-progress.log": {
+    "events": [],
+    "failures": []
+  }
+}

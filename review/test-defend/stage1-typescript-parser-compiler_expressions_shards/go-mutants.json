@@ -1,0 +1,26 @@
+[
+  {
+    "id": "D1",
+    "file": "internal/javascript/javascript.go",
+    "line": 833,
+    "old": "e.value(expression.WhenTrue) + \" : \" + e.value(expression.WhenNot)",
+    "new": "e.value(expression.WhenNot) + \" : \" + e.value(expression.WhenTrue)",
+    "regex": "^(TestClosedConditionalEmptyArrayGap|TestClosedOptionalFunctionValueGap)$",
+    "command": "timeout 120 go test -overlay=/tmp/defend-parser/D1-overlay.json -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^(TestClosedConditionalEmptyArrayGap|TestClosedOptionalFunctionValueGap)$",
+    "status": 1,
+    "vet": 0,
+    "wall": 7.037133294001251
+  },
+  {
+    "id": "D2",
+    "file": "internal/lower/class_inheritance.go",
+    "line": 316,
+    "old": "} else if instance.base != nil {",
+    "new": "} else if instance.base == nil {",
+    "regex": "^(TestTypeOnlyImportCycleCompiles|TestClassMethodInterfaceGap)$",
+    "command": "timeout 120 go test -overlay=/tmp/defend-parser/D2-overlay.json -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^(TestTypeOnlyImportCycleCompiles|TestClassMethodInterfaceGap)$",
+    "status": 1,
+    "vet": 0,
+    "wall": 11.831289706999087
+  }
+]

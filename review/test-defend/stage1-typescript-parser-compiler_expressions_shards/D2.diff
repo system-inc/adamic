@@ -1,0 +1,11 @@
+--- a/internal/lower/class_inheritance.go
++++ b/internal/lower/class_inheritance.go
+@@ -313,7 +313,7 @@
+ 		if state&superUninitialized != 0 {
+ 			l.result.Functions[initializer].Body = append(l.result.Functions[initializer].Body, l.superEnd())
+ 		}
+-	} else if instance.base != nil {
++	} else if instance.base == nil {
+ 		arguments := []ir.Expression{}
+ 		for _, parameter := range l.result.Functions[initializer].Parameters {
+ 			arguments = append(arguments, ir.Read{Local: parameter, Of: l.result.Locals[parameter].Type})

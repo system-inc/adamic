@@ -1,0 +1,11 @@
+--- a/stage1/typescript/parser/grammar.ts
++++ b/stage1/typescript/parser/grammar.ts
+@@ -39,7 +39,7 @@
+         case 'PercentToken':
+             return 14;
+         case 'AsteriskAsteriskToken':
+-            return 15;
++            return 13;
+         default:
+             return -1;
+     }

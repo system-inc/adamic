@@ -1,0 +1,2 @@
+stage1/typescript/parser/gaps_test.go:123:	if err := os.WriteFile(emitted, []byte(javascript.JavaScript(lowered)), 0644); err != nil {
+stage1/typescript/parser/gaps_test.go:169:	if err := os.WriteFile(emitted, []byte(javascript.JavaScript(lowered)), 0644); err != nil {

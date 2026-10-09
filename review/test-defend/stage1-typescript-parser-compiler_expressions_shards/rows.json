@@ -1,0 +1,74 @@
+[
+  {
+    "test": "TestClosedConditionalEmptyArrayGap",
+    "package": "stage1/typescript/parser",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestPushSpreadGap"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D1 internal/javascript/javascript.go:833",
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "internal/javascript/javascript.go:833",
+        "change": "Swap conditional true and false operands in JavaScript emission.",
+        "rows_failed": [
+          "TestClosedConditionalEmptyArrayGap"
+        ]
+      }
+    ],
+    "evidence": "timeout 120 go test -overlay=/tmp/defend-parser/D1-overlay.json -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run \"^(TestClosedConditionalEmptyArrayGap|TestClosedOptionalFunctionValueGap)$\"; D1.log; gaps_test.go:178: JavaScript backend: \"0\\n\", Node \"1\\n\""
+  },
+  {
+    "test": "TestGeneratedExpressionsAgree",
+    "package": "stage1/typescript/parser",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestCompilerExpressionsAgree family"
+    ],
+    "defense": "cannot-judge",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D3",
+        "file_line": "stage1/typescript/parser/parser.ts:107",
+        "change": "PrivateIdentifier node kind becomes Identifier.",
+        "rows_failed": [
+          "TestGeneratedExpressionsAgree",
+          "TestWholeGeneratedAgrees"
+        ]
+      },
+      {
+        "mutant": "D4",
+        "file_line": "stage1/typescript/parser/grammar.ts:42",
+        "change": "Exponentiation precedence 15 becomes 13.",
+        "rows_failed": [
+          "TestGeneratedExpressionsAgree"
+        ]
+      }
+    ],
+    "evidence": "D4-runs.json records timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ with the bounded agreement regex; D3-group0.log, D3-group3.log, D4-1.log; generated_test.go:126: Node: case 584 line 5626: port \"1 BinaryExpression 0 5 0 0 -1 0 0\\t\\t\\t\", Go \"1 Identifier 0 1 0 0 -1 0 0\\t\\ta\\t\"; D4 unique within completed bounded matrix, remaining package rows unknown."
+  },
+  {
+    "test": "TestTypeOnlyImportCycleCompiles",
+    "package": "stage1/typescript/parser",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestClosedOptionalFunctionValueGap"
+    ],
+    "defense": "cannot-judge",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D2",
+        "file_line": "internal/lower/class_inheritance.go:316",
+        "change": "Flip implicit-constructor base guard from != nil to == nil.",
+        "rows_failed": [
+          "TestTypeOnlyImportCycleCompiles"
+        ]
+      }
+    ],
+    "evidence": "timeout 120 go test -overlay=/tmp/defend-parser/D2-overlay.json -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run \"^TestTypeOnlyImportCycleCompiles$\"; D2-TestTypeOnlyImportCycleCompiles.log; panic: runtime error: invalid memory address or nil pointer dereference [recovered, repanicked]; five isolated gap competitors passed, other lower callers unknown."
+  }
+]

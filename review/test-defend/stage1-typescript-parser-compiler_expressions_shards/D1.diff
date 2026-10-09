@@ -1,0 +1,11 @@
+--- a/internal/javascript/javascript.go
++++ b/internal/javascript/javascript.go
+@@ -830,7 +830,7 @@
+ 		}
+ 		return "(" + strings.Join(parts, " + ") + ")"
+ 	case ir.Conditional:
+-		return "(" + e.value(expression.Condition) + " ? " + e.value(expression.WhenTrue) + " : " + e.value(expression.WhenNot) + ")"
++		return "(" + e.value(expression.Condition) + " ? " + e.value(expression.WhenNot) + " : " + e.value(expression.WhenTrue) + ")"
+ 	case ir.ObjectLiteral:
+ 		if expression.Tuple {
+ 			elements := []string{}

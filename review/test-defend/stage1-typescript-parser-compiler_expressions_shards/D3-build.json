@@ -1,0 +1,5 @@
+{
+  "command": "timeout 120 go run ./cmd/adamic build stage1/typescript/parser/main.ts -o /tmp/defend-parser/D3-native --sanitize",
+  "status": 0,
+  "wall": 20.136392816999432
+}

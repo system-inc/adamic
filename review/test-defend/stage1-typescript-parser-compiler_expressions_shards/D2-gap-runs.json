@@ -1,0 +1,27 @@
+[
+  {
+    "test": "TestStrongAstParentGap",
+    "status": 0,
+    "command": "timeout 120 go test -overlay=/tmp/defend-parser/D2-overlay.json -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestStrongAstParentGap$"
+  },
+  {
+    "test": "TestPushSpreadGap",
+    "status": 0,
+    "command": "timeout 120 go test -overlay=/tmp/defend-parser/D2-overlay.json -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestPushSpreadGap$"
+  },
+  {
+    "test": "TestClassMethodInterfaceGap",
+    "status": 0,
+    "command": "timeout 120 go test -overlay=/tmp/defend-parser/D2-overlay.json -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestClassMethodInterfaceGap$"
+  },
+  {
+    "test": "TestClosedOptionalFunctionValueGap",
+    "status": 0,
+    "command": "timeout 120 go test -overlay=/tmp/defend-parser/D2-overlay.json -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestClosedOptionalFunctionValueGap$"
+  },
+  {
+    "test": "TestClosedConditionalEmptyArrayGap",
+    "status": 0,
+    "command": "timeout 120 go test -overlay=/tmp/defend-parser/D2-overlay.json -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestClosedConditionalEmptyArrayGap$"
+  }
+]
