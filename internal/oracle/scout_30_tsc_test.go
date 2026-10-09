@@ -99,11 +99,9 @@ func TestScout30FamilyMutants(t *testing.T) {
 func TestScout30Refusals(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, reason string }{
-		{"json_specs", "never"},
 		{"json_parse", "any"},
 		{"object_entries_references", "entries"},
 		{"string_diagnostic", "String"},
-		{"scanner_parse_concat", "BinaryExpression"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/scout_30_refused/"+probe.name+".a"))
@@ -119,6 +117,54 @@ func TestScout30Refusals(t *testing.T) {
 				t.Fatalf("want named refusal %q, got %v", probe.reason, err)
 			}
 			t.Log(err)
+		})
+	}
+}
+
+// Empty arrays now use their destination element type (8f66740460), and
+// string-plus-number expressions convert the number before concatenation (8c962b67d4).
+// These former refusals must agree with Node rather than merely compile.
+func TestScout30ClosedRefusalsMatchNode(t *testing.T) {
+	t.Parallel()
+	for _, probe := range []struct{ name, original, replacement string }{
+		{"json_specs", "include", "wrong include"},
+		{"scanner_parse_concat", "077", "10"},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/scout_30_refused/"+probe.name+".a"))
+			if err != nil {
+				t.Fatal(err)
+			}
+			truth := onNode(t, path)
+			if truth.exitCode != 0 || len(truth.stderr) != 0 {
+				t.Fatalf("source Node: %+v", truth)
+			}
+			program, err := lowered(t, path)
+			if err != nil {
+				t.Fatal(err)
+			}
+			actual, binary := natively(t, program)
+			if difference := disagreement(truth, actual); difference != "" {
+				t.Fatalf("native: %s", difference)
+			}
+			if difference := disagreement(truth, onJavaScriptBackend(t, program)); difference != "" {
+				t.Fatalf("JavaScript: %s", difference)
+			}
+			if report := leaks(t, program, binary); report != "" {
+				t.Fatal(report)
+			}
+			t.Logf("Node, native and JavaScript agree: stdout %q, stderr empty, exit 0", truth.stdout)
+			changed := false
+			for index, text := range program.Strings {
+				if text == probe.original {
+					program.Strings[index] = probe.replacement
+					changed = true
+				}
+			}
+			if !changed {
+				t.Fatal("mutant changed no input")
+			}
+			scout22MutantMatchesOnlyNode(t, path, program)
 		})
 	}
 }
