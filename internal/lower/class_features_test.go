@@ -64,10 +64,6 @@ func TestClassFeaturesAccessorRefusals(t *testing.T) {
 			t.Fatalf("want unsafe accessor override refused, got %v", err)
 		}
 	}
-	_, err := lowerSource(t, `const source = { get text(): string { throw new Error('fail'); } }; const copied = { ...source }; console.log(copied.text);`)
-	if err == nil || !strings.Contains(err.Error(), "getter may throw") {
-		t.Fatalf("want throwing spread diagnosed, got %v", err)
-	}
 }
 
 func TestClassFeaturesStaticDeclarationsExecute(t *testing.T) {
@@ -136,4 +132,9 @@ func TestClassFeaturesStaticInterfaceCycle(t *testing.T) {
 	if err == nil || !strings.Contains(err.Error(), "cycle") {
 		t.Fatalf("constructor interface cycle accepted: %v", err)
 	}
+}
+
+func TestClassFeaturesThrowingAccessorSpread(t *testing.T) {
+	t.Parallel()
+	lowersAndAgreesWithNode(t, `const source = { get text(): string { throw new Error('fail'); } }; try { const copied = { ...source }; console.log(copied.text); } catch (error) { if (error instanceof Error) console.log(error.message); else throw error; }`)
 }

@@ -374,7 +374,7 @@ func (l *lowering) checkAccessorSpreads() error {
 	throwing := false
 	for _, class := range l.result.Classes {
 		for _, accessor := range class.Accessors {
-			if class.Literal && accessor.Getter >= 0 && (l.result.Functions[accessor.Getter].MayThrow || l.libraryFailure(l.result.Functions[accessor.Getter].Body, map[int]bool{}) != "") {
+			if class.Literal && accessor.Getter >= 0 && (l.libraryFailure(l.result.Functions[accessor.Getter].Body, map[int]bool{}) != "") {
 				throwing = true
 			}
 		}
