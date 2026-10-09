@@ -111,6 +111,7 @@ func latentDeclarations(program *load.Program, file *ast.SourceFile) []LatentDec
 }
 
 type LatentFile struct {
+	FailedBoundaries []LatentBoundary `json:"failed_boundaries,omitempty"`
 	SpeculativeCoverage *LatentSpeculativeCoverage `json:"speculative_coverage,omitempty"`
 	Measurement         string                     `json:"measurement"`
 	File                string                     `json:"file"`

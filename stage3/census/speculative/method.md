@@ -19,13 +19,12 @@ is traversed; binding names are not invented as value-position reads.
 
 A boundary is the AST construct replaced after a failed statement, expression,
 signature, or body attempt. Multiple errors on the same construct do not add
-multiple boundaries. Exact visitor identities and byte spans are retained; printed
+multiple boundaries. Every failed boundary is emitted in a separate complete catalogue, independent of finding deduplication. Boundary syntax kinds distinguish equal-span nodes such as a parameter and its identifier. Exact visitor identities and byte spans are retained; printed
 line/column positions alone are ambiguous. Depth is computed after all files have
 been walked, so dependency attempts and parents which fail after visiting a child
 cannot make the result depend on file order. Each site counts its failed AST
 ancestors, excluding its own boundary. `root_kind` is the exact existing reason
-text, not a normalization or the name of the enclosing declaration. Headline
-identities remain `(kind, where, reason, text)`; raw records preserve attempt and
+text, not a normalization or the name of the enclosing declaration. Speculative finding identities include the actual visitor site: file, syntax kind and byte span, plus the original `(kind, where, reason, text)` identity. Distinct constructs at the same printed location remain distinct sites. Repeated attempts of the same physical site and reason retain one source identity and depth. Full/no-stubs retain the original identity; raw records preserve attempt and
 phase. Project registration can expose binding failures before a unit attempt;
 those records retain the current file context and their actual source site identity. The top twenty ranks those identities by `(kind, exact reason)`, across all
 depths; 4+ groups all depths of four or more.
@@ -79,3 +78,7 @@ the existing deep copier and its private-field and foreign-pointer guards. A
 focused overlay-only test compares optimized values to the legacy copier and
 mutates scalar slices and nested bodies to verify source ownership; a shared-slice
 mutant fails it. Full and no-stubs modes use the original copier.
+
+The current tables combine four separately loaded directory-root projects: _namespaces, factory, transformers/declarations and transformers/module. Each retains its original import graph for checking, while census registration/walking uses the directory roots. Table sites must be attributed to the directory being measured. Foreign dependency attempts are retained in raw records but excluded from that directory's table. Every AST child of every covered source is visited, and stock TypeScript validates local-site depths. These separate contexts can yield different observations from a whole-compiler project; the report explicitly inventories all unmeasured files and uses the whole compiler's bytes as denominator.
+
+Speculative function slices use Go value copying for scalar fields and deep copying for Parameters, OptionalParameters, Body, Environment, FrameEnvironment and ReferenceParents. A schema guard rejects additional/private mutable fields. The focused ownership/schema mutants and complete six-witness byte parity validate this optimization.

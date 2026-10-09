@@ -16,3 +16,5 @@ python3 stage3/census/speculative/audit.py /tmp/speculative-census-final /tmp/sp
 ```
 
 The exact harness is preserved as [header-check-harness.py](evidence/header-check-harness.py); copy it to /tmp/speculative-a-check/run.py to reproduce. No whole package or full gate was run. This commit fixes the reported a-check failure only; speculative raw totals and unverified-depth status remain the partial results from e46fa73d. Depth tables are not ready and are not included.
+
+After 20ebb633, the checker-clean equal-span witness makes six controls. The current partial-results delivery reruns the unchanged in-place a-check step on all six .a files: zero mismatches, with all eight removed/wrong-code header predicate mutants caught. The four error headers remain unchanged.

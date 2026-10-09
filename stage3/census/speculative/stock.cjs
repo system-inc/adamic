@@ -28,10 +28,10 @@ for (const row of rows.slice(1)) {
     }
     const offset = position => offsets[position];
     const nodes = [];
-    function visit(node, ancestors) {
+    function visit(node, ancestors, ancestorKinds = []) {
         const span = [offset(Math.max(0, node.pos)), offset(node.end)];
-        nodes.push({start: span[0], end: span[1], kind: ts.SyntaxKind[node.kind], kind_code: node.kind, ancestors});
-        ts.forEachChild(node, child => visit(child, [...ancestors, span]));
+        nodes.push({start: span[0], end: span[1], kind: ts.SyntaxKind[node.kind], kind_code: node.kind, ancestors, ancestor_kinds: ancestorKinds});
+        ts.forEachChild(node, child => visit(child, [...ancestors, span], [...ancestorKinds, node.kind]));
     }
     visit(source, []);
     files.push({file:path.relative(root,filename), bytes:bytes.length,

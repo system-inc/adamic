@@ -15,7 +15,7 @@ folder=output/'token-mutant'
 shutil.copytree(overlay,folder,dirs_exist_ok=True)
 path=folder/'internal_lower_latent_speculative.go'
 text=path.read_text()
-old='node := sites[latentFindingKey(finding)]'
+old='node := sites[latentSpecFindingKey(finding)]'
 assert text.count(old)==1
 path.write_text(text.replace(old,'node := nodes[finding.Where]'))
 configuration=json.loads((overlay/'overlay.json').read_text())

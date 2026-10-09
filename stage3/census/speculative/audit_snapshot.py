@@ -35,3 +35,9 @@ for name,virtual,needle,replacement,message in [
  text=(out/(name+'.log')).read_text()
  assert result.returncode!=0 and message in text,text
  print(name+': caught by '+message)
+
+with (out/'function-schema-mutant.log').open('w') as log:
+ result=subprocess.run(['go','test','-overlay='+str(out/'overlay.json'),'./internal/lower','-run','^TestLatentSpecSnapshotScalarCopy$','-count=1'],cwd=repo,env=dict(os.environ,LATENT_MUTANT_SKIP_FUNCTION_SCHEMA='1',LATENT_MUTANT_SHARE_SCALAR_SLICE='0'),stdout=log,stderr=subprocess.STDOUT)
+text=(out/'function-schema-mutant.log').read_text()
+assert result.returncode!=0 and 'function schema drift copied silently' in text,text
+print('function-schema-mutant: caught by unsupported mutable function-field guard')

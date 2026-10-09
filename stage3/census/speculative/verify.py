@@ -15,7 +15,7 @@ def verify(artifact):
     for row in rows[1:]:
         for finding in row['findings']:
             if finding['kind'] in ('NotYet','Refused') and finding['where'].startswith(str(root)+'/'):
-                identity = tuple(finding[k] for k in ('kind','where','reason','text'))
+                identity = tuple(finding[k] for k in ('kind','where','reason','text')) + (finding.get('site_where', ''), finding.get('site_kind', ''), finding.get('site_start', 0), finding.get('site_end', 0))
                 previous = unique.setdefault(identity, finding)
                 assert previous['depth'] == finding['depth'], identity
     for kind in ('NotYet','Refused'):
@@ -42,12 +42,16 @@ def verify(artifact):
 
 
 count = verify(result)
-for name, mutate in [
+mutants = [
     ('headline-depth-total',lambda x:x['counts']['NotYet'].__setitem__(0,x['counts']['NotYet'][0]+1)),
     ('top20-depth-count',lambda x:x['top20'][0]['counts'].__setitem__(0,x['top20'][0]['counts'][0]+1)),
     ('omit-source-file',lambda x:x['files'].pop()),
     ('byte-share',lambda x:x.__setitem__('examined_bytes',x['examined_bytes']+1)),
-]:
+]
+if not result['top20']:
+    mutants = [(name, mutate) for name, mutate in mutants if name != 'top20-depth-count']
+    print('top20-depth-count: no ranked sites in this input; not applicable')
+for name, mutate in mutants:
     mutant=deepcopy(result)
     mutate(mutant)
     try:
@@ -56,4 +60,4 @@ for name, mutate in [
         print(name+' artifact mutant caught')
     else:
         raise AssertionError(name+' mutant survived')
-print(f'PASS: {count} unique sites; exact depth totals and top20; complete source inventory; independent byte denominator; all four artifact mutants caught')
+print(f'PASS: {count} unique sites; exact depth totals and top20; complete source inventory; independent byte denominator; all {len(mutants)} applicable artifact mutants caught')

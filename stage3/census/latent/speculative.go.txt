@@ -10,6 +10,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"os"
 	"reflect"
+	"sort"
 	"strings"
 )
 
@@ -27,6 +28,7 @@ type latentPlaceholder struct {
 func (v latentPlaceholder) Type() ir.Type { return v.Of }
 
 type latentBoundaryKey struct {
+	Kind       string
 	Where      string
 	Start, End int
 }
@@ -61,6 +63,11 @@ func (l *lowering) latentPlaceholder(node *ast.Node) (value ir.Expression) {
 func latentFindingKey(finding LatentFinding) string {
 	return strings.Join([]string{finding.Kind, finding.Where, finding.Reason, finding.Text}, "\x00")
 }
+// Speculative sites distinguish failed AST constructs which share a printed
+// location and reason. Full/no-stubs retain the original census identity.
+func latentSpecFindingKey(finding LatentFinding) string {
+	return fmt.Sprintf("%s\x00%s\x00%s\x00%d\x00%d", latentFindingKey(finding), finding.SiteWhere, finding.SiteKind, finding.SiteStart, finding.SiteEnd)
+}
 func latentRecordNode(failure error, node *ast.Node) {
 	if failure == nil {
 		return
@@ -73,7 +80,9 @@ func latentRecordNode(failure error, node *ast.Node) {
 	finding.SiteWhere = latentSpecProgram.Where(node)
 	finding.SiteKind = node.Kind.String()
 	finding.SiteStart, finding.SiteEnd = node.Pos(), node.End()
-	latentSpec.sites[latentFindingKey(*finding)] = node
+	if latentSpec.sites[latentSpecFindingKey(*finding)] == nil {
+		latentSpec.sites[latentSpecFindingKey(*finding)] = node
+	}
 }
 
 var latentSpecProgram *load.Program
@@ -84,7 +93,7 @@ func (l *lowering) latentSpecFailure(node *ast.Node, failure error) {
 	finding.Start, finding.End = node.Pos(), node.End()
 	finding.BoundaryWhere = l.program.Where(node)
 	latentSpec.failed[node] = true
-	latentSpec.boundaries[latentBoundaryKey{finding.BoundaryWhere, finding.Start, finding.End}] = node
+	latentSpec.boundaries[latentBoundaryKey{node.Kind.String(), finding.BoundaryWhere, finding.Start, finding.End}] = node
 }
 
 func (l *lowering) latentSpecExpression(node *ast.Node) (value ir.Expression, failure error) {
@@ -335,22 +344,39 @@ func latentSpeculative(ctx context.Context, program *load.Program, emit func(Lat
 		fmt.Fprintf(os.Stderr, "speculative walk: %s nodes=%d findings=%d unvisited=%d\n", record.File, record.SpeculativeCoverage.TotalNodes, len(record.Findings), record.SpeculativeCoverage.UnvisitedNodes)
 		records = append(records, record)
 	}
+	// Boundary evidence is independent of finding deduplication. Nodes sharing a
+	// span remain distinct by syntax kind; a parameter and its name can coincide.
+	boundaryInventory := map[string][]LatentBoundary{}
+	for node := range failed {
+		where := program.Where(node)
+		file := strings.Join(strings.Split(where, ":")[:len(strings.Split(where, ":"))-2], ":")
+		boundaryInventory[file] = append(boundaryInventory[file], LatentBoundary{Kind: node.Kind.String(), Where: where, Start: node.Pos(), End: node.End()})
+	}
+	for file := range boundaryInventory {
+		sort.Slice(boundaryInventory[file], func(i, j int) bool {
+			a, b := boundaryInventory[file][i], boundaryInventory[file][j]
+			if a.Start != b.Start { return a.Start < b.Start }
+			if a.End != b.End { return a.End < b.End }
+			return a.Kind < b.Kind
+		})
+	}
 	// Depth is resolved after the entire project: dependencies can expose a failed
 	// boundary before or after the boundary's own file is attempted.
 	for _, record := range records {
+		record.FailedBoundaries = boundaryInventory[record.File]
 		seen := map[string]bool{}
 		findings := record.Findings
 		record.Findings = []LatentFinding{}
 		for _, finding := range findings {
 			finding.RootKind = finding.Reason
-			node := sites[latentFindingKey(finding)]
+			node := sites[latentSpecFindingKey(finding)]
 			if node == nil {
 				node = nodes[finding.Where]
 			}
-			if finding.BoundaryWhere != "" {
-				node = boundaries[latentBoundaryKey{finding.BoundaryWhere, finding.Start, finding.End}]
-			}
 			if node != nil {
+				finding.SiteWhere = program.Where(node)
+				finding.SiteKind = node.Kind.String()
+				finding.SiteStart, finding.SiteEnd = node.Pos(), node.End()
 				for parent := node.Parent; parent != nil; parent = parent.Parent {
 					if failed[parent] {
 						finding.Depth++
@@ -360,7 +386,7 @@ func latentSpeculative(ctx context.Context, program *load.Program, emit func(Lat
 			if os.Getenv("LATENT_MUTANT_DEPTH_ZERO") == "1" {
 				finding.Depth = 0
 			}
-			key := latentFindingKey(finding)
+			key := latentSpecFindingKey(finding)
 			if !seen[key] {
 				seen[key] = true
 				record.Findings = append(record.Findings, finding)
@@ -451,4 +477,31 @@ func (l *lowering) latentSpecDeclareLocal(name *ast.Node) (local int, failure er
 		}
 	}()
 	return l.latentDeclareLocalRaw(name)
+}
+
+// Census boundary metadata is never present in a normal production build.
+type LatentBoundary struct {
+	Where string `json:"where"`
+	Kind string `json:"kind"`
+	Start int `json:"start"`
+	End int `json:"end"`
+}
+
+var latentSpecFunctionSchemas = map[reflect.Type]bool{}
+
+// Direct function-slice copying is safe only while every mutable field is
+// explicitly cloned. Future IR fields fail here instead of silently aliasing.
+func latentSpecFunctionSchema(t reflect.Type) {
+	if os.Getenv("LATENT_MUTANT_SKIP_FUNCTION_SCHEMA") == "1" { return }
+	if latentSpecFunctionSchemas[t] { return }
+	for i := 0; i < t.NumField(); i++ {
+		field := t.Field(i)
+		if field.PkgPath != "" { panic("latent state copy: unexported function field " + field.Name) }
+		if latentSpecImmutable(field.Type) { continue }
+		switch field.Name {
+		case "Parameters", "OptionalParameters", "Body", "Environment", "FrameEnvironment", "ReferenceParents":
+		default: panic("latent state copy: unsupported function field " + field.Name)
+		}
+	}
+	latentSpecFunctionSchemas[t] = true
 }

@@ -14,6 +14,7 @@ python3 stage3/census/speculative/audit_snapshot.py "$repo" "$out/overlay" "$out
 python3 stage3/census/speculative/audit.py "$out/census" "$out/control" > "$out/control.log" 2>&1
 python3 stage3/census/speculative/audit_signature.py "$out/census" "$out/signature-control" > "$out/signature-control.log" 2>&1
 python3 stage3/census/speculative/audit_dependency.py "$out/census" "$out/dependency-control" > "$out/dependency-control.log" 2>&1
+python3 stage3/census/speculative/audit_topology.py "$repo" "$out/overlay" "$out/census" "$out/topology" > "$out/topology.log" 2>&1
 python3 stage3/census/speculative/prove_identity.py "$repo" "$out/overlay" "$out/census" "$out/identity" > "$out/identity.log" 2>&1
 node stage3/census/speculative/stock.cjs "$out/control/source" "$out/control/speculative.jsonl" "$out/control/stock.json" > "$out/control/stock.log" 2>&1
 python3 stage3/census/speculative/audit_report_controls.py "$out/control/source" "$out/control/speculative.jsonl" "$out/control/stock.json" "$out/control/full.jsonl" "$out/control/no-stubs-mutant.jsonl" "$out/report-guards" > "$out/report-guards.log" 2>&1

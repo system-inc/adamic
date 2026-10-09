@@ -9,7 +9,7 @@ import (
 
 func TestLatentSpecSnapshotScalarCopy(t *testing.T) {
 	t.Setenv("LATENT_SPECULATIVE", "1")
-	source := ir.Program{CheckedFields: map[string]bool{"x": true}, Locals: []ir.Local{{Name: "x"}}, Functions: []ir.Function{{Name: "f", OptionalParameters: map[int]bool{0: true}, Parameters: []int{0}, Environment: []int{1}, Body: []ir.Statement{ir.Block{Body: []ir.Statement{ir.Block{}}}}}}}
+	source := ir.Program{Source: "witness.a", CheckedFields: map[string]bool{"x": true}, Locals: []ir.Local{{Name: "x"}}, Functions: []ir.Function{{Name: "f", OptionalParameters: map[int]bool{0: true}, Parameters: []int{0}, Environment: []int{1}, FrameEnvironment: []int{2}, ReferenceParents: []int{3}, Body: []ir.Statement{ir.Block{Body: []ir.Statement{ir.Block{}}}}}}}
 	mapper := new(checker.TypeMapper)
 	state := &lowering{result: &source, typeMapper: mapper, function: &source.Functions[0]}
 	snapshot := state.latentSnapshot()
@@ -31,10 +31,16 @@ func TestLatentSpecSnapshotScalarCopy(t *testing.T) {
 	fast.Locals[0].Name = "changed"
 	fast.Functions[0].Parameters[0] = 10
 	fast.Functions[0].Environment[0] = 20
+	fast.Functions[0].FrameEnvironment[0] = 30
+	fast.Functions[0].ReferenceParents[0] = 40
 	fast.Functions[0].Body[0].(ir.Block).Body[0] = ir.Block{Body: []ir.Statement{ir.Block{}}}
-	if !source.CheckedFields["x"] || !source.Functions[0].OptionalParameters[0] || source.Locals[0].Name != "x" || source.Functions[0].Parameters[0] != 0 || source.Functions[0].Environment[0] != 1 || len(source.Functions[0].Body[0].(ir.Block).Body[0].(ir.Block).Body) != 0 {
+	if !source.CheckedFields["x"] || !source.Functions[0].OptionalParameters[0] || source.Locals[0].Name != "x" || source.Functions[0].Parameters[0] != 0 || source.Functions[0].Environment[0] != 1 || source.Functions[0].FrameEnvironment[0] != 2 || source.Functions[0].ReferenceParents[0] != 3 || len(source.Functions[0].Body[0].(ir.Block).Body[0].(ir.Block).Body) != 0 {
 		t.Fatal("snapshot aliases mutable source state")
 	}
+	t.Run("function-schema-guard", func(t *testing.T) {
+		defer func() { if recover() == nil { t.Fatal("function schema drift copied silently") } }()
+		latentSpecFunctionSchema(reflect.TypeFor[struct{ Additional map[int]bool }]())
+	})
 	t.Run("private-field-guard", func(t *testing.T) {
 		defer func() {
 			if recover() == nil {
@@ -43,4 +49,15 @@ func TestLatentSpecSnapshotScalarCopy(t *testing.T) {
 		}()
 		latentCopyIR(struct{ hidden int }{1}, map[any]any{})
 	})
+}
+
+func BenchmarkLatentSpecFunctionSlice(b *testing.B) {
+	functions := make([]ir.Function, 10000)
+	for i := range functions { functions[i].Name = "registered" }
+	for _, mode := range []string{"0", "1"} {
+		b.Run("speculative-"+mode, func(b *testing.B) {
+			b.Setenv("LATENT_SPECULATIVE", mode)
+			for i := 0; i < b.N; i++ { latentCopyIR(functions, map[any]any{}) }
+		})
+	}
 }

@@ -1,0 +1,102 @@
+{
+  "gate_sha": "3bf2489e2a5e09ab59d2926b1c0ff374dfa1fa45",
+  "paths": {
+    "stage3/census/speculative/control/dependency/main.a": {
+      "outcome": "type error",
+      "expected": "type error TS1101",
+      "first": "stage3/census/speculative/control/dependency/target.a:3:5: error TS1101: 'with' statements are not allowed in strict mode.",
+      "exit": 1,
+      "stderr": "stage3/census/speculative/control/dependency/target.a:3:5: error TS1101: 'with' statements are not allowed in strict mode.\nstage3/census/speculative/control/dependency/target.a:3:5: error TS1101: 'with' statements are not allowed in strict mode.\nstage3/census/speculative/control/dependency/target.a:3:5: error TS2410: The 'with' statement is not supported. All symbols in a 'with' block will have type 'any'.\n",
+      "stdout_bytes": 0
+    },
+    "stage3/census/speculative/control/dependency/target.a": {
+      "outcome": "type error",
+      "expected": "type error TS1101",
+      "first": "stage3/census/speculative/control/dependency/target.a:3:5: error TS1101: 'with' statements are not allowed in strict mode.",
+      "exit": 1,
+      "stderr": "stage3/census/speculative/control/dependency/target.a:3:5: error TS1101: 'with' statements are not allowed in strict mode.\nstage3/census/speculative/control/dependency/target.a:3:5: error TS1101: 'with' statements are not allowed in strict mode.\nstage3/census/speculative/control/dependency/target.a:3:5: error TS2410: The 'with' statement is not supported. All symbols in a 'with' block will have type 'any'.\n",
+      "stdout_bytes": 0
+    },
+    "stage3/census/speculative/control/identity.a": {
+      "outcome": "type error",
+      "expected": "type error TS1064",
+      "first": "stage3/census/speculative/control/identity.a:2:48: error TS1064: The return type of an async function or method must be the global Promise<T> type. Did you mean to write 'Promise<T>'?",
+      "exit": 1,
+      "stderr": "stage3/census/speculative/control/identity.a:2:48: error TS1064: The return type of an async function or method must be the global Promise<T> type. Did you mean to write 'Promise<T>'?\n",
+      "stdout_bytes": 0
+    },
+    "stage3/census/speculative/control/nested.a": {
+      "outcome": "type error",
+      "expected": "type error TS1101",
+      "first": "stage3/census/speculative/control/nested.a:3:5: error TS1101: 'with' statements are not allowed in strict mode.",
+      "exit": 1,
+      "stderr": "stage3/census/speculative/control/nested.a:3:5: error TS1101: 'with' statements are not allowed in strict mode.\nstage3/census/speculative/control/nested.a:3:5: error TS1101: 'with' statements are not allowed in strict mode.\nstage3/census/speculative/control/nested.a:3:5: error TS2410: The 'with' statement is not supported. All symbols in a 'with' block will have type 'any'.\nstage3/census/speculative/control/nested.a:4:9: error TS1101: 'with' statements are not allowed in strict mode.\nstage3/census/speculative/control/nested.a:4:9: error TS1101: 'with' statements are not allowed in strict mode.\n",
+      "stdout_bytes": 0
+    },
+    "stage3/census/speculative/control/signature-nested.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": "",
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 197
+    },
+    "stage3/census/speculative/control/span-identity.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": "",
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 194
+    }
+  },
+  "files": 6,
+  "mismatches": 0,
+  "outcomes": {
+    "type error": 4,
+    "checked": 2
+  },
+  "mutants": [
+    {
+      "path": "stage3/census/speculative/control/dependency/main.a",
+      "mutant": "removed",
+      "caught": "a-check failed for 1 file:\nstage3/census/speculative/control/dependency/main.a: type error, expected checked (stage3/census/speculative/control/dependency/target.a:3:5: error TS1101: 'with' statements are not allowed in strict mode.)"
+    },
+    {
+      "path": "stage3/census/speculative/control/dependency/main.a",
+      "mutant": "wrong-code",
+      "caught": "a-check failed for 1 file:\nstage3/census/speculative/control/dependency/main.a: type error, expected type error TS999999 (stage3/census/speculative/control/dependency/target.a:3:5: error TS1101: 'with' statements are not allowed in strict mode.)"
+    },
+    {
+      "path": "stage3/census/speculative/control/dependency/target.a",
+      "mutant": "removed",
+      "caught": "a-check failed for 1 file:\nstage3/census/speculative/control/dependency/target.a: type error, expected checked (stage3/census/speculative/control/dependency/target.a:3:5: error TS1101: 'with' statements are not allowed in strict mode.)"
+    },
+    {
+      "path": "stage3/census/speculative/control/dependency/target.a",
+      "mutant": "wrong-code",
+      "caught": "a-check failed for 1 file:\nstage3/census/speculative/control/dependency/target.a: type error, expected type error TS999999 (stage3/census/speculative/control/dependency/target.a:3:5: error TS1101: 'with' statements are not allowed in strict mode.)"
+    },
+    {
+      "path": "stage3/census/speculative/control/identity.a",
+      "mutant": "removed",
+      "caught": "a-check failed for 1 file:\nstage3/census/speculative/control/identity.a: type error, expected checked (stage3/census/speculative/control/identity.a:2:48: error TS1064: The return type of an async function or method must be the global Promise<T> type. Did you mean to write 'Promise<T>'?)"
+    },
+    {
+      "path": "stage3/census/speculative/control/identity.a",
+      "mutant": "wrong-code",
+      "caught": "a-check failed for 1 file:\nstage3/census/speculative/control/identity.a: type error, expected type error TS999999 (stage3/census/speculative/control/identity.a:2:48: error TS1064: The return type of an async function or method must be the global Promise<T> type. Did you mean to write 'Promise<T>'?)"
+    },
+    {
+      "path": "stage3/census/speculative/control/nested.a",
+      "mutant": "removed",
+      "caught": "a-check failed for 1 file:\nstage3/census/speculative/control/nested.a: type error, expected checked (stage3/census/speculative/control/nested.a:3:5: error TS1101: 'with' statements are not allowed in strict mode.)"
+    },
+    {
+      "path": "stage3/census/speculative/control/nested.a",
+      "mutant": "wrong-code",
+      "caught": "a-check failed for 1 file:\nstage3/census/speculative/control/nested.a: type error, expected type error TS999999 (stage3/census/speculative/control/nested.a:3:5: error TS1101: 'with' statements are not allowed in strict mode.)"
+    }
+  ],
+  "mutant_method": "unchanged Gate.aCheck header predicate against captured real in-place compiler diagnostics; every header restored"
+}

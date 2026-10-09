@@ -26,6 +26,7 @@ func latentFullEnabled() bool { return os.Getenv("LATENT_FULL") == "1" || latent
 func latentCopyIR[T any](value T, seen map[any]any) T {
 	speculative := latentSpeculativeEnabled()
 	shareScalarSlice := os.Getenv("LATENT_MUTANT_SHARE_SCALAR_SLICE") == "1"
+	functionSlice := reflect.TypeFor[[]ir.Function]()
 	var copyValue func(reflect.Value) reflect.Value
 	copyValue = func(v reflect.Value) reflect.Value {
 		if speculative && latentSpecImmutable(v.Type()) {
@@ -82,6 +83,21 @@ func latentCopyIR[T any](value T, seen map[any]any) T {
 		case reflect.Slice:
 			if v.IsNil() {
 				return reflect.Zero(v.Type())
+			}
+			if speculative && v.Type() == functionSlice {
+				latentSpecFunctionSchema(reflect.TypeFor[ir.Function]())
+				original := v.Interface().([]ir.Function)
+				cloned := make([]ir.Function, len(original))
+				copy(cloned, original)
+				for i, function := range original {
+					if function.Parameters != nil { cloned[i].Parameters = copyValue(reflect.ValueOf(function.Parameters)).Interface().([]int) }
+					if function.OptionalParameters != nil { cloned[i].OptionalParameters = copyValue(reflect.ValueOf(function.OptionalParameters)).Interface().(map[int]bool) }
+					if function.Body != nil { cloned[i].Body = copyValue(reflect.ValueOf(function.Body)).Interface().([]ir.Statement) }
+					if function.Environment != nil { cloned[i].Environment = copyValue(reflect.ValueOf(function.Environment)).Interface().([]int) }
+					if function.FrameEnvironment != nil { cloned[i].FrameEnvironment = copyValue(reflect.ValueOf(function.FrameEnvironment)).Interface().([]int) }
+					if function.ReferenceParents != nil { cloned[i].ReferenceParents = copyValue(reflect.ValueOf(function.ReferenceParents)).Interface().([]int) }
+				}
+				return reflect.ValueOf(cloned)
 			}
 			result := reflect.MakeSlice(v.Type(), v.Len(), v.Len())
 			if speculative && latentSpecImmutable(v.Type().Elem()) {

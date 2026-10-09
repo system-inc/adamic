@@ -31,11 +31,12 @@ def stock_spans(filename):
     return span_indices[filename]
 all_kinds = Counter()
 boundaries_by_file = defaultdict(set)
+kind_codes = {name: int(code) for code,names in stock["syntax_kinds"].items() for name in names}
 for row in rows[1:]:
-    for finding in row['findings']:
-        if finding.get('boundary_where'):
-            name = finding['boundary_where'].rsplit(':', 2)[0]
-            boundaries_by_file[name].add((finding.get('start', 0), finding['end']))
+    for boundary in row.get('failed_boundaries', []):
+        kind = boundary['kind'].removeprefix('Kind')
+        assert kind in kind_codes, boundary
+        boundaries_by_file[row['file']].add((boundary['start'], boundary['end'], kind_codes[kind]))
 for row in rows[1:]:
     relative = str(Path(row['file']).relative_to(root))
     witness = stock_files[relative]
@@ -62,7 +63,7 @@ for row in rows[1:]:
                 native_kind = finding['site_kind'].removeprefix('Kind')
                 candidates = [node for node in candidates if native_kind == node['kind'] or
                               native_kind in stock.get('syntax_kinds', {}).get(str(node.get('kind_code', -1)), [])]
-            depths = {sum(tuple(span) in boundaries for span in node['ancestors']) for node in candidates}
+            depths = {sum((*span, kind) in boundaries for span,kind in zip(node["ancestors"],node["ancestor_kinds"],strict=True)) for node in candidates}
             if depths:
                 assert finding['depth'] in depths, (relative, finding, depths)
                 depth_matches += 1
@@ -72,7 +73,7 @@ for row in rows[1:]:
             depth_without_source += 1
         if finding['kind'] not in counts or not finding['where'].startswith(str(root) + '/'):
             continue
-        key = tuple(finding[k] for k in ('kind', 'where', 'reason', 'text'))
+        key = tuple(finding[k] for k in ('kind', 'where', 'reason', 'text')) + (finding.get('site_where', ''), finding.get('site_kind', ''), finding.get('site_start', 0), finding.get('site_end', 0))
         if key in seen:
             continue
         seen.add(key)
