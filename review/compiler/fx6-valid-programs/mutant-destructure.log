@@ -1,0 +1,8 @@
+=== RUN   TestFX6P53
+=== PAUSE TestFX6P53
+=== CONT  TestFX6P53
+    fx6_valid_test.go:45: JavaScript backend stdout = "", source Node = "n5\n"
+--- FAIL: TestFX6P53 (0.13s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.142s
+FAIL

@@ -1,0 +1,33 @@
+=== RUN   TestFX6P35
+=== PAUSE TestFX6P35
+=== RUN   TestFX6P36
+=== PAUSE TestFX6P36
+=== RUN   TestFX6P37
+=== PAUSE TestFX6P37
+=== RUN   TestFX6P38
+=== PAUSE TestFX6P38
+=== RUN   TestFX6P51
+=== PAUSE TestFX6P51
+=== RUN   TestFX6P53
+=== PAUSE TestFX6P53
+=== RUN   TestFX6P70
+=== PAUSE TestFX6P70
+=== CONT  TestFX6P35
+=== CONT  TestFX6P51
+=== CONT  TestFX6P70
+=== CONT  TestFX6P53
+=== CONT  TestFX6P37
+=== NAME  TestFX6P70
+    fx6_valid_test.go:49: Lower refused acceptance row: /tmp/adamic-gate/TestFX6P703373655928/001/main.a:3:14: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)
+--- FAIL: TestFX6P70 (0.21s)
+=== CONT  TestFX6P38
+--- PASS: TestFX6P37 (0.50s)
+--- PASS: TestFX6P51 (0.50s)
+=== CONT  TestFX6P36
+--- PASS: TestFX6P35 (0.51s)
+--- PASS: TestFX6P53 (0.54s)
+--- PASS: TestFX6P38 (0.36s)
+--- PASS: TestFX6P36 (0.23s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.747s
+FAIL

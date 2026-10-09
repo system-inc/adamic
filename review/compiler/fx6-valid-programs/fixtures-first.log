@@ -1,0 +1,35 @@
+=== RUN   TestFX6P35
+=== PAUSE TestFX6P35
+=== RUN   TestFX6P36
+=== PAUSE TestFX6P36
+=== RUN   TestFX6P37
+=== PAUSE TestFX6P37
+=== RUN   TestFX6P38
+=== PAUSE TestFX6P38
+=== RUN   TestFX6P51
+=== PAUSE TestFX6P51
+=== RUN   TestFX6P53
+=== PAUSE TestFX6P53
+=== RUN   TestFX6P70
+=== PAUSE TestFX6P70
+=== CONT  TestFX6P35
+=== CONT  TestFX6P38
+=== CONT  TestFX6P37
+=== CONT  TestFX6P53
+=== CONT  TestFX6P70
+=== NAME  TestFX6P53
+    fx6_valid_test.go:44: Lower refused acceptance row: /tmp/adamic-gate/TestFX6P531686922726/001/main.a:6:8: stage 0 can't lower a destructured name held otherwise than its field yet
+--- FAIL: TestFX6P53 (0.43s)
+=== CONT  TestFX6P51
+=== NAME  TestFX6P70
+    fx6_valid_test.go:49: Lower refused acceptance row: /tmp/adamic-gate/TestFX6P70937053950/001/main.a:2:14: stage 0 can't lower a readonly [number, number] seen as a { readonly length: number; } (a tuple is held as an object, not an array, so far; write it as an array where it's made, or copy it into one: [pair[0], pair[1]]) yet
+--- FAIL: TestFX6P70 (0.41s)
+=== CONT  TestFX6P36
+--- PASS: TestFX6P37 (0.92s)
+--- PASS: TestFX6P38 (1.00s)
+--- PASS: TestFX6P35 (1.01s)
+--- PASS: TestFX6P36 (0.53s)
+--- PASS: TestFX6P51 (0.74s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	1.269s
+FAIL

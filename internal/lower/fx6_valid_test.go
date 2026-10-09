@@ -43,3 +43,8 @@ func TestFX6P53(t *testing.T) {
 	t.Parallel()
 	lowersAndAgreesWithNode(t, fx6Source(t, "p53"))
 }
+
+func TestFX6P38Number(t *testing.T) {
+	t.Parallel()
+	lowersAndAgreesWithNode(t, fx6Source(t, "p38_number"))
+}

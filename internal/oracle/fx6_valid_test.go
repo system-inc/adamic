@@ -10,6 +10,11 @@ func init() {
 		path    string
 		lowers  bool
 		checked bool
+	}{"internal/lower/testdata/fx6/p38_number.a", true, false})
+	fixtures = append(fixtures, struct {
+		path    string
+		lowers  bool
+		checked bool
 	}{"internal/lower/testdata/fx6/p51_wrong.a", true, true})
 	fixtures = append(fixtures, struct {
 		path    string
@@ -202,4 +207,23 @@ func TestFX6P49(t *testing.T) {
 func TestFX6P51Wrong(t *testing.T) {
 	t.Parallel()
 	fx6CheckedStop(t, "p51_wrong", "adamic: panic: field read failed: value (field value) expected Target, found function with incompatible parameter representations")
+}
+func TestFX6P38Number(t *testing.T) {
+	t.Parallel()
+	path, err := filepath.Abs("../../internal/lower/testdata/fx6/p38_number.a")
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	want := onNode(t, path)
+	t.Logf("Node: exit=%d stdout=%q stderr=%q", want.exitCode, want.stdout, want.stderr)
+	for backend, got := range map[string]run{"native": releasedUncached(t, program), "sanitized": func() run { got, _ := nativelyUncached(t, program); return got }(), "javascript": onJavaScriptBackend(t, program)} {
+		t.Logf("%s: exit=%d stdout=%q stderr=%q", backend, got.exitCode, got.stdout, got.stderr)
+		if difference := disagreement(want, got); difference != "" {
+			t.Errorf("%s: %s", backend, difference)
+		}
+	}
 }

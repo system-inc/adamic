@@ -1,8 +1,6 @@
-diff --git b/internal/lower/interface_cast.go a/internal/lower/interface_cast.go
-index 57d850fd..8ca15d7b 100644
---- b/internal/lower/interface_cast.go
-+++ a/internal/lower/interface_cast.go
-@@ -32,8 +32,9 @@ func (l *lowering) interfaceCast(node *ast.Node, value ir.Expression, source, ta
+--- a/internal/lower/interface_cast.go
++++ b/internal/lower/interface_cast.go
+@@ -32,8 +32,9 @@
  	return nil, nil
  }
  
@@ -14,17 +12,17 @@ index 57d850fd..8ca15d7b 100644
  func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Type) (ir.Expression, error) {
  	if target.Flags()&checker.TypeFlagsUnion != 0 {
  		return l.legacyView(node, value, target)
-@@ -45,6 +46,9 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Typ
+@@ -44,6 +45,9 @@
+ 	}
  	if l.result.CheckedFields == nil {
  		l.result.CheckedFields = map[string]bool{}
- 	}
++	}
 +	for field := range fields {
 +		l.result.CheckedFields[field] = true
-+	}
+ 	}
  
  	modules, err := l.moduleOrder(l.program.Files()[0])
- 	if err != nil {
-@@ -58,7 +62,7 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Typ
+@@ -58,7 +62,7 @@
  		}
  		// Optional receivers and optional/accessor slots still need a representation
  		// conversion that the V1 checked read boundary cannot emit.
@@ -33,7 +31,7 @@ index 57d850fd..8ca15d7b 100644
  			access := part.AsPropertyAccessExpression()
  			if base, _ := l.representation(l.checker.GetTypeAtLocation(access.Expression)); base == ir.Object {
  				field := l.checker.GetSymbolAtLocation(part.Name())
-@@ -67,7 +71,7 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Typ
+@@ -67,7 +71,7 @@
  				}
  			}
  		}
@@ -42,7 +40,7 @@ index 57d850fd..8ca15d7b 100644
  			if symbol := l.checker.GetSymbolAtLocation(part.Name()); symbol != nil {
  				of, _ := l.representation(l.checker.GetTypeOfSymbol(symbol))
  				if of == ir.Object {
-@@ -317,14 +321,6 @@ func (l *lowering) viewSchema(node *ast.Node, target *checker.Type) (map[string]
+@@ -317,14 +321,6 @@
  		contract := l.result.ViewContracts[id-1]
  		for _, field := range contract.Fields {
  			fields[field.Name] = true
@@ -57,7 +55,7 @@ index 57d850fd..8ca15d7b 100644
  			visit(field.Contract)
  		}
  		for _, member := range contract.Members {
-@@ -386,7 +382,7 @@ func (l *lowering) legacyView(node *ast.Node, value ir.Expression, target *check
+@@ -386,7 +382,7 @@
  				}
  			}
  		}
@@ -66,7 +64,7 @@ index 57d850fd..8ca15d7b 100644
  			access := part.AsPropertyAccessExpression()
  			if base, _ := l.representation(l.checker.GetTypeAtLocation(access.Expression)); base == ir.Object {
  				field := l.checker.GetSymbolAtLocation(part.Name())
-@@ -413,7 +409,7 @@ func (l *lowering) legacyView(node *ast.Node, value ir.Expression, target *check
+@@ -413,7 +409,7 @@
  		l.result.CheckedFields = map[string]bool{}
  	}
  	for field := range fields {
@@ -75,19 +73,9 @@ index 57d850fd..8ca15d7b 100644
  	}
  	return value, nil
  }
-diff --git b/internal/lower/readiness.go a/internal/lower/readiness.go
-index bb002614..1955c537 100644
---- b/internal/lower/readiness.go
-+++ a/internal/lower/readiness.go
-@@ -8,7 +8,6 @@ import (
- 	"github.com/system-inc/adamic/internal/load"
- 	"reflect"
- 	"slices"
--	"strconv"
- )
- 
- func sourceExpression(node *ast.Node) string {
-@@ -285,7 +284,7 @@ func readinessStatement(statement ir.Statement, program *ir.Program, fields map[
+--- a/internal/lower/readiness.go
++++ b/internal/lower/readiness.go
+@@ -285,7 +285,7 @@
  				}
  				node = expression
  			case ir.Property:
@@ -96,21 +84,9 @@ index bb002614..1955c537 100644
  					expression.View = ""
  					expression.ViewType = ""
  					expression.ViewAllowed = nil
-@@ -442,9 +441,3 @@ stored:
- 	}
- 	return []ir.Statement{ir.Declare{Local: local, Value: value}}, present, assigned, nil
- }
--
--// A checked view member belongs to its static receiver type. Bare names remain
--// reserved for record storage, which has its own representation boundary.
--func checkedViewFieldKey(receiverTypeID int, name string) string {
--	return strconv.Itoa(receiverTypeID) + ":" + name
--}
-diff --git b/internal/lower/view_lazy.go a/internal/lower/view_lazy.go
-index ade3b1e0..5ae27fb9 100644
---- b/internal/lower/view_lazy.go
-+++ a/internal/lower/view_lazy.go
-@@ -165,7 +165,7 @@ func (l *lowering) checkLazyViewReads() error {
+--- a/internal/lower/view_lazy.go
++++ b/internal/lower/view_lazy.go
+@@ -165,7 +165,7 @@
  
  		switch read := node.(type) {
  		case ir.Property:
