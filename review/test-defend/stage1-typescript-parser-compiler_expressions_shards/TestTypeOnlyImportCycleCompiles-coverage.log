@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T14:22:32.284335515Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/typescript/parser"}
+{"Time":"2026-10-09T14:22:32.292357095Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestTypeOnlyImportCycleCompiles"}
+{"Time":"2026-10-09T14:22:32.292425926Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestTypeOnlyImportCycleCompiles","Output":"=== RUN   TestTypeOnlyImportCycleCompiles\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:22:32.292442661Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestTypeOnlyImportCycleCompiles","Output":"=== PAUSE TestTypeOnlyImportCycleCompiles\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:22:32.292445084Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestTypeOnlyImportCycleCompiles"}
+{"Time":"2026-10-09T14:22:32.292449451Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestTypeOnlyImportCycleCompiles"}
+{"Time":"2026-10-09T14:22:32.292451063Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestTypeOnlyImportCycleCompiles","Output":"=== CONT  TestTypeOnlyImportCycleCompiles\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:22:32.558725624Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestTypeOnlyImportCycleCompiles","Output":"--- PASS: TestTypeOnlyImportCycleCompiles (0.27s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:22:32.558787085Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestTypeOnlyImportCycleCompiles","Elapsed":0.27}
+{"Time":"2026-10-09T14:22:32.558809007Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:22:32.565121351Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"coverage: 13.4% of statements in ./internal/load, ./internal/lower, ./internal/native, ./internal/javascript\n"}
+{"Time":"2026-10-09T14:22:32.585050374Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"ok  \tgithub.com/system-inc/adamic/stage1/typescript/parser\t0.300s\tcoverage: 13.4% of statements in ./internal/load, ./internal/lower, ./internal/native, ./internal/javascript\n"}
+{"Time":"2026-10-09T14:22:32.585088099Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Elapsed":0.301}

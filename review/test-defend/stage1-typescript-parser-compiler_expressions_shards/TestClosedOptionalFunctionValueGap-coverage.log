@@ -1,0 +1,9 @@
+{"Time":"2026-10-09T14:22:34.552181311Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/typescript/parser"}
+{"Time":"2026-10-09T14:22:34.558979151Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestClosedOptionalFunctionValueGap"}
+{"Time":"2026-10-09T14:22:34.55905273Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestClosedOptionalFunctionValueGap","Output":"=== RUN   TestClosedOptionalFunctionValueGap\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:22:34.888929673Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestClosedOptionalFunctionValueGap","Output":"--- PASS: TestClosedOptionalFunctionValueGap (0.33s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:22:34.889714742Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestClosedOptionalFunctionValueGap","Elapsed":0.33}
+{"Time":"2026-10-09T14:22:34.889744596Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:22:34.894980441Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"coverage: 10.5% of statements in ./internal/load, ./internal/lower, ./internal/native, ./internal/javascript\n"}
+{"Time":"2026-10-09T14:22:34.915371966Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"ok  \tgithub.com/system-inc/adamic/stage1/typescript/parser\t0.362s\tcoverage: 10.5% of statements in ./internal/load, ./internal/lower, ./internal/native, ./internal/javascript\n"}
+{"Time":"2026-10-09T14:22:34.915410563Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Elapsed":0.363}

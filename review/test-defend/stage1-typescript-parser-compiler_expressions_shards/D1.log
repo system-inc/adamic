@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T14:28:40.275581347Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/typescript/parser"}
+{"Time":"2026-10-09T14:28:40.285404986Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestClosedOptionalFunctionValueGap"}
+{"Time":"2026-10-09T14:28:40.28547532Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestClosedOptionalFunctionValueGap","Output":"=== RUN   TestClosedOptionalFunctionValueGap\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:28:40.643668949Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestClosedOptionalFunctionValueGap","Output":"--- PASS: TestClosedOptionalFunctionValueGap (0.36s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:28:40.643708368Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestClosedOptionalFunctionValueGap","Elapsed":0.36}
+{"Time":"2026-10-09T14:28:40.643735598Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestClosedConditionalEmptyArrayGap"}
+{"Time":"2026-10-09T14:28:40.643740265Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestClosedConditionalEmptyArrayGap","Output":"=== RUN   TestClosedConditionalEmptyArrayGap\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:28:41.003440749Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestClosedConditionalEmptyArrayGap","Output":"    gaps_test.go:178: JavaScript backend: \"0\\n\", Node \"1\\n\"\n","OutputType":"error"}
+{"Time":"2026-10-09T14:28:41.003798016Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestClosedConditionalEmptyArrayGap","Output":"--- FAIL: TestClosedConditionalEmptyArrayGap (0.36s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:28:41.003834981Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestClosedConditionalEmptyArrayGap","Elapsed":0.36}
+{"Time":"2026-10-09T14:28:41.00388869Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:28:41.005403416Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/typescript/parser\t0.729s\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:28:41.005427071Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Elapsed":0.73}
