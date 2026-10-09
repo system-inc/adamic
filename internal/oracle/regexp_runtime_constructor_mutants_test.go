@@ -154,11 +154,14 @@ func TestRuntimeConstructorBudgetStop(t *testing.T) {
 	}
 	// Returning 'no match' builds and exits cleanly; only Node's true answer
 	// catches it. The unreachable call keeps diagnostic code referenced.
-	changed := strings.Replace(string(runtime), mutation, `if (*steps >= limit) goto finished; `+mutation, 1) + "\n" + source
+	changed := "#define ADAMIC_REGEXP_RUNTIME_OWNER 1\n" + strings.Replace(string(runtime), mutation, `if (*steps >= limit) goto finished; `+mutation, 1) + "\n" + source
 	// Keep the archive's matcher symbols independent; its regular-engine
 	// helpers can still link without colliding with this instrumented copy.
+	// Enable constructor ownership in this copy and alias before including
+	// the headers so prototypes and method thunks use the same names as
+	// the instrumented definitions.
 	for _, name := range []string{"set_regular_enabled", "set_regular_mode", "set_step_limit", "read", "canonical", "word", "contains", "new_owned", "new", "done", "group_lookup", "property", "exec", "test", "match_all", "match", "iterator_step", "next", "search", "split", "replace"} {
-		changed = strings.ReplaceAll(changed, "adamic_regex_"+name+"(", "adamic_regex_mutant_"+name+"(")
+		changed = "#define adamic_regex_" + name + " adamic_regex_mutant_" + name + "\n" + changed
 	}
 	mutant := runtimeConstructorMutant(t, changed)
 	if d := disagreement(expected, mutant); d != "stdout differs" {
