@@ -1,0 +1,11 @@
+--- a/internal/testguard/guard.go
++++ b/internal/testguard/guard.go
+@@ -67,7 +67,7 @@
+ 	}
+ 	done := make(chan error, 1)
+ 	go func() { done <- command.Wait() }()
+-	timer := time.NewTimer(ceiling)
++	timer := time.NewTimer(budget)
+ 	defer timer.Stop()
+ 	select {
+ 	case err = <-done:

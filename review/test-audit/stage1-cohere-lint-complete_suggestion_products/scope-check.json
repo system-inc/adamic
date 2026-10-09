@@ -1,0 +1,26 @@
+{
+  "requested": [
+    "TestProduct_CompleteSuggestionGoOracle",
+    "TestProduct_CompleteSuggestionLowered",
+    "TestProduct_CompleteSuggestionMutantLowered",
+    "TestProduct_CompleteSuggestionNative",
+    "TestCompleteSuggestionSerialization_Setup",
+    "TestCompleteSuggestionSerialization_000",
+    "TestCompleteSuggestionSerialization_001",
+    "TestCompleteSuggestionSerialization_002",
+    "TestCompleteSuggestionSerialization_003",
+    "TestCompleteSuggestionSerialization_004",
+    "TestCompleteSuggestionSerialization_005",
+    "TestCompleteSuggestionSerialization_PlantedFailure",
+    "TestCompilerCorpusSourcesExcludeOnlyNamedFolders",
+    "TestCompilerGuardBackend",
+    "TestChildCPUHangGuard",
+    "TestChildWallBackstop",
+    "TestChildCPUWaitGuard",
+    "TestEmittedJavaScriptMismatch_000"
+  ],
+  "missing": [],
+  "union_added": "TestCompleteSuggestionSerialization",
+  "related_out_of_slice": "TestCompleteSuggestionSerialization_IsolatedShard",
+  "families_note": "Four product wrappers share one checker. Shard 000 has distinct field assertions; 001-003 compare full output; 004-005 witness deliberate wrong edit. Together with union and remaining requested tests this gives 12 rows, not the stated 13."
+}

@@ -1,0 +1,1 @@
+{"label": "M6", "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestChildCPUWaitGuard)$", "seconds": 13.893242982998345, "exit": 0}

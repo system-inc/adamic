@@ -1,0 +1,1 @@
+{"label": "emitted-individual-baseline", "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^TestEmittedJavaScriptMismatch_000$", "seconds": 93.78867756700129, "exit": 1}

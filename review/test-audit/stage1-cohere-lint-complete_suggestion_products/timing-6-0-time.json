@@ -1,0 +1,1 @@
+{"label": "timing-6-0", "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestCompilerCorpusSourcesExcludeOnlyNamedFolders)$", "seconds": 3.446526158000779, "exit": 0}

@@ -1,0 +1,1 @@
+{"label": "timing-1-1", "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestCompleteSuggestionSerialization_000)$", "seconds": 9.54238959400027, "exit": 0}

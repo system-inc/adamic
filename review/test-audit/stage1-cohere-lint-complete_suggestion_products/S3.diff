@@ -1,0 +1,11 @@
+--- a/stage1/cohere/lint/corpus_sources_test.go
++++ b/stage1/cohere/lint/corpus_sources_test.go
+@@ -32,7 +32,7 @@
+ 		}
+ 		fixture := false
+ 		for _, directory := range strings.Split(filepath.ToSlash(filepath.Dir(relative)), "/") {
+-			if slices.Contains(compilerCorpusFixtureFolders, directory) {
++			if !slices.Contains(compilerCorpusFixtureFolders, directory) {
+ 				fixture = true
+ 			}
+ 		}

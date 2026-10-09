@@ -1,0 +1,11 @@
+--- a/stage1/cohere/lint/suggestions.a
++++ b/stage1/cohere/lint/suggestions.a
+@@ -5,7 +5,7 @@
+     readonly text: string;
+     constructor(start: number, end: number, text: string) {
+         this.start = start;
+-        this.end = end;
++        this.end = end + 1;
+         this.text = text;
+     }
+ }

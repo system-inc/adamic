@@ -1,0 +1,99 @@
+{
+  "setup_seconds": 0,
+  "nproc": 5,
+  "npm_ci_seconds": 0.768,
+  "native_and_lowering_build_measurements": {
+    "M1": [
+      {
+        "product": "complete-suggestion-go-oracle",
+        "seconds": 6.11
+      },
+      {
+        "product": "complete-suggestion-lowered-false",
+        "seconds": 17.52
+      },
+      {
+        "product": "complete-suggestion-native",
+        "seconds": 40.17
+      },
+      {
+        "product": "complete-suggestion-lowered-true",
+        "seconds": 16.05
+      }
+    ],
+    "M2": [
+      {
+        "product": "complete-suggestion-go-oracle",
+        "seconds": 4.82
+      },
+      {
+        "product": "complete-suggestion-lowered-false",
+        "seconds": 17.68
+      },
+      {
+        "product": "complete-suggestion-native",
+        "seconds": 21.53
+      },
+      {
+        "product": "complete-suggestion-lowered-true",
+        "seconds": 16.12
+      }
+    ],
+    "M3": [
+      {
+        "product": "complete-suggestion-go-oracle",
+        "seconds": 4.51
+      },
+      {
+        "product": "complete-suggestion-lowered-false",
+        "seconds": 18.15
+      },
+      {
+        "product": "complete-suggestion-native",
+        "seconds": 21.28
+      },
+      {
+        "product": "complete-suggestion-lowered-true",
+        "seconds": 17.21
+      }
+    ],
+    "M4": [
+      {
+        "product": "complete-suggestion-go-oracle",
+        "seconds": 7.49
+      },
+      {
+        "product": "complete-suggestion-lowered-false",
+        "seconds": 19.73
+      },
+      {
+        "product": "complete-suggestion-native",
+        "seconds": 22.2
+      },
+      {
+        "product": "complete-suggestion-lowered-true",
+        "seconds": 17.81
+      }
+    ],
+    "P1B": [
+      {
+        "product": "complete-suggestion-go-oracle",
+        "seconds": 5.1
+      },
+      {
+        "product": "complete-suggestion-lowered-false",
+        "seconds": 14.29
+      },
+      {
+        "product": "complete-suggestion-native",
+        "seconds": 5.75
+      },
+      {
+        "product": "complete-suggestion-lowered-true",
+        "seconds": 19.74
+      }
+    ]
+  },
+  "measured_go_test_command_wall_seconds": 1362.3113308750071,
+  "note": "Build product measurements are nested in command timings; do not sum them with command wall seconds. Go compilation/launch overhead is not separately isolated. Reading, source editing, vet and publication are outside the summed go-test timings."
+}

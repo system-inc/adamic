@@ -1,0 +1,11 @@
+--- a/stage1/cohere/lint/complete_suggestion_serialization_shards_test.go
++++ b/stage1/cohere/lint/complete_suggestion_serialization_shards_test.go
+@@ -238,7 +238,7 @@
+ 		got = completeSuggestionNode(ctx, t, p.mutantModule, p.path).output
+ 	}
+ 	if shard >= 4 {
+-		if bytes.Equal(got, p.want) {
++		if true {
+ 			t.Fatalf("second suggestion edit mutant survived on %s", completeSuggestionCases[shard])
+ 		}
+ 		t.Logf("second suggestion edit mutant caught on %s: %s", completeSuggestionCases[shard], difference(got, p.want))

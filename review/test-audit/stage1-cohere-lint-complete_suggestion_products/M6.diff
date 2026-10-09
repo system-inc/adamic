@@ -1,0 +1,11 @@
+--- a/internal/testguard/guard.go
++++ b/internal/testguard/guard.go
+@@ -54,7 +54,7 @@
+ 		return err
+ 	}
+ 	argv := append([]string{command.Path}, command.Args[1:]...)
+-	seconds := uint64((budget + time.Second - 1) / time.Second)
++	seconds := uint64(1)
+ 	command.Path = executable
+ 	command.Args = append([]string{executable, "--adamic-cpu-child", strconv.FormatUint(seconds, 10)}, argv...)
+ 	if command.Env == nil {

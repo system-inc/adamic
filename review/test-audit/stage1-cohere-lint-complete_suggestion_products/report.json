@@ -1,0 +1,512 @@
+[
+  {
+    "id": "P",
+    "test": "TestProduct_CompleteSuggestion family",
+    "members": [
+      "TestProduct_CompleteSuggestionGoOracle",
+      "TestProduct_CompleteSuggestionLowered",
+      "TestProduct_CompleteSuggestionMutantLowered",
+      "TestProduct_CompleteSuggestionNative"
+    ],
+    "package": "stage1/cohere/lint",
+    "file": [
+      "stage1/cohere/lint/complete_suggestion_products_test.go:9",
+      "stage1/cohere/lint/complete_suggestion_products_test.go:16",
+      "stage1/cohere/lint/complete_suggestion_products_test.go:23",
+      "stage1/cohere/lint/complete_suggestion_products_test.go:30"
+    ],
+    "seconds": 3.022,
+    "timing_samples": [
+      3.022,
+      3.702,
+      2.927
+    ],
+    "oracle": "Build success and artifact paths only; no comparison of lint answers.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "S2: complete_suggestion_products_test.go:33: build complete-suggestion-native: open /workspace/u107-cache/S2/9f9e6206cab447e21b1b199d744a1a829f20731959ddacd2ce0ff7ff10b647dc/lint.c: no such file or directory",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "P",
+      "F",
+      "A",
+      "MW",
+      "S",
+      "C",
+      "H",
+      "CH",
+      "WB",
+      "CW"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestProduct_CompleteSuggestionNative)$; complete_suggestion_products_test.go:33: build complete-suggestion-native: open /workspace/u107-cache/S2/9f9e6206cab447e21b1b199d744a1a829f20731959ddacd2ce0ff7ff10b647dc/lint.c: no such file or directory"
+  },
+  {
+    "id": "F",
+    "test": "TestCompleteSuggestionSerialization_000",
+    "members": [
+      "TestCompleteSuggestionSerialization_000"
+    ],
+    "package": "stage1/cohere/lint",
+    "file": [
+      "stage1/cohere/lint/complete_suggestion_serialization_shards_test.go:254"
+    ],
+    "seconds": 6.789,
+    "timing_samples": [
+      6.593,
+      6.789,
+      8.392
+    ],
+    "oracle": "Hand-written oracle field substrings; checks captured Go fixture output, not port output.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "S0: complete_suggestion_serialization_shards_test.go:256: missing field \"suggestion\\tfirst\":",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "P",
+      "F",
+      "A",
+      "MW",
+      "S",
+      "C",
+      "H",
+      "CH",
+      "WB",
+      "CW"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestCompleteSuggestionSerialization_000)$; complete_suggestion_serialization_shards_test.go:256: missing field \"suggestion\\tfirst\":"
+  },
+  {
+    "id": "A",
+    "test": "TestCompleteSuggestionSerialization agreement family",
+    "members": [
+      "TestCompleteSuggestionSerialization_001",
+      "TestCompleteSuggestionSerialization_002",
+      "TestCompleteSuggestionSerialization_003",
+      "TestCompleteSuggestionSerialization"
+    ],
+    "package": "stage1/cohere/lint",
+    "file": [
+      "stage1/cohere/lint/complete_suggestion_serialization_shards_test.go:258",
+      "stage1/cohere/lint/complete_suggestion_serialization_shards_test.go:262",
+      "stage1/cohere/lint/complete_suggestion_serialization_shards_test.go:266",
+      "stage1/cohere/lint/harness_test.go:40"
+    ],
+    "seconds": 7.107,
+    "timing_samples": [
+      8.62,
+      7.107,
+      6.779
+    ],
+    "oracle": "Go cohere complete serialized bytes versus source Node, emitted JavaScript and sanitized native; union has a synthetic ownership assertion.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M1",
+      "M2",
+      "M4"
+    ],
+    "unique_kills": [
+      "M1",
+      "M2",
+      "M4"
+    ],
+    "last_proven_fail": "M4: complete_suggestion_serialization_shards_test.go:268: sanitized native: case 0 line 12: port \"\", Go \"fixed\\t/*\\\\ud83d\\\\ude00*/debugger;\\\\u000a\"",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P1B"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "P",
+      "F",
+      "A",
+      "MW",
+      "S",
+      "C",
+      "H",
+      "CH",
+      "WB",
+      "CW"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestProduct_CompleteSuggestionGoOracle|TestProduct_CompleteSuggestionLowered|TestProduct_CompleteSuggestionMutantLowered|TestProduct_CompleteSuggestionNative|TestCompleteSuggestionSerialization_Setup|TestCompleteSuggestionSerialization_000|TestCompleteSuggestionSerialization_001|TestCompleteSuggestionSerialization_002|TestCompleteSuggestionSerialization_003|TestCompleteSuggestionSerialization_004|TestCompleteSuggestionSerialization_005|TestCompilerCorpusSourcesExcludeOnlyNamedFolders|TestCompilerGuardBackend|TestChildCPUHangGuard|TestChildWallBackstop|TestChildCPUWaitGuard|TestCompleteSuggestionSerialization)$; complete_suggestion_serialization_shards_test.go:268: sanitized native: case 0 line 12: port \"\", Go \"fixed\\t/*\\\\ud83d\\\\ude00*/debugger;\\\\u000a\""
+  },
+  {
+    "id": "MW",
+    "test": "TestCompleteSuggestionSerialization mutant family",
+    "members": [
+      "TestCompleteSuggestionSerialization_004",
+      "TestCompleteSuggestionSerialization_005"
+    ],
+    "package": "stage1/cohere/lint",
+    "file": [
+      "stage1/cohere/lint/complete_suggestion_serialization_shards_test.go:270",
+      "stage1/cohere/lint/complete_suggestion_serialization_shards_test.go:274"
+    ],
+    "seconds": 7.331,
+    "timing_samples": [
+      7.331,
+      6.809,
+      8.05
+    ],
+    "oracle": "Go cohere bytes must differ from the built-in wrong second-edit endpoint. W2 forces that comparison to claim agreement.",
+    "oracle_kind": "external-run",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W2: complete_suggestion_serialization_shards_test.go:276: second suggestion edit mutant survived on mutant emitted JavaScript",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "P",
+      "F",
+      "A",
+      "MW",
+      "S",
+      "C",
+      "H",
+      "CH",
+      "WB",
+      "CW"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestCompleteSuggestionSerialization_004|TestCompleteSuggestionSerialization_005)$; complete_suggestion_serialization_shards_test.go:276: second suggestion edit mutant survived on mutant emitted JavaScript"
+  },
+  {
+    "id": "S",
+    "test": "TestCompleteSuggestionSerialization_Setup",
+    "members": [
+      "TestCompleteSuggestionSerialization_Setup"
+    ],
+    "package": "stage1/cohere/lint",
+    "file": [
+      "stage1/cohere/lint/complete_suggestion_serialization_shards_test.go:79"
+    ],
+    "seconds": 6.604,
+    "timing_samples": [
+      6.604,
+      6.876,
+      6.566
+    ],
+    "oracle": "Shared products must be prepared and readiness recorded.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "S1: complete_suggestion_serialization_shards_test.go:81: complete suggestion shared preparation failed",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "P",
+      "F",
+      "A",
+      "MW",
+      "S",
+      "C",
+      "H",
+      "CH",
+      "WB",
+      "CW"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestCompleteSuggestionSerialization_Setup)$; complete_suggestion_serialization_shards_test.go:81: complete suggestion shared preparation failed"
+  },
+  {
+    "id": "PF",
+    "test": "TestCompleteSuggestionSerialization_PlantedFailure",
+    "members": [
+      "TestCompleteSuggestionSerialization_PlantedFailure"
+    ],
+    "package": "stage1/cohere/lint",
+    "file": [
+      "stage1/cohere/lint/complete_suggestion_serialization_shards_test.go:280"
+    ],
+    "seconds": 52.348,
+    "timing_samples": [
+      49.746,
+      54.843,
+      52.348
+    ],
+    "oracle": "Exactly shard 001 must fail and contain planted suggestion disagreement.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W1: complete_suggestion_serialization_shards_test.go:303: wrong planted failure: <nil>; failures []",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestCompleteSuggestionSerialization_PlantedFailure)$; complete_suggestion_serialization_shards_test.go:303: wrong planted failure: <nil>; failures []"
+  },
+  {
+    "id": "C",
+    "test": "TestCompilerCorpusSourcesExcludeOnlyNamedFolders",
+    "members": [
+      "TestCompilerCorpusSourcesExcludeOnlyNamedFolders"
+    ],
+    "package": "stage1/cohere/lint",
+    "file": [
+      "stage1/cohere/lint/corpus_sources_test.go:52"
+    ],
+    "seconds": 0.144,
+    "timing_samples": [
+      0.143,
+      0.144,
+      0.215
+    ],
+    "oracle": "Exact hand-written retained paths and excluded folder names in a temporary git repository; git does not supply the expected answer.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "S3: corpus_sources_test.go:101: exclusion exceeded named directory contract or retained a fixture:",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "P",
+      "F",
+      "A",
+      "MW",
+      "S",
+      "C",
+      "H",
+      "CH",
+      "WB",
+      "CW"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestCompilerCorpusSourcesExcludeOnlyNamedFolders)$; corpus_sources_test.go:101: exclusion exceeded named directory contract or retained a fixture:"
+  },
+  {
+    "id": "H",
+    "test": "TestCompilerGuardBackend",
+    "members": [
+      "TestCompilerGuardBackend"
+    ],
+    "package": "stage1/cohere/lint",
+    "file": [
+      "stage1/cohere/lint/deadlines_test.go:27"
+    ],
+    "seconds": 0.05,
+    "timing_samples": [
+      0.05,
+      0.031,
+      0.052
+    ],
+    "oracle": "Dormant subprocess adapter; returns immediately without its parent environment. No independent assertion.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "helper",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "P",
+      "F",
+      "A",
+      "MW",
+      "S",
+      "C",
+      "H",
+      "CH",
+      "WB",
+      "CW"
+    ],
+    "evidence": "go test -list . ./stage1/cohere/lint/; No independent failing assertion required for helper.",
+    "parent": "compilerShardLauncher adapter in lint_test.go:408; git grep found no caller at the starting commit"
+  },
+  {
+    "id": "CH",
+    "test": "TestChildCPUHangGuard",
+    "members": [
+      "TestChildCPUHangGuard"
+    ],
+    "package": "stage1/cohere/lint",
+    "file": [
+      "stage1/cohere/lint/deadlines_test.go:51"
+    ],
+    "seconds": 1.557,
+    "timing_samples": [
+      1.4,
+      1.557,
+      2.242
+    ],
+    "oracle": "Node infinite-loop child must return a named CPU-guard error. W3 suppresses the failure report, while preserving the CPU limit.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W3: deadlines_test.go:61: loop guard: <nil>",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "P",
+      "F",
+      "A",
+      "MW",
+      "S",
+      "C",
+      "H",
+      "CH",
+      "WB",
+      "CW"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestChildCPUHangGuard)$; deadlines_test.go:61: loop guard: <nil>"
+  },
+  {
+    "id": "WB",
+    "test": "TestChildWallBackstop",
+    "members": [
+      "TestChildWallBackstop"
+    ],
+    "package": "stage1/cohere/lint",
+    "file": [
+      "stage1/cohere/lint/deadlines_test.go:66"
+    ],
+    "seconds": 0.303,
+    "timing_samples": [
+      0.342,
+      0.276,
+      0.303
+    ],
+    "oracle": "Sleeping Node child must return a named wall-backstop error. W4 suppresses the failure report, while preserving the kill.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W4: deadlines_test.go:72: backstop: <nil>",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "P",
+      "F",
+      "A",
+      "MW",
+      "S",
+      "C",
+      "H",
+      "CH",
+      "WB",
+      "CW"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestChildWallBackstop)$; deadlines_test.go:72: backstop: <nil>"
+  },
+  {
+    "id": "CW",
+    "test": "TestChildCPUWaitGuard",
+    "members": [
+      "TestChildCPUWaitGuard"
+    ],
+    "package": "stage1/cohere/lint",
+    "file": [
+      "stage1/cohere/lint/deadlines_test.go:79"
+    ],
+    "seconds": 1.791,
+    "timing_samples": [
+      1.899,
+      1.749,
+      1.791
+    ],
+    "oracle": "Node CPU/wait/CPU child must exit successfully, wall time exceed 1 second and CPU remain below 1 second; no stdout comparison.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M5"
+    ],
+    "unique_kills": [
+      "M5"
+    ],
+    "last_proven_fail": "M5: deadlines_test.go:84: node -e const start=process.cpuUsage(); while(Object.values(process.cpuUsage(start)).reduce((a,b)=>a+b,0) < 200000) {} setTimeout(()=>{const again=process.cpuUsage(); while(Object.values(process.cpuUsage(again)).reduce((a,b)=>a+b,0) < 200000) {}},1200);: wall backstop exceeded: ceiling 1h0m0s",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 2,
+    "probe_kills": [
+      "P2"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "CW"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestChildCPUWaitGuard)$; deadlines_test.go:84: node -e const start=process.cpuUsage(); while(Object.values(process.cpuUsage(start)).reduce((a,b)=>a+b,0) < 200000) {} setTimeout(()=>{const again=process.cpuUsage(); while(Object.values(process.cpuUsage(again)).reduce((a,b)=>a+b,0) < 200000) {}},1200);: wall backstop exceeded: ceiling 1h0m0s"
+  },
+  {
+    "id": "E",
+    "test": "TestEmittedJavaScriptMismatch_000",
+    "members": [
+      "TestEmittedJavaScriptMismatch_000"
+    ],
+    "package": "stage1/cohere/lint",
+    "file": [
+      "stage1/cohere/lint/emitted_javascript_shards_test.go:126"
+    ],
+    "seconds": null,
+    "timing_samples": [
+      null,
+      null,
+      null
+    ],
+    "oracle": "Go cohere bytes compared with source Node, emitted JavaScript and native; planted child must fail with the specific mismatch text. Preparation did not complete within the individual 90-second budget; witness weakening was not run.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "cannot-judge",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^TestEmittedJavaScriptMismatch_000$; emitted_javascript_shards_test.go:246: build emitted-mismatch-oracle 74012d67bef7 hit 1.00"
+  }
+]

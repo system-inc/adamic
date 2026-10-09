@@ -1,0 +1,1 @@
+{"label": "timing-7-0", "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestCompilerGuardBackend)$", "seconds": 3.060347904000082, "exit": 0}

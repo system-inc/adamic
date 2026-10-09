@@ -1,0 +1,42 @@
+[
+  {
+    "id": "M1",
+    "file": "stage1/cohere/lint/main.ts",
+    "line": 109,
+    "old": "complete = true;",
+    "new": "complete = false;",
+    "menu": "change constant"
+  },
+  {
+    "id": "M2",
+    "file": "stage1/cohere/lint/suggestions.a",
+    "line": 8,
+    "old": "this.end = end;",
+    "new": "this.end = end + 1;",
+    "menu": "off-by-one"
+  },
+  {
+    "id": "M3",
+    "file": "stage1/cohere/lint/main.ts",
+    "line": 49,
+    "old": "code < 128 ? 1",
+    "new": "code < 256 ? 1",
+    "menu": "change bound"
+  },
+  {
+    "id": "M4",
+    "file": "stage1/cohere/lint/main.ts",
+    "line": 144,
+    "old": "        console.log(`fixed\\t${written(fixed)}`);",
+    "new": "        ;",
+    "menu": "drop statement"
+  },
+  {
+    "id": "P1",
+    "file": "stage1/cohere/lint/main.ts",
+    "line": 11,
+    "old": "function run(row: string, countOnly: boolean): number {",
+    "new": "function run(row: string, countOnly: boolean): number {\n    return 0;",
+    "menu": "empty-answer probe"
+  }
+]

@@ -1,0 +1,109 @@
+{
+  "row_aliases": {
+    "P": "TestProduct_CompleteSuggestion family",
+    "F": "TestCompleteSuggestionSerialization_000",
+    "A": "TestCompleteSuggestionSerialization agreement family",
+    "MW": "TestCompleteSuggestionSerialization mutant family",
+    "S": "TestCompleteSuggestionSerialization_Setup",
+    "PF": "TestCompleteSuggestionSerialization_PlantedFailure",
+    "C": "TestCompilerCorpusSourcesExcludeOnlyNamedFolders",
+    "H": "TestCompilerGuardBackend",
+    "CH": "TestChildCPUHangGuard",
+    "WB": "TestChildWallBackstop",
+    "CW": "TestChildCPUWaitGuard",
+    "E": "TestEmittedJavaScriptMismatch_000"
+  },
+  "production": {
+    "M1": {
+      "failed_tests": [
+        "TestCompleteSuggestionSerialization_003",
+        "TestCompleteSuggestionSerialization_002",
+        "TestCompleteSuggestionSerialization_001"
+      ],
+      "failed_rows": [
+        "A"
+      ]
+    },
+    "M2": {
+      "failed_tests": [
+        "TestCompleteSuggestionSerialization_003",
+        "TestCompleteSuggestionSerialization_002",
+        "TestCompleteSuggestionSerialization_001"
+      ],
+      "failed_rows": [
+        "A"
+      ]
+    },
+    "M3": {
+      "failed_tests": [],
+      "failed_rows": []
+    },
+    "M4": {
+      "failed_tests": [
+        "TestCompleteSuggestionSerialization_003",
+        "TestCompleteSuggestionSerialization_002",
+        "TestCompleteSuggestionSerialization_001"
+      ],
+      "failed_rows": [
+        "A"
+      ]
+    },
+    "M5": {
+      "failed_tests": [
+        "TestChildCPUWaitGuard"
+      ],
+      "failed_rows": [
+        "CW"
+      ]
+    },
+    "M6": {
+      "failed_tests": [],
+      "failed_rows": []
+    }
+  },
+  "probes": {
+    "P1B": {
+      "failed_tests": [
+        "TestCompleteSuggestionSerialization_003",
+        "TestCompleteSuggestionSerialization_001",
+        "TestCompleteSuggestionSerialization_002"
+      ],
+      "valid_compilation": true
+    },
+    "P2": {
+      "failed_tests": [
+        "TestChildCPUWaitGuard"
+      ],
+      "valid_compilation": true
+    }
+  },
+  "checks": {
+    "S0": [
+      "TestCompleteSuggestionSerialization_000"
+    ],
+    "S1": [
+      "TestCompleteSuggestionSerialization_Setup"
+    ],
+    "S2": [
+      "TestProduct_CompleteSuggestionNative"
+    ],
+    "S3": [
+      "TestCompilerCorpusSourcesExcludeOnlyNamedFolders"
+    ],
+    "W1": [
+      "TestCompleteSuggestionSerialization_PlantedFailure"
+    ],
+    "W2": [
+      "TestCompleteSuggestionSerialization_005",
+      "TestCompleteSuggestionSerialization_004"
+    ],
+    "W3": [
+      "TestChildCPUHangGuard"
+    ],
+    "W4": [
+      "TestChildWallBackstop"
+    ],
+    "W5": []
+  },
+  "unknown": "All other package rows and repo-wide kills. Witness production precondition failures never support verdicts."
+}

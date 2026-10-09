@@ -1,0 +1,103 @@
+[
+  [
+    "S0",
+    "stage1/cohere/lint/complete_suggestion_serialization_shards_test.go",
+    "p.want = completeSuggestionExecute(ctx, t, \"\", p.oracle, \"--manifest\", p.path).output",
+    "p.want = nil",
+    [
+      "TestCompleteSuggestionSerialization_000"
+    ],
+    "setup-check"
+  ],
+  [
+    "S1",
+    "stage1/cohere/lint/complete_suggestion_serialization_shards_test.go",
+    "completeSuggestionProductsReady = true",
+    "completeSuggestionProductsReady = false",
+    [
+      "TestCompleteSuggestionSerialization_Setup"
+    ],
+    "setup-check"
+  ],
+  [
+    "S2",
+    "stage1/cohere/lint/complete_suggestion_serialization_shards_test.go",
+    "return os.WriteFile(filepath.Join(out, \"lint.c\"), []byte(native.C(lowered)), 0644)",
+    "return os.WriteFile(filepath.Join(out, \"missing.c\"), []byte(native.C(lowered)), 0644)",
+    [
+      "TestProduct_CompleteSuggestionNative"
+    ],
+    "setup-check"
+  ],
+  [
+    "S3",
+    "stage1/cohere/lint/corpus_sources_test.go",
+    "slices.Contains(compilerCorpusFixtureFolders, directory)",
+    "!slices.Contains(compilerCorpusFixtureFolders, directory)",
+    [
+      "TestCompilerCorpusSourcesExcludeOnlyNamedFolders"
+    ],
+    "setup-check"
+  ],
+  [
+    "W1",
+    "stage1/cohere/lint/complete_suggestion_serialization_shards_test.go",
+    "return caseID != plantedID || bytes.Equal(got, want)",
+    "return true",
+    [
+      "TestCompleteSuggestionSerialization_PlantedFailure"
+    ],
+    "witness"
+  ],
+  [
+    "W2",
+    "stage1/cohere/lint/complete_suggestion_serialization_shards_test.go",
+    "if bytes.Equal(got, p.want) {",
+    "if true {",
+    [
+      "TestCompleteSuggestionSerialization_004",
+      "TestCompleteSuggestionSerialization_005"
+    ],
+    "witness"
+  ],
+  [
+    "W3",
+    "internal/testguard/guard.go",
+    "return fmt.Errorf(\"%s: child CPU hang guard exceeded: CPU %s, budget %s: %w\", label, cpu, budget, err)",
+    "return nil",
+    [
+      "TestChildCPUHangGuard"
+    ],
+    "witness"
+  ],
+  [
+    "W4",
+    "internal/testguard/guard.go",
+    "return fmt.Errorf(\"%s: wall backstop exceeded: ceiling %s\", label, ceiling)",
+    "return nil",
+    [
+      "TestChildWallBackstop"
+    ],
+    "witness"
+  ],
+  [
+    "M5",
+    "internal/testguard/guard.go",
+    "time.NewTimer(ceiling)",
+    "time.NewTimer(budget)",
+    [
+      "TestChildCPUWaitGuard"
+    ],
+    "change option"
+  ],
+  [
+    "M6",
+    "internal/testguard/guard.go",
+    "uint64((budget + time.Second - 1) / time.Second)",
+    "uint64(1)",
+    [
+      "TestChildCPUWaitGuard"
+    ],
+    "change constant"
+  ]
+]
