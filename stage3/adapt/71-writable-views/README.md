@@ -52,3 +52,26 @@ The corrected diagnostic follow-up removes nine sites. The tuple and fresh-alloc
 Batch composition: runtime fingerprints are captured from the input after earlier numbered adaptations. The unchanged proposed-file guard compares 71's output to that input before writing any file. family-guards.cjs plants runtime edits in each plan family; plan-mutants.cjs also plants an array-copy runtime edit. Both must be refused without source writes. Historical pristine-body hashes in the specifications are provenance, not a composition gate.
 
 Batch 4 verification: full apply and landing lane pass (106366 passing, one sanctioned API failure, zero pending), matching main. All three family runtime-edit mutants and all four plan mutants are rejected before source writes. See evidence/batch4-composition.json. Public API bytes match main; the three emitted JavaScript differences come from adaptation 41's void rewrites, outside this guard fix.
+
+Batch 5 composition: the convertConfigFileToObject sink plan expects exactly
+one signature returning AdamicJsonRecoveryObject, supplied by adaptation 43.
+Both its before and after patterns retain that return; 71 changes only the
+errors sink. The proposed-file runtime fingerprint check remains unchanged.
+The wrong-expected-type mutant replaces this plan's return with string and is
+refused by the exact shape guard. A proposed errors.push(undefined) runtime
+edit is separately refused by the unchanged file fingerprint check before any
+source write; all source hashes remain identical. The convertToJson plan likewise expects exactly one signature returning
+AdamicJsonRecoveryValue | undefined from 43, retaining that return in both
+patterns and changing only its errors sink. Each sink has an independent
+wrong-expected-type mutant; the unchanged runtime guards reject proposed body
+edits in all three plan families.
+
+Both composed sink patterns occur exactly once. Batch 5 full apply passes;
+all two wrong-type, three family runtime, and four plan mutants are rejected
+before source writes. [evidence/batch5-composition.json](evidence/batch5-composition.json)
+records these nine catches. Historical census counts are not remeasured here.
+
+Batch 5b repeats the full apply and all nine composition mutants on the
+45487a80 base, without either hidden-source branch. All mutants are rejected
+before source writes. [evidence/batch5b-composition.json](evidence/batch5b-composition.json)
+records this fresh run.

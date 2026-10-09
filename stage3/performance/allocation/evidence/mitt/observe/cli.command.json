@@ -1,0 +1,17 @@
+{
+  "argv": [
+    "/workspace/adamic-tools/bin/node",
+    "--expose-gc",
+    "/workspace/adamic/stage3/performance/allocation/observe.cjs",
+    "observe",
+    "/tmp/allocation-complete/mitt/observe",
+    "/tmp/allocation-complete/dependencies/node_modules/typescript/lib/_tsc.js",
+    "-",
+    "-p",
+    "/tmp/allocation-complete/mitt-source/allocation.json",
+    "--noEmit",
+    "--pretty",
+    "false"
+  ],
+  "cwd": "/tmp/allocation-complete/mitt-source"
+}
