@@ -276,6 +276,107 @@ class ConfigurationTests(unittest.TestCase):
         self.assertIn('/Users/kirkouimet/Projects/ahra/node_modules/.bin', plist['EnvironmentVariables']['PATH'])
 
 
+class WatchdogTests(unittest.TestCase):
+    """cloud/probe-90-watchdog.sh against a state directory, a recorded page command and a fixed clock."""
+
+    def setUp(self):
+        self.root = Path(tempfile.mkdtemp())
+        self.state = self.root / 'state'
+        self.state.mkdir()
+        self.pages = self.root / 'pages'
+        pager = self.root / 'page.sh'
+        pager.write_text('#!/bin/bash\nprintf "%s\\t%s\\n" "$1" "$2" >> "' + str(self.pages) + '"\n')
+        pager.chmod(0o755)
+        self.pager = pager
+        self.now = 1791580000
+
+    def tearDown(self):
+        shutil.rmtree(self.root)
+
+    # The probe's launchd line as `launchctl list` prints it: pid (or -) and last exit; empty when not loaded.
+    jobLine = '- 1'
+
+    def watch(self, minutesLater=0, pager=None):
+        jobScript = self.root / 'job.sh'
+        jobScript.write_text('#!/bin/bash\necho "%s"\n' % self.jobLine)
+        jobScript.chmod(0o755)
+        env = dict(os.environ, ADAMIC_FAST_GATE_WATCH_STATE=str(self.state), ADAMIC_PROBE_NOW=str(self.now + minutesLater * 60),
+                   ADAMIC_PROBE_PAGE=str(pager or self.pager), ADAMIC_PROBE_JOB=str(jobScript))
+        result = subprocess.run(['bash', str(here / 'probe-90-watchdog.sh')], env=env, capture_output=True, text=True)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        return result.stdout
+
+    def posted(self, minutesAgo):
+        (self.state / 'probe-90-posted').write_text('%d\n' % (self.now - minutesAgo * 60))
+
+    def paged(self):
+        return self.pages.read_text().splitlines() if self.pages.exists() else []
+
+    def test_a_post_20_minutes_old_is_quiet(self):
+        self.posted(20)
+        self.watch()
+        self.assertEqual(self.paged(), [])
+
+    def test_a_stopped_probe_pages_both_once_naming_the_age_and_launchd(self):
+        self.posted(40)
+        self.watch()
+        pages = self.paged()
+        self.assertEqual([page.split('\t')[0] for page in pages], ['system_adamic_release_verdict', 'system_adamic_developer_tools'])
+        self.assertIn('its last post on #awn479j was 40 min ago, over its 35-minute line', pages[0])
+        self.assertIn('com.adamic.probe-90 is loaded, not running, last exit 1', pages[0])
+        # The same silence five and ten minutes on pages nobody again.
+        self.watch(minutesLater=5)
+        self.watch(minutesLater=10)
+        self.assertEqual(len(self.paged()), 2)
+
+    def test_a_fresh_post_rearms_it(self):
+        self.posted(40)
+        self.watch()
+        self.posted(0)
+        self.watch()
+        self.assertEqual(len(self.paged()), 2)
+        # The next silence is a new episode and pages again.
+        self.watch(minutesLater=36)
+        self.assertEqual(len(self.paged()), 4)
+
+    def test_before_any_post_it_arms_and_pages_35_minutes_later(self):
+        output = self.watch()
+        self.assertIn('armed', output)
+        self.assertEqual(self.paged(), [])
+        self.watch(minutesLater=34)
+        self.assertEqual(self.paged(), [])
+        self.watch(minutesLater=36)
+        self.assertIn('no post on #awn479j since the watchdog armed', self.paged()[0])
+
+    def test_a_running_probe_and_an_unloaded_one_are_named(self):
+        self.posted(40)
+        self.jobLine = '65497 0'
+        self.watch()
+        self.assertIn('com.adamic.probe-90 is running (pid 65497)', self.paged()[0])
+        self.posted(41)
+        self.jobLine = ''
+        self.watch()
+        self.assertIn('com.adamic.probe-90 is not loaded', self.paged()[-1])
+
+    def test_a_page_that_reached_nobody_is_tried_again(self):
+        self.posted(40)
+        failing = self.root / 'fail.sh'
+        failing.write_text('#!/bin/bash\nexit 1\n')
+        failing.chmod(0o755)
+        self.watch(pager=failing)
+        self.assertFalse((self.state / 'probe-90-paged').exists())
+        self.watch(minutesLater=5)
+        self.assertEqual(len(self.paged()), 2)
+
+    def test_the_watchdog_plist(self):
+        with open(here / 'probe-90' / 'com.adamic.probe-90-watchdog.plist', 'rb') as handle:
+            plist = plistlib.load(handle)
+        self.assertEqual(plist['Label'], 'com.adamic.probe-90-watchdog')
+        self.assertEqual(plist['StartInterval'], 300)
+        self.assertTrue(plist['ProgramArguments'][-1].endswith('/cloud/probe-90-watchdog.sh'))
+        self.assertIn('/Users/kirkouimet/Projects/ahra/node_modules/.bin', plist['EnvironmentVariables']['PATH'])
+
+
 class DryRunTests(unittest.TestCase):
     """cloud/probe-90.sh --dry-run in a copy of its tools beside a local origin: the commit it would gate."""
 
@@ -308,7 +409,8 @@ class DryRunTests(unittest.TestCase):
 
     def run_probe(self, *arguments, **environment):
         environment.setdefault('LOOM_CLOCK', str(self.root / 'no-clock.py'))
-        env = dict(os.environ, ADAMIC_FAST_GATE_WATCH_STATE=str(self.state), ADAMIC_PROBE_POST='0', **environment)
+        environment.setdefault('ADAMIC_PROBE_POST', '0')
+        env = dict(os.environ, ADAMIC_FAST_GATE_WATCH_STATE=str(self.state), **environment)
         return subprocess.run(['bash', str(self.tools / 'cloud' / 'probe-90.sh'), *arguments], env=env, capture_output=True, text=True)
 
     def commitOf(self, output):
@@ -358,6 +460,22 @@ class DryRunTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         self.assertIn('no clock:', result.stdout)
         self.commitOf(result.stdout)
+
+    def test_a_post_stamps_the_watchdogs_clock(self):
+        # A real (not dry) run with no time to wait: it pushes to the local origin, posts its no-verdict line through a
+        # stand-in ahra, stamps probe-90-posted for cloud/probe-90-watchdog.sh, and deletes its branch.
+        bin = self.root / 'bin'
+        bin.mkdir()
+        (bin / 'ahra').write_text('#!/bin/bash\necho "$@" >> "' + str(self.root / 'ahra-calls') + '"\n')
+        (bin / 'ahra').chmod(0o755)
+        before = int(datetime.now(timezone.utc).timestamp())
+        result = self.run_probe(ADAMIC_PROBE_POST='1', ADAMIC_PROBE_SECONDS='0', ADAMIC_FAST_GATE_AHRA_DIR=str(self.root),
+                                LOOM_FAST_JOBS=str(self.root / 'jobs'), ADAMIC_PROBE_WATCH_LOG=str(self.root / 'watch.log'),
+                                PATH=str(bin) + os.pathsep + os.environ['PATH'])
+        self.assertIn('posted on #awn479j', result.stdout, result.stdout + result.stderr)
+        self.assertIn('tasks status awn479j', (self.root / 'ahra-calls').read_text())
+        self.assertGreaterEqual(int((self.state / 'probe-90-posted').read_text()), before)
+        self.assertNotIn('probe-90', self.git('ls-remote', 'origin', cwd=self.tools))
 
     def test_a_skipped_branch_is_never_made(self):
         (self.state / 'skip-globs').write_text('devtools/probe-90-* paused by hand\n')

@@ -60,7 +60,10 @@ post() {
   # ahra takes at most 160 characters on one line.
   local line
   line=$(printf '%s' "$1" | tr '\n' ' ' | cut -c1-160)
-  (cd "${ahraDirectory}" && ahra tasks status "${task}" "${line}" --auto) && say "posted on #${task}: ${line}"
+  (cd "${ahraDirectory}" && ahra tasks status "${task}" "${line}" --auto) || return 1
+  # The watchdog (cloud/probe-90-watchdog.sh) pages when this stamp grows older than a cycle and a bit.
+  date -u +%s > "${state}/probe-90-posted"
+  say "posted on #${task}: ${line}"
 }
 
 stamp=$(date -u +%Y%m%dT%H%M%SZ)
