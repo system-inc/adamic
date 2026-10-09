@@ -104,10 +104,10 @@ func recoveryOracle(t *testing.T, s *recoverySetup) string {
 	})
 	return filepath.Join(dir, "oracle")
 }
-func recoveryPort(t *testing.T, s *recoverySetup, path string) (string, string) {
+func recoveryLowered(t *testing.T, s *recoverySetup, path string) string {
 	t.Helper()
 	inputs := recoveryCacheInputs(t, path)
-	lowered := recoveryProduct(t, s, inputs, func(dir string) error {
+	return recoveryProduct(t, s, inputs, func(dir string) error {
 		program, err := load.Load([]string{path})
 		if err != nil {
 			return err
@@ -121,11 +121,16 @@ func recoveryPort(t *testing.T, s *recoverySetup, path string) (string, string) 
 		}
 		return os.WriteFile(filepath.Join(dir, "port.mjs"), []byte(javascript.JavaScript(ir)), 0644)
 	})
+}
+
+func recoveryPort(t *testing.T, s *recoverySetup, path string) (string, string) {
+	t.Helper()
+	lowered := recoveryLowered(t, s, path)
 	code, err := os.ReadFile(filepath.Join(lowered, "port.c"))
 	if err != nil {
 		t.Fatal(err)
 	}
-	inputs = buildcache.Inputs{
+	inputs := buildcache.Inputs{
 		Name:      "estree-sanitized-native",
 		Files:     []string{"internal/native/runtime", "internal/native/native.go", "internal/native/library.go", "stage1/cohere/estree/recovery_cache_test.go"},
 		Flags:     append(native.Flags(native.Options{Sanitize: true}), fmt.Sprintf("source-sha256=%x", sha256.Sum256(code)), "relative-source-names", "canonical-debug-prefix=/adamic-estree"),
@@ -285,6 +290,7 @@ func proveRecoveryVerdict(t *testing.T, cases []recoveryCase, count int, mode st
 	t.Logf("planted %s %s failed only %s", mode, cases[planted].id, owner)
 }
 func TestRecoveryShardProofChild(t *testing.T) {
+	t.Parallel()
 	data := os.Getenv("ADAMIC_ESTREE_SHARD_PROOF")
 	if data == "" {
 		return
