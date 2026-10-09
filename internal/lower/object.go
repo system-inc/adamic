@@ -224,6 +224,11 @@ func (l *lowering) arrayLiteral(node *ast.Node) (ir.Expression, error) {
 	literal := ir.ArrayLiteral{Element: element}
 	declared := l.checker.GetContextualType(node, checker.ContextFlagsNone)
 	if declared == nil {
+		// Fresh nested literals take the enclosing best-common destination,
+		// just as elementType does. An inferred [] is not a retained never[] alias.
+		declared = l.impliedTarget(node)
+	}
+	if declared == nil {
 		declared = l.checker.GetTypeAtLocation(node)
 	}
 	if l.checker.IsArrayType(declared) {

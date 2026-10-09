@@ -68,6 +68,7 @@ func TestExplainChecksDriver(t *testing.T) {
 }
 
 func TestExplainCheckedWritesOutput(t *testing.T) {
+	t.Parallel()
 	for _, fixture := range []struct{ name, expression string }{
 		{"emit-node-misfit", "view.emitNode"}, {"number-misfit", "view.count"}, {"flow-node-misfit", "view.node"},
 		{"container-number-misfit", "values[0]"}, {"container-map-misfit", "values[value]"},
@@ -77,6 +78,7 @@ func TestExplainCheckedWritesOutput(t *testing.T) {
 		{"overload-callback-misfit", "factory(true).emitNode"},
 	} {
 		t.Run(fixture.name, func(t *testing.T) {
+			t.Parallel()
 			source, err := os.ReadFile("../../stage3/checked-writes/" + fixture.name + ".ts")
 			if err != nil {
 				t.Fatal(err)
