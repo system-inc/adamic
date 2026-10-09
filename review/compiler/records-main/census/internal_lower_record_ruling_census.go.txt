@@ -1,0 +1,12 @@
+package lower
+import("context";"github.com/system-inc/adamic/internal/load";"github.com/microsoft/TypeScript/tsc/shim/ast";"github.com/system-inc/adamic/internal/ir";"github.com/microsoft/TypeScript/tsc/shim/checker")
+func RecordRulingCensus(p *load.Program) map[string]any {
+ c,release:=p.Checker(context.Background(),p.Files()[0]);defer release();l:=&lowering{program:p,checker:c,result:&ir.Program{},this:-1,functionIndex:-1};rows:=[]map[string]string{};targets:=0
+ var visit ast.Visitor
+ visit=func(n *ast.Node)bool {
+  if l.recordTarget(n) {targets++}
+  if err:=l.recordDivergenceRefusal(n);err!=nil {r:=err.(*Refused);shape:="prototype_read";if n.Kind==ast.KindBinaryExpression {shape="prototype_in";if n.AsBinaryExpression().OperatorToken.Kind==ast.KindEqualsToken {shape="prototype_set"}} else if l.recordScalarNarrowed(n) && l.recordInterveningMutation(n) {shape="narrowed_number";e:=l.recordElement(l.checker.GetTypeAtLocation(recordReceiver(n)));if e!=nil && e.Flags()&checker.TypeFlagsUnion!=0 {shape="named_invalidated"}} else if n.Parent!=nil && n.Parent.Kind==ast.KindCallExpression {for i,a:=range n.Parent.AsCallExpression().Arguments.Nodes {if a==n && len(n.Parent.AsCallExpression().Arguments.Nodes)>1 {if i==0 {shape="compare_properties_left"} else {shape="compare_properties_right"}}}} else if n.Parent!=nil && n.Parent.Kind==ast.KindBinaryExpression && n.Parent.AsBinaryExpression().OperatorToken.Kind==ast.KindQuestionQuestionToken {shape="environment_boundary"};rows=append(rows,map[string]string{"shape":shape,"where":r.Where,"reason":r.What,"fix":r.Fix})}
+  return n.ForEachChild(visit)
+ }
+ for _,f:=range p.Files(){f.AsNode().ForEachChild(visit)};return map[string]any{"hits":rows,"record_accesses":targets}
+}

@@ -1,0 +1,184 @@
+[
+  {
+    "package": "./stage1/cohere/css",
+    "tests": [
+      "TestClosedEmptyArrayUnionGap",
+      "TestClosedOptionalBooleanConditionGap",
+      "TestClosedParserRegexGap",
+      "TestClosedPrinterRegexGap",
+      "TestEachGapStandsWhereGapsMdSaysItDoes"
+    ],
+    "exit": 0
+  },
+  {
+    "package": "./stage1/cohere/cssstrings",
+    "tests": [
+      "TestMultiPushGap"
+    ],
+    "exit": 0
+  },
+  {
+    "package": "./stage1/cohere/estree",
+    "tests": [
+      "TestCookedSurrogateLibraryGap",
+      "TestInterfaceDefaultGap",
+      "TestInterfaceTypeMethodGap",
+      "TestMethodReplacementGap",
+      "TestParserRecoveryGap",
+      "TestPinnedNumericGaps",
+      "TestPostfixValueGap",
+      "TestRawInputGap",
+      "TestRecoveryLibraryGaps",
+      "TestTypeMemberLibraryGap"
+    ],
+    "exit": 0
+  },
+  {
+    "package": "./stage1/cohere/gitignore",
+    "tests": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes"
+    ],
+    "exit": 0
+  },
+  {
+    "package": "./stage1/cohere/graphql",
+    "tests": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes"
+    ],
+    "exit": 0
+  },
+  {
+    "package": "./stage1/cohere/graphql/printer",
+    "tests": [
+      "TestPrinterConstructorGap",
+      "TestPrinterWhitespaceGap_000",
+      "TestPrinterWhitespaceGap_001",
+      "TestPrinterWhitespaceGap_002",
+      "TestPrinterWhitespaceGap_003",
+      "TestPrinterWhitespaceGap_004",
+      "TestPrinterWhitespaceGap_Setup"
+    ],
+    "exit": 0
+  },
+  {
+    "package": "./stage1/cohere/json",
+    "tests": [
+      "TestClosedEmptyFallbackGap",
+      "TestDocumentedStageZeroGaps",
+      "TestUpstreamNumericSeparatorGap"
+    ],
+    "exit": 0
+  },
+  {
+    "package": "./stage1/cohere/lint",
+    "tests": [
+      "TestClosedComparatorGaps",
+      "TestNestedConstructorGap"
+    ],
+    "exit": 0
+  },
+  {
+    "package": "./stage1/cohere/lint/helpers",
+    "tests": [
+      "TestKnownGapsAreExplicit"
+    ],
+    "exit": 0
+  },
+  {
+    "package": "./stage1/cohere/lint/helpers/comments",
+    "tests": [
+      "TestJsxParserGapIsExplicit"
+    ],
+    "exit": 0
+  },
+  {
+    "package": "./stage1/cohere/lint/regex",
+    "tests": [
+      "TestDynamicPatternGap",
+      "TestOptionDialectGap"
+    ],
+    "exit": 0
+  },
+  {
+    "package": "./stage1/cohere/markdownblocks",
+    "tests": [
+      "TestParserRepresentationProbes"
+    ],
+    "exit": 0
+  },
+  {
+    "package": "./stage1/cohere/mediaquery",
+    "tests": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes"
+    ],
+    "exit": 0
+  },
+  {
+    "package": "./stage1/cohere/selector",
+    "tests": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes"
+    ],
+    "exit": 0
+  },
+  {
+    "package": "./stage1/cohere/static_single_assignment",
+    "tests": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes"
+    ],
+    "exit": 0
+  },
+  {
+    "package": "./stage1/cohere/suppression",
+    "tests": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes"
+    ],
+    "exit": 0
+  },
+  {
+    "package": "./stage1/cohere/tsprinter",
+    "tests": [
+      "TestClassInterfaceMethodGap",
+      "TestClosedOptionalBooleanFunctionGap",
+      "TestClosedPrefixUpdateValueGap",
+      "TestCompilerGaps"
+    ],
+    "exit": 0
+  },
+  {
+    "package": "./stage1/cohere/values",
+    "tests": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes"
+    ],
+    "exit": 0
+  },
+  {
+    "package": "./stage1/cohere/yaml",
+    "tests": [
+      "TestClosedLexerGaps",
+      "TestClosedStringPresenceGap",
+      "TestClosedValuePresenceGap",
+      "TestLexerGaps",
+      "TestSpeedCostProbes"
+    ],
+    "exit": 0
+  },
+  {
+    "package": "./stage1/typescript/parser",
+    "tests": [
+      "TestClassMethodInterfaceGap",
+      "TestClosedConditionalEmptyArrayGap",
+      "TestClosedOptionalFunctionValueGap",
+      "TestPushSpreadGap",
+      "TestStrongAstParentGap"
+    ],
+    "exit": 0
+  },
+  {
+    "package": "./stage1/typescript/scanner",
+    "tests": [
+      "TestBigintGapStandsWhereGapsMdSays",
+      "TestGapStandsWhereGapsMdSays"
+    ],
+    "exit": 0
+  }
+]

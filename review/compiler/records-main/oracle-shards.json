@@ -1,0 +1,42 @@
+[
+  {
+    "name": "fixtures-1",
+    "pattern": "^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^(cast_enum_const\\.a|census_optional_values_padding\\.a|detached_own_parser\\.a|entries_checked_misfit\\.a|enums_flags\\.a|enums_open_never_field\\.a|library_method_values\\.a|library_object_has_own\\.a|method_coverage_object_descriptors\\.a|optional_after_call_193\\.a|optional_field_alias_variants\\.a|optional_field_checked_view_string_self\\.a|optional_indexing_map\\.a|optional_widening_fresh\\.a|records_guarded_snapshot\\.a|records_narrowed_reference\\.a|records_prototype_read\\.a|taste_optional_join\\.a)$",
+    "exit": 0
+  },
+  {
+    "name": "fixtures-2",
+    "pattern": "^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^(cast_enum_const_numeric_fails\\.a|census_optional_values_receivers\\.a|detached_own_records\\.a|entries_proven\\.a|enums_flags_modules/main\\.a|enums_open_never_if\\.a|library_method_values_dead_zone\\.a|library_object_is\\.a|method_coverage_object_statics\\.a|optional_after_call_79\\.a|optional_field_checked_copy\\.a|optional_field_checked_view_string_undefined\\.a|optional_indexing_string\\.a|records_census\\.a|records_named_alias_unready\\.a|records_operations\\.a|records_prototype_set\\.a|records_json_replacer_duplicates\\.a)$",
+    "exit": 0
+  },
+  {
+    "name": "fixtures-3",
+    "pattern": "^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^(cast_enum_const_string_fails\\.a|census_optional_values_system\\.a|detached_own_unready\\.a|entries_proven_import\\.a|enums_flags_never_default\\.a|enums_open_never_implicit\\.a|library_object_assign\\.a|library_object_keys\\.a|method_coverage_object_tags\\.a|optional_after_call_gaps/computed\\.a|optional_field_checked_view\\.a|optional_field_construction\\.a|optional_indexing_string_gap\\.a|records_compare_missing_scalar\\.a|records_named_intrinsics\\.a|records_optional\\.a|records_refuse/r24\\.a|json_replacer_duplicates_object\\.a)$",
+    "exit": 0
+  },
+  {
+    "name": "fixtures-4",
+    "pattern": "^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^(cast_enum_numeric\\.a|conditions_optional_boolean\\.a|e4eec87_u02_optional_absent\\.a|entries_record_alias\\.a|enums_modules/main\\.a|enums_open_never_index\\.a|library_object_assign_fields\\.a|library_object_order\\.a|namespaces_parser_enums\\.a|optional_after_call_propagation\\.a|optional_field_checked_view_enumeration\\.a|optional_field_presence\\.a|optional_indexing_typed_array\\.a|records_compare_properties_left\\.a|records_named_invalidated\\.a|records_ownership\\.a|records_scalars\\.a)$",
+    "exit": 0
+  },
+  {
+    "name": "fixtures-5",
+    "pattern": "^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^(cast_enum_numeric_fails\\.a|conditions_optional_number\\.a|entries_checked_boolean\\.a|entries_record_misfit\\.a|enums_names\\.a|enums_open_never_return\\.a|library_object_freeze\\.a|library_object_own\\.a|namespaces_unknown_enum_before\\.a|optional_after_call_required\\.a|optional_field_checked_view_literal\\.a|optional_field_unknown\\.a|optional_numbers\\.a|records_compare_properties_right\\.a|records_named_operations\\.a|records_partial_parser\\.a|records_type_only_composition\\.a)$",
+    "exit": 0
+  },
+  {
+    "name": "fixtures-6",
+    "pattern": "^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^(cast_enum_string\\.a|conditions_optional_reference\\.a|entries_checked_boxed\\.a|entries_scanner\\.a|enums_open\\.a|enums_open_never_update\\.a|library_object_freeze_alias\\.a|library_object_same\\.a|nbody_optional_references\\.a|optional_after_call_variants\\.a|optional_field_checked_view_misfit\\.a|optional_field_write\\.a|optional_strings\\.a|records_discarded\\.a|records_named_options\\.a|records_partial_undefined\\.a|records_type_only_scanner\\.a)$",
+    "exit": 0
+  },
+  {
+    "name": "fixtures-7",
+    "pattern": "^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^(cast_enum_string_fails\\.a|conditions_optional_string\\.a|entries_checked_fit\\.a|enums\\.a|enums_open_members\\.a|host_empty_object_slots\\.a|library_object_freeze_assign\\.a|library_string_raw\\.a|notyet_library_object_entries_const\\.a|optional_class_method\\.a|optional_field_checked_view_pending\\.a|optional_indexing_array\\.a|optional_widening_class\\.a|records_environment_boundary\\.a|records_named_union\\.a|records_partial_views\\.a|records_type_only_value\\.a)$",
+    "exit": 0
+  },
+  {
+    "name": "fixtures-8",
+    "pattern": "^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^(census_optional_values_forms\\.a|detached_own_objects\\.a|entries_checked_literal\\.a|enums_const\\.a|enums_open_never\\.a|host_optional_intrinsic\\.a|library_object_freeze_write\\.a|literal_optional_shapes\\.a|object_prototype\\.a|optional_field_alias\\.a|optional_field_checked_view_required_string\\.a|optional_indexing_chain\\.a|optional_widening_declared\\.a|records_for_in\\.a|records_narrowed_number\\.a|records_prototype_in\\.a|step21_object_uncaught\\.a)$",
+    "exit": 0
+  }
+]
