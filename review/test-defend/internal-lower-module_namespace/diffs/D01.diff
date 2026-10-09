@@ -1,0 +1,9 @@
+--- a/internal/lower/load_time_reads.go
++++ b/internal/lower/load_time_reads.go
+@@ -99,5 +99,5 @@
+ }
+ 
+ func (l *lowering) checkedModuleRead(node *ast.Node, local int) bool {
+-	return !l.provenModuleReads[node] && l.checked(local)
++	return (!l.provenModuleReads[node] || node.Kind == ast.KindPropertyAccessExpression) && l.checked(local)
+ }

@@ -1,0 +1,11 @@
+--- a/internal/lower/namespaces.go
++++ b/internal/lower/namespaces.go
+@@ -149,7 +149,7 @@
+ 				continue
+ 			}
+ 			if declaration.Kind == ast.KindFunctionDeclaration && declaration.Parent == node.Parent {
+-				if namespaceOwnThis(declaration) {
++				if false {
+ 					return &Refused{Where: l.program.Where(declaration), What: "this in a callable namespace function; qualified and detached calls have different receivers", Fix: "pass the state explicitly"}
+ 				}
+ 				for _, parameter := range declaration.Parameters() {

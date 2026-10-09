@@ -1,0 +1,219 @@
+[
+  {
+    "test": "TestModuleNamespaceInitializedReadProof",
+    "package": "internal/lower",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [],
+    "prior_subsumed_by": [
+      "TestUndecidedCycleReadsUseReadyChecks"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D01 internal/lower/load_time_reads.go:102",
+    "attempts": [
+      {
+        "mutant": "D01",
+        "file_line": "internal/lower/load_time_reads.go:102",
+        "change": "retain readiness for qualified property reads but not plain imported identifiers",
+        "rows_failed": [
+          "TestModuleNamespaceInitializedReadProof"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-module-namespace/cache/D01 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; module_namespace_test.go:65: provider initialized before consumer, but the qualified read retained a readiness check"
+  },
+  {
+    "test": "TestCallableNamespaceReceiverStaysLoud",
+    "package": "internal/lower",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [],
+    "prior_subsumed_by": [
+      "TestNamespaceReceiverArrowInheritsScope"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D02 internal/lower/namespaces.go:152",
+    "attempts": [
+      {
+        "mutant": "D02",
+        "file_line": "internal/lower/namespaces.go:152",
+        "change": "disable the receiver refusal for function and namespace declaration merging, keeping member-function refusal",
+        "rows_failed": [
+          "TestCallableNamespaceReceiverStaysLoud"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-module-namespace/cache/D02 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; namespace_callable_test.go:35: got /tmp/adamic-gate/TestCallableNamespaceReceiverStaysLoud924089560/001/main.a:1:12: stage 0 can't lower an explicit callable-namespace this parameter; pass state explicitly yet"
+  },
+  {
+    "test": "TestNamespaceClassEarlyConstructionStaysLoud",
+    "package": "internal/lower",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestCallableNamespaceLimitsStayLoud"
+    ],
+    "prior_subsumed_by": [
+      "TestCallableNamespaceLimitsStayLoud"
+    ],
+    "defense": "cannot-judge",
+    "unique_mutant": null,
+    "attempts": [],
+    "evidence": "go test -count=1 -timeout 90s ./internal/lower/ -run ^TestNamespaceClassEarlyConstructionStaysLoud$ -coverpkg=./internal/lower -coverprofile=coverage/TestNamespaceClassEarlyConstructionStaysLoud.out; clean coverage passes; 24 exclusive covered lines identify construction and new edges. No construction-specific mutant was run within the seven-mutant cap; cannot judge. The broad D07 union replacement does not make this row fail.",
+    "reason": "24 exclusive covered lines identify construction and new edges. No construction-specific mutant was run within the seven-mutant cap; cannot judge. The broad D07 union replacement does not make this row fail.",
+    "owner_finding": "Name matches the NotYet refusal assertion. It does not test native construction behavior, but does not promise to."
+  },
+  {
+    "test": "TestNamespaceAmbientHostInitialization",
+    "package": "internal/lower",
+    "prior_verdict": "untrue",
+    "subsumed_by": [],
+    "prior_subsumed_by": [],
+    "defense": "cannot-judge",
+    "unique_mutant": null,
+    "attempts": [],
+    "evidence": "go test -count=1 -timeout 90s ./internal/lower/ -run ^TestNamespaceAmbientHostInitialization$ -coverpkg=./internal/lower -coverprofile=coverage/TestNamespaceAmbientHostInitialization.out; clean coverage passes; 16 exclusive covered lines include host and ownership paths. The row has acquired an executable refusal assertion since audit. No host-specific mutant was run within the cap; cannot judge.",
+    "reason": "16 exclusive covered lines include host and ownership paths. The row has acquired an executable refusal assertion since audit. No host-specific mutant was run within the cap; cannot judge.",
+    "owner_finding": "Current row checks both ambient preflight and executable early-read refusal. Host lowering checks only error text, and cwd admits a separate ownership refusal. A different node: error can satisfy the host assertion."
+  },
+  {
+    "test": "TestNamespaceAmbientContextsDoNotExecute",
+    "package": "internal/lower",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [],
+    "prior_subsumed_by": [
+      "TestNamespaceCallGraphCycleUnion"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D03 internal/lower/namespaces.go:22",
+    "attempts": [
+      {
+        "mutant": "D03",
+        "file_line": "internal/lower/namespaces.go:22",
+        "change": "drop declaration-file ambient authority while keeping syntax and inherited flags",
+        "rows_failed": [
+          "TestNamespaceAmbientContextsDoNotExecute"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-module-namespace/cache/D03 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; namespaces_ambient_test.go:68: declaration-file namespace executes"
+  },
+  {
+    "test": "TestNamespaceCallGraphLinearWork",
+    "package": "internal/lower",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [],
+    "prior_subsumed_by": [
+      "TestNamespaceCallGraphCycleUnion"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D06 internal/lower/namespaces_call_graph.go:29",
+    "attempts": [
+      {
+        "mutant": "D06",
+        "file_line": "internal/lower/namespaces_call_graph.go:29",
+        "change": "do not reuse completed empty reach sets, retaining active-cycle and nonempty memoization",
+        "rows_failed": [
+          "TestNamespaceCallGraphLinearWork"
+        ],
+        "combined_run_timeouts": [
+          "TestEnumInitializationReach"
+        ],
+        "isolated_enum_exit": 0
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-module-namespace/cache/D06 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestNamespaceCallGraphLinearWork$/^12$; namespaces_call_graph_test.go:44: nonlinear function walks: got 8191, want 13; D06-rest.log times out in TestEnumInitializationReach/call-graph-24; D06-enum-alone.log passes its expensive subcase; D06-enum-whole.log passes the complete enum row. Other rows finish passing in D06-rest.log; the combined timeout does not prove an individual catch",
+    "bounded": true,
+    "bound": "Target depth 12 catches; target depth 24 exceeds 90s. Combined exclusion matrix cooks in enum row, but that complete row separately passes within 90s; every other top-level row passes in exclusion matrix."
+  },
+  {
+    "test": "TestNamespaceCallGraphCycleUnion",
+    "package": "internal/lower",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestEnumNamespaceSharedCycle"
+    ],
+    "prior_subsumed_by": [
+      "TestEnumNamespaceSharedCycle"
+    ],
+    "defense": "cannot-judge",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D07",
+        "file_line": "internal/lower/namespaces_call_graph.go:140",
+        "change": "replace completed component union with each member direct reads; also exercises early-class reach propagation",
+        "rows_failed": [
+          "TestEnumInitializationGraphMemo",
+          "TestEnumInitializationReach",
+          "TestEnumLimitsStayLoud",
+          "TestEnumNamespaceSharedCycle",
+          "TestNamespaceCallGraphCycleUnion",
+          "TestNamespaceInitializationReachability"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-module-namespace/cache/D07 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; namespaces_call_graph_test.go:67: partial cycle reach for one: 1 namespaces",
+    "reason": "No exclusive covered lines. Three namespace-only cycle members differ semantically from the two-member enum/namespace subsumer. D07 reproduces a shared union failure, not a unique three-member boundary fault. Fewer than three aimed attempts; cannot judge.",
+    "owner_finding": "Name matches exact namespace identities, full cycle membership and expansion count. No identified name/assertion mismatch."
+  },
+  {
+    "test": "TestNamespaceEnumInitializationIndependentOfModuleAnalysis",
+    "package": "internal/lower",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestEnumInitializationReach",
+      "TestNamespaceLimitsStayLoud"
+    ],
+    "prior_subsumed_by": [
+      "TestEnumInitializationReach"
+    ],
+    "defense": "cannot-judge",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D05",
+        "file_line": "internal/lower/namespaces.go:252",
+        "change": "change namespace preflight reachable-enum diagnostic while independent enum preflight stays intact",
+        "rows_failed": [
+          "TestEnumInitializationReach",
+          "TestNamespaceEnumInitializationIndependentOfModuleAnalysis",
+          "TestNamespaceLimitsStayLoud"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-module-namespace/cache/D05 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; namespaces_call_graph_test.go:86: namespace enum lost its independent refusal: /tmp/adamic-gate/TestNamespaceEnumInitializationIndependentOfModuleAnalysis4239742949/001/graph.a:1:44: stage 0 can't lower reading a value before its runtime initialization; move the call after the enum declaration yet",
+    "reason": "D05 makes this row fail, but TestEnumInitializationReach and TestNamespaceLimitsStayLoud also fail. Fewer than three aimed attempts within cap; cannot judge uniqueness.",
+    "owner_finding": "Name matches the direct namespace preflight call without module scheduling. Its oracle only demands an enum diagnostic substring; it does not separately assert module-analysis state."
+  },
+  {
+    "test": "TestParserFactoryBindingHoisting",
+    "package": "internal/lower",
+    "prior_verdict": "untrue",
+    "subsumed_by": [],
+    "prior_subsumed_by": [],
+    "defense": "defended",
+    "unique_mutant": "D04 internal/lower/modules.go:100",
+    "attempts": [
+      {
+        "mutant": "D04",
+        "file_line": "internal/lower/modules.go:100",
+        "change": "clear destructured namespace var metadata",
+        "rows_failed": [
+          "TestParserFactoryBindingHoisting"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-module-namespace/cache/D04 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; namespaces_factory_test.go:42: NamespaceVar bindings = map[], want factoryCreateNodeArray and factoryCreateNumericLiteral once each"
+  },
+  {
+    "test": "TestTscNamespaceDeclarationShapes",
+    "package": "internal/lower",
+    "prior_verdict": "untrue",
+    "subsumed_by": [],
+    "prior_subsumed_by": [],
+    "defense": "cannot-judge",
+    "unique_mutant": null,
+    "attempts": [],
+    "evidence": "go test -count=1 -timeout 90s ./internal/lower/ -run ^TestTscNamespaceDeclarationShapes$ -coverpkg=./internal/lower -coverprofile=coverage/TestTscNamespaceDeclarationShapes.out; clean coverage passes; 14 exclusive covered lines include optional namespace local initialization and empty erased declaration bodies. No shape-specific mutant was run within the cap; cannot judge.",
+    "reason": "14 exclusive covered lines include optional namespace local initialization and empty erased declaration bodies. No shape-specific mutant was run within the cap; cannot judge.",
+    "owner_finding": "Tsc names fixture provenance, not an executed tsc oracle. Positive cases assert only acceptance, not the lowered contents; overload policy is self-derived."
+  }
+]

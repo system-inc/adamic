@@ -1,0 +1,65 @@
+[
+  {
+    "mutant": "D01",
+    "file": "internal/lower/load_time_reads.go",
+    "file_line": "internal/lower/load_time_reads.go:102",
+    "old": "return !l.provenModuleReads[node] && l.checked(local)",
+    "new": "return (!l.provenModuleReads[node] || node.Kind == ast.KindPropertyAccessExpression) && l.checked(local)",
+    "target": "TestModuleNamespaceInitializedReadProof",
+    "change": "retain readiness for qualified property reads but not plain imported identifiers"
+  },
+  {
+    "mutant": "D02",
+    "file": "internal/lower/namespaces.go",
+    "file_line": "internal/lower/namespaces.go:152",
+    "old": "if namespaceOwnThis(declaration) {",
+    "new": "if false {",
+    "target": "TestCallableNamespaceReceiverStaysLoud",
+    "change": "disable the receiver refusal for function and namespace declaration merging, keeping member-function refusal"
+  },
+  {
+    "mutant": "D03",
+    "file": "internal/lower/namespaces.go",
+    "file_line": "internal/lower/namespaces.go:22",
+    "old": " || ast.GetSourceFileOfNode(declaration).IsDeclarationFile",
+    "new": "",
+    "target": "TestNamespaceAmbientContextsDoNotExecute",
+    "change": "drop declaration-file ambient authority while keeping syntax and inherited flags"
+  },
+  {
+    "mutant": "D04",
+    "file": "internal/lower/modules.go",
+    "file_line": "internal/lower/modules.go:100",
+    "old": "l.result.Locals[local].NamespaceVar = true",
+    "new": "l.result.Locals[local].NamespaceVar = false",
+    "target": "TestParserFactoryBindingHoisting",
+    "change": "clear destructured namespace var metadata"
+  },
+  {
+    "mutant": "D05",
+    "file": "internal/lower/namespaces.go",
+    "file_line": "internal/lower/namespaces.go:252",
+    "old": "\"reading an enum before its runtime initialization; move the call after the enum declaration\"",
+    "new": "\"reading a value before its runtime initialization; move the call after the enum declaration\"",
+    "target": "TestNamespaceEnumInitializationIndependentOfModuleAnalysis",
+    "change": "change namespace preflight reachable-enum diagnostic while independent enum preflight stays intact"
+  },
+  {
+    "mutant": "D06",
+    "file": "internal/lower/namespaces_call_graph.go",
+    "file_line": "internal/lower/namespaces_call_graph.go:29",
+    "old": "if cached := g.functions[function]; cached != nil {",
+    "new": "if cached := g.functions[function]; cached != nil && (cached.active || len(cached.reaches) != 0) {",
+    "target": "TestNamespaceCallGraphLinearWork",
+    "change": "do not reuse completed empty reach sets, retaining active-cycle and nonempty memoization"
+  },
+  {
+    "mutant": "D07",
+    "file": "internal/lower/namespaces_call_graph.go",
+    "file_line": "internal/lower/namespaces_call_graph.go:140",
+    "old": "member.reaches = reaches",
+    "new": "member.reaches = member.reads",
+    "target": "TestNamespaceCallGraphCycleUnion",
+    "change": "replace completed component union with each member direct reads; also exercises early-class reach propagation"
+  }
+]
