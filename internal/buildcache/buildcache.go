@@ -141,10 +141,6 @@ func get(inputs Inputs, build func(directory string) error) (string, string, err
 			os.RemoveAll(scratch)
 			return "", "", err
 		}
-		// Publishing is the store's gain, never this build's failure: a write that fails is noted and the product used.
-		if err = publish(key, inputs.Name, scratch); err != nil {
-			note("publish %s %s failed: %v", inputs.Name, key[:12], err)
-		}
 	}
 	if err = os.WriteFile(product+".inputs", []byte(describe(inputs)), 0o644); err != nil {
 		os.RemoveAll(scratch)
@@ -153,6 +149,12 @@ func get(inputs Inputs, build func(directory string) error) (string, string, err
 	if err = os.Rename(scratch, product); err != nil {
 		os.RemoveAll(scratch)
 		return "", "", err
+	}
+	if outcome == "miss" {
+		// Uploads are off the test's clock. The product must have its permanent name before it is spooled.
+		if err = spool(key, inputs.Name, product); err != nil {
+			note("spool %s %s failed: %v", inputs.Name, key[:12], err)
+		}
 	}
 	return product, record(inputs.Name, key, outcome, started), nil
 }

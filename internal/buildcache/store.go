@@ -194,6 +194,10 @@ func named(err error, what string) error {
 // describeProduct is a product directory's manifest: every regular file by path, hash, size and mode, sorted.
 // Anything else in a product (a symlink, a device) can't be stored, so it is an error.
 func describeProduct(key, name, directory string) (manifest, error) {
+	return describeProductBytes(key, name, directory, false)
+}
+
+func describeProductBytes(key, name, directory string, normalize bool) (manifest, error) {
 	product := manifest{Version: 1, Key: key, Name: name}
 	err := filepath.WalkDir(directory, func(file string, entry fs.DirEntry, err error) error {
 		if err != nil || entry.IsDir() {
@@ -213,6 +217,11 @@ func describeProduct(key, name, directory string) (manifest, error) {
 		relative, err := filepath.Rel(directory, file)
 		if err != nil {
 			return err
+		}
+		if normalize {
+			if content, err = auditBytes(content); err != nil {
+				return fmt.Errorf("%s: %w", file, err)
+			}
 		}
 		sum := sha256.Sum256(content)
 		mode := uint32(0o644)
@@ -246,10 +255,18 @@ func publishToken() string {
 // publish stores a product this machine built, when it holds the write credential: every file's blob, the
 // manifest's, then the ref.
 func publish(key, name, directory string) error {
+	return publishNamespace(key, name, directory, writeNamespace())
+}
+
+func publishNamespace(key, name, directory, namespace string) error {
 	token := publishToken()
 	if token == "" || os.Getenv("ADAMIC_BUILD_STORE") == "off" {
 		return nil
 	}
+	return publishWithToken(key, name, directory, namespace, token)
+}
+
+func publishWithToken(key, name, directory, namespace, token string) error {
 	writer := os.Getenv("ADAMIC_BUILD_STORE_WRITE")
 	if writer == "" {
 		writer = defaultWriter
@@ -277,7 +294,7 @@ func publish(key, name, directory string) error {
 	if err = upload(writer+"/blobs/"+manifestHash, token, encoded); err != nil {
 		return err
 	}
-	if err = upload(writer+"/refs/"+writeNamespace()+"/"+key, token, []byte(manifestHash)); err != nil {
+	if err = upload(writer+"/refs/"+namespace+"/"+key, token, []byte(manifestHash)); err != nil {
 		if strings.Contains(err.Error(), "409") {
 			return fmt.Errorf("the store already holds a different product for key %s (%s): the key isn't honest or the build isn't reproducible: %v", key[:12], name, err)
 		}
@@ -326,11 +343,11 @@ func audit(key, name, fetched string, build func(directory string) error) error 
 	if err = build(rebuilt); err != nil {
 		return err
 	}
-	want, err := describeProduct(key, name, rebuilt)
+	want, err := describeProductBytes(key, name, rebuilt, true)
 	if err != nil {
 		return err
 	}
-	got, err := describeProduct(key, name, fetched)
+	got, err := describeProductBytes(key, name, fetched, true)
 	if err != nil {
 		return err
 	}
