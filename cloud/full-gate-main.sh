@@ -95,8 +95,48 @@ stopRemote() {
   [[ ${sha} =~ ^[0-9a-f]{40}$ ]] || return 1
   ssh "${box}" "pkill -TERM -f 'run.py .*--sha ${sha}'" || true
 }
+# One whole gate per box, ever (@system_adamic, Oct 9 00:13Z: the Threadripper's requests loop took e37ea9dc onto the
+# box while a hand-started rerun of 6b2c73f9 ran there, load 145 on 64 cores). Every run holds the box's claim, a
+# directory per box in one place for every loop and hand-started run alike, with the holder's pid; a claim whose pid
+# is gone is taken over. A loop starts nothing on a box someone else holds.
+boxClaims=${ADAMIC_FULL_GATE_BOXES:-${HOME}/.adamic-full-gate/boxes}
+claimBox() {
+  local holder pid
+  mkdir -p "${boxClaims}"
+  if mkdir "${boxClaims}/${box}" 2> /dev/null; then
+    echo "$$ $1" > "${boxClaims}/${box}/holder"
+    return 0
+  fi
+  read -r pid holder < "${boxClaims}/${box}/holder" 2> /dev/null || { echo "$$ $1" > "${boxClaims}/${box}/holder"; return 0; }
+  [ "${pid}" = $$ ] && { echo "$$ $1" > "${boxClaims}/${box}/holder"; return 0; }
+  kill -0 "${pid}" 2> /dev/null && return 1
+  echo "$$ $1" > "${boxClaims}/${box}/holder"
+}
+releaseBox() {
+  local pid rest
+  read -r pid rest < "${boxClaims}/${box}/holder" 2> /dev/null || return 0
+  [ "${pid}" = $$ ] || return 0
+  rm -f "${boxClaims}/${box}/holder"
+  rmdir "${boxClaims}/${box}" 2> /dev/null || true
+}
+boxFree() {
+  local pid rest
+  read -r pid rest < "${boxClaims}/${box}/holder" 2> /dev/null || return 0
+  [ "${pid}" = $$ ] || ! kill -0 "${pid}" 2> /dev/null
+}
 # ADAMIC_FULL_GATE_RUN_TO_END=1: a parity proof, run to the end after its first failure (run.py --run-to-end).
 run() {
+  local code
+  if ! claimBox "$1"; then
+    echo "$(date -u +%H:%M:%S) not starting $1: ${box} is running another whole gate ($(cat "${boxClaims}/${box}/holder" 2> /dev/null))"
+    return 2
+  fi
+  runOnBox "$@"
+  code=$?
+  releaseBox
+  return "${code}"
+}
+runOnBox() {
   local sha=$1 origin=${2:-main} tools stamp out status previous="" parent="" stopping=""
   tools=$(git -C "${here}" rev-parse HEAD)
   stamp=$(date -u +%Y%m%dT%H%M%SZ)
@@ -421,7 +461,7 @@ if [ -n "${once}" ]; then
   exit
 fi
 while true; do
-  if oneOffRunning; then
+  if oneOffRunning || ! boxFree; then
     sleep 60
     continue
   fi

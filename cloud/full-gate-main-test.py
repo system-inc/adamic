@@ -65,7 +65,8 @@ class FullGateLoopTests(unittest.TestCase):
         """Source the loop as a library and evaluate one expression; (exit code, stdout)."""
         command = 'set +e; ADAMIC_FULL_GATE_LIBRARY=1 source %s; %s' % (self.work / 'cloud' / 'full-gate-main.sh', expression)
         result = subprocess.run(['bash', '-c', command], capture_output=True, text=True,
-                                env=dict(os.environ, ADAMIC_FULL_GATE_STATE=str(self.state), ADAMIC_FAST_GATE_WATCH_STATE=str(self.state)))
+                                env=dict(os.environ, ADAMIC_FULL_GATE_STATE=str(self.state), ADAMIC_FAST_GATE_WATCH_STATE=str(self.state),
+                                         ADAMIC_FULL_GATE_BOXES=str(self.state / 'boxes')))
         return result.returncode, result.stdout.strip()
 
     def test_a_record_only_main_is_confirmed_by_its_parent_s_green_whole_gate(self):
@@ -174,6 +175,27 @@ class FullGateLoopTests(unittest.TestCase):
             self.record(due[0], 'green: %s full gate on the pool' % due[0], runner='pool', stamp='20261008T221000Z')
             (self.state / 'requests').write_text(due[0] + '\n')
             self.assertEqual(self.call('nextRequest'), (0, due[0]))
+
+    def test_one_whole_gate_per_box_ever(self):
+        # Oct 9 00:13Z: the requests loop took a second whole gate onto the Threadripper beside a hand-started one.
+        script = self.work / 'cloud' / 'full-gate-main.sh'
+        environment = dict(os.environ, ADAMIC_FULL_GATE_STATE=str(self.state), ADAMIC_FAST_GATE_WATCH_STATE=str(self.state),
+                           ADAMIC_FULL_GATE_BOXES=str(self.state / 'boxes'))
+        holder = subprocess.Popen(['bash', '-c', 'set +e; ADAMIC_FULL_GATE_LIBRARY=1 source %s; box=threadripper; claimBox %s; sleep 30' % (script, self.code)],
+                                  env=environment)
+        self.addCleanup(holder.kill)
+        for _ in range(100):
+            if (self.state / 'boxes' / 'threadripper' / 'holder').exists():
+                break
+            subprocess.run(['sleep', '0.1'])
+        self.assertEqual(self.call('box=threadripper; claimBox %s' % self.changed)[0], 1, 'a held box refuses a second gate')
+        self.assertEqual(self.call('box=threadripper; boxFree')[0], 1)
+        self.assertEqual(self.call('box=home; claimBox %s' % self.changed)[0], 0, 'another box is free')
+        holder.kill()
+        holder.wait()
+        self.assertEqual(self.call('box=threadripper; boxFree')[0], 0, "a dead holder's claim is free")
+        self.assertEqual(self.call('box=threadripper; claimBox %s; releaseBox' % self.changed)[0], 0)
+        self.assertFalse((self.state / 'boxes' / 'threadripper').exists())
 
     def test_record_paths_are_push_main_s_three(self):
         self.assertEqual(self.call('recordOnly %s %s' % (self.code, self.records))[0], 0)
