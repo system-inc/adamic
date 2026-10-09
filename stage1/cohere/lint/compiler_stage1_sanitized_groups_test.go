@@ -8,14 +8,20 @@ import (
 	"testing"
 )
 
-const compilerAgreementSanitizedCheckerGroups = 17
+const compilerAgreementSanitizedCheckerGroups = 18
 
 func compilerAgreementUnit(c compilerAgreementCase, side int) int {
 	if c.key == compilerAgreementCheckerKey && c.rule != "all" && side == 4 {
 		group := compilerAgreementBucket(c.rule, compilerAgreementCheckerGroups)
-		// Bucket 1 has eight rules and takes 69 s alone; split by the next hash bit.
-		if group == 1 && compilerAgreementBucket(c.rule, 2*compilerAgreementCheckerGroups) >= compilerAgreementCheckerGroups {
-			group = 16
+		// Refine only slow bucket 1: group 16 owns the next high bit, and
+		// group 17 splits the remaining low half after its 71 s rerun.
+		if group == 1 {
+			bits := compilerAgreementBucket(c.rule, 4*compilerAgreementCheckerGroups)
+			if bits&compilerAgreementCheckerGroups != 0 {
+				group = 16
+			} else if bits&(2*compilerAgreementCheckerGroups) != 0 {
+				group = 17
+			}
 		}
 		return testCompilerAndStage1AgreeShards + group
 	}
@@ -29,7 +35,7 @@ func TestProduct_CompilerAgreementLowered(t *testing.T) {
 
 func TestCompilerAndStage1Agree_6484(t *testing.T) {
 	t.Parallel()
-	t.Skip("awaits #5ggwf8c: pending; combined sanitized checker.ts/all run moved to that heavy-unit task, not dropped; gate declaration mechanism is blocked")
+	t.Skip("awaits devtools/heavy-units: pending #5ggwf8c; combined sanitized checker.ts/all run moved to that heavy-unit task, not dropped; #m9es0rv adds the heavy census class and budget exemption")
 }
 
 func compilerAgreementCheckUnits(t *testing.T, cases []compilerAgreementCase) {
@@ -180,4 +186,9 @@ func TestCompilerAndStage1Agree_CheckerSanitized_15(t *testing.T) {
 func TestCompilerAndStage1Agree_CheckerSanitized_16(t *testing.T) {
 	t.Parallel()
 	compilerAgreementShard(t, 6501)
+}
+
+func TestCompilerAndStage1Agree_CheckerSanitized_17(t *testing.T) {
+	t.Parallel()
+	compilerAgreementShard(t, 6502)
 }
