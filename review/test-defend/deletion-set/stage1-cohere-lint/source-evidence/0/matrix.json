@@ -1,0 +1,221 @@
+[
+  {
+    "id": "M1",
+    "file": "stage1/cohere/lint/lint.ts",
+    "line": 116,
+    "before": "        rules.visit(index, parent);",
+    "after": "",
+    "menu": "drop visit statement",
+    "failed_tests": [
+      "TestOwnedWitnesses_010",
+      "TestOwnedWitnesses_002",
+      "TestOwnedWitnesses_003",
+      "TestOwnedWitnesses_015",
+      "TestOwnedWitnesses_013",
+      "TestOwnedWitnesses_014",
+      "TestOwnedWitnesses_001",
+      "TestOwnedWitnesses_000",
+      "TestOwnedWitnesses_007",
+      "TestOwnedWitnesses_012",
+      "TestOwnedWitnesses_009",
+      "TestOwnedWitnesses_008",
+      "TestOwnedWitnesses_005",
+      "TestOwnedWitnesses_006",
+      "TestOwnedWitnesses_011",
+      "TestOwnedWitnesses_004"
+    ],
+    "failed_rows": [
+      "TestOwnedWitnesses"
+    ],
+    "runs": [
+      "M1"
+    ]
+  },
+  {
+    "id": "M2",
+    "file": "stage1/cohere/lint/lint.ts",
+    "line": 21,
+    "before": "    return left.start - right.start;",
+    "after": "    return right.start - left.start;",
+    "menu": "swap subtraction arguments",
+    "failed_tests": [
+      "TestOwnedWitnesses_010",
+      "TestOwnedWitnesses_003",
+      "TestOwnedWitnesses_000",
+      "TestOwnedWitnesses_002",
+      "TestOwnedWitnesses_008",
+      "TestOwnedWitnesses_009",
+      "TestOwnedWitnesses_005",
+      "TestOwnedWitnesses_006",
+      "TestOwnedWitnesses_004",
+      "TestOwnedWitnesses_001",
+      "TestOwnedWitnesses_015",
+      "TestOwnedWitnesses_014",
+      "TestOwnedWitnesses_013",
+      "TestOwnedWitnesses_012",
+      "TestOwnedWitnesses_011"
+    ],
+    "failed_rows": [
+      "TestOwnedWitnesses"
+    ],
+    "runs": [
+      "M2"
+    ]
+  },
+  {
+    "id": "M3",
+    "file": "stage1/cohere/lint/lint.ts",
+    "line": 77,
+    "before": "        if(this.junkRows) {",
+    "after": "        if(!this.junkRows) {",
+    "menu": "flip condition",
+    "failed_tests": [],
+    "failed_rows": [],
+    "runs": [
+      "M3"
+    ]
+  },
+  {
+    "id": "E1",
+    "file": "stage1/cohere/lint/main.ts",
+    "line": 11,
+    "before": "function run(row: string, countOnly: boolean): number {",
+    "after": "function run(row: string, countOnly: boolean): number { return 0;",
+    "menu": "empty entry probe",
+    "failed_tests": [
+      "TestOwnedWitnesses_003",
+      "TestOwnedWitnesses_002",
+      "TestOwnedWitnesses_010",
+      "TestOwnedWitnesses_007",
+      "TestOwnedWitnesses_006",
+      "TestOwnedWitnesses_008",
+      "TestOwnedWitnesses_009",
+      "TestOwnedWitnesses_005",
+      "TestOwnedWitnesses_004",
+      "TestOwnedWitnesses_000",
+      "TestOwnedWitnesses_001",
+      "TestOwnedWitnesses_015",
+      "TestOwnedWitnesses_013",
+      "TestOwnedWitnesses_014",
+      "TestOwnedWitnesses_012",
+      "TestOwnedWitnesses_011"
+    ],
+    "failed_rows": [
+      "TestOwnedWitnesses"
+    ],
+    "runs": [
+      "E1"
+    ]
+  },
+  {
+    "id": "W1",
+    "file": "stage1/cohere/lint/lint_test.go",
+    "line": 550,
+    "function": "TestLegacyMutants",
+    "before": "if bytes.Equal(side.run.output, want) {",
+    "after": "if true {",
+    "kind": "allowed witness comparison weakening",
+    "failed_tests": [
+      "TestLegacyMutants/overlap_winner_misreported",
+      "TestLegacyMutants"
+    ],
+    "failed_rows": [
+      "TestLegacyMutants"
+    ],
+    "runs": [
+      "W1"
+    ]
+  },
+  {
+    "id": "W2",
+    "file": "stage1/cohere/lint/lint_test.go",
+    "line": 571,
+    "function": "TestDecorationOptionMutant",
+    "before": "if bytes.Equal(side.run.output, want) {",
+    "after": "if true {",
+    "kind": "allowed witness comparison weakening",
+    "failed_tests": [
+      "TestDecorationOptionMutant"
+    ],
+    "failed_rows": [
+      "TestDecorationOptionMutant"
+    ],
+    "runs": [
+      "W2"
+    ]
+  },
+  {
+    "id": "W3",
+    "file": "stage1/cohere/lint/lint_test.go",
+    "line": 599,
+    "function": "TestCountGuardMutant",
+    "before": "if bytes.Equal(side.count.output, count) {",
+    "after": "if true {",
+    "kind": "allowed witness comparison weakening",
+    "failed_tests": [
+      "TestCountGuardMutant"
+    ],
+    "failed_rows": [
+      "TestCountGuardMutant"
+    ],
+    "runs": [
+      "W3"
+    ]
+  },
+  {
+    "id": "W4",
+    "file": "stage1/cohere/lint/lint_test.go",
+    "line": 744,
+    "function": "TestMutants",
+    "before": "if bytes.Equal(side.run.output, want) {",
+    "after": "if true {",
+    "kind": "allowed witness comparison weakening",
+    "failed_tests": [
+      "TestMutants/nexus-abbreviated-identifier_whole-word_finding_suppressed",
+      "TestMutants"
+    ],
+    "failed_rows": [
+      "TestMutants"
+    ],
+    "runs": [
+      "W4",
+      "W4-Mutants-bounded"
+    ]
+  },
+  {
+    "id": "W5",
+    "file": "stage1/cohere/lint/node_table_split_test.go",
+    "line": 293,
+    "function": "nodeTableEqual",
+    "before": "if diff := difference(got, want); diff != \"\" {",
+    "after": "if diff := \"\"; diff != \"\" {",
+    "kind": "allowed witness comparison weakening",
+    "failed_tests": [
+      "TestNodeTableIsLinkOnlyUnionAndPlantedFailure"
+    ],
+    "failed_rows": [
+      "TestNodeTableIsLinkOnlyUnionAndPlantedFailure"
+    ],
+    "runs": [
+      "W5"
+    ]
+  },
+  {
+    "id": "W6",
+    "file": "stage1/cohere/lint/owned_witness_units_test.go",
+    "line": 327,
+    "function": "ownedWitnessAgreement",
+    "before": "if diff := difference(got, want); diff != \"\" {",
+    "after": "if diff := \"\"; diff != \"\" {",
+    "kind": "allowed witness comparison weakening",
+    "failed_tests": [
+      "TestOwnedWitnessesPlantedDisagreement"
+    ],
+    "failed_rows": [
+      "TestOwnedWitnessesPlantedDisagreement"
+    ],
+    "runs": [
+      "W6"
+    ]
+  }
+]

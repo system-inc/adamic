@@ -1,0 +1,337 @@
+{
+  "D1": [
+    {
+      "Test": "TestNodeTableIsLinkOnly_000",
+      "Action": "fail",
+      "Elapsed": 1.75
+    },
+    {
+      "Test": "TestOwnedWitnesses_012",
+      "Action": "fail",
+      "Elapsed": 16.58
+    },
+    {
+      "Test": "TestOwnedWitnesses_010",
+      "Action": "fail",
+      "Elapsed": 16.77
+    },
+    {
+      "Test": "TestOwnedWitnesses_004",
+      "Action": "fail",
+      "Elapsed": 16.78
+    },
+    {
+      "Test": "TestOwnedWitnesses_015",
+      "Action": "fail",
+      "Elapsed": 15.06
+    },
+    {
+      "Test": "TestOwnedWitnesses_013",
+      "Action": "fail",
+      "Elapsed": 16.83
+    },
+    {
+      "Test": "TestOwnedWitnesses_014",
+      "Action": "fail",
+      "Elapsed": 1.02
+    },
+    {
+      "Test": "TestOwnedWitnesses_007",
+      "Action": "fail",
+      "Elapsed": 1.07
+    },
+    {
+      "Test": "TestOwnedWitnesses_008",
+      "Action": "fail",
+      "Elapsed": 1.12
+    },
+    {
+      "Test": "TestOwnedWitnesses_011",
+      "Action": "fail",
+      "Elapsed": 1.19
+    },
+    {
+      "Test": "TestOwnedWitnesses_009",
+      "Action": "fail",
+      "Elapsed": 1.3
+    },
+    {
+      "Test": "TestOwnedWitnesses_006",
+      "Action": "fail",
+      "Elapsed": 0.92
+    },
+    {
+      "Test": "TestOwnedWitnesses_005",
+      "Action": "fail",
+      "Elapsed": 1.22
+    },
+    {
+      "Test": "TestOwnedWitnessesUnion",
+      "Action": "pass",
+      "Elapsed": 0.03
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_007",
+      "Action": "fail",
+      "Elapsed": 0.01
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_006",
+      "Action": "fail",
+      "Elapsed": 0.01
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_005",
+      "Action": "fail",
+      "Elapsed": 0.01
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_004",
+      "Action": "fail",
+      "Elapsed": 0.02
+    },
+    {
+      "Test": "TestOwnedWitnesses_002",
+      "Action": "fail",
+      "Elapsed": 1.25
+    },
+    {
+      "Test": "TestOwnedWitnesses_003",
+      "Action": "fail",
+      "Elapsed": 1.28
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_003",
+      "Action": "fail",
+      "Elapsed": 0.01
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_002",
+      "Action": "fail",
+      "Elapsed": 0.02
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_001",
+      "Action": "fail",
+      "Elapsed": 0.01
+    },
+    {
+      "Test": "TestOwnedWitnesses_001",
+      "Action": "fail",
+      "Elapsed": 1.26
+    },
+    {
+      "Test": "TestOwnedWitnesses_000",
+      "Action": "fail",
+      "Elapsed": 0.99
+    }
+  ],
+  "D2": [
+    {
+      "Test": "TestProduct_NodeTableLowered",
+      "Action": "pass",
+      "Elapsed": 0.2
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_000",
+      "Action": "fail",
+      "Elapsed": 1.86
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_004",
+      "Action": "fail",
+      "Elapsed": 1.87
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_007",
+      "Action": "fail",
+      "Elapsed": 1.67
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_006",
+      "Action": "fail",
+      "Elapsed": 0.13
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_005",
+      "Action": "fail",
+      "Elapsed": 0.12
+    },
+    {
+      "Test": "TestOwnedWitnesses_012",
+      "Action": "pass",
+      "Elapsed": 3.63
+    },
+    {
+      "Test": "TestOwnedWitnesses_008",
+      "Action": "pass",
+      "Elapsed": 5.55
+    },
+    {
+      "Test": "TestOwnedWitnesses_015",
+      "Action": "pass",
+      "Elapsed": 3.58
+    },
+    {
+      "Test": "TestOwnedWitnesses_014",
+      "Action": "pass",
+      "Elapsed": 3.62
+    },
+    {
+      "Test": "TestProduct_LintOwnedWitnessesSanitized",
+      "Action": "pass",
+      "Elapsed": 0
+    },
+    {
+      "Test": "TestProduct_LintOwnedWitnessesLowered",
+      "Action": "pass",
+      "Elapsed": 0
+    },
+    {
+      "Test": "TestOwnedWitnessesUnion",
+      "Action": "pass",
+      "Elapsed": 0.05
+    },
+    {
+      "Test": "TestOwnedWitnesses_000",
+      "Action": "pass",
+      "Elapsed": 5.63
+    },
+    {
+      "Test": "TestProduct_NodeTableNative",
+      "Action": "pass",
+      "Elapsed": 0
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_003",
+      "Action": "fail",
+      "Elapsed": 0.18
+    },
+    {
+      "Test": "TestProduct_NodeTableOracle",
+      "Action": "pass",
+      "Elapsed": 0.31
+    },
+    {
+      "Test": "TestOwnedWitnesses_013",
+      "Action": "pass",
+      "Elapsed": 1.2
+    },
+    {
+      "Test": "TestOwnedWitnesses_010",
+      "Action": "pass",
+      "Elapsed": 1.28
+    },
+    {
+      "Test": "TestOwnedWitnesses_011",
+      "Action": "fail",
+      "Elapsed": 1.15
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_002",
+      "Action": "fail",
+      "Elapsed": 2.11
+    },
+    {
+      "Test": "TestOwnedWitnesses_007",
+      "Action": "pass",
+      "Elapsed": 0.9
+    },
+    {
+      "Test": "TestOwnedWitnesses_004",
+      "Action": "fail",
+      "Elapsed": 1.31
+    },
+    {
+      "Test": "TestProduct_NodeTableCapture",
+      "Action": "pass",
+      "Elapsed": 2.51
+    },
+    {
+      "Test": "TestProduct_NodeTableEmitted",
+      "Action": "pass",
+      "Elapsed": 0
+    },
+    {
+      "Test": "TestOwnedWitnesses_006",
+      "Action": "pass",
+      "Elapsed": 1.12
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_001",
+      "Action": "fail",
+      "Elapsed": 0.19
+    },
+    {
+      "Test": "TestOwnedWitnesses_005",
+      "Action": "pass",
+      "Elapsed": 1.3
+    },
+    {
+      "Test": "TestOwnedWitnesses_002",
+      "Action": "pass",
+      "Elapsed": 1.39
+    },
+    {
+      "Test": "TestOwnedWitnesses_009",
+      "Action": "pass",
+      "Elapsed": 1.53
+    },
+    {
+      "Test": "TestOwnedWitnesses_003",
+      "Action": "pass",
+      "Elapsed": 1.41
+    },
+    {
+      "Test": "TestOwnedWitnesses_001",
+      "Action": "pass",
+      "Elapsed": 1.43
+    }
+  ],
+  "D3": [
+    {
+      "Test": "TestNodeTableIsLinkOnly_000",
+      "Action": "pass",
+      "Elapsed": 1.89
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_005",
+      "Action": "pass",
+      "Elapsed": 1.92
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_007",
+      "Action": "pass",
+      "Elapsed": 1.93
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_004",
+      "Action": "pass",
+      "Elapsed": 1.94
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_006",
+      "Action": "pass",
+      "Elapsed": 1.94
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_003",
+      "Action": "pass",
+      "Elapsed": 0.22
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_001",
+      "Action": "pass",
+      "Elapsed": 0.21
+    },
+    {
+      "Test": "TestNodeTableIsLinkOnly_002",
+      "Action": "pass",
+      "Elapsed": 1.78
+    }
+  ],
+  "D3_unknown": [
+    "TestOwnedWitnesses_000 through _015: product preparation cooked"
+  ],
+  "outside_matrix": "All other package rows remain unknown for mutants. Current scope is preserved in list.log."
+}

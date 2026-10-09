@@ -1,0 +1,495 @@
+[
+  {
+    "test": "TestProfileCompilation family",
+    "package": "stage1/cohere/lint",
+    "file": [
+      "stage1/cohere/lint/profile_compilation_main_test.go",
+      "stage1/cohere/lint/profile_test.go"
+    ],
+    "seconds": 2.021,
+    "oracle": "Live unchanged Go cohere wire/count output, compared with Node, emitted JavaScript, scanner, profiled and counted output; self-written corpus union invariants.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M01",
+      "M02",
+      "M03"
+    ],
+    "unique_kills": [
+      "M01",
+      "M02",
+      "M03"
+    ],
+    "last_proven_fail": "M03: profile_test.go:128: Node: case 0 line 2: port \"fixed\\tvar a;\\\\u000a\", Go \"/workspace/u111-tmp/TestProfileCompilation_0002686935148/003/no-var-0.ts:1:1\"",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 3,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestFactoryHooks_Setup",
+      "TestProfileCompilation family",
+      "TestProfileCompilationBuildEmission family",
+      "TestNestedOutsideModuleCopy",
+      "TestProfileCompilationBuildLower",
+      "TestProfileCompilation_Setup",
+      "TestProfileCompilationBuildNative",
+      "TestProfileCompilationPlantedFailure",
+      "TestPositionIndexMutant",
+      "TestCommentFoldMutant",
+      "TestRegistrationMutant"
+    ],
+    "evidence": "python3 /workspace/u111-tmp/switch_matrix.py (writes M03 to /workspace/u111-selector); timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run '^(TestProfileCompilationUnion|TestProfileCompilationPlantedFailure|TestProfileCompilationBuildLower|TestProfileCompilationBuildC|TestProfileCompilationBuildJavaScript|TestProfileCompilationBuildNative|TestProfileCompilation_Setup|TestProfileCompilation_000|TestCommentFoldMutant|TestPositionIndexMutant|TestRegistrationMutant|TestFactoryHooks_Setup|TestNestedOutsideModuleCopy)$' > M03.log 2>&1; profile_test.go:128: Node: case 0 line 2: port \"fixed\\tvar a;\\\\u000a\", Go \"/workspace/u111-tmp/TestProfileCompilation_0002686935148/003/no-var-0.ts:1:1\"",
+    "members": [
+      "TestProfileCompilationUnion",
+      "TestProfileCompilation_000"
+    ]
+  },
+  {
+    "test": "TestProfileCompilationBuildEmission family",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/lint_setup_clock_regression_test.go",
+    "seconds": 0.289,
+    "oracle": "Own emitted artifacts and successful serialization/write operations. No emitted answer is executed by these build wrappers.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "S03: profile_compilation_main_test.go:325: open /workspace/u111-cache/S03/6f597cf5f80523855d7d0175780a5a69c2430ab48b800f6cf32f917b8b7d8fda/program.gob: no such file or directory",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 3,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestFactoryHooks_Setup",
+      "TestProfileCompilation family",
+      "TestProfileCompilationBuildEmission family",
+      "TestNestedOutsideModuleCopy",
+      "TestProfileCompilationBuildLower",
+      "TestProfileCompilation_Setup",
+      "TestProfileCompilationBuildNative",
+      "TestProfileCompilationPlantedFailure",
+      "TestPositionIndexMutant",
+      "TestCommentFoldMutant",
+      "TestRegistrationMutant"
+    ],
+    "evidence": "timeout 120 go test -overlay /workspace/u111-tmp/checks/S03/overlay.json -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run '^(TestProfileCompilationBuildLower|TestProfileCompilationBuildC|TestProfileCompilationBuildJavaScript|TestProfileCompilationBuildNative|TestProfileCompilation_Setup)$' > S03.log 2>&1; profile_compilation_main_test.go:325: open /workspace/u111-cache/S03/6f597cf5f80523855d7d0175780a5a69c2430ab48b800f6cf32f917b8b7d8fda/program.gob: no such file or directory",
+    "members": [
+      "TestProfileCompilationBuildC",
+      "TestProfileCompilationBuildJavaScript"
+    ],
+    "setup_kills": [
+      "S03"
+    ]
+  },
+  {
+    "test": "TestProfileCompilationPlantedFailure",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/lint_setup_clock_regression_test.go",
+    "seconds": 3.854,
+    "oracle": "Go cohere comparison in child; parent expects exactly one failed compilation case and planted disagreement text.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W01: lint_setup_clock_regression_test.go:113: wrong planted-failure attribution: <nil>",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestFactoryHooks_Setup",
+      "TestProfileCompilation family",
+      "TestProfileCompilationBuildEmission family",
+      "TestNestedOutsideModuleCopy",
+      "TestProfileCompilationBuildLower",
+      "TestProfileCompilation_Setup",
+      "TestProfileCompilationBuildNative",
+      "TestProfileCompilationPlantedFailure",
+      "TestPositionIndexMutant",
+      "TestCommentFoldMutant",
+      "TestRegistrationMutant"
+    ],
+    "evidence": "timeout 120 go test -overlay /workspace/u111-tmp/checks/W01/overlay.json -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run '^(TestProfileCompilationPlantedFailure|TestCommentFoldMutant|TestPositionIndexMutant)$' > W01.log 2>&1; lint_setup_clock_regression_test.go:113: wrong planted-failure attribution: <nil>",
+    "witness_kills": [
+      "W01"
+    ]
+  },
+  {
+    "test": "TestProfileCompilationBuildLower",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/lint_setup_clock_regression_test.go",
+    "seconds": 0.218,
+    "oracle": "Only completion of compilationLowered is checked. S03 still passes while writing lost.gob instead of program.gob; the returned path and IR contents are not checked.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "untrue",
+    "subsumed_by": [],
+    "mutants_in_matrix": 3,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestFactoryHooks_Setup",
+      "TestProfileCompilation family",
+      "TestProfileCompilationBuildEmission family",
+      "TestNestedOutsideModuleCopy",
+      "TestProfileCompilationBuildLower",
+      "TestProfileCompilation_Setup",
+      "TestProfileCompilationBuildNative",
+      "TestProfileCompilationPlantedFailure",
+      "TestPositionIndexMutant",
+      "TestCommentFoldMutant",
+      "TestRegistrationMutant"
+    ],
+    "evidence": "S03.log: BuildLower PASS despite missing program.gob",
+    "construction_escapes": [
+      "S03"
+    ],
+    "resting_on": "three production mutants and one construction filename fault; no deletion recommendation"
+  },
+  {
+    "test": "TestProfileCompilationBuildNative",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/lint_setup_clock_regression_test.go",
+    "seconds": 0.453,
+    "oracle": "Successful builds and reading/copying scanner, counted and profiled files. No runtime answer comparison here.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "S04: profile_compilation_main_test.go:243: open /workspace/u111-cache/S04/258835ad696fbc9086060bf8335dc2e4cc3e719a2d563fef1f21fac3af0d160c/scanner: no such file or directory",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 3,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestFactoryHooks_Setup",
+      "TestProfileCompilation family",
+      "TestProfileCompilationBuildEmission family",
+      "TestNestedOutsideModuleCopy",
+      "TestProfileCompilationBuildLower",
+      "TestProfileCompilation_Setup",
+      "TestProfileCompilationBuildNative",
+      "TestProfileCompilationPlantedFailure",
+      "TestPositionIndexMutant",
+      "TestCommentFoldMutant",
+      "TestRegistrationMutant"
+    ],
+    "evidence": "timeout 120 go test -overlay /workspace/u111-tmp/checks/S04/overlay.json -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run '^(TestProfileCompilationBuildNative|TestProfileCompilation_Setup)$' > S04.log 2>&1; profile_compilation_main_test.go:243: open /workspace/u111-cache/S04/258835ad696fbc9086060bf8335dc2e4cc3e719a2d563fef1f21fac3af0d160c/scanner: no such file or directory",
+    "setup_kills": [
+      "S03",
+      "S04"
+    ]
+  },
+  {
+    "test": "TestProfileCompilation_Setup",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/lint_setup_clock_regression_test.go",
+    "seconds": 1.752,
+    "oracle": "Preparation must finish without errors. It prepares Go oracle outputs but does not compare candidate answers.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "S03: profile_compilation_main_test.go:325: open /workspace/u111-cache/S03/6f597cf5f80523855d7d0175780a5a69c2430ab48b800f6cf32f917b8b7d8fda/program.gob: no such file or directory",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 3,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestFactoryHooks_Setup",
+      "TestProfileCompilation family",
+      "TestProfileCompilationBuildEmission family",
+      "TestNestedOutsideModuleCopy",
+      "TestProfileCompilationBuildLower",
+      "TestProfileCompilation_Setup",
+      "TestProfileCompilationBuildNative",
+      "TestProfileCompilationPlantedFailure",
+      "TestPositionIndexMutant",
+      "TestCommentFoldMutant",
+      "TestRegistrationMutant"
+    ],
+    "evidence": "timeout 120 go test -overlay /workspace/u111-tmp/checks/S03/overlay.json -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run '^(TestProfileCompilationBuildLower|TestProfileCompilationBuildC|TestProfileCompilationBuildJavaScript|TestProfileCompilationBuildNative|TestProfileCompilation_Setup)$' > S03.log 2>&1; profile_compilation_main_test.go:325: open /workspace/u111-cache/S03/6f597cf5f80523855d7d0175780a5a69c2430ab48b800f6cf32f917b8b7d8fda/program.gob: no such file or directory",
+    "setup_kills": [
+      "S03",
+      "S04"
+    ]
+  },
+  {
+    "test": "TestProfileArtifacts",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/profile_test.go",
+    "seconds": null,
+    "oracle": "Git checkout pin plus own artifact construction succeeds. Empty buildProfile probe passes with all native artifacts absent in a fresh directory.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "cannot-judge",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": true,
+    "matrix_rows": [
+      "TestFactoryHooks_Setup",
+      "TestProfileCompilation family",
+      "TestProfileCompilationBuildEmission family",
+      "TestNestedOutsideModuleCopy",
+      "TestProfileCompilationBuildLower",
+      "TestProfileCompilation_Setup",
+      "TestProfileCompilationBuildNative",
+      "TestProfileCompilationPlantedFailure",
+      "TestPositionIndexMutant",
+      "TestCommentFoldMutant",
+      "TestRegistrationMutant"
+    ],
+    "evidence": "P02.log: PASS with absent main.c/scanner/counted/profiled; clean-TestProfileArtifacts-0.log timed out at 90s",
+    "probe_ids": [
+      "P02"
+    ],
+    "seconds_lower_bound": 90
+  },
+  {
+    "test": "TestProfileSnapshotsAgree",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/profile_test.go",
+    "seconds": null,
+    "oracle": "Intended live Go cohere agreement over upstream/compiler/stage1 corpus and snapshot backends; enabled clean run timed out before completing agreement.",
+    "oracle_kind": "external-run",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "cannot-judge",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestFactoryHooks_Setup",
+      "TestProfileCompilation family",
+      "TestProfileCompilationBuildEmission family",
+      "TestNestedOutsideModuleCopy",
+      "TestProfileCompilationBuildLower",
+      "TestProfileCompilation_Setup",
+      "TestProfileCompilationBuildNative",
+      "TestProfileCompilationPlantedFailure",
+      "TestPositionIndexMutant",
+      "TestCommentFoldMutant",
+      "TestRegistrationMutant"
+    ],
+    "evidence": "clean-TestProfileSnapshotsAgree-0.log: panic: test timed out after 1m30s",
+    "seconds_lower_bound": 90
+  },
+  {
+    "test": "TestCommentFoldMutant",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/profile_test.go",
+    "seconds": 7.841,
+    "oracle": "Live Go cohere output; built-in fold mutation must disagree on Node and emitted JavaScript.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W01: profile_test.go:244: fold mutant survived on Node",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestFactoryHooks_Setup",
+      "TestProfileCompilation family",
+      "TestProfileCompilationBuildEmission family",
+      "TestNestedOutsideModuleCopy",
+      "TestProfileCompilationBuildLower",
+      "TestProfileCompilation_Setup",
+      "TestProfileCompilationBuildNative",
+      "TestProfileCompilationPlantedFailure",
+      "TestPositionIndexMutant",
+      "TestCommentFoldMutant",
+      "TestRegistrationMutant"
+    ],
+    "evidence": "timeout 120 go test -overlay /workspace/u111-tmp/checks/W01/overlay.json -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run '^(TestProfileCompilationPlantedFailure|TestCommentFoldMutant|TestPositionIndexMutant)$' > W01.log 2>&1; profile_test.go:244: fold mutant survived on Node",
+    "witness_kills": [
+      "W01"
+    ]
+  },
+  {
+    "test": "TestPositionIndexMutant",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/profile_test.go",
+    "seconds": 7.586,
+    "oracle": "Live Go cohere output; built-in anchor mutation must disagree on Node and emitted JavaScript.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W01: profile_test.go:263: position mutant survived on Node",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestFactoryHooks_Setup",
+      "TestProfileCompilation family",
+      "TestProfileCompilationBuildEmission family",
+      "TestNestedOutsideModuleCopy",
+      "TestProfileCompilationBuildLower",
+      "TestProfileCompilation_Setup",
+      "TestProfileCompilationBuildNative",
+      "TestProfileCompilationPlantedFailure",
+      "TestPositionIndexMutant",
+      "TestCommentFoldMutant",
+      "TestRegistrationMutant"
+    ],
+    "evidence": "timeout 120 go test -overlay /workspace/u111-tmp/checks/W01/overlay.json -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run '^(TestProfileCompilationPlantedFailure|TestCommentFoldMutant|TestPositionIndexMutant)$' > W01.log 2>&1; profile_test.go:263: position mutant survived on Node",
+    "witness_kills": [
+      "W01"
+    ]
+  },
+  {
+    "test": "TestRegistrationMutant",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/registration_test.go",
+    "seconds": 7.659,
+    "oracle": "Live Go cohere output for no-debugger; built-in descriptor mutation must disagree on Node and emitted JavaScript.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W02: registration_test.go:57: listener omission survived on Node",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestFactoryHooks_Setup",
+      "TestProfileCompilation family",
+      "TestProfileCompilationBuildEmission family",
+      "TestNestedOutsideModuleCopy",
+      "TestProfileCompilationBuildLower",
+      "TestProfileCompilation_Setup",
+      "TestProfileCompilationBuildNative",
+      "TestProfileCompilationPlantedFailure",
+      "TestPositionIndexMutant",
+      "TestCommentFoldMutant",
+      "TestRegistrationMutant"
+    ],
+    "evidence": "timeout 120 go test -overlay /workspace/u111-tmp/checks/W02/overlay.json -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run '^(TestRegistrationMutant)$' > W02.log 2>&1; registration_test.go:57: listener omission survived on Node",
+    "witness_kills": [
+      "W02"
+    ]
+  },
+  {
+    "test": "TestFactoryHooks_Setup",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/registration_test.go",
+    "seconds": 4.149,
+    "oracle": "Own fixture pair and prepared-product construction, including exactly four directory/manifest rows and nonnil prepared state.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "S02: factory_hooks_shards_test.go:203: incomplete factory hook fixture setup",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 3,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestFactoryHooks_Setup",
+      "TestProfileCompilation family",
+      "TestProfileCompilationBuildEmission family",
+      "TestNestedOutsideModuleCopy",
+      "TestProfileCompilationBuildLower",
+      "TestProfileCompilation_Setup",
+      "TestProfileCompilationBuildNative",
+      "TestProfileCompilationPlantedFailure",
+      "TestPositionIndexMutant",
+      "TestCommentFoldMutant",
+      "TestRegistrationMutant"
+    ],
+    "evidence": "timeout 120 go test -overlay /workspace/u111-tmp/checks/S02/overlay.json -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run '^(TestFactoryHooks_Setup)$' > S02.log 2>&1; factory_hooks_shards_test.go:203: incomplete factory hook fixture setup",
+    "setup_kills": [
+      "S02"
+    ]
+  },
+  {
+    "test": "TestNestedOutsideModuleCopy",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/registration_test.go",
+    "seconds": 0.609,
+    "oracle": "Own copied newline expectation on Node/native; built-in bad rewrite must produce Node ERR_MODULE_NOT_FOUND and a load.Load error. No independent comparison helper guards the negative checks.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "cannot-judge",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestFactoryHooks_Setup",
+      "TestProfileCompilation family",
+      "TestProfileCompilationBuildEmission family",
+      "TestNestedOutsideModuleCopy",
+      "TestProfileCompilationBuildLower",
+      "TestProfileCompilation_Setup",
+      "TestProfileCompilationBuildNative",
+      "TestProfileCompilationPlantedFailure",
+      "TestPositionIndexMutant",
+      "TestCommentFoldMutant",
+      "TestRegistrationMutant"
+    ],
+    "evidence": "clean-TestNestedOutsideModuleCopy-{0,1,2}.log: PASS; W03-not-run.txt explains unavailable permitted weakening"
+  }
+]

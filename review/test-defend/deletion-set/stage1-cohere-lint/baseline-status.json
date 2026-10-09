@@ -1,0 +1,36 @@
+{
+  "status": "red_stopped",
+  "wall_seconds": 198,
+  "failed_rows": [
+    "TestShardsAgree_006",
+    "TestShardsAgree_007",
+    "TestShardsAgree_008",
+    "TestShardsAgree_009",
+    "TestShardsAgree_010",
+    "TestShardsAgree_011",
+    "TestShardsAgree_012",
+    "TestShardsAgree_013",
+    "TestShardsAgree_014",
+    "TestShardsAgree_015",
+    "TestShardsAgree_016",
+    "TestShardsAgree_017",
+    "TestShardsAgree_018"
+  ],
+  "errors": [
+    "shards_agree_split_test.go:296: set ADAMIC_TYPESCRIPT_SOURCE to pinned TypeScript checkout",
+    "shards_agree_split_test.go:224: open prepared.json: no such file or directory",
+    "shards_agree_split_test.go:223: open prepared.json: no such file or directory",
+    "shards_agree_split_test.go:222: open prepared.json: no such file or directory",
+    "shards_agree_split_test.go:221: open prepared.json: no such file or directory",
+    "shards_agree_split_test.go:358: open prepared.json: no such file or directory",
+    "shards_agree_split_test.go:219: open prepared.json: no such file or directory",
+    "shards_agree_split_test.go:218: open prepared.json: no such file or directory",
+    "shards_agree_split_test.go:356: open prepared.json: no such file or directory",
+    "shards_agree_split_test.go:220: open prepared.json: no such file or directory",
+    "shards_agree_split_test.go:217: open prepared.json: no such file or directory",
+    "shards_agree_split_test.go:216: open prepared.json: no such file or directory",
+    "shards_agree_split_test.go:215: open prepared.json: no such file or directory"
+  ],
+  "stopped_reason": "Baseline failed: missing ADAMIC_TYPESCRIPT_SOURCE and prepared.json",
+  "mutants_run": 0
+}

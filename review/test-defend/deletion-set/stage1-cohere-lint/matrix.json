@@ -1,0 +1,101 @@
+[
+  {
+    "mutant": "D1",
+    "file": "review/test-defend/stage1-cohere-lint-lint/D1.diff",
+    "branch": "test-defend/stage1-cohere-lint-lint",
+    "candidates_failed": [
+      "TestNodeTableIsLinkOnlyFamily"
+    ],
+    "candidate_members_failed": [
+      "TestNodeTableIsLinkOnly_000",
+      "TestNodeTableIsLinkOnly_007",
+      "TestNodeTableIsLinkOnly_006",
+      "TestNodeTableIsLinkOnly_005",
+      "TestNodeTableIsLinkOnly_004",
+      "TestNodeTableIsLinkOnly_003",
+      "TestNodeTableIsLinkOnly_002",
+      "TestNodeTableIsLinkOnly_001"
+    ],
+    "other_rows_failed": [
+      "TestOwnedWitnesses_012",
+      "TestOwnedWitnesses_010",
+      "TestOwnedWitnesses_004",
+      "TestOwnedWitnesses_015",
+      "TestOwnedWitnesses_013",
+      "TestOwnedWitnesses_014",
+      "TestOwnedWitnesses_007",
+      "TestOwnedWitnesses_008",
+      "TestOwnedWitnesses_011",
+      "TestOwnedWitnesses_009",
+      "TestOwnedWitnesses_006",
+      "TestOwnedWitnesses_005",
+      "TestOwnedWitnesses_002",
+      "TestOwnedWitnesses_003",
+      "TestOwnedWitnesses_001",
+      "TestOwnedWitnesses_000"
+    ],
+    "local_diff": "review/test-defend/deletion-set/stage1-cohere-lint/R1-D1.diff",
+    "file_line": "stage1/cohere/lint/lint.ts:83",
+    "stale": false,
+    "apply_check": "",
+    "status": "not_run_baseline_red",
+    "still_caught_by": null
+  },
+  {
+    "mutant": "D2",
+    "file": "review/test-defend/stage1-cohere-lint-lint/D2.diff",
+    "branch": "test-defend/stage1-cohere-lint-lint",
+    "candidates_failed": [
+      "TestNodeTableIsLinkOnlyFamily"
+    ],
+    "candidate_members_failed": [
+      "TestNodeTableIsLinkOnly_000",
+      "TestNodeTableIsLinkOnly_004",
+      "TestNodeTableIsLinkOnly_007",
+      "TestNodeTableIsLinkOnly_006",
+      "TestNodeTableIsLinkOnly_005",
+      "TestNodeTableIsLinkOnly_003",
+      "TestNodeTableIsLinkOnly_002",
+      "TestNodeTableIsLinkOnly_001"
+    ],
+    "other_rows_failed": [
+      "TestOwnedWitnesses_011",
+      "TestOwnedWitnesses_004"
+    ],
+    "local_diff": "review/test-defend/deletion-set/stage1-cohere-lint/R2-D2.diff",
+    "file_line": "stage1/cohere/lint/lint.ts:202",
+    "stale": false,
+    "apply_check": "",
+    "status": "not_run_baseline_red",
+    "still_caught_by": null
+  },
+  {
+    "mutant": "D1",
+    "file": "review/test-defend/stage1-cohere-lint-profile_compilation_main/session-157a4355/D1.diff",
+    "branch": "test-defend/stage1-cohere-lint-profile_compilation_main",
+    "candidates_failed": [
+      "TestProfileCompilationBuildLower"
+    ],
+    "other_rows_failed": [
+      "TestProduct_ProfileCompilationCounted",
+      "TestProduct_ProfileCompilationScanner",
+      "TestProduct_ProfileCompilationLowered",
+      "TestProfileCompilation_Setup",
+      "TestProfileCompilation_000",
+      "TestProduct_ProfileCompilationJavaScript",
+      "TestProduct_ProfileCompilationC",
+      "TestProfileCompilationBuildJavaScript",
+      "TestProfileCompilationPlantedFailure",
+      "TestProfileCompilationBuildNative",
+      "TestProfileCompilationBuildC",
+      "TestProduct_ProfileCompilationOracleOutputs",
+      "TestProduct_ProfileCompilationProfiled"
+    ],
+    "local_diff": "review/test-defend/deletion-set/stage1-cohere-lint/R3-D1.diff",
+    "file_line": "internal/lower/lower.go:22",
+    "stale": false,
+    "apply_check": "",
+    "status": "not_run_baseline_red",
+    "still_caught_by": null
+  }
+]
