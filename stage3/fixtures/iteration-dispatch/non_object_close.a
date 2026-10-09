@@ -1,0 +1,6 @@
+// a-check: refused adamic/no-unchecked-cast
+// Pending: .ts type-lie exit 70 oracle requires compiler/per-backend-stops 5f3b2e36.
+interface Step {value: number; done: boolean;}
+interface Cursor {next(): Step;}
+const source = {[Symbol.iterator]() {return {next(): Step {return {value:1,done:false};}, return(): Step {return 1 as unknown as Step;}};}};
+try {for (const value of source) {console.log(`${value}`); break;}} catch(error) {console.log(error instanceof TypeError ? 'TypeError' : 'unexpected');}

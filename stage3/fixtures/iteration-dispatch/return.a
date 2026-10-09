@@ -1,0 +1,22 @@
+interface Step { value: string; done: boolean; }
+interface Cursor { next(): Step; return(): Step; }
+interface Source { [Symbol.iterator](): Cursor; }
+class Sequence {
+ index = 0;
+ failNext: boolean;
+ failClose: boolean;
+ constructor(failNext: boolean, failClose: boolean) { this.failNext = failNext; this.failClose = failClose; }
+ [Symbol.iterator](): Sequence { console.log('iterator'); return this; }
+ next(): Step {
+  console.log(`next:${this.index}`);
+  if (this.failNext) { throw new Error(`next failure ${this.index}`); }
+  this.index += 1;
+  return {value: `value:${this.index}`, done: this.index > 2};
+ }
+ return(): Step {
+  console.log(`close:${this.index}`);
+  if (this.failClose) { throw new Error(`close failure ${this.index}`); }
+  return {value: `closed:${this.index}`, done: true};
+ }
+}
+function consume(source: Source): string { for (const value of source) { return `returned:${value}`; } return 'empty'; } console.log(consume(new Sequence(false, false)));

@@ -468,7 +468,7 @@ func callsBack(expression ir.Expression) bool {
 		return call.Replacement != nil
 	}
 	switch expression.(type) {
-	case ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.ArraySort, ir.MapForEach:
+	case ir.IteratorMethod, ir.IteratorField, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.ArraySort, ir.MapForEach:
 		return true
 	}
 	return false

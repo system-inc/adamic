@@ -196,7 +196,7 @@ func (l *lowering) throwsOut(statements []ir.Statement) bool {
 			if node.Replacement != nil && l.result.ClosuresMayThrow {
 				found = true
 			}
-		case ir.CallClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.MapForEach:
+		case ir.IteratorMethod, ir.IteratorField, ir.CallClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.MapForEach:
 			// A call through a function value, written out or made by the runtime's loop.
 			if l.result.ClosuresMayThrow {
 				found = true
@@ -229,7 +229,7 @@ func (l *lowering) libraryFailure(statements []ir.Statement, visited map[int]boo
 					}
 				}
 			}
-		case ir.CallClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.MapForEach:
+		case ir.IteratorMethod, ir.IteratorField, ir.CallClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.MapForEach:
 			callsClosures = true
 		case ir.ArraySort:
 			if node.Callback != nil {

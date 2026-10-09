@@ -1,0 +1,8 @@
+// a-check: refused a generator function
+// Reduced and specialized from core.ts:538, singleIterator.
+function* singleIterator(value: number): Generator<number, void, unknown> {
+    yield value;
+}
+for (const value of singleIterator(7)) {
+    console.log(`${value}`);
+}
