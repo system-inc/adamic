@@ -75,7 +75,7 @@ class GateLaneTests(unittest.TestCase):
         poster.write_text('#!/usr/bin/env bash\nfile=""; while [ $# -gt 0 ]; do [ "$1" = --text-file ] && file=$2; shift; done\n'
                           'cat "$file" >> %s; echo >> %s; echo "Comment added"\n' % (self.posts, self.posts))
         poster.chmod(0o755)
-        return subprocess.run(['python3', str(script)], cwd=self.repository, capture_output=True, text=True, timeout=30,
+        return subprocess.run(['python3', str(script)], cwd=self.repository, capture_output=True, text=True, timeout=120,
                               env=dict(os.environ, GATE_LANE_CANDIDATES=str(self.candidates), GATE_LANE_STATE=str(self.root / 'state'),
                                        GATE_LANE_PUSH_MAIN=str(fake), GATE_LANE_AHRA=str(poster)))
 
@@ -175,6 +175,15 @@ class GateLaneTests(unittest.TestCase):
         self.run_lane(0, during="printf '%s\\n' >> %s\n" % (late, self.candidates))
         self.assertNotIn('cloud/land-x', self.candidates.read_text())
         self.assertIn(late, self.candidates.read_text())
+
+    def test_a_landing_that_takes_longer_than_a_minute_is_never_killed(self):
+        # push-main runs minutes on a real landing; a timeout on it once killed landings midway (Oct 9 16:45Z review).
+        self.record('20261009T110000Z', 'fast', 'green: slow landing')
+        self.candidates.write_text('cloud/land-slow\t%s\ttask7\t\n' % self.sha)
+        ran = self.run_lane(0, during='sleep 30\n')
+        self.assertEqual(ran.returncode, 0, ran.stderr)
+        self.assertIn('Gate lane landed', self.posts.read_text())
+        self.assertNotIn(self.sha, self.candidates.read_text())
 
     def test_a_refusal_is_posted_once_and_a_hold_waits(self):
         self.record('20261009T110000Z', 'full-main', 'red: whole')

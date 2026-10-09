@@ -23,7 +23,13 @@ ahra = os.environ.get("GATE_LANE_AHRA", "cd ~/Projects/ahra && ahra")
 
 
 def git(*arguments):
-    return subprocess.run(["git", *arguments], capture_output=True, text=True, timeout=25).stdout.strip()
+    # A hung fetch must not hold the lane's lock forever, but a timeout is logged and read as empty, never a crash
+    # that leaves the candidates file unwritten.
+    try:
+        return subprocess.run(["git", *arguments], capture_output=True, text=True, timeout=300).stdout.strip()
+    except subprocess.TimeoutExpired:
+        print("gate-lane: git %s timed out after 300 s" % " ".join(arguments[:2]), flush=True)
+        return ""
 
 
 remoteRecords = []
@@ -158,7 +164,8 @@ def main():
         # A gate merge names its candidate, so the landing and the task read which commit came in.
         label = gated[:8] if gated == sha else "%s (gate merge of %s)" % (gated[:8], sha[:8])
         published = git("log", "-1", "--format=%cI", "origin/" + found[1])
-        ran = subprocess.run(["bash", pushMain, *arguments, gated, "%s (gate lane)" % branch], capture_output=True, text=True, timeout=25)
+        # No timeout: a landing runs minutes (fetches, merges, checks, the push), and killing it midway is worse than waiting.
+        ran = subprocess.run(["bash", pushMain, *arguments, gated, "%s (gate lane)" % branch], capture_output=True, text=True)
         now = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
         if ran.returncode == 0:
             pushed = [l for l in ran.stdout.splitlines() if l.startswith("Pushed main")]
