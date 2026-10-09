@@ -50,22 +50,19 @@ case $(uname -m) in
 	*) echo "setup: no tools for $(uname -m)" >&2 && exit 1 ;;
 esac
 
-# Go. Any Go from 1.21 on fetches the version go.mod names by itself (GOTOOLCHAIN=auto), so an
-# installed one is enough; otherwise the newest stable release goes in $tools/go.
+# Go: the pinned one (cloud/go-pin.sh) in $tools/go, whatever else the machine has, since the toolchain is in
+# every action ID and every verdict. GOTOOLCHAIN=auto still honors a go.mod that asks for newer.
 export GOTOOLCHAIN=auto
+# shellcheck source=cloud/go-pin.sh
+source "$repository/cloud/go-pin.sh"
 # Some cloud boxes reach proxy.golang.org but not storage.googleapis.com, where it redirects module
 # downloads, and answer 403. The default proxy list falls back to direct only on 404 and 410, so a
 # module the box hasn't cached fails setup. The pipe falls back on any error, fetching from the
 # module's own source instead; go.sum still checks every module's hash either way.
 export GOPROXY="https://proxy.golang.org|direct"
 prepareGo() {
-# Only a go that answers `go version` counts: some images ship an unrelated /usr/bin/go.
-realGo() { "$1" version 2> /dev/null | grep -q '^go version go1\.'; }
-if ! { command -v go > /dev/null 2>&1 && realGo go; } && ! realGo "$tools/go/bin/go"; then
-	goVersion=$(curl -fsSL 'https://go.dev/VERSION?m=text' | head -n 1)
-	curl -fsSL "https://dl.google.com/go/$goVersion.linux-$goArchitecture.tar.gz" | tar --no-same-owner -xz -C "$tools"
-fi
-[ -x "$tools/go/bin/go" ] && export PATH="$tools/go/bin:$PATH"
+installPinnedGo "$tools" "$goArchitecture" || { echo "setup: $goPin didn't install in $tools/go" >&2; return 1; }
+export PATH="$tools/go/bin:$PATH"
 (cd "$repository" && go version)
 step "go ready"
 }
@@ -171,46 +168,26 @@ if "$wasiSDK"; then
  step "wasi sdk ready ($wasiDirectory)"
 fi
 
-# Bootstrap without the hook: the cache program cannot cache its own build. Older branches and
-# bootstrap failures still warm Go's local cache, so a shared-cache outage never blocks setup.
-unset GOCACHEPROG
-gocacheprog=off
-if [ "${ADAMIC_GOCACHE_OFF:-0}" = 1 ]; then
-	step "shared cache off (ADAMIC_GOCACHE_OFF=1)"
-elif [ ! -d "$repository/cmd/adamic-gocacheprog" ]; then
-	step "shared cache off (cmd/adamic-gocacheprog absent)"
-elif (cd "$repository" && env -u GOCACHEPROG go build -o "$tools/bin/adamic-gocacheprog" ./cmd/adamic-gocacheprog) > "$run/gocacheprog.log" 2>&1; then
-	export GOCACHEPROG="$tools/bin/adamic-gocacheprog"
-	gocacheprog=on
-	step "shared cache ready"
-else
-	step "shared cache off (adamic-gocacheprog build failed; see $run/gocacheprog.log)"
-fi
-
 # One file every shell sources: the agent's shell in Codex is a different session from this one.
 cat > "$tools/env.sh" << ENV
-export PATH="$tools/bin:$([ -x "$tools/go/bin/go" ] && echo "$tools/go/bin:")\$PATH"
+export PATH="$tools/bin:$tools/go/bin:\$PATH"
 export GOTOOLCHAIN=auto
 export GOPROXY="https://proxy.golang.org|direct"
 export TMPDIR=$gate
 export ADAMIC_MARKDOWNWIDTH_DEPS="$markdownDependencies"
-# A product's bytes are a function of its key (@system_adamic, Oct 9): without these, every binary stamps the commit
-# and the checkout path, inputs no key sees. Added to whatever GOFLAGS holds, once, however often this is sourced.
-case " \${GOFLAGS:-} " in *" -buildvcs=false -trimpath "*) ;; *) export GOFLAGS="\${GOFLAGS:+\$GOFLAGS }-buildvcs=false -trimpath" ;; esac
 ENV
-# Persist only a successful bootstrap; recheck opt-out and branch presence in later shells.
-# Credentials stay in the caller's environment: cloud setup never grants cache write trust.
-printf 'unset GOCACHEPROG\n' >> "$tools/env.sh"
-if [ "$gocacheprog" = on ]; then
-	printf 'if [ "${ADAMIC_GOCACHE_OFF:-0}" != 1 ] && [ -d %q ] && [ -x %q ]; then\n\texport GOCACHEPROG=%q\nfi\n' \
-		"$repository/cmd/adamic-gocacheprog" "$tools/bin/adamic-gocacheprog" "$tools/bin/adamic-gocacheprog" >> "$tools/env.sh"
-fi
 if "$wasiSDK"; then
  printf 'export WASI_SYSROOT=%q\n' "$wasiDirectory/share/wasi-sysroot" >> "$tools/env.sh"
 fi
+# The shared cache's part of env.sh: the go flags that make actions shareable and the cache program, built without the
+# hook (it cannot cache its own build). A shared-cache outage never blocks setup; Go's local cache still warms.
+unset GOCACHEPROG
+bash "$repository/cloud/gocacheprog.sh" "$tools" > "$run/gocacheprog.out" 2>&1 || true
+step "$(sed 's/^gocacheprog: //' "$run/gocacheprog.out" | tail -1)"
 grep -qs "$tools/env.sh" ~/.bashrc || echo "source $tools/env.sh" >> ~/.bashrc
 # shellcheck disable=SC1091
 source "$tools/env.sh"
+gocacheprog=$([ -n "${GOCACHEPROG:-}" ] && echo on || echo off)
 cd "$repository"
 
 # Validate actual dependency actions, including dirty sources, embeds, local replacements and
