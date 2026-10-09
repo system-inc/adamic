@@ -234,11 +234,12 @@ stopGate() {
   fi
   return 1
 }
-# Integration's skip list names tips that won't land (superseded candidates): one still running there is
-# stopped, so its slot goes to work that can (integration asked twice by hand, Oct 8).
+# Integration's skip list names tips that won't land (superseded candidates), and skip-globs whole families: one
+# still running there is stopped, so its slot goes to work that can (integration asked twice by hand, Oct 8; three
+# codex/coverage-* gates held pool slots for 75 minutes after their glob went in, Oct 9 05:54Z).
 stopSkipped() {
-  local file pid branch sha slot box rest
-  [ -s "${state}/skip" ] || return 0
+  local file pid branch sha slot box rest glob why
+  [ -s "${state}/skip" ] || [ -s "${state}/skip-globs" ] || return 0
   for file in "${state}"/running/*; do
     [ -f "${file}" ] || continue
     pid=$(basename "${file}")
@@ -246,9 +247,16 @@ stopSkipped() {
     kill -0 "${pid}" 2> /dev/null || continue
     read -r branch sha slot box rest < "${file}"
     [ "${branch}" = canary/main ] && continue
-    grep -qxF "${branch} ${sha}" "${state}/skip" || continue
-    stopGate "${pid}" "${branch}" "${sha}" "${box:-threadripper}" "on the skip list" &&
-      echo "$(date -u +%H:%M:%S) stopped ${branch} ${sha}: on the skip list"
+    why=""
+    grep -qxF "${branch} ${sha}" "${state}/skip" 2> /dev/null && why="on the skip list"
+    if [ -z "${why}" ]; then
+      while read -r glob _; do
+        [ -n "${glob}" ] && [[ ${glob} != \#* ]] && [[ ${branch} == ${glob} ]] && { why="on the skip list (${glob})"; break; }
+      done < <(cat "${state}/skip-globs" 2> /dev/null)
+    fi
+    [ -n "${why}" ] || continue
+    stopGate "${pid}" "${branch}" "${sha}" "${box:-threadripper}" "${why}" &&
+      echo "$(date -u +%H:%M:%S) stopped ${branch} ${sha}: ${why}"
   done
 }
 # Side work whose branch was pushed again stops: its verdict would only be superseded, and on Loom's pool it held one

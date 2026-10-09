@@ -717,6 +717,20 @@ class WatchTests(unittest.TestCase):
         self.assertIn('on the skip list', (w.root / 'loom-jobs' / (sha + '.cancel')).read_text())
         w.wait(lambda: 'stopped %s %s: on the skip list' % (branch, sha) in w.read('output'))
 
+    def test_a_running_gate_a_skip_glob_covers_is_stopped_and_cancelled_on_the_pool(self):
+        # Oct 9 05:54Z: three codex/coverage-* gates held pool slots for 75 minutes after their glob went in.
+        w = Watcher(1, canaryBox='box1', mode='hold', slots='pool P\n')
+        self.addCleanup(w.close)
+        (w.state / 'pool-side').touch()
+        w.wait(lambda: 'codex/test0 ' in w.read('pool-starts'))
+        branch, sha = w.read('pool-starts').split()[:2]
+        (w.state / 'skip-globs').write_text('# a comment line\ncodex/test* why it never lands\n')
+        w.wait(lambda: (w.root / 'loom-jobs' / (sha + '.cancel')).exists())
+        self.assertIn('on the skip list (codex/test*)', (w.root / 'loom-jobs' / (sha + '.cancel')).read_text())
+        w.wait(lambda: 'stopped %s %s: on the skip list (codex/test*)' % (branch, sha) in w.read('output'))
+        time.sleep(.3)
+        self.assertEqual(w.read('output').count('stopped %s %s: on the skip list' % (branch, sha)), 1)
+
     def test_a_side_gate_whose_branch_was_pushed_again_is_stopped_and_cancelled_on_the_pool(self):
         # Oct 9 04:08Z: a superseded devtools tip kept one of the pool's two server slots.
         w = Watcher(1, canaryBox='box1', mode='hold', slots='pool P\n')
