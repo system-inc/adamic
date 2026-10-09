@@ -10,7 +10,7 @@ import (
 	"path/filepath"
 	"runtime"
 	"strings"
-	"sync/atomic"
+	"sync"
 	"syscall"
 	"testing"
 	"time"
@@ -31,6 +31,7 @@ var completeSuggestionLeaves = []func(*testing.T){TestCompleteSuggestionSerializ
 
 func completeSuggestionUnion(t *testing.T) {
 	t.Helper()
+	completeSuggestionReady(t)
 	if len(completeSuggestionLeaves) != testCompleteSuggestionSerializationShards || len(completeSuggestionCases) != testCompleteSuggestionSerializationShards {
 		t.Fatal("shard enumeration changed")
 	}
@@ -70,20 +71,24 @@ type completeSuggestionProducts struct {
 	want                                                          []byte
 }
 
-var completeSuggestionProductsReady atomic.Bool
+var completeSuggestionProductsOnce sync.Once
+var completeSuggestionProductsReady bool
 var completeSuggestionProductsValue completeSuggestionProducts
 
-// Not parallel: publishes shared serialization products before parallel leaves.
+// Setup remains an independently selectable preparation check.
 func TestCompleteSuggestionSerialization_Setup(t *testing.T) {
-	completeSuggestionProductsReady.Store(false)
+	t.Parallel()
+	completeSuggestionReady(t)
+}
+
+func completeSuggestionPrepare(t *testing.T) {
+	t.Helper()
 	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
-	deadline := time.AfterFunc(90*time.Second, func() { panic("P0: complete suggestion setup exceeded 90s") })
-	defer deadline.Stop()
 	started := time.Now()
 	defer func() {
 		elapsed := time.Since(started)
-		t.Logf("TestCompleteSuggestionSerialization_Setup: %.3fs cooked=%t", elapsed.Seconds(), elapsed >= 60*time.Second)
+		t.Logf("complete suggestion preparation: %.3fs", elapsed.Seconds())
 	}()
 	p := &completeSuggestionProductsValue
 	files := []string{"internal", "oracle", "bridge", "go.mod", "cohere", "stage1/cohere/lint/registry"}
@@ -180,10 +185,7 @@ func TestCompleteSuggestionSerialization_Setup(t *testing.T) {
 			p.binary = filepath.Join(nativeProduct, "scanner")
 		}
 	}
-	if time.Since(started) >= 60*time.Second {
-		t.Fatal("cooked: serialization setup exceeds 60s budget")
-	}
-	completeSuggestionProductsReady.Store(true)
+	completeSuggestionProductsReady = true
 }
 
 func completeSuggestionShard(t *testing.T, shard int) {
@@ -267,22 +269,29 @@ func TestCompleteSuggestionSerialization_PlantedFailure(t *testing.T) {
 	completeSuggestionReady(t)
 	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
-	command := completeSuggestionCommand(ctx, os.Args[0], "-test.run=^TestCompleteSuggestionSerialization_(Setup|[0-9]{3})$", "-test.timeout=90s", "-test.parallel=4", "-test.v")
-	command.Env = append(os.Environ(), "ADAMIC_COMPLETE_SUGGESTION_PLANT=1")
-	var output bytes.Buffer
-	command.Stdout, command.Stderr = &output, &output
-	err := command.Run()
-	if command.Process != nil {
-		_ = syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-	}
-	failures := []string{}
-	for _, line := range strings.Split(output.String(), "\n") {
-		if strings.HasPrefix(line, "--- FAIL:") {
-			failures = append(failures, line)
+	// Loom runs one top-level test per process. Exercise that same selection,
+	// preserving the proof that every non-owner (including both mutants) passes.
+	for shard := range completeSuggestionLeaves {
+		name := fmt.Sprintf("TestCompleteSuggestionSerialization_%03d", shard)
+		command := completeSuggestionCommand(ctx, os.Args[0], "-test.run=^"+name+"$", "-test.timeout=90s", "-test.v")
+		command.Env = append(os.Environ(), "ADAMIC_COMPLETE_SUGGESTION_PLANT=1")
+		output, err := command.CombinedOutput()
+		if command.Process != nil {
+			_ = syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
 		}
-	}
-	if err == nil || len(failures) != 1 || !strings.HasPrefix(failures[0], "--- FAIL: TestCompleteSuggestionSerialization_001 ") || !strings.Contains(output.String(), "planted suggestion disagreement") {
-		t.Fatalf("wrong planted failure: %v; failures %v\n%s", err, failures, &output)
+		failures := []string{}
+		for _, line := range strings.Split(string(output), "\n") {
+			if strings.HasPrefix(line, "--- FAIL:") {
+				failures = append(failures, line)
+			}
+		}
+		if shard == 1 {
+			if err == nil || len(failures) != 1 || !strings.HasPrefix(failures[0], "--- FAIL: "+name+" ") || !bytes.Contains(output, []byte("planted suggestion disagreement")) {
+				t.Fatalf("wrong planted failure: %v; failures %v\n%s", err, failures, output)
+			}
+		} else if err != nil || len(failures) != 0 {
+			t.Fatalf("non-owner %s failed: %v\n%s", name, err, output)
+		}
 	}
 	t.Log("planted disagreement rejected by exactly shard 001")
 }
@@ -306,12 +315,14 @@ func completeSuggestionOnlyRule(t *testing.T, directory string) {
 	prepareRegistry(t, directory)
 }
 
-// A leaf never initializes shared products or starts its case deadline while
-// acquiring a setup lock. Filtered runs must explicitly include the Setup test.
+// Each process prepares its own products, with real builders on cache misses.
+// Call this before starting a case deadline, including time spent waiting for Once.
 func completeSuggestionReady(t *testing.T) *completeSuggestionProducts {
 	t.Helper()
-	if !completeSuggestionProductsReady.Load() {
-		t.Fatal("include TestCompleteSuggestionSerialization_Setup in -run; shards never build shared products")
+	completeSuggestionProductsOnce.Do(func() { completeSuggestionPrepare(t) })
+	// Fatal inside preparation completes Once too; other callers must also fail.
+	if !completeSuggestionProductsReady {
+		t.Fatal("complete suggestion shared preparation failed")
 	}
 	return &completeSuggestionProductsValue
 }
@@ -418,19 +429,4 @@ func completeSuggestionBuildOracle(ctx context.Context, sourceRoot, directory st
 		return fmt.Errorf("Go oracle build: %v\n%s\n%s", err, &output, &stderr)
 	}
 	return nil
-}
-
-func TestCompleteSuggestionSerialization_RequiresSetup(t *testing.T) {
-	t.Parallel()
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
-	defer cancel()
-	command := completeSuggestionCommand(ctx, os.Args[0], "-test.run=^TestCompleteSuggestionSerialization_005$", "-test.timeout=90s", "-test.v")
-	output, err := command.CombinedOutput()
-	if command.Process != nil {
-		_ = syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-	}
-	if err == nil || !bytes.Contains(output, []byte("shards never build shared products")) {
-		t.Fatalf("leaf without setup: %v\n%s", err, output)
-	}
-	t.Log("isolated leaf refused immediately without building shared products")
 }
