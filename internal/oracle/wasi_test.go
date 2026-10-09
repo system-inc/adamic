@@ -142,6 +142,7 @@ func TestWASIRunnerCatchesMutants(t *testing.T) {
 
 // Compile every emitted translation unit for the 32-bit ABI independently of runtime linking.
 func TestWASIEmission(t *testing.T) {
+	t.Parallel()
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		t.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
@@ -157,7 +158,9 @@ func TestWASIEmission(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
+			lowerStarted := time.Now()
 			program, err := lowered(t, path)
+			t.Logf("WASI emission lowering: %.3fs", time.Since(lowerStarted).Seconds())
 			if !fixture.lowers {
 				t.Skip("fixture does not lower")
 			}
@@ -166,11 +169,17 @@ func TestWASIEmission(t *testing.T) {
 			}
 			directory := t.TempDir()
 			source := filepath.Join(directory, "main.c")
-			if err := os.WriteFile(source, []byte(native.C(program)), 0644); err != nil {
+			emitStarted := time.Now()
+			code := native.C(program)
+			t.Logf("WASI emission C: %.3fs, %d bytes", time.Since(emitStarted).Seconds(), len(code))
+			if err := os.WriteFile(source, []byte(code), 0644); err != nil {
 				t.Fatal(err)
 			}
 			flags := append(native.Flags(options), "-I", filepath.Join(repository, "internal", "native", "runtime"), "-c", source, "-o", filepath.Join(directory, "main.o"))
-			if output, err := bounded(t, compiler, flags...).CombinedOutput(); err != nil {
+			compileStarted := time.Now()
+			output, compileErr := bounded(t, compiler, flags...).CombinedOutput()
+			t.Logf("WASI emission clang: %.3fs", time.Since(compileStarted).Seconds())
+			if err := compileErr; err != nil {
 				t.Fatalf("emitted C: %v\n%s", err, output)
 			}
 		})
