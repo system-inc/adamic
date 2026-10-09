@@ -6,10 +6,12 @@
 
 static const char *const names[] = {"next", "text", "counted", "empty"};
 static const bool references[] = {true, true, true, true};
-static const adamic_shape shape = {4, names, references, NULL};
+static const adamic_field_kind kinds[] = {adamic_field_reference, adamic_field_reference, adamic_field_reference, adamic_field_reference};
+static const adamic_shape shape = {4, names, references, NULL, kinds};
 static const char *const leaf_names[] = {"text"};
 static const bool leaf_references[] = {true};
-static const adamic_shape leaf_shape = {1, leaf_names, leaf_references, NULL};
+static const adamic_field_kind leaf_kinds[] = {adamic_field_reference};
+static const adamic_shape leaf_shape = {1, leaf_names, leaf_references, NULL, leaf_kinds};
 
 static adamic_object *member(void) {
     adamic_object *object = adamic_object_new(&shape);

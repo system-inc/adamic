@@ -3,9 +3,10 @@
 // so four workers register one shape's types at once, then read through the registry.
 static const char *const names[] = {"x"};
 static const bool references[] = {false};
+static const adamic_field_kind kinds[] = {adamic_field_number};
 static const adamic_shape shapes[8] = {
- {1, names, references, NULL}, {1, names, references, NULL}, {1, names, references, NULL}, {1, names, references, NULL},
- {1, names, references, NULL}, {1, names, references, NULL}, {1, names, references, NULL}, {1, names, references, NULL},
+ {1, names, references, NULL, kinds}, {1, names, references, NULL, kinds}, {1, names, references, NULL, kinds}, {1, names, references, NULL, kinds},
+ {1, names, references, NULL, kinds}, {1, names, references, NULL, kinds}, {1, names, references, NULL, kinds}, {1, names, references, NULL, kinds},
 };
 static const int types[] = {1};
 static adamic_shape_types metadata[8] = {
