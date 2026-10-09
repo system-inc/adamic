@@ -487,3 +487,12 @@ Setup completed in 37.548s: Go ready at 0.070s, Node at 0.078s, submodules at 0.
 | Audit key | Holds / writers and timing | Classification |
 |---|---|---|
 | `async.c:cleanups:1` | Borrowed frame cleanup records; generated wrappers register, settlement/destruction forget, cancel and exit take records before releasing reactions | Loop confined under the host bridge loop-affinity contract. No foreign publisher accesses this list; source pool callbacks capturing async frames are rejected. Records own no Adamic reference |
+
+## Integrated c2 view runtime files
+
+- `runtime-file:view_callables_contract.h`: inline predicates and per-call stack buffers; signature descriptors are borrowed immutable data. The failure path's only local static is a const out-of-memory string.
+- `runtime-file:view_representations.h`: enum constants and a slot-index macro; no storage.
+- `runtime-file:view_unions_mixed.c`: borrowed value snapshots and per-call selection state. Failure text uses a per-call allocation; the only local static is a const out-of-memory string. No mutable static storage.
+- `runtime-file:view_unions_mixed.h`: type and function declarations; no storage.
+- `runtime-file:view_unions_untagged.c`: borrowed descriptors, automatic slot caches, and a stack-local recursive match path. No global cache or mutable static storage.
+- `runtime-file:view_unions_untagged.h`: type and function declarations; no storage.
