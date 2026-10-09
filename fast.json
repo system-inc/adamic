@@ -1,0 +1,21 @@
+{
+  "sha": "96ec16372669936bc84efbbdea96a5350c4b3153",
+  "candidate": "96ec16372669936bc84efbbdea96a5350c4b3153",
+  "base": "2b4dbde172c1c2f23c065ecae8b906f8fcb72a20",
+  "base_name": "main",
+  "branch": "cloud/land-stack-c2-96ec1637",
+  "tools": "ec73409fe1b06a2f75c71c7837a8262a428c8051",
+  "status": "red",
+  "failure": {
+    "step": "merge",
+    "after_seconds": 0.0,
+    "detail": "conflicts with main 2b4dbde172c1c2f23c065ecae8b906f8fcb72a20 in cloud/fast-gate/compiler-dependencies.json internal/fuzz/fuzz_test.go stage1/cohere/estree/estree_test.go stage1/cohere/estree/exports_test.go stage1/cohere/estree/recovery_lowered_recipe_test.go"
+  },
+  "merge_conflicts": [
+    "cloud/fast-gate/compiler-dependencies.json",
+    "internal/fuzz/fuzz_test.go",
+    "stage1/cohere/estree/estree_test.go",
+    "stage1/cohere/estree/exports_test.go",
+    "stage1/cohere/estree/recovery_lowered_recipe_test.go"
+  ]
+}
