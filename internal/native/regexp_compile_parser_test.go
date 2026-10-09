@@ -17,8 +17,14 @@ import (
 
 // The oracle process evaluates the entire corpus once; each C parse owns and
 // releases its tree under ASan and UBSan, including rejected parses.
-func TestRegExpRuntimeParserAcceptance(t *testing.T) { runtimeParserAcceptance(t, false) }
-func TestRegExpRuntimeParserWASI(t *testing.T)       { runtimeParserAcceptance(t, true) }
+func TestRegExpRuntimeParserAcceptance(t *testing.T) {
+	t.Parallel()
+	runtimeParserAcceptance(t, false)
+}
+func TestRegExpRuntimeParserWASI(t *testing.T) {
+	t.Parallel()
+	runtimeParserAcceptance(t, true)
+}
 
 func runtimeParserAcceptance(t *testing.T, wasi bool, mutateMessage ...bool) {
 	t.Helper()
@@ -172,4 +178,7 @@ func runtimeRegexCompilerCases(t *testing.T) ([][]string, int) {
 	return cases, corpus
 }
 
-func TestRegExpRuntimeCountedErrorMutant(t *testing.T) { runtimeParserAcceptance(t, false, true) }
+func TestRegExpRuntimeCountedErrorMutant(t *testing.T) {
+	t.Parallel()
+	runtimeParserAcceptance(t, false, true)
+}

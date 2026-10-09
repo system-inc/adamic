@@ -10,6 +10,7 @@ import (
 )
 
 func TestHoistedStringAppendPreservesAliasesAndEffects(t *testing.T) {
+	t.Parallel()
 	path, err := filepath.Abs(filepath.Join("testdata", "hoisted_string_append.a"))
 	if err != nil {
 		t.Fatal(err)

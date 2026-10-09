@@ -68,6 +68,7 @@ func runtimePropertyAliases(t *testing.T) []string {
 }
 
 func TestRegExpRuntimePropertiesGenerated(t *testing.T) {
+	t.Parallel()
 	path := filepath.Join(t.TempDir(), "tables.h")
 	command := exec.Command("python3", "../regexp/testdata/generate-runtime-properties.py", "--output", path)
 	if output, err := command.CombinedOutput(); err != nil {
@@ -190,6 +191,7 @@ int main(void) { int result = check(); if (result != 0) fprintf(stderr, "propert
 }
 
 func TestRegExpRuntimePropertyIdentity(t *testing.T) {
+	t.Parallel()
 	source := runtimePropertyHarness(t)
 	directory := t.TempDir()
 	main := filepath.Join(directory, "main.c")
@@ -214,6 +216,7 @@ func TestRegExpRuntimePropertyIdentity(t *testing.T) {
 }
 
 func TestRegExpRuntimePropertiesWASI(t *testing.T) {
+	t.Parallel()
 	// This table unit uses no allocation, libc, atomics or runtime host services.
 	// WASI runs the same entry comparisons with 32-bit pointers. The Linux
 	// identity gate above is the sanitizer gate of record.
@@ -240,6 +243,7 @@ func TestRegExpRuntimePropertiesWASI(t *testing.T) {
 }
 
 func TestRegExpRuntimeCompilerNotLinked(t *testing.T) {
+	t.Parallel()
 	binary := filepath.Join(t.TempDir(), "empty")
 	if err := Build("#include \"adamic.h\"\nint main(void) { return 0; }\n", binary, Options{Sanitize: true}); err != nil {
 		t.Fatal(err)

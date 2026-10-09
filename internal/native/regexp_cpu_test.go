@@ -39,6 +39,7 @@ func runRegExpChild(t *testing.T, binary string, arguments []string, environment
 }
 
 func TestRegExpChildStall(t *testing.T) {
+	t.Parallel()
 	// A real nonreturning native fixture proves the guard kills and reaps a hang.
 	source := `#include "adamic.h"
 int main(int argc, char **argv) {
@@ -59,6 +60,7 @@ int main(int argc, char **argv) {
 }
 
 func TestRegExpChildCPUBudget(t *testing.T) {
+	t.Parallel()
 	source := `#include "adamic.h"
 #include <time.h>
 int main(int argc, char **argv) {

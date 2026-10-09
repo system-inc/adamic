@@ -9,6 +9,7 @@ import (
 // Cache exhaustion is a fallback, not a failed match. This regular language has
 // exponentially many distinguishable suffixes, beyond the bounded lazy cache.
 func TestRegExpRegularEngineNode(t *testing.T) {
+	t.Parallel()
 	random := rand.New(rand.NewSource(875))
 	input := make([]rune, 512)
 	for k := range input {

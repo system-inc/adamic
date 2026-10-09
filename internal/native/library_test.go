@@ -132,6 +132,7 @@ func TestRuntimeCacheRebuildsChangedSources(t *testing.T) {
 
 // Many callers begin on an empty cache together. A compiler wrapper records actual compilations,
 // so the test requires one build as well as an intact archive every caller can link.
+// Not parallel: the executable wrapper writable descriptor can be inherited by other tests' forked children until exec.
 func TestRuntimeCacheConcurrentBuilders(t *testing.T) {
 	// Not parallel: publish the executable wrapper before other tests fork. An inherited
 	// writable descriptor can keep the script text busy until the child reaches exec.
