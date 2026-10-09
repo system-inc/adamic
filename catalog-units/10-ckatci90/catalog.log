@@ -1,0 +1,8 @@
+target e69fcba7280181870555756c01839bf48a5fc7e4
+logs /home/ahra/full-gate/out/e69fcba72801-20261009T031120Z/catalog-units/10-ckatci90/adamic-catalog-logs-u24e5app
+build flags: commit=e69fcba7280181870555756c01839bf48a5fc7e4; nproc=64; cpu.max=max 100000; go version go1.27.1 linux/amd64; clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261); v24.19.0; ADAMIC_GATE_UNCACHED=1; go test -trimpath -count=1; native C11 strict warnings, -ffp-contract=off -fno-optimize-sibling-calls; release -O2; sanitizer -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all
+jobs 1; Go -trimpath shares only content-keyed build artifacts; test results uncached
+11 refuse-definite-assignment: applies-and-fails-as-recorded
+11 made against=d772b5c990de4304de990e723835f19ebb613641
+11 wall=162.568s setup=74.135s check=80.839s cleanup=5.497s load=2.82 5.55 10.00 61/942 427292 -> 67.27 36.23 21.27 47/1296 469987
+total wall=162.634s load=2.82 5.55 10.00 52/936 427141 -> 67.27 36.23 21.27 46/1290 469987

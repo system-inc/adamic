@@ -1,0 +1,52 @@
+--- FAIL: TestSuppressionDirectivesAreRefused (0.00s)
+    --- FAIL: TestSuppressionDirectivesAreRefused/@ts-ignore/number.a///_@ts-ignore_ (0.10s)
+        suppression_directives_test.go:23: got <nil>, want directive refusal
+    --- FAIL: TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a//**_prose__*_@ts-expect-error_*/_ (0.09s)
+        suppression_directives_test.go:23: got <nil>, want directive refusal
+    --- FAIL: TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a//**_@ts-expect-error_*/_ (0.10s)
+        suppression_directives_test.go:23: got <nil>, want directive refusal
+    --- FAIL: TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a//*_@ts-expect-error_*/_ (0.09s)
+        suppression_directives_test.go:23: got <nil>, want directive refusal
+    --- FAIL: TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a///_@ts-expect-error_ (0.07s)
+        suppression_directives_test.go:23: got <nil>, want directive refusal
+    --- FAIL: TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a//**_prose__*_@ts-expect-error_*/_ (0.10s)
+        suppression_directives_test.go:23: got <nil>, want directive refusal
+    --- FAIL: TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a//**_@ts-expect-error_*/_ (0.09s)
+        suppression_directives_test.go:23: got <nil>, want directive refusal
+    --- FAIL: TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a//*_@ts-expect-error_*/_ (0.09s)
+        suppression_directives_test.go:23: got <nil>, want directive refusal
+    --- FAIL: TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a///_@ts-expect-error_ (0.08s)
+        suppression_directives_test.go:23: got <nil>, want directive refusal
+    --- FAIL: TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a//**_prose__*_@ts-expect-error_*/_ (0.09s)
+        suppression_directives_test.go:23: got <nil>, want directive refusal
+    --- FAIL: TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a//**_@ts-expect-error_*/_ (0.08s)
+        suppression_directives_test.go:23: got <nil>, want directive refusal
+    --- FAIL: TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a//*_@ts-expect-error_*/_ (0.10s)
+        suppression_directives_test.go:23: got <nil>, want directive refusal
+    --- FAIL: TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a///_@ts-expect-error_ (0.09s)
+        suppression_directives_test.go:23: got <nil>, want directive refusal
+    --- FAIL: TestSuppressionDirectivesAreRefused/@ts-ignore/call.a//**_prose__*_@ts-ignore_*/_ (0.31s)
+        suppression_directives_test.go:23: got <nil>, want directive refusal
+    --- FAIL: TestSuppressionDirectivesAreRefused/@ts-ignore/call.a//**_@ts-ignore_*/_ (0.08s)
+        suppression_directives_test.go:23: got <nil>, want directive refusal
+    --- FAIL: TestSuppressionDirectivesAreRefused/@ts-ignore/call.a//*_@ts-ignore_*/_ (0.09s)
+        suppression_directives_test.go:23: got <nil>, want directive refusal
+    --- FAIL: TestSuppressionDirectivesAreRefused/@ts-ignore/call.a///_@ts-ignore_ (0.10s)
+        suppression_directives_test.go:23: got <nil>, want directive refusal
+    --- FAIL: TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a//**_prose__*_@ts-ignore_*/_ (0.09s)
+        suppression_directives_test.go:23: got <nil>, want directive refusal
+    --- FAIL: TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a//**_@ts-ignore_*/_ (0.09s)
+        suppression_directives_test.go:23: got <nil>, want directive refusal
+    --- FAIL: TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a//*_@ts-ignore_*/_ (0.09s)
+        suppression_directives_test.go:23: got <nil>, want directive refusal
+    --- FAIL: TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a///_@ts-ignore_ (0.08s)
+        suppression_directives_test.go:23: got <nil>, want directive refusal
+    --- FAIL: TestSuppressionDirectivesAreRefused/@ts-ignore/number.a//**_prose__*_@ts-ignore_*/_ (0.09s)
+        suppression_directives_test.go:23: got <nil>, want directive refusal
+    --- FAIL: TestSuppressionDirectivesAreRefused/@ts-ignore/number.a//**_@ts-ignore_*/_ (0.09s)
+        suppression_directives_test.go:23: got <nil>, want directive refusal
+    --- FAIL: TestSuppressionDirectivesAreRefused/@ts-ignore/number.a//*_@ts-ignore_*/_ (0.11s)
+        suppression_directives_test.go:23: got <nil>, want directive refusal
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	2.450s
+FAIL

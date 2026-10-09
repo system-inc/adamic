@@ -1,0 +1,27 @@
+{
+  "target": "e69fcba7280181870555756c01839bf48a5fc7e4",
+  "jobs": 1,
+  "total_wall_seconds": 158.6594749220094,
+  "load_before": "2.82 5.55 10.00 57/935 427143",
+  "load_after": "67.27 36.23 21.27 42/1329 469152",
+  "entries": [
+    {
+      "number": 6,
+      "made_against": "e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+      "target": "e69fcba7280181870555756c01839bf48a5fc7e4",
+      "worktree": "/home/ahra/full-gate/out/e69fcba72801-20261009T031120Z/catalog-units/05-ndc05kp9/adamic-catalog-worktree-ww6canvm/entry-06",
+      "setup_seconds": 48.438110239003436,
+      "ok": true,
+      "check_seconds": 103.83108613800141,
+      "cleanup_seconds": 4.817378042003838,
+      "wall_seconds": 158.5856712090026,
+      "load_before": "2.82 5.55 10.00 61/947 427318",
+      "load_after": "67.27 36.23 21.27 43/1329 469151",
+      "messages": [
+        "06 constructor-capture-region: applies-and-fails-as-recorded",
+        "06 made against=e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+        "06 wall=158.586s setup=48.438s check=103.831s cleanup=4.817s load=2.82 5.55 10.00 61/947 427318 -> 67.27 36.23 21.27 43/1329 469151"
+      ]
+    }
+  ]
+}

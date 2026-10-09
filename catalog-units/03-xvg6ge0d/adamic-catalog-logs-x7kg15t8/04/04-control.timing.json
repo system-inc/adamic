@@ -1,0 +1,16 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-trimpath",
+    "-count=1",
+    "./internal/oracle",
+    "-run",
+    "^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^borrow_element_super_move[.]a$"
+  ],
+  "seconds": 54.626892619999126,
+  "exit_code": 0,
+  "go_reported_test_seconds": 1.319,
+  "load_before": "77.05 27.66 17.37 86/1441 448380",
+  "load_after": "63.64 32.39 19.59 57/1202 461812"
+}
