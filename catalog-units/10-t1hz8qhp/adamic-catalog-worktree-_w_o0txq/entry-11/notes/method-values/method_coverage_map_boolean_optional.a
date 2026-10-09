@@ -1,2 +1,0 @@
-const values: (boolean | undefined)[] = [true, undefined, false];
-console.log(values.map(String).join('|'));

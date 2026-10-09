@@ -1,5 +1,0 @@
-{
-  "name": "no-useless-catch finally repair range reversed",
-  "from": "const hasFinally = this.context.node(parent).children.length === 3;",
-  "to": "const hasFinally = this.context.node(parent).children.length === 2;"
-}

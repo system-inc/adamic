@@ -1,5 +1,0 @@
-{
-  "name": "empty function body reported",
-  "from": "!functionBody &&",
-  "to": "(functionBody || !functionBody) &&"
-}

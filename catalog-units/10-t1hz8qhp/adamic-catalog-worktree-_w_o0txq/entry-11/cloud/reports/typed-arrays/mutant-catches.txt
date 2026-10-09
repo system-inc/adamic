@@ -1,6 +1,0 @@
---- FAIL: TestTypedArrayGaps (0.38s)
-    typed_arrays_test.go:54: const v = new Uint8Array(2); try { v.set(new Uint8Array(3)); } catch { console.log('caught'); }: want "a try around typed array set", got <nil>
-    typed_arrays_test.go:54: function size(): number { return -1; } try { const v = new Uint8Array(size()); } catch { console.log('caught'); }: want "a try around typed array length conversion", got <nil>
-FAIL
-FAIL	github.com/system-inc/adamic/internal/lower	0.386s
-FAIL

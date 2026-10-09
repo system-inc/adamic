@@ -1,9 +1,0 @@
-interface Leaf { readonly text: string; }
-interface Root { readonly child: { readonly leaf: Leaf }; }
-function make(n: number): Root { return { child: { leaf: { text: `return${n}` } } }; }
-function leaf(root: Root): Leaf { const result = root.child.leaf; return result; }
-function text(root: Root): string { return root.child.leaf.text; }
-function stored(): readonly Leaf[] { const root = make(1); const result: Leaf[] = []; result.push(root.child.leaf); return result; }
-console.log(leaf(make(2)).text);
-console.log(text(make(3)));
-console.log(stored()[0]?.text ?? 'missing');

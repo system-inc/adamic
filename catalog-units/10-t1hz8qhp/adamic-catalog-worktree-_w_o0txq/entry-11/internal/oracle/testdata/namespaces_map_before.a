@@ -1,8 +1,0 @@
-// From TypeScript 6.0.3, src/compiler/core.ts:19
-// From TypeScript 6.0.3, src/compiler/debug.ts:26
-// Minimal namespace-initialization preflight stop: this Map call does not read Debug.
-const emptyMap: ReadonlyMap<never, never> = new Map<never, never>();
-namespace Debug {
-    export let isDebugging = false;
-}
-console.log(`${emptyMap.size}:${Debug.isDebugging}`);

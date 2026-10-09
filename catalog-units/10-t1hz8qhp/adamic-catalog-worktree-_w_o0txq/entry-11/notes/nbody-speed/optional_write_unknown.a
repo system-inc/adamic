@@ -1,8 +1,0 @@
-// No generated or runtime layout supplies a uniform offset for amount.
-interface Optional { amount?: number; }
-function write(value: Optional): void {
-    console.log(`${value.amount}`);
-    value.amount = 2;
-    console.log(`${value.amount}`);
-}
-write({});

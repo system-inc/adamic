@@ -1,5 +1,0 @@
-class Version {
-    readonly major = 1;
-    toString(): string { return `${this.major}.2.3`; }
-}
-console.log(`>=${new Version()}`);

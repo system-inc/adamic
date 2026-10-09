@@ -1,5 +1,0 @@
-{
-  "name": "no-empty-pattern reports real bindings",
-  "from": "if(node.children.length !== 0) {",
-  "to": "if(node.children.length < 0) {"
-}

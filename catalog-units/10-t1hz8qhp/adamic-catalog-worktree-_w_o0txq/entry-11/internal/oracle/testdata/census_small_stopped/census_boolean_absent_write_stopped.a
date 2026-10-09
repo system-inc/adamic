@@ -1,7 +1,0 @@
-// Stopped: an existing absent-field write fails after lowering, independent of truthiness.
-// Choice: reserve declared optional fields in the literal shape, or refuse the write.
-// Judgment: reserving a distinct undefined slot is sound and preserves Node's behavior.
-interface State { flag?: boolean; }
-const state: State = {};
-state.flag = false;
-console.log(String(!state.flag));

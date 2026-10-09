@@ -1,5 +1,0 @@
-import { Code, Word } from './barrel.a';
-console.log(`${Code.Zero}:${Code.Ready}:${Code.Done}:${Code.Alias}`);
-console.log(Code[4] ?? "missing");
-console.log(Word.Second);
-console.log(String(Code === Code));

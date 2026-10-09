@@ -1,8 +1,0 @@
-class Reader {
-    static read(value?: number): string {
-        return `${arguments.length}:${value ?? -1}`;
-    }
-}
-console.log(Reader.read());
-console.log(Reader.read(undefined));
-console.log(Reader.read(8));

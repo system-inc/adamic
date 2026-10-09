@@ -1,8 +1,0 @@
-=== RUN   TestNodeCacheProgram
-=== PAUSE TestNodeCacheProgram
-=== CONT  TestNodeCacheProgram
-    cache_test.go:31: changed Node program served "before\n", want "after\n"
---- FAIL: TestNodeCacheProgram (0.06s)
-FAIL
-FAIL	github.com/system-inc/adamic/cmd/adamic-test262	0.062s
-FAIL

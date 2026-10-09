@@ -1,5 +1,0 @@
-{
-  "name": "method listener lost",
-  "from": "style === 'property' && node.kind === 'MethodSignature'",
-  "to": "style === 'property' && node.kind === 'NeverKeyword'"
-}

@@ -1,4 +1,0 @@
-const original = { x: 1, y: 'wrong' };
-const view: { x: number } = original;
-const holder: { value: { x: number; y?: number } } = { value: { x: 0 } };
-holder.value = view;

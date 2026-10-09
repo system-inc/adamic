@@ -1,2 +1,0 @@
-export const messageScriptUrl =
-    'A `javascript:` URL runs whatever follows the colon as code, so this string is an eval that happens to be spelled as a link. Anything that can reach the value that builds it can execute in the page, and a content security policy that blocks inline script blocks this too, so it tends to fail in production rather than in review. A real handler does the same work without turning a string into a program.';

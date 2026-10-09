@@ -1,6 +1,0 @@
-{
-  "name": "and-left-undefined-ignored",
-  "file": "rule.a",
-  "from": "if(operator === 'AmpersandAmpersandToken') { this.reaching(node.children[0] ?? -1, arithmetic); }",
-  "to": "if(false) { this.reaching(node.children[0] ?? -1, arithmetic); }"
-}

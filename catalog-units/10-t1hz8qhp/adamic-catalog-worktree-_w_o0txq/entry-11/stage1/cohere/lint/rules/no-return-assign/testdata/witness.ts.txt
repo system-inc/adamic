@@ -1,5 +1,0 @@
-const assigning = () => left = right;
-const wrapped = () => (left = right);
-function returning() {
-    return left = right;
-}

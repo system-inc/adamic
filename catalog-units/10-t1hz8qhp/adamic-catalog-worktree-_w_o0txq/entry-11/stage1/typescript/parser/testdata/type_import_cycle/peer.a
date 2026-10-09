@@ -1,5 +1,0 @@
-import type { Entry } from './entry.a';
-
-export function value(entry: Entry): number {
-    return entry.number;
-}

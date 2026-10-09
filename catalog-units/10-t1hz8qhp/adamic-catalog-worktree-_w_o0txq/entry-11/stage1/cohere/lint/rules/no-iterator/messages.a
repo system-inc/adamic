@@ -1,3 +1,0 @@
-export const messageNoIterator =
-    "This uses the reserved name `__iterator__`. That was SpiderMonkey's pre-standard iteration protocol, removed from Firefox in 2015 and never implemented anywhere else, so the property does nothing in any engine running today. Use `[Symbol.iterator]`, which is the standard protocol that replaced it.";
-export const messageUseSymbolIterator = 'Replace `__iterator__` with `[Symbol.iterator]`.';

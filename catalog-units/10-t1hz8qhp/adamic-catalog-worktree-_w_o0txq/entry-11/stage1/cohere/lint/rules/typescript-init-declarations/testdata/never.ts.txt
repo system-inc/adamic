@@ -1,4 +1,0 @@
-let value: number /* before equals */ = 1;
-const fixed = 2;
-using resource = acquire();
-for (let index = 0; index < 1; index++) { let inside = 1; }

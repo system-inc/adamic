@@ -1,5 +1,0 @@
-{
-  "name": "callback at the limit is reported",
-  "from": "if(depth <= this.maximum) {",
-  "to": "if(depth < this.maximum) {"
-}

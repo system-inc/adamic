@@ -1,1 +1,0 @@
-export const messageTooDeeply = "Each level of nesting is another condition the reader has to hold in their head to know whether this line runs at all. Lift a branch into a named function, return early to flatten the happy path, or invert a condition so the exceptional case exits first.";

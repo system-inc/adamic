@@ -1,6 +1,0 @@
-function setSerializerContextAnd<N extends string, R>(cb: (node: N) => R, node: N): R;
-function setSerializerContextAnd<N extends string, T, R>(cb: (node: N, arg: T) => R, node: N, arg: T): R;
-function setSerializerContextAnd<N extends string, T, R>(cb: (node: N, arg?: T) => R, node: N, arg?: T): R {
-    return arg === undefined ? cb(node) : cb(node, arg);
-}
-console.log(setSerializerContextAnd((node: string, arg: string) => node + '/' + arg, 'node', 'arg'));

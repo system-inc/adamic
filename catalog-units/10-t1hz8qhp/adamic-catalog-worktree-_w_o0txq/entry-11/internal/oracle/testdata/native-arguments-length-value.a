@@ -1,5 +1,0 @@
-// Reduced from compiler's arguments_length_unrelated_type.a.
-// A function value must forward the actual count, not its first numeric argument.
-function reader(): number { return arguments.length; }
-const counted: (value: number) => number = reader;
-console.log(`${counted(9)}`);

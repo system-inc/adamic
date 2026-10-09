@@ -1,9 +1,0 @@
---- FAIL: TestHelpersMatchCohere (96.29s)
-    helpers_test.go:78: go stderr: go: downloading github.com/dlclark/regexp2/v2 v2.5.2
-        go: downloading github.com/dlclark/regexp2 v1.11.5
-FAIL
-FAIL	github.com/system-inc/adamic/stage1/cohere/lint/helpers	163.224s
-ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments	292.311s
-ok  	github.com/system-inc/adamic/stage1/cohere/lint/shards	0.004s
-ok  	github.com/system-inc/adamic/internal/corpusfiles	2.603s
-FAIL

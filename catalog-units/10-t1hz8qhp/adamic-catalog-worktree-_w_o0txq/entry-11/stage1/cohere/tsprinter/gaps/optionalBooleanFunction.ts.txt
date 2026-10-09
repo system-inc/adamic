@@ -1,2 +1,0 @@
-const show = (flag: boolean | undefined): string => flag === undefined ? 'absent' : 'present';
-console.log(show(undefined));

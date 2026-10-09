@@ -1,7 +1,0 @@
-function outer(): number {
- function read(): number { return value; }
- const result = read();
- const [value]: readonly [number] = [5];
- return result;
-}
-console.log(String(outer()));

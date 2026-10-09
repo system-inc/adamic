@@ -1,4 +1,0 @@
-// A form other than NFC, NFD, NFKC and NFKD is JavaScript's RangeError, and a panic here.
-const form = 'nfc'.toUpperCase();
-console.log('á'.normalize(form).length.toString());
-console.log('é'.normalize('nfc'));

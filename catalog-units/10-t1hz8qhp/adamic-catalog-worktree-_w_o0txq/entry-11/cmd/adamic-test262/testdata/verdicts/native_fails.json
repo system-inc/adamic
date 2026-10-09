@@ -1,6 +1,0 @@
-{
-  "name": "native fails where node passes",
-  "node": {"exit": 0, "stdout": "ok\n", "stderr": ""},
-  "native": {"exit": 70, "stdout": "", "stderr": "adamic: panic: no\n"},
-  "want": "fail"
-}

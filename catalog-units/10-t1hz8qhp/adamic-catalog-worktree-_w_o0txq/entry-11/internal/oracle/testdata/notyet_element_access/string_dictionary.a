@@ -1,3 +1,0 @@
-interface MapLike<T> { [index: string]: T; }
-function read(values: MapLike<string>, key: string): string | undefined { return values[key]; }
-console.log('witness');

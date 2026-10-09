@@ -1,6 +1,0 @@
-import { Paint } from './values.a';
-console.log('namespace entry');
-const coat = Paint.coat;
-const inner = Paint.Inner.coat;
-console.log(`${coat === Paint.coat} ${inner === Paint.Inner.coat} ${coat === inner}`);
-console.log(`${coat('red')} ${Paint.Inner.coat('red')} ${Paint.madeCount()} ${Paint.Inner.madeCount()}`);

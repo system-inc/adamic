@@ -1,8 +1,0 @@
-const convert = String;
-const again = convert;
-console.log(['', '0', '日本語', '🌍', 'a\u0000b'].map(again).join('|'));
-const optional: (number | undefined)[] = [undefined, -0, 1.5, NaN, Infinity, -Infinity];
-console.log(optional.map(String).join('|'));
-console.log([1e-7, 1e21, 9007199254740991, -2.5].map(convert).join('|'));
-const missing: (string | undefined)[] = [undefined, '', '🌍'];
-console.log(missing.map(again).join('|'));

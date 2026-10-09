@@ -1,9 +1,0 @@
-interface Reader {
- pick(value?: string): string | undefined;
-}
-class Plain implements Reader {
- pick(value?: string): string | undefined { return value; }
-}
-const reader: Reader = new Plain();
-const got = reader.pick();
-console.log(`${got === undefined} ${got}`);

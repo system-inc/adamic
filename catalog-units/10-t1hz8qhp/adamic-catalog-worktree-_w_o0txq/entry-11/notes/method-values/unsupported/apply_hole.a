@@ -1,2 +1,0 @@
-// a-check: type error TS2345
-const method = Array.prototype.indexOf; console.log(`${method.apply([1], [,])}`);

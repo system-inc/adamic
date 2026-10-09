@@ -1,7 +1,0 @@
-interface Leaf { readonly kind: string; }
-interface Node { readonly parent: Leaf; }
-interface Listener { read(leaf: Leaf): number; }
-class Reader implements Listener { read(leaf: Leaf): number { return leaf.kind.length; } }
-function visit(node: Node, listener: Listener): number { return listener.read(node.parent); }
-function make(n: number): Node { return { parent: { kind: `listener${n}` } }; }
-console.log(`${visit(make(7), new Reader())}`);

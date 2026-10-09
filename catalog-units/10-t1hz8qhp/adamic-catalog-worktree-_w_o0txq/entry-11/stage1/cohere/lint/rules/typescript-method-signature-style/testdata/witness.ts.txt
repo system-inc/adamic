@@ -1,7 +1,0 @@
-interface CallableType {
-    method(value: string): number;
-    readonly property: (value: string) => number;
-}
-interface Numbered {
-    0(value: string): number;
-}

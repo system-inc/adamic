@@ -1,3 +1,0 @@
-let result: RegExpExecArray | null = /a/.exec('a');
-function lose(): void { result = /z/.exec('a'); }
-if (result !== null) { lose(); console.log(`${result.index}`); }

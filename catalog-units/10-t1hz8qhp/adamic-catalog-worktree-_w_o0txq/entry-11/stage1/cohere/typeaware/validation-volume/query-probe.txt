@@ -1,9 +1,0 @@
-Source: declare const x: {m():void};x;\n
-Config: stage1/cohere/typeaware/testdata/tsconfig.json, strict true
-Node: final Identifier x, byte start 28, end 29
-Questions: widened-shape and property-info:m (benchmark shorthand)
-Queries: 10000 per round, three alternating rounds
-Native: testdata/fact_cost_volume.ts linked with the checker archive
-Go: go build -o /tmp/fact-cost-go ./bridge/tsgo/cost
-Property shorthand first gets a raw-shape type identity, outside warm timing.
-The accumulated UTF-16 lengths match: 760000 widened, 460000 property.

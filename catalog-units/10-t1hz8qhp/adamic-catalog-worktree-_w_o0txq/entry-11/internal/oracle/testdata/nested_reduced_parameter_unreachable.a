@@ -1,4 +1,0 @@
-// Reduced from 03_scanner_hoisting.a at b15216d by adamic-reduce.
-function readScanner(text: string): string { return ''; function getText(): string { return text; } }
-
-console.log("read:" + readScanner("scanner " + String(3)));

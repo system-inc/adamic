@@ -1,7 +1,0 @@
-// From TypeScript 6.0.3, src/compiler/core.ts:2220 (adaptation 52 checked read)
-function fail(): never { throw new Error("missing"); }
-function read(text: string, index: number): string {
-    return text[index] ?? fail();
-}
-console.log(read("x", 0));
-try { read("x", 1); } catch { console.log("missing"); }

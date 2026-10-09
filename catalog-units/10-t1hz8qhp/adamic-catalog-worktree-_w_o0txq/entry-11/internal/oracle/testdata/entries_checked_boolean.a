@@ -1,6 +1,0 @@
-function show(view: {readonly yes: boolean}): void {
- console.log(Object.values(view).map(value => `${value}`).join(','));
- for (const [key, value] of Object.entries(view)) console.log(`${key}:${value}`);
-}
-const source = {yes: true, no: false};
-show(source);

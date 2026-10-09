@@ -1,5 +1,0 @@
-// Reduced from 04_scanner_escaped_text.a at b15216d by adamic-reduce.
-function createScanner(text: string): () => string { return getText; function getText(): string { return text; } }
-
-const getText = createScanner("scanner " + String(4));
-console.log(getText());

@@ -1,3 +1,0 @@
-function missing(): readonly number[] | undefined { return undefined; }
-const values = missing() as readonly number[];
-console.log(`${values[0] ?? -1}`);

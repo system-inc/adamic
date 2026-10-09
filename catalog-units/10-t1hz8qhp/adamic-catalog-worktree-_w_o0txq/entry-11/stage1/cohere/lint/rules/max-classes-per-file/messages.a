@@ -1,2 +1,0 @@
-// Verbatim pinned cohere message, moved from batch4_messages.ts.
-export const messageMaximum = 'File has too many classes (%d). Maximum allowed is %d. A file holding several classes makes the reader hold several vocabularies at once, and the import that names the file no longer says which one it wanted. Split them into a file each, named for the class.';

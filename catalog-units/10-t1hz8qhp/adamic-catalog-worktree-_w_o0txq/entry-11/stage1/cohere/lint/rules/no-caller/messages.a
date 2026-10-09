@@ -1,4 +1,0 @@
-// Verbatim message from batch2:no_caller.ts and pinned Go cohere.
-export function messageNoCaller(name: string): string {
-    return `This uses \`arguments.${name}\`. Both properties throw in strict mode, which every module and class body already is, and they prevent engines from optimizing functions whose callers would otherwise be statically known. Name the function and refer to it by name instead.`;
-}

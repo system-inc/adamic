@@ -1,15 +1,0 @@
-// next/no_html_link_for_pages_routes.go:281; "\\[[^\n\r\u2028\u2029]*\\]"
-import { observe } from '../observe.a';
-const pattern = "\\[[^\n\r  ]*\\]";
-const flags = "gu";
-const regex = new RegExp(pattern, flags);
-observe(regex, "", 0);
-observe(regex, "🌍", 1);
-observe(regex, "TODO\n", 2);
-observe(regex, " TODO", 3);
-observe(regex, "[]", 4);
-observe(regex, "x[]", 5);
-observe(regex, "[]\n", 6);
-observe(regex, "// > alphanumerics and hyphen [0-9A-Za-z-]. Identifiers MUST NOT be empty. Numeric identifiers", 7);
-observe(regex, "// > comprise only ASCII alphanumerics and hyphen [0-9A-Za-z-]. Identifiers MUST NOT be empty.", 8);
-observe(regex, "// Transforms `a[x] **= b` into `(_a = a)[_x = x] = Math.pow(_a[_x], b)`", 9);

@@ -1,5 +1,0 @@
-import { Base } from './base.a';
-export class Child extends Base {
-    override changing(): string { return 'child-changing'; }
-    parent(): string { return super.changing(); }
-}

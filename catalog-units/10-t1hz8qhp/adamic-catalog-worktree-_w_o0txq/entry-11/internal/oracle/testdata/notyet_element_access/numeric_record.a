@@ -1,3 +1,0 @@
-interface FlowGraphNode { readonly text: string; }
-function read(values: Record<number, FlowGraphNode>, id: number): FlowGraphNode | undefined { return values[id]; }
-console.log('witness');

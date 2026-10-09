@@ -1,3 +1,0 @@
-import { programArguments } from 'adamic';
-const pattern = programArguments()[0] ?? 'TODO';
-console.log(`${new RegExp(pattern, 'u').test('TODO')}`);

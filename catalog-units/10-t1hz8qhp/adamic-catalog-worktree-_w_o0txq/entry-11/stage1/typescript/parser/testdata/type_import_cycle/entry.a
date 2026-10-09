@@ -1,7 +1,0 @@
-import { value } from './peer.a';
-
-export class Entry {
-    readonly number = 1;
-}
-
-console.log(`${value(new Entry())}`);

@@ -1,5 +1,0 @@
-{
-  "name": "empty_character_class_silenced",
-  "from": "if(cursor === opening + 1) empty.push(opening);",
-  "to": "if(cursor === opening + 2) empty.push(opening);"
-}

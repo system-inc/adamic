@@ -1,2 +1,0 @@
-// Required rule-option contract. Native lowering currently refuses this function.
-export function optionPattern(pattern: string): RegExp { return new RegExp(pattern, 'u'); }

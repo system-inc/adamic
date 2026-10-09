@@ -1,6 +1,0 @@
-const wider: { x: number; y?: number } = { x: 1 };
-console.log(typeof wider.y);
-const original = { x: 2, y: 'wrong' };
-const view: { x: number } = original;
-const rebuilt: { x: number; y?: number } = { x: view.x };
-console.log(typeof rebuilt.y);

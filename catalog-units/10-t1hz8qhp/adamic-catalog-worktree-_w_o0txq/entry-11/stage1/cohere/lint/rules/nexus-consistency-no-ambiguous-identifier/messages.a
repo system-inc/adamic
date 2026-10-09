@@ -1,8 +1,0 @@
-export const messageNoUnderscore = "Identifier \"_\" is not descriptive enough. Name it explicitly, or prefix an underscore to a real name such as \"_event\" when the point is that the value is deliberately unused.";
-export function messageNoSingleLetter(name: string): string {
-    return "Single-letter identifier \"{{name}}\" is not descriptive enough. The name is read everywhere it is used and declared only once, so the saving is at the declaration and the cost is at every call site.".replace('{{name}}', name);
-}
-export function messageNoAmbiguousE(context: string): string {
-    const hint = context === 'error' ? ' (appears to be an error)' : context === 'event' ? ' (appears to be an event)' : ' (context unclear)';
-    return "Variable named \"e\" is too ambiguous<<context>>. It is the one name that could be an error or an event, and a reader has to find the declaration to learn which. Use \"{{suggestedName}}\" or a more descriptive name.".replace('<<context>>', hint).replace('{{suggestedName}}', context === 'error' ? 'error' : 'event');
-}

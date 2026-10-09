@@ -1,3 +1,0 @@
-import { writeTextFile } from 'adamic';
-const args: [string, string] = ['out.txt', 'text'];
-writeTextFile(...args);

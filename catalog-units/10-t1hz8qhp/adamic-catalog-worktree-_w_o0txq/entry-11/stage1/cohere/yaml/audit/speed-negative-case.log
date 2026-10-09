@@ -1,7 +1,0 @@
-=== RUN   TestLexerGaps
-=== RUN   TestLexerGaps/negativeCase.ts
-    gaps_test.go:49: /workspace/adamic/stage1/cohere/yaml/gaps/negativeCase.ts:3:9: stage 0 can't lower a case that isn't a constant yet
---- PASS: TestLexerGaps (0.11s)
-    --- PASS: TestLexerGaps/negativeCase.ts (0.11s)
-PASS
-ok  	github.com/system-inc/adamic/stage1/cohere/yaml	0.115s

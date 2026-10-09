@@ -1,3 +1,0 @@
-class Base { get summary(): string { return `score ${this.score()}`; } score(): number { return 0; } }
-class Derived extends Base { snap = super.summary; count: number = 5; constructor(extra: number) { super(); this.count += extra; } score(): number { return this.count + 1; } }
-console.log(new Derived(2).snap);

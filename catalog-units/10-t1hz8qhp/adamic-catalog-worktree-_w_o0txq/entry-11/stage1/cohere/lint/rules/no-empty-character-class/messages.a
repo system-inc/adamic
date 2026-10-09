@@ -1,2 +1,0 @@
-export const messageEmptyCharacterClass =
-    'This character class is empty, so it matches nothing and makes the whole pattern unmatchable. Nobody writes an unmatchable pattern on purpose, which is why this is almost always a class whose contents were deleted or never typed. It is worth reporting because the failure is silent: the regex compiles, the code runs, and the branch behind the match simply never fires.';

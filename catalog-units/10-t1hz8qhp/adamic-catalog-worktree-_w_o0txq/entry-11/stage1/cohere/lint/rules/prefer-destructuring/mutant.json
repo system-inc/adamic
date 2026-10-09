@@ -1,5 +1,0 @@
-{
-  "name": "prefer-destructuring-object-fix",
-  "from": "replacement = `{${key.text}} = ${text}`;",
-  "to": "replacement = `{${key.text}} = (${text})`;"
-}

@@ -1,5 +1,0 @@
-{
-  "name": "prefer-template mutant from batch 8",
-  "from": "if(!contains(context, top, false))",
-  "to": "if(contains(context, top, false))"
-}

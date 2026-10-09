@@ -1,5 +1,0 @@
-function example(value: string | string[]): string {
-    return typeof value === "string" ? value : value.join(",");
-}
-const read = example;
-console.log(`${read(`single${1}`)}:${read([`first${2}`, `second${3}`])}`);

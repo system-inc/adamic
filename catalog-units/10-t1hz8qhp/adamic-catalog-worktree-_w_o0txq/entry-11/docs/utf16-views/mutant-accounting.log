@@ -1,9 +1,0 @@
-Traceback (most recent call last):
-  File "/workspace/utf16-measure/repo/stage1/typescript/scanner/profile.py", line 149, in <module>
-    main()
-  File "/workspace/utf16-measure/repo/stage1/typescript/scanner/profile.py", line 136, in main
-    result = summarize(profile)
-             ^^^^^^^^^^^^^^^^^^
-  File "/workspace/utf16-measure/repo/stage1/typescript/scanner/profile.py", line 69, in summarize
-    raise RuntimeError("callgrind self costs do not sum to summary")
-RuntimeError: callgrind self costs do not sum to summary

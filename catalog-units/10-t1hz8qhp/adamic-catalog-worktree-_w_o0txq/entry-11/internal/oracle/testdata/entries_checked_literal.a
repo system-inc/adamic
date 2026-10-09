@@ -1,6 +1,0 @@
-function show(view: {readonly value: 'good'}): void {
- Object.entries(view);
- console.log('completed');
-}
-const source = {value: 'good', hidden: 'bad'} as const;
-show(source);

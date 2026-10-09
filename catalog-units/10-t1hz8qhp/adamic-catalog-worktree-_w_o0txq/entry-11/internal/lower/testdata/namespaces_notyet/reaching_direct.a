@@ -1,3 +1,0 @@
-function read(): boolean { return Debug.isDebugging; }
-console.log(`${read()}`);
-namespace Debug { export let isDebugging = false; }

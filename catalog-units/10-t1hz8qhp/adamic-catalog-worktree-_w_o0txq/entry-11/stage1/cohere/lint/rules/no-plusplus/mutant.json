@@ -1,5 +1,0 @@
-{
-  "name": "for update option ignored",
-  "from": "this.context.settings.read('allowforloopafterthoughts', 'false') === 'true'",
-  "to": "this.context.settings.read('allowforloopafterthoughts', 'false') === 'false'"
-}

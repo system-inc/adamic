@@ -1,4 +1,0 @@
-const original = { x: 1, y: 'wrong' };
-const view: { x: number } = original;
-let wider: { x: number; y?: number } = { x: 0 };
-wider = view;

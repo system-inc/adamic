@@ -1,7 +1,0 @@
-export namespace Words {
-    const prefix = 'word';
-    export function label(value: number): string { return `${prefix} ${value}`; }
-    export const length = 4;
-    export namespace Inner { export type Index = number; export function double(value: number): number { return value * 2; } }
-}
-console.log('namespace dependency');

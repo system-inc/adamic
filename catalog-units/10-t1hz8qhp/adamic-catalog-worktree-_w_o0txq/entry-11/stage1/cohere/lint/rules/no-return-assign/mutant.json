@@ -1,5 +1,0 @@
-{
-  "name": "return parentheses option reversed",
-  "from": "this.context.settings.read('option', 'except-parens') !== 'always'",
-  "to": "this.context.settings.read('option', 'except-parens') === 'always'"
-}

@@ -1,6 +1,0 @@
-// Reduced from TypeScript 6.0.3, src/compiler/utilities.ts:747-749
-const values = new Map<string, string | number>([["one", 1], ["text", "x"]]);
-const iterator = values.entries();
-for (const [key, value] of iterator) {
-    console.log(`${key}:${value}`);
-}

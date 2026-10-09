@@ -1,9 +1,0 @@
-=== RUN   TestCompilerCorpusSourcesExcludeOnlyNamedFolders
-=== PAUSE TestCompilerCorpusSourcesExcludeOnlyNamedFolders
-=== CONT  TestCompilerCorpusSourcesExcludeOnlyNamedFolders
-    corpus_sources_test.go:94: corpus-files: repository /tmp/adamic-gate/TestCompilerCorpusSourcesExcludeOnlyNamedFolders686442900/001 root stage1 pin 4b08954a740bb9f846df30b88843339a9a90965e count 18
-    corpus_sources_test.go:94: compiler corpus stage1: excluded 7 tracked files under testdata/, validation/, evidence/; retained 11 sources
-    corpus_sources_test.go:103: all 11 sources retained; only 7 named-folder fixtures excluded
---- PASS: TestCompilerCorpusSourcesExcludeOnlyNamedFolders (0.10s)
-PASS
-ok  	github.com/system-inc/adamic/stage1/cohere/lint	0.166s

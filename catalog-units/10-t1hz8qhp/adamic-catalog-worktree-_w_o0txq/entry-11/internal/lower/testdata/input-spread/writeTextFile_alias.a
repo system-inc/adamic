@@ -1,3 +1,0 @@
-import { writeTextFile as door } from 'adamic';
-const args: [string, string] = ['out.txt', 'text'];
-door(...args);

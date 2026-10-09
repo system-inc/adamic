@@ -1,8 +1,0 @@
-interface ReaderInterface { readonly read: () => number; }
-class Box { value = 17; read(): number { return this.value; } }
-class Consumer {
-    readonly reader: ReaderInterface;
-    constructor(reader: ReaderInterface) { this.reader = reader; }
-    run(): number { return this.reader.read(); }
-}
-console.log(`${new Consumer(new Box()).run()}`);

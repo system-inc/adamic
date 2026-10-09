@@ -1,4 +1,0 @@
-/* eslint-disable @typescript-eslint/unbound-method -- The oracle calls these intrinsic aliases with receivers proven by the branch. */
-const method = String.prototype.charAt;
-console.log(method.call('a🌍', 0));
-console.log(method.apply('a🌍', [99]));

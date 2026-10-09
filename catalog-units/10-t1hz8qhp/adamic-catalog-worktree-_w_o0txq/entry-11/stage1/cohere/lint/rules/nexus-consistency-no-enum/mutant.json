@@ -1,5 +1,0 @@
-{
-  "name": "enum reported at its declaration rather than its name",
-  "from": "name < 0 ? index : name",
-  "to": "index"
-}

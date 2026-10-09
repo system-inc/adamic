@@ -1,5 +1,0 @@
-{
-  "name": "predicate finding widened to its owner",
-  "from": "this.context.report(index,",
-  "to": "this.context.report(this.context.parent(index),"
-}

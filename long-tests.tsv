@@ -1,0 +1,23 @@
+github.com/system-inc/adamic/internal/flow	TestEveryFunctionIsInSingleAssignment	110.20	pass
+github.com/system-inc/adamic/stage1/typescript/parser	TestJsxMutants/text_start	88.97	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestAdditionalJSONBoundaries	82.22	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestSingleFileStdoutDriver	78.93	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestThreePortMutantsAreCaught/missing_final_newline	75.41	pass
+github.com/system-inc/adamic/internal/native	TestWASI (setup)	71.37	pass
+github.com/system-inc/adamic/internal/fresh	TestEveryWriteIsRecordedAndKnown	69.29	fail
+github.com/system-inc/adamic/stage1/cohere/css	TestThePortParsesAsGoCohereDoes/Go_agreement	58.17	pass
+github.com/system-inc/adamic/stage1/typescript/parser	TestJsxMutants/text_payload	54.78	pass
+github.com/system-inc/adamic/stage1/typescript/parser	TestJsxMutants/child_order	54.32	pass
+github.com/system-inc/adamic/stage1/typescript/parser	TestJsxMutants/attribute_list	54.12	pass
+github.com/system-inc/adamic/stage1/typescript/parser	TestGeneratedExpressionsAgree	53.02	pass
+github.com/system-inc/adamic/stage1/cohere/gitignore	TestThePortAnswersAsGoCohereAndGitDo/natively_and_on_Node,_as_Go_cohere	49.49	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestExternalComparisonCatchesThreePrinterMutants (setup)	49.02	pass
+github.com/system-inc/adamic/cmd/adamic-test262	TestLargeCompilerOutputIsComplete	43.59	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestDocumentedStageZeroGaps (setup)	42.81	pass
+github.com/system-inc/adamic/internal/lower	TestArgumentsLengthRefusals (setup)	38.83	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestCachedWidthMutantIsCaught	36.46	pass
+github.com/system-inc/adamic/internal/flow	TestEveryMutationIsInItsRange/programs/../oracle/testdata/timsort.a	34.39	pass
+github.com/system-inc/adamic/stage1/typescript/parser	TestJsxMutants/self_closing_kind	34.35	pass
+github.com/system-inc/adamic/stage1/cohere/css	TestThePortParsesAsGoCohereDoes/catches_closing_braces_no_longer_include_the_closing_byte	30.81	pass
+github.com/system-inc/adamic/internal/flow	TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/timsort.a	30.78	pass
+github.com/system-inc/adamic/stage1/cohere/css	TestThePortParsesAsGoCohereDoes/catches_comments_always_disappear_from_values	30.65	pass

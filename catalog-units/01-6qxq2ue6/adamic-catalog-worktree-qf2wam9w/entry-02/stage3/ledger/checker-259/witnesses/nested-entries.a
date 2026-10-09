@@ -1,5 +1,0 @@
-declare function collect<T>(items: Iterable<T>): T[];
-declare function transform<T, U>(items: Iterable<T>, callback: (item: T) => U): U[];
-for (const [key, values] of collect(new Map<string, Map<string, { name: string }>>().entries())) {
-    transform(values.values(), item => item.name);
-}

@@ -1,2 +1,0 @@
-declare function collect<T>(items: Iterable<T>): T[];
-const result: string[] = collect(new Map<string, string>().values());

@@ -1,3 +1,0 @@
-import './hoisted_consumer.a';
-export const unused = 1;
-export function pure(): number { return 4; }

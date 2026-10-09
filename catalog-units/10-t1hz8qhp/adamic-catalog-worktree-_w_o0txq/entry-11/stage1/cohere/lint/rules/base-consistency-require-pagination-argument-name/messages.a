@@ -1,1 +1,0 @@
-export const invalidName = "A GraphQlArgument of PaginationInput type must be named \"pagination\", or end with \"Pagination\" when a query takes more than one paginator and the names have to be told apart. A caller reads the argument name to know which paginator it is driving, and a name outside that convention makes them guess.";

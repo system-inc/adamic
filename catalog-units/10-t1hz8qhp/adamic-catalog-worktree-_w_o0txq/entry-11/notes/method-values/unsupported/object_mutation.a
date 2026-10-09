@@ -1,1 +1,0 @@
-const method = Object.freeze; const object = method({ x: 1 }); console.log(`${object.x}`);

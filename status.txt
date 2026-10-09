@@ -1,1 +1,1 @@
-running: full gate of 313af4d720533db17dc802d0f44dc34140c3a024 against 313af4d720533db17dc802d0f44dc34140c3a024
+red: 313af4d720533db17dc802d0f44dc34140c3a024 full gate, first failure at tests after 275.7 s, cancelled after first failure (coverage=0.0s build=13.7s tools=0.1s determinism=16.7s vet=35.1s wasi=125.3s catalog=226.3s stage3=260.7s tests=261.2s; 23 units over 30 s (1272 s, 20 on the burn-down, 3 drifted over); box load 16.2 on 64 cores at start, load 52.8 on 64 cores at first failure, load 52.8 on 64 cores at end), 1 fail, 3450 pass

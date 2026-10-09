@@ -1,4 +1,0 @@
-/* eslint-disable @typescript-eslint/unbound-method -- The oracle calls these intrinsic aliases with receivers proven by the branch. */
-const format = Number.prototype.toPrecision;
-console.log('before');
-console.log(format.apply(1, [0]));

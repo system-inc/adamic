@@ -1,6 +1,0 @@
-console.log("values");
-export function greet(name: string): string { return `hello ${name}`; }
-export class Box { readonly value = "box"; }
-export const answer = 42;
-export enum Code { Zero, Ready = 4, Done, Alias = 4 }
-export enum Word { First = "first", Second = "second" }

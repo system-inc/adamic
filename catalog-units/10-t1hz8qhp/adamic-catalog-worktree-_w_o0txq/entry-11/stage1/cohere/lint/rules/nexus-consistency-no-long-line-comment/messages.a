@@ -1,3 +1,0 @@
-export function messageLongLineComment(lineCount: string): string {
-    return `A run of five or more double-slash lines should be a block comment. Past four lines a stack of slashes stops reading as one thought and starts reading as a wall, with no cue where the passage ends. This run is ${lineCount} lines.`;
-}

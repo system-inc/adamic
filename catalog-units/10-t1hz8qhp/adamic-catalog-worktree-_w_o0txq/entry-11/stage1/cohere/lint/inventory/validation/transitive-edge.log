@@ -1,6 +1,0 @@
-=== RUN   TestTransitiveSiblingAndMethodDependencies
-    adamic_inventory_test.go:79: lost resolved direct/transitive sibling: []main.dependency{main.dependency{Symbol:"github.com/system-inc/cohere/internal/lint/rules/core.helper", Package:"github.com/system-inc/cohere/internal/lint/rules/core", Location:"helper.go:1", Direct:true, Kind:"sibling"}}
---- FAIL: TestTransitiveSiblingAndMethodDependencies (0.00s)
-FAIL
-FAIL	command-line-arguments	0.019s
-FAIL

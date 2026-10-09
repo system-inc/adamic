@@ -1,8 +1,0 @@
-=== RUN   TestUnavailableCacheStillRuns
-=== PAUSE TestUnavailableCacheStillRuns
-=== CONT  TestUnavailableCacheStillRuns
-    cache_test.go:254: unavailable result cache changed verdict: {Path:pass/pad.js Directory:pass Kind:crashed Reason:mkdir /tmp/adamic-gate/TestUnavailableCacheStillRuns4280338139/002/not-a-directory: not a directory Adaptations:map[]}
---- FAIL: TestUnavailableCacheStillRuns (2.44s)
-FAIL
-FAIL	github.com/system-inc/adamic/cmd/adamic-test262	2.487s
-FAIL

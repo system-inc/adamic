@@ -1,5 +1,0 @@
-{
-  "name": "adjacent overload separation ignored",
-  "from": "seen.has(key) && previous !== key",
-  "to": "seen.has(key) && previous === key"
-}

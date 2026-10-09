@@ -1,7 +1,0 @@
-enum Names { Zero, One, Alias = One, High = 4 }
-enum TextNames { First = "first", Second = "second" }
-const names = Names;
-for (const name in names) { console.log(name); }
-for (const name in TextNames) { console.log(name); }
-const forward = Object.keys(Names).filter(name => name === "Zero" || name === "One" || name === "Alias" || name === "High");
-console.log(forward.join("|"));

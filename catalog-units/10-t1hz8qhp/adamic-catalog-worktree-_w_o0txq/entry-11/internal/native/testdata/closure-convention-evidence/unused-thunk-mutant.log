@@ -1,6 +1,0 @@
-=== RUN   TestParserHasNoUnusedOptionalMethodThunks
-    closure_convention_test.go:229: unused optional method thunk: Parser_type
---- FAIL: TestParserHasNoUnusedOptionalMethodThunks (23.16s)
-FAIL
-FAIL	github.com/system-inc/adamic/internal/native	23.223s
-FAIL

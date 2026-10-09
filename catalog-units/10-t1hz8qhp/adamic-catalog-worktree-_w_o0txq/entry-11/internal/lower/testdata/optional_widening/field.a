@@ -1,3 +1,0 @@
-const original = { x: 1, y: 'wrong' };
-const view: { x: number } = original;
-const wider: { value: { x: number; y?: number } } = { value: view };

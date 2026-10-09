@@ -1,5 +1,0 @@
-import { Base, visit } from './base.a';
-import { Child } from './child.a';
-console.log(visit(new Base()));
-console.log(visit(new Child()));
-console.log(new Child().parent());

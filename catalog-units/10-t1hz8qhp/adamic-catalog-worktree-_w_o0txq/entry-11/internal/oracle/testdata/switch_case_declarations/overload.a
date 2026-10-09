@@ -1,7 +1,0 @@
-switch (1) {
-case 1:
-function size(value: number): number;
-function size(value: number): number { return value + 1; }
-console.log(`${size(1)}`);
-break;
-}

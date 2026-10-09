@@ -1,7 +1,0 @@
-// Reduced from TypeScript 6.0.3, src/compiler/scanner.ts:1161-1188
-function outer(): void {
-    function inner(value: string): string;
-    function inner(value: string): string { return value; }
-    console.log(inner("x"));
-}
-outer();

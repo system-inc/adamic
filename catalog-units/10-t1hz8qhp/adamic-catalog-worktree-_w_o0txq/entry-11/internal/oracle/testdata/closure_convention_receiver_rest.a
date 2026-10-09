@@ -1,5 +1,0 @@
-interface Runner { run(first?: number, ...tail: number[]): number; }
-const object: Runner = { run(first: number = 3, ...tail: number[]): number { return first + tail.length + arguments.length * 10; } };
-console.log(String(object.run()));
-console.log(String(object.run(undefined, 4, 5)));
-console.log(String(object.run(2, ...[6, 7, 8])));
