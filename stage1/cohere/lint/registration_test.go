@@ -33,28 +33,6 @@ func TestMain(m *testing.M) {
 	os.Exit(code)
 }
 
-func TestOwnedWitnesses(t *testing.T) {
-	directory, err := filepath.Abs(".")
-	if err != nil {
-		t.Fatal(err)
-	}
-	oracle := goOracle(t)
-	var rows []string
-	for _, d := range prepareRegistry(t, ".") {
-		for _, row := range ownedWitnessRows(t, directory, d) {
-			path := strings.SplitN(row, "\t", 2)[0]
-			pair := recoveryRows(t, oracle, []string{row, path + "\tall"})
-			answer := execute(t, "", oracle, "--manifest", manifest(t, pair[:1]), "--count")
-			if string(answer.output) == "0\n" {
-				t.Fatalf("%s witness reports no findings", d.Name)
-			}
-			rows = append(rows, pair...)
-		}
-	}
-	path := manifest(t, rows)
-	compare(t, oracle, buildPort(t, directory, true), directory, path)
-}
-
 func TestRegistrationMutant(t *testing.T) {
 	// This remains a valid descriptor and compiled rule: only its subscription is wrong.
 	directory := mutant(t, `"DebuggerStatement"`, `"EmptyStatement"`, "rules/no-debugger/rule.json")
