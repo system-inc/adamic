@@ -1,0 +1,13 @@
+diff --git a/stage1/cohere/json/parser.ts b/stage1/cohere/json/parser.ts
+index 7d6ebd4d..8363e568 100644
+--- a/stage1/cohere/json/parser.ts
++++ b/stage1/cohere/json/parser.ts
+@@ -279,7 +279,7 @@ export class Reader {
+                     }
+                     digitsStart++;
+                     length = closing - digitsStart;
+-                    if(length === 0 || Number.parseInt(raw.slice(digitsStart, closing), 16) > 0x10ffff) {
++                    if(length === 0 || Number.parseInt(raw.slice(digitsStart, closing), 16) > 0x110000) {
+                         throw new Error(this.message('an invalid \\u{} escape'));
+                     }
+                 }

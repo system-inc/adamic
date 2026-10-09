@@ -1,0 +1,18 @@
+{"Time":"2026-10-09T15:35:45.643932438Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/json"}
+{"Time":"2026-10-09T15:35:45.65301061Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestSingleFileStdoutDriver"}
+{"Time":"2026-10-09T15:35:45.653088418Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestSingleFileStdoutDriver","Output":"=== RUN   TestSingleFileStdoutDriver\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:35:45.653110771Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestSingleFileStdoutDriver","Output":"=== PAUSE TestSingleFileStdoutDriver\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:35:45.653113606Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestSingleFileStdoutDriver"}
+{"Time":"2026-10-09T15:35:45.653663135Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestSingleFileStdoutDriver"}
+{"Time":"2026-10-09T15:35:45.653671188Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestSingleFileStdoutDriver","Output":"=== CONT  TestSingleFileStdoutDriver\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:35:46.630418385Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestSingleFileStdoutDriver","Output":"    port_test.go:598: Go cohere: === RUN   TestAdamicJSONAudit\n"}
+{"Time":"2026-10-09T15:35:46.630810046Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestSingleFileStdoutDriver","Output":"            adamic_json_audit_test.go:44: 2 texts in 0.000s\n"}
+{"Time":"2026-10-09T15:35:46.630813601Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestSingleFileStdoutDriver","Output":"        --- PASS: TestAdamicJSONAudit (0.00s)\n"}
+{"Time":"2026-10-09T15:35:46.63081905Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestSingleFileStdoutDriver","Output":"        PASS\n"}
+{"Time":"2026-10-09T15:35:46.630823056Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestSingleFileStdoutDriver","Output":"        ok  \tgithub.com/system-inc/cohere/internal/format/javascript\t0.006s\n"}
+{"Time":"2026-10-09T15:35:56.032659709Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestSingleFileStdoutDriver","Output":"--- PASS: TestSingleFileStdoutDriver (10.38s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:35:56.032761503Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestSingleFileStdoutDriver","Elapsed":10.38}
+{"Time":"2026-10-09T15:35:56.032784458Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:35:56.040744126Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Output":"coverage: 26.0% of statements in ./internal/lower, ./internal/native, ./internal/load\n"}
+{"Time":"2026-10-09T15:35:56.060599079Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/json\t10.416s\tcoverage: 26.0% of statements in ./internal/lower, ./internal/native, ./internal/load\n"}
+{"Time":"2026-10-09T15:35:56.060648464Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/json","Elapsed":10.417}

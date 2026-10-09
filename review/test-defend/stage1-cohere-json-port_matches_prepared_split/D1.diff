@@ -1,0 +1,13 @@
+diff --git a/stage1/cohere/json/main.ts b/stage1/cohere/json/main.ts
+index 5d2cd02c..8b4e0418 100644
+--- a/stage1/cohere/json/main.ts
++++ b/stage1/cohere/json/main.ts
+@@ -62,7 +62,7 @@ if(batch) {
+ }
+ else {
+     try {
+-        console.log(format(path, read.text).slice(0, -1));
++        console.log(format(path, read.text).slice(0, -2));
+     }
+     catch(error) {
+         panic(error instanceof Error ? error.message : '?');

@@ -1,0 +1,79 @@
+stage1/cohere/json/main.ts:4:export function escaped(text: string): string {
+stage1/cohere/json/main.ts:6:    if(result.includes('\\')) {
+stage1/cohere/json/main.ts:9:    if(result.includes('\n')) {
+stage1/cohere/json/main.ts:12:    if(result.includes('\r')) {
+stage1/cohere/json/main.ts:15:    if(result.includes('\t')) {
+stage1/cohere/json/main.ts:20:function unescaped(text: string): string {
+stage1/cohere/json/main.ts:21:    if(!text.includes('\\')) {
+stage1/cohere/json/main.ts:26:    for(let index = 1; index < pieces.length; index++) {
+stage1/cohere/json/main.ts:45:    panic(read.message);
+stage1/cohere/json/main.ts:48:    for(const line of read.text.split('\n')) {
+stage1/cohere/json/main.ts:67:    catch(error) {
+stage1/cohere/json/width.ts:4:function mapped(code: number): number {
+stage1/cohere/json/width.ts:8:function match(program: readonly (readonly number[])[], instruction: number, text: string, position: number): number {
+stage1/cohere/json/width.ts:13:    if(op === 0 || op === 1) {
+stage1/cohere/json/width.ts:17:    if(op === 2 || op === 6) {
+stage1/cohere/json/width.ts:20:    if(op === 3) {
+stage1/cohere/json/width.ts:29:    if(op === 4) {
+stage1/cohere/json/width.ts:32:    if(op === 5 || position >= text.length) {
+stage1/cohere/json/width.ts:37:    if(row.length === 4) {
+stage1/cohere/json/width.ts:53:function wide(code: number): boolean {
+stage1/cohere/json/width.ts:56:    while(left < right) {
+stage1/cohere/json/width.ts:69:export function stringWidth(text: string): number {
+stage1/cohere/json/width.ts:71:    for(let index = 0; index < text.length; index++) {
+stage1/cohere/json/width.ts:78:    if(ascii) {
+stage1/cohere/json/width.ts:82:    for(let index = 0; index < text.length;) {
+stage1/cohere/json/doc.ts:20:    add(kind: string, text: string, parts: number[], broken: boolean): number {
+stage1/cohere/json/doc.ts:33:    text(text: string): number {
+stage1/cohere/json/doc.ts:36:    concat(parts: number[]): number {
+stage1/cohere/json/doc.ts:39:    line(soft: boolean, hard: boolean): number {
+stage1/cohere/json/doc.ts:42:    indent(child: number): number {
+stage1/cohere/json/doc.ts:45:    group(child: number, broken: boolean): number {
+stage1/cohere/json/doc.ts:48:    fill(parts: number[]): number {
+stage1/cohere/json/doc.ts:51:    get(index: number): DocInterface {
+stage1/cohere/json/doc.ts:55:    fits(
+stage1/cohere/json/doc.ts:99:    print(root: number): string {
+stage1/cohere/json/parser.ts:17:export function quoted(text: string): string {
+stage1/cohere/json/parser.ts:19:    for(let index = 0; index < text.length; index++) {
+stage1/cohere/json/parser.ts:46:function whitespace(code: number): boolean {
+stage1/cohere/json/parser.ts:61:function digit(code: number): number {
+stage1/cohere/json/parser.ts:70:function inRanges(code: number, ranges: readonly (readonly number[])[]): boolean {
+stage1/cohere/json/parser.ts:71:    for(const range of ranges) {
+stage1/cohere/json/parser.ts:81:function nameStart(code: number): boolean {
+stage1/cohere/json/parser.ts:90:export function numericValue(raw: string): number {
+stage1/cohere/json/parser.ts:93:    if(prefix === '0x' || prefix === '0o' || prefix === '0b') {
+stage1/cohere/json/parser.ts:103:    constructor(text: string) {
+stage1/cohere/json/parser.ts:106:    get(index: number): JsonNodeInterface {
+stage1/cohere/json/parser.ts:109:    add(kind: string, start: number, raw: string, children: number[]): number {
+stage1/cohere/json/parser.ts:114:    message(detail: string): string {
+stage1/cohere/json/parser.ts:117:    skip(): void {
+stage1/cohere/json/parser.ts:157:    peek(): number {
+stage1/cohere/json/parser.ts:161:    expect(char: string): void {
+stage1/cohere/json/parser.ts:167:    name(): string {
+stage1/cohere/json/parser.ts:186:    unexpected(): string {
+stage1/cohere/json/parser.ts:189:    number(): number {
+stage1/cohere/json/parser.ts:240:    string(): number {
+stage1/cohere/json/parser.ts:303:    value(key: boolean): number {
+stage1/cohere/json/parser.ts:378:    parse(stringify: boolean): number {
+stage1/cohere/json/formatter.ts:5:export function stringifyName(name: string): boolean {
+stage1/cohere/json/formatter.ts:10:function numberText(raw: string): string {
+stage1/cohere/json/formatter.ts:11:    if(raw.length === 1) {
+stage1/cohere/json/formatter.ts:17:    for(let index = 0; index < exponent; index++) {
+stage1/cohere/json/formatter.ts:23:    if(decimalPrefix) {
+stage1/cohere/json/formatter.ts:36:    if(value.startsWith('.')) {
+stage1/cohere/json/formatter.ts:43:    if(dot >= 0 && !mantissa.slice(dot + 1).includes('_')) {
+stage1/cohere/json/formatter.ts:48:    if(mantissa.endsWith('.')) {
+stage1/cohere/json/formatter.ts:53:function stringText(raw: string): string {
+stage1/cohere/json/formatter.ts:54:    if(raw.startsWith('"')) {
+stage1/cohere/json/formatter.ts:58:    for(let index = 1; index < raw.length - 1; index++) {
+stage1/cohere/json/formatter.ts:86:function unicodeEnd(text: string, start: number): number {
+stage1/cohere/json/formatter.ts:89:function unicodeCode(text: string, start: number, end: number): number {
+stage1/cohere/json/formatter.ts:95:function cookedTemplate(raw: string): string {
+stage1/cohere/json/formatter.ts:98:    for(let index = 0; index < text.length; index++) {
+stage1/cohere/json/formatter.ts:167:function jsonQuote(text: string): string {
+stage1/cohere/json/formatter.ts:169:    for(let index = 0; index < text.length; index++) {
+stage1/cohere/json/formatter.ts:210:    constructor(reader: Reader, stringify: boolean) {
+stage1/cohere/json/formatter.ts:223:    attach(root: number): void {
+stage1/cohere/json/formatter.ts:277:    blankAfter(end: number): boolean {
+stage1/cohere/json/formatter.ts:294:    print(index: number, key: boolean): number {
+stage1/cohere/json/formatter.ts:474:export function format(name: string, text: string): string {

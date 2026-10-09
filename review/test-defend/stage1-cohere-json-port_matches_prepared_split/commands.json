@@ -1,0 +1,13 @@
+{
+  "D1": "ADAMIC_GATE_SAMPLE=92d196011e78208b45b3768dcf2c8c88e7ec132d ADAMIC_BUILD_CACHE_DIR=/tmp/defend-json/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/json/ -run '^(TestAdditionalJSONBoundaries|TestSingleFileStdoutDriver|TestPortMatchesGoCohere_[0-9]{3})$'",
+  "D2": "ADAMIC_GATE_SAMPLE=92d196011e78208b45b3768dcf2c8c88e7ec132d ADAMIC_BUILD_CACHE_DIR=/tmp/defend-json/cache/D2 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/json/ -run '^(TestAdditionalJSONBoundaries|TestSingleFileStdoutDriver|TestPortMatchesGoCohere_[0-9]{3})$'",
+  "new_matrix": "ADAMIC_GATE_SAMPLE=92d196011e78208b45b3768dcf2c8c88e7ec132d ADAMIC_BUILD_CACHE_DIR=/tmp/defend-json/cache/<id> timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/json/ -run \"$(cat new-rows.regex)\"",
+  "coverage_package": "./internal/lower,./internal/native,./internal/load",
+  "coverage_rows": [
+    "^TestAdditionalJSONBoundaries$",
+    "^TestSingleFileStdoutDriver$",
+    "^TestPortMatchesGoCohere_[0-9]{3}$"
+  ],
+  "baseline_full": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/json/",
+  "baseline_new_full": "ADAMIC_GATE_SAMPLE=92d196011e78208b45b3768dcf2c8c88e7ec132d timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/json/ -run '^(TestPortMatchesGoCohere_[0-9]{4}|TestPortMatchesGoCohereClassOrder_[0-9]{3})$'"
+}

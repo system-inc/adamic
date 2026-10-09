@@ -1,0 +1,18 @@
+{
+  "code_under_test": "JSON TypeScript parser, formatter, document printer and file/batch driver",
+  "oracle": "live Go cohere output, plus exact exit/stderr checks",
+  "mutants": [
+    {
+      "id": "D1",
+      "file": "stage1/cohere/json/main.ts",
+      "change": ".slice(0, -1) -> .slice(0, -2)",
+      "difference": "single-file stdout path is absent from batch agreement rows"
+    },
+    {
+      "id": "D2",
+      "file": "stage1/cohere/json/parser.ts",
+      "change": "> 0x10ffff -> > 0x110000",
+      "difference": "Additional boundaries includes invalid unicode code point 110000; generated agreement controls lack this braced escape"
+    }
+  ]
+}
