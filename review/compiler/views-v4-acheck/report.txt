@@ -23,3 +23,7 @@ view-result-wrong: replace const callback = viewed.run with a direct-call wrappe
 factory-165-wrong-arity: make Target.onEmitNode readonly; Node stdout unchanged; TestV4Lane5FactoryWiderWriteRefusal fails wider-write keeps path and fix, exit 1.
 Initial boxed-result trial changed boolean true to string true. It remained refused for the escaping read and did not kill the test; replaced with the direct-call-wrapper mutant above.
 TestV4Lane5SkipAdapterMutant: native and JavaScript adapter bypasses run like Node, unlike the required exit70; existing behavioral catcher passes, 15.06s. Factory and boxed positive controls also run their existing guard mutants; full observations in tests.log.
+
+Integration lane command from repository root, after committing:
+git fetch -q origin main devtools/fast-gate cloud/merge-tree && git show origin/cloud/merge-tree:cloud/integration/lane-checks.py | python3 -
+exit 0: lane checks 13.0 s: gofmt and tools on 154 Go files, t.Parallel on 8 test packages; a-check 38 .a files; vet 8 packages. Zero a-check failures. Repair commit 80e75f1a.
