@@ -1,0 +1,17 @@
+=== RUN   TestProfileCompilation_000
+=== PAUSE TestProfileCompilation_000
+=== CONT  TestProfileCompilation_000
+    profile_compilation_main_test.go:272: build lint-profile-lowered 2bf5455e32a4 hit 0.04
+    profile_compilation_main_test.go:298: build lint-profile-emit-c a75e2a112d15 hit 0.03
+    profile_compilation_main_test.go:272: build lint-profile-lowered 2bf5455e32a4 hit 0.03
+    profile_compilation_main_test.go:298: build lint-profile-emit-javascript 22af98d9f085 hit 0.03
+    profile_compilation_main_test.go:201: build lint-profile-scanner 0b4c84eb6cda hit 0.05
+    profile_compilation_main_test.go:201: build lint-profile-counted ede11463792c hit 0.04
+    profile_compilation_main_test.go:201: build lint-profile-profiled 0614a20f59e5 hit 0.04
+    profile_test.go:92: build shards-agree-profile-oracle 633214cc3066 hit 1.05
+    profile_test.go:92: build lint-profile-oracle-outputs c740bed72207 miss 0.39
+    profile_test.go:142: counted instrumentation: adamic: counts: allocations 250 frees 250 retains 1996 releases 771 peak 205 regions 0
+    profile_compilation_main_test.go:100: wall=314.259632ms cooked=false
+--- PASS: TestProfileCompilation_000 (3.12s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	3.143s

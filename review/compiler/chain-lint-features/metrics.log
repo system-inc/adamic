@@ -1,0 +1,39 @@
+{
+  "flags": [
+    "-std=c11",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-Wcast-function-type-strict",
+    "-pedantic",
+    "-Wno-unused-variable",
+    "-Wno-unused-but-set-variable",
+    "-Wno-unused-function",
+    "-Wno-unused-parameter",
+    "-Wno-self-assign",
+    "-ffp-contract=off",
+    "-fno-optimize-sibling-calls",
+    "-O2",
+    "-DADAMIC_CLOSURE_CONVENTION=1"
+  ],
+  "generated_c_bytes": 7354,
+  "generated_c_lines": 155,
+  "jobs": 1,
+  "runtime_preparation_seconds": 3.20375825,
+  "split-cold": {
+    "binary": "/workspace/adamic/review/compiler/chain-lint-features/scanner-metrics/split-cold",
+    "binary_bytes": 433656,
+    "build_wall_seconds": 0.160284773
+  },
+  "split-warm": {
+    "binary": "/workspace/adamic/review/compiler/chain-lint-features/scanner-metrics/split-warm",
+    "binary_bytes": 433656,
+    "build_wall_seconds": 0.092261166
+  },
+  "timing_scope": "native.Build wall time, runtime prewarmed; includes splitting, preprocessing, cache checks, compilation and linking; excludes C emission and Go startup",
+  "unsplit": {
+    "binary": "/workspace/adamic/review/compiler/chain-lint-features/scanner-metrics/unsplit",
+    "binary_bytes": 433016,
+    "build_wall_seconds": 0.068995792
+  }
+}
