@@ -33,7 +33,7 @@ func mutantNativeProduct(t *testing.T, index int) string {
 			t.Fatal(err)
 		}
 		inputs := expressionInputFiles(t, root+"/internal", root+"/bridge/tsgo", root+"/cohere", root+"/stage1/typescript/parser")
-		inputs = append(inputs, root+"/go.mod", root+"/go.sum", root+"/go.work", root+"/stage1/cohere/tsprinter/mutants_test.go", root+"/stage1/cohere/tsprinter/mutant_products_test.go", root+"/stage1/cohere/tsprinter/helpers_test.go", root+"/stage1/cohere/tsprinter/expressions_test.go", root+"/stage1/cohere/tsprinter/expression_units_test.go")
+		inputs = append(inputs, root+"/go.mod", root+"/go.work", root+"/stage1/cohere/tsprinter/mutants_test.go", root+"/stage1/cohere/tsprinter/mutant_products_test.go", root+"/stage1/cohere/tsprinter/helpers_test.go", root+"/stage1/cohere/tsprinter/expressions_test.go", root+"/stage1/cohere/tsprinter/expression_units_test.go")
 		files, err := filepath.Glob("*.ts")
 		if err != nil {
 			t.Fatal(err)
@@ -81,7 +81,7 @@ func mutantOracleProduct(t *testing.T, index int) (string, string) {
 		for _, file := range []string{"mutants_test.go", "mutant_oracle_test.go", "mutant_units_test.go", "mutant_products_test.go", "helpers_test.go", "doc_test.go", "shards_test.go", "testdata/doc_side_test.go", "testdata/expressions_side_test.go", "testdata/statements_side_test.go", "testdata/notyet.json", "expressions_test.go", "expression_units_test.go"} {
 			inputs = append(inputs, root+"/stage1/cohere/tsprinter/"+file)
 		}
-		inputs = append(inputs, root+"/go.mod", root+"/go.sum", root+"/go.work")
+		inputs = append(inputs, root+"/go.mod", root+"/go.work")
 		state.directory = expressionBuild(t, printerBuildInputs{
 			Name:      fmt.Sprintf("TS printer mutant %03d Go oracle corpus", index),
 			Files:     inputs,
