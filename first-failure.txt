@@ -1,0 +1,8 @@
+FIRST FAILURE (tests, at 1.9 s):
+go test -c -o exited 1
+# github.com/system-inc/adamic/stage1/cohere/lint [github.com/system-inc/adamic/stage1/cohere/lint.test]
+stage1/cohere/lint/harness_test.go:4:2: "bytes" imported and not used
+stage1/cohere/lint/lint_test.go:9:2: "github.com/system-inc/adamic/stage1/cohere/lint/shards" imported and not used
+stage1/cohere/lint/lint_test.go:15:2: "runtime" imported and not used
+
+(box load 28.3 on 64 cores at first failure)
