@@ -11,7 +11,7 @@ Evidence includes standalone diffs, raw logs, inventories and timing samples.
     "package": "stage1/cohere/lint",
     "file": "stage1/cohere/lint/bv61ffb_decoded_options_test.go:49",
     "seconds": 5.084,
-    "oracle": "Go cohere executed live; canonical diagnostic, suggestion, rejection, convergence and fixed-source comparison; member 003 checks only Go count, members 004/005 witness built-in mutants, Union checks registration",
+    "oracle": "Go cohere executed live; canonical diagnostic, suggestion, rejection, convergence and fixed-source comparison; M4 native catch is exit 70 (panic: missing options) before output comparison; member 003 checks only Go count, members 004/005 witness built-in mutants, Union checks registration",
     "oracle_kind": "external-run",
     "kills": [
       "M1",
@@ -22,7 +22,7 @@ Evidence includes standalone diffs, raw logs, inventories and timing samples.
       "M1",
       "M2"
     ],
-    "last_proven_fail": "M4 None",
+    "last_proven_fail": "M4 bv61ffb_decoded_options_test.go:51: /tmp/u106/cache/M4/852df6b6b56623c7f6e3d9d275251f8e3f2a5ba29fddf798dd51edb46c53adb2/scanner [--manifest /tmp/adamic-gate/lint-shared-588547747/decoded-options-manifest.txt]: exit status 70",
     "verdict": "sacred",
     "subsumed_by": [],
     "mutants_in_matrix": 4,
@@ -45,7 +45,7 @@ Evidence includes standalone diffs, raw logs, inventories and timing samples.
       "TestCompilerAndStage1Agree_007",
       "TestCompilerAndStage1Agree_012"
     ],
-    "evidence": "timeout 100 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestDecodedOptionsAndMutant_[0-9]+|TestDecodedOptionsAndMutantUnion|TestClosedComparatorGaps|TestCompilerAndStage1Agree_(002|007|012))$ > M4.log; None",
+    "evidence": "timeout 100 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestDecodedOptionsAndMutant_[0-9]+|TestDecodedOptionsAndMutantUnion|TestClosedComparatorGaps|TestCompilerAndStage1Agree_(002|007|012))$ > M4.log; bv61ffb_decoded_options_test.go:51: /tmp/u106/cache/M4/852df6b6b56623c7f6e3d9d275251f8e3f2a5ba29fddf798dd51edb46c53adb2/scanner [--manifest /tmp/adamic-gate/lint-shared-588547747/decoded-options-manifest.txt]: exit status 70",
     "members": [
       "TestDecodedOptionsAndMutant_000",
       "TestDecodedOptionsAndMutant_001",
@@ -466,6 +466,6 @@ The 13-row count appears to omit family grouping of the three product declaratio
 No repo-wide uniqueness, full-package per-mutant run, exhaustive native compiler corpus matrix or exact coverage profile was completed. Empty-answer probes are excluded from all production kills.
 Setup: warm Go 1.27.1, nproc 5, no cloud setup. npm and corpus installation logs are saved. Timing driver wall costs are in commands.jsonl. Audit elapsed time is recorded in completion.txt.
 
-Rebuild measurements are in rebuild-times.json. Native build-only durations: M1 1.83s, M2 1.76s, M3 2.89s, M4 7.85s; these exclude lowering (about 11s per original and built-in-mutant product), oracle builds and execution. P1 native rebuild 8.69s.
+Rebuild measurements: rebuild-times.json. Native build-only seconds: M1 1.83, M2 1.76, M3 2.89, M4 7.85, P1 8.69. Lowering costs about 11 seconds per original or built-in-mutant product, recorded separately. Large logs are losslessly compressed as .log.gz. Total elapsed audit approximately 28 minutes. Production and harness source restored.
 
-Large logs are preserved losslessly as .log.gz. Use gzip -dc to read them. Completion was approximately 12:27 UTC, about 27 minutes after starting. No source mutations remain.
+Oracle-strength finding: M4 causes native decoded-options execution to exit 70 with panic: missing options, before canonical output comparison. The row rejects a different runtime failure rather than identifying a lint diagnostic mismatch for this mutant. M1/M2 also demonstrate actual agreement mismatches. The closed-gap M4 kill is an actual numeric mismatch: native 3 versus Node 1.

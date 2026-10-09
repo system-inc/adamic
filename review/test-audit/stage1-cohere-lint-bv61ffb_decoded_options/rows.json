@@ -4,7 +4,7 @@
     "package": "stage1/cohere/lint",
     "file": "stage1/cohere/lint/bv61ffb_decoded_options_test.go:49",
     "seconds": 5.084,
-    "oracle": "Go cohere executed live; canonical diagnostic, suggestion, rejection, convergence and fixed-source comparison; member 003 checks only Go count, members 004/005 witness built-in mutants, Union checks registration",
+    "oracle": "Go cohere executed live; canonical diagnostic, suggestion, rejection, convergence and fixed-source comparison; M4 native catch is exit 70 (panic: missing options) before output comparison; member 003 checks only Go count, members 004/005 witness built-in mutants, Union checks registration",
     "oracle_kind": "external-run",
     "kills": [
       "M1",
@@ -15,7 +15,7 @@
       "M1",
       "M2"
     ],
-    "last_proven_fail": "M4 None",
+    "last_proven_fail": "M4 bv61ffb_decoded_options_test.go:51: /tmp/u106/cache/M4/852df6b6b56623c7f6e3d9d275251f8e3f2a5ba29fddf798dd51edb46c53adb2/scanner [--manifest /tmp/adamic-gate/lint-shared-588547747/decoded-options-manifest.txt]: exit status 70",
     "verdict": "sacred",
     "subsumed_by": [],
     "mutants_in_matrix": 4,
@@ -38,7 +38,7 @@
       "TestCompilerAndStage1Agree_007",
       "TestCompilerAndStage1Agree_012"
     ],
-    "evidence": "timeout 100 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestDecodedOptionsAndMutant_[0-9]+|TestDecodedOptionsAndMutantUnion|TestClosedComparatorGaps|TestCompilerAndStage1Agree_(002|007|012))$ > M4.log; None",
+    "evidence": "timeout 100 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestDecodedOptionsAndMutant_[0-9]+|TestDecodedOptionsAndMutantUnion|TestClosedComparatorGaps|TestCompilerAndStage1Agree_(002|007|012))$ > M4.log; bv61ffb_decoded_options_test.go:51: /tmp/u106/cache/M4/852df6b6b56623c7f6e3d9d275251f8e3f2a5ba29fddf798dd51edb46c53adb2/scanner [--manifest /tmp/adamic-gate/lint-shared-588547747/decoded-options-manifest.txt]: exit status 70",
     "members": [
       "TestDecodedOptionsAndMutant_000",
       "TestDecodedOptionsAndMutant_001",
