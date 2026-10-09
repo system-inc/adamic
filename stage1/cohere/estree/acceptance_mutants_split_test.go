@@ -130,6 +130,7 @@ func TestAcceptanceMutants_000(t *testing.T) { t.Parallel(); runAcceptanceMutant
 func TestAcceptanceMutants_001(t *testing.T) { t.Parallel(); runAcceptanceMutantShard(t, 1) }
 
 func TestAcceptanceMutantsUnion(t *testing.T) {
+	t.Parallel()
 	items := acceptanceMutantEnumeration()
 	runners := []int{0, 1}
 	if len(runners) != testAcceptanceMutantsShards || len(items) != testAcceptanceMutantsShards {

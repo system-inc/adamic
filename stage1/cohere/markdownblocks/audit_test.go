@@ -109,7 +109,7 @@ func auditResults(t *testing.T, name string, result run) []auditOutput {
 	return answers
 }
 
-// Not parallel: wholeDocumentPreflightShared is initialized for the parallel preflight shards.
+// Not parallel: wholeDocumentPreflightShared is initialized for the parallel preflight shards. prepares the shared oracle binaries and corpus before parallel leaves run.
 func TestWholeDocumentOraclePreflight(t *testing.T) {
 	started := time.Now()
 	fixture := wholeDocumentPreflight(t)

@@ -18,29 +18,29 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 )
 
-// Not parallel: listLayoutShared setup cache and shared markdownMemory configuration; existing helper controls parallel execution.
+// Not parallel: listLayoutShared setup cache and shared markdownMemory configuration; existing helper controls parallel execution. shared layout fixtures and memory-budget admission are handled by the setup helper.
 func TestMarkdownListLayout(t *testing.T) {
 	parallelMarkdown(t)
 	listLayoutSetup(t)
 }
 
-// Not parallel: quoteLayoutShared is initialized for the parallel quote layout shards.
+// Not parallel: quoteLayoutShared is initialized for the parallel quote layout shards. shared layout fixtures and memory-budget admission are handled by the setup helper.
 func TestMarkdownQuoteLayout(t *testing.T) {
 	quoteLayoutSetup(t)
 }
 
-// Not parallel: tableLayoutSharedProducts and tableLayoutInputs are initialized for the parallel table layout shards.
+// Not parallel: tableLayoutSharedProducts and tableLayoutInputs are initialized for the parallel table layout shards. shared layout fixtures and memory-budget admission are handled by the setup helper.
 func TestMarkdownTableLayout(t *testing.T) {
 	testMarkdownTableLayout(t)
 }
 
-// Not parallel: shared completeLayout cache and layout-fixtures directory; existing helper controls parallel execution.
+// Not parallel: shared completeLayout cache and layout-fixtures directory; existing helper controls parallel execution. shared layout fixtures and memory-budget admission are handled by the setup helper.
 func TestMarkdownCodeBlockLayout(t *testing.T) {
 	parallelMarkdown(t)
 	testBlockLayout(t, "code")
 }
 
-// Not parallel: shared completeLayout cache and layout-fixtures directory; existing helper controls parallel execution.
+// Not parallel: shared completeLayout cache and layout-fixtures directory; existing helper controls parallel execution. shared layout fixtures and memory-budget admission are handled by the setup helper.
 func TestMarkdownHTMLBlockLayout(t *testing.T) {
 	parallelMarkdown(t)
 	testBlockLayout(t, "html")
@@ -73,19 +73,19 @@ func fullLayoutFixture(t *testing.T) *layoutFixture {
 	return completeLayout
 }
 
-// Not parallel: shared leaf layout shard setup and markdownMemory configuration; existing helper controls parallel execution.
+// Not parallel: shared leaf layout shard setup and markdownMemory configuration; existing helper controls parallel execution. shared layout fixtures and memory-budget admission are handled by the setup helper.
 func TestMarkdownLeafComposition(t *testing.T) {
 	parallelMarkdown(t)
 	testMarkdownLeafShards(t)
 }
 
-// Not parallel: shared completeLayout cache and layout-fixtures directory; existing helper controls parallel execution.
+// Not parallel: shared completeLayout cache and layout-fixtures directory; existing helper controls parallel execution. shared layout fixtures and memory-budget admission are handled by the setup helper.
 func TestMarkdownRootLayout(t *testing.T) {
 	parallelMarkdown(t)
 	testBlockLayout(t, "root")
 }
 
-// Not parallel: structureLayoutComplete is initialized for the parallel structure layout shards.
+// Not parallel: structureLayoutComplete is initialized for the parallel structure layout shards. shared layout fixtures and memory-budget admission are handled by the setup helper.
 func TestMarkdownStructureLayout(t *testing.T) {
 	configureMarkdownMemory(t)
 	structureLayoutShared(t)
