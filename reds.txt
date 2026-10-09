@@ -1,0 +1,60 @@
+run adamic-verify-20261009T105435-1efd3bf8: void, 13438 tests in 89 units, 22 failed, 10 units broken, 0 killed over budget
+BROKEN tests-15: no results (exited false, last output "loom-pilot: 2d447f2f80e3 slot ? cpus ? tree 77dcb0955cd85682055a8d22f9b8036dfa5ccd1d setup 478 s, 2 packages at a time")
+BROKEN tests-19: no results (exited false, last output "loom-runner: still running after 570 s")
+BROKEN tests-23: no results (exited false, last output "loom-runner: still running after 450 s")
+BROKEN tests-23-r1: no results (exited false, last output "loom-runner: still running after 390 s")
+BROKEN tests-28-r7: no results (exited false, last output "loom-runner: still running after 300 s")
+BROKEN tests-28-r8: no results (exited false, last output "loom-runner: still running after 300 s")
+BROKEN tests-28-r9: no results (exited false, last output "loom-runner: still running after 270 s")
+BROKEN tests-28-r10: no results (exited false, last output "loom-runner: still running after 300 s")
+BROKEN tests-28-r12: no results (exited false, last output "loom-runner: still running after 300 s")
+BROKEN tests-28-r14: no results (exited false, last output "loom-runner: still running after 270 s")
+FAIL github.com/system-inc/adamic/cmd/adamic-gate TestTypeAwareChildrenAndParentCost (tests-25)
+    resume_test.go:143: cannot enumerate TestVolumeAgreementAndMutants
+FAIL github.com/system-inc/adamic/internal/ir TestCallTargetReaders (tests-26)
+    call_targets_guard_test.go:169: unapproved call-target read internal/lower/class_static_guard_test.go:TestClassStaticInitializerCallIsEmitted:Call.Function at /tmp/adamic/internal/lower/class_static_guard_test.go:45:13; use CallTargets or ClosureTargets
+FAIL github.com/system-inc/adamic/stage1/cohere/graphql/printer TestPrinterAsGoCohere_002 (tests-01-r1)
+    grain_asgo_test.go:240: union: 14256 unique mode/case ids across 4 shards
+    grain_asgo_test.go:253: setup wall 0.129s
+    grain_asgo_test.go:261: mode tight, cases 0..3563
+    grain_asgo_test.go:299: leaks: shard-002: exit -1,
+    grain_asgo_test.go:256: own work wall 30.085s
+    grain_asgo_test.go:258: invalid test unit: 30.085s exceeds 30s
+FAIL github.com/system-inc/adamic/stage1/cohere/graphql/printer TestPrinterPreflightPlantedDisagreement (tests-01-r1)
+    preflight_units_test.go:131: Go GraphQL printer oracle: signal: killed
+FAIL github.com/system-inc/adamic/stage1/cohere/graphql/printer TestPrinterUpstreamPreflight_002 (tests-01-r1)
+    top_level_units_test.go:12: Go GraphQL printer oracle: signal: killed
+FAIL github.com/system-inc/adamic/stage1/cohere/graphql/printer TestPrinterUpstreamPreflight_003 (tests-01-r1)
+    top_level_units_test.go:13: Go GraphQL printer oracle: signal: killed
+FAIL github.com/system-inc/adamic/stage1/cohere/graphql/printer TestPrinterUpstreamPreflight_Setup (tests-01-r1)
+    top_level_units_test.go:9: Go GraphQL printer oracle: signal: killed
+FAIL github.com/system-inc/adamic/stage1/cohere/graphql/printer TestPrinterWhitespaceGap_000 (tests-01-r1)
+    gaps_test.go:58: Go GraphQL printer oracle: signal: killed
+FAIL github.com/system-inc/adamic/stage1/cohere/graphql/printer TestPrinterWhitespaceGap_001 (tests-01-r1)
+    gaps_test.go:58: Go GraphQL printer oracle: signal: killed
+FAIL github.com/system-inc/adamic/stage1/cohere/graphql/printer TestPrinterWhitespaceGap_002 (tests-01-r1)
+    gaps_test.go:58: Go GraphQL printer oracle: signal: killed
+FAIL github.com/system-inc/adamic/stage1/cohere/graphql/printer TestPrinterWhitespaceGap_003 (tests-01-r1)
+    gaps_test.go:58: Go GraphQL printer oracle: signal: killed
+FAIL github.com/system-inc/adamic/stage1/cohere/graphql/printer TestPrinterWhitespaceGap_004 (tests-01-r1)
+    gaps_test.go:58: Go GraphQL printer oracle: signal: killed
+FAIL github.com/system-inc/adamic/stage1/cohere/graphql/printer TestPrinterWhitespaceGap_Setup (tests-01-r1)
+    gaps_test.go:58: Go GraphQL printer oracle: signal: killed
+FAIL github.com/system-inc/adamic/stage1/cohere/lint/inventory TestInventoryEngineUnion (tests-28-r11)
+    engine_shards_test.go:265: signal: killed
+FAIL github.com/system-inc/adamic/stage1/cohere/lint/inventory TestInventoryEngine_000 (tests-28-r11)
+    engine_shards_test.go:289: shared inventory build or union validation did not complete
+FAIL github.com/system-inc/adamic/stage1/cohere/lint/inventory TestInventoryEngine_001 (tests-28-r11)
+    engine_shards_test.go:290: shared inventory build or union validation did not complete
+FAIL github.com/system-inc/adamic/stage1/cohere/lint/inventory TestInventoryEngine_002 (tests-28-r11)
+    engine_shards_test.go:291: shared inventory build or union validation did not complete
+FAIL github.com/system-inc/adamic/stage1/cohere/lint/inventory TestInventoryEngine_003 (tests-28-r11)
+    engine_shards_test.go:292: shared inventory build or union validation did not complete
+FAIL github.com/system-inc/adamic/stage1/cohere/lint/inventory TestInventoryEngine_004 (tests-28-r11)
+    engine_shards_test.go:293: shared inventory build or union validation did not complete
+FAIL github.com/system-inc/adamic/stage1/cohere/lint/inventory TestInventoryEngine_005 (tests-28-r11)
+    engine_shards_test.go:294: shared inventory build or union validation did not complete
+FAIL github.com/system-inc/adamic/stage1/cohere/lint/inventory TestInventoryEngine_006 (tests-28-r11)
+    engine_shards_test.go:295: shared inventory build or union validation did not complete
+FAIL github.com/system-inc/adamic/stage1/cohere/lint/inventory TestInventoryEngine_007 (tests-28-r11)
+    engine_shards_test.go:296: shared inventory build or union validation did not complete
