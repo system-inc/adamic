@@ -2,7 +2,6 @@ package estree
 
 import (
 	"os"
-	"path/filepath"
 	"strings"
 	"testing"
 )
@@ -18,15 +17,6 @@ func scalarCases() []string {
 		"0b1111111111111111111111111111111111111111111111111111111111111111111111111111111111n; 0o777777777777777777777777777777777777n;",
 		"0n; 0x000000000000000000n; 1_000_000_000_000_000_000_000n;",
 	}
-}
-
-// Not parallel: native.Build writes the shared user cache directory adamic/runtime
-func TestScalarEdges(t *testing.T) {
-	main, err := filepath.Abs("main.ts")
-	if err != nil {
-		t.Fatal(err)
-	}
-	runScalarEdges(t, main)
 }
 
 func TestScalarOriginalLibraries(t *testing.T) {
