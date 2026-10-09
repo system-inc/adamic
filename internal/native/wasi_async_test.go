@@ -11,6 +11,7 @@ import (
 // A WASI reactor supplies wake/wait hooks instead of a POSIX pipe. Exercise the
 // ownership and completion path directly, including the unsupported default.
 func TestWASIHostPromises(t *testing.T) {
+	t.Parallel()
 	if os.Getenv("ADAMIC_TEST_WASI") != "1" || os.Getenv("WASI_SYSROOT") == "" {
 		t.Skip("WASI integration requires ADAMIC_TEST_WASI=1 and WASI_SYSROOT")
 	}

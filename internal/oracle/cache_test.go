@@ -561,8 +561,8 @@ func TestGateCacheAtomicEvidence(t *testing.T) {
 	}
 }
 
+// Not parallel: Setenv changes the process-wide gate bypass.
 func TestGateCacheUncached(t *testing.T) {
-	// Not parallel: Setenv changes the process-wide gate bypass.
 	t.Setenv("ADAMIC_GATE_UNCACHED", "0")
 	cache := &resultCache{directory: t.TempDir()}
 	key := cacheKey("forced run")

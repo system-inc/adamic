@@ -16,6 +16,7 @@ import (
 // Build a real shared string and remove one owner before reading the other.
 // The mutant must build and fail at runtime, not at clang's type checks.
 func TestReleaseSharedValueAndUnsafeMutant(t *testing.T) {
+	t.Parallel()
 	checked, err := load.Load([]string{"testdata/release_fastpath.ts"})
 	if err != nil {
 		t.Fatal(err)

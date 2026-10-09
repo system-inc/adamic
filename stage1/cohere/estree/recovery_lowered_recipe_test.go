@@ -19,6 +19,7 @@ const testRecoveryLoweredRecipeShards = 1
 // Independently lower the same source at different private paths, so removing
 // those paths from the product key is justified by the actual C and JS bytes.
 func TestRecoveryLoweredRecipe(t *testing.T) {
+	t.Parallel()
 	setup := beginRecoverySetup(t)
 	defer setup.report(t)
 	main, err := filepath.Abs("main.ts")

@@ -174,6 +174,7 @@ func TestClosureConventionWrongOrder(t *testing.T) {
 // and canonical fields change the closure layout. Dropping its count must fail.
 // node_process.c's two sites join this list when library's area brings the file.
 func TestClosureConventionOwnerRuntimeSites(t *testing.T) {
+	t.Parallel()
 	root, err := filepath.Abs("runtime")
 	if err != nil {
 		t.Fatal(err)

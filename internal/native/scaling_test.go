@@ -11,6 +11,7 @@ import (
 )
 
 func TestParallelScaling(t *testing.T) {
+	t.Parallel()
 	for _, build := range parallelBuilds(t) {
 		t.Run(build.name, func(t *testing.T) {
 			binary := parallelHarness(t, "scaling.c", build.options)
@@ -84,6 +85,7 @@ func cacheBuilderGate(source string) string {
 }
 
 func TestParallelCachePublication(t *testing.T) {
+	t.Parallel()
 	for _, build := range parallelBuilds(t) {
 		t.Run(build.name, func(t *testing.T) {
 			binary := scalingSnapshot(t, "cache_race.c", "string_index.c", cacheBuilderGate, build.options)
@@ -97,6 +99,7 @@ func TestParallelCachePublication(t *testing.T) {
 }
 
 func TestParallelScalingGuardMutants(t *testing.T) {
+	t.Parallel()
 	t.Run("pointer_guard", func(t *testing.T) {
 		binary := scalingSnapshot(t, "scaling.c", "object.c", func(source string) string {
 			return strings.Replace(source, "if ((pointer & ~ADAMIC_SLOT_SHAPE_MASK) != 0)", "if (false)", 1)
@@ -128,6 +131,7 @@ func TestParallelScalingGuardMutants(t *testing.T) {
 }
 
 func TestParallelSlotPairs(t *testing.T) {
+	t.Parallel()
 	for _, build := range parallelBuilds(t) {
 		t.Run(build.name, func(t *testing.T) {
 			binary := parallelHarness(t, "cache_pairs.c", build.options)

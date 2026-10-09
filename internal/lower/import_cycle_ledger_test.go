@@ -24,8 +24,8 @@ import (
 
 // TestOriginalCycleLedger measures binding-initialization obligations on the pinned
 // original source. It does not claim that unrelated tsc features lower natively.
+// Not parallel: the public rule caches one program process-wide.
 func TestOriginalCycleLedger(t *testing.T) {
-	// Not parallel: the public rule caches one program process-wide.
 	root := os.Getenv("ADAMIC_CYCLE_LEDGER_ROOT")
 	if root == "" {
 		t.Skip("set ADAMIC_CYCLE_LEDGER_ROOT to pristine TypeScript 6.0.3 with generated diagnostics")

@@ -8,9 +8,9 @@ import (
 	"testing"
 )
 
+// Not parallel: this compiles both sanitizer runtimes and executes bounded
+// subprocess controls and mutants; simultaneous gates obscure race evidence.
 func TestHostPromises(t *testing.T) {
-	// Not parallel: this compiles both sanitizer runtimes and executes bounded
-	// subprocess controls and mutants; simultaneous gates obscure race evidence.
 	if goruntime.GOOS != "linux" {
 		t.Skip("host promise sanitizer evidence currently requires Linux LeakSanitizer")
 	}

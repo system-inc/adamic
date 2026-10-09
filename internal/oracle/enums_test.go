@@ -24,6 +24,7 @@ func init() {
 // These mutants must compile and finish without a sanitizer finding. Only independent Node
 // output comparison can kill them; a clang diagnostic is not evidence for enum semantics.
 func TestEnumSemanticMutants(t *testing.T) {
+	t.Parallel()
 	for _, family := range []string{"numeric member", "string member", "reverse alias", "string reverse map", "const member", "key effects"} {
 		t.Run(family, func(t *testing.T) {
 			t.Parallel()

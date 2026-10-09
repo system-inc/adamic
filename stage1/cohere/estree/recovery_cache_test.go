@@ -247,6 +247,7 @@ const testRecoveryNativeRecipeShards = 4
 // The fixture checks the compiler recipe, including leak detection, rather than
 // merely checking that its command line still contains sanitizer switches.
 func TestRecoveryNativeRecipe(t *testing.T) {
+	t.Parallel()
 	setup := beginRecoverySetup(t)
 	defer setup.report(t)
 	source := `#include "adamic.h"
