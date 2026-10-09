@@ -1,0 +1,25 @@
+{
+  "finished": true,
+  "verdict": "void",
+  "runner": "pool",
+  "pool": "codex-side",
+  "pool_run": "adamic-select-20261009T200732-4dee8f5d",
+  "covers": "go-tests",
+  "uncached_tests": false,
+  "sha": "ae1c8539c8ca82e676f95d57f06e6bcb9d08a14b",
+  "branch": "cloud/land-stack-mac-base-green-10a53004",
+  "base": "df0595f2d63c6fe32623b4e9d0b085374f505bef",
+  "candidate": "10a53004789712882b82a96c8960b21e4840717c",
+  "gated": "ae1c8539c8ca82e676f95d57f06e6bcb9d08a14b",
+  "complete": true,
+  "darwin": "not run (pool is Linux only)",
+  "loom_tools": "beeb8a1ddc13d76c7eb732ae9bb708dc05e478c6f449b9eab6f2fb2a45bb857f",
+  "loom_tools_promoted": "d0c80ee6a1d426c42ef3414264d87e6478902c5aa9b5b81e46ae9c81c81b0e3e",
+  "gate_tools": "ec73409fe1b06a2f75c71c7837a8262a428c8051",
+  "pass": 0,
+  "fail": 0,
+  "skip": 0,
+  "planned_stages": [
+    "tests"
+  ]
+}
