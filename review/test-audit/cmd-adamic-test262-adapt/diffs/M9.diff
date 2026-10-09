@@ -1,0 +1,11 @@
+--- a/cmd/adamic-test262/adapt.go
++++ b/cmd/adamic-test262/adapt.go
+@@ -411,7 +411,7 @@
+ 	if elem == nil {
+ 		return nil
+ 	}
+-	return &jtype{kind: "array", elem: elem}
++	return &jtype{kind: "object", elem: elem}
+ }
+ 
+ type texpr struct {

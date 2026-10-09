@@ -1,0 +1,11 @@
+--- a/cmd/adamic-test262/classify.go
++++ b/cmd/adamic-test262/classify.go
+@@ -62,7 +62,7 @@
+ 		result.Skip = reason
+ 		return result
+ 	}
+-	if adapt {
++	if !adapt {
+ 		rewritten := adaptSource(body)
+ 		body = rewritten.Source
+ 		result.Adaptations = rewritten.Counts

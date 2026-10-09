@@ -1,0 +1,17 @@
+--- a/cmd/adamic-test262/run.go
++++ b/cmd/adamic-test262/run.go
+@@ -622,13 +622,7 @@
+ // withCrashPath puts the test file on the crash record. The reason alone was not enough to see
+ // which program the compiler or clang rejected.
+ func withCrashPath(path string, reason string) string {
+-	if path == "" {
+-		return reason
+-	}
+-	if reason == "" {
+-		return path
+-	}
+-	return path + ": " + reason
++	return ""
+ }
+ 
+ func test262Commit(test262 string) string {

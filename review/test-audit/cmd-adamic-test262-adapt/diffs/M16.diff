@@ -1,0 +1,11 @@
+--- a/cmd/adamic-test262/adapt.go
++++ b/cmd/adamic-test262/adapt.go
+@@ -259,7 +259,7 @@
+ 	}
+ 	if index < len(source) && (source[index] == 'e' || source[index] == 'E') {
+ 		next := index + 1
+-		if next < len(source) && (source[next] == '+' || source[next] == '-') {
++		if next < len(source) && (source[next] == '*' || source[next] == '-') {
+ 			next++
+ 		}
+ 		if next < len(source) && isDigit(source[next]) {

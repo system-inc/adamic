@@ -1,0 +1,18 @@
+{
+  "base": "6d890e0129beecb2df9f65c89b7733a6f02b5248",
+  "nproc": 5,
+  "setup": "skipped: warm env worked",
+  "npm_ci_seconds": 0.48062365100122406,
+  "baseline_wall_seconds": 53.31506717500088,
+  "timing_21_runs_wall_seconds": 44.01633852298983,
+  "standalone_apply_vet_seconds": 4.852794022997841,
+  "matrix_wall_seconds": 809.490026471005,
+  "matrix_binary_seconds": 753.265,
+  "coverage_reach_seconds": "ok  \tgithub.com/system-inc/adamic/cmd/adamic-test262\t0.014s\tcoverage: 33.9% of statements\n",
+  "measurement_enabled_binary_seconds": 9.626,
+  "unique_verdict_counts": {
+    "sacred": 5,
+    "subsumed": 1,
+    "untrue": 1
+  }
+}

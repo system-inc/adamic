@@ -1,0 +1,11 @@
+--- a/cmd/adamic-test262/adapt.go
++++ b/cmd/adamic-test262/adapt.go
+@@ -1873,7 +1873,7 @@
+ 		if !strictEqualOK(p.eval(cmp.left), p.eval(cmp.right)) {
+ 			continue
+ 		}
+-		text := "==="
++		text := "=="
+ 		if cmp.op == "!=" {
+ 			text = "!=="
+ 		}

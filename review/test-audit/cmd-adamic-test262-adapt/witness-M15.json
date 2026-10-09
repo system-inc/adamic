@@ -1,0 +1,16 @@
+{
+  "function cb(x){return x;} [1].forEach(cb);": {
+    "Source": "function cb(x){return x;} [1].forEach(cb);",
+    "Counts": null
+  },
+  "var x=1; class Box { value: number; }": {
+    "Source": "var x=1; class Box { value: number; }",
+    "Counts": null
+  },
+  "var x=1e+2;": {
+    "Source": "let x=1e+2;",
+    "Counts": {
+      "var-to-let": 1
+    }
+  }
+}

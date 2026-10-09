@@ -1,0 +1,11 @@
+--- a/cmd/adamic-test262/adapt.go
++++ b/cmd/adamic-test262/adapt.go
+@@ -1884,7 +1884,7 @@
+ 
+ func (p *parser) rewriteThrows() {
+ 	for _, throw := range p.throws {
+-		p.edits = append(p.edits, edit{start: throw.start, end: throw.end, text: "Error"})
++		p.edits = append(p.edits, edit{start: throw.start, end: throw.end, text: "TypeError"})
+ 		p.counts[adaptThrowError]++
+ 	}
+ }

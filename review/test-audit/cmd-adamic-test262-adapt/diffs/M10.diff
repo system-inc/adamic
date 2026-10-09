@@ -1,0 +1,11 @@
+--- a/cmd/adamic-test262/adapt.go
++++ b/cmd/adamic-test262/adapt.go
+@@ -361,7 +361,7 @@
+ }
+ 
+ func sameType(left *jtype, right *jtype) bool {
+-	if left == nil || right == nil || left.kind != right.kind {
++	if left == nil || right == nil || left.kind == right.kind {
+ 		return false
+ 	}
+ 	switch left.kind {

@@ -1,0 +1,11 @@
+--- a/cmd/adamic-test262/run.go
++++ b/cmd/adamic-test262/run.go
+@@ -628,7 +628,7 @@
+ 	if reason == "" {
+ 		return path
+ 	}
+-	return path + ": " + reason
++	return path + " / " + reason
+ }
+ 
+ func test262Commit(test262 string) string {

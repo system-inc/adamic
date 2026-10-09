@@ -1,0 +1,11 @@
+--- a/cmd/adamic-test262/adapt.go
++++ b/cmd/adamic-test262/adapt.go
+@@ -1674,7 +1674,7 @@
+ 		if !safe {
+ 			continue
+ 		}
+-		p.edits = append(p.edits, edit{start: stmt.keyword.start, end: stmt.keyword.end, text: "let"})
++		p.edits = append(p.edits, edit{start: stmt.keyword.start, end: stmt.keyword.end, text: "const"})
+ 		p.counts[adaptVarToLet] += len(stmt.decls)
+ 	}
+ }

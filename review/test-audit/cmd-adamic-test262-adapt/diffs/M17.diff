@@ -1,0 +1,10 @@
+--- a/cmd/adamic-test262/adapt.go
++++ b/cmd/adamic-test262/adapt.go
+@@ -629,7 +629,6 @@
+ 		return
+ 	case "class":
+ 		p.skipBraced()
+-		p.unsafeVars = true
+ 		return
+ 	case "if":
+ 		p.next()

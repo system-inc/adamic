@@ -1,0 +1,42 @@
+--- a/cmd/adamic-test262/classify.go
++++ b/cmd/adamic-test262/classify.go
+@@ -37,38 +37,7 @@
+ // equality, Test262Error). It never writes the checkout. Without it, the body is only the harness
+ // rename the prelude needs.
+ func classify(path string, source string, adapt bool) classified {
+-	result := classified{Path: path, Directory: directoryOf(path)}
+-	meta := parseFrontmatter(source)
+-	if reason := negativeSkip(meta); reason != "" {
+-		result.Skip = reason
+-		return result
+-	}
+-	result.NegativePhase = meta.NegativePhase
+-	result.NegativeType = meta.NegativeType
+-	if reason := flagSkip(meta.Flags); reason != "" {
+-		result.Skip = reason
+-		return result
+-	}
+-	if reason := includeSkip(meta.Includes); reason != "" {
+-		result.Skip = reason
+-		return result
+-	}
+-	if reason := featureSkip(meta.Features); reason != "" {
+-		result.Skip = reason
+-		return result
+-	}
+-	body := bodyAfterFrontmatter(source)
+-	if reason := syntaxSkip(codeOnly(body)); reason != "" {
+-		result.Skip = reason
+-		return result
+-	}
+-	if adapt {
+-		rewritten := adaptSource(body)
+-		body = rewritten.Source
+-		result.Adaptations = rewritten.Counts
+-	}
+-	result.Program = program(rewriteHarnessCalls(body))
+-	return result
++	return classified{}
+ }
+ 
+ func directoryOf(path string) string {

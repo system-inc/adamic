@@ -1,0 +1,11 @@
+--- a/cmd/adamic-test262/adapt.go
++++ b/cmd/adamic-test262/adapt.go
+@@ -1704,7 +1704,7 @@
+ 			continue
+ 		}
+ 		if ref.inInit == decl.binding {
+-			return false
++			return true
+ 		}
+ 		// A use whose token sits before the declarator is the var/let split: var reads undefined,
+ 		// let is in the temporal dead zone. That includes a closure written above the declarator.

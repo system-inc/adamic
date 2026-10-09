@@ -1,0 +1,769 @@
+--- a/cmd/adamic-test262/adapt.go
++++ b/cmd/adamic-test262/adapt.go
+@@ -26,6 +26,12 @@
+ // adaptSource rewrites a test body. If the body uses syntax the scan does not understand, the body
+ // comes back unchanged: a partial edit from a confused scan would be a meaning change we did not prove.
+ func adaptSource(source string) adapted {
++	if auditMutant("P1") {
++		return adapted{}
++	}
++	if auditMutant("M1") {
++		return adapted{Source: source}
++	}
+ 	parsed := parseBody(source)
+ 	if parsed.failed {
+ 		return adapted{Source: source}
+@@ -228,6 +234,9 @@
+ }
+ 
+ func endOfNumber(source string, index int) int {
++	if auditMutant("M16") {
++		return auditM16endOfNumber(source, index)
++	}
+ 	if source[index] == '0' && index+1 < len(source) {
+ 		switch source[index+1] {
+ 		case 'x', 'X', 'b', 'B', 'o', 'O':
+@@ -361,6 +370,9 @@
+ }
+ 
+ func sameType(left *jtype, right *jtype) bool {
++	if auditMutant("M10") {
++		return auditM10sameType(left, right)
++	}
+ 	if left == nil || right == nil || left.kind != right.kind {
+ 		return false
+ 	}
+@@ -388,6 +400,9 @@
+ // The same primitive does not coerce. Two objects compare by reference either way.
+ // null compared with undefined does coerce, and that pair is not the same kind, so it stays.
+ func strictEqualOK(left *jtype, right *jtype) bool {
++	if auditMutant("M11") {
++		return auditM11strictEqualOK(left, right)
++	}
+ 	if left == nil || right == nil || left.kind != right.kind {
+ 		return false
+ 	}
+@@ -408,6 +423,9 @@
+ )
+ 
+ func arrayOf(elem *jtype) *jtype {
++	if auditMutant("M9") {
++		return auditM9arrayOf(elem)
++	}
+ 	if elem == nil {
+ 		return nil
+ 	}
+@@ -610,6 +628,10 @@
+ }
+ 
+ func (p *parser) parseStatement() {
++	if auditMutant("M17") {
++		p.auditM17parseStatement()
++		return
++	}
+ 	if p.failed || p.eof() {
+ 		return
+ 	}
+@@ -928,6 +950,10 @@
+ }
+ 
+ func (p *parser) parseThrow() {
++	if auditMutant("M14") {
++		p.auditM14parseThrow()
++		return
++	}
+ 	p.next()
+ 	if p.peek().newlineBefore {
+ 		p.fail()
+@@ -1663,6 +1689,10 @@
+ }
+ 
+ func (p *parser) rewriteVars() {
++	if auditMutant("M2") {
++		p.auditM2rewriteVars()
++		return
++	}
+ 	for _, stmt := range p.varStmts {
+ 		safe := len(stmt.decls) > 0
+ 		for _, decl := range stmt.decls {
+@@ -1680,6 +1710,12 @@
+ }
+ 
+ func (p *parser) declSafe(decl *varDecl) bool {
++	if auditMutant("M4") {
++		return p.auditM4declSafe(decl)
++	}
++	if auditMutant("M3") {
++		return p.auditM3declSafe(decl)
++	}
+ 	if decl.unsafe || decl.binding == nil || decl.binding.poison {
+ 		return false
+ 	}
+@@ -1724,6 +1760,9 @@
+ }
+ 
+ func (p *parser) capturedAcrossLoop(decl *varDecl, ref reference) bool {
++	if auditMutant("M5") {
++		return p.auditM5capturedAcrossLoop(decl, ref)
++	}
+ 	if ref.scope == nil || ref.scope.fn == decl.fn {
+ 		return false
+ 	}
+@@ -1742,6 +1781,9 @@
+ }
+ 
+ func scopeWithin(inner *scope, outer *scope) bool {
++	if auditMutant("M6") {
++		return auditM6scopeWithin(inner, outer)
++	}
+ 	for inner != nil {
+ 		if inner == outer {
+ 			return true
+@@ -1752,6 +1794,10 @@
+ }
+ 
+ func (p *parser) annotateCallbacks() {
++	if auditMutant("M7") {
++		p.auditM7annotateCallbacks()
++		return
++	}
+ 	groups := map[*fnInfo][][]*jtype{}
+ 	for _, call := range p.calls {
+ 		fn := p.callbackFn(call)
+@@ -1803,6 +1849,9 @@
+ }
+ 
+ func (p *parser) callbackFn(call callNote) *fnInfo {
++	if auditMutant("M8") {
++		return p.auditM8callbackFn(call)
++	}
+ 	index := 0
+ 	if call.method == "replace" || call.method == "replaceAll" {
+ 		index = 1
+@@ -1869,6 +1918,10 @@
+ }
+ 
+ func (p *parser) rewriteEquals() {
++	if auditMutant("M12") {
++		p.auditM12rewriteEquals()
++		return
++	}
+ 	for _, cmp := range p.cmps {
+ 		if !strictEqualOK(p.eval(cmp.left), p.eval(cmp.right)) {
+ 			continue
+@@ -1883,6 +1936,10 @@
+ }
+ 
+ func (p *parser) rewriteThrows() {
++	if auditMutant("M13") {
++		p.auditM13rewriteThrows()
++		return
++	}
+ 	for _, throw := range p.throws {
+ 		p.edits = append(p.edits, edit{start: throw.start, end: throw.end, text: "Error"})
+ 		p.counts[adaptThrowError]++
+@@ -2000,6 +2057,9 @@
+ }
+ 
+ func (p *parser) evalArray(expr *texpr) *jtype {
++	if auditMutant("M15") {
++		return p.auditM15evalArray(expr)
++	}
+ 	if expr.arrayCtor && len(expr.elems) == 1 {
+ 		only := p.eval(expr.elems[0])
+ 		if only != nil && only.kind == "number" {
+@@ -2087,3 +2147,466 @@
+ 		return false
+ 	}
+ }
++
++func (p *parser) auditM2rewriteVars() {
++	for _, stmt := range p.varStmts {
++		safe := len(stmt.decls) > 0
++		for _, decl := range stmt.decls {
++			if !p.declSafe(decl) {
++				safe = false
++				break
++			}
++		}
++		if !safe {
++			continue
++		}
++		p.edits = append(p.edits, edit{start: stmt.keyword.start, end: stmt.keyword.end, text: "const"})
++		p.counts[adaptVarToLet] += len(stmt.decls)
++	}
++}
++
++func (p *parser) auditM3declSafe(decl *varDecl) bool {
++	if decl.unsafe || decl.binding == nil || decl.binding.poison {
++		return false
++	}
++	if decl.block != nil && decl.block.kind == "switch" {
++		// `let` directly in a switch case is a syntax error. A brace inside the case is its own block.
++		return false
++	}
++	decls := 0
++	for _, stmt := range p.varStmts {
++		for _, other := range stmt.decls {
++			if other.binding == decl.binding {
++				decls++
++			}
++		}
++	}
++	if decls != 2 {
++		return false
++	}
++	for _, ref := range p.refs {
++		binding := lookup(ref.scope, ref.name)
++		if binding != decl.binding {
++			continue
++		}
++		if ref.inInit == decl.binding {
++			return false
++		}
++		// A use whose token sits before the declarator is the var/let split: var reads undefined,
++		// let is in the temporal dead zone. That includes a closure written above the declarator.
++		if ref.at >= 0 && ref.at < decl.nameAt {
++			return false
++		}
++		// let is scoped to the block that holds the declarator. A read from outside that block,
++		// including from a function that is not inside it, would stop seeing the binding.
++		if decl.block != nil && !scopeWithin(ref.scope, decl.block) {
++			return false
++		}
++		if p.capturedAcrossLoop(decl, ref) {
++			return false
++		}
++	}
++	return true
++}
++
++func (p *parser) auditM4declSafe(decl *varDecl) bool {
++	if decl.unsafe || decl.binding == nil || decl.binding.poison {
++		return false
++	}
++	if decl.block != nil && decl.block.kind == "switch" {
++		// `let` directly in a switch case is a syntax error. A brace inside the case is its own block.
++		return false
++	}
++	decls := 0
++	for _, stmt := range p.varStmts {
++		for _, other := range stmt.decls {
++			if other.binding == decl.binding {
++				decls++
++			}
++		}
++	}
++	if decls != 1 {
++		return false
++	}
++	for _, ref := range p.refs {
++		binding := lookup(ref.scope, ref.name)
++		if binding != decl.binding {
++			continue
++		}
++		if ref.inInit == decl.binding {
++			return true
++		}
++		// A use whose token sits before the declarator is the var/let split: var reads undefined,
++		// let is in the temporal dead zone. That includes a closure written above the declarator.
++		if ref.at >= 0 && ref.at < decl.nameAt {
++			return false
++		}
++		// let is scoped to the block that holds the declarator. A read from outside that block,
++		// including from a function that is not inside it, would stop seeing the binding.
++		if decl.block != nil && !scopeWithin(ref.scope, decl.block) {
++			return false
++		}
++		if p.capturedAcrossLoop(decl, ref) {
++			return false
++		}
++	}
++	return true
++}
++
++func (p *parser) auditM5capturedAcrossLoop(decl *varDecl, ref reference) bool {
++	if ref.scope == nil || ref.scope.fn == decl.fn {
++		return false
++	}
++	for scope := ref.scope; scope != nil && scope != decl.fn; scope = scope.parent {
++		if scope.kind != "loop" {
++			continue
++		}
++		if decl.loopVar && decl.loop == scope {
++			return false
++		}
++		if decl.block != scope && scopeWithin(decl.block, scope) {
++			return true
++		}
++	}
++	return false
++}
++
++func auditM6scopeWithin(inner *scope, outer *scope) bool {
++	for inner != nil {
++		if inner != outer {
++			return true
++		}
++		inner = inner.parent
++	}
++	return false
++}
++
++func (p *parser) auditM7annotateCallbacks() {
++	groups := map[*fnInfo][][]*jtype{}
++	for _, call := range p.calls {
++		fn := p.callbackFn(call)
++		if fn == nil {
++			continue
++		}
++		groups[fn] = append(groups[fn], p.inferCall(call))
++	}
++	for fn, inferences := range groups {
++		if len(inferences) == 0 {
++			continue
++		}
++		for index, param := range fn.params {
++			if param.name == "" || param.typed || param.rest || param.pattern || param.hasDefault {
++				continue
++			}
++			var chosen *jtype
++			agree := true
++			for _, inference := range inferences {
++				if inference == nil || index >= len(inference) || inference[index] == nil {
++					agree = false
++					break
++				}
++				if chosen == nil {
++					chosen = inference[index]
++					continue
++				}
++				if !sameType(chosen, inference[index]) {
++					agree = false
++					break
++				}
++			}
++			if !agree || chosen == nil {
++				continue
++			}
++			rendered := chosen.string()
++			if rendered == "" {
++				continue
++			}
++			p.edits = append(p.edits, edit{start: param.nameEnd, end: param.nameEnd, text: " = " + rendered})
++			p.counts[adaptCallbackParam]++
++			if fn.scope != nil {
++				if binding := fn.scope.names[param.name]; binding != nil && binding.kind == "param" {
++					binding.typ = chosen
++				}
++			}
++		}
++	}
++}
++
++func (p *parser) auditM8callbackFn(call callNote) *fnInfo {
++	index := 1
++	if call.method == "replace" || call.method == "replaceAll" {
++		index = 1
++	}
++	if call.viaCall {
++		index++
++	}
++	if index >= len(call.args) || call.args[index] == nil || call.args[index].op != "name" {
++		return nil
++	}
++	arg := call.args[index]
++	binding := lookup(arg.scope, arg.name)
++	if binding == nil || binding.fn == nil || binding.poison {
++		return nil
++	}
++	return binding.fn
++}
++
++func auditM9arrayOf(elem *jtype) *jtype {
++	if elem == nil {
++		return nil
++	}
++	return &jtype{kind: "object", elem: elem}
++}
++
++func auditM10sameType(left *jtype, right *jtype) bool {
++	if left == nil || right == nil || left.kind == right.kind {
++		return false
++	}
++	switch left.kind {
++	case "number", "string", "boolean", "undefined", "null":
++		return true
++	case "array":
++		return sameType(left.elem, right.elem)
++	case "object":
++		if len(left.fields) != len(right.fields) {
++			return false
++		}
++		for index := range left.fields {
++			if left.fields[index].name != right.fields[index].name || !sameType(left.fields[index].typ, right.fields[index].typ) {
++				return false
++			}
++		}
++		return true
++	default:
++		return false
++	}
++}
++
++func auditM11strictEqualOK(left *jtype, right *jtype) bool {
++	if left == nil || right == nil || left.kind == right.kind {
++		return false
++	}
++	switch left.kind {
++	case "number", "string", "boolean", "null", "undefined", "object", "array":
++		return true
++	default:
++		return false
++	}
++}
++
++func (p *parser) auditM12rewriteEquals() {
++	for _, cmp := range p.cmps {
++		if !strictEqualOK(p.eval(cmp.left), p.eval(cmp.right)) {
++			continue
++		}
++		text := "=="
++		if cmp.op == "!=" {
++			text = "!=="
++		}
++		p.edits = append(p.edits, edit{start: cmp.start, end: cmp.end, text: text})
++		p.counts[adaptStrictEq]++
++	}
++}
++
++func (p *parser) auditM13rewriteThrows() {
++	for _, throw := range p.throws {
++		p.edits = append(p.edits, edit{start: throw.start, end: throw.end, text: "TypeError"})
++		p.counts[adaptThrowError]++
++	}
++}
++
++func (p *parser) auditM14parseThrow() {
++	p.next()
++	if p.peek().newlineBefore {
++		p.fail()
++		return
++	}
++	if p.is("new") && p.pos+1 < len(p.toks) && p.toks[p.pos+1].text == "Test262Error" && p.instanceOfTest262 {
++		name := p.toks[p.pos+1]
++		p.throws = append(p.throws, throwNote{start: name.start, end: name.end})
++	}
++	p.parseSequence(false)
++	p.semi()
++}
++
++func (p *parser) auditM15evalArray(expr *texpr) *jtype {
++	if expr.arrayCtor && len(expr.elems) == 1 {
++		only := p.eval(expr.elems[0])
++		if only != nil && only.kind == "number" {
++			return nil
++		}
++	}
++	if len(expr.elems) <= 1 {
++		return nil
++	}
++	var elem *jtype
++	for _, item := range expr.elems {
++		next := p.eval(item)
++		if next == nil {
++			return nil
++		}
++		if elem == nil {
++			elem = next
++			continue
++		}
++		if sameType(elem, next) {
++			continue
++		}
++		if elem.kind == "object" || next.kind == "object" || elem.kind == "array" || next.kind == "array" {
++			return nil
++		}
++		merged := mergeUnion(elem, next)
++		if merged == nil {
++			return nil
++		}
++		elem = merged
++	}
++	if elem != nil && elem.kind == "union" {
++		return nil
++	}
++	return arrayOf(elem)
++}
++
++func auditM16endOfNumber(source string, index int) int {
++	if source[index] == '0' && index+1 < len(source) {
++		switch source[index+1] {
++		case 'x', 'X', 'b', 'B', 'o', 'O':
++			index += 2
++			for index < len(source) && (isHex(source[index]) || source[index] == '_') {
++				index++
++			}
++			return index
++		}
++	}
++	sawDigit := false
++	for index < len(source) && (isDigit(source[index]) || source[index] == '_') {
++		if isDigit(source[index]) {
++			sawDigit = true
++		}
++		index++
++	}
++	if index < len(source) && source[index] == '.' {
++		index++
++		for index < len(source) && (isDigit(source[index]) || source[index] == '_') {
++			if isDigit(source[index]) {
++				sawDigit = true
++			}
++			index++
++		}
++	}
++	if !sawDigit {
++		return index
++	}
++	if index < len(source) && (source[index] == 'e' || source[index] == 'E') {
++		next := index + 1
++		if next < len(source) && (source[next] == '*' || source[next] == '-') {
++			next++
++		}
++		if next < len(source) && isDigit(source[next]) {
++			index = next + 1
++			for index < len(source) && isDigit(source[index]) {
++				index++
++			}
++		}
++	}
++	if index < len(source) && (source[index] == 'n') {
++		index++
++	}
++	return index
++}
++
++func (p *parser) auditM17parseStatement() {
++	if p.failed || p.eof() {
++		return
++	}
++	switch p.peek().text {
++	case ";":
++		p.next()
++		return
++	case "{":
++		p.parseBlock()
++		return
++	case "var", "let", "const":
++		p.parseDeclaration(false)
++		p.semi()
++		return
++	case "function":
++		p.parseFunction(true)
++		return
++	case "class":
++		p.skipBraced()
++		return
++	case "if":
++		p.next()
++		p.expect("(")
++		p.parseSequence(false)
++		p.expect(")")
++		p.parseControlled()
++		if p.is("else") {
++			p.next()
++			p.parseControlled()
++		}
++		return
++	case "for":
++		p.parseFor()
++		return
++	case "while":
++		p.next()
++		loop := p.push("loop")
++		p.expect("(")
++		p.parseSequence(false)
++		p.expect(")")
++		p.parseControlled()
++		p.pop(loop)
++		return
++	case "do":
++		p.next()
++		loop := p.push("loop")
++		p.parseControlled()
++		p.expect("while")
++		p.expect("(")
++		p.parseSequence(false)
++		p.expect(")")
++		p.semi()
++		p.pop(loop)
++		return
++	case "switch":
++		p.parseSwitch()
++		return
++	case "try":
++		p.parseTry()
++		return
++	case "throw":
++		p.parseThrow()
++		return
++	case "return":
++		p.next()
++		if !p.eof() && !p.is("}") && !p.is(";") && !p.peek().newlineBefore {
++			p.parseSequence(false)
++		}
++		p.semi()
++		return
++	case "break", "continue", "debugger":
++		p.next()
++		if p.peek().kind == "ident" && !isKeyword(p.peek().text) && !p.peek().newlineBefore && !p.is(";") && !p.is("}") {
++			p.next()
++		}
++		p.semi()
++		return
++	case "import", "export", "with":
++		p.fail()
++		return
++	}
++	if p.peek().kind == "ident" && !isKeyword(p.peek().text) && p.pos+1 < len(p.toks) && p.toks[p.pos+1].text == ":" {
++		p.next()
++		p.next()
++		p.parseStatement()
++		return
++	}
++	if p.peek().text == "async" && p.pos+1 < len(p.toks) && p.toks[p.pos+1].text == "function" {
++		p.fail()
++		return
++	}
++	p.parseSequence(false)
++	p.semi()
++}
+--- a/cmd/adamic-test262/classify.go
++++ b/cmd/adamic-test262/classify.go
+@@ -37,6 +37,15 @@
+ // equality, Test262Error). It never writes the checkout. Without it, the body is only the harness
+ // rename the prelude needs.
+ func classify(path string, source string, adapt bool) classified {
++	if auditMutant("P2") {
++		return classified{}
++	}
++	if auditMutant("M19") {
++		return auditM19classify(path, source, adapt)
++	}
++	if auditMutant("M18") {
++		return auditM18classify(path, source, adapt)
++	}
+ 	result := classified{Path: path, Directory: directoryOf(path)}
+ 	meta := parseFrontmatter(source)
+ 	if reason := negativeSkip(meta); reason != "" {
+@@ -220,3 +229,72 @@
+ 		return ""
+ 	}
+ }
++
++func auditM18classify(path string, source string, adapt bool) classified {
++	result := classified{Path: path, Directory: directoryOf(path)}
++	meta := parseFrontmatter(source)
++	if reason := negativeSkip(meta); reason != "" {
++		result.Skip = reason
++		return result
++	}
++	result.NegativePhase = meta.NegativePhase
++	result.NegativeType = meta.NegativeType
++	if reason := flagSkip(meta.Flags); reason != "" {
++		result.Skip = reason
++		return result
++	}
++	if reason := includeSkip(meta.Includes); reason != "" {
++		result.Skip = reason
++		return result
++	}
++	if reason := featureSkip(meta.Features); reason != "" {
++		result.Skip = reason
++		return result
++	}
++	body := bodyAfterFrontmatter(source)
++	if reason := syntaxSkip(codeOnly(body)); reason != "" {
++		result.Skip = reason
++		return result
++	}
++	if !adapt {
++		rewritten := adaptSource(body)
++		body = rewritten.Source
++		result.Adaptations = rewritten.Counts
++	}
++	result.Program = program(rewriteHarnessCalls(body))
++	return result
++}
++
++func auditM19classify(path string, source string, adapt bool) classified {
++	result := classified{Path: path, Directory: directoryOf(path)}
++	meta := parseFrontmatter(source)
++	if reason := negativeSkip(meta); reason != "" {
++		result.Skip = reason
++		return result
++	}
++	result.NegativePhase = meta.NegativePhase
++	result.NegativeType = meta.NegativeType
++	if reason := flagSkip(meta.Flags); reason != "" {
++		result.Skip = reason
++		return result
++	}
++	if reason := includeSkip(meta.Includes); reason != "" {
++		result.Skip = reason
++		return result
++	}
++	if reason := featureSkip(meta.Features); reason != "" {
++		result.Skip = reason
++		return result
++	}
++	body := bodyAfterFrontmatter(source)
++	if reason := syntaxSkip(codeOnly(body)); reason != "" {
++		result.Skip = reason
++		return result
++	}
++	if adapt {
++		rewritten := adaptSource(body)
++		body = rewritten.Source
++	}
++	result.Program = program(rewriteHarnessCalls(body))
++	return result
++}
+--- a/cmd/adamic-test262/run.go
++++ b/cmd/adamic-test262/run.go
+@@ -622,6 +622,12 @@
+ // withCrashPath puts the test file on the crash record. The reason alone was not enough to see
+ // which program the compiler or clang rejected.
+ func withCrashPath(path string, reason string) string {
++	if auditMutant("P3") {
++		return ""
++	}
++	if auditMutant("M20") {
++		return auditM20withCrashPath(path, reason)
++	}
+ 	if path == "" {
+ 		return reason
+ 	}
+@@ -671,3 +677,13 @@
+ 	}
+ 	return runCommandWithLimit(2*time.Minute, nil, 16<<20, e.adamic, "c", path)
+ }
++
++func auditM20withCrashPath(path string, reason string) string {
++	if path == "" {
++		return reason
++	}
++	if reason == "" {
++		return path
++	}
++	return path + " / " + reason
++}
+--- a/cmd/adamic-test262/audit_selector.go
++++ b/cmd/adamic-test262/audit_selector.go
+@@ -0,0 +1,5 @@
++package main
++
++import "os"
++
++func auditMutant(id string) bool { return os.Getenv("ADAMIC_MUTANT") == id }

@@ -1,0 +1,11 @@
+--- a/cmd/adamic-test262/adapt.go
++++ b/cmd/adamic-test262/adapt.go
+@@ -388,7 +388,7 @@
+ // The same primitive does not coerce. Two objects compare by reference either way.
+ // null compared with undefined does coerce, and that pair is not the same kind, so it stays.
+ func strictEqualOK(left *jtype, right *jtype) bool {
+-	if left == nil || right == nil || left.kind != right.kind {
++	if left == nil || right == nil || left.kind == right.kind {
+ 		return false
+ 	}
+ 	switch left.kind {

@@ -1,0 +1,19 @@
+--- a/cmd/adamic-test262/adapt.go
++++ b/cmd/adamic-test262/adapt.go
+@@ -26,15 +26,7 @@
+ // adaptSource rewrites a test body. If the body uses syntax the scan does not understand, the body
+ // comes back unchanged: a partial edit from a confused scan would be a meaning change we did not prove.
+ func adaptSource(source string) adapted {
+-	parsed := parseBody(source)
+-	if parsed.failed {
+-		return adapted{Source: source}
+-	}
+-	parsed.finish()
+-	if parsed.failed || len(parsed.edits) == 0 {
+-		return adapted{Source: source}
+-	}
+-	return adapted{Source: applyEdits(source, parsed.edits), Counts: parsed.counts}
++	return adapted{}
+ }
+ 
+ type edit struct {

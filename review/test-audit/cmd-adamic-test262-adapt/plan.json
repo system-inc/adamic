@@ -1,0 +1,209 @@
+[
+  {
+    "id": "M1",
+    "file": "cmd/adamic-test262/adapt.go",
+    "line": 28,
+    "old": "func adaptSource(source string) adapted {\n",
+    "new": "func adaptSource(source string) adapted {\n\treturn adapted{Source: source}\n",
+    "kind": "return early",
+    "changed_line": 28
+  },
+  {
+    "id": "M2",
+    "file": "cmd/adamic-test262/adapt.go",
+    "line": 1677,
+    "old": "end: stmt.keyword.end, text: \"let\"",
+    "new": "end: stmt.keyword.end, text: \"const\"",
+    "kind": "change constant",
+    "changed_line": 1677
+  },
+  {
+    "id": "M3",
+    "file": "cmd/adamic-test262/adapt.go",
+    "line": 1698,
+    "old": "if decls != 1 {",
+    "new": "if decls != 2 {",
+    "kind": "off-by-one bound",
+    "changed_line": 1698
+  },
+  {
+    "id": "M4",
+    "file": "cmd/adamic-test262/adapt.go",
+    "line": 1706,
+    "old": "if ref.inInit == decl.binding {\n\t\t\treturn false",
+    "new": "if ref.inInit == decl.binding {\n\t\t\treturn true",
+    "kind": "change constant",
+    "changed_line": 1706
+  },
+  {
+    "id": "M5",
+    "file": "cmd/adamic-test262/adapt.go",
+    "line": 1734,
+    "old": "if decl.loopVar && decl.loop == scope {\n\t\t\treturn true",
+    "new": "if decl.loopVar && decl.loop == scope {\n\t\t\treturn false",
+    "kind": "change constant",
+    "changed_line": 1734
+  },
+  {
+    "id": "M6",
+    "file": "cmd/adamic-test262/adapt.go",
+    "line": 1746,
+    "old": "if inner == outer {",
+    "new": "if inner != outer {",
+    "kind": "flip condition",
+    "changed_line": 1746
+  },
+  {
+    "id": "M7",
+    "file": "cmd/adamic-test262/adapt.go",
+    "line": 1794,
+    "old": "text: \": \" + rendered",
+    "new": "text: \" = \" + rendered",
+    "kind": "change constant",
+    "changed_line": 1794
+  },
+  {
+    "id": "M8",
+    "file": "cmd/adamic-test262/adapt.go",
+    "line": 1805,
+    "old": "func (p *parser) callbackFn(call callNote) *fnInfo {\n\tindex := 0",
+    "new": "func (p *parser) callbackFn(call callNote) *fnInfo {\n\tindex := 1",
+    "kind": "off-by-one bound",
+    "changed_line": 1806
+  },
+  {
+    "id": "M9",
+    "file": "cmd/adamic-test262/adapt.go",
+    "line": 414,
+    "old": "return &jtype{kind: \"array\", elem: elem}",
+    "new": "return &jtype{kind: \"object\", elem: elem}",
+    "kind": "change constant",
+    "changed_line": 414
+  },
+  {
+    "id": "M10",
+    "file": "cmd/adamic-test262/adapt.go",
+    "line": 363,
+    "old": "func sameType(left *jtype, right *jtype) bool {\n\tif left == nil || right == nil || left.kind != right.kind {",
+    "new": "func sameType(left *jtype, right *jtype) bool {\n\tif left == nil || right == nil || left.kind == right.kind {",
+    "kind": "flip condition",
+    "changed_line": 364
+  },
+  {
+    "id": "M11",
+    "file": "cmd/adamic-test262/adapt.go",
+    "line": 390,
+    "old": "func strictEqualOK(left *jtype, right *jtype) bool {\n\tif left == nil || right == nil || left.kind != right.kind {",
+    "new": "func strictEqualOK(left *jtype, right *jtype) bool {\n\tif left == nil || right == nil || left.kind == right.kind {",
+    "kind": "flip condition",
+    "changed_line": 391
+  },
+  {
+    "id": "M12",
+    "file": "cmd/adamic-test262/adapt.go",
+    "line": 1876,
+    "old": "text := \"===\"",
+    "new": "text := \"==\"",
+    "kind": "change constant",
+    "changed_line": 1876
+  },
+  {
+    "id": "M13",
+    "file": "cmd/adamic-test262/adapt.go",
+    "line": 1887,
+    "old": "end: throw.end, text: \"Error\"",
+    "new": "end: throw.end, text: \"TypeError\"",
+    "kind": "change constant",
+    "changed_line": 1887
+  },
+  {
+    "id": "M14",
+    "file": "cmd/adamic-test262/adapt.go",
+    "line": 936,
+    "old": "&& !p.instanceOfTest262 {",
+    "new": "&& p.instanceOfTest262 {",
+    "kind": "flip condition",
+    "changed_line": 936
+  },
+  {
+    "id": "M15",
+    "file": "cmd/adamic-test262/adapt.go",
+    "line": 2009,
+    "old": "if len(expr.elems) == 0 {",
+    "new": "if len(expr.elems) <= 1 {",
+    "kind": "off-by-one bound",
+    "changed_line": 2009
+  },
+  {
+    "id": "M16",
+    "file": "cmd/adamic-test262/adapt.go",
+    "line": 262,
+    "old": "source[next] == '+' || source[next] == '-'",
+    "new": "source[next] == '*' || source[next] == '-'",
+    "kind": "change constant",
+    "changed_line": 262
+  },
+  {
+    "id": "M17",
+    "file": "cmd/adamic-test262/adapt.go",
+    "line": 631,
+    "old": "p.skipBraced()\n\t\tp.unsafeVars = true",
+    "new": "p.skipBraced()",
+    "kind": "drop statement",
+    "changed_line": 632
+  },
+  {
+    "id": "M18",
+    "file": "cmd/adamic-test262/classify.go",
+    "line": 65,
+    "old": "if adapt {",
+    "new": "if !adapt {",
+    "kind": "flip condition",
+    "changed_line": 65
+  },
+  {
+    "id": "M19",
+    "file": "cmd/adamic-test262/classify.go",
+    "line": 68,
+    "old": "\t\tresult.Adaptations = rewritten.Counts\n",
+    "new": "",
+    "kind": "drop statement",
+    "changed_line": 68
+  },
+  {
+    "id": "M20",
+    "file": "cmd/adamic-test262/run.go",
+    "line": 631,
+    "old": "return path + \": \" + reason",
+    "new": "return path + \" / \" + reason",
+    "kind": "change constant",
+    "changed_line": 631
+  },
+  {
+    "id": "P1",
+    "file": "cmd/adamic-test262/adapt.go",
+    "line": 28,
+    "old": "func adaptSource(source string) adapted {\n",
+    "new": "func adaptSource(source string) adapted {\n\treturn adapted{}\n",
+    "kind": "empty-answer probe",
+    "changed_line": 28
+  },
+  {
+    "id": "P2",
+    "file": "cmd/adamic-test262/classify.go",
+    "line": 39,
+    "old": "func classify(path string, source string, adapt bool) classified {\n",
+    "new": "func classify(path string, source string, adapt bool) classified {\n\treturn classified{}\n",
+    "kind": "empty-answer probe",
+    "changed_line": 39
+  },
+  {
+    "id": "P3",
+    "file": "cmd/adamic-test262/run.go",
+    "line": 624,
+    "old": "func withCrashPath(path string, reason string) string {\n",
+    "new": "func withCrashPath(path string, reason string) string {\n\treturn \"\"\n",
+    "kind": "empty-answer probe",
+    "changed_line": 624
+  }
+]

@@ -1,0 +1,11 @@
+--- a/cmd/adamic-test262/adapt.go
++++ b/cmd/adamic-test262/adapt.go
+@@ -1791,7 +1791,7 @@
+ 			if rendered == "" {
+ 				continue
+ 			}
+-			p.edits = append(p.edits, edit{start: param.nameEnd, end: param.nameEnd, text: ": " + rendered})
++			p.edits = append(p.edits, edit{start: param.nameEnd, end: param.nameEnd, text: " = " + rendered})
+ 			p.counts[adaptCallbackParam]++
+ 			if fn.scope != nil {
+ 				if binding := fn.scope.names[param.name]; binding != nil && binding.kind == "param" {

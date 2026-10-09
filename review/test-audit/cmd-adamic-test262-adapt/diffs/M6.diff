@@ -1,0 +1,11 @@
+--- a/cmd/adamic-test262/adapt.go
++++ b/cmd/adamic-test262/adapt.go
+@@ -1743,7 +1743,7 @@
+ 
+ func scopeWithin(inner *scope, outer *scope) bool {
+ 	for inner != nil {
+-		if inner == outer {
++		if inner != outer {
+ 			return true
+ 		}
+ 		inner = inner.parent

@@ -1,0 +1,11 @@
+--- a/cmd/adamic-test262/adapt.go
++++ b/cmd/adamic-test262/adapt.go
+@@ -1695,7 +1695,7 @@
+ 			}
+ 		}
+ 	}
+-	if decls != 1 {
++	if decls != 2 {
+ 		return false
+ 	}
+ 	for _, ref := range p.refs {

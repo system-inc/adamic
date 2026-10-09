@@ -1,0 +1,11 @@
+--- a/cmd/adamic-test262/adapt.go
++++ b/cmd/adamic-test262/adapt.go
+@@ -1732,7 +1732,7 @@
+ 			continue
+ 		}
+ 		if decl.loopVar && decl.loop == scope {
+-			return true
++			return false
+ 		}
+ 		if decl.block != scope && scopeWithin(decl.block, scope) {
+ 			return true

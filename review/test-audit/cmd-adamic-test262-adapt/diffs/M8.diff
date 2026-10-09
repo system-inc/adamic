@@ -1,0 +1,11 @@
+--- a/cmd/adamic-test262/adapt.go
++++ b/cmd/adamic-test262/adapt.go
+@@ -1803,7 +1803,7 @@
+ }
+ 
+ func (p *parser) callbackFn(call callNote) *fnInfo {
+-	index := 0
++	index := 1
+ 	if call.method == "replace" || call.method == "replaceAll" {
+ 		index = 1
+ 	}

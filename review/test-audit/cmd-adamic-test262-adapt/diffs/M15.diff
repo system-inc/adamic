@@ -1,0 +1,11 @@
+--- a/cmd/adamic-test262/adapt.go
++++ b/cmd/adamic-test262/adapt.go
+@@ -2006,7 +2006,7 @@
+ 			return nil
+ 		}
+ 	}
+-	if len(expr.elems) == 0 {
++	if len(expr.elems) <= 1 {
+ 		return nil
+ 	}
+ 	var elem *jtype

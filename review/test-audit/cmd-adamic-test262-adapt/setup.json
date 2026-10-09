@@ -1,0 +1,53 @@
+[
+  {
+    "label": "tools",
+    "command": [
+      "bash",
+      "-c",
+      "go version; node --version; nproc; git rev-parse HEAD"
+    ],
+    "exit": 0,
+    "seconds": 0.014364705999469152
+  },
+  {
+    "label": "npm-ci",
+    "command": [
+      "npm",
+      "ci"
+    ],
+    "exit": 0,
+    "seconds": 0.48062365100122406
+  },
+  {
+    "label": "list",
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "test",
+      "-list",
+      ".",
+      "./cmd/adamic-test262/"
+    ],
+    "exit": 0,
+    "seconds": 5.491889648001234
+  },
+  {
+    "label": "baseline",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic-test262/",
+      "-run",
+      "."
+    ],
+    "exit": 0,
+    "seconds": 53.31506717500088
+  }
+]

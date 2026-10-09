@@ -1,0 +1,11 @@
+--- a/cmd/adamic-test262/adapt.go
++++ b/cmd/adamic-test262/adapt.go
+@@ -933,7 +933,7 @@
+ 		p.fail()
+ 		return
+ 	}
+-	if p.is("new") && p.pos+1 < len(p.toks) && p.toks[p.pos+1].text == "Test262Error" && !p.instanceOfTest262 {
++	if p.is("new") && p.pos+1 < len(p.toks) && p.toks[p.pos+1].text == "Test262Error" && p.instanceOfTest262 {
+ 		name := p.toks[p.pos+1]
+ 		p.throws = append(p.throws, throwNote{start: name.start, end: name.end})
+ 	}

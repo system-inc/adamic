@@ -1,0 +1,10 @@
+{"Time":"2026-10-09T09:57:55.397780076Z","Action":"start","Package":"github.com/system-inc/adamic/cmd/adamic-test262"}
+{"Time":"2026-10-09T09:57:55.420455313Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerStartupMeasurement"}
+{"Time":"2026-10-09T09:57:55.420995522Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerStartupMeasurement","Output":"=== RUN   TestCompilerStartupMeasurement\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:58:05.015162582Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerStartupMeasurement","Output":"    performance_test.go:59: 30 interleaved compiles: subprocess=1.936345215s in-process=1.509901356s startup-only=375.826863ms\n"}
+{"Time":"2026-10-09T09:58:05.015230061Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerStartupMeasurement","Output":"--- PASS: TestCompilerStartupMeasurement (9.61s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:58:05.015248669Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerStartupMeasurement","Elapsed":9.61}
+{"Time":"2026-10-09T09:58:05.015267357Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:58:05.015849307Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"coverage: 1.2% of statements\n"}
+{"Time":"2026-10-09T09:58:05.023286327Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"ok  \tgithub.com/system-inc/adamic/cmd/adamic-test262\t9.625s\tcoverage: 1.2% of statements\n"}
+{"Time":"2026-10-09T09:58:05.023318054Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Elapsed":9.626}

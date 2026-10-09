@@ -1,0 +1,10 @@
+--- a/cmd/adamic-test262/classify.go
++++ b/cmd/adamic-test262/classify.go
+@@ -65,7 +65,6 @@
+ 	if adapt {
+ 		rewritten := adaptSource(body)
+ 		body = rewritten.Source
+-		result.Adaptations = rewritten.Counts
+ 	}
+ 	result.Program = program(rewriteHarnessCalls(body))
+ 	return result
