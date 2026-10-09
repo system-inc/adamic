@@ -1,0 +1,932 @@
+{
+  "runs": [
+    {
+      "command": "NODE_V8_COVERAGE=/tmp/u099-v8coverage timeout 90 node --disable-warning=ExperimentalWarning oracle/node.mjs stage1/cohere/graphql/printer/main.ts --cases /home/agent/.cache/adamic-build/88902adf52f2f99c05d8983ce13839ec5688c829673751c89d2659ea48b54386/cases.txt defaults",
+      "exit": 0,
+      "wall": 1.3123396520004462
+    },
+    {
+      "command": "NODE_V8_COVERAGE=/tmp/u099-v8coverage timeout 90 node --disable-warning=ExperimentalWarning oracle/node.mjs stage1/cohere/graphql/printer/main.ts --cases /home/agent/.cache/adamic-build/ab7bfa360bc61de45f57361d1c3e80cc186a63a3208bef2552b40151844230fd/cases.txt narrow",
+      "exit": 0,
+      "wall": 1.2959870869999577
+    },
+    {
+      "command": "NODE_V8_COVERAGE=/tmp/u099-v8coverage timeout 90 node --disable-warning=ExperimentalWarning oracle/node.mjs stage1/cohere/graphql/printer/main.ts --cases /home/agent/.cache/adamic-build/17da87dfad785204c9c34770782c958e3a7c522825ad044354762773da7ba110/cases.txt tight",
+      "exit": 0,
+      "wall": 1.3012275559995032
+    },
+    {
+      "command": "NODE_V8_COVERAGE=/tmp/u099-v8coverage timeout 90 node --disable-warning=ExperimentalWarning oracle/node.mjs stage1/cohere/graphql/printer/main.ts --cases /home/agent/.cache/adamic-build/79ee6634420cd93023a9ab3d264a3b384e068374e5512dbca9386bc61561a249/cases.txt tabs",
+      "exit": 0,
+      "wall": 1.2995794720009144
+    }
+  ],
+  "limitations": "Node source-side reachability on the four complete clean mode corpora, not native C coverage. Offsets are transformed-code offsets. Original source locations remain in function-inventory.json.",
+  "modules": [
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/graphql/printer/main.ts",
+      "functions": [
+        {
+          "name": "",
+          "offset": 0,
+          "count": 4
+        },
+        {
+          "name": "escaped",
+          "offset": 147,
+          "count": 14256
+        },
+        {
+          "name": "unescaped",
+          "offset": 569,
+          "count": 14256
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/graphql/printer/printer.ts",
+      "functions": [
+        {
+          "name": "",
+          "offset": 0,
+          "count": 4
+        },
+        {
+          "name": "field",
+          "offset": 160,
+          "count": 2142848
+        },
+        {
+          "name": "child",
+          "offset": 313,
+          "count": 1182060
+        },
+        {
+          "name": "list",
+          "offset": 431,
+          "count": 688384
+        },
+        {
+          "name": "flag",
+          "offset": 549,
+          "count": 27968
+        },
+        {
+          "name": "decoded",
+          "offset": 669,
+          "count": 279472
+        },
+        {
+          "name": "textValue",
+          "offset": 1783,
+          "count": 244436
+        },
+        {
+          "name": "isNewline",
+          "offset": 1914,
+          "count": 168208
+        },
+        {
+          "name": "spaces",
+          "offset": 2020,
+          "count": 218512
+        },
+        {
+          "name": "newline",
+          "offset": 2256,
+          "count": 168208
+        },
+        {
+          "name": "hasNewline",
+          "offset": 2581,
+          "count": 105320
+        },
+        {
+          "name": "previousEmpty",
+          "offset": 2744,
+          "count": 172
+        },
+        {
+          "name": "nextEmpty",
+          "offset": 2980,
+          "count": 59336
+        },
+        {
+          "name": "<instance_members_initializer>",
+          "offset": 3760,
+          "count": 10052
+        },
+        {
+          "name": "Printer",
+          "offset": 3831,
+          "count": 10052
+        },
+        {
+          "name": "node",
+          "offset": 3953,
+          "count": 2709852
+        },
+        {
+          "name": "neighbours",
+          "offset": 4053,
+          "count": 84524
+        },
+        {
+          "name": "",
+          "offset": 4441,
+          "count": 141920
+        },
+        {
+          "name": "attach",
+          "offset": 5489,
+          "count": 10052
+        },
+        {
+          "name": "comment",
+          "offset": 6709,
+          "count": 15416
+        },
+        {
+          "name": "dangling",
+          "offset": 6910,
+          "count": 17960
+        },
+        {
+          "name": "print",
+          "offset": 7364,
+          "count": 816956
+        },
+        {
+          "name": "sequence",
+          "offset": 9917,
+          "count": 101052
+        },
+        {
+          "name": "arguments",
+          "offset": 10461,
+          "count": 61948
+        },
+        {
+          "name": "description",
+          "offset": 11126,
+          "count": 494560
+        },
+        {
+          "name": "directives",
+          "offset": 11509,
+          "count": 494560
+        },
+        {
+          "name": "block",
+          "offset": 12222,
+          "count": 6644
+        },
+        {
+          "name": "generic",
+          "offset": 12749,
+          "count": 494560
+        },
+        {
+          "name": "finish",
+          "offset": 26980,
+          "count": 10052
+        },
+        {
+          "name": "format",
+          "offset": 27297,
+          "count": 14256
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/graphql/parser.ts",
+      "functions": [
+        {
+          "name": "",
+          "offset": 0,
+          "count": 4
+        },
+        {
+          "name": "<instance_members_initializer>",
+          "offset": 133,
+          "count": 560740
+        },
+        {
+          "name": "GraphNode",
+          "offset": 175,
+          "count": 560740
+        },
+        {
+          "name": "text",
+          "offset": 380,
+          "count": 279316
+        },
+        {
+          "name": "flag",
+          "offset": 520,
+          "count": 29304
+        },
+        {
+          "name": "child",
+          "offset": 660,
+          "count": 426072
+        },
+        {
+          "name": "list",
+          "offset": 831,
+          "count": 56592
+        },
+        {
+          "name": "field",
+          "offset": 965,
+          "count": 156288
+        },
+        {
+          "name": "isDirectiveLocation",
+          "offset": 1043,
+          "count": 2760
+        },
+        {
+          "name": "getTokenKindDesc",
+          "offset": 1767,
+          "count": 2312
+        },
+        {
+          "name": "getTokenDesc",
+          "offset": 1864,
+          "count": 1720
+        },
+        {
+          "name": "<instance_members_initializer>",
+          "offset": 2033,
+          "count": 14256
+        },
+        {
+          "name": "Parser",
+          "offset": 2060,
+          "count": 14256
+        },
+        {
+          "name": "node",
+          "offset": 2131,
+          "count": 560740
+        },
+        {
+          "name": "advanceLexer",
+          "offset": 2310,
+          "count": 690908
+        },
+        {
+          "name": "peek",
+          "offset": 2367,
+          "count": 341932
+        },
+        {
+          "name": "expectToken",
+          "offset": 2437,
+          "count": 438708
+        },
+        {
+          "name": "expectOptionalToken",
+          "offset": 2748,
+          "count": 359084
+        },
+        {
+          "name": "expectKeyword",
+          "offset": 2951,
+          "count": 19652
+        },
+        {
+          "name": "expectOptionalKeyword",
+          "offset": 3272,
+          "count": 24124
+        },
+        {
+          "name": "unexpected",
+          "offset": 3505,
+          "count": 1076
+        },
+        {
+          "name": "parseName",
+          "offset": 3684,
+          "count": 207708
+        },
+        {
+          "name": "parseNamedType",
+          "offset": 3855,
+          "count": 29320
+        },
+        {
+          "name": "parseTypeReference",
+          "offset": 4027,
+          "count": 25184
+        },
+        {
+          "name": "parseStringLiteral",
+          "offset": 4657,
+          "count": 25664
+        },
+        {
+          "name": "parseVariable",
+          "offset": 4922,
+          "count": 12052
+        },
+        {
+          "name": "parseValueLiteral",
+          "offset": 5123,
+          "count": 90468
+        },
+        {
+          "name": "parseArguments",
+          "offset": 8352,
+          "count": 48600
+        },
+        {
+          "name": "parseDirective",
+          "offset": 8932,
+          "count": 23988
+        },
+        {
+          "name": "parseDirectives",
+          "offset": 9231,
+          "count": 80648
+        },
+        {
+          "name": "parseConstDirectives",
+          "offset": 9577,
+          "count": 29924
+        },
+        {
+          "name": "parseFragmentName",
+          "offset": 9655,
+          "count": 11080
+        },
+        {
+          "name": "parseFragmentArguments",
+          "offset": 9834,
+          "count": 4284
+        },
+        {
+          "name": "parseSelectionSet",
+          "offset": 10421,
+          "count": 25796
+        },
+        {
+          "name": "peekDescription",
+          "offset": 13263,
+          "count": 58860
+        },
+        {
+          "name": "parseDescription",
+          "offset": 13357,
+          "count": 36944
+        },
+        {
+          "name": "parseVariableDefinition",
+          "offset": 13508,
+          "count": 4056
+        },
+        {
+          "name": "parseVariableDefinitions",
+          "offset": 14185,
+          "count": 7452
+        },
+        {
+          "name": "parseOperationType",
+          "offset": 14530,
+          "count": 8864
+        },
+        {
+          "name": "parseOperationDefinition",
+          "offset": 14920,
+          "count": 6784
+        },
+        {
+          "name": "parseFragmentDefinition",
+          "offset": 16005,
+          "count": 1652
+        },
+        {
+          "name": "parseOperationTypeDefinition",
+          "offset": 16802,
+          "count": 3016
+        },
+        {
+          "name": "parseOperationTypeDefinitions",
+          "offset": 17178,
+          "count": 1608
+        },
+        {
+          "name": "parseSchemaDefinition",
+          "offset": 17607,
+          "count": 1468
+        },
+        {
+          "name": "parseScalarTypeDefinition",
+          "offset": 18113,
+          "count": 1484
+        },
+        {
+          "name": "delimitedNamedTypes",
+          "offset": 18573,
+          "count": 2608
+        },
+        {
+          "name": "parseImplementsInterfaces",
+          "offset": 18884,
+          "count": 3548
+        },
+        {
+          "name": "parseInputValueDef",
+          "offset": 19071,
+          "count": 6396
+        },
+        {
+          "name": "parseInputValueDefs",
+          "offset": 19768,
+          "count": 7692
+        },
+        {
+          "name": "parseFieldDefinition",
+          "offset": 20133,
+          "count": 4572
+        },
+        {
+          "name": "parseFieldsDefinition",
+          "offset": 20790,
+          "count": 3468
+        },
+        {
+          "name": "parseObjectTypeDefinition",
+          "offset": 21129,
+          "count": 1696
+        },
+        {
+          "name": "parseInterfaceTypeDefinition",
+          "offset": 21783,
+          "count": 1568
+        },
+        {
+          "name": "parseUnionMemberTypes",
+          "offset": 22448,
+          "count": 1656
+        },
+        {
+          "name": "parseUnionTypeDefinition",
+          "offset": 22620,
+          "count": 1568
+        },
+        {
+          "name": "parseEnumValueName",
+          "offset": 23164,
+          "count": 2144
+        },
+        {
+          "name": "parseEnumValueDefinition",
+          "offset": 23530,
+          "count": 2156
+        },
+        {
+          "name": "parseEnumValuesDefinition",
+          "offset": 23959,
+          "count": 1608
+        },
+        {
+          "name": "parseEnumTypeDefinition",
+          "offset": 24306,
+          "count": 1436
+        },
+        {
+          "name": "parseInputObjectTypeDefinition",
+          "offset": 24854,
+          "count": 1524
+        },
+        {
+          "name": "parseDirectiveLocation",
+          "offset": 25419,
+          "count": 2776
+        },
+        {
+          "name": "parseDirectiveDefinition",
+          "offset": 25673,
+          "count": 1520
+        },
+        {
+          "name": "parseSchemaExtension",
+          "offset": 26665,
+          "count": 172
+        },
+        {
+          "name": "parseScalarTypeExtension",
+          "offset": 27261,
+          "count": 164
+        },
+        {
+          "name": "parseObjectTypeExtension",
+          "offset": 27771,
+          "count": 160
+        },
+        {
+          "name": "parseInterfaceTypeExtension",
+          "offset": 28541,
+          "count": 160
+        },
+        {
+          "name": "parseUnionTypeExtension",
+          "offset": 29322,
+          "count": 200
+        },
+        {
+          "name": "parseEnumTypeExtension",
+          "offset": 29946,
+          "count": 224
+        },
+        {
+          "name": "parseInputObjectTypeExtension",
+          "offset": 30575,
+          "count": 152
+        },
+        {
+          "name": "parseDirectiveExtension",
+          "offset": 31221,
+          "count": 140
+        },
+        {
+          "name": "parseTypeSystemExtension",
+          "offset": 31763,
+          "count": 1408
+        },
+        {
+          "name": "parseDefinition",
+          "offset": 32747,
+          "count": 22852
+        },
+        {
+          "name": "parseDocument",
+          "offset": 34781,
+          "count": 14256
+        },
+        {
+          "name": "parseComments",
+          "offset": 35136,
+          "count": 10052
+        },
+        {
+          "name": "parse",
+          "offset": 35587,
+          "count": 14256
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/graphql/lexer.ts",
+      "functions": [
+        {
+          "name": "",
+          "offset": 0,
+          "count": 4
+        },
+        {
+          "name": "written",
+          "offset": 331,
+          "count": 225836
+        },
+        {
+          "name": "escaped",
+          "offset": 679,
+          "count": 54064
+        },
+        {
+          "name": "getLocation",
+          "offset": 1172,
+          "count": 4204
+        },
+        {
+          "name": "syntaxError",
+          "offset": 1767,
+          "count": 4204
+        },
+        {
+          "name": "isPunctuatorTokenKind",
+          "offset": 1959,
+          "count": 2312
+        },
+        {
+          "name": "isUnicodeScalarValue",
+          "offset": 2251,
+          "count": 384100
+        },
+        {
+          "name": "isLeadingSurrogate",
+          "offset": 2374,
+          "count": 36308
+        },
+        {
+          "name": "isTrailingSurrogate",
+          "offset": 2457,
+          "count": 36100
+        },
+        {
+          "name": "isSupplementaryCodePoint",
+          "offset": 2541,
+          "count": 34936
+        },
+        {
+          "name": "printCodePointAt",
+          "offset": 2707,
+          "count": 1384
+        },
+        {
+          "name": "readHexDigit",
+          "offset": 3086,
+          "count": 34464
+        },
+        {
+          "name": "read16BitHexCode",
+          "offset": 3286,
+          "count": 5564
+        },
+        {
+          "name": "readEscapedUnicodeVariableWidth",
+          "offset": 3737,
+          "count": 2692
+        },
+        {
+          "name": "readEscapedUnicodeFixedWidth",
+          "offset": 4521,
+          "count": 4400
+        },
+        {
+          "name": "readEscapedCharacter",
+          "offset": 5386,
+          "count": 2456
+        },
+        {
+          "name": "createToken",
+          "offset": 6644,
+          "count": 696840
+        },
+        {
+          "name": "readComment",
+          "offset": 6839,
+          "count": 17744
+        },
+        {
+          "name": "readDigits",
+          "offset": 7443,
+          "count": 30116
+        },
+        {
+          "name": "readNumber",
+          "offset": 7811,
+          "count": 25976
+        },
+        {
+          "name": "readString",
+          "offset": 9317,
+          "count": 15928
+        },
+        {
+          "name": "readBlockString",
+          "offset": 10724,
+          "count": 11068
+        },
+        {
+          "name": "readName",
+          "offset": 12725,
+          "count": 258616
+        },
+        {
+          "name": "readNextToken",
+          "offset": 13135,
+          "count": 699024
+        },
+        {
+          "name": "<instance_members_initializer>",
+          "offset": 17238,
+          "count": 14256
+        },
+        {
+          "name": "Lexer",
+          "offset": 17368,
+          "count": 14256
+        },
+        {
+          "name": "lookaheadIndex",
+          "offset": 17625,
+          "count": 697944
+        },
+        {
+          "name": "advance",
+          "offset": 18154,
+          "count": 690908
+        },
+        {
+          "name": "lookahead",
+          "offset": 18427,
+          "count": 7036
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/graphql/blockString.ts",
+      "functions": [
+        {
+          "name": "",
+          "offset": 0,
+          "count": 4
+        },
+        {
+          "name": "leadingWhitespace",
+          "offset": 54,
+          "count": 20060
+        },
+        {
+          "name": "dedentBlockStringLines",
+          "offset": 230,
+          "count": 10952
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/graphql/characterClasses.ts",
+      "functions": [
+        {
+          "name": "",
+          "offset": 0,
+          "count": 4
+        },
+        {
+          "name": "isWhiteSpace",
+          "offset": 7,
+          "count": 23968
+        },
+        {
+          "name": "isDigit",
+          "offset": 93,
+          "count": 707444
+        },
+        {
+          "name": "isLetter",
+          "offset": 172,
+          "count": 1017600
+        },
+        {
+          "name": "isNameStart",
+          "offset": 288,
+          "count": 285820
+        },
+        {
+          "name": "isNameContinue",
+          "offset": 372,
+          "count": 731780
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/graphql/token.ts",
+      "functions": [
+        {
+          "name": "",
+          "offset": 0,
+          "count": 4
+        },
+        {
+          "name": "<instance_members_initializer>",
+          "offset": 25,
+          "count": 711096
+        },
+        {
+          "name": "Token",
+          "offset": 88,
+          "count": 711096
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/graphql/printer/doc.ts",
+      "functions": [
+        {
+          "name": "",
+          "offset": 0,
+          "count": 4
+        },
+        {
+          "name": "<instance_members_initializer>",
+          "offset": 224,
+          "count": 10052
+        },
+        {
+          "name": "Documents",
+          "offset": 254,
+          "count": 10052
+        },
+        {
+          "name": "get",
+          "offset": 321,
+          "count": 8624640
+        },
+        {
+          "name": "add",
+          "offset": 411,
+          "count": 4714500
+        },
+        {
+          "name": "text",
+          "offset": 929,
+          "count": 2187548
+        },
+        {
+          "name": "concat",
+          "offset": 1002,
+          "count": 2052020
+        },
+        {
+          "name": "join",
+          "offset": 1081,
+          "count": 110020
+        },
+        {
+          "name": "indent",
+          "offset": 1370,
+          "count": 88192
+        },
+        {
+          "name": "group",
+          "offset": 1473,
+          "count": 89616
+        },
+        {
+          "name": "line",
+          "offset": 1574,
+          "count": 208756
+        },
+        {
+          "name": "ifBreak",
+          "offset": 1663,
+          "count": 64324
+        },
+        {
+          "name": "suffix",
+          "offset": 1794,
+          "count": 12108
+        },
+        {
+          "name": "breakParent",
+          "offset": 1897,
+          "count": 11936
+        },
+        {
+          "name": "fits",
+          "offset": 1977,
+          "count": 44179
+        },
+        {
+          "name": "print",
+          "offset": 3505,
+          "count": 10052
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/json/width.ts",
+      "functions": [
+        {
+          "name": "",
+          "offset": 0,
+          "count": 4
+        },
+        {
+          "name": "mapped",
+          "offset": 119,
+          "count": 3322644
+        },
+        {
+          "name": "match",
+          "offset": 224,
+          "count": 6815464
+        },
+        {
+          "name": "wide",
+          "offset": 1702,
+          "count": 170792
+        },
+        {
+          "name": "stringWidth",
+          "offset": 2214,
+          "count": 4714500
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/json/widthTables.ts",
+      "functions": [
+        {
+          "name": "",
+          "offset": 0,
+          "count": 4
+        }
+      ]
+    }
+  ]
+}

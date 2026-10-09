@@ -1,0 +1,11 @@
+--- a/stage1/cohere/graphql/printer/doc.ts
++++ b/stage1/cohere/graphql/printer/doc.ts
+@@ -198,7 +198,7 @@
+             }
+             else if(node.kind === 'ifBreak') {
+                 stack.push({
+-                    doc: node.parts[command.flat ? 1 : 0] ?? panic('branch'),
++                    doc: node.parts[command.flat ? 0 : 0] ?? panic('branch'),
+                     indent: command.indent,
+                     flat: command.flat,
+                 });

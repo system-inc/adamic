@@ -1,0 +1,32 @@
+[
+  {
+    "id": "M01",
+    "command": "ADAMIC_GRAPHQL_PRETTIER=/tmp/u099-prettier timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/graphql/printer/ -run '^TestProduct_GraphQLPrinterSanitized$'",
+    "exit": 0,
+    "wall": 8.68349174099967
+  },
+  {
+    "id": "M02",
+    "command": "ADAMIC_GRAPHQL_PRETTIER=/tmp/u099-prettier timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/graphql/printer/ -run '^TestProduct_GraphQLPrinterSanitized$'",
+    "exit": 0,
+    "wall": 6.05287629600025
+  },
+  {
+    "id": "M03",
+    "command": "ADAMIC_GRAPHQL_PRETTIER=/tmp/u099-prettier timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/graphql/printer/ -run '^TestProduct_GraphQLPrinterSanitized$'",
+    "exit": 0,
+    "wall": 5.684293405998687
+  },
+  {
+    "id": "M04",
+    "command": "ADAMIC_GRAPHQL_PRETTIER=/tmp/u099-prettier timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/graphql/printer/ -run '^TestProduct_GraphQLPrinterSanitized$'",
+    "exit": 0,
+    "wall": 5.677416994998566
+  },
+  {
+    "id": "P01",
+    "command": "ADAMIC_GRAPHQL_PRETTIER=/tmp/u099-prettier timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/graphql/printer/ -run '^TestProduct_GraphQLPrinterSanitized$'",
+    "exit": 0,
+    "wall": 8.562213077999331
+  }
+]

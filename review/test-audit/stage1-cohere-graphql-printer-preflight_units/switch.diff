@@ -1,0 +1,112 @@
+diff --git a/stage1/cohere/graphql/parser.ts b/stage1/cohere/graphql/parser.ts
+index d7f0f460..8bba6979 100644
+--- a/stage1/cohere/graphql/parser.ts
++++ b/stage1/cohere/graphql/parser.ts
+@@ -29,7 +29,10 @@
+ //     Value, a List or Undefined, since returning undefined from a function that returns an array or
+ //     undefined lowers to C that clang refuses (suppression's GAPS.md, gap 2).
+ 
+-import { panic } from 'adamic';
++import { readTextFile, panic } from 'adamic';
++
++const auditRead = readTextFile('/tmp/u099-mutant');
++const auditMutant = auditRead.kind === 'Error' ? '' : auditRead.text;
+ import { isPunctuatorTokenKind, Lexer, syntaxError } from './lexer.ts';
+ import type { Token, TokenKind } from './token.ts';
+ 
+@@ -1225,7 +1228,7 @@ class Parser {
+ 	parseDocument(): number {
+ 		const start = this.lexer.token;
+ 		// many('<SOF>', parseDefinition, '<EOF>')
+-		this.expectToken('<SOF>');
++		this.expectToken(auditMutant === 'M04' ? '<EOF>' : '<SOF>');
+ 		const definitions: number[] = [];
+ 		do {
+ 			definitions.push(this.parseDefinition());
+diff --git a/stage1/cohere/graphql/printer/doc.ts b/stage1/cohere/graphql/printer/doc.ts
+index 91487e22..d6165afc 100644
+--- a/stage1/cohere/graphql/printer/doc.ts
++++ b/stage1/cohere/graphql/printer/doc.ts
+@@ -1,7 +1,10 @@
+ // The subset of cohere/internal/format/doc reached by the GraphQL printer.
+ // Children are indexes, preserving acyclic ownership. Width uses the JSON slice's
+ // port of cohere's Unicode string-width implementation.
+-import { panic } from 'adamic';
++import { readTextFile, panic } from 'adamic';
++
++const auditRead = readTextFile('/tmp/u099-mutant');
++const auditMutant = auditRead.kind === 'Error' ? '' : auditRead.text;
+ import { stringWidth } from '../../json/width.ts';
+ interface DocInterface {
+     readonly kind: string;
+@@ -23,7 +26,7 @@ export interface SettingsOptions {
+ }
+ export const defaults: SettingsOptions = {
+     printWidth: 120,
+-    tabWidth: 4,
++    tabWidth: auditMutant === 'M01' ? 3 : 4,
+     useTabs: false,
+     bracketSpacing: true,
+ };
+@@ -198,7 +201,7 @@ export class Documents {
+             }
+             else if(node.kind === 'ifBreak') {
+                 stack.push({
+-                    doc: node.parts[command.flat ? 1 : 0] ?? panic('branch'),
++                    doc: node.parts[command.flat ? (auditMutant === 'M02' ? 0 : 1) : 0] ?? panic('branch'),
+                     indent: command.indent,
+                     flat: command.flat,
+                 });
+diff --git a/stage1/cohere/graphql/printer/main.ts b/stage1/cohere/graphql/printer/main.ts
+index 0b93546b..19cace87 100644
+--- a/stage1/cohere/graphql/printer/main.ts
++++ b/stage1/cohere/graphql/printer/main.ts
+@@ -1,5 +1,8 @@
+ // Format one file to stdout. --cases reads the escaped batch protocol used by the corpus test.
+ import { panic, programArguments, readTextFile } from 'adamic';
++
++const auditRead = readTextFile('/tmp/u099-mutant');
++const auditMutant = auditRead.kind === 'Error' ? '' : auditRead.text;
+ import { format } from './printer.ts';
+ import { defaults, type SettingsOptions } from './doc.ts';
+ export function escaped(text: string): string {
+@@ -38,6 +41,8 @@ function unescaped(text: string): string {
+     }
+     return parts.join('');
+ }
++function auditMain(): void {
++    if(auditMutant === 'P01') { return; }
+ const args = programArguments();
+ const batch = args[0] === '--cases';
+ const mode = args[2] ?? 'defaults';
+@@ -67,3 +72,6 @@ else {
+     if(result.kind === 'Error') panic(result.message);
+     console.log(result.text.slice(0, -1));
+ }
++
++}
++auditMain();
+diff --git a/stage1/cohere/graphql/printer/printer.ts b/stage1/cohere/graphql/printer/printer.ts
+index 58b9724c..01bba1b1 100644
+--- a/stage1/cohere/graphql/printer/printer.ts
++++ b/stage1/cohere/graphql/printer/printer.ts
+@@ -1,6 +1,9 @@
+ // Port of cohere/internal/format/graphql/print.go and print_helpers.go, composed
+ // with the existing parser. The reachable shared comment core is below too.
+-import { panic } from 'adamic';
++import { readTextFile, panic } from 'adamic';
++
++const auditRead = readTextFile('/tmp/u099-mutant');
++const auditMutant = auditRead.kind === 'Error' ? '' : auditRead.text;
+ import { parse, type Document, type GraphNode, type Value, type Comment } from '../parser.ts';
+ import { Documents, defaults, type SettingsOptions } from './doc.ts';
+ const absent: Value = { kind: 'Undefined' };
+@@ -201,7 +204,7 @@ class Printer {
+     comment(index: number): number {
+         const comment = this.ast.comments[index] ?? panic('comment');
+         this.printed[index] = 1;
+-        return this.docs.text(`#${decoded(comment.value).trimEnd()}`);
++        return this.docs.text(`${auditMutant === 'M03' ? '##' : '#'}${decoded(comment.value).trimEnd()}`);
+     }
+     dangling(index: number): number {
+         const parts: number[] = [];

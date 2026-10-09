@@ -1,0 +1,8 @@
+{
+  "row": "TestPrinterWhitespaceGap family",
+  "command": "ADAMIC_GRAPHQL_PRETTIER=/tmp/u099-prettier timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/graphql/printer/ -run '^(TestPrinterWhitespaceGap_000|TestPrinterWhitespaceGap_001|TestPrinterWhitespaceGap_002|TestPrinterWhitespaceGap_003|TestPrinterWhitespaceGap_004)$'",
+  "exit": 0,
+  "wall": 6.984389952000129,
+  "seconds": 5.221,
+  "timeout": false
+}

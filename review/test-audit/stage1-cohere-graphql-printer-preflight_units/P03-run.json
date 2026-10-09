@@ -1,0 +1,12 @@
+{
+  "id": "P03",
+  "kind": "empty construction entry probe",
+  "file": "stage1/cohere/graphql/printer/shards_test.go",
+  "line": 232,
+  "before": "func printerShardSelection(value string, count int) ([]bool, error) {",
+  "after": "func printerShardSelection(value string, count int) ([]bool, error) {\n\tif os.Getenv(\"ADAMIC_AUDIT_PROBE\") == \"P03\" { return nil, nil }",
+  "test": "TestPrinterShardSelection",
+  "command": "ADAMIC_GRAPHQL_PRETTIER=/tmp/u099-prettier ADAMIC_AUDIT_PROBE=P03 timeout 120 go test -overlay=/tmp/u099-P03-overlay.json -json -count=1 -timeout 90s ./stage1/cohere/graphql/printer/ -run '^TestPrinterShardSelection$'",
+  "exit": 1,
+  "wall": 4.908413907000067
+}

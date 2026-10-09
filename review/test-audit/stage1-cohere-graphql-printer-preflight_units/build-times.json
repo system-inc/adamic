@@ -1,0 +1,3635 @@
+[
+  {
+    "log": "P01-build.log",
+    "product": "GraphQL_printer_source",
+    "key": "0afa658e1f04",
+    "cache": "miss",
+    "seconds": 0.0
+  },
+  {
+    "log": "P01-build.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "244e24396492",
+    "cache": "miss",
+    "seconds": 3.34
+  },
+  {
+    "log": "P01-build.log",
+    "product": "GraphQL_printer_split_native_sanitize=true",
+    "key": "7f2aa8c55028",
+    "cache": "miss",
+    "seconds": 3.42
+  },
+  {
+    "log": "M04-build.log",
+    "product": "GraphQL_printer_source",
+    "key": "927ec66dd1dd",
+    "cache": "miss",
+    "seconds": 0.0
+  },
+  {
+    "log": "M04-build.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "779be6a16d9e",
+    "cache": "miss",
+    "seconds": 3.39
+  },
+  {
+    "log": "M04-build.log",
+    "product": "GraphQL_printer_split_native_sanitize=true",
+    "key": "1b543fecd7ce",
+    "cache": "miss",
+    "seconds": 0.5
+  },
+  {
+    "log": "M03-build.log",
+    "product": "GraphQL_printer_source",
+    "key": "6e933a82ad46",
+    "cache": "miss",
+    "seconds": 0.0
+  },
+  {
+    "log": "M03-build.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "0492043ab454",
+    "cache": "miss",
+    "seconds": 3.41
+  },
+  {
+    "log": "M03-build.log",
+    "product": "GraphQL_printer_split_native_sanitize=true",
+    "key": "1431bd24fa91",
+    "cache": "miss",
+    "seconds": 0.33
+  },
+  {
+    "log": "M02-build.log",
+    "product": "GraphQL_printer_source",
+    "key": "97e29e38a953",
+    "cache": "miss",
+    "seconds": 0.0
+  },
+  {
+    "log": "M02-build.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "744ed3a549ac",
+    "cache": "miss",
+    "seconds": 3.53
+  },
+  {
+    "log": "M02-build.log",
+    "product": "GraphQL_printer_split_native_sanitize=true",
+    "key": "a8c1ebe665af",
+    "cache": "miss",
+    "seconds": 0.62
+  },
+  {
+    "log": "M01-build.log",
+    "product": "GraphQL_printer_source",
+    "key": "14cb8d110037",
+    "cache": "miss",
+    "seconds": 0.0
+  },
+  {
+    "log": "M01-build.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "ff24118cce62",
+    "cache": "miss",
+    "seconds": 3.45
+  },
+  {
+    "log": "M01-build.log",
+    "product": "GraphQL_printer_split_native_sanitize=true",
+    "key": "cdfca8a2d3d5",
+    "cache": "miss",
+    "seconds": 3.45
+  },
+  {
+    "log": "P05.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "P04.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "P04.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "ab7bfa360bc6",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "P04.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "17da87dfad78",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "P04.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "S03.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "S02.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "S02.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "ab7bfa360bc6",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "S02.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "17da87dfad78",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "S02.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "W02.log",
+    "product": "GraphQL_printer_Go_oracle",
+    "key": "e48be64e6d46",
+    "cache": "hit",
+    "seconds": 0.86
+  },
+  {
+    "log": "W02.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "W02.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "W01.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "W01.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "P01.log",
+    "product": "GraphQL_printer_source",
+    "key": "ca5f4b3c5793",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "P01.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "P01.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "P01.log",
+    "product": "GraphQL_printer_Go_oracle",
+    "key": "e48be64e6d46",
+    "cache": "hit",
+    "seconds": 1.63
+  },
+  {
+    "log": "P01.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "ab7bfa360bc6",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "P01.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "P01.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "P01.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "17da87dfad78",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "P01.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "ab7bfa360bc6",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "P01.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "ab7bfa360bc6",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "P01.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "17da87dfad78",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "P01.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "P01.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "17da87dfad78",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "P01.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "P01.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "P01.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "44185c5014c3",
+    "cache": "hit",
+    "seconds": 2.41
+  },
+  {
+    "log": "P01.log",
+    "product": "GraphQL_printer_split_native_sanitize=true",
+    "key": "e01dd12177f0",
+    "cache": "hit",
+    "seconds": 0.02
+  },
+  {
+    "log": "P01.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "P01.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "P01.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "P01.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "P01.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "P01.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "44185c5014c3",
+    "cache": "hit",
+    "seconds": 2.52
+  },
+  {
+    "log": "P01.log",
+    "product": "sanitized_GraphQL_printer",
+    "key": "71f82748fd43",
+    "cache": "hit",
+    "seconds": 0.02
+  },
+  {
+    "log": "P01.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "44185c5014c3",
+    "cache": "hit",
+    "seconds": 2.5
+  },
+  {
+    "log": "P01.log",
+    "product": "sanitized_GraphQL_printer",
+    "key": "71f82748fd43",
+    "cache": "hit",
+    "seconds": 0.03
+  },
+  {
+    "log": "P01.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "44185c5014c3",
+    "cache": "hit",
+    "seconds": 2.54
+  },
+  {
+    "log": "P01.log",
+    "product": "sanitized_GraphQL_printer",
+    "key": "71f82748fd43",
+    "cache": "hit",
+    "seconds": 0.02
+  },
+  {
+    "log": "P01.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "25201b8823b0",
+    "cache": "hit",
+    "seconds": 2.42
+  },
+  {
+    "log": "P01.log",
+    "product": "sanitized_GraphQL_printer",
+    "key": "71f82748fd43",
+    "cache": "hit",
+    "seconds": 0.02
+  },
+  {
+    "log": "P01.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "P01.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "ab7bfa360bc6",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "P01.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "P01.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "17da87dfad78",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "P01.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "44185c5014c3",
+    "cache": "hit",
+    "seconds": 2.69
+  },
+  {
+    "log": "P01.log",
+    "product": "sanitized_GraphQL_printer",
+    "key": "71f82748fd43",
+    "cache": "hit",
+    "seconds": 0.02
+  },
+  {
+    "log": "P01.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "P01.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "P01.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "P01.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "ab7bfa360bc6",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "P01.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "17da87dfad78",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "P01.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "P01.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "P01.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "44185c5014c3",
+    "cache": "hit",
+    "seconds": 2.17
+  },
+  {
+    "log": "P01.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "ab7bfa360bc6",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "P01.log",
+    "product": "sanitized_GraphQL_printer",
+    "key": "71f82748fd43",
+    "cache": "hit",
+    "seconds": 0.02
+  },
+  {
+    "log": "P01.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "17da87dfad78",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "P01.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M04.log",
+    "product": "GraphQL_printer_Go_oracle",
+    "key": "e48be64e6d46",
+    "cache": "hit",
+    "seconds": 1.46
+  },
+  {
+    "log": "M04.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M04.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "ab7bfa360bc6",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M04.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M04.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M04.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "17da87dfad78",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M04.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M04.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M04.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M04.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "ab7bfa360bc6",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M04.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "17da87dfad78",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M04.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M04.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M04.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M04.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "44185c5014c3",
+    "cache": "hit",
+    "seconds": 2.58
+  },
+  {
+    "log": "M04.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "44185c5014c3",
+    "cache": "hit",
+    "seconds": 2.61
+  },
+  {
+    "log": "M04.log",
+    "product": "sanitized_GraphQL_printer",
+    "key": "71f82748fd43",
+    "cache": "hit",
+    "seconds": 0.03
+  },
+  {
+    "log": "M04.log",
+    "product": "sanitized_GraphQL_printer",
+    "key": "71f82748fd43",
+    "cache": "hit",
+    "seconds": 0.04
+  },
+  {
+    "log": "M04.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "44185c5014c3",
+    "cache": "hit",
+    "seconds": 2.7
+  },
+  {
+    "log": "M04.log",
+    "product": "sanitized_GraphQL_printer",
+    "key": "71f82748fd43",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "M04.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M04.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M04.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M04.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M04.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "ab7bfa360bc6",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M04.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "17da87dfad78",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M04.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M04.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M04.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "ab7bfa360bc6",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M04.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "17da87dfad78",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M04.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M04.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "44185c5014c3",
+    "cache": "hit",
+    "seconds": 2.56
+  },
+  {
+    "log": "M04.log",
+    "product": "sanitized_GraphQL_printer",
+    "key": "71f82748fd43",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "M04.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "44185c5014c3",
+    "cache": "hit",
+    "seconds": 2.6
+  },
+  {
+    "log": "M04.log",
+    "product": "sanitized_GraphQL_printer",
+    "key": "71f82748fd43",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "M04.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M04.log",
+    "product": "GraphQL_printer_source",
+    "key": "ca5f4b3c5793",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M04.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "ab7bfa360bc6",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M04.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "17da87dfad78",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M04.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M04.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M04.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "ab7bfa360bc6",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M04.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "17da87dfad78",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M04.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M04.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "44185c5014c3",
+    "cache": "hit",
+    "seconds": 2.52
+  },
+  {
+    "log": "M04.log",
+    "product": "GraphQL_printer_split_native_sanitize=true",
+    "key": "e01dd12177f0",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "M04.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "25201b8823b0",
+    "cache": "hit",
+    "seconds": 1.98
+  },
+  {
+    "log": "M04.log",
+    "product": "sanitized_GraphQL_printer",
+    "key": "71f82748fd43",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "M03.log",
+    "product": "GraphQL_printer_Go_oracle",
+    "key": "e48be64e6d46",
+    "cache": "hit",
+    "seconds": 1.53
+  },
+  {
+    "log": "M03.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M03.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M03.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M03.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "ab7bfa360bc6",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M03.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M03.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "ab7bfa360bc6",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M03.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M03.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "ab7bfa360bc6",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M03.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "17da87dfad78",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M03.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "17da87dfad78",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M03.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "17da87dfad78",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M03.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M03.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M03.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M03.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M03.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M03.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "ab7bfa360bc6",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M03.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "ab7bfa360bc6",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M03.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "17da87dfad78",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M03.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "17da87dfad78",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M03.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M03.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M03.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "44185c5014c3",
+    "cache": "hit",
+    "seconds": 2.58
+  },
+  {
+    "log": "M03.log",
+    "product": "sanitized_GraphQL_printer",
+    "key": "71f82748fd43",
+    "cache": "hit",
+    "seconds": 0.05
+  },
+  {
+    "log": "M03.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M03.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M03.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "ab7bfa360bc6",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M03.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "17da87dfad78",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M03.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M03.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "25201b8823b0",
+    "cache": "hit",
+    "seconds": 2.64
+  },
+  {
+    "log": "M03.log",
+    "product": "sanitized_GraphQL_printer",
+    "key": "71f82748fd43",
+    "cache": "hit",
+    "seconds": 0.02
+  },
+  {
+    "log": "M03.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M03.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M03.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M03.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M03.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M03.log",
+    "product": "GraphQL_printer_source",
+    "key": "ca5f4b3c5793",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M03.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "44185c5014c3",
+    "cache": "hit",
+    "seconds": 2.5
+  },
+  {
+    "log": "M03.log",
+    "product": "sanitized_GraphQL_printer",
+    "key": "71f82748fd43",
+    "cache": "hit",
+    "seconds": 0.02
+  },
+  {
+    "log": "M03.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "44185c5014c3",
+    "cache": "hit",
+    "seconds": 2.55
+  },
+  {
+    "log": "M03.log",
+    "product": "sanitized_GraphQL_printer",
+    "key": "71f82748fd43",
+    "cache": "hit",
+    "seconds": 0.03
+  },
+  {
+    "log": "M03.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "44185c5014c3",
+    "cache": "hit",
+    "seconds": 2.46
+  },
+  {
+    "log": "M03.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "44185c5014c3",
+    "cache": "hit",
+    "seconds": 2.56
+  },
+  {
+    "log": "M03.log",
+    "product": "sanitized_GraphQL_printer",
+    "key": "71f82748fd43",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "M03.log",
+    "product": "sanitized_GraphQL_printer",
+    "key": "71f82748fd43",
+    "cache": "hit",
+    "seconds": 0.03
+  },
+  {
+    "log": "M03.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "44185c5014c3",
+    "cache": "hit",
+    "seconds": 2.22
+  },
+  {
+    "log": "M03.log",
+    "product": "GraphQL_printer_split_native_sanitize=true",
+    "key": "e01dd12177f0",
+    "cache": "hit",
+    "seconds": 0.03
+  },
+  {
+    "log": "M02.log",
+    "product": "GraphQL_printer_Go_oracle",
+    "key": "e48be64e6d46",
+    "cache": "hit",
+    "seconds": 1.26
+  },
+  {
+    "log": "M02.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M02.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M02.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M02.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "ab7bfa360bc6",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M02.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M02.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "ab7bfa360bc6",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M02.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M02.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "17da87dfad78",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M02.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "ab7bfa360bc6",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M02.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "17da87dfad78",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M02.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "17da87dfad78",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M02.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M02.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M02.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M02.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "ab7bfa360bc6",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M02.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "17da87dfad78",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M02.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M02.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M02.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M02.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M02.log",
+    "product": "GraphQL_printer_source",
+    "key": "ca5f4b3c5793",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M02.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "44185c5014c3",
+    "cache": "hit",
+    "seconds": 2.52
+  },
+  {
+    "log": "M02.log",
+    "product": "sanitized_GraphQL_printer",
+    "key": "71f82748fd43",
+    "cache": "hit",
+    "seconds": 0.02
+  },
+  {
+    "log": "M02.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M02.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M02.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "44185c5014c3",
+    "cache": "hit",
+    "seconds": 2.1
+  },
+  {
+    "log": "M02.log",
+    "product": "sanitized_GraphQL_printer",
+    "key": "71f82748fd43",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "M02.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "44185c5014c3",
+    "cache": "hit",
+    "seconds": 2.08
+  },
+  {
+    "log": "M02.log",
+    "product": "GraphQL_printer_split_native_sanitize=true",
+    "key": "e01dd12177f0",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "M02.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "44185c5014c3",
+    "cache": "hit",
+    "seconds": 4.56
+  },
+  {
+    "log": "M02.log",
+    "product": "sanitized_GraphQL_printer",
+    "key": "71f82748fd43",
+    "cache": "hit",
+    "seconds": 0.07
+  },
+  {
+    "log": "M02.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "44185c5014c3",
+    "cache": "hit",
+    "seconds": 4.55
+  },
+  {
+    "log": "M02.log",
+    "product": "sanitized_GraphQL_printer",
+    "key": "71f82748fd43",
+    "cache": "hit",
+    "seconds": 0.04
+  },
+  {
+    "log": "M02.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M02.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "ab7bfa360bc6",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M02.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "17da87dfad78",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M02.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M02.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M02.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M02.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M02.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "ab7bfa360bc6",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M02.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "17da87dfad78",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M02.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M02.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "44185c5014c3",
+    "cache": "hit",
+    "seconds": 2.05
+  },
+  {
+    "log": "M02.log",
+    "product": "sanitized_GraphQL_printer",
+    "key": "71f82748fd43",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "M02.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "25201b8823b0",
+    "cache": "hit",
+    "seconds": 2.0
+  },
+  {
+    "log": "M02.log",
+    "product": "sanitized_GraphQL_printer",
+    "key": "71f82748fd43",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "M01.log",
+    "product": "GraphQL_printer_Go_oracle",
+    "key": "e48be64e6d46",
+    "cache": "hit",
+    "seconds": 1.28
+  },
+  {
+    "log": "M01.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M01.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M01.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M01.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M01.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "ab7bfa360bc6",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M01.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M01.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "ab7bfa360bc6",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M01.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "17da87dfad78",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M01.log",
+    "product": "GraphQL_printer_source",
+    "key": "ca5f4b3c5793",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M01.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "17da87dfad78",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M01.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M01.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M01.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "44185c5014c3",
+    "cache": "hit",
+    "seconds": 2.04
+  },
+  {
+    "log": "M01.log",
+    "product": "GraphQL_printer_split_native_sanitize=true",
+    "key": "e01dd12177f0",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "M01.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "44185c5014c3",
+    "cache": "hit",
+    "seconds": 2.17
+  },
+  {
+    "log": "M01.log",
+    "product": "sanitized_GraphQL_printer",
+    "key": "71f82748fd43",
+    "cache": "hit",
+    "seconds": 0.04
+  },
+  {
+    "log": "M01.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M01.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M01.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "44185c5014c3",
+    "cache": "hit",
+    "seconds": 2.11
+  },
+  {
+    "log": "M01.log",
+    "product": "sanitized_GraphQL_printer",
+    "key": "71f82748fd43",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "M01.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M01.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M01.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M01.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "44185c5014c3",
+    "cache": "hit",
+    "seconds": 2.38
+  },
+  {
+    "log": "M01.log",
+    "product": "sanitized_GraphQL_printer",
+    "key": "71f82748fd43",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "M01.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M01.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "ab7bfa360bc6",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M01.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "17da87dfad78",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M01.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M01.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M01.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "ab7bfa360bc6",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M01.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "17da87dfad78",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M01.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M01.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "44185c5014c3",
+    "cache": "hit",
+    "seconds": 2.6
+  },
+  {
+    "log": "M01.log",
+    "product": "sanitized_GraphQL_printer",
+    "key": "71f82748fd43",
+    "cache": "hit",
+    "seconds": 0.02
+  },
+  {
+    "log": "M01.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "44185c5014c3",
+    "cache": "hit",
+    "seconds": 2.69
+  },
+  {
+    "log": "M01.log",
+    "product": "sanitized_GraphQL_printer",
+    "key": "71f82748fd43",
+    "cache": "hit",
+    "seconds": 0.03
+  },
+  {
+    "log": "M01.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M01.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "ab7bfa360bc6",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M01.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "17da87dfad78",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M01.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M01.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M01.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "ab7bfa360bc6",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M01.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "17da87dfad78",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M01.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "M01.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "25201b8823b0",
+    "cache": "hit",
+    "seconds": 2.47
+  },
+  {
+    "log": "M01.log",
+    "product": "sanitized_GraphQL_printer",
+    "key": "71f82748fd43",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "switched-baseline.log",
+    "product": "GraphQL_printer_Go_oracle",
+    "key": "e48be64e6d46",
+    "cache": "hit",
+    "seconds": 1.58
+  },
+  {
+    "log": "switched-baseline.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "switched-baseline.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "switched-baseline.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "switched-baseline.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "switched-baseline.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "ab7bfa360bc6",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "switched-baseline.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "ab7bfa360bc6",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "switched-baseline.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "ab7bfa360bc6",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "switched-baseline.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "17da87dfad78",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "switched-baseline.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "17da87dfad78",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "switched-baseline.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "17da87dfad78",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "switched-baseline.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "switched-baseline.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "switched-baseline.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "switched-baseline.log",
+    "product": "GraphQL_printer_source",
+    "key": "ca5f4b3c5793",
+    "cache": "miss",
+    "seconds": 0.0
+  },
+  {
+    "log": "switched-baseline.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "switched-baseline.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "25201b8823b0",
+    "cache": "miss",
+    "seconds": 5.31
+  },
+  {
+    "log": "switched-baseline.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "44185c5014c3",
+    "cache": "miss",
+    "seconds": 4.26
+  },
+  {
+    "log": "switched-baseline.log",
+    "product": "GraphQL_printer_split_native_sanitize=true",
+    "key": "e01dd12177f0",
+    "cache": "miss",
+    "seconds": 3.71
+  },
+  {
+    "log": "switched-baseline.log",
+    "product": "sanitized_GraphQL_printer",
+    "key": "71f82748fd43",
+    "cache": "miss",
+    "seconds": 9.26
+  },
+  {
+    "log": "switched-baseline.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "switched-baseline.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "switched-baseline.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "44185c5014c3",
+    "cache": "hit",
+    "seconds": 2.5
+  },
+  {
+    "log": "switched-baseline.log",
+    "product": "sanitized_GraphQL_printer",
+    "key": "71f82748fd43",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "switched-baseline.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "switched-baseline.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "switched-baseline.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "switched-baseline.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "switched-baseline.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "ab7bfa360bc6",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "switched-baseline.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "17da87dfad78",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "switched-baseline.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "switched-baseline.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "44185c5014c3",
+    "cache": "hit",
+    "seconds": 2.53
+  },
+  {
+    "log": "switched-baseline.log",
+    "product": "sanitized_GraphQL_printer",
+    "key": "71f82748fd43",
+    "cache": "hit",
+    "seconds": 0.02
+  },
+  {
+    "log": "switched-baseline.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "44185c5014c3",
+    "cache": "hit",
+    "seconds": 2.38
+  },
+  {
+    "log": "switched-baseline.log",
+    "product": "sanitized_GraphQL_printer",
+    "key": "71f82748fd43",
+    "cache": "hit",
+    "seconds": 0.02
+  },
+  {
+    "log": "switched-baseline.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "44185c5014c3",
+    "cache": "hit",
+    "seconds": 2.59
+  },
+  {
+    "log": "switched-baseline.log",
+    "product": "sanitized_GraphQL_printer",
+    "key": "71f82748fd43",
+    "cache": "hit",
+    "seconds": 0.02
+  },
+  {
+    "log": "switched-baseline.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "44185c5014c3",
+    "cache": "hit",
+    "seconds": 2.59
+  },
+  {
+    "log": "switched-baseline.log",
+    "product": "sanitized_GraphQL_printer",
+    "key": "71f82748fd43",
+    "cache": "hit",
+    "seconds": 0.05
+  },
+  {
+    "log": "switched-baseline.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "switched-baseline.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "switched-baseline.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "ab7bfa360bc6",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "switched-baseline.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "17da87dfad78",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "switched-baseline.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "switched-baseline.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "switched-baseline.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "ab7bfa360bc6",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "switched-baseline.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "17da87dfad78",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "switched-baseline.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterWhitespaceGap_family-time3.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterWhitespaceGap_family-time3.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterWhitespaceGap_family-time3.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterWhitespaceGap_family-time3.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterWhitespaceGap_family-time3.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterWhitespaceGap_family-time3.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "19284332a167",
+    "cache": "hit",
+    "seconds": 2.37
+  },
+  {
+    "log": "TestPrinterWhitespaceGap_family-time3.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "19284332a167",
+    "cache": "hit",
+    "seconds": 2.28
+  },
+  {
+    "log": "TestPrinterWhitespaceGap_family-time3.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "19284332a167",
+    "cache": "hit",
+    "seconds": 2.41
+  },
+  {
+    "log": "TestPrinterWhitespaceGap_family-time3.log",
+    "product": "sanitized_GraphQL_printer",
+    "key": "2964c6997ad8",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "TestPrinterWhitespaceGap_family-time3.log",
+    "product": "sanitized_GraphQL_printer",
+    "key": "2964c6997ad8",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "TestPrinterWhitespaceGap_family-time3.log",
+    "product": "sanitized_GraphQL_printer",
+    "key": "2964c6997ad8",
+    "cache": "hit",
+    "seconds": 0.02
+  },
+  {
+    "log": "TestPrinterWhitespaceGap_family-time3.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "19284332a167",
+    "cache": "hit",
+    "seconds": 2.3
+  },
+  {
+    "log": "TestPrinterWhitespaceGap_family-time3.log",
+    "product": "sanitized_GraphQL_printer",
+    "key": "2964c6997ad8",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "TestPrinterWhitespaceGap_family-time3.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "19284332a167",
+    "cache": "hit",
+    "seconds": 2.53
+  },
+  {
+    "log": "TestPrinterWhitespaceGap_family-time3.log",
+    "product": "sanitized_GraphQL_printer",
+    "key": "2964c6997ad8",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "TestPrinterWhitespaceGap_family-time2.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterWhitespaceGap_family-time2.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterWhitespaceGap_family-time2.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterWhitespaceGap_family-time2.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterWhitespaceGap_family-time2.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterWhitespaceGap_family-time2.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "19284332a167",
+    "cache": "hit",
+    "seconds": 2.14
+  },
+  {
+    "log": "TestPrinterWhitespaceGap_family-time2.log",
+    "product": "sanitized_GraphQL_printer",
+    "key": "2964c6997ad8",
+    "cache": "hit",
+    "seconds": 0.02
+  },
+  {
+    "log": "TestPrinterWhitespaceGap_family-time2.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "19284332a167",
+    "cache": "hit",
+    "seconds": 2.36
+  },
+  {
+    "log": "TestPrinterWhitespaceGap_family-time2.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "19284332a167",
+    "cache": "hit",
+    "seconds": 2.3
+  },
+  {
+    "log": "TestPrinterWhitespaceGap_family-time2.log",
+    "product": "sanitized_GraphQL_printer",
+    "key": "2964c6997ad8",
+    "cache": "hit",
+    "seconds": 0.02
+  },
+  {
+    "log": "TestPrinterWhitespaceGap_family-time2.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "19284332a167",
+    "cache": "hit",
+    "seconds": 2.3
+  },
+  {
+    "log": "TestPrinterWhitespaceGap_family-time2.log",
+    "product": "sanitized_GraphQL_printer",
+    "key": "2964c6997ad8",
+    "cache": "hit",
+    "seconds": 0.02
+  },
+  {
+    "log": "TestPrinterWhitespaceGap_family-time2.log",
+    "product": "sanitized_GraphQL_printer",
+    "key": "2964c6997ad8",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "TestPrinterWhitespaceGap_family-time2.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "19284332a167",
+    "cache": "hit",
+    "seconds": 2.41
+  },
+  {
+    "log": "TestPrinterWhitespaceGap_family-time2.log",
+    "product": "sanitized_GraphQL_printer",
+    "key": "2964c6997ad8",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "TestPrinterWhitespaceGap_family-time1.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterWhitespaceGap_family-time1.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterWhitespaceGap_family-time1.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterWhitespaceGap_family-time1.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterWhitespaceGap_family-time1.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterWhitespaceGap_family-time1.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "19284332a167",
+    "cache": "hit",
+    "seconds": 2.31
+  },
+  {
+    "log": "TestPrinterWhitespaceGap_family-time1.log",
+    "product": "sanitized_GraphQL_printer",
+    "key": "2964c6997ad8",
+    "cache": "hit",
+    "seconds": 0.02
+  },
+  {
+    "log": "TestPrinterWhitespaceGap_family-time1.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "19284332a167",
+    "cache": "hit",
+    "seconds": 2.33
+  },
+  {
+    "log": "TestPrinterWhitespaceGap_family-time1.log",
+    "product": "sanitized_GraphQL_printer",
+    "key": "2964c6997ad8",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "TestPrinterWhitespaceGap_family-time1.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "19284332a167",
+    "cache": "hit",
+    "seconds": 2.36
+  },
+  {
+    "log": "TestPrinterWhitespaceGap_family-time1.log",
+    "product": "sanitized_GraphQL_printer",
+    "key": "2964c6997ad8",
+    "cache": "hit",
+    "seconds": 0.02
+  },
+  {
+    "log": "TestPrinterWhitespaceGap_family-time1.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "19284332a167",
+    "cache": "hit",
+    "seconds": 2.38
+  },
+  {
+    "log": "TestPrinterWhitespaceGap_family-time1.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "19284332a167",
+    "cache": "hit",
+    "seconds": 2.38
+  },
+  {
+    "log": "TestPrinterWhitespaceGap_family-time1.log",
+    "product": "sanitized_GraphQL_printer",
+    "key": "2964c6997ad8",
+    "cache": "hit",
+    "seconds": 0.02
+  },
+  {
+    "log": "TestPrinterWhitespaceGap_family-time1.log",
+    "product": "sanitized_GraphQL_printer",
+    "key": "2964c6997ad8",
+    "cache": "hit",
+    "seconds": 0.03
+  },
+  {
+    "log": "TestPrinterWhitespaceGap_Setup-time3.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterWhitespaceGap_Setup-time2.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterWhitespaceGap_Setup-time1.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterUpstreamPreflight_family-time3.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterUpstreamPreflight_family-time3.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "ab7bfa360bc6",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterUpstreamPreflight_family-time3.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterUpstreamPreflight_family-time3.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterUpstreamPreflight_family-time3.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "ab7bfa360bc6",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterUpstreamPreflight_family-time3.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "17da87dfad78",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterUpstreamPreflight_family-time3.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterUpstreamPreflight_family-time3.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "ab7bfa360bc6",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterUpstreamPreflight_family-time3.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterUpstreamPreflight_family-time3.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "17da87dfad78",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterUpstreamPreflight_family-time3.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "ab7bfa360bc6",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterUpstreamPreflight_family-time3.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "17da87dfad78",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterUpstreamPreflight_family-time3.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterUpstreamPreflight_family-time3.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "17da87dfad78",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterUpstreamPreflight_family-time3.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterUpstreamPreflight_family-time3.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterUpstreamPreflight_family-time2.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterUpstreamPreflight_family-time2.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterUpstreamPreflight_family-time2.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "ab7bfa360bc6",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterUpstreamPreflight_family-time2.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterUpstreamPreflight_family-time2.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "ab7bfa360bc6",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterUpstreamPreflight_family-time2.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "17da87dfad78",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterUpstreamPreflight_family-time2.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "ab7bfa360bc6",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterUpstreamPreflight_family-time2.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterUpstreamPreflight_family-time2.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "17da87dfad78",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterUpstreamPreflight_family-time2.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "17da87dfad78",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterUpstreamPreflight_family-time2.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "ab7bfa360bc6",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterUpstreamPreflight_family-time2.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterUpstreamPreflight_family-time2.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterUpstreamPreflight_family-time2.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterUpstreamPreflight_family-time2.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "17da87dfad78",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterUpstreamPreflight_family-time2.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterUpstreamPreflight_family-time1.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterUpstreamPreflight_family-time1.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterUpstreamPreflight_family-time1.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterUpstreamPreflight_family-time1.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "ab7bfa360bc6",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterUpstreamPreflight_family-time1.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "ab7bfa360bc6",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterUpstreamPreflight_family-time1.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "ab7bfa360bc6",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterUpstreamPreflight_family-time1.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "17da87dfad78",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterUpstreamPreflight_family-time1.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "17da87dfad78",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterUpstreamPreflight_family-time1.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterUpstreamPreflight_family-time1.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "17da87dfad78",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterUpstreamPreflight_family-time1.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterUpstreamPreflight_family-time1.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "ab7bfa360bc6",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterUpstreamPreflight_family-time1.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterUpstreamPreflight_family-time1.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterUpstreamPreflight_family-time1.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "17da87dfad78",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterUpstreamPreflight_family-time1.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterUpstreamPreflight_Setup-time3.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterUpstreamPreflight_Setup-time3.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "ab7bfa360bc6",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterUpstreamPreflight_Setup-time3.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "17da87dfad78",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterUpstreamPreflight_Setup-time3.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterUpstreamPreflight_Setup-time2.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterUpstreamPreflight_Setup-time2.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "ab7bfa360bc6",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterUpstreamPreflight_Setup-time2.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "17da87dfad78",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterUpstreamPreflight_Setup-time2.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterUpstreamPreflight_Setup-time1.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterUpstreamPreflight_Setup-time1.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "ab7bfa360bc6",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterUpstreamPreflight_Setup-time1.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "17da87dfad78",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterUpstreamPreflight_Setup-time1.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterAsGoCohere_family-time3.log",
+    "product": "GraphQL_printer_source",
+    "key": "17ac3d05a011",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterAsGoCohere_family-time3.log",
+    "product": "GraphQL_printer_Go_oracle",
+    "key": "e48be64e6d46",
+    "cache": "hit",
+    "seconds": 0.99
+  },
+  {
+    "log": "TestPrinterAsGoCohere_family-time3.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterAsGoCohere_family-time3.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "ab7bfa360bc6",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterAsGoCohere_family-time3.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "17da87dfad78",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterAsGoCohere_family-time3.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterAsGoCohere_family-time3.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "19284332a167",
+    "cache": "hit",
+    "seconds": 1.56
+  },
+  {
+    "log": "TestPrinterAsGoCohere_family-time3.log",
+    "product": "GraphQL_printer_split_native_sanitize=true",
+    "key": "1bc6249ca667",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "TestPrinterAsGoCohere_family-time2.log",
+    "product": "GraphQL_printer_source",
+    "key": "17ac3d05a011",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterAsGoCohere_family-time2.log",
+    "product": "GraphQL_printer_Go_oracle",
+    "key": "e48be64e6d46",
+    "cache": "hit",
+    "seconds": 0.97
+  },
+  {
+    "log": "TestPrinterAsGoCohere_family-time2.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterAsGoCohere_family-time2.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "ab7bfa360bc6",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterAsGoCohere_family-time2.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "17da87dfad78",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterAsGoCohere_family-time2.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterAsGoCohere_family-time2.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "19284332a167",
+    "cache": "hit",
+    "seconds": 1.62
+  },
+  {
+    "log": "TestPrinterAsGoCohere_family-time2.log",
+    "product": "GraphQL_printer_split_native_sanitize=true",
+    "key": "1bc6249ca667",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "TestPrinterAsGoCohere_family-time1.log",
+    "product": "GraphQL_printer_source",
+    "key": "17ac3d05a011",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterAsGoCohere_family-time1.log",
+    "product": "GraphQL_printer_Go_oracle",
+    "key": "e48be64e6d46",
+    "cache": "hit",
+    "seconds": 0.9
+  },
+  {
+    "log": "TestPrinterAsGoCohere_family-time1.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterAsGoCohere_family-time1.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "ab7bfa360bc6",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterAsGoCohere_family-time1.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "17da87dfad78",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterAsGoCohere_family-time1.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterAsGoCohere_family-time1.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "19284332a167",
+    "cache": "hit",
+    "seconds": 1.49
+  },
+  {
+    "log": "TestPrinterAsGoCohere_family-time1.log",
+    "product": "GraphQL_printer_split_native_sanitize=true",
+    "key": "1bc6249ca667",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "TestPrinterShardPlantedDisagreement-time3.log",
+    "product": "GraphQL_printer_Go_oracle",
+    "key": "e48be64e6d46",
+    "cache": "hit",
+    "seconds": 0.83
+  },
+  {
+    "log": "TestPrinterShardPlantedDisagreement-time3.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterShardPlantedDisagreement-time3.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterShardPlantedDisagreement-time2.log",
+    "product": "GraphQL_printer_Go_oracle",
+    "key": "e48be64e6d46",
+    "cache": "hit",
+    "seconds": 0.84
+  },
+  {
+    "log": "TestPrinterShardPlantedDisagreement-time2.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterShardPlantedDisagreement-time2.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterShardPlantedDisagreement-time1.log",
+    "product": "GraphQL_printer_Go_oracle",
+    "key": "e48be64e6d46",
+    "cache": "hit",
+    "seconds": 0.82
+  },
+  {
+    "log": "TestPrinterShardPlantedDisagreement-time1.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterShardPlantedDisagreement-time1.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterFileDriver-time3.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "b9ef4315e4f5",
+    "cache": "hit",
+    "seconds": 1.47
+  },
+  {
+    "log": "TestPrinterFileDriver-time3.log",
+    "product": "sanitized_GraphQL_printer",
+    "key": "2964c6997ad8",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "TestPrinterFileDriver-time2.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "b9ef4315e4f5",
+    "cache": "hit",
+    "seconds": 1.42
+  },
+  {
+    "log": "TestPrinterFileDriver-time2.log",
+    "product": "sanitized_GraphQL_printer",
+    "key": "2964c6997ad8",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "TestPrinterFileDriver-time1.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "b9ef4315e4f5",
+    "cache": "hit",
+    "seconds": 1.48
+  },
+  {
+    "log": "TestPrinterFileDriver-time1.log",
+    "product": "sanitized_GraphQL_printer",
+    "key": "2964c6997ad8",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "TestPrinterPreflightPlantedDisagreement-time3.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterPreflightPlantedDisagreement-time3.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterPreflightPlantedDisagreement-time2.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterPreflightPlantedDisagreement-time2.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterPreflightPlantedDisagreement-time1.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "TestPrinterPreflightPlantedDisagreement-time1.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "slice-baseline.log",
+    "product": "GraphQL_printer_Go_oracle",
+    "key": "e48be64e6d46",
+    "cache": "hit",
+    "seconds": 1.44
+  },
+  {
+    "log": "slice-baseline.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "slice-baseline.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "ab7bfa360bc6",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "slice-baseline.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "slice-baseline.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "ab7bfa360bc6",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "slice-baseline.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "17da87dfad78",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "slice-baseline.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "slice-baseline.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "17da87dfad78",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "slice-baseline.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "slice-baseline.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "ab7bfa360bc6",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "slice-baseline.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "slice-baseline.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "slice-baseline.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "17da87dfad78",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "slice-baseline.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "slice-baseline.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "ab7bfa360bc6",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "slice-baseline.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "slice-baseline.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "17da87dfad78",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "slice-baseline.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "slice-baseline.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "slice-baseline.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "slice-baseline.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "ab7bfa360bc6",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "slice-baseline.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "17da87dfad78",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "slice-baseline.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "slice-baseline.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "19284332a167",
+    "cache": "hit",
+    "seconds": 2.92
+  },
+  {
+    "log": "slice-baseline.log",
+    "product": "sanitized_GraphQL_printer",
+    "key": "2964c6997ad8",
+    "cache": "hit",
+    "seconds": 0.03
+  },
+  {
+    "log": "slice-baseline.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "slice-baseline.log",
+    "product": "GraphQL_printer_source",
+    "key": "17ac3d05a011",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "slice-baseline.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "slice-baseline.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "slice-baseline.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "ab7bfa360bc6",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "slice-baseline.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "17da87dfad78",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "slice-baseline.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "slice-baseline.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "19284332a167",
+    "cache": "hit",
+    "seconds": 2.2
+  },
+  {
+    "log": "slice-baseline.log",
+    "product": "sanitized_GraphQL_printer",
+    "key": "2964c6997ad8",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "slice-baseline.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "19284332a167",
+    "cache": "hit",
+    "seconds": 2.19
+  },
+  {
+    "log": "slice-baseline.log",
+    "product": "GraphQL_printer_split_native_sanitize=true",
+    "key": "1bc6249ca667",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "slice-baseline.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "79ee6634420c",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "slice-baseline.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "b9ef4315e4f5",
+    "cache": "miss",
+    "seconds": 8.4
+  },
+  {
+    "log": "slice-baseline.log",
+    "product": "sanitized_GraphQL_printer",
+    "key": "2964c6997ad8",
+    "cache": "hit",
+    "seconds": 0.03
+  },
+  {
+    "log": "slice-baseline.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "slice-baseline.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "slice-baseline.log",
+    "product": "GraphQL_printer_oracle_outputs",
+    "key": "88902adf52f2",
+    "cache": "hit",
+    "seconds": 0.0
+  },
+  {
+    "log": "slice-baseline.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "19284332a167",
+    "cache": "hit",
+    "seconds": 2.06
+  },
+  {
+    "log": "slice-baseline.log",
+    "product": "sanitized_GraphQL_printer",
+    "key": "2964c6997ad8",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "slice-baseline.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "19284332a167",
+    "cache": "hit",
+    "seconds": 2.02
+  },
+  {
+    "log": "slice-baseline.log",
+    "product": "sanitized_GraphQL_printer",
+    "key": "2964c6997ad8",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "slice-baseline.log",
+    "product": "lowered_GraphQL_printer",
+    "key": "19284332a167",
+    "cache": "hit",
+    "seconds": 1.78
+  },
+  {
+    "log": "slice-baseline.log",
+    "product": "sanitized_GraphQL_printer",
+    "key": "2964c6997ad8",
+    "cache": "hit",
+    "seconds": 0.01
+  }
+]

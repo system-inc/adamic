@@ -1,0 +1,12 @@
+{
+  "id": "P05",
+  "kind": "empty construction entry probe",
+  "file": "stage1/cohere/graphql/printer/gaps_test.go",
+  "line": 153,
+  "before": "func whitespaceShards(cases []printerCase) []printerShard {",
+  "after": "func whitespaceShards(cases []printerCase) []printerShard {\n\tif os.Getenv(\"ADAMIC_AUDIT_PROBE\") == \"P05\" { return nil }",
+  "test": "TestPrinterWhitespaceGap_Setup",
+  "command": "ADAMIC_GRAPHQL_PRETTIER=/tmp/u099-prettier ADAMIC_AUDIT_PROBE=P05 timeout 120 go test -overlay=/tmp/u099-P05-overlay.json -json -count=1 -timeout 90s ./stage1/cohere/graphql/printer/ -run '^TestPrinterWhitespaceGap_Setup$'",
+  "exit": 1,
+  "wall": 6.2276720909994765
+}

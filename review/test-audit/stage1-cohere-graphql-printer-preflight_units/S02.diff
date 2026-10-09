@@ -1,0 +1,10 @@
+--- a/stage1/cohere/graphql/printer/preflight_units_test.go
++++ b/stage1/cohere/graphql/printer/preflight_units_test.go
+@@ -84,7 +84,6 @@
+ 	for _, mode := range []string{"defaults", "narrow", "tight", "tabs"} {
+ 		cases, want := printerCases(t, mode, oracle)
+ 		enumeration := enumeratePrinter(t, mode, cases, want)
+-		whole = append(whole, enumeration...)
+ 		shards = append(shards, printerShard{mode: mode, path: cases, cases: enumeration})
+ 	}
+ 	if len(shards) != testPrinterUpstreamPreflightShards {

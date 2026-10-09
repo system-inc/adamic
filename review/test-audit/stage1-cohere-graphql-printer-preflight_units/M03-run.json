@@ -1,0 +1,34 @@
+{
+  "command": "ADAMIC_GRAPHQL_PRETTIER=/tmp/u099-prettier timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/graphql/printer/ -run '^(TestPrinterPreflightPlantedDisagreement|TestPrinterFileDriver|TestPrinterShardUnionRejectsMissingAndRepeated|TestPrinterShardSelection|TestPrinterShardPlantedDisagreement|TestPrinterAsGoCohere_Union|TestPrinterAsGoCohere_000|TestPrinterAsGoCohere_001|TestPrinterAsGoCohere_002|TestPrinterAsGoCohere_003|TestPrinterUpstreamPreflight_Setup|TestPrinterUpstreamPreflight_000|TestPrinterUpstreamPreflight_001|TestPrinterUpstreamPreflight_002|TestPrinterUpstreamPreflight_003|TestPrinterWhitespaceGap_Setup|TestPrinterWhitespaceGap_000|TestPrinterWhitespaceGap_001|TestPrinterWhitespaceGap_002|TestPrinterWhitespaceGap_003|TestPrinterWhitespaceGap_004)$'",
+  "selector_file": "/tmp/u099-mutant",
+  "selector_value": "M03",
+  "exit": 1,
+  "wall": 24.912003278000157,
+  "seconds": 23.2,
+  "failed": [
+    "TestPrinterAsGoCohere_001",
+    "TestPrinterAsGoCohere_003",
+    "TestPrinterAsGoCohere_000",
+    "TestPrinterAsGoCohere_002"
+  ],
+  "passed": [
+    "TestPrinterWhitespaceGap_Setup",
+    "TestPrinterAsGoCohere_Union",
+    "TestPrinterWhitespaceGap_000",
+    "TestPrinterUpstreamPreflight_003",
+    "TestPrinterShardSelection",
+    "TestPrinterShardUnionRejectsMissingAndRepeated",
+    "TestPrinterUpstreamPreflight_000",
+    "TestPrinterUpstreamPreflight_001",
+    "TestPrinterUpstreamPreflight_Setup",
+    "TestPrinterUpstreamPreflight_002",
+    "TestPrinterFileDriver",
+    "TestPrinterPreflightPlantedDisagreement",
+    "TestPrinterWhitespaceGap_002",
+    "TestPrinterWhitespaceGap_004",
+    "TestPrinterShardPlantedDisagreement",
+    "TestPrinterWhitespaceGap_003",
+    "TestPrinterWhitespaceGap_001"
+  ],
+  "timeout": false
+}

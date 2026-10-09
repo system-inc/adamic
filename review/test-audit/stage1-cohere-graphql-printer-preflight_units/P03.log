@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T12:09:05.631439281Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer"}
+{"Time":"2026-10-09T12:09:05.638507867Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestPrinterShardSelection"}
+{"Time":"2026-10-09T12:09:05.638566074Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestPrinterShardSelection","Output":"=== RUN   TestPrinterShardSelection\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:09:05.638737783Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestPrinterShardSelection","Output":"=== PAUSE TestPrinterShardSelection\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:09:05.638742671Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestPrinterShardSelection"}
+{"Time":"2026-10-09T12:09:05.638747187Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestPrinterShardSelection"}
+{"Time":"2026-10-09T12:09:05.63874893Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestPrinterShardSelection","Output":"=== CONT  TestPrinterShardSelection\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:09:05.638752285Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestPrinterShardSelection","Output":"    shards_test.go:309: shard-000 assigned 0 times\n","OutputType":"error"}
+{"Time":"2026-10-09T12:09:05.638759977Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestPrinterShardSelection","Output":"--- FAIL: TestPrinterShardSelection (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:09:05.638761669Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestPrinterShardSelection","Elapsed":0}
+{"Time":"2026-10-09T12:09:05.638770452Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:09:05.638917874Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/cohere/graphql/printer\t0.007s\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:09:05.638936092Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Elapsed":0.008}

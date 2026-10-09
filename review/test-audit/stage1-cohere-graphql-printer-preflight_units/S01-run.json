@@ -1,0 +1,12 @@
+{
+  "id": "S01",
+  "kind": "construction condition flip",
+  "file": "stage1/cohere/graphql/printer/shards_test.go",
+  "line": 251,
+  "before": "selected[i] = i%boxes == index",
+  "after": "selected[i] = i%boxes != index",
+  "test": "TestPrinterShardSelection",
+  "command": "ADAMIC_GRAPHQL_PRETTIER=/tmp/u099-prettier ADAMIC_AUDIT_PROBE=S01 timeout 120 go test -overlay=/tmp/u099-S01-overlay.json -json -count=1 -timeout 90s ./stage1/cohere/graphql/printer/ -run '^TestPrinterShardSelection$'",
+  "exit": 1,
+  "wall": 4.735469982000723
+}

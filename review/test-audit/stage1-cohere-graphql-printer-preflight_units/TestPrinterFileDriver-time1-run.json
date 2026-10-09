@@ -1,0 +1,8 @@
+{
+  "row": "TestPrinterFileDriver",
+  "command": "ADAMIC_GRAPHQL_PRETTIER=/tmp/u099-prettier timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/graphql/printer/ -run '^(TestPrinterFileDriver)$'",
+  "exit": 0,
+  "wall": 3.4321597300004214,
+  "seconds": 1.788,
+  "timeout": false
+}

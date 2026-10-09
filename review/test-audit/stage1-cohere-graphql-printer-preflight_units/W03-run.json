@@ -1,0 +1,12 @@
+{
+  "id": "W03",
+  "kind": "construction comparison weakening",
+  "file": "stage1/cohere/graphql/printer/shards_test.go",
+  "line": 219,
+  "before": "item != original",
+  "after": "item.id != original.id",
+  "test": "TestPrinterShardUnionRejectsMissingAndRepeated",
+  "command": "ADAMIC_GRAPHQL_PRETTIER=/tmp/u099-prettier ADAMIC_AUDIT_PROBE=W03 timeout 120 go test -overlay=/tmp/u099-W03-overlay.json -json -count=1 -timeout 90s ./stage1/cohere/graphql/printer/ -run '^TestPrinterShardUnionRejectsMissingAndRepeated$'",
+  "exit": 1,
+  "wall": 4.788999287999104
+}

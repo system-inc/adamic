@@ -1,0 +1,12 @@
+{
+  "id": "W02",
+  "kind": "witness weakening",
+  "file": "stage1/cohere/graphql/printer/shards_test.go",
+  "line": 265,
+  "before": "if string(result.stdout) == want.String() {",
+  "after": "if result.exitCode == 0 {",
+  "test": "TestPrinterShardPlantedDisagreement",
+  "command": "ADAMIC_GRAPHQL_PRETTIER=/tmp/u099-prettier ADAMIC_AUDIT_PROBE=W02 timeout 120 go test -overlay=/tmp/u099-W02-overlay.json -json -count=1 -timeout 90s ./stage1/cohere/graphql/printer/ -run '^TestPrinterShardPlantedDisagreement$'",
+  "exit": 1,
+  "wall": 6.13574841099944
+}

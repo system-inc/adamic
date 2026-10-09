@@ -1,0 +1,12 @@
+{
+  "id": "P02",
+  "kind": "empty construction entry probe",
+  "file": "stage1/cohere/graphql/printer/shards_test.go",
+  "line": 206,
+  "before": "func printerShardUnion(whole []printerCase, shards []printerShard) error {",
+  "after": "func printerShardUnion(whole []printerCase, shards []printerShard) error {\n\tif os.Getenv(\"ADAMIC_AUDIT_PROBE\") == \"P02\" { return nil }",
+  "test": "TestPrinterShardUnionRejectsMissingAndRepeated",
+  "command": "ADAMIC_GRAPHQL_PRETTIER=/tmp/u099-prettier ADAMIC_AUDIT_PROBE=P02 timeout 120 go test -overlay=/tmp/u099-P02-overlay.json -json -count=1 -timeout 90s ./stage1/cohere/graphql/printer/ -run '^TestPrinterShardUnionRejectsMissingAndRepeated$'",
+  "exit": 1,
+  "wall": 4.890501059999224
+}

@@ -1,0 +1,38 @@
+[
+  {
+    "mode": "defaults",
+    "command": "cwd=/workspace/adamic/cohere; ADAMIC_PRINTER_REQUEST=/tmp/u099-live-defaults/request.json timeout 90 /home/agent/.cache/adamic-build/e48be64e6d46598cc4ae3f9504347962bd3f0c4c96b9b6bfb99669976e60487d/oracle '-test.run=^TestAdamicPrinter$' -test.count=1 -test.timeout=90s",
+    "exit": 0,
+    "wall": 0.4286011589992995,
+    "cached_and_live_answers_identical": true,
+    "sha256": "5faa51aa5bc054a2f239404538f3f1485018aa0f981a6ab9c8902d55b74be3ed",
+    "cases": 20655
+  },
+  {
+    "mode": "narrow",
+    "command": "cwd=/workspace/adamic/cohere; ADAMIC_PRINTER_REQUEST=/tmp/u099-live-narrow/request.json timeout 90 /home/agent/.cache/adamic-build/e48be64e6d46598cc4ae3f9504347962bd3f0c4c96b9b6bfb99669976e60487d/oracle '-test.run=^TestAdamicPrinter$' -test.count=1 -test.timeout=90s",
+    "exit": 0,
+    "wall": 0.3432494400003634,
+    "cached_and_live_answers_identical": true,
+    "sha256": "5cc153daebefa2e19d489c56391005e94be91662adce30e4350c1cd78d01682b",
+    "cases": 20655
+  },
+  {
+    "mode": "tight",
+    "command": "cwd=/workspace/adamic/cohere; ADAMIC_PRINTER_REQUEST=/tmp/u099-live-tight/request.json timeout 90 /home/agent/.cache/adamic-build/e48be64e6d46598cc4ae3f9504347962bd3f0c4c96b9b6bfb99669976e60487d/oracle '-test.run=^TestAdamicPrinter$' -test.count=1 -test.timeout=90s",
+    "exit": 0,
+    "wall": 0.36849703100051556,
+    "cached_and_live_answers_identical": true,
+    "sha256": "a9c78f3b0f137748e4ce35286ebeb6143eb862ec3df5277a4ecfe0ba8c619724",
+    "cases": 20655
+  },
+  {
+    "mode": "tabs",
+    "command": "cwd=/workspace/adamic/cohere; ADAMIC_PRINTER_REQUEST=/tmp/u099-live-tabs/request.json timeout 90 /home/agent/.cache/adamic-build/e48be64e6d46598cc4ae3f9504347962bd3f0c4c96b9b6bfb99669976e60487d/oracle '-test.run=^TestAdamicPrinter$' -test.count=1 -test.timeout=90s",
+    "exit": 0,
+    "wall": 0.3480283259996213,
+    "cached_and_live_answers_identical": true,
+    "sha256": "471f9d8451e5162b2d34fa5b4a64b46f313105f2913e848a313d97e38102335f",
+    "cases": 20655
+  }
+]

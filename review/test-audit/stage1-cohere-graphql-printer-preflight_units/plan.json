@@ -1,0 +1,58 @@
+{
+  "declared_before_any_mutation": true,
+  "production_mutants": [
+    {
+      "id": "M01",
+      "file": "stage1/cohere/graphql/printer/doc.ts",
+      "line": 26,
+      "before": "    tabWidth: 4,",
+      "after": "    tabWidth: 3,",
+      "menu": "change defaults constant",
+      "reached_function": "format(source, settings=defaults), file-driver default options"
+    },
+    {
+      "id": "M02",
+      "file": "stage1/cohere/graphql/printer/doc.ts",
+      "line": 201,
+      "before": "doc: node.parts[command.flat ? 1 : 0] ?? panic('branch'),",
+      "after": "doc: node.parts[command.flat ? 0 : 0] ?? panic('branch'),",
+      "menu": "change branch-index constant in Documents.print",
+      "reached_function": "Documents.print"
+    },
+    {
+      "id": "M03",
+      "file": "stage1/cohere/graphql/printer/printer.ts",
+      "line": 204,
+      "before": "this.docs.text(`#${decoded(comment.value).trimEnd()}`)",
+      "after": "this.docs.text(`##${decoded(comment.value).trimEnd()}`)",
+      "menu": "change comment prefix constant in Printer.comment",
+      "reached_function": "Printer.comment"
+    },
+    {
+      "id": "M04",
+      "file": "stage1/cohere/graphql/parser.ts",
+      "line": 1228,
+      "before": "this.expectToken('<SOF>');",
+      "after": "this.expectToken('<EOF>');",
+      "menu": "change token constant in Parser.parseDocument",
+      "reached_function": "Parser.parseDocument"
+    }
+  ],
+  "probes": {
+    "P01": "empty port command entry",
+    "P02": "printerShardUnion returns nil",
+    "P03": "printerShardSelection returns nil,nil",
+    "P04": "enumeratePrinter returns nil",
+    "P05": "whitespaceShards returns nil"
+  },
+  "witness_weakening": {
+    "W01": "disable unexpected-difference error in printerPreflightDisagreement",
+    "W02": "accept successful output without comparing in printerShardDisagreement",
+    "W03": "compare union IDs but omit input/answer payload equality"
+  },
+  "construction_breaks": {
+    "S01": "flip selected modulo equality",
+    "S02": "drop whole-enumeration append in upstream construction",
+    "S03": "off-by-one whitespace construction input bound"
+  }
+}

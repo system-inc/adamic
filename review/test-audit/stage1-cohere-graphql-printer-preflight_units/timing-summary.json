@@ -1,0 +1,27 @@
+{
+  "nproc": 5,
+  "setup_skipped": true,
+  "medians": {
+    "TestPrinterPreflightPlantedDisagreement": 4.332,
+    "TestPrinterFileDriver": 1.777,
+    "TestPrinterShardUnionRejectsMissingAndRepeated": 0.007,
+    "TestPrinterShardSelection": 0.007,
+    "TestPrinterShardPlantedDisagreement": 1.32,
+    "TestPrinterAsGoCohere family": 9.99,
+    "TestPrinterUpstreamPreflight_Setup": 1.437,
+    "TestPrinterUpstreamPreflight family": 5.97,
+    "TestPrinterWhitespaceGap_Setup": 1.183,
+    "TestPrinterWhitespaceGap family": 5.21
+  },
+  "clean_timing_binary_total": 94.336,
+  "clean_timing_wall_total": 143.72394846200132,
+  "matrix_binary_seconds": {
+    "M01": 23.328,
+    "M02": 23.689,
+    "M03": 23.2,
+    "M04": 16.357,
+    "P01": 16.41
+  },
+  "standalone_validation_wall_total": 34.660291515996505,
+  "fresh_switched_product_miss_seconds": 22.54
+}

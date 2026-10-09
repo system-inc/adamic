@@ -1,0 +1,403 @@
+[
+  {
+    "test": "TestPrinterPreflightPlantedDisagreement",
+    "package": "stage1/cohere/graphql/printer",
+    "file": "stage1/cohere/graphql/printer/preflight_units_test.go",
+    "seconds": 4.332,
+    "oracle": "npm Prettier and Go cohere, with self-written owner/count expectations. This is a witness of printerPreflightDisagreement. Shared error-prefixed refusals are accepted without checking diagnostic equality.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W01: preflight_units_test.go:156: planted disagreement caught by 0 shards, want exactly one",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestPrinterPreflightPlantedDisagreement",
+      "TestPrinterFileDriver",
+      "TestPrinterShardUnionRejectsMissingAndRepeated",
+      "TestPrinterShardSelection",
+      "TestPrinterShardPlantedDisagreement",
+      "TestPrinterAsGoCohere family",
+      "TestPrinterUpstreamPreflight_Setup",
+      "TestPrinterUpstreamPreflight family",
+      "TestPrinterWhitespaceGap_Setup",
+      "TestPrinterWhitespaceGap family"
+    ],
+    "evidence": "ADAMIC_GRAPHQL_PRETTIER=/tmp/u099-prettier ADAMIC_AUDIT_PROBE=W01 timeout 120 go test -overlay=/tmp/u099-W01-overlay.json -json -count=1 -timeout 90s ./stage1/cohere/graphql/printer/ -run '^TestPrinterPreflightPlantedDisagreement$'; preflight_units_test.go:156: planted disagreement caught by 0 shards, want exactly one",
+    "guard_kills": [
+      "W01"
+    ]
+  },
+  {
+    "test": "TestPrinterFileDriver",
+    "package": "stage1/cohere/graphql/printer",
+    "file": "stage1/cohere/graphql/printer/printer_test.go",
+    "seconds": 1.777,
+    "oracle": "Hand-written query output with four-space indentation. Node and native execution must match it and exit zero; stderr is not independently required to be empty.",
+    "oracle_kind": "self",
+    "kills": [
+      "M01",
+      "M02",
+      "M04"
+    ],
+    "unique_kills": [
+      "M01"
+    ],
+    "last_proven_fail": "M01: printer_test.go:131: driver: exit 0, stdout \"query {\\n   hello(a: 1, b: 2)\\n}\\n\", stderr \"\"",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestPrinterPreflightPlantedDisagreement",
+      "TestPrinterFileDriver",
+      "TestPrinterShardUnionRejectsMissingAndRepeated",
+      "TestPrinterShardSelection",
+      "TestPrinterShardPlantedDisagreement",
+      "TestPrinterAsGoCohere family",
+      "TestPrinterUpstreamPreflight_Setup",
+      "TestPrinterUpstreamPreflight family",
+      "TestPrinterWhitespaceGap_Setup",
+      "TestPrinterWhitespaceGap family"
+    ],
+    "evidence": "ADAMIC_GRAPHQL_PRETTIER=/tmp/u099-prettier timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/graphql/printer/ -run '^(TestPrinterPreflightPlantedDisagreement|TestPrinterFileDriver|TestPrinterShardUnionRejectsMissingAndRepeated|TestPrinterShardSelection|TestPrinterShardPlantedDisagreement|TestPrinterAsGoCohere_Union|TestPrinterAsGoCohere_000|TestPrinterAsGoCohere_001|TestPrinterAsGoCohere_002|TestPrinterAsGoCohere_003|TestPrinterUpstreamPreflight_Setup|TestPrinterUpstreamPreflight_000|TestPrinterUpstreamPreflight_001|TestPrinterUpstreamPreflight_002|TestPrinterUpstreamPreflight_003|TestPrinterWhitespaceGap_Setup|TestPrinterWhitespaceGap_000|TestPrinterWhitespaceGap_001|TestPrinterWhitespaceGap_002|TestPrinterWhitespaceGap_003|TestPrinterWhitespaceGap_004)$'; printer_test.go:131: driver: exit 0, stdout \"query {\\n   hello(a: 1, b: 2)\\n}\\n\", stderr \"\"",
+    "unique_kills_scope": "Only this bounded matrix; package and repository uniqueness remain unknown."
+  },
+  {
+    "test": "TestPrinterShardUnionRejectsMissingAndRepeated",
+    "package": "stage1/cohere/graphql/printer",
+    "file": "stage1/cohere/graphql/printer/shards_test.go",
+    "seconds": 0.007,
+    "oracle": "Self-written valid/missing/repeated/changed-input unions. Witnesses suite construction validation, including payload identity.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W03: shards_test.go:286: invalid union accepted",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P02"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestPrinterPreflightPlantedDisagreement",
+      "TestPrinterFileDriver",
+      "TestPrinterShardUnionRejectsMissingAndRepeated",
+      "TestPrinterShardSelection",
+      "TestPrinterShardPlantedDisagreement",
+      "TestPrinterAsGoCohere family",
+      "TestPrinterUpstreamPreflight_Setup",
+      "TestPrinterUpstreamPreflight family",
+      "TestPrinterWhitespaceGap_Setup",
+      "TestPrinterWhitespaceGap family"
+    ],
+    "evidence": "ADAMIC_GRAPHQL_PRETTIER=/tmp/u099-prettier ADAMIC_AUDIT_PROBE=W03 timeout 120 go test -overlay=/tmp/u099-W03-overlay.json -json -count=1 -timeout 90s ./stage1/cohere/graphql/printer/ -run '^TestPrinterShardUnionRejectsMissingAndRepeated$'; shards_test.go:286: invalid union accepted",
+    "guard_kills": [
+      "W03"
+    ]
+  },
+  {
+    "test": "TestPrinterShardSelection",
+    "package": "stage1/cohere/graphql/printer",
+    "file": "stage1/cohere/graphql/printer/shards_test.go",
+    "seconds": 0.007,
+    "oracle": "Self-written modulo assignment, complete/disjoint selection, invalid selector and unset selector expectations.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "S01: shards_test.go:308: shard-000 assigned 0 times",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P03"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestPrinterPreflightPlantedDisagreement",
+      "TestPrinterFileDriver",
+      "TestPrinterShardUnionRejectsMissingAndRepeated",
+      "TestPrinterShardSelection",
+      "TestPrinterShardPlantedDisagreement",
+      "TestPrinterAsGoCohere family",
+      "TestPrinterUpstreamPreflight_Setup",
+      "TestPrinterUpstreamPreflight family",
+      "TestPrinterWhitespaceGap_Setup",
+      "TestPrinterWhitespaceGap family"
+    ],
+    "evidence": "ADAMIC_GRAPHQL_PRETTIER=/tmp/u099-prettier ADAMIC_AUDIT_PROBE=S01 timeout 120 go test -overlay=/tmp/u099-S01-overlay.json -json -count=1 -timeout 90s ./stage1/cohere/graphql/printer/ -run '^TestPrinterShardSelection$'; shards_test.go:308: shard-000 assigned 0 times",
+    "guard_kills": [
+      "S01"
+    ]
+  },
+  {
+    "test": "TestPrinterShardPlantedDisagreement",
+    "package": "stage1/cohere/graphql/printer",
+    "file": "stage1/cohere/graphql/printer/grain_asgo_test.go",
+    "seconds": 1.32,
+    "oracle": "Go cohere and Node controls; self-written planted mismatch must be rejected by exactly its owning shard. Production control failures do not prove this witness.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W02: grain_asgo_test.go:340: planted disagreement caught by 0 shards, want exactly one",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestPrinterPreflightPlantedDisagreement",
+      "TestPrinterFileDriver",
+      "TestPrinterShardUnionRejectsMissingAndRepeated",
+      "TestPrinterShardSelection",
+      "TestPrinterShardPlantedDisagreement",
+      "TestPrinterAsGoCohere family",
+      "TestPrinterUpstreamPreflight_Setup",
+      "TestPrinterUpstreamPreflight family",
+      "TestPrinterWhitespaceGap_Setup",
+      "TestPrinterWhitespaceGap family"
+    ],
+    "evidence": "ADAMIC_GRAPHQL_PRETTIER=/tmp/u099-prettier ADAMIC_AUDIT_PROBE=W02 timeout 120 go test -overlay=/tmp/u099-W02-overlay.json -json -count=1 -timeout 90s ./stage1/cohere/graphql/printer/ -run '^TestPrinterShardPlantedDisagreement$'; grain_asgo_test.go:340: planted disagreement caught by 0 shards, want exactly one",
+    "guard_kills": [
+      "W02"
+    ]
+  },
+  {
+    "test": "TestPrinterAsGoCohere family",
+    "package": "stage1/cohere/graphql/printer",
+    "file": "stage1/cohere/graphql/printer/grain_asgo_test.go",
+    "seconds": 9.99,
+    "oracle": "Exact Node source, native, JavaScript-backend and Linux leak-run stdout/stderr/exit compared with Go cohere. Four direct live oracle regenerations match cached answers byte-for-byte. Union member checks construction only.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M02",
+      "M03",
+      "M04"
+    ],
+    "unique_kills": [
+      "M03"
+    ],
+    "last_proven_fail": "M03: grain_asgo_test.go:299: native: shard-003 tabs/case-000546: line 547: \"ok\\t## leading the file\\\\n## ends in JavaScript-only whitespace\\\\n\\\\n## before a definition\\\\ntype T { ## after the brace\\\\n\\\\t## own line before a field\\\\n\\\\ta: Int ## end of line\\\\n\\\\tb(\\\\n\\\\t\\\\t## before an argument\\\\n\\\\t\\\\tx: Int ## after an argument\\\\n\\\\t): Int\\\\n}\\\\nquery {\\\\n\\\\ta ## after a selection\\\\n\\\\t## between selections\\\\n\\\\tb\\\\n}\\\\n## end of file\\\\n\", Go cohere \"ok\\t# leading the file\\\\n# ends in JavaScript-only whitespace\\\\n\\\\n# before a definition\\\\ntype T { # after the brace\\\\n\\\\t# own line before a field\\\\n\\\\ta: Int # end of line\\\\n\\\\tb(\\\\n\\\\t\\\\t# before an argument\\\\n\\\\t\\\\tx: Int # after an argument\\\\n\\\\t): Int\\\\n}\\\\nquery {\\\\n\\\\ta # after a selection\\\\n\\\\t# between selections\\\\n\\\\tb\\\\n}\\\\n# end of file\\\\n\"",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestPrinterPreflightPlantedDisagreement",
+      "TestPrinterFileDriver",
+      "TestPrinterShardUnionRejectsMissingAndRepeated",
+      "TestPrinterShardSelection",
+      "TestPrinterShardPlantedDisagreement",
+      "TestPrinterAsGoCohere family",
+      "TestPrinterUpstreamPreflight_Setup",
+      "TestPrinterUpstreamPreflight family",
+      "TestPrinterWhitespaceGap_Setup",
+      "TestPrinterWhitespaceGap family"
+    ],
+    "evidence": "ADAMIC_GRAPHQL_PRETTIER=/tmp/u099-prettier timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/graphql/printer/ -run '^(TestPrinterPreflightPlantedDisagreement|TestPrinterFileDriver|TestPrinterShardUnionRejectsMissingAndRepeated|TestPrinterShardSelection|TestPrinterShardPlantedDisagreement|TestPrinterAsGoCohere_Union|TestPrinterAsGoCohere_000|TestPrinterAsGoCohere_001|TestPrinterAsGoCohere_002|TestPrinterAsGoCohere_003|TestPrinterUpstreamPreflight_Setup|TestPrinterUpstreamPreflight_000|TestPrinterUpstreamPreflight_001|TestPrinterUpstreamPreflight_002|TestPrinterUpstreamPreflight_003|TestPrinterWhitespaceGap_Setup|TestPrinterWhitespaceGap_000|TestPrinterWhitespaceGap_001|TestPrinterWhitespaceGap_002|TestPrinterWhitespaceGap_003|TestPrinterWhitespaceGap_004)$'; grain_asgo_test.go:299: native: shard-003 tabs/case-000546: line 547: \"ok\\t## leading the file\\\\n## ends in JavaScript-only whitespace\\\\n\\\\n## before a definition\\\\ntype T { ## after the brace\\\\n\\\\t## own line before a field\\\\n\\\\ta: Int ## end of line\\\\n\\\\tb(\\\\n\\\\t\\\\t## before an argument\\\\n\\\\t\\\\tx: Int ## after an argument\\\\n\\\\t): Int\\\\n}\\\\nquery {\\\\n\\\\ta ## after a selection\\\\n\\\\t## between selections\\\\n\\\\tb\\\\n}\\\\n## end of file\\\\n\", Go cohere \"ok\\t# leading the file\\\\n# ends in JavaScript-only whitespace\\\\n\\\\n# before a definition\\\\ntype T { # after the brace\\\\n\\\\t# own line before a field\\\\n\\\\ta: Int # end of line\\\\n\\\\tb(\\\\n\\\\t\\\\t# before an argument\\\\n\\\\t\\\\tx: Int # after an argument\\\\n\\\\t): Int\\\\n}\\\\nquery {\\\\n\\\\ta # after a selection\\\\n\\\\t# between selections\\\\n\\\\tb\\\\n}\\\\n# end of file\\\\n\"",
+    "members": [
+      "TestPrinterAsGoCohere_Union",
+      "TestPrinterAsGoCohere_000",
+      "TestPrinterAsGoCohere_001",
+      "TestPrinterAsGoCohere_002",
+      "TestPrinterAsGoCohere_003"
+    ],
+    "probe_untouched_members": [
+      "TestPrinterAsGoCohere_Union: construction-only member, not a port entry"
+    ],
+    "unique_kills_scope": "Only this bounded matrix; package and repository uniqueness remain unknown."
+  },
+  {
+    "test": "TestPrinterUpstreamPreflight_Setup",
+    "package": "stage1/cohere/graphql/printer",
+    "file": "stage1/cohere/graphql/printer/top_level_units_test.go",
+    "seconds": 1.437,
+    "oracle": "Union of constructed mode/case IDs and input/answer pairings. Both sides derive from enumeratePrinter; zero enumerated IDs are accepted, as P04 proves.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "S02: top_level_units_test.go:9: shard-000: missing, changed or repeated id defaults/case-000000",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": true,
+    "matrix_rows": [
+      "TestPrinterPreflightPlantedDisagreement",
+      "TestPrinterFileDriver",
+      "TestPrinterShardUnionRejectsMissingAndRepeated",
+      "TestPrinterShardSelection",
+      "TestPrinterShardPlantedDisagreement",
+      "TestPrinterAsGoCohere family",
+      "TestPrinterUpstreamPreflight_Setup",
+      "TestPrinterUpstreamPreflight family",
+      "TestPrinterWhitespaceGap_Setup",
+      "TestPrinterWhitespaceGap family"
+    ],
+    "evidence": "ADAMIC_GRAPHQL_PRETTIER=/tmp/u099-prettier ADAMIC_AUDIT_PROBE=S02 timeout 120 go test -overlay=/tmp/u099-S02-overlay.json -json -count=1 -timeout 90s ./stage1/cohere/graphql/printer/ -run '^TestPrinterUpstreamPreflight_Setup$'; top_level_units_test.go:9: shard-000: missing, changed or repeated id defaults/case-000000",
+    "guard_kills": [
+      "S02"
+    ],
+    "probe_entry": "enumeratePrinter, the value-producing enumeration used by this construction check",
+    "probe_evidence": "P04.log: union: 0 unique mode/case ids across 4 shards; PASS"
+  },
+  {
+    "test": "TestPrinterUpstreamPreflight family",
+    "package": "stage1/cohere/graphql/printer",
+    "file": "stage1/cohere/graphql/printer/top_level_units_test.go",
+    "seconds": 5.97,
+    "oracle": "Go cohere compared with npm Prettier 3.9.6 and embedded fork across four modes. Shared error-prefixed refusals need not have matching diagnostics; five self-recorded whitespace gaps per mode are required. The Adamic port is never executed.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "cannot-judge",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestPrinterPreflightPlantedDisagreement",
+      "TestPrinterFileDriver",
+      "TestPrinterShardUnionRejectsMissingAndRepeated",
+      "TestPrinterShardSelection",
+      "TestPrinterShardPlantedDisagreement",
+      "TestPrinterAsGoCohere family",
+      "TestPrinterUpstreamPreflight_Setup",
+      "TestPrinterUpstreamPreflight family",
+      "TestPrinterWhitespaceGap_Setup",
+      "TestPrinterWhitespaceGap family"
+    ],
+    "evidence": "Source proof: printerUpstreamUnit in preflight_units_test.go executes only Go cohere and npm/embedded Prettier, no TS/native port. All four port mutants pass this row, and no permitted mutation of its protected oracles is available.",
+    "members": [
+      "TestPrinterUpstreamPreflight_000",
+      "TestPrinterUpstreamPreflight_001",
+      "TestPrinterUpstreamPreflight_002",
+      "TestPrinterUpstreamPreflight_003"
+    ],
+    "reason": "Not caused by bounded scope. This is an oracle-preflight row with no permitted Adamic code-under-test mutation; changing Go cohere or Prettier would mutate an oracle."
+  },
+  {
+    "test": "TestPrinterWhitespaceGap_Setup",
+    "package": "stage1/cohere/graphql/printer",
+    "file": "stage1/cohere/graphql/printer/top_level_units_test.go",
+    "seconds": 1.183,
+    "oracle": "Live Go cohere corpus answers must contain the expected Syntax Error refusal class; self-written union covers the five repository whitespace case IDs.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "S03: gaps_test.go:93: shard union 4 ids, unsplit 5",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P05"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestPrinterPreflightPlantedDisagreement",
+      "TestPrinterFileDriver",
+      "TestPrinterShardUnionRejectsMissingAndRepeated",
+      "TestPrinterShardSelection",
+      "TestPrinterShardPlantedDisagreement",
+      "TestPrinterAsGoCohere family",
+      "TestPrinterUpstreamPreflight_Setup",
+      "TestPrinterUpstreamPreflight family",
+      "TestPrinterWhitespaceGap_Setup",
+      "TestPrinterWhitespaceGap family"
+    ],
+    "evidence": "ADAMIC_GRAPHQL_PRETTIER=/tmp/u099-prettier ADAMIC_AUDIT_PROBE=S03 timeout 120 go test -overlay=/tmp/u099-S03-overlay.json -json -count=1 -timeout 90s ./stage1/cohere/graphql/printer/ -run '^TestPrinterWhitespaceGap_Setup$'; gaps_test.go:93: shard union 4 ids, unsplit 5",
+    "guard_kills": [
+      "S03"
+    ]
+  },
+  {
+    "test": "TestPrinterWhitespaceGap family",
+    "package": "stage1/cohere/graphql/printer",
+    "file": "stage1/cohere/graphql/printer/top_level_units_test.go",
+    "seconds": 5.21,
+    "oracle": "Exact native and Node port refusals against Go cohere; npm and embedded Prettier must emit the self-recorded empty formatted answers. Error text is checked exactly on the port sides.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M04"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M04: gaps_test.go:129: native: shard-004 stage1/cohere/graphql/printer/gaps/whitespace-cases.json/case-000000: line 1: \"error\\tSyntax Error: Expected <EOF>, found <SOF>. (1:1)\", Go cohere \"error\\tSyntax Error: Unexpected <EOF>. (1:1)\"",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestPrinterFileDriver"
+    ],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": 1.777,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestPrinterPreflightPlantedDisagreement",
+      "TestPrinterFileDriver",
+      "TestPrinterShardUnionRejectsMissingAndRepeated",
+      "TestPrinterShardSelection",
+      "TestPrinterShardPlantedDisagreement",
+      "TestPrinterAsGoCohere family",
+      "TestPrinterUpstreamPreflight_Setup",
+      "TestPrinterUpstreamPreflight family",
+      "TestPrinterWhitespaceGap_Setup",
+      "TestPrinterWhitespaceGap family"
+    ],
+    "evidence": "ADAMIC_GRAPHQL_PRETTIER=/tmp/u099-prettier timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/graphql/printer/ -run '^(TestPrinterPreflightPlantedDisagreement|TestPrinterFileDriver|TestPrinterShardUnionRejectsMissingAndRepeated|TestPrinterShardSelection|TestPrinterShardPlantedDisagreement|TestPrinterAsGoCohere_Union|TestPrinterAsGoCohere_000|TestPrinterAsGoCohere_001|TestPrinterAsGoCohere_002|TestPrinterAsGoCohere_003|TestPrinterUpstreamPreflight_Setup|TestPrinterUpstreamPreflight_000|TestPrinterUpstreamPreflight_001|TestPrinterUpstreamPreflight_002|TestPrinterUpstreamPreflight_003|TestPrinterWhitespaceGap_Setup|TestPrinterWhitespaceGap_000|TestPrinterWhitespaceGap_001|TestPrinterWhitespaceGap_002|TestPrinterWhitespaceGap_003|TestPrinterWhitespaceGap_004)$'; gaps_test.go:129: native: shard-004 stage1/cohere/graphql/printer/gaps/whitespace-cases.json/case-000000: line 1: \"error\\tSyntax Error: Expected <EOF>, found <SOF>. (1:1)\", Go cohere \"error\\tSyntax Error: Unexpected <EOF>. (1:1)\"",
+    "members": [
+      "TestPrinterWhitespaceGap_000",
+      "TestPrinterWhitespaceGap_001",
+      "TestPrinterWhitespaceGap_002",
+      "TestPrinterWhitespaceGap_003",
+      "TestPrinterWhitespaceGap_004"
+    ],
+    "subsumption_mutants": 1,
+    "subsumption_limit": "Hint based on M04 only, not a deletion recommendation."
+  }
+]

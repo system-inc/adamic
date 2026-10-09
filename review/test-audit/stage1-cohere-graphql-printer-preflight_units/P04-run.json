@@ -1,0 +1,12 @@
+{
+  "id": "P04",
+  "kind": "empty construction entry probe",
+  "file": "stage1/cohere/graphql/printer/shards_test.go",
+  "line": 181,
+  "before": "func enumeratePrinter(t *testing.T, mode, path, want string) []printerCase {",
+  "after": "func enumeratePrinter(t *testing.T, mode, path, want string) []printerCase {\n\tif os.Getenv(\"ADAMIC_AUDIT_PROBE\") == \"P04\" { return nil }",
+  "test": "TestPrinterUpstreamPreflight_Setup",
+  "command": "ADAMIC_GRAPHQL_PRETTIER=/tmp/u099-prettier ADAMIC_AUDIT_PROBE=P04 timeout 120 go test -overlay=/tmp/u099-P04-overlay.json -json -count=1 -timeout 90s ./stage1/cohere/graphql/printer/ -run '^TestPrinterUpstreamPreflight_Setup$'",
+  "exit": 0,
+  "wall": 6.218823192000855
+}

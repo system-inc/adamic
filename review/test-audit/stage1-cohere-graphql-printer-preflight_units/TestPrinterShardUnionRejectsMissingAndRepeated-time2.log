@@ -1,0 +1,12 @@
+{"Time":"2026-10-09T12:02:57.789583075Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer"}
+{"Time":"2026-10-09T12:02:57.796139997Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestPrinterShardUnionRejectsMissingAndRepeated"}
+{"Time":"2026-10-09T12:02:57.79620798Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestPrinterShardUnionRejectsMissingAndRepeated","Output":"=== RUN   TestPrinterShardUnionRejectsMissingAndRepeated\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:02:57.796228381Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestPrinterShardUnionRejectsMissingAndRepeated","Output":"=== PAUSE TestPrinterShardUnionRejectsMissingAndRepeated\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:02:57.796230844Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestPrinterShardUnionRejectsMissingAndRepeated"}
+{"Time":"2026-10-09T12:02:57.796233048Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestPrinterShardUnionRejectsMissingAndRepeated"}
+{"Time":"2026-10-09T12:02:57.79623484Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestPrinterShardUnionRejectsMissingAndRepeated","Output":"=== CONT  TestPrinterShardUnionRejectsMissingAndRepeated\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:02:57.796240188Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestPrinterShardUnionRejectsMissingAndRepeated","Output":"--- PASS: TestPrinterShardUnionRejectsMissingAndRepeated (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:02:57.796242532Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestPrinterShardUnionRejectsMissingAndRepeated","Elapsed":0}
+{"Time":"2026-10-09T12:02:57.796372738Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:02:57.797126426Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/graphql/printer\t0.007s\n"}
+{"Time":"2026-10-09T12:02:57.797138223Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Elapsed":0.008}

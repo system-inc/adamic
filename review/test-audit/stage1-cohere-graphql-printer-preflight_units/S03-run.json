@@ -1,0 +1,12 @@
+{
+  "id": "S03",
+  "kind": "construction off-by-one",
+  "file": "stage1/cohere/graphql/printer/gaps_test.go",
+  "line": 158,
+  "before": "for _, item := range cases {\n\t\towner := whitespaceOwner(item.id)",
+  "after": "for _, item := range cases[:len(cases)-1] {\n\t\towner := whitespaceOwner(item.id)",
+  "test": "TestPrinterWhitespaceGap_Setup",
+  "command": "ADAMIC_GRAPHQL_PRETTIER=/tmp/u099-prettier ADAMIC_AUDIT_PROBE=S03 timeout 120 go test -overlay=/tmp/u099-S03-overlay.json -json -count=1 -timeout 90s ./stage1/cohere/graphql/printer/ -run '^TestPrinterWhitespaceGap_Setup$'",
+  "exit": 1,
+  "wall": 6.0973597040010645
+}

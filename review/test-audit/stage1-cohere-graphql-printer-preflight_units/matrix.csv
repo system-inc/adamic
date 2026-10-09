@@ -1,0 +1,11 @@
+row,M01,M02,M03,M04,production-kills-count
+TestPrinterPreflightPlantedDisagreement,pass,pass,pass,pass,0
+TestPrinterFileDriver,fail,fail,pass,fail,3
+TestPrinterShardUnionRejectsMissingAndRepeated,pass,pass,pass,pass,0
+TestPrinterShardSelection,pass,pass,pass,pass,0
+TestPrinterShardPlantedDisagreement,pass,fail,pass,fail,0
+TestPrinterAsGoCohere family,pass,fail,fail,fail,3
+TestPrinterUpstreamPreflight_Setup,pass,pass,pass,pass,0
+TestPrinterUpstreamPreflight family,pass,pass,pass,pass,0
+TestPrinterWhitespaceGap_Setup,pass,pass,pass,pass,0
+TestPrinterWhitespaceGap family,pass,pass,pass,fail,1

@@ -1,0 +1,103 @@
+{
+  "start_commit": "a467d1a1571c43e0f01fc4efcb43890280e4a1ac",
+  "requested": [
+    "TestPrinterPreflightPlantedDisagreement",
+    "TestPrinterFileDriver",
+    "TestPrinterShardUnionRejectsMissingAndRepeated",
+    "TestPrinterShardSelection",
+    "TestPrinterShardPlantedDisagreement",
+    "TestPrinterAsGoCohere_Setup",
+    "TestPrinterAsGoCohere_000",
+    "TestPrinterAsGoCohere_001",
+    "TestPrinterAsGoCohere_002",
+    "TestPrinterAsGoCohere_003",
+    "TestPrinterUpstreamPreflight_Setup",
+    "TestPrinterUpstreamPreflight_000",
+    "TestPrinterUpstreamPreflight_001",
+    "TestPrinterUpstreamPreflight_002",
+    "TestPrinterUpstreamPreflight_003",
+    "TestPrinterWhitespaceGap_Setup",
+    "TestPrinterWhitespaceGap_000",
+    "TestPrinterWhitespaceGap_001",
+    "TestPrinterWhitespaceGap_002",
+    "TestPrinterWhitespaceGap_003",
+    "TestPrinterWhitespaceGap_004"
+  ],
+  "missing": [
+    "TestPrinterAsGoCohere_Setup"
+  ],
+  "groups": [
+    {
+      "test": "TestPrinterPreflightPlantedDisagreement",
+      "members": [
+        "TestPrinterPreflightPlantedDisagreement"
+      ]
+    },
+    {
+      "test": "TestPrinterFileDriver",
+      "members": [
+        "TestPrinterFileDriver"
+      ]
+    },
+    {
+      "test": "TestPrinterShardUnionRejectsMissingAndRepeated",
+      "members": [
+        "TestPrinterShardUnionRejectsMissingAndRepeated"
+      ]
+    },
+    {
+      "test": "TestPrinterShardSelection",
+      "members": [
+        "TestPrinterShardSelection"
+      ]
+    },
+    {
+      "test": "TestPrinterShardPlantedDisagreement",
+      "members": [
+        "TestPrinterShardPlantedDisagreement"
+      ]
+    },
+    {
+      "test": "TestPrinterAsGoCohere family",
+      "members": [
+        "TestPrinterAsGoCohere_Union",
+        "TestPrinterAsGoCohere_000",
+        "TestPrinterAsGoCohere_001",
+        "TestPrinterAsGoCohere_002",
+        "TestPrinterAsGoCohere_003"
+      ]
+    },
+    {
+      "test": "TestPrinterUpstreamPreflight_Setup",
+      "members": [
+        "TestPrinterUpstreamPreflight_Setup"
+      ]
+    },
+    {
+      "test": "TestPrinterUpstreamPreflight family",
+      "members": [
+        "TestPrinterUpstreamPreflight_000",
+        "TestPrinterUpstreamPreflight_001",
+        "TestPrinterUpstreamPreflight_002",
+        "TestPrinterUpstreamPreflight_003"
+      ]
+    },
+    {
+      "test": "TestPrinterWhitespaceGap_Setup",
+      "members": [
+        "TestPrinterWhitespaceGap_Setup"
+      ]
+    },
+    {
+      "test": "TestPrinterWhitespaceGap family",
+      "members": [
+        "TestPrinterWhitespaceGap_000",
+        "TestPrinterWhitespaceGap_001",
+        "TestPrinterWhitespaceGap_002",
+        "TestPrinterWhitespaceGap_003",
+        "TestPrinterWhitespaceGap_004"
+      ]
+    }
+  ],
+  "new_union": "TestPrinterAsGoCohere_Union included in AsGo family because it repeats the shared union check, with no additional assertions."
+}

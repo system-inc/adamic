@@ -1,0 +1,8 @@
+{
+  "row": "TestPrinterPreflightPlantedDisagreement",
+  "command": "ADAMIC_GRAPHQL_PRETTIER=/tmp/u099-prettier timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/graphql/printer/ -run '^(TestPrinterPreflightPlantedDisagreement)$'",
+  "exit": 0,
+  "wall": 6.131090125999435,
+  "seconds": 4.345,
+  "timeout": false
+}

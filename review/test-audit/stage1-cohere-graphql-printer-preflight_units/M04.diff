@@ -1,0 +1,11 @@
+--- a/stage1/cohere/graphql/parser.ts
++++ b/stage1/cohere/graphql/parser.ts
+@@ -1225,7 +1225,7 @@
+ 	parseDocument(): number {
+ 		const start = this.lexer.token;
+ 		// many('<SOF>', parseDefinition, '<EOF>')
+-		this.expectToken('<SOF>');
++		this.expectToken('<EOF>');
+ 		const definitions: number[] = [];
+ 		do {
+ 			definitions.push(this.parseDefinition());

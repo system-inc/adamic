@@ -1,0 +1,14 @@
+{"Time":"2026-10-09T12:02:46.140211617Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer"}
+{"Time":"2026-10-09T12:02:46.146869379Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestPrinterFileDriver"}
+{"Time":"2026-10-09T12:02:46.146928889Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestPrinterFileDriver","Output":"=== RUN   TestPrinterFileDriver\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:02:46.146944543Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestPrinterFileDriver","Output":"=== PAUSE TestPrinterFileDriver\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:02:46.146946766Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestPrinterFileDriver"}
+{"Time":"2026-10-09T12:02:46.146950421Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestPrinterFileDriver"}
+{"Time":"2026-10-09T12:02:46.146952855Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestPrinterFileDriver","Output":"=== CONT  TestPrinterFileDriver\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:02:47.789206729Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestPrinterFileDriver","Output":"    printer_test.go:127: build lowered_GraphQL_printer b9ef4315e4f5 hit 1.48\n"}
+{"Time":"2026-10-09T12:02:47.819987725Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestPrinterFileDriver","Output":"    printer_test.go:127: build sanitized_GraphQL_printer 2964c6997ad8 hit 0.01\n"}
+{"Time":"2026-10-09T12:02:47.926260445Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestPrinterFileDriver","Output":"--- PASS: TestPrinterFileDriver (1.78s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:02:47.926296499Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Test":"TestPrinterFileDriver","Elapsed":1.78}
+{"Time":"2026-10-09T12:02:47.92631729Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:02:47.928074491Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/graphql/printer\t1.788s\n"}
+{"Time":"2026-10-09T12:02:47.928107741Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/printer","Elapsed":1.788}

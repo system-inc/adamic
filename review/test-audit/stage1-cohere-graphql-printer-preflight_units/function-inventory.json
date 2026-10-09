@@ -1,0 +1,1088 @@
+{
+  "scope": "Conservative named-function/method inventory of all ten copied source files. Not exact dynamic coverage; main.ts top-level command is the port entry. Upstream preflight does not call any of these port functions.",
+  "functions": [
+    {
+      "file": "stage1/cohere/graphql/token.ts",
+      "line": 59,
+      "function": "Token.constructor"
+    },
+    {
+      "file": "stage1/cohere/graphql/characterClasses.ts",
+      "line": 12,
+      "function": "isWhiteSpace"
+    },
+    {
+      "file": "stage1/cohere/graphql/characterClasses.ts",
+      "line": 20,
+      "function": "isDigit"
+    },
+    {
+      "file": "stage1/cohere/graphql/characterClasses.ts",
+      "line": 31,
+      "function": "isLetter"
+    },
+    {
+      "file": "stage1/cohere/graphql/characterClasses.ts",
+      "line": 43,
+      "function": "isNameStart"
+    },
+    {
+      "file": "stage1/cohere/graphql/characterClasses.ts",
+      "line": 53,
+      "function": "isNameContinue"
+    },
+    {
+      "file": "stage1/cohere/graphql/blockString.ts",
+      "line": 6,
+      "function": "leadingWhitespace"
+    },
+    {
+      "file": "stage1/cohere/graphql/blockString.ts",
+      "line": 18,
+      "function": "dedentBlockStringLines"
+    },
+    {
+      "file": "stage1/cohere/graphql/lexer.ts",
+      "line": 34,
+      "function": "written"
+    },
+    {
+      "file": "stage1/cohere/graphql/lexer.ts",
+      "line": 49,
+      "function": "escaped"
+    },
+    {
+      "file": "stage1/cohere/graphql/lexer.ts",
+      "line": 72,
+      "function": "getLocation"
+    },
+    {
+      "file": "stage1/cohere/graphql/lexer.ts",
+      "line": 94,
+      "function": "syntaxError"
+    },
+    {
+      "file": "stage1/cohere/graphql/lexer.ts",
+      "line": 99,
+      "function": "isPunctuatorTokenKind"
+    },
+    {
+      "file": "stage1/cohere/graphql/lexer.ts",
+      "line": 124,
+      "function": "isUnicodeScalarValue"
+    },
+    {
+      "file": "stage1/cohere/graphql/lexer.ts",
+      "line": 128,
+      "function": "isLeadingSurrogate"
+    },
+    {
+      "file": "stage1/cohere/graphql/lexer.ts",
+      "line": 132,
+      "function": "isTrailingSurrogate"
+    },
+    {
+      "file": "stage1/cohere/graphql/lexer.ts",
+      "line": 141,
+      "function": "isSupplementaryCodePoint"
+    },
+    {
+      "file": "stage1/cohere/graphql/lexer.ts",
+      "line": 150,
+      "function": "printCodePointAt"
+    },
+    {
+      "file": "stage1/cohere/graphql/lexer.ts",
+      "line": 173,
+      "function": "readHexDigit"
+    },
+    {
+      "file": "stage1/cohere/graphql/lexer.ts",
+      "line": 189,
+      "function": "read16BitHexCode"
+    },
+    {
+      "file": "stage1/cohere/graphql/lexer.ts",
+      "line": 207,
+      "function": "readEscapedUnicodeVariableWidth"
+    },
+    {
+      "file": "stage1/cohere/graphql/lexer.ts",
+      "line": 237,
+      "function": "readEscapedUnicodeFixedWidth"
+    },
+    {
+      "file": "stage1/cohere/graphql/lexer.ts",
+      "line": 275,
+      "function": "readEscapedCharacter"
+    },
+    {
+      "file": "stage1/cohere/graphql/lexer.ts",
+      "line": 300,
+      "function": "createToken"
+    },
+    {
+      "file": "stage1/cohere/graphql/lexer.ts",
+      "line": 311,
+      "function": "readComment"
+    },
+    {
+      "file": "stage1/cohere/graphql/lexer.ts",
+      "line": 338,
+      "function": "readDigits"
+    },
+    {
+      "file": "stage1/cohere/graphql/lexer.ts",
+      "line": 378,
+      "function": "readNumber"
+    },
+    {
+      "file": "stage1/cohere/graphql/lexer.ts",
+      "line": 451,
+      "function": "readString"
+    },
+    {
+      "file": "stage1/cohere/graphql/lexer.ts",
+      "line": 508,
+      "function": "readBlockString"
+    },
+    {
+      "file": "stage1/cohere/graphql/lexer.ts",
+      "line": 582,
+      "function": "readName"
+    },
+    {
+      "file": "stage1/cohere/graphql/lexer.ts",
+      "line": 603,
+      "function": "readNextToken"
+    },
+    {
+      "file": "stage1/cohere/graphql/lexer.ts",
+      "line": 762,
+      "function": "Lexer.constructor"
+    },
+    {
+      "file": "stage1/cohere/graphql/lexer.ts",
+      "line": 772,
+      "function": "Lexer.lookaheadIndex"
+    },
+    {
+      "file": "stage1/cohere/graphql/lexer.ts",
+      "line": 793,
+      "function": "Lexer.advance"
+    },
+    {
+      "file": "stage1/cohere/graphql/lexer.ts",
+      "line": 803,
+      "function": "Lexer.lookahead"
+    },
+    {
+      "file": "stage1/cohere/graphql/parser.ts",
+      "line": 58,
+      "function": "GraphNode.constructor"
+    },
+    {
+      "file": "stage1/cohere/graphql/parser.ts",
+      "line": 83,
+      "function": "text"
+    },
+    {
+      "file": "stage1/cohere/graphql/parser.ts",
+      "line": 87,
+      "function": "flag"
+    },
+    {
+      "file": "stage1/cohere/graphql/parser.ts",
+      "line": 92,
+      "function": "child"
+    },
+    {
+      "file": "stage1/cohere/graphql/parser.ts",
+      "line": 96,
+      "function": "list"
+    },
+    {
+      "file": "stage1/cohere/graphql/parser.ts",
+      "line": 100,
+      "function": "field"
+    },
+    {
+      "file": "stage1/cohere/graphql/parser.ts",
+      "line": 106,
+      "function": "isDirectiveLocation"
+    },
+    {
+      "file": "stage1/cohere/graphql/parser.ts",
+      "line": 135,
+      "function": "getTokenKindDesc"
+    },
+    {
+      "file": "stage1/cohere/graphql/parser.ts",
+      "line": 140,
+      "function": "getTokenDesc"
+    },
+    {
+      "file": "stage1/cohere/graphql/parser.ts",
+      "line": 151,
+      "function": "Parser.constructor"
+    },
+    {
+      "file": "stage1/cohere/graphql/parser.ts",
+      "line": 161,
+      "function": "Parser.node"
+    },
+    {
+      "file": "stage1/cohere/graphql/parser.ts",
+      "line": 168,
+      "function": "Parser.advanceLexer"
+    },
+    {
+      "file": "stage1/cohere/graphql/parser.ts",
+      "line": 173,
+      "function": "Parser.peek"
+    },
+    {
+      "file": "stage1/cohere/graphql/parser.ts",
+      "line": 179,
+      "function": "Parser.expectToken"
+    },
+    {
+      "file": "stage1/cohere/graphql/parser.ts",
+      "line": 191,
+      "function": "Parser.expectOptionalToken"
+    },
+    {
+      "file": "stage1/cohere/graphql/parser.ts",
+      "line": 202,
+      "function": "Parser.expectKeyword"
+    },
+    {
+      "file": "stage1/cohere/graphql/parser.ts",
+      "line": 213,
+      "function": "Parser.expectOptionalKeyword"
+    },
+    {
+      "file": "stage1/cohere/graphql/parser.ts",
+      "line": 224,
+      "function": "Parser.unexpected"
+    },
+    {
+      "file": "stage1/cohere/graphql/parser.ts",
+      "line": 230,
+      "function": "Parser.parseName"
+    },
+    {
+      "file": "stage1/cohere/graphql/parser.ts",
+      "line": 238,
+      "function": "Parser.parseNamedType"
+    },
+    {
+      "file": "stage1/cohere/graphql/parser.ts",
+      "line": 249,
+      "function": "Parser.parseTypeReference"
+    },
+    {
+      "file": "stage1/cohere/graphql/parser.ts",
+      "line": 269,
+      "function": "Parser.parseStringLiteral"
+    },
+    {
+      "file": "stage1/cohere/graphql/parser.ts",
+      "line": 276,
+      "function": "Parser.parseVariable"
+    },
+    {
+      "file": "stage1/cohere/graphql/parser.ts",
+      "line": 302,
+      "function": "Parser.parseValueLiteral"
+    },
+    {
+      "file": "stage1/cohere/graphql/parser.ts",
+      "line": 379,
+      "function": "Parser.parseArguments"
+    },
+    {
+      "file": "stage1/cohere/graphql/parser.ts",
+      "line": 397,
+      "function": "Parser.parseDirective"
+    },
+    {
+      "file": "stage1/cohere/graphql/parser.ts",
+      "line": 405,
+      "function": "Parser.parseDirectives"
+    },
+    {
+      "file": "stage1/cohere/graphql/parser.ts",
+      "line": 416,
+      "function": "Parser.parseConstDirectives"
+    },
+    {
+      "file": "stage1/cohere/graphql/parser.ts",
+      "line": 423,
+      "function": "Parser.parseFragmentName"
+    },
+    {
+      "file": "stage1/cohere/graphql/parser.ts",
+      "line": 432,
+      "function": "Parser.parseFragmentArguments"
+    },
+    {
+      "file": "stage1/cohere/graphql/parser.ts",
+      "line": 451,
+      "function": "Parser.parseSelectionSet"
+    },
+    {
+      "file": "stage1/cohere/graphql/parser.ts",
+      "line": 528,
+      "function": "Parser.peekDescription"
+    },
+    {
+      "file": "stage1/cohere/graphql/parser.ts",
+      "line": 533,
+      "function": "Parser.parseDescription"
+    },
+    {
+      "file": "stage1/cohere/graphql/parser.ts",
+      "line": 541,
+      "function": "Parser.parseVariableDefinition"
+    },
+    {
+      "file": "stage1/cohere/graphql/parser.ts",
+      "line": 558,
+      "function": "Parser.parseVariableDefinitions"
+    },
+    {
+      "file": "stage1/cohere/graphql/parser.ts",
+      "line": 571,
+      "function": "Parser.parseOperationType"
+    },
+    {
+      "file": "stage1/cohere/graphql/parser.ts",
+      "line": 590,
+      "function": "Parser.parseOperationDefinition"
+    },
+    {
+      "file": "stage1/cohere/graphql/parser.ts",
+      "line": 623,
+      "function": "Parser.parseFragmentDefinition"
+    },
+    {
+      "file": "stage1/cohere/graphql/parser.ts",
+      "line": 643,
+      "function": "Parser.parseOperationTypeDefinition"
+    },
+    {
+      "file": "stage1/cohere/graphql/parser.ts",
+      "line": 653,
+      "function": "Parser.parseOperationTypeDefinitions"
+    },
+    {
+      "file": "stage1/cohere/graphql/parser.ts",
+      "line": 669,
+      "function": "Parser.parseSchemaDefinition"
+    },
+    {
+      "file": "stage1/cohere/graphql/parser.ts",
+      "line": 679,
+      "function": "Parser.parseScalarTypeDefinition"
+    },
+    {
+      "file": "stage1/cohere/graphql/parser.ts",
+      "line": 691,
+      "function": "Parser.delimitedNamedTypes"
+    },
+    {
+      "file": "stage1/cohere/graphql/parser.ts",
+      "line": 706,
+      "function": "Parser.parseImplementsInterfaces"
+    },
+    {
+      "file": "stage1/cohere/graphql/parser.ts",
+      "line": 717,
+      "function": "Parser.parseInputValueDef"
+    },
+    {
+      "file": "stage1/cohere/graphql/parser.ts",
+      "line": 737,
+      "function": "Parser.parseInputValueDefs"
+    },
+    {
+      "file": "stage1/cohere/graphql/parser.ts",
+      "line": 752,
+      "function": "Parser.parseFieldDefinition"
+    },
+    {
+      "file": "stage1/cohere/graphql/parser.ts",
+      "line": 772,
+      "function": "Parser.parseFieldsDefinition"
+    },
+    {
+      "file": "stage1/cohere/graphql/parser.ts",
+      "line": 789,
+      "function": "Parser.parseObjectTypeDefinition"
+    },
+    {
+      "file": "stage1/cohere/graphql/parser.ts",
+      "line": 810,
+      "function": "Parser.parseInterfaceTypeDefinition"
+    },
+    {
+      "file": "stage1/cohere/graphql/parser.ts",
+      "line": 832,
+      "function": "Parser.parseUnionMemberTypes"
+    },
+    {
+      "file": "stage1/cohere/graphql/parser.ts",
+      "line": 843,
+      "function": "Parser.parseUnionTypeDefinition"
+    },
+    {
+      "file": "stage1/cohere/graphql/parser.ts",
+      "line": 854,
+      "function": "Parser.parseEnumValueName"
+    },
+    {
+      "file": "stage1/cohere/graphql/parser.ts",
+      "line": 865,
+      "function": "Parser.parseEnumValueDefinition"
+    },
+    {
+      "file": "stage1/cohere/graphql/parser.ts",
+      "line": 876,
+      "function": "Parser.parseEnumValuesDefinition"
+    },
+    {
+      "file": "stage1/cohere/graphql/parser.ts",
+      "line": 892,
+      "function": "Parser.parseEnumTypeDefinition"
+    },
+    {
+      "file": "stage1/cohere/graphql/parser.ts",
+      "line": 906,
+      "function": "Parser.parseInputObjectTypeDefinition"
+    },
+    {
+      "file": "stage1/cohere/graphql/parser.ts",
+      "line": 924,
+      "function": "Parser.parseDirectiveLocation"
+    },
+    {
+      "file": "stage1/cohere/graphql/parser.ts",
+      "line": 939,
+      "function": "Parser.parseDirectiveDefinition"
+    },
+    {
+      "file": "stage1/cohere/graphql/parser.ts",
+      "line": 969,
+      "function": "Parser.parseSchemaExtension"
+    },
+    {
+      "file": "stage1/cohere/graphql/parser.ts",
+      "line": 985,
+      "function": "Parser.parseScalarTypeExtension"
+    },
+    {
+      "file": "stage1/cohere/graphql/parser.ts",
+      "line": 1003,
+      "function": "Parser.parseObjectTypeExtension"
+    },
+    {
+      "file": "stage1/cohere/graphql/parser.ts",
+      "line": 1023,
+      "function": "Parser.parseInterfaceTypeExtension"
+    },
+    {
+      "file": "stage1/cohere/graphql/parser.ts",
+      "line": 1042,
+      "function": "Parser.parseUnionTypeExtension"
+    },
+    {
+      "file": "stage1/cohere/graphql/parser.ts",
+      "line": 1060,
+      "function": "Parser.parseEnumTypeExtension"
+    },
+    {
+      "file": "stage1/cohere/graphql/parser.ts",
+      "line": 1078,
+      "function": "Parser.parseInputObjectTypeExtension"
+    },
+    {
+      "file": "stage1/cohere/graphql/parser.ts",
+      "line": 1091,
+      "function": "Parser.parseDirectiveExtension"
+    },
+    {
+      "file": "stage1/cohere/graphql/parser.ts",
+      "line": 1118,
+      "function": "Parser.parseTypeSystemExtension"
+    },
+    {
+      "file": "stage1/cohere/graphql/parser.ts",
+      "line": 1168,
+      "function": "Parser.parseDefinition"
+    },
+    {
+      "file": "stage1/cohere/graphql/parser.ts",
+      "line": 1225,
+      "function": "Parser.parseDocument"
+    },
+    {
+      "file": "stage1/cohere/graphql/parser.ts",
+      "line": 1239,
+      "function": "parseComments"
+    },
+    {
+      "file": "stage1/cohere/graphql/parser.ts",
+      "line": 1257,
+      "function": "parse"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/main.ts",
+      "line": 5,
+      "function": "escaped"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/main.ts",
+      "line": 7,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/main.ts",
+      "line": 10,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/main.ts",
+      "line": 13,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/main.ts",
+      "line": 16,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/main.ts",
+      "line": 21,
+      "function": "unescaped"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/main.ts",
+      "line": 22,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/main.ts",
+      "line": 29,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/main.ts",
+      "line": 56,
+      "function": ".for"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/main.ts",
+      "line": 57,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/printer.ts",
+      "line": 7,
+      "function": "field"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/printer.ts",
+      "line": 8,
+      "function": ".for"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/printer.ts",
+      "line": 13,
+      "function": "child"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/printer.ts",
+      "line": 17,
+      "function": "list"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/printer.ts",
+      "line": 21,
+      "function": "flag"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/printer.ts",
+      "line": 27,
+      "function": "decoded"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/printer.ts",
+      "line": 31,
+      "function": ".while"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/printer.ts",
+      "line": 32,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/printer.ts",
+      "line": 37,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/printer.ts",
+      "line": 45,
+      "function": ".while"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/printer.ts",
+      "line": 59,
+      "function": "textValue"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/printer.ts",
+      "line": 63,
+      "function": "isNewline"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/printer.ts",
+      "line": 66,
+      "function": "spaces"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/printer.ts",
+      "line": 76,
+      "function": "newline"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/printer.ts",
+      "line": 82,
+      "function": "hasNewline"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/printer.ts",
+      "line": 86,
+      "function": "previousEmpty"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/printer.ts",
+      "line": 92,
+      "function": "nextEmpty"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/printer.ts",
+      "line": 97,
+      "function": ".while"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/printer.ts",
+      "line": 100,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/printer.ts",
+      "line": 106,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/printer.ts",
+      "line": 130,
+      "function": "Printer.constructor"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/printer.ts",
+      "line": 135,
+      "function": "Printer.node"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/printer.ts",
+      "line": 138,
+      "function": "Printer.neighbours"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/printer.ts",
+      "line": 140,
+      "function": "Printer.for"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/printer.ts",
+      "line": 155,
+      "function": "Printer.while"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/printer.ts",
+      "line": 160,
+      "function": "Printer.if"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/printer.ts",
+      "line": 172,
+      "function": "Printer.attach"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/printer.ts",
+      "line": 180,
+      "function": "Printer.if"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/printer.ts",
+      "line": 201,
+      "function": "Printer.comment"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/printer.ts",
+      "line": 206,
+      "function": "Printer.dangling"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/printer.ts",
+      "line": 208,
+      "function": "Printer.for"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/printer.ts",
+      "line": 220,
+      "function": "Printer.print"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/printer.ts",
+      "line": 225,
+      "function": "Printer.for"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/printer.ts",
+      "line": 233,
+      "function": "Printer.if"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/printer.ts",
+      "line": 244,
+      "function": "Printer.for"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/printer.ts",
+      "line": 247,
+      "function": "Printer.if"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/printer.ts",
+      "line": 255,
+      "function": "Printer.if"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/printer.ts",
+      "line": 277,
+      "function": "Printer.sequence"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/printer.ts",
+      "line": 291,
+      "function": "Printer.arguments"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/printer.ts",
+      "line": 305,
+      "function": "Printer.description"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/printer.ts",
+      "line": 315,
+      "function": "Printer.directives"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/printer.ts",
+      "line": 327,
+      "function": "Printer.block"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/printer.ts",
+      "line": 342,
+      "function": "Printer.generic"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/printer.ts",
+      "line": 348,
+      "function": "Printer.switch"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/printer.ts",
+      "line": 359,
+      "function": "Printer.if"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/printer.ts",
+      "line": 413,
+      "function": "Printer.if"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/printer.ts",
+      "line": 417,
+      "function": "Printer.for"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/printer.ts",
+      "line": 421,
+      "function": "Printer.if"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/printer.ts",
+      "line": 633,
+      "function": "Printer.finish"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/printer.ts",
+      "line": 644,
+      "function": "format"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/doc.ts",
+      "line": 33,
+      "function": "Documents.constructor"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/doc.ts",
+      "line": 36,
+      "function": "Documents.get"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/doc.ts",
+      "line": 39,
+      "function": "Documents.add"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/doc.ts",
+      "line": 41,
+      "function": "Documents.if"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/doc.ts",
+      "line": 42,
+      "function": "Documents.for"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/doc.ts",
+      "line": 43,
+      "function": "Documents.if"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/doc.ts",
+      "line": 58,
+      "function": "Documents.text"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/doc.ts",
+      "line": 61,
+      "function": "Documents.concat"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/doc.ts",
+      "line": 64,
+      "function": "Documents.join"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/doc.ts",
+      "line": 72,
+      "function": "Documents.indent"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/doc.ts",
+      "line": 75,
+      "function": "Documents.group"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/doc.ts",
+      "line": 78,
+      "function": "Documents.line"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/doc.ts",
+      "line": 81,
+      "function": "Documents.ifBreak"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/doc.ts",
+      "line": 84,
+      "function": "Documents.suffix"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/doc.ts",
+      "line": 87,
+      "function": "Documents.breakParent"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/doc.ts",
+      "line": 90,
+      "function": "Documents.fits"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/doc.ts",
+      "line": 94,
+      "function": "Documents.while"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/doc.ts",
+      "line": 95,
+      "function": "Documents.if"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/doc.ts",
+      "line": 104,
+      "function": "Documents.if"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/doc.ts",
+      "line": 108,
+      "function": "Documents.if"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/doc.ts",
+      "line": 113,
+      "function": "Documents.if"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/doc.ts",
+      "line": 131,
+      "function": "Documents.print"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/doc.ts",
+      "line": 137,
+      "function": "Documents.while"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/doc.ts",
+      "line": 138,
+      "function": "Documents.if"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/doc.ts",
+      "line": 143,
+      "function": "Documents.if"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/doc.ts",
+      "line": 144,
+      "function": "Documents.if"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/doc.ts",
+      "line": 163,
+      "function": "Documents.if"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/doc.ts",
+      "line": 168,
+      "function": "Documents.if"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/doc.ts",
+      "line": 173,
+      "function": "Documents.while"
+    },
+    {
+      "file": "stage1/cohere/graphql/printer/doc.ts",
+      "line": 178,
+      "function": "Documents.if"
+    },
+    {
+      "file": "stage1/cohere/json/width.ts",
+      "line": 4,
+      "function": "mapped"
+    },
+    {
+      "file": "stage1/cohere/json/width.ts",
+      "line": 8,
+      "function": "match"
+    },
+    {
+      "file": "stage1/cohere/json/width.ts",
+      "line": 13,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/json/width.ts",
+      "line": 17,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/json/width.ts",
+      "line": 20,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/json/width.ts",
+      "line": 21,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/json/width.ts",
+      "line": 24,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/json/width.ts",
+      "line": 29,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/json/width.ts",
+      "line": 32,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/json/width.ts",
+      "line": 37,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/json/width.ts",
+      "line": 53,
+      "function": "wide"
+    },
+    {
+      "file": "stage1/cohere/json/width.ts",
+      "line": 56,
+      "function": ".while"
+    },
+    {
+      "file": "stage1/cohere/json/width.ts",
+      "line": 59,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/json/width.ts",
+      "line": 69,
+      "function": "stringWidth"
+    },
+    {
+      "file": "stage1/cohere/json/width.ts",
+      "line": 73,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/json/width.ts",
+      "line": 78,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/json/width.ts",
+      "line": 84,
+      "function": ".if"
+    }
+  ],
+  "construction_functions": [
+    "enumeratePrinter",
+    "printerShardUnion",
+    "printerShardSelection",
+    "whitespaceCaseID",
+    "whitespaceOwner",
+    "whitespaceShards"
+  ],
+  "witnessed_comparisons": [
+    "printerPreflightDisagreement",
+    "printerShardDisagreement",
+    "printerShardUnion"
+  ]
+}

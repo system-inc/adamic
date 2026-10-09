@@ -1,0 +1,8 @@
+{
+  "row": "TestPrinterUpstreamPreflight family",
+  "command": "ADAMIC_GRAPHQL_PRETTIER=/tmp/u099-prettier timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/graphql/printer/ -run '^(TestPrinterUpstreamPreflight_000|TestPrinterUpstreamPreflight_001|TestPrinterUpstreamPreflight_002|TestPrinterUpstreamPreflight_003)$'",
+  "exit": 0,
+  "wall": 7.654521429999477,
+  "seconds": 5.97,
+  "timeout": false
+}

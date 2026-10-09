@@ -1,0 +1,8 @@
+{
+  "row": "TestPrinterShardUnionRejectsMissingAndRepeated",
+  "command": "ADAMIC_GRAPHQL_PRETTIER=/tmp/u099-prettier timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/graphql/printer/ -run '^(TestPrinterShardUnionRejectsMissingAndRepeated)$'",
+  "exit": 0,
+  "wall": 1.5983161439999094,
+  "seconds": 0.007,
+  "timeout": false
+}

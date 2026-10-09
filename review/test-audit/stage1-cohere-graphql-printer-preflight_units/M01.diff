@@ -1,0 +1,11 @@
+--- a/stage1/cohere/graphql/printer/doc.ts
++++ b/stage1/cohere/graphql/printer/doc.ts
+@@ -23,7 +23,7 @@
+ }
+ export const defaults: SettingsOptions = {
+     printWidth: 120,
+-    tabWidth: 4,
++    tabWidth: 3,
+     useTabs: false,
+     bracketSpacing: true,
+ };
