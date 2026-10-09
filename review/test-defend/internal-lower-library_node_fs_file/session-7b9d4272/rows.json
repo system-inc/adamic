@@ -1,0 +1,74 @@
+[
+  {
+    "test": "TestNodeFSFileDoesNotAuthorizeMutableWidening",
+    "package": "internal/lower",
+    "prior_verdict": "subsumed",
+    "subsumed_by": "TestEmptyNeverMapCannotGainWritableInhabitants",
+    "defense": "defended",
+    "unique_mutant": "D04 internal/lower/invariance.go:168",
+    "attempts": [
+      {
+        "mutant": "D01",
+        "file_line": "internal/lower/invariance.go:188",
+        "change": "Ignore undefined in mutable property write compatibility",
+        "rows_failed": [
+          "TestAMutableLocationSeenWiderIsRefused"
+        ],
+        "supplemental": true
+      },
+      {
+        "mutant": "D04",
+        "file_line": "internal/lower/invariance.go:168",
+        "change": "Return early from mutable-property proof for optional views of boolean fields",
+        "rows_failed": [
+          "TestNodeFSFileDoesNotAuthorizeMutableWidening"
+        ],
+        "supplemental": false
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/fsfile-defend/cache/D04 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D04.log 2>&1; library_node_fs_file_test.go:29: want mutable widening refusal, got <nil>",
+    "limits": "Unique in the completed whole-package run; three default skipped cases remain unknown."
+  },
+  {
+    "test": "TestNodeFSFileRefusesVoidValues",
+    "package": "internal/lower",
+    "prior_verdict": "subsumed",
+    "subsumed_by": "TestNodeFSFileRefusesOptionEffects",
+    "defense": "defended",
+    "unique_mutant": "D02 internal/lower/library_node_fs_file.go:101",
+    "attempts": [
+      {
+        "mutant": "D02",
+        "file_line": "internal/lower/library_node_fs_file.go:101",
+        "change": "Disable fs void-value rejection condition",
+        "rows_failed": [
+          "TestNodeFSFileRefusesVoidValues"
+        ],
+        "supplemental": false
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/fsfile-defend/cache/D02 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D02.log 2>&1; library_node_fs_file_test.go:45: want void value refusal, got <nil>",
+    "limits": "Unique in the completed whole-package run; three default skipped cases remain unknown."
+  },
+  {
+    "test": "TestNodeFSFileRefusesPinnedUnsupportedOverloads",
+    "package": "internal/lower",
+    "prior_verdict": "subsumed",
+    "subsumed_by": "TestNodeFSFile family",
+    "defense": "defended",
+    "unique_mutant": "D03 internal/lower/library_node_fs_file.go:358",
+    "attempts": [
+      {
+        "mutant": "D03",
+        "file_line": "internal/lower/library_node_fs_file.go:358",
+        "change": "Disable bigint-true Stats rejection while preserving ordinary Stats",
+        "rows_failed": [
+          "TestNodeFSFileRefusesPinnedUnsupportedOverloads"
+        ],
+        "supplemental": false
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/fsfile-defend/cache/D03 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D03.log 2>&1; library_node_fs_file_test.go:63: want named NotYet statSync, got <nil>",
+    "limits": "Unique in the completed whole-package run; three default skipped cases remain unknown."
+  }
+]

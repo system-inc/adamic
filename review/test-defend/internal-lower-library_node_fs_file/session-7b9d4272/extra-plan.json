@@ -1,0 +1,10 @@
+[
+  [
+    "D04",
+    "internal/lower/invariance.go",
+    "source, target := l.checker.GetTypeOfSymbol(inside), l.checker.GetTypeOfSymbol(viewed)",
+    "source, target := l.checker.GetTypeOfSymbol(inside), l.checker.GetTypeOfSymbol(viewed)\n\t\tif viewed.Flags & ast.SymbolFlagsOptional != 0 && l.checker.TypeToString(source) == \"boolean\" { return nil }",
+    "Return early from mutable-property proof for optional views of boolean fields",
+    "widening"
+  ]
+]

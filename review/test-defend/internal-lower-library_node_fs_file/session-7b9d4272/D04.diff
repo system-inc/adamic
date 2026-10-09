@@ -1,0 +1,10 @@
+--- a/internal/lower/invariance.go
++++ b/internal/lower/invariance.go
+@@ -166,6 +166,7 @@
+ 			continue
+ 		}
+ 		source, target := l.checker.GetTypeOfSymbol(inside), l.checker.GetTypeOfSymbol(viewed)
++		if viewed.Flags & ast.SymbolFlagsOptional != 0 && l.checker.TypeToString(source) == "boolean" { return nil }
+ 		if viewed.Flags&ast.SymbolFlagsMethod != 0 || inside.Flags&ast.SymbolFlagsMethod != 0 {
+ 			// A method isn't a slot anything writes, but what it returns and takes are views: the
+ 			// program's own methods. The library's (an Iterable's, an array's own) are left to the
