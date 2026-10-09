@@ -1,0 +1,11 @@
+--- a/internal/native/emit_expressions.go
++++ b/internal/native/emit_expressions.go
+@@ -251,7 +251,7 @@
+ 		return e.own(ir.Weak, fmt.Sprintf("adamic_weak_of(%s)", e.value(expression.Value)))
+ 	case ir.WeakTarget:
+ 		target := "adamic_weak_target"
+-		if expression.Present {
++		if !expression.Present {
+ 			target = "adamic_weak_target_present"
+ 		}
+ 		// Retained, as any reference read out of a slot is: a call later in the statement may let go

@@ -1,0 +1,262 @@
+[
+  {
+    "test": "TestWASIAgreesWithNode",
+    "run": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestWASIAgreesWithNode$"
+    ],
+    "status": 1,
+    "wall": 94.18184913499863,
+    "binary_seconds": 90.088
+  },
+  {
+    "test": "TestWASIOracleCatchesMutants",
+    "run": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestWASIOracleCatchesMutants$"
+    ],
+    "status": 0,
+    "wall": 2.634509743998933,
+    "binary_seconds": 0.423
+  },
+  {
+    "test": "TestWASIOracleCatchesMutants",
+    "run": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestWASIOracleCatchesMutants$"
+    ],
+    "status": 0,
+    "wall": 2.5339473050007655,
+    "binary_seconds": 0.363
+  },
+  {
+    "test": "TestWASIOracleCatchesMutants",
+    "run": 2,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestWASIOracleCatchesMutants$"
+    ],
+    "status": 0,
+    "wall": 2.4937824080006976,
+    "binary_seconds": 0.359
+  },
+  {
+    "test": "TestWASIRunnerCatchesMutants",
+    "run": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestWASIRunnerCatchesMutants$"
+    ],
+    "status": 0,
+    "wall": 2.61231893600052,
+    "binary_seconds": 0.41
+  },
+  {
+    "test": "TestWASIRunnerCatchesMutants",
+    "run": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestWASIRunnerCatchesMutants$"
+    ],
+    "status": 0,
+    "wall": 2.5781110229982005,
+    "binary_seconds": 0.402
+  },
+  {
+    "test": "TestWASIRunnerCatchesMutants",
+    "run": 2,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestWASIRunnerCatchesMutants$"
+    ],
+    "status": 0,
+    "wall": 2.791595008002332,
+    "binary_seconds": 0.414
+  },
+  {
+    "test": "TestWASIEmission",
+    "run": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestWASIEmission$"
+    ],
+    "status": 0,
+    "wall": 38.99177677999978,
+    "binary_seconds": 36.779
+  },
+  {
+    "test": "TestWASIEmission",
+    "run": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestWASIEmission$"
+    ],
+    "status": 0,
+    "wall": 36.4009769660006,
+    "binary_seconds": 33.286
+  },
+  {
+    "test": "TestWASIEmission",
+    "run": 2,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestWASIEmission$"
+    ],
+    "status": 0,
+    "wall": 34.19450557399978,
+    "binary_seconds": 32.075
+  },
+  {
+    "test": "TestWeakReadsUndefinedOnceFreed",
+    "run": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestWeakReadsUndefinedOnceFreed$"
+    ],
+    "status": 0,
+    "wall": 2.426690142998268,
+    "binary_seconds": 0.493
+  },
+  {
+    "test": "TestWeakReadsUndefinedOnceFreed",
+    "run": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestWeakReadsUndefinedOnceFreed$"
+    ],
+    "status": 0,
+    "wall": 2.2127283869995154,
+    "binary_seconds": 0.131
+  },
+  {
+    "test": "TestWeakReadsUndefinedOnceFreed",
+    "run": 2,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestWeakReadsUndefinedOnceFreed$"
+    ],
+    "status": 0,
+    "wall": 2.332526202000736,
+    "binary_seconds": 0.133
+  }
+]

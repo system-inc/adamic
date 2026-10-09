@@ -1,0 +1,14 @@
+package main
+import (
+ "fmt"
+ "math"
+ "github.com/system-inc/adamic/internal/native"
+ _ "unsafe"
+)
+//go:linkname cNumber github.com/system-inc/adamic/internal/native.cNumber
+func cNumber(float64) string
+func main() {
+ fmt.Printf("NaN=%s positiveInf=%s negativeInf=%s finite=%s\n", cNumber(math.NaN()),cNumber(math.Inf(1)),cNumber(math.Inf(-1)),cNumber(1.25))
+ fmt.Printf("Flags=%q\n",native.Flags(native.Options{}))
+ fmt.Printf("WASILinkFlags=%q\n",native.WASILinkFlags(native.Options{Target:"wasm32-wasi"}))
+}

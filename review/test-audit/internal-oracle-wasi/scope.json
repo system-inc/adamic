@@ -1,0 +1,18 @@
+{
+  "base": "09fe4b54913753188a9357982bfd47cdf36ef97c",
+  "rows": [
+    "TestWASIAgreesWithNode",
+    "TestWASIOracleCatchesMutants",
+    "TestWASIRunnerCatchesMutants",
+    "TestWASIEmission",
+    "TestWeakReadsUndefinedOnceFreed"
+  ],
+  "fixtures": [
+    "dedication/dedication.a",
+    "internal/oracle/testdata/numbers.a",
+    "internal/oracle/testdata/weak_narrowed.a",
+    "internal/oracle/testdata/reuse.a"
+  ],
+  "weak_fixtures": "all four",
+  "bounded": true
+}

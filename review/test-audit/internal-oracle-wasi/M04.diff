@@ -1,0 +1,11 @@
+--- a/internal/native/emit_values.go
++++ b/internal/native/emit_values.go
+@@ -74,7 +74,7 @@
+ 	case value > 1.7976931348623157e308:
+ 		return "HUGE_VAL"
+ 	case value < -1.7976931348623157e308:
+-		return "(-HUGE_VAL)"
++		return "0.0"
+ 	}
+ 	return "(" + strconv.FormatFloat(value, 'x', -1, 64) + ")"
+ }

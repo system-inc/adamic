@@ -1,0 +1,17 @@
+{
+  "status": 0,
+  "wall": 3.6920995640030014,
+  "command": [
+    "timeout",
+    "120",
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "./internal/oracle/",
+    "-run",
+    "^(TestWASIAgreesWithNode|TestWASIEmission|TestWeakReadsUndefinedOnceFreed)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$"
+  ]
+}

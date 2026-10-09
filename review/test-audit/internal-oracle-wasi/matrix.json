@@ -1,0 +1,301 @@
+[
+  {
+    "id": "M01",
+    "part": "bounded",
+    "command": "ADAMIC_MUTANT=M01 ADAMIC_BUILD_CACHE_DIR=/workspace/u072-products/M01 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestWASIAgreesWithNode|TestWASIEmission|TestWeakReadsUndefinedOnceFreed)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$ > review/test-audit/internal-oracle-wasi/M01-bounded.log 2>&1",
+    "status": 1,
+    "wall": 8.905101067997748,
+    "binary_seconds": 1.326,
+    "rows_run": [
+      "TestWASIAgreesWithNode",
+      "TestWASIEmission",
+      "TestWeakReadsUndefinedOnceFreed"
+    ],
+    "failed_rows": [
+      "TestWASIAgreesWithNode",
+      "TestWeakReadsUndefinedOnceFreed"
+    ],
+    "cooked": false
+  },
+  {
+    "id": "M01",
+    "part": "emission",
+    "command": "ADAMIC_MUTANT=M01 ADAMIC_BUILD_CACHE_DIR=/workspace/u072-products/M01 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestWASIEmission$ > review/test-audit/internal-oracle-wasi/M01-emission.log 2>&1",
+    "status": 0,
+    "wall": 37.55002138599957,
+    "binary_seconds": 35.344,
+    "rows_run": [
+      "TestWASIEmission"
+    ],
+    "failed_rows": [],
+    "cooked": false
+  },
+  {
+    "id": "M02",
+    "part": "bounded",
+    "command": "ADAMIC_MUTANT=M02 ADAMIC_BUILD_CACHE_DIR=/workspace/u072-products/M02 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestWASIAgreesWithNode|TestWASIEmission|TestWeakReadsUndefinedOnceFreed)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$ > review/test-audit/internal-oracle-wasi/M02-bounded.log 2>&1",
+    "status": 0,
+    "wall": 3.825165810998442,
+    "binary_seconds": 1.291,
+    "rows_run": [
+      "TestWASIAgreesWithNode",
+      "TestWASIEmission",
+      "TestWeakReadsUndefinedOnceFreed"
+    ],
+    "failed_rows": [],
+    "cooked": false
+  },
+  {
+    "id": "M02",
+    "part": "emission",
+    "command": "ADAMIC_MUTANT=M02 ADAMIC_BUILD_CACHE_DIR=/workspace/u072-products/M02 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestWASIEmission$ > review/test-audit/internal-oracle-wasi/M02-emission.log 2>&1",
+    "status": 0,
+    "wall": 40.015884368000116,
+    "binary_seconds": 37.824,
+    "rows_run": [
+      "TestWASIEmission"
+    ],
+    "failed_rows": [],
+    "cooked": false
+  },
+  {
+    "id": "M03",
+    "part": "bounded",
+    "command": "ADAMIC_MUTANT=M03 ADAMIC_BUILD_CACHE_DIR=/workspace/u072-products/M03 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestWASIAgreesWithNode|TestWASIEmission|TestWeakReadsUndefinedOnceFreed)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$ > review/test-audit/internal-oracle-wasi/M03-bounded.log 2>&1",
+    "status": 0,
+    "wall": 3.372867768001015,
+    "binary_seconds": 1.211,
+    "rows_run": [
+      "TestWASIAgreesWithNode",
+      "TestWASIEmission",
+      "TestWeakReadsUndefinedOnceFreed"
+    ],
+    "failed_rows": [],
+    "cooked": false
+  },
+  {
+    "id": "M03",
+    "part": "emission",
+    "command": "ADAMIC_MUTANT=M03 ADAMIC_BUILD_CACHE_DIR=/workspace/u072-products/M03 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestWASIEmission$ > review/test-audit/internal-oracle-wasi/M03-emission.log 2>&1",
+    "status": 0,
+    "wall": 35.22347869099758,
+    "binary_seconds": 33.072,
+    "rows_run": [
+      "TestWASIEmission"
+    ],
+    "failed_rows": [],
+    "cooked": false
+  },
+  {
+    "id": "M04",
+    "part": "bounded",
+    "command": "ADAMIC_MUTANT=M04 ADAMIC_BUILD_CACHE_DIR=/workspace/u072-products/M04 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestWASIAgreesWithNode|TestWASIEmission|TestWeakReadsUndefinedOnceFreed)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$ > review/test-audit/internal-oracle-wasi/M04-bounded.log 2>&1",
+    "status": 0,
+    "wall": 3.607972353001969,
+    "binary_seconds": 1.331,
+    "rows_run": [
+      "TestWASIAgreesWithNode",
+      "TestWASIEmission",
+      "TestWeakReadsUndefinedOnceFreed"
+    ],
+    "failed_rows": [],
+    "cooked": false
+  },
+  {
+    "id": "M04",
+    "part": "emission",
+    "command": "ADAMIC_MUTANT=M04 ADAMIC_BUILD_CACHE_DIR=/workspace/u072-products/M04 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestWASIEmission$ > review/test-audit/internal-oracle-wasi/M04-emission.log 2>&1",
+    "status": 0,
+    "wall": 36.71114119300182,
+    "binary_seconds": 34.421,
+    "rows_run": [
+      "TestWASIEmission"
+    ],
+    "failed_rows": [],
+    "cooked": false
+  },
+  {
+    "id": "M05",
+    "part": "bounded",
+    "command": "ADAMIC_MUTANT=M05 ADAMIC_BUILD_CACHE_DIR=/workspace/u072-products/M05 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestWASIAgreesWithNode|TestWASIEmission|TestWeakReadsUndefinedOnceFreed)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$ > review/test-audit/internal-oracle-wasi/M05-bounded.log 2>&1",
+    "status": 1,
+    "wall": 3.4522197329970368,
+    "binary_seconds": 1.259,
+    "rows_run": [
+      "TestWASIAgreesWithNode",
+      "TestWASIEmission",
+      "TestWeakReadsUndefinedOnceFreed"
+    ],
+    "failed_rows": [
+      "TestWASIAgreesWithNode",
+      "TestWeakReadsUndefinedOnceFreed"
+    ],
+    "cooked": false
+  },
+  {
+    "id": "M05",
+    "part": "emission",
+    "command": "ADAMIC_MUTANT=M05 ADAMIC_BUILD_CACHE_DIR=/workspace/u072-products/M05 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestWASIEmission$ > review/test-audit/internal-oracle-wasi/M05-emission.log 2>&1",
+    "status": 0,
+    "wall": 37.94878743500158,
+    "binary_seconds": 35.848,
+    "rows_run": [
+      "TestWASIEmission"
+    ],
+    "failed_rows": [],
+    "cooked": false
+  },
+  {
+    "id": "M06",
+    "part": "bounded",
+    "command": "ADAMIC_MUTANT=M06 ADAMIC_BUILD_CACHE_DIR=/workspace/u072-products/M06 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestWASIAgreesWithNode|TestWASIEmission|TestWeakReadsUndefinedOnceFreed)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$ > review/test-audit/internal-oracle-wasi/M06-bounded.log 2>&1",
+    "status": 1,
+    "wall": 3.5949077240002225,
+    "binary_seconds": 1.312,
+    "rows_run": [
+      "TestWASIAgreesWithNode",
+      "TestWASIEmission",
+      "TestWeakReadsUndefinedOnceFreed"
+    ],
+    "failed_rows": [
+      "TestWASIAgreesWithNode",
+      "TestWeakReadsUndefinedOnceFreed"
+    ],
+    "cooked": false
+  },
+  {
+    "id": "M06",
+    "part": "emission",
+    "command": "ADAMIC_MUTANT=M06 ADAMIC_BUILD_CACHE_DIR=/workspace/u072-products/M06 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestWASIEmission$ > review/test-audit/internal-oracle-wasi/M06-emission.log 2>&1",
+    "status": 1,
+    "wall": 36.77465617100097,
+    "binary_seconds": 34.531,
+    "rows_run": [
+      "TestWASIEmission"
+    ],
+    "failed_rows": [
+      "TestWASIEmission"
+    ],
+    "cooked": false
+  },
+  {
+    "id": "M07",
+    "part": "bounded",
+    "command": "ADAMIC_MUTANT=M07 ADAMIC_BUILD_CACHE_DIR=/workspace/u072-products/M07 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestWASIAgreesWithNode|TestWASIEmission|TestWeakReadsUndefinedOnceFreed)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$ > review/test-audit/internal-oracle-wasi/M07-bounded.log 2>&1",
+    "status": 0,
+    "wall": 22.597788687999127,
+    "binary_seconds": 20.303,
+    "rows_run": [
+      "TestWASIAgreesWithNode",
+      "TestWASIEmission",
+      "TestWeakReadsUndefinedOnceFreed"
+    ],
+    "failed_rows": [],
+    "cooked": false
+  },
+  {
+    "id": "M07",
+    "part": "emission",
+    "command": "ADAMIC_MUTANT=M07 ADAMIC_BUILD_CACHE_DIR=/workspace/u072-products/M07 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestWASIEmission$ > review/test-audit/internal-oracle-wasi/M07-emission.log 2>&1",
+    "status": 0,
+    "wall": 30.8125112839989,
+    "binary_seconds": 28.688,
+    "rows_run": [
+      "TestWASIEmission"
+    ],
+    "failed_rows": [],
+    "cooked": false
+  },
+  {
+    "id": "M08",
+    "part": "bounded",
+    "command": "ADAMIC_MUTANT=M08 ADAMIC_BUILD_CACHE_DIR=/workspace/u072-products/M08 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestWASIAgreesWithNode|TestWASIEmission|TestWeakReadsUndefinedOnceFreed)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$ > review/test-audit/internal-oracle-wasi/M08-bounded.log 2>&1",
+    "status": 0,
+    "wall": 22.532414041001175,
+    "binary_seconds": 20.301,
+    "rows_run": [
+      "TestWASIAgreesWithNode",
+      "TestWASIEmission",
+      "TestWeakReadsUndefinedOnceFreed"
+    ],
+    "failed_rows": [],
+    "cooked": false
+  },
+  {
+    "id": "M08",
+    "part": "emission",
+    "command": "ADAMIC_MUTANT=M08 ADAMIC_BUILD_CACHE_DIR=/workspace/u072-products/M08 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestWASIEmission$ > review/test-audit/internal-oracle-wasi/M08-emission.log 2>&1",
+    "status": 0,
+    "wall": 32.20722168199791,
+    "binary_seconds": 29.834,
+    "rows_run": [
+      "TestWASIEmission"
+    ],
+    "failed_rows": [],
+    "cooked": false
+  },
+  {
+    "id": "M09",
+    "part": "bounded",
+    "command": "ADAMIC_MUTANT=M09 ADAMIC_BUILD_CACHE_DIR=/workspace/u072-products/M09 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestWASIAgreesWithNode|TestWASIEmission|TestWeakReadsUndefinedOnceFreed)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$ > review/test-audit/internal-oracle-wasi/M09-bounded.log 2>&1",
+    "status": 1,
+    "wall": 3.272073336000176,
+    "binary_seconds": 1.238,
+    "rows_run": [
+      "TestWASIAgreesWithNode",
+      "TestWASIEmission",
+      "TestWeakReadsUndefinedOnceFreed"
+    ],
+    "failed_rows": [
+      "TestWASIAgreesWithNode"
+    ],
+    "cooked": false
+  },
+  {
+    "id": "M09",
+    "part": "emission",
+    "command": "ADAMIC_MUTANT=M09 ADAMIC_BUILD_CACHE_DIR=/workspace/u072-products/M09 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestWASIEmission$ > review/test-audit/internal-oracle-wasi/M09-emission.log 2>&1",
+    "status": 0,
+    "wall": 33.588092861002224,
+    "binary_seconds": 31.649,
+    "rows_run": [
+      "TestWASIEmission"
+    ],
+    "failed_rows": [],
+    "cooked": false
+  },
+  {
+    "id": "P01",
+    "part": "bounded",
+    "command": "ADAMIC_MUTANT=P01 ADAMIC_BUILD_CACHE_DIR=/workspace/u072-products/P01 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestWASIAgreesWithNode|TestWASIEmission|TestWeakReadsUndefinedOnceFreed)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$/^(shard-[0-9]+|dedication|internal|oracle|testdata|weak|dedication[.]a|numbers[.]a|weak_narrowed[.]a|freed[.]a|probe_chain[.]a|reuse[.]a|narrowed[.]a)$ > review/test-audit/internal-oracle-wasi/P01-bounded.log 2>&1",
+    "status": 1,
+    "wall": 3.005238712998107,
+    "binary_seconds": 0.728,
+    "rows_run": [
+      "TestWASIAgreesWithNode",
+      "TestWASIEmission",
+      "TestWeakReadsUndefinedOnceFreed"
+    ],
+    "failed_rows": [
+      "TestWASIAgreesWithNode",
+      "TestWASIEmission",
+      "TestWeakReadsUndefinedOnceFreed"
+    ],
+    "cooked": false
+  },
+  {
+    "id": "P01",
+    "part": "emission",
+    "command": "ADAMIC_MUTANT=P01 ADAMIC_BUILD_CACHE_DIR=/workspace/u072-products/P01 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestWASIEmission$ > review/test-audit/internal-oracle-wasi/P01-emission.log 2>&1",
+    "status": 1,
+    "wall": 21.430279667998548,
+    "binary_seconds": 19.199,
+    "rows_run": [
+      "TestWASIEmission"
+    ],
+    "failed_rows": [
+      "TestWASIEmission"
+    ],
+    "cooked": false
+  }
+]

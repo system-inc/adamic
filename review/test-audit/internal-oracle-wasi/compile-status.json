@@ -1,0 +1,132 @@
+[
+  {
+    "id": "M01",
+    "apply_status": 0,
+    "compile_status": 0,
+    "seconds": 0.8185674189990095,
+    "command": [
+      "go",
+      "vet",
+      "-overlay",
+      "/workspace/u072-tmp/verify/M01.json",
+      "./internal/native/"
+    ]
+  },
+  {
+    "id": "M02",
+    "apply_status": 0,
+    "compile_status": 0,
+    "seconds": 0.8661298849983723,
+    "command": [
+      "go",
+      "vet",
+      "-overlay",
+      "/workspace/u072-tmp/verify/M02.json",
+      "./internal/native/"
+    ]
+  },
+  {
+    "id": "M03",
+    "apply_status": 0,
+    "compile_status": 0,
+    "seconds": 0.3438185209997755,
+    "command": [
+      "go",
+      "vet",
+      "-overlay",
+      "/workspace/u072-tmp/verify/M03.json",
+      "./internal/native/"
+    ]
+  },
+  {
+    "id": "M04",
+    "apply_status": 0,
+    "compile_status": 0,
+    "seconds": 0.41094228899964946,
+    "command": [
+      "go",
+      "vet",
+      "-overlay",
+      "/workspace/u072-tmp/verify/M04.json",
+      "./internal/native/"
+    ]
+  },
+  {
+    "id": "M05",
+    "apply_status": 0,
+    "compile_status": 0,
+    "seconds": 0.3169289129982644,
+    "command": [
+      "go",
+      "vet",
+      "-overlay",
+      "/workspace/u072-tmp/verify/M05.json",
+      "./internal/native/"
+    ]
+  },
+  {
+    "id": "M06",
+    "apply_status": 0,
+    "compile_status": 0,
+    "seconds": 0.35557265899842605,
+    "command": [
+      "go",
+      "vet",
+      "-overlay",
+      "/workspace/u072-tmp/verify/M06.json",
+      "./internal/native/"
+    ]
+  },
+  {
+    "id": "M07",
+    "apply_status": 0,
+    "compile_status": 0,
+    "seconds": 0.38072387799911667,
+    "command": [
+      "go",
+      "vet",
+      "-overlay",
+      "/workspace/u072-tmp/verify/M07.json",
+      "./internal/native/"
+    ]
+  },
+  {
+    "id": "M08",
+    "apply_status": 0,
+    "compile_status": 0,
+    "seconds": 0.351420479000808,
+    "command": [
+      "go",
+      "vet",
+      "-overlay",
+      "/workspace/u072-tmp/verify/M08.json",
+      "./internal/native/"
+    ]
+  },
+  {
+    "id": "M09",
+    "apply_status": 0,
+    "compile_status": 0,
+    "seconds": 0.34117565199994715,
+    "command": [
+      "go",
+      "vet",
+      "-overlay",
+      "/workspace/u072-tmp/verify/M09.json",
+      "./internal/native/"
+    ]
+  },
+  {
+    "id": "P01",
+    "apply_status": 0,
+    "compile_status": 0,
+    "seconds": 0.41823849999855156,
+    "command": [
+      "go",
+      "vet",
+      "-overlay",
+      "/workspace/u072-tmp/verify/P01.json",
+      "./internal/native/"
+    ]
+  }
+]

@@ -1,0 +1,12 @@
+{"Time":"2026-10-09T11:19:41.200112139Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-09T11:19:41.208743805Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestWASIOracleCatchesMutants"}
+{"Time":"2026-10-09T11:19:41.208831435Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestWASIOracleCatchesMutants","Output":"=== RUN   TestWASIOracleCatchesMutants\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:19:41.308977983Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestWASIOracleCatchesMutants","Output":"    wasi_test.go:102: gate cache node hit\n"}
+{"Time":"2026-10-09T11:19:41.621422521Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestWASIOracleCatchesMutants","Output":"--- PASS: TestWASIOracleCatchesMutants (0.41s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:19:41.621470783Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestWASIOracleCatchesMutants","Elapsed":0.41}
+{"Time":"2026-10-09T11:19:41.621491744Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:19:41.621498253Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: native hits=0 misses=0\n"}
+{"Time":"2026-10-09T11:19:41.621500517Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: node hits=1 misses=0\n"}
+{"Time":"2026-10-09T11:19:41.62150248Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: probe hits=0 misses=0\n"}
+{"Time":"2026-10-09T11:19:41.623100563Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"ok  \tgithub.com/system-inc/adamic/internal/oracle\t0.422s\n"}
+{"Time":"2026-10-09T11:19:41.623139591Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":0.423}

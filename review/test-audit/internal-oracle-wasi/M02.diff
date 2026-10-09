@@ -1,0 +1,11 @@
+--- a/internal/native/emit_values.go
++++ b/internal/native/emit_values.go
+@@ -70,7 +70,7 @@
+ func cNumber(value float64) string {
+ 	switch {
+ 	case value != value:
+-		return "NAN"
++		return "0.0"
+ 	case value > 1.7976931348623157e308:
+ 		return "HUGE_VAL"
+ 	case value < -1.7976931348623157e308:

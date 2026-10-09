@@ -1,0 +1,17 @@
+package native
+
+import "os"
+
+func auditSelected(id string) bool { return os.Getenv("ADAMIC_MUTANT") == id }
+func auditDelta(id string) int {
+	if auditSelected(id) {
+		return 1
+	}
+	return 0
+}
+func auditText(id, original, changed string) string {
+	if auditSelected(id) {
+		return changed
+	}
+	return original
+}

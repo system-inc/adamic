@@ -1,0 +1,11 @@
+--- a/internal/native/target.go
++++ b/internal/native/target.go
+@@ -56,7 +56,7 @@
+ func WASILinkFlags(options Options) []string {
+ 	flags := []string{"-Wl,-z,stack-size=131072"}
+ 	if !options.Request {
+-		return append(flags, "-mexec-model=command")
++		return append(flags, "-mexec-model=reactor")
+ 	}
+ 	flags = append(flags, "-mexec-model=reactor", "-Wl,--export-memory")
+ 	for _, name := range []string{"adamic_request", "adamic_response_bytes", "adamic_response_length", "malloc", "free", "adamic_release"} {

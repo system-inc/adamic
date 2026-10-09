@@ -1,0 +1,8 @@
+{"Time":"2026-10-09T11:19:51.4421864Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-09T11:19:51.451941744Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestWASIRunnerCatchesMutants"}
+{"Time":"2026-10-09T11:19:51.452059408Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestWASIRunnerCatchesMutants","Output":"=== RUN   TestWASIRunnerCatchesMutants\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:19:51.843100679Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestWASIRunnerCatchesMutants","Output":"--- PASS: TestWASIRunnerCatchesMutants (0.39s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:19:51.843152085Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestWASIRunnerCatchesMutants","Elapsed":0.39}
+{"Time":"2026-10-09T11:19:51.843172986Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:19:51.844262923Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"ok  \tgithub.com/system-inc/adamic/internal/oracle\t0.402s\n"}
+{"Time":"2026-10-09T11:19:51.844300929Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":0.402}

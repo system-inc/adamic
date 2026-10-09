@@ -1,0 +1,74 @@
+[
+  {
+    "id": "M01",
+    "file": "internal/native/native.go",
+    "line": 29,
+    "before": "index < len(value)",
+    "after": "index < len(value)-1",
+    "menu": "off-by-one bound"
+  },
+  {
+    "id": "M02",
+    "file": "internal/native/emit_values.go",
+    "line": 73,
+    "before": "return \"NAN\"",
+    "after": "return \"0.0\"",
+    "menu": "change constant"
+  },
+  {
+    "id": "M03",
+    "file": "internal/native/emit_values.go",
+    "line": 75,
+    "before": "return \"HUGE_VAL\"",
+    "after": "return \"0.0\"",
+    "menu": "change constant"
+  },
+  {
+    "id": "M04",
+    "file": "internal/native/emit_values.go",
+    "line": 77,
+    "before": "return \"(-HUGE_VAL)\"",
+    "after": "return \"0.0\"",
+    "menu": "change constant"
+  },
+  {
+    "id": "M05",
+    "file": "internal/native/emit_expressions.go",
+    "line": 254,
+    "before": "if expression.Present {",
+    "after": "if !expression.Present {",
+    "menu": "flip condition"
+  },
+  {
+    "id": "M06",
+    "file": "internal/native/emit_values.go",
+    "line": 79,
+    "before": "strconv.FormatFloat(value, 'x', -1, 64)",
+    "after": "strconv.FormatFloat(value, 'x', 0, 64)",
+    "menu": "change constant"
+  },
+  {
+    "id": "M07",
+    "file": "internal/native/native.go",
+    "line": 86,
+    "before": "flags = append(flags, \"-ffp-contract=off\")",
+    "after": "flags = append(flags, \"-ffp-contract=fast\")",
+    "menu": "change option"
+  },
+  {
+    "id": "M08",
+    "file": "internal/native/native.go",
+    "line": 90,
+    "before": "flags = append(flags, \"-fno-optimize-sibling-calls\")",
+    "after": "flags = append(flags, \"-foptimize-sibling-calls\")",
+    "menu": "change option"
+  },
+  {
+    "id": "M09",
+    "file": "internal/native/target.go",
+    "line": 59,
+    "before": "return append(flags, \"-mexec-model=command\")",
+    "after": "return append(flags, \"-mexec-model=reactor\")",
+    "menu": "change option"
+  }
+]

@@ -1,0 +1,168 @@
+[
+  {
+    "test": "TestWASIAgreesWithNode",
+    "package": "internal/oracle",
+    "file": "internal/oracle/wasi_test.go",
+    "seconds": null,
+    "oracle": "Node stdout, stderr and exit code; checked fixtures use Adamic JavaScript backend instead. The bounded four fixtures use Node. Full isolated row exceeded 90s.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M01",
+      "M05",
+      "M06",
+      "M09"
+    ],
+    "unique_kills": [
+      "M09"
+    ],
+    "last_proven_fail": "M09: wasi_test.go:75: TestWASIAgreesWithNode/shard-001/dedication/dedication.a: exit codes differ",
+    "verdict": "slow-worthy",
+    "subsumed_by": [],
+    "mutants_in_matrix": 9,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestWASIAgreesWithNode",
+      "TestWASIEmission",
+      "TestWeakReadsUndefinedOnceFreed"
+    ],
+    "evidence": "ADAMIC_MUTANT=M09 ADAMIC_BUILD_CACHE_DIR=/workspace/u072-products/M09 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run \"$BOUNDED\" > M09-bounded.log 2>&1; wasi_test.go:75: TestWASIAgreesWithNode/shard-001/dedication/dedication.a: exit codes differ",
+    "seconds_lower_bound": 90,
+    "timing_runs": 1,
+    "over_budget": true
+  },
+  {
+    "test": "TestWASIOracleCatchesMutants",
+    "package": "internal/oracle",
+    "file": "internal/oracle/wasi_test.go",
+    "seconds": 0.363,
+    "oracle": "Executed Node observation plus self-written disagreement labels stdout differs and exit codes differ. W01 disables comparison and both witnesses fail.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W01: wasi_test.go:105: byte mutant: got \"\"",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestWASIOracleCatchesMutants",
+      "TestWASIRunnerCatchesMutants"
+    ],
+    "evidence": "go test -overlay /workspace/u072-tmp/witness.json -json -count=1 -timeout 90s ./internal/oracle/ -run \"^(TestWASIOracleCatchesMutants|TestWASIRunnerCatchesMutants)$\" > W01.log 2>&1; wasi_test.go:105: byte mutant: got \"\""
+  },
+  {
+    "test": "TestWASIRunnerCatchesMutants",
+    "package": "internal/oracle",
+    "file": "internal/oracle/wasi_test.go",
+    "seconds": 0.41,
+    "oracle": "Executed Node observation plus self-written disagreement labels stdout differs and exit codes differ. W01 disables comparison and both witnesses fail.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W01: wasi_test.go:136: byte mutant: \"\"",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestWASIOracleCatchesMutants",
+      "TestWASIRunnerCatchesMutants"
+    ],
+    "evidence": "go test -overlay /workspace/u072-tmp/witness.json -json -count=1 -timeout 90s ./internal/oracle/ -run \"^(TestWASIOracleCatchesMutants|TestWASIRunnerCatchesMutants)$\" > W01.log 2>&1; wasi_test.go:136: byte mutant: \"\""
+  },
+  {
+    "test": "TestWASIEmission",
+    "package": "internal/oracle",
+    "file": "internal/oracle/wasi_test.go",
+    "seconds": 33.286,
+    "oracle": "WASI SDK clang 20.1.8 compilation succeeds under native.Flags, including -Werror and -pedantic. Checks compilation, not output; M06 triggered -Wliteral-range. Expected success is a self-written criterion.",
+    "oracle_kind": "self",
+    "kills": [
+      "M06"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M06: wasi_test.go:174: emitted C: exit status 1",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestWeakReadsUndefinedOnceFreed"
+    ],
+    "mutants_in_matrix": 9,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": 0.133,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestWASIAgreesWithNode",
+      "TestWASIEmission",
+      "TestWeakReadsUndefinedOnceFreed"
+    ],
+    "evidence": "ADAMIC_MUTANT=M06 ADAMIC_BUILD_CACHE_DIR=/workspace/u072-products/M06 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run \"^TestWASIEmission$\" > M06-emission.log 2>&1; wasi_test.go:174: emitted C: exit status 1",
+    "subsumption_mutants": 1
+  },
+  {
+    "test": "TestWeakReadsUndefinedOnceFreed",
+    "package": "internal/oracle",
+    "file": "internal/oracle/weak_test.go",
+    "seconds": 0.133,
+    "oracle": "Handwritten native and Node/JavaScript outcomes in weak_test.go. Native lifetime semantics follow repository docs/memory.md, which is not an outside authority. Node runs, but does not supply the native expected answer.",
+    "oracle_kind": "self",
+    "kills": [
+      "M01",
+      "M05",
+      "M06"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M06: weak_test.go:52: native: stdout differs: exit 0, stdout \"while held: bbbb\\nafter: gone true\\n\", stderr \"\"",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestWASIAgreesWithNode"
+    ],
+    "mutants_in_matrix": 9,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestWASIAgreesWithNode",
+      "TestWASIEmission",
+      "TestWeakReadsUndefinedOnceFreed"
+    ],
+    "evidence": "ADAMIC_MUTANT=M06 ADAMIC_BUILD_CACHE_DIR=/workspace/u072-products/M06 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run \"$BOUNDED\" > M06-bounded.log 2>&1; weak_test.go:52: native: stdout differs: exit 0, stdout \"while held: bbbb\\nafter: gone true\\n\", stderr \"\"",
+    "subsumer_seconds_lower_bound": 90,
+    "subsumption_mutants": 3
+  }
+]
+{
+  "setup_seconds": 46.193,
+  "sdk_ready_seconds": 3.6,
+  "npm_reported_seconds": 0.528,
+  "nproc": 5,
+  "whole_package_baseline_seconds": 90.037,
+  "large_rows_baseline_seconds": 90.077,
+  "valid_matrix_wall_seconds": 420.42782397399424,
+  "valid_matrix_binary_seconds": 370.71,
+  "timing_wall_seconds": 226.38531761099875,
+  "standalone_compile_seconds": 4.603518194991921,
+  "witness_wall_seconds": 15.29965439499938
+}

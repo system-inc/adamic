@@ -1,0 +1,3 @@
+NaN=NAN positiveInf=HUGE_VAL negativeInf=(-HUGE_VAL) finite=(0x1.4p+00)
+Flags=["-std=c11" "-Wall" "-Wextra" "-Werror" "-Wcast-function-type-strict" "-pedantic" "-Wno-unused-variable" "-Wno-unused-but-set-variable" "-Wno-unused-function" "-Wno-unused-parameter" "-Wno-self-assign" "-ffp-contract=fast" "-fno-optimize-sibling-calls" "-O2"]
+WASILinkFlags=["-Wl,-z,stack-size=131072" "-mexec-model=command"]

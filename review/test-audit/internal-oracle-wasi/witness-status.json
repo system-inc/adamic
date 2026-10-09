@@ -1,0 +1,22 @@
+{
+  "id": "W01",
+  "command": [
+    "timeout",
+    "120",
+    "go",
+    "test",
+    "-overlay",
+    "/workspace/u072-tmp/witness.json",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "./internal/oracle/",
+    "-run",
+    "^(TestWASIOracleCatchesMutants|TestWASIRunnerCatchesMutants)$"
+  ],
+  "seconds": 15.29965439499938,
+  "status": 1,
+  "file": "internal/oracle/oracle_test.go",
+  "line": 717
+}
