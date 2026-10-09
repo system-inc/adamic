@@ -41,3 +41,5 @@ Setup ran with GOPROXY=https://proxy.golang.org|direct. Timing lines: Node 0.022
 The initial combined command hit its outer 90s limit after records passed, while cold oracle work was still running; it is not claimed as a full pass. The initial counts check also hit its outer 90s limit while compiling/measuring fixtures, with no assertion failure. Both were rerun successfully, then rerun again after merging the newer main. The interrupted and successful logs are retained separately.
 
 Lane checks on the first merge passed: gofmt/tools on 277 Go files, t.Parallel and vet on 23 test packages, 13.3s. The required lane command is run again on the committed final delivery before pushing; lane-final.log records it and the final response reports its output. This is verification of the lowering chain's step 21/24 fixes and the corpus/gap reconciliation, not new semantics.
+
+Final committed-delivery lane checks passed in 2.3s: gofmt and tools on 277 Go files, t.Parallel on 23 test packages, vet 23 packages. The lane log is included in a final evidence-only commit; all source and test inputs remain identical to tested SHA 52355360. No combination failure required a fix.
