@@ -1,0 +1,15 @@
+--- FAIL: TestArrowThisSuper (0.39s)
+    arrow_this_test.go:16: gate cache node hit
+    arrow_this_test.go:16: gate cache node miss
+    arrow_this_test.go:16: native: clang failed: exit status 1
+        /tmp/adamic-gate/adamic-build-3691877585/main.c:164:71: error: use of undeclared identifier 'adamic_local_5_this_cell'
+          164 |         adamic_object * adamic_temporary_23 = adamic_retain((adamic_object *)adamic_local_5_this_cell->value.reference);
+              |                                                                              ^
+        1 error generated.
+        
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=1 misses=1
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.769s
+FAIL

@@ -1,0 +1,63 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_deep.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_deep.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_release.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_release.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_subclass_holder.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_subclass_holder.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/borrow_element_super_move.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/borrow_element_super_move.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_deep.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_subclass_holder.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_release.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/borrow_element_super_move.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_release.a
+    oracle_test.go:771: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/borrow_element_super_move.a
+    oracle_test.go:771: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_deep.a
+    oracle_test.go:771: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_subclass_holder.a
+    oracle_test.go:771: gate cache node miss
+    oracle_test.go:771: gate cache node miss
+    oracle_test.go:608: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_deep.a
+    oracle_test.go:771: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_release.a
+    oracle_test.go:771: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/borrow_element_super_move.a
+    oracle_test.go:771: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_deep.a
+    oracle_test.go:608: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/borrow_element_super_move.a
+    oracle_test.go:608: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_release.a
+    oracle_test.go:608: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/borrow_element_super_move.a
+    oracle_test.go:601: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_subclass_holder.a
+    oracle_test.go:601: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/borrow_element_super_move.a
+    oracle_test.go:615: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_deep.a
+    oracle_test.go:601: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_subclass_holder.a
+    oracle_test.go:615: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_release.a
+    oracle_test.go:601: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_deep.a
+    oracle_test.go:615: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_release.a
+    oracle_test.go:615: gate cache native hit
+--- PASS: TestNativeAgreesWithNode (0.17s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/borrow_element_super_move.a (2.46s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_subclass_holder.a (2.76s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_deep.a (3.12s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_release.a (3.35s)
+PASS
+gate cache: native hits=4 misses=8
+gate cache: node hits=0 misses=8
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	3.577s

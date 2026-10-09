@@ -1,0 +1,6 @@
+adamic: native: clang failed: exit status 1
+/tmp/adamic-gate/adamic-build-3832156634/main.c:47:47: error: use of undeclared identifier 'adamic_local_6_this_cell'
+   47 |         adamic_temporary_1->cells[0] = adamic_retain(adamic_local_6_this_cell);
+      |                                                      ^
+1 error generated.
+

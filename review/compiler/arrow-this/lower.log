@@ -1,0 +1,99 @@
+--- FAIL: TestNamespaceAmbientHostInitialization (0.10s)
+    --- FAIL: TestNamespaceAmbientHostInitialization/realpath (0.02s)
+        namespaces_ambient_test.go:29: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+    --- FAIL: TestNamespaceAmbientHostInitialization/cwd (0.01s)
+        namespaces_ambient_test.go:29: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+--- FAIL: TestStep21LibraryAdmission (0.34s)
+    step21_library_admission_test.go:16: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+--- FAIL: TestNodeLibraryQualifiedTypeAssertion (0.01s)
+    library_node_test.go:81: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+--- FAIL: TestNodeLibraryDistinguishesReceiverOwners (0.01s)
+    library_node_test.go:57: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+--- FAIL: TestNodeLibraryDoesNotRefuseTypeOnlyOrUserNames (0.01s)
+    library_node_test.go:43: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+--- FAIL: TestNodeFSFileScratchOptionsBorrow (0.02s)
+    library_node_fs_file_test.go:104: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+--- FAIL: TestNodeFSFileBufferBorrow (0.02s)
+    library_node_fs_file_test.go:94: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+--- FAIL: TestNodeFSFileScratchOverloadsAreNamed (0.04s)
+    library_node_fs_file_test.go:115: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+--- FAIL: TestNodeFSFileKeepsDetachedMethodRefusal (0.01s)
+    library_node_fs_file_test.go:85: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+--- FAIL: TestNodeFSFileNamespaceImport (0.01s)
+    library_node_fs_file_test.go:71: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+--- FAIL: TestNodeFSFileRefusesVoidValues (0.01s)
+    library_node_fs_file_test.go:43: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+--- FAIL: TestNodeFSFileQualifiedErrorType (0.03s)
+    library_node_fs_file_test.go:76: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+--- FAIL: TestNodeFSFileRefusesOptionEffects (0.02s)
+    library_node_fs_file_test.go:35: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+--- FAIL: TestNodeFSFileOptionsBorrow (0.02s)
+    library_node_fs_file_test.go:21: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+--- FAIL: TestNodeFSFileDoesNotAuthorizeMutableWidening (0.03s)
+    library_node_fs_file_test.go:27: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+--- FAIL: TestFSStatThrowsByDefault (0.01s)
+    fs_method_guards_test.go:51: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+--- FAIL: TestFSExistsOperation (0.02s)
+    fs_method_guards_test.go:41: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+--- FAIL: TestFSRemoveDefaultRetryDelayLowers (0.01s)
+    fs_method_guards_test.go:34: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+--- FAIL: TestFSOpenStringFlagsLower (0.01s)
+    fs_method_guards_test.go:27: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+--- FAIL: TestNodeLibraryNamesUnimplementedMembers (0.00s)
+    --- FAIL: TestNodeLibraryNamesUnimplementedMembers/node:fs.copyFileSync (0.03s)
+        library_node_test.go:28: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+    --- FAIL: TestNodeLibraryNamesUnimplementedMembers/node:crypto.randomUUID (0.08s)
+        library_node_test.go:28: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+    --- FAIL: TestNodeLibraryNamesUnimplementedMembers/node:path.sep (0.01s)
+        library_node_test.go:28: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+    --- FAIL: TestNodeLibraryNamesUnimplementedMembers/node:fs.readFile#01 (0.02s)
+        library_node_test.go:28: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+    --- FAIL: TestNodeLibraryNamesUnimplementedMembers/node:path.toNamespacedPath (0.01s)
+        library_node_test.go:28: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+    --- FAIL: TestNodeLibraryNamesUnimplementedMembers/node:buffer.BufferConstructor.byteLength (0.02s)
+        library_node_test.go:28: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+    --- FAIL: TestNodeLibraryNamesUnimplementedMembers/node:fs.readFile (0.03s)
+        library_node_test.go:28: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+    --- FAIL: TestNodeLibraryNamesUnimplementedMembers/node:os.userInfo (0.03s)
+        library_node_test.go:28: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+--- FAIL: TestNodeFSFileRefusesPinnedUnsupportedOverloads (0.00s)
+    --- FAIL: TestNodeFSFileRefusesPinnedUnsupportedOverloads/readFileSync (0.03s)
+        library_node_fs_file_test.go:60: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+    --- FAIL: TestNodeFSFileRefusesPinnedUnsupportedOverloads/readSync (0.04s)
+        library_node_fs_file_test.go:60: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+    --- FAIL: TestNodeFSFileRefusesPinnedUnsupportedOverloads/statSync (0.04s)
+        library_node_fs_file_test.go:60: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+    --- FAIL: TestNodeFSFileRefusesPinnedUnsupportedOverloads/writeFileSync (0.05s)
+        library_node_fs_file_test.go:60: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+    --- FAIL: TestNodeFSFileRefusesPinnedUnsupportedOverloads/openSync (0.05s)
+        library_node_fs_file_test.go:60: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+--- FAIL: TestNodeBufferRefusals (0.00s)
+    --- FAIL: TestNodeBufferRefusals/buffer_alloc (0.04s)
+        library_node_buffer_test.go:27: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+    --- FAIL: TestNodeBufferRefusals/typed_array_view (0.04s)
+        library_node_buffer_test.go:27: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+    --- FAIL: TestNodeBufferRefusals/structural_hash_view (0.04s)
+        library_node_buffer_test.go:27: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+    --- FAIL: TestNodeBufferRefusals/digest (0.02s)
+        library_node_buffer_test.go:27: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+    --- FAIL: TestNodeBufferRefusals/detached (0.03s)
+        library_node_buffer_test.go:27: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+    --- FAIL: TestNodeBufferRefusals/algorithm (0.02s)
+        library_node_buffer_test.go:27: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+    --- FAIL: TestNodeBufferRefusals/encoding (0.04s)
+        library_node_buffer_test.go:27: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+    --- FAIL: TestNodeBufferRefusals/buffer_isUtf8 (0.04s)
+        library_node_buffer_test.go:27: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+    --- FAIL: TestNodeBufferRefusals/crypto_random (0.04s)
+        library_node_buffer_test.go:27: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+    --- FAIL: TestNodeBufferRefusals/hash_inherited_read (0.02s)
+        library_node_buffer_test.go:27: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+    --- FAIL: TestNodeBufferRefusals/crypto_constructor (0.06s)
+        library_node_buffer_test.go:27: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+    --- FAIL: TestNodeBufferRefusals/buffer_read (0.01s)
+        library_node_buffer_test.go:27: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+    --- FAIL: TestNodeBufferRefusals/hash_copy (0.04s)
+        library_node_buffer_test.go:27: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	73.254s
+FAIL

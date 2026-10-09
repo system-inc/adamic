@@ -1,0 +1,28 @@
+=== RUN   TestArrowThisSuper
+=== PAUSE TestArrowThisSuper
+=== RUN   TestArrowThisField
+=== PAUSE TestArrowThisField
+=== RUN   TestArrowThisStored
+=== PAUSE TestArrowThisStored
+=== CONT  TestArrowThisSuper
+=== CONT  TestArrowThisStored
+=== CONT  TestArrowThisField
+    arrow_this_test.go:21: gate cache node miss
+=== NAME  TestArrowThisSuper
+    arrow_this_test.go:16: gate cache node hit
+=== NAME  TestArrowThisStored
+    arrow_this_test.go:26: gate cache node hit
+=== NAME  TestArrowThisSuper
+    arrow_this_test.go:16: gate cache node hit
+=== NAME  TestArrowThisStored
+    arrow_this_test.go:26: gate cache node hit
+=== NAME  TestArrowThisField
+    arrow_this_test.go:21: gate cache node miss
+--- PASS: TestArrowThisStored (1.70s)
+--- PASS: TestArrowThisSuper (1.81s)
+--- PASS: TestArrowThisField (2.32s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=4 misses=2
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	2.347s

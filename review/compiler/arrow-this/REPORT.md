@@ -35,7 +35,7 @@ go vet ./internal/lower ./internal/oracle
 git diff --check
 ```
 
-Setup reports Go ready 0.091s, Node ready 0.120s, clang ready 0.698s, markdown dependencies ready 1.620s, submodules ready 19.824s, Go build ready 474.543s, build cache warm 474.689s, done 474.727s. nproc is 5; cpu.max is 400000 100000 (4 CPUs). The printed environment file is /workspace/adamic-tools/env.sh. Initial cold reproduction/oracle commands reached their outer limits and are superseded by the warm runs. The first lowering run failed for missing pinned @types/node 25.3.3; npm ci installed it and the suite was rerun. The first full counts refresh exceeded its 90-second aggregate limit and was rerun with a five-minute hard test limit. Logs preserve these failures rather than claiming them green.
+Setup reports Go ready 0.091s, Node ready 0.120s, clang ready 0.698s, markdown dependencies ready 1.620s, submodules ready 19.824s, Go build ready 474.543s, build cache warm 474.689s, done 474.727s. nproc is 5; cpu.max is 400000 100000 (4 CPUs). The printed environment file is /workspace/adamic-tools/env.sh. Initial cold reproduction/oracle commands reached their outer limits and are superseded by the warm runs. The first lowering run failed for missing pinned @types/node 25.3.3; npm ci installed it and the suite was rerun. The first full counts refresh exceeded its 90-second aggregate limit and was rerun with a five-minute hard test limit. Logs preserve these failures rather than claiming them green; the full counts timeout stack is compressed in counts-timeout.log.gz.
 
 Final results and delivery are appended below.
 
@@ -52,3 +52,5 @@ It exited 0 and printed: lane checks 9.2 s: gofmt and tools on 273 Go files, t.P
 The full TestCountsAreRecorded update passed in 210.896s. The entire counts diff is three added rows, with no existing row changed. In allocations/frees/retains/releases/peak/regions order: super 5/5/8/8/5/0; field 7/7/9/11/6/0; stored 7/7/9/11/7/0.
 
 Delivery branch is compiler/arrow-this, based on the explicitly requested origin/compiler/after-chain dependency and merged with current origin/main ce1c5a2fd91e40b05160e587ea5d88ed5bdfedb2. This unit advances #rh16bxg by eliminating the remaining reproduced receiver-capture leak and guarding both immediate shapes and the stored control against Node. The brief supplied no numbered roadmap step beyond the task identifier. No PR was opened and no main or area branch was pushed.
+
+After committing the counts and report, lane checks passed again: lane checks 3.9 s: gofmt and tools on 273 Go files, t.Parallel on 22 test packages; vet 22 packages.
