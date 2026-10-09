@@ -1,0 +1,19 @@
+{"Time":"2026-10-09T19:56:14.379551781Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T19:56:14.443463235Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestDefiniteAssignmentUsesReadiness"}
+{"Time":"2026-10-09T19:56:14.444589696Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestDefiniteAssignmentUsesReadiness","Output":"=== RUN   TestDefiniteAssignmentUsesReadiness\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:56:14.444649011Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestDefiniteAssignmentUsesReadiness","Output":"=== PAUSE TestDefiniteAssignmentUsesReadiness\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:56:14.444960895Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestDefiniteAssignmentUsesReadiness"}
+{"Time":"2026-10-09T19:56:14.444967544Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestDefiniteAssignmentSoundNeighbors"}
+{"Time":"2026-10-09T19:56:14.444970604Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestDefiniteAssignmentSoundNeighbors","Output":"=== RUN   TestDefiniteAssignmentSoundNeighbors\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:56:14.444978546Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestDefiniteAssignmentSoundNeighbors","Output":"=== PAUSE TestDefiniteAssignmentSoundNeighbors\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:56:14.444980901Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestDefiniteAssignmentSoundNeighbors"}
+{"Time":"2026-10-09T19:56:14.44499162Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestDefiniteAssignmentUsesReadiness"}
+{"Time":"2026-10-09T19:56:14.444994543Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestDefiniteAssignmentUsesReadiness","Output":"=== CONT  TestDefiniteAssignmentUsesReadiness\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:56:14.444997843Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestDefiniteAssignmentSoundNeighbors"}
+{"Time":"2026-10-09T19:56:14.445000447Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestDefiniteAssignmentSoundNeighbors","Output":"=== CONT  TestDefiniteAssignmentSoundNeighbors\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:56:18.251316623Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestDefiniteAssignmentSoundNeighbors","Output":"--- PASS: TestDefiniteAssignmentSoundNeighbors (3.80s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:56:18.653162224Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestDefiniteAssignmentSoundNeighbors","Elapsed":3.8}
+{"Time":"2026-10-09T19:56:18.653266752Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestDefiniteAssignmentUsesReadiness","Output":"--- PASS: TestDefiniteAssignmentUsesReadiness (4.21s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:56:18.653665536Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestDefiniteAssignmentUsesReadiness","Elapsed":4.21}
+{"Time":"2026-10-09T19:56:18.653684615Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:56:18.657550656Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":4.2780000000000005}

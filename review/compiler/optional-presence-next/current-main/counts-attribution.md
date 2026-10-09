@@ -1,0 +1,1 @@
+Full counts regeneration passed in 393.851 seconds. The result is byte-identical to the merged table: 1,320 runtime rows and 15 predicate direction rows. No rows moved, were added or were removed. The cold attempt failed during compilation before measurements; this was the only completed regeneration.

@@ -1,0 +1,387 @@
+[
+  {
+    "name": "eep1m5z-93122fa_t_t5",
+    "source": "review/compiler/eep-presence/eep1m5z-93122fa_t_t5.a.txt",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/scratch/optional-presence-next/eep1m5z-93122fa_t_t5.a"
+      ],
+      "exit": 0,
+      "seconds": 0.566,
+      "stdout": "1 2\n",
+      "stderr": ""
+    },
+    "native_compile": {
+      "command": [
+        "/workspace/scratch/optional-next-adamic",
+        "build",
+        "/workspace/scratch/optional-presence-next/eep1m5z-93122fa_t_t5.a",
+        "-o",
+        "/workspace/scratch/optional-presence-next/eep1m5z-93122fa_t_t5-native"
+      ],
+      "exit": 1,
+      "seconds": 0.653,
+      "stdout": "",
+      "stderr": "adamic: /workspace/scratch/optional-presence-next/eep1m5z-93122fa_t_t5.a:2:9: stage 0 can't lower a union or optional tuple length; declare arrays where the values are constructed, or carry an explicit length alongside each tuple yet\n"
+    },
+    "sanitized_compile": {
+      "command": [
+        "/workspace/scratch/optional-next-adamic",
+        "build",
+        "/workspace/scratch/optional-presence-next/eep1m5z-93122fa_t_t5.a",
+        "-o",
+        "/workspace/scratch/optional-presence-next/eep1m5z-93122fa_t_t5-sanitized",
+        "--sanitize"
+      ],
+      "exit": 1,
+      "seconds": 0.544,
+      "stdout": "",
+      "stderr": "adamic: /workspace/scratch/optional-presence-next/eep1m5z-93122fa_t_t5.a:2:9: stage 0 can't lower a union or optional tuple length; declare arrays where the values are constructed, or carry an explicit length alongside each tuple yet\n"
+    },
+    "js_compile": {
+      "command": [
+        "/workspace/scratch/optional-next-adamic",
+        "js",
+        "/workspace/scratch/optional-presence-next/eep1m5z-93122fa_t_t5.a"
+      ],
+      "exit": 1,
+      "seconds": 0.458,
+      "stdout": "",
+      "stderr": "adamic: /workspace/scratch/optional-presence-next/eep1m5z-93122fa_t_t5.a:2:9: stage 0 can't lower a union or optional tuple length; declare arrays where the values are constructed, or carry an explicit length alongside each tuple yet\n"
+    },
+    "classification": "REFUSED"
+  },
+  {
+    "name": "eep1m5z-93122fa_t_v1",
+    "source": "review/compiler/eep-presence/eep1m5z-93122fa_t_v1.a.txt",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/scratch/optional-presence-next/eep1m5z-93122fa_t_v1.a"
+      ],
+      "exit": 0,
+      "seconds": 0.484,
+      "stdout": "2 -1\n",
+      "stderr": ""
+    },
+    "native_compile": {
+      "command": [
+        "/workspace/scratch/optional-next-adamic",
+        "build",
+        "/workspace/scratch/optional-presence-next/eep1m5z-93122fa_t_v1.a",
+        "-o",
+        "/workspace/scratch/optional-presence-next/eep1m5z-93122fa_t_v1-native"
+      ],
+      "exit": 1,
+      "seconds": 0.61,
+      "stdout": "",
+      "stderr": "adamic: /workspace/scratch/optional-presence-next/eep1m5z-93122fa_t_v1.a:2:9: stage 0 can't lower a union or optional tuple length; declare arrays where the values are constructed, or carry an explicit length alongside each tuple yet\n"
+    },
+    "sanitized_compile": {
+      "command": [
+        "/workspace/scratch/optional-next-adamic",
+        "build",
+        "/workspace/scratch/optional-presence-next/eep1m5z-93122fa_t_v1.a",
+        "-o",
+        "/workspace/scratch/optional-presence-next/eep1m5z-93122fa_t_v1-sanitized",
+        "--sanitize"
+      ],
+      "exit": 1,
+      "seconds": 0.45,
+      "stdout": "",
+      "stderr": "adamic: /workspace/scratch/optional-presence-next/eep1m5z-93122fa_t_v1.a:2:9: stage 0 can't lower a union or optional tuple length; declare arrays where the values are constructed, or carry an explicit length alongside each tuple yet\n"
+    },
+    "js_compile": {
+      "command": [
+        "/workspace/scratch/optional-next-adamic",
+        "js",
+        "/workspace/scratch/optional-presence-next/eep1m5z-93122fa_t_v1.a"
+      ],
+      "exit": 1,
+      "seconds": 0.292,
+      "stdout": "",
+      "stderr": "adamic: /workspace/scratch/optional-presence-next/eep1m5z-93122fa_t_v1.a:2:9: stage 0 can't lower a union or optional tuple length; declare arrays where the values are constructed, or carry an explicit length alongside each tuple yet\n"
+    },
+    "classification": "REFUSED"
+  },
+  {
+    "name": "eep1m5z-93122fa_t_v2",
+    "source": "review/compiler/eep-presence/eep1m5z-93122fa_t_v2.a.txt",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/scratch/optional-presence-next/eep1m5z-93122fa_t_v2.a"
+      ],
+      "exit": 0,
+      "seconds": 0.393,
+      "stdout": "2 3\n",
+      "stderr": ""
+    },
+    "native_compile": {
+      "command": [
+        "/workspace/scratch/optional-next-adamic",
+        "build",
+        "/workspace/scratch/optional-presence-next/eep1m5z-93122fa_t_v2.a",
+        "-o",
+        "/workspace/scratch/optional-presence-next/eep1m5z-93122fa_t_v2-native"
+      ],
+      "exit": 1,
+      "seconds": 0.351,
+      "stdout": "",
+      "stderr": "adamic: /workspace/scratch/optional-presence-next/eep1m5z-93122fa_t_v2.a:2:9: stage 0 can't lower a union or optional tuple length; declare arrays where the values are constructed, or carry an explicit length alongside each tuple yet\n"
+    },
+    "sanitized_compile": {
+      "command": [
+        "/workspace/scratch/optional-next-adamic",
+        "build",
+        "/workspace/scratch/optional-presence-next/eep1m5z-93122fa_t_v2.a",
+        "-o",
+        "/workspace/scratch/optional-presence-next/eep1m5z-93122fa_t_v2-sanitized",
+        "--sanitize"
+      ],
+      "exit": 1,
+      "seconds": 0.294,
+      "stdout": "",
+      "stderr": "adamic: /workspace/scratch/optional-presence-next/eep1m5z-93122fa_t_v2.a:2:9: stage 0 can't lower a union or optional tuple length; declare arrays where the values are constructed, or carry an explicit length alongside each tuple yet\n"
+    },
+    "js_compile": {
+      "command": [
+        "/workspace/scratch/optional-next-adamic",
+        "js",
+        "/workspace/scratch/optional-presence-next/eep1m5z-93122fa_t_v2.a"
+      ],
+      "exit": 1,
+      "seconds": 0.197,
+      "stdout": "",
+      "stderr": "adamic: /workspace/scratch/optional-presence-next/eep1m5z-93122fa_t_v2.a:2:9: stage 0 can't lower a union or optional tuple length; declare arrays where the values are constructed, or carry an explicit length alongside each tuple yet\n"
+    },
+    "classification": "REFUSED"
+  },
+  {
+    "name": "eep1m5z-93122fa_t_v5",
+    "source": "review/compiler/eep-presence/eep1m5z-93122fa_t_v5.a.txt",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/scratch/optional-presence-next/eep1m5z-93122fa_t_v5.a"
+      ],
+      "exit": 0,
+      "seconds": 0.502,
+      "stdout": "2\n2\n",
+      "stderr": ""
+    },
+    "native_compile": {
+      "command": [
+        "/workspace/scratch/optional-next-adamic",
+        "build",
+        "/workspace/scratch/optional-presence-next/eep1m5z-93122fa_t_v5.a",
+        "-o",
+        "/workspace/scratch/optional-presence-next/eep1m5z-93122fa_t_v5-native"
+      ],
+      "exit": 1,
+      "seconds": 0.297,
+      "stdout": "",
+      "stderr": "adamic: /workspace/scratch/optional-presence-next/eep1m5z-93122fa_t_v5.a:7:16: stage 0 can't lower a union or optional tuple length; declare arrays where the values are constructed, or carry an explicit length alongside each tuple yet\n"
+    },
+    "sanitized_compile": {
+      "command": [
+        "/workspace/scratch/optional-next-adamic",
+        "build",
+        "/workspace/scratch/optional-presence-next/eep1m5z-93122fa_t_v5.a",
+        "-o",
+        "/workspace/scratch/optional-presence-next/eep1m5z-93122fa_t_v5-sanitized",
+        "--sanitize"
+      ],
+      "exit": 1,
+      "seconds": 0.452,
+      "stdout": "",
+      "stderr": "adamic: /workspace/scratch/optional-presence-next/eep1m5z-93122fa_t_v5.a:7:16: stage 0 can't lower a union or optional tuple length; declare arrays where the values are constructed, or carry an explicit length alongside each tuple yet\n"
+    },
+    "js_compile": {
+      "command": [
+        "/workspace/scratch/optional-next-adamic",
+        "js",
+        "/workspace/scratch/optional-presence-next/eep1m5z-93122fa_t_v5.a"
+      ],
+      "exit": 1,
+      "seconds": 0.223,
+      "stdout": "",
+      "stderr": "adamic: /workspace/scratch/optional-presence-next/eep1m5z-93122fa_t_v5.a:7:16: stage 0 can't lower a union or optional tuple length; declare arrays where the values are constructed, or carry an explicit length alongside each tuple yet\n"
+    },
+    "classification": "REFUSED"
+  },
+  {
+    "name": "eep1m5z-classfeat_method_view",
+    "source": "review/compiler/eep-presence/eep1m5z-classfeat_method_view.a.txt",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/scratch/optional-presence-next/eep1m5z-classfeat_method_view.a"
+      ],
+      "exit": 0,
+      "seconds": 0.527,
+      "stdout": "worker one1\nlazy\n",
+      "stderr": ""
+    },
+    "native_compile": {
+      "command": [
+        "/workspace/scratch/optional-next-adamic",
+        "build",
+        "/workspace/scratch/optional-presence-next/eep1m5z-classfeat_method_view.a",
+        "-o",
+        "/workspace/scratch/optional-presence-next/eep1m5z-classfeat_method_view-native"
+      ],
+      "exit": 1,
+      "seconds": 0.4,
+      "stdout": "",
+      "stderr": "adamic: /workspace/scratch/optional-presence-next/eep1m5z-classfeat_method_view.a:10:46: stage 0 can't lower a method sharing its name with a getter; rename the getter or use a callable arrow field in the interface and implementation yet\n"
+    },
+    "sanitized_compile": {
+      "command": [
+        "/workspace/scratch/optional-next-adamic",
+        "build",
+        "/workspace/scratch/optional-presence-next/eep1m5z-classfeat_method_view.a",
+        "-o",
+        "/workspace/scratch/optional-presence-next/eep1m5z-classfeat_method_view-sanitized",
+        "--sanitize"
+      ],
+      "exit": 1,
+      "seconds": 0.304,
+      "stdout": "",
+      "stderr": "adamic: /workspace/scratch/optional-presence-next/eep1m5z-classfeat_method_view.a:10:46: stage 0 can't lower a method sharing its name with a getter; rename the getter or use a callable arrow field in the interface and implementation yet\n"
+    },
+    "js_compile": {
+      "command": [
+        "/workspace/scratch/optional-next-adamic",
+        "js",
+        "/workspace/scratch/optional-presence-next/eep1m5z-classfeat_method_view.a"
+      ],
+      "exit": 1,
+      "seconds": 0.302,
+      "stdout": "",
+      "stderr": "adamic: /workspace/scratch/optional-presence-next/eep1m5z-classfeat_method_view.a:10:46: stage 0 can't lower a method sharing its name with a getter; rename the getter or use a callable arrow field in the interface and implementation yet\n"
+    },
+    "classification": "REFUSED"
+  },
+  {
+    "name": "eep1m5z-classfeat_static_virtual",
+    "source": "review/compiler/eep-presence/eep1m5z-classfeat_static_virtual.a.txt",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/scratch/optional-presence-next/eep1m5z-classfeat_static_virtual.a"
+      ],
+      "exit": 1,
+      "seconds": 0.547,
+      "stdout": "",
+      "stderr": "file:///workspace/scratch/optional-presence-next/eep1m5z-classfeat_static_virtual.a:13\n        return this.label.toUpperCase();\n                          ^\n\nTypeError: Cannot read properties of undefined (reading 'toUpperCase')\n    at Derived.n (file:///workspace/scratch/optional-presence-next/eep1m5z-classfeat_static_virtual.a:13:27)\n    at Derived.m (file:///workspace/scratch/optional-presence-next/eep1m5z-classfeat_static_virtual.a:6:26)\n    at <static_initializer> (file:///workspace/scratch/optional-presence-next/eep1m5z-classfeat_static_virtual.a:10:25)\n    at file:///workspace/scratch/optional-presence-next/eep1m5z-classfeat_static_virtual.a:9:23\n    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)\n    at async node:internal/modules/esm/loader:643:26\n    at async file:///workspace/adamic/oracle/node.mjs:82:1\n\nNode.js v24.19.0\n"
+    },
+    "native_compile": {
+      "command": [
+        "/workspace/scratch/optional-next-adamic",
+        "build",
+        "/workspace/scratch/optional-presence-next/eep1m5z-classfeat_static_virtual.a",
+        "-o",
+        "/workspace/scratch/optional-presence-next/eep1m5z-classfeat_static_virtual-native"
+      ],
+      "exit": 1,
+      "seconds": 0.504,
+      "stdout": "",
+      "stderr": "adamic: /workspace/scratch/optional-presence-next/eep1m5z-classfeat_static_virtual.a:8:42: stage 0 can't lower a static field read with an earlier initializer calling this; move that initializer after the fields read by static methods, or evaluate the call after class construction yet\n"
+    },
+    "sanitized_compile": {
+      "command": [
+        "/workspace/scratch/optional-next-adamic",
+        "build",
+        "/workspace/scratch/optional-presence-next/eep1m5z-classfeat_static_virtual.a",
+        "-o",
+        "/workspace/scratch/optional-presence-next/eep1m5z-classfeat_static_virtual-sanitized",
+        "--sanitize"
+      ],
+      "exit": 1,
+      "seconds": 0.497,
+      "stdout": "",
+      "stderr": "adamic: /workspace/scratch/optional-presence-next/eep1m5z-classfeat_static_virtual.a:8:42: stage 0 can't lower a static field read with an earlier initializer calling this; move that initializer after the fields read by static methods, or evaluate the call after class construction yet\n"
+    },
+    "js_compile": {
+      "command": [
+        "/workspace/scratch/optional-next-adamic",
+        "js",
+        "/workspace/scratch/optional-presence-next/eep1m5z-classfeat_static_virtual.a"
+      ],
+      "exit": 1,
+      "seconds": 0.356,
+      "stdout": "",
+      "stderr": "adamic: /workspace/scratch/optional-presence-next/eep1m5z-classfeat_static_virtual.a:8:42: stage 0 can't lower a static field read with an earlier initializer calling this; move that initializer after the fields read by static methods, or evaluate the call after class construction yet\n"
+    },
+    "classification": "REFUSED"
+  },
+  {
+    "name": "eep1m5z",
+    "source": "review/compiler/eep-presence/eep1m5z.a.txt",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/scratch/optional-presence-next/eep1m5z.a"
+      ],
+      "exit": 0,
+      "seconds": 0.46,
+      "stdout": "1 2\n",
+      "stderr": ""
+    },
+    "native_compile": {
+      "command": [
+        "/workspace/scratch/optional-next-adamic",
+        "build",
+        "/workspace/scratch/optional-presence-next/eep1m5z.a",
+        "-o",
+        "/workspace/scratch/optional-presence-next/eep1m5z-native"
+      ],
+      "exit": 1,
+      "seconds": 0.295,
+      "stdout": "",
+      "stderr": "adamic: /workspace/scratch/optional-presence-next/eep1m5z.a:1:68: stage 0 can't lower a union or optional tuple length; declare arrays where the values are constructed, or carry an explicit length alongside each tuple yet\n"
+    },
+    "sanitized_compile": {
+      "command": [
+        "/workspace/scratch/optional-next-adamic",
+        "build",
+        "/workspace/scratch/optional-presence-next/eep1m5z.a",
+        "-o",
+        "/workspace/scratch/optional-presence-next/eep1m5z-sanitized",
+        "--sanitize"
+      ],
+      "exit": 1,
+      "seconds": 0.402,
+      "stdout": "",
+      "stderr": "adamic: /workspace/scratch/optional-presence-next/eep1m5z.a:1:68: stage 0 can't lower a union or optional tuple length; declare arrays where the values are constructed, or carry an explicit length alongside each tuple yet\n"
+    },
+    "js_compile": {
+      "command": [
+        "/workspace/scratch/optional-next-adamic",
+        "js",
+        "/workspace/scratch/optional-presence-next/eep1m5z.a"
+      ],
+      "exit": 1,
+      "seconds": 0.5,
+      "stdout": "",
+      "stderr": "adamic: /workspace/scratch/optional-presence-next/eep1m5z.a:1:68: stage 0 can't lower a union or optional tuple length; declare arrays where the values are constructed, or carry an explicit length alongside each tuple yet\n"
+    },
+    "classification": "REFUSED"
+  }
+]

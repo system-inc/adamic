@@ -1,0 +1,19 @@
+{"Time":"2026-10-09T19:57:23.295702177Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T19:57:23.473537638Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceGenericSoundness"}
+{"Time":"2026-10-09T19:57:23.473639126Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceGenericSoundness","Output":"=== RUN   TestInheritanceGenericSoundness\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:57:23.47368975Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceGenericSoundness","Output":"=== PAUSE TestInheritanceGenericSoundness\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:57:23.473693948Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceGenericSoundness"}
+{"Time":"2026-10-09T19:57:23.473701245Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceGenericSoundness"}
+{"Time":"2026-10-09T19:57:23.473704283Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceGenericSoundness","Output":"=== CONT  TestInheritanceGenericSoundness\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:57:23.473708504Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceGenericSoundness/generic_narrowing"}
+{"Time":"2026-10-09T19:57:23.473715515Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceGenericSoundness/generic_narrowing","Output":"=== RUN   TestInheritanceGenericSoundness/generic_narrowing\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:57:23.787123111Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceGenericSoundness/generic_narrowing","Output":"--- PASS: TestInheritanceGenericSoundness/generic_narrowing (0.31s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:57:23.787168609Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceGenericSoundness/generic_narrowing","Elapsed":0.31}
+{"Time":"2026-10-09T19:57:23.787184483Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceGenericSoundness/generic_inherited_cycle"}
+{"Time":"2026-10-09T19:57:23.787188247Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceGenericSoundness/generic_inherited_cycle","Output":"=== RUN   TestInheritanceGenericSoundness/generic_inherited_cycle\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:57:24.064819558Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceGenericSoundness/generic_inherited_cycle","Output":"--- PASS: TestInheritanceGenericSoundness/generic_inherited_cycle (0.28s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:57:24.06489729Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceGenericSoundness/generic_inherited_cycle","Elapsed":0.28}
+{"Time":"2026-10-09T19:57:24.064913746Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceGenericSoundness","Output":"--- PASS: TestInheritanceGenericSoundness (0.59s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:57:24.064922211Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceGenericSoundness","Elapsed":0.59}
+{"Time":"2026-10-09T19:57:24.06492598Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:57:24.074030756Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.778}

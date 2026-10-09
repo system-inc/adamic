@@ -1,0 +1,22 @@
+{"Time":"2026-10-09T20:01:54.347709323Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T20:01:54.39108802Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestWASIUnit30"}
+{"Time":"2026-10-09T20:01:54.39115455Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestWASIUnit30","Output":"=== RUN   TestWASIUnit30\n","OutputType":"frame"}
+{"Time":"2026-10-09T20:01:54.903091253Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestWASIUnit30","Output":"    wasm_test.go:455: WASI toolchain probe phase 0.507s\n"}
+{"Time":"2026-10-09T20:01:55.164330403Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestWASIUnit30","Output":"    wasm_test.go:455: WASI runtime inputs and cache identity phase 0.258s\n"}
+{"Time":"2026-10-09T20:01:55.178132657Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestWASIUnit30","Output":"    wasm_test.go:107: WASI runtime build/cache phase counted=false 0.017s\n"}
+{"Time":"2026-10-09T20:01:55.178169178Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestWASIUnit30","Output":"    wasm_test.go:455: strict C11 runtime: 62 translation units compiled\n"}
+{"Time":"2026-10-09T20:01:55.276690703Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestWASIUnit30","Output":"    wasm_test.go:455: WASI compiler build/cache phase 0.099s\n"}
+{"Time":"2026-10-09T20:01:55.276741628Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestWASIUnit30/internal/oracle/testdata/read_files.a"}
+{"Time":"2026-10-09T20:01:55.276760552Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestWASIUnit30/internal/oracle/testdata/read_files.a","Output":"=== RUN   TestWASIUnit30/internal/oracle/testdata/read_files.a\n","OutputType":"frame"}
+{"Time":"2026-10-09T20:01:55.597334238Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestWASIUnit30/internal/oracle/testdata/read_files.a","Output":"    wasm_test.go:157: WASI generate phase 0.317s\n"}
+{"Time":"2026-10-09T20:01:55.603114769Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestWASIUnit30","Output":"    wasm_test.go:107: WASI runtime build/cache phase counted=false 0.004s\n"}
+{"Time":"2026-10-09T20:01:56.496809385Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestWASIUnit30/internal/oracle/testdata/read_files.a","Output":"    wasm_test.go:163: WASI link/cache phase 0.898s\n"}
+{"Time":"2026-10-09T20:01:56.958427175Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestWASIUnit30/internal/oracle/testdata/read_files.a","Output":"    wasm_test.go:215: WASI source Node phase 0.461s\n"}
+{"Time":"2026-10-09T20:01:57.367673707Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestWASIUnit30/internal/oracle/testdata/read_files.a","Output":"    wasm_test.go:218: WASI execution phase 0.405s\n"}
+{"Time":"2026-10-09T20:01:57.36774387Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestWASIUnit30/internal/oracle/testdata/read_files.a","Output":"--- PASS: TestWASIUnit30/internal/oracle/testdata/read_files.a (2.09s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T20:01:57.367750629Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestWASIUnit30/internal/oracle/testdata/read_files.a","Elapsed":2.09}
+{"Time":"2026-10-09T20:01:57.367766237Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestWASIUnit30","Output":"    wasm_test.go:455: WASI oracle: 1/38 equivalent\n"}
+{"Time":"2026-10-09T20:01:57.367771563Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestWASIUnit30","Output":"--- PASS: TestWASIUnit30 (2.97s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T20:01:57.367781706Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestWASIUnit30","Elapsed":2.97}
+{"Time":"2026-10-09T20:01:57.367785103Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T20:01:57.373592817Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Elapsed":3.026}

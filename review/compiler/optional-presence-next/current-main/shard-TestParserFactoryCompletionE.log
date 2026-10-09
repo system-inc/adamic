@@ -1,0 +1,11 @@
+{"Time":"2026-10-09T19:59:24.843893461Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T19:59:24.899282233Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParserFactoryCompletionEarlyReturn"}
+{"Time":"2026-10-09T19:59:24.899358423Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParserFactoryCompletionEarlyReturn","Output":"=== RUN   TestParserFactoryCompletionEarlyReturn\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:59:24.899392544Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParserFactoryCompletionEarlyReturn","Output":"=== PAUSE TestParserFactoryCompletionEarlyReturn\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:59:24.899396527Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParserFactoryCompletionEarlyReturn"}
+{"Time":"2026-10-09T19:59:24.899411888Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParserFactoryCompletionEarlyReturn"}
+{"Time":"2026-10-09T19:59:24.899414965Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParserFactoryCompletionEarlyReturn","Output":"=== CONT  TestParserFactoryCompletionEarlyReturn\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:59:25.191112003Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParserFactoryCompletionEarlyReturn","Output":"--- PASS: TestParserFactoryCompletionEarlyReturn (0.29s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:59:25.191160291Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParserFactoryCompletionEarlyReturn","Elapsed":0.29}
+{"Time":"2026-10-09T19:59:25.191176995Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:59:25.191247328Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.347}

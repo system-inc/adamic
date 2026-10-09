@@ -1,0 +1,19 @@
+{"Time":"2026-10-09T19:56:23.479621452Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T19:56:23.542955001Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEmptyLiteralGenericReturnUsesSamePath"}
+{"Time":"2026-10-09T19:56:23.543018838Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEmptyLiteralGenericReturnUsesSamePath","Output":"=== RUN   TestEmptyLiteralGenericReturnUsesSamePath\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:56:23.543112465Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEmptyLiteralGenericReturnUsesSamePath","Output":"=== PAUSE TestEmptyLiteralGenericReturnUsesSamePath\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:56:23.54311694Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEmptyLiteralGenericReturnUsesSamePath"}
+{"Time":"2026-10-09T19:56:23.54312098Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEmptyNeverMapCannotGainWritableInhabitants"}
+{"Time":"2026-10-09T19:56:23.543123507Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEmptyNeverMapCannotGainWritableInhabitants","Output":"=== RUN   TestEmptyNeverMapCannotGainWritableInhabitants\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:56:23.543137889Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEmptyNeverMapCannotGainWritableInhabitants","Output":"=== PAUSE TestEmptyNeverMapCannotGainWritableInhabitants\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:56:23.543140765Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEmptyNeverMapCannotGainWritableInhabitants"}
+{"Time":"2026-10-09T19:56:23.543146004Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEmptyLiteralGenericReturnUsesSamePath"}
+{"Time":"2026-10-09T19:56:23.543148816Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEmptyLiteralGenericReturnUsesSamePath","Output":"=== CONT  TestEmptyLiteralGenericReturnUsesSamePath\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:56:23.548536302Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEmptyNeverMapCannotGainWritableInhabitants"}
+{"Time":"2026-10-09T19:56:23.54855938Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEmptyNeverMapCannotGainWritableInhabitants","Output":"=== CONT  TestEmptyNeverMapCannotGainWritableInhabitants\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:56:24.033926007Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEmptyNeverMapCannotGainWritableInhabitants","Output":"--- PASS: TestEmptyNeverMapCannotGainWritableInhabitants (0.46s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:56:24.292091082Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEmptyNeverMapCannotGainWritableInhabitants","Elapsed":0.46}
+{"Time":"2026-10-09T19:56:24.292129015Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEmptyLiteralGenericReturnUsesSamePath","Output":"--- PASS: TestEmptyLiteralGenericReturnUsesSamePath (0.75s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:56:24.292136232Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEmptyLiteralGenericReturnUsesSamePath","Elapsed":0.75}
+{"Time":"2026-10-09T19:56:24.2921393Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:56:24.294810789Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.815}

@@ -1,0 +1,19 @@
+{"Time":"2026-10-09T19:58:24.801641375Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T19:58:24.901283469Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedCapturedParametersAreOwned"}
+{"Time":"2026-10-09T19:58:24.901357232Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedCapturedParametersAreOwned","Output":"=== RUN   TestNestedCapturedParametersAreOwned\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:24.90148102Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedCapturedParametersAreOwned","Output":"=== PAUSE TestNestedCapturedParametersAreOwned\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:24.901486685Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedCapturedParametersAreOwned"}
+{"Time":"2026-10-09T19:58:24.901491043Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedCallbackCycleIsRefused"}
+{"Time":"2026-10-09T19:58:24.901494035Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedCallbackCycleIsRefused","Output":"=== RUN   TestNestedCallbackCycleIsRefused\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:24.901573415Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedCallbackCycleIsRefused","Output":"=== PAUSE TestNestedCallbackCycleIsRefused\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:24.901576707Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedCallbackCycleIsRefused"}
+{"Time":"2026-10-09T19:58:24.901580102Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedCapturedParametersAreOwned"}
+{"Time":"2026-10-09T19:58:24.901583015Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedCapturedParametersAreOwned","Output":"=== CONT  TestNestedCapturedParametersAreOwned\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:24.901589227Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedCallbackCycleIsRefused"}
+{"Time":"2026-10-09T19:58:24.901592141Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedCallbackCycleIsRefused","Output":"=== CONT  TestNestedCallbackCycleIsRefused\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:25.284496282Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedCallbackCycleIsRefused","Output":"--- PASS: TestNestedCallbackCycleIsRefused (0.38s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:26.439131375Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedCallbackCycleIsRefused","Elapsed":0.38}
+{"Time":"2026-10-09T19:58:26.439228838Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedCapturedParametersAreOwned","Output":"--- PASS: TestNestedCapturedParametersAreOwned (1.50s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:26.439239119Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedCapturedParametersAreOwned","Elapsed":1.5}
+{"Time":"2026-10-09T19:58:26.43924293Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:26.440179953Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":1.639}

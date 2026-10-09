@@ -1,0 +1,11 @@
+{"Time":"2026-10-09T19:57:29.180048009Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T19:57:29.395977312Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestTSGoBuildSeesTheProgramsFeatures"}
+{"Time":"2026-10-09T19:57:29.396032935Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestTSGoBuildSeesTheProgramsFeatures","Output":"=== RUN   TestTSGoBuildSeesTheProgramsFeatures\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:57:29.396058131Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestTSGoBuildSeesTheProgramsFeatures","Output":"=== PAUSE TestTSGoBuildSeesTheProgramsFeatures\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:57:29.396060995Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestTSGoBuildSeesTheProgramsFeatures"}
+{"Time":"2026-10-09T19:57:29.396089731Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestTSGoBuildSeesTheProgramsFeatures"}
+{"Time":"2026-10-09T19:57:29.396092924Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestTSGoBuildSeesTheProgramsFeatures","Output":"=== CONT  TestTSGoBuildSeesTheProgramsFeatures\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:57:30.955107183Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestTSGoBuildSeesTheProgramsFeatures","Output":"--- PASS: TestTSGoBuildSeesTheProgramsFeatures (1.55s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:57:30.955142637Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestTSGoBuildSeesTheProgramsFeatures","Elapsed":1.55}
+{"Time":"2026-10-09T19:57:30.955152759Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:57:30.955183767Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Elapsed":1.775}
