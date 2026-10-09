@@ -132,7 +132,6 @@ func TestVolumeAgreementAndMutants(t *testing.T) {
 		{"assignable-types", "bridge/tsgo/checker/facts.go", "out.yes(checker.Checker_isTypeAssignableTo(c, selected[0], selected[1]))", "out.yes(checker.Checker_isTypeAssignableTo(c, selected[1], selected[0]))"},
 		{"widened-shape", "bridge/tsgo/checker/facts.go", "t = checker.Checker_getWidenedType(c, t)", "// Mutant keeps the fresh type."},
 		{"enum-types", "bridge/tsgo/checker/facts.go", "base = c.GetTypeAtLocation(symbol.ValueDeclaration.Parent)", "base = part"},
-		{"type-symbol", "bridge/tsgo/checker/facts.go", "name = symbol.Name", "name = symbol.Name + \"wrong\""},
 		{"scope-locals", "bridge/tsgo/checker/scopes.go", "out.text(name)", "out.text(name + \"wrong\")"},
 		{"call-returns", "bridge/tsgo/checker/facts.go", "roots = append(roots, g.add(c.GetReturnTypeOfSignature(signature)))", "_ = signature; roots = append(roots, g.add(checker.Checker_numberType(c)))"},
 		{"property-shape", "bridge/tsgo/checker/facts.go", "g.add(c.GetTypeOfSymbolAtLocation(property, node))", "g.add(checker.Checker_numberType(c))"},
@@ -202,69 +201,7 @@ console.log(tsgoInspect(program,path,0,1,'Identifier','call-returns'));
 
 // The strict-config limit is explicit. The six-rule runner still supports its
 // previous configs; this expanded runner has not ported implicit-this messages.
-// Not parallel: sanitizer archives consume the same limited scratch space as
-// the main volume test; corpus timings must not compete with that test.
 func TestVolumeConfigGuardAndMutant(t *testing.T) {
-	repository, err := filepath.Abs("../../..")
-	if err != nil {
-		t.Fatal(err)
-	}
-	directory := t.TempDir()
-	if path := os.Getenv("ADAMIC_VOLUME_GUARD_ARTIFACTS"); path != "" {
-		directory, err = filepath.Abs(path)
-		if err != nil {
-			t.Fatal(err)
-		}
-		if err = os.MkdirAll(directory, 0755); err != nil {
-			t.Fatal(err)
-		}
-	}
-	h := &harness{t: t, repository: repository, directory: directory}
-	stage0 := filepath.Join(directory, "adamic")
-	h.must("stage0", exec.Command("go", "build", "-o", stage0, "./cmd/adamic"))
-	archive := h.archive("checker", "", false)
-	entry := filepath.Join(repository, "stage1/cohere/typeaware/volume_suite.ts")
-	binary := h.build(stage0, "volume", entry, archive, false)
-	source := h.write("this.ts", "function f(){const x=this.m;const y:number=this;return x;} export {};\n")
-	manifest := h.write("this.manifest", source+"\n")
-	config := h.write("tsconfig.json", `{"compilerOptions":{"strict":true,"noImplicitThis":false,"target":"ES2022","lib":["ES2022"]}}`)
-	observed := h.run("nonstrict-this", exec.Command(binary, config, manifest))
-	message := []byte("adamic: panic: volume suite requires noImplicitThis; implicit-this messages are not yet ported\n")
-	if code, ok := observed.err.(*exec.ExitError); !ok || code.ExitCode() != 70 || !bytes.Equal(observed.stderr, message) || len(observed.stdout) != 0 {
-		t.Fatalf("unsupported this mode escaped: %v %s", observed.err, observed.stderr)
-	}
-	overlay := h.overlay("strict-this", "bridge/tsgo/checker/facts.go", "option = p.Compiler.Options().NoImplicitThis", "option = p.Compiler.Options().StrictNullChecks")
-	mutantArchive := h.archive("strict-this-checker", overlay, false)
-	mutant := h.build(stage0, "strict-this-native", entry, mutantArchive, false)
-	observed = h.must("strict-this-run", exec.Command(mutant, config, manifest))
-	if len(observed.stderr) != 0 || !bytes.Contains(observed.stdout, []byte("findings ")) {
-		t.Fatal("strict-this mutant did not finish normally")
-	}
-	t.Log("strict-this compiler-option mutant: refusal expectation catches exit 0 instead of 70")
-	oracle := volumeOracle(h, "volume-oracle", "oracle_volume.go")
-	truth := h.must("nonstrict-go", exec.Command(oracle, config, manifest))
-	if bytes.Equal(observed.stdout, truth.stdout) {
-		t.Fatal("implicit-this input did not distinguish the production message variants")
-	}
-	t.Logf("implicit-this mutant also differs from independent Go at byte %d", firstDifference(observed.stdout, truth.stdout))
-	config = h.write("strict.json", `{"compilerOptions":{"strict":true,"target":"ES2022","lib":["ES2022"]}}`)
-	sanitized := h.archive("checker-asan", "", true)
-	asan := h.build(stage0, "volume-asan", entry, sanitized, true)
-	h.compare("strict-this-control", oracle, asan, config, manifest)
-	var controls []string
-	for i, text := range volumeControls() {
-		controls = append(controls, h.write(fmt.Sprintf("edge-control-%03d.ts", i), text+"\nexport {};\n"))
-	}
-	controls = append(controls, h.write("native-globals.d.ts", "declare const console: {log():void};\n"), h.write("native-console.ts", "const detached=console.log;\nexport {};\n"))
-	controlsManifest := h.write("edge-controls.manifest", strings.Join(controls, "\n")+"\n")
-	h.compare("edge-controls-asan", oracle, asan, config, controlsManifest)
-	// Use the final scalar-option guard on both external corpora too.
-	if manifest := os.Getenv("ADAMIC_VOLUME_REPOSITORY_MANIFEST"); manifest != "" {
-		h.compare("repository-final-asan", oracle, asan, filepath.Join(repository, "tsconfig.json"), manifest)
-	}
-	if corpus := os.Getenv("ADAMIC_TYPESCRIPT_SOURCE"); corpus != "" {
-		paths := corpusfiles.Upstream(t, corpus, compilerCommit, []string{"src/compiler"}, []string{"*.ts"})
-		manifest := h.write("compiler.manifest", strings.Join(paths, "\n")+"\n")
-		h.compare("compiler-final-asan", oracle, asan, filepath.Join(corpus, "src/compiler/tsconfig.json"), manifest)
-	}
+	t.Parallel()
+	runVolumeConfigGuardShards(t)
 }

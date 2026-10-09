@@ -99,6 +99,7 @@ func TestWASIRequest(t *testing.T) {
 	}
 }
 
+// Not parallel: native.Build writes native.runtimeBuilds and the shared os.UserCacheDir()/adamic/runtime cache.
 func TestRequestNativeStaysCommand(t *testing.T) {
 	program, code := compile("testdata/wasi/request.a")
 	if code != 0 {

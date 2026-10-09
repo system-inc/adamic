@@ -54,9 +54,11 @@ func TestArgumentsLengthReadNeighbors(t *testing.T) {
 }
 
 func TestArgumentsLengthRefusalFixtures(t *testing.T) {
+	t.Parallel()
 	const other = "arguments other than a read of arguments.length; name the parameters, or take a rest parameter; only arguments.length may be read"
 	for _, name := range []string{"indexing", "aliasing", "passing", "returning", "spreading", "writing", "arrow"} {
 		t.Run(name, func(t *testing.T) {
+			t.Parallel()
 			source, err := os.ReadFile(filepath.Join("..", "oracle", "testdata", "arguments_length_refused", name+".a"))
 			if err != nil {
 				t.Fatal(err)

@@ -22,6 +22,7 @@ func init() {
 
 // The old required-field lookup still compiles, but panics instead of returning typed undefined.
 func TestLiteralOptionalOracleCatchesMutant(t *testing.T) {
+	t.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/e4eec87_u02_optional_absent.a"))
 	if err != nil {
 		t.Fatal(err)

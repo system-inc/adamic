@@ -13,6 +13,7 @@ import (
 	"unicode/utf16"
 )
 
+// Not parallel: shared markdownMemory configuration and artifacts build cache; existing helper controls parallel execution.
 func TestMicromarkInputChunks(t *testing.T) {
 	parallelMarkdownMemory(t, 1)
 	root, err := filepath.Abs(repository)

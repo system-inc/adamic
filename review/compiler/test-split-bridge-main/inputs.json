@@ -1,0 +1,26 @@
+{
+  "measured_initial_base": "fe3852f03ae69a6fce2f1d08b26e69bb759bdd44",
+  "delivery_base": "153db5b10aaff38aad65df09ee8cbe2e2badd7fb",
+  "corpus_commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "nproc": 5,
+  "cgroup_cpu_max": "400000 100000",
+  "gomaxprocs": 4,
+  "platform": "Linux amd64",
+  "go": "1.27.1",
+  "clang": "20.1.8",
+  "node": "24.19.0",
+  "measurement": "empty product cache per invocation; prepared Go dependency/toolchain cache; all lazy product setup included",
+  "original_testbridge_seconds": 397,
+  "original_time_source": "Loom measurement supplied in the unit",
+  "source_sha256": {
+    "bridge/tsgo/bridge_test.go": "1a0e9d52b90660f3b6b9d6867f868ed71cb2e31e9fb36afd9bf27f94967fbb7a",
+    "bridge/tsgo/product_cache_test.go": "3c10f788b084f424545131d286cd29c319517e1e61bf2b6004cebae0e46e2924",
+    "bridge/tsgo/units_test.go": "669208666feccfc6cd951f11931e2b2763f3c67cabeb48e85184da01c7f53be2",
+    "bridge/tsgo/coverage_test.go": "9e44c53794599c26d1c2e980aaa97b1b6565e0978316bfffba25cda92155d413",
+    "bridge/tsgo/registered_units_test.go": "f59d114a769f80328b3874d477e2b3b55c76c8a2a24032268519786dded753be",
+    "bridge/tsgo/products_test.go": "501151ffa957975c94bab4c0a12a3739061dd0b1a0af7e3281889f7b7e3b5d3e"
+  },
+  "measured_base": "7f409c9f321aa9ac33ddcb140a49fb7dc3354cb2",
+  "last_main_update": "Only tests outside bridge/tsgo changed. The ABI check on the delivery base passed in 12.051 test seconds, including new product builds.",
+  "split_commit": "1af1cf34a114f5f98949eaa5d7ffef198a515e0d"
+}

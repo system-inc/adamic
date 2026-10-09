@@ -10,11 +10,13 @@ import (
 func recoveredExpressions() []string {
 	return []string{"const C = @d class {};", "const C = @d @e(1) class Named extends Base { static x=1; };", "(@d class { m(){return 1;} });", "function f(){ await 'x'; await 1; await true; await this; }", "function f(){ yield 'x'; yield 1; yield true; }", "await\nx; yield\nx;", "await(x); yield(x);"}
 }
+
+// Not parallel: recovery helpers write the shared cache directory adamic-build
 func TestRecoveredExpressions(t *testing.T) {
 	list := manifest(t, recoveredExpressions())
-	want := execute(t, "", goOracle(t), "--manifest", list)
+	want := recoveryAnswer(t, goOracle(t), list, "--manifest")
 	main, _ := filepath.Abs("main.ts")
-	binary, script := build(t, main, true)
+	binary, script := recoveryBuild(t, main, true)
 	for name, got := range map[string][]byte{"Node": onNode(t, main, "--manifest", list), "native": execute(t, "", binary, "--manifest", list), "emitted": onNode(t, script, "--manifest", list)} {
 		if d := firstDifference(want, got); d != "" {
 			t.Fatal(name + ": " + d)
@@ -22,11 +24,13 @@ func TestRecoveredExpressions(t *testing.T) {
 	}
 	t.Logf("%d decorated class / await / yield cases, %d bytes match Go", len(recoveredExpressions()), len(want))
 }
+
+// Not parallel: recovery helpers write the shared cache directory adamic-build
 func TestRecoveredExpressionMutant(t *testing.T) {
 	list := manifest(t, recoveredExpressions())
-	want := execute(t, "", goOracle(t), "--manifest", list)
+	want := recoveryAnswer(t, goOracle(t), list, "--manifest")
 	path := mutantPort(t, "sourceLookahead.ts", "(scanner.flags & 1) === 0 &&\n        (token", "(scanner.flags & 1) >= 0 &&\n        (token")
-	binary, _ := build(t, path, true)
+	binary, _ := recoveryBuild(t, path, true)
 	for name, got := range map[string][]byte{"Node": onNode(t, path, "--manifest", list), "native": execute(t, "", binary, "--manifest", list)} {
 		if d := firstDifference(want, got); d == "" {
 			t.Fatal(name + " mutant survived")
@@ -36,9 +40,10 @@ func TestRecoveredExpressionMutant(t *testing.T) {
 	}
 }
 
+// Not parallel: recovery helpers write the shared cache directory adamic-build
 func TestUnattachedDecorator(t *testing.T) {
 	main, _ := filepath.Abs("main.ts")
-	binary, script := build(t, main, true)
+	binary, script := recoveryBuild(t, main, true)
 	for _, body := range []string{"@dec\nawait 1", "@dec\nx"} {
 		path := filepath.Join(t.TempDir(), "input.ts")
 		os.WriteFile(path, []byte(body), 0644)
@@ -48,14 +53,15 @@ func TestUnattachedDecorator(t *testing.T) {
 	}
 }
 
+// Not parallel: recovery helpers write the shared cache directory adamic-build
 func TestUnattachedDecoratorControl(t *testing.T) {
 	list := manifest(t, []string{"@dec\nawait 1", "@dec\nx"})
-	statuses := string(execute(t, "", goOracle(t), "--audit", list, t.TempDir()))
+	statuses := string(recoveryAnswer(t, goOracle(t), list, "--audit"))
 	if strings.Count(statuses, `"status":"error"`) != 2 {
 		t.Fatalf("Go decorator refusals changed: %s", statuses)
 	}
 	main := mutantPort(t, "pipeline.ts", `parser.nodes[id]?.kind === 'Decorator'`, `parser.nodes[id]?.kind === 'UnusedDecoratorControl'`)
-	binary, _ := build(t, main, true)
+	binary, _ := recoveryBuild(t, main, true)
 	for name, got := range map[string][]byte{"Node": onNode(t, main, "--manifest", list), "native": execute(t, "", binary, "--manifest", list)} {
 		if strings.Count(string(got), "0 Program ") != 2 {
 			t.Fatal(name + " decorator control did not finish with two incorrect acceptances")

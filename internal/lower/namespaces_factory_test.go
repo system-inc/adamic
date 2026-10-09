@@ -14,6 +14,7 @@ import (
 )
 
 func TestParserFactoryBindingHoisting(t *testing.T) {
+	t.Parallel()
 	path, err := filepath.Abs("../oracle/testdata/namespaces_parser_factory.a")
 	if err != nil {
 		t.Fatal(err)
@@ -41,6 +42,7 @@ func TestParserFactoryBindingHoisting(t *testing.T) {
 }
 
 func TestMissingBindingSymbolHasStructuredLocation(t *testing.T) {
+	t.Parallel()
 	path := filepath.Join(t.TempDir(), "main.a")
 	if err := os.WriteFile(path, []byte("const { field: local } = { field: 1 };"), 0644); err != nil {
 		t.Fatal(err)

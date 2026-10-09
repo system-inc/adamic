@@ -10,6 +10,7 @@ import (
 	"github.com/system-inc/cohere/internal/format/formatoptions"
 )
 
+// Not parallel: writes the fixed ADAMIC_JSON_ANSWERS path.
 func TestAdamicJSONAudit(t *testing.T) {
 	casesPath := os.Getenv("ADAMIC_JSON_CASES")
 	if casesPath == "" {
