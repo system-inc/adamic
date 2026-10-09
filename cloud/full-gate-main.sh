@@ -379,18 +379,21 @@ BOX
         else
           range="no green full gate recorded yet, so no range to bisect"
         fi
+        redOwner=system_adamic_release_verdict
+        [ "${origin}" = request ] && redOwner=system_adamic_release_integration
         if [ "${origin}" = request ]; then
           (cd /Users/kirkouimet/Projects/ahra && ahra os send system_adamic_release_integration "Whole gate of the star's candidate ${sha} (a request, not main) is red: ${status}. Log: gate-logs/${sha:0:12}/${stamp}/full-main (first-failure.txt). It runs on for triage while the candidate stays in the requests file." >/dev/null 2>&1 || true)
         else
-          (cd /Users/kirkouimet/Projects/ahra && ahra os send system_adamic_release_integration "Full gate of main ${sha} is red: ${status}. Log: gate-logs/${sha:0:12}/${stamp}/full-main (first-failure.txt). ${range}. Bisect those on a fast slot. The rest keeps running for triage." >/dev/null 2>&1 || true)
+          (cd /Users/kirkouimet/Projects/ahra && ahra os send "${redOwner}" "Full gate of main ${sha} is red: ${status}. Log: gate-logs/${sha:0:12}/${stamp}/full-main (first-failure.txt). ${range}. Bisect those on a fast slot. The rest keeps running for triage." >/dev/null 2>&1 || true)
         fi
         # A red that may be load (a timeout, a stall, a kill) gets Loom's same-instance A/B against the candidate's first
-        # parent, and the verdict comes back to integration (cloud/ab-trigger.py; @system_adamic from the witness, Oct 9).
+        # parent, and the verdict comes back to whoever owns the red (cloud/ab-trigger.py; @system_adamic from the witness,
+        # Oct 9): the star's candidate is integration's, and main's reds are verdict's since 20:27Z (integration, 22:55Z).
         firstFailure=$(mktemp)
         if ssh "${box}" "cat ~/${out}/first-failure.txt" > "${firstFailure}" 2> /dev/null; then
           git -C "${here}" fetch -q origin "${gated}" 2> /dev/null || true
           python3 "${here}/cloud/ab-trigger.py" write --candidate "${gated}" --main "$(git -C "${here}" rev-parse "${gated}^1" 2> /dev/null)" \
-            --red "gate-logs/${sha:0:12}/${stamp}/full-main" --first-failure "${firstFailure}" --notify system_adamic_release_integration || true
+            --red "gate-logs/${sha:0:12}/${stamp}/full-main" --first-failure "${firstFailure}" --notify "${redOwner}" || true
         fi
         rm -f "${firstFailure}"
       fi
