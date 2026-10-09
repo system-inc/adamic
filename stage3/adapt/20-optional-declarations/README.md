@@ -590,3 +590,23 @@ the checked build and snapshot proof were rerun successfully. Package checks
 from the unchanged census/meter/loader tooling passed (9.711s and 3.646s);
 this unit changes only source-adaptation tooling. The full native Adamic gate,
 future adaptations and unproven C/R invariants are outside this unit. No PR.
+
+## Builder assignment pattern, October 9
+
+The remaining-67 parser ledger supplies TS2375 at builder.ts:2273 and 2310.
+Replaying this adaptation after all predecessors resolves three internal owners:
+ReusableBuilderProgramState.outSignature, hasErrors and emitSignatures. At the
+normal numeric position an earlier incompatible member masks those optional
+chains. The bounded pattern resolves the two state object assignments inside
+createBuilderProgramUsingIncrementalBuildInfo and passes those three fields
+through the existing selector. It retains every question mark, key and value.
+The source value must contain undefined, every other constituent must fit the
+annotation, and indexed or changed owner contracts fail before edits. It is
+independent of the checker's first reported incompatible member.
+
+The full apply comparison changes only those three internal declarations.
+A real-source mutant replaces buildInfo.outSignature with true and is rejected
+by `builder optional value contract drift: outSignature`; original bytes are
+restored. Full composition results and exact commands are recorded in
+../../scouts/step24/remaining-67/README.md. No public declaration is widened
+by this pattern, and no compiler or shared harness changes are included.

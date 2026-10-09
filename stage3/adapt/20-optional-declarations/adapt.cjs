@@ -167,6 +167,51 @@ for (;;) {
         }
         if (!resolved) excluded.push({ ...finding, reason });
     }
+    // These two builder assignments already supply present-undefined evidence.
+    // An earlier incompatible member can hide their optional diagnostic until
+    // indexed-read adaptations run. Resolve the reviewed fields individually
+    // through the same selector, rather than depending on diagnostic ordering.
+    const builder = program.getSourceFile(path.join(directory, 'builder.ts'));
+    if (builder) {
+        let assignments = 0;
+        function visitBuilder(node) {
+            if (ts.isFunctionDeclaration(node) && node.name?.text === 'createBuilderProgramUsingIncrementalBuildInfo') {
+                function visitAssignment(n) {
+                    if (ts.isBinaryExpression(n) && n.operatorToken.kind === ts.SyntaxKind.EqualsToken &&
+                        ts.isIdentifier(n.left) && n.left.text === 'state' && ts.isObjectLiteralExpression(n.right)) {
+                        assignments++;
+                        const target = checker.getTypeAtLocation(n.left);
+                        for (const name of ['outSignature', 'hasErrors', 'emitSignatures']) {
+                            const field = n.right.properties.find(p => ts.isPropertyAssignment(p) && p.name.getText(builder) === name);
+                            if (!field) continue;
+                            const property = checker.getPropertyOfType(target, name);
+                            const owners = property?.declarations || [];
+                            if (owners.length !== 1 || !ts.isInterfaceDeclaration(owners[0].parent) ||
+                                owners[0].parent.name.text !== 'ReusableBuilderProgramState') throw new Error('builder optional owner drift: ' + name);
+                            if (unproven(checker, field.initializer)) throw new Error('builder optional evidence became indexed: ' + name);
+                            const point = builder.getLineAndCharacterOfPosition(field.getStart(builder));
+                            const finding = { file: 'src/compiler/builder.ts', line: point.line + 1,
+                                column: point.character + 1, code: null, source: field.getText(builder),
+                                resolution: 'reviewed present-undefined assignment, independent of first diagnostic member' };
+                            const value = checker.getTypeAtLocation(field.initializer);
+                            const annotation = checker.getTypeFromTypeNode(owners[0].type);
+                            if (!parts(value).some(undefinedPart) || parts(value).some(part => !undefinedPart(part) &&
+                                ((part.flags & forbidden) || !checker.isTypeAssignableTo(part, annotation)))) {
+                                throw new Error('builder optional value contract drift: ' + name);
+                            }
+                            if (!checker.isTypeAssignableTo(checker.getUndefinedType(), annotation) && !select(property, value, finding)) {
+                                throw new Error('builder optional owner is ineligible: ' + name);
+                            }
+                        }
+                    }
+                    ts.forEachChild(n, visitAssignment);
+                }
+                visitAssignment(node.body);
+            } else ts.forEachChild(node, visitBuilder);
+        }
+        visitBuilder(builder);
+        if (assignments !== 2) throw new Error('builder optional assignment count drift: ' + assignments);
+    }
     // One object slot can be viewed through several inherited declarations.
     // Its proven present-undefined write must be truthful in every optional view.
     const interfaces = [];
