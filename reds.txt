@@ -1,0 +1,27 @@
+run adamic-verify-20261009T124801-995bf727: red, 26276 tests in 88 units, 2 failed, 0 units broken, 0 killed over budget
+AGAIN tests-31: from run adamic-verify-again-20261009T130628-eb00e1aa
+AGAIN tests-03-r2: from run adamic-verify-again-20261009T130628-eb00e1aa
+AGAIN tests-28-r1: from run adamic-verify-again-20261009T130628-eb00e1aa
+AGAIN tests-28-r6: from run adamic-verify-again-20261009T130628-eb00e1aa
+AGAIN tests-28-r8: from run adamic-verify-again-20261009T130628-eb00e1aa
+AGAIN tests-28-r10: from run adamic-verify-again-20261009T131803-efd8d5b7
+AGAIN tests-28-r11: from run adamic-verify-again-20261009T131803-efd8d5b7
+AGAIN tests-28-r12: from run adamic-verify-again-20261009T130628-eb00e1aa
+AGAIN tests-28-r15: from run adamic-verify-again-20261009T130628-eb00e1aa
+AGAIN tests-28-r16: from run adamic-verify-again-20261009T130628-eb00e1aa
+FAIL github.com/system-inc/adamic/stage1/cohere/css (package) (tests-28-r7)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/css	440.875s
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-28-r10)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint	610.054s
+FAIL github.com/system-inc/adamic/stage1/cohere/typeaware requested tests ran: 0 (tests-04): note: stale, the tree holds no test TestVolumeProfileAgreementAndMutants
+FAIL github.com/system-inc/adamic/internal/flow requested tests ran: 0 (tests-20): note: stale, the tree holds no test TestEveryFunctionIsInSingleAssignment
+FAIL github.com/system-inc/adamic/internal/fresh requested tests ran: 0 (tests-20): note: stale, the tree holds no test TestEveryWriteIsRecordedAndKnown
+FAIL github.com/system-inc/adamic/cmd/adamic-gate requested tests ran: 0 (tests-25): note: stale, the tree holds no test TestTypeAwareChildrenAndParentCost
+FAIL github.com/system-inc/adamic/internal/flow requested tests ran: 0 (tests-25): note: stale, the tree holds no test TestEveryMutationIsInItsRange
+FAIL github.com/system-inc/adamic/internal/flow requested tests ran: 0 (tests-26): note: stale, the tree holds no test TestEveryPathNodeTakesIsInTheGraph
+FAIL github.com/system-inc/adamic/internal/flow requested tests ran: 0 (tests-35): note: stale, the tree holds no test TestLivenessHoldsOnEveryPath
+FAIL github.com/system-inc/adamic/stage1/cohere/lint requested tests ran: 0 (tests-01): requested tests started 20, verdicts 1 of: TestOwnedWitnesses (TestOwnedWitnessesAssignmentStable, TestOwnedWitnessesPlantedDisagreement, TestOwnedWitnessesUnion, TestOwnedWitnesses_000, TestOwnedWitnesses_001, TestOwnedWitnesses_002, ...)
+FAIL github.com/system-inc/adamic/stage1/cohere/lint requested tests ran: 0 (tests-01): whole package started 6739, verdicts 90 of: TestCompilerAndStage1Agree_000, TestCompilerAndStage1Agree_001, TestCompilerAndStage1Agree_002, TestCompilerAndStage1Agree_003, TestCompilerAndStage1Agree_004, TestCompilerAndStage1Agree_005, TestCompilerAndStage1Agree_006, TestCompilerAndStage1Agree_007, TestCompilerAndStage1Agree_008, TestCompilerAndStage1Agree_009, TestCompilerAndStage1Agree_010, TestCompilerAndStage1Agree_011
+FAIL github.com/system-inc/adamic/stage1/cohere/css requested tests ran: 0 (tests-19): requested tests started 390, verdicts 363 of: TestThePortParsesAsGoCohereDoes (TestThePortParsesAsGoCohereDoes_350, TestThePortParsesAsGoCohereDoes_351, TestThePortParsesAsGoCohereDoes_352, TestThePortParsesAsGoCohereDoes_353, TestThePortParsesAsGoCohereDoes_354, TestThePortParsesAsGoCohereDoes_355, ...)
+FAIL github.com/system-inc/adamic/stage1/cohere/css requested tests ran: 0 (tests-20): requested tests started 19, verdicts 2 of: TestCompositionMatchesGo (TestCompositionMatchesGoUnion, TestCompositionMatchesGo_000, TestCompositionMatchesGo_001, TestCompositionMatchesGo_002, TestCompositionMatchesGo_003, TestCompositionMatchesGo_004, ...)
+FAIL github.com/system-inc/adamic/stage1/cohere/css requested tests ran: 0 (tests-26): whole package started 514, verdicts 460 of: TestCSSPrinterAgreesWithGoUnion, TestCSSPrinterAgreesWithGo_000, TestCSSPrinterAgreesWithGo_001, TestCSSPrinterAgreesWithGo_002, TestCSSPrinterAgreesWithGo_003, TestCSSPrinterAgreesWithGo_004, TestCSSPrinterAgreesWithGo_005, TestCSSPrinterAgreesWithGo_006, TestCSSPrinterAgreesWithGo_008, TestCSSPrinterAgreesWithGo_011
