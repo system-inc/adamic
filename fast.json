@@ -1,0 +1,30 @@
+{
+  "finished": true,
+  "verdict": "void",
+  "runner": "pool",
+  "pool": "codex-side",
+  "pool_run": "adamic-select-20261009T213201-9932653f",
+  "covers": "go-tests",
+  "uncached_tests": false,
+  "sha": "5643d94a3dea936849f34726706065cc67fa951e",
+  "branch": "cloud/land-stack-miscompile-train-plus-3-7e77cb5c",
+  "base": "296a6633a6b1d079faaafaf3187c70e96589efdf",
+  "candidate": "7e77cb5cb989103dd820679cc943a7a8e309653d",
+  "gated": "5643d94a3dea936849f34726706065cc67fa951e",
+  "unplanned_packages_not_run": 4,
+  "complete": true,
+  "darwin": "not run (pool is Linux only)",
+  "loom_tools": "03d9cf9de25ea90faa3d97a2bf8205b5ae0fc0cbf3519c9d8be0e56141237d44",
+  "loom_tools_promoted": "d0c80ee6a1d426c42ef3414264d87e6478902c5aa9b5b81e46ae9c81c81b0e3e",
+  "gate_tools": "ec73409fe1b06a2f75c71c7837a8262a428c8051",
+  "pass": 0,
+  "fail": 0,
+  "skip": 0,
+  "planned_stages": [
+    "tests"
+  ],
+  "wall_seconds": 42.5,
+  "steps_seconds": {
+    "tests": 42.5
+  }
+}
