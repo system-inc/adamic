@@ -1,0 +1,10 @@
+--- a/internal/lower/class.go
++++ b/internal/lower/class.go
+@@ -408,6 +408,7 @@
+ 
+ // setProperty lowers object.name = value, as a statement.
+ func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Statement, error) {
++ if true { return nil, nil }
+ 	if call, handled, err := l.superAccessor(target, valueNode); handled {
+ 		if err != nil {
+ 			return nil, err

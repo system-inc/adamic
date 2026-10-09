@@ -1,0 +1,16 @@
+TestDefaultTaggedInterfaceAdmission overlapping ['M01', 'M08'] [] ['TestPredicateBodyProof', 'TestEnumSlotViews'] False
+TestDefaultTaggedInterfaceNeedsNoFlag subsumed ['M01'] [] ['TestDefaultTaggedInterfaceAdmission'] True
+TestIteratorGapsAreExplicit subsumed ['M04'] [] ['TestIteratorViewsCannotEraseReceivers'] False
+TestIteratorViewsCannotHideReturn subsumed ['M03', 'M04'] [] ['TestIteratorViewsCannotEraseReceivers'] False
+TestIteratorViewsCannotEraseReceivers subsumed ['M03', 'M04'] [] ['TestIteratorViewsCannotHideReturn'] False
+TestIteratorDestructuringDoesNotLieAboutExhaustion sacred ['M03', 'M12'] ['M12'] [] False
+TestGeneratorsAreRefusedEvenWithoutYield sacred ['M05'] ['M05'] [] False
+TestLiteralMethodCapturesCannotMakeCycles subsumed ['M06'] [] ['TestInheritanceRefusesUnsoundOverrides'] False
+TestLiteralMethodViewsDoNotLoseThis subsumed ['M11'] [] ['TestDestructuredMethodsCannotLoadOwnSlots'] True
+TestIteratorDescriptorReasons overlapping ['M03', 'M04', 'M08'] [] ['TestIteratorMapperIndexHasNumberRepresentation', 'TestIteratorViewsCannotEraseReceivers', 'TestEnumSlotViews'] False
+TestRepresentedMethodReplacementIsNotYet subsumed ['M08'] [] ['TestIteratorDescriptorReasons'] False
+TestDestructuredMethodsCannotLoadOwnSlots subsumed ['M11'] [] ['TestLiteralMethodViewsDoNotLoseThis'] False
+TestGenericIteratorViewsPreserveNativeArguments subsumed ['M07'] [] ['TestUncheckableCastsStayRefused'] False
+TestIteratorMapperIndexHasNumberRepresentation sacred ['M03', 'M09'] ['M09'] [] False
+TestIteratorSymbolKeysAreNotStringKeys subsumed ['M10'] [] ['TestClassWrongOutputKeysRepair'] False
+additional subsumers ['TestInheritanceRefusesUnsoundOverrides', 'TestUncheckableCastsStayRefused', 'TestClassWrongOutputKeysRepair']

@@ -1,0 +1,5 @@
+package lower
+
+import "os"
+
+func u033Mutant(id string) bool { return os.Getenv("ADAMIC_MUTANT") == id }
