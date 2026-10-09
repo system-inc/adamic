@@ -29,6 +29,8 @@ const optionalFieldWrite = "optional-field-write"
 // OptIn are the features the generator leaves out unless asked for by name: shapes stage 0 is known
 // to get wrong today, kept ready for the day it doesn't.
 var OptIn = []string{
+	"helper-predicates",      // helper predicate parameter positions (review #fxspptb, 120)
+	"array-predicates",       // narrowing callbacks over union arrays (121, 122)
 	interfaceOmittedOptional, // carrier.pick() through an interface, with the optional argument left out
 	optionalFieldWrite,       // record.slot = value on a record made as {}, then read
 }

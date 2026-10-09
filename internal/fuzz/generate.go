@@ -184,6 +184,12 @@ func (g *generator) program() *Program {
 	add := func(statement *Statement) {
 		program.Block.Statements = append(program.Block.Statements, statement)
 	}
+	if g.allowed("helper-predicates") && g.with["helper-predicates"] {
+		add(statement(g.helperPredicateSource()))
+	}
+	if g.allowed("array-predicates") && g.with["array-predicates"] {
+		add(statement(g.arrayPredicateSource()))
+	}
 	g.push()
 	add(statement("interface Holder {\n\tvalue: number;\n\tname: string;\n\tlist: number[];\n}"))
 	g.declare("holder.value", Number, true)
