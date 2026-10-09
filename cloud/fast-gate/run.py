@@ -1358,7 +1358,7 @@ class Gate:
         if not requested:
             return
         outcomes = topLevelOutcomes(os.path.join(self.arguments.out, "test.jsonl"))
-        results = {importPath + " " + name: outcomes.get(importPath + " " + name, "missing")
+        results = {importPath + " " + name: familyOutcome(outcomes, importPath, name)
                    for importPath, names in requested.items() for name in sorted(names)}
         self.result["deferred_run_results"] = results
         unproven = ["%s: %s" % (test, outcome) for test, outcome in sorted(results.items()) if outcome not in ("pass", "fail")]
@@ -1802,7 +1802,11 @@ class Gate:
                     productPool.submit(runProduct, row, binary)
             names = [] if productsOnly else [name for name in names if not name.startswith("TestProduct_")]
             if importPath in getattr(self, "onlyTests", {}):
-                names = [name for name in names if name in self.onlyTests[importPath]]
+                names = [name for name in names if inFamily(name, self.onlyTests[importPath])]
+                if not names:
+                    # A package gated only for requested tests that selects none of them proves nothing: red, never a pass.
+                    self.fail("requested", "requested tests ran: 0 in %s: %s match no test in its -test.list" % (importPath, ", ".join(sorted(self.onlyTests[importPath]))))
+                    return
             selection = getattr(self, "oracleSelection", {"whole": True}) if importPath == oracle else {"whole": True}
             patterns = {}
             if not selection["whole"]:
@@ -2506,6 +2510,26 @@ def testUnits(path):
         if setup > 0:
             units[key[0], key[1] + " (setup)"] = (round(setup, 2), action)
     return units
+
+
+def inFamily(name, requested):
+    """A requested test name selects itself and every top-level test it prefixes: a family split into shards
+    (TestNormalizeMatchesNode is TestNormalizeMatchesNodePoints00, 01, ...) is requested by its name, and an exact
+    anchor selected none of it, so a requested set ran nothing and read as passed (@system_adamic, Oct 9 11:01Z)."""
+    return any(name.startswith(prefix) for prefix in requested)
+
+
+def familyOutcome(outcomes, package, name):
+    """A requested name's outcome over its family in topLevelOutcomes: the test itself when it ran, else fail if any
+    member failed, pass if any passed, skip if every member skipped, and missing when the family ran nothing."""
+    exact = outcomes.get(package + " " + name)
+    if exact:
+        return exact
+    members = [outcome for key, outcome in outcomes.items() if key.startswith(package + " " + name)]
+    for outcome in ("fail", "pass", "skip"):
+        if outcome in members:
+            return outcome
+    return "missing"
 
 
 def topLevelOutcomes(path):

@@ -105,7 +105,8 @@ class FakeProcess:
             name = "TestOne"
             if "-run" in command and "TestWASI" in command[command.index("-run") + 1]:
                 name = "TestWASI/" + ("requests" if "requests" in command[command.index("-run") + 1] else "a.a")
-            lines = [json.dumps({"Action": "pass", "Package": "p", "Test": name}) + "\n"]
+            package = command[command.index("-p") + 1] if "test2json" in command and "-p" in command else "p"
+            lines = [json.dumps({"Action": "pass", "Package": package, "Test": name}) + "\n"]
         self.lines = lines
         self.stdout = io.StringIO("".join(lines)) if stdout == subprocess.PIPE else None
 
@@ -432,6 +433,18 @@ class FailClosed(unittest.TestCase):
         self.assertEqual(result["deferred_run_results"], {"p TestMissing": "missing"})
         # The red line names what didn't run, not just "first failure at deferred" (trio 114a6439, Oct 9 10:50Z).
         self.assertIn("first failure at deferred (1 requested deferred tests unproven: p TestMissing missing)", status)
+
+    def test_a_package_gated_for_requested_tests_runs_their_family_and_reds_when_it_selects_none(self):
+        # A requested name selects its prefix family (TestOn selects TestOne); one that selects nothing is red, never an
+        # empty pass (@system_adamic, Oct 9 11:01Z, after Loom's unit ran "no tests to run" and passed).
+        with mock.patch.object(run.Gate, "runRequested", lambda gate: setattr(gate, "requested", {"q": {"TestOn"}})):
+            gate, status, result = self.gate()
+        self.assertIsNone(gate.failure, status)
+        self.assertEqual(result["split_tests"].get("q"), 1)
+        with mock.patch.object(run.Gate, "runRequested", lambda gate: setattr(gate, "requested", {"q": {"TestNoSuchFamily"}})):
+            gate, status, result = self.gate()
+        self.assertIn("first failure at requested", status)
+        self.assertIn("requested tests ran: 0 in q: TestNoSuchFamily", gate.failure["detail"])
 
     def test_several_fast_phases_complete_the_pool_landing_record(self):
         gate, status, result = self.gate(extra={"phases": "build,vet,smoke,census", "census": self.poolLog()})
@@ -905,6 +918,31 @@ class GateRunsDeferred(unittest.TestCase):
         self.assertEqual(gate.failure["step"], "deferred")
         self.assertIn("TestWASI: skip", gate.failure["detail"])
         self.assertIn("TestShardsAgree: missing", gate.failure["detail"])
+
+    def test_a_requested_name_is_a_prefix_family_and_one_that_matches_nothing_is_red(self):
+        # Trio 114a6439, Oct 9: TestNormalizeMatchesNode is a family (TestNormalizeMatchesNodePoints00, 01, ...), and an
+        # exact anchor ran none of it.
+        gate, native, lint = self.gate("deferred")
+        gate.runRequested()
+        with open(os.path.join(gate.arguments.out, "test.jsonl"), "w") as handle:
+            for test in ("TestSplitTSGoAgreesShard00", "TestSplitTSGoAgreesShard01", "TestWASI", "TestShardsAgree_000"):
+                handle.write(json.dumps({"Action": "pass", "Package": native if not test.startswith("TestShards") else lint, "Test": test}) + "\n")
+        gate.requestedRan()
+        self.assertIsNone(gate.failure, gate.result.get("deferred_run_results"))
+        self.assertEqual(gate.result["deferred_run_results"][native + " TestSplitTSGoAgrees"], "pass")
+        # A family whose one member failed fails; a planted name that matches nothing is missing, and red.
+        self.assertEqual(run.familyOutcome({"p TestA01": "pass", "p TestA02": "fail"}, "p", "TestA"), "fail")
+        self.assertEqual(run.familyOutcome({"p TestA01": "pass"}, "p", "TestNoSuchFamily"), "missing")
+        self.assertTrue(run.inFamily("TestNormalizeMatchesNodePoints00", {"TestNormalizeMatchesNode"}))
+        self.assertFalse(run.inFamily("TestNormalize", {"TestNormalizeMatchesNode"}))
+        gate, native, lint = self.gate("internal/native TestWASI")
+        gate.runRequested()
+        gate.requested[native].add("TestNoSuchFamily")
+        open(os.path.join(gate.arguments.out, "test.jsonl"), "w").write(json.dumps({"Action": "pass", "Package": native, "Test": "TestWASI"}) + "\n")
+        with mock.patch("builtins.print"):
+            gate.requestedRan()
+        self.assertEqual(gate.failure["step"], "deferred")
+        self.assertIn("TestNoSuchFamily: missing", gate.failure["detail"])
 
     def test_every_requested_test_reaching_a_verdict_passes_the_check(self):
         gate, native, lint = self.gate("internal/native TestWASI")
