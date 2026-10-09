@@ -1,0 +1,11 @@
+--- a/internal/lower/arguments_length.go
++++ b/internal/lower/arguments_length.go
+@@ -59,7 +59,7 @@
+ 		l.result.Locals = append(l.result.Locals, ir.Local{Name: "argument_count", Type: ir.Number, Function: l.functionIndex})
+ 		l.function.ArgumentsCount = local + 1
+ 	}
+-	return ir.Read{Local: l.function.ArgumentsCount - 1, Of: ir.Number}
++	return ir.NumberConstant{Value: 9}
+ }
+ 
+ // callArguments keeps spreads at their evaluation point. Backends expand them once,

@@ -2,6 +2,8 @@ package lower
 
 import (
 	"errors"
+	"path/filepath"
+	"strconv"
 	"strings"
 	"testing"
 )
@@ -9,12 +11,14 @@ import (
 func TestNodeFSFileOptionsBorrow(t *testing.T) {
 	t.Parallel()
 	for _, source := range []string{
-		`import {statSync as status} from 'node:fs'; const options={throwIfNoEntry:false}; const result=status('missing',options);`,
-		`import {unlinkSync} from 'node:fs'; function remove(path:string):void {return unlinkSync(path);} remove('missing');`,
+		`import {statSync as status} from 'node:fs'; const options={throwIfNoEntry:false}; const result=status('missing',options); console.log(result===undefined?'absent':'present');`,
+		`import {unlinkSync} from 'node:fs'; function remove(path:string):void {return unlinkSync(path);} console.log('before remove'); remove('missing');`,
 	} {
-		if _, err := lowerSource(t, source); err != nil {
-			t.Fatal(err)
+		exit := 0
+		if strings.Contains(source, "before remove") {
+			exit = 70
 		}
+		lowersAndAgreesWithNodeExit(t, fsAgreementSource(t, source), exit)
 	}
 }
 
@@ -64,9 +68,7 @@ func TestNodeFSFileRefusesPinnedUnsupportedOverloads(t *testing.T) {
 
 func TestNodeFSFileNamespaceImport(t *testing.T) {
 	t.Parallel()
-	if _, err := lowerSource(t, `import * as fs from 'node:fs'; fs.existsSync('x');`); err != nil {
-		t.Fatal(err)
-	}
+	lowersAndAgreesWithNode(t, fsAgreementSource(t, `import * as fs from 'node:fs'; console.log(fs.existsSync('x')?'present':'absent');`))
 }
 
 func TestNodeFSFileQualifiedErrorType(t *testing.T) {
@@ -94,20 +96,17 @@ func TestNodeFSFileKeepsDetachedMethodRefusal(t *testing.T) {
 
 func TestNodeFSFileBufferBorrow(t *testing.T) {
 	t.Parallel()
-	if _, err := lowerSource(t, `import {readSync,writeFileSync} from 'node:fs'; import {Buffer} from 'node:buffer'; const bytes=Buffer.from('x'); readSync(0,bytes,0,1,null); writeFileSync('x',bytes);`); err != nil {
-		t.Fatal(err)
-	}
+	lowersAndAgreesWithNode(t, fsAgreementSource(t, `import {openSync,closeSync,readSync,readFileSync,writeFileSync,unlinkSync} from 'node:fs'; import {Buffer} from 'node:buffer'; const bytes=Buffer.from('b'); writeFileSync('x',Buffer.from('a')); const fd=openSync('x','r'); const count=readSync(fd,bytes,0,1,null); console.log(count.toString()); closeSync(fd); console.log(bytes.toString()); writeFileSync('x',bytes); console.log(readFileSync('x','utf8')); unlinkSync('x');`))
 }
 
 func TestNodeFSFileScratchOptionsBorrow(t *testing.T) {
 	t.Parallel()
 	for _, source := range []string{
-		`import {rmSync} from 'node:fs'; const options={recursive:true,force:true}; rmSync('missing',options);`,
-		`import {mkdtempSync} from 'node:fs'; mkdtempSync('prefix',{encoding:'utf8'});`,
+		`import {rmSync,existsSync} from 'node:fs'; const options={recursive:true,force:true}; rmSync('missing',options); console.log(existsSync('missing')?'present':'absent');`,
+		`import {mkdtempSync,existsSync,rmSync} from 'node:fs'; const directory=mkdtempSync('prefix',{encoding:'utf8'}); console.log(existsSync(directory)?'created':'missing'); rmSync(directory,{recursive:true});`,
 	} {
-		if _, err := lowerSource(t, source); err != nil {
-			t.Fatal(err)
-		}
+		source = strings.ReplaceAll(source, "'prefix'", strconv.Quote(filepath.Join(t.TempDir(), "prefix")))
+		lowersAndAgreesWithNode(t, fsAgreementSource(t, source))
 	}
 }
 

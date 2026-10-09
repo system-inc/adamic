@@ -70,3 +70,24 @@ func TestRegExpRuntimeConstructionLowers(t *testing.T) {
 		}
 	}
 }
+
+func TestRegExpUnicodeClassSourceAgreesWithNode(t *testing.T) {
+	t.Parallel()
+	source := "const regex = new RegExp('[[/]/', 'u'); console.log(`${regex.source}|${regex.flags}|${regex.test('//')}`);"
+	// Only native exposes lowered RegExp source metadata; JavaScript recomputes it.
+	lowersAndAgreesWithNodeNative(t, source)
+}
+
+func TestRegExpSlashClassSourceAgreesWithNode(t *testing.T) {
+	t.Parallel()
+	source := "const regex = new RegExp('[/]/', 'u'); console.log(`${regex.source}|${regex.flags}|${regex.test('//')}`);"
+	// Only native exposes lowered RegExp source metadata; JavaScript recomputes it.
+	lowersAndAgreesWithNodeNative(t, source)
+}
+
+func TestRegExpEscapedSlashSourceAgreesWithNode(t *testing.T) {
+	t.Parallel()
+	source := "const regex = new RegExp('\\\\/', 'u'); console.log(`${regex.source}|${regex.flags}|${regex.test('/')}`);"
+	// Only native exposes lowered RegExp source metadata; JavaScript recomputes it.
+	lowersAndAgreesWithNodeNative(t, source)
+}

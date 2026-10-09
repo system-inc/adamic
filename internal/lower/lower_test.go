@@ -473,6 +473,7 @@ function keep(view: View): View {
 	const same: View = view;
 	return same;
 }
+console.log(keep({ pet: { name: 'Rex' } }).pet.name);
 `},
 		{"a readonly field copied into a writable one", `const view: { readonly pet: Animal } = { pet: { name: 'Rex' } };
 const pen: { pet: Animal } = { pet: view.pet };
@@ -482,15 +483,19 @@ console.log(view.pet.name);
 		{"a copy made by slice", `const dogs: Dog[] = [{ name: 'Rex', bark: 'woof' }];
 const animals: Animal[] = dogs.slice();
 animals.push({ name: 'Tom' });
+console.log(String(animals.length) + ':' + String(dogs.length));
 `},
 		{"a copy made by map", `const dogs: Dog[] = [{ name: 'Rex', bark: 'woof' }];
 const animals: Animal[] = dogs.map((dog) => dog);
+console.log(animals.map((animal) => animal.name).join(','));
 `},
 		{"a copy made by filter", `const dogs: Dog[] = [{ name: 'Rex', bark: 'woof' }];
 const animals: Animal[] = dogs.filter((dog) => dog.bark.length > 0);
+console.log(animals.map((animal) => animal.name).join(','));
 `},
 		{"a conditional of fresh arrays", `const dogs: Dog[] = [{ name: 'Rex', bark: 'woof' }];
 const animals: Animal[] = dogs.length > 5 ? [{ name: 'Tom' }] : [];
+console.log(String(animals.length));
 `},
 		{"a Map made from pairs", `const pairs: [string, Dog][] = [['Rex', { name: 'Rex', bark: 'woof' }]];
 const byName = new Map<string, Dog>(pairs);
@@ -499,20 +504,25 @@ console.log(` + "`${byName.size}`" + `);
 		{"a conditional of fresh copies", `const dogs: Dog[] = [{ name: 'Rex', bark: 'woof' }];
 const animals: Animal[] = dogs.length > 5 ? dogs.slice() : [];
 animals.push({ name: 'Tom' });
+console.log(String(animals.length) + ':' + String(dogs.length));
 `},
 		{"a new Map passed", `function add(animals: Map<string, Animal>): void {
 	animals.set('Tom', { name: 'Tom' });
+	console.log(String(animals.size));
 }
 add(new Map<string, Dog>());
 `},
 		{"a new Map", `const byName: Map<string, Animal> = new Map<string, Dog>();
+console.log(String(byName.size));
 `},
 		{"a union target that can't write", `const dogs: Dog[] = [{ name: 'Rex', bark: 'woof' }];
 const slot: readonly Animal[] | string = dogs;
+console.log(String(slot.length));
 `},
 		{"a shorthand property that can't write", `const dogs: Dog[] = [{ name: 'Rex', bark: 'woof' }];
 const list = dogs;
 const view: { list: readonly Animal[] } = { list };
+console.log(view.list.map((animal) => animal.name).join(','));
 `},
 		{"a destructuring with no type", `interface View {
 	readonly pet: Animal;
@@ -523,6 +533,7 @@ console.log(pet.name);
 `},
 		{"a method returning the same type", `const source = { list: (): readonly Animal[] => [] };
 const shelter: { list(): readonly Animal[] } = source;
+console.log(String(shelter.list().length));
 `},
 		{"a class seen as itself", `class Box<T> {
 	item: T;
@@ -542,6 +553,10 @@ console.log(again.item.bark);
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
+			if strings.Contains(probe.source, "console.log") {
+				lowersAndAgreesWithNode(t, pets+probe.source)
+				return
+			}
 			_, err := lowerSource(t, pets+probe.source)
 			var refused *Refused
 			if errors.As(err, &refused) {
@@ -637,11 +652,16 @@ func TestAMethodReadAsAValueIsRefused(t *testing.T) {
 	} {
 		t.Run("not "+neighbor.name, func(t *testing.T) {
 			t.Parallel()
-			_, err := lowerSource(t, shelter+neighbor.source)
-			var refused *Refused
-			if errors.As(err, &refused) {
-				t.Errorf("refused a method that keeps its object: %v", err)
+			if neighbor.name == "a field holding a function" {
+				// This partial admission row permits NotYet for an erased prototype origin.
+				_, err := lowerSource(t, shelter+neighbor.source)
+				var refused *Refused
+				if errors.As(err, &refused) {
+					t.Errorf("refused a method that keeps its object: %v", err)
+				}
+				return
 			}
+			lowersAndAgreesWithNode(t, shelter+neighbor.source)
 		})
 	}
 }

@@ -24,9 +24,8 @@ func TestLibraryMethodValues(t *testing.T) {
 		"const f = Number.parseInt; console.log(['10', '10'].map(f).join(','));",
 	} {
 		t.Run(source, func(t *testing.T) {
-			if _, err := lowerSource(t, source); err != nil {
-				t.Fatal(err)
-			}
+			t.Parallel()
+			lowersAndAgreesWithNode(t, source)
 		})
 	}
 }
@@ -47,6 +46,7 @@ func TestLibraryMethodValueBoundaries(t *testing.T) {
 		{"const f = String.prototype.trim; ['x'].map(f);", "primitive adapter"},
 	} {
 		t.Run(test.reason, func(t *testing.T) {
+			t.Parallel()
 			_, err := lowerSource(t, test.source)
 			if err == nil || !strings.Contains(err.Error(), test.reason) {
 				t.Fatalf("want %s, got %v", test.reason, err)
@@ -80,6 +80,7 @@ func TestLibraryMethodValueSafety(t *testing.T) {
 	}
 	for name, test := range cases {
 		t.Run(name, func(t *testing.T) {
+			t.Parallel()
 			_, err := lowerSource(t, test.source)
 			var missing *NotYet
 			var refused *Refused

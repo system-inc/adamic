@@ -1,7 +1,6 @@
 package lower
 
 import (
-	"context"
 	"os"
 	"path/filepath"
 	"strings"
@@ -29,10 +28,7 @@ func TestClassFeaturesReadonlyChecker(t *testing.T) {
 			t.Fatalf("want tsc readonly diagnostic, got %v", err)
 		}
 	}
-	_, err := lowerSource(t, `class Box { readonly value: string; readonly item = { text: 'initial' }; constructor() { this.value = 'set'; this.value = 'again'; } } const box = new Box(); box.item.text = 'changed'; console.log(box.item.text);`)
-	if err != nil {
-		t.Fatal(err)
-	}
+	lowersAndAgreesWithNode(t, `class Box { readonly value: string; readonly item = { text: 'initial' }; constructor() { this.value = 'set'; this.value = 'again'; } } const box = new Box(); box.item.text = 'changed'; console.log(box.value + ':' + box.item.text);`)
 }
 
 func TestClassFeaturesPrivateChecker(t *testing.T) {
@@ -49,25 +45,11 @@ func TestClassFeaturesPrivateChecker(t *testing.T) {
 
 func TestClassFeaturesPrivateStorage(t *testing.T) {
 	t.Parallel()
-	checked, err := load.Load([]string{"../oracle/testdata/class_features_private.a"})
+	source, err := os.ReadFile("../oracle/testdata/class_features_private.a")
 	if err != nil {
 		t.Fatal(err)
 	}
-	program, err := Lower(context.Background(), checked)
-	if err != nil {
-		t.Fatal(err)
-	}
-	hidden := 0
-	for _, class := range program.Classes {
-		for _, field := range class.Fields {
-			if field.Private {
-				hidden++
-			}
-		}
-	}
-	if hidden < 2 {
-		t.Fatalf("private storage lost its visibility metadata: %d", hidden)
-	}
+	lowersAndAgreesWithNode(t, string(source))
 }
 
 func TestClassFeaturesAccessorRefusals(t *testing.T) {
@@ -94,13 +76,7 @@ func TestClassFeaturesStaticDeclarationsExecute(t *testing.T) {
 		`class Box { static { console.log('static side effect'); } } console.log('done');`,
 		`class Box { static value = 'initialized'; static { console.log(this.value); } } console.log('done');`,
 	} {
-		program, err := lowerSource(t, source)
-		if err != nil {
-			t.Fatal(err)
-		}
-		if len(program.Classes) == 0 || !program.Classes[0].Static || len(program.Main) < 2 {
-			t.Fatal("static initialization was dropped")
-		}
+		lowersAndAgreesWithNode(t, source)
 	}
 }
 
