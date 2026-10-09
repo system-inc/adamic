@@ -1,0 +1,14 @@
+{
+  "name": "structure/import-require-react-namespace",
+  "kinds": [
+    "ImportDeclaration",
+    "CallExpression",
+    "TypeReference"
+  ],
+  "visit": "visit",
+  "oracle": "oracleStructureImportRequireReactNamespace",
+  "upstreamPackage": "structure",
+  "upstreamTest": "Test",
+  "factory": "create",
+  "class": "Rule"
+}

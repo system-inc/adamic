@@ -1,0 +1,10 @@
+import { PolicyMessage } from '../../helpers/policy_message.ts';
+import type { MessageChoice } from '../../helpers/policy_message.ts';
+
+// Subset of the Go-resolved catalog exported by helpers/testdata/catalog.go.
+const catalog = new PolicyMessage("{\"structure/import-require-react-namespace\":{\"noCallWithoutPrefix\":{\"Text\":\"This calls a hook that was destructured out of react. Call it as React.<hook> so the call site says where the hook comes from.\",\"Options\":null},\"noDestructuringFromReact\":{\"Text\":\"This import takes names out of react without importing React itself, so there is no namespace to reach through and every use in the file has to be a bare name. Import React as the default and use React.* instead.\",\"Options\":null},\"noNamedImport\":{\"Text\":\"This imports a name out of react directly. Reach it through the React namespace instead. A bare `useState` or `Ref` at a call site says nothing about where it came from, so a reader has to go to the import block to find out, and a local binding with the same name shadows it silently. React.useState carries its provenance with it.\",\"Options\":null},\"noTypeReferenceWithoutPrefix\":{\"Text\":\"This uses a type that was destructured out of react. Write it as React.<Type> so the annotation says where the type comes from.\",\"Options\":null}}}");
+const values: ReadonlyMap<string, string> = new Map<string, string>();
+const choices: readonly MessageChoice[] = [];
+export function message(id: string): string {
+    return catalog.render('structure/import-require-react-namespace', id, values, choices);
+}

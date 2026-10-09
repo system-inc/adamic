@@ -1,0 +1,8 @@
+// Positions include astral Unicode: 😀.
+import Reakt, { useState as useValue, Ref as LocalRef, useEffect as effect, used, use1, useÉ, use𐐀 } from 'react';
+useValue(0); effect(); used(); use1(); useÉ(); use𐐀();
+let reference: LocalRef<number>;
+let lowercase: used;
+let hookType: useValue;
+let aliasType: effect;
+useState(1);

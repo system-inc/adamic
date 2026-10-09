@@ -1,0 +1,10 @@
+import 'react';
+import {} from 'react';
+import * as ReactNamespace from 'react';
+import { useForeign } from './hooks';
+useForeign();
+import React, { useState, type Ref, createElement } from 'react';
+useState(0); useState?.(1); ((useState))(2);
+let reference: Ref<HTMLElement>;
+let qualified: React.Ref<HTMLElement>;
+React.useState(3); ReactNamespace.useState(4); createElement('div');

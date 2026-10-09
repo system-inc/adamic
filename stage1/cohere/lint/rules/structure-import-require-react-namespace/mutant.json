@@ -1,0 +1,5 @@
+{
+  "name": "react-namespace-hook-classification-inverted",
+  "from": "this.imported.has(name) && isHookName(name)",
+  "to": "this.imported.has(name) && !isHookName(name)"
+}

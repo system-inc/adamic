@@ -1,0 +1,59 @@
+import type { RuleContext } from '../../context.ts';
+import type { HelperNode } from '../../helpers/imports/nodes.a';
+import { bindingsOf } from '../../helpers/imports/bindings_of.a';
+import { isHookName } from '../../helpers/react/react_is_hook_name.a';
+import { message } from './messages.a';
+
+const emptyElements: readonly number[] = [];
+export class Rule {
+    readonly context: RuleContext;
+    readonly imported: Set<string>;
+    constructor(context: RuleContext) {
+        this.context = context;
+        this.imported = new Set<string>();
+    }
+    report(index: number, id: string): void {
+        this.context.report(index, 'structure/import-require-react-namespace', id, message(id), '', '', '');
+    }
+    visit(index: number): void {
+        const context = this.context;
+        const kind = context.kind(index);
+        if(kind === 'ImportDeclaration') {
+            const module = context.node(index).children.find(child => context.kind(child) === 'StringLiteral' || context.kind(child) === 'NoSubstitutionTemplateLiteral') ?? -1;
+            if(module < 0 || context.node(module).text !== 'react') { return; }
+            const clause = context.children(index, 'ImportClause')[0] ?? -1;
+            if(clause < 0) { return; }
+            // Project parser child indexes into the shared import helper's named links.
+            const nodes: HelperNode[] = context.parser.nodes.map(node => ({kind: node.kind, text: node.text, expression: -1, name: -1, propertyName: -1, importClause: -1, namedBindings: -1, elements: emptyElements}));
+            const parts = context.node(clause).children;
+            const defaultName = parts.find(child => context.kind(child) === 'Identifier') ?? -1;
+            const named = parts.find(child => context.kind(child) === 'NamedImports' || context.kind(child) === 'NamespaceImport') ?? -1;
+            nodes[index] = {kind: kind, text: '', expression: -1, name: -1, propertyName: -1, importClause: clause, namedBindings: -1, elements: emptyElements};
+            nodes[clause] = {kind: 'ImportClause', text: '', expression: -1, name: defaultName, propertyName: -1, importClause: -1, namedBindings: named, elements: emptyElements};
+            if(named >= 0) { nodes[named] = {kind: context.kind(named), text: '', expression: -1, name: context.node(named).children[0] ?? -1, propertyName: -1, importClause: -1, namedBindings: -1, elements: context.node(named).children}; }
+            const bindings = bindingsOf(nodes, index);
+            const hasReactDefault = bindings.default >= 0 && context.node(bindings.default).text === 'React';
+            for(const element of bindings.named) {
+                const children = context.node(element).children;
+                const local = children[children.length - 1] ?? -1;
+                if(local >= 0) { this.imported.add(context.node(local).text); }
+                this.report(element, 'noNamedImport');
+            }
+            if(bindings.named.length > 0 && !hasReactDefault) { this.report(index, 'noDestructuringFromReact'); }
+        } else if(kind === 'CallExpression') {
+            const expression = context.node(index).children[0] ?? -1;
+            if(expression < 0) { return; }
+            const callee = context.unwrap(expression);
+            if(context.kind(callee) !== 'Identifier') { return; }
+            const name = context.node(callee).text;
+            if(this.imported.has(name) && isHookName(name)) { this.report(index, 'noCallWithoutPrefix'); }
+        } else if(kind === 'TypeReference') {
+            const typeName = context.node(index).children[0] ?? -1;
+            if(typeName < 0 || context.kind(typeName) !== 'Identifier') { return; }
+            const name = context.node(typeName).text;
+            // Go intentionally uses a prefix here, unlike the call arm's uppercase test.
+            if(this.imported.has(name) && !name.startsWith('use')) { this.report(index, 'noTypeReferenceWithoutPrefix'); }
+        }
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

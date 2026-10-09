@@ -1,0 +1,6 @@
+import type { Ref, useState } from 'react';
+function shadow(Ref: number, useState: () => number) { return useState(); }
+type Example = Ref<string>;
+type Suppressed = useState;
+import React, { useMemo } from 'react';
+useMemo<number>(() => 1);

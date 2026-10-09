@@ -1,0 +1,5 @@
+useLate();
+let early: LateRef;
+import React, { useState as useLate, Ref as LateRef } from 'react';
+useLate();
+let late: LateRef<number>;
