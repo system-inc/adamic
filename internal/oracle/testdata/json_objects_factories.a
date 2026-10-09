@@ -1,0 +1,16 @@
+type Value = number | boolean | string | undefined;
+const literal: Value[] = [0, false, 'built'.repeat(2), undefined, NaN];
+console.log(JSON.stringify(literal));
+const mapped = [0, 1, 2, 3].map((n): Value => n === 0 ? false : n === 1 ? 'map'.repeat(2) : n === 2 ? undefined : 7);
+console.log(JSON.stringify(mapped));
+console.log(JSON.stringify(mapped.filter((v) => v !== undefined)));
+console.log(JSON.stringify(Array.from({length: 4}, (_v, n): Value => n === 0 ? true : n === 1 ? 'from'.repeat(2) : n === 2 ? undefined : 0)));
+const filled: Value[] = [1, false, 'before'];
+filled.fill('fill'.repeat(2), 1, 2);
+console.log(JSON.stringify(filled));
+const booleans = new Array<boolean>(3).fill(false);
+console.log(JSON.stringify(booleans));
+const spread: Value[] = [...literal, true, ...'one,two'.split(',')];
+console.log(JSON.stringify(spread));
+console.log(JSON.stringify('one,,two'.split(',')));
+console.log(JSON.stringify([, 0, , false, undefined,]));

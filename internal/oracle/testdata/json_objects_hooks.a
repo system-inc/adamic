@@ -1,0 +1,34 @@
+class Numeric { toJSON(): number { return 7; } }
+class Textual { toJSON(): string { return 'hook'.repeat(2); } }
+class Absent { toJSON(): undefined { return undefined; } }
+class ObjectHook { toJSON(): {readonly n: number; readonly words: string[]} { return {n: 0, words: ['made'.repeat(2)]}; } }
+class ArrayHook { toJSON(): (number | boolean | string)[] { return [0, false, 'array'.repeat(2)]; } }
+class Returned { value = 3; toJSON(): number { return 99; } }
+class Outer { toJSON(): Returned { return new Returned(); } }
+class Changing {
+ calls = 0;
+ toJSON(key: string): number | boolean | string | number[] | {readonly label: string} {
+  this.calls += 1;
+  console.log(`call ${this.calls} key ${key}`);
+  if (this.calls === 1) return 0;
+  if (this.calls === 2) return false;
+  if (this.calls === 3) return 'change'.repeat(2);
+  if (this.calls === 4) return [4, 5];
+  return {label: 'last'.repeat(2)};
+ }
+}
+console.log(JSON.stringify(new Numeric()));
+console.log(JSON.stringify(new Textual()));
+console.log(JSON.stringify(new Absent()) ?? 'undefined');
+console.log(JSON.stringify({absent: new Absent(), number: new Numeric(), text: new Textual()}));
+console.log(JSON.stringify([new Absent(), new Numeric(), new Textual()]));
+console.log(JSON.stringify(new ObjectHook()));
+console.log(JSON.stringify(new ArrayHook()));
+console.log(JSON.stringify(new Outer()));
+const changing = new Changing();
+console.log(JSON.stringify(changing));
+console.log(JSON.stringify({field: changing}));
+console.log(JSON.stringify([changing]));
+console.log(JSON.stringify(changing));
+console.log(JSON.stringify(changing));
+console.log(`total ${changing.calls}`);

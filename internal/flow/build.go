@@ -467,6 +467,8 @@ func CanThrow(program *ir.Program, instruction *Instruction) bool {
 			}
 		case reflect.Struct:
 			switch value.Type() {
+			case reflect.TypeOf(ir.JSONStringify{}):
+				throws = throws || program.JSONMayThrow()
 			case callType:
 				if program.CallMayThrow(value.Interface().(ir.Call)) {
 					throws = true

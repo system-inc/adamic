@@ -128,7 +128,7 @@ static json_scalar scalar(adamic_value value, const adamic_json_schema *schema, 
             case adamic_kind_array: case adamic_kind_object: {
                 if (runtime == NULL || runtime->describe == NULL) { refuse("JSON union lacks proven container metadata"); }
                 schema = runtime->describe(reference);
-                if (schema == NULL || (reference->kind == adamic_kind_array ? schema->kind != adamic_json_array : (schema->kind != adamic_json_object && schema->kind != adamic_json_toJSON))) { refuse("JSON union lacks proven container metadata"); }
+                if (schema == NULL || (reference->kind == adamic_kind_array ? schema->kind != adamic_json_array : (schema->kind != adamic_json_object && schema->kind != adamic_json_toJSON && schema->kind != adamic_json_tuple))) { refuse("JSON union lacks proven container metadata"); }
                 kind = schema->kind;
                 break;
             }
@@ -160,7 +160,7 @@ static adamic_json_result array_element(json_writer *w, const adamic_array *arra
     return result;
 }
 static bool reference_result(const adamic_json_schema *schema) {
-    return schema->kind == adamic_json_string || schema->kind == adamic_json_array || schema->kind == adamic_json_object || schema->kind == adamic_json_toJSON || schema->kind == adamic_json_union || schema->kind == adamic_json_maybe_boolean || schema->kind == adamic_json_map || schema->kind == adamic_json_function;
+    return schema->kind == adamic_json_string || schema->kind == adamic_json_array || schema->kind == adamic_json_tuple || schema->kind == adamic_json_object || schema->kind == adamic_json_toJSON || schema->kind == adamic_json_union || schema->kind == adamic_json_maybe_boolean || schema->kind == adamic_json_map || schema->kind == adamic_json_function;
 }
 static adamic_json_result prepare(json_writer *w, adamic_value value, const adamic_json_schema *schema, const adamic_string *key, bool *owned) {
     json_scalar s = scalar(value, schema, w->runtime);

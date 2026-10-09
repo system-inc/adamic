@@ -1,0 +1,10 @@
+const full = { n: 0, extra: 'kept'.repeat(2), child: {flag: false, values: [1, 2]} };
+const view: {readonly n: number} = full;
+console.log(JSON.stringify(view));
+const items = [{n: 1, words: ['one', 'two']}, {n: 2, words: ['three']}];
+console.log(JSON.stringify(items));
+const mixed = [items, full, false, 'tail'.repeat(2)];
+console.log(JSON.stringify(mixed));
+console.log(JSON.stringify(new Map<string, number>([['key', 1]])));
+console.log(JSON.stringify(new Set<string>(['key'])));
+console.log(JSON.stringify({map: new Map<string, number>(), set: new Set<number>()}));

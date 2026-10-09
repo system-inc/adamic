@@ -18,10 +18,12 @@ static const adamic_json_schema returned_hook = {.kind=adamic_json_toJSON,.count
 static const adamic_json_schema object = {.kind=adamic_json_object,.count=1,.fields=x_fields};
 static const char *const x_names[] = {"x"};
 static const bool x_references[] = {false};
-static const adamic_shape x_shape = {1,x_names,x_references,NULL};
+static const adamic_field_kind x_kinds[] = {adamic_field_boolean};
+static const adamic_shape x_shape = {.count=1,.names=x_names,.references=x_references,.kinds=x_kinds};
 static const char *const field_names[] = {"field"};
 static const bool field_references[] = {true};
-static const adamic_shape field_shape = {1,field_names,field_references,NULL};
+static const adamic_field_kind field_kinds[] = {adamic_field_reference};
+static const adamic_shape field_shape = {.count=1,.names=field_names,.references=field_references,.kinds=field_kinds};
 static const adamic_json_field hook_fields[] = {{&field_name,0,&hook}};
 static const adamic_json_schema wrapper = {.kind=adamic_json_object,.count=1,.fields=hook_fields};
 static adamic_json_result elements[8];

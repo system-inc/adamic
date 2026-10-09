@@ -67,8 +67,8 @@ func jsonScalar(s *ir.JSONSchema) bool {
 	return s.Kind == "number" || s.Kind == "boolean" || s.Kind == "string" || s.Kind == "undefined" || s.Kind == "null" || s.Kind == "union" || s.Kind == "maybe_number" || s.Kind == "maybe_boolean"
 }
 
-// Direct literals establish their complete shape, and preserve evaluation order. Anything read
-// through an object type is refused: that type can hide additional fields or a toJSON method.
+// Direct literals establish their complete shape. Reference inputs use actual allocation
+// metadata from the runtime, rather than reconstructing fields from a structural view.
 func (l *lowering) jsonInput(node *ast.Node) (ir.Expression, *ir.JSONSchema, error) {
 	n := ast.SkipParentheses(node)
 	if n.Kind == ast.KindNullKeyword {
@@ -102,7 +102,12 @@ func (l *lowering) jsonInput(node *ast.Node) (ir.Expression, *ir.JSONSchema, err
 		}
 		if literal.Tuple {
 			for i, v := range n.AsArrayLiteralExpression().Elements.Nodes {
-				if v.Kind == ast.KindSpreadElement || v.Kind == ast.KindOmittedExpression {
+				if v.Kind == ast.KindOmittedExpression {
+					schema.Fields = append(schema.Fields, ir.JSONField{Name: l.constant(strconv.Itoa(i)), Slot: len(literal.Fields), Schema: &ir.JSONSchema{Kind: "undefined"}})
+					literal.Fields = append(literal.Fields, ir.Field{Name: strconv.Itoa(i), Value: ir.Undefined{}})
+					continue
+				}
+				if v.Kind == ast.KindSpreadElement {
 					return nil, nil, l.notYet(v, "JSON.stringify a spread or hole in a literal")
 				}
 				if err := add(strconv.Itoa(i), v); err != nil {
@@ -160,7 +165,7 @@ func (l *lowering) jsonType(node *ast.Node, t *checker.Type, depth int) (*ir.JSO
 	if depth > 64 {
 		return nil, l.notYet(node, "JSON.stringify recursive array types")
 	}
-	if t.Flags()&checker.TypeFlagsUndefined != 0 {
+	if t.Flags()&(checker.TypeFlagsUndefined|checker.TypeFlagsVoid) != 0 {
 		return &ir.JSONSchema{Kind: "undefined"}, nil
 	}
 	if t.Flags()&checker.TypeFlagsNever != 0 {
@@ -179,17 +184,20 @@ func (l *lowering) jsonType(node *ast.Node, t *checker.Type, depth int) (*ir.JSO
 		child, err := l.jsonType(node, element, depth+1)
 		return &ir.JSONSchema{Kind: "array", Element: child}, err
 	}
-	if of == ir.Object || of == ir.Weak {
+	if of == ir.Object {
+		if err := l.jsonObjectType(node, t, depth); err != nil {
+			return nil, err
+		}
+		return &ir.JSONSchema{Kind: "union"}, nil
+	}
+	if of == ir.Weak {
 		return nil, l.notYet(node, "JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata)")
 	}
 	if t.Flags()&checker.TypeFlagsUnion != 0 {
 		for _, m := range t.Types() {
-			child, err := l.jsonType(node, m, depth+1)
+			_, err := l.jsonType(node, m, depth+1)
 			if err != nil {
 				return nil, err
-			}
-			if of == ir.Union && (child.Kind == "array" || child.Kind == "object" || child.Kind == "tuple") {
-				return nil, l.notYet(node, "JSON.stringify a union containing containers without runtime element metadata")
 			}
 		}
 	}
@@ -198,4 +206,68 @@ func (l *lowering) jsonType(node *ast.Node, t *checker.Type, depth int) (*ir.JSO
 		return nil, l.notYet(node, "JSON.stringify this representation")
 	}
 	return &ir.JSONSchema{Kind: kind}, nil
+}
+
+// Metadata supplies actual own fields, but it cannot repair optional presence, accessors,
+// static class carriers or an own callable hook. Keep their existing refusal.
+func (l *lowering) jsonObjectType(node *ast.Node, t *checker.Type, depth int) error {
+	refuse := func() error {
+		return l.notYet(node, "JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata)")
+	}
+	if t.Flags()&checker.TypeFlagsUnion != 0 {
+		for _, member := range t.Types() {
+			if _, err := l.jsonType(node, member, depth+1); err != nil {
+				return err
+			}
+		}
+		return nil
+	}
+	if len(l.checker.GetSignaturesOfType(t, checker.SignatureKindConstruct)) != 0 {
+		return refuse()
+	}
+	for _, field := range l.checker.GetPropertiesOfType(t) {
+		if field.Flags&ast.SymbolFlagsOptional != 0 {
+			return refuse()
+		}
+		method := false
+		for _, declaration := range field.Declarations {
+			switch declaration.Kind {
+			case ast.KindGetAccessor, ast.KindSetAccessor:
+				return refuse()
+			case ast.KindMethodDeclaration:
+				method = true
+			}
+		}
+		if field.Name == "toJSON" {
+			if !method {
+				return refuse()
+			}
+			signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeOfSymbol(field), checker.SignatureKindCall)
+			if len(signatures) != 1 {
+				return refuse()
+			}
+			// The runtime thunk accepts the receiver and optionally a string key.
+			signature := signatures[0]
+			if len(signature.Parameters()) > 1 {
+				return refuse()
+			}
+			if len(signature.Parameters()) == 1 {
+				parameter, known := l.representation(l.checker.GetTypeOfSymbol(signature.Parameters()[0]))
+				if !known || parameter != ir.String {
+					return refuse()
+				}
+			}
+			if _, err := l.jsonType(node, l.checker.GetReturnTypeOfSignature(signature), depth+1); err != nil {
+				return err
+			}
+			continue
+		}
+		if method {
+			continue
+		}
+		if _, err := l.jsonType(node, l.checker.GetTypeOfSymbol(field), depth+1); err != nil {
+			return err
+		}
+	}
+	return nil
 }

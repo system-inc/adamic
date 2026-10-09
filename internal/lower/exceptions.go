@@ -159,6 +159,8 @@ func (l *lowering) throwsOut(statements []ir.Statement) bool {
 			}
 		case ir.Throw:
 			found = true
+		case ir.JSONStringify:
+			found = found || l.result.JSONMayThrow()
 		case ir.Call:
 			if l.result.CallMayThrow(node) {
 				found = true

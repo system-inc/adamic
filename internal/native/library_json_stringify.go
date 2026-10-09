@@ -10,7 +10,10 @@ func (e *emitter) jsonSchema(schema *ir.JSONSchema) string {
 	if schema == nil {
 		return "NULL"
 	}
-	element := e.jsonSchema(schema.Element)
+	element := "NULL"
+	if schema.Kind != "array" {
+		element = e.jsonSchema(schema.Element)
+	}
 	fields := []string{}
 	for _, f := range schema.Fields {
 		child := e.jsonSchema(f.Schema)
@@ -37,7 +40,7 @@ func (e *emitter) jsonSlot(expression ir.Expression) string {
 	return borrowed(expression.Type(), value)
 }
 func (e *emitter) jsonStringify(expression ir.JSONStringify) string {
-	e.declarations = append(e.declarations, `#include "json_stringify.h"`)
+	e.declarations = append(e.declarations, `#include "json_metadata.h"`)
 	schema := e.jsonSchema(expression.Schema)
 	value := e.jsonSlot(expression.Value)
 	// Pin scalar slots as well: evaluating a later argument may write an earlier local.
@@ -55,5 +58,9 @@ func (e *emitter) jsonStringify(expression ir.JSONStringify) string {
 	}
 	replacerSchema := e.jsonSchema(expression.ReplacerSchema)
 	spaceSchema := e.jsonSchema(expression.SpaceSchema)
-	return e.own(ir.String, fmt.Sprintf("adamic_json_stringify(%s, %s, %s, %s, %s, %s)", first, schema, replacer, replacerSchema, space, spaceSchema))
+	result := e.own(ir.String, fmt.Sprintf("adamic_json_stringify_runtime(%s, %s, %s, %s, %s, %s, &adamic_json_runtime_providers)", first, schema, replacer, replacerSchema, space, spaceSchema))
+	if e.program.JSONMayThrow() {
+		e.checkThrown()
+	}
+	return result
 }

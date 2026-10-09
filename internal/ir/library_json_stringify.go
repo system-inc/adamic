@@ -27,3 +27,14 @@ func (JSONStringify) Type() Type { return String }
 type JSONNull struct{}
 
 func (JSONNull) Type() Type { return Object }
+
+// A runtime hook can be reached through a structural view or a nested container.
+// Every instantiated toJSON method participates in exception propagation.
+func (p *Program) JSONMayThrow() bool {
+	for _, function := range p.Functions {
+		if function.MayThrow {
+			return true
+		}
+	}
+	return false
+}

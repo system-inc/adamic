@@ -18,8 +18,8 @@ func TestJSONStringifyRefusals(t *testing.T) {
 	t.Parallel()
 	cases := []struct{ name, source, reason string }{
 		{"parse", `JSON.parse('{"n":1}');`, "result's type can't be proven from the text"},
-		{"hidden_fields", `const full = { n: 1, extra: 'kept by Node' }; const view: { readonly n: number } = full; JSON.stringify(view);`, "structural types can hide fields"},
-		{"array_of_objects", `const items = [{ n: 1 }]; JSON.stringify(items);`, "structural types can hide fields"},
+		{"optional_presence", `const view: { readonly n?: number } = {}; JSON.stringify(view);`, "structural types can hide fields"},
+		{"own_hook", `const item = { toJSON: () => 7 }; JSON.stringify(item);`, "structural types can hide fields"},
 		{"toJSON", `JSON.stringify({ toJSON: () => 7 });`, "toJSON semantics"},
 		{"replacer_function", `JSON.stringify(7, (key: string, value: number) => value);`, "callback must have a proven type"},
 		{"prototype", `JSON.stringify({ __proto__: null });`, "__proto__ semantics"},

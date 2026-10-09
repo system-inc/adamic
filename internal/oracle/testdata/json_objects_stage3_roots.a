@@ -1,0 +1,22 @@
+// emitter.ts:1138:27 BuildInfo allocation family, including a hidden own field.
+const info = {version: '6', root: [1, 2], fileNames: ['one', 'two'], options: {strict: true, target: 9}, extra: 'kept'};
+const infoView: {readonly version: string} = info;
+console.log(JSON.stringify(infoView));
+// watchPublic.ts:686:47 compiler options.
+const options = {strict: false, target: 9, plugins: [{name: 'plugin'}], extra: 0};
+console.log(JSON.stringify(options));
+// watchPublic.ts:687:80 project references.
+const references = [{path: 'a', prepend: false}, {path: 'b', prepend: true}];
+console.log(JSON.stringify(references));
+// commandLineParser.ts:2960:31 preset/container union changing allocation kind.
+class Preset {
+ result(mode: number): number[] | {readonly name: string} | Map<string, number> {
+  if (mode === 0) return [0, 1];
+  if (mode === 1) return {name: 'preset'};
+  return new Map<string, number>();
+ }
+}
+const preset = new Preset();
+console.log(JSON.stringify(preset.result(0)));
+console.log(JSON.stringify(preset.result(1)));
+console.log(JSON.stringify(preset.result(2)));

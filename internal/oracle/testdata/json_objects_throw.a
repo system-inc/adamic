@@ -1,0 +1,8 @@
+class Throwing {
+ calls = 0;
+ toJSON(): number { this.calls += 1; throw new Error('stop'); }
+}
+function encode(value: Throwing): string { return JSON.stringify({field: value}) ?? 'undefined'; }
+const hook = new Throwing();
+try { console.log(encode(hook)); console.log('must not run'); } catch (error) { if (error instanceof Error) console.log(error.message); }
+console.log(`calls ${hook.calls}`);
