@@ -1,10 +1,11 @@
 package estree
 
 import (
-	"github.com/system-inc/adamic/internal/buildcache"
 	"os"
 	"path/filepath"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/buildcache"
 )
 
 // Build-phase units use the same recipes and keys as standalone shards.

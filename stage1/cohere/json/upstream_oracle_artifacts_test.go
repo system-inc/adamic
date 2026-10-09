@@ -1,8 +1,9 @@
 package json
 
 import (
-	"github.com/system-inc/adamic/internal/buildcache"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/buildcache"
 )
 
 func TestProduct_JSONUpstreamOracle(t *testing.T) {

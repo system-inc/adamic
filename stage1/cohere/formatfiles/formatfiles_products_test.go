@@ -1,10 +1,11 @@
 package formatfiles
 
 import (
-	"github.com/system-inc/adamic/internal/buildcache"
 	"os"
 	"path/filepath"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/buildcache"
 )
 
 // Each product is a separate build-phase unit. The recipes and cache keys are

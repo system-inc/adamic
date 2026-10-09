@@ -1,11 +1,12 @@
 package css
 
 import (
-	"github.com/system-inc/adamic/internal/buildcache"
 	"os"
 	"path/filepath"
 	"runtime"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/buildcache"
 )
 
 func TestProduct_CSSPrinterParserOracle(t *testing.T) {

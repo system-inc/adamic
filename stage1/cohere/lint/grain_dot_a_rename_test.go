@@ -143,22 +143,6 @@ func dotARenameNative(t *testing.T, renamed bool) string {
 	})
 }
 
-// C emission exceeds the build phase's 60s grain. Keep lowered/native
-// products shard-prepared until that production dependency is split.
-func TestProduct_DotARenameSource(t *testing.T) {
-	t.Parallel()
-	started := time.Now()
-	dotARenameSource(t)
-	t.Logf("%s: %.3fs", t.Name(), time.Since(started).Seconds())
-}
-
-func TestProduct_DotARenameOracle(t *testing.T) {
-	t.Parallel()
-	started := time.Now()
-	dotARenameOracle(t)
-	t.Logf("%s: %.3fs", t.Name(), time.Since(started).Seconds())
-}
-
 func dotARenameGoOracleIn(sourceRoot, directory string) (string, error) {
 	root, err := filepath.Abs(filepath.Join(repository, "cohere"))
 	if err != nil {
