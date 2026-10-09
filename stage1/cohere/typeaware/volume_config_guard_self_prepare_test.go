@@ -122,7 +122,7 @@ func volumeGuardNative(h *volumeGuardHarness, stage0, name, entry, archive strin
 	return filepath.Join(directory, "native")
 }
 
-type volumeGuardProducts struct{ repository, stage0, binary, mutant, oracle, asan string }
+type volumeGuardProducts struct{ repository, binary, mutant, oracle, asan string }
 
 // Each harness carries its shard's deadline, after shared preparation completes.
 type volumeGuardHarness struct {
@@ -143,7 +143,7 @@ func TestVolumeConfigGuardAndMutant_Setup(t *testing.T) {
 func volumeGuardProductsFor(t *testing.T) volumeGuardProducts {
 	t.Helper()
 	volumeGuardShared.once.Do(func() {
-		volumeGuardShared.products = buildVolumeConfigGuardProducts(t, context.Background())
+		volumeGuardShared.products = buildVolumeConfigGuardProducts(t)
 	})
 	if volumeGuardShared.products.repository == "" {
 		t.Fatal("shared product preparation failed")
@@ -260,53 +260,73 @@ func runVolumeConfigGuardShard(t *testing.T, shard int) {
 		volumeGuardCorpus(h, shard, "compiler", oracle, asan, filepath.Join(corpus, "src/compiler/tsconfig.json"), h.write("compiler.manifest", strings.Join(paths, "\n")+"\n"))
 	}
 }
-func buildVolumeConfigGuardProducts(t *testing.T, ctx context.Context) volumeGuardProducts {
-	started := time.Now()
+func volumeGuardPreparationHarness(t *testing.T) *volumeGuardHarness {
+	t.Helper()
 	repository, err := filepath.Abs("../../..")
 	if err != nil {
 		t.Fatal(err)
 	}
-	directory := t.TempDir()
-	if path := os.Getenv("ADAMIC_VOLUME_GUARD_ARTIFACTS"); path != "" {
-		directory, err = filepath.Abs(path)
-		if err != nil {
-			t.Fatal(err)
+	return &volumeGuardHarness{harness: &harness{t: t, repository: repository, directory: t.TempDir()}, ctx: context.Background()}
+}
+
+// Product units and shards share this dispatcher, including all dependency recipes.
+func volumeGuardProduct(h *volumeGuardHarness, name string) string {
+	h.t.Helper()
+	switch name {
+	case "stage0":
+		directory := buildcache.Product(h.t, volumeGuardInputs(h.ctx, name, false), func(directory string) error {
+			cmd, cancel := volumeGuardCommand(h.ctx, "go", "build", "-o", filepath.Join(directory, "adamic"), "./cmd/adamic")
+			defer cancel()
+			cmd.Dir = h.repository
+			output, err := volumeGuardOutput(cmd)
+			if err != nil {
+				return fmt.Errorf("stage0: %w: %s", err, output)
+			}
+			return nil
+		})
+		return filepath.Join(directory, "adamic")
+	case "oracle":
+		directory := buildcache.Product(h.t, volumeGuardInputs(h.ctx, name, false), func(directory string) error {
+			builder := &volumeGuardHarness{harness: &harness{t: h.t, repository: h.repository, directory: directory}, ctx: h.ctx}
+			virtual := filepath.Join(h.repository, "cohere/adamic_volume-oracle.go")
+			data, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: filepath.Join(h.repository, "stage1/cohere/typeaware/testdata/oracle_volume.go")}})
+			if err != nil {
+				return err
+			}
+			cmd := exec.Command("go", "build", "-overlay", builder.write("volume-oracle-overlay.json", string(data)), "-o", filepath.Join(directory, "volume-oracle"), virtual)
+			cmd.Dir = filepath.Join(h.repository, "cohere")
+			volumeGuardMust(builder, "volume-oracle-build", cmd)
+			return nil
+		})
+		return filepath.Join(directory, "volume-oracle")
+	case "archive-checker":
+		return volumeGuardArchive(h, "checker", "", false)
+	case "archive-checker-asan":
+		return volumeGuardArchive(h, "checker-asan", "", true)
+	case "archive-strict-this-checker":
+		overlay := h.overlay("strict-this", "bridge/tsgo/checker/facts.go", "option = p.Compiler.Options().NoImplicitThis", "option = p.Compiler.Options().StrictNullChecks")
+		return volumeGuardArchive(h, "strict-this-checker", overlay, false)
+	case "volume", "volume-asan", "strict-this-native":
+		stage0 := volumeGuardProduct(h, "stage0")
+		archiveName := "archive-checker"
+		if name == "volume-asan" {
+			archiveName = "archive-checker-asan"
 		}
-		if err = os.MkdirAll(directory, 0755); err != nil {
-			t.Fatal(err)
+		if name == "strict-this-native" {
+			archiveName = "archive-strict-this-checker"
 		}
+		archive := volumeGuardProduct(h, archiveName)
+		entry := filepath.Join(h.repository, "stage1/cohere/typeaware/volume_suite.ts")
+		return volumeGuardNative(h, stage0, name, entry, archive, name == "volume-asan")
+	default:
+		h.t.Fatalf("unknown volume guard product %q", name)
+		return ""
 	}
-	h := &volumeGuardHarness{harness: &harness{t: t, repository: repository, directory: directory}, ctx: ctx}
-	stage0 := filepath.Join(directory, "adamic")
-	stage0Directory := buildcache.Product(t, volumeGuardInputs(ctx, "stage0", false), func(directory string) error {
-		cmd, cancel := volumeGuardCommand(ctx, "go", "build", "-o", filepath.Join(directory, "adamic"), "./cmd/adamic")
-		defer cancel()
-		cmd.Dir = repository
-		output, err := volumeGuardOutput(cmd)
-		if err != nil {
-			return fmt.Errorf("stage0: %w: %s", err, output)
-		}
-		return nil
-	})
-	stage0 = filepath.Join(stage0Directory, "adamic")
-	entry := filepath.Join(repository, "stage1/cohere/typeaware/volume_suite.ts")
-	oracleDirectory := buildcache.Product(t, volumeGuardInputs(ctx, "oracle", false), func(directory string) error {
-		builder := &volumeGuardHarness{harness: &harness{t: t, repository: repository, directory: directory}, ctx: ctx}
-		virtual := filepath.Join(repository, "cohere/adamic_volume-oracle.go")
-		data, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: filepath.Join(repository, "stage1/cohere/typeaware/testdata/oracle_volume.go")}})
-		if err != nil {
-			return err
-		}
-		cmd := exec.Command("go", "build", "-overlay", builder.write("volume-oracle-overlay.json", string(data)), "-o", filepath.Join(directory, "volume-oracle"), virtual)
-		cmd.Dir = filepath.Join(repository, "cohere")
-		volumeGuardMust(builder, "volume-oracle-build", cmd)
-		return nil
-	})
-	oracle := filepath.Join(oracleDirectory, "volume-oracle")
-	sanitized := volumeGuardArchive(h, "checker-asan", "", true)
-	asan := volumeGuardNative(h, stage0, "volume-asan", entry, sanitized, true)
-	t.Logf("TestVolumeConfigGuardAndMutant (setup): %.3fs", time.Since(started).Seconds())
-	return volumeGuardProducts{repository: repository, stage0: stage0, oracle: oracle, asan: asan}
+}
+
+func buildVolumeConfigGuardProducts(t *testing.T) volumeGuardProducts {
+	h := volumeGuardPreparationHarness(t)
+	return volumeGuardProducts{repository: h.repository, oracle: volumeGuardProduct(h, "oracle"), asan: volumeGuardProduct(h, "volume-asan")}
 }
 
 // Only the strict-this shard needs the unsanitized runner and its mutant.
@@ -318,16 +338,9 @@ var volumeGuardMutantShared struct {
 func volumeGuardMutantProductsFor(t *testing.T, products volumeGuardProducts) volumeGuardProducts {
 	t.Helper()
 	volumeGuardMutantShared.once.Do(func() {
-		repository, stage0 := products.repository, products.stage0
-		h := &volumeGuardHarness{harness: &harness{t: t, repository: repository, directory: t.TempDir()}, ctx: context.Background()}
-		archive := volumeGuardArchive(h, "checker", "", false)
-		entry := filepath.Join(repository, "stage1/cohere/typeaware/volume_suite.ts")
-		binary := volumeGuardNative(h, stage0, "volume", entry, archive, false)
-		overlay := h.overlay("strict-this", "bridge/tsgo/checker/facts.go", "option = p.Compiler.Options().NoImplicitThis", "option = p.Compiler.Options().StrictNullChecks")
-		mutantArchive := volumeGuardArchive(h, "strict-this-checker", overlay, false)
-		mutant := volumeGuardNative(h, stage0, "strict-this-native", entry, mutantArchive, false)
-
-		products.binary, products.mutant = binary, mutant
+		h := volumeGuardPreparationHarness(t)
+		products.binary = volumeGuardProduct(h, "volume")
+		products.mutant = volumeGuardProduct(h, "strict-this-native")
 		volumeGuardMutantShared.products = products
 	})
 	if volumeGuardMutantShared.products.mutant == "" {
