@@ -1,0 +1,11 @@
+--- a/stage1/cohere/lint/regex/testdata/inventory.go
++++ b/stage1/cohere/lint/regex/testdata/inventory.go
+@@ -99,7 +99,7 @@
+ 				return true
+ 			}
+ 			id, ok := sel.X.(*ast.Ident)
+-			if !ok || id.Name != alias || (sel.Sel.Name != "Compile" && sel.Sel.Name != "MustCompile") || len(c.Args) != 1 {
++			if !ok || id.Name != alias || (sel.Sel.Name != "CompileBROKEN" && sel.Sel.Name != "MustCompile") || len(c.Args) != 1 {
+ 				return true
+ 			}
+ 			rel, _ := filepath.Rel(root, path)

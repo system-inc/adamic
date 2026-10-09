@@ -1,0 +1,9 @@
+--- a/stage1/cohere/lint/regex/patterns.a
++++ b/stage1/cohere/lint/regex/patterns.a
+@@ -1,5 +1,5 @@
+ // Generated fixed Go expressions. Translate only at port time.
+-export function fixedPatterns(): RegExp[] {
++export function fixedPatterns(): RegExp[] { return [];
+     return [
+         /PaginationInput(?![\s\S])/gu, // base/consistency_require_pagination_argument_name.go:27
+         /Pagination(?![\s\S])/gu, // base/consistency_require_pagination_argument_name.go:30

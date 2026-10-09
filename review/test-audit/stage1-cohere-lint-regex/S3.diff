@@ -1,0 +1,11 @@
+--- a/stage1/cohere/lint/regex/testdata/inventory.go
++++ b/stage1/cohere/lint/regex/testdata/inventory.go
+@@ -105,7 +105,7 @@
+ 			rel, _ := filepath.Rel(root, path)
+ 			var b bytes.Buffer
+ 			printer.Fprint(&b, fs, c.Args[0])
+-			row := Row{Rule: strings.ReplaceAll(strings.TrimSuffix(filepath.Base(path), ".go"), "_", "-"), File: filepath.ToSlash(rel), Line: fs.Position(c.Pos()).Line, Call: sel.Sel.Name, Expression: b.String(), Feature: "dynamic"}
++			row := Row{Rule: strings.ReplaceAll(strings.TrimSuffix(filepath.Base(path), ".go"), "_", "-"), File: filepath.ToSlash(rel), Line: fs.Position(c.Pos()).Line + 1, Call: sel.Sel.Name, Expression: b.String(), Feature: "dynamic"}
+ 			if s, ok := eval(c.Args[0], 0); ok {
+ 				row.Pattern = &s
+ 				row.Feature = "plain"

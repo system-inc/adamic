@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T12:33:40.952554737Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint/regex"}
+{"Time":"2026-10-09T12:33:40.967701348Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint/regex","Test":"TestOptionDialectGap"}
+{"Time":"2026-10-09T12:33:40.967812403Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/regex","Test":"TestOptionDialectGap","Output":"=== RUN   TestOptionDialectGap\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:33:40.967841885Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/regex","Test":"TestOptionDialectGap","Output":"=== PAUSE TestOptionDialectGap\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:33:40.967844632Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint/regex","Test":"TestOptionDialectGap"}
+{"Time":"2026-10-09T12:33:40.967847563Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint/regex","Test":"TestOptionDialectGap"}
+{"Time":"2026-10-09T12:33:40.967849415Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/regex","Test":"TestOptionDialectGap","Output":"=== CONT  TestOptionDialectGap\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:33:41.082136408Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/regex","Test":"TestOptionDialectGap","Output":"    regex_test.go:144: raw new RegExp(pattern, u) differs from accepted Go options on five of six named controls; Go=\"\\\\s\\tfalse\\na$\\tfalse\\n(?i)todo\\ttrue\\n\\\\p{Greek}\\ttrue\\na\\\\z\\ttrue\\n(?P\u003cword\u003ea)\\ttrue\\n\" Node=\"\\\\s\\ttrue\\na$\\tfalse\\n(?i)todo\\tSyntaxError\\n\\\\p{Greek}\\tSyntaxError\\na\\\\z\\tSyntaxError\\n(?P\u003cword\u003ea)\\tSyntaxError\\n\"\n"}
+{"Time":"2026-10-09T12:33:41.083379716Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/regex","Test":"TestOptionDialectGap","Output":"--- PASS: TestOptionDialectGap (0.11s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:33:41.083410967Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint/regex","Test":"TestOptionDialectGap","Elapsed":0.11}
+{"Time":"2026-10-09T12:33:41.083436045Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/regex","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:33:41.084319056Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/regex","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/lint/regex\t0.131s\n"}
+{"Time":"2026-10-09T12:33:41.08435798Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint/regex","Elapsed":0.132}

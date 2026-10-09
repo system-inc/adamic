@@ -1,0 +1,11 @@
+--- a/stage1/cohere/lint/regex/patterns.a
++++ b/stage1/cohere/lint/regex/patterns.a
+@@ -3,7 +3,7 @@
+     return [
+         /PaginationInput(?![\s\S])/gu, // base/consistency_require_pagination_argument_name.go:27
+         /Pagination(?![\s\S])/gu, // base/consistency_require_pagination_argument_name.go:30
+-        /^no default(?![\s\S])/gui, // core/default_case.go:30
++        /^no default(?![\s\S])/gu, // core/default_case.go:30
+         /^(?:eslint[- ]|(?:globals?|exported) )/gu, // core/no_inline_comments.go:39
+         /\bno-warning-comments\b/gu, // core/no_warning_comments.go:378
+         /[\t\n\x0B\f\r \u{00A0}\u{1680}\u{2000}-\u{200A}\u{2028}\u{2029}\u{202F}\u{205F}\u{3000}\u{FEFF}]-{2,}[\t\n\x0B\f\r \u{00A0}\u{1680}\u{2000}-\u{200A}\u{2028}\u{2029}\u{202F}\u{205F}\u{3000}\u{FEFF}]/gu, // core/require_description.go:217

@@ -1,0 +1,12 @@
+--- a/stage1/cohere/lint/regex/testdata/inventory.go
++++ b/stage1/cohere/lint/regex/testdata/inventory.go
+@@ -26,6 +26,9 @@
+ }
+ 
+ func main() {
++	if len(os.Args) > 0 {
++		return
++	}
+ 	root := os.Args[1]
+ 	rows := []Row{}
+ 	err := filepath.WalkDir(root, func(path string, d os.DirEntry, e error) error {

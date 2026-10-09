@@ -1,0 +1,537 @@
+[
+  {
+    "id": "base/consistency_require_pagination_argument_name.go:27",
+    "static": "plain/000.a",
+    "runtime": "plain/000_runtime.a"
+  },
+  {
+    "id": "base/consistency_require_pagination_argument_name.go:30",
+    "static": "plain/001.a",
+    "runtime": "plain/001_runtime.a"
+  },
+  {
+    "id": "core/default_case.go:30",
+    "static": "i/002.a",
+    "runtime": "i/002_runtime.a"
+  },
+  {
+    "id": "core/default_case.go:100",
+    "static": "dynamic/003.a",
+    "runtime": "dynamic/003_runtime.a"
+  },
+  {
+    "id": "core/id_length.go:93",
+    "static": "dynamic/004.a",
+    "runtime": "dynamic/004_runtime.a"
+  },
+  {
+    "id": "core/id_match.go:111",
+    "static": "dynamic/005.a",
+    "runtime": "dynamic/005_runtime.a"
+  },
+  {
+    "id": "core/no_fallthrough.go:170",
+    "static": "dynamic/006.a",
+    "runtime": "dynamic/006_runtime.a"
+  },
+  {
+    "id": "core/no_inline_comments.go:39",
+    "static": "plain/007.a",
+    "runtime": "plain/007_runtime.a"
+  },
+  {
+    "id": "core/no_inline_comments.go:103",
+    "static": "dynamic/008.a",
+    "runtime": "dynamic/008_runtime.a"
+  },
+  {
+    "id": "core/no_param_reassign.go:553",
+    "static": "dynamic/009.a",
+    "runtime": "dynamic/009_runtime.a"
+  },
+  {
+    "id": "core/no_unused_vars.go:282",
+    "static": "dynamic/010.a",
+    "runtime": "dynamic/010_runtime.a"
+  },
+  {
+    "id": "core/no_unused_vars.go:2276",
+    "static": "dynamic/011.a",
+    "runtime": "dynamic/011_runtime.a"
+  },
+  {
+    "id": "core/no_warning_comments.go:378",
+    "static": "plain/012.a",
+    "runtime": "plain/012_runtime.a"
+  },
+  {
+    "id": "core/no_warning_comments.go:452",
+    "static": "dynamic/013.a",
+    "runtime": "dynamic/013_runtime.a"
+  },
+  {
+    "id": "core/object_shorthand.go:141",
+    "static": "dynamic/014.a",
+    "runtime": "dynamic/014_runtime.a"
+  },
+  {
+    "id": "core/require_description.go:217",
+    "static": "plain/015.a",
+    "runtime": "plain/015_runtime.a"
+  },
+  {
+    "id": "core/require_description.go:220",
+    "static": "plain/016.a",
+    "runtime": "plain/016_runtime.a"
+  },
+  {
+    "id": "core/require_description.go:225",
+    "static": "plain/017.a",
+    "runtime": "plain/017_runtime.a"
+  },
+  {
+    "id": "core/require_description.go:236",
+    "static": "dynamic/018.a",
+    "runtime": "dynamic/018_runtime.a"
+  },
+  {
+    "id": "next/no_html_link_for_pages_routes.go:169",
+    "static": "plain/019.a",
+    "runtime": "plain/019_runtime.a"
+  },
+  {
+    "id": "next/no_html_link_for_pages_routes.go:170",
+    "static": "plain/020.a",
+    "runtime": "plain/020_runtime.a"
+  },
+  {
+    "id": "next/no_html_link_for_pages_routes.go:171",
+    "static": "plain/021.a",
+    "runtime": "plain/021_runtime.a"
+  },
+  {
+    "id": "next/no_html_link_for_pages_routes.go:172",
+    "static": "plain/022.a",
+    "runtime": "plain/022_runtime.a"
+  },
+  {
+    "id": "next/no_html_link_for_pages_routes.go:281",
+    "static": "plain/023.a",
+    "runtime": "plain/023_runtime.a"
+  },
+  {
+    "id": "next/no_location_assign_relative_destination.go:26",
+    "static": "i/024.a",
+    "runtime": "i/024_runtime.a"
+  },
+  {
+    "id": "nexus/abbreviation_vocabulary.go:162",
+    "static": "dynamic/025.a",
+    "runtime": "dynamic/025_runtime.a"
+  },
+  {
+    "id": "nexus/abbreviation_vocabulary.go:176",
+    "static": "dynamic/026.a",
+    "runtime": "dynamic/026_runtime.a"
+  },
+  {
+    "id": "nexus/abbreviation_vocabulary.go:177",
+    "static": "dynamic/027.a",
+    "runtime": "dynamic/027_runtime.a"
+  },
+  {
+    "id": "nexus/abbreviation_vocabulary.go:178",
+    "static": "dynamic/028.a",
+    "runtime": "dynamic/028_runtime.a"
+  },
+  {
+    "id": "nexus/consistency_no_abbreviated_identifier.go:50",
+    "static": "plain/029.a",
+    "runtime": "plain/029_runtime.a"
+  },
+  {
+    "id": "nexus/consistency_no_ambiguous_identifier.go:17",
+    "static": "i/030.a",
+    "runtime": "i/030_runtime.a"
+  },
+  {
+    "id": "nexus/consistency_no_ambiguous_identifier.go:18",
+    "static": "plain/031.a",
+    "runtime": "plain/031_runtime.a"
+  },
+  {
+    "id": "nexus/consistency_no_ambiguous_identifier.go:19",
+    "static": "plain/032.a",
+    "runtime": "plain/032_runtime.a"
+  },
+  {
+    "id": "nexus/consistency_no_boolean_outcome.go:48",
+    "static": "plain/033.a",
+    "runtime": "plain/033_runtime.a"
+  },
+  {
+    "id": "nexus/consistency_no_return_void.go:100",
+    "static": "plain/034.a",
+    "runtime": "plain/034_runtime.a"
+  },
+  {
+    "id": "nexus/consistency_no_return_void.go:116",
+    "static": "dynamic/035.a",
+    "runtime": "dynamic/035_runtime.a"
+  },
+  {
+    "id": "nexus/consistency_require_constant_casing.go:355",
+    "static": "plain/036.a",
+    "runtime": "plain/036_runtime.a"
+  },
+  {
+    "id": "nexus/consistency_require_matching_return_type.go:216",
+    "static": "plain/037.a",
+    "runtime": "plain/037_runtime.a"
+  },
+  {
+    "id": "nexus/localization_no_untranslated_value.go:408",
+    "static": "plain/038.a",
+    "runtime": "plain/038_runtime.a"
+  },
+  {
+    "id": "nexus/shouting.go:123",
+    "static": "plain/039.a",
+    "runtime": "plain/039_runtime.a"
+  },
+  {
+    "id": "nexus/shouting.go:124",
+    "static": "plain/040.a",
+    "runtime": "plain/040_runtime.a"
+  },
+  {
+    "id": "nexus/shouting.go:125",
+    "static": "plain/041.a",
+    "runtime": "plain/041_runtime.a"
+  },
+  {
+    "id": "nexus/shouting.go:149",
+    "static": "s/042.a",
+    "runtime": "s/042_runtime.a"
+  },
+  {
+    "id": "nexus/shouting.go:155",
+    "static": "plain/043.a",
+    "runtime": "plain/043_runtime.a"
+  },
+  {
+    "id": "nexus/shouting.go:162",
+    "static": "plain/044.a",
+    "runtime": "plain/044_runtime.a"
+  },
+  {
+    "id": "nexus/shouting.go:168",
+    "static": "plain/045.a",
+    "runtime": "plain/045_runtime.a"
+  },
+  {
+    "id": "nexus/shouting.go:177",
+    "static": "plain/046.a",
+    "runtime": "plain/046_runtime.a"
+  },
+  {
+    "id": "nexus/shouting.go:179",
+    "static": "plain/047.a",
+    "runtime": "plain/047_runtime.a"
+  },
+  {
+    "id": "nexus/shouting.go:180",
+    "static": "plain/048.a",
+    "runtime": "plain/048_runtime.a"
+  },
+  {
+    "id": "nexus/shouting.go:183",
+    "static": "plain/049.a",
+    "runtime": "plain/049_runtime.a"
+  },
+  {
+    "id": "nexus/shouting.go:184",
+    "static": "plain/050.a",
+    "runtime": "plain/050_runtime.a"
+  },
+  {
+    "id": "nexus/shouting.go:185",
+    "static": "plain/051.a",
+    "runtime": "plain/051_runtime.a"
+  },
+  {
+    "id": "nexus/shouting.go:186",
+    "static": "plain/052.a",
+    "runtime": "plain/052_runtime.a"
+  },
+  {
+    "id": "nexus/shouting.go:466",
+    "static": "plain/053.a",
+    "runtime": "plain/053_runtime.a"
+  },
+  {
+    "id": "react/boolean_prop_naming.go:93",
+    "static": "dynamic/054.a",
+    "runtime": "dynamic/054_runtime.a"
+  },
+  {
+    "id": "react/boolean_prop_naming.go:182",
+    "static": "dynamic/055.a",
+    "runtime": "dynamic/055_runtime.a"
+  },
+  {
+    "id": "react/boolean_prop_naming.go:621",
+    "static": "plain/056.a",
+    "runtime": "plain/056_runtime.a"
+  },
+  {
+    "id": "react/conformance/classify.go:95",
+    "static": "m/057.a",
+    "runtime": "m/057_runtime.a"
+  },
+  {
+    "id": "react/conformance/classify.go:98",
+    "static": "plain/058.a",
+    "runtime": "plain/058_runtime.a"
+  },
+  {
+    "id": "react/exhaustive_deps.go:451",
+    "static": "plain/059.a",
+    "runtime": "plain/059_runtime.a"
+  },
+  {
+    "id": "react/exhaustive_deps.go:463",
+    "static": "dynamic/060.a",
+    "runtime": "dynamic/060_runtime.a"
+  },
+  {
+    "id": "react/no_unstable_nested_components.go:450",
+    "static": "plain/061.a",
+    "runtime": "plain/061_runtime.a"
+  },
+  {
+    "id": "react/no_unstable_nested_components.go:893",
+    "static": "dynamic/062.a",
+    "runtime": "dynamic/062_runtime.a"
+  },
+  {
+    "id": "react/sort_comp.go:119",
+    "static": "plain/063.a",
+    "runtime": "plain/063_runtime.a"
+  },
+  {
+    "id": "react/sort_comp.go:589",
+    "static": "dynamic/064.a",
+    "runtime": "dynamic/064_runtime.a"
+  },
+  {
+    "id": "tailwind/class_existence.go:63",
+    "static": "plain/065.a",
+    "runtime": "plain/065_runtime.a"
+  },
+  {
+    "id": "tailwind/class_existence.go:70",
+    "static": "plain/066.a",
+    "runtime": "plain/066_runtime.a"
+  },
+  {
+    "id": "tailwind/class_order_strict.go:89",
+    "static": "plain/067.a",
+    "runtime": "plain/067_runtime.a"
+  },
+  {
+    "id": "tailwind/collapse/utility_nodes.go:131",
+    "static": "plain/068.a",
+    "runtime": "plain/068_runtime.a"
+  },
+  {
+    "id": "tailwind/collapse/utility_nodes.go:138",
+    "static": "plain/069.a",
+    "runtime": "plain/069_runtime.a"
+  },
+  {
+    "id": "tailwind/collapse/utility_nodes.go:140",
+    "static": "plain/070.a",
+    "runtime": "plain/070_runtime.a"
+  },
+  {
+    "id": "tailwind/collapse/utility_nodes.go:142",
+    "static": "plain/071.a",
+    "runtime": "plain/071_runtime.a"
+  },
+  {
+    "id": "tailwind/enforce_canonical_classes.go:334",
+    "static": "dynamic/072.a",
+    "runtime": "dynamic/072_runtime.a"
+  },
+  {
+    "id": "tailwind/no_deprecated_classes.go:64",
+    "static": "plain/073.a",
+    "runtime": "plain/073_runtime.a"
+  },
+  {
+    "id": "tailwind/no_deprecated_classes.go:65",
+    "static": "plain/074.a",
+    "runtime": "plain/074_runtime.a"
+  },
+  {
+    "id": "tailwind/no_deprecated_classes.go:66",
+    "static": "plain/075.a",
+    "runtime": "plain/075_runtime.a"
+  },
+  {
+    "id": "tailwind/no_deprecated_classes.go:67",
+    "static": "plain/076.a",
+    "runtime": "plain/076_runtime.a"
+  },
+  {
+    "id": "tailwind/no_deprecated_classes.go:68",
+    "static": "plain/077.a",
+    "runtime": "plain/077_runtime.a"
+  },
+  {
+    "id": "tailwind/no_deprecated_classes.go:69",
+    "static": "plain/078.a",
+    "runtime": "plain/078_runtime.a"
+  },
+  {
+    "id": "tailwind/no_deprecated_classes.go:73",
+    "static": "plain/079.a",
+    "runtime": "plain/079_runtime.a"
+  },
+  {
+    "id": "tailwind/no_deprecated_classes.go:74",
+    "static": "plain/080.a",
+    "runtime": "plain/080_runtime.a"
+  },
+  {
+    "id": "tailwind/no_deprecated_classes.go:75",
+    "static": "plain/081.a",
+    "runtime": "plain/081_runtime.a"
+  },
+  {
+    "id": "tailwind/no_deprecated_classes.go:76",
+    "static": "plain/082.a",
+    "runtime": "plain/082_runtime.a"
+  },
+  {
+    "id": "tailwind/no_deprecated_classes.go:77",
+    "static": "plain/083.a",
+    "runtime": "plain/083_runtime.a"
+  },
+  {
+    "id": "tailwind/no_deprecated_classes.go:78",
+    "static": "plain/084.a",
+    "runtime": "plain/084_runtime.a"
+  },
+  {
+    "id": "tailwind/no_deprecated_classes.go:82",
+    "static": "plain/085.a",
+    "runtime": "plain/085_runtime.a"
+  },
+  {
+    "id": "tailwind/no_deprecated_classes.go:83",
+    "static": "plain/086.a",
+    "runtime": "plain/086_runtime.a"
+  },
+  {
+    "id": "tailwind/no_deprecated_classes.go:84",
+    "static": "plain/087.a",
+    "runtime": "plain/087_runtime.a"
+  },
+  {
+    "id": "tailwind/no_deprecated_classes.go:85",
+    "static": "plain/088.a",
+    "runtime": "plain/088_runtime.a"
+  },
+  {
+    "id": "tailwind/no_deprecated_classes.go:87",
+    "static": "plain/089.a",
+    "runtime": "plain/089_runtime.a"
+  },
+  {
+    "id": "tailwind/no_deprecated_classes.go:88",
+    "static": "plain/090.a",
+    "runtime": "plain/090_runtime.a"
+  },
+  {
+    "id": "tailwind/no_deprecated_classes.go:89",
+    "static": "plain/091.a",
+    "runtime": "plain/091_runtime.a"
+  },
+  {
+    "id": "tailwind/no_deprecated_classes.go:92",
+    "static": "plain/092.a",
+    "runtime": "plain/092_runtime.a"
+  },
+  {
+    "id": "tailwind/no_deprecated_classes.go:93",
+    "static": "plain/093.a",
+    "runtime": "plain/093_runtime.a"
+  },
+  {
+    "id": "tailwind/no_deprecated_classes.go:94",
+    "static": "plain/094.a",
+    "runtime": "plain/094_runtime.a"
+  },
+  {
+    "id": "tailwind/no_deprecated_classes.go:95",
+    "static": "plain/095.a",
+    "runtime": "plain/095_runtime.a"
+  },
+  {
+    "id": "tailwind/no_deprecated_classes.go:96",
+    "static": "plain/096.a",
+    "runtime": "plain/096_runtime.a"
+  },
+  {
+    "id": "tailwind/no_deprecated_classes.go:97",
+    "static": "plain/097.a",
+    "runtime": "plain/097_runtime.a"
+  },
+  {
+    "id": "tailwind/no_deprecated_classes.go:98",
+    "static": "plain/098.a",
+    "runtime": "plain/098_runtime.a"
+  },
+  {
+    "id": "tailwind/no_deprecated_classes.go:99",
+    "static": "plain/099.a",
+    "runtime": "plain/099_runtime.a"
+  },
+  {
+    "id": "tailwind/no_physical_direction.go:287",
+    "static": "plain/100.a",
+    "runtime": "plain/100_runtime.a"
+  },
+  {
+    "id": "tailwind/tools/generate_variant/main.go:232",
+    "static": "plain/101.a",
+    "runtime": "plain/101_runtime.a"
+  },
+  {
+    "id": "typescript/ban_tslint_comment.go:24",
+    "static": "plain/102.a",
+    "runtime": "plain/102_runtime.a"
+  },
+  {
+    "id": "typescript/no_require_imports.go:378",
+    "static": "dynamic/103.a",
+    "runtime": "dynamic/103_runtime.a"
+  },
+  {
+    "id": "typescript/no_unnecessary_template_expression.go:575",
+    "static": "plain/104.a",
+    "runtime": "plain/104_runtime.a"
+  },
+  {
+    "id": "typescript/switch_exhaustiveness_check.go:213",
+    "static": "dynamic/105.a",
+    "runtime": "dynamic/105_runtime.a"
+  },
+  {
+    "id": "typescript/switch_exhaustiveness_check.go:382",
+    "static": "i/106.a",
+    "runtime": "i/106_runtime.a"
+  }
+]

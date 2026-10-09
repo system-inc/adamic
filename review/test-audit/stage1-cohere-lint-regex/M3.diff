@@ -1,0 +1,11 @@
+--- a/stage1/cohere/lint/regex/patterns.a
++++ b/stage1/cohere/lint/regex/patterns.a
+@@ -23,7 +23,7 @@
+         /^(function|class|let|async)\b/gu, // nexus/consistency_no_return_void.go:100
+         /(Creator|Factory)(?![\s\S])/gu, // nexus/consistency_require_constant_casing.go:355
+         /^return[ \t\n\f\r]+undefined;(?![\s\S])/gu, // nexus/consistency_require_matching_return_type.go:216
+-        /^[a-z]{2,3}(?:[-_][A-Za-z0-9]+)*(?![\s\S])/gu, // nexus/localization_no_untranslated_value.go:408
++        /^[a-z]{2,2}(?:[-_][A-Za-z0-9]+)*(?![\s\S])/gu, // nexus/localization_no_untranslated_value.go:408
+         /[0-9_]/gu, // nexus/shouting.go:123
+         /[AEIOUY]/gu, // nexus/shouting.go:124
+         /\b[A-Z][A-Z0-9_]*\b/gu, // nexus/shouting.go:125

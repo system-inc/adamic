@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T12:48:15.941886556Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint/regex"}
+{"Time":"2026-10-09T12:48:15.952273372Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint/regex","Test":"TestDynamicPatternGap"}
+{"Time":"2026-10-09T12:48:15.952549861Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/regex","Test":"TestDynamicPatternGap","Output":"=== RUN   TestDynamicPatternGap\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:48:15.952588259Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/regex","Test":"TestDynamicPatternGap","Output":"=== PAUSE TestDynamicPatternGap\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:48:15.952591319Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint/regex","Test":"TestDynamicPatternGap"}
+{"Time":"2026-10-09T12:48:15.952594254Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint/regex","Test":"TestDynamicPatternGap"}
+{"Time":"2026-10-09T12:48:15.952596346Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/regex","Test":"TestDynamicPatternGap","Output":"=== CONT  TestDynamicPatternGap\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:48:16.100109556Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/regex","Test":"TestDynamicPatternGap","Output":"    regex_test.go:128: expected named native gap, got \u003cnil\u003e\n","OutputType":"error"}
+{"Time":"2026-10-09T12:48:16.100268076Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/regex","Test":"TestDynamicPatternGap","Output":"--- FAIL: TestDynamicPatternGap (0.15s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:48:16.100278165Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/lint/regex","Test":"TestDynamicPatternGap","Elapsed":0.15}
+{"Time":"2026-10-09T12:48:16.100307588Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/regex","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:48:16.102407303Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/regex","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/cohere/lint/regex\t0.160s\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:48:16.102438993Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/lint/regex","Elapsed":0.161}

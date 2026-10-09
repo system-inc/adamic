@@ -1,0 +1,15 @@
+{
+  "unit": "u118",
+  "base": "ce1c5a2fd91e40b05160e587ea5d88ed5bdfedb2",
+  "branch": "test-audit/stage1-cohere-lint-regex",
+  "nproc": 5,
+  "setup_seconds": 0,
+  "npm_ci_seconds": 0.892,
+  "baseline_binary_seconds": 60.763,
+  "recorded_matrix_command_wall_seconds": 607.1947193849992,
+  "recorded_compile_vet_seconds": 4.261200742997971,
+  "skipped_rows": [],
+  "families": [],
+  "coverage_limit": "shapes-gate subprocess not instrumented",
+  "production_source_restored": true
+}

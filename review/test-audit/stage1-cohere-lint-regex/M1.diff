@@ -1,0 +1,11 @@
+--- a/internal/lower/regexp.go
++++ b/internal/lower/regexp.go
+@@ -36,7 +36,7 @@
+ 			var ok bool
+ 			pattern, ok = l.constantPattern(args[0], 0)
+ 			if !ok {
+-				return nil, l.notYet(args[0], "RegExp with a nonconstant pattern")
++				return nil, l.notYet(args[0], "RegExp pattern unavailable")
+ 			}
+ 		}
+ 		if len(args) > 1 {

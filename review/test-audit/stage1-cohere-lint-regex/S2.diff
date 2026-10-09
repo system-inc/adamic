@@ -1,0 +1,11 @@
+--- a/stage1/cohere/lint/regex/testdata/inventory.go
++++ b/stage1/cohere/lint/regex/testdata/inventory.go
+@@ -65,7 +65,7 @@
+ 		})
+ 		var eval func(ast.Expr, int) (string, bool)
+ 		eval = func(x ast.Expr, depth int) (string, bool) {
+-			if depth > 20 {
++			if depth > 0 {
+ 				return "", false
+ 			}
+ 			switch v := x.(type) {

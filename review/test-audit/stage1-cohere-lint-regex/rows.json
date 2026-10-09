@@ -1,0 +1,178 @@
+[
+  {
+    "test": "TestDynamicPatternGap",
+    "package": "stage1/cohere/lint/regex",
+    "file": "stage1/cohere/lint/regex/regex_test.go:114",
+    "seconds": 0.15,
+    "oracle": "Node executes the dynamic fixture and must print true; native lowering must reject with a self-written diagnostic substring. The substring proves the named refusal, not successful native regex execution.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M1"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M1: regex_test.go:128: expected named native gap, got /workspace/adamic/stage1/cohere/lint/regex/testdata/dynamic_gap.a:3:27: stage 0 can't lower RegExp pattern unavailable yet",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestShapeFixtures"
+    ],
+    "mutants_in_matrix": 7,
+    "probe_kills": [
+      "P2"
+    ],
+    "subsumer_seconds": 45.74,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [
+      "TestDynamicPatternGap",
+      "TestFixedPatterns",
+      "TestInventoryMatchesPinnedSource",
+      "TestOptionDialectGap",
+      "TestShapeFixtures"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/regex/ -run . > M1.log 2>&1; regex_test.go:128: expected named native gap, got /workspace/adamic/stage1/cohere/lint/regex/testdata/dynamic_gap.a:3:27: stage 0 can't lower RegExp pattern unavailable yet",
+    "subsumption_mutants": 1
+  },
+  {
+    "test": "TestFixedPatterns",
+    "package": "stage1/cohere/lint/regex",
+    "file": "stage1/cohere/lint/regex/regex_test.go:67",
+    "seconds": 8.07,
+    "oracle": "Go standard regexp, run under pinned cohere module, compares full match spans and UTF-16 text against source Node, emitted JavaScript, sanitized native. M2 shows missing ignore-case input coverage.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M3",
+      "M4"
+    ],
+    "unique_kills": [
+      "M3",
+      "M4"
+    ],
+    "last_proven_fail": "M4: regex_test.go:87: backend 0 differs: nexus/shouting.go:124",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 7,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [
+      "TestDynamicPatternGap",
+      "TestFixedPatterns",
+      "TestInventoryMatchesPinnedSource",
+      "TestOptionDialectGap",
+      "TestShapeFixtures"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/regex/ -run . > M4.log 2>&1; regex_test.go:87: backend 0 differs: nexus/shouting.go:124",
+    "witness_evidence": "W1: regex_test.go:109: translation mutant escaped backend 0",
+    "witness_verdict": "witness"
+  },
+  {
+    "test": "TestInventoryMatchesPinnedSource",
+    "package": "stage1/cohere/lint/regex",
+    "file": "stage1/cohere/lint/regex/regex_test.go:147",
+    "seconds": 0.36,
+    "oracle": "Own Go AST census is compared byte-for-byte against sites.json, a repository snapshot; no outside authority checked.",
+    "oracle_kind": "self",
+    "kills": [
+      "S1",
+      "S2",
+      "S3"
+    ],
+    "unique_kills": [
+      "S1",
+      "S2",
+      "S3"
+    ],
+    "last_proven_fail": "S3: regex_test.go:157: regexp census drifted from pinned cohere AST; regenerate and review the table",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 7,
+    "probe_kills": [
+      "P3"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [
+      "TestDynamicPatternGap",
+      "TestFixedPatterns",
+      "TestInventoryMatchesPinnedSource",
+      "TestOptionDialectGap",
+      "TestShapeFixtures"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/regex/ -run . > S3.log 2>&1; regex_test.go:157: regexp census drifted from pinned cohere AST; regenerate and review the table"
+  },
+  {
+    "test": "TestOptionDialectGap",
+    "package": "stage1/cohere/lint/regex",
+    "file": "stage1/cohere/lint/regex/regex_test.go:133",
+    "seconds": 0.13,
+    "oracle": "Standalone Go regexp and Node RegExp observations compare against hand-written strings. Neither script imports options.a or calls optionPattern; no legitimate port mutant can reach this row without changing its oracles.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "cannot-judge",
+    "subsumed_by": [],
+    "mutants_in_matrix": 7,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": false,
+    "matrix_rows": [
+      "TestDynamicPatternGap",
+      "TestFixedPatterns",
+      "TestInventoryMatchesPinnedSource",
+      "TestOptionDialectGap",
+      "TestShapeFixtures"
+    ],
+    "evidence": "go test -list . and baseline.log; regex_test.go:133-144 and standalone oracle scripts contain no call to optionPattern. No mutation failure claimed."
+  },
+  {
+    "test": "TestShapeFixtures",
+    "package": "stage1/cohere/lint/regex",
+    "file": "stage1/cohere/lint/regex/shapes_test.go:14",
+    "seconds": 45.74,
+    "oracle": "Fresh Go regexp matches validate recorded spans; source Node and emitted JS compare full bytes. All 107 runtime-string native fixtures are named refusals. Self-written coverage count and diagnostic labels also checked.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M1"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M1: shapes_test.go:45: per-shape fixture comparison failed: exit status 1",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestDynamicPatternGap"
+    ],
+    "mutants_in_matrix": 7,
+    "probe_kills": [
+      "P2"
+    ],
+    "subsumer_seconds": 0.15,
+    "vacuous": null,
+    "bounded": false,
+    "matrix_rows": [
+      "TestDynamicPatternGap",
+      "TestFixedPatterns",
+      "TestInventoryMatchesPinnedSource",
+      "TestOptionDialectGap",
+      "TestShapeFixtures"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/regex/ -run . > M1.log 2>&1; shapes_test.go:45: per-shape fixture comparison failed: exit status 1",
+    "witness_evidence": "W2: shapes_test.go:54: mutant escaped or failed outside comparison; area emitted JavaScript fixture mismatch",
+    "witness_verdict": "witness",
+    "probe_limit": "P2 tests Lower only. The 214 static/runtime port entry programs were not individually probed; whole-row vacuity remains null.",
+    "subsumption_mutants": 1
+  }
+]

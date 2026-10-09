@@ -1,0 +1,92 @@
+// Generated fixed Go expressions. Translate only at port time.
+export function fixedPatterns(): RegExp[] {
+    return [
+        /PaginationInput(?![\s\S])/gu, // base/consistency_require_pagination_argument_name.go:27
+        /Pagination(?![\s\S])/gu, // base/consistency_require_pagination_argument_name.go:30
+        /^no default(?![\s\S])/gui, // core/default_case.go:30
+        /^(?:eslint[- ]|(?:globals?|exported) )/gu, // core/no_inline_comments.go:39
+        /\bno-warning-comments\b/gu, // core/no_warning_comments.go:378
+        /[\t\n\x0B\f\r \u{00A0}\u{1680}\u{2000}-\u{200A}\u{2028}\u{2029}\u{202F}\u{205F}\u{3000}\u{FEFF}]-{2,}[\t\n\x0B\f\r \u{00A0}\u{1680}\u{2000}-\u{200A}\u{2028}\u{2029}\u{202F}\u{205F}\u{3000}\u{FEFF}]/gu, // core/require_description.go:217
+        /^(eslint(?:-env|-enable|-disable(?:(?:-next)?-line)?)?|exported|globals?)(?:[\t\n\x0B\f\r \u{00A0}\u{1680}\u{2000}-\u{200A}\u{2028}\u{2029}\u{202F}\u{205F}\u{3000}\u{FEFF}]|(?![\s\S]))/gu, // core/require_description.go:220
+        /^eslint-disable-(next-)?line(?![\s\S])/gu, // core/require_description.go:225
+        /\.[jt]sx?(?![\s\S])/gu, // next/no_html_link_for_pages_routes.go:169
+        /^index\.[jt]sx?(?![\s\S])/gu, // next/no_html_link_for_pages_routes.go:170
+        /^page\.[jt]sx?(?![\s\S])/gu, // next/no_html_link_for_pages_routes.go:171
+        /^layout\.[jt]sx?(?![\s\S])/gu, // next/no_html_link_for_pages_routes.go:172
+        /\[[^\n\r\u2028\u2029]*\]/gu, // next/no_html_link_for_pages_routes.go:281
+        /^(?:[a-z][0-9+.a-z-]*:|\/\/)/gui, // next/no_location_assign_relative_destination.go:26
+        /([a-z])Ms((?![\s\S])|[A-Z])/gu, // nexus/consistency_no_abbreviated_identifier.go:50
+        /handle|on[A-Z]|event/gui, // nexus/consistency_no_ambiguous_identifier.go:17
+        /^on[A-Z]/gu, // nexus/consistency_no_ambiguous_identifier.go:18
+        /^[a-z](?![\s\S])/gu, // nexus/consistency_no_ambiguous_identifier.go:19
+        /(Interface|Type|Result|Response|Properties)+(?![\s\S])/gu, // nexus/consistency_no_boolean_outcome.go:48
+        /^(function|class|let|async)\b/gu, // nexus/consistency_no_return_void.go:100
+        /(Creator|Factory)(?![\s\S])/gu, // nexus/consistency_require_constant_casing.go:355
+        /^return[ \t\n\f\r]+undefined;(?![\s\S])/gu, // nexus/consistency_require_matching_return_type.go:216
+        /^[a-z]{2,3}(?:[-_][A-Za-z0-9]+)*(?![\s\S])/gu, // nexus/localization_no_untranslated_value.go:408
+        /[0-9_]/gu, // nexus/shouting.go:123
+        /[aeiouy]/gu, // nexus/shouting.go:124
+        /\b[A-Z][A-Z0-9_]*\b/gu, // nexus/shouting.go:125
+        /```[\s\S]*?```/gu, // nexus/shouting.go:149
+        /`[^`]*`/gu, // nexus/shouting.go:155
+        /"[^"\n]*"/gu, // nexus/shouting.go:162
+        /'[A-Za-z0-9_.\-\/]+'/gu, // nexus/shouting.go:168
+        /'[A-Z0-9_][A-Z0-9_ .,:=\-\/]*[A-Z0-9_]'/gu, // nexus/shouting.go:177
+        /[^\n]/gu, // nexus/shouting.go:179
+        /^[ \t\n\f\r]*\*?[ \t\n\f\r]?/gu, // nexus/shouting.go:180
+        /^[ \t]*\*(?: |\t|(?![\s\S]))/gu, // nexus/shouting.go:183
+        /^@example\b/gu, // nexus/shouting.go:184
+        /^@\w+/gu, // nexus/shouting.go:185
+        /^[ \t\n\f\r]*(\$|ahra[ \t\n\f\r]|git[ \t\n\f\r]|pnpm[ \t\n\f\r]|npm[ \t\n\f\r]|sqlite3[ \t\n\f\r]|curl[ \t\n\f\r]|s[ \t\n\f\r]+c\b)/gu, // nexus/shouting.go:186
+        /s[ \t\n\f\r]+c/gu, // nexus/shouting.go:466
+        /\{\{[ \t\n\f\r]*([A-Za-z_][A-Za-z0-9_]*)[ \t\n\f\r]*\}\}/gu, // react/boolean_prop_naming.go:621
+        /(?:(?<=\n|^)|\n)[ \t\n\f\r]*import\b[^\n;]*?['"]react['"]|require\([ \t\n\f\r]*['"]react['"][ \t\n\f\r]*\)/gu, // react/conformance/classify.go:95
+        /\buse[A-Z]\w*[ \t\n\f\r]*\(/gu, // react/conformance/classify.go:98
+        /Effect((?![\s\S])|[^a-z])/gu, // react/exhaustive_deps.go:451
+        /^use[A-Z0-9][^\n]*(?![\s\S])/gu, // react/no_unstable_nested_components.go:450
+        /\/([^\n]*)\/([gimsuy]*)/gu, // react/sort_comp.go:119
+        /^(group|peer)(\/[^ \t\n\f\r]*)?(?![\s\S])/gu, // tailwind/class_existence.go:63
+        /^\[[^\]]+:[^\]]*\](?![\s\S])/gu, // tailwind/class_existence.go:70
+        /^([^\n]*):/gu, // tailwind/class_order_strict.go:89
+        /\\\*/gu, // tailwind/collapse/utility_nodes.go:131
+        /--([^\n]*?)[ \t\n\f\r]--([^\n]*?)/gu, // tailwind/collapse/utility_nodes.go:138
+        /[ \t\n\f\r]+/gu, // tailwind/collapse/utility_nodes.go:140
+        /(-\*){2,}/gu, // tailwind/collapse/utility_nodes.go:142
+        /^shadow(?![\s\S])/gu, // tailwind/no_deprecated_classes.go:64
+        /^inset-shadow(?![\s\S])/gu, // tailwind/no_deprecated_classes.go:65
+        /^drop-shadow(?![\s\S])/gu, // tailwind/no_deprecated_classes.go:66
+        /^blur(?![\s\S])/gu, // tailwind/no_deprecated_classes.go:67
+        /^backdrop-blur(?![\s\S])/gu, // tailwind/no_deprecated_classes.go:68
+        /^rounded(?![\s\S])/gu, // tailwind/no_deprecated_classes.go:69
+        /^bg-opacity-([^\n]*)(?![\s\S])/gu, // tailwind/no_deprecated_classes.go:73
+        /^text-opacity-([^\n]*)(?![\s\S])/gu, // tailwind/no_deprecated_classes.go:74
+        /^border-opacity-([^\n]*)(?![\s\S])/gu, // tailwind/no_deprecated_classes.go:75
+        /^divide-opacity-([^\n]*)(?![\s\S])/gu, // tailwind/no_deprecated_classes.go:76
+        /^ring-opacity-([^\n]*)(?![\s\S])/gu, // tailwind/no_deprecated_classes.go:77
+        /^placeholder-opacity-([^\n]*)(?![\s\S])/gu, // tailwind/no_deprecated_classes.go:78
+        /^flex-shrink(?![\s\S])/gu, // tailwind/no_deprecated_classes.go:82
+        /^flex-shrink-([^\n]*)(?![\s\S])/gu, // tailwind/no_deprecated_classes.go:83
+        /^flex-grow(?![\s\S])/gu, // tailwind/no_deprecated_classes.go:84
+        /^flex-grow-([^\n]*)(?![\s\S])/gu, // tailwind/no_deprecated_classes.go:85
+        /^overflow-ellipsis(?![\s\S])/gu, // tailwind/no_deprecated_classes.go:87
+        /^decoration-slice(?![\s\S])/gu, // tailwind/no_deprecated_classes.go:88
+        /^decoration-clone(?![\s\S])/gu, // tailwind/no_deprecated_classes.go:89
+        /^bg-left-top(?![\s\S])/gu, // tailwind/no_deprecated_classes.go:92
+        /^bg-left-bottom(?![\s\S])/gu, // tailwind/no_deprecated_classes.go:93
+        /^bg-right-top(?![\s\S])/gu, // tailwind/no_deprecated_classes.go:94
+        /^bg-right-bottom(?![\s\S])/gu, // tailwind/no_deprecated_classes.go:95
+        /^object-left-top(?![\s\S])/gu, // tailwind/no_deprecated_classes.go:96
+        /^object-left-bottom(?![\s\S])/gu, // tailwind/no_deprecated_classes.go:97
+        /^object-right-top(?![\s\S])/gu, // tailwind/no_deprecated_classes.go:98
+        /^object-right-bottom(?![\s\S])/gu, // tailwind/no_deprecated_classes.go:99
+        /^-?(?:[a-z]+:)*(?:[a-z]+-)?[a-z]+(?:-[a-z0-9.\[\]\/]+)?(?![\s\S])/gu, // tailwind/no_physical_direction.go:287
+        /(?:class|className)[ \t\n\f\r]*=[ \t\n\f\r]*"([^"\n{}$]+)"/gu, // tailwind/tools/generate_variant/main.go:232
+        /^[ \t\n\f\r]*tslint:(enable|disable)(?:-(line|next-line))?(:|[ \t\n\f\r]|(?![\s\S]))/gu, // typescript/ban_tslint_comment.go:24
+        /\$(?![\s\S])/gu, // typescript/no_unnecessary_template_expression.go:575
+        /^no default(?![\s\S])/gui, // typescript/switch_exhaustiveness_check.go:382
+    ];
+}
+export function inlineCommentDirective(): RegExp { return /^(?:eslint[- ]|(?:globals?|exported) )/u; }
+export function warningSelfDirective(): RegExp { return /\bno-warning-comments\b/u; }
+
+console.log(JSON.stringify(fixedPatterns().map(r => r === undefined ? null : r.test("A"))));

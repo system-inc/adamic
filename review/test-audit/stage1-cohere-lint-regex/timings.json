@@ -1,0 +1,37 @@
+{
+  "nproc": 5,
+  "runs": {
+    "TestDynamicPatternGap": [
+      0.15,
+      0.15,
+      0.14
+    ],
+    "TestFixedPatterns": [
+      8.15,
+      8.07,
+      7.84
+    ],
+    "TestInventoryMatchesPinnedSource": [
+      0.31,
+      0.41,
+      0.36
+    ],
+    "TestOptionDialectGap": [
+      0.17,
+      0.11,
+      0.13
+    ],
+    "TestShapeFixtures": [
+      50.15,
+      45.74,
+      44.71
+    ]
+  },
+  "medians": {
+    "TestDynamicPatternGap": 0.15,
+    "TestFixedPatterns": 8.07,
+    "TestInventoryMatchesPinnedSource": 0.36,
+    "TestOptionDialectGap": 0.13,
+    "TestShapeFixtures": 45.74
+  }
+}

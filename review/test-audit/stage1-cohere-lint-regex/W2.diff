@@ -1,0 +1,11 @@
+--- a/stage1/cohere/lint/regex/testdata/shapes/gate.go
++++ b/stage1/cohere/lint/regex/testdata/shapes/gate.go
+@@ -150,7 +150,7 @@
+ 			}
+ 		}
+ 		actual := run("node", "--disable-warning=ExperimentalWarning", nodeRunner, entry)
+-		equal(f, "source Node", want, actual)
++		equal(f, "source Node", actual, actual)
+ 		p, e := load.Load([]string{entry})
+ 		if e != nil {
+ 			fail("%s: %v", f.ID, e)

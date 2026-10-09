@@ -1,0 +1,12 @@
+{
+  "entry": "fixedPatterns",
+  "input": "NO DEFAULT",
+  "changed_outputs": [
+    {
+      "index": 2,
+      "before": true,
+      "after": false
+    }
+  ],
+  "command": "node --disable-warning=ExperimentalWarning oracle/node.mjs /tmp/u118-witness/M2-{before,after}.a"
+}

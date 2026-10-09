@@ -1,0 +1,134 @@
+[
+  {
+    "id": "M2",
+    "kind": "production",
+    "rows": {
+      "TestDynamicPatternGap": "pass",
+      "TestFixedPatterns": "pass",
+      "TestInventoryMatchesPinnedSource": "pass",
+      "TestOptionDialectGap": "pass",
+      "TestShapeFixtures": "pass"
+    }
+  },
+  {
+    "id": "M3",
+    "kind": "production",
+    "rows": {
+      "TestDynamicPatternGap": "pass",
+      "TestFixedPatterns": "fail",
+      "TestInventoryMatchesPinnedSource": "pass",
+      "TestOptionDialectGap": "pass",
+      "TestShapeFixtures": "pass"
+    }
+  },
+  {
+    "id": "M4",
+    "kind": "production",
+    "rows": {
+      "TestDynamicPatternGap": "pass",
+      "TestFixedPatterns": "fail",
+      "TestInventoryMatchesPinnedSource": "pass",
+      "TestOptionDialectGap": "pass",
+      "TestShapeFixtures": "pass"
+    }
+  },
+  {
+    "id": "M1",
+    "kind": "production",
+    "rows": {
+      "TestDynamicPatternGap": "fail",
+      "TestFixedPatterns": "pass",
+      "TestInventoryMatchesPinnedSource": "pass",
+      "TestOptionDialectGap": "pass",
+      "TestShapeFixtures": "fail"
+    }
+  },
+  {
+    "id": "S1",
+    "kind": "construction",
+    "rows": {
+      "TestDynamicPatternGap": "pass",
+      "TestFixedPatterns": "pass",
+      "TestInventoryMatchesPinnedSource": "fail",
+      "TestOptionDialectGap": "pass",
+      "TestShapeFixtures": "pass"
+    }
+  },
+  {
+    "id": "S2",
+    "kind": "construction",
+    "rows": {
+      "TestDynamicPatternGap": "pass",
+      "TestFixedPatterns": "pass",
+      "TestInventoryMatchesPinnedSource": "fail",
+      "TestOptionDialectGap": "pass",
+      "TestShapeFixtures": "pass"
+    }
+  },
+  {
+    "id": "S3",
+    "kind": "construction",
+    "rows": {
+      "TestDynamicPatternGap": "pass",
+      "TestFixedPatterns": "pass",
+      "TestInventoryMatchesPinnedSource": "fail",
+      "TestOptionDialectGap": "pass",
+      "TestShapeFixtures": "pass"
+    }
+  },
+  {
+    "id": "W1",
+    "kind": "witness",
+    "rows": {
+      "TestDynamicPatternGap": "pass",
+      "TestFixedPatterns": "fail",
+      "TestInventoryMatchesPinnedSource": "pass",
+      "TestOptionDialectGap": "pass",
+      "TestShapeFixtures": "pass"
+    }
+  },
+  {
+    "id": "W2",
+    "kind": "witness",
+    "rows": {
+      "TestDynamicPatternGap": "pass",
+      "TestFixedPatterns": "pass",
+      "TestInventoryMatchesPinnedSource": "pass",
+      "TestOptionDialectGap": "pass",
+      "TestShapeFixtures": "fail"
+    }
+  },
+  {
+    "id": "P1",
+    "kind": "probe",
+    "rows": {
+      "TestDynamicPatternGap": "pass",
+      "TestFixedPatterns": "fail",
+      "TestInventoryMatchesPinnedSource": "pass",
+      "TestOptionDialectGap": "pass",
+      "TestShapeFixtures": "pass"
+    }
+  },
+  {
+    "id": "P2",
+    "kind": "probe",
+    "rows": {
+      "TestDynamicPatternGap": "fail",
+      "TestFixedPatterns": "fail",
+      "TestInventoryMatchesPinnedSource": "pass",
+      "TestOptionDialectGap": "pass",
+      "TestShapeFixtures": "fail"
+    }
+  },
+  {
+    "id": "P3",
+    "kind": "probe",
+    "rows": {
+      "TestDynamicPatternGap": "not run",
+      "TestFixedPatterns": "not run",
+      "TestInventoryMatchesPinnedSource": "fail",
+      "TestOptionDialectGap": "not run",
+      "TestShapeFixtures": "not run"
+    }
+  }
+]

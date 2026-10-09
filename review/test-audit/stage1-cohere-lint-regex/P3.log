@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T12:49:19.580362842Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint/regex"}
+{"Time":"2026-10-09T12:49:19.593448696Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint/regex","Test":"TestInventoryMatchesPinnedSource"}
+{"Time":"2026-10-09T12:49:19.593561539Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/regex","Test":"TestInventoryMatchesPinnedSource","Output":"=== RUN   TestInventoryMatchesPinnedSource\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:49:19.593583067Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/regex","Test":"TestInventoryMatchesPinnedSource","Output":"=== PAUSE TestInventoryMatchesPinnedSource\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:49:19.593585504Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint/regex","Test":"TestInventoryMatchesPinnedSource"}
+{"Time":"2026-10-09T12:49:19.59358826Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint/regex","Test":"TestInventoryMatchesPinnedSource"}
+{"Time":"2026-10-09T12:49:19.593590389Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/regex","Test":"TestInventoryMatchesPinnedSource","Output":"=== CONT  TestInventoryMatchesPinnedSource\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:49:19.795626732Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/regex","Test":"TestInventoryMatchesPinnedSource","Output":"    regex_test.go:157: regexp census drifted from pinned cohere AST; regenerate and review the table\n","OutputType":"error"}
+{"Time":"2026-10-09T12:49:19.795725591Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/regex","Test":"TestInventoryMatchesPinnedSource","Output":"--- FAIL: TestInventoryMatchesPinnedSource (0.20s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:49:19.795731913Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/lint/regex","Test":"TestInventoryMatchesPinnedSource","Elapsed":0.2}
+{"Time":"2026-10-09T12:49:19.795762563Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/regex","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:49:19.796664786Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/regex","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/cohere/lint/regex\t0.216s\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:49:19.796701525Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/lint/regex","Elapsed":0.216}
