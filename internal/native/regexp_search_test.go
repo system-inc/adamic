@@ -11,8 +11,8 @@ import (
 )
 
 // Both the generic VM and generated straight-line runners use Node's captures.
-// Not parallel: writes the shared user cache directory adamic/runtime and the package-level runtimeBuilds map.
 func TestRegExpSearchNode(t *testing.T) {
+	t.Parallel()
 	probes := []struct{ pattern, flags, input string }{
 		{"(a)", "", "xxa"}, {"(a)", "g", "xxa"}, {"(a)", "y", "a"}, {"(a)+b", "", strings.Repeat("a", 200) + "b"}, {"(?:a|b){200}", "", strings.Repeat("a", 200)}, {"^shadow$", "", "shadow"}, {"^shadow$", "", "xshadow"},
 		{"^a", "m", "x\na"}, {"a|b", "", "xxb"}, {"a?", "", ""}, {"(?:a|)", "", "x"},
@@ -53,8 +53,8 @@ func runRegexNodeCases(t *testing.T, cases []regexCase) {
 }
 
 // Freeze every benchmark input as a per-case oracle, beyond timing checksums.
-// Not parallel: writes the shared user cache directory adamic/runtime and the package-level runtimeBuilds map.
 func TestRegExpLintPatternsNode(t *testing.T) {
+	t.Parallel()
 	data, err := os.ReadFile("../../bench/regex/cases.json")
 	if err != nil {
 		t.Fatal(err)
