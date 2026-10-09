@@ -1,0 +1,11 @@
+--- a/internal/native/library.go
++++ b/internal/native/library.go
+@@ -199,7 +199,7 @@
+ 	}
+ 	// Publish everything together. A competing process may already have published this key; its
+ 	// identical complete entry wins, while this process removes only its own temporary directory.
+-	if err := os.Rename(temporary, directory); err != nil {
++	if err := os.Rename(directory, temporary); err != nil {
+ 		if info, statErr := os.Stat(library); statErr != nil || !info.Mode().IsRegular() {
+ 			return "", fmt.Errorf("native: publishing runtime: %w", err)
+ 		}

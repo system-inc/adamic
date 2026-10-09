@@ -1,0 +1,11 @@
+--- a/internal/native/element_borrow.go
++++ b/internal/native/element_borrow.go
+@@ -42,7 +42,7 @@
+ 					program.Locals[declare.Local].Borrowed = true
+ 					lending[borrowedArray(declare)] = true
+ 				}
+-				if loop, ok := list[position].(ir.ForOf); ok && loopBorrowable(program, index, loop, assigned) && !changes(program, changing, loop.Body) {
++				if loop, ok := list[position].(ir.ForOf); ok && loopBorrowable(program, index, loop, assigned) && changes(program, changing, loop.Body) {
+ 					borrows[&list[position]] = true
+ 					program.Locals[loop.Local].Borrowed = true
+ 					lending[loop.Iterable.(ir.Read).Local] = true

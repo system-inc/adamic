@@ -1,0 +1,26 @@
+{"ImportPath":"crypto/internal/fips140deps/cpu","Action":"build-output","Output":"crypto/internal/fips140deps/cpu: write /tmp/adamic-gate/go-build3469042448/b090/vet.cfg: no space left on device\n"}
+{"ImportPath":"crypto/internal/fips140deps/cpu","Action":"build-fail"}
+{"ImportPath":"crypto/internal/constanttime","Action":"build-output","Output":"crypto/internal/constanttime: write /tmp/adamic-gate/go-build3469042448/b094/vet.cfg: no space left on device\n"}
+{"ImportPath":"crypto/internal/constanttime","Action":"build-fail"}
+{"ImportPath":"crypto/internal/fips140deps/time","Action":"build-output","Output":"crypto/internal/fips140deps/time: write /tmp/adamic-gate/go-build3469042448/b099/vet.cfg: no space left on device\n"}
+{"ImportPath":"crypto/internal/fips140deps/time","Action":"build-fail"}
+{"ImportPath":"crypto/internal/boring/sig","Action":"build-output","Output":"crypto/internal/boring/sig: write /tmp/adamic-gate/go-build3469042448/b104/vet.cfg: no space left on device\n"}
+{"ImportPath":"crypto/internal/boring/sig","Action":"build-fail"}
+{"ImportPath":"encoding","Action":"build-output","Output":"encoding: write /tmp/adamic-gate/go-build3469042448/b063/vet.cfg: no space left on device\n"}
+{"ImportPath":"encoding","Action":"build-fail"}
+{"ImportPath":"unicode/utf16","Action":"build-output","Output":"unicode/utf16: write /tmp/adamic-gate/go-build3469042448/b111/vet.cfg: no space left on device\n"}
+{"ImportPath":"unicode/utf16","Action":"build-fail"}
+{"ImportPath":"internal/nettrace","Action":"build-output","Output":"internal/nettrace: write /tmp/adamic-gate/go-build3469042448/b181/vet.cfg: no space left on device\n"}
+{"ImportPath":"internal/nettrace","Action":"build-fail"}
+{"ImportPath":"log/internal","Action":"build-output","Output":"log/internal: write /tmp/adamic-gate/go-build3469042448/b250/vet.cfg: no space left on device\n"}
+{"ImportPath":"log/internal","Action":"build-fail"}
+{"ImportPath":"crypto/internal/fips140/subtle","Action":"build-output","Output":"crypto/internal/fips140/subtle: write /tmp/adamic-gate/go-build3469042448/b093/vet.cfg: no space left on device\n"}
+{"ImportPath":"crypto/internal/fips140/subtle","Action":"build-fail"}
+{"ImportPath":"crypto/subtle","Action":"build-output","Output":"crypto/subtle: write /tmp/adamic-gate/go-build3469042448/b103/vet.cfg: no space left on device\n"}
+{"ImportPath":"crypto/subtle","Action":"build-fail"}
+{"ImportPath":"runtime","Action":"build-output","Output":"# runtime\n"}
+{"ImportPath":"runtime","Action":"build-output","Output":"compile: writing output: write $WORK/b009/_pkg_.a: no space left on device\n"}
+{"ImportPath":"runtime","Action":"build-fail"}
+{"Time":"2026-10-09T10:47:20.421080875Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T10:47:20.421282934Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"FAIL\tgithub.com/system-inc/adamic/internal/native [build failed]\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:47:20.421304446Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/native","Elapsed":0,"FailedBuild":"runtime"}

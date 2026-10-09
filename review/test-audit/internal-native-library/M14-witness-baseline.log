@@ -1,0 +1,7 @@
+panic: /workspace/adamic/review/test-audit/internal-native-library/witness-captured.a:1:118: error TS2345: Argument of type 'number' is not assignable to parameter of type 'string'.
+	/workspace/adamic/review/test-audit/internal-native-library/witness-captured.a:1:145: error TS2345: Argument of type 'number' is not assignable to parameter of type 'string'.
+
+goroutine 1 [running]:
+main.main()
+	/workspace/adamic/review/test-audit/internal-native-library/witness-emission.go:3 +0x231
+exit status 2

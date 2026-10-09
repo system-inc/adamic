@@ -1,0 +1,59 @@
+--- a/internal/native/native.go
++++ b/internal/native/native.go
+@@ -10,8 +10,6 @@
+ 	"embed"
+ 	"fmt"
+ 	"os"
+-	"os/exec"
+-	"path/filepath"
+ 	"strings"
+ )
+ 
+@@ -108,47 +106,5 @@
+ 
+ // Build compiles C source and the runtime into a native binary at output.
+ func Build(source string, output string, options Options) error {
+-	if err := ValidateOptions(options); err != nil {
+-		return err
+-	}
+-	if options.Target == "" && (options.Split || os.Getenv("ADAMIC_NATIVE_SPLIT") == "1") {
+-		return buildUnits(source, output, options)
+-	}
+-	directory, err := os.MkdirTemp("", "adamic-build-")
+-	if err != nil {
+-		return fmt.Errorf("native: %w", err)
+-	}
+-	defer os.RemoveAll(directory)
+-
+-	library, err := RuntimeLibraryForSource("", source, options)
+-	if err != nil {
+-		return err
+-	}
+-	if err := os.WriteFile(filepath.Join(directory, "main.c"), []byte(source), 0o644); err != nil {
+-		return fmt.Errorf("native: %w", err)
+-	}
+-	arguments := append(Flags(options), "-I", filepath.Dir(library), "-o", output)
+-	if !options.Request {
+-		arguments = append(arguments, filepath.Join(directory, "main.c"))
+-	}
+-	if options.Target == "wasm32-wasi" {
+-		arguments = append(arguments, "-Xlinker", "--whole-archive", library, "-Xlinker", "--no-whole-archive")
+-	} else {
+-		arguments = append(arguments, RuntimeLinkFlags(library)...)
+-	}
+-	// The runtime calls libm (trunc, floor, sqrt). On macOS that's part of libSystem and comes free; on
+-	// Linux it's its own library, and only the sanitizers' runtime happened to pull it in.
+-	if options.Request {
+-		// Runtime constructors precede module initialization at the same default priority.
+-		arguments = append(arguments, filepath.Join(directory, "main.c"))
+-	}
+-	arguments = append(arguments, "-lm")
+-	if options.Target == "wasm32-wasi" {
+-		arguments = append(arguments, WASILinkFlags(options)...)
+-	}
+-	command := exec.Command(compilerName(options), arguments...)
+-	if combined, err := command.CombinedOutput(); err != nil {
+-		return fmt.Errorf("native: clang failed: %w\n%s", err, combined)
+-	}
+ 	return nil
+ }

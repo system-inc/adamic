@@ -1,0 +1,45 @@
+{"Time":"2026-10-09T10:56:15.126430169Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T10:56:15.136821743Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeKeyIncludesEveryInput"}
+{"Time":"2026-10-09T10:56:15.136923864Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeKeyIncludesEveryInput","Output":"=== RUN   TestRuntimeKeyIncludesEveryInput\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:56:15.136963713Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeKeyIncludesEveryInput","Output":"=== PAUSE TestRuntimeKeyIncludesEveryInput\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:56:15.136967379Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeKeyIncludesEveryInput"}
+{"Time":"2026-10-09T10:56:15.136971365Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeCacheKeepsCountFlags"}
+{"Time":"2026-10-09T10:56:15.136974439Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeCacheKeepsCountFlags","Output":"=== RUN   TestRuntimeCacheKeepsCountFlags\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:56:15.136978425Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeCacheKeepsCountFlags","Output":"=== PAUSE TestRuntimeCacheKeepsCountFlags\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:56:15.13698165Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeCacheKeepsCountFlags"}
+{"Time":"2026-10-09T10:56:15.136985776Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeCacheRebuildsChangedSources"}
+{"Time":"2026-10-09T10:56:15.136990052Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeCacheRebuildsChangedSources","Output":"=== RUN   TestRuntimeCacheRebuildsChangedSources\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:56:15.136998745Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeCacheRebuildsChangedSources","Output":"=== PAUSE TestRuntimeCacheRebuildsChangedSources\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:56:15.137001659Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeCacheRebuildsChangedSources"}
+{"Time":"2026-10-09T10:56:15.137006306Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeCacheConcurrentBuilders"}
+{"Time":"2026-10-09T10:56:15.13700915Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeCacheConcurrentBuilders","Output":"=== RUN   TestRuntimeCacheConcurrentBuilders\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:56:15.137013327Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeCacheConcurrentBuilders","Output":"=== PAUSE TestRuntimeCacheConcurrentBuilders\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:56:15.137016111Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeCacheConcurrentBuilders"}
+{"Time":"2026-10-09T10:56:15.137020257Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeCacheConcurrentProcesses"}
+{"Time":"2026-10-09T10:56:15.137023031Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeCacheConcurrentProcesses","Output":"=== RUN   TestRuntimeCacheConcurrentProcesses\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:56:15.137026867Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeCacheConcurrentProcesses","Output":"=== PAUSE TestRuntimeCacheConcurrentProcesses\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:56:15.1370292Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeCacheConcurrentProcesses"}
+{"Time":"2026-10-09T10:56:15.137041789Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeKeyIncludesEveryInput"}
+{"Time":"2026-10-09T10:56:15.137044873Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeKeyIncludesEveryInput","Output":"=== CONT  TestRuntimeKeyIncludesEveryInput\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:56:15.137051824Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeCacheConcurrentBuilders"}
+{"Time":"2026-10-09T10:56:15.137055419Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeCacheConcurrentBuilders","Output":"=== CONT  TestRuntimeCacheConcurrentBuilders\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:56:15.137093014Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeCacheRebuildsChangedSources"}
+{"Time":"2026-10-09T10:56:15.137097391Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeCacheRebuildsChangedSources","Output":"=== CONT  TestRuntimeCacheRebuildsChangedSources\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:56:15.137125823Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeCacheKeepsCountFlags"}
+{"Time":"2026-10-09T10:56:15.137128487Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeCacheKeepsCountFlags","Output":"=== CONT  TestRuntimeCacheKeepsCountFlags\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:56:15.137729926Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeCacheConcurrentProcesses"}
+{"Time":"2026-10-09T10:56:15.138444954Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeCacheConcurrentProcesses","Output":"=== CONT  TestRuntimeCacheConcurrentProcesses\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:56:15.328734313Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeKeyIncludesEveryInput","Output":"--- PASS: TestRuntimeKeyIncludesEveryInput (0.19s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:56:15.385836514Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeKeyIncludesEveryInput","Elapsed":0.19}
+{"Time":"2026-10-09T10:56:15.385911194Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeCacheConcurrentProcesses","Output":"--- PASS: TestRuntimeCacheConcurrentProcesses (0.25s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:56:15.539985973Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeCacheConcurrentProcesses","Elapsed":0.25}
+{"Time":"2026-10-09T10:56:15.540023849Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeCacheRebuildsChangedSources","Output":"--- PASS: TestRuntimeCacheRebuildsChangedSources (0.40s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:56:16.727637585Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeCacheRebuildsChangedSources","Elapsed":0.4}
+{"Time":"2026-10-09T10:56:16.727686598Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeCacheConcurrentBuilders","Output":"--- PASS: TestRuntimeCacheConcurrentBuilders (1.59s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:56:22.27390394Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeCacheConcurrentBuilders","Elapsed":1.59}
+{"Time":"2026-10-09T10:56:22.2739446Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeCacheKeepsCountFlags","Output":"    library_test.go:69: count true: got \"\", want \"adamic: counts: allocations 0 frees 0 retains 0 releases 0 peak 0 regions 0\\n\"\n","OutputType":"error"}
+{"Time":"2026-10-09T10:56:22.355990233Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeCacheKeepsCountFlags","Output":"--- FAIL: TestRuntimeCacheKeepsCountFlags (7.22s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:56:22.356034458Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeCacheKeepsCountFlags","Elapsed":7.22}
+{"Time":"2026-10-09T10:56:22.356040757Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:56:22.365600831Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"FAIL\tgithub.com/system-inc/adamic/internal/native\t7.239s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:56:22.365644756Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/native","Elapsed":7.239}

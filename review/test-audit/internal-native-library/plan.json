@@ -1,0 +1,142 @@
+[
+  {
+    "id": "M01",
+    "file": "library.go",
+    "line": 129,
+    "old": "part(version)",
+    "new": ""
+  },
+  {
+    "id": "M02",
+    "file": "library.go",
+    "line": 128,
+    "old": "part(compiler)",
+    "new": ""
+  },
+  {
+    "id": "M03",
+    "file": "library.go",
+    "line": 131,
+    "old": "for _, flag := range flags {\n\t\tpart(flag)\n\t}",
+    "new": ""
+  },
+  {
+    "id": "M04",
+    "file": "library.go",
+    "line": 124,
+    "old": "fmt.Fprintf(hash, \"%d:\", len(value));",
+    "new": ""
+  },
+  {
+    "id": "M05",
+    "file": "library.go",
+    "line": 138,
+    "old": "hash.Write(file.contents)",
+    "new": ""
+  },
+  {
+    "id": "M06",
+    "file": "library.go",
+    "line": 109,
+    "old": "!strings.HasSuffix(entry.Name(), \".h\")",
+    "new": "!strings.HasSuffix(entry.Name(), \".hh\")"
+  },
+  {
+    "id": "M07",
+    "file": "library.go",
+    "line": 150,
+    "old": "info.Mode().IsRegular()",
+    "new": "!info.Mode().IsRegular()"
+  },
+  {
+    "id": "M08",
+    "file": "library.go",
+    "line": 202,
+    "old": "os.Rename(temporary, directory)",
+    "new": "os.Rename(directory, temporary)"
+  },
+  {
+    "id": "M09",
+    "file": "library.go",
+    "line": 216,
+    "old": "\"--whole-archive\"",
+    "new": "\"--no-whole-archive\""
+  },
+  {
+    "id": "M10",
+    "file": "element_borrow.go",
+    "line": 47,
+    "old": "program.Locals[loop.Local].Borrowed = true",
+    "new": "program.Locals[loop.Local].Borrowed = false"
+  },
+  {
+    "id": "M11",
+    "file": "element_borrow.go",
+    "line": 48,
+    "old": "lending[loop.Iterable.(ir.Read).Local] = true",
+    "new": "lending[loop.Iterable.(ir.Read).Local] = false"
+  },
+  {
+    "id": "M12",
+    "file": "element_borrow.go",
+    "line": 45,
+    "old": "!changes(program, changing, loop.Body)",
+    "new": "changes(program, changing, loop.Body)"
+  },
+  {
+    "id": "M13",
+    "file": "element_borrow.go",
+    "line": 170,
+    "old": "return false",
+    "new": "return true"
+  },
+  {
+    "id": "M14",
+    "file": "element_borrow.go",
+    "line": 96,
+    "old": "!held.Captured &&",
+    "new": ""
+  },
+  {
+    "id": "M15",
+    "file": "borrow.go",
+    "line": 144,
+    "old": "!pure(argument)",
+    "new": "pure(argument)"
+  },
+  {
+    "id": "M16",
+    "file": "emit_statements.go",
+    "line": 448,
+    "old": "!e.elementBorrows[e.at]",
+    "new": "e.elementBorrows[e.at]"
+  },
+  {
+    "id": "M17",
+    "file": "emit_statements.go",
+    "line": 442,
+    "old": "else if e.elementBorrows[e.at]",
+    "new": "else if !e.elementBorrows[e.at]"
+  },
+  {
+    "id": "M18",
+    "file": "runtime/string_build_impl.h",
+    "line": 31,
+    "old": "units > ADAMIC_STRING_MAX_UNITS",
+    "new": "units >= ADAMIC_STRING_MAX_UNITS"
+  },
+  {
+    "id": "M19",
+    "file": "runtime/string_build_impl.h",
+    "line": 31,
+    "old": "units > ADAMIC_STRING_MAX_UNITS",
+    "new": "units > ADAMIC_STRING_MAX_UNITS + 1"
+  },
+  {
+    "id": "M20",
+    "file": "runtime/map_set.c",
+    "line": 29,
+    "old": "hash ^= hash >> 12",
+    "new": "hash ^= hash >> 11"
+  }
+]

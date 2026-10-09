@@ -1,0 +1,67 @@
+{
+  "TestRuntimeKeyIncludesEveryInput": [
+    0.078,
+    0.076,
+    0.075
+  ],
+  "TestRuntimeCacheKeepsCountFlags": [
+    0.187,
+    0.175,
+    0.192
+  ],
+  "TestRuntimeCacheRebuildsChangedSources": [
+    0.199,
+    0.194,
+    0.201
+  ],
+  "TestRuntimeCacheConcurrentBuilders": [
+    1.293,
+    1.251,
+    1.312
+  ],
+  "TestRuntimeCacheConcurrentProcesses": [
+    0.16,
+    0.173,
+    0.186
+  ],
+  "TestStringLengthLimit": [
+    0.184,
+    0.17,
+    0.184
+  ],
+  "TestLoopBorrowPlan": [
+    0.05,
+    0.058,
+    0.052
+  ],
+  "TestNbodyBorrowedLoopC": [
+    0.073,
+    0.086,
+    0.307
+  ],
+  "TestGlobalArgumentLending": [
+    0.095,
+    0.056,
+    0.054
+  ],
+  "TestLoopArrayHoldC": [
+    0.117,
+    0.344,
+    0.121
+  ],
+  "TestLoopCallCoverage": [
+    0.168,
+    0.317,
+    0.56
+  ],
+  "TestMapHashProbeBound": [
+    12.422,
+    12.573,
+    12.106
+  ],
+  "TestMapHashProbeCatchesMutants": [
+    21.055,
+    19.794,
+    20.233
+  ]
+}

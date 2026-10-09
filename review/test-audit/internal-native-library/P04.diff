@@ -1,0 +1,41 @@
+--- a/internal/native/element_borrow.go
++++ b/internal/native/element_borrow.go
+@@ -22,37 +22,7 @@
+ // Every possible call target must preserve the elements for the borrow to stand.
+ // Reuse never moves an array that lends (reusePlan.movable).
+ func planElementBorrows(program *ir.Program) (map[*ir.Statement]bool, map[int]bool) {
+-	changing := changingFunctions(program)
+-	borrows := map[*ir.Statement]bool{}
+-	lending := map[int]bool{}
+-	for index := range program.Functions {
+-		function := &program.Functions[index]
+-		if function.Closure {
+-			continue
+-		}
+-		assigned := assignedLocals(function.Body)
+-		var statements func([]ir.Statement)
+-		statements = func(list []ir.Statement) {
+-			for position := range list {
+-				declare, declaration := list[position].(ir.Declare)
+-				element := declaration && borrowable(program, index, declare, assigned) && !changes(program, changing, list[position+1:])
+-				chain := declaration && borrowableChain(program, index, declare, assigned)
+-				if element || chain {
+-					borrows[&list[position]] = true
+-					program.Locals[declare.Local].Borrowed = true
+-					lending[borrowedArray(declare)] = true
+-				}
+-				if loop, ok := list[position].(ir.ForOf); ok && loopBorrowable(program, index, loop, assigned) && !changes(program, changing, loop.Body) {
+-					borrows[&list[position]] = true
+-					program.Locals[loop.Local].Borrowed = true
+-					lending[loop.Iterable.(ir.Read).Local] = true
+-				}
+-				walkStatement(list[position], func(ir.Expression) {}, statements)
+-			}
+-		}
+-		statements(function.Body)
+-	}
+-	return borrows, lending
++	return nil, nil
+ }
+ 
+ // borrowedArray is the root holder a borrowing declaration relies on, an array

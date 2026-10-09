@@ -1,0 +1,11 @@
+--- a/internal/native/emit_statements.go
++++ b/internal/native/emit_statements.go
+@@ -445,7 +445,7 @@
+ 	} else {
+ 		e.line("%s %s = %s;", cType(statement.Iterable.Type()), held, e.kept(iterable))
+ 	}
+-	if !e.elementBorrows[e.at] {
++	if e.elementBorrows[e.at] {
+ 		e.hold(held)
+ 	}
+ 	e.end()

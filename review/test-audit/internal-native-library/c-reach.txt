@@ -1,0 +1,3 @@
+C runtime dynamic coverage attempt did not start a test binary before its outer 120-second compilation backstop. It was discarded.
+Direct production roots established by source reading: adamic_string_check_length (string_build_impl.h:30), adamic_map_number_hash (map_set.c:22), map_hash.c harness calls hash_key, map construction/set/get, SameValueZero packing, object/string allocation and release. The harness is oracle code, not production mutation code.
+Go coverage inventory is exact for the scoped run; this is not a complete dynamic C function inventory.

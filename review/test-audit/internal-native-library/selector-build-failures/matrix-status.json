@@ -1,0 +1,300 @@
+{
+  "M01": {
+    "exit": 1,
+    "wall": 8.953680118000193,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestRuntimeKeyIncludesEveryInput|TestRuntimeCacheKeepsCountFlags|TestRuntimeCacheRebuildsChangedSources|TestRuntimeCacheConcurrentBuilders|TestRuntimeCacheConcurrentProcesses)$",
+    "rows": [
+      "TestRuntimeKeyIncludesEveryInput",
+      "TestRuntimeCacheKeepsCountFlags",
+      "TestRuntimeCacheRebuildsChangedSources",
+      "TestRuntimeCacheConcurrentBuilders",
+      "TestRuntimeCacheConcurrentProcesses"
+    ]
+  },
+  "M02": {
+    "exit": 1,
+    "wall": 3.806374629999482,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestRuntimeKeyIncludesEveryInput|TestRuntimeCacheKeepsCountFlags|TestRuntimeCacheRebuildsChangedSources|TestRuntimeCacheConcurrentBuilders|TestRuntimeCacheConcurrentProcesses)$",
+    "rows": [
+      "TestRuntimeKeyIncludesEveryInput",
+      "TestRuntimeCacheKeepsCountFlags",
+      "TestRuntimeCacheRebuildsChangedSources",
+      "TestRuntimeCacheConcurrentBuilders",
+      "TestRuntimeCacheConcurrentProcesses"
+    ]
+  },
+  "M03": {
+    "exit": 1,
+    "wall": 3.948811045000184,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestRuntimeKeyIncludesEveryInput|TestRuntimeCacheKeepsCountFlags|TestRuntimeCacheRebuildsChangedSources|TestRuntimeCacheConcurrentBuilders|TestRuntimeCacheConcurrentProcesses)$",
+    "rows": [
+      "TestRuntimeKeyIncludesEveryInput",
+      "TestRuntimeCacheKeepsCountFlags",
+      "TestRuntimeCacheRebuildsChangedSources",
+      "TestRuntimeCacheConcurrentBuilders",
+      "TestRuntimeCacheConcurrentProcesses"
+    ]
+  },
+  "M04": {
+    "exit": 1,
+    "wall": 4.0060407139972085,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestRuntimeKeyIncludesEveryInput|TestRuntimeCacheKeepsCountFlags|TestRuntimeCacheRebuildsChangedSources|TestRuntimeCacheConcurrentBuilders|TestRuntimeCacheConcurrentProcesses)$",
+    "rows": [
+      "TestRuntimeKeyIncludesEveryInput",
+      "TestRuntimeCacheKeepsCountFlags",
+      "TestRuntimeCacheRebuildsChangedSources",
+      "TestRuntimeCacheConcurrentBuilders",
+      "TestRuntimeCacheConcurrentProcesses"
+    ]
+  },
+  "M05": {
+    "exit": 1,
+    "wall": 3.747832289998769,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestRuntimeKeyIncludesEveryInput|TestRuntimeCacheKeepsCountFlags|TestRuntimeCacheRebuildsChangedSources|TestRuntimeCacheConcurrentBuilders|TestRuntimeCacheConcurrentProcesses)$",
+    "rows": [
+      "TestRuntimeKeyIncludesEveryInput",
+      "TestRuntimeCacheKeepsCountFlags",
+      "TestRuntimeCacheRebuildsChangedSources",
+      "TestRuntimeCacheConcurrentBuilders",
+      "TestRuntimeCacheConcurrentProcesses"
+    ]
+  },
+  "M06": {
+    "exit": 1,
+    "wall": 3.3781423959990207,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestRuntimeKeyIncludesEveryInput|TestRuntimeCacheKeepsCountFlags|TestRuntimeCacheRebuildsChangedSources|TestRuntimeCacheConcurrentBuilders|TestRuntimeCacheConcurrentProcesses)$",
+    "rows": [
+      "TestRuntimeKeyIncludesEveryInput",
+      "TestRuntimeCacheKeepsCountFlags",
+      "TestRuntimeCacheRebuildsChangedSources",
+      "TestRuntimeCacheConcurrentBuilders",
+      "TestRuntimeCacheConcurrentProcesses"
+    ]
+  },
+  "M07": {
+    "exit": 1,
+    "wall": 3.6734864700010803,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestRuntimeKeyIncludesEveryInput|TestRuntimeCacheKeepsCountFlags|TestRuntimeCacheRebuildsChangedSources|TestRuntimeCacheConcurrentBuilders|TestRuntimeCacheConcurrentProcesses)$",
+    "rows": [
+      "TestRuntimeKeyIncludesEveryInput",
+      "TestRuntimeCacheKeepsCountFlags",
+      "TestRuntimeCacheRebuildsChangedSources",
+      "TestRuntimeCacheConcurrentBuilders",
+      "TestRuntimeCacheConcurrentProcesses"
+    ]
+  },
+  "M08": {
+    "exit": 1,
+    "wall": 3.5165756460010016,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestRuntimeKeyIncludesEveryInput|TestRuntimeCacheKeepsCountFlags|TestRuntimeCacheRebuildsChangedSources|TestRuntimeCacheConcurrentBuilders|TestRuntimeCacheConcurrentProcesses)$",
+    "rows": [
+      "TestRuntimeKeyIncludesEveryInput",
+      "TestRuntimeCacheKeepsCountFlags",
+      "TestRuntimeCacheRebuildsChangedSources",
+      "TestRuntimeCacheConcurrentBuilders",
+      "TestRuntimeCacheConcurrentProcesses"
+    ]
+  },
+  "M09": {
+    "exit": 1,
+    "wall": 3.8152761349992943,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestRuntimeKeyIncludesEveryInput|TestRuntimeCacheKeepsCountFlags|TestRuntimeCacheRebuildsChangedSources|TestRuntimeCacheConcurrentBuilders|TestRuntimeCacheConcurrentProcesses)$",
+    "rows": [
+      "TestRuntimeKeyIncludesEveryInput",
+      "TestRuntimeCacheKeepsCountFlags",
+      "TestRuntimeCacheRebuildsChangedSources",
+      "TestRuntimeCacheConcurrentBuilders",
+      "TestRuntimeCacheConcurrentProcesses"
+    ]
+  },
+  "M10": {
+    "exit": 1,
+    "wall": 2.523070729999745,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestLoopBorrowPlan|TestNbodyBorrowedLoopC|TestGlobalArgumentLending|TestLoopArrayHoldC|TestLoopCallCoverage)$",
+    "rows": [
+      "TestLoopBorrowPlan",
+      "TestNbodyBorrowedLoopC",
+      "TestGlobalArgumentLending",
+      "TestLoopArrayHoldC",
+      "TestLoopCallCoverage"
+    ]
+  },
+  "M11": {
+    "exit": 1,
+    "wall": 2.5228317769979185,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestLoopBorrowPlan|TestNbodyBorrowedLoopC|TestGlobalArgumentLending|TestLoopArrayHoldC|TestLoopCallCoverage)$",
+    "rows": [
+      "TestLoopBorrowPlan",
+      "TestNbodyBorrowedLoopC",
+      "TestGlobalArgumentLending",
+      "TestLoopArrayHoldC",
+      "TestLoopCallCoverage"
+    ]
+  },
+  "M12": {
+    "exit": 1,
+    "wall": 2.3975702520001505,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestLoopBorrowPlan|TestNbodyBorrowedLoopC|TestGlobalArgumentLending|TestLoopArrayHoldC|TestLoopCallCoverage)$",
+    "rows": [
+      "TestLoopBorrowPlan",
+      "TestNbodyBorrowedLoopC",
+      "TestGlobalArgumentLending",
+      "TestLoopArrayHoldC",
+      "TestLoopCallCoverage"
+    ]
+  },
+  "M13": {
+    "exit": 1,
+    "wall": 2.4395250839988876,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestLoopBorrowPlan|TestNbodyBorrowedLoopC|TestGlobalArgumentLending|TestLoopArrayHoldC|TestLoopCallCoverage)$",
+    "rows": [
+      "TestLoopBorrowPlan",
+      "TestNbodyBorrowedLoopC",
+      "TestGlobalArgumentLending",
+      "TestLoopArrayHoldC",
+      "TestLoopCallCoverage"
+    ]
+  },
+  "M14": {
+    "exit": 1,
+    "wall": 2.1576542100010556,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestLoopBorrowPlan|TestNbodyBorrowedLoopC|TestGlobalArgumentLending|TestLoopArrayHoldC|TestLoopCallCoverage)$",
+    "rows": [
+      "TestLoopBorrowPlan",
+      "TestNbodyBorrowedLoopC",
+      "TestGlobalArgumentLending",
+      "TestLoopArrayHoldC",
+      "TestLoopCallCoverage"
+    ]
+  },
+  "M15": {
+    "exit": 1,
+    "wall": 2.319172557999991,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestLoopBorrowPlan|TestNbodyBorrowedLoopC|TestGlobalArgumentLending|TestLoopArrayHoldC|TestLoopCallCoverage)$",
+    "rows": [
+      "TestLoopBorrowPlan",
+      "TestNbodyBorrowedLoopC",
+      "TestGlobalArgumentLending",
+      "TestLoopArrayHoldC",
+      "TestLoopCallCoverage"
+    ]
+  },
+  "M16": {
+    "exit": 1,
+    "wall": 2.4855991559998074,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestLoopBorrowPlan|TestNbodyBorrowedLoopC|TestGlobalArgumentLending|TestLoopArrayHoldC|TestLoopCallCoverage)$",
+    "rows": [
+      "TestLoopBorrowPlan",
+      "TestNbodyBorrowedLoopC",
+      "TestGlobalArgumentLending",
+      "TestLoopArrayHoldC",
+      "TestLoopCallCoverage"
+    ]
+  },
+  "M17": {
+    "exit": 1,
+    "wall": 2.193435076998867,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestLoopBorrowPlan|TestNbodyBorrowedLoopC|TestGlobalArgumentLending|TestLoopArrayHoldC|TestLoopCallCoverage)$",
+    "rows": [
+      "TestLoopBorrowPlan",
+      "TestNbodyBorrowedLoopC",
+      "TestGlobalArgumentLending",
+      "TestLoopArrayHoldC",
+      "TestLoopCallCoverage"
+    ]
+  },
+  "M18": {
+    "exit": 1,
+    "wall": 4.656855793000432,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestStringLengthLimit)$",
+    "rows": [
+      "TestStringLengthLimit"
+    ]
+  },
+  "M19": {
+    "exit": 1,
+    "wall": 4.440114520999487,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestStringLengthLimit)$",
+    "rows": [
+      "TestStringLengthLimit"
+    ]
+  },
+  "M20": {
+    "exit": 1,
+    "wall": 7.406008726997243,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestMapHashProbeBound)$",
+    "rows": [
+      "TestMapHashProbeBound"
+    ]
+  },
+  "P01": {
+    "exit": 1,
+    "wall": 2.26957900999696,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestRuntimeKeyIncludesEveryInput)$",
+    "rows": [
+      "TestRuntimeKeyIncludesEveryInput"
+    ]
+  },
+  "P02": {
+    "exit": 1,
+    "wall": 2.782125014000485,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestRuntimeCacheRebuildsChangedSources|TestRuntimeCacheConcurrentBuilders|TestRuntimeCacheConcurrentProcesses)$",
+    "rows": [
+      "TestRuntimeCacheRebuildsChangedSources",
+      "TestRuntimeCacheConcurrentBuilders",
+      "TestRuntimeCacheConcurrentProcesses"
+    ]
+  },
+  "P03": {
+    "exit": 1,
+    "wall": 2.5567569699996966,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestRuntimeCacheKeepsCountFlags)$",
+    "rows": [
+      "TestRuntimeCacheKeepsCountFlags"
+    ]
+  },
+  "P04": {
+    "exit": 1,
+    "wall": 2.052420098996663,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestLoopBorrowPlan|TestLoopCallCoverage)$",
+    "rows": [
+      "TestLoopBorrowPlan",
+      "TestLoopCallCoverage"
+    ]
+  },
+  "P05": {
+    "exit": 1,
+    "wall": 2.1463471930001106,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestNbodyBorrowedLoopC|TestLoopArrayHoldC|TestLoopCallCoverage)$",
+    "rows": [
+      "TestNbodyBorrowedLoopC",
+      "TestLoopArrayHoldC",
+      "TestLoopCallCoverage"
+    ]
+  },
+  "P06": {
+    "exit": 1,
+    "wall": 2.287290104999556,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestGlobalArgumentLending|TestLoopCallCoverage)$",
+    "rows": [
+      "TestGlobalArgumentLending",
+      "TestLoopCallCoverage"
+    ]
+  },
+  "P07": {
+    "exit": 1,
+    "wall": 4.698092656999506,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestStringLengthLimit)$",
+    "rows": [
+      "TestStringLengthLimit"
+    ]
+  },
+  "P08": {
+    "exit": 1,
+    "wall": 6.934598436997476,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestMapHashProbeBound)$",
+    "rows": [
+      "TestMapHashProbeBound"
+    ]
+  }
+}

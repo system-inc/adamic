@@ -1,0 +1,11 @@
+--- a/internal/native/library.go
++++ b/internal/native/library.go
+@@ -121,7 +121,7 @@
+ func runtimeKey(files []runtimeFile, flags []string, compiler string, version string) string {
+ 	hash := sha256.New()
+ 	// Length prefixes preserve flag boundaries, order and arbitrary source bytes.
+-	part := func(value string) { fmt.Fprintf(hash, "%d:", len(value)); hash.Write([]byte(value)) }
++	part := func(value string) {  hash.Write([]byte(value)) }
+ 	part("adamic-runtime-v1")
+ 	part(goruntime.GOOS)
+ 	part(goruntime.GOARCH)

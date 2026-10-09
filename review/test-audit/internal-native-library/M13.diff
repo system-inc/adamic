@@ -1,0 +1,11 @@
+--- a/internal/native/element_borrow.go
++++ b/internal/native/element_borrow.go
+@@ -167,7 +167,7 @@
+ 	case ir.Call:
+ 		for _, target := range program.CallTargets(expression) {
+ 			if changing[target] {
+-				return false
++				return true
+ 			}
+ 		}
+ 		return true

@@ -1,0 +1,102 @@
+{
+  "M01": {
+    "exit": 0,
+    "wall": 0.13595264100149507,
+    "command": "timeout 90 go vet ./internal/native/"
+  },
+  "M02": {
+    "exit": 0,
+    "wall": 0.12861687099939445,
+    "command": "timeout 90 go vet ./internal/native/"
+  },
+  "M03": {
+    "exit": 0,
+    "wall": 0.15108779599904665,
+    "command": "timeout 90 go vet ./internal/native/"
+  },
+  "M04": {
+    "exit": 0,
+    "wall": 0.1343006669994793,
+    "command": "timeout 90 go vet ./internal/native/"
+  },
+  "M05": {
+    "exit": 0,
+    "wall": 0.13955516300120507,
+    "command": "timeout 90 go vet ./internal/native/"
+  },
+  "M06": {
+    "exit": 0,
+    "wall": 0.13525212400054443,
+    "command": "timeout 90 go vet ./internal/native/"
+  },
+  "M07": {
+    "exit": 0,
+    "wall": 0.1402869310004462,
+    "command": "timeout 90 go vet ./internal/native/"
+  },
+  "M08": {
+    "exit": 0,
+    "wall": 0.1331043940008385,
+    "command": "timeout 90 go vet ./internal/native/"
+  },
+  "M09": {
+    "exit": 0,
+    "wall": 0.13754649800102925,
+    "command": "timeout 90 go vet ./internal/native/"
+  },
+  "M10": {
+    "exit": 0,
+    "wall": 0.14734482900166768,
+    "command": "timeout 90 go vet ./internal/native/"
+  },
+  "M11": {
+    "exit": 0,
+    "wall": 0.1450132809986826,
+    "command": "timeout 90 go vet ./internal/native/"
+  },
+  "M12": {
+    "exit": 0,
+    "wall": 0.17104023399951984,
+    "command": "timeout 90 go vet ./internal/native/"
+  },
+  "M13": {
+    "exit": 0,
+    "wall": 0.14266371600024286,
+    "command": "timeout 90 go vet ./internal/native/"
+  },
+  "M14": {
+    "exit": 0,
+    "wall": 0.13620485300270957,
+    "command": "timeout 90 go vet ./internal/native/"
+  },
+  "M15": {
+    "exit": 0,
+    "wall": 0.14475181799934944,
+    "command": "timeout 90 go vet ./internal/native/"
+  },
+  "M16": {
+    "exit": 0,
+    "wall": 0.13056433599922457,
+    "command": "timeout 90 go vet ./internal/native/"
+  },
+  "M17": {
+    "exit": 0,
+    "wall": 0.13924751200102037,
+    "command": "timeout 90 go vet ./internal/native/"
+  },
+  "M18": {
+    "exit": 0,
+    "wall": 0.2948677919994225,
+    "command": "timeout 90 clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -Iinternal/native/runtime -c internal/native/runtime/string.c -o /tmp/u048-M18.o"
+  },
+  "M19": {
+    "exit": 0,
+    "wall": 0.32927990600001067,
+    "command": "timeout 90 clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -Iinternal/native/runtime -c internal/native/runtime/string.c -o /tmp/u048-M19.o"
+  },
+  "M20": {
+    "exit": 0,
+    "wall": 0.06836004800061346,
+    "command": "timeout 90 clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -Iinternal/native/runtime -c internal/native/runtime/map_set.c -o /tmp/u048-M20.o"
+  }
+}

@@ -1,0 +1,223 @@
+{
+  "TestRuntimeKeyIncludesEveryInput": [
+    {
+      "exit": 0,
+      "wall": 2.3643692409968935,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/native/ -run ^TestRuntimeKeyIncludesEveryInput$"
+    },
+    {
+      "exit": 0,
+      "wall": 2.408869319999212,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/native/ -run ^TestRuntimeKeyIncludesEveryInput$"
+    },
+    {
+      "exit": 0,
+      "wall": 2.1467888320003112,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/native/ -run ^TestRuntimeKeyIncludesEveryInput$"
+    }
+  ],
+  "TestRuntimeCacheKeepsCountFlags": [
+    {
+      "exit": 0,
+      "wall": 2.1529163569975935,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/native/ -run ^TestRuntimeCacheKeepsCountFlags$"
+    },
+    {
+      "exit": 0,
+      "wall": 2.2523132499991334,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/native/ -run ^TestRuntimeCacheKeepsCountFlags$"
+    },
+    {
+      "exit": 0,
+      "wall": 2.484521638001752,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/native/ -run ^TestRuntimeCacheKeepsCountFlags$"
+    }
+  ],
+  "TestRuntimeCacheRebuildsChangedSources": [
+    {
+      "exit": 0,
+      "wall": 2.385682762000215,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/native/ -run ^TestRuntimeCacheRebuildsChangedSources$"
+    },
+    {
+      "exit": 0,
+      "wall": 2.405401536998397,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/native/ -run ^TestRuntimeCacheRebuildsChangedSources$"
+    },
+    {
+      "exit": 0,
+      "wall": 2.347700510999857,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/native/ -run ^TestRuntimeCacheRebuildsChangedSources$"
+    }
+  ],
+  "TestRuntimeCacheConcurrentBuilders": [
+    {
+      "exit": 0,
+      "wall": 3.3412104480012204,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/native/ -run ^TestRuntimeCacheConcurrentBuilders$"
+    },
+    {
+      "exit": 0,
+      "wall": 3.119397063001088,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/native/ -run ^TestRuntimeCacheConcurrentBuilders$"
+    },
+    {
+      "exit": 0,
+      "wall": 3.385201467001025,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/native/ -run ^TestRuntimeCacheConcurrentBuilders$"
+    }
+  ],
+  "TestRuntimeCacheConcurrentProcesses": [
+    {
+      "exit": 0,
+      "wall": 2.210938771000656,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/native/ -run ^TestRuntimeCacheConcurrentProcesses$"
+    },
+    {
+      "exit": 0,
+      "wall": 2.4355671030025405,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/native/ -run ^TestRuntimeCacheConcurrentProcesses$"
+    },
+    {
+      "exit": 0,
+      "wall": 2.401879416000156,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/native/ -run ^TestRuntimeCacheConcurrentProcesses$"
+    }
+  ],
+  "TestStringLengthLimit": [
+    {
+      "exit": 0,
+      "wall": 2.33942245399885,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/native/ -run ^TestStringLengthLimit$"
+    },
+    {
+      "exit": 0,
+      "wall": 2.277504513000167,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/native/ -run ^TestStringLengthLimit$"
+    },
+    {
+      "exit": 0,
+      "wall": 2.238377893001598,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/native/ -run ^TestStringLengthLimit$"
+    }
+  ],
+  "TestLoopBorrowPlan": [
+    {
+      "exit": 0,
+      "wall": 2.1015927760017803,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/native/ -run ^TestLoopBorrowPlan$"
+    },
+    {
+      "exit": 0,
+      "wall": 2.170302233997063,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/native/ -run ^TestLoopBorrowPlan$"
+    },
+    {
+      "exit": 0,
+      "wall": 2.3345706069994776,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/native/ -run ^TestLoopBorrowPlan$"
+    }
+  ],
+  "TestNbodyBorrowedLoopC": [
+    {
+      "exit": 0,
+      "wall": 2.214192228999309,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/native/ -run ^TestNbodyBorrowedLoopC$"
+    },
+    {
+      "exit": 0,
+      "wall": 2.7614558070017665,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/native/ -run ^TestNbodyBorrowedLoopC$"
+    },
+    {
+      "exit": 0,
+      "wall": 4.259752670001035,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/native/ -run ^TestNbodyBorrowedLoopC$"
+    }
+  ],
+  "TestGlobalArgumentLending": [
+    {
+      "exit": 0,
+      "wall": 6.11732767599824,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/native/ -run ^TestGlobalArgumentLending$"
+    },
+    {
+      "exit": 0,
+      "wall": 2.5913776919987868,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/native/ -run ^TestGlobalArgumentLending$"
+    },
+    {
+      "exit": 0,
+      "wall": 2.5109580409989576,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/native/ -run ^TestGlobalArgumentLending$"
+    }
+  ],
+  "TestLoopArrayHoldC": [
+    {
+      "exit": 0,
+      "wall": 2.6484833950016764,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/native/ -run ^TestLoopArrayHoldC$"
+    },
+    {
+      "exit": 0,
+      "wall": 4.564577955999994,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/native/ -run ^TestLoopArrayHoldC$"
+    },
+    {
+      "exit": 0,
+      "wall": 4.116983445001097,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/native/ -run ^TestLoopArrayHoldC$"
+    }
+  ],
+  "TestLoopCallCoverage": [
+    {
+      "exit": 0,
+      "wall": 2.274361122999835,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/native/ -run ^TestLoopCallCoverage$"
+    },
+    {
+      "exit": 0,
+      "wall": 9.645171723001113,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/native/ -run ^TestLoopCallCoverage$"
+    },
+    {
+      "exit": 0,
+      "wall": 10.114747725998313,
+      "command": "timeout 120 go test -count=1 -timeout 90s ./internal/native/ -run ^TestLoopCallCoverage$"
+    }
+  ],
+  "TestMapHashProbeBound": [
+    {
+      "exit": 0,
+      "wall": 14.554388084001403,
+      "command": "go test -count=1 -timeout 90s ./internal/native/ -run ^TestMapHashProbeBound$"
+    },
+    {
+      "exit": 0,
+      "wall": 14.618540382998617,
+      "command": "go test -count=1 -timeout 90s ./internal/native/ -run ^TestMapHashProbeBound$"
+    },
+    {
+      "exit": 0,
+      "wall": 14.173874505002459,
+      "command": "go test -count=1 -timeout 90s ./internal/native/ -run ^TestMapHashProbeBound$"
+    }
+  ],
+  "TestMapHashProbeCatchesMutants": [
+    {
+      "exit": 0,
+      "wall": 23.066255801997613,
+      "command": "go test -count=1 -timeout 90s ./internal/native/ -run ^TestMapHashProbeCatchesMutants$"
+    },
+    {
+      "exit": 0,
+      "wall": 22.15036346999841,
+      "command": "go test -count=1 -timeout 90s ./internal/native/ -run ^TestMapHashProbeCatchesMutants$"
+    },
+    {
+      "exit": 0,
+      "wall": 22.260845941997104,
+      "command": "go test -count=1 -timeout 90s ./internal/native/ -run ^TestMapHashProbeCatchesMutants$"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+--- a/internal/native/library.go
++++ b/internal/native/library.go
+@@ -128,9 +128,7 @@
+ 	part(compiler)
+ 	part(version)
+ 	fmt.Fprintf(hash, "%d:", len(flags))
+-	for _, flag := range flags {
+-		part(flag)
+-	}
++
+ 	fmt.Fprintf(hash, "%d:", len(files))
+ 	for _, file := range files {
+ 		part(file.name)

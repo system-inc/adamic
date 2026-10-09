@@ -1,0 +1,16 @@
+--- FAIL: TestMapHashProbeCatchesMutants (18.57s)
+    --- FAIL: TestMapHashProbeCatchesMutants/old_hash (6.07s)
+        map_hash_test.go:120: native: archiving runtime: exit status 1
+            ar: unable to copy file '/tmp/adamic-gate/TestMapHashProbeCatchesMutantsold_hash2315321702/001/.build-1954817436/runtime.a'; reason: Success
+            
+    --- FAIL: TestMapHashProbeCatchesMutants/zero_normalization (6.31s)
+        map_hash_test.go:120: native: archiving runtime: exit status 1
+            ar: unable to copy file '/tmp/adamic-gate/TestMapHashProbeCatchesMutantszero_normalization417701668/001/.build-2963920548/runtime.a'; reason: No space left on device
+            
+    --- FAIL: TestMapHashProbeCatchesMutants/NaN_normalization (6.19s)
+        map_hash_test.go:120: native: archiving runtime: exit status 1
+            ar: unable to copy file '/tmp/adamic-gate/TestMapHashProbeCatchesMutantsNaN_normalization2363398719/001/.build-3785743100/runtime.a'; reason: No space left on device
+            
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	18.578s
+FAIL

@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/map_set.c
++++ b/internal/native/runtime/map_set.c
+@@ -26,7 +26,7 @@
+ 	if (number >= INT32_MIN && number <= INT32_MAX && trunc(number) == number) {
+ 		uint32_t hash = (uint32_t)(int32_t)number;
+ 		hash = ~hash + (hash << 15);
+-		hash ^= hash >> 12;
++		hash ^= hash >> 11;
+ 		hash += hash << 2;
+ 		hash ^= hash >> 4;
+ 		hash *= 2057;

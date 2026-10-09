@@ -1,0 +1,59 @@
+{"Time":"2026-10-09T10:52:21.518186822Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T10:52:21.526266682Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLoopBorrowPlan"}
+{"Time":"2026-10-09T10:52:21.526363505Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLoopBorrowPlan","Output":"=== RUN   TestLoopBorrowPlan\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:52:21.526394581Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLoopBorrowPlan","Output":"=== PAUSE TestLoopBorrowPlan\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:52:21.526413329Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLoopBorrowPlan"}
+{"Time":"2026-10-09T10:52:21.526415532Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNbodyBorrowedLoopC"}
+{"Time":"2026-10-09T10:52:21.526417715Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNbodyBorrowedLoopC","Output":"=== RUN   TestNbodyBorrowedLoopC\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:52:21.526426538Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNbodyBorrowedLoopC","Output":"=== PAUSE TestNbodyBorrowedLoopC\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:52:21.526428531Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNbodyBorrowedLoopC"}
+{"Time":"2026-10-09T10:52:21.526430364Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestGlobalArgumentLending"}
+{"Time":"2026-10-09T10:52:21.526431946Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestGlobalArgumentLending","Output":"=== RUN   TestGlobalArgumentLending\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:52:21.52643426Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestGlobalArgumentLending","Output":"=== PAUSE TestGlobalArgumentLending\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:52:21.526435782Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestGlobalArgumentLending"}
+{"Time":"2026-10-09T10:52:21.526437655Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLoopArrayHoldC"}
+{"Time":"2026-10-09T10:52:21.526439307Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLoopArrayHoldC","Output":"=== RUN   TestLoopArrayHoldC\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:52:21.52644122Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLoopArrayHoldC","Output":"=== PAUSE TestLoopArrayHoldC\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:52:21.526444094Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLoopArrayHoldC"}
+{"Time":"2026-10-09T10:52:21.526449823Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLoopCallCoverage"}
+{"Time":"2026-10-09T10:52:21.526452477Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLoopCallCoverage","Output":"=== RUN   TestLoopCallCoverage\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:52:21.526455271Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLoopCallCoverage","Output":"=== PAUSE TestLoopCallCoverage\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:52:21.526458506Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLoopCallCoverage"}
+{"Time":"2026-10-09T10:52:21.526461961Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLoopBorrowPlan"}
+{"Time":"2026-10-09T10:52:21.526464695Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLoopBorrowPlan","Output":"=== CONT  TestLoopBorrowPlan\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:52:21.527302925Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLoopArrayHoldC"}
+{"Time":"2026-10-09T10:52:21.527339979Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLoopArrayHoldC","Output":"=== CONT  TestLoopArrayHoldC\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:52:21.527346048Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestGlobalArgumentLending"}
+{"Time":"2026-10-09T10:52:21.527348081Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestGlobalArgumentLending","Output":"=== CONT  TestGlobalArgumentLending\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:52:21.527350385Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNbodyBorrowedLoopC"}
+{"Time":"2026-10-09T10:52:21.527351917Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNbodyBorrowedLoopC","Output":"=== CONT  TestNbodyBorrowedLoopC\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:52:21.52735363Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLoopCallCoverage"}
+{"Time":"2026-10-09T10:52:21.527355382Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLoopCallCoverage","Output":"=== CONT  TestLoopCallCoverage\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:52:21.621706225Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestGlobalArgumentLending","Output":"--- PASS: TestGlobalArgumentLending (0.09s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:52:21.632157472Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestGlobalArgumentLending","Elapsed":0.09}
+{"Time":"2026-10-09T10:52:21.632267014Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLoopArrayHoldC","Output":"    loop_borrow_test.go:157: pushBody: redundant iterator retain\n","OutputType":"error"}
+{"Time":"2026-10-09T10:52:21.632712283Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLoopArrayHoldC","Output":"    loop_borrow_test.go:157: throwBody: redundant iterator retain\n","OutputType":"error"}
+{"Time":"2026-10-09T10:52:21.633152203Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLoopArrayHoldC","Output":"    loop_borrow_test.go:157: caughtBody: redundant iterator retain\n","OutputType":"error"}
+{"Time":"2026-10-09T10:52:21.634415482Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLoopBorrowPlan","Output":"--- PASS: TestLoopBorrowPlan (0.11s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:52:21.636522127Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLoopBorrowPlan","Elapsed":0.11}
+{"Time":"2026-10-09T10:52:21.636538832Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLoopArrayHoldC","Output":"    loop_borrow_test.go:157: parameterBody: redundant iterator retain\n","OutputType":"error"}
+{"Time":"2026-10-09T10:52:21.642543663Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNbodyBorrowedLoopC","Output":"--- PASS: TestNbodyBorrowedLoopC (0.12s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:52:21.659036175Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNbodyBorrowedLoopC","Elapsed":0.12}
+{"Time":"2026-10-09T10:52:21.659081452Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLoopCallCoverage","Output":"    loop_borrow_test.go:271: readLocal: redundant iterator retain\n","OutputType":"error"}
+{"Time":"2026-10-09T10:52:21.659579328Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLoopCallCoverage","Output":"    loop_borrow_test.go:271: readParameter: redundant iterator retain\n","OutputType":"error"}
+{"Time":"2026-10-09T10:52:21.660197433Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLoopCallCoverage","Output":"    loop_borrow_test.go:271: pushLocal: redundant iterator retain\n","OutputType":"error"}
+{"Time":"2026-10-09T10:52:21.668305905Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLoopCallCoverage","Output":"    loop_borrow_test.go:271: continueAfterRead: redundant iterator retain\n","OutputType":"error"}
+{"Time":"2026-10-09T10:52:21.669162853Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLoopCallCoverage","Output":"    loop_borrow_test.go:271: throwAfterRead: redundant iterator retain\n","OutputType":"error"}
+{"Time":"2026-10-09T10:52:21.671921152Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLoopCallCoverage","Output":"    loop_borrow_test.go:271: reportQuiet: redundant iterator retain\n","OutputType":"error"}
+{"Time":"2026-10-09T10:52:21.672890456Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLoopCallCoverage","Output":"    loop_borrow_test.go:271: scanCopy: redundant iterator retain\n","OutputType":"error"}
+{"Time":"2026-10-09T10:52:21.673801393Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLoopCallCoverage","Output":"    loop_borrow_test.go:271: scanLent: redundant iterator retain\n","OutputType":"error"}
+{"Time":"2026-10-09T10:52:21.675678209Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLoopCallCoverage","Output":"    loop_borrow_test.go:271: fieldLocal: redundant iterator retain\n","OutputType":"error"}
+{"Time":"2026-10-09T10:52:21.678722311Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLoopCallCoverage","Output":"--- FAIL: TestLoopCallCoverage (0.15s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:52:21.690633928Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLoopCallCoverage","Elapsed":0.15}
+{"Time":"2026-10-09T10:52:21.690676361Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLoopArrayHoldC","Output":"    loop_borrow_test.go:157: offsetMomentum: redundant iterator retain\n","OutputType":"error"}
+{"Time":"2026-10-09T10:52:21.691087258Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLoopArrayHoldC","Output":"    loop_borrow_test.go:157: advance: redundant iterator retain\n","OutputType":"error"}
+{"Time":"2026-10-09T10:52:21.691107348Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLoopArrayHoldC","Output":"--- FAIL: TestLoopArrayHoldC (0.16s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:52:21.691147928Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLoopArrayHoldC","Elapsed":0.16}
+{"Time":"2026-10-09T10:52:21.691150752Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:52:21.69641658Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"FAIL\tgithub.com/system-inc/adamic/internal/native\t0.178s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:52:21.696438162Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/native","Elapsed":0.178}

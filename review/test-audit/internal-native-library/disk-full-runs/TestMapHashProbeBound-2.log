@@ -1,0 +1,12 @@
+--- FAIL: TestMapHashProbeBound (12.80s)
+    --- FAIL: TestMapHashProbeBound/malloc (6.82s)
+        map_hash_test.go:90: native: archiving runtime: exit status 1
+            ar: unable to copy file '/tmp/adamic-gate/TestMapHashProbeBoundmalloc1340763207/001/.build-1759287027/runtime.a'; reason: Success
+            
+    --- FAIL: TestMapHashProbeBound/slabs (5.97s)
+        map_hash_test.go:90: native: archiving runtime: exit status 1
+            ar: unable to copy file '/tmp/adamic-gate/TestMapHashProbeBoundslabs4028974049/001/.build-3225654247/runtime.a'; reason: Success
+            
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	12.803s
+FAIL

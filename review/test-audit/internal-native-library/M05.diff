@@ -1,0 +1,11 @@
+--- a/internal/native/library.go
++++ b/internal/native/library.go
+@@ -135,7 +135,7 @@
+ 	for _, file := range files {
+ 		part(file.name)
+ 		fmt.Fprintf(hash, "%d:", len(file.contents))
+-		hash.Write(file.contents)
++
+ 	}
+ 	return fmt.Sprintf("%x", hash.Sum(nil))
+ }

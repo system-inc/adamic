@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/string_build_impl.h
++++ b/internal/native/runtime/string_build_impl.h
+@@ -28,7 +28,7 @@
+ // V8's longest string, in UTF-16 units (String::kMaxLength on 64-bit): past it, every way of making
+ // a string throws RangeError: Invalid string length, and so Adamic panics there too.
+ void adamic_string_check_length(double units) {
+-	if (units > ADAMIC_STRING_MAX_UNITS) {
++	if (units >= ADAMIC_STRING_MAX_UNITS) {
+ 		static const char message[] = "RangeError: Invalid string length";
+ 		adamic_panic(message, sizeof message - 1);
+ 	}

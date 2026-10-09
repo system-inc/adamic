@@ -1,0 +1,31 @@
+--- a/internal/native/borrow.go
++++ b/internal/native/borrow.go
+@@ -136,27 +136,7 @@
+ // touches also rejects unknown closure and callback effects. Reads of the global
+ // are conservatively refused along with writes.
+ func (e *emitter) lentArgument(call ir.Call, index int) (string, bool) {
+-	read, ok := call.Arguments[index].(ir.Read)
+-	if !ok || !e.program.Locals[read.Local].Global || !lendable(read.Of) {
+-		return "", false
+-	}
+-	for _, argument := range call.Arguments[index+1:] {
+-		if !pure(argument) {
+-			return "", false
+-		}
+-	}
+-	// Every target that can run must borrow this parameter, so each one's own parameters are
+-	// read rather than the static callee's.
+-	for _, target := range e.program.CallTargets(call) {
+-		parameters := e.program.Functions[target].Parameters
+-		if index >= len(parameters) || touches(e.program, target, read.Local, map[int]bool{}) || !e.program.Locals[parameters[index]].Borrowed || e.reuse.consumed[parameters[index]] {
+-			return "", false
+-		}
+-	}
+-	if read.Checked {
+-		e.checkReady(read.Local)
+-	}
+-	return e.snapshot(read.Of, e.localName(read.Local)), true
++	return "", false
+ }
+ 
+ // chainRoot follows strong field loads only. A weak handle is not an owner of its

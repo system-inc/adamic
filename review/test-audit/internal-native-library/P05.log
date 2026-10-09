@@ -1,0 +1,32 @@
+{"Time":"2026-10-09T10:52:49.932092409Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T10:52:49.939389215Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNbodyBorrowedLoopC"}
+{"Time":"2026-10-09T10:52:49.939444417Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNbodyBorrowedLoopC","Output":"=== RUN   TestNbodyBorrowedLoopC\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:52:49.939790379Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNbodyBorrowedLoopC","Output":"=== PAUSE TestNbodyBorrowedLoopC\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:52:49.939799011Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNbodyBorrowedLoopC"}
+{"Time":"2026-10-09T10:52:49.939802116Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLoopArrayHoldC"}
+{"Time":"2026-10-09T10:52:49.939805251Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLoopArrayHoldC","Output":"=== RUN   TestLoopArrayHoldC\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:52:49.939808666Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLoopArrayHoldC","Output":"=== PAUSE TestLoopArrayHoldC\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:52:49.939810218Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLoopArrayHoldC"}
+{"Time":"2026-10-09T10:52:49.939812411Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLoopCallCoverage"}
+{"Time":"2026-10-09T10:52:49.939813893Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLoopCallCoverage","Output":"=== RUN   TestLoopCallCoverage\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:52:49.939816036Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLoopCallCoverage","Output":"=== PAUSE TestLoopCallCoverage\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:52:49.939817759Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLoopCallCoverage"}
+{"Time":"2026-10-09T10:52:49.939819532Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNbodyBorrowedLoopC"}
+{"Time":"2026-10-09T10:52:49.939821064Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNbodyBorrowedLoopC","Output":"=== CONT  TestNbodyBorrowedLoopC\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:52:49.939823147Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLoopCallCoverage"}
+{"Time":"2026-10-09T10:52:49.939825841Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLoopCallCoverage","Output":"=== CONT  TestLoopCallCoverage\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:52:49.939827714Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLoopArrayHoldC"}
+{"Time":"2026-10-09T10:52:49.939829226Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLoopArrayHoldC","Output":"=== CONT  TestLoopArrayHoldC\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:52:50.004187596Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNbodyBorrowedLoopC","Output":"    loop_borrow_test.go:79: function 1 offsetMomentum still counts binding adamic_local_18_body\n","OutputType":"error"}
+{"Time":"2026-10-09T10:52:50.004294804Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNbodyBorrowedLoopC","Output":"    loop_borrow_test.go:79: function 2 advance still counts binding adamic_local_30_body\n","OutputType":"error"}
+{"Time":"2026-10-09T10:52:50.004314954Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNbodyBorrowedLoopC","Output":"--- FAIL: TestNbodyBorrowedLoopC (0.06s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:52:50.006319969Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNbodyBorrowedLoopC","Elapsed":0.06}
+{"Time":"2026-10-09T10:52:50.006360199Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLoopCallCoverage","Output":"    loop_borrow_test.go:257: readLocal: missing function definition\n","OutputType":"error"}
+{"Time":"2026-10-09T10:52:50.006366178Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLoopCallCoverage","Output":"--- FAIL: TestLoopCallCoverage (0.07s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:52:50.007491342Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLoopCallCoverage","Elapsed":0.07}
+{"Time":"2026-10-09T10:52:50.007499053Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLoopArrayHoldC","Output":"    loop_borrow_test.go:143: popBody: missing function definition\n","OutputType":"error"}
+{"Time":"2026-10-09T10:52:50.007502969Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLoopArrayHoldC","Output":"--- FAIL: TestLoopArrayHoldC (0.07s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:52:50.007533644Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLoopArrayHoldC","Elapsed":0.07}
+{"Time":"2026-10-09T10:52:50.007536008Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:52:50.010706907Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"FAIL\tgithub.com/system-inc/adamic/internal/native\t0.078s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:52:50.01073587Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/native","Elapsed":0.079}

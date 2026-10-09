@@ -1,0 +1,42 @@
+{
+  "P01": {
+    "exit": 0,
+    "wall": 0.3153356119983073,
+    "command": "timeout 90 go vet ./internal/native/"
+  },
+  "P02": {
+    "exit": 0,
+    "wall": 0.30559607800023514,
+    "command": "timeout 90 go vet ./internal/native/"
+  },
+  "P03": {
+    "exit": 0,
+    "wall": 0.28744619999997667,
+    "command": "timeout 90 go vet ./internal/native/"
+  },
+  "P04": {
+    "exit": 0,
+    "wall": 0.29259723300128826,
+    "command": "timeout 90 go vet ./internal/native/"
+  },
+  "P05": {
+    "exit": 0,
+    "wall": 0.2790209129998402,
+    "command": "timeout 90 go vet ./internal/native/"
+  },
+  "P06": {
+    "exit": 0,
+    "wall": 0.2827428129967302,
+    "command": "timeout 90 go vet ./internal/native/"
+  },
+  "P07": {
+    "exit": 0,
+    "wall": 0.2858200750015385,
+    "command": "timeout 90 clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -Iinternal/native/runtime -c internal/native/runtime/string.c -o /workspace/u048-tmp/P07.o"
+  },
+  "P08": {
+    "exit": 0,
+    "wall": 0.07548104599845828,
+    "command": "timeout 90 clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -Iinternal/native/runtime -c internal/native/runtime/map_set.c -o /workspace/u048-tmp/P08.o"
+  }
+}

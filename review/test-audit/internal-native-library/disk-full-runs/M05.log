@@ -1,0 +1,45 @@
+{"ImportPath":"internal/coverage/rtcov","Action":"build-output","Output":"# github.com/system-inc/adamic/internal/native\n"}
+{"ImportPath":"internal/coverage/rtcov","Action":"build-output","Output":"../adamic-tools/go/src/runtime/covercounter.go:8:2: package internal/coverage/rtcov is not in std (/workspace/adamic-tools/go/src/internal/coverage/rtcov)\n"}
+{"ImportPath":"internal/coverage/rtcov","Action":"build-fail"}
+{"ImportPath":"internal/profilerecord","Action":"build-output","Output":"# github.com/system-inc/adamic/internal/native\n"}
+{"ImportPath":"internal/profilerecord","Action":"build-output","Output":"../adamic-tools/go/src/runtime/mprof.go:13:2: package internal/profilerecord is not in std (/workspace/adamic-tools/go/src/internal/profilerecord)\n"}
+{"ImportPath":"internal/profilerecord","Action":"build-fail"}
+{"ImportPath":"internal/runtime/cgroup","Action":"build-output","Output":"# github.com/system-inc/adamic/internal/native\n"}
+{"ImportPath":"internal/runtime/cgroup","Action":"build-output","Output":"../adamic-tools/go/src/runtime/cgroup_linux.go:8:2: package internal/runtime/cgroup is not in std (/workspace/adamic-tools/go/src/internal/runtime/cgroup)\n"}
+{"ImportPath":"internal/runtime/cgroup","Action":"build-fail"}
+{"ImportPath":"internal/runtime/exithook","Action":"build-output","Output":"# github.com/system-inc/adamic/internal/native\n"}
+{"ImportPath":"internal/runtime/exithook","Action":"build-output","Output":"../adamic-tools/go/src/runtime/proc.go:14:2: package internal/runtime/exithook is not in std (/workspace/adamic-tools/go/src/internal/runtime/exithook)\n"}
+{"ImportPath":"internal/runtime/exithook","Action":"build-fail"}
+{"ImportPath":"internal/runtime/gc","Action":"build-output","Output":"# github.com/system-inc/adamic/internal/native\n"}
+{"ImportPath":"internal/runtime/gc","Action":"build-output","Output":"../adamic-tools/go/src/runtime/heapdump.go:17:2: package internal/runtime/gc is not in std (/workspace/adamic-tools/go/src/internal/runtime/gc)\n"}
+{"ImportPath":"internal/runtime/gc","Action":"build-fail"}
+{"ImportPath":"internal/runtime/gc/scan","Action":"build-output","Output":"# github.com/system-inc/adamic/internal/native\n"}
+{"ImportPath":"internal/runtime/gc/scan","Action":"build-output","Output":"../adamic-tools/go/src/runtime/mgcmark_greenteagc.go:43:2: package internal/runtime/gc/scan is not in std (/workspace/adamic-tools/go/src/internal/runtime/gc/scan)\n"}
+{"ImportPath":"internal/runtime/gc/scan","Action":"build-fail"}
+{"ImportPath":"internal/runtime/pprof/label","Action":"build-output","Output":"# github.com/system-inc/adamic/internal/native\n"}
+{"ImportPath":"internal/runtime/pprof/label","Action":"build-output","Output":"../adamic-tools/go/src/runtime/traceback.go:11:2: package internal/runtime/pprof/label is not in std (/workspace/adamic-tools/go/src/internal/runtime/pprof/label)\n"}
+{"ImportPath":"internal/runtime/pprof/label","Action":"build-fail"}
+{"ImportPath":"crypto/internal/fips140/check","Action":"build-output","Output":"# github.com/system-inc/adamic/internal/native\n"}
+{"ImportPath":"crypto/internal/fips140/check","Action":"build-output","Output":"../adamic-tools/go/src/crypto/internal/fips140/aes/cast.go:10:2: package crypto/internal/fips140/check is not in std (/workspace/adamic-tools/go/src/crypto/internal/fips140/check)\n"}
+{"ImportPath":"crypto/internal/fips140/check","Action":"build-fail"}
+{"ImportPath":"crypto/internal/fips140/subtle","Action":"build-output","Output":"# github.com/system-inc/adamic/internal/native\n"}
+{"ImportPath":"crypto/internal/fips140/subtle","Action":"build-output","Output":"../adamic-tools/go/src/crypto/internal/fips140/aes/cbc.go:10:2: package crypto/internal/fips140/subtle is not in std (/workspace/adamic-tools/go/src/crypto/internal/fips140/subtle)\n"}
+{"ImportPath":"crypto/internal/fips140/subtle","Action":"build-fail"}
+{"ImportPath":"crypto/internal/fips140/drbg","Action":"build-output","Output":"# github.com/system-inc/adamic/internal/native\n"}
+{"ImportPath":"crypto/internal/fips140/drbg","Action":"build-output","Output":"../adamic-tools/go/src/crypto/internal/fips140/aes/gcm/gcm_nonces.go:11:2: package crypto/internal/fips140/drbg is not in std (/workspace/adamic-tools/go/src/crypto/internal/fips140/drbg)\n"}
+{"ImportPath":"crypto/internal/fips140/drbg","Action":"build-fail"}
+{"ImportPath":"crypto/fips140","Action":"build-output","Output":"# github.com/system-inc/adamic/internal/native\n"}
+{"ImportPath":"crypto/fips140","Action":"build-output","Output":"../adamic-tools/go/src/crypto/internal/fips140only/fips140only.go:8:2: package crypto/fips140 is not in std (/workspace/adamic-tools/go/src/crypto/fips140)\n"}
+{"ImportPath":"crypto/fips140","Action":"build-fail"}
+{"ImportPath":"crypto/internal/fips140/sha3","Action":"build-output","Output":"# github.com/system-inc/adamic/internal/native\n"}
+{"ImportPath":"crypto/internal/fips140/sha3","Action":"build-output","Output":"../adamic-tools/go/src/crypto/internal/fips140only/fips140only.go:10:2: package crypto/internal/fips140/sha3 is not in std (/workspace/adamic-tools/go/src/crypto/internal/fips140/sha3)\n"}
+{"ImportPath":"crypto/internal/fips140/sha3","Action":"build-fail"}
+{"ImportPath":"crypto/internal/fips140/sha512","Action":"build-output","Output":"# github.com/system-inc/adamic/internal/native\n"}
+{"ImportPath":"crypto/internal/fips140/sha512","Action":"build-output","Output":"../adamic-tools/go/src/crypto/internal/fips140only/fips140only.go:11:2: package crypto/internal/fips140/sha512 is not in std (/workspace/adamic-tools/go/src/crypto/internal/fips140/sha512)\n"}
+{"ImportPath":"crypto/internal/fips140/sha512","Action":"build-fail"}
+{"ImportPath":"crypto/internal/constanttime","Action":"build-output","Output":"# github.com/system-inc/adamic/internal/native\n"}
+{"ImportPath":"crypto/internal/constanttime","Action":"build-output","Output":"../adamic-tools/go/src/crypto/subtle/constant_time.go:10:2: package crypto/internal/constanttime is not in std (/workspace/adamic-tools/go/src/crypto/internal/constanttime)\n"}
+{"ImportPath":"crypto/internal/constanttime","Action":"build-fail"}
+{"Time":"2026-10-09T10:47:20.90300177Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T10:47:20.903637741Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"FAIL\tgithub.com/system-inc/adamic/internal/native [setup failed]\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:47:20.903683228Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/native","Elapsed":0.001,"FailedBuild":"internal/coverage/rtcov"}

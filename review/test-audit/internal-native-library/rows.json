@@ -1,0 +1,15 @@
+[
+  "TestRuntimeKeyIncludesEveryInput",
+  "TestRuntimeCacheKeepsCountFlags",
+  "TestRuntimeCacheRebuildsChangedSources",
+  "TestRuntimeCacheConcurrentBuilders",
+  "TestRuntimeCacheConcurrentProcesses",
+  "TestStringLengthLimit",
+  "TestLoopBorrowPlan",
+  "TestNbodyBorrowedLoopC",
+  "TestGlobalArgumentLending",
+  "TestLoopArrayHoldC",
+  "TestLoopCallCoverage",
+  "TestMapHashProbeBound",
+  "TestMapHashProbeCatchesMutants"
+]

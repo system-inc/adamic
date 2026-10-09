@@ -1,0 +1,11 @@
+--- a/internal/native/library.go
++++ b/internal/native/library.go
+@@ -106,7 +106,7 @@
+ 	}
+ 	var files []runtimeFile
+ 	for _, entry := range entries {
+-		if entry.IsDir() || (!strings.HasSuffix(entry.Name(), ".c") && !strings.HasSuffix(entry.Name(), ".h")) {
++		if entry.IsDir() || (!strings.HasSuffix(entry.Name(), ".c") && !strings.HasSuffix(entry.Name(), ".hh")) {
+ 			continue
+ 		}
+ 		contents, err := fs.ReadFile(sources, path.Join(root, entry.Name()))

@@ -1,0 +1,11 @@
+--- a/internal/native/borrow.go
++++ b/internal/native/borrow.go
+@@ -141,7 +141,7 @@
+ 		return "", false
+ 	}
+ 	for _, argument := range call.Arguments[index+1:] {
+-		if !pure(argument) {
++		if pure(argument) {
+ 			return "", false
+ 		}
+ 	}

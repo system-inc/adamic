@@ -1,0 +1,6 @@
+{"ImportPath":"runtime","Action":"build-output","Output":"# runtime\n"}
+{"ImportPath":"runtime","Action":"build-output","Output":"compile: writing output: write $WORK/b009/_pkg_.a: no space left on device\n"}
+{"ImportPath":"runtime","Action":"build-fail"}
+{"Time":"2026-10-09T10:47:17.717223092Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T10:47:17.71739108Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"FAIL\tgithub.com/system-inc/adamic/internal/native [build failed]\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:47:17.717408816Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/native","Elapsed":0,"FailedBuild":"runtime"}

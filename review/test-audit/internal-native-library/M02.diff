@@ -1,0 +1,11 @@
+--- a/internal/native/library.go
++++ b/internal/native/library.go
+@@ -125,7 +125,7 @@
+ 	part("adamic-runtime-v1")
+ 	part(goruntime.GOOS)
+ 	part(goruntime.GOARCH)
+-	part(compiler)
++
+ 	part(version)
+ 	fmt.Fprintf(hash, "%d:", len(flags))
+ 	for _, flag := range flags {

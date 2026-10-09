@@ -1,0 +1,264 @@
+diff --git a/internal/native/borrow.go b/internal/native/borrow.go
+index 9f3854b8..eea80785 100644
+--- a/internal/native/borrow.go
++++ b/internal/native/borrow.go
+@@ -136,12 +136,15 @@ func eachOperand(expression ir.Expression, visit func(ir.Expression)) {
+ // touches also rejects unknown closure and callback effects. Reads of the global
+ // are conservatively refused along with writes.
+ func (e *emitter) lentArgument(call ir.Call, index int) (string, bool) {
++	if auditMutant("P06") {
++		return "", false
++	}
+ 	read, ok := call.Arguments[index].(ir.Read)
+ 	if !ok || !e.program.Locals[read.Local].Global || !lendable(read.Of) {
+ 		return "", false
+ 	}
+ 	for _, argument := range call.Arguments[index+1:] {
+-		if !pure(argument) {
++		if auditValue("M15", !pure(argument), pure(argument)) {
+ 			return "", false
+ 		}
+ 	}
+diff --git a/internal/native/element_borrow.go b/internal/native/element_borrow.go
+index c390852d..04327b6d 100644
+--- a/internal/native/element_borrow.go
++++ b/internal/native/element_borrow.go
+@@ -22,6 +22,9 @@ import (
+ // Every possible call target must preserve the elements for the borrow to stand.
+ // Reuse never moves an array that lends (reusePlan.movable).
+ func planElementBorrows(program *ir.Program) (map[*ir.Statement]bool, map[int]bool) {
++	if auditMutant("P04") {
++		return nil, nil
++	}
+ 	changing := changingFunctions(program)
+ 	borrows := map[*ir.Statement]bool{}
+ 	lending := map[int]bool{}
+@@ -42,10 +45,10 @@ func planElementBorrows(program *ir.Program) (map[*ir.Statement]bool, map[int]bo
+ 					program.Locals[declare.Local].Borrowed = true
+ 					lending[borrowedArray(declare)] = true
+ 				}
+-				if loop, ok := list[position].(ir.ForOf); ok && loopBorrowable(program, index, loop, assigned) && !changes(program, changing, loop.Body) {
++				if loop, ok := list[position].(ir.ForOf); ok && loopBorrowable(program, index, loop, assigned) && auditValue("M12", !changes(program, changing, loop.Body), changes(program, changing, loop.Body)) {
+ 					borrows[&list[position]] = true
+-					program.Locals[loop.Local].Borrowed = true
+-					lending[loop.Iterable.(ir.Read).Local] = true
++					program.Locals[loop.Local].Borrowed = !auditMutant("M10")
++					lending[loop.Iterable.(ir.Read).Local] = !auditMutant("M11")
+ 				}
+ 				walkStatement(list[position], func(ir.Expression) {}, statements)
+ 			}
+@@ -93,7 +96,7 @@ func borrowable(program *ir.Program, function int, declare ir.Declare, assigned
+ 		return false
+ 	}
+ 	held := program.Locals[array.Local]
+-	return !held.Global && !held.Captured && !held.ExpressionAssigned && held.Function == function && !assigned[array.Local]
++	return !held.Global && auditValue("M14", !held.Captured, true) && !held.ExpressionAssigned && held.Function == function && !assigned[array.Local]
+ }
+ 
+ // assignedLocals is every variable an assignment in a function's body writes.
+@@ -167,7 +170,7 @@ func unchanging(program *ir.Program, changing map[int]bool, expression ir.Expres
+ 	case ir.Call:
+ 		for _, target := range program.CallTargets(expression) {
+ 			if changing[target] {
+-				return false
++				return auditMutant("M13")
+ 			}
+ 		}
+ 		return true
+diff --git a/internal/native/emit.go b/internal/native/emit.go
+index 8842056c..c0b0a456 100644
+--- a/internal/native/emit.go
++++ b/internal/native/emit.go
+@@ -20,6 +20,9 @@ import (
+ // retain and a release on every assignment for that simplicity; removing them where they cancel is
+ // the memory model's work, measured against this.
+ func C(program *ir.Program) string {
++	if auditMutant("P05") {
++		return ""
++	}
+ 	return cProgram(program, -1)
+ }
+ 
+diff --git a/internal/native/emit_statements.go b/internal/native/emit_statements.go
+index a9237c2b..fc8e384e 100644
+--- a/internal/native/emit_statements.go
++++ b/internal/native/emit_statements.go
+@@ -439,13 +439,13 @@ func (e *emitter) forOf(statement ir.ForOf) {
+ 		e.line("adamic_typed_array_iterator *%s = adamic_typed_array_iterate(%s);", held, iterable)
+ 	} else if overMap {
+ 		e.line("adamic_map_iterator *%s = adamic_map_iterate(%s);", held, iterable)
+-	} else if e.elementBorrows[e.at] {
++	} else if auditValue("M17", e.elementBorrows[e.at], !e.elementBorrows[e.at]) {
+ 		// The same proof lends both the element and the array. Neither owns a count here.
+ 		e.line("%s %s = %s;", cType(statement.Iterable.Type()), held, iterable)
+ 	} else {
+ 		e.line("%s %s = %s;", cType(statement.Iterable.Type()), held, e.kept(iterable))
+ 	}
+-	if !e.elementBorrows[e.at] {
++	if auditValue("M16", !e.elementBorrows[e.at], e.elementBorrows[e.at]) {
+ 		e.hold(held)
+ 	}
+ 	e.end()
+diff --git a/internal/native/library.go b/internal/native/library.go
+index 23e259b3..991ba330 100644
+--- a/internal/native/library.go
++++ b/internal/native/library.go
+@@ -106,7 +106,7 @@ func readRuntime(sources fs.FS, root string) ([]runtimeFile, error) {
+ 	}
+ 	var files []runtimeFile
+ 	for _, entry := range entries {
+-		if entry.IsDir() || (!strings.HasSuffix(entry.Name(), ".c") && !strings.HasSuffix(entry.Name(), ".h")) {
++		if entry.IsDir() || (!strings.HasSuffix(entry.Name(), ".c") && auditValue("M06", !strings.HasSuffix(entry.Name(), ".h"), !strings.HasSuffix(entry.Name(), ".hh"))) {
+ 			continue
+ 		}
+ 		contents, err := fs.ReadFile(sources, path.Join(root, entry.Name()))
+@@ -119,35 +119,54 @@ func readRuntime(sources fs.FS, root string) ([]runtimeFile, error) {
+ }
+ 
+ func runtimeKey(files []runtimeFile, flags []string, compiler string, version string) string {
++	if auditMutant("P01") {
++		return ""
++	}
+ 	hash := sha256.New()
+ 	// Length prefixes preserve flag boundaries, order and arbitrary source bytes.
+-	part := func(value string) { fmt.Fprintf(hash, "%d:", len(value)); hash.Write([]byte(value)) }
++	part := func(value string) {
++		if !auditMutant("M04") {
++			fmt.Fprintf(hash, "%d:", len(value))
++		}
++		hash.Write([]byte(value))
++	}
+ 	part("adamic-runtime-v1")
+ 	part(goruntime.GOOS)
+ 	part(goruntime.GOARCH)
+-	part(compiler)
+-	part(version)
++	if !auditMutant("M02") {
++		part(compiler)
++	}
++	if !auditMutant("M01") {
++		part(version)
++	}
+ 	fmt.Fprintf(hash, "%d:", len(flags))
+-	for _, flag := range flags {
+-		part(flag)
++	if !auditMutant("M03") {
++		for _, flag := range flags {
++			part(flag)
++		}
+ 	}
+ 	fmt.Fprintf(hash, "%d:", len(files))
+ 	for _, file := range files {
+ 		part(file.name)
+ 		fmt.Fprintf(hash, "%d:", len(file.contents))
+-		hash.Write(file.contents)
++		if !auditMutant("M05") {
++			hash.Write(file.contents)
++		}
+ 	}
+ 	return fmt.Sprintf("%x", hash.Sum(nil))
+ }
+ 
+ func cachedRuntime(files []runtimeFile, flags []string, compiler string, version string, cache string) (string, error) {
++	if auditMutant("P02") {
++		return "", nil
++	}
+ 	directory := filepath.Join(cache, runtimeKey(files, flags, compiler, version))
+ 	library := filepath.Join(directory, "runtime.a")
+ 	value, _ := runtimeBuilds.LoadOrStore(directory, &sync.Mutex{})
+ 	lock := value.(*sync.Mutex)
+ 	lock.Lock()
+ 	defer lock.Unlock()
+-	if info, err := os.Stat(library); err == nil && info.Mode().IsRegular() {
++	if info, err := os.Stat(library); err == nil && auditValue("M07", info.Mode().IsRegular(), !info.Mode().IsRegular()) {
+ 		return library, nil
+ 	}
+ 	if err := os.MkdirAll(cache, 0o755); err != nil {
+@@ -199,7 +218,7 @@ func cachedRuntime(files []runtimeFile, flags []string, compiler string, version
+ 	}
+ 	// Publish everything together. A competing process may already have published this key; its
+ 	// identical complete entry wins, while this process removes only its own temporary directory.
+-	if err := os.Rename(temporary, directory); err != nil {
++	if err := os.Rename(auditValue("M08", temporary, directory), auditValue("M08", directory, temporary)); err != nil {
+ 		if info, statErr := os.Stat(library); statErr != nil || !info.Mode().IsRegular() {
+ 			return "", fmt.Errorf("native: publishing runtime: %w", err)
+ 		}
+@@ -213,7 +232,7 @@ func RuntimeLinkFlags(library string) []string {
+ 	if goruntime.GOOS == "darwin" {
+ 		return []string{"-Xlinker", "-force_load", "-Xlinker", library}
+ 	}
+-	return []string{"-Xlinker", "--whole-archive", library, "-Xlinker", "--no-whole-archive"}
++	return []string{"-Xlinker", auditValue("M09", "--whole-archive", "--no-whole-archive"), library, "-Xlinker", "--no-whole-archive"}
+ }
+ 
+ func slicesContain(values []string, wanted string) bool {
+diff --git a/internal/native/native.go b/internal/native/native.go
+index fd266740..ff74d112 100644
+--- a/internal/native/native.go
++++ b/internal/native/native.go
+@@ -108,6 +108,9 @@ func Flags(options Options) []string {
+ 
+ // Build compiles C source and the runtime into a native binary at output.
+ func Build(source string, output string, options Options) error {
++	if auditMutant("P03") {
++		return nil
++	}
+ 	if err := ValidateOptions(options); err != nil {
+ 		return err
+ 	}
+diff --git a/internal/native/runtime/map_set.c b/internal/native/runtime/map_set.c
+index 299fa10e..39568e3f 100644
+--- a/internal/native/runtime/map_set.c
++++ b/internal/native/runtime/map_set.c
+@@ -1,6 +1,7 @@
+ // Packed number | undefined keys keep undefined separate from every present NaN.
+ #include "adamic.h"
+ #include <string.h>
++#include <stdlib.h>
+ 
+ bool adamic_map_maybe_key_equal(double left, double right) {
+ 	adamic_maybe_number a = adamic_maybe_number_unpack(left);
+@@ -20,13 +21,14 @@ uint64_t adamic_map_maybe_key_hash(double key) {
+ // ComputeUnseededHash and ComputeLongHash (src/utils/utils.h). Unsigned arithmetic
+ // wraps exactly as V8's does; check the signed range before converting a double.
+ uint64_t adamic_map_number_hash(double number) {
++ if (getenv("ADAMIC_MUTANT") != NULL && strcmp(getenv("ADAMIC_MUTANT"), "P08") == 0) { return 0; }
+ 	if (isnan(number)) {
+ 		return 0x3fffffffu;
+ 	}
+ 	if (number >= INT32_MIN && number <= INT32_MAX && trunc(number) == number) {
+ 		uint32_t hash = (uint32_t)(int32_t)number;
+ 		hash = ~hash + (hash << 15);
+-		hash ^= hash >> 12;
++		hash ^= hash >> (getenv("ADAMIC_MUTANT") != NULL && strcmp(getenv("ADAMIC_MUTANT"), "M20") == 0 ? 11 : 12);
+ 		hash += hash << 2;
+ 		hash ^= hash >> 4;
+ 		hash *= 2057;
+diff --git a/internal/native/runtime/string_build_impl.h b/internal/native/runtime/string_build_impl.h
+index da505b3c..29be3cec 100644
+--- a/internal/native/runtime/string_build_impl.h
++++ b/internal/native/runtime/string_build_impl.h
+@@ -28,7 +28,8 @@ adamic_string *adamic_string_from_number(double value) {
+ // V8's longest string, in UTF-16 units (String::kMaxLength on 64-bit): past it, every way of making
+ // a string throws RangeError: Invalid string length, and so Adamic panics there too.
+ void adamic_string_check_length(double units) {
+-	if (units > ADAMIC_STRING_MAX_UNITS) {
++ if (getenv("ADAMIC_MUTANT") != NULL && strcmp(getenv("ADAMIC_MUTANT"), "P07") == 0) { return; }
++	if ((getenv("ADAMIC_MUTANT") != NULL && strcmp(getenv("ADAMIC_MUTANT"), "M18") == 0 ? units >= ADAMIC_STRING_MAX_UNITS : getenv("ADAMIC_MUTANT") != NULL && strcmp(getenv("ADAMIC_MUTANT"), "M19") == 0 ? units > ADAMIC_STRING_MAX_UNITS + 1 : units > ADAMIC_STRING_MAX_UNITS)) {
+ 		static const char message[] = "RangeError: Invalid string length";
+ 		adamic_panic(message, sizeof message - 1);
+ 	}
+--- /dev/null
++++ b/internal/native/audit_selector.go
+@@ -0,0 +1,11 @@
++package native
++
++import "os"
++
++func auditMutant(id string) bool { return os.Getenv("ADAMIC_MUTANT") == id }
++func auditValue[T any](id string, normal, mutant T) T {
++	if auditMutant(id) {
++		return mutant
++	}
++	return normal
++}

@@ -1,0 +1,32 @@
+--- a/internal/native/runtime/map_set.c
++++ b/internal/native/runtime/map_set.c
+@@ -20,28 +20,7 @@
+ // ComputeUnseededHash and ComputeLongHash (src/utils/utils.h). Unsigned arithmetic
+ // wraps exactly as V8's does; check the signed range before converting a double.
+ uint64_t adamic_map_number_hash(double number) {
+-	if (isnan(number)) {
+-		return 0x3fffffffu;
+-	}
+-	if (number >= INT32_MIN && number <= INT32_MAX && trunc(number) == number) {
+-		uint32_t hash = (uint32_t)(int32_t)number;
+-		hash = ~hash + (hash << 15);
+-		hash ^= hash >> 12;
+-		hash += hash << 2;
+-		hash ^= hash >> 4;
+-		hash *= 2057;
+-		hash ^= hash >> 16;
+-		return hash & 0x3fffffffu;
+-	}
+-	uint64_t hash;
+-	memcpy(&hash, &number, sizeof hash);
+-	hash = ~hash + (hash << 18);
+-	hash ^= hash >> 31;
+-	hash *= 21;
+-	hash ^= hash >> 11;
+-	hash += hash << 6;
+-	hash ^= hash >> 22;
+-	return hash & 0x3fffffffu;
++	return 0;
+ }
+ 
+ static const char *const iterator_names[] = {"next"};

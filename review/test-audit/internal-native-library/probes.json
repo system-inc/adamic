@@ -1,0 +1,50 @@
+[
+  {
+    "id": "P01",
+    "file": "library.go",
+    "line": 121,
+    "return": "return \"\""
+  },
+  {
+    "id": "P02",
+    "file": "library.go",
+    "line": 143,
+    "return": "return \"\", nil"
+  },
+  {
+    "id": "P03",
+    "file": "native.go",
+    "line": 110,
+    "return": "return nil"
+  },
+  {
+    "id": "P04",
+    "file": "element_borrow.go",
+    "line": 24,
+    "return": "return nil, nil"
+  },
+  {
+    "id": "P05",
+    "file": "emit.go",
+    "line": 22,
+    "return": "return \"\""
+  },
+  {
+    "id": "P06",
+    "file": "borrow.go",
+    "line": 138,
+    "return": "return \"\", false"
+  },
+  {
+    "id": "P07",
+    "file": "runtime/string_build_impl.h",
+    "line": 30,
+    "return": "return;"
+  },
+  {
+    "id": "P08",
+    "file": "runtime/map_set.c",
+    "line": 22,
+    "return": "return 0;"
+  }
+]

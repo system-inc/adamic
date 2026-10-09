@@ -1,0 +1,22 @@
+{"Time":"2026-10-09T10:52:52.196708261Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T10:52:52.205742441Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestGlobalArgumentLending"}
+{"Time":"2026-10-09T10:52:52.205835198Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestGlobalArgumentLending","Output":"=== RUN   TestGlobalArgumentLending\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:52:52.205880325Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestGlobalArgumentLending","Output":"=== PAUSE TestGlobalArgumentLending\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:52:52.205882819Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestGlobalArgumentLending"}
+{"Time":"2026-10-09T10:52:52.205885382Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLoopCallCoverage"}
+{"Time":"2026-10-09T10:52:52.205887926Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLoopCallCoverage","Output":"=== RUN   TestLoopCallCoverage\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:52:52.20589051Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLoopCallCoverage","Output":"=== PAUSE TestLoopCallCoverage\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:52:52.205892533Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLoopCallCoverage"}
+{"Time":"2026-10-09T10:52:52.20589711Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestGlobalArgumentLending"}
+{"Time":"2026-10-09T10:52:52.205900014Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestGlobalArgumentLending","Output":"=== CONT  TestGlobalArgumentLending\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:52:52.205902167Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLoopCallCoverage"}
+{"Time":"2026-10-09T10:52:52.20590426Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLoopCallCoverage","Output":"=== CONT  TestLoopCallCoverage\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:52:52.255543287Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestGlobalArgumentLending","Output":"    loop_borrow_test.go:110: read virtual 0 argument 0 lent false, want true\n","OutputType":"error"}
+{"Time":"2026-10-09T10:52:52.25566695Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestGlobalArgumentLending","Output":"--- FAIL: TestGlobalArgumentLending (0.05s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:52:52.271583319Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/native","Test":"TestGlobalArgumentLending","Elapsed":0.05}
+{"Time":"2026-10-09T10:52:52.271650348Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLoopCallCoverage","Output":"    loop_borrow_test.go:212: reportQuiet should borrow the global; the body never writes it\n","OutputType":"error"}
+{"Time":"2026-10-09T10:52:52.291296322Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLoopCallCoverage","Output":"--- FAIL: TestLoopCallCoverage (0.09s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:52:52.291331224Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLoopCallCoverage","Elapsed":0.09}
+{"Time":"2026-10-09T10:52:52.291341049Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:52:52.294564096Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"FAIL\tgithub.com/system-inc/adamic/internal/native\t0.098s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:52:52.294584646Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/native","Elapsed":0.098}

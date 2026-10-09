@@ -1,0 +1,11 @@
+--- a/internal/native/library.go
++++ b/internal/native/library.go
+@@ -213,7 +213,7 @@
+ 	if goruntime.GOOS == "darwin" {
+ 		return []string{"-Xlinker", "-force_load", "-Xlinker", library}
+ 	}
+-	return []string{"-Xlinker", "--whole-archive", library, "-Xlinker", "--no-whole-archive"}
++	return []string{"-Xlinker", "--no-whole-archive", library, "-Xlinker", "--no-whole-archive"}
+ }
+ 
+ func slicesContain(values []string, wanted string) bool {

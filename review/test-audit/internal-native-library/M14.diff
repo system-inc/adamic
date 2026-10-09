@@ -1,0 +1,11 @@
+--- a/internal/native/element_borrow.go
++++ b/internal/native/element_borrow.go
+@@ -93,7 +93,7 @@
+ 		return false
+ 	}
+ 	held := program.Locals[array.Local]
+-	return !held.Global && !held.Captured && !held.ExpressionAssigned && held.Function == function && !assigned[array.Local]
++	return !held.Global &&  !held.ExpressionAssigned && held.Function == function && !assigned[array.Local]
+ }
+ 
+ // assignedLocals is every variable an assignment in a function's body writes.

@@ -1,0 +1,11 @@
+--- a/internal/native/element_borrow.go
++++ b/internal/native/element_borrow.go
+@@ -45,7 +45,7 @@
+ 				if loop, ok := list[position].(ir.ForOf); ok && loopBorrowable(program, index, loop, assigned) && !changes(program, changing, loop.Body) {
+ 					borrows[&list[position]] = true
+ 					program.Locals[loop.Local].Borrowed = true
+-					lending[loop.Iterable.(ir.Read).Local] = true
++					lending[loop.Iterable.(ir.Read).Local] = false
+ 				}
+ 				walkStatement(list[position], func(ir.Expression) {}, statements)
+ 			}

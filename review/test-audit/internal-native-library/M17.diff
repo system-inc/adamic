@@ -1,0 +1,11 @@
+--- a/internal/native/emit_statements.go
++++ b/internal/native/emit_statements.go
+@@ -439,7 +439,7 @@
+ 		e.line("adamic_typed_array_iterator *%s = adamic_typed_array_iterate(%s);", held, iterable)
+ 	} else if overMap {
+ 		e.line("adamic_map_iterator *%s = adamic_map_iterate(%s);", held, iterable)
+-	} else if e.elementBorrows[e.at] {
++	} else if !e.elementBorrows[e.at] {
+ 		// The same proof lends both the element and the array. Neither owns a count here.
+ 		e.line("%s %s = %s;", cType(statement.Iterable.Type()), held, iterable)
+ 	} else {

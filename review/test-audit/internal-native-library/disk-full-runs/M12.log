@@ -1,0 +1,6 @@
+{"ImportPath":"./internal/native","Action":"build-output","Output":"# ./internal/native\n"}
+{"ImportPath":"./internal/native","Action":"build-output","Output":"write /tmp/u048/runtimecache/M12/go-build/0b/0b3e0296ffefd0813722a1c94eb4ff5ce7d5fe089369cbdf411b46a05fc78577-d: no space left on device\n"}
+{"ImportPath":"./internal/native","Action":"build-fail"}
+{"Time":"2026-10-09T10:47:21.02731491Z","Action":"start","Package":"./internal/native"}
+{"Time":"2026-10-09T10:47:21.027528996Z","Action":"output","Package":"./internal/native","Output":"FAIL\t./internal/native [setup failed]\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:47:21.027549417Z","Action":"fail","Package":"./internal/native","Elapsed":0,"FailedBuild":"./internal/native"}

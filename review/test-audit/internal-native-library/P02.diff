@@ -1,0 +1,74 @@
+--- a/internal/native/library.go
++++ b/internal/native/library.go
+@@ -141,70 +141,7 @@
+ }
+ 
+ func cachedRuntime(files []runtimeFile, flags []string, compiler string, version string, cache string) (string, error) {
+-	directory := filepath.Join(cache, runtimeKey(files, flags, compiler, version))
+-	library := filepath.Join(directory, "runtime.a")
+-	value, _ := runtimeBuilds.LoadOrStore(directory, &sync.Mutex{})
+-	lock := value.(*sync.Mutex)
+-	lock.Lock()
+-	defer lock.Unlock()
+-	if info, err := os.Stat(library); err == nil && info.Mode().IsRegular() {
+-		return library, nil
+-	}
+-	if err := os.MkdirAll(cache, 0o755); err != nil {
+-		return "", fmt.Errorf("native: runtime cache: %w", err)
+-	}
+-	temporary, err := os.MkdirTemp(cache, ".build-")
+-	if err != nil {
+-		return "", fmt.Errorf("native: %w", err)
+-	}
+-	defer os.RemoveAll(temporary)
+-	for _, feature := range []string{"ADAMIC_CLOSURE_CONVENTION", "ADAMIC_CANONICAL_CLOSURES", "ADAMIC_CLOSURE_RECEIVERS", "ADAMIC_REGEXP_REPLACE_CALLBACK", "ADAMIC_NODE_HOST"} {
+-		if slicesContain(flags, "-D"+feature+"=1") {
+-			files = append([]runtimeFile(nil), files...)
+-			for i := range files {
+-				if files[i].name == "adamic.h" {
+-					files[i].contents = append([]byte("#define "+feature+" 1\n"), files[i].contents...)
+-				}
+-			}
+-		}
+-	}
+-
+-	// Headers live beside the archive, from the same snapshot that produced its objects.
+-	if err := os.Chmod(temporary, 0o755); err != nil {
+-		return "", err
+-	}
+-	for _, file := range files {
+-		if err := os.WriteFile(filepath.Join(temporary, file.name), file.contents, 0o644); err != nil {
+-			return "", err
+-		}
+-	}
+-	var objects []string
+-	for _, file := range files {
+-		if !strings.HasSuffix(file.name, ".c") {
+-			continue
+-		}
+-		object := filepath.Join(temporary, strings.TrimSuffix(file.name, ".c")+".o")
+-		arguments := append(append([]string{}, flags...), "-c", filepath.Join(temporary, file.name), "-o", object)
+-		if output, err := exec.Command(compiler, arguments...).CombinedOutput(); err != nil {
+-			return "", fmt.Errorf("native: compiling runtime %s: %w\n%s", file.name, err, output)
+-		}
+-		objects = append(objects, object)
+-	}
+-	if len(objects) == 0 {
+-		return "", fmt.Errorf("native: runtime has no C sources")
+-	}
+-	arguments := append([]string{"rcs", filepath.Join(temporary, "runtime.a")}, objects...)
+-	if output, err := exec.Command(archiverName(compiler), arguments...).CombinedOutput(); err != nil {
+-		return "", fmt.Errorf("native: archiving runtime: %w\n%s", err, output)
+-	}
+-	// Publish everything together. A competing process may already have published this key; its
+-	// identical complete entry wins, while this process removes only its own temporary directory.
+-	if err := os.Rename(temporary, directory); err != nil {
+-		if info, statErr := os.Stat(library); statErr != nil || !info.Mode().IsRegular() {
+-			return "", fmt.Errorf("native: publishing runtime: %w", err)
+-		}
+-	}
+-	return library, nil
++	return "", nil
+ }
+ 
+ // RuntimeLinkFlags retains every translation unit, as Build did when linking the object files

@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T10:56:24.487093549Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T10:56:24.496050947Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestStringLengthLimit"}
+{"Time":"2026-10-09T10:56:24.496147009Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestStringLengthLimit","Output":"=== RUN   TestStringLengthLimit\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:56:24.496884439Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestStringLengthLimit","Output":"=== PAUSE TestStringLengthLimit\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:56:24.496897899Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestStringLengthLimit"}
+{"Time":"2026-10-09T10:56:24.496904138Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestStringLengthLimit"}
+{"Time":"2026-10-09T10:56:24.496907132Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestStringLengthLimit","Output":"=== CONT  TestStringLengthLimit\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:56:31.442114019Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestStringLengthLimit","Output":"    limit_test.go:48: 536870888 units: exit 70, \"adamic: panic: RangeError: Invalid string length\\n\"; want exit 0, \"allowed\\n\"\n","OutputType":"error"}
+{"Time":"2026-10-09T10:56:31.449128353Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestStringLengthLimit","Output":"--- FAIL: TestStringLengthLimit (6.95s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:56:31.449177345Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/native","Test":"TestStringLengthLimit","Elapsed":6.95}
+{"Time":"2026-10-09T10:56:31.449199468Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:56:31.450669863Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"FAIL\tgithub.com/system-inc/adamic/internal/native\t6.963s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:56:31.450689732Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/native","Elapsed":6.964}
