@@ -81,7 +81,7 @@ the seven implementation fixtures. Counts are recorded in
 `internal/oracle/counts.md`. No emitter change was needed for this acceptance run.
 
 The acceptance follow-up is documented in
-`cloud/reports/assignment-proofs/acceptance.md`, including the emitted-C proof
+`review/assignment-proofs/acceptance.md`, including the emitted-C proof
 inspection and the existing RHS/dereference checks that remain.
 
 ## Rebuilt on main
