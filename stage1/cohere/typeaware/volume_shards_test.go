@@ -2,6 +2,8 @@ package typeaware
 
 import (
 	"bytes"
+	"crypto/sha256"
+	"encoding/binary"
 	"fmt"
 	"github.com/system-inc/adamic/internal/buildcache"
 	"os"
@@ -13,6 +15,21 @@ import (
 	"testing"
 	"time"
 )
+
+// Repository manifests are live. Reserve fixed buckets with growth headroom.
+const testVolumeRepositoryShards = 128
+
+func volumeRepositoryBucket(repository, path string) (int, error) {
+	key, err := filepath.Rel(repository, path)
+	if err != nil {
+		return 0, err
+	}
+	if key == ".." || strings.HasPrefix(key, ".."+string(filepath.Separator)) {
+		return 0, fmt.Errorf("repository case outside repository: %s", path)
+	}
+	sum := sha256.Sum256([]byte(filepath.ToSlash(key) + ":volume"))
+	return int(binary.BigEndian.Uint64(sum[:8]) % testVolumeRepositoryShards), nil
+}
 
 type volumeShard struct {
 	ids []string
@@ -113,7 +130,9 @@ func volumeManifest(t *testing.T, config, manifest string) []string {
 	return paths
 }
 
-// Files above 128 KiB get a unit of their own; other files use four-file units.
+// The live repository corpus uses fixed hash buckets keyed by repository-relative
+// path and volume mode. Compiler ranges are fixed by compilerCommit (77 files).
+// In pinned ranges, files above 128 KiB stand alone; other files use four-file units.
 // Each unit compares the independent Go oracle to BOTH native products, including
 // sanitizer/leak stderr checks. Config declarations and imported dependencies
 // remain available to each program through the unchanged compiler loader.
@@ -128,25 +147,49 @@ func volumeCorpusShards(t *testing.T, prefix string, paths []string, config, ora
 			small = nil
 		}
 	}
-	for _, path := range paths {
-		info, err := os.Stat(path)
+	if prefix == "repository" {
+		if len(paths) == 0 {
+			t.Fatal("repository corpus is empty")
+		}
+		repository, err := filepath.Abs("../../..")
 		if err != nil {
 			t.Fatal(err)
 		}
-		if info.Size() > 128*1024 {
-			flush()
-			groups = append(groups, []string{path})
-		} else {
-			small = append(small, path)
-			if len(small) == 4 {
+		groups = make([][]string, testVolumeRepositoryShards)
+		for _, path := range paths {
+			bucket, err := volumeRepositoryBucket(repository, path)
+			if err != nil {
+				t.Fatal(err)
+			}
+			groups[bucket] = append(groups[bucket], path)
+		}
+	} else {
+		if prefix == "compiler" && len(paths) != 77 {
+			t.Fatalf("compiler pin %s: got %d files, want 77", compilerCommit, len(paths))
+		}
+		for _, path := range paths {
+			info, err := os.Stat(path)
+			if err != nil {
+				t.Fatal(err)
+			}
+			if info.Size() > 128*1024 {
 				flush()
+				groups = append(groups, []string{path})
+			} else {
+				small = append(small, path)
+				if len(small) == 4 {
+					flush()
+				}
 			}
 		}
+		flush()
 	}
-	flush()
 	shards := make([]volumeShard, 0, len(groups))
 	for _, group := range groups {
 		shards = append(shards, volumeShard{ids: volumeIDs(prefix, group), run: func(h *harness) {
+			if len(group) == 0 {
+				return
+			}
 			manifest := h.write("cases.manifest", strings.Join(group, "\n")+"\n")
 			volumeCompareProducts(h, dataInputs, prefix, oracle, binary, asan, config, manifest)
 		}})
@@ -260,4 +303,26 @@ func TestVolumeShardPlantedDisagreement(t *testing.T) {
 		t.Fatalf("wrong failing shards %v:\n%s", failed, output)
 	}
 	t.Log("planted case-004 caught exactly by shard-001")
+}
+
+// Adding a file or relocating the checkout must not reassign existing cases.
+func TestVolumeRepositoryShardStability(t *testing.T) {
+	original := []string{"a.ts", "sub/b.ts", "z.ts"}
+	assignments := map[string]int{}
+	for _, key := range original {
+		bucket, err := volumeRepositoryBucket("/old/repository", filepath.Join("/old/repository", key))
+		if err != nil {
+			t.Fatal(err)
+		}
+		assignments[key] = bucket
+	}
+	for _, key := range append([]string{"new.ts"}, original...) {
+		bucket, err := volumeRepositoryBucket("/new/repository", filepath.Join("/new/repository", key))
+		if err != nil {
+			t.Fatal(err)
+		}
+		if before, exists := assignments[key]; exists && before != bucket {
+			t.Fatalf("%s moved from %d to %d", key, before, bucket)
+		}
+	}
 }
