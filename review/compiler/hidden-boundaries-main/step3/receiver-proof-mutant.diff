@@ -1,0 +1,11 @@
+--- internal/lower/method_destructuring.go
++++ internal/lower/method_destructuring.go
+@@ -34,6 +34,8 @@
+ // erasedMethodField guard still rejects any compatible literal with a receiver or class prototype.
+ // A signature alone never proves the body independent.
+ func (l *lowering) destructurableMethod(member *ast.Symbol) bool {
++ return true
++
+ 	found := false
+ 	for _, root := range l.checker.GetRootSymbols(member) {
+ 		for _, declaration := range root.Declarations {

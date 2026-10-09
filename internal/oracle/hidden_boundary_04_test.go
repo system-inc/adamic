@@ -20,15 +20,12 @@ func init() {
 		path            string
 		lowers, checked bool
 	}{"internal/oracle/testdata/hidden_boundary_generic_optional_array.a", true, false})
-	for _, path := range []string{"internal/oracle/testdata/hidden_boundary_optional_array_mutation_refused.a", "internal/oracle/testdata/hidden_boundary_alias_cast_refused.a"} {
-		fixtures = append(fixtures, struct {
-			path            string
-			lowers, checked bool
-		}{path, false, false})
-	}
+	// Refused controls are owned by their explicit tests below; the generic registry expects NotYet for non-lowering fixtures.
+
 }
 
 func TestHiddenBoundary04EvaluationOrder(t *testing.T) {
+	t.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/hidden_boundary_optional_array_order.a"))
 	if err != nil {
 		t.Fatal(err)
@@ -53,6 +50,7 @@ func TestHiddenBoundary04EvaluationOrder(t *testing.T) {
 }
 
 func TestHiddenBoundary04Node(t *testing.T) {
+	t.Parallel()
 	path, pathErr := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/hidden_boundary_generic_optional_array.a"))
 	if pathErr != nil {
 		t.Fatal(pathErr)
@@ -78,6 +76,7 @@ func TestHiddenBoundary04Node(t *testing.T) {
 }
 
 func TestHiddenBoundary04PresentArrayMutant(t *testing.T) {
+	t.Parallel()
 	path, pathErr := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/hidden_boundary_generic_optional_array.a"))
 	if pathErr != nil {
 		t.Fatal(pathErr)
@@ -110,6 +109,7 @@ func TestHiddenBoundary04PresentArrayMutant(t *testing.T) {
 }
 
 func TestHiddenBoundary04EagerIndexMutant(t *testing.T) {
+	t.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/hidden_boundary_optional_array_order.a"))
 	if err != nil {
 		t.Fatal(err)
@@ -154,12 +154,16 @@ func TestHiddenBoundary04EagerIndexMutant(t *testing.T) {
 	}
 }
 
-func TestHiddenBoundary04UnsafeCasesRefused(t *testing.T) {
+func hiddenBoundary04UnsafeCase(t *testing.T, selected string) {
+	t.Helper()
 	for _, probe := range []struct{ file, reason, node string }{
 		{"hidden_boundary_optional_array_mutation_refused.a", "instantiating a generic function", "text|7\n"},
 		{"hidden_boundary_alias_cast_refused.a", "a cast the runtime can't check", "3\n"},
 	} {
-		t.Run(probe.file, func(t *testing.T) {
+		if probe.file != selected {
+			continue
+		}
+		func() {
 			path, pathErr := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", probe.file))
 			if pathErr != nil {
 				t.Fatal(pathErr)
@@ -174,6 +178,15 @@ func TestHiddenBoundary04UnsafeCasesRefused(t *testing.T) {
 				t.Fatalf("unsafe acceptance or wrong stop: %v", err)
 			}
 			t.Logf("Node stdout=%q; compiler refusal: %v", truth.stdout, err)
-		})
+		}()
 	}
+}
+
+func TestHiddenBoundary04MutationRefused(t *testing.T) {
+	t.Parallel()
+	hiddenBoundary04UnsafeCase(t, "hidden_boundary_optional_array_mutation_refused.a")
+}
+func TestHiddenBoundary04AliasCastRefused(t *testing.T) {
+	t.Parallel()
+	hiddenBoundary04UnsafeCase(t, "hidden_boundary_alias_cast_refused.a")
 }

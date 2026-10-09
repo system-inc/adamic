@@ -237,7 +237,7 @@ When the recorded caller differs from the diagnostic's declaration, add
 header position. It changes only the selected attempt: the diagnostic's location,
 kind and reason still have to match an actual lowering finding exactly. A sibling,
 wrong reason or position merely inside the caller cannot count as reproduction.
-`stage3/hidden-04/replay_check.py WORKER NEW_OUTPUT_DIRECTORY` checks these cases;
+`review/compiler/hidden-boundaries-main/step3/historical-optional-array/replay_check.py WORKER NEW_OUTPUT_DIRECTORY` checks these cases;
 the existing sibling-selection mutant must fail its positive caller assertion.
 
 For a hash-pinned hidden interval, the guarded worker also accepts
@@ -249,5 +249,5 @@ diagnostic reproduction. Use the stock AST to verify the overlapping-unit roster
 apply the existing hidden-census arithmetic and clip its result to the interval.
 Totals outside that interval, and whole-file or whole-corpus totals, are invalid
 for this partial ledger. The ordinary full census and diagnostic replay modes are
-unchanged. [Hidden 04 evidence](../../hidden-04/REPORT.md) verifies this clipping
+unchanged. [Historical hidden 04 evidence](../../../review/compiler/hidden-boundaries-main/step3/historical-optional-array/REPORT.md) verifies this clipping
 against the original full-census result before comparing the current compiler.
