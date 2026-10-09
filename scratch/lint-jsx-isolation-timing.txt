@@ -1,0 +1,958 @@
+Task #8ezaf5t part 2 checkpoint — 2026-10-09
+Candidate: 4f1aa63b
+Instance CPU quota: /sys/fs/cgroup/cpu.max = 400000 100000 (4 CPUs).
+Go compilation warmed with go test -run ^$ before measurements.
+Cold lint key: local comment appended to internal/buildcache/buildcache.go, then reverted.
+Each lint TestProduct_ unit selected separately with -timeout 10m -count=1.
+Initial setup missing ADAMIC_TYPESCRIPT_SOURCE corrected to /workspace/scratch/typescript-6.0.3 (v6.0.3); remaining products rerun individually.
+Isolation command: go test ./stage1/cohere/lint -run ^TestJsxLintTreesSetupIsolation$ -timeout 90s -test.skip ^TestProduct_ -count=1 -v
+After: PASS; test time 20.70 s; process wall 22.490912239 s.
+Before (unchanged base-main test, products prebuilt): PASS; test time 45.90 s; process wall 48.088864971 s.
+Baseline did NOT reproduce a timeout or exceed 60 s; that proof remains outstanding.
+Negative control: local ADAMIC_JSX_SHARD_CHILD=1 selects existing child shard path that skips real JSX preparation. Child passes, isolation fails missing build jsx-parser. Test time 2.13 s; process wall 4.076594560 s. Plant reverted.
+Checks: gofmt clean; go vet ./stage1/cohere/lint clean; committed-file lane check passed (1 Go file, 1 test package).
+Product process-wall observations (includes go test startup):
+JSX membership 5.137 s; parser 5.808 s; tree lowering 7.680 s; tree native 13.216 s; tree setup 21.614 s.
+Other cold products exceeded the 60 s budget: compiler release native wall 80.652 s (lowering record 63.95 s); node-table capture wall 73.922 s (build 72.09 s); shards-agree lowering wall 66.286 s (build 64.09 s). These are outside this worker's allowed files.
+
+Raw logs follow.
+
+===== lint-jsx-products.log =====
+=== RUN   TestProduct_CompilerAgreementGoOracle
+=== PAUSE TestProduct_CompilerAgreementGoOracle
+=== CONT  TestProduct_CompilerAgreementGoOracle
+    compiler_stage1_split_test.go:182: build compiler-agreement-go-oracle 88f866ea8679 miss 54.63
+    compiler_stage1_split_test.go:287: TestProduct_CompilerAgreementGoOracle: 55.224s cooked=false
+--- PASS: TestProduct_CompilerAgreementGoOracle (55.22s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	55.260s
+=== RUN   TestProduct_CompilerAgreementReleaseNative
+=== PAUSE TestProduct_CompilerAgreementReleaseNative
+=== CONT  TestProduct_CompilerAgreementReleaseNative
+    compiler_stage1_split_test.go:182: build compiler-agreement-lowered a8d9f145db80 miss 63.95
+    compiler_stage1_split_test.go:182: build compiler-agreement-native-false 218803ebf53e miss 77.43
+    compiler_stage1_split_test.go:301: TestProduct_CompilerAgreementReleaseNative: 77.654s cooked=true
+--- PASS: TestProduct_CompilerAgreementReleaseNative (77.65s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	77.689s
+=== RUN   TestProduct_CompilerAgreementSanitizedNative
+=== PAUSE TestProduct_CompilerAgreementSanitizedNative
+=== CONT  TestProduct_CompilerAgreementSanitizedNative
+    compiler_stage1_split_test.go:182: build compiler-agreement-lowered a8d9f145db80 hit 0.52
+    compiler_stage1_split_test.go:182: build compiler-agreement-native-true 09940e31cf8d miss 39.34
+    compiler_stage1_split_test.go:296: TestProduct_CompilerAgreementSanitizedNative: 39.597s cooked=false
+--- PASS: TestProduct_CompilerAgreementSanitizedNative (39.60s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	39.627s
+=== RUN   TestProduct_CompleteSuggestionGoOracle
+=== PAUSE TestProduct_CompleteSuggestionGoOracle
+=== CONT  TestProduct_CompleteSuggestionGoOracle
+    complete_suggestion_products_test.go:12: build complete-suggestion-go-oracle fc899192bfe3 miss 7.90
+    complete_suggestion_products_test.go:11: TestProduct_CompleteSuggestionGoOracle: 7.955s
+--- PASS: TestProduct_CompleteSuggestionGoOracle (7.96s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	7.986s
+=== RUN   TestProduct_CompleteSuggestionLowered
+=== PAUSE TestProduct_CompleteSuggestionLowered
+=== CONT  TestProduct_CompleteSuggestionLowered
+    complete_suggestion_products_test.go:19: build complete-suggestion-lowered-false fa78b9c53ddf miss 11.37
+    complete_suggestion_products_test.go:18: TestProduct_CompleteSuggestionLowered: 11.445s
+--- PASS: TestProduct_CompleteSuggestionLowered (11.45s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	11.475s
+=== RUN   TestProduct_CompleteSuggestionMutantLowered
+=== PAUSE TestProduct_CompleteSuggestionMutantLowered
+=== CONT  TestProduct_CompleteSuggestionMutantLowered
+    complete_suggestion_products_test.go:26: build complete-suggestion-lowered-true 976b106d48be miss 12.22
+    complete_suggestion_products_test.go:25: TestProduct_CompleteSuggestionMutantLowered: 12.286s
+--- PASS: TestProduct_CompleteSuggestionMutantLowered (12.29s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	12.317s
+=== RUN   TestProduct_CompleteSuggestionNative
+=== PAUSE TestProduct_CompleteSuggestionNative
+=== CONT  TestProduct_CompleteSuggestionNative
+    complete_suggestion_serialization_shards_test.go:195: build complete-suggestion-lowered-false fa78b9c53ddf hit 1.10
+    complete_suggestion_products_test.go:33: build complete-suggestion-native 8aeb63811938 miss 14.55
+    complete_suggestion_products_test.go:32: TestProduct_CompleteSuggestionNative: 14.616s
+--- PASS: TestProduct_CompleteSuggestionNative (14.62s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	14.647s
+=== RUN   TestProduct_DecodedOptionsGoOracle
+=== PAUSE TestProduct_DecodedOptionsGoOracle
+=== CONT  TestProduct_DecodedOptionsGoOracle
+    bv61ffb_decoded_options_test.go:236: build lint-decoded-options-lowered-setup-v2 4b309bd119e7 miss 11.20
+    bv61ffb_decoded_options_test.go:236: build lint-decoded-options-lowered-setup-v2-ignored-allowemptycatch 52fa48aa95f1 miss 11.18
+    bv61ffb_decoded_options_test.go:236: build lint-decoded-options-native-setup-v2 2a39dd097b60 miss 8.32
+    bv61ffb_decoded_options_test.go:236: build lint-decoded-options-go-oracle-setup-v2 c4ec57fccac2 miss 5.58
+    bv61ffb_decoded_options_test.go:236: decoded-options shared preparation: 36.350032384s; own-work deadline starts afterward
+    lint_setup_clock_products_test.go:138: product wall=36.350117765s
+--- PASS: TestProduct_DecodedOptionsGoOracle (36.35s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	36.388s
+=== RUN   TestProduct_DecodedOptionsLowered
+=== PAUSE TestProduct_DecodedOptionsLowered
+=== CONT  TestProduct_DecodedOptionsLowered
+    lint_setup_clock_products_test.go:116: build lint-decoded-options-lowered-setup-v2 4b309bd119e7 hit 0.93
+    lint_setup_clock_products_test.go:117: product wall=971.362536ms
+--- PASS: TestProduct_DecodedOptionsLowered (0.97s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	1.002s
+=== RUN   TestProduct_DecodedOptionsMutantLowered
+=== PAUSE TestProduct_DecodedOptionsMutantLowered
+=== CONT  TestProduct_DecodedOptionsMutantLowered
+    lint_setup_clock_products_test.go:123: build lint-decoded-options-lowered-setup-v2-ignored-allowemptycatch 52fa48aa95f1 hit 0.85
+    lint_setup_clock_products_test.go:124: product wall=880.621087ms
+--- PASS: TestProduct_DecodedOptionsMutantLowered (0.88s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	0.906s
+=== RUN   TestProduct_DecodedOptionsNative
+=== PAUSE TestProduct_DecodedOptionsNative
+=== CONT  TestProduct_DecodedOptionsNative
+    bv61ffb_decoded_options_test.go:236: build lint-decoded-options-lowered-setup-v2 4b309bd119e7 hit 0.86
+    bv61ffb_decoded_options_test.go:236: build lint-decoded-options-lowered-setup-v2-ignored-allowemptycatch 52fa48aa95f1 hit 0.85
+    bv61ffb_decoded_options_test.go:236: build lint-decoded-options-native-setup-v2 2a39dd097b60 hit 0.84
+    bv61ffb_decoded_options_test.go:236: build lint-decoded-options-go-oracle-setup-v2 c4ec57fccac2 hit 0.98
+    bv61ffb_decoded_options_test.go:236: decoded-options shared preparation: 3.598881333s; own-work deadline starts afterward
+    lint_setup_clock_products_test.go:131: product wall=3.598945408s
+--- PASS: TestProduct_DecodedOptionsNative (3.60s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	3.627s
+=== RUN   TestProduct_DotARenameOracle
+=== PAUSE TestProduct_DotARenameOracle
+=== CONT  TestProduct_DotARenameOracle
+    grain_dot_a_rename_test.go:70: build dot-a-rename-oracle db31cdd23658 miss 2.49
+    grain_dot_a_rename_test.go:159: TestProduct_DotARenameOracle: 2.538s
+--- PASS: TestProduct_DotARenameOracle (2.54s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	2.565s
+=== RUN   TestProduct_DotARenameSource
+=== PAUSE TestProduct_DotARenameSource
+=== CONT  TestProduct_DotARenameSource
+    grain_dot_a_rename_test.go:70: build dot-a-rename-renamed-source 44c23e3539ce miss 0.20
+    grain_dot_a_rename_test.go:152: TestProduct_DotARenameSource: 0.245s
+--- PASS: TestProduct_DotARenameSource (0.25s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	0.275s
+=== RUN   TestProduct_EmittedMismatchOracle
+=== PAUSE TestProduct_EmittedMismatchOracle
+=== CONT  TestProduct_EmittedMismatchOracle
+    emitted_javascript_shards_test.go:246: build emitted-mismatch-oracle 6f0fa7d9769f miss 2.75
+--- PASS: TestProduct_EmittedMismatchOracle (2.76s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	2.788s
+=== RUN   TestProduct_FactoryHooksLowered
+=== PAUSE TestProduct_FactoryHooksLowered
+=== CONT  TestProduct_FactoryHooksLowered
+    factory_hooks_shards_test.go:246: TestFactoryHooks (setup): 0.101s
+    factory_hooks_shards_test.go:257: build factory-hooks-lowered-0 dadf77c350c3 miss 11.49
+--- PASS: TestProduct_FactoryHooksLowered (11.59s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	11.623s
+=== RUN   TestProduct_FactoryHooksMutantLowered
+=== PAUSE TestProduct_FactoryHooksMutantLowered
+=== CONT  TestProduct_FactoryHooksMutantLowered
+    factory_hooks_shards_test.go:246: TestFactoryHooks (setup): 0.100s
+    factory_hooks_shards_test.go:257: build factory-hooks-lowered-1 93e4f483e298 miss 11.50
+--- PASS: TestProduct_FactoryHooksMutantLowered (11.60s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	11.626s
+=== RUN   TestProduct_FactoryHooksNative
+=== PAUSE TestProduct_FactoryHooksNative
+=== CONT  TestProduct_FactoryHooksNative
+    factory_hooks_shards_test.go:246: TestFactoryHooks (setup): 0.093s
+    factory_hooks_shards_test.go:257: build factory-hooks-lowered-0 dadf77c350c3 hit 1.27
+    factory_hooks_shards_test.go:293: build factory-hooks-native c5ed6592d76c miss 13.47
+--- PASS: TestProduct_FactoryHooksNative (14.85s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	14.873s
+=== RUN   TestProduct_NodeTableCapture
+=== PAUSE TestProduct_NodeTableCapture
+=== CONT  TestProduct_NodeTableCapture
+    node_table_oracle_floor_test.go:582: build lint-node-table-capture d836d047aa51 miss 72.09
+--- PASS: TestProduct_NodeTableCapture (72.09s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	72.120s
+=== RUN   TestProduct_NodeTableEmitted
+=== PAUSE TestProduct_NodeTableEmitted
+=== CONT  TestProduct_NodeTableEmitted
+    node_table_oracle_floor_test.go:86: build lint-node-table-lowered-ir 0cd704de5e5b miss 4.58
+    node_table_oracle_floor_test.go:116: build lint-node-table-emitted-c-serial-v2 bd420eb4aa33 miss 55.56
+--- PASS: TestProduct_NodeTableEmitted (60.17s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	60.201s
+=== RUN   TestProduct_NodeTableLowered
+=== PAUSE TestProduct_NodeTableLowered
+=== CONT  TestProduct_NodeTableLowered
+    node_table_oracle_floor_test.go:86: build lint-node-table-lowered-ir 0cd704de5e5b hit 0.15
+--- PASS: TestProduct_NodeTableLowered (0.16s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	0.202s
+=== RUN   TestProduct_NodeTableNative
+=== PAUSE TestProduct_NodeTableNative
+=== CONT  TestProduct_NodeTableNative
+    node_table_oracle_floor_test.go:86: build lint-node-table-lowered-ir 0cd704de5e5b hit 0.13
+    node_table_oracle_floor_test.go:116: build lint-node-table-emitted-c-serial-v2 bd420eb4aa33 hit 0.12
+    node_table_oracle_floor_test.go:143: build lint-node-table-native 3bee37daf15c miss 5.42
+--- PASS: TestProduct_NodeTableNative (5.76s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	5.796s
+=== RUN   TestProduct_NodeTableOracle
+=== PAUSE TestProduct_NodeTableOracle
+=== CONT  TestProduct_NodeTableOracle
+    node_table_oracle_floor_test.go:578: build lint-node-table-oracle d1679591d151 miss 3.28
+--- PASS: TestProduct_NodeTableOracle (3.30s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	3.326s
+=== RUN   TestProduct_ProfileCompilationC
+=== PAUSE TestProduct_ProfileCompilationC
+=== CONT  TestProduct_ProfileCompilationC
+    profile_compilation_main_test.go:303: build lint-profile-lowered 6f597cf5f805 miss 4.50
+    profile_compilation_main_test.go:329: build lint-profile-emit-c a59a2b401f1c miss 54.64
+    lint_setup_clock_products_test.go:54: product wall=59.345959769s
+--- PASS: TestProduct_ProfileCompilationC (59.35s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	59.384s
+=== RUN   TestProduct_ProfileCompilationCounted
+=== PAUSE TestProduct_ProfileCompilationCounted
+=== CONT  TestProduct_ProfileCompilationCounted
+    profile_compilation_main_test.go:303: build lint-profile-lowered 6f597cf5f805 hit 0.04
+    profile_compilation_main_test.go:329: build lint-profile-emit-c a59a2b401f1c hit 0.03
+    profile_compilation_main_test.go:303: build lint-profile-lowered 6f597cf5f805 hit 0.04
+    profile_compilation_main_test.go:329: build lint-profile-emit-javascript c324e25eca1e miss 0.12
+    profile_compilation_main_test.go:201: build lint-profile-counted 4d29f0200394 miss 11.93
+    lint_setup_clock_products_test.go:75: product wall=12.324411352s
+--- PASS: TestProduct_ProfileCompilationCounted (12.32s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	12.354s
+=== RUN   TestProduct_ProfileCompilationJavaScript
+=== PAUSE TestProduct_ProfileCompilationJavaScript
+=== CONT  TestProduct_ProfileCompilationJavaScript
+    profile_compilation_main_test.go:303: build lint-profile-lowered 6f597cf5f805 hit 0.04
+    profile_compilation_main_test.go:329: build lint-profile-emit-javascript c324e25eca1e hit 0.03
+    lint_setup_clock_products_test.go:61: product wall=210.755392ms
+--- PASS: TestProduct_ProfileCompilationJavaScript (0.21s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	0.239s
+=== RUN   TestProduct_ProfileCompilationLowered
+=== PAUSE TestProduct_ProfileCompilationLowered
+=== CONT  TestProduct_ProfileCompilationLowered
+    profile_compilation_main_test.go:303: build lint-profile-lowered 6f597cf5f805 hit 0.04
+    lint_setup_clock_products_test.go:47: product wall=187.103324ms
+--- PASS: TestProduct_ProfileCompilationLowered (0.19s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	0.218s
+=== RUN   TestProduct_ProfileCompilationOracle
+=== PAUSE TestProduct_ProfileCompilationOracle
+=== CONT  TestProduct_ProfileCompilationOracle
+    lint_setup_clock_products_test.go:144: build shards-agree-profile-oracle 92b9454c9445 miss 4.60
+    lint_setup_clock_products_test.go:145: product wall=4.622419994s
+--- PASS: TestProduct_ProfileCompilationOracle (4.62s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	4.651s
+=== RUN   TestProduct_ProfileCompilationOracleOutputs
+=== PAUSE TestProduct_ProfileCompilationOracleOutputs
+=== CONT  TestProduct_ProfileCompilationOracleOutputs
+    profile_compilation_main_test.go:303: build lint-profile-lowered 6f597cf5f805 hit 0.04
+    profile_compilation_main_test.go:329: build lint-profile-emit-c a59a2b401f1c hit 0.03
+    profile_compilation_main_test.go:303: build lint-profile-lowered 6f597cf5f805 hit 0.04
+    profile_compilation_main_test.go:329: build lint-profile-emit-javascript c324e25eca1e hit 0.03
+    profile_compilation_main_test.go:201: build lint-profile-counted 4d29f0200394 hit 0.07
+    profile_compilation_main_test.go:201: build lint-profile-scanner 258835ad696f miss 13.55
+    profile_compilation_main_test.go:201: build lint-profile-profiled 033a73bd2413 miss 22.27
+    lint_setup_clock_products_test.go:88: build shards-agree-profile-oracle 92b9454c9445 hit 1.19
+    lint_setup_clock_products_test.go:88: build lint-profile-oracle-outputs 47dceea49810 miss 0.03
+    lint_setup_clock_products_test.go:89: product wall=23.925126892s
+--- PASS: TestProduct_ProfileCompilationOracleOutputs (23.93s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	23.956s
+=== RUN   TestProduct_ProfileCompilationProfiled
+=== PAUSE TestProduct_ProfileCompilationProfiled
+=== CONT  TestProduct_ProfileCompilationProfiled
+    profile_compilation_main_test.go:303: build lint-profile-lowered 6f597cf5f805 hit 0.04
+    profile_compilation_main_test.go:329: build lint-profile-emit-c a59a2b401f1c hit 0.03
+    profile_compilation_main_test.go:303: build lint-profile-lowered 6f597cf5f805 hit 0.04
+    profile_compilation_main_test.go:329: build lint-profile-emit-javascript c324e25eca1e hit 0.03
+    profile_compilation_main_test.go:201: build lint-profile-profiled 033a73bd2413 hit 0.03
+    lint_setup_clock_products_test.go:82: product wall=339.158121ms
+--- PASS: TestProduct_ProfileCompilationProfiled (0.34s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	0.368s
+=== RUN   TestProduct_ProfileCompilationScanner
+=== PAUSE TestProduct_ProfileCompilationScanner
+=== CONT  TestProduct_ProfileCompilationScanner
+    profile_compilation_main_test.go:303: build lint-profile-lowered 6f597cf5f805 hit 0.04
+    profile_compilation_main_test.go:329: build lint-profile-emit-c a59a2b401f1c hit 0.03
+    profile_compilation_main_test.go:303: build lint-profile-lowered 6f597cf5f805 hit 0.04
+    profile_compilation_main_test.go:329: build lint-profile-emit-javascript c324e25eca1e hit 0.03
+    profile_compilation_main_test.go:201: build lint-profile-scanner 258835ad696f hit 0.03
+    lint_setup_clock_products_test.go:68: product wall=333.68448ms
+--- PASS: TestProduct_ProfileCompilationScanner (0.33s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	0.361s
+=== RUN   TestProduct_RulesAgreeOracle
+=== PAUSE TestProduct_RulesAgreeOracle
+=== CONT  TestProduct_RulesAgreeOracle
+    grain_rules_agree_shards_test.go:228: build lint-rules-agree-go-oracle 432ec67a86f1 miss 2.53
+    grain_rules_agree_products_test.go:15: TestProduct_RulesAgreeOracle: 2.549s
+--- PASS: TestProduct_RulesAgreeOracle (2.55s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	2.577s
+=== RUN   TestProduct_ShardsAgreeCapture
+=== PAUSE TestProduct_ShardsAgreeCapture
+=== CONT  TestProduct_ShardsAgreeCapture
+    shards_agree_split_test.go:129: build shards-agree-capture 2410cb57b94c miss 18.11
+    lint_setup_clock_products_test.go:33: product wall=18.129593621s
+--- PASS: TestProduct_ShardsAgreeCapture (18.13s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	18.158s
+=== RUN   TestProduct_ShardsAgreeLowered
+=== PAUSE TestProduct_ShardsAgreeLowered
+=== CONT  TestProduct_ShardsAgreeLowered
+    shards_agree_split_test.go:154: build shards-agree-lowered 3ad1058bef46 miss 64.09
+    lint_setup_clock_products_test.go:12: product wall=1m4.150891911s
+--- PASS: TestProduct_ShardsAgreeLowered (64.15s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	64.188s
+=== RUN   TestProduct_ShardsAgreeNative
+=== PAUSE TestProduct_ShardsAgreeNative
+=== CONT  TestProduct_ShardsAgreeNative
+    shards_agree_split_test.go:154: build shards-agree-lowered 3ad1058bef46 hit 2.19
+    shards_agree_split_test.go:171: build shards-agree-native 06fb5e279bbb miss 9.49
+    lint_setup_clock_products_test.go:19: product wall=11.706991373s
+--- PASS: TestProduct_ShardsAgreeNative (11.71s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	11.743s
+=== RUN   TestProduct_ShardsAgreeOracle
+=== PAUSE TestProduct_ShardsAgreeOracle
+=== CONT  TestProduct_ShardsAgreeOracle
+    shards_agree_split_test.go:125: build shards-agree-oracle b8a9fce0b035 miss 4.21
+    lint_setup_clock_products_test.go:26: product wall=4.225830881s
+--- PASS: TestProduct_ShardsAgreeOracle (4.23s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	4.254s
+=== RUN   TestProduct_ShardsAgreePrepared
+=== PAUSE TestProduct_ShardsAgreePrepared
+=== CONT  TestProduct_ShardsAgreePrepared
+    shards_agree_split_test.go:339: set ADAMIC_TYPESCRIPT_SOURCE to pinned TypeScript checkout
+--- FAIL: TestProduct_ShardsAgreePrepared (0.02s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	0.060s
+FAIL
+=== RUN   TestProduct_ShardsAgreePrepared
+=== PAUSE TestProduct_ShardsAgreePrepared
+=== CONT  TestProduct_ShardsAgreePrepared
+    shards_agree_split_test.go:346: no compiler files under /workspace/adamic/cohere/TypeScript
+--- FAIL: TestProduct_ShardsAgreePrepared (0.02s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	0.048s
+FAIL
+=== RUN   TestProduct_ShardsAgreePrepared
+=== PAUSE TestProduct_ShardsAgreePrepared
+=== CONT  TestProduct_ShardsAgreePrepared
+    shards_agree_split_test.go:154: build shards-agree-lowered 3ad1058bef46 hit 1.06
+    shards_agree_split_test.go:171: build shards-agree-native 06fb5e279bbb hit 1.05
+    shards_agree_split_test.go:125: build shards-agree-oracle b8a9fce0b035 hit 1.07
+    shards_agree_split_test.go:129: build shards-agree-capture 2410cb57b94c hit 1.07
+    lint_setup_clock_products_test.go:39: build shards-agree-prepared-v1 80e890e50873 miss 7.09
+    lint_setup_clock_products_test.go:39: TestShardsAgree (setup): 7.130s; /home/agent/.cache/adamic-build/80e890e5087307a233e676a38f241a6ea1b09bd8ccff1e70dcc03a2adf8276d2
+    lint_setup_clock_products_test.go:40: product wall=7.130012659s
+--- PASS: TestProduct_ShardsAgreePrepared (7.13s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	7.163s
+=== RUN   TestProduct_SuggestionAlongsideGoOracle
+=== PAUSE TestProduct_SuggestionAlongsideGoOracle
+=== CONT  TestProduct_SuggestionAlongsideGoOracle
+    suggestion_alongside_shards_test.go:42: build suggestion-alongside-lowered-v2 e07f51202174 miss 11.58
+    suggestion_alongside_shards_test.go:42: build suggestion-alongside-native-v2 d980e9662d92 miss 8.42
+    suggestion_alongside_shards_test.go:42: build suggestion-alongside-go-oracle-v1 0213ffbec403 miss 6.67
+    lint_setup_clock_products_test.go:110: product wall=26.743905146s
+--- PASS: TestProduct_SuggestionAlongsideGoOracle (26.74s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	26.776s
+=== RUN   TestProduct_SuggestionAlongsideLowered
+=== PAUSE TestProduct_SuggestionAlongsideLowered
+=== CONT  TestProduct_SuggestionAlongsideLowered
+    suggestion_alongside_shards_test.go:42: build suggestion-alongside-lowered-v2 e07f51202174 hit 1.01
+    suggestion_alongside_shards_test.go:42: build suggestion-alongside-native-v2 d980e9662d92 hit 1.01
+    suggestion_alongside_shards_test.go:42: build suggestion-alongside-go-oracle-v1 0213ffbec403 hit 1.18
+    lint_setup_clock_products_test.go:96: product wall=3.281165825s
+--- PASS: TestProduct_SuggestionAlongsideLowered (3.28s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	3.306s
+=== RUN   TestProduct_SuggestionAlongsideNative
+=== PAUSE TestProduct_SuggestionAlongsideNative
+=== CONT  TestProduct_SuggestionAlongsideNative
+    suggestion_alongside_shards_test.go:42: build suggestion-alongside-lowered-v2 e07f51202174 hit 1.10
+    suggestion_alongside_shards_test.go:42: build suggestion-alongside-native-v2 d980e9662d92 hit 1.05
+    suggestion_alongside_shards_test.go:42: build suggestion-alongside-go-oracle-v1 0213ffbec403 hit 1.17
+    lint_setup_clock_products_test.go:103: product wall=3.392566488s
+--- PASS: TestProduct_SuggestionAlongsideNative (3.39s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	3.422s
+=== RUN   TestProduct_WitnessScriptKindGoOracle
+=== PAUSE TestProduct_WitnessScriptKindGoOracle
+=== CONT  TestProduct_WitnessScriptKindGoOracle
+    witness_script_kind_products_test.go:31: build witness-script-kind-go-oracle-v1 ef05840198b2 miss 3.52
+--- PASS: TestProduct_WitnessScriptKindGoOracle (3.53s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	3.552s
+=== RUN   TestProduct_WitnessScriptKindLowered
+=== PAUSE TestProduct_WitnessScriptKindLowered
+=== CONT  TestProduct_WitnessScriptKindLowered
+    witness_script_kind_products_test.go:21: build witness-script-kind-lowered-no-debugger-v1 cd85cb0f7bde miss 11.36
+--- PASS: TestProduct_WitnessScriptKindLowered (11.36s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	11.382s
+=== RUN   TestProduct_WitnessScriptKindNative
+=== PAUSE TestProduct_WitnessScriptKindNative
+=== CONT  TestProduct_WitnessScriptKindNative
+    witness_script_kind_products_test.go:26: build witness-script-kind-lowered-no-debugger-v1 cd85cb0f7bde hit 1.22
+    witness_script_kind_products_test.go:26: build witness-script-kind-native-no-debugger-v1 3f8f02cdf08c miss 15.64
+--- PASS: TestProduct_WitnessScriptKindNative (16.87s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	16.894s
+=== RUN   TestProduct_YepestaOracle
+=== PAUSE TestProduct_YepestaOracle
+=== CONT  TestProduct_YepestaOracle
+    yepesta_products_test.go:8: build yepesta-oracle-v1 e9affa36ac60 miss 3.28
+--- PASS: TestProduct_YepestaOracle (3.29s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	3.318s
+=== RUN   TestProduct_jsx_membership
+=== PAUSE TestProduct_jsx_membership
+=== CONT  TestProduct_jsx_membership
+    jsx_products_test.go:8: build jsx-membership ea979905c5e5 miss 3.09
+--- PASS: TestProduct_jsx_membership (3.21s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	3.236s
+=== RUN   TestProduct_jsx_parser
+=== PAUSE TestProduct_jsx_parser
+=== CONT  TestProduct_jsx_parser
+    jsx_products_test.go:13: build jsx-parser 5fb7f5a562c0 miss 3.92
+--- PASS: TestProduct_jsx_parser (4.04s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	4.063s
+=== RUN   TestProduct_jsx_tree_lowered
+=== PAUSE TestProduct_jsx_tree_lowered
+=== CONT  TestProduct_jsx_tree_lowered
+    jsx_products_test.go:18: build jsx-tree-lowered bf9ecef85f41 miss 5.77
+--- PASS: TestProduct_jsx_tree_lowered (5.91s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	5.941s
+=== RUN   TestProduct_jsx_tree_native
+=== PAUSE TestProduct_jsx_tree_native
+=== CONT  TestProduct_jsx_tree_native
+    jsx_products_test.go:23: build jsx-tree-lowered bf9ecef85f41 hit 0.40
+    jsx_products_test.go:23: build jsx-tree-native 1294cc36826f miss 9.71
+--- PASS: TestProduct_jsx_tree_native (10.48s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	10.511s
+=== RUN   TestProduct_jsx_tree_setup
+=== PAUSE TestProduct_jsx_tree_setup
+=== CONT  TestProduct_jsx_tree_setup
+    jsx_shards_test.go:518: build jsx-membership ea979905c5e5 hit 0.26
+    jsx_shards_test.go:523: build jsx-parser 5fb7f5a562c0 hit 0.27
+    jsx_shards_test.go:524: build jsx-tree-lowered bf9ecef85f41 hit 0.32
+    jsx_shards_test.go:524: build jsx-tree-native 1294cc36826f hit 0.33
+    jsx_shards_test.go:517: build jsx-tree-setup-v1 0eb88852ead0 miss 19.38
+--- PASS: TestProduct_jsx_tree_setup (19.62s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	19.694s
+
+===== lint-jsx-after.log =====
+=== RUN   TestJsxLintTreesSetupIsolation
+=== PAUSE TestJsxLintTreesSetupIsolation
+=== CONT  TestJsxLintTreesSetupIsolation
+    jsx_shards_test.go:517: build jsx-tree-setup-v1 0eb88852ead0 hit 1.20
+    jsx_setup_isolation_test.go:24: build jsx-parser 5fb7f5a562c0 hit 0.27
+    jsx_setup_isolation_test.go:25: build jsx-membership ea979905c5e5 hit 0.27
+--- PASS: TestJsxLintTreesSetupIsolation (20.70s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	20.722s
+
+===== lint-jsx-before-products.log =====
+=== RUN   TestProduct_CompilerAgreementGoOracle
+=== PAUSE TestProduct_CompilerAgreementGoOracle
+=== CONT  TestProduct_CompilerAgreementGoOracle
+    compiler_stage1_split_test.go:182: build compiler-agreement-go-oracle 88f866ea8679 hit 0.64
+    compiler_stage1_split_test.go:287: TestProduct_CompilerAgreementGoOracle: 0.812s cooked=false
+--- PASS: TestProduct_CompilerAgreementGoOracle (0.81s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	0.840s
+=== RUN   TestProduct_CompilerAgreementReleaseNative
+=== PAUSE TestProduct_CompilerAgreementReleaseNative
+=== CONT  TestProduct_CompilerAgreementReleaseNative
+    compiler_stage1_split_test.go:182: build compiler-agreement-native-false 218803ebf53e hit 0.49
+    compiler_stage1_split_test.go:301: TestProduct_CompilerAgreementReleaseNative: 0.673s cooked=false
+--- PASS: TestProduct_CompilerAgreementReleaseNative (0.67s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	0.704s
+=== RUN   TestProduct_CompilerAgreementSanitizedNative
+=== PAUSE TestProduct_CompilerAgreementSanitizedNative
+=== CONT  TestProduct_CompilerAgreementSanitizedNative
+    compiler_stage1_split_test.go:182: build compiler-agreement-native-true 09940e31cf8d hit 0.49
+    compiler_stage1_split_test.go:296: TestProduct_CompilerAgreementSanitizedNative: 0.619s cooked=false
+--- PASS: TestProduct_CompilerAgreementSanitizedNative (0.62s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	0.646s
+=== RUN   TestProduct_CompleteSuggestionGoOracle
+=== PAUSE TestProduct_CompleteSuggestionGoOracle
+=== CONT  TestProduct_CompleteSuggestionGoOracle
+    complete_suggestion_products_test.go:12: build complete-suggestion-go-oracle fc899192bfe3 hit 1.09
+    complete_suggestion_products_test.go:11: TestProduct_CompleteSuggestionGoOracle: 1.141s
+--- PASS: TestProduct_CompleteSuggestionGoOracle (1.14s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	1.168s
+=== RUN   TestProduct_CompleteSuggestionLowered
+=== PAUSE TestProduct_CompleteSuggestionLowered
+=== CONT  TestProduct_CompleteSuggestionLowered
+    complete_suggestion_products_test.go:19: build complete-suggestion-lowered-false fa78b9c53ddf hit 1.06
+    complete_suggestion_products_test.go:18: TestProduct_CompleteSuggestionLowered: 1.124s
+--- PASS: TestProduct_CompleteSuggestionLowered (1.12s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	1.152s
+=== RUN   TestProduct_CompleteSuggestionMutantLowered
+=== PAUSE TestProduct_CompleteSuggestionMutantLowered
+=== CONT  TestProduct_CompleteSuggestionMutantLowered
+    complete_suggestion_products_test.go:26: build complete-suggestion-lowered-true 976b106d48be hit 1.05
+    complete_suggestion_products_test.go:25: TestProduct_CompleteSuggestionMutantLowered: 1.108s
+--- PASS: TestProduct_CompleteSuggestionMutantLowered (1.11s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	1.133s
+=== RUN   TestProduct_CompleteSuggestionNative
+=== PAUSE TestProduct_CompleteSuggestionNative
+=== CONT  TestProduct_CompleteSuggestionNative
+    complete_suggestion_products_test.go:33: build complete-suggestion-native 8aeb63811938 hit 1.09
+    complete_suggestion_products_test.go:32: TestProduct_CompleteSuggestionNative: 1.143s
+--- PASS: TestProduct_CompleteSuggestionNative (1.14s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	1.169s
+=== RUN   TestProduct_DecodedOptionsGoOracle
+=== PAUSE TestProduct_DecodedOptionsGoOracle
+=== CONT  TestProduct_DecodedOptionsGoOracle
+    bv61ffb_decoded_options_test.go:236: build lint-decoded-options-lowered-setup-v2 4b309bd119e7 hit 0.85
+    bv61ffb_decoded_options_test.go:236: build lint-decoded-options-lowered-setup-v2-ignored-allowemptycatch 52fa48aa95f1 hit 0.86
+    bv61ffb_decoded_options_test.go:236: build lint-decoded-options-native-setup-v2 2a39dd097b60 hit 0.87
+    bv61ffb_decoded_options_test.go:236: build lint-decoded-options-go-oracle-setup-v2 c4ec57fccac2 hit 1.00
+    bv61ffb_decoded_options_test.go:236: decoded-options shared preparation: 3.667968476s; own-work deadline starts afterward
+    lint_setup_clock_products_test.go:138: product wall=3.668053734s
+--- PASS: TestProduct_DecodedOptionsGoOracle (3.67s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	3.695s
+=== RUN   TestProduct_DecodedOptionsLowered
+=== PAUSE TestProduct_DecodedOptionsLowered
+=== CONT  TestProduct_DecodedOptionsLowered
+    lint_setup_clock_products_test.go:116: build lint-decoded-options-lowered-setup-v2 4b309bd119e7 hit 0.84
+    lint_setup_clock_products_test.go:117: product wall=871.408511ms
+--- PASS: TestProduct_DecodedOptionsLowered (0.87s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	0.899s
+=== RUN   TestProduct_DecodedOptionsMutantLowered
+=== PAUSE TestProduct_DecodedOptionsMutantLowered
+=== CONT  TestProduct_DecodedOptionsMutantLowered
+    lint_setup_clock_products_test.go:123: build lint-decoded-options-lowered-setup-v2-ignored-allowemptycatch 52fa48aa95f1 hit 0.84
+    lint_setup_clock_products_test.go:124: product wall=870.486523ms
+--- PASS: TestProduct_DecodedOptionsMutantLowered (0.87s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	0.894s
+=== RUN   TestProduct_DecodedOptionsNative
+=== PAUSE TestProduct_DecodedOptionsNative
+=== CONT  TestProduct_DecodedOptionsNative
+    bv61ffb_decoded_options_test.go:236: build lint-decoded-options-lowered-setup-v2 4b309bd119e7 hit 0.85
+    bv61ffb_decoded_options_test.go:236: build lint-decoded-options-lowered-setup-v2-ignored-allowemptycatch 52fa48aa95f1 hit 0.88
+    bv61ffb_decoded_options_test.go:236: build lint-decoded-options-native-setup-v2 2a39dd097b60 hit 0.85
+    bv61ffb_decoded_options_test.go:236: build lint-decoded-options-go-oracle-setup-v2 c4ec57fccac2 hit 1.01
+    bv61ffb_decoded_options_test.go:236: decoded-options shared preparation: 3.660577827s; own-work deadline starts afterward
+    lint_setup_clock_products_test.go:131: product wall=3.660627833s
+--- PASS: TestProduct_DecodedOptionsNative (3.66s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	3.686s
+=== RUN   TestProduct_DotARenameOracle
+=== PAUSE TestProduct_DotARenameOracle
+=== CONT  TestProduct_DotARenameOracle
+    grain_dot_a_rename_test.go:70: build dot-a-rename-oracle db31cdd23658 hit 0.12
+    grain_dot_a_rename_test.go:159: TestProduct_DotARenameOracle: 0.160s
+--- PASS: TestProduct_DotARenameOracle (0.16s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	0.186s
+=== RUN   TestProduct_DotARenameSource
+=== PAUSE TestProduct_DotARenameSource
+=== CONT  TestProduct_DotARenameSource
+    grain_dot_a_rename_test.go:70: build dot-a-rename-renamed-source 44c23e3539ce hit 0.18
+    grain_dot_a_rename_test.go:152: TestProduct_DotARenameSource: 0.225s
+--- PASS: TestProduct_DotARenameSource (0.22s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	0.260s
+=== RUN   TestProduct_EmittedMismatchOracle
+=== PAUSE TestProduct_EmittedMismatchOracle
+=== CONT  TestProduct_EmittedMismatchOracle
+    emitted_javascript_shards_test.go:246: build emitted-mismatch-oracle 6f0fa7d9769f hit 0.22
+--- PASS: TestProduct_EmittedMismatchOracle (0.23s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	0.260s
+=== RUN   TestProduct_FactoryHooksLowered
+=== PAUSE TestProduct_FactoryHooksLowered
+=== CONT  TestProduct_FactoryHooksLowered
+    factory_hooks_shards_test.go:246: TestFactoryHooks (setup): 0.095s
+    factory_hooks_shards_test.go:257: build factory-hooks-lowered-0 4700ee202f97 miss 11.79
+--- PASS: TestProduct_FactoryHooksLowered (11.89s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	11.916s
+=== RUN   TestProduct_FactoryHooksMutantLowered
+=== PAUSE TestProduct_FactoryHooksMutantLowered
+=== CONT  TestProduct_FactoryHooksMutantLowered
+    factory_hooks_shards_test.go:246: TestFactoryHooks (setup): 0.099s
+    factory_hooks_shards_test.go:257: build factory-hooks-lowered-1 303250b1e52e miss 11.31
+--- PASS: TestProduct_FactoryHooksMutantLowered (11.41s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	11.441s
+=== RUN   TestProduct_FactoryHooksNative
+=== PAUSE TestProduct_FactoryHooksNative
+=== CONT  TestProduct_FactoryHooksNative
+    factory_hooks_shards_test.go:246: TestFactoryHooks (setup): 0.101s
+    factory_hooks_shards_test.go:257: build factory-hooks-lowered-0 4700ee202f97 hit 1.23
+    factory_hooks_shards_test.go:293: build factory-hooks-native c5ed6592d76c hit 1.08
+--- PASS: TestProduct_FactoryHooksNative (2.43s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	2.455s
+=== RUN   TestProduct_NodeTableCapture
+=== PAUSE TestProduct_NodeTableCapture
+=== CONT  TestProduct_NodeTableCapture
+    node_table_oracle_floor_test.go:582: build lint-node-table-capture d836d047aa51 hit 1.03
+--- PASS: TestProduct_NodeTableCapture (1.03s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	1.059s
+=== RUN   TestProduct_NodeTableEmitted
+=== PAUSE TestProduct_NodeTableEmitted
+=== CONT  TestProduct_NodeTableEmitted
+    node_table_oracle_floor_test.go:86: build lint-node-table-lowered-ir 0cd704de5e5b hit 0.12
+    node_table_oracle_floor_test.go:116: build lint-node-table-emitted-c-serial-v2 bd420eb4aa33 hit 0.12
+--- PASS: TestProduct_NodeTableEmitted (0.26s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	0.289s
+=== RUN   TestProduct_NodeTableLowered
+=== PAUSE TestProduct_NodeTableLowered
+=== CONT  TestProduct_NodeTableLowered
+    node_table_oracle_floor_test.go:86: build lint-node-table-lowered-ir 0cd704de5e5b hit 0.13
+--- PASS: TestProduct_NodeTableLowered (0.15s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	0.173s
+=== RUN   TestProduct_NodeTableNative
+=== PAUSE TestProduct_NodeTableNative
+=== CONT  TestProduct_NodeTableNative
+    node_table_oracle_floor_test.go:86: build lint-node-table-lowered-ir 0cd704de5e5b hit 0.11
+    node_table_oracle_floor_test.go:116: build lint-node-table-emitted-c-serial-v2 bd420eb4aa33 hit 0.11
+    node_table_oracle_floor_test.go:143: build lint-node-table-native 3bee37daf15c hit 0.11
+--- PASS: TestProduct_NodeTableNative (0.39s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	0.412s
+=== RUN   TestProduct_NodeTableOracle
+=== PAUSE TestProduct_NodeTableOracle
+=== CONT  TestProduct_NodeTableOracle
+    node_table_oracle_floor_test.go:578: build lint-node-table-oracle d1679591d151 hit 0.18
+--- PASS: TestProduct_NodeTableOracle (0.19s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	0.217s
+=== RUN   TestProduct_ProfileCompilationC
+=== PAUSE TestProduct_ProfileCompilationC
+=== CONT  TestProduct_ProfileCompilationC
+    profile_compilation_main_test.go:303: build lint-profile-lowered 6f597cf5f805 hit 0.04
+    profile_compilation_main_test.go:329: build lint-profile-emit-c a59a2b401f1c hit 0.03
+    lint_setup_clock_products_test.go:54: product wall=224.417015ms
+--- PASS: TestProduct_ProfileCompilationC (0.22s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	0.250s
+=== RUN   TestProduct_ProfileCompilationCounted
+=== PAUSE TestProduct_ProfileCompilationCounted
+=== CONT  TestProduct_ProfileCompilationCounted
+    profile_compilation_main_test.go:303: build lint-profile-lowered 6f597cf5f805 hit 0.03
+    profile_compilation_main_test.go:329: build lint-profile-emit-c a59a2b401f1c hit 0.03
+    profile_compilation_main_test.go:303: build lint-profile-lowered 6f597cf5f805 hit 0.03
+    profile_compilation_main_test.go:329: build lint-profile-emit-javascript c324e25eca1e hit 0.03
+    profile_compilation_main_test.go:201: build lint-profile-counted 4d29f0200394 hit 0.03
+    lint_setup_clock_products_test.go:75: product wall=333.709371ms
+--- PASS: TestProduct_ProfileCompilationCounted (0.33s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	0.361s
+=== RUN   TestProduct_ProfileCompilationJavaScript
+=== PAUSE TestProduct_ProfileCompilationJavaScript
+=== CONT  TestProduct_ProfileCompilationJavaScript
+    profile_compilation_main_test.go:303: build lint-profile-lowered 6f597cf5f805 hit 0.03
+    profile_compilation_main_test.go:329: build lint-profile-emit-javascript c324e25eca1e hit 0.03
+    lint_setup_clock_products_test.go:61: product wall=209.724906ms
+--- PASS: TestProduct_ProfileCompilationJavaScript (0.21s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	0.237s
+=== RUN   TestProduct_ProfileCompilationLowered
+=== PAUSE TestProduct_ProfileCompilationLowered
+=== CONT  TestProduct_ProfileCompilationLowered
+    profile_compilation_main_test.go:303: build lint-profile-lowered 6f597cf5f805 hit 0.04
+    lint_setup_clock_products_test.go:47: product wall=171.269578ms
+--- PASS: TestProduct_ProfileCompilationLowered (0.17s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	0.198s
+=== RUN   TestProduct_ProfileCompilationOracle
+=== PAUSE TestProduct_ProfileCompilationOracle
+=== CONT  TestProduct_ProfileCompilationOracle
+    lint_setup_clock_products_test.go:144: build shards-agree-profile-oracle 92b9454c9445 hit 1.88
+    lint_setup_clock_products_test.go:145: product wall=1.897511489s
+--- PASS: TestProduct_ProfileCompilationOracle (1.90s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	1.927s
+=== RUN   TestProduct_ProfileCompilationOracleOutputs
+=== PAUSE TestProduct_ProfileCompilationOracleOutputs
+=== CONT  TestProduct_ProfileCompilationOracleOutputs
+    profile_compilation_main_test.go:303: build lint-profile-lowered 6f597cf5f805 hit 0.04
+    profile_compilation_main_test.go:329: build lint-profile-emit-c a59a2b401f1c hit 0.03
+    profile_compilation_main_test.go:303: build lint-profile-lowered 6f597cf5f805 hit 0.03
+    profile_compilation_main_test.go:329: build lint-profile-emit-javascript c324e25eca1e hit 0.03
+    profile_compilation_main_test.go:201: build lint-profile-profiled 033a73bd2413 hit 0.04
+    profile_compilation_main_test.go:201: build lint-profile-counted 4d29f0200394 hit 0.04
+    profile_compilation_main_test.go:201: build lint-profile-scanner 258835ad696f hit 0.04
+    lint_setup_clock_products_test.go:88: build shards-agree-profile-oracle 92b9454c9445 hit 1.05
+    lint_setup_clock_products_test.go:88: build lint-profile-oracle-outputs 47dceea49810 hit 0.00
+    lint_setup_clock_products_test.go:89: product wall=1.621493703s
+--- PASS: TestProduct_ProfileCompilationOracleOutputs (1.62s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	1.654s
+=== RUN   TestProduct_ProfileCompilationProfiled
+=== PAUSE TestProduct_ProfileCompilationProfiled
+=== CONT  TestProduct_ProfileCompilationProfiled
+    profile_compilation_main_test.go:303: build lint-profile-lowered 6f597cf5f805 hit 0.04
+    profile_compilation_main_test.go:329: build lint-profile-emit-c a59a2b401f1c hit 0.03
+    profile_compilation_main_test.go:303: build lint-profile-lowered 6f597cf5f805 hit 0.03
+    profile_compilation_main_test.go:329: build lint-profile-emit-javascript c324e25eca1e hit 0.03
+    profile_compilation_main_test.go:201: build lint-profile-profiled 033a73bd2413 hit 0.03
+    lint_setup_clock_products_test.go:82: product wall=323.766007ms
+--- PASS: TestProduct_ProfileCompilationProfiled (0.32s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	0.351s
+=== RUN   TestProduct_ProfileCompilationScanner
+=== PAUSE TestProduct_ProfileCompilationScanner
+=== CONT  TestProduct_ProfileCompilationScanner
+    profile_compilation_main_test.go:303: build lint-profile-lowered 6f597cf5f805 hit 0.03
+    profile_compilation_main_test.go:329: build lint-profile-emit-c a59a2b401f1c hit 0.03
+    profile_compilation_main_test.go:303: build lint-profile-lowered 6f597cf5f805 hit 0.03
+    profile_compilation_main_test.go:329: build lint-profile-emit-javascript c324e25eca1e hit 0.03
+    profile_compilation_main_test.go:201: build lint-profile-scanner 258835ad696f hit 0.03
+    lint_setup_clock_products_test.go:68: product wall=325.828697ms
+--- PASS: TestProduct_ProfileCompilationScanner (0.33s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	0.353s
+=== RUN   TestProduct_RulesAgreeOracle
+=== PAUSE TestProduct_RulesAgreeOracle
+=== CONT  TestProduct_RulesAgreeOracle
+    grain_rules_agree_shards_test.go:228: build lint-rules-agree-go-oracle 432ec67a86f1 hit 0.13
+    grain_rules_agree_products_test.go:15: TestProduct_RulesAgreeOracle: 0.141s
+--- PASS: TestProduct_RulesAgreeOracle (0.14s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	0.170s
+=== RUN   TestProduct_ShardsAgreeCapture
+=== PAUSE TestProduct_ShardsAgreeCapture
+=== CONT  TestProduct_ShardsAgreeCapture
+    shards_agree_split_test.go:129: build shards-agree-capture 2410cb57b94c hit 1.05
+    lint_setup_clock_products_test.go:33: product wall=1.072524813s
+--- PASS: TestProduct_ShardsAgreeCapture (1.07s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	1.102s
+=== RUN   TestProduct_ShardsAgreeLowered
+=== PAUSE TestProduct_ShardsAgreeLowered
+=== CONT  TestProduct_ShardsAgreeLowered
+    shards_agree_split_test.go:154: build shards-agree-lowered 3ad1058bef46 hit 1.12
+    lint_setup_clock_products_test.go:12: product wall=1.134038401s
+--- PASS: TestProduct_ShardsAgreeLowered (1.13s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	1.162s
+=== RUN   TestProduct_ShardsAgreeNative
+=== PAUSE TestProduct_ShardsAgreeNative
+=== CONT  TestProduct_ShardsAgreeNative
+    shards_agree_split_test.go:154: build shards-agree-lowered 3ad1058bef46 hit 1.05
+    shards_agree_split_test.go:171: build shards-agree-native 06fb5e279bbb hit 1.06
+    lint_setup_clock_products_test.go:19: product wall=2.135732692s
+--- PASS: TestProduct_ShardsAgreeNative (2.14s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	2.163s
+=== RUN   TestProduct_ShardsAgreeOracle
+=== PAUSE TestProduct_ShardsAgreeOracle
+=== CONT  TestProduct_ShardsAgreeOracle
+    shards_agree_split_test.go:125: build shards-agree-oracle b8a9fce0b035 hit 1.06
+    lint_setup_clock_products_test.go:26: product wall=1.077112326s
+--- PASS: TestProduct_ShardsAgreeOracle (1.08s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	1.103s
+=== RUN   TestProduct_ShardsAgreePrepared
+=== PAUSE TestProduct_ShardsAgreePrepared
+=== CONT  TestProduct_ShardsAgreePrepared
+    lint_setup_clock_products_test.go:39: build shards-agree-prepared-v1 80e890e50873 hit 1.09
+    lint_setup_clock_products_test.go:39: TestShardsAgree (setup): 1.143s; /home/agent/.cache/adamic-build/80e890e5087307a233e676a38f241a6ea1b09bd8ccff1e70dcc03a2adf8276d2
+    lint_setup_clock_products_test.go:40: product wall=1.142866779s
+--- PASS: TestProduct_ShardsAgreePrepared (1.14s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	1.171s
+=== RUN   TestProduct_SuggestionAlongsideGoOracle
+=== PAUSE TestProduct_SuggestionAlongsideGoOracle
+=== CONT  TestProduct_SuggestionAlongsideGoOracle
+    suggestion_alongside_shards_test.go:42: build suggestion-alongside-lowered-v2 ec1374803bdc miss 11.58
+    suggestion_alongside_shards_test.go:42: build suggestion-alongside-native-v2 6e45b9fd54c1 miss 1.76
+    suggestion_alongside_shards_test.go:42: build suggestion-alongside-go-oracle-v1 d974c182b59b miss 4.40
+    lint_setup_clock_products_test.go:110: product wall=17.808138954s
+--- PASS: TestProduct_SuggestionAlongsideGoOracle (17.81s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	17.834s
+=== RUN   TestProduct_SuggestionAlongsideLowered
+=== PAUSE TestProduct_SuggestionAlongsideLowered
+=== CONT  TestProduct_SuggestionAlongsideLowered
+    suggestion_alongside_shards_test.go:42: build suggestion-alongside-lowered-v2 ec1374803bdc hit 1.08
+    suggestion_alongside_shards_test.go:42: build suggestion-alongside-native-v2 6e45b9fd54c1 hit 1.06
+    suggestion_alongside_shards_test.go:42: build suggestion-alongside-go-oracle-v1 d974c182b59b hit 1.23
+    lint_setup_clock_products_test.go:96: product wall=3.436260726s
+--- PASS: TestProduct_SuggestionAlongsideLowered (3.44s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	3.478s
+=== RUN   TestProduct_SuggestionAlongsideNative
+=== PAUSE TestProduct_SuggestionAlongsideNative
+=== CONT  TestProduct_SuggestionAlongsideNative
+    suggestion_alongside_shards_test.go:42: build suggestion-alongside-lowered-v2 ec1374803bdc hit 1.01
+    suggestion_alongside_shards_test.go:42: build suggestion-alongside-native-v2 6e45b9fd54c1 hit 1.03
+    suggestion_alongside_shards_test.go:42: build suggestion-alongside-go-oracle-v1 d974c182b59b hit 1.18
+    lint_setup_clock_products_test.go:103: product wall=3.287930653s
+--- PASS: TestProduct_SuggestionAlongsideNative (3.29s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	3.317s
+=== RUN   TestProduct_WitnessScriptKindGoOracle
+=== PAUSE TestProduct_WitnessScriptKindGoOracle
+=== CONT  TestProduct_WitnessScriptKindGoOracle
+    witness_script_kind_products_test.go:31: build witness-script-kind-go-oracle-v1 693241e08cea miss 4.01
+--- PASS: TestProduct_WitnessScriptKindGoOracle (4.02s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	4.043s
+=== RUN   TestProduct_WitnessScriptKindLowered
+=== PAUSE TestProduct_WitnessScriptKindLowered
+=== CONT  TestProduct_WitnessScriptKindLowered
+    witness_script_kind_products_test.go:21: build witness-script-kind-lowered-no-debugger-v1 a7cc90ff4d71 miss 11.61
+--- PASS: TestProduct_WitnessScriptKindLowered (11.61s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	11.635s
+=== RUN   TestProduct_WitnessScriptKindNative
+=== PAUSE TestProduct_WitnessScriptKindNative
+=== CONT  TestProduct_WitnessScriptKindNative
+    witness_script_kind_products_test.go:26: build witness-script-kind-lowered-no-debugger-v1 a7cc90ff4d71 hit 1.23
+    witness_script_kind_products_test.go:26: build witness-script-kind-native-no-debugger-v1 573c989c6367 miss 2.15
+--- PASS: TestProduct_WitnessScriptKindNative (3.40s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	3.423s
+=== RUN   TestProduct_YepestaOracle
+=== PAUSE TestProduct_YepestaOracle
+=== CONT  TestProduct_YepestaOracle
+    yepesta_products_test.go:8: build yepesta-oracle-v1 3cadbfa27e63 miss 3.70
+--- PASS: TestProduct_YepestaOracle (3.72s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	3.748s
+=== RUN   TestProduct_jsx_membership
+=== PAUSE TestProduct_jsx_membership
+=== CONT  TestProduct_jsx_membership
+    jsx_products_test.go:8: build jsx-membership ea979905c5e5 hit 0.28
+--- PASS: TestProduct_jsx_membership (0.41s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	0.434s
+=== RUN   TestProduct_jsx_parser
+=== PAUSE TestProduct_jsx_parser
+=== CONT  TestProduct_jsx_parser
+    jsx_products_test.go:13: build jsx-parser 5fb7f5a562c0 hit 0.25
+--- PASS: TestProduct_jsx_parser (0.38s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	0.407s
+=== RUN   TestProduct_jsx_tree_lowered
+=== PAUSE TestProduct_jsx_tree_lowered
+=== CONT  TestProduct_jsx_tree_lowered
+    jsx_products_test.go:18: build jsx-tree-lowered bf9ecef85f41 hit 0.32
+--- PASS: TestProduct_jsx_tree_lowered (0.46s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	0.487s
+=== RUN   TestProduct_jsx_tree_native
+=== PAUSE TestProduct_jsx_tree_native
+=== CONT  TestProduct_jsx_tree_native
+    jsx_products_test.go:23: build jsx-tree-lowered bf9ecef85f41 hit 0.32
+    jsx_products_test.go:23: build jsx-tree-native 1294cc36826f hit 0.32
+--- PASS: TestProduct_jsx_tree_native (0.93s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	0.954s
+=== RUN   TestProduct_jsx_tree_setup
+=== PAUSE TestProduct_jsx_tree_setup
+=== CONT  TestProduct_jsx_tree_setup
+    jsx_shards_test.go:518: build jsx-membership ea979905c5e5 hit 0.38
+    jsx_shards_test.go:523: build jsx-parser 5fb7f5a562c0 hit 0.35
+    jsx_shards_test.go:524: build jsx-tree-lowered bf9ecef85f41 hit 0.32
+    jsx_shards_test.go:524: build jsx-tree-native 1294cc36826f hit 0.32
+    jsx_shards_test.go:517: build jsx-tree-setup-v1 833e07133513 miss 25.82
+--- PASS: TestProduct_jsx_tree_setup (25.85s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	25.925s
+
+===== lint-jsx-before.log =====
+=== RUN   TestJsxLintTreesSetupIsolation
+=== PAUSE TestJsxLintTreesSetupIsolation
+=== CONT  TestJsxLintTreesSetupIsolation
+--- PASS: TestJsxLintTreesSetupIsolation (45.90s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	45.941s
+
+===== lint-jsx-plant-products.log =====
+=== RUN   TestProduct_jsx_membership
+=== PAUSE TestProduct_jsx_membership
+=== CONT  TestProduct_jsx_membership
+    jsx_products_test.go:8: build jsx-membership ea979905c5e5 hit 0.26
+--- PASS: TestProduct_jsx_membership (0.40s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	0.429s
+=== RUN   TestProduct_jsx_parser
+=== PAUSE TestProduct_jsx_parser
+=== CONT  TestProduct_jsx_parser
+    jsx_products_test.go:13: build jsx-parser 5fb7f5a562c0 hit 0.35
+--- PASS: TestProduct_jsx_parser (0.48s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	0.509s
+=== RUN   TestProduct_jsx_tree_lowered
+=== PAUSE TestProduct_jsx_tree_lowered
+=== CONT  TestProduct_jsx_tree_lowered
+    jsx_products_test.go:18: build jsx-tree-lowered bf9ecef85f41 hit 0.41
+--- PASS: TestProduct_jsx_tree_lowered (0.57s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	0.594s
+=== RUN   TestProduct_jsx_tree_native
+=== PAUSE TestProduct_jsx_tree_native
+=== CONT  TestProduct_jsx_tree_native
+    jsx_products_test.go:23: build jsx-tree-lowered bf9ecef85f41 hit 0.50
+    jsx_products_test.go:23: build jsx-tree-native 1294cc36826f hit 0.36
+--- PASS: TestProduct_jsx_tree_native (1.21s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	1.247s
+=== RUN   TestProduct_jsx_tree_setup
+=== PAUSE TestProduct_jsx_tree_setup
+=== CONT  TestProduct_jsx_tree_setup
+    jsx_shards_test.go:518: build jsx-membership ea979905c5e5 hit 0.34
+    jsx_shards_test.go:523: build jsx-parser 5fb7f5a562c0 hit 0.37
+    jsx_shards_test.go:524: build jsx-tree-lowered bf9ecef85f41 hit 0.44
+    jsx_shards_test.go:524: build jsx-tree-native 1294cc36826f hit 0.35
+    jsx_shards_test.go:517: build jsx-tree-setup-v1 76dfcc34b6ca miss 22.25
+--- PASS: TestProduct_jsx_tree_setup (22.27s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	22.348s
+
+===== lint-jsx-plant.log =====
+=== RUN   TestJsxLintTreesSetupIsolation
+=== PAUSE TestJsxLintTreesSetupIsolation
+=== CONT  TestJsxLintTreesSetupIsolation
+    jsx_shards_test.go:517: build jsx-tree-setup-v1 76dfcc34b6ca hit 1.22
+    jsx_setup_isolation_test.go:24: build jsx-parser 5fb7f5a562c0 hit 0.27
+    jsx_setup_isolation_test.go:25: build jsx-membership ea979905c5e5 hit 0.30
+    jsx_setup_isolation_test.go:48: missing preparation proof "build jsx-parser":
+        === RUN   TestJsxLintTrees_001
+        === PAUSE TestJsxLintTrees_001
+        === CONT  TestJsxLintTrees_001
+        --- PASS: TestJsxLintTrees_001 (0.00s)
+        PASS
+--- FAIL: TestJsxLintTreesSetupIsolation (2.13s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	2.156s
+FAIL
