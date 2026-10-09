@@ -30,4 +30,4 @@ Brief friction/limits:
 
 Existing source and tests are untouched. No tests in other packages ran. All test output was logged. rows.json is the requested per-row deliverable.
 
-Additional healthy-port baseline TestShardsAgree_000 also exceeded 90 seconds; healthy-baseline.log records that result. It is not a clean comparator baseline and was not used for mutation conclusions.
+Additional comparator TestShardsAgree_000 failed before building (0.049 package seconds): shards_agree_split_test.go:296: set ADAMIC_TYPESCRIPT_SOURCE to pinned TypeScript checkout. That is a setup failure, not a timeout or production assertion. It was not used for coverage or mutation conclusions. The target family independently timed out in C emission without requiring that checkout.
