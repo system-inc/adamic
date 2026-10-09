@@ -1,0 +1,50 @@
+{
+  "commit": "d054e3578d4e53bef8cb8c9ab82d6ace69cdafeb",
+  "code": "Suppression TS port and driver; closed gap checks exercise compiler Lower/native evaluate. Port row contains both positive agreement and built-in mutant witness subcases.",
+  "oracle": "External Go cohere output for port; Node execution plus hand-written stdout for gaps. ESLint script is documentation, not run by these tests.",
+  "mutants": [
+    {
+      "id": "M1",
+      "file": "stage1/cohere/suppression/suppression.ts",
+      "from": "\t\t\t\tcandidate.applied++;",
+      "to": "",
+      "menu": "drop statement"
+    },
+    {
+      "id": "M2",
+      "file": "stage1/cohere/suppression/directives.ts",
+      "from": "export const DirectiveOxlint = 'oxlint-disable';",
+      "to": "export const DirectiveOxlint = 'oxlint-disabled';",
+      "menu": "change constant"
+    },
+    {
+      "id": "M3",
+      "file": "stage1/cohere/suppression/scan.ts",
+      "from": "while (index < text.length && text[index] !== '\\n')",
+      "to": "while (index < text.length && text[index] !== '\\r')",
+      "menu": "change constant"
+    },
+    {
+      "id": "M4",
+      "file": "internal/native/emit_expressions.go",
+      "from": "\tcase ir.IsUndefined:\n\t\tif expression.Value.Type().IsMaybe() {\n\t\t\treturn fmt.Sprintf(\"(!(%s).present)\", e.value(expression.Value))\n\t\t}\n\t\treturn fmt.Sprintf(\"(%s == NULL)\", e.value(expression.Value))",
+      "to": "\tcase ir.IsUndefined:\n\t\tif expression.Value.Type().IsMaybe() {\n\t\t\treturn fmt.Sprintf(\"(!(%s).present)\", e.value(expression.Value))\n\t\t}\n\t\treturn fmt.Sprintf(\"(%s != NULL)\", e.value(expression.Value))",
+      "menu": "flip condition"
+    }
+  ],
+  "probes": [
+    {
+      "id": "P1",
+      "file": "stage1/cohere/suppression/suppression.ts",
+      "entry": "build",
+      "change": "replace build body with empty Index, preserving source line index"
+    },
+    {
+      "id": "P2",
+      "file": "internal/lower/lower.go",
+      "entry": "Lower",
+      "change": "return &ir.Program{}, nil at entry, representing empty emitted answer; keep nonnil so compiler can emit a no-output executable"
+    }
+  ],
+  "witness": "W1 firstDifference returns empty; inspect positive and builtin-mutant subcases separately"
+}

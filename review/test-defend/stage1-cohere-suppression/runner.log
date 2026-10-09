@@ -1,0 +1,45 @@
+{
+  "mutant": "D01",
+  "file_line": "internal/native/emit_expressions.go:135",
+  "change": "change BooleanToString format constant to swap true and false output strings",
+  "old": "return fmt.Sprintf(\"((%s) ? &adamic_string_true : &adamic_string_false)\", e.value(expression.Value))",
+  "new": "return fmt.Sprintf(\"((%s) ? &adamic_string_false : &adamic_string_true)\", e.value(expression.Value))",
+  "command": "ADAMIC_BUILD_CACHE_DIR=/workspace/suppression-defend-cache/D01 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/suppression/ -run . > D01.log 2>&1",
+  "wall_seconds": 24.261055841001507,
+  "exit": 1,
+  "rows_failed": [
+    "TestEachGapStandsWhereGapsMdSaysItDoes"
+  ],
+  "rows_passed": [
+    "TestThePortParsesAsGoCohereDoes"
+  ],
+  "subcases_passed": [
+    "TestThePortParsesAsGoCohereDoes/catches_a_regular_expression's_class_ignored",
+    "TestThePortParsesAsGoCohereDoes/catches_a_suffix_match_off_a_/_boundary",
+    "TestThePortParsesAsGoCohereDoes/catches_a_//_file-scope_disable_honored",
+    "TestThePortParsesAsGoCohereDoes/catches_a_directive_covering_the_finding_about_itself",
+    "TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere",
+    "TestThePortParsesAsGoCohereDoes/catches_a_string_running_past_its_line",
+    "TestThePortParsesAsGoCohereDoes/catches_a_directive_word_in_any_case",
+    "TestThePortParsesAsGoCohereDoes/catches_a_vertical_tab_skipped_as_space",
+    "TestThePortParsesAsGoCohereDoes/catches_only_space_or_tab_ending_a_directive_word",
+    "TestThePortParsesAsGoCohereDoes/catches_a_)_opening_a_regular_expression",
+    "TestThePortParsesAsGoCohereDoes/catches_an_interpolation_closing_on_an_object's_brace",
+    "TestThePortParsesAsGoCohereDoes/catches_Go_whitespace_instead_of_JavaScript_whitespace",
+    "TestThePortParsesAsGoCohereDoes/catches_an_enable_on_the_block's_own_line_closing_it"
+  ],
+  "failures": [
+    {
+      "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_return_undefined_array.ts",
+      "line": "gaps_test.go:77: natively: exit 0, stdout \"false\\n\", stderr \"\"; Node prints \"true\\n\""
+    },
+    {
+      "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_mutual_recursion.ts",
+      "line": "gaps_test.go:77: natively: exit 0, stdout \"false true\\n\", stderr \"\"; Node prints \"true false\\n\""
+    }
+  ],
+  "skipped": [],
+  "binary_seconds": [
+    17.743
+  ]
+}

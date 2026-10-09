@@ -1,0 +1,11 @@
+--- a/internal/native/emit_expressions.go
++++ b/internal/native/emit_expressions.go
+@@ -132,7 +132,7 @@
+ 	case ir.NumberToString:
+ 		return e.own(ir.String, fmt.Sprintf("adamic_string_from_number(%s)", e.value(expression.Value)))
+ 	case ir.BooleanToString:
+-		return fmt.Sprintf("((%s) ? &adamic_string_true : &adamic_string_false)", e.value(expression.Value))
++		return fmt.Sprintf("((%s) ? &adamic_string_false : &adamic_string_true)", e.value(expression.Value))
+ 	case ir.Concat:
+ 		parts := make([]string, 0, len(expression.Parts))
+ 		for _, part := range expression.Parts {

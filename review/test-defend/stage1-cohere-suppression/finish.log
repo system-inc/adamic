@@ -1,0 +1,23 @@
+[
+  {
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes",
+    "package": "stage1/cohere/suppression",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestThePortParsesAsGoCohereDoes"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D01 internal/native/emit_expressions.go:135",
+    "attempts": [
+      {
+        "mutant": "D01",
+        "file_line": "internal/native/emit_expressions.go:135",
+        "change": "change BooleanToString format constant to swap true and false output strings",
+        "rows_failed": [
+          "TestEachGapStandsWhereGapsMdSaysItDoes"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/workspace/suppression-defend-cache/D01 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/suppression/ -run . > D01.log 2>&1; gaps_test.go:77: natively: exit 0, stdout \"false\\n\", stderr \"\"; Node prints \"true\\n\""
+  }
+]
