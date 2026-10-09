@@ -70,11 +70,16 @@ func expressionCorpus(t *testing.T, processPlan ...bool) (string, string, string
 	return directory + "/cases.txt", string(answers), directory + "/cases.json"
 }
 
+const testExpressionsAgainstGoAndPrettierShards = 65
+
 // ADAMIC_TEST_SHARD=i/n selects units whose zero-based index modulo n is i;
 // unset runs all units. Builds are shared inputs, prepared before t.Parallel.
 func TestExpressionsAgainstGoAndPrettier(t *testing.T) {
 	cases, want, _ := expressionCorpus(t, false)
-	plan, answers := expressionUnits(t, cases, want, 64)
+	plan, answers := expressionUnits(t, cases, want, testExpressionsAgainstGoAndPrettierShards-1)
+	if got := len(plan.shards) + 1; got != testExpressionsAgainstGoAndPrettierShards {
+		t.Fatalf("enumerated %d shards, declared %d", got, testExpressionsAgainstGoAndPrettierShards)
+	}
 	library := os.Getenv("ADAMIC_TS_PRETTIER")
 	if library == "" {
 		t.Skip("set ADAMIC_TS_PRETTIER to prettier@3.9.6")
