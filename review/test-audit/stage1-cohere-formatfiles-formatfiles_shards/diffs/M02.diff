@@ -1,0 +1,11 @@
+--- a/stage1/cohere/formatfiles/disk.ts
++++ b/stage1/cohere/formatfiles/disk.ts
+@@ -52,7 +52,7 @@
+ // statIsDirectory is whether os.Stat finds a directory at path, following symbolic links.
+ export function statIsDirectory(path: string): boolean {
+ 	const status = fileStatus(path);
+-	return status.kind === 'Ok' && status.type === 'directory';
++	return status.kind === 'Ok' && status.type === 'file';
+ }
+ 
+ // followedEntry is what a path names once its links are followed, as a gitignore Entry, or undefined

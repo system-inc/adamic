@@ -1,0 +1,66 @@
+[
+  {
+    "id": "M01",
+    "file": "stage1/cohere/formatfiles/enumerate.ts",
+    "line": 365,
+    "old": "enumeration.walked++;",
+    "new": "enumeration.walked += 2;",
+    "kind": "off-by-one count",
+    "validation": {
+      "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/formatfiles/ -run ^TestProduct_FormatfilesNative$",
+      "environment": {
+        "ADAMIC_BUILD_CACHE_DIR": "/tmp/u092/cache/validate-M01"
+      },
+      "wall_seconds": 5.387561864000418,
+      "exit": 0
+    }
+  },
+  {
+    "id": "M02",
+    "file": "stage1/cohere/formatfiles/disk.ts",
+    "line": 55,
+    "old": "return status.kind === 'Ok' && status.type === 'directory';",
+    "new": "return status.kind === 'Ok' && status.type === 'file';",
+    "kind": "change constant",
+    "validation": {
+      "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/formatfiles/ -run ^TestProduct_FormatfilesNative$",
+      "environment": {
+        "ADAMIC_BUILD_CACHE_DIR": "/tmp/u092/cache/validate-M02"
+      },
+      "wall_seconds": 5.589638522999849,
+      "exit": 0
+    }
+  },
+  {
+    "id": "M03",
+    "file": "stage1/cohere/formatfiles/golang.ts",
+    "line": 16,
+    "old": "character === '\u0130' ? 'i' : character.toLowerCase()",
+    "new": "character === '\u0130' ? 'j' : character.toLowerCase()",
+    "kind": "change constant",
+    "validation": {
+      "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/formatfiles/ -run ^TestProduct_FormatfilesNative$",
+      "environment": {
+        "ADAMIC_BUILD_CACHE_DIR": "/tmp/u092/cache/validate-M03"
+      },
+      "wall_seconds": 5.326988525000161,
+      "exit": 0
+    }
+  },
+  {
+    "id": "M04",
+    "file": "stage1/cohere/formatfiles/main.ts",
+    "line": 38,
+    "old": "const hexDigits = '0123456789abcdef';",
+    "new": "const hexDigits = '0123456789ABCDEF';",
+    "kind": "change constant",
+    "validation": {
+      "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/formatfiles/ -run ^TestProduct_FormatfilesNative$",
+      "environment": {
+        "ADAMIC_BUILD_CACHE_DIR": "/tmp/u092/cache/validate-M04"
+      },
+      "wall_seconds": 5.309198156000093,
+      "exit": 0
+    }
+  }
+]

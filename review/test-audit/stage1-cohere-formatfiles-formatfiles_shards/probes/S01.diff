@@ -1,0 +1,11 @@
+--- a/stage1/cohere/formatfiles/formatfiles_shards_test.go
++++ b/stage1/cohere/formatfiles/formatfiles_shards_test.go
+@@ -25,7 +25,7 @@
+ // ADAMIC_TEST_SHARD=i/n selects one shard; unset runs all. The count stays fixed.
+ // Trees come from cohere pin 7945d102a6c18dd36adf9114a758ce646e8b2359 and the
+ // seeded generator. Hash tree names and mutant names, never enumeration positions.
+-const testThePortParsesAsGoCohereDoesShards = 32
++const testThePortParsesAsGoCohereDoesShards = 31
+ 
+ type formatfilesPart struct {
+ 	cases, answers string

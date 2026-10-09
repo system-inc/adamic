@@ -1,0 +1,11 @@
+--- a/stage1/cohere/formatfiles/golang.ts
++++ b/stage1/cohere/formatfiles/golang.ts
+@@ -13,7 +13,7 @@
+ export function goToLower(text: string): string {
+ 	let lowered = '';
+ 	for (const character of text) {
+-		lowered += character === 'İ' ? 'i' : character.toLowerCase();
++		lowered += character === 'İ' ? 'j' : character.toLowerCase();
+ 	}
+ 	return lowered;
+ }

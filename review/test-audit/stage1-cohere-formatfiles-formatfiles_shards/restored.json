@@ -1,0 +1,4236 @@
+{
+  "id": "restored",
+  "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/formatfiles/ -run .",
+  "exit": 0,
+  "wall_seconds": 19.551049007000074,
+  "events": [
+    {
+      "Time": "2026-10-09T11:49:20.186536562Z",
+      "Action": "start",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193094656Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193153345Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo",
+      "Output": "=== RUN   TestExtAgreesWithGo\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193173245Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo",
+      "Output": "=== PAUSE TestExtAgreesWithGo\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193175448Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193181988Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesGoOracle"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193184572Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesGoOracle",
+      "Output": "=== RUN   TestProduct_FormatfilesGoOracle\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193187296Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesGoOracle",
+      "Output": "=== PAUSE TestProduct_FormatfilesGoOracle\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193188918Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesGoOracle"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193190941Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNative"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193192514Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNative",
+      "Output": "=== RUN   TestProduct_FormatfilesNative\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193206244Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNative",
+      "Output": "=== PAUSE TestProduct_FormatfilesNative\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193207877Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNative"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193209689Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeUnsanitized"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193211272Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeUnsanitized",
+      "Output": "=== RUN   TestProduct_FormatfilesNativeUnsanitized\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193215198Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeUnsanitized",
+      "Output": "=== PAUSE TestProduct_FormatfilesNativeUnsanitized\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.19321691Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeUnsanitized"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193218793Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeAdamicFilesDeclined"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193221868Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeAdamicFilesDeclined",
+      "Output": "=== RUN   TestProduct_FormatfilesNativeAdamicFilesDeclined\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193224061Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeAdamicFilesDeclined",
+      "Output": "=== PAUSE TestProduct_FormatfilesNativeAdamicFilesDeclined\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193230731Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeAdamicFilesDeclined"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193232894Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeBareAdamicName"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193235598Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeBareAdamicName",
+      "Output": "=== RUN   TestProduct_FormatfilesNativeBareAdamicName\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193237952Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeBareAdamicName",
+      "Output": "=== PAUSE TestProduct_FormatfilesNativeBareAdamicName\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193239474Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeBareAdamicName"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193241567Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeUppercaseAdamicExtension"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.1932432Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeUppercaseAdamicExtension",
+      "Output": "=== RUN   TestProduct_FormatfilesNativeUppercaseAdamicExtension\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193245443Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeUppercaseAdamicExtension",
+      "Output": "=== PAUSE TestProduct_FormatfilesNativeUppercaseAdamicExtension\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193247056Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeUppercaseAdamicExtension"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.19324994Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeJavaScriptLowercase"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193251362Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeJavaScriptLowercase",
+      "Output": "=== RUN   TestProduct_FormatfilesNativeJavaScriptLowercase\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193255589Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeJavaScriptLowercase",
+      "Output": "=== PAUSE TestProduct_FormatfilesNativeJavaScriptLowercase\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193257121Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeJavaScriptLowercase"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193258873Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeUTF16Sort"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193260366Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeUTF16Sort",
+      "Output": "=== RUN   TestProduct_FormatfilesNativeUTF16Sort\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193262829Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeUTF16Sort",
+      "Output": "=== PAUSE TestProduct_FormatfilesNativeUTF16Sort\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193264442Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeUTF16Sort"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193267777Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeLinkLoop"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193269239Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeLinkLoop",
+      "Output": "=== RUN   TestProduct_FormatfilesNativeLinkLoop\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193273305Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeLinkLoop",
+      "Output": "=== PAUSE TestProduct_FormatfilesNativeLinkLoop\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193274998Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeLinkLoop"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193276881Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeQuoteDEL"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193278323Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeQuoteDEL",
+      "Output": "=== RUN   TestProduct_FormatfilesNativeQuoteDEL\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193280516Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeQuoteDEL",
+      "Output": "=== PAUSE TestProduct_FormatfilesNativeQuoteDEL\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193282058Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeQuoteDEL"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193283751Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeQuoteMark"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193285213Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeQuoteMark",
+      "Output": "=== RUN   TestProduct_FormatfilesNativeQuoteMark\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193287597Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeQuoteMark",
+      "Output": "=== PAUSE TestProduct_FormatfilesNativeQuoteMark\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193289219Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeQuoteMark"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193291062Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeDanglingLink"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193292454Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeDanglingLink",
+      "Output": "=== RUN   TestProduct_FormatfilesNativeDanglingLink\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.19329621Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeDanglingLink",
+      "Output": "=== PAUSE TestProduct_FormatfilesNativeDanglingLink\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193297952Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeDanglingLink"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193299845Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeTrailingDot"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193301217Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeTrailingDot",
+      "Output": "=== RUN   TestProduct_FormatfilesNativeTrailingDot\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.1933034Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeTrailingDot",
+      "Output": "=== PAUSE TestProduct_FormatfilesNativeTrailingDot\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193304983Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeTrailingDot"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193306776Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeDanglingGit"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.19330958Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeDanglingGit",
+      "Output": "=== RUN   TestProduct_FormatfilesNativeDanglingGit\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193311653Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeDanglingGit",
+      "Output": "=== PAUSE TestProduct_FormatfilesNativeDanglingGit\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193313175Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeDanglingGit"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193315358Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeDanglingPrettierignore"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193316871Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeDanglingPrettierignore",
+      "Output": "=== RUN   TestProduct_FormatfilesNativeDanglingPrettierignore\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193318974Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeDanglingPrettierignore",
+      "Output": "=== PAUSE TestProduct_FormatfilesNativeDanglingPrettierignore\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193320546Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeDanglingPrettierignore"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193324743Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestFormatfilesShardPlantedDisagreement"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193326796Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestFormatfilesShardPlantedDisagreement",
+      "Output": "=== RUN   TestFormatfilesShardPlantedDisagreement\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193328729Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestFormatfilesShardPlantedDisagreement",
+      "Output": "=== PAUSE TestFormatfilesShardPlantedDisagreement\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193330281Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestFormatfilesShardPlantedDisagreement"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193332013Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_000"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193333476Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_000",
+      "Output": "=== RUN   TestThePortParsesAsGoCohereDoes_000\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193335509Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_000",
+      "Output": "=== PAUSE TestThePortParsesAsGoCohereDoes_000\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193337041Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_000"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193339485Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_001"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193340867Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_001",
+      "Output": "=== RUN   TestThePortParsesAsGoCohereDoes_001\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.19334289Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_001",
+      "Output": "=== PAUSE TestThePortParsesAsGoCohereDoes_001\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193346075Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_001"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193347957Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_002"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.19334941Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_002",
+      "Output": "=== RUN   TestThePortParsesAsGoCohereDoes_002\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193351883Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_002",
+      "Output": "=== PAUSE TestThePortParsesAsGoCohereDoes_002\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193353626Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_002"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193355479Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_003"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193356951Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_003",
+      "Output": "=== RUN   TestThePortParsesAsGoCohereDoes_003\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193359515Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_003",
+      "Output": "=== PAUSE TestThePortParsesAsGoCohereDoes_003\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193361097Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_003"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.19336322Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_004"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193364572Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_004",
+      "Output": "=== RUN   TestThePortParsesAsGoCohereDoes_004\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193366956Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_004",
+      "Output": "=== PAUSE TestThePortParsesAsGoCohereDoes_004\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193368428Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_004"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193396541Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_005"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193399295Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_005",
+      "Output": "=== RUN   TestThePortParsesAsGoCohereDoes_005\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193416581Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_005",
+      "Output": "=== PAUSE TestThePortParsesAsGoCohereDoes_005\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193418363Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_005"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193420847Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_006"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193422339Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_006",
+      "Output": "=== RUN   TestThePortParsesAsGoCohereDoes_006\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193425244Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_006",
+      "Output": "=== PAUSE TestThePortParsesAsGoCohereDoes_006\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193428489Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_006"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193430321Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_007"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193431623Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_007",
+      "Output": "=== RUN   TestThePortParsesAsGoCohereDoes_007\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193434187Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_007",
+      "Output": "=== PAUSE TestThePortParsesAsGoCohereDoes_007\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.19343586Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_007"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193437833Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_008"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193439235Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_008",
+      "Output": "=== RUN   TestThePortParsesAsGoCohereDoes_008\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193441458Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_008",
+      "Output": "=== PAUSE TestThePortParsesAsGoCohereDoes_008\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.19344295Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_008"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193445124Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_009"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193446466Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_009",
+      "Output": "=== RUN   TestThePortParsesAsGoCohereDoes_009\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193448569Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_009",
+      "Output": "=== PAUSE TestThePortParsesAsGoCohereDoes_009\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193450061Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_009"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193451694Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_010"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193453236Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_010",
+      "Output": "=== RUN   TestThePortParsesAsGoCohereDoes_010\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193459776Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_010",
+      "Output": "=== PAUSE TestThePortParsesAsGoCohereDoes_010\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193461448Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_010"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193463161Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_011"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193465715Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_011",
+      "Output": "=== RUN   TestThePortParsesAsGoCohereDoes_011\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193469741Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_011",
+      "Output": "=== PAUSE TestThePortParsesAsGoCohereDoes_011\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193471453Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_011"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193473216Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_012"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193474838Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_012",
+      "Output": "=== RUN   TestThePortParsesAsGoCohereDoes_012\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193477382Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_012",
+      "Output": "=== PAUSE TestThePortParsesAsGoCohereDoes_012\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193479145Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_012"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193480787Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_013"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193482109Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_013",
+      "Output": "=== RUN   TestThePortParsesAsGoCohereDoes_013\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193484212Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_013",
+      "Output": "=== PAUSE TestThePortParsesAsGoCohereDoes_013\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193485835Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_013"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193487537Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_014"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193488859Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_014",
+      "Output": "=== RUN   TestThePortParsesAsGoCohereDoes_014\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193493206Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_014",
+      "Output": "=== PAUSE TestThePortParsesAsGoCohereDoes_014\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193494828Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_014"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193497122Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_015"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193498564Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_015",
+      "Output": "=== RUN   TestThePortParsesAsGoCohereDoes_015\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193500817Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_015",
+      "Output": "=== PAUSE TestThePortParsesAsGoCohereDoes_015\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.19350233Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_015"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193505364Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_016"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193506937Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_016",
+      "Output": "=== RUN   TestThePortParsesAsGoCohereDoes_016\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193510632Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_016",
+      "Output": "=== PAUSE TestThePortParsesAsGoCohereDoes_016\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193512235Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_016"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193515199Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_017"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193517462Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_017",
+      "Output": "=== RUN   TestThePortParsesAsGoCohereDoes_017\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193520307Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_017",
+      "Output": "=== PAUSE TestThePortParsesAsGoCohereDoes_017\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193522109Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_017"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193524243Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_018"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193525875Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_018",
+      "Output": "=== RUN   TestThePortParsesAsGoCohereDoes_018\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193528048Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_018",
+      "Output": "=== PAUSE TestThePortParsesAsGoCohereDoes_018\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193529811Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_018"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193532715Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_019"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193534809Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_019",
+      "Output": "=== RUN   TestThePortParsesAsGoCohereDoes_019\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193536922Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_019",
+      "Output": "=== PAUSE TestThePortParsesAsGoCohereDoes_019\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193538454Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_019"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193540938Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_020"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.19354261Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_020",
+      "Output": "=== RUN   TestThePortParsesAsGoCohereDoes_020\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193545775Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_020",
+      "Output": "=== PAUSE TestThePortParsesAsGoCohereDoes_020\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193547438Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_020"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193549451Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_021"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193552956Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_021",
+      "Output": "=== RUN   TestThePortParsesAsGoCohereDoes_021\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193556261Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_021",
+      "Output": "=== PAUSE TestThePortParsesAsGoCohereDoes_021\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193557873Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_021"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193559906Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_022"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193561579Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_022",
+      "Output": "=== RUN   TestThePortParsesAsGoCohereDoes_022\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193652486Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_022",
+      "Output": "=== PAUSE TestThePortParsesAsGoCohereDoes_022\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.19365575Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_022"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193657894Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_023"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193661359Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_023",
+      "Output": "=== RUN   TestThePortParsesAsGoCohereDoes_023\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193667458Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_023",
+      "Output": "=== PAUSE TestThePortParsesAsGoCohereDoes_023\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193670242Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_023"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193674078Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_024"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193747629Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_024",
+      "Output": "=== RUN   TestThePortParsesAsGoCohereDoes_024\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193753918Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_024",
+      "Output": "=== PAUSE TestThePortParsesAsGoCohereDoes_024\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193755601Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_024"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193757834Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_025"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193759276Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_025",
+      "Output": "=== RUN   TestThePortParsesAsGoCohereDoes_025\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193762431Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_025",
+      "Output": "=== PAUSE TestThePortParsesAsGoCohereDoes_025\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193764053Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_025"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193765976Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_026"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193770814Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_026",
+      "Output": "=== RUN   TestThePortParsesAsGoCohereDoes_026\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193773928Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_026",
+      "Output": "=== PAUSE TestThePortParsesAsGoCohereDoes_026\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193775491Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_026"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193777363Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_027"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193778816Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_027",
+      "Output": "=== RUN   TestThePortParsesAsGoCohereDoes_027\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193783723Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_027",
+      "Output": "=== PAUSE TestThePortParsesAsGoCohereDoes_027\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193785175Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_027"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193787829Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_028"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193790413Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_028",
+      "Output": "=== RUN   TestThePortParsesAsGoCohereDoes_028\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193793267Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_028",
+      "Output": "=== PAUSE TestThePortParsesAsGoCohereDoes_028\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.19379494Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_028"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193796973Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_029"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193798385Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_029",
+      "Output": "=== RUN   TestThePortParsesAsGoCohereDoes_029\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193800388Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_029",
+      "Output": "=== PAUSE TestThePortParsesAsGoCohereDoes_029\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193802061Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_029"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193804845Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_030"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193806237Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_030",
+      "Output": "=== RUN   TestThePortParsesAsGoCohereDoes_030\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.19380843Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_030",
+      "Output": "=== PAUSE TestThePortParsesAsGoCohereDoes_030\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193810103Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_030"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193813418Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_031"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.19381491Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_031",
+      "Output": "=== RUN   TestThePortParsesAsGoCohereDoes_031\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193817414Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_031",
+      "Output": "=== PAUSE TestThePortParsesAsGoCohereDoes_031\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193819126Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_031"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193820889Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoesUnion"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193822351Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoesUnion",
+      "Output": "=== RUN   TestThePortParsesAsGoCohereDoesUnion\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193825245Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoesUnion",
+      "Output": "=== PAUSE TestThePortParsesAsGoCohereDoesUnion\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193826818Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoesUnion"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193828631Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193830373Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo",
+      "Output": "=== CONT  TestExtAgreesWithGo\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.193898436Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_008"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.19390153Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_008",
+      "Output": "=== CONT  TestThePortParsesAsGoCohereDoes_008\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.194028191Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeDanglingLink"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.194032868Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeDanglingLink",
+      "Output": "=== CONT  TestProduct_FormatfilesNativeDanglingLink\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.194346439Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_007"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.194352659Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_007",
+      "Output": "=== CONT  TestThePortParsesAsGoCohereDoes_007\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.194487802Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeTrailingDot"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.194494082Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeTrailingDot",
+      "Output": "=== CONT  TestProduct_FormatfilesNativeTrailingDot\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.291093716Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo/bare_dot_i"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.291143661Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo/bare_dot_i",
+      "Output": "=== RUN   TestExtAgreesWithGo/bare_dot_i\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.291167998Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo/bare_dot_i",
+      "Output": "--- PASS: TestExtAgreesWithGo/bare_dot_i (0.00s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.291173686Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo/bare_dot_i",
+      "Elapsed": 0
+    },
+    {
+      "Time": "2026-10-09T11:49:20.291194588Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo/single_dot"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.291198133Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo/single_dot",
+      "Output": "=== RUN   TestExtAgreesWithGo/single_dot\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.291204192Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo/single_dot",
+      "Output": "--- PASS: TestExtAgreesWithGo/single_dot (0.00s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.291207517Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo/single_dot",
+      "Elapsed": 0
+    },
+    {
+      "Time": "2026-10-09T11:49:20.291210291Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo/double_dot"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.291212585Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo/double_dot",
+      "Output": "=== RUN   TestExtAgreesWithGo/double_dot\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.29121583Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo/double_dot",
+      "Output": "--- PASS: TestExtAgreesWithGo/double_dot (0.00s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.291219345Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo/double_dot",
+      "Elapsed": 0
+    },
+    {
+      "Time": "2026-10-09T11:49:20.29122275Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo/no_dot"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.291225604Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo/no_dot",
+      "Output": "=== RUN   TestExtAgreesWithGo/no_dot\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.291229981Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo/no_dot",
+      "Output": "--- PASS: TestExtAgreesWithGo/no_dot (0.00s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.291233015Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo/no_dot",
+      "Elapsed": 0
+    },
+    {
+      "Time": "2026-10-09T11:49:20.291235459Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo/trailing_dot"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.291237923Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo/trailing_dot",
+      "Output": "=== RUN   TestExtAgreesWithGo/trailing_dot\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.291241238Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo/trailing_dot",
+      "Output": "--- PASS: TestExtAgreesWithGo/trailing_dot (0.00s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.291243952Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo/trailing_dot",
+      "Elapsed": 0
+    },
+    {
+      "Time": "2026-10-09T11:49:20.291252074Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo/last_of_multiple_dots"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.291256871Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo/last_of_multiple_dots",
+      "Output": "=== RUN   TestExtAgreesWithGo/last_of_multiple_dots\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.29126262Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo/last_of_multiple_dots",
+      "Output": "--- PASS: TestExtAgreesWithGo/last_of_multiple_dots (0.00s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.291265464Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo/last_of_multiple_dots",
+      "Elapsed": 0
+    },
+    {
+      "Time": "2026-10-09T11:49:20.291268419Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo/absolute_nested_dotfile"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.291271333Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo/absolute_nested_dotfile",
+      "Output": "=== RUN   TestExtAgreesWithGo/absolute_nested_dotfile\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.291274838Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo/absolute_nested_dotfile",
+      "Output": "--- PASS: TestExtAgreesWithGo/absolute_nested_dotfile (0.00s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.291277903Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo/absolute_nested_dotfile",
+      "Elapsed": 0
+    },
+    {
+      "Time": "2026-10-09T11:49:20.291280617Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo/absolute_root_dotfile"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.291283121Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo/absolute_root_dotfile",
+      "Output": "=== RUN   TestExtAgreesWithGo/absolute_root_dotfile\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.291286426Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo/absolute_root_dotfile",
+      "Output": "--- PASS: TestExtAgreesWithGo/absolute_root_dotfile (0.00s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.29128943Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo/absolute_root_dotfile",
+      "Elapsed": 0
+    },
+    {
+      "Time": "2026-10-09T11:49:20.291292044Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo/root"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.291294408Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo/root",
+      "Output": "=== RUN   TestExtAgreesWithGo/root\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.291297522Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo/root",
+      "Output": "--- PASS: TestExtAgreesWithGo/root (0.00s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.291300327Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo/root",
+      "Elapsed": 0
+    },
+    {
+      "Time": "2026-10-09T11:49:20.291303021Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo/empty"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.291305224Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo/empty",
+      "Output": "=== RUN   TestExtAgreesWithGo/empty\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.291308609Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo/empty",
+      "Output": "--- PASS: TestExtAgreesWithGo/empty (0.00s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.291311554Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo/empty",
+      "Elapsed": 0
+    },
+    {
+      "Time": "2026-10-09T11:49:20.291316Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo/relative_nested_dotfile"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.291318484Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo/relative_nested_dotfile",
+      "Output": "=== RUN   TestExtAgreesWithGo/relative_nested_dotfile\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.291322129Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo/relative_nested_dotfile",
+      "Output": "--- PASS: TestExtAgreesWithGo/relative_nested_dotfile (0.00s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.291325064Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo/relative_nested_dotfile",
+      "Elapsed": 0
+    },
+    {
+      "Time": "2026-10-09T11:49:20.291330362Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo/dot_before_separator"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.291333326Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo/dot_before_separator",
+      "Output": "=== RUN   TestExtAgreesWithGo/dot_before_separator\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.291336531Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo/dot_before_separator",
+      "Output": "--- PASS: TestExtAgreesWithGo/dot_before_separator (0.00s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.291339596Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo/dot_before_separator",
+      "Elapsed": 0
+    },
+    {
+      "Time": "2026-10-09T11:49:20.29134238Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo/nested_trailing_dot"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.291344523Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo/nested_trailing_dot",
+      "Output": "=== RUN   TestExtAgreesWithGo/nested_trailing_dot\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.291348008Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo/nested_trailing_dot",
+      "Output": "--- PASS: TestExtAgreesWithGo/nested_trailing_dot (0.00s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.291351163Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo/nested_trailing_dot",
+      "Elapsed": 0
+    },
+    {
+      "Time": "2026-10-09T11:49:20.291354088Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo/bare_Unicode_dotfile"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.291356411Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo/bare_Unicode_dotfile",
+      "Output": "=== RUN   TestExtAgreesWithGo/bare_Unicode_dotfile\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.291360037Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo/bare_Unicode_dotfile",
+      "Output": "--- PASS: TestExtAgreesWithGo/bare_Unicode_dotfile (0.00s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.291363171Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo/bare_Unicode_dotfile",
+      "Elapsed": 0
+    },
+    {
+      "Time": "2026-10-09T11:49:20.291366026Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo/Unicode_extension"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.291368229Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo/Unicode_extension",
+      "Output": "=== RUN   TestExtAgreesWithGo/Unicode_extension\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.291397913Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo/Unicode_extension",
+      "Output": "--- PASS: TestExtAgreesWithGo/Unicode_extension (0.00s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.291404063Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo/Unicode_extension",
+      "Elapsed": 0
+    },
+    {
+      "Time": "2026-10-09T11:49:20.291407207Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo/dot_at_zero_without_slash"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.291409771Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo/dot_at_zero_without_slash",
+      "Output": "=== RUN   TestExtAgreesWithGo/dot_at_zero_without_slash\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.29141551Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo/dot_at_zero_without_slash",
+      "Output": "--- PASS: TestExtAgreesWithGo/dot_at_zero_without_slash (0.00s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.291418404Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo/dot_at_zero_without_slash",
+      "Elapsed": 0
+    },
+    {
+      "Time": "2026-10-09T11:49:20.291421118Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo/escaped_extension"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.291423342Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo/escaped_extension",
+      "Output": "=== RUN   TestExtAgreesWithGo/escaped_extension\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.291426887Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo/escaped_extension",
+      "Output": "--- PASS: TestExtAgreesWithGo/escaped_extension (0.00s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.291430052Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo/escaped_extension",
+      "Elapsed": 0
+    },
+    {
+      "Time": "2026-10-09T11:49:20.380065607Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo",
+      "Output": "    ext_agreement_test.go:97: mutant disagreement: ext(\".i\"): Node \"\", filepath.Ext \".i\"\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.380434542Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo",
+      "Output": "    formatfiles_prepare_test.go:155: ext agreement own wall 0.187 s (setup wait excluded)\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.380473501Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo",
+      "Output": "--- PASS: TestExtAgreesWithGo (0.19s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.380509104Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestExtAgreesWithGo",
+      "Elapsed": 0.19
+    },
+    {
+      "Time": "2026-10-09T11:49:20.380521343Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeQuoteMark"
+    },
+    {
+      "Time": "2026-10-09T11:49:20.380523296Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeQuoteMark",
+      "Output": "=== CONT  TestProduct_FormatfilesNativeQuoteMark\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:21.479208863Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_008",
+      "Output": "    formatfiles_prepare_test.go:138: build formatfiles-go-oracle e4c2bb911f7f hit 1.28\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:21.925072108Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_008",
+      "Output": "    formatfiles_prepare_test.go:138: seed 20261005, 400 generated trees\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:21.944025428Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_008",
+      "Output": "    formatfiles_prepare_test.go:139: union: 414 trees, 13 modes, 5382 unique mode/tree cases, 32 shards\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:22.294196323Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeDanglingLink",
+      "Output": "    formatfiles_shards_test.go:182: build formatfiles-native-a_link_to_nothing_taken_for_nothing 9dcab104a8e0 hit 1.33\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:22.294250274Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeDanglingLink",
+      "Output": "--- PASS: TestProduct_FormatfilesNativeDanglingLink (2.10s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:22.29425447Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeDanglingLink",
+      "Elapsed": 2.1
+    },
+    {
+      "Time": "2026-10-09T11:49:22.294259949Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeQuoteDEL"
+    },
+    {
+      "Time": "2026-10-09T11:49:22.294262402Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeQuoteDEL",
+      "Output": "=== CONT  TestProduct_FormatfilesNativeQuoteDEL\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:22.313227249Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeTrailingDot",
+      "Output": "    formatfiles_shards_test.go:182: build formatfiles-native-a_trailing_dot_no_extension 9fb975dc3a9a hit 1.34\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:22.313262412Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeTrailingDot",
+      "Output": "--- PASS: TestProduct_FormatfilesNativeTrailingDot (2.12s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:22.313266839Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeTrailingDot",
+      "Elapsed": 2.12
+    },
+    {
+      "Time": "2026-10-09T11:49:22.313270574Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeLinkLoop"
+    },
+    {
+      "Time": "2026-10-09T11:49:22.313272758Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeLinkLoop",
+      "Output": "=== CONT  TestProduct_FormatfilesNativeLinkLoop\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:22.380165517Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeQuoteMark",
+      "Output": "    formatfiles_shards_test.go:182: build formatfiles-native-a_quote_passed_by_the_quoting's_fast_path 62080043b79a hit 1.27\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:22.380210345Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeQuoteMark",
+      "Output": "--- PASS: TestProduct_FormatfilesNativeQuoteMark (2.00s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:22.380214551Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeQuoteMark",
+      "Elapsed": 2
+    },
+    {
+      "Time": "2026-10-09T11:49:22.380219689Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeUTF16Sort"
+    },
+    {
+      "Time": "2026-10-09T11:49:22.380222092Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeUTF16Sort",
+      "Output": "=== CONT  TestProduct_FormatfilesNativeUTF16Sort\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:23.798140907Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_008",
+      "Output": "    formatfiles_shards_test.go:182: build formatfiles-native 6b2c56782c3e hit 1.14\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:24.24309849Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_008",
+      "Output": "    formatfiles_check_test.go:50: 14 trees, 24 files offered, 25 directories entered, 2 refused walks: every answer the same from Go cohere, the port natively, on Node and through the JavaScript backend\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:24.243148054Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_008",
+      "Output": "    formatfiles_prepare_test.go:155: shard own wall 0.441 s (setup wait excluded)\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:24.24315829Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_008",
+      "Output": "--- PASS: TestThePortParsesAsGoCohereDoes_008 (4.05s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:24.243161334Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_008",
+      "Elapsed": 4.05
+    },
+    {
+      "Time": "2026-10-09T11:49:24.243166933Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeJavaScriptLowercase"
+    },
+    {
+      "Time": "2026-10-09T11:49:24.243168795Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeJavaScriptLowercase",
+      "Output": "=== CONT  TestProduct_FormatfilesNativeJavaScriptLowercase\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:24.267438412Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_007",
+      "Output": "    formatfiles_check_test.go:50: 14 trees, 32 files offered, 30 directories entered, 1 refused walks: every answer the same from Go cohere, the port natively, on Node and through the JavaScript backend\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:24.267481897Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_007",
+      "Output": "    formatfiles_prepare_test.go:155: shard own wall 0.466 s (setup wait excluded)\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:24.267490911Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_007",
+      "Output": "--- PASS: TestThePortParsesAsGoCohereDoes_007 (4.07s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:24.267495328Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_007",
+      "Elapsed": 4.07
+    },
+    {
+      "Time": "2026-10-09T11:49:24.267501887Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeUppercaseAdamicExtension"
+    },
+    {
+      "Time": "2026-10-09T11:49:24.267504882Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeUppercaseAdamicExtension",
+      "Output": "=== CONT  TestProduct_FormatfilesNativeUppercaseAdamicExtension\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:24.346762881Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeLinkLoop",
+      "Output": "    formatfiles_shards_test.go:182: build formatfiles-native-a_link_round_a_loop_taken_for_nothing 0beac58f5ddd hit 1.36\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:24.346815871Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeLinkLoop",
+      "Output": "--- PASS: TestProduct_FormatfilesNativeLinkLoop (2.03s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:24.34682207Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeLinkLoop",
+      "Elapsed": 2.03
+    },
+    {
+      "Time": "2026-10-09T11:49:24.346830322Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeBareAdamicName"
+    },
+    {
+      "Time": "2026-10-09T11:49:24.346841059Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeBareAdamicName",
+      "Output": "=== CONT  TestProduct_FormatfilesNativeBareAdamicName\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:24.364978471Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeQuoteDEL",
+      "Output": "    formatfiles_shards_test.go:182: build formatfiles-native-DEL_passed_by_the_quoting's_fast_path 665cacaedb18 hit 1.41\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:24.365015907Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeQuoteDEL",
+      "Output": "--- PASS: TestProduct_FormatfilesNativeQuoteDEL (2.07s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:24.365021265Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeQuoteDEL",
+      "Elapsed": 2.07
+    },
+    {
+      "Time": "2026-10-09T11:49:24.365027004Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeAdamicFilesDeclined"
+    },
+    {
+      "Time": "2026-10-09T11:49:24.365029988Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeAdamicFilesDeclined",
+      "Output": "=== CONT  TestProduct_FormatfilesNativeAdamicFilesDeclined\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:24.516783876Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeUTF16Sort",
+      "Output": "    formatfiles_shards_test.go:182: build formatfiles-native-the_declined_extensions_sorted_by_UTF-16_unit b4064fc1504a hit 1.44\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:24.516836274Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeUTF16Sort",
+      "Output": "--- PASS: TestProduct_FormatfilesNativeUTF16Sort (2.14s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:24.516841202Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeUTF16Sort",
+      "Elapsed": 2.14
+    },
+    {
+      "Time": "2026-10-09T11:49:24.516847922Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeUnsanitized"
+    },
+    {
+      "Time": "2026-10-09T11:49:24.516850916Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeUnsanitized",
+      "Output": "=== CONT  TestProduct_FormatfilesNativeUnsanitized\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:26.571204919Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeUppercaseAdamicExtension",
+      "Output": "    formatfiles_shards_test.go:182: build formatfiles-native-uppercase_.A_held_back_as_Adamic 354d93a20d11 hit 1.46\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:26.571251068Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeUppercaseAdamicExtension",
+      "Output": "--- PASS: TestProduct_FormatfilesNativeUppercaseAdamicExtension (2.30s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:26.571255795Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeUppercaseAdamicExtension",
+      "Elapsed": 2.3
+    },
+    {
+      "Time": "2026-10-09T11:49:26.571264669Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNative"
+    },
+    {
+      "Time": "2026-10-09T11:49:26.571267373Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNative",
+      "Output": "=== CONT  TestProduct_FormatfilesNative\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:26.571270848Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNative",
+      "Output": "--- PASS: TestProduct_FormatfilesNative (0.00s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:26.571281304Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNative",
+      "Elapsed": 0
+    },
+    {
+      "Time": "2026-10-09T11:49:26.571283146Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesGoOracle"
+    },
+    {
+      "Time": "2026-10-09T11:49:26.571284699Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesGoOracle",
+      "Output": "=== CONT  TestProduct_FormatfilesGoOracle\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:26.588705538Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeBareAdamicName",
+      "Output": "    formatfiles_shards_test.go:182: build formatfiles-native-a_bare_.a_name_held_back_as_Adamic d8bda3c521f1 hit 1.37\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:26.588774352Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeBareAdamicName",
+      "Output": "--- PASS: TestProduct_FormatfilesNativeBareAdamicName (2.25s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:26.589739934Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeBareAdamicName",
+      "Elapsed": 2.25
+    },
+    {
+      "Time": "2026-10-09T11:49:26.589765563Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_002"
+    },
+    {
+      "Time": "2026-10-09T11:49:26.589769569Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_002",
+      "Output": "=== CONT  TestThePortParsesAsGoCohereDoes_002\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:26.703108493Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeAdamicFilesDeclined",
+      "Output": "    formatfiles_shards_test.go:182: build formatfiles-native-Adamic_files_declined_instead_of_held_back 53abd359e596 hit 1.48\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:26.703169535Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeAdamicFilesDeclined",
+      "Output": "--- PASS: TestProduct_FormatfilesNativeAdamicFilesDeclined (2.33s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:26.703176225Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeAdamicFilesDeclined",
+      "Elapsed": 2.33
+    },
+    {
+      "Time": "2026-10-09T11:49:26.703182995Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_006"
+    },
+    {
+      "Time": "2026-10-09T11:49:26.703186711Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_006",
+      "Output": "=== CONT  TestThePortParsesAsGoCohereDoes_006\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:26.706574186Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeJavaScriptLowercase",
+      "Output": "    formatfiles_shards_test.go:182: build formatfiles-native-an_extension_lowercased_as_JavaScript_does 4b5b0b5839c4 hit 1.59\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:26.706604892Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeJavaScriptLowercase",
+      "Output": "--- PASS: TestProduct_FormatfilesNativeJavaScriptLowercase (2.46s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:26.70661029Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeJavaScriptLowercase",
+      "Elapsed": 2.46
+    },
+    {
+      "Time": "2026-10-09T11:49:26.706615768Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_005"
+    },
+    {
+      "Time": "2026-10-09T11:49:26.706624792Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_005",
+      "Output": "=== CONT  TestThePortParsesAsGoCohereDoes_005\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:26.809784204Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeUnsanitized",
+      "Output": "    formatfiles_prepare_test.go:117: build formatfiles-native-unsanitized 5ac76e52f758 hit 1.43\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:26.80982834Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeUnsanitized",
+      "Output": "--- PASS: TestProduct_FormatfilesNativeUnsanitized (2.29s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:26.809831505Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeUnsanitized",
+      "Elapsed": 2.29
+    },
+    {
+      "Time": "2026-10-09T11:49:26.809836963Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_004"
+    },
+    {
+      "Time": "2026-10-09T11:49:26.809839337Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_004",
+      "Output": "=== CONT  TestThePortParsesAsGoCohereDoes_004\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:26.932127592Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_002",
+      "Output": "    formatfiles_check_test.go:50: 10 trees, 10 files offered, 10 directories entered, 2 refused walks: every answer the same from Go cohere, the port natively, on Node and through the JavaScript backend\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:26.932175063Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_002",
+      "Output": "    formatfiles_prepare_test.go:155: shard own wall 0.343 s (setup wait excluded)\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:26.932181423Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_002",
+      "Output": "--- PASS: TestThePortParsesAsGoCohereDoes_002 (0.34s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:26.932184548Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_002",
+      "Elapsed": 0.34
+    },
+    {
+      "Time": "2026-10-09T11:49:26.932190146Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_003"
+    },
+    {
+      "Time": "2026-10-09T11:49:26.93219261Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_003",
+      "Output": "=== CONT  TestThePortParsesAsGoCohereDoes_003\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:27.305616322Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_005",
+      "Output": "    formatfiles_check_test.go:50: 13 trees, 30 files offered, 29 directories entered, 1 refused walks: every answer the same from Go cohere, the port natively, on Node and through the JavaScript backend\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:27.30566827Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_005",
+      "Output": "    formatfiles_check_test.go:82: mutant a trailing dot no extension\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:27.307112021Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_006",
+      "Output": "    formatfiles_check_test.go:50: 11 trees, 18 files offered, 27 directories entered, 2 refused walks: every answer the same from Go cohere, the port natively, on Node and through the JavaScript backend\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:27.307162407Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_006",
+      "Output": "    formatfiles_prepare_test.go:155: shard own wall 0.607 s (setup wait excluded)\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:27.307180334Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_006",
+      "Output": "--- PASS: TestThePortParsesAsGoCohereDoes_006 (0.61s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:27.307185111Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_006",
+      "Elapsed": 0.61
+    },
+    {
+      "Time": "2026-10-09T11:49:27.307192843Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestFormatfilesShardPlantedDisagreement"
+    },
+    {
+      "Time": "2026-10-09T11:49:27.307196599Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestFormatfilesShardPlantedDisagreement",
+      "Output": "=== CONT  TestFormatfilesShardPlantedDisagreement\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:27.307211521Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestFormatfilesShardPlantedDisagreement",
+      "Output": "    formatfiles_shards_test.go:221: union: 3 trees, 13 modes, 39 unique mode/tree cases, 32 shards\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:27.307215537Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestFormatfilesShardPlantedDisagreement",
+      "Output": "    formatfiles_shards_test.go:234: planted disagreement \"generated 1\" caught only by shard-004\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:27.307219944Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestFormatfilesShardPlantedDisagreement",
+      "Output": "--- PASS: TestFormatfilesShardPlantedDisagreement (0.00s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:27.307223339Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestFormatfilesShardPlantedDisagreement",
+      "Elapsed": 0
+    },
+    {
+      "Time": "2026-10-09T11:49:27.307225943Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_001"
+    },
+    {
+      "Time": "2026-10-09T11:49:27.307228366Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_001",
+      "Output": "=== CONT  TestThePortParsesAsGoCohereDoes_001\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:27.33576432Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_004",
+      "Output": "    formatfiles_check_test.go:50: 15 trees, 29 files offered, 32 directories entered, 1 refused walks: every answer the same from Go cohere, the port natively, on Node and through the JavaScript backend\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:27.335905613Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_004",
+      "Output": "    formatfiles_prepare_test.go:155: shard own wall 0.526 s (setup wait excluded)\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:27.335948327Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_004",
+      "Output": "--- PASS: TestThePortParsesAsGoCohereDoes_004 (0.53s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:27.335966544Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_004",
+      "Elapsed": 0.53
+    },
+    {
+      "Time": "2026-10-09T11:49:27.335972804Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_000"
+    },
+    {
+      "Time": "2026-10-09T11:49:27.33599691Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_000",
+      "Output": "=== CONT  TestThePortParsesAsGoCohereDoes_000\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:27.4816695Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_003",
+      "Output": "    formatfiles_check_test.go:50: 11 trees, 26 files offered, 24 directories entered, 0 refused walks: every answer the same from Go cohere, the port natively, on Node and through the JavaScript backend\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:27.481742379Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_003",
+      "Output": "    formatfiles_check_test.go:82: mutant a link to nothing taken for nothing\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:27.860767722Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_000",
+      "Output": "    formatfiles_check_test.go:50: 11 trees, 18 files offered, 19 directories entered, 3 refused walks: every answer the same from Go cohere, the port natively, on Node and through the JavaScript backend\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:27.860818598Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_000",
+      "Output": "    formatfiles_check_test.go:82: mutant a quote passed by the quoting's fast path\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:27.923813535Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_001",
+      "Output": "    formatfiles_check_test.go:50: 17 trees, 40 files offered, 41 directories entered, 3 refused walks: every answer the same from Go cohere, the port natively, on Node and through the JavaScript backend\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:27.923865092Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_001",
+      "Output": "    formatfiles_prepare_test.go:155: shard own wall 0.617 s (setup wait excluded)\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:27.923878843Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_001",
+      "Output": "--- PASS: TestThePortParsesAsGoCohereDoes_001 (0.62s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:27.923921908Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_001",
+      "Elapsed": 0.62
+    },
+    {
+      "Time": "2026-10-09T11:49:27.923929119Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_020"
+    },
+    {
+      "Time": "2026-10-09T11:49:27.923932033Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_020",
+      "Output": "=== CONT  TestThePortParsesAsGoCohereDoes_020\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:28.521621644Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_020",
+      "Output": "    formatfiles_check_test.go:50: 14 trees, 34 files offered, 30 directories entered, 3 refused walks: every answer the same from Go cohere, the port natively, on Node and through the JavaScript backend\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:28.521673112Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_020",
+      "Output": "    formatfiles_check_test.go:82: mutant an extension lowercased as JavaScript does\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:28.68115284Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesGoOracle",
+      "Output": "    formatfiles_products_test.go:9: build formatfiles-go-oracle e4c2bb911f7f hit 2.11\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:28.681198859Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesGoOracle",
+      "Output": "--- PASS: TestProduct_FormatfilesGoOracle (2.11s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:28.681202835Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesGoOracle",
+      "Elapsed": 2.11
+    },
+    {
+      "Time": "2026-10-09T11:49:28.681208704Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoesUnion"
+    },
+    {
+      "Time": "2026-10-09T11:49:28.681217588Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoesUnion",
+      "Output": "=== CONT  TestThePortParsesAsGoCohereDoesUnion\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:28.710612714Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoesUnion",
+      "Output": "    formatfiles_shards_test.go:371: union: 414 trees, 13 modes, 5382 unique mode/tree cases, 32 shards\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:28.7106636Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoesUnion",
+      "Output": "--- PASS: TestThePortParsesAsGoCohereDoesUnion (0.03s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:28.710667396Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoesUnion",
+      "Elapsed": 0.03
+    },
+    {
+      "Time": "2026-10-09T11:49:28.710673956Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_031"
+    },
+    {
+      "Time": "2026-10-09T11:49:28.710676259Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_031",
+      "Output": "=== CONT  TestThePortParsesAsGoCohereDoes_031\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:29.366005336Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_031",
+      "Output": "    formatfiles_check_test.go:50: 13 trees, 21 files offered, 18 directories entered, 4 refused walks: every answer the same from Go cohere, the port natively, on Node and through the JavaScript backend\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:29.366060399Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_031",
+      "Output": "    formatfiles_prepare_test.go:155: shard own wall 0.658 s (setup wait excluded)\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:29.36610762Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_031",
+      "Output": "--- PASS: TestThePortParsesAsGoCohereDoes_031 (0.66s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:29.366113238Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_031",
+      "Elapsed": 0.66
+    },
+    {
+      "Time": "2026-10-09T11:49:29.366118947Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_030"
+    },
+    {
+      "Time": "2026-10-09T11:49:29.366121Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_030",
+      "Output": "=== CONT  TestThePortParsesAsGoCohereDoes_030\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:29.704804325Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_005",
+      "Output": "    formatfiles_check_test.go:96: natively, caught: line 1673: \"declined \\\"(none)\\\" 1\", Go cohere \"declined \\\".\\\" 1\"\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:29.706128347Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_005",
+      "Output": "    formatfiles_check_test.go:96: on Node, caught: line 1673: \"declined \\\"(none)\\\" 1\", Go cohere \"declined \\\".\\\" 1\"\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:29.706306945Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_005",
+      "Output": "    formatfiles_prepare_test.go:155: shard own wall 3.000 s (setup wait excluded)\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:29.7063236Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_005",
+      "Output": "--- PASS: TestThePortParsesAsGoCohereDoes_005 (3.00s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:29.706339524Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_005",
+      "Elapsed": 3
+    },
+    {
+      "Time": "2026-10-09T11:49:29.706345874Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_029"
+    },
+    {
+      "Time": "2026-10-09T11:49:29.706349029Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_029",
+      "Output": "=== CONT  TestThePortParsesAsGoCohereDoes_029\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:29.928775511Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_030",
+      "Output": "    formatfiles_check_test.go:50: 12 trees, 27 files offered, 25 directories entered, 2 refused walks: every answer the same from Go cohere, the port natively, on Node and through the JavaScript backend\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:29.928823873Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_030",
+      "Output": "    formatfiles_prepare_test.go:155: shard own wall 0.563 s (setup wait excluded)\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:29.928830323Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_030",
+      "Output": "--- PASS: TestThePortParsesAsGoCohereDoes_030 (0.56s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:29.928833738Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_030",
+      "Elapsed": 0.56
+    },
+    {
+      "Time": "2026-10-09T11:49:29.928838746Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_028"
+    },
+    {
+      "Time": "2026-10-09T11:49:29.9288412Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_028",
+      "Output": "=== CONT  TestThePortParsesAsGoCohereDoes_028\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:29.940218713Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_003",
+      "Output": "    formatfiles_check_test.go:96: natively, caught: line 590: \"walked 2\", Go cohere \"enumerate error gitignore: /tmp/adamic-gate/formatfiles-shared-1940424990/fixture-2599504114/trees/generated-0/.gitignore is a symbolic link, which git does not follow inside a working tree, so its patterns would not apply; replace it with the file it points to\"\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:29.941079478Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_003",
+      "Output": "    formatfiles_check_test.go:96: on Node, caught: line 590: \"walked 2\", Go cohere \"enumerate error gitignore: /tmp/adamic-gate/formatfiles-shared-1940424990/fixture-2599504114/trees/generated-0/.gitignore is a symbolic link, which git does not follow inside a working tree, so its patterns would not apply; replace it with the file it points to\"\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:29.9411607Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_003",
+      "Output": "    formatfiles_prepare_test.go:155: shard own wall 3.009 s (setup wait excluded)\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:29.941168432Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_003",
+      "Output": "--- PASS: TestThePortParsesAsGoCohereDoes_003 (3.01s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:29.941171717Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_003",
+      "Elapsed": 3.01
+    },
+    {
+      "Time": "2026-10-09T11:49:29.941177415Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_027"
+    },
+    {
+      "Time": "2026-10-09T11:49:29.941186789Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_027",
+      "Output": "=== CONT  TestThePortParsesAsGoCohereDoes_027\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:30.370941267Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_000",
+      "Output": "    formatfiles_check_test.go:96: natively, caught: line 703: \"has \\\"/tmp/adamic-gate/formatfiles-shared-1940424990/fixture-2599504114/trees/generated-2/vendor/quote\\\".ts\\\" 0\", Go cohere \"has \\\"/tmp/adamic-gate/formatfiles-shared-1940424990/fixture-2599504114/trees/generated-2/vendor/quote\\\\\\\".ts\\\" 0\"\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:30.374576085Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_000",
+      "Output": "    formatfiles_check_test.go:96: on Node, caught: line 703: \"has \\\"/tmp/adamic-gate/formatfiles-shared-1940424990/fixture-2599504114/trees/generated-2/vendor/quote\\\".ts\\\" 0\", Go cohere \"has \\\"/tmp/adamic-gate/formatfiles-shared-1940424990/fixture-2599504114/trees/generated-2/vendor/quote\\\\\\\".ts\\\" 0\"\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:30.374849816Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_000",
+      "Output": "    formatfiles_prepare_test.go:155: shard own wall 3.039 s (setup wait excluded)\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:30.374894864Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_000",
+      "Output": "--- PASS: TestThePortParsesAsGoCohereDoes_000 (3.04s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:30.37489863Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_000",
+      "Elapsed": 3.04
+    },
+    {
+      "Time": "2026-10-09T11:49:30.374904178Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_026"
+    },
+    {
+      "Time": "2026-10-09T11:49:30.374906842Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_026",
+      "Output": "=== CONT  TestThePortParsesAsGoCohereDoes_026\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:30.487573805Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_028",
+      "Output": "    formatfiles_check_test.go:50: 11 trees, 18 files offered, 15 directories entered, 4 refused walks: every answer the same from Go cohere, the port natively, on Node and through the JavaScript backend\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:30.487616359Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_028",
+      "Output": "    formatfiles_check_test.go:82: mutant a link round a loop taken for nothing\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:30.60862572Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_020",
+      "Output": "    formatfiles_check_test.go:96: natively, caught: line 911: \"declined \\\".\u03b1\u03c2\\\" 1\", Go cohere \"declined \\\".\u03b1\u03c3\\\" 1\"\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:30.608668614Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_020",
+      "Output": "    formatfiles_check_test.go:96: on Node, caught: line 911: \"declined \\\".\u03b1\u03c2\\\" 1\", Go cohere \"declined \\\".\u03b1\u03c3\\\" 1\"\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:30.60867224Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_020",
+      "Output": "    formatfiles_prepare_test.go:155: shard own wall 2.682 s (setup wait excluded)\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:30.608678489Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_020",
+      "Output": "--- PASS: TestThePortParsesAsGoCohereDoes_020 (2.68s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:30.608687002Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_020",
+      "Elapsed": 2.68
+    },
+    {
+      "Time": "2026-10-09T11:49:30.60869238Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_025"
+    },
+    {
+      "Time": "2026-10-09T11:49:30.608694403Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_025",
+      "Output": "=== CONT  TestThePortParsesAsGoCohereDoes_025\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:30.608974304Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_027",
+      "Output": "    formatfiles_check_test.go:50: 14 trees, 36 files offered, 32 directories entered, 3 refused walks: every answer the same from Go cohere, the port natively, on Node and through the JavaScript backend\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:30.608982707Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_027",
+      "Output": "    formatfiles_check_test.go:82: mutant uppercase .A held back as Adamic\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:30.802340013Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_026",
+      "Output": "    formatfiles_check_test.go:50: 14 trees, 36 files offered, 24 directories entered, 3 refused walks: every answer the same from Go cohere, the port natively, on Node and through the JavaScript backend\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:30.802500324Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_026",
+      "Output": "    formatfiles_prepare_test.go:155: shard own wall 0.428 s (setup wait excluded)\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:30.80252442Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_026",
+      "Output": "--- PASS: TestThePortParsesAsGoCohereDoes_026 (0.43s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:30.802538391Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_026",
+      "Elapsed": 0.43
+    },
+    {
+      "Time": "2026-10-09T11:49:30.80254425Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_024"
+    },
+    {
+      "Time": "2026-10-09T11:49:30.802546653Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_024",
+      "Output": "=== CONT  TestThePortParsesAsGoCohereDoes_024\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:31.208746235Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_024",
+      "Output": "    formatfiles_check_test.go:50: 15 trees, 21 files offered, 27 directories entered, 5 refused walks: every answer the same from Go cohere, the port natively, on Node and through the JavaScript backend\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:31.208791934Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_024",
+      "Output": "    formatfiles_prepare_test.go:155: shard own wall 0.406 s (setup wait excluded)\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:31.209115831Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_023"
+    },
+    {
+      "Time": "2026-10-09T11:49:31.209137264Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_023",
+      "Output": "=== CONT  TestThePortParsesAsGoCohereDoes_023\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:31.20916837Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_024",
+      "Output": "--- PASS: TestThePortParsesAsGoCohereDoes_024 (0.41s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:31.675487823Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_024",
+      "Elapsed": 0.41
+    },
+    {
+      "Time": "2026-10-09T11:49:31.675533552Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_023",
+      "Output": "    formatfiles_check_test.go:50: 15 trees, 28 files offered, 33 directories entered, 1 refused walks: every answer the same from Go cohere, the port natively, on Node and through the JavaScript backend\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:31.675544939Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_023",
+      "Output": "    formatfiles_prepare_test.go:155: shard own wall 0.467 s (setup wait excluded)\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:31.675616156Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_023",
+      "Output": "--- PASS: TestThePortParsesAsGoCohereDoes_023 (0.47s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:31.675620022Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_023",
+      "Elapsed": 0.47
+    },
+    {
+      "Time": "2026-10-09T11:49:31.675621725Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_022"
+    },
+    {
+      "Time": "2026-10-09T11:49:31.675623678Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_022",
+      "Output": "=== CONT  TestThePortParsesAsGoCohereDoes_022\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:32.111202752Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_022",
+      "Output": "    formatfiles_check_test.go:50: 12 trees, 36 files offered, 25 directories entered, 1 refused walks: every answer the same from Go cohere, the port natively, on Node and through the JavaScript backend\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:32.111247018Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_022",
+      "Output": "    formatfiles_check_test.go:82: mutant DEL passed by the quoting's fast path\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:32.190749635Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_028",
+      "Output": "    formatfiles_check_test.go:96: natively, caught: line 1093: \"walked 9\", Go cohere \"walked 10\"\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:32.19079254Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_028",
+      "Output": "    formatfiles_check_test.go:96: on Node, caught: line 1093: \"walked 9\", Go cohere \"walked 10\"\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:32.19492761Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_028",
+      "Output": "    formatfiles_prepare_test.go:155: shard own wall 2.266 s (setup wait excluded)\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:32.194961751Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_028",
+      "Output": "--- PASS: TestThePortParsesAsGoCohereDoes_028 (2.27s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:32.194965587Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_028",
+      "Elapsed": 2.27
+    },
+    {
+      "Time": "2026-10-09T11:49:32.194970865Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_021"
+    },
+    {
+      "Time": "2026-10-09T11:49:32.194972898Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_021",
+      "Output": "=== CONT  TestThePortParsesAsGoCohereDoes_021\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:32.611814317Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_021",
+      "Output": "    formatfiles_check_test.go:50: 10 trees, 17 files offered, 18 directories entered, 3 refused walks: every answer the same from Go cohere, the port natively, on Node and through the JavaScript backend\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:32.611858103Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_021",
+      "Output": "    formatfiles_prepare_test.go:155: shard own wall 0.417 s (setup wait excluded)\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:32.611866956Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_021",
+      "Output": "--- PASS: TestThePortParsesAsGoCohereDoes_021 (0.42s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:32.61187003Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_021",
+      "Elapsed": 0.42
+    },
+    {
+      "Time": "2026-10-09T11:49:32.611875529Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeDanglingPrettierignore"
+    },
+    {
+      "Time": "2026-10-09T11:49:32.611877372Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeDanglingPrettierignore",
+      "Output": "=== CONT  TestProduct_FormatfilesNativeDanglingPrettierignore\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:32.679075961Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_027",
+      "Output": "    formatfiles_check_test.go:96: natively, caught: line 557: \"unhandled 2\", Go cohere \"unhandled 3\"\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:32.681420969Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_027",
+      "Output": "    formatfiles_check_test.go:96: on Node, caught: line 557: \"unhandled 2\", Go cohere \"unhandled 3\"\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:32.681453327Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_027",
+      "Output": "    formatfiles_prepare_test.go:155: shard own wall 2.740 s (setup wait excluded)\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:32.681462311Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_027",
+      "Output": "--- PASS: TestThePortParsesAsGoCohereDoes_027 (2.74s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:32.68149491Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_027",
+      "Elapsed": 2.74
+    },
+    {
+      "Time": "2026-10-09T11:49:32.681502411Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_014"
+    },
+    {
+      "Time": "2026-10-09T11:49:32.681505676Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_014",
+      "Output": "=== CONT  TestThePortParsesAsGoCohereDoes_014\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:32.692455727Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_029",
+      "Output": "    formatfiles_shards_test.go:182: build formatfiles-native-a_.git_link_to_nothing_taken_for_a_repository 343680893afb hit 1.66\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:33.048121085Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_014",
+      "Output": "    formatfiles_check_test.go:50: 15 trees, 29 files offered, 27 directories entered, 3 refused walks: every answer the same from Go cohere, the port natively, on Node and through the JavaScript backend\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:33.04825745Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_014",
+      "Output": "    formatfiles_prepare_test.go:155: shard own wall 0.367 s (setup wait excluded)\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:33.048293264Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_014",
+      "Output": "--- PASS: TestThePortParsesAsGoCohereDoes_014 (0.37s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:33.048306053Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_014",
+      "Elapsed": 0.37
+    },
+    {
+      "Time": "2026-10-09T11:49:33.048311181Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_019"
+    },
+    {
+      "Time": "2026-10-09T11:49:33.048313114Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_019",
+      "Output": "=== CONT  TestThePortParsesAsGoCohereDoes_019\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:33.187050752Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_029",
+      "Output": "    formatfiles_check_test.go:50: 15 trees, 26 files offered, 32 directories entered, 2 refused walks: every answer the same from Go cohere, the port natively, on Node and through the JavaScript backend\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:33.187094938Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_029",
+      "Output": "    formatfiles_check_test.go:82: mutant a .git link to nothing taken for a repository\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:33.217890361Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_025",
+      "Output": "    formatfiles_shards_test.go:182: build formatfiles-native-a_.prettierignore_link_to_nothing_let_through 02739aa91c3d hit 1.48\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:33.220484222Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeDanglingPrettierignore",
+      "Output": "--- PASS: TestProduct_FormatfilesNativeDanglingPrettierignore (0.61s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:33.220510742Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeDanglingPrettierignore",
+      "Elapsed": 0.61
+    },
+    {
+      "Time": "2026-10-09T11:49:33.220516561Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_018"
+    },
+    {
+      "Time": "2026-10-09T11:49:33.220518614Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_018",
+      "Output": "=== CONT  TestThePortParsesAsGoCohereDoes_018\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:33.495341631Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_019",
+      "Output": "    formatfiles_check_test.go:50: 11 trees, 27 files offered, 23 directories entered, 1 refused walks: every answer the same from Go cohere, the port natively, on Node and through the JavaScript backend\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:33.495410604Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_019",
+      "Output": "    formatfiles_check_test.go:82: mutant the declined extensions sorted by UTF-16 unit\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:33.771295913Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_025",
+      "Output": "    formatfiles_check_test.go:50: 11 trees, 13 files offered, 21 directories entered, 2 refused walks: every answer the same from Go cohere, the port natively, on Node and through the JavaScript backend\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:33.771355733Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_025",
+      "Output": "    formatfiles_check_test.go:82: mutant a .prettierignore link to nothing let through\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:33.930892892Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_018",
+      "Output": "    formatfiles_check_test.go:50: 13 trees, 25 files offered, 28 directories entered, 2 refused walks: every answer the same from Go cohere, the port natively, on Node and through the JavaScript backend\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:33.93095779Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_018",
+      "Output": "    formatfiles_prepare_test.go:155: shard own wall 0.712 s (setup wait excluded)\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:33.930966212Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_018",
+      "Output": "--- PASS: TestThePortParsesAsGoCohereDoes_018 (0.71s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:33.930969918Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_018",
+      "Elapsed": 0.71
+    },
+    {
+      "Time": "2026-10-09T11:49:33.930976318Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_017"
+    },
+    {
+      "Time": "2026-10-09T11:49:33.930979192Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_017",
+      "Output": "=== CONT  TestThePortParsesAsGoCohereDoes_017\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:34.21910923Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_022",
+      "Output": "    formatfiles_check_test.go:96: natively, caught: line 778: \"has \\\"/tmp/adamic-gate/formatfiles-shared-1940424990/fixture-2599504114/trees/generated-3/.cache/deep/del\\x7f.ts\\\" 0\", Go cohere \"has \\\"/tmp/adamic-gate/formatfiles-shared-1940424990/fixture-2599504114/trees/generated-3/.cache/deep/del\\\\u007f.ts\\\" 0\"\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:34.219160167Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_022",
+      "Output": "    formatfiles_check_test.go:96: on Node, caught: line 778: \"has \\\"/tmp/adamic-gate/formatfiles-shared-1940424990/fixture-2599504114/trees/generated-3/.cache/deep/del\\x7f.ts\\\" 0\", Go cohere \"has \\\"/tmp/adamic-gate/formatfiles-shared-1940424990/fixture-2599504114/trees/generated-3/.cache/deep/del\\\\u007f.ts\\\" 0\"\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:34.219163972Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_022",
+      "Output": "    formatfiles_prepare_test.go:155: shard own wall 2.542 s (setup wait excluded)\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:34.219172024Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_022",
+      "Output": "--- PASS: TestThePortParsesAsGoCohereDoes_022 (2.54s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:34.219174598Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_022",
+      "Elapsed": 2.54
+    },
+    {
+      "Time": "2026-10-09T11:49:34.219180107Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_016"
+    },
+    {
+      "Time": "2026-10-09T11:49:34.219182039Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_016",
+      "Output": "=== CONT  TestThePortParsesAsGoCohereDoes_016\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:34.392838091Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_017",
+      "Output": "    formatfiles_check_test.go:50: 12 trees, 31 files offered, 25 directories entered, 1 refused walks: every answer the same from Go cohere, the port natively, on Node and through the JavaScript backend\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:34.393071673Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_017",
+      "Output": "    formatfiles_prepare_test.go:155: shard own wall 0.462 s (setup wait excluded)\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:34.395216899Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_017",
+      "Output": "--- PASS: TestThePortParsesAsGoCohereDoes_017 (0.46s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:34.39543041Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_017",
+      "Elapsed": 0.46
+    },
+    {
+      "Time": "2026-10-09T11:49:34.395564943Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_015"
+    },
+    {
+      "Time": "2026-10-09T11:49:34.395569189Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_015",
+      "Output": "=== CONT  TestThePortParsesAsGoCohereDoes_015\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:34.62493225Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_016",
+      "Output": "    formatfiles_check_test.go:50: 11 trees, 16 files offered, 16 directories entered, 2 refused walks: every answer the same from Go cohere, the port natively, on Node and through the JavaScript backend\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:34.624974834Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_016",
+      "Output": "    formatfiles_check_test.go:82: mutant Adamic files declined instead of held back\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:34.969053889Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_015",
+      "Output": "    formatfiles_check_test.go:50: 11 trees, 30 files offered, 29 directories entered, 0 refused walks: every answer the same from Go cohere, the port natively, on Node and through the JavaScript backend\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:34.969264075Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_015",
+      "Output": "    formatfiles_prepare_test.go:155: shard own wall 0.574 s (setup wait excluded)\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:34.969335092Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_015",
+      "Output": "--- PASS: TestThePortParsesAsGoCohereDoes_015 (0.57s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:34.969444877Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_015",
+      "Elapsed": 0.57
+    },
+    {
+      "Time": "2026-10-09T11:49:34.969457206Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeDanglingGit"
+    },
+    {
+      "Time": "2026-10-09T11:49:34.969460431Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeDanglingGit",
+      "Output": "=== CONT  TestProduct_FormatfilesNativeDanglingGit\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:34.969638919Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeDanglingGit",
+      "Output": "--- PASS: TestProduct_FormatfilesNativeDanglingGit (0.00s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:34.975135988Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestProduct_FormatfilesNativeDanglingGit",
+      "Elapsed": 0
+    },
+    {
+      "Time": "2026-10-09T11:49:34.975161726Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_009"
+    },
+    {
+      "Time": "2026-10-09T11:49:34.975166143Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_009",
+      "Output": "=== CONT  TestThePortParsesAsGoCohereDoes_009\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:35.533766199Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_009",
+      "Output": "    formatfiles_check_test.go:50: 12 trees, 19 files offered, 23 directories entered, 1 refused walks: every answer the same from Go cohere, the port natively, on Node and through the JavaScript backend\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:35.533858638Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_009",
+      "Output": "    formatfiles_prepare_test.go:155: shard own wall 0.564 s (setup wait excluded)\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:35.533871377Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_009",
+      "Output": "--- PASS: TestThePortParsesAsGoCohereDoes_009 (0.56s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:35.533874933Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_009",
+      "Elapsed": 0.56
+    },
+    {
+      "Time": "2026-10-09T11:49:35.533880201Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_010"
+    },
+    {
+      "Time": "2026-10-09T11:49:35.533882204Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_010",
+      "Output": "=== CONT  TestThePortParsesAsGoCohereDoes_010\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:35.795259344Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_019",
+      "Output": "    formatfiles_check_test.go:96: natively, caught: line 1820: \"declined \\\".\ud83d\ude00\\\" 1\", Go cohere \"declined \\\".\\ue000\\\" 1\"\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:35.796594893Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_019",
+      "Output": "    formatfiles_check_test.go:96: on Node, caught: line 1820: \"declined \\\".\ud83d\ude00\\\" 1\", Go cohere \"declined \\\".\\ue000\\\" 1\"\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:35.796683787Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_019",
+      "Output": "    formatfiles_prepare_test.go:155: shard own wall 2.748 s (setup wait excluded)\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:35.796693472Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_019",
+      "Output": "--- PASS: TestThePortParsesAsGoCohereDoes_019 (2.75s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:35.796696576Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_019",
+      "Elapsed": 2.75
+    },
+    {
+      "Time": "2026-10-09T11:49:35.796707683Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_013"
+    },
+    {
+      "Time": "2026-10-09T11:49:35.796710487Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_013",
+      "Output": "=== CONT  TestThePortParsesAsGoCohereDoes_013\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:35.865929105Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_025",
+      "Output": "    formatfiles_check_test.go:96: natively, caught: line 946: \"walked 12\", Go cohere \"enumerate error /tmp/adamic-gate/formatfiles-shared-1940424990/fixture-2599504114/trees/generated-7/.prettierignore: Prettier config remains where cohere no longer reads it; delete it, since the format block's \\\"ignore\\\" in the Nexus tier (NexusCohereSettings.json) and the ignorePatterns of CohereSettings.json say what the walk skips\"\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:35.867209441Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_025",
+      "Output": "    formatfiles_check_test.go:96: on Node, caught: line 946: \"walked 12\", Go cohere \"enumerate error /tmp/adamic-gate/formatfiles-shared-1940424990/fixture-2599504114/trees/generated-7/.prettierignore: Prettier config remains where cohere no longer reads it; delete it, since the format block's \\\"ignore\\\" in the Nexus tier (NexusCohereSettings.json) and the ignorePatterns of CohereSettings.json say what the walk skips\"\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:35.867339867Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_025",
+      "Output": "    formatfiles_prepare_test.go:155: shard own wall 2.649 s (setup wait excluded)\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:35.867369031Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_025",
+      "Output": "--- PASS: TestThePortParsesAsGoCohereDoes_025 (5.26s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:35.867405045Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_025",
+      "Elapsed": 5.26
+    },
+    {
+      "Time": "2026-10-09T11:49:35.867410884Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_012"
+    },
+    {
+      "Time": "2026-10-09T11:49:35.867413007Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_012",
+      "Output": "=== CONT  TestThePortParsesAsGoCohereDoes_012\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:36.015808633Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_029",
+      "Output": "    formatfiles_check_test.go:96: natively, caught: line 737: \"walked 1\", Go cohere \"enumerate error walking /tmp/adamic-gate/formatfiles-shared-1940424990/fixture-2599504114/trees/generated-3: gitignore: /tmp/adamic-gate/formatfiles-shared-1940424990/fixture-2599504114/trees/generated-3/.cache is a repository of its own\"\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:36.022841642Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_029",
+      "Output": "    formatfiles_check_test.go:96: on Node, caught: line 737: \"walked 1\", Go cohere \"enumerate error walking /tmp/adamic-gate/formatfiles-shared-1940424990/fixture-2599504114/trees/generated-3: gitignore: /tmp/adamic-gate/formatfiles-shared-1940424990/fixture-2599504114/trees/generated-3/.cache is a repository of its own\"\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:36.022876244Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_029",
+      "Output": "    formatfiles_prepare_test.go:155: shard own wall 3.329 s (setup wait excluded)\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:36.022884606Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_029",
+      "Output": "--- PASS: TestThePortParsesAsGoCohereDoes_029 (6.31s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:36.02288746Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_029",
+      "Elapsed": 6.31
+    },
+    {
+      "Time": "2026-10-09T11:49:36.022893109Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_011"
+    },
+    {
+      "Time": "2026-10-09T11:49:36.022895332Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_011",
+      "Output": "=== CONT  TestThePortParsesAsGoCohereDoes_011\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:36.273696845Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_010",
+      "Output": "    formatfiles_check_test.go:50: 15 trees, 27 files offered, 28 directories entered, 4 refused walks: every answer the same from Go cohere, the port natively, on Node and through the JavaScript backend\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:36.273742344Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_010",
+      "Output": "    formatfiles_prepare_test.go:155: shard own wall 0.740 s (setup wait excluded)\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:36.273748794Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_010",
+      "Output": "--- PASS: TestThePortParsesAsGoCohereDoes_010 (0.74s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:36.299565758Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_010",
+      "Elapsed": 0.74
+    },
+    {
+      "Time": "2026-10-09T11:49:36.299608081Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_013",
+      "Output": "    formatfiles_check_test.go:50: 14 trees, 26 files offered, 21 directories entered, 5 refused walks: every answer the same from Go cohere, the port natively, on Node and through the JavaScript backend\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:36.299618657Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_013",
+      "Output": "    formatfiles_prepare_test.go:155: shard own wall 0.503 s (setup wait excluded)\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:36.299624366Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_013",
+      "Output": "--- PASS: TestThePortParsesAsGoCohereDoes_013 (0.50s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:36.310794232Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_013",
+      "Elapsed": 0.5
+    },
+    {
+      "Time": "2026-10-09T11:49:36.31083245Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_012",
+      "Output": "    formatfiles_check_test.go:50: 13 trees, 37 files offered, 35 directories entered, 1 refused walks: every answer the same from Go cohere, the port natively, on Node and through the JavaScript backend\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:36.310842805Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_012",
+      "Output": "    formatfiles_prepare_test.go:155: shard own wall 0.443 s (setup wait excluded)\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:36.310855074Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_012",
+      "Output": "--- PASS: TestThePortParsesAsGoCohereDoes_012 (0.44s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:36.473892984Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_012",
+      "Elapsed": 0.44
+    },
+    {
+      "Time": "2026-10-09T11:49:36.473940155Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_011",
+      "Output": "    formatfiles_check_test.go:50: 15 trees, 25 files offered, 25 directories entered, 3 refused walks: every answer the same from Go cohere, the port natively, on Node and through the JavaScript backend\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:36.473949128Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_011",
+      "Output": "    formatfiles_check_test.go:82: mutant a bare .a name held back as Adamic\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:36.712131109Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_016",
+      "Output": "    formatfiles_check_test.go:96: natively, caught: line 557: \"unhandled 5\", Go cohere \"unhandled 3\"\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:36.713065645Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_016",
+      "Output": "    formatfiles_check_test.go:96: on Node, caught: line 557: \"unhandled 5\", Go cohere \"unhandled 3\"\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:36.713218635Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_016",
+      "Output": "    formatfiles_prepare_test.go:155: shard own wall 2.496 s (setup wait excluded)\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:36.713251244Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_016",
+      "Output": "--- PASS: TestThePortParsesAsGoCohereDoes_016 (2.50s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:37.863536469Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_016",
+      "Elapsed": 2.5
+    },
+    {
+      "Time": "2026-10-09T11:49:37.863586695Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_011",
+      "Output": "    formatfiles_check_test.go:96: natively, caught: line 557: \"unhandled 2\", Go cohere \"unhandled 3\"\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:37.86710059Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_011",
+      "Output": "    formatfiles_check_test.go:96: on Node, caught: line 557: \"unhandled 2\", Go cohere \"unhandled 3\"\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:37.867135192Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_011",
+      "Output": "    formatfiles_prepare_test.go:155: shard own wall 1.846 s (setup wait excluded)\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:37.867145288Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_011",
+      "Output": "--- PASS: TestThePortParsesAsGoCohereDoes_011 (1.85s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:37.867149073Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Test": "TestThePortParsesAsGoCohereDoes_011",
+      "Elapsed": 1.85
+    },
+    {
+      "Time": "2026-10-09T11:49:37.867154211Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Output": "PASS\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:49:37.885333986Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Output": "ok  \tgithub.com/system-inc/adamic/stage1/cohere/formatfiles\t17.698s\n"
+    },
+    {
+      "Time": "2026-10-09T11:49:37.885430892Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "Elapsed": 17.699
+    }
+  ]
+}

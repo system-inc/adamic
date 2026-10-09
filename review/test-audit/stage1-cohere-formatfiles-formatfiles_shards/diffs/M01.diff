@@ -1,0 +1,11 @@
+--- a/stage1/cohere/formatfiles/enumerate.ts
++++ b/stage1/cohere/formatfiles/enumerate.ts
+@@ -362,7 +362,7 @@
+ 
+ 		// A symbolic link is never a directory to filepath.Walk, which does not follow it, so a link to a
+ 		// directory arrives here as a file, and is skipped after the ignore layers have had their say.
+-		enumeration.walked++;
++		enumeration.walked += 2;
+ 
+ 		const scope = scopeOf(scopes, relative);
+ 		if (scope.ignored(relative, false)[0]) {

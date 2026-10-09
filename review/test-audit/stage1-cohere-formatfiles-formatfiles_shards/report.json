@@ -1,0 +1,99 @@
+[
+  {
+    "test": "TestFormatfilesShardPlantedDisagreement",
+    "package": "stage1/cohere/formatfiles",
+    "file": "stage1/cohere/formatfiles/formatfiles_shards_test.go:207",
+    "seconds": 0.007,
+    "oracle": "Self-written expectation that one planted output difference is caught only by its hash-assigned owner. W01 disables firstDifference; the witness then fails.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W01: formatfiles_shards_test.go:232: caught by [], want only 4",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/formatfiles/ -run ^TestFormatfilesShardPlantedDisagreement$; formatfiles_shards_test.go:232: caught by [], want only 4"
+  },
+  {
+    "test": "TestThePortParsesAsGoCohereDoes family",
+    "package": "stage1/cohere/formatfiles",
+    "file": "stage1/cohere/formatfiles/formatfiles_shards_test.go:239",
+    "members": [
+      "TestThePortParsesAsGoCohereDoes_000",
+      "TestThePortParsesAsGoCohereDoes_001",
+      "TestThePortParsesAsGoCohereDoes_002",
+      "TestThePortParsesAsGoCohereDoes_003",
+      "TestThePortParsesAsGoCohereDoes_004",
+      "TestThePortParsesAsGoCohereDoes_005",
+      "TestThePortParsesAsGoCohereDoes_006",
+      "TestThePortParsesAsGoCohereDoes_007",
+      "TestThePortParsesAsGoCohereDoes_008",
+      "TestThePortParsesAsGoCohereDoes_009",
+      "TestThePortParsesAsGoCohereDoes_010",
+      "TestThePortParsesAsGoCohereDoes_011",
+      "TestThePortParsesAsGoCohereDoes_012",
+      "TestThePortParsesAsGoCohereDoes_013",
+      "TestThePortParsesAsGoCohereDoes_014",
+      "TestThePortParsesAsGoCohereDoes_015",
+      "TestThePortParsesAsGoCohereDoes_016",
+      "TestThePortParsesAsGoCohereDoes_017",
+      "TestThePortParsesAsGoCohereDoes_018",
+      "TestThePortParsesAsGoCohereDoes_019",
+      "TestThePortParsesAsGoCohereDoes_020",
+      "TestThePortParsesAsGoCohereDoes_021",
+      "TestThePortParsesAsGoCohereDoes_022",
+      "TestThePortParsesAsGoCohereDoes_023",
+      "TestThePortParsesAsGoCohereDoes_024",
+      "TestThePortParsesAsGoCohereDoes_025",
+      "TestThePortParsesAsGoCohereDoes_026",
+      "TestThePortParsesAsGoCohereDoes_027",
+      "TestThePortParsesAsGoCohereDoes_028",
+      "TestThePortParsesAsGoCohereDoes_029",
+      "TestThePortParsesAsGoCohereDoes_030",
+      "TestThePortParsesAsGoCohereDoes_031",
+      "TestThePortParsesAsGoCohereDoesUnion"
+    ],
+    "seconds": 20.682,
+    "oracle": "Go cohere executes the same fixture trees and emits expected bytes. Native, port-on-Node and JavaScript backend stdout must match; exits/stderr checked. Self-written corpus coverage, embedded mutant-disagreement expectations and zero-leak contract are additional checks. Embedded disagreement checks accept an empty driver under P01.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M01",
+      "M02",
+      "M03",
+      "M04"
+    ],
+    "unique_kills": [
+      "M01",
+      "M02",
+      "M03",
+      "M04"
+    ],
+    "last_proven_fail": "M04: formatfiles_check_test.go:41: native and Go cohere differ: line 474: \"has \\\"/tmp/adamic-gate/formatfiles-shared-3998048330/fixture-2738120353/trees/generated-202/build/build/Z/del\\\\u007F.ts\\\" 0\", Go cohere \"has \\\"/tmp/adamic-gate/formatfiles-shared-3998048330/fixture-2738120353/trees/generated-202/build/build/Z/del\\\\u007f.ts\\\" 0\"",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "vacuous_subcases": [
+      "Embedded mutant-disagreement checks for all 12 built-in mutants: 24 native/Node comparisons accept empty output under P01."
+    ],
+    "probe_exempt_members": [
+      "TestThePortParsesAsGoCohereDoesUnion: construction-only member does not execute the port entry."
+    ],
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/formatfiles/ -run .; /tmp/u092/mutant contains M04; formatfiles_check_test.go:41: native and Go cohere differ: line 474: \"has \\\"/tmp/adamic-gate/formatfiles-shared-3998048330/fixture-2738120353/trees/generated-202/build/build/Z/del\\\\u007F.ts\\\" 0\", Go cohere \"has \\\"/tmp/adamic-gate/formatfiles-shared-3998048330/fixture-2738120353/trees/generated-202/build/build/Z/del\\\\u007f.ts\\\" 0\"",
+    "union_construction_evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/formatfiles/ -run ^TestThePortParsesAsGoCohereDoesUnion$; formatfiles_shards_test.go:401: invalid leaf declaration \"TestThePortParsesAsGoCohereDoes_031\""
+  }
+]

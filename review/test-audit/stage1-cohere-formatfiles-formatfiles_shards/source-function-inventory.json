@@ -1,0 +1,402 @@
+[
+  {
+    "file": "stage1/cohere/formatfiles/enumerate.ts",
+    "line": 79,
+    "declaration": "function covers(layer: IgnoreLayer, relative: string, directory: boolean): boolean {"
+  },
+  {
+    "file": "stage1/cohere/formatfiles/enumerate.ts",
+    "line": 94,
+    "declaration": "function walkTree(path: string, status: LinkStatus, visit: Visit): WalkStep {"
+  },
+  {
+    "file": "stage1/cohere/formatfiles/enumerate.ts",
+    "line": 122,
+    "declaration": "function walk(root: string, visit: Visit): WalkStep {"
+  },
+  {
+    "file": "stage1/cohere/formatfiles/enumerate.ts",
+    "line": 130,
+    "declaration": "function walkDirectories(path: string, status: LinkStatus, visit: Visit): WalkStep {"
+  },
+  {
+    "file": "stage1/cohere/formatfiles/enumerate.ts",
+    "line": 154,
+    "declaration": "function walkDir(root: string, visit: Visit): WalkStep {"
+  },
+  {
+    "file": "stage1/cohere/formatfiles/enumerate.ts",
+    "line": 162,
+    "declaration": "function parentOf(relative: string): string {"
+  },
+  {
+    "file": "stage1/cohere/formatfiles/enumerate.ts",
+    "line": 169,
+    "declaration": "export function hasOwnRepository(directory: string): boolean {"
+  },
+  {
+    "file": "stage1/cohere/formatfiles/enumerate.ts",
+    "line": 175,
+    "declaration": "export function repositoryBoundaryBetween(rootGiven: string, settingsDirectoryGiven: string): boolean {"
+  },
+  {
+    "file": "stage1/cohere/formatfiles/enumerate.ts",
+    "line": 192,
+    "declaration": "export function nestedRepositoryContaining(rootGiven: string, fileName: string): string {"
+  },
+  {
+    "file": "stage1/cohere/formatfiles/enumerate.ts",
+    "line": 210,
+    "declaration": "function scopeOf(scopes: ReadonlyMap<string, Matcher>, relative: string): Matcher {"
+  },
+  {
+    "file": "stage1/cohere/formatfiles/enumerate.ts",
+    "line": 216,
+    "declaration": "export function nestedRepositoriesBelow(root: string): { readonly kind: 'Ok'; readonly nested: readonly string[] } | { readonly kind: 'Error'; readonly message: string } {"
+  },
+  {
+    "file": "stage1/cohere/formatfiles/enumerate.ts",
+    "line": 266,
+    "declaration": "export function enumerate(root: string, resolution: Resolution, handles: (fileName: string) => boolean): Enumerated {"
+  },
+  {
+    "file": "stage1/cohere/formatfiles/disk.ts",
+    "line": 30,
+    "declaration": "export function lstat(path: string): LinkStatus {"
+  },
+  {
+    "file": "stage1/cohere/formatfiles/disk.ts",
+    "line": 48,
+    "declaration": "export function statExists(path: string): boolean {"
+  },
+  {
+    "file": "stage1/cohere/formatfiles/disk.ts",
+    "line": 53,
+    "declaration": "export function statIsDirectory(path: string): boolean {"
+  },
+  {
+    "file": "stage1/cohere/formatfiles/disk.ts",
+    "line": 60,
+    "declaration": "function followedEntry(path: string): Entry | undefined {"
+  },
+  {
+    "file": "stage1/cohere/formatfiles/disk.ts",
+    "line": 97,
+    "declaration": "load(relative: string): void {"
+  },
+  {
+    "file": "stage1/cohere/formatfiles/golang.ts",
+    "line": 13,
+    "declaration": "export function goToLower(text: string): string {"
+  },
+  {
+    "file": "stage1/cohere/formatfiles/golang.ts",
+    "line": 24,
+    "declaration": "export function compareCodePoints(left: string, right: string): number {"
+  },
+  {
+    "file": "stage1/cohere/formatfiles/golang.ts",
+    "line": 45,
+    "declaration": "export function ext(path: string): string {"
+  },
+  {
+    "file": "stage1/cohere/formatfiles/golang.ts",
+    "line": 55,
+    "declaration": "export function join(directory: string, name: string): string {"
+  },
+  {
+    "file": "stage1/cohere/formatfiles/golang.ts",
+    "line": 65,
+    "declaration": "export function rel(base: string, target: string): string {"
+  },
+  {
+    "file": "stage1/cohere/formatfiles/main.ts",
+    "line": 43,
+    "declaration": "function escapeOf(character: string): string {"
+  },
+  {
+    "file": "stage1/cohere/formatfiles/main.ts",
+    "line": 65,
+    "declaration": "function needsEscape(text: string): boolean {"
+  },
+  {
+    "file": "stage1/cohere/formatfiles/main.ts",
+    "line": 77,
+    "declaration": "function quote(text: string): string {"
+  },
+  {
+    "file": "stage1/cohere/formatfiles/main.ts",
+    "line": 96,
+    "declaration": "function unescapeOf(letter: string, field: string): string {"
+  },
+  {
+    "file": "stage1/cohere/formatfiles/main.ts",
+    "line": 112,
+    "declaration": "function unescape(field: string): string {"
+  },
+  {
+    "file": "stage1/cohere/formatfiles/main.ts",
+    "line": 126,
+    "declaration": "function field(fields: readonly string[], index: number, line: string): string {"
+  },
+  {
+    "file": "stage1/cohere/formatfiles/main.ts",
+    "line": 131,
+    "declaration": "function sortedKeys(counts: ReadonlyMap<string, number>): string[] {"
+  },
+  {
+    "file": "stage1/cohere/gitignore/path.ts",
+    "line": 10,
+    "declaration": "function isClean(path: string): boolean {"
+  },
+  {
+    "file": "stage1/cohere/gitignore/path.ts",
+    "line": 44,
+    "declaration": "export function clean(path: string): string {"
+  },
+  {
+    "file": "stage1/cohere/gitignore/path.ts",
+    "line": 78,
+    "declaration": "export function base(path: string): string {"
+  },
+  {
+    "file": "stage1/cohere/gitignore/path.ts",
+    "line": 96,
+    "declaration": "export function dir(path: string): string {"
+  },
+  {
+    "file": "stage1/cohere/gitignore/glob.ts",
+    "line": 59,
+    "declaration": "matches(text: string, path: boolean): boolean {"
+  },
+  {
+    "file": "stage1/cohere/gitignore/glob.ts",
+    "line": 148,
+    "declaration": "reach(positions: boolean[], start: number): void {"
+  },
+  {
+    "file": "stage1/cohere/gitignore/glob.ts",
+    "line": 172,
+    "declaration": "function endsWith(text: string, length: number, bytes: readonly number[]): boolean {"
+  },
+  {
+    "file": "stage1/cohere/gitignore/glob.ts",
+    "line": 183,
+    "declaration": "function neverGlob(): Glob {"
+  },
+  {
+    "file": "stage1/cohere/gitignore/glob.ts",
+    "line": 189,
+    "declaration": "export function compileGlob(pattern: string, path: boolean): Glob {"
+  },
+  {
+    "file": "stage1/cohere/gitignore/glob.ts",
+    "line": 283,
+    "declaration": "function compileSet(pattern: string, length: number, start: number): CompiledSet | undefined {"
+  },
+  {
+    "file": "stage1/cohere/gitignore/glob.ts",
+    "line": 367,
+    "declaration": "function className(pattern: string, start: number, end: number): string {"
+  },
+  {
+    "file": "stage1/cohere/gitignore/glob.ts",
+    "line": 377,
+    "declaration": "function addClass(members: boolean[], name: string): boolean {"
+  },
+  {
+    "file": "stage1/cohere/gitignore/glob.ts",
+    "line": 428,
+    "declaration": "function isLetter(character: number): boolean {"
+  },
+  {
+    "file": "stage1/cohere/gitignore/glob.ts",
+    "line": 432,
+    "declaration": "function isDigit(character: number): boolean {"
+  },
+  {
+    "file": "stage1/cohere/gitignore/glob.ts",
+    "line": 438,
+    "declaration": "function newPositionSet(size: number): boolean[] {"
+  },
+  {
+    "file": "stage1/cohere/gitignore/glob.ts",
+    "line": 442,
+    "declaration": "function addPosition(positions: boolean[], position: number): void {"
+  },
+  {
+    "file": "stage1/cohere/gitignore/glob.ts",
+    "line": 446,
+    "declaration": "function hasPosition(positions: readonly boolean[], position: number): boolean {"
+  },
+  {
+    "file": "stage1/cohere/gitignore/glob.ts",
+    "line": 450,
+    "declaration": "function clearPositions(positions: boolean[]): void {"
+  },
+  {
+    "file": "stage1/cohere/gitignore/gitignore.ts",
+    "line": 73,
+    "declaration": "function failure<Value>(message: string): Result<Value> {"
+  },
+  {
+    "file": "stage1/cohere/gitignore/gitignore.ts",
+    "line": 93,
+    "declaration": "function lstat(tree: WorkingTree, relative: string): Entry | undefined {"
+  },
+  {
+    "file": "stage1/cohere/gitignore/gitignore.ts",
+    "line": 100,
+    "declaration": "function stat(tree: WorkingTree, relative: string): Entry | undefined {"
+  },
+  {
+    "file": "stage1/cohere/gitignore/gitignore.ts",
+    "line": 121,
+    "declaration": "function absolute(tree: WorkingTree, relative: string): string {"
+  },
+  {
+    "file": "stage1/cohere/gitignore/gitignore.ts",
+    "line": 140,
+    "declaration": "isZero(): boolean {"
+  },
+  {
+    "file": "stage1/cohere/gitignore/gitignore.ts",
+    "line": 145,
+    "declaration": "toString(): string {"
+  },
+  {
+    "file": "stage1/cohere/gitignore/gitignore.ts",
+    "line": 155,
+    "declaration": "function zeroSource(): Source {"
+  },
+  {
+    "file": "stage1/cohere/gitignore/gitignore.ts",
+    "line": 181,
+    "declaration": "matches(relativePath: string, baseName: string): boolean {"
+  },
+  {
+    "file": "stage1/cohere/gitignore/gitignore.ts",
+    "line": 220,
+    "declaration": "root(): string {"
+  },
+  {
+    "file": "stage1/cohere/gitignore/gitignore.ts",
+    "line": 226,
+    "declaration": "directory(): string {"
+  },
+  {
+    "file": "stage1/cohere/gitignore/gitignore.ts",
+    "line": 232,
+    "declaration": "excluded(): Verdict {"
+  },
+  {
+    "file": "stage1/cohere/gitignore/gitignore.ts",
+    "line": 247,
+    "declaration": "enter(relativeDirectoryAsGiven: string): Result<Matcher> {"
+  },
+  {
+    "file": "stage1/cohere/gitignore/gitignore.ts",
+    "line": 297,
+    "declaration": "ignored(relativePathAsGiven: string, isDirectory: boolean): Verdict {"
+  },
+  {
+    "file": "stage1/cohere/gitignore/gitignore.ts",
+    "line": 323,
+    "declaration": "ignoredPath(relativePathAsGiven: string, isDirectory: boolean): Result<Verdict> {"
+  },
+  {
+    "file": "stage1/cohere/gitignore/gitignore.ts",
+    "line": 339,
+    "declaration": "decide(relativePath: string, baseName: string, isDirectory: boolean, fileCount: number): Rule | undefined {"
+  },
+  {
+    "file": "stage1/cohere/gitignore/gitignore.ts",
+    "line": 354,
+    "declaration": "export function newMatcher(tree: WorkingTree): Result<Matcher> {"
+  },
+  {
+    "file": "stage1/cohere/gitignore/gitignore.ts",
+    "line": 393,
+    "declaration": "ignored(relativePathAsGiven: string, isDirectory: boolean): Verdict {"
+  },
+  {
+    "file": "stage1/cohere/gitignore/gitignore.ts",
+    "line": 406,
+    "declaration": "export function compilePatterns(lines: readonly string[], name: string): Result<Patterns> {"
+  },
+  {
+    "file": "stage1/cohere/gitignore/gitignore.ts",
+    "line": 425,
+    "declaration": "function lastMatching(rules: readonly Rule[], relativePath: string, baseName: string, isDirectory: boolean): Rule | undefined {"
+  },
+  {
+    "file": "stage1/cohere/gitignore/gitignore.ts",
+    "line": 440,
+    "declaration": "function readTreeFile(tree: WorkingTree, directory: string): Result<readonly Rule[]> {"
+  },
+  {
+    "file": "stage1/cohere/gitignore/gitignore.ts",
+    "line": 455,
+    "declaration": "function readIgnoreFile(tree: WorkingTree, relativeFile: string, follow: boolean): Result<string | undefined> {"
+  },
+  {
+    "file": "stage1/cohere/gitignore/gitignore.ts",
+    "line": 489,
+    "declaration": "function parseRules(contentsAsRead: string, file: string, base: string): Result<readonly Rule[]> {"
+  },
+  {
+    "file": "stage1/cohere/gitignore/gitignore.ts",
+    "line": 509,
+    "declaration": "function trimTrailingSpaces(line: string): string {"
+  },
+  {
+    "file": "stage1/cohere/gitignore/gitignore.ts",
+    "line": 537,
+    "declaration": "function compileRule(line: string, file: string, lineNumber: number, base: string): Rule {"
+  },
+  {
+    "file": "stage1/cohere/gitignore/gitignore.ts",
+    "line": 565,
+    "declaration": "function cleanRelative(relative: string): string {"
+  },
+  {
+    "file": "stage1/cohere/gitignore/gitignore.ts",
+    "line": 579,
+    "declaration": "function isCleanRelative(relative: string): boolean {"
+  },
+  {
+    "file": "stage1/cohere/gitignore/gitignore.ts",
+    "line": 598,
+    "declaration": "export function joinRelative(directory: string, name: string): string {"
+  },
+  {
+    "file": "stage1/cohere/gitignore/gitignore.ts",
+    "line": 606,
+    "declaration": "function displayDirectory(directory: string): string {"
+  },
+  {
+    "file": "stage1/cohere/gitignore/gitignore.ts",
+    "line": 614,
+    "declaration": "function cutPrefix(text: string, prefix: string): readonly [string, boolean] {"
+  },
+  {
+    "file": "stage1/cohere/gitignore/gitignore.ts",
+    "line": 622,
+    "declaration": "function trimPrefix(text: string, prefix: string): string {"
+  },
+  {
+    "file": "stage1/cohere/gitignore/gitignore.ts",
+    "line": 627,
+    "declaration": "function trimSuffix(text: string, suffix: string): string {"
+  },
+  {
+    "file": "stage1/cohere/gitignore/gitignore.ts",
+    "line": 632,
+    "declaration": "function hexDigit(value: number): string {"
+  },
+  {
+    "file": "stage1/cohere/gitignore/gitignore.ts",
+    "line": 640,
+    "declaration": "function quote(text: string): string {"
+  }
+]

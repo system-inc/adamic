@@ -1,0 +1,146 @@
+Unit u092: all 34 requested Test names exist; two grouped rows.
+Base 3a1c8b5792fb66503290d2d494ce96302bc4386d; nproc 5; warm toolchain.
+Whole-package clean baseline passed in 28.427 seconds; no skips.
+Four native-port mutants killed only by the shard family, package-unique after grouping.
+Verdicts: shard family sacred; planted-disagreement row witness.
+
+[
+  {
+    "test": "TestFormatfilesShardPlantedDisagreement",
+    "package": "stage1/cohere/formatfiles",
+    "file": "stage1/cohere/formatfiles/formatfiles_shards_test.go:207",
+    "seconds": 0.007,
+    "oracle": "Self-written expectation that one planted output difference is caught only by its hash-assigned owner. W01 disables firstDifference; the witness then fails.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W01: formatfiles_shards_test.go:232: caught by [], want only 4",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/formatfiles/ -run ^TestFormatfilesShardPlantedDisagreement$; formatfiles_shards_test.go:232: caught by [], want only 4"
+  },
+  {
+    "test": "TestThePortParsesAsGoCohereDoes family",
+    "package": "stage1/cohere/formatfiles",
+    "file": "stage1/cohere/formatfiles/formatfiles_shards_test.go:239",
+    "members": [
+      "TestThePortParsesAsGoCohereDoes_000",
+      "TestThePortParsesAsGoCohereDoes_001",
+      "TestThePortParsesAsGoCohereDoes_002",
+      "TestThePortParsesAsGoCohereDoes_003",
+      "TestThePortParsesAsGoCohereDoes_004",
+      "TestThePortParsesAsGoCohereDoes_005",
+      "TestThePortParsesAsGoCohereDoes_006",
+      "TestThePortParsesAsGoCohereDoes_007",
+      "TestThePortParsesAsGoCohereDoes_008",
+      "TestThePortParsesAsGoCohereDoes_009",
+      "TestThePortParsesAsGoCohereDoes_010",
+      "TestThePortParsesAsGoCohereDoes_011",
+      "TestThePortParsesAsGoCohereDoes_012",
+      "TestThePortParsesAsGoCohereDoes_013",
+      "TestThePortParsesAsGoCohereDoes_014",
+      "TestThePortParsesAsGoCohereDoes_015",
+      "TestThePortParsesAsGoCohereDoes_016",
+      "TestThePortParsesAsGoCohereDoes_017",
+      "TestThePortParsesAsGoCohereDoes_018",
+      "TestThePortParsesAsGoCohereDoes_019",
+      "TestThePortParsesAsGoCohereDoes_020",
+      "TestThePortParsesAsGoCohereDoes_021",
+      "TestThePortParsesAsGoCohereDoes_022",
+      "TestThePortParsesAsGoCohereDoes_023",
+      "TestThePortParsesAsGoCohereDoes_024",
+      "TestThePortParsesAsGoCohereDoes_025",
+      "TestThePortParsesAsGoCohereDoes_026",
+      "TestThePortParsesAsGoCohereDoes_027",
+      "TestThePortParsesAsGoCohereDoes_028",
+      "TestThePortParsesAsGoCohereDoes_029",
+      "TestThePortParsesAsGoCohereDoes_030",
+      "TestThePortParsesAsGoCohereDoes_031",
+      "TestThePortParsesAsGoCohereDoesUnion"
+    ],
+    "seconds": 20.682,
+    "oracle": "Go cohere executes the same fixture trees and emits expected bytes. Native, port-on-Node and JavaScript backend stdout must match; exits/stderr checked. Self-written corpus coverage, embedded mutant-disagreement expectations and zero-leak contract are additional checks. Embedded disagreement checks accept an empty driver under P01.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M01",
+      "M02",
+      "M03",
+      "M04"
+    ],
+    "unique_kills": [
+      "M01",
+      "M02",
+      "M03",
+      "M04"
+    ],
+    "last_proven_fail": "M04: formatfiles_check_test.go:41: native and Go cohere differ: line 474: \"has \\\"/tmp/adamic-gate/formatfiles-shared-3998048330/fixture-2738120353/trees/generated-202/build/build/Z/del\\\\u007F.ts\\\" 0\", Go cohere \"has \\\"/tmp/adamic-gate/formatfiles-shared-3998048330/fixture-2738120353/trees/generated-202/build/build/Z/del\\\\u007f.ts\\\" 0\"",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "vacuous_subcases": [
+      "Embedded mutant-disagreement checks for all 12 built-in mutants: 24 native/Node comparisons accept empty output under P01."
+    ],
+    "probe_exempt_members": [
+      "TestThePortParsesAsGoCohereDoesUnion: construction-only member does not execute the port entry."
+    ],
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/formatfiles/ -run .; /tmp/u092/mutant contains M04; formatfiles_check_test.go:41: native and Go cohere differ: line 474: \"has \\\"/tmp/adamic-gate/formatfiles-shared-3998048330/fixture-2738120353/trees/generated-202/build/build/Z/del\\\\u007F.ts\\\" 0\", Go cohere \"has \\\"/tmp/adamic-gate/formatfiles-shared-3998048330/fixture-2738120353/trees/generated-202/build/build/Z/del\\\\u007f.ts\\\" 0\"",
+    "union_construction_evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/formatfiles/ -run ^TestThePortParsesAsGoCohereDoesUnion$; formatfiles_shards_test.go:401: invalid leaf declaration \"TestThePortParsesAsGoCohereDoes_031\""
+  }
+]
+
+| ID | origin/main location | One-line change | Failed grouped rows | Failed leaves |
+|---|---|---|---|---|
+| M01 | stage1/cohere/formatfiles/enumerate.ts:365 | `enumeration.walked++;` to `enumeration.walked += 2;` | TestThePortParsesAsGoCohereDoes family | 32 |
+| M02 | stage1/cohere/formatfiles/disk.ts:55 | `return status.kind === 'Ok' && status.type === 'directory';` to `return status.kind === 'Ok' && status.type === 'file';` | TestThePortParsesAsGoCohereDoes family | 28 |
+| M03 | stage1/cohere/formatfiles/golang.ts:16 | `character === 'İ' ? 'i' : character.toLowerCase()` to `character === 'İ' ? 'j' : character.toLowerCase()` | TestThePortParsesAsGoCohereDoes family | 16 |
+| M04 | stage1/cohere/formatfiles/main.ts:38 | `const hexDigits = '0123456789abcdef';` to `const hexDigits = '0123456789ABCDEF';` | TestThePortParsesAsGoCohereDoes family | 29 |
+
+Survivors: none among the four production mutants. Every run completed below 90 seconds. No equivalent candidates claimed.
+
+Findings, scope and brief complications:
+- The brief cites origin/main 8de93800f4; fetched main was 3a1c8b5792fb66503290d2d494ce96302bc4386d. All 34 named functions still exist in formatfiles_shards_test.go. No moved or vanished names. The introduction says two rows and the end lists 34 functions; grouping gives one witness and one family.
+- The Union has distinct construction assertions while the family rule explicitly names numbered shards plus union as a family. Following that explicit shape and the brief's two-row scope, Union is included as a construction member. Its S01 failure is reported separately and never supports the family's sacred verdict. It does not execute the port, so the port-entry probe is not its own entry probe.
+- CODE UNDER TEST: formatfiles .ts port, main.ts module entry, imported gitignore path/glob/matcher code. The production declaration inventory is source-function-inventory.json. observed-functions.json plus node-coverage.json.gz record 155 observed V8 function entries across original and built-in-mutant TypeScript module copies, including module bodies and callbacks. These entries are not claimed to be 155 unique source declarations. The witness checks the suite's firstDifference comparison.
+- ORACLE: original Go cohere formatfiles operates on the same on-disk trees and emits byte-for-byte expected output. No Go cohere, oracle script, corpus or assertion was mutated for production evidence. Native products were rebuilt for each standalone .ts mutant; all compiled successfully before the switch matrix. All four faults were caught in native output, and also by Node/backend comparisons.
+- Whole package has 50 top-level Tests. Each matrix run used -run . with count=1 and a 90-second binary timeout. None cooked or panicked. Only numbered shard leaves failed. Grouping makes each mutant a single-family kill and therefore package-unique. Repo-wide uniqueness is left for central replay; no other Adamic package was tested. The Go cohere child oracle is required by this package's own tests, not a broad repo replay.
+- Four fixed menu mutations span enumeration accounting, disk classification, Unicode lowercase mapping and escaped output. The approximate six-mutant target for two rows conflicts with the at-most-four rebuild advice; the witness is not a production row in any event. No inserted production statement supports a verdict.
+- Existing built-in port mutation sites must remain present: otherwise the suite fails during preparation rather than on an answer. All four audit edits avoid those exact-match sites. The scratch selector is read from /tmp/u092/mutant by the port. Its helper statements are scaffolding, absent from standalone diffs; the neutral switched whole-package baseline passed before any selected mutation ran.
+- The port's entry is top-level module execution, not a named main function. P01 removes the whole executable driver from const casesPath onward, leaving declarations/imports and producing no output with exit zero. Its standalone native build passed. Every execution shard rejects it; Union passes because it checks partition construction rather than executing the entry. Family vacuity is false.
+- P01 exposes a narrower weakness: all twelve built-in mutant-disagreement checks accept empty output as a successful difference, 24 comparisons total across native and Node. Example: formatfiles_check_test.go:96: natively, caught: line 1: "", Go cohere "tree cohere 0". The ordinary baseline comparisons reject that output, so this is a vacuous embedded check finding, not a vacuous whole family.
+- W01 returns an empty difference from firstDifference, leaving witness planting and ownership assertions intact. The witness fails with caught by [], want only 4. Its failures under production mutations do not count; only this weakened-comparison run establishes witness.
+- S01 changes the construction shard count from 32 to 31. Union fails on the existing _031 declaration. This is separately permitted setup evidence and is never counted as a production kill.
+- The family combines external-run Go comparisons with self-written coverage and disagreement expectations. Its leak check also relies on success status from LeakSanitizer on Linux. The exact-output oracle distinguishes M04's changed escape spelling while output remains successful; this is not merely a count/exit-code catch.
+- No opt-in, skipped row or missing-tool skip occurred in clean, matrix or probe runs. Warm toolchain setup was skipped; npm ci ran before the baseline. Tests use warm product caching but always regenerate the current port IR and source-dependent keys. Port selector values are runtime inputs, so switched products can be reused safely. No compiler code was mutated and no stale native product was used.
+- Rebuild measurements are full native-product test command wall times, including lowering and C emission plus Go command overhead, not isolated clang time. The switch baseline includes building all switched products. Matrix runs reuse those unchanged switched products. Distinct standalone validation caches are listed in mutant-plan.json.
+- The complete restored-source package passed again in 17.698 binary seconds. Runtime leak behavior on Darwin, ungenerated seeds, larger corpora and repo-wide replay were not covered. No permission or automatic-review block occurred.
+
+Timing:
+Toolchain setup skipped; nproc 5. npm ci installed 3 packages in 0.378 s. Clean package binary 28.427 s.
+witness: samples [0.008, 0.007, 0.007], median 0.007 s.
+family: samples [20.682, 21.636, 19.879], median 20.682 s.
+M01: standalone native rebuild command wall 5.388 s.
+M02: standalone native rebuild command wall 5.590 s.
+M03: standalone native rebuild command wall 5.327 s.
+M04: standalone native rebuild command wall 5.309 s.
+M01: matrix command wall 21.553 s.
+M02: matrix command wall 21.739 s.
+M03: matrix command wall 20.745 s.
+M04: matrix command wall 21.931 s.
+P01 command wall 14.828 s.
+Restored whole-package command wall 19.551 s. Exact binary elapsed and switch build measurements are preserved in their JSON/logs.

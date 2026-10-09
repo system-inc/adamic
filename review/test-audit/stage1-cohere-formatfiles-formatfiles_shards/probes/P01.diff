@@ -1,0 +1,95 @@
+--- a/stage1/cohere/formatfiles/main.ts
++++ b/stage1/cohere/formatfiles/main.ts
+@@ -132,92 +132,3 @@
+ 	return [...counts.keys()].sort(compareCodePoints);
+ }
+ 
+-const casesPath = programArguments()[0] ?? panic('usage: main.ts <cases file>');
+-const read = readTextFile(casesPath);
+-if (read.kind === 'Error') {
+-	panic(read.message);
+-}
+-
+-let handled: readonly string[] = [];
+-let root = '';
+-for (const line of read.text.split('\n')) {
+-	if (line === '') {
+-		continue;
+-	}
+-	const fields = line.split('\t');
+-	switch (fields[0] ?? '') {
+-		case 'handles':
+-			handled = fields.slice(1).map((extension) => unescape(extension));
+-			break;
+-		case 'tree':
+-			console.log(`tree ${field(fields, 1, line)}`);
+-			root = field(fields, 2, line);
+-			break;
+-		case 'house': {
+-			const extensions = handled;
+-			const resolution: Resolution = {
+-				houseIgnoreDeclared: field(fields, 1, line) === '1',
+-				source: field(fields, 2, line),
+-				houseIgnore: fields.slice(3).map((houseLine) => unescape(houseLine)),
+-				ignorePatterns: [],
+-			};
+-			const enumerated = enumerate(root, resolution, (fileName) => extensions.includes(goToLower(ext(fileName))));
+-			if (enumerated.kind === 'Error') {
+-				console.log(`enumerate error ${enumerated.message}`);
+-			} else {
+-				const enumeration = enumerated.enumeration;
+-				console.log(`walked ${enumeration.walked}`);
+-				for (const name of sortedKeys(enumeration.ignoredByLayer)) {
+-					console.log(`layer ${quote(name)} ${enumeration.ignoredByLayer.get(name) ?? 0}`);
+-				}
+-				console.log(`unhandled ${enumeration.unhandled}`);
+-				console.log(`symbolic-links ${enumeration.symbolicLinks}`);
+-				for (const extension of sortedKeys(enumeration.declinedExtensions)) {
+-					console.log(`declined ${quote(extension)} ${enumeration.declinedExtensions.get(extension) ?? 0}`);
+-				}
+-				for (const nested of enumeration.nestedRepositories) {
+-					console.log(`nested ${quote(nested)}`);
+-				}
+-				for (const directory of enumeration.directories) {
+-					console.log(`directory ${quote(directory)}`);
+-				}
+-				for (const ignoreFile of enumeration.ignoreFiles) {
+-					console.log(`ignore-file ${quote(ignoreFile)}`);
+-				}
+-				for (const file of enumeration.files) {
+-					console.log(`file ${quote(file)}`);
+-				}
+-				for (const file of enumeration.adamic) {
+-					console.log(`adamic ${quote(file)}`);
+-				}
+-			}
+-			const below = nestedRepositoriesBelow(root);
+-			if (below.kind === 'Error') {
+-				console.log(`nested-below error ${below.message}`);
+-			} else {
+-				for (const nested of below.nested) {
+-					console.log(`nested-below ${quote(nested)}`);
+-				}
+-			}
+-			break;
+-		}
+-		case 'has': {
+-			const directory = field(fields, 1, line);
+-			console.log(`has ${quote(directory)} ${hasOwnRepository(directory) ? '1' : '0'}`);
+-			break;
+-		}
+-		case 'contains': {
+-			const file = field(fields, 1, line);
+-			console.log(`contains ${quote(file)} ${quote(nestedRepositoryContaining(root, file))}`);
+-			break;
+-		}
+-		case 'boundary': {
+-			const from = field(fields, 1, line);
+-			const to = field(fields, 2, line);
+-			console.log(`boundary ${quote(from)} ${quote(to)} ${repositoryBoundaryBetween(from, to) ? '1' : '0'}`);
+-			break;
+-		}
+-		default:
+-			panic(`an unknown record: ${line}`);
+-	}
+-}

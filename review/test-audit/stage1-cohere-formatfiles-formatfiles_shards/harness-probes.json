@@ -1,0 +1,241 @@
+[
+  {
+    "id": "W01",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/formatfiles/ -run ^TestFormatfilesShardPlantedDisagreement$",
+    "exit": 1,
+    "wall_seconds": 5.087796306999735,
+    "events": [
+      {
+        "Time": "2026-10-09T11:49:11.832925451Z",
+        "Action": "start",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles"
+      },
+      {
+        "Time": "2026-10-09T11:49:11.840033182Z",
+        "Action": "run",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+        "Test": "TestFormatfilesShardPlantedDisagreement"
+      },
+      {
+        "Time": "2026-10-09T11:49:11.840119252Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+        "Test": "TestFormatfilesShardPlantedDisagreement",
+        "Output": "=== RUN   TestFormatfilesShardPlantedDisagreement\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:49:11.840148195Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+        "Test": "TestFormatfilesShardPlantedDisagreement",
+        "Output": "=== PAUSE TestFormatfilesShardPlantedDisagreement\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:49:11.840150469Z",
+        "Action": "pause",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+        "Test": "TestFormatfilesShardPlantedDisagreement"
+      },
+      {
+        "Time": "2026-10-09T11:49:11.840153103Z",
+        "Action": "cont",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+        "Test": "TestFormatfilesShardPlantedDisagreement"
+      },
+      {
+        "Time": "2026-10-09T11:49:11.840154855Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+        "Test": "TestFormatfilesShardPlantedDisagreement",
+        "Output": "=== CONT  TestFormatfilesShardPlantedDisagreement\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:49:11.840160063Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+        "Test": "TestFormatfilesShardPlantedDisagreement",
+        "Output": "    formatfiles_shards_test.go:221: union: 3 trees, 13 modes, 39 unique mode/tree cases, 32 shards\n"
+      },
+      {
+        "Time": "2026-10-09T11:49:11.840162527Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+        "Test": "TestFormatfilesShardPlantedDisagreement",
+        "Output": "    formatfiles_shards_test.go:232: caught by [], want only 4\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T11:49:11.840169067Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+        "Test": "TestFormatfilesShardPlantedDisagreement",
+        "Output": "--- FAIL: TestFormatfilesShardPlantedDisagreement (0.00s)\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:49:11.840172412Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+        "Test": "TestFormatfilesShardPlantedDisagreement",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-09T11:49:11.84018473Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+        "Output": "FAIL\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:49:11.840353214Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+        "Output": "FAIL\tgithub.com/system-inc/adamic/stage1/cohere/formatfiles\t0.007s\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:49:11.84037061Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+        "Elapsed": 0.007
+      }
+    ],
+    "file": "stage1/cohere/formatfiles/formatfiles_test.go",
+    "line": 263,
+    "old": "func firstDifference(got string, want string) string {",
+    "new": "func firstDifference(got string, want string) string { if true {return \"\"};"
+  },
+  {
+    "id": "S01",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/formatfiles/ -run ^TestThePortParsesAsGoCohereDoesUnion$",
+    "exit": 1,
+    "wall_seconds": 6.333680018999985,
+    "events": [
+      {
+        "Time": "2026-10-09T11:49:16.94886029Z",
+        "Action": "start",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles"
+      },
+      {
+        "Time": "2026-10-09T11:49:16.955930735Z",
+        "Action": "run",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+        "Test": "TestThePortParsesAsGoCohereDoesUnion"
+      },
+      {
+        "Time": "2026-10-09T11:49:16.956018997Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+        "Test": "TestThePortParsesAsGoCohereDoesUnion",
+        "Output": "=== RUN   TestThePortParsesAsGoCohereDoesUnion\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:49:16.956043324Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+        "Test": "TestThePortParsesAsGoCohereDoesUnion",
+        "Output": "=== PAUSE TestThePortParsesAsGoCohereDoesUnion\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:49:16.956045627Z",
+        "Action": "pause",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+        "Test": "TestThePortParsesAsGoCohereDoesUnion"
+      },
+      {
+        "Time": "2026-10-09T11:49:16.956048001Z",
+        "Action": "cont",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+        "Test": "TestThePortParsesAsGoCohereDoesUnion"
+      },
+      {
+        "Time": "2026-10-09T11:49:16.956049663Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+        "Test": "TestThePortParsesAsGoCohereDoesUnion",
+        "Output": "=== CONT  TestThePortParsesAsGoCohereDoesUnion\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:49:17.951810718Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+        "Test": "TestThePortParsesAsGoCohereDoesUnion",
+        "Output": "    formatfiles_prepare_test.go:138: build formatfiles-go-oracle e4c2bb911f7f hit 0.99\n"
+      },
+      {
+        "Time": "2026-10-09T11:49:18.298454923Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+        "Test": "TestThePortParsesAsGoCohereDoesUnion",
+        "Output": "    formatfiles_prepare_test.go:138: seed 20261005, 400 generated trees\n"
+      },
+      {
+        "Time": "2026-10-09T11:49:18.314270423Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+        "Test": "TestThePortParsesAsGoCohereDoesUnion",
+        "Output": "    formatfiles_prepare_test.go:139: union: 414 trees, 13 modes, 5382 unique mode/tree cases, 31 shards\n"
+      },
+      {
+        "Time": "2026-10-09T11:49:18.324876677Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+        "Test": "TestThePortParsesAsGoCohereDoesUnion",
+        "Output": "    formatfiles_shards_test.go:371: union: 414 trees, 13 modes, 5382 unique mode/tree cases, 31 shards\n"
+      },
+      {
+        "Time": "2026-10-09T11:49:18.32543079Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+        "Test": "TestThePortParsesAsGoCohereDoesUnion",
+        "Output": "    formatfiles_shards_test.go:401: invalid leaf declaration \"TestThePortParsesAsGoCohereDoes_031\"\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T11:49:18.325496389Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+        "Test": "TestThePortParsesAsGoCohereDoesUnion",
+        "Output": "--- FAIL: TestThePortParsesAsGoCohereDoesUnion (1.37s)\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:49:18.325502128Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+        "Test": "TestThePortParsesAsGoCohereDoesUnion",
+        "Elapsed": 1.37
+      },
+      {
+        "Time": "2026-10-09T11:49:18.325522048Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+        "Output": "FAIL\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:49:18.339424069Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+        "Output": "FAIL\tgithub.com/system-inc/adamic/stage1/cohere/formatfiles\t1.390s\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:49:18.339455556Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+        "Elapsed": 1.391
+      }
+    ],
+    "file": "stage1/cohere/formatfiles/formatfiles_shards_test.go",
+    "line": 28,
+    "old": "const testThePortParsesAsGoCohereDoesShards = 32",
+    "new": "const testThePortParsesAsGoCohereDoesShards = 31"
+  }
+]
