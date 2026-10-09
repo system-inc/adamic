@@ -63,3 +63,7 @@ Source Node was checked with a bounded invocation of Node's `node:module.stripTy
 `export GOPROXY='https://proxy.golang.org|direct'` preceded `timeout 180 bash cloud/setup.sh`. Setup succeeded and printed `/workspace/adamic-tools/env.sh`, sourced for all Go runs. Timing lines: Go and Node ready 0.024 seconds; markdown dependencies ready 0.077; submodules ready 0.081; clang ready 0.179; Go build ready 39.461; test binaries deferred 39.758; build cache warm 39.760; done 39.786. `nproc` printed 5, with `cpu.max` `400000 100000` (four-CPU quota). Go 1.27.1, clang 20.1.8, Node 24.19.0.
 
 This was targeted downstream replay, not a claim about all repo-wide coverage. Full packages, the full gate and stage1 port suites were not run. Integration lane results are recorded alongside this report. All branch changes are `_test.go`, testdata or review evidence.
+
+Lane checks passed: `lane checks 1.4 s: gofmt and tools on 1 Go files, t.Parallel on 1 test packages; vet 1 packages`. Origin/main advanced to `6d890e0129beecb2df9f65c89b7733a6f02b5248` during checks and was merged without conflicts. Its changes were stage1 CSS and lint tests, with no production change to the guarded paths. The new lowering guard and both namespace oracle cases were rerun green on the merged tip (`merged-guard.jsonl`, `merged-downstream.jsonl`).
+
+The first commit attempt failed because the disk was full. Only disposable Go caches from this worker's completed bridge archive measurement were removed, preserving its source and evidence; the commit then succeeded.
