@@ -97,6 +97,10 @@ IN THE SOFTWARE.
     src/builtins/string-repeat.tq, V8 13.6.233.17);
   - positioned String lastIndexOf (`internal/native/runtime/string_search_impl.h`, after
     String::LastIndexOf in Node v24.19.0 deps/v8/src/objects/string.cc);
+  - String generic receiver nullish checks and undefined padding-fill defaults
+    (`internal/lower/library_string.go`, `internal/lower/optional.go`, after
+    ToThisString in `src/codegen/code-stub-assembler.cc` and StringPad in
+    `src/builtins/string-pad.tq`, Node.js v24.19.0's V8);
   - positioned String affixes (`internal/lower/library_string.go`, after
     src/builtins/string-startswith.tq and src/builtins/string-endswith.tq);
   - String well-formed Unicode (`runtime/string_wellformed.c`, after

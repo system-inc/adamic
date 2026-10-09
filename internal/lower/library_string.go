@@ -191,26 +191,16 @@ func (l *lowering) libraryString(node *ast.Node) (ir.Expression, bool, error) {
 			if len(written) == 0 {
 				return nil, true, l.notYet(node, "String.prototype."+method+".call without a present receiver")
 			}
-			proven := l.checker.GetTypeAtLocation(written[0])
+			proven := l.concrete(l.checker.GetTypeAtLocation(written[0]))
 			if proven.Flags()&(checker.TypeFlagsNull|checker.TypeFlagsUndefined) != 0 {
 				return l.stringNullPrototypeCall(node, method, written)
 			}
-			if l.mayBeUndefined(written[0]) {
-				return nil, true, l.notYet(node, "String prototype call on a possibly undefined receiver (dynamic TypeError is not lowered)")
-			}
 			if method == "toString" || method == "valueOf" {
-				if proven.Flags()&checker.TypeFlagsStringLike == 0 {
+				if l.checker.GetNonNullableType(proven).Flags()&checker.TypeFlagsStringLike == 0 {
 					return nil, true, l.notYet(node, "String.prototype."+method+" on a non-string receiver (requires a String internal slot)")
 				}
 			}
-			if of, _ := l.representation(proven); of == ir.Object || of == ir.Array || of == ir.Map {
-				return l.stringObjectPrototypeCall(node, method, written)
-			}
-			value, err := l.stringConversion(written[0])
-			if err != nil {
-				return nil, true, err
-			}
-			return l.libraryStringMethod(node, value, method, written[1:])
+			return l.stringPrototypeCall(node, method, written)
 		}
 	}
 	if of, _ := l.representation(l.checker.GetTypeAtLocation(receiver)); of == ir.String {
@@ -544,17 +534,34 @@ func (l *lowering) stringRawTemplate(node *ast.Node) (ir.Expression, error) {
 	return ir.Concat{Parts: parts}, nil
 }
 
-// .call evaluates every explicit argument before entering the intrinsic's ToPrimitive step.
-func (l *lowering) stringObjectPrototypeCall(node *ast.Node, method string, written []*ast.Node) (ir.Expression, bool, error) {
+// .call evaluates every explicit argument before RequireObjectCoercible and ToString.
+// The nullish test follows V8's ToThisString (code-stub-assembler.cc), Node 24.19.0.
+// Copyright the V8 project authors. BSD-3-Clause; see THIRD_PARTY_NOTICES.md.
+func (l *lowering) stringPrototypeCall(node *ast.Node, method string, written []*ast.Node) (ir.Expression, bool, error) {
 	values := []ir.Expression{}
-	for _, argument := range written {
+	slots := make([]int, len(written))
+	reads := make([]ir.Expression, len(written))
+	for index, argument := range written {
 		value, err := l.expression(argument)
 		if err != nil {
 			return nil, true, err
 		}
-		values = append(values, value)
+		// Undefined literals have neither effects nor a stored slot. Preserve their
+		// identity for optional-argument defaults rather than passing a typed null.
+		if _, missing := value.(ir.Undefined); missing {
+			slots[index] = -1
+			reads[index] = value
+		} else {
+			slots[index] = len(values)
+			values = append(values, value)
+		}
 	}
-	function, reads := l.stringHelper("prototype_primitive", values)
+	function, parameters := l.stringHelper("prototype_primitive", values)
+	for index, slot := range slots {
+		if slot >= 0 {
+			reads[index] = parameters[slot]
+		}
+	}
 	converted, err := l.stringConversionValue(written[0], reads[0])
 	if err != nil {
 		return nil, true, err
@@ -564,7 +571,16 @@ func (l *lowering) stringObjectPrototypeCall(node *ast.Node, method string, writ
 		return nil, true, err
 	}
 	l.result.Functions[function].Returns = result.Type()
-	l.result.Functions[function].Body = []ir.Statement{ir.Return{Value: result}}
+	body := []ir.Statement{}
+	proven := l.concrete(l.checker.GetTypeAtLocation(written[0]))
+	if l.includesUndefined(proven) || l.includesNull(proven) {
+		condition := ir.Expression(ir.IsUndefined{Value: reads[0]})
+		if !reads[0].Type().IsMaybe() {
+			condition = ir.Binary{Operator: ir.Or, Left: condition, Right: ir.IsNull{Value: reads[0]}}
+		}
+		body = append(body, ir.If{Condition: condition, Then: []ir.Statement{l.stringReceiverError(method)}})
+	}
+	l.result.Functions[function].Body = append(body, ir.Return{Value: result})
 	return ir.Call{Function: function, Arguments: values, Returns: result.Type()}, true, nil
 }
 
@@ -665,15 +681,8 @@ func (l *lowering) stringNullPrototypeCall(node *ast.Node, method string, writte
 		}
 	}
 	function, _ := l.stringHelper("null_receiver", values)
-	message := "String.prototype." + method + " called on null or undefined"
-	if method == "toString" || method == "valueOf" {
-		message = "String.prototype." + method + " requires that 'this' be a String"
-	}
 	l.result.Functions[function].Returns = returns
-	l.result.Functions[function].Body = []ir.Statement{ir.Throw{Value: ir.ObjectLiteral{Fields: []ir.Field{
-		{Name: "name", Value: ir.StringConstant{Index: l.constant("TypeError")}},
-		{Name: "message", Value: ir.StringConstant{Index: l.constant(message)}},
-	}}}}
+	l.result.Functions[function].Body = []ir.Statement{l.stringReceiverError(method)}
 	return ir.Call{Function: function, Arguments: values, Returns: returns}, true, nil
 }
 
@@ -681,4 +690,23 @@ func (l *lowering) stringIdentity(value ir.Expression) ir.Expression {
 	function, reads := l.stringHelper("identity", []ir.Expression{value})
 	l.result.Functions[function].Body = []ir.Statement{ir.Return{Value: reads[0]}}
 	return ir.Call{Function: function, Arguments: []ir.Expression{value}, Returns: ir.String}
+}
+
+// RequireObjectCoercible precedes ToString, as in V8's ToThisString builtin.
+func (l *lowering) stringReceiverError(method string) ir.Statement {
+	// V8 installs trimStart/trimEnd as aliases of the older builtin names.
+	if method == "trimStart" {
+		method = "trimLeft"
+	}
+	if method == "trimEnd" {
+		method = "trimRight"
+	}
+	message := "String.prototype." + method + " called on null or undefined"
+	if method == "toString" || method == "valueOf" {
+		message = "String.prototype." + method + " requires that 'this' be a String"
+	}
+	return ir.Throw{Value: ir.MakeError{
+		Name:    ir.StringConstant{Index: l.constant("TypeError")},
+		Message: ir.StringConstant{Index: l.constant(message)},
+	}}
 }
