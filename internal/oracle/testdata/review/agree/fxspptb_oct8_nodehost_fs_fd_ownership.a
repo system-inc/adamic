@@ -1,0 +1,32 @@
+import { Buffer } from 'node:buffer';
+import { mkdtempSync, rmSync, writeFileSync, readFileSync, openSync, closeSync, readSync, writeSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+function code(error: unknown): string { return typeof error === 'object' && error !== null && 'code' in error && typeof error.code === 'string' ? error.code : ''; }
+const root = mkdtempSync(tmpdir() + '/adamic-nodehost-');
+try {
+    const path = root + '/file';
+    writeFileSync(path, 'hello');
+    const fd = openSync(path, 'r');
+    try {
+        try { writeFileSync(fd, Buffer.from('bad')); } catch(error) { if(error instanceof Error) console.log(`write ${code(error)}|${error.message}`); }
+        console.log(`after-error ${readFileSync(fd, 'utf8')}`);
+        console.log(`still-open ${readSync(fd, Buffer.from('x'), 0, 1, 0)}`);
+    } finally { closeSync(fd); }
+    const writefd = openSync(path, 'w');
+    try {
+        try { readFileSync(writefd); } catch(error) { if(error instanceof Error) console.log(`read ${code(error)}|${error.message}`); }
+        console.log(`after-error-write ${writeSync(writefd, 'ok')}`);
+        writeFileSync(writefd, Buffer.from('!'), {flush:true});
+    } finally { closeSync(writefd); }
+    console.log(readFileSync(path, 'utf8'));
+    const anchor = openSync(path, 'r');
+    closeSync(anchor);
+    for(let i = 0; i < 50; i++) {
+        try { readFileSync(root); } catch(error) { if(error instanceof Error && i === 49) console.log(`owned-read ${code(error)}|${error.message}`); }
+        try { writeFileSync(path, Buffer.from('x'), {flag:'r'}); } catch(error) { if(error instanceof Error && i === 49) console.log(`owned-write ${code(error)}|${error.message}`); }
+    }
+    const reused = openSync(path, 'r');
+    console.log(`fd-reused ${reused === anchor}`);
+    closeSync(reused);
+    console.log(readFileSync(path, 'utf8'));
+} finally { rmSync(root, {recursive:true, force:true}); }

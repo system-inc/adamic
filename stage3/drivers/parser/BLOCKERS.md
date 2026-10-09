@@ -1,3 +1,103 @@
+# Area-stack 2c7d9fd2: eight focused probes green, real build checker-red
+
+Fresh compiler scratch is 2c7d9fd22bdd5f2d2d9cda0a892b7ec734c3d758.
+area/library 33982530 (descendant of requested e40216f2) conflicts in 45 paths,
+including lowering, loading and runtime; paths recorded and merge aborted.
+No compiler merge is pushed. SameMap stays unchanged; 65 and 76 are applied.
+The source is the preceding fully validated current-main 89ac4a8c lane tree,
+with erased 65 reapplied, then gathered afresh and byte-audited.
+
+Both split modes stop at debug.ts:113:19 TS2339: captureStackTrace missing on
+ErrorConstructor (second use 114:19). No parser C, clang measurements, binary,
+native dump or native corpus comparison. Attempts take 0.6205s unsplit and
+0.7696s split before clang. Repeat also fails before clang, not a warm build.
+
+| Earlier blocker | Measured result on this scratch |
+|---|---|
+| core.ts:11:52 enum initialization | Still refuses at exactly 11:52 after replacing Debug.fail with a throwing body in a discovery copy. Both enum minimal programs still refuse. |
+| Namespace this/returned method | Declaration probe now compiles and matches Node; byte mutant caught. |
+| Class inside namespace | Declaration probe now compiles and matches Node; byte mutant caught. |
+| Function merged with namespace | Declaration probe now compiles and matches Node; byte mutant caught. |
+| Predicate overload and callback result | Still pass natively with matching output and byte mutants. |
+| Predicate callback parameter | Still refuses at native-predicate-callback-parameter.a:2:90. |
+| arguments.length and function-value forwarding | Both still pass with Node output and byte mutants; forwarding prints 1. |
+| Non-null checked read | Regressed versus prior scratch: now refuses ! at native-nonnull.a:5:16. |
+| Runtime namespace initialization and mutable export | Still refuse in their separate focused probes; three declaration successes do not clear these. |
+
+Eight of 21 focused probes match Node stdout, stderr and exit, and all eight
+one-byte output mutants are caught. Three newly green namespace probes only
+print declaration-loaded messages; method invocation and class instantiation
+semantics are not proved by them. No accepted build has mismatched output.
+MapLike, generic array/brand views, empty generic fallback and both casts still
+refuse; exact diagnostics and prior/current status are in
+[front34 comparison](evidence/front34/comparison.json).
+
+New slice: 27 declaration files, 1993 code declarations, 41857 copied lines,
+2082 byte-audited spans, 79 ordered modules. Full/slice extended Node dumps match:
+36,429,231 bytes, SHA256
+686a89adf8f215a92b3751b02b767fb062d6bc285d63bb4e363b60f16395d615.
+Node-end and both JSDoc mutants are caught on both trees. 65 erases identically;
+76's contract checks and 32 local lane tests pass. Full upstream oracle was not
+rerun: no new adapter edit. Recovery manifest is not rerun; native build is red.
+Exact merge paths, compiler logs, split attempts, Node/probe outputs and the
+single throwing placeholder: [front34 evidence](evidence/front34/README.md).
+
+Earlier units below are historical, not this scratch's pass claims.
+
+---
+
+# Land-area-next 28285421: fresh scratch, native red
+
+records-maplike-library 2648ad33 conflicts in 44 paths, including lowering,
+loading and native. Merge aborted as instructed; compiler is land-area-next
+28285421 alone. No compiler merge is pushed. Adaptations 65 and 76 remain applied,
+sameMap remains unchanged. Both split modes now stop in the checker at
+**debug.ts:113:19 TS2339 captureStackTrace missing on ErrorConstructor**, with the
+second use at 114:19. The previous library scratch's Error fact is absent here.
+No C, clang time, native parser dump or native acceptance corpus is reached.
+
+Earlier families, measured by isolated probes: core.ts:11:52 enum initialization
+persists; all three namespace forms persist. Predicate overload and callback
+result probes now pass, but the predicate callback-parameter probe still refuses.
+arguments.length and its function-value witness both match Node, with byte mutants
+caught (the latter prints 1). Six of twenty focused probes pass; every green has
+identical stdout, stderr and exit, plus a caught one-byte output mutant.
+MapLike and the sameMap/key-array casts still refuse in focused probes.
+
+The fresh byte-audited slice has 27 declaration files, 1993 code declarations,
+41857 copied-span lines and 2082 spans across 79 modules. Extended full/slice Node
+dumps are identical: 36,429,231 bytes, SHA256
+686a89adf8f215a92b3751b02b767fb062d6bc285d63bb4e363b60f16395d615.
+Node-end and both JSDoc mutants are caught on both trees. 76's contract mutants
+and 32 local lane tests pass. No adaptation changes or new API sanctions; prior
+full landing-lane proof remains the baseline. Error-recovery manifest not rerun.
+
+Ten ordered source stops follow, all after row 1 behind uncommitted throwing
+placeholders. Rows 9-10 are observed on helper calls after the enum placeholders;
+the unchanged Map-before-namespace minimal reproduces that namespace preflight.
+Observed column 109 on row 10 maps to original cache initializer column 29.
+Further stubs create TS2454 and an inferred void-result TS2339; an earlier attempt
+also duplicated a helper. These artifacts are excluded, and discovery stops here
+rather than claiming fifteen source failures. Exact diagnostics, failed attempts,
+placeholder patches and merge paths: [front33 evidence](evidence/front33/README.md).
+
+| Order | Original slice location | Exact diagnostic | Minimal program |
+|---|---|---|---|
+| 1 | src/compiler/debug.ts:113:19 | error TS2339: Property 'captureStackTrace' does not exist on type 'ErrorConstructor'. | [native-error-capture-stack.a](native-error-capture-stack.a) |
+| 2 | src/compiler/core.ts:11:52 | stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet | [native-enum-map.a](native-enum-map.a) |
+| 3 | src/compiler/debug.ts:333:29 | stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet | [native-enum-map.a](native-enum-map.a) |
+| 4 | src/compiler/performanceCore.ts:37:37 | stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet | [native-call-before-enum.a](native-call-before-enum.a) |
+| 5 | src/compiler/performance.ts:15:18 | stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet | [native-call-before-enum.a](native-call-before-enum.a) |
+| 6 | src/compiler/performance.ts:16:15 | stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet | [native-enum-map.a](native-enum-map.a) |
+| 7 | src/compiler/performance.ts:17:16 | stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet | [native-enum-map.a](native-enum-map.a) |
+| 8 | src/compiler/performance.ts:18:19 | stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet | [native-enum-map.a](native-enum-map.a) |
+| 9 | src/compiler/core.ts:11:52 | stage 0 can't lower a call before all runtime namespaces are initialized; put namespaces before executable module code yet | [native-map-before-namespace.a](native-map-before-namespace.a) |
+| 10 | src/compiler/debug.ts:333:29 | stage 0 can't lower a call before all runtime namespaces are initialized; put namespaces before executable module code yet | [native-map-before-namespace.a](native-map-before-namespace.a) |
+
+Earlier units below are historical evidence, not this scratch’s green claims.
+
+---
+
 # Current unit: library merge and permanent finite-key contract
 
 Native red on scratch 2d7c31ac (main ffe6efc1 + area/library b05a9306).

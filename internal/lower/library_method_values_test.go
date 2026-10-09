@@ -44,6 +44,8 @@ func TestLibraryMethodValueBoundaries(t *testing.T) {
 		{"const f = Array.prototype.indexOf; f.bind([1]);", "captured receiver"},
 		{"console.log([{x: 1}].map(String).join(','));", "primitive adapter"},
 		{"const f = String.prototype.trim; ['x'].map(f);", "primitive adapter"},
+		// Its own guard, not the later array-of-any refusal, must name the hole-filling call.
+		{"const fill = Array.prototype.fill; const result: number[] = fill.call(new Array<number>(2), 7); console.log(result.join('|'));", "delayed fill of an array with holes"},
 	} {
 		t.Run(test.reason, func(t *testing.T) {
 			t.Parallel()

@@ -1,0 +1,2 @@
+const Debug = { fail: (message?: string): never => { throw new Error("failure"); } };
+console.log("ok");

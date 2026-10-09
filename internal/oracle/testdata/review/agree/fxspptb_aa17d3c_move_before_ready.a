@@ -1,0 +1,16 @@
+// A global moved into a consumed parameter before its declaration has run: JavaScript throws a
+// ReferenceError reading it, before the callee runs. reuse.go refuses to move a checked read.
+interface Tree {
+	value: number;
+	label: string;
+}
+function insert(tree: Tree, value: number): Tree {
+	console.log(`insert ${value}`);
+	return { ...tree, value: value };
+}
+function early(): void {
+	tree = insert(tree, 1);
+}
+early();
+let tree: Tree = { value: 0, label: `root${0}` };
+console.log(`${tree.value}`);

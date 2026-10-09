@@ -1,0 +1,19 @@
+interface Box { readonly name: string }
+function isText(x: string | undefined): x is string;
+function isText(x: string | undefined): boolean {
+  return x === undefined || x.length > 0;
+}
+function describe(b: Box | undefined): string {
+  return b === undefined ? "undefined" : "box " + b.name;
+}
+function f(o: Box | undefined): void {
+  if (isText(o?.name)) {
+    const b: Box = o;
+    console.log("claimed box: " + describe(b));
+    console.log(o === undefined ? "direct: undefined" : "direct: box");
+  } else {
+    console.log("no text");
+  }
+}
+f({ name: "a" });
+f(undefined);

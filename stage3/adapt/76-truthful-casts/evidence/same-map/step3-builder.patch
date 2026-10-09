@@ -1,0 +1,14 @@
+--- main/src/compiler/builder.ts
++++ trial-3/src/compiler/builder.ts
+@@ -534,0 +535,2 @@
++type InternalDiagnosticMessageChain = DiagnosticMessageChain | ReusableDiagnosticMessageChain | ((Omit<DiagnosticMessageChain, "next"> | Omit<ReusableRepopulateInfoChain, "next">) & { next?: InternalDiagnosticMessageChain[] | undefined });
++
+@@ -540 +542 @@
+-): DiagnosticMessageChain {
++): InternalDiagnosticMessageChain {
+@@ -555 +557 @@
+-    return next === chain.next ? chain as DiagnosticMessageChain : { ...chain as DiagnosticMessageChain, next };
++    return next === chain.next ? chain : { ...chain, next };
+@@ -563 +565 @@
+-): DiagnosticMessageChain[] | undefined {
++): InternalDiagnosticMessageChain[] | undefined {

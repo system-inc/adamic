@@ -1,0 +1,9 @@
+--- /workspace/scratch/scanner-escape-stream/comparison-control.stdout	2026-10-08 15:04:21.277324022 +0000
++++ /workspace/scratch/scanner-escape-stream/node-end-mutant.stdout	2026-10-08 15:04:21.493321451 +0000
+@@ -1,5 +1,5 @@
+ pass	true	"/workspace/scratch/native3-full/adapted/src/compiler/_namespaces/ts.moduleSpecifiers.ts"
+-ExportKeyword	0	70	76	1	"export"	"export"
++ExportKeyword	0	70	77	1	"export"	"export"
+ AsteriskToken	76	77	78	0	"*"	"export"
+ FromKeyword	78	79	83	0	"from"	"from"
+ StringLiteral	83	84	108	0	"\"../moduleSpecifiers.js\""	"../moduleSpecifiers.js"

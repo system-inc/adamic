@@ -1,0 +1,21 @@
+{
+  "argv": [
+    "/workspace/adamic-tools/bin/node",
+    "--expose-gc",
+    "/workspace/adamic/stage3/performance/allocation/observe.cjs",
+    "lifetime",
+    "/tmp/allocation-complete/compiler/lifetime",
+    "/tmp/allocation-complete/dependencies/node_modules/typescript/lib/_tsc.js",
+    "-",
+    "-p",
+    "/tmp/allocation-complete/compiler-source/src/compiler",
+    "--noEmit",
+    "--pretty",
+    "false",
+    "--incremental",
+    "false",
+    "--composite",
+    "false"
+  ],
+  "cwd": "/tmp/allocation-complete/compiler-source"
+}

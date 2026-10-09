@@ -1,0 +1,18 @@
+{"order": 13, "file": "scanner.ts", "line": 432, "column": 59, "message": "stage 0 can't lower Object.entries on a shape not proven by a plain literal or its const binding yet", "build_exit": 1, "wall_seconds": 4.5110828790002415}
+NEEDS PLACEHOLDER: /tmp/scanner-next-stub.cjs:2
+const [file,line,col,forceReturn]=process.argv.slice(2);let text=fs.readFileSync(file,'utf8');const sf=ts.createSourceFile(file,text,ts.ScriptTarget.Latest,true);const pos=sf.getPositionOfLineAndCharacter(+line-1,+col-1);let candidates=[];function walk(n){if(n.getStart(sf)<=pos&&pos<n.end && ts.isFunctionLike(n)&&n.body)candidates.push(n);ts.forEachChild(n,walk);}walk(sf);candidates.sort((a,b)=>(Number(ts.isFunctionDeclaration(b))-Number(ts.isFunctionDeclaration(a))) || (a.end-a.pos)-(b.end-b.pos));let n=candidates[0];if(!n)throw Error('no enclosing function');const body=n.body;const name=n.name?.getText(sf)||'<anonymous>';let returnAnnotation=''; if(!n.type && ts.isFunctionDeclaration(n)) { const program=ts.createProgram([file],{strict:true,allowImportingTsExtensions:true,target:ts.ScriptTarget.ESNext,module:ts.ModuleKind.ESNext});const checker=program.getTypeChecker();const source=program.getSourceFile(file);let same;function find(v){if(v.pos===n.pos&&v.kind===n.kind)same=v;ts.forEachChild(v,find);}find(source);const signature=checker.getSignatureFromDeclaration(same);returnAnnotation=': '+checker.typeToString(checker.getReturnTypeOfSignature(signature),same,ts.TypeFormatFlags.NoTruncation)+' '; } if(forceReturn === 'never' && !n.type) returnAnnotation=': never '; let replacement=returnAnnotation+'{ throw new Error("discovery placeholder: '+name+'"); }'; text=text.slice(0,body.getStart(sf))+replacement+text.slice(body.end);if(forceReturn === 'never' && n.type) text=text.slice(0,n.type.getStart(sf))+'never'+text.slice(n.type.end); fs.writeFileSync(file,text);console.log(JSON.stringify({file,line:+line,column:+col,name,removed:body.getText(sf),replacement}));
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  ^
+
+Error: no enclosing function
+    at Object.<anonymous> (/tmp/scanner-next-stub.cjs:2:537)
+    at Module._compile (node:internal/modules/cjs/loader:1872:14)
+    at Object..js (node:internal/modules/cjs/loader:2003:10)
+    at Module.load (node:internal/modules/cjs/loader:1594:32)
+    at Module._load (node:internal/modules/cjs/loader:1396:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+    at node:internal/main/run_main_module:33:47
+
+Node.js v24.19.0
+
+WALK RECORDED 13 stops.

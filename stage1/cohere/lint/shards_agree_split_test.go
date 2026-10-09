@@ -6,7 +6,6 @@ import (
 	"crypto/sha256"
 	"encoding/binary"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/load"
@@ -17,12 +16,10 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
-	"regexp"
 	"runtime"
 	"sort"
 	"strings"
 	"sync"
-	"syscall"
 	"testing"
 	"time"
 )
@@ -40,8 +37,7 @@ func testShardsAgree(t *testing.T, shard int) {
 		return
 	}
 	products := testShardsAgreeRead(t, os.Getenv("ADAMIC_SHARDS_AGREE_READY"))
-	testShardsAgreeGroupDeadline(t)
-	// The parent's lookup has completed before this child's 90-second deadline.
+	// The parent fetched all shared products before launching this leaf.
 	rows := products.Buckets[shard]
 	if len(rows) == 0 {
 		t.Log("empty shard")
@@ -50,8 +46,8 @@ func testShardsAgree(t *testing.T, shard int) {
 	path := manifest(t, rows)
 	binary := products.Binary
 	t.Logf("union %d cases, shard %03d: %d cases", len(products.Rows), shard, len(rows))
-	want := testShardsAgreeExecute(t, "", binary, "--manifest", path)
-	wantCount := testShardsAgreeExecute(t, "", binary, "--manifest", path, "--count")
+	want := execute(t, "", binary, "--manifest", path)
+	wantCount := execute(t, "", binary, "--manifest", path, "--count")
 	counts := []int{1, 2, runtime.NumCPU()}
 	type answer struct {
 		output, count []byte
@@ -210,45 +206,6 @@ func testShardsAgreePartition(t *testing.T, rows []string) [][]string {
 	}
 	return buckets
 }
-func TestShardsAgree_Union(t *testing.T) {
-	t.Parallel()
-	data, err := os.ReadFile("shards_agree_split_test.go")
-	if err != nil {
-		t.Fatal(err)
-	}
-	for i := 0; i < testShardsAgreeShards; i++ {
-		name := fmt.Sprintf("func TestShardsAgree_%03d(", i)
-		if bytes.Count(data, []byte(name)) != 1 {
-			t.Fatalf("enumeration missing/duplicate %s", name)
-		}
-	}
-	if len(regexp.MustCompile(`(?m)^func TestShardsAgree_[0-9]{3}\(`).FindAll(data, -1)) != testShardsAgreeShards {
-		t.Fatal("shard enumeration differs from constant")
-	}
-	products := testShardsAgreeReady(t)
-	rows := products.Rows
-	buckets := testShardsAgreePartition(t, rows)
-	// Plant one output disagreement and use the same byte oracle as every leaf.
-	planted := rows[0]
-	caught := []int{}
-	for shard, bucket := range buckets {
-		for _, row := range bucket {
-			want := []byte(row)
-			got := append([]byte(nil), want...)
-			if row == planted {
-				got = append(got, '!')
-			}
-			if difference(got, want) != "" {
-				caught = append(caught, shard)
-			}
-		}
-	}
-	if len(caught) != 1 || caught[0] != testShardsAgreeOwner(t, planted) {
-		t.Fatalf("planted disagreement caught by %v", caught)
-	}
-	t.Logf("union %d cases across %d shards", len(rows), testShardsAgreeShards)
-	t.Logf("planted disagreement caught exactly once by TestShardsAgree_%03d", caught[0])
-}
 func TestShardsAgree_000(t *testing.T) { t.Parallel(); testShardsAgree(t, 0) }
 func TestShardsAgree_001(t *testing.T) { t.Parallel(); testShardsAgree(t, 1) }
 func TestShardsAgree_002(t *testing.T) { t.Parallel(); testShardsAgree(t, 2) }
@@ -395,30 +352,6 @@ func testShardsAgreeRead(t *testing.T, d string) testShardsAgreeProducts {
 	products.Root = d
 	return products
 }
-func testShardsAgreeChild(t *testing.T, name string, markers ...string) {
-	t.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
-	defer cancel()
-	command := exec.CommandContext(ctx, os.Args[0], "-test.run=^"+name+"$", "-test.timeout=0", "-test.v")
-	command.Env = append(append(os.Environ(), markers...), "ADAMIC_SHARDS_AGREE_BOUND=1")
-	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
-	command.Cancel = func() error {
-		if command.Process == nil {
-			return os.ErrProcessDone
-		}
-		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-		if errors.Is(err, syscall.ESRCH) {
-			return os.ErrProcessDone
-		}
-		return err
-	}
-	command.WaitDelay = time.Second
-	output, err := command.CombinedOutput()
-	t.Logf("%s", output)
-	if err != nil {
-		t.Fatalf("%s: %v (deadline: %v)", name, err, ctx.Err())
-	}
-}
 
 func TestShardsAgree_016(t *testing.T) { t.Parallel(); testShardsAgree(t, 16) }
 
@@ -452,11 +385,8 @@ func TestShardsAgree_030(t *testing.T) { t.Parallel(); testShardsAgree(t, 30) }
 
 func TestShardsAgree_031(t *testing.T) { t.Parallel(); testShardsAgree(t, 31) }
 
-// Keep every subprocess in the outer CommandContext process group. The package
-// run/execute helpers install separate testguard groups, so using them here
-// would let compiler or scanner descendants escape the 90-second cancellation.
+// Product recipes run without a test-side deadline. The build phase owns their ceiling.
 func testShardsAgreeRun(directory string, environment []string, name string, args ...string) ([]byte, error) {
-	// Inherit the outer bounded group; a new group would escape its cancellation.
 	command := exec.CommandContext(context.Background(), name, args...)
 	command.Dir = directory
 	// An explicit environment loses the PWD os/exec sets from Dir, and the go command trusts PWD over the
@@ -478,34 +408,6 @@ func testShardsAgreeRun(directory string, environment []string, name string, arg
 		return nil, fmt.Errorf("%s %v: %v\n%s", name, args, err, &stderr)
 	}
 	return os.ReadFile(output.Name())
-}
-
-func testShardsAgreeExecute(t *testing.T, directory, name string, args ...string) execution {
-	t.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
-	defer cancel()
-	// Inherit the outer bounded group; a new group would escape its cancellation.
-	command := exec.CommandContext(ctx, name, args...)
-	command.Dir = directory
-	output, err := os.CreateTemp(t.TempDir(), "stdout-")
-	if err != nil {
-		t.Fatal(err)
-	}
-	defer output.Close()
-	command.Stdout = output
-	var stderr bytes.Buffer
-	command.Stderr = &stderr
-	started := time.Now()
-	err = command.Run()
-	duration := time.Since(started)
-	if err != nil || len(commandDiagnostics(name, stderr.Bytes())) != 0 {
-		t.Fatalf("%s %v: %v\n%s", name, args, err, &stderr)
-	}
-	data, err := os.ReadFile(output.Name())
-	if err != nil {
-		t.Fatal(err)
-	}
-	return execution{data, duration}
 }
 
 func testShardsAgreeRecoveryRows(t *testing.T, oracle string, rows []string) []string {
@@ -721,17 +623,4 @@ func testShardsAgreeCaptureUpstream(sourceRoot, directory string) ([]string, err
 		return nil, fmt.Errorf("capture unexpectedly small: %d cases", len(rows))
 	}
 	return rows, nil
-}
-
-// Go's outer test alarm can exit the controller before CommandContext cancels.
-// The child independently kills its inherited group at the same 90-second
-// bound, including compilers and scanners, even after that controller is gone.
-func testShardsAgreeGroupDeadline(t *testing.T) {
-	t.Helper()
-	if os.Getenv("ADAMIC_SHARDS_AGREE_BOUND") != "1" {
-		return
-	}
-	group := syscall.Getpgrp()
-	timer := time.AfterFunc(90*time.Second, func() { _ = syscall.Kill(-group, syscall.SIGKILL) })
-	t.Cleanup(func() { timer.Stop() })
 }

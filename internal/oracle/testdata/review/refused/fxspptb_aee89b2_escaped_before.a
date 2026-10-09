@@ -1,0 +1,28 @@
+// The caller lets the parent escape into a global; a function value then adds a fresh child to it
+// (a proven write the caller can't see); the caller hands that child and the parent to a helper.
+interface Node {
+	readonly kind: string;
+	readonly nodes: Node[];
+}
+let saved: Node = { kind: 'empty', nodes: [] };
+function addChild(parent: Node, child: Node): void {
+	parent.nodes.push(child); // closes the cycle
+}
+function run(n: number, grow: () => void): number {
+	const root: Node = { kind: `r${n}`, nodes: [] };
+	saved = root;
+	grow();
+	const first = root.nodes[0];
+	if (first !== undefined) {
+		addChild(first, root);
+	}
+	return root.nodes.length;
+}
+let total = 0;
+for (let i = 0; i < 100; i++) {
+	total += run(i, () => {
+		saved.nodes.push({ kind: `z${i}`, nodes: [] });
+	});
+}
+saved = { kind: 'cleared', nodes: [] };
+console.log(`${total}`);

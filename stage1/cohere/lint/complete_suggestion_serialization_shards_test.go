@@ -94,7 +94,11 @@ func completeSuggestionPrepare(t *testing.T) {
 	directory := completeSuggestionFixture(t, false)
 	p.directory = directory
 	source := filepath.Join(directory, "suggestions.ts")
-	if err := os.WriteFile(source, []byte("/*😀*/debugger;\n"), 0644); err != nil {
+	text, err := os.ReadFile("testdata/serialization/audit-columns.ts.txt")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(source, text, 0644); err != nil {
 		t.Fatal(err)
 	}
 	p.path = filepath.Join(directory, "manifest.txt")
