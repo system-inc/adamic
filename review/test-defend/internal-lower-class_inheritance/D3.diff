@@ -1,0 +1,13 @@
+diff --git a/internal/lower/class_generic_calls.go b/internal/lower/class_generic_calls.go
+index 06c67091..c5a18d39 100644
+--- a/internal/lower/class_generic_calls.go
++++ b/internal/lower/class_generic_calls.go
+@@ -48,7 +48,7 @@ func (l *lowering) classGenericCall(node *ast.Node) (ir.Expression, bool, error)
+ 		targets = append(targets, target)
+ 		key += "," + strconv.Itoa(int(target.Id()))
+ 	}
+-	mapper := newTypeMapper(sources, targets)
++	mapper := newTypeMapper(targets, sources)
+ 	if err := l.nominalTypeArguments(declaration, targets, mapper, node); err != nil {
+ 		return nil, true, err
+ 	}

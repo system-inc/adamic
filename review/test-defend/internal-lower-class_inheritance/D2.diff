@@ -1,0 +1,12 @@
+diff --git a/internal/lower/class_generic_calls.go b/internal/lower/class_generic_calls.go
+index 06c67091..5bceee99 100644
+--- a/internal/lower/class_generic_calls.go
++++ b/internal/lower/class_generic_calls.go
+@@ -64,7 +64,6 @@ func (l *lowering) classGenericCall(node *ast.Node) (ir.Expression, bool, error)
+ 		l.classGenericInstances[key] = bucket
+ 	}
+ 	outerMapper, outerInstances := l.typeMapper, l.genericInstances
+-	l.typeMapper, l.genericInstances = mapper, bucket
+ 	defer func() { l.typeMapper, l.genericInstances = outerMapper, outerInstances }()
+ 	value, err := l.call(node)
+ 	return value, true, err
