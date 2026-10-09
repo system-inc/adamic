@@ -28,8 +28,7 @@ func TestMarkdownQuoteLayout(t *testing.T) {
 }
 
 func TestMarkdownTableLayout(t *testing.T) {
-	parallelMarkdown(t)
-	testBlockLayout(t, "tables")
+	testMarkdownTableLayout(t)
 }
 
 func TestMarkdownCodeBlockLayout(t *testing.T) {
