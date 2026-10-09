@@ -1,0 +1,27 @@
+{"Time":"2026-10-09T10:29:53.22040264Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T10:29:53.22769871Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionGapsAreLoud"}
+{"Time":"2026-10-09T10:29:53.227768744Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionGapsAreLoud","Output":"=== RUN   TestNestedFunctionGapsAreLoud\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:29:53.227790726Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionGapsAreLoud","Output":"=== PAUSE TestNestedFunctionGapsAreLoud\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:29:53.22779305Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionGapsAreLoud"}
+{"Time":"2026-10-09T10:29:53.227796946Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionGapsAreLoud"}
+{"Time":"2026-10-09T10:29:53.227798698Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionGapsAreLoud","Output":"=== CONT  TestNestedFunctionGapsAreLoud\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:29:53.227801212Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionGapsAreLoud/block"}
+{"Time":"2026-10-09T10:29:53.227802794Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionGapsAreLoud/block","Output":"=== RUN   TestNestedFunctionGapsAreLoud/block\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:29:53.258424408Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionGapsAreLoud/block","Output":"    nested_functions_test.go:27: want NotYet \"block-scoped nested\", got \u003cnil\u003e\n","OutputType":"error"}
+{"Time":"2026-10-09T10:29:53.258497937Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionGapsAreLoud/block","Output":"--- FAIL: TestNestedFunctionGapsAreLoud/block (0.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:29:53.258502634Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionGapsAreLoud/block","Elapsed":0.03}
+{"Time":"2026-10-09T10:29:53.258520821Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionGapsAreLoud/generic"}
+{"Time":"2026-10-09T10:29:53.258523615Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionGapsAreLoud/generic","Output":"=== RUN   TestNestedFunctionGapsAreLoud/generic\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:29:53.278977098Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionGapsAreLoud/generic","Output":"    nested_functions_test.go:27: want NotYet \"generic function as a value\", got \u003cnil\u003e\n","OutputType":"error"}
+{"Time":"2026-10-09T10:29:53.283078486Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionGapsAreLoud/generic","Output":"--- FAIL: TestNestedFunctionGapsAreLoud/generic (0.02s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:29:53.283097014Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionGapsAreLoud/generic","Elapsed":0.02}
+{"Time":"2026-10-09T10:29:53.283102672Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionGapsAreLoud/dynamic_this"}
+{"Time":"2026-10-09T10:29:53.283104815Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionGapsAreLoud/dynamic_this","Output":"=== RUN   TestNestedFunctionGapsAreLoud/dynamic_this\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:29:53.301702924Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionGapsAreLoud/dynamic_this","Output":"    nested_functions_test.go:27: want NotYet \"dynamic this\", got \u003cnil\u003e\n","OutputType":"error"}
+{"Time":"2026-10-09T10:29:53.301744586Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionGapsAreLoud/dynamic_this","Output":"--- FAIL: TestNestedFunctionGapsAreLoud/dynamic_this (0.02s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:29:53.301748762Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionGapsAreLoud/dynamic_this","Elapsed":0.02}
+{"Time":"2026-10-09T10:29:53.301773699Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionGapsAreLoud","Output":"--- FAIL: TestNestedFunctionGapsAreLoud (0.07s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:29:53.30181478Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionGapsAreLoud","Elapsed":0.07}
+{"Time":"2026-10-09T10:29:53.301817103Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:29:53.303581023Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.083s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:29:53.303604558Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.083}

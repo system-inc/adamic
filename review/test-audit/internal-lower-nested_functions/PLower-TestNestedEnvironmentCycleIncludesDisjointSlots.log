@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T10:29:58.52748756Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T10:29:58.53410717Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedEnvironmentCycleIncludesDisjointSlots"}
+{"Time":"2026-10-09T10:29:58.534172196Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedEnvironmentCycleIncludesDisjointSlots","Output":"=== RUN   TestNestedEnvironmentCycleIncludesDisjointSlots\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:29:58.534848817Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedEnvironmentCycleIncludesDisjointSlots","Output":"=== PAUSE TestNestedEnvironmentCycleIncludesDisjointSlots\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:29:58.534861196Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedEnvironmentCycleIncludesDisjointSlots"}
+{"Time":"2026-10-09T10:29:58.534864821Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedEnvironmentCycleIncludesDisjointSlots"}
+{"Time":"2026-10-09T10:29:58.534866814Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedEnvironmentCycleIncludesDisjointSlots","Output":"=== CONT  TestNestedEnvironmentCycleIncludesDisjointSlots\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:29:58.561676352Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedEnvironmentCycleIncludesDisjointSlots","Output":"    nested_functions_test.go:95: want complete environment cycle refusal, got \u003cnil\u003e\n","OutputType":"error"}
+{"Time":"2026-10-09T10:29:58.561809519Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedEnvironmentCycleIncludesDisjointSlots","Output":"--- FAIL: TestNestedEnvironmentCycleIncludesDisjointSlots (0.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:29:58.561848146Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedEnvironmentCycleIncludesDisjointSlots","Elapsed":0.03}
+{"Time":"2026-10-09T10:29:58.561868817Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:29:58.562951353Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.035s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:29:58.562970712Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.036}

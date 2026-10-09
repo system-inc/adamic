@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T10:29:55.052809377Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T10:29:55.061419561Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionCycleIsRefused"}
+{"Time":"2026-10-09T10:29:55.061481182Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionCycleIsRefused","Output":"=== RUN   TestNestedFunctionCycleIsRefused\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:29:55.061502764Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionCycleIsRefused","Output":"=== PAUSE TestNestedFunctionCycleIsRefused\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:29:55.061505188Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionCycleIsRefused"}
+{"Time":"2026-10-09T10:29:55.061514412Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionCycleIsRefused"}
+{"Time":"2026-10-09T10:29:55.061589202Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionCycleIsRefused","Output":"=== CONT  TestNestedFunctionCycleIsRefused\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:29:55.091322046Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionCycleIsRefused","Output":"    nested_functions_test.go:44: want cycle refusal, got \u003cnil\u003e\n","OutputType":"error"}
+{"Time":"2026-10-09T10:29:55.091517135Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionCycleIsRefused","Output":"--- FAIL: TestNestedFunctionCycleIsRefused (0.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:29:55.091521301Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionCycleIsRefused","Elapsed":0.03}
+{"Time":"2026-10-09T10:29:55.091542522Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:29:55.092658929Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.039s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:29:55.092677016Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.04}
