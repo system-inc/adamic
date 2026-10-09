@@ -8,6 +8,7 @@ import (
 	"testing"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/load"
 )
 
@@ -90,6 +91,7 @@ console.log(typeof make());`
 	checked, release := program.Checker(context.Background(), file)
 	defer release()
 	l := &lowering{program: program, checker: checked}
+	requireClockSignaturePositiveControl(t)
 	found := false
 	var visit ast.Visitor
 	visit = func(node *ast.Node) bool {
@@ -128,6 +130,7 @@ console.log(typeof make());`
 	checked, release := program.Checker(context.Background(), file)
 	defer release()
 	l := &lowering{program: program, checker: checked}
+	requireClockSignaturePositiveControl(t)
 	found := false
 	var visit ast.Visitor
 	visit = func(node *ast.Node) bool {
@@ -145,4 +148,22 @@ console.log(typeof make());`
 	if !found {
 		t.Fatal("missing checked make signature")
 	}
+}
+
+// The rejecting proof must still admit its supported finite object signature.
+func requireClockSignaturePositiveControl(t *testing.T) {
+	t.Helper()
+	graph, statements := namespaceGraphForTest(t, `interface Base<T> { readonly token: T; }
+ function make(): (Base<"="> & { readonly left: { readonly text: string } }) | undefined { return undefined; }`)
+	for _, node := range statements {
+		if node.Kind == ast.KindFunctionDeclaration {
+			checked := graph.lowering.checker
+			result := checked.GetReturnTypeOfSignature(checked.GetSignatureFromDeclaration(node))
+			if held, known := graph.lowering.clockGenericReturnsT01(result); !known || held != ir.Object {
+				t.Fatalf("supported signature lost its object representation: held=%v known=%t", held, known)
+			}
+			return
+		}
+	}
+	t.Fatal("missing supported make signature")
 }

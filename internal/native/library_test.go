@@ -47,6 +47,24 @@ func TestRuntimeKeyIncludesEveryInput(t *testing.T) {
 	}
 }
 
+// Inputs that join to the same bytes must still key apart, or one runtime is served another's
+// library. Each pair below keeps the count of parts the same, so only the boundaries differ.
+func TestRuntimeKeyKeepsBoundaries(t *testing.T) {
+	t.Parallel()
+	files := []runtimeFile{{"a.c", []byte("int a;\n")}}
+	if runtimeKey(files, []string{"a", "bc"}, "clang", "version 1") == runtimeKey(files, []string{"ab", "c"}, "clang", "version 1") {
+		t.Error(`flags ["a" "bc"] and ["ab" "c"] share a key`)
+	}
+	if runtimeKey(files, nil, "clang", "version 1") == runtimeKey(files, nil, "clangv", "ersion 1") {
+		t.Error(`compiler "clang" with version "version 1" and "clangv" with "ersion 1" share a key`)
+	}
+	split := []runtimeFile{{"a.c", []byte("bc")}}
+	moved := []runtimeFile{{"a.cb", []byte("c")}}
+	if runtimeKey(split, nil, "clang", "version 1") == runtimeKey(moved, nil, "clang", "version 1") {
+		t.Error(`file "a.c" holding "bc" and "a.cb" holding "c" share a key`)
+	}
+}
+
 // Count is checked in the linked runtime itself, not merely in a comparison of keys. Build an
 // uncounted library first: a key missing ADAMIC_COUNT would reuse it and silently lose the report.
 func TestRuntimeCacheKeepsCountFlags(t *testing.T) {

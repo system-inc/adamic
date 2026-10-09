@@ -282,6 +282,54 @@ int main(int argc,char **argv) {
 	}
 }
 
+// Jump chains plus match have exact instruction counts, independent of scanning,
+// backtracking and the compiler's regexp optimizations.
+func TestRegExpNativeStepLimitBoundary(t *testing.T) {
+	t.Parallel()
+	const source = `#include "adamic.h"
+#include <stdio.h>
+#include <stdlib.h>
+static const adamic_regex_instruction two[] = {{.op=3,.x=1},{.op=0}};
+static const adamic_regex_instruction four[] = {{.op=3,.x=1},{.op=3,.x=2},{.op=3,.x=3},{.op=0}};
+static const adamic_regex_program programs[] = {{.code=two},{.code=four}};
+int main(int argc, char **argv) {
+ adamic_start(argc,argv);
+ adamic_regex_set_step_limit(strtoull(argv[2],NULL,10));
+ adamic_object *regex=adamic_regex_new(&programs[atoi(argv[1])],&adamic_string_empty,&adamic_string_empty);
+ bool matched=adamic_regex_test(regex,&adamic_string_empty);
+ adamic_release(regex);
+ printf("matched %d\n",matched);
+ return 0;
+}
+`
+	binary := filepath.Join(t.TempDir(), "boundary")
+	if err := Build(source, binary, Options{Sanitize: true}); err != nil {
+		t.Fatal(err)
+	}
+	for index, steps := range []int{2, 4} {
+		for _, limit := range []int{steps, steps - 1} {
+			ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+			command := exec.CommandContext(ctx, binary, fmt.Sprint(index), fmt.Sprint(limit))
+			// Panic terminates before cleanup; successful cases retain leak detection.
+			if limit < steps {
+				command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=0")
+			}
+			output, err := command.CombinedOutput()
+			cancel()
+			if limit == steps {
+				if err != nil || string(output) != "matched 1\n" {
+					t.Errorf("%d instructions at limit %d: want matched 1, got exit=%v output=%q", steps, limit, err, output)
+				}
+			} else {
+				var exit *exec.ExitError
+				if !errors.As(err, &exit) || exit.ExitCode() != 70 || string(output) != "adamic: panic: regexp: instruction step limit exceeded\n" {
+					t.Errorf("%d instructions at limit %d: want exit 70 and step-limit diagnostic, got exit=%v output=%q", steps, limit, err, output)
+				}
+			}
+		}
+	}
+}
+
 // Library IteratorYieldResult types can also describe user objects. Read by
 // field name, and preserve a missing optional done instead of assuming slot zero.
 func TestRegExpIteratorResultShape(t *testing.T) {

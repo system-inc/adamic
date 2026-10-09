@@ -1,0 +1,21 @@
+{"Time":"2026-10-09T10:58:11.30205677Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T10:58:11.309396383Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParserFactoryBindingHoisting"}
+{"Time":"2026-10-09T10:58:11.30947586Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParserFactoryBindingHoisting","Output":"=== RUN   TestParserFactoryBindingHoisting\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:58:11.309494638Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParserFactoryBindingHoisting","Output":"=== PAUSE TestParserFactoryBindingHoisting\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:58:11.309497092Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParserFactoryBindingHoisting"}
+{"Time":"2026-10-09T10:58:11.309499045Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceFactoryBindingsAgreeWithNode"}
+{"Time":"2026-10-09T10:58:11.309501528Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceFactoryBindingsAgreeWithNode","Output":"=== RUN   TestNamespaceFactoryBindingsAgreeWithNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:58:11.309505054Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceFactoryBindingsAgreeWithNode","Output":"=== PAUSE TestNamespaceFactoryBindingsAgreeWithNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:58:11.309506776Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceFactoryBindingsAgreeWithNode"}
+{"Time":"2026-10-09T10:58:11.309509921Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParserFactoryBindingHoisting"}
+{"Time":"2026-10-09T10:58:11.309511573Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParserFactoryBindingHoisting","Output":"=== CONT  TestParserFactoryBindingHoisting\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:58:11.309513857Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceFactoryBindingsAgreeWithNode"}
+{"Time":"2026-10-09T10:58:11.309515739Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceFactoryBindingsAgreeWithNode","Output":"=== CONT  TestNamespaceFactoryBindingsAgreeWithNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:58:11.348388148Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParserFactoryBindingHoisting","Output":"    namespaces_factory_test.go:42: NamespaceVar bindings = map[], want factoryCreateNodeArray and factoryCreateNumericLiteral once each\n","OutputType":"error"}
+{"Time":"2026-10-09T10:58:11.348451001Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParserFactoryBindingHoisting","Output":"--- FAIL: TestParserFactoryBindingHoisting (0.04s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:58:11.440762508Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParserFactoryBindingHoisting","Elapsed":0.04}
+{"Time":"2026-10-09T10:58:11.440818481Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceFactoryBindingsAgreeWithNode","Output":"--- PASS: TestNamespaceFactoryBindingsAgreeWithNode (0.13s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:58:11.440830088Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceFactoryBindingsAgreeWithNode","Elapsed":0.13}
+{"Time":"2026-10-09T10:58:11.440835185Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:58:11.442155754Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.140s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:58:11.442197065Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.14}
