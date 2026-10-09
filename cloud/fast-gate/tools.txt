@@ -19,4 +19,5 @@ sysctl	darwin	command -v sysctl
 leaks	darwin	command -v leaks
 nm	all	command -v nm
 taskset	linux	command -v taskset
+timeout	linux	timeout --version | grep -q coreutils
 bun	optional	true
