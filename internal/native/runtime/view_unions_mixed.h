@@ -2,6 +2,7 @@
 #define ADAMIC_VIEW_UNIONS_MIXED_H
 
 #include "adamic.h"
+#include "view_representations.h"
 
 // Logical kinds, not object storage bytes or heap-header kinds. The common
 // readiness-aware slot probe must normalize a value before calling selection.

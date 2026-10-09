@@ -42,6 +42,9 @@ func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {
 
 func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 	proven = l.concrete(proven)
+	if base := l.phantomBase(proven); base != nil {
+		return l.representation(base)
+	}
 	if kind := l.typedArrayKind(proven); kind != 0 {
 		return kind, true
 	}
@@ -72,7 +75,7 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 		return l.objectIntersection(proven)
 	}
 	switch {
-	case flags&(checker.TypeFlagsUndefined|checker.TypeFlagsVoid) != 0:
+	case flags&(checker.TypeFlagsNull|checker.TypeFlagsUndefined|checker.TypeFlagsVoid) != 0:
 		return ir.Object, true
 	case flags&checker.TypeFlagsNumberLike != 0:
 		return ir.Number, true
@@ -96,17 +99,13 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 		return ir.Closure, true
 	case flags&checker.TypeFlagsUnion != 0:
 		if l.includesNull(proven) && !dynamicObjectType(proven) {
-			// A nullable object reference uses NULL. Null and undefined together need distinct tags.
-			if l.includesUndefined(proven) {
-				return 0, false
-			}
+			// RegExp's native absent-array protocol stays on its existing ABI.
+			regexp := false
 			for _, member := range proven.Types() {
-				if member.Flags()&checker.TypeFlagsNull == 0 {
-					of, known := l.representation(member)
-					if !known || !of.IsReference() || of == ir.String || of == ir.Union {
-						return 0, false
-					}
-				}
+				regexp = regexp || l.isLibraryType(member, "RegExpExecArray", "RegExpMatchArray", "RegExpIndicesArray")
+			}
+			if !regexp {
+				return ir.Union, true
 			}
 		}
 		var shared ir.Type

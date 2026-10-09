@@ -5,6 +5,7 @@ import (
 	"errors"
 	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
@@ -37,8 +38,9 @@ func TestMixedUnionContractGraph(t *testing.T) {
 		`interface Left {readonly left:string} interface Right {readonly right:number} type Target=Left|Right;`,
 	} {
 		t.Run(source, func(t *testing.T) {
-			if viewArrayContractHook == nil && source == `interface Node {readonly ready:boolean} type Target=Node|readonly Node[];` {
-				t.Skip("awaits views-v3 array contract adapter: Node | readonly Node[] member contracts")
+			if strings.Contains(source, "readonly Node[]") {
+				// Array membership needs V3 element-kind metadata and hole-aware reads.
+				t.Skip("acceptance dependency: compiler/views-v3 787cea7a")
 			}
 			l, target, release := mixedUnionLowering(t, source)
 			defer release()
@@ -135,7 +137,6 @@ func TestMixedUnionContractRecursiveMember(t *testing.T) {
 }
 
 func TestMixedUnionContractPhantomBrandUsesPrimitiveBase(t *testing.T) {
-	t.Skip("awaits the V1 primitive-brand prerequisite from d2d3c77e: branded string union member contracts")
 	l, target, release := mixedUnionLowering(t, `type Brand=string&{readonly marker:void}; type Target=Brand|number;`)
 	defer release()
 	node := l.program.Files()[0].Statements.Nodes[0]
@@ -159,7 +160,6 @@ func TestMixedUnionContractPhantomBrandUsesPrimitiveBase(t *testing.T) {
 }
 
 func TestMixedUnionContractPhantomVoidIsUndefined(t *testing.T) {
-	t.Skip("awaits the V1 primitive-brand prerequisite from d2d3c77e: phantom void undefined contracts")
 	l, target, release := mixedUnionLowering(t, `type Target=void&{readonly marker:void};`)
 	defer release()
 	node := l.program.Files()[0].Statements.Nodes[0]
