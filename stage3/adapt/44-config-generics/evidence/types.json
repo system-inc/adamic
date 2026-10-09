@@ -1,0 +1,100 @@
+{
+  "typescript": "6.0.3",
+  "consumerDiagnostics": 0,
+  "genericCallerProbe": "all converter callers accept arbitrary raw types; normalized default union and undefined preserved; narrower subtypes are not promised",
+  "checkerMutant": [
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "code": 2322,
+      "start": 145929,
+      "message": "Type 'string' is not assignable to type 'CompilerOptions'."
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "code": 2322,
+      "start": 156013,
+      "message": "Type 'string' is not assignable to type 'CompilerOptions'."
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "code": 2322,
+      "start": 157180,
+      "message": "Type 'CompilerOptions' is not assignable to type 'string'."
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "code": 2322,
+      "start": 184510,
+      "message": "Type 'string' is not assignable to type 'CompilerOptions'."
+    }
+  ],
+  "subtypeWitness": [
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "code": 2322,
+      "start": 184043,
+      "message": "Type 'CompilerOptions | TypeAcquisition' is not assignable to type '{ strict: true; }'.\n  Type 'CompilerOptions' is not assignable to type '{ strict: true; }'.\n    Types of property 'strict' are incompatible.\n      Type 'boolean | undefined' is not assignable to type 'true'.\n        Type 'undefined' is not assignable to type 'true'."
+    }
+  ],
+  "declined": [
+    {
+      "site": "parseOwnConfigOfJson",
+      "diagnostics": [
+        {
+          "file": "src/compiler/commandLineParser.ts",
+          "code": 2345,
+          "start": 145170,
+          "message": "Argument of type 'TRaw' is not assignable to parameter of type 'object'."
+        },
+        {
+          "file": "src/compiler/commandLineParser.ts",
+          "code": 2339,
+          "start": 145369,
+          "message": "Property 'compilerOptions' does not exist on type 'TRaw'."
+        },
+        {
+          "file": "src/compiler/commandLineParser.ts",
+          "code": 2339,
+          "start": 145492,
+          "message": "Property 'typeAcquisition' does not exist on type 'TRaw'."
+        },
+        {
+          "file": "src/compiler/commandLineParser.ts",
+          "code": 2339,
+          "start": 145609,
+          "message": "Property 'watchOptions' does not exist on type 'TRaw'."
+        },
+        {
+          "file": "src/compiler/commandLineParser.ts",
+          "code": 2339,
+          "start": 145652,
+          "message": "Property 'compileOnSave' does not exist on type 'TRaw'."
+        },
+        {
+          "file": "src/compiler/commandLineParser.ts",
+          "code": 2345,
+          "start": 145703,
+          "message": "Argument of type 'TRaw' is not assignable to parameter of type '{ compileOnSave?: unknown; }'."
+        },
+        {
+          "file": "src/compiler/commandLineParser.ts",
+          "code": 2339,
+          "start": 145765,
+          "message": "Property 'extends' does not exist on type 'TRaw'."
+        },
+        {
+          "file": "src/compiler/commandLineParser.ts",
+          "code": 2339,
+          "start": 145781,
+          "message": "Property 'extends' does not exist on type 'TRaw'."
+        },
+        {
+          "file": "src/compiler/commandLineParser.ts",
+          "code": 2339,
+          "start": 145840,
+          "message": "Property 'extends' does not exist on type 'TRaw'."
+        }
+      ]
+    }
+  ]
+}
