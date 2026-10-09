@@ -1,6 +1,6 @@
 Defender scanner unit at origin/main 76c59c81e8617cea1892a01841494895927a712c: all 29 audit tests still exist, no new top-level tests.
 Two gap rows defended by package-unique D1/D2; profile row not defended after three valid attempts.
-Evidence: test-defend/stage1-typescript-scanner under review/test-defend/stage1-typescript-scanner/.
+Evidence: test-defend/stage1-typescript-scanner under review/test-defend/stage1-typescript-scanner/sessions/gaps-profile-76c59c81/.
 
 ```json
 [
@@ -184,3 +184,7 @@ The standalone rounding witness initially passed a number to console.log, which 
 The bias-to-keep requirement and not-defended verdict are compatible: not defended means these three targeted mutations establish no unique catch, not that the row is useless or may be deleted. No test was deleted, rewritten or weakened. For the undefended row, the name promises snapshots agreeing and the assertion checks complete answer bytes against TypeScript-Go. There is no missing threshold promised by that name. The counted binary is built by Artifacts but omitted from snapshots comparison. The two defended gap names mention where a gap stands, but their assertions check the fixture result and diagnostic What/category rather than asserting diagnostic Where or reading GAPS.md.
 
 Warm tools were used, with no setup script; npm ci ran in stage3/api. The baseline took 39.026 binary seconds. Coverage commands took 39.092 wall seconds. Valid matrix commands including validation took 216.266 wall seconds; per-run durations are in defense-runs.json. No binary run exceeded 90 seconds; the longest valid mutant binary was 40.335 seconds. nproc=5. Total session approximately 16 minutes. Other package tests and repository-wide uniqueness were not covered.
+
+The push found existing defender work on the same remote branch. This session is kept in sessions/gaps-profile-76c59c81 so the earlier root evidence can be merged unchanged, without force-pushing or overwriting it.
+
+All sixteen members of the named audit subsumer pass D3 and D4 while snapshots fails them. This demonstrates behavior missed by that named family, although performance catches the same mutations and prevents package-unique defense.
