@@ -44,7 +44,7 @@
   },
   {
     "id": "M2",
-    "command": "ADAMIC_TSGO_CORPUS=/tmp/u001/corpus ADAMIC_BUILD_CACHE_DIR=/tmp/u001/cache/M2-final timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run '^(TestTSGoRequiresLink|TestBridgeUnitsCoverEveryPiece|TestBridgeProductCacheIsVerified)$' (standalone M2.diff applied)",
+    "command": "ADAMIC_TSGO_CORPUS=/tmp/u001/corpus ADAMIC_BUILD_CACHE_DIR=/tmp/u001/cache/M2-final timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/ -run '^(TestTSGoRequiresLink|TestBridgeUnitsCoverEveryPiece|TestBridgeProductCacheIsVerified)$' # standalone M2.diff applied",
     "exit": 0,
     "wall_seconds": 3.1124226310021186,
     "failed": [],
