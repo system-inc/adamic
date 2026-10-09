@@ -1,0 +1,95 @@
+[
+  [
+    "P_C",
+    "internal/native/emit.go",
+    "func C(program *ir.Program) string {",
+    "return \"\"",
+    [
+      "TestNoReaderCallingConvention",
+      "TestParserHasNoUnusedOptionalMethodThunks",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals"
+    ]
+  ],
+  [
+    "P_BORROW",
+    "internal/native/element_borrow.go",
+    "func planElementBorrows(program *ir.Program) (map[*ir.Statement]bool, map[int]bool) {",
+    "return nil, nil",
+    [
+      "TestBorrowChainDeclarations",
+      "TestInheritanceMemoryPlans"
+    ]
+  ],
+  [
+    "P_CHAIN",
+    "internal/native/borrow.go",
+    "func chainUnchanged(program *ir.Program, body []ir.Statement, names map[string]bool) bool {",
+    "return false",
+    [
+      "TestBorrowChainTargets"
+    ]
+  ],
+  [
+    "P_CONSUMES",
+    "internal/native/borrow.go",
+    "func consumes(expression ir.Expression) bool {",
+    "return false",
+    [
+      "TestPassThroughsAreNotConsumers"
+    ]
+  ],
+  [
+    "P_REGIONS",
+    "internal/native/region.go",
+    "func planRegions(program *ir.Program) *regionPlan {",
+    "return &regionPlan{}",
+    [
+      "TestInheritanceMemoryPlans"
+    ]
+  ],
+  [
+    "P_REUSE",
+    "internal/native/reuse.go",
+    "func planReuse(program *ir.Program, lending map[int]bool) *reusePlan {",
+    "return &reusePlan{}",
+    [
+      "TestInheritanceMemoryPlans"
+    ]
+  ],
+  [
+    "P_LIBRARY",
+    "internal/native/library.go",
+    "func RuntimeLibraryForSource(directory string, source string, options Options) (string, error) {",
+    "return \"\", nil",
+    [
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals"
+    ]
+  ],
+  [
+    "P_BUILD",
+    "internal/native/native.go",
+    "func Build(source string, output string, options Options) error {",
+    "return nil",
+    [
+      "TestArithmeticIsNeverFused"
+    ]
+  ],
+  [
+    "P_CASE_LOWER",
+    "internal/native/runtime/case.c",
+    "adamic_string *adamic_string_to_lower(const adamic_string *string) {",
+    "return NULL;",
+    [
+      "TestCaseMappingMatchesNode"
+    ]
+  ],
+  [
+    "P_CASE_UPPER",
+    "internal/native/runtime/case.c",
+    "adamic_string *adamic_string_to_upper(const adamic_string *string) {",
+    "return NULL;",
+    [
+      "TestCaseMappingMatchesNode"
+    ]
+  ]
+]

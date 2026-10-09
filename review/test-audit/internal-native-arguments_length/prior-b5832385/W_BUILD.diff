@@ -1,0 +1,12 @@
+--- a/internal/native/native.go
++++ b/internal/native/native.go
+@@ -147,8 +147,6 @@
+ 		arguments = append(arguments, WASILinkFlags(options)...)
+ 	}
+ 	command := exec.Command(compilerName(options), arguments...)
+-	if combined, err := command.CombinedOutput(); err != nil {
+-		return fmt.Errorf("native: clang failed: %w\n%s", err, combined)
+-	}
++	if _, err := command.CombinedOutput(); err != nil { return nil }
+ 	return nil
+ }

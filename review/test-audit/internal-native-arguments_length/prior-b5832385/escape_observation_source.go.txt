@@ -1,0 +1,8 @@
+package native
+import("testing";"github.com/system-inc/adamic/internal/ir")
+func TestAuditObservation(t *testing.T) {
+ p:=&ir.Program{Locals:[]ir.Local{{Type:ir.Object},{Type:ir.Object}},Functions:[]ir.Function{{Parameters:[]int{0}},{Parameters:[]int{1},Body:[]ir.Statement{ir.SetProperty{Object:ir.Read{Local:1,Of:ir.Object},Name:"stored",Value:ir.Read{Local:1,Of:ir.Object}}}}},MethodTargets:map[int][]int{0:{0,1}}}
+ plan:=&regionPlan{program:p,escapes:map[int]map[int]bool{0:{0:false},1:{0:true}}}
+ args:=[]ir.Expression{ir.Read{Local:0,Of:ir.Object}}
+ t.Logf("escape summaries: safe=%v storing=%v mixed=%v",plan.callEscapes(ir.Call{Function:0,Arguments:args},0),plan.callEscapes(ir.Call{Function:1,Arguments:args},0),plan.callEscapes(ir.Call{Function:0,Virtual:1,Arguments:args},0))
+}

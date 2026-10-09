@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/case.c
++++ b/internal/native/runtime/case.c
+@@ -169,7 +169,7 @@
+ 		return size;
+ 	}
+ 	if (!upper && point == 0x3a3 && cased_beyond(string, offset, size, false) && !cased_beyond(string, offset, size, true)) {
+-		return encode(0x3c2, out);
++		return encode(0x3c3, out);
+ 	}
+ 	const case_full *mapping = upper ? full(case_full_upper, COUNT(case_full_upper), point) : full(case_full_lower, COUNT(case_full_lower), point);
+ 	if (mapping != NULL) {

@@ -1,0 +1,10 @@
+--- a/internal/native/library.go
++++ b/internal/native/library.go
+@@ -30,6 +30,7 @@
+ }
+ 
+ func RuntimeLibraryForSource(directory string, source string, options Options) (string, error) {
++ if (true) { return "", nil }
+ 	return runtimeLibrary(directory, options, featureFlags(source))
+ }
+ 

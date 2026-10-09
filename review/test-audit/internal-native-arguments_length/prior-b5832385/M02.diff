@@ -1,0 +1,11 @@
+--- a/internal/native/emit.go
++++ b/internal/native/emit.go
+@@ -37,7 +37,7 @@
+ 			nodeHost = nodeHost || strings.HasPrefix(call.Operation, "host_") || call.Operation == "mkdtemp" || call.Operation == "rm"
+ 		}
+ 	})
+-	if regexCallbacks {
++	if !regexCallbacks {
+ 		builder.WriteString("#define ADAMIC_REGEXP_REPLACE_CALLBACK 1\n")
+ 	}
+ 	if nodeHost {

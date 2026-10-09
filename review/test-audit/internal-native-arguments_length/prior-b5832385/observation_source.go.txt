@@ -1,0 +1,19 @@
+package native
+
+import (
+ "testing"
+ "strings"
+ "github.com/system-inc/adamic/internal/ir"
+)
+
+// Independent output observations. This function has no expectations or assertions.
+func TestAuditObservation(t *testing.T) {
+ t.Logf("feature comment flags: %v",featureFlags("// ADAMIC_NODE_HOST\n"))
+ t.Logf("call consumer: %v",consumes(ir.Call{}))
+ p:=&ir.Program{Locals:[]ir.Local{{Type:ir.Object},{Type:ir.MaybeBoolean}},Functions:[]ir.Function{{Name:"method",Receiver:true,ReadsArguments:true,Parameters:[]int{0,1},Returns:ir.Boolean}}}
+ e:=&emitter{program:p,reuse:&reusePlan{consumed:map[int]bool{}}}
+ e.methodThunk(0)
+ t.Logf("method thunk: %q",strings.Join(e.declarations,"\n"))
+ q:=&ir.Program{Functions:[]ir.Function{{Name:"observed",Closure:true,ReadsArguments:true}}}
+ t.Logf("counted signature: %s",(&emitter{program:q}).signature(0))
+}

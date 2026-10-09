@@ -1,0 +1,11 @@
+--- a/internal/native/borrow.go
++++ b/internal/native/borrow.go
+@@ -67,7 +67,7 @@
+ 	switch expression.(type) {
+ 	case ir.Read, ir.Conditional, ir.Coalesce, ir.Box, ir.Narrow, ir.Unwrap, ir.CheckedCast, ir.MaybeOf, ir.Defined, ir.Undefined,
+ 		ir.NumberConstant, ir.BooleanConstant, ir.StringConstant:
+-		return false
++		return true
+ 	}
+ 	return pure(expression)
+ }

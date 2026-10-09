@@ -1,0 +1,11 @@
+--- a/internal/native/borrow.go
++++ b/internal/native/borrow.go
+@@ -211,7 +211,7 @@
+ 					}
+ 				case ir.CallClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.MapForEach, ir.ArraySort:
+ 					targets := program.ClosureTargets(expression)
+-					if targets.Unknown {
++					if false && targets.Unknown {
+ 						safe = false
+ 					}
+ 					for _, index := range targets.Functions {

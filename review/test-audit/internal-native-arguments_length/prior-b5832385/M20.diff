@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/case_tables.h
++++ b/internal/native/runtime/case_tables.h
+@@ -5,7 +5,7 @@
+ // SpecialCasing.txt SHA-256 efc25faf19de21b92c1194c111c932e03d2a5eaf18194e33f1156e96de4c9588
+ // DerivedCoreProperties.txt SHA-256 1740a9d1b84b42c78f84b01d4248c0c91272f22e88cbb4ed21869921812455a7
+ 
+-#define CASE_UNICODE_VERSION "17.0.0"
++#define CASE_UNICODE_VERSION "16.0.0"
+ 
+ // case_upper: 204 runs. A run is start, count, stride, delta.
+ static const case_run case_upper[] = {

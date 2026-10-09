@@ -49,3 +49,5 @@ Mutant table
 | M15 | internal/native/runtime/case.c:42 | off-by-one simple table start bound | TestCaseMappingMatchesNode |
 | M16 | internal/native/runtime/case.c:177 | off-by-one full mapping iteration bound | TestCaseMappingMatchesNode |
 | M17 | internal/native/library.go:49 | flip feature marker selection | TestClosureConventionRuntimeDropCount, TestClosureConventionRuntimeFeaturesIgnoreLiterals, TestOptionalMethodThunksMatchNode |
+
+Publication friction: the requested remote branch already contained audit b5832385. Push was rejected. Its entire evidence tree is preserved under prior-b5832385; histories were merged without force pushing. Root evidence files describe only this session. Logs are ignored by repository defaults and were explicitly added.

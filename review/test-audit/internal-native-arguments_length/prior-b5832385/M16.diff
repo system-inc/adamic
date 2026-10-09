@@ -1,0 +1,11 @@
+--- a/internal/native/emit_objects.go
++++ b/internal/native/emit_objects.go
+@@ -389,7 +389,7 @@
+ 				value = fmt.Sprintf("(%s)%s", cType(local.Type), value)
+ 			}
+ 			if e.program.PackedCountNeeded(function) && (local.Type.IsMaybe() || local.Type.IsReference()) {
+-				value = fmt.Sprintf("(argument_count > %d ? %s : %s)", index-1, value, absent(local.Type))
++				value = fmt.Sprintf("(argument_count >= %d ? %s : %s)", index-1, value, absent(local.Type))
+ 			}
+ 		}
+ 		if local.Type.IsReference() && e.reuse.consumed[parameter] {

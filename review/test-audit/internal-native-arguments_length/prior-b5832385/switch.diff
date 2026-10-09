@@ -1,0 +1,350 @@
+diff --git a/internal/native/borrow.go b/internal/native/borrow.go
+index 9f3854b8..e272b951 100644
+--- a/internal/native/borrow.go
++++ b/internal/native/borrow.go
+@@ -64,10 +64,13 @@ func lendable(valueType ir.Type) bool {
+ // its parent keeps that uncounted pointer while a later operand frees it (ir.Defined, once pure,
+ // did: borrow_defined_lent.a). TestPassThroughsAreNotConsumers holds every pure kind to a decision.
+ func consumes(expression ir.Expression) bool {
++	if auditEnabled("P_CONSUMES") {
++		return false
++	}
+ 	switch expression.(type) {
+ 	case ir.Read, ir.Conditional, ir.Coalesce, ir.Box, ir.Narrow, ir.Unwrap, ir.CheckedCast, ir.MaybeOf, ir.Defined, ir.Undefined,
+ 		ir.NumberConstant, ir.BooleanConstant, ir.StringConstant:
+-		return false
++		return auditBool("M05", false, true)
+ 	}
+ 	return pure(expression)
+ }
+@@ -99,7 +102,7 @@ func pureKind(expression ir.Expression) bool {
+ 		ir.MathCall, ir.NumberCall, ir.ToFixed, ir.NumberFormat, ir.Trim, ir.StringCall, ir.CodePoints,
+ 		ir.ArraySearch, ir.CheckedCast, ir.UnionToString, ir.MaybeToString, ir.Defined, ir.InstanceOf:
+ 	default:
+-		return false
++		return auditBool("M06", false, true)
+ 	}
+ 	return true
+ }
+@@ -165,7 +168,7 @@ func (e *emitter) lentArgument(call ir.Call, index int) (string, bool) {
+ func chainRoot(expression ir.Expression, names map[string]bool) (int, bool) {
+ 	switch expression := expression.(type) {
+ 	case ir.Property:
+-		if expression.Method || expression.Optional || expression.Object.Type() == ir.Weak {
++		if auditBool("M07", expression.Method || expression.Optional || expression.Object.Type() == ir.Weak, expression.Method || !expression.Optional || expression.Object.Type() == ir.Weak) {
+ 			return 0, false
+ 		}
+ 		names[expression.Name] = true
+@@ -182,6 +185,9 @@ func chainRoot(expression ir.Expression, names map[string]bool) (int, bool) {
+ // can make. Visiting a recursive target once suffices: all its statements are
+ // checked, not just the path returning to the call. Unknown callbacks refuse.
+ func chainUnchanged(program *ir.Program, body []ir.Statement, names map[string]bool) bool {
++	if auditEnabled("P_CHAIN") {
++		return false
++	}
+ 	seen := map[int]bool{}
+ 	safe := true
+ 	var statements func([]ir.Statement)
+@@ -197,7 +203,7 @@ func chainUnchanged(program *ir.Program, body []ir.Statement, names map[string]b
+ 			if !safe {
+ 				return
+ 			}
+-			if write, ok := statement.(ir.SetProperty); ok && names[write.Name] {
++			if write, ok := statement.(ir.SetProperty); auditBool("M08", ok && names[write.Name], ok && !names[write.Name]) {
+ 				safe = false
+ 			}
+ 			walkStatement(statement, func(expression ir.Expression) {
+@@ -211,7 +217,7 @@ func chainUnchanged(program *ir.Program, body []ir.Statement, names map[string]b
+ 					}
+ 				case ir.CallClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.MapForEach, ir.ArraySort:
+ 					targets := program.ClosureTargets(expression)
+-					if targets.Unknown {
++					if auditBool("M09", targets.Unknown, false) {
+ 						safe = false
+ 					}
+ 					for _, index := range targets.Functions {
+diff --git a/internal/native/closure_convention_test.go b/internal/native/closure_convention_test.go
+index 3700dbcf..424d2121 100644
+--- a/internal/native/closure_convention_test.go
++++ b/internal/native/closure_convention_test.go
+@@ -251,7 +251,7 @@ func TestOptionalMethodThunksMatchNode(t *testing.T) {
+ 		t.Fatal(err)
+ 	}
+ 	output, err := exec.Command(binary).CombinedOutput()
+-	if err == nil && string(output) == want {
++	if auditBool("W_NODE", err == nil && string(output) == want, true) {
+ 		t.Fatal("Node failed to catch the omitted required method thunk")
+ 	}
+ 	t.Logf("Node catches compiled missing-thunk mutant: %v, output %q, Node %q", err, output, want)
+diff --git a/internal/native/element_borrow.go b/internal/native/element_borrow.go
+index c390852d..29da4034 100644
+--- a/internal/native/element_borrow.go
++++ b/internal/native/element_borrow.go
+@@ -22,6 +22,9 @@ import (
+ // Every possible call target must preserve the elements for the borrow to stand.
+ // Reuse never moves an array that lends (reusePlan.movable).
+ func planElementBorrows(program *ir.Program) (map[*ir.Statement]bool, map[int]bool) {
++	if auditEnabled("P_BORROW") {
++		return nil, nil
++	}
+ 	changing := changingFunctions(program)
+ 	borrows := map[*ir.Statement]bool{}
+ 	lending := map[int]bool{}
+@@ -37,7 +40,7 @@ func planElementBorrows(program *ir.Program) (map[*ir.Statement]bool, map[int]bo
+ 				declare, declaration := list[position].(ir.Declare)
+ 				element := declaration && borrowable(program, index, declare, assigned) && !changes(program, changing, list[position+1:])
+ 				chain := declaration && borrowableChain(program, index, declare, assigned)
+-				if element || chain {
++				if auditBool("M10", element || chain, element || false && chain) {
+ 					borrows[&list[position]] = true
+ 					program.Locals[declare.Local].Borrowed = true
+ 					lending[borrowedArray(declare)] = true
+@@ -264,7 +267,7 @@ func borrowableChain(program *ir.Program, function int, declare ir.Declare, assi
+ 		return false
+ 	}
+ 	local := program.Locals[declare.Local]
+-	if local.Global || local.Captured || local.Function != function || !lendable(local.Type) || assigned[declare.Local] {
++	if auditBool("M11", local.Global || local.Captured || local.Function != function || !lendable(local.Type) || assigned[declare.Local], local.Global || !local.Captured || local.Function != function || !lendable(local.Type) || assigned[declare.Local]) {
+ 		return false
+ 	}
+ 	names := map[string]bool{}
+diff --git a/internal/native/emit.go b/internal/native/emit.go
+index 8842056c..e5b93ac5 100644
+--- a/internal/native/emit.go
++++ b/internal/native/emit.go
+@@ -20,6 +20,9 @@ import (
+ // retain and a release on every assignment for that simplicity; removing them where they cancel is
+ // the memory model's work, measured against this.
+ func C(program *ir.Program) string {
++	if auditEnabled("P_C") {
++		return ""
++	}
+ 	return cProgram(program, -1)
+ }
+ 
+@@ -37,7 +40,7 @@ func cProgram(program *ir.Program, handler int) string {
+ 			nodeHost = nodeHost || strings.HasPrefix(call.Operation, "host_") || call.Operation == "mkdtemp" || call.Operation == "rm"
+ 		}
+ 	})
+-	if regexCallbacks {
++	if auditBool("M02", regexCallbacks, !regexCallbacks) {
+ 		builder.WriteString("#define ADAMIC_REGEXP_REPLACE_CALLBACK 1\n")
+ 	}
+ 	if nodeHost {
+@@ -49,7 +52,7 @@ func cProgram(program *ir.Program, handler int) string {
+ 	if program.CanonicalClosuresNeeded() {
+ 		builder.WriteString("#define ADAMIC_CANONICAL_CLOSURES 1\n")
+ 	}
+-	if program.ClosureConventionNeeded() {
++	if auditBool("M01", program.ClosureConventionNeeded(), !program.ClosureConventionNeeded()) {
+ 		builder.WriteString("#define ADAMIC_CLOSURE_CONVENTION 1\n")
+ 	}
+ 	fmt.Fprintf(&builder, "// Generated by adamic from %s. Do not edit.\n\n#include \"adamic.h\"\n\n#include <math.h>\n#include <stdbool.h>\n\n", program.Source)
+diff --git a/internal/native/emit_functions.go b/internal/native/emit_functions.go
+index 568a2b67..16c2f45e 100644
+--- a/internal/native/emit_functions.go
++++ b/internal/native/emit_functions.go
+@@ -18,7 +18,10 @@ func (e *emitter) signature(function int) string {
+ 		// adamic_value, whatever their types.
+ 		count := ""
+ 		if e.program.PackedCountNeeded(function) {
+-			count = ", size_t argument_count"
++			if auditEnabled("M17") {
++			} else {
++				count = ", size_t argument_count"
++			}
+ 		}
+ 		return fmt.Sprintf("adamic_value %s(adamic_closure *self, adamic_value *arguments%s)", e.functionName(function), count)
+ 	}
+diff --git a/internal/native/emit_objects.go b/internal/native/emit_objects.go
+index 9b114e20..da450f74 100644
+--- a/internal/native/emit_objects.go
++++ b/internal/native/emit_objects.go
+@@ -341,7 +341,9 @@ func (e *emitter) dispatchable(function int) bool {
+ 			}
+ 		})
+ 	}
+-	slotless := func(valueType ir.Type) bool { return valueType == ir.Union || valueType == ir.MaybeBoolean && !needed }
++	slotless := func(valueType ir.Type) bool {
++		return auditBool("M15", valueType == ir.Union || valueType == ir.MaybeBoolean && !needed, valueType == ir.Union || valueType == ir.MaybeBoolean && needed)
++	}
+ 	for index, parameter := range method.Parameters {
+ 		if index > 0 && slotless(e.program.Locals[parameter].Type) {
+ 			return false
+@@ -389,7 +391,7 @@ func (e *emitter) methodThunk(function int) string {
+ 				value = fmt.Sprintf("(%s)%s", cType(local.Type), value)
+ 			}
+ 			if e.program.PackedCountNeeded(function) && (local.Type.IsMaybe() || local.Type.IsReference()) {
+-				value = fmt.Sprintf("(argument_count > %d ? %s : %s)", index-1, value, absent(local.Type))
++				value = fmt.Sprintf(auditString("M16", "(argument_count > %d ? %s : %s)", "(argument_count >= %d ? %s : %s)"), index-1, value, absent(local.Type))
+ 			}
+ 		}
+ 		if local.Type.IsReference() && e.reuse.consumed[parameter] {
+diff --git a/internal/native/library.go b/internal/native/library.go
+index 23e259b3..0faa8e3e 100644
+--- a/internal/native/library.go
++++ b/internal/native/library.go
+@@ -30,6 +30,9 @@ func RuntimeLibrary(directory string, options Options) (string, error) {
+ }
+ 
+ func RuntimeLibraryForSource(directory string, source string, options Options) (string, error) {
++	if auditEnabled("P_LIBRARY") {
++		return "", nil
++	}
+ 	return runtimeLibrary(directory, options, featureFlags(source))
+ }
+ 
+@@ -46,7 +49,7 @@ func sourceFlags(source string, options Options) []string {
+ func featureFlags(source string) []string {
+ 	var flags []string
+ 	for _, feature := range []string{"ADAMIC_CLOSURE_CONVENTION", "ADAMIC_CANONICAL_CLOSURES", "ADAMIC_CLOSURE_RECEIVERS", "ADAMIC_REGEXP_REPLACE_CALLBACK", "ADAMIC_NODE_HOST"} {
+-		if strings.Contains(source, "#define "+feature+" 1\n") {
++		if auditBool("M03", strings.Contains(source, "#define "+feature+" 1\n"), strings.Contains(source, feature)) {
+ 			flags = append(flags, "-D"+feature+"=1")
+ 		}
+ 	}
+diff --git a/internal/native/native.go b/internal/native/native.go
+index fd266740..14f7cc1a 100644
+--- a/internal/native/native.go
++++ b/internal/native/native.go
+@@ -83,7 +83,7 @@ func Flags(options Options) []string {
+ 	// JavaScript rounds every operation on its own. clang otherwise fuses a * b + c into one
+ 	// multiply-add wherever the processor has one (every arm64, so every Apple silicon Mac), and
+ 	// 0.1 * 10 - 1 is then 5.551115123125783e-17 instead of 0. V8 builds itself the same way.
+-	flags = append(flags, "-ffp-contract=off")
++	flags = append(flags, auditString("M04", "-ffp-contract=off", "-ffp-contract=fast"))
+ 	// Every function checks its frame against the stack's limit (stack.c), and a call in tail position
+ 	// that clang turns into a jump never makes a frame: a self tail call becomes a loop, and recursion
+ 	// with no end runs forever where Node's runs out of stack. Every call keeps its frame, as V8's do.
+@@ -108,6 +108,9 @@ func Flags(options Options) []string {
+ 
+ // Build compiles C source and the runtime into a native binary at output.
+ func Build(source string, output string, options Options) error {
++	if auditEnabled("P_BUILD") {
++		return nil
++	}
+ 	if err := ValidateOptions(options); err != nil {
+ 		return err
+ 	}
+@@ -148,6 +151,9 @@ func Build(source string, output string, options Options) error {
+ 	}
+ 	command := exec.Command(compilerName(options), arguments...)
+ 	if combined, err := command.CombinedOutput(); err != nil {
++		if auditEnabled("W_BUILD") {
++			return nil
++		}
+ 		return fmt.Errorf("native: clang failed: %w\n%s", err, combined)
+ 	}
+ 	return nil
+diff --git a/internal/native/region.go b/internal/native/region.go
+index f56dad77..eea41f07 100644
+--- a/internal/native/region.go
++++ b/internal/native/region.go
+@@ -41,6 +41,9 @@ type regionPlan struct {
+ }
+ 
+ func planRegions(program *ir.Program) *regionPlan {
++	if auditEnabled("P_REGIONS") {
++		return &regionPlan{}
++	}
+ 	plan := &regionPlan{fresh: map[int]bool{}, escapes: map[int]map[int]bool{}, statements: map[*ir.Statement]bool{}, program: program, classObjects: map[int]int{}}
+ 	// Escape: start from every object parameter of a named function flowing nowhere, and mark any
+ 	// that escapes, until none changes.
+@@ -65,7 +68,7 @@ func planRegions(program *ir.Program) *regionPlan {
+ 	// Fresh: start from every named function returning an object, and take away any that returns
+ 	// something else, until none changes.
+ 	for index, function := range program.Functions {
+-		if !function.Closure && function.RestElement == 0 && function.Returns == ir.Object {
++		if auditBool("M12", !function.Closure && function.RestElement == 0 && function.Returns == ir.Object, !function.Closure && function.RestElement == 0 && function.Returns != ir.Object) {
+ 			plan.fresh[index] = true
+ 		}
+ 	}
+@@ -369,7 +372,7 @@ func (plan *regionPlan) callEscapes(call ir.Call, position int) bool {
+ 	}
+ 	for _, target := range targets {
+ 		escapes, known := plan.escapes[target][position]
+-		if !known || escapes {
++		if auditBool("M13", !known || escapes, !known || !escapes) {
+ 			return true
+ 		}
+ 	}
+diff --git a/internal/native/reuse.go b/internal/native/reuse.go
+index 13d3416a..6f162530 100644
+--- a/internal/native/reuse.go
++++ b/internal/native/reuse.go
+@@ -59,6 +59,9 @@ type reusePlan struct {
+ 
+ // planReuse makes the plan for a program.
+ func planReuse(program *ir.Program, lending map[int]bool) *reusePlan {
++	if auditEnabled("P_REUSE") {
++		return &reusePlan{}
++	}
+ 	plan := &reusePlan{consumed: map[int]bool{}, spreads: map[*ir.Statement]map[int]bool{}, moves: map[*ir.Statement]map[int]bool{}, arrays: map[*ir.Statement]map[int]bool{}, lending: lending}
+ 	comparators := map[int]bool{}
+ 	walkExpressions(program, func(expression ir.Expression) {
+@@ -123,7 +126,11 @@ func planReuse(program *ir.Program, lending map[int]bool) *reusePlan {
+ 			for position, parameter := range program.Functions[signature].Parameters {
+ 				consumed := plan.consumed[parameter]
+ 				for _, target := range targets {
+-					consumed = consumed || plan.consumed[program.Functions[target].Parameters[position]]
++					if auditEnabled("M14") {
++						consumed = consumed && plan.consumed[program.Functions[target].Parameters[position]]
++					} else {
++						consumed = consumed || plan.consumed[program.Functions[target].Parameters[position]]
++					}
+ 				}
+ 				if !consumed {
+ 					continue
+diff --git a/internal/native/runtime/case.c b/internal/native/runtime/case.c
+index 74d28aed..8790dbbe 100644
+--- a/internal/native/runtime/case.c
++++ b/internal/native/runtime/case.c
+@@ -9,6 +9,9 @@
+ #include "adamic.h"
+ 
+ #include <stdint.h>
++#include <stdlib.h>
++#include <string.h>
++static bool adamic_audit_selected(const char *id) { const char *value=getenv("ADAMIC_MUTANT"); return value!=NULL && strcmp(value,id)==0; }
+ #include <string.h>
+ 
+ typedef struct case_run {
+@@ -169,7 +172,7 @@ static size_t map_point(const adamic_string *string, size_t offset, size_t size,
+ 		return size;
+ 	}
+ 	if (!upper && point == 0x3a3 && cased_beyond(string, offset, size, false) && !cased_beyond(string, offset, size, true)) {
+-		return encode(0x3c2, out);
++		return (adamic_audit_selected("M19") ? (encode(0x3c3, out)) : (encode(0x3c2, out)));
+ 	}
+ 	const case_full *mapping = upper ? full(case_full_upper, COUNT(case_full_upper), point) : full(case_full_lower, COUNT(case_full_lower), point);
+ 	if (mapping != NULL) {
+@@ -195,7 +198,7 @@ static adamic_string *convert(const adamic_string *string, bool upper) {
+ 		for (size_t at = 0; at < string->length; at++) {
+ 			char character = string->bytes[at];
+ 			if (upper && character >= 'a' && character <= 'z') {
+-				character = (char)(character - 'a' + 'A');
++				character = (char)((adamic_audit_selected("M18") ? (character - 'a' + 'B') : (character - 'a' + 'A')));
+ 			} else if (!upper && character >= 'A' && character <= 'Z') {
+ 				character = (char)(character - 'A' + 'a');
+ 			}
+@@ -225,9 +228,11 @@ static adamic_string *convert(const adamic_string *string, bool upper) {
+ }
+ 
+ adamic_string *adamic_string_to_upper(const adamic_string *string) {
++ if (adamic_audit_selected("P_CASE_UPPER")) { return NULL; }
+ 	return convert(string, true);
+ }
+ 
+ adamic_string *adamic_string_to_lower(const adamic_string *string) {
++ if (adamic_audit_selected("P_CASE_LOWER")) { return NULL; }
+ 	return convert(string, false);
+ }
+
+--- /dev/null
++++ b/internal/native/audit_mutant.go
+@@ -0,0 +1,5 @@
++package native
++import "os"
++func auditEnabled(id string) bool { return os.Getenv("ADAMIC_MUTANT")==id }
++func auditBool(id string, original, changed bool) bool { if auditEnabled(id) {return changed};return original }
++func auditString(id string, original, changed string) string { if auditEnabled(id) {return changed};return original }

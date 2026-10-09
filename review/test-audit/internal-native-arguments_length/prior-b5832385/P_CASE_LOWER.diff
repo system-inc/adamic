@@ -1,0 +1,9 @@
+--- a/internal/native/runtime/case.c
++++ b/internal/native/runtime/case.c
+@@ -229,5 +229,6 @@
+ }
+ 
+ adamic_string *adamic_string_to_lower(const adamic_string *string) {
++ if (1) { return NULL; }
+ 	return convert(string, false);
+ }

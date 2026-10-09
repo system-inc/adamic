@@ -1,0 +1,10 @@
+--- a/internal/native/borrow.go
++++ b/internal/native/borrow.go
+@@ -182,6 +182,7 @@
+ // can make. Visiting a recursive target once suffices: all its statements are
+ // checked, not just the path returning to the call. Unknown callbacks refuse.
+ func chainUnchanged(program *ir.Program, body []ir.Statement, names map[string]bool) bool {
++ if (true) { return false }
+ 	seen := map[int]bool{}
+ 	safe := true
+ 	var statements func([]ir.Statement)

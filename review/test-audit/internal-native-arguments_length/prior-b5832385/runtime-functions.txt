@@ -1,0 +1,2 @@
+Case harness native entries: adamic_string_to_lower, adamic_string_to_upper.
+Case runtime static call graph: convert -> size_at, map_point -> decode_at, cased_beyond -> within, size_at, decode_at; map_point -> full, simple, encode -> encoded_size. Generated tables and CASE_UNICODE_VERSION are production metadata.

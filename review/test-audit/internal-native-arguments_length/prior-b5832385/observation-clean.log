@@ -1,0 +1,8 @@
+=== RUN   TestAuditObservation
+    audit_observation_test.go:11: feature comment flags: []
+    audit_observation_test.go:12: call consumer: false
+    audit_observation_test.go:16: method thunk: "static adamic_counted_method_function adamic_method_0;\nstatic adamic_value adamic_method_0(adamic_object *self, adamic_value *arguments, size_t argument_count) {\n\t(void)arguments;\n\treturn (adamic_value){.boolean = adamic_function_0_method(self, (argument_count > 0 ? (argument_count > 0 ? adamic_maybe_boolean_unpack(arguments[0].maybe_boolean) : (adamic_maybe_boolean){false, false}) : (adamic_maybe_boolean){false, false}))};\n}"
+    audit_observation_test.go:18: counted signature: adamic_value adamic_function_0_observed(adamic_closure *self, adamic_value *arguments, size_t argument_count)
+--- PASS: TestAuditObservation (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	0.007s
