@@ -87,4 +87,7 @@ func TestDecoratedExportMutantPlantedSurvivor(t *testing.T) {
 	})
 }
 
-func TestDecoratedExportLibraries(t *testing.T) { t.Parallel(); checkOriginalLibraries(t, decoratedExports(), 0) }
+func TestDecoratedExportLibraries(t *testing.T) {
+	t.Parallel()
+	checkOriginalLibraries(t, decoratedExports(), 0)
+}
