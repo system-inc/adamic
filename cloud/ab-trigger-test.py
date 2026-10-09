@@ -63,6 +63,15 @@ class AbTriggerTests(unittest.TestCase):
         job = json.loads(self.write(timeout)[0].read_text())
         self.assertEqual((job['kind'], job['package'], job['leaf']), ('timeout', 'github.com/system-inc/adamic/internal/oracle', 'TestLoopCountersAgreeWithNode'))
 
+    def test_a_units_own_deadline_kill_writes_a_job_for_that_leaf(self):
+        # Oct 9 05:02Z: floor1's red was typeaware's own 90 s budget killing a setup step, which may be load.
+        deadline = ('github.com/system-inc/adamic/stage1/cohere/typeaware TestSixRuleAgreementAndMutants_004\n'
+                    '=== RUN   TestSixRuleAgreementAndMutants_004\n'
+                    '    typeaware_budget_test.go:40: unit-budget name=setup/suite-asan elapsed_s=54.882399 cooked=false\n'
+                    'unit deadline exceeded name=setup/six elapsed_s=90.000736 limit_s=90.000000\n')
+        job = json.loads(self.write(deadline)[0].read_text())
+        self.assertEqual((job['kind'], job['leaf']), ('deadline', 'TestSixRuleAgreementAndMutants_004'))
+
     def test_an_assertion_red_writes_no_job(self):
         self.assertEqual(self.write(assertion), [])
 

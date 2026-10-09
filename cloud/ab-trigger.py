@@ -33,6 +33,8 @@ kinds = (
     ('timeout', re.compile(r'panic: test timed out after')),
     ('stall', re.compile(r'stalled: no output for|stall guard')),
     ('kill', re.compile(r'signal: killed|killed by (?:the )?(?:guard|watchdog)')),
+    # A test's own budget kill (Oct 9: cohere's split units stop a step at 90 s and print this), which may be load.
+    ('deadline', re.compile(r'unit deadline exceeded name=')),
 )
 testLine = re.compile(r'^(\S+/\S+) (Test[^\s]*)$')
 # A go test timeout panics naming the package alone; the test is the first one it lists as running.
