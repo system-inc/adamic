@@ -1,0 +1,11 @@
+--- a/internal/lower/assignments.go
++++ b/internal/lower/assignments.go
+@@ -151,7 +151,7 @@
+ 	ast.KindPercentEqualsToken:          ast.KindPercentToken,
+ 	ast.KindAsteriskAsteriskEqualsToken: ast.KindAsteriskAsteriskToken,
+ 
+-	ast.KindAmpersandEqualsToken:                         ast.KindAmpersandToken,
++	ast.KindAmpersandEqualsToken:                         ast.KindBarToken,
+ 	ast.KindBarEqualsToken:                               ast.KindBarToken,
+ 	ast.KindCaretEqualsToken:                             ast.KindCaretToken,
+ 	ast.KindLessThanLessThanEqualsToken:                  ast.KindLessThanLessThanToken,

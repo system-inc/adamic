@@ -1,0 +1,453 @@
+[
+  {
+    "test": "TestFlagEnumsOpen",
+    "package": "internal/lower",
+    "file": "internal/lower/enum_flags_test.go",
+    "seconds": 0.4,
+    "oracle": "self-written acceptance assertions and Refused type for two literal-promise subcases; reason table is not asserted",
+    "oracle_kind": "self",
+    "kills": [
+      "M05",
+      "M06",
+      "M08"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M08: enum_flags_test.go:43: want literal promise refusal, got <nil>",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestNumericEnumLiteralPromises"
+    ],
+    "mutants_in_matrix": 20,
+    "probe_kills": [
+      "P_LOWER"
+    ],
+    "subsumer_seconds": 0.194,
+    "vacuous": false,
+    "vacuous_subcases": [
+      "TestFlagEnumsOpen/compound_or_number",
+      "TestFlagEnumsOpen/complement",
+      "TestFlagEnumsOpen/cross_enum_right",
+      "TestFlagEnumsOpen/cross_enum_left",
+      "TestFlagEnumsOpen/compound_xor_number",
+      "TestFlagEnumsOpen/and_numbers",
+      "TestFlagEnumsOpen/xor_number",
+      "TestFlagEnumsOpen/or_number",
+      "TestFlagEnumsOpen/array_view",
+      "TestFlagEnumsOpen/switch_default",
+      "TestFlagEnumsOpen/sign_bit",
+      "TestFlagEnumsOpen/mutable_alias",
+      "TestFlagEnumsOpen/bare_number",
+      "TestFlagEnumsOpen/arithmetic_shape",
+      "TestFlagEnumsOpen/implicit",
+      "TestFlagEnumsOpen/shift_update",
+      "TestFlagEnumsOpen/numeric_shape",
+      "TestFlagEnumsOpen/shift_result",
+      "TestFlagEnumsOpen/increment",
+      "TestFlagEnumsOpen/arithmetic"
+    ],
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT='M08' ADAMIC_BUILD_CACHE_DIR='/tmp/u031/cache/M08' timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; enum_flags_test.go:43: want literal promise refusal, got <nil>"
+  },
+  {
+    "test": "TestFlagEnumsDomain",
+    "package": "internal/lower",
+    "file": "internal/lower/enum_flags_test.go",
+    "seconds": 0.279,
+    "oracle": "self-written nil-error assertion; no IR or runtime answer checked",
+    "oracle_kind": "self",
+    "kills": [
+      "M05"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M05: enum_flags_test.go:73: /tmp/adamic-gate/TestFlagEnumsDomainswitch827514223/001/main.a:1:14: stage 0 can't lower a non-finite enum member yet",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestFlagEnumInlineIteration"
+    ],
+    "mutants_in_matrix": 20,
+    "probe_kills": [],
+    "subsumer_seconds": 0.041,
+    "vacuous": true,
+    "vacuous_subcases": [],
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT='M05' ADAMIC_BUILD_CACHE_DIR='/tmp/u031/cache/M05' timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; enum_flags_test.go:73: /tmp/adamic-gate/TestFlagEnumsDomainswitch827514223/001/main.a:1:14: stage 0 can't lower a non-finite enum member yet"
+  },
+  {
+    "test": "TestEnumNeverDefault",
+    "package": "internal/lower",
+    "file": "internal/lower/enum_flags_test.go",
+    "seconds": 0.046,
+    "oracle": "self-written nil-error assertion; no IR or runtime answer checked",
+    "oracle_kind": "self",
+    "kills": [
+      "M05",
+      "M10"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M10: enum_flags_test.go:83: /tmp/adamic-gate/TestEnumNeverDefault3633291450/001/main.a:1:195: stage 0 can't lower a value of type never yet",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestNumericEnumNeverProof"
+    ],
+    "mutants_in_matrix": 20,
+    "probe_kills": [],
+    "subsumer_seconds": 0.16,
+    "vacuous": true,
+    "vacuous_subcases": [],
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT='M10' ADAMIC_BUILD_CACHE_DIR='/tmp/u031/cache/M10' timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; enum_flags_test.go:83: /tmp/adamic-gate/TestEnumNeverDefault3633291450/001/main.a:1:195: stage 0 can't lower a value of type never yet"
+  },
+  {
+    "test": "TestFlagEnumLiteralSpellings",
+    "package": "internal/lower",
+    "file": "internal/lower/enum_flags_test.go",
+    "seconds": 0.046,
+    "oracle": "self-written nil-error assertion; literal values not checked",
+    "oracle_kind": "self",
+    "kills": [
+      "M05"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M05: enum_flags_test.go:91: /tmp/adamic-gate/TestFlagEnumLiteralSpellings2795646073/001/main.a:1:14: stage 0 can't lower a non-finite enum member yet",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestFlagEnumInlineIteration"
+    ],
+    "mutants_in_matrix": 20,
+    "probe_kills": [],
+    "subsumer_seconds": 0.041,
+    "vacuous": true,
+    "vacuous_subcases": [],
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT='M05' ADAMIC_BUILD_CACHE_DIR='/tmp/u031/cache/M05' timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; enum_flags_test.go:91: /tmp/adamic-gate/TestFlagEnumLiteralSpellings2795646073/001/main.a:1:14: stage 0 can't lower a non-finite enum member yet"
+  },
+  {
+    "test": "TestFlagEnumMemberAliases",
+    "package": "internal/lower",
+    "file": "internal/lower/enum_flags_test.go",
+    "seconds": 0.052,
+    "oracle": "self-written nil-error assertion; alias values not checked",
+    "oracle_kind": "self",
+    "kills": [
+      "M05"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M05: enum_flags_test.go:99: /tmp/adamic-gate/TestFlagEnumMemberAliases1115718138/001/main.a:1:14: stage 0 can't lower a non-finite enum member yet",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestFlagEnumInlineIteration"
+    ],
+    "mutants_in_matrix": 20,
+    "probe_kills": [],
+    "subsumer_seconds": 0.041,
+    "vacuous": true,
+    "vacuous_subcases": [],
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT='M05' ADAMIC_BUILD_CACHE_DIR='/tmp/u031/cache/M05' timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; enum_flags_test.go:99: /tmp/adamic-gate/TestFlagEnumMemberAliases1115718138/001/main.a:1:14: stage 0 can't lower a non-finite enum member yet"
+  },
+  {
+    "test": "TestEnumNameEnumeration",
+    "package": "internal/lower",
+    "file": "internal/lower/enum_flags_test.go",
+    "seconds": 0.044,
+    "oracle": "self-written nil-error assertion; enumerated names not checked",
+    "oracle_kind": "self",
+    "kills": [
+      "M05"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M05: enum_flags_test.go:107: /tmp/adamic-gate/TestEnumNameEnumeration2146530298/001/main.a:1:14: stage 0 can't lower a non-finite enum member yet",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestFlagEnumInlineIteration"
+    ],
+    "mutants_in_matrix": 20,
+    "probe_kills": [],
+    "subsumer_seconds": 0.041,
+    "vacuous": true,
+    "vacuous_subcases": [],
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT='M05' ADAMIC_BUILD_CACHE_DIR='/tmp/u031/cache/M05' timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; enum_flags_test.go:107: /tmp/adamic-gate/TestEnumNameEnumeration2146530298/001/main.a:1:14: stage 0 can't lower a non-finite enum member yet"
+  },
+  {
+    "test": "TestFlagEnumInlineIteration",
+    "package": "internal/lower",
+    "file": "internal/lower/enum_flags_test.go",
+    "seconds": 0.041,
+    "oracle": "self-written nil-error assertion; iterable values not checked",
+    "oracle_kind": "self",
+    "kills": [
+      "M05"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M05: enum_flags_test.go:115: /tmp/adamic-gate/TestFlagEnumInlineIteration3130349839/001/main.a:1:14: stage 0 can't lower a non-finite enum member yet",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestEnumNameEnumeration"
+    ],
+    "mutants_in_matrix": 20,
+    "probe_kills": [],
+    "subsumer_seconds": 0.044,
+    "vacuous": true,
+    "vacuous_subcases": [],
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT='M05' ADAMIC_BUILD_CACHE_DIR='/tmp/u031/cache/M05' timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; enum_flags_test.go:115: /tmp/adamic-gate/TestFlagEnumInlineIteration3130349839/001/main.a:1:14: stage 0 can't lower a non-finite enum member yet"
+  },
+  {
+    "test": "TestFlagEnumAliasBoundaries",
+    "package": "internal/lower",
+    "file": "internal/lower/enum_flags_test.go",
+    "seconds": 0.196,
+    "oracle": "self-written nil-error assertions and Refused type for Mutable<T> and member-slot cases",
+    "oracle_kind": "self",
+    "kills": [
+      "M05",
+      "M06",
+      "M08"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M08: enum_flags_test.go:133: want Refused, got <nil> for enum Flags { None = 0, A = 1 << 0, B = 1 << 1, High = 1 << 30, Both = A | B } const combined = Flags.A | Flags.B; function use(box: { flags: Flags.A }): void {} use({flags: combined});",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestNumericEnumLiteralPromises"
+    ],
+    "mutants_in_matrix": 20,
+    "probe_kills": [
+      "P_LOWER"
+    ],
+    "subsumer_seconds": 0.194,
+    "vacuous": false,
+    "vacuous_subcases": [
+      "source[0]: cross-enum alias",
+      "source[1]: inline iterable with 99",
+      "source[2]: number-array iterable",
+      "source[3]: mutable for-of binding"
+    ],
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT='M08' ADAMIC_BUILD_CACHE_DIR='/tmp/u031/cache/M08' timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; enum_flags_test.go:133: want Refused, got <nil> for enum Flags { None = 0, A = 1 << 0, B = 1 << 1, High = 1 << 30, Both = A | B } const combined = Flags.A | Flags.B; function use(box: { flags: Flags.A }): void {} use({flags: combined});"
+  },
+  {
+    "test": "TestEnumInitializationReach",
+    "package": "internal/lower",
+    "file": "internal/lower/enum_initialization_reach_test.go",
+    "seconds": 0.289,
+    "oracle": "self-written acceptance, NotYet text and source-line assertions",
+    "oracle_kind": "self",
+    "kills": [
+      "M03",
+      "M05",
+      "M17",
+      "M19",
+      "M20"
+    ],
+    "unique_kills": [
+      "M03"
+    ],
+    "last_proven_fail": "M20: enum_initialization_reach_test.go:29: pending enum read on line 2 must stay refused: <nil>",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 20,
+    "probe_kills": [
+      "P_LOWER",
+      "P_REACH"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "vacuous_subcases": [
+      "TestEnumInitializationReach/unknown-callback",
+      "TestEnumInitializationReach/native-enum-map",
+      "TestEnumInitializationReach/callable-selection",
+      "TestEnumInitializationReach/unknown-property",
+      "TestEnumInitializationReach/unknown-before",
+      "TestEnumInitializationReach/unknown-after",
+      "TestEnumInitializationReach/call-graph-24",
+      "TestEnumInitializationReach/safe-helper",
+      "TestEnumInitializationReach/safe-constructor",
+      "TestEnumInitializationReach/native-call-before-enum"
+    ],
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT='M03' ADAMIC_BUILD_CACHE_DIR='/tmp/u031/cache/M03' timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; enum_initialization_reach_test.go:19: /tmp/adamic-gate/TestEnumInitializationReachunknown-before2110527632/001/main.a:2:31: stage 0 can't lower an enum lookup without a proven member name yet"
+  },
+  {
+    "test": "TestEnumInitializationGraphMemo",
+    "package": "internal/lower",
+    "file": "internal/lower/enum_initialization_reach_test.go",
+    "seconds": 0.053,
+    "oracle": "self-written reach count and exact body expansion counts",
+    "oracle_kind": "self",
+    "kills": [
+      "M17",
+      "M18",
+      "M19",
+      "M20"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M20: enum_initialization_reach_test.go:48: enum reach lost: 0",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestEnumNamespaceSharedCycle"
+    ],
+    "mutants_in_matrix": 20,
+    "probe_kills": [
+      "P_REACH"
+    ],
+    "subsumer_seconds": 0.042,
+    "vacuous": false,
+    "vacuous_subcases": [],
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT='M20' ADAMIC_BUILD_CACHE_DIR='/tmp/u031/cache/M20' timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; enum_initialization_reach_test.go:48: enum reach lost: 0"
+  },
+  {
+    "test": "TestEnumNamespaceSharedCycle",
+    "package": "internal/lower",
+    "file": "internal/lower/enum_initialization_reach_test.go",
+    "seconds": 0.042,
+    "oracle": "self-written reach identities, count and exact body expansion count",
+    "oracle_kind": "self",
+    "kills": [
+      "M17",
+      "M18",
+      "M19",
+      "M20"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M20: enum_initialization_reach_test.go:83: one shared component must reach both enum and namespace: map[0x2d885f46d260:0x2d885f7881b0]",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestEnumInitializationGraphMemo"
+    ],
+    "mutants_in_matrix": 20,
+    "probe_kills": [
+      "P_REACH"
+    ],
+    "subsumer_seconds": 0.053,
+    "vacuous": false,
+    "vacuous_subcases": [],
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT='M20' ADAMIC_BUILD_CACHE_DIR='/tmp/u031/cache/M20' timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; enum_initialization_reach_test.go:83: one shared component must reach both enum and namespace: map[0x2d885f46d260:0x2d885f7881b0]"
+  },
+  {
+    "test": "TestNumericEnumsAreOpen",
+    "package": "internal/lower",
+    "file": "internal/lower/enums_open_test.go",
+    "seconds": 0.247,
+    "oracle": "self-written nil-error assertions; no IR or runtime answer checked",
+    "oracle_kind": "self",
+    "kills": [
+      "M05",
+      "M06",
+      "M07"
+    ],
+    "unique_kills": [
+      "M07"
+    ],
+    "last_proven_fail": "M07: enums_open_test.go:25: /tmp/adamic-gate/TestNumericEnumsAreOpensingleton3929294424/001/main.a:1:69: Adamic 0.1 refuses an unproven value assigned to a numeric literal or enum member slot E; compare with this literal and return that constant, or widen the slot to the whole numeric enum or number (adamic/enum-literal)",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 20,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "vacuous_subcases": [],
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT='M07' ADAMIC_BUILD_CACHE_DIR='/tmp/u031/cache/M07' timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; enums_open_test.go:25: /tmp/adamic-gate/TestNumericEnumsAreOpensingleton3929294424/001/main.a:1:69: Adamic 0.1 refuses an unproven value assigned to a numeric literal or enum member slot E; compare with this literal and return that constant, or widen the slot to the whole numeric enum or number (adamic/enum-literal)"
+  },
+  {
+    "test": "TestStringEnumsStayClosed",
+    "package": "internal/lower",
+    "file": "internal/lower/enums_open_test.go",
+    "seconds": 0.068,
+    "oracle": "self-written Refused type and diagnostic substring alternatives",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "untrue",
+    "subsumed_by": [],
+    "mutants_in_matrix": 20,
+    "probe_kills": [
+      "P_LOWER"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "vacuous_subcases": [],
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "No production mutant failure observed; see matrix.json"
+  },
+  {
+    "test": "TestNumericEnumNeverProof",
+    "package": "internal/lower",
+    "file": "internal/lower/enums_open_test.go",
+    "seconds": 0.16,
+    "oracle": "self-written IR function name enum_never and Panic presence",
+    "oracle_kind": "self",
+    "kills": [
+      "M05",
+      "M06",
+      "M10",
+      "M11",
+      "M12",
+      "M13"
+    ],
+    "unique_kills": [
+      "M11",
+      "M12",
+      "M13"
+    ],
+    "last_proven_fail": "M13: enums_open_test.go:73: guarded true, want false",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 20,
+    "probe_kills": [
+      "P_LOWER"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "vacuous_subcases": [],
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT='M13' ADAMIC_BUILD_CACHE_DIR='/tmp/u031/cache/M13' timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; enums_open_test.go:73: guarded true, want false"
+  },
+  {
+    "test": "TestNumericEnumLiteralPromises",
+    "package": "internal/lower",
+    "file": "internal/lower/enums_open_test.go",
+    "seconds": 0.194,
+    "oracle": "self-written Refused type only; unrelated Refused can satisfy it",
+    "oracle_kind": "self",
+    "kills": [
+      "M05",
+      "M06",
+      "M08"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M08: enums_open_test.go:93: want literal-promise refusal, got <nil>",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestFlagEnumAliasBoundaries"
+    ],
+    "mutants_in_matrix": 20,
+    "probe_kills": [
+      "P_LOWER"
+    ],
+    "subsumer_seconds": 0.196,
+    "vacuous": false,
+    "vacuous_subcases": [],
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT='M08' ADAMIC_BUILD_CACHE_DIR='/tmp/u031/cache/M08' timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; enums_open_test.go:93: want literal-promise refusal, got <nil>"
+  }
+]

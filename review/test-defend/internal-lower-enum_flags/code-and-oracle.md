@@ -1,0 +1,5 @@
+CODE UNDER TEST: Adamic Go lowering. Entry Lower reaches assignment and combine for flag compound operations, enumConstant/enumFields/enumExpression for members and reverse mapping, arrayLiteral/forOf for inline enum arrays, switchStatement/fallthroughSwitch/enumNeverCheck for checked never defaults. Full reached-function inventories are the per-row functions.txt files.
+
+ORACLE: all three current rows execute original source on Node and generated JavaScript on Node, comparing stdout bytes, exit code and stderr. external-run. These rows do not observe native C. NumericEnumNeverProof additionally inspects the self-written IR helper name and Panic presence.
+
+Prior audit used acceptance-only assertions. Current rows were strengthened before this defense starting commit. Semantic targets: Domain uniquely among its named subsumer exercises compound AND with complement; NeverDefault executes a checked numeric-enum switch returning strings, whereas NumericEnumNeverProof inspects IR without executing those functions; InlineIteration executes a fresh inline enum array containing zero, whereas NameEnumeration enumerates object keys.

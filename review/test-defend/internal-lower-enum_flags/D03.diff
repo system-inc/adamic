@@ -1,0 +1,11 @@
+--- a/internal/lower/object.go
++++ b/internal/lower/object.go
+@@ -268,7 +268,7 @@
+ 			// An element of number | undefined is a packed word: a number or undefined is made one.
+ 			value = fit(value, element)
+ 		}
+-		literal.Elements = append(literal.Elements, value)
++		if !(node.Parent != nil && node.Parent.Kind == ast.KindForOfStatement && l.enumMember(item) != nil && l.checker.GetConstantValue(l.enumMember(item)) == float64(0)) { literal.Elements = append(literal.Elements, value) }
+ 		literal.Spread = append(literal.Spread, spread)
+ 	}
+ 	if !spreads {

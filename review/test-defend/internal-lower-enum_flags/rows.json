@@ -1,0 +1,65 @@
+[
+  {
+    "test": "TestFlagEnumsDomain",
+    "package": "internal/lower",
+    "prior_verdict": "subsumed",
+    "subsumed_by": "TestFlagEnumInlineIteration",
+    "defense": "defended",
+    "unique_mutant": "D01 internal/lower/assignments.go:154",
+    "attempts": [
+      {
+        "mutant": "D01",
+        "file_line": "internal/lower/assignments.go:154",
+        "change": "change option: compound AND becomes OR",
+        "rows_failed": [
+          "TestFlagEnumsDomain"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/enum-defense/cache/D01 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > review/test-defend/internal-lower-enum_flags/D01.log 2>&1; enum_flags_test.go:97: JavaScript backend stdout = \"-1\\n0/1073741824/A\\n\", source Node = \"1073741826\\n0/1073741824/A\\n\""
+  },
+  {
+    "test": "TestEnumNeverDefault",
+    "package": "internal/lower",
+    "prior_verdict": "subsumed",
+    "subsumed_by": "TestNumericEnumNeverProof",
+    "defense": "defended",
+    "unique_mutant": "D02 internal/lower/switch.go:47",
+    "attempts": [
+      {
+        "mutant": "D02",
+        "file_line": "internal/lower/switch.go:47",
+        "change": "off-by-one bound: omit first dispatch group in checked string-returning enum switches",
+        "rows_failed": [
+          "TestEnumNeverDefault"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/enum-defense/cache/D02 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > review/test-defend/internal-lower-enum_flags/D02.log 2>&1; enum_flags_test.go:103: JavaScript backend stdout = \"\", source Node = \"rgb\\n0/1/2/Red\\n\""
+  },
+  {
+    "test": "TestFlagEnumInlineIteration",
+    "package": "internal/lower",
+    "prior_verdict": "subsumed",
+    "subsumed_by": "TestEnumNameEnumeration",
+    "defense": "defended",
+    "unique_mutant": "D04 internal/lower/object.go:1001",
+    "attempts": [
+      {
+        "mutant": "D03",
+        "file_line": "internal/lower/object.go:271",
+        "change": "drop statement: omit zero-valued enum member from inline for-of array",
+        "rows_failed": []
+      },
+      {
+        "mutant": "D04",
+        "file_line": "internal/lower/object.go:1001",
+        "change": "off-by-one bound: start inline enum array iteration after its zero-valued first member",
+        "rows_failed": [
+          "TestFlagEnumInlineIteration"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/enum-defense/cache/D04 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > review/test-defend/internal-lower-enum_flags/D04.log 2>&1; enum_flags_test.go:123: JavaScript backend stdout = \"3\\nHigh\\n\", source Node = \"0\\n3\\nHigh\\n\""
+  }
+]

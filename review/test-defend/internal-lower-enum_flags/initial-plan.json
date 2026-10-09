@@ -1,0 +1,26 @@
+{
+  "base": "6eef5ae586af0354d3032d36535e54cefb2da43a",
+  "mutants": [
+    [
+      "D01",
+      "internal/lower/assignments.go",
+      "ast.KindAmpersandEqualsToken:                         ast.KindAmpersandToken,",
+      "ast.KindAmpersandEqualsToken:                         ast.KindBarToken,",
+      "change option: compound AND becomes OR"
+    ],
+    [
+      "D02",
+      "internal/lower/switch.go",
+      "for index, group := range groups {",
+      "for index, group := range groups[func() int { if unmatchedCheck != nil && l.function != nil && l.function.Returns == ir.String { return 1 }; return 0 }():] {",
+      "off-by-one bound: omit first dispatch group in checked string-returning enum switches"
+    ],
+    [
+      "D03",
+      "internal/lower/object.go",
+      "literal.Elements = append(literal.Elements, value)",
+      "if !(node.Parent != nil && node.Parent.Kind == ast.KindForOfStatement && l.enumMember(item) != nil && l.checker.GetConstantValue(l.enumMember(item)) == float64(0)) { literal.Elements = append(literal.Elements, value) }",
+      "drop statement: omit zero-valued enum member from inline for-of array"
+    ]
+  ]
+}

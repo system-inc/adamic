@@ -1,0 +1,11 @@
+--- a/internal/lower/switch.go
++++ b/internal/lower/switch.go
+@@ -44,7 +44,7 @@
+ 		dispatch.Default = []ir.Statement{unmatchedCheck}
+ 	}
+ 	bodies := []ir.Statement{}
+-	for index, group := range groups {
++	for index, group := range groups[func() int { if unmatchedCheck != nil && l.function != nil && l.function.Returns == ir.String { return 1 }; return 0 }():] {
+ 		position := ir.NumberConstant{Value: float64(index)}
+ 		choose := []ir.Statement{ir.Assign{Local: entry, Value: position}}
+ 		if len(group.tests) > 0 {
