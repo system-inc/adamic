@@ -111,33 +111,34 @@ func (l *lowering) findCycles(modules []*ast.SourceFile) error {
 		l.programPlan = l.selectProgramMembership(finder, modules)
 		return nil
 	}
-	if l.programPlan != nil {
-		for _, proven := range finder.seen {
-			if l.programPlan != nil && l.programPlan.types[int(proven.Id())] {
-				continue
-			}
-			if err := finder.slotsOf(proven); err != nil {
-				return err
+	for _, proven := range finder.seen {
+		if l.programPlan != nil && l.programPlan.types[int(proven.Id())] {
+			continue
+		}
+		if err := finder.slotsOf(proven); err != nil {
+			return err
+		}
+	}
+	for local, declared := range l.result.Locals {
+		if !declared.Captured || declared.Global {
+			continue
+		}
+		proven, node := l.localTypes[local], l.localNodes[local]
+		if proven == nil || node == nil || finder.weak(proven) {
+			continue
+		}
+		if finder.reaches(proven, cycleNode{cell: local + 1}) && !l.closedFrameInput(local) && (l.programPlan == nil || !l.programPlan.cells[local]) {
+			return &Refused{
+				Where: l.program.Where(node),
+				What:  "'" + declared.Name + "', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free",
+				Fix:   "remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)",
 			}
 		}
-		for local, declared := range l.result.Locals {
-			if !declared.Captured || declared.Global {
-				continue
-			}
-			proven, node := l.localTypes[local], l.localNodes[local]
-			if proven == nil || node == nil || finder.weak(proven) {
-				continue
-			}
-			if finder.reaches(proven, cycleNode{cell: local + 1}) && !l.closedFrameInput(local) && (l.programPlan == nil || !l.programPlan.cells[local]) {
-				return &Refused{
-					Where: l.program.Where(node),
-					What:  "'" + declared.Name + "', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free",
-					Fix:   "remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)",
-				}
-			}
+	}
+	if l.programPlan == nil {
+		if err := finder.graphTypes(modules); err != nil {
+			return err
 		}
-	} else if err := finder.graphTypes(modules); err != nil {
-		return err
 	}
 	l.resolveCountTypes(modules)
 	return l.checkLazyViewReads()
