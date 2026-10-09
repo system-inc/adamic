@@ -144,6 +144,9 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 	case ir.ObjectLiteral:
 		return e.objectLiteral(expression)
 	case ir.Property:
+		if expression.Object.Type() == ir.Array {
+			return e.nodeArrayProperty(expression)
+		}
 		if expression.View != "" {
 			return e.viewField(expression)
 		}
@@ -614,6 +617,9 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		separator := e.value(expression.Separator)
 		return e.own(ir.String, fmt.Sprintf("adamic_array_join(%s, %s, %s)", array, separator, joinKind(expression.Element)))
 	case ir.ArrayLiteral:
+		if len(expression.Metadata) != 0 {
+			return e.nodeArrayLiteral(expression)
+		}
 		if spread, ok := e.spreadArray(expression); ok {
 			return spread
 		}

@@ -119,8 +119,10 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 	if literal.Record {
 		return e.recordLiteral(literal)
 	}
-	if reused, ok := e.reused(literal); ok {
-		return reused
+	if !constructionFields(literal.Fields) {
+		if reused, ok := e.reused(literal); ok {
+			return reused
+		}
 	}
 	if literal.Spread != nil {
 		// A copy of the source's object, whatever its shape, with the named fields replaced. The copy
@@ -168,11 +170,17 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 		if region {
 			values = append(values, e.handRegion(field.Value, "region"))
 		} else {
+			if field.Absent {
+				values = append(values, "")
+				continue
+			}
 			values = append(values, e.value(field.Value))
 		}
 	}
 	object := ""
-	if region {
+	if constructionFields(literal.Fields) {
+		object = e.own(ir.Object, fmt.Sprintf("adamic_object_construct(&%s)", e.literalShape(literal)))
+	} else if region {
 		object = e.regionValue(fmt.Sprintf("adamic_object_new_in(region, &%s)", e.literalShape(literal)))
 	} else {
 		object = e.own(ir.Object, fmt.Sprintf("adamic_object_new(&%s)", e.literalShape(literal)))
@@ -204,6 +212,12 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 	for index, field := range literal.Fields {
 		if e.fieldTypesNeeded() {
 			e.line("adamic_object_field_types(%s)[%d] = %d;", object, index, fieldInitialRepresentation(field))
+		}
+		if field.Absent {
+			continue
+		}
+		if constructionFields(literal.Fields) {
+			e.line("adamic_object_publish(%s, %d); adamic_object_initialized(%s)[%d] = 1;", object, index, object, index)
 		}
 		if field.Uninitialized && !field.Unset {
 			e.line("adamic_object_initialized(%s)[%d] = 0;", object, index)
@@ -445,7 +459,7 @@ func (e *emitter) methodEntryType() string {
 }
 
 func (e *emitter) fieldTypesNeeded() bool {
-	if len(e.program.CheckedFields) != 0 || e.dynamicProperties() {
+	if len(e.program.CheckedFields) != 0 || e.dynamicProperties() || e.constructionNeeded() {
 		return true
 	}
 	needed := false

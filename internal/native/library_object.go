@@ -22,6 +22,9 @@ func (e *emitter) objectCall(call ir.ObjectCall) string {
 	case "hasOwn":
 		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_object_has_own(%s, %s)", arguments[0], arguments[1]))
 	case "keys":
+		if call.Arguments[0].Type() == ir.Array {
+			return e.own(ir.Array, fmt.Sprintf("adamic_node_array_keys(%s)", arguments[0]))
+		}
 		return e.own(ir.Array, fmt.Sprintf("adamic_object_keys(%s)", arguments[0]))
 	case "values", "entries":
 		if call.Checked {

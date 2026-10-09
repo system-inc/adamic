@@ -132,6 +132,7 @@ bool adamic_has_property(const adamic_heap *value, const char *name) {
 		}
 		for (size_t index = 0; index < object->shape->count; index++) {
 			if (strcmp(name, object->shape->names[index]) != 0) continue;
+			if (!adamic_object_present(object, index)) continue;
 			if (object->class == NULL || name[0] != '#') return true;
 			const adamic_shape *public = object->class->public_shape;
 			if (named(name, public->names, public->count)) return true;
@@ -149,6 +150,7 @@ bool adamic_has_property(const adamic_heap *value, const char *name) {
 		const adamic_array *array = (const adamic_array *)value;
 		size_t index;
 		if (array_key(name, &index)) return index < array->length;
+		if (array->metadata != NULL && adamic_has_property(&array->metadata->heap, name)) return true;
 		if (array->properties != NULL && adamic_has_property(&array->properties->heap, name)) return true;
 		static const char *const names[] = {"length", "at", "concat", "copyWithin", "fill", "find", "findIndex", "findLast", "findLastIndex", "lastIndexOf", "pop", "push", "reverse", "shift", "unshift", "slice", "sort", "splice", "includes", "indexOf", "join", "keys", "entries", "values", "forEach", "filter", "flat", "flatMap", "map", "every", "some", "reduce", "reduceRight", "toReversed", "toSorted", "toSpliced", "with"};
 		return object_prototype_name(name) || named(name, names, sizeof names / sizeof names[0]);
@@ -157,8 +159,14 @@ bool adamic_has_property(const adamic_heap *value, const char *name) {
 }
 
 static adamic_heap *dynamic_slot(const adamic_object *object, size_t index) {
+	if (!adamic_object_present(object, index) || !adamic_object_initialized(object)[index]) return NULL;
 	const adamic_value slot = object->slots[index];
 	if (object->shape->references[index]) return adamic_retain(slot.reference);
+	if (object->write_order!=NULL) {
+		unsigned char actual=adamic_object_field_types(object)[index];
+		if (actual==1) return adamic_box_number(slot.number);
+		if (actual==2) return slot.boolean ? &adamic_box_true.heap : &adamic_box_false.heap;
+	}
 	for (const adamic_shape_types *entry = shape_types; entry != NULL; entry = entry->next) {
 		if (entry->shape != object->shape) continue;
 		// These are ir.Type's scalar representations, written by the emitter.
@@ -193,6 +201,11 @@ adamic_heap *adamic_dynamic_property(adamic_heap *value, const char *name) {
 	if (value->kind == adamic_kind_array) {
 		adamic_array *array = (adamic_array *)value;
 		if (strcmp(name, "length") == 0) return adamic_box_number((double)array->length);
+		if (array->metadata != NULL) {
+			for (size_t index = 0; index < array->metadata->shape->count; index++) {
+				if (strcmp(name, array->metadata->shape->names[index]) == 0) return dynamic_slot(array->metadata, index);
+			}
+		}
 		if (array->properties != NULL) return adamic_dynamic_property(&array->properties->heap, name);
 		return NULL;
 	}

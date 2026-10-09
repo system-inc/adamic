@@ -117,6 +117,13 @@ func (l *lowering) declareLocal(name *ast.Node) (int, error) {
 	if origin := l.placeholderOrigin(name); origin != "" {
 		valueType = placeholderStorage(valueType)
 	}
+	unsetField := ""
+	if declaration := name.Parent; declaration != nil && declaration.Kind == ast.KindVariableDeclaration && declaration.Type() == nil && declaration.Initializer() != nil && declaration.Parent.Flags&ast.NodeFlagsConst != 0 {
+		unsetField = l.savedFactoryOrigin(declaration.Initializer(), map[*ast.Symbol]bool{})
+		if unsetField != "" {
+			valueType = ir.Union
+		}
+	}
 	if l.locals == nil {
 		l.locals = map[*ast.Symbol]int{}
 	}
@@ -125,7 +132,7 @@ func (l *lowering) declareLocal(name *ast.Node) (int, error) {
 		return local, nil
 	}
 	l.locals[symbol] = len(l.result.Locals)
-	l.result.Locals = append(l.result.Locals, ir.Local{Name: name.Text(), Type: valueType, Function: l.functionIndex, Placeholder: l.placeholderOrigin(name), Uninitialized: l.placeholderOrigin(name) != "" && (name.Parent.Kind != ast.KindParameter || l.uninitializedInitializer(name.Parent.AsParameterDeclaration().Initializer))})
+	l.result.Locals = append(l.result.Locals, ir.Local{UnsetField: unsetField, Name: name.Text(), Type: valueType, Function: l.functionIndex, Placeholder: l.placeholderOrigin(name), Uninitialized: l.placeholderOrigin(name) != "" && (name.Parent.Kind != ast.KindParameter || l.uninitializedInitializer(name.Parent.AsParameterDeclaration().Initializer))})
 	proven := l.checker.GetTypeAtLocation(name)
 	if inferred != nil {
 		proven = inferred
@@ -240,6 +247,9 @@ func (l *lowering) localRead(node *ast.Node, local int) (ir.Expression, error) {
 		return l.placeholderRead(node, ir.Read{Local: local, Of: l.result.Locals[local].Type, Checked: l.result.Locals[local].NamespaceState || l.checkedModuleRead(node, local), Unset: true}, origin), nil
 	}
 	read := ir.Expression(ir.Read{Local: local, Of: l.result.Locals[local].Type, Checked: l.result.Locals[local].NamespaceState || l.checkedModuleRead(node, local), Readiness: sourceExpression(node)})
+	if origin := l.result.Locals[local].UnsetField; origin != "" {
+		return l.unsetSpecialization(node, read, l.checker.GetTypeOfSymbol(l.symbol(node)), origin)
+	}
 	if l.result.Locals[local].Type == ir.Union {
 		// Where the checker has narrowed it to fewer members held one way, it's read as that.
 		parent := node.Parent

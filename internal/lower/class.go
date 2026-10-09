@@ -453,7 +453,8 @@ func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Stat
 	if err != nil {
 		return nil, err
 	}
-	if object.Type() != ir.Object {
+	_, _, nodeArray := l.nodeArrayLayoutOf(l.checker.GetTypeAtLocation(target.AsPropertyAccessExpression().Expression))
+	if object.Type() != ir.Object && !(object.Type() == ir.Array && nodeArray) {
 		return nil, l.notYet(target, "assigning a field of a "+typeName(object.Type()))
 	}
 	value, err := l.expression(valueNode)

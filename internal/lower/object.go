@@ -137,7 +137,7 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 		}
 		literal.Empty = empty
 	}
-	return literal, nil
+	return l.reserveFactoryFields(node, literal)
 }
 
 // emptySpread is the object { ...source, fields } makes when source is undefined: JavaScript's is
@@ -357,6 +357,10 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 		// A Weak<Node[]> narrowed to present is the array.
 		arrayType = target
 	}
+	if _, element, known := l.nodeArrayLayoutOf(arrayType); known {
+		held, _ := l.representation(element)
+		return held, nil
+	}
 	if !l.checker.IsArrayType(arrayType) {
 		return 0, l.notYet(node, "a value of type "+l.checker.TypeToString(arrayType)+" where an array goes")
 	}
@@ -446,6 +450,11 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 	if err != nil {
 		return nil, err
 	}
+	if object.Type() == ir.Object || object.Type() == ir.Array {
+		if value, handled, err := l.factoryFieldRead(node, object, name); handled {
+			return value, err
+		}
+	}
 	if object.Type() == ir.Union {
 		return l.dynamicProperty(node, object, name)
 	}
@@ -491,6 +500,11 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 			return ir.Length{Array: object, Optional: true}, nil
 		}
 		return ir.StringLength{Value: object, Optional: true}, nil
+	}
+	if object.Type() == ir.Array && name != "length" {
+		if value, handled, err := l.nodeArrayProperty(node, object, name); handled {
+			return value, err
+		}
 	}
 	if object.Type() == ir.Array && name != "length" && l.isLibraryType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(access.Expression)), "RegExpExecArray", "RegExpMatchArray", "RegExpIndicesArray") {
 		of, e := l.typeOf(node)
