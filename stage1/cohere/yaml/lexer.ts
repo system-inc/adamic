@@ -278,7 +278,7 @@ export class Lexer {
     }
     pushToIndex(index: number, allowEmpty: boolean): number {
         const piece = this.buffer.slice(this.pos, index);
-        if(piece !== '') {
+        if(piece) {
             this.tokens.push(piece);
             this.pos += piece.length;
             return piece.length;
@@ -298,7 +298,7 @@ export class Lexer {
         }
         let index = this.pos + 1;
         let unit = character(this.buffer, index);
-        while(unit !== '') {
+        while(unit) {
             if(member(tagChars, unit)) {
                 index += 1;
                 unit = character(this.buffer, index);
@@ -673,13 +673,13 @@ export class Lexer {
     }
     lex(source: string, incomplete = false): string[] {
         this.tokens = [];
-        if(source !== '') {
-            this.buffer = this.buffer !== '' ? this.buffer + source : source;
+        if(source) {
+            this.buffer = this.buffer ? this.buffer + source : source;
             this.lineEndPos = -2;
         }
         this.atEnd = !incomplete;
-        let next = this.next === '' ? 'stream' : this.next;
-        while(next !== '') {
+        let next = !this.next ? 'stream' : this.next;
+        while(next) {
             if(!incomplete && !this.hasChars(1)) break;
             next = this.parseNext(next);
         }

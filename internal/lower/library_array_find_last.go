@@ -44,6 +44,11 @@ func (l *lowering) libraryArrayFindLast(node *ast.Node, array ir.Expression, ele
 		// before the callback call. Do not pass a missing reference as T.
 		return l.arrayVisit(node, array, element, name)
 	}
+	if slotless(first) {
+		// Main represents boxed and optional-boolean callback slots; its search
+		// contract supplies their argument conversion and missing-element check.
+		return l.arrayVisit(node, array, element, name)
+	}
 	callback, err := l.expression(written)
 	if err != nil {
 		return nil, true, err
@@ -51,9 +56,7 @@ func (l *lowering) libraryArrayFindLast(node *ast.Node, array ir.Expression, ele
 	if callback.Type() != ir.Closure {
 		return nil, true, l.notYet(node, name+" callback is not a closure")
 	}
-	if len(parameters) == 0 && slotless(ir.Maybe(element)) {
-		return nil, true, l.notYet(node, name+" with an ignored optional element needs compiler closure ABI support")
-	}
+
 	result, err := l.typeOf(node)
 	if err != nil {
 		return nil, true, err

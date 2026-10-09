@@ -138,10 +138,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/assertions/09_interface_kind.a:15:10: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
-    }
+    "stage0": {"outcome":"Refused","what":"stage3/fixtures/assertions/09_interface_kind.a:15:9: Adamic 0.1 refuses checked view read of field properties with unsupported array contract; prove or implement the array contract before reading this field"}
   },
   {
     "file": "10_union_kind.a",
@@ -170,10 +167,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/assertions/11_parenthesized_kind.a:15:14: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
-    }
+    "stage0": {"outcome":"Compiles","what":""}
   },
   {
     "file": "12_union_target.a",
@@ -202,10 +196,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/assertions/13_flag_downcast.a:11:52: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
-    }
+    "stage0": {"outcome":"Compiles","what":""}
   },
   {
     "file": "14_structural_cache.a",
@@ -299,8 +290,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/assertions/19_identifier_kind.a:15:24: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/assertions/19_identifier_kind.a:25:13: stage 0 can't lower a checked field alias requiring an optional, accessor, or representation conversion yet"
     }
   },
   {
@@ -314,9 +305,6 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/assertions/20_type_flag_mask.a:11:54: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
-    }
+    "stage0": {"outcome":"Compiles","what":""}
   }
 ]

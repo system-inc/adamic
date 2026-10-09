@@ -74,6 +74,20 @@ func (l *lowering) objectStringByHint(node *ast.Node, value ir.Expression, hint 
 			if l.writable(returned) {
 				text = ir.UnionToString{Value: call}
 			}
+			if text == nil && !l.includesNull(returned) && !l.includesUndefined(returned) {
+				// Compiler boxes primitive-admitting {} results. Inspect that proven tag once;
+				// an object result proceeds to valueOf rather than being printed prematurely.
+				local := len(l.result.Locals)
+				l.result.Locals = append(l.result.Locals, ir.Local{Name: "conversion_result", Type: ir.Union, Function: function})
+				read := ir.Read{Local: local, Of: ir.Union}
+				body = append(body, ir.Declare{Local: local, Value: call})
+				kind := ir.TypeOf{Value: read}
+				primitive := ir.Binary{Operator: ir.And,
+					Left:  ir.Binary{Operator: ir.NotEqual, Left: kind, Right: ir.StringConstant{Index: l.constant("object")}},
+					Right: ir.Binary{Operator: ir.NotEqual, Left: kind, Right: ir.StringConstant{Index: l.constant("function")}}}
+				body = append(body, ir.If{Condition: primitive, Then: []ir.Statement{ir.Return{Value: ir.UnionToString{Value: read}}}})
+				continue
+			}
 		}
 		if text != nil {
 			body = append(body, ir.Return{Value: text})

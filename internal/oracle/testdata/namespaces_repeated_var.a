@@ -1,0 +1,14 @@
+namespace State {
+    export var value: number | undefined;
+    export function read(): number | undefined { return value; }
+    console.log(`${read()}`);
+    export var value: number | undefined = 1;
+    console.log(`${read()}`);
+    export var value: number | undefined;
+    console.log(`${read()}`);
+    export var value: number | undefined = 2;
+    console.log(`${read()}`);
+}
+console.log(`${State.value}`);
+State.value = 3;
+console.log(`${State.read()}`);

@@ -12,6 +12,10 @@ import (
 )
 
 func init() {
+	fixtures = append(fixtures, struct {
+		path            string
+		lowers, checked bool
+	}{"internal/oracle/testdata/library_object_replaced.a", true, true})
 	for _, path := range []string{"library_object_intrinsic", "library_object_coercion", "library_object_enumeration"} {
 		fixtures = append(fixtures, struct {
 			path            string

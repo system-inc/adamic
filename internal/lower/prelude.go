@@ -3,6 +3,7 @@ package lower
 
 import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/load"
 )
@@ -21,6 +22,15 @@ func (l *lowering) console(call *ast.Node) (ir.Statement, error) {
 	value, err := l.expression(arguments[0])
 	if err != nil {
 		return nil, err
+	}
+	// A checked assertion of a statically empty operand stops before console observes it.
+	// Keep the assertion evaluation rather than admitting an object to the scalar boundary.
+	argument := ast.SkipParentheses(arguments[0])
+	if argument.Kind == ast.KindNonNullExpression && l.checkedAssertionSource(argument) {
+		operand := l.checker.GetTypeAtLocation(argument.AsNonNullExpression().Expression)
+		if operand.Flags() == checker.TypeFlagsNull || operand.Flags() == checker.TypeFlagsUndefined {
+			return ir.Evaluate{Value: value}, nil
+		}
 	}
 	if _, null := value.(ir.Null); null {
 		value = ir.StringConstant{Index: l.constant("null")}

@@ -13,14 +13,6 @@ func TestRegExpGroupCompoundRefusals(t *testing.T) {
 		for _, operator := range []string{"+=", "&&=", "||=", "??="} {
 			source := "const m = /(?<x>a)/.exec('a'); if (m !== null && m.groups !== undefined) { const g = m.groups; " + target + " " + operator + " 'q'; }"
 			_, err := lowerSource(t, source)
-			if operator == "&&=" || operator == "||=" {
-				// Adamic 0.1's logical-assignment refusal precedes regex lowering.
-				var refused *Refused
-				if !errors.As(err, &refused) {
-					t.Errorf("want 0.1 refusal for %s: %v", operator, err)
-				}
-				continue
-			}
 			var notYet *NotYet
 			// ??= is already NotYet before either operand is lowered.
 			if !errors.As(err, &notYet) || (operator != "??=" && !strings.Contains(err.Error(), "overriding a RegExp or iterator property")) {

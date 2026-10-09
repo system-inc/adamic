@@ -23,6 +23,11 @@ func (l *lowering) methodName(node *ast.Node) (string, bool) {
 	if ast.IsIdentifier(name) || name.Kind == ast.KindStringLiteral {
 		return name.Text(), name.Text() != iteratorSlot
 	}
+	if name.Kind == ast.KindComputedPropertyName {
+		if text, known := constantStringKey(name.AsComputedPropertyName().Expression); known {
+			return text, text != iteratorSlot
+		}
+	}
 	if name.Kind == ast.KindComputedPropertyName && l.symbolIterator(name.AsComputedPropertyName().Expression) {
 		return iteratorSlot, true
 	}
@@ -46,7 +51,7 @@ func (l *lowering) iteratorMember(proven *checker.Type) *ast.Symbol {
 // lexical captures still use the existing cycle analysis and reference-counted closure environment.
 func (l *lowering) objectMethod(node *ast.Node) (ir.Expression, error) {
 	index := len(l.result.Functions)
-	l.result.Functions = append(l.result.Functions, ir.Function{Name: "object_method", Closure: true})
+	l.result.Functions = append(l.result.Functions, ir.Function{Name: "object_method", Closure: true, Receiver: true})
 	this := l.iterationLocal("this", ir.Object, index)
 	l.noteLocal(this, l.checker.GetTypeAtLocation(node.Parent), node)
 	l.closureRecords = append(l.closureRecords, closureRecord{proven: l.checker.GetTypeAtLocation(node), function: index, node: node})
@@ -116,7 +121,7 @@ func (l *lowering) memberFunction(where *ast.Node, proven *checker.Type, value i
 				if err != nil {
 					return nil, false, -1, err
 				}
-				return nil, true, instance.methods[methodKey(declaration, instance.class)], nil
+				return nil, true, instance.methods[l.methodKey(declaration, instance.class)], nil
 			}
 		}
 	}
@@ -439,7 +444,8 @@ func (l *lowering) userMethodCall(node *ast.Node) (ir.Expression, bool, error) {
 		if member == nil || !literalMethod(member) {
 			return nil, false, nil
 		}
-		receiverNode = callee.AsPropertyAccessExpression().Expression
+		value, err := l.callClosure(node)
+		return value, true, err
 	default:
 		return nil, false, nil
 	}
@@ -455,8 +461,13 @@ func (l *lowering) userMethodCall(node *ast.Node) (ir.Expression, bool, error) {
 		}
 		arguments = append(arguments, lowered)
 	}
-	result, _ := l.representation(l.checker.GetTypeAtLocation(node))
-	if result == 0 || slotless(result) {
+	proven := l.checker.GetTypeAtLocation(node)
+	result, known := l.representation(proven)
+	void := proven.Flags()&(checker.TypeFlagsVoid|checker.TypeFlagsNever) != 0
+	if void {
+		result = 0
+	}
+	if (!known && !void) || slotless(result) {
 		return nil, true, l.notYet(node, "a literal method call with an unrepresented result")
 	}
 	function := len(l.result.Functions)
@@ -474,6 +485,12 @@ func (l *lowering) userMethodCall(node *ast.Node) (ir.Expression, bool, error) {
 	for index, parameter := range parameters[1:] {
 		passed = append(passed, ir.Read{Local: parameter, Of: arguments[index+1].Type()})
 	}
-	l.result.Functions[function] = ir.Function{Name: "invoke_method", Returns: result, Parameters: parameters, Body: []ir.Statement{ir.Return{Value: invokeMember(method, hasReceiver, direct, object, passed, result)}}}
+	call := invokeMember(method, hasReceiver, direct, object, passed, result)
+	body := []ir.Statement{ir.Return{Value: call}}
+	if void {
+		// A void method still runs with its receiver and arguments, but has no value to return.
+		body = []ir.Statement{ir.Evaluate{Value: call}}
+	}
+	l.result.Functions[function] = ir.Function{Name: "invoke_method", Returns: result, Parameters: parameters, Body: body}
 	return ir.Call{Function: function, Arguments: arguments, Returns: result}, true, nil
 }

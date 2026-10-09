@@ -31,6 +31,20 @@ func (l *lowering) inProperty(node *ast.Node) (ir.Expression, error) {
 	if strings.ContainsRune(key.Text(), 0) {
 		return nil, l.notYet(key, "in with a NUL key (native shape names)")
 	}
+	// "key" in value narrows a union of object types to the members that declare the key, and any
+	// object carrying that key passes, so the narrowed member's fields would be read on trust. The
+	// sound use is presence on an unknown or single object type, where reads stay dynamic.
+	if right := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(binary.Right)); right.Flags()&checker.TypeFlagsUnion != 0 {
+		objects := 0
+		for _, member := range right.Types() {
+			if member.Flags()&checker.TypeFlagsObject != 0 {
+				objects++
+			}
+		}
+		if objects > 1 {
+			return nil, &Refused{Where: l.program.Where(node), What: "in that narrows a union of object types (any object with the key passes)", Fix: "use a discriminant, or a Map"}
+		}
+	}
 	if checker.IsTupleType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(binary.Right))) {
 		return nil, l.notYet(binary.Right, "in on a tuple (array presence metadata)")
 	}
@@ -136,6 +150,11 @@ func (l *lowering) unknownView(node *ast.Node, own, contextual *checker.Type) er
 		}
 		if callee.Kind == ast.KindPropertyAccessExpression && callee.Name().Text() == "stringify" && l.isLibraryGlobal(callee.AsPropertyAccessExpression().Expression, "JSON") {
 			return nil
+		}
+	}
+	if l.includesNull(own) && own.Flags()&checker.TypeFlagsNull == 0 {
+		if held, known := l.representation(own); known && held != ir.Union {
+			return l.notYet(node, "a nullable reference viewed as unknown or object (null and undefined slot tags)")
 		}
 	}
 	present := l.checker.GetNonNullableType(own)

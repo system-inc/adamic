@@ -11,6 +11,7 @@ const scout22OwnSignature = `const hasOwnProperty: (this: object, key: string) =
 func TestBorrowedObjectOwnProperty(t *testing.T) {
 	t.Parallel()
 	for _, source := range []string{
+		"const own = Object.prototype.hasOwnProperty; console.log(`${own.call({n:1},'n')}`);",
 		scout22OwnSignature + `const value = { n: 1 }; console.log(String(hasOwnProperty.call(value, 'n')));`,
 		scout22OwnSignature + `const value = { hasOwnProperty: (key: string): boolean => false }; hasOwnProperty.call(value, 'hasOwnProperty');`,
 		`const value = { n: 1 }; console.log(String(Object.prototype.hasOwnProperty.call(value, 'absent')));`,
@@ -47,10 +48,9 @@ func TestBorrowedObjectOwnPropertyRefusesUnprovenUses(t *testing.T) {
 	}
 }
 
-func TestBorrowedObjectOwnPropertyDoesNotInferAnyOrTrustAnnotations(t *testing.T) {
+func TestBorrowedObjectOwnPropertyDoesNotTrustMutableOrShadowedAliases(t *testing.T) {
 	t.Parallel()
 	for _, source := range []string{
-		`const own = Object.prototype.hasOwnProperty; console.log(String(own.call({n:1},'n')));`,
 		`let own: (this: object, key: string) => boolean = Object.prototype.hasOwnProperty; console.log(String(own.call({n:1},'n')));`,
 		`const Object = { prototype: { hasOwnProperty: (key: string): boolean => false } }; console.log(String(Object.prototype.hasOwnProperty.call({},'n')));`,
 	} {

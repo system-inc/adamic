@@ -1,0 +1,16 @@
+=== RUN   TestClosureConventionOwnerRuntimeSites
+    closure_convention_test.go:206: adamic_closure_call(closure, padded, count): drop-count mutant rejected under -Werror: expected 3, have 2
+    closure_convention_test.go:206: adamic_closure_call(closure, args, count): drop-count mutant rejected under -Werror: expected 3, have 2
+    closure_convention_test.go:206: adamic_closure_call(scope->work, arguments, 2): drop-count mutant rejected under -Werror: expected 3, have 2
+    closure_convention_test.go:206: adamic_closure_call(work, arguments, 2): drop-count mutant rejected under -Werror: expected 3, have 2
+--- PASS: TestClosureConventionOwnerRuntimeSites (0.75s)
+=== RUN   TestOptionalMethodThunksMatchNode
+    closure_convention_test.go:289: Node catches compiled missing-thunk mutant: exit status 70, output "adamic: panic: compiler bug: a method the checker proved is there is missing\n", Node "yes yes no\nunused no\nfacade no\n"
+--- PASS: TestOptionalMethodThunksMatchNode (0.52s)
+=== RUN   TestRuntimeFieldLayoutsAreIncluded
+=== PAUSE TestRuntimeFieldLayoutsAreIncluded
+=== CONT  TestRuntimeFieldLayoutsAreIncluded
+    fields_test.go:178: 36 runtime layouts included
+--- PASS: TestRuntimeFieldLayoutsAreIncluded (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	1.294s

@@ -9,6 +9,7 @@ import (
 func TestUnknownReflectionRefusals(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ source, reason string }{
+		{`function reflect(value: unknown): string { return typeof value; } function test(value: {code:string}|null): string { return reflect(value); }`, "nullable reference"},
 		{`function has(key: string, value: object): boolean { return key in value; }`, "dynamic key coercion"},
 		{`console.log(String('a\0b' in {}));`, "NUL key"},
 		{`function has(pair: readonly [number]): boolean { return 'length' in pair; }`, "tuple"},

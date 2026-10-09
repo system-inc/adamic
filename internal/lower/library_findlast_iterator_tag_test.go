@@ -28,13 +28,13 @@ func TestLibraryFindLastMissingScalarBoundaries(t *testing.T) {
 			t.Fatal(err)
 		}
 	}
-	_, ignoredErr := lowerSource(t, `const a=[true,false]; a.findLastIndex(():boolean=>false);`)
-	if ignoredErr == nil || !strings.Contains(ignoredErr.Error(), "compiler closure ABI support") {
-		t.Fatalf("want ignored optional boolean ABI refusal, got %v", ignoredErr)
-	}
-	_, err := lowerSource(t, `const a=[true,false]; a.findLast((n:boolean|undefined):boolean=>{a.pop();return n===undefined;});`)
-	if err == nil || !strings.Contains(err.Error(), "function value taking boolean | undefined") {
-		t.Fatalf("want compiler optional boolean ABI refusal, got %v", err)
+	for _, source := range []string{
+		`const a=[true,false]; a.findLastIndex(():boolean=>false);`,
+		`const a=[true,false]; a.findLast((n:boolean|undefined):boolean=>{a.pop();return n===undefined;});`,
+	} {
+		if _, err := lowerSource(t, source); err != nil {
+			t.Fatalf("want compiler optional boolean ABI support, got %v", err)
+		}
 	}
 }
 

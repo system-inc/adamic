@@ -8,7 +8,7 @@ import (
 
 func TestDateStringRuling10Refusals(t *testing.T) {
 	for _, name := range []string{"library_date_string", "library_date_string_utc", "library_date_string_refusal", "library_date_dynamic_parse"} {
-		_, err := lowered(t, filepath.Join(repository, "internal/oracle/testdata/"+name+".a"))
+		_, err := lowered(t, filepath.Join(repository, "internal/oracle/testdata/library_date_refused/"+name+".a"))
 		if err == nil || !strings.Contains(err.Error(), "ruling 10") {
 			t.Fatalf("%s: want ruling 10 refusal, got %v", name, err)
 		}

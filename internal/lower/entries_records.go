@@ -1,0 +1,219 @@
+package lower
+
+import (
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/system-inc/adamic/internal/ir"
+	"strings"
+)
+
+// Fold only effect-free strings; a runtime computed key is not a shape proof.
+func constantStringKey(node *ast.Node) (string, bool) {
+	node = ast.SkipParentheses(node)
+	if node.Kind == ast.KindStringLiteral {
+		return node.Text(), true
+	}
+	if node.Kind == ast.KindBinaryExpression && node.AsBinaryExpression().OperatorToken.Kind == ast.KindPlusToken {
+		left, a := constantStringKey(node.AsBinaryExpression().Left)
+		right, b := constantStringKey(node.AsBinaryExpression().Right)
+		return left + right, a && b
+	}
+	return "", false
+}
+
+func (l *lowering) enumerationInModule(module *ast.SourceFile) bool {
+	return l.enumerationMethodsInModule(module, false)
+}
+
+func (l *lowering) enumerationMethodsInModule(module *ast.SourceFile, valuesOnly bool) bool {
+	found := false
+	var visit ast.Visitor
+	visit = func(node *ast.Node) bool {
+		if node.Kind == ast.KindCallExpression {
+			callee := ast.SkipParentheses(node.AsCallExpression().Expression)
+			if callee.Kind == ast.KindPropertyAccessExpression && l.isLibraryGlobal(callee.AsPropertyAccessExpression().Expression, "Object") {
+				name := callee.Name().Text()
+				found = found || name == "entries" || name == "values" || !valuesOnly && name == "keys"
+			}
+		}
+		return node.ForEachChild(visit)
+	}
+	module.AsNode().ForEachChild(visit)
+	return found
+}
+
+// The declaration alone does not promise a runtime dictionary. Ordinary closed
+// literal origins stay fixed; indexed writes below explicitly select record storage.
+func (l *lowering) enumerationIndexSignature(node *ast.Node) bool {
+	if !l.enumerationInModule(ast.GetSourceFileOfNode(node).AsSourceFile()) {
+		return false
+	}
+	signature := node.AsIndexSignatureDeclaration()
+	return len(signature.Parameters.Nodes) == 1 && signature.Parameters.Nodes[0].AsParameterDeclaration().Type != nil && signature.Parameters.Nodes[0].AsParameterDeclaration().Type.Kind == ast.KindStringKeyword
+}
+
+// Reassigned origins are never guessed. Const aliases can still mutate their
+// object: those writes select record storage and invalidate unchecked enumeration.
+func (l *lowering) entriesLiteralOrigin(node *ast.Node, depth int) *ast.Node {
+	if node == nil || depth > 32 {
+		return nil
+	}
+	node = ast.SkipParentheses(node)
+	if node.Kind == ast.KindObjectLiteralExpression {
+		return node
+	}
+	if node.Kind == ast.KindAsExpression && ast.IsConstTypeReference(node.AsAsExpression().Type) {
+		return l.entriesLiteralOrigin(node.AsAsExpression().Expression, depth+1)
+	}
+	if !ast.IsIdentifier(node) {
+		return nil
+	}
+	symbol := l.symbol(node)
+	if symbol == nil || len(symbol.Declarations) != 1 {
+		return nil
+	}
+	declaration := symbol.Declarations[0]
+	if declaration.Kind != ast.KindVariableDeclaration || declaration.Parent.Flags&ast.NodeFlagsConst == 0 {
+		return nil
+	}
+	return l.entriesLiteralOrigin(declaration.AsVariableDeclaration().Initializer, depth+1)
+}
+
+func (l *lowering) entriesRecordLiteral(literal *ast.Node) bool {
+	parent := literal.Parent
+	for parent != nil && (parent.Kind == ast.KindAsExpression || parent.Kind == ast.KindParenthesizedExpression) {
+		parent = parent.Parent
+	}
+	if parent == nil || parent.Kind != ast.KindVariableDeclaration || parent.Parent.Flags&ast.NodeFlagsConst == 0 {
+		return false
+	}
+	contextual := l.checker.GetContextualType(literal, checker.ContextFlagsNone)
+	indexed := contextual != nil && len(l.checker.GetIndexInfosOfType(contextual)) != 0
+	modules, err := l.moduleOrder(l.program.Files()[0])
+	if err != nil {
+		return false
+	}
+	written := false
+	var visit ast.Visitor
+	visit = func(node *ast.Node) bool {
+		if node.Kind == ast.KindBinaryExpression && ast.IsAssignmentOperator(node.AsBinaryExpression().OperatorToken.Kind) {
+			target := ast.SkipParentheses(node.AsBinaryExpression().Left)
+			var receiver *ast.Node
+			if target.Kind == ast.KindElementAccessExpression {
+				receiver = target.AsElementAccessExpression().Expression
+			}
+			if target.Kind == ast.KindPropertyAccessExpression {
+				receiver = target.AsPropertyAccessExpression().Expression
+			}
+			if receiver != nil && l.entriesLiteralOrigin(receiver, 0) == literal && (indexed || l.entriesStringIndexed(receiver)) {
+				written = true
+			}
+		}
+		return node.ForEachChild(visit)
+	}
+	for _, module := range modules {
+		module.AsNode().ForEachChild(visit)
+	}
+	return written
+}
+
+func (l *lowering) entriesRecordWrite(target, valueNode *ast.Node) ([]ir.Statement, bool, error) {
+	var receiver, keyNode *ast.Node
+	key, known := "", false
+	if target.Kind == ast.KindElementAccessExpression {
+		access := target.AsElementAccessExpression()
+		receiver, keyNode = access.Expression, access.ArgumentExpression
+		key, known = constantStringKey(keyNode)
+	} else {
+		receiver = target.AsPropertyAccessExpression().Expression
+		key, known = target.Name().Text(), true
+	}
+	origin := l.entriesLiteralOrigin(receiver, 0)
+	if origin == nil || !l.entriesRecordLiteral(origin) {
+		return nil, false, nil
+	}
+	if !known || key == "__proto__" || strings.ContainsRune(key, 0) || strings.HasPrefix(key, "#") || key == iteratorSlot {
+		return nil, true, l.notYet(target, "an indexed record write without a plain constant data key")
+	}
+	object, err := l.expression(receiver)
+	if err != nil {
+		return nil, true, err
+	}
+	value, err := l.expression(valueNode)
+	if err != nil {
+		return nil, true, err
+	}
+	if value.Type() != ir.Number && value.Type() != ir.String && value.Type() != ir.Boolean && value.Type() != ir.Union {
+		return nil, true, l.notYet(target, "a record write outside scalar storage")
+	}
+	return []ir.Statement{ir.SetProperty{Object: object, Name: key, Value: fit(value, ir.Union), Define: true, Record: true, Site: l.writeSite(receiver)}}, true, nil
+}
+
+func (l *lowering) enumerationDescriptorRefusal(node *ast.Node) error {
+	if node.Kind != ast.KindGetAccessor && node.Kind != ast.KindSetAccessor && node.Kind != ast.KindComputedPropertyName {
+		return nil
+	}
+	if !l.enumerationMethodsInModule(ast.GetSourceFileOfNode(node).AsSourceFile(), true) {
+		return nil
+	}
+	if node.Kind == ast.KindComputedPropertyName {
+		if l.checker.GetTypeAtLocation(node.AsComputedPropertyName().Expression).Flags()&checker.TypeFlagsESSymbolLike == 0 {
+			return nil
+		}
+		return &Refused{Where: l.program.Where(node), What: "Object enumeration with symbol keys", Fix: "use own string-keyed data properties"}
+	}
+	return &Refused{Where: l.program.Where(node), What: "Object enumeration with a getter or accessor", Fix: "use own data properties"}
+}
+
+func (l *lowering) entriesProgramHasRecords() bool {
+	modules, err := l.moduleOrder(l.program.Files()[0])
+	if err != nil {
+		return true
+	}
+	found := false
+	var visit ast.Visitor
+	visit = func(node *ast.Node) bool {
+		if node.Kind == ast.KindObjectLiteralExpression && l.entriesRecordLiteral(node) {
+			found = true
+		}
+		return node.ForEachChild(visit)
+	}
+	for _, module := range modules {
+		module.AsNode().ForEachChild(visit)
+	}
+	return found
+}
+
+func (l *lowering) entriesStringIndexed(receiver *ast.Node) bool {
+	for _, info := range l.checker.GetIndexInfosOfType(l.checker.GetTypeAtLocation(receiver)) {
+		if info.KeyType().Flags()&checker.TypeFlagsStringLike != 0 {
+			return true
+		}
+	}
+	return false
+}
+
+// A parameter or replaced binding cannot establish which allocation must grow.
+// Keep those writes outside this first record-origin implementation.
+func (l *lowering) enumerationIndexedWriteRefusal(node *ast.Node) error {
+	if node.Kind != ast.KindBinaryExpression || !ast.IsAssignmentOperator(node.AsBinaryExpression().OperatorToken.Kind) {
+		return nil
+	}
+	target := ast.SkipParentheses(node.AsBinaryExpression().Left)
+	var receiver *ast.Node
+	if target.Kind == ast.KindPropertyAccessExpression {
+		receiver = target.AsPropertyAccessExpression().Expression
+	}
+	if target.Kind == ast.KindElementAccessExpression {
+		receiver = target.AsElementAccessExpression().Expression
+	}
+	if receiver != nil {
+		if err := l.regexUnsupportedUse(receiver); err != nil {
+			return err
+		}
+	}
+	if receiver == nil || !l.entriesStringIndexed(receiver) || l.entriesLiteralOrigin(receiver, 0) != nil {
+		return nil
+	}
+	return l.notYet(node, "an indexed mutation without a closed const literal origin")
+}

@@ -15,7 +15,7 @@ func init() {
 		"internal/oracle/testdata/class_features_static.a",
 		"internal/oracle/testdata/class_features_static_private.a",
 		"internal/oracle/testdata/class_features_private.a",
-		"internal/oracle/testdata/class_features_accessors.a",
+		"internal/oracle/testdata/class_features_refused/class_features_accessors.a",
 		"internal/oracle/testdata/class_features_twice.a",
 		"internal/oracle/testdata/class_features_retained.a",
 		"internal/oracle/testdata/class_features_distinct.a",
@@ -26,18 +26,21 @@ func init() {
 		"internal/oracle/testdata/class_inheritance_memory.a",
 		"internal/oracle/testdata/class_inheritance_generic.a",
 		"internal/oracle/testdata/class_inheritance_interface.a",
+		"internal/oracle/testdata/class_private_generic.a",
+		"internal/oracle/testdata/class_private_members.a",
 		"internal/oracle/testdata/class_inheritance_conditional.a",
+		"internal/oracle/testdata/class_super_closure.a",
 	} {
 		fixtures = append(fixtures, struct {
 			path    string
 			lowers  bool
 			checked bool
-		}{path, path != "internal/oracle/testdata/class_features_accessors.a", false})
+		}{path, path != "internal/oracle/testdata/class_features_refused/class_features_accessors.a", false})
 	}
 }
 
 func TestScout22AccessorSpreadRefusal(t *testing.T) {
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/class_features_accessors.a"))
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/class_features_refused/class_features_accessors.a"))
 	if err != nil {
 		t.Fatal(err)
 	}

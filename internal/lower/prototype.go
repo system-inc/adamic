@@ -75,6 +75,10 @@ func (l *lowering) prototypeRead(node *ast.Node, name string) error {
 }
 
 func (l *lowering) objectPrototypeCall(node, receiver *ast.Node, name string) (ir.Expression, bool, error) {
+	return l.objectPrototypeCallArguments(node, receiver, name, node.AsCallExpression().Arguments.Nodes)
+}
+
+func (l *lowering) objectPrototypeCallArguments(node, receiver *ast.Node, name string, written []*ast.Node) (ir.Expression, bool, error) {
 	callee := ast.SkipParentheses(node.AsCallExpression().Expression)
 	if !l.libraryMember(callee) {
 		return nil, false, nil
@@ -84,7 +88,7 @@ func (l *lowering) objectPrototypeCall(node, receiver *ast.Node, name string) (i
 	default:
 		return nil, false, nil
 	}
-	if value, handled, err := l.objectDescriptorPrototypeCall(node, receiver, name); handled {
+	if value, handled, err := l.objectDescriptorPrototypeCallArguments(node, receiver, name, written); handled {
 		return value, handled, err
 	}
 	if name == "isPrototypeOf" {
@@ -94,7 +98,10 @@ func (l *lowering) objectPrototypeCall(node, receiver *ast.Node, name string) (i
 		return nil, true, l.notYet(node, name+" on Error (its prototype and non-enumerable own descriptors differ from plain objects)")
 	}
 	of, _ := l.representation(l.checker.GetTypeAtLocation(receiver))
-	if of == ir.Object {
+	if l.exactPlainObject(receiver) {
+		of = ir.Object
+	}
+	if of == ir.Object || of == ir.Union {
 		if reason := l.prototypeHazard(receiver, name); reason != "" {
 			return nil, true, l.notYet(node, name+" through an object view ("+reason+")")
 		}
@@ -116,16 +123,16 @@ func (l *lowering) objectPrototypeCall(node, receiver *ast.Node, name string) (i
 	}
 	if name == "hasOwnProperty" || name == "propertyIsEnumerable" {
 		if of != ir.Object {
-			return l.nonObjectOwnProperty(node, receiver, name, of)
+			return l.nonObjectOwnPropertyArguments(node, receiver, name, of, written)
 		}
 		if checker.IsTupleType(l.checker.GetTypeAtLocation(receiver)) {
 			return nil, true, l.notYet(node, name+" on a tuple (its representation includes absent optional slots and no length descriptor)")
 		}
 		// Every own field of a plain object or a class instance is enumerable. Methods are on its
 		// prototype, absent from its shape, and defineProperty is refused.
-		return l.hasOwnProperty(node, receiver)
+		return l.hasOwnPropertyArguments(node, receiver, written)
 	}
-	if len(node.AsCallExpression().Arguments.Nodes) != 0 {
+	if len(written) != 0 {
 		return nil, true, l.notYet(node, name+" with arguments")
 	}
 	if checker.IsTupleType(l.checker.GetTypeAtLocation(receiver)) {
@@ -142,7 +149,9 @@ func (l *lowering) objectPrototypeCall(node, receiver *ast.Node, name string) (i
 		return nil, true, err
 	}
 	if name == "valueOf" {
-		if result, _ := l.representation(l.checker.GetTypeAtLocation(node)); result != of {
+		if result, _ := l.representation(l.checker.GetTypeAtLocation(node)); result == ir.Union && of == ir.Object {
+			return fit(value, result), true, nil
+		} else if result != of {
 			return nil, true, l.notYet(node, "valueOf whose library result type erases the "+typeName(of)+" representation to Object (keeping or returning that result needs a tagged object view)")
 		}
 		switch of {
@@ -156,7 +165,7 @@ func (l *lowering) objectPrototypeCall(node, receiver *ast.Node, name string) (i
 	case ir.Boolean:
 		return ir.BooleanToString{Value: value}, true, nil
 	case ir.Array:
-		return l.arrayMethod(node, receiver, "join")
+		return l.arrayMethodArguments(node, receiver, "join", written)
 	case ir.Object, ir.Map:
 		if l.libraryIteratorTagType(l.checker.GetTypeAtLocation(receiver)) {
 			return l.libraryIteratorString(value), true, nil

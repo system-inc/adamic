@@ -63,6 +63,11 @@ func (l *lowering) objectPrototypeLink(node *ast.Node, name string) (ir.Expressi
 		if err != nil {
 			return nil, true, err
 		}
+		// An immutable Object.create binding proves an object even in the compiler
+		// representation of {}, which also admits boxed primitive values.
+		if value.Type() == ir.Union && l.emptyPrototypeAllocation(arg) {
+			value = ir.Narrow{Value: value, To: ir.Object}
+		}
 		if value.Type() != ir.Object {
 			return fail("receiver or prototype is not a proven plain object")
 		}

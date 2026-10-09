@@ -84,8 +84,8 @@ func (l *lowering) stringConversionValue(node *ast.Node, value ir.Expression) (i
 			return l.spelled(node, value), nil
 		}
 	}
-	if l.checker.GetTypeAtLocation(node).Flags() == checker.TypeFlagsUndefined {
-		return ir.StringConstant{Index: l.constant("undefined")}, nil
+	if l.checker.GetTypeAtLocation(node).Flags()&(checker.TypeFlagsVoid|checker.TypeFlagsUndefined) != 0 {
+		return ir.Effects{Body: []ir.Statement{ir.Evaluate{Value: value}}, Result: ir.StringConstant{Index: l.constant("undefined")}}, nil
 	}
 	if ast.SkipParentheses(node).Kind == ast.KindNullKeyword {
 		return ir.StringConstant{Index: l.constant("null")}, nil
@@ -285,6 +285,11 @@ func (l *lowering) libraryStringMethodValues(node *ast.Node, value ir.Expression
 		shape.optional = 2
 		known = true
 	}
+	if name == "lastIndexOf" {
+		shape.arguments = []ir.Type{ir.String, ir.Number}
+		shape.optional = 1
+		known = true
+	}
 	if !known {
 		return nil, true, l.notYet(node, "String.prototype."+name+" (no sound lowering for this method yet)")
 	}
@@ -328,6 +333,18 @@ func (l *lowering) libraryStringMethodValues(node *ast.Node, value ir.Expression
 		if fallback, optional := optionalStrings[name][index]; optional {
 			lowered = l.orDefault(arg, lowered, fallback)
 		}
+		if (name == "slice" || name == "substring" || name == "lastIndexOf") && shape.arguments[index] == ir.Number {
+			fallback := ir.NumberConstant{Value: 0}
+			if index == 1 {
+				fallback.Value = math.Inf(1)
+			}
+			if _, absent := lowered.(ir.Undefined); absent {
+				lowered = fallback
+			}
+			if lowered.Type() == ir.MaybeNumber {
+				lowered = ir.Coalesce{Value: lowered, Fallback: fallback, Of: ir.Number}
+			}
+		}
 		if lowered.Type() != shape.arguments[index] {
 			return nil, true, l.notYet(arg, "a "+typeName(lowered.Type())+" argument to "+name)
 		}
@@ -336,6 +353,18 @@ func (l *lowering) libraryStringMethodValues(node *ast.Node, value ir.Expression
 	switch name {
 	case "startsWith", "endsWith":
 		return l.stringAffixMethod(value, name, arguments), true, nil
+	case "lastIndexOf":
+		if len(arguments) == 2 {
+			// A prefix ending after a complete candidate restricts starts, including the empty search.
+			// Bind all operands before reading lengths so effectful receiver and arguments run once.
+			b := l.libraryArrayBuilder([]ir.Expression{value, arguments[0], arguments[1]})
+			text, search, position := b.read(b.parameters[0]), b.read(b.parameters[1]), b.read(b.parameters[2])
+			integer := ir.Conditional{Condition: ir.NumberCall{Function: "isNaN", Arguments: []ir.Expression{position}}, WhenTrue: ir.NumberConstant{Value: math.Inf(1)}, WhenNot: ir.MathCall{Function: "trunc", Arguments: []ir.Expression{position}}}
+			start := ir.MathCall{Function: "min", Arguments: []ir.Expression{ir.StringLength{Value: text}, ir.MathCall{Function: "max", Arguments: []ir.Expression{integer, ir.NumberConstant{Value: 0}}}}}
+			end := ir.Binary{Operator: ir.Add, Left: start, Right: ir.StringLength{Value: search}}
+			prefix := ir.StringCall{Value: text, Method: "slice", Arguments: []ir.Expression{ir.NumberConstant{Value: 0}, end}}
+			return b.finish("string_last_index_of_position", ir.StringCall{Value: prefix, Method: "lastIndexOf", Arguments: []ir.Expression{search}}), true, nil
+		}
 	case "trim":
 		return ir.Trim{Value: value}, true, nil
 	case "charCodeAt":
@@ -345,7 +374,7 @@ func (l *lowering) libraryStringMethodValues(node *ast.Node, value ir.Expression
 		}
 		return ir.CharCodeAt{Value: value, Index: position}, true, nil
 	case "substr":
-		return l.stringSubstr(value, arguments), true, nil
+		return l.stringSubstrValues(value, arguments), true, nil
 	case "charAt", "substring":
 		return l.stringIndexMethod(value, name, arguments), true, nil
 	case "codePointAt":
@@ -499,7 +528,7 @@ func (l *lowering) stringReadOnlyArgument(node *ast.Node) bool {
 }
 
 func (l *lowering) refuseStringWidening(node *ast.Node) error {
-	if l.stringReadOnlyArgument(node) {
+	if l.stringReadOnlyArgument(node) || l.regexReplacementArgument(node) {
 		return nil
 	}
 	return l.refuseWidening(node)

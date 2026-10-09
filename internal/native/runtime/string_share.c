@@ -11,29 +11,37 @@
 // the bytes of a string some slice reads (its count is more than one, so it isn't reused), and reuse
 // would have to reset the cached units and index, which describe the old bytes.
 //
-// Sharing keeps the whole owner alive for as long as the slice is, so a short slice of a long string
-// is copied instead: a slice shares only when it is at least SHARE_MINIMUM bytes, below which a copy
-// is as cheap as the header, and at least 1/SHARE_FRACTION of its owner, so it never keeps more than
-// SHARE_FRACTION times its own bytes alive.
+// Sharing retains the ultimate owner, including its spare append capacity. Copy only when that
+// storage exceeds SHARE_FRACTION times the view's own header and bytes. Including the header
+// lets short views share small parents, without a minimum substring size. Constants pin nothing.
 
 #include "adamic.h"
 
 #include <string.h>
 
-#ifndef SHARE_MINIMUM
-#define SHARE_MINIMUM 64
-#endif
 #ifndef SHARE_FRACTION
-#define SHARE_FRACTION 4
+#define SHARE_FRACTION 8
 #endif
 
 adamic_string *adamic_string_share(const adamic_string *string, size_t offset, size_t size) {
-	if (offset == 0 && size == string->length) {
-		// The whole string is itself.
-		return adamic_retain((adamic_string *)string);
+	if (size == 0) {
+		return adamic_retain(&adamic_string_empty);
 	}
 	const adamic_string *owner = string->owner != NULL ? string->owner : string;
-	if (size < SHARE_MINIMUM || size < owner->length / SHARE_FRACTION) {
+	// A zero-count stack piece is borrowed, unlike a marked literal. It has no count a view
+	// can keep, so even a whole slice must copy. Built literal indexes remain non-NULL.
+	bool borrowed = adamic_reference_count(&owner->heap) == 0 && owner->index == NULL;
+	if (!borrowed && offset == 0 && size == string->length) {
+		return adamic_retain((adamic_string *)string);
+	}
+	size_t storage = owner->capacity > owner->length ? owner->capacity : owner->length;
+	// Avoid multiplication and addition overflow. ceil((header + storage) / fraction)
+	// is at most header + view bytes exactly when the retained-storage bound holds.
+	size_t minimum = storage / SHARE_FRACTION + sizeof *owner / SHARE_FRACTION;
+	size_t remainder = storage % SHARE_FRACTION + sizeof *owner % SHARE_FRACTION;
+	minimum += remainder / SHARE_FRACTION + (remainder % SHARE_FRACTION != 0);
+	bool oversized = minimum > sizeof *owner && size < minimum - sizeof *owner;
+	if (borrowed || (adamic_reference_count(&owner->heap) != 0 && oversized)) {
 		adamic_string *copy = adamic_string_allocate(size);
 		if (size > 0) {
 			memcpy((char *)copy->bytes, string->bytes + offset, size);

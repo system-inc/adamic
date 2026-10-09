@@ -355,7 +355,7 @@ adamic_object *adamic_node_stdout_handle(void) {
     static const char *const handle_names[] = {"setBlocking"};
     static const bool references[] = {true};
     static const adamic_shape shape = {1, handle_names, references, NULL};
-    static adamic_closure method = {{0, adamic_kind_closure, 0}, set_blocking, 0};
+    static adamic_closure method = {.heap = {0, adamic_kind_closure, 0}, .code = set_blocking, .count = 0};
     adamic_object *handle = adamic_object_new(&shape);
     handle->slots[0].reference = &method;
     return handle;
@@ -413,11 +413,11 @@ static adamic_value performance_mark_method(adamic_closure *self, adamic_value *
 static adamic_value performance_measure_method(adamic_closure *self, adamic_value *args) { (void)self; return (adamic_value){.reference = adamic_node_measure(args[0].reference, args[1].reference, args[2].reference)}; }
 static adamic_value performance_clear_marks_method(adamic_closure *self, adamic_value *args) { (void)self; adamic_node_clear_marks(args[0].reference); return (adamic_value){.reference = NULL}; }
 static adamic_value performance_clear_measures_method(adamic_closure *self, adamic_value *args) { (void)self; adamic_node_clear_measures(args[0].reference); return (adamic_value){.reference = NULL}; }
-static adamic_closure performance_now_closure = {{0, adamic_kind_closure, 0}, performance_now_method, 0};
-static adamic_closure performance_mark_closure = {{0, adamic_kind_closure, 0}, performance_mark_method, 0};
-static adamic_closure performance_measure_closure = {{0, adamic_kind_closure, 0}, performance_measure_method, 0};
-static adamic_closure performance_clear_marks_closure = {{0, adamic_kind_closure, 0}, performance_clear_marks_method, 0};
-static adamic_closure performance_clear_measures_closure = {{0, adamic_kind_closure, 0}, performance_clear_measures_method, 0};
+static adamic_closure performance_now_closure = {.heap = {0, adamic_kind_closure, 0}, .code = performance_now_method, .count = 0};
+static adamic_closure performance_mark_closure = {.heap = {0, adamic_kind_closure, 0}, .code = performance_mark_method, .count = 0};
+static adamic_closure performance_measure_closure = {.heap = {0, adamic_kind_closure, 0}, .code = performance_measure_method, .count = 0};
+static adamic_closure performance_clear_marks_closure = {.heap = {0, adamic_kind_closure, 0}, .code = performance_clear_marks_method, .count = 0};
+static adamic_closure performance_clear_measures_closure = {.heap = {0, adamic_kind_closure, 0}, .code = performance_clear_measures_method, .count = 0};
 static adamic_closure *const performance_methods[] = {&performance_now_closure, &performance_mark_closure, &performance_measure_closure, &performance_clear_marks_closure, &performance_clear_measures_closure};
 
 adamic_object *adamic_node_performance(void) {

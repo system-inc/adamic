@@ -120,15 +120,16 @@ func (l *lowering) findCycles(modules []*ast.SourceFile) error {
 		if proven == nil || node == nil || finder.weak(proven) {
 			continue
 		}
-		if finder.reaches(proven, cycleNode{cell: local + 1}) {
+		if finder.reaches(proven, cycleNode{cell: local + 1}) && !l.closedFrameInput(local) {
 			return &Refused{
 				Where: l.program.Where(node),
 				What:  "'" + declared.Name + "', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free",
-				Fix:   "write the function as a function declaration (function " + declared.Name + "() {}), which captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)",
+				Fix:   "remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)",
 			}
 		}
 	}
-	return nil
+	l.resolveCountTypes(modules)
+	return l.checkLazyViewReads()
 }
 
 // made notes the type of a value just made: an object type as a shape, and what anything else is

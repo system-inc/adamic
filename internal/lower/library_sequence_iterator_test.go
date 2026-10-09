@@ -24,9 +24,9 @@ func TestLibrarySequenceIteratorRefusals(t *testing.T) {
 func TestLibrarySequenceIteratorCycles(t *testing.T) {
 	for _, factory := range []string{"items.values()", "items[Symbol.iterator]()"} {
 		t.Run(factory, func(t *testing.T) {
-			_, err := lowerSource(t, `interface Item { iterator?: ArrayIterator<Item>; }
+			_, err := lowerSource(t, `interface Item { iterator: ArrayIterator<Item> | undefined; }
 const items: Item[] = [];
-const item: Item = {};
+const item: Item = { iterator: undefined };
 items.push(item);
 item.iterator = `+factory+`;`)
 			if err == nil || !strings.Contains(err.Error(), "cycle") {
@@ -51,7 +51,6 @@ for (const value of custom) { console.log(value); break; }`)
 func TestLibraryIteratorCompilerSlotsRefused(t *testing.T) {
 	for _, probe := range []struct{ source, reason string }{
 		{`const iterator = [true].values();`, "compiler slot representation support"},
-		{"const step = [1].values().next(); if (step.done) { console.log(`${step.value === undefined}`); }", "a value of type undefined"},
 	} {
 		t.Run(probe.reason, func(t *testing.T) {
 			_, err := lowerSource(t, probe.source)
@@ -80,5 +79,11 @@ func TestLibraryIteratorBuiltinOverridesRefused(t *testing.T) {
 				t.Fatalf("want compiler built-in write refusal, got %v", err)
 			}
 		})
+	}
+}
+
+func TestLibraryIteratorCompletedUndefinedValue(t *testing.T) {
+	if _, err := lowerSource(t, "const step = [1].values().next(); if (step.done) { console.log(`${step.value === undefined}`); }"); err != nil {
+		t.Fatal(err)
 	}
 }

@@ -5,7 +5,7 @@ import "github.com/system-inc/adamic/internal/ir"
 // Port of V8's src/builtins/string-substr.tq. The receiver is already a string;
 // numeric operands have no observable conversion. Bind all operands once before
 // clamping start relative to the UTF-16 length and limiting the requested count.
-func (l *lowering) stringSubstr(value ir.Expression, arguments []ir.Expression) ir.Expression {
+func (l *lowering) stringSubstrValues(value ir.Expression, arguments []ir.Expression) ir.Expression {
 	values := append([]ir.Expression{value}, arguments...)
 	function, reads := l.stringHelper("substr", values)
 	zero := ir.NumberConstant{Value: 0}

@@ -25,8 +25,9 @@ func (l *lowering) staticBase(declaration *ast.Node) *ast.Node {
 }
 func (l *lowering) needsStatics(declaration *ast.Node) bool {
 	// A class is in the temporal dead zone even when it has no static members.
-	// Cyclic graphs need the same ready storage for construction and extends.
-	if l.cyclicModules {
+	// Cyclic graphs and namespace classes need the same ready storage for
+	// construction and extends, including classes without static members.
+	if l.cyclicModules || declaration.Parent != nil && declaration.Parent.Kind == ast.KindModuleBlock {
 		return true
 	}
 	for _, member := range declaration.Members() {
@@ -124,14 +125,14 @@ func (l *lowering) staticInstance(declaration *ast.Node) (*instance, error) {
 			if slotless(of) {
 				return nil, l.notYet(member, "a static field without a native slot")
 			}
-			if member.AsPropertyDeclaration().Initializer == nil && !l.includesUndefined(l.checker.GetTypeAtLocation(member.Name())) {
+			if member.AsPropertyDeclaration().Initializer == nil && !l.uninitializedDeclaration(member) && !l.includesUndefined(l.checker.GetTypeAtLocation(member.Name())) {
 				return nil, l.notYet(member, "an uninitialized nonnullable static field; initialize it at its declaration")
 			}
 			value := zeroValue(of)
 			if of.IsReference() {
 				value = ir.Undefined{Of: of}
 			}
-			field := ir.Field{Name: memberKey(member.Name(), lowered.class), Value: value, Private: member.Name().Kind == ast.KindPrivateIdentifier}
+			field := ir.Field{Name: l.memberKey(member.Name(), lowered.class), Value: value, Private: member.Name().Kind == ast.KindPrivateIdentifier, Uninitialized: l.uninitializedDeclaration(member) || l.lazyAssertionInitializer(member.AsPropertyDeclaration().Initializer)}
 			slot := -1
 			for i, previous := range metadata.Fields {
 				if previous.Name == field.Name {
@@ -163,7 +164,7 @@ func (l *lowering) staticInstance(declaration *ast.Node) (*instance, error) {
 		if !classFunction(member) || !ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) {
 			continue
 		}
-		key := methodKey(member, lowered.class)
+		key := l.methodKey(member, lowered.class)
 		function := len(l.result.Functions)
 		lowered.methods[key] = function
 		meta := &l.result.Classes[lowered.class-1]
@@ -197,7 +198,7 @@ func (l *lowering) staticInstance(declaration *ast.Node) (*instance, error) {
 		if !classFunction(member) || !ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) {
 			continue
 		}
-		function := lowered.methods[methodKey(member, lowered.class)]
+		function := lowered.methods[l.methodKey(member, lowered.class)]
 		if err := l.signature(function, member, l.thisLocal(function)); err != nil {
 			return nil, err
 		}
@@ -209,7 +210,7 @@ func (l *lowering) staticInstance(declaration *ast.Node) (*instance, error) {
 		if !classFunction(member) || !ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) {
 			continue
 		}
-		if err := l.lowerFunction(lowered.methods[methodKey(member, lowered.class)], member, -1); err != nil {
+		if err := l.lowerFunction(lowered.methods[l.methodKey(member, lowered.class)], member, -1); err != nil {
 			return nil, err
 		}
 	}
@@ -217,6 +218,8 @@ func (l *lowering) staticInstance(declaration *ast.Node) (*instance, error) {
 }
 
 // Allocation installs methods and accessors before the ordered field and block initializers run.
+// The named map uses this static side's implementations, including inherited ones, while
+// the class's virtual slots still serve nominal calls. Both keep the actual receiver as this.
 func (l *lowering) staticDeclaration(declaration *ast.Node) ([]ir.Statement, error) {
 	if err := l.staticClassDeclaration(declaration); err != nil {
 		return nil, err
@@ -249,7 +252,7 @@ func (l *lowering) staticDeclaration(declaration *ast.Node) ([]ir.Statement, err
 		fields[slot].Value = ir.Read{Local: l.locals[l.symbol(parent.Name())], Of: ir.Object, Checked: checked}
 	}
 	object := ir.Read{Local: l.staticGlobals[l.symbol(declaration.Name())], Of: ir.Object}
-	statements := []ir.Statement{ir.Declare{Local: object.Local, Value: ir.ObjectLiteral{Fields: fields, Class: lowered.class}}}
+	statements := []ir.Statement{ir.Declare{Local: object.Local, Value: ir.ObjectLiteral{Fields: fields, Class: lowered.class, Methods: lowered.methodList()}}}
 	outerInstance, outerType, outerNode := l.instance, l.classType, l.classNode
 	l.instance, l.classType, l.classNode = lowered, l.checker.GetTypeOfSymbol(l.symbol(declaration.Name())), declaration.Name()
 	defer func() { l.instance, l.classType, l.classNode = outerInstance, outerType, outerNode }()
@@ -293,14 +296,30 @@ func (l *lowering) staticDeclaration(declaration *ast.Node) ([]ir.Statement, err
 			of, _ := l.typeOf(member.Name())
 			value := zeroValue(of)
 			initializer := member.AsPropertyDeclaration().Initializer
-			if initializer != nil {
-				value, err = l.expression(initializer)
-				value = fit(value, of)
-			} else if of.IsReference() {
-				value = ir.Undefined{Of: of}
-			}
-			if err == nil {
-				function.Body = []ir.Statement{ir.SetProperty{Object: ir.Read{Local: self, Of: ir.Object}, Name: memberKey(member.Name(), lowered.class), Value: value, Define: true, Site: l.staticWriteSite(declaration.Name())}}
+
+			if l.lazyAssertionInitializer(initializer) && !l.uninitializedInitializer(initializer) {
+				prefix, present, assigned, lazyErr := l.lazyAssertion(initializer, of)
+				err = lazyErr
+				if of.IsReference() {
+					value = ir.Undefined{Of: of}
+				}
+				if err == nil {
+					function.Body = append(prefix, ir.SetProperty{Object: ir.Read{Local: self, Of: ir.Object}, Name: l.memberKey(member.Name(), lowered.class), Value: value, Define: true, Uninitialized: true, Site: l.staticWriteSite(declaration.Name())}, ir.If{Condition: present, Then: []ir.Statement{ir.SetProperty{Object: ir.Read{Local: self, Of: ir.Object}, Name: l.memberKey(member.Name(), lowered.class), Value: assigned, Define: true, Site: l.staticWriteSite(declaration.Name())}}})
+				}
+			} else {
+				if l.uninitializedDeclaration(member) {
+					if of.IsReference() {
+						value = ir.Undefined{Of: of}
+					}
+				} else if initializer != nil {
+					value, err = l.expression(initializer)
+					value = fit(value, of)
+				} else if of.IsReference() {
+					value = ir.Undefined{Of: of}
+				}
+				if err == nil {
+					function.Body = []ir.Statement{ir.SetProperty{Object: ir.Read{Local: self, Of: ir.Object}, Name: l.memberKey(member.Name(), lowered.class), Value: value, Define: true, Uninitialized: l.uninitializedDeclaration(member), Site: l.staticWriteSite(declaration.Name())}}
+				}
 			}
 			available[member.Name().Text()] = true
 		}
@@ -554,7 +573,7 @@ func (l *lowering) staticConstruct(node, declaration *ast.Node, constructor int,
 	index := len(l.result.Functions)
 	self := len(l.result.Locals)
 	l.result.Locals = append(l.result.Locals, ir.Local{Name: "class", Type: ir.Object, Function: index})
-	function := ir.Function{Name: "class_ready_new", Parameters: []int{self}, Returns: ir.Object}
+	function := ir.Function{Name: "class_ready_new", Parameters: []int{self}, Returns: ir.Object, Receiver: true, ForwardsArguments: constructor + 1, RestElement: l.result.Functions[constructor].RestElement}
 	forwarded := []ir.Expression{}
 	for _, parameter := range l.result.Functions[constructor].Parameters {
 		local := len(l.result.Locals)
@@ -564,7 +583,7 @@ func (l *lowering) staticConstruct(node, declaration *ast.Node, constructor int,
 		function.Parameters = append(function.Parameters, local)
 		forwarded = append(forwarded, ir.Read{Local: local, Of: incoming.Type})
 	}
-	function.Body = []ir.Statement{ir.Return{Value: ir.Call{Function: constructor, Arguments: forwarded, Returns: ir.Object}}}
+	function.Body = []ir.Statement{ir.Return{Value: ir.Call{Function: constructor, Arguments: forwarded, Returns: ir.Object, ForwardCount: true, RestPacked: true}}}
 	l.result.Functions = append(l.result.Functions, function)
 	return ir.Call{Function: index, Arguments: append([]ir.Expression{receiver}, arguments...), Returns: ir.Object}
 }

@@ -62,6 +62,8 @@ func (l *lowering) libraryNumberSlot(node *ast.Node) (ir.Expression, error) {
 
 // libraryNumber converts only proven primitives. Objects can run arbitrary valueOf/toString code,
 // so they stay NotYet rather than being guessed at. The runtime handles missing primitive values.
+// libraryNumber implements primitive ToNumber and delegates represented conversion methods.
+// Dynamic object protocols stay explicit rather than guessing away user code.
 func (l *lowering) libraryNumber(node *ast.Node) (ir.Expression, error) {
 	if l.isLibraryType(l.checker.GetTypeAtLocation(node), "Date") {
 		value, err := l.expression(node)
@@ -94,6 +96,8 @@ func (l *lowering) libraryNumber(node *ast.Node) (ir.Expression, error) {
 	case ir.Number:
 		return value, nil
 	case ir.Boolean, ir.String, ir.MaybeNumber, ir.MaybeBoolean:
+	case ir.Object, ir.Array:
+		return l.censusNumberObject(node, value)
 	case ir.Union:
 		if !l.writable(l.checker.GetTypeAtLocation(node)) {
 			return nil, l.notYet(node, "Number conversion of a union containing objects")

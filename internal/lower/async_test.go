@@ -38,14 +38,14 @@ func TestAsyncGapsNameTheMissingPiece(t *testing.T) {
 		{"async function f(): Promise<void> { await f(); }\nawait f();", "recursive async call graphs"},
 		{"async function f(): Promise<void> { while (false) { await Promise.resolve(); } }\nawait f();", "control flow"},
 		{"async function f(): Promise<void> {}\nf();", "unawaited async task"},
-		{"async function f(): Promise<void> { await Promise.resolve(); }\nvoid f();", "void operator"},
+		{"async function f(): Promise<void> { await Promise.resolve(); }\nvoid f();", "async assignments, callbacks or Promise methods"},
 		{"async function f(): Promise<void> { console.log(`${1 == 1}`); }\nawait f();", "refuses =="},
 	} {
 		_, err := lowerSource(t, probe.source)
 		if err == nil || !strings.Contains(err.Error(), probe.want) {
 			t.Errorf("%s: got %v, want %s", probe.source, err, probe.want)
 		}
-		if strings.Contains(probe.want, "task") || probe.want == "void operator" || probe.want == "refuses ==" {
+		if strings.Contains(probe.want, "task") || probe.want == "refuses ==" {
 			var refused *Refused
 			if !errors.As(err, &refused) {
 				t.Errorf("permanent refusal became NotYet: %v", err)

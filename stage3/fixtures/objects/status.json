@@ -27,8 +27,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/objects/02_polling_levels.a:10:17: stage 0 can't lower a BinaryExpression with a boolean and a value yet"
+      "outcome": "Refused",
+      "what": "stage3/fixtures/objects/02_polling_levels.a:11:81: Adamic 0.1 refuses a spread after the first field; spread once, first: { ...source, field: value } (adamic/single-spread)"
     }
   },
   {
@@ -94,7 +94,7 @@
     },
     "stage0": {
       "outcome": "NotYet",
-      "what": "stage3/fixtures/objects/06_watch_close.a:25:17: stage 0 can't lower storing boolean in a field yet"
+      "what": "stage3/fixtures/objects/06_watch_close.a:25:17: stage 0 can't lower writing a possibly absent optional own field yet"
     }
   },
   {
@@ -127,8 +127,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/objects/08_loop_state.a:13:17: Adamic 0.1 refuses a string as a condition; compare it explicitly, like name.length > 0 or count !== 0"
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/objects/08_loop_state.a:16:17: stage 0 can't lower writing a possibly absent optional own field yet"
     }
   },
   {
@@ -144,8 +144,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/objects/10_build_options.a:14:54: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added"
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/objects/10_build_options.a:8:5: stage 0 can't lower an indexed mutation without a closed const literal origin yet"
     }
   },
   {
@@ -164,7 +164,7 @@
     },
     "stage0": {
       "outcome": "NotYet",
-      "what": "stage3/fixtures/objects/12_decorator_descriptor.a:13:55: stage 0 can't lower a BinaryExpression with a string and a string yet"
+      "what": "stage3/fixtures/objects/12_decorator_descriptor.a:13:21: stage 0 can't lower writing a possibly absent optional own field yet"
     }
   },
   {
@@ -179,8 +179,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/objects/14_comment_pending.a:10:19: Adamic 0.1 refuses a definite assignment assertion !; remove ! and initialize it where it is declared or in the constructor, or type it T | undefined"
+      "outcome": "Compiles",
+      "what": ""
     }
   },
   {
@@ -195,8 +195,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/objects/15_accessor_absence.a:17:22: Adamic 0.1 refuses a definite assignment assertion !; remove ! and initialize it where it is declared or in the constructor, or type it T | undefined"
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/objects/15_accessor_absence.a:70:72: stage 0 can't lower String ToPrimitive needs a conversion member hidden by the object view yet"
     }
   },
   {
@@ -247,8 +247,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/objects/19_identifier_multimap.a:20:13: Adamic 0.1 refuses a value as a condition; compare it explicitly, like name.length > 0 or count !== 0"
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/objects/19_identifier_multimap.a:79:82: stage 0 can't lower a value of type (ModuleSpecifierResolutionHost & { getCommonSourceDirectory(): string; }) | undefined yet"
     }
   },
   {
@@ -344,8 +344,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/objects/26_diagnostic_in.a:8:107: stage 0 can't lower a parameter that isn't a plain name yet"
+      "outcome": "Refused",
+      "what": "stage3/fixtures/objects/26_diagnostic_in.a:21:43: Adamic 0.1 refuses in that narrows a union of object types (any object with the key passes); use a discriminant, or a Map"
     }
   },
   {
@@ -377,8 +377,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/objects/28_debugger.a:7:9: Adamic 0.1 refuses debugger; remove it"
+      "outcome": "Compiles",
+      "what": ""
     }
   },
   {
@@ -393,8 +393,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/objects/29_parameter_default.a:11:1: stage 0 can't lower a destructured parameter beside a parameter with a default yet"
+      "outcome": "Refused",
+      "what": "stage3/fixtures/objects/29_parameter_default.a:6:13: Adamic 0.1 refuses 'a', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)"
     }
   },
   {

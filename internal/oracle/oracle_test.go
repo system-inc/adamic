@@ -45,6 +45,24 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/process_bad_code.a", true, false},
 	{"internal/oracle/testdata/process_observations.a", true, false},
 	{"internal/oracle/testdata/process_shadow.a", true, false},
+	{"internal/oracle/testdata/string_views_lifetime.a", true, false},
+	{"internal/oracle/testdata/string_views_holders.a", true, false},
+	{"internal/oracle/testdata/string_views_throw.a", true, false},
+	{"internal/oracle/testdata/string_views_loops.a", true, false},
+	{"internal/oracle/testdata/string_views_policy.a", true, false},
+	{"internal/oracle/testdata/string_views_methods.a", true, false},
+	{"internal/oracle/testdata/string_views_characters.a", true, false},
+	{"internal/oracle/testdata/string_views_calls.a", true, false},
+	{"internal/oracle/testdata/string_views_surrogates.a", true, false},
+	{"internal/oracle/testdata/non_null.ts", true, false},
+	{"internal/oracle/testdata/non_null_map.ts", true, true},
+	{"internal/oracle/testdata/non_null_catch.ts", true, true},
+	{"internal/oracle/testdata/non_null_field.ts", true, true},
+	{"internal/oracle/testdata/non_null_capture.ts", true, true},
+	{"internal/oracle/testdata/non_null_array.ts", true, true},
+	{"internal/oracle/testdata/non_null_union.ts", true, true},
+	{"internal/oracle/testdata/non_null_boolean.ts", true, true},
+	{"internal/oracle/testdata/non_null_null.ts", true, true},
 	{"internal/oracle/testdata/typeof_null.a", true, false},
 	{"internal/oracle/testdata/literal_units_walk.a", true, false},
 	{"internal/oracle/testdata/route_targets_callbacks.a", true, false},
@@ -118,11 +136,14 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/call_targets_reuse.a", true, false},
 	{"internal/oracle/testdata/call_targets_closure.a", true, false},
 	{"internal/oracle/testdata/call_targets_sort.a", true, false},
+	{"internal/oracle/testdata/library_array_heterogeneous.a", true, false},
 	{"internal/oracle/testdata/library_date_json.a", true, false},
 	{"internal/oracle/testdata/library_date_construct.a", true, false},
 	{"internal/oracle/testdata/library_date_get.a", true, false},
 	{"internal/oracle/testdata/library_date_set.a", true, false},
 	{"internal/oracle/testdata/library_date_iso.a", true, false},
+	{"internal/oracle/testdata/input_spread_local.a", true, false},
+	{"internal/oracle/testdata/input_spread_ordinary.a", true, false},
 	{"internal/oracle/testdata/library_object_keys.a", true, false},
 	{"internal/oracle/testdata/library_object_is.a", true, false},
 	{"internal/oracle/testdata/library_object_has_own.a", true, false},
@@ -781,6 +802,10 @@ func TestNativeAgreesWithNode(t *testing.T) {
 				t.Fatal(err)
 			}
 			program, err := lowered(t, path)
+			if refusedAdamicNonNullFixture(fixture.path) {
+				assertAdamicNonNullRefusal(t, err)
+				return
+			}
 			if !fixture.lowers {
 				var notYet *lower.NotYet
 				if !errors.As(err, &notYet) {

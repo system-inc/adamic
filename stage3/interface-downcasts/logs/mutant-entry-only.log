@@ -1,0 +1,6 @@
+=== RUN   TestInterfaceCastImportedConstruction
+    interface_cast_test.go:160: imported malformed factory must invalidate proof: <nil>
+--- FAIL: TestInterfaceCastImportedConstruction (0.03s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.031s
+FAIL

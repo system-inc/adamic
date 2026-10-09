@@ -26,6 +26,11 @@ func (l *lowering) nullableUse(node *ast.Node) error {
 	for outer.Parent != nil && outer.Parent.Kind == ast.KindParenthesizedExpression {
 		outer = outer.Parent
 	}
+	// A checked TypeScript assertion observes its operand before any contextual storage.
+	// Its nullish check owns this empty case; ordinary nullable views still need a tag.
+	if parent := outer.Parent; parent != nil && parent.Kind == ast.KindNonNullExpression && l.checkedAssertionSource(parent) {
+		return nil
+	}
 	// typeof retains a lookup's presence slot until classification. The typeof lowering
 	// rejects any operand that cannot carry that presence.
 	observedTypeOf := outer.Parent != nil && outer.Parent.Kind == ast.KindTypeOfExpression

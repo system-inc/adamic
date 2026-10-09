@@ -4,6 +4,8 @@ import (
 	"errors"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/ir"
 )
 
 func TestObjectRefusalsExplainSoundness(t *testing.T) {
@@ -36,8 +38,6 @@ func TestObjectRefusalsExplainSoundness(t *testing.T) {
 func TestObjectUnprovenShapesStayNotYet(t *testing.T) {
 	t.Parallel()
 	for _, source := range []string{
-		`const source={value:1, hidden:'wrong'}; const view:{readonly value:number}=source; Object.values(view);`,
-		`const source={value:1, hidden:'wrong'}; const view:{readonly value:number}=source; Object.entries(view);`,
 		`Object.assign({value:1}, {extra:2});`,
 		`function keys(source:{value:number}|undefined):string[] { return Object.keys({...source}); }`,
 		`function own(object:{value?:number}):boolean { return Object.hasOwn(object,'value'); }`,
@@ -74,7 +74,7 @@ func TestObjectIntegrityRefusesUnrepresentedDescriptors(t *testing.T) {
 	}
 }
 
-func TestObjectReplacedBindingsStayUnproven(t *testing.T) {
+func TestObjectReplacedBindingsUseChecks(t *testing.T) {
 	t.Parallel()
 	for _, write := range []string{
 		`value = hidden;`,
@@ -85,7 +85,23 @@ func TestObjectReplacedBindingsStayUnproven(t *testing.T) {
 		source := `let value = { n: 1 }; const hidden = { n: 2, extra: 'wrong' }; ` + write + ` Object.values(value);`
 		t.Run(write, func(t *testing.T) {
 			t.Parallel()
-			_, err := lowerSource(t, source)
+			program, err := lowerSource(t, source)
+			if write == `value = hidden;` || write == `[value] = [hidden];` {
+				if err != nil {
+					t.Fatal(err)
+				}
+				checked := false
+				walk(program.Main, func(node any) bool {
+					if call, ok := node.(ir.ObjectCall); ok && call.Method == "values" {
+						checked = call.Checked
+					}
+					return true
+				})
+				if !checked {
+					t.Fatal("replaced binding lost its enumeration check")
+				}
+				return
+			}
 			var notYet *NotYet
 			if !errors.As(err, &notYet) {
 				t.Fatalf("got %v, want NotYet", err)

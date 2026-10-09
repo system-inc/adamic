@@ -180,6 +180,10 @@ func (l *lowering) proveDataDescriptor(target *ast.Node, key string, node *ast.N
 }
 
 func (l *lowering) objectDescriptorPrototypeCall(node, receiver *ast.Node, name string) (ir.Expression, bool, error) {
+	return l.objectDescriptorPrototypeCallArguments(node, receiver, name, node.AsCallExpression().Arguments.Nodes)
+}
+
+func (l *lowering) objectDescriptorPrototypeCallArguments(node, receiver *ast.Node, name string, args []*ast.Node) (ir.Expression, bool, error) {
 	if name != "propertyIsEnumerable" {
 		return nil, false, nil
 	}
@@ -192,7 +196,6 @@ func (l *lowering) objectDescriptorPrototypeCall(node, receiver *ast.Node, name 
 		// prototype-hazard proof; this handler only adds exact data shapes.
 		return nil, false, nil
 	}
-	args := node.AsCallExpression().Arguments.Nodes
 	if len(args) != 1 || hasSpread(node) {
 		return nil, true, l.notYet(node, "propertyIsEnumerable with these arguments")
 	}

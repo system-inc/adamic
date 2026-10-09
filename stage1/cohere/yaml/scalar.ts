@@ -267,7 +267,7 @@ export class ScalarResolver {
         let previousMoreIndented = false;
         for(let index = 0; index < contentStart; index++) {
             const line = lines[index];
-            if(line !== undefined) result.value += `${line.indent.slice(trimIndent)}\n`;
+            if(line) result.value += `${line.indent.slice(trimIndent)}\n`;
         }
         for(let index = contentStart; index < chompStart; index++) {
             const line = lines[index];
@@ -311,7 +311,7 @@ export class ScalarResolver {
         if(chomp === '+') {
             for(let index = chompStart; index < lines.length; index++) {
                 const line = lines[index];
-                if(line !== undefined) result.value += `\n${line.indent.slice(trimIndent)}`;
+                if(line) result.value += `\n${line.indent.slice(trimIndent)}`;
             }
             if(char(result.value, result.value.length - 1) !== '\n') result.value += '\n';
         }

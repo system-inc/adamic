@@ -71,10 +71,16 @@ static const char *const iterator_method_names[] = {"next", "__adamic_symbol_ite
 static adamic_value array_iterator_next(adamic_object *self, adamic_value *arguments) { return iterator_next(self, arguments); }
 static adamic_value set_iterator_next(adamic_object *self, adamic_value *arguments) { return iterator_next(self, arguments); }
 static adamic_value string_iterator_next(adamic_object *self, adamic_value *arguments) { return iterator_next(self, arguments); }
-static const adamic_method iterator_method_code[][3] = {
-	{iterator_next, iterator_identity, map_iterator_tag}, {set_iterator_next, iterator_identity, set_iterator_tag},
-	{array_iterator_next, iterator_identity, array_iterator_tag}, {string_iterator_next, iterator_identity, string_iterator_tag}
+#ifdef ADAMIC_CLOSURE_CONVENTION
+#define ITERATOR_METHOD(function) {.counted = false, .code = function}
+#else
+#define ITERATOR_METHOD(function) function
+#endif
+static const adamic_method_entry iterator_method_code[][3] = {
+	{ITERATOR_METHOD(iterator_next),ITERATOR_METHOD(iterator_identity),ITERATOR_METHOD(map_iterator_tag)}, {ITERATOR_METHOD(set_iterator_next),ITERATOR_METHOD(iterator_identity),ITERATOR_METHOD(set_iterator_tag)},
+	{ITERATOR_METHOD(array_iterator_next),ITERATOR_METHOD(iterator_identity),ITERATOR_METHOD(array_iterator_tag)}, {ITERATOR_METHOD(string_iterator_next),ITERATOR_METHOD(iterator_identity),ITERATOR_METHOD(string_iterator_tag)}
 };
+#undef ITERATOR_METHOD
 static const adamic_methods iterator_prototypes[] = {
 	{3, iterator_method_names, iterator_method_code[0]}, {3, iterator_method_names, iterator_method_code[1]},
 	{3, iterator_method_names, iterator_method_code[2]}, {3, iterator_method_names, iterator_method_code[3]}
@@ -103,6 +109,8 @@ static bool collection_reference(int type) {
 	return type != 1 && type != 2 && type != 7;
 }
 
+static adamic_code_function collection_next;
+
 static adamic_value collection_next(adamic_closure *self, adamic_value *arguments) {
 	(void)arguments;
 	adamic_object *state = self->cells[0]->value.reference;
@@ -116,6 +124,8 @@ static adamic_value collection_next(adamic_closure *self, adamic_value *argument
 	adamic_value key, value;
 	bool present = adamic_map_iterator_next(iterator, &key, &value);
 	result->slots[0].boolean = !present;
+	adamic_object_field_types(result)[0] = 2;
+	adamic_object_field_types(result)[1] = reference ? (part == 3 ? 4 : (unsigned char)(part == 1 || set ? key_type : value_type)) : (unsigned char)(!present || (part == 1 || set ? key_type : value_type) != 2 ? 7 : 2);
 	if (!present) {
 		if (!reference) {
 			result->slots[1].number = adamic_maybe_number_pack((adamic_maybe_number){false, 0});
@@ -128,6 +138,8 @@ static adamic_value collection_next(adamic_closure *self, adamic_value *argument
 		adamic_object *pair = adamic_object_new(&pair_shapes[shape]);
 		pair->slots[0] = key;
 		pair->slots[1] = value;
+		adamic_object_field_types(pair)[0] = (unsigned char)key_type;
+		adamic_object_field_types(pair)[1] = (unsigned char)value_type;
 		if (collection_reference(key_type)) { adamic_retain(key.reference); }
 		if (collection_reference(value_type)) { adamic_retain(value.reference); }
 		result->slots[1].reference = pair;

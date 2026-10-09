@@ -1,0 +1,3 @@
+function suffix(): string { console.log('right operand'); return ' suffix'; }
+try { console.log(new Date(0) + suffix()); } catch (error) { if (error instanceof Error) { console.log(error.name); console.log(error.message); } }
+console.log(String(new Date(NaN)));

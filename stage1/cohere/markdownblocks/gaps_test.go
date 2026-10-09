@@ -14,19 +14,19 @@ import (
 func TestParserRepresentationProbes(t *testing.T) {
 	parallelMarkdown(t)
 	for _, gap := range []struct{ path, stdout, notYet, refused, refusedExact string }{
-		{path: "gaps/1_recursive_state.ts", stdout: "35\n35\n", notYet: "a function inside a function (a closure)"},
+		{path: "gaps/1_recursive_state.ts", stdout: "35\n35\n"},
 		{path: "gaps/2_state_arrow_cycle.ts", stdout: "35\n35\n", refused: "a cycle reference counting can't free"},
 		{path: "gaps/3_recursive_callable.ts", stdout: "1\n0\n"},
 		{path: "gaps/14_missing_path_key.ts", stdout: "key=\"\" present=false\n"},
 		{path: "gaps/4_structural_ranges.ts", stdout: "1\n", refused: "a cycle reference counting can't free"},
-		{path: "gaps/5_conditional_panic.ts", stdout: "T\n", notYet: "reading panic"},
+		{path: "gaps/5_conditional_panic.ts", stdout: "T\n"},
 		{path: "gaps/7_postfix_property.ts", stdout: "0\n1\n", notYet: "a PostfixUnaryExpression"},
 		{path: "gaps/8_generic_callback_result.ts", stdout: "value\n", notYet: "a function returning Result"},
-		{path: "gaps/9_mixed_path_names.ts", stdout: "children,0\n", notYet: "an array of string | number"},
+		{path: "gaps/9_mixed_path_names.ts", stdout: "children,0\n", notYet: "join on an array of objects, arrays, maps or functions"},
 		{path: "gaps/10_multiple_push.ts", stdout: "1,2\n", notYet: "push with other than one value"},
 		{path: "gaps/11_function_expression.ts", stdout: "value\n"},
-		{path: "gaps/12_conditional_empty_array.ts", stdout: "0\n", notYet: "an array of never"},
-		{path: "gaps/15_string_or.ts", stdout: "fallback\nx\n", notYet: "a BinaryExpression with a string and a string"},
+		{path: "gaps/12_conditional_empty_array.ts", stdout: "0\n"},
+		{path: "gaps/15_string_or.ts", stdout: "fallback\nx\n"},
 		{path: "gaps/16_array_shift.ts", stdout: "1\n2\n", refusedExact: ":2:16: Adamic 0.1 refuses inherited library member shift read as an own field; prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-method)"},
 		{path: "gaps/17_long_optional_chain.ts", stdout: "1\n", notYet: "an optional chain longer than one step"},
 	} {

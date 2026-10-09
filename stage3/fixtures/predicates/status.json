@@ -13,8 +13,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/predicates/01_identifier.a:23:5: Adamic 0.1 refuses a type predicate whose return is not proven (return expression is not a trusted check on node); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)"
+      "outcome": "Compiles",
+      "what": ""
     }
   },
   {
@@ -31,8 +31,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/predicates/02_module_name.a:23:5: Adamic 0.1 refuses a type predicate whose return is not proven (return expression is not a trusted check on node); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)"
+      "outcome": "Compiles",
+      "what": ""
     }
   },
   {
@@ -50,7 +50,7 @@
     },
     "stage0": {
       "outcome": "Refused",
-      "what": "stage3/fixtures/predicates/03_void_zero.a:23:5: Adamic 0.1 refuses a type predicate whose return is not proven (return expression is not a trusted check on node); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)"
+      "what": "stage3/fixtures/predicates/03_void_zero.a:31:55: Adamic 0.1 refuses checked view read of field expression with unsupported union contract; prove or implement the union contract before reading this field"
     }
   },
   {
@@ -102,7 +102,7 @@
     },
     "stage0": {
       "outcome": "Refused",
-      "what": "stage3/fixtures/predicates/06_signed_numeric.a:23:5: Adamic 0.1 refuses a type predicate whose return is not proven (return expression is not a trusted check on node); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)"
+      "what": "stage3/fixtures/predicates/06_signed_numeric.a:31:5: Adamic 0.1 refuses a type predicate whose return is not proven (return expression is not a trusted check on node); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)"
     }
   },
   {
@@ -184,8 +184,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/predicates/11_empty_assert.a:6:42: Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)"
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/predicates/11_empty_assert.a:6:1: stage 0 can't lower checked predicate overload target { links: string; } yet"
     }
   }
 ]

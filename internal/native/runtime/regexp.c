@@ -440,7 +440,11 @@ static adamic_value regex_exec_method(adamic_object *self, adamic_value *argumen
     return (adamic_value){.reference = adamic_regex_exec(self, arguments[0].reference)};
 }
 static const char *const regex_method_names[] = {"test", "exec"};
-static const adamic_method regex_method_code[] = {regex_test_method, regex_exec_method};
+#ifdef ADAMIC_CLOSURE_CONVENTION
+static const adamic_method_entry regex_method_code[] = {{.counted = false, .code = regex_test_method}, {.counted = false, .code = regex_exec_method}};
+#else
+static const adamic_method_entry regex_method_code[] = {regex_test_method, regex_exec_method};
+#endif
 static const adamic_methods regex_methods = {2, regex_method_names, regex_method_code};
 static const char *const regex_names[] = {"__program", "lastIndex",	 "source",		"flags",
 										  "global",	   "ignoreCase", "multiline",	"unicode",

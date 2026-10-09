@@ -7,10 +7,13 @@ import (
 )
 
 func (l *lowering) objectNamesCall(node *ast.Node, name string) (ir.Expression, bool, error) {
+	return l.objectNamesCallArguments(node, name, node.AsCallExpression().Arguments.Nodes)
+}
+
+func (l *lowering) objectNamesCallArguments(node *ast.Node, name string, written []*ast.Node) (ir.Expression, bool, error) {
 	if name != "keys" && name != "getOwnPropertyNames" {
 		return nil, false, nil
 	}
-	written := node.AsCallExpression().Arguments.Nodes
 	if len(written) != 1 || hasSpread(node) {
 		return nil, true, l.notYet(node, "Object."+name+" with these arguments")
 	}

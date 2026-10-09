@@ -11,7 +11,7 @@ import (
 )
 
 func TestRegExpRuntimeOwnershipOptInMutant(t *testing.T) {
-	source, err := os.ReadFile("library_regexp_compile.go")
+	source, err := os.ReadFile("library.go")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -20,7 +20,7 @@ func TestRegExpRuntimeOwnershipOptInMutant(t *testing.T) {
 		t.Fatal("ownership opt-in site moved")
 	}
 	dir := t.TempDir()
-	replacement := filepath.Join(dir, "library_regexp_compile.go")
+	replacement := filepath.Join(dir, "library.go")
 	if err := os.WriteFile(replacement, []byte(strings.Replace(string(source), old, "true", 1)), 0600); err != nil {
 		t.Fatal(err)
 	}
@@ -36,7 +36,7 @@ func TestRegExpRuntimeOwnershipOptInMutant(t *testing.T) {
 			t.Fatal(err)
 		}
 	}
-	original, _ := filepath.Abs("library_regexp_compile.go")
+	original, _ := filepath.Abs("library.go")
 	overlay["Replace"][original] = replacement
 	data, _ := json.Marshal(overlay)
 	path := filepath.Join(dir, "overlay.json")

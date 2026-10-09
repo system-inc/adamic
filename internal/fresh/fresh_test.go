@@ -2,7 +2,9 @@ package fresh_test
 
 import (
 	"context"
+	"errors"
 	"path/filepath"
+	"strings"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/fresh"
@@ -68,4 +70,26 @@ func TestEveryWriteIsRecordedAndKnown(t *testing.T) {
 		}
 	}
 	t.Logf("%d writes in %d programs, %d proven not to close a cycle", writes, len(paths), proven)
+}
+
+// Methods use outside parameters, so passing a confined node must let it escape
+// even when the method's return is a scalar. The global can then reach its array.
+func TestMethodKeepsArgument(t *testing.T) {
+	t.Parallel()
+	path, err := filepath.Abs("../oracle/testdata/fresh_refused/devirt_fresh_method_keeps_argument.a")
+	if err != nil {
+		t.Fatal(err)
+	}
+	loaded, err := load.Load([]string{path})
+	if err != nil {
+		t.Fatal(err)
+	}
+	_, err = lower.Lower(context.Background(), loaded)
+	var refused *lower.Refused
+	if !errors.As(err, &refused) {
+		t.Fatalf("method-kept argument closes a cycle: want refusal, got %v", err)
+	}
+	if !strings.Contains(refused.Error(), "(adamic/cycle-capable)") || !strings.Contains(refused.Error(), "the write at "+path+":15:") {
+		t.Fatalf("refusal does not name the cycle-closing push: %v", refused)
+	}
 }

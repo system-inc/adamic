@@ -18,8 +18,8 @@ func TestScout22Slice2CompilerAndPrototypeGaps(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if len(paths) != 12 {
-		t.Fatalf("want 12 site witnesses, got %d", len(paths))
+	if len(paths) != 11 {
+		t.Fatalf("want 11 remaining site witnesses, got %d", len(paths))
 	}
 	for _, path := range paths {
 		t.Run(filepath.Base(path), func(t *testing.T) {

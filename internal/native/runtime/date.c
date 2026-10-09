@@ -136,7 +136,7 @@ static adamic_value date_now_method(adamic_closure *self, adamic_value *argument
  (void)self; (void)arguments;
  return (adamic_value){.number = adamic_date_now()};
 }
-static adamic_closure date_now_closure = {{0, adamic_kind_closure, 0}, date_now_method, 0};
+static adamic_closure date_now_closure = {.heap = {0, adamic_kind_closure, 0}, .code = date_now_method, .count = 0};
 adamic_closure *adamic_date_now_function(void) { return &date_now_closure; }
 
 adamic_string *adamic_date_utc_string(const adamic_object *date) {

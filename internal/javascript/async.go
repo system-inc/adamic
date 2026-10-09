@@ -9,6 +9,7 @@ import (
 func asyncJavaScript(program *ir.Program) string {
 	var out strings.Builder
 	out.WriteString("const adamicTypeOf = (value) => typeof value;\n")
+	out.WriteString("const adamicUnready = (name) => { throw new ReferenceError(`Cannot access '${name}' before initialization`); };\n")
 	e := &emitter{program: program, indent: 1}
 	for index, fn := range program.Async.Functions {
 		parameters := []string{}
@@ -16,8 +17,27 @@ func asyncJavaScript(program *ir.Program) string {
 			parameters = append(parameters, e.name(local))
 		}
 		fmt.Fprintf(&out, "async function adamic_async_%d(%s) {\n", index, strings.Join(parameters, ", "))
+		for _, local := range fn.Locals {
+			ready := false
+			for _, parameter := range fn.Parameters {
+				ready = ready || parameter == local
+			}
+			fmt.Fprintf(&out, "let %s = %t;\n", readyName(local), ready)
+		}
 		for _, state := range fn.States {
-			e.statements(state.Body)
+			for _, statement := range state.Body {
+				switch statement := statement.(type) {
+				case ir.Declare:
+					// This closed primitive graph has no synchronous declaration prologue.
+					// Preserve checked reads across suspension with function-local readiness.
+					e.line("let %s = %s;", e.name(statement.Local), e.value(statement.Value))
+					e.line("%s = %t;", readyName(statement.Local), !statement.Uninitialized)
+				case ir.WriteLine:
+					e.statements([]ir.Statement{statement})
+				default:
+					panic("javascript async: unknown lowered statement")
+				}
+			}
 			out.WriteString(e.out.String())
 			e.out.Reset()
 			if state.Await != nil {
@@ -33,7 +53,7 @@ func asyncJavaScript(program *ir.Program) string {
 					value = "Promise.resolve(" + e.value(wait.Value) + ")"
 				}
 				if state.Target >= 0 {
-					fmt.Fprintf(&out, "let %s = await %s;\n", e.name(state.Target), value)
+					fmt.Fprintf(&out, "let %s = await %s;\n%s = true;\n", e.name(state.Target), value, readyName(state.Target))
 				} else {
 					fmt.Fprintf(&out, "await %s;\n", value)
 				}

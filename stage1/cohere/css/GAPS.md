@@ -20,17 +20,23 @@ refuses `inherited library member shift read as an own field`: this unsupported
 method must not become a load from a nonexistent own slot. The parser reads the
 front token and removes it with `splice(0, 1)` instead.
 
-## 3. Optional boolean conditions
+## 3. Optional boolean conditions: closed
 
 [gaps/3_optional_boolean_condition.ts](gaps/3_optional_boolean_condition.ts) prints
-`important`. Adamic refuses `a boolean | undefined as a condition`. Reads of the
-boolean property tables compare the result explicitly with `true`.
+`important` on source Node, native ASan/UBSan and the JavaScript backend,
+with a separate LeakSanitizer check in `TestClosedOptionalBooleanConditionGap`.
+Closed by `320b762dfebed000ca07288e51eb6d78cd29b5f7`, which lowers optional
+boolean conditions. Raw and composed tree serialization, printer truth predicates and namespace
+printing now use the boolean table read directly. Comparisons used to pass a required boolean to
+`setBoolean` remain: those normalize a value, rather than work around a condition.
 
-## 4. Empty array assigned into an optional array
+## 4. Empty array assigned into an optional array: closed
 
-[gaps/4_empty_array_union.ts](gaps/4_empty_array_union.ts) prints `0`. Adamic reports
-`stage 0 can't lower an array of never yet`. The custom-property composition
-creates an explicitly typed `number[]` local before assigning its optional slot.
+[gaps/4_empty_array_union.ts](gaps/4_empty_array_union.ts) prints `0`. It used to stop at
+`stage 0 can't lower an array of never yet`; it lowers on the area-stack slice (compiler, Oct 8),
+and `TestClosedEmptyArrayUnionGap` holds it on native ASan/UBSan, Node, the JavaScript backend
+and LeakSanitizer. The custom-property composition still creates an explicitly typed
+`number[]` local before assigning its optional slot; that workaround is cohere's to remove.
 
 ## 5. Dynamic repeat under catch
 
@@ -113,3 +119,23 @@ The printer retains its earlier direct-concatenation workaround pending a new
 benchmark. `PERFORMANCE.md` records the historical failure and rejected unsafe
 candidate; its old `gaps/7_shared_slice_append.ts` path now refers to the moved
 regression above.
+
+Optional boolean closure validation on compiler/area-gaps:
+
+```sh
+go test -v ./stage1/cohere/css -run '^(TestClosedOptionalBooleanConditionGap|TestTheCanonicalRangeChecksCanFail|TestCompositionMatchesGo)$' -count=1 -timeout 30m
+go test -v ./stage1/cohere/css -run '^TestOptionalBooleanPrinterMatchesGo$' -count=1 -timeout 30m
+```
+
+Both passed (180.627s and 60.278s). Composition compares 24,014 cases with Go,
+Node and both backends; the tiny printer corpus compares six flag/namespace
+cases, including important and SCSS default flags, with all those sides.
+Sanitizer and leak checks pass. Existing custom-property, comment and closing
+range mutants are caught by Node/Go comparison, and the public Range corruption
+mutant is caught on raw and composed backends. Changing the gap's boolean to
+false failed on normal Node `ordinary` output. Removing the declaration
+semicolon failed the six-case printer test on normal Node output against Go.
+Both temporary mutants were restored. The full printer/package corpus was
+not run. The first test attempt, before setup completed, failed because the
+TypeScript submodule's tsc/go.mod was absent; the logged successful rerun above
+followed completed submodule setup.

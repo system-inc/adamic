@@ -16,6 +16,10 @@ import (
 
 var fsFileFixtures = []string{"read", "open", "write", "close", "write_file", "exists", "stat", "mkdir", "unlink", "utimes", "date", "system", "buffer", "read_sync", "write_buffer", "mkdtemp", "rm"}
 
+// Preserve the imported runtime witnesses, but do not compile an unsound Error view.
+// Their exact diagnostics are checked by TestClosureMergeRefusals.
+var fsFileRefusedFixtures = []string{"read", "open", "write", "exists", "stat", "unlink", "utimes", "system", "buffer", "read_sync", "mkdtemp", "rm"}
+
 func fsFilePrepare(t *testing.T, shared, name string) inputRun {
 	t.Helper()
 	root := filepath.Join(shared, name)
@@ -211,7 +215,7 @@ func TestNodeFSFileMutants(t *testing.T) {
 				pattern := regexp.MustCompile(`adamic_node_fs_dirent_is\(([^,\n]+), "` + method + `"\)`)
 				code = pattern.ReplaceAllString(code, "fs_file_mutant(${1})")
 			} else if one.operation == "date_time" {
-				// The embedded Node Date declaration now emits the shared Date runtime.
+				// The complete Date runtime now owns the same scalar timestamp slot.
 				code = strings.ReplaceAll(code, "adamic_date_value(", "fs_file_mutant(")
 			} else {
 				code = strings.ReplaceAll(code, "adamic_fs_file_"+one.operation+"(", "fs_file_mutant(")

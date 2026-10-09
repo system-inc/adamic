@@ -10,6 +10,9 @@ type ObjectCall struct {
 	Element          Type
 	Returns          Type
 	DescriptorFields []ObjectDescriptorField
+	Checked          bool
+	Allowed          []Expression
+	ElementName      string
 }
 
 func (c ObjectCall) Type() Type { return c.Returns }

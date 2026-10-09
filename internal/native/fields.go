@@ -28,7 +28,13 @@ func (e *emitter) uniformFieldSlot(object, name string) string {
 func uniformFieldOffsets(program *ir.Program) map[string]int {
 	// Named regex groups create layouts outside ObjectLiteral. Until their names and
 	// offsets participate in this proof, regex programs retain checked shape lookup.
-	if len(program.Regexps) != 0 {
+	recordStorage := false
+	walkExpressions(program, func(expression ir.Expression) {
+		if literal, ok := expression.(ir.ObjectLiteral); ok && literal.Record {
+			recordStorage = true
+		}
+	})
+	if len(program.Regexps) != 0 || recordStorage {
 		return map[string]int{}
 	}
 	// Runtime-produced layouts are not ObjectLiterals: map entries (0, 1), Error (name, message, code),
@@ -43,11 +49,12 @@ func uniformFieldOffsets(program *ir.Program) map[string]int {
 		{"name", "message", "code"}, {"_fsFileTime"}, {"size", "mtimeMs", "mtime", "_fsFileMode", "atime"},
 		// The Node directory host and the existing realPath result are created in C.
 		{"kind", "path"}, {"name", "message", "code"}, {"name", "type"},
-		{"next"}, {"iterator", "part", "key", "value", "set"}, {"done", "value"},
+		{"__adamic_iterator_state"}, {"next"}, {"iterator", "part", "key", "value", "set"}, {"done", "value"},
 		{"__program", "lastIndex", "source", "flags", "global", "ignoreCase", "multiline", "unicode", "sticky", "hasIndices", "unicodeSets", "dotAll"},
 		{"index", "input", "groups", "indices"}, {"regex", "input", "done"},
 		{"nodeKind", "symbolName", "type"},
 		{"bytes", "finalized"},
+		{"value", "writable", "enumerable", "configurable"},
 		// Process host layouts are part of the same whole-program proof.
 		{"name", "message", "code"}, {"heapUsed"},
 		{"name", "entryType", "startTime", "duration"}, {"setBlocking"},

@@ -122,6 +122,9 @@ var cName = regexp.MustCompile(`^[A-Za-z_][A-Za-z0-9_]*$`)
 // objectLiteral makes an object. Its fields' values are evaluated in order first; making the object
 // itself can't be observed, so it may come after them.
 func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
+	if literal.Record {
+		return e.recordLiteral(literal)
+	}
 	if reused, ok := e.reused(literal); ok {
 		return reused
 	}
@@ -142,7 +145,14 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 		}
 		for index, field := range literal.Fields {
 			slot := e.temporary()
-			e.line("adamic_value *%s = adamic_object_field(%s, %s, &%s);", slot, object, cString(field.Name), e.cache())
+			cache := e.cache()
+			e.line("adamic_value *%s = adamic_object_field(%s, %s, &%s);", slot, object, cString(field.Name), cache)
+			if e.fieldTypesNeeded() {
+				e.line("adamic_object_set_slot_type(%s, %s, %d);", object, slot, field.Value.Type())
+			}
+			if e.fieldReadinessNeeded(field.Name) {
+				e.line("adamic_object_set_slot_initialized(%s, %s, %t);", object, slot, !field.Uninitialized)
+			}
 			if field.Value.Type().IsReference() {
 				e.line("adamic_release(%s->reference);", slot)
 				e.line("%s->reference = %s;", slot, e.kept(values[index]))
@@ -195,6 +205,12 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 		}
 	}
 	for index, field := range literal.Fields {
+		if e.fieldTypesNeeded() {
+			e.line("adamic_object_field_types(%s)[%d] = %d;", object, index, field.Value.Type())
+		}
+		if field.Uninitialized {
+			e.line("adamic_object_initialized(%s)[%d] = 0;", object, index)
+		}
 		value := values[index]
 		if e.regionValues[value] {
 			// A value in the region is immortal while the region lives: held without a count.
@@ -274,12 +290,20 @@ func (e *emitter) shapeWith(fieldNames []string, fieldTypes []ir.Type, methods [
 			thunks = append(thunks, "NULL")
 			continue
 		}
-		thunks = append(thunks, e.methodThunk(method.Function))
+		thunk := e.methodThunk(method.Function)
+		if e.program.ClosureConventionNeeded() {
+			field := "code"
+			if e.program.PackedCountNeeded(method.Function) {
+				field = "counted_code"
+			}
+			thunk = fmt.Sprintf("{.counted = %t, .%s = %s}", e.program.PackedCountNeeded(method.Function), field, thunk)
+		}
+		thunks = append(thunks, thunk)
 	}
 	if len(thunks) > 0 {
 		e.declarations = append(e.declarations,
 			fmt.Sprintf("static const char *const %s_method_names[] = {%s};", name, strings.Join(methodNames, ", ")),
-			fmt.Sprintf("static const adamic_method %s_method_code[] = {%s};", name, strings.Join(thunks, ", ")),
+			fmt.Sprintf("static const %s %s_method_code[] = {%s};", e.methodEntryType(), name, strings.Join(thunks, ", ")),
 			fmt.Sprintf("static const adamic_methods %s_methods = {%d, %s_method_names, %s_method_code};", name, len(thunks), name, name))
 		table = "&" + name + "_methods"
 	}
@@ -300,12 +324,30 @@ func (e *emitter) shapeWith(fieldNames []string, fieldTypes []ir.Type, methods [
 }
 
 // dispatchable reports whether a class's method can be called through an interface: each value it
-// takes and gives fits an adamic_value. One that doesn't (boolean | undefined, a union) can't be
+// takes and gives fits an adamic_value. One that doesn't (a union) can't be
 // passed to a function value either (lower's callClosure says not yet), so no call through an
 // interface reaches it with one. Its name remains in the table for presence tests.
 func (e *emitter) dispatchable(function int) bool {
 	method := e.program.Functions[function]
-	slotless := func(valueType ir.Type) bool { return valueType == ir.MaybeBoolean || valueType == ir.Union }
+	needed := e.program.StructuralMethodThunks[function]
+	if e.program.StructuralMethodThunks == nil {
+		walkExpressions(e.program, func(expression ir.Expression) {
+			call, ok := expression.(ir.CallClosure)
+			if !ok {
+				return
+			}
+			targets, resolved := e.program.FunctionTypeTargets[call.FunctionType]
+			if !resolved {
+				targets = e.program.ClosureTargets(call).Functions
+			}
+			for _, target := range targets {
+				if e.program.Functions[target].Name == method.Name {
+					needed = true
+				}
+			}
+		})
+	}
+	slotless := func(valueType ir.Type) bool { return valueType == ir.Union || valueType == ir.MaybeBoolean && !needed }
 	for index, parameter := range method.Parameters {
 		if index > 0 && slotless(e.program.Locals[parameter].Type) {
 			return false
@@ -328,21 +370,45 @@ func (e *emitter) methodThunk(function int) string {
 	}
 	e.thunks[function] = true
 	method := e.program.Functions[function]
-	lines := []string{fmt.Sprintf("static adamic_value %s(adamic_object *self, adamic_value *arguments) {", name), "\t(void)arguments;"}
+	count := ""
+	if e.program.PackedCountNeeded(function) {
+		count = ", size_t argument_count"
+	}
+	shape := "adamic_method_function"
+	if e.program.PackedCountNeeded(function) {
+		shape = "adamic_counted_method_function"
+	}
+	lines := []string{fmt.Sprintf("static %s %s;", shape, name), fmt.Sprintf("static adamic_value %s(adamic_object *self, adamic_value *arguments%s) {", name, count), "\t(void)arguments;"}
 	values := []string{}
 	for index, parameter := range method.Parameters {
 		local := e.program.Locals[parameter]
 		value := "self"
-		if index > 0 {
+		if method.RestElement != 0 && index == len(method.Parameters)-1 {
+			slot := e.program.RestArgumentSlots[ir.FunctionRestArguments(method)]
+			value = fmt.Sprintf("(adamic_array *)arguments[%d].reference", slot)
+		} else if index > 0 {
 			value = unslotted(local.Type, fmt.Sprintf("arguments[%d].%s", index-1, member(local.Type)))
+			if e.program.PackedCountNeeded(function) {
+				value = closureArgument(local.Type, index-1)
+			}
 			if local.Type.IsReference() {
 				value = fmt.Sprintf("(%s)%s", cType(local.Type), value)
+			}
+			if e.program.PackedCountNeeded(function) && (local.Type.IsMaybe() || local.Type.IsReference()) {
+				value = fmt.Sprintf("(argument_count > %d ? %s : %s)", index-1, value, absent(local.Type))
 			}
 		}
 		if local.Type.IsReference() && e.reuse.consumed[parameter] {
 			value = fmt.Sprintf("adamic_retain(%s)", value)
 		}
 		values = append(values, value)
+	}
+	if method.ArgumentsCount != 0 {
+		count := "0"
+		if method.ReadsArguments {
+			count = "(double)argument_count"
+		}
+		values = append(values, count)
 	}
 	call := fmt.Sprintf("%s(%s)", e.functionName(function), strings.Join(values, ", "))
 	if method.Returns == 0 {
@@ -367,9 +433,46 @@ func (e *emitter) cache() string {
 func (e *emitter) dynamicProperties() bool {
 	found := false
 	walkExpressions(e.program, func(expression ir.Expression) {
+		if call, ok := expression.(ir.ObjectCall); ok && call.Checked {
+			found = true
+		}
 		if _, dynamic := expression.(ir.DynamicProperty); dynamic {
 			found = true
 		}
 	})
 	return found
+}
+
+func (e *emitter) methodEntryType() string {
+	if e.program.ClosureConventionNeeded() {
+		return "adamic_method_entry"
+	}
+	return "adamic_method"
+}
+
+func (e *emitter) fieldTypesNeeded() bool {
+	if len(e.program.CheckedFields) != 0 || e.dynamicProperties() {
+		return true
+	}
+	needed := false
+	walkExpressions(e.program, func(expression ir.Expression) {
+		if property, ok := expression.(ir.Property); ok && property.View != "" {
+			needed = true
+		}
+	})
+	return needed
+}
+
+// Hand-built IR can carry field contracts without the lowerer's summary maps.
+func (e *emitter) fieldReadinessNeeded(name string) bool {
+	if e.program.UninitializedFields[name] {
+		return true
+	}
+	needed := false
+	walkExpressions(e.program, func(expression ir.Expression) {
+		if property, ok := expression.(ir.Property); ok && property.Name == name && (property.Readiness != "" || property.View != "") {
+			needed = true
+		}
+	})
+	return needed
 }

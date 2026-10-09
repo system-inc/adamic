@@ -265,6 +265,11 @@ static void deallocate(adamic_heap *heap) {
 
 void *adamic_retain_slow(void *value) {
 	adamic_heap *heap = value;
+#ifdef ADAMIC_CANONICAL_CLOSURES
+	if (heap != NULL && heap->kind == adamic_kind_cell && ((adamic_cell *)heap)->owner != NULL) {
+		heap = &((adamic_cell *)heap)->owner->heap;
+	}
+#endif
 	if (heap != NULL) {
 		size_t count = __atomic_load_n(&heap->references, __ATOMIC_RELAXED);
 		// Clang's native intptr_t conversion makes shared counts negative. One test covers both
@@ -298,6 +303,14 @@ static void list(void *value) {
 }
 
 // drop_reference never touches the freeing queue unless the last reference went away.
+static void *reference_owner(void *value) {
+#ifdef ADAMIC_CANONICAL_CLOSURES
+	adamic_heap *heap = value;
+	if (heap != NULL && heap->kind == adamic_kind_cell && ((adamic_cell *)heap)->owner != NULL) { return ((adamic_cell *)heap)->owner; }
+#endif
+	return value;
+}
+
 static bool drop_reference(void *value) {
 	adamic_heap *heap = value;
 	if (heap == NULL) { return false; }
@@ -316,6 +329,7 @@ static bool drop_reference(void *value) {
 
 // Children are queued for an outer drain, never freed recursively.
 static void let_go(void *value) {
+	value = reference_owner(value);
 	if (drop_reference(value)) { list(value); }
 }
 
@@ -348,6 +362,18 @@ static void free_one(void *value) {
 		free(array->elements);
 		break;
 	}
+	case adamic_kind_typed_array: {
+		adamic_typed_array *array = value;
+		if (array->owner != NULL) {
+			let_go(array->owner);
+		} else {
+			free(array->data);
+		}
+		break;
+	}
+	case adamic_kind_typed_array_iterator:
+		let_go(((adamic_typed_array_iterator *)value)->array);
+		break;
 	case adamic_kind_map:
 		adamic_map_free_children(value, let_go);
 		break;
@@ -358,8 +384,21 @@ static void free_one(void *value) {
 		}
 		break;
 	}
+#ifdef ADAMIC_CANONICAL_CLOSURES
+	case adamic_kind_environment: {
+		adamic_environment *environment = value;
+		for (size_t index = 0; index < environment->count; index++) {
+			adamic_cell *cell = &environment->cells[index];
+			if (cell->references) { let_go(cell->value.reference); }
+		}
+		break;
+	}
+#endif
 	case adamic_kind_closure: {
 		adamic_closure *closure = value;
+#ifdef ADAMIC_CANONICAL_CLOSURES
+		adamic_closure_uncache(closure);
+#endif
 		for (size_t index = 0; index < closure->count; index++) {
 			let_go(closure->cells[index]);
 		}
@@ -398,6 +437,7 @@ __attribute__((noinline)) static void release_last(void *value) {
 }
 
 void adamic_release_slow(void *value) {
+	value = reference_owner(value);
 	if (drop_reference(value)) { release_last(value); }
 }
 

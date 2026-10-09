@@ -23,7 +23,7 @@ func TestRuntimeStaticsParallel(t *testing.T) {
 		t.Skip("concurrency-area has not been merged; parallel.c is absent")
 	}
 	library, root := staticsRaceLibrary(t, "", "", "")
-	for _, fixture := range []string{"regex", "string_bmp", "string_supplementary", "normalization", "numbers", "map", "heap_weak", "field_cache", "json", "profiling", "output"} {
+	for _, fixture := range []string{"regex", "string_ascii", "string_bmp", "string_supplementary", "normalization", "numbers", "map", "heap_weak", "field_cache", "json", "profiling", "output"} {
 		t.Run(fixture, func(t *testing.T) {
 			binary := staticsRaceFixture(t, root, library, fixture)
 			staticsRaceRun(t, binary, false)
@@ -41,6 +41,7 @@ func TestRuntimeStaticsProtectionMutants(t *testing.T) {
 		t.Skip("concurrency-area has not been merged; parallel.c is absent")
 	}
 	mutants := []struct{ name, file, old, changed, fixture string }{
+		{"ascii_header_write", "string_slice_impl.h", "return &characters[value];", "characters[value].units = 2; return &characters[value];", "string_ascii"},
 		{"shared_map_compaction", "map.c", "adamic_is_shared(&map->heap) || ", "", "map"},
 		{"regex_budget", "regexp.c", "static _Atomic uint64_t regex_step_limit;", "static uint64_t regex_step_limit;", "regex"},
 		{"checker_profiling", "tsgo.c", "static _Atomic", "static", "profiling"},

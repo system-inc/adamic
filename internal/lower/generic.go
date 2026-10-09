@@ -68,8 +68,15 @@ func (l *lowering) instantiateFunction(call *ast.Node, declaration *ast.Node) (i
 
 	substitution := map[*checker.Type]ir.Type{}
 
+	owner := -1
+	if local, ok := l.locals[l.symbol(declaration.Name())]; ok && l.result.Locals[local].NestedFunction < 0 {
+		owner = l.result.Locals[local].Function
+	}
 	key := l.program.Where(declaration)
 	name := declaration.Name().Text()
+	if owner >= 0 {
+		key += ",frame:" + strconv.Itoa(owner)
+	}
 	for _, parameter := range declaration.TypeParameters() {
 		parameterType := l.checker.GetTypeAtLocation(parameter.Name())
 		concrete, isKnown := concreteTypes[parameterType]
@@ -104,7 +111,7 @@ func (l *lowering) instantiateFunction(call *ast.Node, declaration *ast.Node) (i
 
 	index := len(l.result.Functions)
 	name += "_" + strconv.Itoa(index)
-	l.result.Functions = append(l.result.Functions, ir.Function{Name: name})
+	l.result.Functions = append(l.result.Functions, ir.Function{Name: name, Closure: owner >= 0, NestedParent: owner + 1})
 	if l.genericInstances == nil {
 		l.genericInstances = map[string]int{}
 	}
@@ -114,6 +121,14 @@ func (l *lowering) instantiateFunction(call *ast.Node, declaration *ast.Node) (i
 	// whatever function or closure called it.
 	outerSubstitution, outerLocals, outerClosures, outerTypeMapper := l.substitution, l.locals, l.closures, l.typeMapper
 	l.substitution, l.closures = substitution, nil
+	if owner >= 0 {
+		for proven, held := range outerSubstitution {
+			if _, ok := substitution[proven]; !ok {
+				substitution[proven] = held
+			}
+		}
+		l.closures = append(append([]int{}, outerClosures...), index)
+	}
 	sources, targets := []*checker.Type{}, []*checker.Type{}
 	for _, parameter := range declaration.TypeParameters() {
 		parameterType := l.checker.GetTypeAtLocation(parameter.Name())
@@ -129,7 +144,7 @@ func (l *lowering) instantiateFunction(call *ast.Node, declaration *ast.Node) (i
 	}
 	l.locals = map[*ast.Symbol]int{}
 	for symbol, local := range outerLocals {
-		if l.result.Locals[local].Global {
+		if l.result.Locals[local].Global || owner >= 0 {
 			l.locals[symbol] = local
 		}
 	}
@@ -138,6 +153,9 @@ func (l *lowering) instantiateFunction(call *ast.Node, declaration *ast.Node) (i
 		l.substitution, l.locals, l.closures, l.typeMapper = outerSubstitution, outerLocals, outerClosures, outerTypeMapper
 		l.genericDepth--
 	}()
+	if owner >= 0 {
+		l.closureRecords = append(l.closureRecords, closureRecord{proven: l.concrete(l.checker.GetTypeAtLocation(declaration.Name())), function: index, node: declaration})
+	}
 	if err := l.lowerFunction(index, declaration, -1); err != nil {
 		return 0, err
 	}
@@ -238,6 +256,56 @@ func (l *lowering) inferTypesSeen(declared *checker.Type, instantiated *checker.
 		return
 	}
 	visited[[2]*checker.Type{declared, instantiated}] = true
+	// Optional implementation parameters and results can wrap the same generic
+	// binder that the resolved overload exposes directly. Infer from the present
+	// member; an absent argument supplies no evidence about that binder.
+	if declared.Flags()&checker.TypeFlagsUnion != 0 && l.censusHasUndefined(declared) {
+		present := []*checker.Type{}
+		for _, member := range declared.Types() {
+			if member.Flags()&checker.TypeFlagsUndefined == 0 {
+				present = append(present, member)
+			}
+		}
+		given := instantiated
+		if l.censusHasUndefined(given) && given.Flags()&checker.TypeFlagsUnion != 0 {
+			members := []*checker.Type{}
+			for _, member := range given.Types() {
+				if member.Flags()&checker.TypeFlagsUndefined == 0 {
+					members = append(members, member)
+				}
+			}
+			given = l.checker.GetUnionType(members)
+		}
+		// GetNonNullableType also turns a rigid T into T & {}. Removing only
+		// the optional member preserves the binder we are trying to infer.
+		if len(present) == 1 && given.Flags()&checker.TypeFlagsUndefined == 0 {
+			l.inferTypesSeen(present[0], given, into, visited)
+		}
+		return
+	}
+	if declared.Flags()&checker.TypeFlagsUnion != 0 {
+		var missing *checker.Type
+		for _, member := range declared.Types() {
+			known, found := into[member]
+			if !found && member.Flags()&checker.TypeFlagsTypeParameter != 0 {
+				if missing != nil {
+					return // More than one unknown binder has no unique witness.
+				}
+				missing = member
+				continue
+			}
+			if !found {
+				known = l.concrete(member)
+			}
+			if !l.checker.IsTypeAssignableTo(known, l.concrete(instantiated)) {
+				return
+			}
+		}
+		if missing != nil {
+			into[missing] = l.concrete(instantiated)
+		}
+		return
+	}
 	if declared.Flags()&checker.TypeFlagsTypeParameter != 0 {
 		if _, isSet := into[declared]; !isSet {
 			into[declared] = l.concrete(instantiated)

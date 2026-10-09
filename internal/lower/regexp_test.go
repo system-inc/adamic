@@ -10,7 +10,6 @@ import (
 
 func TestRegExpNativeRefusals(t *testing.T) {
 	for _, source := range []string{
-		"console.log('a'.replace(/a/, (value: string) => value));",
 		"const regex = /a/; regex.exec = (input: string): RegExpExecArray | null => null;",
 		"const regex = /a/; const copy = {...regex};",
 	} {

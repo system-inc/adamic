@@ -75,7 +75,7 @@ func (e *emitter) arrayVisit(visit ir.ArrayVisit) string {
 		}
 		e.line("adamic_value %s = {.%s = %s};", argument, member(visit.SearchFirst), slotted(visit.SearchFirst, fmt.Sprintf("(%s) ? %s : %s", present, value, absent)))
 	}
-	call := fmt.Sprintf("%s->code(%s, (adamic_value[]){%s, {.number = (double)%s}, {.reference = %s}})", callback, callback, argument, index, source)
+	call := e.callbackCall(callback, visit.Callback, visit.CallbackType, argument, fmt.Sprintf("{.number = (double)%s}", index), fmt.Sprintf("{.reference = %s}", source))
 	if visit.Method == "forEach" && !visit.Returns.IsReference() {
 		e.line("%s;", call)
 	} else {
@@ -170,8 +170,8 @@ func (e *emitter) arrayReduce(reduce ir.ArrayReduce) string {
 	if reduce.Element.IsReference() {
 		e.line("adamic_retain(%s.reference);", element)
 	}
-	e.line("adamic_value %s = %s->code(%s, (adamic_value[]){{.%s = %s}, %s, {.number = (double)%s}, {.reference = %s}});",
-		answer, callback, callback, member(reduce.Result), slotted(reduce.Result, accumulator), element, index, source)
+	call := e.callbackCall(callback, reduce.Callback, reduce.CallbackType, fmt.Sprintf("{.%s = %s}", member(reduce.Result), slotted(reduce.Result, accumulator)), element, fmt.Sprintf("{.number = (double)%s}", index), fmt.Sprintf("{.reference = %s}", source))
+	e.line("adamic_value %s = %s;", answer, call)
 	// The element held across the call is let go; the accumulator is the statement's.
 	if reduce.Element.IsReference() {
 		e.closureThrown(element + ".reference")
@@ -201,6 +201,8 @@ func equality(element ir.Type) string {
 		return "adamic_equal_booleans"
 	case ir.String:
 		return "adamic_equal_strings"
+	case ir.Union:
+		return "adamic_equal_unions"
 	case ir.MaybeNumber:
 		return "adamic_equal_maybe_numbers"
 	}
@@ -226,6 +228,9 @@ func (e *emitter) comparator(sort ir.ArraySort) string {
 	e.temporaries++
 	name := fmt.Sprintf("adamic_compare_%d", e.temporaries)
 	argument := unslotted(sort.Element, "left."+member(sort.Element)) + ", " + unslotted(sort.Element, "right."+member(sort.Element))
+	if e.program.Functions[sort.Comparator].ArgumentsCount != 0 {
+		argument += ", 2"
+	}
 	e.declarations = append(e.declarations, fmt.Sprintf(
 		"static int %s(adamic_value left, adamic_value right, void *context) {\n\t(void)context;\n\tdouble result = %s(%s);\n\treturn result < 0 ? -1 : result > 0 ? 1 : 0;\n}",
 		name, e.functionName(sort.Comparator), argument))
