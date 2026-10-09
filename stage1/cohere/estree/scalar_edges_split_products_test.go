@@ -62,15 +62,15 @@ func scalarEdgeLowered(t *testing.T, main string) string {
 func scalarEdgeNative(t *testing.T, lowered string) string {
 	t.Helper()
 	inputs := scalarEdgeInputs()
-	inputs.Name = "scalar-edges-sanitized-native"
+	inputs.Name = "scalar-edges-sanitized-native-v2"
 	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
-	inputs.Flags = append(native.Flags(native.Options{Sanitize: true}), []string{"Sanitize=true", "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT"), "ADAMIC_NATIVE_JOBS=" + os.Getenv("ADAMIC_NATIVE_JOBS"), "ADAMIC_GATE_UNCACHED=" + os.Getenv("ADAMIC_GATE_UNCACHED")}...)
+	inputs.Flags = append(native.Flags(native.Options{Sanitize: true, Split: true}), []string{"Sanitize=true", "Split=true", "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT"), "ADAMIC_NATIVE_JOBS=" + os.Getenv("ADAMIC_NATIVE_JOBS"), "ADAMIC_GATE_UNCACHED=" + os.Getenv("ADAMIC_GATE_UNCACHED")}...)
 	product := buildcache.Product(t, inputs, func(dir string) error {
 		source, err := os.ReadFile(filepath.Join(lowered, "port.c"))
 		if err != nil {
 			return err
 		}
-		return native.Build(string(source), filepath.Join(dir, "port"), native.Options{Sanitize: true})
+		return native.Build(string(source), filepath.Join(dir, "port"), native.Options{Sanitize: true, Split: true})
 	})
 	return filepath.Join(product, "port")
 }
