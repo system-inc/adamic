@@ -472,3 +472,14 @@ Stress observations on codex/signal-mutant-steady, based on area/runtime 915b9e0
 - A complete final native rerun was also launched alongside the stress test. After the environment reconnect its native.test process (PID 136015) was a zombie with PPID 1 and wait status 0, but the enclosing go command's summary was unavailable and `/tmp/signal-steady-native-final.log` was empty. This is not reported as a normal logged package pass. No full repository or oracle rerun was made for these test-only hooks.
 
 Setup completed in 37.548s: Go ready at 0.070s, Node at 0.078s, submodules at 0.177s, clang at 0.403s, build cache warm at 37.506s. nproc is 5 with a four-CPU quota. The generated environment was sourced for each test command.
+
+## View contract storage audit, October 9, 2026
+
+- `runtime-file:view_callables_contract.h`: static inline helpers and contract types; no file-scope objects. The function-local static const out-of-memory string is immutable. Parameter masks and signatures are borrowed producer metadata; formatting buffers and counters are automatic locals, and diagnostic messages are allocated per call. There is no mutable static storage to synchronize.
+- `runtime-file:view_representations.h`: representation enum constants and the slot-index macro only; no objects or mutable static storage.
+- `runtime-file:view_unions_mixed.c`: functions and a static helper function; no file-scope objects. The function-local static const out-of-memory string is immutable. Normalized snapshots and counters are automatic locals; member tables and callback context are supplied by the caller. No mutable static storage is introduced.
+- `runtime-file:view_unions_mixed.h`: enum constants, value/member types and function declarations only; no storage.
+- `runtime-file:view_unions_untagged.c`: static helper functions but no file-scope objects. Recursive membership paths, depth counters, normalized snapshots and the zero-initialized slot cache are automatic per-call locals. Contract/member tables and callback context are borrowed from the caller; object field probes use the local cache. No mutable static storage or shared readiness state is introduced.
+- `runtime-file:view_unions_untagged.h`: contract/tag/field/producer types, callback typedefs and function declarations only; metadata pointers refer to caller-owned tables. No file-scope storage.
+
+These six files require no additions to the mutable-static writer or parallel-probe lists: their only static data are immutable diagnostic strings.
