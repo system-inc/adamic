@@ -1,0 +1,792 @@
+[
+  {
+    "key": "skipcensus",
+    "classification": "a",
+    "owner": "compiler/test-split-native ed05fde6; compiler/test-split-bridge 93cd7227; stage1-split/printers 16fc3639. Main merge also exposes the stage3 fixture split inventory drift.",
+    "observations": [
+      {
+        "tree": "base",
+        "exit": 1,
+        "tests": [
+          {
+            "test": "TestCensus",
+            "action": "fail"
+          }
+        ]
+      },
+      {
+        "tree": "any",
+        "exit": 1,
+        "tests": [
+          {
+            "test": "TestCensus",
+            "action": "fail"
+          }
+        ]
+      },
+      {
+        "tree": "merged",
+        "exit": 1,
+        "tests": [
+          {
+            "test": "TestCensus",
+            "action": "fail"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "key": "flow",
+    "classification": "a",
+    "owner": "compiler/test-split-flow e6a6174e. Base misses 38 entries; any-returns adds two fixture entries to that inherited drift.",
+    "observations": [
+      {
+        "tree": "base",
+        "exit": 1,
+        "tests": [
+          {
+            "test": "TestFlowCorpusUnitsCoverEveryProgram",
+            "action": "fail"
+          }
+        ]
+      },
+      {
+        "tree": "any",
+        "exit": 1,
+        "tests": [
+          {
+            "test": "TestFlowCorpusUnitsCoverEveryProgram",
+            "action": "fail"
+          }
+        ]
+      },
+      {
+        "tree": "merged",
+        "exit": 1,
+        "tests": [
+          {
+            "test": "TestFlowCorpusUnitsCoverEveryProgram",
+            "action": "fail"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "key": "fresh",
+    "classification": "a",
+    "owner": "compiler/test-split-flow e6a6174e. Base misses 38 entries; any-returns adds two fixture entries to that inherited drift.",
+    "observations": [
+      {
+        "tree": "base",
+        "exit": 1,
+        "tests": [
+          {
+            "test": "TestFreshCorpusUnitsCoverEveryProgram",
+            "action": "fail"
+          }
+        ]
+      },
+      {
+        "tree": "any",
+        "exit": 1,
+        "tests": [
+          {
+            "test": "TestFreshCorpusUnitsCoverEveryProgram",
+            "action": "fail"
+          }
+        ]
+      },
+      {
+        "tree": "merged",
+        "exit": 1,
+        "tests": [
+          {
+            "test": "TestFreshCorpusUnitsCoverEveryProgram",
+            "action": "fail"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "key": "fuzz",
+    "classification": "a",
+    "owner": "integration/runtime-stack-on-c1 5aa673ed, through runtime merge 234e2eb0; coordinate with codex/fuzz-flaked-under-load. Leak death is reported as a finding, not confirmed as a flake.",
+    "observations": [
+      {
+        "tree": "base",
+        "exit": 1,
+        "tests": [
+          {
+            "test": "TestFindingReproducesAlone/leak_runner_death",
+            "action": "fail"
+          },
+          {
+            "test": "TestFindingReproducesAlone",
+            "action": "fail"
+          }
+        ]
+      },
+      {
+        "tree": "any",
+        "exit": 1,
+        "tests": [
+          {
+            "test": "TestFindingReproducesAlone/leak_runner_death",
+            "action": "fail"
+          },
+          {
+            "test": "TestFindingReproducesAlone",
+            "action": "fail"
+          }
+        ]
+      },
+      {
+        "tree": "merged",
+        "exit": 1,
+        "tests": [
+          {
+            "test": "TestFindingReproducesAlone/leak_runner_death",
+            "action": "fail"
+          },
+          {
+            "test": "TestFindingReproducesAlone",
+            "action": "fail"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "key": "ir",
+    "classification": "a",
+    "owner": "compiler/hidden-boundaries c9beed41. The already-delivered reader fix 573bd3e7 is absent from this stack base; not cherry-picked here.",
+    "observations": [
+      {
+        "tree": "base",
+        "exit": 1,
+        "tests": [
+          {
+            "test": "TestCallTargetReaders",
+            "action": "fail"
+          }
+        ]
+      },
+      {
+        "tree": "any",
+        "exit": 1,
+        "tests": [
+          {
+            "test": "TestCallTargetReaders",
+            "action": "fail"
+          }
+        ]
+      },
+      {
+        "tree": "merged",
+        "exit": 1,
+        "tests": [
+          {
+            "test": "TestCallTargetReaders",
+            "action": "fail"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "key": "tnode",
+    "classification": "b",
+    "owner": "codex/any-returns-concrete. Exact substitution bypassed the constrained mutable-field refusal; fixed here.",
+    "observations": [
+      {
+        "tree": "base",
+        "exit": 0,
+        "tests": [
+          {
+            "test": "TestHiddenTNodeConstraintMutationRemainsNotYet",
+            "action": "pass"
+          }
+        ]
+      },
+      {
+        "tree": "any",
+        "exit": 1,
+        "tests": [
+          {
+            "test": "TestHiddenTNodeConstraintMutationRemainsNotYet",
+            "action": "fail"
+          }
+        ]
+      },
+      {
+        "tree": "merged",
+        "exit": 0,
+        "tests": [
+          {
+            "test": "TestHiddenTNodeConstraintMutationRemainsNotYet",
+            "action": "pass"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "key": "representation",
+    "classification": "a",
+    "owner": "compiler/hidden-boundaries TNode storage 702c3ecb/8fc4be59 versus the Source representation test at 963e7c53. Tagged Union storage is now known; test still expects unknown.",
+    "observations": [
+      {
+        "tree": "base",
+        "exit": 1,
+        "tests": [
+          {
+            "test": "TestRepresentationClockSourceCheckedTypes",
+            "action": "fail"
+          }
+        ]
+      },
+      {
+        "tree": "any",
+        "exit": 1,
+        "tests": [
+          {
+            "test": "TestRepresentationClockSourceCheckedTypes",
+            "action": "fail"
+          }
+        ]
+      },
+      {
+        "tree": "merged",
+        "exit": 1,
+        "tests": [
+          {
+            "test": "TestRepresentationClockSourceCheckedTypes",
+            "action": "fail"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "key": "signal",
+    "classification": "a",
+    "owner": "integration/runtime-stack-on-c1 5aa673ed, runtime/slice-3-concurrency. Schedule-sensitive mutant witness: base pass then fail; identical standalone runtime sources across base and any-returns.",
+    "observations": [
+      {
+        "tree": "base",
+        "exit": 0,
+        "tests": [
+          {
+            "test": "TestRuntimeStaticsSignalAndExit/handler_buffer_mutant",
+            "action": "pass"
+          },
+          {
+            "test": "TestRuntimeStaticsSignalAndExit",
+            "action": "pass"
+          }
+        ]
+      },
+      {
+        "tree": "any",
+        "exit": 1,
+        "tests": [
+          {
+            "test": "TestRuntimeStaticsSignalAndExit/handler_buffer_mutant",
+            "action": "fail"
+          },
+          {
+            "test": "TestRuntimeStaticsSignalAndExit",
+            "action": "fail"
+          }
+        ]
+      },
+      {
+        "tree": "merged",
+        "exit": 0,
+        "tests": [
+          {
+            "test": "TestRuntimeStaticsSignalAndExit/handler_buffer_mutant",
+            "action": "pass"
+          },
+          {
+            "test": "TestRuntimeStaticsSignalAndExit",
+            "action": "pass"
+          }
+        ]
+      },
+      {
+        "tree": "base repeat",
+        "exit": 1
+      }
+    ]
+  },
+  {
+    "key": "uint16",
+    "classification": "a",
+    "owner": "runtime Uint16Array 277e3937 carried by integration/runtime-stack-on-c1; stale new-expression NotYet expectations.",
+    "observations": [
+      {
+        "tree": "base",
+        "exit": 1,
+        "tests": [
+          {
+            "test": "TestNewExpressionUint16RemainsNotYet",
+            "action": "fail"
+          }
+        ]
+      },
+      {
+        "tree": "any",
+        "exit": 1,
+        "tests": [
+          {
+            "test": "TestNewExpressionUint16RemainsNotYet",
+            "action": "fail"
+          }
+        ]
+      },
+      {
+        "tree": "merged",
+        "exit": 1,
+        "tests": [
+          {
+            "test": "TestNewExpressionUint16RemainsNotYet",
+            "action": "fail"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "key": "optional",
+    "classification": "a",
+    "owner": "compiler/optional-presence a774d316 with views-v1. Exact checked-view refusal text changed; source-slot integration still pending.",
+    "observations": [
+      {
+        "tree": "base",
+        "exit": 1,
+        "tests": [
+          {
+            "test": "TestOptionalFieldCheckedViewPending",
+            "action": "fail"
+          }
+        ]
+      },
+      {
+        "tree": "any",
+        "exit": 1,
+        "tests": [
+          {
+            "test": "TestOptionalFieldCheckedViewPending",
+            "action": "fail"
+          }
+        ]
+      },
+      {
+        "tree": "merged",
+        "exit": 1,
+        "tests": [
+          {
+            "test": "TestOptionalFieldCheckedViewPending",
+            "action": "fail"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "key": "native-uint16",
+    "classification": "a",
+    "owner": "runtime Uint16Array 277e3937 carried by integration/runtime-stack-on-c1; stale fixture admission record.",
+    "observations": [
+      {
+        "tree": "base",
+        "exit": 1,
+        "tests": [
+          {
+            "test": "TestNativeAgreesWithNode/internal/oracle/testdata/new_expression_uint16.a",
+            "action": "fail"
+          },
+          {
+            "test": "TestNativeAgreesWithNode",
+            "action": "fail"
+          }
+        ]
+      },
+      {
+        "tree": "any",
+        "exit": 1,
+        "tests": [
+          {
+            "test": "TestNativeAgreesWithNode/internal/oracle/testdata/new_expression_uint16.a",
+            "action": "fail"
+          },
+          {
+            "test": "TestNativeAgreesWithNode",
+            "action": "fail"
+          }
+        ]
+      },
+      {
+        "tree": "merged",
+        "exit": 1,
+        "tests": [
+          {
+            "test": "TestNativeAgreesWithNode/internal/oracle/testdata/new_expression_uint16.a",
+            "action": "fail"
+          },
+          {
+            "test": "TestNativeAgreesWithNode",
+            "action": "fail"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "key": "native-uint16-notyet",
+    "classification": "a",
+    "owner": "runtime Uint16Array 277e3937 carried by integration/runtime-stack-on-c1; stale fixture admission record.",
+    "observations": [
+      {
+        "tree": "base",
+        "exit": 1,
+        "tests": [
+          {
+            "test": "TestNativeAgreesWithNode/internal/oracle/testdata/new_expression_uint16_notyet.a",
+            "action": "fail"
+          },
+          {
+            "test": "TestNativeAgreesWithNode",
+            "action": "fail"
+          }
+        ]
+      },
+      {
+        "tree": "any",
+        "exit": 1,
+        "tests": [
+          {
+            "test": "TestNativeAgreesWithNode/internal/oracle/testdata/new_expression_uint16_notyet.a",
+            "action": "fail"
+          },
+          {
+            "test": "TestNativeAgreesWithNode",
+            "action": "fail"
+          }
+        ]
+      },
+      {
+        "tree": "merged",
+        "exit": 1,
+        "tests": [
+          {
+            "test": "TestNativeAgreesWithNode/internal/oracle/testdata/new_expression_uint16_notyet.a",
+            "action": "fail"
+          },
+          {
+            "test": "TestNativeAgreesWithNode",
+            "action": "fail"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "key": "native-tnode-mutation",
+    "classification": "b",
+    "owner": "codex/any-returns-concrete; same concrete field-write regression.",
+    "observations": [
+      {
+        "tree": "base",
+        "exit": 0,
+        "tests": [
+          {
+            "test": "TestNativeAgreesWithNode/internal/oracle/testdata/notyet/hidden_boundary_generic_tnode_mutation.a",
+            "action": "pass"
+          },
+          {
+            "test": "TestNativeAgreesWithNode",
+            "action": "pass"
+          }
+        ]
+      },
+      {
+        "tree": "any",
+        "exit": 1,
+        "tests": [
+          {
+            "test": "TestNativeAgreesWithNode/internal/oracle/testdata/notyet/hidden_boundary_generic_tnode_mutation.a",
+            "action": "fail"
+          },
+          {
+            "test": "TestNativeAgreesWithNode",
+            "action": "fail"
+          }
+        ]
+      },
+      {
+        "tree": "merged",
+        "exit": 0,
+        "tests": [
+          {
+            "test": "TestNativeAgreesWithNode/internal/oracle/testdata/notyet/hidden_boundary_generic_tnode_mutation.a",
+            "action": "pass"
+          },
+          {
+            "test": "TestNativeAgreesWithNode",
+            "action": "pass"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "key": "native-binder",
+    "classification": "a",
+    "owner": "compiler/optional-presence a774d316. Binder-flow lowers, but oracle still registers NotYet.",
+    "observations": [
+      {
+        "tree": "base",
+        "exit": 1,
+        "tests": [
+          {
+            "test": "TestNativeAgreesWithNode/stage3/fixtures/taste/17_binder_flow.a",
+            "action": "fail"
+          },
+          {
+            "test": "TestNativeAgreesWithNode",
+            "action": "fail"
+          }
+        ]
+      },
+      {
+        "tree": "any",
+        "exit": 1,
+        "tests": [
+          {
+            "test": "TestNativeAgreesWithNode/stage3/fixtures/taste/17_binder_flow.a",
+            "action": "fail"
+          },
+          {
+            "test": "TestNativeAgreesWithNode",
+            "action": "fail"
+          }
+        ]
+      },
+      {
+        "tree": "merged",
+        "exit": 1,
+        "tests": [
+          {
+            "test": "TestNativeAgreesWithNode/stage3/fixtures/taste/17_binder_flow.a",
+            "action": "fail"
+          },
+          {
+            "test": "TestNativeAgreesWithNode",
+            "action": "fail"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "key": "wasi-uint16",
+    "classification": "a",
+    "owner": "runtime Uint16Array 277e3937 carried by integration/runtime-stack-on-c1; stale fixture admission record.",
+    "observations": [
+      {
+        "tree": "base",
+        "exit": 1,
+        "tests": [
+          {
+            "test": "TestWASIAgreesWithNode/internal/oracle/testdata/new_expression_uint16.a",
+            "action": "fail"
+          },
+          {
+            "test": "TestWASIAgreesWithNode",
+            "action": "fail"
+          }
+        ]
+      },
+      {
+        "tree": "any",
+        "exit": 1,
+        "tests": [
+          {
+            "test": "TestWASIAgreesWithNode/internal/oracle/testdata/new_expression_uint16.a",
+            "action": "fail"
+          },
+          {
+            "test": "TestWASIAgreesWithNode",
+            "action": "fail"
+          }
+        ]
+      },
+      {
+        "tree": "merged",
+        "exit": 1,
+        "tests": [
+          {
+            "test": "TestWASIAgreesWithNode/internal/oracle/testdata/new_expression_uint16.a",
+            "action": "fail"
+          },
+          {
+            "test": "TestWASIAgreesWithNode",
+            "action": "fail"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "key": "wasi-uint16-notyet",
+    "classification": "a",
+    "owner": "runtime Uint16Array 277e3937 carried by integration/runtime-stack-on-c1; stale fixture admission record.",
+    "observations": [
+      {
+        "tree": "base",
+        "exit": 1,
+        "tests": [
+          {
+            "test": "TestWASIAgreesWithNode/internal/oracle/testdata/new_expression_uint16_notyet.a",
+            "action": "fail"
+          },
+          {
+            "test": "TestWASIAgreesWithNode",
+            "action": "fail"
+          }
+        ]
+      },
+      {
+        "tree": "any",
+        "exit": 1,
+        "tests": [
+          {
+            "test": "TestWASIAgreesWithNode/internal/oracle/testdata/new_expression_uint16_notyet.a",
+            "action": "fail"
+          },
+          {
+            "test": "TestWASIAgreesWithNode",
+            "action": "fail"
+          }
+        ]
+      },
+      {
+        "tree": "merged",
+        "exit": 1,
+        "tests": [
+          {
+            "test": "TestWASIAgreesWithNode/internal/oracle/testdata/new_expression_uint16_notyet.a",
+            "action": "fail"
+          },
+          {
+            "test": "TestWASIAgreesWithNode",
+            "action": "fail"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "key": "wasi-tnode-mutation",
+    "classification": "b",
+    "owner": "codex/any-returns-concrete; same concrete field-write regression.",
+    "observations": [
+      {
+        "tree": "base",
+        "exit": 0,
+        "tests": [
+          {
+            "test": "TestWASIAgreesWithNode/internal/oracle/testdata/notyet/hidden_boundary_generic_tnode_mutation.a",
+            "action": "pass"
+          },
+          {
+            "test": "TestWASIAgreesWithNode",
+            "action": "pass"
+          }
+        ]
+      },
+      {
+        "tree": "any",
+        "exit": 1,
+        "tests": [
+          {
+            "test": "TestWASIAgreesWithNode/internal/oracle/testdata/notyet/hidden_boundary_generic_tnode_mutation.a",
+            "action": "fail"
+          },
+          {
+            "test": "TestWASIAgreesWithNode",
+            "action": "fail"
+          }
+        ]
+      },
+      {
+        "tree": "merged",
+        "exit": 0,
+        "tests": [
+          {
+            "test": "TestWASIAgreesWithNode/internal/oracle/testdata/notyet/hidden_boundary_generic_tnode_mutation.a",
+            "action": "pass"
+          },
+          {
+            "test": "TestWASIAgreesWithNode",
+            "action": "pass"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "key": "wasi-binder",
+    "classification": "a",
+    "owner": "compiler/optional-presence a774d316. Binder-flow lowers, but oracle still registers NotYet.",
+    "observations": [
+      {
+        "tree": "base",
+        "exit": 1,
+        "tests": [
+          {
+            "test": "TestWASIAgreesWithNode/stage3/fixtures/taste/17_binder_flow.a",
+            "action": "fail"
+          },
+          {
+            "test": "TestWASIAgreesWithNode",
+            "action": "fail"
+          }
+        ]
+      },
+      {
+        "tree": "any",
+        "exit": 1,
+        "tests": [
+          {
+            "test": "TestWASIAgreesWithNode/stage3/fixtures/taste/17_binder_flow.a",
+            "action": "fail"
+          },
+          {
+            "test": "TestWASIAgreesWithNode",
+            "action": "fail"
+          }
+        ]
+      },
+      {
+        "tree": "merged",
+        "exit": 1,
+        "tests": [
+          {
+            "test": "TestWASIAgreesWithNode/stage3/fixtures/taste/17_binder_flow.a",
+            "action": "fail"
+          },
+          {
+            "test": "TestWASIAgreesWithNode",
+            "action": "fail"
+          }
+        ]
+      }
+    ]
+  }
+]

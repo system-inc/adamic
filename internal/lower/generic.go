@@ -224,6 +224,32 @@ func (l *lowering) refuseInstantiatedMutation(declaration *ast.Node) error {
 		if refused != nil {
 			return true
 		}
+		if node.Kind == ast.KindBinaryExpression {
+			binary := node.AsBinaryExpression()
+			_, compound := compoundAssignments[binary.OperatorToken.Kind]
+			if binary.OperatorToken.Kind == ast.KindEqualsToken || compound {
+				target := ast.SkipParentheses(binary.Left)
+				if target.Kind == ast.KindPropertyAccessExpression {
+					receiver := l.checker.GetTypeAtLocation(target.AsPropertyAccessExpression().Expression)
+					// Substitution proves read storage, not that the constraint's writable
+					// field accepts this write: a subtype may narrow it to a literal. Prove
+					// a simple write against the concrete field; otherwise preserve the
+					// existing tagged-write boundary, including for compound assignments.
+					if receiver.Flags()&checker.TypeFlagsTypeParameter != 0 {
+						if held, known := l.constraintStorage(receiver); known && held == ir.Union {
+							concrete := l.concrete(receiver)
+							field := l.checker.GetPropertyOfType(concrete, target.Name().Text())
+							from := l.concrete(l.checker.GetTypeAtLocation(binary.Right))
+							proven := !compound && concrete.Flags()&(checker.TypeFlagsTypeParameter|checker.TypeFlagsUnion) == 0 && field != nil && from.Flags()&checker.TypeFlagsAny == 0 && l.checker.IsTypeAssignableTo(from, l.concrete(l.checker.GetTypeOfSymbol(field)))
+							if !proven {
+								refused = l.notYet(target, "assigning a field of a "+typeName(held))
+								return true
+							}
+						}
+					}
+				}
+			}
+		}
 		if node.Kind == ast.KindCallExpression {
 			call := node.AsCallExpression()
 			callee := ast.SkipParentheses(call.Expression)

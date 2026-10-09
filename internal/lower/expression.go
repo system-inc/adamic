@@ -74,7 +74,7 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 		return l.objectIntersection(proven)
 	}
 	switch {
-	case flags&(checker.TypeFlagsUndefined|checker.TypeFlagsVoid) != 0:
+	case flags&(checker.TypeFlagsNull|checker.TypeFlagsUndefined|checker.TypeFlagsVoid) != 0:
 		return ir.Object, true
 	case flags&checker.TypeFlagsNumberLike != 0:
 		return ir.Number, true
@@ -98,17 +98,21 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 		return ir.Closure, true
 	case flags&checker.TypeFlagsUnion != 0:
 		if l.includesNull(proven) && !dynamicObjectType(proven) {
-			// A nullable object reference uses NULL. Null and undefined together need distinct tags.
-			if l.includesUndefined(proven) {
-				return 0, false
-			}
+			// Preserve the area's nullable reference and RegExp protocols. Only
+			// differently stored members need the boxed union representation.
+			boxed := l.includesUndefined(proven)
 			for _, member := range proven.Types() {
-				if member.Flags()&checker.TypeFlagsNull == 0 {
-					of, known := l.representation(member)
-					if !known || !of.IsReference() || of == ir.String || of == ir.Union {
-						return 0, false
-					}
+				if member.Flags()&(checker.TypeFlagsNull|checker.TypeFlagsUndefined) != 0 {
+					continue
 				}
+				of, known := l.representation(member)
+				if !known {
+					return 0, false
+				}
+				boxed = boxed || !of.IsReference() || of == ir.String || of == ir.Union
+			}
+			if boxed {
+				return ir.Union, true
 			}
 		}
 		var shared ir.Type

@@ -302,6 +302,7 @@ typedef struct adamic_object {
 	const adamic_shape *shape;
 	const adamic_class *class;
 	bool frozen;
+	bool tuple;
 	bool dynamic_shape;
 	const int *dynamic_types;
 	adamic_value slots[];
@@ -315,6 +316,11 @@ void adamic_object_absent(adamic_object *object, size_t index);
 void adamic_object_present(adamic_object *object, size_t index);
 bool adamic_object_delete(adamic_object *object, const adamic_string *key);
 adamic_object *adamic_object_copy_reserving(const adamic_object *source, const adamic_shape *reserved);
+
+// Include insertion ranks and both per-slot byte tails in every allocation.
+static inline size_t adamic_object_size(size_t count) {
+	return sizeof(adamic_object) + count * (sizeof(adamic_value) + sizeof(size_t) + 2);
+}
 // Initialized bits follow slots in the same allocation, indexed by the actual shape.
 static inline unsigned char *adamic_object_initialized(const adamic_object *object) {
 	return (unsigned char *)(void *)(adamic_object_orders(object) + object->shape->count);

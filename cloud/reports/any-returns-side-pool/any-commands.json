@@ -1,0 +1,420 @@
+[
+  {
+    "key": "skipcensus",
+    "command": [
+      "go",
+      "test",
+      "./internal/skipcensus",
+      "-run",
+      "^TestCensus$",
+      "-timeout",
+      "90s",
+      "-count=1",
+      "-json"
+    ],
+    "exit": 1,
+    "tests": [
+      {
+        "test": "TestCensus",
+        "action": "fail"
+      }
+    ]
+  },
+  {
+    "key": "flow",
+    "command": [
+      "go",
+      "test",
+      "./internal/flow",
+      "-run",
+      "^TestFlowCorpusUnitsCoverEveryProgram$",
+      "-timeout",
+      "90s",
+      "-count=1",
+      "-json"
+    ],
+    "exit": 1,
+    "tests": [
+      {
+        "test": "TestFlowCorpusUnitsCoverEveryProgram",
+        "action": "fail"
+      }
+    ]
+  },
+  {
+    "key": "fresh",
+    "command": [
+      "go",
+      "test",
+      "./internal/fresh",
+      "-run",
+      "^TestFreshCorpusUnitsCoverEveryProgram$",
+      "-timeout",
+      "90s",
+      "-count=1",
+      "-json"
+    ],
+    "exit": 1,
+    "tests": [
+      {
+        "test": "TestFreshCorpusUnitsCoverEveryProgram",
+        "action": "fail"
+      }
+    ]
+  },
+  {
+    "key": "fuzz",
+    "command": [
+      "go",
+      "test",
+      "./internal/fuzz",
+      "-run",
+      "^TestFindingReproducesAlone$/^leak_runner_death$",
+      "-timeout",
+      "90s",
+      "-count=1",
+      "-json"
+    ],
+    "exit": 1,
+    "tests": [
+      {
+        "test": "TestFindingReproducesAlone/leak_runner_death",
+        "action": "fail"
+      },
+      {
+        "test": "TestFindingReproducesAlone",
+        "action": "fail"
+      }
+    ]
+  },
+  {
+    "key": "ir",
+    "command": [
+      "go",
+      "test",
+      "./internal/ir",
+      "-run",
+      "^TestCallTargetReaders$",
+      "-timeout",
+      "90s",
+      "-count=1",
+      "-json"
+    ],
+    "exit": 1,
+    "tests": [
+      {
+        "test": "TestCallTargetReaders",
+        "action": "fail"
+      }
+    ]
+  },
+  {
+    "key": "tnode",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^TestHiddenTNodeConstraintMutationRemainsNotYet$",
+      "-timeout",
+      "90s",
+      "-count=1",
+      "-json"
+    ],
+    "exit": 1,
+    "tests": [
+      {
+        "test": "TestHiddenTNodeConstraintMutationRemainsNotYet",
+        "action": "fail"
+      }
+    ]
+  },
+  {
+    "key": "representation",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^TestRepresentationClockSourceCheckedTypes$",
+      "-timeout",
+      "90s",
+      "-count=1",
+      "-json"
+    ],
+    "exit": 1,
+    "tests": [
+      {
+        "test": "TestRepresentationClockSourceCheckedTypes",
+        "action": "fail"
+      }
+    ]
+  },
+  {
+    "key": "signal",
+    "command": [
+      "go",
+      "test",
+      "./internal/native",
+      "-run",
+      "^TestRuntimeStaticsSignalAndExit$/^handler_buffer_mutant$",
+      "-timeout",
+      "90s",
+      "-count=1",
+      "-json"
+    ],
+    "exit": 1,
+    "tests": [
+      {
+        "test": "TestRuntimeStaticsSignalAndExit/handler_buffer_mutant",
+        "action": "fail"
+      },
+      {
+        "test": "TestRuntimeStaticsSignalAndExit",
+        "action": "fail"
+      }
+    ]
+  },
+  {
+    "key": "uint16",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestNewExpressionUint16RemainsNotYet$",
+      "-timeout",
+      "90s",
+      "-count=1",
+      "-json"
+    ],
+    "exit": 1,
+    "tests": [
+      {
+        "test": "TestNewExpressionUint16RemainsNotYet",
+        "action": "fail"
+      }
+    ]
+  },
+  {
+    "key": "optional",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestOptionalFieldCheckedViewPending$",
+      "-timeout",
+      "90s",
+      "-count=1",
+      "-json"
+    ],
+    "exit": 1,
+    "tests": [
+      {
+        "test": "TestOptionalFieldCheckedViewPending",
+        "action": "fail"
+      }
+    ]
+  },
+  {
+    "key": "native-uint16",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^new_expression_uint16[.]a$",
+      "-timeout",
+      "90s",
+      "-count=1",
+      "-json"
+    ],
+    "exit": 1,
+    "tests": [
+      {
+        "test": "TestNativeAgreesWithNode/internal/oracle/testdata/new_expression_uint16.a",
+        "action": "fail"
+      },
+      {
+        "test": "TestNativeAgreesWithNode",
+        "action": "fail"
+      }
+    ]
+  },
+  {
+    "key": "native-uint16-notyet",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^new_expression_uint16_notyet[.]a$",
+      "-timeout",
+      "90s",
+      "-count=1",
+      "-json"
+    ],
+    "exit": 1,
+    "tests": [
+      {
+        "test": "TestNativeAgreesWithNode/internal/oracle/testdata/new_expression_uint16_notyet.a",
+        "action": "fail"
+      },
+      {
+        "test": "TestNativeAgreesWithNode",
+        "action": "fail"
+      }
+    ]
+  },
+  {
+    "key": "native-tnode-mutation",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^notyet$/^hidden_boundary_generic_tnode_mutation[.]a$",
+      "-timeout",
+      "90s",
+      "-count=1",
+      "-json"
+    ],
+    "exit": 1,
+    "tests": [
+      {
+        "test": "TestNativeAgreesWithNode/internal/oracle/testdata/notyet/hidden_boundary_generic_tnode_mutation.a",
+        "action": "fail"
+      },
+      {
+        "test": "TestNativeAgreesWithNode",
+        "action": "fail"
+      }
+    ]
+  },
+  {
+    "key": "native-binder",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode$/^stage3$/^fixtures$/^taste$/^17_binder_flow[.]a$",
+      "-timeout",
+      "90s",
+      "-count=1",
+      "-json"
+    ],
+    "exit": 1,
+    "tests": [
+      {
+        "test": "TestNativeAgreesWithNode/stage3/fixtures/taste/17_binder_flow.a",
+        "action": "fail"
+      },
+      {
+        "test": "TestNativeAgreesWithNode",
+        "action": "fail"
+      }
+    ]
+  },
+  {
+    "key": "wasi-uint16",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestWASIAgreesWithNode$/^internal$/^oracle$/^testdata$/^new_expression_uint16[.]a$",
+      "-timeout",
+      "90s",
+      "-count=1",
+      "-json"
+    ],
+    "exit": 1,
+    "tests": [
+      {
+        "test": "TestWASIAgreesWithNode/internal/oracle/testdata/new_expression_uint16.a",
+        "action": "fail"
+      },
+      {
+        "test": "TestWASIAgreesWithNode",
+        "action": "fail"
+      }
+    ]
+  },
+  {
+    "key": "wasi-uint16-notyet",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestWASIAgreesWithNode$/^internal$/^oracle$/^testdata$/^new_expression_uint16_notyet[.]a$",
+      "-timeout",
+      "90s",
+      "-count=1",
+      "-json"
+    ],
+    "exit": 1,
+    "tests": [
+      {
+        "test": "TestWASIAgreesWithNode/internal/oracle/testdata/new_expression_uint16_notyet.a",
+        "action": "fail"
+      },
+      {
+        "test": "TestWASIAgreesWithNode",
+        "action": "fail"
+      }
+    ]
+  },
+  {
+    "key": "wasi-tnode-mutation",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestWASIAgreesWithNode$/^internal$/^oracle$/^testdata$/^notyet$/^hidden_boundary_generic_tnode_mutation[.]a$",
+      "-timeout",
+      "90s",
+      "-count=1",
+      "-json"
+    ],
+    "exit": 1,
+    "tests": [
+      {
+        "test": "TestWASIAgreesWithNode/internal/oracle/testdata/notyet/hidden_boundary_generic_tnode_mutation.a",
+        "action": "fail"
+      },
+      {
+        "test": "TestWASIAgreesWithNode",
+        "action": "fail"
+      }
+    ]
+  },
+  {
+    "key": "wasi-binder",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestWASIAgreesWithNode$/^stage3$/^fixtures$/^taste$/^17_binder_flow[.]a$",
+      "-timeout",
+      "90s",
+      "-count=1",
+      "-json"
+    ],
+    "exit": 1,
+    "tests": [
+      {
+        "test": "TestWASIAgreesWithNode/stage3/fixtures/taste/17_binder_flow.a",
+        "action": "fail"
+      },
+      {
+        "test": "TestWASIAgreesWithNode",
+        "action": "fail"
+      }
+    ]
+  }
+]
