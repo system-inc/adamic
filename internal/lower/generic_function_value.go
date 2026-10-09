@@ -43,6 +43,10 @@ func (l *lowering) hasGenericFunctionValues() bool {
 						continue
 					}
 					parent, use := node.Parent, node
+					// A qualified generic direct call is not a detached function value.
+					if parent != nil && parent.Kind == ast.KindPropertyAccessExpression && parent.Name() == node {
+						use, parent = parent, parent.Parent
+					}
 					for parent != nil && parent.Kind == ast.KindParenthesizedExpression {
 						use, parent = parent, parent.Parent
 					}

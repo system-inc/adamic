@@ -138,3 +138,16 @@ console.log(compare(first, first) ? 'same' : 'different');
 		t.Fatalf("want union identity comparison NotYet, got %v", err)
 	}
 }
+
+func TestGenericFunctionValueNamespaceDirectCallsKeepIdentity(t *testing.T) {
+	t.Parallel()
+	_, err := lowerSource(t, `namespace Values {
+ export function identity<T>(value: T): T { return value; }
+ export function read(value: number): number { return value; }
+ }
+ const copy = Values.read;
+ console.log(String(Values.identity(2)) + ' ' + String(copy === Values.read));`)
+	if err != nil {
+		t.Fatal(err)
+	}
+}
