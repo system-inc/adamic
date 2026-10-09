@@ -1,10 +1,10 @@
 package native
 
 import (
+	"fmt"
 	"os/exec"
 	"path/filepath"
 	goruntime "runtime"
-	"strconv"
 	"strings"
 	"testing"
 )
@@ -65,8 +65,8 @@ int main(int count, char **arguments) {
 // builds generations of strings through the runtime at sizes across every class, down and up again,
 // and a control builds the same generations at one size; both are release builds, where the classes
 // are on, and the churn's peak resident set must stay near the control's.
+// Not parallel: this test measures resident memory.
 func TestSizeClassesShareTheirChunks(t *testing.T) {
-	t.Parallel()
 	const harness = `#include "adamic.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -74,19 +74,34 @@ func TestSizeClassesShareTheirChunks(t *testing.T) {
 #include <sys/resource.h>
 
 static adamic_string *items[20000];
+static bool generation_chunks[20000];
 
 int main(int count, char **arguments) {
 	(void)count;
 	bool churn = strcmp(arguments[1], "churn") == 0;
+	uint32_t acquired_chunks = 0;
+	size_t largest_generation = 0;
 	static const size_t lengths[] = {8, 40, 72, 104, 136, 168, 192, 168, 136, 104, 72, 40, 8, 192, 8};
 	for (size_t round = 0; round < sizeof lengths / sizeof lengths[0]; round++) {
 		size_t length = churn ? lengths[round] : 192;
+		memset(generation_chunks, 0, sizeof generation_chunks);
+		size_t live_chunks = 0;
 		// The control must use a slab too: 200 bytes plus the string header exceeds 256.
 		if (sizeof(adamic_string) + length > 256) { return 2; }
 		for (size_t index = 0; index < 20000; index++) {
 			items[index] = adamic_string_allocate(length);
+			// Slab numbers are one plus the monotonically assigned chunk number.
+			// Count a generation's distinct chunks, not its slots or resident pages.
+			uint32_t slab = items[index]->heap.slab;
+			if (slab == 0 || slab > 20000) { return 3; }
+			if (!generation_chunks[slab - 1]) {
+				generation_chunks[slab - 1] = true;
+				live_chunks++;
+			}
+			if (slab > acquired_chunks) { acquired_chunks = slab; }
 			memset((char *)items[index]->bytes, 'a' + (int)(index % 26), length);
 		}
+		if (live_chunks > largest_generation) { largest_generation = live_chunks; }
 		for (size_t index = 0; index < 20000; index++) {
 			if (items[index]->bytes[length - 1] != 'a' + (int)(index % 26)) {
 				puts("corrupt");
@@ -97,7 +112,7 @@ int main(int count, char **arguments) {
 	}
 	struct rusage usage;
 	getrusage(RUSAGE_SELF, &usage);
-	printf("%ld\n", usage.ru_maxrss);
+	printf("%ld %u %zu\n", usage.ru_maxrss, acquired_chunks, largest_generation);
 	return 0;
 }
 `
@@ -112,11 +127,20 @@ int main(int count, char **arguments) {
 		if err != nil {
 			t.Fatalf("%s: %v\n%s", mode, err, output)
 		}
-		kilobytes, err := strconv.Atoi(strings.TrimSpace(string(output)))
+		var kilobytes, acquired, generation int
+		_, err = fmt.Sscanf(string(output), "%d %d %d", &kilobytes, &acquired, &generation)
 		if err != nil {
 			t.Fatalf("%s: %q", mode, output)
 		}
-		return residentKibibytes(kilobytes, goruntime.GOOS)
+		kilobytes = residentKibibytes(kilobytes, goruntime.GOOS)
+		// give() keeps at most one empty chunk per class; all others are spares.
+		// Hence total chunks cannot exceed one live generation plus the 16 classes.
+		// Unlike the RSS ratio, this cannot grow together in control and churn.
+		t.Logf("%s: peak %d KiB, acquired %d chunks, largest generation %d chunks", mode, kilobytes, acquired, generation)
+		if acquired > generation+16 {
+			t.Errorf("%s: acquired %d chunks exceeds largest generation %d + 16 retained class chunks (peak %d KiB): spare chunks were not reused", mode, acquired, generation, kilobytes)
+		}
+		return kilobytes
 	}
 	control, churn := peak("control"), peak("churn")
 	// Fifteen generations at up to fourteen sizes: kept apart, they'd peak several times the control.
