@@ -28,10 +28,14 @@ func TestMdastIdentifierScalars(t *testing.T) {
 	}
 	if runtime.GOOS == "darwin" {
 		report := malformedEventsExecute(t, ctx, nil, "leaks", "--atExit", "--", products.release)
-		clean(t, "identifier leaks", report)
+		if report.exitCode != 0 {
+			t.Fatalf("identifier leaks: exit %d\n%s\n%s", report.exitCode, report.stdout, report.stderr)
+		}
 	} else {
 		report := malformedEventsExecute(t, ctx, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)
-		clean(t, "identifier leaks", report)
+		if report.exitCode != 0 {
+			t.Fatalf("identifier leaks: exit %d\n%s\n%s", report.exitCode, report.stdout, report.stderr)
+		}
 	}
 	scratch := t.TempDir()
 	if e := os.Mkdir(filepath.Join(scratch, "testdata"), 0755); e != nil {
