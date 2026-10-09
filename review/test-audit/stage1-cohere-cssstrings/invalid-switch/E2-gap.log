@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T08:13:00.268784027Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/cssstrings"}
+{"Time":"2026-10-09T08:13:00.276340905Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/cssstrings","Test":"TestMultiPushGap"}
+{"Time":"2026-10-09T08:13:00.276410457Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/cssstrings","Test":"TestMultiPushGap","Output":"=== RUN   TestMultiPushGap\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:13:00.276665144Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/cssstrings","Test":"TestMultiPushGap","Output":"=== PAUSE TestMultiPushGap\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:13:00.276675409Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/cssstrings","Test":"TestMultiPushGap"}
+{"Time":"2026-10-09T08:13:00.276678754Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/cssstrings","Test":"TestMultiPushGap"}
+{"Time":"2026-10-09T08:13:00.276680527Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/cssstrings","Test":"TestMultiPushGap","Output":"=== CONT  TestMultiPushGap\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:13:00.375352746Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/cssstrings","Test":"TestMultiPushGap","Output":"    gaps_test.go:29: gap changed: \u003cnil\u003e; update GAPS.md and remove the workaround if closed\n","OutputType":"error"}
+{"Time":"2026-10-09T08:13:00.375433816Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/cssstrings","Test":"TestMultiPushGap","Output":"--- FAIL: TestMultiPushGap (0.10s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:13:00.375438122Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/cssstrings","Test":"TestMultiPushGap","Elapsed":0.1}
+{"Time":"2026-10-09T08:13:00.375457521Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/cssstrings","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:13:00.376544579Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/cssstrings","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/cohere/cssstrings\t0.107s\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:13:00.376563687Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/cssstrings","Elapsed":0.108}
