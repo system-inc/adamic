@@ -1,0 +1,74 @@
+
+--- host-node.out ---
+true
+true
+
+--- host-node.err ---
+
+--- host-on.out ---
+true
+true
+
+--- host-on.err ---
+adamic: counts: allocations 11 frees 7 retains 18 releases 34 peak 8 regions 4
+
+--- host-on-build.log ---
+
+--- host-off-build.log ---
+adamic: /workspace/adamic/stage3/fixtures/host/14_getCurrentDirectory.a:13:28: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)
+
+--- parse-on-build.log ---
+
+--- parse-off-build.log ---
+
+--- parse-on.out ---
+0
+
+--- parse-on.err ---
+adamic: counts: allocations 3375891 frees 3375891 retains 41427189 releases 37478796 peak 729760 regions 0
+elapsed=3.983 user=3.692 sys=0.288
+
+--- parse-off.out ---
+0
+
+--- parse-off.err ---
+adamic: counts: allocations 3375891 frees 3375891 retains 41427189 releases 37478796 peak 729760 regions 0
+elapsed=3.910 user=3.669 sys=0.238
+
+--- parse-node.out ---
+0
+
+--- parse-node.err ---
+elapsed=0.922 user=1.553 sys=0.195
+
+--- parse-on-ast.err ---
+adamic: counts: allocations 18394245 frees 18394245 retains 56459859 releases 63154866 peak 729760 regions 0
+
+--- parse-node-ast.err ---
+
+--- member-release-mutant.log ---
+=== RUN   TestProgramRegionCoreMutants
+=== RUN   TestProgramRegionCoreMutants/member-release-frees
+    program_region_core_test.go:211: caught by heap-use-after-free
+--- PASS: TestProgramRegionCoreMutants (0.26s)
+    --- PASS: TestProgramRegionCoreMutants/member-release-frees (0.26s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	0.271s
+
+--- setup.log ---
+go version go1.27.1 linux/amd64
+v24.19.0
+setup: go ready (0.024s)
+setup: node ready (0.025s)
+setup: markdown dependencies skipped (validated lock and installed bytes); step-duration=0.008s
+setup: markdown dependencies ready (0.076s)
+setup: submodules ready (0.079s)
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0.195s)
+setup: go build ready (36.916s)
+setup: test binaries deferred (use --warm-tests) (37.129s)
+setup: build cache warm (37.130s)
+setup: build-flags commit=23a4f2f018f1a082ef8acff06dc90ba74d40a5bd nproc=5 cpu.max=400000 100000 go=go version go1.27.1 linux/amd64 clang=clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261) node=v24.19.0 cached=yes warm-tests=false load-before=0.00 0.06 0.19 1/432 91653 load-after=7.58 2.07 0.86 1/432 92607
+setup: done on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB (37.158s)
+setup: source /workspace/adamic-tools/env.sh
+setup: logs /tmp/adamic-gate/setup.n5uQZr
