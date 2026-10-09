@@ -92,29 +92,12 @@ func BuildTSGo(source, output, archive string, options Options) error {
 	if err := os.WriteFile(filepath.Join(directory, "main.c"), []byte(source), 0o644); err != nil {
 		return err
 	}
-	units := []string{filepath.Join(directory, "main.c")}
-	entries, err := runtime.ReadDir("runtime")
+	library, err := tsgoRuntimeLibrary(source, options)
 	if err != nil {
 		return err
 	}
-	for _, entry := range entries {
-		contents, err := runtime.ReadFile("runtime/" + entry.Name())
-		if err != nil {
-			return err
-		}
-		path := filepath.Join(directory, entry.Name())
-		if err := os.WriteFile(path, contents, 0o644); err != nil {
-			return err
-		}
-		if strings.HasSuffix(path, ".c") {
-			units = append(units, path)
-		}
-	}
-	if err := os.WriteFile(filepath.Join(directory, "tsgo.h"), bridge.Header, 0o644); err != nil {
-		return err
-	}
-	arguments := append(tsgoFlags(source, options), "-o", output)
-	arguments = append(arguments, units...)
+	arguments := append(tsgoFlags(source, options), "-I"+filepath.Dir(library), "-o", output, filepath.Join(directory, "main.c"))
+	arguments = append(arguments, RuntimeLinkFlags(library)...)
 	arguments = append(arguments, archive, "-lm", "-lpthread", "-ldl")
 	combined, err := exec.Command("clang", arguments...).CombinedOutput()
 	if err != nil {
@@ -128,4 +111,30 @@ func BuildTSGo(source, output, archive string, options Options) error {
 // library.
 func tsgoFlags(source string, options Options) []string {
 	return append(sourceFlags(source, options), "-DADAMIC_TSGO")
+}
+
+// The checker bridge has its own runtime key: its ABI header and ADAMIC_TSGO
+// change the objects, while the selected Go archive changes only the final link.
+func tsgoRuntimeLibrary(source string, options Options) (string, error) {
+	if err := ValidateOptions(options); err != nil {
+		return "", err
+	}
+	files, err := readRuntime(runtime, "runtime")
+	if err != nil {
+		return "", err
+	}
+	files = append(files, runtimeFile{"tsgo.h", bridge.Header})
+	compiler, err := exec.LookPath(compilerName(options))
+	if err != nil {
+		return "", err
+	}
+	version, err := exec.Command(compiler, "--version").CombinedOutput()
+	if err != nil {
+		return "", fmt.Errorf("native: clang --version: %w\n%s", err, version)
+	}
+	cache, err := os.UserCacheDir()
+	if err != nil {
+		return "", err
+	}
+	return cachedRuntime(files, tsgoFlags(source, options), compiler, string(version), filepath.Join(cache, "adamic", "tsgo-runtime"))
 }
