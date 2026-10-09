@@ -1,7 +1,6 @@
 package lower
 
 import (
-	"bytes"
 	"context"
 	"os"
 	"os/exec"
@@ -11,7 +10,6 @@ import (
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/system-inc/adamic/internal/ir"
-	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/native"
 )
@@ -66,63 +64,20 @@ function xorFlags(a: Flags, b: Flags): Flags { return a ^ b; }
 	}
 }
 
-func enumGuardNodeOutput(t *testing.T, source string, program *ir.Program, want string, buildNative bool) {
-	t.Helper()
-	directory := t.TempDir()
-	path := filepath.Join(directory, "main.a")
-	if err := os.WriteFile(path, []byte(source), 0o644); err != nil {
-		t.Fatal(err)
-	}
-	runner, err := filepath.Abs("../../oracle/node.mjs")
-	if err != nil {
-		t.Fatal(err)
-	}
-	run := func(name, executable string, arguments ...string) []byte {
-		t.Helper()
-		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-		defer cancel()
-		command := exec.CommandContext(ctx, executable, arguments...)
-		var stderr bytes.Buffer
-		command.Stderr = &stderr
-		stdout, err := command.Output()
-		if err != nil || stderr.Len() != 0 {
-			t.Fatalf("%s: error %v, stdout %q, stderr %q", name, err, stdout, stderr.Bytes())
-		}
-		return stdout
-	}
-	truth := run("source Node", "node", "--disable-warning=ExperimentalWarning", runner, path)
-	if string(truth) != want {
-		t.Fatalf("source Node stdout = %q, want %q", truth, want)
-	}
-	generated := filepath.Join(directory, "generated.mjs")
-	if err := os.WriteFile(generated, []byte(javascript.JavaScript(program)), 0o644); err != nil {
-		t.Fatal(err)
-	}
-	if got := run("JavaScript backend", "node", "--disable-warning=ExperimentalWarning", runner, generated); !bytes.Equal(got, truth) {
-		t.Errorf("JavaScript backend stdout = %q, source Node = %q", got, truth)
-	}
-	if buildNative {
-		binary := filepath.Join(directory, "native")
-		if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
-			t.Fatal(err)
-		}
-		if got := run("native backend with ASan/UBSan", binary); !bytes.Equal(got, truth) {
-			t.Errorf("native backend stdout = %q, source Node = %q", got, truth)
-		}
-	}
-}
-
 func TestEnumMemberValuesAndReverseNameMatchNode(t *testing.T) {
 	t.Parallel()
 	source := `enum E { A = 1, B = 2, Alias = A } console.log(E.A + ' ' + E.B + ' ' + E.Alias + ' ' + E[1]);`
-	program, err := lowerSource(t, source)
-	if err != nil {
+	program := lowersAndAgreesWithNode(t, source)
+	binary := filepath.Join(t.TempDir(), "native")
+	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
-	if program == nil {
-		t.Fatal("lowering returned empty IR")
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+	output, err := exec.CommandContext(ctx, binary).CombinedOutput()
+	if err != nil || string(output) != "1 2 1 Alias\n" {
+		t.Fatalf("native: %v, output %q", err, output)
 	}
-	enumGuardNodeOutput(t, source, program, "1 2 1 Alias\n", true)
 }
 
 // Open numeric enum lowering bypasses these classification proofs, so changing
@@ -138,13 +93,8 @@ func TestEnumFlagProofsWithoutObservableLoweringEffect(t *testing.T) {
 // Native objects need a unique field slot, so guard that invariant directly.
 func TestEnumReverseMappingUsesSingleSlot(t *testing.T) {
 	t.Parallel()
-	program, err := lowerSource(t, "enum E { A = 1, B = 2, Alias = A } console.log(E[1] ?? 'missing');")
-	if err != nil {
-		t.Fatal(err)
-	}
-	if program == nil {
-		t.Fatal("lowering returned empty IR")
-	}
+	// JavaScript overwrites duplicate keys; behavior cannot observe native field-slot uniqueness.
+	program := lowersAndAgreesWithNode(t, "enum E { A = 1, B = 2, Alias = A } console.log(E[1] ?? 'missing');")
 	found := false
 	for _, statement := range program.Main {
 		declaration, ok := statement.(ir.Declare)
