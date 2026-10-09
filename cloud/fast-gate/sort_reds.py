@@ -89,7 +89,12 @@ def sort_reds(candidate, main=None, context=None):
         wrong = bool(WRONG.search(detail))
         cold = row.get('cold_miss') is True or bool(COLD.search(detail))
         paths = set(row.get('input_paths', []))
-        touched = bool(paths & set(context.get('candidate_changed', [])))
+        declared = row.get('inputs', {}).get('paths', [])
+        def touches(changes):
+            return bool(paths & set(changes)) or any(
+                root == '.' or path == root or path.startswith(root.rstrip('/') + '/')
+                for root in declared for path in changes)
+        touched = touches(context.get('candidate_changed', []))
         known_inputs = bool(row.get('input_hash') and paths and 'candidate_changed' in context)
         other = main_rows.get(name)
         same = bool(other and row.get('input_hash') and row['input_hash'] == other.get('input_hash'))
@@ -102,7 +107,7 @@ def sort_reds(candidate, main=None, context=None):
         elif same and red(other) and other.get('status') != 'not run':
             label, reason = 'mains', 'same unit and input hash red in newest main record on these tools'
         elif (other and not red(other) and other.get('input_hash') and not same and known_inputs and
-              not touched and paths & set(context.get('main_changed', []))):
+              not touched and touches(context.get('main_changed', []))):
             label, reason = 'stale', "main has since fixed this, recut, don't land"
         else:
             label, reason = 'candidate', 'no matching red main evidence for these inputs'

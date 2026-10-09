@@ -52,6 +52,7 @@ import traceback
 
 from input_hashes import hash_units, tools_fingerprint
 from sort_reds import sort_record
+from product_inputs import prepare_overlay, read_recipes, cold_miss
 
 module = "github.com/system-inc/adamic"
 # What the whole gate sets: no cached results, and the gate inputs' lanes on (see cloud/setup.sh --gate-inputs).
@@ -1697,6 +1698,9 @@ class Gate:
         os.makedirs(binaries, exist_ok=True)
         record = TestSeconds()
         history = record.read()
+        productOverlay = None
+        if os.path.isfile(os.path.join(self.arguments.tree, "internal/buildcache/buildcache.go")):
+            productOverlay = prepare_overlay(self.arguments.tree, os.path.join(self.arguments.out, "product-input-overlay"))
         observations, paused = {}, set()
 
         def watch(line):
@@ -1782,7 +1786,7 @@ class Gate:
                 if os.path.exists(binary):
                     os.rename(binary, binary + ".previous")
                 with builds:
-                    built = self.stream("tests", ["go", "test", "-c", "-o", binary, importPath], None)
+                    built = self.stream("tests", ["go", "test", "-c"] + (["-overlay", productOverlay] if productOverlay else []) + ["-o", binary, importPath], None)
                 if built != 0:
                     return
                 if not os.path.exists(binary):
@@ -1920,11 +1924,21 @@ class Gate:
                    "-test.v=test2json", "-test.paniconexit0", "-test.count=1", "-test.timeout=%ds" % productKillSeconds,
                    "-test.parallel=4", "-test.run", "^%s$" % re.escape(name)]
         before = time.monotonic()
+        inputsLog = os.path.join(self.arguments.out, "product-inputs-" + hashlib.sha256((package + " " + name).encode()).hexdigest() + ".jsonl")
+        if os.path.exists(inputsLog):
+            os.unlink(inputsLog)
         try:
-            code = self.stream("products", command, log, self.packageDirectories[package], {"GOMAXPROCS": "4"})
+            code = self.stream("products", command, log, self.packageDirectories[package],
+                               {"GOMAXPROCS": "4", "ADAMIC_GATE_PRODUCT_INPUTS": inputsLog})
         except BaseException:
             code = None
             self.fail("products", "%s %s\n%s" % (package, name, traceback.format_exc()))
+        if os.path.isfile(inputsLog):
+            try:
+                row["product_recipes"] = read_recipes(inputsLog)
+                row["cold_miss"] = cold_miss(inputsLog)
+            except (OSError, ValueError) as error:
+                row["product_input_error"] = str(error)
         row.update(seconds=round(time.monotonic() - before, 6), exit=code, status="passed" if code == 0 else "failed")
         if code != 0:
             self.fail("products", "%s %s failed or was killed" % (package, name))
@@ -2379,8 +2393,16 @@ class Gate:
                 phases.append(row)
         self.result["phase_units"] = phases
         rows += phases
+        recipes = {(row["package"], row["test"]): row["product_recipes"]
+                   for row in self.result.get("product_units", []) if row.get("product_recipes")}
+        for row in rows:
+            key = row.get("package"), row.get("test", "").split("/")[0].removesuffix(" (setup)")
+            if key in recipes:
+                row["product_recipes"] = recipes[key]
         # CLI and gate use this same function and the same phase-input providers.
-        results = hash_units(self.arguments.tree, rows, self.arguments.full, phaseInputs)
+        observations = {(row.get("unit") or (row.get("package", "") + " " + row.get("test", "")).strip()): row["product_recipes"]
+                        for row in rows if row.get("product_recipes")}
+        results = hash_units(self.arguments.tree, rows, self.arguments.full, phaseInputs, observations)
         errors = []
         for row, identity in zip(rows, results):
             row.update(identity)

@@ -590,7 +590,9 @@ class Products(unittest.TestCase):
         self.assertTrue(listedDuringProduct, "other binaries stopped compiling during products")
         self.assertFalse(premature, "TestX launched before q's product passed")
         self.assertEqual(order, ["product passed", "TestX"])
-        self.assertEqual(shapes, [{"GOMAXPROCS": "4"}])
+        self.assertEqual(len(shapes), 1)
+        self.assertEqual(shapes[0]["GOMAXPROCS"], "4")
+        self.assertIn("ADAMIC_GATE_PRODUCT_INPUTS", shapes[0])
         self.assertEqual(gate.exits, {"products": 0, "tests": 0})
 
     def test_scan_list_mismatch_is_red_at_products(self):
@@ -2742,3 +2744,167 @@ class SharedUnitHashCommand(unittest.TestCase):
         self.assertEqual(rows[0]['unit'], 'example.com/missing TestMissing')
         self.assertIsNone(rows[0]['input_hash'])
         self.assertIn('incomplete go list closure', rows[0]['input_hash_error'])
+
+
+class ProductRecipeHashes(unittest.TestCase):
+    """Opaque fake Key addresses prove delegation, without copying its hash algorithm."""
+    def setUp(self):
+        self.directory = tempfile.TemporaryDirectory()
+        self.addCleanup(self.directory.cleanup)
+        self.tree = self.directory.name
+        def write(path, content):
+            target = os.path.join(self.tree, path)
+            os.makedirs(os.path.dirname(target), exist_ok=True)
+            with open(target, 'w') as handle:
+                handle.write(content)
+        self.write = write
+        write('go.mod', 'module github.com/system-inc/adamic\n\ngo 1.23\n')
+        write('asset.txt', 'one')
+        write('internal/buildcache/buildcache.go', '''package buildcache
+import (
+ "fmt"
+ "os"
+ "path/filepath"
+ "strings"
+ "testing"
+)
+type Inputs struct { Name string; Files, Flags, Toolchain []string }
+func repositoryRoot() (string, error) {
+ dir, err := os.Getwd()
+ for err == nil {
+  if _, e := os.Stat(filepath.Join(dir, "go.mod")); e == nil { return dir, nil }
+  parent := filepath.Dir(dir); if parent == dir { break }; dir = parent
+ }
+ return "", fmt.Errorf("missing repository")
+}
+func Key(root string, inputs Inputs) (string, error) {
+ for _, path := range inputs.Files {
+  content, err := os.ReadFile(filepath.Join(root, path)); if err != nil { return "", err }
+  if string(content) != "one" { return strings.Repeat("b",64), nil }
+ }
+ if len(inputs.Flags) != 1 || inputs.Flags[0] != "-O1" || len(inputs.Toolchain) != 1 || inputs.Toolchain[0] != "tool v1" {
+  return strings.Repeat("b",64), nil
+ }
+ return strings.Repeat("a",64), nil
+}
+func get(inputs Inputs, build func(directory string) error) (string, string, error) {
+ return "", "", build("")
+}
+func Product(t testing.TB, inputs Inputs, build func(string) error) string {
+ directory, _, err := get(inputs, build); if err != nil { t.Fatal(err) }; return directory
+}
+''')
+        write('p/product_test.go', '''package p
+import (
+ "fmt"
+ "os"
+ "path/filepath"
+ "testing"
+ "github.com/system-inc/adamic/internal/buildcache"
+)
+func TestProduct_Recipe(t *testing.T) {
+ flag := os.Getenv("RECIPE_FLAG"); if flag == "" { flag = "-O1" }
+ buildcache.Product(t, buildcache.Inputs{Name:"recipe",Files:[]string{"asset.txt"},Flags:[]string{flag},Toolchain:[]string{"tool v1"}},func(string)error{
+  os.WriteFile(filepath.Join("..","build-ran"), []byte("yes"), 0600)
+  return fmt.Errorf("planted product build failure")
+ })
+}
+''')
+        realRun(['git', 'init', '-q', self.tree], check=True, timeout=10)
+        self.row = {'package': run.module + '/p', 'test': 'TestProduct_Recipe', 'product': True}
+        self.recipe = {'Name': 'recipe', 'Files': ['asset.txt'], 'Flags': ['-O1'], 'Toolchain': ['tool v1']}
+
+    def hashes(self, row=None):
+        from input_hashes import hash_units
+        row = row or self.row
+        observations = {row.get('unit') or row['package']+' '+row['test']: row['product_recipes']} if row.get('product_recipes') else None
+        return list(hash_units(self.tree, [row], product_observations=observations))[0]
+
+    def test_discovery_collects_runtime_recipe_without_building(self):
+        result = self.hashes()
+        self.assertEqual(result['input_hash'], 'a'*64, result)
+        self.assertEqual(result['inputs']['buildcache'], [self.recipe])
+        self.assertEqual(result['input_paths'], ['asset.txt'])
+        self.assertFalse(os.path.exists(os.path.join(self.tree, 'build-ran')))
+        # The command recomputes the same declaration/key on this checkout.
+        command = [sys.executable, os.path.join(os.path.dirname(run.__file__), 'input_hashes.py'),
+                   '--tree', self.tree, '--units', '-']
+        response = realRun(command, input=json.dumps(self.row)+'\n', capture_output=True, text=True, timeout=30)
+        self.assertEqual(response.returncode, 0, response.stderr)
+        self.assertEqual(json.loads(response.stdout), result)
+
+    def test_files_flags_and_toolchain_each_change_product_identity(self):
+        original = self.hashes(dict(self.row, product_recipes=[self.recipe]))
+        self.assertEqual(original['input_hash'], 'a'*64, original)
+        for field in ('Flags', 'Toolchain'):
+            recipe = dict(self.recipe, **{field: ['changed']})
+            result = self.hashes(dict(self.row, product_recipes=[recipe]))
+            self.assertEqual(result['input_hash'], 'b'*64, result)
+        self.write('asset.txt', 'two')
+        self.assertEqual(self.hashes(original)['input_hash'], 'b'*64)
+
+    def test_fresh_tree_re_evaluates_flags_from_the_recipe(self):
+        with mock.patch.dict(os.environ, RECIPE_FLAG='-O2'):
+            result = self.hashes()
+        self.assertEqual(result['inputs']['buildcache'][0]['Flags'], ['-O2'])
+        self.assertEqual(result['input_hash'], 'b'*64, result)
+
+    def test_replaying_recorded_units_refreshes_flags_on_moved_tree(self):
+        before = self.hashes()
+        with mock.patch.dict(os.environ, RECIPE_FLAG='-O2'):
+            after = self.hashes(before)
+        self.assertEqual(after['inputs']['buildcache'][0]['Flags'], ['-O2'])
+        self.assertNotEqual(before['input_hash'], after['input_hash'])
+
+    def test_key_failure_keeps_the_resolved_recipe(self):
+        recipe = dict(self.recipe, Files=['missing-file'])
+        result = self.hashes(dict(self.row, product_recipes=[recipe]))
+        self.assertIsNone(result['input_hash'])
+        self.assertEqual(result['inputs']['buildcache'], [recipe])
+        self.assertIn('candidate buildcache.Key failed', result['input_hash_error'])
+
+    def test_partial_recipe_discovery_cannot_reuse_compound_unit(self):
+        previous = {'unit': self.row['package']+' '+self.row['test'], 'inputs': {
+            'packages': [], 'paths': ['asset.txt'],
+            'buildcache': [self.recipe, dict(self.recipe, Name='dependent-recipe')]}}
+        result = self.hashes(previous)
+        self.assertIsNone(result['input_hash'])
+        self.assertIn('unavailable prerequisite', result['input_hash_error'])
+
+    def test_missing_product_inputs_never_fall_back_to_package_hash(self):
+        os.unlink(os.path.join(self.tree, 'internal/buildcache/buildcache.go'))
+        result = self.hashes()
+        self.assertIsNone(result['input_hash'])
+        self.assertIn('buildcache recipe API', result['input_hash_error'])
+
+    def test_red_product_records_actual_inputs_before_build_failure(self):
+        from product_inputs import prepare_overlay, read_recipes, cold_miss
+        scratch = os.path.join(self.tree, '.overlay')
+        overlay = prepare_overlay(self.tree, scratch)
+        binary = os.path.join(self.tree, '.product.test')
+        realRun(['go', 'test', '-c', '-overlay', overlay, '-o', binary, run.module+'/p'],
+                cwd=self.tree, check=True, capture_output=True, timeout=30)
+        gate = run.Gate.__new__(run.Gate)
+        out = os.path.join(self.tree, '.out')
+        os.makedirs(out)
+        gate.arguments = types.SimpleNamespace(tree=self.tree, out=out, full=False)
+        gate.failure = None
+        gate.packageDirectories = {run.module+'/p': os.path.join(self.tree, 'p')}
+        gate.fail = lambda *args: None
+        def stream(stage, command, log, cwd, environment):
+            process = realRun(command, cwd=cwd, env=dict(os.environ, **environment),
+                              capture_output=True, text=True, timeout=30)
+            return process.returncode
+        row = dict(self.row)
+        with mock.patch.object(gate, 'stream', side_effect=stream):
+            gate.productUnit(row, binary, None)
+        self.assertEqual(row['status'], 'failed')
+        self.assertTrue(row['cold_miss'])
+        self.assertEqual(row['product_recipes'], [self.recipe])
+        self.assertTrue(os.path.exists(os.path.join(self.tree, 'build-ran')))
+        gate.result = {'product_units': [row], 'units': [dict(self.row)]}
+        gate.planned, gate.exits = ['products'], {'products': 1}
+        gate.recordInputHashes()
+        self.assertEqual(row['input_hash'], 'a'*64, row)
+        self.assertEqual(row['inputs']['buildcache'], [self.recipe])
+        self.assertEqual(gate.result['units'][0]['input_hash'], row['input_hash'])

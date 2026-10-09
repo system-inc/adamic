@@ -69,3 +69,45 @@ makes the command exit 1; null is never reusable evidence.
 `SharedUnitHashCommand` proves byte-equivalent JSON fields between the command
 and all gate ledger row kinds, stable hashes on a relocated checkout, and only
 the affected unit changing when moved main edits one package.
+
+## Product units
+
+The same `hash_units()` function covers `TestProduct_*`. Product records carry
+`inputs.buildcache`, the evaluated recipe's `Name`, `Files`, `Flags`, and
+`Toolchain`, plus `inputs.paths`, `input_paths`, `product_keys`, and `input_hash`.
+For one recipe the input hash is exactly the candidate's `buildcache.Key()`.
+A unit fetching several recipes uses a digest of their sorted distinct keys.
+No copy of the buildcache key algorithm exists in the gate: `product_key.go`
+transports requests to the candidate's own Go implementation.
+
+The gate observes `Inputs` at the buildcache boundary through a private Go
+compiler overlay. The checkout remains unchanged. Observation occurs before
+the build, so a failing product retains its input evidence. The build callback
+also reports an actual cold miss; the sorter can then distinguish timing failures
+whose Files the candidate touched, including additions or deletions under a
+recipe's declared directory.
+
+The integration command is unchanged:
+
+```
+timeout 120s python3 <gate-tools>/cloud/fast-gate/input_hashes.py \
+  --tree <checkout-at-sha> --units <gate-units.jsonl>
+```
+
+For product units it reevaluates the recipe on this tree, including current Flags
+and Toolchain; it ignores stale recipe observations supplied in a prior record.
+Discovery intercepts the buildcache call before running the product build. The
+gate supplies its just-captured observations to the same function to avoid this
+extra replay. Missing or unsupported recipe evidence produces a null hash and
+an explicit error, with no fallback to a package closure.
+
+`ProductRecipeHashes` covers discovery, command parity, Files/Flags/Toolchain
+invalidation, refresh of Flags while replaying a recorded unit, missing evidence,
+and the actual recipe retained by a red product. An additional bounded check
+against main's real buildcache implementation confirmed exact Key parity and
+invalidation by executable bits, Flags, and Toolchain.
+
+For compound units, discovery may read already cached prerequisite products but
+never invokes a build callback. If an unavailable prerequisite prevents it from
+collecting every recipe named by the recorded unit, it emits a null hash and an
+explicit rerun reason instead of substituting the prerequisite's key.
