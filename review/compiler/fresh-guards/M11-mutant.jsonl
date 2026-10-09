@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T08:03:41.947902478Z","Action":"start","Package":"github.com/system-inc/adamic/internal/fresh"}
+{"Time":"2026-10-09T08:03:41.955044221Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestReplacementCallbackEscapeRemainsUnproven"}
+{"Time":"2026-10-09T08:03:41.955129269Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestReplacementCallbackEscapeRemainsUnproven","Output":"=== RUN   TestReplacementCallbackEscapeRemainsUnproven\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:03:41.955160415Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestReplacementCallbackEscapeRemainsUnproven","Output":"=== PAUSE TestReplacementCallbackEscapeRemainsUnproven\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:03:41.95516357Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestReplacementCallbackEscapeRemainsUnproven"}
+{"Time":"2026-10-09T08:03:41.955167256Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestReplacementCallbackEscapeRemainsUnproven"}
+{"Time":"2026-10-09T08:03:41.955169799Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestReplacementCallbackEscapeRemainsUnproven","Output":"=== CONT  TestReplacementCallbackEscapeRemainsUnproven\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:03:41.955187696Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestReplacementCallbackEscapeRemainsUnproven","Output":"    guards_test.go:45: want one unproven saved field write at site 1 in function 0, got [{Kind:1 Site:1 Name:saved Function:0 Proven:true Why:}]\n","OutputType":"error"}
+{"Time":"2026-10-09T08:03:41.955202989Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestReplacementCallbackEscapeRemainsUnproven","Output":"--- FAIL: TestReplacementCallbackEscapeRemainsUnproven (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:03:41.955232794Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestReplacementCallbackEscapeRemainsUnproven","Elapsed":0}
+{"Time":"2026-10-09T08:03:41.955252534Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:03:41.955432804Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Output":"FAIL\tgithub.com/system-inc/adamic/internal/fresh\t0.007s\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:03:41.955447806Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/fresh","Elapsed":0.008}
