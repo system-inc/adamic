@@ -1,0 +1,13 @@
+diff --git a/stage1/cohere/estree/pipeline.ts b/stage1/cohere/estree/pipeline.ts
+index 73890eba..765fbaac 100644
+--- a/stage1/cohere/estree/pipeline.ts
++++ b/stage1/cohere/estree/pipeline.ts
+@@ -35,7 +35,7 @@ export function answer(path: string, text: string): string {
+     }
+     if(parser.diagnostics.length > 0) {
+         const diagnostic = parser.diagnostics[0] ?? panic('missing diagnostic');
+-        return panic(`ESTree parser diagnostic ${diagnostic.code} at ${diagnostic.start}: ${diagnostic.message}`);
++        return panic(`ESTree diagnostic ${diagnostic.code} at ${diagnostic.start}: ${diagnostic.message}`);
+     }
+     if(parser.scanner.errors.length > 0) {
+         return panic('ESTree scanner diagnostic');

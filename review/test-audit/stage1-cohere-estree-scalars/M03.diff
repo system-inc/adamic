@@ -1,0 +1,13 @@
+diff --git a/stage1/cohere/estree/sourceRecovery.ts b/stage1/cohere/estree/sourceRecovery.ts
+index 195275aa..10e1c78a 100644
+--- a/stage1/cohere/estree/sourceRecovery.ts
++++ b/stage1/cohere/estree/sourceRecovery.ts
+@@ -69,7 +69,7 @@ export function listDiagnostic(kind: string, context: string): ListDiagnosticInt
+         case 'heritage':
+             return { code: 1190, message: 'A heritage clause element is expected.' };
+         case 'members':
+-            return { code: 1131, message: 'Property or signature expected.' };
++            return { code: 1132, message: 'Property or signature expected.' };
+         case 'arguments':
+             return { code: 1135, message: 'Argument expression expected.' };
+         case 'array':

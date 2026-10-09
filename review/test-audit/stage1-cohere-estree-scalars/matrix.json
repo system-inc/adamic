@@ -1,0 +1,622 @@
+{
+  "M01": {
+    "failed_tests": [
+      "TestBoundedPortParser_058",
+      "TestBoundedPortParser_013",
+      "TestBoundedPortParser_033",
+      "TestBoundedPortParser_003",
+      "TestBoundedPortParser_057",
+      "TestBoundedPortParser_020",
+      "TestBoundedPortParser_035"
+    ],
+    "passed_tests": [
+      "TestBoundedPortParser_000",
+      "TestBoundedPortParser_015",
+      "TestBoundedPortParser_032",
+      "TestBoundedPortParser_014",
+      "TestBoundedPortParser_062",
+      "TestBoundedPortParser_063",
+      "TestBoundedPortParser_061",
+      "TestBoundedPortParser_012",
+      "TestBoundedPortParserUnion",
+      "TestBoundedPortParser_011",
+      "TestBoundedPortParser_010",
+      "TestBoundedPortParser_059",
+      "TestBoundedPortParser_009",
+      "TestBoundedPortParser_060",
+      "TestBoundedPortParser_008",
+      "TestBoundedPortParser_016",
+      "TestBoundedPortParser_007",
+      "TestBoundedPortParser_056",
+      "TestBoundedPortParser_031",
+      "TestBoundedPortParser_055",
+      "TestBoundedPortParser_006",
+      "TestBoundedPortParser_030",
+      "TestBoundedPortParser_005",
+      "TestBoundedPortParser_054",
+      "TestBoundedPortParser_004",
+      "TestBoundedPortParser_029",
+      "TestBoundedPortParser_028",
+      "TestBoundedPortParser_002",
+      "TestBoundedPortParser_053",
+      "TestBoundedPortParser_027",
+      "TestBoundedPortParser_026",
+      "TestBoundedPortParser_051",
+      "TestBoundedPortParser_025",
+      "TestBoundedPortParser_050",
+      "TestBoundedPortParser_024",
+      "TestBoundedPortParser_049",
+      "TestBoundedPortParser_023",
+      "TestBoundedPortParser_022",
+      "TestBoundedPortParser_021",
+      "TestBoundedPortParser_018",
+      "TestBoundedPortParser_048",
+      "TestBoundedPortParser_017",
+      "TestBoundedPortParser_047",
+      "TestBoundedPortParser_046",
+      "TestBoundedPortParser_045",
+      "TestBoundedPortParser_044",
+      "TestBoundedPortParser_043",
+      "TestBoundedPortParser_042",
+      "TestBoundedPortParser_001",
+      "TestBoundedPortParser_040",
+      "TestBoundedPortParser_039",
+      "TestBoundedPortParser_038",
+      "TestBoundedPortParser_037",
+      "TestBoundedPortParser_036",
+      "TestBoundedPortParser_052",
+      "TestBoundedPortParser_019",
+      "TestBoundedPortParser_034",
+      "TestBoundedPortParser_041"
+    ],
+    "build_lines": [
+      "stalls_test.go:81: build estree-misc-sanitized-emitted a5aaa048030c miss 56.24",
+      "stalls_test.go:89: build estree-misc-oracle-answers 4bcaf8a65eed miss 0.19"
+    ],
+    "command": {
+      "id": "M01",
+      "command": [
+        "timeout",
+        "120",
+        "go",
+        "test",
+        "-json",
+        "-count=1",
+        "-timeout",
+        "90s",
+        "./stage1/cohere/estree/",
+        "-run",
+        "^TestBoundedPortParser(_[0-9]{3}|Union)$"
+      ],
+      "cache": "/tmp/u088/cache/M01",
+      "wall": 66.90577311400011,
+      "exit": 1
+    }
+  },
+  "M02": {
+    "failed_tests": [
+      "TestBoundedPortParser_033",
+      "TestBoundedPortParser_060",
+      "TestBoundedPortParser_016",
+      "TestBoundedPortParser_001",
+      "TestBoundedPortParser_052",
+      "TestBoundedPortParser_041",
+      "TestBoundedPortParser_019",
+      "TestBoundedPortParser_034",
+      "TestBoundedPortParser_035"
+    ],
+    "passed_tests": [
+      "TestBoundedPortParser_032",
+      "TestBoundedPortParser_000",
+      "TestBoundedPortParser_049",
+      "TestBoundedPortParser_017",
+      "TestBoundedPortParser_063",
+      "TestBoundedPortParser_062",
+      "TestBoundedPortParser_061",
+      "TestBoundedPortParser_059",
+      "TestBoundedPortParserUnion",
+      "TestBoundedPortParser_056",
+      "TestBoundedPortParser_055",
+      "TestBoundedPortParser_054",
+      "TestBoundedPortParser_053",
+      "TestBoundedPortParser_051",
+      "TestBoundedPortParser_050",
+      "TestBoundedPortParser_008",
+      "TestBoundedPortParser_015",
+      "TestBoundedPortParser_014",
+      "TestBoundedPortParser_012",
+      "TestBoundedPortParser_011",
+      "TestBoundedPortParser_010",
+      "TestBoundedPortParser_009",
+      "TestBoundedPortParser_025",
+      "TestBoundedPortParser_031",
+      "TestBoundedPortParser_030",
+      "TestBoundedPortParser_029",
+      "TestBoundedPortParser_028",
+      "TestBoundedPortParser_027",
+      "TestBoundedPortParser_026",
+      "TestBoundedPortParser_004",
+      "TestBoundedPortParser_007",
+      "TestBoundedPortParser_006",
+      "TestBoundedPortParser_005",
+      "TestBoundedPortParser_058",
+      "TestBoundedPortParser_048",
+      "TestBoundedPortParser_047",
+      "TestBoundedPortParser_045",
+      "TestBoundedPortParser_044",
+      "TestBoundedPortParser_043",
+      "TestBoundedPortParser_042",
+      "TestBoundedPortParser_021",
+      "TestBoundedPortParser_024",
+      "TestBoundedPortParser_023",
+      "TestBoundedPortParser_022",
+      "TestBoundedPortParser_002",
+      "TestBoundedPortParser_046",
+      "TestBoundedPortParser_057",
+      "TestBoundedPortParser_037",
+      "TestBoundedPortParser_040",
+      "TestBoundedPortParser_039",
+      "TestBoundedPortParser_038",
+      "TestBoundedPortParser_036",
+      "TestBoundedPortParser_003",
+      "TestBoundedPortParser_013",
+      "TestBoundedPortParser_018",
+      "TestBoundedPortParser_020"
+    ],
+    "build_lines": [
+      "stalls_test.go:81: build estree-misc-sanitized-emitted b050927616b9 miss 55.69",
+      "stalls_test.go:89: build estree-misc-oracle-answers 4bcaf8a65eed miss 0.11"
+    ],
+    "command": {
+      "id": "M02",
+      "command": [
+        "timeout",
+        "120",
+        "go",
+        "test",
+        "-json",
+        "-count=1",
+        "-timeout",
+        "90s",
+        "./stage1/cohere/estree/",
+        "-run",
+        "^TestBoundedPortParser(_[0-9]{3}|Union)$"
+      ],
+      "cache": "/tmp/u088/cache/M02",
+      "wall": 66.40123578699968,
+      "exit": 1
+    }
+  },
+  "M03": {
+    "failed_tests": [],
+    "passed_tests": [
+      "TestBoundedPortParser_000",
+      "TestBoundedPortParser_061",
+      "TestBoundedPortParser_063",
+      "TestBoundedPortParser_062",
+      "TestBoundedPortParser_059",
+      "TestBoundedPortParserUnion",
+      "TestBoundedPortParser_056",
+      "TestBoundedPortParser_055",
+      "TestBoundedPortParser_054",
+      "TestBoundedPortParser_053",
+      "TestBoundedPortParser_060",
+      "TestBoundedPortParser_051",
+      "TestBoundedPortParser_050",
+      "TestBoundedPortParser_049",
+      "TestBoundedPortParser_048",
+      "TestBoundedPortParser_047",
+      "TestBoundedPortParser_046",
+      "TestBoundedPortParser_045",
+      "TestBoundedPortParser_044",
+      "TestBoundedPortParser_043",
+      "TestBoundedPortParser_042",
+      "TestBoundedPortParser_052",
+      "TestBoundedPortParser_040",
+      "TestBoundedPortParser_038",
+      "TestBoundedPortParser_037",
+      "TestBoundedPortParser_036",
+      "TestBoundedPortParser_039",
+      "TestBoundedPortParser_058",
+      "TestBoundedPortParser_057",
+      "TestBoundedPortParser_017",
+      "TestBoundedPortParser_032",
+      "TestBoundedPortParser_031",
+      "TestBoundedPortParser_030",
+      "TestBoundedPortParser_029",
+      "TestBoundedPortParser_028",
+      "TestBoundedPortParser_027",
+      "TestBoundedPortParser_026",
+      "TestBoundedPortParser_025",
+      "TestBoundedPortParser_024",
+      "TestBoundedPortParser_023",
+      "TestBoundedPortParser_022",
+      "TestBoundedPortParser_021",
+      "TestBoundedPortParser_033",
+      "TestBoundedPortParser_034",
+      "TestBoundedPortParser_018",
+      "TestBoundedPortParser_008",
+      "TestBoundedPortParser_041",
+      "TestBoundedPortParser_015",
+      "TestBoundedPortParser_014",
+      "TestBoundedPortParser_035",
+      "TestBoundedPortParser_012",
+      "TestBoundedPortParser_011",
+      "TestBoundedPortParser_010",
+      "TestBoundedPortParser_009",
+      "TestBoundedPortParser_004",
+      "TestBoundedPortParser_007",
+      "TestBoundedPortParser_006",
+      "TestBoundedPortParser_005",
+      "TestBoundedPortParser_002",
+      "TestBoundedPortParser_020",
+      "TestBoundedPortParser_019",
+      "TestBoundedPortParser_016",
+      "TestBoundedPortParser_003",
+      "TestBoundedPortParser_013",
+      "TestBoundedPortParser_001"
+    ],
+    "build_lines": [
+      "stalls_test.go:81: build estree-misc-sanitized-emitted bcf0cb63dc60 miss 57.81",
+      "stalls_test.go:89: build estree-misc-oracle-answers 4bcaf8a65eed miss 0.19"
+    ],
+    "command": {
+      "id": "M03",
+      "command": [
+        "timeout",
+        "120",
+        "go",
+        "test",
+        "-json",
+        "-count=1",
+        "-timeout",
+        "90s",
+        "./stage1/cohere/estree/",
+        "-run",
+        "^TestBoundedPortParser(_[0-9]{3}|Union)$"
+      ],
+      "cache": "/tmp/u088/cache/M03",
+      "wall": 71.32151548799993,
+      "exit": 0
+    }
+  },
+  "P01": {
+    "failed_tests": [
+      "TestBoundedPortParser_060",
+      "TestBoundedPortParser_033",
+      "TestBoundedPortParser_041",
+      "TestBoundedPortParser_058",
+      "TestBoundedPortParser_057",
+      "TestBoundedPortParser_052",
+      "TestBoundedPortParser_013",
+      "TestBoundedPortParser_035",
+      "TestBoundedPortParser_034",
+      "TestBoundedPortParser_003",
+      "TestBoundedPortParser_001",
+      "TestBoundedPortParser_019",
+      "TestBoundedPortParser_016",
+      "TestBoundedPortParser_020"
+    ],
+    "passed_tests": [
+      "TestBoundedPortParser_040",
+      "TestBoundedPortParser_063",
+      "TestBoundedPortParser_000",
+      "TestBoundedPortParser_062",
+      "TestBoundedPortParser_061",
+      "TestBoundedPortParser_049",
+      "TestBoundedPortParser_047",
+      "TestBoundedPortParser_048",
+      "TestBoundedPortParser_059",
+      "TestBoundedPortParserUnion",
+      "TestBoundedPortParser_046",
+      "TestBoundedPortParser_045",
+      "TestBoundedPortParser_056",
+      "TestBoundedPortParser_055",
+      "TestBoundedPortParser_044",
+      "TestBoundedPortParser_054",
+      "TestBoundedPortParser_043",
+      "TestBoundedPortParser_053",
+      "TestBoundedPortParser_032",
+      "TestBoundedPortParser_042",
+      "TestBoundedPortParser_051",
+      "TestBoundedPortParser_031",
+      "TestBoundedPortParser_050",
+      "TestBoundedPortParser_030",
+      "TestBoundedPortParser_037",
+      "TestBoundedPortParser_039",
+      "TestBoundedPortParser_029",
+      "TestBoundedPortParser_038",
+      "TestBoundedPortParser_028",
+      "TestBoundedPortParser_014",
+      "TestBoundedPortParser_036",
+      "TestBoundedPortParser_027",
+      "TestBoundedPortParser_012",
+      "TestBoundedPortParser_026",
+      "TestBoundedPortParser_006",
+      "TestBoundedPortParser_005",
+      "TestBoundedPortParser_011",
+      "TestBoundedPortParser_004",
+      "TestBoundedPortParser_010",
+      "TestBoundedPortParser_002",
+      "TestBoundedPortParser_009",
+      "TestBoundedPortParser_025",
+      "TestBoundedPortParser_024",
+      "TestBoundedPortParser_008",
+      "TestBoundedPortParser_023",
+      "TestBoundedPortParser_022",
+      "TestBoundedPortParser_021",
+      "TestBoundedPortParser_017",
+      "TestBoundedPortParser_015",
+      "TestBoundedPortParser_018",
+      "TestBoundedPortParser_007"
+    ],
+    "build_lines": [
+      "stalls_test.go:81: build estree-misc-sanitized-emitted 3fa694d812aa miss 32.03",
+      "stalls_test.go:89: build estree-misc-oracle-answers 4bcaf8a65eed miss 0.23"
+    ],
+    "command": {
+      "id": "P01",
+      "command": [
+        "timeout",
+        "120",
+        "go",
+        "test",
+        "-json",
+        "-count=1",
+        "-timeout",
+        "90s",
+        "./stage1/cohere/estree/",
+        "-run",
+        "^TestBoundedPortParser(_[0-9]{3}|Union)$"
+      ],
+      "cache": "/tmp/u088/cache/P01",
+      "wall": 45.22439926400057,
+      "exit": 1
+    }
+  },
+  "W01": {
+    "failed_tests": [
+      "TestBoundedPortParserPlantedDisagreement",
+      "TestSyntaxMutants_000"
+    ],
+    "passed_tests": [
+      "TestSyntaxMutants_001",
+      "TestSyntaxMutants_002",
+      "TestSyntaxMutantsUnion"
+    ],
+    "build_lines": [],
+    "command": {
+      "id": "W01",
+      "regex": "^(TestBoundedPortParserPlantedDisagreement|TestSyntaxMutants_[0-9]{3}|TestSyntaxMutantsUnion)$",
+      "wall": 7.64696951499991,
+      "exit": 1,
+      "cache": "/tmp/u088/cache/harness",
+      "command": [
+        "timeout",
+        "120",
+        "go",
+        "test",
+        "-json",
+        "-count=1",
+        "-timeout",
+        "90s",
+        "./stage1/cohere/estree/",
+        "-run",
+        "^(TestBoundedPortParserPlantedDisagreement|TestSyntaxMutants_[0-9]{3}|TestSyntaxMutantsUnion)$"
+      ]
+    }
+  },
+  "W02": {
+    "failed_tests": [
+      "TestPortStallControlPlantedSurvivor"
+    ],
+    "passed_tests": [
+      "TestPortStallControl_000"
+    ],
+    "build_lines": [
+      "stalls_test.go:144: build estree-misc-source-mutant f1a66a2146c2 miss 0.03",
+      "stalls_test.go:145: build estree-misc-sanitized-emitted 9f8e035a233c miss 58.72"
+    ],
+    "command": {
+      "id": "W02",
+      "regex": "^(TestPortStallControlPlantedSurvivor|TestPortStallControl_[0-9]{3})$",
+      "wall": 63.72012212899972,
+      "exit": 1,
+      "cache": "/tmp/u088/cache/harness",
+      "command": [
+        "timeout",
+        "120",
+        "go",
+        "test",
+        "-json",
+        "-count=1",
+        "-timeout",
+        "90s",
+        "./stage1/cohere/estree/",
+        "-run",
+        "^(TestPortStallControlPlantedSurvivor|TestPortStallControl_[0-9]{3})$"
+      ]
+    }
+  },
+  "W03": {
+    "failed_tests": [],
+    "passed_tests": [
+      "TestSyntaxMutants_002",
+      "TestSyntaxMutants_001"
+    ],
+    "build_lines": [],
+    "command": {
+      "id": "W03",
+      "regex": "^TestSyntaxMutants_00[12]$",
+      "wall": 5.047775066000213,
+      "exit": 0,
+      "cache": "/tmp/u088/cache/harness",
+      "command": [
+        "timeout",
+        "120",
+        "go",
+        "test",
+        "-json",
+        "-count=1",
+        "-timeout",
+        "90s",
+        "./stage1/cohere/estree/",
+        "-run",
+        "^TestSyntaxMutants_00[12]$"
+      ]
+    }
+  },
+  "S01": {
+    "failed_tests": [
+      "TestEstreeScopedProcessGroupDeadline"
+    ],
+    "passed_tests": [],
+    "build_lines": [],
+    "command": {
+      "id": "S01",
+      "regex": "^TestEstreeScopedProcessGroupDeadline$",
+      "wall": 3.1122864549997757,
+      "exit": 1,
+      "cache": "/tmp/u088/cache/harness",
+      "command": [
+        "timeout",
+        "120",
+        "go",
+        "test",
+        "-json",
+        "-count=1",
+        "-timeout",
+        "90s",
+        "./stage1/cohere/estree/",
+        "-run",
+        "^TestEstreeScopedProcessGroupDeadline$"
+      ]
+    }
+  },
+  "S02": {
+    "failed_tests": [],
+    "passed_tests": [
+      "TestProduct_SyntaxMutantsGoOracle"
+    ],
+    "build_lines": [
+      "syntax_mutants_self_setup_test.go:204: build syntax-mutants-go-oracle-v1 8290780788d4 miss 1.37"
+    ],
+    "command": {
+      "id": "S02",
+      "regex": "^TestProduct_SyntaxMutantsGoOracle$",
+      "wall": 4.105257811999763,
+      "exit": 0,
+      "cache": "/tmp/u088/cache/S02",
+      "command": [
+        "timeout",
+        "120",
+        "go",
+        "test",
+        "-json",
+        "-count=1",
+        "-timeout",
+        "90s",
+        "./stage1/cohere/estree/",
+        "-run",
+        "^TestProduct_SyntaxMutantsGoOracle$"
+      ]
+    }
+  },
+  "S03": {
+    "failed_tests": [],
+    "passed_tests": [
+      "TestProduct_SyntaxMutantLowered_001",
+      "TestProduct_SyntaxMutantLowered_002",
+      "TestProduct_SyntaxMutantLowered_000"
+    ],
+    "build_lines": [
+      "syntax_mutants_self_setup_test.go:214: build estree-syntax-mutant-emitted-erasure-precedence 25f3213a4050 miss 28.05",
+      "syntax_mutants_self_setup_test.go:219: build estree-syntax-mutant-emitted-reference-pragma ce872e37da36 miss 28.36",
+      "syntax_mutants_self_setup_test.go:209: build estree-syntax-mutant-emitted-mapped-constraint 5b1d3424bbca miss 28.80"
+    ],
+    "command": {
+      "id": "S03",
+      "regex": "^TestProduct_SyntaxMutantLowered_[0-9]{3}$",
+      "wall": 31.731267697000476,
+      "exit": 0,
+      "cache": "/tmp/u088/cache/S03",
+      "command": [
+        "timeout",
+        "120",
+        "go",
+        "test",
+        "-json",
+        "-count=1",
+        "-timeout",
+        "90s",
+        "./stage1/cohere/estree/",
+        "-run",
+        "^TestProduct_SyntaxMutantLowered_[0-9]{3}$"
+      ]
+    }
+  },
+  "S04": {
+    "failed_tests": [],
+    "passed_tests": [
+      "TestProduct_SyntaxMutantNative_002",
+      "TestProduct_SyntaxMutantNative_001"
+    ],
+    "build_lines": [
+      "syntax_mutants_self_setup_test.go:229: build estree-syntax-mutant-native-reference-pragma 22de27e7a52c miss 1.96",
+      "syntax_mutants_self_setup_test.go:224: build estree-syntax-mutant-native-erasure-precedence ecd43ad23d74 miss 1.96"
+    ],
+    "command": {
+      "id": "S04",
+      "regex": "^TestProduct_SyntaxMutantNative_00[12]$",
+      "wall": 4.666904253999746,
+      "exit": 0,
+      "cache": "/tmp/u088/cache/S04",
+      "command": [
+        "timeout",
+        "120",
+        "go",
+        "test",
+        "-json",
+        "-count=1",
+        "-timeout",
+        "90s",
+        "./stage1/cohere/estree/",
+        "-run",
+        "^TestProduct_SyntaxMutantNative_00[12]$"
+      ]
+    }
+  },
+  "S05": {
+    "failed_tests": [],
+    "passed_tests": [
+      "TestProduct_SyntaxMutantsSetup_002",
+      "TestProduct_SyntaxMutantsSetup_001",
+      "TestProduct_SyntaxMutantsSetup_000"
+    ],
+    "build_lines": [
+      "loom_family_products_test.go:53: build syntax-mutant-ready-v2-reference-pragma f2c1144927db miss 0.73",
+      "loom_family_products_test.go:49: build syntax-mutant-ready-v2-erasure-precedence 1d0fbc19f4e4 miss 0.73",
+      "loom_family_products_test.go:45: build syntax-mutant-ready-v2-mapped-constraint 496bbfb00e80 miss 0.74"
+    ],
+    "command": {
+      "id": "S05",
+      "regex": "^TestProduct_SyntaxMutantsSetup_[0-9]{3}$",
+      "wall": 3.7943313460000354,
+      "exit": 0,
+      "cache": "/tmp/u088/cache/S05",
+      "command": [
+        "timeout",
+        "120",
+        "go",
+        "test",
+        "-json",
+        "-count=1",
+        "-timeout",
+        "90s",
+        "./stage1/cohere/estree/",
+        "-run",
+        "^TestProduct_SyntaxMutantsSetup_[0-9]{3}$"
+      ]
+    }
+  }
+}

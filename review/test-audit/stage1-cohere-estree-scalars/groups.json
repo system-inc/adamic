@@ -1,0 +1,58 @@
+[
+  [
+    "TestScalarOriginalLibraries",
+    "^TestScalarOriginalLibraries$"
+  ],
+  [
+    "TestPinnedNumericGaps",
+    "^TestPinnedNumericGaps$"
+  ],
+  [
+    "TestEstreeScopedProcessGroupDeadline",
+    "^TestEstreeScopedProcessGroupDeadline$"
+  ],
+  [
+    "TestBoundedPortParserPlantedDisagreement",
+    "^TestBoundedPortParserPlantedDisagreement$"
+  ],
+  [
+    "TestPortStallControlPlantedSurvivor",
+    "^TestPortStallControlPlantedSurvivor$"
+  ],
+  [
+    "TestBoundedPortParser family",
+    "^TestBoundedPortParser(_[0-9]{3}|Union)$"
+  ],
+  [
+    "TestPortStallControl family",
+    "^TestPortStallControl(_000|Union)$"
+  ],
+  [
+    "TestProduct_SyntaxMutantsSetup family",
+    "^TestProduct_SyntaxMutantsSetup_[0-9]{3}$"
+  ],
+  [
+    "TestProduct_SyntaxMutantsGoOracle",
+    "^TestProduct_SyntaxMutantsGoOracle$"
+  ],
+  [
+    "TestProduct_SyntaxMutantLowered family",
+    "^TestProduct_SyntaxMutantLowered_[0-9]{3}$"
+  ],
+  [
+    "TestProduct_SyntaxMutantNative family",
+    "^TestProduct_SyntaxMutantNative_00[12]$"
+  ],
+  [
+    "TestSyntaxMutants_000",
+    "^TestSyntaxMutants_000$"
+  ],
+  [
+    "TestSyntaxMutants_001 family",
+    "^TestSyntaxMutants_00[12]$"
+  ],
+  [
+    "TestSyntaxMutantsUnion",
+    "^TestSyntaxMutantsUnion$"
+  ]
+]

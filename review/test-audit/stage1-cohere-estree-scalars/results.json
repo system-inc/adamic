@@ -1,0 +1,528 @@
+[
+  {
+    "test": "TestScalarOriginalLibraries",
+    "members": [
+      "TestScalarOriginalLibraries"
+    ],
+    "package": "stage1/cohere/estree",
+    "file": "stage1/cohere/estree/scalars_test.go:22",
+    "seconds": 1.586,
+    "oracle": "Go cohere AST is compared with pinned npm ESTree/Prettier on Node. No Adamic port entry is called.",
+    "oracle_kind": "external-run",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "cannot-judge",
+    "subsumed_by": [],
+    "mutants_in_matrix": 3,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestBoundedPortParser family"
+    ],
+    "evidence": "Three isolated timing runs pass; test bodies call Go cohere and npm libraries, not the port.",
+    "cannot_judge_reason": "No meaningful port mutant can reach this row. Mutating either compared implementation would mutate an oracle, which the brief forbids."
+  },
+  {
+    "test": "TestPinnedNumericGaps",
+    "members": [
+      "TestPinnedNumericGaps"
+    ],
+    "package": "stage1/cohere/estree",
+    "file": "stage1/cohere/estree/scalars_test.go:27",
+    "seconds": 1.321,
+    "oracle": "Go NaN count and Node numeric spellings are checked against handwritten expected values. No Adamic port entry is called.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "cannot-judge",
+    "subsumed_by": [],
+    "mutants_in_matrix": 3,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestBoundedPortParser family"
+    ],
+    "evidence": "Three isolated timing runs pass; test bodies call Go cohere and npm libraries, not the port.",
+    "cannot_judge_reason": "No meaningful port mutant can reach this row. Mutating either compared implementation would mutate an oracle, which the brief forbids."
+  },
+  {
+    "test": "TestEstreeScopedProcessGroupDeadline",
+    "members": [
+      "TestEstreeScopedProcessGroupDeadline"
+    ],
+    "package": "stage1/cohere/estree",
+    "file": "stage1/cohere/estree/stalls_deadlines_test.go:105",
+    "seconds": 3.016,
+    "oracle": "Own process-group flags, grandchild-ready marker and 3s/4s deadline expectations.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "S01: stalls_deadlines_test.go:135: child must have its own process group",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 3,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestBoundedPortParser family"
+    ],
+    "evidence": "ADAMIC_ESTREE_LIBRARY=/tmp/u088/library ADAMIC_AUDIT=S01 ADAMIC_BUILD_CACHE_DIR=/tmp/u088/cache/harness timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestEstreeScopedProcessGroupDeadline$' > S01.log 2>&1; stalls_deadlines_test.go:135: child must have its own process group"
+  },
+  {
+    "test": "TestBoundedPortParserPlantedDisagreement",
+    "members": [
+      "TestBoundedPortParserPlantedDisagreement"
+    ],
+    "package": "stage1/cohere/estree",
+    "file": "stage1/cohere/estree/stalls_test.go:117",
+    "seconds": 0.04,
+    "oracle": "Own sharding proof invokes the agreement checker on a planted disagreement.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W01: stalls_test.go:119: planted failure must be caught only by TestBoundedPortParser_035: exit=<nil>",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 3,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestBoundedPortParser family"
+    ],
+    "evidence": "ADAMIC_ESTREE_LIBRARY=/tmp/u088/library ADAMIC_AUDIT=W01 ADAMIC_BUILD_CACHE_DIR=/tmp/u088/cache/harness timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^(TestBoundedPortParserPlantedDisagreement|TestSyntaxMutants_[0-9]{3}|TestSyntaxMutantsUnion)$' > W01.log 2>&1; stalls_test.go:119: planted failure must be caught only by TestBoundedPortParser_035: exit=<nil>"
+  },
+  {
+    "test": "TestPortStallControlPlantedSurvivor",
+    "members": [
+      "TestPortStallControlPlantedSurvivor"
+    ],
+    "package": "stage1/cohere/estree",
+    "file": "stage1/cohere/estree/stalls_test.go:170",
+    "seconds": 0.024,
+    "oracle": "Own sharding proof invokes the timeout checker on a planted survivor.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W02: stalls_test.go:172: planted failure must be caught only by TestPortStallControl_000: exit=<nil>",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 3,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestBoundedPortParser family"
+    ],
+    "evidence": "ADAMIC_ESTREE_LIBRARY=/tmp/u088/library ADAMIC_AUDIT=W02 ADAMIC_BUILD_CACHE_DIR=/tmp/u088/cache/harness timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^(TestPortStallControlPlantedSurvivor|TestPortStallControl_[0-9]{3})$' > W02.log 2>&1; stalls_test.go:172: planted failure must be caught only by TestPortStallControl_000: exit=<nil>"
+  },
+  {
+    "test": "TestBoundedPortParser family",
+    "members": [
+      "TestBoundedPortParser_000",
+      "TestBoundedPortParser_001",
+      "TestBoundedPortParser_002",
+      "TestBoundedPortParser_003",
+      "TestBoundedPortParser_004",
+      "TestBoundedPortParser_005",
+      "TestBoundedPortParser_006",
+      "TestBoundedPortParser_007",
+      "TestBoundedPortParser_008",
+      "TestBoundedPortParser_009",
+      "TestBoundedPortParser_010",
+      "TestBoundedPortParser_011",
+      "TestBoundedPortParser_012",
+      "TestBoundedPortParser_013",
+      "TestBoundedPortParser_014",
+      "TestBoundedPortParser_015",
+      "TestBoundedPortParser_016",
+      "TestBoundedPortParser_017",
+      "TestBoundedPortParser_018",
+      "TestBoundedPortParser_019",
+      "TestBoundedPortParser_020",
+      "TestBoundedPortParser_021",
+      "TestBoundedPortParser_022",
+      "TestBoundedPortParser_023",
+      "TestBoundedPortParser_024",
+      "TestBoundedPortParser_025",
+      "TestBoundedPortParser_026",
+      "TestBoundedPortParser_027",
+      "TestBoundedPortParser_028",
+      "TestBoundedPortParser_029",
+      "TestBoundedPortParser_030",
+      "TestBoundedPortParser_031",
+      "TestBoundedPortParser_032",
+      "TestBoundedPortParser_033",
+      "TestBoundedPortParser_034",
+      "TestBoundedPortParser_035",
+      "TestBoundedPortParser_036",
+      "TestBoundedPortParser_037",
+      "TestBoundedPortParser_038",
+      "TestBoundedPortParser_039",
+      "TestBoundedPortParser_040",
+      "TestBoundedPortParser_041",
+      "TestBoundedPortParser_042",
+      "TestBoundedPortParser_043",
+      "TestBoundedPortParser_044",
+      "TestBoundedPortParser_045",
+      "TestBoundedPortParser_046",
+      "TestBoundedPortParser_047",
+      "TestBoundedPortParser_048",
+      "TestBoundedPortParser_049",
+      "TestBoundedPortParser_050",
+      "TestBoundedPortParser_051",
+      "TestBoundedPortParser_052",
+      "TestBoundedPortParser_053",
+      "TestBoundedPortParser_054",
+      "TestBoundedPortParser_055",
+      "TestBoundedPortParser_056",
+      "TestBoundedPortParser_057",
+      "TestBoundedPortParser_058",
+      "TestBoundedPortParser_059",
+      "TestBoundedPortParser_060",
+      "TestBoundedPortParser_061",
+      "TestBoundedPortParser_062",
+      "TestBoundedPortParser_063",
+      "TestBoundedPortParserUnion"
+    ],
+    "package": "stage1/cohere/estree",
+    "file": [
+      "stage1/cohere/estree/stalls_top_shards_test.go:17",
+      "stage1/cohere/estree/stalls_top_shards_test.go:18",
+      "stage1/cohere/estree/stalls_top_shards_test.go:19",
+      "stage1/cohere/estree/stalls_top_shards_test.go:20",
+      "stage1/cohere/estree/stalls_top_shards_test.go:21",
+      "stage1/cohere/estree/stalls_top_shards_test.go:22",
+      "stage1/cohere/estree/stalls_top_shards_test.go:23",
+      "stage1/cohere/estree/stalls_top_shards_test.go:24",
+      "stage1/cohere/estree/stalls_top_shards_test.go:25",
+      "stage1/cohere/estree/stalls_top_shards_test.go:26",
+      "stage1/cohere/estree/stalls_top_shards_test.go:27",
+      "stage1/cohere/estree/stalls_top_shards_test.go:28",
+      "stage1/cohere/estree/stalls_top_shards_test.go:29",
+      "stage1/cohere/estree/stalls_top_shards_test.go:30",
+      "stage1/cohere/estree/stalls_top_shards_test.go:31",
+      "stage1/cohere/estree/stalls_top_shards_test.go:32",
+      "stage1/cohere/estree/stalls_top_shards_test.go:33",
+      "stage1/cohere/estree/stalls_top_shards_test.go:34",
+      "stage1/cohere/estree/stalls_top_shards_test.go:35",
+      "stage1/cohere/estree/stalls_top_shards_test.go:36",
+      "stage1/cohere/estree/stalls_top_shards_test.go:37",
+      "stage1/cohere/estree/stalls_top_shards_test.go:38",
+      "stage1/cohere/estree/stalls_top_shards_test.go:39",
+      "stage1/cohere/estree/stalls_top_shards_test.go:40",
+      "stage1/cohere/estree/stalls_top_shards_test.go:41",
+      "stage1/cohere/estree/stalls_top_shards_test.go:42",
+      "stage1/cohere/estree/stalls_top_shards_test.go:43",
+      "stage1/cohere/estree/stalls_top_shards_test.go:44",
+      "stage1/cohere/estree/stalls_top_shards_test.go:45",
+      "stage1/cohere/estree/stalls_top_shards_test.go:46",
+      "stage1/cohere/estree/stalls_top_shards_test.go:47",
+      "stage1/cohere/estree/stalls_top_shards_test.go:48",
+      "stage1/cohere/estree/stalls_top_shards_test.go:49",
+      "stage1/cohere/estree/stalls_top_shards_test.go:50",
+      "stage1/cohere/estree/stalls_top_shards_test.go:51",
+      "stage1/cohere/estree/stalls_top_shards_test.go:52",
+      "stage1/cohere/estree/stalls_top_shards_test.go:53",
+      "stage1/cohere/estree/stalls_top_shards_test.go:54",
+      "stage1/cohere/estree/stalls_top_shards_test.go:55",
+      "stage1/cohere/estree/stalls_top_shards_test.go:56",
+      "stage1/cohere/estree/stalls_top_shards_test.go:57",
+      "stage1/cohere/estree/stalls_top_shards_test.go:58",
+      "stage1/cohere/estree/stalls_top_shards_test.go:59",
+      "stage1/cohere/estree/stalls_top_shards_test.go:60",
+      "stage1/cohere/estree/stalls_top_shards_test.go:61",
+      "stage1/cohere/estree/stalls_top_shards_test.go:62",
+      "stage1/cohere/estree/stalls_top_shards_test.go:63",
+      "stage1/cohere/estree/stalls_top_shards_test.go:64",
+      "stage1/cohere/estree/stalls_top_shards_test.go:65",
+      "stage1/cohere/estree/stalls_top_shards_test.go:66",
+      "stage1/cohere/estree/stalls_top_shards_test.go:67",
+      "stage1/cohere/estree/stalls_top_shards_test.go:68",
+      "stage1/cohere/estree/stalls_top_shards_test.go:69",
+      "stage1/cohere/estree/stalls_top_shards_test.go:70",
+      "stage1/cohere/estree/stalls_top_shards_test.go:71",
+      "stage1/cohere/estree/stalls_top_shards_test.go:72",
+      "stage1/cohere/estree/stalls_top_shards_test.go:73",
+      "stage1/cohere/estree/stalls_top_shards_test.go:74",
+      "stage1/cohere/estree/stalls_top_shards_test.go:75",
+      "stage1/cohere/estree/stalls_top_shards_test.go:76",
+      "stage1/cohere/estree/stalls_top_shards_test.go:77",
+      "stage1/cohere/estree/stalls_top_shards_test.go:78",
+      "stage1/cohere/estree/stalls_top_shards_test.go:79",
+      "stage1/cohere/estree/stalls_top_shards_test.go:80",
+      "stage1/cohere/estree/stalls_top_shards_test.go:83"
+    ],
+    "seconds": 9.02,
+    "oracle": "Go cohere canonical bytes for accepted cases. Refusals only require nonzero exit, empty stdout and ESTree parser substring; exact diagnostic codes are unguarded.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M01",
+      "M02"
+    ],
+    "unique_kills": [
+      "M01",
+      "M02"
+    ],
+    "last_proven_fail": "M02: stalls_test.go:111: [node --disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /workspace/adamic/stage1/cohere/estree/main.ts /tmp/adamic-gate/TestBoundedPortParser_03389812771/003/input.ts]: timeout=false exit=exit status 70 stdout=0 stderr=adamic: panic: ESTree diagnostic 1005 at 10: '}' expected.",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 3,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestBoundedPortParser family"
+    ],
+    "evidence": "ADAMIC_ESTREE_LIBRARY=/tmp/u088/library ADAMIC_BUILD_CACHE_DIR=/tmp/u088/cache/M02 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestBoundedPortParser(_[0-9]{3}|Union)$' > M02.log 2>&1; stalls_test.go:111: [node --disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /workspace/adamic/stage1/cohere/estree/main.ts /tmp/adamic-gate/TestBoundedPortParser_03389812771/003/input.ts]: timeout=false exit=exit status 70 stdout=0 stderr=adamic: panic: ESTree diagnostic 1005 at 10: '}' expected."
+  },
+  {
+    "test": "TestPortStallControl family",
+    "members": [
+      "TestPortStallControl_000",
+      "TestPortStallControlUnion"
+    ],
+    "package": "stage1/cohere/estree",
+    "file": [
+      "stage1/cohere/estree/stalls_top_shards_test.go:81",
+      "stage1/cohere/estree/stalls_top_shards_test.go:87"
+    ],
+    "seconds": 1.254,
+    "oracle": "Guard-disabled source/native port must stall at 500ms. Disabling portStallControlResult still passes its leaf and union.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "untrue",
+    "subsumed_by": [],
+    "mutants_in_matrix": 3,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestBoundedPortParser family"
+    ],
+    "evidence": "ADAMIC_ESTREE_LIBRARY=/tmp/u088/library ADAMIC_AUDIT=W02 ADAMIC_BUILD_CACHE_DIR=/tmp/u088/cache/harness timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^(TestPortStallControlPlantedSurvivor|TestPortStallControl_[0-9]{3})$' > W02.log 2>&1; --- PASS: TestPortStallControl_000 (59.86s)"
+  },
+  {
+    "test": "TestProduct_SyntaxMutantsSetup family",
+    "members": [
+      "TestProduct_SyntaxMutantsSetup_000",
+      "TestProduct_SyntaxMutantsSetup_001",
+      "TestProduct_SyntaxMutantsSetup_002"
+    ],
+    "package": "stage1/cohere/estree",
+    "file": [
+      "stage1/cohere/estree/loom_family_products_test.go:43",
+      "stage1/cohere/estree/loom_family_products_test.go:47",
+      "stage1/cohere/estree/loom_family_products_test.go:51"
+    ],
+    "seconds": 0.387,
+    "oracle": "Product builder returns successfully; expected ready.json is absent under S05 but all three wrappers pass.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "untrue",
+    "subsumed_by": [],
+    "mutants_in_matrix": 3,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestBoundedPortParser family"
+    ],
+    "evidence": "ADAMIC_ESTREE_LIBRARY=/tmp/u088/library ADAMIC_AUDIT=S05 ADAMIC_BUILD_CACHE_DIR=/tmp/u088/cache/S05 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestProduct_SyntaxMutantsSetup_[0-9]{3}$' > S05.log 2>&1; --- PASS: TestProduct_SyntaxMutantsSetup_000 (0.93s)"
+  },
+  {
+    "test": "TestProduct_SyntaxMutantsGoOracle",
+    "members": [
+      "TestProduct_SyntaxMutantsGoOracle"
+    ],
+    "package": "stage1/cohere/estree",
+    "file": "stage1/cohere/estree/syntax_mutants_self_setup_test.go:195",
+    "seconds": 0.27,
+    "oracle": "Product builder returns successfully; expected oracle artifact is absent under S02 but wrapper passes.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "untrue",
+    "subsumed_by": [],
+    "mutants_in_matrix": 3,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestBoundedPortParser family"
+    ],
+    "evidence": "ADAMIC_ESTREE_LIBRARY=/tmp/u088/library ADAMIC_AUDIT=S02 ADAMIC_BUILD_CACHE_DIR=/tmp/u088/cache/S02 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestProduct_SyntaxMutantsGoOracle$' > S02.log 2>&1; --- PASS: TestProduct_SyntaxMutantsGoOracle (1.57s)"
+  },
+  {
+    "test": "TestProduct_SyntaxMutantLowered family",
+    "members": [
+      "TestProduct_SyntaxMutantLowered_000",
+      "TestProduct_SyntaxMutantLowered_001",
+      "TestProduct_SyntaxMutantLowered_002"
+    ],
+    "package": "stage1/cohere/estree",
+    "file": [
+      "stage1/cohere/estree/syntax_mutants_self_setup_test.go:200",
+      "stage1/cohere/estree/syntax_mutants_self_setup_test.go:205",
+      "stage1/cohere/estree/syntax_mutants_self_setup_test.go:210"
+    ],
+    "seconds": 0.377,
+    "oracle": "Lowering/emission completes; expected port.c is absent under S03 but all three wrappers pass.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "untrue",
+    "subsumed_by": [],
+    "mutants_in_matrix": 3,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestBoundedPortParser family"
+    ],
+    "evidence": "ADAMIC_ESTREE_LIBRARY=/tmp/u088/library ADAMIC_AUDIT=S03 ADAMIC_BUILD_CACHE_DIR=/tmp/u088/cache/S03 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestProduct_SyntaxMutantLowered_[0-9]{3}$' > S03.log 2>&1; --- PASS: TestProduct_SyntaxMutantLowered_000 (29.11s)"
+  },
+  {
+    "test": "TestProduct_SyntaxMutantNative family",
+    "members": [
+      "TestProduct_SyntaxMutantNative_001",
+      "TestProduct_SyntaxMutantNative_002"
+    ],
+    "package": "stage1/cohere/estree",
+    "file": [
+      "stage1/cohere/estree/syntax_mutants_self_setup_test.go:215",
+      "stage1/cohere/estree/syntax_mutants_self_setup_test.go:220"
+    ],
+    "seconds": 0.443,
+    "oracle": "Clang compilation completes; expected port binary is absent under S04 but both wrappers pass. No output smoke test.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "untrue",
+    "subsumed_by": [],
+    "mutants_in_matrix": 3,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestBoundedPortParser family"
+    ],
+    "evidence": "ADAMIC_ESTREE_LIBRARY=/tmp/u088/library ADAMIC_AUDIT=S04 ADAMIC_BUILD_CACHE_DIR=/tmp/u088/cache/S04 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestProduct_SyntaxMutantNative_00[12]$' > S04.log 2>&1; --- PASS: TestProduct_SyntaxMutantNative_001 (2.32s)"
+  },
+  {
+    "test": "TestSyntaxMutants_000",
+    "members": [
+      "TestSyntaxMutants_000"
+    ],
+    "package": "stage1/cohere/estree",
+    "file": "stage1/cohere/estree/syntax_mutants_self_setup_test.go:275",
+    "seconds": 0.804,
+    "oracle": "Go cohere canonical bytes are compared with Node and native built-in mapped-constraint mutant.",
+    "oracle_kind": "external-run",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W01: syntax_mutants_self_setup_test.go:262: Node mutant survived",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 3,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestBoundedPortParser family"
+    ],
+    "evidence": "ADAMIC_ESTREE_LIBRARY=/tmp/u088/library ADAMIC_AUDIT=W01 ADAMIC_BUILD_CACHE_DIR=/tmp/u088/cache/harness timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^(TestBoundedPortParserPlantedDisagreement|TestSyntaxMutants_[0-9]{3}|TestSyntaxMutantsUnion)$' > W01.log 2>&1; syntax_mutants_self_setup_test.go:262: Node mutant survived"
+  },
+  {
+    "test": "TestSyntaxMutants_001 family",
+    "members": [
+      "TestSyntaxMutants_001",
+      "TestSyntaxMutants_002"
+    ],
+    "package": "stage1/cohere/estree",
+    "file": [
+      "stage1/cohere/estree/syntax_mutants_self_setup_test.go:276",
+      "stage1/cohere/estree/syntax_mutants_self_setup_test.go:277"
+    ],
+    "seconds": 0.762,
+    "oracle": "Go audit must report error and mutant outputs must contain 0 Program. Disabling the acceptance comparison leaves both wrappers green.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "untrue",
+    "subsumed_by": [],
+    "mutants_in_matrix": 3,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestBoundedPortParser family"
+    ],
+    "evidence": "ADAMIC_ESTREE_LIBRARY=/tmp/u088/library ADAMIC_AUDIT=W03 ADAMIC_BUILD_CACHE_DIR=/tmp/u088/cache/harness timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestSyntaxMutants_00[12]$' > W03.log 2>&1; --- PASS: TestSyntaxMutants_001 (0.97s)"
+  },
+  {
+    "test": "TestSyntaxMutantsUnion",
+    "members": [
+      "TestSyntaxMutantsUnion"
+    ],
+    "package": "stage1/cohere/estree",
+    "file": "stage1/cohere/estree/syntax_mutants_self_setup_test.go:281",
+    "seconds": 2.464,
+    "oracle": "Own coverage and planted-survivor subprocess proof. Disabled firstDifference makes the unplanted leaf fail, and the union still passes.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "untrue",
+    "subsumed_by": [],
+    "mutants_in_matrix": 3,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestBoundedPortParser family"
+    ],
+    "evidence": "ADAMIC_ESTREE_LIBRARY=/tmp/u088/library ADAMIC_AUDIT=W01 ADAMIC_BUILD_CACHE_DIR=/tmp/u088/cache/harness timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^(TestBoundedPortParserPlantedDisagreement|TestSyntaxMutants_[0-9]{3}|TestSyntaxMutantsUnion)$' > W01.log 2>&1; --- PASS: TestSyntaxMutantsUnion (3.71s)"
+  }
+]

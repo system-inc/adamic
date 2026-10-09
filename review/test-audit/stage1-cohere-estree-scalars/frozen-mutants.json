@@ -1,0 +1,26 @@
+[
+  {
+    "id": "M01",
+    "file": "stage1/cohere/estree/protocol.ts",
+    "line": 44,
+    "before": "const level = frame.depth;",
+    "after": "const level = frame.depth + 1;",
+    "menu": "change constant"
+  },
+  {
+    "id": "M02",
+    "file": "stage1/cohere/estree/pipeline.ts",
+    "line": 38,
+    "before": "ESTree parser diagnostic ${diagnostic.code}",
+    "after": "ESTree diagnostic ${diagnostic.code}",
+    "menu": "change constant"
+  },
+  {
+    "id": "M03",
+    "file": "stage1/cohere/estree/sourceRecovery.ts",
+    "line": 72,
+    "before": "code: 1131, message:",
+    "after": "code: 1132, message:",
+    "menu": "change constant"
+  }
+]

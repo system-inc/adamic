@@ -1,0 +1,12 @@
+diff --git a/stage1/cohere/estree/pipeline.ts b/stage1/cohere/estree/pipeline.ts
+index 73890eba..1246f49b 100644
+--- a/stage1/cohere/estree/pipeline.ts
++++ b/stage1/cohere/estree/pipeline.ts
+@@ -8,6 +8,7 @@ import { collectComments } from './comments.ts';
+ import { Postprocessor, mergeComments } from './postprocess.ts';
+ import { dump, written } from './protocol.ts';
+ export function answer(path: string, text: string): string {
++    return '';
+     if(text.includes('\ufffd')) {
+         return panic('ESTree cannot recover original UTF-8 bytes from replacement-decoded input');
+     }

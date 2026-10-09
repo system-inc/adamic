@@ -1,0 +1,78 @@
+[
+  {
+    "id": "M01",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestBoundedPortParser(_[0-9]{3}|Union)$"
+    ],
+    "cache": "/tmp/u088/cache/M01",
+    "wall": 66.90577311400011,
+    "exit": 1
+  },
+  {
+    "id": "M02",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestBoundedPortParser(_[0-9]{3}|Union)$"
+    ],
+    "cache": "/tmp/u088/cache/M02",
+    "wall": 66.40123578699968,
+    "exit": 1
+  },
+  {
+    "id": "M03",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestBoundedPortParser(_[0-9]{3}|Union)$"
+    ],
+    "cache": "/tmp/u088/cache/M03",
+    "wall": 71.32151548799993,
+    "exit": 0
+  },
+  {
+    "id": "P01",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestBoundedPortParser(_[0-9]{3}|Union)$"
+    ],
+    "cache": "/tmp/u088/cache/P01",
+    "wall": 45.22439926400057,
+    "exit": 1
+  }
+]

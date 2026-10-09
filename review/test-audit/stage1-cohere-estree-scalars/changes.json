@@ -1,0 +1,98 @@
+[
+  {
+    "id": "M01",
+    "file": "stage1/cohere/estree/protocol.ts",
+    "line": 44,
+    "before": "const level = frame.depth;",
+    "after": "const level = frame.depth + 1;",
+    "menu": "change constant"
+  },
+  {
+    "id": "M02",
+    "file": "stage1/cohere/estree/pipeline.ts",
+    "line": 38,
+    "before": "ESTree parser diagnostic ${diagnostic.code}",
+    "after": "ESTree diagnostic ${diagnostic.code}",
+    "menu": "change constant"
+  },
+  {
+    "id": "M03",
+    "file": "stage1/cohere/estree/sourceRecovery.ts",
+    "line": 72,
+    "before": "code: 1131, message:",
+    "after": "code: 1132, message:",
+    "menu": "change constant"
+  },
+  {
+    "id": "W01",
+    "file": "stage1/cohere/estree/estree_test.go",
+    "line": 163,
+    "before": "func firstDifference(want, got []byte) string {",
+    "after": "func firstDifference(want, got []byte) string {\n return \"\"",
+    "role": "witness"
+  },
+  {
+    "id": "W02",
+    "file": "stage1/cohere/estree/stalls_test.go",
+    "line": 124,
+    "before": "func portStallControlResult(timedOut bool, err error) error {",
+    "after": "func portStallControlResult(timedOut bool, err error) error {\n return nil",
+    "role": "witness"
+  },
+  {
+    "id": "W03",
+    "file": "stage1/cohere/estree/syntax_mutants_self_setup_test.go",
+    "line": 267,
+    "before": "if !strings.Contains(string(got), \"0 Program \") {",
+    "after": "if false && !strings.Contains(string(got), \"0 Program \") {",
+    "role": "witness"
+  },
+  {
+    "id": "S01",
+    "file": "stage1/cohere/estree/stalls_deadlines_test.go",
+    "line": 21,
+    "before": "Setpgid: true",
+    "after": "Setpgid: false",
+    "role": "construction"
+  },
+  {
+    "id": "S02",
+    "file": "stage1/cohere/estree/syntax_mutants_self_setup_test.go",
+    "line": 141,
+    "before": "return os.WriteFile(filepath.Join(dir, \"oracle\"), data, 0755)",
+    "after": "return os.WriteFile(filepath.Join(dir, \"missing\"), data, 0755)",
+    "role": "construction"
+  },
+  {
+    "id": "S03",
+    "file": "stage1/cohere/estree/syntax_mutants_self_setup_test.go",
+    "line": 88,
+    "before": "return os.WriteFile(filepath.Join(dir, \"port.c\"), []byte(native.C(program)), 0644)",
+    "after": "return os.WriteFile(filepath.Join(dir, \"missing\"), []byte(native.C(program)), 0644)",
+    "role": "construction"
+  },
+  {
+    "id": "S04",
+    "file": "stage1/cohere/estree/syntax_mutants_self_setup_test.go",
+    "line": 104,
+    "before": "return native.Build(string(data), filepath.Join(dir, \"port\"), estreeFamilyNativeOptions())",
+    "after": "return native.Build(string(data), filepath.Join(dir, \"missing\"), estreeFamilyNativeOptions())",
+    "role": "construction"
+  },
+  {
+    "id": "S05",
+    "file": "stage1/cohere/estree/syntax_mutants_self_setup_test.go",
+    "line": 167,
+    "before": "return os.WriteFile(filepath.Join(dir, \"ready.json\"), data, 0644)",
+    "after": "return os.WriteFile(filepath.Join(dir, \"missing\"), data, 0644)",
+    "role": "construction"
+  },
+  {
+    "id": "P01",
+    "file": "stage1/cohere/estree/pipeline.ts",
+    "line": 10,
+    "before": "answer body",
+    "after": "return ''; at entry",
+    "role": "probe"
+  }
+]

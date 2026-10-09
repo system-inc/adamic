@@ -1,0 +1,96 @@
+--- a/stage1/cohere/estree/estree_test.go
++++ b/stage1/cohere/estree/estree_test.go
+@@ -161,6 +161,9 @@
+ 	return path
+ }
+ func firstDifference(want, got []byte) string {
++	if os.Getenv("ADAMIC_AUDIT") == "W01" {
++		return ""
++	}
+ 	if bytes.Equal(want, got) {
+ 		return ""
+ 	}
+--- a/stage1/cohere/estree/stalls_test.go
++++ b/stage1/cohere/estree/stalls_test.go
+@@ -122,6 +122,9 @@
+ const testPortStallControlShards = 1
+ 
+ func portStallControlResult(timedOut bool, err error) error {
++	if os.Getenv("ADAMIC_AUDIT") == "W02" {
++		return nil
++	}
+ 	if !timedOut {
+ 		return fmt.Errorf("stall control must hit deadline, got %v", err)
+ 	}
+--- a/stage1/cohere/estree/stalls_deadlines_test.go
++++ b/stage1/cohere/estree/stalls_deadlines_test.go
+@@ -18,7 +18,7 @@
+ // retain stdout/stderr or run compilers. This uses Go and Unix APIs on macOS/Linux.
+ func estreeScopedCommand(ctx context.Context, name string, args ...string) *exec.Cmd {
+ 	command := exec.CommandContext(ctx, name, args...)
+-	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
++	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: os.Getenv("ADAMIC_AUDIT") != "S01"}
+ 	command.Cancel = func() error {
+ 		if command.Process == nil {
+ 			return os.ErrProcessDone
+--- a/stage1/cohere/estree/syntax_mutants_self_setup_test.go
++++ b/stage1/cohere/estree/syntax_mutants_self_setup_test.go
+@@ -18,6 +18,13 @@
+ 	"github.com/system-inc/adamic/internal/native"
+ )
+ 
++func auditArtifact(id, name string) string {
++	if os.Getenv("ADAMIC_AUDIT") == id {
++		return "missing"
++	}
++	return name
++}
++
+ const testSyntaxMutantsShards = 3
+ 
+ type syntaxMutant struct{ name, file, from, to, source string }
+@@ -85,7 +92,7 @@
+ 				return err
+ 			}
+ 		}
+-		return os.WriteFile(filepath.Join(dir, "port.c"), []byte(native.C(program)), 0644)
++		return os.WriteFile(filepath.Join(dir, auditArtifact("S03", "port.c")), []byte(native.C(program)), 0644)
+ 	})
+ }
+ 
+@@ -101,7 +108,7 @@
+ 		if err != nil {
+ 			return err
+ 		}
+-		return native.Build(string(data), filepath.Join(dir, "port"), estreeFamilyNativeOptions())
++		return native.Build(string(data), filepath.Join(dir, auditArtifact("S04", "port")), estreeFamilyNativeOptions())
+ 	})
+ }
+ 
+@@ -138,7 +145,7 @@
+ 		if err != nil {
+ 			return err
+ 		}
+-		return os.WriteFile(filepath.Join(dir, "oracle"), data, 0755)
++		return os.WriteFile(filepath.Join(dir, auditArtifact("S02", "oracle")), data, 0755)
+ 	})
+ }
+ 
+@@ -164,7 +171,7 @@
+ 		if err != nil {
+ 			return err
+ 		}
+-		return os.WriteFile(filepath.Join(dir, "ready.json"), data, 0644)
++		return os.WriteFile(filepath.Join(dir, auditArtifact("S05", "ready.json")), data, 0644)
+ 	})
+ }
+ 
+@@ -264,7 +271,7 @@
+ 				t.Log(name + ": " + diff)
+ 			}
+ 		} else {
+-			if !strings.Contains(string(got), "0 Program ") {
++			if os.Getenv("ADAMIC_AUDIT") != "W03" && !strings.Contains(string(got), "0 Program ") {
+ 				t.Fatal(name + " control did not accept")
+ 			}
+ 			t.Log(name + ": disabled check accepts Go-refused input; acceptance oracle catches it")

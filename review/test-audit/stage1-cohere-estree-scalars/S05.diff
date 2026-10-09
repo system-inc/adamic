@@ -1,0 +1,13 @@
+diff --git a/stage1/cohere/estree/syntax_mutants_self_setup_test.go b/stage1/cohere/estree/syntax_mutants_self_setup_test.go
+index 6565f0ac..d7f56902 100644
+--- a/stage1/cohere/estree/syntax_mutants_self_setup_test.go
++++ b/stage1/cohere/estree/syntax_mutants_self_setup_test.go
+@@ -164,7 +164,7 @@ func syntaxMutantPreparedProduct(t *testing.T, index int) string {
+ 		if err != nil {
+ 			return err
+ 		}
+-		return os.WriteFile(filepath.Join(dir, "ready.json"), data, 0644)
++		return os.WriteFile(filepath.Join(dir, "missing"), data, 0644)
+ 	})
+ }
+ 

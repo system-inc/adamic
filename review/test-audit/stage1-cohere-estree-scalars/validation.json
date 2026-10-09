@@ -1,0 +1,70 @@
+[
+  {
+    "id": "M01",
+    "check": "native rebuild in M01.log; patch applies to starting commit",
+    "exit": 0
+  },
+  {
+    "id": "M02",
+    "check": "native rebuild in M02.log; patch applies to starting commit",
+    "exit": 0
+  },
+  {
+    "id": "M03",
+    "check": "native rebuild in M03.log; patch applies to starting commit",
+    "exit": 0
+  },
+  {
+    "id": "P01",
+    "check": "native rebuild in P01.log; patch applies to starting commit",
+    "exit": 0
+  },
+  {
+    "id": "S01",
+    "check": "go vet ./stage1/cohere/estree/",
+    "exit": 0,
+    "wall": 0.555166404999909
+  },
+  {
+    "id": "S02",
+    "check": "go vet ./stage1/cohere/estree/",
+    "exit": 0,
+    "wall": 0.6641725700001189
+  },
+  {
+    "id": "S03",
+    "check": "go vet ./stage1/cohere/estree/",
+    "exit": 0,
+    "wall": 0.9158337040007609
+  },
+  {
+    "id": "S04",
+    "check": "go vet ./stage1/cohere/estree/",
+    "exit": 0,
+    "wall": 0.8113301829998818
+  },
+  {
+    "id": "S05",
+    "check": "go vet ./stage1/cohere/estree/",
+    "exit": 0,
+    "wall": 0.8854485679994468
+  },
+  {
+    "id": "W01",
+    "check": "go vet ./stage1/cohere/estree/",
+    "exit": 0,
+    "wall": 0.7068837239994537
+  },
+  {
+    "id": "W02",
+    "check": "go vet ./stage1/cohere/estree/",
+    "exit": 0,
+    "wall": 0.6263691699996343
+  },
+  {
+    "id": "W03",
+    "check": "go vet ./stage1/cohere/estree/",
+    "exit": 0,
+    "wall": 0.7828218249997008
+  }
+]

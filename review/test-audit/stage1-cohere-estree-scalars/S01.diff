@@ -1,0 +1,13 @@
+diff --git a/stage1/cohere/estree/stalls_deadlines_test.go b/stage1/cohere/estree/stalls_deadlines_test.go
+index fe096db8..f44f83be 100644
+--- a/stage1/cohere/estree/stalls_deadlines_test.go
++++ b/stage1/cohere/estree/stalls_deadlines_test.go
+@@ -18,7 +18,7 @@ import (
+ // retain stdout/stderr or run compilers. This uses Go and Unix APIs on macOS/Linux.
+ func estreeScopedCommand(ctx context.Context, name string, args ...string) *exec.Cmd {
+ 	command := exec.CommandContext(ctx, name, args...)
+-	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
++	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: false}
+ 	command.Cancel = func() error {
+ 		if command.Process == nil {
+ 			return os.ErrProcessDone

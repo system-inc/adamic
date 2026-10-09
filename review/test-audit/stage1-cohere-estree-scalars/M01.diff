@@ -1,0 +1,13 @@
+diff --git a/stage1/cohere/estree/protocol.ts b/stage1/cohere/estree/protocol.ts
+index d2533879..84b9cf58 100644
+--- a/stage1/cohere/estree/protocol.ts
++++ b/stage1/cohere/estree/protocol.ts
+@@ -41,7 +41,7 @@ export function dump(arena: Arena, root: number, depth = 0): string {
+         if(frame === undefined) {
+             break;
+         }
+-        const level = frame.depth;
++        const level = frame.depth + 1;
+         if(frame.id < 0) {
+             parts.push(`${level} null\n`);
+             continue;

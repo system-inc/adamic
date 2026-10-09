@@ -1,0 +1,222 @@
+[
+  {
+    "id": "harness-warm-0",
+    "regex": "^TestProduct_SyntaxMutantsSetup_000$",
+    "wall": 45.430349244000354,
+    "exit": 0,
+    "cache": "/tmp/u088/cache/harness",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestProduct_SyntaxMutantsSetup_000$"
+    ]
+  },
+  {
+    "id": "harness-warm-1",
+    "regex": "^TestProduct_SyntaxMutantsSetup_001$",
+    "wall": 34.29065033899951,
+    "exit": 0,
+    "cache": "/tmp/u088/cache/harness",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestProduct_SyntaxMutantsSetup_001$"
+    ]
+  },
+  {
+    "id": "harness-warm-2",
+    "regex": "^TestProduct_SyntaxMutantsSetup_002$",
+    "wall": 31.594293848000234,
+    "exit": 0,
+    "cache": "/tmp/u088/cache/harness",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestProduct_SyntaxMutantsSetup_002$"
+    ]
+  },
+  {
+    "id": "W01",
+    "regex": "^(TestBoundedPortParserPlantedDisagreement|TestSyntaxMutants_[0-9]{3}|TestSyntaxMutantsUnion)$",
+    "wall": 7.64696951499991,
+    "exit": 1,
+    "cache": "/tmp/u088/cache/harness",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^(TestBoundedPortParserPlantedDisagreement|TestSyntaxMutants_[0-9]{3}|TestSyntaxMutantsUnion)$"
+    ]
+  },
+  {
+    "id": "W02",
+    "regex": "^(TestPortStallControlPlantedSurvivor|TestPortStallControl_[0-9]{3})$",
+    "wall": 63.72012212899972,
+    "exit": 1,
+    "cache": "/tmp/u088/cache/harness",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^(TestPortStallControlPlantedSurvivor|TestPortStallControl_[0-9]{3})$"
+    ]
+  },
+  {
+    "id": "W03",
+    "regex": "^TestSyntaxMutants_00[12]$",
+    "wall": 5.047775066000213,
+    "exit": 0,
+    "cache": "/tmp/u088/cache/harness",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestSyntaxMutants_00[12]$"
+    ]
+  },
+  {
+    "id": "S01",
+    "regex": "^TestEstreeScopedProcessGroupDeadline$",
+    "wall": 3.1122864549997757,
+    "exit": 1,
+    "cache": "/tmp/u088/cache/harness",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestEstreeScopedProcessGroupDeadline$"
+    ]
+  },
+  {
+    "id": "S02",
+    "regex": "^TestProduct_SyntaxMutantsGoOracle$",
+    "wall": 4.105257811999763,
+    "exit": 0,
+    "cache": "/tmp/u088/cache/S02",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestProduct_SyntaxMutantsGoOracle$"
+    ]
+  },
+  {
+    "id": "S03",
+    "regex": "^TestProduct_SyntaxMutantLowered_[0-9]{3}$",
+    "wall": 31.731267697000476,
+    "exit": 0,
+    "cache": "/tmp/u088/cache/S03",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestProduct_SyntaxMutantLowered_[0-9]{3}$"
+    ]
+  },
+  {
+    "id": "S04",
+    "regex": "^TestProduct_SyntaxMutantNative_00[12]$",
+    "wall": 4.666904253999746,
+    "exit": 0,
+    "cache": "/tmp/u088/cache/S04",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestProduct_SyntaxMutantNative_00[12]$"
+    ]
+  },
+  {
+    "id": "S05",
+    "regex": "^TestProduct_SyntaxMutantsSetup_[0-9]{3}$",
+    "wall": 3.7943313460000354,
+    "exit": 0,
+    "cache": "/tmp/u088/cache/S05",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestProduct_SyntaxMutantsSetup_[0-9]{3}$"
+    ]
+  }
+]
