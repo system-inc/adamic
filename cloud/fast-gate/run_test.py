@@ -1031,5 +1031,207 @@ esac
                 self.assertIn("refs/heads/gate-logs/" + "b"*12, handle.read())
 
 
+class ReverseDependencies(unittest.TestCase):
+    def setUp(self):
+        self.scratch = tempfile.TemporaryDirectory()
+        self.addCleanup(self.scratch.cleanup)
+        self.tree = self.scratch.name
+        realRun(["git", "init", "-q", self.tree], check=True)
+        self.packages = []
+        for name, fields in (("internal/load", {}), ("middle", {"TestImports": [run.module + "/internal/load"]}),
+                             ("outer", {"XTestImports": [run.module + "/middle"]}),
+                             ("ordinary", {"Imports": [run.module + "/internal/load"]}), ("unrelated", {}), ("internal/oracle", {}), ("stage1/gaps", {})):
+            directory = os.path.join(self.tree, name)
+            os.makedirs(directory)
+            self.packages.append(dict(Dir=directory, ImportPath=run.module + "/" + name, **fields))
+        self.gate = run.Gate.__new__(run.Gate)
+        self.gate.arguments = types.SimpleNamespace(tree=self.tree, tools=self.tree)
+        self.gate.result = {}
+        self.gate.deferred = {run.module + "/stage1/gaps": {"TestGap"}}
+        self.gate.selectOracle = mock.Mock(return_value={"whole": False})
+        self.gate.command = mock.Mock(return_value=types.SimpleNamespace(returncode=0, stdout="".join(json.dumps(p) for p in self.packages)))
+        self.gate.git = lambda tree, *args: run.git(tree, *args)
+        self.declare({"stage1/gaps": ["internal/load"], "internal/oracle": ["internal/load"]})
+
+    def declare(self, packages):
+        path = os.path.join(self.tree, "cloud/fast-gate/compiler-dependencies.json")
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        with open(path, "w") as handle:
+            json.dump({"version": 1, "packages": packages}, handle)
+
+    def test_transitive_test_imports_and_unrelated_package(self):
+        packages, unowned = self.gate.touched(["internal/load/load.go"])
+        self.assertIn(run.module + "/ordinary", packages)
+        self.assertIn(run.module + "/middle", packages)
+        self.assertIn(run.module + "/outer", packages)
+        self.assertNotIn(run.module + "/unrelated", packages)
+        self.assertEqual(unowned, [])
+        self.assertEqual(self.gate.command.call_args.args[0], ["go", "list", "-deps", "-test", "-json", "./..."])
+
+    def test_test_variants_normalize_to_real_packages(self):
+        self.packages[1]["ImportPath"] += " [" + run.module + "/middle.test]"
+        self.packages[2]["XTestImports"] = [self.packages[1]["ImportPath"]]
+        self.packages.append(dict(Dir=os.path.join(self.tree, "outer"), Name="main", ImportPath=run.module + "/outer.test", Imports=[run.module + "/outer"]))
+        self.gate.command.return_value.stdout = "".join(json.dumps(p) for p in self.packages)
+        packages, _ = self.gate.touched(["internal/load/load.go"])
+        self.assertIn(run.module + "/middle", packages)
+        self.assertIn(run.module + "/outer", packages)
+        self.assertNotIn(run.module + "/outer.test", packages)
+
+    def test_external_test_package_uses_its_real_owner(self):
+        self.packages.append(dict(Dir=os.path.join(self.tree, "outer"), ForTest=run.module + "/outer", ImportPath=run.module + "/outer_test [" + run.module + "/outer.test]", Imports=[run.module + "/internal/load"]))
+        self.gate.command.return_value.stdout = "".join(json.dumps(p) for p in self.packages)
+        packages, unowned = self.gate.touched(["outer/source.go"])
+        self.assertEqual(packages, [run.module + "/outer"])
+        self.assertEqual(unowned, [])
+
+    def test_opaque_gap_and_whole_oracle_are_selected(self):
+        packages, _ = self.gate.touched(["internal/load/load.go"])
+        self.assertIn(run.module + "/stage1/gaps", packages)
+        self.assertTrue(self.gate.oracleSelection["whole"])
+        self.assertEqual(self.gate.deferred, {})
+
+    def test_census_rejects_a_new_compiler_runner(self):
+        path = os.path.join(self.tree, "stage1/new/probe_test.go")
+        os.makedirs(os.path.dirname(path))
+        with open(path, "w") as handle:
+            handle.write('package new\nvar command = "cmd/adamic"\n')
+        realRun(["git", "-C", self.tree, "add", "."], check=True)
+        with self.assertRaisesRegex(ValueError, "census.*stage1/new/probe_test.go"):
+            self.gate.touched(["internal/load/load.go", "stage1/new/probe_test.go"])
+
+    def test_census_rejects_computed_compiler_outside_stage1(self):
+        path = os.path.join(self.tree, "cmd/new/probe_test.go")
+        os.makedirs(os.path.dirname(path))
+        with open(path, "w") as handle:
+            handle.write('package new\nimport "os/exec"\nfunc TestCompiler(t *testing.T) { exec.Command(binary(), "types", "input.a").Run() }\n')
+        realRun(["git", "-C", self.tree, "add", "."], check=True)
+        with self.assertRaisesRegex(ValueError, "census.*cmd/new/probe_test.go"):
+            self.gate.touched(["internal/load/load.go", "cmd/new/probe_test.go"])
+
+    def test_census_rejects_removed_declaration(self):
+        path = os.path.join(self.tree, "stage1/gaps/probe_test.go")
+        with open(path, "w") as handle:
+            handle.write('package gaps\nimport "os/exec"\n')
+        realRun(["git", "-C", self.tree, "add", "."], check=True)
+        self.declare({"internal/oracle": ["internal/load"]})
+        with self.assertRaisesRegex(ValueError, "census.*stage1/gaps/probe_test.go"):
+            self.gate.touched(["internal/load/load.go", "stage1/gaps/probe_test.go"])
+
+    def test_an_undeclared_consumer_on_the_base_is_named_not_red(self):
+        path = os.path.join(self.tree, "stage1/old/probe_test.go")
+        os.makedirs(os.path.dirname(path))
+        with open(path, "w") as handle:
+            handle.write('package old\nvar command = "cmd/adamic"\n')
+        realRun(["git", "-C", self.tree, "add", "."], check=True)
+        try:
+            self.gate.touched(["internal/load/load.go"])
+        except ValueError as error:
+            self.fail("a consumer the change didn't touch turned it red: %s" % error)
+        self.assertEqual(self.gate.result["compiler_consumers_undeclared_on_base"], ["stage1/old/probe_test.go"])
+
+    def test_a_branch_declares_its_own_consumer_over_the_tools_map(self):
+        toolsDirectory = tempfile.TemporaryDirectory()
+        self.addCleanup(toolsDirectory.cleanup)
+        tools = toolsDirectory.name
+        os.makedirs(os.path.join(tools, "cloud/fast-gate"))
+        with open(os.path.join(tools, "cloud/fast-gate/compiler-dependencies.json"), "w") as handle:
+            json.dump({"version": 1, "packages": {"internal/oracle": ["internal/load"]}}, handle)
+        self.gate.arguments = types.SimpleNamespace(tree=self.tree, tools=tools)
+        path = os.path.join(self.tree, "stage1/gaps/probe_test.go")
+        with open(path, "w") as handle:
+            handle.write('package gaps\nimport "os/exec"\n')
+        realRun(["git", "-C", self.tree, "add", "."], check=True)
+        # The tree's map declares stage1/gaps (setUp); the tools' map doesn't: merged, the consumer is declared.
+        try:
+            packages, _ = self.gate.touched(["internal/load/load.go", "stage1/gaps/probe_test.go"])
+        except ValueError as error:
+            self.fail("the branch's own declaration wasn't read: %s" % error)
+        self.assertIn(run.module + "/stage1/gaps", packages)
+
+    def test_stage3_driver_declaration_and_selection(self):
+        path = os.path.join(self.tree, "cloud/fast-gate/compiler-dependencies.json")
+        with open(path) as handle:
+            declarations = json.load(handle)
+        declarations["drivers"] = {"stage3/drivers/parser": {"dependencies": ["middle"]}}
+        with open(path, "w") as handle:
+            json.dump(declarations, handle)
+        self.gate.touched(["internal/load/load.go"])
+        self.assertEqual(self.gate.result["selected_compiler_drivers"], ["stage3/drivers/parser"])
+        self.gate.touched(["unrelated/source.go"])
+        self.assertEqual(self.gate.result["selected_compiler_drivers"], [])
+
+    def test_invalid_driver_map_fails_closed(self):
+        path = os.path.join(self.tree, "cloud/fast-gate/compiler-dependencies.json")
+        with open(path) as handle:
+            declarations = json.load(handle)
+        declarations["drivers"] = {"stage3/drivers/parser": {"dependencies": ["internal/missing"]}}
+        with open(path, "w") as handle:
+            json.dump(declarations, handle)
+        with self.assertRaisesRegex(ValueError, "invalid compiler driver dependencies"):
+            self.gate.touched(["internal/load/load.go"])
+
+    def test_census_rejects_undeclared_script_driver(self):
+        path = os.path.join(self.tree, "stage3/drivers/new/run.py")
+        os.makedirs(os.path.dirname(path))
+        with open(path, "w") as handle:
+            handle.write('import subprocess\nsubprocess.run([compiler, "build", "input.a"])\n')
+        realRun(["git", "-C", self.tree, "add", "."], check=True)
+        with self.assertRaisesRegex(ValueError, "census.*stage3/drivers/new/run.py"):
+            self.gate.touched(["internal/load/load.go", "stage3/drivers/new/run.py"])
+
+    def test_invalid_map_fails_closed(self):
+        self.declare({"stage1/gaps": ["internal/missing"]})
+        with self.assertRaisesRegex(ValueError, "invalid compiler dependencies"):
+            self.gate.touched(["internal/load/load.go"])
+
+    def test_embedding_and_fixture_ownership_survive(self):
+        self.packages[0]["EmbedFiles"] = ["runtime/header.h"]
+        self.gate.command.return_value.stdout = "".join(json.dumps(p) for p in self.packages)
+        packages, unowned = self.gate.touched(["internal/load/runtime/header.h", "middle/testdata/input.ts", "unknown.txt"])
+        self.assertIn(run.module + "/outer", packages)
+        self.assertEqual(unowned, ["unknown.txt"])
+
+
+class ReverseDependencyMutants(unittest.TestCase):
+    def test_each_check_kills_its_mutant(self):
+        with open(run.__file__) as handle:
+            original = handle.read()
+        mutants = [
+            ("external test owner lost", 'package.get("ForTest") or ', '', "test_external_test_package_uses_its_real_owner"),
+            ("test variants not normalized", '.split(" [", 1)[0]', '', "test_test_variants_normalize_to_real_packages"),
+            ("synthetic test binary selected", 'if package.get("Name") == "main"', 'if False and package.get("Name") == "main"', "test_test_variants_normalize_to_real_packages"),
+            ("ordinary imports omitted", 'package.get("Imports", [])', '[]', "test_transitive_test_imports_and_unrelated_package"),
+            ("test imports omitted", 'package.get("TestImports", [])', '[]', "test_transitive_test_imports_and_unrelated_package"),
+            ("external test imports omitted", 'package.get("XTestImports", [])', '[]', "test_transitive_test_imports_and_unrelated_package"),
+            ("transitive walk removed", 'pending.append(dependent)', 'pass', "test_transitive_test_imports_and_unrelated_package"),
+            ("opaque dependencies ignored", 'dependencies = self.compilerDependencies(directories, changed)', 'dependencies = {}', "test_opaque_gap_and_whole_oracle_are_selected"),
+            ("compiler oracle narrowed", 'if compilerChanged or oracle not in changedPackages else self.selectOracle()', 'if False else self.selectOracle()', "test_opaque_gap_and_whole_oracle_are_selected"),
+            ("computed invocation detection removed", '|"os/exec"|os\\.StartProcess|syscall\\.Exec', '', "test_census_rejects_computed_compiler_outside_stage1"),
+            ("census restricted to stage1", '"ls-files").splitlines()', '"ls-files", "--", "stage1").splitlines()', "test_census_rejects_computed_compiler_outside_stage1"),
+            ("removed map entry accepted", 'if missing:', 'if False:', "test_census_rejects_removed_declaration"),
+            ("base consumers red the change", 'missing = [path for path in missing if path in touchedFiles]', 'pass', "test_an_undeclared_consumer_on_the_base_is_named_not_red"),
+            ("branch map ignored", 'declarations.setdefault(field, {}).update(layer[field])', 'pass', "test_a_branch_declares_its_own_consumer_over_the_tools_map"),
+            ("driver dependencies not validated", 'any(value not in directories for value in inputs)', 'False', "test_invalid_driver_map_fails_closed"),
+            ("script census removed", 'if re.search(r"subprocess|child_process|', 'if False and re.search(r"subprocess|child_process|', "test_census_rejects_undeclared_script_driver"),
+            ("driver selection removed", 'self.result["selected_compiler_drivers"] = sorted(', 'self.result["selected_compiler_drivers"] = sorted([] if True else ', "test_stage3_driver_declaration_and_selection"),
+            ("census disabled", 'if missing:', 'if False:', "test_census_rejects_a_new_compiler_runner"),
+            ("invalid dependencies accepted", 'value not in directories', 'False', "test_invalid_map_fails_closed"),
+            ("affected tests deferred", 'self.deferred = {}', 'pass', "test_opaque_gap_and_whole_oracle_are_selected"),
+            ("fixture ancestry removed", 'while owner is None and ancestor not in', 'while False and ancestor not in', "test_embedding_and_fixture_ownership_survive"),
+        ]
+        for name, before, after, test in mutants:
+            with self.subTest(mutant=name):
+                self.assertIn(before, original)
+                namespace = dict(run.__dict__)
+                exec(compile(original.replace(before, after), run.__file__, "exec"), namespace)
+                mutated = namespace["Gate"]
+                with mock.patch.object(run.Gate, "touched", mutated.touched), mock.patch.object(run.Gate, "compilerDependencies", mutated.compilerDependencies):
+                    result = unittest.TestResult()
+                    ReverseDependencies(test).run(result)
+                self.assertEqual(len(result.errors), 0, result.errors)
+                self.assertEqual(len(result.failures), 1, (name, result.failures))
+
+
 if __name__ == "__main__":
     unittest.main()
