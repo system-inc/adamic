@@ -1,0 +1,11 @@
+--- a/internal/native/emit_values.go
++++ b/internal/native/emit_values.go
+@@ -76,7 +76,7 @@
+ 	case value < -1.7976931348623157e308:
+ 		return "(-HUGE_VAL)"
+ 	}
+-	return "(" + strconv.FormatFloat(value, 'x', -1, 64) + ")"
++	return "(" + strconv.FormatFloat(value, 'x', 0, 64) + ")"
+ }
+ 
+ // absent is an omitted argument, distinct from an uninitialized local's placeholder.

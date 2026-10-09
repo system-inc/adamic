@@ -1,0 +1,153 @@
+[
+  {
+    "diff": "b02-003-M14",
+    "file_line": "internal/lower/locals.go:13",
+    "source_branch": "test-audit/internal-oracle-checked_views_v2_source",
+    "all_catchers": [],
+    "panics": [],
+    "completed": false,
+    "runs": [
+      {
+        "command": [
+          "go",
+          "test",
+          "-count=1",
+          "-timeout",
+          "60m",
+          "-json",
+          "./internal/oracle/",
+          "-skip",
+          "^(TestCallTarget|TestCheckedCastFlushesOutput|TestCheckedCastRunsNoCatchOrFinally|TestCheckedViewUntaggedSourceFlows|TestCheckedViewV2ArrayArmBoundary|TestCheckedViewV2MovedStage3Results|TestFileWritesLandInNodesOrder|TestImportCycleRuntimeCalls|TestInterfaceCastImportedConstruction|TestModuleNamespaceReadsMatchNode|TestNamespaceLiveExportBoundary|TestNumericEnumNeverPathsPinned|TestNumericEnumNeverPinned|TestOmittedOriginalProbePolicy|TestParserNamespace|TestRegexCycleFixtureHasItsNativeDependency|TestStage3EnumSparseArrayBoundary|TestTypedArrayWriteStopIsPinned|TestWASIEmission|TestCallTargetThrowAgreesWithNode|TestDirectClosureCallAgreesWithNode|TestParserNamespaceReceiver|TestParserNamespaceClass|TestParserCallableNamespace)($|_|/)|^(TestArgumentsLengthWrongSlotMutant|TestArrayFamilyMutants|TestArrayWithBoundsMutant|TestCheckedCastMutants|TestCheckedViewV2CallableProducerMutant|TestCheckedViewV2MembershipMutant|TestCheckedViewV2RepresentationMutants|TestCheckedViewV2TupleIdentityMutant|TestCheckedViewV2WrongFamilyMutant|TestClockGenericReturnsT01Mutant|TestClosedNestedConstituentMutant|TestConditionLedgerMissingSiteMutant|TestConditionLedgerNullMutant|TestConditionNaNMutant|TestCountsAreRecorded|TestEnumCleanupMutant|TestEnumNameEnumerationMutant|TestEnumSemanticMutants|TestFallthroughMutants|TestInterfaceCastRuntimeMutants|TestLazyInitializerIsNotEagerMutant|TestLibraryMapSetMutants|TestLibraryMethodAliasReadMutant|TestLibraryMethodCaptureMutants|TestLibraryMethodOwnLoadMutants|TestLibraryMethodValueMutants|TestLibraryStringMutants|TestLiteralOptionalOracleCatchesMutant|TestLiteralUndefinedOracleCatchesMutant|TestMathNumberOracleCatchesMutants|TestModuleNamespaceLiveBindingMutant|TestModuleNamespaceReadinessMutants|TestNamespaceRuledMutants|TestNamespaceSemanticMutants|TestNamespaceStateMutants|TestNestedCallbackCarrierMutantIsCaught|TestNestedReferenceIdentityMutant|TestNestedSiblingCycleMutantIsCaught|TestNodeFSFileMutants|TestNotYetLibraryObjectEntriesConstMutant|TestNotYetLibraryRegexCallbackMutants|TestNotYetLibraryRegexOffsetMutants|TestNotYetLibraryStringBoundsMutants|TestOct6InheritanceMutants|TestOct6ReleaseMutant|TestOmittedArgumentZeroMutantIsCaught|TestOmittedReaderZeroMutantIsCaught|TestParameterPropertyMutants|TestParameterPropertyOwnershipMutant|TestParserCallableNamespaceMutant|TestParserNamespaceClassRegistrationMutant|TestParserNamespaceReceiverMutant|TestPrivateGenericMethodOwnerMutant|TestReadinessMutants|TestRegExpReplacementNodeMutants|TestRegExpReplacementTypeGuardMutants|TestRepresentationClockSourceMutant|TestScannerNestedOverloadImplementationMutantIsCaught|TestScannerNestedReferenceMutants|TestSwitchCaseDeclarationMutants|TestSwitchTrailingEmptyMutant|TestSyntaxModuleDeclarationMutants|TestSyntaxSubstrMutants|TestTypeOfConstructorMutant|TestTypeOfNullMutant|TestTypeOfNullSlotPresenceMutant|TestTypeOfStringLiteralMutant|TestUninitializedIsNotNullishMutant|TestUnknownNarrowingMutants|TestWASIOracleCatchesMutants|TestWASIRunnerCatchesMutants)($|/)"
+        ],
+        "environment": {
+          "GOCACHE": "/tmp/rp-oracle-full/go-cache/w0",
+          "ADAMIC_GATE_UNCACHED": "1",
+          "ADAMIC_BUILD_CACHE_DIR": "/tmp/rp-oracle-full/cache/b02-003-M14-r0",
+          "TMPDIR": "/tmp/rp-oracle-full/tmp/b02-003-M14-r0",
+          "GOTMPDIR": "/tmp/rp-oracle-full/tmp/b02-003-M14-r0"
+        },
+        "log": "logs/b02-003-M14-r0.log.gz",
+        "exit": 1,
+        "wall_seconds": 233.93,
+        "failed_top_level": [],
+        "panics": [],
+        "package_completed": false
+      }
+    ],
+    "broken": "Build/process failure without a completed package result",
+    "wall_seconds": 234.325
+  },
+  {
+    "diff": "b02-005-M8",
+    "file_line": "internal/native/view_unions_untagged.go:59",
+    "source_branch": "test-audit/internal-oracle-checked_views_v2_source",
+    "all_catchers": [],
+    "panics": [],
+    "completed": false,
+    "runs": [
+      {
+        "command": [
+          "go",
+          "test",
+          "-count=1",
+          "-timeout",
+          "60m",
+          "-json",
+          "./internal/oracle/",
+          "-skip",
+          "^(TestCallTarget|TestCheckedCastFlushesOutput|TestCheckedCastRunsNoCatchOrFinally|TestCheckedViewUntaggedSourceFlows|TestCheckedViewV2ArrayArmBoundary|TestCheckedViewV2MovedStage3Results|TestFileWritesLandInNodesOrder|TestImportCycleRuntimeCalls|TestInterfaceCastImportedConstruction|TestModuleNamespaceReadsMatchNode|TestNamespaceLiveExportBoundary|TestNumericEnumNeverPathsPinned|TestNumericEnumNeverPinned|TestOmittedOriginalProbePolicy|TestParserNamespace|TestRegexCycleFixtureHasItsNativeDependency|TestStage3EnumSparseArrayBoundary|TestTypedArrayWriteStopIsPinned|TestWASIEmission|TestCallTargetThrowAgreesWithNode|TestDirectClosureCallAgreesWithNode|TestParserNamespaceReceiver|TestParserNamespaceClass|TestParserCallableNamespace)($|_|/)|^(TestArgumentsLengthWrongSlotMutant|TestArrayFamilyMutants|TestArrayWithBoundsMutant|TestCheckedCastMutants|TestCheckedViewV2CallableProducerMutant|TestCheckedViewV2MembershipMutant|TestCheckedViewV2RepresentationMutants|TestCheckedViewV2TupleIdentityMutant|TestCheckedViewV2WrongFamilyMutant|TestClockGenericReturnsT01Mutant|TestClosedNestedConstituentMutant|TestConditionLedgerMissingSiteMutant|TestConditionLedgerNullMutant|TestConditionNaNMutant|TestCountsAreRecorded|TestEnumCleanupMutant|TestEnumNameEnumerationMutant|TestEnumSemanticMutants|TestFallthroughMutants|TestInterfaceCastRuntimeMutants|TestLazyInitializerIsNotEagerMutant|TestLibraryMapSetMutants|TestLibraryMethodAliasReadMutant|TestLibraryMethodCaptureMutants|TestLibraryMethodOwnLoadMutants|TestLibraryMethodValueMutants|TestLibraryStringMutants|TestLiteralOptionalOracleCatchesMutant|TestLiteralUndefinedOracleCatchesMutant|TestMathNumberOracleCatchesMutants|TestModuleNamespaceLiveBindingMutant|TestModuleNamespaceReadinessMutants|TestNamespaceRuledMutants|TestNamespaceSemanticMutants|TestNamespaceStateMutants|TestNestedCallbackCarrierMutantIsCaught|TestNestedReferenceIdentityMutant|TestNestedSiblingCycleMutantIsCaught|TestNodeFSFileMutants|TestNotYetLibraryObjectEntriesConstMutant|TestNotYetLibraryRegexCallbackMutants|TestNotYetLibraryRegexOffsetMutants|TestNotYetLibraryStringBoundsMutants|TestOct6InheritanceMutants|TestOct6ReleaseMutant|TestOmittedArgumentZeroMutantIsCaught|TestOmittedReaderZeroMutantIsCaught|TestParameterPropertyMutants|TestParameterPropertyOwnershipMutant|TestParserCallableNamespaceMutant|TestParserNamespaceClassRegistrationMutant|TestParserNamespaceReceiverMutant|TestPrivateGenericMethodOwnerMutant|TestReadinessMutants|TestRegExpReplacementNodeMutants|TestRegExpReplacementTypeGuardMutants|TestRepresentationClockSourceMutant|TestScannerNestedOverloadImplementationMutantIsCaught|TestScannerNestedReferenceMutants|TestSwitchCaseDeclarationMutants|TestSwitchTrailingEmptyMutant|TestSyntaxModuleDeclarationMutants|TestSyntaxSubstrMutants|TestTypeOfConstructorMutant|TestTypeOfNullMutant|TestTypeOfNullSlotPresenceMutant|TestTypeOfStringLiteralMutant|TestUninitializedIsNotNullishMutant|TestUnknownNarrowingMutants|TestWASIOracleCatchesMutants|TestWASIRunnerCatchesMutants)($|/)"
+        ],
+        "environment": {
+          "GOCACHE": "/tmp/rp-oracle-full/go-cache/w1",
+          "ADAMIC_GATE_UNCACHED": "1",
+          "ADAMIC_BUILD_CACHE_DIR": "/tmp/rp-oracle-full/cache/b02-005-M8-r0",
+          "TMPDIR": "/tmp/rp-oracle-full/tmp/b02-005-M8-r0",
+          "GOTMPDIR": "/tmp/rp-oracle-full/tmp/b02-005-M8-r0"
+        },
+        "log": "logs/b02-005-M8-r0.log.gz",
+        "exit": 1,
+        "wall_seconds": 162.305,
+        "failed_top_level": [],
+        "panics": [],
+        "package_completed": false
+      }
+    ],
+    "broken": "Build/process failure without a completed package result",
+    "wall_seconds": 162.648
+  },
+  {
+    "diff": "b05-013-M10",
+    "file_line": "internal/lower/namespaces.go:432",
+    "source_branch": "test-audit/internal-oracle-method_values_mutant",
+    "all_catchers": [],
+    "panics": [],
+    "completed": false,
+    "runs": [
+      {
+        "command": [
+          "go",
+          "test",
+          "-count=1",
+          "-timeout",
+          "60m",
+          "-json",
+          "./internal/oracle/",
+          "-skip",
+          "^(TestCallTarget|TestCheckedCastFlushesOutput|TestCheckedCastRunsNoCatchOrFinally|TestCheckedViewUntaggedSourceFlows|TestCheckedViewV2ArrayArmBoundary|TestCheckedViewV2MovedStage3Results|TestFileWritesLandInNodesOrder|TestImportCycleRuntimeCalls|TestInterfaceCastImportedConstruction|TestModuleNamespaceReadsMatchNode|TestNamespaceLiveExportBoundary|TestNumericEnumNeverPathsPinned|TestNumericEnumNeverPinned|TestOmittedOriginalProbePolicy|TestParserNamespace|TestRegexCycleFixtureHasItsNativeDependency|TestStage3EnumSparseArrayBoundary|TestTypedArrayWriteStopIsPinned|TestWASIEmission|TestCallTargetThrowAgreesWithNode|TestDirectClosureCallAgreesWithNode|TestParserNamespaceReceiver|TestParserNamespaceClass|TestParserCallableNamespace)($|_|/)|^(TestArgumentsLengthWrongSlotMutant|TestArrayFamilyMutants|TestArrayWithBoundsMutant|TestCheckedCastMutants|TestCheckedViewV2CallableProducerMutant|TestCheckedViewV2MembershipMutant|TestCheckedViewV2RepresentationMutants|TestCheckedViewV2TupleIdentityMutant|TestCheckedViewV2WrongFamilyMutant|TestClockGenericReturnsT01Mutant|TestClosedNestedConstituentMutant|TestConditionLedgerMissingSiteMutant|TestConditionLedgerNullMutant|TestConditionNaNMutant|TestCountsAreRecorded|TestEnumCleanupMutant|TestEnumNameEnumerationMutant|TestEnumSemanticMutants|TestFallthroughMutants|TestInterfaceCastRuntimeMutants|TestLazyInitializerIsNotEagerMutant|TestLibraryMapSetMutants|TestLibraryMethodAliasReadMutant|TestLibraryMethodCaptureMutants|TestLibraryMethodOwnLoadMutants|TestLibraryMethodValueMutants|TestLibraryStringMutants|TestLiteralOptionalOracleCatchesMutant|TestLiteralUndefinedOracleCatchesMutant|TestMathNumberOracleCatchesMutants|TestModuleNamespaceLiveBindingMutant|TestModuleNamespaceReadinessMutants|TestNamespaceRuledMutants|TestNamespaceSemanticMutants|TestNamespaceStateMutants|TestNestedCallbackCarrierMutantIsCaught|TestNestedReferenceIdentityMutant|TestNestedSiblingCycleMutantIsCaught|TestNodeFSFileMutants|TestNotYetLibraryObjectEntriesConstMutant|TestNotYetLibraryRegexCallbackMutants|TestNotYetLibraryRegexOffsetMutants|TestNotYetLibraryStringBoundsMutants|TestOct6InheritanceMutants|TestOct6ReleaseMutant|TestOmittedArgumentZeroMutantIsCaught|TestOmittedReaderZeroMutantIsCaught|TestParameterPropertyMutants|TestParameterPropertyOwnershipMutant|TestParserCallableNamespaceMutant|TestParserNamespaceClassRegistrationMutant|TestParserNamespaceReceiverMutant|TestPrivateGenericMethodOwnerMutant|TestReadinessMutants|TestRegExpReplacementNodeMutants|TestRegExpReplacementTypeGuardMutants|TestRepresentationClockSourceMutant|TestScannerNestedOverloadImplementationMutantIsCaught|TestScannerNestedReferenceMutants|TestSwitchCaseDeclarationMutants|TestSwitchTrailingEmptyMutant|TestSyntaxModuleDeclarationMutants|TestSyntaxSubstrMutants|TestTypeOfConstructorMutant|TestTypeOfNullMutant|TestTypeOfNullSlotPresenceMutant|TestTypeOfStringLiteralMutant|TestUninitializedIsNotNullishMutant|TestUnknownNarrowingMutants|TestWASIOracleCatchesMutants|TestWASIRunnerCatchesMutants)($|/)"
+        ],
+        "environment": {
+          "GOCACHE": "/tmp/rp-oracle-full/go-cache/w1",
+          "ADAMIC_GATE_UNCACHED": "1",
+          "ADAMIC_BUILD_CACHE_DIR": "/tmp/rp-oracle-full/cache/b05-013-M10-r0",
+          "TMPDIR": "/tmp/rp-oracle-full/tmp/b05-013-M10-r0",
+          "GOTMPDIR": "/tmp/rp-oracle-full/tmp/b05-013-M10-r0"
+        },
+        "log": "logs/b05-013-M10-r0.log.gz",
+        "exit": 1,
+        "wall_seconds": 187.613,
+        "failed_top_level": [],
+        "panics": [],
+        "package_completed": false
+      }
+    ],
+    "broken": "Build/process failure without a completed package result",
+    "wall_seconds": 187.777
+  },
+  {
+    "diff": "b06-014-M4",
+    "file_line": "internal/lower/lower.go:22",
+    "source_branch": "test-audit/internal-oracle-oct6_mutant",
+    "all_catchers": [],
+    "panics": [],
+    "completed": true,
+    "runs": [
+      {
+        "command": [
+          "go",
+          "test",
+          "-count=1",
+          "-timeout",
+          "60m",
+          "-json",
+          "./internal/oracle/",
+          "-skip",
+          "^(TestCallTarget|TestCheckedCastFlushesOutput|TestCheckedCastRunsNoCatchOrFinally|TestCheckedViewUntaggedSourceFlows|TestCheckedViewV2ArrayArmBoundary|TestCheckedViewV2MovedStage3Results|TestFileWritesLandInNodesOrder|TestImportCycleRuntimeCalls|TestInterfaceCastImportedConstruction|TestModuleNamespaceReadsMatchNode|TestNamespaceLiveExportBoundary|TestNumericEnumNeverPathsPinned|TestNumericEnumNeverPinned|TestOmittedOriginalProbePolicy|TestParserNamespace|TestRegexCycleFixtureHasItsNativeDependency|TestStage3EnumSparseArrayBoundary|TestTypedArrayWriteStopIsPinned|TestWASIEmission|TestCallTargetThrowAgreesWithNode|TestDirectClosureCallAgreesWithNode|TestParserNamespaceReceiver|TestParserNamespaceClass|TestParserCallableNamespace)($|_|/)|^(TestArgumentsLengthWrongSlotMutant|TestArrayFamilyMutants|TestArrayWithBoundsMutant|TestCheckedCastMutants|TestCheckedViewV2CallableProducerMutant|TestCheckedViewV2MembershipMutant|TestCheckedViewV2RepresentationMutants|TestCheckedViewV2TupleIdentityMutant|TestCheckedViewV2WrongFamilyMutant|TestClockGenericReturnsT01Mutant|TestClosedNestedConstituentMutant|TestConditionLedgerMissingSiteMutant|TestConditionLedgerNullMutant|TestConditionNaNMutant|TestCountsAreRecorded|TestEnumCleanupMutant|TestEnumNameEnumerationMutant|TestEnumSemanticMutants|TestFallthroughMutants|TestInterfaceCastRuntimeMutants|TestLazyInitializerIsNotEagerMutant|TestLibraryMapSetMutants|TestLibraryMethodAliasReadMutant|TestLibraryMethodCaptureMutants|TestLibraryMethodOwnLoadMutants|TestLibraryMethodValueMutants|TestLibraryStringMutants|TestLiteralOptionalOracleCatchesMutant|TestLiteralUndefinedOracleCatchesMutant|TestMathNumberOracleCatchesMutants|TestModuleNamespaceLiveBindingMutant|TestModuleNamespaceReadinessMutants|TestNamespaceRuledMutants|TestNamespaceSemanticMutants|TestNamespaceStateMutants|TestNestedCallbackCarrierMutantIsCaught|TestNestedReferenceIdentityMutant|TestNestedSiblingCycleMutantIsCaught|TestNodeFSFileMutants|TestNotYetLibraryObjectEntriesConstMutant|TestNotYetLibraryRegexCallbackMutants|TestNotYetLibraryRegexOffsetMutants|TestNotYetLibraryStringBoundsMutants|TestOct6InheritanceMutants|TestOct6ReleaseMutant|TestOmittedArgumentZeroMutantIsCaught|TestOmittedReaderZeroMutantIsCaught|TestParameterPropertyMutants|TestParameterPropertyOwnershipMutant|TestParserCallableNamespaceMutant|TestParserNamespaceClassRegistrationMutant|TestParserNamespaceReceiverMutant|TestPrivateGenericMethodOwnerMutant|TestReadinessMutants|TestRegExpReplacementNodeMutants|TestRegExpReplacementTypeGuardMutants|TestRepresentationClockSourceMutant|TestScannerNestedOverloadImplementationMutantIsCaught|TestScannerNestedReferenceMutants|TestSwitchCaseDeclarationMutants|TestSwitchTrailingEmptyMutant|TestSyntaxModuleDeclarationMutants|TestSyntaxSubstrMutants|TestTypeOfConstructorMutant|TestTypeOfNullMutant|TestTypeOfNullSlotPresenceMutant|TestTypeOfStringLiteralMutant|TestUninitializedIsNotNullishMutant|TestUnknownNarrowingMutants|TestWASIOracleCatchesMutants|TestWASIRunnerCatchesMutants)($|/)"
+        ],
+        "environment": {
+          "GOCACHE": "/tmp/rp-oracle-full/go-cache/w0",
+          "ADAMIC_GATE_UNCACHED": "1",
+          "ADAMIC_BUILD_CACHE_DIR": "/tmp/rp-oracle-full/cache/b06-014-M4-r0",
+          "TMPDIR": "/tmp/rp-oracle-full/tmp/b06-014-M4-r0",
+          "GOTMPDIR": "/tmp/rp-oracle-full/tmp/b06-014-M4-r0"
+        },
+        "log": "logs/b06-014-M4-r0.log.gz",
+        "exit": 1,
+        "wall_seconds": 155.253,
+        "failed_top_level": [],
+        "panics": [],
+        "package_completed": true
+      }
+    ],
+    "wall_seconds": 155.45
+  }
+]

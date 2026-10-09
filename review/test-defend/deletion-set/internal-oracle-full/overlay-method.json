@@ -1,0 +1,6 @@
+{
+  "source_application": "Each standalone diff applies to a copy of its changed production files under /tmp/rp-oracle-full/applied; the Go overlay maps exact base paths to those copies.",
+  "embedded_c": "Go toolchain cmd/go/internal/work/exec.go:900 maps embedded files through fsys.Actual, so the adamic.c flush mutation is compiled.",
+  "go_subprocess": "internal/oracle/interface_cast_counts_test.go:18 invokes go run; its only caller is internal/oracle/counts_test.go:178 within excluded TestCountsAreRecorded.",
+  "main_tree": "Unchanged exact detached base throughout accepted overlay runs."
+}

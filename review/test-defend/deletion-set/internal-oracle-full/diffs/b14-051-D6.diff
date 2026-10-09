@@ -1,0 +1,11 @@
+--- a/internal/native/emit_expressions.go
++++ b/internal/native/emit_expressions.go
+@@ -751,7 +751,7 @@
+ 	case operandType == ir.Union && operator == ir.NotEqual:
+ 		return fmt.Sprintf("(!adamic_union_equal(%s, %s))", left, right)
+ 	}
+-	return fmt.Sprintf("(%s %s %s)", left, cOperators[operator], right)
++	return fmt.Sprintf("(%s %s %s)", right, cOperators[operator], left)
+ }
+ 
+ // narrowedAwayMessage is the panic of a number or a boolean the checker narrowed undefined out of,

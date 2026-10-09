@@ -1,0 +1,9 @@
+{
+  "base": "7b9d4272c28f59530ab13daa5c49067e47933b06",
+  "source_evidence_commit": "a8add762431bc259828c332e60a5ff9fc66b0655",
+  "nproc": 5,
+  "toolchain_setup": "warm env sourced; setup skipped",
+  "started_utc": "2026-10-09T20:13:41.299116+00:00",
+  "excluded_rule": "22 deletion candidates, TestCountsAreRecorded, and top-level names containing Mutant or Witness",
+  "concurrency": 2
+}

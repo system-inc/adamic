@@ -1,0 +1,11 @@
+--- a/internal/native/emit.go
++++ b/internal/native/emit.go
+@@ -147,7 +147,7 @@
+ 
+ // longestLiteral is the longest string literal C11 promises to compile (5.2.4.1: 4,095 characters),
+ // which clang holds a program to under -pedantic. A longer string is written as bytes (cBytes).
+-const longestLiteral = 4095
++const longestLiteral = 4096
+ 
+ // cBytes is a string's bytes as an array initializer, as many as it has, with no terminator.
+ func cBytes(value string) string {

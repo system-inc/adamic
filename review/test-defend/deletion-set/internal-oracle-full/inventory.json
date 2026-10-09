@@ -1,0 +1,97 @@
+[
+  {
+    "diff": "b02-003-M14",
+    "file_line": "internal/lower/locals.go:13",
+    "source_branch": "test-audit/internal-oracle-checked_views_v2_source"
+  },
+  {
+    "diff": "b02-005-M8",
+    "file_line": "internal/native/view_unions_untagged.go:59",
+    "source_branch": "test-audit/internal-oracle-checked_views_v2_source"
+  },
+  {
+    "diff": "b05-013-M10",
+    "file_line": "internal/lower/namespaces.go:432",
+    "source_branch": "test-audit/internal-oracle-method_values_mutant"
+  },
+  {
+    "diff": "b06-014-M4",
+    "file_line": "internal/lower/lower.go:22",
+    "source_branch": "test-audit/internal-oracle-oct6_mutant"
+  },
+  {
+    "diff": "b07-017-M04",
+    "file_line": "internal/lower/namespaces.go:94",
+    "source_branch": "test-audit/internal-oracle-parser_namespaces"
+  },
+  {
+    "diff": "b07-018-M05",
+    "file_line": "internal/lower/namespace_callable.go:21",
+    "source_branch": "test-audit/internal-oracle-parser_namespaces"
+  },
+  {
+    "diff": "b10-021-M06",
+    "file_line": "internal/native/emit_values.go:79",
+    "source_branch": "test-audit/internal-oracle-wasi"
+  },
+  {
+    "diff": "b11-023-D02",
+    "file_line": "internal/native/runtime/adamic.c:195",
+    "source_branch": "test-defend/internal-oracle-arguments_length"
+  },
+  {
+    "diff": "b12-041-D4",
+    "file_line": "internal/javascript/javascript.go:688",
+    "source_branch": "test-defend/internal-oracle-checked_views_flag_downcast"
+  },
+  {
+    "diff": "b14-043-D3",
+    "file_line": "internal/lower/enum_never.go:100",
+    "source_branch": "test-defend/internal-oracle-enums_open"
+  },
+  {
+    "diff": "b14-050-D5",
+    "file_line": "internal/lower/expression.go:784",
+    "source_branch": "test-defend/internal-oracle-enums_open"
+  },
+  {
+    "diff": "b14-051-D6",
+    "file_line": "internal/native/emit_expressions.go:754",
+    "source_branch": "test-defend/internal-oracle-enums_open"
+  },
+  {
+    "diff": "b14-052-D7",
+    "file_line": "internal/native/emit_branches.go:104",
+    "source_branch": "test-defend/internal-oracle-enums_open"
+  },
+  {
+    "diff": "b16-058-D02",
+    "file_line": "internal/lower/module_namespace.go:16",
+    "source_branch": "test-defend/internal-oracle-method_values_mutant"
+  },
+  {
+    "diff": "b17-065-D4",
+    "file_line": "internal/lower/non_null.go:106",
+    "source_branch": "test-defend/internal-oracle-oct6_mutant"
+  },
+  {
+    "diff": "b17-066-D5",
+    "file_line": "internal/native/emit_values.go:61",
+    "source_branch": "test-defend/internal-oracle-oct6_mutant"
+  },
+  {
+    "diff": "b17-067-D6",
+    "file_line": "internal/lower/expression.go:1024",
+    "source_branch": "test-defend/internal-oracle-oct6_mutant"
+  },
+  {
+    "diff": "b21-074-D2",
+    "file_line": "internal/native/emit_values.go:22",
+    "source_branch": "test-defend/internal-oracle-wasi"
+  },
+  {
+    "diff": "b21-076-D4",
+    "file_line": "internal/native/emit.go:150",
+    "source_branch": "test-defend/internal-oracle-wasi"
+  }
+]

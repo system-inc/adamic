@@ -1,0 +1,43 @@
+{
+  "diff": "b16-058-D02",
+  "file_line": "internal/lower/module_namespace.go:16",
+  "source_branch": "test-defend/internal-oracle-method_values_mutant",
+  "all_catchers": [
+    "TestNativeAgreesWithNode"
+  ],
+  "panics": [],
+  "completed": false,
+  "runs": [
+    {
+      "command": [
+        "go",
+        "test",
+        "-overlay=/tmp/rp-oracle-full/overlays/b16-058-D02.json",
+        "-count=1",
+        "-timeout",
+        "60m",
+        "-json",
+        "./internal/oracle/",
+        "-skip",
+        "^(TestCallTarget|TestCheckedCastFlushesOutput|TestCheckedCastRunsNoCatchOrFinally|TestCheckedViewUntaggedSourceFlows|TestCheckedViewV2ArrayArmBoundary|TestCheckedViewV2MovedStage3Results|TestFileWritesLandInNodesOrder|TestImportCycleRuntimeCalls|TestInterfaceCastImportedConstruction|TestModuleNamespaceReadsMatchNode|TestNamespaceLiveExportBoundary|TestNumericEnumNeverPathsPinned|TestNumericEnumNeverPinned|TestOmittedOriginalProbePolicy|TestParserNamespace|TestRegexCycleFixtureHasItsNativeDependency|TestStage3EnumSparseArrayBoundary|TestTypedArrayWriteStopIsPinned|TestWASIEmission|TestCallTargetThrowAgreesWithNode|TestDirectClosureCallAgreesWithNode|TestParserNamespaceReceiver|TestParserNamespaceClass|TestParserCallableNamespace)($|_|/)|^(TestArgumentsLengthWrongSlotMutant|TestArrayFamilyMutants|TestArrayWithBoundsMutant|TestCheckedCastMutants|TestCheckedViewV2CallableProducerMutant|TestCheckedViewV2MembershipMutant|TestCheckedViewV2RepresentationMutants|TestCheckedViewV2TupleIdentityMutant|TestCheckedViewV2WrongFamilyMutant|TestClockGenericReturnsT01Mutant|TestClosedNestedConstituentMutant|TestConditionLedgerMissingSiteMutant|TestConditionLedgerNullMutant|TestConditionNaNMutant|TestCountsAreRecorded|TestEnumCleanupMutant|TestEnumNameEnumerationMutant|TestEnumSemanticMutants|TestFallthroughMutants|TestInterfaceCastRuntimeMutants|TestLazyInitializerIsNotEagerMutant|TestLibraryMapSetMutants|TestLibraryMethodAliasReadMutant|TestLibraryMethodCaptureMutants|TestLibraryMethodOwnLoadMutants|TestLibraryMethodValueMutants|TestLibraryStringMutants|TestLiteralOptionalOracleCatchesMutant|TestLiteralUndefinedOracleCatchesMutant|TestMathNumberOracleCatchesMutants|TestModuleNamespaceLiveBindingMutant|TestModuleNamespaceReadinessMutants|TestNamespaceRuledMutants|TestNamespaceSemanticMutants|TestNamespaceStateMutants|TestNestedCallbackCarrierMutantIsCaught|TestNestedReferenceIdentityMutant|TestNestedSiblingCycleMutantIsCaught|TestNodeFSFileMutants|TestNotYetLibraryObjectEntriesConstMutant|TestNotYetLibraryRegexCallbackMutants|TestNotYetLibraryRegexOffsetMutants|TestNotYetLibraryStringBoundsMutants|TestOct6InheritanceMutants|TestOct6ReleaseMutant|TestOmittedArgumentZeroMutantIsCaught|TestOmittedReaderZeroMutantIsCaught|TestParameterPropertyMutants|TestParameterPropertyOwnershipMutant|TestParserCallableNamespaceMutant|TestParserNamespaceClassRegistrationMutant|TestParserNamespaceReceiverMutant|TestPrivateGenericMethodOwnerMutant|TestReadinessMutants|TestRegExpReplacementNodeMutants|TestRegExpReplacementTypeGuardMutants|TestRepresentationClockSourceMutant|TestScannerNestedOverloadImplementationMutantIsCaught|TestScannerNestedReferenceMutants|TestSwitchCaseDeclarationMutants|TestSwitchTrailingEmptyMutant|TestSyntaxModuleDeclarationMutants|TestSyntaxSubstrMutants|TestTypeOfConstructorMutant|TestTypeOfNullMutant|TestTypeOfNullSlotPresenceMutant|TestTypeOfStringLiteralMutant|TestUninitializedIsNotNullishMutant|TestUnknownNarrowingMutants|TestWASIOracleCatchesMutants|TestWASIRunnerCatchesMutants)($|/)"
+      ],
+      "environment": {
+        "GOMAXPROCS": "2",
+        "GOFLAGS": "-p=2",
+        "GOCACHE": "/tmp/rp-oracle-full/go-cache/w1",
+        "ADAMIC_GATE_UNCACHED": "1",
+        "ADAMIC_BUILD_CACHE_DIR": "/tmp/rp-oracle-full/cache/b16-058-D02-r0",
+        "TMPDIR": "/tmp/rp-oracle-full/tmp/b16-058-D02-r0",
+        "GOTMPDIR": "/tmp/rp-oracle-full/tmp/b16-058-D02-r0"
+      },
+      "log": "logs/b16-058-D02-r0.log.gz",
+      "exit": 1,
+      "wall_seconds": 713.029,
+      "failed_top_level": [
+        "TestNativeAgreesWithNode"
+      ],
+      "panics": [],
+      "package_completed": true
+    }
+  ]
+}

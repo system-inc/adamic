@@ -1,0 +1,10 @@
+--- a/internal/native/runtime/adamic.c
++++ b/internal/native/runtime/adamic.c
+@@ -192,7 +192,6 @@
+ _Noreturn void adamic_panic(const char *message, size_t length) {
+ 	static const char prefix[] = "adamic: panic: ";
+ 	// Everything the program printed comes first, as on Node.
+-	flush();
+ 	// Best effort: stderr may be what failed.
+ 	(void)write_all(adamic_stderr, prefix, sizeof prefix - 1);
+ 	(void)write_all(adamic_stderr, message, length);

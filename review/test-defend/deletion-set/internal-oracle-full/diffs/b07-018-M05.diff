@@ -1,0 +1,11 @@
+--- a/internal/lower/namespace_callable.go
++++ b/internal/lower/namespace_callable.go
+@@ -18,7 +18,7 @@
+ // A closure represents the callable identity, but has no attached object storage.
+ // Only uses that cannot observe that omitted container are admitted.
+ func (l *lowering) callableNamespaceUse(node *ast.Node) bool {
+-	if called(node) {
++	if !called(node) {
+ 		return true
+ 	}
+ 	use := node

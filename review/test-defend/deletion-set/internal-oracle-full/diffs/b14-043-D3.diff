@@ -1,0 +1,10 @@
+--- a/internal/lower/enum_never.go
++++ b/internal/lower/enum_never.go
+@@ -97,7 +97,6 @@
+ 	read := ir.Read{Local: local, Of: value.Type()}
+ 	var printed ir.Expression = ir.NumberToString{Value: read}
+ 	if value.Type().IsMaybe() {
+-		printed = ir.MaybeToString{Value: read}
+ 	} else if value.Type() == ir.Union {
+ 		printed = ir.UnionToString{Value: read}
+ 	}

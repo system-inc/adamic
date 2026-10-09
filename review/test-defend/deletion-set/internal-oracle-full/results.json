@@ -1,0 +1,1322 @@
+[
+  {
+    "diff": "b02-003-M14",
+    "file_line": "internal/lower/locals.go:13",
+    "source_branch": "test-audit/internal-oracle-checked_views_v2_source",
+    "all_catchers": [
+      "TestAPromptComesBeforeTheRead",
+      "TestASignalLeavesWhatWasPrinted",
+      "TestArgumentsLengthTypeScriptSource",
+      "TestCheckedViewFlagDowncast",
+      "TestCheckedViewInterfaces",
+      "TestCheckedViewObjectPrimitiveSource",
+      "TestCheckedViewObjects",
+      "TestCheckedViewOptionalReadBoundary",
+      "TestCheckedViewUntaggedArrayPending",
+      "TestCheckedViewUntaggedCallableUnion",
+      "TestCheckedViewUntaggedOptionalCallableControl",
+      "TestCheckedViewUntaggedOwnClassData",
+      "TestCheckedViewUntaggedRecursive",
+      "TestCheckedViewUntaggedSourceDispatch",
+      "TestCheckedViewV2ReadsAfterWrites",
+      "TestClassWrongOutput103",
+      "TestClosedStdoutEndsAsOnNode",
+      "TestClosureMergeRefusals",
+      "TestDefaultTaggedSourceViews",
+      "TestEntriesProvenance",
+      "TestEnumInitializationNode",
+      "TestEnumInitializationUnknownPinned",
+      "TestFractionalPowersReachRuntime",
+      "TestFreshWriteProbesStayRefused",
+      "TestFunctionValueBoundaryBoxing",
+      "TestImportCycleLoadTimeReads",
+      "TestImportedNonliteralConstCaseIsNotYet",
+      "TestInputAgreesWithNode",
+      "TestInterfaceCastChecksMalformedRead",
+      "TestInterfaceCastOracle",
+      "TestInterfaceCastScalarTags",
+      "TestJSONStringifyRefusals",
+      "TestLibraryMapSetIteratorCopiesRefused",
+      "TestLoopCountersAgreeWithNode",
+      "TestNarrowedFieldUsesSharedReadiness",
+      "TestNarrowedUnionMemberCheck",
+      "TestNarrowedUnionObjectTagRefusal",
+      "TestNativeAgreesWithNode",
+      "TestNestedCycleRefusal",
+      "TestNewExpressionCacheCaptureRemainsNotYet",
+      "TestNodeFSFileAgreesWithNode",
+      "TestNonNullWeakFreedNamesExpression",
+      "TestOneFileHoldsNodesOrder",
+      "TestParserNonNullSourceExtension",
+      "TestPredicateDirectionCountsAreRecorded",
+      "TestPredicateMiscompileRefusals",
+      "TestReviewProgramsAgreeWithNode",
+      "TestRuntimeLastIndexOfMatchesNode",
+      "TestScannerNestedReferences",
+      "TestStage3EnumFallthrough",
+      "TestStatementsSmallRulings",
+      "TestStatementsSmallTypeScriptIncrement",
+      "TestTypeScriptConditionsAgreeWithNode",
+      "TestTypedArrayWorkersStatsMatchesPlatforms",
+      "TestWeakReadsUndefinedOnceFreed"
+    ],
+    "panics": [],
+    "completed": true,
+    "runs": [
+      {
+        "command": [
+          "go",
+          "test",
+          "-overlay=/tmp/rp-oracle-full/overlays/b02-003-M14.json",
+          "-count=1",
+          "-timeout",
+          "60m",
+          "-json",
+          "./internal/oracle/",
+          "-skip",
+          "^(TestCallTarget|TestCheckedCastFlushesOutput|TestCheckedCastRunsNoCatchOrFinally|TestCheckedViewUntaggedSourceFlows|TestCheckedViewV2ArrayArmBoundary|TestCheckedViewV2MovedStage3Results|TestFileWritesLandInNodesOrder|TestImportCycleRuntimeCalls|TestInterfaceCastImportedConstruction|TestModuleNamespaceReadsMatchNode|TestNamespaceLiveExportBoundary|TestNumericEnumNeverPathsPinned|TestNumericEnumNeverPinned|TestOmittedOriginalProbePolicy|TestParserNamespace|TestRegexCycleFixtureHasItsNativeDependency|TestStage3EnumSparseArrayBoundary|TestTypedArrayWriteStopIsPinned|TestWASIEmission|TestCallTargetThrowAgreesWithNode|TestDirectClosureCallAgreesWithNode|TestParserNamespaceReceiver|TestParserNamespaceClass|TestParserCallableNamespace)($|_|/)|^(TestArgumentsLengthWrongSlotMutant|TestArrayFamilyMutants|TestArrayWithBoundsMutant|TestCheckedCastMutants|TestCheckedViewV2CallableProducerMutant|TestCheckedViewV2MembershipMutant|TestCheckedViewV2RepresentationMutants|TestCheckedViewV2TupleIdentityMutant|TestCheckedViewV2WrongFamilyMutant|TestClockGenericReturnsT01Mutant|TestClosedNestedConstituentMutant|TestConditionLedgerMissingSiteMutant|TestConditionLedgerNullMutant|TestConditionNaNMutant|TestCountsAreRecorded|TestEnumCleanupMutant|TestEnumNameEnumerationMutant|TestEnumSemanticMutants|TestFallthroughMutants|TestInterfaceCastRuntimeMutants|TestLazyInitializerIsNotEagerMutant|TestLibraryMapSetMutants|TestLibraryMethodAliasReadMutant|TestLibraryMethodCaptureMutants|TestLibraryMethodOwnLoadMutants|TestLibraryMethodValueMutants|TestLibraryStringMutants|TestLiteralOptionalOracleCatchesMutant|TestLiteralUndefinedOracleCatchesMutant|TestMathNumberOracleCatchesMutants|TestModuleNamespaceLiveBindingMutant|TestModuleNamespaceReadinessMutants|TestNamespaceRuledMutants|TestNamespaceSemanticMutants|TestNamespaceStateMutants|TestNestedCallbackCarrierMutantIsCaught|TestNestedReferenceIdentityMutant|TestNestedSiblingCycleMutantIsCaught|TestNodeFSFileMutants|TestNotYetLibraryObjectEntriesConstMutant|TestNotYetLibraryRegexCallbackMutants|TestNotYetLibraryRegexOffsetMutants|TestNotYetLibraryStringBoundsMutants|TestOct6InheritanceMutants|TestOct6ReleaseMutant|TestOmittedArgumentZeroMutantIsCaught|TestOmittedReaderZeroMutantIsCaught|TestParameterPropertyMutants|TestParameterPropertyOwnershipMutant|TestParserCallableNamespaceMutant|TestParserNamespaceClassRegistrationMutant|TestParserNamespaceReceiverMutant|TestPrivateGenericMethodOwnerMutant|TestReadinessMutants|TestRegExpReplacementNodeMutants|TestRegExpReplacementTypeGuardMutants|TestRepresentationClockSourceMutant|TestScannerNestedOverloadImplementationMutantIsCaught|TestScannerNestedReferenceMutants|TestSwitchCaseDeclarationMutants|TestSwitchTrailingEmptyMutant|TestSyntaxModuleDeclarationMutants|TestSyntaxSubstrMutants|TestTypeOfConstructorMutant|TestTypeOfNullMutant|TestTypeOfNullSlotPresenceMutant|TestTypeOfStringLiteralMutant|TestUninitializedIsNotNullishMutant|TestUnknownNarrowingMutants|TestWASIOracleCatchesMutants|TestWASIRunnerCatchesMutants)($|/)"
+        ],
+        "environment": {
+          "GOMAXPROCS": "2",
+          "GOFLAGS": "-p=2",
+          "GOCACHE": "/tmp/rp-oracle-full/go-cache/w0",
+          "ADAMIC_GATE_UNCACHED": "1",
+          "ADAMIC_BUILD_CACHE_DIR": "/tmp/rp-oracle-full/cache/b02-003-M14-r0",
+          "TMPDIR": "/tmp/rp-oracle-full/tmp/b02-003-M14-r0",
+          "GOTMPDIR": "/tmp/rp-oracle-full/tmp/b02-003-M14-r0"
+        },
+        "log": "logs/b02-003-M14-r0.log.gz",
+        "exit": 1,
+        "wall_seconds": 118.899,
+        "failed_top_level": [
+          "TestAPromptComesBeforeTheRead",
+          "TestASignalLeavesWhatWasPrinted",
+          "TestArgumentsLengthTypeScriptSource",
+          "TestCheckedViewFlagDowncast",
+          "TestCheckedViewInterfaces",
+          "TestCheckedViewObjectPrimitiveSource",
+          "TestCheckedViewObjects",
+          "TestCheckedViewOptionalReadBoundary",
+          "TestCheckedViewUntaggedArrayPending",
+          "TestCheckedViewUntaggedCallableUnion",
+          "TestCheckedViewUntaggedOptionalCallableControl",
+          "TestCheckedViewUntaggedOwnClassData",
+          "TestCheckedViewUntaggedRecursive",
+          "TestCheckedViewUntaggedSourceDispatch",
+          "TestCheckedViewV2ReadsAfterWrites",
+          "TestClassWrongOutput103",
+          "TestClosedStdoutEndsAsOnNode",
+          "TestClosureMergeRefusals",
+          "TestDefaultTaggedSourceViews",
+          "TestEntriesProvenance",
+          "TestEnumInitializationNode",
+          "TestEnumInitializationUnknownPinned",
+          "TestFractionalPowersReachRuntime",
+          "TestFreshWriteProbesStayRefused",
+          "TestFunctionValueBoundaryBoxing",
+          "TestImportCycleLoadTimeReads",
+          "TestImportedNonliteralConstCaseIsNotYet",
+          "TestInputAgreesWithNode",
+          "TestInterfaceCastChecksMalformedRead",
+          "TestInterfaceCastOracle",
+          "TestInterfaceCastScalarTags",
+          "TestJSONStringifyRefusals",
+          "TestLibraryMapSetIteratorCopiesRefused",
+          "TestLoopCountersAgreeWithNode",
+          "TestNarrowedFieldUsesSharedReadiness",
+          "TestNarrowedUnionMemberCheck",
+          "TestNarrowedUnionObjectTagRefusal",
+          "TestNativeAgreesWithNode",
+          "TestNestedCycleRefusal",
+          "TestNewExpressionCacheCaptureRemainsNotYet",
+          "TestNodeFSFileAgreesWithNode",
+          "TestNonNullWeakFreedNamesExpression",
+          "TestOneFileHoldsNodesOrder",
+          "TestParserNonNullSourceExtension",
+          "TestPredicateDirectionCountsAreRecorded",
+          "TestPredicateMiscompileRefusals",
+          "TestReviewProgramsAgreeWithNode",
+          "TestRuntimeLastIndexOfMatchesNode",
+          "TestScannerNestedReferences",
+          "TestStage3EnumFallthrough",
+          "TestStatementsSmallRulings",
+          "TestStatementsSmallTypeScriptIncrement",
+          "TestTypeScriptConditionsAgreeWithNode",
+          "TestTypedArrayWorkersStatsMatchesPlatforms",
+          "TestWeakReadsUndefinedOnceFreed"
+        ],
+        "panics": [],
+        "package_completed": true
+      }
+    ],
+    "wall_seconds": 118.994
+  },
+  {
+    "diff": "b02-005-M8",
+    "file_line": "internal/native/view_unions_untagged.go:59",
+    "source_branch": "test-audit/internal-oracle-checked_views_v2_source",
+    "all_catchers": [
+      "TestCheckedViewObjectPrimitiveSource",
+      "TestCheckedViewUntaggedRecursive",
+      "TestCheckedViewUntaggedSourceDispatch",
+      "TestReviewProgramsAgreeWithNode"
+    ],
+    "panics": [],
+    "completed": true,
+    "runs": [
+      {
+        "command": [
+          "go",
+          "test",
+          "-overlay=/tmp/rp-oracle-full/overlays/b02-005-M8.json",
+          "-count=1",
+          "-timeout",
+          "60m",
+          "-json",
+          "./internal/oracle/",
+          "-skip",
+          "^(TestCallTarget|TestCheckedCastFlushesOutput|TestCheckedCastRunsNoCatchOrFinally|TestCheckedViewUntaggedSourceFlows|TestCheckedViewV2ArrayArmBoundary|TestCheckedViewV2MovedStage3Results|TestFileWritesLandInNodesOrder|TestImportCycleRuntimeCalls|TestInterfaceCastImportedConstruction|TestModuleNamespaceReadsMatchNode|TestNamespaceLiveExportBoundary|TestNumericEnumNeverPathsPinned|TestNumericEnumNeverPinned|TestOmittedOriginalProbePolicy|TestParserNamespace|TestRegexCycleFixtureHasItsNativeDependency|TestStage3EnumSparseArrayBoundary|TestTypedArrayWriteStopIsPinned|TestWASIEmission|TestCallTargetThrowAgreesWithNode|TestDirectClosureCallAgreesWithNode|TestParserNamespaceReceiver|TestParserNamespaceClass|TestParserCallableNamespace)($|_|/)|^(TestArgumentsLengthWrongSlotMutant|TestArrayFamilyMutants|TestArrayWithBoundsMutant|TestCheckedCastMutants|TestCheckedViewV2CallableProducerMutant|TestCheckedViewV2MembershipMutant|TestCheckedViewV2RepresentationMutants|TestCheckedViewV2TupleIdentityMutant|TestCheckedViewV2WrongFamilyMutant|TestClockGenericReturnsT01Mutant|TestClosedNestedConstituentMutant|TestConditionLedgerMissingSiteMutant|TestConditionLedgerNullMutant|TestConditionNaNMutant|TestCountsAreRecorded|TestEnumCleanupMutant|TestEnumNameEnumerationMutant|TestEnumSemanticMutants|TestFallthroughMutants|TestInterfaceCastRuntimeMutants|TestLazyInitializerIsNotEagerMutant|TestLibraryMapSetMutants|TestLibraryMethodAliasReadMutant|TestLibraryMethodCaptureMutants|TestLibraryMethodOwnLoadMutants|TestLibraryMethodValueMutants|TestLibraryStringMutants|TestLiteralOptionalOracleCatchesMutant|TestLiteralUndefinedOracleCatchesMutant|TestMathNumberOracleCatchesMutants|TestModuleNamespaceLiveBindingMutant|TestModuleNamespaceReadinessMutants|TestNamespaceRuledMutants|TestNamespaceSemanticMutants|TestNamespaceStateMutants|TestNestedCallbackCarrierMutantIsCaught|TestNestedReferenceIdentityMutant|TestNestedSiblingCycleMutantIsCaught|TestNodeFSFileMutants|TestNotYetLibraryObjectEntriesConstMutant|TestNotYetLibraryRegexCallbackMutants|TestNotYetLibraryRegexOffsetMutants|TestNotYetLibraryStringBoundsMutants|TestOct6InheritanceMutants|TestOct6ReleaseMutant|TestOmittedArgumentZeroMutantIsCaught|TestOmittedReaderZeroMutantIsCaught|TestParameterPropertyMutants|TestParameterPropertyOwnershipMutant|TestParserCallableNamespaceMutant|TestParserNamespaceClassRegistrationMutant|TestParserNamespaceReceiverMutant|TestPrivateGenericMethodOwnerMutant|TestReadinessMutants|TestRegExpReplacementNodeMutants|TestRegExpReplacementTypeGuardMutants|TestRepresentationClockSourceMutant|TestScannerNestedOverloadImplementationMutantIsCaught|TestScannerNestedReferenceMutants|TestSwitchCaseDeclarationMutants|TestSwitchTrailingEmptyMutant|TestSyntaxModuleDeclarationMutants|TestSyntaxSubstrMutants|TestTypeOfConstructorMutant|TestTypeOfNullMutant|TestTypeOfNullSlotPresenceMutant|TestTypeOfStringLiteralMutant|TestUninitializedIsNotNullishMutant|TestUnknownNarrowingMutants|TestWASIOracleCatchesMutants|TestWASIRunnerCatchesMutants)($|/)"
+        ],
+        "environment": {
+          "GOMAXPROCS": "2",
+          "GOFLAGS": "-p=2",
+          "GOCACHE": "/tmp/rp-oracle-full/go-cache/w0",
+          "ADAMIC_GATE_UNCACHED": "1",
+          "ADAMIC_BUILD_CACHE_DIR": "/tmp/rp-oracle-full/cache/b02-005-M8-r0",
+          "TMPDIR": "/tmp/rp-oracle-full/tmp/b02-005-M8-r0",
+          "GOTMPDIR": "/tmp/rp-oracle-full/tmp/b02-005-M8-r0"
+        },
+        "log": "logs/b02-005-M8-r0.log.gz",
+        "exit": 1,
+        "wall_seconds": 645.498,
+        "failed_top_level": [
+          "TestCheckedViewObjectPrimitiveSource",
+          "TestCheckedViewUntaggedRecursive",
+          "TestCheckedViewUntaggedSourceDispatch",
+          "TestReviewProgramsAgreeWithNode"
+        ],
+        "panics": [],
+        "package_completed": true
+      }
+    ],
+    "wall_seconds": 645.628
+  },
+  {
+    "diff": "b05-013-M10",
+    "file_line": "internal/lower/namespaces.go:432",
+    "source_branch": "test-audit/internal-oracle-method_values_mutant",
+    "all_catchers": [
+      "TestNativeAgreesWithNode"
+    ],
+    "panics": [],
+    "completed": true,
+    "runs": [
+      {
+        "command": [
+          "go",
+          "test",
+          "-overlay=/tmp/rp-oracle-full/overlays/b05-013-M10.json",
+          "-count=1",
+          "-timeout",
+          "60m",
+          "-json",
+          "./internal/oracle/",
+          "-skip",
+          "^(TestCallTarget|TestCheckedCastFlushesOutput|TestCheckedCastRunsNoCatchOrFinally|TestCheckedViewUntaggedSourceFlows|TestCheckedViewV2ArrayArmBoundary|TestCheckedViewV2MovedStage3Results|TestFileWritesLandInNodesOrder|TestImportCycleRuntimeCalls|TestInterfaceCastImportedConstruction|TestModuleNamespaceReadsMatchNode|TestNamespaceLiveExportBoundary|TestNumericEnumNeverPathsPinned|TestNumericEnumNeverPinned|TestOmittedOriginalProbePolicy|TestParserNamespace|TestRegexCycleFixtureHasItsNativeDependency|TestStage3EnumSparseArrayBoundary|TestTypedArrayWriteStopIsPinned|TestWASIEmission|TestCallTargetThrowAgreesWithNode|TestDirectClosureCallAgreesWithNode|TestParserNamespaceReceiver|TestParserNamespaceClass|TestParserCallableNamespace)($|_|/)|^(TestArgumentsLengthWrongSlotMutant|TestArrayFamilyMutants|TestArrayWithBoundsMutant|TestCheckedCastMutants|TestCheckedViewV2CallableProducerMutant|TestCheckedViewV2MembershipMutant|TestCheckedViewV2RepresentationMutants|TestCheckedViewV2TupleIdentityMutant|TestCheckedViewV2WrongFamilyMutant|TestClockGenericReturnsT01Mutant|TestClosedNestedConstituentMutant|TestConditionLedgerMissingSiteMutant|TestConditionLedgerNullMutant|TestConditionNaNMutant|TestCountsAreRecorded|TestEnumCleanupMutant|TestEnumNameEnumerationMutant|TestEnumSemanticMutants|TestFallthroughMutants|TestInterfaceCastRuntimeMutants|TestLazyInitializerIsNotEagerMutant|TestLibraryMapSetMutants|TestLibraryMethodAliasReadMutant|TestLibraryMethodCaptureMutants|TestLibraryMethodOwnLoadMutants|TestLibraryMethodValueMutants|TestLibraryStringMutants|TestLiteralOptionalOracleCatchesMutant|TestLiteralUndefinedOracleCatchesMutant|TestMathNumberOracleCatchesMutants|TestModuleNamespaceLiveBindingMutant|TestModuleNamespaceReadinessMutants|TestNamespaceRuledMutants|TestNamespaceSemanticMutants|TestNamespaceStateMutants|TestNestedCallbackCarrierMutantIsCaught|TestNestedReferenceIdentityMutant|TestNestedSiblingCycleMutantIsCaught|TestNodeFSFileMutants|TestNotYetLibraryObjectEntriesConstMutant|TestNotYetLibraryRegexCallbackMutants|TestNotYetLibraryRegexOffsetMutants|TestNotYetLibraryStringBoundsMutants|TestOct6InheritanceMutants|TestOct6ReleaseMutant|TestOmittedArgumentZeroMutantIsCaught|TestOmittedReaderZeroMutantIsCaught|TestParameterPropertyMutants|TestParameterPropertyOwnershipMutant|TestParserCallableNamespaceMutant|TestParserNamespaceClassRegistrationMutant|TestParserNamespaceReceiverMutant|TestPrivateGenericMethodOwnerMutant|TestReadinessMutants|TestRegExpReplacementNodeMutants|TestRegExpReplacementTypeGuardMutants|TestRepresentationClockSourceMutant|TestScannerNestedOverloadImplementationMutantIsCaught|TestScannerNestedReferenceMutants|TestSwitchCaseDeclarationMutants|TestSwitchTrailingEmptyMutant|TestSyntaxModuleDeclarationMutants|TestSyntaxSubstrMutants|TestTypeOfConstructorMutant|TestTypeOfNullMutant|TestTypeOfNullSlotPresenceMutant|TestTypeOfStringLiteralMutant|TestUninitializedIsNotNullishMutant|TestUnknownNarrowingMutants|TestWASIOracleCatchesMutants|TestWASIRunnerCatchesMutants)($|/)"
+        ],
+        "environment": {
+          "GOMAXPROCS": "2",
+          "GOFLAGS": "-p=2",
+          "GOCACHE": "/tmp/rp-oracle-full/go-cache/w1",
+          "ADAMIC_GATE_UNCACHED": "1",
+          "ADAMIC_BUILD_CACHE_DIR": "/tmp/rp-oracle-full/cache/b05-013-M10-r0",
+          "TMPDIR": "/tmp/rp-oracle-full/tmp/b05-013-M10-r0",
+          "GOTMPDIR": "/tmp/rp-oracle-full/tmp/b05-013-M10-r0"
+        },
+        "log": "logs/b05-013-M10-r0.log.gz",
+        "exit": 1,
+        "wall_seconds": 569.308,
+        "failed_top_level": [
+          "TestNativeAgreesWithNode"
+        ],
+        "panics": [],
+        "package_completed": true
+      }
+    ],
+    "wall_seconds": 569.434
+  },
+  {
+    "diff": "b06-014-M4",
+    "file_line": "internal/lower/lower.go:22",
+    "source_branch": "test-audit/internal-oracle-oct6_mutant",
+    "all_catchers": [
+      "TestAPromptComesBeforeTheRead",
+      "TestASignalLeavesWhatWasPrinted",
+      "TestArgumentsLengthTypeScriptSource",
+      "TestCensusAppendResultProof",
+      "TestCensusOverloadResultStop",
+      "TestCheckedCastFailureContract",
+      "TestCheckedNonNullAdamicRefusal",
+      "TestCheckedNonNullCounts",
+      "TestCheckedNonNullTypeScript",
+      "TestCheckedViewFlagDowncast",
+      "TestCheckedViewInterfaces",
+      "TestCheckedViewObjectPrimitiveSource",
+      "TestCheckedViewObjects",
+      "TestCheckedViewOptionalReadBoundary",
+      "TestCheckedViewUntaggedArrayPending",
+      "TestCheckedViewUntaggedCallableUnion",
+      "TestCheckedViewUntaggedOptionalCallableControl",
+      "TestCheckedViewUntaggedOwnClassData",
+      "TestCheckedViewUntaggedRecursive",
+      "TestCheckedViewUntaggedSourceDispatch",
+      "TestCheckedViewV2ReadsAfterWrites",
+      "TestClassWrongOutput103",
+      "TestClassWrongOutput106",
+      "TestClassWrongOutput107",
+      "TestClassWrongOutput108",
+      "TestClosedStdoutEndsAsOnNode",
+      "TestClosureMergeRefusals",
+      "TestDebuggerNativeEmitsNothing",
+      "TestDefaultTaggedSourceViews",
+      "TestElementAccessCompilerAreaBoundaries",
+      "TestEntriesProvenance",
+      "TestEnumInitializationNode",
+      "TestEnumInitializationUnknownPinned",
+      "TestFractionalPowersReachRuntime",
+      "TestFreshWriteProbesStayRefused",
+      "TestFunctionValueBoundaryBoxing",
+      "TestImportCycleLoadTimeReads",
+      "TestImportedNonliteralConstCaseIsNotYet",
+      "TestImpossibleNonNullFixturesAreRefused",
+      "TestInUnionNarrowingIsRefused",
+      "TestInputAgreesWithNode",
+      "TestInterfaceCastChecksMalformedRead",
+      "TestInterfaceCastOracle",
+      "TestInterfaceCastScalarTags",
+      "TestJSONStringifyOracleCatchesKeyOrder",
+      "TestJSONStringifyRefusals",
+      "TestLibraryMapSetIteratorCopiesRefused",
+      "TestLongArgumentsLeaveTheStackItsLimit",
+      "TestLoopCountersAgreeWithNode",
+      "TestNarrowedFieldUsesSharedReadiness",
+      "TestNarrowedUnionMemberCheck",
+      "TestNarrowedUnionObjectTagRefusal",
+      "TestNativeAgreesWithNode",
+      "TestNestedCycleRefusal",
+      "TestNewExpressionCacheCaptureRemainsNotYet",
+      "TestNewExpressionUint16RemainsNotYet",
+      "TestNodeFSFileAgreesWithNode",
+      "TestNonNullAdamicRefusal",
+      "TestNonNullLiteralUnionInitializers",
+      "TestNonNullWeakFreedNamesExpression",
+      "TestOneFileHoldsNodesOrder",
+      "TestOverloadContractRulings",
+      "TestParseIntMapIndexRadixAgreesWithNode",
+      "TestParserNonNullSourceExtension",
+      "TestPossibleNonNullAdamicAssertionsAreRefused",
+      "TestPredicateDirectionCountsAreRecorded",
+      "TestPredicateMiscompileRefusals",
+      "TestReviewProgramsAgreeWithNode",
+      "TestReviewProgramsRefuse",
+      "TestReviewProgramsSelfTest",
+      "TestRuntimeLastIndexOfMatchesNode",
+      "TestScannerNestedReferences",
+      "TestSmallStacksStillPanic",
+      "TestStage3EnumBoundaries",
+      "TestStage3EnumFallthrough",
+      "TestStatementsSmallRulings",
+      "TestStatementsSmallTypeScriptIncrement",
+      "TestSwitchCaseOverloadIsNotYet",
+      "TestTheOracleCatchesOneByte",
+      "TestTypeScriptConditionsAgreeWithNode",
+      "TestTypedArrayWorkersStatsMatchesPlatforms",
+      "TestUncheckableCastAdmission",
+      "TestViewFieldInheritedStaticReadiness",
+      "TestWeakReadsUndefinedOnceFreed"
+    ],
+    "panics": [],
+    "completed": true,
+    "runs": [
+      {
+        "command": [
+          "go",
+          "test",
+          "-overlay=/tmp/rp-oracle-full/overlays/b06-014-M4.json",
+          "-count=1",
+          "-timeout",
+          "60m",
+          "-json",
+          "./internal/oracle/",
+          "-skip",
+          "^(TestCallTarget|TestCheckedCastFlushesOutput|TestCheckedCastRunsNoCatchOrFinally|TestCheckedViewUntaggedSourceFlows|TestCheckedViewV2ArrayArmBoundary|TestCheckedViewV2MovedStage3Results|TestFileWritesLandInNodesOrder|TestImportCycleRuntimeCalls|TestInterfaceCastImportedConstruction|TestModuleNamespaceReadsMatchNode|TestNamespaceLiveExportBoundary|TestNumericEnumNeverPathsPinned|TestNumericEnumNeverPinned|TestOmittedOriginalProbePolicy|TestParserNamespace|TestRegexCycleFixtureHasItsNativeDependency|TestStage3EnumSparseArrayBoundary|TestTypedArrayWriteStopIsPinned|TestWASIEmission|TestCallTargetThrowAgreesWithNode|TestDirectClosureCallAgreesWithNode|TestParserNamespaceReceiver|TestParserNamespaceClass|TestParserCallableNamespace)($|_|/)|^(TestArgumentsLengthWrongSlotMutant|TestArrayFamilyMutants|TestArrayWithBoundsMutant|TestCheckedCastMutants|TestCheckedViewV2CallableProducerMutant|TestCheckedViewV2MembershipMutant|TestCheckedViewV2RepresentationMutants|TestCheckedViewV2TupleIdentityMutant|TestCheckedViewV2WrongFamilyMutant|TestClockGenericReturnsT01Mutant|TestClosedNestedConstituentMutant|TestConditionLedgerMissingSiteMutant|TestConditionLedgerNullMutant|TestConditionNaNMutant|TestCountsAreRecorded|TestEnumCleanupMutant|TestEnumNameEnumerationMutant|TestEnumSemanticMutants|TestFallthroughMutants|TestInterfaceCastRuntimeMutants|TestLazyInitializerIsNotEagerMutant|TestLibraryMapSetMutants|TestLibraryMethodAliasReadMutant|TestLibraryMethodCaptureMutants|TestLibraryMethodOwnLoadMutants|TestLibraryMethodValueMutants|TestLibraryStringMutants|TestLiteralOptionalOracleCatchesMutant|TestLiteralUndefinedOracleCatchesMutant|TestMathNumberOracleCatchesMutants|TestModuleNamespaceLiveBindingMutant|TestModuleNamespaceReadinessMutants|TestNamespaceRuledMutants|TestNamespaceSemanticMutants|TestNamespaceStateMutants|TestNestedCallbackCarrierMutantIsCaught|TestNestedReferenceIdentityMutant|TestNestedSiblingCycleMutantIsCaught|TestNodeFSFileMutants|TestNotYetLibraryObjectEntriesConstMutant|TestNotYetLibraryRegexCallbackMutants|TestNotYetLibraryRegexOffsetMutants|TestNotYetLibraryStringBoundsMutants|TestOct6InheritanceMutants|TestOct6ReleaseMutant|TestOmittedArgumentZeroMutantIsCaught|TestOmittedReaderZeroMutantIsCaught|TestParameterPropertyMutants|TestParameterPropertyOwnershipMutant|TestParserCallableNamespaceMutant|TestParserNamespaceClassRegistrationMutant|TestParserNamespaceReceiverMutant|TestPrivateGenericMethodOwnerMutant|TestReadinessMutants|TestRegExpReplacementNodeMutants|TestRegExpReplacementTypeGuardMutants|TestRepresentationClockSourceMutant|TestScannerNestedOverloadImplementationMutantIsCaught|TestScannerNestedReferenceMutants|TestSwitchCaseDeclarationMutants|TestSwitchTrailingEmptyMutant|TestSyntaxModuleDeclarationMutants|TestSyntaxSubstrMutants|TestTypeOfConstructorMutant|TestTypeOfNullMutant|TestTypeOfNullSlotPresenceMutant|TestTypeOfStringLiteralMutant|TestUninitializedIsNotNullishMutant|TestUnknownNarrowingMutants|TestWASIOracleCatchesMutants|TestWASIRunnerCatchesMutants)($|/)"
+        ],
+        "environment": {
+          "GOMAXPROCS": "2",
+          "GOFLAGS": "-p=2",
+          "GOCACHE": "/tmp/rp-oracle-full/go-cache/w1",
+          "ADAMIC_GATE_UNCACHED": "1",
+          "ADAMIC_BUILD_CACHE_DIR": "/tmp/rp-oracle-full/cache/b06-014-M4-r0",
+          "TMPDIR": "/tmp/rp-oracle-full/tmp/b06-014-M4-r0",
+          "GOTMPDIR": "/tmp/rp-oracle-full/tmp/b06-014-M4-r0"
+        },
+        "log": "logs/b06-014-M4-r0.log.gz",
+        "exit": 1,
+        "wall_seconds": 88.912,
+        "failed_top_level": [
+          "TestAPromptComesBeforeTheRead",
+          "TestASignalLeavesWhatWasPrinted",
+          "TestArgumentsLengthTypeScriptSource",
+          "TestCensusAppendResultProof",
+          "TestCensusOverloadResultStop",
+          "TestCheckedCastFailureContract",
+          "TestCheckedNonNullAdamicRefusal",
+          "TestCheckedNonNullCounts",
+          "TestCheckedNonNullTypeScript",
+          "TestCheckedViewFlagDowncast",
+          "TestCheckedViewInterfaces",
+          "TestCheckedViewObjectPrimitiveSource",
+          "TestCheckedViewObjects",
+          "TestCheckedViewOptionalReadBoundary",
+          "TestCheckedViewUntaggedArrayPending",
+          "TestCheckedViewUntaggedCallableUnion",
+          "TestCheckedViewUntaggedOptionalCallableControl",
+          "TestCheckedViewUntaggedOwnClassData",
+          "TestCheckedViewUntaggedRecursive",
+          "TestCheckedViewUntaggedSourceDispatch",
+          "TestCheckedViewV2ReadsAfterWrites",
+          "TestClassWrongOutput103",
+          "TestClassWrongOutput106",
+          "TestClassWrongOutput107",
+          "TestClassWrongOutput108",
+          "TestClosedStdoutEndsAsOnNode",
+          "TestClosureMergeRefusals",
+          "TestDebuggerNativeEmitsNothing",
+          "TestDefaultTaggedSourceViews",
+          "TestElementAccessCompilerAreaBoundaries",
+          "TestEntriesProvenance",
+          "TestEnumInitializationNode",
+          "TestEnumInitializationUnknownPinned",
+          "TestFractionalPowersReachRuntime",
+          "TestFreshWriteProbesStayRefused",
+          "TestFunctionValueBoundaryBoxing",
+          "TestImportCycleLoadTimeReads",
+          "TestImportedNonliteralConstCaseIsNotYet",
+          "TestImpossibleNonNullFixturesAreRefused",
+          "TestInUnionNarrowingIsRefused",
+          "TestInputAgreesWithNode",
+          "TestInterfaceCastChecksMalformedRead",
+          "TestInterfaceCastOracle",
+          "TestInterfaceCastScalarTags",
+          "TestJSONStringifyOracleCatchesKeyOrder",
+          "TestJSONStringifyRefusals",
+          "TestLibraryMapSetIteratorCopiesRefused",
+          "TestLongArgumentsLeaveTheStackItsLimit",
+          "TestLoopCountersAgreeWithNode",
+          "TestNarrowedFieldUsesSharedReadiness",
+          "TestNarrowedUnionMemberCheck",
+          "TestNarrowedUnionObjectTagRefusal",
+          "TestNativeAgreesWithNode",
+          "TestNestedCycleRefusal",
+          "TestNewExpressionCacheCaptureRemainsNotYet",
+          "TestNewExpressionUint16RemainsNotYet",
+          "TestNodeFSFileAgreesWithNode",
+          "TestNonNullAdamicRefusal",
+          "TestNonNullLiteralUnionInitializers",
+          "TestNonNullWeakFreedNamesExpression",
+          "TestOneFileHoldsNodesOrder",
+          "TestOverloadContractRulings",
+          "TestParseIntMapIndexRadixAgreesWithNode",
+          "TestParserNonNullSourceExtension",
+          "TestPossibleNonNullAdamicAssertionsAreRefused",
+          "TestPredicateDirectionCountsAreRecorded",
+          "TestPredicateMiscompileRefusals",
+          "TestReviewProgramsAgreeWithNode",
+          "TestReviewProgramsRefuse",
+          "TestReviewProgramsSelfTest",
+          "TestRuntimeLastIndexOfMatchesNode",
+          "TestScannerNestedReferences",
+          "TestSmallStacksStillPanic",
+          "TestStage3EnumBoundaries",
+          "TestStage3EnumFallthrough",
+          "TestStatementsSmallRulings",
+          "TestStatementsSmallTypeScriptIncrement",
+          "TestSwitchCaseOverloadIsNotYet",
+          "TestTheOracleCatchesOneByte",
+          "TestTypeScriptConditionsAgreeWithNode",
+          "TestTypedArrayWorkersStatsMatchesPlatforms",
+          "TestUncheckableCastAdmission",
+          "TestViewFieldInheritedStaticReadiness",
+          "TestWeakReadsUndefinedOnceFreed"
+        ],
+        "panics": [],
+        "package_completed": true
+      }
+    ],
+    "wall_seconds": 88.977
+  },
+  {
+    "diff": "b07-017-M04",
+    "file_line": "internal/lower/namespaces.go:94",
+    "source_branch": "test-audit/internal-oracle-parser_namespaces",
+    "all_catchers": [
+      "TestNativeAgreesWithNode"
+    ],
+    "panics": [],
+    "completed": true,
+    "runs": [
+      {
+        "command": [
+          "go",
+          "test",
+          "-overlay=/tmp/rp-oracle-full/overlays/b07-017-M04.json",
+          "-count=1",
+          "-timeout",
+          "60m",
+          "-json",
+          "./internal/oracle/",
+          "-skip",
+          "^(TestCallTarget|TestCheckedCastFlushesOutput|TestCheckedCastRunsNoCatchOrFinally|TestCheckedViewUntaggedSourceFlows|TestCheckedViewV2ArrayArmBoundary|TestCheckedViewV2MovedStage3Results|TestFileWritesLandInNodesOrder|TestImportCycleRuntimeCalls|TestInterfaceCastImportedConstruction|TestModuleNamespaceReadsMatchNode|TestNamespaceLiveExportBoundary|TestNumericEnumNeverPathsPinned|TestNumericEnumNeverPinned|TestOmittedOriginalProbePolicy|TestParserNamespace|TestRegexCycleFixtureHasItsNativeDependency|TestStage3EnumSparseArrayBoundary|TestTypedArrayWriteStopIsPinned|TestWASIEmission|TestCallTargetThrowAgreesWithNode|TestDirectClosureCallAgreesWithNode|TestParserNamespaceReceiver|TestParserNamespaceClass|TestParserCallableNamespace)($|_|/)|^(TestArgumentsLengthWrongSlotMutant|TestArrayFamilyMutants|TestArrayWithBoundsMutant|TestCheckedCastMutants|TestCheckedViewV2CallableProducerMutant|TestCheckedViewV2MembershipMutant|TestCheckedViewV2RepresentationMutants|TestCheckedViewV2TupleIdentityMutant|TestCheckedViewV2WrongFamilyMutant|TestClockGenericReturnsT01Mutant|TestClosedNestedConstituentMutant|TestConditionLedgerMissingSiteMutant|TestConditionLedgerNullMutant|TestConditionNaNMutant|TestCountsAreRecorded|TestEnumCleanupMutant|TestEnumNameEnumerationMutant|TestEnumSemanticMutants|TestFallthroughMutants|TestInterfaceCastRuntimeMutants|TestLazyInitializerIsNotEagerMutant|TestLibraryMapSetMutants|TestLibraryMethodAliasReadMutant|TestLibraryMethodCaptureMutants|TestLibraryMethodOwnLoadMutants|TestLibraryMethodValueMutants|TestLibraryStringMutants|TestLiteralOptionalOracleCatchesMutant|TestLiteralUndefinedOracleCatchesMutant|TestMathNumberOracleCatchesMutants|TestModuleNamespaceLiveBindingMutant|TestModuleNamespaceReadinessMutants|TestNamespaceRuledMutants|TestNamespaceSemanticMutants|TestNamespaceStateMutants|TestNestedCallbackCarrierMutantIsCaught|TestNestedReferenceIdentityMutant|TestNestedSiblingCycleMutantIsCaught|TestNodeFSFileMutants|TestNotYetLibraryObjectEntriesConstMutant|TestNotYetLibraryRegexCallbackMutants|TestNotYetLibraryRegexOffsetMutants|TestNotYetLibraryStringBoundsMutants|TestOct6InheritanceMutants|TestOct6ReleaseMutant|TestOmittedArgumentZeroMutantIsCaught|TestOmittedReaderZeroMutantIsCaught|TestParameterPropertyMutants|TestParameterPropertyOwnershipMutant|TestParserCallableNamespaceMutant|TestParserNamespaceClassRegistrationMutant|TestParserNamespaceReceiverMutant|TestPrivateGenericMethodOwnerMutant|TestReadinessMutants|TestRegExpReplacementNodeMutants|TestRegExpReplacementTypeGuardMutants|TestRepresentationClockSourceMutant|TestScannerNestedOverloadImplementationMutantIsCaught|TestScannerNestedReferenceMutants|TestSwitchCaseDeclarationMutants|TestSwitchTrailingEmptyMutant|TestSyntaxModuleDeclarationMutants|TestSyntaxSubstrMutants|TestTypeOfConstructorMutant|TestTypeOfNullMutant|TestTypeOfNullSlotPresenceMutant|TestTypeOfStringLiteralMutant|TestUninitializedIsNotNullishMutant|TestUnknownNarrowingMutants|TestWASIOracleCatchesMutants|TestWASIRunnerCatchesMutants)($|/)"
+        ],
+        "environment": {
+          "GOMAXPROCS": "2",
+          "GOFLAGS": "-p=2",
+          "GOCACHE": "/tmp/rp-oracle-full/go-cache/w0",
+          "ADAMIC_GATE_UNCACHED": "1",
+          "ADAMIC_BUILD_CACHE_DIR": "/tmp/rp-oracle-full/cache/b07-017-M04-r0",
+          "TMPDIR": "/tmp/rp-oracle-full/tmp/b07-017-M04-r0",
+          "GOTMPDIR": "/tmp/rp-oracle-full/tmp/b07-017-M04-r0"
+        },
+        "log": "logs/b07-017-M04-r0.log.gz",
+        "exit": 1,
+        "wall_seconds": 548.228,
+        "failed_top_level": [
+          "TestNativeAgreesWithNode"
+        ],
+        "panics": [],
+        "package_completed": true
+      }
+    ],
+    "wall_seconds": 548.317
+  },
+  {
+    "diff": "b07-018-M05",
+    "file_line": "internal/lower/namespace_callable.go:21",
+    "source_branch": "test-audit/internal-oracle-parser_namespaces",
+    "all_catchers": [
+      "TestNativeAgreesWithNode"
+    ],
+    "panics": [],
+    "completed": true,
+    "runs": [
+      {
+        "command": [
+          "go",
+          "test",
+          "-overlay=/tmp/rp-oracle-full/overlays/b07-018-M05.json",
+          "-count=1",
+          "-timeout",
+          "60m",
+          "-json",
+          "./internal/oracle/",
+          "-skip",
+          "^(TestCallTarget|TestCheckedCastFlushesOutput|TestCheckedCastRunsNoCatchOrFinally|TestCheckedViewUntaggedSourceFlows|TestCheckedViewV2ArrayArmBoundary|TestCheckedViewV2MovedStage3Results|TestFileWritesLandInNodesOrder|TestImportCycleRuntimeCalls|TestInterfaceCastImportedConstruction|TestModuleNamespaceReadsMatchNode|TestNamespaceLiveExportBoundary|TestNumericEnumNeverPathsPinned|TestNumericEnumNeverPinned|TestOmittedOriginalProbePolicy|TestParserNamespace|TestRegexCycleFixtureHasItsNativeDependency|TestStage3EnumSparseArrayBoundary|TestTypedArrayWriteStopIsPinned|TestWASIEmission|TestCallTargetThrowAgreesWithNode|TestDirectClosureCallAgreesWithNode|TestParserNamespaceReceiver|TestParserNamespaceClass|TestParserCallableNamespace)($|_|/)|^(TestArgumentsLengthWrongSlotMutant|TestArrayFamilyMutants|TestArrayWithBoundsMutant|TestCheckedCastMutants|TestCheckedViewV2CallableProducerMutant|TestCheckedViewV2MembershipMutant|TestCheckedViewV2RepresentationMutants|TestCheckedViewV2TupleIdentityMutant|TestCheckedViewV2WrongFamilyMutant|TestClockGenericReturnsT01Mutant|TestClosedNestedConstituentMutant|TestConditionLedgerMissingSiteMutant|TestConditionLedgerNullMutant|TestConditionNaNMutant|TestCountsAreRecorded|TestEnumCleanupMutant|TestEnumNameEnumerationMutant|TestEnumSemanticMutants|TestFallthroughMutants|TestInterfaceCastRuntimeMutants|TestLazyInitializerIsNotEagerMutant|TestLibraryMapSetMutants|TestLibraryMethodAliasReadMutant|TestLibraryMethodCaptureMutants|TestLibraryMethodOwnLoadMutants|TestLibraryMethodValueMutants|TestLibraryStringMutants|TestLiteralOptionalOracleCatchesMutant|TestLiteralUndefinedOracleCatchesMutant|TestMathNumberOracleCatchesMutants|TestModuleNamespaceLiveBindingMutant|TestModuleNamespaceReadinessMutants|TestNamespaceRuledMutants|TestNamespaceSemanticMutants|TestNamespaceStateMutants|TestNestedCallbackCarrierMutantIsCaught|TestNestedReferenceIdentityMutant|TestNestedSiblingCycleMutantIsCaught|TestNodeFSFileMutants|TestNotYetLibraryObjectEntriesConstMutant|TestNotYetLibraryRegexCallbackMutants|TestNotYetLibraryRegexOffsetMutants|TestNotYetLibraryStringBoundsMutants|TestOct6InheritanceMutants|TestOct6ReleaseMutant|TestOmittedArgumentZeroMutantIsCaught|TestOmittedReaderZeroMutantIsCaught|TestParameterPropertyMutants|TestParameterPropertyOwnershipMutant|TestParserCallableNamespaceMutant|TestParserNamespaceClassRegistrationMutant|TestParserNamespaceReceiverMutant|TestPrivateGenericMethodOwnerMutant|TestReadinessMutants|TestRegExpReplacementNodeMutants|TestRegExpReplacementTypeGuardMutants|TestRepresentationClockSourceMutant|TestScannerNestedOverloadImplementationMutantIsCaught|TestScannerNestedReferenceMutants|TestSwitchCaseDeclarationMutants|TestSwitchTrailingEmptyMutant|TestSyntaxModuleDeclarationMutants|TestSyntaxSubstrMutants|TestTypeOfConstructorMutant|TestTypeOfNullMutant|TestTypeOfNullSlotPresenceMutant|TestTypeOfStringLiteralMutant|TestUninitializedIsNotNullishMutant|TestUnknownNarrowingMutants|TestWASIOracleCatchesMutants|TestWASIRunnerCatchesMutants)($|/)"
+        ],
+        "environment": {
+          "GOMAXPROCS": "2",
+          "GOFLAGS": "-p=2",
+          "GOCACHE": "/tmp/rp-oracle-full/go-cache/w1",
+          "ADAMIC_GATE_UNCACHED": "1",
+          "ADAMIC_BUILD_CACHE_DIR": "/tmp/rp-oracle-full/cache/b07-018-M05-r0",
+          "TMPDIR": "/tmp/rp-oracle-full/tmp/b07-018-M05-r0",
+          "GOTMPDIR": "/tmp/rp-oracle-full/tmp/b07-018-M05-r0"
+        },
+        "log": "logs/b07-018-M05-r0.log.gz",
+        "exit": 1,
+        "wall_seconds": 556.007,
+        "failed_top_level": [
+          "TestNativeAgreesWithNode"
+        ],
+        "panics": [],
+        "package_completed": true
+      }
+    ],
+    "wall_seconds": 556.067
+  },
+  {
+    "diff": "b10-021-M06",
+    "file_line": "internal/native/emit_values.go:79",
+    "source_branch": "test-audit/internal-oracle-wasi",
+    "all_catchers": [
+      "TestArgumentsLengthTypeScriptSource",
+      "TestCheckedNonNullTypeScript",
+      "TestCheckedViewObjectPrimitiveSource",
+      "TestCheckedViewUntaggedSourceDispatch",
+      "TestCheckedViewV2ReadsAfterWrites",
+      "TestClosedStdoutEndsAsOnNode",
+      "TestEntriesProvenance",
+      "TestEnumInitializationNode",
+      "TestInputAgreesWithNode",
+      "TestInterfaceCastOracle",
+      "TestLoopCountersAgreeWithNode",
+      "TestNativeAgreesWithNode",
+      "TestNodeFSFileAgreesWithNode",
+      "TestOneFileHoldsNodesOrder",
+      "TestRequiredViewFieldOperandOnce",
+      "TestRequiredViewFieldPrimitive",
+      "TestReviewProgramsAgreeWithNode",
+      "TestRuntimeLastIndexOfMatchesNode",
+      "TestScannerNestedReferences",
+      "TestStage3EnumFallthrough",
+      "TestTypedArrayWorkersStatsMatchesPlatforms",
+      "TestWeakReadsUndefinedOnceFreed"
+    ],
+    "panics": [],
+    "completed": true,
+    "runs": [
+      {
+        "command": [
+          "go",
+          "test",
+          "-overlay=/tmp/rp-oracle-full/overlays/b10-021-M06.json",
+          "-count=1",
+          "-timeout",
+          "60m",
+          "-json",
+          "./internal/oracle/",
+          "-skip",
+          "^(TestCallTarget|TestCheckedCastFlushesOutput|TestCheckedCastRunsNoCatchOrFinally|TestCheckedViewUntaggedSourceFlows|TestCheckedViewV2ArrayArmBoundary|TestCheckedViewV2MovedStage3Results|TestFileWritesLandInNodesOrder|TestImportCycleRuntimeCalls|TestInterfaceCastImportedConstruction|TestModuleNamespaceReadsMatchNode|TestNamespaceLiveExportBoundary|TestNumericEnumNeverPathsPinned|TestNumericEnumNeverPinned|TestOmittedOriginalProbePolicy|TestParserNamespace|TestRegexCycleFixtureHasItsNativeDependency|TestStage3EnumSparseArrayBoundary|TestTypedArrayWriteStopIsPinned|TestWASIEmission|TestCallTargetThrowAgreesWithNode|TestDirectClosureCallAgreesWithNode|TestParserNamespaceReceiver|TestParserNamespaceClass|TestParserCallableNamespace)($|_|/)|^(TestArgumentsLengthWrongSlotMutant|TestArrayFamilyMutants|TestArrayWithBoundsMutant|TestCheckedCastMutants|TestCheckedViewV2CallableProducerMutant|TestCheckedViewV2MembershipMutant|TestCheckedViewV2RepresentationMutants|TestCheckedViewV2TupleIdentityMutant|TestCheckedViewV2WrongFamilyMutant|TestClockGenericReturnsT01Mutant|TestClosedNestedConstituentMutant|TestConditionLedgerMissingSiteMutant|TestConditionLedgerNullMutant|TestConditionNaNMutant|TestCountsAreRecorded|TestEnumCleanupMutant|TestEnumNameEnumerationMutant|TestEnumSemanticMutants|TestFallthroughMutants|TestInterfaceCastRuntimeMutants|TestLazyInitializerIsNotEagerMutant|TestLibraryMapSetMutants|TestLibraryMethodAliasReadMutant|TestLibraryMethodCaptureMutants|TestLibraryMethodOwnLoadMutants|TestLibraryMethodValueMutants|TestLibraryStringMutants|TestLiteralOptionalOracleCatchesMutant|TestLiteralUndefinedOracleCatchesMutant|TestMathNumberOracleCatchesMutants|TestModuleNamespaceLiveBindingMutant|TestModuleNamespaceReadinessMutants|TestNamespaceRuledMutants|TestNamespaceSemanticMutants|TestNamespaceStateMutants|TestNestedCallbackCarrierMutantIsCaught|TestNestedReferenceIdentityMutant|TestNestedSiblingCycleMutantIsCaught|TestNodeFSFileMutants|TestNotYetLibraryObjectEntriesConstMutant|TestNotYetLibraryRegexCallbackMutants|TestNotYetLibraryRegexOffsetMutants|TestNotYetLibraryStringBoundsMutants|TestOct6InheritanceMutants|TestOct6ReleaseMutant|TestOmittedArgumentZeroMutantIsCaught|TestOmittedReaderZeroMutantIsCaught|TestParameterPropertyMutants|TestParameterPropertyOwnershipMutant|TestParserCallableNamespaceMutant|TestParserNamespaceClassRegistrationMutant|TestParserNamespaceReceiverMutant|TestPrivateGenericMethodOwnerMutant|TestReadinessMutants|TestRegExpReplacementNodeMutants|TestRegExpReplacementTypeGuardMutants|TestRepresentationClockSourceMutant|TestScannerNestedOverloadImplementationMutantIsCaught|TestScannerNestedReferenceMutants|TestSwitchCaseDeclarationMutants|TestSwitchTrailingEmptyMutant|TestSyntaxModuleDeclarationMutants|TestSyntaxSubstrMutants|TestTypeOfConstructorMutant|TestTypeOfNullMutant|TestTypeOfNullSlotPresenceMutant|TestTypeOfStringLiteralMutant|TestUninitializedIsNotNullishMutant|TestUnknownNarrowingMutants|TestWASIOracleCatchesMutants|TestWASIRunnerCatchesMutants)($|/)"
+        ],
+        "environment": {
+          "GOMAXPROCS": "2",
+          "GOFLAGS": "-p=2",
+          "GOCACHE": "/tmp/rp-oracle-full/go-cache/w0",
+          "ADAMIC_GATE_UNCACHED": "1",
+          "ADAMIC_BUILD_CACHE_DIR": "/tmp/rp-oracle-full/cache/b10-021-M06-r0",
+          "TMPDIR": "/tmp/rp-oracle-full/tmp/b10-021-M06-r0",
+          "GOTMPDIR": "/tmp/rp-oracle-full/tmp/b10-021-M06-r0"
+        },
+        "log": "logs/b10-021-M06-r0.log.gz",
+        "exit": 1,
+        "wall_seconds": 550.397,
+        "failed_top_level": [
+          "TestArgumentsLengthTypeScriptSource",
+          "TestCheckedNonNullTypeScript",
+          "TestCheckedViewObjectPrimitiveSource",
+          "TestCheckedViewUntaggedSourceDispatch",
+          "TestCheckedViewV2ReadsAfterWrites",
+          "TestClosedStdoutEndsAsOnNode",
+          "TestEntriesProvenance",
+          "TestEnumInitializationNode",
+          "TestInputAgreesWithNode",
+          "TestInterfaceCastOracle",
+          "TestLoopCountersAgreeWithNode",
+          "TestNativeAgreesWithNode",
+          "TestNodeFSFileAgreesWithNode",
+          "TestOneFileHoldsNodesOrder",
+          "TestRequiredViewFieldOperandOnce",
+          "TestRequiredViewFieldPrimitive",
+          "TestReviewProgramsAgreeWithNode",
+          "TestRuntimeLastIndexOfMatchesNode",
+          "TestScannerNestedReferences",
+          "TestStage3EnumFallthrough",
+          "TestTypedArrayWorkersStatsMatchesPlatforms",
+          "TestWeakReadsUndefinedOnceFreed"
+        ],
+        "panics": [],
+        "package_completed": true
+      }
+    ],
+    "wall_seconds": 552.111
+  },
+  {
+    "diff": "b11-023-D02",
+    "file_line": "internal/native/runtime/adamic.c:195",
+    "source_branch": "test-defend/internal-oracle-arguments_length",
+    "all_catchers": [
+      "TestCensusOverloadResultStop",
+      "TestCheckedCastFailureContract",
+      "TestCheckedNonNullTypeScript",
+      "TestEntriesProvenance",
+      "TestEnumInitializationUnknownPinned",
+      "TestInterfaceCastOracle",
+      "TestInterfaceCastScalarTags",
+      "TestLongArgumentsLeaveTheStackItsLimit",
+      "TestNativeAgreesWithNode",
+      "TestNonNullWeakFreedNamesExpression",
+      "TestPredicateMiscompileRefusals",
+      "TestReviewProgramsAgreeWithNode",
+      "TestSmallStacksStillPanic",
+      "TestStage3EnumFallthrough",
+      "TestStatementsSmallTypeScriptIncrement",
+      "TestWeakReadsUndefinedOnceFreed"
+    ],
+    "panics": [],
+    "completed": true,
+    "runs": [
+      {
+        "command": [
+          "go",
+          "test",
+          "-overlay=/tmp/rp-oracle-full/overlays/b11-023-D02.json",
+          "-count=1",
+          "-timeout",
+          "60m",
+          "-json",
+          "./internal/oracle/",
+          "-skip",
+          "^(TestCallTarget|TestCheckedCastFlushesOutput|TestCheckedCastRunsNoCatchOrFinally|TestCheckedViewUntaggedSourceFlows|TestCheckedViewV2ArrayArmBoundary|TestCheckedViewV2MovedStage3Results|TestFileWritesLandInNodesOrder|TestImportCycleRuntimeCalls|TestInterfaceCastImportedConstruction|TestModuleNamespaceReadsMatchNode|TestNamespaceLiveExportBoundary|TestNumericEnumNeverPathsPinned|TestNumericEnumNeverPinned|TestOmittedOriginalProbePolicy|TestParserNamespace|TestRegexCycleFixtureHasItsNativeDependency|TestStage3EnumSparseArrayBoundary|TestTypedArrayWriteStopIsPinned|TestWASIEmission|TestCallTargetThrowAgreesWithNode|TestDirectClosureCallAgreesWithNode|TestParserNamespaceReceiver|TestParserNamespaceClass|TestParserCallableNamespace)($|_|/)|^(TestArgumentsLengthWrongSlotMutant|TestArrayFamilyMutants|TestArrayWithBoundsMutant|TestCheckedCastMutants|TestCheckedViewV2CallableProducerMutant|TestCheckedViewV2MembershipMutant|TestCheckedViewV2RepresentationMutants|TestCheckedViewV2TupleIdentityMutant|TestCheckedViewV2WrongFamilyMutant|TestClockGenericReturnsT01Mutant|TestClosedNestedConstituentMutant|TestConditionLedgerMissingSiteMutant|TestConditionLedgerNullMutant|TestConditionNaNMutant|TestCountsAreRecorded|TestEnumCleanupMutant|TestEnumNameEnumerationMutant|TestEnumSemanticMutants|TestFallthroughMutants|TestInterfaceCastRuntimeMutants|TestLazyInitializerIsNotEagerMutant|TestLibraryMapSetMutants|TestLibraryMethodAliasReadMutant|TestLibraryMethodCaptureMutants|TestLibraryMethodOwnLoadMutants|TestLibraryMethodValueMutants|TestLibraryStringMutants|TestLiteralOptionalOracleCatchesMutant|TestLiteralUndefinedOracleCatchesMutant|TestMathNumberOracleCatchesMutants|TestModuleNamespaceLiveBindingMutant|TestModuleNamespaceReadinessMutants|TestNamespaceRuledMutants|TestNamespaceSemanticMutants|TestNamespaceStateMutants|TestNestedCallbackCarrierMutantIsCaught|TestNestedReferenceIdentityMutant|TestNestedSiblingCycleMutantIsCaught|TestNodeFSFileMutants|TestNotYetLibraryObjectEntriesConstMutant|TestNotYetLibraryRegexCallbackMutants|TestNotYetLibraryRegexOffsetMutants|TestNotYetLibraryStringBoundsMutants|TestOct6InheritanceMutants|TestOct6ReleaseMutant|TestOmittedArgumentZeroMutantIsCaught|TestOmittedReaderZeroMutantIsCaught|TestParameterPropertyMutants|TestParameterPropertyOwnershipMutant|TestParserCallableNamespaceMutant|TestParserNamespaceClassRegistrationMutant|TestParserNamespaceReceiverMutant|TestPrivateGenericMethodOwnerMutant|TestReadinessMutants|TestRegExpReplacementNodeMutants|TestRegExpReplacementTypeGuardMutants|TestRepresentationClockSourceMutant|TestScannerNestedOverloadImplementationMutantIsCaught|TestScannerNestedReferenceMutants|TestSwitchCaseDeclarationMutants|TestSwitchTrailingEmptyMutant|TestSyntaxModuleDeclarationMutants|TestSyntaxSubstrMutants|TestTypeOfConstructorMutant|TestTypeOfNullMutant|TestTypeOfNullSlotPresenceMutant|TestTypeOfStringLiteralMutant|TestUninitializedIsNotNullishMutant|TestUnknownNarrowingMutants|TestWASIOracleCatchesMutants|TestWASIRunnerCatchesMutants)($|/)"
+        ],
+        "environment": {
+          "GOMAXPROCS": "2",
+          "GOFLAGS": "-p=2",
+          "GOCACHE": "/tmp/rp-oracle-full/go-cache/w1",
+          "ADAMIC_GATE_UNCACHED": "1",
+          "ADAMIC_BUILD_CACHE_DIR": "/tmp/rp-oracle-full/cache/b11-023-D02-r0",
+          "TMPDIR": "/tmp/rp-oracle-full/tmp/b11-023-D02-r0",
+          "GOTMPDIR": "/tmp/rp-oracle-full/tmp/b11-023-D02-r0"
+        },
+        "log": "logs/b11-023-D02-r0.log.gz",
+        "exit": 1,
+        "wall_seconds": 599.626,
+        "failed_top_level": [
+          "TestCensusOverloadResultStop",
+          "TestCheckedCastFailureContract",
+          "TestCheckedNonNullTypeScript",
+          "TestEntriesProvenance",
+          "TestEnumInitializationUnknownPinned",
+          "TestInterfaceCastOracle",
+          "TestInterfaceCastScalarTags",
+          "TestLongArgumentsLeaveTheStackItsLimit",
+          "TestNativeAgreesWithNode",
+          "TestNonNullWeakFreedNamesExpression",
+          "TestPredicateMiscompileRefusals",
+          "TestReviewProgramsAgreeWithNode",
+          "TestSmallStacksStillPanic",
+          "TestStage3EnumFallthrough",
+          "TestStatementsSmallTypeScriptIncrement",
+          "TestWeakReadsUndefinedOnceFreed"
+        ],
+        "panics": [],
+        "package_completed": true
+      }
+    ],
+    "wall_seconds": 599.737
+  },
+  {
+    "diff": "b12-041-D4",
+    "file_line": "internal/javascript/javascript.go:688",
+    "source_branch": "test-defend/internal-oracle-checked_views_flag_downcast",
+    "all_catchers": [
+      "TestCheckedViewFlagDowncast",
+      "TestNativeAgreesWithNode",
+      "TestTypeScriptConditionsAgreeWithNode"
+    ],
+    "panics": [],
+    "completed": true,
+    "runs": [
+      {
+        "command": [
+          "go",
+          "test",
+          "-overlay=/tmp/rp-oracle-full/overlays/b12-041-D4.json",
+          "-count=1",
+          "-timeout",
+          "60m",
+          "-json",
+          "./internal/oracle/",
+          "-skip",
+          "^(TestCallTarget|TestCheckedCastFlushesOutput|TestCheckedCastRunsNoCatchOrFinally|TestCheckedViewUntaggedSourceFlows|TestCheckedViewV2ArrayArmBoundary|TestCheckedViewV2MovedStage3Results|TestFileWritesLandInNodesOrder|TestImportCycleRuntimeCalls|TestInterfaceCastImportedConstruction|TestModuleNamespaceReadsMatchNode|TestNamespaceLiveExportBoundary|TestNumericEnumNeverPathsPinned|TestNumericEnumNeverPinned|TestOmittedOriginalProbePolicy|TestParserNamespace|TestRegexCycleFixtureHasItsNativeDependency|TestStage3EnumSparseArrayBoundary|TestTypedArrayWriteStopIsPinned|TestWASIEmission|TestCallTargetThrowAgreesWithNode|TestDirectClosureCallAgreesWithNode|TestParserNamespaceReceiver|TestParserNamespaceClass|TestParserCallableNamespace)($|_|/)|^(TestArgumentsLengthWrongSlotMutant|TestArrayFamilyMutants|TestArrayWithBoundsMutant|TestCheckedCastMutants|TestCheckedViewV2CallableProducerMutant|TestCheckedViewV2MembershipMutant|TestCheckedViewV2RepresentationMutants|TestCheckedViewV2TupleIdentityMutant|TestCheckedViewV2WrongFamilyMutant|TestClockGenericReturnsT01Mutant|TestClosedNestedConstituentMutant|TestConditionLedgerMissingSiteMutant|TestConditionLedgerNullMutant|TestConditionNaNMutant|TestCountsAreRecorded|TestEnumCleanupMutant|TestEnumNameEnumerationMutant|TestEnumSemanticMutants|TestFallthroughMutants|TestInterfaceCastRuntimeMutants|TestLazyInitializerIsNotEagerMutant|TestLibraryMapSetMutants|TestLibraryMethodAliasReadMutant|TestLibraryMethodCaptureMutants|TestLibraryMethodOwnLoadMutants|TestLibraryMethodValueMutants|TestLibraryStringMutants|TestLiteralOptionalOracleCatchesMutant|TestLiteralUndefinedOracleCatchesMutant|TestMathNumberOracleCatchesMutants|TestModuleNamespaceLiveBindingMutant|TestModuleNamespaceReadinessMutants|TestNamespaceRuledMutants|TestNamespaceSemanticMutants|TestNamespaceStateMutants|TestNestedCallbackCarrierMutantIsCaught|TestNestedReferenceIdentityMutant|TestNestedSiblingCycleMutantIsCaught|TestNodeFSFileMutants|TestNotYetLibraryObjectEntriesConstMutant|TestNotYetLibraryRegexCallbackMutants|TestNotYetLibraryRegexOffsetMutants|TestNotYetLibraryStringBoundsMutants|TestOct6InheritanceMutants|TestOct6ReleaseMutant|TestOmittedArgumentZeroMutantIsCaught|TestOmittedReaderZeroMutantIsCaught|TestParameterPropertyMutants|TestParameterPropertyOwnershipMutant|TestParserCallableNamespaceMutant|TestParserNamespaceClassRegistrationMutant|TestParserNamespaceReceiverMutant|TestPrivateGenericMethodOwnerMutant|TestReadinessMutants|TestRegExpReplacementNodeMutants|TestRegExpReplacementTypeGuardMutants|TestRepresentationClockSourceMutant|TestScannerNestedOverloadImplementationMutantIsCaught|TestScannerNestedReferenceMutants|TestSwitchCaseDeclarationMutants|TestSwitchTrailingEmptyMutant|TestSyntaxModuleDeclarationMutants|TestSyntaxSubstrMutants|TestTypeOfConstructorMutant|TestTypeOfNullMutant|TestTypeOfNullSlotPresenceMutant|TestTypeOfStringLiteralMutant|TestUninitializedIsNotNullishMutant|TestUnknownNarrowingMutants|TestWASIOracleCatchesMutants|TestWASIRunnerCatchesMutants)($|/)"
+        ],
+        "environment": {
+          "GOMAXPROCS": "2",
+          "GOFLAGS": "-p=2",
+          "GOCACHE": "/tmp/rp-oracle-full/go-cache/w0",
+          "ADAMIC_GATE_UNCACHED": "1",
+          "ADAMIC_BUILD_CACHE_DIR": "/tmp/rp-oracle-full/cache/b12-041-D4-r0",
+          "TMPDIR": "/tmp/rp-oracle-full/tmp/b12-041-D4-r0",
+          "GOTMPDIR": "/tmp/rp-oracle-full/tmp/b12-041-D4-r0"
+        },
+        "log": "logs/b12-041-D4-r0.log.gz",
+        "exit": 1,
+        "wall_seconds": 557.004,
+        "failed_top_level": [
+          "TestCheckedViewFlagDowncast",
+          "TestNativeAgreesWithNode",
+          "TestTypeScriptConditionsAgreeWithNode"
+        ],
+        "panics": [],
+        "package_completed": true
+      }
+    ],
+    "wall_seconds": 558.709
+  },
+  {
+    "diff": "b14-043-D3",
+    "file_line": "internal/lower/enum_never.go:100",
+    "source_branch": "test-defend/internal-oracle-enums_open",
+    "all_catchers": [
+      "TestNativeAgreesWithNode"
+    ],
+    "panics": [],
+    "completed": true,
+    "runs": [
+      {
+        "command": [
+          "go",
+          "test",
+          "-overlay=/tmp/rp-oracle-full/overlays/b14-043-D3.json",
+          "-count=1",
+          "-timeout",
+          "60m",
+          "-json",
+          "./internal/oracle/",
+          "-skip",
+          "^(TestCallTarget|TestCheckedCastFlushesOutput|TestCheckedCastRunsNoCatchOrFinally|TestCheckedViewUntaggedSourceFlows|TestCheckedViewV2ArrayArmBoundary|TestCheckedViewV2MovedStage3Results|TestFileWritesLandInNodesOrder|TestImportCycleRuntimeCalls|TestInterfaceCastImportedConstruction|TestModuleNamespaceReadsMatchNode|TestNamespaceLiveExportBoundary|TestNumericEnumNeverPathsPinned|TestNumericEnumNeverPinned|TestOmittedOriginalProbePolicy|TestParserNamespace|TestRegexCycleFixtureHasItsNativeDependency|TestStage3EnumSparseArrayBoundary|TestTypedArrayWriteStopIsPinned|TestWASIEmission|TestCallTargetThrowAgreesWithNode|TestDirectClosureCallAgreesWithNode|TestParserNamespaceReceiver|TestParserNamespaceClass|TestParserCallableNamespace)($|_|/)|^(TestArgumentsLengthWrongSlotMutant|TestArrayFamilyMutants|TestArrayWithBoundsMutant|TestCheckedCastMutants|TestCheckedViewV2CallableProducerMutant|TestCheckedViewV2MembershipMutant|TestCheckedViewV2RepresentationMutants|TestCheckedViewV2TupleIdentityMutant|TestCheckedViewV2WrongFamilyMutant|TestClockGenericReturnsT01Mutant|TestClosedNestedConstituentMutant|TestConditionLedgerMissingSiteMutant|TestConditionLedgerNullMutant|TestConditionNaNMutant|TestCountsAreRecorded|TestEnumCleanupMutant|TestEnumNameEnumerationMutant|TestEnumSemanticMutants|TestFallthroughMutants|TestInterfaceCastRuntimeMutants|TestLazyInitializerIsNotEagerMutant|TestLibraryMapSetMutants|TestLibraryMethodAliasReadMutant|TestLibraryMethodCaptureMutants|TestLibraryMethodOwnLoadMutants|TestLibraryMethodValueMutants|TestLibraryStringMutants|TestLiteralOptionalOracleCatchesMutant|TestLiteralUndefinedOracleCatchesMutant|TestMathNumberOracleCatchesMutants|TestModuleNamespaceLiveBindingMutant|TestModuleNamespaceReadinessMutants|TestNamespaceRuledMutants|TestNamespaceSemanticMutants|TestNamespaceStateMutants|TestNestedCallbackCarrierMutantIsCaught|TestNestedReferenceIdentityMutant|TestNestedSiblingCycleMutantIsCaught|TestNodeFSFileMutants|TestNotYetLibraryObjectEntriesConstMutant|TestNotYetLibraryRegexCallbackMutants|TestNotYetLibraryRegexOffsetMutants|TestNotYetLibraryStringBoundsMutants|TestOct6InheritanceMutants|TestOct6ReleaseMutant|TestOmittedArgumentZeroMutantIsCaught|TestOmittedReaderZeroMutantIsCaught|TestParameterPropertyMutants|TestParameterPropertyOwnershipMutant|TestParserCallableNamespaceMutant|TestParserNamespaceClassRegistrationMutant|TestParserNamespaceReceiverMutant|TestPrivateGenericMethodOwnerMutant|TestReadinessMutants|TestRegExpReplacementNodeMutants|TestRegExpReplacementTypeGuardMutants|TestRepresentationClockSourceMutant|TestScannerNestedOverloadImplementationMutantIsCaught|TestScannerNestedReferenceMutants|TestSwitchCaseDeclarationMutants|TestSwitchTrailingEmptyMutant|TestSyntaxModuleDeclarationMutants|TestSyntaxSubstrMutants|TestTypeOfConstructorMutant|TestTypeOfNullMutant|TestTypeOfNullSlotPresenceMutant|TestTypeOfStringLiteralMutant|TestUninitializedIsNotNullishMutant|TestUnknownNarrowingMutants|TestWASIOracleCatchesMutants|TestWASIRunnerCatchesMutants)($|/)"
+        ],
+        "environment": {
+          "GOMAXPROCS": "2",
+          "GOFLAGS": "-p=2",
+          "GOCACHE": "/tmp/rp-oracle-full/go-cache/w1",
+          "ADAMIC_GATE_UNCACHED": "1",
+          "ADAMIC_BUILD_CACHE_DIR": "/tmp/rp-oracle-full/cache/b14-043-D3-r0",
+          "TMPDIR": "/tmp/rp-oracle-full/tmp/b14-043-D3-r0",
+          "GOTMPDIR": "/tmp/rp-oracle-full/tmp/b14-043-D3-r0"
+        },
+        "log": "logs/b14-043-D3-r0.log.gz",
+        "exit": 1,
+        "wall_seconds": 561.959,
+        "failed_top_level": [
+          "TestNativeAgreesWithNode"
+        ],
+        "panics": [],
+        "package_completed": true
+      }
+    ],
+    "wall_seconds": 562.03
+  },
+  {
+    "diff": "b14-050-D5",
+    "file_line": "internal/lower/expression.go:784",
+    "source_branch": "test-defend/internal-oracle-enums_open",
+    "all_catchers": [
+      "TestArgumentsLengthTypeScriptSource",
+      "TestLongArgumentsLeaveTheStackItsLimit",
+      "TestLoopCountersAgreeWithNode",
+      "TestNativeAgreesWithNode",
+      "TestReviewProgramsAgreeWithNode",
+      "TestRuntimeLastIndexOfMatchesNode",
+      "TestSmallStacksStillPanic",
+      "TestTypeScriptConditionsAgreeWithNode",
+      "TestTypedArrayWorkersStatsMatchesPlatforms"
+    ],
+    "panics": [],
+    "completed": true,
+    "runs": [
+      {
+        "command": [
+          "go",
+          "test",
+          "-overlay=/tmp/rp-oracle-full/overlays/b14-050-D5.json",
+          "-count=1",
+          "-timeout",
+          "60m",
+          "-json",
+          "./internal/oracle/",
+          "-skip",
+          "^(TestCallTarget|TestCheckedCastFlushesOutput|TestCheckedCastRunsNoCatchOrFinally|TestCheckedViewUntaggedSourceFlows|TestCheckedViewV2ArrayArmBoundary|TestCheckedViewV2MovedStage3Results|TestFileWritesLandInNodesOrder|TestImportCycleRuntimeCalls|TestInterfaceCastImportedConstruction|TestModuleNamespaceReadsMatchNode|TestNamespaceLiveExportBoundary|TestNumericEnumNeverPathsPinned|TestNumericEnumNeverPinned|TestOmittedOriginalProbePolicy|TestParserNamespace|TestRegexCycleFixtureHasItsNativeDependency|TestStage3EnumSparseArrayBoundary|TestTypedArrayWriteStopIsPinned|TestWASIEmission|TestCallTargetThrowAgreesWithNode|TestDirectClosureCallAgreesWithNode|TestParserNamespaceReceiver|TestParserNamespaceClass|TestParserCallableNamespace)($|_|/)|^(TestArgumentsLengthWrongSlotMutant|TestArrayFamilyMutants|TestArrayWithBoundsMutant|TestCheckedCastMutants|TestCheckedViewV2CallableProducerMutant|TestCheckedViewV2MembershipMutant|TestCheckedViewV2RepresentationMutants|TestCheckedViewV2TupleIdentityMutant|TestCheckedViewV2WrongFamilyMutant|TestClockGenericReturnsT01Mutant|TestClosedNestedConstituentMutant|TestConditionLedgerMissingSiteMutant|TestConditionLedgerNullMutant|TestConditionNaNMutant|TestCountsAreRecorded|TestEnumCleanupMutant|TestEnumNameEnumerationMutant|TestEnumSemanticMutants|TestFallthroughMutants|TestInterfaceCastRuntimeMutants|TestLazyInitializerIsNotEagerMutant|TestLibraryMapSetMutants|TestLibraryMethodAliasReadMutant|TestLibraryMethodCaptureMutants|TestLibraryMethodOwnLoadMutants|TestLibraryMethodValueMutants|TestLibraryStringMutants|TestLiteralOptionalOracleCatchesMutant|TestLiteralUndefinedOracleCatchesMutant|TestMathNumberOracleCatchesMutants|TestModuleNamespaceLiveBindingMutant|TestModuleNamespaceReadinessMutants|TestNamespaceRuledMutants|TestNamespaceSemanticMutants|TestNamespaceStateMutants|TestNestedCallbackCarrierMutantIsCaught|TestNestedReferenceIdentityMutant|TestNestedSiblingCycleMutantIsCaught|TestNodeFSFileMutants|TestNotYetLibraryObjectEntriesConstMutant|TestNotYetLibraryRegexCallbackMutants|TestNotYetLibraryRegexOffsetMutants|TestNotYetLibraryStringBoundsMutants|TestOct6InheritanceMutants|TestOct6ReleaseMutant|TestOmittedArgumentZeroMutantIsCaught|TestOmittedReaderZeroMutantIsCaught|TestParameterPropertyMutants|TestParameterPropertyOwnershipMutant|TestParserCallableNamespaceMutant|TestParserNamespaceClassRegistrationMutant|TestParserNamespaceReceiverMutant|TestPrivateGenericMethodOwnerMutant|TestReadinessMutants|TestRegExpReplacementNodeMutants|TestRegExpReplacementTypeGuardMutants|TestRepresentationClockSourceMutant|TestScannerNestedOverloadImplementationMutantIsCaught|TestScannerNestedReferenceMutants|TestSwitchCaseDeclarationMutants|TestSwitchTrailingEmptyMutant|TestSyntaxModuleDeclarationMutants|TestSyntaxSubstrMutants|TestTypeOfConstructorMutant|TestTypeOfNullMutant|TestTypeOfNullSlotPresenceMutant|TestTypeOfStringLiteralMutant|TestUninitializedIsNotNullishMutant|TestUnknownNarrowingMutants|TestWASIOracleCatchesMutants|TestWASIRunnerCatchesMutants)($|/)"
+        ],
+        "environment": {
+          "GOMAXPROCS": "2",
+          "GOFLAGS": "-p=2",
+          "GOCACHE": "/tmp/rp-oracle-full/go-cache/w0",
+          "ADAMIC_GATE_UNCACHED": "1",
+          "ADAMIC_BUILD_CACHE_DIR": "/tmp/rp-oracle-full/cache/b14-050-D5-r0",
+          "TMPDIR": "/tmp/rp-oracle-full/tmp/b14-050-D5-r0",
+          "GOTMPDIR": "/tmp/rp-oracle-full/tmp/b14-050-D5-r0"
+        },
+        "log": "logs/b14-050-D5-r0.log.gz",
+        "exit": 1,
+        "wall_seconds": 1078.521,
+        "failed_top_level": [
+          "TestArgumentsLengthTypeScriptSource",
+          "TestLongArgumentsLeaveTheStackItsLimit",
+          "TestLoopCountersAgreeWithNode",
+          "TestNativeAgreesWithNode",
+          "TestReviewProgramsAgreeWithNode",
+          "TestRuntimeLastIndexOfMatchesNode",
+          "TestSmallStacksStillPanic",
+          "TestTypeScriptConditionsAgreeWithNode",
+          "TestTypedArrayWorkersStatsMatchesPlatforms"
+        ],
+        "panics": [],
+        "package_completed": true
+      }
+    ],
+    "wall_seconds": 1081.136
+  },
+  {
+    "diff": "b14-051-D6",
+    "file_line": "internal/native/emit_expressions.go:754",
+    "source_branch": "test-defend/internal-oracle-enums_open",
+    "all_catchers": [
+      "TestArgumentsLengthTypeScriptSource",
+      "TestLoopCountersAgreeWithNode",
+      "TestPredicateMiscompileRefusals",
+      "TestReviewProgramsAgreeWithNode",
+      "TestStatementsSmallTypeScriptIncrement",
+      "TestTypedArrayWorkersStatsMatchesPlatforms"
+    ],
+    "panics": [],
+    "completed": true,
+    "runs": [
+      {
+        "command": [
+          "go",
+          "test",
+          "-overlay=/tmp/rp-oracle-full/overlays/b14-051-D6.json",
+          "-count=1",
+          "-timeout",
+          "60m",
+          "-json",
+          "./internal/oracle/",
+          "-skip",
+          "^(TestCallTarget|TestCheckedCastFlushesOutput|TestCheckedCastRunsNoCatchOrFinally|TestCheckedViewUntaggedSourceFlows|TestCheckedViewV2ArrayArmBoundary|TestCheckedViewV2MovedStage3Results|TestFileWritesLandInNodesOrder|TestImportCycleRuntimeCalls|TestInterfaceCastImportedConstruction|TestModuleNamespaceReadsMatchNode|TestNamespaceLiveExportBoundary|TestNumericEnumNeverPathsPinned|TestNumericEnumNeverPinned|TestOmittedOriginalProbePolicy|TestParserNamespace|TestRegexCycleFixtureHasItsNativeDependency|TestStage3EnumSparseArrayBoundary|TestTypedArrayWriteStopIsPinned|TestWASIEmission|TestCallTargetThrowAgreesWithNode|TestDirectClosureCallAgreesWithNode|TestParserNamespaceReceiver|TestParserNamespaceClass|TestParserCallableNamespace)($|_|/)|^(TestArgumentsLengthWrongSlotMutant|TestArrayFamilyMutants|TestArrayWithBoundsMutant|TestCheckedCastMutants|TestCheckedViewV2CallableProducerMutant|TestCheckedViewV2MembershipMutant|TestCheckedViewV2RepresentationMutants|TestCheckedViewV2TupleIdentityMutant|TestCheckedViewV2WrongFamilyMutant|TestClockGenericReturnsT01Mutant|TestClosedNestedConstituentMutant|TestConditionLedgerMissingSiteMutant|TestConditionLedgerNullMutant|TestConditionNaNMutant|TestCountsAreRecorded|TestEnumCleanupMutant|TestEnumNameEnumerationMutant|TestEnumSemanticMutants|TestFallthroughMutants|TestInterfaceCastRuntimeMutants|TestLazyInitializerIsNotEagerMutant|TestLibraryMapSetMutants|TestLibraryMethodAliasReadMutant|TestLibraryMethodCaptureMutants|TestLibraryMethodOwnLoadMutants|TestLibraryMethodValueMutants|TestLibraryStringMutants|TestLiteralOptionalOracleCatchesMutant|TestLiteralUndefinedOracleCatchesMutant|TestMathNumberOracleCatchesMutants|TestModuleNamespaceLiveBindingMutant|TestModuleNamespaceReadinessMutants|TestNamespaceRuledMutants|TestNamespaceSemanticMutants|TestNamespaceStateMutants|TestNestedCallbackCarrierMutantIsCaught|TestNestedReferenceIdentityMutant|TestNestedSiblingCycleMutantIsCaught|TestNodeFSFileMutants|TestNotYetLibraryObjectEntriesConstMutant|TestNotYetLibraryRegexCallbackMutants|TestNotYetLibraryRegexOffsetMutants|TestNotYetLibraryStringBoundsMutants|TestOct6InheritanceMutants|TestOct6ReleaseMutant|TestOmittedArgumentZeroMutantIsCaught|TestOmittedReaderZeroMutantIsCaught|TestParameterPropertyMutants|TestParameterPropertyOwnershipMutant|TestParserCallableNamespaceMutant|TestParserNamespaceClassRegistrationMutant|TestParserNamespaceReceiverMutant|TestPrivateGenericMethodOwnerMutant|TestReadinessMutants|TestRegExpReplacementNodeMutants|TestRegExpReplacementTypeGuardMutants|TestRepresentationClockSourceMutant|TestScannerNestedOverloadImplementationMutantIsCaught|TestScannerNestedReferenceMutants|TestSwitchCaseDeclarationMutants|TestSwitchTrailingEmptyMutant|TestSyntaxModuleDeclarationMutants|TestSyntaxSubstrMutants|TestTypeOfConstructorMutant|TestTypeOfNullMutant|TestTypeOfNullSlotPresenceMutant|TestTypeOfStringLiteralMutant|TestUninitializedIsNotNullishMutant|TestUnknownNarrowingMutants|TestWASIOracleCatchesMutants|TestWASIRunnerCatchesMutants)($|/)"
+        ],
+        "environment": {
+          "GOMAXPROCS": "2",
+          "GOFLAGS": "-p=2",
+          "GOCACHE": "/tmp/rp-oracle-full/go-cache/w1",
+          "ADAMIC_GATE_UNCACHED": "1",
+          "ADAMIC_BUILD_CACHE_DIR": "/tmp/rp-oracle-full/cache/b14-051-D6-r0",
+          "TMPDIR": "/tmp/rp-oracle-full/tmp/b14-051-D6-r0",
+          "GOTMPDIR": "/tmp/rp-oracle-full/tmp/b14-051-D6-r0"
+        },
+        "log": "logs/b14-051-D6-r0.log.gz",
+        "exit": 1,
+        "wall_seconds": 173.946,
+        "failed_top_level": [
+          "TestArgumentsLengthTypeScriptSource",
+          "TestLoopCountersAgreeWithNode",
+          "TestPredicateMiscompileRefusals",
+          "TestReviewProgramsAgreeWithNode",
+          "TestStatementsSmallTypeScriptIncrement",
+          "TestTypedArrayWorkersStatsMatchesPlatforms"
+        ],
+        "panics": [],
+        "package_completed": true
+      }
+    ],
+    "wall_seconds": 176.09
+  },
+  {
+    "diff": "b14-052-D7",
+    "file_line": "internal/native/emit_branches.go:104",
+    "source_branch": "test-defend/internal-oracle-enums_open",
+    "all_catchers": [
+      "TestAPromptComesBeforeTheRead",
+      "TestArgumentsLengthTypeScriptSource",
+      "TestCheckedViewFlagDowncast",
+      "TestCheckedViewObjectPrimitiveSource",
+      "TestCheckedViewV2ReadsAfterWrites",
+      "TestInputAgreesWithNode",
+      "TestNarrowedUnionMemberCheck",
+      "TestNativeAgreesWithNode",
+      "TestNodeFSFileAgreesWithNode",
+      "TestOneFileHoldsNodesOrder",
+      "TestPredicateMiscompileRefusals",
+      "TestReviewProgramsAgreeWithNode",
+      "TestTypeScriptConditionsAgreeWithNode",
+      "TestTypedArrayWorkersStatsMatchesPlatforms"
+    ],
+    "panics": [],
+    "completed": true,
+    "runs": [
+      {
+        "command": [
+          "go",
+          "test",
+          "-overlay=/tmp/rp-oracle-full/overlays/b14-052-D7.json",
+          "-count=1",
+          "-timeout",
+          "60m",
+          "-json",
+          "./internal/oracle/",
+          "-skip",
+          "^(TestCallTarget|TestCheckedCastFlushesOutput|TestCheckedCastRunsNoCatchOrFinally|TestCheckedViewUntaggedSourceFlows|TestCheckedViewV2ArrayArmBoundary|TestCheckedViewV2MovedStage3Results|TestFileWritesLandInNodesOrder|TestImportCycleRuntimeCalls|TestInterfaceCastImportedConstruction|TestModuleNamespaceReadsMatchNode|TestNamespaceLiveExportBoundary|TestNumericEnumNeverPathsPinned|TestNumericEnumNeverPinned|TestOmittedOriginalProbePolicy|TestParserNamespace|TestRegexCycleFixtureHasItsNativeDependency|TestStage3EnumSparseArrayBoundary|TestTypedArrayWriteStopIsPinned|TestWASIEmission|TestCallTargetThrowAgreesWithNode|TestDirectClosureCallAgreesWithNode|TestParserNamespaceReceiver|TestParserNamespaceClass|TestParserCallableNamespace)($|_|/)|^(TestArgumentsLengthWrongSlotMutant|TestArrayFamilyMutants|TestArrayWithBoundsMutant|TestCheckedCastMutants|TestCheckedViewV2CallableProducerMutant|TestCheckedViewV2MembershipMutant|TestCheckedViewV2RepresentationMutants|TestCheckedViewV2TupleIdentityMutant|TestCheckedViewV2WrongFamilyMutant|TestClockGenericReturnsT01Mutant|TestClosedNestedConstituentMutant|TestConditionLedgerMissingSiteMutant|TestConditionLedgerNullMutant|TestConditionNaNMutant|TestCountsAreRecorded|TestEnumCleanupMutant|TestEnumNameEnumerationMutant|TestEnumSemanticMutants|TestFallthroughMutants|TestInterfaceCastRuntimeMutants|TestLazyInitializerIsNotEagerMutant|TestLibraryMapSetMutants|TestLibraryMethodAliasReadMutant|TestLibraryMethodCaptureMutants|TestLibraryMethodOwnLoadMutants|TestLibraryMethodValueMutants|TestLibraryStringMutants|TestLiteralOptionalOracleCatchesMutant|TestLiteralUndefinedOracleCatchesMutant|TestMathNumberOracleCatchesMutants|TestModuleNamespaceLiveBindingMutant|TestModuleNamespaceReadinessMutants|TestNamespaceRuledMutants|TestNamespaceSemanticMutants|TestNamespaceStateMutants|TestNestedCallbackCarrierMutantIsCaught|TestNestedReferenceIdentityMutant|TestNestedSiblingCycleMutantIsCaught|TestNodeFSFileMutants|TestNotYetLibraryObjectEntriesConstMutant|TestNotYetLibraryRegexCallbackMutants|TestNotYetLibraryRegexOffsetMutants|TestNotYetLibraryStringBoundsMutants|TestOct6InheritanceMutants|TestOct6ReleaseMutant|TestOmittedArgumentZeroMutantIsCaught|TestOmittedReaderZeroMutantIsCaught|TestParameterPropertyMutants|TestParameterPropertyOwnershipMutant|TestParserCallableNamespaceMutant|TestParserNamespaceClassRegistrationMutant|TestParserNamespaceReceiverMutant|TestPrivateGenericMethodOwnerMutant|TestReadinessMutants|TestRegExpReplacementNodeMutants|TestRegExpReplacementTypeGuardMutants|TestRepresentationClockSourceMutant|TestScannerNestedOverloadImplementationMutantIsCaught|TestScannerNestedReferenceMutants|TestSwitchCaseDeclarationMutants|TestSwitchTrailingEmptyMutant|TestSyntaxModuleDeclarationMutants|TestSyntaxSubstrMutants|TestTypeOfConstructorMutant|TestTypeOfNullMutant|TestTypeOfNullSlotPresenceMutant|TestTypeOfStringLiteralMutant|TestUninitializedIsNotNullishMutant|TestUnknownNarrowingMutants|TestWASIOracleCatchesMutants|TestWASIRunnerCatchesMutants)($|/)"
+        ],
+        "environment": {
+          "GOMAXPROCS": "2",
+          "GOFLAGS": "-p=2",
+          "GOCACHE": "/tmp/rp-oracle-full/go-cache/w1",
+          "ADAMIC_GATE_UNCACHED": "1",
+          "ADAMIC_BUILD_CACHE_DIR": "/tmp/rp-oracle-full/cache/b14-052-D7-r0",
+          "TMPDIR": "/tmp/rp-oracle-full/tmp/b14-052-D7-r0",
+          "GOTMPDIR": "/tmp/rp-oracle-full/tmp/b14-052-D7-r0"
+        },
+        "log": "logs/b14-052-D7-r0.log.gz",
+        "exit": 1,
+        "wall_seconds": 824.689,
+        "failed_top_level": [
+          "TestAPromptComesBeforeTheRead",
+          "TestArgumentsLengthTypeScriptSource",
+          "TestCheckedViewFlagDowncast",
+          "TestCheckedViewObjectPrimitiveSource",
+          "TestCheckedViewV2ReadsAfterWrites",
+          "TestInputAgreesWithNode",
+          "TestNarrowedUnionMemberCheck",
+          "TestNativeAgreesWithNode",
+          "TestNodeFSFileAgreesWithNode",
+          "TestOneFileHoldsNodesOrder",
+          "TestPredicateMiscompileRefusals",
+          "TestReviewProgramsAgreeWithNode",
+          "TestTypeScriptConditionsAgreeWithNode",
+          "TestTypedArrayWorkersStatsMatchesPlatforms"
+        ],
+        "panics": [],
+        "package_completed": true
+      }
+    ],
+    "wall_seconds": 824.785
+  },
+  {
+    "diff": "b16-058-D02",
+    "file_line": "internal/lower/module_namespace.go:16",
+    "source_branch": "test-defend/internal-oracle-method_values_mutant",
+    "all_catchers": [
+      "TestNativeAgreesWithNode"
+    ],
+    "panics": [],
+    "completed": true,
+    "runs": [
+      {
+        "command": [
+          "go",
+          "test",
+          "-overlay=/tmp/rp-oracle-full/overlays/b16-058-D02.json",
+          "-count=1",
+          "-timeout",
+          "60m",
+          "-json",
+          "./internal/oracle/",
+          "-skip",
+          "^(TestCallTarget|TestCheckedCastFlushesOutput|TestCheckedCastRunsNoCatchOrFinally|TestCheckedViewUntaggedSourceFlows|TestCheckedViewV2ArrayArmBoundary|TestCheckedViewV2MovedStage3Results|TestFileWritesLandInNodesOrder|TestImportCycleRuntimeCalls|TestInterfaceCastImportedConstruction|TestModuleNamespaceReadsMatchNode|TestNamespaceLiveExportBoundary|TestNumericEnumNeverPathsPinned|TestNumericEnumNeverPinned|TestOmittedOriginalProbePolicy|TestParserNamespace|TestRegexCycleFixtureHasItsNativeDependency|TestStage3EnumSparseArrayBoundary|TestTypedArrayWriteStopIsPinned|TestWASIEmission|TestCallTargetThrowAgreesWithNode|TestDirectClosureCallAgreesWithNode|TestParserNamespaceReceiver|TestParserNamespaceClass|TestParserCallableNamespace)($|_|/)|^(TestArgumentsLengthWrongSlotMutant|TestArrayFamilyMutants|TestArrayWithBoundsMutant|TestCheckedCastMutants|TestCheckedViewV2CallableProducerMutant|TestCheckedViewV2MembershipMutant|TestCheckedViewV2RepresentationMutants|TestCheckedViewV2TupleIdentityMutant|TestCheckedViewV2WrongFamilyMutant|TestClockGenericReturnsT01Mutant|TestClosedNestedConstituentMutant|TestConditionLedgerMissingSiteMutant|TestConditionLedgerNullMutant|TestConditionNaNMutant|TestCountsAreRecorded|TestEnumCleanupMutant|TestEnumNameEnumerationMutant|TestEnumSemanticMutants|TestFallthroughMutants|TestInterfaceCastRuntimeMutants|TestLazyInitializerIsNotEagerMutant|TestLibraryMapSetMutants|TestLibraryMethodAliasReadMutant|TestLibraryMethodCaptureMutants|TestLibraryMethodOwnLoadMutants|TestLibraryMethodValueMutants|TestLibraryStringMutants|TestLiteralOptionalOracleCatchesMutant|TestLiteralUndefinedOracleCatchesMutant|TestMathNumberOracleCatchesMutants|TestModuleNamespaceLiveBindingMutant|TestModuleNamespaceReadinessMutants|TestNamespaceRuledMutants|TestNamespaceSemanticMutants|TestNamespaceStateMutants|TestNestedCallbackCarrierMutantIsCaught|TestNestedReferenceIdentityMutant|TestNestedSiblingCycleMutantIsCaught|TestNodeFSFileMutants|TestNotYetLibraryObjectEntriesConstMutant|TestNotYetLibraryRegexCallbackMutants|TestNotYetLibraryRegexOffsetMutants|TestNotYetLibraryStringBoundsMutants|TestOct6InheritanceMutants|TestOct6ReleaseMutant|TestOmittedArgumentZeroMutantIsCaught|TestOmittedReaderZeroMutantIsCaught|TestParameterPropertyMutants|TestParameterPropertyOwnershipMutant|TestParserCallableNamespaceMutant|TestParserNamespaceClassRegistrationMutant|TestParserNamespaceReceiverMutant|TestPrivateGenericMethodOwnerMutant|TestReadinessMutants|TestRegExpReplacementNodeMutants|TestRegExpReplacementTypeGuardMutants|TestRepresentationClockSourceMutant|TestScannerNestedOverloadImplementationMutantIsCaught|TestScannerNestedReferenceMutants|TestSwitchCaseDeclarationMutants|TestSwitchTrailingEmptyMutant|TestSyntaxModuleDeclarationMutants|TestSyntaxSubstrMutants|TestTypeOfConstructorMutant|TestTypeOfNullMutant|TestTypeOfNullSlotPresenceMutant|TestTypeOfStringLiteralMutant|TestUninitializedIsNotNullishMutant|TestUnknownNarrowingMutants|TestWASIOracleCatchesMutants|TestWASIRunnerCatchesMutants)($|/)"
+        ],
+        "environment": {
+          "GOMAXPROCS": "2",
+          "GOFLAGS": "-p=2",
+          "GOCACHE": "/tmp/rp-oracle-full/go-cache/w1",
+          "ADAMIC_GATE_UNCACHED": "1",
+          "ADAMIC_BUILD_CACHE_DIR": "/tmp/rp-oracle-full/cache/b16-058-D02-r0",
+          "TMPDIR": "/tmp/rp-oracle-full/tmp/b16-058-D02-r0",
+          "GOTMPDIR": "/tmp/rp-oracle-full/tmp/b16-058-D02-r0"
+        },
+        "log": "logs/b16-058-D02-r0.log.gz",
+        "exit": 1,
+        "wall_seconds": 713.029,
+        "failed_top_level": [
+          "TestNativeAgreesWithNode"
+        ],
+        "panics": [],
+        "package_completed": true
+      }
+    ],
+    "wall_seconds": 713.111
+  },
+  {
+    "diff": "b17-065-D4",
+    "file_line": "internal/lower/non_null.go:106",
+    "source_branch": "test-defend/internal-oracle-oct6_mutant",
+    "all_catchers": [
+      "TestCheckedNonNullCounts",
+      "TestCheckedNonNullTypeScript",
+      "TestDefaultTaggedSourceViews",
+      "TestImpossibleNonNullFixturesAreRefused",
+      "TestNarrowedFieldUsesSharedReadiness",
+      "TestNativeAgreesWithNode",
+      "TestNonNullLiteralUnionInitializers",
+      "TestNonNullWeakFreedNamesExpression",
+      "TestParserNonNullSourceExtension",
+      "TestPredicateDirectionCountsAreRecorded",
+      "TestStatementsSmallTypeScriptIncrement",
+      "TestViewFieldInheritedStaticReadiness"
+    ],
+    "panics": [],
+    "completed": true,
+    "runs": [
+      {
+        "command": [
+          "go",
+          "test",
+          "-overlay=/tmp/rp-oracle-full/overlays/b17-065-D4.json",
+          "-count=1",
+          "-timeout",
+          "60m",
+          "-json",
+          "./internal/oracle/",
+          "-skip",
+          "^(TestCallTarget|TestCheckedCastFlushesOutput|TestCheckedCastRunsNoCatchOrFinally|TestCheckedViewUntaggedSourceFlows|TestCheckedViewV2ArrayArmBoundary|TestCheckedViewV2MovedStage3Results|TestFileWritesLandInNodesOrder|TestImportCycleRuntimeCalls|TestInterfaceCastImportedConstruction|TestModuleNamespaceReadsMatchNode|TestNamespaceLiveExportBoundary|TestNumericEnumNeverPathsPinned|TestNumericEnumNeverPinned|TestOmittedOriginalProbePolicy|TestParserNamespace|TestRegexCycleFixtureHasItsNativeDependency|TestStage3EnumSparseArrayBoundary|TestTypedArrayWriteStopIsPinned|TestWASIEmission|TestCallTargetThrowAgreesWithNode|TestDirectClosureCallAgreesWithNode|TestParserNamespaceReceiver|TestParserNamespaceClass|TestParserCallableNamespace)($|_|/)|^(TestArgumentsLengthWrongSlotMutant|TestArrayFamilyMutants|TestArrayWithBoundsMutant|TestCheckedCastMutants|TestCheckedViewV2CallableProducerMutant|TestCheckedViewV2MembershipMutant|TestCheckedViewV2RepresentationMutants|TestCheckedViewV2TupleIdentityMutant|TestCheckedViewV2WrongFamilyMutant|TestClockGenericReturnsT01Mutant|TestClosedNestedConstituentMutant|TestConditionLedgerMissingSiteMutant|TestConditionLedgerNullMutant|TestConditionNaNMutant|TestCountsAreRecorded|TestEnumCleanupMutant|TestEnumNameEnumerationMutant|TestEnumSemanticMutants|TestFallthroughMutants|TestInterfaceCastRuntimeMutants|TestLazyInitializerIsNotEagerMutant|TestLibraryMapSetMutants|TestLibraryMethodAliasReadMutant|TestLibraryMethodCaptureMutants|TestLibraryMethodOwnLoadMutants|TestLibraryMethodValueMutants|TestLibraryStringMutants|TestLiteralOptionalOracleCatchesMutant|TestLiteralUndefinedOracleCatchesMutant|TestMathNumberOracleCatchesMutants|TestModuleNamespaceLiveBindingMutant|TestModuleNamespaceReadinessMutants|TestNamespaceRuledMutants|TestNamespaceSemanticMutants|TestNamespaceStateMutants|TestNestedCallbackCarrierMutantIsCaught|TestNestedReferenceIdentityMutant|TestNestedSiblingCycleMutantIsCaught|TestNodeFSFileMutants|TestNotYetLibraryObjectEntriesConstMutant|TestNotYetLibraryRegexCallbackMutants|TestNotYetLibraryRegexOffsetMutants|TestNotYetLibraryStringBoundsMutants|TestOct6InheritanceMutants|TestOct6ReleaseMutant|TestOmittedArgumentZeroMutantIsCaught|TestOmittedReaderZeroMutantIsCaught|TestParameterPropertyMutants|TestParameterPropertyOwnershipMutant|TestParserCallableNamespaceMutant|TestParserNamespaceClassRegistrationMutant|TestParserNamespaceReceiverMutant|TestPrivateGenericMethodOwnerMutant|TestReadinessMutants|TestRegExpReplacementNodeMutants|TestRegExpReplacementTypeGuardMutants|TestRepresentationClockSourceMutant|TestScannerNestedOverloadImplementationMutantIsCaught|TestScannerNestedReferenceMutants|TestSwitchCaseDeclarationMutants|TestSwitchTrailingEmptyMutant|TestSyntaxModuleDeclarationMutants|TestSyntaxSubstrMutants|TestTypeOfConstructorMutant|TestTypeOfNullMutant|TestTypeOfNullSlotPresenceMutant|TestTypeOfStringLiteralMutant|TestUninitializedIsNotNullishMutant|TestUnknownNarrowingMutants|TestWASIOracleCatchesMutants|TestWASIRunnerCatchesMutants)($|/)"
+        ],
+        "environment": {
+          "GOMAXPROCS": "2",
+          "GOFLAGS": "-p=2",
+          "GOCACHE": "/tmp/rp-oracle-full/go-cache/w0",
+          "ADAMIC_GATE_UNCACHED": "1",
+          "ADAMIC_BUILD_CACHE_DIR": "/tmp/rp-oracle-full/cache/b17-065-D4-r0",
+          "TMPDIR": "/tmp/rp-oracle-full/tmp/b17-065-D4-r0",
+          "GOTMPDIR": "/tmp/rp-oracle-full/tmp/b17-065-D4-r0"
+        },
+        "log": "logs/b17-065-D4-r0.log.gz",
+        "exit": 1,
+        "wall_seconds": 682.496,
+        "failed_top_level": [
+          "TestCheckedNonNullCounts",
+          "TestCheckedNonNullTypeScript",
+          "TestDefaultTaggedSourceViews",
+          "TestImpossibleNonNullFixturesAreRefused",
+          "TestNarrowedFieldUsesSharedReadiness",
+          "TestNativeAgreesWithNode",
+          "TestNonNullLiteralUnionInitializers",
+          "TestNonNullWeakFreedNamesExpression",
+          "TestParserNonNullSourceExtension",
+          "TestPredicateDirectionCountsAreRecorded",
+          "TestStatementsSmallTypeScriptIncrement",
+          "TestViewFieldInheritedStaticReadiness"
+        ],
+        "panics": [],
+        "package_completed": true
+      }
+    ],
+    "wall_seconds": 682.613
+  },
+  {
+    "diff": "b17-066-D5",
+    "file_line": "internal/native/emit_values.go:61",
+    "source_branch": "test-defend/internal-oracle-oct6_mutant",
+    "all_catchers": [
+      "TestArgumentsLengthTypeScriptSource",
+      "TestCheckedNonNullCounts",
+      "TestCheckedNonNullTypeScript",
+      "TestLoopCountersAgreeWithNode",
+      "TestNarrowedFieldUsesSharedReadiness",
+      "TestNativeAgreesWithNode",
+      "TestReviewProgramsAgreeWithNode",
+      "TestStatementsSmallTypeScriptIncrement",
+      "TestViewFieldInheritedStaticReadiness"
+    ],
+    "panics": [],
+    "completed": true,
+    "runs": [
+      {
+        "command": [
+          "go",
+          "test",
+          "-overlay=/tmp/rp-oracle-full/overlays/b17-066-D5.json",
+          "-count=1",
+          "-timeout",
+          "60m",
+          "-json",
+          "./internal/oracle/",
+          "-skip",
+          "^(TestCallTarget|TestCheckedCastFlushesOutput|TestCheckedCastRunsNoCatchOrFinally|TestCheckedViewUntaggedSourceFlows|TestCheckedViewV2ArrayArmBoundary|TestCheckedViewV2MovedStage3Results|TestFileWritesLandInNodesOrder|TestImportCycleRuntimeCalls|TestInterfaceCastImportedConstruction|TestModuleNamespaceReadsMatchNode|TestNamespaceLiveExportBoundary|TestNumericEnumNeverPathsPinned|TestNumericEnumNeverPinned|TestOmittedOriginalProbePolicy|TestParserNamespace|TestRegexCycleFixtureHasItsNativeDependency|TestStage3EnumSparseArrayBoundary|TestTypedArrayWriteStopIsPinned|TestWASIEmission|TestCallTargetThrowAgreesWithNode|TestDirectClosureCallAgreesWithNode|TestParserNamespaceReceiver|TestParserNamespaceClass|TestParserCallableNamespace)($|_|/)|^(TestArgumentsLengthWrongSlotMutant|TestArrayFamilyMutants|TestArrayWithBoundsMutant|TestCheckedCastMutants|TestCheckedViewV2CallableProducerMutant|TestCheckedViewV2MembershipMutant|TestCheckedViewV2RepresentationMutants|TestCheckedViewV2TupleIdentityMutant|TestCheckedViewV2WrongFamilyMutant|TestClockGenericReturnsT01Mutant|TestClosedNestedConstituentMutant|TestConditionLedgerMissingSiteMutant|TestConditionLedgerNullMutant|TestConditionNaNMutant|TestCountsAreRecorded|TestEnumCleanupMutant|TestEnumNameEnumerationMutant|TestEnumSemanticMutants|TestFallthroughMutants|TestInterfaceCastRuntimeMutants|TestLazyInitializerIsNotEagerMutant|TestLibraryMapSetMutants|TestLibraryMethodAliasReadMutant|TestLibraryMethodCaptureMutants|TestLibraryMethodOwnLoadMutants|TestLibraryMethodValueMutants|TestLibraryStringMutants|TestLiteralOptionalOracleCatchesMutant|TestLiteralUndefinedOracleCatchesMutant|TestMathNumberOracleCatchesMutants|TestModuleNamespaceLiveBindingMutant|TestModuleNamespaceReadinessMutants|TestNamespaceRuledMutants|TestNamespaceSemanticMutants|TestNamespaceStateMutants|TestNestedCallbackCarrierMutantIsCaught|TestNestedReferenceIdentityMutant|TestNestedSiblingCycleMutantIsCaught|TestNodeFSFileMutants|TestNotYetLibraryObjectEntriesConstMutant|TestNotYetLibraryRegexCallbackMutants|TestNotYetLibraryRegexOffsetMutants|TestNotYetLibraryStringBoundsMutants|TestOct6InheritanceMutants|TestOct6ReleaseMutant|TestOmittedArgumentZeroMutantIsCaught|TestOmittedReaderZeroMutantIsCaught|TestParameterPropertyMutants|TestParameterPropertyOwnershipMutant|TestParserCallableNamespaceMutant|TestParserNamespaceClassRegistrationMutant|TestParserNamespaceReceiverMutant|TestPrivateGenericMethodOwnerMutant|TestReadinessMutants|TestRegExpReplacementNodeMutants|TestRegExpReplacementTypeGuardMutants|TestRepresentationClockSourceMutant|TestScannerNestedOverloadImplementationMutantIsCaught|TestScannerNestedReferenceMutants|TestSwitchCaseDeclarationMutants|TestSwitchTrailingEmptyMutant|TestSyntaxModuleDeclarationMutants|TestSyntaxSubstrMutants|TestTypeOfConstructorMutant|TestTypeOfNullMutant|TestTypeOfNullSlotPresenceMutant|TestTypeOfStringLiteralMutant|TestUninitializedIsNotNullishMutant|TestUnknownNarrowingMutants|TestWASIOracleCatchesMutants|TestWASIRunnerCatchesMutants)($|/)"
+        ],
+        "environment": {
+          "GOMAXPROCS": "2",
+          "GOFLAGS": "-p=2",
+          "GOCACHE": "/tmp/rp-oracle-full/go-cache/w0",
+          "ADAMIC_GATE_UNCACHED": "1",
+          "ADAMIC_BUILD_CACHE_DIR": "/tmp/rp-oracle-full/cache/b17-066-D5-r0",
+          "TMPDIR": "/tmp/rp-oracle-full/tmp/b17-066-D5-r0",
+          "GOTMPDIR": "/tmp/rp-oracle-full/tmp/b17-066-D5-r0"
+        },
+        "log": "logs/b17-066-D5-r0.log.gz",
+        "exit": 1,
+        "wall_seconds": 710.648,
+        "failed_top_level": [
+          "TestArgumentsLengthTypeScriptSource",
+          "TestCheckedNonNullCounts",
+          "TestCheckedNonNullTypeScript",
+          "TestLoopCountersAgreeWithNode",
+          "TestNarrowedFieldUsesSharedReadiness",
+          "TestNativeAgreesWithNode",
+          "TestReviewProgramsAgreeWithNode",
+          "TestStatementsSmallTypeScriptIncrement",
+          "TestViewFieldInheritedStaticReadiness"
+        ],
+        "panics": [],
+        "package_completed": true
+      }
+    ],
+    "wall_seconds": 710.749
+  },
+  {
+    "diff": "b17-067-D6",
+    "file_line": "internal/lower/expression.go:1024",
+    "source_branch": "test-defend/internal-oracle-oct6_mutant",
+    "all_catchers": [
+      "TestAPromptComesBeforeTheRead",
+      "TestArgumentsLengthTypeScriptSource",
+      "TestCheckedViewFlagDowncast",
+      "TestCheckedViewObjectPrimitiveSource",
+      "TestCheckedViewV2ReadsAfterWrites",
+      "TestEnumInitializationNode",
+      "TestInputAgreesWithNode",
+      "TestNarrowedUnionMemberCheck",
+      "TestNativeAgreesWithNode",
+      "TestNodeFSFileAgreesWithNode",
+      "TestOneFileHoldsNodesOrder",
+      "TestPredicateMiscompileRefusals",
+      "TestReviewProgramsAgreeWithNode",
+      "TestTypeScriptConditionsAgreeWithNode",
+      "TestTypedArrayWorkersStatsMatchesPlatforms"
+    ],
+    "panics": [],
+    "completed": true,
+    "runs": [
+      {
+        "command": [
+          "go",
+          "test",
+          "-overlay=/tmp/rp-oracle-full/overlays/b17-067-D6.json",
+          "-count=1",
+          "-timeout",
+          "60m",
+          "-json",
+          "./internal/oracle/",
+          "-skip",
+          "^(TestCallTarget|TestCheckedCastFlushesOutput|TestCheckedCastRunsNoCatchOrFinally|TestCheckedViewUntaggedSourceFlows|TestCheckedViewV2ArrayArmBoundary|TestCheckedViewV2MovedStage3Results|TestFileWritesLandInNodesOrder|TestImportCycleRuntimeCalls|TestInterfaceCastImportedConstruction|TestModuleNamespaceReadsMatchNode|TestNamespaceLiveExportBoundary|TestNumericEnumNeverPathsPinned|TestNumericEnumNeverPinned|TestOmittedOriginalProbePolicy|TestParserNamespace|TestRegexCycleFixtureHasItsNativeDependency|TestStage3EnumSparseArrayBoundary|TestTypedArrayWriteStopIsPinned|TestWASIEmission|TestCallTargetThrowAgreesWithNode|TestDirectClosureCallAgreesWithNode|TestParserNamespaceReceiver|TestParserNamespaceClass|TestParserCallableNamespace)($|_|/)|^(TestArgumentsLengthWrongSlotMutant|TestArrayFamilyMutants|TestArrayWithBoundsMutant|TestCheckedCastMutants|TestCheckedViewV2CallableProducerMutant|TestCheckedViewV2MembershipMutant|TestCheckedViewV2RepresentationMutants|TestCheckedViewV2TupleIdentityMutant|TestCheckedViewV2WrongFamilyMutant|TestClockGenericReturnsT01Mutant|TestClosedNestedConstituentMutant|TestConditionLedgerMissingSiteMutant|TestConditionLedgerNullMutant|TestConditionNaNMutant|TestCountsAreRecorded|TestEnumCleanupMutant|TestEnumNameEnumerationMutant|TestEnumSemanticMutants|TestFallthroughMutants|TestInterfaceCastRuntimeMutants|TestLazyInitializerIsNotEagerMutant|TestLibraryMapSetMutants|TestLibraryMethodAliasReadMutant|TestLibraryMethodCaptureMutants|TestLibraryMethodOwnLoadMutants|TestLibraryMethodValueMutants|TestLibraryStringMutants|TestLiteralOptionalOracleCatchesMutant|TestLiteralUndefinedOracleCatchesMutant|TestMathNumberOracleCatchesMutants|TestModuleNamespaceLiveBindingMutant|TestModuleNamespaceReadinessMutants|TestNamespaceRuledMutants|TestNamespaceSemanticMutants|TestNamespaceStateMutants|TestNestedCallbackCarrierMutantIsCaught|TestNestedReferenceIdentityMutant|TestNestedSiblingCycleMutantIsCaught|TestNodeFSFileMutants|TestNotYetLibraryObjectEntriesConstMutant|TestNotYetLibraryRegexCallbackMutants|TestNotYetLibraryRegexOffsetMutants|TestNotYetLibraryStringBoundsMutants|TestOct6InheritanceMutants|TestOct6ReleaseMutant|TestOmittedArgumentZeroMutantIsCaught|TestOmittedReaderZeroMutantIsCaught|TestParameterPropertyMutants|TestParameterPropertyOwnershipMutant|TestParserCallableNamespaceMutant|TestParserNamespaceClassRegistrationMutant|TestParserNamespaceReceiverMutant|TestPrivateGenericMethodOwnerMutant|TestReadinessMutants|TestRegExpReplacementNodeMutants|TestRegExpReplacementTypeGuardMutants|TestRepresentationClockSourceMutant|TestScannerNestedOverloadImplementationMutantIsCaught|TestScannerNestedReferenceMutants|TestSwitchCaseDeclarationMutants|TestSwitchTrailingEmptyMutant|TestSyntaxModuleDeclarationMutants|TestSyntaxSubstrMutants|TestTypeOfConstructorMutant|TestTypeOfNullMutant|TestTypeOfNullSlotPresenceMutant|TestTypeOfStringLiteralMutant|TestUninitializedIsNotNullishMutant|TestUnknownNarrowingMutants|TestWASIOracleCatchesMutants|TestWASIRunnerCatchesMutants)($|/)"
+        ],
+        "environment": {
+          "GOMAXPROCS": "2",
+          "GOFLAGS": "-p=2",
+          "GOCACHE": "/tmp/rp-oracle-full/go-cache/w1",
+          "ADAMIC_GATE_UNCACHED": "1",
+          "ADAMIC_BUILD_CACHE_DIR": "/tmp/rp-oracle-full/cache/b17-067-D6-r0",
+          "TMPDIR": "/tmp/rp-oracle-full/tmp/b17-067-D6-r0",
+          "GOTMPDIR": "/tmp/rp-oracle-full/tmp/b17-067-D6-r0"
+        },
+        "log": "logs/b17-067-D6-r0.log.gz",
+        "exit": 1,
+        "wall_seconds": 840.156,
+        "failed_top_level": [
+          "TestAPromptComesBeforeTheRead",
+          "TestArgumentsLengthTypeScriptSource",
+          "TestCheckedViewFlagDowncast",
+          "TestCheckedViewObjectPrimitiveSource",
+          "TestCheckedViewV2ReadsAfterWrites",
+          "TestEnumInitializationNode",
+          "TestInputAgreesWithNode",
+          "TestNarrowedUnionMemberCheck",
+          "TestNativeAgreesWithNode",
+          "TestNodeFSFileAgreesWithNode",
+          "TestOneFileHoldsNodesOrder",
+          "TestPredicateMiscompileRefusals",
+          "TestReviewProgramsAgreeWithNode",
+          "TestTypeScriptConditionsAgreeWithNode",
+          "TestTypedArrayWorkersStatsMatchesPlatforms"
+        ],
+        "panics": [],
+        "package_completed": true
+      }
+    ],
+    "wall_seconds": 840.62
+  },
+  {
+    "diff": "b21-074-D2",
+    "file_line": "internal/native/emit_values.go:22",
+    "source_branch": "test-defend/internal-oracle-wasi",
+    "all_catchers": [
+      "TestArgumentsLengthTypeScriptSource",
+      "TestEntriesProvenance",
+      "TestEnumInitializationNode",
+      "TestLoopCountersAgreeWithNode",
+      "TestNativeAgreesWithNode",
+      "TestReviewProgramsAgreeWithNode"
+    ],
+    "panics": [],
+    "completed": true,
+    "runs": [
+      {
+        "command": [
+          "go",
+          "test",
+          "-overlay=/tmp/rp-oracle-full/overlays/b21-074-D2.json",
+          "-count=1",
+          "-timeout",
+          "60m",
+          "-json",
+          "./internal/oracle/",
+          "-skip",
+          "^(TestCallTarget|TestCheckedCastFlushesOutput|TestCheckedCastRunsNoCatchOrFinally|TestCheckedViewUntaggedSourceFlows|TestCheckedViewV2ArrayArmBoundary|TestCheckedViewV2MovedStage3Results|TestFileWritesLandInNodesOrder|TestImportCycleRuntimeCalls|TestInterfaceCastImportedConstruction|TestModuleNamespaceReadsMatchNode|TestNamespaceLiveExportBoundary|TestNumericEnumNeverPathsPinned|TestNumericEnumNeverPinned|TestOmittedOriginalProbePolicy|TestParserNamespace|TestRegexCycleFixtureHasItsNativeDependency|TestStage3EnumSparseArrayBoundary|TestTypedArrayWriteStopIsPinned|TestWASIEmission|TestCallTargetThrowAgreesWithNode|TestDirectClosureCallAgreesWithNode|TestParserNamespaceReceiver|TestParserNamespaceClass|TestParserCallableNamespace)($|_|/)|^(TestArgumentsLengthWrongSlotMutant|TestArrayFamilyMutants|TestArrayWithBoundsMutant|TestCheckedCastMutants|TestCheckedViewV2CallableProducerMutant|TestCheckedViewV2MembershipMutant|TestCheckedViewV2RepresentationMutants|TestCheckedViewV2TupleIdentityMutant|TestCheckedViewV2WrongFamilyMutant|TestClockGenericReturnsT01Mutant|TestClosedNestedConstituentMutant|TestConditionLedgerMissingSiteMutant|TestConditionLedgerNullMutant|TestConditionNaNMutant|TestCountsAreRecorded|TestEnumCleanupMutant|TestEnumNameEnumerationMutant|TestEnumSemanticMutants|TestFallthroughMutants|TestInterfaceCastRuntimeMutants|TestLazyInitializerIsNotEagerMutant|TestLibraryMapSetMutants|TestLibraryMethodAliasReadMutant|TestLibraryMethodCaptureMutants|TestLibraryMethodOwnLoadMutants|TestLibraryMethodValueMutants|TestLibraryStringMutants|TestLiteralOptionalOracleCatchesMutant|TestLiteralUndefinedOracleCatchesMutant|TestMathNumberOracleCatchesMutants|TestModuleNamespaceLiveBindingMutant|TestModuleNamespaceReadinessMutants|TestNamespaceRuledMutants|TestNamespaceSemanticMutants|TestNamespaceStateMutants|TestNestedCallbackCarrierMutantIsCaught|TestNestedReferenceIdentityMutant|TestNestedSiblingCycleMutantIsCaught|TestNodeFSFileMutants|TestNotYetLibraryObjectEntriesConstMutant|TestNotYetLibraryRegexCallbackMutants|TestNotYetLibraryRegexOffsetMutants|TestNotYetLibraryStringBoundsMutants|TestOct6InheritanceMutants|TestOct6ReleaseMutant|TestOmittedArgumentZeroMutantIsCaught|TestOmittedReaderZeroMutantIsCaught|TestParameterPropertyMutants|TestParameterPropertyOwnershipMutant|TestParserCallableNamespaceMutant|TestParserNamespaceClassRegistrationMutant|TestParserNamespaceReceiverMutant|TestPrivateGenericMethodOwnerMutant|TestReadinessMutants|TestRegExpReplacementNodeMutants|TestRegExpReplacementTypeGuardMutants|TestRepresentationClockSourceMutant|TestScannerNestedOverloadImplementationMutantIsCaught|TestScannerNestedReferenceMutants|TestSwitchCaseDeclarationMutants|TestSwitchTrailingEmptyMutant|TestSyntaxModuleDeclarationMutants|TestSyntaxSubstrMutants|TestTypeOfConstructorMutant|TestTypeOfNullMutant|TestTypeOfNullSlotPresenceMutant|TestTypeOfStringLiteralMutant|TestUninitializedIsNotNullishMutant|TestUnknownNarrowingMutants|TestWASIOracleCatchesMutants|TestWASIRunnerCatchesMutants)($|/)"
+        ],
+        "environment": {
+          "GOMAXPROCS": "2",
+          "GOFLAGS": "-p=2",
+          "GOCACHE": "/tmp/rp-oracle-full/go-cache/w0",
+          "ADAMIC_GATE_UNCACHED": "1",
+          "ADAMIC_BUILD_CACHE_DIR": "/tmp/rp-oracle-full/cache/b21-074-D2-r0",
+          "TMPDIR": "/tmp/rp-oracle-full/tmp/b21-074-D2-r0",
+          "GOTMPDIR": "/tmp/rp-oracle-full/tmp/b21-074-D2-r0"
+        },
+        "log": "logs/b21-074-D2-r0.log.gz",
+        "exit": 1,
+        "wall_seconds": 629.857,
+        "failed_top_level": [
+          "TestArgumentsLengthTypeScriptSource",
+          "TestEntriesProvenance",
+          "TestEnumInitializationNode",
+          "TestLoopCountersAgreeWithNode",
+          "TestNativeAgreesWithNode",
+          "TestReviewProgramsAgreeWithNode"
+        ],
+        "panics": [],
+        "package_completed": true
+      }
+    ],
+    "wall_seconds": 629.974
+  },
+  {
+    "diff": "b21-076-D4",
+    "file_line": "internal/native/emit.go:150",
+    "source_branch": "test-defend/internal-oracle-wasi",
+    "all_catchers": [
+      "TestNativeAgreesWithNode"
+    ],
+    "panics": [],
+    "completed": true,
+    "runs": [
+      {
+        "command": [
+          "go",
+          "test",
+          "-overlay=/tmp/rp-oracle-full/overlays/b21-076-D4.json",
+          "-count=1",
+          "-timeout",
+          "60m",
+          "-json",
+          "./internal/oracle/",
+          "-skip",
+          "^(TestCallTarget|TestCheckedCastFlushesOutput|TestCheckedCastRunsNoCatchOrFinally|TestCheckedViewUntaggedSourceFlows|TestCheckedViewV2ArrayArmBoundary|TestCheckedViewV2MovedStage3Results|TestFileWritesLandInNodesOrder|TestImportCycleRuntimeCalls|TestInterfaceCastImportedConstruction|TestModuleNamespaceReadsMatchNode|TestNamespaceLiveExportBoundary|TestNumericEnumNeverPathsPinned|TestNumericEnumNeverPinned|TestOmittedOriginalProbePolicy|TestParserNamespace|TestRegexCycleFixtureHasItsNativeDependency|TestStage3EnumSparseArrayBoundary|TestTypedArrayWriteStopIsPinned|TestWASIEmission|TestCallTargetThrowAgreesWithNode|TestDirectClosureCallAgreesWithNode|TestParserNamespaceReceiver|TestParserNamespaceClass|TestParserCallableNamespace)($|_|/)|^(TestArgumentsLengthWrongSlotMutant|TestArrayFamilyMutants|TestArrayWithBoundsMutant|TestCheckedCastMutants|TestCheckedViewV2CallableProducerMutant|TestCheckedViewV2MembershipMutant|TestCheckedViewV2RepresentationMutants|TestCheckedViewV2TupleIdentityMutant|TestCheckedViewV2WrongFamilyMutant|TestClockGenericReturnsT01Mutant|TestClosedNestedConstituentMutant|TestConditionLedgerMissingSiteMutant|TestConditionLedgerNullMutant|TestConditionNaNMutant|TestCountsAreRecorded|TestEnumCleanupMutant|TestEnumNameEnumerationMutant|TestEnumSemanticMutants|TestFallthroughMutants|TestInterfaceCastRuntimeMutants|TestLazyInitializerIsNotEagerMutant|TestLibraryMapSetMutants|TestLibraryMethodAliasReadMutant|TestLibraryMethodCaptureMutants|TestLibraryMethodOwnLoadMutants|TestLibraryMethodValueMutants|TestLibraryStringMutants|TestLiteralOptionalOracleCatchesMutant|TestLiteralUndefinedOracleCatchesMutant|TestMathNumberOracleCatchesMutants|TestModuleNamespaceLiveBindingMutant|TestModuleNamespaceReadinessMutants|TestNamespaceRuledMutants|TestNamespaceSemanticMutants|TestNamespaceStateMutants|TestNestedCallbackCarrierMutantIsCaught|TestNestedReferenceIdentityMutant|TestNestedSiblingCycleMutantIsCaught|TestNodeFSFileMutants|TestNotYetLibraryObjectEntriesConstMutant|TestNotYetLibraryRegexCallbackMutants|TestNotYetLibraryRegexOffsetMutants|TestNotYetLibraryStringBoundsMutants|TestOct6InheritanceMutants|TestOct6ReleaseMutant|TestOmittedArgumentZeroMutantIsCaught|TestOmittedReaderZeroMutantIsCaught|TestParameterPropertyMutants|TestParameterPropertyOwnershipMutant|TestParserCallableNamespaceMutant|TestParserNamespaceClassRegistrationMutant|TestParserNamespaceReceiverMutant|TestPrivateGenericMethodOwnerMutant|TestReadinessMutants|TestRegExpReplacementNodeMutants|TestRegExpReplacementTypeGuardMutants|TestRepresentationClockSourceMutant|TestScannerNestedOverloadImplementationMutantIsCaught|TestScannerNestedReferenceMutants|TestSwitchCaseDeclarationMutants|TestSwitchTrailingEmptyMutant|TestSyntaxModuleDeclarationMutants|TestSyntaxSubstrMutants|TestTypeOfConstructorMutant|TestTypeOfNullMutant|TestTypeOfNullSlotPresenceMutant|TestTypeOfStringLiteralMutant|TestUninitializedIsNotNullishMutant|TestUnknownNarrowingMutants|TestWASIOracleCatchesMutants|TestWASIRunnerCatchesMutants)($|/)"
+        ],
+        "environment": {
+          "GOMAXPROCS": "2",
+          "GOFLAGS": "-p=2",
+          "GOCACHE": "/tmp/rp-oracle-full/go-cache/w1",
+          "ADAMIC_GATE_UNCACHED": "1",
+          "ADAMIC_BUILD_CACHE_DIR": "/tmp/rp-oracle-full/cache/b21-076-D4-r0",
+          "TMPDIR": "/tmp/rp-oracle-full/tmp/b21-076-D4-r0",
+          "GOTMPDIR": "/tmp/rp-oracle-full/tmp/b21-076-D4-r0"
+        },
+        "log": "logs/b21-076-D4-r0.log.gz",
+        "exit": 1,
+        "wall_seconds": 665.45,
+        "failed_top_level": [
+          "TestNativeAgreesWithNode"
+        ],
+        "panics": [],
+        "package_completed": true
+      }
+    ],
+    "wall_seconds": 665.517
+  }
+]

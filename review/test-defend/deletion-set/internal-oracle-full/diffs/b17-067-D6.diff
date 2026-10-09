@@ -1,0 +1,11 @@
+--- a/internal/lower/expression.go
++++ b/internal/lower/expression.go
+@@ -1021,7 +1021,7 @@
+ 		}
+ 		return nil, l.notYet(node, "a conditional whose branches have different types")
+ 	}
+-	return ir.Conditional{Condition: condition, WhenTrue: whenTrue, WhenNot: whenNot}, nil
++	return ir.Conditional{Condition: condition, WhenTrue: whenNot, WhenNot: whenTrue}, nil
+ }
+ 
+ func typeName(valueType ir.Type) string {
