@@ -191,32 +191,6 @@ func (l *lowering) chainProperty(node *ast.Node, object ir.Expression) (ir.Expre
 		return nil, err
 	}
 	name := l.fieldName(node.Name())
-	receiver := node.AsPropertyAccessExpression().Expression
-	if object.Type() == ir.Array && l.regexRuntimeProperty(receiver, name) && name != "length" {
-		of, err := l.typeOf(node)
-		if err != nil {
-			return nil, err
-		}
-		stored := of
-		if name == "index" && l.isLibraryType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(receiver)), "RegExpMatchArray") {
-			stored = ir.MaybeNumber
-		}
-		value := ir.Expression(ir.RegExpProperty{Array: object, Name: name, Of: stored})
-		if stored == ir.MaybeNumber && of == ir.Number {
-			value = ir.Unwrap{Value: value}
-		}
-		return value, nil
-	}
-	if object.Type() == ir.Object && l.regexGroups(receiver) {
-		of, err := l.typeOf(node)
-		if err != nil {
-			return nil, err
-		}
-		if of != ir.String && of != ir.Object {
-			return nil, l.notYet(node, "a named-group key with an Object-prototype type")
-		}
-		return ir.RegExpGroup{Object: object, Name: name, Of: of}, nil
-	}
 	switch object.Type() {
 	case ir.Array, ir.Uint8Array, ir.Int32Array, ir.Float64Array:
 		if name == "length" {
