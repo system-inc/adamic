@@ -5,11 +5,9 @@ import (
 	"context"
 	"fmt"
 	"hash/fnv"
-	"io/fs"
 	"os"
 	"os/exec"
 	"path/filepath"
-	"runtime"
 	"strconv"
 	"strings"
 	"sync"
@@ -17,11 +15,6 @@ import (
 	"testing"
 	"time"
 
-	"github.com/system-inc/adamic/internal/buildcache"
-	"github.com/system-inc/adamic/internal/javascript"
-	"github.com/system-inc/adamic/internal/load"
-	"github.com/system-inc/adamic/internal/lower"
-	"github.com/system-inc/adamic/internal/native"
 	"github.com/system-inc/adamic/stage1/cohere/lint/registry"
 )
 
@@ -229,36 +222,28 @@ func ownedWitnessUnit(t *testing.T, shard int) {
 }
 
 var ownedWitnessShared struct {
-	sync.Mutex
+	sync.Once
 	oracle, binary, module string
-}
-
-// Not parallel: publishes the shared oracle and immutable products before parallel shards resume.
-func TestOwnedWitnesses_Setup(t *testing.T) {
-	if os.Getenv("ADAMIC_OWNED_WITNESS_PROBE") == "1" {
-		return
-	}
-	ownedWitnessSetup(t)
 }
 
 func ownedWitnessSetup(t *testing.T) {
 	t.Helper()
-	ownedWitnessShared.Lock()
-	defer ownedWitnessShared.Unlock()
-	if ownedWitnessShared.oracle != "" {
-		return
+	ownedWitnessShared.Do(func() {
+		// No deadline of its own: setup is the build phase's to make fast, and Loom's 90 s kill still covers
+		// the unit (@system_adamic's ruling). A shard's clock starts only after this returns.
+		started := time.Now()
+		directory, err := filepath.Abs(".")
+		if err != nil {
+			t.Fatal(err)
+		}
+		oracle := lintGoOracleProduct(t)
+		binary, module := ownedWitnessProducts(t, directory)
+		ownedWitnessShared.oracle, ownedWitnessShared.binary, ownedWitnessShared.module = oracle, binary, module
+		t.Logf("shared setup=%s", time.Since(started))
+	})
+	if ownedWitnessShared.oracle == "" {
+		t.Fatal("owned witness setup failed earlier in this process")
 	}
-	// No deadline of its own: setup is the build phase's to make fast, and Loom's 90 s kill still covers
-	// the unit (@system_adamic's ruling). A shard's clock starts only after this returns.
-	started := time.Now()
-	directory, err := filepath.Abs(".")
-	if err != nil {
-		t.Fatal(err)
-	}
-	oracle := goOracle(t) // Overlay builds retain their existing builder by instruction.
-	binary, module := ownedWitnessProducts(t, directory)
-	ownedWitnessShared.oracle, ownedWitnessShared.binary, ownedWitnessShared.module = oracle, binary, module
-	t.Logf("shared setup=%s", time.Since(started))
 }
 
 func ownedWitnessExecute(t *testing.T, ctx context.Context, name string, args ...string) execution {
@@ -330,72 +315,6 @@ func ownedWitnessAgreement(id, side string, got, want []byte) error {
 	return nil
 }
 
-// Non-Go products include the port, compiler implementation and embedded runtime.
-// Go oracle overlay builds retain their existing builder until GoBuild supports them.
-func ownedWitnessProducts(t *testing.T, directory string) (string, string) {
-	t.Helper()
-	files := []string{"go.mod", "cohere/go.mod", "cohere/go.sum", "stage1/cohere/lint/owned_witness_units_test.go"}
-	for _, root := range []string{"internal", "stage1/typescript", "cohere/rule_runner", "cohere/schema", "cohere/internal", "cohere/TypeScript-shim", "cohere/TypeScript/tsc"} {
-		err := filepath.WalkDir(filepath.Join(repository, root), func(path string, entry fs.DirEntry, err error) error {
-			if err != nil {
-				return err
-			}
-			if entry.IsDir() {
-				if entry.Name() == ".git" {
-					return filepath.SkipDir
-				}
-				return nil
-			}
-			ext := filepath.Ext(path)
-			if (ext == ".go" && !strings.HasSuffix(path, "_test.go")) || ext == ".c" || ext == ".h" || ext == ".ts" || ext == ".a" || entry.Name() == "go.mod" || entry.Name() == "go.sum" {
-				relative, err := filepath.Rel(repository, path)
-				if err != nil {
-					return err
-				}
-				files = append(files, filepath.ToSlash(relative))
-			}
-			return nil
-		})
-		if err != nil {
-			t.Fatal(err)
-		}
-	}
-	for _, file := range portFiles(t) {
-		files = append(files, filepath.ToSlash(filepath.Join("stage1/cohere/lint", file)))
-	}
-	tools := []string{runtime.Version(), runtime.GOOS, runtime.GOARCH}
-	lowered := buildcache.Product(t, buildcache.Inputs{Name: "lint-owned-witnesses-lowered", Files: files, Toolchain: tools}, func(dir string) error {
-		started := time.Now()
-		program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
-		if err != nil {
-			return err
-		}
-		ir, err := lower.Lower(context.Background(), program)
-		if err != nil {
-			return err
-		}
-		if err = os.WriteFile(filepath.Join(dir, "program.c"), []byte(native.C(ir)), 0644); err != nil {
-			return err
-		}
-		err = os.WriteFile(filepath.Join(dir, "program.mjs"), []byte(javascript.JavaScript(ir)), 0644)
-		t.Logf("cold build lowered=%s", time.Since(started))
-		return err
-	})
-	flags := append(native.Flags(native.Options{Sanitize: true, Split: true, Jobs: 4}), "Split=true", "Jobs=4", "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"), "ADAMIC_NATIVE_JOBS="+os.Getenv("ADAMIC_NATIVE_JOBS"), "ADAMIC_GATE_UNCACHED="+os.Getenv("ADAMIC_GATE_UNCACHED"))
-	tools = append(tools, buildcache.Tool("clang", "--version"))
-	binary := buildcache.Product(t, buildcache.Inputs{Name: "lint-owned-witnesses-sanitized", Files: files, Flags: flags, Toolchain: tools}, func(dir string) error {
-		source, err := os.ReadFile(filepath.Join(lowered, "program.c"))
-		if err != nil {
-			return err
-		}
-		started := time.Now()
-		err = native.Build(string(source), filepath.Join(dir, "native"), native.Options{Sanitize: true, Split: true, Jobs: 4})
-		t.Logf("cold build sanitized=%s", time.Since(started))
-		return err
-	})
-	return filepath.Join(binary, "native"), filepath.Join(lowered, "program.mjs")
-}
-
 func TestOwnedWitnessesUnion(t *testing.T) {
 	t.Parallel()
 	cases := ownedWitnessCases(t, ".")
@@ -432,7 +351,9 @@ func TestOwnedWitnessesPlantedDisagreement(t *testing.T) {
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
-	command := exec.CommandContext(ctx, binary, "-test.run=^TestOwnedWitnesses_[0-9]{3}$", "-test.timeout=90s", "-test.v")
+	cases := ownedWitnessCases(t, ".")
+	want := fmt.Sprintf("TestOwnedWitnesses_%03d", ownedWitnessShard(cases[0].id, testOwnedWitnessesShards))
+	command := exec.CommandContext(ctx, binary, "-test.run=^"+want+"$", "-test.timeout=90s", "-test.v")
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
 		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
@@ -447,8 +368,6 @@ func TestOwnedWitnessesPlantedDisagreement(t *testing.T) {
 	if err == nil {
 		t.Fatal("planted disagreement survived")
 	}
-	cases := ownedWitnessCases(t, ".")
-	want := fmt.Sprintf("TestOwnedWitnesses_%03d", ownedWitnessShard(cases[0].id, testOwnedWitnessesShards))
 	failures := 0
 	for _, line := range strings.Split(string(output), "\n") {
 		if strings.Contains(line, "--- FAIL: TestOwnedWitnesses_") {
