@@ -4,6 +4,8 @@ import (
 	"bytes"
 	"context"
 	"crypto/sha256"
+	"encoding/base64"
+	"encoding/hex"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -404,5 +406,112 @@ func TestPoisoningStopsFallback(t *testing.T) {
 	out, log := transact(t, t.TempDir(), srv.URL, "", "", getRequest(), nil)
 	if !out.Miss || !strings.Contains(log, "cache poisoning") {
 		t.Fatalf("response %+v; log %q", out, log)
+	}
+}
+
+// writeLikeGo frames a request the way cmd/go's writeToChild does: JSON, a
+// blank line, then for a put the base64 body as a quoted line.
+func writeLikeGo(b *bytes.Buffer, req request, body []byte) {
+	j, _ := json.Marshal(req)
+	b.Write(j)
+	b.WriteString("\n\n")
+	if req.Command == "put" && req.BodySize > 0 {
+		b.WriteString(`"` + base64.StdEncoding.EncodeToString(body) + "\"\n")
+	}
+}
+
+func serveStream(t *testing.T, c *cache, input []byte) (map[int64]response, error) {
+	t.Helper()
+	var output bytes.Buffer
+	err := serve(c, bytes.NewReader(input), &output)
+	responses := map[int64]response{}
+	dec := json.NewDecoder(&output)
+	for {
+		var r response
+		if dec.Decode(&r) != nil {
+			break
+		}
+		if _, ok := responses[r.ID]; ok {
+			t.Fatalf("duplicate response for ID %d", r.ID)
+		}
+		responses[r.ID] = r
+	}
+	return responses, err
+}
+
+func localCache(t *testing.T) (*cache, *bytes.Buffer) {
+	var log bytes.Buffer
+	return &cache{dir: t.TempDir(), namespace: "gocache", stderr: &log, client: http.DefaultClient}, &log
+}
+
+// Go abandons a put whose body changed size mid-copy and writes the next
+// request straight after the truncated base64, on the same line.
+func TestAbandonedPutResyncs(t *testing.T) {
+	t.Parallel()
+	c, log := localCache(t)
+	body := []byte("compiled output")
+	var input bytes.Buffer
+	writeLikeGo(&input, putRequest(body), body)
+	a := sha256.Sum256([]byte("abandoned"))
+	o := sha256.Sum256([]byte("changed"))
+	abandoned := request{ID: 2, Command: "put", ActionID: a[:], OutputID: o[:], BodySize: 4096}
+	j, _ := json.Marshal(abandoned)
+	input.Write(j)
+	input.WriteString("\n\n\"" + base64.StdEncoding.EncodeToString(bytes.Repeat([]byte("x"), 300))[:100])
+	writeLikeGo(&input, request{ID: 3, Command: "get", ActionID: a[:]}, nil)
+	get := getRequest()
+	get.ID = 4
+	writeLikeGo(&input, get, nil)
+	writeLikeGo(&input, request{ID: 5, Command: "close"}, nil)
+	responses, err := serveStream(t, c, input.Bytes())
+	if err != nil {
+		t.Fatalf("serve: %v", err)
+	}
+	if r, ok := responses[2]; ok {
+		t.Fatalf("answered the abandoned put: %+v", r)
+	}
+	if r, ok := responses[1]; !ok || r.Err != "" || r.DiskPath == "" {
+		t.Fatalf("valid put: %+v", r)
+	}
+	if r, ok := responses[3]; !ok || !r.Miss {
+		t.Fatalf("get after the abandoned body: %+v", r)
+	}
+	if _, ok := responses[4]; !ok {
+		t.Fatal("following get unanswered")
+	}
+	if _, ok := responses[5]; !ok || len(responses) != 5 {
+		t.Fatalf("responses: %+v", responses)
+	}
+	want := fmt.Sprintf("put 2 abandoned mid-body by go: action %s, BodySize 4096, 100 base64 bytes arrived", hex.EncodeToString(a[:]))
+	if !strings.Contains(log.String(), want) {
+		t.Fatalf("log %q", log.String())
+	}
+	input.Reset()
+	writeLikeGo(&input, getRequest(), nil)
+	writeLikeGo(&input, request{ID: 3, Command: "close"}, nil)
+	responses, err = serveStream(t, c, input.Bytes())
+	got, _ := os.ReadFile(responses[2].DiskPath)
+	if err != nil || responses[2].Miss || !bytes.Equal(got, body) {
+		t.Fatalf("valid put not served: %+v %q %v", responses[2], got, err)
+	}
+}
+
+func TestAbandonedPutAtEOF(t *testing.T) {
+	t.Parallel()
+	for _, tail := range []string{"", "\"QUJD", "\"QUJD\n"} {
+		t.Run(fmt.Sprintf("%q", tail), func(t *testing.T) {
+			c, log := localCache(t)
+			j, _ := json.Marshal(putRequest([]byte("never arrives")))
+			responses, err := serveStream(t, c, append(j, "\n\n"+tail...))
+			if err != nil {
+				t.Fatalf("serve: %v", err)
+			}
+			if _, ok := responses[1]; ok || len(responses) != 1 {
+				t.Fatalf("responses: %+v", responses)
+			}
+			if !strings.Contains(log.String(), "put 1 abandoned mid-body") {
+				t.Fatalf("log %q", log.String())
+			}
+		})
 	}
 }
