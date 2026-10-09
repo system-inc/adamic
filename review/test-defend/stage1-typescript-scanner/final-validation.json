@@ -1,0 +1,27 @@
+{
+  "source_restored_to_start": true,
+  "five_standalone_diffs_apply": true,
+  "D3_clang_command": [
+    "clang",
+    "-std=c11",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-pedantic",
+    "-Wno-unused-variable",
+    "-Wno-unused-but-set-variable",
+    "-Wno-unused-function",
+    "-Wno-unused-parameter",
+    "-Wno-self-assign",
+    "-ffp-contract=off",
+    "-fno-optimize-sibling-calls",
+    "-O2",
+    "-I",
+    "internal/native/runtime",
+    "-c",
+    "/tmp/defend-scanner/D3-clean-diff.c",
+    "-o",
+    "/tmp/defend-scanner/D3-clean-diff.o"
+  ],
+  "D3_clang_exit": 0
+}

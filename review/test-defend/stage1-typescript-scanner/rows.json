@@ -1,0 +1,142 @@
+[
+  {
+    "test": "TestGapStandsWhereGapsMdSays",
+    "package": "stage1/typescript/scanner",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestBigintGapStandsWhereGapsMdSays"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D1 internal/lower/object.go:1266",
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "internal/lower/object.go:1266",
+        "change": "\"push with other than one value\" -> \"push with two values\"",
+        "rows_failed": [
+          "TestGapStandsWhereGapsMdSays"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_TYPESCRIPT_SOURCE=/tmp/defend-scanner/typescript ADAMIC_SCANNER_BENCH=1 ADAMIC_SCANNER_PROFILE_DIR=/tmp/defend-scanner/artifacts/D1 ADAMIC_SCANNER_PROFILE_SNAPSHOTS=/tmp/defend-scanner/artifacts/D1 ADAMIC_BUILD_CACHE_DIR=/tmp/defend-scanner/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/scanner/ -run . > D1.log 2>&1; gaps_test.go:34: gap changed: /workspace/adamic/stage1/typescript/scanner/gaps/1_push.ts:3:1: stage 0 can't lower push with two values yet; update GAPS.md and undo gap 1 workaround",
+    "rows_passed": [
+      "TestBigintGapStandsWhereGapsMdSays",
+      "TestPerformance",
+      "TestProduct_ScannerDecimalSeparator",
+      "TestProduct_ScannerNative",
+      "TestProduct_ScannerOracle",
+      "TestProduct_ScannerPunctuator",
+      "TestProduct_ScannerRegexRescan",
+      "TestProduct_ScannerRelease",
+      "TestProduct_ScannerSourceIdentifier",
+      "TestProfileArtifacts",
+      "TestProfileSnapshotsAgree",
+      "TestScannerAgreesWithTypescriptGo_000",
+      "TestScannerAgreesWithTypescriptGo_001",
+      "TestScannerAgreesWithTypescriptGo_002",
+      "TestScannerAgreesWithTypescriptGo_003",
+      "TestScannerAgreesWithTypescriptGo_004",
+      "TestScannerAgreesWithTypescriptGo_005",
+      "TestScannerAgreesWithTypescriptGo_006",
+      "TestScannerAgreesWithTypescriptGo_007",
+      "TestScannerAgreesWithTypescriptGo_008",
+      "TestScannerAgreesWithTypescriptGo_009",
+      "TestScannerAgreesWithTypescriptGo_010",
+      "TestScannerAgreesWithTypescriptGo_011",
+      "TestScannerAgreesWithTypescriptGo_012",
+      "TestScannerAgreesWithTypescriptGo_013",
+      "TestScannerAgreesWithTypescriptGo_014",
+      "TestScannerAgreesWithTypescriptGo_015",
+      "TestScannerShardCoverage"
+    ]
+  },
+  {
+    "test": "TestBigintGapStandsWhereGapsMdSays",
+    "package": "stage1/typescript/scanner",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestGapStandsWhereGapsMdSays"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D2 internal/lower/expression.go:40",
+    "attempts": [
+      {
+        "mutant": "D2",
+        "file_line": "internal/lower/expression.go:40",
+        "change": "\"a value of type \"+l.checker.TypeToString(l.checker.GetTypeAtLocation(node)) -> \"a representation of type \"+l.checker.TypeToString(l.checker.GetTypeAtLocation(node))",
+        "rows_failed": [
+          "TestBigintGapStandsWhereGapsMdSays"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_TYPESCRIPT_SOURCE=/tmp/defend-scanner/typescript ADAMIC_SCANNER_BENCH=1 ADAMIC_SCANNER_PROFILE_DIR=/tmp/defend-scanner/artifacts/D2 ADAMIC_SCANNER_PROFILE_SNAPSHOTS=/tmp/defend-scanner/artifacts/D2 ADAMIC_BUILD_CACHE_DIR=/tmp/defend-scanner/cache/D2 timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/scanner/ -run . > D2.log 2>&1; gaps_test.go:59: gap changed: /workspace/adamic/stage1/typescript/scanner/gaps/2_bigint.ts:2:7: stage 0 can't lower a representation of type 1237940039285380274899124223n yet; update GAPS.md and undo gap 2 workaround",
+    "rows_passed": [
+      "TestGapStandsWhereGapsMdSays",
+      "TestPerformance",
+      "TestProduct_ScannerDecimalSeparator",
+      "TestProduct_ScannerNative",
+      "TestProduct_ScannerOracle",
+      "TestProduct_ScannerPunctuator",
+      "TestProduct_ScannerRegexRescan",
+      "TestProduct_ScannerRelease",
+      "TestProduct_ScannerSourceIdentifier",
+      "TestProfileArtifacts",
+      "TestProfileSnapshotsAgree",
+      "TestScannerAgreesWithTypescriptGo_000",
+      "TestScannerAgreesWithTypescriptGo_001",
+      "TestScannerAgreesWithTypescriptGo_002",
+      "TestScannerAgreesWithTypescriptGo_003",
+      "TestScannerAgreesWithTypescriptGo_004",
+      "TestScannerAgreesWithTypescriptGo_005",
+      "TestScannerAgreesWithTypescriptGo_006",
+      "TestScannerAgreesWithTypescriptGo_007",
+      "TestScannerAgreesWithTypescriptGo_008",
+      "TestScannerAgreesWithTypescriptGo_009",
+      "TestScannerAgreesWithTypescriptGo_010",
+      "TestScannerAgreesWithTypescriptGo_011",
+      "TestScannerAgreesWithTypescriptGo_012",
+      "TestScannerAgreesWithTypescriptGo_013",
+      "TestScannerAgreesWithTypescriptGo_014",
+      "TestScannerAgreesWithTypescriptGo_015",
+      "TestScannerShardCoverage"
+    ]
+  },
+  {
+    "test": "TestProfileSnapshotsAgree",
+    "package": "stage1/typescript/scanner",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestScannerAgreesWithTypescriptGo family"
+    ],
+    "defense": "not defended",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D3",
+        "file_line": "internal/native/runtime/heap.c:149",
+        "change": "each->free = ((free_slot *)slot)->next; -> [statement dropped]",
+        "rows_failed": [
+          "TestPerformance",
+          "TestProfileSnapshotsAgree"
+        ]
+      },
+      {
+        "mutant": "D4",
+        "file_line": "internal/native/runtime/heap.c:152",
+        "change": "each->fresh += size; -> each->fresh += size - 1;",
+        "rows_failed": [
+          "TestPerformance",
+          "TestProfileSnapshotsAgree"
+        ]
+      },
+      {
+        "mutant": "D5",
+        "file_line": "internal/native/native.go:106",
+        "change": "return append(flags, \"-O2\") -> return append(flags, \"-O2\", \"-funsafe-math-optimizations\")",
+        "rows_failed": []
+      }
+    ],
+    "evidence": "ADAMIC_TYPESCRIPT_SOURCE=/tmp/defend-scanner/typescript ADAMIC_SCANNER_BENCH=1 ADAMIC_SCANNER_PROFILE_DIR=/tmp/defend-scanner/artifacts/D4 ADAMIC_SCANNER_PROFILE_SNAPSHOTS=/tmp/defend-scanner/artifacts/D4 ADAMIC_BUILD_CACHE_DIR=/tmp/defend-scanner/cache/D4 timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/scanner/ -run . > D4.log 2>&1; profile_test.go:105: /tmp/defend-scanner/artifacts/D4/scanner [--manifest /tmp/adamic-gate/TestProfileSnapshotsAgree3810207524/001/all.txt]: signal: segmentation fault",
+    "name_assertion_finding": "No mismatch: the row asserts complete answer bytes against TypeScript-Go for release, profiled and Node runs. It does not compare the counted artifact."
+  }
+]

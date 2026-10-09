@@ -1,0 +1,92 @@
+stage1/typescript/scanner/main.ts:5:function written(text: string): string {
+stage1/typescript/scanner/main.ts:7:    for(let index = 0; index < text.length; index++) {
+stage1/typescript/scanner/main.ts:16:function run(path: string, mode: string, countOnly: boolean): number {
+stage1/typescript/scanner/main.ts:18:    if(read.kind === 'Error') {
+stage1/typescript/scanner/main.ts:24:    if(!countOnly) {
+stage1/typescript/scanner/main.ts:42:    for(;;) {
+stage1/typescript/scanner/main.ts:96:    if(manifest.kind === 'Error') {
+stage1/typescript/scanner/main.ts:102:    for(const line of manifest.text.split('\n')) {
+stage1/typescript/scanner/main.ts:113:    if(countOnly) {
+stage1/typescript/scanner/main.ts:118:    run(first, args[1] ?? 'scan', false);
+stage1/typescript/scanner/scanner_products_test.go:42:func scannerFetch(t *testing.T, inputs buildcache.Inputs, recipe func(string) error) string {
+stage1/typescript/scanner/scanner_products_test.go:57:func scannerOracleProduct(t *testing.T) string {
+stage1/typescript/scanner/scanner_products_test.go:88:func scannerPortProduct(t *testing.T, source string, sanitize bool) string {
+stage1/typescript/scanner/scanner_products_test.go:120:func scannerNative(t *testing.T, mutant int, sanitize bool) string {
+stage1/typescript/scanner/scanner_products_test.go:130:func scannerProductTime(t *testing.T, build func() string) {
+stage1/typescript/scanner/scanner_products_test.go:137:func TestProduct_ScannerOracle(t *testing.T) {
+stage1/typescript/scanner/scanner_products_test.go:141:func TestProduct_ScannerNative(t *testing.T) {
+stage1/typescript/scanner/scanner_products_test.go:145:func TestProduct_ScannerRelease(t *testing.T) {
+stage1/typescript/scanner/scanner_products_test.go:149:func TestProduct_ScannerSourceIdentifier(t *testing.T) {
+stage1/typescript/scanner/scanner_products_test.go:153:func TestProduct_ScannerPunctuator(t *testing.T) {
+stage1/typescript/scanner/scanner_products_test.go:157:func TestProduct_ScannerDecimalSeparator(t *testing.T) {
+stage1/typescript/scanner/scanner_products_test.go:161:func TestProduct_ScannerRegexRescan(t *testing.T) {
+stage1/typescript/scanner/scanner_products_test.go:166:func scannerOwner(identity string) int {
+stage1/typescript/scanner/scanner_products_test.go:171:func scannerCaseIdentity(line string) string {
+stage1/typescript/scanner/scanner_products_test.go:182:func scannerManifestLines(t *testing.T, path string) []string {
+stage1/typescript/scanner/scanner_products_test.go:191:func scannerSelect(lines []string, shard int) []string {
+stage1/typescript/scanner/scanner_products_test.go:201:func scannerRun(t *testing.T, ctx context.Context, name string, args ...string) []byte {
+stage1/typescript/scanner/scanner_products_test.go:216:func scannerNode(t *testing.T, ctx context.Context, directory, manifest string) []byte {
+stage1/typescript/scanner/scanner_products_test.go:225:func scannerShard(t *testing.T, shard int) {
+stage1/typescript/scanner/scanner_products_test.go:289:func TestScannerShardCoverage(t *testing.T) {
+stage1/typescript/scanner/scanner_products_test.go:334:func TestScannerAgreesWithTypescriptGo_000(t *testing.T) { t.Parallel(); scannerShard(t, 0) }
+stage1/typescript/scanner/scanner_products_test.go:336:func TestScannerAgreesWithTypescriptGo_001(t *testing.T) { t.Parallel(); scannerShard(t, 1) }
+stage1/typescript/scanner/scanner_products_test.go:338:func TestScannerAgreesWithTypescriptGo_002(t *testing.T) { t.Parallel(); scannerShard(t, 2) }
+stage1/typescript/scanner/scanner_products_test.go:340:func TestScannerAgreesWithTypescriptGo_003(t *testing.T) { t.Parallel(); scannerShard(t, 3) }
+stage1/typescript/scanner/scanner_products_test.go:342:func TestScannerAgreesWithTypescriptGo_004(t *testing.T) { t.Parallel(); scannerShard(t, 4) }
+stage1/typescript/scanner/scanner_products_test.go:344:func TestScannerAgreesWithTypescriptGo_005(t *testing.T) { t.Parallel(); scannerShard(t, 5) }
+stage1/typescript/scanner/scanner_products_test.go:346:func TestScannerAgreesWithTypescriptGo_006(t *testing.T) { t.Parallel(); scannerShard(t, 6) }
+stage1/typescript/scanner/scanner_products_test.go:348:func TestScannerAgreesWithTypescriptGo_007(t *testing.T) { t.Parallel(); scannerShard(t, 7) }
+stage1/typescript/scanner/scanner_products_test.go:350:func TestScannerAgreesWithTypescriptGo_008(t *testing.T) { t.Parallel(); scannerShard(t, 8) }
+stage1/typescript/scanner/scanner_products_test.go:352:func TestScannerAgreesWithTypescriptGo_009(t *testing.T) { t.Parallel(); scannerShard(t, 9) }
+stage1/typescript/scanner/scanner_products_test.go:354:func TestScannerAgreesWithTypescriptGo_010(t *testing.T) { t.Parallel(); scannerShard(t, 10) }
+stage1/typescript/scanner/scanner_products_test.go:356:func TestScannerAgreesWithTypescriptGo_011(t *testing.T) { t.Parallel(); scannerShard(t, 11) }
+stage1/typescript/scanner/scanner_products_test.go:358:func TestScannerAgreesWithTypescriptGo_012(t *testing.T) { t.Parallel(); scannerShard(t, 12) }
+stage1/typescript/scanner/scanner_products_test.go:360:func TestScannerAgreesWithTypescriptGo_013(t *testing.T) { t.Parallel(); scannerShard(t, 13) }
+stage1/typescript/scanner/scanner_products_test.go:362:func TestScannerAgreesWithTypescriptGo_014(t *testing.T) { t.Parallel(); scannerShard(t, 14) }
+stage1/typescript/scanner/scanner_products_test.go:364:func TestScannerAgreesWithTypescriptGo_015(t *testing.T) { t.Parallel(); scannerShard(t, 15) }
+stage1/typescript/scanner/scanner_agreement_shards_test.go:30:func execute(t *testing.T, directory, name string, args ...string) execution {
+stage1/typescript/scanner/scanner_agreement_shards_test.go:55:func goOracle(t *testing.T) string {
+stage1/typescript/scanner/scanner_agreement_shards_test.go:60:func buildPort(t *testing.T, directory string, sanitize bool) string {
+stage1/typescript/scanner/scanner_agreement_shards_test.go:65:func copyPort(t *testing.T, file, from, to string) string {
+stage1/typescript/scanner/scanner_agreement_shards_test.go:87:func node(t *testing.T, directory, manifest string, count bool) execution {
+stage1/typescript/scanner/scanner_agreement_shards_test.go:100:func difference(got, want []byte) string {
+stage1/typescript/scanner/scanner_agreement_shards_test.go:120:func compilerSource(t *testing.T) string {
+stage1/typescript/scanner/scanner_agreement_shards_test.go:141:func sourceFiles(t *testing.T, directory string) []string {
+stage1/typescript/scanner/scanner_agreement_shards_test.go:158:func askedCorpus(t *testing.T) corpus {
+stage1/typescript/scanner/scanner_agreement_shards_test.go:292:func TestPerformance(t *testing.T) {
+stage1/typescript/scanner/profile_test.go:18:func TestProfileArtifacts(t *testing.T) {
+stage1/typescript/scanner/profile_test.go:92:func TestProfileSnapshotsAgree(t *testing.T) {
+stage1/typescript/scanner/scanner.ts:14:function decimalDigits(text: string, base: number): string {
+stage1/typescript/scanner/scanner.ts:16:    for(const character of text) {
+stage1/typescript/scanner/scanner.ts:31:    while(first < result.length - 1 && result.charCodeAt(first) === 48) {
+stage1/typescript/scanner/scanner.ts:37:function numberValue(text: string): string {
+stage1/typescript/scanner/scanner.ts:38:    if(text === '') {
+stage1/typescript/scanner/scanner.ts:62:    constructor(text: string) {
+stage1/typescript/scanner/scanner.ts:65:    code(offset = 0): number {
+stage1/typescript/scanner/scanner.ts:73:    advance(code: number): void {
+stage1/typescript/scanner/scanner.ts:76:    error(code: number, start: number = this.pos, length = 0): void {
+stage1/typescript/scanner/scanner.ts:81:    fragment(base: number, separators: boolean, minimum = 0, maximum: number = Number.MAX_SAFE_INTEGER): string {
+stage1/typescript/scanner/scanner.ts:122:    unicode(report: boolean): number {
+stage1/typescript/scanner/scanner.ts:173:    escape(report: boolean): string {
+stage1/typescript/scanner/scanner.ts:251:    identifier(prefix: number): boolean {
+stage1/typescript/scanner/scanner.ts:289:    string(): void {
+stage1/typescript/scanner/scanner.ts:324:    template(report: boolean): void {
+stage1/typescript/scanner/scanner.ts:370:    bigint(): void {
+stage1/typescript/scanner/scanner.ts:385:    number(): void {
+stage1/typescript/scanner/scanner.ts:492:    scan(): string {
+stage1/typescript/scanner/scanner.ts:676:    punctuation(code: number): string {
+stage1/typescript/scanner/scanner.ts:817:    rescanGreater(): void {
+stage1/typescript/scanner/scanner.ts:834:    rescanTemplate(): void {
+stage1/typescript/scanner/scanner.ts:840:    rescanSlash(): void {
+stage1/typescript/scanner/scanner.ts:936:    scanJsxIdentifier(): void {
+stage1/typescript/scanner/scanner.ts:948:    scanJsxAttributeValue(): void {
+stage1/typescript/scanner/scanner.ts:978:    scanJsx(): string {
+stage1/typescript/scanner/characters.ts:240:function contains(ranges: readonly number[], code: number): boolean {
+stage1/typescript/scanner/characters.ts:243:    while(low <= high) {
+stage1/typescript/scanner/characters.ts:259:export function isIdentifierStart(code: number): boolean {
+stage1/typescript/scanner/characters.ts:268:export function isIdentifierPart(code: number): boolean {
+stage1/typescript/scanner/characters.ts:271:export function isLineBreak(code: number): boolean {
+stage1/typescript/scanner/characters.ts:274:export function isSpace(code: number): boolean {
+stage1/typescript/scanner/characters.ts:290:export function digit(code: number): number {
+stage1/typescript/scanner/gaps_test.go:13:func TestGapStandsWhereGapsMdSays(t *testing.T) {
+stage1/typescript/scanner/gaps_test.go:38:func TestBigintGapStandsWhereGapsMdSays(t *testing.T) {

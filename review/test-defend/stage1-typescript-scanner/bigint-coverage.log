@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T14:22:13.432890111Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/typescript/scanner"}
+{"Time":"2026-10-09T14:22:13.440009099Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/typescript/scanner","Test":"TestBigintGapStandsWhereGapsMdSays"}
+{"Time":"2026-10-09T14:22:13.440069588Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/scanner","Test":"TestBigintGapStandsWhereGapsMdSays","Output":"=== RUN   TestBigintGapStandsWhereGapsMdSays\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:22:13.440087495Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/scanner","Test":"TestBigintGapStandsWhereGapsMdSays","Output":"=== PAUSE TestBigintGapStandsWhereGapsMdSays\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:22:13.440089748Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/typescript/scanner","Test":"TestBigintGapStandsWhereGapsMdSays"}
+{"Time":"2026-10-09T14:22:13.440091901Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/typescript/scanner","Test":"TestBigintGapStandsWhereGapsMdSays"}
+{"Time":"2026-10-09T14:22:13.440093604Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/scanner","Test":"TestBigintGapStandsWhereGapsMdSays","Output":"=== CONT  TestBigintGapStandsWhereGapsMdSays\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:22:13.542237282Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/scanner","Test":"TestBigintGapStandsWhereGapsMdSays","Output":"--- PASS: TestBigintGapStandsWhereGapsMdSays (0.10s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:22:13.542277712Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/typescript/scanner","Test":"TestBigintGapStandsWhereGapsMdSays","Elapsed":0.1}
+{"Time":"2026-10-09T14:22:13.542299834Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/scanner","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:22:13.545317599Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/scanner","Output":"coverage: 3.3% of statements in github.com/system-inc/adamic/internal/lower\n"}
+{"Time":"2026-10-09T14:22:13.558212988Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/scanner","Output":"ok  \tgithub.com/system-inc/adamic/stage1/typescript/scanner\t0.125s\tcoverage: 3.3% of statements in github.com/system-inc/adamic/internal/lower\n"}
+{"Time":"2026-10-09T14:22:13.55824798Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/typescript/scanner","Elapsed":0.125}

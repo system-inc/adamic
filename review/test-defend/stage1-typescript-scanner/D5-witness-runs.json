@@ -1,0 +1,78 @@
+[
+  {
+    "id": "clean",
+    "step": "cli-build",
+    "command": [
+      "go",
+      "build",
+      "-o",
+      "/tmp/defend-scanner/adamic-clean",
+      "./cmd/adamic"
+    ],
+    "exit": 0,
+    "seconds": 0.2369430500002636
+  },
+  {
+    "id": "clean",
+    "step": "native-build",
+    "command": [
+      "timeout",
+      "90",
+      "/tmp/defend-scanner/adamic-clean",
+      "build",
+      "/tmp/defend-scanner/rounding.ts",
+      "-o",
+      "/tmp/defend-scanner/rounding-clean"
+    ],
+    "exit": 0,
+    "seconds": 0.10706312100228388
+  },
+  {
+    "id": "clean",
+    "step": "execute",
+    "command": [
+      "/tmp/defend-scanner/rounding-clean",
+      "1e20"
+    ],
+    "exit": 0,
+    "seconds": 0.001066147000528872
+  },
+  {
+    "id": "D5",
+    "step": "cli-build",
+    "command": [
+      "go",
+      "build",
+      "-o",
+      "/tmp/defend-scanner/adamic-D5",
+      "./cmd/adamic"
+    ],
+    "exit": 0,
+    "seconds": 4.854036529002769
+  },
+  {
+    "id": "D5",
+    "step": "native-build",
+    "command": [
+      "timeout",
+      "90",
+      "/tmp/defend-scanner/adamic-D5",
+      "build",
+      "/tmp/defend-scanner/rounding.ts",
+      "-o",
+      "/tmp/defend-scanner/rounding-D5"
+    ],
+    "exit": 0,
+    "seconds": 0.10666525499982527
+  },
+  {
+    "id": "D5",
+    "step": "execute",
+    "command": [
+      "/tmp/defend-scanner/rounding-D5",
+      "1e20"
+    ],
+    "exit": 0,
+    "seconds": 0.0010349009971832857
+  }
+]

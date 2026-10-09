@@ -1,0 +1,82 @@
+[
+  {
+    "id": "push",
+    "exit": 0,
+    "seconds": 4.751099307999539,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/scanner/",
+      "-run",
+      "^TestGapStandsWhereGapsMdSays$",
+      "-coverpkg=github.com/system-inc/adamic/internal/lower",
+      "-coverprofile=/tmp/defend-scanner/evidence/push.cover"
+    ]
+  },
+  {
+    "id": "bigint",
+    "exit": 0,
+    "seconds": 1.8365293360002397,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/scanner/",
+      "-run",
+      "^TestBigintGapStandsWhereGapsMdSays$",
+      "-coverpkg=github.com/system-inc/adamic/internal/lower",
+      "-coverprofile=/tmp/defend-scanner/evidence/bigint.cover"
+    ]
+  },
+  {
+    "id": "snapshots",
+    "exit": 0,
+    "seconds": 12.613129571000172,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/scanner/",
+      "-run",
+      "^TestProfileSnapshotsAgree$",
+      "-coverpkg=github.com/system-inc/adamic/internal/native",
+      "-coverprofile=/tmp/defend-scanner/evidence/snapshots.cover"
+    ]
+  },
+  {
+    "id": "agreement",
+    "exit": 0,
+    "seconds": 19.891023455998948,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/scanner/",
+      "-run",
+      "^TestScannerAgreesWithTypescriptGo_",
+      "-coverpkg=github.com/system-inc/adamic/internal/native",
+      "-coverprofile=/tmp/defend-scanner/evidence/agreement.cover"
+    ]
+  }
+]

@@ -1,0 +1,70 @@
+[
+  {
+    "id": "D5",
+    "target": "TestProfileSnapshotsAgree",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/scanner/",
+      "-run",
+      "."
+    ],
+    "environment": {
+      "ADAMIC_TOOLS": "/workspace/adamic-tools",
+      "ADAMIC_TYPESCRIPT_SOURCE": "/tmp/defend-scanner/typescript",
+      "ADAMIC_SCANNER_BENCH": "1",
+      "ADAMIC_SCANNER_PROFILE_DIR": "/tmp/defend-scanner/artifacts/D5",
+      "ADAMIC_SCANNER_PROFILE_SNAPSHOTS": "/tmp/defend-scanner/artifacts/D5",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/defend-scanner/cache/D5"
+    },
+    "exit": 1,
+    "seconds": 27.951092785999208,
+    "failed": [
+      "TestProfileArtifacts",
+      "TestPerformance",
+      "TestProduct_ScannerRelease",
+      "TestProfileSnapshotsAgree"
+    ],
+    "passed": [
+      "TestGapStandsWhereGapsMdSays",
+      "TestScannerAgreesWithTypescriptGo_008",
+      "TestScannerAgreesWithTypescriptGo_003",
+      "TestScannerAgreesWithTypescriptGo_010",
+      "TestScannerAgreesWithTypescriptGo_007",
+      "TestScannerAgreesWithTypescriptGo_009",
+      "TestScannerAgreesWithTypescriptGo_015",
+      "TestScannerAgreesWithTypescriptGo_013",
+      "TestScannerAgreesWithTypescriptGo_001",
+      "TestScannerAgreesWithTypescriptGo_000",
+      "TestScannerShardCoverage",
+      "TestProduct_ScannerDecimalSeparator",
+      "TestProduct_ScannerNative",
+      "TestProduct_ScannerPunctuator",
+      "TestProduct_ScannerRegexRescan",
+      "TestScannerAgreesWithTypescriptGo_006",
+      "TestScannerAgreesWithTypescriptGo_002",
+      "TestProduct_ScannerOracle",
+      "TestProduct_ScannerSourceIdentifier",
+      "TestBigintGapStandsWhereGapsMdSays",
+      "TestScannerAgreesWithTypescriptGo_012",
+      "TestScannerAgreesWithTypescriptGo_005",
+      "TestScannerAgreesWithTypescriptGo_014",
+      "TestScannerAgreesWithTypescriptGo_004",
+      "TestScannerAgreesWithTypescriptGo_011"
+    ],
+    "failing_lines": [
+      "profile_test.go:63: native: compiling runtime array.c: exit status 1",
+      "scanner_products_test.go:50: build scanner-native: native: compiling runtime array.c: exit status 1",
+      "scanner_products_test.go:147: scanner product preparation failed",
+      "profile_test.go:105: /tmp/defend-scanner/artifacts/D5/scanner [--manifest /tmp/adamic-gate/TestProfileSnapshotsAgree808569533/001/all.txt]: fork/exec /tmp/defend-scanner/artifacts/D5/scanner: no such file or directory"
+    ],
+    "unique_target": false,
+    "invalid_reason": "clang Werror nan-infinity-disabled prevents runtime compilation; not a semantic kill"
+  }
+]
