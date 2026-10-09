@@ -956,3 +956,63 @@ ok  	github.com/system-inc/adamic/stage1/cohere/lint	22.348s
 FAIL
 FAIL	github.com/system-inc/adamic/stage1/cohere/lint	2.156s
 FAIL
+
+===== Current-main verification =====
+Cherry-picked fix dc004648 onto main 23a19b8b (includes PR #271).
+Each JSX product prebuilt individually, Go cache warm, same 4-CPU instance.
+Product wall seconds: membership 9.794, parser 2.524, lowering 9.871, native 12.694, setup 21.862.
+Isolation PASS: test 24.12 s; process wall 26.131406612 s.
+Vet and committed-file lane check pass.
+
+===== lint-jsx-current-products.log =====
+=== RUN   TestProduct_jsx_membership
+=== PAUSE TestProduct_jsx_membership
+=== CONT  TestProduct_jsx_membership
+    jsx_products_test.go:8: build jsx-membership ea979905c5e5 hit 0.27
+--- PASS: TestProduct_jsx_membership (0.39s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	0.421s
+=== RUN   TestProduct_jsx_parser
+=== PAUSE TestProduct_jsx_parser
+=== CONT  TestProduct_jsx_parser
+    jsx_products_test.go:13: build jsx-parser 5fb7f5a562c0 hit 0.34
+--- PASS: TestProduct_jsx_parser (0.50s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	0.576s
+=== RUN   TestProduct_jsx_tree_lowered
+=== PAUSE TestProduct_jsx_tree_lowered
+=== CONT  TestProduct_jsx_tree_lowered
+    jsx_products_test.go:18: build jsx-tree-lowered e8e41f63fefe miss 6.78
+--- PASS: TestProduct_jsx_tree_lowered (7.07s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	7.110s
+=== RUN   TestProduct_jsx_tree_native
+=== PAUSE TestProduct_jsx_tree_native
+=== CONT  TestProduct_jsx_tree_native
+    jsx_products_test.go:23: build jsx-tree-lowered e8e41f63fefe hit 0.48
+    jsx_products_test.go:23: build jsx-tree-native 0b363f6645d6 miss 9.41
+--- PASS: TestProduct_jsx_tree_native (10.28s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	10.320s
+=== RUN   TestProduct_jsx_tree_setup
+=== PAUSE TestProduct_jsx_tree_setup
+=== CONT  TestProduct_jsx_tree_setup
+    jsx_shards_test.go:518: build jsx-membership ea979905c5e5 hit 0.33
+    jsx_shards_test.go:523: build jsx-parser 5fb7f5a562c0 hit 0.27
+    jsx_shards_test.go:524: build jsx-tree-lowered e8e41f63fefe hit 0.32
+    jsx_shards_test.go:524: build jsx-tree-native 0b363f6645d6 hit 0.36
+    jsx_shards_test.go:517: build jsx-tree-setup-v1 cce7bbb767a3 miss 19.59
+--- PASS: TestProduct_jsx_tree_setup (19.62s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	19.697s
+
+===== lint-jsx-current.log =====
+=== RUN   TestJsxLintTreesSetupIsolation
+=== PAUSE TestJsxLintTreesSetupIsolation
+=== CONT  TestJsxLintTreesSetupIsolation
+    jsx_shards_test.go:517: build jsx-tree-setup-v1 cce7bbb767a3 hit 1.88
+    jsx_setup_isolation_test.go:24: build jsx-parser 5fb7f5a562c0 hit 0.27
+    jsx_setup_isolation_test.go:25: build jsx-membership ea979905c5e5 hit 0.28
+--- PASS: TestJsxLintTreesSetupIsolation (24.12s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	24.145s
