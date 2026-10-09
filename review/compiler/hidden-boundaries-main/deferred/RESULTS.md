@@ -2,7 +2,7 @@
 
 Evidence for #wvhe1jz, roadmap step 30. No compiler or test source changes.
 
-Observed results: recut {'pass': 5, 'missing': 9}; main {'pass': 5, 'missing': 9}.
+Observed results: five passes and nine missing exact names on each revision. No test failed, and no branch-only red was observed.
 
 Tested recut `64a5179f933c3478f6eecbf91f85f32de1112f89`, fetched through `cloud/land-stack-hidden-boundaries-64a5179f`. The short SHA fetch returned "couldn't find remote ref". The fallback `36e7fac4` was not used.
 
@@ -38,10 +38,10 @@ Seconds below are command wall seconds, including build/link startup. A pass req
 | TestNodeTableIsLinkOnly | stage1/cohere/lint | [missing](branch-TestNodeTableIsLinkOnly.log) | 2.121 | [missing](main-TestNodeTableIsLinkOnly.log) | 2.124 |
 | TestShardsAgree | stage1/cohere/lint | [missing](branch-TestShardsAgree.log) | 2.226 | [missing](main-TestShardsAgree.log) | 2.021 |
 
-Missing names are absent as exact top-level tests in both tested trees. Several native names now use Unit or Points/Contexts suffixes; lint uses product/leaf tests. Those successors were outside this exact-name brief and were not substituted. This evidence cannot turn absent tests into green coverage.
+Missing names are absent as exact top-level tests in both tested trees; [test-name-census.txt](test-name-census.txt) records source names and suffixes. Several native names now use Unit or Points/Contexts suffixes; lint uses product/leaf tests. Those successors were outside this exact-name brief and were not substituted. This evidence cannot turn absent tests into green coverage.
 
 Mutants exercised by the requested tests: `TestMapHashProbeCatchesMutants` checks old hash against the integer probe bound, zero normalization against "zero hashes differ", and NaN normalization against "NaN hashes differ". `TestRecordReadMutants` checks prototype-membership-restored and missing-read-silent against the exact diagnostic/exit contract, and own-read-checked-as-missing against the own-hit fixture. Their individual outcomes and catcher messages are in the logs. No new checks or mutants were added; absent `TestRecordMutants` ran none of its successor mutants.
 
-Setup succeeded. Its complete output and timing lines are in [setup.log](setup.log); `nproc=5`, cgroup quota 4 CPUs. No new fixture or test leaf was added, so counts were not refreshed. The whole gate and whole packages were not run. No _test.go file was edited, so the call-target-reader guard was not required.
+Setup succeeded: Node ready 0.027s, Go ready 0.033s, clang ready 0.232s, Markdown dependency step 0.932s and ready 1.021s, submodules ready 16.023s, Go build ready 189.530s, test binaries deferred 189.635s, cache warm 189.637s, done 189.667s. Its complete output is in [setup.log](setup.log); `nproc=5`, cgroup quota 4 CPUs. No new fixture or test leaf was added, so counts were not refreshed. The whole gate and whole packages were not run. No _test.go file was edited, so the call-target-reader guard was not required.
 
-Lane check output is in [lane-checks.log](lane-checks.log). The required default invocation checks inherited recut changes against the merge base with current main as well as this evidence commit; any inherited findings are reported without fixing source in this unit.
+Lane checks passed: "lane checks 11.1 s: gofmt and tools on 47 Go files, t.Parallel on 5 test packages; vet skipped, over 10 s". Output is in [lane-checks.log](lane-checks.log). The default invocation inspected inherited recut changes against the merge base with current main as well as this evidence commit. No violation was reported; the vet timeout limits that verification.

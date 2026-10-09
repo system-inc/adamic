@@ -1,0 +1,5 @@
+{"Time":"2026-10-09T16:31:28.640243268Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint"}
+{"Time":"2026-10-09T16:31:28.663210634Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"testing: warning: no tests to run\n"}
+{"Time":"2026-10-09T16:31:28.663315813Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T16:31:28.663458558Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/lint\t0.023s [no tests to run]\n"}
+{"Time":"2026-10-09T16:31:28.663755857Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Elapsed":0.024}
