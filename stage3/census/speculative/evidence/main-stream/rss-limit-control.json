@@ -1,0 +1,14 @@
+{
+  "command": [
+    "python3",
+    "-c",
+    "import time; value=bytearray(80*1024*1024); time.sleep(10)"
+  ],
+  "wall_seconds": 0.10777680499995768,
+  "peak_rss_kib": 88832,
+  "exit": -9,
+  "time_limit_seconds": 3.0,
+  "rss_limit_mib": 64,
+  "address_space_limit_mib": 128,
+  "rss_limit_killed": true
+}
