@@ -6,3 +6,9 @@
 # Leaves use -count=1 -timeout 90s -test.skip ^TestProduct_; products use -timeout 10m.
 kind	unit	loom_s	alone_before_s	setup_s	own_work_s	status
 bootstrap-product	TestProduct_profile_missing_binding	-	175.09	135.789954-checker	36.24-native	PASS; cold Go cache, excludes about 176s package compilation; warm repetition pending
+product	TestProduct_stage0	-	9.64	-	-	pass; command_wall_s=17.344
+product	TestProduct_checker	-	9.07	-	-	pass; command_wall_s=11.055
+product	TestProduct_profile_missing_binding	-	3.81	-	-	pass; command_wall_s=5.934
+leaf	TestShadowIndexMissingBindingUnion	-	0.00	-	-	pass; command_wall_s=2.462
+leaf	TestShadowIndexMissingBinding_000	113	10.87	10.326	-	pass; command_wall_s=13.548
+product	TestProduct_volume_guard_stage0	-	4.16	-	-	pass; command_wall_s=6.313
