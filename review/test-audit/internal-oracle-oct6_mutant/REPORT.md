@@ -152,7 +152,10 @@ Production and harness changes restored; evidence is on test-audit/internal-orac
     "last_proven_fail": "M4: omitted_arguments_test.go:82: lower: stage 0 compiles a program from one entry file, got 1",
     "verdict": "subsumed",
     "subsumed_by": [
-      "TestAPromptComesBeforeTheRead"
+      "TestNativeAgreesWithNode",
+      "TestFileWritesLandInNodesOrder",
+      "TestAPromptComesBeforeTheRead",
+      "TestOverloadContractRulings"
     ],
     "mutants_in_matrix": 4,
     "probe_kills": [
@@ -245,7 +248,10 @@ Production and harness changes restored; evidence is on test-audit/internal-orac
     "last_proven_fail": "M4: oracle_test.go:751: Lower: lower: stage 0 compiles a program from one entry file, got 1",
     "verdict": "subsumed",
     "subsumed_by": [
-      "TestAPromptComesBeforeTheRead"
+      "TestOmittedOriginalProbePolicy",
+      "TestFileWritesLandInNodesOrder",
+      "TestAPromptComesBeforeTheRead",
+      "TestOverloadContractRulings"
     ],
     "mutants_in_matrix": 4,
     "probe_kills": [
@@ -463,7 +469,10 @@ Production and harness changes restored; evidence is on test-audit/internal-orac
     "last_proven_fail": "M4: output_test.go:213: Lower: lower: stage 0 compiles a program from one entry file, got 1",
     "verdict": "subsumed",
     "subsumed_by": [
-      "TestAPromptComesBeforeTheRead"
+      "TestOmittedOriginalProbePolicy",
+      "TestNativeAgreesWithNode",
+      "TestAPromptComesBeforeTheRead",
+      "TestOverloadContractRulings"
     ],
     "mutants_in_matrix": 4,
     "probe_kills": [
@@ -516,7 +525,10 @@ Production and harness changes restored; evidence is on test-audit/internal-orac
     "last_proven_fail": "M4: output_test.go:238: Lower: lower: stage 0 compiles a program from one entry file, got 1",
     "verdict": "subsumed",
     "subsumed_by": [
-      "TestFileWritesLandInNodesOrder"
+      "TestOmittedOriginalProbePolicy",
+      "TestNativeAgreesWithNode",
+      "TestFileWritesLandInNodesOrder",
+      "TestOverloadContractRulings"
     ],
     "mutants_in_matrix": 4,
     "probe_kills": [
@@ -623,6 +635,9 @@ Production and harness changes restored; evidence is on test-audit/internal-orac
     "last_proven_fail": "M4: overload_contract_test.go:34: want refusal \"overload 1 of createToken result\", got lower: stage 0 compiles a program from one entry file, got 1",
     "verdict": "subsumed",
     "subsumed_by": [
+      "TestOmittedOriginalProbePolicy",
+      "TestNativeAgreesWithNode",
+      "TestFileWritesLandInNodesOrder",
       "TestAPromptComesBeforeTheRead"
     ],
     "mutants_in_matrix": 4,
@@ -766,7 +781,7 @@ Friction, ambiguity, and limits:
 - Go coverage listed 579 reached lower/native/oracle production functions before the fixed menu. Test-file helper functions were read and listed using rg. Exact runtime C branch coverage was not obtained; the C support inventory is conservative.
 - The seven planted-failure tests are witnesses. Their M4 failures are broken preparation and cannot prove the comparison or sanitizer check. Those failures remain in raw matrix results but never count toward their kills or uniqueness. W1, W2, W3 supply their verdicts.
 - W1 and W2 return the empty comparison/report value, under the explicit witness-check exception. They are not production mutants. W3 disables the check by changing the sanitizer option, leaving the planted retain mutation and expected report predicate intact. With ASan disabled the observed mutant exits 0 with empty stderr, demonstrating why an exit-only check would miss it.
-- Five subsumption findings rest on only M4, which breaks the general one-file entry requirement. This does not measure omitted-slot, overload-proof, or individual fixture sensitivity. Reciprocal FileWrites/Prompt judgments and the other single-mutant findings are hints, not deletion recommendations.
+- Five subsumption findings rest on only M4, which breaks the general one-file entry requirement. This does not measure omitted-slot, overload-proof, or individual fixture sensitivity. The five rows mutually subsume each other within this single-mutant matrix; each names the others. The fastest measured subsumer is recorded. These judgments and the other single-mutant findings are hints, not deletion recommendations.
 - Runtime mutations use a native-process environment selector; the runtime source/header content remains identical for every selection, so cached libraries execute the selected behavior rather than stale compiled branches. ADAMIC_GATE_UNCACHED=1 forces actual Node/native/protocol observations for every matrix run; ADAMIC_BUILD_CACHE_DIR is separate per selection.
 - The nil Lower probe caused a Go panic. Every assigned row was rerun alone, retaining the twelve-fixture restriction for NativeAgrees. Probe results on witnesses are precondition effects and vacuity is null there. Ordinary output rows are judged by their own runtime entries, not by Lower preparation.
 - Three-per-row timing uses normal warm result caches, as the brief's commands specify. The first observation is often slower than subsequent cached observations. The matrix bypasses those caches. The full NativeAgrees row was stopped after its first 90.039-second timeout, not repeated twice more.

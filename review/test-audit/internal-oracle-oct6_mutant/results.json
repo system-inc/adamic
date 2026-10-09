@@ -145,7 +145,10 @@
     "last_proven_fail": "M4: omitted_arguments_test.go:82: lower: stage 0 compiles a program from one entry file, got 1",
     "verdict": "subsumed",
     "subsumed_by": [
-      "TestAPromptComesBeforeTheRead"
+      "TestNativeAgreesWithNode",
+      "TestFileWritesLandInNodesOrder",
+      "TestAPromptComesBeforeTheRead",
+      "TestOverloadContractRulings"
     ],
     "mutants_in_matrix": 4,
     "probe_kills": [
@@ -238,7 +241,10 @@
     "last_proven_fail": "M4: oracle_test.go:751: Lower: lower: stage 0 compiles a program from one entry file, got 1",
     "verdict": "subsumed",
     "subsumed_by": [
-      "TestAPromptComesBeforeTheRead"
+      "TestOmittedOriginalProbePolicy",
+      "TestFileWritesLandInNodesOrder",
+      "TestAPromptComesBeforeTheRead",
+      "TestOverloadContractRulings"
     ],
     "mutants_in_matrix": 4,
     "probe_kills": [
@@ -456,7 +462,10 @@
     "last_proven_fail": "M4: output_test.go:213: Lower: lower: stage 0 compiles a program from one entry file, got 1",
     "verdict": "subsumed",
     "subsumed_by": [
-      "TestAPromptComesBeforeTheRead"
+      "TestOmittedOriginalProbePolicy",
+      "TestNativeAgreesWithNode",
+      "TestAPromptComesBeforeTheRead",
+      "TestOverloadContractRulings"
     ],
     "mutants_in_matrix": 4,
     "probe_kills": [
@@ -509,7 +518,10 @@
     "last_proven_fail": "M4: output_test.go:238: Lower: lower: stage 0 compiles a program from one entry file, got 1",
     "verdict": "subsumed",
     "subsumed_by": [
-      "TestFileWritesLandInNodesOrder"
+      "TestOmittedOriginalProbePolicy",
+      "TestNativeAgreesWithNode",
+      "TestFileWritesLandInNodesOrder",
+      "TestOverloadContractRulings"
     ],
     "mutants_in_matrix": 4,
     "probe_kills": [
@@ -616,6 +628,9 @@
     "last_proven_fail": "M4: overload_contract_test.go:34: want refusal \"overload 1 of createToken result\", got lower: stage 0 compiles a program from one entry file, got 1",
     "verdict": "subsumed",
     "subsumed_by": [
+      "TestOmittedOriginalProbePolicy",
+      "TestNativeAgreesWithNode",
+      "TestFileWritesLandInNodesOrder",
       "TestAPromptComesBeforeTheRead"
     ],
     "mutants_in_matrix": 4,
