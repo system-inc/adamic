@@ -611,13 +611,14 @@ func statementPrinterLibrary(t *testing.T, name string, result run, specs string
 
 func statementShardProofEnabled() bool { return os.Getenv("ADAMIC_STATEMENTS_SHARD_PROOF") == "1" }
 
-// Command deadlines use only Go APIs and kill the entire child process group.
+// Case commands use the shard deadline. Setup has no clock of its own;
+// cancellation still kills the entire child process group.
 func statementCommand(t *testing.T, name string, arguments ...string) *exec.Cmd {
 	t.Helper()
 	if value, ok := statementCaseContexts.Load(t); ok {
 		return statementContextCommand(value.(context.Context), name, arguments...)
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	ctx, cancel := context.WithCancel(context.Background())
 	t.Cleanup(cancel)
 	return statementContextCommand(ctx, name, arguments...)
 }
@@ -625,11 +626,6 @@ func statementCommand(t *testing.T, name string, arguments ...string) *exec.Cmd 
 func statementContextCommand(ctx context.Context, name string, arguments ...string) *exec.Cmd {
 	command := exec.CommandContext(ctx, name, arguments...)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
-	// Setup's nested commands join its group, so its outer deadline also kills
-	// Go compilers and their descendants if the whole setup process is cooked.
-	if os.Getenv("ADAMIC_STATEMENTS_SETUP_CHILD") == "1" {
-		command.SysProcAttr.Pgid = syscall.Getpgrp()
-	}
 	command.Cancel = func() error {
 		if command.Process == nil {
 			return os.ErrProcessDone

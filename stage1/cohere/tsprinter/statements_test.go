@@ -64,7 +64,7 @@ func statementCorpusBuild(t *testing.T) (string, string, string) {
 		if err := os.WriteFile(directory+"/request.json", request, 0644); err != nil {
 			return err
 		}
-		command := statementCommand(t, oracleDir+"/oracle", "-test.v", "-test.count=1", "-test.run=^TestAdamicStatementCorpus$", "-test.timeout=3h")
+		command := statementCommand(t, oracleDir+"/oracle", "-test.v", "-test.count=1", "-test.run=^TestAdamicStatementCorpus$", "-test.timeout=0")
 		command.Dir = root + "/cohere"
 		command.Env = append(os.Environ(), "ADAMIC_TS_STATEMENT_REQUEST="+directory+"/request.json")
 		output, err := combinedOutput(command)
@@ -167,9 +167,6 @@ func statementAgainstGoAndPrettierShard(t *testing.T, shardNumber int) {
 	if err := os.WriteFile(gapPath, []byte(gapInput), 0644); err != nil {
 		t.Fatal(err)
 	}
-	script, _ := filepath.Abs("testdata/expressions.mjs")
-	embedded, _ := filepath.Abs("testdata/embedded.mjs")
-	bundles, _ := filepath.Abs(filepath.Join(repository, "cohere/internal/format/prettier/bundles"))
 	backend := filepath.Join(loweredDir, "program.mjs")
 	selected := func(number int) bool { return number == shardNumber }
 	libraryHash := products.LibraryHash
@@ -178,15 +175,8 @@ func statementAgainstGoAndPrettierShard(t *testing.T, shardNumber int) {
 		if !selected(number) {
 			continue
 		}
-		for side, oracle := range []struct {
-			name, script, library string
-			files                 []string
-			flags                 []string
-		}{
-			{"npm", script, library, []string{"stage1/cohere/tsprinter/testdata/expressions.mjs", "stage1/cohere/tsprinter/testdata/tsc-upstream-differences.json", "stage1/cohere/tsprinter/testdata/prettier-differences.json"}, []string{"npm bytes sha256=" + libraryHash}},
-			{"embedded", embedded, bundles, []string{"stage1/cohere/tsprinter/testdata/embedded.mjs", "stage1/cohere/tsprinter/testdata/tsc-upstream-differences.json", "cohere/internal/format/prettier/bundles"}, nil},
-		} {
-			directory := statementLibraryOracle(t, number, side, shard, compilerHash, libraryHash, oracle.name, oracle.script, oracle.library, oracle.files, oracle.flags)
+		for side := 0; side < 2; side++ {
+			directory := statementLibraryOracle(t, number, side, shard, compilerHash, libraryHash, library)
 			answers, err := os.ReadFile(filepath.Join(directory, "answers.txt"))
 			if err != nil {
 				t.Fatal(err)
@@ -239,8 +229,16 @@ func statementAgainstGoAndPrettierShard(t *testing.T, shardNumber int) {
 	}
 }
 
-func statementLibraryOracle(t *testing.T, number, side int, shard statementShard, compilerHash, libraryHash, name, script, library string, files, oracleFlags []string) string {
+func statementLibraryOracle(t *testing.T, number, side int, shard statementShard, compilerHash, libraryHash, library string) string {
 	t.Helper()
+	name, script, files, oracleFlags := "npm", "testdata/expressions.mjs", []string{"stage1/cohere/tsprinter/testdata/expressions.mjs", "stage1/cohere/tsprinter/testdata/tsc-upstream-differences.json", "stage1/cohere/tsprinter/testdata/prettier-differences.json"}, []string{"npm bytes sha256=" + libraryHash}
+	if side == 1 {
+		name, script = "embedded", "testdata/embedded.mjs"
+		library, _ = filepath.Abs(filepath.Join(repository, "cohere/internal/format/prettier/bundles"))
+		files = []string{"stage1/cohere/tsprinter/testdata/embedded.mjs", "stage1/cohere/tsprinter/testdata/tsc-upstream-differences.json", "cohere/internal/format/prettier/bundles"}
+		oracleFlags = nil
+	}
+	script, _ = filepath.Abs(script)
 	return printerGateOnce(t, fmt.Sprintf("statement-library-%d-%d", number, side), func() string {
 		flags := append(oracleFlags, "builder sha256="+compilerHash, "cases sha256="+statementFileHash(t, shard.specs), "library="+library, "script="+script, "width=80", "NODE_OPTIONS="+os.Getenv("NODE_OPTIONS"), "NODE_PATH="+os.Getenv("NODE_PATH"))
 		return statementProduct(t, buildcache.Inputs{

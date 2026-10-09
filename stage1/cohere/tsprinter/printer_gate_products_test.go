@@ -5,12 +5,10 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"runtime"
 	"sync"
 	"testing"
-	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/javascript"
@@ -65,9 +63,9 @@ func printerGateGoOracle(t *testing.T) string {
 			if err := os.WriteFile(path, overlay, 0644); err != nil {
 				return err
 			}
-			ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
+			ctx, cancel := context.WithCancel(context.Background())
 			defer cancel()
-			command := exec.CommandContext(ctx, "go", "test", "-c", "-trimpath", "-ldflags=-buildid=", "-overlay="+path, "-o="+dir+"/oracle", "./internal/format/javascript")
+			command := statementContextCommand(ctx, "go", "test", "-c", "-trimpath", "-ldflags=-buildid=", "-overlay="+path, "-o="+dir+"/oracle", "./internal/format/javascript")
 			command.Dir = root + "/cohere"
 			output, err := command.CombinedOutput()
 			if err != nil {

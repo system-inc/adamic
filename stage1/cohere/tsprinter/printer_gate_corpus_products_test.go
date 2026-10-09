@@ -44,15 +44,7 @@ func statementDeclaredLibraryOracle(t *testing.T, number, side int) {
 		t.Fatal(err)
 	}
 	compilerHash := statementFileHash(t, executable)
-	name, script, files, flags := "npm", "testdata/expressions.mjs", []string{"stage1/cohere/tsprinter/testdata/expressions.mjs", "stage1/cohere/tsprinter/testdata/tsc-upstream-differences.json", "stage1/cohere/tsprinter/testdata/prettier-differences.json"}, []string{"npm bytes sha256=" + statementDirectoryHash(t, library)}
-	if side == 1 {
-		name, script = "embedded", "testdata/embedded.mjs"
-		library, _ = filepath.Abs(filepath.Join(repository, "cohere/internal/format/prettier/bundles"))
-		files = []string{"stage1/cohere/tsprinter/testdata/embedded.mjs", "stage1/cohere/tsprinter/testdata/tsc-upstream-differences.json", "cohere/internal/format/prettier/bundles"}
-		flags = nil
-	}
-	script, _ = filepath.Abs(script)
-	statementLibraryOracle(t, number, side, shard, compilerHash, "", name, script, library, files, flags)
+	statementLibraryOracle(t, number, side, shard, compilerHash, statementDirectoryHash(t, library), library)
 }
 func TestProduct_TSPrinterStatementsNPM_000(t *testing.T) {
 	t.Parallel()
