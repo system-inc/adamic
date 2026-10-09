@@ -294,6 +294,10 @@ func TestJSONGrain30Union(t *testing.T) {
 			delete(bindings, name)
 		}
 		t.Logf("%03d: exact union of %d cases across %v", ordinal, len(items), names)
+		if len(items) == 0 {
+			t.Logf("%03d: empty measured group; skipping mutation self-checks", ordinal)
+			continue
+		}
 		// Each nonempty child owns a changed oracle answer exactly once, tested
 		// through the same comparisonError that real backend comparisons use.
 		for owner, owned := range work {

@@ -1,0 +1,14 @@
+test_fake_skipped_span_grows_exactly (__main__.Arithmetic.test_fake_skipped_span_grows_exactly) ... FAIL
+
+======================================================================
+FAIL: test_fake_skipped_span_grows_exactly (__main__.Arithmetic.test_fake_skipped_span_grows_exactly)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/hidden-d72728e5-tools/stage3/census/hidden/test_hidden.py", line 55, in test_fake_skipped_span_grows_exactly
+    self.assertEqual(total(rows, stock) - baseline, 17, 'fake skipped body adds exactly 17 bytes')
+AssertionError: 0 != 17 : fake skipped body adds exactly 17 bytes
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (failures=1)

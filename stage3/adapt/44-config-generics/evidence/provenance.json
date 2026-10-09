@@ -1,0 +1,22 @@
+{
+  "label": "step09-adapt44",
+  "base": "45487a809f89885a3fc651cd590e7dabf31362dc",
+  "upstream": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "scout": "4e6121d3",
+  "measurement": "Uncommitted adaptation 44 on base; execution.commit records the base HEAD. The source and script hashes identify the measured changes.",
+  "sha256": {
+    "adapt.cjs": "5b79dab552cb04e42bcb0fe95e29c4614d170954739ebc66325df72f36885a82",
+    "rules.json": "03c725a82072cd1fdfc51f484e677512ebbf87c7b0b84d3e6d47ec51820eb197",
+    "predicate.json": "7bdb25767ef1e218005695b0ef5efec49b44b260b532305835bc99a0ccd72574",
+    "check-types.cjs": "c4ac64445a3a2bac38fa34e8312a4d5b95ff054a053857316fc2d0dc554134de",
+    "proof.cjs": "295ee370b76c7bd063bfbb3dedd28e9ec064ae04c56f378a15a84e3cbedb1d68"
+  },
+  "mutants": {
+    "site_guards": 13,
+    "stock_checker": 1,
+    "runtime": 1,
+    "artifact_bytes": 2,
+    "lane_counts": 1,
+    "total": 18
+  }
+}
