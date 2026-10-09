@@ -31,6 +31,10 @@ ahraDirectory = os.environ.get('ADAMIC_FAST_GATE_AHRA_DIR', '/Users/kirkouimet/P
 queuedLimit = int(os.environ.get('ADAMIC_STAR_QUEUED_SECONDS', '60'))
 # A whole gate of main runs about 50 minutes on Home; past an hour the loop is stuck, not busy.
 busyLimit = int(os.environ.get('ADAMIC_MAIN_BUSY_SECONDS', '3600'))
+# Once the pool is promoted it gates main first, and the box loop waits its grace before taking a main itself
+# (full-gate-main.sh mainTurn, ADAMIC_POOL_GRACE); the page waits that out too.
+poolPromoted = Path(os.environ.get('ADAMIC_POOL_PROMOTED', os.path.expanduser('~/.adamic-full-gate/pool-promoted')))
+poolGrace = int(os.environ.get('ADAMIC_POOL_GRACE', '600'))
 fullLog = Path(os.environ.get('ADAMIC_FULL_GATE_LOG', os.path.expanduser('~/Projects/system/adamic-gate-logs/full-gate-main.log')))
 mainReds = os.environ.get('ADAMIC_MAIN_REDS', '')  # a file standing in for cloud/merge-tree's, in tests
 verdictLine = re.compile(r'^(\d\d:\d\d:\d\d) done (\S+): (green|red): ([0-9a-f]{40})\b(.*)$')
@@ -417,14 +421,18 @@ def checkConfirmation(now):
     busy = busyWith(log, now)
     if busy:
         return 'main %s queued behind a running main gate, %s' % (head[:12], busy), None, None, []
+    # The pool's record (or a box's published before its log line) confirms it as well as the loop's log does.
+    if wholeGate(head)[0] in ('running', 'green', 'red'):
+        return 'main %s confirming (%s record)' % (head[:12], wholeGate(head)[0]), None, None, []
     seen = state / 'main-head-first-seen'
     fields = (lines(seen) or [''])[0].split()
     if len(fields) != 2 or fields[0] != head:
         seen.write_text('%s %d\n' % (head, now))
         fields = [head, str(now)]
     waited = now - int(fields[1])
-    if waited < queuedLimit:
-        return 'main %s not yet confirmed, %d s' % (head[:12], waited), None, None, []
+    limit = queuedLimit + (poolGrace if poolPromoted.exists() else 0)
+    if waited < limit:
+        return 'main %s not yet confirmed, %d s of %d' % (head[:12], waited, limit), None, None, []
     return ('main %s unconfirmed %d s' % (head[:12], waited), 'unconfirmed:' + head,
             "Main moved to %s %d s ago and no whole gate has started on it: the full-gate loop (com.adamic.full-gate-main, "
             "Home) isn't confirming main, so a landing's red can't show." % (head[:12], waited), ['system_adamic_developer_tools'])

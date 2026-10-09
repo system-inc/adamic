@@ -36,7 +36,8 @@ esac
                         ADAMIC_MAIN_HEAD=str(self.root / 'main-head'), ADAMIC_FULL_GATE_RUNNING=str(self.root / 'full-running'),
                         ADAMIC_BRANCH_COMMITS=str(self.root / 'branch-commits'),
                         ADAMIC_FULL_GATE_REQUESTS=str(self.root / 'requests'),
-                        ADAMIC_WHOLE_GATES=str(self.root / 'whole-gates'), ADAMIC_FULL_GATE_PREGATES=str(self.root / 'pregate'))
+                        ADAMIC_WHOLE_GATES=str(self.root / 'whole-gates'), ADAMIC_FULL_GATE_PREGATES=str(self.root / 'pregate'),
+                        ADAMIC_POOL_PROMOTED=str(self.root / 'pool-promoted'))
         self.now = int(time.time())
         for name in ('queue', 'queue.ranked', 'seen', 'watch.log', 'full.log', 'main-reds.tsv', 'landed', 'main-head', 'full-running', 'branch-commits', 'requests', 'whole-gates'):
             (self.root / name).write_text('')
@@ -339,6 +340,20 @@ esac
         (self.root / 'sends').unlink()
         old = time.strftime('%H:%M:%S', time.gmtime(self.now - 4000))
         (self.root / 'full.log').write_text('%s full gate of main %s (tools t) on home\n' % (old, running))
+        self.assertIn('no whole gate has started', self.check()[0])
+
+
+    def test_once_the_pool_is_promoted_a_main_waits_out_the_pools_grace_and_a_pool_record_confirms_it(self):
+        # Oct 9 03:36Z: the pool gates main first and the box loop waits ten minutes before taking it itself.
+        head = '9' * 40
+        (self.root / 'pool-promoted').write_text('promoted\n')
+        (self.root / 'main-head').write_text(head + '\n')
+        (self.root / 'main-head-first-seen').write_text('%s %d\n' % (head, self.now - 300))
+        self.assertEqual(self.check(), [], 'five minutes is inside the pool grace')
+        (self.root / 'whole-gates').write_text('%s running %d\n' % (head, self.now - 60))
+        (self.root / 'main-head-first-seen').write_text('%s %d\n' % (head, self.now - 900))
+        self.assertEqual(self.check(), [], "the pool's running record confirms it")
+        (self.root / 'whole-gates').write_text('')
         self.assertIn('no whole gate has started', self.check()[0])
 
 
