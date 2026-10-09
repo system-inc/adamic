@@ -43,8 +43,11 @@ static void snapshot(adamic_record *record) {
 	}
 	const adamic_json_schema schema = {adamic_json_object, NULL, keys->length, fields};
 	// A borrowed object view for JSON only, never counted or freed as a heap object.
-	adamic_object *view = calloc(1, sizeof *view + keys->length * sizeof *view->slots);
+	const adamic_shape shape = {keys->length, NULL, NULL, NULL};
+	adamic_object *view = calloc(1, adamic_object_size(keys->length));
 	if (view == NULL) abort();
+	view->shape = &shape;
+	memset(adamic_object_initialized(view), 1, keys->length);
 	for (size_t index = 0; index < keys->length; index++) view->slots[index] = values->elements[index];
 	json((adamic_value){.reference = view}, &schema);
 	free(view);
