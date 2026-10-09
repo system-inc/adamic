@@ -1,0 +1,287 @@
+[
+  {
+    "test": "TestDefaultTaggedInterfaceNeedsNoFlag",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=github.com/system-inc/adamic/internal/lower",
+      "-coverprofile=/workspace/adamic/review/test-defend/internal-lower-interface_cast/coverage/TestDefaultTaggedInterfaceNeedsNoFlag.cover",
+      "./internal/lower/",
+      "-run",
+      "^TestDefaultTaggedInterfaceNeedsNoFlag$"
+    ],
+    "seconds": 26.444387185998494,
+    "exit": 0
+  },
+  {
+    "test": "TestDefaultTaggedInterfaceAdmission",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=github.com/system-inc/adamic/internal/lower",
+      "-coverprofile=/workspace/adamic/review/test-defend/internal-lower-interface_cast/coverage/TestDefaultTaggedInterfaceAdmission.cover",
+      "./internal/lower/",
+      "-run",
+      "^TestDefaultTaggedInterfaceAdmission$"
+    ],
+    "seconds": 26.98145483100234,
+    "exit": 0
+  },
+  {
+    "test": "TestIteratorGapsAreExplicit",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=github.com/system-inc/adamic/internal/lower",
+      "-coverprofile=/workspace/adamic/review/test-defend/internal-lower-interface_cast/coverage/TestIteratorGapsAreExplicit.cover",
+      "./internal/lower/",
+      "-run",
+      "^TestIteratorGapsAreExplicit$"
+    ],
+    "seconds": 3.266909272999328,
+    "exit": 0
+  },
+  {
+    "test": "TestIteratorViewsCannotEraseReceivers",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=github.com/system-inc/adamic/internal/lower",
+      "-coverprofile=/workspace/adamic/review/test-defend/internal-lower-interface_cast/coverage/TestIteratorViewsCannotEraseReceivers.cover",
+      "./internal/lower/",
+      "-run",
+      "^TestIteratorViewsCannotEraseReceivers$"
+    ],
+    "seconds": 3.0559531030012295,
+    "exit": 0
+  },
+  {
+    "test": "TestIteratorViewsCannotHideReturn",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=github.com/system-inc/adamic/internal/lower",
+      "-coverprofile=/workspace/adamic/review/test-defend/internal-lower-interface_cast/coverage/TestIteratorViewsCannotHideReturn.cover",
+      "./internal/lower/",
+      "-run",
+      "^TestIteratorViewsCannotHideReturn$"
+    ],
+    "seconds": 2.9728071529971203,
+    "exit": 0
+  },
+  {
+    "test": "TestLiteralMethodCapturesCannotMakeCycles",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=github.com/system-inc/adamic/internal/lower",
+      "-coverprofile=/workspace/adamic/review/test-defend/internal-lower-interface_cast/coverage/TestLiteralMethodCapturesCannotMakeCycles.cover",
+      "./internal/lower/",
+      "-run",
+      "^TestLiteralMethodCapturesCannotMakeCycles$"
+    ],
+    "seconds": 2.7467917500034673,
+    "exit": 0
+  },
+  {
+    "test": "TestInheritanceRefusesUnsoundOverrides",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=github.com/system-inc/adamic/internal/lower",
+      "-coverprofile=/workspace/adamic/review/test-defend/internal-lower-interface_cast/coverage/TestInheritanceRefusesUnsoundOverrides.cover",
+      "./internal/lower/",
+      "-run",
+      "^TestInheritanceRefusesUnsoundOverrides$"
+    ],
+    "seconds": 3.388849521994416,
+    "exit": 0
+  },
+  {
+    "test": "TestLiteralMethodViewsDoNotLoseThis",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=github.com/system-inc/adamic/internal/lower",
+      "-coverprofile=/workspace/adamic/review/test-defend/internal-lower-interface_cast/coverage/TestLiteralMethodViewsDoNotLoseThis.cover",
+      "./internal/lower/",
+      "-run",
+      "^TestLiteralMethodViewsDoNotLoseThis$"
+    ],
+    "seconds": 3.4904067030001897,
+    "exit": 0
+  },
+  {
+    "test": "TestDestructuredMethodsCannotLoadOwnSlots",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=github.com/system-inc/adamic/internal/lower",
+      "-coverprofile=/workspace/adamic/review/test-defend/internal-lower-interface_cast/coverage/TestDestructuredMethodsCannotLoadOwnSlots.cover",
+      "./internal/lower/",
+      "-run",
+      "^TestDestructuredMethodsCannotLoadOwnSlots$"
+    ],
+    "seconds": 3.0155957820024923,
+    "exit": 0
+  },
+  {
+    "test": "TestRepresentedMethodReplacementIsNotYet",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=github.com/system-inc/adamic/internal/lower",
+      "-coverprofile=/workspace/adamic/review/test-defend/internal-lower-interface_cast/coverage/TestRepresentedMethodReplacementIsNotYet.cover",
+      "./internal/lower/",
+      "-run",
+      "^TestRepresentedMethodReplacementIsNotYet$"
+    ],
+    "seconds": 2.7871956800008775,
+    "exit": 0
+  },
+  {
+    "test": "TestIteratorDescriptorReasons",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=github.com/system-inc/adamic/internal/lower",
+      "-coverprofile=/workspace/adamic/review/test-defend/internal-lower-interface_cast/coverage/TestIteratorDescriptorReasons.cover",
+      "./internal/lower/",
+      "-run",
+      "^TestIteratorDescriptorReasons$"
+    ],
+    "seconds": 3.1006512669991935,
+    "exit": 0
+  },
+  {
+    "test": "TestGenericIteratorViewsPreserveNativeArguments",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=github.com/system-inc/adamic/internal/lower",
+      "-coverprofile=/workspace/adamic/review/test-defend/internal-lower-interface_cast/coverage/TestGenericIteratorViewsPreserveNativeArguments.cover",
+      "./internal/lower/",
+      "-run",
+      "^TestGenericIteratorViewsPreserveNativeArguments$"
+    ],
+    "seconds": 2.8623962690035114,
+    "exit": 0
+  },
+  {
+    "test": "TestUncheckableCastsStayRefused",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=github.com/system-inc/adamic/internal/lower",
+      "-coverprofile=/workspace/adamic/review/test-defend/internal-lower-interface_cast/coverage/TestUncheckableCastsStayRefused.cover",
+      "./internal/lower/",
+      "-run",
+      "^TestUncheckableCastsStayRefused$"
+    ],
+    "seconds": 3.876917121000588,
+    "exit": 0
+  },
+  {
+    "test": "TestIteratorSymbolKeysAreNotStringKeys",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=github.com/system-inc/adamic/internal/lower",
+      "-coverprofile=/workspace/adamic/review/test-defend/internal-lower-interface_cast/coverage/TestIteratorSymbolKeysAreNotStringKeys.cover",
+      "./internal/lower/",
+      "-run",
+      "^TestIteratorSymbolKeysAreNotStringKeys$"
+    ],
+    "seconds": 2.891715262005164,
+    "exit": 0
+  },
+  {
+    "test": "TestClassWrongOutputKeysRepair",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=github.com/system-inc/adamic/internal/lower",
+      "-coverprofile=/workspace/adamic/review/test-defend/internal-lower-interface_cast/coverage/TestClassWrongOutputKeysRepair.cover",
+      "./internal/lower/",
+      "-run",
+      "^TestClassWrongOutputKeysRepair$"
+    ],
+    "seconds": 3.2607231860019965,
+    "exit": 0
+  }
+]
