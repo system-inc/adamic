@@ -1,0 +1,11 @@
+interface Base { readonly kind: number; }
+interface Selected extends Base { readonly kind: 1 | 2; }
+function selectedKind(kind: number): boolean {
+ switch (kind) { case 1: case 2: return true; case 3: break; default: return false; }
+ return false;
+}
+function isSelected(node: Base): node is Selected { return selectedKind(node.kind); }
+interface First extends Base { readonly kind: 1; }
+function isFirst(node: Base): node is First { return isSelected(node) && node.kind !== 2; }
+function choose(node: Base): void { console.log(`${isSelected(node)}:${isFirst(node)}`); }
+choose({kind:1}); choose({kind:2}); choose({kind:3}); choose({kind:4});

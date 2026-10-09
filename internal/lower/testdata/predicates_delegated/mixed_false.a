@@ -1,0 +1,6 @@
+function helper(value: unknown): value is string { return typeof value === "string"; }
+function delegated(value: unknown): value is string { return helper(value) && false; }
+function choose(value: string | number): void {
+ if (delegated(value)) { console.log("yes"); } else { console.log(`${value}`); }
+}
+choose("text");

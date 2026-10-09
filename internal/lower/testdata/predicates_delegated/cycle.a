@@ -1,0 +1,5 @@
+let recurse = true;
+function first(value: unknown): value is string { if (recurse) { recurse = false; return second(value); } return true; }
+function second(value: unknown): value is string { return first(value); }
+const value: string | number = 7;
+console.log(`${first(value)}`);

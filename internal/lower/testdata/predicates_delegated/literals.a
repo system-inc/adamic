@@ -1,0 +1,7 @@
+enum Kind { Plus, Minus, Multiply, Other }
+function isPlus(kind: Kind): kind is Kind.Plus { return kind === Kind.Plus; }
+function isMinus(kind: Kind): kind is Kind.Minus { return kind === Kind.Minus; }
+function isAdditive(kind: Kind): kind is Kind.Plus | Kind.Minus { return isPlus(kind) || isMinus(kind); }
+function isPositive(kind: Kind): kind is Kind.Plus { return isAdditive(kind) && !isMinus(kind); }
+console.log(`${isAdditive(Kind.Plus)}:${isAdditive(Kind.Minus)}:${isAdditive(Kind.Other)}`);
+console.log(`${isPositive(Kind.Plus)}:${isPositive(Kind.Minus)}`);

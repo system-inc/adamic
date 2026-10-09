@@ -1,0 +1,9 @@
+function stringBody(value: unknown): boolean { return typeof value === "string"; }
+function isString(value: unknown): value is string {
+ const matches = stringBody(value);
+ if (matches) { return true; }
+ return false;
+}
+function isConditionalString(value: unknown): value is string { return stringBody(value) ? true : false; }
+function choose(value: string | number): void { console.log(`${isString(value)}:${isConditionalString(value)}`); }
+choose("text"); choose(7);

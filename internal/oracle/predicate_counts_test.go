@@ -103,6 +103,14 @@ func predicateCountsTable(t *testing.T) string {
 		}
 		fmt.Fprintf(&table, "| internal/lower/testdata/condition_assertions/%s.a (.ts checked mode) | %d | %d | %d | %d |\n", fixture.name, len(counts.Sites), counts.Proven, counts.Checked, counts.Unobservable)
 	}
+	for _, fixture := range delegatedPredicateFixtures {
+		program, err := lowered(t, delegatedPredicateInput(t, fixture.name, true))
+		if err != nil {
+			t.Fatal(err)
+		}
+		counts := program.PredicateChecks
+		fmt.Fprintf(&table, "| internal/lower/testdata/predicates_delegated/%s.a (.ts checked mode) | %d | %d | %d | %d |\n", fixture.name, len(counts.Sites), counts.Proven, counts.Checked, counts.Unobservable)
+	}
 	return table.String()
 }
 

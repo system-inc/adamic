@@ -1,0 +1,6 @@
+function isString(value: unknown): value is string { return typeof value === "string"; }
+function isNumber(value: unknown): value is number { return typeof value === "number"; }
+function isScalar(value: unknown): value is string | number { return isString(value) || isNumber(value); }
+function isOnlyString(value: unknown): value is string { return isScalar(value) && !isNumber(value); }
+function choose(value: string | number | boolean): void { console.log(`${isScalar(value)}:${isOnlyString(value)}`); }
+choose("text"); choose(7); choose(false);

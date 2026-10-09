@@ -1,0 +1,4 @@
+function helper(value: unknown): value is string { return true; }
+function delegated(value: unknown): value is string { return helper(value); }
+const value: string | number = 7;
+console.log(`${delegated(value)}`);

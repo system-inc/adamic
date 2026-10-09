@@ -1,0 +1,7 @@
+interface Base { kind: number; }
+interface Selected extends Base { kind: 1; }
+function helper(node: Base): node is Selected { return node.kind === 1; }
+function change(node: Base): void { node.kind = 2; }
+function delegated(node: Base): node is Selected { const matches = helper(node); change(node); return matches; }
+const node: Base = {kind:1};
+console.log(`${delegated(node)}`);

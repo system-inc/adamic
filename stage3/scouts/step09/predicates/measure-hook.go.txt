@@ -3,6 +3,7 @@ package lower
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
@@ -10,6 +11,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"os"
 	"strconv"
+	"strings"
 )
 
 var HatchMatchedCalls int
@@ -66,13 +68,30 @@ func HatchPredicateProof(ctx context.Context, program *load.Program) []HatchPred
 		}()
 		return f()
 	}
+	selection := map[string]bool{}
+	if path := os.Getenv("HATCH_SELECTION"); path != "" {
+		data, err := os.ReadFile(path)
+		if err != nil {
+			panic(err)
+		}
+		if err = json.Unmarshal(data, &selection); err != nil {
+			panic(err)
+		}
+	}
 	rows := []HatchPredicateResult{}
 	indexes := map[*ast.Node]int{}
 	for _, file := range files {
 		var visit ast.Visitor
 		visit = func(n *ast.Node) bool {
 			if n.Kind == ast.KindTypePredicate && n.Parent != nil && ast.IsFunctionLike(n.Parent) && n.Parent.Body() != nil {
-                if os.Getenv("HATCH_CONDITION_ONLY") == "1" && (n.AsTypePredicateNode().Type != nil || n.AsTypePredicateNode().AssertsModifier == nil) { n.ForEachChild(visit); return false }
+				if os.Getenv("HATCH_CONDITION_ONLY") == "1" && (n.AsTypePredicateNode().Type != nil || n.AsTypePredicateNode().AssertsModifier == nil) {
+					n.ForEachChild(visit)
+					return false
+				}
+				if len(selection) > 0 && !selection["src/compiler/"+strings.Split(program.Where(n), "/src/compiler/")[1]] {
+					n.ForEachChild(visit)
+					return false
+				}
 				r := HatchPredicateResult{Location: program.Where(n), Admission: "Proven", Calls: []HatchCall{}}
 				l := fresh()
 				err := run(func() error {
@@ -116,7 +135,9 @@ func HatchPredicateProof(ctx context.Context, program *load.Program) []HatchPred
 		}
 		file.AsNode().ForEachChild(visit)
 	}
-	if os.Getenv("HATCH_BODY_ONLY") == "1" { return rows }
+	if os.Getenv("HATCH_BODY_ONLY") == "1" {
+		return rows
+	}
 	callsMeasured := 0
 	for _, file := range files {
 		var visit ast.Visitor
@@ -165,7 +186,9 @@ func HatchPredicateProof(ctx context.Context, program *load.Program) []HatchPred
 								}
 								return t.Flags()&checker.TypeFlagsObject != 0 && !isClassInstance(t)
 							}
-							if claim.Type() != nil { r.ViewTarget = needsView(claim.Type()) }
+							if claim.Type() != nil {
+								r.ViewTarget = needsView(claim.Type())
+							}
 							args := []ir.Expression{}
 							fn := ir.Function{Name: "measurement_target", Returns: ir.Boolean}
 							if decl.Type().AsTypePredicateNode().AssertsModifier != nil {
