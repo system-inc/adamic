@@ -279,7 +279,7 @@ func (l *lowering) arrayLiteral(node *ast.Node) (ir.Expression, error) {
 
 // elementType is the representation of an array's elements, from the checker's type for the node.
 func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
-	arrayType := l.checker.GetNonNullableType(l.concrete(l.arrayPredicateType(node)))
+	arrayType := l.checker.GetNonNullableType(l.concrete(l.arrayStorageType(node)))
 	if l.nodeBufferType(arrayType, "Buffer") {
 		return ir.Number, nil
 	}
@@ -1004,6 +1004,9 @@ func (l *lowering) forOf(node *ast.Node) ([]ir.Statement, error) {
 		if lowered.Local, err = l.declareLocal(name); err != nil {
 			return nil, err
 		}
+		if element == ir.Union {
+			l.result.Locals[lowered.Local].Type = ir.Union
+		}
 		if element == ir.Weak {
 			// An array of Weak<Node> narrowed to present (by filter) still holds handles, so the
 			// variable holds one too, and each read of it is the target.
@@ -1407,28 +1410,13 @@ func (l *lowering) arrayVisit(node *ast.Node, array ir.Expression, element ir.Ty
 	}
 	claim := predicateOfSignature(l.checker, signatures[0])
 	if claim != nil && claim.Type() != nil {
-		// A predicate changes the receiver's flow type, never its stored elements.
-		// Optional numbers and references keep their storage; boxed unions cannot become S[].
-		if name == "every" && element == ir.Union {
-			target, known := l.kept(l.concrete(claim.Type()))
-			if known && target != element {
-				return nil, true, &Refused{Where: l.program.Where(node), What: "array element narrowing across a union layout is not yet sound", Fix: "read the elements through the union type, or copy them into a new S[]"}
-			}
-		}
 		if name == "filter" && element == ir.Union {
 			target, known := l.kept(l.concrete(claim.Type()))
 			if known && target != element {
 				return nil, true, l.notYet(node, "filter predicate element representation conversion from boxed union to "+typeName(target)+"; use a loop with an explicit narrowed copy")
 			}
 		}
-		// An undefined result already fits packed optional-number storage.
-		// Heap-backed and boxed sources cannot be reused as that result slot.
-		if (name == "find" || name == "findLast") && !(element == ir.MaybeNumber && claim.Type().Flags()&checker.TypeFlagsUndefined != 0) {
-			result, err := l.typeOf(node)
-			if err != nil || result != ir.Maybe(element) {
-				return nil, true, l.notYet(node, name+" predicate result representation conversion from "+typeName(ir.Maybe(element))+" to "+l.checker.TypeToString(l.checker.GetTypeAtLocation(node))+"; use a loop with an explicit narrowed result")
-			}
-		}
+
 	}
 	var returns ir.Type
 	if result := l.checker.GetReturnTypeOfSignature(signatures[0]); result.Flags()&checker.TypeFlagsVoid == 0 {
@@ -1440,7 +1428,18 @@ func (l *lowering) arrayVisit(node *ast.Node, array ir.Expression, element ir.Ty
 	if name != "forEach" && returns != ir.Boolean {
 		return nil, true, &Refused{Where: l.program.Where(arguments[0]), What: "a " + name + " callback that doesn't return a boolean", Fix: "return a comparison, like word.length > 0: 0.1 has no truthiness"}
 	}
-	return ir.ArrayVisit{Method: name, Array: array, Callback: callback, Element: element, Returns: returns, CallbackType: int(l.concrete(l.checker.GetTypeAtLocation(arguments[0])).Id())}, true, nil
+	visit := ir.Expression(ir.ArrayVisit{Method: name, Array: array, Callback: callback, Element: element, Returns: returns, CallbackType: int(l.concrete(l.checker.GetTypeAtLocation(arguments[0])).Id())})
+	if (name == "find" || name == "findLast") && claim != nil && claim.Type() != nil && !(element == ir.MaybeNumber && claim.Type().Flags()&checker.TypeFlagsUndefined != 0) {
+		if result, err := l.typeOf(node); err != nil {
+			return nil, true, err
+		} else if visit.Type() != result {
+			if element != ir.Union {
+				return nil, true, l.notYet(node, name+" predicate result representation conversion")
+			}
+			visit = l.checkedArrayNarrow(visit, result)
+		}
+	}
+	return visit, true, nil
 }
 
 // arrayReduce lowers array.reduce(callback, initial). 0.1 requires the initial value (docs/0.1.md):
@@ -1846,7 +1845,13 @@ func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 		if position.Type() != ir.Number {
 			return nil, l.notYet(node, "an array index that isn't a number")
 		}
-		return l.defined(node, ir.ArrayIndex{Array: object, Index: position, Element: element, Optional: optional}), nil
+		value := ir.Expression(ir.ArrayIndex{Array: object, Index: position, Element: element, Optional: optional})
+		if element == ir.Union {
+			if here, err := l.typeOf(node); err == nil && here != ir.Union {
+				value = l.checkedArrayNarrow(value, here)
+			}
+		}
+		return l.defined(node, value), nil
 	}
 	if object.Type() == ir.Object {
 		if value, handled, err := l.indexedTupleRead(node, object); handled {

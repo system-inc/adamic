@@ -1,15 +1,9 @@
 package lower
 
 import (
-	"context"
-	"errors"
-	"fmt"
 	"os"
 	"path/filepath"
-	"strings"
 	"testing"
-
-	"github.com/system-inc/adamic/internal/load"
 )
 
 func arrayNarrowingSource(t *testing.T, name string) string {
@@ -21,98 +15,76 @@ func arrayNarrowingSource(t *testing.T, name string) string {
 	return string(source)
 }
 
-func refusesArrayNarrowing(t *testing.T, name, reason string) {
-	t.Helper()
-	path, err := filepath.Abs(filepath.Join("testdata", "array_narrowing", name+".a"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	checked, err := load.Load([]string{path})
-	if err != nil {
-		t.Fatal(err)
-	}
-	_, err = Lower(context.Background(), checked)
-	method := "every"
-	if name == "find" {
-		method = "find"
-	} else if name == "find_last" {
-		method = "findLast"
-	}
-	marker := "items." + method + "("
-	if name == "property" {
-		marker = "obj." + marker
-	}
-	source := arrayNarrowingSource(t, name)
-	position := strings.Index(source, marker)
-	if position < 0 {
-		t.Fatal("fixture has no narrowing site")
-	}
-	wantWhere := fmt.Sprintf("%s:%d:%d", path, strings.Count(source[:position], "\n")+1, position-strings.LastIndex(source[:position], "\n"))
-	var refusal *Refused
-	var notYet *NotYet
-	where := ""
-	if errors.As(err, &refusal) {
-		where = refusal.Where
-	} else if errors.As(err, &notYet) {
-		where = notYet.Where
-	}
-	if where != wantWhere {
-		t.Fatalf("want refusal at narrowing site %s, got %v", wantWhere, err)
-	}
-	if err == nil || !strings.Contains(err.Error(), reason) || !strings.Contains(err.Error(), path+":") {
-		t.Fatalf("want refusal at exact fixture path with %q, got %v", reason, err)
-	}
-	if reason == "array element narrowing across a union layout is not yet sound" {
-		var refusal *Refused
-		if !errors.As(err, &refusal) || refusal.Fix != "read the elements through the union type, or copy them into a new S[]" {
-			t.Fatalf("want actionable layout refusal, got %v", err)
-		}
-	}
+func TestArrayNarrowingEveryAgrees(t *testing.T) {
+	t.Parallel()
+	source := arrayNarrowingSource(t, "every")
+	lowersAndAgreesWithNode(t, source)
+	// Only native exposes the stored union slots and checked scalar unboxing.
+	lowersAndAgreesWithNodeNative(t, source)
 }
 
-func TestArrayNarrowingEveryRefused(t *testing.T) {
+func TestArrayNarrowingInferredAgrees(t *testing.T) {
 	t.Parallel()
-	refusesArrayNarrowing(t, "every", "array element narrowing across a union layout is not yet sound")
+	source := arrayNarrowingSource(t, "inferred")
+	lowersAndAgreesWithNode(t, source)
+	// Only native exposes the stored union slots and checked scalar unboxing.
+	lowersAndAgreesWithNodeNative(t, source)
 }
 
-func TestArrayNarrowingInferredRefused(t *testing.T) {
+func TestArrayNarrowingReadonlyAgrees(t *testing.T) {
 	t.Parallel()
-	refusesArrayNarrowing(t, "inferred", "array element narrowing across a union layout is not yet sound")
+	source := arrayNarrowingSource(t, "readonly")
+	lowersAndAgreesWithNode(t, source)
+	// Only native exposes the stored union slots and checked scalar unboxing.
+	lowersAndAgreesWithNodeNative(t, source)
 }
 
-func TestArrayNarrowingReadonlyRefused(t *testing.T) {
+func TestArrayNarrowingEarlyReturnAgrees(t *testing.T) {
 	t.Parallel()
-	refusesArrayNarrowing(t, "readonly", "array element narrowing across a union layout is not yet sound")
+	source := arrayNarrowingSource(t, "early_return")
+	lowersAndAgreesWithNode(t, source)
+	// Only native exposes the stored union slots and checked scalar unboxing.
+	lowersAndAgreesWithNodeNative(t, source)
 }
 
-func TestArrayNarrowingEarlyReturnRefused(t *testing.T) {
+func TestArrayNarrowingPropertyAgrees(t *testing.T) {
 	t.Parallel()
-	refusesArrayNarrowing(t, "early_return", "array element narrowing across a union layout is not yet sound")
+	source := arrayNarrowingSource(t, "property")
+	lowersAndAgreesWithNode(t, source)
+	// Only native exposes the stored union slots and checked scalar unboxing.
+	lowersAndAgreesWithNodeNative(t, source)
 }
 
-func TestArrayNarrowingPropertyRefused(t *testing.T) {
+func TestArrayNarrowingForwardAgrees(t *testing.T) {
 	t.Parallel()
-	refusesArrayNarrowing(t, "property", "array element narrowing across a union layout is not yet sound")
+	source := arrayNarrowingSource(t, "forward")
+	lowersAndAgreesWithNode(t, source)
+	// Only native exposes the stored union slots and checked scalar unboxing.
+	lowersAndAgreesWithNodeNative(t, source)
 }
 
-func TestArrayNarrowingForwardRefused(t *testing.T) {
+func TestArrayNarrowingCatAgrees(t *testing.T) {
 	t.Parallel()
-	refusesArrayNarrowing(t, "forward", "array element narrowing across a union layout is not yet sound")
+	source := arrayNarrowingSource(t, "cat")
+	lowersAndAgreesWithNode(t, source)
+	// Only native exposes the stored union slots and checked scalar unboxing.
+	lowersAndAgreesWithNodeNative(t, source)
 }
 
-func TestArrayNarrowingCatRefused(t *testing.T) {
+func TestArrayNarrowingFindAgrees(t *testing.T) {
 	t.Parallel()
-	refusesArrayNarrowing(t, "cat", "array element narrowing across a union layout is not yet sound")
+	source := arrayNarrowingSource(t, "find")
+	lowersAndAgreesWithNode(t, source)
+	// Only native exposes the stored union slots and checked scalar unboxing.
+	lowersAndAgreesWithNodeNative(t, source)
 }
 
-func TestArrayNarrowingFindRefused(t *testing.T) {
+func TestArrayNarrowingFindLastAgrees(t *testing.T) {
 	t.Parallel()
-	refusesArrayNarrowing(t, "find", "find predicate result representation conversion")
-}
-
-func TestArrayNarrowingFindLastRefused(t *testing.T) {
-	t.Parallel()
-	refusesArrayNarrowing(t, "find_last", "findLast predicate result representation conversion")
+	source := arrayNarrowingSource(t, "find_last")
+	lowersAndAgreesWithNode(t, source)
+	// Only native exposes the stored union slots and checked scalar unboxing.
+	lowersAndAgreesWithNodeNative(t, source)
 }
 
 func TestArrayNarrowingOptionalNumberAgrees(t *testing.T) {
@@ -160,5 +132,19 @@ func TestArrayNarrowingBooleanCallbackAgrees(t *testing.T) {
 	source := arrayNarrowingSource(t, "boolean_callback")
 	lowersAndAgreesWithNode(t, source)
 	// Only native exposes whether the union layout is retained.
+	lowersAndAgreesWithNodeNative(t, source)
+}
+
+func TestArrayNarrowingStoredReadsAgrees(t *testing.T) {
+	t.Parallel()
+	source := `const items: (string | number)[] = [1, 2];
+ if (items.every((value): value is number => typeof value === 'number')) {
+ const first = items[0];
+ if (first !== undefined) console.log('first ' + (first + 1));
+ console.log(items.map(value => value * 2).join(','));
+ for (const value of items) console.log('next ' + (value + 1));
+ }`
+	lowersAndAgreesWithNode(t, source)
+	// Native exposes boxed storage in indexed, mapped and loop reads.
 	lowersAndAgreesWithNodeNative(t, source)
 }

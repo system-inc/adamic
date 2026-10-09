@@ -711,7 +711,7 @@ func (e *emitter) mapped(expression ir.ArrayMap) (string, bool) {
 	}
 	source := e.variable(expression.Array, read)
 	unique := e.temporary()
-	e.line("bool %s = %s;", unique, uniquelyHeld(source))
+	e.line("bool %s = %s && %s->references == %t;", unique, uniquelyHeld(source), source, expression.Result.IsReference())
 	callback := e.value(expression.Callback)
 	mapped := e.own(ir.Array, fmt.Sprintf("(%s ? adamic_retain(%s) : adamic_array_new(%s->length, %t))", unique, source, source, expression.Result.IsReference()))
 	count, index, result := e.temporary(), e.temporary(), e.temporary()
@@ -721,7 +721,8 @@ func (e *emitter) mapped(expression ir.ArrayMap) (string, bool) {
 	e.line("\t\tstatic const char message[] = \"map: the array shrank while it was being mapped\";")
 	e.line("\t\tadamic_panic(message, sizeof message - 1);")
 	e.line("\t}")
-	call := e.callbackCall(callback, expression.Callback, expression.CallbackType, fmt.Sprintf("%s->elements[%s]", source, index), fmt.Sprintf("{.number = (double)%s}", index), fmt.Sprintf("{.reference = %s}", source))
+	argument := e.arrayCallbackSlot(source, fmt.Sprintf("%s->elements[%s]", source, index), expression.Callback, expression.CallbackType, 0, expression.Element)
+	call := e.callbackCall(callback, expression.Callback, expression.CallbackType, argument, fmt.Sprintf("{.number = (double)%s}", index), fmt.Sprintf("{.reference = %s}", source))
 	e.line("\tadamic_value %s = %s;", result, call)
 	e.line("\tif (%s) {", unique)
 	// The callback is done with the element it was handed: the result takes its place.

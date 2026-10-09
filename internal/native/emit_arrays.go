@@ -55,7 +55,8 @@ func (e *emitter) arrayVisit(visit ir.ArrayVisit) string {
 	if references {
 		e.line("adamic_retain(%s.reference);", element)
 	}
-	call := e.callbackCall(callback, visit.Callback, visit.CallbackType, element, fmt.Sprintf("{.number = (double)%s}", index), fmt.Sprintf("{.reference = %s}", source))
+	argument := e.arrayCallbackSlot(source, element, visit.Callback, visit.CallbackType, 0, visit.Element)
+	call := e.callbackCall(callback, visit.Callback, visit.CallbackType, argument, fmt.Sprintf("{.number = (double)%s}", index), fmt.Sprintf("{.reference = %s}", source))
 	if visit.Method == "forEach" && !visit.Returns.IsReference() {
 		e.line("%s;", call)
 	} else {
@@ -147,7 +148,8 @@ func (e *emitter) arrayReduce(reduce ir.ArrayReduce) string {
 	if reduce.Element.IsReference() {
 		e.line("adamic_retain(%s.reference);", element)
 	}
-	call := e.callbackCall(callback, reduce.Callback, reduce.CallbackType, fmt.Sprintf("{.%s = %s}", member(reduce.Result), slotted(reduce.Result, accumulator)), element, fmt.Sprintf("{.number = (double)%s}", index), fmt.Sprintf("{.reference = %s}", source))
+	argument := e.arrayCallbackSlot(source, element, reduce.Callback, reduce.CallbackType, 1, reduce.Element)
+	call := e.callbackCall(callback, reduce.Callback, reduce.CallbackType, fmt.Sprintf("{.%s = %s}", member(reduce.Result), slotted(reduce.Result, accumulator)), argument, fmt.Sprintf("{.number = (double)%s}", index), fmt.Sprintf("{.reference = %s}", source))
 	e.line("adamic_value %s = %s;", answer, call)
 	// The element held across the call is let go; the accumulator is the statement's.
 	if reduce.Element.IsReference() {

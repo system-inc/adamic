@@ -373,7 +373,8 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		e.line("\t}")
 		e.indent++
 		element := e.temporary()
-		call := e.callbackCall(callback, expression.Callback, expression.CallbackType, fmt.Sprintf("%s->elements[%s]", source, index), fmt.Sprintf("{.number = (double)%s}", index), fmt.Sprintf("{.reference = %s}", source))
+		argument := e.arrayCallbackSlot(source, fmt.Sprintf("%s->elements[%s]", source, index), expression.Callback, expression.CallbackType, 0, expression.Element)
+		call := e.callbackCall(callback, expression.Callback, expression.CallbackType, argument, fmt.Sprintf("{.number = (double)%s}", index), fmt.Sprintf("{.reference = %s}", source))
 		e.line("adamic_value %s = %s;", element, call)
 		// What's mapped so far is the statement's, let go with its temporaries.
 		e.closureThrown()
