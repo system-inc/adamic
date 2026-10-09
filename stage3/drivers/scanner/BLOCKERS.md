@@ -1,4 +1,104 @@
+## October 8: combined records-library merge closes MapLike admission
+
+Fresh scratch dbd7a7c8 cleanly merges current main 6998ebc2 and combined branch
+2648ad33, containing library e40216f2 plus records/named-index support. No hand
+resolution or compiler/adaptation source edit was made. Compiler build passed
+in 186.725s; setup passed in 54.226s with nproc=5.
+
+The previous measured order 1, corePublic.ts:9:5 MapLike index signature, is gone.
+Its unchanged type-only witness prints ok on both Node and native; diff passes,
+and a one-byte native-control mutant is caught. Both real scanner modes now
+stop at debug.ts:7:1, namespace refusal. Previous measured orders 2 through 15
+remain as fresh orders 1 through 14. Fresh order 15 is an optional-parameter
+function value in the throwing Debug placeholder, explicitly dependent on that
+replacement, as is fresh order 13. No original namespace claim is made from them.
+
+Both full-tree Node diffs pass and both one-byte Node-output mutants are caught.
+Fifteen fresh witnesses finish on Node and reproduce their Adamic diagnostics.
+No native scanner binary, token comparison or native timing exists.
+
+[Combined compiler report, controls and ordered stops](evidence/combined-records-library/REPORT.md).
+
+## October 8: clean records rebase still conflicts with library
+
+Fresh scratch af708e4e merges current main ffe6efc1 and library b05a9306.
+The requested clean records/named-index rebase fcddeb29 conflicted in six files
+against that combination and was aborted and skipped without hand resolutions.
+The previous hand-resolved checkout is excluded from this measurement.
+
+Compiler build passed in 141.791s. Scanner split 0 and 1 still stop at
+corePublic.ts:9:5. Both full-tree Node diffs pass, both exactly-one-byte Node
+output mutants are caught, and fifteen fresh Node-success/build-refusal
+witnesses reproduce the preceding fifteen ordered stops. No native scanner
+comparison, native timing or records feature integration is claimed.
+
+[Fresh integration and ordered-stop evidence](evidence/clean-records-rebase/REPORT.md).
+
+## October 8: scratch records resolution stopped at verification
+
+A scratch-merge measurement resolved the six conflicts from records-lowering
+456c981b against the existing b05a9306 scratch base, which includes main efe9f404.
+The Go compiler built in 10.315s, but its targeted tests failed: nullable-record
+admission disagrees with the records refusal test, the Buffer typed-array view
+reports a changed diagnostic, and the automatically merged JSON runtime passes
+an enum where main now requires a schema pointer. The semantic integration in
+internal/lower/expression.go is not verified. Scratch remains uncommitted and
+never pushed. No scanner rebuild or native comparison follows this failed
+prerequisite. No blocker retirement or mutant catch is claimed.
+
+[Scratch-merge report, each resolution and raw test logs](evidence/scratch-records-merge/REPORT.md).
+
 # Scanner blockers
+
+## October 8: records follow-up, both requested merges skipped
+
+Tried named-index-records c20e5b56 and records-lowering 456c981b (includes
+70fb62b1) on the existing b05a9306 scratch. Both conflicted, respectively in
+17 and six files, and were aborted and skipped without compiler edits.
+Compiler rebuild passed in 1.968s and produced the same binary SHA256.
+
+Both native scanner modes still refuse corePublic.ts:9:5, the MapLike index
+signature. Both fresh Node streams match the full-tree reference byte for byte;
+509,014 skipped-trivia tokens, 860,418 retained-trivia tokens and 466 errors.
+Both fresh token-end mutants fail diff. No native scanner comparison or timing
+is available, and neither records feature is claimed integrated or tested.
+
+[Fresh ordered evidence](evidence/native3-records/REPORT.md) contains fifteen
+successive stops and fifteen rerun Node-success/build-refusal witnesses.
+Discovery placeholders have the same limits as the preceding native3 run,
+including the Debug-dependent observation 14 and whole createScanner removal.
+No compiler, adaptation or oracle fixture change is on the delivery branch.
+
+
+## October 8: native unit 3, library merged and front-3 skipped
+
+Scratch compiler b05a9306 includes main efe9f404 and library's 2bf78f6a /
+0ab7c2bd fixes. front-3 a36d1c04 conflicted in 23 files and was aborted and
+skipped as requested. No compiler or adaptation edit was made.
+
+Both ADAMIC_NATIVE_SPLIT=0 and split=1 with five jobs stop at
+corePublic.ts:9:5, refusing the MapLike index signature. Both slice Node streams
+match the complete full-tree reference byte for byte: 509,014 skipped-trivia
+tokens, 860,418 retained-trivia tokens and 466 errors. Both end mutants fail diff.
+
+[The ordered report](evidence/native3/REPORT.md) records fifteen successive
+observations, throwing discovery placeholders, and a small successful Node
+program that reproduces each diagnostic. Observation 14 depends on replacing
+Debug's namespace with an object of functions. None of the behind-placeholder
+results constitutes a native scanner proof.
+
+**Gone in the isolated control:** the missing captureStackTrace static method.
+Typed capture-stack-marker-control.a builds and prints ok on both Node and
+native; a one-byte native-control output mutant fails diff. The marker-bearing
+probe separately fails TS2769 because {} is not Function. The real scanner
+stops earlier, so no scanner native-output mutant or timing is claimed.
+
+**Historical retirement status unavailable:** the referenced October 8 list
+is absent from BLOCKERS.md at all three fetched refs. Existing October 7 notes
+remain intact; no unseen fifteen-item list is marked closed by inference.
+All hashes, conflicts, raw diagnostics, witnesses and setup timings are in
+[evidence/native3](evidence/native3/REPORT.md). No new oracle fixture was added.
+
 
 ## October 7: developer-tools split compile on and off
 

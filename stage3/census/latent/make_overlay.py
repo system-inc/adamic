@@ -20,8 +20,21 @@ start = original.index('\tfiles := program.Files()')
 end = original.index('\n}\n\ntype lowering', start)
 original = original[:start] + '\treturn nil, fmt.Errorf("latent census: measurement only; no IR output")' + original[end:]
 original = original.replace('\n\t"path/filepath"', '')
-original = original.replace('type lowering struct {', 'type lowering struct {\n latentDeclarations map[int]*ast.Node\n latentReady map[int]bool')
+original = original.replace('type lowering struct {', 'type lowering struct {\n latentDeclarations map[int]*ast.Node\n latentReady map[int]bool\n latentAncestors map[*ast.Node]bool')
 overlay('internal/lower/lower.go', original)
+# Generate typed snapshots of all lowering-owned state; unknown shapes fail loudly.
+state_output = scratch / 'internal_lower_latent_state.go'
+subprocess.run(['go', 'run', str(territory / 'statecopy'), str(repository),
+                str(scratch / 'internal_lower_lower.go'), str(state_output)], check=True, cwd=territory)
+replace[str(repository / 'internal/lower/latent_state.go')] = str(state_output)
+statement_output = scratch / 'internal_lower_statements.go'
+subprocess.run(['go', 'run', str(territory / 'statementrewrite'),
+                str(repository / 'internal/lower/statements.go'), str(statement_output)], check=True, cwd=territory)
+replace[str(repository / 'internal/lower/statements.go')] = str(statement_output)
+overlay('internal/lower/latent_full.go', (territory / 'full.go.txt').read_text())
+overlay('internal/lower/latent_units.go', (territory / 'units.go.txt').read_text())
+overlay('internal/lower/latent_replay.go', (territory / 'replay.go.txt').read_text())
+
 # Parse the exact refusal function and its visitor scopes; fail on unsupported shapes.
 refusal_output = scratch / 'internal_lower_refusals.go'
 subprocess.run(['go', 'run', str(territory / 'refusalrewrite/cmd'),
@@ -56,8 +69,14 @@ assert needle in functions
 functions = functions.replace(needle, needle + '\n if l.latentReady == nil { l.latentReady = map[int]bool{} }; l.latentReady[index] = true')
 # Generic dependency instantiations must also obey body skip policy.
 needle = 'func (l *lowering) lowerFunction(index int, declaration *ast.Node, this int) error {'
-functions = functions.replace(needle, needle + '\n if len(l.program.LatentDiagnosticsIn(declaration.Body())) > 0 { return &LatentDependencySkipped{Where:l.program.Where(declaration)} }')
+functions = functions.replace(needle, needle + '\n if len(l.latentBodyDiagnostics(declaration.Body())) > 0 { return &LatentDependencySkipped{Where:l.program.Where(declaration)} }')
 overlay('internal/lower/functions.go', functions)
+locals_source = (repository / 'internal/lower/locals.go').read_text()
+needle = 'local, isLocal := l.locals[symbol]'
+assert locals_source.count(needle) == 1
+locals_source = locals_source.replace(needle, 'if latentFullEnabled() { l.latentLexicalLocal(identifier, symbol) }\n' + needle)
+overlay('internal/lower/locals.go', locals_source)
+
 hook = (territory / 'lower.go.txt').read_text()
 if (repository / 'internal/lower/enums.go').exists():
     hook = hook.replace('// LATENT_ENUM_REGISTRATION', """case ast.KindEnumDeclaration:
@@ -69,5 +88,6 @@ if (repository / 'internal/lower/enums.go').exists():
         }""")
 overlay('internal/lower/latent_hook.go', hook)
 overlay('stage3/census/latent/tool/main.go', (territory / 'main.go.txt').read_text())
+overlay('stage3/census/latent/replay/worker/main.go', (territory / 'replay/main.go.txt').read_text())
 (scratch / 'overlay.json').write_text(json.dumps({'Replace': replace}, indent=2) + '\n')
 print(scratch / 'overlay.json')
