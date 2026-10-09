@@ -28,7 +28,7 @@
     "attempts": [
       {
         "mutant": "D02",
-        "file_line": "internal/lower/cycles.go:328",
+        "file_line": "internal/lower/cycles.go:329",
         "change": "return early: Exclusive block cycles.go:329: no unproven write for an earlier slot must not abandon later slots.",
         "rows_failed": [
           "TestReadonlyFieldsAreJudgedByTheirConstructorsWrites"
@@ -36,8 +36,8 @@
       },
       {
         "mutant": "D03",
-        "file_line": "internal/lower/fresh.go:49",
-        "change": "return early: Exclusive block fresh.go:44: a nonmatching write must not end the search for a later matching write.",
+        "file_line": "internal/lower/fresh.go:50",
+        "change": "return early on a nonmatching write instead of continuing the write search; shared-code semantic attempt",
         "rows_failed": []
       },
       {

@@ -623,7 +623,7 @@
     "old": "\t\tif write.Kind != kind || (kind == fresh.WriteField && !f.l.cycleFieldMatches(holder, name, write.Name)) {\n\t\t\tcontinue\n\t\t}",
     "new": "\t\tif write.Kind != kind || (kind == fresh.WriteField && !f.l.cycleFieldMatches(holder, name, write.Name)) {\n\t\t\treturn nil\n\t\t}",
     "kind": "return early",
-    "lead": "Exclusive block fresh.go:44: a nonmatching write must not end the search for a later matching write.",
+    "lead": "Shared-code semantic lead: direct constructor types and construct-signature interfaces scan different write histories; stop on the first nonmatching write.",
     "rows_failed": [],
     "rows_passed": [
       "TestAMethodReadAsAValueIsRefused",
