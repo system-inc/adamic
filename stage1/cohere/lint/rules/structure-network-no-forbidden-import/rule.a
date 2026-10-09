@@ -1,0 +1,59 @@
+import { panic } from 'adamic';
+import type { RuleContext } from '../../context.ts';
+import { structureFileContext } from '../../helpers/structure_file_context.a';
+import { bindingsOf } from '../../helpers/imports/bindings_of.a';
+import { importedNameOf } from '../../helpers/imports/imported_name_of.a';
+import type { HelperNode } from '../../helpers/imports/nodes.a';
+import { tanStackMessage, apolloMessage, graphqlMessage } from './messages.a';
+
+export class Rule {
+    readonly contextValue: RuleContext | undefined = undefined;
+    readonly exempt: boolean;
+    importNodes: readonly HelperNode[] | undefined = undefined;
+    constructor(context: RuleContext) {
+        this.contextValue = context;
+        this.exempt = structureFileContext(context.parser.path).isNetworkServiceFile;
+    }
+    ruleContext(): RuleContext { return this.contextValue ?? panic('rule context not initialized'); }
+    importsGraphql(index: number): boolean {
+        const context = this.ruleContext();
+        if(this.importNodes === undefined) {
+            // Project named fields once, keeping the parser's non-owning indexes.
+            const nodes: HelperNode[] = [];
+            for(let cursor = 0; cursor < context.parser.nodes.length; cursor++) {
+                const node = context.node(cursor);
+                const clause = node.kind === 'ImportDeclaration' ? context.children(cursor, 'ImportClause')[0] ?? -1 : -1;
+                const named = node.kind === 'ImportClause' ? node.children.find(child => context.kind(child) === 'NamedImports' || context.kind(child) === 'NamespaceImport') ?? -1 : -1;
+                const name = node.kind === 'ImportSpecifier' ? node.children[node.children.length - 1] ?? -1 : node.kind === 'ImportClause' ? node.children.find(child => context.kind(child) === 'Identifier') ?? -1 : -1;
+                const propertyName = node.kind === 'ImportSpecifier' && node.children.length > 1 ? node.children[0] ?? -1 : -1;
+                nodes.push({kind: node.kind, text: node.text, expression: -1, name, propertyName, importClause: clause, namedBindings: named, elements: node.children});
+            }
+            this.importNodes = nodes;
+        }
+        const nodes = this.importNodes;
+        for(const element of bindingsOf(nodes, index).named) {
+            if(importedNameOf(nodes, element) === 'graphql') { return true; }
+        }
+        return false;
+    }
+    visit(index: number): void {
+        const context = this.ruleContext();
+        let module = -1;
+        for(const child of context.node(index).children) {
+            const kind = context.kind(child);
+            if(kind === 'StringLiteral' || kind === 'NoSubstitutionTemplateLiteral') { module = child; }
+        }
+        if(module < 0) { return; }
+        const source = context.node(module).text;
+        if(source === '@tanstack/react-query' && !this.exempt) {
+            context.report(index, 'structure/network-no-forbidden-import', 'noDirectTanStackQuery', tanStackMessage, '', '', '');
+        }
+        if(source.startsWith('@apollo/')) {
+            context.report(index, 'structure/network-no-forbidden-import', 'noDirectApollo', apolloMessage, '', '', '');
+        }
+        if(source.includes('/generated') && this.importsGraphql(index)) {
+            context.report(index, 'structure/network-no-forbidden-import', 'noDirectGraphqlImport', graphqlMessage, '', '', '');
+        }
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

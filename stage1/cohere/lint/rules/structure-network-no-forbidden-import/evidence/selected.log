@@ -1,0 +1,103 @@
+=== RUN   TestRulesAgree
+=== PAUSE TestRulesAgree
+=== RUN   TestMutants
+=== PAUSE TestMutants
+=== RUN   TestOwnedWitnesses
+=== PAUSE TestOwnedWitnesses
+=== CONT  TestRulesAgree
+=== CONT  TestOwnedWitnesses
+=== CONT  TestMutants
+=== RUN   TestMutants/structure-network-apollo-prefix
+=== PAUSE TestMutants/structure-network-apollo-prefix
+=== CONT  TestMutants/structure-network-apollo-prefix
+=== NAME  TestRulesAgree
+    lint_test.go:420: checker compilation phases: load=296.760875ms lower=7.473537031s C=704.436995ms JavaScript=31.07986ms
+=== NAME  TestMutants/structure-network-apollo-prefix
+    lint_test.go:1127: checker compilation phases: load=290.482237ms lower=7.814221245s C=764.204779ms JavaScript=40.304863ms
+    lint_test.go:1133: structure-network-apollo-prefix caught on Node: case 89 line 4898: port "fixed\timport { useQuery } from '@tanstack/react-query';\\u000aimport { onError } from '@apollo/client/link/error';\\u000aexport { useQuery, onError };\\u000a", Go "/tmp/adamic-gate/TestMutantsstructure-network-apollo-prefix213437620/020/structure-network-no-forbidden-import-1.ts:2:1"
+        Go context:
+        case 89
+        /tmp/adamic-gate/TestMutantsstructure-network-apollo-prefix213437620/020/structure-network-no-forbidden-import-1.ts:1:1
+          structure/network-no-forbidden-import  This imports @tanstack/react-query directly. NetworkService wraps it, and the wrapper is where the query client, the cache keys, the retry policy and the error shaping live. A component holding its own useQuery gets a different client and a different cache, so its data goes stale independently of everything else on the page. NetworkService's own module, source/services/network/, is exempt, since that is where TanStack is configured.
+        
+        range 0 49 noDirectTanStackQuery 			0 49
+        /tmp/adamic-gate/TestMutantsstructure-network-apollo-prefix213437620/020/structure-network-no-forbidden-import-1.ts:2:1
+          structure/network-no-forbidden-import  This imports Apollo directly. NetworkService replaced it rather than wrapping it, so an Apollo import pulls a second GraphQL client into the bundle and gives this one call site a cache nothing else reads or invalidates.
+        
+        range 50 102 noDirectApollo 			50 102
+        fixed	import { useQuery } from '@tanstack/react-query';\u000aimport { onError } from '@apollo/client/link/error';\u000aexport { useQuery, onError };\u000a
+    lint_test.go:1133: structure-network-apollo-prefix caught on emitted JavaScript: case 89 line 4898: port "fixed\timport { useQuery } from '@tanstack/react-query';\\u000aimport { onError } from '@apollo/client/link/error';\\u000aexport { useQuery, onError };\\u000a", Go "/tmp/adamic-gate/TestMutantsstructure-network-apollo-prefix213437620/020/structure-network-no-forbidden-import-1.ts:2:1"
+        Go context:
+        case 89
+        /tmp/adamic-gate/TestMutantsstructure-network-apollo-prefix213437620/020/structure-network-no-forbidden-import-1.ts:1:1
+          structure/network-no-forbidden-import  This imports @tanstack/react-query directly. NetworkService wraps it, and the wrapper is where the query client, the cache keys, the retry policy and the error shaping live. A component holding its own useQuery gets a different client and a different cache, so its data goes stale independently of everything else on the page. NetworkService's own module, source/services/network/, is exempt, since that is where TanStack is configured.
+        
+        range 0 49 noDirectTanStackQuery 			0 49
+        /tmp/adamic-gate/TestMutantsstructure-network-apollo-prefix213437620/020/structure-network-no-forbidden-import-1.ts:2:1
+          structure/network-no-forbidden-import  This imports Apollo directly. NetworkService replaced it rather than wrapping it, so an Apollo import pulls a second GraphQL client into the bundle and gives this one call site a cache nothing else reads or invalidates.
+        
+        range 50 102 noDirectApollo 			50 102
+        fixed	import { useQuery } from '@tanstack/react-query';\u000aimport { onError } from '@apollo/client/link/error';\u000aexport { useQuery, onError };\u000a
+--- PASS: TestMutants (7.59s)
+    --- PASS: TestMutants/structure-network-apollo-prefix (10.07s)
+=== NAME  TestRulesAgree
+    lint_test.go:420: checker native build: 1m5.54554134s
+=== NAME  TestOwnedWitnesses
+    registration_test.go:60: checker native build: 1m5.545339212s
+    registration_test.go:60: typed runtime time: Go program and lint=92.395192ms native program, lint and recording=111.928781ms
+    registration_test.go:60: typed runtime time: native=111.928781ms
+    registration_test.go:60: typed runtime time: Node=410.881586ms
+    registration_test.go:60: typed runtime time: emitted JavaScript=90.467407ms
+    registration_test.go:60: live Go, native, Node and emitted JavaScript replay identical: 740 bytes
+    registration_test.go:60: checker native build: 29.231355ms
+    registration_test.go:60: typed runtime time: Go program and lint=74.44777ms native program, lint and recording=88.77128ms
+    registration_test.go:60: typed runtime time: native=88.77128ms
+    registration_test.go:60: typed runtime time: Node=397.57462ms
+    registration_test.go:60: typed runtime time: emitted JavaScript=95.235961ms
+    registration_test.go:60: live Go, native, Node and emitted JavaScript replay identical: 1887 bytes
+    registration_test.go:60: checker native build: 8.774462ms
+    registration_test.go:60: typed runtime time: Go program and lint=79.002693ms native program, lint and recording=111.538296ms
+    registration_test.go:60: typed runtime time: native=111.538296ms
+    registration_test.go:60: typed runtime time: Node=455.369245ms
+    registration_test.go:60: typed runtime time: emitted JavaScript=97.084606ms
+    registration_test.go:60: live Go, native, Node and emitted JavaScript replay identical: 2001 bytes
+    registration_test.go:60: checker native build: 15.99202ms
+    registration_test.go:60: typed runtime time: Go program and lint=60.119399ms native program, lint and recording=95.604032ms
+    registration_test.go:60: typed runtime time: native=95.604032ms
+    registration_test.go:60: typed runtime time: Node=372.08956ms
+    registration_test.go:60: typed runtime time: emitted JavaScript=107.745582ms
+    registration_test.go:60: live Go, native, Node and emitted JavaScript replay identical: 5286 bytes
+    registration_test.go:60: checker native build: 12.741122ms
+    registration_test.go:60: typed runtime time: Go program and lint=77.948774ms native program, lint and recording=105.493776ms
+    registration_test.go:60: typed runtime time: native=105.493776ms
+    registration_test.go:60: typed runtime time: Node=383.016945ms
+    registration_test.go:60: typed runtime time: emitted JavaScript=88.339173ms
+    registration_test.go:60: live Go, native, Node and emitted JavaScript replay identical: 1066 bytes
+    registration_test.go:60: checker native build: 41.529379ms
+    registration_test.go:60: typed runtime time: Go program and lint=72.632853ms native program, lint and recording=114.370945ms
+    registration_test.go:60: typed runtime time: native=114.370945ms
+    registration_test.go:60: typed runtime time: Node=337.433424ms
+    registration_test.go:60: typed runtime time: emitted JavaScript=77.615792ms
+    registration_test.go:60: live Go, native, Node and emitted JavaScript replay identical: 1060 bytes
+    registration_test.go:60: checker native build: 10.041011ms
+    registration_test.go:60: typed runtime time: Go program and lint=61.618953ms native program, lint and recording=74.191875ms
+    registration_test.go:60: typed runtime time: native=74.191875ms
+    registration_test.go:60: typed runtime time: Node=328.675455ms
+    registration_test.go:60: typed runtime time: emitted JavaScript=73.582666ms
+    registration_test.go:60: live Go, native, Node and emitted JavaScript replay identical: 968 bytes
+    registration_test.go:60: checker native build: 12.251905ms
+    registration_test.go:60: typed runtime time: Go program and lint=58.686218ms native program, lint and recording=70.363586ms
+    registration_test.go:60: typed runtime time: native=70.363586ms
+    registration_test.go:60: typed runtime time: Node=354.651168ms
+    registration_test.go:60: typed runtime time: emitted JavaScript=104.490285ms
+    registration_test.go:60: live Go, native, Node and emitted JavaScript replay identical: 1060 bytes
+    registration_test.go:76: checker native build: 18.355053ms
+    registration_test.go:76: Go, Node, emitted JavaScript, native identical: 485946 bytes
+--- PASS: TestOwnedWitnesses (98.30s)
+=== NAME  TestRulesAgree
+    lint_test.go:296: cohere cases: 5747 unique source/rule/options combinations
+    lint_test.go:491: typed upstream cases: 0 under their captured compiler options, 0 under strict alone; 0 held to upstream's count, 0 not, their programs holding other fixture files
+    lint_test.go:515: Go, Node, emitted JavaScript, native identical: 503845 bytes
+--- PASS: TestRulesAgree (113.74s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	113.870s

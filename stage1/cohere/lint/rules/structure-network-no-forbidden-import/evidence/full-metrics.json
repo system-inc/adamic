@@ -1,0 +1,40 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-json",
+    "./stage1/cohere/lint",
+    "-count=1",
+    "-timeout=60m"
+  ],
+  "nproc": 5,
+  "load_before": "0.75 0.94 1.61 1/140 184363",
+  "environment": {
+    "ADAMIC_TYPESCRIPT_SOURCE": "/tmp/no-forward-ref-typescript-pin",
+    "WASI_SYSROOT": "/workspace/adamic-tools/wasi-sdk/share/wasi-sysroot",
+    "ADAMIC_LINT_BENCH": "1",
+    "ADAMIC_LINT_PROFILE_DIR": "/tmp/network-no-forbidden-import-profiles.KXbBxW",
+    "ADAMIC_LINT_PROFILE_SNAPSHOTS": "/tmp/network-no-forbidden-import-profiles.KXbBxW",
+    "GOMAXPROCS": "4",
+    "GOFLAGS": "-buildvcs=false"
+  },
+  "typescript_commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "typescript_status": "",
+  "exit_code": 0,
+  "wall_seconds": 1167.015,
+  "load_after": "4.26 4.72 3.62 1/142 339495",
+  "counts": {
+    "pass": 159,
+    "fail": 0,
+    "skip": 1
+  },
+  "top_level_counts": {
+    "pass": 47,
+    "fail": 0,
+    "skip": 1
+  },
+  "skips": [
+    "TestCheckerBridgeRefusalPending"
+  ],
+  "failures": []
+}

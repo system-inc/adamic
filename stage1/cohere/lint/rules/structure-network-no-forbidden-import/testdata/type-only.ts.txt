@@ -1,0 +1,3 @@
+import type { graphql as Query } from '../generated/graphql';
+import { type graphql as InlineQuery } from '../generated/inline';
+export type Result = Query | InlineQuery;

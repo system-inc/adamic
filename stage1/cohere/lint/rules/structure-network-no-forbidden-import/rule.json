@@ -1,0 +1,12 @@
+{
+  "name": "structure/network-no-forbidden-import",
+  "kinds": [
+    "ImportDeclaration"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleStructureNetworkNoForbiddenImport",
+  "upstreamPackage": "structure",
+  "upstreamTest": "TestNetworkNoForbiddenImport"
+}

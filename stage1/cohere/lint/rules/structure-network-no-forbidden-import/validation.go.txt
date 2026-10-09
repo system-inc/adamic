@@ -1,0 +1,42 @@
+package lint
+
+import (
+	"bytes"
+	"strings"
+	"testing"
+)
+
+func TestNetworkForbiddenImportCapturedCount(t *testing.T) {
+	t.Parallel()
+	count := 0
+	for _, row := range upstream(t) {
+		if strings.Split(row, "\t")[1] == "structure/network-no-forbidden-import" {
+			count++
+		}
+	}
+	if count != 17 {
+		t.Fatalf("captured %d own upstream cases, want 17", count)
+	}
+	t.Logf("own captured upstream cases=%d", count)
+}
+
+func TestNetworkForbiddenImportNativeMutant(t *testing.T) {
+	t.Parallel()
+	directory := mutant(t, "source.startsWith('@apollo/')", "source === '@apollo/client'", "rules/structure-network-no-forbidden-import/rule.a")
+	var rows []string
+	for _, descriptor := range prepareRegistry(t, ".") {
+		if descriptor.Name == "structure/network-no-forbidden-import" {
+			rows = ownedWitnessRows(t, ".", descriptor)
+		}
+	}
+	path := manifest(t, rows)
+	want := execute(t, "", goOracle(t), "--manifest", path).output
+	got := execute(t, "", buildMutantPort(t, directory), "--manifest", path).output
+	if bytes.Equal(got, want) {
+		t.Fatal("native mutant survived")
+	}
+	if diff := difference(got, node(t, directory, path, false).output); diff != "" {
+		t.Fatal(diff)
+	}
+	t.Logf("structure-network-apollo-prefix caught on sanitized native: %s", difference(got, want))
+}

@@ -1,0 +1,5 @@
+import { graphql as query, helper } from '../generated/graphql';
+import { helper as graphql } from '../generated/other';
+import graphqlDefault from '../generated/default';
+import * as graphqlNamespace from '../generated/namespace';
+export { query, graphql, graphqlDefault, graphqlNamespace };

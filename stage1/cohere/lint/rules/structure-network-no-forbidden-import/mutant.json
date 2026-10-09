@@ -1,0 +1,5 @@
+{
+  "name": "structure-network-apollo-prefix",
+  "from": "source.startsWith('@apollo/')",
+  "to": "source === '@apollo/client'"
+}

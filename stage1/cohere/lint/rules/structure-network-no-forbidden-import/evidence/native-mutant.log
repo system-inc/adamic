@@ -1,0 +1,27 @@
+=== RUN   TestNetworkForbiddenImportCapturedCount
+=== PAUSE TestNetworkForbiddenImportCapturedCount
+=== RUN   TestNetworkForbiddenImportNativeMutant
+=== PAUSE TestNetworkForbiddenImportNativeMutant
+=== CONT  TestNetworkForbiddenImportCapturedCount
+=== CONT  TestNetworkForbiddenImportNativeMutant
+    lint_test.go:148: checker compilation phases: load=273.826033ms lower=8.611517089s C=793.297576ms JavaScript=40.64332ms
+    lint_test.go:156: checker native mutant build: 7.129907804s
+    network_forbidden_import_validation_test.go:41: structure-network-apollo-prefix caught on sanitized native: case 1 line 12: port "fixed\timport { useQuery } from '@tanstack/react-query';\\u000aimport { onError } from '@apollo/client/link/error';\\u000aexport { useQuery, onError };\\u000a", Go "/tmp/adamic-gate/TestNetworkForbiddenImportNativeMutant2939478068/003/structure-network-no-forbidden-import-1.ts:2:1"
+        Go context:
+        case 1
+        /tmp/adamic-gate/TestNetworkForbiddenImportNativeMutant2939478068/003/structure-network-no-forbidden-import-1.ts:1:1
+          structure/network-no-forbidden-import  This imports @tanstack/react-query directly. NetworkService wraps it, and the wrapper is where the query client, the cache keys, the retry policy and the error shaping live. A component holding its own useQuery gets a different client and a different cache, so its data goes stale independently of everything else on the page. NetworkService's own module, source/services/network/, is exempt, since that is where TanStack is configured.
+        
+        range 0 49 noDirectTanStackQuery 			0 49
+        /tmp/adamic-gate/TestNetworkForbiddenImportNativeMutant2939478068/003/structure-network-no-forbidden-import-1.ts:2:1
+          structure/network-no-forbidden-import  This imports Apollo directly. NetworkService replaced it rather than wrapping it, so an Apollo import pulls a second GraphQL client into the bundle and gives this one call site a cache nothing else reads or invalidates.
+        
+        range 50 102 noDirectApollo 			50 102
+        fixed	import { useQuery } from '@tanstack/react-query';\u000aimport { onError } from '@apollo/client/link/error';\u000aexport { useQuery, onError };\u000a
+--- PASS: TestNetworkForbiddenImportNativeMutant (23.58s)
+=== NAME  TestNetworkForbiddenImportCapturedCount
+    lint_test.go:296: cohere cases: 5747 unique source/rule/options combinations
+    network_forbidden_import_validation_test.go:20: own captured upstream cases=17
+--- PASS: TestNetworkForbiddenImportCapturedCount (23.92s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	24.048s
