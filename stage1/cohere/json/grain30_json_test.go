@@ -150,6 +150,13 @@ func jsonGrain30Run(t *testing.T, ordinal, child int) {
 
 func jsonGrain30Leak(t *testing.T, items []textCase) {
 	t.Helper()
+	// A measured group can empty when the partition regenerates. Coverage has
+	// already proven every case owns one leak pass, so there is nothing to run,
+	// and an empty oracle reply would split into one blank answer.
+	if len(items) == 0 {
+		t.Logf("leak child: 0 cases; coverage holds, nothing to run")
+		return
+	}
 	deadline := portMatchesDeadline(t.Name())
 	defer deadline.Stop()
 	started := time.Now()
