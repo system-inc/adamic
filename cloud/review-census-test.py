@@ -74,6 +74,18 @@ class ReviewCensusTests(unittest.TestCase):
         (self.attachments / 'fxspptb' / 'oct8_p03.a').write_text('console.log("new");\n')
         self.assertEqual(len(self.once()[1]), 2)
 
+    def test_an_exempted_program_is_out_by_name_and_nothing_else_is(self):
+        # Integration moved d96d304_normalize_edge.a out of the lane (39.2 s, over its 30 s unit), as evidence elsewhere.
+        exempt = self.root / 'exempt.txt'
+        exempt.write_text('# exempt\nfxspptb/oct8_p02.a over the lane unit\n')
+        self.environment['ADAMIC_REVIEW_EXEMPT'] = str(exempt)
+        output, sends = self.once()
+        self.assertIn('0 review programs outside the lane', output)
+        self.assertEqual(sends, [])
+        (self.attachments / 'fxspptb' / 'oct8_p04.a').write_text('console.log("another");\n')
+        output, sends = self.once()
+        self.assertIn('fxspptb/oct8_p04.a', sends[0])
+
 
 if __name__ == '__main__':
     unittest.main()
