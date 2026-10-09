@@ -1,0 +1,7 @@
+// a-check: refused a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)
+// From TypeScript 6.0.3, adapted src/compiler/emitter.ts:4105
+// Adaptation: 45-regex-captures; capture-free separator.
+for (const text of ["a\r\nb", "a\nb", "a\rb", ""]) {
+    const lines = text.split(/\r\n?|\n/) as string[];
+    console.log(`${JSON.stringify(lines)}`);
+}
