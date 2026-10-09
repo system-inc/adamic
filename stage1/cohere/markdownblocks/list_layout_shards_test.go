@@ -126,10 +126,14 @@ func buildListLayoutSetupPrepare(t *testing.T) {
 // Not parallel: publish the shared build product before parallel corpus shards resume.
 func TestMarkdownListLayout_Setup(t *testing.T) { buildListLayoutSetup(t) }
 
-// Filtered shards use the same shared preparation as the setup test.
+// A shard prepares the shared products itself, once per process: it fetches them when they are built
+// and builds them on a miss, so it never needs another top-level test to have run first.
 func listLayoutSetup(t *testing.T) listLayoutProducts {
 	t.Helper()
 	buildListLayoutSetup(t)
+	if listLayoutShared.sanitized == "" {
+		t.Fatal("shared setup unavailable")
+	}
 	return listLayoutShared
 }
 
@@ -709,7 +713,7 @@ func listLayoutShardFixture(t *testing.T, products listLayoutProducts, inputs []
 	}
 }
 
-// Explicit children share the active setup or unit process-group tracking.
+// Setup has no deadline. Child groups belong to the active preparation or Unit.
 func listLayoutCommand(t *testing.T, name string, arguments ...string) *exec.Cmd {
 	t.Helper()
 	return testgrain.CommandContext(t, t.Context(), name, arguments...)

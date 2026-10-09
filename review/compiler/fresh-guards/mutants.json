@@ -1,0 +1,162 @@
+[
+  {
+    "label": "M6-mutant",
+    "command": [
+      "go",
+      "test",
+      "./internal/fresh",
+      "-run",
+      "^TestStatAtimeSelfCycleRemainsUnproven$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout=90s",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 11.291808918000243
+  },
+  {
+    "label": "M6-restored",
+    "command": [
+      "go",
+      "test",
+      "./internal/fresh",
+      "-run",
+      "^TestStatAtimeSelfCycleRemainsUnproven$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout=90s",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 2.02157836600054
+  },
+  {
+    "label": "M11-mutant",
+    "command": [
+      "go",
+      "test",
+      "./internal/fresh",
+      "-run",
+      "^TestReplacementCallbackEscapeRemainsUnproven$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout=90s",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 10.764623043000029
+  },
+  {
+    "label": "M11-restored",
+    "command": [
+      "go",
+      "test",
+      "./internal/fresh",
+      "-run",
+      "^TestReplacementCallbackEscapeRemainsUnproven$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout=90s",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 1.919914175001395
+  },
+  {
+    "label": "M14-mutant",
+    "command": [
+      "go",
+      "test",
+      "./internal/fresh",
+      "-run",
+      "^TestFutureBufferOperationRemainsUnknown$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout=90s",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 10.990446955000152
+  },
+  {
+    "label": "M14-restored",
+    "command": [
+      "go",
+      "test",
+      "./internal/fresh",
+      "-run",
+      "^TestFutureBufferOperationRemainsUnknown$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout=90s",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 1.9717103719995066
+  },
+  {
+    "label": "M15-mutant",
+    "command": [
+      "go",
+      "test",
+      "./internal/fresh",
+      "-run",
+      "^TestClassMethodOutsideSelfCycleRemainsUnproven$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout=90s",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 10.733130392000021
+  },
+  {
+    "label": "M15-restored",
+    "command": [
+      "go",
+      "test",
+      "./internal/fresh",
+      "-run",
+      "^TestClassMethodOutsideSelfCycleRemainsUnproven$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout=90s",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 1.9239843420000398
+  },
+  {
+    "label": "M18-mutant",
+    "command": [
+      "go",
+      "test",
+      "./internal/fresh",
+      "-run",
+      "^TestFreshWrites____flow_testdata_mutations_a_5514557d1b47$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout=90s",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 13.033633400998951
+  },
+  {
+    "label": "M18-restored",
+    "command": [
+      "go",
+      "test",
+      "./internal/fresh",
+      "-run",
+      "^TestFreshWrites____flow_testdata_mutations_a_5514557d1b47$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout=90s",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 2.5301560669995524
+  }
+]

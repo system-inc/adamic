@@ -93,3 +93,9 @@ func TestStatementsAgainstGoAndPrettierUnion(t *testing.T) {
 	}
 	t.Logf("live union: %d unique cases in %d shards", total, len(shards))
 }
+
+// Audit shared preparation as an independently selected unit.
+func TestStatementsAgainstGoAndPrettier_Setup(t *testing.T) {
+	t.Parallel()
+	statementReadyShared(t)
+}

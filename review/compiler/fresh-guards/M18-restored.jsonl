@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T08:04:25.010085164Z","Action":"start","Package":"github.com/system-inc/adamic/internal/fresh"}
+{"Time":"2026-10-09T08:04:25.018601118Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestFreshWrites____flow_testdata_mutations_a_5514557d1b47"}
+{"Time":"2026-10-09T08:04:25.018703782Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestFreshWrites____flow_testdata_mutations_a_5514557d1b47","Output":"=== RUN   TestFreshWrites____flow_testdata_mutations_a_5514557d1b47\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:04:25.018737993Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestFreshWrites____flow_testdata_mutations_a_5514557d1b47","Output":"=== PAUSE TestFreshWrites____flow_testdata_mutations_a_5514557d1b47\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:04:25.018740376Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestFreshWrites____flow_testdata_mutations_a_5514557d1b47"}
+{"Time":"2026-10-09T08:04:25.018746115Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestFreshWrites____flow_testdata_mutations_a_5514557d1b47"}
+{"Time":"2026-10-09T08:04:25.018748118Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestFreshWrites____flow_testdata_mutations_a_5514557d1b47","Output":"=== CONT  TestFreshWrites____flow_testdata_mutations_a_5514557d1b47\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:04:25.069686731Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestFreshWrites____flow_testdata_mutations_a_5514557d1b47","Output":"    corpus_units_test.go:6419: 13 writes, 13 proven not to close a cycle\n"}
+{"Time":"2026-10-09T08:04:25.069774373Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestFreshWrites____flow_testdata_mutations_a_5514557d1b47","Output":"--- PASS: TestFreshWrites____flow_testdata_mutations_a_5514557d1b47 (0.05s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:04:25.06977914Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestFreshWrites____flow_testdata_mutations_a_5514557d1b47","Elapsed":0.05}
+{"Time":"2026-10-09T08:04:25.069801253Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:04:25.07138379Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Output":"ok  \tgithub.com/system-inc/adamic/internal/fresh\t0.061s\n"}
+{"Time":"2026-10-09T08:04:25.071453204Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/fresh","Elapsed":0.061}

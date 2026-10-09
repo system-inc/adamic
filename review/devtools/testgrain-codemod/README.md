@@ -86,3 +86,19 @@ whole-package verdict. These kills count as failed verification attempts;
 this branch does not claim that the whole packages pass. The six focused warm
 families above all completed successfully under the same cap. The monitored
 parser process left no live descendant processes when it exited.
+
+## Main merge repair
+
+Merged main `163086eb`. The conflicted list-layout file was replaced in full
+with main's version before applying the AST codemod again; no conflict hunks
+were hand-merged. The conversion preserves main's setup-on-cache-miss behavior,
+its readiness check and the absence of a setup-side deadline. All 16 list-layout
+shards pass warm in 12.6 seconds, with 4,073 cases before and after. Package vet,
+gofmt and the timer/verdict grep are clean.
+
+The requested complete markdownblocks `go test -timeout 90s -v -count=1` run
+was killed at its external 90-second limit during
+`TestMarkdownStructureLayout_Setup`; recorded child processes were killed too.
+This remains a failed whole-package verification attempt, not a package pass.
+Main then advanced to `b3f83786` (scanner-only changes); list-layout's blob was
+identical to `163086eb`, so the conversion was retained and that tip merged too.
