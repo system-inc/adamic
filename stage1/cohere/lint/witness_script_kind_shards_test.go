@@ -51,6 +51,26 @@ func witnessScriptKindSetup(t *testing.T) {
 			t.Fatal(err)
 		}
 		s.directory = copyPort(t, directory, "", "")
+		// Build the same full Go oracle while lowering/clang use the other CPUs.
+		type oracleResult struct {
+			path string
+			err  error
+		}
+		oracleDone := make(chan oracleResult, 1)
+		go func() {
+			out, err := os.MkdirTemp(sharedDirectory, "witness-oracle-")
+			if err != nil {
+				oracleDone <- oracleResult{err: err}
+				return
+			}
+			path, err := goOracleIn(packageDirectory, out)
+			// The shared runner treats module-download notices as errors. Retry
+			// after that successful fetch, without changing the shared helper.
+			if err != nil && strings.Contains(err.Error(), "go: downloading ") {
+				path, err = goOracleIn(packageDirectory, out)
+			}
+			oracleDone <- oracleResult{path, err}
+		}()
 		witness := filepath.Join(directory, "rules/no-debugger/testdata/witness.ts.txt")
 		renamed := strings.TrimSuffix(witness, ".ts.txt") + ".tsx.txt"
 		if err := os.Rename(witness, renamed); err != nil {
@@ -134,7 +154,11 @@ func witnessScriptKindSetup(t *testing.T) {
 		})
 		s.binary = filepath.Join(product, "scanner")
 		// GoBuild is not on this base; retain the existing Go build path.
-		s.oracle = goOracle(t)
+		oracle := <-oracleDone
+		if oracle.err != nil {
+			t.Fatal(oracle.err)
+		}
+		s.oracle = oracle.path
 	})
 	if s.oracle == "" || s.binary == "" || len(s.sources) == 0 {
 		t.Fatal("witness setup incomplete")
