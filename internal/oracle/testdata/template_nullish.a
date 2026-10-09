@@ -1,0 +1,4 @@
+function mark(): number { console.log("effect"); return 7; }
+function absent(): undefined { console.log("absent"); return undefined; }
+console.log(`null:${null}, undefined:${undefined}, void:${void mark()}, call:${absent()}`);
+console.log(`number:${7}, boolean:${true}, string:${"kept"}`);
