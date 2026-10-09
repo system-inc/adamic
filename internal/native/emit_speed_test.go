@@ -80,7 +80,8 @@ console.log(Base.inherited.toString() + ':' + Derived.inherited.toString());
 int main(void) {
     static const char *const names[] = {"payload", "own"};
     static const bool references[] = {true, false};
-    static const adamic_shape shape = {2, names, references, NULL};
+    static const adamic_field_kind kinds[] = {adamic_field_reference, adamic_field_number};
+    static const adamic_shape shape = {2, names, references, NULL, kinds};
     static const size_t flags[] = {2, 0};
     static const adamic_class static_class = {.count = 2, .is_static = true, .static_flags = flags};
     adamic_object *box = adamic_object_new(&shape);

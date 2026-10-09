@@ -17,6 +17,7 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/fresh"
 	"github.com/system-inc/adamic/internal/load"
+	"github.com/system-inc/adamic/stage1/cohere/lint/registry"
 )
 
 // Refresh an intended answer change with:
@@ -48,14 +49,20 @@ type cycleSlotAnswer struct {
 
 func cyclesCorpusEntries(t *testing.T) []string {
 	t.Helper()
+	return cyclesCorpusEntriesUnder(t, []string{"../oracle", "../../stage1"})
+}
+
+func cyclesCorpusEntriesUnder(t *testing.T, roots []string) []string {
+	t.Helper()
 	var paths []string
-	for _, root := range []string{"../oracle", "../../stage1"} {
+	for _, root := range roots {
 		err := filepath.WalkDir(root, func(path string, entry os.DirEntry, err error) error {
 			if err != nil {
 				return err
 			}
 			if entry.IsDir() {
-				if entry.Name() == "node_modules" {
+				// Generated lint registries are ignored build artifacts, not corpus sources.
+				if entry.Name() == "node_modules" || entry.Name() == ".generated" {
 					return filepath.SkipDir
 				}
 				return nil
@@ -72,6 +79,24 @@ func cyclesCorpusEntries(t *testing.T) []string {
 	sort.Strings(paths)
 	return paths
 }
+
+func TestCyclesCorpusInventoryIgnoresGenerated(t *testing.T) {
+	root := t.TempDir()
+	for _, path := range []string{"fixture.a", "source.ts", "types.d.ts", ".generated/registry.ts", "node_modules/library.ts"} {
+		absolute := filepath.Join(root, path)
+		if err := os.MkdirAll(filepath.Dir(absolute), 0755); err != nil {
+			t.Fatal(err)
+		}
+		if err := os.WriteFile(absolute, []byte("console.log('fixture');\n"), 0644); err != nil {
+			t.Fatal(err)
+		}
+	}
+	wanted := []string{filepath.ToSlash(filepath.Join(root, "fixture.a")), filepath.ToSlash(filepath.Join(root, "source.ts"))}
+	if got := cyclesCorpusEntriesUnder(t, []string{root}); !reflect.DeepEqual(got, wanted) {
+		t.Fatalf("corpus includes generated or dependency sources: got %v; want %v", got, wanted)
+	}
+}
+
 func cyclesReadCorpus(t *testing.T) map[string]cycleAnswer {
 	t.Helper()
 	data, err := os.ReadFile(cyclesCorpusPath)
@@ -84,7 +109,65 @@ func cyclesReadCorpus(t *testing.T) map[string]cycleAnswer {
 	}
 	return corpus
 }
+func cyclesPrepareRegistry(t *testing.T, root string) {
+	t.Helper()
+	if _, err := registry.Generate(root); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestCyclesCorpusPreparesGeneratedDependency(t *testing.T) {
+	root := t.TempDir()
+	rule := filepath.Join(root, "rules", "no-debugger")
+	if err := os.MkdirAll(rule, 0755); err != nil {
+		t.Fatal(err)
+	}
+	source := "../../stage1/cohere/lint/rules/no-debugger"
+	if err := filepath.WalkDir(source, func(path string, entry os.DirEntry, err error) error {
+		if err != nil {
+			return err
+		}
+		relative, err := filepath.Rel(source, path)
+		if err != nil {
+			return err
+		}
+		target := filepath.Join(rule, relative)
+		if entry.IsDir() {
+			return os.MkdirAll(target, 0755)
+		}
+		data, err := os.ReadFile(path)
+		if err != nil {
+			return err
+		}
+		return os.WriteFile(target, data, 0644)
+	}); err != nil {
+		t.Fatal(err)
+	}
+	cyclesPrepareRegistry(t, root)
+	generated := filepath.Join(root, ".generated", "registry.ts")
+	wanted, err := os.ReadFile(generated)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !strings.Contains(string(wanted), "../rules/no-debugger/rule.ts") {
+		t.Fatal("generated registry lost fixture rule")
+	}
+	if err := os.WriteFile(generated, []byte("stale registry"), 0644); err != nil {
+		t.Fatal(err)
+	}
+	cyclesPrepareRegistry(t, root)
+	got, err := os.ReadFile(generated)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !reflect.DeepEqual(got, wanted) {
+		t.Fatal("corpus depends on a stale generated dependency")
+	}
+}
+
 func TestCyclesCorpus(t *testing.T) {
+	// lint.ts imports its generated dispatch even though that artifact is not an entry.
+	cyclesPrepareRegistry(t, "../../stage1/cohere/lint")
 	paths := cyclesCorpusEntries(t)
 	var wanted map[string]cycleAnswer
 	if !*updateCycles {
