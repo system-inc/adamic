@@ -26,6 +26,7 @@ var mutantOracleProducts [testMutantsShards]mutantProductState
 
 func mutantNativeProduct(t *testing.T, index int) string {
 	t.Helper()
+	options := native.Options{Sanitize: true, Split: true, Jobs: 4}
 	state := &mutantNativeProducts[index]
 	state.once.Do(func() {
 		root, err := filepath.Abs(repository)
@@ -44,7 +45,7 @@ func mutantNativeProduct(t *testing.T, index int) string {
 		state.directory = expressionBuild(t, printerBuildInputs{
 			Name:      fmt.Sprintf("TS printer mutant %03d sanitized native", index),
 			Files:     inputs,
-			Flags:     append(native.Flags(native.Options{Sanitize: true}), fmt.Sprintf("mutation=%+v", mutations[index])),
+			Flags:     append(native.Flags(options), "split=true", "jobs=4", fmt.Sprintf("mutation=%+v", mutations[index])),
 			Toolchain: runtime.Version() + "\n" + buildcache.Tool("clang", "--version"),
 		}, func(directory string) error {
 			path := mutatedPort(t, mutations[index])
@@ -58,7 +59,7 @@ func mutantNativeProduct(t *testing.T, index int) string {
 			source := native.C(program)
 			t.Logf("grain C emission: %.3fs", time.Since(started).Seconds())
 			started = time.Now()
-			err = native.Build(source, filepath.Join(directory, "port"), native.Options{Sanitize: true})
+			err = native.Build(source, filepath.Join(directory, "port"), options)
 			t.Logf("grain clang runtime/compile/link: %.3fs", time.Since(started).Seconds())
 			return err
 		})
