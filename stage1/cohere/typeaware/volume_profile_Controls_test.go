@@ -8,6 +8,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"strings"
+	"sync"
 	"testing"
 	"time"
 
@@ -55,25 +56,43 @@ func volumeProfileStage0(h *harness) string {
 
 func volumeProfileNative(h *harness, stage0, archive string, sanitize bool, name string, build func(*harness) string, variant ...string) string {
 	h.t.Helper()
-	fingerprint := func(path string) string {
+	digest := func(path string) string {
 		data, err := os.ReadFile(path)
 		if err != nil {
 			h.t.Fatal(err)
 		}
 		return fmt.Sprintf("%x", sha256.Sum256(data))
 	}
-	var files []string
+	// The stage0 executable includes the lowerer, emitter, runtime and prelude.
+	// Key the Go archive by its source recipe: c-archive bytes include scratch
+	// paths, so their digest would prevent reuse across otherwise identical builds.
+	archiveName, archiveFlags := "typeaware checker archive", ""
+	cc, err := exec.Command("go", "env", "CC").Output()
+	if err != nil {
+		h.t.Fatal(err)
+	}
+	if sanitize {
+		archiveName += " asan"
+		archiveFlags = "CC=clang CGO_CFLAGS=-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all"
+		cc = []byte("clang")
+	}
+	inputs := buildcache.Inputs{
+		Name:      name,
+		Flags:     []string{"build", "stage1/cohere/typeaware/volume_suite.ts", "--tsgo", "stage0=" + digest(stage0), "archive=" + archiveName, "go build -buildmode=c-archive ./bridge/tsgo/archive", archiveFlags, fmt.Sprintf("sanitize=%t", sanitize), "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT"), "ADAMIC_NATIVE_JOBS=" + os.Getenv("ADAMIC_NATIVE_JOBS"), "ADAMIC_GATE_UNCACHED=" + os.Getenv("ADAMIC_GATE_UNCACHED")},
+		Files:     []string{"bridge/tsgo", "cohere/TypeScript/tsc/internal", "cohere/TypeScript/tsc/go.mod", "cohere/TypeScript/tsc/go.sum", "cohere/TypeScript-shim", "go.mod", "go.sum", "cohere/go.mod", "cohere/go.sum"},
+		Toolchain: []string{buildcache.Tool("clang", "--version"), buildcache.Tool(strings.Fields(string(cc))[0], "--version"), buildcache.Tool("go", "version"), buildcache.Tool("go", "env", "-json", "GOOS", "GOARCH", "GOAMD64", "GOARM64", "CGO_ENABLED", "CC", "CXX", "CGO_CFLAGS", "CGO_CPPFLAGS", "CGO_CXXFLAGS", "CGO_LDFLAGS", "GOFLAGS", "GOEXPERIMENT")},
+	}
 	for _, directory := range []string{"stage1/cohere/typeaware", "stage1/cohere/lint", "stage1/typescript"} {
 		err := filepath.WalkDir(filepath.Join(h.repository, directory), func(path string, entry fs.DirEntry, err error) error {
 			if err != nil {
 				return err
 			}
-			if !entry.IsDir() && filepath.Ext(path) == ".ts" {
+			if !entry.IsDir() && strings.HasSuffix(path, ".ts") {
 				relative, err := filepath.Rel(h.repository, path)
 				if err != nil {
 					return err
 				}
-				files = append(files, relative)
+				inputs.Files = append(inputs.Files, filepath.ToSlash(relative))
 			}
 			return nil
 		})
@@ -81,9 +100,6 @@ func volumeProfileNative(h *harness, stage0, archive string, sanitize bool, name
 			h.t.Fatal(err)
 		}
 	}
-	inputs := buildcache.Inputs{Name: name, Files: files,
-		Flags:     []string{"build", "stage1/cohere/typeaware/volume_suite.ts", "--tsgo", "stage0=" + fingerprint(stage0), "archive=" + fingerprint(archive), fmt.Sprintf("sanitize=%t", sanitize), "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT"), "ADAMIC_NATIVE_JOBS=" + os.Getenv("ADAMIC_NATIVE_JOBS"), "ADAMIC_GATE_UNCACHED=" + os.Getenv("ADAMIC_GATE_UNCACHED")},
-		Toolchain: []string{buildcache.Tool("clang", "--version")}}
 	inputs.Flags = append(inputs.Flags, variant...)
 	directory := buildcache.Product(h.t, inputs, func(directory string) error {
 		local := &harness{t: h.t, repository: h.repository, directory: directory}
@@ -93,17 +109,21 @@ func volumeProfileNative(h *harness, stage0, archive string, sanitize bool, name
 	return filepath.Join(directory, "volume")
 }
 
-func TestVolumeProfileControls(t *testing.T) {
-	started := time.Now()
-	cases := []struct {
-		name     string
-		sanitize bool
-	}{{"controls", false}, {"controls-asan", true}}
+type volumeProfileControlCase struct {
+	name     string
+	sanitize bool
+}
+
+func volumeProfileControlsCases() []volumeProfileControlCase {
+	return []volumeProfileControlCase{{"controls", false}, {"controls-asan", true}}
+}
+
+func TestVolumeProfileControlsUnion(t *testing.T) {
+	t.Parallel()
+	cases := volumeProfileControlsCases()
 	if len(cases) != testVolumeProfileControlsShards {
 		t.Fatalf("controls enumeration: %d != %d", len(cases), testVolumeProfileControlsShards)
 	}
-	// Count every live source/mode occurrence in the union. No fixture total is
-	// frozen: adding a control keeps both mode shards and all existing ownership.
 	seen := map[string]int{}
 	var keys []string
 	for i := range volumeProfileControlSources() {
@@ -123,28 +143,68 @@ func TestVolumeProfileControls(t *testing.T) {
 		}
 	}
 	t.Logf("controls union: %d live source/mode cases in %d shards", len(seen), len(cases))
+}
 
-	// Build shared Go dependencies before releasing parallel checks.
+func runVolumeProfileControls(t *testing.T, index int) {
+	started := time.Now()
+	c := volumeProfileControlsCases()[index]
 	h := volumeProfileHarness(t)
-	stage0 := volumeProfileStage0(h)
-	oracle := volumeOracle(h, "volume-oracle", "oracle_volume.go")
-	normal := h.archive("checker", "", false)
-	sanitized := h.archive("checker-asan", "", true)
-	t.Logf("TestVolumeProfileControls (setup): %.3fs", time.Since(started).Seconds())
-	for i, c := range cases {
-		t.Run(fmt.Sprintf("shard-%03d", i), func(t *testing.T) {
-			t.Parallel()
-			h := volumeProfileHarness(t)
-			archive, name := normal, "typeaware volume"
+	var stage0, archive, oracle string
+	var builds sync.WaitGroup
+	for _, job := range []struct {
+		product *string
+		build   func(*harness) string
+	}{
+		{&stage0, volumeProfileStage0},
+		{&archive, func(h *harness) string {
+			name := "checker"
 			if c.sanitize {
-				archive, name = sanitized, "typeaware volume asan"
+				name += "-asan"
 			}
-			binary := volumeProfileNative(h, stage0, archive, c.sanitize, name, func(local *harness) string {
-				return local.build(stage0, "volume", filepath.Join(h.repository, "stage1/cohere/typeaware/volume_suite.ts"), archive, c.sanitize)
-			})
-			checkStarted := time.Now()
-			h.compare(c.name, oracle, binary, filepath.Join(h.repository, "stage1/cohere/typeaware/testdata/tsconfig.json"), volumeProfileControlsManifest(h))
-			t.Logf("check excluding cached build: %.3fs", time.Since(checkStarted).Seconds())
-		})
+			return h.archive(name, "", c.sanitize)
+		}},
+		{&oracle, func(h *harness) string { return volumeOracle(h, "volume-oracle", "oracle_volume.go") }},
+	} {
+		local := volumeProfileHarness(t)
+		builds.Add(1)
+		go func() { defer builds.Done(); *job.product = job.build(local) }()
 	}
+	builds.Wait()
+	if t.Failed() {
+		return
+	}
+	t.Logf("setup: %.3fs", time.Since(started).Seconds())
+	name := "typeaware volume"
+	if c.sanitize {
+		name += " asan"
+	}
+	binary := volumeProfileNative(h, stage0, archive, c.sanitize, name, func(local *harness) string {
+		return local.build(stage0, "volume", filepath.Join(h.repository, "stage1/cohere/typeaware/volume_suite.ts"), archive, c.sanitize)
+	})
+	checkStarted := time.Now()
+	h.compare(c.name, oracle, binary, filepath.Join(h.repository, "stage1/cohere/typeaware/testdata/tsconfig.json"), volumeProfileControlsManifest(h))
+	t.Logf("check after product fetch: %.3fs; cooked=false", time.Since(checkStarted).Seconds())
+}
+
+func TestVolumeProfileControls_000(t *testing.T) { t.Parallel(); runVolumeProfileControls(t, 0) }
+func TestVolumeProfileControls_001(t *testing.T) { t.Parallel(); runVolumeProfileControls(t, 1) }
+
+const testShadowIndexMissingBindingShards = 1
+
+func TestShadowIndexMissingBindingUnion(t *testing.T) {
+	t.Parallel()
+	cases := []string{"missing-binding"}
+	if len(cases) != testShadowIndexMissingBindingShards {
+		t.Fatalf("missing-binding enumeration: %d != %d", len(cases), testShadowIndexMissingBindingShards)
+	}
+	seen := map[string]int{}
+	for _, name := range cases {
+		seen[name]++
+	}
+	for name, count := range seen {
+		if count != 1 {
+			t.Fatalf("%s: %d owners", name, count)
+		}
+	}
+	t.Logf("missing-binding union: %d cases", len(cases))
 }

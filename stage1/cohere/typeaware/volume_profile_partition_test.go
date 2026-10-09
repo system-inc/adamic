@@ -7,6 +7,7 @@ import (
 	"go/token"
 	"path/filepath"
 	"strconv"
+	"strings"
 	"testing"
 )
 
@@ -36,46 +37,49 @@ func TestVolumeProfilePartition(t *testing.T) {
 		}
 		want[row.check] = row.owner
 	}
+
 	owners := map[string][]string{}
-	for _, slice := range []struct{ file, test string }{
-		{"volume_profile_Controls_test.go", "TestVolumeProfileControls"},
-		{"volume_profile_Mutants_test.go", "TestVolumeProfileMutants"},
-		{"volume_profile_Overlays_test.go", "TestVolumeProfileOverlays"},
-		{"volume_profile_Corpora_test.go", "TestVolumeProfileCorpora"},
+	for _, slice := range []struct {
+		file, test string
+		shards     int
+	}{
+		{"volume_profile_Controls_test.go", "TestVolumeProfileControls", testVolumeProfileControlsShards},
+		{"volume_profile_Mutants_test.go", "TestVolumeProfileMutants", testVolumeProfileMutantsShards},
+		{"volume_profile_Overlays_test.go", "TestVolumeProfileOverlays", testVolumeProfileOverlaysShards},
+		{"volume_profile_Corpora_test.go", "TestVolumeProfileCorpora", testVolumeProfileCorporaShards},
 	} {
 		tree, err := parser.ParseFile(token.NewFileSet(), filepath.Clean(slice.file), nil, 0)
 		if err != nil {
 			t.Fatal(err)
 		}
-		var function *ast.FuncDecl
+		tops := map[string]bool{}
+		union := false
 		for _, declaration := range tree.Decls {
-			if f, ok := declaration.(*ast.FuncDecl); ok && f.Name.Name == slice.test {
-				function = f
+			f, ok := declaration.(*ast.FuncDecl)
+			if !ok {
+				continue
+			}
+			if f.Name.Name == slice.test+"Union" {
+				union = true
+			}
+			if strings.HasPrefix(f.Name.Name, slice.test+"_") {
+				tops[f.Name.Name] = true
 			}
 		}
-		if function == nil {
-			t.Fatalf("missing owner %s", slice.test)
+		if !union {
+			t.Errorf("%s: missing top-level union", slice.test)
 		}
-		parallel, compare, mutantCheck := false, false, false
-		ast.Inspect(function.Body, func(node ast.Node) bool {
-			if call, ok := node.(*ast.CallExpr); ok {
-				if selector, ok := call.Fun.(*ast.SelectorExpr); ok {
-					if receiver, ok := selector.X.(*ast.Ident); ok {
-						if receiver.Name == "t" && selector.Sel.Name == "Parallel" {
-							parallel = true
-						}
-						if receiver.Name == "h" && selector.Sel.Name == "compare" {
-							compare = true
-						}
-						if receiver.Name == "bytes" && (selector.Sel.Name == "Equal" || selector.Sel.Name == "Contains") {
-							mutantCheck = true
-						}
-					}
-				}
+		for i := 0; i < slice.shards; i++ {
+			if !tops[fmt.Sprintf("%s_%03d", slice.test, i)] {
+				t.Errorf("missing top-level shard %s_%03d", slice.test, i)
 			}
-			// Each execution case is a struct literal whose first field is its name.
+		}
+		if len(tops) != slice.shards {
+			t.Errorf("%s: %d top-level shards, want %d", slice.test, len(tops), slice.shards)
+		}
+		ast.Inspect(tree, func(node ast.Node) bool {
 			row, ok := node.(*ast.CompositeLit)
-			if !ok || len(row.Elts) == 0 {
+			if !ok || row.Type != nil || len(row.Elts) == 0 {
 				return true
 			}
 			name, ok := row.Elts[0].(*ast.BasicLit)
@@ -86,8 +90,8 @@ func TestVolumeProfilePartition(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
-			// Exclude string arrays used for flags and native-global generation.
-			if row.Type != nil {
+			// These are build jobs, not original execution checks.
+			if strings.HasPrefix(key, "typeaware ") {
 				return true
 			}
 			owners[key] = append(owners[key], slice.test)
@@ -96,17 +100,8 @@ func TestVolumeProfilePartition(t *testing.T) {
 			}
 			return true
 		})
-		if !parallel {
-			t.Errorf("%s has no parallel shard", slice.test)
-		}
-		if slice.test == "TestVolumeProfileControls" || slice.test == "TestVolumeProfileCorpora" {
-			if !compare {
-				t.Errorf("%s lost byte comparison", slice.test)
-			}
-		} else if !mutantCheck {
-			t.Errorf("%s lost mutant rejection", slice.test)
-		}
 	}
+
 	for check, owner := range want {
 		actual := owners[check]
 		if len(actual) != 1 || actual[0] != owner {

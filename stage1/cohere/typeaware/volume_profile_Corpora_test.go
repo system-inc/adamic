@@ -11,6 +11,7 @@ import (
 	"path/filepath"
 	"slices"
 	"strings"
+	"sync"
 	"testing"
 	"time"
 
@@ -36,12 +37,24 @@ func volumeProfileCorporaNative(h *harness, stage0, archive string, sanitize boo
 		}
 		return fmt.Sprintf("%x", sha256.Sum256(data))
 	}
-	// The stage0 executable includes the lowerer, native emitter, runtime and
-	// prelude. The archive digest includes all checker sources and build flags.
+	// The stage0 executable includes the lowerer, emitter, runtime and prelude.
+	// Key the Go archive by its source recipe: c-archive bytes include scratch
+	// paths, so their digest would prevent reuse across otherwise identical builds.
+	archiveName, archiveFlags := "typeaware checker archive", ""
+	cc, err := exec.Command("go", "env", "CC").Output()
+	if err != nil {
+		h.t.Fatal(err)
+	}
+	if sanitize {
+		archiveName += " asan"
+		archiveFlags = "CC=clang CGO_CFLAGS=-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all"
+		cc = []byte("clang")
+	}
 	inputs := buildcache.Inputs{
 		Name:      name,
-		Flags:     []string{"build", "stage1/cohere/typeaware/volume_suite.ts", "--tsgo", "stage0=" + digest(stage0), "archive=" + digest(archive), fmt.Sprintf("sanitize=%t", sanitize), "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT"), "ADAMIC_NATIVE_JOBS=" + os.Getenv("ADAMIC_NATIVE_JOBS"), "ADAMIC_GATE_UNCACHED=" + os.Getenv("ADAMIC_GATE_UNCACHED")},
-		Toolchain: []string{buildcache.Tool("clang", "--version")},
+		Flags:     []string{"build", "stage1/cohere/typeaware/volume_suite.ts", "--tsgo", "stage0=" + digest(stage0), "archive=" + archiveName, "go build -buildmode=c-archive ./bridge/tsgo/archive", archiveFlags, fmt.Sprintf("sanitize=%t", sanitize), "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT"), "ADAMIC_NATIVE_JOBS=" + os.Getenv("ADAMIC_NATIVE_JOBS"), "ADAMIC_GATE_UNCACHED=" + os.Getenv("ADAMIC_GATE_UNCACHED")},
+		Files:     []string{"bridge/tsgo", "cohere/TypeScript/tsc/internal", "cohere/TypeScript/tsc/go.mod", "cohere/TypeScript/tsc/go.sum", "cohere/TypeScript-shim", "go.mod", "go.sum", "cohere/go.mod", "cohere/go.sum"},
+		Toolchain: []string{buildcache.Tool("clang", "--version"), buildcache.Tool(strings.Fields(string(cc))[0], "--version"), buildcache.Tool("go", "version"), buildcache.Tool("go", "env", "-json", "GOOS", "GOARCH", "GOAMD64", "GOARM64", "CGO_ENABLED", "CC", "CXX", "CGO_CFLAGS", "CGO_CPPFLAGS", "CGO_CXXFLAGS", "CGO_LDFLAGS", "GOFLAGS", "GOEXPERIMENT")},
 	}
 	for _, directory := range []string{"stage1/cohere/typeaware", "stage1/cohere/lint", "stage1/typescript"} {
 		err := filepath.WalkDir(filepath.Join(h.repository, directory), func(path string, entry fs.DirEntry, err error) error {
@@ -188,11 +201,35 @@ func TestVolumeProfileCorpora(t *testing.T) {
 	if os.Getenv("ADAMIC_VOLUME_REPOSITORY_MANIFEST") != "" || os.Getenv("ADAMIC_VOLUME_COMPILER_MANIFEST") != "" {
 		h := &harness{t: t, repository: repository, directory: t.TempDir()}
 		// These are Go builds; keep the original commands until GoBuild lands.
-		stage0 := filepath.Join(h.directory, "adamic")
-		h.must("stage0", exec.Command("go", "build", "-o", stage0, "./cmd/adamic"))
-		archive := h.archive("checker", "", false)
-		sanitized := h.archive("checker-asan", "", true)
-		oracle = volumeOracle(h, "volume-oracle", "oracle_volume.go")
+		var stage0, archive, sanitized string
+		var builds sync.WaitGroup
+		for _, job := range []struct {
+			name    string
+			product *string
+			build   func(*harness) string
+		}{
+			{"typeaware stage0", &stage0, func(h *harness) string {
+				path := filepath.Join(h.directory, "adamic")
+				h.must("stage0", exec.Command("go", "build", "-o", path, "./cmd/adamic"))
+				return path
+			}},
+			{"typeaware checker archive", &archive, func(h *harness) string { return h.archive("checker", "", false) }},
+			{"typeaware checker archive asan", &sanitized, func(h *harness) string { return h.archive("checker-asan", "", true) }},
+			{"typeaware volume oracle", &oracle, func(h *harness) string { return volumeOracle(h, "volume-oracle", "oracle_volume.go") }},
+		} {
+			builder := &harness{t: t, repository: repository, directory: t.TempDir()}
+			builds.Add(1)
+			go func() {
+				defer builds.Done()
+				started := time.Now()
+				*job.product = job.build(builder)
+				t.Logf("Go build %s: %.3fs", job.name, time.Since(started).Seconds())
+			}()
+		}
+		builds.Wait()
+		if t.Failed() {
+			return
+		}
 		binary = volumeProfileCorporaNative(h, stage0, archive, false)
 		asan = volumeProfileCorporaNative(h, stage0, sanitized, true)
 	}

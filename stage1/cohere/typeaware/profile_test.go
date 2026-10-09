@@ -2,7 +2,6 @@ package typeaware
 
 import (
 	"bytes"
-	"fmt"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -43,34 +42,21 @@ func profileSourceMutant(h *harness, stage0, archive, name, from, to string) str
 	return h.build(stage0, name, filepath.Join(directory, "volume_suite.ts"), archive, false)
 }
 
-const testShadowIndexMissingBindingShards = 1
-
-func TestShadowIndexMissingBinding(t *testing.T) {
+func TestShadowIndexMissingBinding_000(t *testing.T) {
+	t.Parallel()
 	started := time.Now()
 	h := volumeProfileHarness(t)
 	stage0 := volumeProfileStage0(h)
 	archive := h.archive("checker", "", false)
-	cases := []string{"missing-binding"}
-	if len(cases) != testShadowIndexMissingBindingShards {
-		t.Fatalf("missing-binding enumeration: %d != %d", len(cases), testShadowIndexMissingBindingShards)
+	t.Logf("setup: %.3fs", time.Since(started).Seconds())
+	mutant := volumeProfileNative(h, stage0, archive, false, "typeaware volume missing-binding namedScopes wrong", func(local *harness) string {
+		return profileSourceMutant(local, stage0, archive, "missing-binding", "this.namedScopes.set(binding.name, fresh);", "this.namedScopes.set('wrong', fresh);")
+	}, "this.namedScopes.set(binding.name, fresh);", "this.namedScopes.set('wrong', fresh);")
+	source := h.write("input.ts", "const x=1;\nexport {};\n")
+	manifest := h.write("manifest", source+"\n")
+	got := h.run("missing-binding-run", exec.Command(mutant, filepath.Join(h.repository, "stage1/cohere/typeaware/testdata/tsconfig.json"), manifest))
+	if code, ok := got.err.(*exec.ExitError); !ok || code.ExitCode() != 70 || !bytes.Contains(got.stderr, []byte("missing binding index")) {
+		t.Fatalf("missing binding index was not refused: %v %s", got.err, got.stderr)
 	}
-	t.Logf("TestShadowIndexMissingBinding (setup): %.3fs", time.Since(started).Seconds())
-	for i, name := range cases {
-		t.Run(fmt.Sprintf("shard-%03d", i), func(t *testing.T) {
-			t.Parallel()
-			h := volumeProfileHarness(t)
-			mutant := volumeProfileNative(h, stage0, archive, false,
-				"typeaware volume missing-binding namedScopes wrong", func(local *harness) string {
-					return profileSourceMutant(local, stage0, archive, name,
-						"this.namedScopes.set(binding.name, fresh);", "this.namedScopes.set('wrong', fresh);")
-				}, "this.namedScopes.set(binding.name, fresh);", "this.namedScopes.set('wrong', fresh);")
-			source := h.write("input.ts", "const x=1;\nexport {};\n")
-			manifest := h.write("manifest", source+"\n")
-			got := h.run("missing-binding-run", exec.Command(mutant, filepath.Join(h.repository, "stage1/cohere/typeaware/testdata/tsconfig.json"), manifest))
-			if code, ok := got.err.(*exec.ExitError); !ok || code.ExitCode() != 70 || !bytes.Contains(got.stderr, []byte("missing binding index")) {
-				t.Fatalf("missing binding index was not refused: %v %s", got.err, got.stderr)
-			}
-			t.Log("omitted binding key: compiled mutant panics 70, missing binding index")
-		})
-	}
+	t.Log("omitted binding key: compiled mutant panics 70, missing binding index; cooked=false")
 }

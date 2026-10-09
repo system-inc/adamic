@@ -75,9 +75,12 @@ func TestVolumeProfileMutants(t *testing.T) {
 	}
 	toolchain := []string{buildcache.Tool("clang", "--version"), buildcache.Tool("go", "version")}
 	t.Logf("TestVolumeProfileMutants (setup): %.6fs; union coverage: %d source mutants, %d controls", time.Since(started).Seconds(), len(changes), len(paths))
+	assigned := make(map[string]int, len(changes))
 	for i, change := range changes {
+		assigned[change.name]++
 		t.Run(fmt.Sprintf("shard-%03d", i), func(t *testing.T) {
 			t.Parallel()
+			shardStarted := time.Now()
 			// Include mutated source bytes explicitly, independent of scratch paths.
 			digest := sha256.New()
 			for _, path := range files {
@@ -111,6 +114,15 @@ func TestVolumeProfileMutants(t *testing.T) {
 			}
 			t.Logf("%s: exit 0, independent Go byte oracle catches byte %d; %s", change.name, firstDifference(got.stdout, truth.stdout), summary(got.stdout))
 			t.Logf("leaf after product fetch: %.6fs", time.Since(leafStarted).Seconds())
+			t.Logf("shard including product fetch: %.6fs; budget 60s", time.Since(shardStarted).Seconds())
 		})
+	}
+	if len(assigned) != len(changes) {
+		t.Fatalf("shard union covers %d unique mutants, enumerated %d", len(assigned), len(changes))
+	}
+	for name, count := range assigned {
+		if count != 1 {
+			t.Fatalf("mutant %s assigned to %d shards, want exactly one", name, count)
+		}
 	}
 }
