@@ -1,0 +1,21 @@
+FIRST FAILURE (products, at 170.6 s):
+github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_profile_controls_native
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  {                                                 }
+        /home/ahra/adamic-tools/llvm/lib/clang/20/include/__stddef_null.h:26:14: note: expanded from macro 'NULL'
+           26 | #define NULL ((void*)0)
+              |              ^
+        /tmp/adamic-gate/adamic-tsgo-519065013/main.c:6181:122: error: field designator 'counted' does not refer to any field in type 'union adamic_method_entry::(anonymous at /tmp/adamic-gate/adamic-tsgo-519065013/adamic.h:389:2)'
+         6181 | static const adamic_method_entry adamic_shape_22_method_code[] = {{.counted = false, .code = adamic_method_351}, NULL, {.counted = false, .code = adamic_method_354}, {.counted = false, .code = adamic_method_353}};
+              |                                                                                                                         ~^~~~~~~~~~~~~~~
+        /tmp/adamic-gate/adamic-tsgo-519065013/main.c:6181:114: error: suggest braces around initialization of subobject [-Werror,-Wmissing-braces]
+         6181 | static const adamic_method_entry adamic_shape_22_method_code[] = {{.counted = false, .code = adamic_method_351}, NULL, {.counted = false, .code = adamic_method_354}, {.counted = false, .code = adamic_method_353}};
+              |                                                                                                                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+              |                                                                                                                  {                                                  }
+        /home/ahra/adamic-tools/llvm/lib/clang/20/include/__stddef_null.h:26:14: note: expanded from macro 'NULL'
+           26 | #define NULL ((void*)0)
+              |              ^
+        8 errors generated.
+        
+--- FAIL: TestProduct_profile_controls_native (57.13s)
+
+(box load 46.1 on 64 cores at first failure)
