@@ -1,0 +1,51 @@
+[
+  {
+    "id": "D1",
+    "file_line": "internal/lower/enum_never.go:17",
+    "change": "flip array stored-type recovery condition",
+    "target": "TestNumericEnumNeverPathsPinned",
+    "overlay": "/tmp/defend-enums/D1.json"
+  },
+  {
+    "id": "D2",
+    "file_line": "internal/lower/enum_never.go:92",
+    "change": "drop return-context helper representation override",
+    "target": "TestNumericEnumNeverPathsPinned",
+    "overlay": "/tmp/defend-enums/D2.json"
+  },
+  {
+    "id": "D3",
+    "file_line": "internal/lower/enum_never.go:100",
+    "change": "drop optional-number panic formatting",
+    "target": "TestNumericEnumNeverPathsPinned",
+    "overlay": "/tmp/defend-enums/D3.json"
+  },
+  {
+    "id": "D4",
+    "file_line": "internal/lower/enum_never.go:105",
+    "change": "change exact enum panic prefix constant",
+    "target": "TestNumericEnumNeverPinned",
+    "overlay": "/tmp/defend-enums/D4.json"
+  },
+  {
+    "id": "D5",
+    "file_line": "internal/lower/enum_never.go:107",
+    "change": "change exact enum panic suffix constant",
+    "target": "TestNumericEnumNeverPinned",
+    "overlay": "/tmp/defend-enums/D5.json"
+  },
+  {
+    "id": "D6",
+    "file_line": "internal/lower/enums.go:477",
+    "change": "flip numeric default member-origin proof condition",
+    "target": "TestNumericEnumNeverPinned",
+    "overlay": "/tmp/defend-enums/D6.json"
+  },
+  {
+    "id": "D7",
+    "file_line": "internal/lower/invariance.go:505",
+    "change": "change the mutable-widening refusal label, leaving cycle refusal labels intact",
+    "target": "TestStage3EnumBoundaries",
+    "overlay": "/tmp/defend-enums/D7.json"
+  }
+]

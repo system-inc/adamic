@@ -1,0 +1,898 @@
+{
+  "bounded": true,
+  "scope": {
+    "rows": [
+      "TestEnumInitializationNode",
+      "TestEnumInitializationUnknownPinned",
+      "TestNumericEnumNeverPathsPinned",
+      "TestNumericEnumNeverPinned",
+      "TestStage3EnumBoundaries",
+      "TestStage3EnumSparseArrayBoundary",
+      "TestEnumNameEnumerationMutant",
+      "TestEnumSemanticMutants",
+      "TestEnumCleanupMutant",
+      "TestStage3EnumFallthrough",
+      "TestFallthroughMutants",
+      "TestFreshWriteProbesStayRefused",
+      "TestImportedNonliteralConstCaseIsNotYet",
+      "TestNativeAgreesWithNode (enum fixture subset)"
+    ],
+    "bounded": true,
+    "outside": "unknown",
+    "reason": "Whole clean package exceeded the test binary budget. Selected enum-specific tests and fixture registrants plus the prior refusal subsumer; general Lower callers outside this set are unknown.",
+    "selector": "^(TestEnumInitializationNode|TestEnumInitializationUnknownPinned|TestNumericEnumNeverPathsPinned|TestNumericEnumNeverPinned|TestStage3EnumBoundaries|TestStage3EnumSparseArrayBoundary|TestEnumNameEnumerationMutant|TestEnumSemanticMutants|TestEnumCleanupMutant|TestStage3EnumFallthrough|TestFallthroughMutants|TestFreshWriteProbesStayRefused|TestImportedNonliteralConstCaseIsNotYet)$",
+    "fixture_selector": "^TestNativeAgreesWithNode$/(internal|stage3)/(oracle|fixtures)/(testdata|enums)/(enums|[0-9])"
+  },
+  "mutants": {
+    "D1": {
+      "failed": [
+        "TestNativeAgreesWithNode",
+        "TestNumericEnumNeverPathsPinned"
+      ],
+      "passed": [
+        "TestEnumCleanupMutant",
+        "TestEnumInitializationNode",
+        "TestEnumInitializationUnknownPinned",
+        "TestEnumNameEnumerationMutant",
+        "TestEnumSemanticMutants",
+        "TestFallthroughMutants",
+        "TestFreshWriteProbesStayRefused",
+        "TestImportedNonliteralConstCaseIsNotYet",
+        "TestNumericEnumNeverPinned",
+        "TestStage3EnumBoundaries",
+        "TestStage3EnumFallthrough",
+        "TestStage3EnumSparseArrayBoundary"
+      ],
+      "skipped": [],
+      "failing_lines": [
+        {
+          "test": "TestNumericEnumNeverPathsPinned/index",
+          "line": "enums_open_test.go:29: /workspace/adamic/internal/oracle/testdata/enums_open_never_index.a:6:11: stage 0 can't lower a value of type never yet"
+        },
+        {
+          "test": "TestNativeAgreesWithNode/internal/oracle/testdata/enums_open_never_index.a",
+          "line": "oracle_test.go:751: Lower: /workspace/adamic/internal/oracle/testdata/enums_open_never_index.a:6:11: stage 0 can't lower a value of type never yet"
+        }
+      ],
+      "fixture_results": {
+        "TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_int32array.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_deep.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_uint8array.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_modules/main.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_numparam.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/taste_stage3_representations.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_param.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_coalesce.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_element_method.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_element.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_float64array.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_f1_alias_narrowed.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_element_plain.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_f1_field_narrowed.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_parser_enums.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_f1_field_present.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_u02_optional_absent.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_f1_class_narrowed.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_f2b_union_narrow_number.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_u03_discriminated_undefined.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_u01_undefined_field_widened.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/new_expression_uint16_notyet.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/93122fa_s1.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/new_expression_uint16.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/93122fa_s2.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_f2_union_narrow_call.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_paren.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_conditional.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_utf16.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_open_never_field.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_open_never_if.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_open_never.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_open_members.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_utf8.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_flags_modules/main.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_open.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_optional.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_arrayindex.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_const.a": "pass",
+        "TestNativeAgreesWithNode/stage3/fixtures/enums/09_symbol_exclusion_mask.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_flags.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_flags_never_default.a": "pass",
+        "TestNativeAgreesWithNode/stage3/fixtures/enums/07_regex_array_map.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_names.a": "pass",
+        "TestNativeAgreesWithNode/stage3/fixtures/enums/13_regex_map_keys.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_template.a": "pass",
+        "TestNativeAgreesWithNode/stage3/fixtures/enums/12_diagnostic_reverse_lookup.a": "pass",
+        "TestNativeAgreesWithNode/stage3/fixtures/enums/10_string_enum.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/utf8_view_fails.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/clock_generic_returns_t_01.a": "pass",
+        "TestNativeAgreesWithNode/stage3/fixtures/enums/02_node_range.a": "pass",
+        "TestNativeAgreesWithNode/stage3/fixtures/enums/05_local_export_flags.a": "pass",
+        "TestNativeAgreesWithNode/stage3/fixtures/enums/04_parse_tree_mask.a": "pass",
+        "TestNativeAgreesWithNode/stage3/fixtures/enums/03_jsdoc_range.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/conditions_ledger78.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_subclass_holder.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_open_never_index.a": "fail",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/utf8_view.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_release.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_parameters.a": "pass",
+        "TestNativeAgreesWithNode/stage3/fixtures/enums/01_token_range.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_open_never_implicit.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_open_never_return.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_typeof.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_open_never_update.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/closure_convention_host24.a": "pass"
+      },
+      "binary_seconds": [
+        20.234,
+        36.169
+      ]
+    },
+    "D2": {
+      "failed": [],
+      "passed": [
+        "TestEnumCleanupMutant",
+        "TestEnumInitializationNode",
+        "TestEnumInitializationUnknownPinned",
+        "TestEnumNameEnumerationMutant",
+        "TestEnumSemanticMutants",
+        "TestFallthroughMutants",
+        "TestFreshWriteProbesStayRefused",
+        "TestImportedNonliteralConstCaseIsNotYet",
+        "TestNativeAgreesWithNode",
+        "TestNumericEnumNeverPathsPinned",
+        "TestNumericEnumNeverPinned",
+        "TestStage3EnumBoundaries",
+        "TestStage3EnumFallthrough",
+        "TestStage3EnumSparseArrayBoundary"
+      ],
+      "skipped": [],
+      "failing_lines": [],
+      "fixture_results": {
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_open_never_update.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_const.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_modules/main.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_deep.a": "pass",
+        "TestNativeAgreesWithNode/stage3/fixtures/enums/09_symbol_exclusion_mask.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_open_never_field.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_open_never_if.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_open_never.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_open_members.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_open.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_flags_modules/main.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_flags_never_default.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_flags.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/utf8_view_fails.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/clock_generic_returns_t_01.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/closure_convention_host24.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/utf8_view.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/conditions_ledger78.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_release.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_subclass_holder.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_optional.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_parameters.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_uint8array.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_float64array.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_int32array.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/taste_stage3_representations.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/93122fa_s2.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/new_expression_uint16_notyet.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/new_expression_uint16.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/93122fa_s1.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_f2b_union_narrow_number.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_f2_union_narrow_call.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_conditional.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_paren.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_arrayindex.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_utf8.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_utf16.a": "pass",
+        "TestNativeAgreesWithNode/stage3/fixtures/enums/01_token_range.a": "pass",
+        "TestNativeAgreesWithNode/stage3/fixtures/enums/05_local_export_flags.a": "pass",
+        "TestNativeAgreesWithNode/stage3/fixtures/enums/04_parse_tree_mask.a": "pass",
+        "TestNativeAgreesWithNode/stage3/fixtures/enums/03_jsdoc_range.a": "pass",
+        "TestNativeAgreesWithNode/stage3/fixtures/enums/02_node_range.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_element_plain.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_template.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_typeof.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_coalesce.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_numparam.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_param.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_element_method.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_element.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_f1_field_narrowed.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_f1_alias_narrowed.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_f1_field_present.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_f1_class_narrowed.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_open_never_return.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_open_never_index.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_names.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_u01_undefined_field_widened.a": "pass",
+        "TestNativeAgreesWithNode/stage3/fixtures/enums/07_regex_array_map.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_parser_enums.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_open_never_implicit.a": "pass",
+        "TestNativeAgreesWithNode/stage3/fixtures/enums/12_diagnostic_reverse_lookup.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_u03_discriminated_undefined.a": "pass",
+        "TestNativeAgreesWithNode/stage3/fixtures/enums/13_regex_map_keys.a": "pass",
+        "TestNativeAgreesWithNode/stage3/fixtures/enums/10_string_enum.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_u02_optional_absent.a": "pass"
+      },
+      "binary_seconds": [
+        7.79,
+        17.424
+      ]
+    },
+    "D3": {
+      "failed": [
+        "TestNativeAgreesWithNode",
+        "TestNumericEnumNeverPathsPinned"
+      ],
+      "passed": [
+        "TestEnumCleanupMutant",
+        "TestEnumInitializationNode",
+        "TestEnumInitializationUnknownPinned",
+        "TestEnumNameEnumerationMutant",
+        "TestEnumSemanticMutants",
+        "TestFallthroughMutants",
+        "TestFreshWriteProbesStayRefused",
+        "TestImportedNonliteralConstCaseIsNotYet",
+        "TestNumericEnumNeverPinned",
+        "TestStage3EnumBoundaries",
+        "TestStage3EnumFallthrough",
+        "TestStage3EnumSparseArrayBoundary"
+      ],
+      "skipped": [],
+      "failing_lines": [
+        {
+          "test": "TestNumericEnumNeverPathsPinned/index",
+          "line": "oracle_test.go:594: native: clang failed: exit status 1"
+        },
+        {
+          "test": "TestNumericEnumNeverPathsPinned/if",
+          "line": "oracle_test.go:594: native: clang failed: exit status 1"
+        },
+        {
+          "test": "TestNativeAgreesWithNode/internal/oracle/testdata/enums_open_never_index.a",
+          "line": "oracle_test.go:594: native: clang failed: exit status 1"
+        },
+        {
+          "test": "TestNativeAgreesWithNode/internal/oracle/testdata/enums_open_never_if.a",
+          "line": "oracle_test.go:594: native: clang failed: exit status 1"
+        }
+      ],
+      "fixture_results": {
+        "TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_deep.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_float64array.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_uint8array.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_int32array.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_modules/main.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_numparam.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_f1_field_present.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_param.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_coalesce.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_element_method.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_element.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/taste_stage3_representations.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_typeof.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_element_plain.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_open_never_update.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/93122fa_s2.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_const.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/93122fa_s1.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/new_expression_uint16_notyet.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/new_expression_uint16.a": "pass",
+        "TestNativeAgreesWithNode/stage3/fixtures/enums/07_regex_array_map.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_names.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_utf16.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_f2b_union_narrow_number.a": "pass",
+        "TestNativeAgreesWithNode/stage3/fixtures/enums/13_regex_map_keys.a": "pass",
+        "TestNativeAgreesWithNode/stage3/fixtures/enums/12_diagnostic_reverse_lookup.a": "pass",
+        "TestNativeAgreesWithNode/stage3/fixtures/enums/10_string_enum.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_optional.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_f2_union_narrow_call.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_utf8.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_arrayindex.a": "pass",
+        "TestNativeAgreesWithNode/stage3/fixtures/enums/05_local_export_flags.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_conditional.a": "pass",
+        "TestNativeAgreesWithNode/stage3/fixtures/enums/04_parse_tree_mask.a": "pass",
+        "TestNativeAgreesWithNode/stage3/fixtures/enums/03_jsdoc_range.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_paren.a": "pass",
+        "TestNativeAgreesWithNode/stage3/fixtures/enums/09_symbol_exclusion_mask.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_parser_enums.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_template.a": "pass",
+        "TestNativeAgreesWithNode/stage3/fixtures/enums/02_node_range.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_u03_discriminated_undefined.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_open_never_index.a": "fail",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_f1_alias_narrowed.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_u01_undefined_field_widened.a": "pass",
+        "TestNativeAgreesWithNode/stage3/fixtures/enums/01_token_range.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_f1_class_narrowed.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_open_never_return.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_open_never_implicit.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_f1_field_narrowed.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_flags.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_open_members.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_flags_never_default.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_open_never_field.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_flags_modules/main.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_open.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_open_never_if.a": "fail",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/utf8_view_fails.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_open_never.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/clock_generic_returns_t_01.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_subclass_holder.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/closure_convention_host24.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/utf8_view.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_release.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_u02_optional_absent.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_parameters.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/conditions_ledger78.a": "pass"
+      },
+      "binary_seconds": [
+        8.18,
+        22.001
+      ]
+    },
+    "D4": {
+      "failed": [
+        "TestNumericEnumNeverPathsPinned",
+        "TestNumericEnumNeverPinned",
+        "TestStage3EnumFallthrough"
+      ],
+      "passed": [
+        "TestEnumCleanupMutant",
+        "TestEnumInitializationNode",
+        "TestEnumInitializationUnknownPinned",
+        "TestEnumNameEnumerationMutant",
+        "TestEnumSemanticMutants",
+        "TestFallthroughMutants",
+        "TestFreshWriteProbesStayRefused",
+        "TestImportedNonliteralConstCaseIsNotYet",
+        "TestNativeAgreesWithNode",
+        "TestStage3EnumBoundaries",
+        "TestStage3EnumSparseArrayBoundary"
+      ],
+      "skipped": [],
+      "failing_lines": [
+        {
+          "test": "TestNumericEnumNeverPathsPinned/if",
+          "line": "enums_open_test.go:39: native: stderr differs; {stdout:[98 101 102 111 114 101 10] stderr:[97 100 97 109 105 99 58 32 112 97 110 105 99 58 32 117 110 114 101 97 99 104 97 98 108 101 32 101 110 117 109 32 118 97 108 117 101 32 52 50 32 102 111 114 32 110 117 109 101 114 105 99 32 101 110 117 109 32 83 121 110 116 97 120 75 105 110 100 10] exitCode:70}"
+        },
+        {
+          "test": "TestNumericEnumNeverPathsPinned/if",
+          "line": "enums_open_test.go:39: javascript: stderr differs; {stdout:[98 101 102 111 114 101 10] stderr:[97 100 97 109 105 99 58 32 112 97 110 105 99 58 32 117 110 114 101 97 99 104 97 98 108 101 32 101 110 117 109 32 118 97 108 117 101 32 52 50 32 102 111 114 32 110 117 109 101 114 105 99 32 101 110 117 109 32 83 121 110 116 97 120 75 105 110 100 10] exitCode:70}"
+        },
+        {
+          "test": "TestNumericEnumNeverPathsPinned/return",
+          "line": "enums_open_test.go:39: native: stderr differs; {stdout:[98 101 102 111 114 101 10] stderr:[97 100 97 109 105 99 58 32 112 97 110 105 99 58 32 117 110 114 101 97 99 104 97 98 108 101 32 101 110 117 109 32 118 97 108 117 101 32 52 50 32 102 111 114 32 110 117 109 101 114 105 99 32 101 110 117 109 32 83 121 110 116 97 120 75 105 110 100 10] exitCode:70}"
+        },
+        {
+          "test": "TestNumericEnumNeverPathsPinned/return",
+          "line": "enums_open_test.go:39: javascript: stderr differs; {stdout:[98 101 102 111 114 101 10] stderr:[97 100 97 109 105 99 58 32 112 97 110 105 99 58 32 117 110 114 101 97 99 104 97 98 108 101 32 101 110 117 109 32 118 97 108 117 101 32 52 50 32 102 111 114 32 110 117 109 101 114 105 99 32 101 110 117 109 32 83 121 110 116 97 120 75 105 110 100 10] exitCode:70}"
+        },
+        {
+          "test": "TestNumericEnumNeverPathsPinned/update",
+          "line": "enums_open_test.go:39: native: stderr differs; {stdout:[98 101 102 111 114 101 10] stderr:[97 100 97 109 105 99 58 32 112 97 110 105 99 58 32 117 110 114 101 97 99 104 97 98 108 101 32 101 110 117 109 32 118 97 108 117 101 32 52 50 32 102 111 114 32 110 117 109 101 114 105 99 32 101 110 117 109 32 83 121 110 116 97 120 75 105 110 100 10] exitCode:70}"
+        },
+        {
+          "test": "TestNumericEnumNeverPathsPinned/update",
+          "line": "enums_open_test.go:39: javascript: stderr differs; {stdout:[98 101 102 111 114 101 10] stderr:[97 100 97 109 105 99 58 32 112 97 110 105 99 58 32 117 110 114 101 97 99 104 97 98 108 101 32 101 110 117 109 32 118 97 108 117 101 32 52 50 32 102 111 114 32 110 117 109 101 114 105 99 32 101 110 117 109 32 83 121 110 116 97 120 75 105 110 100 10] exitCode:70}"
+        },
+        {
+          "test": "TestNumericEnumNeverPathsPinned/implicit",
+          "line": "enums_open_test.go:39: javascript: stderr differs; {stdout:[98 101 102 111 114 101 10 108 111 111 107 117 112 10] stderr:[97 100 97 109 105 99 58 32 112 97 110 105 99 58 32 117 110 114 101 97 99 104 97 98 108 101 32 101 110 117 109 32 118 97 108 117 101 32 52 50 32 102 111 114 32 110 117 109 101 114 105 99 32 101 110 117 109 32 83 121 110 116 97 120 75 105 110 100 10] exitCode:70}"
+        },
+        {
+          "test": "TestNumericEnumNeverPathsPinned/implicit",
+          "line": "enums_open_test.go:39: native: stderr differs; {stdout:[98 101 102 111 114 101 10 108 111 111 107 117 112 10] stderr:[97 100 97 109 105 99 58 32 112 97 110 105 99 58 32 117 110 114 101 97 99 104 97 98 108 101 32 101 110 117 109 32 118 97 108 117 101 32 52 50 32 102 111 114 32 110 117 109 101 114 105 99 32 101 110 117 109 32 83 121 110 116 97 120 75 105 110 100 10] exitCode:70}"
+        },
+        {
+          "test": "TestNumericEnumNeverPathsPinned/index",
+          "line": "enums_open_test.go:39: native: stderr differs; {stdout:[98 101 102 111 114 101 10] stderr:[97 100 97 109 105 99 58 32 112 97 110 105 99 58 32 117 110 114 101 97 99 104 97 98 108 101 32 101 110 117 109 32 118 97 108 117 101 32 52 50 32 102 111 114 32 110 117 109 101 114 105 99 32 101 110 117 109 32 83 121 110 116 97 120 75 105 110 100 10] exitCode:70}"
+        },
+        {
+          "test": "TestNumericEnumNeverPathsPinned/index",
+          "line": "enums_open_test.go:39: javascript: stderr differs; {stdout:[98 101 102 111 114 101 10] stderr:[97 100 97 109 105 99 58 32 112 97 110 105 99 58 32 117 110 114 101 97 99 104 97 98 108 101 32 101 110 117 109 32 118 97 108 117 101 32 52 50 32 102 111 114 32 110 117 109 101 114 105 99 32 101 110 117 109 32 83 121 110 116 97 120 75 105 110 100 10] exitCode:70}"
+        },
+        {
+          "test": "TestNumericEnumNeverPathsPinned/field",
+          "line": "enums_open_test.go:39: native: stderr differs; {stdout:[98 101 102 111 114 101 10] stderr:[97 100 97 109 105 99 58 32 112 97 110 105 99 58 32 117 110 114 101 97 99 104 97 98 108 101 32 101 110 117 109 32 118 97 108 117 101 32 52 50 32 102 111 114 32 110 117 109 101 114 105 99 32 101 110 117 109 32 83 121 110 116 97 120 75 105 110 100 10] exitCode:70}"
+        },
+        {
+          "test": "TestNumericEnumNeverPathsPinned/field",
+          "line": "enums_open_test.go:39: javascript: stderr differs; {stdout:[98 101 102 111 114 101 10] stderr:[97 100 97 109 105 99 58 32 112 97 110 105 99 58 32 117 110 114 101 97 99 104 97 98 108 101 32 101 110 117 109 32 118 97 108 117 101 32 52 50 32 102 111 114 32 110 117 109 101 114 105 99 32 101 110 117 109 32 83 121 110 116 97 120 75 105 110 100 10] exitCode:70}"
+        },
+        {
+          "test": "TestNumericEnumNeverPinned",
+          "line": "enums_open_test.go:60: native: stderr differs; exit 70, stdout \"before\\n\", stderr \"adamic: panic: unreachable enum value 42 for numeric enum SyntaxKind\\n\""
+        },
+        {
+          "test": "TestNumericEnumNeverPinned",
+          "line": "enums_open_test.go:60: javascript: stderr differs; exit 70, stdout \"before\\n\", stderr \"adamic: panic: unreachable enum value 42 for numeric enum SyntaxKind\\n\""
+        },
+        {
+          "test": "TestStage3EnumFallthrough/unmatched",
+          "line": "stage3_front_test.go:68: javascript: stderr differs: {stdout:[65 68 66 10 66 10 65 68 10 50 10] stderr:[97 100 97 109 105 99 58 32 112 97 110 105 99 58 32 117 110 114 101 97 99 104 97 98 108 101 32 101 110 117 109 32 118 97 108 117 101 32 52 50 32 102 111 114 32 110 117 109 101 114 105 99 32 101 110 117 109 32 75 105 110 100 10] exitCode:70}"
+        },
+        {
+          "test": "TestStage3EnumFallthrough/unmatched",
+          "line": "stage3_front_test.go:68: native: stderr differs: {stdout:[65 68 66 10 66 10 65 68 10 50 10] stderr:[97 100 97 109 105 99 58 32 112 97 110 105 99 58 32 117 110 114 101 97 99 104 97 98 108 101 32 101 110 117 109 32 118 97 108 117 101 32 52 50 32 102 111 114 32 110 117 109 101 114 105 99 32 101 110 117 109 32 75 105 110 100 10] exitCode:70}"
+        },
+        {
+          "test": "TestStage3EnumFallthrough/unmatched",
+          "line": "stage3_front_test.go:68: release: stderr differs: {stdout:[65 68 66 10 66 10 65 68 10 50 10] stderr:[97 100 97 109 105 99 58 32 112 97 110 105 99 58 32 117 110 114 101 97 99 104 97 98 108 101 32 101 110 117 109 32 118 97 108 117 101 32 52 50 32 102 111 114 32 110 117 109 101 114 105 99 32 101 110 117 109 32 75 105 110 100 10] exitCode:70}"
+        }
+      ],
+      "fixture_results": {
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_const.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_open_never_update.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_modules/main.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_deep.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_names.a": "pass",
+        "TestNativeAgreesWithNode/stage3/fixtures/enums/13_regex_map_keys.a": "pass",
+        "TestNativeAgreesWithNode/stage3/fixtures/enums/07_regex_array_map.a": "pass",
+        "TestNativeAgreesWithNode/stage3/fixtures/enums/12_diagnostic_reverse_lookup.a": "pass",
+        "TestNativeAgreesWithNode/stage3/fixtures/enums/10_string_enum.a": "pass",
+        "TestNativeAgreesWithNode/stage3/fixtures/enums/09_symbol_exclusion_mask.a": "pass",
+        "TestNativeAgreesWithNode/stage3/fixtures/enums/04_parse_tree_mask.a": "pass",
+        "TestNativeAgreesWithNode/stage3/fixtures/enums/05_local_export_flags.a": "pass",
+        "TestNativeAgreesWithNode/stage3/fixtures/enums/03_jsdoc_range.a": "pass",
+        "TestNativeAgreesWithNode/stage3/fixtures/enums/02_node_range.a": "pass",
+        "TestNativeAgreesWithNode/stage3/fixtures/enums/01_token_range.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_open_never_index.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_open_never_return.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_open_never_implicit.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_flags.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_open_never_field.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_open_never.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_open_never_if.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_open_members.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_flags_modules/main.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_open.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_flags_never_default.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_optional.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_float64array.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/93122fa_s2.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_int32array.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_uint8array.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/taste_stage3_representations.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/new_expression_uint16_notyet.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/new_expression_uint16.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/93122fa_s1.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_f2b_union_narrow_number.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_conditional.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_f2_union_narrow_call.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_paren.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_arrayindex.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_element_plain.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_utf8.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_utf16.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_template.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_typeof.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_coalesce.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_param.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_numparam.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_element_method.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_element.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_f1_field_narrowed.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_f1_field_present.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_f1_alias_narrowed.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_f1_class_narrowed.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/utf8_view_fails.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/clock_generic_returns_t_01.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_u01_undefined_field_widened.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_parser_enums.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_u03_discriminated_undefined.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/closure_convention_host24.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_u02_optional_absent.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_subclass_holder.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/conditions_ledger78.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/utf8_view.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_release.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_parameters.a": "pass"
+      },
+      "binary_seconds": [
+        8.419,
+        15.211
+      ]
+    },
+    "D5": {
+      "failed": [
+        "TestNumericEnumNeverPathsPinned",
+        "TestNumericEnumNeverPinned",
+        "TestStage3EnumFallthrough"
+      ],
+      "passed": [
+        "TestEnumCleanupMutant",
+        "TestEnumInitializationNode",
+        "TestEnumInitializationUnknownPinned",
+        "TestEnumNameEnumerationMutant",
+        "TestEnumSemanticMutants",
+        "TestFallthroughMutants",
+        "TestFreshWriteProbesStayRefused",
+        "TestImportedNonliteralConstCaseIsNotYet",
+        "TestNativeAgreesWithNode",
+        "TestStage3EnumBoundaries",
+        "TestStage3EnumSparseArrayBoundary"
+      ],
+      "skipped": [],
+      "failing_lines": [
+        {
+          "test": "TestNumericEnumNeverPathsPinned/index",
+          "line": "enums_open_test.go:39: native: stderr differs; {stdout:[98 101 102 111 114 101 10] stderr:[97 100 97 109 105 99 58 32 112 97 110 105 99 58 32 117 110 114 101 97 99 104 97 98 108 101 32 118 97 108 117 101 32 52 50 32 102 111 114 32 101 110 117 109 32 83 121 110 116 97 120 75 105 110 100 10] exitCode:70}"
+        },
+        {
+          "test": "TestNumericEnumNeverPathsPinned/index",
+          "line": "enums_open_test.go:39: javascript: stderr differs; {stdout:[98 101 102 111 114 101 10] stderr:[97 100 97 109 105 99 58 32 112 97 110 105 99 58 32 117 110 114 101 97 99 104 97 98 108 101 32 118 97 108 117 101 32 52 50 32 102 111 114 32 101 110 117 109 32 83 121 110 116 97 120 75 105 110 100 10] exitCode:70}"
+        },
+        {
+          "test": "TestNumericEnumNeverPathsPinned/if",
+          "line": "enums_open_test.go:39: native: stderr differs; {stdout:[98 101 102 111 114 101 10] stderr:[97 100 97 109 105 99 58 32 112 97 110 105 99 58 32 117 110 114 101 97 99 104 97 98 108 101 32 118 97 108 117 101 32 52 50 32 102 111 114 32 101 110 117 109 32 83 121 110 116 97 120 75 105 110 100 10] exitCode:70}"
+        },
+        {
+          "test": "TestNumericEnumNeverPathsPinned/if",
+          "line": "enums_open_test.go:39: javascript: stderr differs; {stdout:[98 101 102 111 114 101 10] stderr:[97 100 97 109 105 99 58 32 112 97 110 105 99 58 32 117 110 114 101 97 99 104 97 98 108 101 32 118 97 108 117 101 32 52 50 32 102 111 114 32 101 110 117 109 32 83 121 110 116 97 120 75 105 110 100 10] exitCode:70}"
+        },
+        {
+          "test": "TestNumericEnumNeverPathsPinned/implicit",
+          "line": "enums_open_test.go:39: native: stderr differs; {stdout:[98 101 102 111 114 101 10 108 111 111 107 117 112 10] stderr:[97 100 97 109 105 99 58 32 112 97 110 105 99 58 32 117 110 114 101 97 99 104 97 98 108 101 32 118 97 108 117 101 32 52 50 32 102 111 114 32 101 110 117 109 32 83 121 110 116 97 120 75 105 110 100 10] exitCode:70}"
+        },
+        {
+          "test": "TestNumericEnumNeverPathsPinned/implicit",
+          "line": "enums_open_test.go:39: javascript: stderr differs; {stdout:[98 101 102 111 114 101 10 108 111 111 107 117 112 10] stderr:[97 100 97 109 105 99 58 32 112 97 110 105 99 58 32 117 110 114 101 97 99 104 97 98 108 101 32 118 97 108 117 101 32 52 50 32 102 111 114 32 101 110 117 109 32 83 121 110 116 97 120 75 105 110 100 10] exitCode:70}"
+        },
+        {
+          "test": "TestNumericEnumNeverPathsPinned/update",
+          "line": "enums_open_test.go:39: native: stderr differs; {stdout:[98 101 102 111 114 101 10] stderr:[97 100 97 109 105 99 58 32 112 97 110 105 99 58 32 117 110 114 101 97 99 104 97 98 108 101 32 118 97 108 117 101 32 52 50 32 102 111 114 32 101 110 117 109 32 83 121 110 116 97 120 75 105 110 100 10] exitCode:70}"
+        },
+        {
+          "test": "TestNumericEnumNeverPathsPinned/update",
+          "line": "enums_open_test.go:39: javascript: stderr differs; {stdout:[98 101 102 111 114 101 10] stderr:[97 100 97 109 105 99 58 32 112 97 110 105 99 58 32 117 110 114 101 97 99 104 97 98 108 101 32 118 97 108 117 101 32 52 50 32 102 111 114 32 101 110 117 109 32 83 121 110 116 97 120 75 105 110 100 10] exitCode:70}"
+        },
+        {
+          "test": "TestNumericEnumNeverPathsPinned/field",
+          "line": "enums_open_test.go:39: javascript: stderr differs; {stdout:[98 101 102 111 114 101 10] stderr:[97 100 97 109 105 99 58 32 112 97 110 105 99 58 32 117 110 114 101 97 99 104 97 98 108 101 32 118 97 108 117 101 32 52 50 32 102 111 114 32 101 110 117 109 32 83 121 110 116 97 120 75 105 110 100 10] exitCode:70}"
+        },
+        {
+          "test": "TestNumericEnumNeverPathsPinned/field",
+          "line": "enums_open_test.go:39: native: stderr differs; {stdout:[98 101 102 111 114 101 10] stderr:[97 100 97 109 105 99 58 32 112 97 110 105 99 58 32 117 110 114 101 97 99 104 97 98 108 101 32 118 97 108 117 101 32 52 50 32 102 111 114 32 101 110 117 109 32 83 121 110 116 97 120 75 105 110 100 10] exitCode:70}"
+        },
+        {
+          "test": "TestNumericEnumNeverPathsPinned/return",
+          "line": "enums_open_test.go:39: native: stderr differs; {stdout:[98 101 102 111 114 101 10] stderr:[97 100 97 109 105 99 58 32 112 97 110 105 99 58 32 117 110 114 101 97 99 104 97 98 108 101 32 118 97 108 117 101 32 52 50 32 102 111 114 32 101 110 117 109 32 83 121 110 116 97 120 75 105 110 100 10] exitCode:70}"
+        },
+        {
+          "test": "TestNumericEnumNeverPathsPinned/return",
+          "line": "enums_open_test.go:39: javascript: stderr differs; {stdout:[98 101 102 111 114 101 10] stderr:[97 100 97 109 105 99 58 32 112 97 110 105 99 58 32 117 110 114 101 97 99 104 97 98 108 101 32 118 97 108 117 101 32 52 50 32 102 111 114 32 101 110 117 109 32 83 121 110 116 97 120 75 105 110 100 10] exitCode:70}"
+        },
+        {
+          "test": "TestNumericEnumNeverPinned",
+          "line": "enums_open_test.go:60: native: stderr differs; exit 70, stdout \"before\\n\", stderr \"adamic: panic: unreachable value 42 for enum SyntaxKind\\n\""
+        },
+        {
+          "test": "TestNumericEnumNeverPinned",
+          "line": "enums_open_test.go:60: javascript: stderr differs; exit 70, stdout \"before\\n\", stderr \"adamic: panic: unreachable value 42 for enum SyntaxKind\\n\""
+        },
+        {
+          "test": "TestStage3EnumFallthrough/unmatched",
+          "line": "stage3_front_test.go:68: release: stderr differs: {stdout:[65 68 66 10 66 10 65 68 10 50 10] stderr:[97 100 97 109 105 99 58 32 112 97 110 105 99 58 32 117 110 114 101 97 99 104 97 98 108 101 32 118 97 108 117 101 32 52 50 32 102 111 114 32 101 110 117 109 32 75 105 110 100 10] exitCode:70}"
+        },
+        {
+          "test": "TestStage3EnumFallthrough/unmatched",
+          "line": "stage3_front_test.go:68: javascript: stderr differs: {stdout:[65 68 66 10 66 10 65 68 10 50 10] stderr:[97 100 97 109 105 99 58 32 112 97 110 105 99 58 32 117 110 114 101 97 99 104 97 98 108 101 32 118 97 108 117 101 32 52 50 32 102 111 114 32 101 110 117 109 32 75 105 110 100 10] exitCode:70}"
+        },
+        {
+          "test": "TestStage3EnumFallthrough/unmatched",
+          "line": "stage3_front_test.go:68: native: stderr differs: {stdout:[65 68 66 10 66 10 65 68 10 50 10] stderr:[97 100 97 109 105 99 58 32 112 97 110 105 99 58 32 117 110 114 101 97 99 104 97 98 108 101 32 118 97 108 117 101 32 52 50 32 102 111 114 32 101 110 117 109 32 75 105 110 100 10] exitCode:70}"
+        }
+      ],
+      "fixture_results": {
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_optional.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_open_never_update.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_modules/main.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_float64array.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_deep.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_int32array.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/93122fa_s2.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_uint8array.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/taste_stage3_representations.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/93122fa_s1.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/new_expression_uint16.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/new_expression_uint16_notyet.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_f2_union_narrow_call.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_f2b_union_narrow_number.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_conditional.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_paren.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_arrayindex.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_utf8.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_flags.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_utf16.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_open_never_field.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_open_never_if.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_open_never.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_open_members.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_open.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_flags_never_default.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/utf8_view_fails.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_flags_modules/main.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/clock_generic_returns_t_01.a": "pass",
+        "TestNativeAgreesWithNode/stage3/fixtures/enums/09_symbol_exclusion_mask.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_const.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/closure_convention_host24.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_element_plain.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_template.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_typeof.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/conditions_ledger78.a": "pass",
+        "TestNativeAgreesWithNode/stage3/fixtures/enums/07_regex_array_map.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_coalesce.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_numparam.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_names.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_param.a": "pass",
+        "TestNativeAgreesWithNode/stage3/fixtures/enums/13_regex_map_keys.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_element_method.a": "pass",
+        "TestNativeAgreesWithNode/stage3/fixtures/enums/12_diagnostic_reverse_lookup.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_element.a": "pass",
+        "TestNativeAgreesWithNode/stage3/fixtures/enums/02_node_range.a": "pass",
+        "TestNativeAgreesWithNode/stage3/fixtures/enums/10_string_enum.a": "pass",
+        "TestNativeAgreesWithNode/stage3/fixtures/enums/05_local_export_flags.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_subclass_holder.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/utf8_view.a": "pass",
+        "TestNativeAgreesWithNode/stage3/fixtures/enums/04_parse_tree_mask.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_release.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_f1_alias_narrowed.a": "pass",
+        "TestNativeAgreesWithNode/stage3/fixtures/enums/03_jsdoc_range.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_f1_field_narrowed.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_f1_class_narrowed.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_f1_field_present.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_open_never_return.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_open_never_index.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_u01_undefined_field_widened.a": "pass",
+        "TestNativeAgreesWithNode/stage3/fixtures/enums/01_token_range.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_parser_enums.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_u03_discriminated_undefined.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_u02_optional_absent.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_parameters.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_open_never_implicit.a": "pass"
+      },
+      "binary_seconds": [
+        7.825,
+        16.18
+      ]
+    },
+    "D6": {
+      "failed": [
+        "TestNativeAgreesWithNode",
+        "TestNumericEnumNeverPathsPinned",
+        "TestNumericEnumNeverPinned",
+        "TestStage3EnumFallthrough"
+      ],
+      "passed": [
+        "TestEnumCleanupMutant",
+        "TestEnumInitializationNode",
+        "TestEnumInitializationUnknownPinned",
+        "TestEnumNameEnumerationMutant",
+        "TestEnumSemanticMutants",
+        "TestFallthroughMutants",
+        "TestFreshWriteProbesStayRefused",
+        "TestImportedNonliteralConstCaseIsNotYet",
+        "TestStage3EnumBoundaries",
+        "TestStage3EnumSparseArrayBoundary"
+      ],
+      "skipped": [],
+      "failing_lines": [
+        {
+          "test": "TestNumericEnumNeverPathsPinned/implicit",
+          "line": "enums_open_test.go:39: native: stderr differs; {stdout:[98 101 102 111 114 101 10 108 111 111 107 117 112 10] stderr:[97 100 97 109 105 99 58 32 112 97 110 105 99 58 32 99 111 109 112 105 108 101 114 32 98 117 103 58 32 97 32 102 117 110 99 116 105 111 110 32 101 110 100 101 100 32 119 105 116 104 111 117 116 32 114 101 116 117 114 110 105 110 103 10] exitCode:70}"
+        },
+        {
+          "test": "TestNumericEnumNeverPathsPinned/implicit",
+          "line": "enums_open_test.go:39: javascript: exit codes differ; {stdout:[98 101 102 111 114 101 10 108 111 111 107 117 112 10 117 110 100 101 102 105 110 101 100 10] stderr:[] exitCode:0}"
+        },
+        {
+          "test": "TestNumericEnumNeverPinned",
+          "line": "enums_open_test.go:60: native: exit codes differ; exit 0, stdout \"before\\nafter\\n\", stderr \"\""
+        },
+        {
+          "test": "TestNumericEnumNeverPinned",
+          "line": "enums_open_test.go:60: javascript: exit codes differ; exit 0, stdout \"before\\nafter\\n\", stderr \"\""
+        },
+        {
+          "test": "TestStage3EnumFallthrough/unmatched",
+          "line": "stage3_front_test.go:68: native: exit codes differ: {stdout:[65 68 66 10 66 10 65 68 10 50 10 68 66 10] stderr:[] exitCode:0}"
+        },
+        {
+          "test": "TestStage3EnumFallthrough/unmatched",
+          "line": "stage3_front_test.go:68: release: exit codes differ: {stdout:[65 68 66 10 66 10 65 68 10 50 10 68 66 10] stderr:[] exitCode:0}"
+        },
+        {
+          "test": "TestStage3EnumFallthrough/unmatched",
+          "line": "stage3_front_test.go:68: javascript: exit codes differ: {stdout:[65 68 66 10 66 10 65 68 10 50 10 68 66 10] stderr:[] exitCode:0}"
+        },
+        {
+          "test": "TestNativeAgreesWithNode/internal/oracle/testdata/enums_open_never.a",
+          "line": "oracle_test.go:769: want the inserted check to fire natively (exit 70) where the source on Node runs on: native 0, Node 0"
+        },
+        {
+          "test": "TestNativeAgreesWithNode/internal/oracle/testdata/enums_open_never_implicit.a",
+          "line": "oracle_test.go:765: exit codes differ"
+        }
+      ],
+      "fixture_results": {
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_open_never_update.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_optional.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_element_plain.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_modules/main.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_deep.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_f1_class_narrowed.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_f1_alias_narrowed.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_f1_field_present.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_f1_field_narrowed.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_parser_enums.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_u02_optional_absent.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_u01_undefined_field_widened.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_u03_discriminated_undefined.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_numparam.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_template.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_typeof.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_coalesce.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_float64array.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_int32array.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_uint8array.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/taste_stage3_representations.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/93122fa_s2.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/93122fa_s1.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_utf8.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_param.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_element_method.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_open_never_field.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_open_never_if.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_flags.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_open_never.a": "fail",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_open_members.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_utf16.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_open.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_flags_modules/main.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/new_expression_uint16_notyet.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_flags_never_default.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/new_expression_uint16.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_f2_union_narrow_call.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/utf8_view_fails.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_f2b_union_narrow_number.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/clock_generic_returns_t_01.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/closure_convention_host24.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/utf8_view.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_element.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_subclass_holder.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/conditions_ledger78.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_release.a": "pass",
+        "TestNativeAgreesWithNode/stage3/fixtures/enums/09_symbol_exclusion_mask.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_const.a": "pass",
+        "TestNativeAgreesWithNode/stage3/fixtures/enums/07_regex_array_map.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums.a": "pass",
+        "TestNativeAgreesWithNode/stage3/fixtures/enums/12_diagnostic_reverse_lookup.a": "pass",
+        "TestNativeAgreesWithNode/stage3/fixtures/enums/13_regex_map_keys.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_names.a": "pass",
+        "TestNativeAgreesWithNode/stage3/fixtures/enums/10_string_enum.a": "pass",
+        "TestNativeAgreesWithNode/stage3/fixtures/enums/02_node_range.a": "pass",
+        "TestNativeAgreesWithNode/stage3/fixtures/enums/03_jsdoc_range.a": "pass",
+        "TestNativeAgreesWithNode/stage3/fixtures/enums/05_local_export_flags.a": "pass",
+        "TestNativeAgreesWithNode/stage3/fixtures/enums/04_parse_tree_mask.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_open_never_index.a": "pass",
+        "TestNativeAgreesWithNode/stage3/fixtures/enums/01_token_range.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_open_never_return.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_paren.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_parameters.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_conditional.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_open_never_implicit.a": "fail",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_arrayindex.a": "pass"
+      },
+      "binary_seconds": [
+        7.967,
+        22.407
+      ]
+    },
+    "D7": {
+      "failed": [
+        "TestStage3EnumBoundaries"
+      ],
+      "passed": [
+        "TestEnumCleanupMutant",
+        "TestEnumInitializationNode",
+        "TestEnumInitializationUnknownPinned",
+        "TestEnumNameEnumerationMutant",
+        "TestEnumSemanticMutants",
+        "TestFallthroughMutants",
+        "TestFreshWriteProbesStayRefused",
+        "TestImportedNonliteralConstCaseIsNotYet",
+        "TestNativeAgreesWithNode",
+        "TestNumericEnumNeverPathsPinned",
+        "TestNumericEnumNeverPinned",
+        "TestStage3EnumFallthrough",
+        "TestStage3EnumSparseArrayBoundary"
+      ],
+      "skipped": [],
+      "failing_lines": [
+        {
+          "test": "TestStage3EnumBoundaries/06_set_node_flags.a",
+          "line": "enums_stage3_test.go:62: want boundary invariant-mutable, got /workspace/adamic/stage3/fixtures/enums/06_set_node_flags.a:79:10: Adamic 0.1 refuses a value of type T seen as Mutable<T>, which can write T[\"flags\"] where NodeFlags is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-readonly); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+        }
+      ],
+      "fixture_results": {
+        "TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_int32array.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_uint8array.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_deep.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/93122fa_s2.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_float64array.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/taste_stage3_representations.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/new_expression_uint16_notyet.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/new_expression_uint16.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/93122fa_s1.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_f2b_union_narrow_number.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_f2_union_narrow_call.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_conditional.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_paren.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_arrayindex.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_optional.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_utf16.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_utf8.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_template.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_typeof.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_coalesce.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_numparam.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_param.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_element_method.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_element_plain.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/047cb0d_n_element.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_f1_field_present.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_f1_alias_narrowed.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_f1_class_narrowed.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_u01_undefined_field_widened.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_f1_field_narrowed.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/namespaces_parser_enums.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_u03_discriminated_undefined.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_u02_optional_absent.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_const.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_modules/main.a": "pass",
+        "TestNativeAgreesWithNode/stage3/fixtures/enums/07_regex_array_map.a": "pass",
+        "TestNativeAgreesWithNode/stage3/fixtures/enums/13_regex_map_keys.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_names.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums.a": "pass",
+        "TestNativeAgreesWithNode/stage3/fixtures/enums/12_diagnostic_reverse_lookup.a": "pass",
+        "TestNativeAgreesWithNode/stage3/fixtures/enums/10_string_enum.a": "pass",
+        "TestNativeAgreesWithNode/stage3/fixtures/enums/09_symbol_exclusion_mask.a": "pass",
+        "TestNativeAgreesWithNode/stage3/fixtures/enums/05_local_export_flags.a": "pass",
+        "TestNativeAgreesWithNode/stage3/fixtures/enums/04_parse_tree_mask.a": "pass",
+        "TestNativeAgreesWithNode/stage3/fixtures/enums/03_jsdoc_range.a": "pass",
+        "TestNativeAgreesWithNode/stage3/fixtures/enums/02_node_range.a": "pass",
+        "TestNativeAgreesWithNode/stage3/fixtures/enums/01_token_range.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_open_never_index.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_open_never_return.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_open_never_update.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_open_never_implicit.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_open_never.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_open_never_if.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_open_never_field.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_open.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_open_members.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_flags_never_default.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_flags_modules/main.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/enums_flags.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/utf8_view_fails.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/clock_generic_returns_t_01.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/closure_convention_host24.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/utf8_view.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_subclass_holder.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/conditions_ledger78.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_release.a": "pass",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_parameters.a": "pass"
+      },
+      "binary_seconds": [
+        17.355,
+        44.395
+      ]
+    }
+  }
+}

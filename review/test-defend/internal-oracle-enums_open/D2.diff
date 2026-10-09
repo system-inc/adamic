@@ -1,0 +1,10 @@
+--- a/internal/lower/enum_never.go
++++ b/internal/lower/enum_never.go
+@@ -89,7 +89,6 @@
+ 		}
+ 	}
+ 	if node.Parent != nil && node.Parent.Kind == ast.KindReturnStatement && l.function != nil {
+-		of = l.function.Returns
+ 	}
+ 	function := len(l.result.Functions)
+ 	local := len(l.result.Locals)

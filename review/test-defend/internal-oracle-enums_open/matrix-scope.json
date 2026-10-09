@@ -1,0 +1,23 @@
+{
+  "rows": [
+    "TestEnumInitializationNode",
+    "TestEnumInitializationUnknownPinned",
+    "TestNumericEnumNeverPathsPinned",
+    "TestNumericEnumNeverPinned",
+    "TestStage3EnumBoundaries",
+    "TestStage3EnumSparseArrayBoundary",
+    "TestEnumNameEnumerationMutant",
+    "TestEnumSemanticMutants",
+    "TestEnumCleanupMutant",
+    "TestStage3EnumFallthrough",
+    "TestFallthroughMutants",
+    "TestFreshWriteProbesStayRefused",
+    "TestImportedNonliteralConstCaseIsNotYet",
+    "TestNativeAgreesWithNode (enum fixture subset)"
+  ],
+  "bounded": true,
+  "outside": "unknown",
+  "reason": "Whole clean package exceeded the test binary budget. Selected enum-specific tests and fixture registrants plus the prior refusal subsumer; general Lower callers outside this set are unknown.",
+  "selector": "^(TestEnumInitializationNode|TestEnumInitializationUnknownPinned|TestNumericEnumNeverPathsPinned|TestNumericEnumNeverPinned|TestStage3EnumBoundaries|TestStage3EnumSparseArrayBoundary|TestEnumNameEnumerationMutant|TestEnumSemanticMutants|TestEnumCleanupMutant|TestStage3EnumFallthrough|TestFallthroughMutants|TestFreshWriteProbesStayRefused|TestImportedNonliteralConstCaseIsNotYet)$",
+  "fixture_selector": "^TestNativeAgreesWithNode$/(internal|stage3)/(oracle|fixtures)/(testdata|enums)/(enums|[0-9])"
+}

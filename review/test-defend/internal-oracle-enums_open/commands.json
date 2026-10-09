@@ -1,0 +1,226 @@
+[
+  {
+    "id": "D1",
+    "kind": "apply",
+    "command": "git apply --check /workspace/adamic/review/test-defend/internal-oracle-enums_open/D1.diff",
+    "seconds": 0.006249714999285061,
+    "exit": 0,
+    "log": "review/test-defend/internal-oracle-enums_open/D1-apply.log"
+  },
+  {
+    "id": "D1",
+    "kind": "vet",
+    "command": "go vet -overlay /tmp/defend-enums/D1.json ./internal/lower/",
+    "seconds": 1.482852899003774,
+    "exit": 0,
+    "log": "review/test-defend/internal-oracle-enums_open/D1-vet.log"
+  },
+  {
+    "id": "D1",
+    "kind": "matrix",
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-enums/cache/D1 ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -overlay /tmp/defend-enums/D1.json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestEnumInitializationNode|TestEnumInitializationUnknownPinned|TestNumericEnumNeverPathsPinned|TestNumericEnumNeverPinned|TestStage3EnumBoundaries|TestStage3EnumSparseArrayBoundary|TestEnumNameEnumerationMutant|TestEnumSemanticMutants|TestEnumCleanupMutant|TestStage3EnumFallthrough|TestFallthroughMutants|TestFreshWriteProbesStayRefused|TestImportedNonliteralConstCaseIsNotYet)$'",
+    "seconds": 89.15141079800378,
+    "exit": 1,
+    "log": "review/test-defend/internal-oracle-enums_open/D1-matrix.log"
+  },
+  {
+    "id": "D1",
+    "kind": "fixtures",
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-enums/cache/D1 ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -overlay /tmp/defend-enums/D1.json -count=1 -timeout 90s ./internal/oracle/ -run '^TestNativeAgreesWithNode$/(internal|stage3)/(oracle|fixtures)/(testdata|enums)/(enums|[0-9])'",
+    "seconds": 42.894175471999915,
+    "exit": 1,
+    "log": "review/test-defend/internal-oracle-enums_open/D1-fixtures.log"
+  },
+  {
+    "id": "D2",
+    "kind": "apply",
+    "command": "git apply --check /workspace/adamic/review/test-defend/internal-oracle-enums_open/D2.diff",
+    "seconds": 0.005937595997238532,
+    "exit": 0,
+    "log": "review/test-defend/internal-oracle-enums_open/D2-apply.log"
+  },
+  {
+    "id": "D2",
+    "kind": "vet",
+    "command": "go vet -overlay /tmp/defend-enums/D2.json ./internal/lower/",
+    "seconds": 0.7481391900000744,
+    "exit": 0,
+    "log": "review/test-defend/internal-oracle-enums_open/D2-vet.log"
+  },
+  {
+    "id": "D2",
+    "kind": "matrix",
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-enums/cache/D2 ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -overlay /tmp/defend-enums/D2.json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestEnumInitializationNode|TestEnumInitializationUnknownPinned|TestNumericEnumNeverPathsPinned|TestNumericEnumNeverPinned|TestStage3EnumBoundaries|TestStage3EnumSparseArrayBoundary|TestEnumNameEnumerationMutant|TestEnumSemanticMutants|TestEnumCleanupMutant|TestStage3EnumFallthrough|TestFallthroughMutants|TestFreshWriteProbesStayRefused|TestImportedNonliteralConstCaseIsNotYet)$'",
+    "seconds": 35.73093168000196,
+    "exit": 0,
+    "log": "review/test-defend/internal-oracle-enums_open/D2-matrix.log"
+  },
+  {
+    "id": "D2",
+    "kind": "fixtures",
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-enums/cache/D2 ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -overlay /tmp/defend-enums/D2.json -count=1 -timeout 90s ./internal/oracle/ -run '^TestNativeAgreesWithNode$/(internal|stage3)/(oracle|fixtures)/(testdata|enums)/(enums|[0-9])'",
+    "seconds": 19.96833335300471,
+    "exit": 0,
+    "log": "review/test-defend/internal-oracle-enums_open/D2-fixtures.log"
+  },
+  {
+    "id": "D3",
+    "kind": "apply",
+    "command": "git apply --check /workspace/adamic/review/test-defend/internal-oracle-enums_open/D3.diff",
+    "seconds": 0.009264865999284666,
+    "exit": 0,
+    "log": "review/test-defend/internal-oracle-enums_open/D3-apply.log"
+  },
+  {
+    "id": "D3",
+    "kind": "vet",
+    "command": "go vet -overlay /tmp/defend-enums/D3.json ./internal/lower/",
+    "seconds": 0.7338573110027937,
+    "exit": 0,
+    "log": "review/test-defend/internal-oracle-enums_open/D3-vet.log"
+  },
+  {
+    "id": "D3",
+    "kind": "matrix",
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-enums/cache/D3 ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -overlay /tmp/defend-enums/D3.json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestEnumInitializationNode|TestEnumInitializationUnknownPinned|TestNumericEnumNeverPathsPinned|TestNumericEnumNeverPinned|TestStage3EnumBoundaries|TestStage3EnumSparseArrayBoundary|TestEnumNameEnumerationMutant|TestEnumSemanticMutants|TestEnumCleanupMutant|TestStage3EnumFallthrough|TestFallthroughMutants|TestFreshWriteProbesStayRefused|TestImportedNonliteralConstCaseIsNotYet)$'",
+    "seconds": 30.221858552999038,
+    "exit": 1,
+    "log": "review/test-defend/internal-oracle-enums_open/D3-matrix.log"
+  },
+  {
+    "id": "D3",
+    "kind": "fixtures",
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-enums/cache/D3 ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -overlay /tmp/defend-enums/D3.json -count=1 -timeout 90s ./internal/oracle/ -run '^TestNativeAgreesWithNode$/(internal|stage3)/(oracle|fixtures)/(testdata|enums)/(enums|[0-9])'",
+    "seconds": 26.2608209070022,
+    "exit": 1,
+    "log": "review/test-defend/internal-oracle-enums_open/D3-fixtures.log"
+  },
+  {
+    "id": "D4",
+    "kind": "apply",
+    "command": "git apply --check /workspace/adamic/review/test-defend/internal-oracle-enums_open/D4.diff",
+    "seconds": 0.00677350300247781,
+    "exit": 0,
+    "log": "review/test-defend/internal-oracle-enums_open/D4-apply.log"
+  },
+  {
+    "id": "D4",
+    "kind": "vet",
+    "command": "go vet -overlay /tmp/defend-enums/D4.json ./internal/lower/",
+    "seconds": 0.762309630998061,
+    "exit": 0,
+    "log": "review/test-defend/internal-oracle-enums_open/D4-vet.log"
+  },
+  {
+    "id": "D4",
+    "kind": "matrix",
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-enums/cache/D4 ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -overlay /tmp/defend-enums/D4.json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestEnumInitializationNode|TestEnumInitializationUnknownPinned|TestNumericEnumNeverPathsPinned|TestNumericEnumNeverPinned|TestStage3EnumBoundaries|TestStage3EnumSparseArrayBoundary|TestEnumNameEnumerationMutant|TestEnumSemanticMutants|TestEnumCleanupMutant|TestStage3EnumFallthrough|TestFallthroughMutants|TestFreshWriteProbesStayRefused|TestImportedNonliteralConstCaseIsNotYet)$'",
+    "seconds": 29.704559751000488,
+    "exit": 1,
+    "log": "review/test-defend/internal-oracle-enums_open/D4-matrix.log"
+  },
+  {
+    "id": "D4",
+    "kind": "fixtures",
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-enums/cache/D4 ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -overlay /tmp/defend-enums/D4.json -count=1 -timeout 90s ./internal/oracle/ -run '^TestNativeAgreesWithNode$/(internal|stage3)/(oracle|fixtures)/(testdata|enums)/(enums|[0-9])'",
+    "seconds": 18.03820037600235,
+    "exit": 0,
+    "log": "review/test-defend/internal-oracle-enums_open/D4-fixtures.log"
+  },
+  {
+    "id": "D5",
+    "kind": "apply",
+    "command": "git apply --check /workspace/adamic/review/test-defend/internal-oracle-enums_open/D5.diff",
+    "seconds": 0.005107407996547408,
+    "exit": 0,
+    "log": "review/test-defend/internal-oracle-enums_open/D5-apply.log"
+  },
+  {
+    "id": "D5",
+    "kind": "vet",
+    "command": "go vet -overlay /tmp/defend-enums/D5.json ./internal/lower/",
+    "seconds": 0.6707374190009432,
+    "exit": 0,
+    "log": "review/test-defend/internal-oracle-enums_open/D5-vet.log"
+  },
+  {
+    "id": "D5",
+    "kind": "matrix",
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-enums/cache/D5 ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -overlay /tmp/defend-enums/D5.json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestEnumInitializationNode|TestEnumInitializationUnknownPinned|TestNumericEnumNeverPathsPinned|TestNumericEnumNeverPinned|TestStage3EnumBoundaries|TestStage3EnumSparseArrayBoundary|TestEnumNameEnumerationMutant|TestEnumSemanticMutants|TestEnumCleanupMutant|TestStage3EnumFallthrough|TestFallthroughMutants|TestFreshWriteProbesStayRefused|TestImportedNonliteralConstCaseIsNotYet)$'",
+    "seconds": 26.543024553997384,
+    "exit": 1,
+    "log": "review/test-defend/internal-oracle-enums_open/D5-matrix.log"
+  },
+  {
+    "id": "D5",
+    "kind": "fixtures",
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-enums/cache/D5 ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -overlay /tmp/defend-enums/D5.json -count=1 -timeout 90s ./internal/oracle/ -run '^TestNativeAgreesWithNode$/(internal|stage3)/(oracle|fixtures)/(testdata|enums)/(enums|[0-9])'",
+    "seconds": 19.26611986899661,
+    "exit": 0,
+    "log": "review/test-defend/internal-oracle-enums_open/D5-fixtures.log"
+  },
+  {
+    "id": "D6",
+    "kind": "apply",
+    "command": "git apply --check /workspace/adamic/review/test-defend/internal-oracle-enums_open/D6.diff",
+    "seconds": 0.010335019003832713,
+    "exit": 0,
+    "log": "review/test-defend/internal-oracle-enums_open/D6-apply.log"
+  },
+  {
+    "id": "D6",
+    "kind": "vet",
+    "command": "go vet -overlay /tmp/defend-enums/D6.json ./internal/lower/",
+    "seconds": 0.8260585880052531,
+    "exit": 0,
+    "log": "review/test-defend/internal-oracle-enums_open/D6-vet.log"
+  },
+  {
+    "id": "D6",
+    "kind": "matrix",
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-enums/cache/D6 ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -overlay /tmp/defend-enums/D6.json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestEnumInitializationNode|TestEnumInitializationUnknownPinned|TestNumericEnumNeverPathsPinned|TestNumericEnumNeverPinned|TestStage3EnumBoundaries|TestStage3EnumSparseArrayBoundary|TestEnumNameEnumerationMutant|TestEnumSemanticMutants|TestEnumCleanupMutant|TestStage3EnumFallthrough|TestFallthroughMutants|TestFreshWriteProbesStayRefused|TestImportedNonliteralConstCaseIsNotYet)$'",
+    "seconds": 30.699531618993205,
+    "exit": 1,
+    "log": "review/test-defend/internal-oracle-enums_open/D6-matrix.log"
+  },
+  {
+    "id": "D6",
+    "kind": "fixtures",
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-enums/cache/D6 ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -overlay /tmp/defend-enums/D6.json -count=1 -timeout 90s ./internal/oracle/ -run '^TestNativeAgreesWithNode$/(internal|stage3)/(oracle|fixtures)/(testdata|enums)/(enums|[0-9])'",
+    "seconds": 26.369627835003485,
+    "exit": 1,
+    "log": "review/test-defend/internal-oracle-enums_open/D6-fixtures.log"
+  },
+  {
+    "id": "D7",
+    "kind": "apply",
+    "command": "git apply --check /workspace/adamic/review/test-defend/internal-oracle-enums_open/D7.diff",
+    "seconds": 0.009856312994088512,
+    "exit": 0,
+    "log": "review/test-defend/internal-oracle-enums_open/D7-apply.log"
+  },
+  {
+    "id": "D7",
+    "kind": "vet",
+    "command": "go vet -overlay /tmp/defend-enums/D7.json ./internal/lower/",
+    "seconds": 0.2697650580012123,
+    "exit": 0,
+    "log": "review/test-defend/internal-oracle-enums_open/D7-vet.log"
+  },
+  {
+    "id": "D7",
+    "kind": "matrix",
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-enums/cache/D7 ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -overlay /tmp/defend-enums/D7.json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestEnumInitializationNode|TestEnumInitializationUnknownPinned|TestNumericEnumNeverPathsPinned|TestNumericEnumNeverPinned|TestStage3EnumBoundaries|TestStage3EnumSparseArrayBoundary|TestEnumNameEnumerationMutant|TestEnumSemanticMutants|TestEnumCleanupMutant|TestStage3EnumFallthrough|TestFallthroughMutants|TestFreshWriteProbesStayRefused|TestImportedNonliteralConstCaseIsNotYet)$'",
+    "seconds": 24.39265284100111,
+    "exit": 1,
+    "log": "review/test-defend/internal-oracle-enums_open/D7-matrix.log"
+  },
+  {
+    "id": "D7",
+    "kind": "fixtures",
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-enums/cache/D7 ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -overlay /tmp/defend-enums/D7.json -count=1 -timeout 90s ./internal/oracle/ -run '^TestNativeAgreesWithNode$/(internal|stage3)/(oracle|fixtures)/(testdata|enums)/(enums|[0-9])'",
+    "seconds": 64.05746204099705,
+    "exit": 0,
+    "log": "review/test-defend/internal-oracle-enums_open/D7-fixtures.log"
+  }
+]

@@ -1,0 +1,11 @@
+--- a/internal/lower/enum_never.go
++++ b/internal/lower/enum_never.go
+@@ -104,7 +104,7 @@
+ 	message := ir.Concat{Parts: []ir.Expression{
+ 		ir.StringConstant{Index: l.constant("unreachable value ")},
+ 		printed,
+-		ir.StringConstant{Index: l.constant(" for numeric enum " + identity.Name)},
++		ir.StringConstant{Index: l.constant(" for enum " + identity.Name)},
+ 	}}
+ 	l.result.Functions = append(l.result.Functions, ir.Function{
+ 		Name: "enum_never", Parameters: []int{local}, Returns: of,

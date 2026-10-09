@@ -1,0 +1,104 @@
+[
+  {
+    "test": "TestNumericEnumNeverPathsPinned",
+    "package": "internal/oracle",
+    "prior_verdict": "subsumed",
+    "subsumed_by": "TestNumericEnumNeverPinned",
+    "defense": "not defended",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "internal/lower/enum_never.go:17",
+        "change": "flip array stored-type recovery condition",
+        "rows_failed": [
+          "TestNativeAgreesWithNode",
+          "TestNumericEnumNeverPathsPinned"
+        ]
+      },
+      {
+        "mutant": "D2",
+        "file_line": "internal/lower/enum_never.go:92",
+        "change": "drop return-context helper representation override",
+        "rows_failed": []
+      },
+      {
+        "mutant": "D3",
+        "file_line": "internal/lower/enum_never.go:100",
+        "change": "drop optional-number panic formatting",
+        "rows_failed": [
+          "TestNativeAgreesWithNode",
+          "TestNumericEnumNeverPathsPinned"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-enums/cache/D1 ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -overlay /tmp/defend-enums/D1.json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestEnumInitializationNode|TestEnumInitializationUnknownPinned|TestNumericEnumNeverPathsPinned|TestNumericEnumNeverPinned|TestStage3EnumBoundaries|TestStage3EnumSparseArrayBoundary|TestEnumNameEnumerationMutant|TestEnumSemanticMutants|TestEnumCleanupMutant|TestStage3EnumFallthrough|TestFallthroughMutants|TestFreshWriteProbesStayRefused|TestImportedNonliteralConstCaseIsNotYet)$'; enums_open_test.go:29: /workspace/adamic/internal/oracle/testdata/enums_open_never_index.a:6:11: stage 0 can't lower a value of type never yet",
+    "bounded": true,
+    "reason": "Three aimed attempts yielded shared catches or no catch; this is not a deletion recommendation."
+  },
+  {
+    "test": "TestNumericEnumNeverPinned",
+    "package": "internal/oracle",
+    "prior_verdict": "subsumed",
+    "subsumed_by": "TestStage3EnumSparseArrayBoundary",
+    "defense": "not defended",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D4",
+        "file_line": "internal/lower/enum_never.go:105",
+        "change": "change exact enum panic prefix constant",
+        "rows_failed": [
+          "TestNumericEnumNeverPathsPinned",
+          "TestNumericEnumNeverPinned",
+          "TestStage3EnumFallthrough"
+        ]
+      },
+      {
+        "mutant": "D5",
+        "file_line": "internal/lower/enum_never.go:107",
+        "change": "change exact enum panic suffix constant",
+        "rows_failed": [
+          "TestNumericEnumNeverPathsPinned",
+          "TestNumericEnumNeverPinned",
+          "TestStage3EnumFallthrough"
+        ]
+      },
+      {
+        "mutant": "D6",
+        "file_line": "internal/lower/enums.go:477",
+        "change": "flip numeric default member-origin proof condition",
+        "rows_failed": [
+          "TestNativeAgreesWithNode",
+          "TestNumericEnumNeverPathsPinned",
+          "TestNumericEnumNeverPinned",
+          "TestStage3EnumFallthrough"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-enums/cache/D4 ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -overlay /tmp/defend-enums/D4.json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestEnumInitializationNode|TestEnumInitializationUnknownPinned|TestNumericEnumNeverPathsPinned|TestNumericEnumNeverPinned|TestStage3EnumBoundaries|TestStage3EnumSparseArrayBoundary|TestEnumNameEnumerationMutant|TestEnumSemanticMutants|TestEnumCleanupMutant|TestStage3EnumFallthrough|TestFallthroughMutants|TestFreshWriteProbesStayRefused|TestImportedNonliteralConstCaseIsNotYet)$'; enums_open_test.go:60: native: stderr differs; exit 70, stdout \"before\\n\", stderr \"adamic: panic: unreachable enum value 42 for numeric enum SyntaxKind\\n\"",
+    "bounded": true,
+    "reason": "Three aimed attempts yielded shared catches or no catch; this is not a deletion recommendation."
+  },
+  {
+    "test": "TestStage3EnumBoundaries",
+    "package": "internal/oracle",
+    "prior_verdict": "subsumed",
+    "subsumed_by": "TestFreshWriteProbesStayRefused",
+    "defense": "cannot-judge",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D7",
+        "file_line": "internal/lower/invariance.go:505",
+        "change": "change the mutable-widening refusal label, leaving cycle refusal labels intact",
+        "rows_failed": [
+          "TestStage3EnumBoundaries"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-enums/cache/D7 ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -overlay /tmp/defend-enums/D7.json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestEnumInitializationNode|TestEnumInitializationUnknownPinned|TestNumericEnumNeverPathsPinned|TestNumericEnumNeverPinned|TestStage3EnumBoundaries|TestStage3EnumSparseArrayBoundary|TestEnumNameEnumerationMutant|TestEnumSemanticMutants|TestEnumCleanupMutant|TestStage3EnumFallthrough|TestFallthroughMutants|TestFreshWriteProbesStayRefused|TestImportedNonliteralConstCaseIsNotYet)$'; enums_stage3_test.go:62: want boundary invariant-mutable, got /workspace/adamic/stage3/fixtures/enums/06_set_node_flags.a:79:10: Adamic 0.1 refuses a value of type T seen as Mutable<T>, which can write T[\"flags\"] where NodeFlags is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-readonly); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "bounded": true,
+    "reason": "D7 is unique in the bounded matrix, but whole-package uniqueness remains unknown after two timeouts."
+  }
+]

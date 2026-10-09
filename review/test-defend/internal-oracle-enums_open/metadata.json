@@ -1,0 +1,15 @@
+{
+  "base": "e77a4ae41f473c149aee910c51b73637686a804a",
+  "nproc": 5,
+  "disk_before": {
+    "tmp_free_gb": 6.4,
+    "workspace_free_gb": 7.3
+  },
+  "cleanup": [
+    "/tmp/defend-private-generic"
+  ],
+  "setup": "warm env.sh; skipped",
+  "npm_ci": "added 3 packages in 744ms",
+  "scope_count": 198,
+  "unmodified_production": true
+}

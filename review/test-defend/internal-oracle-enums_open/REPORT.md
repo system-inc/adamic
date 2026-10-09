@@ -1,0 +1,29 @@
+Two rows were not defended by three aimed attempts each; no deletion is recommended.
+Stage3EnumBoundaries has a unique bounded catch, but package uniqueness is unknown.
+Production source, tests, fixtures, harness and oracles remain unchanged.
+
+Starting origin/main: e77a4ae41f473c149aee910c51b73637686a804a. All three names exist among 198 current top-level tests. Read prior REPORT.md, PLAN.md, relevant rows.json records and matrix.json from the full-ref fetched audit. Code and oracle names, coverage differences and semantic leads are in code-and-oracle.md. Coverage baselines passed for each row and subsumer. Exclusive covered block counts were 537, 346 and 79 respectively.
+
+Seven standalone production diffs apply cleanly and each passes go vet ./internal/lower with its overlay. Each variant uses a separate ADAMIC_BUILD_CACHE_DIR. commands.json records exact commands, wall times and exits. matrix.json records all observed failures, passes, fixture results and failing lines. matrix-scope.json lists the bounded rows and selectors; outside callers are unknown. replay.py reconstructs scratch overlays from the recorded starting commit.
+
+D1 flips stored-array recovery. PathsPinned/index fails lowering at enums_open_test.go:29, but its registered general fixture fails too. D2 drops the return-context representation override and survives; it is an equivalent candidate, with no demonstrated changed-output witness. D3 drops optional panic formatting: both PathsPinned and its general fixture fail native compilation, a shared precondition catch rather than a semantic runtime assertion. These three attempts do not defend PathsPinned uniquely.
+
+D4 and D5 change enum panic prefix and suffix constants. Both pinned rows and the current TestStage3EnumFallthrough fail, while all selected general fixtures pass. General checked fixtures require agreeing backends and exit 70, so identical wrong panic messages evade them. Exact panic pins therefore have value, but the two pinned rows and new fallthrough row overlap on these mutations. D6 flips the numeric default member-origin condition; both pinned rows, fallthrough and the general fixture row fail. NeverPinned is not uniquely defended by these three attempts.
+
+D7 changes the mutable-widening refusal label in lower.wideningRefusal at invariance.go:505, leaving cycle labels intact. Only Stage3EnumBoundaries fails in the bounded matrix, at enums_stage3_test.go:62: want boundary invariant-mutable, got ... (adamic/invariant-readonly). All 12 other selected top-level rows pass, including FreshWriteProbesStayRefused; the general enum fixtures pass too. This supports keeping the diagnostic-label assertion. It does not prove refusal safety, since refusal still occurs. No package-unique kill is claimed.
+
+The whole clean package cooked at 90.299 seconds without a prior assertion failure. D7 whole-package replays cooked at 90.669 and 91.130 seconds, completing 79 and 131 top-level rows respectively; neither reached the decisive Stage3 assertion. The second used -parallel 16 and normal observation caches to reduce scheduling starvation, still with D7's own product cache. No test failure was recorded before those timeouts. Direct load/lower assertions are not skipped by observation caches. The bounded matrices completed without panic or timeout. Full completion lists are in full-run-observations.json.
+
+Owner findings and brief feedback:
+
+- Neither non-defended row's name promises something its assertions omit. PathsPinned checks six paths and complete panic triples, including lookup evaluation order. NeverPinned additionally asserts independent source Node output, which lowering mutants cannot change. Shared catches do not justify deleting that observation.
+- Stage3EnumBoundaries checks three cases, error classes and code/rule substrings. It does not pin complete diagnostic locations or text; its name does not promise those stronger checks.
+- A 15 GB minimum is impossible on the 8.8 GB /tmp filesystem. Removed the preceding unit's /tmp/defend-private-generic scratch/cache as authorized. Afterwards /tmp had 6.4 GB and /workspace 7.3 GB free. No repository/tools were deleted and no ENOSPC occurred.
+- The brief permits bounded matrices but defines defended by whole-package uniqueness. We report cannot-judge for the unique bounded D7 catch rather than silently treating these as equal.
+- Full-package scheduling can consume the budget before the relevant assertion runs. Higher concurrency increased completion but did not settle uniqueness.
+- Go coverage measures blocks, not C runtime execution. Shared lines can have different oracle strengths; D4/D5 demonstrate that distinction.
+- Scratch overlays preserved the checkout, but recompiling Go and building cold native products consumed time. The 89.151-second D1 command spent 20.231 seconds in the test binary, so it was not a cooked 90-second test. commands.json separates command wall time from Go-reported binary time.
+- Supplied audit commands were truncated; fetched complete records supplied the original selectors. The original subsumption rested on coarse main-execution and blanket refusal-format mutations.
+- An initial coverage-comparison write failed in the read-only sandbox; it was rerun with authorized write access. Automatic approval review later timed out while saving the report; a smaller authorized write succeeded. Neither affected test results.
+
+Warm env.sh worked; setup skipped. nproc=5. npm ci in stage3/api reported 744ms. Work took about 22 minutes including approval delay. No test was deleted, rewritten or weakened; no main push or PR occurred. Other-package tests, complete runtime C coverage, whole-package uniqueness and a behavioral witness for D2 remain uncovered. Logs are compressed losslessly. All seven mutants were retained within the near-minute matrix cap.
