@@ -1,0 +1,12 @@
+run adamic-verify-20261009T130404-fa0857da: void, 1729 tests in 51 units, 2 failed, 1 units broken, 0 killed over budget
+BROKEN tests-08: exited 1 with no failed test (last output "loom-pilot: tests took 359 s in all")
+FAIL github.com/system-inc/adamic/stage1/cohere/json (package) (tests-17-r4)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/json	201.440s
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-17-r5)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint	242.905s
+BROKEN tests-08 on 1 placements, workers: 71e0f4fd0f02
+FAIL github.com/system-inc/adamic/stage1/cohere/json requested tests started 8325, verdicts 202 of: TestPortMatchesGoCohere (TestPortMatchesGoCohereClassOrder_000, TestPortMatchesGoCohereUnion, TestPortMatchesGoCohere_0072, TestPortMatchesGoCohere_0073, TestPortMatchesGoCohere_0074, TestPortMatchesGoCohere_0075, ...) (tests-02)
+FAIL github.com/system-inc/adamic/stage1/cohere/lint requested tests started 8, verdicts 0 of: TestDecodedOptionsAndMutant (TestDecodedOptionsAndMutantPlantedFailure, TestDecodedOptionsAndMutantUnion, TestDecodedOptionsAndMutant_001, TestDecodedOptionsAndMutant_002, TestDecodedOptionsAndMutant_003, TestDecodedOptionsAndMutant_004, ...) (tests-02)
+FAIL github.com/system-inc/adamic/stage1/cohere/lint whole package started 6520, verdicts 134 of: TestCompilerAndStage1Agree_000, TestCompilerAndStage1Agree_001, TestCompilerAndStage1Agree_002, TestCompilerAndStage1Agree_003, TestCompilerAndStage1Agree_004, TestCompilerAndStage1Agree_005, TestCompilerAndStage1Agree_006, TestCompilerAndStage1Agree_007, TestCompilerAndStage1Agree_008, TestCompilerAndStage1Agree_009, TestCompilerAndStage1Agree_010, TestCompilerAndStage1Agree_011 (tests-02)
+FAIL github.com/system-inc/adamic/stage1/cohere/json requested tests started 2068, verdicts 366 of: TestUpstreamRepositoryCorpusParity (TestUpstreamRepositoryCorpusParityShardProof, TestUpstreamRepositoryCorpusParityUnion, TestUpstreamRepositoryCorpusParity_000, TestUpstreamRepositoryCorpusParity_0000, TestUpstreamRepositoryCorpusParity_0001, TestUpstreamRepositoryCorpusParity_0002, ...) (tests-13)
+FAIL github.com/system-inc/adamic/stage1/cohere/json whole package started 10422, verdicts 596 of: TestJSONUpstreamShardDisagreement (tests-17-r4)
