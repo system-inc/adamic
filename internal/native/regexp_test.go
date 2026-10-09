@@ -235,6 +235,9 @@ process.stdout.write(JSON.stringify(cases));`)
 	if err = json.Unmarshal(output, &cases); err != nil {
 		t.Fatal(err)
 	}
+	if len(cases) != randomRegexCases {
+		t.Fatalf("random regex corpus: got %d, want %d", len(cases), randomRegexCases)
+	}
 	runRegexCases(t, cases[unit*randomRegexUnitSize:min((unit+1)*randomRegexUnitSize, len(cases))])
 }
 

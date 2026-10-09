@@ -6,3 +6,10 @@
 {"Time":"2026-10-09T06:00:36.608129733Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRegExpBytecodeRandomNodeUnit15"}
 {"Time":"2026-10-09T06:00:36.608131486Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRegExpBytecodeRandomNodeUnit15","Output":"=== CONT  TestRegExpBytecodeRandomNodeUnit15\n","OutputType":"frame"}
 {"Time":"2026-10-09T06:00:37.11661389Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRegExpBytecodeRandomNodeUnit15","Output":"    regexp_test.go:395: compiling 247 patterns, 250 executions, 612639 C bytes\n"}
+{"Time":"2026-10-09T06:00:43.471435027Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRegExpBytecodeRandomNodeUnit15","Output":"    regexp_test.go:395: mode=[] native execution totals: 250 cases, 0 disagreements\n"}
+{"Time":"2026-10-09T06:00:43.481759144Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRegExpBytecodeRandomNodeUnit15","Output":"    regexp_test.go:395: mode=[unlimited] native execution totals: 250 cases, 0 disagreements\n"}
+{"Time":"2026-10-09T06:00:43.482208708Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRegExpBytecodeRandomNodeUnit15","Output":"--- PASS: TestRegExpBytecodeRandomNodeUnit15 (6.87s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:00:43.482237651Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRegExpBytecodeRandomNodeUnit15","Elapsed":6.87}
+{"Time":"2026-10-09T06:00:43.482256579Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:00:43.48345572Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"ok  \tgithub.com/system-inc/adamic/internal/native\t6.882s\n"}
+{"Time":"2026-10-09T06:00:43.483490142Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Elapsed":6.883}
