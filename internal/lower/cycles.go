@@ -108,6 +108,9 @@ func (l *lowering) findCycles(modules []*ast.SourceFile) error {
 		finder.use(proven, l.classNodeFor(proven))
 	}
 	if l.programDiscovery {
+		// Count forwarding can append locals. Discovery must finish the same
+		// allocation layout as the final pass before recording membership.
+		l.resolveCountTypes(modules)
 		l.programPlan = l.selectProgramMembership(finder, modules)
 		return nil
 	}

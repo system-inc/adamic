@@ -4,6 +4,8 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
+	"maps"
+	"slices"
 )
 
 func (l *lowering) builtinArguments(node *ast.Node) bool {
@@ -181,7 +183,8 @@ func (l *lowering) resolveCountTypes(modules []*ast.SourceFile) {
 			function.ArgumentsCount = local + 1
 			changed = true
 		}
-		for signature, implementations := range l.result.MethodTargets {
+		for _, signature := range slices.Sorted(maps.Keys(l.result.MethodTargets)) {
+			implementations := l.result.MethodTargets[signature]
 			targets := append([]int{signature}, implementations...)
 			reads := false
 			for _, target := range targets {
