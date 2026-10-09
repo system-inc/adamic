@@ -1,0 +1,11 @@
+FIRST FAILURE (census, at 1.2 s):
+compiler dependency census: undeclared compiler consumers: stage3/applyproducts/products.go. Declare each in cloud/fast-gate/compiler-dependencies.json in this branch: its package, then the compiler packages it exercises (entries there add to the gate tools' map).
+(box load 50.5 on 64 cores at first failure)
+red: 923b8d62d457751f37472fb903a137307e906af9 fast gate, first failure at census after 1.2 s (; 0 units over 30 s (0 s, 0 on the burn-down, 0 drifted over); box load 50.5 on 64 cores at start, load 50.5 on 64 cores at first failure, load 50.5 on 64 cores at end; deferred to full gate: 0 tests; branch area/stage3, session 01a1140e-1ff3-7516-9930-4a9b610ab006), 0 fail, 0 pass
+darwin leg: green: darwin build and compile of internal/oracle/testdata/047cb0d_n_arrayindex.a on Sun2 in 2 s
+remote: 
+remote: Create a pull request for 'gate-logs/923b8d62d457/20261009T172819Z/fast' on GitHub by visiting:        
+remote:      https://github.com/system-inc/adamic/pull/new/gate-logs/923b8d62d457/20261009T172819Z/fast        
+remote: 
+published gate-logs/923b8d62d457/20261009T172819Z/fast (5212892be4e64f06778c5a793f82b9ca93c926c8)
+red: 923b8d62d457751f37472fb903a137307e906af9 fast gate, first failure at census after 1.2 s (; 0 units over 30 s (0 s, 0 on the burn-down, 0 drifted over); box load 50.5 on 64 cores at start, load 50.5 on 64 cores at first failure, load 50.5 on 64 cores at end; deferred to full gate: 0 tests; branch area/stage3, session 01a1140e-1ff3-7516-9930-4a9b610ab006), 0 fail, 0 pass
