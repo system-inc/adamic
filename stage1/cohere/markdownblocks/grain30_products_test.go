@@ -66,9 +66,16 @@ func grainProduct(t *testing.T, name, target string) grainProducts {
 	p := grainProducts{main: main}
 	goTools := []string{buildcache.Tool("go", "version")}
 	nativeTools := []string{runtime.GOOS, runtime.GOARCH, buildcache.Tool("clang", "--version")}
-	goFlags := []string{"GOFLAGS=" + os.Getenv("GOFLAGS"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "GOOS=" + os.Getenv("GOOS"), "GOARCH=" + os.Getenv("GOARCH"), "CC=" + os.Getenv("CC"), "CXX=" + os.Getenv("CXX")}
+	// GoBuild cannot key a newly synthesized overlay target yet: GoInputs stats that
+	// nonexistent target. Rule 7 permits this Go build as a Product, with all inputs
+	// and reproducible flags declared. Generator/formatter products use GoBuild below.
 	if target == "" || target == "go" {
-		dir := buildcache.Product(t, buildcache.Inputs{Name: "markdown-grain-" + name + "-go", Files: []string{"go.mod", "cohere", "stage1/cohere/markdownblocks/testdata", "stage1/cohere/markdownblocks/grain30_products_test.go"}, Flags: goFlags, Toolchain: goTools}, func(dir string) error {
+		flags := []string{"-trimpath", "-buildvcs=false", "-ldflags=-buildid="}
+		inputs := buildcache.Inputs{Name: "markdown-grain-" + name + "-go-v2", Files: []string{"go.mod", "go.work", "cohere", "stage1/cohere/markdownblocks/testdata", "stage1/cohere/markdownblocks/grain30_products_test.go"}, Toolchain: goTools, Flags: append([]string(nil), flags...)}
+		for _, variable := range []string{"GOFLAGS", "CGO_ENABLED", "GOOS", "GOARCH", "GOAMD64", "GOARM64", "GOEXPERIMENT", "CC", "CXX", "CGO_CFLAGS", "CGO_CPPFLAGS", "CGO_CXXFLAGS", "CGO_LDFLAGS", "GOTOOLCHAIN", "GOWORK"} {
+			inputs.Flags = append(inputs.Flags, variable+"="+os.Getenv(variable))
+		}
+		dir := buildcache.Product(t, inputs, func(dir string) error {
 			replace := map[string]string{}
 			for to, from := range recipe.overlay {
 				replace[filepath.Join(root, "cohere", to)] = filepath.Join(root, "stage1/cohere/markdownblocks/testdata", from)
@@ -78,10 +85,11 @@ func grainProduct(t *testing.T, name, target string) grainProducts {
 				return err
 			}
 			overlay := filepath.Join(dir, "overlay.json")
-			if err = os.WriteFile(overlay, data, 0644); err != nil {
+			if err := os.WriteFile(overlay, data, 0644); err != nil {
 				return err
 			}
-			cmd := exec.CommandContext(t.Context(), "go", "build", "-overlay="+overlay, "-o", filepath.Join(dir, "oracle"), filepath.Join(root, "cohere/cmd", recipe.command, "main.go"))
+			args := append(append([]string{"build"}, flags...), "-overlay="+overlay, "-o", filepath.Join(dir, "oracle"), filepath.Join(root, "cohere/cmd", recipe.command, "main.go"))
+			cmd := exec.CommandContext(t.Context(), "go", args...)
 			cmd.Dir = filepath.Join(root, "cohere")
 			if output, err := combinedOutput(cmd); err != nil {
 				return fmt.Errorf("Go oracle: %w\n%s", err, output)
@@ -90,6 +98,7 @@ func grainProduct(t *testing.T, name, target string) grainProducts {
 		})
 		p.goBinary = filepath.Join(dir, "oracle")
 	}
+
 	if target == "go" {
 		return p
 	}
@@ -334,28 +343,15 @@ func grainTool(t *testing.T, name string) string {
 	prepared.once.Do(func() { prepared.path = grainBuildTool(t, name) })
 	return prepared.path
 }
-func grainBuildTool(t *testing.T, name string) string {
 
-	root := markdownLayoutProductRoot(t)
-	files := []string{"go.mod", "stage1/cohere/markdownblocks/tools/generate_" + name}
-	work := root
+func grainBuildTool(t *testing.T, name string) string {
 	pkg := "./stage1/cohere/markdownblocks/tools/generate_" + name
 	if name == "formatter" {
-		files = []string{"go.mod", "cohere"}
-		work = filepath.Join(root, "cohere")
-		pkg = "./command/cohere"
+		pkg = "github.com/system-inc/cohere/command/cohere"
 	}
-	flags := []string{"GOFLAGS=" + os.Getenv("GOFLAGS"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "GOOS=" + os.Getenv("GOOS"), "GOARCH=" + os.Getenv("GOARCH"), "CC=" + os.Getenv("CC"), "CXX=" + os.Getenv("CXX")}
-	dir := buildcache.Product(t, buildcache.Inputs{Name: "markdown-grain-tool-" + name, Files: append(files, "stage1/cohere/markdownblocks/grain30_products_test.go"), Flags: flags, Toolchain: []string{buildcache.Tool("go", "version")}}, func(dir string) error {
-		cmd := exec.CommandContext(t.Context(), "go", "build", "-o", filepath.Join(dir, "tool"), pkg)
-		cmd.Dir = work
-		if output, err := combinedOutput(cmd); err != nil {
-			return fmt.Errorf("tool %s: %w\n%s", name, err, output)
-		}
-		return nil
-	})
-	return filepath.Join(dir, "tool")
+	return buildcache.GoBuild(t, "grain-"+name, pkg, nil)
 }
+
 func grainGenerator(t *testing.T, name string) string {
 	if name == "decode" {
 		name = "entities"
