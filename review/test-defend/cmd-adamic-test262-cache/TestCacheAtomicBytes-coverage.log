@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T18:15:37.496122773Z","Action":"start","Package":"github.com/system-inc/adamic/cmd/adamic-test262"}
+{"Time":"2026-10-09T18:15:37.506867186Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCacheAtomicBytes"}
+{"Time":"2026-10-09T18:15:37.50695305Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCacheAtomicBytes","Output":"=== RUN   TestCacheAtomicBytes\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:15:37.507241012Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCacheAtomicBytes","Output":"=== PAUSE TestCacheAtomicBytes\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:15:37.507254614Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCacheAtomicBytes"}
+{"Time":"2026-10-09T18:15:37.507258814Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCacheAtomicBytes"}
+{"Time":"2026-10-09T18:15:37.507261241Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCacheAtomicBytes","Output":"=== CONT  TestCacheAtomicBytes\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:15:37.508115387Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCacheAtomicBytes","Output":"--- PASS: TestCacheAtomicBytes (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:15:37.508173742Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCacheAtomicBytes","Elapsed":0}
+{"Time":"2026-10-09T18:15:37.508197717Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:15:37.509776677Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"coverage: 1.5% of statements in ./cmd/adamic-test262\n"}
+{"Time":"2026-10-09T18:15:37.516013852Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"ok  \tgithub.com/system-inc/adamic/cmd/adamic-test262\t0.019s\tcoverage: 1.5% of statements in ./cmd/adamic-test262\n"}
+{"Time":"2026-10-09T18:15:37.516035635Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Elapsed":0.02}

@@ -1,0 +1,13 @@
+diff --git a/cmd/adamic-test262/cache.go b/cmd/adamic-test262/cache.go
+index 3c39d744..10e0763f 100644
+--- a/cmd/adamic-test262/cache.go
++++ b/cmd/adamic-test262/cache.go
+@@ -32,7 +32,7 @@ type recordedExecution struct {
+ }
+ 
+ func recordExecution(value execution) recordedExecution {
+-	return recordedExecution{[]byte(value.Stdout), []byte(value.Stderr), value.Exit, value.Signal, value.TimedOut}
++	return recordedExecution{[]byte(value.Stdout), nil, value.Exit, value.Signal, value.TimedOut}
+ }
+ func (value recordedExecution) execution() execution {
+ 	return execution{string(value.Stdout), string(value.Stderr), value.Exit, value.Signal, value.TimedOut}

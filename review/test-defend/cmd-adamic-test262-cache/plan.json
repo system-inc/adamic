@@ -1,0 +1,34 @@
+[
+  {
+    "mutant": "D1",
+    "file": "cmd/adamic-test262/run.go",
+    "line": 272,
+    "old": "\tif dependentProgram(test.Program) {\n\t\tcache = nil\n\t}\n",
+    "new": "",
+    "change": "drop dependent-program cache bypass"
+  },
+  {
+    "mutant": "D2",
+    "file": "cmd/adamic-test262/cache.go",
+    "line": 35,
+    "old": "[]byte(value.Stdout), []byte(value.Stderr), value.Exit",
+    "new": "[]byte(value.Stdout), nil, value.Exit",
+    "change": "change stored stderr to empty"
+  },
+  {
+    "mutant": "D3",
+    "file": "cmd/adamic-test262/run.go",
+    "line": 169,
+    "old": "\tif jobs > 1 {\n\t\tsort.SliceStable(indices, func(i, j int) bool { return len(tests[indices[i]].Program) > len(tests[indices[j]].Program) })\n\t}\n",
+    "new": "",
+    "change": "drop parallel scheduling sort"
+  },
+  {
+    "mutant": "D4",
+    "file": "cmd/adamic-test262/run.go",
+    "line": 162,
+    "old": "jobs := e.jobs",
+    "new": "jobs := 1",
+    "change": "change worker-count option to one"
+  }
+]
