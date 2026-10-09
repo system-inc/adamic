@@ -1,0 +1,184 @@
+[
+  {
+    "mutant": "D1",
+    "file_line": "stage1/cohere/lint/rules/no-underscore-dangle/profile.a:25",
+    "change": "swap arguments: parser input and filename",
+    "from": "new Parser(source, path)",
+    "to": "new Parser(path, source)",
+    "matrix": {
+      "label": "D1",
+      "command": [
+        "timeout",
+        "120",
+        "go",
+        "test",
+        "-json",
+        "-count=1",
+        "-timeout",
+        "90s",
+        "./stage1/cohere/lint/rules/no-underscore-dangle/",
+        "-run",
+        "."
+      ],
+      "exit": 0,
+      "wall_seconds": 41.701924054999836
+    },
+    "witness": {
+      "label": "witness-D1",
+      "command": [
+        "timeout",
+        "10",
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "stage1/cohere/lint/rules/no-underscore-dangle/profile.a",
+        "/workspace/adamic/review/test-defend/stage1-cohere-lint-rules-no-underscore-dangle/witness-manifest.txt"
+      ],
+      "exit": 0,
+      "wall_seconds": 0.1479156619971036
+    },
+    "rows_failed": [],
+    "rows_passed": [
+      "TestCompileProfiles"
+    ],
+    "test_seconds": [
+      39.16
+    ],
+    "witness_changed": true,
+    "witness_diff": [
+      "--- \n",
+      "+++ \n",
+      "@@ -1,7 +1,2 @@\n",
+      " case 0",
+      "-finding 6 15 unexpectedUnderscore\tUnexpected dangling '_' in '_lead'. A leading or trailing underscore is a convention for privacy that the language does not enforce, so it tells a reader something is off limits while doing nothing to keep them out. Where privacy is real, `#private` or a closure says so and is checked.",
+      "-finding 23 32 unexpectedUnderscore\tUnexpected dangling '_' in 'tail_'. A leading or trailing underscore is a convention for privacy that the language does not enforce, so it tells a reader something is off limits while doing nothing to keep them out. Where privacy is real, `#private` or a closure says so and is checked.",
+      "-finding 34 41 unexpectedUnderscore\tUnexpected dangling '_' in '_x'. A leading or trailing underscore is a convention for privacy that the language does not enforce, so it tells a reader something is off limits while doing nothing to keep them out. Where privacy is real, `#private` or a closure says so and is checked.",
+      "-finding 43 64 unexpectedUnderscore\tUnexpected dangling '_' in '_fn'. A leading or trailing underscore is a convention for privacy that the language does not enforce, so it tells a reader something is off limits while doing nothing to keep them out. Where privacy is real, `#private` or a closure says so and is checked.",
+      "-finding 56 60 unexpectedUnderscore\tUnexpected dangling '_' in '_arg'. A leading or trailing underscore is a convention for privacy that the language does not enforce, so it tells a reader something is off limits while doing nothing to keep them out. Where privacy is real, `#private` or a closure says so and is checked.",
+      " fixed\tconst _lead = 1; const tail_ = 2; this._x; function _fn(_arg) {}\\u000a"
+    ]
+  },
+  {
+    "mutant": "D2",
+    "file_line": "stage1/cohere/lint/rules/no-underscore-dangle/profile.a:42",
+    "change": "swap callback arguments: reverse finding ordering",
+    "from": "(left, right) => left.start - right.start",
+    "to": "(right, left) => left.start - right.start",
+    "matrix": {
+      "label": "D2",
+      "command": [
+        "timeout",
+        "120",
+        "go",
+        "test",
+        "-json",
+        "-count=1",
+        "-timeout",
+        "90s",
+        "./stage1/cohere/lint/rules/no-underscore-dangle/",
+        "-run",
+        "."
+      ],
+      "exit": 0,
+      "wall_seconds": 40.39953722700011
+    },
+    "witness": {
+      "label": "witness-D2",
+      "command": [
+        "timeout",
+        "10",
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "stage1/cohere/lint/rules/no-underscore-dangle/profile.a",
+        "/workspace/adamic/review/test-defend/stage1-cohere-lint-rules-no-underscore-dangle/witness-manifest.txt"
+      ],
+      "exit": 0,
+      "wall_seconds": 0.14933427100186236
+    },
+    "rows_failed": [],
+    "rows_passed": [
+      "TestCompileProfiles"
+    ],
+    "test_seconds": [
+      38.04
+    ],
+    "witness_changed": true,
+    "witness_diff": [
+      "--- \n",
+      "+++ \n",
+      "@@ -1,7 +1,7 @@\n",
+      " case 0",
+      "+finding 56 60 unexpectedUnderscore\tUnexpected dangling '_' in '_arg'. A leading or trailing underscore is a convention for privacy that the language does not enforce, so it tells a reader something is off limits while doing nothing to keep them out. Where privacy is real, `#private` or a closure says so and is checked.",
+      "+finding 43 64 unexpectedUnderscore\tUnexpected dangling '_' in '_fn'. A leading or trailing underscore is a convention for privacy that the language does not enforce, so it tells a reader something is off limits while doing nothing to keep them out. Where privacy is real, `#private` or a closure says so and is checked.",
+      "+finding 34 41 unexpectedUnderscore\tUnexpected dangling '_' in '_x'. A leading or trailing underscore is a convention for privacy that the language does not enforce, so it tells a reader something is off limits while doing nothing to keep them out. Where privacy is real, `#private` or a closure says so and is checked.",
+      "+finding 23 32 unexpectedUnderscore\tUnexpected dangling '_' in 'tail_'. A leading or trailing underscore is a convention for privacy that the language does not enforce, so it tells a reader something is off limits while doing nothing to keep them out. Where privacy is real, `#private` or a closure says so and is checked.",
+      " finding 6 15 unexpectedUnderscore\tUnexpected dangling '_' in '_lead'. A leading or trailing underscore is a convention for privacy that the language does not enforce, so it tells a reader something is off limits while doing nothing to keep them out. Where privacy is real, `#private` or a closure says so and is checked.",
+      "-finding 23 32 unexpectedUnderscore\tUnexpected dangling '_' in 'tail_'. A leading or trailing underscore is a convention for privacy that the language does not enforce, so it tells a reader something is off limits while doing nothing to keep them out. Where privacy is real, `#private` or a closure says so and is checked.",
+      "-finding 34 41 unexpectedUnderscore\tUnexpected dangling '_' in '_x'. A leading or trailing underscore is a convention for privacy that the language does not enforce, so it tells a reader something is off limits while doing nothing to keep them out. Where privacy is real, `#private` or a closure says so and is checked.",
+      "-finding 43 64 unexpectedUnderscore\tUnexpected dangling '_' in '_fn'. A leading or trailing underscore is a convention for privacy that the language does not enforce, so it tells a reader something is off limits while doing nothing to keep them out. Where privacy is real, `#private` or a closure says so and is checked.",
+      "-finding 56 60 unexpectedUnderscore\tUnexpected dangling '_' in '_arg'. A leading or trailing underscore is a convention for privacy that the language does not enforce, so it tells a reader something is off limits while doing nothing to keep them out. Where privacy is real, `#private` or a closure says so and is checked.",
+      " fixed\tconst _lead = 1; const tail_ = 2; this._x; function _fn(_arg) {}\\u000a"
+    ]
+  },
+  {
+    "mutant": "D3",
+    "file_line": "stage1/cohere/lint/rules/no-underscore-dangle/profile.a:10",
+    "change": "swap recursive arguments: revisit parent instead of descending",
+    "from": "ancestry(context, parents, child, index)",
+    "to": "ancestry(context, parents, index, child)",
+    "matrix": {
+      "label": "D3",
+      "command": [
+        "timeout",
+        "120",
+        "go",
+        "test",
+        "-json",
+        "-count=1",
+        "-timeout",
+        "90s",
+        "./stage1/cohere/lint/rules/no-underscore-dangle/",
+        "-run",
+        "."
+      ],
+      "exit": 0,
+      "wall_seconds": 40.122675079001056
+    },
+    "witness": {
+      "label": "witness-D3",
+      "command": [
+        "timeout",
+        "10",
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "stage1/cohere/lint/rules/no-underscore-dangle/profile.a",
+        "/workspace/adamic/review/test-defend/stage1-cohere-lint-rules-no-underscore-dangle/witness-manifest.txt"
+      ],
+      "exit": 70,
+      "wall_seconds": 0.17389873899810482
+    },
+    "rows_failed": [],
+    "rows_passed": [
+      "TestCompileProfiles"
+    ],
+    "test_seconds": [
+      37.77
+    ],
+    "witness_changed": true,
+    "witness_diff": [
+      "--- \n",
+      "+++ \n",
+      "@@ -1,7 +1,2 @@\n",
+      " case 0",
+      "-finding 6 15 unexpectedUnderscore\tUnexpected dangling '_' in '_lead'. A leading or trailing underscore is a convention for privacy that the language does not enforce, so it tells a reader something is off limits while doing nothing to keep them out. Where privacy is real, `#private` or a closure says so and is checked.",
+      "-finding 23 32 unexpectedUnderscore\tUnexpected dangling '_' in 'tail_'. A leading or trailing underscore is a convention for privacy that the language does not enforce, so it tells a reader something is off limits while doing nothing to keep them out. Where privacy is real, `#private` or a closure says so and is checked.",
+      "-finding 34 41 unexpectedUnderscore\tUnexpected dangling '_' in '_x'. A leading or trailing underscore is a convention for privacy that the language does not enforce, so it tells a reader something is off limits while doing nothing to keep them out. Where privacy is real, `#private` or a closure says so and is checked.",
+      "-finding 43 64 unexpectedUnderscore\tUnexpected dangling '_' in '_fn'. A leading or trailing underscore is a convention for privacy that the language does not enforce, so it tells a reader something is off limits while doing nothing to keep them out. Where privacy is real, `#private` or a closure says so and is checked.",
+      "-finding 56 60 unexpectedUnderscore\tUnexpected dangling '_' in '_arg'. A leading or trailing underscore is a convention for privacy that the language does not enforce, so it tells a reader something is off limits while doing nothing to keep them out. Where privacy is real, `#private` or a closure says so and is checked.",
+      "-fixed\tconst _lead = 1; const tail_ = 2; this._x; function _fn(_arg) {}\\u000a",
+      "+adamic: panic: RangeError: Maximum call stack size exceeded"
+    ]
+  }
+]

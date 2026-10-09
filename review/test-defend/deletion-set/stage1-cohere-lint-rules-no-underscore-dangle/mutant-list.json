@@ -1,0 +1,70 @@
+{
+  "written_before_baseline_utc": "2026-10-09T18:04:15.647328+00:00",
+  "main": "b8bcadb2c493173855f19d7e5c508b34f5eeb5b6",
+  "inventory": [
+    {
+      "mutant": "M1",
+      "file": "review/test-audit/stage1-cohere-lint-rules-no-underscore-dangle/M1.diff",
+      "branch": "test-audit/stage1-cohere-lint-rules-no-underscore-dangle",
+      "branch_sha": "bb813899109d7b4e00c9473b02a8108cbd731d72",
+      "candidates_failed": [],
+      "other_rows_failed": [],
+      "selected": false
+    },
+    {
+      "mutant": "M2",
+      "file": "review/test-audit/stage1-cohere-lint-rules-no-underscore-dangle/M2.diff",
+      "branch": "test-audit/stage1-cohere-lint-rules-no-underscore-dangle",
+      "branch_sha": "bb813899109d7b4e00c9473b02a8108cbd731d72",
+      "candidates_failed": [],
+      "other_rows_failed": [],
+      "selected": false
+    },
+    {
+      "mutant": "M3",
+      "file": "review/test-audit/stage1-cohere-lint-rules-no-underscore-dangle/M3.diff",
+      "branch": "test-audit/stage1-cohere-lint-rules-no-underscore-dangle",
+      "branch_sha": "bb813899109d7b4e00c9473b02a8108cbd731d72",
+      "candidates_failed": [],
+      "other_rows_failed": [],
+      "selected": false
+    },
+    {
+      "mutant": "M4",
+      "file": "review/test-audit/stage1-cohere-lint-rules-no-underscore-dangle/M4.diff",
+      "branch": "test-audit/stage1-cohere-lint-rules-no-underscore-dangle",
+      "branch_sha": "bb813899109d7b4e00c9473b02a8108cbd731d72",
+      "candidates_failed": [],
+      "other_rows_failed": [],
+      "selected": false
+    },
+    {
+      "mutant": "D1",
+      "file": "review/test-defend/stage1-cohere-lint-rules-no-underscore-dangle/D1.diff",
+      "branch": "test-defend/stage1-cohere-lint-rules-no-underscore-dangle",
+      "branch_sha": "cb2d60543b909b18cbac665fe859f3124496a573",
+      "candidates_failed": [],
+      "other_rows_failed": [],
+      "selected": false
+    },
+    {
+      "mutant": "D2",
+      "file": "review/test-defend/stage1-cohere-lint-rules-no-underscore-dangle/D2.diff",
+      "branch": "test-defend/stage1-cohere-lint-rules-no-underscore-dangle",
+      "branch_sha": "cb2d60543b909b18cbac665fe859f3124496a573",
+      "candidates_failed": [],
+      "other_rows_failed": [],
+      "selected": false
+    },
+    {
+      "mutant": "D3",
+      "file": "review/test-defend/stage1-cohere-lint-rules-no-underscore-dangle/D3.diff",
+      "branch": "test-defend/stage1-cohere-lint-rules-no-underscore-dangle",
+      "branch_sha": "cb2d60543b909b18cbac665fe859f3124496a573",
+      "candidates_failed": [],
+      "other_rows_failed": [],
+      "selected": false
+    }
+  ],
+  "selected": []
+}

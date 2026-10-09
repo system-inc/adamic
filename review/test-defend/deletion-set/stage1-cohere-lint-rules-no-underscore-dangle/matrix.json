@@ -1,0 +1,15 @@
+{
+  "package": "stage1/cohere/lint/rules/no-underscore-dangle",
+  "main": "b8bcadb2c493173855f19d7e5c508b34f5eeb5b6",
+  "skipped": [
+    "TestCompileProfiles"
+  ],
+  "mutants": [],
+  "keep": [],
+  "deletable": [
+    "TestCompileProfiles"
+  ],
+  "notes": {
+    "TestCompileProfiles": "No gathered mutant: all four audit and three defender mutants recorded no failing candidate row. Deletable means no demonstrated mutant protection; skipping this sole row leaves no package tests to run."
+  }
+}
