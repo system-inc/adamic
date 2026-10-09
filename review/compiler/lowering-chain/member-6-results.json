@@ -1,0 +1,663 @@
+{
+  "branch": "compiler/namespace-value",
+  "source": "26ccff9c",
+  "tests": [
+    {
+      "test": "TestNamespaceClassEarlyConstructionStaysLoud",
+      "result": "pass",
+      "seconds": 0.03,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceReceiverArrowInheritsScope",
+      "result": "pass",
+      "seconds": 0.03,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceReceiverRefusal",
+      "result": "pass",
+      "seconds": 0.06,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceCallGraphCycleUnion",
+      "result": "pass",
+      "seconds": 0.06,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceAmbientContextsDoNotExecute",
+      "result": "pass",
+      "seconds": 0.08,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceEnumInitializationIndependentOfModuleAnalysis",
+      "result": "pass",
+      "seconds": 0.06,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceCallGraphLinearWork/12",
+      "result": "pass",
+      "seconds": 0.07,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceLimitsStayLoud/computed_enum",
+      "result": "pass",
+      "seconds": 0.09,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceCallGraphLinearWork/24",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceCallGraphLinearWork",
+      "result": "pass",
+      "seconds": 0.12,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceReturnedAssignmentLimits",
+      "result": "pass",
+      "seconds": 0.1,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceLimitsStayLoud/reopened_enum",
+      "result": "pass",
+      "seconds": 0.09,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceInitializationReachability/direct",
+      "result": "pass",
+      "seconds": 0.03,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceLimitsStayLoud/early_enum",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceInitializationReachability/helper",
+      "result": "pass",
+      "seconds": 0.08,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceLimitsStayLoud/function_merge_escape",
+      "result": "pass",
+      "seconds": 0.06,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceLimitsStayLoud/class_merge",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceInitializationReachability/cycle",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceInitializationReachability",
+      "result": "pass",
+      "seconds": 0.16,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceLimitsStayLoud/destructured_state",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceTypesErase",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceClosedCallGraphEdges",
+      "result": "pass",
+      "seconds": 0.27,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceLimitsStayLoud/nested_object_var",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceLimitsStayLoud/rest_object_var",
+      "result": "pass",
+      "seconds": 0.03,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceLimitsStayLoud/default_object_var",
+      "result": "pass",
+      "seconds": 0.03,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceLimitsStayLoud/early_call",
+      "result": "pass",
+      "seconds": 0.03,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceLimitsStayLoud/early_read",
+      "result": "pass",
+      "seconds": 0.03,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceLimitsStayLoud/block_var",
+      "result": "pass",
+      "seconds": 0.03,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceLimitsStayLoud/nested_early_read",
+      "result": "pass",
+      "seconds": 0.03,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceLimitsStayLoud/explicit_receiver",
+      "result": "pass",
+      "seconds": 0.03,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceLimitsStayLoud/ambient",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceLimitsStayLoud",
+      "result": "pass",
+      "seconds": 0.68,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceAmbientHostInitialization/realpath",
+      "result": "pass",
+      "seconds": 0.77,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceAmbientHostInitialization/cwd",
+      "result": "pass",
+      "seconds": 0.48,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceAmbientHostInitialization",
+      "result": "pass",
+      "seconds": 1.25,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceRuledMutants/live-write",
+      "result": "pass",
+      "seconds": 13.14,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceRuledMutants/repeat-initializer",
+      "result": "pass",
+      "seconds": 0.34,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceRuledMutants/primitive-tag",
+      "result": "pass",
+      "seconds": 0.32,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceRuledMutants",
+      "result": "pass",
+      "seconds": 13.81,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceSemanticMutants/wrong_factory_binding",
+      "result": "pass",
+      "seconds": 0.4,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceSemanticMutants/drop_returned_assignment",
+      "result": "pass",
+      "seconds": 0.41,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceSemanticMutants/wrong_exported_state",
+      "result": "pass",
+      "seconds": 0.46,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceSemanticMutants/wrong_scoped_function",
+      "result": "pass",
+      "seconds": 0.5,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceSemanticMutants/wrong_body_order",
+      "result": "pass",
+      "seconds": 0.37,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceSemanticMutants/wrong_namespace_enum",
+      "result": "pass",
+      "seconds": 0.39,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceSemanticMutants/wrong_debug_initialization",
+      "result": "pass",
+      "seconds": 0.36,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceSemanticMutants/wrong_scoped_constant",
+      "result": "pass",
+      "seconds": 0.47,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceSemanticMutants",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceStateMutants/lose_assignment",
+      "result": "pass",
+      "seconds": 0.29,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceStateMutants/lose_hoisting",
+      "result": "pass",
+      "seconds": 0.29,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceStateMutants/skip_ready_check",
+      "result": "pass",
+      "seconds": 0.29,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceStateMutants",
+      "result": "pass",
+      "seconds": 0.87,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode",
+      "result": "pass",
+      "seconds": 0.06,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceContainerLimitsStayNamed",
+      "result": "pass",
+      "seconds": 0.18,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceLiveExportBoundary",
+      "result": "pass",
+      "seconds": 0.54,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceDescriptorBoundary",
+      "result": "pass",
+      "seconds": 2.67,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceDirectWritesStayRefused",
+      "result": "pass",
+      "seconds": 2.77,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceObjectMutants/second-object",
+      "result": "pass",
+      "seconds": 3.19,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceObjectAgreement/identity",
+      "result": "pass",
+      "seconds": 2.93,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestTracingNamespaceValueBoundary",
+      "result": "pass",
+      "seconds": 2.81,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceReadonlyWiderViewStop",
+      "result": "pass",
+      "seconds": 3.21,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceObjectAgreement/staged",
+      "result": "pass",
+      "seconds": 2.81,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceObjectMutants/early-key",
+      "result": "pass",
+      "seconds": 2.93,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceObjectAgreement/merged",
+      "result": "pass",
+      "seconds": 2.2,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceObjectMutants/wrong-order",
+      "result": "pass",
+      "seconds": 2.2,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceValueBoundary/stored",
+      "result": "pass",
+      "seconds": 2.95,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceObjectMutants/drop-readonly",
+      "result": "pass",
+      "seconds": 2.12,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceObjectMutants",
+      "result": "pass",
+      "seconds": 10.45,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceObjectAgreement/structural-view",
+      "result": "pass",
+      "seconds": 2.26,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceValueBoundary/passed",
+      "result": "pass",
+      "seconds": 2.63,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceObjectAgreement/order",
+      "result": "pass",
+      "seconds": 1.72,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceValueBoundary/returned",
+      "result": "pass",
+      "seconds": 2.07,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceValueBoundary",
+      "result": "pass",
+      "seconds": 7.65,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceObjectAgreement/effects",
+      "result": "pass",
+      "seconds": 1.46,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceObjectAgreement/prototype-presence",
+      "result": "pass",
+      "seconds": 1.33,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceObjectAgreement/imports/main",
+      "result": "pass",
+      "seconds": 1.45,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceObjectAgreement/wider-reference",
+      "result": "pass",
+      "seconds": 1.49,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceObjectAgreement/erased-block",
+      "result": "pass",
+      "seconds": 1.51,
+      "log": "member-6-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceObjectAgreement",
+      "result": "pass",
+      "seconds": 19.17,
+      "log": "member-6-tests.jsonl"
+    }
+  ],
+  "counts": {
+    "added": [
+      {
+        "row": "stage3/namespace-value/qualified-live.a",
+        "after": [
+          "4",
+          "4",
+          "9",
+          "16",
+          "3",
+          "0"
+        ]
+      },
+      {
+        "row": "stage3/namespace-value/tracing-qualified.a",
+        "after": [
+          "11",
+          "11",
+          "12",
+          "22",
+          "8",
+          "0"
+        ]
+      },
+      {
+        "row": "stage3/namespace-value/stored.a",
+        "after": [
+          "9",
+          "9",
+          "11",
+          "22",
+          "6",
+          "0"
+        ]
+      },
+      {
+        "row": "stage3/namespace-value/passed.a",
+        "after": [
+          "7",
+          "7",
+          "8",
+          "15",
+          "6",
+          "0"
+        ]
+      },
+      {
+        "row": "stage3/namespace-value/returned.a",
+        "after": [
+          "9",
+          "9",
+          "11",
+          "22",
+          "6",
+          "0"
+        ]
+      },
+      {
+        "row": "stage3/namespace-value/identity.a",
+        "after": [
+          "6",
+          "6",
+          "5",
+          "13",
+          "5",
+          "0"
+        ]
+      },
+      {
+        "row": "stage3/namespace-value/staged.a",
+        "after": [
+          "17",
+          "17",
+          "25",
+          "36",
+          "8",
+          "0"
+        ]
+      },
+      {
+        "row": "stage3/namespace-value/merged.a",
+        "after": [
+          "13",
+          "13",
+          "22",
+          "29",
+          "9",
+          "0"
+        ]
+      },
+      {
+        "row": "stage3/namespace-value/structural-view.a",
+        "after": [
+          "4",
+          "4",
+          "1",
+          "6",
+          "3",
+          "0"
+        ]
+      },
+      {
+        "row": "stage3/namespace-value/order.a",
+        "after": [
+          "7",
+          "7",
+          "6",
+          "10",
+          "7",
+          "0"
+        ]
+      },
+      {
+        "row": "stage3/namespace-value/effects.a",
+        "after": [
+          "11",
+          "11",
+          "10",
+          "22",
+          "6",
+          "0"
+        ]
+      },
+      {
+        "row": "stage3/namespace-value/prototype-presence.a",
+        "after": [
+          "6",
+          "6",
+          "5",
+          "10",
+          "6",
+          "0"
+        ]
+      },
+      {
+        "row": "stage3/namespace-value/imports/main.a",
+        "after": [
+          "15",
+          "15",
+          "17",
+          "30",
+          "7",
+          "0"
+        ]
+      },
+      {
+        "row": "stage3/namespace-value/wider-reference.a",
+        "after": [
+          "7",
+          "7",
+          "11",
+          "19",
+          "6",
+          "0"
+        ]
+      },
+      {
+        "row": "stage3/fixtures/namespaces/10_tracing_escape.a",
+        "after": [
+          "16",
+          "16",
+          "20",
+          "36",
+          "13",
+          "0"
+        ]
+      },
+      {
+        "row": "stage3/namespace-value/erased-block.a",
+        "after": [
+          "7",
+          "7",
+          "5",
+          "11",
+          "6",
+          "0"
+        ]
+      }
+    ],
+    "changed": [],
+    "removed": [],
+    "rows": 1031
+  }
+}

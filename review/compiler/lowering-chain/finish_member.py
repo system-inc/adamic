@@ -3,6 +3,7 @@ from pathlib import Path
 import gzip,json,subprocess,sys
 r=Path(__file__).resolve().parent
 number,branch,sha,reason=sys.argv[1:5]
+assert not list(Path('review').rglob('*.go')), 'review evidence must not be compilable Go'
 subprocess.run(['python3',str(r/'record_member.py'),number,branch,sha,reason],check=True)
 d=json.loads((r/('member-'+number+'-results.json')).read_text())
 leaves=[x for x in d['tests'] if '/' not in x['test'] and x['result']=='pass']

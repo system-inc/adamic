@@ -6,7 +6,7 @@ root=Path(sys.argv[1]).resolve();root.mkdir(parents=True,exist_ok=True)
 def run(name,relative,change,pattern,catcher):
  original=repo/relative;source=original.read_text();mutated=change(source);assert mutated!=source
  (root/(name+'.patch')).write_text(''.join(difflib.unified_diff(source.splitlines(True),mutated.splitlines(True),fromfile=relative,tofile=relative)))
- replacement=root/(name+'.go');replacement.write_text(mutated)
+ replacement=root/(name+'.go.txt');replacement.write_text(mutated)
  overlay=root/(name+'.json');overlay.write_text(json.dumps({'Replace':{str(original):str(replacement)}}))
  env=os.environ.copy();env['ADAMIC_GATE_UNCACHED']='1'
  log=root/(name+'.log')

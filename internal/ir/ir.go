@@ -266,6 +266,9 @@ type Local struct {
 
 	// NamespaceState stays unready until assigned when its type excludes undefined.
 	NamespaceState bool
+	// NamespaceObject is the canonical escaped container; NamespaceReady is its creation flag.
+	NamespaceObject bool
+	NamespaceReady  int
 
 	// NamespaceVar has hoisted storage; its initializer is an assignment in source order.
 	NamespaceVar bool
@@ -398,6 +401,7 @@ type (
 	ObjectLiteral struct {
 		// Record uses counted own-key storage when indexed aliases can add fields.
 		Record          bool
+		Namespace       bool
 		GraphTypes      []int
 		SpreadReadiness string
 		// Class is the nominal class ID, or zero for a plain object.
@@ -425,6 +429,7 @@ type (
 		// CallableAccessor keeps getter selection attached to a direct callable
 		// invocation; the receiver is saved before that getter runs.
 		CallableAccessor   bool
+		Namespace          bool
 		ViewContract       ViewContractID
 		ViewTypeID         int
 		ViewReceiverTypeID int
@@ -1207,11 +1212,13 @@ type (
 
 	// SetProperty is object.name = value: the field takes the value, and lets go of what it held.
 	SetProperty struct {
-		Record        bool // write into counted own-key storage
-		Uninitialized bool
-		Object        Expression
-		Name          string
-		Value         Expression
+		NamespaceInstall  bool
+		NamespaceReadonly bool
+		Record            bool // write into counted own-key storage
+		Uninitialized     bool
+		Object            Expression
+		Name              string
+		Value             Expression
 		// Class is as Property's.
 		Class int
 		// Site is which write of the program this is, for the cycle finder (lowering keeps the type of

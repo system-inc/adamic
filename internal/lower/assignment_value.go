@@ -26,6 +26,12 @@ func (l *lowering) assignmentValue(node *ast.Node) (ir.Expression, error) {
 		return nil, err
 	}
 	var value ir.Expression = ir.Read{Local: local, Of: l.result.Locals[local].Type, Checked: l.checked(local)}
+	if read, handled, err := l.namespaceExportRead(target); handled {
+		if err != nil {
+			return nil, err
+		}
+		value = read
+	}
 	if value.Type() == ir.Union && result != ir.Union {
 		value = ir.Narrow{Value: value, To: result}
 	} else {

@@ -477,6 +477,14 @@ func (e *emitter) statement(at *ir.Statement) {
 	case ir.Panic:
 		e.line("panic(%s);", e.value(statement.Message))
 	case ir.SetProperty:
+		if statement.NamespaceInstall {
+			e.line("adamicNamespaceInstall(%s, %s, %s, %t);", e.value(statement.Object), quote(statement.Name), e.value(statement.Value), statement.NamespaceReadonly)
+			break
+		}
+		if statement.Record {
+			e.line("adamicWriteField(%s, %s, %s);", e.value(statement.Object), quote(statement.Name), e.value(statement.Value))
+			break
+		}
 		if e.program.CheckedFields[statement.Name] && !statement.Define && !statement.Uninitialized {
 			e.line("adamicViewWrite(%s, %s, %s, %d);", e.value(statement.Object), quote(statement.Name), e.value(statement.Value), viewFieldRepresentation(statement.Value))
 			break
@@ -832,6 +840,9 @@ func (e *emitter) value(expression ir.Expression) string {
 	case ir.Conditional:
 		return "(" + e.value(expression.Condition) + " ? " + e.value(expression.WhenTrue) + " : " + e.value(expression.WhenNot) + ")"
 	case ir.ObjectLiteral:
+		if expression.Namespace {
+			return "adamicNamespace()"
+		}
 		if expression.Tuple {
 			elements := []string{}
 			for _, field := range expression.Fields {

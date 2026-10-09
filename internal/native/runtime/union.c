@@ -1,6 +1,7 @@
 // union.c: a union whose members are held differently, as one counted reference (adamic.h).
 
 #include "adamic.h"
+#include "namespace.h"
 
 #include <math.h>
 #include <string.h>
@@ -128,6 +129,7 @@ bool adamic_has_property(const adamic_heap *value, const char *name) {
 		const adamic_object *object = (const adamic_object *)value;
 		if (adamic_record_is(object)) {
 			adamic_string key = {{0, adamic_kind_string, 0}, strlen(name), name, 0, NULL, NULL, 0};
+			if (adamic_namespace_is(object)) return adamic_record_has_own(object, &key) || object_prototype_name(name);
 			return adamic_record_has(object, &key);
 		}
 		for (size_t index = 0; index < object->shape->count; index++) {

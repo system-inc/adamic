@@ -26,7 +26,7 @@ for name, relative, before, after, test, evidence in mutants:
     original = root / relative
     source = original.read_text()
     assert source.count(before) == 1, (name, "mutation site drift")
-    replacement = output / (name + ".go")
+    replacement = output / (name + ".go.txt")
     replacement.write_text(source.replace(before, after))
     overlay = output / (name + ".json")
     overlay.write_text(json.dumps({"Replace": {str(original): str(replacement)}}))

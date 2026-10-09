@@ -1,0 +1,6 @@
+namespace State { export let value = 1; export function advance(): void { value += 1; } }
+function replace(state: typeof State): void { state.value = 8; }
+const mock = {value: 2, advance: State.advance};
+replace(mock);
+console.log(String(State.value));
+console.log(String(mock.value));
