@@ -172,6 +172,11 @@ class LandingTests(unittest.TestCase):
         self.assertLanded(self.push('--test-only', same, 'beside'), landed, same)
         refused = self.push(second, '1', '1', '0', '0', 'second')
         self.assertIn('beyond record and test-only commits (code/a_test.go)', refused.stderr)
+        # It names B, the moved main merged with the gated sha, which descends from the gate (#mbexftz).
+        moved = refused.stderr.split('on B ')[1].split()[0]
+        self.assertEqual(git(self.repository, 'rev-list', '--parents', '-n', '1', moved).split()[1:], [self.main_now(), second])
+        self.assertEqual(git(self.repository, 'rev-parse', moved + '^{tree}'),
+                         git(self.repository, 'merge-tree', '--write-tree', self.main_now(), second).splitlines()[0])
 
 
     def test_a_test_beside_the_stars_code_waits_while_its_gate_runs(self):

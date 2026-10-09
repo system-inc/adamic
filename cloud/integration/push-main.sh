@@ -637,7 +637,11 @@ else
 	recordPaths=$(git diff --name-only "$gated" "$tree")
 	notRecords=$(printf '%s\n' "$recordPaths" | countingPaths "$(codePackages "$(git merge-base "$old" "$gated")" "$gated")")
 	if [ -n "$notRecords" ]; then
-		echo "refused: main moved to ${old:0:8} under this gate, beyond record and test-only commits ($(printf '%s' "$notRecords" | head -n 3 | paste -sd ' ' -)); merge it in and gate again" >&2
+		# B, the moved main merged with the gated sha (@system_adamic, Oct 9 02:52, #mbexftz): it descends from the
+		# gate, so a rerun of only the units whose input hash the move changed can land it on the gate's kept
+		# verdicts (rerun_merge.py). Until that rerun path is wired, B is named and the landing refused.
+		moved=$(git commit-tree "$tree" -p "$old" -p "$gated" -m "Moved main: ${gated:0:8} merged onto main ${old:0:8}, for a rerun of the units the move changed")
+		echo "refused: main moved to ${old:0:8} under this gate, beyond record and test-only commits ($(printf '%s' "$notRecords" | head -n 3 | paste -sd ' ' -)); merge it in and gate again, or rerun the units the move changed on B ${moved}" >&2
 		exit 1
 	fi
 	if printf '%s\n' "$recordPaths" | grep -qx 'stage3/progress.json' && git grep -q 'progress\.json' "$gated" -- '*.go' '*.py' '*.sh' '*.mjs' '*.cjs' '*.js' '*.ts' '*.a'; then
