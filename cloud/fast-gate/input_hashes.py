@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Content identities for the gate ledger; checkout paths never enter the digest."""
 import argparse
+import fnmatch
 import glob
 import hashlib
 import json
@@ -117,7 +118,61 @@ class InputHashes:
         return value
 
 
-def hash_units(tree, units, full=False, phase_inputs=None):
+def reads_lines(path):
+    """(package, glob) for each reads line of an executors.txt."""
+    if not os.path.exists(path):
+        return []
+    with open(path) as handle:
+        return [tuple(line.split()[1:3]) for line in handle if line.split()[:1] == ['reads']]
+
+
+def test_unit_inputs(identities, package, tools):
+    """What a test unit reads beyond its Go closure (#pgnnb67): its package's own testdata, read by path and never
+    compiled; each path a reads line names for its package (executors.txt, the tools' and then the tree's); and the
+    compiler packages compiler-dependencies.json declares its tests run. Without them an edit to
+    internal/oracle/testdata left oracle's, flow's and lower's hashes where they were."""
+    if tools is None:
+        raise ValueError('a test unit needs the gate tools for its reads lines (--tools)')
+    identities.inventory()
+    row = identities.packages.get(package)
+    if row is None or not row.get('Dir'):
+        raise ValueError('incomplete go list closure: ' + package)
+    directories = {os.path.relpath(os.path.realpath(value['Dir']), identities.tree): name
+                   for name, value in identities.packages.items() if value.get('Dir')}
+    directory = os.path.relpath(os.path.realpath(row['Dir']), identities.tree)
+    listing = subprocess.run(['git', '-C', identities.tree, 'ls-files', '-z', '-c', '-o', '--exclude-standard'],
+                             capture_output=True, check=True, timeout=10).stdout
+    files = [os.fsdecode(raw) for raw in listing.split(b'\0') if raw]
+    paths = set()
+    for path in files:
+        parts = path.split('/')
+        if 'testdata' not in parts:
+            continue
+        owner = '/'.join(parts[:parts.index('testdata')]) or '.'
+        while owner not in directories and owner not in ('', '.'):
+            owner = os.path.dirname(owner)
+        if owner == directory:
+            paths.add('/'.join(parts[:parts.index('testdata') + 1]))
+    roots = []
+    for root in dict.fromkeys(os.path.realpath(value) for value in (tools, identities.tree)):
+        roots.append(root)
+        for reader, pattern in reads_lines(os.path.join(root, 'cloud/fast-gate/executors.txt')):
+            if reader != directory:
+                continue
+            matched = [path for path in files if fnmatch.fnmatchcase(path, pattern)]
+            # A declared path that isn't there yet still counts: creating it changes the identity.
+            paths.update(matched or ([] if any(mark in pattern for mark in '*?[') else [pattern]))
+    declared = []
+    for root in roots:
+        name = os.path.join(root, 'cloud/fast-gate/compiler-dependencies.json')
+        if os.path.exists(name):
+            with open(name) as handle:
+                declared = json.load(handle).get('packages', {}).get(directory, declared)
+    packages = [package] + sorted(directories[value] for value in declared if value in directories and directories[value] != package)
+    return {'packages': packages, 'paths': sorted(paths)}
+
+
+def hash_units(tree, units, full=False, phase_inputs=None, tools=None):
     """The shared gate/integration entry point: one identity result per unit.
 
     Accept --list-units --with-inputs rows, recorded ledger rows, or plain unit
@@ -139,11 +194,11 @@ def hash_units(tree, units, full=False, phase_inputs=None):
             inputs = row.get('inputs')
             if inputs is None:
                 if row.get('package'):
-                    inputs = {'packages': [row['package']], 'paths': []}
+                    inputs = test_unit_inputs(identities, row['package'], tools)
                 else:
                     package, separator, test = name.partition(' ')
                     if separator and '/' in package:
-                        inputs = {'packages': [package], 'paths': []}
+                        inputs = test_unit_inputs(identities, package, tools)
                     else:
                         if phase_inputs is None:
                             from run import phaseInputs
@@ -165,6 +220,7 @@ def main():
     parser.add_argument('--tree', required=True, help='checkout whose contents to hash')
     parser.add_argument('--units', required=True, help='JSONL or plain unit list; - reads stdin')
     parser.add_argument('--full', action='store_true', help='whole-gate declarations for phase names without inputs')
+    parser.add_argument('--tools', help='gate tools checkout whose executors.txt and compiler map declare test units\' reads')
     args = parser.parse_args()
     def rows(handle):
         for line in handle:
@@ -174,7 +230,7 @@ def main():
     failed = False
     handle = sys.stdin if args.units == '-' else open(args.units)
     try:
-        for row in hash_units(args.tree, rows(handle), args.full):
+        for row in hash_units(args.tree, rows(handle), args.full, tools=args.tools):
             print(json.dumps(row, sort_keys=True), flush=True)
             failed = failed or row['input_hash'] is None
     finally:

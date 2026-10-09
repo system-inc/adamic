@@ -50,7 +50,7 @@ import time
 import datetime
 import traceback
 
-from input_hashes import InputHashes, tools_fingerprint
+from input_hashes import InputHashes, test_unit_inputs, tools_fingerprint
 
 module = "github.com/system-inc/adamic"
 # What the whole gate sets: no cached results, and the gate inputs' lanes on (see cloud/setup.sh --gate-inputs).
@@ -2427,7 +2427,13 @@ class Gate:
             for row in self.result.get(field, []):
                 # The unit's name as input_hashes.py's command derives it, so a ledger row can be rehashed on another tree.
                 row.setdefault("unit", ("%s %s" % (row["package"], row.get("test", ""))).strip())
-                attach(row, {"packages": [row["package"]], "paths": []})
+                try:
+                    inputs = test_unit_inputs(identities, row["package"], vars(self.arguments).get("tools"))
+                except (OSError, ValueError, subprocess.SubprocessError, TimeoutError) as error:
+                    row.update(input_hash=None, input_hash_error=str(error))
+                    errors.append(str(error))
+                    continue
+                attach(row, inputs)
         phases = []
         for phase in self.planned:
             if phase == "tests":

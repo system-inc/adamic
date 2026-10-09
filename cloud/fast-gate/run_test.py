@@ -2615,7 +2615,7 @@ class SharedUnitHashCommand(unittest.TestCase):
                 handle.write(content)
         realRun(['git', 'init', '-q', self.tree], check=True, timeout=10)
         self.command = [sys.executable, os.path.join(os.path.dirname(run.__file__), 'input_hashes.py'),
-                        '--tree', self.tree, '--units', '-']
+                        '--tree', self.tree, '--tools', self.tree, '--units', '-']
         self.unit_list = [{'package': 'example.com/shared/p', 'test': 'TestAnswer'},
                           {'package': 'example.com/shared/q', 'test': 'TestOther'},
                           {'unit': 'runtime-phase', 'inputs': {'packages': [], 'paths': ['runtime']}}]
@@ -2630,7 +2630,7 @@ class SharedUnitHashCommand(unittest.TestCase):
 
     def test_cli_exactly_matches_gate_ledger_for_every_row_kind(self):
         gate = run.Gate.__new__(run.Gate)
-        gate.arguments = types.SimpleNamespace(tree=self.tree, full=False)
+        gate.arguments = types.SimpleNamespace(tree=self.tree, tools=self.tree, full=False)
         gate.planned, gate.exits = ['tests', 'runtime-phase'], {'tests': 0, 'runtime-phase': 0}
         gate.result = {field: [dict(self.unit_list[0])] for field in
                        ('units', 'test_outcomes', 'product_units', 'cache_drain_units')}
@@ -2671,6 +2671,38 @@ class SharedUnitHashCommand(unittest.TestCase):
         self.assertEqual(rows[0]['unit'], 'example.com/missing TestMissing')
         self.assertIsNone(rows[0]['input_hash'])
         self.assertIn('incomplete go list closure', rows[0]['input_hash_error'])
+
+    hash_units = None
+
+    def test_a_test_units_reads_move_its_hash(self):
+        # #pgnnb67: a test unit's identity holds its own testdata, every path its reads lines name and the compiler
+        # packages its declaration names. Without them an edit to internal/oracle/testdata moved no unit's hash.
+        hash_units = self.hash_units or __import__('input_hashes').hash_units
+        for path, content in {'p/testdata/input.txt': 'one\n', 'r/r.go': 'package r\nconst Answer = 1\n',
+                              'cloud/fast-gate/executors.txt': 'reads q p/testdata/*\n',
+                              'cloud/fast-gate/compiler-dependencies.json': '{"version": 1, "packages": {"q": ["r"]}}'}.items():
+            target = os.path.join(self.tree, path)
+            os.makedirs(os.path.dirname(target), exist_ok=True)
+            with open(target, 'w') as handle:
+                handle.write(content)
+        units = self.unit_list[:2]
+        before = list(hash_units(self.tree, units, tools=self.tree))
+        self.assertTrue(all(row['input_hash'] for row in before), before)
+        for path, moved in (('p/testdata/input.txt', ['example.com/shared/p TestAnswer', 'example.com/shared/q TestOther']),
+                            ('r/r.go', ['example.com/shared/q TestOther'])):
+            copy = os.path.join(self.directory.name, 'moved-' + path.replace('/', '-'))
+            shutil.copytree(self.tree, copy)
+            with open(os.path.join(copy, path), 'a') as handle:
+                handle.write('\n')
+            after = list(hash_units(copy, units, tools=copy))
+            self.assertEqual([row['unit'] for old, row in zip(before, after) if old['input_hash'] != row['input_hash']], moved, path)
+
+    def test_a_test_unit_without_the_tools_has_no_identity(self):
+        # Its reads lines live in the gate tools' executors.txt; hashing without them would under-declare.
+        from input_hashes import hash_units
+        rows = list(hash_units(self.tree, self.unit_list[:1]))
+        self.assertIsNone(rows[0]['input_hash'])
+        self.assertIn('--tools', rows[0]['input_hash_error'])
 
     def test_a_declared_path_changes_its_units_hash(self):
         # A unit's declared input path is part of its identity: changing that file's content changes the unit's hash
@@ -2832,6 +2864,29 @@ class PhaseInputs(unittest.TestCase):
             PhaseInputs("test_wasi_inputs_cover_inventory_and_command_working_directories").run(result)
         self.assertEqual(len(result.failures), 1, result.errors)
         self.assertEqual(result.errors, [])
+
+
+class UnitIdentityMutants(unittest.TestCase):
+    def test_each_declaration_kills_its_mutant(self):
+        import input_hashes
+        with open(input_hashes.__file__) as handle:
+            original = handle.read()
+        mutants = [
+            ("own testdata left out", "            paths.add('/'.join(parts[:parts.index('testdata') + 1]))", "            pass"),
+            ("reads lines left out", "            paths.update(matched or", "            set().update(matched or"),
+            ("compiler declarations left out", "                declared = json.load(handle).get('packages', {}).get(directory, declared)", "                pass"),
+        ]
+        for name, before, after in mutants:
+            with self.subTest(mutant=name):
+                self.assertIn(before, original)
+                namespace = {"__name__": "mutant"}
+                exec(compile(original.replace(before, after), input_hashes.__file__, "exec"), namespace)
+                test = SharedUnitHashCommand("test_a_test_units_reads_move_its_hash")
+                test.hash_units = namespace["hash_units"]
+                result = unittest.TestResult()
+                test.run(result)
+                self.assertEqual(result.errors, [])
+                self.assertEqual(len(result.failures), 1, (name, result.failures))
 
 
 class UnitInputHashes(unittest.TestCase):
