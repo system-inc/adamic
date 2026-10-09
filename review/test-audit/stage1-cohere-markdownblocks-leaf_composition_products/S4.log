@@ -1,0 +1,19 @@
+{"Time":"2026-10-09T13:36:26.765694924Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks"}
+{"Time":"2026-10-09T13:36:26.774222368Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownListLayout_Setup"}
+{"Time":"2026-10-09T13:36:26.774298042Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownListLayout_Setup","Output":"=== RUN   TestMarkdownListLayout_Setup\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:36:26.945709921Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownListLayout_Setup","Output":"    list_layout_shards_test.go:97: build markdown-list-layout-shared-v2 63f47e274fe4 hit 0.07\n"}
+{"Time":"2026-10-09T13:36:26.990492253Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownListLayout_Setup","Output":"    list_layout_shards_test.go:122: corpus-files: repository /workspace/adamic root stage1/cohere/markdownblocks pin ce1c5a2fd91e40b05160e587ea5d88ed5bdfedb2 count 3\n"}
+{"Time":"2026-10-09T13:36:26.992720757Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownListLayout_Setup","Output":"    list_layout_shards_test.go:92: Markdown list layout setup: 0.218s\n"}
+{"Time":"2026-10-09T13:36:26.992769942Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownListLayout_Setup","Output":"--- PASS: TestMarkdownListLayout_Setup (0.22s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:36:26.992776121Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownListLayout_Setup","Elapsed":0.22}
+{"Time":"2026-10-09T13:36:26.992811424Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownListLayout"}
+{"Time":"2026-10-09T13:36:26.992815781Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownListLayout","Output":"=== RUN   TestMarkdownListLayout\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:36:26.9928216Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownListLayout","Output":"=== PAUSE TestMarkdownListLayout\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:36:26.992824294Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownListLayout"}
+{"Time":"2026-10-09T13:36:26.992829992Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownListLayout"}
+{"Time":"2026-10-09T13:36:26.992832456Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownListLayout","Output":"=== CONT  TestMarkdownListLayout\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:36:26.992837974Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownListLayout","Output":"--- PASS: TestMarkdownListLayout (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:36:26.992841389Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownListLayout","Elapsed":0}
+{"Time":"2026-10-09T13:36:26.992845906Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:36:26.994861454Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/markdownblocks\t0.229s\n"}
+{"Time":"2026-10-09T13:36:26.994889296Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Elapsed":0.229}

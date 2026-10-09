@@ -1,0 +1,145 @@
+--- a/stage1/cohere/markdownblocks/document.ts
++++ b/stage1/cohere/markdownblocks/document.ts
+@@ -217,140 +217,5 @@
+     tabWidth: number,
+     useTabs = false,
+ ): string {
+-    propagate(arena, root);
+-    const indents: IndentationInterface[] = [{ value: '', length: 0, queue: [], root: 0 }];
+-    const stack = new CommandStack();
+-    stack.values.push(command(0, 1, root));
+-    const modes = new Map<number, number>();
+-    const output: string[] = [];
+-    let position = 0;
+-    let remeasure = false;
+-    while(stack.values.length > 0) {
+-        const current = stack.values.pop() ?? panic('print stack');
+-        const node = arena.node(current.doc);
+-        if(node.kind === 't') {
+-            if(node.text !== '') {
+-                output.push(node.text);
+-                if(stack.values.length > 0) position += node.width;
+-            }
+-        }
+-        else if(node.kind === 'a') stack.appendParts(node.children, current);
+-        else if(node.kind === 'i' || node.kind === 's' || node.kind === 'w' || node.kind === 'r' || node.kind === 'd') {
+-            const aligned = indents.length;
+-            indents.push(indent(indents, current.indent, node.kind, node.text, node.width, tabWidth, useTabs));
+-            stack.values.push(command(aligned, current.mode, child(node)));
+-        }
+-        else if(node.kind === 'g') {
+-            let mode = 1;
+-            let contents = child(node);
+-            if(current.mode === 2 && !remeasure) mode = node.breaks ? 1 : 2;
+-            else {
+-                remeasure = false;
+-                if(
+-                    !node.breaks &&
+-                    fits(arena, command(current.indent, 2, contents), stack.values, printWidth - position, modes, false)
+-                )
+-                    mode = 2;
+-                else if((node.flag & 2) !== 0) {
+-                    contents = child(node, node.children.length - 1);
+-                    if(!node.breaks) {
+-                        for(let index = 1; index < node.children.length - 1; index++) {
+-                            const candidate = child(node, index);
+-                            if(
+-                                fits(
+-                                    arena,
+-                                    command(current.indent, 2, candidate),
+-                                    stack.values,
+-                                    printWidth - position,
+-                                    modes,
+-                                    false,
+-                                )
+-                            ) {
+-                                contents = candidate;
+-                                mode = 2;
+-                                break;
+-                            }
+-                        }
+-                    }
+-                }
+-            }
+-            stack.values.push(command(current.indent, mode, contents));
+-            if(node.group >= 0) modes.set(node.group, mode);
+-        }
+-        else if(node.kind === 'f') {
+-            const length = node.children.length - current.offset;
+-            if(length === 0) continue;
+-            const content = node.children[current.offset] ?? panic('fill content');
+-            const flat = command(current.indent, 2, content);
+-            const broken = command(current.indent, 1, content);
+-            const contentFits = fits(arena, flat, [], printWidth - position, modes, true);
+-            if(length === 1) {
+-                stack.values.push(contentFits ? flat : broken);
+-                continue;
+-            }
+-            const whitespace = node.children[current.offset + 1] ?? panic('fill whitespace');
+-            let together = false;
+-            if(length > 2) {
+-                const second = node.children[current.offset + 2] ?? panic('fill second');
+-                together = fits(
+-                    arena,
+-                    command(current.indent, 2, arena.concat([content, whitespace, second])),
+-                    [],
+-                    printWidth - position,
+-                    modes,
+-                    true,
+-                );
+-                stack.values.push(command(current.indent, current.mode, current.doc, current.offset + 2));
+-            }
+-            const flatSpace = length === 2 ? contentFits : together;
+-            stack.values.push(command(current.indent, flatSpace ? 2 : 1, whitespace));
+-            stack.values.push(together || contentFits ? flat : broken);
+-        }
+-        else if(node.kind === 'b') {
+-            const mode = node.group < 0 ? current.mode : (modes.get(node.group) ?? 0);
+-            if(mode === 1 || mode === 2)
+-                stack.values.push(command(current.indent, current.mode, child(node, mode === 1 ? 0 : 1)));
+-        }
+-        else if(node.kind === 'l') stack.values.push(command(current.indent, current.mode, child(node)));
+-        else if(node.kind === 'h' || node.kind === 'x') {
+-            if(node.kind === 'h' && current.mode === 2 && (node.flag & 2) === 0) {
+-                if((node.flag & 1) === 0) {
+-                    output.push(' ');
+-                    position++;
+-                }
+-                continue;
+-            }
+-            if(node.kind === 'h' && current.mode === 2) remeasure = true;
+-            if(node.kind === 'h' && (node.flag & 4) !== 0) {
+-                const base = indents[current.indent] ?? panic('literal indent');
+-                const rootIndent = indents[base.root] ?? panic('literal root');
+-                output.push('\n');
+-                output.push(rootIndent.value);
+-                position = rootIndent.length;
+-            }
+-            else {
+-                // Trim trailing spaces/tabs across text fragments without joining the whole buffer.
+-                let removed = 0;
+-                while(output.length > 0) {
+-                    const last = output.pop() ?? panic('print result');
+-                    let end = last.length;
+-                    while(end > 0 && (last.charCodeAt(end - 1) === 32 || last.charCodeAt(end - 1) === 9)) end--;
+-                    removed += last.length - end;
+-                    if(end > 0) {
+-                        output.push(last.slice(0, end));
+-                        break;
+-                    }
+-                }
+-                position -= removed;
+-                if(node.kind === 'h') {
+-                    const base = indents[current.indent] ?? panic('line indent');
+-                    output.push('\n');
+-                    output.push(base.value);
+-                    position = base.length;
+-                }
+-            }
+-        }
+-        else if(node.kind !== 'p') panic('unsupported Markdown document in printer');
+-    }
+-    return output.join('');
+-}
++    return '';
++}

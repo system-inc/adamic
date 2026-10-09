@@ -1,0 +1,92 @@
+[
+  {
+    "id": "M1",
+    "command": [
+      "timeout",
+      "90",
+      "/tmp/u127-adamic",
+      "build",
+      "stage1/cohere/markdownblocks/testdata/list_probe.ts",
+      "-o",
+      "/tmp/u127-M1",
+      "--sanitize"
+    ],
+    "exit": 0,
+    "seconds": 66.36416310000095
+  },
+  {
+    "id": "M2",
+    "command": [
+      "timeout",
+      "90",
+      "/tmp/u127-adamic",
+      "build",
+      "stage1/cohere/markdownblocks/testdata/list_probe.ts",
+      "-o",
+      "/tmp/u127-M2",
+      "--sanitize"
+    ],
+    "exit": 0,
+    "seconds": 62.55406529300126
+  },
+  {
+    "id": "M3",
+    "command": [
+      "timeout",
+      "90",
+      "/tmp/u127-adamic",
+      "build",
+      "stage1/cohere/markdownblocks/testdata/list_probe.ts",
+      "-o",
+      "/tmp/u127-M3",
+      "--sanitize"
+    ],
+    "exit": 0,
+    "seconds": 61.915581973999
+  },
+  {
+    "id": "M4",
+    "command": [
+      "timeout",
+      "90",
+      "/tmp/u127-adamic",
+      "build",
+      "stage1/cohere/markdownblocks/testdata/mdast_probe.ts",
+      "-o",
+      "/tmp/u127-M4",
+      "--sanitize"
+    ],
+    "exit": 0,
+    "seconds": 6.468336288000501
+  },
+  {
+    "id": "P1",
+    "command": [
+      "timeout",
+      "90",
+      "/tmp/u127-adamic",
+      "build",
+      "stage1/cohere/markdownblocks/testdata/list_probe.ts",
+      "-o",
+      "/tmp/u127-P1",
+      "--sanitize"
+    ],
+    "exit": 0,
+    "seconds": 58.41553776499859
+  },
+  {
+    "id": "P2",
+    "command": [
+      "timeout",
+      "90",
+      "/tmp/u127-adamic",
+      "build",
+      "stage1/cohere/markdownblocks/testdata/mdast_probe.ts",
+      "-o",
+      "/tmp/u127-P2",
+      "--sanitize"
+    ],
+    "exit": 0,
+    "seconds": 6.565671147000103
+  }
+]

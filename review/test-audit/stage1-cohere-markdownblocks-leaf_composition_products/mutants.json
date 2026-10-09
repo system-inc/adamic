@@ -1,0 +1,41 @@
+[
+  {
+    "id": "M1",
+    "file": "stage1/cohere/markdownblocks/codeblocks.ts",
+    "line": 20,
+    "change": "Math.max(4, longest + 1)",
+    "failed_rows": [
+      "TestMarkdownLayout family",
+      "TestMarkdownListLayout family"
+    ]
+  },
+  {
+    "id": "M2",
+    "file": "stage1/cohere/markdownblocks/htmlblocks.ts",
+    "line": 15,
+    "change": "code === 33",
+    "failed_rows": [
+      "TestMarkdownLayout family",
+      "TestMarkdownListLayout family"
+    ]
+  },
+  {
+    "id": "M3",
+    "file": "stage1/cohere/markdownblocks/root.ts",
+    "line": 99,
+    "change": "drop final parts.push(arena.hardline())",
+    "failed_rows": [
+      "TestMarkdownLayout family",
+      "TestMarkdownListLayout family"
+    ]
+  },
+  {
+    "id": "M4",
+    "file": "stage1/cohere/markdownblocks/mdastCompile.ts",
+    "line": 74,
+    "change": "previous.type === token.type",
+    "failed_rows": [
+      "TestMdastMalformedEvents family"
+    ]
+  }
+]

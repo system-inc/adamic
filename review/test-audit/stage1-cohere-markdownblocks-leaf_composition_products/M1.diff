@@ -1,0 +1,11 @@
+--- a/stage1/cohere/markdownblocks/codeblocks.ts
++++ b/stage1/cohere/markdownblocks/codeblocks.ts
+@@ -17,7 +17,7 @@
+         }
+         else count = 0;
+     }
+-    return '`'.repeat(Math.max(3, longest + 1));
++    return '`'.repeat(Math.max(4, longest + 1));
+ }
+ export function printCodeBlock(arena: DocumentArena, frame: CodeBlockInterface): number {
+     const body: number[] = [];

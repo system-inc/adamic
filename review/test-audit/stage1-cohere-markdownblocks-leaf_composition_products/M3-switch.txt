@@ -1,0 +1,104 @@
+// Cohere printRoot and root child spacing, including paired ignore ranges.
+import { panic, readTextFile } from 'adamic';
+function auditChoice(): string { const value = readTextFile('/tmp/u127-mutant'); return value.kind === 'Ok' ? value.text.trim() : ''; }
+const auditMutant = auditChoice();
+
+import type { DocumentArena } from './document.ts';
+export interface RootChildInterface {
+    readonly doc: number;
+    readonly kind: string;
+    readonly value: string;
+    readonly start: number;
+    readonly end: number;
+    readonly startOffset: number;
+    readonly endOffset: number;
+}
+export function ignoreKind(kind: string, value: string): string {
+    if(kind !== 'html' || !value.startsWith('<!--') || !value.endsWith('-->') || value.length < 7) return '';
+    const inner = value.slice(4, -3).trim();
+    return inner === 'prettier-ignore'
+        ? 'next'
+        : inner === 'prettier-ignore-start'
+          ? 'start'
+          : inner === 'prettier-ignore-end'
+            ? 'end'
+            : '';
+}
+function inline(kind: string): boolean {
+    return [
+        'liquidNode',
+        'inlineCode',
+        'emphasis',
+        'esComment',
+        'strong',
+        'delete',
+        'wikiLink',
+        'link',
+        'linkReference',
+        'image',
+        'imageReference',
+        'footnote',
+        'footnoteReference',
+        'sentence',
+        'whitespace',
+        'word',
+        'break',
+        'inlineMath',
+    ].includes(kind);
+}
+export function printRoot(arena: DocumentArena, source: string, children: readonly RootChildInterface[]): number {
+    if(children.length === 0) return arena.text('');
+    const ranges: number[] = [];
+    let start = -1;
+    for(let index = 0; index < children.length; index++) {
+        const child = children[index] ?? panic('root ignore child');
+        const kind = ignoreKind(child.kind, child.value);
+        if(kind === 'start' && start < 0) start = index;
+        else if(kind === 'end' && start >= 0) {
+            ranges.push(start);
+            ranges.push(index);
+            start = -1;
+        }
+    }
+    const parts: number[] = [];
+    let rangeIndex = 0;
+    for(let index = 0; index < children.length; index++) {
+        const child = children[index] ?? panic('root child');
+        const rangeStart = ranges[rangeIndex];
+        const rangeEnd = ranges[rangeIndex + 1] ?? -1;
+        if(rangeStart !== undefined && index > rangeStart && index < rangeEnd) continue;
+        if(rangeStart !== undefined && index === rangeEnd) {
+            rangeIndex += 2;
+            continue;
+        }
+        let document = child.doc;
+        if(rangeStart !== undefined && index === rangeStart) {
+            const last = children[rangeEnd] ?? panic('ignore end child');
+            document = arena.concat([
+                arena.text(child.value),
+                arena.text(source.slice(child.endOffset, last.startOffset)),
+                arena.text(last.value),
+            ]);
+        }
+        else if(index > 0) {
+            const previous = children[index - 1] ?? panic('root previous');
+            if(ignoreKind(previous.kind, previous.value) === 'next')
+                document = arena.text(source.slice(child.startOffset, child.endOffset));
+        }
+        if(parts.length > 0 && !inline(child.kind)) {
+            const previous = children[index - 1] ?? panic('root spacing previous');
+            parts.push(arena.hardline());
+            const overlapping = child.start !== child.end && child.start < previous.end;
+            const definitions = child.kind === 'definition' && previous.kind === 'definition';
+            const adjacentHTML =
+                child.kind === 'html' &&
+                (previous.kind === 'html' || previous.kind === 'paragraph') &&
+                previous.end + 1 === child.start;
+            if(!overlapping && !definitions && ignoreKind(previous.kind, previous.value) !== 'next' && !adjacentHTML)
+                parts.push(arena.hardline());
+        }
+        parts.push(document);
+    }
+    if(auditMutant !== 'M3') parts.push(arena.hardline());
+    return arena.concat(parts);
+}

@@ -1,0 +1,10 @@
+{"Time":"2026-10-09T13:44:10.006569278Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks"}
+{"Time":"2026-10-09T13:44:10.019826057Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestAuditConstructionObservation"}
+{"Time":"2026-10-09T13:44:10.019908202Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestAuditConstructionObservation","Output":"=== RUN   TestAuditConstructionObservation\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:44:11.10198906Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestAuditConstructionObservation","Output":"    leaf_composition_independent_test.go:510: build markdown-leaf-lowered 1279f76bfe59 hit 1.08\n"}
+{"Time":"2026-10-09T13:44:11.107006591Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestAuditConstructionObservation","Output":"    u127_observation_test.go:7: OBSERVED generated_C_bytes=1949282\n"}
+{"Time":"2026-10-09T13:44:11.107068204Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestAuditConstructionObservation","Output":"--- PASS: TestAuditConstructionObservation (1.09s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:44:11.107072591Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestAuditConstructionObservation","Elapsed":1.09}
+{"Time":"2026-10-09T13:44:11.107094934Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:44:11.108506826Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/markdownblocks\t1.100s\n"}
+{"Time":"2026-10-09T13:44:11.108537482Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Elapsed":1.102}

@@ -1,0 +1,218 @@
+{
+  "base": "ce1c5a2fd91e40b05160e587ea5d88ed5bdfedb2",
+  "rows": [
+    {
+      "test": "TestProduct_MarkdownLeafGoLists",
+      "file": "leaf_composition_products_test.go",
+      "line": 28,
+      "exists": true
+    },
+    {
+      "test": "TestProduct_MarkdownLeafGoDocLayout",
+      "file": "leaf_composition_products_test.go",
+      "line": 33,
+      "exists": true
+    },
+    {
+      "test": "TestProduct_MarkdownLeafLowered",
+      "file": "leaf_composition_products_test.go",
+      "line": 38,
+      "exists": true
+    },
+    {
+      "test": "TestProduct_MarkdownLeafNativeSanitized",
+      "file": "leaf_composition_products_test.go",
+      "line": 43,
+      "exists": true
+    },
+    {
+      "test": "TestProduct_MarkdownLeafNativeRelease",
+      "file": "leaf_composition_products_test.go",
+      "line": 49,
+      "exists": true
+    },
+    {
+      "test": "TestMarkdownListLayout_Setup",
+      "file": "list_layout_shards_test.go",
+      "line": 127,
+      "exists": true
+    },
+    {
+      "test": "TestMarkdownListLayoutUnion",
+      "file": "list_layout_shards_test.go",
+      "line": 155,
+      "exists": true
+    },
+    {
+      "test": "TestMarkdownListLayout_000",
+      "file": "list_layout_shards_test.go",
+      "line": 225,
+      "exists": true
+    },
+    {
+      "test": "TestMarkdownListLayout_001",
+      "file": "list_layout_shards_test.go",
+      "line": 229,
+      "exists": true
+    },
+    {
+      "test": "TestMarkdownListLayout_002",
+      "file": "list_layout_shards_test.go",
+      "line": 233,
+      "exists": true
+    },
+    {
+      "test": "TestMarkdownListLayout_003",
+      "file": "list_layout_shards_test.go",
+      "line": 237,
+      "exists": true
+    },
+    {
+      "test": "TestMarkdownListLayout_004",
+      "file": "list_layout_shards_test.go",
+      "line": 241,
+      "exists": true
+    },
+    {
+      "test": "TestMarkdownListLayout_005",
+      "file": "list_layout_shards_test.go",
+      "line": 245,
+      "exists": true
+    },
+    {
+      "test": "TestMarkdownListLayout_006",
+      "file": "list_layout_shards_test.go",
+      "line": 249,
+      "exists": true
+    },
+    {
+      "test": "TestMarkdownListLayout_007",
+      "file": "list_layout_shards_test.go",
+      "line": 253,
+      "exists": true
+    },
+    {
+      "test": "TestMarkdownListLayout_008",
+      "file": "list_layout_shards_test.go",
+      "line": 257,
+      "exists": true
+    },
+    {
+      "test": "TestMarkdownListLayout_009",
+      "file": "list_layout_shards_test.go",
+      "line": 261,
+      "exists": true
+    },
+    {
+      "test": "TestMarkdownListLayout_010",
+      "file": "list_layout_shards_test.go",
+      "line": 265,
+      "exists": true
+    },
+    {
+      "test": "TestMarkdownListLayout_011",
+      "file": "list_layout_shards_test.go",
+      "line": 269,
+      "exists": true
+    },
+    {
+      "test": "TestMarkdownListLayout_012",
+      "file": "list_layout_shards_test.go",
+      "line": 273,
+      "exists": true
+    },
+    {
+      "test": "TestMarkdownListLayout_013",
+      "file": "list_layout_shards_test.go",
+      "line": 277,
+      "exists": true
+    },
+    {
+      "test": "TestMarkdownListLayout_014",
+      "file": "list_layout_shards_test.go",
+      "line": 281,
+      "exists": true
+    },
+    {
+      "test": "TestMarkdownListLayout_015",
+      "file": "list_layout_shards_test.go",
+      "line": 285,
+      "exists": true
+    },
+    {
+      "test": "TestMarkdownListLayout",
+      "file": "lists_test.go",
+      "line": 24,
+      "exists": true
+    },
+    {
+      "test": "TestMarkdownQuoteLayout",
+      "file": "lists_test.go",
+      "line": 32,
+      "exists": true
+    },
+    {
+      "test": "TestMarkdownTableLayout",
+      "file": "lists_test.go",
+      "line": 38,
+      "exists": true
+    },
+    {
+      "test": "TestMarkdownCodeBlockLayout",
+      "file": "lists_test.go",
+      "line": 46,
+      "exists": true
+    },
+    {
+      "test": "TestMarkdownHTMLBlockLayout",
+      "file": "lists_test.go",
+      "line": 54,
+      "exists": true
+    },
+    {
+      "test": "TestMarkdownLeafComposition",
+      "file": "lists_test.go",
+      "line": 89,
+      "exists": true
+    },
+    {
+      "test": "TestMarkdownRootLayout",
+      "file": "lists_test.go",
+      "line": 98,
+      "exists": true
+    },
+    {
+      "test": "TestMarkdownStructureLayout_Setup",
+      "file": "lists_test.go",
+      "line": 106,
+      "exists": true
+    },
+    {
+      "test": "TestMdastMalformedEvents_000",
+      "file": "malformed_events_independent_test.go",
+      "line": 126,
+      "exists": true
+    },
+    {
+      "test": "TestMdastMalformedEvents_001",
+      "file": "malformed_events_independent_test.go",
+      "line": 130,
+      "exists": true
+    },
+    {
+      "test": "TestMdastMalformedEvents_002",
+      "file": "malformed_events_independent_test.go",
+      "line": 134,
+      "exists": true
+    },
+    {
+      "test": "TestMdastMalformedEventsUnion",
+      "file": "malformed_events_independent_test.go",
+      "line": 138,
+      "exists": true
+    }
+  ],
+  "moved_file": {
+    "malformed_events_shards_test.go": "malformed_events_independent_test.go"
+  }
+}

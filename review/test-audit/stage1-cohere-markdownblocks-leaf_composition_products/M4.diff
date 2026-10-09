@@ -1,0 +1,11 @@
+--- a/stage1/cohere/markdownblocks/mdastCompile.ts
++++ b/stage1/cohere/markdownblocks/mdastCompile.ts
+@@ -71,7 +71,7 @@
+         const open = this.openTokens.pop();
+         if(open === undefined) panic(`Cannot close \`${token.type}\`: it’s not open`);
+         const previous = this.tokens.token(open);
+-        if(previous.type !== token.type)
++        if(previous.type === token.type)
+             panic(`Cannot close \`${token.type}\`: a different token (\`${previous.type}\`) is open`);
+         node.setEnd(token.end);
+     }

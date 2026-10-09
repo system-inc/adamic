@@ -1,0 +1,42 @@
+--- a/stage1/cohere/markdownblocks/mdastCompile.ts
++++ b/stage1/cohere/markdownblocks/mdastCompile.ts
+@@ -617,38 +617,6 @@
+         return length;
+     }
+     compile(): MdastArena {
+-        const root = this.arena.add('root', true, false);
+-        this.stack.push(root);
+-        const lists: number[] = [];
+-        for(let index = 0; index < this.events.length; index++) {
+-            const event = this.events[index] ?? panic('event');
+-            const token = this.tokens.token(event.token);
+-            if(token.type === 'listOrdered' || token.type === 'listUnordered') {
+-                if(event.enter) lists.push(index);
+-                else index = this.prepareList(lists.pop() ?? panic('list stack'), index);
+-            }
+-        }
+-        for(const event of this.events) {
+-            this.context = event.context;
+-            if(event.enter) this.onEnter(event.token);
+-            else this.onExit(event.token);
+-        }
+-        if(this.openTokens.length > 0)
+-            panic(
+-                `Cannot close document, a token (\`${this.tokens.token(this.openTokens[this.openTokens.length - 1] ?? panic('open token')).type}\`) is still open`,
+-            );
+-        if(this.events.length > 0) {
+-            this.arena.node(root).setStart(this.tokens.token((this.events[0] ?? panic('root start')).token).start);
+-            this.arena
+-                .node(root)
+-                .setEnd(this.tokens.token((this.events[this.events.length - 2] ?? panic('root end')).token).end);
+-        }
+-        else {
+-            this.arena.node(root).start.line = 1;
+-            this.arena.node(root).start.column = 1;
+-            this.arena.node(root).end.line = 1;
+-            this.arena.node(root).end.column = 1;
+-        }
+-        return this.arena;
++        return new MdastArena();
+     }
+ }

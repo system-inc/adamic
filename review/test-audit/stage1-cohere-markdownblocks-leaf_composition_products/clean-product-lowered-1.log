@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T12:50:41.208055451Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks"}
+{"Time":"2026-10-09T12:50:41.217455136Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestProduct_MarkdownLeafLowered"}
+{"Time":"2026-10-09T12:50:41.217558862Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestProduct_MarkdownLeafLowered","Output":"=== RUN   TestProduct_MarkdownLeafLowered\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:50:41.218866637Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestProduct_MarkdownLeafLowered","Output":"=== PAUSE TestProduct_MarkdownLeafLowered\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:50:41.218883082Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestProduct_MarkdownLeafLowered"}
+{"Time":"2026-10-09T12:50:41.21888826Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestProduct_MarkdownLeafLowered"}
+{"Time":"2026-10-09T12:50:41.218890353Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestProduct_MarkdownLeafLowered","Output":"=== CONT  TestProduct_MarkdownLeafLowered\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:51:15.438195343Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestProduct_MarkdownLeafLowered","Output":"    leaf_composition_independent_test.go:510: build markdown-leaf-lowered 1279f76bfe59 miss 34.22\n"}
+{"Time":"2026-10-09T12:51:15.441536396Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestProduct_MarkdownLeafLowered","Output":"--- PASS: TestProduct_MarkdownLeafLowered (34.22s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:51:15.441628986Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestProduct_MarkdownLeafLowered","Elapsed":34.22}
+{"Time":"2026-10-09T12:51:15.44166459Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:51:15.462072519Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/markdownblocks\t34.254s\n"}
+{"Time":"2026-10-09T12:51:15.462130447Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Elapsed":34.254}

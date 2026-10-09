@@ -1,0 +1,10 @@
+{"Time":"2026-10-09T13:43:59.10677968Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks"}
+{"Time":"2026-10-09T13:43:59.11439684Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestAuditConstructionObservation"}
+{"Time":"2026-10-09T13:43:59.114498444Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestAuditConstructionObservation","Output":"=== RUN   TestAuditConstructionObservation\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:44:00.163693698Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestAuditConstructionObservation","Output":"    u127_observation_test.go:6: build markdown-leaf-go-adamic_markdown_lists f88290b77989 hit 1.05\n"}
+{"Time":"2026-10-09T13:44:00.163990947Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestAuditConstructionObservation","Output":"    u127_observation_test.go:6: OBSERVED path=\"/home/agent/.cache/adamic-build/f88290b77989b96a34602f305231a328a698bbacb3993d4d50b38790984a0994/oracle\" directory=false\n"}
+{"Time":"2026-10-09T13:44:00.164019079Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestAuditConstructionObservation","Output":"--- PASS: TestAuditConstructionObservation (1.05s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:44:00.164024518Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestAuditConstructionObservation","Elapsed":1.05}
+{"Time":"2026-10-09T13:44:00.164044428Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:44:00.165089936Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/markdownblocks\t1.058s\n"}
+{"Time":"2026-10-09T13:44:00.165117868Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Elapsed":1.058}

@@ -1,0 +1,827 @@
+[
+  {
+    "id": "M1",
+    "group": "list-family",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^(TestMarkdownListLayout(Union|_00[0-9]|_01[0-5]))$"
+    ],
+    "wall": 79.04284042499967,
+    "exit": 1,
+    "cooked": false,
+    "failed": [
+      "TestMarkdownListLayout_008",
+      "TestMarkdownListLayout_012",
+      "TestMarkdownListLayout_004",
+      "TestMarkdownListLayout_007",
+      "TestMarkdownListLayout_006",
+      "TestMarkdownListLayout_005",
+      "TestMarkdownListLayout_013",
+      "TestMarkdownListLayout_015",
+      "TestMarkdownListLayout_014",
+      "TestMarkdownListLayout_002",
+      "TestMarkdownListLayout_003",
+      "TestMarkdownListLayout_010",
+      "TestMarkdownListLayout_001",
+      "TestMarkdownListLayout_009",
+      "TestMarkdownListLayout_011",
+      "TestMarkdownListLayout_000"
+    ],
+    "errors": [
+      {
+        "Time": "2026-10-09T13:14:14.658912208Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestMarkdownListLayout_007",
+        "Output": "    list_layout_shards_test.go:698: source Node lists output byte 3832 in generated/code-layout/> - ```\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T13:14:14.691346027Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestMarkdownListLayout_008",
+        "Output": "    list_layout_shards_test.go:698: source Node lists output byte 2920 in generated/code-layout/> ```\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T13:14:14.875247954Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestMarkdownListLayout_012",
+        "Output": "    list_layout_shards_test.go:698: source Node lists output byte 23 in generated/block/~~~\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T13:14:14.881843092Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestMarkdownListLayout_004",
+        "Output": "    list_layout_shards_test.go:698: source Node lists output byte 67 in generated/block/  ```\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T13:14:14.906530666Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestMarkdownListLayout_006",
+        "Output": "    list_layout_shards_test.go:698: source Node lists output byte 284 in generated/block/> ```\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T13:14:16.800088461Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestMarkdownListLayout_005",
+        "Output": "    list_layout_shards_test.go:698: source Node lists output byte 224 in generated/embedding/const x = <div className=\"x\">x</div>;\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T13:14:16.919696504Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestMarkdownListLayout_013",
+        "Output": "    list_layout_shards_test.go:698: source Node lists output byte 450 in generated/block/> ~~~\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T13:14:17.083170193Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestMarkdownListLayout_015",
+        "Output": "    list_layout_shards_test.go:698: source Node lists output byte 2229 in generated/quote-layout/> > > ```js\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T13:14:17.08898326Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestMarkdownListLayout_014",
+        "Output": "    list_layout_shards_test.go:698: source Node lists output byte 204 in generated/embedding/if (true) { console.log(\"x\"); }\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T13:14:17.131960639Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestMarkdownListLayout_002",
+        "Output": "    list_layout_shards_test.go:698: source Node lists output byte 3510 in generated/code-layout/> - ```\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T13:14:19.007925912Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestMarkdownListLayout_003",
+        "Output": "    list_layout_shards_test.go:698: source Node lists output byte 3 in stage1/cohere/markdownblocks/gaps/embedded_jsonc.md\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T13:14:19.166750607Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestMarkdownListLayout_010",
+        "Output": "    list_layout_shards_test.go:698: source Node lists output byte 210 in generated/block/  ~~~\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T13:14:19.290221788Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestMarkdownListLayout_011",
+        "Output": "    list_layout_shards_test.go:698: source Node lists output byte 2489 in generated/quote-layout/   >\t```js\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T13:14:19.314198799Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestMarkdownListLayout_001",
+        "Output": "    list_layout_shards_test.go:698: source Node lists output byte 3 in stage1/cohere/markdownblocks/gaps/embedded_flow.md\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T13:14:19.337870669Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestMarkdownListLayout_009",
+        "Output": "    list_layout_shards_test.go:698: source Node lists output byte 3 in generated/block/```\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T13:14:20.305228083Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestMarkdownListLayout_000",
+        "Output": "    list_layout_shards_test.go:698: source Node lists output byte 8503 in stage1/cohere/markdownblocks/GAPS.md\n",
+        "OutputType": "error"
+      }
+    ]
+  },
+  {
+    "id": "M1",
+    "group": "block-layouts",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^(TestMarkdownCodeBlockLayout|TestMarkdownHTMLBlockLayout|TestMarkdownRootLayout)$"
+    ],
+    "wall": 67.01467284299906,
+    "exit": 1,
+    "cooked": false,
+    "failed": [
+      "TestMarkdownCodeBlockLayout",
+      "TestMarkdownRootLayout",
+      "TestMarkdownHTMLBlockLayout"
+    ],
+    "errors": [
+      {
+        "Time": "2026-10-09T13:15:27.287098372Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestMarkdownCodeBlockLayout",
+        "Output": "    lists_test.go:342: source Node lists output byte 8503 in stage1/cohere/markdownblocks/GAPS.md\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T13:15:27.290957659Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestMarkdownRootLayout",
+        "Output": "    lists_test.go:375: the complete layout baseline failed\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T13:15:27.29097169Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestMarkdownHTMLBlockLayout",
+        "Output": "    lists_test.go:375: the complete layout baseline failed\n",
+        "OutputType": "error"
+      }
+    ]
+  },
+  {
+    "id": "M2",
+    "group": "list-family",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^(TestMarkdownListLayout(Union|_00[0-9]|_01[0-5]))$"
+    ],
+    "wall": 17.136456207001174,
+    "exit": 1,
+    "cooked": false,
+    "failed": [
+      "TestMarkdownListLayout_006"
+    ],
+    "errors": [
+      {
+        "Time": "2026-10-09T13:15:32.372377039Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestMarkdownListLayout_006",
+        "Output": "    list_layout_shards_test.go:698: source Node lists output byte 6668 in generated/html-layout/<!-- a  \n",
+        "OutputType": "error"
+      }
+    ]
+  },
+  {
+    "id": "M2",
+    "group": "block-layouts",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^(TestMarkdownCodeBlockLayout|TestMarkdownHTMLBlockLayout|TestMarkdownRootLayout)$"
+    ],
+    "wall": 62.52035078699919,
+    "exit": 1,
+    "cooked": false,
+    "failed": [
+      "TestMarkdownCodeBlockLayout",
+      "TestMarkdownRootLayout",
+      "TestMarkdownHTMLBlockLayout"
+    ],
+    "errors": [
+      {
+        "Time": "2026-10-09T13:16:46.981968184Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestMarkdownCodeBlockLayout",
+        "Output": "    lists_test.go:342: source Node lists output byte 164054 in generated/html-layout/<!-- a  \n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T13:16:46.982101936Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestMarkdownRootLayout",
+        "Output": "    lists_test.go:375: the complete layout baseline failed\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T13:16:46.982118561Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestMarkdownHTMLBlockLayout",
+        "Output": "    lists_test.go:375: the complete layout baseline failed\n",
+        "OutputType": "error"
+      }
+    ]
+  },
+  {
+    "id": "M3",
+    "group": "list-family",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^(TestMarkdownListLayout(Union|_00[0-9]|_01[0-5]))$"
+    ],
+    "wall": 9.688266421999288,
+    "exit": 1,
+    "cooked": false,
+    "failed": [
+      "TestMarkdownListLayout_005",
+      "TestMarkdownListLayout_004",
+      "TestMarkdownListLayout_008",
+      "TestMarkdownListLayout_006",
+      "TestMarkdownListLayout_007",
+      "TestMarkdownListLayout_015",
+      "TestMarkdownListLayout_012",
+      "TestMarkdownListLayout_013",
+      "TestMarkdownListLayout_014",
+      "TestMarkdownListLayout_002",
+      "TestMarkdownListLayout_001",
+      "TestMarkdownListLayout_010",
+      "TestMarkdownListLayout_003",
+      "TestMarkdownListLayout_011",
+      "TestMarkdownListLayout_009",
+      "TestMarkdownListLayout_000"
+    ],
+    "errors": [
+      {
+        "Time": "2026-10-09T13:16:51.087896608Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestMarkdownListLayout_005",
+        "Output": "    list_layout_shards_test.go:698: source Node lists output byte 80 in generated/list/10./nnnn\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T13:16:51.09916405Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestMarkdownListLayout_004",
+        "Output": "    list_layout_shards_test.go:698: source Node lists output byte 17 in generated/list/*/n\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T13:16:51.10849684Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestMarkdownListLayout_008",
+        "Output": "    list_layout_shards_test.go:698: source Node lists output byte 105 in generated/list/1./nnnnn\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T13:16:51.113750663Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestMarkdownListLayout_006",
+        "Output": "    list_layout_shards_test.go:698: source Node lists output byte 133 in generated/list/*/nnnnn\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T13:16:51.165025553Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestMarkdownListLayout_007",
+        "Output": "    list_layout_shards_test.go:698: source Node lists output byte 133 in generated/list/-/nnnnn\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T13:16:53.082342167Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestMarkdownListLayout_015",
+        "Output": "    list_layout_shards_test.go:698: source Node lists output byte 12 in generated/block/> <!-- x -->\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T13:16:53.223392786Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestMarkdownListLayout_012",
+        "Output": "    list_layout_shards_test.go:698: source Node lists output byte 17 in generated/list/-/n\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T13:16:53.397261741Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestMarkdownListLayout_013",
+        "Output": "    list_layout_shards_test.go:698: source Node lists output byte 98 in generated/list/*/nnnn\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T13:16:53.41810627Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestMarkdownListLayout_014",
+        "Output": "    list_layout_shards_test.go:698: source Node lists output byte 98 in generated/list/+/nnnn\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T13:16:53.500230696Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestMarkdownListLayout_002",
+        "Output": "    list_layout_shards_test.go:698: source Node lists output byte 67 in generated/list/+/nnn\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T13:16:55.369175393Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestMarkdownListLayout_010",
+        "Output": "    list_layout_shards_test.go:698: source Node lists output byte 17 in generated/list/+/n\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T13:16:55.53300346Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestMarkdownListLayout_001",
+        "Output": "    list_layout_shards_test.go:698: source Node lists output byte 61 in stage1/cohere/markdownblocks/gaps/embedded_flow.md\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T13:16:55.668073109Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestMarkdownListLayout_003",
+        "Output": "    list_layout_shards_test.go:698: source Node lists output byte 31 in stage1/cohere/markdownblocks/gaps/embedded_jsonc.md\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T13:16:55.720188102Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestMarkdownListLayout_011",
+        "Output": "    list_layout_shards_test.go:698: source Node lists output byte 40 in generated/list/*/nn\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T13:16:56.272191716Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestMarkdownListLayout_009",
+        "Output": "    list_layout_shards_test.go:698: source Node lists output byte 11 in generated/block/```\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T13:16:56.667191346Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestMarkdownListLayout_000",
+        "Output": "    list_layout_shards_test.go:698: source Node lists output byte 64841 in stage1/cohere/markdownblocks/GAPS.md\n",
+        "OutputType": "error"
+      }
+    ]
+  },
+  {
+    "id": "M3",
+    "group": "block-layouts",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^(TestMarkdownCodeBlockLayout|TestMarkdownHTMLBlockLayout|TestMarkdownRootLayout)$"
+    ],
+    "wall": 65.97303473200009,
+    "exit": 1,
+    "cooked": false,
+    "failed": [
+      "TestMarkdownCodeBlockLayout",
+      "TestMarkdownHTMLBlockLayout",
+      "TestMarkdownRootLayout"
+    ],
+    "errors": [
+      {
+        "Time": "2026-10-09T13:18:02.616045461Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestMarkdownCodeBlockLayout",
+        "Output": "    lists_test.go:342: source Node lists output byte 64841 in stage1/cohere/markdownblocks/GAPS.md\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T13:18:02.61740268Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestMarkdownHTMLBlockLayout",
+        "Output": "    lists_test.go:375: the complete layout baseline failed\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T13:18:02.617411334Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestMarkdownRootLayout",
+        "Output": "    lists_test.go:375: the complete layout baseline failed\n",
+        "OutputType": "error"
+      }
+    ]
+  },
+  {
+    "id": "M4",
+    "group": "malformed-family",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^(TestMdastMalformedEvents(_00[0-2]|Union))$"
+    ],
+    "wall": 12.904557124000348,
+    "exit": 1,
+    "cooked": false,
+    "failed": [
+      "TestMdastMalformedEvents_002"
+    ],
+    "errors": [
+      {
+        "Time": "2026-10-09T13:18:15.38756313Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestMdastMalformedEvents_002",
+        "Output": "    malformed_events_independent_test.go:193: mismatch expected error exit70 got0\n",
+        "OutputType": "error"
+      }
+    ]
+  },
+  {
+    "id": "P1",
+    "group": "list-family",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^(TestMarkdownListLayout(Union|_00[0-9]|_01[0-5]))$"
+    ],
+    "wall": 9.784082842999851,
+    "exit": 1,
+    "cooked": false,
+    "failed": [
+      "TestMarkdownListLayout_004",
+      "TestMarkdownListLayout_005",
+      "TestMarkdownListLayout_008",
+      "TestMarkdownListLayout_006",
+      "TestMarkdownListLayout_007",
+      "TestMarkdownListLayout_002",
+      "TestMarkdownListLayout_003",
+      "TestMarkdownListLayout_015",
+      "TestMarkdownListLayout_012",
+      "TestMarkdownListLayout_014",
+      "TestMarkdownListLayout_010",
+      "TestMarkdownListLayout_011",
+      "TestMarkdownListLayout_013",
+      "TestMarkdownListLayout_001",
+      "TestMarkdownListLayout_009",
+      "TestMarkdownListLayout_000"
+    ],
+    "errors": [
+      {
+        "Time": "2026-10-09T13:18:19.693555449Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestMarkdownListLayout_004",
+        "Output": "    list_layout_shards_test.go:698: source Node lists output byte 0 in generated/list/*/n\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T13:18:19.904269782Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestMarkdownListLayout_006",
+        "Output": "    list_layout_shards_test.go:698: source Node lists output byte 0 in generated/list/*/nnnnn\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T13:18:19.969914412Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestMarkdownListLayout_005",
+        "Output": "    list_layout_shards_test.go:698: source Node lists output byte 0 in generated/list/10./nnnn\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T13:18:20.022509164Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestMarkdownListLayout_008",
+        "Output": "    list_layout_shards_test.go:698: source Node lists output byte 0 in generated/list/1./nnnnn\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T13:18:20.025374169Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestMarkdownListLayout_007",
+        "Output": "    list_layout_shards_test.go:698: source Node lists output byte 0 in generated/list/-/nnnnn\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T13:18:21.91571769Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestMarkdownListLayout_015",
+        "Output": "    list_layout_shards_test.go:698: source Node lists output byte 0 in generated/block/> <!-- x -->\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T13:18:21.932985771Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestMarkdownListLayout_002",
+        "Output": "    list_layout_shards_test.go:698: source Node lists output byte 0 in generated/list/+/nnn\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T13:18:22.016073715Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestMarkdownListLayout_003",
+        "Output": "    list_layout_shards_test.go:698: source Node lists output byte 0 in stage1/cohere/markdownblocks/gaps/embedded_jsonc.md\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T13:18:22.106099098Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestMarkdownListLayout_012",
+        "Output": "    list_layout_shards_test.go:698: source Node lists output byte 0 in generated/list/-/n\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T13:18:22.419366832Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestMarkdownListLayout_014",
+        "Output": "    list_layout_shards_test.go:698: source Node lists output byte 0 in generated/list/+/nnnn\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T13:18:24.240238584Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestMarkdownListLayout_010",
+        "Output": "    list_layout_shards_test.go:698: source Node lists output byte 0 in generated/list/+/n\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T13:18:24.246187285Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestMarkdownListLayout_011",
+        "Output": "    list_layout_shards_test.go:698: source Node lists output byte 0 in generated/list/*/nn\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T13:18:24.303337349Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestMarkdownListLayout_013",
+        "Output": "    list_layout_shards_test.go:698: source Node lists output byte 0 in generated/list/*/nnnn\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T13:18:24.339151891Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestMarkdownListLayout_001",
+        "Output": "    list_layout_shards_test.go:698: source Node lists output byte 0 in stage1/cohere/markdownblocks/gaps/embedded_flow.md\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T13:18:24.961851778Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestMarkdownListLayout_009",
+        "Output": "    list_layout_shards_test.go:698: source Node lists output byte 0 in generated/block/```\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T13:18:25.336630219Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestMarkdownListLayout_000",
+        "Output": "    list_layout_shards_test.go:698: source Node lists output byte 0 in stage1/cohere/markdownblocks/GAPS.md\n",
+        "OutputType": "error"
+      }
+    ]
+  },
+  {
+    "id": "P1",
+    "group": "block-layouts",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^(TestMarkdownCodeBlockLayout|TestMarkdownHTMLBlockLayout|TestMarkdownRootLayout)$"
+    ],
+    "wall": 66.56925859500006,
+    "exit": 1,
+    "cooked": false,
+    "failed": [
+      "TestMarkdownCodeBlockLayout",
+      "TestMarkdownRootLayout",
+      "TestMarkdownHTMLBlockLayout"
+    ],
+    "errors": [
+      {
+        "Time": "2026-10-09T13:19:31.880344472Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestMarkdownCodeBlockLayout",
+        "Output": "    lists_test.go:342: source Node lists output byte 0 in stage1/cohere/markdownblocks/GAPS.md\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T13:19:31.881252453Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestMarkdownRootLayout",
+        "Output": "    lists_test.go:375: the complete layout baseline failed\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T13:19:31.881260405Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestMarkdownHTMLBlockLayout",
+        "Output": "    lists_test.go:375: the complete layout baseline failed\n",
+        "OutputType": "error"
+      }
+    ]
+  },
+  {
+    "id": "P2",
+    "group": "malformed-family",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^(TestMdastMalformedEvents(_00[0-2]|Union))$"
+    ],
+    "wall": 6.382293410000784,
+    "exit": 1,
+    "cooked": false,
+    "failed": [
+      "TestMdastMalformedEvents_002",
+      "TestMdastMalformedEvents_001",
+      "TestMdastMalformedEvents_000"
+    ],
+    "errors": [
+      {
+        "Time": "2026-10-09T13:19:38.280140543Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestMdastMalformedEvents_002",
+        "Output": "    malformed_events_independent_test.go:196: normalized actual error first byte difference at 15 (lengths 46/78)\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T13:19:38.286024251Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestMdastMalformedEvents_001",
+        "Output": "    malformed_events_independent_test.go:196: normalized actual error first byte difference at 15 (lengths 46/57)\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T13:19:38.290385716Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestMdastMalformedEvents_000",
+        "Output": "    malformed_events_independent_test.go:196: normalized actual error first byte difference at 15 (lengths 46/74)\n",
+        "OutputType": "error"
+      }
+    ]
+  }
+]

@@ -1,0 +1,55 @@
+[
+  {
+    "id": "M1",
+    "command": [
+      "/tmp/u127-M1",
+      "/tmp/u127-witness/native.txt"
+    ],
+    "exit": 0,
+    "changed": true,
+    "first_difference": 8503,
+    "got": "`text\\nCannot close document, a token (`paragraph`) is still",
+    "Go_expected": "text\\nCannot close document, a token (`paragraph`) is still ",
+    "got_sha256": "118c4642081a78056ac3314daef8239cfe3ef9df956206fb078a0be42d1a964e",
+    "Go_sha256": "3fc051ab20fd1ef3b96ba94dca6af232c3725a6734c219de943b6dcae956fdbe"
+  },
+  {
+    "id": "M2",
+    "command": [
+      "/tmp/u127-M2",
+      "/tmp/u127-witness/native.txt"
+    ],
+    "exit": 0,
+    "changed": true,
+    "first_difference": 164054,
+    "got": "  \\nb\\t -->\\n\n<!-- a\\nb\\t -->\\n\n<!-- a\\nb\\t -->\\n\n<!-- a\\nb\\",
+    "Go_expected": "\\nb\\t -->\\n\n<!-- a\\nb\\t -->\\n\n<!-- a\\nb\\t -->\\n\n<!-- a\\nb\\t ",
+    "got_sha256": "e0eedc0d23bf3d20d81d5f79aa98107e6d0dbff19332aeff7c7504409f7740ba",
+    "Go_sha256": "3fc051ab20fd1ef3b96ba94dca6af232c3725a6734c219de943b6dcae956fdbe"
+  },
+  {
+    "id": "M3",
+    "command": [
+      "/tmp/u127-M3",
+      "/tmp/u127-witness/native.txt"
+    ],
+    "exit": 0,
+    "changed": true,
+    "first_difference": 64841,
+    "got": "\n```js\\n// @flow\\nfunction f<T: string>(x:T):T{return x;}\\n`",
+    "Go_expected": "\\n\n```js\\n// @flow\\nfunction f<T: string>(x:T):T{return x;}\\",
+    "got_sha256": "12bde213251e7eeb7a7b42689ba72dea9287bbee48e928fc36609e2032ed87a9",
+    "Go_sha256": "3fc051ab20fd1ef3b96ba94dca6af232c3725a6734c219de943b6dcae956fdbe"
+  },
+  {
+    "id": "M4",
+    "command": [
+      "/tmp/u127-M4",
+      "stage1/cohere/markdownblocks/gaps/event_mismatch.txt"
+    ],
+    "exit": 0,
+    "clean_expected_exit": 70,
+    "stdout": "content\\t\\nroot\\t1\\tfalse\\tfalse\\t\\t0\\tfalse\\t-\\tfalse\\t-\\t-\\t-\\t\\t-\\t-\\t-\\t\\t\\t\\t1,1,0,1,1,0\\t-\\t-\\t\\t\\t\\t\\nparagraph\\t0\\tfalse\\tfalse\\t\\t0\\tfalse\\t-\\tfalse\\t-\\t-\\t-\\t\\t-\\t-\\t-\\t\\t\\t\\t1,1,0,1,1,0\\t-\\t-\\t\\t\\t\\t\n",
+    "stderr": ""
+  }
+]

@@ -1,0 +1,11 @@
+--- a/stage1/cohere/markdownblocks/leaf_composition_independent_test.go
++++ b/stage1/cohere/markdownblocks/leaf_composition_independent_test.go
+@@ -41,7 +41,7 @@
+ 	directory := buildcache.Product(t, buildcache.Inputs{Name: fmt.Sprintf("markdown-leaf-native-%t", sanitize), Files: []string{"internal/native"}, Flags: []string{fmt.Sprintf("source=%x sanitize=%t split=%s", sum, sanitize, os.Getenv("ADAMIC_NATIVE_SPLIT"))}, Toolchain: []string{runtime.GOOS, runtime.GOARCH, buildcache.Tool("clang", "--version")}}, func(directory string) error {
+ 		return native.Build(source, filepath.Join(directory, "port"), native.Options{Sanitize: sanitize})
+ 	})
+-	return filepath.Join(directory, "port")
++	return filepath.Join(directory, "")
+ }
+ 
+ var leafCompositionPrepared *leafCompositionFixture

@@ -1,0 +1,145 @@
+[
+  {
+    "id": "S1",
+    "file": "stage1/cohere/markdownblocks/leaf_composition_independent_test.go",
+    "line": 485,
+    "change": [
+      "return filepath.Join(product, \"oracle\")",
+      "return filepath.Join(product, \"\")"
+    ],
+    "pattern": "^TestProduct_MarkdownLeafGo(Lists|DocLayout)$",
+    "vet": 0,
+    "exit": 0,
+    "wall": 8.562184869000703
+  },
+  {
+    "id": "S2",
+    "file": "stage1/cohere/markdownblocks/leaf_composition_products_test.go",
+    "line": 24,
+    "change": [
+      "\tprepareLeafCompositionLowered(t, &p)\n",
+      ""
+    ],
+    "pattern": "^TestProduct_MarkdownLeafLowered$",
+    "vet": 0,
+    "exit": 0,
+    "wall": 6.766515952000191
+  },
+  {
+    "id": "S3",
+    "file": "stage1/cohere/markdownblocks/leaf_composition_independent_test.go",
+    "line": 44,
+    "change": [
+      "return filepath.Join(directory, \"port\")",
+      "return filepath.Join(directory, \"\")"
+    ],
+    "pattern": "^TestProduct_MarkdownLeafNative(Sanitized|Release)$",
+    "vet": 0,
+    "exit": 0,
+    "wall": 8.615835399999924
+  },
+  {
+    "id": "S4",
+    "file": "stage1/cohere/markdownblocks/list_layout_shards_test.go",
+    "line": 820,
+    "change": [
+      "sanitized: manifest.Paths[2]",
+      "sanitized: \"\""
+    ],
+    "pattern": "^(TestMarkdownListLayout_Setup|TestMarkdownListLayout)$",
+    "vet": 0,
+    "exit": 0,
+    "wall": 7.559696345000702
+  },
+  {
+    "id": "S5",
+    "file": "stage1/cohere/markdownblocks/quote_layout_shards_test.go",
+    "line": 286,
+    "change": [
+      "\t\t\tproducts.goBinary = binary\n",
+      ""
+    ],
+    "pattern": "^TestMarkdownQuoteLayout$",
+    "vet": 0,
+    "exit": 1,
+    "wall": 47.760280104999765
+  },
+  {
+    "id": "S6",
+    "file": "stage1/cohere/markdownblocks/lists_test.go",
+    "line": 724,
+    "change": [
+      "return inputs, files",
+      "return inputs[:0], files"
+    ],
+    "pattern": "^TestMarkdownTableLayout$",
+    "vet": 0,
+    "exit": 0,
+    "wall": 10.614303103999191
+  },
+  {
+    "id": "S7",
+    "file": "stage1/cohere/markdownblocks/leaf_composition_independent_test.go",
+    "line": 93,
+    "change": [
+      "\t\tleafCompositionPrepared, leafCompositionBuilds = fixture, products\n",
+      ""
+    ],
+    "pattern": "^TestMarkdownLeafComposition$",
+    "vet": 0,
+    "exit": 1,
+    "wall": 12.364554254998438
+  },
+  {
+    "id": "S8",
+    "file": "stage1/cohere/markdownblocks/structure_layout_shards_test.go",
+    "line": 117,
+    "change": [
+      "\t\tstructureLayoutComplete = state\n",
+      ""
+    ],
+    "pattern": "^TestMarkdownStructureLayout_Setup$",
+    "vet": 0,
+    "exit": 1,
+    "wall": 10.7393556729985
+  },
+  {
+    "id": "W1",
+    "file": "stage1/cohere/markdownblocks/lists_test.go",
+    "line": 508,
+    "change": [
+      "if bytes.Equal(result.stdout, want.stdout) {",
+      "if true {"
+    ],
+    "pattern": "^(TestMarkdownCodeBlockLayout|TestMarkdownHTMLBlockLayout|TestMarkdownRootLayout)$",
+    "vet": 0,
+    "exit": 1,
+    "wall": 70.46088393299942
+  },
+  {
+    "id": "W2",
+    "file": "stage1/cohere/markdownblocks/list_layout_shards_test.go",
+    "line": 215,
+    "change": [
+      "if bytes.Equal(result.stdout, fixture.mutantWant) {",
+      "if true {"
+    ],
+    "pattern": "^TestMarkdownListLayout(Union|_00[0-9]|_01[0-5])$",
+    "vet": 0,
+    "exit": 1,
+    "wall": 21.06883607799864
+  },
+  {
+    "id": "W3",
+    "file": "stage1/cohere/markdownblocks/malformed_events_independent_test.go",
+    "line": 227,
+    "change": [
+      "if bytes.Equal(mutant.stderr, []byte(\"adamic: panic: \"+string(truth.stdout))) {",
+      "if true {"
+    ],
+    "pattern": "^TestMdastMalformedEvents(_00[0-2]|Union)$",
+    "vet": 0,
+    "exit": 1,
+    "wall": 16.957295104999503
+  }
+]

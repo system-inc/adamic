@@ -1,0 +1,82 @@
+[
+  {
+    "id": "S1",
+    "phase": "before",
+    "exit": 0,
+    "observation": [
+      "u127_observation_test.go:6: OBSERVED path=\"/home/agent/.cache/adamic-build/f88290b77989b96a34602f305231a328a698bbacb3993d4d50b38790984a0994/oracle\" directory=false"
+    ]
+  },
+  {
+    "id": "S1",
+    "phase": "after",
+    "exit": 0,
+    "observation": [
+      "u127_observation_test.go:6: OBSERVED path=\"/home/agent/.cache/adamic-build/f88290b77989b96a34602f305231a328a698bbacb3993d4d50b38790984a0994\" directory=true"
+    ]
+  },
+  {
+    "id": "S2",
+    "phase": "before",
+    "exit": 0,
+    "observation": [
+      "u127_observation_test.go:7: OBSERVED generated_C_bytes=1949282"
+    ]
+  },
+  {
+    "id": "S2",
+    "phase": "after",
+    "exit": 0,
+    "observation": [
+      "u127_observation_test.go:7: OBSERVED generated_C_bytes=0"
+    ]
+  },
+  {
+    "id": "S3",
+    "phase": "before",
+    "exit": 0,
+    "observation": [
+      "u127_observation_test.go:8: OBSERVED path=\"/home/agent/.cache/adamic-build/516517ae7a44292bd004e96dc648bfa0459a8e4e06fb7b985ae91fe9ba01e55b/port\" directory=false"
+    ]
+  },
+  {
+    "id": "S3",
+    "phase": "after",
+    "exit": 0,
+    "observation": [
+      "u127_observation_test.go:8: OBSERVED path=\"/home/agent/.cache/adamic-build/516517ae7a44292bd004e96dc648bfa0459a8e4e06fb7b985ae91fe9ba01e55b\" directory=true"
+    ]
+  },
+  {
+    "id": "S4",
+    "phase": "before",
+    "exit": 0,
+    "observation": [
+      "u127_observation_test.go:9: OBSERVED sanitized=\"/home/agent/.cache/adamic-build/0c5074ea2dda8becf5c6901641dd7092fa2f6b1a775aaec39f56e49eeaaa1bf9/binary\""
+    ]
+  },
+  {
+    "id": "S4",
+    "phase": "after",
+    "exit": 0,
+    "observation": [
+      "u127_observation_test.go:9: OBSERVED sanitized=\"\""
+    ]
+  },
+  {
+    "id": "S6",
+    "phase": "before",
+    "exit": 0,
+    "observation": [
+      "u127_observation_test.go:10: OBSERVED input_cases=4070"
+    ]
+  },
+  {
+    "id": "S6",
+    "phase": "after",
+    "exit": 0,
+    "observation": [
+      "u127_observation_test.go:10: OBSERVED input_cases=0"
+    ]
+  }
+]

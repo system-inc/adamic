@@ -1,0 +1,9 @@
+{"Time":"2026-10-09T13:44:17.685952643Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks"}
+{"Time":"2026-10-09T13:44:17.696862965Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestAuditConstructionObservation"}
+{"Time":"2026-10-09T13:44:17.696994984Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestAuditConstructionObservation","Output":"=== RUN   TestAuditConstructionObservation\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:44:17.697033012Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestAuditConstructionObservation","Output":"    u127_observation_test.go:7: OBSERVED generated_C_bytes=0\n"}
+{"Time":"2026-10-09T13:44:17.697042857Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestAuditConstructionObservation","Output":"--- PASS: TestAuditConstructionObservation (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:44:17.697046883Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestAuditConstructionObservation","Elapsed":0}
+{"Time":"2026-10-09T13:44:17.697058681Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:44:17.697280125Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/markdownblocks\t0.011s\n"}
+{"Time":"2026-10-09T13:44:17.697300005Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Elapsed":0.011}
