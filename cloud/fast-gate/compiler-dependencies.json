@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "packages": {
+    "internal/testgrain": [
+      "internal/load",
+      "internal/lower",
+      "internal/native",
+      "internal/javascript",
+      "internal/ir",
+      "internal/flow",
+      "cmd/adamic"
+    ]
+  }
+}
