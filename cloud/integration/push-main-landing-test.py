@@ -166,8 +166,11 @@ class LandingTests(unittest.TestCase):
 
     def test_a_hyphenated_python_test_is_test_only_unless_a_non_test_file_runs_it(self):
         # @system_adamic, Oct 9 04:20: *-test.py takes the lane, but one a gate script or .sh names is gate logic.
-        alone = self.change(self.main, 'cloud/check-test.py', 'print("ok")\n', 'a python test')
-        landed = self.assertLanded(self.push('--test-only', alone, 'alone'), self.main, alone)
+        documented = self.change(self.main, 'cloud/check.md', 'Run cloud/check-test.py to check it.\n', 'a doc naming the test')
+        git(self.repository, 'push', '-q', 'origin', documented + ':refs/heads/main')
+        alone = self.change(documented, 'cloud/check-test.py', 'print("ok")\n', 'a python test')
+        # A document that names it runs nothing, so it doesn't make the test gate logic.
+        landed = self.assertLanded(self.push('--test-only', alone, 'alone'), documented, alone)
         runner = self.change(landed, 'cloud/run.sh', '#!/bin/sh\npython3 cloud/check-test.py\n', 'a gate script that runs it')
         self.assertLanded(self.push(runner, '1', '1', '0', '0', 'runner'), landed, runner)
         edited = self.change(self.main_now(), 'cloud/check-test.py', 'print("changed")\n', 'edit the test a script runs')

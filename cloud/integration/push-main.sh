@@ -642,9 +642,9 @@ Named but not read, checked by hand: ${notReaders[*]}."
 	fi
 	# A Python test named by a non-test file (a gate script, a .sh that runs it) is gate logic and gets a gate
 	# (@system_adamic, Oct 9 04:20, ruling *-test.py into the lane). Go's _test.go can't be imported; a Python test can
-	# be run or read by name, so the lane looks for its name outside tests.
+	# be run or read by name, so the lane looks for its name outside tests. A document naming it (.md, .txt) runs nothing.
 	for path in $(printf '%s\n' "$changed" | grep -E '(_test\.py$|-test\.py$|(^|/)test_[^/]*\.py$)' || true); do
-		users=$(git grep -l -F -e "${path##*/}" "$tree" -- . 2>/dev/null | sed 's/^[^:]*://' | grep -v -x -F -e "$path" | grep -v -E "$testOnlyPattern" || true)
+		users=$(git grep -l -F -e "${path##*/}" "$tree" -- . 2>/dev/null | sed 's/^[^:]*://' | grep -v -x -F -e "$path" | grep -v -E "$testOnlyPattern" | grep -v -E '\.(md|txt)$' || true)
 		if [ -n "$users" ]; then
 			echo "refused: ${path} is named by $(printf '%s' "$users" | head -n 3 | paste -sd ' ' -), which isn't a test, so it's gate logic; gate it" >&2
 			exit 1
