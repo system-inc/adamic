@@ -32,6 +32,8 @@ func TestAsyncGeneratedIdentityCannotBeClaimedBySource(t *testing.T) {
 func TestAsyncGapsNameTheMissingPiece(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ source, want string }{
+		{`const source = {[Symbol.iterator](){return {next(){return {value:1,done:false};}}}}; for(const item of source){await Promise.resolve(); break;}`, "async for-of over a user iterator"},
+		{`const source = {[Symbol.iterator](){return {next(){return {value:1,done:false};}}}}; async function f():Promise<void>{for(const item of source){await Promise.resolve(); break;}} await f();`, "async for-of over a user iterator"},
 		{"async function f(): Promise<void> { outer: while (true) { for (const item of [1, 2]) { await Promise.resolve(); break outer; } } }\nawait f();", "async for-of labeled outer break"},
 		{"async function f(): Promise<void> { outer: for (const item of [1, 2]) { await Promise.resolve(); continue outer; } }\nawait f();", "a labeled continue"},
 		{"import { parallelMap } from 'adamic'; async function f(): Promise<string> { const extra = 3; await Promise.resolve(); const items: readonly number[] = [1,2]; return parallelMap(items, item => item + extra).join(','); } console.log(await f());", "pool tasks capturing an async environment"},

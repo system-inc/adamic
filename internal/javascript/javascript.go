@@ -54,6 +54,7 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	builder.WriteString(fieldReadinessRuntime)
 	builder.WriteString("import { createHash as adamicNodeCreateHash } from 'node:crypto';\n")
 	builder.WriteString(collectionIteratorRuntime)
+	builder.WriteString(stringIteratorRuntime)
 	builder.WriteString(jsonStringifyRuntime)
 	counted := false
 	for _, function := range program.Functions {
@@ -1170,6 +1171,8 @@ func (e *emitter) value(expression ir.Expression) string {
 			return "adamicFind(" + e.value(expression.Array) + ", " + quote(expression.Method) + ", " + e.value(expression.Callback) + ")"
 		}
 		return "adamicVisit(" + e.value(expression.Array) + ", " + quote(expression.Method) + ", " + e.value(expression.Callback) + ")"
+	case ir.StringIterator:
+		return "adamicStringIterator(" + e.value(expression.Value) + ")"
 	case ir.CollectionIterator:
 		return "adamicCollectionIterator(" + e.value(expression.Collection) + ", " + quote(expression.Part) + ")"
 	case ir.MapNew:
