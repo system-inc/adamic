@@ -1,0 +1,319 @@
+[
+  {
+    "id": "M01",
+    "kind": "production",
+    "matrix_rows": [
+      "TestJSXAgreement family"
+    ],
+    "results": {
+      "TestJSXAgreement family": "fail"
+    },
+    "failing_members": [
+      "TestJSXAgreement_008",
+      "TestJSXAgreement_012",
+      "TestJSXAgreement_023",
+      "TestJSXAgreement_024",
+      "TestJSXAgreement_025",
+      "TestJSXAgreement_027",
+      "TestJSXAgreement_029"
+    ],
+    "command": {
+      "label": "M01",
+      "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^(TestJSXAgreement(_[0-9]{3})?)$",
+      "env": {
+        "ADAMIC_MUTANT": "M01",
+        "ADAMIC_BUILD_CACHE_DIR": "/tmp/u086/cache/switch"
+      },
+      "wall_seconds": 5.562,
+      "exit": 1
+    }
+  },
+  {
+    "id": "M02",
+    "kind": "production",
+    "matrix_rows": [
+      "TestParserRecoveryGap"
+    ],
+    "results": {
+      "TestParserRecoveryGap": "fail"
+    },
+    "failing_members": [
+      "TestParserRecoveryGap"
+    ],
+    "command": {
+      "label": "M02",
+      "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^(TestParserRecoveryGap)$",
+      "env": {
+        "ADAMIC_MUTANT": "M02",
+        "ADAMIC_BUILD_CACHE_DIR": "/tmp/u086/cache/switch"
+      },
+      "wall_seconds": 14.898,
+      "exit": 1
+    }
+  },
+  {
+    "id": "M03",
+    "kind": "production",
+    "matrix_rows": [
+      "TestRawInputGap",
+      "TestJSXAgreement family"
+    ],
+    "results": {
+      "TestRawInputGap": "fail",
+      "TestJSXAgreement family": "fail"
+    },
+    "failing_members": [
+      "TestJSXAgreement_008",
+      "TestJSXAgreement_012",
+      "TestJSXAgreement_023",
+      "TestJSXAgreement_024",
+      "TestJSXAgreement_025",
+      "TestJSXAgreement_027",
+      "TestJSXAgreement_029",
+      "TestRawInputGap"
+    ],
+    "command": {
+      "label": "M03",
+      "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^(TestRawInputGap|TestJSXAgreement(_[0-9]{3})?)$",
+      "env": {
+        "ADAMIC_MUTANT": "M03",
+        "ADAMIC_BUILD_CACHE_DIR": "/tmp/u086/cache/switch"
+      },
+      "wall_seconds": 6.652,
+      "exit": 1
+    }
+  },
+  {
+    "id": "M04",
+    "kind": "production",
+    "matrix_rows": [
+      "TestJSXAgreement family"
+    ],
+    "results": {
+      "TestJSXAgreement family": "fail"
+    },
+    "failing_members": [
+      "TestJSXAgreement_008",
+      "TestJSXAgreement_012",
+      "TestJSXAgreement_023",
+      "TestJSXAgreement_024",
+      "TestJSXAgreement_025",
+      "TestJSXAgreement_027",
+      "TestJSXAgreement_029"
+    ],
+    "command": {
+      "label": "M04",
+      "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^(TestJSXAgreement(_[0-9]{3})?)$",
+      "env": {
+        "ADAMIC_MUTANT": "M04",
+        "ADAMIC_BUILD_CACHE_DIR": "/tmp/u086/cache/switch"
+      },
+      "wall_seconds": 5.357,
+      "exit": 1
+    }
+  },
+  {
+    "id": "M05",
+    "kind": "production",
+    "matrix_rows": [
+      "TestPostfixValueGap",
+      "TestMethodReplacementGap",
+      "TestInterfaceDefaultGap",
+      "TestInterfaceTypeMethodGap"
+    ],
+    "results": {
+      "TestPostfixValueGap": "fail",
+      "TestMethodReplacementGap": "pass",
+      "TestInterfaceDefaultGap": "pass",
+      "TestInterfaceTypeMethodGap": "pass"
+    },
+    "failing_members": [
+      "TestPostfixValueGap"
+    ],
+    "command": {
+      "label": "M05",
+      "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^(TestPostfixValueGap|TestMethodReplacementGap|TestInterfaceDefaultGap|TestInterfaceTypeMethodGap)$",
+      "env": {
+        "ADAMIC_MUTANT": "M05",
+        "ADAMIC_BUILD_CACHE_DIR": "/tmp/u086/cache/M05"
+      },
+      "wall_seconds": 2.203,
+      "exit": 1
+    }
+  },
+  {
+    "id": "M06",
+    "kind": "production",
+    "matrix_rows": [
+      "TestPostfixValueGap",
+      "TestMethodReplacementGap",
+      "TestInterfaceDefaultGap",
+      "TestInterfaceTypeMethodGap"
+    ],
+    "results": {
+      "TestPostfixValueGap": "pass",
+      "TestMethodReplacementGap": "pass",
+      "TestInterfaceDefaultGap": "fail",
+      "TestInterfaceTypeMethodGap": "fail"
+    },
+    "failing_members": [
+      "TestInterfaceDefaultGap",
+      "TestInterfaceTypeMethodGap"
+    ],
+    "command": {
+      "label": "M06",
+      "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^(TestPostfixValueGap|TestMethodReplacementGap|TestInterfaceDefaultGap|TestInterfaceTypeMethodGap)$",
+      "env": {
+        "ADAMIC_MUTANT": "M06",
+        "ADAMIC_BUILD_CACHE_DIR": "/tmp/u086/cache/M06"
+      },
+      "wall_seconds": 1.913,
+      "exit": 1
+    }
+  },
+  {
+    "id": "M07",
+    "kind": "production",
+    "matrix_rows": [
+      "TestPostfixValueGap",
+      "TestMethodReplacementGap",
+      "TestInterfaceDefaultGap",
+      "TestInterfaceTypeMethodGap"
+    ],
+    "results": {
+      "TestPostfixValueGap": "pass",
+      "TestMethodReplacementGap": "fail",
+      "TestInterfaceDefaultGap": "pass",
+      "TestInterfaceTypeMethodGap": "pass"
+    },
+    "failing_members": [
+      "TestMethodReplacementGap"
+    ],
+    "command": {
+      "label": "M07",
+      "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^(TestPostfixValueGap|TestMethodReplacementGap|TestInterfaceDefaultGap|TestInterfaceTypeMethodGap)$",
+      "env": {
+        "ADAMIC_MUTANT": "M07",
+        "ADAMIC_BUILD_CACHE_DIR": "/tmp/u086/cache/M07"
+      },
+      "wall_seconds": 2.34,
+      "exit": 1
+    }
+  },
+  {
+    "id": "H01",
+    "kind": "setup",
+    "matrix_rows": [
+      "TestMiscShardUnionRejectsInvalidEnumeration"
+    ],
+    "results": {
+      "TestMiscShardUnionRejectsInvalidEnumeration": "fail"
+    },
+    "failing_members": [
+      "TestMiscShardUnionRejectsInvalidEnumeration"
+    ],
+    "command": {
+      "label": "H01",
+      "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^(TestMiscShardUnionRejectsInvalidEnumeration)$",
+      "env": {
+        "ADAMIC_BUILD_CACHE_DIR": "/tmp/u086/cache/H01"
+      },
+      "wall_seconds": 4.933,
+      "exit": 1
+    }
+  },
+  {
+    "id": "H02",
+    "kind": "setup",
+    "matrix_rows": [
+      "TestMiscShardGrowthKeepsAssignments"
+    ],
+    "results": {
+      "TestMiscShardGrowthKeepsAssignments": "fail"
+    },
+    "failing_members": [
+      "TestMiscShardGrowthKeepsAssignments"
+    ],
+    "command": {
+      "label": "H02",
+      "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^(TestMiscShardGrowthKeepsAssignments)$",
+      "env": {
+        "ADAMIC_BUILD_CACHE_DIR": "/tmp/u086/cache/H02"
+      },
+      "wall_seconds": 4.886,
+      "exit": 1
+    }
+  },
+  {
+    "id": "H03",
+    "kind": "setup",
+    "matrix_rows": [
+      "TestRecoveryCacheInputKeys"
+    ],
+    "results": {
+      "TestRecoveryCacheInputKeys": "fail"
+    },
+    "failing_members": [
+      "TestRecoveryCacheInputKeys"
+    ],
+    "command": {
+      "label": "H03",
+      "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^(TestRecoveryCacheInputKeys)$",
+      "env": {
+        "ADAMIC_BUILD_CACHE_DIR": "/tmp/u086/cache/H03"
+      },
+      "wall_seconds": 5.291,
+      "exit": 1
+    }
+  },
+  {
+    "id": "H04",
+    "kind": "setup",
+    "matrix_rows": [
+      "TestRecoveryNativeRecipe"
+    ],
+    "results": {
+      "TestRecoveryNativeRecipe": "fail"
+    },
+    "failing_members": [
+      "TestRecoveryNativeRecipe"
+    ],
+    "command": {
+      "label": "H04",
+      "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^(TestRecoveryNativeRecipe)$",
+      "env": {
+        "ADAMIC_BUILD_CACHE_DIR": "/tmp/u086/cache/H04"
+      },
+      "wall_seconds": 11.169,
+      "exit": 1
+    }
+  },
+  {
+    "id": "W01",
+    "kind": "witness",
+    "matrix_rows": [
+      "TestJSXAgreementPlantedDisagreement",
+      "TestJSXMutant",
+      "TestJSXMutantPlantedSurvivor"
+    ],
+    "results": {
+      "TestJSXAgreementPlantedDisagreement": "fail",
+      "TestJSXMutant": "fail",
+      "TestJSXMutantPlantedSurvivor": "fail"
+    },
+    "failing_members": [
+      "TestJSXAgreementPlantedDisagreement",
+      "TestJSXMutant",
+      "TestJSXMutantPlantedSurvivor"
+    ],
+    "command": {
+      "label": "W01",
+      "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^(TestJSXAgreementPlantedDisagreement|TestJSXMutant|TestJSXMutantPlantedSurvivor)$",
+      "env": {
+        "ADAMIC_BUILD_CACHE_DIR": "/tmp/u086/cache/W01"
+      },
+      "wall_seconds": 44.904,
+      "exit": 1
+    }
+  }
+]

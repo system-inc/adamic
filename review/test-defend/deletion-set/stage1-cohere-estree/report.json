@@ -1,0 +1,171 @@
+{
+  "package": "stage1/cohere/estree",
+  "main": "7b9d4272c28f59530ab13daa5c49067e47933b06",
+  "skipped": [
+    "TestInterfaceDefaultGap",
+    "TestInterfaceTypeMethodGap",
+    "TestUnattachedDecoratorControl"
+  ],
+  "mutants": [
+    {
+      "mutant": "M06",
+      "file_line": "internal/lower/diagnostics.go:33",
+      "branch": "test-audit/stage1-cohere-estree-gaps",
+      "candidates_failed": [
+        "TestInterfaceDefaultGap",
+        "TestInterfaceTypeMethodGap"
+      ],
+      "still_caught_by": [],
+      "stale": false,
+      "wall_seconds": 1132.401,
+      "witness_failures": [],
+      "panicking_tests": [],
+      "early_stopped": false
+    },
+    {
+      "mutant": "D1",
+      "file_line": "stage1/cohere/estree/sourceParser.ts:1189",
+      "branch": "test-defend/stage1-cohere-estree-deep",
+      "candidates_failed": [
+        "TestUnattachedDecoratorControl"
+      ],
+      "still_caught_by": [
+        "TestDecoratedExports"
+      ],
+      "stale": false,
+      "wall_seconds": 253.004,
+      "witness_failures": [],
+      "panicking_tests": [],
+      "early_stopped": true
+    },
+    {
+      "mutant": "D3",
+      "file_line": "stage1/cohere/estree/protocol.ts:36",
+      "branch": "test-defend/stage1-cohere-estree-deep",
+      "candidates_failed": [
+        "TestUnattachedDecoratorControl"
+      ],
+      "still_caught_by": [
+        "TestAcceptanceGrammar"
+      ],
+      "stale": false,
+      "wall_seconds": 45.404,
+      "witness_failures": [],
+      "panicking_tests": [],
+      "early_stopped": true
+    },
+    {
+      "mutant": "D2",
+      "file_line": "internal/lower/class_inheritance.go:761",
+      "branch": "test-defend/stage1-cohere-estree-gaps",
+      "candidates_failed": [
+        "TestInterfaceDefaultGap"
+      ],
+      "still_caught_by": [
+        "TestAcceptanceDiagnostics",
+        "TestAcceptanceGrammar"
+      ],
+      "stale": false,
+      "wall_seconds": 7.222,
+      "witness_failures": [
+        "TestAcceptanceDiagnosticControl"
+      ],
+      "panicking_tests": [],
+      "early_stopped": true
+    },
+    {
+      "mutant": "D3",
+      "file_line": "internal/lower/iteration_origin.go:95",
+      "branch": "test-defend/stage1-cohere-estree-gaps",
+      "candidates_failed": [
+        "TestInterfaceDefaultGap",
+        "TestInterfaceTypeMethodGap"
+      ],
+      "still_caught_by": [],
+      "stale": false,
+      "wall_seconds": 1120.287,
+      "witness_failures": [],
+      "panicking_tests": [],
+      "early_stopped": false
+    },
+    {
+      "mutant": "D4",
+      "file_line": "internal/lower/iteration_origin.go:88",
+      "branch": "test-defend/stage1-cohere-estree-gaps",
+      "candidates_failed": [
+        "TestInterfaceDefaultGap",
+        "TestInterfaceTypeMethodGap"
+      ],
+      "still_caught_by": [],
+      "stale": false,
+      "wall_seconds": 1058.632,
+      "witness_failures": [],
+      "panicking_tests": [],
+      "early_stopped": false
+    },
+    {
+      "mutant": "D5",
+      "file_line": "internal/lower/expression.go:1024",
+      "branch": "test-defend/stage1-cohere-estree-gaps",
+      "candidates_failed": [
+        "TestInterfaceTypeMethodGap"
+      ],
+      "still_caught_by": [
+        "TestAcceptanceGrammar"
+      ],
+      "stale": false,
+      "wall_seconds": 44.298,
+      "witness_failures": [],
+      "panicking_tests": [],
+      "early_stopped": true
+    },
+    {
+      "mutant": "D6",
+      "file_line": "internal/lower/expression.go:508",
+      "branch": "test-defend/stage1-cohere-estree-gaps",
+      "candidates_failed": [
+        "TestInterfaceTypeMethodGap"
+      ],
+      "still_caught_by": [
+        "TestAcceptanceDiagnostics"
+      ],
+      "stale": false,
+      "wall_seconds": 1851.596,
+      "witness_failures": [],
+      "panicking_tests": [
+        "TestAcceptanceGrammar"
+      ],
+      "early_stopped": true
+    },
+    {
+      "mutant": "D7",
+      "file_line": "internal/lower/expression.go:783",
+      "branch": "test-defend/stage1-cohere-estree-gaps",
+      "candidates_failed": [
+        "TestInterfaceTypeMethodGap"
+      ],
+      "still_caught_by": [
+        "TestAcceptanceGrammar"
+      ],
+      "stale": false,
+      "wall_seconds": 46.214,
+      "witness_failures": [],
+      "panicking_tests": [],
+      "early_stopped": true
+    }
+  ],
+  "keep": [
+    {
+      "test": "TestInterfaceDefaultGap",
+      "because": "test-audit/stage1-cohere-estree-gaps/M06 loses its last catcher without the set; test-defend/stage1-cohere-estree-gaps/D3 loses its last catcher without the set; test-defend/stage1-cohere-estree-gaps/D4 loses its last catcher without the set"
+    },
+    {
+      "test": "TestInterfaceTypeMethodGap",
+      "because": "test-audit/stage1-cohere-estree-gaps/M06 loses its last catcher without the set; test-defend/stage1-cohere-estree-gaps/D3 loses its last catcher without the set; test-defend/stage1-cohere-estree-gaps/D4 loses its last catcher without the set"
+    }
+  ],
+  "deletable": [
+    "TestUnattachedDecoratorControl"
+  ],
+  "keep_requirement": "Retain at least one of the two interface gap tests; this replay establishes their joint protection, not individual necessity."
+}

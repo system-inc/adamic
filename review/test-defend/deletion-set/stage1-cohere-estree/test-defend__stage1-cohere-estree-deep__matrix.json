@@ -1,0 +1,174 @@
+[
+  {
+    "mutant": "D1",
+    "row": "TestUnattachedDecoratorControl",
+    "file_line": "stage1/cohere/estree/sourceParser.ts:1189",
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/estree-defend/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestUnattachedDecoratorControl$",
+    "exit": 1,
+    "wall": 35.98331167899596,
+    "fail": [
+      "TestUnattachedDecoratorControl"
+    ],
+    "pass": [],
+    "failure_lines": [
+      "loom_family_products_test.go:68: build estree-syntax-mutant-ir-unattached-decorator ea8498be9a36 miss 1.76",
+      "loom_family_products_test.go:68: build estree-syntax-mutant-emitted-unattached-decorator 8d5ab8382192 miss 25.01",
+      "loom_family_products_test.go:68: build estree-syntax-mutant-ir-unattached-decorator ea8498be9a36 hit 0.05",
+      "loom_family_products_test.go:68: build estree-syntax-mutant-emitted-unattached-decorator 8d5ab8382192 hit 0.06",
+      "loom_family_products_test.go:68: build estree-syntax-mutant-native-unattached-decorator 89c9b7a5a106 miss 5.34",
+      "loom_family_products_test.go:69: build syntax-mutants-go-oracle-v1 a61d747ba447 miss 0.94",
+      "loom_family_products_test.go:90: setup: 33.347s",
+      "loom_family_products_test.go:101: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /tmp/estree-defend/cache/D1/8d5ab83821928985313d1fd2314965ded3af3b7e215973d44141fa4a15c6383a/main.ts --manifest /tmp/adamic-gate/TestUnattachedDecoratorControl4088479820/004/manifest]: exit status 70",
+      "loom_family_products_test.go:92: own work: 0.191s"
+    ]
+  },
+  {
+    "mutant": "D1",
+    "row": "TestRecoveredExpressions",
+    "file_line": "stage1/cohere/estree/sourceParser.ts:1189",
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/estree-defend/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestRecoveredExpressions$",
+    "exit": 1,
+    "wall": 56.899820215003274,
+    "fail": [
+      "TestRecoveredExpressions"
+    ],
+    "pass": [],
+    "failure_lines": [
+      "recovery_cache_test.go:231: BUILD estree-oracle-answer cold wall=0.008671s",
+      "expressions_test.go:16: build estree-oracle-answer 94398d7890ac miss 0.01",
+      "recovery_shards_test.go:46: BUILD estree-lowered-program cold wall=23.471492s",
+      "expressions_test.go:18: build estree-lowered-program 01fa0de209a8 miss 23.51",
+      "recovery_shards_test.go:46: BUILD estree-sanitized-native cold wall=29.712929s",
+      "expressions_test.go:18: build estree-sanitized-native d52d3f09507e miss 29.72",
+      "recovery_shards_test.go:38: setup wall=53.388423s builds=53.226311s without-builds=0.162113s",
+      "expressions_test.go:19: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /workspace/adamic/stage1/cohere/estree/main.ts --manifest /tmp/adamic-gate/TestRecoveredExpressions925634770/001/manifest]: exit status 70",
+      "recovery_shards_test.go:33: TEST totalCPU=54.319725s"
+    ]
+  },
+  {
+    "mutant": "D2",
+    "row": "TestUnattachedDecoratorControl",
+    "file_line": "stage1/cohere/estree/pipeline.ts:95",
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/estree-defend/cache/D2 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestUnattachedDecoratorControl$",
+    "exit": 0,
+    "wall": 36.84722369600058,
+    "fail": [],
+    "pass": [
+      "TestUnattachedDecoratorControl"
+    ],
+    "failure_lines": [
+      "loom_family_products_test.go:68: build estree-syntax-mutant-ir-unattached-decorator a35cd212e271 miss 1.78",
+      "loom_family_products_test.go:68: build estree-syntax-mutant-emitted-unattached-decorator 3eed4a231025 miss 21.32",
+      "loom_family_products_test.go:68: build estree-syntax-mutant-ir-unattached-decorator a35cd212e271 hit 0.05",
+      "loom_family_products_test.go:68: build estree-syntax-mutant-emitted-unattached-decorator 3eed4a231025 hit 0.06",
+      "loom_family_products_test.go:68: build estree-syntax-mutant-native-unattached-decorator 1dba663197be miss 10.13",
+      "loom_family_products_test.go:69: build syntax-mutants-go-oracle-v1 a77809182ac9 miss 0.80",
+      "loom_family_products_test.go:90: setup: 34.303s",
+      "loom_family_products_test.go:107: Node: disabled orphan guard accepts both Go-refused files; acceptance check catches it",
+      "loom_family_products_test.go:107: native: disabled orphan guard accepts both Go-refused files; acceptance check catches it",
+      "loom_family_products_test.go:92: own work: 0.222s"
+    ]
+  },
+  {
+    "mutant": "D2",
+    "row": "TestRecoveredExpressions",
+    "file_line": "stage1/cohere/estree/pipeline.ts:95",
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/estree-defend/cache/D2 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestRecoveredExpressions$",
+    "exit": 1,
+    "wall": 66.94680655399861,
+    "fail": [
+      "TestRecoveredExpressions"
+    ],
+    "pass": [],
+    "failure_lines": [
+      "recovery_cache_test.go:231: BUILD estree-oracle-answer cold wall=0.003889s",
+      "expressions_test.go:16: build estree-oracle-answer 94398d7890ac miss 0.00",
+      "recovery_shards_test.go:46: BUILD estree-lowered-program cold wall=31.094926s",
+      "expressions_test.go:18: build estree-lowered-program c5f36a30bf8a miss 31.14",
+      "recovery_shards_test.go:46: BUILD estree-sanitized-native cold wall=32.051564s",
+      "expressions_test.go:18: build estree-sanitized-native 18ca1beafc35 miss 32.05",
+      "recovery_shards_test.go:38: setup wall=63.376211s builds=63.199471s without-builds=0.176740s",
+      "expressions_test.go:21: emitted: line 40: Go \"stripped const C = @d class {};\", port \"0 Program 0 60 0 0 0 0 60 0\"",
+      "recovery_shards_test.go:33: TEST totalCPU=64.559163s"
+    ]
+  },
+  {
+    "mutant": "D3",
+    "row": "TestUnattachedDecoratorControl",
+    "file_line": "stage1/cohere/estree/protocol.ts:36",
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/estree-defend/cache/D3 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestUnattachedDecoratorControl$",
+    "exit": 1,
+    "wall": 28.656759232995682,
+    "fail": [
+      "TestUnattachedDecoratorControl"
+    ],
+    "pass": [],
+    "failure_lines": [
+      "loom_family_products_test.go:68: build estree-syntax-mutant-ir-unattached-decorator 2f9c35221a46 miss 1.60",
+      "loom_family_products_test.go:68: build estree-syntax-mutant-emitted-unattached-decorator 62b3b970b0d0 miss 21.95",
+      "loom_family_products_test.go:68: build estree-syntax-mutant-ir-unattached-decorator 2f9c35221a46 hit 0.05",
+      "loom_family_products_test.go:68: build estree-syntax-mutant-emitted-unattached-decorator 62b3b970b0d0 hit 0.05",
+      "loom_family_products_test.go:68: build estree-syntax-mutant-native-unattached-decorator 5be5810497ae miss 1.41",
+      "loom_family_products_test.go:69: build syntax-mutants-go-oracle-v1 264f8b1a2a2e miss 0.77",
+      "loom_family_products_test.go:90: setup: 26.003s",
+      "loom_family_products_test.go:105: Node decorator control did not finish with two incorrect acceptances",
+      "loom_family_products_test.go:92: own work: 0.190s"
+    ]
+  },
+  {
+    "mutant": "D3",
+    "row": "TestRecoveredExpressions",
+    "file_line": "stage1/cohere/estree/protocol.ts:36",
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/estree-defend/cache/D3 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestRecoveredExpressions$",
+    "exit": 1,
+    "wall": 62.64327308299835,
+    "fail": [
+      "TestRecoveredExpressions"
+    ],
+    "pass": [],
+    "failure_lines": [
+      "recovery_cache_test.go:231: BUILD estree-oracle-answer cold wall=0.006634s",
+      "expressions_test.go:16: build estree-oracle-answer 94398d7890ac miss 0.01",
+      "recovery_shards_test.go:46: BUILD estree-lowered-program cold wall=28.586737s",
+      "expressions_test.go:18: build estree-lowered-program 80f691da24e9 miss 28.64",
+      "recovery_shards_test.go:46: BUILD estree-sanitized-native cold wall=30.447239s",
+      "expressions_test.go:18: build estree-sanitized-native 35ffda87412b miss 30.45",
+      "recovery_shards_test.go:38: setup wall=59.249984s builds=59.086584s without-builds=0.163399s",
+      "expressions_test.go:21: Node: line 1: Go \"0 Program 0 22 0 0 0 0 22 0\", port \"1 Program 0 22 0 0 0 0 22 0\"",
+      "recovery_shards_test.go:33: TEST totalCPU=60.451250s"
+    ]
+  },
+  {
+    "mutant": "D1",
+    "row": "TestUnattachedDecorator",
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/estree-defend/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestUnattachedDecorator$",
+    "exit": 1,
+    "wall": 2.779808751998644,
+    "fail": [
+      "TestUnattachedDecorator"
+    ],
+    "pass": []
+  },
+  {
+    "mutant": "D2",
+    "row": "TestUnattachedDecorator",
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/estree-defend/cache/D2 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestUnattachedDecorator$",
+    "exit": 0,
+    "wall": 3.2614457849995233,
+    "fail": [],
+    "pass": [
+      "TestUnattachedDecorator"
+    ]
+  },
+  {
+    "mutant": "D3",
+    "row": "TestUnattachedDecorator",
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/estree-defend/cache/D3 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestUnattachedDecorator$",
+    "exit": 0,
+    "wall": 3.0504528410019702,
+    "fail": [],
+    "pass": [
+      "TestUnattachedDecorator"
+    ]
+  }
+]

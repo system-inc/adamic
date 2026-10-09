@@ -1,0 +1,1 @@
+The workspace restarted at approximately 18:51 UTC during defender gaps D3. The interrupted log has no verdict. Four completed replay records were preserved. Remaining mutants restart with fresh replay-v3 caches.

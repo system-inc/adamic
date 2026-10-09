@@ -1,0 +1,5 @@
+test-defend__stage1-cohere-estree-gaps__D3 [] panics []
+test-defend__stage1-cohere-estree-gaps__D4 [] panics []
+test-defend__stage1-cohere-estree-gaps__D5 ['TestAcceptanceGrammar'] panics []
+test-defend__stage1-cohere-estree-gaps__D6 ['TestAcceptanceDiagnostics'] panics ['TestAcceptanceGrammar']
+test-defend__stage1-cohere-estree-gaps__D7 ['TestAcceptanceGrammar'] panics []

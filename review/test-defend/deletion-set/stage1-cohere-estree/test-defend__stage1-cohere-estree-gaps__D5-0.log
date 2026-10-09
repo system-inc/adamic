@@ -1,0 +1,50 @@
+{"Time":"2026-10-09T19:28:37.951618569Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T19:28:37.958613673Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_AcceptanceOracle"}
+{"Time":"2026-10-09T19:28:37.958706313Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_AcceptanceOracle","Output":"=== RUN   TestProduct_AcceptanceOracle\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:28:37.958764601Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_AcceptanceOracle","Output":"=== PAUSE TestProduct_AcceptanceOracle\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:28:37.958767325Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_AcceptanceOracle"}
+{"Time":"2026-10-09T19:28:37.958769899Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_AcceptanceCatchLowered"}
+{"Time":"2026-10-09T19:28:37.95877706Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_AcceptanceCatchLowered","Output":"=== RUN   TestProduct_AcceptanceCatchLowered\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:28:37.958779614Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_AcceptanceCatchLowered","Output":"=== PAUSE TestProduct_AcceptanceCatchLowered\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:28:37.958781056Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_AcceptanceCatchLowered"}
+{"Time":"2026-10-09T19:28:37.958782879Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_AcceptanceCatchNative"}
+{"Time":"2026-10-09T19:28:37.958785192Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_AcceptanceCatchNative","Output":"=== RUN   TestProduct_AcceptanceCatchNative\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:28:37.958788006Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_AcceptanceCatchNative","Output":"=== PAUSE TestProduct_AcceptanceCatchNative\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:28:37.958789158Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_AcceptanceCatchNative"}
+{"Time":"2026-10-09T19:28:37.958791672Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_AcceptanceClassLowered"}
+{"Time":"2026-10-09T19:28:37.958793114Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_AcceptanceClassLowered","Output":"=== RUN   TestProduct_AcceptanceClassLowered\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:28:37.958794937Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_AcceptanceClassLowered","Output":"=== PAUSE TestProduct_AcceptanceClassLowered\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:28:37.958796119Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_AcceptanceClassLowered"}
+{"Time":"2026-10-09T19:28:37.958797591Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_AcceptanceClassNative"}
+{"Time":"2026-10-09T19:28:37.958798853Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_AcceptanceClassNative","Output":"=== RUN   TestProduct_AcceptanceClassNative\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:28:37.958801266Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_AcceptanceClassNative","Output":"=== PAUSE TestProduct_AcceptanceClassNative\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:28:37.958802388Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestProduct_AcceptanceClassNative"}
+{"Time":"2026-10-09T19:28:37.958805523Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceMutants_000"}
+{"Time":"2026-10-09T19:28:37.958807446Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceMutants_000","Output":"=== RUN   TestAcceptanceMutants_000\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:28:37.958809559Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceMutants_000","Output":"=== PAUSE TestAcceptanceMutants_000\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:28:37.958810761Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceMutants_000"}
+{"Time":"2026-10-09T19:28:37.958812153Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceMutants_001"}
+{"Time":"2026-10-09T19:28:37.958813234Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceMutants_001","Output":"=== RUN   TestAcceptanceMutants_001\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:28:37.958814887Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceMutants_001","Output":"=== PAUSE TestAcceptanceMutants_001\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:28:37.958816239Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceMutants_001"}
+{"Time":"2026-10-09T19:28:37.958818262Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceMutantsUnion"}
+{"Time":"2026-10-09T19:28:37.958819494Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceMutantsUnion","Output":"=== RUN   TestAcceptanceMutantsUnion\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:28:37.958821968Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceMutantsUnion","Output":"=== PAUSE TestAcceptanceMutantsUnion\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:28:37.958823169Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceMutantsUnion"}
+{"Time":"2026-10-09T19:28:37.958825543Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceMutantsPlanted_000"}
+{"Time":"2026-10-09T19:28:37.958828638Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceMutantsPlanted_000","Output":"=== RUN   TestAcceptanceMutantsPlanted_000\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:28:37.958832303Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceMutantsPlanted_000","Output":"=== PAUSE TestAcceptanceMutantsPlanted_000\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:28:37.958833695Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceMutantsPlanted_000"}
+{"Time":"2026-10-09T19:28:37.958835839Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceMutantsPlanted_001"}
+{"Time":"2026-10-09T19:28:37.958837Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceMutantsPlanted_001","Output":"=== RUN   TestAcceptanceMutantsPlanted_001\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:28:37.958838793Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceMutantsPlanted_001","Output":"=== PAUSE TestAcceptanceMutantsPlanted_001\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:28:37.958840075Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceMutantsPlanted_001"}
+{"Time":"2026-10-09T19:28:37.958841547Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceGrammar"}
+{"Time":"2026-10-09T19:28:37.958842659Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceGrammar","Output":"=== RUN   TestAcceptanceGrammar\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:28:38.752910272Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceGrammar","Output":"    grain30_setup_products_test.go:22: build estree-go-oracle-v1 29f10554a07f miss 0.64\n"}
+{"Time":"2026-10-09T19:29:16.574322559Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceGrammar","Output":"    acceptance_test.go:22: /tmp/adamic-gate/TestAcceptanceGrammar2146363731/004/port [--manifest /tmp/adamic-gate/TestAcceptanceGrammar2146363731/001/manifest]: exit status 70\n","OutputType":"error"}
+{"Time":"2026-10-09T19:29:16.574367327Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceGrammar","Output":"        adamic: panic: ESTree byte mapping differs\n","OutputType":"error-continue"}
+{"Time":"2026-10-09T19:29:16.575001304Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceGrammar","Output":"--- FAIL: TestAcceptanceGrammar (38.62s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:29:16.575009036Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceGrammar","Elapsed":38.62}
+{"Time":"2026-10-09T19:29:16.575036487Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceDiagnostics"}
+{"Time":"2026-10-09T19:29:16.575038791Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceDiagnostics","Output":"=== RUN   TestAcceptanceDiagnostics\n","OutputType":"frame"}

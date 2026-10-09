@@ -1,0 +1,13 @@
+diff --git a/internal/lower/expression.go b/internal/lower/expression.go
+index 8b8c5d6d..ccf7a99e 100644
+--- a/internal/lower/expression.go
++++ b/internal/lower/expression.go
+@@ -780,7 +780,7 @@ func (l *lowering) prefix(node *ast.Node) (ir.Expression, error) {
+ }
+ 
+ var arithmetic = map[ast.Kind]ir.Operator{
+-	ast.KindPlusToken:             ir.Add,
++	ast.KindPlusToken:             ir.Subtract,
+ 	ast.KindMinusToken:            ir.Subtract,
+ 	ast.KindAsteriskToken:         ir.Multiply,
+ 	ast.KindSlashToken:            ir.Divide,

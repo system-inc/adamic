@@ -1,0 +1,6 @@
+baseline {'status': 'pass', 'wall_seconds': 1093.4239430427551, 'binary_seconds': 1087.326, 'rows_failed': [], 'rows_skipped': ['TestCookedSurrogateLibraryGap', 'TestCorpusNativeRefusals', 'TestDecoratedExportLibraries', 'TestJSXOriginalLibraries', 'TestOriginalLibraries', 'TestPinnedNumericGaps', 'TestRecoveryLibraryGaps', 'TestRepositoryAgreement', 'TestScalarOriginalLibraries', 'TestSyntaxLibraries', 'TestThroughput', 'TestTypeMemberLibraryGap']}
+Traceback (most recent call last):
+  File "/workspace/adamic/review/test-defend/deletion-set/stage1-cohere-estree/replay.py", line 37, in <module>
+    for raw in proc.stdout:
+               ^^^^^^^^^^^
+KeyboardInterrupt

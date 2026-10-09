@@ -1,0 +1,144 @@
+[
+  {
+    "mutant": "M06",
+    "file_line": "internal/lower/diagnostics.go:33",
+    "branch": "test-audit/stage1-cohere-estree-gaps",
+    "diff": "review/test-audit/stage1-cohere-estree-gaps/M06.diff",
+    "local_diff": "review/test-defend/deletion-set/stage1-cohere-estree/test-audit__stage1-cohere-estree-gaps__M06.diff",
+    "slug": "test-audit__stage1-cohere-estree-gaps__M06",
+    "candidates_failed": [
+      "TestInterfaceDefaultGap",
+      "TestInterfaceTypeMethodGap"
+    ],
+    "other_rows_failed": []
+  },
+  {
+    "mutant": "D1",
+    "file_line": "stage1/cohere/estree/sourceParser.ts:1189",
+    "branch": "test-defend/stage1-cohere-estree-deep",
+    "diff": "review/test-defend/stage1-cohere-estree-deep/D1.diff",
+    "local_diff": "review/test-defend/deletion-set/stage1-cohere-estree/test-defend__stage1-cohere-estree-deep__D1.diff",
+    "slug": "test-defend__stage1-cohere-estree-deep__D1",
+    "candidates_failed": [
+      "TestUnattachedDecoratorControl"
+    ],
+    "other_rows_failed": [
+      "TestRecoveredExpressions",
+      "TestUnattachedDecorator"
+    ]
+  },
+  {
+    "mutant": "D3",
+    "file_line": "stage1/cohere/estree/protocol.ts:36",
+    "branch": "test-defend/stage1-cohere-estree-deep",
+    "diff": "review/test-defend/stage1-cohere-estree-deep/D3.diff",
+    "local_diff": "review/test-defend/deletion-set/stage1-cohere-estree/test-defend__stage1-cohere-estree-deep__D3.diff",
+    "slug": "test-defend__stage1-cohere-estree-deep__D3",
+    "candidates_failed": [
+      "TestUnattachedDecoratorControl"
+    ],
+    "other_rows_failed": [
+      "TestRecoveredExpressions"
+    ]
+  },
+  {
+    "mutant": "D2",
+    "file_line": "internal/lower/class_inheritance.go:761",
+    "branch": "test-defend/stage1-cohere-estree-gaps",
+    "diff": "review/test-defend/stage1-cohere-estree-gaps/D2.diff",
+    "local_diff": "review/test-defend/deletion-set/stage1-cohere-estree/test-defend__stage1-cohere-estree-gaps__D2.diff",
+    "slug": "test-defend__stage1-cohere-estree-gaps__D2",
+    "candidates_failed": [
+      "TestInterfaceDefaultGap"
+    ],
+    "other_rows_failed": [
+      "TestJSXAgreement_008",
+      "TestJSXAgreement_012",
+      "TestJSXAgreement_023",
+      "TestJSXAgreement_024",
+      "TestJSXAgreement_025",
+      "TestJSXAgreement_027",
+      "TestJSXAgreement_029"
+    ]
+  },
+  {
+    "mutant": "D3",
+    "file_line": "internal/lower/iteration_origin.go:95",
+    "branch": "test-defend/stage1-cohere-estree-gaps",
+    "diff": "review/test-defend/stage1-cohere-estree-gaps/D3.diff",
+    "local_diff": "review/test-defend/deletion-set/stage1-cohere-estree/test-defend__stage1-cohere-estree-gaps__D3.diff",
+    "slug": "test-defend__stage1-cohere-estree-gaps__D3",
+    "candidates_failed": [
+      "TestInterfaceDefaultGap",
+      "TestInterfaceTypeMethodGap"
+    ],
+    "other_rows_failed": []
+  },
+  {
+    "mutant": "D4",
+    "file_line": "internal/lower/iteration_origin.go:88",
+    "branch": "test-defend/stage1-cohere-estree-gaps",
+    "diff": "review/test-defend/stage1-cohere-estree-gaps/D4.diff",
+    "local_diff": "review/test-defend/deletion-set/stage1-cohere-estree/test-defend__stage1-cohere-estree-gaps__D4.diff",
+    "slug": "test-defend__stage1-cohere-estree-gaps__D4",
+    "candidates_failed": [
+      "TestInterfaceDefaultGap",
+      "TestInterfaceTypeMethodGap"
+    ],
+    "other_rows_failed": []
+  },
+  {
+    "mutant": "D5",
+    "file_line": "internal/lower/expression.go:1024",
+    "branch": "test-defend/stage1-cohere-estree-gaps",
+    "diff": "review/test-defend/stage1-cohere-estree-gaps/D5.diff",
+    "local_diff": "review/test-defend/deletion-set/stage1-cohere-estree/test-defend__stage1-cohere-estree-gaps__D5.diff",
+    "slug": "test-defend__stage1-cohere-estree-gaps__D5",
+    "candidates_failed": [
+      "TestInterfaceTypeMethodGap"
+    ],
+    "other_rows_failed": [
+      "TestJSXAgreement_008",
+      "TestJSXAgreement_012",
+      "TestJSXAgreement_023",
+      "TestJSXAgreement_024",
+      "TestJSXAgreement_025",
+      "TestJSXAgreement_027",
+      "TestJSXAgreement_029"
+    ]
+  },
+  {
+    "mutant": "D6",
+    "file_line": "internal/lower/expression.go:508",
+    "branch": "test-defend/stage1-cohere-estree-gaps",
+    "diff": "review/test-defend/stage1-cohere-estree-gaps/D6.diff",
+    "local_diff": "review/test-defend/deletion-set/stage1-cohere-estree/test-defend__stage1-cohere-estree-gaps__D6.diff",
+    "slug": "test-defend__stage1-cohere-estree-gaps__D6",
+    "candidates_failed": [
+      "TestInterfaceTypeMethodGap"
+    ],
+    "other_rows_failed": [
+      "TestJSXAgreement_027"
+    ]
+  },
+  {
+    "mutant": "D7",
+    "file_line": "internal/lower/expression.go:783",
+    "branch": "test-defend/stage1-cohere-estree-gaps",
+    "diff": "review/test-defend/stage1-cohere-estree-gaps/D7.diff",
+    "local_diff": "review/test-defend/deletion-set/stage1-cohere-estree/test-defend__stage1-cohere-estree-gaps__D7.diff",
+    "slug": "test-defend__stage1-cohere-estree-gaps__D7",
+    "candidates_failed": [
+      "TestInterfaceTypeMethodGap"
+    ],
+    "other_rows_failed": [
+      "TestJSXAgreement_008",
+      "TestJSXAgreement_012",
+      "TestJSXAgreement_023",
+      "TestJSXAgreement_024",
+      "TestJSXAgreement_025",
+      "TestJSXAgreement_027",
+      "TestJSXAgreement_029"
+    ]
+  }
+]

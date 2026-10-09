@@ -1,0 +1,15 @@
+{
+  "pid": 442225,
+  "start_epoch": 1791568329.51,
+  "argv": [
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "30m",
+    "./stage1/cohere/estree/",
+    "-skip",
+    "^(TestInterfaceDefaultGap|TestInterfaceTypeMethodGap|TestUnattachedDecoratorControl)($|_|/)"
+  ]
+}
