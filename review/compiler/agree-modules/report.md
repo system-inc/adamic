@@ -46,3 +46,5 @@ Mutants and what caught them:
 | statics M13 | Exact readiness panic message includes new Box().n. |
 
 No new oracle fixtures were added, so counts.md requires no refresh. Assumption: source-row count treats an import dependency as part of its main entry row and the six functions in the domain-proof program as one source row. Refusal rows retain their original programs and contracts.
+
+Delivery recheck after current-main merge c285c3ee: focused lower tests PASS, 5.029s; tests-delivery.log holds the complete output. Final lane output is reported with the push.
