@@ -1,9 +1,11 @@
 package estree
 
 import (
+	"bytes"
 	"fmt"
 	"os"
 	"os/exec"
+	"regexp"
 	"strconv"
 	"strings"
 	"syscall"
@@ -141,4 +143,119 @@ func estreeAccounting(t *testing.T) {
 	t.Helper()
 	before := estreeCPU()
 	t.Cleanup(func() { t.Logf("total test CPU: %.3fs", estreeCPU()-before) })
+}
+
+func estreeSingles(cases int) [][]int {
+	groups := make([][]int, cases)
+	for id := range groups {
+		groups[id] = []int{id}
+	}
+	return groups
+}
+func estreeAgreementVerdict(want, got []byte) error {
+	if diff := firstDifference(want, got); diff != "" {
+		return fmt.Errorf("%s", diff)
+	}
+	return nil
+}
+func estreeRefusalVerdict(err error, timeout bool, size int64, stderr, diagnostic string) error {
+	if timeout || err == nil || size != 0 || !strings.Contains(stderr, diagnostic) {
+		return fmt.Errorf("timeout=%v exit=%v stdout=%d stderr=%s", timeout, err, size, stderr)
+	}
+	return nil
+}
+func estreeRefused(t *testing.T, argv []string, diagnostic string) {
+	t.Helper()
+	output, err := os.CreateTemp(t.TempDir(), "stdout")
+	if err != nil {
+		t.Fatal(err)
+	}
+	var stderr bytes.Buffer
+	runErr, timeout := runWithCPUBudget(t, argv, output, &stderr, 2*time.Second)
+	if err := output.Close(); err != nil {
+		t.Fatal(err)
+	}
+	info, err := os.Stat(output.Name())
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := estreeRefusalVerdict(runErr, timeout, info.Size(), stderr.String(), diagnostic); err != nil {
+		t.Fatalf("%v: %v", argv, err)
+	}
+}
+
+// Use the production plan and verdict in a child which really fails. Exactly
+// one shard must report the planted wrong answer, acceptance, or survivor.
+func estreeShardFailure(t *testing.T, count, cases int, groups [][]int, mode string, planted int) {
+	t.Helper()
+	if os.Getenv("ADAMIC_ESTREE_SHARD_PROOF") == t.Name() {
+		selected := estreeShardPlan(t, count, cases, groups)
+		for i, group := range groups {
+			if !selected[i] {
+				continue
+			}
+			t.Run(fmt.Sprintf("shard-%03d", i), func(t *testing.T) {
+				t.Parallel()
+				for _, id := range group {
+					var err error
+					switch mode {
+					case "refusal":
+						exit := fmt.Errorf("refused")
+						if id == planted {
+							exit = nil
+						}
+						err = estreeRefusalVerdict(exit, false, 0, "expected diagnostic", "expected diagnostic")
+					case "mutant":
+						got := []byte("mutant")
+						if id == planted {
+							got = []byte("Go")
+						}
+						err = estreeMutantVerdict([]byte("Go"), got)
+					case "agreement":
+						got := []byte("Go")
+						if id == planted {
+							got = []byte("planted disagreement")
+						}
+						err = estreeAgreementVerdict([]byte("Go"), got)
+					default:
+						t.Fatal("unknown proof mode")
+					}
+					if err != nil {
+						t.Fatalf("case %d: %v", id, err)
+					}
+				}
+			})
+		}
+		return
+	}
+	owner := -1
+	for i, group := range groups {
+		for _, id := range group {
+			if id == planted {
+				owner = i
+			}
+		}
+	}
+	if owner < 0 {
+		t.Fatal("planted ID absent")
+	}
+	executable, err := os.Executable()
+	if err != nil {
+		t.Fatal(err)
+	}
+	command := exec.Command(executable, "-test.run=^"+regexp.QuoteMeta(t.Name())+"$", "-test.v")
+	for _, entry := range os.Environ() {
+		if !strings.HasPrefix(entry, "ADAMIC_TEST_SHARD=") && !strings.HasPrefix(entry, "ADAMIC_ESTREE_SHARD_PROOF=") {
+			command.Env = append(command.Env, entry)
+		}
+	}
+	command.Env = append(command.Env, "ADAMIC_ESTREE_SHARD_PROOF="+t.Name())
+	output, err := command.CombinedOutput()
+	text := string(output)
+	prefix := "--- FAIL: " + t.Name() + "/shard-"
+	expected := fmt.Sprintf("%s%03d", prefix, owner)
+	if err == nil || strings.Count(text, prefix) != 1 || !strings.Contains(text, expected) || !strings.Contains(text, fmt.Sprintf("case %d:", planted)) {
+		t.Fatalf("planted %s did not fail exactly shard-%03d: %v\n%s", mode, owner, err, text)
+	}
+	t.Logf("case %d planted %s caught by exactly shard-%03d", planted, mode, owner)
 }

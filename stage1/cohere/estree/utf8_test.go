@@ -1,10 +1,12 @@
 package estree
 
 import (
+	"fmt"
 	"os"
 	"path/filepath"
 	"strings"
 	"testing"
+	"time"
 )
 
 func cookedSurrogates() []string {
@@ -52,17 +54,44 @@ func TestCookedSurrogateLibraryGap(t *testing.T) {
 	}
 	t.Log("Go serializes each unpaired WTF-8 surrogate as three U+FFFD; original keeps UTF-16 surrogates")
 }
+
+const testLossyInputRefusalShards = 2
+
+func lossyInputs() [][]byte {
+	return [][]byte{{47, 47, 240, 144, 128, 10, 120, 59}, {47, 47, 239, 191, 189, 10, 120, 59}}
+}
+
+// ADAMIC_TEST_SHARD=i/n selects shard indices modulo n; unset runs all.
 func TestLossyInputRefusal(t *testing.T) {
-	main, _ := filepath.Abs("main.ts")
-	binary, script := build(t, main, true)
-	for _, body := range [][]byte{{47, 47, 240, 144, 128, 10, 120, 59}, {47, 47, 239, 191, 189, 10, 120, 59}} {
-		path := filepath.Join(t.TempDir(), "input.ts")
-		os.WriteFile(path, body, 0644)
-		for _, argv := range [][]string{{"node", "--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), main, path}, {binary, path}, {"node", "--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), script, path}} {
-			refusedBeforeDeadline(t, argv, "cannot recover original UTF-8 bytes")
-		}
+	estreeAccounting(t)
+	started := time.Now()
+	bodies := lossyInputs()
+	selected := estreeShardPlan(t, testLossyInputRefusalShards, len(bodies), estreeSingles(len(bodies)))
+	main, err := filepath.Abs("main.ts")
+	if err != nil {
+		t.Fatal(err)
 	}
-	t.Log("equal-size malformed and valid replacement inputs both explicitly refuse; raw-byte API remains required")
+	binary, script := estreeTimedBuild(t, main, true)
+	t.Logf("setup including builds: %.3fs", time.Since(started).Seconds())
+	for i, body := range bodies {
+		if !selected[i] {
+			continue
+		}
+		t.Run(fmt.Sprintf("shard-%03d", i), func(t *testing.T) {
+			t.Parallel()
+			path := filepath.Join(t.TempDir(), "input.ts")
+			if err := os.WriteFile(path, body, 0644); err != nil {
+				t.Fatal(err)
+			}
+			for _, argv := range [][]string{{"node", "--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), main, path}, {binary, path}, {"node", "--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), script, path}} {
+				estreeRefused(t, argv, "cannot recover original UTF-8 bytes")
+			}
+		})
+	}
+}
+func TestLossyInputRefusalShardFailure(t *testing.T) {
+	bodies := lossyInputs()
+	estreeShardFailure(t, testLossyInputRefusalShards, len(bodies), estreeSingles(len(bodies)), "refusal", 1)
 }
 
 func TestLossyInputControl(t *testing.T) {
