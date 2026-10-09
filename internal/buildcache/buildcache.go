@@ -5,9 +5,9 @@
 //
 // A miss builds into an empty private directory and publishes it whole by rename, so a product on disk is
 // always complete and a failed build leaves nothing. ADAMIC_BUILD_CACHE=off builds every time into a fresh
-// directory: the uncached proof mode, which is what lands main. The cache is local to the machine for now
-// (ADAMIC_BUILD_CACHE_DIR, or the user cache directory's adamic-build); Loom's content-addressed store slots in
-// behind Get without changing a caller.
+// directory: the uncached proof mode, which is what lands main. The cache is local to the machine
+// (ADAMIC_BUILD_CACHE_DIR, or the user cache directory's adamic-build), and a miss there fetches from the shared
+// store before it builds (store.go).
 package buildcache
 
 import (
@@ -40,7 +40,7 @@ type Inputs struct {
 // Product returns the directory holding the product built from inputs, failing the test if it can't be built.
 func Product(t testing.TB, inputs Inputs, build func(directory string) error) string {
 	t.Helper()
-	directory, line, err := get(inputs, build)
+	directory, line, err := get(inputs, build, t.Name())
 	if line != "" {
 		t.Log(line)
 	}
@@ -56,8 +56,13 @@ func Get(inputs Inputs, build func(directory string) error) (string, error) {
 	return directory, err
 }
 
-func get(inputs Inputs, build func(directory string) error) (string, string, error) {
+func get(inputs Inputs, build func(directory string) error, testName ...string) (string, string, error) {
 	started := time.Now()
+	if os.Getenv(auditReplayKey) != "" {
+		if err := replayBuild(inputs, build); err != nil {
+			return "", "", err
+		}
+	}
 	if os.Getenv("ADAMIC_BUILD_CACHE") == "off" {
 		directory, err := os.MkdirTemp("", "adamic-build-")
 		if err != nil {
@@ -65,6 +70,17 @@ func get(inputs Inputs, build func(directory string) error) (string, string, err
 		}
 		if err = build(directory); err != nil {
 			return "", "", err
+		}
+		// Main's own gate runs uncached and is the one writer of trusted refs: what it built from main's sources is
+		// published for everyone to read (store.go).
+		if trusted() {
+			if root, err := repositoryRoot(); err == nil {
+				if key, err := Key(root, inputs); err == nil {
+					if err = publish(key, inputs.Name, directory); err != nil {
+						note("publish %s %s failed: %v", inputs.Name, key[:12], err)
+					}
+				}
+			}
 		}
 		return directory, record(inputs.Name, "uncached", "off", started), nil
 	}
@@ -101,9 +117,30 @@ func get(inputs Inputs, build func(directory string) error) (string, string, err
 	if err != nil {
 		return "", "", err
 	}
-	if err = build(scratch); err != nil {
-		os.RemoveAll(scratch)
-		return "", "", err
+	outcome := "miss"
+	auditSample := false
+	if os.Getenv("ADAMIC_BUILD_STORE") != "off" {
+		switch err = fetch(key, scratch); {
+		case err == nil:
+			outcome = "fetched"
+			auditSample = os.Getenv(auditReplayKey) == "" && auditing()
+		case errors.Is(err, errNotStored):
+			// Not stored, or the store unreachable: build here, from an empty directory again.
+			note("store %s %s: %v", inputs.Name, key[:12], err)
+			os.RemoveAll(scratch)
+			if scratch, err = os.MkdirTemp(cache, ".building-"+key[:12]+"-"); err != nil {
+				return "", "", err
+			}
+		default:
+			os.RemoveAll(scratch)
+			return "", "", err
+		}
+	}
+	if outcome == "miss" {
+		if err = build(scratch); err != nil {
+			os.RemoveAll(scratch)
+			return "", "", err
+		}
 	}
 	if err = os.WriteFile(product+".inputs", []byte(describe(inputs)), 0o644); err != nil {
 		os.RemoveAll(scratch)
@@ -113,7 +150,19 @@ func get(inputs Inputs, build func(directory string) error) (string, string, err
 		os.RemoveAll(scratch)
 		return "", "", err
 	}
-	return product, record(inputs.Name, key, "miss", started), nil
+	if auditSample {
+		if err = queueAudit(key, inputs, product, testName); err != nil {
+			return "", "", err
+		}
+		outcome = "audit-queued"
+	}
+	if outcome == "miss" && os.Getenv(auditReplayKey) == "" {
+		// Uploads are off the test's clock. The product must have its permanent name before it is spooled.
+		if err = spool(key, inputs.Name, product); err != nil {
+			note("spool %s %s failed: %v", inputs.Name, key[:12], err)
+		}
+	}
+	return product, record(inputs.Name, key, outcome, started), nil
 }
 
 // Key is the product's address: a hash of every input, each length-prefixed so no two inputs run together.
@@ -257,7 +306,17 @@ func describe(inputs Inputs) string {
 	return strings.Join(lines, "\n") + "\n"
 }
 
-// record is the product's census line, 'build <name> <key12> hit|miss|off <seconds>', also appended to
+// note appends a line about the store to $ADAMIC_BUILD_LOG when set, beside the census lines.
+func note(format string, arguments ...any) {
+	if path := os.Getenv("ADAMIC_BUILD_LOG"); path != "" {
+		if file, err := os.OpenFile(path, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0o644); err == nil {
+			fmt.Fprintf(file, format+"\n", arguments...)
+			file.Close()
+		}
+	}
+}
+
+// record is the product's census line, 'build <name> <key12> hit|fetched|audit-queued|miss|off <seconds>', also appended to
 // $ADAMIC_BUILD_LOG when set, so the gate can count every build as its own unit.
 func record(name, key, outcome string, started time.Time) string {
 	line := fmt.Sprintf("build %s %s %s %.2f", strings.ReplaceAll(name, " ", "_"), key[:min(12, len(key))], outcome, time.Since(started).Seconds())
