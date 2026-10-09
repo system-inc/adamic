@@ -1,0 +1,13 @@
+// a-check: refused the non-null assertion !
+// TypeScript 6.0.3 src/compiler/core.ts:519, K=string and V=number.
+function getOrUpdate(map: Map<string, number>, key: string, callback: () => number): number {
+    if (map.has(key)) {
+        return map.get(key)!;
+    }
+    const value = callback();
+    map.set(key, value);
+    return value;
+}
+const values = new Map<string, number>();
+console.log(String(getOrUpdate(values, "id", () => 17)));
+console.log(String(getOrUpdate(values, "id", () => 99)));

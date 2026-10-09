@@ -1,0 +1,24 @@
+{
+  "projects": 301,
+  "byte_identical_project_outputs": 301,
+  "placeholder_sites": 50,
+  "counts": {
+    "YES for observed first reads": 25,
+    "NO: first read before write": 19,
+    "UNOBSERVED: no first read": 6
+  },
+  "initializations": 61883896,
+  "first_reads": 4888904,
+  "before_write": 344015,
+  "opaque_calls": 0,
+  "driver": {
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+      "/tmp/nonnull-slots-tslib/slots.cjs"
+    ],
+    "cases": 301,
+    "passed": 301,
+    "failed": [],
+    "seconds": 403.574
+  }
+}
