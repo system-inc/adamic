@@ -1,0 +1,13 @@
+diff --git a/internal/native/library.go b/internal/native/library.go
+index 23e259b3..ecd11c30 100644
+--- a/internal/native/library.go
++++ b/internal/native/library.go
+@@ -200,7 +200,7 @@ func cachedRuntime(files []runtimeFile, flags []string, compiler string, version
+ 	// Publish everything together. A competing process may already have published this key; its
+ 	// identical complete entry wins, while this process removes only its own temporary directory.
+ 	if err := os.Rename(temporary, directory); err != nil {
+-		if info, statErr := os.Stat(library); statErr != nil || !info.Mode().IsRegular() {
++		if info, statErr := os.Stat(library); statErr == nil || !info.Mode().IsRegular() {
+ 			return "", fmt.Errorf("native: publishing runtime: %w", err)
+ 		}
+ 	}

@@ -1,0 +1,17 @@
+[
+  "timeout",
+  "120",
+  "go",
+  "test",
+  "-json",
+  "-count=1",
+  "-timeout",
+  "90s",
+  "./internal/native/",
+  "-run",
+  "^(TestBorrowChainDeclarations|TestCEndsInNewline|TestCallTargetsElementBorrowPlan|TestClosureConventionDropCount|TestClosureConventionRuntimeDropCount|TestClosureConventionRuntimeFeaturesIgnoreLiterals|TestClosureConventionWrongOrder|TestDevirtualizeBorrowDocClaim|TestDevirtualizedCalls|TestInheritanceMemoryPlans|TestLibraryMapSetIteratorResources|TestLoopArrayHoldC|TestLoopBorrowPlan|TestLoopCallCoverage|TestMapHashProbeCatchesMutants|TestMeasureClangUnits|TestNbodyBorrowedLoopC|TestNbodyIndexedElementsBorrow|TestNoReaderCallingConvention|TestNodeBufferRuntimeWithoutDeclarations|TestOptionalMethodThunksMatchNode|TestParserHasNoUnusedOptionalMethodThunks|TestRecordsAgainstNode|TestRegexProgramsKeepCheckedFieldReads|TestRuntimeCacheConcurrentBuilders|TestRuntimeCacheConcurrentProcesses|TestRuntimeCacheKeepsCountFlags|TestRuntimeCacheRebuildsChangedSources|TestRuntimeFieldLayoutsAreIncluded|TestRuntimeKeyIncludesEveryInput|TestRuntimeKeyKeepsBoundaries|TestRuntimeStringViews|TestStringBuildingMatchesNode|TestStringsMatchJavaScript|TestTSGoBuildSeesTheProgramsFeatures|TestThrowElementBorrowPlan|TestUniformFieldsMatchNode)$",
+  "-coverpkg",
+  "./internal/native",
+  "-coverprofile",
+  "review/test-defend/internal-native-library/rest-matrix.cover"
+]

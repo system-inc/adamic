@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T17:15:46.896930838Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T17:15:46.904442347Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNbodyBorrowedLoopC"}
+{"Time":"2026-10-09T17:15:46.904535808Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNbodyBorrowedLoopC","Output":"=== RUN   TestNbodyBorrowedLoopC\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:15:46.904564191Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNbodyBorrowedLoopC","Output":"=== PAUSE TestNbodyBorrowedLoopC\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:15:46.904566675Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNbodyBorrowedLoopC"}
+{"Time":"2026-10-09T17:15:46.904569679Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNbodyBorrowedLoopC"}
+{"Time":"2026-10-09T17:15:46.904571382Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNbodyBorrowedLoopC","Output":"=== CONT  TestNbodyBorrowedLoopC\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:15:47.025256042Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNbodyBorrowedLoopC","Output":"--- PASS: TestNbodyBorrowedLoopC (0.12s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:15:47.025303354Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNbodyBorrowedLoopC","Elapsed":0.12}
+{"Time":"2026-10-09T17:15:47.025324716Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:15:47.026543046Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"coverage: 23.1% of statements in ./internal/native\n"}
+{"Time":"2026-10-09T17:15:47.031126087Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"ok  \tgithub.com/system-inc/adamic/internal/native\t0.133s\tcoverage: 23.1% of statements in ./internal/native\n"}
+{"Time":"2026-10-09T17:15:47.031175011Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Elapsed":0.134}

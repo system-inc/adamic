@@ -1,0 +1,435 @@
+[
+  {
+    "test": "TestRuntimeKeyIncludesEveryInput",
+    "package": "internal/native",
+    "file": "internal/native/library_test.go",
+    "seconds": 0.076,
+    "oracle": "Handwritten metamorphic key changes and flag order checks.",
+    "oracle_kind": "self",
+    "kills": [
+      "M01",
+      "M02",
+      "M03",
+      "M05"
+    ],
+    "unique_kills": [
+      "M01",
+      "M02",
+      "M03"
+    ],
+    "last_proven_fail": "M05: library_test.go:34: changing adamic.c did not change the key",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 9,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestRuntimeKeyIncludesEveryInput",
+      "TestRuntimeCacheKeepsCountFlags",
+      "TestRuntimeCacheRebuildsChangedSources",
+      "TestRuntimeCacheConcurrentBuilders",
+      "TestRuntimeCacheConcurrentProcesses"
+    ],
+    "evidence": "ADAMIC_MUTANT=M05 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestRuntimeKeyIncludesEveryInput|TestRuntimeCacheKeepsCountFlags|TestRuntimeCacheRebuildsChangedSources|TestRuntimeCacheConcurrentBuilders|TestRuntimeCacheConcurrentProcesses)$ > M05.log 2>&1; library_test.go:34: changing adamic.c did not change the key"
+  },
+  {
+    "test": "TestRuntimeCacheKeepsCountFlags",
+    "package": "internal/native",
+    "file": "internal/native/library_test.go",
+    "seconds": 0.187,
+    "oracle": "Handwritten empty-program count report, run from the built executable.",
+    "oracle_kind": "self",
+    "kills": [
+      "M06",
+      "M08",
+      "M09"
+    ],
+    "unique_kills": [
+      "M09"
+    ],
+    "last_proven_fail": "M09: library_test.go:69: count true: got \"\", want \"adamic: counts: allocations 0 frees 0 retains 0 releases 0 peak 0 regions 0\\n\"",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 9,
+    "probe_kills": [
+      "P03"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestRuntimeKeyIncludesEveryInput",
+      "TestRuntimeCacheKeepsCountFlags",
+      "TestRuntimeCacheRebuildsChangedSources",
+      "TestRuntimeCacheConcurrentBuilders",
+      "TestRuntimeCacheConcurrentProcesses"
+    ],
+    "evidence": "ADAMIC_MUTANT=M09 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestRuntimeKeyIncludesEveryInput|TestRuntimeCacheKeepsCountFlags|TestRuntimeCacheRebuildsChangedSources|TestRuntimeCacheConcurrentBuilders|TestRuntimeCacheConcurrentProcesses)$ > M09.log 2>&1; library_test.go:69: count true: got \"\", want \"adamic: counts: allocations 0 frees 0 retains 0 releases 0 peak 0 regions 0\\n\""
+  },
+  {
+    "test": "TestRuntimeCacheRebuildsChangedSources",
+    "package": "internal/native",
+    "file": "internal/native/library_test.go",
+    "seconds": 0.199,
+    "oracle": "Handwritten C fixture outputs 1, 2, 4 and changed archive identities.",
+    "oracle_kind": "self",
+    "kills": [
+      "M05",
+      "M06",
+      "M08"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M08: library_test.go:117: native: publishing runtime: rename /workspace/u048-tmp/TestRuntimeCacheRebuildsChangedSources2846577434/001/3403f3091932ef2ce58a41fb6cc163b3a9d501860de90dc6b482f023e77562e5 /workspace/u048-tmp/TestRuntimeCacheRebuildsChangedSources2846577434/001/.build-4070347847: no such file or directory",
+    "verdict": "overlapping",
+    "subsumed_by": [
+      "TestRuntimeCacheKeepsCountFlags",
+      "TestRuntimeKeyIncludesEveryInput"
+    ],
+    "mutants_in_matrix": 9,
+    "probe_kills": [
+      "P02"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestRuntimeKeyIncludesEveryInput",
+      "TestRuntimeCacheKeepsCountFlags",
+      "TestRuntimeCacheRebuildsChangedSources",
+      "TestRuntimeCacheConcurrentBuilders",
+      "TestRuntimeCacheConcurrentProcesses"
+    ],
+    "evidence": "ADAMIC_MUTANT=M08 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestRuntimeKeyIncludesEveryInput|TestRuntimeCacheKeepsCountFlags|TestRuntimeCacheRebuildsChangedSources|TestRuntimeCacheConcurrentBuilders|TestRuntimeCacheConcurrentProcesses)$ > M08.log 2>&1; library_test.go:117: native: publishing runtime: rename /workspace/u048-tmp/TestRuntimeCacheRebuildsChangedSources2846577434/001/3403f3091932ef2ce58a41fb6cc163b3a9d501860de90dc6b482f023e77562e5 /workspace/u048-tmp/TestRuntimeCacheRebuildsChangedSources2846577434/001/.build-4070347847: no such file or directory"
+  },
+  {
+    "test": "TestRuntimeCacheConcurrentBuilders",
+    "package": "internal/native",
+    "file": "internal/native/library_test.go",
+    "seconds": 1.293,
+    "oracle": "Handwritten one-compilation, identical archives, output 42 and one cache entry.",
+    "oracle_kind": "self",
+    "kills": [
+      "M07",
+      "M08"
+    ],
+    "unique_kills": [
+      "M07"
+    ],
+    "last_proven_fail": "M08: library_test.go:167: caller 0: native: publishing runtime: rename /workspace/u048-tmp/TestRuntimeCacheConcurrentBuilders1944570777/001/cache/eb4becf7cbff6b19bab0600055fdc60ee922b74dd3b3c55631e62bae318d532d /workspace/u048-tmp/TestRuntimeCacheConcurrentBuilders1944570777/001/cache/.build-3253343070: no such file or directory",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 9,
+    "probe_kills": [
+      "P02"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestRuntimeKeyIncludesEveryInput",
+      "TestRuntimeCacheKeepsCountFlags",
+      "TestRuntimeCacheRebuildsChangedSources",
+      "TestRuntimeCacheConcurrentBuilders",
+      "TestRuntimeCacheConcurrentProcesses"
+    ],
+    "evidence": "ADAMIC_MUTANT=M08 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestRuntimeKeyIncludesEveryInput|TestRuntimeCacheKeepsCountFlags|TestRuntimeCacheRebuildsChangedSources|TestRuntimeCacheConcurrentBuilders|TestRuntimeCacheConcurrentProcesses)$ > M08.log 2>&1; library_test.go:167: caller 0: native: publishing runtime: rename /workspace/u048-tmp/TestRuntimeCacheConcurrentBuilders1944570777/001/cache/eb4becf7cbff6b19bab0600055fdc60ee922b74dd3b3c55631e62bae318d532d /workspace/u048-tmp/TestRuntimeCacheConcurrentBuilders1944570777/001/cache/.build-3253343070: no such file or directory"
+  },
+  {
+    "test": "TestRuntimeCacheConcurrentProcesses",
+    "package": "internal/native",
+    "file": "internal/native/library_test.go",
+    "seconds": 0.173,
+    "oracle": "Handwritten subprocess header, output 42, successful child checks and one cache entry; parent is not merely a helper.",
+    "oracle_kind": "self",
+    "kills": [
+      "M08"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M08: library_test.go:232: process 0: exit status 1",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestRuntimeCacheKeepsCountFlags"
+    ],
+    "mutants_in_matrix": 9,
+    "probe_kills": [
+      "P02"
+    ],
+    "subsumer_seconds": 0.187,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestRuntimeKeyIncludesEveryInput",
+      "TestRuntimeCacheKeepsCountFlags",
+      "TestRuntimeCacheRebuildsChangedSources",
+      "TestRuntimeCacheConcurrentBuilders",
+      "TestRuntimeCacheConcurrentProcesses"
+    ],
+    "evidence": "ADAMIC_MUTANT=M08 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestRuntimeKeyIncludesEveryInput|TestRuntimeCacheKeepsCountFlags|TestRuntimeCacheRebuildsChangedSources|TestRuntimeCacheConcurrentBuilders|TestRuntimeCacheConcurrentProcesses)$ > M08.log 2>&1; library_test.go:232: process 0: exit status 1"
+  },
+  {
+    "test": "TestStringLengthLimit",
+    "package": "internal/native",
+    "file": "internal/native/limit_test.go",
+    "seconds": 0.184,
+    "oracle": "V8 13.6.233.17 include/v8-primitive.h:126 64-bit kMaxLength formula checked: (1<<29)-24=536870888. Adamic panic prefix and exit 70 are self-written.",
+    "oracle_kind": [
+      "external-authority",
+      "self"
+    ],
+    "kills": [
+      "M18",
+      "M19"
+    ],
+    "unique_kills": [
+      "M18",
+      "M19"
+    ],
+    "last_proven_fail": "M19: limit_test.go:48: 536870889 units: exit 0, \"allowed\\n\"; want exit 70, \"adamic: panic: RangeError: Invalid string length\\n\"",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 2,
+    "probe_kills": [
+      "P07"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestStringLengthLimit"
+    ],
+    "evidence": "ADAMIC_MUTANT=M19 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestStringLengthLimit)$ > M19.log 2>&1; limit_test.go:48: 536870889 units: exit 0, \"allowed\\n\"; want exit 70, \"adamic: panic: RangeError: Invalid string length\\n\"",
+    "vacuous_subcases": [
+      "0 units",
+      "536870888 units"
+    ]
+  },
+  {
+    "test": "TestLoopBorrowPlan",
+    "package": "internal/native",
+    "file": "internal/native/loop_borrow_test.go",
+    "seconds": 0.052,
+    "oracle": "Handwritten borrowing, local ownership, lending and function/loop inventory.",
+    "oracle_kind": "self",
+    "kills": [
+      "M10",
+      "M11",
+      "M12",
+      "M13",
+      "M14"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M14: loop_borrow_test.go:44: closureReassignBody: borrowed true, want false",
+    "verdict": "overlapping",
+    "subsumed_by": [
+      "TestLoopCallCoverage",
+      "TestLoopArrayHoldC"
+    ],
+    "mutants_in_matrix": 8,
+    "probe_kills": [
+      "P04"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestLoopBorrowPlan",
+      "TestNbodyBorrowedLoopC",
+      "TestGlobalArgumentLending",
+      "TestLoopArrayHoldC",
+      "TestLoopCallCoverage"
+    ],
+    "evidence": "ADAMIC_MUTANT=M14 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestLoopBorrowPlan|TestNbodyBorrowedLoopC|TestGlobalArgumentLending|TestLoopArrayHoldC|TestLoopCallCoverage)$ > M14.log 2>&1; loop_borrow_test.go:44: closureReassignBody: borrowed true, want false"
+  },
+  {
+    "test": "TestNbodyBorrowedLoopC",
+    "package": "internal/native",
+    "file": "internal/native/loop_borrow_test.go",
+    "seconds": 0.086,
+    "oracle": "Handwritten IR Borrowed flags and absence of named binding retain/release in emitted C; no Node execution.",
+    "oracle_kind": "self",
+    "kills": [
+      "M10",
+      "M12"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M12: loop_borrow_test.go:79: function 1 offsetMomentum still counts binding adamic_local_18_body",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestLoopBorrowPlan"
+    ],
+    "mutants_in_matrix": 8,
+    "probe_kills": [
+      "P05"
+    ],
+    "subsumer_seconds": 0.052,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestLoopBorrowPlan",
+      "TestNbodyBorrowedLoopC",
+      "TestGlobalArgumentLending",
+      "TestLoopArrayHoldC",
+      "TestLoopCallCoverage"
+    ],
+    "evidence": "ADAMIC_MUTANT=M12 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestLoopBorrowPlan|TestNbodyBorrowedLoopC|TestGlobalArgumentLending|TestLoopArrayHoldC|TestLoopCallCoverage)$ > M12.log 2>&1; loop_borrow_test.go:79: function 1 offsetMomentum still counts binding adamic_local_18_body"
+  },
+  {
+    "test": "TestGlobalArgumentLending",
+    "package": "internal/native",
+    "file": "internal/native/loop_borrow_test.go",
+    "seconds": 0.056,
+    "oracle": "Handwritten eligible-global argument predicate and minimum coverage count.",
+    "oracle_kind": "self",
+    "kills": [
+      "M15"
+    ],
+    "unique_kills": [
+      "M15"
+    ],
+    "last_proven_fail": "M15: loop_borrow_test.go:110: read virtual 0 argument 0 lent false, want true",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 8,
+    "probe_kills": [
+      "P06"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestLoopBorrowPlan",
+      "TestNbodyBorrowedLoopC",
+      "TestGlobalArgumentLending",
+      "TestLoopArrayHoldC",
+      "TestLoopCallCoverage"
+    ],
+    "evidence": "ADAMIC_MUTANT=M15 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestLoopBorrowPlan|TestNbodyBorrowedLoopC|TestGlobalArgumentLending|TestLoopArrayHoldC|TestLoopCallCoverage)$ > M15.log 2>&1; loop_borrow_test.go:110: read virtual 0 argument 0 lent false, want true"
+  },
+  {
+    "test": "TestLoopArrayHoldC",
+    "package": "internal/native",
+    "file": "internal/native/loop_borrow_test.go",
+    "seconds": 0.121,
+    "oracle": "Handwritten iterator retain/release expectations, emitted definitions and coverage counts.",
+    "oracle_kind": "self",
+    "kills": [
+      "M12",
+      "M13",
+      "M14",
+      "M16",
+      "M17"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M17: loop_borrow_test.go:157: pushBody: redundant iterator retain",
+    "verdict": "overlapping",
+    "subsumed_by": [
+      "TestLoopCallCoverage",
+      "TestLoopBorrowPlan"
+    ],
+    "mutants_in_matrix": 8,
+    "probe_kills": [
+      "P05"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestLoopBorrowPlan",
+      "TestNbodyBorrowedLoopC",
+      "TestGlobalArgumentLending",
+      "TestLoopArrayHoldC",
+      "TestLoopCallCoverage"
+    ],
+    "evidence": "ADAMIC_MUTANT=M17 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestLoopBorrowPlan|TestNbodyBorrowedLoopC|TestGlobalArgumentLending|TestLoopArrayHoldC|TestLoopCallCoverage)$ > M17.log 2>&1; loop_borrow_test.go:157: pushBody: redundant iterator retain"
+  },
+  {
+    "test": "TestLoopCallCoverage",
+    "package": "internal/native",
+    "file": "internal/native/loop_borrow_test.go",
+    "seconds": 0.317,
+    "oracle": "Handwritten borrow/lending/iterator expectations, global-call checks and 26-function inventory.",
+    "oracle_kind": "self",
+    "kills": [
+      "M10",
+      "M11",
+      "M12",
+      "M13",
+      "M16",
+      "M17"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M17: loop_borrow_test.go:271: readLocal: redundant iterator retain",
+    "verdict": "overlapping",
+    "subsumed_by": [
+      "TestLoopBorrowPlan",
+      "TestLoopArrayHoldC"
+    ],
+    "mutants_in_matrix": 8,
+    "probe_kills": [
+      "P04",
+      "P05",
+      "P06"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestLoopBorrowPlan",
+      "TestNbodyBorrowedLoopC",
+      "TestGlobalArgumentLending",
+      "TestLoopArrayHoldC",
+      "TestLoopCallCoverage"
+    ],
+    "evidence": "ADAMIC_MUTANT=M17 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestLoopBorrowPlan|TestNbodyBorrowedLoopC|TestGlobalArgumentLending|TestLoopArrayHoldC|TestLoopCallCoverage)$ > M17.log 2>&1; loop_borrow_test.go:271: readLocal: redundant iterator retain"
+  },
+  {
+    "test": "TestMapHashProbeBound",
+    "package": "internal/native",
+    "file": "internal/native/map_hash_test.go",
+    "seconds": 12.422,
+    "oracle": "C harness asserts SameValueZero, insertion/lookups and probe bound 64; Go checks exit status only. M20 changes hash(1) while this corpus still passes.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "untrue",
+    "subsumed_by": [],
+    "mutants_in_matrix": 1,
+    "probe_kills": [
+      "P08"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestMapHashProbeBound"
+    ],
+    "evidence": "ADAMIC_MUTANT=P08 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestMapHashProbeBound)$ > P08.log 2>&1; map_hash_test.go:91: probe bound 64 exceeded: integers entries=64 hit=64 miss=65"
+  },
+  {
+    "test": "TestMapHashProbeCatchesMutants",
+    "package": "internal/native",
+    "file": "internal/native/map_hash_test.go",
+    "seconds": 20.233,
+    "oracle": "Witness expects three built-in bad hashes to fail with exit 1 and specific diagnostic text, without sanitizer failures.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W01: map_hash_test.go:131: mutant escaped or failed for another reason: <nil>",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestMapHashProbeCatchesMutants"
+    ],
+    "evidence": "W01 checker diff applied; timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^TestMapHashProbeCatchesMutants$ > W01.log 2>&1; map_hash_test.go:131: mutant escaped or failed for another reason: <nil>"
+  }
+]

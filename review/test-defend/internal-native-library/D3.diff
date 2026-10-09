@@ -1,0 +1,13 @@
+diff --git a/internal/native/runtime/map_set.c b/internal/native/runtime/map_set.c
+index 299fa10e..f4dbe101 100644
+--- a/internal/native/runtime/map_set.c
++++ b/internal/native/runtime/map_set.c
+@@ -31,7 +31,7 @@ uint64_t adamic_map_number_hash(double number) {
+ 		hash ^= hash >> 4;
+ 		hash *= 2057;
+ 		hash ^= hash >> 16;
+-		return hash & 0x3fffffffu;
++		return hash & 0xffu;
+ 	}
+ 	uint64_t hash;
+ 	memcpy(&hash, &number, sizeof hash);

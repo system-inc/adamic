@@ -1,0 +1,17 @@
+diff --git a/internal/native/emit_statements.go b/internal/native/emit_statements.go
+index a9237c2b..6f698857 100644
+--- a/internal/native/emit_statements.go
++++ b/internal/native/emit_statements.go
+@@ -526,11 +526,7 @@ func (e *emitter) forOf(statement ir.ForOf) {
+ 		if statement.Element.IsReference() {
+ 			element = fmt.Sprintf("(%s)%s", cType(statement.Element), element)
+ 		}
+-		if e.elementBorrows[e.at] {
+-			e.line("%s %s = %s;", cType(statement.Element), e.localName(statement.Local), element)
+-		} else {
+-			e.declareLocal(statement.Local, element, false)
+-		}
++		e.declareLocal(statement.Local, element, false)
+ 	}
+ 	for index := range statement.Body {
+ 		e.statementAt(&statement.Body[index])

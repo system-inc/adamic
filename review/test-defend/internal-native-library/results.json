@@ -1,0 +1,256 @@
+[
+  {
+    "test": "TestRuntimeCacheConcurrentProcesses",
+    "package": "internal/native",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestRuntimeCacheKeepsCountFlags"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D1 internal/native/library.go:203",
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "internal/native/library.go:203",
+        "change": "if info, statErr := os.Stat(library); statErr != nil || !info.Mode().IsRegular() { => if info, statErr := os.Stat(library); statErr == nil || !info.Mode().IsRegular() {",
+        "rows_failed": [
+          "TestRuntimeCacheConcurrentProcesses"
+        ]
+      }
+    ],
+    "evidence": "source /workspace/adamic-tools/env.sh; python3 review/test-defend/internal-native-library/run-defense.py; D1.log: library_test.go:250: process 0: exit status 1; exact timeout/go argv in matrix.json",
+    "bounded": true,
+    "matrix_rows": [
+      "TestRuntimeCacheConcurrentBuilders",
+      "TestRuntimeCacheConcurrentProcesses",
+      "TestRuntimeCacheKeepsCountFlags",
+      "TestRuntimeCacheRebuildsChangedSources",
+      "TestRuntimeKeyIncludesEveryInput",
+      "TestRuntimeKeyKeepsBoundaries",
+      "TestRuntimeFieldLayoutsAreIncluded",
+      "TestRuntimeStringViews"
+    ],
+    "passed_tests": [
+      "TestRuntimeCacheConcurrentBuilders",
+      "TestRuntimeCacheKeepsCountFlags",
+      "TestRuntimeCacheRebuildsChangedSources",
+      "TestRuntimeFieldLayoutsAreIncluded",
+      "TestRuntimeKeyIncludesEveryInput",
+      "TestRuntimeKeyKeepsBoundaries",
+      "TestRuntimeStringViews"
+    ],
+    "skipped_tests": [],
+    "unique_scope": "Completed bounded matrix only. Omitted package tests remain unknown."
+  },
+  {
+    "test": "TestNbodyBorrowedLoopC",
+    "package": "internal/native",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestLoopBorrowPlan"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D2 internal/native/emit_statements.go:529",
+    "attempts": [
+      {
+        "mutant": "D2",
+        "file_line": "internal/native/emit_statements.go:529",
+        "change": "\t\tif e.elementBorrows[e.at] {\n\t\t\te.line(\"%s %s = %s;\", cType(statement.Element), e.localName(statement.Local), element)\n\t\t} else {\n\t\t\te.declareLocal(statement.Local, element, false)\n\t\t} => \t\te.declareLocal(statement.Local, element, false)",
+        "rows_failed": [
+          "TestNbodyBorrowedLoopC"
+        ]
+      }
+    ],
+    "evidence": "source /workspace/adamic-tools/env.sh; python3 review/test-defend/internal-native-library/run-defense.py; D2.log: loop_borrow_test.go:79: function 1 offsetMomentum still counts binding adamic_local_18_body; exact timeout/go argv in matrix.json",
+    "bounded": true,
+    "matrix_rows": [
+      "TestBorrowChainDeclarations",
+      "TestCEndsInNewline",
+      "TestCallTargetsElementBorrowPlan",
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "TestClosureConventionWrongOrder",
+      "TestDevirtualizeBorrowDocClaim",
+      "TestDevirtualizedCalls",
+      "TestInheritanceMemoryPlans",
+      "TestLibraryMapSetIteratorResources",
+      "TestLoopArrayHoldC",
+      "TestLoopBorrowPlan",
+      "TestLoopCallCoverage",
+      "TestMeasureClangUnits",
+      "TestNbodyBorrowedLoopC",
+      "TestNbodyIndexedElementsBorrow",
+      "TestNoReaderCallingConvention",
+      "TestNodeBufferRuntimeWithoutDeclarations",
+      "TestOptionalMethodThunksMatchNode",
+      "TestParserHasNoUnusedOptionalMethodThunks",
+      "TestRecordsAgainstNode",
+      "TestRegexProgramsKeepCheckedFieldReads",
+      "TestRuntimeCacheConcurrentBuilders",
+      "TestRuntimeCacheConcurrentProcesses",
+      "TestRuntimeCacheKeepsCountFlags",
+      "TestRuntimeCacheRebuildsChangedSources",
+      "TestRuntimeFieldLayoutsAreIncluded",
+      "TestRuntimeKeyIncludesEveryInput",
+      "TestRuntimeKeyKeepsBoundaries",
+      "TestRuntimeStringViews",
+      "TestStringBuildingMatchesNode",
+      "TestStringsMatchJavaScript",
+      "TestTSGoBuildSeesTheProgramsFeatures",
+      "TestThrowElementBorrowPlan",
+      "TestUniformFieldsMatchNode"
+    ],
+    "passed_tests": [
+      "TestBorrowChainDeclarations",
+      "TestCEndsInNewline",
+      "TestCallTargetsElementBorrowPlan",
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "TestClosureConventionWrongOrder",
+      "TestDevirtualizeBorrowDocClaim",
+      "TestDevirtualizedCalls",
+      "TestInheritanceMemoryPlans",
+      "TestLibraryMapSetIteratorResources",
+      "TestLoopArrayHoldC",
+      "TestLoopBorrowPlan",
+      "TestLoopCallCoverage",
+      "TestNbodyIndexedElementsBorrow",
+      "TestNoReaderCallingConvention",
+      "TestNodeBufferRuntimeWithoutDeclarations",
+      "TestOptionalMethodThunksMatchNode",
+      "TestParserHasNoUnusedOptionalMethodThunks",
+      "TestRecordsAgainstNode",
+      "TestRegexProgramsKeepCheckedFieldReads",
+      "TestRuntimeCacheConcurrentBuilders",
+      "TestRuntimeCacheConcurrentProcesses",
+      "TestRuntimeCacheKeepsCountFlags",
+      "TestRuntimeCacheRebuildsChangedSources",
+      "TestRuntimeFieldLayoutsAreIncluded",
+      "TestRuntimeKeyIncludesEveryInput",
+      "TestRuntimeKeyKeepsBoundaries",
+      "TestRuntimeStringViews",
+      "TestStringBuildingMatchesNode",
+      "TestStringsMatchJavaScript",
+      "TestTSGoBuildSeesTheProgramsFeatures",
+      "TestThrowElementBorrowPlan",
+      "TestUniformFieldsMatchNode"
+    ],
+    "skipped_tests": [
+      "TestMeasureClangUnits"
+    ],
+    "unique_scope": "Completed bounded matrix only. Omitted package tests remain unknown."
+  },
+  {
+    "test": "TestMapHashProbeBound",
+    "package": "internal/native",
+    "prior_verdict": "untrue",
+    "subsumed_by": [],
+    "defense": "defended",
+    "unique_mutant": "D4 internal/native/runtime/map_set.c:34",
+    "attempts": [
+      {
+        "mutant": "D3",
+        "file_line": "internal/native/runtime/map_set.c:34",
+        "change": "return hash & 0x3fffffffu; => return hash & 0xffu;",
+        "rows_failed": [
+          "TestLibraryMapSetIteratorResources",
+          "TestMapHashProbeBound"
+        ]
+      },
+      {
+        "mutant": "D4",
+        "file_line": "internal/native/runtime/map_set.c:34",
+        "change": "return hash & 0x3fffffffu; => return hash & 0x3ffu;",
+        "rows_failed": [
+          "TestMapHashProbeBound"
+        ]
+      }
+    ],
+    "evidence": "source /workspace/adamic-tools/env.sh; python3 review/test-defend/internal-native-library/run-defense.py D4; D4.log: map_hash_test.go:91: probe bound 64 exceeded: integers entries=1024 hit=743 miss=764; exact timeout/go argv in matrix.json",
+    "bounded": true,
+    "matrix_rows": [
+      "TestBorrowChainDeclarations",
+      "TestCEndsInNewline",
+      "TestCallTargetsElementBorrowPlan",
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "TestClosureConventionWrongOrder",
+      "TestDevirtualizeBorrowDocClaim",
+      "TestDevirtualizedCalls",
+      "TestInheritanceMemoryPlans",
+      "TestLibraryMapSetIteratorResources",
+      "TestLoopArrayHoldC",
+      "TestLoopBorrowPlan",
+      "TestLoopCallCoverage",
+      "TestMapHashProbeBound",
+      "TestMapHashProbeCatchesMutants",
+      "TestMeasureClangUnits",
+      "TestNbodyBorrowedLoopC",
+      "TestNbodyIndexedElementsBorrow",
+      "TestNoReaderCallingConvention",
+      "TestNodeBufferRuntimeWithoutDeclarations",
+      "TestOptionalMethodThunksMatchNode",
+      "TestParserHasNoUnusedOptionalMethodThunks",
+      "TestRecordsAgainstNode",
+      "TestRegexProgramsKeepCheckedFieldReads",
+      "TestRuntimeCacheConcurrentBuilders",
+      "TestRuntimeCacheConcurrentProcesses",
+      "TestRuntimeCacheKeepsCountFlags",
+      "TestRuntimeCacheRebuildsChangedSources",
+      "TestRuntimeFieldLayoutsAreIncluded",
+      "TestRuntimeKeyIncludesEveryInput",
+      "TestRuntimeKeyKeepsBoundaries",
+      "TestRuntimeStringViews",
+      "TestStringBuildingMatchesNode",
+      "TestStringsMatchJavaScript",
+      "TestTSGoBuildSeesTheProgramsFeatures",
+      "TestThrowElementBorrowPlan",
+      "TestUniformFieldsMatchNode"
+    ],
+    "passed_tests": [
+      "TestBorrowChainDeclarations",
+      "TestCEndsInNewline",
+      "TestCallTargetsElementBorrowPlan",
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "TestClosureConventionWrongOrder",
+      "TestDevirtualizeBorrowDocClaim",
+      "TestDevirtualizedCalls",
+      "TestInheritanceMemoryPlans",
+      "TestLibraryMapSetIteratorResources",
+      "TestLoopArrayHoldC",
+      "TestLoopBorrowPlan",
+      "TestLoopCallCoverage",
+      "TestMapHashProbeCatchesMutants",
+      "TestNbodyBorrowedLoopC",
+      "TestNbodyIndexedElementsBorrow",
+      "TestNoReaderCallingConvention",
+      "TestNodeBufferRuntimeWithoutDeclarations",
+      "TestOptionalMethodThunksMatchNode",
+      "TestParserHasNoUnusedOptionalMethodThunks",
+      "TestRecordsAgainstNode",
+      "TestRegexProgramsKeepCheckedFieldReads",
+      "TestRuntimeCacheConcurrentBuilders",
+      "TestRuntimeCacheConcurrentProcesses",
+      "TestRuntimeCacheKeepsCountFlags",
+      "TestRuntimeCacheRebuildsChangedSources",
+      "TestRuntimeFieldLayoutsAreIncluded",
+      "TestRuntimeKeyIncludesEveryInput",
+      "TestRuntimeKeyKeepsBoundaries",
+      "TestRuntimeStringViews",
+      "TestStringBuildingMatchesNode",
+      "TestStringsMatchJavaScript",
+      "TestTSGoBuildSeesTheProgramsFeatures",
+      "TestThrowElementBorrowPlan",
+      "TestUniformFieldsMatchNode"
+    ],
+    "skipped_tests": [
+      "TestMeasureClangUnits"
+    ],
+    "unique_scope": "Completed bounded matrix only. Omitted package tests remain unknown."
+  }
+]
