@@ -8,15 +8,17 @@ import (
 	"time"
 )
 
-// Prepare products once before the parallel comparison leaf.
-// Not parallel: prepares the shared emitted-mismatch products before parallel leaves.
-// Not parallel: prepares shared emitted-mismatch products before the parallel comparison leaf.
 func TestEmittedJavaScriptMismatch(t *testing.T) {
+	t.Parallel()
+	emittedMismatchUnion(t)
+}
+
+// Not parallel: prepares shared emittedMismatchProducts before parallel shards resume.
+func TestEmittedJavaScriptMismatch_Setup(t *testing.T) {
 	started := time.Now()
 	deadline := time.AfterFunc(90*time.Second, func() { panic("P0: emitted JavaScript setup exceeded 90s") })
 	defer deadline.Stop()
 	emittedMismatchSetup(t)
-	emittedMismatchUnion(t)
 	elapsed := time.Since(started)
 	t.Logf("TestEmittedJavaScriptMismatch (setup): %.3fs cooked=%t", elapsed.Seconds(), elapsed >= 90*time.Second)
 	if elapsed >= 60*time.Second {
