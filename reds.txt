@@ -1,0 +1,184 @@
+run adamic-verify-20261009T103921-c2b017da: void, 23347 tests in 88 units, 81 failed, 1 units broken, 0 killed over budget
+BROKEN tests-13: exited 2, Loom's fault (last output "none            8.8G  6.0G  2.9G  69% /tmp")
+FAIL github.com/system-inc/adamic/stage1/cohere/typeaware TestVolumeAgreementAndMutants/apparent-shape (tests-02)
+    volume_test.go:143: phase command apparent-shape-checker 90.002721s
+    volume_test.go:143: apparent-shape-checker: signal: killed
+FAIL github.com/system-inc/adamic/stage1/cohere/typeaware TestVolumeAgreementAndMutants/contextual-shape (tests-16)
+    volume_test.go:143: phase command contextual-shape-checker 90.006003s
+    volume_test.go:143: contextual-shape-checker: signal: killed
+FAIL github.com/system-inc/adamic/stage1/cohere/typeaware TestVolumeAgreementAndMutants (tests-35)
+    volume_test.go:95: phase command stage0 22.499182s
+    typeaware_test.go:159: phase command checker 361.476426s
+    typeaware_test.go:185: phase load volume 0.200426s
+    typeaware_test.go:192: phase lowering volume 5.612595s
+    typeaware_test.go:198: phase emission volume 46.663613s
+    typeaware_test.go:225: phase clang volume 25.676103s
+    volume_test.go:18: build typeaware_six_volume-oracle-build 3486f48f9c85 miss 57.41
+    volume_test.go:108: phase command controls-go 0.073065s
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_000 (tests-28-r7)
+    css_printer_parallel_test.go:146: css printer product -1 unavailable: its build failed earlier in this process (see that test's log)
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_001 (tests-28-r7)
+    css_printer_parallel_test.go:147: css printer product -1 unavailable: its build failed earlier in this process (see that test's log)
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_002 (tests-28-r7)
+    css_printer_parallel_test.go:148: css printer product -1 unavailable: its build failed earlier in this process (see that test's log)
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_003 (tests-28-r7)
+    css_printer_parallel_test.go:149: css printer product -1 unavailable: its build failed earlier in this process (see that test's log)
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_004 (tests-28-r7)
+    css_printer_parallel_test.go:150: css printer product -1 unavailable: its build failed earlier in this process (see that test's log)
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_005 (tests-28-r7)
+    css_printer_parallel_test.go:151: css printer product -1 unavailable: its build failed earlier in this process (see that test's log)
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_006 (tests-28-r7)
+    css_printer_parallel_test.go:152: css printer product -1 unavailable: its build failed earlier in this process (see that test's log)
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_007 (tests-28-r7)
+    css_printer_parallel_test.go:153: css printer product -1 unavailable: its build failed earlier in this process (see that test's log)
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_008 (tests-28-r7)
+    css_printer_parallel_test.go:154: css printer product -1 unavailable: its build failed earlier in this process (see that test's log)
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_009 (tests-28-r7)
+    css_printer_parallel_test.go:155: css printer product -1 unavailable: its build failed earlier in this process (see that test's log)
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_010 (tests-28-r7)
+    css_printer_parallel_test.go:156: css printer product -1 unavailable: its build failed earlier in this process (see that test's log)
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_011 (tests-28-r7)
+    css_printer_parallel_test.go:157: css printer product -1 unavailable: its build failed earlier in this process (see that test's log)
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_012 (tests-28-r7)
+    css_printer_parallel_test.go:158: css printer product -1 unavailable: its build failed earlier in this process (see that test's log)
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_013 (tests-28-r7)
+    css_printer_parallel_test.go:159: css printer product -1 unavailable: its build failed earlier in this process (see that test's log)
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_014 (tests-28-r7)
+    css_printer_parallel_test.go:160: css printer product -1 unavailable: its build failed earlier in this process (see that test's log)
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_015 (tests-28-r7)
+    css_printer_parallel_test.go:161: css printer product -1 unavailable: its build failed earlier in this process (see that test's log)
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_016 (tests-28-r7)
+    css_printer_parallel_test.go:162: css printer product 0 unavailable: its build failed earlier in this process (see that test's log)
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_017 (tests-28-r7)
+    css_printer_parallel_test.go:163: css printer product 0 unavailable: its build failed earlier in this process (see that test's log)
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_018 (tests-28-r7)
+    css_printer_parallel_test.go:164: css printer product 0 unavailable: its build failed earlier in this process (see that test's log)
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_019 (tests-28-r7)
+    css_printer_parallel_test.go:165: css printer product 0 unavailable: its build failed earlier in this process (see that test's log)
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_020 (tests-28-r7)
+    css_printer_parallel_test.go:166: css printer product 0 unavailable: its build failed earlier in this process (see that test's log)
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_021 (tests-28-r7)
+    css_printer_parallel_test.go:167: css printer product 0 unavailable: its build failed earlier in this process (see that test's log)
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_022 (tests-28-r7)
+    css_printer_parallel_test.go:168: css printer product 0 unavailable: its build failed earlier in this process (see that test's log)
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_023 (tests-28-r7)
+    css_printer_parallel_test.go:169: css printer product 0 unavailable: its build failed earlier in this process (see that test's log)
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_024 (tests-28-r7)
+    css_printer_parallel_test.go:170: css printer product 0 unavailable: its build failed earlier in this process (see that test's log)
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_025 (tests-28-r7)
+    css_printer_parallel_test.go:171: css printer product 0 unavailable: its build failed earlier in this process (see that test's log)
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_026 (tests-28-r7)
+    css_printer_parallel_test.go:172: css printer product 0 unavailable: its build failed earlier in this process (see that test's log)
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_027 (tests-28-r7)
+    css_printer_parallel_test.go:173: css printer product 0 unavailable: its build failed earlier in this process (see that test's log)
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_028 (tests-28-r7)
+    css_printer_parallel_test.go:174: css printer product 0 unavailable: its build failed earlier in this process (see that test's log)
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_029 (tests-28-r7)
+    css_printer_parallel_test.go:175: css printer product 0 unavailable: its build failed earlier in this process (see that test's log)
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_030 (tests-28-r7)
+    css_printer_parallel_test.go:176: css printer product 0 unavailable: its build failed earlier in this process (see that test's log)
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_031 (tests-28-r7)
+    css_printer_parallel_test.go:177: css printer product 0 unavailable: its build failed earlier in this process (see that test's log)
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_032 (tests-28-r7)
+    css_printer_parallel_test.go:178: css printer product 1 unavailable: its build failed earlier in this process (see that test's log)
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_033 (tests-28-r7)
+    css_printer_parallel_test.go:179: css printer product 1 unavailable: its build failed earlier in this process (see that test's log)
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_034 (tests-28-r7)
+    css_printer_parallel_test.go:180: css printer product 1 unavailable: its build failed earlier in this process (see that test's log)
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_035 (tests-28-r7)
+    css_printer_parallel_test.go:181: css printer product 1 unavailable: its build failed earlier in this process (see that test's log)
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_036 (tests-28-r7)
+    css_printer_parallel_test.go:182: css printer product 1 unavailable: its build failed earlier in this process (see that test's log)
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_037 (tests-28-r7)
+    css_printer_parallel_test.go:183: css printer product 1 unavailable: its build failed earlier in this process (see that test's log)
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_038 (tests-28-r7)
+    css_printer_parallel_test.go:184: css printer product 1 unavailable: its build failed earlier in this process (see that test's log)
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_039 (tests-28-r7)
+    css_printer_parallel_test.go:185: css printer product 1 unavailable: its build failed earlier in this process (see that test's log)
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_040 (tests-28-r7)
+    css_printer_parallel_test.go:186: css printer product 1 unavailable: its build failed earlier in this process (see that test's log)
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_041 (tests-28-r7)
+    printer_shards_test.go:56: build css-printer-oracle-0 82e4a4fd612a hit 1.71
+    css_printer_parallel_test.go:25: === RUN   TestAdamicPortCases
+    adamic_port_side_test.go:168: corpus files: map[.css:322 .less:43 .scss:180]
+    adamic_port_side_test.go:251: 24594 cases, 5479 parsed
+    adamic_port_side_test.go:269: Go: 245940 stylesheets in 10.55559933s, 23299 stylesheets/s; 54790 parsed, 129910 children
+    PASS
+    printer_shards_test.go:56: build css-printer-oracle-1 52b86de000eb miss 18.54
+    css_printer_parallel_test.go:187: css printer product 1 unavailable: its build failed earlier in this process (see that test's log)
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_042 (tests-28-r7)
+    css_printer_parallel_test.go:188: css printer product 1 unavailable: its build failed earlier in this process (see that test's log)
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_043 (tests-28-r7)
+    css_printer_parallel_test.go:189: css printer product 1 unavailable: its build failed earlier in this process (see that test's log)
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_044 (tests-28-r7)
+    css_printer_parallel_test.go:190: css printer product 1 unavailable: its build failed earlier in this process (see that test's log)
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_045 (tests-28-r7)
+    css_printer_parallel_test.go:191: css printer product 1 unavailable: its build failed earlier in this process (see that test's log)
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_046 (tests-28-r7)
+    css_printer_parallel_test.go:192: css printer product 1 unavailable: its build failed earlier in this process (see that test's log)
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_047 (tests-28-r7)
+    css_printer_parallel_test.go:193: css printer product 1 unavailable: its build failed earlier in this process (see that test's log)
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_048 (tests-28-r7)
+    css_printer_parallel_test.go:194: css printer product 2 unavailable: its build failed earlier in this process (see that test's log)
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_049 (tests-28-r7)
+    css_printer_parallel_test.go:195: css printer product 2 unavailable: its build failed earlier in this process (see that test's log)
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_050 (tests-28-r7)
+    css_printer_parallel_test.go:196: css printer product 2 unavailable: its build failed earlier in this process (see that test's log)
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_051 (tests-28-r7)
+    css_printer_parallel_test.go:197: css printer product 2 unavailable: its build failed earlier in this process (see that test's log)
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_052 (tests-28-r7)
+    css_printer_parallel_test.go:198: css printer product 2 unavailable: its build failed earlier in this process (see that test's log)
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_053 (tests-28-r7)
+    css_printer_parallel_test.go:199: css printer product 2 unavailable: its build failed earlier in this process (see that test's log)
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_054 (tests-28-r7)
+    css_printer_parallel_test.go:200: css printer product 2 unavailable: its build failed earlier in this process (see that test's log)
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_055 (tests-28-r7)
+    css_printer_parallel_test.go:201: css printer product 2 unavailable: its build failed earlier in this process (see that test's log)
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_056 (tests-28-r7)
+    css_printer_parallel_test.go:202: css printer product 2 unavailable: its build failed earlier in this process (see that test's log)
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_057 (tests-28-r7)
+    css_printer_parallel_test.go:203: css printer product 2 unavailable: its build failed earlier in this process (see that test's log)
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_058 (tests-28-r7)
+    css_printer_parallel_test.go:204: css printer product 2 unavailable: its build failed earlier in this process (see that test's log)
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_059 (tests-28-r7)
+    css_printer_parallel_test.go:205: css printer product 2 unavailable: its build failed earlier in this process (see that test's log)
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_060 (tests-28-r7)
+    css_printer_parallel_test.go:206: css printer product 2 unavailable: its build failed earlier in this process (see that test's log)
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_061 (tests-28-r7)
+    css_printer_parallel_test.go:207: css printer product 2 unavailable: its build failed earlier in this process (see that test's log)
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_062 (tests-28-r7)
+    css_printer_parallel_test.go:208: css printer product 2 unavailable: its build failed earlier in this process (see that test's log)
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_063 (tests-28-r7)
+    css_printer_parallel_test.go:209: css printer product 2 unavailable: its build failed earlier in this process (see that test's log)
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestProduct_CSSPrinterIndentMutant (tests-28-r7)
+    printer_shards_test.go:98: build css-printer-executable-1: rename /tmp/adamic-gate/TestProduct_CSSPrinterIndentMutant2146820374/001 /home/agent/.cache/adamic-build/.building-5707ee4667c7-2816210935/sources: invalid cross-device link
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestProduct_CSSPrinterSanitizedAndLowered (tests-28-r7)
+    printer_shards_test.go:98: build css-printer-executable--1: rename /tmp/adamic-gate/TestProduct_CSSPrinterSanitizedAndLowered839638999/001 /home/agent/.cache/adamic-build/.building-903b7a03f677-2986332860/sources: invalid cross-device link
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestProduct_CSSPrinterSemicolonMutant (tests-28-r7)
+    printer_shards_test.go:98: build css-printer-executable-0: rename /tmp/adamic-gate/TestProduct_CSSPrinterSemicolonMutant1557278460/001 /home/agent/.cache/adamic-build/.building-2688631e088b-3740606921/sources: invalid cross-device link
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestProduct_CSSPrinterWidthMutant (tests-28-r7)
+    printer_shards_test.go:98: build css-printer-executable-2: rename /tmp/adamic-gate/TestProduct_CSSPrinterWidthMutant822098162/001 /home/agent/.cache/adamic-build/.building-ad8f57f5e3d9-1181098708/sources: invalid cross-device link
+FAIL github.com/system-inc/adamic/stage1/cohere/lint TestShardsAgree_Setup (tests-28-r10)
+    shards_agree_split_test.go:270: === RUN   TestShardsAgree_Setup
+    shards_agree_split_test.go:154: build shards-agree-lowered dd744c8833e7 miss 65.02
+    shards_agree_split_test.go:168: build shards-agree-native bd5cbd4e30f9 miss 8.79
+    shards_agree_split_test.go:125: build shards-agree-oracle 435a8d4a3719 miss 3.11
+    shards_agree_split_test.go:270: TestShardsAgree_Setup: signal: killed (deadline: context deadline exceeded)
+FAIL github.com/system-inc/adamic/stage1/cohere/lint/inventory TestInventoryEngineUnion (tests-28-r11)
+    engine_shards_test.go:265: signal: killed
+FAIL github.com/system-inc/adamic/stage1/cohere/lint/inventory TestInventoryEngine_000 (tests-28-r11)
+    engine_shards_test.go:289: shared inventory build or union validation did not complete
+FAIL github.com/system-inc/adamic/stage1/cohere/lint/inventory TestInventoryEngine_001 (tests-28-r11)
+    engine_shards_test.go:290: shared inventory build or union validation did not complete
+FAIL github.com/system-inc/adamic/stage1/cohere/lint/inventory TestInventoryEngine_002 (tests-28-r11)
+    engine_shards_test.go:291: shared inventory build or union validation did not complete
+FAIL github.com/system-inc/adamic/stage1/cohere/lint/inventory TestInventoryEngine_003 (tests-28-r11)
+    engine_shards_test.go:292: shared inventory build or union validation did not complete
+FAIL github.com/system-inc/adamic/stage1/cohere/lint/inventory TestInventoryEngine_004 (tests-28-r11)
+    engine_shards_test.go:293: shared inventory build or union validation did not complete
+FAIL github.com/system-inc/adamic/stage1/cohere/lint/inventory TestInventoryEngine_005 (tests-28-r11)
+    engine_shards_test.go:294: shared inventory build or union validation did not complete
+FAIL github.com/system-inc/adamic/stage1/cohere/lint/inventory TestInventoryEngine_006 (tests-28-r11)
+    engine_shards_test.go:295: shared inventory build or union validation did not complete
+FAIL github.com/system-inc/adamic/stage1/cohere/lint/inventory TestInventoryEngine_007 (tests-28-r11)
+    engine_shards_test.go:296: shared inventory build or union validation did not complete
