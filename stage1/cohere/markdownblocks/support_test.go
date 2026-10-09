@@ -377,7 +377,13 @@ func natively(t *testing.T, program *ir.Program, arguments ...string) (run, stri
 // oracle runs on every fixture (internal/leakcheck), on the sanitized binary and the port's C.
 func leaks(t *testing.T, program *ir.Program, sanitized string, arguments ...string) string {
 	t.Helper()
-	return leakcheck.Report(t, native.C(program), sanitized, arguments...)
+	// Linux checks the existing sanitized product and may have no retained IR.
+	// macOS needs C to build the independent counted control.
+	var code string
+	if runtime.GOOS == "darwin" {
+		code = native.C(program)
+	}
+	return leakcheck.Report(t, code, sanitized, arguments...)
 }
 
 func write(t *testing.T, path string, b []byte) {
