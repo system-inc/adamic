@@ -678,6 +678,29 @@ class WatchTests(unittest.TestCase):
         ranked = (w.state / 'queue.ranked').read_text().split()
         self.assertEqual(len((w.state / 'queue.ranked').read_text().splitlines()[0].split()), 6, 'ranked lines keep their six fields')
 
+    def test_front_tips_tie_in_the_front_file_s_order_not_newest_first(self):
+        # Oct 9 06:15Z: a preempted front tip requeued as the newest and won the reserved box back at once.
+        w = self.reservation('server B\n', [('cloud/land-a-x', 'B'), ('cloud/land-b-x', 'B')], release=False)
+        (w.state / 'front').write_text('cloud/land-a-*\ncloud/land-b-*\n')
+        w.put('initial', 'pass')
+        w.wait(lambda: len([x for x in w.read('starts').splitlines() if not x.startswith('canary/')]) == 1)
+        self.assertTrue([x for x in w.read('starts').splitlines() if not x.startswith('canary/')][0].startswith('cloud/land-a-x '))
+
+    def test_a_front_tip_whose_reserved_boxes_are_held_takes_any_big_slot_after_ten_minutes(self):
+        # Three front tips, two star boxes: the third waited on Server while another big slot sat free (Oct 9).
+        w = self.reservation('server B\nother B\nthird B\n', [('cloud/land-a-x', 'B'), ('cloud/land-b-x', 'B'), ('cloud/land-c-x', 'B')], release=False)
+        (w.state / 'front').write_text('cloud/land-a-*\ncloud/land-b-*\ncloud/land-c-*\n')
+        # A pass reads the reservations from the top of the pass: release the canary once one has seen the front.
+        w.wait(lambda: 'cloud/land-c-*' in w.read('state/first-step-globs.poll'))
+        w.put('initial', 'pass')
+        w.wait(lambda: len([x for x in w.read('starts').splitlines() if not x.startswith('canary/')]) == 2)
+        time.sleep(.5)
+        self.assertNotIn('cloud/land-c-x', w.read('starts'), 'took a general slot before its ten minutes')
+        w.put('clock', '1503')
+        w.wait(lambda: 'cloud/land-c-x' in w.read('starts'))
+        start = [x for x in w.read('starts').splitlines() if x.startswith('cloud/land-c-x ')][0]
+        self.assertTrue(start.endswith(' third'), start)
+
     def test_a_box_running_the_star_takes_no_other_gate(self):
         # No Server in the table: the star runs wherever a big slot is free, and that box is then its own.
         w = self.reservation('workshop B\nworkshop S\n',

@@ -411,6 +411,16 @@ isFront() {
   done
   return 1
 }
+# The front file's line a front tip first matches, from 1: among front tips the file's order is the rank, never which was
+# queued last (Oct 9 06:15Z: a preempted front tip requeued as the newest and won its box back at once, three times).
+frontLine() {
+  local glob line=0
+  for glob in ${frontList[@]+"${frontList[@]}"}; do
+    line=$((line + 1))
+    [[ $1 == ${glob} ]] && { echo "${line}"; return; }
+  done
+  echo 0
+}
 # ${state}/star-boxes, rewritten every pass: the boxes the star runs on or waits for, one per line. Work outside
 # this watcher (Loom's pilot) reads it and stays off them.
 writeStarBoxes() {
@@ -595,6 +605,7 @@ rankQueue() {
     # 23:17Z: train-3 outranked train-2 because ties break newest first). Other tips sort as 0, newest first.
     train=0
     if [[ ${branch} =~ ^cloud/land-train-([0-9]+) ]]; then train=${BASH_REMATCH[1]}; fi
+    isFront "${branch}" && train=$(( $(frontLine "${branch}") * 1000 + train ))
     echo "$(( position * 100 + rank )) ${train} ${queued} ${class} ${branch} ${sha} ${reserved}"
   done < "${state}/queue" | sort -k1,1n -k2,2n -k3,3nr | cut -d' ' -f1,3- > "${state}/queue.ranked"
 }
@@ -646,7 +657,14 @@ pickNext() {
       eligible=$(usableSlots "${branch}")
       if [ "${reserved}" = yes ]; then
         own=$(reservedBoxes "${branch}" "${class}")
+        anyBig=$(echo "${eligible}" | grep ' B$')
         [ -n "${own}" ] && eligible=$(echo "${eligible}" | grep -xF "$(echo "${own}" | sed "s/\$/ ${class}/")")
+        # A front tip whose reserved boxes other front tips hold takes any free big slot after ten minutes, ahead of the
+        # rest (Oct 9 06:13Z: gate-shards-json waited 75 minutes for Server while Threadripper's B went twice to rank-102
+        # work; 09:00Z: a third front tip with both star boxes taken).
+        if [ -z "${eligible}" ] && [ -n "${anyBig}" ] && isFront "${branch}" && [ $(( pollTime - queued )) -ge 600 ]; then
+          eligible=${anyBig}
+        fi
       fi
       classes=" $(echo "${eligible}" | awk '{print $2}' | sort -u | tr '\n' ' ')"
       borrowable=$(borrowableBox "${eligible}")
