@@ -1,0 +1,5 @@
+Unit u040, origin f91994f019703ba25d2918cf529c0e0b0c05d93c.
+
+Read REPORT.md for the deliverable; rows.json, matrix.json, manifest.json and timings.json are machine-readable. Logs are JSON Go test output. Every diff in diffs/ applies independently to the origin commit. M04 is supplemental. Probes P01 through P04 never count as mutant kills. standalone-validation.json records successful apply checks and Go vet for all twenty diffs; vet.py reconstructs the overlays from original-files.json.
+
+Replay each standalone diff in a clean checkout of the origin commit. Source /workspace/adamic-tools/env.sh, set OPTIONAL_WIDENING_CONFIG to census-project/tsconfig.json and OPTIONAL_WIDENING_OUTPUT to a writable file, give each production mutant ADAMIC_BUILD_CACHE_DIR=/tmp/u040/cache/<id>, and run the commands from matrix-commands.json. Standalone diffs need no ADAMIC_MUTANT switch. For switched replay, apply switched-source.diff and copy switched-helper.go.txt to internal/lower/audit_u040.go, then use ADAMIC_MUTANT. Restore source afterwards.
