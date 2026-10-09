@@ -27,6 +27,11 @@ func TestMain(m *testing.M) {
 		os.Exit(1)
 	}
 	sharedDirectory = directory
+	if err := decodedOptionsBeforeTests(); err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.RemoveAll(directory)
+		os.Exit(1)
+	}
 	code := m.Run()
 	if err := os.RemoveAll(directory); err != nil {
 		fmt.Fprintln(os.Stderr, err)
@@ -193,8 +198,8 @@ console.log(written('copied'));
 	t.Log("root-only import rewrite mutant caught by Node and native module loading")
 }
 
-// TestDecodedOptionsAndMutant measures the shared Go-oracle setup separately.
-func TestDecodedOptionsAndMutant(t *testing.T) {
+// The bounded setup child prepares all immutable products before m.Run starts shards.
+func TestDecodedOptionsAndMutant_Setup(t *testing.T) {
 	t.Parallel()
-	goOracle(t)
+	decodedOptionsSetupTest(t)
 }
