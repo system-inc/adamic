@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T18:32:14.433924631Z","Action":"start","Package":"github.com/system-inc/adamic/internal/fresh"}
+{"Time":"2026-10-09T18:32:14.442081942Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestNodeFSFileResultsAreFresh"}
+{"Time":"2026-10-09T18:32:14.442158404Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestNodeFSFileResultsAreFresh","Output":"=== RUN   TestNodeFSFileResultsAreFresh\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:32:14.442186983Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestNodeFSFileResultsAreFresh","Output":"=== PAUSE TestNodeFSFileResultsAreFresh\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:32:14.442189812Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestNodeFSFileResultsAreFresh"}
+{"Time":"2026-10-09T18:32:14.442191966Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestNodeFSFileResultsAreFresh"}
+{"Time":"2026-10-09T18:32:14.442193883Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestNodeFSFileResultsAreFresh","Output":"=== CONT  TestNodeFSFileResultsAreFresh\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:32:14.442297302Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestNodeFSFileResultsAreFresh","Output":"--- PASS: TestNodeFSFileResultsAreFresh (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:32:14.442301595Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestNodeFSFileResultsAreFresh","Elapsed":0}
+{"Time":"2026-10-09T18:32:14.442342764Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:32:14.443442975Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Output":"coverage: 32.4% of statements in ./internal/fresh\n"}
+{"Time":"2026-10-09T18:32:14.445293022Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Output":"ok  \tgithub.com/system-inc/adamic/internal/fresh\t0.011s\tcoverage: 32.4% of statements in ./internal/fresh\n"}
+{"Time":"2026-10-09T18:32:14.445344033Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/fresh","Elapsed":0.011}

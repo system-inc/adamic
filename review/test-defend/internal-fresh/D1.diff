@@ -1,0 +1,16 @@
+diff --git a/internal/fresh/fresh.go b/internal/fresh/fresh.go
+index f89bca77..ab0ddf37 100644
+--- a/internal/fresh/fresh.go
++++ b/internal/fresh/fresh.go
+@@ -1464,10 +1464,7 @@ func (a *analysis) value(expression ir.Expression) value {
+ 		var result value
+ 		for _, target := range a.proof.program.CallTargets(expression) {
+ 			a.state = before.copy()
+-			if !a.proof.direct[target] {
+-				// Its parameters are outside to it, so it may keep them anywhere.
+-				a.call(operands, 0)
+-			}
++
+ 			result.merge(a.made(target, a.proof.summaries[target], operands))
+ 			joined.join(a.state)
+ 		}

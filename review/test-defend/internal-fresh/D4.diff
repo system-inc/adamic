@@ -1,0 +1,12 @@
+diff --git a/internal/fresh/fresh.go b/internal/fresh/fresh.go
+index f89bca77..eb23bc39 100644
+--- a/internal/fresh/fresh.go
++++ b/internal/fresh/fresh.go
+@@ -1330,7 +1330,6 @@ func (a *analysis) value(expression ir.Expression) value {
+ 		a.value(expression.Path)
+ 		return a.fresh(anyField, a.fresh(elementKey, value{}))
+ 	case ir.NodeFSFile:
+-		return a.nodeFSFile(expression)
+ 	case ir.FileStatus:
+ 		a.value(expression.Path)
+ 		return a.fresh(anyField, value{})

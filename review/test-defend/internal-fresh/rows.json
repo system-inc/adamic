@@ -1,0 +1,62 @@
+[
+  {
+    "test": "TestMethodKeepsArgument",
+    "package": "internal/fresh",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestNodeFSFileOperandsStillJudgeWrites"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D1 internal/fresh/fresh.go:1467",
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "internal/fresh/fresh.go:1467",
+        "change": "drop the conservative escape statement for non-direct method calls",
+        "rows_failed": [
+          "TestMethodKeepsArgument"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/fresh-defense/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/fresh/ -run .; fresh_test.go:102: method-kept argument closes a cycle: want refusal, got <nil>; all other 817 top-level tests passed."
+  },
+  {
+    "test": "TestNodeFSFileDoesNotEscapeBorrowedObjects",
+    "package": "internal/fresh",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestNodeFSFileResultsAreFresh"
+    ],
+    "defense": "not defended",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D2",
+        "file_line": "internal/fresh/node_fs_file.go:8",
+        "change": "return early through a retaining, clobbering call for primitive host operations",
+        "rows_failed": []
+      },
+      {
+        "mutant": "D3",
+        "file_line": "internal/fresh/node_fs_file.go:9",
+        "change": "drop the complete filesystem argument-evaluation loop",
+        "rows_failed": [
+          "TestNodeFSFileOperandsStillJudgeWrites"
+        ]
+      },
+      {
+        "mutant": "D4",
+        "file_line": "internal/fresh/fresh.go:1332",
+        "change": "drop the recognized host-return statement, reaching the existing unknown fallback",
+        "rows_failed": [
+          "TestFreshCorpus family",
+          "TestNodeFSFileDoesNotEscapeBorrowedObjects",
+          "TestNodeFSFileOperationsAreKnown",
+          "TestNodeFSFileResultsAreFresh",
+          "TestStatAtimeSelfCycleRemainsUnproven"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/fresh-defense/cache/D4 timeout 120 go test -json -count=1 -timeout 90s ./internal/fresh/ -run .; node_fs_file_test.go:63: is_file: borrowed argument poisoned a fresh tree write: [{Kind:5 Site:0 Name: Function:0 Proven:false Why:ir.NodeFSFile is a node the cycle finder doesn't know} {Kind:1 Site:1 Name:next Function:0 Proven:true Why:}]; also caught by ResultsAreFresh, OperationsAreKnown, StatAtimeSelfCycleRemainsUnproven and six corpus members."
+  }
+]

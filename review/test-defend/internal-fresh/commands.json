@@ -1,0 +1,12 @@
+{
+  "coverage": {
+    "method": "TMPDIR=/tmp/fresh-defense/tmp timeout 120 go test -json -count=1 -timeout 90s -coverpkg=./internal/fresh -coverprofile=method.cover ./internal/fresh/ -run ^TestMethodKeepsArgument$",
+    "operands": "TMPDIR=/tmp/fresh-defense/tmp timeout 120 go test -json -count=1 -timeout 90s -coverpkg=./internal/fresh -coverprofile=operands.cover ./internal/fresh/ -run ^TestNodeFSFileOperandsStillJudgeWrites$",
+    "borrowed": "TMPDIR=/tmp/fresh-defense/tmp timeout 120 go test -json -count=1 -timeout 90s -coverpkg=./internal/fresh -coverprofile=borrowed.cover ./internal/fresh/ -run ^TestNodeFSFileDoesNotEscapeBorrowedObjects$",
+    "results": "TMPDIR=/tmp/fresh-defense/tmp timeout 120 go test -json -count=1 -timeout 90s -coverpkg=./internal/fresh -coverprofile=results.cover ./internal/fresh/ -run ^TestNodeFSFileResultsAreFresh$"
+  },
+  "baseline": "TMPDIR=/tmp/fresh-defense/tmp ADAMIC_BUILD_CACHE_DIR=/tmp/fresh-defense/cache/baseline timeout 120 go test -json -count=1 -timeout 90s ./internal/fresh/ -run .",
+  "witness": "TMPDIR=/tmp/fresh-defense/tmp ADAMIC_BUILD_CACHE_DIR=/tmp/fresh-defense/cache/witness-{clean,mutant} timeout 90 go run ./review/test-defend/internal-fresh/witness",
+  "audit_fetch_requested": "git fetch origin test-audit/internal-fresh:refs/remotes/origin/test-audit/internal-fresh (remote ref absent)",
+  "audit_fetch_used": "git fetch origin test-audit/fresh:refs/remotes/origin/test-audit/fresh"
+}

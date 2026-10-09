@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T18:32:12.698945292Z","Action":"start","Package":"github.com/system-inc/adamic/internal/fresh"}
+{"Time":"2026-10-09T18:32:12.707724555Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestNodeFSFileDoesNotEscapeBorrowedObjects"}
+{"Time":"2026-10-09T18:32:12.707789802Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestNodeFSFileDoesNotEscapeBorrowedObjects","Output":"=== RUN   TestNodeFSFileDoesNotEscapeBorrowedObjects\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:32:12.707807765Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestNodeFSFileDoesNotEscapeBorrowedObjects","Output":"=== PAUSE TestNodeFSFileDoesNotEscapeBorrowedObjects\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:32:12.707809902Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestNodeFSFileDoesNotEscapeBorrowedObjects"}
+{"Time":"2026-10-09T18:32:12.707812233Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestNodeFSFileDoesNotEscapeBorrowedObjects"}
+{"Time":"2026-10-09T18:32:12.707814249Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestNodeFSFileDoesNotEscapeBorrowedObjects","Output":"=== CONT  TestNodeFSFileDoesNotEscapeBorrowedObjects\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:32:12.708138686Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestNodeFSFileDoesNotEscapeBorrowedObjects","Output":"--- PASS: TestNodeFSFileDoesNotEscapeBorrowedObjects (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:32:12.708147721Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestNodeFSFileDoesNotEscapeBorrowedObjects","Elapsed":0}
+{"Time":"2026-10-09T18:32:12.708159536Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:32:12.710212416Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Output":"coverage: 43.3% of statements in ./internal/fresh\n"}
+{"Time":"2026-10-09T18:32:12.711138166Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Output":"ok  \tgithub.com/system-inc/adamic/internal/fresh\t0.012s\tcoverage: 43.3% of statements in ./internal/fresh\n"}
+{"Time":"2026-10-09T18:32:12.711162776Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/fresh","Elapsed":0.012}
