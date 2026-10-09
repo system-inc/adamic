@@ -1,0 +1,58 @@
+=== RUN   TestEnumFlagProofsWithoutObservableLoweringEffect
+=== PAUSE TestEnumFlagProofsWithoutObservableLoweringEffect
+=== RUN   TestEnumReverseMappingUsesSingleSlot
+=== PAUSE TestEnumReverseMappingUsesSingleSlot
+=== RUN   TestNumericEnumsAreOpen
+=== PAUSE TestNumericEnumsAreOpen
+=== RUN   TestStringEnumsStayClosed
+=== PAUSE TestStringEnumsStayClosed
+=== RUN   TestNumericEnumNeverProof
+=== PAUSE TestNumericEnumNeverProof
+=== RUN   TestNumericEnumLiteralPromises
+=== PAUSE TestNumericEnumLiteralPromises
+=== CONT  TestEnumFlagProofsWithoutObservableLoweringEffect
+=== CONT  TestStringEnumsStayClosed
+=== CONT  TestNumericEnumLiteralPromises
+=== RUN   TestNumericEnumLiteralPromises/member_tag
+=== CONT  TestNumericEnumsAreOpen
+    enums_open_test.go:23: singleton
+=== CONT  TestNumericEnumNeverProof
+=== RUN   TestNumericEnumNeverProof/member
+=== RUN   TestNumericEnumNeverProof/parameter
+=== RUN   TestNumericEnumLiteralPromises/narrowed_member
+--- PASS: TestEnumFlagProofsWithoutObservableLoweringEffect (0.26s)
+=== CONT  TestEnumReverseMappingUsesSingleSlot
+--- PASS: TestStringEnumsStayClosed (0.28s)
+=== RUN   TestNumericEnumNeverProof/combination
+=== RUN   TestNumericEnumLiteralPromises/plain_literal
+=== RUN   TestNumericEnumNeverProof/array_read
+=== RUN   TestNumericEnumLiteralPromises/indexed_subset
+=== NAME  TestNumericEnumsAreOpen
+    enums_open_test.go:23: member_tags
+=== RUN   TestNumericEnumNeverProof/closed_return
+=== RUN   TestNumericEnumLiteralPromises/subset_member
+=== RUN   TestNumericEnumLiteralPromises/open_tag
+--- PASS: TestNumericEnumNeverProof (0.51s)
+    --- PASS: TestNumericEnumNeverProof/member (0.16s)
+    --- PASS: TestNumericEnumNeverProof/parameter (0.14s)
+    --- PASS: TestNumericEnumNeverProof/combination (0.07s)
+    --- PASS: TestNumericEnumNeverProof/array_read (0.05s)
+    --- PASS: TestNumericEnumNeverProof/closed_return (0.08s)
+--- PASS: TestNumericEnumLiteralPromises (0.52s)
+    --- PASS: TestNumericEnumLiteralPromises/member_tag (0.24s)
+    --- PASS: TestNumericEnumLiteralPromises/narrowed_member (0.07s)
+    --- PASS: TestNumericEnumLiteralPromises/plain_literal (0.07s)
+    --- PASS: TestNumericEnumLiteralPromises/indexed_subset (0.06s)
+    --- PASS: TestNumericEnumLiteralPromises/subset_member (0.04s)
+    --- PASS: TestNumericEnumLiteralPromises/open_tag (0.04s)
+--- PASS: TestEnumReverseMappingUsesSingleSlot (0.29s)
+=== NAME  TestNumericEnumsAreOpen
+    enums_open_test.go:23: coalesce
+    enums_open_test.go:23: arithmetic
+    enums_open_test.go:23: signed_flags
+    enums_open_test.go:23: cast
+    enums_open_test.go:23: containers
+    enums_open_test.go:23: optional_object
+--- PASS: TestNumericEnumsAreOpen (1.49s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	1.496s

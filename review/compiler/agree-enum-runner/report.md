@@ -18,3 +18,5 @@ Commands run, each with output saved under this review directory:
 - M14 changes literal-equality classification, M15 drops bit 30, M16 changes the AND-domain proof from either side to both: TestEnumFlagProofsWithoutObservableLoweringEffect catches each.
 
 Toolchain reused from the preceding turn: source /workspace/adamic-tools/env.sh, GOPROXY https://proxy.golang.org|direct, nproc 5, four-CPU cgroup quota. No new test leaves; each selected leaf is below 60s.
+
+Delivery after rebase (implementation d26ee64e): focused tests PASS, package 1.496s, slowest selected test TestNumericEnumsAreOpen 1.49s; `timeout 100 go test ./internal/ir -run '^TestCallTargetReaders$' -count=1 -timeout 90s -v` PASS, package 14.195s; integration lane checks PASS, 1.8s (gofmt/tools on one Go file, t.Parallel on one package, vet one package). Outputs are in tests-delivery.log, call-targets.log and lane-checks.log. The final evidence-only commit is lane-checked again before push.
