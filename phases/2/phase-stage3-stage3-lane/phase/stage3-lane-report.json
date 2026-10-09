@@ -1,0 +1,50 @@
+{
+  "status": "fail",
+  "errors": [
+    "test counts: expected {'passing': 106366, 'failing': 1, 'pending': 0}, observed {'passing': 106336, 'failing': 6, 'pending': 0}",
+    "reporter counts: expected {'passing': 106366, 'failing': 1, 'pending': 0}, observed {'passing': 106336, 'failing': 6, 'pending': 0}",
+    "failed test names: expected ['unittests:: Public APIs for typescript.d.ts should be acknowledged when they change'], observed ['compiler tests compiler tests for tests/cases/compiler/APILibCheck.ts \"before all\" hook for \"Correct errors for tests/cases/compiler/APILibCheck.ts\"', 'compiler tests compiler tests for tests/cases/compiler/errorOnUnionVsObjectShouldDeeplyDisambiguate.ts \"before all\" hook for \"Correct errors for tests/cases/compiler/errorOnUnionVsObjectShouldDeeplyDisambiguate.ts\"', 'compiler tests compiler tests for tests/cases/compiler/jsxDeclarationsWithEsModuleInteropNoCrash.tsx \"before all\" hook for \"Correct errors for tests/cases/compiler/jsxDeclarationsWithEsModuleInteropNoCrash.tsx\"', 'conformance tests conformance tests for tests/cases/conformance/jsx/checkJsxUnionSFXContextualTypeInferredCorrectly.tsx \"before all\" hook for \"Correct errors for tests/cases/conformance/jsx/checkJsxUnionSFXContextualTypeInferredCorrectly.tsx\"', 'conformance tests conformance tests for tests/cases/conformance/statements/for-await-ofStatements/forAwaitPerIterationBindingDownlevel.ts (@target: es5) \"before all\" hook for \"Correct errors for tests/cases/conformance/statements/for-await-ofStatements/forAwaitPerIterationBindingDownlevel.ts\"', 'unittests:: Public APIs for typescript.d.ts should be acknowledged when they change']",
+    "number of reported failure titles: expected 1, observed 6"
+  ],
+  "counts": {
+    "passing": 106336,
+    "failing": 6,
+    "pending": 0
+  },
+  "failed_tests": [
+    "compiler tests compiler tests for tests/cases/compiler/APILibCheck.ts \"before all\" hook for \"Correct errors for tests/cases/compiler/APILibCheck.ts\"",
+    "compiler tests compiler tests for tests/cases/compiler/errorOnUnionVsObjectShouldDeeplyDisambiguate.ts \"before all\" hook for \"Correct errors for tests/cases/compiler/errorOnUnionVsObjectShouldDeeplyDisambiguate.ts\"",
+    "compiler tests compiler tests for tests/cases/compiler/jsxDeclarationsWithEsModuleInteropNoCrash.tsx \"before all\" hook for \"Correct errors for tests/cases/compiler/jsxDeclarationsWithEsModuleInteropNoCrash.tsx\"",
+    "conformance tests conformance tests for tests/cases/conformance/jsx/checkJsxUnionSFXContextualTypeInferredCorrectly.tsx \"before all\" hook for \"Correct errors for tests/cases/conformance/jsx/checkJsxUnionSFXContextualTypeInferredCorrectly.tsx\"",
+    "conformance tests conformance tests for tests/cases/conformance/statements/for-await-ofStatements/forAwaitPerIterationBindingDownlevel.ts (@target: es5) \"before all\" hook for \"Correct errors for tests/cases/conformance/statements/for-await-ofStatements/forAwaitPerIterationBindingDownlevel.ts\"",
+    "unittests:: Public APIs for typescript.d.ts should be acknowledged when they change"
+  ],
+  "baseline_diffs": [
+    "api/typescript.d.ts"
+  ],
+  "api": {
+    "reference_declarations": 28,
+    "composed_declarations": 222,
+    "sanctioned_declarations": 222,
+    "added_lines": 194,
+    "removed_lines": 193
+  },
+  "platform": {
+    "os": "linux",
+    "arch": "x64",
+    "node": "v24.19.0"
+  },
+  "execution": {
+    "commit": "6042af82a7f94ba5fffd6e975e75df91e44db24f",
+    "apply_exit": 0,
+    "oracle_exit": 1,
+    "platform": {
+      "os": "linux",
+      "arch": "x64",
+      "node": "v24.19.0"
+    },
+    "wall_seconds": 695.28
+  },
+  "results": "/tmp/adamic-stage3-lane",
+  "verdict": "FAIL stage3 landing lane: test counts: expected {'passing': 106366, 'failing': 1, 'pending': 0}, observed {'passing': 106336, 'failing': 6, 'pending': 0}"
+}

@@ -1,0 +1,25 @@
+{
+ "replaced": [
+  {
+   "unit": "phase-wasi-testwasiunit08",
+   "was": "failed",
+   "run": 1
+  },
+  {
+   "unit": "phase-wasi-testwasiunit12",
+   "was": "failed",
+   "run": 1
+  },
+  {
+   "unit": "phase-wasi-testwasiunit18",
+   "was": "failed",
+   "run": 1
+  },
+  {
+   "unit": "phase-stage3-stage3-lane",
+   "was": "failed",
+   "run": 1
+  }
+ ],
+ "why_red_was_rerun": null
+}

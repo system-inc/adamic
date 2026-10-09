@@ -1,0 +1,3 @@
+run adamic-gate-phases-again-20261009T143551-88d03262: red, 0 tests in 4 units, 1 failed, 0 units broken, 0 killed over budget
+FAIL phase-stage3-stage3-lane (stage)
+    red: 6042af82a7f94ba5fffd6e975e75df91e44db24f full gate, first failure at stage3 after 696.1 s, cancelled after first failure (stage3=696.1s; 0 units over 30 s (0 s, 0 on the burn-down, 0 drifted over); box load 1.5 on 5 cores at start, load 2.3 on 5 cores at first failure, load 2.3 on 5 cores at end), 0 fail, 0 pass
