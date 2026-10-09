@@ -1,0 +1,56 @@
+[
+  {
+    "file": "checker-index.a",
+    "node": {
+      "stdout": "42\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stock_strict_checker": {
+      "version": "6.0.3",
+      "diagnostics": [
+        {
+          "code": 18048,
+          "message": "'file' is possibly 'undefined'."
+        }
+      ]
+    },
+    "responsible_option_ablation": {
+      "version": "6.0.3",
+      "diagnostics": []
+    },
+    "mutant": {
+      "catcher": "Node throws TypeError on the empty indexed input",
+      "exit": 70,
+      "stdout": ""
+    },
+    "native": "pending: pinned TypeScript submodule unavailable"
+  },
+  {
+    "file": "emitter-optional.a",
+    "node": {
+      "stdout": "index.ts\npath,extension,packageId,originalPath,resolvedUsingTsExtension\ntrue\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stock_strict_checker": {
+      "version": "6.0.3",
+      "diagnostics": [
+        {
+          "code": 2322,
+          "message": "Type 'SearchResult<{ path: string; extension: string; packageId: string | undefined; originalPath: string | undefined; resolvedUsingTsExtension: boolean | undefined; }>' is not assignable to type 'SearchResult<Resolved>'.\n  Type '{ value: { path: string; extension: string; packageId: string | undefined; originalPath: string | undefined; resolvedUsingTsExtension: boolean | undefined; } | undefined; }' is not assignable to type 'SearchResult<Resolved>'.\n    Types of property 'value' are incompatible.\n      Type '{ path: string; extension: string; packageId: string | undefined; originalPath: string | undefined; resolvedUsingTsExtension: boolean | undefined; } | undefined' is not assignable to type 'Resolved | undefined'.\n        Type '{ path: string; extension: string; packageId: string | undefined; originalPath: string | undefined; resolvedUsingTsExtension: boolean | undefined; }' is not assignable to type 'Resolved' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n          Types of property 'originalPath' are incompatible.\n            Type 'string | undefined' is not assignable to type 'string | true'.\n              Type 'undefined' is not assignable to type 'string | true'."
+        }
+      ]
+    },
+    "responsible_option_ablation": {
+      "version": "6.0.3",
+      "diagnostics": []
+    },
+    "mutant": {
+      "catcher": "Node own-key output differs when the undefined-valued field is omitted",
+      "exit": 0,
+      "stdout": "index.ts\npath,extension,packageId,resolvedUsingTsExtension\ntrue\n"
+    },
+    "native": "pending: pinned TypeScript submodule unavailable"
+  }
+]
