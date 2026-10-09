@@ -1,0 +1,16 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-trimpath",
+    "-count=1",
+    "./internal/oracle",
+    "-run",
+    "^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^borrow_element_virtual_store[.]a$"
+  ],
+  "seconds": 38.31322667800123,
+  "exit_code": 0,
+  "go_reported_test_seconds": 1.928,
+  "load_before": "57.06 22.05 12.91 74/1293 1062158",
+  "load_after": "62.30 27.68 15.18 84/1191 1092927"
+}
