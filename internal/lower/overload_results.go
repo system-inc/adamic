@@ -207,13 +207,9 @@ func (l *lowering) overloadSpecialization(call *ast.CallExpression, value ir.Exp
 	invoked, direct := value.(ir.Call)
 	var closure *ir.CallClosure
 	if candidate, known := value.(ir.CallClosure); known {
-		function := candidate.Direct - 1
-		if function < 0 {
-			if maker, known := candidate.Closure.(ir.MakeClosure); known {
-				function = maker.Function
-			}
-		}
-		if function >= 0 {
+		targets := l.result.ClosureTargets(candidate)
+		if !targets.Unknown && len(targets.Functions) == 1 {
+			function := targets.Functions[0]
 			closure = &candidate
 			invoked = ir.Call{Function: function, Arguments: candidate.Arguments, Spread: candidate.Spread, Returns: candidate.Returns}
 			direct = true
@@ -222,6 +218,11 @@ func (l *lowering) overloadSpecialization(call *ast.CallExpression, value ir.Exp
 	if !direct || len(invoked.Spread) > 0 {
 		return nil, l.notYet(call.AsNode(), "an overload result boundary on an indirect or spread call")
 	}
+	targets := l.result.CallTargets(invoked)
+	if len(targets) != 1 {
+		return nil, l.notYet(call.AsNode(), "an overload result boundary with multiple implementation targets")
+	}
+	implementationFunction := targets[0]
 	resolved := l.checker.GetResolvedSignature(call.AsNode())
 	if invoked.Type() == 0 || len(resolved.Parameters()) != len(implementation.Parameters()) || len(invoked.Arguments) > len(implementation.Parameters()) {
 		return nil, l.notYet(call.AsNode(), "a checked overload with void or differing parameter arity")
@@ -252,7 +253,7 @@ func (l *lowering) overloadSpecialization(call *ast.CallExpression, value ir.Exp
 	if !known {
 		return nil, l.notYet(call.AsNode(), "an overload result without a representation")
 	}
-	key := fmt.Sprintf("overload-result:%d:%d:%s", invoked.Function, ordinal, l.genericTypeKey(promised))
+	key := fmt.Sprintf("overload-result:%d:%d:%s", implementationFunction, ordinal, l.genericTypeKey(promised))
 	key += ":" + l.genericTypeKey(produced)
 	if closure != nil {
 		key += ":closure"
@@ -310,7 +311,7 @@ func (l *lowering) overloadSpecialization(call *ast.CallExpression, value ir.Exp
 		}
 		given := l.concrete(l.checker.GetTypeOfSymbol(resolved.Parameters()[position]))
 		takes := l.overloadImplementationType(implementation, resolved, l.censusCallableParameterType(l.symbol(implementation.Parameters()[position].Name())))
-		held := l.result.Locals[l.result.Functions[invoked.Function].Parameters[position]].Type
+		held := l.result.Locals[l.result.Functions[implementationFunction].Parameters[position]].Type
 		if l.overloadNullableParameter(given, takes) {
 			message := fmt.Sprintf("overload %d of %s parameter %d %s cannot be served by implementation parameter %s", ordinal, implementation.Name().Text(), position+1, l.checker.TypeToString(given), l.checker.TypeToString(takes))
 			checked.Arguments[position] = ir.Coalesce{Value: argument, Of: held, Panic: ir.StringConstant{Index: l.constant(message)}}

@@ -1,0 +1,22 @@
+{
+  "readers": {
+    "package_seconds": 0.715,
+    "top_level_passes": 1,
+    "largest_leaf_seconds": 0.7
+  },
+  "cycles": {
+    "package_seconds": 17.307,
+    "top_level_passes": 1,
+    "largest_leaf_seconds": 14.71
+  },
+  "lower": {
+    "package_seconds": 65.318,
+    "top_level_passes": 338,
+    "largest_leaf_seconds": 15.79
+  },
+  "flow metadata": {
+    "package_seconds": 6.861,
+    "top_level_passes": 4,
+    "largest_leaf_seconds": 6.81
+  }
+}
