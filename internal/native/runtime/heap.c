@@ -149,7 +149,7 @@ static void *take(size_t class, uint32_t *number) {
 		each->free = ((free_slot *)slot)->next;
 	} else {
 		slot = each->fresh;
-		each->fresh += size - 1;
+		each->fresh += size;
 		UNPOISON(slot, size);
 	}
 	each->live++;
