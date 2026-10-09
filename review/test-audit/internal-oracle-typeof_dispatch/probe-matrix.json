@@ -1,0 +1,22 @@
+{
+  "PLower": {
+    "TestNarrowedFieldUsesSharedReadiness": 1,
+    "TestViewFieldInheritedStaticReadiness": 1,
+    "TestDefaultTaggedSourceViews": 1
+  },
+  "PC": {
+    "TestRequiredViewFieldOperandOnce": 1,
+    "TestNarrowedFieldUsesSharedReadiness": 1,
+    "TestViewFieldInheritedStaticReadiness": 1,
+    "TestDefaultTaggedSourceViews": 1
+  },
+  "PJS": {
+    "TestRequiredViewFieldOperandOnce": 1,
+    "TestNarrowedFieldUsesSharedReadiness": 1,
+    "TestViewFieldInheritedStaticReadiness": 1,
+    "TestDefaultTaggedSourceViews": 1
+  },
+  "PShards": {
+    "TestWASIShardUnion": 1
+  }
+}

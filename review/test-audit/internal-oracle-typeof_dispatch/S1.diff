@@ -1,0 +1,12 @@
+--- a/internal/oracle/wasi_shards_test.go
++++ b/internal/oracle/wasi_shards_test.go
+@@ -27,9 +27,6 @@
+ 	}
+ 	sort.Slice(rows, func(i, j int) bool { return fixtures[rows[i]].path < fixtures[rows[j]].path })
+ 	shards := make([][]int, wasiFixtureShardCount)
+-	for ordinal, row := range rows {
+-		shards[ordinal%len(shards)] = append(shards[ordinal%len(shards)], row)
+-	}
+ 	return shards
+ }
+ 

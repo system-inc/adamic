@@ -1,0 +1,662 @@
+[
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestTypeOfConstructorMutant|TestTypeOfStringLiteralMutant|TestTypeOfNullMutant|TestTypeOfNullSlotPresenceMutant|TestUnknownNarrowingMutants|TestRequiredViewFieldPrimitive|TestRequiredViewFieldOperandOnce|TestNarrowedFieldUsesSharedReadiness|TestViewFieldInheritedStaticReadiness|TestDefaultTaggedSourceViews|TestWASIShardUnion|TestWASIShardPlantedDisagreement|TestWASIShardPlantedFixture)$"
+    ],
+    "log": "bounded-baseline.log",
+    "exit": 0,
+    "wall": 5.319607116999578
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=./internal/lower,./internal/native,./internal/javascript",
+      "-coverprofile=/workspace/adamic/review/test-audit/internal-oracle-typeof_dispatch/slice.cover",
+      "./internal/oracle/",
+      "-run",
+      "^(TestTypeOfConstructorMutant|TestTypeOfStringLiteralMutant|TestTypeOfNullMutant|TestTypeOfNullSlotPresenceMutant|TestUnknownNarrowingMutants|TestRequiredViewFieldPrimitive|TestRequiredViewFieldOperandOnce|TestNarrowedFieldUsesSharedReadiness|TestViewFieldInheritedStaticReadiness|TestDefaultTaggedSourceViews|TestWASIShardUnion|TestWASIShardPlantedDisagreement|TestWASIShardPlantedFixture)$"
+    ],
+    "log": "slice-coverage.log",
+    "exit": 0,
+    "wall": 10.56485040500047
+  },
+  {
+    "command": [
+      "go",
+      "tool",
+      "cover",
+      "-func=/workspace/adamic/review/test-audit/internal-oracle-typeof_dispatch/slice.cover"
+    ],
+    "log": "functions-coverage.txt",
+    "exit": 0,
+    "wall": 0.14457489300002635
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestTypeOfConstructorMutant)$"
+    ],
+    "log": "timing-TestTypeOfConstructorMutant-1.log",
+    "exit": 0,
+    "wall": 2.345294522000586
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestTypeOfConstructorMutant)$"
+    ],
+    "log": "timing-TestTypeOfConstructorMutant-2.log",
+    "exit": 0,
+    "wall": 2.1873251549995985
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestTypeOfConstructorMutant)$"
+    ],
+    "log": "timing-TestTypeOfConstructorMutant-3.log",
+    "exit": 0,
+    "wall": 2.2381362320002154
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestTypeOfStringLiteralMutant)$"
+    ],
+    "log": "timing-TestTypeOfStringLiteralMutant-1.log",
+    "exit": 0,
+    "wall": 2.2364193940002224
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestTypeOfStringLiteralMutant)$"
+    ],
+    "log": "timing-TestTypeOfStringLiteralMutant-2.log",
+    "exit": 0,
+    "wall": 2.3792290820001654
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestTypeOfStringLiteralMutant)$"
+    ],
+    "log": "timing-TestTypeOfStringLiteralMutant-3.log",
+    "exit": 0,
+    "wall": 2.091188702999716
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestTypeOfNullMutant)$"
+    ],
+    "log": "timing-TestTypeOfNullMutant-1.log",
+    "exit": 0,
+    "wall": 2.007206842999949
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestTypeOfNullMutant)$"
+    ],
+    "log": "timing-TestTypeOfNullMutant-2.log",
+    "exit": 0,
+    "wall": 2.1736177160000807
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestTypeOfNullMutant)$"
+    ],
+    "log": "timing-TestTypeOfNullMutant-3.log",
+    "exit": 0,
+    "wall": 2.314956587000779
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestTypeOfNullSlotPresenceMutant)$"
+    ],
+    "log": "timing-TestTypeOfNullSlotPresenceMutant-1.log",
+    "exit": 0,
+    "wall": 2.343345968999529
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestTypeOfNullSlotPresenceMutant)$"
+    ],
+    "log": "timing-TestTypeOfNullSlotPresenceMutant-2.log",
+    "exit": 0,
+    "wall": 2.3808880420001515
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestTypeOfNullSlotPresenceMutant)$"
+    ],
+    "log": "timing-TestTypeOfNullSlotPresenceMutant-3.log",
+    "exit": 0,
+    "wall": 2.268752314000267
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestUnknownNarrowingMutants)$"
+    ],
+    "log": "timing-TestUnknownNarrowingMutants-1.log",
+    "exit": 0,
+    "wall": 2.05850196099982
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestUnknownNarrowingMutants)$"
+    ],
+    "log": "timing-TestUnknownNarrowingMutants-2.log",
+    "exit": 0,
+    "wall": 2.0015273660001185
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestUnknownNarrowingMutants)$"
+    ],
+    "log": "timing-TestUnknownNarrowingMutants-3.log",
+    "exit": 0,
+    "wall": 1.9893165719995523
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestRequiredViewFieldPrimitive)$"
+    ],
+    "log": "timing-TestRequiredViewFieldPrimitive-1.log",
+    "exit": 0,
+    "wall": 2.865150390999588
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestRequiredViewFieldPrimitive)$"
+    ],
+    "log": "timing-TestRequiredViewFieldPrimitive-2.log",
+    "exit": 0,
+    "wall": 2.76014288999977
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestRequiredViewFieldPrimitive)$"
+    ],
+    "log": "timing-TestRequiredViewFieldPrimitive-3.log",
+    "exit": 0,
+    "wall": 2.6546100740006295
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestRequiredViewFieldOperandOnce)$"
+    ],
+    "log": "timing-TestRequiredViewFieldOperandOnce-1.log",
+    "exit": 0,
+    "wall": 2.296272376000161
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestRequiredViewFieldOperandOnce)$"
+    ],
+    "log": "timing-TestRequiredViewFieldOperandOnce-2.log",
+    "exit": 0,
+    "wall": 2.430538405000334
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestRequiredViewFieldOperandOnce)$"
+    ],
+    "log": "timing-TestRequiredViewFieldOperandOnce-3.log",
+    "exit": 0,
+    "wall": 2.217084999999315
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestDefaultTaggedSourceViews)$"
+    ],
+    "log": "timing-TestDefaultTaggedSourceViews-1.log",
+    "exit": 0,
+    "wall": 2.6497270410000056
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestDefaultTaggedSourceViews)$"
+    ],
+    "log": "timing-TestDefaultTaggedSourceViews-2.log",
+    "exit": 0,
+    "wall": 2.6024046320007983
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestDefaultTaggedSourceViews)$"
+    ],
+    "log": "timing-TestDefaultTaggedSourceViews-3.log",
+    "exit": 0,
+    "wall": 2.542144110000663
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestWASIShardUnion)$"
+    ],
+    "log": "timing-TestWASIShardUnion-1.log",
+    "exit": 0,
+    "wall": 1.9031534639998426
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestWASIShardUnion)$"
+    ],
+    "log": "timing-TestWASIShardUnion-2.log",
+    "exit": 0,
+    "wall": 1.9883274590001747
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestWASIShardUnion)$"
+    ],
+    "log": "timing-TestWASIShardUnion-3.log",
+    "exit": 0,
+    "wall": 1.8162082939998072
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestWASIShardPlantedDisagreement)$"
+    ],
+    "log": "timing-TestWASIShardPlantedDisagreement-1.log",
+    "exit": 0,
+    "wall": 2.0442717080004513
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestWASIShardPlantedDisagreement)$"
+    ],
+    "log": "timing-TestWASIShardPlantedDisagreement-2.log",
+    "exit": 0,
+    "wall": 2.1302656649995697
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestWASIShardPlantedDisagreement)$"
+    ],
+    "log": "timing-TestWASIShardPlantedDisagreement-3.log",
+    "exit": 0,
+    "wall": 2.301623875000587
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestWASIShardPlantedFixture)$"
+    ],
+    "log": "timing-TestWASIShardPlantedFixture-1.log",
+    "exit": 0,
+    "wall": 2.3480741120001767
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestWASIShardPlantedFixture)$"
+    ],
+    "log": "timing-TestWASIShardPlantedFixture-2.log",
+    "exit": 0,
+    "wall": 2.3279191519995948
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestWASIShardPlantedFixture)$"
+    ],
+    "log": "timing-TestWASIShardPlantedFixture-3.log",
+    "exit": 0,
+    "wall": 2.212665996999931
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestNarrowedFieldUsesSharedReadiness|TestViewFieldInheritedStaticReadiness)$"
+    ],
+    "log": "timing-TestViewFieldReadiness_family-1.log",
+    "exit": 0,
+    "wall": 2.7480046239998046
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestNarrowedFieldUsesSharedReadiness|TestViewFieldInheritedStaticReadiness)$"
+    ],
+    "log": "timing-TestViewFieldReadiness_family-2.log",
+    "exit": 0,
+    "wall": 2.7038830180008517
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestNarrowedFieldUsesSharedReadiness|TestViewFieldInheritedStaticReadiness)$"
+    ],
+    "log": "timing-TestViewFieldReadiness_family-3.log",
+    "exit": 0,
+    "wall": 2.4385751439995147
+  }
+]

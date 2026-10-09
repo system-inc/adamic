@@ -1,0 +1,9 @@
+{"Time":"2026-10-09T11:18:02.072487332Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-09T11:18:02.08244783Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestWASIShardUnion"}
+{"Time":"2026-10-09T11:18:02.082548923Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestWASIShardUnion","Output":"=== RUN   TestWASIShardUnion\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:18:02.08258041Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestWASIShardUnion","Output":"    wasi_shards_test.go:80: missing fixture internal/oracle/testdata/string_views_lifetime.a\n","OutputType":"error"}
+{"Time":"2026-10-09T11:18:02.082595002Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestWASIShardUnion","Output":"--- FAIL: TestWASIShardUnion (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:18:02.082600651Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestWASIShardUnion","Elapsed":0}
+{"Time":"2026-10-09T11:18:02.082614712Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:18:02.082928511Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\tgithub.com/system-inc/adamic/internal/oracle\t0.010s\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:18:02.082966177Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":0.011}

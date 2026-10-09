@@ -1,0 +1,11 @@
+--- a/internal/native/view_fields.go
++++ b/internal/native/view_fields.go
+@@ -28,7 +28,7 @@
+ 	if property.ViewType != "" {
+ 		name = property.ViewType
+ 	}
+-	e.line("adamic_value %s = adamic_object_view(%s, %s, &%s, %d, %s, %s);", slot, object, cString(property.Name), e.cache(), property.Of, cString(name), cString(property.View))
++	e.line("adamic_value %s = adamic_object_view(%s, %s, &%s, %d, %s, %s);", slot, object, cString(property.View), e.cache(), property.Of, cString(name), cString(property.Name))
+ 	value := unslotted(property.Of, fmt.Sprintf("%s.%s", slot, member(property.Of)))
+ 	if len(property.ViewAllowed) != 0 {
+ 		tests := []string{}

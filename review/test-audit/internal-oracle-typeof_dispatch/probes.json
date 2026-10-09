@@ -1,0 +1,50 @@
+[
+  {
+    "id": "PLower",
+    "file": "internal/lower/lower.go",
+    "signature": "func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {",
+    "answer": "return nil, nil",
+    "tests": [
+      "TestNarrowedFieldUsesSharedReadiness",
+      "TestViewFieldInheritedStaticReadiness",
+      "TestDefaultTaggedSourceViews"
+    ],
+    "line": 20
+  },
+  {
+    "id": "PC",
+    "file": "internal/native/emit.go",
+    "signature": "func C(program *ir.Program) string {",
+    "answer": "return \"\"",
+    "tests": [
+      "TestRequiredViewFieldOperandOnce",
+      "TestNarrowedFieldUsesSharedReadiness",
+      "TestViewFieldInheritedStaticReadiness",
+      "TestDefaultTaggedSourceViews"
+    ],
+    "line": 22
+  },
+  {
+    "id": "PJS",
+    "file": "internal/javascript/javascript.go",
+    "signature": "func JavaScript(program *ir.Program) string {",
+    "answer": "return \"\"",
+    "tests": [
+      "TestRequiredViewFieldOperandOnce",
+      "TestNarrowedFieldUsesSharedReadiness",
+      "TestViewFieldInheritedStaticReadiness",
+      "TestDefaultTaggedSourceViews"
+    ],
+    "line": 24
+  },
+  {
+    "id": "PShards",
+    "file": "internal/oracle/wasi_shards_test.go",
+    "signature": "func wasiFixtureShards() [][]int {",
+    "answer": "return nil",
+    "tests": [
+      "TestWASIShardUnion"
+    ],
+    "line": 23
+  }
+]

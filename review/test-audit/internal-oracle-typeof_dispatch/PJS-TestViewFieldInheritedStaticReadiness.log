@@ -1,0 +1,18 @@
+{"Time":"2026-10-09T11:17:56.254997651Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-09T11:17:56.262164371Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestViewFieldInheritedStaticReadiness"}
+{"Time":"2026-10-09T11:17:56.262246335Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestViewFieldInheritedStaticReadiness","Output":"=== RUN   TestViewFieldInheritedStaticReadiness\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:17:56.262289941Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestViewFieldInheritedStaticReadiness","Output":"=== PAUSE TestViewFieldInheritedStaticReadiness\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:17:56.262292364Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestViewFieldInheritedStaticReadiness"}
+{"Time":"2026-10-09T11:17:56.262295479Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestViewFieldInheritedStaticReadiness"}
+{"Time":"2026-10-09T11:17:56.262297162Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestViewFieldInheritedStaticReadiness","Output":"=== CONT  TestViewFieldInheritedStaticReadiness\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:17:56.337916332Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestViewFieldInheritedStaticReadiness","Output":"    view_fields_test.go:157: gate cache node miss\n"}
+{"Time":"2026-10-09T11:17:56.594464931Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestViewFieldInheritedStaticReadiness","Output":"    view_fields_test.go:157: gate cache node hit\n"}
+{"Time":"2026-10-09T11:17:56.594520104Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestViewFieldInheritedStaticReadiness","Output":"    view_fields_test.go:157: exit codes differ\n","OutputType":"error"}
+{"Time":"2026-10-09T11:17:56.594664953Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestViewFieldInheritedStaticReadiness","Output":"--- FAIL: TestViewFieldInheritedStaticReadiness (0.33s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:17:56.594671433Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestViewFieldInheritedStaticReadiness","Elapsed":0.33}
+{"Time":"2026-10-09T11:17:56.594700907Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:17:56.594710011Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: native hits=0 misses=0\n"}
+{"Time":"2026-10-09T11:17:56.594712865Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: node hits=1 misses=1\n"}
+{"Time":"2026-10-09T11:17:56.594715529Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: probe hits=0 misses=0\n"}
+{"Time":"2026-10-09T11:17:56.595805765Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\tgithub.com/system-inc/adamic/internal/oracle\t0.340s\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:17:56.595819766Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":0.341}

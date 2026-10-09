@@ -1,0 +1,9 @@
+{"Time":"2026-10-09T11:16:56.878280766Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-09T11:16:56.885956054Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestWASIShardUnion"}
+{"Time":"2026-10-09T11:16:56.886024607Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestWASIShardUnion","Output":"=== RUN   TestWASIShardUnion\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:16:56.886117938Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestWASIShardUnion","Output":"    wasi_shards_test.go:73: missing shard-000\n","OutputType":"error"}
+{"Time":"2026-10-09T11:16:56.886142085Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestWASIShardUnion","Output":"--- FAIL: TestWASIShardUnion (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:16:56.886145259Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestWASIShardUnion","Elapsed":0}
+{"Time":"2026-10-09T11:16:56.886166852Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:16:56.886387425Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\tgithub.com/system-inc/adamic/internal/oracle\t0.008s\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:16:56.886411201Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":0.008}

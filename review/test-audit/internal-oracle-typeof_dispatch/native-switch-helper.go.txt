@@ -1,0 +1,4 @@
+package native
+import "os"
+func auditUnitMutant()string{return os.Getenv("ADAMIC_MUTANT")}
+func auditUnitString(id,a,b string)string{if auditUnitMutant()==id{return a};return b}

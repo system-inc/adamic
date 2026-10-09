@@ -1,0 +1,20 @@
+{"Time":"2026-10-09T11:17:46.433926189Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-09T11:17:46.442321099Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestViewFieldInheritedStaticReadiness"}
+{"Time":"2026-10-09T11:17:46.442416473Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestViewFieldInheritedStaticReadiness","Output":"=== RUN   TestViewFieldInheritedStaticReadiness\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:17:46.442441691Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestViewFieldInheritedStaticReadiness","Output":"=== PAUSE TestViewFieldInheritedStaticReadiness\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:17:46.442444124Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestViewFieldInheritedStaticReadiness"}
+{"Time":"2026-10-09T11:17:46.442448992Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestViewFieldInheritedStaticReadiness"}
+{"Time":"2026-10-09T11:17:46.442450684Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestViewFieldInheritedStaticReadiness","Output":"=== CONT  TestViewFieldInheritedStaticReadiness\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:17:46.521690296Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestViewFieldInheritedStaticReadiness","Output":"    view_fields_test.go:157: gate cache node miss\n"}
+{"Time":"2026-10-09T11:17:46.650363464Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestViewFieldInheritedStaticReadiness","Output":"    view_fields_test.go:157: native: clang failed: exit status 1\n","OutputType":"error"}
+{"Time":"2026-10-09T11:17:46.650431547Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestViewFieldInheritedStaticReadiness","Output":"        /tmp/adamic-gate/adamic-build-1123832252/main.c:1:1: error: ISO C requires a translation unit to contain at least one declaration [-Werror,-Wempty-translation-unit]\n","OutputType":"error-continue"}
+{"Time":"2026-10-09T11:17:46.650438688Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestViewFieldInheritedStaticReadiness","Output":"        1 error generated.\n","OutputType":"error-continue"}
+{"Time":"2026-10-09T11:17:46.650442153Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestViewFieldInheritedStaticReadiness","Output":"        \n","OutputType":"error-continue"}
+{"Time":"2026-10-09T11:17:46.650474201Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestViewFieldInheritedStaticReadiness","Output":"--- FAIL: TestViewFieldInheritedStaticReadiness (0.21s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:17:46.650477466Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestViewFieldInheritedStaticReadiness","Elapsed":0.21}
+{"Time":"2026-10-09T11:17:46.650501232Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:17:46.650508423Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: native hits=0 misses=0\n"}
+{"Time":"2026-10-09T11:17:46.650510697Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: node hits=0 misses=1\n"}
+{"Time":"2026-10-09T11:17:46.650512519Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: probe hits=0 misses=0\n"}
+{"Time":"2026-10-09T11:17:46.652495638Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\tgithub.com/system-inc/adamic/internal/oracle\t0.218s\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:17:46.652520576Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":0.219}

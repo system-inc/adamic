@@ -1,0 +1,11 @@
+--- a/internal/native/emit_branches.go
++++ b/internal/native/emit_branches.go
+@@ -143,7 +143,7 @@
+ 	_, null := coalesce.Value.(ir.Null)
+ 	if undefined || null {
+ 		// Literal absence is known without comparing sentinel addresses in C.
+-		present = "false"
++		present = "true"
+ 	} else if coalesce.Value.Type() == ir.Union {
+ 		present += " && " + value + " != &adamic_null"
+ 	}

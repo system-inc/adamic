@@ -1,0 +1,689 @@
+[
+  {
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ],
+    "log": "M1-vet.log",
+    "exit": 0,
+    "wall": 0.6155924650001907,
+    "environment": {
+      "ADAMIC_ORACLE_WASI": "1",
+      "WASI_SYSROOT": "/workspace/adamic-tools/wasi-sdk/share/wasi-sysroot"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/native/"
+    ],
+    "log": "M2-vet.log",
+    "exit": 0,
+    "wall": 0.3567082819999996,
+    "environment": {
+      "ADAMIC_ORACLE_WASI": "1",
+      "WASI_SYSROOT": "/workspace/adamic-tools/wasi-sdk/share/wasi-sysroot"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/javascript/"
+    ],
+    "log": "M3-vet.log",
+    "exit": 0,
+    "wall": 0.06400433399994654,
+    "environment": {
+      "ADAMIC_ORACLE_WASI": "1",
+      "WASI_SYSROOT": "/workspace/adamic-tools/wasi-sdk/share/wasi-sysroot"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/native/"
+    ],
+    "log": "M4-vet.log",
+    "exit": 0,
+    "wall": 0.3374362510003266,
+    "environment": {
+      "ADAMIC_ORACLE_WASI": "1",
+      "WASI_SYSROOT": "/workspace/adamic-tools/wasi-sdk/share/wasi-sysroot"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ],
+    "log": "PLower-vet.log",
+    "exit": 0,
+    "wall": 0.6247467900002448,
+    "environment": {
+      "ADAMIC_ORACLE_WASI": "1",
+      "WASI_SYSROOT": "/workspace/adamic-tools/wasi-sdk/share/wasi-sysroot"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/native/"
+    ],
+    "log": "PC-vet.log",
+    "exit": 0,
+    "wall": 0.15335531900018395,
+    "environment": {
+      "ADAMIC_ORACLE_WASI": "1",
+      "WASI_SYSROOT": "/workspace/adamic-tools/wasi-sdk/share/wasi-sysroot"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/javascript/"
+    ],
+    "log": "PJS-vet.log",
+    "exit": 0,
+    "wall": 0.06539090800015401,
+    "environment": {
+      "ADAMIC_ORACLE_WASI": "1",
+      "WASI_SYSROOT": "/workspace/adamic-tools/wasi-sdk/share/wasi-sysroot"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/oracle/"
+    ],
+    "log": "PShards-vet.log",
+    "exit": 0,
+    "wall": 0.31834182199963834,
+    "environment": {
+      "ADAMIC_ORACLE_WASI": "1",
+      "WASI_SYSROOT": "/workspace/adamic-tools/wasi-sdk/share/wasi-sysroot"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/oracle/"
+    ],
+    "log": "W1-vet.log",
+    "exit": 0,
+    "wall": 0.3591455360001419,
+    "environment": {
+      "ADAMIC_ORACLE_WASI": "1",
+      "WASI_SYSROOT": "/workspace/adamic-tools/wasi-sdk/share/wasi-sysroot"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestTypeOfConstructorMutant|TestTypeOfStringLiteralMutant|TestTypeOfNullMutant|TestTypeOfNullSlotPresenceMutant|TestUnknownNarrowingMutants|TestRequiredViewFieldPrimitive|TestWASIShardPlantedDisagreement|TestWASIShardPlantedFixture)$"
+    ],
+    "log": "W1.log",
+    "exit": 1,
+    "wall": 8.671145039999828,
+    "environment": {
+      "ADAMIC_MUTANT": "W1",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u071/cache/W1",
+      "ADAMIC_ORACLE_WASI": "1",
+      "WASI_SYSROOT": "/workspace/adamic-tools/wasi-sdk/share/wasi-sysroot"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/oracle/"
+    ],
+    "log": "S1-vet.log",
+    "exit": 0,
+    "wall": 0.2965384080007425,
+    "environment": {
+      "ADAMIC_ORACLE_WASI": "1",
+      "WASI_SYSROOT": "/workspace/adamic-tools/wasi-sdk/share/wasi-sysroot"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestWASIShardUnion)$"
+    ],
+    "log": "S1.log",
+    "exit": 1,
+    "wall": 6.391732468000555,
+    "environment": {
+      "ADAMIC_MUTANT": "S1",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u071/cache/S1",
+      "ADAMIC_ORACLE_WASI": "1",
+      "WASI_SYSROOT": "/workspace/adamic-tools/wasi-sdk/share/wasi-sysroot"
+    }
+  },
+  {
+    "command": [
+      "gofmt",
+      "-w",
+      "internal/lower/non_null.go",
+      "internal/lower/lower.go",
+      "internal/javascript/view_fields.go",
+      "internal/oracle/oracle_test.go",
+      "internal/native/view_fields.go",
+      "internal/oracle/wasi_shards_test.go",
+      "internal/javascript/javascript.go",
+      "internal/native/emit_branches.go",
+      "internal/native/emit.go",
+      "internal/lower/u071_mutant.go",
+      "internal/native/u071_mutant.go",
+      "internal/javascript/u071_mutant.go",
+      "internal/oracle/u071_mutant_test.go"
+    ],
+    "log": "switch-gofmt.log",
+    "exit": 0,
+    "wall": 0.0068589660004363395,
+    "environment": {
+      "ADAMIC_ORACLE_WASI": "1",
+      "WASI_SYSROOT": "/workspace/adamic-tools/wasi-sdk/share/wasi-sysroot"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "test",
+      "-c",
+      "-o",
+      "/tmp/u071-test",
+      "./internal/oracle/"
+    ],
+    "log": "switch-build.log",
+    "exit": 0,
+    "wall": 13.631076462000237,
+    "environment": {
+      "ADAMIC_ORACLE_WASI": "1",
+      "WASI_SYSROOT": "/workspace/adamic-tools/wasi-sdk/share/wasi-sysroot"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestTypeOfConstructorMutant|TestTypeOfStringLiteralMutant|TestTypeOfNullMutant|TestTypeOfNullSlotPresenceMutant|TestUnknownNarrowingMutants|TestRequiredViewFieldPrimitive|TestRequiredViewFieldOperandOnce|TestNarrowedFieldUsesSharedReadiness|TestViewFieldInheritedStaticReadiness|TestDefaultTaggedSourceViews|TestWASIShardUnion|TestWASIShardPlantedDisagreement|TestWASIShardPlantedFixture)$"
+    ],
+    "log": "M1.log",
+    "exit": 1,
+    "wall": 5.620190581000315,
+    "environment": {
+      "ADAMIC_MUTANT": "M1",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u071/cache/M1",
+      "ADAMIC_ORACLE_WASI": "1",
+      "WASI_SYSROOT": "/workspace/adamic-tools/wasi-sdk/share/wasi-sysroot"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestTypeOfConstructorMutant|TestTypeOfStringLiteralMutant|TestTypeOfNullMutant|TestTypeOfNullSlotPresenceMutant|TestUnknownNarrowingMutants|TestRequiredViewFieldPrimitive|TestRequiredViewFieldOperandOnce|TestNarrowedFieldUsesSharedReadiness|TestViewFieldInheritedStaticReadiness|TestDefaultTaggedSourceViews|TestWASIShardUnion|TestWASIShardPlantedDisagreement|TestWASIShardPlantedFixture)$"
+    ],
+    "log": "M2.log",
+    "exit": 1,
+    "wall": 5.335816155999964,
+    "environment": {
+      "ADAMIC_MUTANT": "M2",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u071/cache/M2",
+      "ADAMIC_ORACLE_WASI": "1",
+      "WASI_SYSROOT": "/workspace/adamic-tools/wasi-sdk/share/wasi-sysroot"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestTypeOfConstructorMutant|TestTypeOfStringLiteralMutant|TestTypeOfNullMutant|TestTypeOfNullSlotPresenceMutant|TestUnknownNarrowingMutants|TestRequiredViewFieldPrimitive|TestRequiredViewFieldOperandOnce|TestNarrowedFieldUsesSharedReadiness|TestViewFieldInheritedStaticReadiness|TestDefaultTaggedSourceViews|TestWASIShardUnion|TestWASIShardPlantedDisagreement|TestWASIShardPlantedFixture)$"
+    ],
+    "log": "M3.log",
+    "exit": 1,
+    "wall": 5.763510133999262,
+    "environment": {
+      "ADAMIC_MUTANT": "M3",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u071/cache/M3",
+      "ADAMIC_ORACLE_WASI": "1",
+      "WASI_SYSROOT": "/workspace/adamic-tools/wasi-sdk/share/wasi-sysroot"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestTypeOfConstructorMutant|TestTypeOfStringLiteralMutant|TestTypeOfNullMutant|TestTypeOfNullSlotPresenceMutant|TestUnknownNarrowingMutants|TestRequiredViewFieldPrimitive|TestRequiredViewFieldOperandOnce|TestNarrowedFieldUsesSharedReadiness|TestViewFieldInheritedStaticReadiness|TestDefaultTaggedSourceViews|TestWASIShardUnion|TestWASIShardPlantedDisagreement|TestWASIShardPlantedFixture)$"
+    ],
+    "log": "M4.log",
+    "exit": 1,
+    "wall": 5.732440589000362,
+    "environment": {
+      "ADAMIC_MUTANT": "M4",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u071/cache/M4",
+      "ADAMIC_ORACLE_WASI": "1",
+      "WASI_SYSROOT": "/workspace/adamic-tools/wasi-sdk/share/wasi-sysroot"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestNarrowedFieldUsesSharedReadiness)$"
+    ],
+    "log": "PLower-TestNarrowedFieldUsesSharedReadiness.log",
+    "exit": 1,
+    "wall": 2.074170263000269,
+    "environment": {
+      "ADAMIC_MUTANT": "PLower",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u071/cache/PLower",
+      "ADAMIC_ORACLE_WASI": "1",
+      "WASI_SYSROOT": "/workspace/adamic-tools/wasi-sdk/share/wasi-sysroot"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestViewFieldInheritedStaticReadiness)$"
+    ],
+    "log": "PLower-TestViewFieldInheritedStaticReadiness.log",
+    "exit": 1,
+    "wall": 2.0968691039997793,
+    "environment": {
+      "ADAMIC_MUTANT": "PLower",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u071/cache/PLower",
+      "ADAMIC_ORACLE_WASI": "1",
+      "WASI_SYSROOT": "/workspace/adamic-tools/wasi-sdk/share/wasi-sysroot"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestDefaultTaggedSourceViews)$"
+    ],
+    "log": "PLower-TestDefaultTaggedSourceViews.log",
+    "exit": 1,
+    "wall": 2.24019756800044,
+    "environment": {
+      "ADAMIC_MUTANT": "PLower",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u071/cache/PLower",
+      "ADAMIC_ORACLE_WASI": "1",
+      "WASI_SYSROOT": "/workspace/adamic-tools/wasi-sdk/share/wasi-sysroot"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestRequiredViewFieldOperandOnce)$"
+    ],
+    "log": "PC-TestRequiredViewFieldOperandOnce.log",
+    "exit": 1,
+    "wall": 2.2007780789999742,
+    "environment": {
+      "ADAMIC_MUTANT": "PC",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u071/cache/PC",
+      "ADAMIC_ORACLE_WASI": "1",
+      "WASI_SYSROOT": "/workspace/adamic-tools/wasi-sdk/share/wasi-sysroot"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestNarrowedFieldUsesSharedReadiness)$"
+    ],
+    "log": "PC-TestNarrowedFieldUsesSharedReadiness.log",
+    "exit": 1,
+    "wall": 2.6301954339996882,
+    "environment": {
+      "ADAMIC_MUTANT": "PC",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u071/cache/PC",
+      "ADAMIC_ORACLE_WASI": "1",
+      "WASI_SYSROOT": "/workspace/adamic-tools/wasi-sdk/share/wasi-sysroot"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestViewFieldInheritedStaticReadiness)$"
+    ],
+    "log": "PC-TestViewFieldInheritedStaticReadiness.log",
+    "exit": 1,
+    "wall": 2.4118172979997325,
+    "environment": {
+      "ADAMIC_MUTANT": "PC",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u071/cache/PC",
+      "ADAMIC_ORACLE_WASI": "1",
+      "WASI_SYSROOT": "/workspace/adamic-tools/wasi-sdk/share/wasi-sysroot"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestDefaultTaggedSourceViews)$"
+    ],
+    "log": "PC-TestDefaultTaggedSourceViews.log",
+    "exit": 1,
+    "wall": 2.46533289800027,
+    "environment": {
+      "ADAMIC_MUTANT": "PC",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u071/cache/PC",
+      "ADAMIC_ORACLE_WASI": "1",
+      "WASI_SYSROOT": "/workspace/adamic-tools/wasi-sdk/share/wasi-sysroot"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestRequiredViewFieldOperandOnce)$"
+    ],
+    "log": "PJS-TestRequiredViewFieldOperandOnce.log",
+    "exit": 1,
+    "wall": 2.5546084010002232,
+    "environment": {
+      "ADAMIC_MUTANT": "PJS",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u071/cache/PJS",
+      "ADAMIC_ORACLE_WASI": "1",
+      "WASI_SYSROOT": "/workspace/adamic-tools/wasi-sdk/share/wasi-sysroot"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestNarrowedFieldUsesSharedReadiness)$"
+    ],
+    "log": "PJS-TestNarrowedFieldUsesSharedReadiness.log",
+    "exit": 1,
+    "wall": 2.623248779000278,
+    "environment": {
+      "ADAMIC_MUTANT": "PJS",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u071/cache/PJS",
+      "ADAMIC_ORACLE_WASI": "1",
+      "WASI_SYSROOT": "/workspace/adamic-tools/wasi-sdk/share/wasi-sysroot"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestViewFieldInheritedStaticReadiness)$"
+    ],
+    "log": "PJS-TestViewFieldInheritedStaticReadiness.log",
+    "exit": 1,
+    "wall": 2.296757226000409,
+    "environment": {
+      "ADAMIC_MUTANT": "PJS",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u071/cache/PJS",
+      "ADAMIC_ORACLE_WASI": "1",
+      "WASI_SYSROOT": "/workspace/adamic-tools/wasi-sdk/share/wasi-sysroot"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestDefaultTaggedSourceViews)$"
+    ],
+    "log": "PJS-TestDefaultTaggedSourceViews.log",
+    "exit": 1,
+    "wall": 3.2276652999998987,
+    "environment": {
+      "ADAMIC_MUTANT": "PJS",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u071/cache/PJS",
+      "ADAMIC_ORACLE_WASI": "1",
+      "WASI_SYSROOT": "/workspace/adamic-tools/wasi-sdk/share/wasi-sysroot"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestWASIShardUnion)$"
+    ],
+    "log": "PShards-TestWASIShardUnion.log",
+    "exit": 1,
+    "wall": 2.2580387389998577,
+    "environment": {
+      "ADAMIC_MUTANT": "PShards",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u071/cache/PShards",
+      "ADAMIC_ORACLE_WASI": "1",
+      "WASI_SYSROOT": "/workspace/adamic-tools/wasi-sdk/share/wasi-sysroot"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestTypeOfConstructorMutant|TestTypeOfStringLiteralMutant|TestTypeOfNullMutant|TestTypeOfNullSlotPresenceMutant|TestUnknownNarrowingMutants|TestRequiredViewFieldPrimitive|TestRequiredViewFieldOperandOnce|TestNarrowedFieldUsesSharedReadiness|TestViewFieldInheritedStaticReadiness|TestDefaultTaggedSourceViews|TestWASIShardUnion|TestWASIShardPlantedDisagreement|TestWASIShardPlantedFixture)$"
+    ],
+    "log": "final-baseline.log",
+    "exit": 0,
+    "wall": 4.233310902999619,
+    "environment": {
+      "ADAMIC_ORACLE_WASI": "1",
+      "WASI_SYSROOT": "/workspace/adamic-tools/wasi-sdk/share/wasi-sysroot"
+    }
+  },
+  {
+    "command": [
+      "go",
+      "vet",
+      "./internal/oracle/"
+    ],
+    "log": "final-vet.log",
+    "exit": 0,
+    "wall": 0.26190833100008604,
+    "environment": {
+      "ADAMIC_ORACLE_WASI": "1",
+      "WASI_SYSROOT": "/workspace/adamic-tools/wasi-sdk/share/wasi-sysroot"
+    }
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "log": "source-diff-check.log",
+    "exit": 0,
+    "wall": 0.0916799649994573,
+    "environment": {
+      "ADAMIC_ORACLE_WASI": "1",
+      "WASI_SYSROOT": "/workspace/adamic-tools/wasi-sdk/share/wasi-sysroot"
+    }
+  }
+]

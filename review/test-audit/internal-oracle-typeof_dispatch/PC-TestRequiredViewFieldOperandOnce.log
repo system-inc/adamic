@@ -1,0 +1,20 @@
+{"Time":"2026-10-09T11:17:41.379427335Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-09T11:17:41.388905069Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestRequiredViewFieldOperandOnce"}
+{"Time":"2026-10-09T11:17:41.38899147Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestRequiredViewFieldOperandOnce","Output":"=== RUN   TestRequiredViewFieldOperandOnce\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:17:41.38902484Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestRequiredViewFieldOperandOnce","Output":"=== PAUSE TestRequiredViewFieldOperandOnce\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:17:41.389027394Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestRequiredViewFieldOperandOnce"}
+{"Time":"2026-10-09T11:17:41.389029968Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestRequiredViewFieldOperandOnce"}
+{"Time":"2026-10-09T11:17:41.389031911Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestRequiredViewFieldOperandOnce","Output":"=== CONT  TestRequiredViewFieldOperandOnce\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:17:41.497115437Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestRequiredViewFieldOperandOnce","Output":"    view_fields_test.go:111: gate cache node miss\n"}
+{"Time":"2026-10-09T11:17:41.608235266Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestRequiredViewFieldOperandOnce","Output":"    view_fields_test.go:115: native: clang failed: exit status 1\n","OutputType":"error"}
+{"Time":"2026-10-09T11:17:41.608281807Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestRequiredViewFieldOperandOnce","Output":"        /tmp/adamic-gate/adamic-build-2020555131/main.c:1:1: error: ISO C requires a translation unit to contain at least one declaration [-Werror,-Wempty-translation-unit]\n","OutputType":"error-continue"}
+{"Time":"2026-10-09T11:17:41.608288857Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestRequiredViewFieldOperandOnce","Output":"        1 error generated.\n","OutputType":"error-continue"}
+{"Time":"2026-10-09T11:17:41.608295297Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestRequiredViewFieldOperandOnce","Output":"        \n","OutputType":"error-continue"}
+{"Time":"2026-10-09T11:17:41.608312583Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestRequiredViewFieldOperandOnce","Output":"--- FAIL: TestRequiredViewFieldOperandOnce (0.22s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:17:41.608315187Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestRequiredViewFieldOperandOnce","Elapsed":0.22}
+{"Time":"2026-10-09T11:17:41.608334346Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:17:41.608337411Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: native hits=0 misses=0\n"}
+{"Time":"2026-10-09T11:17:41.608339373Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: node hits=0 misses=1\n"}
+{"Time":"2026-10-09T11:17:41.608341206Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: probe hits=0 misses=0\n"}
+{"Time":"2026-10-09T11:17:41.609754981Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\tgithub.com/system-inc/adamic/internal/oracle\t0.230s\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:17:41.609784726Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":0.23}
