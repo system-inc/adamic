@@ -71,7 +71,7 @@ func estreeTimedOracle(t *testing.T) string {
 	t.Helper()
 	start := time.Now()
 	cpu := estreeCPU()
-	result := goOracle(t)
+	result := estreeOracleProduct(t)
 	t.Logf("build Go oracle: %.3fs CPU %.3fs", time.Since(start).Seconds(), estreeCPU()-cpu)
 	return result
 }
@@ -79,7 +79,7 @@ func estreeTimedBuild(t *testing.T, path string, sanitize bool) (string, string)
 	t.Helper()
 	start := time.Now()
 	cpu := estreeCPU()
-	binary, script := build(t, path, sanitize)
+	binary, script := estreePortProduct(t, path, sanitize)
 	t.Logf("build lowered/native/emitted: %.3fs CPU %.3fs", time.Since(start).Seconds(), estreeCPU()-cpu)
 	return binary, script
 }
@@ -93,45 +93,8 @@ func estreeMutantVerdict(want, got []byte) error {
 // Plant an oracle-identical (surviving) mutant at case 4 in the exact production
 // plan. Run the ordinary t.Fatal verdict in a child so the proof itself passes.
 func TestSyntaxMutantsShardFailure(t *testing.T) {
-	if os.Getenv("ADAMIC_ESTREE_SHARD_PROOF") == "syntax-mutants" {
-		groups, cases := syntaxMutantGroups()
-		selected := estreeShardPlan(t, testSyntaxMutantsShards, cases, groups)
-		for i, group := range groups {
-			if !selected[i] {
-				continue
-			}
-			t.Run(fmt.Sprintf("shard-%03d", i), func(t *testing.T) {
-				t.Parallel()
-				for _, id := range group {
-					want, got := []byte("Go"), []byte("mutant")
-					if id == 4 {
-						got = want
-					}
-					if err := estreeMutantVerdict(want, got); err != nil {
-						t.Fatalf("case %d: %v", id, err)
-					}
-				}
-			})
-		}
-		return
-	}
-	executable, err := os.Executable()
-	if err != nil {
-		t.Fatal(err)
-	}
-	command := exec.Command(executable, "-test.run=^TestSyntaxMutantsShardFailure$", "-test.v")
-	for _, entry := range os.Environ() {
-		if !strings.HasPrefix(entry, "ADAMIC_TEST_SHARD=") && !strings.HasPrefix(entry, "ADAMIC_ESTREE_SHARD_PROOF=") {
-			command.Env = append(command.Env, entry)
-		}
-	}
-	command.Env = append(command.Env, "ADAMIC_ESTREE_SHARD_PROOF=syntax-mutants")
-	output, err := command.CombinedOutput()
-	text := string(output)
-	if err == nil || strings.Count(text, "--- FAIL: TestSyntaxMutantsShardFailure/shard-") != 1 || !strings.Contains(text, "--- FAIL: TestSyntaxMutantsShardFailure/shard-000") || !strings.Contains(text, "case 4: mutant survived") {
-		t.Fatalf("planted survivor was not caught by exactly shard-000: %v\n%s", err, text)
-	}
-	t.Log("case 4 planted survivor caught by exactly shard-000")
+	groups, cases := syntaxMutantGroups()
+	estreeShardFailure(t, testSyntaxMutantsShards, cases, groups, "mutant", 4)
 }
 
 func estreeCPU() float64 {
@@ -197,6 +160,21 @@ func estreeShardFailure(t *testing.T, count, cases int, groups [][]int, mode str
 			}
 			t.Run(fmt.Sprintf("shard-%03d", i), func(t *testing.T) {
 				t.Parallel()
+				if mode == "mutant" {
+					// Production compares the whole manifest for a mutant,
+					// rather than requiring every control input to differ.
+					want := []byte(fmt.Sprintf("Go answers for %v", group))
+					got := []byte("mutant answers")
+					for _, id := range group {
+						if id == planted {
+							got = want
+						}
+					}
+					if err := estreeMutantVerdict(want, got); err != nil {
+						t.Fatalf("case %d: %v", planted, err)
+					}
+					return
+				}
 				for _, id := range group {
 					var err error
 					switch mode {
@@ -206,12 +184,6 @@ func estreeShardFailure(t *testing.T, count, cases int, groups [][]int, mode str
 							exit = nil
 						}
 						err = estreeRefusalVerdict(exit, false, 0, "expected diagnostic", "expected diagnostic")
-					case "mutant":
-						got := []byte("mutant")
-						if id == planted {
-							got = []byte("Go")
-						}
-						err = estreeMutantVerdict([]byte("Go"), got)
 					case "agreement":
 						got := []byte("Go")
 						if id == planted {
