@@ -476,6 +476,10 @@ func CanThrow(program *ir.Program, instruction *Instruction) bool {
 				throws = true
 			}
 			switch value.Type() {
+			case reflect.TypeOf(ir.Defined{}):
+				if value.Interface().(ir.Defined).Throws() {
+					throws = true
+				}
 			case callType:
 				if program.CallMayThrow(value.Interface().(ir.Call)) {
 					throws = true
