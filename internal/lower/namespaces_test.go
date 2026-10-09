@@ -53,10 +53,8 @@ func TestNamespaceReceiverRefusal(t *testing.T) {
 
 func TestNamespaceTypesErase(t *testing.T) {
 	t.Parallel()
-	program, err := lowerSource(t, "namespace N {export interface Box {readonly x:number;} export namespace Inner {export type Number=number;}} const value:N.Box={x:7}; const x:N.Inner.Number=value.x; console.log(`${x}`);")
-	if err != nil {
-		t.Fatal(err)
-	}
+	// Behavior cannot observe erased type-only namespace bindings.
+	program := lowersAndAgreesWithNode(t, "namespace N {export interface Box {readonly x:number;} export namespace Inner {export type Number=number;}} const value:N.Box={x:7}; const x:N.Inner.Number=value.x; console.log(`${x}`);")
 	for _, local := range program.Locals {
 		if local.Name == "N" || local.Name == "Inner" {
 			t.Fatal("type namespace made a binding")
@@ -90,13 +88,11 @@ func TestDebugNamespaceMergedCapabilities(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
-			_, err = lowerSource(t, string(source))
 			if test.reason == "" {
-				if err != nil {
-					t.Fatal(err)
-				}
+				lowersAndAgreesWithNode(t, string(source))
 				return
 			}
+			_, err = lowerSource(t, string(source))
 			var notYet *NotYet
 			if !errors.As(err, &notYet) || !strings.Contains(err.Error(), test.reason) {
 				t.Fatalf("got %v, want NotYet %s", err, test.reason)
