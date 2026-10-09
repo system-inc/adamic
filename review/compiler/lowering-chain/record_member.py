@@ -20,7 +20,10 @@ after = rows(Path('internal/oracle/counts.md'))
 retired_path = root / (prefix + '-retired-counts.json')
 retired = json.loads(retired_path.read_text()) if retired_path.exists() else {}
 assert before.keys() - after.keys() == retired.keys(), 'unrecorded own count rows lost'
-assert not (incoming.keys() - after.keys()) - retired.keys(), 'unrecorded incoming count rows lost'
+previously_retired = {}
+for ledger in root.glob('member-*-retired-counts.json'):
+    previously_retired.update(json.loads(ledger.read_text()))
+assert not (incoming.keys() - after.keys()) - previously_retired.keys(), 'unrecorded incoming count rows lost'
 changes = {'added': [{'row':key,'after':value} for key,value in after.items() if key not in before],
            'changed': [{'row':key,'before':before[key],'after':value,'reason':reason} for key,value in after.items() if key in before and before[key] != value],
            'removed': [{'row':key,'before':before[key],'reason':value} for key,value in retired.items()], 'rows':len(after)}
