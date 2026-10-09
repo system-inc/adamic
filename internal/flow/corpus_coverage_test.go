@@ -62,20 +62,24 @@ func functionName(function any) string {
 func TestFlowCorpusUnitsCoverEveryProgram(t *testing.T) {
 	t.Parallel()
 	expected := programs(t)
-	if len(flowCorpusPaths) != len(expected) || len(flowCorpusTests) != 4 || len(flowProgramChecks) != 4 {
+	if len(flowCorpusTests) != 4 || len(flowProgramChecks) != 4 {
 		t.Fatalf("corpus count: %d paths, %d expected, %d families, %d checks", len(flowCorpusPaths), len(expected), len(flowCorpusTests), len(flowProgramChecks))
 	}
 	families := []string{"SingleAssignment", "MutationRanges", "GraphPaths", "Liveness"}
 	checks := []string{"checkSingleAssignmentProgram", "checkMutationRangesProgram", "checkGraphPathsProgram", "checkLivenessProgram"}
+	live := map[string]bool{}
+	for _, path := range expected {
+		live[filepath.ToSlash(path)] = true
+	}
 	seen := map[string]bool{}
 	units := map[string]bool{}
 	for index, path := range flowCorpusPaths {
-		if path != filepath.ToSlash(expected[index]) || seen[path] {
-			t.Fatalf("corpus coverage at %d: %q, want unique %q", index, path, expected[index])
+		if !live[path] || seen[path] {
+			t.Fatalf("corpus coverage at %d: %q is missing or duplicated", index, path)
 		}
 		seen[path] = true
 		for family, bindings := range flowCorpusTests {
-			if len(bindings) != len(expected) {
+			if len(bindings) != len(flowCorpusPaths) {
 				t.Fatalf("family %s covers %d of %d programs", families[family], len(bindings), len(expected))
 			}
 			prefix := "TestFlowProgram"
@@ -106,4 +110,26 @@ func TestFlowCorpusSetupIsShared(t *testing.T) {
 	if tracePrepared(t, path) != tracePrepared(t, path) {
 		t.Fatal("trace setup was rebuilt")
 	}
+}
+
+// A long remainder is the signal to regenerate the selectable corpus units.
+// Until then it keeps new programs covered without requiring regeneration.
+func TestFlowCorpusRemainder(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	generated := map[string]bool{}
+	for _, path := range flowCorpusPaths {
+		generated[path] = true
+	}
+	count := 0
+	for _, path := range programs(t) {
+		if generated[filepath.ToSlash(path)] {
+			continue
+		}
+		count++
+		t.Run(filepath.ToSlash(path), func(t *testing.T) {
+			checkAllFlowProgram(t, path)
+		})
+	}
+	t.Logf("remainder ran %d programs", count)
 }
