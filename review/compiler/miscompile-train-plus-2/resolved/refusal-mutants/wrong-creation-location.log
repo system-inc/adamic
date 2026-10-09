@@ -1,0 +1,43 @@
+=== RUN   TestTrainPlusRefusalP26
+=== PAUSE TestTrainPlusRefusalP26
+=== RUN   TestTrainPlusRefusalP33
+=== PAUSE TestTrainPlusRefusalP33
+=== RUN   TestTrainPlusRefusalP34
+=== PAUSE TestTrainPlusRefusalP34
+=== RUN   TestTrainPlusRefusalP35
+=== PAUSE TestTrainPlusRefusalP35
+=== CONT  TestTrainPlusRefusalP26
+=== CONT  TestTrainPlusRefusalP34
+=== CONT  TestTrainPlusRefusalP33
+=== CONT  TestTrainPlusRefusalP35
+=== NAME  TestTrainPlusRefusalP33
+    train_plus_refusals_test.go:54: /workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_oct9_native_p33_map_in_union.a: wrong creation refusal: &lower.Refused{Where:"wrong:1:1", What:"view type has an unsupported member: value", Fix:"use a supported, checked type for value (currently string | Map<string, number>) before creating this view"}
+    train_plus_refusals_test.go:54: .a: wrong:1:1: view type has an unsupported member: value
+=== NAME  TestTrainPlusRefusalP35
+    train_plus_refusals_test.go:64: /workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_oct9_native_p35_class_in_union.a: wrong creation refusal: &lower.Refused{Where:"wrong:1:1", What:"view type has an unsupported member: value", Fix:"use a supported, checked type for value (currently string | Point) before creating this view"}
+    train_plus_refusals_test.go:64: .a: wrong:1:1: view type has an unsupported member: value
+=== NAME  TestTrainPlusRefusalP34
+    train_plus_refusals_test.go:59: /workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_oct9_native_p34_typed_array_in_union.a: wrong creation refusal: &lower.Refused{Where:"wrong:1:1", What:"view type has an unsupported member: value", Fix:"use a supported, checked type for value (currently string | Uint8Array<ArrayBufferLike>) before creating this view"}
+    train_plus_refusals_test.go:59: .a: wrong:1:1: view type has an unsupported member: value
+=== NAME  TestTrainPlusRefusalP26
+    train_plus_refusals_test.go:49: /workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_oct9_native_p26_callable_or_undefined.a: wrong creation refusal: &lower.Refused{Where:"wrong:1:1", What:"view type has an unsupported member: value", Fix:"use a supported, checked type for value (currently Target) before creating this view"}
+    train_plus_refusals_test.go:49: .a: wrong:1:1: view type has an unsupported member: value
+=== NAME  TestTrainPlusRefusalP34
+    train_plus_refusals_test.go:59: /tmp/adamic-gate/TestTrainPlusRefusalP34748560556/001/fxspptb_oct9_native_p34_typed_array_in_union.ts: wrong creation refusal: &lower.Refused{Where:"wrong:1:1", What:"view type has an unsupported member: value", Fix:"use a supported, checked type for value (currently string | Uint8Array<ArrayBufferLike>) before creating this view"}
+    train_plus_refusals_test.go:59: .ts: wrong:1:1: view type has an unsupported member: value
+--- FAIL: TestTrainPlusRefusalP34 (0.12s)
+=== NAME  TestTrainPlusRefusalP33
+    train_plus_refusals_test.go:54: /tmp/adamic-gate/TestTrainPlusRefusalP33958810209/001/fxspptb_oct9_native_p33_map_in_union.ts: wrong creation refusal: &lower.Refused{Where:"wrong:1:1", What:"view type has an unsupported member: value", Fix:"use a supported, checked type for value (currently string | Map<string, number>) before creating this view"}
+    train_plus_refusals_test.go:54: .ts: wrong:1:1: view type has an unsupported member: value
+--- FAIL: TestTrainPlusRefusalP33 (0.12s)
+=== NAME  TestTrainPlusRefusalP35
+    train_plus_refusals_test.go:64: /tmp/adamic-gate/TestTrainPlusRefusalP352350785369/001/fxspptb_oct9_native_p35_class_in_union.ts: wrong creation refusal: &lower.Refused{Where:"wrong:1:1", What:"view type has an unsupported member: value", Fix:"use a supported, checked type for value (currently string | Point) before creating this view"}
+    train_plus_refusals_test.go:64: .ts: wrong:1:1: view type has an unsupported member: value
+--- FAIL: TestTrainPlusRefusalP35 (0.13s)
+=== NAME  TestTrainPlusRefusalP26
+    train_plus_refusals_test.go:49: /tmp/adamic-gate/TestTrainPlusRefusalP262881856212/001/fxspptb_oct9_native_p26_callable_or_undefined.ts: wrong creation refusal: &lower.Refused{Where:"wrong:1:1", What:"view type has an unsupported member: value", Fix:"use a supported, checked type for value (currently Target) before creating this view"}
+    train_plus_refusals_test.go:49: .ts: wrong:1:1: view type has an unsupported member: value
+--- FAIL: TestTrainPlusRefusalP26 (0.13s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.144s
+FAIL

@@ -1,0 +1,115 @@
+=== RUN   TestCheckedCastWithoutReadSummary
+=== PAUSE TestCheckedCastWithoutReadSummary
+=== RUN   TestDecodeASCIIUnit06
+=== PAUSE TestDecodeASCIIUnit06
+=== RUN   TestDecodeASCIIUnit22
+=== PAUSE TestDecodeASCIIUnit22
+=== RUN   TestDecodeASCIIUnit38
+=== PAUSE TestDecodeASCIIUnit38
+=== RUN   TestDecodeASCIIWASIUnit09
+=== PAUSE TestDecodeASCIIWASIUnit09
+=== RUN   TestDecodeASCIIWASIUnit25
+=== PAUSE TestDecodeASCIIWASIUnit25
+=== RUN   TestDecodeASCIIWASIUnit41
+=== PAUSE TestDecodeASCIIWASIUnit41
+=== RUN   TestFX7ViewCycleAndStackGuard
+=== PAUSE TestFX7ViewCycleAndStackGuard
+=== RUN   TestGlobalArgumentLending
+=== PAUSE TestGlobalArgumentLending
+=== RUN   TestNormalizeMatchesNodePoints06
+=== PAUSE TestNormalizeMatchesNodePoints06
+=== RUN   TestToStringWithARadixMatchesNode
+=== PAUSE TestToStringWithARadixMatchesNode
+=== RUN   TestRegExpIteratorResultShape
+=== PAUSE TestRegExpIteratorResultShape
+=== RUN   TestRegExpBytecodeRandomNodeUnit14
+=== PAUSE TestRegExpBytecodeRandomNodeUnit14
+=== RUN   TestRegExpBytecodeRandomNodeUnit30
+=== PAUSE TestRegExpBytecodeRandomNodeUnit30
+=== RUN   TestStringBuildingMatchesNode
+=== PAUSE TestStringBuildingMatchesNode
+=== RUN   TestSplitTSGoAgreesUnit01
+    units_tsgo_test.go:108: set ADAMIC_CLANG_TSGO_ARCHIVE to a built checker archive
+--- SKIP: TestSplitTSGoAgreesUnit01 (0.00s)
+=== RUN   TestWASIUnit13
+    wasm_test.go:366: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with WASI clang and Node 24 on PATH
+--- SKIP: TestWASIUnit13 (0.00s)
+=== RUN   TestWASIUnit29
+    wasm_test.go:446: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with WASI clang and Node 24 on PATH
+--- SKIP: TestWASIUnit29 (0.00s)
+=== CONT  TestStringBuildingMatchesNode
+=== CONT  TestCheckedCastWithoutReadSummary
+=== CONT  TestRegExpBytecodeRandomNodeUnit30
+=== CONT  TestRegExpBytecodeRandomNodeUnit14
+=== CONT  TestRegExpIteratorResultShape
+--- PASS: TestRegExpIteratorResultShape (0.37s)
+=== CONT  TestToStringWithARadixMatchesNode
+=== NAME  TestStringBuildingMatchesNode
+    string_build_test.go:119: 2000 stateful operations match Node
+--- PASS: TestStringBuildingMatchesNode (0.46s)
+=== CONT  TestNormalizeMatchesNodePoints06
+--- PASS: TestCheckedCastWithoutReadSummary (0.62s)
+=== CONT  TestGlobalArgumentLending
+--- PASS: TestGlobalArgumentLending (0.15s)
+=== CONT  TestFX7ViewCycleAndStackGuard
+=== NAME  TestRegExpBytecodeRandomNodeUnit14
+    regexp_test.go:441: compiling 249 patterns, 250 executions, 604110 C bytes
+=== NAME  TestRegExpBytecodeRandomNodeUnit30
+    regexp_test.go:521: compiling 248 patterns, 250 executions, 702402 C bytes
+--- PASS: TestFX7ViewCycleAndStackGuard (0.70s)
+=== CONT  TestDecodeASCIIWASIUnit41
+    decode_ascii_test.go:567: set ADAMIC_TEST_WASI=1
+    split_units_test.go:293: unit elapsed 0.001s
+--- SKIP: TestDecodeASCIIWASIUnit41 (0.00s)
+=== CONT  TestDecodeASCIIWASIUnit25
+    decode_ascii_test.go:487: set ADAMIC_TEST_WASI=1
+    split_units_test.go:293: unit elapsed 0.000s
+--- SKIP: TestDecodeASCIIWASIUnit25 (0.00s)
+=== CONT  TestDecodeASCIIWASIUnit09
+    decode_ascii_test.go:407: set ADAMIC_TEST_WASI=1
+    split_units_test.go:293: unit elapsed 0.000s
+--- SKIP: TestDecodeASCIIWASIUnit09 (0.00s)
+=== CONT  TestDecodeASCIIUnit38
+    decode_ascii_test.go:327: corpus phase 0.000s (including cache wait)
+    decode_ascii_test.go:327: compile phase 0.003s (including cache wait)
+=== NAME  TestToStringWithARadixMatchesNode
+    radix_test.go:100: 146452 answers (3854 values, every radix from 2 to 36), 0 mismatches
+--- PASS: TestToStringWithARadixMatchesNode (1.90s)
+=== CONT  TestDecodeASCIIUnit22
+    decode_ascii_test.go:247: corpus phase 0.000s (including cache wait)
+    decode_ascii_test.go:247: compile phase 0.001s (including cache wait)
+=== NAME  TestRegExpBytecodeRandomNodeUnit30
+    regexp_test.go:521: mode=[] native execution totals: 250 cases, 0 disagreements
+    regexp_test.go:521: mode=[unlimited] native execution totals: 250 cases, 0 disagreements
+--- PASS: TestRegExpBytecodeRandomNodeUnit30 (2.52s)
+=== CONT  TestDecodeASCIIUnit06
+    decode_ascii_test.go:167: corpus phase 0.001s (including cache wait)
+    decode_ascii_test.go:167: compile phase 0.001s (including cache wait)
+=== NAME  TestRegExpBytecodeRandomNodeUnit14
+    regexp_test.go:441: mode=[] native execution totals: 250 cases, 0 disagreements
+    regexp_test.go:441: mode=[unlimited] native execution totals: 250 cases, 0 disagreements
+--- PASS: TestRegExpBytecodeRandomNodeUnit14 (3.49s)
+=== NAME  TestNormalizeMatchesNodePoints06
+    normalize_test.go:278: 65536 lines, 0 mismatches
+    split_units_test.go:293: unit elapsed 7.057s
+--- PASS: TestNormalizeMatchesNodePoints06 (7.06s)
+=== NAME  TestDecodeASCIIUnit06
+    decode_ascii_test.go:167: run phase 5.623s
+    decode_ascii_test.go:167: prefixes=2048 cases=2129920 Node and baseline identical
+        
+    split_units_test.go:293: unit elapsed 5.626s
+--- PASS: TestDecodeASCIIUnit06 (5.63s)
+=== NAME  TestDecodeASCIIUnit38
+    decode_ascii_test.go:327: run phase 6.760s
+    decode_ascii_test.go:327: prefixes=2048 cases=2129920 Node and baseline identical
+        
+    split_units_test.go:293: unit elapsed 6.764s
+--- PASS: TestDecodeASCIIUnit38 (6.76s)
+=== NAME  TestDecodeASCIIUnit22
+    decode_ascii_test.go:247: run phase 6.414s
+    decode_ascii_test.go:247: prefixes=2048 cases=2129920 Node and baseline identical
+        
+    split_units_test.go:293: unit elapsed 6.417s
+--- PASS: TestDecodeASCIIUnit22 (6.42s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	8.695s

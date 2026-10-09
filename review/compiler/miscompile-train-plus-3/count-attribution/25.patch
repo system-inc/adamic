@@ -1,0 +1,17 @@
+--- 51aa3a96
++++ 6a056842
+@@ -42,10 +42,11 @@
+ 	ADAMIC_CHECK_STACK();
+ 	adamic_object * adamic_temporary_1 = adamic_function_2_Plain_new();
+ 	adamic_object * adamic_local_4_original = adamic_temporary_1;
+-	adamic_object * adamic_temporary_2 = adamic_function_4_checked_view_members(adamic_local_4_original);
+-	adamic_object * adamic_temporary_3 = adamic_object_copy(adamic_temporary_2);
++	bool adamic_temporary_2 = ((adamic_local_4_original->heap.references == 1 && !adamic_weak_held(adamic_local_4_original)) && !adamic_local_4_original->frozen);
++	adamic_object * adamic_temporary_3 = (adamic_temporary_2 ? adamic_retain(adamic_local_4_original) : adamic_object_copy(adamic_local_4_original));
++	adamic_temporary_3->class = NULL;
++	adamic_temporary_3->tuple = false;
+ 	adamic_object * adamic_temporary_4 = adamic_temporary_3;
+-	adamic_release(adamic_temporary_2);
+ 	adamic_release(adamic_local_4_original);
+ 	return adamic_temporary_4;
+ 	adamic_unreachable();

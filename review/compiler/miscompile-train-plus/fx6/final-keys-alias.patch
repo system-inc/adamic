@@ -1,0 +1,11 @@
+--- a/internal/lower/library_object.go
++++ b/internal/lower/library_object.go
+@@ -86,7 +86,7 @@
+ 			return nil, true, l.notYet(written[0], "Object."+name+" on other than a present plain object")
+ 		}
+ 		if name == "keys" || name == "values" || name == "entries" {
+-			value, err = l.checkedViewMembers(node, written[0], value, nil)
++			value, err = value, nil
+ 			if err != nil {
+ 				return nil, true, err
+ 			}

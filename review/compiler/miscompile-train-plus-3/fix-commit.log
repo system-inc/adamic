@@ -1,0 +1,3 @@
+[compiler/miscompile-train-plus-3 6a056842] Restore spread reuse after unnecessary member helpers clear
+ 4 files changed, 164 insertions(+)
+ create mode 100644 internal/oracle/train_plus_spread_test.go

@@ -1,0 +1,5 @@
+Every final command sources /workspace/adamic-tools/env.sh and sets GOPROXY=https://proxy.golang.org|direct.
+Full package command arrays: shard-results.json; complete disjoint test membership: shards.json.
+Remaining train registered command:
+timeout 89 go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/lower/testdata/(callable_producers|scalar_union_views|fx7_wrong_aborts|fx7_tuple_recognition)|TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_(native_p(04|06|08|17|18|20|54|59|75|77)|views_p(68|69))|TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance_memory.a' -count=1 -v -timeout 80s
+Other exact commands and results: REPORT.md, mutants.json, changed-fixtures-command.json, extra-fixtures.json.

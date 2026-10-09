@@ -1,0 +1,126 @@
+=== RUN   TestViewInEmptyKeyControl
+=== PAUSE TestViewInEmptyKeyControl
+=== CONT  TestViewInEmptyKeyControl
+--- PASS: TestViewInEmptyKeyControl (0.79s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.811s
+=== RUN   TestCheckedViewCorrectSpread
+=== PAUSE TestCheckedViewCorrectSpread
+=== RUN   TestCheckedViewCorrectIn
+=== PAUSE TestCheckedViewCorrectIn
+=== RUN   TestCheckedViewCorrectKeys
+=== PAUSE TestCheckedViewCorrectKeys
+=== RUN   TestCheckedViewCorrectKeysAlias
+=== PAUSE TestCheckedViewCorrectKeysAlias
+=== RUN   TestCheckedViewCorrectValues
+=== PAUSE TestCheckedViewCorrectValues
+=== RUN   TestCheckedViewCorrectEntries
+=== PAUSE TestCheckedViewCorrectEntries
+=== RUN   TestCheckedViewCorrectP19NumberRead
+=== PAUSE TestCheckedViewCorrectP19NumberRead
+=== RUN   TestCheckedViewCorrectP19StringRead
+=== PAUSE TestCheckedViewCorrectP19StringRead
+=== RUN   TestCheckedViewCorrectP72String
+=== PAUSE TestCheckedViewCorrectP72String
+=== RUN   TestCheckedViewCorrectP72Number
+=== PAUSE TestCheckedViewCorrectP72Number
+=== RUN   TestCheckedViewElementP19Read
+=== PAUSE TestCheckedViewElementP19Read
+=== CONT  TestCheckedViewCorrectSpread
+=== CONT  TestCheckedViewCorrectP19NumberRead
+=== CONT  TestCheckedViewCorrectKeysAlias
+=== CONT  TestCheckedViewCorrectEntries
+=== CONT  TestCheckedViewCorrectValues
+=== NAME  TestCheckedViewCorrectKeysAlias
+    view_element_reads_test.go:115: gate cache node hit
+    view_element_reads_test.go:115: gate cache node hit
+    oracle_test.go:596: gate cache native hit
+    oracle_test.go:589: gate cache native hit
+    oracle_test.go:603: gate cache native hit
+--- PASS: TestCheckedViewCorrectKeysAlias (0.43s)
+=== CONT  TestCheckedViewCorrectIn
+=== NAME  TestCheckedViewCorrectValues
+    view_element_reads_test.go:120: gate cache node hit
+    view_element_reads_test.go:120: gate cache node hit
+    oracle_test.go:596: gate cache native hit
+    oracle_test.go:589: gate cache native hit
+    oracle_test.go:603: gate cache native hit
+--- PASS: TestCheckedViewCorrectValues (0.43s)
+=== CONT  TestCheckedViewCorrectP72Number
+=== NAME  TestCheckedViewCorrectEntries
+    view_element_reads_test.go:125: gate cache node hit
+    view_element_reads_test.go:125: gate cache node hit
+    oracle_test.go:596: gate cache native hit
+    oracle_test.go:589: gate cache native hit
+    oracle_test.go:603: gate cache native hit
+--- PASS: TestCheckedViewCorrectEntries (0.46s)
+=== CONT  TestCheckedViewElementP19Read
+=== NAME  TestCheckedViewCorrectSpread
+    view_element_reads_test.go:100: gate cache node hit
+    view_element_reads_test.go:100: gate cache node hit
+    oracle_test.go:596: gate cache native hit
+    oracle_test.go:589: gate cache native hit
+    oracle_test.go:603: gate cache native hit
+--- PASS: TestCheckedViewCorrectSpread (0.54s)
+=== CONT  TestCheckedViewCorrectP72String
+=== NAME  TestCheckedViewCorrectP19NumberRead
+    view_element_reads_test.go:130: gate cache node hit
+    view_element_reads_test.go:130: gate cache node hit
+    oracle_test.go:596: gate cache native hit
+    oracle_test.go:589: gate cache native hit
+    oracle_test.go:603: gate cache native hit
+--- PASS: TestCheckedViewCorrectP19NumberRead (0.60s)
+=== CONT  TestCheckedViewCorrectP19StringRead
+=== NAME  TestCheckedViewElementP19Read
+    view_element_reads_test.go:175: gate cache node hit
+    view_element_reads_test.go:175: gate cache node hit
+    oracle_test.go:596: gate cache native hit
+    oracle_test.go:589: gate cache native hit
+--- PASS: TestCheckedViewElementP19Read (0.14s)
+=== CONT  TestCheckedViewCorrectKeys
+=== NAME  TestCheckedViewCorrectIn
+    view_element_reads_test.go:105: gate cache node hit
+    view_element_reads_test.go:105: gate cache node hit
+    oracle_test.go:596: gate cache native hit
+    oracle_test.go:589: gate cache native hit
+    oracle_test.go:603: gate cache native hit
+--- PASS: TestCheckedViewCorrectIn (0.24s)
+=== NAME  TestCheckedViewCorrectP72String
+    view_element_reads_test.go:140: gate cache node hit
+    view_element_reads_test.go:140: gate cache node hit
+    oracle_test.go:596: gate cache native hit
+    oracle_test.go:589: gate cache native hit
+    oracle_test.go:603: gate cache native hit
+--- PASS: TestCheckedViewCorrectP72String (0.18s)
+=== NAME  TestCheckedViewCorrectP72Number
+    view_element_reads_test.go:145: gate cache node hit
+    view_element_reads_test.go:145: gate cache node hit
+    oracle_test.go:596: gate cache native hit
+    oracle_test.go:589: gate cache native hit
+    oracle_test.go:603: gate cache native hit
+--- PASS: TestCheckedViewCorrectP72Number (0.32s)
+=== NAME  TestCheckedViewCorrectKeys
+    view_element_reads_test.go:110: gate cache node hit
+=== NAME  TestCheckedViewCorrectP19StringRead
+    view_element_reads_test.go:135: gate cache node hit
+=== NAME  TestCheckedViewCorrectKeys
+    view_element_reads_test.go:110: gate cache node hit
+=== NAME  TestCheckedViewCorrectP19StringRead
+    view_element_reads_test.go:135: gate cache node hit
+=== NAME  TestCheckedViewCorrectKeys
+    oracle_test.go:596: gate cache native hit
+    oracle_test.go:589: gate cache native hit
+=== NAME  TestCheckedViewCorrectP19StringRead
+    oracle_test.go:596: gate cache native hit
+=== NAME  TestCheckedViewCorrectKeys
+    oracle_test.go:603: gate cache native hit
+--- PASS: TestCheckedViewCorrectKeys (0.15s)
+=== NAME  TestCheckedViewCorrectP19StringRead
+    oracle_test.go:589: gate cache native hit
+    oracle_test.go:603: gate cache native hit
+--- PASS: TestCheckedViewCorrectP19StringRead (0.15s)
+PASS
+gate cache: native hits=32 misses=0
+gate cache: node hits=22 misses=0
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.783s

@@ -1,0 +1,21 @@
+--- 51aa3a96
++++ 6a056842
+@@ -102,14 +102,15 @@
+ 	adamic_temporary_22->reference = adamic_temporary_21;
+ 	if (adamic_temporary_25 != NULL) adamic_release(adamic_temporary_25);
+ 	adamic_release(adamic_temporary_20);
+-	adamic_object * adamic_temporary_26 = adamic_function_2_checked_view_members(adamic_local_2_item);
+-	adamic_object * adamic_temporary_27 = adamic_object_copy(adamic_temporary_26);
++	bool adamic_temporary_26 = ((adamic_local_2_item->heap.references == 1 && !adamic_weak_held(adamic_local_2_item)) && !adamic_local_2_item->frozen);
++	adamic_object * adamic_temporary_27 = (adamic_temporary_26 ? adamic_retain(adamic_local_2_item) : adamic_object_copy(adamic_local_2_item));
+ 	adamic_string * adamic_temporary_28 = adamic_function_0_touch();
+ 	adamic_value *adamic_temporary_29 = adamic_object_field(adamic_temporary_27, "label", &adamic_cache_30);
+ 	adamic_release(adamic_temporary_29->reference);
+ 	adamic_temporary_29->reference = adamic_temporary_28;
++	adamic_temporary_27->class = NULL;
++	adamic_temporary_27->tuple = false;
+ 	adamic_object * adamic_local_3_next = adamic_temporary_27;
+-	adamic_release(adamic_temporary_26);
+ 	double adamic_temporary_31 = (&adamic_local_3_next->slots[1])->number;
+ 	adamic_string * adamic_temporary_32 = adamic_string_from_number(adamic_temporary_31);
+ 	adamic_string * adamic_temporary_33 = ((adamic_string *)(&adamic_local_3_next->slots[0])->reference);

@@ -1,0 +1,8 @@
+=== RUN   TestCallableContractWideProducer
+=== PAUSE TestCallableContractWideProducer
+=== CONT  TestCallableContractWideProducer
+    callable_contract_retention_test.go:42: Native backend stdout = "", source Node = "8\n"
+--- FAIL: TestCallableContractWideProducer (0.77s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.790s
+FAIL

@@ -1,0 +1,16 @@
+--- FAIL: TestCheckedViewUntaggedSourceFlows (0.00s)
+    --- FAIL: TestCheckedViewUntaggedSourceFlows/generic/wrong (0.37s)
+        checked_views_v2_source_test.go:134: gate cache node hit
+        checked_views_v2_source_test.go:140: gate cache node hit
+        checked_views_v2_source_test.go:141: native: exit=0 stdout="true\n" stderr=""
+        checked_views_v2_source_test.go:143: native: exit codes differ
+        checked_views_v2_source_test.go:141: native-sanitized: exit=0 stdout="true\n" stderr=""
+        checked_views_v2_source_test.go:143: native-sanitized: exit codes differ
+        checked_views_v2_source_test.go:141: javascript: exit=0 stdout="true\n" stderr=""
+        checked_views_v2_source_test.go:143: javascript: exit codes differ
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=2 misses=0
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.378s
+FAIL

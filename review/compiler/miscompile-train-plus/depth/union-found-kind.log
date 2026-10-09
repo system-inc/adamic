@@ -1,0 +1,27 @@
+=== RUN   TestFX7TextP67
+=== PAUSE TestFX7TextP67
+=== RUN   TestFX7TextP72
+=== PAUSE TestFX7TextP72
+=== CONT  TestFX7TextP67
+=== CONT  TestFX7TextP72
+=== NAME  TestFX7TextP67
+    fx7_depth_texts_test.go:73: gate cache node miss
+=== NAME  TestFX7TextP72
+    fx7_depth_texts_test.go:74: gate cache node miss
+=== NAME  TestFX7TextP67
+    fx7_depth_texts_test.go:73: JavaScript: exit 70 stdout "" stderr "adamic: panic: field read failed: viewed.value matches no member of number | Inner; expected number | Inner, found function\n"
+=== NAME  TestFX7TextP72
+    fx7_depth_texts_test.go:74: JavaScript: exit 70 stdout "" stderr "adamic: panic: field read failed: viewed.value matches no member of readonly [string, number]; expected readonly [string, number], found array\n"
+    fx7_depth_texts_test.go:74: sanitized: stderr differs; stderr "adamic: panic: field read failed: viewed.value matches no member of readonly [string, number]; expected readonly [string, number], found object\n"
+    fx7_depth_texts_test.go:74: native: stderr differs; stderr "adamic: panic: field read failed: viewed.value matches no member of readonly [string, number]; expected readonly [string, number], found object\n"
+--- FAIL: TestFX7TextP72 (12.45s)
+=== NAME  TestFX7TextP67
+    fx7_depth_texts_test.go:73: native: stderr differs; stderr "adamic: panic: field read failed: viewed.value matches no member of number | Inner; expected number | Inner, found object\n"
+    fx7_depth_texts_test.go:73: sanitized: stderr differs; stderr "adamic: panic: field read failed: viewed.value matches no member of number | Inner; expected number | Inner, found object\n"
+--- FAIL: TestFX7TextP67 (12.47s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	12.482s
+FAIL

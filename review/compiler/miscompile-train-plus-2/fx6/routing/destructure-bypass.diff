@@ -1,0 +1,11 @@
+--- a/internal/lower/collections.go
++++ b/internal/lower/collections.go
+@@ -360,7 +360,7 @@
+ 			property.ViewAllowed = l.viewLiterals(fieldType)
+ 			value = property
+ 		} else {
+-			value = l.readViewMember(binding, property, fieldSymbol, destructured)
++			_ = fieldSymbol; value = property
+ 		}
+ 		statements = append(statements, l.initializeLocal(local, value)...)
+ 	}

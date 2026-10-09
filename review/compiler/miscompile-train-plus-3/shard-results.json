@@ -1,0 +1,362 @@
+[
+  {
+    "package": "native",
+    "shard": 1,
+    "tests": 18,
+    "exit": 0,
+    "seconds": 71.395,
+    "command": [
+      "go",
+      "test",
+      "./internal/native",
+      "-run",
+      "^(TestNoReaderCallingConvention|TestDecodeASCIIUnit00|TestDecodeASCIIUnit16|TestDecodeASCIIUnit32|TestDecodeASCIIWASIUnit03|TestDecodeASCIIWASIUnit19|TestDecodeASCIIWASIUnit35|TestCallTargetsElementBorrowPlan|TestRuntimeCacheRebuildsChangedSources|TestNormalizeMatchesNodePoints00|TestNormalizeMatchesNodePoints16|TestRecordMutantsUnit05|TestRegExpBytecodeRandomNodeUnit08|TestRegExpBytecodeRandomNodeUnit24|TestRuntimeReleasePaths|TestMeasureClangUnits|TestWASIUnit07|TestWASIUnit23)$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "80s"
+    ]
+  },
+  {
+    "package": "native",
+    "shard": 2,
+    "tests": 18,
+    "exit": 0,
+    "seconds": 16.085,
+    "command": [
+      "go",
+      "test",
+      "./internal/native",
+      "-run",
+      "^(TestBorrowChainDeclarations|TestDecodeASCIIUnit01|TestDecodeASCIIUnit17|TestDecodeASCIIUnit33|TestDecodeASCIIWASIUnit04|TestDecodeASCIIWASIUnit20|TestDecodeASCIIWASIUnit36|TestDevirtualizeBorrowDocClaim|TestRuntimeCacheConcurrentBuilders|TestNormalizeMatchesNodePoints01|TestNormalizeMatchesNodeContexts|TestRegExpSearchNode|TestRegExpBytecodeRandomNodeUnit09|TestRegExpBytecodeRandomNodeUnit25|TestRuntimeStringEquality|TestUnitsPreserveSharedState|TestWASIUnit08|TestWASIUnit24)$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "80s"
+    ]
+  },
+  {
+    "package": "native",
+    "shard": 3,
+    "tests": 18,
+    "exit": 0,
+    "seconds": 9.297,
+    "command": [
+      "go",
+      "test",
+      "./internal/native",
+      "-run",
+      "^(TestBorrowChainTargets|TestDecodeASCIIUnit02|TestDecodeASCIIUnit18|TestDecodeASCIIUnit34|TestDecodeASCIIWASIUnit05|TestDecodeASCIIWASIUnit21|TestDecodeASCIIWASIUnit37|TestUniformFieldsMatchNode|TestRuntimeCacheConcurrentProcesses|TestNormalizeMatchesNodePoints02|TestNumbersFormatExactlyAsJavaScriptDoes|TestRegExpLintPatternsNode|TestRegExpBytecodeRandomNodeUnit10|TestRegExpBytecodeRandomNodeUnit26|TestSplitUnitCoverage|TestUnitCacheFlagsHoldSanitizer|TestWASIUnit09|TestWASIUnit25)$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "80s"
+    ]
+  },
+  {
+    "package": "native",
+    "shard": 4,
+    "tests": 18,
+    "exit": 0,
+    "seconds": 17.452,
+    "command": [
+      "go",
+      "test",
+      "./internal/native",
+      "-run",
+      "^(TestPassThroughsAreNotConsumers|TestDecodeASCIIUnit03|TestDecodeASCIIUnit19|TestDecodeASCIIUnit35|TestDecodeASCIIWASIUnit06|TestDecodeASCIIWASIUnit22|TestDecodeASCIIWASIUnit38|TestRuntimeFieldLayoutsAreIncluded|TestStringLengthLimit|TestNormalizeMatchesNodePoints03|TestNumbersParseExactlyAsJavaScriptDoes|TestRegExpBytecodeTest262|TestRegExpBytecodeRandomNodeUnit11|TestRegExpBytecodeRandomNodeUnit27|TestShardSelection|TestSplitTokensDoNotRewriteLiterals|TestWASIUnit10|TestWASIUnit26)$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "80s"
+    ]
+  },
+  {
+    "package": "native",
+    "shard": 5,
+    "tests": 18,
+    "exit": 0,
+    "seconds": 20.696,
+    "command": [
+      "go",
+      "test",
+      "./internal/native",
+      "-run",
+      "^(TestCaseMappingMatchesNode|TestDecodeASCIIUnit04|TestDecodeASCIIUnit20|TestDecodeASCIIUnit36|TestDecodeASCIIWASIUnit07|TestDecodeASCIIWASIUnit23|TestDecodeASCIIWASIUnit39|TestRegexProgramsKeepCheckedFieldReads|TestLoopBorrowPlan|TestNormalizeMatchesNodePoints04|TestPowersOfTwoFormatAsJavaScriptDoes|TestRegExpNativeStepLimit|TestRegExpBytecodeRandomNodeUnit12|TestRegExpBytecodeRandomNodeUnit28|TestRetainedSplitCoverage|TestUnitSystemHeaderProvenance|TestWASIUnit11|TestWASIUnit27)$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "80s"
+    ]
+  },
+  {
+    "package": "native",
+    "shard": 6,
+    "tests": 18,
+    "exit": 0,
+    "seconds": 8.656,
+    "command": [
+      "go",
+      "test",
+      "./internal/native",
+      "-run",
+      "^(TestCaseTablesMatchNodesUnicode|TestDecodeASCIIUnit05|TestDecodeASCIIUnit21|TestDecodeASCIIUnit37|TestDecodeASCIIWASIUnit08|TestDecodeASCIIWASIUnit24|TestDecodeASCIIWASIUnit40|TestOptionalWriteMissingSlotRemainsChecked|TestNbodyBorrowedLoopC|TestNormalizeMatchesNodePoints05|TestArtifactInputsAndReuse|TestRegExpNativeStepLimitBoundary|TestRegExpBytecodeRandomNodeUnit13|TestRegExpBytecodeRandomNodeUnit29|TestRetainedTopLevelCoverage|TestSplitTSGoAgreesUnit00|TestWASIUnit12|TestWASIUnit28)$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "80s"
+    ]
+  },
+  {
+    "package": "native",
+    "shard": 7,
+    "tests": 18,
+    "exit": 0,
+    "seconds": 11.919,
+    "command": [
+      "go",
+      "test",
+      "./internal/native",
+      "-run",
+      "^(TestCheckedCastWithoutReadSummary|TestDecodeASCIIUnit06|TestDecodeASCIIUnit22|TestDecodeASCIIUnit38|TestDecodeASCIIWASIUnit09|TestDecodeASCIIWASIUnit25|TestDecodeASCIIWASIUnit41|TestFX7ViewCycleAndStackGuard|TestGlobalArgumentLending|TestNormalizeMatchesNodePoints06|TestToStringWithARadixMatchesNode|TestRegExpIteratorResultShape|TestRegExpBytecodeRandomNodeUnit14|TestRegExpBytecodeRandomNodeUnit30|TestStringBuildingMatchesNode|TestSplitTSGoAgreesUnit01|TestWASIUnit13|TestWASIUnit29)$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "80s"
+    ]
+  },
+  {
+    "package": "native",
+    "shard": 8,
+    "tests": 18,
+    "exit": 0,
+    "seconds": 17.565,
+    "command": [
+      "go",
+      "test",
+      "./internal/native",
+      "-run",
+      "^(TestInheritanceMemoryPlans|TestDecodeASCIIUnit07|TestDecodeASCIIUnit23|TestDecodeASCIIUnit39|TestDecodeASCIIWASIUnit10|TestDecodeASCIIWASIUnit26|TestDecodeASCIIWASIUnit42|TestFreedValuesAreCaughtWithSlabs|TestLoopArrayHoldC|TestNormalizeMatchesNodePoints07|TestToStringWithARadixOutOfRangePanics|TestRegExpBytecodePatternUnits|TestRegExpBytecodeRandomNodeUnit15|TestRegExpBytecodeRandomNodeUnit31|TestStringIndexMatchesNode|TestViewSnapshotPayloadOwnership|TestWASIUnit14|TestWASIUnit30)$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "80s"
+    ]
+  },
+  {
+    "package": "native",
+    "shard": 9,
+    "tests": 18,
+    "exit": 0,
+    "seconds": 14.845,
+    "command": [
+      "go",
+      "test",
+      "./internal/native",
+      "-run",
+      "^(TestClosureConventionDropCount|TestDecodeASCIIUnit08|TestDecodeASCIIUnit24|TestDecodeASCIIUnit40|TestDecodeASCIIWASIUnit11|TestDecodeASCIIWASIUnit27|TestDecodeASCIIWASIUnit43|TestSizeClassesShareTheirChunks|TestLoopCallCoverage|TestNormalizeMatchesNodePoints08|TestRecordsAgainstNode|TestRegExpBytecodeRandomNodeUnit00|TestRegExpBytecodeRandomNodeUnit16|TestRegExpBytecodeRandomNodeUnit32|TestStringViewAfterAppendMatchesNode|TestViewMixedUnionUnknownAndUnavailable|TestWASIUnit15|TestWASIUnit31)$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "80s"
+    ]
+  },
+  {
+    "package": "native",
+    "shard": 10,
+    "tests": 18,
+    "exit": 0,
+    "seconds": 26.853,
+    "command": [
+      "go",
+      "test",
+      "./internal/native",
+      "-run",
+      "^(TestClosureConventionRuntimeDropCount|TestDecodeASCIIUnit09|TestDecodeASCIIUnit25|TestDecodeASCIIUnit41|TestDecodeASCIIWASIUnit12|TestDecodeASCIIWASIUnit28|TestDecodeASCIIWASIUnit44|TestResidentSetUnits|TestMapHashProbeBound|TestNormalizeMatchesNodePoints09|TestRecordReadMutants|TestRegExpBytecodeRandomNodeUnit01|TestRegExpBytecodeRandomNodeUnit17|TestRegExpBytecodeRandomNodeUnit33|TestStringIndexCacheStatesMatchNode|TestWASIUnit00|TestWASIUnit16|TestWASIUnit32)$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "80s"
+    ]
+  },
+  {
+    "package": "native",
+    "shard": 11,
+    "tests": 18,
+    "exit": 0,
+    "seconds": 27.069,
+    "command": [
+      "go",
+      "test",
+      "./internal/native",
+      "-run",
+      "^(TestClosureConventionRuntimeFeaturesIgnoreLiterals|TestDecodeASCIIUnit10|TestDecodeASCIIUnit26|TestDecodeASCIIUnit42|TestDecodeASCIIWASIUnit13|TestDecodeASCIIWASIUnit29|TestDevirtualizedCalls|TestIeee754MatchesNodeBitForBit|TestMapHashProbeCatchesMutants|TestNormalizeMatchesNodePoints10|TestRecordBenchmark|TestRegExpBytecodeRandomNodeUnit02|TestRegExpBytecodeRandomNodeUnit18|TestRegExpBytecodeRandomNodeUnit34|TestStringsMatchJavaScript|TestWASIUnit01|TestWASIUnit17|TestWASIUnit33)$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "80s"
+    ]
+  },
+  {
+    "package": "native",
+    "shard": 12,
+    "tests": 18,
+    "exit": 0,
+    "seconds": 11.309,
+    "command": [
+      "go",
+      "test",
+      "./internal/native",
+      "-run",
+      "^(TestClosureConventionWrongOrder|TestDecodeASCIIUnit11|TestDecodeASCIIUnit27|TestDecodeASCIIUnit43|TestDecodeASCIIWASIUnit14|TestDecodeASCIIWASIUnit30|TestExactReceiverRejectsAssignments|TestCEndsInNewline|TestMathAndToFixedMatchJavaScript|TestNormalizeMatchesNodePoints11|TestRecordMutantsUnit00|TestRegExpBytecodeRandomNodeUnit03|TestRegExpBytecodeRandomNodeUnit19|TestRegExpBytecodeRandomNodeUnit35|TestRuntimeStringViews|TestWASIUnit02|TestWASIUnit18|TestWASIUnit34)$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "80s"
+    ]
+  },
+  {
+    "package": "native",
+    "shard": 13,
+    "tests": 18,
+    "exit": 0,
+    "seconds": 15.431,
+    "command": [
+      "go",
+      "test",
+      "./internal/native",
+      "-run",
+      "^(TestParserHasNoUnusedOptionalMethodThunks|TestDecodeASCIIUnit12|TestDecodeASCIIUnit28|TestDecodeASCIIUnit44|TestDecodeASCIIWASIUnit15|TestDecodeASCIIWASIUnit31|TestToExponentialAndToPrecisionMatchNode|TestLibraryMapSetIteratorResources|TestMaybeNumbersPackIntoOneDouble|TestNormalizeMatchesNodePoints12|TestRecordMutantsUnit01|TestRegExpBytecodeRandomNodeUnit04|TestRegExpBytecodeRandomNodeUnit20|TestRegExpBytecodeRandomNodeUnit36|TestWASITargetFlags|TestWASIUnit03|TestWASIUnit19|TestWASIUnit35)$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "80s"
+    ]
+  },
+  {
+    "package": "native",
+    "shard": 14,
+    "tests": 17,
+    "exit": 0,
+    "seconds": 10.44,
+    "command": [
+      "go",
+      "test",
+      "./internal/native",
+      "-run",
+      "^(TestOptionalMethodThunksMatchNode|TestDecodeASCIIUnit13|TestDecodeASCIIUnit29|TestDecodeASCIIWASIUnit00|TestDecodeASCIIWASIUnit16|TestDecodeASCIIWASIUnit32|TestToExponentialAndToPrecisionOutOfRangePanic|TestRuntimeKeyIncludesEveryInput|TestNodeBufferRuntimeWithoutDeclarations|TestNormalizeMatchesNodePoints13|TestRecordMutantsUnit02|TestRegExpBytecodeRandomNodeUnit05|TestRegExpBytecodeRandomNodeUnit21|TestRegExpBytecodeRandomNodeUnit37|TestWASIRefusesUnsupportedOptions|TestWASIUnit04|TestWASIUnit20)$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "80s"
+    ]
+  },
+  {
+    "package": "native",
+    "shard": 15,
+    "tests": 17,
+    "exit": 0,
+    "seconds": 18.019,
+    "command": [
+      "go",
+      "test",
+      "./internal/native",
+      "-run",
+      "^(TestArithmeticIsNeverFused|TestDecodeASCIIUnit14|TestDecodeASCIIUnit30|TestDecodeASCIIWASIUnit01|TestDecodeASCIIWASIUnit17|TestDecodeASCIIWASIUnit33|TestNbodyIndexedElementsBorrow|TestRuntimeKeyKeepsBoundaries|TestNormalizeLongMeasurements|TestNormalizeMatchesNodePoints14|TestRecordMutantsUnit03|TestRegExpBytecodeRandomNodeUnit06|TestRegExpBytecodeRandomNodeUnit22|TestRegExpBytecodeRandomNodeUnit38|TestTSGoBuildSeesTheProgramsFeatures|TestWASIUnit05|TestWASIUnit21)$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "80s"
+    ]
+  },
+  {
+    "package": "native",
+    "shard": 16,
+    "tests": 17,
+    "exit": 0,
+    "seconds": 48.246,
+    "command": [
+      "go",
+      "test",
+      "./internal/native",
+      "-run",
+      "^(TestDecodeCacheLockDeadline|TestDecodeASCIIUnit15|TestDecodeASCIIUnit31|TestDecodeASCIIWASIUnit02|TestDecodeASCIIWASIUnit18|TestDecodeASCIIWASIUnit34|TestThrowElementBorrowPlan|TestRuntimeCacheKeepsCountFlags|TestNormalizeRandomMatchesNode|TestNormalizeMatchesNodePoints15|TestRecordMutantsUnit04|TestRegExpBytecodeRandomNodeUnit07|TestRegExpBytecodeRandomNodeUnit23|TestRegExpBytecodeRandomNodeUnit39|TestTypedArrayRuntime|TestWASIUnit06|TestWASIUnit22)$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "80s"
+    ]
+  },
+  {
+    "package": "lower",
+    "shard": 1,
+    "tests": 91,
+    "exit": 0,
+    "seconds": 36.098,
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^(TestAgreementRejectsWrongLoweredOutput|TestAgreementEnumConstantWitness|TestAgreementParseIntRadixWitness|TestMixedTupleSpreadIsNotYet|TestArrayPredicatePreservesDeclaredElementContract|TestArrayPredicateCoexistsWithUnknownReflection|TestCallableContractReceiverBinding|TestCallableContractPlainSpread|TestCallableProducerExtraOptionalRefused|TestCallableProducerDiscardedObjectResultRefused|TestCallableProducerP61|TestCallableUnionResultReferenceMutant|TestCensusMarkerZeroCallIsNotAssumedSafe|TestCensusOverloadReturnProof|TestCensusPredicateMarkerCallStaysNotYet|TestCensusBooleanDeadBranch|TestClassFeaturesReadonlyChecker|TestClassFeaturesStaticDeclarationsExecute|TestClassFeaturesStaticParentCycle|TestInheritanceAllowsSoundOverrides|TestInheritanceRefusesFalseNominalViews|TestInheritanceRefusesGrowingGenericClasses|TestInheritanceGenericNominalConstraints|TestClassArgumentsUseCheckerIdentity|TestClassWrongOutputKeysRepair|TestClockGenericReturnsT01RejectsNullBeforeBody|TestDefiniteAssignmentSoundNeighbors|TestEntriesRecordBoundaries|TestFlagEnumLiteralSpellings|TestFlagEnumAliasBoundaries|TestEnumInitializationReach|TestStringEnumsStayClosed|TestEnumSwitchExhaustiveness|TestReadonlyFieldsAreJudgedByTheirConstructorsWrites|TestFSExistsOperation|TestFX6P36|TestFX6P53|TestFX7P08|TestFX7CheckedCastFieldTypes|TestOriginalCycleLedger|TestDefaultTaggedInterfaceAdmission|TestIteratorViewsCannotEraseReceivers|TestLiteralMethodViewsDoNotLoseThis|TestDestructuredMethodsCannotLoadOwnSlots|TestLibraryLanguageBoundaries|TestLibraryMethodValueBoundaries|TestNodeFSFileDoesNotAuthorizeMutableWidening|TestNodeFSFileNamespaceImport|TestNodeFSFileScratchOptionsBorrow|TestNodeLibraryDistinguishesReceiverOwners|TestLibraryRegexOffsetRequiresNoCaptures|TestWhatZeroOneRefusesIsRefusedWithAFix|TestAMethodReadAsAValueIsRefused|TestCallableNamespaceReceiverStaysLoud|TestNamespaceAmbientContextsDoNotExecute|TestParserFactoryBindingHoisting|TestNamespaceReceiverRefusal|TestNamespaceReturnedAssignmentLimits|TestNestedFunctionGapsAreLoud|TestNestedCapturedParametersAreOwned|TestNestedBodylessDeclarationsAreLoud|TestNonNullAssertionOnPresentTypeIsErased|TestOptionalWideningCensus|TestOverloadInferenceWitnesses|TestParameterPropertiesSoundness|TestPredicateSummaryParameterIndex|TestConditionAssertionAdmission|TestPredicateUseRegions|TestPrimitiveAdmittingSlotsUseBoxes|TestPrototypeHazardsBehindObjectViewsAreNotYet|TestProvenRelationsErase|TestRegExpUnicodeClassSourceAgreesWithNode|TestScalarUnionViewMaybeNumber|TestScalarUnionViewMaybeBooleanTransitions|TestSuppressionDirectivesAreRefused|TestSwitchEmptyCaseFallsThrough|TestTrainPlusRefusalP33|TestTupleRecognitionP69|TestTypedArrayGaps|TestUnknownReflectionRefusals|TestViewStringElementReadControl|TestViewElementP06CorrectControl|TestViewElementDestructuredUnionControl|TestViewKeysControl|TestViewElementP19Control|TestViewInEmptyKeyControl|TestViewSnapshotMaybeNumber|TestMixedUnionContractGraph|TestMixedUnionContractPhantomBrandUsesPrimitiveBase|TestUnsupportedViewMapMember|TestSupportedCallableViewMember)$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "80s"
+    ]
+  },
+  {
+    "package": "lower",
+    "shard": 2,
+    "tests": 90,
+    "exit": 0,
+    "seconds": 17.924,
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^(TestAgreementRejectsEmptyAnswer|TestAgreementInheritedFieldWitness|TestNativeAgreementRejectsWrongOutput|TestArgumentsLengthReadNeighbors|TestArrayPredicateCannotInventAnElementContract|TestCallableContractP18|TestCallableContractReceiverEvaluatedOnce|TestCallableProducerLiteralReturn|TestCallableProducerFewerParametersAdapted|TestCallableProducerTaggedUnreadMethod|TestCallableProducerRegistryFiltersDirectFunctions|TestUncheckableCastsStayRefused|TestOptionalFunctionValueRelation|TestCensusPredicateInteractionBoundary|TestCensusOverloadRelation|TestCheckPragmasAreRefused|TestClassFeaturesPrivateChecker|TestClassFeaturesStaticSoundness|TestClassFeaturesStaticInterfaceCycle|TestInheritanceHasClassIdentity|TestInheritanceRefusesThisBeforeSuperReturns|TestInheritanceGenericSoundness|TestInheritanceGenericFactoryLayouts|TestClassStaticInitializerCallIsEmitted|TestClassWrongOutputPrivateRepair|TestClockGenericReturnsT01RejectsIndexBeforeBody|TestNestedEmptyArrayElementKinds|TestFlagEnumsOpen|TestFlagEnumMemberAliases|TestEnumMemberValuesAndReverseNameMatchNode|TestEnumInitializationGraphMemo|TestNumericEnumNeverProof|TestEnumLimitsStayLoud|TestParseIntMapUsesIndexRadix|TestFSStatThrowsByDefault|TestFX6P37|TestFX6P38Number|TestFX7P59|TestGenericFunctionPolymorphicRecursionIsRefused|TestUndecidedCycleReadsUseReadyChecks|TestDefaultTaggedInterfaceNeedsNoFlag|TestIteratorDestructuringDoesNotLieAboutExhaustion|TestLiteralMethodSignatureViewsDoNotLoseThis|TestGenericIteratorViewsPreserveNativeArguments|TestLibraryMapSetGapsStayRefused|TestLibraryMethodValueSafety|TestNodeFSFileRefusesOptionEffects|TestNodeFSFileQualifiedErrorType|TestNodeFSFileScratchOverloadsAreNamed|TestNodeLibraryQualifiedTypeAssertion|TestLibraryStringRefusals|TestAMutableLocationSeenWiderIsRefused|TestModuleNamespaceLimitsStayLoud|TestNamespaceClassEarlyConstructionStaysLoud|TestNamespaceCallGraphLinearWork|TestMissingBindingSymbolHasStructuredLocation|TestNamespaceTypesErase|TestNamespaceInitializationReachability|TestNestedFunctionCycleIsRefused|TestClosedFrameInputRejectsMutation|TestNestedRestIsSupported|TestOptionalIndexingMapShapeRefused|TestOptionalWideningRefused|TestAbfe962OverrideDefaultAddedRefusesNativeSignature|TestParameterPropertyCheckerContracts|TestPredicateOverloadRuntime|TestPredicateCallbackContracts|TestPredicateUsesBelongToEachCall|TestInheritedLibraryReadsNeverLoadOwnFields|TestUnrepresentedPrototypeCallsAreNotYet|TestReadinessElisionRequiresDominatingAssignment|TestRegExpSlashClassSourceAgreesWithNode|TestScalarUnionViewMaybeBoolean|TestPrivateAndPublicStaticsAgreeWithNode|TestSuppressionDirectiveSoundNeighbors|TestSwitchEmptyBlockFallsThrough|TestTrainPlusRefusalP34|TestTupleRecognitionOrdinaryArray|TestTypedArrayViewsCannotChangeRepresentation|TestViewDiagnosticP17|TestViewLiteralTypedElementReadControl|TestViewElementP01CorrectControl|TestViewSpreadControl|TestViewKeysAliasControl|TestViewElementP72Control|TestViewObjectContractsAreAvailableToEraser|TestTupleObjectViewRefused|TestMixedUnionContractFailureDoesNotCertifyRetry|TestMixedUnionContractPhantomVoidIsUndefined|TestUnsupportedViewCallableMember)$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "80s"
+    ]
+  },
+  {
+    "package": "lower",
+    "shard": 3,
+    "tests": 90,
+    "exit": 0,
+    "seconds": 11.994,
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^(TestAgreementAcceptsComputedAnswer|TestAgreementParameterPropertyWitness|TestNativeAgreementRejectsWrongExit|TestArgumentsLengthRefusalFixtures|TestArrayPredicateDoesNotMisclassifyNativeTuples|TestCallableContractP20|TestCallableContractChecksBeforeArguments|TestCallableProducerFewerParametersRefused|TestCallableProducerMethodShorthandAdapted|TestCallableProducerP21|TestCallableProducerCertificatesUseClosureThunks|TestCheckedCastProofAndElision|TestOverloadedShorthandFunctionValueStaysNotYet|TestCensusPredicateInteractionEscapes|TestCensusSmallFiniteKeyRead|TestCheckPragmaNeighborsCompile|TestClassFeaturesPrivateStorage|TestClassFeaturesAccessorCaptureCycle|TestInheritanceRefusesUnsoundOverrides|TestInheritanceCycleFinderIncludesInheritedFields|TestInheritanceKeepsNominalTupleDestructuring|TestInheritanceConditionalThisRules|TestInheritanceNativeSignatureNeighbors|TestClassStaticSideEffectMatchesNode|TestClockGenericReturnsT01Shapes|TestConstructorCacheOneArgumentRemainsNotYet|TestEmptyLiteralGenericReturnUsesSamePath|TestFlagEnumsDomain|TestEnumNameEnumeration|TestEnumFlagProofsWithoutObservableLoweringEffect|TestEnumNamespaceSharedCycle|TestNumericEnumLiteralPromises|TestConstEnumErasesRuntimeObject|TestFSOpenStringFlagsLower|TestFunctionValueUnionViewsStayNotYet|TestFX6P38|TestFX7P04|TestFX7P75|TestGenericUnionFixtureHasSeparateInstances|TestInputSpreadArgumentsAreNotYet|TestIteratorGapsAreExplicit|TestGeneratorsAreRefusedEvenWithoutYield|TestIteratorDescriptorReasons|TestIteratorMapperIndexHasNumberRepresentation|TestLibraryMapSetIteratorCopyTypesRefused|TestNodeBufferRefusals|TestNodeFSFileRefusesVoidValues|TestNodeFSFileKeepsDetachedMethodRefusal|TestNodeLibraryNamesUnimplementedMembers|TestObjectRefusalsExplainSoundness|TestConsoleLowersToWriteLine|TestAViewThatCantWriteIsNotRefused|TestModuleNamespaceInitializedReadProof|TestNamespaceReceiverArrowInheritsScope|TestNamespaceCallGraphCycleUnion|TestTscNamespaceDeclarationShapes|TestTracingNamespaceEscapeStaysNotYet|TestNamespaceClosedCallGraphEdges|TestNestedEnvironmentHasOneAllocationSite|TestNestedRebindingNotYet|TestAdamicNullishAssertionsAreRefused|TestOptionalIndexingKeepsIndexSignaturesRefused|TestOptionalWideningAllowed|TestOverrideOptionalNumberRefusesNativeSignature|TestParameterPropertyCallbackReceiver|TestIndirectPredicateOverloadIsPending|TestEveryNeedsCallbackEffects|TestUnprovenPredicateReturnsAreRefused|TestPrototypeMethodsAreRefusedWithReasons|TestIsPrototypeOfReadsExplainThePrototypeRefusal|TestRegExpNativeRefusals|TestRegExpEscapedSlashSourceAgreesWithNode|TestScalarUnionViewMaybeString|TestNamespaceFactoryBindingsAgreeWithNode|TestSwitchConditionalBreakFallsThrough|TestTasteRepresentationLimitsStayExplicit|TestTrainPlusRefusalP35|TestTupleRecognitionRejectsArrayObjectView|TestTypedArrayFromArray|TestViewDiagnosticP48|TestViewElementFixAgreesWithNode|TestViewElementP07CorrectControl|TestViewSpreadMethodRefused|TestViewValuesControl|TestViewElementP19StringControl|TestViewObjectWritesNeedSourceCertificate|TestTupleObjectViewCopiedLength|TestMixedUnionContractUnknownMemberFails|TestUntaggedViewMemberTags|TestUnsupportedViewUnreadMember)$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "80s"
+    ]
+  },
+  {
+    "package": "lower",
+    "shard": 4,
+    "tests": 90,
+    "exit": 0,
+    "seconds": 12.089,
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^(TestAgreementAcceptsExpectedPanic|TestAgreementStaticInitializerWitness|TestArgumentsLengthRefusals|TestArgumentsLengthReadKeepsReaderFact|TestUnknownArrayPredicateRefusesUnrepresentedObservations|TestCallableContractWideProducer|TestCallableContractSpreadRefused|TestCallableProducerMethodShorthandRefused|TestCallableProducerExtraOptionalAdapted|TestCallableProducerP60|TestCallableUnionResultAgreement|TestCensusMarkerResultIsAssignable|TestCensusOverloadBinderGuards|TestCensusPredicateMarkerKeepsProofBoundaries|TestCensusRestMutableElements|TestTsgoHonorsNoCheckInAdamicFiles|TestClassFeaturesAccessorRefusals|TestClassFeaturesNarrowedAccessor|TestInheritanceKeepsCheckerConstructorRules|TestInheritanceRejectsUnsupportedConstructorShapes|TestInheritanceGenericMonomorphizations|TestInheritanceGenericViewsKeepNominalArguments|TestInheritanceNativeSignatureLimits|TestClassWrongOutputIteratorReceiver|TestClockGenericReturnsT01DeclinesBrandedPrimitives|TestDefiniteAssignmentUsesReadiness|TestEntriesAllocationProof|TestEnumNeverDefault|TestFlagEnumInlineIteration|TestEnumReverseMappingUsesSingleSlot|TestNumericEnumsAreOpen|TestEnumSlotViews|TestEnumIdentityAcrossModules|TestFSRemoveDefaultRetryDelayLowers|TestFX6P35|TestFX6P51|TestFX7P06|TestFX7P77|TestGenericJSONUnionArrayIsNotYet|TestInputSpreadCoverage|TestIteratorViewsCannotHideReturn|TestLiteralMethodCapturesCannotMakeCycles|TestRepresentedMethodReplacementIsNotYet|TestIteratorSymbolKeysAreNotStringKeys|TestLibraryMethodValues|TestNodeFSFileOptionsBorrow|TestNodeFSFileRefusesPinnedUnsupportedOverloads|TestNodeFSFileBufferBorrow|TestNodeLibraryDoesNotRefuseTypeOnlyOrUserNames|TestObjectUnprovenShapesStayNotYet|TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat|TestATupleSeenAsAnArrayIsNotYet|TestCallableNamespaceLimitsStayLoud|TestNamespaceAmbientHostInitialization|TestNamespaceEnumInitializationIndependentOfModuleAnalysis|TestNamespaceLimitsStayLoud|TestDebugNamespaceMergedCapabilities|TestEmptyNeverMapCannotGainWritableInhabitants|TestNestedEnvironmentCycleIncludesDisjointSlots|TestNestedCallbackCycleIsRefused|TestNonNullAssertionLowersToNullishPanic|TestOptionalIndexingKeepsUnsupportedStorageNotYet|TestOptionalWideningSpreadOverwrite|TestOverrideOptionalRefusesNativeSignature|TestParameterPropertyValueMatchesNode|TestPredicateBodyProof|TestPredicateOverloadCallback|TestPredicateBodiesAreProven|TestNullishPrototypeReadsAreRejectedByChecker|TestProvenRelationsRefuse|TestRegExpSourceNode|TestRepresentationClockSourceCheckedTypes|TestScalarUnionViewMaybeNumberTransitions|TestReadinessErrorIncludesReceiverExpression|TestSwitchEmptyElseFallsThrough|TestTrainPlusRefusalP26|TestTupleRecognitionP68|TestTypedArraysLower|TestTypedArrayFromEmptyArray|TestViewDiagnosticP64|TestViewElementP05CorrectControl|TestViewElementDestructuredControl|TestViewInControl|TestViewEntriesControl|TestViewElementP72NumberControl|TestViewSnapshotMaybeBoolean|TestTupleObjectViewOrdinaryTuple|TestMixedUnionContractRecursiveMember|TestUntaggedViewStructuralFallback|TestSupportedViewMembersAgree)$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "80s"
+    ]
+  }
+]

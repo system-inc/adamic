@@ -1,0 +1,40 @@
+=== RUN   TestInheritanceMemoryPlans
+=== PAUSE TestInheritanceMemoryPlans
+=== CONT  TestInheritanceMemoryPlans
+    class_inheritance_test.go:48: Reader.replace reuses its ordinary Item parameter; no checked-view member boundary applies
+--- PASS: TestInheritanceMemoryPlans (0.08s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	0.107s
+=== RUN   TestCheckedViewSpreadForwardCertificate
+=== PAUSE TestCheckedViewSpreadForwardCertificate
+=== RUN   TestCheckedViewSpreadForwardCorrect
+=== PAUSE TestCheckedViewSpreadForwardCorrect
+=== RUN   TestCheckedViewSpread
+=== PAUSE TestCheckedViewSpread
+=== CONT  TestCheckedViewSpreadForwardCertificate
+=== CONT  TestCheckedViewSpread
+=== CONT  TestCheckedViewSpreadForwardCorrect
+=== NAME  TestCheckedViewSpreadForwardCertificate
+    train_plus_spread_test.go:39: Load: /tmp/adamic-gate/TestCheckedViewSpreadForwardCertificate2304910896/001/forward-spread.a:7:13: error TS2345: Argument of type 'number' is not assignable to parameter of type 'string'.
+--- FAIL: TestCheckedViewSpreadForwardCertificate (0.11s)
+=== NAME  TestCheckedViewSpreadForwardCorrect
+    train_plus_spread_test.go:44: Load: /tmp/adamic-gate/TestCheckedViewSpreadForwardCorrect2084966296/001/forward-spread.a:7:13: error TS2345: Argument of type 'number' is not assignable to parameter of type 'string'.
+--- FAIL: TestCheckedViewSpreadForwardCorrect (0.11s)
+=== NAME  TestCheckedViewSpread
+    view_element_reads_test.go:61: gate cache node miss
+    view_element_reads_test.go:61: gate cache node miss
+    oracle_test.go:596: gate cache native miss
+    oracle_test.go:589: gate cache native miss
+--- PASS: TestCheckedViewSpread (0.66s)
+FAIL
+gate cache: native hits=0 misses=2
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.679s
+=== RUN   TestCallTargetReaders
+=== PAUSE TestCallTargetReaders
+=== CONT  TestCallTargetReaders
+--- PASS: TestCallTargetReaders (16.51s)
+PASS
+ok  	github.com/system-inc/adamic/internal/ir	16.523s
+FAIL

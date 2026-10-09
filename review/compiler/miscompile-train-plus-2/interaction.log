@@ -1,0 +1,75 @@
+=== RUN   TestCallableContractP18
+=== PAUSE TestCallableContractP18
+=== RUN   TestCallableContractP20
+=== PAUSE TestCallableContractP20
+=== RUN   TestCallableContractWideProducer
+=== PAUSE TestCallableContractWideProducer
+=== RUN   TestCallableContractReceiverBinding
+=== PAUSE TestCallableContractReceiverBinding
+=== RUN   TestCallableContractReceiverEvaluatedOnce
+=== PAUSE TestCallableContractReceiverEvaluatedOnce
+=== RUN   TestCallableContractChecksBeforeArguments
+=== PAUSE TestCallableContractChecksBeforeArguments
+=== RUN   TestCallableContractSpreadRefused
+=== PAUSE TestCallableContractSpreadRefused
+=== RUN   TestCallableContractPlainSpread
+=== PAUSE TestCallableContractPlainSpread
+=== RUN   TestTupleRecognitionP68
+=== PAUSE TestTupleRecognitionP68
+=== RUN   TestTupleRecognitionP69
+=== PAUSE TestTupleRecognitionP69
+=== RUN   TestTupleRecognitionOrdinaryArray
+=== PAUSE TestTupleRecognitionOrdinaryArray
+=== RUN   TestTupleRecognitionRejectsArrayObjectView
+=== PAUSE TestTupleRecognitionRejectsArrayObjectView
+=== RUN   TestViewDiagnosticP17
+=== PAUSE TestViewDiagnosticP17
+=== RUN   TestViewDiagnosticP48
+=== PAUSE TestViewDiagnosticP48
+=== RUN   TestViewDiagnosticP64
+=== PAUSE TestViewDiagnosticP64
+=== CONT  TestCallableContractP18
+=== CONT  TestViewDiagnosticP64
+=== CONT  TestViewDiagnosticP48
+=== CONT  TestViewDiagnosticP17
+=== CONT  TestTupleRecognitionRejectsArrayObjectView
+=== NAME  TestViewDiagnosticP17
+    view_diagnostics_test.go:27: want collection refusal with source location 6:16, got /workspace/adamic/internal/lower/testdata/view_diagnostics/oct9_views_p17.a:5:14: Adamic 0.1 refuses view type has an unsupported member: values; use a supported, checked type for values (currently ReadonlyMap<string, number>) before creating this view
+--- FAIL: TestViewDiagnosticP17 (0.19s)
+=== CONT  TestTupleRecognitionOrdinaryArray
+=== NAME  TestViewDiagnosticP48
+    view_diagnostics_test.go:32: want collection refusal with source location 6:9, got /workspace/adamic/internal/lower/testdata/view_diagnostics/oct9_views_p48.a:5:14: Adamic 0.1 refuses view type has an unsupported member: values; use a supported, checked type for values (currently ReadonlyMap<string, number>) before creating this view
+--- FAIL: TestViewDiagnosticP48 (0.23s)
+=== CONT  TestTupleRecognitionP69
+=== NAME  TestViewDiagnosticP64
+    view_diagnostics_test.go:37: want collection refusal with source location 7:16, got /workspace/adamic/internal/lower/testdata/view_diagnostics/oct9_views_p64.a:5:14: Adamic 0.1 refuses view type has an unsupported member: values; use a supported, checked type for values (currently ReadonlyMap<string, number>) before creating this view
+--- FAIL: TestViewDiagnosticP64 (0.25s)
+=== CONT  TestTupleRecognitionP68
+--- PASS: TestCallableContractP18 (6.38s)
+=== CONT  TestCallableContractPlainSpread
+--- PASS: TestTupleRecognitionP68 (6.13s)
+=== CONT  TestCallableContractSpreadRefused
+=== NAME  TestTupleRecognitionRejectsArrayObjectView
+    tuple_recognition_test.go:74: backend 0 exit 70 stdout "" stderr "adamic: panic: field read failed: viewed.value matches no member of Named | readonly [string, number]; expected Named | readonly [string, number], found array\n"
+    tuple_recognition_test.go:74: backend 1 exit 70 stdout "" stderr "adamic: panic: field read failed: viewed.value matches no member of Named | readonly [string, number]; expected Named | readonly [string, number], found array\n"
+--- PASS: TestTupleRecognitionRejectsArrayObjectView (6.40s)
+=== CONT  TestCallableContractChecksBeforeArguments
+--- PASS: TestTupleRecognitionP69 (6.19s)
+=== CONT  TestCallableContractReceiverEvaluatedOnce
+--- PASS: TestTupleRecognitionOrdinaryArray (6.25s)
+=== CONT  TestCallableContractReceiverBinding
+--- PASS: TestCallableContractSpreadRefused (0.15s)
+=== CONT  TestCallableContractWideProducer
+=== NAME  TestCallableContractChecksBeforeArguments
+    callable_contract_retention_test.go:86: backend 0: exit 70 stdout "before\n" stderr "adamic: panic: field read failed: view.value expected Target, found function with incompatible parameter representations\n"; Node stdout "before\nargument\n99\n"
+    callable_contract_retention_test.go:86: backend 1: exit 70 stdout "before\n" stderr "adamic: panic: field read failed: view.value expected Target, found function with incompatible parameter representations\n"; Node stdout "before\nargument\n99\n"
+--- PASS: TestCallableContractChecksBeforeArguments (0.55s)
+=== CONT  TestCallableContractP20
+--- PASS: TestCallableContractReceiverEvaluatedOnce (1.03s)
+--- PASS: TestCallableContractWideProducer (1.00s)
+--- PASS: TestCallableContractP20 (1.10s)
+--- PASS: TestCallableContractReceiverBinding (4.47s)
+--- PASS: TestCallableContractPlainSpread (4.53s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	10.941s
+FAIL

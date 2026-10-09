@@ -1,0 +1,9 @@
+--- FAIL: TestFixturesAssertions (7.82s)
+    fixtures_test.go:161: build stage3-fixture-oracle-hook dc2d879c8295 miss 6.24
+    --- FAIL: TestFixturesAssertions/assertions (0.00s)
+        --- FAIL: TestFixturesAssertions/assertions/19_identifier_kind.a (0.14s)
+            --- FAIL: TestFixturesAssertions/assertions/19_identifier_kind.a/stage0 (0.00s)
+                fixtures_test.go:406: gap changed: update status.json and check the native output; got {Outcome:Compiles What:}; recorded {Outcome:NotYet What:stage3/fixtures/assertions/19_identifier_kind.a:25:13: stage 0 can't lower a checked field alias requiring an optional, accessor, or representation conversion yet}
+FAIL
+FAIL	github.com/system-inc/adamic/stage3/fixtures	7.990s
+FAIL

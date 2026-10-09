@@ -1,0 +1,10 @@
+constructor-revert {'name': 'constructor-revert', 'exit': 1, 'caught': True}
+reject-tuple-objects {'name': 'reject-tuple-objects', 'exit': 1, 'caught': True}
+missing-tuple-marker {'name': 'missing-tuple-marker', 'exit': 1, 'caught': True}
+Traceback (most recent call last):
+  File "/workspace/adamic/review/compiler/miscompile-train-plus-2/run-extra.py", line 10, in <module>
+    if applied.returncode: raise RuntimeError(name+': patch failed '+applied.stderr)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: admit-arbitrary-arrays: patch failed error: patch failed: internal/javascript/view_unions_untagged.go:83
+error: internal/javascript/view_unions_untagged.go: patch does not apply
+

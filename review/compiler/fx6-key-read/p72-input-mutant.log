@@ -1,0 +1,17 @@
+=== RUN   TestCheckedViewElementP72
+=== PAUSE TestCheckedViewElementP72
+=== CONT  TestCheckedViewElementP72
+    view_element_reads_test.go:95: gate cache node miss
+    view_element_reads_test.go:95: gate cache node miss
+    oracle_test.go:596: gate cache native miss
+    oracle_test.go:589: gate cache native miss
+    view_element_reads_test.go:95: native: exit codes differ; Node exit 70 stdout "" stderr "adamic: panic: field read failed: viewed['value'] matches no member of string | number; expected string | number, found boolean\n"; got exit 0 stdout "string 5\n" stderr ""
+        JavaScript: exit codes differ; Node exit 70 stdout "" stderr "adamic: panic: field read failed: viewed['value'] matches no member of string | number; expected string | number, found boolean\n"; got exit 0 stdout "string 5\n" stderr ""
+        release: exit codes differ; Node exit 70 stdout "" stderr "adamic: panic: field read failed: viewed['value'] matches no member of string | number; expected string | number, found boolean\n"; got exit 0 stdout "string 5\n" stderr ""
+--- FAIL: TestCheckedViewElementP72 (0.44s)
+FAIL
+gate cache: native hits=0 misses=2
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.454s
+FAIL

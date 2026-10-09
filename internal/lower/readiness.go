@@ -8,6 +8,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"reflect"
 	"slices"
+	"strconv"
 )
 
 func sourceExpression(node *ast.Node) string {
@@ -53,6 +54,7 @@ func (l *lowering) uninitializedDeclaration(node *ast.Node) bool {
 // between declarations: an assignment makes the slot ready, and calls cannot unset it.
 // Captures and globals participate in this bit analysis even though value SSA excludes them.
 func readiness(program *ir.Program) {
+	defer removeUncheckedMemberHelpers(program)
 	// A record's named fields live in a counted table, not inline slots.
 	// Retain their representation checks even through a narrower parameter view.
 	if program.CheckedFields == nil {
@@ -284,7 +286,7 @@ func readinessStatement(statement ir.Statement, program *ir.Program, fields map[
 				}
 				node = expression
 			case ir.Property:
-				if !program.CheckedFields[expression.Name] || expression.Method {
+				if !(program.CheckedFields[checkedViewFieldKey(expression.ViewReceiverTypeID, expression.Name)] || program.CheckedFields[expression.Name]) || expression.Method && !certifiedUntaggedCallableRead(program, program.ViewContractTypes[expression.ViewTypeID]) {
 					expression.View = ""
 					expression.ViewType = ""
 					expression.ViewAllowed = nil
@@ -440,4 +442,10 @@ stored:
 		assigned = ir.Narrow{Value: read, To: to}
 	}
 	return []ir.Statement{ir.Declare{Local: local, Value: value}}, present, assigned, nil
+}
+
+// A checked view member belongs to its static receiver type. Bare names remain
+// reserved for record storage, which has its own representation boundary.
+func checkedViewFieldKey(receiverTypeID int, name string) string {
+	return strconv.Itoa(receiverTypeID) + ":" + name
 }

@@ -306,10 +306,24 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 			} else {
 				e.line("adamic_method %s = NULL;", method)
 			}
-			closure = e.own(ir.Closure, fmt.Sprintf("adamic_retain(adamic_object_callee(%s, %s, &%s, &%s))", receiver, cString(property.Name), e.cache(), method))
+			if property.View != "" {
+				property.Method = false
+				var checked bool
+				closure, checked = readUnionViewAt(e, property, receiver)
+				if !checked {
+					panic("compiler bug: unavailable callable view read")
+				}
+			} else {
+				closure = e.own(ir.Closure, fmt.Sprintf("adamic_retain(adamic_object_callee(%s, %s, &%s, &%s))", receiver, cString(property.Name), e.cache(), method))
+			}
 		}
 	}
-	packed, count := e.closureArguments(expression)
+	var packed, count string
+	if property, ok := expression.Closure.(ir.Property); ok && property.View != "" {
+		packed, count = e.checkedCallableArguments(expression, closure)
+	} else {
+		packed, count = e.closureArguments(expression)
+	}
 	call := e.packedClosureCall(expression, closure, packed, count)
 	if expression.Direct > 0 {
 		target := expression.Direct - 1
@@ -360,6 +374,9 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 	e.line("adamic_value %s = %s;", result, call)
 	// A throw gives back a zero value, nothing to let go.
 	e.closureThrown()
+	if expression.Returns == ir.Union {
+		return e.callableUnionResult(result, closure, method)
+	}
 	if expression.Returns.IsReference() {
 		// A closure's result comes back owned.
 		return e.own(expression.Returns, fmt.Sprintf("(%s)%s.reference", cType(expression.Returns), result))

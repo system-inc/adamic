@@ -1,0 +1,19 @@
+--- 51aa3a96
++++ 6a056842
+@@ -38,12 +38,13 @@
+ 	adamic_object * adamic_temporary_2 = adamic_object_freeze(adamic_local_2_source);
+ 	(void)adamic_temporary_2;
+ 	adamic_release(adamic_temporary_2);
+-	adamic_object * adamic_temporary_3 = adamic_function_1_checked_view_members(adamic_local_2_source);
+-	adamic_object * adamic_temporary_4 = adamic_object_copy(adamic_temporary_3);
++	bool adamic_temporary_3 = ((adamic_local_2_source->heap.references == 1 && !adamic_weak_held(adamic_local_2_source)) && !adamic_local_2_source->frozen);
++	adamic_object * adamic_temporary_4 = (adamic_temporary_3 ? adamic_retain(adamic_local_2_source) : adamic_object_copy(adamic_local_2_source));
+ 	adamic_value *adamic_temporary_5 = adamic_object_field(adamic_temporary_4, "value", &adamic_cache_6);
+ 	adamic_temporary_5->number = (0x1p+02);
++	adamic_temporary_4->class = NULL;
++	adamic_temporary_4->tuple = false;
+ 	adamic_object * adamic_local_3_copy = adamic_temporary_4;
+-	adamic_release(adamic_temporary_3);
+ 	bool adamic_temporary_7 = adamic_object_is_frozen(((adamic_heap *)(adamic_local_3_copy)));
+ 	bool adamic_temporary_8 = adamic_temporary_7;
+ 	adamic_release(adamic_local_3_copy);

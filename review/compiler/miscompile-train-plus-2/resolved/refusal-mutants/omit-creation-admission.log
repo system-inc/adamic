@@ -1,0 +1,35 @@
+=== RUN   TestTrainPlusRefusalP26
+=== PAUSE TestTrainPlusRefusalP26
+=== RUN   TestTrainPlusRefusalP33
+=== PAUSE TestTrainPlusRefusalP33
+=== RUN   TestTrainPlusRefusalP34
+=== PAUSE TestTrainPlusRefusalP34
+=== RUN   TestTrainPlusRefusalP35
+=== PAUSE TestTrainPlusRefusalP35
+=== CONT  TestTrainPlusRefusalP26
+=== CONT  TestTrainPlusRefusalP34
+=== CONT  TestTrainPlusRefusalP33
+=== CONT  TestTrainPlusRefusalP35
+=== NAME  TestTrainPlusRefusalP34
+    train_plus_refusals_test.go:59: /workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_oct9_native_p34_typed_array_in_union.a: want creation-site refusal, got program true, error <nil>
+=== NAME  TestTrainPlusRefusalP33
+    train_plus_refusals_test.go:54: /workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_oct9_native_p33_map_in_union.a: want creation-site refusal, got program true, error <nil>
+=== NAME  TestTrainPlusRefusalP26
+    train_plus_refusals_test.go:49: /workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_oct9_native_p26_callable_or_undefined.a: want creation-site refusal, got program true, error <nil>
+=== NAME  TestTrainPlusRefusalP35
+    train_plus_refusals_test.go:64: /workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_oct9_native_p35_class_in_union.a: want creation-site refusal, got program true, error <nil>
+=== NAME  TestTrainPlusRefusalP33
+    train_plus_refusals_test.go:54: /tmp/adamic-gate/TestTrainPlusRefusalP333768447993/001/fxspptb_oct9_native_p33_map_in_union.ts: want creation-site refusal, got program true, error <nil>
+--- FAIL: TestTrainPlusRefusalP33 (0.14s)
+=== NAME  TestTrainPlusRefusalP34
+    train_plus_refusals_test.go:59: /tmp/adamic-gate/TestTrainPlusRefusalP342511541128/001/fxspptb_oct9_native_p34_typed_array_in_union.ts: want creation-site refusal, got program true, error <nil>
+--- FAIL: TestTrainPlusRefusalP34 (0.14s)
+=== NAME  TestTrainPlusRefusalP35
+    train_plus_refusals_test.go:64: /tmp/adamic-gate/TestTrainPlusRefusalP353212024151/001/fxspptb_oct9_native_p35_class_in_union.ts: want creation-site refusal, got program true, error <nil>
+--- FAIL: TestTrainPlusRefusalP35 (0.14s)
+=== NAME  TestTrainPlusRefusalP26
+    train_plus_refusals_test.go:49: /tmp/adamic-gate/TestTrainPlusRefusalP262762274996/001/fxspptb_oct9_native_p26_callable_or_undefined.ts: want creation-site refusal, got program true, error <nil>
+--- FAIL: TestTrainPlusRefusalP26 (0.14s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.153s
+FAIL

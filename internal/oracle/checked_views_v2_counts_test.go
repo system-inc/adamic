@@ -6,7 +6,9 @@ func init() { additionalFixtureCounts = append(additionalFixtureCounts, checkedV
 func checkedViewsV2Counts(t *testing.T) []string {
 	t.Helper()
 	rows := []string{}
+	// Class-data targets with unread any members are refused before native emission.
 	for _, path := range []string{
+		"internal/lower/testdata/unsupported_view/control.a",
 		"stage3/interface-downcasts/lane4b/fixtures/diagnostic-boolean.a",
 		"stage3/interface-downcasts/lane4b/fixtures/diagnostic-code-wrong.a",
 		"stage3/interface-downcasts/lane4b/fixtures/diagnostic-good.a",
@@ -28,8 +30,6 @@ func checkedViewsV2Counts(t *testing.T) []string {
 		"stage3/interface-downcasts/untagged/fixtures/callable-union-nested.a",
 		"stage3/interface-downcasts/untagged/fixtures/callable-union-optional-boundary.a",
 		"stage3/interface-downcasts/untagged/fixtures/callable-union-wrong.a",
-		"stage3/interface-downcasts/untagged/fixtures/class-data-good.a",
-		"stage3/interface-downcasts/untagged/fixtures/class-data-wrong.a",
 		"stage3/interface-downcasts/untagged/fixtures/flow-callback-good.a",
 		"stage3/interface-downcasts/untagged/fixtures/flow-callback-wrong.a",
 		"stage3/interface-downcasts/untagged/fixtures/flow-generic-good.a",

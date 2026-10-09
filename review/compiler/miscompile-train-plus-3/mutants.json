@@ -1,0 +1,36 @@
+[
+  {
+    "name": "mutant-revert-fix",
+    "command": [
+      "go",
+      "test",
+      "./internal/native",
+      "-run",
+      "^TestInheritanceMemoryPlans$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "80s"
+    ],
+    "exit": 1,
+    "caught": true,
+    "seconds": 2.425
+  },
+  {
+    "name": "mutant-drop-member-check",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCheckedView",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "80s"
+    ],
+    "exit": 1,
+    "caught": true,
+    "seconds": 22.746
+  }
+]

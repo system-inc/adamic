@@ -1,0 +1,85 @@
+=== RUN   TestViewSpreadControl
+=== PAUSE TestViewSpreadControl
+=== RUN   TestViewKeysControl
+=== PAUSE TestViewKeysControl
+=== RUN   TestViewKeysAliasControl
+=== PAUSE TestViewKeysAliasControl
+=== CONT  TestViewSpreadControl
+=== CONT  TestViewKeysAliasControl
+=== CONT  TestViewKeysControl
+--- PASS: TestViewSpreadControl (0.23s)
+--- PASS: TestViewKeysControl (0.27s)
+--- PASS: TestViewKeysAliasControl (0.27s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.293s
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== RUN   TestCheckedViewSpread
+=== PAUSE TestCheckedViewSpread
+=== RUN   TestCheckedViewKeys
+=== PAUSE TestCheckedViewKeys
+=== RUN   TestCheckedViewKeysAlias
+=== PAUSE TestCheckedViewKeysAlias
+=== CONT  TestNativeAgreesWithNode
+=== CONT  TestCheckedViewKeys
+=== CONT  TestCheckedViewSpread
+=== CONT  TestCheckedViewKeysAlias
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_object_keys.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_object_keys.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/class_features_private.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/class_features_private.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_object_keys.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/class_features_private.a
+=== NAME  TestCheckedViewSpread
+    view_element_reads_test.go:59: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/class_features_private.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestCheckedViewKeysAlias
+    view_element_reads_test.go:74: gate cache node miss
+=== NAME  TestCheckedViewKeys
+    view_element_reads_test.go:69: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/library_object_keys.a
+    oracle_test.go:753: gate cache node miss
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestCheckedViewSpread
+    view_element_reads_test.go:59: gate cache node miss
+=== NAME  TestCheckedViewKeys
+    view_element_reads_test.go:69: gate cache node miss
+=== NAME  TestCheckedViewKeysAlias
+    view_element_reads_test.go:74: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/class_features_private.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/library_object_keys.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestCheckedViewSpread
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestCheckedViewKeys
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestCheckedViewKeysAlias
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/class_features_private.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestCheckedViewSpread
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/library_object_keys.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestCheckedViewKeys
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestCheckedViewKeysAlias
+    oracle_test.go:589: gate cache native miss
+--- PASS: TestCheckedViewSpread (0.69s)
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/library_object_keys.a
+    oracle_test.go:603: gate cache native hit
+--- PASS: TestCheckedViewKeys (0.72s)
+--- PASS: TestCheckedViewKeysAlias (0.73s)
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/class_features_private.a
+    oracle_test.go:589: gate cache native miss
+    oracle_test.go:603: gate cache native hit
+--- PASS: TestNativeAgreesWithNode (0.08s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_object_keys.a (0.64s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/class_features_private.a (0.80s)
+PASS
+gate cache: native hits=2 misses=10
+gate cache: node hits=0 misses=10
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.904s

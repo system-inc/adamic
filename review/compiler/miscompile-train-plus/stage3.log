@@ -1,0 +1,181 @@
+=== RUN   TestFixturesAssertions
+=== PAUSE TestFixturesAssertions
+=== CONT  TestFixturesAssertions
+    fixtures_test.go:161: build stage3-fixture-oracle-hook 6dd0ffa938d4 miss 14.06
+=== RUN   TestFixturesAssertions/assertions
+=== PAUSE TestFixturesAssertions/assertions
+=== CONT  TestFixturesAssertions/assertions
+=== RUN   TestFixturesAssertions/assertions/01_map_call.a
+=== PAUSE TestFixturesAssertions/assertions/01_map_call.a
+=== RUN   TestFixturesAssertions/assertions/02_code_point_call.a
+=== PAUSE TestFixturesAssertions/assertions/02_code_point_call.a
+=== RUN   TestFixturesAssertions/assertions/03_exports_field.a
+=== PAUSE TestFixturesAssertions/assertions/03_exports_field.a
+=== RUN   TestFixturesAssertions/assertions/04_field_then_call.a
+=== PAUSE TestFixturesAssertions/assertions/04_field_then_call.a
+=== RUN   TestFixturesAssertions/assertions/05_regex_call_index.a
+=== PAUSE TestFixturesAssertions/assertions/05_regex_call_index.a
+=== RUN   TestFixturesAssertions/assertions/06_memoize_clear.a
+=== PAUSE TestFixturesAssertions/assertions/06_memoize_clear.a
+=== RUN   TestFixturesAssertions/assertions/07_indexed_operation.a
+=== PAUSE TestFixturesAssertions/assertions/07_indexed_operation.a
+=== RUN   TestFixturesAssertions/assertions/08_optional_start.a
+=== PAUSE TestFixturesAssertions/assertions/08_optional_start.a
+=== RUN   TestFixturesAssertions/assertions/09_interface_kind.a
+=== PAUSE TestFixturesAssertions/assertions/09_interface_kind.a
+=== RUN   TestFixturesAssertions/assertions/10_union_kind.a
+=== PAUSE TestFixturesAssertions/assertions/10_union_kind.a
+=== RUN   TestFixturesAssertions/assertions/11_parenthesized_kind.a
+=== PAUSE TestFixturesAssertions/assertions/11_parenthesized_kind.a
+=== RUN   TestFixturesAssertions/assertions/12_union_target.a
+=== PAUSE TestFixturesAssertions/assertions/12_union_target.a
+=== RUN   TestFixturesAssertions/assertions/13_flag_downcast.a
+=== PAUSE TestFixturesAssertions/assertions/13_flag_downcast.a
+=== RUN   TestFixturesAssertions/assertions/14_structural_cache.a
+=== PAUSE TestFixturesAssertions/assertions/14_structural_cache.a
+=== RUN   TestFixturesAssertions/assertions/15_mutable_view.a
+=== PAUSE TestFixturesAssertions/assertions/15_mutable_view.a
+=== RUN   TestFixturesAssertions/assertions/16_unknown_chain.a
+=== PAUSE TestFixturesAssertions/assertions/16_unknown_chain.a
+=== RUN   TestFixturesAssertions/assertions/17_brand_upcast.a
+=== PAUSE TestFixturesAssertions/assertions/17_brand_upcast.a
+=== RUN   TestFixturesAssertions/assertions/18_const_tuple.a
+=== PAUSE TestFixturesAssertions/assertions/18_const_tuple.a
+=== RUN   TestFixturesAssertions/assertions/19_identifier_kind.a
+=== PAUSE TestFixturesAssertions/assertions/19_identifier_kind.a
+=== RUN   TestFixturesAssertions/assertions/20_type_flag_mask.a
+=== PAUSE TestFixturesAssertions/assertions/20_type_flag_mask.a
+=== CONT  TestFixturesAssertions/assertions/01_map_call.a
+=== CONT  TestFixturesAssertions/assertions/11_parenthesized_kind.a
+=== CONT  TestFixturesAssertions/assertions/15_mutable_view.a
+=== CONT  TestFixturesAssertions/assertions/06_memoize_clear.a
+=== CONT  TestFixturesAssertions/assertions/04_field_then_call.a
+=== RUN   TestFixturesAssertions/assertions/11_parenthesized_kind.a/node
+=== RUN   TestFixturesAssertions/assertions/11_parenthesized_kind.a/native
+=== RUN   TestFixturesAssertions/assertions/15_mutable_view.a/node
+=== RUN   TestFixturesAssertions/assertions/01_map_call.a/node
+=== RUN   TestFixturesAssertions/assertions/06_memoize_clear.a/node
+=== RUN   TestFixturesAssertions/assertions/04_field_then_call.a/node
+=== RUN   TestFixturesAssertions/assertions/15_mutable_view.a/stage0
+=== CONT  TestFixturesAssertions/assertions/03_exports_field.a
+=== RUN   TestFixturesAssertions/assertions/01_map_call.a/stage0
+=== CONT  TestFixturesAssertions/assertions/02_code_point_call.a
+=== RUN   TestFixturesAssertions/assertions/06_memoize_clear.a/stage0
+=== CONT  TestFixturesAssertions/assertions/08_optional_start.a
+=== RUN   TestFixturesAssertions/assertions/04_field_then_call.a/stage0
+=== CONT  TestFixturesAssertions/assertions/10_union_kind.a
+=== RUN   TestFixturesAssertions/assertions/02_code_point_call.a/node
+=== RUN   TestFixturesAssertions/assertions/03_exports_field.a/node
+=== RUN   TestFixturesAssertions/assertions/02_code_point_call.a/stage0
+=== CONT  TestFixturesAssertions/assertions/09_interface_kind.a
+=== RUN   TestFixturesAssertions/assertions/08_optional_start.a/node
+=== RUN   TestFixturesAssertions/assertions/10_union_kind.a/node
+=== RUN   TestFixturesAssertions/assertions/03_exports_field.a/stage0
+=== CONT  TestFixturesAssertions/assertions/07_indexed_operation.a
+=== RUN   TestFixturesAssertions/assertions/08_optional_start.a/stage0
+=== CONT  TestFixturesAssertions/assertions/12_union_target.a
+=== RUN   TestFixturesAssertions/assertions/09_interface_kind.a/node
+=== RUN   TestFixturesAssertions/assertions/10_union_kind.a/native
+=== RUN   TestFixturesAssertions/assertions/09_interface_kind.a/stage0
+=== CONT  TestFixturesAssertions/assertions/14_structural_cache.a
+=== RUN   TestFixturesAssertions/assertions/12_union_target.a/node
+=== RUN   TestFixturesAssertions/assertions/11_parenthesized_kind.a/stage0
+=== CONT  TestFixturesAssertions/assertions/13_flag_downcast.a
+=== RUN   TestFixturesAssertions/assertions/12_union_target.a/stage0
+=== CONT  TestFixturesAssertions/assertions/17_brand_upcast.a
+=== RUN   TestFixturesAssertions/assertions/07_indexed_operation.a/node
+=== RUN   TestFixturesAssertions/assertions/07_indexed_operation.a/stage0
+=== CONT  TestFixturesAssertions/assertions/20_type_flag_mask.a
+=== RUN   TestFixturesAssertions/assertions/14_structural_cache.a/node
+=== RUN   TestFixturesAssertions/assertions/17_brand_upcast.a/node
+=== RUN   TestFixturesAssertions/assertions/13_flag_downcast.a/node
+=== RUN   TestFixturesAssertions/assertions/14_structural_cache.a/stage0
+=== CONT  TestFixturesAssertions/assertions/19_identifier_kind.a
+=== RUN   TestFixturesAssertions/assertions/13_flag_downcast.a/native
+=== RUN   TestFixturesAssertions/assertions/17_brand_upcast.a/stage0
+=== CONT  TestFixturesAssertions/assertions/18_const_tuple.a
+=== RUN   TestFixturesAssertions/assertions/20_type_flag_mask.a/node
+=== RUN   TestFixturesAssertions/assertions/10_union_kind.a/stage0
+=== CONT  TestFixturesAssertions/assertions/05_regex_call_index.a
+=== RUN   TestFixturesAssertions/assertions/20_type_flag_mask.a/native
+=== RUN   TestFixturesAssertions/assertions/19_identifier_kind.a/node
+=== RUN   TestFixturesAssertions/assertions/18_const_tuple.a/node
+=== RUN   TestFixturesAssertions/assertions/05_regex_call_index.a/node
+=== RUN   TestFixturesAssertions/assertions/18_const_tuple.a/native
+=== RUN   TestFixturesAssertions/assertions/19_identifier_kind.a/stage0
+=== CONT  TestFixturesAssertions/assertions/16_unknown_chain.a
+=== RUN   TestFixturesAssertions/assertions/05_regex_call_index.a/stage0
+=== RUN   TestFixturesAssertions/assertions/16_unknown_chain.a/node
+=== RUN   TestFixturesAssertions/assertions/13_flag_downcast.a/stage0
+=== RUN   TestFixturesAssertions/assertions/16_unknown_chain.a/stage0
+=== RUN   TestFixturesAssertions/assertions/20_type_flag_mask.a/stage0
+=== RUN   TestFixturesAssertions/assertions/18_const_tuple.a/stage0
+--- PASS: TestFixturesAssertions (16.61s)
+    --- PASS: TestFixturesAssertions/assertions (0.00s)
+        --- PASS: TestFixturesAssertions/assertions/15_mutable_view.a (0.57s)
+            --- PASS: TestFixturesAssertions/assertions/15_mutable_view.a/node (0.00s)
+            --- PASS: TestFixturesAssertions/assertions/15_mutable_view.a/stage0 (0.00s)
+        --- PASS: TestFixturesAssertions/assertions/01_map_call.a (0.68s)
+            --- PASS: TestFixturesAssertions/assertions/01_map_call.a/node (0.00s)
+            --- PASS: TestFixturesAssertions/assertions/01_map_call.a/stage0 (0.00s)
+        --- PASS: TestFixturesAssertions/assertions/06_memoize_clear.a (0.68s)
+            --- PASS: TestFixturesAssertions/assertions/06_memoize_clear.a/node (0.00s)
+            --- PASS: TestFixturesAssertions/assertions/06_memoize_clear.a/stage0 (0.00s)
+        --- PASS: TestFixturesAssertions/assertions/04_field_then_call.a (0.75s)
+            --- PASS: TestFixturesAssertions/assertions/04_field_then_call.a/node (0.00s)
+            --- PASS: TestFixturesAssertions/assertions/04_field_then_call.a/stage0 (0.00s)
+        --- PASS: TestFixturesAssertions/assertions/02_code_point_call.a (0.48s)
+            --- PASS: TestFixturesAssertions/assertions/02_code_point_call.a/node (0.00s)
+            --- PASS: TestFixturesAssertions/assertions/02_code_point_call.a/stage0 (0.00s)
+        --- PASS: TestFixturesAssertions/assertions/03_exports_field.a (0.73s)
+            --- PASS: TestFixturesAssertions/assertions/03_exports_field.a/node (0.00s)
+            --- PASS: TestFixturesAssertions/assertions/03_exports_field.a/stage0 (0.00s)
+        --- PASS: TestFixturesAssertions/assertions/08_optional_start.a (0.74s)
+            --- PASS: TestFixturesAssertions/assertions/08_optional_start.a/node (0.00s)
+            --- PASS: TestFixturesAssertions/assertions/08_optional_start.a/stage0 (0.00s)
+        --- PASS: TestFixturesAssertions/assertions/09_interface_kind.a (0.42s)
+            --- PASS: TestFixturesAssertions/assertions/09_interface_kind.a/node (0.00s)
+            --- PASS: TestFixturesAssertions/assertions/09_interface_kind.a/stage0 (0.00s)
+        --- PASS: TestFixturesAssertions/assertions/11_parenthesized_kind.a (1.76s)
+            --- PASS: TestFixturesAssertions/assertions/11_parenthesized_kind.a/node (0.00s)
+            --- PASS: TestFixturesAssertions/assertions/11_parenthesized_kind.a/native (1.53s)
+            --- PASS: TestFixturesAssertions/assertions/11_parenthesized_kind.a/stage0 (0.00s)
+        --- PASS: TestFixturesAssertions/assertions/12_union_target.a (0.44s)
+            --- PASS: TestFixturesAssertions/assertions/12_union_target.a/node (0.00s)
+            --- PASS: TestFixturesAssertions/assertions/12_union_target.a/stage0 (0.00s)
+        --- PASS: TestFixturesAssertions/assertions/07_indexed_operation.a (0.76s)
+            --- PASS: TestFixturesAssertions/assertions/07_indexed_operation.a/node (0.00s)
+            --- PASS: TestFixturesAssertions/assertions/07_indexed_operation.a/stage0 (0.00s)
+        --- PASS: TestFixturesAssertions/assertions/14_structural_cache.a (0.82s)
+            --- PASS: TestFixturesAssertions/assertions/14_structural_cache.a/node (0.00s)
+            --- PASS: TestFixturesAssertions/assertions/14_structural_cache.a/stage0 (0.00s)
+        --- PASS: TestFixturesAssertions/assertions/17_brand_upcast.a (0.65s)
+            --- PASS: TestFixturesAssertions/assertions/17_brand_upcast.a/node (0.00s)
+            --- PASS: TestFixturesAssertions/assertions/17_brand_upcast.a/stage0 (0.00s)
+        --- PASS: TestFixturesAssertions/assertions/10_union_kind.a (1.87s)
+            --- PASS: TestFixturesAssertions/assertions/10_union_kind.a/node (0.00s)
+            --- PASS: TestFixturesAssertions/assertions/10_union_kind.a/native (1.10s)
+            --- PASS: TestFixturesAssertions/assertions/10_union_kind.a/stage0 (0.00s)
+        --- PASS: TestFixturesAssertions/assertions/19_identifier_kind.a (0.78s)
+            --- PASS: TestFixturesAssertions/assertions/19_identifier_kind.a/node (0.00s)
+            --- PASS: TestFixturesAssertions/assertions/19_identifier_kind.a/stage0 (0.00s)
+        --- PASS: TestFixturesAssertions/assertions/05_regex_call_index.a (0.59s)
+            --- PASS: TestFixturesAssertions/assertions/05_regex_call_index.a/node (0.00s)
+            --- PASS: TestFixturesAssertions/assertions/05_regex_call_index.a/stage0 (0.00s)
+        --- PASS: TestFixturesAssertions/assertions/13_flag_downcast.a (1.85s)
+            --- PASS: TestFixturesAssertions/assertions/13_flag_downcast.a/node (0.00s)
+            --- PASS: TestFixturesAssertions/assertions/13_flag_downcast.a/native (1.12s)
+            --- PASS: TestFixturesAssertions/assertions/13_flag_downcast.a/stage0 (0.00s)
+        --- PASS: TestFixturesAssertions/assertions/16_unknown_chain.a (0.63s)
+            --- PASS: TestFixturesAssertions/assertions/16_unknown_chain.a/node (0.00s)
+            --- PASS: TestFixturesAssertions/assertions/16_unknown_chain.a/stage0 (0.00s)
+        --- PASS: TestFixturesAssertions/assertions/20_type_flag_mask.a (1.91s)
+            --- PASS: TestFixturesAssertions/assertions/20_type_flag_mask.a/node (0.00s)
+            --- PASS: TestFixturesAssertions/assertions/20_type_flag_mask.a/native (1.26s)
+            --- PASS: TestFixturesAssertions/assertions/20_type_flag_mask.a/stage0 (0.00s)
+        --- PASS: TestFixturesAssertions/assertions/18_const_tuple.a (1.56s)
+            --- PASS: TestFixturesAssertions/assertions/18_const_tuple.a/node (0.00s)
+            --- PASS: TestFixturesAssertions/assertions/18_const_tuple.a/native (0.99s)
+            --- PASS: TestFixturesAssertions/assertions/18_const_tuple.a/stage0 (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/fixtures	20.725s

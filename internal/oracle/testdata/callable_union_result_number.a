@@ -1,0 +1,4 @@
+type Target = ((value: number) => number) | ((value: number) => string);
+function invoke(target: Target): void { console.log(`${target(5)}`); }
+const producer = (value: number): number => value + 1;
+invoke(producer);

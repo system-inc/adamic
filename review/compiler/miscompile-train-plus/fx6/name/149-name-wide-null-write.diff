@@ -1,0 +1,17 @@
+--- a/internal/native/emit_statements.go
++++ b/internal/native/emit_statements.go
+@@ -237,7 +237,7 @@
+ 		if e.fieldTypesNeeded() {
+ 			cache = e.cache()
+ 		}
+-		if e.program.CheckedFields[statement.Name] {
++		if e.program.CheckedFields[statement.Name] || ((statement.Value.Type() == ir.Array || statement.Value.Type() == ir.Map) && e.fx7NameChecked(statement.Name)) {
+ 			expected := statement.DeclaredType
+ 			if expected == "" {
+ 				expected = map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string", ir.Object: "object", ir.Array: "array", ir.Map: "Map", ir.Closure: "function", ir.Union: "unknown"}[statement.Value.Type()]
+@@ -609,3 +609,5 @@
+ 	e.indent--
+ 	e.line("}")
+ }
++
++func (e *emitter) fx7NameChecked(name string) bool { for key, checked := range e.program.CheckedFields { if checked && strings.HasSuffix(key, ":"+name) { return true } }; return false }
