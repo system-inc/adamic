@@ -1,0 +1,62 @@
+[
+  {
+    "mutant": "TestGeneratedProgramsCheckAndLower-seed-13",
+    "failed": "TestGeneratedProgramsCheckAndLower/seeds-011-015",
+    "passing_siblings": 11,
+    "exit": 1
+  },
+  {
+    "mutant": "TestRegexProgramsPassTheChecker-seed-18",
+    "failed": "TestRegexProgramsPassTheChecker/seeds-016-020",
+    "passing_siblings": 5,
+    "exit": 1
+  },
+  {
+    "mutant": "TestUndefinedNumbersShapes-seed-28",
+    "failed": "TestUndefinedNumbersShapes/seeds-026-030",
+    "passing_siblings": 8,
+    "exit": 1
+  },
+  {
+    "mutant": "TestOverridesShapesAndLower-seed-43",
+    "failed": "TestOverridesShapesAndLower/seeds-040-044",
+    "passing_siblings": 10,
+    "exit": 1
+  },
+  {
+    "mutant": "TestUndefinedNumbersShapes-vocabulary",
+    "failed": "TestUndefinedNumbersShapes/vocabulary",
+    "passing_siblings": 8,
+    "exit": 1
+  },
+  {
+    "mutant": "TestOverridesShapesAndLower-vocabulary",
+    "failed": "TestOverridesShapesAndLower/vocabulary",
+    "passing_siblings": 10,
+    "exit": 1
+  },
+  {
+    "mutant": "runtime-program",
+    "failed": "TestFuzzerSharesRuntimeLibrary/program",
+    "passing_siblings": 1,
+    "exit": 1
+  },
+  {
+    "mutant": "runtime-library",
+    "failed": "TestFuzzerSharesRuntimeLibrary/library",
+    "passing_siblings": 1,
+    "exit": 1
+  },
+  {
+    "mutant": "reduce-signature",
+    "failed": "TestReduceKeepsTheSignature/signature",
+    "passing_siblings": 1,
+    "exit": 1
+  },
+  {
+    "mutant": "reduce-minimum",
+    "failed": "TestReduceKeepsTheSignature/reduction",
+    "passing_siblings": 1,
+    "exit": 1
+  }
+]

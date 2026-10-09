@@ -21,7 +21,7 @@ import (
 	"github.com/system-inc/adamic/internal/gatesample"
 )
 
-const testUpstreamRepositoryCorpusParityShards = 16
+const testUpstreamRepositoryCorpusParitySplitShards = 16
 
 var upstreamParityReports struct {
 	sync.Mutex
@@ -39,7 +39,7 @@ var upstreamParitySetup struct {
 
 func upstreamParityOrdinal(id string) int {
 	sum := sha256.Sum256([]byte(id))
-	return int(binary.BigEndian.Uint64(sum[:8]) % testUpstreamRepositoryCorpusParityShards)
+	return int(binary.BigEndian.Uint64(sum[:8]) % testUpstreamRepositoryCorpusParitySplitShards)
 }
 
 func upstreamParityUnion(cases []textCase, shards [][]textCase) error {
@@ -86,16 +86,16 @@ func upstreamParityPrepare(t *testing.T) {
 				enumerated[f.Name.Name] = true
 			}
 		}
-		if len(enumerated) != testUpstreamRepositoryCorpusParityShards {
-			t.Fatalf("enumerated %d tests, declared %d", len(enumerated), testUpstreamRepositoryCorpusParityShards)
+		if len(enumerated) != testUpstreamRepositoryCorpusParitySplitShards {
+			t.Fatalf("enumerated %d tests, declared %d", len(enumerated), testUpstreamRepositoryCorpusParitySplitShards)
 		}
-		for i := 0; i < testUpstreamRepositoryCorpusParityShards; i++ {
+		for i := 0; i < testUpstreamRepositoryCorpusParitySplitShards; i++ {
 			if !enumerated[fmt.Sprintf("TestUpstreamRepositoryCorpusParity_%03d", i)] {
 				t.Fatalf("missing shard %03d", i)
 			}
 		}
 		cases := sampledCorpusCases(t, 8)
-		shards := make([][]textCase, testUpstreamRepositoryCorpusParityShards)
+		shards := make([][]textCase, testUpstreamRepositoryCorpusParitySplitShards)
 		for _, item := range cases {
 			ordinal := upstreamParityOrdinal(item.Name)
 			shards[ordinal] = append(shards[ordinal], item)
@@ -229,7 +229,7 @@ func upstreamParityRun(t *testing.T, ordinal int) {
 		upstreamParityReports.blocks[id] = block
 	}
 	upstreamParityReports.completed++
-	if path := os.Getenv("ADAMIC_JSON_REPORT"); path != "" && upstreamParityReports.completed == testUpstreamRepositoryCorpusParityShards {
+	if path := os.Getenv("ADAMIC_JSON_REPORT"); path != "" && upstreamParityReports.completed == testUpstreamRepositoryCorpusParitySplitShards {
 		var report strings.Builder
 		for _, item := range upstreamParitySetup.cases {
 			report.WriteString(upstreamParityReports.blocks[item.Name])
@@ -253,7 +253,7 @@ func TestUpstreamRepositoryCorpusParityShardProof(t *testing.T) {
 		t.Fatal("empty live corpus")
 	}
 	planted := cases[0].Name
-	shards := make([][]textCase, testUpstreamRepositoryCorpusParityShards)
+	shards := make([][]textCase, testUpstreamRepositoryCorpusParitySplitShards)
 	for _, item := range cases {
 		i := upstreamParityOrdinal(item.Name)
 		shards[i] = append(shards[i], item)

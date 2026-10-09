@@ -9,6 +9,7 @@ import (
 )
 
 func TestMissingStatementFailsWithMethodName(t *testing.T) {
+	t.Parallel()
 	root := t.TempDir()
 	input := filepath.Join(root, "source.go")
 	output := filepath.Join(root, "output.go")

@@ -25,6 +25,7 @@ func loopProgram(t *testing.T, path string) *ir.Program {
 }
 
 func TestLoopBorrowPlan(t *testing.T) {
+	t.Parallel()
 	program := loopProgram(t, "../oracle/testdata/borrow_loop.a")
 	plan, lending := planElementBorrows(program)
 	want := map[string]bool{"popBody": false, "spliceBody": false, "storeBody": false, "callBody": false, "closureBody": false, "reassignBody": false, "pushBody": true, "throwBody": true, "caughtBody": true, "bindingReuse": true, "assignedBinding": false, "capturedBinding": false, "virtualBody": false, "freshBody": false, "closureReassignBody": false, "globalReassignBody": false, "throwHeldBody": false, "parameterBody": true}
@@ -61,6 +62,7 @@ func TestLoopBorrowPlan(t *testing.T) {
 }
 
 func TestNbodyBorrowedLoopC(t *testing.T) {
+	t.Parallel()
 	program := loopProgram(t, "../../bench/nbody.ts")
 	generated := C(program)
 	for index, function := range program.Functions {
@@ -85,6 +87,7 @@ func TestNbodyBorrowedLoopC(t *testing.T) {
 }
 
 func TestGlobalArgumentLending(t *testing.T) {
+	t.Parallel()
 	program := loopProgram(t, "../oracle/testdata/borrow_global_call.a")
 	emitter := emitter{program: program, reuse: planReuse(program, nil)}
 	checked := 0
@@ -117,6 +120,7 @@ func TestGlobalArgumentLending(t *testing.T) {
 // Inspect the loop's actual iterator temporary, so retaining the binding or releasing another
 // array cannot hide a missing hold. The throw cases check both borrowed and owned cleanup.
 func TestLoopArrayHoldC(t *testing.T) {
+	t.Parallel()
 	for _, path := range []string{"../oracle/testdata/borrow_loop.a", "../../bench/nbody.ts"} {
 		program := loopProgram(t, path)
 		generated := C(program)
@@ -172,6 +176,7 @@ func TestLoopArrayHoldC(t *testing.T) {
 // the caller's retain, not the iterator, is what keeps that array alive, and the lend check
 // below is what requires the retain.
 func TestLoopCallCoverage(t *testing.T) {
+	t.Parallel()
 	program := loopProgram(t, "../oracle/testdata/borrow_loop_calls.a")
 	plan, lending := planElementBorrows(program)
 	owns := map[string]bool{

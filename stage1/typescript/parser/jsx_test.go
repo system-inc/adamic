@@ -68,6 +68,7 @@ func jsxManifest(t *testing.T) (string, int) {
 }
 
 func TestJsxNode(t *testing.T) {
+	t.Parallel()
 	manifest, count := jsxManifest(t)
 	directory, _ := filepath.Abs(".")
 	oracle := goOracle(t)
