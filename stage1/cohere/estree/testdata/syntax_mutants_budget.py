@@ -18,12 +18,12 @@ source = (root / "stage1/cohere/estree/syntax_test.go").read_text()
 count = int(re.search(r"const testSyntaxMutantsShards = (\d+)", source)[1])
 results = []
 for shard in range(count):
-    name = f"TestSyntaxMutants/shard-{shard:03d}"
+    name = f"TestSyntaxMutants_{shard:03d}"
     environment = dict(os.environ, ADAMIC_TEST_SHARD=f"{shard}/{count}")
     started = time.monotonic()
     process = subprocess.Popen(
         ["go", "test", "-json", "./stage1/cohere/estree", "-run",
-         "^TestSyntaxMutants$", "-count=1", "-timeout", "75s"],
+         "^" + name + "$", "-count=1", "-timeout", "75s"],
         cwd=root, env=environment, start_new_session=True,
         stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True,
     )

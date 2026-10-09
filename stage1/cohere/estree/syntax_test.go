@@ -66,48 +66,49 @@ func syntaxMutantGroups() ([][]int, int) {
 }
 
 // ADAMIC_TEST_SHARD=i/n runs the shards whose index modulo n is i; unset runs all.
-func TestSyntaxMutants(t *testing.T) {
+func syntaxMutantsShard(t *testing.T, shard int) {
 	estreeAccounting(t)
 	started := time.Now()
 	groups, cases := syntaxMutantGroups()
 	selected := estreeShardPlan(t, testSyntaxMutantsShards, cases, groups)
+	if !selected[shard] {
+		t.Skip("different ADAMIC_TEST_SHARD partition")
+	}
+	if len(groups[shard]) == 0 {
+		return
+	}
 	oracle := estreeTimedOracle(t)
 	mutants := syntaxMutants()
 	t.Logf("setup including builds: %.3fs; union: %d cases", time.Since(started).Seconds(), cases)
-	for shard := range groups {
-		if !selected[shard] {
+	for _, m := range mutants {
+		if syntaxMutantShard(m) != shard {
 			continue
 		}
-		t.Run(fmt.Sprintf("shard-%03d", shard), func(t *testing.T) {
-			t.Parallel()
-			for _, m := range mutants {
-				if syntaxMutantShard(m) != shard {
-					continue
+		m.main = mutantPort(t, m.file, m.from, m.to)
+		m.binary, _ = estreeTimedBuild(t, m.main, true)
+		list := manifest(t, m.sources)
+		if m.name == "mapped-constraint" {
+			want := estreeOracleOutput(t, oracle, "--manifest", list)
+			for name, got := range map[string][]byte{"Node": onNode(t, m.main, "--manifest", list), "native": execute(t, "", m.binary, "--manifest", list)} {
+				if os.Getenv("ADAMIC_SYNTAX_MUTANTS_PLANT") == m.name {
+					got = want
 				}
-				m.main = mutantPort(t, m.file, m.from, m.to)
-				m.binary, _ = estreeTimedBuild(t, m.main, true)
-				list := manifest(t, m.sources)
-				if m.name == "mapped-constraint" {
-					want := estreeOracleOutput(t, oracle, "--manifest", list)
-					for name, got := range map[string][]byte{"Node": onNode(t, m.main, "--manifest", list), "native": execute(t, "", m.binary, "--manifest", list)} {
-						if err := estreeMutantVerdict(want, got); err != nil {
-							t.Fatalf("%s %s: %v", m.name, name, err)
-						}
-					}
-				} else {
-					statuses := string(estreeOracleOutput(t, oracle, "--audit", list, t.TempDir()))
-					if !strings.Contains(statuses, `"status":"error"`) {
-						t.Fatal(statuses)
-					}
-					for name, got := range map[string][]byte{"Node": onNode(t, m.main, "--manifest", list), "native": execute(t, "", m.binary, "--manifest", list)} {
-						if !strings.Contains(string(got), "0 Program ") {
-							t.Fatal(name + " control did not accept")
-						}
-						t.Log(m.name + " " + name + ": disabled check accepts Go-refused input; acceptance oracle catches it")
-					}
+				if err := estreeMutantVerdict(want, got); err != nil {
+					t.Fatalf("%s %s: %v", m.name, name, err)
 				}
 			}
-		})
+		} else {
+			statuses := string(estreeOracleOutput(t, oracle, "--audit", list, t.TempDir()))
+			if !strings.Contains(statuses, `"status":"error"`) {
+				t.Fatal(statuses)
+			}
+			for name, got := range map[string][]byte{"Node": onNode(t, m.main, "--manifest", list), "native": execute(t, "", m.binary, "--manifest", list)} {
+				if !strings.Contains(string(got), "0 Program ") {
+					t.Fatal(name + " control did not accept")
+				}
+				t.Log(m.name + " " + name + ": disabled check accepts Go-refused input; acceptance oracle catches it")
+			}
+		}
 	}
 }
 
