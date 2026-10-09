@@ -267,12 +267,12 @@ Do not decode each callback separately if UTF-8 may span iovecs.
 | Every other `fd_*` and `path_*`, including `fd_read`, `fd_filestat_get`, `fd_readdir`, `path_open` | EBADF (8), without touching output memory or granting host file access. |
 | `args_sizes_get`, `environ_sizes_get` | Write zero count and zero buffer size, return 0: this host has an empty argument vector and environment. |
 | `args_get`, `environ_get` | Return 0 without writes: zero entries require zero bytes. |
-| `clock_time_get`, `random_get` | Throw `AdamicUnsupportedWASI` naming the import. Fake time and predictable random bytes would not satisfy those services. Neither occurs in the inventoried modules. |
+| `clock_time_get`, `random_get` | Throw `AdamicUnsupportedWASI` naming the import. Fake time and predictable random bytes would not satisfy those services. Neither occurs in the inventoried file-free modules. |
 | Other imports | Throw `AdamicUnsupportedWASI` naming the import; no success stub. |
 
 No inventoried file-free fixture requires an import that the shim cannot
 satisfy. File fixtures cannot run honestly without file access, so the test
-leaves these three out by name (`shimFileFixtures`), without a skip. It still
+leaves these five out by name (`shimFileFixtures`), without a skip. It still
 asserts their imports: a listed fixture that stops importing `path_*`, `fd_read`,
 `fd_readdir` or `fd_filestat_get` fails, and so does an unlisted one that starts.
 
@@ -281,6 +281,8 @@ asserts their imports: a listed fixture that stops importing `path_*`, `fd_read`
 | `internal/oracle/testdata/write_stdout_order.a` | `args_get, args_sizes_get, fd_close, fd_fdstat_get, fd_filestat_get, fd_prestat_dir_name, fd_prestat_get, fd_seek, fd_write, path_open, proc_exit` |
 | `internal/oracle/testdata/write_stderr_order.a` | `args_get, args_sizes_get, fd_close, fd_fdstat_get, fd_filestat_get, fd_prestat_dir_name, fd_prestat_get, fd_seek, fd_write, path_open, proc_exit` |
 | `internal/oracle/testdata/prompt_then_read.a` | `args_get, args_sizes_get, fd_close, fd_fdstat_get, fd_filestat_get, fd_prestat_dir_name, fd_prestat_get, fd_read, fd_seek, fd_write, path_open, proc_exit` |
+| `internal/oracle/testdata/closure_convention_host24.a` | `args_get, args_sizes_get, environ_get, environ_sizes_get, fd_close, fd_fdstat_get, fd_prestat_dir_name, fd_prestat_get, fd_readdir, fd_seek, fd_sync, fd_write, path_create_directory, path_filestat_get, path_open, path_remove_directory, path_unlink_file, proc_exit, random_get` |
+| `internal/oracle/testdata/unknown_narrowing_host.a` | `args_get, args_sizes_get, fd_close, fd_fdstat_get, fd_prestat_dir_name, fd_prestat_get, fd_read, fd_seek, fd_write, path_create_directory, path_filestat_get, path_open, proc_exit` |
 
 The differential command test uses the same expected witness as
 `internal/oracle/wasi_test.go`: Node running source for ordinary fixtures, and
