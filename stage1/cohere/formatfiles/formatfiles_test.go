@@ -185,7 +185,7 @@ func askedCases(t *testing.T) (string, string) {
 	return casesPath, string(answers)
 }
 
-// cohereSide runs testdata/cohere_side_test.go inside cohere's formatfiles package, by overlay, with a
+// cohereSide runs testdata/cohere_side_test.go.txt inside cohere's formatfiles package, by overlay, with a
 // request.
 func cohereSide(t *testing.T, request map[string]any) {
 	t.Helper()
@@ -202,7 +202,7 @@ func cohereSide(t *testing.T, request map[string]any) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	side, err := filepath.Abs(filepath.Join("testdata", "cohere_side_test.go"))
+	side, err := filepath.Abs(filepath.Join("testdata", "cohere_side_test.go.txt"))
 	if err != nil {
 		t.Fatal(err)
 	}

@@ -68,7 +68,7 @@ func goCohere(t *testing.T, input string) string {
 	if err != nil {
 		t.Fatal(err)
 	}
-	side, err := filepath.Abs("testdata/cohere_side_test.go")
+	side, err := filepath.Abs("testdata/cohere_side_test.go.txt")
 	if err != nil {
 		t.Fatal(err)
 	}
