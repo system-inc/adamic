@@ -1,0 +1,6 @@
+case 0
+/workspace/u107-probe/accented.ts:1:7
+  no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+
+range 6 15 unexpectedDebugger fix			6 15
+fixed	/*\u00e9*/\u000a

@@ -1,0 +1,8 @@
+{"Time":"2026-10-09T12:31:19.733273982Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint"}
+{"Time":"2026-10-09T12:31:19.76461419Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestCompilerGuardBackend"}
+{"Time":"2026-10-09T12:31:19.764703646Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestCompilerGuardBackend","Output":"=== RUN   TestCompilerGuardBackend\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:31:19.764763319Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestCompilerGuardBackend","Output":"--- PASS: TestCompilerGuardBackend (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:31:19.764768438Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestCompilerGuardBackend","Elapsed":0}
+{"Time":"2026-10-09T12:31:19.764786477Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:31:19.765236113Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/lint\t0.031s\n"}
+{"Time":"2026-10-09T12:31:19.76530422Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Elapsed":0.032}

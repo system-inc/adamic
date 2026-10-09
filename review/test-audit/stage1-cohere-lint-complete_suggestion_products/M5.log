@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T12:39:51.110624047Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint"}
+{"Time":"2026-10-09T12:39:51.144968031Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestChildCPUWaitGuard"}
+{"Time":"2026-10-09T12:39:51.145063979Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestChildCPUWaitGuard","Output":"=== RUN   TestChildCPUWaitGuard\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:39:51.145135241Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestChildCPUWaitGuard","Output":"=== PAUSE TestChildCPUWaitGuard\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:39:51.145139656Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestChildCPUWaitGuard"}
+{"Time":"2026-10-09T12:39:51.145148832Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestChildCPUWaitGuard"}
+{"Time":"2026-10-09T12:39:51.145274184Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestChildCPUWaitGuard","Output":"=== CONT  TestChildCPUWaitGuard\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:39:52.148826048Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestChildCPUWaitGuard","Output":"    deadlines_test.go:84: node -e const start=process.cpuUsage(); while(Object.values(process.cpuUsage(start)).reduce((a,b)=\u003ea+b,0) \u003c 200000) {} setTimeout(()=\u003e{const again=process.cpuUsage(); while(Object.values(process.cpuUsage(again)).reduce((a,b)=\u003ea+b,0) \u003c 200000) {}},1200);: wall backstop exceeded: ceiling 1h0m0s\n","OutputType":"error"}
+{"Time":"2026-10-09T12:39:52.148908829Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestChildCPUWaitGuard","Output":"--- FAIL: TestChildCPUWaitGuard (1.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:39:52.148914647Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestChildCPUWaitGuard","Elapsed":1}
+{"Time":"2026-10-09T12:39:52.148939501Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:39:52.149836526Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/cohere/lint\t1.039s\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:39:52.149856453Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Elapsed":1.039}

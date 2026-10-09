@@ -1,0 +1,53 @@
+timing-0-0 {'label': 'timing-0-0', 'command': 'timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestProduct_CompleteSuggestionGoOracle|TestProduct_CompleteSuggestionLowered|TestProduct_CompleteSuggestionMutantLowered|TestProduct_CompleteSuggestionNative)$', 'seconds': 7.538559463999263, 'exit': 0}
+timing-0-1 {'label': 'timing-0-1', 'command': 'timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestProduct_CompleteSuggestionGoOracle|TestProduct_CompleteSuggestionLowered|TestProduct_CompleteSuggestionMutantLowered|TestProduct_CompleteSuggestionNative)$', 'seconds': 6.9653549260001455, 'exit': 0}
+timing-0-2 {'label': 'timing-0-2', 'command': 'timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestProduct_CompleteSuggestionGoOracle|TestProduct_CompleteSuggestionLowered|TestProduct_CompleteSuggestionMutantLowered|TestProduct_CompleteSuggestionNative)$', 'seconds': 5.883869470999343, 'exit': 0}
+timing-1-0 {'label': 'timing-1-0', 'command': 'timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestCompleteSuggestionSerialization_000)$', 'seconds': 9.458099870000297, 'exit': 0}
+timing-1-1 {'label': 'timing-1-1', 'command': 'timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestCompleteSuggestionSerialization_000)$', 'seconds': 9.54238959400027, 'exit': 0}
+timing-1-2 {'label': 'timing-1-2', 'command': 'timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestCompleteSuggestionSerialization_000)$', 'seconds': 11.42272524800137, 'exit': 0}
+timing-2-0 {'label': 'timing-2-0', 'command': 'timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestCompleteSuggestionSerialization_001|TestCompleteSuggestionSerialization_002|TestCompleteSuggestionSerialization_003|TestCompleteSuggestionSerialization)$', 'seconds': 11.475120882998453, 'exit': 0}
+timing-2-1 {'label': 'timing-2-1', 'command': 'timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestCompleteSuggestionSerialization_001|TestCompleteSuggestionSerialization_002|TestCompleteSuggestionSerialization_003|TestCompleteSuggestionSerialization)$', 'seconds': 9.673486515002878, 'exit': 0}
+timing-2-2 {'label': 'timing-2-2', 'command': 'timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestCompleteSuggestionSerialization_001|TestCompleteSuggestionSerialization_002|TestCompleteSuggestionSerialization_003|TestCompleteSuggestionSerialization)$', 'seconds': 10.082897316002345, 'exit': 0}
+timing-3-0 {'label': 'timing-3-0', 'command': 'timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestCompleteSuggestionSerialization_004|TestCompleteSuggestionSerialization_005)$', 'seconds': 9.955754450998938, 'exit': 0}
+timing-3-1 {'label': 'timing-3-1', 'command': 'timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestCompleteSuggestionSerialization_004|TestCompleteSuggestionSerialization_005)$', 'seconds': 9.43597016000058, 'exit': 0}
+timing-3-2 {'label': 'timing-3-2', 'command': 'timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestCompleteSuggestionSerialization_004|TestCompleteSuggestionSerialization_005)$', 'seconds': 10.574286684000981, 'exit': 0}
+timing-4-0 {'label': 'timing-4-0', 'command': 'timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestCompleteSuggestionSerialization_Setup)$', 'seconds': 9.121691861000727, 'exit': 0}
+timing-4-1 {'label': 'timing-4-1', 'command': 'timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestCompleteSuggestionSerialization_Setup)$', 'seconds': 9.275545167998644, 'exit': 0}
+timing-4-2 {'label': 'timing-4-2', 'command': 'timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestCompleteSuggestionSerialization_Setup)$', 'seconds': 9.060669508999126, 'exit': 0}
+timing-5-0 {'label': 'timing-5-0', 'command': 'timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestCompleteSuggestionSerialization_PlantedFailure)$', 'seconds': 52.347005139999965, 'exit': 0}
+timing-5-1 {'label': 'timing-5-1', 'command': 'timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestCompleteSuggestionSerialization_PlantedFailure)$', 'seconds': 57.284804514001735, 'exit': 0}
+timing-5-2 {'label': 'timing-5-2', 'command': 'timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestCompleteSuggestionSerialization_PlantedFailure)$', 'seconds': 55.19675641700087, 'exit': 0}
+timing-6-0 {'label': 'timing-6-0', 'command': 'timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestCompilerCorpusSourcesExcludeOnlyNamedFolders)$', 'seconds': 3.446526158000779, 'exit': 0}
+timing-6-1 {'label': 'timing-6-1', 'command': 'timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestCompilerCorpusSourcesExcludeOnlyNamedFolders)$', 'seconds': 2.732718848001241, 'exit': 0}
+timing-6-2 {'label': 'timing-6-2', 'command': 'timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestCompilerCorpusSourcesExcludeOnlyNamedFolders)$', 'seconds': 3.2588682450004853, 'exit': 0}
+timing-7-0 {'label': 'timing-7-0', 'command': 'timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestCompilerGuardBackend)$', 'seconds': 3.060347904000082, 'exit': 0}
+timing-7-1 {'label': 'timing-7-1', 'command': 'timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestCompilerGuardBackend)$', 'seconds': 2.9367504809997627, 'exit': 0}
+timing-7-2 {'label': 'timing-7-2', 'command': 'timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestCompilerGuardBackend)$', 'seconds': 2.4462607109999226, 'exit': 0}
+timing-8-0 {'label': 'timing-8-0', 'command': 'timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestChildCPUHangGuard)$', 'seconds': 4.182422063000558, 'exit': 0}
+timing-8-1 {'label': 'timing-8-1', 'command': 'timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestChildCPUHangGuard)$', 'seconds': 5.562064568002825, 'exit': 0}
+timing-8-2 {'label': 'timing-8-2', 'command': 'timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestChildCPUHangGuard)$', 'seconds': 7.064702445000876, 'exit': 0}
+timing-9-0 {'label': 'timing-9-0', 'command': 'timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestChildWallBackstop)$', 'seconds': 5.395313290999184, 'exit': 0}
+timing-9-1 {'label': 'timing-9-1', 'command': 'timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestChildWallBackstop)$', 'seconds': 4.436407578999933, 'exit': 0}
+timing-9-2 {'label': 'timing-9-2', 'command': 'timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestChildWallBackstop)$', 'seconds': 3.2443714250002813, 'exit': 0}
+timing-10-0 {'label': 'timing-10-0', 'command': 'timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestChildCPUWaitGuard)$', 'seconds': 6.2764748859990505, 'exit': 0}
+timing-10-1 {'label': 'timing-10-1', 'command': 'timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestChildCPUWaitGuard)$', 'seconds': 6.246624256000359, 'exit': 0}
+timing-10-2 {'label': 'timing-10-2', 'command': 'timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestChildCPUWaitGuard)$', 'seconds': 5.686028412001178, 'exit': 0}
+S0 {'label': 'S0', 'command': 'timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestCompleteSuggestionSerialization_000)$', 'seconds': 29.869345258997782, 'exit': 1}
+S1 {'label': 'S1', 'command': 'timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestCompleteSuggestionSerialization_Setup)$', 'seconds': 31.090088388998993, 'exit': 1}
+Traceback (most recent call last):
+  File "/workspace/u107-extra.py", line 17, in <module>
+    f=root/file;before=f.read_text();assert old in before,(mid,old);after=before.replace(old,new)
+                                            ^^^^^^^^^^^^^
+AssertionError: ('S2', 'return os.WriteFile(filepath.Join(out, "lint.c"), []byte(native.C(ir)), 0644)')
+S2 {'label': 'S2', 'command': 'timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestProduct_CompleteSuggestionNative)$', 'seconds': 46.543454182999994, 'exit': 1}
+Traceback (most recent call last):
+  File "/workspace/u107-extra.py", line 20, in <module>
+    f=root/file;before=f.read_text();assert old in before,(mid,old);after=before.replace(old,new)
+                                            ^^^^^^^^^^^^^
+AssertionError: ('S3', 'slices.Contains(compilerCorpusFixtureFolders, part)')
+S3 {'label': 'S3', 'command': 'timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestCompilerCorpusSourcesExcludeOnlyNamedFolders)$', 'seconds': 16.185143771002913, 'exit': 1}
+W1 {'label': 'W1', 'command': 'timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestCompleteSuggestionSerialization_PlantedFailure)$', 'seconds': 55.66757036600029, 'exit': 1}
+W2 {'label': 'W2', 'command': 'timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestCompleteSuggestionSerialization_004|TestCompleteSuggestionSerialization_005)$', 'seconds': 31.528398339996784, 'exit': 1}
+W3 {'label': 'W3', 'command': 'timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestChildCPUHangGuard)$', 'seconds': 20.65778793500067, 'exit': 1}
+W4 {'label': 'W4', 'command': 'timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestChildWallBackstop)$', 'seconds': 17.58110650299932, 'exit': 1}
+M5 {'label': 'M5', 'command': 'timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestChildCPUWaitGuard)$', 'seconds': 14.678132745997573, 'exit': 1}
+M6 {'label': 'M6', 'command': 'timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestChildCPUWaitGuard)$', 'seconds': 13.893242982998345, 'exit': 0}

@@ -1,0 +1,74 @@
+[
+  [
+    "P",
+    3.022,
+    "setup-check",
+    "S2: complete_suggestion_products_test.go:33: build complete-suggestion-native: open /workspace/u107-cache/S2/9f9e6206cab447e21b1b199d744a1a829f20731959ddacd2ce0ff7ff10b647dc/lint.c: no such file or directory"
+  ],
+  [
+    "F",
+    6.789,
+    "setup-check",
+    "S0: complete_suggestion_serialization_shards_test.go:256: missing field \"suggestion\\tfirst\":"
+  ],
+  [
+    "A",
+    7.107,
+    "sacred",
+    "M4: complete_suggestion_serialization_shards_test.go:268: sanitized native: case 0 line 12: port \"\", Go \"fixed\\t/*\\\\ud83d\\\\ude00*/debugger;\\\\u000a\""
+  ],
+  [
+    "MW",
+    7.331,
+    "witness",
+    "W2: complete_suggestion_serialization_shards_test.go:276: second suggestion edit mutant survived on mutant emitted JavaScript"
+  ],
+  [
+    "S",
+    6.604,
+    "setup-check",
+    "S1: complete_suggestion_serialization_shards_test.go:81: complete suggestion shared preparation failed"
+  ],
+  [
+    "PF",
+    52.348,
+    "witness",
+    "W1: complete_suggestion_serialization_shards_test.go:303: wrong planted failure: <nil>; failures []"
+  ],
+  [
+    "C",
+    0.144,
+    "setup-check",
+    "S3: corpus_sources_test.go:101: exclusion exceeded named directory contract or retained a fixture:"
+  ],
+  [
+    "H",
+    0.05,
+    "helper",
+    null
+  ],
+  [
+    "CH",
+    1.557,
+    "witness",
+    "W3: deadlines_test.go:61: loop guard: <nil>"
+  ],
+  [
+    "WB",
+    0.303,
+    "witness",
+    "W4: deadlines_test.go:72: backstop: <nil>"
+  ],
+  [
+    "CW",
+    1.791,
+    "sacred",
+    "M5: deadlines_test.go:84: node -e const start=process.cpuUsage(); while(Object.values(process.cpuUsage(start)).reduce((a,b)=>a+b,0) < 200000) {} setTimeout(()=>{const again=process.cpuUsage(); while(Object.values(process.cpuUsage(again)).reduce((a,b)=>a+b,0) < 200000) {}},1200);: wall backstop exceeded: ceiling 1h0m0s"
+  ],
+  [
+    "E",
+    null,
+    "cannot-judge",
+    null
+  ]
+]

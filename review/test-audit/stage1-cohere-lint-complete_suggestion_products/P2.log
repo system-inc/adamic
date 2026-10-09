@@ -1,0 +1,31 @@
+{"Time":"2026-10-09T12:41:17.013429751Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint"}
+{"Time":"2026-10-09T12:41:17.077056115Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestChildCPUWaitGuard"}
+{"Time":"2026-10-09T12:41:17.077137062Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestChildCPUWaitGuard","Output":"=== RUN   TestChildCPUWaitGuard\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:41:17.077193178Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestChildCPUWaitGuard","Output":"=== PAUSE TestChildCPUWaitGuard\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:41:17.077196654Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestChildCPUWaitGuard"}
+{"Time":"2026-10-09T12:41:17.077203925Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestChildCPUWaitGuard"}
+{"Time":"2026-10-09T12:41:17.077205777Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestChildCPUWaitGuard","Output":"=== CONT  TestChildCPUWaitGuard\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:41:17.077213874Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestChildCPUWaitGuard","Output":"--- FAIL: TestChildCPUWaitGuard (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:41:17.07932754Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestChildCPUWaitGuard","Output":"panic: runtime error: invalid memory address or nil pointer dereference [recovered, repanicked]\n"}
+{"Time":"2026-10-09T12:41:17.079347057Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestChildCPUWaitGuard","Output":"[signal SIGSEGV: segmentation violation code=0x1 addr=0x10 pc=0xd4f4b1]\n"}
+{"Time":"2026-10-09T12:41:17.079550364Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestChildCPUWaitGuard","Output":"\n"}
+{"Time":"2026-10-09T12:41:17.079558308Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestChildCPUWaitGuard","Output":"goroutine 21 [running]:\n"}
+{"Time":"2026-10-09T12:41:17.07956429Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestChildCPUWaitGuard","Output":"testing.tRunner.func1.2({0x1fbc5b8, 0x20e07d0})\n"}
+{"Time":"2026-10-09T12:41:17.079570726Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestChildCPUWaitGuard","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2123 +0x232\n"}
+{"Time":"2026-10-09T12:41:17.079607883Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestChildCPUWaitGuard","Output":"testing.tRunner.func1()\n"}
+{"Time":"2026-10-09T12:41:17.079611235Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestChildCPUWaitGuard","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2126 +0x329\n"}
+{"Time":"2026-10-09T12:41:17.079613684Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestChildCPUWaitGuard","Output":"panic({0x1fbc5b8?, 0x20e07d0?})\n"}
+{"Time":"2026-10-09T12:41:17.079618937Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestChildCPUWaitGuard","Output":"\t/workspace/adamic-tools/go/src/runtime/panic.go:859 +0x125\n"}
+{"Time":"2026-10-09T12:41:17.079625857Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestChildCPUWaitGuard","Output":"os.(*ProcessState).userTime(...)\n"}
+{"Time":"2026-10-09T12:41:17.079628375Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestChildCPUWaitGuard","Output":"\t/workspace/adamic-tools/go/src/os/exec_unix.go:138\n"}
+{"Time":"2026-10-09T12:41:17.079630483Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestChildCPUWaitGuard","Output":"os.(*ProcessState).UserTime(...)\n"}
+{"Time":"2026-10-09T12:41:17.079642967Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestChildCPUWaitGuard","Output":"\t/workspace/adamic-tools/go/src/os/exec.go:370\n"}
+{"Time":"2026-10-09T12:41:17.07964704Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestChildCPUWaitGuard","Output":"github.com/system-inc/adamic/stage1/cohere/lint.TestChildCPUWaitGuard(0x268838fdcfc8)\n"}
+{"Time":"2026-10-09T12:41:17.079650711Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestChildCPUWaitGuard","Output":"\t/workspace/adamic/stage1/cohere/lint/deadlines_test.go:87 +0x91\n"}
+{"Time":"2026-10-09T12:41:17.079653085Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestChildCPUWaitGuard","Output":"testing.tRunner(0x268838fdcfc8, 0x2071f08)\n"}
+{"Time":"2026-10-09T12:41:17.079655529Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestChildCPUWaitGuard","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea\n"}
+{"Time":"2026-10-09T12:41:17.079657892Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestChildCPUWaitGuard","Output":"created by testing.(*T).Run in goroutine 1\n"}
+{"Time":"2026-10-09T12:41:17.079660959Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestChildCPUWaitGuard","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4\n"}
+{"Time":"2026-10-09T12:41:17.080736209Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestChildCPUWaitGuard","Elapsed":0}
+{"Time":"2026-10-09T12:41:17.080755093Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/cohere/lint\t0.067s\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:41:17.080767239Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Elapsed":0.067}

@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T12:31:36.763896889Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint"}
+{"Time":"2026-10-09T12:31:36.866603262Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestChildCPUHangGuard"}
+{"Time":"2026-10-09T12:31:36.866717478Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestChildCPUHangGuard","Output":"=== RUN   TestChildCPUHangGuard\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:31:36.866827179Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestChildCPUHangGuard","Output":"=== PAUSE TestChildCPUHangGuard\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:31:36.866831904Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestChildCPUHangGuard"}
+{"Time":"2026-10-09T12:31:36.866855005Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestChildCPUHangGuard"}
+{"Time":"2026-10-09T12:31:36.86685843Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestChildCPUHangGuard","Output":"=== CONT  TestChildCPUHangGuard\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:31:38.99834848Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestChildCPUHangGuard","Output":"    deadlines_test.go:63: planted endless loop killed and named in 2.11940262s: node /workspace/u107-tmp/TestChildCPUHangGuard2355342861/001/planted-endless-loop.js: child CPU hang guard exceeded: CPU 2.110235s, budget 1s: signal: CPU time limit exceeded\n"}
+{"Time":"2026-10-09T12:31:39.002863501Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestChildCPUHangGuard","Output":"--- PASS: TestChildCPUHangGuard (2.14s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:31:39.002962799Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestChildCPUHangGuard","Elapsed":2.14}
+{"Time":"2026-10-09T12:31:39.003052499Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:31:39.006326773Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/lint\t2.242s\n"}
+{"Time":"2026-10-09T12:31:39.006741944Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Elapsed":2.243}

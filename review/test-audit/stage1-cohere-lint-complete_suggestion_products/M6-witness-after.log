@@ -1,0 +1,1 @@
+guard error=node -e const until=process.hrtime.bigint()+1500000000n;while(process.hrtime.bigint()<until){}: child CPU hang guard exceeded: CPU 1.131464s, budget 3s: signal: CPU time limit exceeded
