@@ -84,7 +84,12 @@ def star():
     for entry in chain:
         entry['ready'] = ready is None or entry['id'] in ready
     first = [entry for entry in chain if waves.get(entry['id']) == 0]
-    global waveZero
+    global waveZero, waveBlockers
+    # A task's blockers are the tasks its waterfall edges come from: what it waits on.
+    touchedAt = {node['id']: int(node.get('lastTouchedAt') or 0) for node in waterfall['nodes']}
+    waveBlockers = {}
+    for edge in waterfall.get('edges', []):
+        waveBlockers.setdefault(edge['to'], []).append(touchedAt.get(edge['from'], 0))
     waveZero = [node for node in waterfall['nodes']
                 if node.get('wave') == 0 and node.get('kind', 'Task') == 'Task' and node.get('status') not in ('Done', 'Cancelled', 'Failed')]
     return (first[0] if first else None), chain
@@ -93,6 +98,7 @@ def star():
 # Every open wave-0 task, as the waterfall's nodes: refreshed with the star, once a minute.
 waveZero = []
 waveOwners = {}
+waveBlockers = {}
 
 
 def waveOwner(identifier):
@@ -113,6 +119,10 @@ def checkWaveZero(now):
     for node in waveZero:
         identifier = node['id']
         touched = int(node.get('lastTouchedAt') or 0) // 1000
+        # A Blocked task can't move until what it waits on does (typescript, Oct 9 05:22Z): its quiet clock is its
+        # blockers' newest motion, so it pages only when they've gone quiet too.
+        if node.get('status') == 'Blocked' and waveBlockers.get(node['id']):
+            touched = max([touched] + [blocker // 1000 for blocker in waveBlockers[node['id']]])
         quiet = now - touched
         key = 'quiet:%s:%d' % (identifier, touched) if touched and quiet >= waveQuietLimit else None
         text = ("#%s is in wave 0 and hasn't moved for %d minutes (%s, last status: %s). Kirk's rule: nothing in wave 0 "

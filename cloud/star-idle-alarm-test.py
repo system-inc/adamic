@@ -389,5 +389,23 @@ esac
         self.assertEqual(len(self.check()), 3, 'a new status is no repeat')
 
 
+    def test_a_blocked_wave_zero_task_is_quiet_only_when_what_it_waits_on_is(self):
+        # Typescript, Oct 9 05:22Z: #8cjprqq paged while Blocked on floor1, which was moving.
+        def write(blockerTouched):
+            waterfall = {'nodes': [{'id': 'waits01', 'wave': 0, 'kind': 'Task', 'status': 'Blocked', 'lastTouchedAt': (self.now - 3600) * 1000,
+                                    'statusAt': 1, 'statusText': 'blocked on floor1'},
+                                   {'id': 'floor01', 'wave': 0, 'kind': 'Task', 'status': 'Running', 'lastTouchedAt': blockerTouched * 1000,
+                                    'statusAt': 1, 'statusText': 'gating'}],
+                         'edges': [{'from': 'floor01', 'to': 'waits01'}], 'criticalPath': ['floor01']}
+            (self.root / 'waterfall.json').write_text(json.dumps(waterfall))
+        (self.root / 'show-waits01').write_text('owner     @system_adamic_typescript (direct)\n')
+        (self.root / 'show-floor01').write_text('owner     @system_adamic_integration (direct)\n')
+        write(self.now - 60)
+        self.assertEqual(self.check(), [], 'its blocker moved a minute ago')
+        write(self.now - 900)
+        recipients = sorted(line.split('|')[0] for line in self.check())
+        self.assertEqual(recipients, ['system_adamic_integration', 'system_adamic_typescript'], 'both quiet: both owners hear')
+
+
 if __name__ == '__main__':
     unittest.main()
