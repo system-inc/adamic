@@ -1,0 +1,26 @@
+{
+  "target": "20d538c0b68f4a4259e3f46dd9fdf7c2d340264b",
+  "jobs": 1,
+  "total_wall_seconds": 0.043067872000392526,
+  "load_before": "0.16 2.44 4.15 1/530 552668",
+  "load_after": "0.16 2.44 4.15 1/530 552677",
+  "entries": [
+    {
+      "number": 14,
+      "made_against": "e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+      "target": "20d538c0b68f4a4259e3f46dd9fdf7c2d340264b",
+      "ok": true,
+      "setup_seconds": 0,
+      "check_seconds": 0,
+      "cleanup_seconds": 0,
+      "wall_seconds": 0.0001375639985781163,
+      "load_before": "0.16 2.44 4.15 1/531 552677",
+      "load_after": "0.16 2.44 4.15 1/531 552677",
+      "messages": [
+        "14 constructor-arrow-this: skipped (Fix is not on target main and adds only lowerer refusal tests, no oracle fixture. Main already lacks the arrow capture refusal.)",
+        "14 made against=e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+        "14 wall=0.000s setup=0.000s check=0.000s cleanup=0.000s load=0.16 2.44 4.15 1/531 552677 -> 0.16 2.44 4.15 1/531 552677"
+      ]
+    }
+  ]
+}
