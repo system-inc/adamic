@@ -23,3 +23,5 @@ Friction and limits:
 - Skipped V3 comment/array subcases are listed in matrix.json. No skipped case is claimed as a pass. No other package or repository-wide gate was run.
 
 Timing: setup.sh skipped because env.sh worked; nproc 5. npm ci succeeded before baseline. runs.json records command wall times, including vet/build and execution; native rebuild time is not separately isolated. Coverage commands and tests write raw logs. All seven standalone diffs passed go vet on their mutated Go package and compiled in their logged matrix. Each mutant used /tmp/defend-checked/cache/<id>. Final clean rest-coverage run passed after restoring production source. Tests were never rewritten or weakened.
+
+Publishing: the requested remote branch already held an interrupted defense at e9eddb52. Its complete original evidence is preserved in prior-e9eddb52/. This session’s REPORT.md, rows.json, matrix.json and plain .log files are authoritative for the three current rows; legacy root .gz logs and runner files belong to the preserved earlier session. Remote history is merged, never force-pushed. Logs matched by the repository ignore rule were explicitly added.

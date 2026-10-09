@@ -1,0 +1,13 @@
+diff --git a/internal/javascript/javascript.go b/internal/javascript/javascript.go
+index 1471d952..c7c1c60a 100644
+--- a/internal/javascript/javascript.go
++++ b/internal/javascript/javascript.go
+@@ -622,7 +622,7 @@ func (e *emitter) loop(at *ir.Statement, statement ir.Loop) {
+ 	}
+ 	e.statements(statement.Update)
+ 	if statement.CheckAfter {
+-		e.line("if (!%s) break;", e.marked(at, 0, "("+e.value(statement.Condition)+")"))
++		e.line("if (%s) break;", e.marked(at, 0, "("+e.value(statement.Condition)+")"))
+ 	}
+ 	e.indent--
+ 	e.line("}")

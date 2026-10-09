@@ -1,0 +1,14 @@
+diff --git a/internal/javascript/view_unions_untagged.go b/internal/javascript/view_unions_untagged.go
+index 9e90e649..40165318 100644
+--- a/internal/javascript/view_unions_untagged.go
++++ b/internal/javascript/view_unions_untagged.go
+@@ -150,9 +150,6 @@ func (e *emitter) untaggedCallableRecorded(property ir.Property, recorded, expec
+ 		certified = certified || contract.ProducerCertified
+ 		functions = append(functions, contract.Functions...)
+ 	}
+-	if !certified {
+-		return recorded
+-	}
+ 	encoded, _ := json.Marshal(functions)
+ 	return "((recorded)=>!adamicViewCallableSignaturesMatch(recorded," + expected + ") || " + string(encoded) + ".includes(recorded?.function) ? recorded : undefined)(" + recorded + ")"
+ }
