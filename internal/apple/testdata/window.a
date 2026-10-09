@@ -38,9 +38,10 @@ label.setFrame({ x: 20, y: 120, width: 280, height: 24 });
 let presses = 0;
 const button = new Button({
 	title: 'Press',
-	action: () => {
+	// It reads how many arguments it was handed, so the count an action passes is witnessed: none.
+	action: function () {
 		presses += 1;
-		label.stringValue = `pressed ${presses}`;
+		label.stringValue = `pressed ${presses}, handed ${arguments.length}`;
 	},
 });
 button.setFrame({ x: 20, y: 20, width: 120, height: 32 });

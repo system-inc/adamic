@@ -219,6 +219,8 @@ A SwiftUI button is pressed by running the block its `Button` holds, in both. Sw
 
 Each check has been shown to fail: dropping the closure's release in an action's `dealloc` (allocations 47, frees 46), a box that retains what it was handed already retained (47, 46), draining the pool after the counts are reported (47, 46), dropping the last UTF-16 unit of a string coming back (the witness disagrees), never letting go of the `NSString`s made for arguments (73 owed), a block's dispose that keeps its holder (26, 24), a block's deliver that keeps the values it made (26, 23), and a block's invoke that calls Adamic without the hop to the main thread (the program panics), a `State` that doesn't render when it's set (the counter disagrees with its witness), and the shim keeping its buttons' actions past exit (119 allocated, 118 freed), and for the boxes: a crossing that doesn't look for the object's box (`window.a` disagrees: the content view isn't `===` itself), a box that never leaves the table (the sanitizer finds the freed box used), and a lookup that doesn't compare the object.
 
+A closure Apple calls is handed how many arguments it was given, as main's closure convention carries it, and a closure that reads `arguments` sees it: `timer.a`'s block closure is handed one, `window.a`'s action none. A block that passes one more or one fewer, or an action that passes one, disagrees with its witness. A default parameter alone doesn't observe the count (only `undefined` does), so those fixtures read `arguments.length`.
+
 ## Not yet
 
 - **Cycles through actions.** An action's closure that captures something holding the control it's attached to is a cycle neither count can see. A delegate's is refused (Delegates, above); an action's isn't yet.

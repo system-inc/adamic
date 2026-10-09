@@ -54,7 +54,7 @@ int main(void) {
 		Presser *presser = [[Presser alloc] init];
 		presser.block = ^{
 			presses += 1;
-			label.stringValue = [NSString stringWithFormat:@"pressed %d", presses];
+			label.stringValue = [NSString stringWithFormat:@"pressed %d, handed 0", presses];
 		};
 		NSButton *button = [NSButton buttonWithTitle:@"Press" target:presser action:@selector(press:)];
 		button.frame = NSMakeRect(20, 20, 120, 32);
