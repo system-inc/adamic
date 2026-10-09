@@ -461,6 +461,9 @@ func CanThrow(program *ir.Program, instruction *Instruction) bool {
 		return false
 	}
 	throws := false
+	if assign, ok := (*instruction.At).(ir.Assign); ok {
+		throws = assign.Throws(program)
+	}
 	var walk func(value reflect.Value)
 	walk = func(value reflect.Value) {
 		switch value.Kind() {
@@ -479,6 +482,8 @@ func CanThrow(program *ir.Program, instruction *Instruction) bool {
 				throws = true
 			}
 			switch value.Type() {
+			case reflect.TypeOf(ir.Read{}):
+				throws = throws || value.Interface().(ir.Read).Throws(program)
 			case reflect.TypeOf(ir.Defined{}):
 				if value.Interface().(ir.Defined).Throws() {
 					throws = true

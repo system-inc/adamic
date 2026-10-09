@@ -441,7 +441,7 @@ func (l *lowering) namespaceReadyReads(node *ast.Node, writing bool) []ir.Expres
 			if setting {
 				message = "TypeError: Cannot set properties of undefined (setting '" + member + "')"
 			}
-			b.body = append(b.body, ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: b.read(b.parameters[0])}, Then: []ir.Statement{ir.Panic{Message: ir.StringConstant{Index: l.constant(message)}}}})
+			b.body = append(b.body, ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: b.read(b.parameters[0])}, Then: []ir.Statement{ir.Throw{Value: fit(ir.MakeError{Message: ir.StringConstant{Index: l.constant(message[len("TypeError: "):])}, Constructor: "TypeError"}, ir.Union)}}})
 			// The outer container is read first in Outer.Inner.member.
 			checks = append([]ir.Expression{b.finish("namespace_ready", ir.BooleanConstant{Value: true})}, checks...)
 		}

@@ -17,7 +17,7 @@ func (l *lowering) baseInstance(declaration *ast.Node, classType *checker.Type) 
 			continue
 		}
 		types := clause.AsHeritageClause().Types.Nodes
-		for _, name := range []string{"Error", "RangeError", "TypeError"} {
+		for _, name := range []string{"Error", "RangeError", "TypeError", "ReferenceError"} {
 			if len(types) == 1 && l.isLibraryGlobal(ast.SkipParentheses(types[0].AsExpressionWithTypeArguments().Expression), name) {
 				return l.errorBase(name), nil
 			}

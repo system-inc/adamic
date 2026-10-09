@@ -1,4 +1,3 @@
-// a-check: refused a generator function
 // Reduced and specialized from core.ts:437, flatMapIterator.
 function* flatMapIterator(iter: number[]): Generator<number, void, unknown> {
     for (const value of iter) {

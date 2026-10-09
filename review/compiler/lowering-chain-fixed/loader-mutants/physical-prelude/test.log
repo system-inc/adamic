@@ -1,0 +1,8 @@
+=== RUN   TestProjectReferencesSharedPrelude
+=== PAUSE TestProjectReferencesSharedPrelude
+=== CONT  TestProjectReferencesSharedPrelude
+    project_references_test.go:182: physical prelude console replaced the embedded declaration used by lowering
+--- FAIL: TestProjectReferencesSharedPrelude (0.15s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/load	0.180s
+FAIL

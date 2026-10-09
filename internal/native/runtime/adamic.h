@@ -923,6 +923,7 @@ extern const adamic_class adamic_host_type_error_class;
 extern const adamic_class adamic_host_range_error_class;
 extern const adamic_class adamic_range_error_class;
 extern const adamic_class adamic_type_error_class;
+extern const adamic_class adamic_reference_error_class;
 adamic_object *adamic_error_new_kind(adamic_string *message, const char *kind);
 adamic_object *adamic_error_new_code(adamic_string *message, adamic_string *code);
 // NULL is an omitted or undefined message; its empty fallback is not an own field.

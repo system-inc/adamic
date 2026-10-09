@@ -1613,7 +1613,7 @@ func (l *lowering) newExpression(node *ast.Node) (ir.Expression, error) {
 	if l.isLibraryGlobal(created.Expression, "Set") {
 		return l.newSet(node)
 	}
-	if l.isLibraryGlobal(created.Expression, "Error") || l.isLibraryGlobal(created.Expression, "RangeError") || l.isLibraryGlobal(created.Expression, "TypeError") {
+	if l.isLibraryGlobal(created.Expression, "Error") || l.isLibraryGlobal(created.Expression, "RangeError") || l.isLibraryGlobal(created.Expression, "TypeError") || l.isLibraryGlobal(created.Expression, "ReferenceError") {
 		return l.newError(node)
 	}
 	if !l.isLibraryGlobal(created.Expression, "Map") {

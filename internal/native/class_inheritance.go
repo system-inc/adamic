@@ -28,7 +28,7 @@ func (e *emitter) classDeclarations(builder *strings.Builder) {
 			base = fmt.Sprintf("&adamic_class_%d", class.Base)
 		}
 		if class.BuiltinError != "" {
-			base = "&adamic_" + map[string]string{"Error": "error", "RangeError": "range_error", "TypeError": "type_error"}[class.BuiltinError] + "_class"
+			base = "&adamic_" + map[string]string{"Error": "error", "RangeError": "range_error", "TypeError": "type_error", "ReferenceError": "reference_error"}[class.BuiltinError] + "_class"
 		}
 		flags := "NULL"
 		if class.Static {

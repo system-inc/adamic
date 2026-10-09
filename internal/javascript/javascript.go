@@ -93,7 +93,7 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	builder.WriteString("const adamicReduce =(array, callback, initial) => array.reduce((carried, element, index, all) => adamicCall(callback, [carried, element, index, all]), initial);\n")
 	builder.WriteString("const adamicSetIndex = (array, index, value) => {\n\tif (!(Number.isInteger(index) && index >= 0 && index < array.length)) panic(`index ${index} is outside an array of length ${array.length}`);\n\tarray[index] = value;\n};\n")
 	builder.WriteString("const adamicCast = (object, field, allowed, message) => allowed.includes(object[field]) ? object : panic(message);\n")
-	builder.WriteString("const adamicUnready = (name) => { panic(`ReferenceError: Cannot access '${name}' before initialization`); };\n\n")
+	builder.WriteString("const adamicUnready = (name) => { throw new ReferenceError(`Cannot access '${name}' before initialization`); };\n\n")
 	if len(program.Classes) > 0 {
 		builder.WriteString(classCountRuntime("const adamicClassIdentities = new WeakMap();\nconst adamicClass = (value, id) => { const metadata = adamicClasses[id - 1]; if (metadata.literal) { const result = {}; for (const name of metadata.publicKeys) { const descriptor = metadata.accessors[name]; if (descriptor) Object.defineProperty(result, name, {enumerable: true, get: descriptor.get === undefined ? undefined : () => adamicGetAccessor(result, name), set: descriptor.set === undefined ? undefined : (next) => adamicSetAccessor(result, name, next)}); else result[name] = value[name]; } for (const name of metadata.privateFields) Object.defineProperty(result, name, {value: value[name], enumerable: false}); value = result; } else for (const name of metadata.privateFields) Object.defineProperty(value, name, {enumerable: false}); if (metadata.static) { const storage = value; value = function () {}; adamicStaticMethods.set(value, Object.getPrototypeOf(storage)); if (metadata.parent) Object.setPrototypeOf(value, storage[metadata.parent]); for (const name of metadata.privateFields) Object.defineProperty(value, name, {value: storage[name], writable: true, configurable: true}); } for (let ancestor = id; ancestor; ancestor = adamicClasses[ancestor - 1].base) { const builtin = adamicClasses[ancestor - 1].builtinError; if (builtin) { Object.setPrototypeOf(value, globalThis[builtin].prototype); break; } } adamicClassIdentities.set(value, id); return value; };\nconst adamicInstanceOf = (value, wanted) => { for (let id = adamicClassIdentities.get(value); id; id = adamicClasses[id - 1].base) { if (id === wanted || (adamicClasses[wanted - 1].definition && adamicClasses[id - 1].definition === adamicClasses[wanted - 1].definition)) return true; } return false; };\nconst adamicVirtual = (value, slot, ...args) => adamicDirect(adamicClasses[adamicClassIdentities.get(value) - 1].methods[slot], [value, ...args]);\n", counted))
 		builder.WriteString(classCountRuntime("const adamicFindAccessor = (value, name) => { for (let id = adamicClassIdentities.get(value); id; id = adamicClasses[id - 1].base) { const found = adamicClasses[id - 1].accessors[name]; if (found) return found; } };\nconst adamicGetAccessor = (value, name) => { const get = adamicFindAccessor(value, name).get; return typeof get === 'string' ? adamicCall(value[get], [value]) : adamicDirect(get, [value]); };\nconst adamicSetAccessor = (value, name, next) => { const set = adamicFindAccessor(value, name).set; return typeof set === 'string' ? adamicCall(value[set], [value, next]) : adamicDirect(set, [value, next]); };\n", counted))
@@ -775,6 +775,10 @@ func (e *emitter) value(expression ir.Expression) string {
 			return fmt.Sprintf("(%s ? %s : panic(%s))", e.localReady(expression.Local), e.variable(expression.Local), quote(message))
 		}
 		if expression.Checked {
+			if e.program.Locals[expression.Local].Hoisted {
+				message := fmt.Sprintf("ReferenceError: Cannot access '%s' before initialization", e.program.Locals[expression.Local].Name)
+				return fmt.Sprintf("(%s ? %s : panic(%s))", e.ready(expression.Local), e.variable(expression.Local), quote(message))
+			}
 			return fmt.Sprintf("(%s ? %s : adamicUnready(%s))", e.ready(expression.Local), e.variable(expression.Local), quote(e.program.Locals[expression.Local].Name))
 		}
 		return e.variable(expression.Local)
@@ -803,7 +807,7 @@ func (e *emitter) value(expression ir.Expression) string {
 		return "adamicFindAccessor(" + e.value(expression.Object) + ", " + quote(expression.Name) + ") !== undefined"
 	case ir.InstanceOf:
 		if expression.Class < 0 {
-			name := map[int]string{-1: "Error", -2: "RangeError", -3: "TypeError"}[expression.Class]
+			name := map[int]string{-1: "Error", -2: "RangeError", -3: "TypeError", -4: "ReferenceError"}[expression.Class]
 			return "(" + e.value(expression.Value) + " instanceof " + name + ")"
 		}
 		if expression.Exact {

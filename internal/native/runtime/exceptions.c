@@ -22,6 +22,8 @@ const adamic_class adamic_host_error_class = {&adamic_error_class, 2, 3, NULL, 0
 static adamic_string error_name = ADAMIC_STRING("Error");
 static adamic_string range_error_name = ADAMIC_STRING("RangeError");
 static adamic_string type_error_name = ADAMIC_STRING("TypeError");
+static adamic_string reference_error_name = ADAMIC_STRING("ReferenceError");
+const adamic_class adamic_reference_error_class = {&adamic_error_class, 2, 2, NULL, 0, &error_shape, NULL, 0, false, 0, NULL};
 const adamic_class adamic_range_error_class = {&adamic_error_class, 2, 2, NULL, 0, &error_shape, NULL, 0, false, 0, NULL};
 const adamic_class adamic_type_error_class = {&adamic_error_class, 2, 2, NULL, 0, &error_shape, NULL, 0, false, 0, NULL};
 const adamic_class adamic_host_type_error_class = {&adamic_type_error_class, 2, 3, NULL, 0, NULL, NULL, 0, false, 0, NULL};
@@ -39,6 +41,7 @@ adamic_object *adamic_error_new_kind(adamic_string *message, const char *kind) {
 	adamic_string *name = &error_name;
  if (strcmp(kind,"RangeError")==0) { error->class = &adamic_range_error_class; name = &range_error_name; }
  if (strcmp(kind,"TypeError")==0) { error->class = &adamic_type_error_class; name = &type_error_name; }
+ if (strcmp(kind,"ReferenceError")==0) { error->class = &adamic_reference_error_class; name = &reference_error_name; }
  error->slots[0].reference = adamic_retain(name);
 	error->slots[1].reference = adamic_retain(message == NULL ? &empty_message : message);
 	adamic_object_field_types(error)[0] = adamic_rep_string;

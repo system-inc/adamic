@@ -48,7 +48,7 @@ func (l *lowering) errorAncestry(proven *checker.Type) bool {
 			proven = constraint
 		}
 	}
-	if l.isLibraryType(proven, "Error", "RangeError", "TypeError") {
+	if l.isLibraryType(proven, "Error", "RangeError", "TypeError", "ReferenceError") {
 		return true
 	}
 	if !isClassInstance(proven) {

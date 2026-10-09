@@ -31,7 +31,7 @@ func step21TerminalOracleCopy(t *testing.T, sources ...string) (string, string) 
 
 func TestStep21TerminalOracleSourceHash(t *testing.T) {
 	t.Parallel()
-	name := "internal/oracle/testdata/dead_zone.a"
+	name := "internal/oracle/testdata/from_code_point_fails.a"
 	root, runner := step21TerminalOracleCopy(t, name)
 	path := filepath.Join(root, name)
 	run := func() run {
@@ -50,9 +50,9 @@ func TestStep21TerminalOracleSourceHash(t *testing.T) {
 
 func TestStep21TerminalOracleDependencyHash(t *testing.T) {
 	t.Parallel()
-	name := "internal/oracle/testdata/import_cycles/read/"
-	root, runner := step21TerminalOracleCopy(t, name+"a.a", name+"b.a")
-	dependency := filepath.Join(root, name+"b.a")
+	name := "stage3/fixtures/cycles/06_import_order_mutant/"
+	root, runner := step21TerminalOracleCopy(t, name+"main.a", name+"core.a", name+"utilities.a", name+"_namespaces/ts.a")
+	dependency := filepath.Join(root, name+"core.a")
 	original, err := os.ReadFile(dependency)
 	if err != nil {
 		t.Fatal(err)
@@ -60,15 +60,15 @@ func TestStep21TerminalOracleDependencyHash(t *testing.T) {
 	if err := os.WriteFile(dependency, append([]byte("throw new Error('changed dependency');\n"), original...), 0644); err != nil {
 		t.Fatal(err)
 	}
-	got := execute(t, "node", "--disable-warning=ExperimentalWarning", runner, filepath.Join(root, name+"a.a"))
+	got := execute(t, "node", "--disable-warning=ExperimentalWarning", runner, filepath.Join(root, name+"main.a"))
 	if got.exitCode != 1 {
 		t.Fatalf("changed dependency borrowed terminal convention: exit %d stderr %q", got.exitCode, got.stderr)
 	}
 }
 
-func TestStep21ReadinessIsTerminal(t *testing.T) {
+func TestStep21ReadinessIsCatchable(t *testing.T) {
 	t.Parallel()
-	// Node's language TDZ is catchable; Adamic's inserted readiness check is terminal.
+	// A language TDZ is catchable; placeholder representation failures stay terminal.
 	path := filepath.Join(t.TempDir(), "readiness.a")
 	source := "function read(): number { return value; } try { console.log(String(read())); } catch { console.log('caught'); } finally { console.log('finally'); } const value = 1;"
 	if err := os.WriteFile(path, []byte(source), 0600); err != nil {
@@ -89,11 +89,13 @@ func TestStep21ReadinessIsTerminal(t *testing.T) {
 			Finally: []ir.Statement{ir.WriteLine{Value: ir.StringConstant{Index: 1}}},
 		}},
 	}
-	native, _ := natively(t, program)
-	want := run{stderr: []byte("adamic: panic: ReferenceError: Cannot access 'value' before initialization\n"), exitCode: 70}
+	native, binary := natively(t, program)
 	for name, got := range map[string]run{"native": native, "JavaScript": onJavaScriptBackend(t, program), "release": released(t, program)} {
-		if difference := disagreement(want, got); difference != "" {
-			t.Errorf("%s readiness guard ran catch/finally: %s: %+v", name, difference, got)
+		if difference := disagreement(truth, got); difference != "" {
+			t.Errorf("%s language TDZ: %s: %+v", name, difference, got)
 		}
+	}
+	if report := leaks(t, program, binary); report != "" {
+		t.Fatal(report)
 	}
 }

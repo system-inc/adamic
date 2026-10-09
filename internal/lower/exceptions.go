@@ -102,7 +102,7 @@ func (l *lowering) tryStatement(node *ast.Node) ([]ir.Statement, error) {
 func (l *lowering) caughtInstanceOfError(node *ast.Node) (ir.Expression, bool) {
 	binary := node.AsBinaryExpression()
 	identity := 0
-	for index, name := range []string{"Error", "RangeError", "TypeError"} {
+	for index, name := range []string{"Error", "RangeError", "TypeError", "ReferenceError"} {
 		if l.isLibraryGlobal(binary.Right, name) {
 			identity = -index - 1
 		}
@@ -167,13 +167,18 @@ func (l *lowering) exceptions() error {
 // throw (through a function value too, a sort's comparator among them), that isn't inside a try's
 // body with a catch.
 func (l *lowering) throwsOut(statements []ir.Statement) bool {
+	return l.throwsOutReadiness(statements, false)
+}
+
+// Readiness checks are counted after readiness has proved and removed safe reads.
+func (l *lowering) throwsOutReadiness(statements []ir.Statement, readinessChecks bool) bool {
 	found := false
 	walk(statements, func(node any) bool {
 		switch node := node.(type) {
 		case ir.Try:
 			if node.HasCatch {
 				// The body's throws are caught; the catch's and the finally's aren't.
-				found = found || l.throwsOut(node.Catch) || l.throwsOut(node.Finally)
+				found = found || l.throwsOutReadiness(node.Catch, readinessChecks) || l.throwsOutReadiness(node.Finally, readinessChecks)
 				return false
 			}
 		case ir.NodeFSFile:
@@ -182,8 +187,12 @@ func (l *lowering) throwsOut(statements []ir.Statement) bool {
 			found = found || node.MayThrow()
 		case ir.Throw:
 			found = true
+		case ir.Assign:
+			found = found || readinessChecks && node.Throws(l.result)
+		case ir.Read:
+			found = found || readinessChecks && node.Throws(l.result)
 		case ir.Defined:
-			found = node.Throws()
+			found = found || node.Throws()
 		case ir.Call:
 			if l.result.CallMayThrow(node) {
 				found = true

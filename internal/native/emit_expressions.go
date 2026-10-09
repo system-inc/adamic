@@ -134,7 +134,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 			return e.snapshot(ir.Boolean, "false")
 		}
 		if expression.Class < 0 {
-			name := map[int]string{-1: "error", -2: "range_error", -3: "type_error"}[expression.Class]
+			name := map[int]string{-1: "error", -2: "range_error", -3: "type_error", -4: "reference_error"}[expression.Class]
 			return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_instanceof(%s, &adamic_%s_class)", value, name))
 		}
 		if expression.Exact {

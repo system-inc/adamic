@@ -56,6 +56,7 @@ func (l *lowering) uninitializedDeclaration(node *ast.Node) bool {
 // assignments make slots ready; placeholder assignments reset their readiness.
 // Captures and globals participate in this bit analysis even though value SSA excludes them.
 func readiness(program *ir.Program) {
+	defer readinessExceptions(program)
 	// A record's named fields live in a counted table, not inline slots.
 	// Retain their representation checks even through a narrower parameter view.
 	if program.CheckedFields == nil {
