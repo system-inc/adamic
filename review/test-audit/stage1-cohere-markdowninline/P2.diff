@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/regexp.c
++++ b/internal/native/runtime/regexp.c
+@@ -916,7 +916,7 @@
+ 	regex_piece(pieces, replacement, plain, length);
+ }
+ adamic_string *adamic_regex_replace(adamic_string *input, adamic_object *regex,
+-									adamic_string *replacement, bool require_global) {
++									adamic_string *replacement, bool require_global) { return &adamic_string_empty;
+ 	const adamic_regex_program *p = regex_program(regex);
+ 	if (require_global)
+ 		regex_require_global(

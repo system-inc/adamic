@@ -1,0 +1,11 @@
+--- a/stage1/cohere/markdowninline/inline.ts
++++ b/stage1/cohere/markdowninline/inline.ts
+@@ -108,7 +108,7 @@
+     if(!emphasis) {
+         if(pseudoSetext && text !== '') {
+             const marker = text.charCodeAt(0);
+-            let fake = marker === 61 || marker === 45;
++            let fake = marker === 62 || marker === 45;
+             for(let index = 1; index < text.length; index++) {
+                 if(text.charCodeAt(index) !== marker) fake = false;
+             }

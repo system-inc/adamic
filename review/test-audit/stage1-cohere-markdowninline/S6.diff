@@ -1,0 +1,12 @@
+--- a/stage1/cohere/markdowninline/inline_products_shards_test.go
++++ b/stage1/cohere/markdowninline/inline_products_shards_test.go
+@@ -131,9 +131,6 @@
+ 	if err != nil {
+ 		return err
+ 	}
+-	if err = inlineWrite(dir, "program.c", []byte(native.C(program))); err != nil {
+-		return err
+-	}
+ 	return inlineWrite(dir, "program.mjs", []byte(javascript.JavaScript(program)))
+ }
+ func buildInlineLowered(dir string) error {

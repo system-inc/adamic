@@ -1,0 +1,34 @@
+[
+  {
+    "side": "clean",
+    "command": [
+      "/home/agent/.cache/adamic-build/e958a3f65637109d2fbb1a30a46903af8804d0dd201dffda3a2d1717b0d2d2fc/port",
+      "--batch",
+      "/tmp/u131/evidence/M3-witness.txt"
+    ],
+    "exit": 0,
+    "wall": 0.0013116179998178268,
+    "stdout": "\\\\===\n"
+  },
+  {
+    "side": "M3",
+    "command": [
+      "/tmp/u131/cache/M3/2cafbef0798323f81042c26ba902fd11659a4966a3c47c413065c3340cb9f2b7/port",
+      "--batch",
+      "/tmp/u131/evidence/M3-witness.txt"
+    ],
+    "exit": 0,
+    "wall": 0.0009822709998843493,
+    "stdout": "===\n"
+  },
+  {
+    "side": "Go",
+    "command": [
+      "/tmp/u131/cache/M3/4065578771eff5fea1846095438c6dbf9d1da1f395c4c770885760b186db615b/go-printer",
+      "/tmp/u131/evidence/M3-witness.txt"
+    ],
+    "exit": 0,
+    "wall": 0.0028929010004503652,
+    "stdout": "\\\\===\n"
+  }
+]

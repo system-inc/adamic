@@ -1,0 +1,114 @@
+[
+  {
+    "id": "M1",
+    "file": "stage1/cohere/markdowninline/inline.ts",
+    "line": 194,
+    "before": "preferred > alternate ? other : quote",
+    "after": "preferred < alternate ? other : quote",
+    "kind": "flip condition"
+  },
+  {
+    "id": "M2",
+    "file": "stage1/cohere/markdowninline/classes.ts",
+    "line": 32,
+    "before": "else if(code > end)",
+    "after": "else if(code >= end)",
+    "kind": "off-by-one endpoint"
+  },
+  {
+    "id": "M3",
+    "file": "stage1/cohere/markdowninline/inline.ts",
+    "line": 111,
+    "before": "marker === 61 || marker === 45",
+    "after": "marker === 62 || marker === 45",
+    "kind": "change constant"
+  },
+  {
+    "id": "M4",
+    "file": "internal/native/runtime/regexp.c",
+    "line": 912,
+    "before": "next == '$' ? replacement : input",
+    "after": "next != '$' ? replacement : input",
+    "kind": "flip condition"
+  },
+  {
+    "id": "P1",
+    "file": "stage1/cohere/markdowninline/inline.ts",
+    "line": 226,
+    "before": "export function formatLeaf(mode: string, text: string): string {",
+    "after": "export function formatLeaf(mode: string, text: string): string { return \"\";",
+    "kind": "empty semantic entry probe"
+  },
+  {
+    "id": "P2",
+    "file": "internal/native/runtime/regexp.c",
+    "line": 919,
+    "before": "adamic_string *replacement, bool require_global) {",
+    "after": "adamic_string *replacement, bool require_global) { return &adamic_string_empty;",
+    "kind": "empty RegExp replacement entry probe"
+  },
+  {
+    "id": "S1",
+    "file": "stage1/cohere/markdowninline/inline_products_shards_test.go",
+    "line": 354,
+    "before": "func inlineUnion(shards []inlineShard, expected map[int]bool) error {\n\tseen := map[int]bool{}\n\tcount := 0\n\tfor i, s := range shards {\n\t\tfor _, id := range s.ids {\n\t\t\tcount++\n\t\t\tif !expected[id] {\n\t\t\t\treturn fmt.Errorf(\"shard-%04d foreign case %d\", i, id)\n\t\t\t}\n\t\t\tif seen[id] {\n\t\t\t\treturn fmt.Errorf(\"shard-%04d repeated case %d\", i, id)\n\t\t\t}\n\t\t\tseen[id] = true\n\t\t}\n\t}\n\tif count != len(expected) || len(seen) != len(expected) {\n\t\treturn fmt.Errorf(\"union has %d cases/%d ids, want %d\", count, len(seen), len(expected))\n\t}\n\tfor id := range expected {\n\t\tif !seen[id] {\n\t\t\treturn fmt.Errorf(\"missing case %d\", id)\n\t\t}\n\t}\n\treturn nil\n}",
+    "after": "func inlineUnion(shards []inlineShard, expected map[int]bool) error {\n\treturn nil\n}",
+    "kind": "construction"
+  },
+  {
+    "id": "S2",
+    "file": "stage1/cohere/markdowninline/inline_products_shards_test.go",
+    "line": 390,
+    "before": "n < 1 || i < 0",
+    "after": "n < 0 || i < 0",
+    "kind": "construction"
+  },
+  {
+    "id": "S3",
+    "file": "stage1/cohere/markdowninline/inline_products_shards_test.go",
+    "line": 304,
+    "before": "func inlineProductSources(t *testing.T, in buildcache.Inputs, source string, names ...string) buildcache.Inputs {\n\tt.Helper()\n\tfor _, name := range names {\n\t\tdata, err := os.ReadFile(filepath.Join(source, name))\n\t\tif err != nil {\n\t\t\tt.Fatal(err)\n\t\t}\n\t\tin.Flags = append(in.Flags, fmt.Sprintf(\"source %s sha256 %x\", name, sha256.Sum256(data)))\n\t}\n\treturn in\n}",
+    "after": "func inlineProductSources(t *testing.T, in buildcache.Inputs, source string, names ...string) buildcache.Inputs {\n\tt.Helper()\n\treturn in\n}",
+    "kind": "construction"
+  },
+  {
+    "id": "S4",
+    "file": "stage1/cohere/markdowninline/inline_products_shards_test.go",
+    "line": 345,
+    "before": "func enumerateInlineShards(names []string, texts []string, files int) []inlineShard {\n\tshards := make([]inlineShard, testMarkdownInlineShards)\n\tfor i := range shards {\n\t\tshards[i].content = fmt.Sprintf(\"hash bucket %d/%d\", i, testMarkdownInlineShards)\n\t}\n\tfor text := range texts {\n\t\tkey := fmt.Sprintf(\"generated:%d\", text-files)\n\t\tif text < files {\n\t\t\tkey = \"corpus:\" + names[text]\n\t\t}\n\t\tfor mode := range len(inlineModes) {\n\t\t\tshard := inlineShardIndex(key, inlineModes[mode])\n\t\t\tshards[shard].ids = append(shards[shard].ids, text*len(inlineModes)+mode)\n\t\t}\n\t}\n\treturn shards\n}",
+    "after": "func enumerateInlineShards(names []string, texts []string, files int) []inlineShard {\n\tshards := make([]inlineShard, testMarkdownInlineShards)\n\tfor i := range shards {\n\t\tshards[i].content = fmt.Sprintf(\"hash bucket %d/%d\", i, testMarkdownInlineShards)\n\t}\n\tfor text := range texts {\n\t\tkey := fmt.Sprintf(\"generated:%d\", text-files)\n\t\tif text < files {\n\t\t\tkey = fmt.Sprintf(\"corpus:%d\", text)\n\t\t}\n\t\tfor mode := range len(inlineModes) {\n\t\t\tshard := inlineShardIndex(key, inlineModes[mode])\n\t\t\tshards[shard].ids = append(shards[shard].ids, text*len(inlineModes)+mode)\n\t\t}\n\t}\n\treturn shards\n}",
+    "kind": "construction"
+  },
+  {
+    "id": "S5",
+    "file": "stage1/cohere/markdowninline/inline_products_shards_test.go",
+    "line": 347,
+    "before": "func enumerateInlineShards(names []string, texts []string, files int) []inlineShard {\n\tshards := make([]inlineShard, testMarkdownInlineShards)\n\tfor i := range shards {\n\t\tshards[i].content = fmt.Sprintf(\"hash bucket %d/%d\", i, testMarkdownInlineShards)\n\t}\n\tfor text := range texts {\n\t\tkey := fmt.Sprintf(\"generated:%d\", text-files)\n\t\tif text < files {\n\t\t\tkey = \"corpus:\" + names[text]\n\t\t}\n\t\tfor mode := range len(inlineModes) {\n\t\t\tshard := inlineShardIndex(key, inlineModes[mode])\n\t\t\tshards[shard].ids = append(shards[shard].ids, text*len(inlineModes)+mode)\n\t\t}\n\t}\n\treturn shards\n}",
+    "after": "func enumerateInlineShards(names []string, texts []string, files int) []inlineShard {\n\tshards := make([]inlineShard, testMarkdownInlineShards)\n\tfor i := range shards {\n\t\tshards[i].content = fmt.Sprintf(\"hash bucket %d/%d\", i, testMarkdownInlineShards)\n\t}\n\tfor text := range texts {\n\t\tkey := fmt.Sprintf(\"generated:%d\", text-files)\n\t\tif text < files {\n\t\t\tkey = \"corpus:\" + names[text]\n\t\t}\n\t\tfor mode := range len(inlineModes)-1 {\n\t\t\tshard := inlineShardIndex(key, inlineModes[mode])\n\t\t\tshards[shard].ids = append(shards[shard].ids, text*len(inlineModes)+mode)\n\t\t}\n\t}\n\treturn shards\n}",
+    "kind": "construction"
+  },
+  {
+    "id": "W1",
+    "file": "stage1/cohere/markdowninline/inline_products_shards_test.go",
+    "line": 407,
+    "before": "func inlineDifference(name string, ids []int, got, want []byte) error {\n\tif bytes.Equal(got, want) {\n\t\treturn nil\n\t}\n\toffset := 0\n\tfor offset < len(got) && offset < len(want) && got[offset] == want[offset] {\n\t\toffset++\n\t}\n\trow := bytes.Count(want[:min(offset, len(want))], []byte(\"\\n\"))\n\tid := -1\n\tif row < len(ids) {\n\t\tid = ids[row]\n\t}\n\treturn fmt.Errorf(\"%s disagreement: case %d mode %c byte %d lengths %d/%d\", name, id, inlineModes[max(0, id)%len(inlineModes)], offset, len(got), len(want))\n}",
+    "after": "func inlineDifference(name string, ids []int, got, want []byte) error {\n\treturn nil\n}",
+    "kind": "weakened witness comparison"
+  },
+  {
+    "id": "S6",
+    "file": "stage1/cohere/markdowninline/inline_products_shards_test.go",
+    "line": 134,
+    "before": "\tif err = inlineWrite(dir, \"program.c\", []byte(native.C(program))); err != nil {\n\t\treturn err\n\t}\n",
+    "after": "drop required program.c write",
+    "kind": "construction"
+  },
+  {
+    "id": "S2B",
+    "file": "stage1/cohere/markdowninline/inline_products_shards_test.go",
+    "line": 390,
+    "before": "i >= n {",
+    "after": "i > n {",
+    "kind": "construction"
+  }
+]

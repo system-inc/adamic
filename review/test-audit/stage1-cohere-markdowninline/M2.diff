@@ -1,0 +1,11 @@
+--- a/stage1/cohere/markdowninline/classes.ts
++++ b/stage1/cohere/markdowninline/classes.ts
+@@ -29,7 +29,7 @@
+         const start = ranges[middle * 2] ?? 0;
+         const end = ranges[middle * 2 + 1] ?? 0;
+         if(code < start) high = middle;
+-        else if(code > end) low = middle + 1;
++        else if(code >= end) low = middle + 1;
+         else return true;
+     }
+     return false;

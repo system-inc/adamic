@@ -1,0 +1,284 @@
+[
+  {
+    "test": "TestDelimiterExpressionMatchesNode",
+    "package": "stage1/cohere/markdowninline",
+    "file": "stage1/cohere/markdowninline/gaps_test.go",
+    "seconds": 0.272,
+    "oracle": "Node executes the protected delimiter expression; native bytes must match. A self-written Node output check also requires a\\*b plus newline.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M4"
+    ],
+    "unique_kills": [
+      "M4"
+    ],
+    "last_proven_fail": "M4: gaps_test.go:31: native delimiter expression first byte difference at 0 (lengths 5/5)",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P2"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestDelimiterExpressionMatchesNode",
+      "TestProduct_MarkdownInline family",
+      "TestMarkdownInline family",
+      "TestMarkdownInlineShardUnion",
+      "TestMarkdownInlineShardSelector",
+      "TestMarkdownInlineProductSourceInputs",
+      "TestMarkdownInlineShardAssignmentStable"
+    ],
+    "evidence": "ADAMIC_MARKDOWNINLINE_LIBRARY=/tmp/u131/prettier/node_modules/prettier ADAMIC_BUILD_CACHE_DIR=/tmp/u131/cache/M4 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdowninline/ -run '^(TestDelimiterExpressionMatchesNode|TestProduct_MarkdownInlineGoOverlay|TestProduct_MarkdownInlineNode|TestProduct_MarkdownInlineOriginalLowered|TestProduct_MarkdownInlineOriginalNative|TestProduct_MarkdownInlineOriginalSanitized|TestProduct_MarkdownInlinePlantedLowered|TestProduct_MarkdownInlinePlantedNative|TestProduct_MarkdownInlinePlantedSanitized|TestProduct_MarkdownInlineParityLowered|TestProduct_MarkdownInlineParityNative|TestProduct_MarkdownInlineParitySanitized|TestProduct_MarkdownInlineParityNode|TestProduct_MarkdownInlinePipeLowered|TestProduct_MarkdownInlinePipeNative|TestProduct_MarkdownInlinePipeSanitized|TestProduct_MarkdownInlinePipeNode|TestProduct_MarkdownInlineFenceLowered|TestProduct_MarkdownInlineFenceNative|TestProduct_MarkdownInlineFenceSanitized|TestProduct_MarkdownInlineFenceNode|TestMarkdownInlineShardUnion|TestMarkdownInlineShardSelector|TestMarkdownInlineProductSourceInputs|TestMarkdownInlineShardAssignmentStable|TestMarkdownInlineUnion|TestMarkdownInline_0000|TestMarkdownInline_0064|TestMarkdownInline_0128|TestMarkdownInline_0192|TestMarkdownInline_0256|TestMarkdownInline_0320|TestMarkdownInline_0384|TestMarkdownInline_0448|TestMarkdownInline_0512|TestMarkdownInline_0576|TestMarkdownInline_0640|TestMarkdownInline_0704|TestMarkdownInline_0768|TestMarkdownInline_0832|TestMarkdownInline_0896|TestMarkdownInline_0960|TestMarkdownInline_1024|TestMarkdownInline_1088|TestMarkdownInline_1152|TestMarkdownInline_1216|TestMarkdownInline_1280|TestMarkdownInline_1344|TestMarkdownInline_1408|TestMarkdownInline_1472|TestMarkdownInline_1536|TestMarkdownInline_1600|TestMarkdownInline_1664|TestMarkdownInline_1728|TestMarkdownInline_1792|TestMarkdownInline_1856|TestMarkdownInline_1920|TestMarkdownInline_1984)$' > M4.log 2>&1; gaps_test.go:31: native delimiter expression first byte difference at 0 (lengths 5/5)",
+    "raw_failing_line": "gaps_test.go:31: native delimiter expression first byte difference at 0 (lengths 5/5)",
+    "members_file": "family-members.json",
+    "timing_samples": [
+      0.292,
+      0.268,
+      0.272
+    ]
+  },
+  {
+    "test": "TestProduct_MarkdownInline family",
+    "package": "stage1/cohere/markdowninline",
+    "file": "stage1/cohere/markdowninline/inline_build_products_test.go",
+    "seconds": 0.292,
+    "oracle": "Self-written product recipes require successful construction of Go, Node, lowered C, native and sanitized products; this is a build/setup check, not a formatting comparison.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "S6: inline_products_shards_test.go:318: open /tmp/u131/cache/S6/fba1196956e34be383cd865709e632e206d2ce9fb48abc4a1b0fc72254f7aa8f/program.c: no such file or directory",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestDelimiterExpressionMatchesNode",
+      "TestProduct_MarkdownInline family",
+      "TestMarkdownInline family",
+      "TestMarkdownInlineShardUnion",
+      "TestMarkdownInlineShardSelector",
+      "TestMarkdownInlineProductSourceInputs",
+      "TestMarkdownInlineShardAssignmentStable"
+    ],
+    "evidence": "ADAMIC_MARKDOWNINLINE_LIBRARY=/tmp/u131/prettier/node_modules/prettier ADAMIC_BUILD_CACHE_DIR=/tmp/u131/cache/S6 timeout 120 go test -json -count=1 -timeout 90s -overlay=/tmp/u131/evidence/S6.overlay.json ./stage1/cohere/markdowninline/ -run '^(TestDelimiterExpressionMatchesNode|TestProduct_MarkdownInlineGoOverlay|TestProduct_MarkdownInlineNode|TestProduct_MarkdownInlineOriginalLowered|TestProduct_MarkdownInlineOriginalNative|TestProduct_MarkdownInlineOriginalSanitized|TestProduct_MarkdownInlinePlantedLowered|TestProduct_MarkdownInlinePlantedNative|TestProduct_MarkdownInlinePlantedSanitized|TestProduct_MarkdownInlineParityLowered|TestProduct_MarkdownInlineParityNative|TestProduct_MarkdownInlineParitySanitized|TestProduct_MarkdownInlineParityNode|TestProduct_MarkdownInlinePipeLowered|TestProduct_MarkdownInlinePipeNative|TestProduct_MarkdownInlinePipeSanitized|TestProduct_MarkdownInlinePipeNode|TestProduct_MarkdownInlineFenceLowered|TestProduct_MarkdownInlineFenceNative|TestProduct_MarkdownInlineFenceSanitized|TestProduct_MarkdownInlineFenceNode|TestMarkdownInlineShardUnion|TestMarkdownInlineShardSelector|TestMarkdownInlineProductSourceInputs|TestMarkdownInlineShardAssignmentStable|TestMarkdownInlineUnion|TestMarkdownInline_0000|TestMarkdownInline_0064|TestMarkdownInline_0128|TestMarkdownInline_0192|TestMarkdownInline_0256|TestMarkdownInline_0320|TestMarkdownInline_0384|TestMarkdownInline_0448|TestMarkdownInline_0512|TestMarkdownInline_0576|TestMarkdownInline_0640|TestMarkdownInline_0704|TestMarkdownInline_0768|TestMarkdownInline_0832|TestMarkdownInline_0896|TestMarkdownInline_0960|TestMarkdownInline_1024|TestMarkdownInline_1088|TestMarkdownInline_1152|TestMarkdownInline_1216|TestMarkdownInline_1280|TestMarkdownInline_1344|TestMarkdownInline_1408|TestMarkdownInline_1472|TestMarkdownInline_1536|TestMarkdownInline_1600|TestMarkdownInline_1664|TestMarkdownInline_1728|TestMarkdownInline_1792|TestMarkdownInline_1856|TestMarkdownInline_1920|TestMarkdownInline_1984)$' > S6.log 2>&1; inline_products_shards_test.go:318: open /tmp/u131/cache/S6/fba1196956e34be383cd865709e632e206d2ce9fb48abc4a1b0fc72254f7aa8f/program.c: no such file or directory",
+    "raw_failing_line": "inline_products_shards_test.go:315: open /tmp/u131/cache/S6/fba1196956e34be383cd865709e632e206d2ce9fb48abc4a1b0fc72254f7aa8f/program.c: no such file or directory",
+    "members_file": "family-members.json",
+    "timing_samples": [
+      0.276,
+      0.292,
+      0.307
+    ],
+    "construction_kills": [
+      "S6"
+    ]
+  },
+  {
+    "test": "TestMarkdownInline family",
+    "package": "stage1/cohere/markdowninline",
+    "file": "stage1/cohere/markdowninline/inline_units_test.go; inline_products_shards_test.go",
+    "seconds": 7.52,
+    "oracle": "Go cohere overlay, source Node, emitted JavaScript Node, and pinned Prettier 3.9.6 compare bytes. Self-written corpus coverage and planted-disagreement labels also apply. Under TS mutants Node shares the altered source; Go and Prettier remain independent.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M1",
+      "M2"
+    ],
+    "unique_kills": [
+      "M1",
+      "M2"
+    ],
+    "last_proven_fail": "M2: inline_products_shards_test.go:560: TestMarkdownInline_0064 native disagreement: case 13377 mode e byte 50388 lengths 171601/171605",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestDelimiterExpressionMatchesNode",
+      "TestProduct_MarkdownInline family",
+      "TestMarkdownInline family",
+      "TestMarkdownInlineShardUnion",
+      "TestMarkdownInlineShardSelector",
+      "TestMarkdownInlineProductSourceInputs",
+      "TestMarkdownInlineShardAssignmentStable"
+    ],
+    "evidence": "ADAMIC_MARKDOWNINLINE_LIBRARY=/tmp/u131/prettier/node_modules/prettier ADAMIC_BUILD_CACHE_DIR=/tmp/u131/cache/M2 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdowninline/ -run '^(TestDelimiterExpressionMatchesNode|TestProduct_MarkdownInlineGoOverlay|TestProduct_MarkdownInlineNode|TestProduct_MarkdownInlineOriginalLowered|TestProduct_MarkdownInlineOriginalNative|TestProduct_MarkdownInlineOriginalSanitized|TestProduct_MarkdownInlinePlantedLowered|TestProduct_MarkdownInlinePlantedNative|TestProduct_MarkdownInlinePlantedSanitized|TestProduct_MarkdownInlineParityLowered|TestProduct_MarkdownInlineParityNative|TestProduct_MarkdownInlineParitySanitized|TestProduct_MarkdownInlineParityNode|TestProduct_MarkdownInlinePipeLowered|TestProduct_MarkdownInlinePipeNative|TestProduct_MarkdownInlinePipeSanitized|TestProduct_MarkdownInlinePipeNode|TestProduct_MarkdownInlineFenceLowered|TestProduct_MarkdownInlineFenceNative|TestProduct_MarkdownInlineFenceSanitized|TestProduct_MarkdownInlineFenceNode|TestMarkdownInlineShardUnion|TestMarkdownInlineShardSelector|TestMarkdownInlineProductSourceInputs|TestMarkdownInlineShardAssignmentStable|TestMarkdownInlineUnion|TestMarkdownInline_0000|TestMarkdownInline_0064|TestMarkdownInline_0128|TestMarkdownInline_0192|TestMarkdownInline_0256|TestMarkdownInline_0320|TestMarkdownInline_0384|TestMarkdownInline_0448|TestMarkdownInline_0512|TestMarkdownInline_0576|TestMarkdownInline_0640|TestMarkdownInline_0704|TestMarkdownInline_0768|TestMarkdownInline_0832|TestMarkdownInline_0896|TestMarkdownInline_0960|TestMarkdownInline_1024|TestMarkdownInline_1088|TestMarkdownInline_1152|TestMarkdownInline_1216|TestMarkdownInline_1280|TestMarkdownInline_1344|TestMarkdownInline_1408|TestMarkdownInline_1472|TestMarkdownInline_1536|TestMarkdownInline_1600|TestMarkdownInline_1664|TestMarkdownInline_1728|TestMarkdownInline_1792|TestMarkdownInline_1856|TestMarkdownInline_1920|TestMarkdownInline_1984)$' > M2.log 2>&1; inline_products_shards_test.go:560: TestMarkdownInline_0064 native disagreement: case 13377 mode e byte 50388 lengths 171601/171605",
+    "raw_failing_line": "inline_products_shards_test.go:560: TestMarkdownInline_0064 native disagreement: case 13377 mode e byte 50388 lengths 171601/171605",
+    "members_file": "family-members.json",
+    "timing_samples": [
+      7.408,
+      7.52,
+      7.52
+    ],
+    "witness_evidence": "W1: inline_products_shards_test.go:649: escaped delimiter parity survived (overlay raw line 637); comparison weakened to return nil; W1.log",
+    "timing_scope": "32 of 2048 shards plus corpus union; full-family timing unknown"
+  },
+  {
+    "test": "TestMarkdownInlineShardUnion",
+    "package": "stage1/cohere/markdowninline",
+    "file": "stage1/cohere/markdowninline/inline_products_shards_test.go",
+    "seconds": 0.007,
+    "oracle": "Self-written missing/repeated/foreign shard union assertions.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "S1: inline_products_shards_test.go:667: invalid union accepted",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestDelimiterExpressionMatchesNode",
+      "TestProduct_MarkdownInline family",
+      "TestMarkdownInline family",
+      "TestMarkdownInlineShardUnion",
+      "TestMarkdownInlineShardSelector",
+      "TestMarkdownInlineProductSourceInputs",
+      "TestMarkdownInlineShardAssignmentStable"
+    ],
+    "evidence": "ADAMIC_MARKDOWNINLINE_LIBRARY=/tmp/u131/prettier/node_modules/prettier timeout 120 go test -json -count=1 -timeout 90s -overlay=/tmp/u131/evidence/S1.overlay.json ./stage1/cohere/markdowninline/ -run '^(TestDelimiterExpressionMatchesNode|TestProduct_MarkdownInlineGoOverlay|TestProduct_MarkdownInlineNode|TestProduct_MarkdownInlineOriginalLowered|TestProduct_MarkdownInlineOriginalNative|TestProduct_MarkdownInlineOriginalSanitized|TestProduct_MarkdownInlinePlantedLowered|TestProduct_MarkdownInlinePlantedNative|TestProduct_MarkdownInlinePlantedSanitized|TestProduct_MarkdownInlineParityLowered|TestProduct_MarkdownInlineParityNative|TestProduct_MarkdownInlineParitySanitized|TestProduct_MarkdownInlineParityNode|TestProduct_MarkdownInlinePipeLowered|TestProduct_MarkdownInlinePipeNative|TestProduct_MarkdownInlinePipeSanitized|TestProduct_MarkdownInlinePipeNode|TestProduct_MarkdownInlineFenceLowered|TestProduct_MarkdownInlineFenceNative|TestProduct_MarkdownInlineFenceSanitized|TestProduct_MarkdownInlineFenceNode|TestMarkdownInlineShardUnion|TestMarkdownInlineShardSelector|TestMarkdownInlineProductSourceInputs|TestMarkdownInlineShardAssignmentStable|TestMarkdownInlineUnion|TestMarkdownInline_0000|TestMarkdownInline_0064|TestMarkdownInline_0128|TestMarkdownInline_0192|TestMarkdownInline_0256|TestMarkdownInline_0320|TestMarkdownInline_0384|TestMarkdownInline_0448|TestMarkdownInline_0512|TestMarkdownInline_0576|TestMarkdownInline_0640|TestMarkdownInline_0704|TestMarkdownInline_0768|TestMarkdownInline_0832|TestMarkdownInline_0896|TestMarkdownInline_0960|TestMarkdownInline_1024|TestMarkdownInline_1088|TestMarkdownInline_1152|TestMarkdownInline_1216|TestMarkdownInline_1280|TestMarkdownInline_1344|TestMarkdownInline_1408|TestMarkdownInline_1472|TestMarkdownInline_1536|TestMarkdownInline_1600|TestMarkdownInline_1664|TestMarkdownInline_1728|TestMarkdownInline_1792|TestMarkdownInline_1856|TestMarkdownInline_1920|TestMarkdownInline_1984)$' > S1.log 2>&1; inline_products_shards_test.go:667: invalid union accepted",
+    "raw_failing_line": "inline_products_shards_test.go:645: invalid union accepted",
+    "members_file": "family-members.json",
+    "timing_samples": [
+      0.007,
+      0.006,
+      0.007
+    ],
+    "construction_kills": [
+      "S1"
+    ]
+  },
+  {
+    "test": "TestMarkdownInlineShardSelector",
+    "package": "stage1/cohere/markdowninline",
+    "file": "stage1/cohere/markdowninline/inline_products_shards_test.go",
+    "seconds": 0.007,
+    "oracle": "Self-written selector bounds and selected-shard assertions.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "S2B: inline_products_shards_test.go:683: accepted \"3/3\"",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestDelimiterExpressionMatchesNode",
+      "TestProduct_MarkdownInline family",
+      "TestMarkdownInline family",
+      "TestMarkdownInlineShardUnion",
+      "TestMarkdownInlineShardSelector",
+      "TestMarkdownInlineProductSourceInputs",
+      "TestMarkdownInlineShardAssignmentStable"
+    ],
+    "evidence": "ADAMIC_MARKDOWNINLINE_LIBRARY=/tmp/u131/prettier/node_modules/prettier timeout 120 go test -json -count=1 -timeout 90s -overlay=/tmp/u131/evidence/S2B.overlay.json ./stage1/cohere/markdowninline/ -run '^(TestDelimiterExpressionMatchesNode|TestProduct_MarkdownInlineGoOverlay|TestProduct_MarkdownInlineNode|TestProduct_MarkdownInlineOriginalLowered|TestProduct_MarkdownInlineOriginalNative|TestProduct_MarkdownInlineOriginalSanitized|TestProduct_MarkdownInlinePlantedLowered|TestProduct_MarkdownInlinePlantedNative|TestProduct_MarkdownInlinePlantedSanitized|TestProduct_MarkdownInlineParityLowered|TestProduct_MarkdownInlineParityNative|TestProduct_MarkdownInlineParitySanitized|TestProduct_MarkdownInlineParityNode|TestProduct_MarkdownInlinePipeLowered|TestProduct_MarkdownInlinePipeNative|TestProduct_MarkdownInlinePipeSanitized|TestProduct_MarkdownInlinePipeNode|TestProduct_MarkdownInlineFenceLowered|TestProduct_MarkdownInlineFenceNative|TestProduct_MarkdownInlineFenceSanitized|TestProduct_MarkdownInlineFenceNode|TestMarkdownInlineShardUnion|TestMarkdownInlineShardSelector|TestMarkdownInlineProductSourceInputs|TestMarkdownInlineShardAssignmentStable|TestMarkdownInlineUnion|TestMarkdownInline_0000|TestMarkdownInline_0064|TestMarkdownInline_0128|TestMarkdownInline_0192|TestMarkdownInline_0256|TestMarkdownInline_0320|TestMarkdownInline_0384|TestMarkdownInline_0448|TestMarkdownInline_0512|TestMarkdownInline_0576|TestMarkdownInline_0640|TestMarkdownInline_0704|TestMarkdownInline_0768|TestMarkdownInline_0832|TestMarkdownInline_0896|TestMarkdownInline_0960|TestMarkdownInline_1024|TestMarkdownInline_1088|TestMarkdownInline_1152|TestMarkdownInline_1216|TestMarkdownInline_1280|TestMarkdownInline_1344|TestMarkdownInline_1408|TestMarkdownInline_1472|TestMarkdownInline_1536|TestMarkdownInline_1600|TestMarkdownInline_1664|TestMarkdownInline_1728|TestMarkdownInline_1792|TestMarkdownInline_1856|TestMarkdownInline_1920|TestMarkdownInline_1984)$' > S2B.log 2>&1; inline_products_shards_test.go:683: accepted \"3/3\"",
+    "raw_failing_line": "inline_products_shards_test.go:683: accepted \"3/3\"",
+    "members_file": "family-members.json",
+    "timing_samples": [
+      0.007,
+      0.007,
+      0.007
+    ],
+    "construction_kills": [
+      "S2B"
+    ]
+  },
+  {
+    "test": "TestMarkdownInlineProductSourceInputs",
+    "package": "stage1/cohere/markdowninline",
+    "file": "stage1/cohere/markdowninline/inline_products_shards_test.go",
+    "seconds": 0.008,
+    "oracle": "Self-written requirement that changed source content changes the product key.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "S3: inline_products_shards_test.go:711: changed prerequisite reused a product key",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestDelimiterExpressionMatchesNode",
+      "TestProduct_MarkdownInline family",
+      "TestMarkdownInline family",
+      "TestMarkdownInlineShardUnion",
+      "TestMarkdownInlineShardSelector",
+      "TestMarkdownInlineProductSourceInputs",
+      "TestMarkdownInlineShardAssignmentStable"
+    ],
+    "evidence": "ADAMIC_MARKDOWNINLINE_LIBRARY=/tmp/u131/prettier/node_modules/prettier timeout 120 go test -json -count=1 -timeout 90s -overlay=/tmp/u131/evidence/S3.overlay.json ./stage1/cohere/markdowninline/ -run '^(TestDelimiterExpressionMatchesNode|TestProduct_MarkdownInlineGoOverlay|TestProduct_MarkdownInlineNode|TestProduct_MarkdownInlineOriginalLowered|TestProduct_MarkdownInlineOriginalNative|TestProduct_MarkdownInlineOriginalSanitized|TestProduct_MarkdownInlinePlantedLowered|TestProduct_MarkdownInlinePlantedNative|TestProduct_MarkdownInlinePlantedSanitized|TestProduct_MarkdownInlineParityLowered|TestProduct_MarkdownInlineParityNative|TestProduct_MarkdownInlineParitySanitized|TestProduct_MarkdownInlineParityNode|TestProduct_MarkdownInlinePipeLowered|TestProduct_MarkdownInlinePipeNative|TestProduct_MarkdownInlinePipeSanitized|TestProduct_MarkdownInlinePipeNode|TestProduct_MarkdownInlineFenceLowered|TestProduct_MarkdownInlineFenceNative|TestProduct_MarkdownInlineFenceSanitized|TestProduct_MarkdownInlineFenceNode|TestMarkdownInlineShardUnion|TestMarkdownInlineShardSelector|TestMarkdownInlineProductSourceInputs|TestMarkdownInlineShardAssignmentStable|TestMarkdownInlineUnion|TestMarkdownInline_0000|TestMarkdownInline_0064|TestMarkdownInline_0128|TestMarkdownInline_0192|TestMarkdownInline_0256|TestMarkdownInline_0320|TestMarkdownInline_0384|TestMarkdownInline_0448|TestMarkdownInline_0512|TestMarkdownInline_0576|TestMarkdownInline_0640|TestMarkdownInline_0704|TestMarkdownInline_0768|TestMarkdownInline_0832|TestMarkdownInline_0896|TestMarkdownInline_0960|TestMarkdownInline_1024|TestMarkdownInline_1088|TestMarkdownInline_1152|TestMarkdownInline_1216|TestMarkdownInline_1280|TestMarkdownInline_1344|TestMarkdownInline_1408|TestMarkdownInline_1472|TestMarkdownInline_1536|TestMarkdownInline_1600|TestMarkdownInline_1664|TestMarkdownInline_1728|TestMarkdownInline_1792|TestMarkdownInline_1856|TestMarkdownInline_1920|TestMarkdownInline_1984)$' > S3.log 2>&1; inline_products_shards_test.go:711: changed prerequisite reused a product key",
+    "raw_failing_line": "inline_products_shards_test.go:704: changed prerequisite reused a product key",
+    "members_file": "family-members.json",
+    "timing_samples": [
+      0.009,
+      0.007,
+      0.008
+    ],
+    "construction_kills": [
+      "S3"
+    ]
+  },
+  {
+    "test": "TestMarkdownInlineShardAssignmentStable",
+    "package": "stage1/cohere/markdowninline",
+    "file": "stage1/cohere/markdowninline/inline_products_shards_test.go",
+    "seconds": 0.007,
+    "oracle": "Self-written stable hash assignment and coverage under corpus insertion.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "S4: inline_products_shards_test.go:736: insertion moved text 1 mode w",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestDelimiterExpressionMatchesNode",
+      "TestProduct_MarkdownInline family",
+      "TestMarkdownInline family",
+      "TestMarkdownInlineShardUnion",
+      "TestMarkdownInlineShardSelector",
+      "TestMarkdownInlineProductSourceInputs",
+      "TestMarkdownInlineShardAssignmentStable"
+    ],
+    "evidence": "ADAMIC_MARKDOWNINLINE_LIBRARY=/tmp/u131/prettier/node_modules/prettier timeout 120 go test -json -count=1 -timeout 90s -overlay=/tmp/u131/evidence/S4.overlay.json ./stage1/cohere/markdowninline/ -run '^(TestDelimiterExpressionMatchesNode|TestProduct_MarkdownInlineGoOverlay|TestProduct_MarkdownInlineNode|TestProduct_MarkdownInlineOriginalLowered|TestProduct_MarkdownInlineOriginalNative|TestProduct_MarkdownInlineOriginalSanitized|TestProduct_MarkdownInlinePlantedLowered|TestProduct_MarkdownInlinePlantedNative|TestProduct_MarkdownInlinePlantedSanitized|TestProduct_MarkdownInlineParityLowered|TestProduct_MarkdownInlineParityNative|TestProduct_MarkdownInlineParitySanitized|TestProduct_MarkdownInlineParityNode|TestProduct_MarkdownInlinePipeLowered|TestProduct_MarkdownInlinePipeNative|TestProduct_MarkdownInlinePipeSanitized|TestProduct_MarkdownInlinePipeNode|TestProduct_MarkdownInlineFenceLowered|TestProduct_MarkdownInlineFenceNative|TestProduct_MarkdownInlineFenceSanitized|TestProduct_MarkdownInlineFenceNode|TestMarkdownInlineShardUnion|TestMarkdownInlineShardSelector|TestMarkdownInlineProductSourceInputs|TestMarkdownInlineShardAssignmentStable|TestMarkdownInlineUnion|TestMarkdownInline_0000|TestMarkdownInline_0064|TestMarkdownInline_0128|TestMarkdownInline_0192|TestMarkdownInline_0256|TestMarkdownInline_0320|TestMarkdownInline_0384|TestMarkdownInline_0448|TestMarkdownInline_0512|TestMarkdownInline_0576|TestMarkdownInline_0640|TestMarkdownInline_0704|TestMarkdownInline_0768|TestMarkdownInline_0832|TestMarkdownInline_0896|TestMarkdownInline_0960|TestMarkdownInline_1024|TestMarkdownInline_1088|TestMarkdownInline_1152|TestMarkdownInline_1216|TestMarkdownInline_1280|TestMarkdownInline_1344|TestMarkdownInline_1408|TestMarkdownInline_1472|TestMarkdownInline_1536|TestMarkdownInline_1600|TestMarkdownInline_1664|TestMarkdownInline_1728|TestMarkdownInline_1792|TestMarkdownInline_1856|TestMarkdownInline_1920|TestMarkdownInline_1984)$' > S4.log 2>&1; inline_products_shards_test.go:736: insertion moved text 1 mode w",
+    "raw_failing_line": "inline_products_shards_test.go:736: insertion moved text 1 mode w",
+    "members_file": "family-members.json",
+    "timing_samples": [
+      0.007,
+      0.007,
+      0.007
+    ],
+    "construction_kills": [
+      "S4"
+    ]
+  }
+]

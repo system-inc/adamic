@@ -1,0 +1,11 @@
+--- a/stage1/cohere/markdowninline/inline.ts
++++ b/stage1/cohere/markdowninline/inline.ts
+@@ -191,7 +191,7 @@
+         if(character === quote) preferred++;
+         if(character === other) alternate++;
+     }
+-    const chosen = preferred > alternate ? other : quote;
++    const chosen = preferred < alternate ? other : quote;
+     return chosen + replaceCharacter(replaceCharacter(title, 92, '\\\\'), chosen.charCodeAt(0), `\\${chosen}`) + chosen;
+ }
+ export function printReference(label: string): string {

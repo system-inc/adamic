@@ -1,0 +1,11 @@
+--- a/stage1/cohere/markdowninline/inline.ts
++++ b/stage1/cohere/markdowninline/inline.ts
+@@ -223,7 +223,7 @@
+     return `![${original !== '' ? original : alt}](${destination}${printedTitle === '' ? '' : ` ${printedTitle}`})`;
+ }
+ // These modes describe leaf nodes and explicit ancestor contexts, not a Markdown parser.
+-export function formatLeaf(mode: string, text: string): string {
++export function formatLeaf(mode: string, text: string): string { return "";
+     if(mode === 'w') return printWord(text, true, false, false, 'a', 'a');
+     if(mode === 'e') return printWord(text, true, false, false, ' ', ' ');
+     if(mode === 'f') return printWord(text, true, true, false, '', '');

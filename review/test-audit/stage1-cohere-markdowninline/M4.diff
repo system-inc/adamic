@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/regexp.c
++++ b/internal/native/runtime/regexp.c
+@@ -909,7 +909,7 @@
+ 			continue;
+ 		regex_piece(pieces, replacement, plain, at);
+ 		if (first >= 0)
+-			regex_piece(pieces, next == '$' ? replacement : input, (size_t)first, (size_t)last);
++			regex_piece(pieces, next != '$' ? replacement : input, (size_t)first, (size_t)last);
+ 		at += consumed - 1;
+ 		plain = at + 1;
+ 	}

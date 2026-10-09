@@ -1,0 +1,540 @@
+[
+  {
+    "id": "M1",
+    "kind": "flip condition",
+    "failed_tests": [
+      "TestMarkdownInline_1856",
+      "TestMarkdownInline_1984",
+      "TestMarkdownInline_1792",
+      "TestMarkdownInline_1664",
+      "TestMarkdownInline_1600",
+      "TestMarkdownInline_1408",
+      "TestMarkdownInline_1472",
+      "TestMarkdownInline_1344",
+      "TestMarkdownInline_1216",
+      "TestMarkdownInline_1088",
+      "TestMarkdownInline_0960",
+      "TestMarkdownInline_0832",
+      "TestMarkdownInline_0704",
+      "TestMarkdownInline_0640",
+      "TestMarkdownInline_0512",
+      "TestMarkdownInline_0384",
+      "TestMarkdownInline_0064",
+      "TestMarkdownInline_0192",
+      "TestMarkdownInline_0576"
+    ],
+    "failed_rows": [
+      "TestMarkdownInline family"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdowninline/",
+      "-run",
+      "^(TestDelimiterExpressionMatchesNode|TestProduct_MarkdownInlineGoOverlay|TestProduct_MarkdownInlineNode|TestProduct_MarkdownInlineOriginalLowered|TestProduct_MarkdownInlineOriginalNative|TestProduct_MarkdownInlineOriginalSanitized|TestProduct_MarkdownInlinePlantedLowered|TestProduct_MarkdownInlinePlantedNative|TestProduct_MarkdownInlinePlantedSanitized|TestProduct_MarkdownInlineParityLowered|TestProduct_MarkdownInlineParityNative|TestProduct_MarkdownInlineParitySanitized|TestProduct_MarkdownInlineParityNode|TestProduct_MarkdownInlinePipeLowered|TestProduct_MarkdownInlinePipeNative|TestProduct_MarkdownInlinePipeSanitized|TestProduct_MarkdownInlinePipeNode|TestProduct_MarkdownInlineFenceLowered|TestProduct_MarkdownInlineFenceNative|TestProduct_MarkdownInlineFenceSanitized|TestProduct_MarkdownInlineFenceNode|TestMarkdownInlineShardUnion|TestMarkdownInlineShardSelector|TestMarkdownInlineProductSourceInputs|TestMarkdownInlineShardAssignmentStable|TestMarkdownInlineUnion|TestMarkdownInline_0000|TestMarkdownInline_0064|TestMarkdownInline_0128|TestMarkdownInline_0192|TestMarkdownInline_0256|TestMarkdownInline_0320|TestMarkdownInline_0384|TestMarkdownInline_0448|TestMarkdownInline_0512|TestMarkdownInline_0576|TestMarkdownInline_0640|TestMarkdownInline_0704|TestMarkdownInline_0768|TestMarkdownInline_0832|TestMarkdownInline_0896|TestMarkdownInline_0960|TestMarkdownInline_1024|TestMarkdownInline_1088|TestMarkdownInline_1152|TestMarkdownInline_1216|TestMarkdownInline_1280|TestMarkdownInline_1344|TestMarkdownInline_1408|TestMarkdownInline_1472|TestMarkdownInline_1536|TestMarkdownInline_1600|TestMarkdownInline_1664|TestMarkdownInline_1728|TestMarkdownInline_1792|TestMarkdownInline_1856|TestMarkdownInline_1920|TestMarkdownInline_1984)$"
+    ],
+    "environment": {
+      "ADAMIC_MARKDOWNINLINE_LIBRARY": "/tmp/u131/prettier/node_modules/prettier",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u131/cache/M1"
+    },
+    "wall_seconds": 9.506733260001056,
+    "exit": 1
+  },
+  {
+    "id": "M2",
+    "kind": "off-by-one endpoint",
+    "failed_tests": [
+      "TestMarkdownInline_0064",
+      "TestMarkdownInline_0256",
+      "TestMarkdownInline_1984",
+      "TestMarkdownInline_1856",
+      "TestMarkdownInline_1920",
+      "TestMarkdownInline_1664",
+      "TestMarkdownInline_1728",
+      "TestMarkdownInline_1344",
+      "TestMarkdownInline_1280",
+      "TestMarkdownInline_1216",
+      "TestMarkdownInline_1024",
+      "TestMarkdownInline_0832",
+      "TestMarkdownInline_0704",
+      "TestMarkdownInline_0384",
+      "TestMarkdownInline_0320"
+    ],
+    "failed_rows": [
+      "TestMarkdownInline family"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdowninline/",
+      "-run",
+      "^(TestDelimiterExpressionMatchesNode|TestProduct_MarkdownInlineGoOverlay|TestProduct_MarkdownInlineNode|TestProduct_MarkdownInlineOriginalLowered|TestProduct_MarkdownInlineOriginalNative|TestProduct_MarkdownInlineOriginalSanitized|TestProduct_MarkdownInlinePlantedLowered|TestProduct_MarkdownInlinePlantedNative|TestProduct_MarkdownInlinePlantedSanitized|TestProduct_MarkdownInlineParityLowered|TestProduct_MarkdownInlineParityNative|TestProduct_MarkdownInlineParitySanitized|TestProduct_MarkdownInlineParityNode|TestProduct_MarkdownInlinePipeLowered|TestProduct_MarkdownInlinePipeNative|TestProduct_MarkdownInlinePipeSanitized|TestProduct_MarkdownInlinePipeNode|TestProduct_MarkdownInlineFenceLowered|TestProduct_MarkdownInlineFenceNative|TestProduct_MarkdownInlineFenceSanitized|TestProduct_MarkdownInlineFenceNode|TestMarkdownInlineShardUnion|TestMarkdownInlineShardSelector|TestMarkdownInlineProductSourceInputs|TestMarkdownInlineShardAssignmentStable|TestMarkdownInlineUnion|TestMarkdownInline_0000|TestMarkdownInline_0064|TestMarkdownInline_0128|TestMarkdownInline_0192|TestMarkdownInline_0256|TestMarkdownInline_0320|TestMarkdownInline_0384|TestMarkdownInline_0448|TestMarkdownInline_0512|TestMarkdownInline_0576|TestMarkdownInline_0640|TestMarkdownInline_0704|TestMarkdownInline_0768|TestMarkdownInline_0832|TestMarkdownInline_0896|TestMarkdownInline_0960|TestMarkdownInline_1024|TestMarkdownInline_1088|TestMarkdownInline_1152|TestMarkdownInline_1216|TestMarkdownInline_1280|TestMarkdownInline_1344|TestMarkdownInline_1408|TestMarkdownInline_1472|TestMarkdownInline_1536|TestMarkdownInline_1600|TestMarkdownInline_1664|TestMarkdownInline_1728|TestMarkdownInline_1792|TestMarkdownInline_1856|TestMarkdownInline_1920|TestMarkdownInline_1984)$"
+    ],
+    "environment": {
+      "ADAMIC_MARKDOWNINLINE_LIBRARY": "/tmp/u131/prettier/node_modules/prettier",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u131/cache/M2"
+    },
+    "wall_seconds": 9.99304220599879,
+    "exit": 1
+  },
+  {
+    "id": "M3",
+    "kind": "change constant",
+    "failed_tests": [],
+    "failed_rows": [],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdowninline/",
+      "-run",
+      "^(TestDelimiterExpressionMatchesNode|TestProduct_MarkdownInlineGoOverlay|TestProduct_MarkdownInlineNode|TestProduct_MarkdownInlineOriginalLowered|TestProduct_MarkdownInlineOriginalNative|TestProduct_MarkdownInlineOriginalSanitized|TestProduct_MarkdownInlinePlantedLowered|TestProduct_MarkdownInlinePlantedNative|TestProduct_MarkdownInlinePlantedSanitized|TestProduct_MarkdownInlineParityLowered|TestProduct_MarkdownInlineParityNative|TestProduct_MarkdownInlineParitySanitized|TestProduct_MarkdownInlineParityNode|TestProduct_MarkdownInlinePipeLowered|TestProduct_MarkdownInlinePipeNative|TestProduct_MarkdownInlinePipeSanitized|TestProduct_MarkdownInlinePipeNode|TestProduct_MarkdownInlineFenceLowered|TestProduct_MarkdownInlineFenceNative|TestProduct_MarkdownInlineFenceSanitized|TestProduct_MarkdownInlineFenceNode|TestMarkdownInlineShardUnion|TestMarkdownInlineShardSelector|TestMarkdownInlineProductSourceInputs|TestMarkdownInlineShardAssignmentStable|TestMarkdownInlineUnion|TestMarkdownInline_0000|TestMarkdownInline_0064|TestMarkdownInline_0128|TestMarkdownInline_0192|TestMarkdownInline_0256|TestMarkdownInline_0320|TestMarkdownInline_0384|TestMarkdownInline_0448|TestMarkdownInline_0512|TestMarkdownInline_0576|TestMarkdownInline_0640|TestMarkdownInline_0704|TestMarkdownInline_0768|TestMarkdownInline_0832|TestMarkdownInline_0896|TestMarkdownInline_0960|TestMarkdownInline_1024|TestMarkdownInline_1088|TestMarkdownInline_1152|TestMarkdownInline_1216|TestMarkdownInline_1280|TestMarkdownInline_1344|TestMarkdownInline_1408|TestMarkdownInline_1472|TestMarkdownInline_1536|TestMarkdownInline_1600|TestMarkdownInline_1664|TestMarkdownInline_1728|TestMarkdownInline_1792|TestMarkdownInline_1856|TestMarkdownInline_1920|TestMarkdownInline_1984)$"
+    ],
+    "environment": {
+      "ADAMIC_MARKDOWNINLINE_LIBRARY": "/tmp/u131/prettier/node_modules/prettier",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u131/cache/M3"
+    },
+    "wall_seconds": 11.60800854000081,
+    "exit": 0
+  },
+  {
+    "id": "M4",
+    "kind": "flip condition",
+    "failed_tests": [
+      "TestDelimiterExpressionMatchesNode"
+    ],
+    "failed_rows": [
+      "TestDelimiterExpressionMatchesNode"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdowninline/",
+      "-run",
+      "^(TestDelimiterExpressionMatchesNode|TestProduct_MarkdownInlineGoOverlay|TestProduct_MarkdownInlineNode|TestProduct_MarkdownInlineOriginalLowered|TestProduct_MarkdownInlineOriginalNative|TestProduct_MarkdownInlineOriginalSanitized|TestProduct_MarkdownInlinePlantedLowered|TestProduct_MarkdownInlinePlantedNative|TestProduct_MarkdownInlinePlantedSanitized|TestProduct_MarkdownInlineParityLowered|TestProduct_MarkdownInlineParityNative|TestProduct_MarkdownInlineParitySanitized|TestProduct_MarkdownInlineParityNode|TestProduct_MarkdownInlinePipeLowered|TestProduct_MarkdownInlinePipeNative|TestProduct_MarkdownInlinePipeSanitized|TestProduct_MarkdownInlinePipeNode|TestProduct_MarkdownInlineFenceLowered|TestProduct_MarkdownInlineFenceNative|TestProduct_MarkdownInlineFenceSanitized|TestProduct_MarkdownInlineFenceNode|TestMarkdownInlineShardUnion|TestMarkdownInlineShardSelector|TestMarkdownInlineProductSourceInputs|TestMarkdownInlineShardAssignmentStable|TestMarkdownInlineUnion|TestMarkdownInline_0000|TestMarkdownInline_0064|TestMarkdownInline_0128|TestMarkdownInline_0192|TestMarkdownInline_0256|TestMarkdownInline_0320|TestMarkdownInline_0384|TestMarkdownInline_0448|TestMarkdownInline_0512|TestMarkdownInline_0576|TestMarkdownInline_0640|TestMarkdownInline_0704|TestMarkdownInline_0768|TestMarkdownInline_0832|TestMarkdownInline_0896|TestMarkdownInline_0960|TestMarkdownInline_1024|TestMarkdownInline_1088|TestMarkdownInline_1152|TestMarkdownInline_1216|TestMarkdownInline_1280|TestMarkdownInline_1344|TestMarkdownInline_1408|TestMarkdownInline_1472|TestMarkdownInline_1536|TestMarkdownInline_1600|TestMarkdownInline_1664|TestMarkdownInline_1728|TestMarkdownInline_1792|TestMarkdownInline_1856|TestMarkdownInline_1920|TestMarkdownInline_1984)$"
+    ],
+    "environment": {
+      "ADAMIC_MARKDOWNINLINE_LIBRARY": "/tmp/u131/prettier/node_modules/prettier",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u131/cache/M4"
+    },
+    "wall_seconds": 19.036581507998562,
+    "exit": 1
+  },
+  {
+    "id": "P1",
+    "kind": "empty semantic entry probe",
+    "failed_tests": [
+      "TestMarkdownInline_1024",
+      "TestMarkdownInline_1152",
+      "TestMarkdownInline_0704",
+      "TestMarkdownInline_0256",
+      "TestMarkdownInline_0896",
+      "TestMarkdownInline_0960",
+      "TestMarkdownInline_1088",
+      "TestMarkdownInline_0832",
+      "TestMarkdownInline_0768",
+      "TestMarkdownInline_0192",
+      "TestMarkdownInline_0128",
+      "TestMarkdownInline_0000",
+      "TestMarkdownInline_0064",
+      "TestMarkdownInline_1600",
+      "TestMarkdownInline_1984",
+      "TestMarkdownInline_1856",
+      "TestMarkdownInline_1792",
+      "TestMarkdownInline_1664",
+      "TestMarkdownInline_1920",
+      "TestMarkdownInline_1728",
+      "TestMarkdownInline_1536",
+      "TestMarkdownInline_1408",
+      "TestMarkdownInline_0512",
+      "TestMarkdownInline_0640",
+      "TestMarkdownInline_1472",
+      "TestMarkdownInline_0448",
+      "TestMarkdownInline_0384",
+      "TestMarkdownInline_1280",
+      "TestMarkdownInline_1344",
+      "TestMarkdownInline_1216",
+      "TestMarkdownInline_0320",
+      "TestMarkdownInline_0576"
+    ],
+    "failed_rows": [
+      "TestMarkdownInline family"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdowninline/",
+      "-run",
+      "^(TestDelimiterExpressionMatchesNode|TestProduct_MarkdownInlineGoOverlay|TestProduct_MarkdownInlineNode|TestProduct_MarkdownInlineOriginalLowered|TestProduct_MarkdownInlineOriginalNative|TestProduct_MarkdownInlineOriginalSanitized|TestProduct_MarkdownInlinePlantedLowered|TestProduct_MarkdownInlinePlantedNative|TestProduct_MarkdownInlinePlantedSanitized|TestProduct_MarkdownInlineParityLowered|TestProduct_MarkdownInlineParityNative|TestProduct_MarkdownInlineParitySanitized|TestProduct_MarkdownInlineParityNode|TestProduct_MarkdownInlinePipeLowered|TestProduct_MarkdownInlinePipeNative|TestProduct_MarkdownInlinePipeSanitized|TestProduct_MarkdownInlinePipeNode|TestProduct_MarkdownInlineFenceLowered|TestProduct_MarkdownInlineFenceNative|TestProduct_MarkdownInlineFenceSanitized|TestProduct_MarkdownInlineFenceNode|TestMarkdownInlineShardUnion|TestMarkdownInlineShardSelector|TestMarkdownInlineProductSourceInputs|TestMarkdownInlineShardAssignmentStable|TestMarkdownInlineUnion|TestMarkdownInline_0000|TestMarkdownInline_0064|TestMarkdownInline_0128|TestMarkdownInline_0192|TestMarkdownInline_0256|TestMarkdownInline_0320|TestMarkdownInline_0384|TestMarkdownInline_0448|TestMarkdownInline_0512|TestMarkdownInline_0576|TestMarkdownInline_0640|TestMarkdownInline_0704|TestMarkdownInline_0768|TestMarkdownInline_0832|TestMarkdownInline_0896|TestMarkdownInline_0960|TestMarkdownInline_1024|TestMarkdownInline_1088|TestMarkdownInline_1152|TestMarkdownInline_1216|TestMarkdownInline_1280|TestMarkdownInline_1344|TestMarkdownInline_1408|TestMarkdownInline_1472|TestMarkdownInline_1536|TestMarkdownInline_1600|TestMarkdownInline_1664|TestMarkdownInline_1728|TestMarkdownInline_1792|TestMarkdownInline_1856|TestMarkdownInline_1920|TestMarkdownInline_1984)$"
+    ],
+    "environment": {
+      "ADAMIC_MARKDOWNINLINE_LIBRARY": "/tmp/u131/prettier/node_modules/prettier",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u131/cache/P1"
+    },
+    "wall_seconds": 6.011957401000473,
+    "exit": 1
+  },
+  {
+    "id": "P2",
+    "kind": "empty RegExp replacement entry probe",
+    "failed_tests": [
+      "TestDelimiterExpressionMatchesNode"
+    ],
+    "failed_rows": [
+      "TestDelimiterExpressionMatchesNode"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdowninline/",
+      "-run",
+      "^(TestDelimiterExpressionMatchesNode|TestProduct_MarkdownInlineGoOverlay|TestProduct_MarkdownInlineNode|TestProduct_MarkdownInlineOriginalLowered|TestProduct_MarkdownInlineOriginalNative|TestProduct_MarkdownInlineOriginalSanitized|TestProduct_MarkdownInlinePlantedLowered|TestProduct_MarkdownInlinePlantedNative|TestProduct_MarkdownInlinePlantedSanitized|TestProduct_MarkdownInlineParityLowered|TestProduct_MarkdownInlineParityNative|TestProduct_MarkdownInlineParitySanitized|TestProduct_MarkdownInlineParityNode|TestProduct_MarkdownInlinePipeLowered|TestProduct_MarkdownInlinePipeNative|TestProduct_MarkdownInlinePipeSanitized|TestProduct_MarkdownInlinePipeNode|TestProduct_MarkdownInlineFenceLowered|TestProduct_MarkdownInlineFenceNative|TestProduct_MarkdownInlineFenceSanitized|TestProduct_MarkdownInlineFenceNode|TestMarkdownInlineShardUnion|TestMarkdownInlineShardSelector|TestMarkdownInlineProductSourceInputs|TestMarkdownInlineShardAssignmentStable|TestMarkdownInlineUnion|TestMarkdownInline_0000|TestMarkdownInline_0064|TestMarkdownInline_0128|TestMarkdownInline_0192|TestMarkdownInline_0256|TestMarkdownInline_0320|TestMarkdownInline_0384|TestMarkdownInline_0448|TestMarkdownInline_0512|TestMarkdownInline_0576|TestMarkdownInline_0640|TestMarkdownInline_0704|TestMarkdownInline_0768|TestMarkdownInline_0832|TestMarkdownInline_0896|TestMarkdownInline_0960|TestMarkdownInline_1024|TestMarkdownInline_1088|TestMarkdownInline_1152|TestMarkdownInline_1216|TestMarkdownInline_1280|TestMarkdownInline_1344|TestMarkdownInline_1408|TestMarkdownInline_1472|TestMarkdownInline_1536|TestMarkdownInline_1600|TestMarkdownInline_1664|TestMarkdownInline_1728|TestMarkdownInline_1792|TestMarkdownInline_1856|TestMarkdownInline_1920|TestMarkdownInline_1984)$"
+    ],
+    "environment": {
+      "ADAMIC_MARKDOWNINLINE_LIBRARY": "/tmp/u131/prettier/node_modules/prettier",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u131/cache/P2"
+    },
+    "wall_seconds": 18.796720698999707,
+    "exit": 1
+  },
+  {
+    "id": "S1",
+    "kind": "construction",
+    "failed_tests": [
+      "TestMarkdownInlineShardUnion"
+    ],
+    "failed_rows": [
+      "TestMarkdownInlineShardUnion"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-overlay=/tmp/u131/evidence/S1.overlay.json",
+      "./stage1/cohere/markdowninline/",
+      "-run",
+      "^(TestDelimiterExpressionMatchesNode|TestProduct_MarkdownInlineGoOverlay|TestProduct_MarkdownInlineNode|TestProduct_MarkdownInlineOriginalLowered|TestProduct_MarkdownInlineOriginalNative|TestProduct_MarkdownInlineOriginalSanitized|TestProduct_MarkdownInlinePlantedLowered|TestProduct_MarkdownInlinePlantedNative|TestProduct_MarkdownInlinePlantedSanitized|TestProduct_MarkdownInlineParityLowered|TestProduct_MarkdownInlineParityNative|TestProduct_MarkdownInlineParitySanitized|TestProduct_MarkdownInlineParityNode|TestProduct_MarkdownInlinePipeLowered|TestProduct_MarkdownInlinePipeNative|TestProduct_MarkdownInlinePipeSanitized|TestProduct_MarkdownInlinePipeNode|TestProduct_MarkdownInlineFenceLowered|TestProduct_MarkdownInlineFenceNative|TestProduct_MarkdownInlineFenceSanitized|TestProduct_MarkdownInlineFenceNode|TestMarkdownInlineShardUnion|TestMarkdownInlineShardSelector|TestMarkdownInlineProductSourceInputs|TestMarkdownInlineShardAssignmentStable|TestMarkdownInlineUnion|TestMarkdownInline_0000|TestMarkdownInline_0064|TestMarkdownInline_0128|TestMarkdownInline_0192|TestMarkdownInline_0256|TestMarkdownInline_0320|TestMarkdownInline_0384|TestMarkdownInline_0448|TestMarkdownInline_0512|TestMarkdownInline_0576|TestMarkdownInline_0640|TestMarkdownInline_0704|TestMarkdownInline_0768|TestMarkdownInline_0832|TestMarkdownInline_0896|TestMarkdownInline_0960|TestMarkdownInline_1024|TestMarkdownInline_1088|TestMarkdownInline_1152|TestMarkdownInline_1216|TestMarkdownInline_1280|TestMarkdownInline_1344|TestMarkdownInline_1408|TestMarkdownInline_1472|TestMarkdownInline_1536|TestMarkdownInline_1600|TestMarkdownInline_1664|TestMarkdownInline_1728|TestMarkdownInline_1792|TestMarkdownInline_1856|TestMarkdownInline_1920|TestMarkdownInline_1984)$"
+    ],
+    "environment": {
+      "ADAMIC_MARKDOWNINLINE_LIBRARY": "/tmp/u131/prettier/node_modules/prettier"
+    },
+    "wall_seconds": 10.628171031999955,
+    "exit": 1
+  },
+  {
+    "id": "S2",
+    "kind": "construction",
+    "failed_tests": [],
+    "failed_rows": [],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-overlay=/tmp/u131/evidence/S2.overlay.json",
+      "./stage1/cohere/markdowninline/",
+      "-run",
+      "^(TestDelimiterExpressionMatchesNode|TestProduct_MarkdownInlineGoOverlay|TestProduct_MarkdownInlineNode|TestProduct_MarkdownInlineOriginalLowered|TestProduct_MarkdownInlineOriginalNative|TestProduct_MarkdownInlineOriginalSanitized|TestProduct_MarkdownInlinePlantedLowered|TestProduct_MarkdownInlinePlantedNative|TestProduct_MarkdownInlinePlantedSanitized|TestProduct_MarkdownInlineParityLowered|TestProduct_MarkdownInlineParityNative|TestProduct_MarkdownInlineParitySanitized|TestProduct_MarkdownInlineParityNode|TestProduct_MarkdownInlinePipeLowered|TestProduct_MarkdownInlinePipeNative|TestProduct_MarkdownInlinePipeSanitized|TestProduct_MarkdownInlinePipeNode|TestProduct_MarkdownInlineFenceLowered|TestProduct_MarkdownInlineFenceNative|TestProduct_MarkdownInlineFenceSanitized|TestProduct_MarkdownInlineFenceNode|TestMarkdownInlineShardUnion|TestMarkdownInlineShardSelector|TestMarkdownInlineProductSourceInputs|TestMarkdownInlineShardAssignmentStable|TestMarkdownInlineUnion|TestMarkdownInline_0000|TestMarkdownInline_0064|TestMarkdownInline_0128|TestMarkdownInline_0192|TestMarkdownInline_0256|TestMarkdownInline_0320|TestMarkdownInline_0384|TestMarkdownInline_0448|TestMarkdownInline_0512|TestMarkdownInline_0576|TestMarkdownInline_0640|TestMarkdownInline_0704|TestMarkdownInline_0768|TestMarkdownInline_0832|TestMarkdownInline_0896|TestMarkdownInline_0960|TestMarkdownInline_1024|TestMarkdownInline_1088|TestMarkdownInline_1152|TestMarkdownInline_1216|TestMarkdownInline_1280|TestMarkdownInline_1344|TestMarkdownInline_1408|TestMarkdownInline_1472|TestMarkdownInline_1536|TestMarkdownInline_1600|TestMarkdownInline_1664|TestMarkdownInline_1728|TestMarkdownInline_1792|TestMarkdownInline_1856|TestMarkdownInline_1920|TestMarkdownInline_1984)$"
+    ],
+    "environment": {
+      "ADAMIC_MARKDOWNINLINE_LIBRARY": "/tmp/u131/prettier/node_modules/prettier"
+    },
+    "wall_seconds": 12.288905420999072,
+    "exit": 0
+  },
+  {
+    "id": "S3",
+    "kind": "construction",
+    "failed_tests": [
+      "TestMarkdownInlineProductSourceInputs"
+    ],
+    "failed_rows": [
+      "TestMarkdownInlineProductSourceInputs"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-overlay=/tmp/u131/evidence/S3.overlay.json",
+      "./stage1/cohere/markdowninline/",
+      "-run",
+      "^(TestDelimiterExpressionMatchesNode|TestProduct_MarkdownInlineGoOverlay|TestProduct_MarkdownInlineNode|TestProduct_MarkdownInlineOriginalLowered|TestProduct_MarkdownInlineOriginalNative|TestProduct_MarkdownInlineOriginalSanitized|TestProduct_MarkdownInlinePlantedLowered|TestProduct_MarkdownInlinePlantedNative|TestProduct_MarkdownInlinePlantedSanitized|TestProduct_MarkdownInlineParityLowered|TestProduct_MarkdownInlineParityNative|TestProduct_MarkdownInlineParitySanitized|TestProduct_MarkdownInlineParityNode|TestProduct_MarkdownInlinePipeLowered|TestProduct_MarkdownInlinePipeNative|TestProduct_MarkdownInlinePipeSanitized|TestProduct_MarkdownInlinePipeNode|TestProduct_MarkdownInlineFenceLowered|TestProduct_MarkdownInlineFenceNative|TestProduct_MarkdownInlineFenceSanitized|TestProduct_MarkdownInlineFenceNode|TestMarkdownInlineShardUnion|TestMarkdownInlineShardSelector|TestMarkdownInlineProductSourceInputs|TestMarkdownInlineShardAssignmentStable|TestMarkdownInlineUnion|TestMarkdownInline_0000|TestMarkdownInline_0064|TestMarkdownInline_0128|TestMarkdownInline_0192|TestMarkdownInline_0256|TestMarkdownInline_0320|TestMarkdownInline_0384|TestMarkdownInline_0448|TestMarkdownInline_0512|TestMarkdownInline_0576|TestMarkdownInline_0640|TestMarkdownInline_0704|TestMarkdownInline_0768|TestMarkdownInline_0832|TestMarkdownInline_0896|TestMarkdownInline_0960|TestMarkdownInline_1024|TestMarkdownInline_1088|TestMarkdownInline_1152|TestMarkdownInline_1216|TestMarkdownInline_1280|TestMarkdownInline_1344|TestMarkdownInline_1408|TestMarkdownInline_1472|TestMarkdownInline_1536|TestMarkdownInline_1600|TestMarkdownInline_1664|TestMarkdownInline_1728|TestMarkdownInline_1792|TestMarkdownInline_1856|TestMarkdownInline_1920|TestMarkdownInline_1984)$"
+    ],
+    "environment": {
+      "ADAMIC_MARKDOWNINLINE_LIBRARY": "/tmp/u131/prettier/node_modules/prettier"
+    },
+    "wall_seconds": 13.030927652000173,
+    "exit": 1
+  },
+  {
+    "id": "S4",
+    "kind": "construction",
+    "failed_tests": [
+      "TestMarkdownInlineShardAssignmentStable"
+    ],
+    "failed_rows": [
+      "TestMarkdownInlineShardAssignmentStable"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-overlay=/tmp/u131/evidence/S4.overlay.json",
+      "./stage1/cohere/markdowninline/",
+      "-run",
+      "^(TestDelimiterExpressionMatchesNode|TestProduct_MarkdownInlineGoOverlay|TestProduct_MarkdownInlineNode|TestProduct_MarkdownInlineOriginalLowered|TestProduct_MarkdownInlineOriginalNative|TestProduct_MarkdownInlineOriginalSanitized|TestProduct_MarkdownInlinePlantedLowered|TestProduct_MarkdownInlinePlantedNative|TestProduct_MarkdownInlinePlantedSanitized|TestProduct_MarkdownInlineParityLowered|TestProduct_MarkdownInlineParityNative|TestProduct_MarkdownInlineParitySanitized|TestProduct_MarkdownInlineParityNode|TestProduct_MarkdownInlinePipeLowered|TestProduct_MarkdownInlinePipeNative|TestProduct_MarkdownInlinePipeSanitized|TestProduct_MarkdownInlinePipeNode|TestProduct_MarkdownInlineFenceLowered|TestProduct_MarkdownInlineFenceNative|TestProduct_MarkdownInlineFenceSanitized|TestProduct_MarkdownInlineFenceNode|TestMarkdownInlineShardUnion|TestMarkdownInlineShardSelector|TestMarkdownInlineProductSourceInputs|TestMarkdownInlineShardAssignmentStable|TestMarkdownInlineUnion|TestMarkdownInline_0000|TestMarkdownInline_0064|TestMarkdownInline_0128|TestMarkdownInline_0192|TestMarkdownInline_0256|TestMarkdownInline_0320|TestMarkdownInline_0384|TestMarkdownInline_0448|TestMarkdownInline_0512|TestMarkdownInline_0576|TestMarkdownInline_0640|TestMarkdownInline_0704|TestMarkdownInline_0768|TestMarkdownInline_0832|TestMarkdownInline_0896|TestMarkdownInline_0960|TestMarkdownInline_1024|TestMarkdownInline_1088|TestMarkdownInline_1152|TestMarkdownInline_1216|TestMarkdownInline_1280|TestMarkdownInline_1344|TestMarkdownInline_1408|TestMarkdownInline_1472|TestMarkdownInline_1536|TestMarkdownInline_1600|TestMarkdownInline_1664|TestMarkdownInline_1728|TestMarkdownInline_1792|TestMarkdownInline_1856|TestMarkdownInline_1920|TestMarkdownInline_1984)$"
+    ],
+    "environment": {
+      "ADAMIC_MARKDOWNINLINE_LIBRARY": "/tmp/u131/prettier/node_modules/prettier"
+    },
+    "wall_seconds": 11.264243116000216,
+    "exit": 1
+  },
+  {
+    "id": "S5",
+    "kind": "construction",
+    "failed_tests": [
+      "TestMarkdownInline_1152",
+      "TestMarkdownInline_0000",
+      "TestMarkdownInline_0192",
+      "TestMarkdownInline_0128",
+      "TestMarkdownInline_0256",
+      "TestMarkdownInline_1088",
+      "TestMarkdownInline_1024",
+      "TestMarkdownInline_0960",
+      "TestMarkdownInline_0064",
+      "TestMarkdownInline_0896",
+      "TestMarkdownInline_0832",
+      "TestMarkdownInlineShardAssignmentStable",
+      "TestMarkdownInline_0768",
+      "TestMarkdownInline_0704",
+      "TestMarkdownInline_0640",
+      "TestMarkdownInline_0576",
+      "TestMarkdownInline_0512",
+      "TestMarkdownInline_0384",
+      "TestMarkdownInline_0320",
+      "TestMarkdownInline_0448",
+      "TestMarkdownInline_1600",
+      "TestMarkdownInline_1792",
+      "TestMarkdownInline_1856",
+      "TestMarkdownInline_1984",
+      "TestMarkdownInline_1920",
+      "TestMarkdownInline_1664",
+      "TestMarkdownInline_1408",
+      "TestMarkdownInline_1536",
+      "TestMarkdownInline_1472",
+      "TestMarkdownInline_1280",
+      "TestMarkdownInline_1344",
+      "TestMarkdownInline_1216",
+      "TestMarkdownInline_1728",
+      "TestMarkdownInlineUnion"
+    ],
+    "failed_rows": [
+      "TestMarkdownInline family",
+      "TestMarkdownInlineShardAssignmentStable"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-overlay=/tmp/u131/evidence/S5.overlay.json",
+      "./stage1/cohere/markdowninline/",
+      "-run",
+      "^(TestDelimiterExpressionMatchesNode|TestProduct_MarkdownInlineGoOverlay|TestProduct_MarkdownInlineNode|TestProduct_MarkdownInlineOriginalLowered|TestProduct_MarkdownInlineOriginalNative|TestProduct_MarkdownInlineOriginalSanitized|TestProduct_MarkdownInlinePlantedLowered|TestProduct_MarkdownInlinePlantedNative|TestProduct_MarkdownInlinePlantedSanitized|TestProduct_MarkdownInlineParityLowered|TestProduct_MarkdownInlineParityNative|TestProduct_MarkdownInlineParitySanitized|TestProduct_MarkdownInlineParityNode|TestProduct_MarkdownInlinePipeLowered|TestProduct_MarkdownInlinePipeNative|TestProduct_MarkdownInlinePipeSanitized|TestProduct_MarkdownInlinePipeNode|TestProduct_MarkdownInlineFenceLowered|TestProduct_MarkdownInlineFenceNative|TestProduct_MarkdownInlineFenceSanitized|TestProduct_MarkdownInlineFenceNode|TestMarkdownInlineShardUnion|TestMarkdownInlineShardSelector|TestMarkdownInlineProductSourceInputs|TestMarkdownInlineShardAssignmentStable|TestMarkdownInlineUnion|TestMarkdownInline_0000|TestMarkdownInline_0064|TestMarkdownInline_0128|TestMarkdownInline_0192|TestMarkdownInline_0256|TestMarkdownInline_0320|TestMarkdownInline_0384|TestMarkdownInline_0448|TestMarkdownInline_0512|TestMarkdownInline_0576|TestMarkdownInline_0640|TestMarkdownInline_0704|TestMarkdownInline_0768|TestMarkdownInline_0832|TestMarkdownInline_0896|TestMarkdownInline_0960|TestMarkdownInline_1024|TestMarkdownInline_1088|TestMarkdownInline_1152|TestMarkdownInline_1216|TestMarkdownInline_1280|TestMarkdownInline_1344|TestMarkdownInline_1408|TestMarkdownInline_1472|TestMarkdownInline_1536|TestMarkdownInline_1600|TestMarkdownInline_1664|TestMarkdownInline_1728|TestMarkdownInline_1792|TestMarkdownInline_1856|TestMarkdownInline_1920|TestMarkdownInline_1984)$"
+    ],
+    "environment": {
+      "ADAMIC_MARKDOWNINLINE_LIBRARY": "/tmp/u131/prettier/node_modules/prettier"
+    },
+    "wall_seconds": 7.1491179690001445,
+    "exit": 1
+  },
+  {
+    "id": "W1",
+    "kind": "weakened witness comparison",
+    "failed_tests": [
+      "TestMarkdownInline_0000"
+    ],
+    "failed_rows": [
+      "TestMarkdownInline family"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-overlay=/tmp/u131/evidence/W1.overlay.json",
+      "./stage1/cohere/markdowninline/",
+      "-run",
+      "^(TestDelimiterExpressionMatchesNode|TestProduct_MarkdownInlineGoOverlay|TestProduct_MarkdownInlineNode|TestProduct_MarkdownInlineOriginalLowered|TestProduct_MarkdownInlineOriginalNative|TestProduct_MarkdownInlineOriginalSanitized|TestProduct_MarkdownInlinePlantedLowered|TestProduct_MarkdownInlinePlantedNative|TestProduct_MarkdownInlinePlantedSanitized|TestProduct_MarkdownInlineParityLowered|TestProduct_MarkdownInlineParityNative|TestProduct_MarkdownInlineParitySanitized|TestProduct_MarkdownInlineParityNode|TestProduct_MarkdownInlinePipeLowered|TestProduct_MarkdownInlinePipeNative|TestProduct_MarkdownInlinePipeSanitized|TestProduct_MarkdownInlinePipeNode|TestProduct_MarkdownInlineFenceLowered|TestProduct_MarkdownInlineFenceNative|TestProduct_MarkdownInlineFenceSanitized|TestProduct_MarkdownInlineFenceNode|TestMarkdownInlineShardUnion|TestMarkdownInlineShardSelector|TestMarkdownInlineProductSourceInputs|TestMarkdownInlineShardAssignmentStable|TestMarkdownInlineUnion|TestMarkdownInline_0000|TestMarkdownInline_0064|TestMarkdownInline_0128|TestMarkdownInline_0192|TestMarkdownInline_0256|TestMarkdownInline_0320|TestMarkdownInline_0384|TestMarkdownInline_0448|TestMarkdownInline_0512|TestMarkdownInline_0576|TestMarkdownInline_0640|TestMarkdownInline_0704|TestMarkdownInline_0768|TestMarkdownInline_0832|TestMarkdownInline_0896|TestMarkdownInline_0960|TestMarkdownInline_1024|TestMarkdownInline_1088|TestMarkdownInline_1152|TestMarkdownInline_1216|TestMarkdownInline_1280|TestMarkdownInline_1344|TestMarkdownInline_1408|TestMarkdownInline_1472|TestMarkdownInline_1536|TestMarkdownInline_1600|TestMarkdownInline_1664|TestMarkdownInline_1728|TestMarkdownInline_1792|TestMarkdownInline_1856|TestMarkdownInline_1920|TestMarkdownInline_1984)$"
+    ],
+    "environment": {
+      "ADAMIC_MARKDOWNINLINE_LIBRARY": "/tmp/u131/prettier/node_modules/prettier"
+    },
+    "wall_seconds": 10.018012602000454,
+    "exit": 1
+  },
+  {
+    "id": "S6",
+    "kind": "construction",
+    "failed_tests": [
+      "TestProduct_MarkdownInlinePipeNative",
+      "TestProduct_MarkdownInlinePipeSanitized",
+      "TestProduct_MarkdownInlineParitySanitized",
+      "TestProduct_MarkdownInlineParityNative",
+      "TestProduct_MarkdownInlinePlantedSanitized",
+      "TestProduct_MarkdownInlinePlantedNative",
+      "TestProduct_MarkdownInlineOriginalSanitized",
+      "TestProduct_MarkdownInlineOriginalNative",
+      "TestMarkdownInline_0256",
+      "TestMarkdownInline_0960",
+      "TestMarkdownInline_0896",
+      "TestMarkdownInline_0832",
+      "TestMarkdownInline_0768",
+      "TestMarkdownInline_0704",
+      "TestMarkdownInline_1152",
+      "TestMarkdownInline_0064",
+      "TestMarkdownInline_1088",
+      "TestMarkdownInline_1024",
+      "TestMarkdownInline_0128",
+      "TestMarkdownInline_0192",
+      "TestMarkdownInline_1600",
+      "TestMarkdownInline_1984",
+      "TestMarkdownInline_1920",
+      "TestMarkdownInline_1856",
+      "TestMarkdownInline_1792",
+      "TestMarkdownInline_1728",
+      "TestMarkdownInline_1664",
+      "TestMarkdownInline_1408",
+      "TestMarkdownInline_1536",
+      "TestMarkdownInline_1472",
+      "TestProduct_MarkdownInlineFenceSanitized",
+      "TestMarkdownInline_1344",
+      "TestMarkdownInline_0000",
+      "TestMarkdownInline_1280",
+      "TestProduct_MarkdownInlineFenceNative",
+      "TestMarkdownInline_1216",
+      "TestMarkdownInline_0512",
+      "TestMarkdownInline_0384",
+      "TestMarkdownInline_0448",
+      "TestMarkdownInline_0640",
+      "TestMarkdownInline_0576",
+      "TestMarkdownInline_0320"
+    ],
+    "failed_rows": [
+      "TestMarkdownInline family",
+      "TestProduct_MarkdownInline family"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-overlay=/tmp/u131/evidence/S6.overlay.json",
+      "./stage1/cohere/markdowninline/",
+      "-run",
+      "^(TestDelimiterExpressionMatchesNode|TestProduct_MarkdownInlineGoOverlay|TestProduct_MarkdownInlineNode|TestProduct_MarkdownInlineOriginalLowered|TestProduct_MarkdownInlineOriginalNative|TestProduct_MarkdownInlineOriginalSanitized|TestProduct_MarkdownInlinePlantedLowered|TestProduct_MarkdownInlinePlantedNative|TestProduct_MarkdownInlinePlantedSanitized|TestProduct_MarkdownInlineParityLowered|TestProduct_MarkdownInlineParityNative|TestProduct_MarkdownInlineParitySanitized|TestProduct_MarkdownInlineParityNode|TestProduct_MarkdownInlinePipeLowered|TestProduct_MarkdownInlinePipeNative|TestProduct_MarkdownInlinePipeSanitized|TestProduct_MarkdownInlinePipeNode|TestProduct_MarkdownInlineFenceLowered|TestProduct_MarkdownInlineFenceNative|TestProduct_MarkdownInlineFenceSanitized|TestProduct_MarkdownInlineFenceNode|TestMarkdownInlineShardUnion|TestMarkdownInlineShardSelector|TestMarkdownInlineProductSourceInputs|TestMarkdownInlineShardAssignmentStable|TestMarkdownInlineUnion|TestMarkdownInline_0000|TestMarkdownInline_0064|TestMarkdownInline_0128|TestMarkdownInline_0192|TestMarkdownInline_0256|TestMarkdownInline_0320|TestMarkdownInline_0384|TestMarkdownInline_0448|TestMarkdownInline_0512|TestMarkdownInline_0576|TestMarkdownInline_0640|TestMarkdownInline_0704|TestMarkdownInline_0768|TestMarkdownInline_0832|TestMarkdownInline_0896|TestMarkdownInline_0960|TestMarkdownInline_1024|TestMarkdownInline_1088|TestMarkdownInline_1152|TestMarkdownInline_1216|TestMarkdownInline_1280|TestMarkdownInline_1344|TestMarkdownInline_1408|TestMarkdownInline_1472|TestMarkdownInline_1536|TestMarkdownInline_1600|TestMarkdownInline_1664|TestMarkdownInline_1728|TestMarkdownInline_1792|TestMarkdownInline_1856|TestMarkdownInline_1920|TestMarkdownInline_1984)$"
+    ],
+    "environment": {
+      "ADAMIC_MARKDOWNINLINE_LIBRARY": "/tmp/u131/prettier/node_modules/prettier",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u131/cache/S6"
+    },
+    "wall_seconds": 7.155088790999798,
+    "exit": 1
+  },
+  {
+    "id": "S2B",
+    "kind": "construction",
+    "failed_tests": [
+      "TestMarkdownInlineShardSelector"
+    ],
+    "failed_rows": [
+      "TestMarkdownInlineShardSelector"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-overlay=/tmp/u131/evidence/S2B.overlay.json",
+      "./stage1/cohere/markdowninline/",
+      "-run",
+      "^(TestDelimiterExpressionMatchesNode|TestProduct_MarkdownInlineGoOverlay|TestProduct_MarkdownInlineNode|TestProduct_MarkdownInlineOriginalLowered|TestProduct_MarkdownInlineOriginalNative|TestProduct_MarkdownInlineOriginalSanitized|TestProduct_MarkdownInlinePlantedLowered|TestProduct_MarkdownInlinePlantedNative|TestProduct_MarkdownInlinePlantedSanitized|TestProduct_MarkdownInlineParityLowered|TestProduct_MarkdownInlineParityNative|TestProduct_MarkdownInlineParitySanitized|TestProduct_MarkdownInlineParityNode|TestProduct_MarkdownInlinePipeLowered|TestProduct_MarkdownInlinePipeNative|TestProduct_MarkdownInlinePipeSanitized|TestProduct_MarkdownInlinePipeNode|TestProduct_MarkdownInlineFenceLowered|TestProduct_MarkdownInlineFenceNative|TestProduct_MarkdownInlineFenceSanitized|TestProduct_MarkdownInlineFenceNode|TestMarkdownInlineShardUnion|TestMarkdownInlineShardSelector|TestMarkdownInlineProductSourceInputs|TestMarkdownInlineShardAssignmentStable|TestMarkdownInlineUnion|TestMarkdownInline_0000|TestMarkdownInline_0064|TestMarkdownInline_0128|TestMarkdownInline_0192|TestMarkdownInline_0256|TestMarkdownInline_0320|TestMarkdownInline_0384|TestMarkdownInline_0448|TestMarkdownInline_0512|TestMarkdownInline_0576|TestMarkdownInline_0640|TestMarkdownInline_0704|TestMarkdownInline_0768|TestMarkdownInline_0832|TestMarkdownInline_0896|TestMarkdownInline_0960|TestMarkdownInline_1024|TestMarkdownInline_1088|TestMarkdownInline_1152|TestMarkdownInline_1216|TestMarkdownInline_1280|TestMarkdownInline_1344|TestMarkdownInline_1408|TestMarkdownInline_1472|TestMarkdownInline_1536|TestMarkdownInline_1600|TestMarkdownInline_1664|TestMarkdownInline_1728|TestMarkdownInline_1792|TestMarkdownInline_1856|TestMarkdownInline_1920|TestMarkdownInline_1984)$"
+    ],
+    "environment": {
+      "ADAMIC_MARKDOWNINLINE_LIBRARY": "/tmp/u131/prettier/node_modules/prettier"
+    },
+    "wall_seconds": 12.716327626998464,
+    "exit": 1
+  }
+]

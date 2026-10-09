@@ -1,0 +1,12 @@
+{"Time":"2026-10-09T12:55:35.340589128Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/markdowninline"}
+{"Time":"2026-10-09T12:55:35.348732429Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/markdowninline","Test":"TestMarkdownInlineProductSourceInputs"}
+{"Time":"2026-10-09T12:55:35.348818629Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdowninline","Test":"TestMarkdownInlineProductSourceInputs","Output":"=== RUN   TestMarkdownInlineProductSourceInputs\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:55:35.348860542Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdowninline","Test":"TestMarkdownInlineProductSourceInputs","Output":"=== PAUSE TestMarkdownInlineProductSourceInputs\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:55:35.348863317Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/markdowninline","Test":"TestMarkdownInlineProductSourceInputs"}
+{"Time":"2026-10-09T12:55:35.348889857Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/markdowninline","Test":"TestMarkdownInlineProductSourceInputs"}
+{"Time":"2026-10-09T12:55:35.348892481Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdowninline","Test":"TestMarkdownInlineProductSourceInputs","Output":"=== CONT  TestMarkdownInlineProductSourceInputs\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:55:35.349035967Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdowninline","Test":"TestMarkdownInlineProductSourceInputs","Output":"--- PASS: TestMarkdownInlineProductSourceInputs (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:55:35.349054555Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/markdowninline","Test":"TestMarkdownInlineProductSourceInputs","Elapsed":0}
+{"Time":"2026-10-09T12:55:35.349082928Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdowninline","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:55:35.34926982Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdowninline","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/markdowninline\t0.008s\n"}
+{"Time":"2026-10-09T12:55:35.349288868Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/markdowninline","Elapsed":0.009}

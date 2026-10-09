@@ -1,0 +1,8 @@
+{"Time":"2026-10-09T12:55:30.079659868Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/markdowninline"}
+{"Time":"2026-10-09T12:55:30.086427485Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/markdowninline","Test":"TestMarkdownInlineShardSelector"}
+{"Time":"2026-10-09T12:55:30.086478281Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdowninline","Test":"TestMarkdownInlineShardSelector","Output":"=== RUN   TestMarkdownInlineShardSelector\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:55:30.086602258Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdowninline","Test":"TestMarkdownInlineShardSelector","Output":"--- PASS: TestMarkdownInlineShardSelector (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:55:30.086625834Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/markdowninline","Test":"TestMarkdownInlineShardSelector","Elapsed":0}
+{"Time":"2026-10-09T12:55:30.086926978Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdowninline","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:55:30.087088366Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdowninline","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/markdowninline\t0.007s\n"}
+{"Time":"2026-10-09T12:55:30.087108937Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/markdowninline","Elapsed":0.007}

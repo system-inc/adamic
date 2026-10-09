@@ -1,0 +1,85 @@
+{
+  "seconds": {
+    "TestDelimiterExpressionMatchesNode": 0.272,
+    "TestProduct_MarkdownInline family": 0.292,
+    "TestMarkdownInline family": 7.52,
+    "TestMarkdownInlineShardUnion": 0.007,
+    "TestMarkdownInlineShardSelector": 0.007,
+    "TestMarkdownInlineProductSourceInputs": 0.008,
+    "TestMarkdownInlineShardAssignmentStable": 0.007
+  },
+  "failures": {
+    "M1": [
+      "TestMarkdownInline family"
+    ],
+    "M2": [
+      "TestMarkdownInline family"
+    ],
+    "M3": [],
+    "M4": [
+      "TestDelimiterExpressionMatchesNode"
+    ],
+    "P1": [
+      "TestMarkdownInline family"
+    ],
+    "P2": [
+      "TestDelimiterExpressionMatchesNode"
+    ],
+    "S1": [
+      "TestMarkdownInlineShardUnion"
+    ],
+    "S2": [],
+    "S3": [
+      "TestMarkdownInlineProductSourceInputs"
+    ],
+    "S4": [
+      "TestMarkdownInlineShardAssignmentStable"
+    ],
+    "S5": [
+      "TestMarkdownInline family",
+      "TestMarkdownInlineShardAssignmentStable"
+    ],
+    "W1": [
+      "TestMarkdownInline family"
+    ],
+    "S6": [
+      "TestMarkdownInline family",
+      "TestProduct_MarkdownInline family"
+    ],
+    "S2B": [
+      "TestMarkdownInlineShardSelector"
+    ]
+  },
+  "builds": {
+    "M1": {
+      "command_wall_seconds": 9.506733260001056,
+      "binary_seconds": 7.775,
+      "logged_miss_seconds": 4.64
+    },
+    "M2": {
+      "command_wall_seconds": 9.99304220599879,
+      "binary_seconds": 8.161,
+      "logged_miss_seconds": 3.63
+    },
+    "M3": {
+      "command_wall_seconds": 11.60800854000081,
+      "binary_seconds": 9.975,
+      "logged_miss_seconds": 3.81
+    },
+    "M4": {
+      "command_wall_seconds": 19.036581507998562,
+      "binary_seconds": 13.682,
+      "logged_miss_seconds": 7.2
+    },
+    "P1": {
+      "command_wall_seconds": 6.011957401000473,
+      "binary_seconds": 4.398,
+      "logged_miss_seconds": 2.49
+    },
+    "P2": {
+      "command_wall_seconds": 18.796720698999707,
+      "binary_seconds": 13.29,
+      "logged_miss_seconds": 7.0
+    }
+  }
+}

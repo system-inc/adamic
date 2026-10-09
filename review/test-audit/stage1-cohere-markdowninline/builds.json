@@ -1,0 +1,764 @@
+{
+  "M1": {
+    "command_wall_seconds": 9.506733260001056,
+    "binary_seconds": 7.775,
+    "logged_miss_seconds": 4.64,
+    "products": [
+      {
+        "product": "markdowninline_mutant_table_pipe_escaping_lowered",
+        "key": "d882e372aea5",
+        "status": "miss",
+        "seconds": 0.17
+      },
+      {
+        "product": "markdowninline_planted_lowered",
+        "key": "9b99268cca5b",
+        "status": "miss",
+        "seconds": 0.18
+      },
+      {
+        "product": "markdowninline_mutant_minimum_absent_fence_lowered",
+        "key": "d86850a8345a",
+        "status": "miss",
+        "seconds": 0.18
+      },
+      {
+        "product": "markdowninline_mutant_minimum_absent_fence_Node",
+        "key": "e3d7d2a13c62",
+        "status": "miss",
+        "seconds": 0.11
+      },
+      {
+        "product": "markdowninline_mutant_minimum_absent_fence_native",
+        "key": "0f1392a3451f",
+        "status": "miss",
+        "seconds": 0.22
+      },
+      {
+        "product": "markdowninline_mutant_minimum_absent_fence_sanitized",
+        "key": "d08c7dfc3a94",
+        "status": "miss",
+        "seconds": 0.43
+      },
+      {
+        "product": "markdowninline_planted_sanitized",
+        "key": "413cd6af33bb",
+        "status": "miss",
+        "seconds": 0.44
+      },
+      {
+        "product": "markdowninline_mutant_table_pipe_escaping_sanitized",
+        "key": "88f1a56fbb6d",
+        "status": "miss",
+        "seconds": 0.47
+      },
+      {
+        "product": "markdowninline_mutant_table_pipe_escaping_Node",
+        "key": "6d44630e7af3",
+        "status": "miss",
+        "seconds": 0.13
+      },
+      {
+        "product": "markdowninline_Go_overlay_bridge",
+        "key": "40e595f7f184",
+        "status": "miss",
+        "seconds": 0.25
+      },
+      {
+        "product": "markdowninline_Node_oracle",
+        "key": "bc87d3eaee04",
+        "status": "miss",
+        "seconds": 0.12
+      },
+      {
+        "product": "markdowninline_lowered_program",
+        "key": "b028c154984f",
+        "status": "miss",
+        "seconds": 0.08
+      },
+      {
+        "product": "markdowninline_native",
+        "key": "890a7087664c",
+        "status": "miss",
+        "seconds": 0.18
+      },
+      {
+        "product": "markdowninline_sanitized",
+        "key": "50baf66a8895",
+        "status": "miss",
+        "seconds": 0.33
+      },
+      {
+        "product": "markdowninline_mutant_escaped_delimiter_parity_lowered",
+        "key": "18b139f1b9d6",
+        "status": "miss",
+        "seconds": 0.07
+      },
+      {
+        "product": "markdowninline_mutant_escaped_delimiter_parity_sanitized",
+        "key": "aade48dd14e5",
+        "status": "miss",
+        "seconds": 0.33
+      },
+      {
+        "product": "markdowninline_mutant_escaped_delimiter_parity_Node",
+        "key": "4ce38e06340a",
+        "status": "miss",
+        "seconds": 0.08
+      },
+      {
+        "product": "markdowninline_planted_native",
+        "key": "1df19280fabe",
+        "status": "miss",
+        "seconds": 0.24
+      },
+      {
+        "product": "markdowninline_mutant_table_pipe_escaping_native",
+        "key": "17e5f096f4c9",
+        "status": "miss",
+        "seconds": 0.28
+      },
+      {
+        "product": "markdowninline_mutant_escaped_delimiter_parity_native",
+        "key": "20f005f23e5a",
+        "status": "miss",
+        "seconds": 0.35
+      }
+    ]
+  },
+  "M2": {
+    "command_wall_seconds": 9.99304220599879,
+    "binary_seconds": 8.161,
+    "logged_miss_seconds": 3.63,
+    "products": [
+      {
+        "product": "markdowninline_Go_overlay_bridge",
+        "key": "b5ac00d52ffc",
+        "status": "miss",
+        "seconds": 0.21
+      },
+      {
+        "product": "markdowninline_Node_oracle",
+        "key": "9fbb155b52db",
+        "status": "miss",
+        "seconds": 0.08
+      },
+      {
+        "product": "markdowninline_lowered_program",
+        "key": "31b2cba0ad6b",
+        "status": "miss",
+        "seconds": 0.08
+      },
+      {
+        "product": "markdowninline_native",
+        "key": "0a96c68c5265",
+        "status": "miss",
+        "seconds": 0.18
+      },
+      {
+        "product": "markdowninline_sanitized",
+        "key": "089f523548fa",
+        "status": "miss",
+        "seconds": 0.34
+      },
+      {
+        "product": "markdowninline_planted_lowered",
+        "key": "c1d59152819e",
+        "status": "miss",
+        "seconds": 0.08
+      },
+      {
+        "product": "markdowninline_planted_sanitized",
+        "key": "a2eebfc28048",
+        "status": "miss",
+        "seconds": 0.34
+      },
+      {
+        "product": "markdowninline_mutant_escaped_delimiter_parity_lowered",
+        "key": "4e7a9e95c91b",
+        "status": "miss",
+        "seconds": 0.08
+      },
+      {
+        "product": "markdowninline_mutant_escaped_delimiter_parity_sanitized",
+        "key": "59412da0cbbe",
+        "status": "miss",
+        "seconds": 0.32
+      },
+      {
+        "product": "markdowninline_mutant_escaped_delimiter_parity_Node",
+        "key": "f116adea800b",
+        "status": "miss",
+        "seconds": 0.08
+      },
+      {
+        "product": "markdowninline_mutant_table_pipe_escaping_lowered",
+        "key": "a974a3ae12ad",
+        "status": "miss",
+        "seconds": 0.07
+      },
+      {
+        "product": "markdowninline_mutant_table_pipe_escaping_sanitized",
+        "key": "779d27807c03",
+        "status": "miss",
+        "seconds": 0.32
+      },
+      {
+        "product": "markdowninline_mutant_table_pipe_escaping_Node",
+        "key": "a4bffa2f86a1",
+        "status": "miss",
+        "seconds": 0.08
+      },
+      {
+        "product": "markdowninline_mutant_minimum_absent_fence_lowered",
+        "key": "fe2d7693a8d7",
+        "status": "miss",
+        "seconds": 0.08
+      },
+      {
+        "product": "markdowninline_mutant_minimum_absent_fence_sanitized",
+        "key": "e5a2c670b88d",
+        "status": "miss",
+        "seconds": 0.32
+      },
+      {
+        "product": "markdowninline_mutant_minimum_absent_fence_Node",
+        "key": "c945af50e9f8",
+        "status": "miss",
+        "seconds": 0.08
+      },
+      {
+        "product": "markdowninline_mutant_minimum_absent_fence_native",
+        "key": "61be203d300b",
+        "status": "miss",
+        "seconds": 0.24
+      },
+      {
+        "product": "markdowninline_mutant_table_pipe_escaping_native",
+        "key": "9e653172f655",
+        "status": "miss",
+        "seconds": 0.22
+      },
+      {
+        "product": "markdowninline_mutant_escaped_delimiter_parity_native",
+        "key": "630c6b908eb1",
+        "status": "miss",
+        "seconds": 0.21
+      },
+      {
+        "product": "markdowninline_planted_native",
+        "key": "af86babc65a8",
+        "status": "miss",
+        "seconds": 0.22
+      }
+    ]
+  },
+  "M3": {
+    "command_wall_seconds": 11.60800854000081,
+    "binary_seconds": 9.975,
+    "logged_miss_seconds": 3.81,
+    "products": [
+      {
+        "product": "markdowninline_Go_overlay_bridge",
+        "key": "4065578771ef",
+        "status": "miss",
+        "seconds": 0.21
+      },
+      {
+        "product": "markdowninline_Node_oracle",
+        "key": "c66c0ed4d49b",
+        "status": "miss",
+        "seconds": 0.09
+      },
+      {
+        "product": "markdowninline_lowered_program",
+        "key": "29ea03ce2c29",
+        "status": "miss",
+        "seconds": 0.09
+      },
+      {
+        "product": "markdowninline_native",
+        "key": "2cafbef07983",
+        "status": "miss",
+        "seconds": 0.21
+      },
+      {
+        "product": "markdowninline_sanitized",
+        "key": "cf9dc307b0fb",
+        "status": "miss",
+        "seconds": 0.34
+      },
+      {
+        "product": "markdowninline_planted_lowered",
+        "key": "2edca4e3c511",
+        "status": "miss",
+        "seconds": 0.08
+      },
+      {
+        "product": "markdowninline_planted_sanitized",
+        "key": "c18a5d4ec7f6",
+        "status": "miss",
+        "seconds": 0.33
+      },
+      {
+        "product": "markdowninline_mutant_escaped_delimiter_parity_lowered",
+        "key": "be9f38899ecb",
+        "status": "miss",
+        "seconds": 0.08
+      },
+      {
+        "product": "markdowninline_mutant_escaped_delimiter_parity_sanitized",
+        "key": "e5a7337f6f3d",
+        "status": "miss",
+        "seconds": 0.33
+      },
+      {
+        "product": "markdowninline_mutant_escaped_delimiter_parity_Node",
+        "key": "33eafa361289",
+        "status": "miss",
+        "seconds": 0.08
+      },
+      {
+        "product": "markdowninline_mutant_table_pipe_escaping_lowered",
+        "key": "5cca2ed07ca9",
+        "status": "miss",
+        "seconds": 0.08
+      },
+      {
+        "product": "markdowninline_mutant_table_pipe_escaping_sanitized",
+        "key": "3f89aba07717",
+        "status": "miss",
+        "seconds": 0.33
+      },
+      {
+        "product": "markdowninline_mutant_table_pipe_escaping_Node",
+        "key": "13cda098459b",
+        "status": "miss",
+        "seconds": 0.08
+      },
+      {
+        "product": "markdowninline_mutant_minimum_absent_fence_lowered",
+        "key": "4643731b9282",
+        "status": "miss",
+        "seconds": 0.08
+      },
+      {
+        "product": "markdowninline_mutant_minimum_absent_fence_sanitized",
+        "key": "f6dec4ffb4da",
+        "status": "miss",
+        "seconds": 0.34
+      },
+      {
+        "product": "markdowninline_mutant_minimum_absent_fence_Node",
+        "key": "0fff592c5e75",
+        "status": "miss",
+        "seconds": 0.08
+      },
+      {
+        "product": "markdowninline_mutant_escaped_delimiter_parity_native",
+        "key": "4f34a1952ee1",
+        "status": "miss",
+        "seconds": 0.22
+      },
+      {
+        "product": "markdowninline_mutant_table_pipe_escaping_native",
+        "key": "31262bf6b357",
+        "status": "miss",
+        "seconds": 0.26
+      },
+      {
+        "product": "markdowninline_mutant_minimum_absent_fence_native",
+        "key": "5a1841a0dc2c",
+        "status": "miss",
+        "seconds": 0.27
+      },
+      {
+        "product": "markdowninline_planted_native",
+        "key": "c85b1a7b3058",
+        "status": "miss",
+        "seconds": 0.23
+      }
+    ]
+  },
+  "M4": {
+    "command_wall_seconds": 19.036581507998562,
+    "binary_seconds": 13.682,
+    "logged_miss_seconds": 7.2,
+    "products": [
+      {
+        "product": "markdowninline_Go_overlay_bridge",
+        "key": "a293062c1517",
+        "status": "miss",
+        "seconds": 0.27
+      },
+      {
+        "product": "markdowninline_Node_oracle",
+        "key": "df540e098f7d",
+        "status": "miss",
+        "seconds": 0.09
+      },
+      {
+        "product": "markdowninline_lowered_program",
+        "key": "8d2c56242856",
+        "status": "miss",
+        "seconds": 0.08
+      },
+      {
+        "product": "markdowninline_native",
+        "key": "6deb89a6d746",
+        "status": "miss",
+        "seconds": 3.03
+      },
+      {
+        "product": "markdowninline_sanitized",
+        "key": "1bd753218213",
+        "status": "miss",
+        "seconds": 0.84
+      },
+      {
+        "product": "markdowninline_planted_lowered",
+        "key": "f1d40e1f2d8b",
+        "status": "miss",
+        "seconds": 0.08
+      },
+      {
+        "product": "markdowninline_planted_sanitized",
+        "key": "6691edba2f7d",
+        "status": "miss",
+        "seconds": 0.33
+      },
+      {
+        "product": "markdowninline_mutant_escaped_delimiter_parity_lowered",
+        "key": "c76f307f1966",
+        "status": "miss",
+        "seconds": 0.08
+      },
+      {
+        "product": "markdowninline_mutant_escaped_delimiter_parity_sanitized",
+        "key": "a4cf4dc05fea",
+        "status": "miss",
+        "seconds": 0.33
+      },
+      {
+        "product": "markdowninline_mutant_escaped_delimiter_parity_Node",
+        "key": "501490cc08ae",
+        "status": "miss",
+        "seconds": 0.11
+      },
+      {
+        "product": "markdowninline_mutant_table_pipe_escaping_lowered",
+        "key": "8cc23a0e26e4",
+        "status": "miss",
+        "seconds": 0.08
+      },
+      {
+        "product": "markdowninline_mutant_table_pipe_escaping_sanitized",
+        "key": "a2598658b1b9",
+        "status": "miss",
+        "seconds": 0.33
+      },
+      {
+        "product": "markdowninline_mutant_table_pipe_escaping_Node",
+        "key": "95057f2b701c",
+        "status": "miss",
+        "seconds": 0.08
+      },
+      {
+        "product": "markdowninline_mutant_minimum_absent_fence_lowered",
+        "key": "1aa938f3d8cc",
+        "status": "miss",
+        "seconds": 0.08
+      },
+      {
+        "product": "markdowninline_mutant_minimum_absent_fence_sanitized",
+        "key": "de1611b9d48a",
+        "status": "miss",
+        "seconds": 0.33
+      },
+      {
+        "product": "markdowninline_mutant_minimum_absent_fence_Node",
+        "key": "93e71ea3709c",
+        "status": "miss",
+        "seconds": 0.08
+      },
+      {
+        "product": "markdowninline_mutant_table_pipe_escaping_native",
+        "key": "62064bf6b195",
+        "status": "miss",
+        "seconds": 0.27
+      },
+      {
+        "product": "markdowninline_mutant_minimum_absent_fence_native",
+        "key": "44a91a8a834f",
+        "status": "miss",
+        "seconds": 0.24
+      },
+      {
+        "product": "markdowninline_planted_native",
+        "key": "e46ee5a2270c",
+        "status": "miss",
+        "seconds": 0.23
+      },
+      {
+        "product": "markdowninline_mutant_escaped_delimiter_parity_native",
+        "key": "6b17d0bf3a59",
+        "status": "miss",
+        "seconds": 0.24
+      }
+    ]
+  },
+  "P1": {
+    "command_wall_seconds": 6.011957401000473,
+    "binary_seconds": 4.398,
+    "logged_miss_seconds": 2.49,
+    "products": [
+      {
+        "product": "markdowninline_Go_overlay_bridge",
+        "key": "b9407320707f",
+        "status": "miss",
+        "seconds": 0.19
+      },
+      {
+        "product": "markdowninline_Node_oracle",
+        "key": "e984aa1dc310",
+        "status": "miss",
+        "seconds": 0.08
+      },
+      {
+        "product": "markdowninline_lowered_program",
+        "key": "5757f96ef009",
+        "status": "miss",
+        "seconds": 0.07
+      },
+      {
+        "product": "markdowninline_native",
+        "key": "999b61be8569",
+        "status": "miss",
+        "seconds": 0.1
+      },
+      {
+        "product": "markdowninline_sanitized",
+        "key": "0e48b74d35b8",
+        "status": "miss",
+        "seconds": 0.2
+      },
+      {
+        "product": "markdowninline_planted_lowered",
+        "key": "400380fc5271",
+        "status": "miss",
+        "seconds": 0.08
+      },
+      {
+        "product": "markdowninline_planted_sanitized",
+        "key": "42589505d0f3",
+        "status": "miss",
+        "seconds": 0.2
+      },
+      {
+        "product": "markdowninline_mutant_escaped_delimiter_parity_lowered",
+        "key": "32cd6a9c4909",
+        "status": "miss",
+        "seconds": 0.07
+      },
+      {
+        "product": "markdowninline_mutant_escaped_delimiter_parity_sanitized",
+        "key": "70f2f7461eb8",
+        "status": "miss",
+        "seconds": 0.2
+      },
+      {
+        "product": "markdowninline_mutant_escaped_delimiter_parity_Node",
+        "key": "24c6562bb28d",
+        "status": "miss",
+        "seconds": 0.08
+      },
+      {
+        "product": "markdowninline_mutant_table_pipe_escaping_lowered",
+        "key": "d2217755671c",
+        "status": "miss",
+        "seconds": 0.07
+      },
+      {
+        "product": "markdowninline_mutant_table_pipe_escaping_sanitized",
+        "key": "9b1d346b1a09",
+        "status": "miss",
+        "seconds": 0.2
+      },
+      {
+        "product": "markdowninline_mutant_table_pipe_escaping_Node",
+        "key": "b5bd8542abde",
+        "status": "miss",
+        "seconds": 0.08
+      },
+      {
+        "product": "markdowninline_mutant_minimum_absent_fence_lowered",
+        "key": "1dd2b803d058",
+        "status": "miss",
+        "seconds": 0.08
+      },
+      {
+        "product": "markdowninline_mutant_minimum_absent_fence_sanitized",
+        "key": "09c18e1b6b55",
+        "status": "miss",
+        "seconds": 0.2
+      },
+      {
+        "product": "markdowninline_mutant_minimum_absent_fence_Node",
+        "key": "c94955c3ecad",
+        "status": "miss",
+        "seconds": 0.08
+      },
+      {
+        "product": "markdowninline_mutant_minimum_absent_fence_native",
+        "key": "6f500ab5d602",
+        "status": "miss",
+        "seconds": 0.15
+      },
+      {
+        "product": "markdowninline_mutant_table_pipe_escaping_native",
+        "key": "54e13c439ecc",
+        "status": "miss",
+        "seconds": 0.11
+      },
+      {
+        "product": "markdowninline_mutant_escaped_delimiter_parity_native",
+        "key": "65cab2dd0af7",
+        "status": "miss",
+        "seconds": 0.12
+      },
+      {
+        "product": "markdowninline_planted_native",
+        "key": "6e98fdb5c1f6",
+        "status": "miss",
+        "seconds": 0.13
+      }
+    ]
+  },
+  "P2": {
+    "command_wall_seconds": 18.796720698999707,
+    "binary_seconds": 13.29,
+    "logged_miss_seconds": 7.0,
+    "products": [
+      {
+        "product": "markdowninline_Go_overlay_bridge",
+        "key": "4f8f1359efda",
+        "status": "miss",
+        "seconds": 0.24
+      },
+      {
+        "product": "markdowninline_Node_oracle",
+        "key": "df540e098f7d",
+        "status": "miss",
+        "seconds": 0.08
+      },
+      {
+        "product": "markdowninline_lowered_program",
+        "key": "d14048b5ce7c",
+        "status": "miss",
+        "seconds": 0.08
+      },
+      {
+        "product": "markdowninline_native",
+        "key": "4c104c66c0cf",
+        "status": "miss",
+        "seconds": 3.01
+      },
+      {
+        "product": "markdowninline_sanitized",
+        "key": "15873f8186fb",
+        "status": "miss",
+        "seconds": 0.77
+      },
+      {
+        "product": "markdowninline_planted_lowered",
+        "key": "1eed76cdf703",
+        "status": "miss",
+        "seconds": 0.08
+      },
+      {
+        "product": "markdowninline_planted_sanitized",
+        "key": "68a8b6e57d5a",
+        "status": "miss",
+        "seconds": 0.33
+      },
+      {
+        "product": "markdowninline_mutant_escaped_delimiter_parity_lowered",
+        "key": "ace63bbcd7d4",
+        "status": "miss",
+        "seconds": 0.08
+      },
+      {
+        "product": "markdowninline_mutant_escaped_delimiter_parity_sanitized",
+        "key": "492d522e91f2",
+        "status": "miss",
+        "seconds": 0.32
+      },
+      {
+        "product": "markdowninline_mutant_escaped_delimiter_parity_Node",
+        "key": "501490cc08ae",
+        "status": "miss",
+        "seconds": 0.08
+      },
+      {
+        "product": "markdowninline_mutant_table_pipe_escaping_lowered",
+        "key": "3d2bcbba03ae",
+        "status": "miss",
+        "seconds": 0.08
+      },
+      {
+        "product": "markdowninline_mutant_table_pipe_escaping_sanitized",
+        "key": "12a8a274d097",
+        "status": "miss",
+        "seconds": 0.32
+      },
+      {
+        "product": "markdowninline_mutant_table_pipe_escaping_Node",
+        "key": "95057f2b701c",
+        "status": "miss",
+        "seconds": 0.08
+      },
+      {
+        "product": "markdowninline_mutant_minimum_absent_fence_lowered",
+        "key": "d9aee8d94826",
+        "status": "miss",
+        "seconds": 0.08
+      },
+      {
+        "product": "markdowninline_mutant_minimum_absent_fence_sanitized",
+        "key": "79acb272fadd",
+        "status": "miss",
+        "seconds": 0.32
+      },
+      {
+        "product": "markdowninline_mutant_minimum_absent_fence_Node",
+        "key": "93e71ea3709c",
+        "status": "miss",
+        "seconds": 0.08
+      },
+      {
+        "product": "markdowninline_mutant_minimum_absent_fence_native",
+        "key": "3355a36aacab",
+        "status": "miss",
+        "seconds": 0.26
+      },
+      {
+        "product": "markdowninline_mutant_table_pipe_escaping_native",
+        "key": "c3baf5e966c9",
+        "status": "miss",
+        "seconds": 0.24
+      },
+      {
+        "product": "markdowninline_planted_native",
+        "key": "a413aeb13d9e",
+        "status": "miss",
+        "seconds": 0.24
+      },
+      {
+        "product": "markdowninline_mutant_escaped_delimiter_parity_native",
+        "key": "d9bbbb9c2cec",
+        "status": "miss",
+        "seconds": 0.23
+      }
+    ]
+  }
+}

@@ -1,0 +1,1 @@
+Candidate equivalent: changing n < 1 to n < 0 cannot admit n=0, because every integer i satisfies i<0 or i>=0. The two predicates agreed on all 121 pairs i,n in [-5,5]. No changed output witness was found; S2 is not unguarded behavior. S2B independently changes the upper index bound and the selector test rejects it.
