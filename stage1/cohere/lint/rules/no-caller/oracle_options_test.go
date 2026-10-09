@@ -5,6 +5,7 @@ package main
 import "testing"
 
 func TestNoCallerOptionsPayload(t *testing.T) {
+	t.Parallel()
 	for _, input := range []string{`{}`, `{"ignored": true}`, `[]`} {
 		fields := []string{"", "no-caller", "", "", "", input}
 		if oracleNoCallerOptions(fields) == nil {

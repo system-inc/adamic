@@ -408,7 +408,7 @@ func leaks(t *testing.T, program *ir.Program, sanitized string, arguments ...str
 }
 
 // Hold the complete composed implementation against the external Go tree.
-// Not parallel: initializes the composition worker's shared setup.
+// Not parallel: initializes the composition worker's shared setup and publishes shared build products and native runtime cache entries.
 func TestCompositionMatchesGo(t *testing.T) {
 	compositionSetup(t)
 }
@@ -462,7 +462,7 @@ func TestCSSThroughput(t *testing.T) {
 }
 
 // Only a corrupt Range catches these probes; source properties remain correct.
-// Not parallel: canonical failure probes use the shared native toolchain.
+// Not parallel: canonical failure probes use the shared native toolchain and write adamic/runtime (and adamic/units for split builds).
 func TestTheCanonicalRangeChecksCanFail(t *testing.T) {
 	raw, err := filepath.Abs("testdata/range_guard.ts")
 	if err != nil {
