@@ -15,7 +15,7 @@ stays on reds and conflicts. One run per invocation; launchd runs it every minut
 usage: cloud/integration/star-train.py [--dry-run]
 """
 
-import importlib.util, json, os, subprocess, sys, time
+import importlib.util, json, os, re, subprocess, sys, time
 
 directory = os.path.dirname(os.path.abspath(__file__))
 dryRun = "--dry-run" in sys.argv
@@ -87,17 +87,37 @@ recordReaders = importlib.util.module_from_spec(specification)
 specification.loader.exec_module(recordReaders)
 
 
-def recordsOnly(older, newer):
-    # True when newer's tree differs from older's only in record paths: the velocity row push-main
-    # commits on every landing, meter runs and stage 3's progress record, the same paths push-main
-    # lets a landing ride over (@system_adamic, October 7).
+# The paths push-main's test-only lane takes with no gate (Kirk, Oct 8), the same pattern push-main.sh
+# checks. Main moving by them doesn't spend a gate: the lane already lands them ungated, and Loom's
+# whole run of main is their check (@system_adamic, Oct 9).
+testOnlyPaths = re.compile(r"(_test\.go$|_test\.py$|(^|/)test_[^/]*\.py$|/testdata/|^review/|(^|/)shards\.json$|^stage3/fixtures/|^stage3/meter/)")
+
+
+def isRecord(path):
+    return path == "documentation/velocity/landings.csv" or path == "stage3/progress.json" or path.startswith("stage3/meter/runs/")
+
+
+def packageOf(path):
+    return path.split("/testdata/")[0] if "/testdata/" in path else os.path.dirname(path)
+
+
+def codePackages(base, tip):
+    # The packages where base..tip changes anything but tests and records.
+    return {packageOf(path) for path in git("diff", "--name-only", base, tip).split() if not isRecord(path) and not testOnlyPaths.search(path)}
+
+
+def recordsOnly(older, newer, code=frozenset()):
+    # True when newer's tree differs from older's only in record paths (the velocity row, meter runs
+    # and stage 3's progress record, the same paths push-main lets a landing ride over, @system_adamic,
+    # October 7) and in paths the test-only lane takes. One guard: a test-only change in a package
+    # where the kept candidate changes code (code) doesn't count, since a test asserting the old
+    # behavior meets the new code there, so the slice re-cuts on it.
     changed = git("diff", "--name-only", older, newer).split()
-    if not all(path == "documentation/velocity/landings.csv" or path == "stage3/progress.json"
-               or path.startswith("stage3/meter/runs/") for path in changed):
+    if not all(isRecord(path) or (testOnlyPaths.search(path) and packageOf(path) not in code) for path in changed):
         return False
     # Honest only while no test or build reads a record (record-paths-test.py, @system_adamic's
     # condition): a reader means the gate has to see the record change, so the slice rebuilds.
-    unexplained = recordReaders.readers(newer) if changed else []
+    unexplained = recordReaders.readers(newer) if any(isRecord(path) for path in changed) else []
     if unexplained:
         log(f"record reader in {newer[:8]}: {unexplained[0]}")
         tell(f"record-reader-{newer[:12]}", "system_adamic_integration", f"record-paths-test.py fails on {newer[:8]}, so the train rebuilds over record commits instead of keeping gates: {'; '.join(unexplained[:3])}")
@@ -259,7 +279,7 @@ for number, (slug, source, owner, riderBranches) in enumerate(slices(), start=1)
         for other, otherSha in trainHeads.items():
             if other.startswith(prefix):
                 otherBase = git("rev-parse", otherSha + "^1" * (len(riders) + 1))
-                if subprocess.run(["git", "merge-base", "--is-ancestor", otherBase, base]).returncode == 0 and recordsOnly(otherBase, base):
+                if subprocess.run(["git", "merge-base", "--is-ancestor", otherBase, base]).returncode == 0 and recordsOnly(otherBase, base, codePackages(otherBase, otherSha)):
                     name = other
                     break
     if name in trainHeads:

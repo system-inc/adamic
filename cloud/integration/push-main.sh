@@ -136,6 +136,36 @@ else
 	skip=$5
 	branches=$6
 fi
+# The paths the test-only lane takes with no gate (Kirk, Oct 8). Main moving by them doesn't spend a
+# candidate's gate either: the lane already lands them ungated, and Loom's whole run of main is their
+# check (@system_adamic, Oct 9). star-train.py's testOnlyPaths is the same pattern.
+# One guard: a test-only change in a package where the candidate changes code still counts, since a
+# test asserting the old behavior meets the new code there.
+testOnlyPattern='(_test\.go$|_test\.py$|(^|/)test_[^/]*\.py$|/testdata/|^review/|(^|/)shards\.json$|^stage3/fixtures/|^stage3/meter/)'
+# The packages (directories) where <base>..<tip> changes anything but tests and records.
+codePackages() {
+	local path
+	git diff --name-only "$1" "$2" | while IFS= read -r path; do
+		case "$path" in documentation/velocity/landings.csv | stage3/meter/runs/* | stage3/progress.json) continue ;; esac
+		[[ "$path" =~ $testOnlyPattern ]] && continue
+		printf '%s\n' "${path%/*}"
+	done | sort -u
+}
+# Reads paths main changed past a gate and prints the ones that spend it: not records, and not
+# test-only unless in one of the candidate's code packages ($1, one per line).
+countingPaths() {
+	local path package
+	while IFS= read -r path; do
+		[ -n "$path" ] || continue
+		case "$path" in documentation/velocity/landings.csv | stage3/meter/runs/* | stage3/progress.json) continue ;; esac
+		if [[ "$path" =~ $testOnlyPattern ]]; then
+			package=${path%%/testdata/*}
+			[ "$package" != "$path" ] || package=${path%/*}
+			printf '%s\n' "$1" | grep -qxF -- "$package" || continue
+		fi
+		printf '%s\n' "$path"
+	done
+}
 velocityFile=documentation/velocity/landings.csv
 velocityHeader=pushed_at_utc,old_main,new_main,commits_landed,branches_landed,gate_minutes,pass,fail,skip,backlog_commits
 directory=$(cd "$(dirname "$0")" && pwd)
@@ -288,7 +318,7 @@ VERDICT
 		echo "refused: the fast gate diffed against ${fastBase:0:8}, which isn't on main's line" >&2
 		exit 1
 	fi
-	movedSince=$(git diff --name-only "$fastBase" origin/main | grep -v -e '^documentation/velocity/landings\.csv$' -e '^stage3/meter/runs/' -e '^stage3/progress\.json$' | grep . || true)
+	movedSince=$(git diff --name-only "$fastBase" origin/main | countingPaths "$(codePackages "$fastBase" "$sha")")
 	untested=$(comm -23 <(printf '%s\n' "$movedSince" | grep . | sort) <(git diff --name-only "$fastBase" "$sha" | sort) || true)
 	if [ -n "$untested" ]; then
 		echo "refused: main moved past the fast gate's base ${fastBase:0:8} in paths the gate didn't see change ($(printf '%s' "$untested" | head -n 3 | paste -sd ' ' -)); merge main in and fast-gate again" >&2
@@ -394,7 +424,7 @@ if [ "$testOnly" = yes ]; then
 	# Harness directories read only by tests and gates, never by the compiler, runtime, library or a shipped
 	# tool, are allowed too, each added by ruling (@system_adamic, Oct 8: stage3/fixtures and stage3/meter).
 	changed=$(git diff --name-only "$old" "$tree")
-	nonTest=$(printf '%s\n' "$changed" | grep -v -E '(_test\.go$|_test\.py$|(^|/)test_[^/]*\.py$|/testdata/|^review/|(^|/)shards\.json$|^stage3/fixtures/|^stage3/meter/)' | grep . || true)
+	nonTest=$(printf '%s\n' "$changed" | grep -v -E "$testOnlyPattern" | grep . || true)
 	if [ -n "$nonTest" ]; then
 		echo "refused: not test-only against main ${old:0:8}: $(printf '%s' "$nonTest" | head -n 5 | paste -sd ' ' -)" >&2
 		exit 1
@@ -425,18 +455,18 @@ elif ! git merge-base --is-ancestor "$old" "$sha"; then
 		exit 1
 	fi
 	recordPaths=$(git diff --name-only "$gated" "$tree")
-	notRecords=$(printf '%s\n' "$recordPaths" | grep -v -e '^documentation/velocity/landings\.csv$' -e '^stage3/meter/runs/' -e '^stage3/progress\.json$' | grep . || true)
+	notRecords=$(printf '%s\n' "$recordPaths" | countingPaths "$(codePackages "$(git merge-base "$old" "$gated")" "$gated")")
 	if [ -n "$notRecords" ]; then
-		echo "refused: main moved to ${old:0:8} under this gate, beyond record commits ($(printf '%s' "$notRecords" | head -n 3 | paste -sd ' ' -)); merge it in and gate again" >&2
+		echo "refused: main moved to ${old:0:8} under this gate, beyond record and test-only commits ($(printf '%s' "$notRecords" | head -n 3 | paste -sd ' ' -)); merge it in and gate again" >&2
 		exit 1
 	fi
 	if printf '%s\n' "$recordPaths" | grep -qx 'stage3/progress.json' && git grep -q 'progress\.json' "$gated" -- '*.go' '*.py' '*.sh' '*.mjs' '*.cjs' '*.js' '*.ts' '*.a'; then
 		echo "refused: main's stage3/progress.json differs from ${gated:0:8}'s and ${gated:0:8} reads it; merge it in and gate again" >&2
 		exit 1
 	fi
-	sha=$(git commit-tree "$tree" -p "$old" -p "$gated" -m "Land ${gated:0:8} over main ${old:0:8}, which moved only by record commits
+	sha=$(git commit-tree "$tree" -p "$old" -p "$gated" -m "Land ${gated:0:8} over main ${old:0:8}, which moved only by record and test-only commits
 
-The tree is ${gated:0:8}'s, as gated, plus main's record paths: $(printf '%s\n' "$recordPaths" | grep . | sed 's#^stage3/meter/runs/\([^/]*\)/.*#stage3/meter/runs/\1/#' | sort -u | paste -sd ' ' -).")
+The tree is ${gated:0:8}'s, as gated, plus main's record and test-only paths: $(printf '%s\n' "$recordPaths" | grep . | sed 's#^stage3/meter/runs/\([^/]*\)/.*#stage3/meter/runs/\1/#' | sort -u | paste -sd ' ' -).")
 	echo "Landing ${gated:0:8} over record-only main ${old:0:8} as ${sha:0:8} (tree = gated tree + record paths)."
 fi
 if [ -n "$correctMain" ]; then
