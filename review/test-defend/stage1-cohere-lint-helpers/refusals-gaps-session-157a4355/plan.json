@@ -1,0 +1,18 @@
+[
+  {
+    "id": "R1",
+    "file": "stage1/cohere/lint/helpers/policy_message.ts",
+    "old": "if(template < 0) {",
+    "new": "if(template < -1) {",
+    "aim": "Missing message must retain the Go-specific refusal, rather than falling through to an invalid arena read.",
+    "line": 15
+  },
+  {
+    "id": "G1",
+    "file": "stage1/cohere/lint/helpers/strict_options.ts",
+    "old": "        if(kind === 'unsupported') { this.unsupported = 'custom or unsupported Go option type'; return false; }\n",
+    "new": "",
+    "aim": "Unsupported custom descriptor must return NotYet even when the input is null.",
+    "line": 11
+  }
+]

@@ -1,0 +1,64 @@
+{
+  "R1": {
+    "mutant": "R1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/helpers/",
+      "-run",
+      "."
+    ],
+    "env": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/lint-helper-defense/cache/R1"
+    },
+    "exit": 1,
+    "wall": 46.36342531899936,
+    "binary_seconds": 44.775,
+    "states": {
+      "TestHelpersMatchCohere": "pass",
+      "TestHelperMutants": "pass",
+      "TestMessageRefusalsMatchGo": "fail",
+      "TestKnownGapsAreExplicit": "pass"
+    },
+    "errors": [
+      "helpers_test.go:236: guard 0 /tmp/adamic-gate/TestMessageRefusalsMatchGo2809949762/001/helpers: exit status 70 stderr \"adamic: panic: missing option value\\n\", Go \"adamic: panic: policy/messages: missing/rule has no message \\\"missing\\\"\\n\""
+    ]
+  },
+  "G1": {
+    "mutant": "G1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/helpers/",
+      "-run",
+      "."
+    ],
+    "env": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/lint-helper-defense/cache/G1"
+    },
+    "exit": 1,
+    "wall": 46.71835495999767,
+    "binary_seconds": 45.129,
+    "states": {
+      "TestHelpersMatchCohere": "pass",
+      "TestHelperMutants": "pass",
+      "TestMessageRefusalsMatchGo": "pass",
+      "TestKnownGapsAreExplicit": "fail"
+    },
+    "errors": [
+      "helpers_test.go:260: output line 2: got \"valid\", Go \"NotYet: custom or unsupported Go option type\""
+    ]
+  }
+}

@@ -1,0 +1,186 @@
+[
+  {
+    "test": "TestHelpersMatchCohere",
+    "package": "stage1/cohere/lint/helpers",
+    "file": "stage1/cohere/lint/helpers/helpers_test.go:78",
+    "seconds": 12.769,
+    "timing_samples": [
+      13.542,
+      12.545,
+      12.769
+    ],
+    "oracle": "Go encoding/json, cohere optionschema, generated Go target decoders and policy.Messages.Render; byte comparison. 5923 Expected seeds also check archived ESLint acceptance/refusal labels. Checked [{}] for require-description against the ESLint 10.8.1/plugin 4.8.1 archive; no fresh ESLint execution.",
+    "oracle_kind": [
+      "external-run",
+      "external-authority"
+    ],
+    "kills": [
+      "M1",
+      "M2",
+      "M3",
+      "M4"
+    ],
+    "unique_kills": [
+      "M1",
+      "M3"
+    ],
+    "last_proven_fail": "M4: helpers_test.go:98: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /workspace/adamic/stage1/cohere/lint/helpers/main.ts /tmp/adamic-gate/TestHelpersMatchCohere1805568307/006/cases.json /workspace/adamic/stage1/cohere/lint/helpers/testdata/catalog.json]: exit status 70",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": [
+      "M1",
+      "M2",
+      "M3",
+      "M4"
+    ],
+    "probe_kills": [
+      "P"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestHelpersMatchCohere",
+      "TestMessageRefusalsMatchGo",
+      "TestKnownGapsAreExplicit"
+    ],
+    "evidence": "ADAMIC_MUTANT=M4; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/ -run ^(TestHelpersMatchCohere|TestMessageRefusalsMatchGo|TestKnownGapsAreExplicit)$; helpers_test.go:98: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /workspace/adamic/stage1/cohere/lint/helpers/main.ts /tmp/adamic-gate/TestHelpersMatchCohere1805568307/006/cases.json /workspace/adamic/stage1/cohere/lint/helpers/testdata/catalog.json]: exit status 70; log=M4-matrix.log",
+    "probe_evidence": {
+      "command": "ADAMIC_MUTANT=P; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/ -run ^(TestHelpersMatchCohere|TestMessageRefusalsMatchGo|TestKnownGapsAreExplicit)$",
+      "failure": "helpers_test.go:99: output line 1: got \"\", Go \"invalid\"",
+      "entry": "main.ts",
+      "diff": "P.diff"
+    }
+  },
+  {
+    "test": "TestHelperMutants",
+    "package": "stage1/cohere/lint/helpers",
+    "file": "stage1/cohere/lint/helpers/helpers_test.go:118",
+    "seconds": 27.224,
+    "timing_samples": [
+      27.224,
+      27.235,
+      27.06
+    ],
+    "oracle": "Independent Go answers and archived ESLint seeds against compiled builtin mutants, using its own direct byte-equality check. W1 proves that local check; WShared+M1 shows this witness does not protect the production compare helper.",
+    "oracle_kind": [
+      "external-run",
+      "external-authority"
+    ],
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W1: helpers_test.go:142: compiled mutant survived",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": [],
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestHelperMutants"
+    ],
+    "evidence": "ADAMIC_MUTANT=W1; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/ -run ^(TestHelperMutants)$; helpers_test.go:142: compiled mutant survived; log=W1.log",
+    "probe_evidence": null
+  },
+  {
+    "test": "TestMessageRefusalsMatchGo",
+    "package": "stage1/cohere/lint/helpers",
+    "file": "stage1/cohere/lint/helpers/helpers_test.go:195",
+    "seconds": 6.134,
+    "timing_samples": [
+      6.131,
+      6.787,
+      6.134
+    ],
+    "oracle": "Go policy.Messages.Render panic text; own adamic prefix and exit 70. Full stderr rejects M4 despite the same exit code. Supplemental SOut shows stdout is unchecked.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M4"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M4: helpers_test.go:236: guard 2 /tmp/adamic-gate/TestMessageRefusalsMatchGo2931154253/001/helpers: exit status 70 stderr \"adamic: panic: policy/messages: nexus/consistency-no-stuttering-name \\\"stutteringName\\\" picks from 0 phrases, and was given 0 options\\n\", Go \"adamic: panic: policy/messages: nexus/consistency-no-stuttering-name \\\"stutteringName\\\" uses the values [name], and was given 0\\n\"",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestHelpersMatchCohere"
+    ],
+    "mutants_in_matrix": [
+      "M1",
+      "M2",
+      "M3",
+      "M4"
+    ],
+    "probe_kills": [
+      "P"
+    ],
+    "subsumer_seconds": 12.769,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestHelpersMatchCohere",
+      "TestMessageRefusalsMatchGo",
+      "TestKnownGapsAreExplicit"
+    ],
+    "evidence": "ADAMIC_MUTANT=M4; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/ -run ^(TestHelpersMatchCohere|TestMessageRefusalsMatchGo|TestKnownGapsAreExplicit)$; helpers_test.go:236: guard 2 /tmp/adamic-gate/TestMessageRefusalsMatchGo2931154253/001/helpers: exit status 70 stderr \"adamic: panic: policy/messages: nexus/consistency-no-stuttering-name \\\"stutteringName\\\" picks from 0 phrases, and was given 0 options\\n\", Go \"adamic: panic: policy/messages: nexus/consistency-no-stuttering-name \\\"stutteringName\\\" uses the values [name], and was given 0\\n\"; log=M4-matrix.log",
+    "probe_evidence": {
+      "command": "ADAMIC_MUTANT=P; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/ -run ^(TestHelpersMatchCohere|TestMessageRefusalsMatchGo|TestKnownGapsAreExplicit)$",
+      "failure": "helpers_test.go:236: guard 0 /tmp/adamic-gate/TestMessageRefusalsMatchGo2481035693/001/helpers: <nil> stderr \"\", Go \"adamic: panic: policy/messages: missing/rule has no message \\\"missing\\\"\\n\"",
+      "entry": "main.ts",
+      "diff": "P.diff"
+    },
+    "limitations": "Subsumption rests on 1 caught mutant. It is a bounded hint, not deletion advice."
+  },
+  {
+    "test": "TestKnownGapsAreExplicit",
+    "package": "stage1/cohere/lint/helpers",
+    "file": "stage1/cohere/lint/helpers/helpers_test.go:244",
+    "seconds": 1.788,
+    "timing_samples": [
+      1.788,
+      1.886,
+      1.671
+    ],
+    "oracle": "Handwritten NotYet labels and valid recovery answer, checked on source Node and sanitized native. No outside authority for those labels.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M2"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M2: helpers_test.go:260: output line 1: got \"NotYet: unsupported schema keyword type\", Go \"NotYet: unsupported schema keyword pattern\"",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestHelpersMatchCohere"
+    ],
+    "mutants_in_matrix": [
+      "M1",
+      "M2",
+      "M3",
+      "M4"
+    ],
+    "probe_kills": [
+      "P"
+    ],
+    "subsumer_seconds": 12.769,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestHelpersMatchCohere",
+      "TestMessageRefusalsMatchGo",
+      "TestKnownGapsAreExplicit"
+    ],
+    "evidence": "ADAMIC_MUTANT=M2; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/ -run ^(TestHelpersMatchCohere|TestMessageRefusalsMatchGo|TestKnownGapsAreExplicit)$; helpers_test.go:260: output line 1: got \"NotYet: unsupported schema keyword type\", Go \"NotYet: unsupported schema keyword pattern\"; log=M2-matrix.log",
+    "probe_evidence": {
+      "command": "ADAMIC_MUTANT=P; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/ -run ^(TestHelpersMatchCohere|TestMessageRefusalsMatchGo|TestKnownGapsAreExplicit)$",
+      "failure": "helpers_test.go:260: output line 1: got \"\", Go \"NotYet: unsupported schema keyword pattern\"",
+      "entry": "main.ts",
+      "diff": "P.diff"
+    },
+    "limitations": "Subsumption rests on 1 caught mutant. It is a bounded hint, not deletion advice."
+  }
+]

@@ -1,0 +1,38 @@
+[
+  {
+    "id": "M1",
+    "file": "stage1/cohere/lint/helpers/options_json.ts",
+    "old": "a.number === b.number",
+    "new": "a.number !== b.number",
+    "kind": "flip condition",
+    "function": "OptionsJson.equal",
+    "line": 136
+  },
+  {
+    "id": "M2",
+    "file": "stage1/cohere/lint/helpers/option_schema.ts",
+    "old": "!known.includes(key)",
+    "new": "known.includes(key)",
+    "kind": "flip condition",
+    "function": "OptionSchema.audit",
+    "line": 23
+  },
+  {
+    "id": "M3",
+    "file": "stage1/cohere/lint/helpers/strict_options.ts",
+    "old": "if(value.kind === 'null') { return true; }",
+    "new": "if(value.kind === 'null') { return false; }",
+    "kind": "change constant",
+    "function": "StrictOptions.matches",
+    "line": 14
+  },
+  {
+    "id": "M4",
+    "file": "stage1/cohere/lint/helpers/policy_message.ts",
+    "old": "chosen.size !== count",
+    "new": "chosen.size !== count + 1",
+    "kind": "off-by-one bound",
+    "function": "PolicyMessage.render",
+    "line": 46
+  }
+]

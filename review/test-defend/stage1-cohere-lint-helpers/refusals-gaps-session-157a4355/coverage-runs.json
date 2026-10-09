@@ -1,0 +1,71 @@
+[
+  {
+    "test": "TestMessageRefusalsMatchGo",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=github.com/system-inc/adamic/internal/lower,github.com/system-inc/adamic/internal/native",
+      "-coverprofile=review/test-defend/stage1-cohere-lint-helpers/refusals-gaps-session-157a4355/TestMessageRefusalsMatchGo.cover",
+      "./stage1/cohere/lint/helpers/",
+      "-run",
+      "^TestMessageRefusalsMatchGo$"
+    ],
+    "env": {
+      "NODE_V8_COVERAGE": "/workspace/adamic/review/test-defend/stage1-cohere-lint-helpers/refusals-gaps-session-157a4355/v8/TestMessageRefusalsMatchGo"
+    },
+    "exit": 0,
+    "wall": 10.488857987998927
+  },
+  {
+    "test": "TestKnownGapsAreExplicit",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=github.com/system-inc/adamic/internal/lower,github.com/system-inc/adamic/internal/native",
+      "-coverprofile=review/test-defend/stage1-cohere-lint-helpers/refusals-gaps-session-157a4355/TestKnownGapsAreExplicit.cover",
+      "./stage1/cohere/lint/helpers/",
+      "-run",
+      "^TestKnownGapsAreExplicit$"
+    ],
+    "env": {
+      "NODE_V8_COVERAGE": "/workspace/adamic/review/test-defend/stage1-cohere-lint-helpers/refusals-gaps-session-157a4355/v8/TestKnownGapsAreExplicit"
+    },
+    "exit": 0,
+    "wall": 3.398651064999285
+  },
+  {
+    "test": "TestHelpersMatchCohere",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=github.com/system-inc/adamic/internal/lower,github.com/system-inc/adamic/internal/native",
+      "-coverprofile=review/test-defend/stage1-cohere-lint-helpers/refusals-gaps-session-157a4355/TestHelpersMatchCohere.cover",
+      "./stage1/cohere/lint/helpers/",
+      "-run",
+      "^TestHelpersMatchCohere$"
+    ],
+    "env": {
+      "NODE_V8_COVERAGE": "/workspace/adamic/review/test-defend/stage1-cohere-lint-helpers/refusals-gaps-session-157a4355/v8/TestHelpersMatchCohere"
+    },
+    "exit": 0,
+    "wall": 14.271976301002724
+  }
+]

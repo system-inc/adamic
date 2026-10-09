@@ -1,0 +1,24 @@
+[
+  {
+    "mutant": "R1",
+    "command": [
+      "git",
+      "apply",
+      "--check",
+      "review/test-defend/stage1-cohere-lint-helpers/refusals-gaps-session-157a4355/R1.diff"
+    ],
+    "exit": 0,
+    "native_compile_evidence": "R1.log"
+  },
+  {
+    "mutant": "G1",
+    "command": [
+      "git",
+      "apply",
+      "--check",
+      "review/test-defend/stage1-cohere-lint-helpers/refusals-gaps-session-157a4355/G1.diff"
+    ],
+    "exit": 0,
+    "native_compile_evidence": "G1-witness-native-build.log"
+  }
+]

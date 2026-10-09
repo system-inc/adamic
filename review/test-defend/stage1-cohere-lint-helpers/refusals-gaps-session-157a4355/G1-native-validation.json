@@ -1,0 +1,45 @@
+{
+  "cache": "/tmp/lint-helper-defense/cache/G1-witness",
+  "runs": [
+    {
+      "label": "clean-node",
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/stage1/cohere/lint/helpers/main.ts",
+        "/workspace/adamic/review/test-defend/stage1-cohere-lint-helpers/refusals-gaps-session-157a4355/G1-witness-case.json",
+        "/workspace/adamic/stage1/cohere/lint/helpers/testdata/catalog.json"
+      ],
+      "exit": 0,
+      "wall": 0.12695265699949232
+    },
+    {
+      "label": "native-build",
+      "command": [
+        "timeout",
+        "90",
+        "go",
+        "run",
+        "./cmd/adamic",
+        "build",
+        "/workspace/adamic/stage1/cohere/lint/helpers/main.ts",
+        "-o",
+        "/tmp/lint-helper-defense-gap",
+        "--sanitize"
+      ],
+      "exit": 0,
+      "wall": 1.5286778119989322
+    },
+    {
+      "label": "native-output",
+      "command": [
+        "/tmp/lint-helper-defense-gap",
+        "/workspace/adamic/review/test-defend/stage1-cohere-lint-helpers/refusals-gaps-session-157a4355/G1-witness-case.json",
+        "/workspace/adamic/stage1/cohere/lint/helpers/testdata/catalog.json"
+      ],
+      "exit": 0,
+      "wall": 0.08501917499961564
+    }
+  ]
+}

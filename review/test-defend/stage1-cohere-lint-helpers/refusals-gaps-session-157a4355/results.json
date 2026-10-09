@@ -1,0 +1,68 @@
+[
+  {
+    "test": "TestMessageRefusalsMatchGo",
+    "package": "stage1/cohere/lint/helpers",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestHelpersMatchCohere"
+    ],
+    "defense": "defended",
+    "unique_mutant": "R1 stage1/cohere/lint/helpers/policy_message.ts:15",
+    "attempts": [
+      {
+        "mutant": "R1",
+        "file_line": "stage1/cohere/lint/helpers/policy_message.ts:15",
+        "change": "if(template < 0) { -> if(template < -1) {",
+        "rows_failed": [
+          "TestMessageRefusalsMatchGo"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/lint-helper-defense/cache/R1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/ -run . > R1.log 2>&1; helpers_test.go:236: guard 0 /tmp/adamic-gate/TestMessageRefusalsMatchGo2809949762/001/helpers: exit status 70 stderr \"adamic: panic: missing option value\\n\", Go \"adamic: panic: policy/messages: missing/rule has no message \\\"missing\\\"\\n\"",
+    "rows_passed": [
+      "TestHelpersMatchCohere",
+      "TestHelperMutants",
+      "TestKnownGapsAreExplicit"
+    ],
+    "bounded": false,
+    "matrix_rows": [
+      "TestHelpersMatchCohere",
+      "TestHelperMutants",
+      "TestMessageRefusalsMatchGo",
+      "TestKnownGapsAreExplicit"
+    ]
+  },
+  {
+    "test": "TestKnownGapsAreExplicit",
+    "package": "stage1/cohere/lint/helpers",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestHelpersMatchCohere"
+    ],
+    "defense": "defended",
+    "unique_mutant": "G1 stage1/cohere/lint/helpers/strict_options.ts:11",
+    "attempts": [
+      {
+        "mutant": "G1",
+        "file_line": "stage1/cohere/lint/helpers/strict_options.ts:11",
+        "change": "if(kind === 'unsupported') { this.unsupported = 'custom or unsupported Go option type'; return false; } -> (drop statement)",
+        "rows_failed": [
+          "TestKnownGapsAreExplicit"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/lint-helper-defense/cache/G1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/ -run . > G1.log 2>&1; helpers_test.go:260: output line 2: got \"valid\", Go \"NotYet: custom or unsupported Go option type\"",
+    "rows_passed": [
+      "TestHelpersMatchCohere",
+      "TestHelperMutants",
+      "TestMessageRefusalsMatchGo"
+    ],
+    "bounded": false,
+    "matrix_rows": [
+      "TestHelpersMatchCohere",
+      "TestHelperMutants",
+      "TestMessageRefusalsMatchGo",
+      "TestKnownGapsAreExplicit"
+    ]
+  }
+]

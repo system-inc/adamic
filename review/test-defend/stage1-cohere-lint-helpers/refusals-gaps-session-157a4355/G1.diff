@@ -1,0 +1,10 @@
+--- a/stage1/cohere/lint/helpers/strict_options.ts
++++ b/stage1/cohere/lint/helpers/strict_options.ts
+@@ -8,7 +8,6 @@
+     constructor(descriptor: string) { this.shapes = new OptionsJson(descriptor); this.root = this.shapes.parse(); }
+     matches(shape: number, values: OptionsJson, index: number): boolean {
+         const kindIndex = this.shapes.field(shape, 'kind'); const kind = this.shapes.node(kindIndex).text;
+-        if(kind === 'unsupported') { this.unsupported = 'custom or unsupported Go option type'; return false; }
+         const value = values.node(index);
+         // encoding/json null leaves scalars/structs untouched and sets pointers/slices/maps to nil.
+         if(value.kind === 'null') { return true; }

@@ -1,0 +1,92 @@
+{
+  "TestMessageRefusalsMatchGo": {
+    "subsumer": "TestHelpersMatchCohere",
+    "exclusive_go_blocks": [],
+    "exclusive_port_ranges": [
+      {
+        "file": "policy_message.ts",
+        "transformed_start": 464,
+        "transformed_end": 468,
+        "snippet": "? -1"
+      },
+      {
+        "file": "policy_message.ts",
+        "transformed_start": 528,
+        "transformed_end": 609,
+        "snippet": "{\n            panic(`policy/messages: ${rule} has no message \"${id}\"`);\n        }"
+      },
+      {
+        "file": "policy_message.ts",
+        "transformed_start": 2285,
+        "transformed_end": 2289,
+        "snippet": "? -1"
+      },
+      {
+        "file": "policy_message.ts",
+        "transformed_start": 2434,
+        "transformed_end": 2592,
+        "snippet": "{\n                panic(`policy/messages: ${rule} \"${id}\" was given the option \"${choice.name}\" of \"${choice.phrase}\", which it does not take`);\n            }"
+      },
+      {
+        "file": "policy_message.ts",
+        "transformed_start": 2849,
+        "transformed_end": 2981,
+        "snippet": "{\n            panic(`policy/messages: ${rule} \"${id}\" picks from ${count} phrases, and was given ${chosen.size} options`);\n        }"
+      },
+      {
+        "file": "policy_message.ts",
+        "transformed_start": 3066,
+        "transformed_end": 3200,
+        "snippet": "{\n            panic(`policy/messages: ${rule} \"${id}\" uses the values [${needed.join(' ')}], and was given ${values.size}`);\n        }"
+      },
+      {
+        "file": "policy_message.ts",
+        "transformed_start": 3318,
+        "transformed_end": 3439,
+        "snippet": "{\n                panic(`policy/messages: ${rule} \"${id}\" uses the value \"${name}\", and was not given it`);\n            }"
+      }
+    ]
+  },
+  "TestKnownGapsAreExplicit": {
+    "subsumer": "TestHelpersMatchCohere",
+    "exclusive_go_blocks": [],
+    "exclusive_port_ranges": [
+      {
+        "file": "strict_options.ts",
+        "transformed_start": 468,
+        "transformed_end": 576,
+        "snippet": "{\n            this.unsupported = 'custom or unsupported Go option type';\n            return false;\n        }"
+      },
+      {
+        "file": "strict_options.ts",
+        "transformed_start": 1560,
+        "transformed_end": 1705,
+        "snippet": "{\n                        this.unsupported = 'Unicode fold for untagged option keys';\n                        return false;\n                    }"
+      },
+      {
+        "file": "strict_options.ts",
+        "transformed_start": 4181,
+        "transformed_end": 4212,
+        "snippet": "? `NotYet: ${this.unsupported}`"
+      },
+      {
+        "file": "option_schema.ts",
+        "transformed_start": 1742,
+        "transformed_end": 1853,
+        "snippet": "{\n                this.unsupported = `unsupported schema keyword ${key}`;\n                return;\n            }"
+      },
+      {
+        "file": "option_schema.ts",
+        "transformed_start": 2709,
+        "transformed_end": 2748,
+        "snippet": "{\n                return;\n            }"
+      },
+      {
+        "file": "option_schema.ts",
+        "transformed_start": 8728,
+        "transformed_end": 8789,
+        "snippet": "{\n            return `NotYet: ${this.unsupported}`;\n        }"
+      }
+    ]
+  }
+}

@@ -1,0 +1,202 @@
+{
+  "named": [
+    {
+      "file": "stage1/cohere/lint/helpers/main.ts",
+      "line": 6,
+      "name": "read"
+    },
+    {
+      "file": "stage1/cohere/lint/helpers/main.ts",
+      "line": 10,
+      "name": "text"
+    },
+    {
+      "file": "stage1/cohere/lint/helpers/main.ts",
+      "line": 12,
+      "name": "schemaText"
+    },
+    {
+      "file": "stage1/cohere/lint/helpers/option_schema.ts",
+      "line": 9,
+      "name": "OptionSchema.constructor"
+    },
+    {
+      "file": "stage1/cohere/lint/helpers/option_schema.ts",
+      "line": 15,
+      "name": "OptionSchema.audit"
+    },
+    {
+      "file": "stage1/cohere/lint/helpers/option_schema.ts",
+      "line": 32,
+      "name": "OptionSchema.field"
+    },
+    {
+      "file": "stage1/cohere/lint/helpers/option_schema.ts",
+      "line": 33,
+      "name": "OptionSchema.limit"
+    },
+    {
+      "file": "stage1/cohere/lint/helpers/option_schema.ts",
+      "line": 36,
+      "name": "OptionSchema.reference"
+    },
+    {
+      "file": "stage1/cohere/lint/helpers/option_schema.ts",
+      "line": 47,
+      "name": "OptionSchema.validate"
+    },
+    {
+      "file": "stage1/cohere/lint/helpers/option_schema.ts",
+      "line": 106,
+      "name": "OptionSchema.check"
+    },
+    {
+      "file": "stage1/cohere/lint/helpers/options_json.ts",
+      "line": 16,
+      "name": "OptionsJson.constructor"
+    },
+    {
+      "file": "stage1/cohere/lint/helpers/options_json.ts",
+      "line": 17,
+      "name": "OptionsJson.node"
+    },
+    {
+      "file": "stage1/cohere/lint/helpers/options_json.ts",
+      "line": 18,
+      "name": "OptionsJson.add"
+    },
+    {
+      "file": "stage1/cohere/lint/helpers/options_json.ts",
+      "line": 23,
+      "name": "OptionsJson.skip"
+    },
+    {
+      "file": "stage1/cohere/lint/helpers/options_json.ts",
+      "line": 26,
+      "name": "OptionsJson.string"
+    },
+    {
+      "file": "stage1/cohere/lint/helpers/options_json.ts",
+      "line": 61,
+      "name": "OptionsJson.digit"
+    },
+    {
+      "file": "stage1/cohere/lint/helpers/options_json.ts",
+      "line": 65,
+      "name": "OptionsJson.value"
+    },
+    {
+      "file": "stage1/cohere/lint/helpers/options_json.ts",
+      "line": 124,
+      "name": "OptionsJson.parse"
+    },
+    {
+      "file": "stage1/cohere/lint/helpers/options_json.ts",
+      "line": 129,
+      "name": "OptionsJson.field"
+    },
+    {
+      "file": "stage1/cohere/lint/helpers/options_json.ts",
+      "line": 133,
+      "name": "OptionsJson.equal"
+    },
+    {
+      "file": "stage1/cohere/lint/helpers/policy_message.ts",
+      "line": 8,
+      "name": "PolicyMessage.constructor"
+    },
+    {
+      "file": "stage1/cohere/lint/helpers/policy_message.ts",
+      "line": 12,
+      "name": "PolicyMessage.template"
+    },
+    {
+      "file": "stage1/cohere/lint/helpers/policy_message.ts",
+      "line": 18,
+      "name": "PolicyMessage.names"
+    },
+    {
+      "file": "stage1/cohere/lint/helpers/policy_message.ts",
+      "line": 32,
+      "name": "PolicyMessage.render"
+    },
+    {
+      "file": "stage1/cohere/lint/helpers/strict_options.ts",
+      "line": 8,
+      "name": "StrictOptions.constructor"
+    },
+    {
+      "file": "stage1/cohere/lint/helpers/strict_options.ts",
+      "line": 9,
+      "name": "StrictOptions.matches"
+    },
+    {
+      "file": "stage1/cohere/lint/helpers/strict_options.ts",
+      "line": 58,
+      "name": "StrictOptions.check"
+    },
+    {
+      "file": "stage1/cohere/lint/helpers/main.ts",
+      "line": 7,
+      "name": "module entry"
+    }
+  ],
+  "callbacks": [
+    {
+      "file": "stage1/cohere/lint/helpers/option_schema.ts",
+      "line": 55,
+      "source": "const t = this.schema.node(type); const names = t.kind === 'array' ? t.children.map(i => this.schema.node(i).text) : [t.text];"
+    },
+    {
+      "file": "stage1/cohere/lint/helpers/option_schema.ts",
+      "line": 56,
+      "source": "if(!names.some(name => name === v.kind || (name === 'integer' && v.kind === 'number' && Number.isFinite(v.number) && Number.isInteger(v.number)))) { return false; }"
+    },
+    {
+      "file": "stage1/cohere/lint/helpers/option_schema.ts",
+      "line": 61,
+      "source": "if(enumeration >= 0 && !this.schema.node(enumeration).children.some(i => values.equal(valueIndex, this.schema, i))) { return false; }"
+    },
+    {
+      "file": "stage1/cohere/lint/helpers/option_schema.ts",
+      "line": 86,
+      "source": "if(required >= 0 && this.schema.node(required).children.some(i => !v.keys.includes(this.schema.node(i).text))) { return false; }"
+    },
+    {
+      "file": "stage1/cohere/lint/helpers/options_json.ts",
+      "line": 48,
+      "source": "if(digits.length !== 4 || ![...digits].every(c => '0123456789abcdefABCDEF'.includes(c))) { this.error = 'unicode escape'; return ''; }"
+    },
+    {
+      "file": "stage1/cohere/lint/helpers/policy_message.ts",
+      "line": 27,
+      "source": "if(name === '' || name.charCodeAt(0) < 97 || name.charCodeAt(0) > 122 || ![...name].every(c => (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9'))) { panic('malformed generated message placeholder'); }"
+    },
+    {
+      "file": "stage1/cohere/lint/helpers/policy_message.ts",
+      "line": 30,
+      "source": "return [...seen].sort((a, b) => a < b ? -1 : a > b ? 1 : 0);"
+    },
+    {
+      "file": "stage1/cohere/lint/helpers/strict_options.ts",
+      "line": 18,
+      "source": "return value.children.every(child => this.matches(item, values, child));"
+    },
+    {
+      "file": "stage1/cohere/lint/helpers/strict_options.ts",
+      "line": 22,
+      "source": "if(map >= 0) { return value.children.every(child => this.matches(map, values, child)); }"
+    },
+    {
+      "file": "stage1/cohere/lint/helpers/strict_options.ts",
+      "line": 27,
+      "source": "if([...key].some(c => c.charCodeAt(0) > 127)) { this.unsupported = 'Unicode fold for untagged option keys'; return false; }"
+    },
+    {
+      "file": "stage1/cohere/lint/helpers/strict_options.ts",
+      "line": 32,
+      "source": "if([...candidate + key].some(c => c.charCodeAt(0) > 127)) { this.unsupported = 'Unicode fold for untagged option keys'; return false; }"
+    }
+  ],
+  "scope": "28 named functions/constructors including module entry, plus 11 callback expression sites. Declaration/caller inventory from source, not a dynamic branch coverage claim."
+}

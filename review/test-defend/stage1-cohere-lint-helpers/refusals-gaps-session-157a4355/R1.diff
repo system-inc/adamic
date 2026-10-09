@@ -1,0 +1,11 @@
+--- a/stage1/cohere/lint/helpers/policy_message.ts
++++ b/stage1/cohere/lint/helpers/policy_message.ts
+@@ -12,7 +12,7 @@
+     template(rule: string, id: string): number {
+         const rules = this.catalog.field(this.root, rule);
+         const template = rules < 0 ? -1 : this.catalog.field(rules, id);
+-        if(template < 0) { panic(`policy/messages: ${rule} has no message "${id}"`); }
++        if(template < -1) { panic(`policy/messages: ${rule} has no message "${id}"`); }
+         return template;
+     }
+     names(text: string): string[] {
