@@ -1,0 +1,11 @@
+run adamic-verify-20261009T075553-81b6944d: void, 5 tests in 12 units, 0 failed, 10 units broken, 0 killed over budget
+BROKEN tests-00: no results (exited true, last output "5.4G\t/tmp/loom-home")
+BROKEN tests-01: no results (exited true, last output "loom-pilot: checkout of aea8bc81077c4ad36a77d9477268919ba8cd3eba failed")
+BROKEN tests-02: no results (exited true, last output "5.4G\t/tmp/loom-home")
+BROKEN tests-05: no results (exited true, last output "5.4G\t/tmp/loom-home")
+BROKEN tests-06: no results (exited true, last output "5.4G\t/tmp/loom-home")
+BROKEN tests-07: no results (exited true, last output "5.4G\t/tmp/loom-home")
+BROKEN tests-08: no results (exited true, last output "5.4G\t/tmp/loom-home")
+BROKEN tests-09: no results (exited true, last output "5.4G\t/tmp/loom-home")
+BROKEN tests-10: no results (exited true, last output "5.4G\t/tmp/loom-home")
+BROKEN tests-11: no results (exited true, last output "5.4G\t/tmp/loom-home")
