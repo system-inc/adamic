@@ -70,3 +70,5 @@ Lane checks run against committed HEAD using the exact integration command. lane
 | erase-earlier-throw | TestOptionalAfterCallPreservesEarlierThrow |
 
 Embedded mutant leaves: TestAssignmentProofChainedMutant, TestAssignmentProofCompoundMutant, TestAssignmentProofIfNarrowingMutant, TestAssignmentProofReturnDefinedMutant, TestAssignmentProofScannerKeywordMutant, TestAssignmentProofWiderTargetMutant, TestCallSpreadEvaluatedTwiceMutant, TestJSONStringifyShorthandWrongBindingMutant. Each passes by rejecting its deliberately changed source/output against its independently captured Node golden.
+
+Final lane replay: lane checks 4.4 s, gofmt and tools on 34 Go files, t.Parallel on 11 test packages, vet 11 packages; exit 0. Recorded in lane-checks-final.log.
