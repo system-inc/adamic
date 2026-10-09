@@ -121,39 +121,56 @@ func printerOracle(t *testing.T) string {
 	return dir + "/oracle"
 }
 
-type printerProducts struct{ source, backend, sanitized, release string }
-
-func preparePrinterProducts(t *testing.T, path string) printerProducts {
+func printerLoweredProduct(t *testing.T, path string) string {
 	t.Helper()
-	loweredProduct := printerBuild(t, printerBuildInputs{
+	return printerBuild(t, printerBuildInputs{
 		Name: "lowered GraphQL printer", Files: printerInputFiles(t, repository, filepath.Dir(filepath.Dir(filepath.Dir(path)))), Toolchain: runtime.Version(),
 	}, func(dir string) error {
+		start := time.Now()
 		program := lowered(t, path)
+		t.Logf("lowering wall %.3fs", time.Since(start).Seconds())
+		start = time.Now()
 		source := native.C(program)
+		t.Logf("C emission wall %.3fs", time.Since(start).Seconds())
 		if err := os.WriteFile(dir+"/port.c", []byte(source), 0644); err != nil {
 			return err
 		}
 		return os.WriteFile(dir+"/program.mjs", []byte(javascript.JavaScript(program)), 0644)
 	})
+}
+
+func printerCompiledProduct(t *testing.T, loweredProduct string, options native.Options) string {
+	t.Helper()
 	data, err := os.ReadFile(loweredProduct + "/port.c")
 	if err != nil {
 		t.Fatal(err)
 	}
-	source := string(data)
-
 	clang := execute(t, nil, "clang", "--version")
 	if clang.exitCode != 0 {
 		t.Fatalf("clang version: %s", clang.stderr)
 	}
+	name := "release GraphQL printer"
+	if options.Sanitize {
+		name = "sanitized GraphQL printer"
+	}
 	inputs := printerInputFiles(t, filepath.Join(repository, "internal/native"))
-	sanitized := printerBuild(t, printerBuildInputs{Name: "sanitized GraphQL printer", Files: append([]string{loweredProduct + "/port.c"}, inputs...), Flags: native.Flags(native.Options{Sanitize: true}), Toolchain: string(clang.stdout)}, func(dir string) error {
-		return native.Build(source, dir+"/port", native.Options{Sanitize: true})
+	return printerBuild(t, printerBuildInputs{Name: name, Files: append([]string{loweredProduct + "/port.c"}, inputs...), Flags: native.Flags(options), Toolchain: string(clang.stdout)}, func(dir string) error {
+		start := time.Now()
+		err := native.Build(string(data), dir+"/port", options)
+		t.Logf("clang wall %.3fs", time.Since(start).Seconds())
+		return err
 	}) + "/port"
+}
+
+type printerProducts struct{ source, backend, sanitized, release string }
+
+func preparePrinterProducts(t *testing.T, path string) printerProducts {
+	t.Helper()
+	loweredProduct := printerLoweredProduct(t, path)
+	sanitized := printerCompiledProduct(t, loweredProduct, native.Options{Sanitize: true})
 	release := ""
 	if runtime.GOOS == "darwin" {
-		release = printerBuild(t, printerBuildInputs{Name: "release GraphQL printer", Files: append([]string{loweredProduct + "/port.c"}, inputs...), Flags: native.Flags(native.Options{}), Toolchain: string(clang.stdout)}, func(dir string) error {
-			return native.Build(source, dir+"/port", native.Options{})
-		}) + "/port"
+		release = printerCompiledProduct(t, loweredProduct, native.Options{})
 	}
 	return printerProducts{source: path, backend: loweredProduct + "/program.mjs", sanitized: sanitized, release: release}
 }
