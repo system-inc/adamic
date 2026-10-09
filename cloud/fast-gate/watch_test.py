@@ -1003,6 +1003,17 @@ class WatchTests(unittest.TestCase):
         w.wait(lambda: w.read('starts').count('canary/main ') == 2)
         self.assertTrue(w.read('starts').splitlines()[-1].endswith(' box0'), w.read('starts'))
 
+    def test_a_stage_canary_takes_a_free_slot_beside_a_front_run_that_doesn_t_hold_the_box_whole(self):
+        # Oct 9 12:13Z: front runs on all four boxes, three leaving slots free, and the stage canary had nowhere to start.
+        w = Watcher(1, canaryBox='box1', mode='hold', slots='box1 S\nbox1 S\n', boxSides={'tools-one': 'tools-zero'})
+        self.addCleanup(w.close)
+        (w.state / 'front').write_text('codex/test0*\n')
+        w.wait(lambda: 'codex/test0 ' in w.read('starts'))
+        w.put('head', 'tools-two')
+        w.wait(lambda: 'gating canary/main' in w.read('output'))
+        self.assertTrue(w.read('starts').splitlines()[-1].startswith('canary/main '), w.read('starts'))
+        self.assertTrue(w.read('starts').splitlines()[-1].endswith(' box1'))
+
     def test_a_stage_canary_green_promotes_the_tools_it_ran_after_the_head_moved_on(self):
         # Oct 8 22:16Z to Oct 9 02:10Z: every box-side push restarted promotion, and nothing promoted for four hours.
         w = self.staged()

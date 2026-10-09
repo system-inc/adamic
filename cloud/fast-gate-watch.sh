@@ -780,8 +780,10 @@ usableSlots() {
   while read -r runningBranch runningSha runningSlot runningBox rest; do
     [ -n "${runningBranch}" ] || continue
     slotReserved "${runningBranch}" "${runningBox:-threadripper}" "${runningSlot}" && held="${held}${runningBox:-threadripper} "
-    # The star holds whatever box it runs on, reserved there or not.
-    isFront "${runningBranch}" && held="${held}${runningBox:-threadripper} "
+    # The star holds whatever box it runs on, reserved there or not. A canary of main still takes a free slot beside a
+    # front run that doesn't hold the box whole: at 12:13Z on Oct 9 front runs sat on all four boxes, three of them
+    # leaving slots free, and the stage canary the star waited on had nowhere to start.
+    isFront "${runningBranch}" && [ "${branch}" != canary/main ] && held="${held}${runningBox:-threadripper} "
   done < "${state}/running.tmp"
   while read -r box slot; do
     # The pool is offered to side tips by pickNext alone.
