@@ -42,6 +42,12 @@ func profileSourceMutant(h *harness, stage0, archive, name, from, to string) str
 	return h.build(stage0, name, filepath.Join(directory, "volume_suite.ts"), archive, false)
 }
 
+func volumeProfileMissingBinding(h *harness, stage0, archive string) string {
+	return volumeProfileNative(h, stage0, archive, false, "typeaware volume missing-binding namedScopes wrong", func(local *harness) string {
+		return profileSourceMutant(local, stage0, archive, "missing-binding", "this.namedScopes.set(binding.name, fresh);", "this.namedScopes.set('wrong', fresh);")
+	}, "this.namedScopes.set(binding.name, fresh);", "this.namedScopes.set('wrong', fresh);")
+}
+
 func TestShadowIndexMissingBinding_000(t *testing.T) {
 	t.Parallel()
 	started := time.Now()
@@ -49,9 +55,7 @@ func TestShadowIndexMissingBinding_000(t *testing.T) {
 	stage0 := volumeProfileStage0(h)
 	archive := h.archive("checker", "", false)
 	t.Logf("setup: %.3fs", time.Since(started).Seconds())
-	mutant := volumeProfileNative(h, stage0, archive, false, "typeaware volume missing-binding namedScopes wrong", func(local *harness) string {
-		return profileSourceMutant(local, stage0, archive, "missing-binding", "this.namedScopes.set(binding.name, fresh);", "this.namedScopes.set('wrong', fresh);")
-	}, "this.namedScopes.set(binding.name, fresh);", "this.namedScopes.set('wrong', fresh);")
+	mutant := volumeProfileMissingBinding(h, stage0, archive)
 	source := h.write("input.ts", "const x=1;\nexport {};\n")
 	manifest := h.write("manifest", source+"\n")
 	got := h.run("missing-binding-run", exec.Command(mutant, filepath.Join(h.repository, "stage1/cohere/typeaware/testdata/tsconfig.json"), manifest))

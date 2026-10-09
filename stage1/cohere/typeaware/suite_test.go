@@ -2,7 +2,6 @@ package typeaware
 
 import (
 	"bytes"
-	"encoding/json"
 	"fmt"
 	goast "go/ast"
 	"go/parser"
@@ -180,15 +179,7 @@ func prepareSixRuleAgreementAndMutants(t *testing.T) *typeAwarePlan {
 	builds.Wait()
 	binary = func(*harness) string { return readyBinary }
 	optimized = func(*harness) string { return readyOptimized }
-	oracle := filepath.Join(directory, "oracle")
-	virtual := filepath.Join(repository, "cohere/adamic_six_oracle.go")
-	data, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: filepath.Join(repository, "stage1/cohere/typeaware/testdata/oracle_six.go")}})
-	if err != nil {
-		t.Fatal(err)
-	}
-	cmd := exec.Command("go", "build", "-overlay", h.write("oracle-overlay.json", string(data)), "-o", oracle, virtual)
-	cmd.Dir = filepath.Join(repository, "cohere")
-	oracle = typeAwareProduct(h, "oracle-build", cmd)
+	oracle := typeAwareOracle(h, "six")
 	config := filepath.Join(repository, "stage1/cohere/typeaware/testdata/tsconfig.json")
 	var paths []string
 	for i, source := range suiteSources(t, repository) {
@@ -391,7 +382,7 @@ func prepareSixRuleAgreementAndMutants(t *testing.T) *typeAwarePlan {
 		return typeAwareBuild(h, stage0, "facts-cost", filepath.Join(repository, "stage1/cohere/typeaware/testdata/fact_cost.ts"), normal(h), false)
 	}
 	directCost := func(h *harness) string {
-		return typeAwareProduct(h, "facts-cost-go-build", exec.Command("go", "build", "-o", filepath.Join(h.directory, "direct-cost"), "./bridge/tsgo/cost"))
+		return sixFactsCostGo(h)
 	}
 	readyNativeCost, readyDirectCost := nativeCost(h), directCost(h)
 	nativeCost = func(*harness) string { return readyNativeCost }
