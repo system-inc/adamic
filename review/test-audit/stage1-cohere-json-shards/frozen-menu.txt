@@ -50,7 +50,7 @@
   [
     "W3",
     "upstream_parity_split_test.go",
-    186,
+    184,
     "upstreamParityBlockCheck body",
     "return nil",
     "weaken witnessed check"
@@ -58,7 +58,7 @@
   [
     "S1",
     "shards_test.go",
-    53,
+    52,
     "end-start < 16",
     "end-start < 15",
     "construction bound"
@@ -74,7 +74,7 @@
   [
     "S3",
     "upstream_parity_split_test.go",
-    30,
+    27,
     "SplitShards = 16",
     "SplitShards = 15",
     "construction constant"
@@ -82,7 +82,7 @@
   [
     "S4",
     "shards_test.go",
-    62,
+    61,
     "start = end",
     "start = end + 1",
     "off-by-one construction traversal"
@@ -90,7 +90,7 @@
   [
     "S5",
     "upstream_parity_split_test.go",
-    423,
+    418,
     "output oracle filename",
     "missing-oracle",
     "construction output constant"
