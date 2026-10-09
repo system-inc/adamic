@@ -7,6 +7,7 @@ import (
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/system-inc/adamic/internal/ir"
 )
 
 // phantomParts separates a primitive from the object views that give it a checker-only name.
@@ -99,4 +100,23 @@ func (l *lowering) phantomUndefined(proven *checker.Type) bool {
 		return base.Flags()&(checker.TypeFlagsVoid|checker.TypeFlagsUndefined) != 0
 	}
 	return false
+}
+
+// Branding may normalize a read contract without authorizing ordinary branded
+// function results or erasure. Those retain the base's separate representation proof.
+func (l *lowering) viewRepresentation(target *checker.Type) (ir.Type, bool) {
+	if base := l.phantomBase(target); base != nil {
+		return l.representation(base)
+	}
+	if target.Flags()&checker.TypeFlagsUnion != 0 {
+		members := make([]*checker.Type, 0, len(target.Types()))
+		for _, member := range target.Types() {
+			if base := l.phantomBase(member); base != nil {
+				member = base
+			}
+			members = append(members, member)
+		}
+		return l.representation(l.checker.GetUnionType(members))
+	}
+	return l.representation(target)
 }

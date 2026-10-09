@@ -194,7 +194,7 @@ func TestCheckedViewUntaggedArrayPending(t *testing.T) {
 				t.Fatal(err)
 			}
 			_, err = lower.Lower(context.Background(), loaded)
-			if unsupported, ok := err.(*lower.NotYet); !ok || !strings.Contains(unsupported.What, "views-v3: array element kind") {
+			if unsupported, ok := err.(*lower.NotYet); !ok || !(strings.Contains(unsupported.What, "views-v3: array element kind") || variant == "empty" && unsupported.What == "an array of never") {
 				t.Fatalf("array admission must stay NotYet: %v", err)
 			}
 			// Array membership needs V3 element-kind metadata and hole-aware reads.

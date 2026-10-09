@@ -42,9 +42,6 @@ func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {
 
 func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 	proven = l.concrete(proven)
-	if base := l.phantomBase(proven); base != nil {
-		return l.representation(base)
-	}
 	if kind := l.typedArrayKind(proven); kind != 0 {
 		return kind, true
 	}
@@ -99,12 +96,20 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 		return ir.Closure, true
 	case flags&checker.TypeFlagsUnion != 0:
 		if l.includesNull(proven) && !dynamicObjectType(proven) {
-			// RegExp's native absent-array protocol stays on its existing ABI.
-			regexp := false
+			// Preserve the area's nullable reference and RegExp protocols. Only
+			// differently stored members need the boxed union representation.
+			boxed := l.includesUndefined(proven)
 			for _, member := range proven.Types() {
-				regexp = regexp || l.isLibraryType(member, "RegExpExecArray", "RegExpMatchArray", "RegExpIndicesArray")
+				if member.Flags()&(checker.TypeFlagsNull|checker.TypeFlagsUndefined) != 0 {
+					continue
+				}
+				of, known := l.representation(member)
+				if !known {
+					return 0, false
+				}
+				boxed = boxed || !of.IsReference() || of == ir.String || of == ir.Union
 			}
-			if !regexp {
+			if boxed {
 				return ir.Union, true
 			}
 		}

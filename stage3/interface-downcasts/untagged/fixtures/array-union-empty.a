@@ -1,4 +1,4 @@
-// NotYet: views-v3: array element kind
+// NotYet: an array of never
 // Independent lazy array-union projection.
 interface ElementA {readonly kind:1; readonly payload:{readonly label:string}; readonly a:any;}
 interface ElementB {readonly kind:2; readonly payload:{readonly label:string}; readonly b:any;}
