@@ -1,0 +1,15 @@
+{"Time":"2026-10-09T15:10:28.232122139Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks"}
+{"Time":"2026-10-09T15:10:28.240099845Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownUnicodeWidths"}
+{"Time":"2026-10-09T15:10:28.240168917Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownUnicodeWidths","Output":"=== RUN   TestMarkdownUnicodeWidths\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:10:28.240195796Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownUnicodeWidths","Output":"    support_test.go:60: markdownblocks memory capacity: 16 units (512 MiB each)\n"}
+{"Time":"2026-10-09T15:10:28.240217588Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownUnicodeWidths","Output":"=== PAUSE TestMarkdownUnicodeWidths\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:10:28.240219211Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownUnicodeWidths"}
+{"Time":"2026-10-09T15:10:28.240221885Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownUnicodeWidths"}
+{"Time":"2026-10-09T15:10:28.240223307Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownUnicodeWidths","Output":"=== CONT  TestMarkdownUnicodeWidths\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:10:28.255940321Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownUnicodeWidths","Output":"    width_test.go:27: corpus-files: repository /workspace/adamic root stage1/cohere/markdownblocks pin 2b1be38362046455e0e5454d8b0e674a8630e95d count 3\n"}
+{"Time":"2026-10-09T15:11:05.249548676Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownUnicodeWidths","Output":"    width_test.go:105: native mismatch \"U+00036F\" got \"1\" want \"0\"\n","OutputType":"error"}
+{"Time":"2026-10-09T15:11:05.250081963Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownUnicodeWidths","Output":"--- FAIL: TestMarkdownUnicodeWidths (37.01s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:11:05.250089795Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownUnicodeWidths","Elapsed":37.01}
+{"Time":"2026-10-09T15:11:05.250111396Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:11:05.263365838Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/cohere/markdownblocks\t37.031s\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:11:05.263397675Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Elapsed":37.031}

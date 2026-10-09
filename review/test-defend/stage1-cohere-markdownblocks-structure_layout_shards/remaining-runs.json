@@ -1,0 +1,133 @@
+[
+  {
+    "label": "D1-remaining-0",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestMarkdownLeafComposition_Setup|TestMarkdownLeafCompositionPlantedDisagreement|TestMarkdownListLayout_Setup|TestMarkdownListLayout|TestMarkdownQuoteLayout|TestMarkdownTableLayout|TestMarkdownLeafComposition|TestMarkdownStructureLayout_Setup|TestMarkdownQuoteLayoutNative|TestMarkdownQuoteLayout_Setup|TestMarkdownTableLayout_Setup|TestMarkdownWhitespaceLayout_Setup|TestMarkdownWhitespaceLayoutMutants|TestMarkdownWhitespaceLayoutBuildWorker)$",
+    "cache": "/tmp/defend-markdown/cache/D1",
+    "status": 0,
+    "wall": 19.114131509999424,
+    "cooked": false,
+    "failed": [],
+    "passed": [
+      "TestMarkdownListLayout_Setup",
+      "TestMarkdownQuoteLayout",
+      "TestMarkdownStructureLayout_Setup",
+      "TestMarkdownQuoteLayout_Setup",
+      "TestMarkdownListLayout",
+      "TestMarkdownLeafCompositionPlantedDisagreement",
+      "TestMarkdownQuoteLayoutNative",
+      "TestMarkdownWhitespaceLayout_Setup",
+      "TestMarkdownTableLayout_Setup",
+      "TestMarkdownWhitespaceLayoutBuildWorker",
+      "TestMarkdownTableLayout",
+      "TestMarkdownLeafComposition_Setup",
+      "TestMarkdownLeafComposition",
+      "TestMarkdownWhitespaceLayoutMutants/policy_CJ_spacing_tie",
+      "TestMarkdownWhitespaceLayoutMutants/policy_Korean_pair",
+      "TestMarkdownWhitespaceLayoutMutants/policy_single_line",
+      "TestMarkdownWhitespaceLayoutMutants"
+    ]
+  },
+  {
+    "label": "D1-remaining-1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestProduct_MarkdownLeafGoLists|TestProduct_MarkdownLeafGoDocLayout|TestProduct_MarkdownLeafLowered|TestProduct_MarkdownLeafNativeSanitized|TestProduct_MarkdownLeafNativeRelease|TestProduct_MarkdownQuote_lowered|TestProduct_MarkdownQuote_lists|TestProduct_MarkdownQuote_layout|TestProduct_MarkdownQuote_native_true|TestProduct_MarkdownQuote_native_false|TestProduct_MarkdownStructure_lowered|TestProduct_MarkdownStructure_native|TestProduct_MarkdownStructure_adamic_markdown_lists|TestProduct_MarkdownStructure_adamic_markdown_doclayout|TestProduct_MarkdownTable_lowered|TestProduct_MarkdownTable_native_true|TestProduct_MarkdownTable_native_false|TestProduct_MarkdownTable_list|TestProduct_MarkdownTable_document|TestProduct_MarkdownWhitespace_lowered|TestProduct_MarkdownWhitespace_lists|TestProduct_MarkdownWhitespace_layout|TestProduct_MarkdownWhitespace_native_true|TestProduct_MarkdownWhitespace_native_false|TestProduct_MarkdownWhitespace_policy_lowered|TestProduct_MarkdownWhitespace_policy_native|TestProduct_MarkdownWhitespace_manifest)$",
+    "cache": "/tmp/defend-markdown/cache/D1",
+    "status": 0,
+    "wall": 17.217555886996706,
+    "cooked": false,
+    "failed": [],
+    "passed": [
+      "TestProduct_MarkdownWhitespace_lowered",
+      "TestProduct_MarkdownLeafGoLists",
+      "TestProduct_MarkdownTable_lowered",
+      "TestProduct_MarkdownWhitespace_lists",
+      "TestProduct_MarkdownWhitespace_layout",
+      "TestProduct_MarkdownTable_document",
+      "TestProduct_MarkdownTable_list",
+      "TestProduct_MarkdownTable_native_false",
+      "TestProduct_MarkdownWhitespace_manifest",
+      "TestProduct_MarkdownTable_native_true",
+      "TestProduct_MarkdownWhitespace_policy_lowered",
+      "TestProduct_MarkdownWhitespace_native_false",
+      "TestProduct_MarkdownWhitespace_native_true",
+      "TestProduct_MarkdownQuote_layout",
+      "TestProduct_MarkdownStructure_lowered",
+      "TestProduct_MarkdownStructure_adamic_markdown_doclayout",
+      "TestProduct_MarkdownStructure_adamic_markdown_lists",
+      "TestProduct_MarkdownStructure_native",
+      "TestProduct_MarkdownWhitespace_policy_native",
+      "TestProduct_MarkdownLeafNativeRelease",
+      "TestProduct_MarkdownQuote_lowered",
+      "TestProduct_MarkdownQuote_native_false",
+      "TestProduct_MarkdownQuote_native_true",
+      "TestProduct_MarkdownLeafNativeSanitized",
+      "TestProduct_MarkdownLeafGoDocLayout",
+      "TestProduct_MarkdownQuote_lists",
+      "TestProduct_MarkdownLeafLowered"
+    ]
+  },
+  {
+    "label": "D2-new-leaf-family",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestMarkdownLeafComposition_000|TestMarkdownLeafComposition_001|TestMarkdownLeafComposition_002|TestMarkdownLeafComposition_003|TestMarkdownLeafComposition_004|TestMarkdownLeafComposition_005|TestMarkdownLeafComposition_006)$",
+    "cache": "/tmp/defend-markdown/cache/D2",
+    "status": 0,
+    "wall": 51.487148373998934,
+    "cooked": false,
+    "failed": [],
+    "passed": [
+      "TestMarkdownLeafComposition_005/reference_collapse",
+      "TestMarkdownLeafComposition_005",
+      "TestMarkdownLeafComposition_004/strong_delimiter",
+      "TestMarkdownLeafComposition_004",
+      "TestMarkdownLeafComposition_006/footnote_indentation",
+      "TestMarkdownLeafComposition_006",
+      "TestMarkdownLeafComposition_003",
+      "TestMarkdownLeafComposition_002",
+      "TestMarkdownLeafComposition_001",
+      "TestMarkdownLeafComposition_000"
+    ]
+  },
+  {
+    "label": "D3-new-leaf-family",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestMarkdownLeafComposition_000|TestMarkdownLeafComposition_001|TestMarkdownLeafComposition_002|TestMarkdownLeafComposition_003|TestMarkdownLeafComposition_004|TestMarkdownLeafComposition_005|TestMarkdownLeafComposition_006)$",
+    "cache": "/tmp/defend-markdown/cache/D3",
+    "status": 1,
+    "wall": 48.644292011998914,
+    "cooked": false,
+    "failed": [
+      "TestMarkdownLeafComposition_002",
+      "TestMarkdownLeafComposition_001",
+      "TestMarkdownLeafComposition_003",
+      "TestMarkdownLeafComposition_000"
+    ],
+    "passed": [
+      "TestMarkdownLeafComposition_004/strong_delimiter",
+      "TestMarkdownLeafComposition_004",
+      "TestMarkdownLeafComposition_005/reference_collapse",
+      "TestMarkdownLeafComposition_005",
+      "TestMarkdownLeafComposition_006/footnote_indentation",
+      "TestMarkdownLeafComposition_006"
+    ]
+  },
+  {
+    "label": "D4-new-leaf-family",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestMarkdownLeafComposition_000|TestMarkdownLeafComposition_001|TestMarkdownLeafComposition_002|TestMarkdownLeafComposition_003|TestMarkdownLeafComposition_004|TestMarkdownLeafComposition_005|TestMarkdownLeafComposition_006)$",
+    "cache": "/tmp/defend-markdown/cache/D4",
+    "status": 1,
+    "wall": 49.56879836100052,
+    "cooked": false,
+    "failed": [
+      "TestMarkdownLeafComposition_002",
+      "TestMarkdownLeafComposition_003",
+      "TestMarkdownLeafComposition_001",
+      "TestMarkdownLeafComposition_000"
+    ],
+    "passed": [
+      "TestMarkdownLeafComposition_005/reference_collapse",
+      "TestMarkdownLeafComposition_005",
+      "TestMarkdownLeafComposition_006/footnote_indentation",
+      "TestMarkdownLeafComposition_006",
+      "TestMarkdownLeafComposition_004/strong_delimiter",
+      "TestMarkdownLeafComposition_004"
+    ]
+  }
+]

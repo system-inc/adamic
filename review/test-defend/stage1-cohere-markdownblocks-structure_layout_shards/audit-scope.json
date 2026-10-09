@@ -1,0 +1,504 @@
+{
+  "commit": "d054e3578d4e53bef8cb8c9ab82d6ace69cdafeb",
+  "provided_count": 124,
+  "missing": [],
+  "tests": {
+    "TestMarkdownStructureLayoutUnion": {
+      "file": "stage1/cohere/markdownblocks/structure_layout_shards_test.go",
+      "line": 65
+    },
+    "TestMarkdownStructureLayout_000": {
+      "file": "stage1/cohere/markdownblocks/structure_layout_shards_test.go",
+      "line": 139
+    },
+    "TestMarkdownStructureLayout_001": {
+      "file": "stage1/cohere/markdownblocks/structure_layout_shards_test.go",
+      "line": 140
+    },
+    "TestMarkdownStructureLayout_002": {
+      "file": "stage1/cohere/markdownblocks/structure_layout_shards_test.go",
+      "line": 141
+    },
+    "TestMarkdownStructureLayout_003": {
+      "file": "stage1/cohere/markdownblocks/structure_layout_shards_test.go",
+      "line": 142
+    },
+    "TestMarkdownStructureLayout_004": {
+      "file": "stage1/cohere/markdownblocks/structure_layout_shards_test.go",
+      "line": 143
+    },
+    "TestMarkdownStructureLayout_005": {
+      "file": "stage1/cohere/markdownblocks/structure_layout_shards_test.go",
+      "line": 144
+    },
+    "TestMarkdownStructureLayout_006": {
+      "file": "stage1/cohere/markdownblocks/structure_layout_shards_test.go",
+      "line": 145
+    },
+    "TestMarkdownStructureLayout_007": {
+      "file": "stage1/cohere/markdownblocks/structure_layout_shards_test.go",
+      "line": 146
+    },
+    "TestMarkdownStructureLayout_008": {
+      "file": "stage1/cohere/markdownblocks/structure_layout_shards_test.go",
+      "line": 147
+    },
+    "TestMarkdownStructureLayout_009": {
+      "file": "stage1/cohere/markdownblocks/structure_layout_shards_test.go",
+      "line": 148
+    },
+    "TestMarkdownStructureLayout_010": {
+      "file": "stage1/cohere/markdownblocks/structure_layout_shards_test.go",
+      "line": 149
+    },
+    "TestMarkdownStructureLayout_011": {
+      "file": "stage1/cohere/markdownblocks/structure_layout_shards_test.go",
+      "line": 150
+    },
+    "TestMarkdownStructureLayout_012": {
+      "file": "stage1/cohere/markdownblocks/structure_layout_shards_test.go",
+      "line": 151
+    },
+    "TestMarkdownStructureLayout_013": {
+      "file": "stage1/cohere/markdownblocks/structure_layout_shards_test.go",
+      "line": 152
+    },
+    "TestMarkdownStructureLayout_014": {
+      "file": "stage1/cohere/markdownblocks/structure_layout_shards_test.go",
+      "line": 153
+    },
+    "TestMarkdownStructureLayout_015": {
+      "file": "stage1/cohere/markdownblocks/structure_layout_shards_test.go",
+      "line": 154
+    },
+    "TestNativeBuildModesAreDistinct": {
+      "file": "stage1/cohere/markdownblocks/support_test.go",
+      "line": 203
+    },
+    "TestMarkdownTableLayout_Setup": {
+      "file": "stage1/cohere/markdownblocks/table_layout_shards_test.go",
+      "line": 64
+    },
+    "TestMarkdownTableLayoutUnion": {
+      "file": "stage1/cohere/markdownblocks/table_layout_shards_test.go",
+      "line": 78
+    },
+    "TestMarkdownTableLayout_000": {
+      "file": "stage1/cohere/markdownblocks/table_layout_shards_test.go",
+      "line": 132
+    },
+    "TestMarkdownTableLayout_001": {
+      "file": "stage1/cohere/markdownblocks/table_layout_shards_test.go",
+      "line": 134
+    },
+    "TestMarkdownTableLayout_002": {
+      "file": "stage1/cohere/markdownblocks/table_layout_shards_test.go",
+      "line": 136
+    },
+    "TestMarkdownTableLayout_003": {
+      "file": "stage1/cohere/markdownblocks/table_layout_shards_test.go",
+      "line": 138
+    },
+    "TestMarkdownTableLayout_004": {
+      "file": "stage1/cohere/markdownblocks/table_layout_shards_test.go",
+      "line": 140
+    },
+    "TestMarkdownTableLayout_005": {
+      "file": "stage1/cohere/markdownblocks/table_layout_shards_test.go",
+      "line": 142
+    },
+    "TestMarkdownTableLayout_006": {
+      "file": "stage1/cohere/markdownblocks/table_layout_shards_test.go",
+      "line": 144
+    },
+    "TestMarkdownTableLayout_007": {
+      "file": "stage1/cohere/markdownblocks/table_layout_shards_test.go",
+      "line": 146
+    },
+    "TestMarkdownTextShardDisagreement": {
+      "file": "stage1/cohere/markdownblocks/text_independent_shards_test.go",
+      "line": 424
+    },
+    "TestMarkdownTextSplitting_000": {
+      "file": "stage1/cohere/markdownblocks/text_independent_shards_test.go",
+      "line": 450
+    },
+    "TestMarkdownTextSplitting_001": {
+      "file": "stage1/cohere/markdownblocks/text_independent_shards_test.go",
+      "line": 451
+    },
+    "TestMarkdownTextSplitting_002": {
+      "file": "stage1/cohere/markdownblocks/text_independent_shards_test.go",
+      "line": 452
+    },
+    "TestMarkdownTextSplitting_003": {
+      "file": "stage1/cohere/markdownblocks/text_independent_shards_test.go",
+      "line": 453
+    },
+    "TestMarkdownTextSplitting_004": {
+      "file": "stage1/cohere/markdownblocks/text_independent_shards_test.go",
+      "line": 454
+    },
+    "TestMarkdownTextSplitting_005": {
+      "file": "stage1/cohere/markdownblocks/text_independent_shards_test.go",
+      "line": 455
+    },
+    "TestMarkdownTextSplitting_006": {
+      "file": "stage1/cohere/markdownblocks/text_independent_shards_test.go",
+      "line": 456
+    },
+    "TestMarkdownTextSplitting_007": {
+      "file": "stage1/cohere/markdownblocks/text_independent_shards_test.go",
+      "line": 457
+    },
+    "TestMarkdownTextSplitting_008": {
+      "file": "stage1/cohere/markdownblocks/text_independent_shards_test.go",
+      "line": 458
+    },
+    "TestMarkdownTextSplitting_009": {
+      "file": "stage1/cohere/markdownblocks/text_independent_shards_test.go",
+      "line": 459
+    },
+    "TestMarkdownTextSplitting_010": {
+      "file": "stage1/cohere/markdownblocks/text_independent_shards_test.go",
+      "line": 460
+    },
+    "TestMarkdownTextSplitting_011": {
+      "file": "stage1/cohere/markdownblocks/text_independent_shards_test.go",
+      "line": 461
+    },
+    "TestMarkdownTextSplitting_012": {
+      "file": "stage1/cohere/markdownblocks/text_independent_shards_test.go",
+      "line": 462
+    },
+    "TestMarkdownTextSplitting_013": {
+      "file": "stage1/cohere/markdownblocks/text_independent_shards_test.go",
+      "line": 463
+    },
+    "TestMarkdownTextSplitting_014": {
+      "file": "stage1/cohere/markdownblocks/text_independent_shards_test.go",
+      "line": 464
+    },
+    "TestMarkdownTextSplitting_015": {
+      "file": "stage1/cohere/markdownblocks/text_independent_shards_test.go",
+      "line": 465
+    },
+    "TestMarkdownTextSplitting_016": {
+      "file": "stage1/cohere/markdownblocks/text_independent_shards_test.go",
+      "line": 466
+    },
+    "TestMarkdownTextSplitting_017": {
+      "file": "stage1/cohere/markdownblocks/text_independent_shards_test.go",
+      "line": 467
+    },
+    "TestMarkdownTextSplitting_018": {
+      "file": "stage1/cohere/markdownblocks/text_independent_shards_test.go",
+      "line": 468
+    },
+    "TestMarkdownTextSplitting_019": {
+      "file": "stage1/cohere/markdownblocks/text_independent_shards_test.go",
+      "line": 469
+    },
+    "TestMarkdownTextSplitting_020": {
+      "file": "stage1/cohere/markdownblocks/text_independent_shards_test.go",
+      "line": 470
+    },
+    "TestMarkdownTextSplitting_021": {
+      "file": "stage1/cohere/markdownblocks/text_independent_shards_test.go",
+      "line": 471
+    },
+    "TestMarkdownTextSplitting_022": {
+      "file": "stage1/cohere/markdownblocks/text_independent_shards_test.go",
+      "line": 472
+    },
+    "TestMarkdownTextSplitting_023": {
+      "file": "stage1/cohere/markdownblocks/text_independent_shards_test.go",
+      "line": 473
+    },
+    "TestMarkdownTextSplitting_024": {
+      "file": "stage1/cohere/markdownblocks/text_independent_shards_test.go",
+      "line": 474
+    },
+    "TestMarkdownTextSplitting_025": {
+      "file": "stage1/cohere/markdownblocks/text_independent_shards_test.go",
+      "line": 475
+    },
+    "TestMarkdownTextSplitting_026": {
+      "file": "stage1/cohere/markdownblocks/text_independent_shards_test.go",
+      "line": 476
+    },
+    "TestMarkdownTextSplitting_027": {
+      "file": "stage1/cohere/markdownblocks/text_independent_shards_test.go",
+      "line": 477
+    },
+    "TestMarkdownTextSplitting_028": {
+      "file": "stage1/cohere/markdownblocks/text_independent_shards_test.go",
+      "line": 478
+    },
+    "TestMarkdownTextSplitting_029": {
+      "file": "stage1/cohere/markdownblocks/text_independent_shards_test.go",
+      "line": 479
+    },
+    "TestMarkdownTextSplitting_030": {
+      "file": "stage1/cohere/markdownblocks/text_independent_shards_test.go",
+      "line": 480
+    },
+    "TestMarkdownTextSplitting_031": {
+      "file": "stage1/cohere/markdownblocks/text_independent_shards_test.go",
+      "line": 481
+    },
+    "TestMarkdownTextSplitting_032": {
+      "file": "stage1/cohere/markdownblocks/text_independent_shards_test.go",
+      "line": 482
+    },
+    "TestMarkdownTextSplitting_033": {
+      "file": "stage1/cohere/markdownblocks/text_independent_shards_test.go",
+      "line": 483
+    },
+    "TestMarkdownTextSplitting_034": {
+      "file": "stage1/cohere/markdownblocks/text_independent_shards_test.go",
+      "line": 484
+    },
+    "TestMarkdownTextSplitting_035": {
+      "file": "stage1/cohere/markdownblocks/text_independent_shards_test.go",
+      "line": 485
+    },
+    "TestMarkdownTextSplitting_036": {
+      "file": "stage1/cohere/markdownblocks/text_independent_shards_test.go",
+      "line": 486
+    },
+    "TestMarkdownTextSplitting_037": {
+      "file": "stage1/cohere/markdownblocks/text_independent_shards_test.go",
+      "line": 487
+    },
+    "TestMarkdownTextSplitting_038": {
+      "file": "stage1/cohere/markdownblocks/text_independent_shards_test.go",
+      "line": 488
+    },
+    "TestMarkdownTextSplitting_039": {
+      "file": "stage1/cohere/markdownblocks/text_independent_shards_test.go",
+      "line": 489
+    },
+    "TestMarkdownTextSplitting_040": {
+      "file": "stage1/cohere/markdownblocks/text_independent_shards_test.go",
+      "line": 490
+    },
+    "TestMarkdownTextSplitting_041": {
+      "file": "stage1/cohere/markdownblocks/text_independent_shards_test.go",
+      "line": 491
+    },
+    "TestMarkdownTextSplitting_042": {
+      "file": "stage1/cohere/markdownblocks/text_independent_shards_test.go",
+      "line": 492
+    },
+    "TestMarkdownTextSplitting_043": {
+      "file": "stage1/cohere/markdownblocks/text_independent_shards_test.go",
+      "line": 493
+    },
+    "TestMarkdownTextSplitting_044": {
+      "file": "stage1/cohere/markdownblocks/text_independent_shards_test.go",
+      "line": 494
+    },
+    "TestMarkdownTextSplitting_045": {
+      "file": "stage1/cohere/markdownblocks/text_independent_shards_test.go",
+      "line": 495
+    },
+    "TestMarkdownTextSplitting_046": {
+      "file": "stage1/cohere/markdownblocks/text_independent_shards_test.go",
+      "line": 496
+    },
+    "TestMarkdownTextSplitting_047": {
+      "file": "stage1/cohere/markdownblocks/text_independent_shards_test.go",
+      "line": 497
+    },
+    "TestMarkdownTextSplitting_048": {
+      "file": "stage1/cohere/markdownblocks/text_independent_shards_test.go",
+      "line": 498
+    },
+    "TestMarkdownTextSplitting_049": {
+      "file": "stage1/cohere/markdownblocks/text_independent_shards_test.go",
+      "line": 499
+    },
+    "TestMarkdownTextSplitting_050": {
+      "file": "stage1/cohere/markdownblocks/text_independent_shards_test.go",
+      "line": 500
+    },
+    "TestMarkdownTextSplitting_051": {
+      "file": "stage1/cohere/markdownblocks/text_independent_shards_test.go",
+      "line": 501
+    },
+    "TestMarkdownTextSplitting_052": {
+      "file": "stage1/cohere/markdownblocks/text_independent_shards_test.go",
+      "line": 502
+    },
+    "TestMarkdownTextSplitting_053": {
+      "file": "stage1/cohere/markdownblocks/text_independent_shards_test.go",
+      "line": 503
+    },
+    "TestMarkdownTextSplitting_054": {
+      "file": "stage1/cohere/markdownblocks/text_independent_shards_test.go",
+      "line": 504
+    },
+    "TestMarkdownTextSplitting_055": {
+      "file": "stage1/cohere/markdownblocks/text_independent_shards_test.go",
+      "line": 505
+    },
+    "TestMarkdownTextSplitting_056": {
+      "file": "stage1/cohere/markdownblocks/text_independent_shards_test.go",
+      "line": 506
+    },
+    "TestMarkdownTextSplitting_057": {
+      "file": "stage1/cohere/markdownblocks/text_independent_shards_test.go",
+      "line": 507
+    },
+    "TestMarkdownTextSplitting_058": {
+      "file": "stage1/cohere/markdownblocks/text_independent_shards_test.go",
+      "line": 508
+    },
+    "TestMarkdownTextSplitting_059": {
+      "file": "stage1/cohere/markdownblocks/text_independent_shards_test.go",
+      "line": 509
+    },
+    "TestMarkdownTextSplitting_060": {
+      "file": "stage1/cohere/markdownblocks/text_independent_shards_test.go",
+      "line": 510
+    },
+    "TestMarkdownTextSplitting_061": {
+      "file": "stage1/cohere/markdownblocks/text_independent_shards_test.go",
+      "line": 511
+    },
+    "TestMarkdownTextSplitting_062": {
+      "file": "stage1/cohere/markdownblocks/text_independent_shards_test.go",
+      "line": 512
+    },
+    "TestMarkdownTextSplitting_063": {
+      "file": "stage1/cohere/markdownblocks/text_independent_shards_test.go",
+      "line": 513
+    },
+    "TestMarkdownTextSplitting_Setup": {
+      "file": "stage1/cohere/markdownblocks/text_independent_test.go",
+      "line": 55
+    },
+    "TestMarkdownTextSplittingUnion": {
+      "file": "stage1/cohere/markdownblocks/text_independent_test.go",
+      "line": 60
+    },
+    "TestMarkdownWhitespaceLayout_Setup": {
+      "file": "stage1/cohere/markdownblocks/whitespace_layout_split_test.go",
+      "line": 108
+    },
+    "TestMarkdownWhitespaceLayoutUnion": {
+      "file": "stage1/cohere/markdownblocks/whitespace_layout_split_test.go",
+      "line": 142
+    },
+    "TestMarkdownWhitespaceLayout_000": {
+      "file": "stage1/cohere/markdownblocks/whitespace_layout_split_test.go",
+      "line": 222
+    },
+    "TestMarkdownWhitespaceLayout_001": {
+      "file": "stage1/cohere/markdownblocks/whitespace_layout_split_test.go",
+      "line": 223
+    },
+    "TestMarkdownWhitespaceLayout_002": {
+      "file": "stage1/cohere/markdownblocks/whitespace_layout_split_test.go",
+      "line": 224
+    },
+    "TestMarkdownWhitespaceLayout_003": {
+      "file": "stage1/cohere/markdownblocks/whitespace_layout_split_test.go",
+      "line": 225
+    },
+    "TestMarkdownWhitespaceLayout_004": {
+      "file": "stage1/cohere/markdownblocks/whitespace_layout_split_test.go",
+      "line": 226
+    },
+    "TestMarkdownWhitespaceLayout_005": {
+      "file": "stage1/cohere/markdownblocks/whitespace_layout_split_test.go",
+      "line": 227
+    },
+    "TestMarkdownWhitespaceLayout_006": {
+      "file": "stage1/cohere/markdownblocks/whitespace_layout_split_test.go",
+      "line": 228
+    },
+    "TestMarkdownWhitespaceLayout_007": {
+      "file": "stage1/cohere/markdownblocks/whitespace_layout_split_test.go",
+      "line": 229
+    },
+    "TestMarkdownWhitespaceLayout_008": {
+      "file": "stage1/cohere/markdownblocks/whitespace_layout_split_test.go",
+      "line": 230
+    },
+    "TestMarkdownWhitespaceLayout_009": {
+      "file": "stage1/cohere/markdownblocks/whitespace_layout_split_test.go",
+      "line": 231
+    },
+    "TestMarkdownWhitespaceLayout_010": {
+      "file": "stage1/cohere/markdownblocks/whitespace_layout_split_test.go",
+      "line": 232
+    },
+    "TestMarkdownWhitespaceLayout_011": {
+      "file": "stage1/cohere/markdownblocks/whitespace_layout_split_test.go",
+      "line": 233
+    },
+    "TestMarkdownWhitespaceLayout_012": {
+      "file": "stage1/cohere/markdownblocks/whitespace_layout_split_test.go",
+      "line": 735
+    },
+    "TestMarkdownWhitespaceLayout_013": {
+      "file": "stage1/cohere/markdownblocks/whitespace_layout_split_test.go",
+      "line": 736
+    },
+    "TestMarkdownWhitespaceLayout_014": {
+      "file": "stage1/cohere/markdownblocks/whitespace_layout_split_test.go",
+      "line": 737
+    },
+    "TestMarkdownWhitespaceLayout_015": {
+      "file": "stage1/cohere/markdownblocks/whitespace_layout_split_test.go",
+      "line": 738
+    },
+    "TestMarkdownWhitespaceLayout_016": {
+      "file": "stage1/cohere/markdownblocks/whitespace_layout_split_test.go",
+      "line": 739
+    },
+    "TestMarkdownWhitespaceLayout_017": {
+      "file": "stage1/cohere/markdownblocks/whitespace_layout_split_test.go",
+      "line": 740
+    },
+    "TestMarkdownWhitespaceLayout_018": {
+      "file": "stage1/cohere/markdownblocks/whitespace_layout_split_test.go",
+      "line": 741
+    },
+    "TestMarkdownWhitespaceLayout_019": {
+      "file": "stage1/cohere/markdownblocks/whitespace_layout_split_test.go",
+      "line": 742
+    },
+    "TestMarkdownWhitespaceLayout_020": {
+      "file": "stage1/cohere/markdownblocks/whitespace_layout_split_test.go",
+      "line": 743
+    },
+    "TestMarkdownWhitespaceLayout_021": {
+      "file": "stage1/cohere/markdownblocks/whitespace_layout_split_test.go",
+      "line": 744
+    },
+    "TestMarkdownWhitespaceLayout_022": {
+      "file": "stage1/cohere/markdownblocks/whitespace_layout_split_test.go",
+      "line": 745
+    },
+    "TestMarkdownWhitespaceLayout_023": {
+      "file": "stage1/cohere/markdownblocks/whitespace_layout_split_test.go",
+      "line": 746
+    },
+    "TestMarkdownWhitespaceLayoutMutants": {
+      "file": "stage1/cohere/markdownblocks/whitespace_layout_split_test.go",
+      "line": 699
+    },
+    "TestMarkdownWhitespaceLayoutBuildWorker": {
+      "file": "stage1/cohere/markdownblocks/whitespace_layout_split_test.go",
+      "line": 873
+    },
+    "TestMarkdownUnicodeWidths": {
+      "file": "stage1/cohere/markdownblocks/width_test.go",
+      "line": 17
+    }
+  },
+  "moves": "text_shards_test.go -> text_independent_shards_test.go; text_test.go -> text_independent_test.go"
+}

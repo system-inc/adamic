@@ -1,0 +1,67 @@
+Static port call inventory from list_probe.ts, text_probe.ts, whitespace_probe.ts and width_probe.ts. Potential reach, not dynamic coverage. Fixture transport helpers codec.ts are listed but will not be mutated.
+stage1/cohere/markdownblocks/structure.ts:8: export function printSentence(arena: DocumentArena, children: readonly SentenceChildInterface[]): number {
+stage1/cohere/markdownblocks/structure.ts:22: export function printParagraph(arena: DocumentArena, children: readonly number[]): number {
+stage1/cohere/markdownblocks/structure.ts:43: export function printHeading(
+stage1/cohere/markdownblocks/tables.ts:16: function rowText(cells: readonly PrintedCellInterface[], widths: readonly number[], aligns: readonly string[]): string {
+stage1/cohere/markdownblocks/tables.ts:27: export function printTable(
+stage1/cohere/markdownblocks/whitespace.ts:30: function koreanPair(previous: string, next: string): boolean {
+stage1/cohere/markdownblocks/whitespace.ts:33: function nonCJ(kind: string): boolean {
+stage1/cohere/markdownblocks/whitespace.ts:36: function asciiPunctuation(unit: number): boolean {
+stage1/cohere/markdownblocks/whitespace.ts:44: function cjSpaces(samples: readonly CJSpaceSampleInterface[]): boolean {
+stage1/cohere/markdownblocks/whitespace.ts:59: function converts(frame: WhitespaceFrameInterface): boolean {
+stage1/cohere/markdownblocks/whitespace.ts:76: function breakable(frame: WhitespaceFrameInterface, proseWrap: string): boolean {
+stage1/cohere/markdownblocks/whitespace.ts:94: function syntaxLeading(value: string): boolean {
+stage1/cohere/markdownblocks/whitespace.ts:109: export function printWhitespace(arena: DocumentArena, frame: WhitespaceFrameInterface): number {
+stage1/cohere/markdownblocks/splitText.ts:6: function contains(value: string, ranges: readonly number[]): boolean {
+stage1/cohere/markdownblocks/splitText.ts:12: function nonCJK(tokens: TextTokens, value: string): void {
+stage1/cohere/markdownblocks/splitText.ts:22: function word(tokens: TextTokens, value: string): void {
+stage1/cohere/markdownblocks/splitText.ts:47: export function splitText(text: string): readonly TextTokenInterface[] {
+stage1/cohere/markdownblocks/textTokens.ts:12: whitespace(value: string): void {
+stage1/cohere/markdownblocks/textTokens.ts:15: word(value: string, kind: string, cj: boolean, leading: boolean, trailing: boolean): void {
+stage1/cohere/markdownblocks/width.ts:14: export function stringWidth(text: string): number {
+stage1/cohere/markdownblocks/emojiMatcher.ts:4: export function inRanges(code: number, ranges: readonly number[]): boolean {
+stage1/cohere/markdownblocks/emojiMatcher.ts:15: export function mappedUnit(code: number): number {
+stage1/cohere/markdownblocks/emojiMatcher.ts:23: constructor(instructions: readonly WidthInstructionInterface[], entry: number) {
+stage1/cohere/markdownblocks/emojiMatcher.ts:28: closure(seeds: readonly number[], position: number, start: number, end: number): number[] {
+stage1/cohere/markdownblocks/emojiMatcher.ts:53: match(text: string, start: number, end: number): number {
+stage1/cohere/markdownblocks/document.ts:18: add(kind: string, text: string, width: number, children: readonly number[], flag = 0, group = -1): number {
+stage1/cohere/markdownblocks/document.ts:31: node(id: number): DocumentInterface {
+stage1/cohere/markdownblocks/document.ts:34: text(value: string): number {
+stage1/cohere/markdownblocks/document.ts:37: concat(parts: readonly number[]): number {
+stage1/cohere/markdownblocks/document.ts:40: align(prefix: string, contents: number): number {
+stage1/cohere/markdownblocks/document.ts:43: hardline(): number {
+stage1/cohere/markdownblocks/document.ts:58: function child(node: DocumentInterface, index = 0): number {
+stage1/cohere/markdownblocks/document.ts:61: function trailing(text: string, previous: number): number {
+stage1/cohere/markdownblocks/document.ts:70: function propagate(arena: DocumentArena, root: number): void {
+stage1/cohere/markdownblocks/document.ts:102: function fits(
+stage1/cohere/markdownblocks/document.ts:167: function indent(
+stage1/cohere/markdownblocks/document.ts:213: export function printDocument(
+stage1/cohere/markdownblocks/commandStack.ts:9: export function command(indentID: number, mode: number, doc: number, offset = 0): CommandInterface {
+stage1/cohere/markdownblocks/commandStack.ts:14: appendParts(parts: readonly number[], current: CommandInterface, offset = 0): void {
+stage1/cohere/markdownblocks/root.ts:13: export function ignoreKind(kind: string, value: string): string {
+stage1/cohere/markdownblocks/root.ts:24: function inline(kind: string): boolean {
+stage1/cohere/markdownblocks/root.ts:46: export function printRoot(arena: DocumentArena, source: string, children: readonly RootChildInterface[]): number {
+stage1/cohere/markdownblocks/leaves.ts:24: function lines(arena: DocumentArena, value: string): number {
+stage1/cohere/markdownblocks/leaves.ts:32: function group(arena: DocumentArena, contents: number): number {
+stage1/cohere/markdownblocks/leaves.ts:35: export function printLeaf(arena: DocumentArena, frame: LeafFrameInterface): number {
+stage1/cohere/markdownblocks/children.ts:5: export function printBlockChildren(arena: DocumentArena, children: readonly ListBlockInterface[]): number {
+stage1/cohere/markdownblocks/lists.ts:30: function whitespace(code: number): boolean {
+stage1/cohere/markdownblocks/lists.ts:53: export function orderedMarker(text: string): OrderedMarkerInterface {
+stage1/cohere/markdownblocks/lists.ts:69: function gitFriendly(frame: ListFrameInterface): boolean {
+stage1/cohere/markdownblocks/lists.ts:77: export function alignedList(frame: ListFrameInterface, tabWidth: number): boolean {
+stage1/cohere/markdownblocks/lists.ts:92: function requiredIndent(frame: ListFrameInterface): number {
+stage1/cohere/markdownblocks/lists.ts:103: export function listPrefix(frame: ListFrameInterface, index: number, tabWidth: number): string {
+stage1/cohere/markdownblocks/lists.ts:122: function loose(item: ListItemInterface, next: ListItemInterface | undefined): boolean {
+stage1/cohere/markdownblocks/lists.ts:125: function doubleLine(
+stage1/cohere/markdownblocks/lists.ts:149: export function printList(arena: DocumentArena, frame: ListFrameInterface, tabWidth: number): number {
+stage1/cohere/markdownblocks/quotes.ts:5: function inline(kind: string): boolean {
+stage1/cohere/markdownblocks/quotes.ts:27: export function printQuote(arena: DocumentArena, children: readonly ListBlockInterface[]): number {
+stage1/cohere/markdownblocks/codeblocks.ts:10: export function fenceStyle(value: string): string {
+stage1/cohere/markdownblocks/codeblocks.ts:22: export function printCodeBlock(arena: DocumentArena, frame: CodeBlockInterface): number {
+stage1/cohere/markdownblocks/htmlblocks.ts:8: function space(code: number): boolean {
+stage1/cohere/markdownblocks/htmlblocks.ts:27: export function printHTMLBlock(arena: DocumentArena, frame: HTMLBlockInterface): number {
+stage1/cohere/markdownblocks/preservedLabel.ts:5: export function printPreservedLabel(arena: DocumentArena, source: string): number {
+stage1/cohere/markdownblocks/codec.ts:2: export function decode(text: string): string {
+stage1/cohere/markdownblocks/codec.ts:16: export function encode(text: string): string {
+Suite construction entries: nativeBinaryResult (support_test.go:188), tableLayoutReady (table_layout_shards_test.go:41), textReadySetup (text_independent_shards_test.go:271), whitespaceLayoutReadyProducts (whitespace_layout_split_test.go:777).
+Witness checks: textOutputDifference (text_independent_shards_test.go:423), whitespaceLayoutBytesEqual (whitespace_layout_split_test.go:205). Go test preparation functions are harness, not production mutation targets.

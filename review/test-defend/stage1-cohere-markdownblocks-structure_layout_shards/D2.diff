@@ -1,0 +1,11 @@
+--- a/stage1/cohere/markdownblocks/structure.ts
++++ b/stage1/cohere/markdownblocks/structure.ts
+@@ -9,7 +9,7 @@
+     const parts: number[] = [];
+     let contents: number[] = [arena.text('')];
+     for(const child of children) {
+-        if(child.whitespace && arena.node(child.doc).kind !== 't') {
++        if(child.whitespace && arena.node(child.doc).kind === 't') {
+             parts.push(contents.length === 1 ? (contents[0] ?? panic('sentence head')) : arena.concat(contents));
+             parts.push(child.doc);
+             contents = [arena.text('')];

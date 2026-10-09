@@ -1,0 +1,119 @@
+[
+  {
+    "id": "M1",
+    "file": "stage1/cohere/markdownblocks/width.ts",
+    "line": 23,
+    "original": "if(ascii) return text.length;",
+    "replacement": "if(ascii) return text.length + 1;",
+    "menu": "change constant",
+    "failed_rows": [
+      "TestMarkdownStructureLayout family",
+      "TestMarkdownTableLayout family",
+      "TestMarkdownWhitespaceLayout family",
+      "TestMarkdownUnicodeWidths"
+    ],
+    "change": "if(ascii) return text.length; -> if(ascii) return text.length + 1;",
+    "category": "production"
+  },
+  {
+    "id": "M2",
+    "file": "stage1/cohere/markdownblocks/structure.ts",
+    "line": 51,
+    "original": "if(!setext) return arena.concat",
+    "replacement": "if(setext) return arena.concat",
+    "menu": "flip condition",
+    "failed_rows": [
+      "TestMarkdownStructureLayout family",
+      "TestMarkdownTableLayout family",
+      "TestMarkdownWhitespaceLayout family"
+    ],
+    "change": "if(!setext) return arena.concat -> if(setext) return arena.concat",
+    "category": "production"
+  },
+  {
+    "id": "M3",
+    "file": "stage1/cohere/markdownblocks/whitespace.ts",
+    "line": 77,
+    "original": "if(proseWrap !== 'always') return false;",
+    "replacement": "if(proseWrap !== 'never') return false;",
+    "menu": "change option",
+    "failed_rows": [
+      "TestMarkdownWhitespaceLayout family"
+    ],
+    "change": "if(proseWrap !== 'always') return false; -> if(proseWrap !== 'never') return false;",
+    "category": "production"
+  },
+  {
+    "id": "M4",
+    "file": "stage1/cohere/markdownblocks/splitText.ts",
+    "line": 62,
+    "original": "if(unit === 10) newline = true;",
+    "replacement": "if(unit === 9) newline = true;",
+    "menu": "change constant",
+    "failed_rows": [
+      "TestMarkdownTextSplitting family"
+    ],
+    "change": "if(unit === 10) newline = true; -> if(unit === 9) newline = true;",
+    "category": "production"
+  },
+  {
+    "id": "S1",
+    "file": "stage1/cohere/markdownblocks/support_test.go",
+    "line": 189,
+    "change": "sanitize: options.Sanitize -> sanitize: false",
+    "category": "construction",
+    "failed_rows": [
+      "TestNativeBuildModesAreDistinct"
+    ]
+  },
+  {
+    "id": "S2",
+    "file": "stage1/cohere/markdownblocks/table_layout_shards_test.go",
+    "line": 43,
+    "change": "drop complete tableLayoutOnce.Do(...) statement; retain nil guard",
+    "category": "construction",
+    "failed_rows": [
+      "TestMarkdownTableLayout_Setup"
+    ]
+  },
+  {
+    "id": "S3",
+    "file": "stage1/cohere/markdownblocks/text_independent_shards_test.go",
+    "line": 276,
+    "change": "drop complete textSetupOnce.Do(...) statement; retain ready guard",
+    "category": "construction",
+    "failed_rows": [
+      "TestMarkdownTextSplitting_Setup"
+    ]
+  },
+  {
+    "id": "S4",
+    "file": "stage1/cohere/markdownblocks/whitespace_layout_split_test.go",
+    "line": 766,
+    "change": "drop complete whitespaceLayoutReadyOnce.Do(...) statement; retain goBinary guard",
+    "category": "construction",
+    "failed_rows": [
+      "TestMarkdownWhitespaceLayout_Setup"
+    ]
+  },
+  {
+    "id": "W1",
+    "file": "stage1/cohere/markdownblocks/text_independent_shards_test.go",
+    "line": 409,
+    "change": "comparison function body -> return nil",
+    "category": "witness",
+    "failed_rows": [
+      "TestMarkdownTextShardDisagreement"
+    ]
+  },
+  {
+    "id": "W2",
+    "file": "stage1/cohere/markdownblocks/whitespace_layout_split_test.go",
+    "line": 204,
+    "change": "return bytes.Equal(actual, expected) -> return true",
+    "category": "witness",
+    "failed_rows": [
+      "TestMarkdownWhitespaceLayoutMutants"
+    ]
+  }
+]

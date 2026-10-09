@@ -1,0 +1,5 @@
+{
+  "command": "timeout 120 go run ./cmd/adamic build stage1/cohere/markdownblocks/testdata/width_probe.ts -o /tmp/defend-markdown/D1-native --sanitize",
+  "status": 0,
+  "wall": 19.706800331998238
+}

@@ -1,0 +1,11 @@
+--- a/stage1/cohere/markdownblocks/structure.ts
++++ b/stage1/cohere/markdownblocks/structure.ts
+@@ -22,7 +22,7 @@
+ export function printParagraph(arena: DocumentArena, children: readonly number[]): number {
+     const parts: number[] = [arena.text('')];
+     const stack = children.slice().reverse();
+-    while(stack.length > 0) {
++    while(stack.length > 1) {
+         const id = stack.pop() ?? panic('paragraph stack');
+         const node = arena.node(id);
+         if(node.kind === 'a') {

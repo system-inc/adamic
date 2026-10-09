@@ -1,0 +1,20 @@
+[
+  {
+    "name": "structure",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s -coverpkg=./internal/load,./internal/lower,./internal/native,./internal/javascript -coverprofile=/tmp/defend-markdown/structure.cover ./stage1/cohere/markdownblocks/ -run ^TestMarkdownStructureLayout(Union|_[0-9]{3})$",
+    "status": 0,
+    "wall": 88.44797487699907
+  },
+  {
+    "name": "table",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s -coverpkg=./internal/load,./internal/lower,./internal/native,./internal/javascript -coverprofile=/tmp/defend-markdown/table.cover ./stage1/cohere/markdownblocks/ -run ^TestMarkdownTableLayout(Union|_[0-9]{3})$",
+    "status": 0,
+    "wall": 55.14614900700326
+  },
+  {
+    "name": "width",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s -coverpkg=./internal/load,./internal/lower,./internal/native,./internal/javascript -coverprofile=/tmp/defend-markdown/width.cover ./stage1/cohere/markdownblocks/ -run ^TestMarkdownUnicodeWidths$",
+    "status": 1,
+    "wall": 92.60799737100024
+  }
+]

@@ -1,0 +1,38 @@
+[
+  {
+    "id": "D1",
+    "file": "stage1/cohere/markdownblocks/width.ts",
+    "old": "code <= 0x36f",
+    "new": "code <= 0x36e",
+    "menu": "off-by-one bound",
+    "aim": "UnicodeWidths enumerates U+036F; the common layout corpus contains U+0301 but not the upper combining bound.",
+    "line": 48
+  },
+  {
+    "id": "D2",
+    "file": "stage1/cohere/markdownblocks/structure.ts",
+    "old": "arena.node(child.doc).kind !== 't'",
+    "new": "arena.node(child.doc).kind === 't'",
+    "menu": "flip condition",
+    "aim": "Sentence whitespace boundaries, checked by structure-specific built-in witnesses, but also supplied to the table family by the same corpus.",
+    "line": 12
+  },
+  {
+    "id": "D3",
+    "file": "stage1/cohere/markdownblocks/structure.ts",
+    "old": "while(stack.length > 0)",
+    "new": "while(stack.length > 1)",
+    "menu": "off-by-one bound",
+    "aim": "Paragraph flattening tail, a structure-specific claimed behavior not separately targeted in the original audit.",
+    "line": 25
+  },
+  {
+    "id": "D4",
+    "file": "stage1/cohere/markdownblocks/tables.ts",
+    "old": "const first = align === 'center' || align === 'left' ? ':' : '-';",
+    "new": "const first = align === 'center' || align === 'right' ? ':' : '-';",
+    "menu": "change constant",
+    "aim": "Table delimiter alignment, targeted by table-specific assertions but shared through the identical common program/corpus.",
+    "line": 51
+  }
+]
