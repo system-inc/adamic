@@ -1,0 +1,30 @@
+=== RUN   TestNativeAgreementRejectsWrongOutput
+=== PAUSE TestNativeAgreementRejectsWrongOutput
+=== RUN   TestNativeAgreementRejectsWrongExit
+=== PAUSE TestNativeAgreementRejectsWrongExit
+=== RUN   TestRegExpUnicodeClassSourceAgreesWithNode
+=== PAUSE TestRegExpUnicodeClassSourceAgreesWithNode
+=== RUN   TestRegExpSlashClassSourceAgreesWithNode
+=== PAUSE TestRegExpSlashClassSourceAgreesWithNode
+=== RUN   TestRegExpEscapedSlashSourceAgreesWithNode
+=== PAUSE TestRegExpEscapedSlashSourceAgreesWithNode
+=== RUN   TestTypedArrayFromArray
+=== PAUSE TestTypedArrayFromArray
+=== RUN   TestTypedArrayFromEmptyArray
+=== PAUSE TestTypedArrayFromEmptyArray
+=== CONT  TestNativeAgreementRejectsWrongOutput
+=== CONT  TestRegExpEscapedSlashSourceAgreesWithNode
+=== CONT  TestTypedArrayFromEmptyArray
+=== CONT  TestTypedArrayFromArray
+=== CONT  TestRegExpUnicodeClassSourceAgreesWithNode
+--- PASS: TestRegExpUnicodeClassSourceAgreesWithNode (1.11s)
+=== CONT  TestRegExpSlashClassSourceAgreesWithNode
+--- PASS: TestNativeAgreementRejectsWrongOutput (1.12s)
+=== CONT  TestNativeAgreementRejectsWrongExit
+--- PASS: TestTypedArrayFromArray (1.20s)
+--- PASS: TestRegExpEscapedSlashSourceAgreesWithNode (1.21s)
+--- PASS: TestTypedArrayFromEmptyArray (1.27s)
+--- PASS: TestRegExpSlashClassSourceAgreesWithNode (1.12s)
+--- PASS: TestNativeAgreementRejectsWrongExit (1.17s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	2.382s
