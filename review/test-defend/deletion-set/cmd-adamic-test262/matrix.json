@@ -1,0 +1,1697 @@
+[
+  {
+    "id": "audit-adapt-M18",
+    "mutant": "M18",
+    "file": "review/test-audit/cmd-adamic-test262-adapt/diffs/M18.diff",
+    "branch": "test-audit/cmd-adamic-test262-adapt",
+    "recorded_matrix": "review/test-audit/cmd-adamic-test262-adapt/matrix.json",
+    "file_line": "cmd/adamic-test262/classify.go:65",
+    "candidates_failed": [
+      "TestParallelCachedMatchesSerial"
+    ],
+    "other_rows_failed": [
+      "TestClassifyAdapt",
+      "TestMiniRunner"
+    ],
+    "diff": "review/test-defend/deletion-set/cmd-adamic-test262/diffs/audit-adapt-M18.diff",
+    "stale": false,
+    "apply_check": "",
+    "branch_sha": "1ee2e777ad6dbe9fda6d560d5e947bfa9bd3673d",
+    "still_caught_by": [
+      "TestClassifyAdapt",
+      "TestMiniRunner"
+    ],
+    "panicking_tests": [],
+    "excluded_pins": [],
+    "excluded_witnesses": [],
+    "runs": [
+      {
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/deletion262/cache/audit-adapt-M18/1 go test -json -count=1 -timeout 30m ./cmd/adamic-test262/ -skip ^(TestAdaptLeavesCheckoutText|TestCompilerStartupMeasurement|TestNativeCacheGeneratedC|TestNodeCacheProgram|TestParallelCachedMatchesSerial)($|_|/)",
+        "log": "review/test-defend/deletion-set/cmd-adamic-test262/audit-adapt-M18.log",
+        "returncode": 1,
+        "wall_seconds": 53.11431844500112,
+        "binary_seconds": [
+          43.119
+        ],
+        "outcomes": {
+          "TestCacheBypass": "pass",
+          "TestCompilerCacheAcrossScratchDirectories": "pass",
+          "TestCacheBypassPreservesIdentity": "pass",
+          "TestEditCacheSeparation": "pass",
+          "TestLoweringSourceEdit": "pass",
+          "TestProgramCPUDeadline": "pass",
+          "TestAdaptSingletonArrayCallback": "pass",
+          "TestFrontmatterShapes": "pass",
+          "TestRewriteHarnessCalls": "pass",
+          "TestCompilerWorkerTimeout": "pass",
+          "TestRunProgramFractionalCPUBudget": "pass",
+          "TestNodeHarnessIdentity": "pass",
+          "TestRunFilterAttemptLimit": "pass",
+          "TestRunnerLocationHelper": "pass",
+          "TestCacheKeyDimensions": "pass",
+          "TestRunnerLocationIdentity": "pass",
+          "TestCompilerHangHelper": "pass",
+          "TestAdaptStrictEq": "pass",
+          "TestCrashPath": "pass",
+          "TestWorkerLazyFallback": "pass",
+          "TestClassifyAdapt": "fail",
+          "TestAdaptThrowError": "pass",
+          "TestMiniRunner": "fail",
+          "TestCompilerCacheProgram": "pass",
+          "TestCompilerWorkerMatchesSubprocess": "pass",
+          "TestAdaptClassKeepsVars": "pass",
+          "TestAdaptCallbackParam": "pass",
+          "TestAdaptPositiveExponentVarToLet": "pass",
+          "TestCacheAtomicBytes": "pass",
+          "TestOutputOverflowIsReported": "pass",
+          "TestNormalizeReason": "pass",
+          "TestRunCommandExactCaptureCapacity": "pass",
+          "TestVerdictCorpus": "pass",
+          "TestClassifyCorpus": "pass",
+          "TestAdaptVarToLet": "pass",
+          "TestImportedInputsRunFresh": "pass",
+          "TestOrderedProgress": "pass",
+          "TestUnavailableCacheStillRuns": "pass",
+          "TestLargeCompilerOutputIsComplete": "pass"
+        },
+        "panicking_tests": [],
+        "failing_lines": {
+          "TestClassifyAdapt": [
+            "adapt_test.go:206: counts map[]"
+          ],
+          "TestMiniRunner": [
+            "corpus_test.go:224: var fixture: refused 0 pass 1 reasons []"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "audit-cache-M02",
+    "mutant": "M02",
+    "file": "review/test-audit/cmd-adamic-test262-cache/M02.diff",
+    "branch": "test-audit/cmd-adamic-test262-cache",
+    "recorded_matrix": "review/test-audit/cmd-adamic-test262-cache/matrix.json",
+    "file_line": "cmd/adamic-test262/cache.go:60",
+    "candidates_failed": [
+      "TestNodeCacheProgram"
+    ],
+    "other_rows_failed": [
+      "TestCacheKeyDimensions"
+    ],
+    "diff": "review/test-defend/deletion-set/cmd-adamic-test262/diffs/audit-cache-M02.diff",
+    "stale": false,
+    "apply_check": "",
+    "branch_sha": "b9589ebc7bd87b7e3c298b92409236b3a83829a2",
+    "still_caught_by": [
+      "TestCacheKeyDimensions"
+    ],
+    "panicking_tests": [],
+    "excluded_pins": [],
+    "excluded_witnesses": [],
+    "runs": [
+      {
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/deletion262/cache/audit-cache-M02/1 go test -json -count=1 -timeout 30m ./cmd/adamic-test262/ -skip ^(TestAdaptLeavesCheckoutText|TestCompilerStartupMeasurement|TestNativeCacheGeneratedC|TestNodeCacheProgram|TestParallelCachedMatchesSerial)($|_|/)",
+        "log": "review/test-defend/deletion-set/cmd-adamic-test262/audit-cache-M02.log",
+        "returncode": 1,
+        "wall_seconds": 55.14081552800053,
+        "binary_seconds": [
+          46.93
+        ],
+        "outcomes": {
+          "TestCacheBypass": "pass",
+          "TestCompilerCacheAcrossScratchDirectories": "pass",
+          "TestCacheBypassPreservesIdentity": "pass",
+          "TestEditCacheSeparation": "pass",
+          "TestLoweringSourceEdit": "pass",
+          "TestProgramCPUDeadline": "pass",
+          "TestOutputOverflowIsReported": "pass",
+          "TestRunnerLocationHelper": "pass",
+          "TestNodeHarnessIdentity": "pass",
+          "TestAdaptSingletonArrayCallback": "pass",
+          "TestCompilerWorkerTimeout": "pass",
+          "TestFrontmatterShapes": "pass",
+          "TestRewriteHarnessCalls": "pass",
+          "TestCacheKeyDimensions": "fail",
+          "TestCompilerHangHelper": "pass",
+          "TestRunnerLocationIdentity": "pass",
+          "TestCompilerCacheProgram": "pass",
+          "TestWorkerLazyFallback": "pass",
+          "TestCompilerWorkerMatchesSubprocess": "pass",
+          "TestMiniRunner": "pass",
+          "TestCacheAtomicBytes": "pass",
+          "TestRunCommandExactCaptureCapacity": "pass",
+          "TestRunFilterAttemptLimit": "pass",
+          "TestRunProgramFractionalCPUBudget": "pass",
+          "TestAdaptStrictEq": "pass",
+          "TestCrashPath": "pass",
+          "TestClassifyAdapt": "pass",
+          "TestAdaptThrowError": "pass",
+          "TestAdaptCallbackParam": "pass",
+          "TestAdaptClassKeepsVars": "pass",
+          "TestAdaptPositiveExponentVarToLet": "pass",
+          "TestNormalizeReason": "pass",
+          "TestVerdictCorpus": "pass",
+          "TestClassifyCorpus": "pass",
+          "TestAdaptVarToLet": "pass",
+          "TestImportedInputsRunFresh": "pass",
+          "TestOrderedProgress": "pass",
+          "TestUnavailableCacheStillRuns": "pass",
+          "TestLargeCompilerOutputIsComplete": "pass"
+        },
+        "panicking_tests": [],
+        "failing_lines": {
+          "TestCacheKeyDimensions": [
+            "cache_test.go:73: node dimension 0 changed but served \"old\""
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "audit-cache-M03",
+    "mutant": "M03",
+    "file": "review/test-audit/cmd-adamic-test262-cache/M03.diff",
+    "branch": "test-audit/cmd-adamic-test262-cache",
+    "recorded_matrix": "review/test-audit/cmd-adamic-test262-cache/matrix.json",
+    "file_line": "cmd/adamic-test262/cache.go:63",
+    "candidates_failed": [
+      "TestNativeCacheGeneratedC"
+    ],
+    "other_rows_failed": [
+      "TestCacheKeyDimensions"
+    ],
+    "diff": "review/test-defend/deletion-set/cmd-adamic-test262/diffs/audit-cache-M03.diff",
+    "stale": false,
+    "apply_check": "",
+    "branch_sha": "b9589ebc7bd87b7e3c298b92409236b3a83829a2",
+    "still_caught_by": [
+      "TestCacheKeyDimensions"
+    ],
+    "panicking_tests": [],
+    "excluded_pins": [],
+    "excluded_witnesses": [],
+    "runs": [
+      {
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/deletion262/cache/audit-cache-M03/1 go test -json -count=1 -timeout 30m ./cmd/adamic-test262/ -skip ^(TestAdaptLeavesCheckoutText|TestCompilerStartupMeasurement|TestNativeCacheGeneratedC|TestNodeCacheProgram|TestParallelCachedMatchesSerial)($|_|/)",
+        "log": "review/test-defend/deletion-set/cmd-adamic-test262/audit-cache-M03.log",
+        "returncode": 1,
+        "wall_seconds": 61.53366654199999,
+        "binary_seconds": [
+          49.201
+        ],
+        "outcomes": {
+          "TestCacheBypass": "pass",
+          "TestCompilerCacheAcrossScratchDirectories": "pass",
+          "TestCacheBypassPreservesIdentity": "pass",
+          "TestEditCacheSeparation": "pass",
+          "TestLoweringSourceEdit": "pass",
+          "TestProgramCPUDeadline": "pass",
+          "TestOutputOverflowIsReported": "pass",
+          "TestAdaptSingletonArrayCallback": "pass",
+          "TestAdaptStrictEq": "pass",
+          "TestRunnerLocationHelper": "pass",
+          "TestNodeHarnessIdentity": "pass",
+          "TestAdaptCallbackParam": "pass",
+          "TestRunProgramFractionalCPUBudget": "pass",
+          "TestCompilerHangHelper": "pass",
+          "TestRunFilterAttemptLimit": "pass",
+          "TestCompilerCacheProgram": "pass",
+          "TestRunnerLocationIdentity": "pass",
+          "TestWorkerLazyFallback": "pass",
+          "TestClassifyAdapt": "pass",
+          "TestCrashPath": "pass",
+          "TestAdaptClassKeepsVars": "pass",
+          "TestAdaptPositiveExponentVarToLet": "pass",
+          "TestCacheAtomicBytes": "pass",
+          "TestRewriteHarnessCalls": "pass",
+          "TestCompilerWorkerMatchesSubprocess": "pass",
+          "TestImportedInputsRunFresh": "pass",
+          "TestFrontmatterShapes": "pass",
+          "TestAdaptThrowError": "pass",
+          "TestCacheKeyDimensions": "fail",
+          "TestCompilerWorkerTimeout": "pass",
+          "TestRunCommandExactCaptureCapacity": "pass",
+          "TestAdaptVarToLet": "pass",
+          "TestVerdictCorpus": "pass",
+          "TestNormalizeReason": "pass",
+          "TestClassifyCorpus": "pass",
+          "TestOrderedProgress": "pass",
+          "TestUnavailableCacheStillRuns": "pass",
+          "TestMiniRunner": "pass",
+          "TestLargeCompilerOutputIsComplete": "pass"
+        },
+        "panicking_tests": [],
+        "failing_lines": {
+          "TestCacheKeyDimensions": [
+            "cache_test.go:73: native dimension 0 changed but served \"old\""
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "audit-cache-M05",
+    "mutant": "M05",
+    "file": "review/test-audit/cmd-adamic-test262-cache/M05.diff",
+    "branch": "test-audit/cmd-adamic-test262-cache",
+    "recorded_matrix": "review/test-audit/cmd-adamic-test262-cache/matrix.json",
+    "file_line": "cmd/adamic-test262/cache.go:35",
+    "candidates_failed": [
+      "TestParallelCachedMatchesSerial"
+    ],
+    "other_rows_failed": [
+      "TestCacheAtomicBytes",
+      "TestCacheBypass",
+      "TestCompilerCacheAcrossScratchDirectories",
+      "TestCompilerWorkerMatchesSubprocess",
+      "TestEditCacheSeparation",
+      "TestLoweringSourceEdit",
+      "TestOrderedProgress",
+      "TestWorkerLazyFallback"
+    ],
+    "diff": "review/test-defend/deletion-set/cmd-adamic-test262/diffs/audit-cache-M05.diff",
+    "stale": false,
+    "apply_check": "",
+    "branch_sha": "b9589ebc7bd87b7e3c298b92409236b3a83829a2",
+    "still_caught_by": [
+      "TestCacheBypass",
+      "TestCompilerCacheAcrossScratchDirectories",
+      "TestEditCacheSeparation",
+      "TestLoweringSourceEdit",
+      "TestCompilerWorkerMatchesSubprocess",
+      "TestCacheAtomicBytes",
+      "TestWorkerLazyFallback",
+      "TestOrderedProgress"
+    ],
+    "panicking_tests": [],
+    "excluded_pins": [],
+    "excluded_witnesses": [],
+    "runs": [
+      {
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/deletion262/cache/audit-cache-M05/1 go test -json -count=1 -timeout 30m ./cmd/adamic-test262/ -skip ^(TestAdaptLeavesCheckoutText|TestCompilerStartupMeasurement|TestNativeCacheGeneratedC|TestNodeCacheProgram|TestParallelCachedMatchesSerial)($|_|/)",
+        "log": "review/test-defend/deletion-set/cmd-adamic-test262/audit-cache-M05.log",
+        "returncode": 1,
+        "wall_seconds": 46.08333355799914,
+        "binary_seconds": [
+          36.525
+        ],
+        "outcomes": {
+          "TestCacheBypass": "fail",
+          "TestCompilerCacheAcrossScratchDirectories": "fail",
+          "TestCacheBypassPreservesIdentity": "pass",
+          "TestEditCacheSeparation": "fail",
+          "TestLoweringSourceEdit": "fail",
+          "TestProgramCPUDeadline": "pass",
+          "TestAdaptSingletonArrayCallback": "pass",
+          "TestOutputOverflowIsReported": "pass",
+          "TestRewriteHarnessCalls": "pass",
+          "TestFrontmatterShapes": "pass",
+          "TestCompilerHangHelper": "pass",
+          "TestCacheKeyDimensions": "pass",
+          "TestCompilerWorkerTimeout": "pass",
+          "TestCompilerCacheProgram": "pass",
+          "TestMiniRunner": "pass",
+          "TestCompilerWorkerMatchesSubprocess": "fail",
+          "TestCacheAtomicBytes": "fail",
+          "TestUnavailableCacheStillRuns": "pass",
+          "TestImportedInputsRunFresh": "pass",
+          "TestRunProgramFractionalCPUBudget": "pass",
+          "TestAdaptStrictEq": "pass",
+          "TestCrashPath": "pass",
+          "TestClassifyAdapt": "pass",
+          "TestAdaptThrowError": "pass",
+          "TestRunFilterAttemptLimit": "pass",
+          "TestRunnerLocationHelper": "pass",
+          "TestNodeHarnessIdentity": "pass",
+          "TestAdaptCallbackParam": "pass",
+          "TestAdaptClassKeepsVars": "pass",
+          "TestAdaptPositiveExponentVarToLet": "pass",
+          "TestNormalizeReason": "pass",
+          "TestClassifyCorpus": "pass",
+          "TestVerdictCorpus": "pass",
+          "TestRunCommandExactCaptureCapacity": "pass",
+          "TestAdaptVarToLet": "pass",
+          "TestWorkerLazyFallback": "fail",
+          "TestRunnerLocationIdentity": "pass",
+          "TestOrderedProgress": "fail",
+          "TestLargeCompilerOutputIsComplete": "pass"
+        },
+        "panicking_tests": [],
+        "failing_lines": {
+          "TestCacheBypass": [
+            "cache_test.go:123: bypass wrote evidence"
+          ],
+          "TestCompilerCacheAcrossScratchDirectories": [
+            "cache_test.go:342: priming C cache: {Path:pass/pad.js Directory:pass Kind:crashed Reason:clang: /tmp/adamic-gate/TestCompilerCacheAcrossScratchDirectories2608778105/002/programs/58fc130007f482b162083f5ecb978b70c2ffb3590f43b6bcf551ac692cdcfa7d/program.c:1:1: error: ISO C requires a translation unit to contain at least one declaration [-Werror,-Wempty-translation-unit] Adaptations:map[]}"
+          ],
+          "TestEditCacheSeparation": [
+            "edit_test.go:34: prime: {Path:edit.js Directory: Kind:crashed Reason:clang: /tmp/adamic-gate/TestEditCacheSeparation2419656212/002/programs/69e428aae47dd5610e303235a45c92b9cbae700e05d7afbbd157b60fcc8760d1/program.c:1:1: error: ISO C requires a translation unit to contain at least one declaration [-Werror,-Wempty-translation-unit] Adaptations:map[]}"
+          ],
+          "TestLoweringSourceEdit": [
+            "edit_test.go:129: {source-edit.js  crashed clang: /tmp/adamic-gate/TestLoweringSourceEdit3980830558/002/programs/b54b5dfedbab4f3558e67cdcd8557177a8334d79298f6c068cadccfbce9471b3/program.c:1:1: error: ISO C requires a translation unit to contain at least one declaration [-Werror,-Wempty-translation-unit] map[]}"
+          ],
+          "TestCompilerWorkerMatchesSubprocess": [
+            "compiler_test.go:54: compiler differs: actual={Stdout: Stderr:// Generated by adamic from program.a. Do not edit."
+          ],
+          "TestCacheAtomicBytes": [
+            "cache_test.go:93: cache lost execution bytes or status",
+            "cache_test.go:93: cache lost execution bytes or status",
+            "cache_test.go:93: cache lost execution bytes or status",
+            "cache_test.go:93: cache lost execution bytes or status",
+            "cache_test.go:93: cache lost execution bytes or status",
+            "cache_test.go:93: cache lost execution bytes or status",
+            "cache_test.go:93: cache lost execution bytes or status",
+            "cache_test.go:93: cache lost execution bytes or status",
+            "cache_test.go:93: cache lost execution bytes or status",
+            "cache_test.go:93: cache lost execution bytes or status",
+            "cache_test.go:93: cache lost execution bytes or status",
+            "cache_test.go:93: cache lost execution bytes or status",
+            "cache_test.go:93: cache lost execution bytes or status",
+            "cache_test.go:93: cache lost execution bytes or status",
+            "cache_test.go:93: cache lost execution bytes or status"
+          ],
+          "TestWorkerLazyFallback": [
+            "edit_test.go:77: worker report {Path:pass Pass:0 Fail:0 Refused:0 Crashed:1 Skipped:0 Unrun:0 Total:1 Directories:[{Path:pass Pass:0 Fail:0 Refused:0 Crashed:1 Skipped:0 Unrun:0 Total:1}] RefusalReasons:[] SkipReasons:[] CrashReasons:[{Reason:pass/pad.js: clang: /tmp/adamic-gate/TestWorkerLazyFallback1724802648/002/programs/58fc130007f482b162083f5ecb978b70c2ffb3590f43b6bcf551ac692cdcfa7d/program.c:1:1: error: ISO C requires a translation unit to contain at least one declaration [-Werror,-Wempty-translation-unit] Count:1}] FailReasons:[] Passes:[] Adaptations:[] directories:map[pass:0x1064ca272410] refusalReasons:map[] skipReasons:map[] crashReasons:map[pass/pad.js: clang: /tmp/adamic-gate/TestWorkerLazyFallback1724802648/002/programs/58fc130007f482b162083f5ecb978b70c2ffb3590f43b6bcf551ac692cdcfa7d/program.c:1:1: error: ISO C requires a translation unit to contain at least one declaration [-Werror,-Wempty-translation-unit]:1] failReasons:map[] adaptations:map[]}: <nil>"
+          ],
+          "TestOrderedProgress": [
+            "cache_test.go:233: ordered progress: \" 50/51 pass=0 fail=0 refused=0 crashed=0 skipped=50\\n 51/51 pass=0 fail=0 refused=0 crashed=1 skipped=50\\n\", want \" 50/51 pass=0 fail=0 refused=0 crashed=0 skipped=50\\n 51/51 pass=1 fail=0 refused=0 crashed=0 skipped=50\\n\""
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "audit-corpus-M01",
+    "mutant": "M01",
+    "file": "review/test-audit/cmd-adamic-test262-corpus/diffs/M01.diff",
+    "branch": "test-audit/cmd-adamic-test262-corpus",
+    "recorded_matrix": "review/test-audit/cmd-adamic-test262-corpus/matrix.json",
+    "file_line": "cmd/adamic-test262/classify.go:90",
+    "candidates_failed": [
+      "TestParallelCachedMatchesSerial"
+    ],
+    "other_rows_failed": [
+      "TestClassifyCorpus",
+      "TestMiniRunner",
+      "TestOrderedProgress"
+    ],
+    "diff": "review/test-defend/deletion-set/cmd-adamic-test262/diffs/audit-corpus-M01.diff",
+    "stale": false,
+    "apply_check": "",
+    "branch_sha": "196dc20df19dfd570398b2412e50936322e9cead",
+    "still_caught_by": [
+      "TestRunFilterAttemptLimit",
+      "TestClassifyCorpus",
+      "TestOrderedProgress",
+      "TestMiniRunner"
+    ],
+    "panicking_tests": [],
+    "excluded_pins": [],
+    "excluded_witnesses": [],
+    "runs": [
+      {
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/deletion262/cache/audit-corpus-M01/1 go test -json -count=1 -timeout 30m ./cmd/adamic-test262/ -skip ^(TestAdaptLeavesCheckoutText|TestCompilerStartupMeasurement|TestNativeCacheGeneratedC|TestNodeCacheProgram|TestParallelCachedMatchesSerial)($|_|/)",
+        "log": "review/test-defend/deletion-set/cmd-adamic-test262/audit-corpus-M01.log",
+        "returncode": 1,
+        "wall_seconds": 57.730963652000355,
+        "binary_seconds": [
+          50.442
+        ],
+        "outcomes": {
+          "TestCacheBypass": "pass",
+          "TestCompilerCacheAcrossScratchDirectories": "pass",
+          "TestCacheBypassPreservesIdentity": "pass",
+          "TestEditCacheSeparation": "pass",
+          "TestLoweringSourceEdit": "pass",
+          "TestProgramCPUDeadline": "pass",
+          "TestAdaptSingletonArrayCallback": "pass",
+          "TestRunProgramFractionalCPUBudget": "pass",
+          "TestRunnerLocationHelper": "pass",
+          "TestCompilerWorkerTimeout": "pass",
+          "TestNodeHarnessIdentity": "pass",
+          "TestOutputOverflowIsReported": "pass",
+          "TestCacheKeyDimensions": "pass",
+          "TestCompilerHangHelper": "pass",
+          "TestRunFilterAttemptLimit": "fail",
+          "TestCompilerCacheProgram": "pass",
+          "TestRunnerLocationIdentity": "pass",
+          "TestWorkerLazyFallback": "pass",
+          "TestCompilerWorkerMatchesSubprocess": "pass",
+          "TestCacheAtomicBytes": "pass",
+          "TestAdaptStrictEq": "pass",
+          "TestCrashPath": "pass",
+          "TestClassifyAdapt": "pass",
+          "TestAdaptThrowError": "pass",
+          "TestAdaptCallbackParam": "pass",
+          "TestRewriteHarnessCalls": "pass",
+          "TestImportedInputsRunFresh": "pass",
+          "TestFrontmatterShapes": "pass",
+          "TestAdaptClassKeepsVars": "pass",
+          "TestAdaptPositiveExponentVarToLet": "pass",
+          "TestRunCommandExactCaptureCapacity": "pass",
+          "TestAdaptVarToLet": "pass",
+          "TestVerdictCorpus": "pass",
+          "TestNormalizeReason": "pass",
+          "TestClassifyCorpus": "fail",
+          "TestUnavailableCacheStillRuns": "pass",
+          "TestOrderedProgress": "fail",
+          "TestMiniRunner": "fail",
+          "TestLargeCompilerOutputIsComplete": "pass"
+        },
+        "panicking_tests": [],
+        "failing_lines": {
+          "TestRunFilterAttemptLimit": [
+            "run_test.go:98: jobs=1: total=5 skipped=0 unrun=4 attempted=1; want 5, 1, 3, 1"
+          ],
+          "TestClassifyCorpus": [
+            "corpus_test.go:41: testdata/corpus/negative_parse.js: kind attempted, want skipped (skip \"\")",
+            "corpus_test.go:49: testdata/corpus/negative_parse.js: negative \"parse SyntaxError\", want \"negative parse or early error\""
+          ],
+          "TestOrderedProgress": [
+            "cache_test.go:233: ordered progress: \" 50/51 pass=0 fail=0 refused=50 crashed=0 skipped=0\\n 51/51 pass=1 fail=0 refused=50 crashed=0 skipped=0\\n\", want \" 50/51 pass=0 fail=0 refused=0 crashed=0 skipped=50\\n 51/51 pass=1 fail=0 refused=0 crashed=0 skipped=50\\n\""
+          ],
+          "TestMiniRunner": [
+            "corpus_test.go:217: negative fixture: skipped 0 pass 0 reasons []"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "audit-corpus-M05",
+    "mutant": "M05",
+    "file": "review/test-audit/cmd-adamic-test262-corpus/diffs/M05.diff",
+    "branch": "test-audit/cmd-adamic-test262-corpus",
+    "recorded_matrix": "review/test-audit/cmd-adamic-test262-corpus/matrix.json",
+    "file_line": "cmd/adamic-test262/verdict.go:58",
+    "candidates_failed": [
+      "TestParallelCachedMatchesSerial"
+    ],
+    "other_rows_failed": [
+      "TestCompilerCacheAcrossScratchDirectories",
+      "TestEditCacheSeparation",
+      "TestLargeCompilerOutputIsComplete",
+      "TestLoweringSourceEdit",
+      "TestMiniRunner",
+      "TestOrderedProgress",
+      "TestUnavailableCacheStillRuns",
+      "TestVerdictCorpus",
+      "TestWorkerLazyFallback"
+    ],
+    "diff": "review/test-defend/deletion-set/cmd-adamic-test262/diffs/audit-corpus-M05.diff",
+    "stale": false,
+    "apply_check": "",
+    "branch_sha": "196dc20df19dfd570398b2412e50936322e9cead",
+    "still_caught_by": [
+      "TestCompilerCacheAcrossScratchDirectories",
+      "TestEditCacheSeparation",
+      "TestLoweringSourceEdit",
+      "TestWorkerLazyFallback",
+      "TestMiniRunner",
+      "TestUnavailableCacheStillRuns",
+      "TestVerdictCorpus",
+      "TestOrderedProgress",
+      "TestLargeCompilerOutputIsComplete"
+    ],
+    "panicking_tests": [],
+    "excluded_pins": [],
+    "excluded_witnesses": [],
+    "runs": [
+      {
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/deletion262/cache/audit-corpus-M05/1 go test -json -count=1 -timeout 30m ./cmd/adamic-test262/ -skip ^(TestAdaptLeavesCheckoutText|TestCompilerStartupMeasurement|TestNativeCacheGeneratedC|TestNodeCacheProgram|TestParallelCachedMatchesSerial)($|_|/)",
+        "log": "review/test-defend/deletion-set/cmd-adamic-test262/audit-corpus-M05.log",
+        "returncode": 1,
+        "wall_seconds": 68.39266069699806,
+        "binary_seconds": [
+          53.391
+        ],
+        "outcomes": {
+          "TestCacheBypass": "pass",
+          "TestCompilerCacheAcrossScratchDirectories": "fail",
+          "TestCacheBypassPreservesIdentity": "pass",
+          "TestEditCacheSeparation": "fail",
+          "TestLoweringSourceEdit": "fail",
+          "TestProgramCPUDeadline": "pass",
+          "TestCompilerHangHelper": "pass",
+          "TestRunnerLocationHelper": "pass",
+          "TestRunProgramFractionalCPUBudget": "pass",
+          "TestNodeHarnessIdentity": "pass",
+          "TestOutputOverflowIsReported": "pass",
+          "TestCrashPath": "pass",
+          "TestWorkerLazyFallback": "fail",
+          "TestCompilerCacheProgram": "pass",
+          "TestRunnerLocationIdentity": "pass",
+          "TestAdaptSingletonArrayCallback": "pass",
+          "TestMiniRunner": "fail",
+          "TestCompilerWorkerMatchesSubprocess": "pass",
+          "TestCacheAtomicBytes": "pass",
+          "TestClassifyAdapt": "pass",
+          "TestCacheKeyDimensions": "pass",
+          "TestAdaptThrowError": "pass",
+          "TestAdaptClassKeepsVars": "pass",
+          "TestAdaptStrictEq": "pass",
+          "TestAdaptCallbackParam": "pass",
+          "TestAdaptPositiveExponentVarToLet": "pass",
+          "TestUnavailableCacheStillRuns": "fail",
+          "TestCompilerWorkerTimeout": "pass",
+          "TestFrontmatterShapes": "pass",
+          "TestRewriteHarnessCalls": "pass",
+          "TestNormalizeReason": "pass",
+          "TestRunCommandExactCaptureCapacity": "pass",
+          "TestVerdictCorpus": "fail",
+          "TestClassifyCorpus": "pass",
+          "TestAdaptVarToLet": "pass",
+          "TestImportedInputsRunFresh": "pass",
+          "TestRunFilterAttemptLimit": "pass",
+          "TestOrderedProgress": "fail",
+          "TestLargeCompilerOutputIsComplete": "fail"
+        },
+        "panicking_tests": [],
+        "failing_lines": {
+          "TestCompilerCacheAcrossScratchDirectories": [
+            "cache_test.go:342: priming C cache: {Path:pass/pad.js Directory:pass Kind:fail Reason:stderr disagrees Adaptations:map[]}"
+          ],
+          "TestEditCacheSeparation": [
+            "edit_test.go:34: prime: {Path:edit.js Directory: Kind:fail Reason:stderr disagrees Adaptations:map[]}"
+          ],
+          "TestLoweringSourceEdit": [
+            "edit_test.go:129: {source-edit.js  fail stderr disagrees map[]}"
+          ],
+          "TestWorkerLazyFallback": [
+            "edit_test.go:77: worker report {Path:pass Pass:0 Fail:1 Refused:0 Crashed:0 Skipped:0 Unrun:0 Total:1 Directories:[{Path:pass Pass:0 Fail:1 Refused:0 Crashed:0 Skipped:0 Unrun:0 Total:1}] RefusalReasons:[] SkipReasons:[] CrashReasons:[] FailReasons:[{Reason:stderr disagrees Count:1}] Passes:[] Adaptations:[] directories:map[pass:0x287b138b4000] refusalReasons:map[] skipReasons:map[] crashReasons:map[] failReasons:map[stderr disagrees:1] adaptations:map[]}: <nil>"
+          ],
+          "TestMiniRunner": [
+            "corpus_test.go:210: pass fixture: 0 reasons fail=[{stderr disagrees 1}] refused=[] crash=[]"
+          ],
+          "TestUnavailableCacheStillRuns": [
+            "cache_test.go:254: unavailable result cache changed verdict: {Path:pass/pad.js Directory:pass Kind:fail Reason:stderr disagrees Adaptations:map[]}"
+          ],
+          "TestVerdictCorpus": [
+            "corpus_test.go:88: testdata/verdicts/both_pass.json (both succeed and match): got fail (stderr disagrees), want pass"
+          ],
+          "TestOrderedProgress": [
+            "cache_test.go:233: ordered progress: \" 50/51 pass=0 fail=0 refused=0 crashed=0 skipped=50\\n 51/51 pass=0 fail=1 refused=0 crashed=0 skipped=50\\n\", want \" 50/51 pass=0 fail=0 refused=0 crashed=0 skipped=50\\n 51/51 pass=1 fail=0 refused=0 crashed=0 skipped=50\\n\""
+          ],
+          "TestLargeCompilerOutputIsComplete": [
+            "corpus_test.go:251: large program: {Path:large.js Pass:0 Fail:1 Refused:0 Crashed:0 Skipped:0 Unrun:0 Total:1 Directories:[{Path:. Pass:0 Fail:1 Refused:0 Crashed:0 Skipped:0 Unrun:0 Total:1}] RefusalReasons:[] SkipReasons:[] CrashReasons:[] FailReasons:[{Reason:stderr disagrees Count:1}] Passes:[] Adaptations:[] directories:map[.:0x287b1360e0f0] refusalReasons:map[] skipReasons:map[] crashReasons:map[] failReasons:map[stderr disagrees:1] adaptations:map[]}"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "audit-corpus-M15",
+    "mutant": "M15",
+    "file": "review/test-audit/cmd-adamic-test262-corpus/diffs/M15.diff",
+    "branch": "test-audit/cmd-adamic-test262-corpus",
+    "recorded_matrix": "review/test-audit/cmd-adamic-test262-corpus/matrix.json",
+    "file_line": "cmd/adamic-test262/run.go:390",
+    "candidates_failed": [
+      "TestCompilerStartupMeasurement",
+      "TestNativeCacheGeneratedC",
+      "TestNodeCacheProgram",
+      "TestParallelCachedMatchesSerial"
+    ],
+    "other_rows_failed": [
+      "TestCompilerCacheProgram",
+      "TestCompilerWorkerMatchesSubprocess",
+      "TestImportedInputsRunFresh",
+      "TestLargeCompilerOutputIsComplete",
+      "TestMiniRunner",
+      "TestProgramCPUDeadline",
+      "TestUnavailableCacheStillRuns",
+      "TestWorkerLazyFallback"
+    ],
+    "diff": "review/test-defend/deletion-set/cmd-adamic-test262/diffs/audit-corpus-M15.diff",
+    "stale": false,
+    "apply_check": "",
+    "branch_sha": "196dc20df19dfd570398b2412e50936322e9cead",
+    "still_caught_by": [
+      "TestProgramCPUDeadline",
+      "TestCompilerCacheProgram",
+      "TestUnavailableCacheStillRuns",
+      "TestMiniRunner",
+      "TestLargeCompilerOutputIsComplete",
+      "TestRunProgramFractionalCPUBudget",
+      "TestRunCommandExactCaptureCapacity",
+      "TestImportedInputsRunFresh",
+      "TestWorkerLazyFallback"
+    ],
+    "panicking_tests": [],
+    "excluded_pins": [],
+    "excluded_witnesses": [],
+    "runs": [
+      {
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/deletion262/cache/audit-corpus-M15/1 go test -json -count=1 -timeout 30m ./cmd/adamic-test262/ -skip ^(TestAdaptLeavesCheckoutText|TestCompilerStartupMeasurement|TestNativeCacheGeneratedC|TestNodeCacheProgram|TestParallelCachedMatchesSerial)($|_|/)",
+        "log": "review/test-defend/deletion-set/cmd-adamic-test262/audit-corpus-M15.log",
+        "returncode": 1,
+        "wall_seconds": 43.95051298399994,
+        "binary_seconds": [
+          35.98
+        ],
+        "outcomes": {
+          "TestCacheBypass": "pass",
+          "TestCompilerCacheAcrossScratchDirectories": "pass",
+          "TestCacheBypassPreservesIdentity": "pass",
+          "TestEditCacheSeparation": "pass",
+          "TestLoweringSourceEdit": "pass",
+          "TestProgramCPUDeadline": "fail",
+          "TestAdaptSingletonArrayCallback": "pass",
+          "TestCompilerHangHelper": "pass",
+          "TestOutputOverflowIsReported": "pass",
+          "TestCrashPath": "pass",
+          "TestClassifyAdapt": "pass",
+          "TestCompilerWorkerTimeout": "pass",
+          "TestFrontmatterShapes": "pass",
+          "TestRewriteHarnessCalls": "pass",
+          "TestAdaptCallbackParam": "pass",
+          "TestAdaptThrowError": "pass",
+          "TestAdaptStrictEq": "pass",
+          "TestRunFilterAttemptLimit": "pass",
+          "TestAdaptClassKeepsVars": "pass",
+          "TestCompilerCacheProgram": "fail",
+          "TestUnavailableCacheStillRuns": "fail",
+          "TestMiniRunner": "fail",
+          "TestLargeCompilerOutputIsComplete": "fail",
+          "TestRunProgramFractionalCPUBudget": "fail",
+          "TestRunnerLocationHelper": "pass",
+          "TestNodeHarnessIdentity": "pass",
+          "TestAdaptPositiveExponentVarToLet": "pass",
+          "TestCacheKeyDimensions": "pass",
+          "TestCacheAtomicBytes": "pass",
+          "TestCompilerWorkerMatchesSubprocess": "pass",
+          "TestNormalizeReason": "pass",
+          "TestVerdictCorpus": "pass",
+          "TestClassifyCorpus": "pass",
+          "TestAdaptVarToLet": "pass",
+          "TestRunCommandExactCaptureCapacity": "fail",
+          "TestImportedInputsRunFresh": "fail",
+          "TestRunnerLocationIdentity": "pass",
+          "TestWorkerLazyFallback": "fail",
+          "TestOrderedProgress": "pass"
+        },
+        "panicking_tests": [],
+        "failing_lines": {
+          "TestProgramCPUDeadline": [
+            "run_test.go:73: 1 CPU second under load: {Stdout: Stderr:command output exceeded capture limit"
+          ],
+          "TestCompilerCacheProgram": [
+            "cache_test.go:307: changed compiler program served \"\", want \"before\\n\""
+          ],
+          "TestUnavailableCacheStillRuns": [
+            "cache_test.go:254: unavailable result cache changed verdict: {Path:pass/pad.js Directory:pass Kind:crashed Reason:command output exceeded capture limit Adaptations:map[]}"
+          ],
+          "TestMiniRunner": [
+            "corpus_test.go:210: pass fixture: 0 reasons fail=[] refused=[] crash=[{pass/pad.js: command output exceeded capture limit 1}]"
+          ],
+          "TestLargeCompilerOutputIsComplete": [
+            "corpus_test.go:251: large program: {Path:large.js Pass:0 Fail:0 Refused:0 Crashed:1 Skipped:0 Unrun:0 Total:1 Directories:[{Path:. Pass:0 Fail:0 Refused:0 Crashed:1 Skipped:0 Unrun:0 Total:1}] RefusalReasons:[] SkipReasons:[] CrashReasons:[{Reason:large.js: command output exceeded capture limit Count:1}] FailReasons:[] Passes:[] Adaptations:[] directories:map[.:0xa6eacf922d0] refusalReasons:map[] skipReasons:map[] crashReasons:map[large.js: command output exceeded capture limit:1] failReasons:map[] adaptations:map[]}"
+          ],
+          "TestRunProgramFractionalCPUBudget": [
+            "run_boundaries_test.go:19: 1500ms CPU budget: got {Stdout: Stderr:command output exceeded capture limit"
+          ],
+          "TestRunCommandExactCaptureCapacity": [
+            "run_boundaries_test.go:37: exact capture capacity: got {Stdout: Stderr:command output exceeded capture limit"
+          ],
+          "TestImportedInputsRunFresh": [
+            "cache_test.go:275: Node cannot import the native runtime; want fail, got {Path:input.js Directory:. Kind:crashed Reason:command output exceeded capture limit Adaptations:map[]}"
+          ],
+          "TestWorkerLazyFallback": [
+            "edit_test.go:88: lazy fallback lost compiler behavior: {Stdout: Stderr:command output exceeded capture limit"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "defend-adapt-D4",
+    "mutant": "D4",
+    "file": "review/test-defend/cmd-adamic-test262-adapt/D4.diff",
+    "branch": "test-defend/cmd-adamic-test262-adapt",
+    "recorded_matrix": "review/test-defend/cmd-adamic-test262-adapt/matrix.json",
+    "file_line": "cmd/adamic-test262/adapt.go:35",
+    "candidates_failed": [
+      "TestAdaptLeavesCheckoutText"
+    ],
+    "other_rows_failed": [
+      "TestAdaptClassKeepsVars",
+      "TestAdaptVarToLet"
+    ],
+    "diff": "review/test-defend/deletion-set/cmd-adamic-test262/diffs/defend-adapt-D4.diff",
+    "stale": false,
+    "apply_check": "",
+    "branch_sha": "c50100eaf9677c0c6047ed176492ed31687f9291",
+    "still_caught_by": [
+      "TestAdaptClassKeepsVars",
+      "TestAdaptVarToLet"
+    ],
+    "panicking_tests": [],
+    "excluded_pins": [],
+    "excluded_witnesses": [],
+    "runs": [
+      {
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/deletion262/cache/defend-adapt-D4/1 go test -json -count=1 -timeout 30m ./cmd/adamic-test262/ -skip ^(TestAdaptLeavesCheckoutText|TestCompilerStartupMeasurement|TestNativeCacheGeneratedC|TestNodeCacheProgram|TestParallelCachedMatchesSerial)($|_|/)",
+        "log": "review/test-defend/deletion-set/cmd-adamic-test262/defend-adapt-D4.log",
+        "returncode": 1,
+        "wall_seconds": 57.30741757999931,
+        "binary_seconds": [
+          49.563
+        ],
+        "outcomes": {
+          "TestCacheBypass": "pass",
+          "TestCompilerCacheAcrossScratchDirectories": "pass",
+          "TestCacheBypassPreservesIdentity": "pass",
+          "TestEditCacheSeparation": "pass",
+          "TestLoweringSourceEdit": "pass",
+          "TestProgramCPUDeadline": "pass",
+          "TestOutputOverflowIsReported": "pass",
+          "TestAdaptSingletonArrayCallback": "pass",
+          "TestAdaptCallbackParam": "pass",
+          "TestAdaptStrictEq": "pass",
+          "TestCacheKeyDimensions": "pass",
+          "TestRunnerLocationHelper": "pass",
+          "TestRunProgramFractionalCPUBudget": "pass",
+          "TestNodeHarnessIdentity": "pass",
+          "TestAdaptClassKeepsVars": "fail",
+          "TestCompilerHangHelper": "pass",
+          "TestCompilerWorkerTimeout": "pass",
+          "TestAdaptPositiveExponentVarToLet": "pass",
+          "TestRunFilterAttemptLimit": "pass",
+          "TestRunnerLocationIdentity": "pass",
+          "TestCompilerCacheProgram": "pass",
+          "TestWorkerLazyFallback": "pass",
+          "TestCacheAtomicBytes": "pass",
+          "TestAdaptThrowError": "pass",
+          "TestCrashPath": "pass",
+          "TestClassifyAdapt": "pass",
+          "TestRewriteHarnessCalls": "pass",
+          "TestCompilerWorkerMatchesSubprocess": "pass",
+          "TestOrderedProgress": "pass",
+          "TestFrontmatterShapes": "pass",
+          "TestRunCommandExactCaptureCapacity": "pass",
+          "TestAdaptVarToLet": "fail",
+          "TestVerdictCorpus": "pass",
+          "TestNormalizeReason": "pass",
+          "TestClassifyCorpus": "pass",
+          "TestImportedInputsRunFresh": "pass",
+          "TestUnavailableCacheStillRuns": "pass",
+          "TestMiniRunner": "pass",
+          "TestLargeCompilerOutputIsComplete": "pass"
+        },
+        "panicking_tests": [],
+        "failing_lines": {
+          "TestAdaptClassKeepsVars": [
+            "adapt_guards_test.go:29: class must preserve vars: got main.adapted{Source:\"var x=1; class Box { value: number; \", Counts:map[string]int(nil)}, want source \"var x=1; class Box { value: number; }\" and no rewrites"
+          ],
+          "TestAdaptVarToLet": [
+            "adapt_test.go:110: source",
+            "adapt_test.go:110: source",
+            "adapt_test.go:110: source",
+            "adapt_test.go:110: source",
+            "adapt_test.go:110: source",
+            "adapt_test.go:110: source",
+            "adapt_test.go:110: source",
+            "adapt_test.go:110: source"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "defend-cache-D2",
+    "mutant": "D2",
+    "file": "review/test-defend/cmd-adamic-test262-cache/D2.diff",
+    "branch": "test-defend/cmd-adamic-test262-cache",
+    "recorded_matrix": "review/test-defend/cmd-adamic-test262-cache/matrix.json",
+    "file_line": "cmd/adamic-test262/cache.go:35",
+    "candidates_failed": [
+      "TestParallelCachedMatchesSerial"
+    ],
+    "other_rows_failed": [
+      "TestCacheAtomicBytes",
+      "TestCompilerWorkerMatchesSubprocess"
+    ],
+    "diff": "review/test-defend/deletion-set/cmd-adamic-test262/diffs/defend-cache-D2.diff",
+    "stale": false,
+    "apply_check": "",
+    "branch_sha": "c29e455e4c06424d5e4ebd9bf49cd66236a0eb34",
+    "still_caught_by": [
+      "TestCompilerWorkerMatchesSubprocess",
+      "TestCacheAtomicBytes"
+    ],
+    "panicking_tests": [],
+    "excluded_pins": [],
+    "excluded_witnesses": [],
+    "runs": [
+      {
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/deletion262/cache/defend-cache-D2/1 go test -json -count=1 -timeout 30m ./cmd/adamic-test262/ -skip ^(TestAdaptLeavesCheckoutText|TestCompilerStartupMeasurement|TestNativeCacheGeneratedC|TestNodeCacheProgram|TestParallelCachedMatchesSerial)($|_|/)",
+        "log": "review/test-defend/deletion-set/cmd-adamic-test262/defend-cache-D2.log",
+        "returncode": 1,
+        "wall_seconds": 50.66784848500174,
+        "binary_seconds": [
+          40.25
+        ],
+        "outcomes": {
+          "TestCacheBypass": "pass",
+          "TestCompilerCacheAcrossScratchDirectories": "pass",
+          "TestCacheBypassPreservesIdentity": "pass",
+          "TestEditCacheSeparation": "pass",
+          "TestLoweringSourceEdit": "pass",
+          "TestProgramCPUDeadline": "pass",
+          "TestOutputOverflowIsReported": "pass",
+          "TestRewriteHarnessCalls": "pass",
+          "TestAdaptSingletonArrayCallback": "pass",
+          "TestCrashPath": "pass",
+          "TestClassifyAdapt": "pass",
+          "TestAdaptThrowError": "pass",
+          "TestAdaptStrictEq": "pass",
+          "TestAdaptCallbackParam": "pass",
+          "TestAdaptClassKeepsVars": "pass",
+          "TestAdaptPositiveExponentVarToLet": "pass",
+          "TestRunProgramFractionalCPUBudget": "pass",
+          "TestCompilerWorkerTimeout": "pass",
+          "TestCompilerHangHelper": "pass",
+          "TestRunFilterAttemptLimit": "pass",
+          "TestCompilerCacheProgram": "pass",
+          "TestRunnerLocationIdentity": "pass",
+          "TestRunnerLocationHelper": "pass",
+          "TestImportedInputsRunFresh": "pass",
+          "TestCompilerWorkerMatchesSubprocess": "fail",
+          "TestWorkerLazyFallback": "pass",
+          "TestFrontmatterShapes": "pass",
+          "TestNodeHarnessIdentity": "pass",
+          "TestCacheAtomicBytes": "fail",
+          "TestNormalizeReason": "pass",
+          "TestAdaptVarToLet": "pass",
+          "TestVerdictCorpus": "pass",
+          "TestCacheKeyDimensions": "pass",
+          "TestClassifyCorpus": "pass",
+          "TestRunCommandExactCaptureCapacity": "pass",
+          "TestMiniRunner": "pass",
+          "TestOrderedProgress": "pass",
+          "TestUnavailableCacheStillRuns": "pass",
+          "TestLargeCompilerOutputIsComplete": "pass"
+        },
+        "panicking_tests": [],
+        "failing_lines": {
+          "TestCompilerWorkerMatchesSubprocess": [
+            "compiler_test.go:54: compiler differs: actual={Stdout: Stderr: Exit:1 Signal: TimedOut:false} expected={Stdout: Stderr:adamic: /tmp/adamic-gate/TestCompilerWorkerMatchesSubprocess3544843511/003/program.a:93:1: Adamic 0.1 refuses var; use const or let"
+          ],
+          "TestCacheAtomicBytes": [
+            "cache_test.go:93: cache lost execution bytes or status",
+            "cache_test.go:93: cache lost execution bytes or status",
+            "cache_test.go:93: cache lost execution bytes or status",
+            "cache_test.go:93: cache lost execution bytes or status",
+            "cache_test.go:93: cache lost execution bytes or status",
+            "cache_test.go:93: cache lost execution bytes or status",
+            "cache_test.go:93: cache lost execution bytes or status",
+            "cache_test.go:93: cache lost execution bytes or status",
+            "cache_test.go:93: cache lost execution bytes or status",
+            "cache_test.go:93: cache lost execution bytes or status",
+            "cache_test.go:93: cache lost execution bytes or status",
+            "cache_test.go:93: cache lost execution bytes or status",
+            "cache_test.go:93: cache lost execution bytes or status",
+            "cache_test.go:93: cache lost execution bytes or status",
+            "cache_test.go:93: cache lost execution bytes or status"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "defend-cache-current-D02",
+    "mutant": "D02",
+    "file": "review/test-defend/cmd-adamic-test262-cache/current-program-bypass/D02.diff",
+    "branch": "test-defend/cmd-adamic-test262-cache",
+    "recorded_matrix": "review/test-defend/cmd-adamic-test262-cache/current-program-bypass/matrix.json",
+    "file_line": "cmd/adamic-test262/cache.go:60",
+    "candidates_failed": [
+      "TestNodeCacheProgram"
+    ],
+    "other_rows_failed": [
+      "TestCacheKeyDimensions"
+    ],
+    "diff": "review/test-defend/deletion-set/cmd-adamic-test262/diffs/defend-cache-current-D02.diff",
+    "stale": false,
+    "apply_check": "",
+    "branch_sha": "c29e455e4c06424d5e4ebd9bf49cd66236a0eb34",
+    "still_caught_by": [
+      "TestCacheKeyDimensions"
+    ],
+    "panicking_tests": [],
+    "excluded_pins": [],
+    "excluded_witnesses": [],
+    "runs": [
+      {
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/deletion262/cache/defend-cache-current-D02/1 go test -json -count=1 -timeout 30m ./cmd/adamic-test262/ -skip ^(TestAdaptLeavesCheckoutText|TestCompilerStartupMeasurement|TestNativeCacheGeneratedC|TestNodeCacheProgram|TestParallelCachedMatchesSerial)($|_|/)",
+        "log": "review/test-defend/deletion-set/cmd-adamic-test262/defend-cache-current-D02.log",
+        "returncode": 1,
+        "wall_seconds": 40.09079266900153,
+        "binary_seconds": [
+          37.672
+        ],
+        "outcomes": {
+          "TestCacheBypass": "pass",
+          "TestCompilerCacheAcrossScratchDirectories": "pass",
+          "TestCacheBypassPreservesIdentity": "pass",
+          "TestEditCacheSeparation": "pass",
+          "TestLoweringSourceEdit": "pass",
+          "TestProgramCPUDeadline": "pass",
+          "TestOutputOverflowIsReported": "pass",
+          "TestRewriteHarnessCalls": "pass",
+          "TestFrontmatterShapes": "pass",
+          "TestAdaptSingletonArrayCallback": "pass",
+          "TestCompilerWorkerTimeout": "pass",
+          "TestRunProgramFractionalCPUBudget": "pass",
+          "TestCacheKeyDimensions": "fail",
+          "TestCompilerHangHelper": "pass",
+          "TestRunFilterAttemptLimit": "pass",
+          "TestCompilerCacheProgram": "pass",
+          "TestRunnerLocationIdentity": "pass",
+          "TestCompilerWorkerMatchesSubprocess": "pass",
+          "TestMiniRunner": "pass",
+          "TestCacheAtomicBytes": "pass",
+          "TestAdaptStrictEq": "pass",
+          "TestCrashPath": "pass",
+          "TestClassifyAdapt": "pass",
+          "TestAdaptThrowError": "pass",
+          "TestAdaptClassKeepsVars": "pass",
+          "TestAdaptCallbackParam": "pass",
+          "TestNodeHarnessIdentity": "pass",
+          "TestUnavailableCacheStillRuns": "pass",
+          "TestAdaptPositiveExponentVarToLet": "pass",
+          "TestRunnerLocationHelper": "pass",
+          "TestRunCommandExactCaptureCapacity": "pass",
+          "TestVerdictCorpus": "pass",
+          "TestNormalizeReason": "pass",
+          "TestClassifyCorpus": "pass",
+          "TestAdaptVarToLet": "pass",
+          "TestImportedInputsRunFresh": "pass",
+          "TestWorkerLazyFallback": "pass",
+          "TestOrderedProgress": "pass",
+          "TestLargeCompilerOutputIsComplete": "pass"
+        },
+        "panicking_tests": [],
+        "failing_lines": {
+          "TestCacheKeyDimensions": [
+            "cache_test.go:73: node dimension 0 changed but served \"old\""
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "defend-cache-current-D03",
+    "mutant": "D03",
+    "file": "review/test-defend/cmd-adamic-test262-cache/current-program-bypass/D03.diff",
+    "branch": "test-defend/cmd-adamic-test262-cache",
+    "recorded_matrix": "review/test-defend/cmd-adamic-test262-cache/current-program-bypass/matrix.json",
+    "file_line": "cmd/adamic-test262/cache.go:63",
+    "candidates_failed": [
+      "TestNativeCacheGeneratedC"
+    ],
+    "other_rows_failed": [
+      "TestCacheKeyDimensions"
+    ],
+    "diff": "review/test-defend/deletion-set/cmd-adamic-test262/diffs/defend-cache-current-D03.diff",
+    "stale": false,
+    "apply_check": "",
+    "branch_sha": "c29e455e4c06424d5e4ebd9bf49cd66236a0eb34",
+    "still_caught_by": [
+      "TestCacheKeyDimensions"
+    ],
+    "panicking_tests": [],
+    "excluded_pins": [],
+    "excluded_witnesses": [],
+    "runs": [
+      {
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/deletion262/cache/defend-cache-current-D03/1 go test -json -count=1 -timeout 30m ./cmd/adamic-test262/ -skip ^(TestAdaptLeavesCheckoutText|TestCompilerStartupMeasurement|TestNativeCacheGeneratedC|TestNodeCacheProgram|TestParallelCachedMatchesSerial)($|_|/)",
+        "log": "review/test-defend/deletion-set/cmd-adamic-test262/defend-cache-current-D03.log",
+        "returncode": 1,
+        "wall_seconds": 44.86274815500292,
+        "binary_seconds": [
+          42.346
+        ],
+        "outcomes": {
+          "TestCacheBypass": "pass",
+          "TestCompilerCacheAcrossScratchDirectories": "pass",
+          "TestCacheBypassPreservesIdentity": "pass",
+          "TestEditCacheSeparation": "pass",
+          "TestLoweringSourceEdit": "pass",
+          "TestProgramCPUDeadline": "pass",
+          "TestAdaptSingletonArrayCallback": "pass",
+          "TestRewriteHarnessCalls": "pass",
+          "TestFrontmatterShapes": "pass",
+          "TestCompilerWorkerTimeout": "pass",
+          "TestRunProgramFractionalCPUBudget": "pass",
+          "TestCacheKeyDimensions": "fail",
+          "TestCompilerHangHelper": "pass",
+          "TestRunFilterAttemptLimit": "pass",
+          "TestCompilerCacheProgram": "pass",
+          "TestRunnerLocationIdentity": "pass",
+          "TestCompilerWorkerMatchesSubprocess": "pass",
+          "TestMiniRunner": "pass",
+          "TestCacheAtomicBytes": "pass",
+          "TestAdaptStrictEq": "pass",
+          "TestCrashPath": "pass",
+          "TestAdaptCallbackParam": "pass",
+          "TestClassifyAdapt": "pass",
+          "TestAdaptThrowError": "pass",
+          "TestAdaptClassKeepsVars": "pass",
+          "TestAdaptPositiveExponentVarToLet": "pass",
+          "TestImportedInputsRunFresh": "pass",
+          "TestNodeHarnessIdentity": "pass",
+          "TestRunnerLocationHelper": "pass",
+          "TestOutputOverflowIsReported": "pass",
+          "TestRunCommandExactCaptureCapacity": "pass",
+          "TestAdaptVarToLet": "pass",
+          "TestVerdictCorpus": "pass",
+          "TestNormalizeReason": "pass",
+          "TestClassifyCorpus": "pass",
+          "TestUnavailableCacheStillRuns": "pass",
+          "TestOrderedProgress": "pass",
+          "TestWorkerLazyFallback": "pass",
+          "TestLargeCompilerOutputIsComplete": "pass"
+        },
+        "panicking_tests": [],
+        "failing_lines": {
+          "TestCacheKeyDimensions": [
+            "cache_test.go:73: native dimension 0 changed but served \"old\""
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "defend-cache-current-D04",
+    "mutant": "D04",
+    "file": "review/test-defend/cmd-adamic-test262-cache/current-program-bypass/D04.diff",
+    "branch": "test-defend/cmd-adamic-test262-cache",
+    "recorded_matrix": "review/test-defend/cmd-adamic-test262-cache/current-program-bypass/matrix.json",
+    "file_line": "cmd/adamic-test262/run.go:379",
+    "candidates_failed": [
+      "TestNativeCacheGeneratedC",
+      "TestNodeCacheProgram",
+      "TestParallelCachedMatchesSerial"
+    ],
+    "other_rows_failed": [
+      "TestCompilerCacheProgram",
+      "TestProgramCPUDeadline"
+    ],
+    "diff": "review/test-defend/deletion-set/cmd-adamic-test262/diffs/defend-cache-current-D04.diff",
+    "stale": false,
+    "apply_check": "",
+    "branch_sha": "c29e455e4c06424d5e4ebd9bf49cd66236a0eb34",
+    "still_caught_by": [
+      "TestProgramCPUDeadline",
+      "TestCompilerCacheProgram"
+    ],
+    "panicking_tests": [],
+    "excluded_pins": [],
+    "excluded_witnesses": [],
+    "runs": [
+      {
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/deletion262/cache/defend-cache-current-D04/1 go test -json -count=1 -timeout 30m ./cmd/adamic-test262/ -skip ^(TestAdaptLeavesCheckoutText|TestCompilerStartupMeasurement|TestNativeCacheGeneratedC|TestNodeCacheProgram|TestParallelCachedMatchesSerial)($|_|/)",
+        "log": "review/test-defend/deletion-set/cmd-adamic-test262/defend-cache-current-D04.log",
+        "returncode": 1,
+        "wall_seconds": 51.25692605600125,
+        "binary_seconds": [
+          47.065
+        ],
+        "outcomes": {
+          "TestCacheBypass": "pass",
+          "TestCompilerCacheAcrossScratchDirectories": "pass",
+          "TestCacheBypassPreservesIdentity": "pass",
+          "TestEditCacheSeparation": "pass",
+          "TestLoweringSourceEdit": "pass",
+          "TestProgramCPUDeadline": "fail",
+          "TestCompilerHangHelper": "pass",
+          "TestAdaptStrictEq": "pass",
+          "TestCrashPath": "pass",
+          "TestClassifyAdapt": "pass",
+          "TestAdaptThrowError": "pass",
+          "TestCacheKeyDimensions": "pass",
+          "TestAdaptSingletonArrayCallback": "pass",
+          "TestCompilerWorkerTimeout": "pass",
+          "TestRewriteHarnessCalls": "pass",
+          "TestCompilerCacheProgram": "fail",
+          "TestUnavailableCacheStillRuns": "pass",
+          "TestFrontmatterShapes": "pass",
+          "TestImportedInputsRunFresh": "pass",
+          "TestMiniRunner": "pass",
+          "TestCompilerWorkerMatchesSubprocess": "pass",
+          "TestRunProgramFractionalCPUBudget": "pass",
+          "TestAdaptCallbackParam": "pass",
+          "TestCacheAtomicBytes": "pass",
+          "TestRunnerLocationIdentity": "pass",
+          "TestRunnerLocationHelper": "pass",
+          "TestAdaptClassKeepsVars": "pass",
+          "TestAdaptPositiveExponentVarToLet": "pass",
+          "TestNodeHarnessIdentity": "pass",
+          "TestOutputOverflowIsReported": "pass",
+          "TestVerdictCorpus": "pass",
+          "TestNormalizeReason": "pass",
+          "TestRunCommandExactCaptureCapacity": "pass",
+          "TestAdaptVarToLet": "pass",
+          "TestClassifyCorpus": "pass",
+          "TestRunFilterAttemptLimit": "pass",
+          "TestOrderedProgress": "pass",
+          "TestWorkerLazyFallback": "pass",
+          "TestLargeCompilerOutputIsComplete": "pass"
+        },
+        "panicking_tests": [],
+        "failing_lines": {
+          "TestProgramCPUDeadline": [
+            "run_test.go:73: 1 CPU second under load: {Stdout:comple Stderr:command output exceeded capture limit"
+          ],
+          "TestCompilerCacheProgram": [
+            "cache_test.go:307: changed compiler program served \"before\", want \"before\\n\""
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "defend-cache-current-D05",
+    "mutant": "D05",
+    "file": "review/test-defend/cmd-adamic-test262-cache/current-program-bypass/D05.diff",
+    "branch": "test-defend/cmd-adamic-test262-cache",
+    "recorded_matrix": "review/test-defend/cmd-adamic-test262-cache/current-program-bypass/matrix.json",
+    "file_line": "cmd/adamic-test262/run.go:392",
+    "candidates_failed": [
+      "TestCompilerStartupMeasurement",
+      "TestNativeCacheGeneratedC",
+      "TestNodeCacheProgram",
+      "TestParallelCachedMatchesSerial"
+    ],
+    "other_rows_failed": [
+      "TestCompilerCacheProgram",
+      "TestImportedInputsRunFresh",
+      "TestLargeCompilerOutputIsComplete",
+      "TestMiniRunner",
+      "TestProgramCPUDeadline",
+      "TestRunCommandExactCaptureCapacity",
+      "TestRunProgramFractionalCPUBudget",
+      "TestUnavailableCacheStillRuns",
+      "TestWorkerLazyFallback"
+    ],
+    "diff": "review/test-defend/deletion-set/cmd-adamic-test262/diffs/defend-cache-current-D05.diff",
+    "stale": false,
+    "apply_check": "",
+    "branch_sha": "c29e455e4c06424d5e4ebd9bf49cd66236a0eb34",
+    "still_caught_by": [
+      "TestProgramCPUDeadline",
+      "TestRunProgramFractionalCPUBudget",
+      "TestCompilerCacheProgram",
+      "TestWorkerLazyFallback",
+      "TestLargeCompilerOutputIsComplete",
+      "TestRunCommandExactCaptureCapacity",
+      "TestImportedInputsRunFresh",
+      "TestUnavailableCacheStillRuns",
+      "TestMiniRunner"
+    ],
+    "panicking_tests": [],
+    "excluded_pins": [],
+    "excluded_witnesses": [],
+    "runs": [
+      {
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/deletion262/cache/defend-cache-current-D05/1 go test -json -count=1 -timeout 30m ./cmd/adamic-test262/ -skip ^(TestAdaptLeavesCheckoutText|TestCompilerStartupMeasurement|TestNativeCacheGeneratedC|TestNodeCacheProgram|TestParallelCachedMatchesSerial)($|_|/)",
+        "log": "review/test-defend/deletion-set/cmd-adamic-test262/defend-cache-current-D05.log",
+        "returncode": 1,
+        "wall_seconds": 35.50649364099809,
+        "binary_seconds": [
+          32.647
+        ],
+        "outcomes": {
+          "TestCacheBypass": "pass",
+          "TestCompilerCacheAcrossScratchDirectories": "pass",
+          "TestCacheBypassPreservesIdentity": "pass",
+          "TestEditCacheSeparation": "pass",
+          "TestLoweringSourceEdit": "pass",
+          "TestProgramCPUDeadline": "fail",
+          "TestAdaptSingletonArrayCallback": "pass",
+          "TestRunnerLocationHelper": "pass",
+          "TestNodeHarnessIdentity": "pass",
+          "TestOutputOverflowIsReported": "pass",
+          "TestCacheKeyDimensions": "pass",
+          "TestRunProgramFractionalCPUBudget": "fail",
+          "TestCrashPath": "pass",
+          "TestAdaptClassKeepsVars": "pass",
+          "TestAdaptPositiveExponentVarToLet": "pass",
+          "TestRunFilterAttemptLimit": "pass",
+          "TestAdaptCallbackParam": "pass",
+          "TestClassifyAdapt": "pass",
+          "TestAdaptThrowError": "pass",
+          "TestAdaptStrictEq": "pass",
+          "TestCompilerWorkerTimeout": "pass",
+          "TestCompilerHangHelper": "pass",
+          "TestRunnerLocationIdentity": "pass",
+          "TestCompilerCacheProgram": "fail",
+          "TestWorkerLazyFallback": "fail",
+          "TestLargeCompilerOutputIsComplete": "fail",
+          "TestFrontmatterShapes": "pass",
+          "TestRewriteHarnessCalls": "pass",
+          "TestCacheAtomicBytes": "pass",
+          "TestCompilerWorkerMatchesSubprocess": "pass",
+          "TestNormalizeReason": "pass",
+          "TestRunCommandExactCaptureCapacity": "fail",
+          "TestAdaptVarToLet": "pass",
+          "TestClassifyCorpus": "pass",
+          "TestVerdictCorpus": "pass",
+          "TestImportedInputsRunFresh": "fail",
+          "TestUnavailableCacheStillRuns": "fail",
+          "TestOrderedProgress": "pass",
+          "TestMiniRunner": "fail"
+        },
+        "panicking_tests": [],
+        "failing_lines": {
+          "TestProgramCPUDeadline": [
+            "run_test.go:73: 1 CPU second under load: {Stdout: Stderr:completed"
+          ],
+          "TestRunProgramFractionalCPUBudget": [
+            "run_boundaries_test.go:19: 1500ms CPU budget: got {Stdout: Stderr:2"
+          ],
+          "TestCompilerCacheProgram": [
+            "cache_test.go:307: changed compiler program served \"\", want \"before\\n\""
+          ],
+          "TestWorkerLazyFallback": [
+            "edit_test.go:88: lazy fallback lost compiler behavior: {Stdout: Stderr:// Generated by adamic from fallback.a. Do not edit."
+          ],
+          "TestLargeCompilerOutputIsComplete": [
+            "corpus_test.go:251: large program: {Path:large.js Pass:0 Fail:0 Refused:0 Crashed:1 Skipped:0 Unrun:0 Total:1 Directories:[{Path:. Pass:0 Fail:0 Refused:0 Crashed:1 Skipped:0 Unrun:0 Total:1}] RefusalReasons:[] SkipReasons:[] CrashReasons:[{Reason:large.js: clang:  Count:1}] FailReasons:[] Passes:[] Adaptations:[] directories:map[.:0x1087403f6050] refusalReasons:map[] skipReasons:map[] crashReasons:map[large.js: clang: :1] failReasons:map[] adaptations:map[]}"
+          ],
+          "TestRunCommandExactCaptureCapacity": [
+            "run_boundaries_test.go:37: exact capture capacity: got {Stdout: Stderr:abc Exit:0 Signal: TimedOut:false}, want {Stdout:abc Stderr: Exit:0 Signal: TimedOut:false}",
+            "run_boundaries_test.go:37: exact capture capacity: got {Stdout:abc Stderr: Exit:0 Signal: TimedOut:false}, want {Stdout: Stderr:abc Exit:0 Signal: TimedOut:false}"
+          ],
+          "TestImportedInputsRunFresh": [
+            "cache_test.go:275: Node cannot import the native runtime; want fail, got {Path:input.js Directory:. Kind:crashed Reason:clang:  Adaptations:map[]}"
+          ],
+          "TestUnavailableCacheStillRuns": [
+            "cache_test.go:254: unavailable result cache changed verdict: {Path:pass/pad.js Directory:pass Kind:crashed Reason:clang:  Adaptations:map[]}"
+          ],
+          "TestMiniRunner": [
+            "corpus_test.go:210: pass fixture: 0 reasons fail=[] refused=[] crash=[{pass/pad.js: clang:  1}]"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "defend-corpus-D05",
+    "mutant": "D05",
+    "file": "review/test-defend/cmd-adamic-test262-corpus/D05.diff",
+    "branch": "test-defend/cmd-adamic-test262-corpus",
+    "recorded_matrix": "review/test-defend/cmd-adamic-test262-corpus/matrix.json",
+    "file_line": "cmd/adamic-test262/run.go:392",
+    "candidates_failed": [
+      "TestCompilerStartupMeasurement",
+      "TestNativeCacheGeneratedC",
+      "TestNodeCacheProgram",
+      "TestParallelCachedMatchesSerial"
+    ],
+    "other_rows_failed": [
+      "TestCompilerCacheProgram",
+      "TestImportedInputsRunFresh",
+      "TestLargeCompilerOutputIsComplete",
+      "TestMiniRunner",
+      "TestProgramCPUDeadline",
+      "TestRunCommandExactCaptureCapacity",
+      "TestRunProgramFractionalCPUBudget",
+      "TestUnavailableCacheStillRuns",
+      "TestWorkerLazyFallback"
+    ],
+    "diff": "review/test-defend/deletion-set/cmd-adamic-test262/diffs/defend-corpus-D05.diff",
+    "stale": false,
+    "apply_check": "",
+    "branch_sha": "75412cc93b6117aa54e62817bb5451068e48e1c4",
+    "still_caught_by": [
+      "TestProgramCPUDeadline",
+      "TestRunProgramFractionalCPUBudget",
+      "TestCompilerCacheProgram",
+      "TestImportedInputsRunFresh",
+      "TestWorkerLazyFallback",
+      "TestRunCommandExactCaptureCapacity",
+      "TestUnavailableCacheStillRuns",
+      "TestLargeCompilerOutputIsComplete",
+      "TestMiniRunner"
+    ],
+    "panicking_tests": [],
+    "excluded_pins": [],
+    "excluded_witnesses": [],
+    "runs": [
+      {
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/deletion262/cache/defend-corpus-D05/1 go test -json -count=1 -timeout 30m ./cmd/adamic-test262/ -skip ^(TestAdaptLeavesCheckoutText|TestCompilerStartupMeasurement|TestNativeCacheGeneratedC|TestNodeCacheProgram|TestParallelCachedMatchesSerial)($|_|/)",
+        "log": "review/test-defend/deletion-set/cmd-adamic-test262/defend-corpus-D05.log",
+        "returncode": 1,
+        "wall_seconds": 47.769586505000916,
+        "binary_seconds": [
+          39.219
+        ],
+        "outcomes": {
+          "TestCacheBypass": "pass",
+          "TestCompilerCacheAcrossScratchDirectories": "pass",
+          "TestCacheBypassPreservesIdentity": "pass",
+          "TestEditCacheSeparation": "pass",
+          "TestLoweringSourceEdit": "pass",
+          "TestProgramCPUDeadline": "fail",
+          "TestOutputOverflowIsReported": "pass",
+          "TestAdaptSingletonArrayCallback": "pass",
+          "TestAdaptStrictEq": "pass",
+          "TestRunnerLocationHelper": "pass",
+          "TestRunProgramFractionalCPUBudget": "fail",
+          "TestNodeHarnessIdentity": "pass",
+          "TestCompilerWorkerTimeout": "pass",
+          "TestCompilerHangHelper": "pass",
+          "TestRunnerLocationIdentity": "pass",
+          "TestRunFilterAttemptLimit": "pass",
+          "TestCompilerCacheProgram": "fail",
+          "TestImportedInputsRunFresh": "fail",
+          "TestAdaptCallbackParam": "pass",
+          "TestCacheAtomicBytes": "pass",
+          "TestRewriteHarnessCalls": "pass",
+          "TestCompilerWorkerMatchesSubprocess": "pass",
+          "TestWorkerLazyFallback": "fail",
+          "TestFrontmatterShapes": "pass",
+          "TestAdaptClassKeepsVars": "pass",
+          "TestClassifyAdapt": "pass",
+          "TestCrashPath": "pass",
+          "TestAdaptPositiveExponentVarToLet": "pass",
+          "TestAdaptThrowError": "pass",
+          "TestCacheKeyDimensions": "pass",
+          "TestRunCommandExactCaptureCapacity": "fail",
+          "TestAdaptVarToLet": "pass",
+          "TestVerdictCorpus": "pass",
+          "TestNormalizeReason": "pass",
+          "TestClassifyCorpus": "pass",
+          "TestUnavailableCacheStillRuns": "fail",
+          "TestOrderedProgress": "pass",
+          "TestLargeCompilerOutputIsComplete": "fail",
+          "TestMiniRunner": "fail"
+        },
+        "panicking_tests": [],
+        "failing_lines": {
+          "TestProgramCPUDeadline": [
+            "run_test.go:73: 1 CPU second under load: {Stdout: Stderr: Exit:0 Signal: TimedOut:false} after 2.478989786s; want successful completion"
+          ],
+          "TestRunProgramFractionalCPUBudget": [
+            "run_boundaries_test.go:19: 1500ms CPU budget: got {Stdout: Stderr: Exit:0 Signal: TimedOut:false}, want {Stdout:2"
+          ],
+          "TestCompilerCacheProgram": [
+            "cache_test.go:307: changed compiler program served \"\", want \"before\\n\""
+          ],
+          "TestImportedInputsRunFresh": [
+            "cache_test.go:275: Node cannot import the native runtime; want fail, got {Path:input.js Directory:. Kind:crashed Reason:clang: /tmp/adamic-gate/TestImportedInputsRunFresh2380832453/002/programs/7aa54f44a752d56e4c9421683b0cc633c6b6e4275626128f9c0c09b94ef7882c/program.c:1:1: error: ISO C requires a translation unit to contain at least one declaration [-Werror,-Wempty-translation-unit] Adaptations:map[]}"
+          ],
+          "TestWorkerLazyFallback": [
+            "edit_test.go:88: lazy fallback lost compiler behavior: {Stdout: Stderr: Exit:0 Signal: TimedOut:false}"
+          ],
+          "TestRunCommandExactCaptureCapacity": [
+            "run_boundaries_test.go:37: exact capture capacity: got {Stdout: Stderr: Exit:0 Signal: TimedOut:false}, want {Stdout:abc Stderr: Exit:0 Signal: TimedOut:false}"
+          ],
+          "TestUnavailableCacheStillRuns": [
+            "cache_test.go:254: unavailable result cache changed verdict: {Path:pass/pad.js Directory:pass Kind:crashed Reason:clang: /tmp/adamic-gate/TestUnavailableCacheStillRuns559276785/001/program.c:1:1: error: ISO C requires a translation unit to contain at least one declaration [-Werror,-Wempty-translation-unit] Adaptations:map[]}"
+          ],
+          "TestLargeCompilerOutputIsComplete": [
+            "corpus_test.go:251: large program: {Path:large.js Pass:0 Fail:0 Refused:0 Crashed:1 Skipped:0 Unrun:0 Total:1 Directories:[{Path:. Pass:0 Fail:0 Refused:0 Crashed:1 Skipped:0 Unrun:0 Total:1}] RefusalReasons:[] SkipReasons:[] CrashReasons:[{Reason:large.js: clang: /home/agent/.cache/adamic/test262/programs/f921021f7924ffe39e8e08c6af735e61d856074158bde1e56f949fc84041bf72/program.c:1:1: error: ISO C requires a translation unit to contain at least one declaration [-Werror,-Wempty-translation-unit] Count:1}] FailReasons:[] Passes:[] Adaptations:[] directories:map[.:0x22903b32d130] refusalReasons:map[] skipReasons:map[] crashReasons:map[large.js: clang: /home/agent/.cache/adamic/test262/programs/f921021f7924ffe39e8e08c6af735e61d856074158bde1e56f949fc84041bf72/program.c:1:1: error: ISO C requires a translation unit to contain at least one declaration [-Werror,-Wempty-translation-unit]:1] failReasons:map[] adaptations:map[]}"
+          ],
+          "TestMiniRunner": [
+            "corpus_test.go:210: pass fixture: 0 reasons fail=[] refused=[] crash=[{pass/pad.js: clang: /home/agent/.cache/adamic/test262/programs/4ed1b954ef1e2f13bd9b1016f9d022d88b83904be0c922b77b207ce6ed8ecfb5/program.c:1:1: error: ISO C requires a translation unit to contain at least one declaration [-Werror,-Wempty-translation-unit] 1}]"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "defend-corpus-D06",
+    "mutant": "D06",
+    "file": "review/test-defend/cmd-adamic-test262-corpus/D06.diff",
+    "branch": "test-defend/cmd-adamic-test262-corpus",
+    "recorded_matrix": "review/test-defend/cmd-adamic-test262-corpus/matrix.json",
+    "file_line": "cmd/adamic-test262/run.go:451",
+    "candidates_failed": [
+      "TestCompilerStartupMeasurement",
+      "TestNativeCacheGeneratedC",
+      "TestNodeCacheProgram",
+      "TestParallelCachedMatchesSerial"
+    ],
+    "other_rows_failed": [
+      "TestCompilerCacheProgram",
+      "TestCompilerWorkerMatchesSubprocess",
+      "TestImportedInputsRunFresh",
+      "TestLargeCompilerOutputIsComplete",
+      "TestMiniRunner",
+      "TestOutputOverflowIsReported",
+      "TestProgramCPUDeadline",
+      "TestRunCommandExactCaptureCapacity",
+      "TestRunProgramFractionalCPUBudget",
+      "TestUnavailableCacheStillRuns"
+    ],
+    "diff": "review/test-defend/deletion-set/cmd-adamic-test262/diffs/defend-corpus-D06.diff",
+    "stale": false,
+    "apply_check": "",
+    "branch_sha": "75412cc93b6117aa54e62817bb5451068e48e1c4",
+    "still_caught_by": [
+      "TestProgramCPUDeadline",
+      "TestOutputOverflowIsReported",
+      "TestRunProgramFractionalCPUBudget",
+      "TestCompilerCacheProgram",
+      "TestCompilerWorkerMatchesSubprocess",
+      "TestImportedInputsRunFresh",
+      "TestRunCommandExactCaptureCapacity",
+      "TestUnavailableCacheStillRuns",
+      "TestMiniRunner",
+      "TestLargeCompilerOutputIsComplete"
+    ],
+    "panicking_tests": [],
+    "excluded_pins": [],
+    "excluded_witnesses": [],
+    "runs": [
+      {
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/deletion262/cache/defend-corpus-D06/1 go test -json -count=1 -timeout 30m ./cmd/adamic-test262/ -skip ^(TestAdaptLeavesCheckoutText|TestCompilerStartupMeasurement|TestNativeCacheGeneratedC|TestNodeCacheProgram|TestParallelCachedMatchesSerial)($|_|/)",
+        "log": "review/test-defend/deletion-set/cmd-adamic-test262/defend-corpus-D06.log",
+        "returncode": 1,
+        "wall_seconds": 62.979261994998524,
+        "binary_seconds": [
+          52.021
+        ],
+        "outcomes": {
+          "TestCacheBypass": "pass",
+          "TestCompilerCacheAcrossScratchDirectories": "pass",
+          "TestCacheBypassPreservesIdentity": "pass",
+          "TestEditCacheSeparation": "pass",
+          "TestLoweringSourceEdit": "pass",
+          "TestProgramCPUDeadline": "fail",
+          "TestOutputOverflowIsReported": "fail",
+          "TestAdaptSingletonArrayCallback": "pass",
+          "TestRunnerLocationHelper": "pass",
+          "TestNodeHarnessIdentity": "pass",
+          "TestRunProgramFractionalCPUBudget": "fail",
+          "TestCompilerHangHelper": "pass",
+          "TestCacheKeyDimensions": "pass",
+          "TestCompilerCacheProgram": "fail",
+          "TestRunFilterAttemptLimit": "pass",
+          "TestRunnerLocationIdentity": "pass",
+          "TestCompilerWorkerMatchesSubprocess": "fail",
+          "TestCacheAtomicBytes": "pass",
+          "TestRewriteHarnessCalls": "pass",
+          "TestImportedInputsRunFresh": "fail",
+          "TestWorkerLazyFallback": "pass",
+          "TestFrontmatterShapes": "pass",
+          "TestAdaptStrictEq": "pass",
+          "TestCrashPath": "pass",
+          "TestClassifyAdapt": "pass",
+          "TestAdaptThrowError": "pass",
+          "TestAdaptCallbackParam": "pass",
+          "TestAdaptClassKeepsVars": "pass",
+          "TestAdaptPositiveExponentVarToLet": "pass",
+          "TestCompilerWorkerTimeout": "pass",
+          "TestRunCommandExactCaptureCapacity": "fail",
+          "TestVerdictCorpus": "pass",
+          "TestNormalizeReason": "pass",
+          "TestAdaptVarToLet": "pass",
+          "TestClassifyCorpus": "pass",
+          "TestUnavailableCacheStillRuns": "fail",
+          "TestOrderedProgress": "pass",
+          "TestMiniRunner": "fail",
+          "TestLargeCompilerOutputIsComplete": "fail"
+        },
+        "panicking_tests": [],
+        "failing_lines": {
+          "TestProgramCPUDeadline": [
+            "run_test.go:73: 1 CPU second under load: {Stdout:completed Stderr: Exit:0 Signal: TimedOut:false} after 1.499180464s; want successful completion"
+          ],
+          "TestOutputOverflowIsReported": [
+            "corpus_test.go:267: overflow: written=6 error=<nil> buffer={buf:{buf:[97 98] off:0 lastRead:0} limit:3 exceeded:true}"
+          ],
+          "TestRunProgramFractionalCPUBudget": [
+            "run_boundaries_test.go:19: 1500ms CPU budget: got {Stdout:2 Stderr: Exit:0 Signal: TimedOut:false}, want {Stdout:2"
+          ],
+          "TestCompilerCacheProgram": [
+            "cache_test.go:307: changed compiler program served \"before\", want \"before\\n\""
+          ],
+          "TestCompilerWorkerMatchesSubprocess": [
+            "compiler_test.go:54: compiler differs: actual={Stdout:// Generated by adamic from program.a. Do not edit."
+          ],
+          "TestImportedInputsRunFresh": [
+            "cache_test.go:275: Node cannot import the native runtime; want fail, got {Path:input.js Directory:. Kind:crashed Reason:clang: /tmp/adamic-gate/TestImportedInputsRunFresh1370491991/002/programs/fea6259d8f6b1fd015a5e4b78d5269695f30108ef1820ee1abf87801dd2aabdd/program.c:385:2: error: no newline at end of file [-Werror,-Wnewline-eof] Adaptations:map[]}"
+          ],
+          "TestRunCommandExactCaptureCapacity": [
+            "run_boundaries_test.go:37: exact capture capacity: got {Stdout:ab Stderr: Exit:0 Signal: TimedOut:false}, want {Stdout:abc Stderr: Exit:0 Signal: TimedOut:false}",
+            "run_boundaries_test.go:37: exact capture capacity: got {Stdout: Stderr:ab Exit:0 Signal: TimedOut:false}, want {Stdout: Stderr:abc Exit:0 Signal: TimedOut:false}"
+          ],
+          "TestUnavailableCacheStillRuns": [
+            "cache_test.go:254: unavailable result cache changed verdict: {Path:pass/pad.js Directory:pass Kind:crashed Reason:clang: /tmp/adamic-gate/TestUnavailableCacheStillRuns2753820180/001/program.c:382:2: error: no newline at end of file [-Werror,-Wnewline-eof] Adaptations:map[]}"
+          ],
+          "TestMiniRunner": [
+            "corpus_test.go:210: pass fixture: 0 reasons fail=[] refused=[] crash=[{pass/pad.js: clang: /home/agent/.cache/adamic/test262/programs/20fb7e0b1df96d073564d182b8c94e54df2dd9ce21aadc26029f6a4ce33248eb/program.c:382:2: error: no newline at end of file [-Werror,-Wnewline-eof] 1}]"
+          ],
+          "TestLargeCompilerOutputIsComplete": [
+            "corpus_test.go:251: large program: {Path:large.js Pass:0 Fail:0 Refused:0 Crashed:1 Skipped:0 Unrun:0 Total:1 Directories:[{Path:. Pass:0 Fail:0 Refused:0 Crashed:1 Skipped:0 Unrun:0 Total:1}] RefusalReasons:[] SkipReasons:[] CrashReasons:[{Reason:large.js: clang: /home/agent/.cache/adamic/test262/programs/f41383061af2986404100b5377b021db60fac9a33d9fb4413780dc90ad693f05/program.c:713:2: error: call to undeclared function 'adamic_function_3_assertameValue'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration] Count:1}] FailReasons:[] Passes:[] Adaptations:[] directories:map[.:0xc85634a6140] refusalReasons:map[] skipReasons:map[] crashReasons:map[large.js: clang: /home/agent/.cache/adamic/test262/programs/f41383061af2986404100b5377b021db60fac9a33d9fb4413780dc90ad693f05/program.c:713:2: error: call to undeclared function 'adamic_function_3_assertameValue'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]:1] failRea"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "defend-corpus-D07",
+    "mutant": "D07",
+    "file": "review/test-defend/cmd-adamic-test262-corpus/D07.diff",
+    "branch": "test-defend/cmd-adamic-test262-corpus",
+    "recorded_matrix": "review/test-defend/cmd-adamic-test262-corpus/matrix.json",
+    "file_line": "cmd/adamic-test262/run.go:396",
+    "candidates_failed": [
+      "TestCompilerStartupMeasurement",
+      "TestParallelCachedMatchesSerial"
+    ],
+    "other_rows_failed": [
+      "TestCompilerCacheAcrossScratchDirectories",
+      "TestEditCacheSeparation",
+      "TestImportedInputsRunFresh",
+      "TestLargeCompilerOutputIsComplete",
+      "TestLoweringSourceEdit",
+      "TestMiniRunner",
+      "TestOrderedProgress",
+      "TestProgramCPUDeadline",
+      "TestRunCommandExactCaptureCapacity",
+      "TestRunProgramFractionalCPUBudget",
+      "TestUnavailableCacheStillRuns",
+      "TestWorkerLazyFallback"
+    ],
+    "diff": "review/test-defend/deletion-set/cmd-adamic-test262/diffs/defend-corpus-D07.diff",
+    "stale": false,
+    "apply_check": "",
+    "branch_sha": "75412cc93b6117aa54e62817bb5451068e48e1c4",
+    "still_caught_by": [
+      "TestCompilerCacheAcrossScratchDirectories",
+      "TestEditCacheSeparation",
+      "TestLoweringSourceEdit",
+      "TestProgramCPUDeadline",
+      "TestWorkerLazyFallback",
+      "TestImportedInputsRunFresh",
+      "TestMiniRunner",
+      "TestLargeCompilerOutputIsComplete",
+      "TestRunProgramFractionalCPUBudget",
+      "TestRunCommandExactCaptureCapacity",
+      "TestUnavailableCacheStillRuns",
+      "TestOrderedProgress"
+    ],
+    "panicking_tests": [],
+    "excluded_pins": [],
+    "excluded_witnesses": [],
+    "runs": [
+      {
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/deletion262/cache/defend-corpus-D07/1 go test -json -count=1 -timeout 30m ./cmd/adamic-test262/ -skip ^(TestAdaptLeavesCheckoutText|TestCompilerStartupMeasurement|TestNativeCacheGeneratedC|TestNodeCacheProgram|TestParallelCachedMatchesSerial)($|_|/)",
+        "log": "review/test-defend/deletion-set/cmd-adamic-test262/defend-corpus-D07.log",
+        "returncode": 1,
+        "wall_seconds": 34.34101164100139,
+        "binary_seconds": [
+          26.094
+        ],
+        "outcomes": {
+          "TestCacheBypass": "pass",
+          "TestCompilerCacheAcrossScratchDirectories": "fail",
+          "TestCacheBypassPreservesIdentity": "pass",
+          "TestEditCacheSeparation": "fail",
+          "TestLoweringSourceEdit": "fail",
+          "TestProgramCPUDeadline": "fail",
+          "TestAdaptSingletonArrayCallback": "pass",
+          "TestCrashPath": "pass",
+          "TestClassifyAdapt": "pass",
+          "TestAdaptThrowError": "pass",
+          "TestAdaptStrictEq": "pass",
+          "TestAdaptCallbackParam": "pass",
+          "TestAdaptClassKeepsVars": "pass",
+          "TestAdaptPositiveExponentVarToLet": "pass",
+          "TestAdaptVarToLet": "pass",
+          "TestRewriteHarnessCalls": "pass",
+          "TestNormalizeReason": "pass",
+          "TestVerdictCorpus": "pass",
+          "TestCacheKeyDimensions": "pass",
+          "TestFrontmatterShapes": "pass",
+          "TestCompilerWorkerTimeout": "pass",
+          "TestRunnerLocationHelper": "pass",
+          "TestNodeHarnessIdentity": "pass",
+          "TestOutputOverflowIsReported": "pass",
+          "TestClassifyCorpus": "pass",
+          "TestWorkerLazyFallback": "fail",
+          "TestCompilerHangHelper": "pass",
+          "TestRunnerLocationIdentity": "pass",
+          "TestCompilerCacheProgram": "pass",
+          "TestImportedInputsRunFresh": "fail",
+          "TestMiniRunner": "fail",
+          "TestLargeCompilerOutputIsComplete": "fail",
+          "TestRunProgramFractionalCPUBudget": "fail",
+          "TestCacheAtomicBytes": "pass",
+          "TestRunCommandExactCaptureCapacity": "fail",
+          "TestRunFilterAttemptLimit": "pass",
+          "TestCompilerWorkerMatchesSubprocess": "pass",
+          "TestUnavailableCacheStillRuns": "fail",
+          "TestOrderedProgress": "fail"
+        },
+        "panicking_tests": [],
+        "failing_lines": {
+          "TestCompilerCacheAcrossScratchDirectories": [
+            "cache_test.go:342: priming C cache: {Path:pass/pad.js Directory:pass Kind:crashed Reason:clang: command output exceeded capture limit Adaptations:map[]}"
+          ],
+          "TestEditCacheSeparation": [
+            "edit_test.go:34: prime: {Path:edit.js Directory: Kind:crashed Reason:clang: command output exceeded capture limit Adaptations:map[]}"
+          ],
+          "TestLoweringSourceEdit": [
+            "edit_test.go:129: {source-edit.js  crashed clang: command output exceeded capture limit map[]}"
+          ],
+          "TestProgramCPUDeadline": [
+            "run_test.go:73: 1 CPU second under load: {Stdout:completed",
+            "run_test.go:46: spinning child: {Stdout: Stderr:command output exceeded capture limit"
+          ],
+          "TestWorkerLazyFallback": [
+            "edit_test.go:77: worker report {Path:pass Pass:0 Fail:0 Refused:0 Crashed:1 Skipped:0 Unrun:0 Total:1 Directories:[{Path:pass Pass:0 Fail:0 Refused:0 Crashed:1 Skipped:0 Unrun:0 Total:1}] RefusalReasons:[] SkipReasons:[] CrashReasons:[{Reason:pass/pad.js: clang: command output exceeded capture limit Count:1}] FailReasons:[] Passes:[] Adaptations:[] directories:map[pass:0x16f3c383a000] refusalReasons:map[] skipReasons:map[] crashReasons:map[pass/pad.js: clang: command output exceeded capture limit:1] failReasons:map[] adaptations:map[]}: <nil>"
+          ],
+          "TestImportedInputsRunFresh": [
+            "cache_test.go:275: Node cannot import the native runtime; want fail, got {Path:input.js Directory:. Kind:crashed Reason:command output exceeded capture limit Adaptations:map[]}"
+          ],
+          "TestMiniRunner": [
+            "corpus_test.go:210: pass fixture: 0 reasons fail=[] refused=[] crash=[{pass/pad.js: command output exceeded capture limit 1}]"
+          ],
+          "TestLargeCompilerOutputIsComplete": [
+            "corpus_test.go:251: large program: {Path:large.js Pass:0 Fail:0 Refused:0 Crashed:1 Skipped:0 Unrun:0 Total:1 Directories:[{Path:. Pass:0 Fail:0 Refused:0 Crashed:1 Skipped:0 Unrun:0 Total:1}] RefusalReasons:[] SkipReasons:[] CrashReasons:[{Reason:large.js: command output exceeded capture limit Count:1}] FailReasons:[] Passes:[] Adaptations:[] directories:map[.:0x16f3c383a000] refusalReasons:map[] skipReasons:map[] crashReasons:map[large.js: command output exceeded capture limit:1] failReasons:map[] adaptations:map[]}"
+          ],
+          "TestRunProgramFractionalCPUBudget": [
+            "run_boundaries_test.go:19: 1500ms CPU budget: got {Stdout:2"
+          ],
+          "TestRunCommandExactCaptureCapacity": [
+            "run_boundaries_test.go:37: exact capture capacity: got {Stdout:abc Stderr:command output exceeded capture limit",
+            "run_boundaries_test.go:37: exact capture capacity: got {Stdout: Stderr:command output exceeded capture limit"
+          ],
+          "TestUnavailableCacheStillRuns": [
+            "cache_test.go:254: unavailable result cache changed verdict: {Path:pass/pad.js Directory:pass Kind:crashed Reason:command output exceeded capture limit Adaptations:map[]}"
+          ],
+          "TestOrderedProgress": [
+            "cache_test.go:233: ordered progress: \" 50/51 pass=0 fail=0 refused=0 crashed=0 skipped=50\\n 51/51 pass=0 fail=0 refused=0 crashed=1 skipped=50\\n\", want \" 50/51 pass=0 fail=0 refused=0 crashed=0 skipped=50\\n 51/51 pass=1 fail=0 refused=0 crashed=0 skipped=50\\n\""
+          ]
+        }
+      }
+    ]
+  }
+]

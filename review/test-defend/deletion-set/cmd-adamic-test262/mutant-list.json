@@ -1,0 +1,369 @@
+[
+  {
+    "id": "audit-adapt-M18",
+    "mutant": "M18",
+    "file": "review/test-audit/cmd-adamic-test262-adapt/diffs/M18.diff",
+    "branch": "test-audit/cmd-adamic-test262-adapt",
+    "recorded_matrix": "review/test-audit/cmd-adamic-test262-adapt/matrix.json",
+    "file_line": "cmd/adamic-test262/classify.go:65",
+    "candidates_failed": [
+      "TestParallelCachedMatchesSerial"
+    ],
+    "other_rows_failed": [
+      "TestClassifyAdapt",
+      "TestMiniRunner"
+    ],
+    "diff": "review/test-defend/deletion-set/cmd-adamic-test262/diffs/audit-adapt-M18.diff",
+    "stale": false,
+    "apply_check": "",
+    "branch_sha": "1ee2e777ad6dbe9fda6d560d5e947bfa9bd3673d"
+  },
+  {
+    "id": "audit-cache-M02",
+    "mutant": "M02",
+    "file": "review/test-audit/cmd-adamic-test262-cache/M02.diff",
+    "branch": "test-audit/cmd-adamic-test262-cache",
+    "recorded_matrix": "review/test-audit/cmd-adamic-test262-cache/matrix.json",
+    "file_line": "cmd/adamic-test262/cache.go:60",
+    "candidates_failed": [
+      "TestNodeCacheProgram"
+    ],
+    "other_rows_failed": [
+      "TestCacheKeyDimensions"
+    ],
+    "diff": "review/test-defend/deletion-set/cmd-adamic-test262/diffs/audit-cache-M02.diff",
+    "stale": false,
+    "apply_check": "",
+    "branch_sha": "b9589ebc7bd87b7e3c298b92409236b3a83829a2"
+  },
+  {
+    "id": "audit-cache-M03",
+    "mutant": "M03",
+    "file": "review/test-audit/cmd-adamic-test262-cache/M03.diff",
+    "branch": "test-audit/cmd-adamic-test262-cache",
+    "recorded_matrix": "review/test-audit/cmd-adamic-test262-cache/matrix.json",
+    "file_line": "cmd/adamic-test262/cache.go:63",
+    "candidates_failed": [
+      "TestNativeCacheGeneratedC"
+    ],
+    "other_rows_failed": [
+      "TestCacheKeyDimensions"
+    ],
+    "diff": "review/test-defend/deletion-set/cmd-adamic-test262/diffs/audit-cache-M03.diff",
+    "stale": false,
+    "apply_check": "",
+    "branch_sha": "b9589ebc7bd87b7e3c298b92409236b3a83829a2"
+  },
+  {
+    "id": "audit-cache-M05",
+    "mutant": "M05",
+    "file": "review/test-audit/cmd-adamic-test262-cache/M05.diff",
+    "branch": "test-audit/cmd-adamic-test262-cache",
+    "recorded_matrix": "review/test-audit/cmd-adamic-test262-cache/matrix.json",
+    "file_line": "cmd/adamic-test262/cache.go:35",
+    "candidates_failed": [
+      "TestParallelCachedMatchesSerial"
+    ],
+    "other_rows_failed": [
+      "TestCacheAtomicBytes",
+      "TestCacheBypass",
+      "TestCompilerCacheAcrossScratchDirectories",
+      "TestCompilerWorkerMatchesSubprocess",
+      "TestEditCacheSeparation",
+      "TestLoweringSourceEdit",
+      "TestOrderedProgress",
+      "TestWorkerLazyFallback"
+    ],
+    "diff": "review/test-defend/deletion-set/cmd-adamic-test262/diffs/audit-cache-M05.diff",
+    "stale": false,
+    "apply_check": "",
+    "branch_sha": "b9589ebc7bd87b7e3c298b92409236b3a83829a2"
+  },
+  {
+    "id": "audit-corpus-M01",
+    "mutant": "M01",
+    "file": "review/test-audit/cmd-adamic-test262-corpus/diffs/M01.diff",
+    "branch": "test-audit/cmd-adamic-test262-corpus",
+    "recorded_matrix": "review/test-audit/cmd-adamic-test262-corpus/matrix.json",
+    "file_line": "cmd/adamic-test262/classify.go:90",
+    "candidates_failed": [
+      "TestParallelCachedMatchesSerial"
+    ],
+    "other_rows_failed": [
+      "TestClassifyCorpus",
+      "TestMiniRunner",
+      "TestOrderedProgress"
+    ],
+    "diff": "review/test-defend/deletion-set/cmd-adamic-test262/diffs/audit-corpus-M01.diff",
+    "stale": false,
+    "apply_check": "",
+    "branch_sha": "196dc20df19dfd570398b2412e50936322e9cead"
+  },
+  {
+    "id": "audit-corpus-M05",
+    "mutant": "M05",
+    "file": "review/test-audit/cmd-adamic-test262-corpus/diffs/M05.diff",
+    "branch": "test-audit/cmd-adamic-test262-corpus",
+    "recorded_matrix": "review/test-audit/cmd-adamic-test262-corpus/matrix.json",
+    "file_line": "cmd/adamic-test262/verdict.go:58",
+    "candidates_failed": [
+      "TestParallelCachedMatchesSerial"
+    ],
+    "other_rows_failed": [
+      "TestCompilerCacheAcrossScratchDirectories",
+      "TestEditCacheSeparation",
+      "TestLargeCompilerOutputIsComplete",
+      "TestLoweringSourceEdit",
+      "TestMiniRunner",
+      "TestOrderedProgress",
+      "TestUnavailableCacheStillRuns",
+      "TestVerdictCorpus",
+      "TestWorkerLazyFallback"
+    ],
+    "diff": "review/test-defend/deletion-set/cmd-adamic-test262/diffs/audit-corpus-M05.diff",
+    "stale": false,
+    "apply_check": "",
+    "branch_sha": "196dc20df19dfd570398b2412e50936322e9cead"
+  },
+  {
+    "id": "audit-corpus-M15",
+    "mutant": "M15",
+    "file": "review/test-audit/cmd-adamic-test262-corpus/diffs/M15.diff",
+    "branch": "test-audit/cmd-adamic-test262-corpus",
+    "recorded_matrix": "review/test-audit/cmd-adamic-test262-corpus/matrix.json",
+    "file_line": "cmd/adamic-test262/run.go:390",
+    "candidates_failed": [
+      "TestCompilerStartupMeasurement",
+      "TestNativeCacheGeneratedC",
+      "TestNodeCacheProgram",
+      "TestParallelCachedMatchesSerial"
+    ],
+    "other_rows_failed": [
+      "TestCompilerCacheProgram",
+      "TestCompilerWorkerMatchesSubprocess",
+      "TestImportedInputsRunFresh",
+      "TestLargeCompilerOutputIsComplete",
+      "TestMiniRunner",
+      "TestProgramCPUDeadline",
+      "TestUnavailableCacheStillRuns",
+      "TestWorkerLazyFallback"
+    ],
+    "diff": "review/test-defend/deletion-set/cmd-adamic-test262/diffs/audit-corpus-M15.diff",
+    "stale": false,
+    "apply_check": "",
+    "branch_sha": "196dc20df19dfd570398b2412e50936322e9cead"
+  },
+  {
+    "id": "defend-adapt-D4",
+    "mutant": "D4",
+    "file": "review/test-defend/cmd-adamic-test262-adapt/D4.diff",
+    "branch": "test-defend/cmd-adamic-test262-adapt",
+    "recorded_matrix": "review/test-defend/cmd-adamic-test262-adapt/matrix.json",
+    "file_line": "cmd/adamic-test262/adapt.go:35",
+    "candidates_failed": [
+      "TestAdaptLeavesCheckoutText"
+    ],
+    "other_rows_failed": [
+      "TestAdaptClassKeepsVars",
+      "TestAdaptVarToLet"
+    ],
+    "diff": "review/test-defend/deletion-set/cmd-adamic-test262/diffs/defend-adapt-D4.diff",
+    "stale": false,
+    "apply_check": "",
+    "branch_sha": "c50100eaf9677c0c6047ed176492ed31687f9291"
+  },
+  {
+    "id": "defend-cache-D2",
+    "mutant": "D2",
+    "file": "review/test-defend/cmd-adamic-test262-cache/D2.diff",
+    "branch": "test-defend/cmd-adamic-test262-cache",
+    "recorded_matrix": "review/test-defend/cmd-adamic-test262-cache/matrix.json",
+    "file_line": "cmd/adamic-test262/cache.go:35",
+    "candidates_failed": [
+      "TestParallelCachedMatchesSerial"
+    ],
+    "other_rows_failed": [
+      "TestCacheAtomicBytes",
+      "TestCompilerWorkerMatchesSubprocess"
+    ],
+    "diff": "review/test-defend/deletion-set/cmd-adamic-test262/diffs/defend-cache-D2.diff",
+    "stale": false,
+    "apply_check": "",
+    "branch_sha": "c29e455e4c06424d5e4ebd9bf49cd66236a0eb34"
+  },
+  {
+    "id": "defend-cache-current-D02",
+    "mutant": "D02",
+    "file": "review/test-defend/cmd-adamic-test262-cache/current-program-bypass/D02.diff",
+    "branch": "test-defend/cmd-adamic-test262-cache",
+    "recorded_matrix": "review/test-defend/cmd-adamic-test262-cache/current-program-bypass/matrix.json",
+    "file_line": "cmd/adamic-test262/cache.go:60",
+    "candidates_failed": [
+      "TestNodeCacheProgram"
+    ],
+    "other_rows_failed": [
+      "TestCacheKeyDimensions"
+    ],
+    "diff": "review/test-defend/deletion-set/cmd-adamic-test262/diffs/defend-cache-current-D02.diff",
+    "stale": false,
+    "apply_check": "",
+    "branch_sha": "c29e455e4c06424d5e4ebd9bf49cd66236a0eb34"
+  },
+  {
+    "id": "defend-cache-current-D03",
+    "mutant": "D03",
+    "file": "review/test-defend/cmd-adamic-test262-cache/current-program-bypass/D03.diff",
+    "branch": "test-defend/cmd-adamic-test262-cache",
+    "recorded_matrix": "review/test-defend/cmd-adamic-test262-cache/current-program-bypass/matrix.json",
+    "file_line": "cmd/adamic-test262/cache.go:63",
+    "candidates_failed": [
+      "TestNativeCacheGeneratedC"
+    ],
+    "other_rows_failed": [
+      "TestCacheKeyDimensions"
+    ],
+    "diff": "review/test-defend/deletion-set/cmd-adamic-test262/diffs/defend-cache-current-D03.diff",
+    "stale": false,
+    "apply_check": "",
+    "branch_sha": "c29e455e4c06424d5e4ebd9bf49cd66236a0eb34"
+  },
+  {
+    "id": "defend-cache-current-D04",
+    "mutant": "D04",
+    "file": "review/test-defend/cmd-adamic-test262-cache/current-program-bypass/D04.diff",
+    "branch": "test-defend/cmd-adamic-test262-cache",
+    "recorded_matrix": "review/test-defend/cmd-adamic-test262-cache/current-program-bypass/matrix.json",
+    "file_line": "cmd/adamic-test262/run.go:379",
+    "candidates_failed": [
+      "TestNativeCacheGeneratedC",
+      "TestNodeCacheProgram",
+      "TestParallelCachedMatchesSerial"
+    ],
+    "other_rows_failed": [
+      "TestCompilerCacheProgram",
+      "TestProgramCPUDeadline"
+    ],
+    "diff": "review/test-defend/deletion-set/cmd-adamic-test262/diffs/defend-cache-current-D04.diff",
+    "stale": false,
+    "apply_check": "",
+    "branch_sha": "c29e455e4c06424d5e4ebd9bf49cd66236a0eb34"
+  },
+  {
+    "id": "defend-cache-current-D05",
+    "mutant": "D05",
+    "file": "review/test-defend/cmd-adamic-test262-cache/current-program-bypass/D05.diff",
+    "branch": "test-defend/cmd-adamic-test262-cache",
+    "recorded_matrix": "review/test-defend/cmd-adamic-test262-cache/current-program-bypass/matrix.json",
+    "file_line": "cmd/adamic-test262/run.go:392",
+    "candidates_failed": [
+      "TestCompilerStartupMeasurement",
+      "TestNativeCacheGeneratedC",
+      "TestNodeCacheProgram",
+      "TestParallelCachedMatchesSerial"
+    ],
+    "other_rows_failed": [
+      "TestCompilerCacheProgram",
+      "TestImportedInputsRunFresh",
+      "TestLargeCompilerOutputIsComplete",
+      "TestMiniRunner",
+      "TestProgramCPUDeadline",
+      "TestRunCommandExactCaptureCapacity",
+      "TestRunProgramFractionalCPUBudget",
+      "TestUnavailableCacheStillRuns",
+      "TestWorkerLazyFallback"
+    ],
+    "diff": "review/test-defend/deletion-set/cmd-adamic-test262/diffs/defend-cache-current-D05.diff",
+    "stale": false,
+    "apply_check": "",
+    "branch_sha": "c29e455e4c06424d5e4ebd9bf49cd66236a0eb34"
+  },
+  {
+    "id": "defend-corpus-D05",
+    "mutant": "D05",
+    "file": "review/test-defend/cmd-adamic-test262-corpus/D05.diff",
+    "branch": "test-defend/cmd-adamic-test262-corpus",
+    "recorded_matrix": "review/test-defend/cmd-adamic-test262-corpus/matrix.json",
+    "file_line": "cmd/adamic-test262/run.go:392",
+    "candidates_failed": [
+      "TestCompilerStartupMeasurement",
+      "TestNativeCacheGeneratedC",
+      "TestNodeCacheProgram",
+      "TestParallelCachedMatchesSerial"
+    ],
+    "other_rows_failed": [
+      "TestCompilerCacheProgram",
+      "TestImportedInputsRunFresh",
+      "TestLargeCompilerOutputIsComplete",
+      "TestMiniRunner",
+      "TestProgramCPUDeadline",
+      "TestRunCommandExactCaptureCapacity",
+      "TestRunProgramFractionalCPUBudget",
+      "TestUnavailableCacheStillRuns",
+      "TestWorkerLazyFallback"
+    ],
+    "diff": "review/test-defend/deletion-set/cmd-adamic-test262/diffs/defend-corpus-D05.diff",
+    "stale": false,
+    "apply_check": "",
+    "branch_sha": "75412cc93b6117aa54e62817bb5451068e48e1c4"
+  },
+  {
+    "id": "defend-corpus-D06",
+    "mutant": "D06",
+    "file": "review/test-defend/cmd-adamic-test262-corpus/D06.diff",
+    "branch": "test-defend/cmd-adamic-test262-corpus",
+    "recorded_matrix": "review/test-defend/cmd-adamic-test262-corpus/matrix.json",
+    "file_line": "cmd/adamic-test262/run.go:451",
+    "candidates_failed": [
+      "TestCompilerStartupMeasurement",
+      "TestNativeCacheGeneratedC",
+      "TestNodeCacheProgram",
+      "TestParallelCachedMatchesSerial"
+    ],
+    "other_rows_failed": [
+      "TestCompilerCacheProgram",
+      "TestCompilerWorkerMatchesSubprocess",
+      "TestImportedInputsRunFresh",
+      "TestLargeCompilerOutputIsComplete",
+      "TestMiniRunner",
+      "TestOutputOverflowIsReported",
+      "TestProgramCPUDeadline",
+      "TestRunCommandExactCaptureCapacity",
+      "TestRunProgramFractionalCPUBudget",
+      "TestUnavailableCacheStillRuns"
+    ],
+    "diff": "review/test-defend/deletion-set/cmd-adamic-test262/diffs/defend-corpus-D06.diff",
+    "stale": false,
+    "apply_check": "",
+    "branch_sha": "75412cc93b6117aa54e62817bb5451068e48e1c4"
+  },
+  {
+    "id": "defend-corpus-D07",
+    "mutant": "D07",
+    "file": "review/test-defend/cmd-adamic-test262-corpus/D07.diff",
+    "branch": "test-defend/cmd-adamic-test262-corpus",
+    "recorded_matrix": "review/test-defend/cmd-adamic-test262-corpus/matrix.json",
+    "file_line": "cmd/adamic-test262/run.go:396",
+    "candidates_failed": [
+      "TestCompilerStartupMeasurement",
+      "TestParallelCachedMatchesSerial"
+    ],
+    "other_rows_failed": [
+      "TestCompilerCacheAcrossScratchDirectories",
+      "TestEditCacheSeparation",
+      "TestImportedInputsRunFresh",
+      "TestLargeCompilerOutputIsComplete",
+      "TestLoweringSourceEdit",
+      "TestMiniRunner",
+      "TestOrderedProgress",
+      "TestProgramCPUDeadline",
+      "TestRunCommandExactCaptureCapacity",
+      "TestRunProgramFractionalCPUBudget",
+      "TestUnavailableCacheStillRuns",
+      "TestWorkerLazyFallback"
+    ],
+    "diff": "review/test-defend/deletion-set/cmd-adamic-test262/diffs/defend-corpus-D07.diff",
+    "stale": false,
+    "apply_check": "",
+    "branch_sha": "75412cc93b6117aa54e62817bb5451068e48e1c4"
+  }
+]
