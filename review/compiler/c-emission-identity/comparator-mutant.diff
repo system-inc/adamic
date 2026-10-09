@@ -1,0 +1,8 @@
+diff -ru /tmp/cemit-diff-control/before/six-released.c /tmp/cemit-diff-control/mutant/six-released.c
+--- /tmp/cemit-diff-control/before/six-released.c	2026-10-09 22:45:51.385411848 +0000
++++ /tmp/cemit-diff-control/mutant/six-released.c	2026-10-09 22:45:51.385495692 +0000
+@@ -83,3 +83,4 @@
+ 	adamic_global_0_a = NULL;
+ 	return 0;
+ }
++/* planted emitted-byte disagreement */

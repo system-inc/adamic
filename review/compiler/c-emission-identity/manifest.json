@@ -1,0 +1,750 @@
+{
+  "tests": {
+    "TestSixRuleAgreementAndMutants": [
+      "six-suite",
+      "six-wrong-node",
+      "six-last-declaration",
+      "six-nullable-default",
+      "six-union-members",
+      "six-released",
+      "six-facts-cost"
+    ],
+    "TestTypeAwareAgreementAndMutants": [
+      "typeaware-main",
+      "typeaware-wrong-main",
+      "typeaware-released",
+      "typeaware-query-cost",
+      "typeaware-bad-kind"
+    ],
+    "TestVolumeConfigGuardAndMutant": [
+      "guard-volume"
+    ],
+    "TestVolumeAgreementCompiler": [
+      "volume-with-program-roots"
+    ],
+    "TestCompositionMatchesGoUnion": [
+      "composition"
+    ],
+    "TestCSSPrinterAgreesWithGo": [
+      "printer",
+      "printer-semicolon",
+      "printer-indent",
+      "printer-width"
+    ],
+    "TestUnicodeNodeShardPlantedFailure": []
+  },
+  "programs": [
+    {
+      "Name": "six-suite",
+      "Path": "/workspace/cemit-cut/stage1/cohere/typeaware/testdata/sharded_suite.ts",
+      "TSGo": true,
+      "RootSHA256": "f0daccbc0aff5bc4b725fdf11e9c9eeeafc0191d4c0720c573266607a69a168a",
+      "SourceFiles": {
+        "/workspace/cemit-cut/stage1/cohere/typeaware/testdata/sharded_suite.ts": "f0daccbc0aff5bc4b725fdf11e9c9eeeafc0191d4c0720c573266607a69a168a",
+        "/workspace/cemit-cut/stage1/typescript/parser/nodes.ts": "f96c7514273ef211538681183b01c44e9f7b2dd9a047fcf89dcc669f84b8c7b6",
+        "/workspace/cemit-cut/stage1/typescript/parser/parser.ts": "2b07db49d45666aade8172270b873195059124b442cb075a4b1cfe1f3ac2b51b",
+        "/workspace/cemit-cut/stage1/typescript/scanner/scanner.ts": "5d8d2b244dc2ec61bac8626f281ac2bcc82f7301b90922084255ee4228ac8bc5",
+        "/workspace/cemit-cut/stage1/typescript/scanner/characters.ts": "58a228be5e31048f68831542d9cb9ec77874a6cf4ffe150b9c829f403e1dd671",
+        "/workspace/cemit-cut/stage1/typescript/scanner/tokens.ts": "af3b2abb725d77aaeb469f3e695d9f29c3ffb58753695e3127bb77b05bcdb475",
+        "/workspace/cemit-cut/stage1/typescript/parser/statements.ts": "8e78404108b86707a93b17f506fc95fac334269298596a446910be3228f666ab",
+        "/workspace/cemit-cut/stage1/typescript/parser/jsx.ts": "ee008273e1a7013c9c2a49c4fbe3c98e8a5d098019e04b4b261df35e9dc2cbba",
+        "/workspace/cemit-cut/stage1/typescript/parser/grammar.ts": "12e1a80281e1a0406d2cb890cc31bce44c013029a8bc5db74fc78f104f27292a",
+        "/workspace/cemit-cut/stage1/typescript/parser/lookahead.ts": "604c76eabf9a6ae6da684bf26bd3bad4aae365027f63a399e9a813c23cb7ab4d",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/unary_minus.ts": "c493f28e51e6a48fc18e9456afbb9035bba423d589ab5ee3036ae925d0f5a82f",
+        "/workspace/cemit-cut/stage1/cohere/lint/finding.ts": "ea4fb83ce655a79ddbb47710dddad79fadd7faa572ee1ce48b3647084b14c2f6",
+        "/workspace/cemit-cut/stage1/cohere/lint/suggestions.a": "1449d82a8079e3bd38eac7ea14c7af4e93ec337f988090a9cbe5fee7c033c011",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/rules.ts": "f296505dae8a0888ad44515a2c3bedc04515fa1926badbe342104b90cea0f605",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/diagnostic.ts": "ba44d0c3f601add63281ac4b3ea602caa7342c412bcef8734c4da6e2f4b6c0d4",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/repair.ts": "17df5033248e6d94394a5ea253edb8a4d21f66df6aa44de03fa56a4edd2eb8b9",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/suggestion.ts": "c6ebf51cd0f93f8de07d91dc42e8a3fcc5c1124ebd3daf31370f95abd755ee72",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/frames.ts": "6489fd8bdd811f066a43f25132bac10c5730b21353940b1a35ff9352f584b30b",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/facts.ts": "b97e5be01a54270f53b66130b5d0a0833254a37f653390e72056f64c450b5c0b",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/type_fact.ts": "9a6f79ad76a0575a8ebd0607f62e61ab85e611784f7eee097472ac2ca452c34d",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/types.ts": "f53f6fd8a755950515bee083b306e77b10caf495314052ed089095d2a49390ba",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/flags.ts": "7ea8236abde7f42b09d46b38c7647f2d817820651d12faf4b04944cc4717e478",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/parameters.ts": "b00901d35f0c41debebf34be3040e06eb24230d18858f5c47b13d975ab6fc8de"
+      },
+      "SourceBytes": 245031,
+      "C": {
+        "parent": {
+          "bytes": 2613567,
+          "sha256": "9e3032155da9ab6826a947999dfb968b22f1c498fd65365dd985cdc0426a4847"
+        },
+        "cut": {
+          "bytes": 2613567,
+          "sha256": "9e3032155da9ab6826a947999dfb968b22f1c498fd65365dd985cdc0426a4847"
+        }
+      }
+    },
+    {
+      "Name": "six-wrong-node",
+      "Path": "/tmp/cemit-inputs/six-wrong-node-main.a",
+      "TSGo": true,
+      "RootSHA256": "dc5e464a337feac4eabba4bb313f96efad91b08d24a292a6cc68deaafc9802dc",
+      "SourceFiles": {
+        "/tmp/cemit-inputs/six-wrong-node-main.a": "dc5e464a337feac4eabba4bb313f96efad91b08d24a292a6cc68deaafc9802dc",
+        "/workspace/cemit-cut/stage1/typescript/parser/nodes.ts": "f96c7514273ef211538681183b01c44e9f7b2dd9a047fcf89dcc669f84b8c7b6",
+        "/workspace/cemit-cut/stage1/typescript/parser/parser.ts": "2b07db49d45666aade8172270b873195059124b442cb075a4b1cfe1f3ac2b51b",
+        "/workspace/cemit-cut/stage1/typescript/scanner/scanner.ts": "5d8d2b244dc2ec61bac8626f281ac2bcc82f7301b90922084255ee4228ac8bc5",
+        "/workspace/cemit-cut/stage1/typescript/scanner/characters.ts": "58a228be5e31048f68831542d9cb9ec77874a6cf4ffe150b9c829f403e1dd671",
+        "/workspace/cemit-cut/stage1/typescript/scanner/tokens.ts": "af3b2abb725d77aaeb469f3e695d9f29c3ffb58753695e3127bb77b05bcdb475",
+        "/workspace/cemit-cut/stage1/typescript/parser/statements.ts": "8e78404108b86707a93b17f506fc95fac334269298596a446910be3228f666ab",
+        "/workspace/cemit-cut/stage1/typescript/parser/jsx.ts": "ee008273e1a7013c9c2a49c4fbe3c98e8a5d098019e04b4b261df35e9dc2cbba",
+        "/workspace/cemit-cut/stage1/typescript/parser/grammar.ts": "12e1a80281e1a0406d2cb890cc31bce44c013029a8bc5db74fc78f104f27292a",
+        "/workspace/cemit-cut/stage1/typescript/parser/lookahead.ts": "604c76eabf9a6ae6da684bf26bd3bad4aae365027f63a399e9a813c23cb7ab4d",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/unary_minus.ts": "c493f28e51e6a48fc18e9456afbb9035bba423d589ab5ee3036ae925d0f5a82f",
+        "/workspace/cemit-cut/stage1/cohere/lint/finding.ts": "ea4fb83ce655a79ddbb47710dddad79fadd7faa572ee1ce48b3647084b14c2f6",
+        "/workspace/cemit-cut/stage1/cohere/lint/suggestions.a": "1449d82a8079e3bd38eac7ea14c7af4e93ec337f988090a9cbe5fee7c033c011",
+        "/tmp/cemit-inputs/six-wrong-node-rules.a": "cfd76611b55ad35f5c0736fc76c35d2b6170ba6fcc7717a64ce0883b0cf85d12",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/diagnostic.ts": "ba44d0c3f601add63281ac4b3ea602caa7342c412bcef8734c4da6e2f4b6c0d4",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/repair.ts": "17df5033248e6d94394a5ea253edb8a4d21f66df6aa44de03fa56a4edd2eb8b9",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/suggestion.ts": "c6ebf51cd0f93f8de07d91dc42e8a3fcc5c1124ebd3daf31370f95abd755ee72",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/frames.ts": "6489fd8bdd811f066a43f25132bac10c5730b21353940b1a35ff9352f584b30b",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/facts.ts": "b97e5be01a54270f53b66130b5d0a0833254a37f653390e72056f64c450b5c0b",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/type_fact.ts": "9a6f79ad76a0575a8ebd0607f62e61ab85e611784f7eee097472ac2ca452c34d",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/types.ts": "f53f6fd8a755950515bee083b306e77b10caf495314052ed089095d2a49390ba",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/flags.ts": "7ea8236abde7f42b09d46b38c7647f2d817820651d12faf4b04944cc4717e478",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/parameters.ts": "b00901d35f0c41debebf34be3040e06eb24230d18858f5c47b13d975ab6fc8de"
+      },
+      "SourceBytes": 245592,
+      "C": {
+        "parent": {
+          "bytes": 2613573,
+          "sha256": "c6ceb7164d387369f55b8bb27c88dc3629c17e1bff3e028cb8d83db8f4ad983f"
+        },
+        "cut": {
+          "bytes": 2613573,
+          "sha256": "c6ceb7164d387369f55b8bb27c88dc3629c17e1bff3e028cb8d83db8f4ad983f"
+        }
+      }
+    },
+    {
+      "Name": "six-last-declaration",
+      "Path": "/tmp/cemit-inputs/six-last-declaration-main.a",
+      "TSGo": true,
+      "RootSHA256": "e7b1269384c98236d6d2a2a5d5ac37406bca2f185bce838dbb7b5d394cf49fcb",
+      "SourceFiles": {
+        "/tmp/cemit-inputs/six-last-declaration-main.a": "e7b1269384c98236d6d2a2a5d5ac37406bca2f185bce838dbb7b5d394cf49fcb",
+        "/workspace/cemit-cut/stage1/typescript/parser/nodes.ts": "f96c7514273ef211538681183b01c44e9f7b2dd9a047fcf89dcc669f84b8c7b6",
+        "/workspace/cemit-cut/stage1/typescript/parser/parser.ts": "2b07db49d45666aade8172270b873195059124b442cb075a4b1cfe1f3ac2b51b",
+        "/workspace/cemit-cut/stage1/typescript/scanner/scanner.ts": "5d8d2b244dc2ec61bac8626f281ac2bcc82f7301b90922084255ee4228ac8bc5",
+        "/workspace/cemit-cut/stage1/typescript/scanner/characters.ts": "58a228be5e31048f68831542d9cb9ec77874a6cf4ffe150b9c829f403e1dd671",
+        "/workspace/cemit-cut/stage1/typescript/scanner/tokens.ts": "af3b2abb725d77aaeb469f3e695d9f29c3ffb58753695e3127bb77b05bcdb475",
+        "/workspace/cemit-cut/stage1/typescript/parser/statements.ts": "8e78404108b86707a93b17f506fc95fac334269298596a446910be3228f666ab",
+        "/workspace/cemit-cut/stage1/typescript/parser/jsx.ts": "ee008273e1a7013c9c2a49c4fbe3c98e8a5d098019e04b4b261df35e9dc2cbba",
+        "/workspace/cemit-cut/stage1/typescript/parser/grammar.ts": "12e1a80281e1a0406d2cb890cc31bce44c013029a8bc5db74fc78f104f27292a",
+        "/workspace/cemit-cut/stage1/typescript/parser/lookahead.ts": "604c76eabf9a6ae6da684bf26bd3bad4aae365027f63a399e9a813c23cb7ab4d",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/unary_minus.ts": "c493f28e51e6a48fc18e9456afbb9035bba423d589ab5ee3036ae925d0f5a82f",
+        "/workspace/cemit-cut/stage1/cohere/lint/finding.ts": "ea4fb83ce655a79ddbb47710dddad79fadd7faa572ee1ce48b3647084b14c2f6",
+        "/workspace/cemit-cut/stage1/cohere/lint/suggestions.a": "1449d82a8079e3bd38eac7ea14c7af4e93ec337f988090a9cbe5fee7c033c011",
+        "/tmp/cemit-inputs/six-last-declaration-rules.a": "7675b46baf8b939e2ca385e321c683654b6fe5de87ce46bb9429cd27842c0f97",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/diagnostic.ts": "ba44d0c3f601add63281ac4b3ea602caa7342c412bcef8734c4da6e2f4b6c0d4",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/repair.ts": "17df5033248e6d94394a5ea253edb8a4d21f66df6aa44de03fa56a4edd2eb8b9",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/suggestion.ts": "c6ebf51cd0f93f8de07d91dc42e8a3fcc5c1124ebd3daf31370f95abd755ee72",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/frames.ts": "6489fd8bdd811f066a43f25132bac10c5730b21353940b1a35ff9352f584b30b",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/facts.ts": "b97e5be01a54270f53b66130b5d0a0833254a37f653390e72056f64c450b5c0b",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/type_fact.ts": "9a6f79ad76a0575a8ebd0607f62e61ab85e611784f7eee097472ac2ca452c34d",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/types.ts": "f53f6fd8a755950515bee083b306e77b10caf495314052ed089095d2a49390ba",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/flags.ts": "7ea8236abde7f42b09d46b38c7647f2d817820651d12faf4b04944cc4717e478",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/parameters.ts": "b00901d35f0c41debebf34be3040e06eb24230d18858f5c47b13d975ab6fc8de"
+      },
+      "SourceBytes": 245576,
+      "C": {
+        "parent": {
+          "bytes": 2613519,
+          "sha256": "39c45e503d05e1a2fe88bb4ca59aa74ec4a16b491a1188927323126bdb93962b"
+        },
+        "cut": {
+          "bytes": 2613519,
+          "sha256": "39c45e503d05e1a2fe88bb4ca59aa74ec4a16b491a1188927323126bdb93962b"
+        }
+      }
+    },
+    {
+      "Name": "six-nullable-default",
+      "Path": "/tmp/cemit-inputs/six-nullable-default-main.a",
+      "TSGo": true,
+      "RootSHA256": "933c8385ab4f195fb8d4402c218b73ababed129b56f5b3c86d3c6cd7c5a9dbfe",
+      "SourceFiles": {
+        "/tmp/cemit-inputs/six-nullable-default-main.a": "933c8385ab4f195fb8d4402c218b73ababed129b56f5b3c86d3c6cd7c5a9dbfe",
+        "/workspace/cemit-cut/stage1/typescript/parser/nodes.ts": "f96c7514273ef211538681183b01c44e9f7b2dd9a047fcf89dcc669f84b8c7b6",
+        "/workspace/cemit-cut/stage1/typescript/parser/parser.ts": "2b07db49d45666aade8172270b873195059124b442cb075a4b1cfe1f3ac2b51b",
+        "/workspace/cemit-cut/stage1/typescript/scanner/scanner.ts": "5d8d2b244dc2ec61bac8626f281ac2bcc82f7301b90922084255ee4228ac8bc5",
+        "/workspace/cemit-cut/stage1/typescript/scanner/characters.ts": "58a228be5e31048f68831542d9cb9ec77874a6cf4ffe150b9c829f403e1dd671",
+        "/workspace/cemit-cut/stage1/typescript/scanner/tokens.ts": "af3b2abb725d77aaeb469f3e695d9f29c3ffb58753695e3127bb77b05bcdb475",
+        "/workspace/cemit-cut/stage1/typescript/parser/statements.ts": "8e78404108b86707a93b17f506fc95fac334269298596a446910be3228f666ab",
+        "/workspace/cemit-cut/stage1/typescript/parser/jsx.ts": "ee008273e1a7013c9c2a49c4fbe3c98e8a5d098019e04b4b261df35e9dc2cbba",
+        "/workspace/cemit-cut/stage1/typescript/parser/grammar.ts": "12e1a80281e1a0406d2cb890cc31bce44c013029a8bc5db74fc78f104f27292a",
+        "/workspace/cemit-cut/stage1/typescript/parser/lookahead.ts": "604c76eabf9a6ae6da684bf26bd3bad4aae365027f63a399e9a813c23cb7ab4d",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/unary_minus.ts": "c493f28e51e6a48fc18e9456afbb9035bba423d589ab5ee3036ae925d0f5a82f",
+        "/workspace/cemit-cut/stage1/cohere/lint/finding.ts": "ea4fb83ce655a79ddbb47710dddad79fadd7faa572ee1ce48b3647084b14c2f6",
+        "/workspace/cemit-cut/stage1/cohere/lint/suggestions.a": "1449d82a8079e3bd38eac7ea14c7af4e93ec337f988090a9cbe5fee7c033c011",
+        "/tmp/cemit-inputs/six-nullable-default-rules.a": "023fd3c8bd007351a9e57fa59ce6288eb6157c5babb9bbd22ff45e5185fde5fa",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/diagnostic.ts": "ba44d0c3f601add63281ac4b3ea602caa7342c412bcef8734c4da6e2f4b6c0d4",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/repair.ts": "17df5033248e6d94394a5ea253edb8a4d21f66df6aa44de03fa56a4edd2eb8b9",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/suggestion.ts": "c6ebf51cd0f93f8de07d91dc42e8a3fcc5c1124ebd3daf31370f95abd755ee72",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/frames.ts": "6489fd8bdd811f066a43f25132bac10c5730b21353940b1a35ff9352f584b30b",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/facts.ts": "b97e5be01a54270f53b66130b5d0a0833254a37f653390e72056f64c450b5c0b",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/type_fact.ts": "9a6f79ad76a0575a8ebd0607f62e61ab85e611784f7eee097472ac2ca452c34d",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/types.ts": "f53f6fd8a755950515bee083b306e77b10caf495314052ed089095d2a49390ba",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/flags.ts": "7ea8236abde7f42b09d46b38c7647f2d817820651d12faf4b04944cc4717e478",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/parameters.ts": "b00901d35f0c41debebf34be3040e06eb24230d18858f5c47b13d975ab6fc8de"
+      },
+      "SourceBytes": 245598,
+      "C": {
+        "parent": {
+          "bytes": 2613581,
+          "sha256": "917c06d72581b7c6eab1e6e5cadf9ab79d3a032625fec11873968ab0831fc340"
+        },
+        "cut": {
+          "bytes": 2613581,
+          "sha256": "917c06d72581b7c6eab1e6e5cadf9ab79d3a032625fec11873968ab0831fc340"
+        }
+      }
+    },
+    {
+      "Name": "six-union-members",
+      "Path": "/tmp/cemit-inputs/six-union-members-main.a",
+      "TSGo": true,
+      "RootSHA256": "969981413fac7abc1aacc8a5fc57ac05941f555330bf0dd1a4dc75b67e455fba",
+      "SourceFiles": {
+        "/tmp/cemit-inputs/six-union-members-main.a": "969981413fac7abc1aacc8a5fc57ac05941f555330bf0dd1a4dc75b67e455fba",
+        "/workspace/cemit-cut/stage1/typescript/parser/nodes.ts": "f96c7514273ef211538681183b01c44e9f7b2dd9a047fcf89dcc669f84b8c7b6",
+        "/workspace/cemit-cut/stage1/typescript/parser/parser.ts": "2b07db49d45666aade8172270b873195059124b442cb075a4b1cfe1f3ac2b51b",
+        "/workspace/cemit-cut/stage1/typescript/scanner/scanner.ts": "5d8d2b244dc2ec61bac8626f281ac2bcc82f7301b90922084255ee4228ac8bc5",
+        "/workspace/cemit-cut/stage1/typescript/scanner/characters.ts": "58a228be5e31048f68831542d9cb9ec77874a6cf4ffe150b9c829f403e1dd671",
+        "/workspace/cemit-cut/stage1/typescript/scanner/tokens.ts": "af3b2abb725d77aaeb469f3e695d9f29c3ffb58753695e3127bb77b05bcdb475",
+        "/workspace/cemit-cut/stage1/typescript/parser/statements.ts": "8e78404108b86707a93b17f506fc95fac334269298596a446910be3228f666ab",
+        "/workspace/cemit-cut/stage1/typescript/parser/jsx.ts": "ee008273e1a7013c9c2a49c4fbe3c98e8a5d098019e04b4b261df35e9dc2cbba",
+        "/workspace/cemit-cut/stage1/typescript/parser/grammar.ts": "12e1a80281e1a0406d2cb890cc31bce44c013029a8bc5db74fc78f104f27292a",
+        "/workspace/cemit-cut/stage1/typescript/parser/lookahead.ts": "604c76eabf9a6ae6da684bf26bd3bad4aae365027f63a399e9a813c23cb7ab4d",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/unary_minus.ts": "c493f28e51e6a48fc18e9456afbb9035bba423d589ab5ee3036ae925d0f5a82f",
+        "/workspace/cemit-cut/stage1/cohere/lint/finding.ts": "ea4fb83ce655a79ddbb47710dddad79fadd7faa572ee1ce48b3647084b14c2f6",
+        "/workspace/cemit-cut/stage1/cohere/lint/suggestions.a": "1449d82a8079e3bd38eac7ea14c7af4e93ec337f988090a9cbe5fee7c033c011",
+        "/tmp/cemit-inputs/six-union-members-rules.a": "fec18ecd19beacd464a1dbbd3e0170224f90f3f2b11ad0bae54ef4da4bfb22a0",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/diagnostic.ts": "ba44d0c3f601add63281ac4b3ea602caa7342c412bcef8734c4da6e2f4b6c0d4",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/repair.ts": "17df5033248e6d94394a5ea253edb8a4d21f66df6aa44de03fa56a4edd2eb8b9",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/suggestion.ts": "c6ebf51cd0f93f8de07d91dc42e8a3fcc5c1124ebd3daf31370f95abd755ee72",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/frames.ts": "6489fd8bdd811f066a43f25132bac10c5730b21353940b1a35ff9352f584b30b",
+        "/tmp/cemit-inputs/six-union-decoder.a": "0fc01122fe0fbf7b120e59fd5bb2147150685ada41cf370237aee0efc3b25860",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/type_fact.ts": "9a6f79ad76a0575a8ebd0607f62e61ab85e611784f7eee097472ac2ca452c34d",
+        "/tmp/cemit-inputs/six-union-types.a": "e504693de0711312661c1ab3a5ecb5925a2f37705df832798ad135763fdeab56",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/flags.ts": "7ea8236abde7f42b09d46b38c7647f2d817820651d12faf4b04944cc4717e478",
+        "/tmp/cemit-inputs/six-union-parameters.a": "513580107827ab534a0ff5b3807a81bfc5ab8c821e0e20520848f022e303a2bd"
+      },
+      "SourceBytes": 245749,
+      "C": {
+        "parent": {
+          "bytes": 2613277,
+          "sha256": "332ec8ccf883c2a8621480586e7010966ece8853370d0038efee14feebc0c100"
+        },
+        "cut": {
+          "bytes": 2613277,
+          "sha256": "332ec8ccf883c2a8621480586e7010966ece8853370d0038efee14feebc0c100"
+        }
+      }
+    },
+    {
+      "Name": "six-released",
+      "Path": "/tmp/cemit-inputs/six-released.a",
+      "TSGo": true,
+      "RootSHA256": "b0549688df72b4a435805e05869b1e49c264f77855d25b7e71bfe98b138ff480",
+      "SourceFiles": {
+        "/tmp/cemit-inputs/six-released.a": "b0549688df72b4a435805e05869b1e49c264f77855d25b7e71bfe98b138ff480"
+      },
+      "SourceBytes": 273,
+      "C": {
+        "parent": {
+          "bytes": 4794,
+          "sha256": "af006a66d6e26556d1cf4a3900e890b75efe06ce3b3b1e8796155ab18630cdaa"
+        },
+        "cut": {
+          "bytes": 4794,
+          "sha256": "af006a66d6e26556d1cf4a3900e890b75efe06ce3b3b1e8796155ab18630cdaa"
+        }
+      }
+    },
+    {
+      "Name": "six-facts-cost",
+      "Path": "/workspace/cemit-cut/stage1/cohere/typeaware/testdata/fact_cost.ts",
+      "TSGo": true,
+      "RootSHA256": "f64055f9955ddf58871241c1be385f9a311ce5397aab9776ffae8be738611604",
+      "SourceFiles": {
+        "/workspace/cemit-cut/stage1/cohere/typeaware/testdata/fact_cost.ts": "f64055f9955ddf58871241c1be385f9a311ce5397aab9776ffae8be738611604"
+      },
+      "SourceBytes": 759,
+      "C": {
+        "parent": {
+          "bytes": 10143,
+          "sha256": "169661a25cdda03676316059050212c9b08408cb3ef7b71fe87650dd19a1548e"
+        },
+        "cut": {
+          "bytes": 10143,
+          "sha256": "169661a25cdda03676316059050212c9b08408cb3ef7b71fe87650dd19a1548e"
+        }
+      }
+    },
+    {
+      "Name": "typeaware-main",
+      "Path": "/workspace/cemit-cut/stage1/cohere/typeaware/main.ts",
+      "TSGo": true,
+      "RootSHA256": "afedfaff160e058a8220ca30cecedb3526f96544887e2dfcc644801ae15a439a",
+      "SourceFiles": {
+        "/workspace/cemit-cut/stage1/cohere/typeaware/main.ts": "afedfaff160e058a8220ca30cecedb3526f96544887e2dfcc644801ae15a439a",
+        "/workspace/cemit-cut/stage1/typescript/parser/nodes.ts": "f96c7514273ef211538681183b01c44e9f7b2dd9a047fcf89dcc669f84b8c7b6",
+        "/workspace/cemit-cut/stage1/typescript/parser/parser.ts": "2b07db49d45666aade8172270b873195059124b442cb075a4b1cfe1f3ac2b51b",
+        "/workspace/cemit-cut/stage1/typescript/scanner/scanner.ts": "5d8d2b244dc2ec61bac8626f281ac2bcc82f7301b90922084255ee4228ac8bc5",
+        "/workspace/cemit-cut/stage1/typescript/scanner/characters.ts": "58a228be5e31048f68831542d9cb9ec77874a6cf4ffe150b9c829f403e1dd671",
+        "/workspace/cemit-cut/stage1/typescript/scanner/tokens.ts": "af3b2abb725d77aaeb469f3e695d9f29c3ffb58753695e3127bb77b05bcdb475",
+        "/workspace/cemit-cut/stage1/typescript/parser/statements.ts": "8e78404108b86707a93b17f506fc95fac334269298596a446910be3228f666ab",
+        "/workspace/cemit-cut/stage1/typescript/parser/jsx.ts": "ee008273e1a7013c9c2a49c4fbe3c98e8a5d098019e04b4b261df35e9dc2cbba",
+        "/workspace/cemit-cut/stage1/typescript/parser/grammar.ts": "12e1a80281e1a0406d2cb890cc31bce44c013029a8bc5db74fc78f104f27292a",
+        "/workspace/cemit-cut/stage1/typescript/parser/lookahead.ts": "604c76eabf9a6ae6da684bf26bd3bad4aae365027f63a399e9a813c23cb7ab4d",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/unary_minus.ts": "c493f28e51e6a48fc18e9456afbb9035bba423d589ab5ee3036ae925d0f5a82f",
+        "/workspace/cemit-cut/stage1/cohere/lint/finding.ts": "ea4fb83ce655a79ddbb47710dddad79fadd7faa572ee1ce48b3647084b14c2f6",
+        "/workspace/cemit-cut/stage1/cohere/lint/suggestions.a": "1449d82a8079e3bd38eac7ea14c7af4e93ec337f988090a9cbe5fee7c033c011"
+      },
+      "SourceBytes": 206882,
+      "C": {
+        "parent": {
+          "bytes": 2217099,
+          "sha256": "82faf91402afca22cdfcaf3625656c231aa0d50d993fa781e21250944e65bbd3"
+        },
+        "cut": {
+          "bytes": 2217099,
+          "sha256": "82faf91402afca22cdfcaf3625656c231aa0d50d993fa781e21250944e65bbd3"
+        }
+      }
+    },
+    {
+      "Name": "typeaware-wrong-main",
+      "Path": "/tmp/cemit-inputs/typeaware-wrong-main.a",
+      "TSGo": true,
+      "RootSHA256": "9f498f8d43afcd05861175fd9240f1e403894f96ac6b9802d885c8a445c2e157",
+      "SourceFiles": {
+        "/tmp/cemit-inputs/typeaware-wrong-main.a": "9f498f8d43afcd05861175fd9240f1e403894f96ac6b9802d885c8a445c2e157",
+        "/workspace/cemit-cut/stage1/typescript/parser/nodes.ts": "f96c7514273ef211538681183b01c44e9f7b2dd9a047fcf89dcc669f84b8c7b6",
+        "/workspace/cemit-cut/stage1/typescript/parser/parser.ts": "2b07db49d45666aade8172270b873195059124b442cb075a4b1cfe1f3ac2b51b",
+        "/workspace/cemit-cut/stage1/typescript/scanner/scanner.ts": "5d8d2b244dc2ec61bac8626f281ac2bcc82f7301b90922084255ee4228ac8bc5",
+        "/workspace/cemit-cut/stage1/typescript/scanner/characters.ts": "58a228be5e31048f68831542d9cb9ec77874a6cf4ffe150b9c829f403e1dd671",
+        "/workspace/cemit-cut/stage1/typescript/scanner/tokens.ts": "af3b2abb725d77aaeb469f3e695d9f29c3ffb58753695e3127bb77b05bcdb475",
+        "/workspace/cemit-cut/stage1/typescript/parser/statements.ts": "8e78404108b86707a93b17f506fc95fac334269298596a446910be3228f666ab",
+        "/workspace/cemit-cut/stage1/typescript/parser/jsx.ts": "ee008273e1a7013c9c2a49c4fbe3c98e8a5d098019e04b4b261df35e9dc2cbba",
+        "/workspace/cemit-cut/stage1/typescript/parser/grammar.ts": "12e1a80281e1a0406d2cb890cc31bce44c013029a8bc5db74fc78f104f27292a",
+        "/workspace/cemit-cut/stage1/typescript/parser/lookahead.ts": "604c76eabf9a6ae6da684bf26bd3bad4aae365027f63a399e9a813c23cb7ab4d",
+        "/tmp/cemit-inputs/typeaware-wrong-node.a": "6d9a4c3388c62d07813cab5d1cc58f0721b92588d961b2f064a17f96bbf9768a",
+        "/workspace/cemit-cut/stage1/cohere/lint/finding.ts": "ea4fb83ce655a79ddbb47710dddad79fadd7faa572ee1ce48b3647084b14c2f6",
+        "/workspace/cemit-cut/stage1/cohere/lint/suggestions.a": "1449d82a8079e3bd38eac7ea14c7af4e93ec337f988090a9cbe5fee7c033c011"
+      },
+      "SourceBytes": 207003,
+      "C": {
+        "parent": {
+          "bytes": 2216446,
+          "sha256": "417501ba70783d15c09290cb99956276250af9956379a7036e29408ff072ff32"
+        },
+        "cut": {
+          "bytes": 2216446,
+          "sha256": "417501ba70783d15c09290cb99956276250af9956379a7036e29408ff072ff32"
+        }
+      }
+    },
+    {
+      "Name": "typeaware-released",
+      "Path": "/workspace/cemit-cut/stage1/cohere/typeaware/testdata/released.ts",
+      "TSGo": true,
+      "RootSHA256": "1c559a8cfdad180125ebb9959f616cea4a61b8c7a6faa2a64c7d8c0696cc5823",
+      "SourceFiles": {
+        "/workspace/cemit-cut/stage1/cohere/typeaware/testdata/released.ts": "1c559a8cfdad180125ebb9959f616cea4a61b8c7a6faa2a64c7d8c0696cc5823"
+      },
+      "SourceBytes": 363,
+      "C": {
+        "parent": {
+          "bytes": 5149,
+          "sha256": "975425da84887bff9856a51ece81bbd27c07df71dc44aa922afaf102187cd79f"
+        },
+        "cut": {
+          "bytes": 5149,
+          "sha256": "975425da84887bff9856a51ece81bbd27c07df71dc44aa922afaf102187cd79f"
+        }
+      }
+    },
+    {
+      "Name": "typeaware-query-cost",
+      "Path": "/workspace/cemit-cut/stage1/cohere/typeaware/testdata/query_cost.ts",
+      "TSGo": true,
+      "RootSHA256": "ced31726eaf7c211f649381a3cf55f5390318d239ed9bda0fcd68ce54940ee36",
+      "SourceFiles": {
+        "/workspace/cemit-cut/stage1/cohere/typeaware/testdata/query_cost.ts": "ced31726eaf7c211f649381a3cf55f5390318d239ed9bda0fcd68ce54940ee36"
+      },
+      "SourceBytes": 605,
+      "C": {
+        "parent": {
+          "bytes": 7402,
+          "sha256": "08d72c3d2f0703ed2495df95dee1462d77a8069a3adb320da7fcf85205f1134d"
+        },
+        "cut": {
+          "bytes": 7402,
+          "sha256": "08d72c3d2f0703ed2495df95dee1462d77a8069a3adb320da7fcf85205f1134d"
+        }
+      }
+    },
+    {
+      "Name": "typeaware-bad-kind",
+      "Path": "/tmp/cemit-inputs/typeaware-bad-kind.a",
+      "TSGo": true,
+      "RootSHA256": "4ecf8053d506df2729b20f3fa2f73f43635ab0cc331d547c0862bc6e390d63bf",
+      "SourceFiles": {
+        "/tmp/cemit-inputs/typeaware-bad-kind.a": "4ecf8053d506df2729b20f3fa2f73f43635ab0cc331d547c0862bc6e390d63bf"
+      },
+      "SourceBytes": 594,
+      "C": {
+        "parent": {
+          "bytes": 7398,
+          "sha256": "22b634917df419c83ae742d705c0fa461d19f9fe9d33f773039ee5316198615c"
+        },
+        "cut": {
+          "bytes": 7398,
+          "sha256": "22b634917df419c83ae742d705c0fa461d19f9fe9d33f773039ee5316198615c"
+        }
+      }
+    },
+    {
+      "Name": "guard-volume",
+      "Path": "/workspace/cemit-cut/stage1/cohere/typeaware/volume_suite.ts",
+      "TSGo": true,
+      "RootSHA256": "a50c650ec8c4d9bd5c0ed8e92f1b1c816c3d5e758a250f744a2d77a89e7d683e",
+      "SourceFiles": {
+        "/workspace/cemit-cut/stage1/cohere/typeaware/volume_suite.ts": "a50c650ec8c4d9bd5c0ed8e92f1b1c816c3d5e758a250f744a2d77a89e7d683e",
+        "/workspace/cemit-cut/stage1/typescript/parser/nodes.ts": "f96c7514273ef211538681183b01c44e9f7b2dd9a047fcf89dcc669f84b8c7b6",
+        "/workspace/cemit-cut/stage1/typescript/parser/parser.ts": "2b07db49d45666aade8172270b873195059124b442cb075a4b1cfe1f3ac2b51b",
+        "/workspace/cemit-cut/stage1/typescript/scanner/scanner.ts": "5d8d2b244dc2ec61bac8626f281ac2bcc82f7301b90922084255ee4228ac8bc5",
+        "/workspace/cemit-cut/stage1/typescript/scanner/characters.ts": "58a228be5e31048f68831542d9cb9ec77874a6cf4ffe150b9c829f403e1dd671",
+        "/workspace/cemit-cut/stage1/typescript/scanner/tokens.ts": "af3b2abb725d77aaeb469f3e695d9f29c3ffb58753695e3127bb77b05bcdb475",
+        "/workspace/cemit-cut/stage1/typescript/parser/statements.ts": "8e78404108b86707a93b17f506fc95fac334269298596a446910be3228f666ab",
+        "/workspace/cemit-cut/stage1/typescript/parser/jsx.ts": "ee008273e1a7013c9c2a49c4fbe3c98e8a5d098019e04b4b261df35e9dc2cbba",
+        "/workspace/cemit-cut/stage1/typescript/parser/grammar.ts": "12e1a80281e1a0406d2cb890cc31bce44c013029a8bc5db74fc78f104f27292a",
+        "/workspace/cemit-cut/stage1/typescript/parser/lookahead.ts": "604c76eabf9a6ae6da684bf26bd3bad4aae365027f63a399e9a813c23cb7ab4d",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/unary_minus.ts": "c493f28e51e6a48fc18e9456afbb9035bba423d589ab5ee3036ae925d0f5a82f",
+        "/workspace/cemit-cut/stage1/cohere/lint/finding.ts": "ea4fb83ce655a79ddbb47710dddad79fadd7faa572ee1ce48b3647084b14c2f6",
+        "/workspace/cemit-cut/stage1/cohere/lint/suggestions.a": "1449d82a8079e3bd38eac7ea14c7af4e93ec337f988090a9cbe5fee7c033c011",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/frames.ts": "6489fd8bdd811f066a43f25132bac10c5730b21353940b1a35ff9352f584b30b",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/rules.ts": "f296505dae8a0888ad44515a2c3bedc04515fa1926badbe342104b90cea0f605",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/diagnostic.ts": "ba44d0c3f601add63281ac4b3ea602caa7342c412bcef8734c4da6e2f4b6c0d4",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/repair.ts": "17df5033248e6d94394a5ea253edb8a4d21f66df6aa44de03fa56a4edd2eb8b9",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/suggestion.ts": "c6ebf51cd0f93f8de07d91dc42e8a3fcc5c1124ebd3daf31370f95abd755ee72",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/facts.ts": "b97e5be01a54270f53b66130b5d0a0833254a37f653390e72056f64c450b5c0b",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/type_fact.ts": "9a6f79ad76a0575a8ebd0607f62e61ab85e611784f7eee097472ac2ca452c34d",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/types.ts": "f53f6fd8a755950515bee083b306e77b10caf495314052ed089095d2a49390ba",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/flags.ts": "7ea8236abde7f42b09d46b38c7647f2d817820651d12faf4b04944cc4717e478",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/parameters.ts": "b00901d35f0c41debebf34be3040e06eb24230d18858f5c47b13d975ab6fc8de",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/returns.ts": "78bfe3369b9fae5ef1b05a2a816086de538952a42b68e7c3a41a8c72a49c1752",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/shadow.ts": "f1e19942910678d8efd05d8de01264d33aa7d74997c06858bffb105f16de4e20",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/binding.ts": "31b12e7b7121a9dd9ed89521554b231d3426b9ffabe8c95925c46d827661df33",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/scope.ts": "445c24409b13ec15813b539a7ee9770d217bdf452d28ce552bdeda0ab8ff5f9f",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/completion.ts": "66532c3d3791ed6308dc0fa486c31d02ff57f4b483fedb704b5131282783bda0",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/unbound.ts": "9bb552e01b46c802ffb7e1c20a7c64efd4369e0e0ee5fd963b0260e07854ffb7",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/bound.ts": "f988626d6dd0d54c2963301a4aed2919983c8fa991aa9d204c9be7110cefa90a",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/void.ts": "593ce4d84c5d385775b7d69ae5a5031074a5158a7907464786aab5d2671a7896",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/volume.ts": "102648b2d59350b48ceafaec2f99f823c155ef556154f46e5aa4c676e6f65dca",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/assignment.ts": "8f448fd87028d4638e7fe344493f169398f6d6ba6feb2b74e351685aeed29e1e"
+      },
+      "SourceBytes": 357095,
+      "C": {
+        "parent": {
+          "bytes": 3719831,
+          "sha256": "fe1f16544fd97a8b990565947c043cfa7bbb809805f10ff821847665a9a304d3"
+        },
+        "cut": {
+          "bytes": 3719831,
+          "sha256": "fe1f16544fd97a8b990565947c043cfa7bbb809805f10ff821847665a9a304d3"
+        }
+      }
+    },
+    {
+      "Name": "volume-with-program-roots",
+      "Path": "/tmp/cemit-inputs/volume-with-program-roots.a",
+      "TSGo": true,
+      "RootSHA256": "19699d8e792e188224468b5c516eacf33e077f291bdf89065b6fabf591abf921",
+      "SourceFiles": {
+        "/tmp/cemit-inputs/volume-with-program-roots.a": "19699d8e792e188224468b5c516eacf33e077f291bdf89065b6fabf591abf921",
+        "/workspace/cemit-cut/stage1/typescript/parser/nodes.ts": "f96c7514273ef211538681183b01c44e9f7b2dd9a047fcf89dcc669f84b8c7b6",
+        "/workspace/cemit-cut/stage1/typescript/parser/parser.ts": "2b07db49d45666aade8172270b873195059124b442cb075a4b1cfe1f3ac2b51b",
+        "/workspace/cemit-cut/stage1/typescript/scanner/scanner.ts": "5d8d2b244dc2ec61bac8626f281ac2bcc82f7301b90922084255ee4228ac8bc5",
+        "/workspace/cemit-cut/stage1/typescript/scanner/characters.ts": "58a228be5e31048f68831542d9cb9ec77874a6cf4ffe150b9c829f403e1dd671",
+        "/workspace/cemit-cut/stage1/typescript/scanner/tokens.ts": "af3b2abb725d77aaeb469f3e695d9f29c3ffb58753695e3127bb77b05bcdb475",
+        "/workspace/cemit-cut/stage1/typescript/parser/statements.ts": "8e78404108b86707a93b17f506fc95fac334269298596a446910be3228f666ab",
+        "/workspace/cemit-cut/stage1/typescript/parser/jsx.ts": "ee008273e1a7013c9c2a49c4fbe3c98e8a5d098019e04b4b261df35e9dc2cbba",
+        "/workspace/cemit-cut/stage1/typescript/parser/grammar.ts": "12e1a80281e1a0406d2cb890cc31bce44c013029a8bc5db74fc78f104f27292a",
+        "/workspace/cemit-cut/stage1/typescript/parser/lookahead.ts": "604c76eabf9a6ae6da684bf26bd3bad4aae365027f63a399e9a813c23cb7ab4d",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/unary_minus.ts": "c493f28e51e6a48fc18e9456afbb9035bba423d589ab5ee3036ae925d0f5a82f",
+        "/workspace/cemit-cut/stage1/cohere/lint/finding.ts": "ea4fb83ce655a79ddbb47710dddad79fadd7faa572ee1ce48b3647084b14c2f6",
+        "/workspace/cemit-cut/stage1/cohere/lint/suggestions.a": "1449d82a8079e3bd38eac7ea14c7af4e93ec337f988090a9cbe5fee7c033c011",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/frames.ts": "6489fd8bdd811f066a43f25132bac10c5730b21353940b1a35ff9352f584b30b",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/rules.ts": "f296505dae8a0888ad44515a2c3bedc04515fa1926badbe342104b90cea0f605",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/diagnostic.ts": "ba44d0c3f601add63281ac4b3ea602caa7342c412bcef8734c4da6e2f4b6c0d4",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/repair.ts": "17df5033248e6d94394a5ea253edb8a4d21f66df6aa44de03fa56a4edd2eb8b9",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/suggestion.ts": "c6ebf51cd0f93f8de07d91dc42e8a3fcc5c1124ebd3daf31370f95abd755ee72",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/facts.ts": "b97e5be01a54270f53b66130b5d0a0833254a37f653390e72056f64c450b5c0b",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/type_fact.ts": "9a6f79ad76a0575a8ebd0607f62e61ab85e611784f7eee097472ac2ca452c34d",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/types.ts": "f53f6fd8a755950515bee083b306e77b10caf495314052ed089095d2a49390ba",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/flags.ts": "7ea8236abde7f42b09d46b38c7647f2d817820651d12faf4b04944cc4717e478",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/parameters.ts": "b00901d35f0c41debebf34be3040e06eb24230d18858f5c47b13d975ab6fc8de",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/returns.ts": "78bfe3369b9fae5ef1b05a2a816086de538952a42b68e7c3a41a8c72a49c1752",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/shadow.ts": "f1e19942910678d8efd05d8de01264d33aa7d74997c06858bffb105f16de4e20",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/binding.ts": "31b12e7b7121a9dd9ed89521554b231d3426b9ffabe8c95925c46d827661df33",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/scope.ts": "445c24409b13ec15813b539a7ee9770d217bdf452d28ce552bdeda0ab8ff5f9f",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/completion.ts": "66532c3d3791ed6308dc0fa486c31d02ff57f4b483fedb704b5131282783bda0",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/unbound.ts": "9bb552e01b46c802ffb7e1c20a7c64efd4369e0e0ee5fd963b0260e07854ffb7",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/bound.ts": "f988626d6dd0d54c2963301a4aed2919983c8fa991aa9d204c9be7110cefa90a",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/void.ts": "593ce4d84c5d385775b7d69ae5a5031074a5158a7907464786aab5d2671a7896",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/volume.ts": "102648b2d59350b48ceafaec2f99f823c155ef556154f46e5aa4c676e6f65dca",
+        "/workspace/cemit-cut/stage1/cohere/typeaware/assignment.ts": "8f448fd87028d4638e7fe344493f169398f6d6ba6feb2b74e351685aeed29e1e"
+      },
+      "SourceBytes": 357738,
+      "C": {
+        "parent": {
+          "bytes": 3724673,
+          "sha256": "651d2071b7a4be78310706b9da919f45e7efd0927d23f05e0c4ab3fb00223bca"
+        },
+        "cut": {
+          "bytes": 3724673,
+          "sha256": "651d2071b7a4be78310706b9da919f45e7efd0927d23f05e0c4ab3fb00223bca"
+        }
+      }
+    },
+    {
+      "Name": "composition",
+      "Path": "/workspace/cemit-cut/stage1/cohere/css/compose_main.ts",
+      "TSGo": false,
+      "RootSHA256": "5ee888a4bb18d78e49e73932d7a34d97183d72f5627cde567d5d2fd657a5b4c5",
+      "SourceFiles": {
+        "/workspace/cemit-cut/stage1/cohere/css/compose_main.ts": "5ee888a4bb18d78e49e73932d7a34d97183d72f5627cde567d5d2fd657a5b4c5",
+        "/workspace/cemit-cut/stage1/cohere/css/compose.ts": "f0046c617aa119c73251217cb2b878567fa5ebc0e32c3510c150e4eb09e1ec8e",
+        "/workspace/cemit-cut/stage1/cohere/css/parser.ts": "7a1e0fbbdde0c0779673323e8776e8782c2b8f93fc896a98e772df304a7f1892",
+        "/workspace/cemit-cut/stage1/cohere/css/input.ts": "c9d781d5909845d6e01be840734b6cc78f5f0e8a819f2a35a949d563c1b16ad9",
+        "/workspace/cemit-cut/stage1/cohere/selector/nodes.ts": "7525942057080f382bb28681bd6fdbdeff637ee1ae0d650238b243f7952fbae9",
+        "/workspace/cemit-cut/stage1/cohere/selector/source.ts": "70c25c1c8c7152ed0fdb89bd539c2461beddc50660bd1d614e2478eaa354fef2",
+        "/workspace/cemit-cut/stage1/cohere/css/nodes.ts": "314564f54935f77e8ae68f26dc80c6815bd172bb7c897e29aea907505f376b34",
+        "/workspace/cemit-cut/stage1/cohere/css/tokenize.ts": "c680823d9578c70cf21431db075bc485389c2898fa3175dd7665df958f33a9e7",
+        "/workspace/cemit-cut/stage1/cohere/mediaquery/index.ts": "16d57675d2ec24ac5e73929247eb55cc1c80fab9a6ba13b7b9b760090420ca4b",
+        "/workspace/cemit-cut/stage1/cohere/mediaquery/nodes.ts": "7ef112165a3722bf38a18a7e034a52cb8476acd4346cc5758c89ffe75a3c7e25",
+        "/workspace/cemit-cut/stage1/cohere/mediaquery/parsers.ts": "8b32dfed9cdeb7cea08f71815655d702a99e0f9f75dad90c5ce2ba6639ebc511",
+        "/workspace/cemit-cut/stage1/cohere/mediaquery/whitespace.ts": "6acac820b4eb5a53f8c7f6b41f65f5f15c164b9df72a5ffb89c590be8331cf9e",
+        "/workspace/cemit-cut/stage1/cohere/css/tree.ts": "28f8cdd4c97b5d6403ccb5095f3774f7a489e072eb4396549a72197ec11de725",
+        "/workspace/cemit-cut/stage1/cohere/css/convert.ts": "cbc2578494c634184c5813772cfd023725d06ea00051fa9f04387cd2423fd776",
+        "/workspace/cemit-cut/stage1/cohere/values/nodes.ts": "9f0e8df2b09f1380cfb6d5930a93db5fbe0d4a82bb075157e0a6186146810999",
+        "/workspace/cemit-cut/stage1/cohere/css/parse_value.ts": "5784433cc99c25e15bc9c414a7899d5351e04ffcee0c92e879a3660107e14398",
+        "/workspace/cemit-cut/stage1/cohere/values/values.ts": "49a4e215f14c8c047c8151b6a462bcaceb70266b9db63fd48e03ac9c25d8122f",
+        "/workspace/cemit-cut/stage1/cohere/values/parser.ts": "a3539f4e9b97dec3bb85342eab39118413cfcba108884078ba867e5c9233aeb5",
+        "/workspace/cemit-cut/stage1/cohere/values/tokenize.ts": "57a1c8606f6bd4060fc37432a19736a81dae832a12f482e338ff5236af04fef1",
+        "/workspace/cemit-cut/stage1/cohere/selector/parser.ts": "de95fbd777c0d7dbdd0b64ace4885ab26b03ea1953fa11b5eb844c72eff48082",
+        "/workspace/cemit-cut/stage1/cohere/selector/tokenize.ts": "9d66216f19132cf2f4b2af005b3837de0dab95574b57d6ad356ccf7651a4c585",
+        "/workspace/cemit-cut/stage1/cohere/css/location.ts": "5c4957ed61a8711efe747d3c5d8deb33b70555d071d51589f4ec7d6bed99666b"
+      },
+      "SourceBytes": 192023,
+      "C": {
+        "parent": {
+          "bytes": 1693895,
+          "sha256": "f51dfb47181042a9f666728b4e774d81974c650bb38c932f9f7f4516e2f1db87"
+        },
+        "cut": {
+          "bytes": 1693895,
+          "sha256": "f51dfb47181042a9f666728b4e774d81974c650bb38c932f9f7f4516e2f1db87"
+        }
+      }
+    },
+    {
+      "Name": "printer",
+      "Path": "/workspace/cemit-cut/stage1/cohere/css/print_main.ts",
+      "TSGo": false,
+      "RootSHA256": "32d90c6b231316b1ae548fa7a77254329956a0f31ba9d5fe244706d57406f85b",
+      "SourceFiles": {
+        "/workspace/cemit-cut/stage1/cohere/css/print_main.ts": "32d90c6b231316b1ae548fa7a77254329956a0f31ba9d5fe244706d57406f85b",
+        "/workspace/cemit-cut/stage1/cohere/css/print.ts": "f3bbc2910a6700f4653cf6ad362030219cf6024ca6b1e02555d985e88563f892",
+        "/workspace/cemit-cut/stage1/cohere/css/tree.ts": "28f8cdd4c97b5d6403ccb5095f3774f7a489e072eb4396549a72197ec11de725",
+        "/workspace/cemit-cut/stage1/cohere/selector/nodes.ts": "7525942057080f382bb28681bd6fdbdeff637ee1ae0d650238b243f7952fbae9",
+        "/workspace/cemit-cut/stage1/cohere/selector/source.ts": "70c25c1c8c7152ed0fdb89bd539c2461beddc50660bd1d614e2478eaa354fef2",
+        "/workspace/cemit-cut/stage1/cohere/css/compose.ts": "f0046c617aa119c73251217cb2b878567fa5ebc0e32c3510c150e4eb09e1ec8e",
+        "/workspace/cemit-cut/stage1/cohere/css/parser.ts": "7a1e0fbbdde0c0779673323e8776e8782c2b8f93fc896a98e772df304a7f1892",
+        "/workspace/cemit-cut/stage1/cohere/css/input.ts": "c9d781d5909845d6e01be840734b6cc78f5f0e8a819f2a35a949d563c1b16ad9",
+        "/workspace/cemit-cut/stage1/cohere/css/nodes.ts": "314564f54935f77e8ae68f26dc80c6815bd172bb7c897e29aea907505f376b34",
+        "/workspace/cemit-cut/stage1/cohere/css/tokenize.ts": "c680823d9578c70cf21431db075bc485389c2898fa3175dd7665df958f33a9e7",
+        "/workspace/cemit-cut/stage1/cohere/mediaquery/index.ts": "16d57675d2ec24ac5e73929247eb55cc1c80fab9a6ba13b7b9b760090420ca4b",
+        "/workspace/cemit-cut/stage1/cohere/mediaquery/nodes.ts": "7ef112165a3722bf38a18a7e034a52cb8476acd4346cc5758c89ffe75a3c7e25",
+        "/workspace/cemit-cut/stage1/cohere/mediaquery/parsers.ts": "8b32dfed9cdeb7cea08f71815655d702a99e0f9f75dad90c5ce2ba6639ebc511",
+        "/workspace/cemit-cut/stage1/cohere/mediaquery/whitespace.ts": "6acac820b4eb5a53f8c7f6b41f65f5f15c164b9df72a5ffb89c590be8331cf9e",
+        "/workspace/cemit-cut/stage1/cohere/css/convert.ts": "cbc2578494c634184c5813772cfd023725d06ea00051fa9f04387cd2423fd776",
+        "/workspace/cemit-cut/stage1/cohere/values/nodes.ts": "9f0e8df2b09f1380cfb6d5930a93db5fbe0d4a82bb075157e0a6186146810999",
+        "/workspace/cemit-cut/stage1/cohere/css/parse_value.ts": "5784433cc99c25e15bc9c414a7899d5351e04ffcee0c92e879a3660107e14398",
+        "/workspace/cemit-cut/stage1/cohere/values/values.ts": "49a4e215f14c8c047c8151b6a462bcaceb70266b9db63fd48e03ac9c25d8122f",
+        "/workspace/cemit-cut/stage1/cohere/values/parser.ts": "a3539f4e9b97dec3bb85342eab39118413cfcba108884078ba867e5c9233aeb5",
+        "/workspace/cemit-cut/stage1/cohere/values/tokenize.ts": "57a1c8606f6bd4060fc37432a19736a81dae832a12f482e338ff5236af04fef1",
+        "/workspace/cemit-cut/stage1/cohere/selector/parser.ts": "de95fbd777c0d7dbdd0b64ace4885ab26b03ea1953fa11b5eb844c72eff48082",
+        "/workspace/cemit-cut/stage1/cohere/selector/tokenize.ts": "9d66216f19132cf2f4b2af005b3837de0dab95574b57d6ad356ccf7651a4c585",
+        "/workspace/cemit-cut/stage1/cohere/css/location.ts": "5c4957ed61a8711efe747d3c5d8deb33b70555d071d51589f4ec7d6bed99666b",
+        "/workspace/cemit-cut/stage1/cohere/cssstrings/strings.ts": "488f11b34facfd5ada17d9171f5ddb9c3f6e4dc2f513b180c87a24a50dd96209",
+        "/workspace/cemit-cut/stage1/cohere/cssnumbers/numbers.ts": "fabd209f1ce0913167f82b83efa145489233dad8c39d7fe45c37da0c10b63558",
+        "/workspace/cemit-cut/stage1/cohere/css/print_doc.ts": "fe7a0b0002625d35ccd4868e94d9075b8b74f7a202cd9445a2c687465699425d",
+        "/workspace/cemit-cut/stage1/cohere/css/print_width_data.ts": "2a62bee3d4b68eb3580b4fd4d0d2281774b2ae2c9bbb7b9ab8a03698d63bb30f",
+        "/workspace/cemit-cut/stage1/cohere/css/print_utilities.ts": "2421e4bd8c1570f47edd2a24b4e661c1460d57cca2cae4af6d67c6252a7e0b21"
+      },
+      "SourceBytes": 262098,
+      "C": {
+        "parent": {
+          "bytes": 2866675,
+          "sha256": "1e9c9c7700b137948873719dae0e07be21a613e5caa018e70ba9a1dc2e4bec81"
+        },
+        "cut": {
+          "bytes": 2866675,
+          "sha256": "1e9c9c7700b137948873719dae0e07be21a613e5caa018e70ba9a1dc2e4bec81"
+        }
+      }
+    },
+    {
+      "Name": "printer-semicolon",
+      "Path": "/tmp/cemit-inputs/printer-semicolon/css/print_main.a",
+      "TSGo": false,
+      "RootSHA256": "c5bdfc9132edd8bbf5ab51af1b9b03e37a42ca613a47c22794a92b8b973d8918",
+      "SourceFiles": {
+        "/tmp/cemit-inputs/printer-semicolon/css/print_main.a": "c5bdfc9132edd8bbf5ab51af1b9b03e37a42ca613a47c22794a92b8b973d8918",
+        "/tmp/cemit-inputs/printer-semicolon/css/print.a": "5f1f30b57ef9d1d8dcfe476d4a6f0f723d89db22454e93c7305a1a8eb2d96d02",
+        "/tmp/cemit-inputs/printer-semicolon/css/tree.a": "2ad76a7fa264dd6893eb3d1be99697119db5dbed4543c80c9afa939d74ac2c44",
+        "/tmp/cemit-inputs/printer-semicolon/selector/nodes.a": "7515839aa313695eb8ca03a32faaa499c5a2c49468c203dcd9c5375dc6f09f92",
+        "/tmp/cemit-inputs/printer-semicolon/selector/source.a": "70c25c1c8c7152ed0fdb89bd539c2461beddc50660bd1d614e2478eaa354fef2",
+        "/tmp/cemit-inputs/printer-semicolon/css/compose.a": "f7121e5adcc971b64412f0084cba0fc223e3d6e9599c195cd847802e375a8404",
+        "/tmp/cemit-inputs/printer-semicolon/css/parser.a": "d1a9111e7bd310dde6ae88259f07b892cd8496e587cff29580a536228f81fd49",
+        "/tmp/cemit-inputs/printer-semicolon/css/input.a": "3f567f7a5c1b129af4cb4a82d4f97d20d530b19bf4d81979b51b813c8dd41447",
+        "/tmp/cemit-inputs/printer-semicolon/css/nodes.a": "51a86d4eef790efd7f9344ced721fade8581edc954e45c2247bccf68a122b06e",
+        "/tmp/cemit-inputs/printer-semicolon/css/tokenize.a": "d6a0eb16c2462cb3d4fcc16dda9dccc446361d02c02ed1dfd2cd59c98d7fad60",
+        "/tmp/cemit-inputs/printer-semicolon/mediaquery/index.a": "9cdb51cf2cf32cf6530fdf7c88c6dae09da5be8ed1bb18894910be33c0bb180e",
+        "/tmp/cemit-inputs/printer-semicolon/mediaquery/nodes.a": "7ef112165a3722bf38a18a7e034a52cb8476acd4346cc5758c89ffe75a3c7e25",
+        "/tmp/cemit-inputs/printer-semicolon/mediaquery/parsers.a": "4a4c426ca08ad9abfe045ba01b6fa3ac818c35aebdc05a3eae6c1ed76ef43584",
+        "/tmp/cemit-inputs/printer-semicolon/mediaquery/whitespace.a": "6acac820b4eb5a53f8c7f6b41f65f5f15c164b9df72a5ffb89c590be8331cf9e",
+        "/tmp/cemit-inputs/printer-semicolon/css/convert.a": "de6e1c400c092004d7aad5401fdf9bcc59045d3035bd834014f2a7f7588422a2",
+        "/tmp/cemit-inputs/printer-semicolon/values/nodes.a": "9f0e8df2b09f1380cfb6d5930a93db5fbe0d4a82bb075157e0a6186146810999",
+        "/tmp/cemit-inputs/printer-semicolon/css/parse_value.a": "45640c2ed1bd338fa4980004e33264458db3897bd4fcdf253bd2a65f6afd882b",
+        "/tmp/cemit-inputs/printer-semicolon/values/values.a": "ef2183a6532aff0e7f1e5791e357e775ee0e117ce46d07d63d0e26871ec12f05",
+        "/tmp/cemit-inputs/printer-semicolon/values/parser.a": "bf0df7b8163c2df0ecc274d5ff5c3f7921e4b41e17057990efc5442ed1c722fe",
+        "/tmp/cemit-inputs/printer-semicolon/values/tokenize.a": "57a1c8606f6bd4060fc37432a19736a81dae832a12f482e338ff5236af04fef1",
+        "/tmp/cemit-inputs/printer-semicolon/selector/parser.a": "a685c686dcc484a2abbf040c54c9de0f33324e371d658e12f298657e0899816a",
+        "/tmp/cemit-inputs/printer-semicolon/selector/tokenize.a": "9d66216f19132cf2f4b2af005b3837de0dab95574b57d6ad356ccf7651a4c585",
+        "/tmp/cemit-inputs/printer-semicolon/css/location.a": "4150927abfd69a19d9ba9f3fce53cb4b92dcbed112c680db1655aef59f91687e",
+        "/tmp/cemit-inputs/printer-semicolon/cssstrings/strings.a": "488f11b34facfd5ada17d9171f5ddb9c3f6e4dc2f513b180c87a24a50dd96209",
+        "/tmp/cemit-inputs/printer-semicolon/cssnumbers/numbers.a": "caf034aaaa9ed9e5eabd0caccabcfc6b84976ab174dd8669097ae824e9eb4319",
+        "/tmp/cemit-inputs/printer-semicolon/css/print_doc.a": "fdac2f7834fca9822f7fdd6465910296912924bff2d634962e3b51522f0ce468",
+        "/tmp/cemit-inputs/printer-semicolon/css/print_width_data.a": "2a62bee3d4b68eb3580b4fd4d0d2281774b2ae2c9bbb7b9ab8a03698d63bb30f",
+        "/tmp/cemit-inputs/printer-semicolon/css/print_utilities.a": "994c22b27da7f62042725b74dd1d3eb9580caea847149401faf14566eb440b89"
+      },
+      "SourceBytes": 262040,
+      "C": {
+        "parent": {
+          "bytes": 2866672,
+          "sha256": "416e00dce64777b01bc341a49d5ef15989d1e749f6ddcefcd9ed55c6a9773c14"
+        },
+        "cut": {
+          "bytes": 2866672,
+          "sha256": "416e00dce64777b01bc341a49d5ef15989d1e749f6ddcefcd9ed55c6a9773c14"
+        }
+      }
+    },
+    {
+      "Name": "printer-indent",
+      "Path": "/tmp/cemit-inputs/printer-indent/css/print_main.a",
+      "TSGo": false,
+      "RootSHA256": "c5bdfc9132edd8bbf5ab51af1b9b03e37a42ca613a47c22794a92b8b973d8918",
+      "SourceFiles": {
+        "/tmp/cemit-inputs/printer-indent/css/print_main.a": "c5bdfc9132edd8bbf5ab51af1b9b03e37a42ca613a47c22794a92b8b973d8918",
+        "/tmp/cemit-inputs/printer-indent/css/print.a": "f81b2d2117e0381cddf31bcf337afd1091d9f517288532d7f65c638fc9f7d3b3",
+        "/tmp/cemit-inputs/printer-indent/css/tree.a": "2ad76a7fa264dd6893eb3d1be99697119db5dbed4543c80c9afa939d74ac2c44",
+        "/tmp/cemit-inputs/printer-indent/selector/nodes.a": "7515839aa313695eb8ca03a32faaa499c5a2c49468c203dcd9c5375dc6f09f92",
+        "/tmp/cemit-inputs/printer-indent/selector/source.a": "70c25c1c8c7152ed0fdb89bd539c2461beddc50660bd1d614e2478eaa354fef2",
+        "/tmp/cemit-inputs/printer-indent/css/compose.a": "f7121e5adcc971b64412f0084cba0fc223e3d6e9599c195cd847802e375a8404",
+        "/tmp/cemit-inputs/printer-indent/css/parser.a": "d1a9111e7bd310dde6ae88259f07b892cd8496e587cff29580a536228f81fd49",
+        "/tmp/cemit-inputs/printer-indent/css/input.a": "3f567f7a5c1b129af4cb4a82d4f97d20d530b19bf4d81979b51b813c8dd41447",
+        "/tmp/cemit-inputs/printer-indent/css/nodes.a": "51a86d4eef790efd7f9344ced721fade8581edc954e45c2247bccf68a122b06e",
+        "/tmp/cemit-inputs/printer-indent/css/tokenize.a": "d6a0eb16c2462cb3d4fcc16dda9dccc446361d02c02ed1dfd2cd59c98d7fad60",
+        "/tmp/cemit-inputs/printer-indent/mediaquery/index.a": "9cdb51cf2cf32cf6530fdf7c88c6dae09da5be8ed1bb18894910be33c0bb180e",
+        "/tmp/cemit-inputs/printer-indent/mediaquery/nodes.a": "7ef112165a3722bf38a18a7e034a52cb8476acd4346cc5758c89ffe75a3c7e25",
+        "/tmp/cemit-inputs/printer-indent/mediaquery/parsers.a": "4a4c426ca08ad9abfe045ba01b6fa3ac818c35aebdc05a3eae6c1ed76ef43584",
+        "/tmp/cemit-inputs/printer-indent/mediaquery/whitespace.a": "6acac820b4eb5a53f8c7f6b41f65f5f15c164b9df72a5ffb89c590be8331cf9e",
+        "/tmp/cemit-inputs/printer-indent/css/convert.a": "de6e1c400c092004d7aad5401fdf9bcc59045d3035bd834014f2a7f7588422a2",
+        "/tmp/cemit-inputs/printer-indent/values/nodes.a": "9f0e8df2b09f1380cfb6d5930a93db5fbe0d4a82bb075157e0a6186146810999",
+        "/tmp/cemit-inputs/printer-indent/css/parse_value.a": "45640c2ed1bd338fa4980004e33264458db3897bd4fcdf253bd2a65f6afd882b",
+        "/tmp/cemit-inputs/printer-indent/values/values.a": "ef2183a6532aff0e7f1e5791e357e775ee0e117ce46d07d63d0e26871ec12f05",
+        "/tmp/cemit-inputs/printer-indent/values/parser.a": "bf0df7b8163c2df0ecc274d5ff5c3f7921e4b41e17057990efc5442ed1c722fe",
+        "/tmp/cemit-inputs/printer-indent/values/tokenize.a": "57a1c8606f6bd4060fc37432a19736a81dae832a12f482e338ff5236af04fef1",
+        "/tmp/cemit-inputs/printer-indent/selector/parser.a": "a685c686dcc484a2abbf040c54c9de0f33324e371d658e12f298657e0899816a",
+        "/tmp/cemit-inputs/printer-indent/selector/tokenize.a": "9d66216f19132cf2f4b2af005b3837de0dab95574b57d6ad356ccf7651a4c585",
+        "/tmp/cemit-inputs/printer-indent/css/location.a": "4150927abfd69a19d9ba9f3fce53cb4b92dcbed112c680db1655aef59f91687e",
+        "/tmp/cemit-inputs/printer-indent/cssstrings/strings.a": "488f11b34facfd5ada17d9171f5ddb9c3f6e4dc2f513b180c87a24a50dd96209",
+        "/tmp/cemit-inputs/printer-indent/cssnumbers/numbers.a": "caf034aaaa9ed9e5eabd0caccabcfc6b84976ab174dd8669097ae824e9eb4319",
+        "/tmp/cemit-inputs/printer-indent/css/print_doc.a": "fdac2f7834fca9822f7fdd6465910296912924bff2d634962e3b51522f0ce468",
+        "/tmp/cemit-inputs/printer-indent/css/print_width_data.a": "2a62bee3d4b68eb3580b4fd4d0d2281774b2ae2c9bbb7b9ab8a03698d63bb30f",
+        "/tmp/cemit-inputs/printer-indent/css/print_utilities.a": "994c22b27da7f62042725b74dd1d3eb9580caea847149401faf14566eb440b89"
+      },
+      "SourceBytes": 262031,
+      "C": {
+        "parent": {
+          "bytes": 2866548,
+          "sha256": "f7abd54e73ea1fdd7301156660af02213c5eb79d93b8cd96a87ee73ac8b487c3"
+        },
+        "cut": {
+          "bytes": 2866548,
+          "sha256": "f7abd54e73ea1fdd7301156660af02213c5eb79d93b8cd96a87ee73ac8b487c3"
+        }
+      }
+    },
+    {
+      "Name": "printer-width",
+      "Path": "/tmp/cemit-inputs/printer-width/css/print_main.a",
+      "TSGo": false,
+      "RootSHA256": "c5bdfc9132edd8bbf5ab51af1b9b03e37a42ca613a47c22794a92b8b973d8918",
+      "SourceFiles": {
+        "/tmp/cemit-inputs/printer-width/css/print_main.a": "c5bdfc9132edd8bbf5ab51af1b9b03e37a42ca613a47c22794a92b8b973d8918",
+        "/tmp/cemit-inputs/printer-width/css/print.a": "6b97753a2af25ac64db68acfc93803a44179b78cd16e785362f3dca034122599",
+        "/tmp/cemit-inputs/printer-width/css/tree.a": "2ad76a7fa264dd6893eb3d1be99697119db5dbed4543c80c9afa939d74ac2c44",
+        "/tmp/cemit-inputs/printer-width/selector/nodes.a": "7515839aa313695eb8ca03a32faaa499c5a2c49468c203dcd9c5375dc6f09f92",
+        "/tmp/cemit-inputs/printer-width/selector/source.a": "70c25c1c8c7152ed0fdb89bd539c2461beddc50660bd1d614e2478eaa354fef2",
+        "/tmp/cemit-inputs/printer-width/css/compose.a": "f7121e5adcc971b64412f0084cba0fc223e3d6e9599c195cd847802e375a8404",
+        "/tmp/cemit-inputs/printer-width/css/parser.a": "d1a9111e7bd310dde6ae88259f07b892cd8496e587cff29580a536228f81fd49",
+        "/tmp/cemit-inputs/printer-width/css/input.a": "3f567f7a5c1b129af4cb4a82d4f97d20d530b19bf4d81979b51b813c8dd41447",
+        "/tmp/cemit-inputs/printer-width/css/nodes.a": "51a86d4eef790efd7f9344ced721fade8581edc954e45c2247bccf68a122b06e",
+        "/tmp/cemit-inputs/printer-width/css/tokenize.a": "d6a0eb16c2462cb3d4fcc16dda9dccc446361d02c02ed1dfd2cd59c98d7fad60",
+        "/tmp/cemit-inputs/printer-width/mediaquery/index.a": "9cdb51cf2cf32cf6530fdf7c88c6dae09da5be8ed1bb18894910be33c0bb180e",
+        "/tmp/cemit-inputs/printer-width/mediaquery/nodes.a": "7ef112165a3722bf38a18a7e034a52cb8476acd4346cc5758c89ffe75a3c7e25",
+        "/tmp/cemit-inputs/printer-width/mediaquery/parsers.a": "4a4c426ca08ad9abfe045ba01b6fa3ac818c35aebdc05a3eae6c1ed76ef43584",
+        "/tmp/cemit-inputs/printer-width/mediaquery/whitespace.a": "6acac820b4eb5a53f8c7f6b41f65f5f15c164b9df72a5ffb89c590be8331cf9e",
+        "/tmp/cemit-inputs/printer-width/css/convert.a": "de6e1c400c092004d7aad5401fdf9bcc59045d3035bd834014f2a7f7588422a2",
+        "/tmp/cemit-inputs/printer-width/values/nodes.a": "9f0e8df2b09f1380cfb6d5930a93db5fbe0d4a82bb075157e0a6186146810999",
+        "/tmp/cemit-inputs/printer-width/css/parse_value.a": "45640c2ed1bd338fa4980004e33264458db3897bd4fcdf253bd2a65f6afd882b",
+        "/tmp/cemit-inputs/printer-width/values/values.a": "ef2183a6532aff0e7f1e5791e357e775ee0e117ce46d07d63d0e26871ec12f05",
+        "/tmp/cemit-inputs/printer-width/values/parser.a": "bf0df7b8163c2df0ecc274d5ff5c3f7921e4b41e17057990efc5442ed1c722fe",
+        "/tmp/cemit-inputs/printer-width/values/tokenize.a": "57a1c8606f6bd4060fc37432a19736a81dae832a12f482e338ff5236af04fef1",
+        "/tmp/cemit-inputs/printer-width/selector/parser.a": "a685c686dcc484a2abbf040c54c9de0f33324e371d658e12f298657e0899816a",
+        "/tmp/cemit-inputs/printer-width/selector/tokenize.a": "9d66216f19132cf2f4b2af005b3837de0dab95574b57d6ad356ccf7651a4c585",
+        "/tmp/cemit-inputs/printer-width/css/location.a": "4150927abfd69a19d9ba9f3fce53cb4b92dcbed112c680db1655aef59f91687e",
+        "/tmp/cemit-inputs/printer-width/cssstrings/strings.a": "488f11b34facfd5ada17d9171f5ddb9c3f6e4dc2f513b180c87a24a50dd96209",
+        "/tmp/cemit-inputs/printer-width/cssnumbers/numbers.a": "caf034aaaa9ed9e5eabd0caccabcfc6b84976ab174dd8669097ae824e9eb4319",
+        "/tmp/cemit-inputs/printer-width/css/print_doc.a": "ac66929bbb43327cc229ed452f8d6122717ea10696b031e323f7c723c1c1eb54",
+        "/tmp/cemit-inputs/printer-width/css/print_width_data.a": "2a62bee3d4b68eb3580b4fd4d0d2281774b2ae2c9bbb7b9ab8a03698d63bb30f",
+        "/tmp/cemit-inputs/printer-width/css/print_utilities.a": "994c22b27da7f62042725b74dd1d3eb9580caea847149401faf14566eb440b89"
+      },
+      "SourceBytes": 261937,
+      "C": {
+        "parent": {
+          "bytes": 2864873,
+          "sha256": "bc201cae6ea6b624e0f8f27649919cc81025cf7c374bdf1fd9454f4471c16a8a"
+        },
+        "cut": {
+          "bytes": 2864873,
+          "sha256": "bc201cae6ea6b624e0f8f27649919cc81025cf7c374bdf1fd9454f4471c16a8a"
+        }
+      }
+    }
+  ],
+  "compiler_cut": "3fefe5b221a751faa05cf49c865270c68c54b7d5",
+  "compiler_baseline": "b3f83786a0ea00c23d47d774d3b6c98f9dd71336",
+  "actual_cut_first_parent": "1fe6d1bca473e9413d6d41651eb902e7c13090c4",
+  "cohere": "7945d102a6c18dd36adf9114a758ce646e8b2359",
+  "test_source_note": "Cut tests except TestVolumeAgreementCompiler, absent at cut: use current main volumeAgreementSource adapter on unchanged volume_suite.ts."
+}

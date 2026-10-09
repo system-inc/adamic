@@ -1,0 +1,53 @@
+package main
+
+import (
+	"context"
+	"encoding/json"
+	"fmt"
+	"github.com/system-inc/adamic/internal/load"
+	"github.com/system-inc/adamic/internal/lower"
+	"github.com/system-inc/adamic/internal/native"
+	"os"
+	"path/filepath"
+	"runtime"
+	"time"
+)
+
+type Row struct {
+	Name, Path string
+	TSGo       bool
+}
+
+func must(e error) {
+	if e != nil {
+		panic(e)
+	}
+}
+func main() {
+	b, e := os.ReadFile(os.Args[1])
+	must(e)
+	var rows []Row
+	must(json.Unmarshal(b, &rows))
+	must(os.MkdirAll(os.Args[2], 0755))
+	for _, r := range rows {
+		p, e := load.Load([]string{r.Path})
+		must(e)
+		if r.TSGo {
+			p.EnableTSGo()
+		}
+		ir, e := lower.Lower(context.Background(), p)
+		must(e)
+		start := time.Now()
+		var c string
+		if r.TSGo && os.Getenv("CEMIT_NATIVE_C") != "1" {
+			c, e = native.TSGoC(ir)
+			must(e)
+		} else {
+			c = native.C(ir)
+		}
+		secs := time.Since(start).Seconds()
+		must(os.WriteFile(filepath.Join(os.Args[2], r.Name+".c"), []byte(c), 0644))
+		fmt.Printf("%s emission=%.9f bytes=%d\n", r.Name, secs, len(c))
+		runtime.GC()
+	}
+}

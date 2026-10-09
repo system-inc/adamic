@@ -1,0 +1,146 @@
+[
+  {
+    "program": "volume-with-program-roots",
+    "side": "parent",
+    "trial": 1,
+    "native_C_seconds": 20.973451358,
+    "load_before": "4.46 3.93 2.14 3/186 8629",
+    "load_after": "4.16 3.90 2.17 2/185 8653"
+  },
+  {
+    "program": "volume-with-program-roots",
+    "side": "cut",
+    "trial": 1,
+    "native_C_seconds": 4.802841248,
+    "load_before": "4.16 3.90 2.17 2/185 8653",
+    "load_after": "3.83 3.83 2.17 2/185 8660"
+  },
+  {
+    "program": "volume-with-program-roots",
+    "side": "cut",
+    "trial": 2,
+    "native_C_seconds": 4.700500898,
+    "load_before": "3.83 3.83 2.17 2/185 8660",
+    "load_after": "3.68 3.80 2.17 2/185 8675"
+  },
+  {
+    "program": "volume-with-program-roots",
+    "side": "parent",
+    "trial": 2,
+    "native_C_seconds": 20.967974028,
+    "load_before": "3.68 3.80 2.17 2/185 8675",
+    "load_after": "3.33 3.71 2.18 2/184 8682"
+  },
+  {
+    "program": "volume-with-program-roots",
+    "side": "parent",
+    "trial": 3,
+    "native_C_seconds": 21.003356447,
+    "load_before": "3.33 3.71 2.18 2/184 8682",
+    "load_after": "2.87 3.57 2.17 2/184 8703"
+  },
+  {
+    "program": "volume-with-program-roots",
+    "side": "cut",
+    "trial": 3,
+    "native_C_seconds": 4.791678621,
+    "load_before": "2.87 3.57 2.17 2/184 8703",
+    "load_after": "2.88 3.56 2.18 2/184 8710"
+  },
+  {
+    "program": "guard-volume",
+    "side": "parent",
+    "trial": 1,
+    "native_C_seconds": 22.078681185,
+    "load_before": "2.88 3.56 2.18 2/184 8710",
+    "load_after": "3.28 3.59 2.23 1/180 8821"
+  },
+  {
+    "program": "guard-volume",
+    "side": "cut",
+    "trial": 1,
+    "native_C_seconds": 4.791200173,
+    "load_before": "3.28 3.59 2.23 1/180 8821",
+    "load_after": "3.10 3.55 2.22 1/177 8833"
+  },
+  {
+    "program": "guard-volume",
+    "side": "cut",
+    "trial": 2,
+    "native_C_seconds": 4.640543768,
+    "load_before": "3.10 3.55 2.22 1/177 8833",
+    "load_after": "2.78 3.47 2.21 1/177 8856"
+  },
+  {
+    "program": "guard-volume",
+    "side": "parent",
+    "trial": 2,
+    "native_C_seconds": 20.170921995,
+    "load_before": "2.78 3.47 2.21 1/177 8856",
+    "load_after": "2.33 3.32 2.18 1/178 8988"
+  },
+  {
+    "program": "guard-volume",
+    "side": "parent",
+    "trial": 3,
+    "native_C_seconds": 20.65809123,
+    "load_before": "2.33 3.32 2.18 1/178 8988",
+    "load_after": "1.88 3.13 2.15 1/178 9002"
+  },
+  {
+    "program": "guard-volume",
+    "side": "cut",
+    "trial": 3,
+    "native_C_seconds": 4.590266195,
+    "load_before": "1.88 3.13 2.15 1/178 9002",
+    "load_after": "1.81 3.10 2.15 1/178 9009"
+  },
+  {
+    "program": "printer",
+    "side": "parent",
+    "trial": 1,
+    "native_C_seconds": 9.739968323,
+    "load_before": "1.81 3.10 2.15 1/178 9009",
+    "load_after": "1.63 2.99 2.13 1/178 9017"
+  },
+  {
+    "program": "printer",
+    "side": "cut",
+    "trial": 1,
+    "native_C_seconds": 1.600445304,
+    "load_before": "1.63 2.99 2.13 1/178 9017",
+    "load_after": "3.18 3.29 2.23 1/178 9085"
+  },
+  {
+    "program": "printer",
+    "side": "cut",
+    "trial": 2,
+    "native_C_seconds": 1.589755094,
+    "load_before": "3.18 3.29 2.23 1/178 9085",
+    "load_after": "3.00 3.26 2.22 1/178 9093"
+  },
+  {
+    "program": "printer",
+    "side": "parent",
+    "trial": 2,
+    "native_C_seconds": 9.32409769,
+    "load_before": "3.00 3.26 2.22 1/178 9093",
+    "load_after": "2.56 3.14 2.20 1/178 9160"
+  },
+  {
+    "program": "printer",
+    "side": "parent",
+    "trial": 3,
+    "native_C_seconds": 9.20326545,
+    "load_before": "2.56 3.14 2.20 1/178 9160",
+    "load_after": "2.32 3.07 2.19 1/178 9174"
+  },
+  {
+    "program": "printer",
+    "side": "cut",
+    "trial": 3,
+    "native_C_seconds": 1.577574375,
+    "load_before": "2.32 3.07 2.19 1/178 9174",
+    "load_after": "2.21 3.04 2.18 1/178 9182"
+  }
+]
