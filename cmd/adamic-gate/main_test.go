@@ -130,6 +130,7 @@ func TestRawEvidenceKeepsSkipReasonsAndFailures(t *testing.T) {
 // A test its owner split into shards declares the count; the planner names each shard a unit, and Go runs
 // exactly the shards a pattern selects. A count that isn't a positive literal refuses, and widths grow past 999.
 func TestShardChildren(t *testing.T) {
+	t.Parallel()
 	directory := t.TempDir()
 	files := map[string]string{
 		"go.mod": "module shardprobe\n\ngo 1.27.0\n",
