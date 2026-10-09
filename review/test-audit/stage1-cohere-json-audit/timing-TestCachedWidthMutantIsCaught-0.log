@@ -1,0 +1,15 @@
+{"Time":"2026-10-09T12:04:03.194997739Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/json"}
+{"Time":"2026-10-09T12:04:03.202916874Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestCachedWidthMutantIsCaught"}
+{"Time":"2026-10-09T12:04:03.203019986Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestCachedWidthMutantIsCaught","Output":"=== RUN   TestCachedWidthMutantIsCaught\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:04:04.108386417Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestCachedWidthMutantIsCaught","Output":"    performance_test.go:35: Go cohere: === RUN   TestAdamicJSONAudit\n"}
+{"Time":"2026-10-09T12:04:04.108444613Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestCachedWidthMutantIsCaught","Output":"            adamic_json_audit_test.go:44: 1 texts in 0.000s\n"}
+{"Time":"2026-10-09T12:04:04.108447577Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestCachedWidthMutantIsCaught","Output":"        --- PASS: TestAdamicJSONAudit (0.00s)\n"}
+{"Time":"2026-10-09T12:04:04.108450692Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestCachedWidthMutantIsCaught","Output":"        PASS\n"}
+{"Time":"2026-10-09T12:04:04.108453476Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestCachedWidthMutantIsCaught","Output":"        ok  \tgithub.com/system-inc/cohere/internal/format/javascript\t0.006s\n"}
+{"Time":"2026-10-09T12:04:09.610406061Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestCachedWidthMutantIsCaught","Output":"    performance_test.go:60: native release byte comparison caught zero cached width\n"}
+{"Time":"2026-10-09T12:04:09.610463616Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestCachedWidthMutantIsCaught","Output":"    performance_test.go:60: Node byte comparison caught zero cached width\n"}
+{"Time":"2026-10-09T12:04:09.610594899Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestCachedWidthMutantIsCaught","Output":"--- PASS: TestCachedWidthMutantIsCaught (6.41s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:04:09.610627327Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestCachedWidthMutantIsCaught","Elapsed":6.41}
+{"Time":"2026-10-09T12:04:09.611188312Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:04:09.613071993Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/json\t6.418s\n"}
+{"Time":"2026-10-09T12:04:09.613091893Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/json","Elapsed":6.418}

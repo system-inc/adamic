@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T12:03:39.273447992Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/json"}
+{"Time":"2026-10-09T12:03:39.282966691Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestNativeChunkDifferenceNamesCase"}
+{"Time":"2026-10-09T12:03:39.283039078Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestNativeChunkDifferenceNamesCase","Output":"=== RUN   TestNativeChunkDifferenceNamesCase\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:03:39.283058236Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestNativeChunkDifferenceNamesCase","Output":"=== PAUSE TestNativeChunkDifferenceNamesCase\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:03:39.283060359Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestNativeChunkDifferenceNamesCase"}
+{"Time":"2026-10-09T12:03:39.283310457Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestNativeChunkDifferenceNamesCase"}
+{"Time":"2026-10-09T12:03:39.283316716Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestNativeChunkDifferenceNamesCase","Output":"=== CONT  TestNativeChunkDifferenceNamesCase\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:03:39.283357466Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestNativeChunkDifferenceNamesCase","Output":"    chunks_test.go:131: caught planted one-byte difference: fixture chunk 1 [1:2] case 0 beta.json byte 3: got \"ok\\tX\"; Go \"ok\\tb\"\n"}
+{"Time":"2026-10-09T12:03:39.283378808Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestNativeChunkDifferenceNamesCase","Output":"--- PASS: TestNativeChunkDifferenceNamesCase (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:03:39.283409132Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestNativeChunkDifferenceNamesCase","Elapsed":0}
+{"Time":"2026-10-09T12:03:39.283423183Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:03:39.283631515Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/json\t0.010s\n"}
+{"Time":"2026-10-09T12:03:39.283698904Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/json","Elapsed":0.01}

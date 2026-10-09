@@ -1,0 +1,12 @@
+{"Time":"2026-10-09T12:14:11.053715124Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/json"}
+{"Time":"2026-10-09T12:14:11.060975813Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestNativeChunkPlan"}
+{"Time":"2026-10-09T12:14:11.061078545Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestNativeChunkPlan","Output":"=== RUN   TestNativeChunkPlan\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:14:11.061119034Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestNativeChunkPlan","Output":"=== PAUSE TestNativeChunkPlan\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:14:11.061121428Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestNativeChunkPlan"}
+{"Time":"2026-10-09T12:14:11.061980814Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestNativeChunkPlan"}
+{"Time":"2026-10-09T12:14:11.06198463Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestNativeChunkPlan","Output":"=== CONT  TestNativeChunkPlan\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:14:11.061996607Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestNativeChunkPlan","Output":"--- PASS: TestNativeChunkPlan (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:14:11.062019051Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestNativeChunkPlan","Elapsed":0}
+{"Time":"2026-10-09T12:14:11.062045229Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:14:11.062315818Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/json\t0.008s\n"}
+{"Time":"2026-10-09T12:14:11.062350519Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/json","Elapsed":0.009}

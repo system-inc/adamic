@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T12:14:33.873567679Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/json"}
+{"Time":"2026-10-09T12:14:33.881462423Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestRepositoryLandingWithoutPinEdit"}
+{"Time":"2026-10-09T12:14:33.881543312Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestRepositoryLandingWithoutPinEdit","Output":"=== RUN   TestRepositoryLandingWithoutPinEdit\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:14:33.881563722Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestRepositoryLandingWithoutPinEdit","Output":"=== PAUSE TestRepositoryLandingWithoutPinEdit\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:14:33.881565865Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestRepositoryLandingWithoutPinEdit"}
+{"Time":"2026-10-09T12:14:33.881568148Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestRepositoryLandingWithoutPinEdit"}
+{"Time":"2026-10-09T12:14:33.881569781Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestRepositoryLandingWithoutPinEdit","Output":"=== CONT  TestRepositoryLandingWithoutPinEdit\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:14:33.908151376Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestRepositoryLandingWithoutPinEdit","Output":"    repository_test.go:282: landing-added.json accepted at the later scratch HEAD; repository 2 -\u003e 3; pin unchanged\n"}
+{"Time":"2026-10-09T12:14:33.908471677Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestRepositoryLandingWithoutPinEdit","Output":"--- PASS: TestRepositoryLandingWithoutPinEdit (0.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:14:33.908481842Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestRepositoryLandingWithoutPinEdit","Elapsed":0.03}
+{"Time":"2026-10-09T12:14:33.908527529Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:14:33.908713633Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/json\t0.035s\n"}
+{"Time":"2026-10-09T12:14:33.90873846Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/json","Elapsed":0.035}
