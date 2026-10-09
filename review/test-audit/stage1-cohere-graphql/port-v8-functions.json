@@ -1,0 +1,602 @@
+[
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/main.ts",
+    "function": "",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/main.ts",
+    "function": "unescapeOf",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/main.ts",
+    "function": "unescape",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/main.ts",
+    "function": "outline",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "<instance_members_initializer>",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "GraphNode",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "text",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "flag",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "child",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "list",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "field",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "isDirectiveLocation",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "getTokenKindDesc",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "getTokenDesc",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "<instance_members_initializer>",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "Parser",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "node",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "advanceLexer",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "peek",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "expectToken",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "expectOptionalToken",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "expectKeyword",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "expectOptionalKeyword",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "unexpected",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "parseName",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "parseNamedType",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "parseTypeReference",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "parseStringLiteral",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "parseVariable",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "parseValueLiteral",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "parseArguments",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "parseDirective",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "parseDirectives",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "parseConstDirectives",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "parseFragmentName",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "parseFragmentArguments",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "parseSelectionSet",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "peekDescription",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "parseDescription",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "parseVariableDefinition",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "parseVariableDefinitions",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "parseOperationType",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "parseOperationDefinition",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "parseFragmentDefinition",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "parseOperationTypeDefinition",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "parseOperationTypeDefinitions",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "parseSchemaDefinition",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "parseScalarTypeDefinition",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "delimitedNamedTypes",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "parseImplementsInterfaces",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "parseInputValueDef",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "parseInputValueDefs",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "parseFieldDefinition",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "parseFieldsDefinition",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "parseObjectTypeDefinition",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "parseInterfaceTypeDefinition",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "parseUnionMemberTypes",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "parseUnionTypeDefinition",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "parseEnumValueName",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "parseEnumValueDefinition",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "parseEnumValuesDefinition",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "parseEnumTypeDefinition",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "parseInputObjectTypeDefinition",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "parseDirectiveLocation",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "parseDirectiveDefinition",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "parseSchemaExtension",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "parseScalarTypeExtension",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "parseObjectTypeExtension",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "parseInterfaceTypeExtension",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "parseUnionTypeExtension",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "parseEnumTypeExtension",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "parseInputObjectTypeExtension",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "parseDirectiveExtension",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "parseTypeSystemExtension",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "parseDefinition",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "parseDocument",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "parseComments",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/parser.ts",
+    "function": "parse",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/lexer.ts",
+    "function": "",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/lexer.ts",
+    "function": "written",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/lexer.ts",
+    "function": "escaped",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/lexer.ts",
+    "function": "getLocation",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/lexer.ts",
+    "function": "syntaxError",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/lexer.ts",
+    "function": "isPunctuatorTokenKind",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/lexer.ts",
+    "function": "isUnicodeScalarValue",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/lexer.ts",
+    "function": "isLeadingSurrogate",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/lexer.ts",
+    "function": "isTrailingSurrogate",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/lexer.ts",
+    "function": "isSupplementaryCodePoint",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/lexer.ts",
+    "function": "printCodePointAt",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/lexer.ts",
+    "function": "readHexDigit",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/lexer.ts",
+    "function": "read16BitHexCode",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/lexer.ts",
+    "function": "readEscapedUnicodeVariableWidth",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/lexer.ts",
+    "function": "readEscapedUnicodeFixedWidth",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/lexer.ts",
+    "function": "readEscapedCharacter",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/lexer.ts",
+    "function": "createToken",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/lexer.ts",
+    "function": "readComment",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/lexer.ts",
+    "function": "readDigits",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/lexer.ts",
+    "function": "readNumber",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/lexer.ts",
+    "function": "readString",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/lexer.ts",
+    "function": "readBlockString",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/lexer.ts",
+    "function": "readName",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/lexer.ts",
+    "function": "readNextToken",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/lexer.ts",
+    "function": "<instance_members_initializer>",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/lexer.ts",
+    "function": "Lexer",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/lexer.ts",
+    "function": "lookaheadIndex",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/lexer.ts",
+    "function": "advance",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/lexer.ts",
+    "function": "lookahead",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/blockString.ts",
+    "function": "",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/blockString.ts",
+    "function": "leadingWhitespace",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/blockString.ts",
+    "function": "dedentBlockStringLines",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/characterClasses.ts",
+    "function": "",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/characterClasses.ts",
+    "function": "isWhiteSpace",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/characterClasses.ts",
+    "function": "isDigit",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/characterClasses.ts",
+    "function": "isLetter",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/characterClasses.ts",
+    "function": "isNameStart",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/characterClasses.ts",
+    "function": "isNameContinue",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/token.ts",
+    "function": "",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/token.ts",
+    "function": "<instance_members_initializer>",
+    "called": true
+  },
+  {
+    "source": "file:///tmp/adamic-gate/TestThePortParsesAsGoCohereDoes2140162357/003/token.ts",
+    "function": "Token",
+    "called": true
+  }
+]

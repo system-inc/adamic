@@ -1,0 +1,11 @@
+--- a/stage1/cohere/graphql/characterClasses.ts
++++ b/stage1/cohere/graphql/characterClasses.ts
+@@ -18,7 +18,7 @@
+ //	Digit :: one of
+ //	  - `0` `1` `2` `3` `4` `5` `6` `7` `8` `9`
+ export function isDigit(code: number): boolean {
+-	return code >= 0x0030 && code <= 0x0039;
++	return code >= 0x0030 && code <= 0x0038;
+ }
+ 
+ // isLetter is the spec's Letter.

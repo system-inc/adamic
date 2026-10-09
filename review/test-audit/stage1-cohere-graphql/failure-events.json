@@ -1,0 +1,90 @@
+{
+  "M01": [
+    {
+      "Time": "2026-10-09T12:01:40.784035253Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/graphql",
+      "Test": "TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere",
+      "Output": "    graphql_test.go:71: Node and Go cohere differ: line 266: \"error Syntax Error: Unexpected character: \\\"9\\\". (1:112)\", Go cohere \"Document[0,128]{definitions=(OperationDefinition[0,128]{operation=\\\"query\\\" description=undefined name=undefined variableDefinitions=undefined directives=undefined selectionSet=SelectionSet[0,128]{selections=(Field[2,126]{alias=undefined name=Name[2,3]{value=\\\"a\\\"} arguments=(Argument[4,9]{name=Name[4,5]{value=\\\"l\\\"} value=ListValue[7,9]{values=()}} Argument[11,16]{name=Name[11,12]{value=\\\"o\\\"} value=ObjectValue[14,16]{fields=()}} Argument[18,41]{name=Name[18,19]{value=\\\"n\\\"} value=ObjectValue[21,41]{fields=(ObjectField[22,33]{name=Name[22,23]{value=\\\"a\\\"} value=ListValue[25,33]{values=(ObjectValue[26,32]{fields=(ObjectField[27,31]{name=Name[27,28]{value=\\\"b\\\"} value=IntValue[30,31]{value=\\\"1\\\"}})})}} ObjectField[35,40]{name=Name[35,36]{value=\\\"c\\\"} value=ObjectValue[38,40]{fields=()}})}} Argument[43,55]{name=Name[43,44]{value=\\\"m\\\"} value=ListValue[46,55]{values=(ListValue[47,5",
+      "OutputType": "error"
+    },
+    {
+      "Time": "2026-10-09T12:01:40.784679241Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/graphql",
+      "Test": "TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere",
+      "Output": "    graphql_test.go:71: native and Go cohere differ: line 266: \"error Syntax Error: Unexpected character: \\\"9\\\". (1:112)\", Go cohere \"Document[0,128]{definitions=(OperationDefinition[0,128]{operation=\\\"query\\\" description=undefined name=undefined variableDefinitions=undefined directives=undefined selectionSet=SelectionSet[0,128]{selections=(Field[2,126]{alias=undefined name=Name[2,3]{value=\\\"a\\\"} arguments=(Argument[4,9]{name=Name[4,5]{value=\\\"l\\\"} value=ListValue[7,9]{values=()}} Argument[11,16]{name=Name[11,12]{value=\\\"o\\\"} value=ObjectValue[14,16]{fields=()}} Argument[18,41]{name=Name[18,19]{value=\\\"n\\\"} value=ObjectValue[21,41]{fields=(ObjectField[22,33]{name=Name[22,23]{value=\\\"a\\\"} value=ListValue[25,33]{values=(ObjectValue[26,32]{fields=(ObjectField[27,31]{name=Name[27,28]{value=\\\"b\\\"} value=IntValue[30,31]{value=\\\"1\\\"}})})}} ObjectField[35,40]{name=Name[35,36]{value=\\\"c\\\"} value=ObjectValue[38,40]{fields=()}})}} Argument[43,55]{name=Name[43,44]{value=\\\"m\\\"} value=ListValue[46,55]{values=(ListValue[47",
+      "OutputType": "error"
+    },
+    {
+      "Time": "2026-10-09T12:01:40.785302689Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/graphql",
+      "Test": "TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere",
+      "Output": "    graphql_test.go:71: the JavaScript backend and Go cohere differ: line 266: \"error Syntax Error: Unexpected character: \\\"9\\\". (1:112)\", Go cohere \"Document[0,128]{definitions=(OperationDefinition[0,128]{operation=\\\"query\\\" description=undefined name=undefined variableDefinitions=undefined directives=undefined selectionSet=SelectionSet[0,128]{selections=(Field[2,126]{alias=undefined name=Name[2,3]{value=\\\"a\\\"} arguments=(Argument[4,9]{name=Name[4,5]{value=\\\"l\\\"} value=ListValue[7,9]{values=()}} Argument[11,16]{name=Name[11,12]{value=\\\"o\\\"} value=ObjectValue[14,16]{fields=()}} Argument[18,41]{name=Name[18,19]{value=\\\"n\\\"} value=ObjectValue[21,41]{fields=(ObjectField[22,33]{name=Name[22,23]{value=\\\"a\\\"} value=ListValue[25,33]{values=(ObjectValue[26,32]{fields=(ObjectField[27,31]{name=Name[27,28]{value=\\\"b\\\"} value=IntValue[30,31]{value=\\\"1\\\"}})})}} ObjectField[35,40]{name=Name[35,36]{value=\\\"c\\\"} value=ObjectValue[38,40]{fields=()}})}} Argument[43,55]{name=Name[43,44]{value=\\\"m\\\"} value=ListValue[46,55]{valu",
+      "OutputType": "error"
+    }
+  ],
+  "M02": [
+    {
+      "Time": "2026-10-09T12:02:02.120431933Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/graphql",
+      "Test": "TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere",
+      "Output": "    graphql_test.go:71: Node and Go cohere differ: line 18: \"Document[0,142]{definitions=(OperationDefinition[0,71]{operation=\\\"query\\\" description=StringValue[0,29]{value=\\\"Plain operation description\\\" block=false} name=Name[36,37]{value=\\\"Q\\\"} variableDefinitions=(VariableDefinition[38,67]{description=StringValue[38,60]{value=\\\"variable description\\\" block=false} variable=Variable[61,63]{name=Name[62,63]{value=\\\"a\\\"}} type=NamedType[64,67]{name=Name[64,67]{value=\\\"Int\\\"}} defaultValue=undefined directives=undefined}) directives=undefined selectionSet=SelectionSet[68,71]{selections=(Field[69,70]{alias=undefined name=Name[69,70]{value=\\\"a\\\"} arguments=undefined directives=undefined selectionSet=undefined})}} FragmentDefinition[72,141]{description=StringValue[72,122]{value=\\\"Block fragment description\\\" block=true} name=Name[132,133]{value=\\\"F\\\"} variableDefinitions=undefined typeCondition=NamedType[137,138]{name=Name[137,138]{value=\\\"T\\\"}} directives=undefined selectionSet=SelectionSet[138,141]{selections=(",
+      "OutputType": "error"
+    },
+    {
+      "Time": "2026-10-09T12:02:02.121542985Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/graphql",
+      "Test": "TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere",
+      "Output": "    graphql_test.go:71: native and Go cohere differ: line 18: \"Document[0,142]{definitions=(OperationDefinition[0,71]{operation=\\\"query\\\" description=StringValue[0,29]{value=\\\"Plain operation description\\\" block=false} name=Name[36,37]{value=\\\"Q\\\"} variableDefinitions=(VariableDefinition[38,67]{description=StringValue[38,60]{value=\\\"variable description\\\" block=false} variable=Variable[61,63]{name=Name[62,63]{value=\\\"a\\\"}} type=NamedType[64,67]{name=Name[64,67]{value=\\\"Int\\\"}} defaultValue=undefined directives=undefined}) directives=undefined selectionSet=SelectionSet[68,71]{selections=(Field[69,70]{alias=undefined name=Name[69,70]{value=\\\"a\\\"} arguments=undefined directives=undefined selectionSet=undefined})}} FragmentDefinition[72,141]{description=StringValue[72,122]{value=\\\"Block fragment description\\\" block=true} name=Name[132,133]{value=\\\"F\\\"} variableDefinitions=undefined typeCondition=NamedType[137,138]{name=Name[137,138]{value=\\\"T\\\"}} directives=undefined selectionSet=SelectionSet[138,141]{selections",
+      "OutputType": "error"
+    },
+    {
+      "Time": "2026-10-09T12:02:02.122534857Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/graphql",
+      "Test": "TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere",
+      "Output": "    graphql_test.go:71: the JavaScript backend and Go cohere differ: line 18: \"Document[0,142]{definitions=(OperationDefinition[0,71]{operation=\\\"query\\\" description=StringValue[0,29]{value=\\\"Plain operation description\\\" block=false} name=Name[36,37]{value=\\\"Q\\\"} variableDefinitions=(VariableDefinition[38,67]{description=StringValue[38,60]{value=\\\"variable description\\\" block=false} variable=Variable[61,63]{name=Name[62,63]{value=\\\"a\\\"}} type=NamedType[64,67]{name=Name[64,67]{value=\\\"Int\\\"}} defaultValue=undefined directives=undefined}) directives=undefined selectionSet=SelectionSet[68,71]{selections=(Field[69,70]{alias=undefined name=Name[69,70]{value=\\\"a\\\"} arguments=undefined directives=undefined selectionSet=undefined})}} FragmentDefinition[72,141]{description=StringValue[72,122]{value=\\\"Block fragment description\\\" block=true} name=Name[132,133]{value=\\\"F\\\"} variableDefinitions=undefined typeCondition=NamedType[137,138]{name=Name[137,138]{value=\\\"T\\\"}} directives=undefined selectionSet=SelectionSet[138",
+      "OutputType": "error"
+    }
+  ],
+  "M03": [
+    {
+      "Time": "2026-10-09T12:02:25.394244951Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/graphql",
+      "Test": "TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere",
+      "Output": "    graphql_test.go:71: Node and Go cohere differ: line 4: \"Document[171,0]{definitions=(OperationDefinition[66,0]{operation=\\\"query\\\" description=undefined name=Name[13,8]{value=\\\"Named\\\"} variableDefinitions=(VariableDefinition[21,14]{description=undefined variable=Variable[17,14]{name=Name[17,15]{value=\\\"id\\\"}} type=NonNullType[21,18]{type=NamedType[20,18]{name=Name[20,18]{value=\\\"ID\\\"}}} defaultValue=undefined directives=undefined} VariableDefinition[47,22]{description=undefined variable=Variable[28,22]{name=Name[28,23]{value=\\\"first\\\"}} type=NamedType[32,29]{name=Name[32,29]{value=\\\"Int\\\"}} defaultValue=IntValue[35,33]{value=\\\"10\\\"} directives=(Directive[47,36]{name=Name[47,37]{value=\\\"deprecated\\\"} arguments=undefined})}) directives=undefined selectionSet=SelectionSet[66,48]{selections=(Field[65,49]{alias=undefined name=Name[53,49]{value=\\\"user\\\"} arguments=(Argument[60,54]{name=Name[56,54]{value=\\\"id\\\"} value=Variable[60,57]{name=Name[60,58]{value=\\\"id\\\"}}}) directives=undefined selectionSet=Selection",
+      "OutputType": "error"
+    },
+    {
+      "Time": "2026-10-09T12:02:25.396762519Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/graphql",
+      "Test": "TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere",
+      "Output": "    graphql_test.go:71: native and Go cohere differ: line 4: \"Document[171,0]{definitions=(OperationDefinition[66,0]{operation=\\\"query\\\" description=undefined name=Name[13,8]{value=\\\"Named\\\"} variableDefinitions=(VariableDefinition[21,14]{description=undefined variable=Variable[17,14]{name=Name[17,15]{value=\\\"id\\\"}} type=NonNullType[21,18]{type=NamedType[20,18]{name=Name[20,18]{value=\\\"ID\\\"}}} defaultValue=undefined directives=undefined} VariableDefinition[47,22]{description=undefined variable=Variable[28,22]{name=Name[28,23]{value=\\\"first\\\"}} type=NamedType[32,29]{name=Name[32,29]{value=\\\"Int\\\"}} defaultValue=IntValue[35,33]{value=\\\"10\\\"} directives=(Directive[47,36]{name=Name[47,37]{value=\\\"deprecated\\\"} arguments=undefined})}) directives=undefined selectionSet=SelectionSet[66,48]{selections=(Field[65,49]{alias=undefined name=Name[53,49]{value=\\\"user\\\"} arguments=(Argument[60,54]{name=Name[56,54]{value=\\\"id\\\"} value=Variable[60,57]{name=Name[60,58]{value=\\\"id\\\"}}}) directives=undefined selectionSet=Selecti",
+      "OutputType": "error"
+    },
+    {
+      "Time": "2026-10-09T12:02:25.401811604Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/graphql",
+      "Test": "TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere",
+      "Output": "    graphql_test.go:71: the JavaScript backend and Go cohere differ: line 4: \"Document[171,0]{definitions=(OperationDefinition[66,0]{operation=\\\"query\\\" description=undefined name=Name[13,8]{value=\\\"Named\\\"} variableDefinitions=(VariableDefinition[21,14]{description=undefined variable=Variable[17,14]{name=Name[17,15]{value=\\\"id\\\"}} type=NonNullType[21,18]{type=NamedType[20,18]{name=Name[20,18]{value=\\\"ID\\\"}}} defaultValue=undefined directives=undefined} VariableDefinition[47,22]{description=undefined variable=Variable[28,22]{name=Name[28,23]{value=\\\"first\\\"}} type=NamedType[32,29]{name=Name[32,29]{value=\\\"Int\\\"}} defaultValue=IntValue[35,33]{value=\\\"10\\\"} directives=(Directive[47,36]{name=Name[47,37]{value=\\\"deprecated\\\"} arguments=undefined})}) directives=undefined selectionSet=SelectionSet[66,48]{selections=(Field[65,49]{alias=undefined name=Name[53,49]{value=\\\"user\\\"} arguments=(Argument[60,54]{name=Name[56,54]{value=\\\"id\\\"} value=Variable[60,57]{name=Name[60,58]{value=\\\"id\\\"}}}) directives=undefined sele",
+      "OutputType": "error"
+    }
+  ],
+  "M04": [
+    {
+      "Time": "2026-10-09T12:02:50.801735072Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/stage1/cohere/graphql",
+      "Test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_error_made_elsewhere.ts",
+      "Output": "    gaps_test.go:58: stage 0 refuses with \"throwing a stored Error\" now, where GAPS.md records \"throwing an Error that isn't made where it's thrown or caught by the catch around it\"\n",
+      "OutputType": "error"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+--- a/internal/lower/exceptions.go
++++ b/internal/lower/exceptions.go
+@@ -53,7 +53,7 @@
+ 	isStoredError := !isNewError && !isCaught && l.isLibraryType(l.checker.GetTypeAtLocation(thrown), "Error") && madeError(thrown)
+ 	if !isNewError && !isCaught && !isStoredError {
+ 		if l.isLibraryType(l.checker.GetTypeAtLocation(thrown), "Error") {
+-			return nil, l.notYet(thrown, "throwing an Error that isn't made where it's thrown or caught by the catch around it")
++			return nil, l.notYet(thrown, "throwing a stored Error")
+ 		}
+ 		return nil, &Refused{Where: l.program.Where(thrown), What: "throwing a " + l.checker.TypeToString(l.checker.GetTypeAtLocation(thrown)), Fix: "throw an Error: throw new Error(String(value)); what a catch takes is unknown, and an Error is what it can be sure of"}
+ 	}

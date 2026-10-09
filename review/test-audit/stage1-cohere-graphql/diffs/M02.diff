@@ -1,0 +1,9 @@
+--- a/stage1/cohere/graphql/blockString.ts
++++ b/stage1/cohere/graphql/blockString.ts
+@@ -46,5 +46,5 @@
+ 		const line = lines[index] ?? '';
+ 		dedented.push(index === 0 ? line : line.slice(commonIndent));
+ 	}
+-	return dedented.slice(firstNonEmptyLine === -1 ? 0 : firstNonEmptyLine, lastNonEmptyLine + 1);
++	return dedented.slice(firstNonEmptyLine === -1 ? 0 : firstNonEmptyLine, lastNonEmptyLine);
+ }

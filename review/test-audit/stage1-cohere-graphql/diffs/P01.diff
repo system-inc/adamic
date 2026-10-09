@@ -1,0 +1,35 @@
+--- a/stage1/cohere/graphql/main.ts
++++ b/stage1/cohere/graphql/main.ts
+@@ -97,32 +97,3 @@
+ 	parts.push('}');
+ }
+ 
+-const casesPath = programArguments()[0] ?? panic('usage: main.ts <cases file>');
+-const read = readTextFile(casesPath);
+-if (read.kind === 'Error') {
+-	panic(read.message);
+-}
+-
+-let caseNumber = 0;
+-for (const line of read.text.split('\n')) {
+-	if (line === '') {
+-		continue;
+-	}
+-	if (!line.startsWith('>')) {
+-		panic(`a case that doesn't start with >: ${line}`);
+-	}
+-	console.log(`case ${caseNumber}`);
+-	caseNumber++;
+-	const result = parse(unescape(line.slice(1)));
+-	if (result.kind === 'Refused') {
+-		console.log(`error ${result.message}`);
+-		continue;
+-	}
+-	const document = result.document;
+-	const parts: string[] = [];
+-	outline(document.nodes, document.root, parts);
+-	console.log(parts.join(''));
+-	for (const comment of document.comments) {
+-		console.log(`comment Comment[${comment.start},${comment.end}]{value="${comment.value}"}`);
+-	}
+-}

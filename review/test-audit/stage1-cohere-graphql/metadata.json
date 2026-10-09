@@ -1,0 +1,12 @@
+{
+  "unit": "u096",
+  "base": "a467d1a1571c43e0f01fc4efcb43890280e4a1ac",
+  "branch": "test-audit/stage1-cohere-graphql",
+  "nproc": 5,
+  "toolchain_setup": "warm env.sh, skipped",
+  "go": "go version go1.27.1 linux/amd64",
+  "node": "v24.19.0",
+  "graphql": "17.0.2",
+  "matrix_scope": "whole package, both top-level rows",
+  "production_restored": true
+}

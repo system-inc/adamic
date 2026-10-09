@@ -1,0 +1,84 @@
+[
+  {
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes",
+    "package": "stage1/cohere/graphql",
+    "file": "stage1/cohere/graphql/gaps_test.go:28",
+    "seconds": 0.306,
+    "oracle": "Executed Node checks the fixture stdout against self-written GAPS.md strings; the closed gap compares native stdout to that string and checks leaks; the open gap checks structured NotYet and exact self-written What. M04 only proves wording, not closed-gap exception semantics.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M04"
+    ],
+    "unique_kills": [
+      "M04"
+    ],
+    "last_proven_fail": "M04: gaps_test.go:58: stage 0 refuses with \"throwing a stored Error\" now, where GAPS.md records \"throwing an Error that isn't made where it's thrown or caught by the catch around it\"",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P02"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_GRAPHQL_LIBRARY=/tmp/u096/library ADAMIC_BUILD_CACHE_DIR=/tmp/u096/cache/M04 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/graphql/ -run . > review/test-audit/stage1-cohere-graphql/logs/M04.log 2>&1\ngaps_test.go:58: stage 0 refuses with \"throwing a stored Error\" now, where GAPS.md records \"throwing an Error that isn't made where it's thrown or caught by the catch around it\"",
+    "vacuous_subcases": []
+  },
+  {
+    "test": "TestThePortParsesAsGoCohereDoes",
+    "package": "stage1/cohere/graphql",
+    "file": "stage1/cohere/graphql/graphql_test.go:52",
+    "seconds": 21.235,
+    "oracle": "Executed Go cohere compared byte for byte against the port on Node, sanitized native C, and the JavaScript backend, including AST fields, locations, comments and errors. Executed graphql-js 17.0.2 independently agrees with Go cohere. Own corpus and leak contracts are self. Embedded mutants accept any output difference, including empty output.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M01",
+      "M02",
+      "M03"
+    ],
+    "unique_kills": [
+      "M01",
+      "M02",
+      "M03"
+    ],
+    "last_proven_fail": "M03: --- FAIL: TestThePortParsesAsGoCohereDoes (1.38s)",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_GRAPHQL_LIBRARY=/tmp/u096/library ADAMIC_BUILD_CACHE_DIR=/tmp/u096/cache/M03 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/graphql/ -run . > review/test-audit/stage1-cohere-graphql/logs/M03.log 2>&1\n--- FAIL: TestThePortParsesAsGoCohereDoes (1.38s)",
+    "vacuous_subcases": [
+      "TestThePortParsesAsGoCohereDoes/catches_a_no-break_space_ignored",
+      "TestThePortParsesAsGoCohereDoes/catches_a_G_in_a_hex_escape",
+      "TestThePortParsesAsGoCohereDoes/catches_a_byte_order_mark_not_ignored",
+      "TestThePortParsesAsGoCohereDoes/catches_a_CRLF_counted_as_two_lines",
+      "TestThePortParsesAsGoCohereDoes/catches_the_unexpected_token_not_the_one_named",
+      "TestThePortParsesAsGoCohereDoes/catches_a_[_in_a_name",
+      "TestThePortParsesAsGoCohereDoes/catches_FRAGMENT_VARIABLE_DEFINITION_no_location",
+      "TestThePortParsesAsGoCohereDoes/catches_a_spread's_absent_arguments_written",
+      "TestThePortParsesAsGoCohereDoes/catches_no_directives_an_empty_list",
+      "TestThePortParsesAsGoCohereDoes/as_graphql-js",
+      "TestThePortParsesAsGoCohereDoes/catches_a_leading_zero's_error_at_the_number's_start",
+      "TestThePortParsesAsGoCohereDoes/catches_U+DFFF_no_trailing_surrogate",
+      "TestThePortParsesAsGoCohereDoes/catches_an_invalid_escape_read_as_nothing",
+      "TestThePortParsesAsGoCohereDoes/catches_a_lone_surrogate_written_as_itself",
+      "TestThePortParsesAsGoCohereDoes/catches_the_sign_bit_not_reached",
+      "TestThePortParsesAsGoCohereDoes/catches_the_first_line's_indent_common",
+      "TestThePortParsesAsGoCohereDoes/catches_an_escaped_triple_quote_keeping_its_backslash"
+    ]
+  }
+]

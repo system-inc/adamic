@@ -1,0 +1,3 @@
+package main
+import("context";"fmt";"os";"time";"github.com/system-inc/adamic/internal/load";"github.com/system-inc/adamic/internal/lower";"github.com/system-inc/adamic/internal/native")
+func main(){start:=time.Now();p,e:=load.Load([]string{os.Args[1]});if e!=nil{panic(e)};ir,e:=lower.Lower(context.Background(),p);if e!=nil{panic(e)};fmt.Printf("lower_seconds %.6f\n",time.Since(start).Seconds());start=time.Now();e=native.Build(native.C(ir),os.Args[2],native.Options{Sanitize:true});if e!=nil{panic(e)};fmt.Printf("build_seconds %.6f\n",time.Since(start).Seconds())}

@@ -1,0 +1,117 @@
+u096: stage1/cohere/graphql, starting origin/main a467d1a1571c43e0f01fc4efcb43890280e4a1ac.
+Two top-level rows verified by go test -list; no families, vanished rows, or skipped rows.
+Clean baseline 27.555 s; 5 CPUs; row medians 0.306 s and 21.235 s.
+Four full-package production mutants: both rows sacred within this matrix; no survivors.
+Both own-entry probes fail; production sources restored; evidence branch test-audit/stage1-cohere-graphql.
+
+[
+  {
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes",
+    "package": "stage1/cohere/graphql",
+    "file": "stage1/cohere/graphql/gaps_test.go:28",
+    "seconds": 0.306,
+    "oracle": "Executed Node checks the fixture stdout against self-written GAPS.md strings; the closed gap compares native stdout to that string and checks leaks; the open gap checks structured NotYet and exact self-written What. M04 only proves wording, not closed-gap exception semantics.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M04"
+    ],
+    "unique_kills": [
+      "M04"
+    ],
+    "last_proven_fail": "M04: gaps_test.go:58: stage 0 refuses with \"throwing a stored Error\" now, where GAPS.md records \"throwing an Error that isn't made where it's thrown or caught by the catch around it\"",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P02"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_GRAPHQL_LIBRARY=/tmp/u096/library ADAMIC_BUILD_CACHE_DIR=/tmp/u096/cache/M04 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/graphql/ -run . > review/test-audit/stage1-cohere-graphql/logs/M04.log 2>&1\ngaps_test.go:58: stage 0 refuses with \"throwing a stored Error\" now, where GAPS.md records \"throwing an Error that isn't made where it's thrown or caught by the catch around it\"",
+    "vacuous_subcases": []
+  },
+  {
+    "test": "TestThePortParsesAsGoCohereDoes",
+    "package": "stage1/cohere/graphql",
+    "file": "stage1/cohere/graphql/graphql_test.go:52",
+    "seconds": 21.235,
+    "oracle": "Executed Go cohere compared byte for byte against the port on Node, sanitized native C, and the JavaScript backend, including AST fields, locations, comments and errors. Executed graphql-js 17.0.2 independently agrees with Go cohere. Own corpus and leak contracts are self. Embedded mutants accept any output difference, including empty output.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M01",
+      "M02",
+      "M03"
+    ],
+    "unique_kills": [
+      "M01",
+      "M02",
+      "M03"
+    ],
+    "last_proven_fail": "M03: --- FAIL: TestThePortParsesAsGoCohereDoes (1.38s)",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_GRAPHQL_LIBRARY=/tmp/u096/library ADAMIC_BUILD_CACHE_DIR=/tmp/u096/cache/M03 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/graphql/ -run . > review/test-audit/stage1-cohere-graphql/logs/M03.log 2>&1\n--- FAIL: TestThePortParsesAsGoCohereDoes (1.38s)",
+    "vacuous_subcases": [
+      "TestThePortParsesAsGoCohereDoes/catches_a_no-break_space_ignored",
+      "TestThePortParsesAsGoCohereDoes/catches_a_G_in_a_hex_escape",
+      "TestThePortParsesAsGoCohereDoes/catches_a_byte_order_mark_not_ignored",
+      "TestThePortParsesAsGoCohereDoes/catches_a_CRLF_counted_as_two_lines",
+      "TestThePortParsesAsGoCohereDoes/catches_the_unexpected_token_not_the_one_named",
+      "TestThePortParsesAsGoCohereDoes/catches_a_[_in_a_name",
+      "TestThePortParsesAsGoCohereDoes/catches_FRAGMENT_VARIABLE_DEFINITION_no_location",
+      "TestThePortParsesAsGoCohereDoes/catches_a_spread's_absent_arguments_written",
+      "TestThePortParsesAsGoCohereDoes/catches_no_directives_an_empty_list",
+      "TestThePortParsesAsGoCohereDoes/as_graphql-js",
+      "TestThePortParsesAsGoCohereDoes/catches_a_leading_zero's_error_at_the_number's_start",
+      "TestThePortParsesAsGoCohereDoes/catches_U+DFFF_no_trailing_surrogate",
+      "TestThePortParsesAsGoCohereDoes/catches_an_invalid_escape_read_as_nothing",
+      "TestThePortParsesAsGoCohereDoes/catches_a_lone_surrogate_written_as_itself",
+      "TestThePortParsesAsGoCohereDoes/catches_the_sign_bit_not_reached",
+      "TestThePortParsesAsGoCohereDoes/catches_the_first_line's_indent_common",
+      "TestThePortParsesAsGoCohereDoes/catches_an_escaped_triple_quote_keeping_its_backslash"
+    ]
+  }
+]
+
+| id | origin/main file:line | change | failed rows |
+|---|---|---|---|
+| M01 | stage1/cohere/graphql/characterClasses.ts:21 | code <= 0x0039 -> code <= 0x0038 | TestThePortParsesAsGoCohereDoes |
+| M02 | stage1/cohere/graphql/blockString.ts:49 | lastNonEmptyLine + 1 -> lastNonEmptyLine | TestThePortParsesAsGoCohereDoes |
+| M03 | stage1/cohere/graphql/parser.ts:162 | new GraphNode(kind, startToken.start, this.lexer.lastToken.end, fields) -> new GraphNode(kind, this.lexer.lastToken.end, startToken.start, fields) | TestThePortParsesAsGoCohereDoes |
+| M04 | internal/lower/exceptions.go:56 | throwing an Error that isn't made where it's thrown or caught by the catch around it -> throwing a stored Error | TestEachGapStandsWhereGapsMdSaysItDoes |
+
+Survivors: none. W01 is witness-only, P01/P02 are probes; neither counts as production kills.
+
+Brief ambiguities, limits and costs:
+
+The two rows cover different products. The parser row tests port source; the gaps row explicitly tests Lower/native rather than the port. Mutating a gap fixture would also change Node, so it would corrupt its oracle. M04 instead changes production throw lowering. It is a diagnostic constant mutation: this gives a local unique catch but leaves the closed gap’s exception semantics untested by a production fault. The four-mutant set is small; sacred means unique in this session, not proof of correctness or repo-wide uniqueness.
+
+The switch instruction and the alternative allowing four rebuilds pull in different directions. I used four separately applied patches under the rebuild alternative. native.Build compiles the main C source for every product even if source and selector are unchanged; a source selector would not make this harness build once. Every matrix run uses an isolated ADAMIC_BUILD_CACHE_DIR. The complete package fit under 90 seconds, so no narrowing or unknown package rows was needed. The matrix runs the built-in 16 mutants too; they are test witness subcases, not 16 additional audit mutants.
+
+Empty Lower returning nil,nil panics during native emission of the closed gap. I ran each gap subcase alone: the closed one panicked and the open one failed its missing-NotYet assertion. No unseen case is credited with a kill. P01 drops the complete main execution driver and builds successfully; the main baseline rejects its empty output. All 16 built-in mutation checks still pass, and the independent graphql-js comparator passes. These are listed as vacuous_subcases, with the comparator explicitly independent of the port. Any unrelated wrong output can satisfy the embedded catch checks. W01 replaces firstDifference with an always-agree answer; all 16 embedded witnesses then fail. W01 is allowed scratch harness evidence and supports no production uniqueness verdict.
+
+The timing of a parallel top-level test’s PASS line excludes time spent before paused child tests finish, so I used the isolated package ok line consistently for row medians. Warm tools do not imply cold native performance: the measured baseline and row costs used the existing runtime library cache. Three timing runs use count=1. npm ci in stage3/api reported 390 ms; installing graphql-js 17.0.2 reported 957 ms. No fresh toolchain setup was necessary, so setup installation time was zero.
+
+The static port inventory was recorded before mutations; subsequent V8 coverage records 120 function entries, all called, and raw entries for the six source modules. Gap-only and full-package Go profiles identify actual reached Lower/native functions with positive coverage. The lists include zero-coverage candidates explicitly rather than claiming they ran. No oracle, fixture, preparation helper, or test was changed for a production mutant. The witness-only harness change was restored.
+
+Building and running: matrix command wall seconds were M01=20.268, M02=23.221, M03=23.281, M04=32.213. Native validator build seconds were M01=1.938421, M02=2.001826, M03=2.245049, M04=1.871593, using native.Options{Sanitize:true}; load/lower time is separate in each build log. These are representative standalone product rebuild times; the matrix builds 17 port variants plus the closed gap, and its wall time includes all those builds and runs. Aggregate test-binary elapsed over recorded runs: 237.844 s. Final restored package passed in 31.369 s with Lower/native coverage. No step or test binary exceeded 90 s.
+
+Not covered: repository-wide uniqueness, other Adamic packages, separate graphql/printer package, alternate seeds or generated counts, unsupported parser APIs/options, invalid UTF-8, all compiler faults, and individual timing samples for embedded subtests. The default 3000 generated texts and seed 20261005 were retained; the normal corpus has 3426 texts. No PR and no main push.
+
+Replay: diffs/M01.diff through M04.diff each apply independently to the starting origin/main. P01/P02 are empty-answer probes; W01-witness-only.diff is solely weakened-check evidence. The logs preserve complete Go JSON commands’ outputs; failure-events.json retains the full long tree differences. build.go.txt is the native validator source; copy it to build.go temporarily to replay the recorded go run commands, then remove it. runner.py and finish.py assume the audit directory and pinned graphql dependency already exist.

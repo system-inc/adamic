@@ -1,0 +1,12 @@
+from pathlib import Path
+import json, subprocess, difflib
+root=Path('/workspace/adamic'); out=root/'review/test-audit/stage1-cohere-graphql'; (out/'diffs').mkdir(exist_ok=True)
+plans=[('M01','stage1/cohere/graphql/characterClasses.ts','code <= 0x0039','code <= 0x0038','off-by-one digit upper bound'),('M02','stage1/cohere/graphql/blockString.ts','lastNonEmptyLine + 1','lastNonEmptyLine','off-by-one slice end'),('M03','stage1/cohere/graphql/parser.ts','new GraphNode(kind, startToken.start, this.lexer.lastToken.end, fields)','new GraphNode(kind, this.lexer.lastToken.end, startToken.start, fields)','swap location arguments'),('M04','internal/lower/exceptions.go',"throwing an Error that isn't made where it's thrown or caught by the catch around it",'throwing a stored Error','change diagnostic constant')]
+records=[]
+for id,file,old,new,kind in plans:
+ s=subprocess.check_output(['git','show','HEAD:'+file],cwd=root).decode(); assert s.count(old)==1
+ t=s.replace(old,new); line=s[:s.index(old)].count('\n')+1
+ diff=''.join(difflib.unified_diff(s.splitlines(True),t.splitlines(True),fromfile='a/'+file,tofile='b/'+file))
+ (out/'diffs'/f'{id}.diff').write_text(diff); records.append(dict(id=id,file=file,line=line,old=old,new=new,menu=kind))
+(out/'plan.json').write_text(json.dumps(records,indent=2)+'\n')
+(out/'PLAN.txt').write_text('Fixed before mutant runs. CODE UNDER TEST: six port .ts files for TestThePortParsesAsGoCohereDoes; Lower and native compilation for TestEachGapStandsWhereGapsMdSaysItDoes. ORACLE: executed Go cohere and graphql-js 17.0.2 for parser; executed Node plus self-written GAPS.md stdout and NotYet contracts for gaps. Port-functions.txt lists the complete candidate function inventory from the six source files, including methods. Lower-functions.txt is gap-row coverage; positive percentages identify reached Go functions, zeros are not reached. Native Build and C are also reached by the closed gap. Mutants were chosen from this inventory, spread across character recognition, string cooking, AST location construction, and throw lowering. Four production mutants, separately rebuilt because native.Build directly compiles each product and does not cache the port binary; no switch or supplemental insertion affects verdicts. Native compilation uses existing sanitized runtime flags. Empty-answer probes planned separately: drop main.ts execution driver; return nil,nil at Lower entry. Probe outcomes never contribute to production kills.\n')

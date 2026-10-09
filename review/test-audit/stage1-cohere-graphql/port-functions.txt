@@ -1,0 +1,110 @@
+stage1/cohere/graphql/characterClasses.ts:12:export function isWhiteSpace(code: number): boolean {
+stage1/cohere/graphql/characterClasses.ts:20:export function isDigit(code: number): boolean {
+stage1/cohere/graphql/characterClasses.ts:31:export function isLetter(code: number): boolean {
+stage1/cohere/graphql/characterClasses.ts:43:export function isNameStart(code: number): boolean {
+stage1/cohere/graphql/characterClasses.ts:53:export function isNameContinue(code: number): boolean {
+stage1/cohere/graphql/token.ts:59:	constructor(kind: TokenKind, start: number, end: number, line: number, column: number, value: string | undefined) {
+stage1/cohere/graphql/main.ts:21:function unescapeOf(letter: string, line: string): string {
+stage1/cohere/graphql/main.ts:40:function unescape(line: string): string {
+stage1/cohere/graphql/main.ts:58:function outline(nodes: readonly GraphNode[], index: number, parts: string[]): void {
+stage1/cohere/graphql/blockString.ts:6:function leadingWhitespace(text: string): number {
+stage1/cohere/graphql/blockString.ts:18:export function dedentBlockStringLines(lines: readonly string[]): string[] {
+stage1/cohere/graphql/lexer.ts:34:export function written(code: number): string {
+stage1/cohere/graphql/lexer.ts:49:export function escaped(text: string): string {
+stage1/cohere/graphql/lexer.ts:72:function getLocation(body: string, position: number): Location {
+stage1/cohere/graphql/lexer.ts:94:export function syntaxError(body: string, position: number, description: string): string {
+stage1/cohere/graphql/lexer.ts:99:export function isPunctuatorTokenKind(kind: TokenKind): boolean {
+stage1/cohere/graphql/lexer.ts:124:function isUnicodeScalarValue(code: number): boolean {
+stage1/cohere/graphql/lexer.ts:128:function isLeadingSurrogate(code: number): boolean {
+stage1/cohere/graphql/lexer.ts:132:function isTrailingSurrogate(code: number): boolean {
+stage1/cohere/graphql/lexer.ts:141:function isSupplementaryCodePoint(body: string, location: number): boolean {
+stage1/cohere/graphql/lexer.ts:150:function printCodePointAt(lexer: Lexer, location: number): string {
+stage1/cohere/graphql/lexer.ts:173:function readHexDigit(code: number): number {
+stage1/cohere/graphql/lexer.ts:189:function read16BitHexCode(body: string, position: number): number {
+stage1/cohere/graphql/lexer.ts:207:function readEscapedUnicodeVariableWidth(lexer: Lexer, position: number): EscapeSequence {
+stage1/cohere/graphql/lexer.ts:237:function readEscapedUnicodeFixedWidth(lexer: Lexer, position: number): EscapeSequence {
+stage1/cohere/graphql/lexer.ts:275:function readEscapedCharacter(lexer: Lexer, position: number): EscapeSequence {
+stage1/cohere/graphql/lexer.ts:300:function createToken(lexer: Lexer, kind: TokenKind, start: number, end: number, value: string | undefined): Token {
+stage1/cohere/graphql/lexer.ts:311:function readComment(lexer: Lexer, start: number): Token {
+stage1/cohere/graphql/lexer.ts:338:function readDigits(lexer: Lexer, start: number, firstCode: number): number {
+stage1/cohere/graphql/lexer.ts:378:function readNumber(lexer: Lexer, start: number, firstCode: number): Token {
+stage1/cohere/graphql/lexer.ts:451:function readString(lexer: Lexer, start: number): Token {
+stage1/cohere/graphql/lexer.ts:508:function readBlockString(lexer: Lexer, start: number): Token {
+stage1/cohere/graphql/lexer.ts:582:function readName(lexer: Lexer, start: number): Token {
+stage1/cohere/graphql/lexer.ts:603:function readNextToken(lexer: Lexer, start: number): Token {
+stage1/cohere/graphql/lexer.ts:762:	constructor(body: string) {
+stage1/cohere/graphql/lexer.ts:772:	lookaheadIndex(): number {
+stage1/cohere/graphql/lexer.ts:793:	advance(): Token {
+stage1/cohere/graphql/lexer.ts:803:	lookahead(): Token {
+stage1/cohere/graphql/parser.ts:58:	constructor(kind: string, start: number, end: number, fields: readonly Field[]) {
+stage1/cohere/graphql/parser.ts:83:function text(key: string, value: string): Field {
+stage1/cohere/graphql/parser.ts:87:function flag(key: string, value: boolean): Field {
+stage1/cohere/graphql/parser.ts:92:function child(key: string, node: number | undefined): Field {
+stage1/cohere/graphql/parser.ts:96:function list(key: string, nodes: readonly number[]): Field {
+stage1/cohere/graphql/parser.ts:100:function field(key: string, value: Value): Field {
+stage1/cohere/graphql/parser.ts:106:function isDirectiveLocation(name: string): boolean {
+stage1/cohere/graphql/parser.ts:135:function getTokenKindDesc(kind: TokenKind): string {
+stage1/cohere/graphql/parser.ts:140:function getTokenDesc(token: Token): string {
+stage1/cohere/graphql/parser.ts:151:	constructor(source: string) {
+stage1/cohere/graphql/parser.ts:161:	node(startToken: Token, kind: string, fields: readonly Field[]): number {
+stage1/cohere/graphql/parser.ts:168:	advanceLexer(): void {
+stage1/cohere/graphql/parser.ts:173:	peek(kind: TokenKind): boolean {
+stage1/cohere/graphql/parser.ts:179:	expectToken(kind: TokenKind): Token {
+stage1/cohere/graphql/parser.ts:191:	expectOptionalToken(kind: TokenKind): boolean {
+stage1/cohere/graphql/parser.ts:202:	expectKeyword(value: string): void {
+stage1/cohere/graphql/parser.ts:213:	expectOptionalKeyword(value: string): boolean {
+stage1/cohere/graphql/parser.ts:224:	unexpected(atToken: Token | undefined): string {
+stage1/cohere/graphql/parser.ts:230:	parseName(): number {
+stage1/cohere/graphql/parser.ts:238:	parseNamedType(): number {
+stage1/cohere/graphql/parser.ts:249:	parseTypeReference(): number {
+stage1/cohere/graphql/parser.ts:269:	parseStringLiteral(): number {
+stage1/cohere/graphql/parser.ts:276:	parseVariable(): number {
+stage1/cohere/graphql/parser.ts:302:	parseValueLiteral(isConst: boolean): number {
+stage1/cohere/graphql/parser.ts:379:	parseArguments(isConst: boolean): Value {
+stage1/cohere/graphql/parser.ts:397:	parseDirective(isConst: boolean): number {
+stage1/cohere/graphql/parser.ts:405:	parseDirectives(isConst: boolean): Value {
+stage1/cohere/graphql/parser.ts:416:	parseConstDirectives(): Value {
+stage1/cohere/graphql/parser.ts:423:	parseFragmentName(): number {
+stage1/cohere/graphql/parser.ts:432:	parseFragmentArguments(): Value {
+stage1/cohere/graphql/parser.ts:451:	parseSelectionSet(): number {
+stage1/cohere/graphql/parser.ts:528:	peekDescription(): boolean {
+stage1/cohere/graphql/parser.ts:533:	parseDescription(): number | undefined {
+stage1/cohere/graphql/parser.ts:541:	parseVariableDefinition(): number {
+stage1/cohere/graphql/parser.ts:558:	parseVariableDefinitions(): Value {
+stage1/cohere/graphql/parser.ts:571:	parseOperationType(): string {
+stage1/cohere/graphql/parser.ts:590:	parseOperationDefinition(): number {
+stage1/cohere/graphql/parser.ts:623:	parseFragmentDefinition(): number {
+stage1/cohere/graphql/parser.ts:643:	parseOperationTypeDefinition(): number {
+stage1/cohere/graphql/parser.ts:653:	parseOperationTypeDefinitions(required: boolean): Value {
+stage1/cohere/graphql/parser.ts:669:	parseSchemaDefinition(): number {
+stage1/cohere/graphql/parser.ts:679:	parseScalarTypeDefinition(): number {
+stage1/cohere/graphql/parser.ts:691:	delimitedNamedTypes(delimiterKind: TokenKind): Value {
+stage1/cohere/graphql/parser.ts:706:	parseImplementsInterfaces(): Value {
+stage1/cohere/graphql/parser.ts:717:	parseInputValueDef(): number {
+stage1/cohere/graphql/parser.ts:737:	parseInputValueDefs(openKind: TokenKind, closeKind: TokenKind): Value {
+stage1/cohere/graphql/parser.ts:752:	parseFieldDefinition(): number {
+stage1/cohere/graphql/parser.ts:772:	parseFieldsDefinition(): Value {
+stage1/cohere/graphql/parser.ts:789:	parseObjectTypeDefinition(): number {
+stage1/cohere/graphql/parser.ts:810:	parseInterfaceTypeDefinition(): number {
+stage1/cohere/graphql/parser.ts:832:	parseUnionMemberTypes(): Value {
+stage1/cohere/graphql/parser.ts:843:	parseUnionTypeDefinition(): number {
+stage1/cohere/graphql/parser.ts:854:	parseEnumValueName(): number {
+stage1/cohere/graphql/parser.ts:865:	parseEnumValueDefinition(): number {
+stage1/cohere/graphql/parser.ts:876:	parseEnumValuesDefinition(): Value {
+stage1/cohere/graphql/parser.ts:892:	parseEnumTypeDefinition(): number {
+stage1/cohere/graphql/parser.ts:906:	parseInputObjectTypeDefinition(): number {
+stage1/cohere/graphql/parser.ts:924:	parseDirectiveLocation(): number {
+stage1/cohere/graphql/parser.ts:939:	parseDirectiveDefinition(): number {
+stage1/cohere/graphql/parser.ts:969:	parseSchemaExtension(): number {
+stage1/cohere/graphql/parser.ts:985:	parseScalarTypeExtension(): number {
+stage1/cohere/graphql/parser.ts:1003:	parseObjectTypeExtension(): number {
+stage1/cohere/graphql/parser.ts:1023:	parseInterfaceTypeExtension(): number {
+stage1/cohere/graphql/parser.ts:1042:	parseUnionTypeExtension(): number {
+stage1/cohere/graphql/parser.ts:1060:	parseEnumTypeExtension(): number {
+stage1/cohere/graphql/parser.ts:1078:	parseInputObjectTypeExtension(): number {
+stage1/cohere/graphql/parser.ts:1091:	parseDirectiveExtension(): number {
+stage1/cohere/graphql/parser.ts:1118:	parseTypeSystemExtension(): number {
+stage1/cohere/graphql/parser.ts:1168:	parseDefinition(): number {
+stage1/cohere/graphql/parser.ts:1225:	parseDocument(): number {
+stage1/cohere/graphql/parser.ts:1239:function parseComments(lexer: Lexer, startIndex: number, endIndex: number): Comment[] {
+stage1/cohere/graphql/parser.ts:1257:export function parse(source: string): ParseResult {

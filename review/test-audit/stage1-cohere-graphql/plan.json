@@ -1,0 +1,34 @@
+[
+  {
+    "id": "M01",
+    "file": "stage1/cohere/graphql/characterClasses.ts",
+    "line": 21,
+    "old": "code <= 0x0039",
+    "new": "code <= 0x0038",
+    "menu": "off-by-one digit upper bound"
+  },
+  {
+    "id": "M02",
+    "file": "stage1/cohere/graphql/blockString.ts",
+    "line": 49,
+    "old": "lastNonEmptyLine + 1",
+    "new": "lastNonEmptyLine",
+    "menu": "off-by-one slice end"
+  },
+  {
+    "id": "M03",
+    "file": "stage1/cohere/graphql/parser.ts",
+    "line": 162,
+    "old": "new GraphNode(kind, startToken.start, this.lexer.lastToken.end, fields)",
+    "new": "new GraphNode(kind, this.lexer.lastToken.end, startToken.start, fields)",
+    "menu": "swap location arguments"
+  },
+  {
+    "id": "M04",
+    "file": "internal/lower/exceptions.go",
+    "line": 56,
+    "old": "throwing an Error that isn't made where it's thrown or caught by the catch around it",
+    "new": "throwing a stored Error",
+    "menu": "change diagnostic constant"
+  }
+]
