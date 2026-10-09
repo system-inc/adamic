@@ -97,12 +97,18 @@ func TestEveryInputChangesTheKey(t *testing.T) {
 	})
 	t.Run("outside the repository", func(t *testing.T) {
 		t.Parallel()
-		root := repository(t)
-		for _, name := range []string{"/etc/hosts", "../escape"} {
+		// Both outside files exist, so only the containment check can refuse them: a missing file's error must
+		// not stand in for it (#z5b8yvs, the test audit's M08).
+		parent := t.TempDir()
+		root := filepath.Join(parent, "repository")
+		write(t, root, "source/a.c", "int a;\n")
+		write(t, parent, "escape", "outside\n")
+		for _, name := range []string{filepath.Join(parent, "escape"), "../escape"} {
 			in := base
 			in.Files = []string{name}
-			if _, err := Key(root, in); err == nil {
-				t.Fatalf("input %s was accepted", name)
+			_, err := Key(root, in)
+			if err == nil || !strings.Contains(err.Error(), "must be inside the repository") {
+				t.Fatalf("input %s: want the containment refusal, got %v", name, err)
 			}
 		}
 	})
