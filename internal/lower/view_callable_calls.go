@@ -27,6 +27,27 @@ func (l *lowering) viewCallableValueDomain(node *ast.Node, target *checker.Type,
 	}
 	flags := target.Flags()
 	switch {
+	case l.callableViewContract(target) && flags&checker.TypeFlagsUnion == 0:
+		signatures := l.checker.GetSignaturesOfType(target, checker.SignatureKindCall)
+		if len(signatures) != 1 || len(l.checker.GetSignaturesOfType(target, checker.SignatureKindConstruct)) != 0 {
+			return 0
+		}
+		signature := signatures[0]
+		if len(signature.TypeParameters()) != 0 || signature.HasRestParameter() || predicateOfSignature(l.checker, signature) != nil || signature.ThisParameter() != nil {
+			return 0
+		}
+		c.Kind, c.Of, c.CallableTypeID = ir.ViewCallable, ir.Closure, int(target.Id())
+		for _, parameter := range signature.Parameters() {
+			id := l.viewCallableValueDomain(node, l.checker.GetTypeOfSymbol(parameter), active)
+			if id == 0 {
+				return 0
+			}
+			c.Parameters = append(c.Parameters, id)
+		}
+		c.Result = l.viewCallableValueDomain(node, l.checker.GetReturnTypeOfSignature(signature), active)
+		if c.Result == 0 {
+			return 0
+		}
 	case flags&(checker.TypeFlagsUnknown|checker.TypeFlagsNonPrimitive) != 0:
 		c.Kind, c.Of = ir.ViewUnknown, ir.Union
 	case flags&(checker.TypeFlagsUndefined|checker.TypeFlagsVoid) != 0:
@@ -36,6 +57,9 @@ func (l *lowering) viewCallableValueDomain(node *ast.Node, target *checker.Type,
 	case flags&checker.TypeFlagsUnion != 0:
 		c.Kind = ir.ViewUnion
 		for _, child := range target.Types() {
+			if l.callableViewContract(child) {
+				return 0
+			}
 			id := l.viewCallableValueDomain(node, child, active)
 			if id == 0 {
 				return 0
@@ -54,6 +78,9 @@ func (l *lowering) viewCallableValueDomain(node *ast.Node, target *checker.Type,
 		case ir.Object:
 			c.Kind = ir.ViewObject
 			for _, field := range l.checker.GetPropertiesOfType(target) {
+				if l.callableViewContract(l.checker.GetTypeOfSymbol(field)) {
+					return 0
+				}
 				id := l.viewCallableValueDomain(node, l.checker.GetTypeOfSymbol(field), active)
 				if id == 0 {
 					return 0
@@ -62,7 +89,7 @@ func (l *lowering) viewCallableValueDomain(node *ast.Node, target *checker.Type,
 			}
 		case ir.Array:
 			element := l.viewArrayElementType(target)
-			if element == nil {
+			if element == nil || l.callableViewContract(element) {
 				return 0
 			}
 			c.Kind, c.Element = ir.ViewArray, l.viewCallableValueDomain(node, element, active)
@@ -78,6 +105,14 @@ func (l *lowering) viewCallableValueDomain(node *ast.Node, target *checker.Type,
 }
 
 func (l *lowering) viewCallableCallContract(node *ast.Node, signatures []*checker.Signature) ir.ViewContractID {
+	// A callback whose callable witness is erased cannot enter the adapter cache
+	// as a bare constructor identity or an uncheckable generic function value.
+	for _, argument := range node.AsCallExpression().Arguments.Nodes {
+		actual := l.concrete(l.checker.GetTypeAtLocation(argument))
+		if l.callableViewContract(actual) && l.viewCallableValueContract(argument, actual) == 0 {
+			return 0
+		}
+	}
 	if len(signatures) == 0 {
 		signatures = l.checker.GetSignaturesOfType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(node.AsCallExpression().Expression)), checker.SignatureKindCall)
 	}

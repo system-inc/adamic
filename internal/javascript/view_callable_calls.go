@@ -11,6 +11,8 @@ func (e *emitter) viewCallableDomain(id ir.ViewContractID, value string) string 
 	c := e.program.ViewContracts[id-1]
 	result := "false"
 	switch c.Kind {
+	case ir.ViewCallable:
+		result = "adamicTypeOf(" + value + ") === 'function'"
 	case ir.ViewUnknown:
 		if c.Name == "unknown" && c.Of == ir.Union {
 			result = "true"
@@ -118,14 +120,20 @@ func (e *emitter) viewCallableInvoke(call ir.CallClosure, p ir.Property) string 
 			b.WriteString("return undefined; }\n")
 			continue
 		}
-		invocation := "adamicCall(value, arguments_)"
+		b.WriteString("const adapted = arguments_.slice();\n")
+		for i, id := range f.CallableParameters {
+			if e.program.ViewContracts[id-1].Kind == ir.ViewCallable {
+				fmt.Fprintf(&b, "adapted[%d]=%s;\n", i, e.viewCallableCallbackAdapter(id, fmt.Sprintf("arguments_[%d]", i), p, call.CallWhere))
+			}
+		}
+		invocation := "adamicCall(value, adapted)"
 		if f.Receiver {
-			invocation = "adamicCall(value, [object, ...arguments_])"
+			invocation = "adamicCall(value, [object, ...adapted])"
 		}
 		if method {
-			invocation = "code(object, ...arguments_)"
+			invocation = "code(object, ...adapted)"
 			if f.ArgumentsCount != 0 {
-				invocation = "adamicDirect(code, [object, ...arguments_])"
+				invocation = "adamicDirect(code, [object, ...adapted])"
 			}
 		}
 		fmt.Fprintf(&b, "const result = %s;\n", invocation)
@@ -133,7 +141,11 @@ func (e *emitter) viewCallableInvoke(call ir.CallClosure, p ir.Property) string 
 			message := fmt.Sprintf("callable call failed: %s at %s result expected view %s, producer %s", p.View, call.CallWhere, e.program.ViewContracts[target.Result-1].Name, f.CallableResultName)
 			fmt.Fprintf(&b, "if (!%s) panic(%s);\n", e.viewCallableDomain(target.Result, "result"), messageValue(message))
 		}
-		b.WriteString("return result; }\n")
+		if e.program.ViewContracts[target.Result-1].Kind == ir.ViewCallable && call.Returns == ir.Closure {
+			fmt.Fprintf(&b, "return %s; }\n", e.viewCallableCallbackAdapter(target.Result, "result", p, call.CallWhere))
+		} else {
+			b.WriteString("return result; }\n")
+		}
 	}
 	b.WriteString("panic(" + messageValue("callable call failed: "+p.View+" at "+call.CallWhere+" has no checkable producer signature") + "); })")
 	return b.String()

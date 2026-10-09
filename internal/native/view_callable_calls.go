@@ -17,6 +17,8 @@ func (e *emitter) viewCallableDomain(id ir.ViewContractID) string {
 		b.WriteString("if (value.kind == adamic_view_union_undefined) return true;\n")
 	}
 	switch c.Kind {
+	case ir.ViewCallable:
+		b.WriteString("return value.kind == adamic_view_union_function;\n")
 	case ir.ViewUnknown:
 		if c.Name == "unknown" && c.Of == ir.Union {
 			b.WriteString("return true;\n")
@@ -262,6 +264,9 @@ func (e *emitter) directViewCallableInvoke(call ir.CallClosure, property ir.Prop
 			}
 			to := e.program.Locals[f.Parameters[i+receiverParameter]].Type
 			value, fresh := viewCallableConverted(from, to, slot, snapshot)
+			if e.program.ViewContracts[id-1].Kind == ir.ViewCallable && from == ir.Closure && to == ir.Closure {
+				value, fresh = e.viewCallableCallbackAdapter(id, value, property, call.CallWhere), true
+			}
 			fmt.Fprintf(&b, "adapted[%d].%s=%s;\n", i+offset, member(to), value)
 			if fresh {
 				releases = append(releases, fmt.Sprintf("adamic_release(adapted[%d].reference);\n", i+offset))
@@ -303,6 +308,12 @@ func (e *emitter) directViewCallableInvoke(call ir.CallClosure, property ir.Prop
 			message := fmt.Sprintf("callable call failed: %s at %s result expected view %s, producer %s", property.View, call.CallWhere, e.program.ViewContracts[target.Result-1].Name, f.CallableResultName)
 			fmt.Fprintf(&b, "if (!%s(returned)) %s;\n", resultCheck, panicCall(message))
 			value, _ := viewCallableConverted(f.Returns, call.Returns, "result", "returned")
+			if e.program.ViewContracts[target.Result-1].Kind == ir.ViewCallable && call.Returns == ir.Closure {
+				value = e.viewCallableCallbackAdapter(target.Result, value, property, call.CallWhere)
+				fmt.Fprintf(&b, "adamic_closure *checked_result=%s;\n", value)
+				b.WriteString("adamic_release(result.reference);\n")
+				value = "checked_result"
+			}
 			fmt.Fprintf(&b, "adamic_value converted_result={.%s=%s};\n", member(call.Returns), value)
 			if f.Returns.IsReference() && !call.Returns.IsReference() {
 				b.WriteString("adamic_release(result.reference);\n")

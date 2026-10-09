@@ -69,6 +69,9 @@ func (l *lowering) recordViewCallableRepresentations(index int, function *ir.Fun
 }
 
 func (l *lowering) viewCallableBoxedRepresentation(proven *checker.Type) bool {
+	if l.callableViewContract(proven) {
+		return l.viewCallableValueContract(nil, proven) != 0
+	}
 	of, known := l.representation(proven)
 	if !known {
 		return false

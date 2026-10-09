@@ -57,6 +57,9 @@ func (l *lowering) prepareViewCallableProperty(node *ast.Node, declared *checker
 		return
 	}
 	l.prepareViewCallableEscape(node, declared, property)
+	if l.viewCallableHasCallback(declared) {
+		l.result.ViewAdapters = true
+	}
 	if l.viewCallableMarkerType(declared) {
 		property.ViewContract = l.viewCallableMarkerContract(l.checker.GetNonNullableType(declared))
 		return
