@@ -18,6 +18,8 @@ func init() {
 		path            string
 		lowers, checked bool
 	}{
+		{"internal/oracle/testdata/optional_field_checked_view_string_self.a", true, false},
+		{"internal/oracle/testdata/optional_field_checked_view_string_undefined.a", true, false},
 		{"internal/oracle/testdata/optional_field_checked_view_pending.a", true, false},
 		{"internal/oracle/testdata/optional_field_checked_view.a", true, false},
 		{"internal/oracle/testdata/optional_field_checked_view_enumeration.a", true, false},
@@ -268,4 +270,72 @@ func TestOptionalFieldCheckedViewCatchesMissingBoxing(t *testing.T) {
 		"if (incoming == 1) value.reference = NULL;",
 		"    adamicWriteField(object, name, value);\n};",
 		"    adamicWriteField(object, name, actual === 10 ? undefined : value);\n};", false)
+}
+
+func TestOptionalFieldCheckedViewStringUndefinedMutant(t *testing.T) {
+	t.Parallel()
+	optionalViewRuntimeMutant(t, "optional_field_checked_view_string_undefined",
+		"(actual == 3 && incoming == 13) || ", "",
+		"actual === 3 && incoming === 13 || ", "", false)
+}
+
+func TestOptionalFieldCheckedViewStringSelf(t *testing.T) {
+	t.Parallel()
+	path, _ := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/optional_field_checked_view_string_self.a"))
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	truth := onNode(t, path)
+	if truth.exitCode != 0 || string(truth.stdout) != "ownedowned\ntrue\n" {
+		t.Fatalf("Node: %+v", truth)
+	}
+	got, _ := nativelyUncached(t, program)
+	for _, result := range []run{got, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+		if difference := disagreement(truth, result); difference != "" {
+			t.Fatalf("%s: exit %d stderr %s", difference, result.exitCode, result.stderr)
+		}
+	}
+	// The checked read must see exactly the slot's one owned reference before retaining it.
+	code := native.C(program)
+	from := "adamic_object_optional_view("
+	if strings.Count(code, from) == 0 {
+		t.Fatal("checked read absent")
+	}
+	helper := `
+#include "adamic.h"
+#include <stdlib.h>
+static adamic_value ownership_optional_view(const adamic_object *object, const char *name, adamic_slot_cache *cache, unsigned char wanted, const char *type, const char *expression) {
+ adamic_value value = adamic_object_optional_view(object, name, cache, wanted, type, expression);
+ if (value.reference != NULL && ((adamic_heap *)value.reference)->references != 1) abort();
+ return value;
+}
+`
+	binary := filepath.Join(t.TempDir(), "one-owner")
+	if err := native.Build(helper+strings.ReplaceAll(code, from, "ownership_optional_view("), binary, native.Options{Sanitize: true}); err != nil {
+		t.Fatal(err)
+	}
+	if difference := disagreement(truth, execute(t, binary)); difference != "" {
+		t.Fatal(difference)
+	}
+	t.Log("checked string reads see one owner before retaining, including self-assignment")
+	// Omitting the caller's retained read violates the borrowed-read/given-store contract.
+	store := regexp.MustCompile(`adamic_object_view_store\([^\n]+\.reference = (adamic_temporary_[0-9]+)}`).FindStringSubmatch(code)
+	if len(store) != 2 {
+		t.Fatal("self store absent")
+	}
+	retain := regexp.MustCompile(`(` + store[1] + ` = )adamic_retain\((adamic_temporary_[0-9]+\.reference)\)`)
+	mutant := retain.ReplaceAllString(code, "${1}${2}")
+	if mutant == code {
+		t.Fatal("borrowed read retain absent")
+	}
+	binary = filepath.Join(t.TempDir(), "mutant")
+	if err := native.Build(mutant, binary, native.Options{Sanitize: true}); err != nil {
+		t.Fatal(err)
+	}
+	failure := execute(t, binary)
+	if !strings.Contains(string(failure.stderr), "heap-use-after-free") {
+		t.Fatalf("ownership mutant escaped: exit %d stderr %s", failure.exitCode, failure.stderr)
+	}
+	t.Logf("ASan catches borrowed string stored without an owned count: %s", failure.stderr)
 }

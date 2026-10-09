@@ -59,3 +59,11 @@ These additional runtime hunks await runtime review.
 - object.c validates the incoming value before storing, preserves the physical slot representation, packs optional scalars or boxes union values, retains incoming references before releasing old ones, and publishes readiness and presence after a successful store.
 
 Exact hunks: step2-runtime.patch.
+
+## Runtime review ownership amendment
+
+- adamic.h documents borrowed reference results of adamic_object_view and borrowed strings from adamic_object_optional_view, including NULL for undefined.
+- adamic.h states that value is given, owned by adamic_object_view_store; its caller must supply keptValue before the store releases the old slot.
+- object.c accepts incoming undefined (13) in string storage (3). NULL is already the optional string representation, and the existing store still publishes property presence independently. Both-backend Node fixtures and a restoring-rejection mutant cover this hunk.
+
+See ownership-runtime.patch for exact hunks. The frozen-write objection was withdrawn: emit_statements.go already calls adamic_object_check_data_write for every SetProperty.

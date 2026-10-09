@@ -16,7 +16,7 @@ const adamicViewWrite = (object, name, value, type) => {
     if (![1,2,3,7,9,13].includes(type)) return adamicLegacyViewWrite(object, name, value, type);
     const actual = adamicFieldRepresentations.get(object)?.[name] ?? 0;
     const incoming = value === undefined ? 13 : typeof value === 'number' ? 1 : typeof value === 'boolean' ? 2 : 3;
-    const fits = actual === incoming && actual >= 1 && actual <= 3 || actual === 7 && [1,13].includes(incoming) || actual === 9 && [2,13].includes(incoming) || actual === 10 && [1,2,3,13].includes(incoming);
+    const fits = actual === 3 && incoming === 13 || actual === incoming && actual >= 1 && actual <= 3 || actual === 7 && [1,13].includes(incoming) || actual === 9 && [2,13].includes(incoming) || actual === 10 && [1,2,3,13].includes(incoming);
     if (!fits) {
         const names = {1:'number',2:'boolean',3:'string',7:'number | undefined',9:'boolean | undefined',10:'union',13:'undefined'};
         panic('field write failed: ' + name + ' expected ' + (names[actual] || (actual === 0 ? 'missing storage' : 'unsupported representation')) + ', found ' + names[incoming]);

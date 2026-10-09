@@ -1,0 +1,11 @@
+interface Source { readonly kind: string; s?: string | undefined }
+interface View { readonly kind: 'record'; s?: string | undefined }
+function read(record: View): string { return String(record.s); }
+const source: Source = { kind: 'record', s: 'owned'.repeat(2) };
+const view = source as View;
+view.s = undefined;
+console.log(read(view));
+console.log(String('s' in source));
+console.log(Object.keys(source).join(','));
+view.s = 'again'.repeat(2);
+console.log(read(view));

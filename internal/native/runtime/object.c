@@ -438,7 +438,7 @@ void adamic_object_view_store(adamic_object *object, const char *name, adamic_sl
         incoming = boolean.present ? 2 : 13;
         value.boolean = boolean.boolean;
     } else if (wanted == 3 && value.reference == NULL) incoming = 13;
-    bool fits = (actual == incoming && actual >= 1 && actual <= 3) || (actual == 7 && (incoming == 1 || incoming == 13)) || (actual == 9 && (incoming == 2 || incoming == 13)) || (actual == 10 && (incoming == 1 || incoming == 2 || incoming == 3 || incoming == 13));
+    bool fits = (actual == 3 && incoming == 13) || (actual == incoming && actual >= 1 && actual <= 3) || (actual == 7 && (incoming == 1 || incoming == 13)) || (actual == 9 && (incoming == 2 || incoming == 13)) || (actual == 10 && (incoming == 1 || incoming == 2 || incoming == 3 || incoming == 13));
     if (!fits) {
         const char *expected = slot == NULL ? "missing storage" : view_storage_name(actual);
         const char *found = view_storage_name(incoming);
