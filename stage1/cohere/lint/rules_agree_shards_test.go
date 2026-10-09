@@ -4,14 +4,17 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"hash/fnv"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"runtime"
 	"sort"
 	"strings"
 	"sync"
+	"syscall"
 	"testing"
 	"time"
 
@@ -20,6 +23,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/testguard"
 	"github.com/system-inc/adamic/stage1/cohere/lint/registry"
 )
 
@@ -152,7 +156,7 @@ func rulesAgreeCorpus(t *testing.T) *rulesAgreeProducts {
 		captureInputs := buildcache.Inputs{
 			Name:      "lint-rules-agree-capture",
 			Files:     []string{"cohere", "stage1/cohere/lint", "go.mod", "go.work"},
-			Flags:     []string{"asserted-cases-overlay", "-count=1", "-timeout=75s"},
+			Flags:     []string{"asserted-cases-overlay", "-count=1", "-timeout=75s", "child-context-deadline=90s"},
 			Toolchain: []string{runtime.Version()},
 		}
 		captureDirectory := buildcache.Product(t, captureInputs, func(output string) error {
@@ -332,6 +336,46 @@ func TestRulesAgree_013(t *testing.T) { rulesAgreeRunShard(t, 13) }
 func TestRulesAgree_014(t *testing.T) { rulesAgreeRunShard(t, 14) }
 func TestRulesAgree_015(t *testing.T) { rulesAgreeRunShard(t, 15) }
 
+// Keep the existing child CPU guard, and bound the entire Go invocation,
+// including compiler descendants, without depending on an external tool.
+func rulesAgreeCaptureRun(directory string, environment []string, args ...string) ([]byte, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	defer cancel()
+	command := exec.CommandContext(ctx, "go", args...)
+	command.Dir = directory
+	command.Env = append(os.Environ(), environment...)
+	command.Env = append(command.Env, "PWD="+directory)
+	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+	command.Cancel = func() error {
+		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+		if errors.Is(err, syscall.ESRCH) {
+			return os.ErrProcessDone
+		}
+		return err
+	}
+	command.WaitDelay = time.Second
+	output, err := os.CreateTemp(sharedDirectory, "rules-agree-capture-stdout-")
+	if err != nil {
+		return nil, err
+	}
+	defer os.Remove(output.Name())
+	defer output.Close()
+	command.Stdout = output
+	var stderr bytes.Buffer
+	command.Stderr = &stderr
+	err = testguard.Run(command, testguard.Budget, testguard.Ceiling)
+	if command.Process != nil {
+		_ = syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+	}
+	if ctx.Err() != nil {
+		return nil, fmt.Errorf("capture cooked: child context deadline exceeded: %w", ctx.Err())
+	}
+	if err != nil || len(commandDiagnostics("go", stderr.Bytes())) != 0 {
+		return nil, fmt.Errorf("go %v: %v\n%s", args, err, &stderr)
+	}
+	return os.ReadFile(output.Name())
+}
+
 func rulesAgreeCaptureUpstream(t *testing.T, sourceRoot, directory string) ([]string, error) {
 	root, err := filepath.Abs(filepath.Join(repository, "cohere"))
 	if err != nil {
@@ -387,7 +431,7 @@ func rulesAgreeCaptureUpstream(t *testing.T, sourceRoot, directory string) ([]st
 			destination := filepath.Join(capture, name)
 			environment := []string{"COHERE_DOCS_CAPTURE=" + destination}
 			started := time.Now()
-			_, failures[index] = run(root, environment, "timeout", "-k", "1s", "75s", "go", "test", "-overlay="+overlayPath, "./internal/lint/rules/"+name, "-run", "^("+strings.Join(packages[name], "|")+")", "-count=1", "-timeout=75s")
+			_, failures[index] = rulesAgreeCaptureRun(root, environment, "test", "-overlay="+overlayPath, "./internal/lint/rules/"+name, "-run", "^("+strings.Join(packages[name], "|")+")", "-count=1", "-timeout=75s")
 			t.Logf("capture package %s: %.3fs cooked=%t", name, time.Since(started).Seconds(), time.Since(started) >= 60*time.Second)
 			if failures[index] == nil && time.Since(started) >= 60*time.Second {
 				failures[index] = fmt.Errorf("capture package %s cooked: over 60s; split smaller", name)
