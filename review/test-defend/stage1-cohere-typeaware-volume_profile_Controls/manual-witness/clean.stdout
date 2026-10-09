@@ -1,0 +1,3 @@
+file	/workspace/adamic/review/test-defend/stage1-cohere-typeaware-volume_profile_Controls/manual-witness/type-import.ts
+117	122	@typescript-eslint/no-shadow	noShadow	This binding takes a name that is already bound in an enclosing scope. Every read of the name inside this scope now resolves here instead of to the outer binding, so code written against the outer one silently reads the inner one. Rename the inner binding. The name 'Point' is already declared in the upper scope on line 1 column 15.	0	0
+findings 1

@@ -1,0 +1,11 @@
+--- a/bridge/tsgo/archive/main.go
++++ b/bridge/tsgo/archive/main.go
+@@ -115,7 +115,7 @@
+ 	defer queryFinished(started, false)
+ 	program := programs.live[uint64(handle)]
+ 	if program == nil {
+-		return failed(error, C.TSGO_HANDLE, "invalid or released checker handle")
++		return failed(error, C.TSGO_HANDLE, "invalid or released checker handle.")
+ 	}
+ 	answer, err := program.Inspect(text(file), uint64(start), uint64(end), text(kind), text(question))
+ 	if err != nil {

@@ -1,0 +1,11 @@
+--- a/stage1/cohere/typeaware/shadow.ts
++++ b/stage1/cohere/typeaware/shadow.ts
+@@ -71,7 +71,7 @@
+                     return false;
+                 }
+                 if(node.kind === 'ImportClause') {
+-                    return node.semantic !== 'TypeKeyword';
++                    return node.semantic !== 'TypeKeyword_';
+                 }
+                 if(node.kind === 'ImportDeclaration') {
+                     break;

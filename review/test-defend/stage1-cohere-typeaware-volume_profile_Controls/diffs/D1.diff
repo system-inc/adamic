@@ -1,0 +1,11 @@
+--- a/stage1/cohere/typeaware/shadow.ts
++++ b/stage1/cohere/typeaware/shadow.ts
+@@ -67,7 +67,7 @@
+             let current = binding.declarations[0] ?? -1;
+             while(current >= 0) {
+                 const node = this.rules.parser.node(current);
+-                if(node.kind === 'ImportSpecifier' && node.semantic === '1') {
++                if(node.kind === 'ImportSpecifier' && node.semantic === '0') {
+                     return false;
+                 }
+                 if(node.kind === 'ImportClause') {

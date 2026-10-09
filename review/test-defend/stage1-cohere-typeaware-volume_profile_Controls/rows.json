@@ -1,0 +1,67 @@
+[
+  {
+    "test": "TestVolumeProfileCorpora family",
+    "package": "stage1/cohere/typeaware",
+    "prior_verdict": "subsumed",
+    "prior_subsumed_by": [
+      "TestVolumeProfileControls family"
+    ],
+    "subsumed_by": [
+      "TestVolumeAgreementRepository family"
+    ],
+    "defense": "not defended",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "stage1/cohere/typeaware/shadow.ts:70",
+        "change": "node.kind === 'ImportSpecifier' && node.semantic === '1' -> node.kind === 'ImportSpecifier' && node.semantic === '0'",
+        "rows_failed": [
+          "TestVolumeAgreementRepository family",
+          "TestVolumeProfileCorpora family"
+        ]
+      },
+      {
+        "mutant": "D2",
+        "file_line": "stage1/cohere/typeaware/shadow.ts:74",
+        "change": "return node.semantic !== 'TypeKeyword'; -> return node.semantic !== 'TypeKeyword_';",
+        "rows_failed": []
+      },
+      {
+        "mutant": "D3",
+        "file_line": "stage1/cohere/typeaware/shadow.ts:66",
+        "change": "(binding.flags & 2097152) !== 0 -> (binding.flags & 1048576) !== 0",
+        "rows_failed": [
+          "TestVolumeAgreementRepository family",
+          "TestVolumeProfileCorpora family"
+        ]
+      }
+    ],
+    "evidence": "See matrix.json exact per-family timeout 120 go test -json -count=1 -timeout 90s commands. D1 and D3: volume_profile_Corpora_test.go:560 repository mismatch; the other repository family catches both. D2 passes all observed rows; manual-survivor-witness.json shows clean/Go findings 1 versus mutant findings 0.",
+    "bounded": true,
+    "name_assertion_finding": "The name fits its exact corpus finding-byte comparisons. The logged 60s budget is enforced with a 90s deadline, not a 60s performance assertion."
+  },
+  {
+    "test": "TestVolumeAgreementAndMutants family",
+    "package": "stage1/cohere/typeaware",
+    "prior_verdict": "subsumed",
+    "prior_subsumed_by": [
+      "TestVolumeProfileControls family"
+    ],
+    "subsumed_by": [],
+    "defense": "defended",
+    "unique_mutant": "D4 bridge/tsgo/archive/main.go:118",
+    "attempts": [
+      {
+        "mutant": "D4",
+        "file_line": "bridge/tsgo/archive/main.go:118",
+        "change": "return failed(error, C.TSGO_HANDLE, \"invalid or released checker handle\") -> return failed(error, C.TSGO_HANDLE, \"invalid or released checker handle.\")",
+        "rows_failed": [
+          "TestVolumeAgreementAndMutants family"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-typeaware-volume/cache/D4 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/typeaware/ -run ^TestVolumeAgreementAndMutants_022$; volume_agreement_shards_test.go:377: released program escaped: exit status 70 adamic: panic: invalid or released checker handle. Other reached rows pass: TestInspectRequestRefusals and TestSixRuleAgreementAndMutants_045.",
+    "bounded": true
+  }
+]

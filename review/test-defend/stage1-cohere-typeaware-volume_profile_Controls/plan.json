@@ -1,0 +1,42 @@
+[
+  {
+    "id": "D1",
+    "test": "TestVolumeProfileCorpora family",
+    "file": "stage1/cohere/typeaware/shadow.ts",
+    "from": "node.kind === 'ImportSpecifier' && node.semantic === '1'",
+    "to": "node.kind === 'ImportSpecifier' && node.semantic === '0'",
+    "menu": "change constant",
+    "lead": "Type-only import values are absent from controls.",
+    "line": 70
+  },
+  {
+    "id": "D2",
+    "test": "TestVolumeProfileCorpora family",
+    "file": "stage1/cohere/typeaware/shadow.ts",
+    "from": "return node.semantic !== 'TypeKeyword';",
+    "to": "return node.semantic !== 'TypeKeyword_';",
+    "menu": "change constant",
+    "lead": "Whole-clause type-only imports are present in the corpus and absent from controls.",
+    "line": 74
+  },
+  {
+    "id": "D3",
+    "test": "TestVolumeProfileCorpora family",
+    "file": "stage1/cohere/typeaware/shadow.ts",
+    "from": "(binding.flags & 2097152) !== 0",
+    "to": "(binding.flags & 1048576) !== 0",
+    "menu": "change constant",
+    "lead": "Imported bindings take the import-specific value classification; controls have no imports.",
+    "line": 66
+  },
+  {
+    "id": "D4",
+    "test": "TestVolumeAgreementAndMutants family",
+    "file": "bridge/tsgo/archive/main.go",
+    "from": "return failed(error, C.TSGO_HANDLE, \"invalid or released checker handle\")",
+    "to": "return failed(error, C.TSGO_HANDLE, \"invalid or released checker handle.\")",
+    "menu": "change constant",
+    "lead": "Released inspect exact diagnostic, versus substring-only inspect checks; modify only tsgo_go_inspect.",
+    "line": 118
+  }
+]

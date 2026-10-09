@@ -1,0 +1,62 @@
+[
+  {
+    "name": "controls",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=./internal/lower,./internal/native",
+      "-coverprofile=review/test-defend/stage1-cohere-typeaware-volume_profile_Controls/coverage/controls.out",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^TestVolumeProfileControls(Union|_[0-9]+)$"
+    ],
+    "exit": 0,
+    "wall": 49.09509871299815
+  },
+  {
+    "name": "corpora",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=./internal/lower,./internal/native",
+      "-coverprofile=review/test-defend/stage1-cohere-typeaware-volume_profile_Controls/coverage/corpora.out",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^TestVolumeProfileCorpora(Union|_0[0-5][0-9]|_06[0-3])$"
+    ],
+    "exit": 0,
+    "wall": 42.71001806899949
+  },
+  {
+    "name": "agreement",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=./internal/lower,./internal/native",
+      "-coverprofile=review/test-defend/stage1-cohere-typeaware-volume_profile_Controls/coverage/agreement.out",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^TestVolumeAgreementAndMutants(Union|_014|_022|_030)$"
+    ],
+    "exit": 0,
+    "wall": 53.5894846830015
+  }
+]

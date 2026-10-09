@@ -1,0 +1,36 @@
+[
+  {
+    "name": "clean",
+    "command": [
+      "/home/agent/.cache/adamic-build/0878412323f0c5332c10656624eb7c51226f7e0c125188475beed0464647f8d8/volume",
+      "/workspace/adamic/stage1/cohere/typeaware/testdata/tsconfig.json",
+      "/workspace/adamic/review/test-defend/stage1-cohere-typeaware-volume_profile_Controls/manual-witness/manifest"
+    ],
+    "exit": 0,
+    "stdout": "file\t/workspace/adamic/review/test-defend/stage1-cohere-typeaware-volume_profile_Controls/manual-witness/type-import.ts\n117\t122\t@typescript-eslint/no-shadow\tnoShadow\tThis binding takes a name that is already bound in an enclosing scope. Every read of the name inside this scope now resolves here instead of to the outer binding, so code written against the outer one silently reads the inner one. Rename the inner binding. The name 'Point' is already declared in the upper scope on line 1 column 15.\t0\t0\nfindings 1\n",
+    "stderr": ""
+  },
+  {
+    "name": "D2",
+    "command": [
+      "/tmp/defend-typeaware-volume/cache/D2/beb669723a6f23fe3ff2e89234a088634b581d03ae7aec569e7cde5edfc9bb7e/volume",
+      "/workspace/adamic/stage1/cohere/typeaware/testdata/tsconfig.json",
+      "/workspace/adamic/review/test-defend/stage1-cohere-typeaware-volume_profile_Controls/manual-witness/manifest"
+    ],
+    "exit": 0,
+    "stdout": "file\t/workspace/adamic/review/test-defend/stage1-cohere-typeaware-volume_profile_Controls/manual-witness/type-import.ts\nfindings 0\n",
+    "stderr": ""
+  },
+  {
+    "name": "Go cohere oracle",
+    "command": [
+      "/home/agent/.cache/adamic-build/47dcffe98a1a2fe8d8482d9f16dd81c6efd5d80ba24f520e0d809a4154aa9ddf/volume-oracle",
+      "/workspace/adamic/stage1/cohere/typeaware/testdata/tsconfig.json",
+      "/workspace/adamic/review/test-defend/stage1-cohere-typeaware-volume_profile_Controls/manual-witness/manifest"
+    ],
+    "exit": 0,
+    "stdout": "file\t/workspace/adamic/review/test-defend/stage1-cohere-typeaware-volume_profile_Controls/manual-witness/type-import.ts\n117\t122\t@typescript-eslint/no-shadow\tnoShadow\tThis binding takes a name that is already bound in an enclosing scope. Every read of the name inside this scope now resolves here instead of to the outer binding, so code written against the outer one silently reads the inner one. Rename the inner binding. The name 'Point' is already declared in the upper scope on line 1 column 15.\t0\t0\nfindings 1\n",
+    "stderr": "cohere: load_ns=16497173 rule_ns=41062 run_ns=89975\n",
+    "matches_clean": true
+  }
+]

@@ -1,0 +1,334 @@
+{
+  "type_import": [
+    {
+      "file": "/workspace/adamic/internal/load/testdata/0.1/compile/07_modules/main.ts",
+      "line": 1,
+      "source": "import { distance, pathLength, type Point } from './geometry.ts';"
+    },
+    {
+      "file": "/workspace/adamic/internal/oracle/testdata/class_layouts.a",
+      "line": 6,
+      "source": "import type { Weak } from 'adamic';"
+    },
+    {
+      "file": "/workspace/adamic/internal/oracle/testdata/doubly_linked.a",
+      "line": 1,
+      "source": "import type { Weak } from 'adamic';"
+    },
+    {
+      "file": "/workspace/adamic/internal/oracle/testdata/fresh_calls.a",
+      "line": 4,
+      "source": "import type { Weak } from 'adamic';"
+    },
+    {
+      "file": "/workspace/adamic/internal/oracle/testdata/fresh_parser.a",
+      "line": 6,
+      "source": "import type { Weak } from 'adamic';"
+    },
+    {
+      "file": "/workspace/adamic/internal/oracle/testdata/reuse_weak_after_reuse.a",
+      "line": 1,
+      "source": "import type { Weak } from 'adamic';"
+    },
+    {
+      "file": "/workspace/adamic/internal/oracle/testdata/reuse_weak_during_spread.a",
+      "line": 1,
+      "source": "import type { Weak } from 'adamic';"
+    },
+    {
+      "file": "/workspace/adamic/internal/oracle/testdata/weak/freed.a",
+      "line": 1,
+      "source": "import type { Weak } from 'adamic';"
+    },
+    {
+      "file": "/workspace/adamic/internal/oracle/testdata/weak/narrowed.a",
+      "line": 1,
+      "source": "import type { Weak } from 'adamic';"
+    },
+    {
+      "file": "/workspace/adamic/internal/oracle/testdata/weak/probe_chain.a",
+      "line": 4,
+      "source": "import type { Weak } from 'adamic';"
+    },
+    {
+      "file": "/workspace/adamic/internal/oracle/testdata/weak/reuse.a",
+      "line": 3,
+      "source": "import type { Weak } from 'adamic';"
+    },
+    {
+      "file": "/workspace/adamic/internal/oracle/testdata/weak_narrowed.a",
+      "line": 1,
+      "source": "import type { Weak } from 'adamic';"
+    },
+    {
+      "file": "/workspace/adamic/internal/oracle/testdata/weak_parent.a",
+      "line": 1,
+      "source": "import { panic, type Weak } from 'adamic';"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/formatfiles/disk.ts",
+      "line": 18,
+      "source": "import type { Entry, WorkingTree } from '../gitignore/gitignore.ts';"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/formatfiles/enumerate.ts",
+      "line": 21,
+      "source": "import { compilePatterns, ExcludeFile, IgnoreFileName, newMatcher, type Matcher, type Patterns } from '../gitignore/gitignore.ts';"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/formatfiles/enumerate.ts",
+      "line": 23,
+      "source": "import { DiskTree, lstat, statExists, statIsDirectory, type LinkStatus } from './disk.ts';"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/gitignore/case.ts",
+      "line": 19,
+      "source": "import type { Entry } from './gitignore.ts';"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/gitignore/main.ts",
+      "line": 11,
+      "source": "import { compilePatterns, newMatcher, type Matcher, type Result, type Verdict } from './gitignore.ts';"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/graphql/lexer.ts",
+      "line": 24,
+      "source": "import { Token, type TokenKind } from './token.ts';"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/graphql/main.ts",
+      "line": 18,
+      "source": "import { type GraphNode, parse } from './parser.ts';"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/graphql/parser.ts",
+      "line": 34,
+      "source": "import type { Token, TokenKind } from './token.ts';"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/lint/finding.ts",
+      "line": 1,
+      "source": "import type { Suggestion, SuggestionEdit } from './suggestions.a';"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/lint/lint.ts",
+      "line": 4,
+      "source": "import { createRuleSet, type RuleSet } from './.generated/registry.ts';"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/lint/lint.ts",
+      "line": 7,
+      "source": "import type { ParseNode } from '../../typescript/parser/nodes.ts';"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/lint/lint.ts",
+      "line": 8,
+      "source": "import type { Scanner } from '../../typescript/scanner/scanner.ts';"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/lint/lint.ts",
+      "line": 12,
+      "source": "import type { Settings } from './settings.ts';"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/mediaquery/index.ts",
+      "line": 9,
+      "source": "import type { MediaNode } from './nodes.ts';"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/mediaquery/index.ts",
+      "line": 11,
+      "source": "import { parseMediaList, type Result } from './parsers.ts';"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/mediaquery/main.ts",
+      "line": 24,
+      "source": "import type { MediaNode } from './nodes.ts';"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/suppression/main.ts",
+      "line": 30,
+      "source": "import { build, type Directive, type Index } from './suppression.ts';"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/typeaware/diagnostic.ts",
+      "line": 1,
+      "source": "import type { Repair } from './repair.ts';"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/typeaware/diagnostic.ts",
+      "line": 2,
+      "source": "import type { Suggestion } from './suggestion.ts';"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/typeaware/parameters.ts",
+      "line": 1,
+      "source": "import type { Types } from './types.ts';"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/typeaware/rules.ts",
+      "line": 3,
+      "source": "import type { Parser } from '../../typescript/parser/parser.ts';"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/typeaware/rules.ts",
+      "line": 4,
+      "source": "import type { Scanner } from '../../typescript/scanner/scanner.ts';"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/typeaware/rules.ts",
+      "line": 5,
+      "source": "import type { ParseNode } from '../../typescript/parser/nodes.ts';"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/typeaware/rules.ts",
+      "line": 11,
+      "source": "import type { TypeFact } from './type_fact.ts';"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/typeaware/rules.ts",
+      "line": 12,
+      "source": "import type { Types } from './types.ts';"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/typeaware/rules.ts",
+      "line": 14,
+      "source": "import type { UnaryMinus } from './unary_minus.ts';"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/typeaware/types.ts",
+      "line": 3,
+      "source": "import type { TypeFact } from './type_fact.ts';"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/typeaware/unary_minus.ts",
+      "line": 3,
+      "source": "import type { Parser } from '../../typescript/parser/parser.ts';"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/typeaware/unary_minus.ts",
+      "line": 4,
+      "source": "import type { Scanner } from '../../typescript/scanner/scanner.ts';"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/values/main.ts",
+      "line": 23,
+      "source": "import { hasNodes, keysOf, type Position, type Source, type ValueNode, type ValueTree } from './nodes.ts';"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/values/parser.ts",
+      "line": 19,
+      "source": "import { alphaNum, type Token } from './tokenize.ts';"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/values/values.ts",
+      "line": 14,
+      "source": "import { Parser, type Parsed } from './parser.ts';"
+    },
+    {
+      "file": "/workspace/adamic/stage1/typescript/parser/lookahead.ts",
+      "line": 2,
+      "source": "import type { Scanner } from '../scanner/scanner.ts';"
+    },
+    {
+      "file": "/workspace/adamic/stage1/typescript/parser/parser.ts",
+      "line": 9,
+      "source": "import type { ParserStateInterface } from './lookahead.ts';"
+    },
+    {
+      "file": "/workspace/adamic/stage1/typescript/parser/statements.ts",
+      "line": 3,
+      "source": "import type { Scanner } from '../scanner/scanner.ts';"
+    },
+    {
+      "file": "/workspace/adamic/stage1/typescript/parser/statements.ts",
+      "line": 4,
+      "source": "import type { ParseNode } from './nodes.ts';"
+    }
+  ],
+  "ambient_global": [],
+  "default_type_import": [],
+  "named_type_import": [
+    {
+      "file": "/workspace/adamic/internal/load/testdata/0.1/compile/07_modules/main.ts",
+      "line": 1,
+      "source": "import { distance, pathLength, type Point } from './geometry.ts';"
+    },
+    {
+      "file": "/workspace/adamic/internal/oracle/testdata/weak_parent.a",
+      "line": 1,
+      "source": "import { panic, type Weak } from 'adamic';"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/formatfiles/enumerate.ts",
+      "line": 21,
+      "source": "import { compilePatterns, ExcludeFile, IgnoreFileName, newMatcher, type Matcher, type Patterns } from '../gitignore/gitignore.ts';"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/formatfiles/enumerate.ts",
+      "line": 23,
+      "source": "import { DiskTree, lstat, statExists, statIsDirectory, type LinkStatus } from './disk.ts';"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/gitignore/main.ts",
+      "line": 11,
+      "source": "import { compilePatterns, newMatcher, type Matcher, type Result, type Verdict } from './gitignore.ts';"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/graphql/lexer.ts",
+      "line": 24,
+      "source": "import { Token, type TokenKind } from './token.ts';"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/graphql/main.ts",
+      "line": 18,
+      "source": "import { type GraphNode, parse } from './parser.ts';"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/lint/lint.ts",
+      "line": 4,
+      "source": "import { createRuleSet, type RuleSet } from './.generated/registry.ts';"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/mediaquery/index.ts",
+      "line": 11,
+      "source": "import { parseMediaList, type Result } from './parsers.ts';"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/suppression/main.ts",
+      "line": 30,
+      "source": "import { build, type Directive, type Index } from './suppression.ts';"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/values/main.ts",
+      "line": 23,
+      "source": "import { hasNodes, keysOf, type Position, type Source, type ValueNode, type ValueTree } from './nodes.ts';"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/values/parser.ts",
+      "line": 19,
+      "source": "import { alphaNum, type Token } from './tokenize.ts';"
+    },
+    {
+      "file": "/workspace/adamic/stage1/cohere/values/values.ts",
+      "line": 14,
+      "source": "import { Parser, type Parsed } from './parser.ts';"
+    }
+  ],
+  "namespace_import": [],
+  "namespace_decl": [
+    {
+      "file": "/workspace/adamic/stage1/typescript/scanner/tokens.ts",
+      "line": 47,
+      "source": "['namespace', 'NamespaceKeyword'],"
+    }
+  ],
+  "infer": [
+    {
+      "file": "/workspace/adamic/stage1/typescript/scanner/tokens.ts",
+      "line": 39,
+      "source": "['infer', 'InferKeyword'],"
+    }
+  ],
+  "multiline": []
+}
