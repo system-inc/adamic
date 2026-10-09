@@ -88,7 +88,7 @@ func cssPrinterProduct(t *testing.T, variant int) cssExecutable {
 		sanitize := variant != 3
 		inputs := buildcache.Inputs{
 			Name:      "css-printer-executable-" + strconv.Itoa(variant),
-			Files:     []string{"stage1/cohere/css", "stage1/cohere/selector", "stage1/cohere/values", "stage1/cohere/mediaquery", "stage1/cohere/cssstrings", "stage1/cohere/cssnumbers", "internal", "cohere/internal", "cohere/rule_runner", "cohere/go.mod", "cohere/go.sum", "cohere/TypeScript/tsc", "cohere/TypeScript-shim", "go.mod", "go.work"},
+			Files:     []string{"stage1/cohere/css", "stage1/cohere/selector", "stage1/cohere/values", "stage1/cohere/mediaquery", "stage1/cohere/cssstrings", "stage1/cohere/cssnumbers", "internal", "bridge/tsgo", "cohere/policy", "cohere/internal", "cohere/rule_runner", "cohere/go.mod", "cohere/go.sum", "cohere/TypeScript/tsc", "cohere/TypeScript-shim", "go.mod", "go.work"},
 			Flags:     append(native.Flags(native.Options{Sanitize: sanitize}), "variant="+strconv.Itoa(variant), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT")),
 			Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version"), runtime.GOOS, runtime.GOARCH},
 		}
