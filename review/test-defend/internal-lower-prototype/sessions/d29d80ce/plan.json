@@ -1,0 +1,23 @@
+[
+  {
+    "id": "D1",
+    "file": "internal/lower/object.go",
+    "line": 382,
+    "old": "\tif l.inheritedLibraryMember(node) && !l.regexRuntimeProperty(access.Expression, name) && name != \"length\" && name != \"size\" && !(l.isLibraryType(l.checker.GetTypeAtLocation(access.Expression), \"Error\") && (name == \"name\" || name == \"message\")) {\n\t\treturn nil, l.prototypeRead(node, name)\n\t}\n",
+    "new": ""
+  },
+  {
+    "id": "D2",
+    "file": "internal/lower/proven_relations.go",
+    "line": 100,
+    "old": "\t\t\t\t\tif field := l.optionalRelationFailure(toArguments[index], fromArguments[index], nil, seen); field != \"\" {\n\t\t\t\t\t\treturn \"type argument.\" + field\n\t\t\t\t\t}\n",
+    "new": ""
+  },
+  {
+    "id": "D3",
+    "file": "internal/lower/expression.go",
+    "line": 645,
+    "old": "\t\treturn l.expression(satisfies.Expression)\n",
+    "new": ""
+  }
+]

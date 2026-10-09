@@ -1,0 +1,65 @@
+[
+  {
+    "test": "TestInheritedLibraryReadsNeverLoadOwnFields",
+    "package": "internal/lower",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestPredicateOverloadRuntime"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D1 internal/lower/object.go:382",
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "internal/lower/object.go:382",
+        "change": "drop statement: inherited property-read guard",
+        "rows_failed": [
+          "TestInheritedLibraryReadsNeverLoadOwnFields"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-prototype/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D1.log 2>&1; prototype_test.go:78: inherited constructor read became ir.Property (ir.Property{ViewContract:0, ViewTypeID:69, ViewReceiverTypeID:3805, ViewWhere:\"/tmp/adamic-gate/TestInheritedLibraryReadsNeverLoadOwnFieldsobjectconstructorb2649630593/001/sweep.a:2:1\", ViewOrdinary:false, View:\"value.constructor\", ViewType:\"Function\", ViewAllowed:[]ir.Expression(nil), Readiness:\"value.constructor\", Object:ir.Read{Local:0, Of:4, Checked:false, Readiness:\"value\"}, Name:\"constructor\", Of:4, Optional:false, Absent:false, Class:0, Method:false}), error <nil>; want a lowering refusal before any own-field load"
+  },
+  {
+    "test": "TestProvenRelationsRefuse",
+    "package": "internal/lower",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestCheckedCastProofAndElision"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D2 internal/lower/proven_relations.go:100",
+    "attempts": [
+      {
+        "mutant": "D2",
+        "file_line": "internal/lower/proven_relations.go:100",
+        "change": "drop statement: reverse optional class type-argument check",
+        "rows_failed": [
+          "TestProvenRelationsRefuse"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-prototype/cache/D2 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D2.log 2>&1; proven_relations_test.go:38: want refusal naming \"optional field type argument.count\", got /tmp/adamic-gate/TestProvenRelationsRefuseupcast_invariant_optional_class_argume4115418149/001/main.a:1:246: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+  },
+  {
+    "test": "TestProvenRelationsErase",
+    "package": "internal/lower",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestDefaultTaggedInterfaceNeedsNoFlag"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D3 internal/lower/expression.go:645",
+    "attempts": [
+      {
+        "mutant": "D3",
+        "file_line": "internal/lower/expression.go:645",
+        "change": "drop statement: successful satisfies operand lowering",
+        "rows_failed": [
+          "TestProvenRelationsErase"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-prototype/cache/D3 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D3.log 2>&1; proven_relations_test.go:51: Lower refused acceptance row: /tmp/adamic-gate/TestProvenRelationsErase994031046/003/main.a:1:105: stage 0 can't lower a SatisfiesExpression yet"
+  }
+]

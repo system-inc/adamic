@@ -1,0 +1,12 @@
+--- a/internal/lower/proven_relations.go
++++ b/internal/lower/proven_relations.go
+@@ -97,9 +97,6 @@
+ 					if field := l.optionalRelationFailure(fromArguments[index], toArguments[index], nil, seen); field != "" {
+ 						return "type argument." + field
+ 					}
+-					if field := l.optionalRelationFailure(toArguments[index], fromArguments[index], nil, seen); field != "" {
+-						return "type argument." + field
+-					}
+ 				}
+ 			}
+ 		}
