@@ -3,7 +3,6 @@ package parser
 import (
 	"bytes"
 	"context"
-	"encoding/json"
 	"fmt"
 	"io/fs"
 	"os"
@@ -28,57 +27,9 @@ type execution struct {
 	duration time.Duration
 }
 
-// Output is a file, never a pipe: the large corpus must also work on Node's writev path.
-func execute(t *testing.T, directory, name string, args ...string) execution {
-	t.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Minute)
-	defer cancel()
-	command := exec.CommandContext(ctx, name, args...)
-	command.Dir = directory
-	output, err := os.CreateTemp(t.TempDir(), "stdout-")
-	if err != nil {
-		t.Fatal(err)
-	}
-	defer output.Close()
-	command.Stdout = output
-	var stderr bytes.Buffer
-	command.Stderr = &stderr
-	started := time.Now()
-	err = command.Run()
-	duration := time.Since(started)
-	if err != nil || stderr.Len() != 0 {
-		t.Fatalf("%s %v: %v\n%s", name, args, err, &stderr)
-	}
-	data, err := os.ReadFile(output.Name())
-	if err != nil {
-		t.Fatal(err)
-	}
-	return execution{data, duration}
-}
-
 func goOracle(t *testing.T) string {
 	t.Helper()
-	root, err := filepath.Abs(filepath.Join(repository, "cohere/TypeScript/tsc"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	side, err := filepath.Abs("testdata/oracle.go")
-	if err != nil {
-		t.Fatal(err)
-	}
-	virtual := filepath.Join(root, "adamic_parser_oracle.go")
-	overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: side}})
-	if err != nil {
-		t.Fatal(err)
-	}
-	directory := t.TempDir()
-	path := filepath.Join(directory, "overlay.json")
-	if err := os.WriteFile(path, overlay, 0644); err != nil {
-		t.Fatal(err)
-	}
-	binary := filepath.Join(directory, "oracle")
-	execute(t, root, "go", "build", "-overlay="+path, "-o", binary, virtual)
-	return binary
+	return parserGuardOracle(t)
 }
 
 func buildPort(t *testing.T, directory string, sanitize bool) string {
