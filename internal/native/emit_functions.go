@@ -347,7 +347,12 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 		} else {
 			methodCall := fmt.Sprintf("%s(%s, %s)", method, receiver, packed)
 			if e.program.ClosureReceiversNeeded() {
-				call = fmt.Sprintf("adamic_closure_receiver_call(%s, %s, %s, %s, %d)", closure, receiver, packed, count, e.packedArgumentSize(expression))
+				if e.program.ViewAdapters {
+					e.viewCallableBlameRuntime()
+					call = fmt.Sprintf("adamic_view_call_at(%s, %s, %s, %s, %d, %s)", closure, receiver, packed, count, e.packedArgumentSize(expression), viewCallableSourceSite(expression))
+				} else {
+					call = fmt.Sprintf("adamic_closure_receiver_call(%s, %s, %s, %s, %d)", closure, receiver, packed, count, e.packedArgumentSize(expression))
+				}
 				if e.program.PackedCountNeededFromCall(expression) {
 					methodCall = fmt.Sprintf("adamic_method_call(%s, %s, %s, %s)", method, receiver, packed, count)
 				} else if e.program.ClosureConventionNeeded() {

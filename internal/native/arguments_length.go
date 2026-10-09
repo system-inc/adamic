@@ -175,6 +175,10 @@ func missingArgument(of ir.Type) string {
 }
 
 func (e *emitter) packedClosureCall(call ir.CallClosure, closure, packed, count string) string {
+	if e.program.ViewAdapters && call.CallWhere != "" {
+		e.viewCallableBlameRuntime()
+		return fmt.Sprintf("adamic_view_call_at(%s, NULL, %s, %s, %d, %s)", closure, packed, count, e.packedArgumentSize(call), viewCallableSourceSite(call))
+	}
 	if e.program.ClosureReceiversNeeded() {
 		return fmt.Sprintf("adamic_closure_receiver_call(%s, NULL, %s, %s, %d)", closure, packed, count, e.packedArgumentSize(call))
 	}

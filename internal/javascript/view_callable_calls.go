@@ -67,6 +67,12 @@ func (e *emitter) viewCallableDomain(id ir.ViewContractID, value string) string 
 // Passing an already formed argument array guarantees every argument expression
 // runs before checks. The callee snapshot precedes the argument array.
 func (e *emitter) viewCallableInvoke(call ir.CallClosure, p ir.Property) string {
+	messageValue := func(message string) string {
+		if p.ViewEscape {
+			return quote(message) + ` + " call at " + (adamicViewCallSite ?? "<runtime callback>")`
+		}
+		return quote(message)
+	}
 	target := e.program.ViewContracts[call.CallContract-1]
 	var b strings.Builder
 	b.WriteString("((prepared, arguments_) => { const object = prepared.object; const value = adamicViewAdapterUnderlying(prepared.value); const code = value instanceof AdamicClosure ? value.code : value;\n")
@@ -92,7 +98,7 @@ func (e *emitter) viewCallableInvoke(call ir.CallClosure, p ir.Property) string 
 		fmt.Fprintf(&b, "if (code === %s) {\n", functionName(e.program, index))
 		if f.CallableReceiver != 0 {
 			message := fmt.Sprintf("callable call failed: %s at %s thisArg expected producer %s, view %s", p.View, call.CallWhere, e.program.ViewContracts[f.CallableReceiver-1].Name, p.ViewType)
-			fmt.Fprintf(&b, "if (!%s) panic(%s);\n", e.viewCallableDomain(f.CallableReceiver, "object"), quote(message))
+			fmt.Fprintf(&b, "if (!%s) panic(%s);\n", e.viewCallableDomain(f.CallableReceiver, "object"), messageValue(message))
 		}
 
 		for i, id := range f.CallableParameters {
@@ -106,7 +112,7 @@ func (e *emitter) viewCallableInvoke(call ir.CallClosure, p ir.Property) string 
 			if call.CheckBound {
 				guard = fmt.Sprintf("arguments_.length > %d && ", i)
 			}
-			fmt.Fprintf(&b, "if (%s!%s) panic(%s);\n", guard, e.viewCallableDomain(id, fmt.Sprintf("arguments_[%d]", i)), quote(message))
+			fmt.Fprintf(&b, "if (%s!%s) panic(%s);\n", guard, e.viewCallableDomain(id, fmt.Sprintf("arguments_[%d]", i)), messageValue(message))
 		}
 		if call.CheckBound {
 			b.WriteString("return undefined; }\n")
@@ -125,11 +131,11 @@ func (e *emitter) viewCallableInvoke(call ir.CallClosure, p ir.Property) string 
 		fmt.Fprintf(&b, "const result = %s;\n", invocation)
 		if call.Returns != 0 {
 			message := fmt.Sprintf("callable call failed: %s at %s result expected view %s, producer %s", p.View, call.CallWhere, e.program.ViewContracts[target.Result-1].Name, f.CallableResultName)
-			fmt.Fprintf(&b, "if (!%s) panic(%s);\n", e.viewCallableDomain(target.Result, "result"), quote(message))
+			fmt.Fprintf(&b, "if (!%s) panic(%s);\n", e.viewCallableDomain(target.Result, "result"), messageValue(message))
 		}
 		b.WriteString("return result; }\n")
 	}
-	b.WriteString("panic(" + quote("callable call failed: "+p.View+" at "+call.CallWhere+" has no checkable producer signature") + "); })")
+	b.WriteString("panic(" + messageValue("callable call failed: "+p.View+" at "+call.CallWhere+" has no checkable producer signature") + "); })")
 	return b.String()
 }
 

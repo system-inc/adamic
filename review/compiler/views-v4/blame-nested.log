@@ -1,0 +1,11 @@
+=== RUN   TestV4EscapeAdapterBlameNestedResult
+=== PAUSE TestV4EscapeAdapterBlameNestedResult
+=== CONT  TestV4EscapeAdapterBlameNestedResult
+    checked_views_v4_blame_test.go:121: gate cache node miss
+    checked_views_v4_blame_test.go:139: gate cache node miss
+--- PASS: TestV4EscapeAdapterBlameNestedResult (0.51s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.522s

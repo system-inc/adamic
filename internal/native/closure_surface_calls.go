@@ -8,7 +8,8 @@ import (
 // The callee has already been evaluated by callThrough. Evaluate thisArg before
 // packing arguments; the adapter runs its producer checks after both are ready.
 func (e *emitter) callWithReceiver(expression ir.CallClosure, closure string) string {
-	declaration := "static adamic_value adamic_view_surface_call(adamic_closure *value, void *receiver, adamic_value *arguments, size_t count, size_t slots) { return adamic_closure_receiver_call(value, receiver, arguments, count, slots); }"
+	e.viewCallableBlameRuntime()
+	declaration := "static adamic_value adamic_view_surface_call(adamic_closure *value, void *receiver, adamic_value *arguments, size_t count, size_t slots, const char *site) { const char *previous = adamic_view_call_site; if (site != NULL) adamic_view_call_site = site; adamic_value result = adamic_closure_receiver_call(value, receiver, arguments, count, slots); adamic_view_call_site = previous; return result; }"
 	found := false
 	for _, existing := range e.declarations {
 		found = found || existing == declaration
@@ -31,7 +32,7 @@ func (e *emitter) callWithReceiver(expression ir.CallClosure, closure string) st
 		e.line("(void)%s(%s, %s, %s, %s, %s);", invoke, closure, receiver, method, packed, count)
 		return "0"
 	}
-	call := fmt.Sprintf("adamic_view_surface_call(%s, %s, %s, %s, %d)", closure, receiver, packed, count, e.packedArgumentSize(expression))
+	call := fmt.Sprintf("adamic_view_surface_call(%s, %s, %s, %s, %d, %s)", closure, receiver, packed, count, e.packedArgumentSize(expression), viewCallableSourceSite(expression))
 	if expression.Returns == 0 {
 		e.line("%s;", call)
 		e.closureThrown()

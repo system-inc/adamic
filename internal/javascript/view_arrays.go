@@ -87,6 +87,9 @@ const adamicViewSetIndex = (array, index, value, storage) => { adamicArrayWriteC
 
 func (e *emitter) value(expression ir.Expression) string {
 	value := e.valueWithoutViewArrays(expression)
+	if call, ok := expression.(ir.CallClosure); ok && e.program.ViewAdapters && call.CallWhere != "" && call.ArgumentCount == nil {
+		value = "adamicViewCallAt(" + quote(call.CallWhere) + ", () => " + value + ")"
+	}
 	if !ir.HasArrayViews(e.program) {
 		return value
 	}

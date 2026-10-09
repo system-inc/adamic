@@ -7,6 +7,12 @@ import (
 )
 
 const viewCallableAdapterRuntime = `
+let adamicViewCallSite;
+const adamicViewCallAt = (site, invoke) => {
+    const previous = adamicViewCallSite;
+    adamicViewCallSite = site;
+    try { return invoke(); } finally { adamicViewCallSite = previous; }
+};
 const adamicViewAdapterRoots = new WeakMap();
 const adamicViewAdapterKeys = new Map();
 const adamicViewAdapterCache = new WeakMap();

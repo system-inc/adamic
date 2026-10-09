@@ -225,9 +225,13 @@ func v4EscapeAdapterCheck(t *testing.T, relation string) {
 		t.Fatal(err)
 	}
 	var read ir.Property
+	callWhere := ""
 	find := func(expression ir.Expression) ir.Expression {
 		if p, ok := expression.(ir.Property); ok && p.ViewEscape && p.View != "" {
 			read = p
+		}
+		if c, ok := expression.(ir.CallClosure); ok && c.CallWhere != "" {
+			callWhere = c.CallWhere
 		}
 		return expression
 	}
@@ -240,6 +244,7 @@ func v4EscapeAdapterCheck(t *testing.T, relation string) {
 	if relation == "result" {
 		message = fmt.Sprintf("callable call failed: %s at escaping call (read at %s) result expected view \"ok\", producer string", read.View, read.ViewWhere)
 	}
+	message += " call at " + callWhere
 	want := run{exitCode: 70, stdout: []byte(checkedOut), stderr: []byte("adamic: panic: " + message + "\n")}
 	sanitized, _ := nativelyUncached(t, program)
 	for name, got := range map[string]run{"native": releasedUncached(t, program), "sanitized": sanitized, "javascript": onJavaScriptBackend(t, program)} {

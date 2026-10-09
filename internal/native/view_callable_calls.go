@@ -154,6 +154,16 @@ func viewCallableConverted(from, to ir.Type, slot, snapshot string) (string, boo
 // before this dispatch tests values or invokes producer code.
 func (e *emitter) directViewCallableInvoke(call ir.CallClosure, property ir.Property) string {
 	e.declarations = append(e.declarations, "#include \"view_unions_untagged.h\"")
+	escaping := property.ViewEscape
+	if escaping {
+		e.viewCallableBlameRuntime()
+	}
+	panicCall := func(message string) string {
+		if escaping {
+			return "adamic_view_call_panic(" + cString(message) + ")"
+		}
+		return "adamic_panic(" + cString(message) + ", sizeof " + cString(message) + " - 1)"
+	}
 	name := e.temporary()
 	methodType := "adamic_method"
 	if e.program.ClosureConventionNeeded() {
@@ -211,7 +221,7 @@ func (e *emitter) directViewCallableInvoke(call ir.CallClosure, property ir.Prop
 		if f.CallableReceiver != 0 {
 			domain := e.viewCallableDomain(f.CallableReceiver)
 			message := fmt.Sprintf("callable call failed: %s at %s thisArg expected producer %s, view %s", property.View, call.CallWhere, e.program.ViewContracts[f.CallableReceiver-1].Name, property.ViewType)
-			fmt.Fprintf(&b, "if (!%s(adamic_view_union_heap((const adamic_heap *)receiver))) adamic_panic(%s, sizeof %s - 1);\n", domain, cString(message), cString(message))
+			fmt.Fprintf(&b, "if (!%s(adamic_view_union_heap((const adamic_heap *)receiver))) %s;\n", domain, panicCall(message))
 		}
 
 		n := max(1, len(f.Parameters), len(call.Arguments)+offset, e.program.FixedArgumentSlots+offset)
@@ -245,7 +255,7 @@ func (e *emitter) directViewCallableInvoke(call ir.CallClosure, property ir.Prop
 				declared = e.program.ViewContracts[target.Parameters[i]-1].Name
 			}
 			message := fmt.Sprintf("callable call failed: %s at %s argument %d expected producer %s, view %s", property.View, call.CallWhere, i+1, actual, declared)
-			fmt.Fprintf(&b, "if (!%s(%s)) adamic_panic(%s, sizeof %s - 1);\n", domain, snapshot, cString(message), cString(message))
+			fmt.Fprintf(&b, "if (!%s(%s)) %s;\n", domain, snapshot, panicCall(message))
 			if call.CheckBound {
 				b.WriteString("}\n")
 				continue
@@ -291,7 +301,7 @@ func (e *emitter) directViewCallableInvoke(call ir.CallClosure, property ir.Prop
 			}
 			fmt.Fprintf(&b, "adamic_view_union_value returned=%s;\n", returnedSnapshot)
 			message := fmt.Sprintf("callable call failed: %s at %s result expected view %s, producer %s", property.View, call.CallWhere, e.program.ViewContracts[target.Result-1].Name, f.CallableResultName)
-			fmt.Fprintf(&b, "if (!%s(returned)) adamic_panic(%s, sizeof %s - 1);\n", resultCheck, cString(message), cString(message))
+			fmt.Fprintf(&b, "if (!%s(returned)) %s;\n", resultCheck, panicCall(message))
 			value, _ := viewCallableConverted(f.Returns, call.Returns, "result", "returned")
 			fmt.Fprintf(&b, "adamic_value converted_result={.%s=%s};\n", member(call.Returns), value)
 			if f.Returns.IsReference() && !call.Returns.IsReference() {
@@ -302,7 +312,7 @@ func (e *emitter) directViewCallableInvoke(call ir.CallClosure, property ir.Prop
 		b.WriteString("}\n")
 	}
 	message := "callable call failed: " + property.View + " at " + call.CallWhere + " has no checkable producer signature"
-	fmt.Fprintf(&b, "adamic_panic(%s,sizeof %s - 1);\n}\n", cString(message), cString(message))
+	fmt.Fprintf(&b, "%s;\n}\n", panicCall(message))
 	e.declarations = append(e.declarations, b.String())
 	return name
 }
