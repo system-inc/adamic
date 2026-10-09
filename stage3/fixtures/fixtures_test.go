@@ -427,6 +427,7 @@ func fixtureShard(t *testing.T) (int, int) {
 }
 
 func TestFixtureShardManifest(t *testing.T) {
+	t.Parallel()
 	statuses, err := filepath.Glob(filepath.Join(*fixtureRoot, "*", "status.json"))
 	if err != nil {
 		t.Fatal(err)
