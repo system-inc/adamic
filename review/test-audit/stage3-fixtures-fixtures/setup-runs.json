@@ -1,0 +1,180 @@
+[
+  {
+    "id": "Kpaths",
+    "file": "stage3/fixtures/fixtures_test.go",
+    "line": 116,
+    "old": "filepath.Ext(name) == \".a\"",
+    "new": "filepath.Ext(name) == \".ts\"",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage3/fixtures/",
+      "-run",
+      "^TestFixturePaths$"
+    ],
+    "wall": 5.611451405999105,
+    "rc": 1
+  },
+  {
+    "id": "Kmanifest",
+    "file": "stage3/fixtures/fixtures_test.go",
+    "line": 457,
+    "old": "name := filepath.Base(filepath.Dir(status)) + \"/\" + entry.File\n\t\t\tif seen[name]",
+    "new": "name := \"\" + \"\"\n\t\t\tif seen[name]",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage3/fixtures/",
+      "-run",
+      "^TestFixtureShardManifest$"
+    ],
+    "wall": 5.577361096000459,
+    "rc": 1
+  },
+  {
+    "id": "Kassignment",
+    "file": "stage3/fixtures/fixtures_test.go",
+    "line": 474,
+    "old": "return int(binary.BigEndian.Uint64(digest[:8]) % uint64(count))",
+    "new": "_ = digest; _ = binary.BigEndian; return 0",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage3/fixtures/",
+      "-run",
+      "^TestFixtureShardManifest$",
+      "-args",
+      "-test.v"
+    ],
+    "wall": 5.667842105000091,
+    "rc": 0
+  },
+  {
+    "id": "Kprepare",
+    "file": "stage3/fixtures/build-hook.py",
+    "line": 107,
+    "old": "if hashlib.sha256(product.read_bytes()).hexdigest() != product.name:",
+    "new": "if hashlib.sha256(product.read_bytes()).hexdigest() == product.name:",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage3/fixtures/",
+      "-run",
+      "^TestPrepareFixtureOracleHook$"
+    ],
+    "wall": 5.641198788000111,
+    "rc": 1
+  },
+  {
+    "id": "Ppaths",
+    "file": "stage3/fixtures/fixtures_test.go",
+    "line": 116,
+    "old": "return fs.ValidPath(name) && !strings.ContainsAny(name, \"\\\\:\") && filepath.Ext(name) == \".a\"",
+    "new": "_ = fs.ValidPath; return false",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage3/fixtures/",
+      "-run",
+      "^TestFixturePaths$"
+    ],
+    "wall": 5.5976919980003,
+    "rc": 1
+  },
+  {
+    "id": "Pprepare",
+    "file": "stage3/fixtures/fixtures_test.go",
+    "line": 371,
+    "old": "func fixtureOracleHook(t *testing.T, repository string) string {\n\tt.Helper()\n\toracleHookOnce.Do(func() {\n\t\toracleHookResult = execute(t, repository, nil, \"python3\", \"stage3/fixtures/build-hook.py\", \"--prepare\")\n\t})\n\tif oracleHookResult.Exit != 0 || strings.TrimSpace(oracleHookResult.Stdout) == \"\" {\n\t\tt.Fatalf(\"preparing or fetching oracle hook: %s%s\", oracleHookResult.Stdout, oracleHookResult.Stderr)\n\t}\n\treturn strings.TrimSpace(oracleHookResult.Stdout)\n}",
+    "new": "func fixtureOracleHook(t *testing.T, repository string) string { return \"\" }",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage3/fixtures/",
+      "-run",
+      "^TestPrepareFixtureOracleHook$"
+    ],
+    "wall": 5.75655855200057,
+    "rc": 0
+  },
+  {
+    "id": "Kassignment8",
+    "file": "stage3/fixtures/fixtures_test.go",
+    "line": 474,
+    "old": "return int(binary.BigEndian.Uint64(digest[:8]) % uint64(count))",
+    "new": "_ = digest; _ = binary.BigEndian; return 0",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage3/fixtures/",
+      "-run",
+      "^TestFixtureShardManifest$"
+    ],
+    "wall": 2.17122389799988,
+    "rc": 0
+  },
+  {
+    "id": "Pmanifest",
+    "file": "stage3/fixtures/fixtures_test.go",
+    "line": 438,
+    "old": "statuses, err := filepath.Glob(filepath.Join(*fixtureRoot, \"*\", \"status.json\"))",
+    "new": "statuses, err := []string(nil), error(nil)",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage3/fixtures/",
+      "-run",
+      "^TestFixtureShardManifest$"
+    ],
+    "wall": 5.9286729599989485,
+    "rc": 1
+  }
+]

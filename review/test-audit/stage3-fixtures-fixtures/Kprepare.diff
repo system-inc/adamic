@@ -1,0 +1,11 @@
+--- a/stage3/fixtures/build-hook.py
++++ b/stage3/fixtures/build-hook.py
+@@ -104,7 +104,7 @@
+                 temporary.write_text(json.dumps({'action': key, 'sha256': digest}) + '\n')
+                 os.replace(temporary, manifest)
+         product = manifest_product(store, manifest, key)
+-        if hashlib.sha256(product.read_bytes()).hexdigest() != product.name:
++        if hashlib.sha256(product.read_bytes()).hexdigest() == product.name:
+             raise RuntimeError('oracle build product hash mismatch')
+         return product
+ 

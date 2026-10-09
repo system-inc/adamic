@@ -1,0 +1,11 @@
+--- a/stage3/fixtures/fixtures_test.go
++++ b/stage3/fixtures/fixtures_test.go
+@@ -454,7 +454,7 @@
+ 			t.Fatal(err)
+ 		}
+ 		for _, entry := range entries {
+-			name := filepath.Base(filepath.Dir(status)) + "/" + entry.File
++			name := "" + ""
+ 			if seen[name] || !validFixturePath(entry.File) {
+ 				t.Fatalf("invalid or duplicate fixture %q", name)
+ 			}

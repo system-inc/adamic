@@ -1,0 +1,293 @@
+u163: all 14 requested names exist at cf735d9fba9e38de6368575e5630e44375a86eaf.
+The 11 directory wrappers form one family; three other rows are setup checks.
+All three production mutants are package-unique kills after grouping.
+Preparation accepts an empty helper return; shard-assignment corruption survives its manifest check.
+Whole-package baseline and restored gate pass; nproc=5; evidence branch test-audit/stage3-fixtures-fixtures.
+
+[
+  {
+    "test": "TestFixtures family",
+    "package": "stage3/fixtures",
+    "file": "stage3/fixtures/fixtures_test.go",
+    "seconds": 16.058,
+    "oracle": "Fresh Node stdout/stderr/exit versus native, recorded Node bytes, and self-written stage0 diagnostic/admission snapshots",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M1",
+      "M2",
+      "M3"
+    ],
+    "unique_kills": [
+      "M1",
+      "M2",
+      "M3"
+    ],
+    "last_proven_fail": "M3: fixtures_test.go:341: native versus Node byte comparison failed: got exit=1 stdout=\"true true\\n\" stderr=\"\"; want exit=0 stdout=\"true true\\n\" stderr=\"\"",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 3,
+    "probe_kills": [
+      "P1",
+      "P2"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [
+      "TestFixtures family",
+      "TestPrepareFixtureOracleHook",
+      "TestFixturePaths",
+      "TestFixtureShardManifest",
+      "TestTransformedNodeRunnerGuard",
+      "TestTransformedNodeRunnerGuardHook",
+      "TestFixtureDirectoriesHaveTopLevelTests"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage3/fixtures/ -run .; fixtures_test.go:341: native versus Node byte comparison failed: got exit=1 stdout=\"true true\\n\" stderr=\"\"; want exit=0 stdout=\"true true\\n\" stderr=\"\"",
+    "members": [
+      "TestFixturesAssertions",
+      "TestFixturesCycles",
+      "TestFixturesEnums",
+      "TestFixturesHost",
+      "TestFixturesNamespaces",
+      "TestFixturesNestedFunctions",
+      "TestFixturesObjects",
+      "TestFixturesPredicates",
+      "TestFixturesRecords",
+      "TestFixturesRunner",
+      "TestFixturesTaste"
+    ],
+    "seconds_samples": [
+      16.058,
+      16.485,
+      15.32
+    ],
+    "vacuous_subcases": [
+      "TestFixturesAssertions/assertions/18_const_tuple.a/stage0",
+      "TestFixturesAssertions/assertions/20_type_flag_mask.a/stage0",
+      "TestFixturesAssertions/assertions/13_flag_downcast.a/stage0",
+      "TestFixturesAssertions/assertions/11_parenthesized_kind.a/stage0",
+      "TestFixturesAssertions/assertions/10_union_kind.a/stage0",
+      "TestFixturesNamespaces/namespaces/07_parser_singleton.a/stage0",
+      "TestFixturesNamespaces/namespaces/12_builder_release_cache.a/stage0",
+      "TestFixturesNamespaces/namespaces/01_builder_state.a/stage0",
+      "TestFixturesNamespaces/namespaces/11_status_type_only.a/stage0",
+      "TestFixturesNamespaces/namespaces/04_debug_state.a/stage0",
+      "TestFixturesNamespaces/namespaces/09_incremental_parser.a/stage0",
+      "TestFixturesNamespaces/namespaces/08_parser_jsdoc_nested.a/stage0",
+      "TestFixturesNamespaces/namespaces/05_debug_log_merge.a/stage0",
+      "TestFixturesCycles/cycles/01_call_time/main.a/stage0",
+      "TestFixturesCycles/cycles/10_hoisted_before_body/main.a/stage0",
+      "TestFixturesCycles/cycles/09_function_value_load/main.a/stage0",
+      "TestFixturesCycles/cycles/08_named_reexports/main.a/stage0",
+      "TestFixturesCycles/cycles/07_namespace_barrel/main.a/stage0",
+      "TestFixturesCycles/cycles/03_extensions/main.a/stage0",
+      "TestFixturesCycles/cycles/02_reverse_barrel/main.a/stage0",
+      "TestFixturesEnums/enums/01_token_range.a/stage0",
+      "TestFixturesEnums/enums/05_local_export_flags.a/stage0",
+      "TestFixturesEnums/enums/12_diagnostic_reverse_lookup.a/stage0",
+      "TestFixturesEnums/enums/13_regex_map_keys.a/stage0",
+      "TestFixturesEnums/enums/03_jsdoc_range.a/stage0",
+      "TestFixturesEnums/enums/04_parse_tree_mask.a/stage0",
+      "TestFixturesEnums/enums/10_string_enum.a/stage0",
+      "TestFixturesEnums/enums/09_symbol_exclusion_mask.a/stage0",
+      "TestFixturesEnums/enums/02_node_range.a/stage0",
+      "TestFixturesPredicates/predicates/01_identifier.a/stage0",
+      "TestFixturesHost/host/24_useCaseSensitiveFileNames.a/stage0",
+      "TestFixturesHost/host/11_setModifiedTime.a/stage0",
+      "TestFixturesPredicates/predicates/03_void_zero.a/stage0",
+      "TestFixturesPredicates/predicates/02_module_name.a/stage0",
+      "TestFixturesTaste/taste/01_diagnostic_code.a/stage0",
+      "TestFixturesTaste/taste/13_void_callback.a/stage0",
+      "TestFixturesTaste/taste/24_proportional_conditions.a/stage0",
+      "TestFixturesTaste/taste/23_labels_finally.a/stage0",
+      "TestFixturesTaste/taste/refused/21_truthy_loops.a/stage0",
+      "TestFixturesTaste/taste/22_assignment_once.a/stage0",
+      "TestFixturesTaste/taste/20_jsdoc_terminate.a/stage0",
+      "TestFixturesTaste/taste/19_deprecated_flags.a/stage0",
+      "TestFixturesTaste/taste/18_named_export.a/stage0",
+      "TestFixturesTaste/taste/16_scan_exclamation.a/stage0",
+      "TestFixturesTaste/taste/14_relative_complement.a/stage0",
+      "TestFixturesTaste/taste/15_barrel.a/stage0",
+      "TestFixturesTaste/taste/07_compact.a/stage0",
+      "TestFixturesTaste/taste/12_symbol_links.a/stage0",
+      "TestFixturesTaste/taste/10_global_import_meta.a/stage0",
+      "TestFixturesTaste/taste/09_literal_cache.a/stage0",
+      "TestFixturesTaste/taste/04_jsx_runtime.a/stage0",
+      "TestFixturesTaste/taste/03_diagnostic_file.a/stage0",
+      "TestFixturesTaste/taste/05_this_type.a/stage0",
+      "TestFixturesNestedFunctions/nested-functions/07_binder_symbol_count.a/stage0",
+      "TestFixturesNestedFunctions/nested-functions/10_checker_arrow_cleanup.a/stage0",
+      "TestFixturesNestedFunctions/nested-functions/11_scanner_method_wrapper.a/stage0",
+      "TestFixturesNestedFunctions/nested-functions/09_checker_constituent_recursion.a/stage0",
+      "TestFixturesNestedFunctions/nested-functions/08_checker_symbol_recursion.a/stage0",
+      "TestFixturesNestedFunctions/nested-functions/06_parser_token_state.a/stage0",
+      "TestFixturesNestedFunctions/nested-functions/03_scanner_hoisting.a/stage0",
+      "TestFixturesNestedFunctions/nested-functions/04_scanner_escaped_text.a/stage0",
+      "TestFixturesNestedFunctions/nested-functions/02_scanner_digits.a/stage0",
+      "TestFixturesNestedFunctions/nested-functions/05_scanner_reassigned_text.a/stage0",
+      "TestFixturesObjects/objects/28_debugger.a/stage0",
+      "TestFixturesObjects/objects/24_transformation_accessors.a/stage0",
+      "TestFixturesObjects/objects/23_factory_getters.a/stage0",
+      "TestFixturesObjects/objects/14_comment_pending.a/stage0",
+      "TestFixturesObjects/objects/07_synthetic_reference.a/stage0",
+      "TestFixturesRunner/runner/03_return_true.a/stage0",
+      "TestFixturesRunner/runner/01_queue_empty.a/stage0",
+      "TestFixturesRunner/runner/02_is_string.a/stage0"
+    ],
+    "probe_note": "P1 positive stage0 checks may accept nil IR; native subprocess failure still kills their containing family. P2 is independently empty native.C."
+  },
+  {
+    "test": "TestPrepareFixtureOracleHook",
+    "package": "stage3/fixtures",
+    "file": "stage3/fixtures/fixtures_test.go",
+    "seconds": 0.515,
+    "oracle": "Build recipe and content-addressed hook integrity; returned path is ignored",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "Kprepare: fixtures_test.go:391: preparing or fetching oracle hook: Traceback (most recent call last):",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": false,
+    "matrix_rows": [
+      "TestFixtures family",
+      "TestPrepareFixtureOracleHook",
+      "TestFixturePaths",
+      "TestFixtureShardManifest",
+      "TestTransformedNodeRunnerGuard",
+      "TestTransformedNodeRunnerGuardHook",
+      "TestFixtureDirectoriesHaveTopLevelTests"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage3/fixtures/ -run ^TestPrepareFixtureOracleHook$; fixtures_test.go:391: preparing or fetching oracle hook: Traceback (most recent call last):",
+    "members": [
+      "TestPrepareFixtureOracleHook"
+    ],
+    "seconds_samples": [
+      0.549,
+      0.515,
+      0.505
+    ]
+  },
+  {
+    "test": "TestFixturePaths",
+    "package": "stage3/fixtures",
+    "file": "stage3/fixtures/fixtures_test.go",
+    "seconds": 0.008,
+    "oracle": "Hand-written portable path acceptance table",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "Kpaths: fixtures_test.go:410: validFixturePath(\"01_value.a\") = false, want true",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [
+      "Ppaths"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [
+      "TestFixtures family",
+      "TestPrepareFixtureOracleHook",
+      "TestFixturePaths",
+      "TestFixtureShardManifest",
+      "TestTransformedNodeRunnerGuard",
+      "TestTransformedNodeRunnerGuardHook",
+      "TestFixtureDirectoriesHaveTopLevelTests"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage3/fixtures/ -run ^TestFixturePaths$; fixtures_test.go:410: validFixturePath(\"01_value.a\") = false, want true",
+    "members": [
+      "TestFixturePaths"
+    ],
+    "seconds_samples": [
+      0.008,
+      0.008,
+      0.008
+    ],
+    "vacuous_subcases": [
+      "TestFixturePaths//tmp/main.a",
+      "TestFixturePaths/01_case/../main.a",
+      "TestFixturePaths/../main.a",
+      "TestFixturePaths/01_case//main.a",
+      "TestFixturePaths/#00",
+      "TestFixturePaths/main.ts",
+      "TestFixturePaths/./main.a",
+      "TestFixturePaths/01_case\\main.a",
+      "TestFixturePaths/C:/main.a"
+    ]
+  },
+  {
+    "test": "TestFixtureShardManifest",
+    "package": "stage3/fixtures",
+    "file": "stage3/fixtures/fixtures_test.go",
+    "seconds": 0.012,
+    "oracle": "Fixture identity uniqueness, path validity and nonempty enumeration; shard assignments only logged",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "Kmanifest: fixtures_test.go:459: invalid or duplicate fixture \"\"",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [
+      "Pmanifest"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [
+      "TestFixtures family",
+      "TestPrepareFixtureOracleHook",
+      "TestFixturePaths",
+      "TestFixtureShardManifest",
+      "TestTransformedNodeRunnerGuard",
+      "TestTransformedNodeRunnerGuardHook",
+      "TestFixtureDirectoriesHaveTopLevelTests"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage3/fixtures/ -run ^TestFixtureShardManifest$; fixtures_test.go:459: invalid or duplicate fixture \"\"",
+    "members": [
+      "TestFixtureShardManifest"
+    ],
+    "seconds_samples": [
+      0.012,
+      0.011,
+      0.013
+    ]
+  }
+]
+PRODUCTION MUTANTS
+M1 | internal/lower/expression.go:508 | return ir.BooleanConstant{Value: node.Kind == ast.KindTrueKeyword}, nil -> return ir.BooleanConstant{Value: node.Kind != ast.KindTrueKeyword}, nil | TestFixtures family
+M2 | internal/lower/diagnostics.go:17 | stage 0 can't lower %s yet -> stage 0 cannot lower %s yet | TestFixtures family
+M3 | internal/native/emit.go:111 | bodies.WriteString("\treturn 0;\n}\n") -> bodies.WriteString("\treturn 1;\n}\n") | TestFixtures family
+
+SURVIVORS
+No production mutant survived. Separate construction finding Kassignment8 survived: assertions/01_map_call.a logged shard=5/8 before and shard=0/8 after, while TestFixtureShardManifest passed both. The row logs assignments but never asserts their values. assignment-witness.json and the before/after logs preserve these observations. Kassignment is equivalent for the default one-shard mode; the 0/8 rerun proves the multi-shard behavior changed. Neither construction fault counts as a production kill or worthy evidence.
+
+SCOPE, INTERPRETATIONS AND TIME COSTS
+The starting origin/main moved from the brief's old 8de93800f4 to cf735d9fba9e38de6368575e5630e44375a86eaf. All 14 requested names remain in fixtures_test.go; none vanished or moved. The 11 TestFixtures wrappers each pass only a directory string to testFixtureDirectory. Under the stated family rule this is one row, even though its inputs cover distinct language features and the shared helper selects Node transform mode for enums/namespaces. Four rows are judged, rather than treating input wrappers as competing tests. scope.json lists all family members and all 17 discovered top-level functions.
+
+The package has three additional top-level functions outside this slice: transformed-runner guard, its subprocess helper, and directory coverage construction. They were included in every whole-package production matrix run to establish package uniqueness. The helper skipped normally because its parent alone supplies the subprocess environment. No requested row skipped, and no platform fixture skipped on this Linux worker. Other tests need no installable opt-ins. The helper's skip is not a missing SDK or unavailable corpus.
+
+The fixture family has two oracle kinds. Current Node is independently executed from fixture source and compared with complete native stdout/stderr/exit. Recorded Node outputs and Adamic stage0 diagnostic/admission strings are self snapshots. TSC provenance points to the extracted TypeScript source; it does not independently establish Adamic's diagnostic text. M2 specifically guards exact diagnostic wording and does not demonstrate a changed semantic refusal. CheckedStop expectations are self-written exact native stop contracts; they are not Node agreement.
+
+Code under test is lowering and native emission/runtime. Fixtures are inputs and were not mutated; expected status.json values, Node runner, comparisons and hook checks were untouched during production mutation runs. Production standalone diffs contain only fixed-menu changes. The switch adds selector plumbing so Go and the hook compile once; that plumbing is not a supplemental mutant. All mutations were frozen in plan.json before checking failures. Each mutation has its own ADAMIC_BUILD_CACHE_DIR. The source-identical switched hook is reused safely, because ADAMIC_MUTANT is inherited by its subprocess and C is regenerated and natively compiled uncached for each fixture. The first switched hook preparation/fetch took 9.061672339 seconds; subsequent fetches took 0.497114238 and 0.607197337 seconds. We did not run the internal/oracle suite; the fixture package necessarily prepares its test binary and invokes only its designated TestStage3FixtureHook.
+
+Every requested semantic row calls Lower; native fixture observations also enter native.C. P1 and P2 independently return their empty values at those entries. A nil IR aborts individual native hook subprocesses, which the fixture parent catches as failed subtests; it does not abort the outer fixture binary. All outer top-level rows completed, so no matrix cells are inferred after an aborted outer process. P1 lets 71 positive stage0 admission subchecks pass because they discard the returned IR and inspect only the error; their native subchecks still fail, so the family is not vacuous. rows.json lists those exact subcase names. Recorded checker failures occur before Lower and are excluded from this list.
+
+Construction rows require permitted scratch construction edits rather than compiler mutations. Kpaths changes the validation implementation while leaving the acceptance table fixed. Kmanifest corrupts the constructed identity while preserving duplicate/validity assertions. Kprepare flips the product-integrity condition while leaving TestPrepareFixtureOracleHook unchanged. Empty construction probes are not production kills. Pprepare returns empty at fixtureOracleHook entry, bypassing preparation; the top-level declaration ignores the path and passes. Pmanifest supplies empty enumeration where the inline manifest construction obtains its answer, because that construction has no separate exported entry function; it fails the existing nonempty guard. Ppaths returns false and passes its negative cases but fails positive cases. All probe identifiers remain separate from kills.
+
+The lower function inventory is based on an actual clean coverage run, reaching 46.0% of lowering statements. Native work runs in the separately compiled subprocess hook and is not visible to the outer coverage profile. functions.txt therefore lists conservative native candidates and labels that limitation explicitly. Selected mutant functions were read in full before planting. Exact dynamic enumeration of every transitive native/runtime function was not completed. No C runtime mutation was planted. The native empty probe is rejected by compilation, which is valid empty-answer evidence but is not counted as a production kill. The three production mutants compiled successfully and were caught by behavior or stage0 assertions, not clang warnings.
+
+README's old TestFixtures command no longer selects the split top-level wrappers. This audit used the current go test -list scope and ^TestFixtures family pattern instead. The family costs below are full-family medians, not per-directory estimates or sums of parallel subtest durations. No time limit was exceeded and no narrowing was needed.
+
+TIMING AND COVERAGE LIMITS
+Warm toolchain: setup skipped (0 seconds), Go1.27.1, Node24.19.0, nproc=5. npm ci in stage3/api took0.510 seconds; assertions/api took0.536 seconds. Whole-package baseline passed in28.373 binary seconds. Isolated binary medians and all three samples are in seconds.json. Isolated Go commands totaled 73.783 wall seconds. Three production matrices plus P1 totaled 90.453 wall seconds. Native empty P2 took 23.233 wall seconds. Construction/probe commands totaled 41.952 wall seconds. Each native fixture subcheck duration includes build, execution and sanitizer/leak work; the inherited hook does not expose pure clang build timing separately, so no separate build duration is invented. Final restored whole package passed in17.690 binary seconds, and Go vet passed.
+No repository-wide test replay was attempted. Other package test quality, cross-package uniqueness, uncached Go toolchain rebuild cost, every transitive runtime function and non-Linux execution are not covered. Package uniqueness is supported because every current outer row was observed in the whole-package matrices and exactly one grouped row failed each production mutant. Construction survivors and empty probes do not support sacred verdicts. Every standalone diff applies to the clean starting tree, and every Go diff was validated with the corresponding package's go vet; Python construction faults exercised their real preparation path.

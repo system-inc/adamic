@@ -1,0 +1,132 @@
+[
+  {
+    "test": "TestFixtures family",
+    "package": "stage3/fixtures",
+    "file": "stage3/fixtures/fixtures_test.go",
+    "seconds": 16.058,
+    "oracle": "Fresh Node stdout/stderr/exit versus native, recorded Node bytes, and self-written stage0 diagnostic/admission snapshots",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M1",
+      "M2",
+      "M3"
+    ],
+    "unique_kills": [
+      "M1",
+      "M2",
+      "M3"
+    ],
+    "last_proven_fail": "M3: fixtures_test.go:341: native versus Node byte comparison failed: got exit=1 stdout=\"true true\\n\" stderr=\"\"",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 3,
+    "probe_kills": [
+      "P1",
+      "P2"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [
+      "TestFixtures family",
+      "TestPrepareFixtureOracleHook",
+      "TestFixturePaths",
+      "TestFixtureShardManifest",
+      "TestTransformedNodeRunnerGuard",
+      "TestTransformedNodeRunnerGuardHook",
+      "TestFixtureDirectoriesHaveTopLevelTests"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage3/fixtures/ -run .; fixtures_test.go:341: native versus Node byte comparison failed: got exit=1 stdout=\"true true\\n\" stderr=\"\"; want exit=0 stdout=\"true true\\n\" stderr=\"\""
+  },
+  {
+    "test": "TestPrepareFixtureOracleHook",
+    "package": "stage3/fixtures",
+    "file": "stage3/fixtures/fixtures_test.go",
+    "seconds": 0.515,
+    "oracle": "Build recipe and content-addressed hook integrity; returned path is ignored",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "Kprepare: fixtures_test.go:391: preparing or fetching oracle hook: RuntimeError: oracle build product hash mismatch",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": false,
+    "matrix_rows": [
+      "TestFixtures family",
+      "TestPrepareFixtureOracleHook",
+      "TestFixturePaths",
+      "TestFixtureShardManifest",
+      "TestTransformedNodeRunnerGuard",
+      "TestTransformedNodeRunnerGuardHook",
+      "TestFixtureDirectoriesHaveTopLevelTests"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage3/fixtures/ -run ^TestPrepareFixtureOracleHook$; fixtures_test.go:391: preparing or fetching oracle hook: Traceback (most recent call last):"
+  },
+  {
+    "test": "TestFixturePaths",
+    "package": "stage3/fixtures",
+    "file": "stage3/fixtures/fixtures_test.go",
+    "seconds": 0.008,
+    "oracle": "Hand-written portable path acceptance table",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "Kpaths: fixtures_test.go:410: validFixturePath(\"01_value.a\") = false, want true",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [
+      "Ppaths"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [
+      "TestFixtures family",
+      "TestPrepareFixtureOracleHook",
+      "TestFixturePaths",
+      "TestFixtureShardManifest",
+      "TestTransformedNodeRunnerGuard",
+      "TestTransformedNodeRunnerGuardHook",
+      "TestFixtureDirectoriesHaveTopLevelTests"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage3/fixtures/ -run ^TestFixturePaths$; fixtures_test.go:410: validFixturePath(\"01_value.a\") = false, want true"
+  },
+  {
+    "test": "TestFixtureShardManifest",
+    "package": "stage3/fixtures",
+    "file": "stage3/fixtures/fixtures_test.go",
+    "seconds": 0.012,
+    "oracle": "Fixture identity uniqueness, path validity and nonempty enumeration; shard assignments only logged",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "Kmanifest: fixtures_test.go:459: invalid or duplicate fixture \"\"",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [
+      "Pmanifest"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [
+      "TestFixtures family",
+      "TestPrepareFixtureOracleHook",
+      "TestFixturePaths",
+      "TestFixtureShardManifest",
+      "TestTransformedNodeRunnerGuard",
+      "TestTransformedNodeRunnerGuardHook",
+      "TestFixtureDirectoriesHaveTopLevelTests"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage3/fixtures/ -run ^TestFixtureShardManifest$; fixtures_test.go:459: invalid or duplicate fixture \"\""
+  }
+]

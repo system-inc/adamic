@@ -1,0 +1,86 @@
+[
+  {
+    "row": "family",
+    "run": 1,
+    "pattern": "^TestFixtures",
+    "wall": 18.20982450699921,
+    "rc": 0
+  },
+  {
+    "row": "family",
+    "run": 2,
+    "pattern": "^TestFixtures",
+    "wall": 18.55257898200034,
+    "rc": 0
+  },
+  {
+    "row": "family",
+    "run": 3,
+    "pattern": "^TestFixtures",
+    "wall": 17.222103237998454,
+    "rc": 0
+  },
+  {
+    "row": "prepare",
+    "run": 1,
+    "pattern": "^TestPrepareFixtureOracleHook$",
+    "wall": 2.5479644639999606,
+    "rc": 0
+  },
+  {
+    "row": "prepare",
+    "run": 2,
+    "pattern": "^TestPrepareFixtureOracleHook$",
+    "wall": 2.5343955360003747,
+    "rc": 0
+  },
+  {
+    "row": "prepare",
+    "run": 3,
+    "pattern": "^TestPrepareFixtureOracleHook$",
+    "wall": 2.4912706300001446,
+    "rc": 0
+  },
+  {
+    "row": "paths",
+    "run": 1,
+    "pattern": "^TestFixturePaths$",
+    "wall": 2.055371168999045,
+    "rc": 0
+  },
+  {
+    "row": "paths",
+    "run": 2,
+    "pattern": "^TestFixturePaths$",
+    "wall": 1.9732539800006634,
+    "rc": 0
+  },
+  {
+    "row": "paths",
+    "run": 3,
+    "pattern": "^TestFixturePaths$",
+    "wall": 2.0490397739995387,
+    "rc": 0
+  },
+  {
+    "row": "manifest",
+    "run": 1,
+    "pattern": "^TestFixtureShardManifest$",
+    "wall": 2.0697254309998243,
+    "rc": 0
+  },
+  {
+    "row": "manifest",
+    "run": 2,
+    "pattern": "^TestFixtureShardManifest$",
+    "wall": 1.9699683740000182,
+    "rc": 0
+  },
+  {
+    "row": "manifest",
+    "run": 3,
+    "pattern": "^TestFixtureShardManifest$",
+    "wall": 2.107618908999939,
+    "rc": 0
+  }
+]

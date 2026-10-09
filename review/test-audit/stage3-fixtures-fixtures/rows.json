@@ -1,0 +1,259 @@
+[
+  {
+    "test": "TestFixtures family",
+    "package": "stage3/fixtures",
+    "file": "stage3/fixtures/fixtures_test.go",
+    "seconds": 16.058,
+    "oracle": "Fresh Node stdout/stderr/exit versus native, recorded Node bytes, and self-written stage0 diagnostic/admission snapshots",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M1",
+      "M2",
+      "M3"
+    ],
+    "unique_kills": [
+      "M1",
+      "M2",
+      "M3"
+    ],
+    "last_proven_fail": "M3: fixtures_test.go:341: native versus Node byte comparison failed: got exit=1 stdout=\"true true\\n\" stderr=\"\"; want exit=0 stdout=\"true true\\n\" stderr=\"\"",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 3,
+    "probe_kills": [
+      "P1",
+      "P2"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [
+      "TestFixtures family",
+      "TestPrepareFixtureOracleHook",
+      "TestFixturePaths",
+      "TestFixtureShardManifest",
+      "TestTransformedNodeRunnerGuard",
+      "TestTransformedNodeRunnerGuardHook",
+      "TestFixtureDirectoriesHaveTopLevelTests"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage3/fixtures/ -run .; fixtures_test.go:341: native versus Node byte comparison failed: got exit=1 stdout=\"true true\\n\" stderr=\"\"; want exit=0 stdout=\"true true\\n\" stderr=\"\"",
+    "members": [
+      "TestFixturesAssertions",
+      "TestFixturesCycles",
+      "TestFixturesEnums",
+      "TestFixturesHost",
+      "TestFixturesNamespaces",
+      "TestFixturesNestedFunctions",
+      "TestFixturesObjects",
+      "TestFixturesPredicates",
+      "TestFixturesRecords",
+      "TestFixturesRunner",
+      "TestFixturesTaste"
+    ],
+    "seconds_samples": [
+      16.058,
+      16.485,
+      15.32
+    ],
+    "vacuous_subcases": [
+      "TestFixturesAssertions/assertions/18_const_tuple.a/stage0",
+      "TestFixturesAssertions/assertions/20_type_flag_mask.a/stage0",
+      "TestFixturesAssertions/assertions/13_flag_downcast.a/stage0",
+      "TestFixturesAssertions/assertions/11_parenthesized_kind.a/stage0",
+      "TestFixturesAssertions/assertions/10_union_kind.a/stage0",
+      "TestFixturesNamespaces/namespaces/07_parser_singleton.a/stage0",
+      "TestFixturesNamespaces/namespaces/12_builder_release_cache.a/stage0",
+      "TestFixturesNamespaces/namespaces/01_builder_state.a/stage0",
+      "TestFixturesNamespaces/namespaces/11_status_type_only.a/stage0",
+      "TestFixturesNamespaces/namespaces/04_debug_state.a/stage0",
+      "TestFixturesNamespaces/namespaces/09_incremental_parser.a/stage0",
+      "TestFixturesNamespaces/namespaces/08_parser_jsdoc_nested.a/stage0",
+      "TestFixturesNamespaces/namespaces/05_debug_log_merge.a/stage0",
+      "TestFixturesCycles/cycles/01_call_time/main.a/stage0",
+      "TestFixturesCycles/cycles/10_hoisted_before_body/main.a/stage0",
+      "TestFixturesCycles/cycles/09_function_value_load/main.a/stage0",
+      "TestFixturesCycles/cycles/08_named_reexports/main.a/stage0",
+      "TestFixturesCycles/cycles/07_namespace_barrel/main.a/stage0",
+      "TestFixturesCycles/cycles/03_extensions/main.a/stage0",
+      "TestFixturesCycles/cycles/02_reverse_barrel/main.a/stage0",
+      "TestFixturesEnums/enums/01_token_range.a/stage0",
+      "TestFixturesEnums/enums/05_local_export_flags.a/stage0",
+      "TestFixturesEnums/enums/12_diagnostic_reverse_lookup.a/stage0",
+      "TestFixturesEnums/enums/13_regex_map_keys.a/stage0",
+      "TestFixturesEnums/enums/03_jsdoc_range.a/stage0",
+      "TestFixturesEnums/enums/04_parse_tree_mask.a/stage0",
+      "TestFixturesEnums/enums/10_string_enum.a/stage0",
+      "TestFixturesEnums/enums/09_symbol_exclusion_mask.a/stage0",
+      "TestFixturesEnums/enums/02_node_range.a/stage0",
+      "TestFixturesPredicates/predicates/01_identifier.a/stage0",
+      "TestFixturesHost/host/24_useCaseSensitiveFileNames.a/stage0",
+      "TestFixturesHost/host/11_setModifiedTime.a/stage0",
+      "TestFixturesPredicates/predicates/03_void_zero.a/stage0",
+      "TestFixturesPredicates/predicates/02_module_name.a/stage0",
+      "TestFixturesTaste/taste/01_diagnostic_code.a/stage0",
+      "TestFixturesTaste/taste/13_void_callback.a/stage0",
+      "TestFixturesTaste/taste/24_proportional_conditions.a/stage0",
+      "TestFixturesTaste/taste/23_labels_finally.a/stage0",
+      "TestFixturesTaste/taste/refused/21_truthy_loops.a/stage0",
+      "TestFixturesTaste/taste/22_assignment_once.a/stage0",
+      "TestFixturesTaste/taste/20_jsdoc_terminate.a/stage0",
+      "TestFixturesTaste/taste/19_deprecated_flags.a/stage0",
+      "TestFixturesTaste/taste/18_named_export.a/stage0",
+      "TestFixturesTaste/taste/16_scan_exclamation.a/stage0",
+      "TestFixturesTaste/taste/14_relative_complement.a/stage0",
+      "TestFixturesTaste/taste/15_barrel.a/stage0",
+      "TestFixturesTaste/taste/07_compact.a/stage0",
+      "TestFixturesTaste/taste/12_symbol_links.a/stage0",
+      "TestFixturesTaste/taste/10_global_import_meta.a/stage0",
+      "TestFixturesTaste/taste/09_literal_cache.a/stage0",
+      "TestFixturesTaste/taste/04_jsx_runtime.a/stage0",
+      "TestFixturesTaste/taste/03_diagnostic_file.a/stage0",
+      "TestFixturesTaste/taste/05_this_type.a/stage0",
+      "TestFixturesNestedFunctions/nested-functions/07_binder_symbol_count.a/stage0",
+      "TestFixturesNestedFunctions/nested-functions/10_checker_arrow_cleanup.a/stage0",
+      "TestFixturesNestedFunctions/nested-functions/11_scanner_method_wrapper.a/stage0",
+      "TestFixturesNestedFunctions/nested-functions/09_checker_constituent_recursion.a/stage0",
+      "TestFixturesNestedFunctions/nested-functions/08_checker_symbol_recursion.a/stage0",
+      "TestFixturesNestedFunctions/nested-functions/06_parser_token_state.a/stage0",
+      "TestFixturesNestedFunctions/nested-functions/03_scanner_hoisting.a/stage0",
+      "TestFixturesNestedFunctions/nested-functions/04_scanner_escaped_text.a/stage0",
+      "TestFixturesNestedFunctions/nested-functions/02_scanner_digits.a/stage0",
+      "TestFixturesNestedFunctions/nested-functions/05_scanner_reassigned_text.a/stage0",
+      "TestFixturesObjects/objects/28_debugger.a/stage0",
+      "TestFixturesObjects/objects/24_transformation_accessors.a/stage0",
+      "TestFixturesObjects/objects/23_factory_getters.a/stage0",
+      "TestFixturesObjects/objects/14_comment_pending.a/stage0",
+      "TestFixturesObjects/objects/07_synthetic_reference.a/stage0",
+      "TestFixturesRunner/runner/03_return_true.a/stage0",
+      "TestFixturesRunner/runner/01_queue_empty.a/stage0",
+      "TestFixturesRunner/runner/02_is_string.a/stage0"
+    ],
+    "probe_note": "P1 positive stage0 checks may accept nil IR; native subprocess failure still kills their containing family. P2 is independently empty native.C."
+  },
+  {
+    "test": "TestPrepareFixtureOracleHook",
+    "package": "stage3/fixtures",
+    "file": "stage3/fixtures/fixtures_test.go",
+    "seconds": 0.515,
+    "oracle": "Build recipe and content-addressed hook integrity; returned path is ignored",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "Kprepare: fixtures_test.go:391: preparing or fetching oracle hook: Traceback (most recent call last):",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": false,
+    "matrix_rows": [
+      "TestFixtures family",
+      "TestPrepareFixtureOracleHook",
+      "TestFixturePaths",
+      "TestFixtureShardManifest",
+      "TestTransformedNodeRunnerGuard",
+      "TestTransformedNodeRunnerGuardHook",
+      "TestFixtureDirectoriesHaveTopLevelTests"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage3/fixtures/ -run ^TestPrepareFixtureOracleHook$; fixtures_test.go:391: preparing or fetching oracle hook: Traceback (most recent call last):",
+    "members": [
+      "TestPrepareFixtureOracleHook"
+    ],
+    "seconds_samples": [
+      0.549,
+      0.515,
+      0.505
+    ]
+  },
+  {
+    "test": "TestFixturePaths",
+    "package": "stage3/fixtures",
+    "file": "stage3/fixtures/fixtures_test.go",
+    "seconds": 0.008,
+    "oracle": "Hand-written portable path acceptance table",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "Kpaths: fixtures_test.go:410: validFixturePath(\"01_value.a\") = false, want true",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [
+      "Ppaths"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [
+      "TestFixtures family",
+      "TestPrepareFixtureOracleHook",
+      "TestFixturePaths",
+      "TestFixtureShardManifest",
+      "TestTransformedNodeRunnerGuard",
+      "TestTransformedNodeRunnerGuardHook",
+      "TestFixtureDirectoriesHaveTopLevelTests"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage3/fixtures/ -run ^TestFixturePaths$; fixtures_test.go:410: validFixturePath(\"01_value.a\") = false, want true",
+    "members": [
+      "TestFixturePaths"
+    ],
+    "seconds_samples": [
+      0.008,
+      0.008,
+      0.008
+    ],
+    "vacuous_subcases": [
+      "TestFixturePaths//tmp/main.a",
+      "TestFixturePaths/01_case/../main.a",
+      "TestFixturePaths/../main.a",
+      "TestFixturePaths/01_case//main.a",
+      "TestFixturePaths/#00",
+      "TestFixturePaths/main.ts",
+      "TestFixturePaths/./main.a",
+      "TestFixturePaths/01_case\\main.a",
+      "TestFixturePaths/C:/main.a"
+    ]
+  },
+  {
+    "test": "TestFixtureShardManifest",
+    "package": "stage3/fixtures",
+    "file": "stage3/fixtures/fixtures_test.go",
+    "seconds": 0.012,
+    "oracle": "Fixture identity uniqueness, path validity and nonempty enumeration; shard assignments only logged",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "Kmanifest: fixtures_test.go:459: invalid or duplicate fixture \"\"",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [
+      "Pmanifest"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [
+      "TestFixtures family",
+      "TestPrepareFixtureOracleHook",
+      "TestFixturePaths",
+      "TestFixtureShardManifest",
+      "TestTransformedNodeRunnerGuard",
+      "TestTransformedNodeRunnerGuardHook",
+      "TestFixtureDirectoriesHaveTopLevelTests"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage3/fixtures/ -run ^TestFixtureShardManifest$; fixtures_test.go:459: invalid or duplicate fixture \"\"",
+    "members": [
+      "TestFixtureShardManifest"
+    ],
+    "seconds_samples": [
+      0.012,
+      0.011,
+      0.013
+    ]
+  }
+]

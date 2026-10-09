@@ -1,0 +1,20 @@
+--- a/stage3/fixtures/fixtures_test.go
++++ b/stage3/fixtures/fixtures_test.go
+@@ -368,16 +368,7 @@
+ var oracleHookOnce sync.Once
+ var oracleHookResult behavior
+ 
+-func fixtureOracleHook(t *testing.T, repository string) string {
+-	t.Helper()
+-	oracleHookOnce.Do(func() {
+-		oracleHookResult = execute(t, repository, nil, "python3", "stage3/fixtures/build-hook.py", "--prepare")
+-	})
+-	if oracleHookResult.Exit != 0 || strings.TrimSpace(oracleHookResult.Stdout) == "" {
+-		t.Fatalf("preparing or fetching oracle hook: %s%s", oracleHookResult.Stdout, oracleHookResult.Stderr)
+-	}
+-	return strings.TrimSpace(oracleHookResult.Stdout)
+-}
++func fixtureOracleHook(t *testing.T, repository string) string { return "" }
+ 
+ // Not parallel: prepare before this package's parallel fixture workers. The
+ // gate can dispatch this named build unit separately; each directory test prepares

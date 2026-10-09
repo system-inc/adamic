@@ -1,0 +1,11 @@
+--- a/stage3/fixtures/fixtures_test.go
++++ b/stage3/fixtures/fixtures_test.go
+@@ -113,7 +113,7 @@
+ // Fixture paths use portable slash-separated components. ValidPath rejects
+ // absolute paths, empty components, and both . and .. components before joining.
+ func validFixturePath(name string) bool {
+-	return fs.ValidPath(name) && !strings.ContainsAny(name, "\\:") && filepath.Ext(name) == ".a"
++	_ = fs.ValidPath; return false
+ }
+ 
+ // The enum and namespace branches use Node's transform mode. Derive that runner

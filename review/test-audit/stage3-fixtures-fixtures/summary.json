@@ -1,0 +1,15 @@
+{
+  "base": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+  "nproc": 5,
+  "rows": 4,
+  "production_mutants": 3,
+  "verdicts": {
+    "sacred": 1,
+    "setup-check": 3
+  },
+  "production_survivors": [],
+  "construction_survivor": "Kassignment8",
+  "baseline_binary_seconds": 28.373,
+  "restored_binary_seconds": 17.69,
+  "setup_seconds": 0
+}

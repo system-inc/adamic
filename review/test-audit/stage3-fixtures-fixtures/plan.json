@@ -1,0 +1,26 @@
+[
+  {
+    "id": "M1",
+    "file": "internal/lower/expression.go",
+    "line": 508,
+    "change": "return ir.BooleanConstant{Value: node.Kind != ast.KindTrueKeyword}, nil",
+    "old": "return ir.BooleanConstant{Value: node.Kind == ast.KindTrueKeyword}, nil",
+    "menu": "flip condition"
+  },
+  {
+    "id": "M2",
+    "file": "internal/lower/diagnostics.go",
+    "line": 17,
+    "change": "stage 0 cannot lower %s yet",
+    "old": "stage 0 can't lower %s yet",
+    "menu": "change constant"
+  },
+  {
+    "id": "M3",
+    "file": "internal/native/emit.go",
+    "line": 111,
+    "change": "bodies.WriteString(\"\\treturn 1;\\n}\\n\")",
+    "old": "bodies.WriteString(\"\\treturn 0;\\n}\\n\")",
+    "menu": "change constant"
+  }
+]

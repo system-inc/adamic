@@ -1,0 +1,84 @@
+diff --git a/internal/lower/diagnostics.go b/internal/lower/diagnostics.go
+index 4e462e16..e8c12985 100644
+--- a/internal/lower/diagnostics.go
++++ b/internal/lower/diagnostics.go
+@@ -2,6 +2,7 @@
+ package lower
+ 
+ import (
++ "os"
+ 	"fmt"
+ 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+ 	"strings"
+@@ -14,7 +15,7 @@ type NotYet struct {
+ }
+ 
+ func (n *NotYet) Error() string {
+-	return fmt.Sprintf("%s: stage 0 can't lower %s yet", n.Where, n.What)
++	if os.Getenv("ADAMIC_MUTANT") == "M2" { return fmt.Sprintf("%s: stage 0 cannot lower %s yet", n.Where, n.What) }; return fmt.Sprintf("%s: stage 0 can't lower %s yet", n.Where, n.What)
+ }
+ 
+ // Refused is something Adamic 0.1 doesn't allow at all (docs/0.1.md), as opposed to something stage 0
+diff --git a/internal/lower/expression.go b/internal/lower/expression.go
+index 8b8c5d6d..4ff0aa71 100644
+--- a/internal/lower/expression.go
++++ b/internal/lower/expression.go
+@@ -1,6 +1,7 @@
+ package lower
+ 
+ import (
++ "os"
+ 	"errors"
+ 	"reflect"
+ 
+@@ -505,7 +506,7 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
+ 	case ast.KindStringLiteral, ast.KindNoSubstitutionTemplateLiteral:
+ 		return ir.StringConstant{Index: l.constant(node.Text())}, nil
+ 	case ast.KindTrueKeyword, ast.KindFalseKeyword:
+-		return ir.BooleanConstant{Value: node.Kind == ast.KindTrueKeyword}, nil
++		if os.Getenv("ADAMIC_MUTANT") == "M1" { return ir.BooleanConstant{Value: node.Kind != ast.KindTrueKeyword}, nil }; return ir.BooleanConstant{Value: node.Kind == ast.KindTrueKeyword}, nil
+ 	case ast.KindIdentifier:
+ 		if value, known, err := l.libraryGlobalValue(node); known {
+ 			return value, err
+diff --git a/internal/lower/lower.go b/internal/lower/lower.go
+index daba343f..939330bf 100644
+--- a/internal/lower/lower.go
++++ b/internal/lower/lower.go
+@@ -7,6 +7,7 @@
+ package lower
+ 
+ import (
++ "os"
+ 	"context"
+ 	"fmt"
+ 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+@@ -18,7 +19,7 @@ import (
+ 
+ // Lower lowers a checked program from one entry, in ESM evaluation order.
+ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
+-	files := program.Files()
++	if os.Getenv("ADAMIC_MUTANT") == "P1" { return nil, nil }; files := program.Files()
+ 	if len(files) != 1 {
+ 		return nil, fmt.Errorf("lower: stage 0 compiles a program from one entry file, got %d", len(files))
+ 	}
+diff --git a/internal/native/emit.go b/internal/native/emit.go
+index 8842056c..613ae8b8 100644
+--- a/internal/native/emit.go
++++ b/internal/native/emit.go
+@@ -1,6 +1,7 @@
+ package native
+ 
+ import (
++ "os"
+ 	"fmt"
+ 	"github.com/system-inc/adamic/internal/ir"
+ 	"strings"
+@@ -108,7 +109,7 @@ func cProgram(program *ir.Program, handler int) string {
+ 		emitter.releaseGlobals()
+ 	}
+ 	bodies.WriteString(emitter.out.String())
+-	bodies.WriteString("\treturn 0;\n}\n")
++	if os.Getenv("ADAMIC_MUTANT") == "M3" { bodies.WriteString("\treturn 1;\n}\n") } else { bodies.WriteString("\treturn 0;\n}\n") }
+ 	if handler >= 0 {
+ 		bodies.WriteString(emitter.requestABI(handler))
+ 	}

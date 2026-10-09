@@ -1,0 +1,14 @@
+{"Time":"2026-10-09T13:53:58.222825256Z","Action":"start","Package":"github.com/system-inc/adamic/stage3/fixtures"}
+{"Time":"2026-10-09T13:53:58.230128972Z","Action":"run","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixtureShardManifest"}
+{"Time":"2026-10-09T13:53:58.230205567Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixtureShardManifest","Output":"=== RUN   TestFixtureShardManifest\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:53:58.230225998Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixtureShardManifest","Output":"=== PAUSE TestFixtureShardManifest\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:53:58.230228201Z","Action":"pause","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixtureShardManifest"}
+{"Time":"2026-10-09T13:53:58.230230485Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixtureShardManifest"}
+{"Time":"2026-10-09T13:53:58.230232247Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixtureShardManifest","Output":"=== CONT  TestFixtureShardManifest\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:53:58.231139367Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixtureShardManifest","Output":"    fixtures_test.go:462:  shard=0/1\n"}
+{"Time":"2026-10-09T13:53:58.231155641Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixtureShardManifest","Output":"    fixtures_test.go:459: invalid or duplicate fixture \"\"\n","OutputType":"error"}
+{"Time":"2026-10-09T13:53:58.231206888Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixtureShardManifest","Output":"--- FAIL: TestFixtureShardManifest (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:53:58.231213929Z","Action":"fail","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixtureShardManifest","Elapsed":0}
+{"Time":"2026-10-09T13:53:58.231226959Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:53:58.231318006Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Output":"FAIL\tgithub.com/system-inc/adamic/stage3/fixtures\t0.008s\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:53:58.231352217Z","Action":"fail","Package":"github.com/system-inc/adamic/stage3/fixtures","Elapsed":0.009}

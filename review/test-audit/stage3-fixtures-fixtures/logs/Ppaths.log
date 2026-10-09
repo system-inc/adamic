@@ -1,0 +1,111 @@
+{"Time":"2026-10-09T13:54:15.464285488Z","Action":"start","Package":"github.com/system-inc/adamic/stage3/fixtures"}
+{"Time":"2026-10-09T13:54:15.475410979Z","Action":"run","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths"}
+{"Time":"2026-10-09T13:54:15.475509597Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths","Output":"=== RUN   TestFixturePaths\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:54:15.475535626Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths","Output":"=== PAUSE TestFixturePaths\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:54:15.4755379Z","Action":"pause","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths"}
+{"Time":"2026-10-09T13:54:15.475540413Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths"}
+{"Time":"2026-10-09T13:54:15.475542116Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths","Output":"=== CONT  TestFixturePaths\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:54:15.475545711Z","Action":"run","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/01_value.a"}
+{"Time":"2026-10-09T13:54:15.475548375Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/01_value.a","Output":"=== RUN   TestFixturePaths/01_value.a\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:54:15.47555167Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/01_value.a","Output":"=== PAUSE TestFixturePaths/01_value.a\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:54:15.475555426Z","Action":"pause","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/01_value.a"}
+{"Time":"2026-10-09T13:54:15.47555773Z","Action":"run","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/01_call_time/main.a"}
+{"Time":"2026-10-09T13:54:15.475559372Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/01_call_time/main.a","Output":"=== RUN   TestFixturePaths/01_call_time/main.a\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:54:15.475562366Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/01_call_time/main.a","Output":"=== PAUSE TestFixturePaths/01_call_time/main.a\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:54:15.475567554Z","Action":"pause","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/01_call_time/main.a"}
+{"Time":"2026-10-09T13:54:15.475572772Z","Action":"run","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/01_call_time/_namespaces/main.a"}
+{"Time":"2026-10-09T13:54:15.475771225Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/01_call_time/_namespaces/main.a","Output":"=== RUN   TestFixturePaths/01_call_time/_namespaces/main.a\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:54:15.475790795Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/01_call_time/_namespaces/main.a","Output":"=== PAUSE TestFixturePaths/01_call_time/_namespaces/main.a\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:54:15.475794931Z","Action":"pause","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/01_call_time/_namespaces/main.a"}
+{"Time":"2026-10-09T13:54:15.475800289Z","Action":"run","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/../main.a"}
+{"Time":"2026-10-09T13:54:15.475803714Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/../main.a","Output":"=== RUN   TestFixturePaths/../main.a\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:54:15.475809723Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/../main.a","Output":"=== PAUSE TestFixturePaths/../main.a\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:54:15.475822402Z","Action":"pause","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/../main.a"}
+{"Time":"2026-10-09T13:54:15.475826619Z","Action":"run","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/01_case/../main.a"}
+{"Time":"2026-10-09T13:54:15.475829663Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/01_case/../main.a","Output":"=== RUN   TestFixturePaths/01_case/../main.a\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:54:15.47583429Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/01_case/../main.a","Output":"=== PAUSE TestFixturePaths/01_case/../main.a\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:54:15.475854981Z","Action":"pause","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/01_case/../main.a"}
+{"Time":"2026-10-09T13:54:15.475860339Z","Action":"run","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths//tmp/main.a"}
+{"Time":"2026-10-09T13:54:15.475864405Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths//tmp/main.a","Output":"=== RUN   TestFixturePaths//tmp/main.a\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:54:15.475868411Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths//tmp/main.a","Output":"=== PAUSE TestFixturePaths//tmp/main.a\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:54:15.475871416Z","Action":"pause","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths//tmp/main.a"}
+{"Time":"2026-10-09T13:54:15.475894561Z","Action":"run","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/C:/main.a"}
+{"Time":"2026-10-09T13:54:15.475897796Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/C:/main.a","Output":"=== RUN   TestFixturePaths/C:/main.a\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:54:15.475901692Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/C:/main.a","Output":"=== PAUSE TestFixturePaths/C:/main.a\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:54:15.475904376Z","Action":"pause","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/C:/main.a"}
+{"Time":"2026-10-09T13:54:15.475907681Z","Action":"run","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/01_case\\main.a"}
+{"Time":"2026-10-09T13:54:15.475910274Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/01_case\\main.a","Output":"=== RUN   TestFixturePaths/01_case\\main.a\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:54:15.475913499Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/01_case\\main.a","Output":"=== PAUSE TestFixturePaths/01_case\\main.a\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:54:15.475915913Z","Action":"pause","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/01_case\\main.a"}
+{"Time":"2026-10-09T13:54:15.475919108Z","Action":"run","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/./main.a"}
+{"Time":"2026-10-09T13:54:15.475921892Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/./main.a","Output":"=== RUN   TestFixturePaths/./main.a\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:54:15.475925107Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/./main.a","Output":"=== PAUSE TestFixturePaths/./main.a\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:54:15.475927601Z","Action":"pause","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/./main.a"}
+{"Time":"2026-10-09T13:54:15.475931496Z","Action":"run","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/01_case//main.a"}
+{"Time":"2026-10-09T13:54:15.475937836Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/01_case//main.a","Output":"=== RUN   TestFixturePaths/01_case//main.a\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:54:15.475941582Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/01_case//main.a","Output":"=== PAUSE TestFixturePaths/01_case//main.a\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:54:15.475944736Z","Action":"pause","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/01_case//main.a"}
+{"Time":"2026-10-09T13:54:15.475948873Z","Action":"run","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/main.ts"}
+{"Time":"2026-10-09T13:54:15.475951316Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/main.ts","Output":"=== RUN   TestFixturePaths/main.ts\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:54:15.475955262Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/main.ts","Output":"=== PAUSE TestFixturePaths/main.ts\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:54:15.475957606Z","Action":"pause","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/main.ts"}
+{"Time":"2026-10-09T13:54:15.47596076Z","Action":"run","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/#00"}
+{"Time":"2026-10-09T13:54:15.475963124Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/#00","Output":"=== RUN   TestFixturePaths/#00\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:54:15.475965678Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/#00","Output":"=== PAUSE TestFixturePaths/#00\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:54:15.475967851Z","Action":"pause","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/#00"}
+{"Time":"2026-10-09T13:54:15.475970465Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/01_value.a"}
+{"Time":"2026-10-09T13:54:15.475972748Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/01_value.a","Output":"=== CONT  TestFixturePaths/01_value.a\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:54:15.475975753Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/01_value.a","Output":"    fixtures_test.go:410: validFixturePath(\"01_value.a\") = false, want true\n","OutputType":"error"}
+{"Time":"2026-10-09T13:54:15.475986409Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/01_value.a","Output":"--- FAIL: TestFixturePaths/01_value.a (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:54:15.475989293Z","Action":"fail","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/01_value.a","Elapsed":0}
+{"Time":"2026-10-09T13:54:15.476003004Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths//tmp/main.a"}
+{"Time":"2026-10-09T13:54:15.476005788Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths//tmp/main.a","Output":"=== CONT  TestFixturePaths//tmp/main.a\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:54:15.476009944Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths//tmp/main.a","Output":"--- PASS: TestFixturePaths//tmp/main.a (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:54:15.47601349Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths//tmp/main.a","Elapsed":0}
+{"Time":"2026-10-09T13:54:15.476016124Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/01_case/../main.a"}
+{"Time":"2026-10-09T13:54:15.476023154Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/01_case/../main.a","Output":"=== CONT  TestFixturePaths/01_case/../main.a\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:54:15.476027311Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/01_case/../main.a","Output":"--- PASS: TestFixturePaths/01_case/../main.a (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:54:15.476030405Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/01_case/../main.a","Elapsed":0}
+{"Time":"2026-10-09T13:54:15.476032799Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/../main.a"}
+{"Time":"2026-10-09T13:54:15.476034802Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/../main.a","Output":"=== CONT  TestFixturePaths/../main.a\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:54:15.476037997Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/../main.a","Output":"--- PASS: TestFixturePaths/../main.a (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:54:15.47604045Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/../main.a","Elapsed":0}
+{"Time":"2026-10-09T13:54:15.476042423Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/01_call_time/_namespaces/main.a"}
+{"Time":"2026-10-09T13:54:15.476044566Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/01_call_time/_namespaces/main.a","Output":"=== CONT  TestFixturePaths/01_call_time/_namespaces/main.a\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:54:15.476049344Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/01_call_time/_namespaces/main.a","Output":"    fixtures_test.go:410: validFixturePath(\"01_call_time/_namespaces/main.a\") = false, want true\n","OutputType":"error"}
+{"Time":"2026-10-09T13:54:15.476054602Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/01_call_time/_namespaces/main.a","Output":"--- FAIL: TestFixturePaths/01_call_time/_namespaces/main.a (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:54:15.476057456Z","Action":"fail","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/01_call_time/_namespaces/main.a","Elapsed":0}
+{"Time":"2026-10-09T13:54:15.476060901Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/01_call_time/main.a"}
+{"Time":"2026-10-09T13:54:15.476063335Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/01_call_time/main.a","Output":"=== CONT  TestFixturePaths/01_call_time/main.a\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:54:15.476066239Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/01_call_time/main.a","Output":"    fixtures_test.go:410: validFixturePath(\"01_call_time/main.a\") = false, want true\n","OutputType":"error"}
+{"Time":"2026-10-09T13:54:15.476069484Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/01_call_time/main.a","Output":"--- FAIL: TestFixturePaths/01_call_time/main.a (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:54:15.476090265Z","Action":"fail","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/01_call_time/main.a","Elapsed":0}
+{"Time":"2026-10-09T13:54:15.476092218Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/01_case//main.a"}
+{"Time":"2026-10-09T13:54:15.476094712Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/01_case//main.a","Output":"=== CONT  TestFixturePaths/01_case//main.a\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:54:15.476099529Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/01_case//main.a","Output":"--- PASS: TestFixturePaths/01_case//main.a (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:54:15.476102594Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/01_case//main.a","Elapsed":0}
+{"Time":"2026-10-09T13:54:15.476104727Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/#00"}
+{"Time":"2026-10-09T13:54:15.476107211Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/#00","Output":"=== CONT  TestFixturePaths/#00\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:54:15.476110125Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/#00","Output":"--- PASS: TestFixturePaths/#00 (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:54:15.476112879Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/#00","Elapsed":0}
+{"Time":"2026-10-09T13:54:15.476115063Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/main.ts"}
+{"Time":"2026-10-09T13:54:15.476116945Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/main.ts","Output":"=== CONT  TestFixturePaths/main.ts\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:54:15.47612002Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/main.ts","Output":"--- PASS: TestFixturePaths/main.ts (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:54:15.476122524Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/main.ts","Elapsed":0}
+{"Time":"2026-10-09T13:54:15.476124877Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/./main.a"}
+{"Time":"2026-10-09T13:54:15.47612674Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/./main.a","Output":"=== CONT  TestFixturePaths/./main.a\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:54:15.476129695Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/./main.a","Output":"--- PASS: TestFixturePaths/./main.a (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:54:15.476132268Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/./main.a","Elapsed":0}
+{"Time":"2026-10-09T13:54:15.476134021Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/01_case\\main.a"}
+{"Time":"2026-10-09T13:54:15.476135984Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/01_case\\main.a","Output":"=== CONT  TestFixturePaths/01_case\\main.a\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:54:15.476139209Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/01_case\\main.a","Output":"--- PASS: TestFixturePaths/01_case\\main.a (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:54:15.476143255Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/01_case\\main.a","Elapsed":0}
+{"Time":"2026-10-09T13:54:15.476145488Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/C:/main.a"}
+{"Time":"2026-10-09T13:54:15.476147541Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/C:/main.a","Output":"=== CONT  TestFixturePaths/C:/main.a\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:54:15.476150596Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/C:/main.a","Output":"--- PASS: TestFixturePaths/C:/main.a (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:54:15.476155003Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths/C:/main.a","Elapsed":0}
+{"Time":"2026-10-09T13:54:15.476157476Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths","Output":"--- FAIL: TestFixturePaths (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:54:15.47615974Z","Action":"fail","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestFixturePaths","Elapsed":0}
+{"Time":"2026-10-09T13:54:15.476161653Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:54:15.476264022Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Output":"FAIL\tgithub.com/system-inc/adamic/stage3/fixtures\t0.012s\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:54:15.476279135Z","Action":"fail","Package":"github.com/system-inc/adamic/stage3/fixtures","Elapsed":0.012}

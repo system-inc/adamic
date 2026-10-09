@@ -1,0 +1,18 @@
+{
+  "id": "P2",
+  "command": [
+    "timeout",
+    "120",
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "./stage3/fixtures/",
+    "-run",
+    "."
+  ],
+  "wall": 23.2328345549995,
+  "rc": 1
+}

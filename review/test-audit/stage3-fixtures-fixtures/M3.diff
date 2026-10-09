@@ -1,0 +1,11 @@
+--- a/internal/native/emit.go
++++ b/internal/native/emit.go
+@@ -108,7 +108,7 @@
+ 		emitter.releaseGlobals()
+ 	}
+ 	bodies.WriteString(emitter.out.String())
+-	bodies.WriteString("\treturn 0;\n}\n")
++	bodies.WriteString("\treturn 1;\n}\n")
+ 	if handler >= 0 {
+ 		bodies.WriteString(emitter.requestABI(handler))
+ 	}

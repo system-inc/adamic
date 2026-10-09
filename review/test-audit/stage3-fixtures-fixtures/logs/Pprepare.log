@@ -1,0 +1,9 @@
+{"Time":"2026-10-09T13:54:21.422462768Z","Action":"start","Package":"github.com/system-inc/adamic/stage3/fixtures"}
+{"Time":"2026-10-09T13:54:21.431399886Z","Action":"run","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestPrepareFixtureOracleHook"}
+{"Time":"2026-10-09T13:54:21.431492015Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestPrepareFixtureOracleHook","Output":"=== RUN   TestPrepareFixtureOracleHook\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:54:21.431525295Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestPrepareFixtureOracleHook","Output":"    fixtures_test.go:383: keyed oracle hook preparation/fetch: 50ns\n"}
+{"Time":"2026-10-09T13:54:21.431534218Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestPrepareFixtureOracleHook","Output":"--- PASS: TestPrepareFixtureOracleHook (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:54:21.431536702Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestPrepareFixtureOracleHook","Elapsed":0}
+{"Time":"2026-10-09T13:54:21.431548109Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:54:21.431676282Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Output":"ok  \tgithub.com/system-inc/adamic/stage3/fixtures\t0.009s\n"}
+{"Time":"2026-10-09T13:54:21.431699257Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/fixtures","Elapsed":0.009}
