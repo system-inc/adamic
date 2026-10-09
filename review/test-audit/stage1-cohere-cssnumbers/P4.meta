@@ -1,0 +1,1 @@
+{"exit": 0, "wall": 1.7472078279997731, "command": ["timeout", "120", "go", "test", "-json", "-count=1", "-timeout", "90s", "./stage1/cohere/cssnumbers/", "-run", "^TestProduct_CSSNumbersGoOracle$"], "cache": "/tmp/u082/cache/P4", "mode": "P4"}

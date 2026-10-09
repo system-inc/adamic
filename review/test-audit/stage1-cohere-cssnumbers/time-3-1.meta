@@ -1,0 +1,1 @@
+{"exit": 0, "wall": 3.25703508999959, "command": ["timeout", "120", "go", "test", "-count=1", "-timeout", "90s", "./stage1/cohere/cssnumbers/", "-run", "^TestProduct_CSSNumbers((Port|Mutant[012])Native|FastNative)$"]}

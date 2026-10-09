@@ -1,0 +1,1 @@
+{"exit": 0, "wall": 3.276219841999591, "command": ["timeout", "120", "go", "test", "-json", "-count=1", "-timeout", "90s", "./stage1/cohere/cssnumbers/", "-run", "^TestProduct_CSSNumbers(Port|Mutant[012])Lowered$"], "cache": "/tmp/u082/cache/S2", "mode": "S2"}

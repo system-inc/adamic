@@ -1,0 +1,11 @@
+--- a/stage1/cohere/cssnumbers/numbers.ts
++++ b/stage1/cohere/cssnumbers/numbers.ts
+@@ -131,7 +131,7 @@
+     const dot = mantissa.indexOf('.');
+     if(dot >= 0) {
+         let end = mantissa.length;
+-        while(end > dot + 1 && mantissa.charCodeAt(end - 1) === 48) end--;
++        while(end > dot + 2 && mantissa.charCodeAt(end - 1) === 48) end--;
+         if(end === dot + 1) end = dot;
+         mantissa = mantissa.slice(0, end);
+     }

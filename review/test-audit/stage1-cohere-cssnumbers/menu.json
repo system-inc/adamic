@@ -1,0 +1,34 @@
+[
+  {
+    "id": "M1",
+    "file": "stage1/cohere/cssnumbers/numbers.ts",
+    "line": 11,
+    "old": "return 'Q';",
+    "new": "return 'q';",
+    "kind": "change constant"
+  },
+  {
+    "id": "M2",
+    "file": "stage1/cohere/cssnumbers/numbers.ts",
+    "line": 81,
+    "old": "code <= 57",
+    "new": "code < 57",
+    "kind": "off-by-one upper digit bound"
+  },
+  {
+    "id": "M3",
+    "file": "stage1/cohere/cssnumbers/numbers.ts",
+    "line": 134,
+    "old": "end > dot + 1",
+    "new": "end > dot + 2",
+    "kind": "off-by-one fraction-trimming bound"
+  },
+  {
+    "id": "M4",
+    "file": "stage1/cohere/cssnumbers/numbers.ts",
+    "line": 87,
+    "old": "code >= 128",
+    "new": "code > 128",
+    "kind": "off-by-one identifier bound"
+  }
+]

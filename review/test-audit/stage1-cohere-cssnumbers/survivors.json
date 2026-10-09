@@ -1,0 +1,17 @@
+[
+  {
+    "id": "M4",
+    "classification": "unguarded behavior in this package",
+    "input": "d\u00801.000px\n",
+    "before": "\u00801.000px\n",
+    "after": "\u00801px\n",
+    "native_after": "\u00801px\n",
+    "go_oracle": "\u00801.000px\n",
+    "exit_codes": {
+      "before": 0,
+      "after": 0,
+      "native": 0,
+      "go": 0
+    }
+  }
+]

@@ -1,0 +1,92 @@
+[
+  {
+    "file": "stage1/cohere/cssnumbers/numbers.ts",
+    "line": 6,
+    "declaration": "function canonicalUnit(raw: string): string {"
+  },
+  {
+    "file": "stage1/cohere/cssnumbers/numbers.ts",
+    "line": 80,
+    "declaration": "function digit(code: number): boolean {"
+  },
+  {
+    "file": "stage1/cohere/cssnumbers/numbers.ts",
+    "line": 83,
+    "declaration": "function letter(code: number): boolean {"
+  },
+  {
+    "file": "stage1/cohere/cssnumbers/numbers.ts",
+    "line": 86,
+    "declaration": "function wordStart(code: number): boolean {"
+  },
+  {
+    "file": "stage1/cohere/cssnumbers/numbers.ts",
+    "line": 89,
+    "declaration": "function wordPart(code: number): boolean {"
+  },
+  {
+    "file": "stage1/cohere/cssnumbers/numbers.ts",
+    "line": 92,
+    "declaration": "function skipDigits(value: string, start: number): number {"
+  },
+  {
+    "file": "stage1/cohere/cssnumbers/numbers.ts",
+    "line": 97,
+    "declaration": "function numberEnd(value: string, start: number): number {"
+  },
+  {
+    "file": "stage1/cohere/cssnumbers/numbers.ts",
+    "line": 119,
+    "declaration": "function printNumber(raw: string): string {"
+  },
+  {
+    "file": "stage1/cohere/cssnumbers/numbers.ts",
+    "line": 140,
+    "declaration": "function stringEnd(value: string, start: number): number {"
+  },
+  {
+    "file": "stage1/cohere/cssnumbers/numbers.ts",
+    "line": 156,
+    "declaration": "function finish(value: string, start: number, end: number, hasWordPart: boolean): MatchType {"
+  },
+  {
+    "file": "stage1/cohere/cssnumbers/numbers.ts",
+    "line": 161,
+    "declaration": "function numberMatch(value: string, start: number): MatchType {"
+  },
+  {
+    "file": "stage1/cohere/cssnumbers/numbers.ts",
+    "line": 177,
+    "declaration": "export function adjustNumbers(value: string): string {"
+  },
+  {
+    "file": "stage1/cohere/cssnumbers/numbers.ts",
+    "line": 203,
+    "declaration": "export function formatValue(value: string, single: boolean): string {"
+  },
+  {
+    "file": "stage1/cohere/cssnumbers/main.ts",
+    "line": 6,
+    "declaration": "function decode(text: string): string {"
+  },
+  {
+    "file": "stage1/cohere/cssnumbers/main.ts",
+    "line": 20,
+    "declaration": "function encode(text: string): string {"
+  },
+  {
+    "file": "stage1/cohere/cssstrings/strings.ts",
+    "line": 3,
+    "declaration": "export function printString(raw: string, singleQuote: boolean): string {"
+  },
+  {
+    "file": "stage1/cohere/cssstrings/strings.ts",
+    "line": 39,
+    "declaration": "function stringEnd(value: string, start: number): number {"
+  },
+  {
+    "file": "stage1/cohere/cssstrings/strings.ts",
+    "line": 50,
+    "declaration": "export function adjustStrings(value: string, singleQuote: boolean): string {"
+  }
+]

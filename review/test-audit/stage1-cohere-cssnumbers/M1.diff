@@ -1,0 +1,11 @@
+--- a/stage1/cohere/cssnumbers/numbers.ts
++++ b/stage1/cohere/cssnumbers/numbers.ts
+@@ -8,7 +8,7 @@
+     const lower = raw.toLowerCase();
+     switch(lower) {
+         case 'q':
+-            return 'Q';
++            return 'q';
+         case 'hz':
+             return 'Hz';
+         case 'khz':

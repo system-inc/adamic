@@ -1,0 +1,1 @@
+{"exit": 0, "wall": 5.415292378000231, "command": ["timeout", "120", "go", "test", "-json", "-count=1", "-timeout", "90s", "./stage1/cohere/cssnumbers/", "-run", "^TestCSSNumbers_Setup$"], "cache": "/tmp/u082/cache/P2", "mode": "P2"}

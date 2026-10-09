@@ -1,0 +1,11 @@
+--- a/stage1/cohere/cssnumbers/numbers.ts
++++ b/stage1/cohere/cssnumbers/numbers.ts
+@@ -78,7 +78,7 @@
+     }
+ }
+ function digit(code: number): boolean {
+-    return code >= 48 && code <= 57;
++    return code >= 48 && code < 57;
+ }
+ function letter(code: number): boolean {
+     return (code >= 65 && code <= 90) || (code >= 97 && code <= 122);

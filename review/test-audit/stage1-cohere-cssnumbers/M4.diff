@@ -1,0 +1,11 @@
+--- a/stage1/cohere/cssnumbers/numbers.ts
++++ b/stage1/cohere/cssnumbers/numbers.ts
+@@ -84,7 +84,7 @@
+     return (code >= 65 && code <= 90) || (code >= 97 && code <= 122);
+ }
+ function wordStart(code: number): boolean {
+-    return code === 95 || letter(code) || code >= 128;
++    return code === 95 || letter(code) || code > 128;
+ }
+ function wordPart(code: number): boolean {
+     return wordStart(code) || digit(code) || code === 45;

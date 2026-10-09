@@ -1,0 +1,1 @@
+{"exit": 0, "wall": 2.9122357149999516, "command": ["timeout", "120", "go", "test", "-count=1", "-timeout", "90s", "./stage1/cohere/cssnumbers/", "-run", "^TestProduct_CSSNumbersGoOracle$"]}

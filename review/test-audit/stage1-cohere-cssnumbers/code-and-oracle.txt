@@ -1,0 +1,4 @@
+CODE UNDER TEST: numbers.ts and the composed cssstrings port executed by main.ts, compiled natively and to JavaScript.
+ORACLE: Go cohere actual CSS numeric/string printer, Prettier 3.9.6, byte-for-byte differential checks. No oracle source is mutated.
+The fixed four-mutant menu was saved before any mutation run. functions.json lists the port and driver functions reachable by the corpus.
+Construction and planted-disagreement checks receive separate permitted harness probes.

@@ -1,0 +1,44 @@
+[
+  {
+    "id": "P2",
+    "file": "stage1/cohere/cssnumbers/port_test.go",
+    "line": 134,
+    "return_value": "return",
+    "pattern": "^TestCSSNumbers_Setup$"
+  },
+  {
+    "id": "P3",
+    "file": "stage1/cohere/cssnumbers/shards_test.go",
+    "line": 55,
+    "return_value": "return nil",
+    "pattern": "^TestCSSNumbersUnion$"
+  },
+  {
+    "id": "P4",
+    "file": "stage1/cohere/cssnumbers/port_test.go",
+    "line": 341,
+    "return_value": "return \"\"",
+    "pattern": "^TestProduct_CSSNumbersGoOracle$"
+  },
+  {
+    "id": "P5",
+    "file": "stage1/cohere/cssnumbers/shards_test.go",
+    "line": 26,
+    "return_value": "return nil",
+    "pattern": "^TestProduct_CSSNumbersGoAnswers$"
+  },
+  {
+    "id": "P6",
+    "file": "stage1/cohere/cssnumbers/setup_products_test.go",
+    "line": 14,
+    "return_value": "return numbersProgram{}",
+    "pattern": "^TestProduct_CSSNumbers(Port|Mutant[012])Lowered$"
+  },
+  {
+    "id": "P7",
+    "file": "stage1/cohere/cssnumbers/setup_products_test.go",
+    "line": 33,
+    "return_value": "return \"\"",
+    "pattern": "^TestProduct_CSSNumbers((Port|Mutant[012])Native|FastNative)$"
+  }
+]

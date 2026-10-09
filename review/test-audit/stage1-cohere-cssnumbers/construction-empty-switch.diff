@@ -1,0 +1,80 @@
+diff --git a/stage1/cohere/cssnumbers/port_test.go b/stage1/cohere/cssnumbers/port_test.go
+index ef6e7c54..faf645bd 100644
+--- a/stage1/cohere/cssnumbers/port_test.go
++++ b/stage1/cohere/cssnumbers/port_test.go
+@@ -132,6 +132,9 @@ func enumerateNumbers(t *testing.T) numbersCorpus {
+ // and the generated grammar in enumerateNumbers.
+ 
+ func prepareCSSNumbersSetup(t *testing.T) {
++	if os.Getenv("ADAMIC_AUDIT_MODE") == "P2" {
++		return
++	}
+ 	t.Helper()
+ 	numbersTopSetup.once.Do(func() {
+ 		corpus := enumerateNumbers(t)
+@@ -339,6 +342,9 @@ func equal(t *testing.T, name string, a, b []byte) {
+ }
+ 
+ func numbersPreparedOracle(t *testing.T) string {
++	if os.Getenv("ADAMIC_AUDIT_MODE") == "P4" {
++		return ""
++	}
+ 	t.Helper()
+ 	root, err := filepath.Abs(repository)
+ 	if err != nil {
+diff --git a/stage1/cohere/cssnumbers/setup_products_test.go b/stage1/cohere/cssnumbers/setup_products_test.go
+index 8abd2f92..06dea4a2 100644
+--- a/stage1/cohere/cssnumbers/setup_products_test.go
++++ b/stage1/cohere/cssnumbers/setup_products_test.go
+@@ -1,6 +1,7 @@
+ package cssnumbers
+ 
+ import (
++	"os"
+ 	"path/filepath"
+ 	"sync"
+ 	"testing"
+@@ -12,6 +13,9 @@ var numbersPreparedPrograms = make([]struct {
+ }, len(numbersMutations)+1)
+ 
+ func numbersPreparedProgram(t *testing.T, mutation int) numbersProgram {
++	if os.Getenv("ADAMIC_AUDIT_MODE") == "P6" {
++		return numbersProgram{}
++	}
+ 	t.Helper()
+ 	state := &numbersPreparedPrograms[mutation+1]
+ 	state.once.Do(func() {
+@@ -31,6 +35,9 @@ func numbersPreparedProgram(t *testing.T, mutation int) numbersProgram {
+ }
+ 
+ func numbersPreparedNative(t *testing.T, mutation int, sanitize bool) string {
++	if os.Getenv("ADAMIC_AUDIT_MODE") == "P7" {
++		return ""
++	}
+ 	t.Helper()
+ 	name := "native-fast"
+ 	if sanitize {
+diff --git a/stage1/cohere/cssnumbers/shards_test.go b/stage1/cohere/cssnumbers/shards_test.go
+index f2a9c55b..f5dc5416 100644
+--- a/stage1/cohere/cssnumbers/shards_test.go
++++ b/stage1/cohere/cssnumbers/shards_test.go
+@@ -24,6 +24,9 @@ import (
+ var numbersEncode = strings.NewReplacer(`\`, `\\`, "\n", `\n`, "\r", `\r`, "\t", `\t`)
+ 
+ func numbersInput(texts []string) []byte {
++	if os.Getenv("ADAMIC_AUDIT_MODE") == "P5" {
++		return nil
++	}
+ 	var input strings.Builder
+ 	for _, text := range texts {
+ 		for _, preference := range []string{"d", "s"} {
+@@ -53,6 +56,9 @@ func numbersCaseID(kind string, index int, preference string) string {
+ }
+ 
+ func numbersUnits(corpus numbersCorpus) []numbersUnit {
++	if os.Getenv("ADAMIC_AUDIT_MODE") == "P3" {
++		return nil
++	}
+ 	var units []numbersUnit
+ 	const batchTexts = 512
+ 	for lo := 0; lo < len(corpus.texts); lo += batchTexts {
