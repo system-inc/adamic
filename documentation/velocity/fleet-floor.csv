@@ -1087,3 +1087,10 @@ time,lane,running,floor,queued,brief,session,outcome
 2026-10-09T07:11:16.382651Z,runtime,1,8,0,,,"gate_backpressure: 109 queued, 16 slots"
 2026-10-09T07:11:18.511563Z,library,0,8,0,,,"gate_backpressure: 109 queued, 16 slots"
 2026-10-09T07:11:30.351675Z,developer_tools,0,4,0,,,"gate_backpressure: 109 queued, 16 slots"
+2026-10-09T07:15:29.695936Z,compiler,4,30,0,,,"gate_backpressure: 109 queued, 16 slots"
+2026-10-09T07:16:05.701129Z,cohere_adamic,0,30,0,,,"gate_backpressure: 109 queued, 16 slots"
+2026-10-09T07:16:09.925524Z,typescript,0,10,0,,,"gate_backpressure: 109 queued, 16 slots"
+2026-10-09T07:16:21.205406Z,runtime,1,8,3,23-step06e-tsc-graph.md,01a11477-b1e8-7134-8ed7-8360ef421013,sent
+2026-10-09T07:16:21.207811Z,runtime,2,8,2,,,dispatch_stopped
+2026-10-09T07:16:23.559009Z,library,0,8,0,,,"gate_backpressure: 109 queued, 16 slots"
+2026-10-09T07:16:33.525199Z,developer_tools,0,4,0,,,"gate_backpressure: 109 queued, 16 slots"
