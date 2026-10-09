@@ -33,8 +33,10 @@ func TestCheckedViewArrays(t *testing.T) {
 			t.Parallel()
 			program, path := interfaceFixture(t, "lane2/"+probe.name)
 			want := run{stdout: []byte(probe.stdout)}
+			node := onNode(t, path)
+			t.Logf("Node: exit=%d stdout=%q stderr=%q", node.exitCode, node.stdout, node.stderr)
 			if probe.diagnostic == "" {
-				if difference := disagreement(want, onNode(t, path)); difference != "" {
+				if difference := disagreement(want, node); difference != "" {
 					t.Fatal("Node: " + difference)
 				}
 			} else {

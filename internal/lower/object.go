@@ -322,10 +322,10 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 		// A Weak<Node[]> narrowed to present is the array.
 		arrayType = target
 	}
-	if !l.checker.IsArrayType(arrayType) {
+	element := l.untaggedArrayElement(arrayType)
+	if element == nil || !l.sameArrayMemberStorage(arrayType) {
 		return 0, l.notYet(node, "a value of type "+l.checker.TypeToString(arrayType)+" where an array goes")
 	}
-	element := l.checker.GetElementTypeOfArrayType(arrayType)
 	if element.Flags()&checker.TypeFlagsUnknown != 0 {
 		return 0, l.notYet(node, "an array of unknown with erased element storage (retain its declared element type before reading elements)")
 	}

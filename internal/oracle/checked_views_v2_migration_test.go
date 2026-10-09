@@ -8,7 +8,6 @@ import (
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
 	"path/filepath"
-	"strings"
 	"testing"
 )
 
@@ -30,18 +29,18 @@ func TestCheckedViewV2ReadsAfterWrites(t *testing.T) {
 	}
 }
 
-func TestCheckedViewV2ArrayArmBoundary(t *testing.T) {
-	path, _ := filepath.Abs("../../stage3/interface-downcasts/v2/array-arm.a")
-	loaded, err := load.Load([]string{path})
-	if err != nil {
-		t.Fatal(err)
+func TestCheckedViewV2ArrayArmAdmission(t *testing.T) {
+	t.Parallel()
+	program, path := interfaceFixture(t, "v2/array-arm")
+	node := onNode(t, path)
+	if diff := disagreement(run{stdout: []byte("true\n")}, node); diff != "" {
+		t.Fatal("Node: " + diff)
 	}
-	_, err = lower.Lower(context.Background(), loaded)
-	if unsupported, ok := err.(*lower.NotYet); !ok || !strings.Contains(unsupported.What, "views-v3: array element kind") {
-		t.Fatalf("expected named V3 arm, got %v", err)
-	}
-	if got := onNode(t, path); got.exitCode != 0 {
-		t.Fatalf("Node: %#v", got)
+	sanitized, _ := nativelyUncached(t, program)
+	for backend, got := range map[string]run{"native-sanitized": sanitized, "native": releasedUncached(t, program), "javascript": onJavaScriptBackend(t, program)} {
+		if diff := disagreement(node, got); diff != "" {
+			t.Fatal(backend + ": " + diff)
+		}
 	}
 }
 

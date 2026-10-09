@@ -6,6 +6,25 @@ import (
 	"reflect"
 )
 
+// Union fields also demand the owning array adapter, including nullable arrays.
+func arrayViewContract(contracts []ir.ViewContract, id ir.ViewContractID, seen map[ir.ViewContractID]bool) (bool, bool) {
+	if id <= 0 || int(id) > len(contracts) || seen[id] {
+		return false, false
+	}
+	seen[id] = true
+	c := contracts[id-1]
+	if c.Kind == ir.ViewArray {
+		return true, !c.ArrayReadonly
+	}
+	found, mutable := false, false
+	for _, member := range c.Members {
+		f, m := arrayViewContract(contracts, member, seen)
+		found = found || f
+		mutable = mutable || m
+	}
+	return found, mutable
+}
+
 // An unread array member must not change an otherwise admitted program.
 func (l *lowering) activateViewArrayReads(graph *allocationFlowGraph, viewed map[int]bool, unknown bool) error {
 	p := l.result
@@ -17,11 +36,12 @@ func (l *lowering) activateViewArrayReads(graph *allocationFlowGraph, viewed map
 	}
 	each(func(n any) bool {
 		read, ok := n.(ir.Property)
-		if !ok || read.Of != ir.Array || !p.CheckedFields[read.Name] {
+		if !ok || !p.CheckedFields[read.Name] {
 			return true
 		}
 		id := p.ViewContractTypes[read.ViewTypeID]
-		if id == 0 || p.ViewContracts[id-1].Kind != ir.ViewArray {
+		array, mutable := arrayViewContract(p.ViewContracts, id, map[ir.ViewContractID]bool{})
+		if !array {
 			return true
 		}
 		reaching := graph.ReachingAllocations(read.Object)
@@ -30,7 +50,7 @@ func (l *lowering) activateViewArrayReads(graph *allocationFlowGraph, viewed map
 			demand = demand || viewed[site]
 		}
 		p.ArrayViewEnabled = p.ArrayViewEnabled || demand
-		if demand && !p.ViewContracts[id-1].ArrayReadonly {
+		if demand && mutable {
 			p.ArrayViewNeedsSourceCertificate = true
 		}
 		return true
@@ -54,6 +74,9 @@ func (l *lowering) activateViewArrayReads(graph *allocationFlowGraph, viewed map
 			fields(f.Contract)
 		}
 		fields(c.Element)
+		for _, member := range c.Members {
+			fields(member)
+		}
 	}
 	var refused error
 	each(func(n any) bool {

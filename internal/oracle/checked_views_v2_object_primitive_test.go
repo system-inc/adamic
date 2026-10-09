@@ -12,6 +12,7 @@ import (
 )
 
 func TestCheckedViewObjectPrimitiveSource(t *testing.T) {
+	t.Parallel()
 	for _, sample := range []struct{ name, source, output, message string }{
 		{"optional-absent", "absent\n", "absent\n", ""},
 		{"optional-receiver", "ok\nabsent\n", "ok\nabsent\n", ""},
@@ -33,10 +34,7 @@ func TestCheckedViewObjectPrimitiveSource(t *testing.T) {
 		{"node-indicator-wrong", "42\n", "", "field read failed: value.externalModuleIndicator matches no member of true | Node | undefined; expected true | Node | undefined, found object"},
 	} {
 		t.Run(sample.name, func(t *testing.T) {
-			if strings.HasPrefix(sample.name, "comment-") {
-				// Array membership needs V3 element-kind metadata and hole-aware reads.
-				t.Skip("awaits compiler/views-v3: array element kind and holes (b065fa576)")
-			}
+			t.Parallel()
 			path, err := filepath.Abs("../../stage3/interface-downcasts/lane4b/fixtures/" + sample.name + ".a")
 			if err != nil {
 				t.Fatal(err)
