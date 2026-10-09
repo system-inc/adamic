@@ -6,6 +6,7 @@ import (
 	"testing"
 )
 
+// Not parallel: t.Setenv changes the process-wide WASI_SYSROOT environment variable.
 func TestBuildTargetParsing(t *testing.T) {
 	t.Setenv("WASI_SYSROOT", t.TempDir())
 	for _, arguments := range [][]string{

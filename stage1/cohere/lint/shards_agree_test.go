@@ -333,6 +333,8 @@ func shardsAgreeUnion(t *testing.T, merge func([][]byte, int) ([]byte, error)) {
 	}
 	t.Logf("union: %d live case ids exactly once in %d shards", len(cases), len(units))
 }
+
+// Not parallel: initializes the shared generated fixtures and captured corpus state.
 func TestShardsAgreeUnion(t *testing.T) { shardsAgreeUnion(t, shards.Merge) }
 
 func shardsAgreeTopLevel(t *testing.T, index int) {
@@ -549,6 +551,7 @@ func shardsAgreeProofCases(directory string) []shardsAgreeCase {
 	return cases
 }
 
+// Not parallel: initializes shared scanner products and fixtures used by proof subprocesses.
 func TestShardsAgreeDisagreement(t *testing.T) {
 	defer shardsAgreeWatchdog(t.Name())()
 	if kind := os.Getenv("ADAMIC_SHARDS_AGREE_PROBE"); kind != "" {

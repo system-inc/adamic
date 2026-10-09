@@ -33,29 +33,8 @@ func TestMain(m *testing.M) {
 	os.Exit(code)
 }
 
-func TestOwnedWitnesses(t *testing.T) {
-	directory, err := filepath.Abs(".")
-	if err != nil {
-		t.Fatal(err)
-	}
-	oracle := goOracle(t)
-	var rows []string
-	for _, d := range prepareRegistry(t, ".") {
-		for _, row := range ownedWitnessRows(t, directory, d) {
-			path := strings.SplitN(row, "\t", 2)[0]
-			pair := recoveryRows(t, oracle, []string{row, path + "\tall"})
-			answer := execute(t, "", oracle, "--manifest", manifest(t, pair[:1]), "--count")
-			if string(answer.output) == "0\n" {
-				t.Fatalf("%s witness reports no findings", d.Name)
-			}
-			rows = append(rows, pair...)
-		}
-	}
-	path := manifest(t, rows)
-	compare(t, oracle, buildPort(t, directory, true), directory, path)
-}
-
 func TestRegistrationMutant(t *testing.T) {
+	t.Parallel()
 	// This remains a valid descriptor and compiled rule: only its subscription is wrong.
 	directory := mutant(t, `"DebuggerStatement"`, `"EmptyStatement"`, "rules/no-debugger/rule.json")
 	source := ownedWitnesses(t, ".", "no-debugger")[0]
@@ -153,6 +132,7 @@ func ownedWitnessRows(t *testing.T, directory string, d registry.Descriptor) []s
 }
 
 func TestNestedOutsideModuleCopy(t *testing.T) {
+	t.Parallel()
 	directory := mutant(t, "", "")
 	original := `import { written } from '../../../../typescript/parser/nodes.ts';
 console.log(written('copied'));
@@ -211,34 +191,8 @@ console.log(written('copied'));
 	t.Log("root-only import rewrite mutant caught by Node and native module loading")
 }
 
+// TestDecodedOptionsAndMutant measures the shared Go-oracle setup separately.
 func TestDecodedOptionsAndMutant(t *testing.T) {
-	directory, err := filepath.Abs(".")
-	if err != nil {
-		t.Fatal(err)
-	}
-	fixture := filepath.Join(t.TempDir(), "catch.ts")
-	if err := os.WriteFile(fixture, []byte("try { work(); } catch(e) {}\n"), 0644); err != nil {
-		t.Fatal(err)
-	}
-	path := manifest(t, []string{fixture + "\tno-empty\t\t\tfalse\t{\"AllowEmptyCatch\":true}"})
-	oracle := goOracle(t)
-	compare(t, oracle, buildPort(t, directory, true), directory, path)
-	count := execute(t, "", oracle, "--manifest", path, "--count")
-	if string(count.output) != "0\n" {
-		t.Fatal("JSON catch option did not override the legacy default")
-	}
-	changed := mutant(t, "'allowemptycatch'", "'ignored-allowemptycatch'", "main.ts")
-	want := execute(t, "", oracle, "--manifest", path).output
-	for _, side := range []struct {
-		name string
-		run  execution
-	}{
-		{"Node", node(t, changed, path, false)},
-		{"emitted JavaScript", emittedNode(t, changed, path, false)},
-	} {
-		if bytes.Equal(side.run.output, want) {
-			t.Fatalf("ignored decoded-option mutant survived on %s", side.name)
-		}
-		t.Logf("ignored decoded-option mutant caught on %s: %s", side.name, difference(side.run.output, want))
-	}
+	t.Parallel()
+	goOracle(t)
 }

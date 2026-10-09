@@ -10,6 +10,7 @@ import (
 
 // The go command's module downloads are the only stderr execute forgives, and only from go.
 func TestCommandDiagnosticsDropOnlyModuleDownloads(t *testing.T) {
+	t.Parallel()
 	for _, row := range []struct {
 		name, command, stderr, want string
 	}{
