@@ -3,6 +3,7 @@ package markdowninline
 import (
 	"bytes"
 	"context"
+	"crypto/sha256"
 	"encoding/json"
 	"fmt"
 	"os"
@@ -14,6 +15,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
@@ -25,32 +27,27 @@ import (
 const testMarkdownInlineShards = 1287
 const inlineModes = "wefnspctrukvhijlboq"
 
-// Same shape as internal/buildcache.Inputs; replace this local metadata type
-// when that helper lands. There is deliberately no package-local disk cache.
-type inlineInputs struct {
-	Name                    string
-	Files, Flags, Toolchain []string
-}
-
-func inlineEnvironment() []string {
-	var result []string
-	for _, name := range []string{"PATH", "HOME", "XDG_CACHE_HOME", "GOENV", "GOFLAGS", "GOTOOLCHAIN", "GOROOT", "GOPATH", "GOWORK", "GOCACHE", "GOMODCACHE", "CGO_ENABLED", "GOOS", "GOARCH", "GOAMD64", "GOARM64", "GOEXPERIMENT", "GO111MODULE", "GOPROXY", "GONOPROXY", "GONOSUMDB", "GOPRIVATE", "GOSUMDB", "GOVCS", "GODEBUG", "CGO_CFLAGS", "CGO_CPPFLAGS", "CGO_CXXFLAGS", "CGO_LDFLAGS", "CC", "CXX", "LIBRARY_PATH", "CPATH", "C_INCLUDE_PATH", "CPLUS_INCLUDE_PATH", "LANG", "LC_ALL", "SOURCE_DATE_EPOCH", "SDKROOT", "MACOSX_DEPLOYMENT_TARGET", "LD_LIBRARY_PATH", "DYLD_LIBRARY_PATH", "ADAMIC_NATIVE_SPLIT", "ADAMIC_NATIVE_JOBS", "ADAMIC_GATE_UNCACHED", "WASI_SYSROOT", "ADAMIC_RUNTIME_CACHE", "ADAMIC_CHECKER_CACHE", "TMPDIR", "NODE_OPTIONS"} {
-		result = append(result, name+"="+os.Getenv(name))
+// Products are shared and read-only. Only the Go overlay bridge is built into
+// a parent-owned temporary directory: buildcache.GoBuild refuses overlays.
+func inlineEnvironment(names ...string) []string {
+	var flags []string
+	for _, name := range names {
+		flags = append(flags, name+"="+os.Getenv(name))
 	}
-	return result
+	return flags
 }
-func inlineVersion(name string, args ...string) string {
-	out, err := exec.Command(name, args...).CombinedOutput()
-	return fmt.Sprintf("%s %v: %s (%v)", name, args, strings.TrimSpace(string(out)), err)
+func inlineBuild(t *testing.T, in buildcache.Inputs, build func(string) error) string {
+	t.Helper()
+	return buildcache.Product(t, in, build)
 }
-func inlineBuild(t *testing.T, in inlineInputs, build func(string) error) string {
+func inlineOverlayBuild(t *testing.T) string {
 	t.Helper()
 	dir := t.TempDir()
 	start := time.Now()
-	if err := build(dir); err != nil {
-		t.Fatalf("build %s: %v", in.Name, err)
+	if err := buildInlineGoBridge(dir); err != nil {
+		t.Fatalf("Go overlay bridge: %v", err)
 	}
-	t.Logf("build census: %s %.6fs inputs=%+v", in.Name, time.Since(start).Seconds(), in)
+	t.Logf("build census: markdowninline Go overlay bridge %.6fs (overlay, uncached)", time.Since(start).Seconds())
 	return dir
 }
 func inlineWrite(dir, name string, data []byte) error {
@@ -151,23 +148,46 @@ func (m inlineMutation) buildLowered(dir string) error {
 	}
 	return buildInlineProgram(filepath.Join(dir, "main.ts"), dir)
 }
-func inlineGoInputs() inlineInputs {
-	return inlineInputs{"markdowninline go bridge", []string{"stage1/cohere/markdowninline/testdata/bridge.go", "stage1/cohere/markdowninline/testdata/go_driver.go", "stage1/cohere/markdowninline/shards_test.go", "cohere", "go.mod", "go.work"}, append([]string{"go build", "-overlay", "-o"}, inlineEnvironment()...), []string{runtime.Version(), inlineVersion("go", "version")}}
-}
-func inlineProgramInputs(name string) inlineInputs {
-	return inlineInputs{name, []string{"stage1/cohere/markdowninline", "internal", "oracle", "cohere", "go.mod", "go.work"}, inlineEnvironment(), []string{runtime.Version(), inlineVersion("go", "version")}}
-}
-func inlineNativeInputs(name string, sanitize bool) inlineInputs {
-	in := inlineProgramInputs(name)
-	in.Flags = append(native.Flags(native.Options{Sanitize: sanitize}), in.Flags...)
-	in.Toolchain = append(in.Toolchain, inlineVersion("clang", "--version"))
+
+// GoInputs discovers the sources (including embedded checker libraries) the
+// compiler actually compiles, instead of hashing the upstream fixture corpus.
+func inlineCompilerInputs(t *testing.T) buildcache.Inputs {
+	t.Helper()
+	in, err := buildcache.GoInputs("markdowninline compiler inputs", "./cmd/adamic", nil, nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	in.Files = append(in.Files, "stage1/cohere/markdowninline/main.ts", "stage1/cohere/markdowninline/inline.ts", "stage1/cohere/markdowninline/classes.ts", "stage1/cohere/markdowninline/shards_test.go")
+	in.Toolchain = append(in.Toolchain, runtime.Version())
 	return in
 }
-func inlineNodeInputs(name string) inlineInputs {
-	in := inlineProgramInputs(name)
-	in.Flags = append([]string{"--disable-warning=ExperimentalWarning", "stripTypeScriptTypes mode=transform"}, in.Flags...)
-	in.Toolchain = append(in.Toolchain, inlineVersion("node", "--version"))
+func inlineProgramInputs(base buildcache.Inputs, name string) buildcache.Inputs {
+	base.Name = name
+	return base
+}
+
+// A dependent product is keyed by bytes read from its prerequisite, never by
+// the machine-specific cache path. This also covers each mutation's exact input.
+func inlineProductSources(t *testing.T, in buildcache.Inputs, source string, names ...string) buildcache.Inputs {
+	t.Helper()
+	for _, name := range names {
+		data, err := os.ReadFile(filepath.Join(source, name))
+		if err != nil {
+			t.Fatal(err)
+		}
+		in.Flags = append(in.Flags, fmt.Sprintf("source %s sha256 %x", name, sha256.Sum256(data)))
+	}
 	return in
+}
+func inlineNativeInputs(t *testing.T, name, source string, sanitize bool) buildcache.Inputs {
+	in := buildcache.Inputs{Name: name, Files: []string{"internal/native", "stage1/cohere/markdowninline/shards_test.go"}, Flags: native.Flags(native.Options{Sanitize: sanitize}), Toolchain: []string{buildcache.Tool("clang", "--version"), runtime.GOOS, runtime.GOARCH}}
+	in.Flags = append(in.Flags, inlineEnvironment("PATH", "HOME", "XDG_CACHE_HOME", "TMPDIR", "LIBRARY_PATH", "CPATH", "C_INCLUDE_PATH", "LANG", "LC_ALL", "SOURCE_DATE_EPOCH", "SDKROOT", "MACOSX_DEPLOYMENT_TARGET", "LD_LIBRARY_PATH", "DYLD_LIBRARY_PATH", "ADAMIC_NATIVE_SPLIT", "ADAMIC_NATIVE_JOBS", "ADAMIC_GATE_UNCACHED")...)
+	return inlineProductSources(t, in, source, "program.c")
+}
+func inlineNodeInputs(t *testing.T, name, source string) buildcache.Inputs {
+	in := buildcache.Inputs{Name: name, Files: []string{"stage1/cohere/markdowninline/testdata/build_node.mjs", "stage1/cohere/markdowninline/shards_test.go"}, Flags: []string{"--disable-warning=ExperimentalWarning", "stripTypeScriptTypes mode=transform"}, Toolchain: []string{buildcache.Tool("node", "--version")}}
+	in.Flags = append(in.Flags, inlineEnvironment("PATH", "NODE_OPTIONS", "NODE_PATH")...)
+	return inlineProductSources(t, in, source, "main.ts", "inline.ts", "classes.ts")
 }
 
 type inlineShard struct {
@@ -339,23 +359,24 @@ func runInlineShards(t *testing.T, paths, texts []string, files, generatedEnd, u
 	if err != nil {
 		t.Fatal(err)
 	}
-	goDir := inlineBuild(t, inlineGoInputs(), buildInlineGoBridge)
+	goDir := inlineOverlayBuild(t)
+	compilerInputs := inlineCompilerInputs(t)
 	goBinary := filepath.Join(goDir, "go-printer")
 	source, err := filepath.Abs(".")
 	if err != nil {
 		t.Fatal(err)
 	}
-	nodeDir := inlineBuild(t, inlineNodeInputs("markdowninline Node oracle"), inlineSource(source).buildNode)
-	lowerDir := inlineBuild(t, inlineProgramInputs("markdowninline lowered program"), buildInlineLowered)
-	nativeDir := inlineBuild(t, inlineNativeInputs("markdowninline native", false), inlineSource(lowerDir).buildNative)
-	sanitizedDir := inlineBuild(t, inlineNativeInputs("markdowninline sanitized", true), inlineSource(lowerDir).buildSanitized)
+	nodeDir := inlineBuild(t, inlineNodeInputs(t, "markdowninline Node oracle", source), inlineSource(source).buildNode)
+	lowerDir := inlineBuild(t, inlineProgramInputs(compilerInputs, "markdowninline lowered program"), buildInlineLowered)
+	nativeDir := inlineBuild(t, inlineNativeInputs(t, "markdowninline native", lowerDir, false), inlineSource(lowerDir).buildNative)
+	sanitizedDir := inlineBuild(t, inlineNativeInputs(t, "markdowninline sanitized", lowerDir, true), inlineSource(lowerDir).buildSanitized)
 	fast, sanitized := filepath.Join(nativeDir, "port"), filepath.Join(sanitizedDir, "port")
 	planted := inlineMutation{"one-case disagreement", "main.ts", "console.log(encode(formatLeaf(line.slice(0, 1), decode(line.slice(1)))));", "console.log(line === 'w😀😀😀😀' ? 'planted disagreement' : encode(formatLeaf(line.slice(0, 1), decode(line.slice(1)))));"}
-	mutantDir := inlineBuild(t, inlineProgramInputs("markdowninline planted lowered"), planted.buildLowered)
-	mutantNativeDir := inlineBuild(t, inlineNativeInputs("markdowninline planted sanitized", true), inlineSource(mutantDir).buildSanitized)
+	mutantDir := inlineBuild(t, inlineProgramInputs(compilerInputs, "markdowninline planted lowered"), planted.buildLowered)
+	mutantNativeDir := inlineBuild(t, inlineNativeInputs(t, "markdowninline planted sanitized", mutantDir, true), inlineSource(mutantDir).buildSanitized)
 	mutantFast := fast
 	if runtime.GOOS == "darwin" {
-		mutantFast = filepath.Join(inlineBuild(t, inlineNativeInputs("markdowninline planted native", false), inlineSource(mutantDir).buildNative), "port")
+		mutantFast = filepath.Join(inlineBuild(t, inlineNativeInputs(t, "markdowninline planted native", mutantDir, false), inlineSource(mutantDir).buildNative), "port")
 	}
 	target := -1
 	for text := range texts {
@@ -385,12 +406,12 @@ func runInlineShards(t *testing.T, paths, texts []string, files, generatedEnd, u
 	type mutantProduct struct{ name, binary, fast, node string }
 	var mutants []mutantProduct
 	for _, m := range []inlineMutation{{"escaped delimiter parity", "inline.ts", "(found.preceding - position) % 2 === 1", "(found.preceding - position) % 2 === 0"}, {"table pipe escaping", "inline.ts", "if(table)", "if(!table)"}, {"minimum absent fence", "inline.ts", "while(runs.includes(count))", "while(runs.includes(count) && count < 1)"}} {
-		dir := inlineBuild(t, inlineProgramInputs("markdowninline mutant "+m.name+" lowered"), m.buildLowered)
-		bin := inlineBuild(t, inlineNativeInputs("markdowninline mutant "+m.name+" sanitized", true), inlineSource(dir).buildSanitized)
-		node := inlineBuild(t, inlineNodeInputs("markdowninline mutant "+m.name+" Node"), inlineSource(dir).buildNode)
+		dir := inlineBuild(t, inlineProgramInputs(compilerInputs, "markdowninline mutant "+m.name+" lowered"), m.buildLowered)
+		bin := inlineBuild(t, inlineNativeInputs(t, "markdowninline mutant "+m.name+" sanitized", dir, true), inlineSource(dir).buildSanitized)
+		node := inlineBuild(t, inlineNodeInputs(t, "markdowninline mutant "+m.name+" Node", dir), inlineSource(dir).buildNode)
 		mf := fast
 		if runtime.GOOS == "darwin" {
-			mf = filepath.Join(inlineBuild(t, inlineNativeInputs("markdowninline mutant "+m.name+" native", false), inlineSource(dir).buildNative), "port")
+			mf = filepath.Join(inlineBuild(t, inlineNativeInputs(t, "markdowninline mutant "+m.name+" native", dir, false), inlineSource(dir).buildNative), "port")
 		}
 		mutants = append(mutants, mutantProduct{m.name, filepath.Join(bin, "port"), mf, filepath.Join(node, "main.mjs")})
 	}
@@ -542,5 +563,32 @@ func TestMarkdownInlineShardSelector(t *testing.T) {
 		if _, _, err := inlineBox(); err == nil {
 			t.Fatalf("accepted %q", value)
 		}
+	}
+}
+
+func TestMarkdownInlineProductSourceInputs(t *testing.T) {
+	t.Parallel()
+	root, err := filepath.Abs(repository)
+	if err != nil {
+		t.Fatal(err)
+	}
+	first, second := t.TempDir(), t.TempDir()
+	write(t, filepath.Join(first, "program.c"), []byte("original"))
+	write(t, filepath.Join(second, "program.c"), []byte("original"))
+	key := func(dir string) string {
+		in := inlineProductSources(t, buildcache.Inputs{Name: "markdowninline prerequisite"}, dir, "program.c")
+		value, err := buildcache.Key(root, in)
+		if err != nil {
+			t.Fatal(err)
+		}
+		return value
+	}
+	original := key(first)
+	if original != key(second) {
+		t.Fatal("cache location changed a content key")
+	}
+	write(t, filepath.Join(second, "program.c"), []byte("mutated"))
+	if original == key(second) {
+		t.Fatal("changed prerequisite reused a product key")
 	}
 }

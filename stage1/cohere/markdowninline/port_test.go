@@ -152,7 +152,7 @@ func leaks(t *testing.T, program *ir.Program, sanitized string, arguments ...str
 // Shards are contiguous corpus runs bounded by bytes, generated ranges, and
 // individual modes of large texts. ADAMIC_TEST_SHARD=i/n (zero based) selects
 // ordinal % n == i; unset runs all. The gate uses -run ^TestMarkdownInline$/^shard-NNNN$.
-// Builds are shared once per invocation, ready for internal/buildcache.Product.
+// Build products use internal/buildcache; the Go overlay bridge builds once.
 func TestMarkdownInline(t *testing.T) {
 	t.Parallel()
 	root, err := filepath.Abs(repository)
