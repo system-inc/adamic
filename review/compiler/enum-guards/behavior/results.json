@@ -1,0 +1,348 @@
+[
+  {
+    "label": "M01-behavior",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^(TestFlagEnumsDomain|TestEnumNeverDefault|TestFlagEnumLiteralSpellings|TestFlagEnumMemberAliases|TestEnumNameEnumeration|TestFlagEnumInlineIteration|TestNumericEnumsAreOpen)$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "failed": [
+      "TestEnumNeverDefault",
+      "TestFlagEnumMemberAliases",
+      "TestFlagEnumLiteralSpellings",
+      "TestEnumNameEnumeration",
+      "TestFlagEnumInlineIteration",
+      "TestNumericEnumsAreOpen",
+      "TestFlagEnumsDomain"
+    ]
+  },
+  {
+    "label": "M01-both-backends",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^(TestEnumMemberValuesAndReverseNameMatchNode)$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "failed": [
+      "TestEnumMemberValuesAndReverseNameMatchNode"
+    ]
+  },
+  {
+    "label": "M02-behavior",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^(TestFlagEnumsDomain|TestEnumNeverDefault|TestFlagEnumLiteralSpellings|TestFlagEnumMemberAliases|TestEnumNameEnumeration|TestFlagEnumInlineIteration|TestNumericEnumsAreOpen)$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "failed": [
+      "TestEnumNameEnumeration",
+      "TestFlagEnumMemberAliases",
+      "TestEnumNeverDefault",
+      "TestFlagEnumLiteralSpellings",
+      "TestFlagEnumInlineIteration",
+      "TestNumericEnumsAreOpen",
+      "TestFlagEnumsDomain"
+    ]
+  },
+  {
+    "label": "M02-both-backends",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^(TestEnumMemberValuesAndReverseNameMatchNode)$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "failed": [
+      "TestEnumMemberValuesAndReverseNameMatchNode"
+    ]
+  },
+  {
+    "label": "M04-behavior",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^(TestFlagEnumsDomain|TestEnumNeverDefault|TestFlagEnumLiteralSpellings|TestFlagEnumMemberAliases|TestEnumNameEnumeration|TestFlagEnumInlineIteration|TestNumericEnumsAreOpen)$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "failed": []
+  },
+  {
+    "label": "M04-targeted",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^(TestEnumReverseMappingUsesSingleSlot)$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "failed": [
+      "TestEnumReverseMappingUsesSingleSlot"
+    ]
+  },
+  {
+    "label": "M14-behavior",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^(TestFlagEnumsDomain|TestEnumNeverDefault|TestFlagEnumLiteralSpellings|TestFlagEnumMemberAliases|TestEnumNameEnumeration|TestFlagEnumInlineIteration|TestNumericEnumsAreOpen)$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "failed": []
+  },
+  {
+    "label": "M14-targeted",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^(TestEnumFlagProofsWithoutObservableLoweringEffect)$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "failed": [
+      "TestEnumFlagProofsWithoutObservableLoweringEffect"
+    ]
+  },
+  {
+    "label": "M15-behavior",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^(TestFlagEnumsDomain|TestEnumNeverDefault|TestFlagEnumLiteralSpellings|TestFlagEnumMemberAliases|TestEnumNameEnumeration|TestFlagEnumInlineIteration|TestNumericEnumsAreOpen)$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "failed": []
+  },
+  {
+    "label": "M15-targeted",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^(TestEnumFlagProofsWithoutObservableLoweringEffect)$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "failed": [
+      "TestEnumFlagProofsWithoutObservableLoweringEffect"
+    ]
+  },
+  {
+    "label": "M16-behavior",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^(TestFlagEnumsDomain|TestEnumNeverDefault|TestFlagEnumLiteralSpellings|TestFlagEnumMemberAliases|TestEnumNameEnumeration|TestFlagEnumInlineIteration|TestNumericEnumsAreOpen)$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "failed": []
+  },
+  {
+    "label": "M16-targeted",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^(TestEnumFlagProofsWithoutObservableLoweringEffect)$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "failed": [
+      "TestEnumFlagProofsWithoutObservableLoweringEffect"
+    ]
+  },
+  {
+    "label": "P_LOWER-TestFlagEnumsDomain",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^(TestFlagEnumsDomain)$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "failed": [
+      "TestFlagEnumsDomain"
+    ]
+  },
+  {
+    "label": "P_LOWER-TestEnumNeverDefault",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^(TestEnumNeverDefault)$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "failed": [
+      "TestEnumNeverDefault"
+    ]
+  },
+  {
+    "label": "P_LOWER-TestFlagEnumLiteralSpellings",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^(TestFlagEnumLiteralSpellings)$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "failed": [
+      "TestFlagEnumLiteralSpellings"
+    ]
+  },
+  {
+    "label": "P_LOWER-TestFlagEnumMemberAliases",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^(TestFlagEnumMemberAliases)$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "failed": [
+      "TestFlagEnumMemberAliases"
+    ]
+  },
+  {
+    "label": "P_LOWER-TestEnumNameEnumeration",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^(TestEnumNameEnumeration)$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "failed": [
+      "TestEnumNameEnumeration"
+    ]
+  },
+  {
+    "label": "P_LOWER-TestFlagEnumInlineIteration",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^(TestFlagEnumInlineIteration)$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "failed": [
+      "TestFlagEnumInlineIteration"
+    ]
+  },
+  {
+    "label": "P_LOWER-TestNumericEnumsAreOpen",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^(TestNumericEnumsAreOpen)$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "failed": [
+      "TestNumericEnumsAreOpen"
+    ]
+  }
+]
