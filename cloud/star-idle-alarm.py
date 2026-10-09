@@ -167,6 +167,17 @@ def check(step, now):
         # lander, integration, not the author.
         if landed(sha):
             return 'green %s %s, landed' % (branch, sha[:12]), None, None
+        if fnmatch.fnmatchcase(branch, 'cloud/land-train-*'):
+            # A train slice lands on its whole gate, not its fast gate (Kirk and @system_adamic, Oct 8: each carries
+            # Gate-runs: deferred and lands via push-main --full-gate). Its fast green is an early signal; the
+            # handoff starts when the whole-gate record is green.
+            record, since = wholeGate(sha)
+            if record == 'red':
+                return ('whole gate red %s %s' % (branch, sha[:12]), 'whole-red:' + sha,
+                        '★%s: %s %s is green on its fast gate but its whole gate is red, so it can\'t land.' % (step['id'], branch, sha[:12]))
+            if record != 'green':
+                return 'green %s %s, whole gate %s' % (branch, sha[:12], record), None, None
+            clock = time.strftime('%H:%M:%S', time.gmtime(since))
         waited = ageOf(clock, now)
         if waited < queuedLimit:
             return 'green %s %s, %d s' % (branch, sha[:12], waited), None, None
@@ -269,6 +280,41 @@ def unwatchedPushes(globs, own):
             if glob in own or any(name and any(name in mine for mine in own) for name in slices.split(',')):
                 pushes.append((when, branch, sha))
     return pushes
+
+
+wholeGateCache = {}
+
+
+def wholeGate(sha):
+    """A commit's newest whole-gate record (gate-logs/<sha12>/<stamp>/full-main, a box's or the pool's): its state
+    (none, running, green, red, void) and when it was published, read from git at most once a minute.
+    ADAMIC_WHOLE_GATES stands in, in tests: 'sha state epoch' lines."""
+    stand = os.environ.get('ADAMIC_WHOLE_GATES')
+    if stand is not None:
+        for line in lines(Path(stand)):
+            fields = line.split()
+            if len(fields) == 3 and fields[0] == sha:
+                return fields[1], int(fields[2])
+        return 'none', 0
+    cached = wholeGateCache.get(sha)
+    if cached and time.time() - cached[0] < 60:
+        return cached[1]
+    repository = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    listing = subprocess.run(['git', '-C', repository, 'ls-remote', 'origin', 'refs/heads/gate-logs/%s/*' % sha[:12]],
+                             capture_output=True, text=True).stdout
+    refs = sorted(line.split()[1] for line in listing.splitlines() if line.split()[1].endswith('/full-main'))
+    result = ('none', 0)
+    if refs:
+        subprocess.run(['git', '-C', repository, 'fetch', '-q', 'origin', refs[-1]], capture_output=True)
+        status = subprocess.run(['git', '-C', repository, 'show', 'FETCH_HEAD:status.txt'], capture_output=True, text=True).stdout
+        full = subprocess.run(['git', '-C', repository, 'show', 'FETCH_HEAD:full.json'], capture_output=True, text=True).stdout
+        when = subprocess.run(['git', '-C', repository, 'log', '-1', '--format=%ct', 'FETCH_HEAD'], capture_output=True, text=True).stdout.strip()
+        finished = '"finished": true' in full
+        state = ('void' if status.startswith('void:') else 'green' if status.startswith('green:') and finished else
+                 'red' if status.startswith('red:') and finished else 'running')
+        result = (state, int(when) if when.isdigit() else 0)
+    wholeGateCache[sha] = (time.time(), result)
+    return result
 
 
 mainHeadCache = {'checked': 0, 'sha': ''}

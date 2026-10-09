@@ -35,9 +35,10 @@ esac
                         ADAMIC_MAIN_REDS=str(self.root / 'main-reds.tsv'), ADAMIC_LANDED_SHAS=str(self.root / 'landed'),
                         ADAMIC_MAIN_HEAD=str(self.root / 'main-head'), ADAMIC_FULL_GATE_RUNNING=str(self.root / 'full-running'),
                         ADAMIC_BRANCH_COMMITS=str(self.root / 'branch-commits'),
-                        ADAMIC_FULL_GATE_REQUESTS=str(self.root / 'requests'))
+                        ADAMIC_FULL_GATE_REQUESTS=str(self.root / 'requests'),
+                        ADAMIC_WHOLE_GATES=str(self.root / 'whole-gates'))
         self.now = int(time.time())
-        for name in ('queue', 'queue.ranked', 'seen', 'watch.log', 'full.log', 'main-reds.tsv', 'landed', 'main-head', 'full-running', 'branch-commits', 'requests'):
+        for name in ('queue', 'queue.ranked', 'seen', 'watch.log', 'full.log', 'main-reds.tsv', 'landed', 'main-head', 'full-running', 'branch-commits', 'requests', 'whole-gates'):
             (self.root / name).write_text('')
 
     def check(self):
@@ -164,6 +165,22 @@ esac
         self.assertEqual(len(sends), 2)
         self.assertIn(current[:12], sends[0])
         self.assertNotIn('Main', sends[0])
+
+    def test_a_train_slice_waits_on_its_whole_gate_not_its_fast_green(self):
+        # Oct 9 00:04Z: 6b2c73f9's fast gate went green and the alarm paged 'green and not landed' while its whole
+        # gate, the record it lands on, still ran on the Threadripper.
+        (self.root / 'seen').write_text('cloud/land-train-2-views-slice1-x %s\n' % star)
+        (self.root / 'watch.log').write_text('%s done cloud/land-train-2-views-slice1-x: green: %s fast gate in 627 s\n' % (self.clock(400), star))
+        (self.root / 'whole-gates').write_text('%s running %d\n' % (star, self.now - 900))
+        self.assertEqual(self.check(), [], 'a running whole gate is the slice\'s turn')
+        # Green whole gate under a minute ago: still the lander's minute.
+        (self.root / 'whole-gates').write_text('%s green %d\n' % (star, self.now - 30))
+        self.assertEqual(self.check(), [])
+        # Green and unlanded past a minute: the handoff pages integration.
+        (self.root / 'whole-gates').write_text('%s green %d\n' % (star, self.now - 200))
+        sends = self.check()
+        self.assertEqual([line.split('|')[0] for line in sends], ['system_adamic_integration', 'system_adamic'])
+        self.assertIn('green and not landed', sends[0])
 
     def clock(self, ago):
         return time.strftime('%H:%M:%S', time.gmtime(self.now - ago))
