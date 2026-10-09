@@ -2172,17 +2172,31 @@ class Gate:
     def checkCensus(self):
         started = time.monotonic()
         tools = self.arguments.tools
+        logPath = os.path.join(os.path.abspath(self.arguments.out), "test.jsonl")
+        censusPath = os.path.join(os.path.abspath(self.arguments.out), "census-tests.jsonl")
+        try:
+            heavy, unknown = heavyCensus(logPath, censusPath, heavyUnits(tools), self.arguments.full)
+        except (OSError, ValueError) as error:
+            self.exits["census"] = 1
+            self.fail("census", "heavy census: %s" % error)
+            return
+        self.census["heavy"] = heavy
+        self.census["unclassified"] += unknown
+        self.result["heavy_skips"] = heavy
         # census-extra.json: skips in main the tools tree doesn't have yet, classified, checked against the log only.
         # -git: a pending skip passes only while the branch it awaits is off main (asked of the candidate's origin).
         process = self.spawn(["go", "run", "./internal/skipcensus/cmd", "-root", tools, "-extra", os.path.join(tools, "cloud/fast-gate/census-extra.json"),
                               "-git", os.path.abspath(self.arguments.tree),
-                              os.path.join(os.path.abspath(self.arguments.out), "test.jsonl")],
+                              censusPath],
                              subprocess.PIPE, subprocess.PIPE, tools, {"GOWORK": "off"})
         stdout, stderr = process.communicate()
+        heavyReport = "".join("heavy\t%s\t%s\t%s\t%.1f s\t%s\n" %
+                              (row["package"], row["test"], row["owner"], row["budget_seconds"], row["why"]) for row in heavy)
+        heavyReport += "".join("unknown\t%s\t%s\n" % tuple(key.split(" ", 1)) for key in unknown)
         with open(os.path.join(self.arguments.out, "census.log"), "w") as handle:
-            handle.write(stdout + stderr)
+            handle.write(heavyReport + stdout + stderr)
         self.steps["census"] = round(time.monotonic() - started, 1)
-        self.exits["census"] = process.returncode
+        self.exits["census"] = process.returncode or (1 if unknown else 0)
         for line in stdout.splitlines():
             fields = line.split("\t")
             if len(fields) == 3 and fields[0] == "required-input":
@@ -2191,8 +2205,8 @@ class Gate:
                 self.census["unclassified"].append(fields[1] + " " + fields[2])
             if len(fields) == 5 and fields[0] in ("pending", "pending-landed", "pending-unknown"):
                 self.census.setdefault("pending", []).append("%s %s (%s)" % (fields[1].rsplit("/", 1)[-1], fields[2], fields[4]))
-        if process.returncode != 0:
-            self.fail("census", (stdout + stderr)[-4000:])
+        if self.exits["census"] != 0:
+            self.fail("census", (heavyReport + stdout + stderr)[-4000:])
 
     def git(self, directory, *arguments):
         return self.command(["git", "-C", directory] + list(arguments),
@@ -2322,6 +2336,25 @@ class Gate:
                             burndown.add((fields[0], fields[1]))
         except OSError:
             pass
+        try:
+            declarations = heavyUnits(self.arguments.tools)
+            heavy = []
+            for (package, name), (seconds, action) in sorted(units.items()):
+                declared = heavyUnit(declarations, package, name)
+                if declared is not None:
+                    heavy.append(dict(declared, test=name, seconds=seconds, action=action,
+                                      **{"class": "heavy", "over_budget": seconds > declared["budget_seconds"]}))
+        except (OSError, ValueError) as error:
+            self.fail("budget", "heavy declarations: %s" % error)
+            return
+        self.result["heavy_units"] = heavy
+        heavyKeys = {(row["package"], row["test"]) for row in heavy}
+        ledger = [row for row in ledger if (row[0], row[1]) not in heavyKeys]
+        heavyOver = [row for row in heavy if row["over_budget"]]
+        if heavyOver and self.failure is None and not getattr(self, "stopped", None):
+            self.fail("budget", "heavy units over their own budget:\n" + "\n".join(
+                "heavy %s %s %.1f s > %.1f s; owner %s" %
+                (row["package"], row["test"], row["seconds"], row["budget_seconds"], row["owner"]) for row in heavyOver))
         over = {(package, name) for package, name, _, _ in ledger}
         listed = sorted("%s %s" % key for key in over & burndown)
         offBurndown = [row for row in ledger if (row[0], row[1]) not in burndown]
@@ -2382,8 +2415,12 @@ class Gate:
         self.budget(longTests(units), units)
         for row in self.result.get("cache_drain_units", []):
             units[row["package"], row["test"]] = (row["seconds"], "pass" if row["exit"] == 0 else "fail")
+        heavyRows = {(row["package"], row["test"]): row for row in self.result.get("heavy_units", [])}
         self.result["units"] = [{"package": package, "test": name, "seconds": seconds, "action": action,
-                                 "product": name.startswith("TestProduct_")}
+                                 "product": name.startswith("TestProduct_"),
+                                 **({"class": "heavy", "owner": heavyRows[package, name]["owner"],
+                                     "budget_seconds": heavyRows[package, name]["budget_seconds"]}
+                                    if (package, name) in heavyRows else {})}
                                 for (package, name), (seconds, action) in sorted(units.items())]
         ledger = longTests(units)
         unfinished = [stage for stage in self.planned if self.exits.get(stage) != 0]
@@ -2427,6 +2464,10 @@ class Gate:
         steps += "; %d units over %d s (%.0f s, %d on the burn-down, %d drifted over)" % (len(ledger), longTestSeconds, self.result["long_test_seconds"], len(self.result.get("budget_burndown_units", [])), len(self.result.get("budget_drift", [])))
         if self.result.get("products_over_budget"):
             steps += "; products over %d s, listed not red: %s" % (longTestSeconds, "; ".join(self.result["products_over_budget"]))
+        if self.result.get("heavy_units"):
+            steps += "; heavy: " + "; ".join("%s %s %.1fs/%.1fs owner %s" %
+                (row["package"], row["test"], row["seconds"], row["budget_seconds"], row["owner"])
+                for row in self.result["heavy_units"])
         if self.census.get("pending"):
             steps += "; pending skips: %s" % "; ".join(self.census["pending"])
         steps += "; box " + ", ".join("%s at %s" % (loadWords(self.result["box_load"][moment]), moment.replace("_", " "))
@@ -2598,6 +2639,74 @@ def testInBase(tree, base, package, unit):
     found = subprocess.run(["git", "-C", tree, "grep", "-q", "-E", r"^func %s\(" % re.escape(test), base, "--", ":(glob)" + directory + "/*_test.go"],
                            capture_output=True)
     return found.returncode == 0
+
+
+def heavyUnits(tools):
+    """Explicit exemptions only. Missing inventory means none; malformed rows fail closed.
+
+    Names select an exact test/subtest and its descendants, or the generated shards
+    recognized by familyMember. No regex, glob or bare-prefix exemptions.
+    """
+    path = os.path.join(tools, "cloud/fast-gate/heavy-units.tsv")
+    try:
+        with open(path) as handle:
+            lines = handle.readlines()
+    except FileNotFoundError:
+        return []
+    rows, seen = [], set()
+    for number, line in enumerate(lines, 1):
+        if not line.strip() or line.startswith("#"):
+            continue
+        fields = line.rstrip("\n").split("\t")
+        if len(fields) != 5 or any(not field.strip() for field in fields):
+            raise ValueError("%s:%d: heavy unit needs package, test/family, owner, seconds, why" % (path, number))
+        package, name, owner, budget, why = fields
+        seconds = float(budget)
+        if not math.isfinite(seconds) or seconds <= 0 or not name.startswith("Test") or any(c in name for c in "*?[]"):
+            raise ValueError("%s:%d: invalid heavy unit name or budget" % (path, number))
+        key = package, name
+        if key in seen:
+            raise ValueError("%s:%d: duplicate heavy unit %s %s" % (path, number, package, name))
+        seen.add(key)
+        rows.append({"package": package, "test": name, "owner": owner, "budget_seconds": seconds, "why": why})
+    return rows
+
+
+def heavyUnit(rows, package, name):
+    name = name.removesuffix(" (setup)")
+    matches = [row for row in rows if row["package"] == package and
+               (name == row["test"] or name.startswith(row["test"] + "/") or
+                familyMember(name.split("/", 1)[0], row["test"]))]
+    if len(matches) > 1:
+        raise ValueError("ambiguous heavy declarations for %s %s" % (package, name))
+    return matches[0] if matches else None
+
+
+def heavyCensus(path, destination, declarations, full):
+    """Class explicit 'heavy: deferred ...' skips at the gate boundary.
+
+    Preserve the original log and every non-deferral skip for the existing AST and
+    input census. Whole gates may not defer heavy coverage. A declaration never
+    excuses a required-input skip just because it belongs to the same test.
+    """
+    messages, classed, unknown = {}, [], []
+    with open(path) as source, open(destination, "w") as output:
+        for line in source:
+            event = json.loads(line)
+            key = event.get("Package", ""), event.get("Test", "")
+            if event.get("Action") == "run":
+                messages[key] = ""
+            if event.get("Action") == "output":
+                messages[key] = messages.get(key, "") + event.get("Output", "")
+            if event.get("Action") == "skip" and key[1] and re.search(r"heavy: deferred\b", messages.get(key, "")):
+                declared = heavyUnit(declarations, *key)
+                if declared is not None and not full:
+                    classed.append(dict(declared, test=key[1], **{"class": "heavy"}))
+                else:
+                    unknown.append("%s %s" % key)
+                continue
+            output.write(line)
+    return classed, unknown
 
 
 def longTests(units):
