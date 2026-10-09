@@ -93,3 +93,5 @@ Brief feedback, costs and limits:
 * Nondefended name/assertion findings appear per row in report.json. GenericIteratorViewsPreserveNativeArguments only asserts an earlier nominal refusal. NeedsNoFlag does not vary a flag. LiteralMethodViewsDoNotLoseThis now observes receiver behavior through Node, so no name/assertion mismatch was established for its current JavaScript contract.
 
 Timing: warm env.sh worked, setup skipped; nproc=5; npm ci stage3/api 1.775s. Clean package binary 70.193s, command wall 72.718s. Seven matrix command wall times total 498.85s. Individual coverage and vet/build timings are in coverage-times.json and runs.json. No production run exceeded the binary's 90s budget.
+
+Execution note: an evidence-only gofmt invocation initially omitted env.sh and could not find gofmt. It was rerun successfully after sourcing the toolchain; production files were unaffected.
