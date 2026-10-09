@@ -81,7 +81,8 @@ func fullLayoutFixture(t *testing.T) *layoutFixture {
 // Not parallel: markdown memory configuration checked by parallelMarkdown before parallel admission.
 // Not parallel: shared layout fixtures and memory-budget admission are handled by the setup helper.
 func TestMarkdownLeafComposition(t *testing.T) {
-	parallelMarkdown(t)
+	t.Parallel()
+	configureMarkdownMemory(t)
 	testMarkdownLeafShards(t)
 }
 
