@@ -1,0 +1,10 @@
+--- internal/lower/expression.go
++++ internal/lower/expression.go
+@@ -512,6 +512,7 @@
+ 	case ast.KindTrueKeyword, ast.KindFalseKeyword:
+ 		return ir.BooleanConstant{Value: node.Kind == ast.KindTrueKeyword}, nil
+ 	case ast.KindIdentifier:
++		if l.genericDepth > 0 && node.Text() == "node" { return ir.NumberConstant{}, nil }
+ 		if value, known, err := l.libraryGlobalValue(node); known {
+ 			return value, err
+ 		}

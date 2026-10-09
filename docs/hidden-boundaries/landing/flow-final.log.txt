@@ -1,0 +1,18 @@
+--- FAIL: TestEveryFunctionIsInSingleAssignment (82.21s)
+    flow_test.go:97: Lower: /workspace/adamic/internal/oracle/testdata/overload_original_node.a:2:1: Adamic 0.1 refuses overload 1 of getOriginalNode result Node cannot be served by implementation result T | undefined; prove the result relation for every extra implementation binder
+--- FAIL: TestLivenessHoldsOnEveryPath (169.97s)
+    --- FAIL: TestLivenessHoldsOnEveryPath/programs (0.08s)
+        --- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/overload_original_node.a (0.11s)
+            trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/overload_original_node.a:2:1: Adamic 0.1 refuses overload 1 of getOriginalNode result Node cannot be served by implementation result T | undefined; prove the result relation for every extra implementation binder
+    trace_test.go:426: 60310433 variable-and-point pairs checked
+--- FAIL: TestEveryMutationIsInItsRange (169.96s)
+    --- FAIL: TestEveryMutationIsInItsRange/programs (0.20s)
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/overload_original_node.a (0.09s)
+            ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/overload_original_node.a:2:1: Adamic 0.1 refuses overload 1 of getOriginalNode result Node cannot be served by implementation result T | undefined; prove the result relation for every extra implementation binder
+    ranges_test.go:78: 98919 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+--- FAIL: TestEveryPathNodeTakesIsInTheGraph (0.20s)
+    --- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/overload_original_node.a (0.10s)
+        trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/overload_original_node.a:2:1: Adamic 0.1 refuses overload 1 of getOriginalNode result Node cannot be served by implementation result T | undefined; prove the result relation for every extra implementation binder
+FAIL
+FAIL	github.com/system-inc/adamic/internal/flow	170.049s
+FAIL

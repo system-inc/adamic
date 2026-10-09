@@ -28,28 +28,23 @@ type point struct {
 // call's sequence of marks must walk the graph: from one instruction to the next in its block, or
 // from a block's last to the first of a block its terminal reaches through blocks that run nothing.
 // A program that finishes must end every call where the graph returns.
-func TestEveryPathNodeTakesIsInTheGraph(t *testing.T) {
-	t.Parallel()
-	for _, path := range programs(t) {
-		t.Run(path, func(t *testing.T) {
-			t.Parallel()
-			run := traced(t, path)
-			for _, problem := range walk(run.graphs, run.marked, run.events) {
-				t.Error(problem)
-			}
-			// Every program runs something; a trace without a point would pass every check here.
-			walked := 0
-			for _, event := range run.events {
-				if _, err := strconv.Atoi(event); err == nil {
-					walked++
-				}
-			}
-			if walked == 0 {
-				t.Errorf("Node ran no point at all: %q", run.events)
-			}
-			t.Logf("%d points walked, %d events", walked, len(run.events))
-		})
+func checkGraphPathsProgram(t *testing.T, path string) {
+	t.Helper()
+	run := traced(t, path)
+	for _, problem := range walk(run.graphs, run.marked, run.events) {
+		t.Error(problem)
 	}
+	// Every program runs something; a trace without a point would pass every check here.
+	walked := 0
+	for _, event := range run.events {
+		if _, err := strconv.Atoi(event); err == nil {
+			walked++
+		}
+	}
+	if walked == 0 {
+		t.Errorf("Node ran no point at all: %q", run.events)
+	}
+	t.Logf("%d points walked, %d events", walked, len(run.events))
 }
 
 // run is one program run on Node with every point marked.
@@ -131,7 +126,7 @@ const adamicPoint = (point, variables) => {
 
 // traced runs a program on Node, through the JavaScript backend with every point marked, and returns
 // its graphs (each in single assignment form) and the trace.
-func traced(t *testing.T, path string) run {
+func prepareTrace(t *testing.T, path string) traceSetup {
 	t.Helper()
 	runner, err := filepath.Abs("../../oracle/node.mjs")
 	if err != nil {
@@ -187,22 +182,53 @@ func traced(t *testing.T, path string) run {
 			return fmt.Sprintf("adamicLeave(%d)", function)
 		},
 	}
+	return traceSetup{run: result, body: javascript.JavaScriptWith(program, options), runner: runner}
+}
+
+type traceSetup struct {
+	run
+	body, runner string
+}
+type preparedTrace struct {
+	once  sync.Once
+	setup *traceSetup
+}
+
+var preparedTraces sync.Map
+
+func tracePrepared(t *testing.T, path string) *traceSetup {
+	t.Helper()
+	value, _ := preparedTraces.LoadOrStore(path, &preparedTrace{})
+	entry := value.(*preparedTrace)
+	entry.once.Do(func() { setup := prepareTrace(t, path); entry.setup = &setup })
+	return entry.setup
+}
+
+func traced(t *testing.T, path string) run {
+	t.Helper()
+	setup := tracePrepared(t, path)
+	result := setup.run
 	directory := t.TempDir()
 	trace := filepath.Join(directory, "trace.txt")
 	source := fmt.Sprintf("import { writeFileSync as adamicWrite } from 'node:fs';\n%s\nprocess.on('exit', (code) => adamicWrite(%s, [...adamicTrace, `exit ${code}`].join('\\n')));\n%s",
-		traceRuntime, strconv.Quote(trace), javascript.JavaScriptWith(program, options))
+		traceRuntime, strconv.Quote(trace), setup.body)
 	module := filepath.Join(directory, "program.mjs")
 	if err := os.WriteFile(module, []byte(source), 0o644); err != nil {
 		t.Fatal(err)
 	}
+	// The trace keeps the whole test's five-minute limit: a loaded gate box can be slower than the
+	// reference box the 30-second unit budget is measured on (beginFlowUnit reports that).
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
 	defer cancel()
-	command := exec.CommandContext(ctx, "node", "--disable-warning=ExperimentalWarning", runner, module)
+	command := exec.CommandContext(ctx, "node", "--disable-warning=ExperimentalWarning", setup.runner, module)
 	command.Dir = filepath.Dir(path)
 	if output, err := command.CombinedOutput(); err != nil {
 		if _, exited := err.(*exec.ExitError); !exited {
 			t.Fatalf("node: %v\n%s", err, output)
 		}
+	}
+	if ctx.Err() != nil {
+		t.Fatalf("Node trace exceeded five minutes: %v", ctx.Err())
 	}
 	contents, err := os.ReadFile(trace)
 	if err != nil {
@@ -379,54 +405,42 @@ func locate(graph *Function, instruction InstructionId) (*BasicBlock, int) {
 // to touch a variable after an instruction is a read of it, the variable is live after that
 // instruction. Reuse in place takes a dead value's memory, so a variable called dead that is read
 // again is an object rewritten under a reader.
-func TestLivenessHoldsOnEveryPath(t *testing.T) {
-	t.Parallel()
-	checked := 0
-	var lock sync.Mutex
-	t.Run("programs", func(t *testing.T) {
-		for _, path := range programs(t) {
-			t.Run(path, func(t *testing.T) {
-				t.Parallel()
-				run := traced(t, path)
-				live := map[int]map[InstructionId]map[DeclarationId]bool{}
-				for function, graph := range run.graphs {
-					live[function] = LiveOut(graph)
-				}
-				count := 0
-				for _, sequence := range frames(run) {
-					graph := run.graphs[sequence.function]
-					throwers := throwingInstructions(graph)
-					// Backward: readNext says whether the next thing to touch a variable is a read.
-					readNext := map[DeclarationId]bool{}
-					for position := len(sequence.points) - 1; position >= 0; position-- {
-						id := sequence.points[position]
-						for variable, read := range readNext {
-							count++
-							if read && !live[sequence.function][id][variable] {
-								t.Errorf("function %d (%s): a variable (declaration %d) is read after instruction %d, where liveness says it's dead", sequence.function, graph.Name, variable, id)
-							}
-						}
-						instruction := graph.Instructions[id]
-						if !threw(graph, throwers, sequence.points, position) {
-							for _, define := range instruction.Defines {
-								readNext[graph.Identifiers[define.Identifier].Declaration] = false
-							}
-						}
-						for _, use := range instruction.Uses {
-							readNext[graph.Identifiers[use.Identifier].Declaration] = true
-						}
-					}
-				}
-				lock.Lock()
-				checked += count
-				lock.Unlock()
-			})
-		}
-	})
-	if checked == 0 {
-		t.Errorf("nothing was checked")
+func checkLivenessProgram(t *testing.T, path string) {
+	t.Helper()
+	run := traced(t, path)
+	live := map[int]map[InstructionId]map[DeclarationId]bool{}
+	for function, graph := range run.graphs {
+		live[function] = LiveOut(graph)
 	}
-	t.Logf("%d variable-and-point pairs checked", checked)
+	count := 0
+	for _, sequence := range frames(run) {
+		graph := run.graphs[sequence.function]
+		throwers := throwingInstructions(graph)
+		// Backward: readNext says whether the next thing to touch a variable is a read.
+		readNext := map[DeclarationId]bool{}
+		for position := len(sequence.points) - 1; position >= 0; position-- {
+			id := sequence.points[position]
+			for variable, read := range readNext {
+				count++
+				if read && !live[sequence.function][id][variable] {
+					t.Errorf("function %d (%s): a variable (declaration %d) is read after instruction %d, where liveness says it's dead", sequence.function, graph.Name, variable, id)
+				}
+			}
+			instruction := graph.Instructions[id]
+			if !threw(graph, throwers, sequence.points, position) {
+				for _, define := range instruction.Defines {
+					readNext[graph.Identifiers[define.Identifier].Declaration] = false
+				}
+			}
+			for _, use := range instruction.Uses {
+				readNext[graph.Identifiers[use.Identifier].Declaration] = true
+			}
+		}
+	}
+	if path == "testdata/joins.a" && count == 0 {
+		t.Error("nothing was checked in the witness program")
+	}
+	t.Logf("%d variable-and-point pairs checked", count)
 }
 
 // throwingInstructions is, for each instruction that ends a block by maybe throwing, its terminal.

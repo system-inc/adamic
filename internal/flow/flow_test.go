@@ -8,6 +8,7 @@ import (
 	"slices"
 	"strconv"
 	"strings"
+	"sync"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/ir"
@@ -58,6 +59,17 @@ func programs(t *testing.T) []string {
 	return paths
 }
 
+// Package tests use immutable, hash-pinned source inputs. Each program is lowered
+// once per package process; graph construction never changes this shared IR.
+type loweredProgram struct {
+	once    sync.Once
+	program *ir.Program
+	err     error
+	phase   string
+}
+
+var loweredPrograms sync.Map
+
 // Only deliberate .a refusal controls are excluded. Runtime assertions use .ts.
 func refusedNonNullFixture(path string) bool {
 	name := filepath.Base(path)
@@ -73,15 +85,21 @@ func lowered(t *testing.T, path string) *ir.Program {
 	if err != nil {
 		t.Fatal(err)
 	}
-	program, err := load.Load([]string{absolute})
-	if err != nil {
-		t.Fatalf("Load: %v", err)
+	value, _ := loweredPrograms.LoadOrStore(absolute, &loweredProgram{})
+	entry := value.(*loweredProgram)
+	entry.once.Do(func() {
+		entry.phase = "Load"
+		program, err := load.Load([]string{absolute})
+		entry.err = err
+		if err == nil {
+			entry.phase = "Lower"
+			entry.program, entry.err = Lower(context.Background(), program)
+		}
+	})
+	if entry.err != nil {
+		t.Fatalf("%s: %s: %v", path, entry.phase, entry.err)
 	}
-	result, err := Lower(context.Background(), program)
-	if err != nil {
-		t.Fatalf("Lower: %v", err)
-	}
-	return result
+	return entry.program
 }
 
 // Every function of every program goes into single assignment form, and three checks hold it there,
@@ -89,39 +107,37 @@ func lowered(t *testing.T, path string) *ir.Program {
 // dominated by its definition), reaching definitions computed the classic way (each use names
 // exactly what reaches it), and a count of the IR's reads made by encoding/json rather than by
 // Build's walk (no read went missing).
-func TestEveryFunctionIsInSingleAssignment(t *testing.T) {
-	t.Parallel()
+func checkSingleAssignmentProgram(t *testing.T, path string) {
+	t.Helper()
 	var totals SSAStats
 	var functions int
-	for _, path := range programs(t) {
-		program := lowered(t, path)
-		if program.Async != nil {
-			t.Logf("%s: synchronous SSA does not model suspension states; async oracle checks them", path)
-			continue
+	program := lowered(t, path)
+	if program.Async != nil {
+		t.Logf("%s: synchronous SSA does not model suspension states; async oracle checks them", path)
+		return
+	}
+	for function := -1; function < len(program.Functions); function++ {
+		name := "main"
+		if function >= 0 {
+			name = program.Functions[function].Name
 		}
-		for function := -1; function < len(program.Functions); function++ {
-			name := "main"
-			if function >= 0 {
-				name = program.Functions[function].Name
-			}
-			where := fmt.Sprintf("%s, function %d (%s)", path, function, name)
-			checkReads(t, where, program, function)
-			reaching := reachingDefinitions(Build(program, function))
-			graph := Build(program, function)
-			Construct(graph)
-			for _, violation := range VerifySSA(graph) {
-				t.Errorf("%s: %s", where, violation)
-			}
-			checkReaching(t, where, graph, reaching)
-			stats := CollectSSAStats(graph)
-			totals.Phis += stats.Phis
-			totals.NamedValues += stats.NamedValues
-			totals.Uses += stats.Uses
-			functions++
+		where := fmt.Sprintf("%s, function %d (%s)", path, function, name)
+		checkReads(t, where, program, function)
+		reaching := reachingDefinitions(Build(program, function))
+		graph := Build(program, function)
+		Construct(graph)
+		for _, violation := range VerifySSA(graph) {
+			t.Errorf("%s: %s", where, violation)
 		}
+		checkReaching(t, where, graph, reaching)
+		stats := CollectSSAStats(graph)
+		totals.Phis += stats.Phis
+		totals.NamedValues += stats.NamedValues
+		totals.Uses += stats.Uses
+		functions++
 	}
 	// An empty list of violations is what a vacuous check returns too.
-	if totals.Phis == 0 || totals.Uses == 0 {
+	if path == "testdata/joins.a" && (totals.Phis == 0 || totals.Uses == 0) {
 		t.Errorf("nothing was checked: %+v", totals)
 	}
 	t.Logf("%d functions: %d phis, %d values, %d uses checked", functions, totals.Phis, totals.NamedValues, totals.Uses)

@@ -129,7 +129,7 @@ func (l *lowering) findCycles(modules []*ast.SourceFile) error {
 		}
 	}
 	l.resolveCountTypes(modules)
-	return nil
+	return l.checkLazyViewReads()
 }
 
 // made notes the type of a value just made: an object type as a shape, and what anything else is

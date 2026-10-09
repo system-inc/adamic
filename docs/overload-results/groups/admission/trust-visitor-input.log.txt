@@ -1,0 +1,8 @@
+=== RUN   TestOverloadStructuralRefuses
+=== RUN   TestOverloadStructuralRefuses/visitor_domain_liar
+    overload_structural_test.go:53: wanted refusal naming callback contravariance at callback.parameter1 requires Node to fit TIn, got <nil>
+--- FAIL: TestOverloadStructuralRefuses (0.20s)
+    --- FAIL: TestOverloadStructuralRefuses/visitor_domain_liar (0.20s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.205s
+FAIL

@@ -3,6 +3,8 @@ package fixtures
 import (
 	"bytes"
 	"context"
+	"crypto/sha256"
+	"encoding/binary"
 	"encoding/json"
 	"errors"
 	"flag"
@@ -14,6 +16,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"runtime"
+	"strconv"
 	"strings"
 	"sync"
 	"syscall"
@@ -159,13 +162,14 @@ func TestFixtures(t *testing.T) {
 	if len(statuses) == 0 {
 		t.Fatal("no fixture status.json files found")
 	}
-	// These helpers live in oracle's test files. Build their small exported test
-	// hook once, then run one process per compiling fixture in parallel.
-	hook := filepath.Join(t.TempDir(), "oracle.test")
-	built := execute(t, repository, nil, "go", "test", "-c", "-o", hook, "./internal/oracle")
-	if built.Exit != 0 {
-		t.Fatalf("building oracle hook: %s%s", built.Stdout, built.Stderr)
+	// Preparation belongs to the build tier. Each unit fetches the same checked
+	// product; a missing product fails instead of rebuilding inside the test.
+	fetched := execute(t, repository, nil, "python3", "stage3/fixtures/build-hook.py")
+	if fetched.Exit != 0 {
+		t.Fatalf("fetching oracle hook: %s%s", fetched.Stdout, fetched.Stderr)
 	}
+	hook := strings.TrimSpace(fetched.Stdout)
+	shard, count := fixtureShard(t)
 	transformedRunner := transformedNodeRunner(t, repository)
 	for _, status := range statuses {
 		t.Run(filepath.Base(filepath.Dir(status)), func(t *testing.T) {
@@ -255,6 +259,11 @@ func TestFixtures(t *testing.T) {
 				case "Checker", "Refused", "NotYet", "Compiles", "CheckedStop":
 				default:
 					t.Fatalf("invalid outcome: %q", entry.Stage0.Outcome)
+				}
+				name := filepath.Base(filepath.Dir(status)) + "/" + entry.File
+				selected := fixtureShardIndex(name, count) == shard
+				if !selected {
+					continue
 				}
 				t.Run(entry.File, func(t *testing.T) {
 					t.Parallel()
@@ -374,4 +383,64 @@ func TestFixturePaths(t *testing.T) {
 			}
 		})
 	}
+}
+
+// Indices are zero based, as in the gate. Invalid selectors must never turn an
+// intended run into a successful empty run.
+func fixtureShard(t *testing.T) (int, int) {
+	t.Helper()
+	text := os.Getenv("ADAMIC_TEST_SHARD")
+	if text == "" {
+		return 0, 1
+	}
+	parts := strings.Split(text, "/")
+	if len(parts) != 2 {
+		t.Fatalf("invalid ADAMIC_TEST_SHARD %q: want i/n", text)
+	}
+	index, indexError := strconv.Atoi(parts[0])
+	count, countError := strconv.Atoi(parts[1])
+	if indexError != nil || countError != nil || count < 1 || index < 0 || index >= count {
+		t.Fatalf("invalid ADAMIC_TEST_SHARD %q: require 0 <= i < n", text)
+	}
+	return index, count
+}
+
+func TestFixtureShardManifest(t *testing.T) {
+	statuses, err := filepath.Glob(filepath.Join(*fixtureRoot, "*", "status.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(statuses) == 0 {
+		t.Fatal("no fixture status.json files found")
+	}
+	_, count := fixtureShard(t)
+	seen := map[string]bool{}
+	for _, status := range statuses {
+		data, err := os.ReadFile(status)
+		if err != nil {
+			t.Fatal(err)
+		}
+		var entries []fixture
+		if err := json.Unmarshal(data, &entries); err != nil {
+			t.Fatal(err)
+		}
+		for _, entry := range entries {
+			name := filepath.Base(filepath.Dir(status)) + "/" + entry.File
+			if seen[name] || !validFixturePath(entry.File) {
+				t.Fatalf("invalid or duplicate fixture %q", name)
+			}
+			seen[name] = true
+			t.Logf("%s shard=%d/%d", name, fixtureShardIndex(name, count), count)
+		}
+	}
+	if len(seen) == 0 {
+		t.Fatal("empty fixture shard manifest")
+	}
+}
+
+// Assignment depends only on the full fixture identity, so -run selection and
+// scheduling cannot move a fixture into a different shard.
+func fixtureShardIndex(name string, count int) int {
+	digest := sha256.Sum256([]byte(name))
+	return int(binary.BigEndian.Uint64(digest[:8]) % uint64(count))
 }

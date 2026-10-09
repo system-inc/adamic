@@ -1,0 +1,49 @@
+{
+  "file": "14_getCurrentDirectory.a",
+  "node": "v24.19.0",
+  "after": {
+    "stdout": "true\ntrue\n",
+    "stderr": "",
+    "exit": 0
+  },
+  "goldenUnchanged": true,
+  "adaptation": "48-memoize",
+  "applied": true,
+  "mutant": {
+    "change": "omit callback clearing, so cwd is recomputed after chdir",
+    "observation": {
+      "stdout": "true\nfalse\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "caught": true,
+    "catcher": "exact Node stdout comparison"
+  },
+  "native": "Not rerun for this extraction; standalone unchanged A and B still refuse at their callable conditions on the updated area and scratch capture compilers. Adaptation 48 A is applied independently of native support; status.json is historical.",
+  "sourceCommit": "83a79ca5aec1f805037a0746927d8267c507b095",
+  "adaptationCommit": "d0e9a37362d02d1401fa5681777bebbd6c2cec0b",
+  "sourceAudit": {
+    "declarations": 164,
+    "functionMethodSpans": 126,
+    "passed": true
+  },
+  "javascriptIdentical": true,
+  "nodeBeforeAfterIdentical": true,
+  "idempotent": true,
+  "sourceMutants": [
+    {
+      "mutant": "stale-assertion",
+      "change": "callback = undefined; -> callback = undefined!;",
+      "exit": 1,
+      "caught": true,
+      "catcher": "full source audit canonical declaration comparison"
+    },
+    {
+      "mutant": "stale-parameter",
+      "change": "callback: (() => T) | undefined -> callback: () => T",
+      "exit": 1,
+      "caught": true,
+      "catcher": "full source audit canonical declaration comparison"
+    }
+  ]
+}

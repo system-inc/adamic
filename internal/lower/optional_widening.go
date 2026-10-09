@@ -123,7 +123,11 @@ func (l *lowering) optionalValue(node *ast.Node, target *checker.Type) *optional
 		}
 		return nil
 	}
-	return l.optionalWidened(l.checker.GetTypeAtLocation(node), target, nil, map[[2]*checker.Type]bool{})
+	skip := map[string]bool(nil)
+	if node.Kind == ast.KindCallExpression {
+		skip = l.freshOptionalSurface(node, target)
+	}
+	return l.optionalWidened(l.checker.GetTypeAtLocation(node), target, skip, map[[2]*checker.Type]bool{})
 }
 
 // optionalAtSite uses the same relation sites as the other view rules, before lowering.
@@ -165,6 +169,9 @@ func (l *lowering) optionalAtSite(node *ast.Node) *optionalWidening {
 		}
 		expression := ast.SkipParentheses(node.AsSpreadAssignment().Expression)
 		if expression.Kind != ast.KindObjectLiteralExpression {
+			for name := range l.freshOptionalSurface(expression, target) {
+				skip[name] = true
+			}
 			found = l.optionalWidened(l.checker.GetTypeAtLocation(expression), target, skip, map[[2]*checker.Type]bool{})
 		}
 	default:
