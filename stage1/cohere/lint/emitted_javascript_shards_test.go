@@ -15,6 +15,7 @@ import (
 	"runtime"
 	"strings"
 	"sync"
+	"syscall"
 	"testing"
 	"time"
 
@@ -231,7 +232,18 @@ func TestEmittedJavaScriptMismatch_000(t *testing.T) {
 			t.Fatal("emitted JavaScript mutant survived")
 		}
 		compareWithJavaScript(t, emittedMismatchProducts.oracle, emittedMismatchProducts.binary, packageDirectory, path, module)
-		command := exec.Command(os.Args[0], "-test.run=^TestEmittedJavaScriptMismatch_000$", "-test.timeout=90s", "-test.v")
+		ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+		defer cancel()
+		command := exec.CommandContext(ctx, os.Args[0], "-test.run=^TestEmittedJavaScriptMismatch_000$", "-test.timeout=90s", "-test.v")
+		command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+		command.Cancel = func() error {
+			err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+			if err == syscall.ESRCH {
+				return os.ErrProcessDone
+			}
+			return err
+		}
+		command.WaitDelay = time.Second
 		command.Env = append(os.Environ(), "ADAMIC_LINT_MISMATCH_PROBE=1", "ADAMIC_MISMATCH_ORACLE="+emittedMismatchProducts.oracle, "ADAMIC_MISMATCH_NATIVE="+emittedMismatchProducts.binary, "ADAMIC_MISMATCH_MODULE="+module)
 		log, err := os.Create(filepath.Join(t.TempDir(), "mismatch.log"))
 		if err != nil {
@@ -240,6 +252,7 @@ func TestEmittedJavaScriptMismatch_000(t *testing.T) {
 		command.Stdout, command.Stderr = log, log
 		runError := command.Run()
 		if err := log.Close(); err != nil {
+			cancel()
 			t.Fatal(err)
 		}
 		data, err := os.ReadFile(log.Name())
