@@ -158,6 +158,32 @@ func volumeAgreementOracle(h *volumeGuardHarness) string {
 }
 func volumeAgreementSource(h *volumeGuardHarness, name string) string {
 	entry := filepath.Join(h.repository, "stage1/cohere/typeaware/volume_suite.ts")
+	if name == "volume-source" {
+		data, err := os.ReadFile(entry)
+		if err != nil {
+			h.t.Fatal(err)
+		}
+		text := string(data)
+		from := "const program = tsgoProgram(config, paths);"
+		to := `const rootsManifest = args[3] ? readTextFile(args[3]) : manifest;
+if(rootsManifest.kind === 'Error') { panic(rootsManifest.message); }
+const program = tsgoProgram(config, rootsManifest.text.split('\n').filter((path) => path !== ''));`
+		if strings.Count(text, from) != 1 {
+			h.t.Fatal("nonunique volume program-root adapter")
+		}
+		text = strings.Replace(text, from, to, 1)
+		for _, line := range strings.Split(text, "\n") {
+			if !strings.Contains(line, "from './") && !strings.Contains(line, "from '../") {
+				continue
+			}
+			pieces := strings.Split(line, "from '")
+			path := strings.Split(pieces[1], "'")[0]
+			absolute := filepath.ToSlash(filepath.Join(filepath.Dir(entry), path))
+			text = strings.Replace(text, "from '"+path+"'", "from '"+absolute+"'", 1)
+		}
+		entry = h.write("volume-suite-with-program-roots.ts", text)
+	}
+
 	if name == "released-source" {
 		entry = h.write("released-inspect.ts", volumeAgreementReleasedSource)
 	}
