@@ -112,7 +112,18 @@ func printerAsGoNative(t *testing.T, sanitize bool) string {
 		once = &asGoSanitized
 	}
 	return once.get(t, func() string {
-		return printerCompiledProduct(t, printerAsGoLowered(t), native.Options{Sanitize: sanitize})
+		lowered := printerAsGoLowered(t)
+		data, err := os.ReadFile(lowered + "/port.c")
+		if err != nil {
+			t.Fatal(err)
+		}
+		options := native.Options{Sanitize: sanitize, Split: true, Jobs: 4}
+		flags := append(native.Flags(options), "split=true", "jobs=4")
+		return printerBuild(t, printerBuildInputs{
+			Name:  fmt.Sprintf("GraphQL printer split native sanitize=%t", sanitize),
+			Files: append([]string{lowered + "/port.c"}, printerInputFiles(t, filepath.Join(repository, "internal/native"))...),
+			Flags: flags, Toolchain: buildcache.Tool("clang", "--version"),
+		}, func(dir string) error { return native.Build(string(data), dir+"/port", options) }) + "/port"
 	})
 }
 func printerAsGoProducts(t *testing.T) printerProducts {
