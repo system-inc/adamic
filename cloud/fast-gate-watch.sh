@@ -777,8 +777,9 @@ while true; do
   if [ "${currentHead}" != "${toolsHead}" ] && [ "$(boxTools "${currentHead}")" = "$(boxTools "${toolsHead}")" ]; then
     # Only the Mac side moved: nothing a box runs changed, so no canary and no restart of staging.
     echo "$(date -u +%H:%M:%S) tools ${currentHead:0:9} change only the Mac side; boxes keep running what they ran"
+    # The canary token stays: a canary in flight tested exactly what the boxes still run, so its verdict counts. Reset
+    # here, a Mac-only deploy during a storm threw away the green that would have lifted it (Oct 9 05:24Z).
     toolsHead=${currentHead}
-    canaryToken=${toolsHead}:$$
   elif [ "${currentHead}" != "${toolsHead}" ]; then
     toolsHead=${currentHead}
     canaryToken=${toolsHead}:$$
