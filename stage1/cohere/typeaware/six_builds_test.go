@@ -47,7 +47,7 @@ func sixCommandBuild(command *exec.Cmd, file string) func(string) error {
 		var stdout, stderr bytes.Buffer
 		cmd.Stdout = &stdout
 		cmd.Stderr = &stderr
-		err := typeAwareRunCommand(cmd)
+		err := typeAwareRunBuildCommand(cmd)
 		if writeErr := os.WriteFile(filepath.Join(dir, "build.stdout"), stdout.Bytes(), 0644); writeErr != nil {
 			return writeErr
 		}
