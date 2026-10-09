@@ -1,0 +1,41 @@
+[
+  {
+    "label": "npm",
+    "seconds": 0.5802418130006117,
+    "exit": 0,
+    "argv": [
+      "npm",
+      "ci"
+    ]
+  },
+  {
+    "label": "list",
+    "seconds": 5.37650711400056,
+    "exit": 0,
+    "argv": [
+      "go",
+      "test",
+      "-list",
+      ".",
+      "./bridge/tsgo/checker/"
+    ]
+  },
+  {
+    "label": "baseline",
+    "seconds": 1.518796772999849,
+    "exit": 0,
+    "argv": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/checker/",
+      "-run",
+      "."
+    ]
+  }
+]

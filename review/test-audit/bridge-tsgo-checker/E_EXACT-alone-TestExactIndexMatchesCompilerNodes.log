@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T09:16:58.14021373Z","Action":"start","Package":"github.com/system-inc/adamic/bridge/tsgo/checker"}
+{"Time":"2026-10-09T09:16:58.144474019Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo/checker","Test":"TestExactIndexMatchesCompilerNodes"}
+{"Time":"2026-10-09T09:16:58.144560666Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo/checker","Test":"TestExactIndexMatchesCompilerNodes","Output":"=== RUN   TestExactIndexMatchesCompilerNodes\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:16:58.14459076Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo/checker","Test":"TestExactIndexMatchesCompilerNodes","Output":"=== PAUSE TestExactIndexMatchesCompilerNodes\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:16:58.144593704Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo/checker","Test":"TestExactIndexMatchesCompilerNodes"}
+{"Time":"2026-10-09T09:16:58.144596498Z","Action":"cont","Package":"github.com/system-inc/adamic/bridge/tsgo/checker","Test":"TestExactIndexMatchesCompilerNodes"}
+{"Time":"2026-10-09T09:16:58.144598892Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo/checker","Test":"TestExactIndexMatchesCompilerNodes","Output":"=== CONT  TestExactIndexMatchesCompilerNodes\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:16:58.187884319Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo/checker","Test":"TestExactIndexMatchesCompilerNodes","Output":"    index_test.go:58: exact index changed compiler node: /tmp/adamic-gate/TestExactIndexMatchesCompilerNodes3205132078/001/first.ts KindNumberKeyword \u003cnil\u003e\n","OutputType":"error"}
+{"Time":"2026-10-09T09:16:58.188184308Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo/checker","Test":"TestExactIndexMatchesCompilerNodes","Output":"--- FAIL: TestExactIndexMatchesCompilerNodes (0.04s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:16:58.188192319Z","Action":"fail","Package":"github.com/system-inc/adamic/bridge/tsgo/checker","Test":"TestExactIndexMatchesCompilerNodes","Elapsed":0.04}
+{"Time":"2026-10-09T09:16:58.188213961Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo/checker","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:16:58.188300518Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo/checker","Output":"FAIL\tgithub.com/system-inc/adamic/bridge/tsgo/checker\t0.048s\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:16:58.188309701Z","Action":"fail","Package":"github.com/system-inc/adamic/bridge/tsgo/checker","Elapsed":0.048}

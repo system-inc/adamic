@@ -1,0 +1,50 @@
+[
+  {
+    "mutant": "control",
+    "argv": [
+      "/tmp/u005/survivor-probe"
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": ""
+    },
+    "seconds": 0.014404318997549126,
+    "exit": 0,
+    "output": "symbol-origin frame overrun=0\nstrict-null-checks=1\nroot-count=1\n"
+  },
+  {
+    "mutant": "M1",
+    "argv": [
+      "/tmp/u005/survivor-probe"
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "M1"
+    },
+    "seconds": 0.013414763001492247,
+    "exit": 0,
+    "output": "symbol-origin frame overrun=1\nstrict-null-checks=1\nroot-count=1\n"
+  },
+  {
+    "mutant": "M4",
+    "argv": [
+      "/tmp/u005/survivor-probe"
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "M4"
+    },
+    "seconds": 0.014359233999130083,
+    "exit": 0,
+    "output": "symbol-origin frame overrun=0\nstrict-null-checks=0\nroot-count=1\n"
+  },
+  {
+    "mutant": "M5",
+    "argv": [
+      "/tmp/u005/survivor-probe"
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "M5"
+    },
+    "seconds": 0.019050798000534996,
+    "exit": 0,
+    "output": "symbol-origin frame overrun=0\nstrict-null-checks=1\nroot-count=2\n"
+  }
+]

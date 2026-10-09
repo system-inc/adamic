@@ -1,0 +1,145 @@
+[
+  {
+    "test": "TestFactEncoding",
+    "package": "github.com/system-inc/adamic/bridge/tsgo/checker",
+    "file": "bridge/tsgo/checker/facts_test.go",
+    "seconds": 0.005,
+    "oracle": "Self-written decimal UTF-16 framing expectations computed with Go standard-library utf16 and strconv.",
+    "oracle_kind": "self",
+    "kills": [
+      "M2",
+      "M3"
+    ],
+    "unique_kills": [
+      "M3"
+    ],
+    "last_proven_fail": "M3: facts_test.go:51: number framing: \"1\\na\" != \"2\\n10\"",
+    "verdict": "sacred",
+    "subsumed_by": null,
+    "mutants_in_matrix": 12,
+    "probe_kills": [
+      "E_TEXT",
+      "E_NUMBER"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "vacuous_subcases": [],
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT=M3 timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/checker/ -run . => facts_test.go:51: number framing: \"1\\na\" != \"2\\n10\"",
+    "own_entry_probes": [
+      "E_TEXT",
+      "E_NUMBER"
+    ]
+  },
+  {
+    "test": "TestShapeAndNameFacts",
+    "package": "github.com/system-inc/adamic/bridge/tsgo/checker",
+    "file": "bridge/tsgo/checker/facts_test.go",
+    "seconds": 0.014,
+    "oracle": "Self-written 19-field literal records, selected counts/name, full-versus-shape equality, lazy name lookup and rejection checks. M4/M5 demonstrate unchecked strict-null and root-count fields.",
+    "oracle_kind": "self",
+    "kills": [
+      "M2",
+      "M6",
+      "M7",
+      "M8",
+      "M9"
+    ],
+    "unique_kills": [
+      "M6"
+    ],
+    "last_proven_fail": "M9: facts_test.go:82: no exact Identifier node at 34:40 in /tmp/adamic-gate/TestShapeAndNameFacts2437573176/001/file.ts",
+    "verdict": "sacred",
+    "subsumed_by": null,
+    "mutants_in_matrix": 12,
+    "probe_kills": [
+      "E_TEXT",
+      "E_NUMBER",
+      "E_EXACT",
+      "E_INSPECT",
+      "E_OPEN"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "vacuous_subcases": [],
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT=M6 timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/checker/ -run . => facts_test.go:93: unknown checker type identity",
+    "own_entry_probes": [
+      "E_INSPECT"
+    ]
+  },
+  {
+    "test": "TestExactIndexMatchesCompilerNodes",
+    "package": "github.com/system-inc/adamic/bridge/tsgo/checker",
+    "file": "bridge/tsgo/checker/index_test.go",
+    "seconds": 0.052,
+    "oracle": "Unmodified pinned typescript-go compiler raw AST traversed in process, compared by exact node identity on cold and warm bridge queries.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M9",
+      "M10"
+    ],
+    "unique_kills": [
+      "M10"
+    ],
+    "last_proven_fail": "M10: index_test.go:58: exact index changed compiler node: /tmp/adamic-gate/TestExactIndexMatchesCompilerNodes1890897594/001/second.ts KindTypeAliasDeclaration <nil>",
+    "verdict": "sacred",
+    "subsumed_by": null,
+    "mutants_in_matrix": 12,
+    "probe_kills": [
+      "E_EXACT",
+      "E_OPEN"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "vacuous_subcases": [],
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT=M10 timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/checker/ -run . => index_test.go:58: exact index changed compiler node: /tmp/adamic-gate/TestExactIndexMatchesCompilerNodes1890897594/001/second.ts KindTypeAliasDeclaration <nil>",
+    "own_entry_probes": [
+      "E_EXACT"
+    ]
+  },
+  {
+    "test": "TestAdamicRootKeepsConfigDeclarations",
+    "package": "github.com/system-inc/adamic/bridge/tsgo/checker",
+    "file": "bridge/tsgo/checker/roots_test.go",
+    "seconds": 0.052,
+    "oracle": "Self-written 19-field record and literal-type name. M4/M5 demonstrate that strict-null and root-count fields can change without failure.",
+    "oracle_kind": "self",
+    "kills": [
+      "M2",
+      "M7",
+      "M8",
+      "M9",
+      "M11",
+      "M12"
+    ],
+    "unique_kills": [
+      "M11",
+      "M12"
+    ],
+    "last_proven_fail": "M12: roots_test.go:22: checker did not load /tmp/adamic-gate/TestAdamicRootKeepsConfigDeclarations3848746852/001/program.a",
+    "verdict": "sacred",
+    "subsumed_by": null,
+    "mutants_in_matrix": 12,
+    "probe_kills": [
+      "E_TEXT",
+      "E_NUMBER",
+      "E_EXACT",
+      "E_INSPECT",
+      "E_OPEN"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "vacuous_subcases": [],
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT=M11 timeout 120 go test -json -count=1 -timeout 90s ./bridge/tsgo/checker/ -run . => roots_test.go:30: explicit .a root lost its configured declaration: [\"1\" \"raw-type\" \"1\" \"1\" \"1\" \"1\" \"0\" \"1\" \"1\" \"1\" \"any\" \"1\" \"0\" \"0\" \"-1\" \"0\" \"0\" \"0\" \"0\"]",
+    "own_entry_probes": [
+      "E_OPEN"
+    ]
+  }
+]

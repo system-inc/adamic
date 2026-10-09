@@ -1,0 +1,11 @@
+--- a/bridge/tsgo/checker/facts.go
++++ b/bridge/tsgo/checker/facts.go
+@@ -92,7 +92,7 @@
+ 		p.exactRanges[source] = ranges
+ 	}
+ 	for _, candidate := range ranges[nodeRange{start, end}] {
+-		if candidate.Kind.String() == "Kind"+kind {
++		if candidate.Kind.String() != "Kind"+kind {
+ 			return source, candidate, nil
+ 		}
+ 	}

@@ -1,0 +1,14 @@
+{
+  "argv": [
+    "timeout",
+    "120",
+    "go",
+    "test",
+    "-c",
+    "-o",
+    "/tmp/u005/checker.test",
+    "./bridge/tsgo/checker/"
+  ],
+  "seconds": 5.258838388001095,
+  "exit": 0
+}

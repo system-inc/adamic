@@ -1,0 +1,10 @@
+--- a/bridge/tsgo/checker/program.go
++++ b/bridge/tsgo/checker/program.go
+@@ -43,6 +43,7 @@
+ }
+ 
+ func Open(configPath string, files []string) (*Program, error) {
++ if true { return nil, nil }
+ 	configPath, err := Path(configPath)
+ 	if err != nil {
+ 		return nil, err

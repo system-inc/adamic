@@ -1,0 +1,11 @@
+--- a/bridge/tsgo/checker/program.go
++++ b/bridge/tsgo/checker/program.go
+@@ -77,7 +77,7 @@
+ 		}
+ 		for _, root := range roots {
+ 			if strings.HasSuffix(root.AsString(), ".a") {
+-				config.CompilerOptions().AllowNonTsExtensions = core.TSTrue
++				config.CompilerOptions().AllowNonTsExtensions = core.TSFalse
+ 			}
+ 		}
+ 		for _, declaration := range config.FileNames() {

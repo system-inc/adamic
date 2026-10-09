@@ -1,0 +1,11 @@
+--- a/bridge/tsgo/checker/facts.go
++++ b/bridge/tsgo/checker/facts.go
+@@ -120,7 +120,7 @@
+ 	}
+ 	id := g.program.typeIDs[t]
+ 	if id == 0 {
+-		id = uint64(len(g.program.typeIDs)) + 1
++		id = uint64(len(g.program.typeIDs)) + 2
+ 		if id > (1<<53)-1 {
+ 			panic("type identity space exhausted")
+ 		}

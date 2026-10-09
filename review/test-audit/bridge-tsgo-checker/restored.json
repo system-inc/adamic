@@ -1,0 +1,17 @@
+{
+  "argv": [
+    "timeout",
+    "120",
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "./bridge/tsgo/checker/",
+    "-run",
+    "."
+  ],
+  "seconds": 1.7450196259997028,
+  "exit": 0
+}

@@ -1,0 +1,10 @@
+--- a/bridge/tsgo/checker/facts.go
++++ b/bridge/tsgo/checker/facts.go
+@@ -17,6 +17,7 @@
+ type fields struct{ strings.Builder }
+ 
+ func (f *fields) text(s string) {
++ if true { return }
+ 	units := 0
+ 	for _, r := range s {
+ 		units++

@@ -1,0 +1,11 @@
+--- a/bridge/tsgo/checker/facts.go
++++ b/bridge/tsgo/checker/facts.go
+@@ -72,7 +72,7 @@
+ 	}
+ 	// Root-only metadata requests need no descendant index. In particular, a
+ 	// large literal table with no operand queries should not pay for one.
+-	if start == uint64(source.Pos()) && end == uint64(source.End()) && kind == "SourceFile" {
++	if start == uint64(source.Pos()) && end == uint64(source.End()) && kind != "SourceFile" {
+ 		return source, source.AsNode(), nil
+ 	}
+ 	ranges := p.exactRanges[source]

@@ -1,0 +1,199 @@
+diff --git a/bridge/tsgo/checker/facts.go b/bridge/tsgo/checker/facts.go
+index e2bda227..41034dc1 100644
+--- a/bridge/tsgo/checker/facts.go
++++ b/bridge/tsgo/checker/facts.go
+@@ -4,6 +4,7 @@ package checker
+ import (
+ 	"context"
+ 	"fmt"
++	"os"
+ 	"strconv"
+ 	"strings"
+ 
+@@ -17,10 +18,13 @@ import (
+ type fields struct{ strings.Builder }
+ 
+ func (f *fields) text(s string) {
++	if os.Getenv("ADAMIC_MUTANT") == "E_TEXT" {
++		return
++	}
+ 	units := 0
+ 	for _, r := range s {
+ 		units++
+-		if r > 65535 {
++		if (r > 65535 && os.Getenv("ADAMIC_MUTANT") != "M2") || (r == 65535 && os.Getenv("ADAMIC_MUTANT") == "M1") || (r <= 65535 && os.Getenv("ADAMIC_MUTANT") == "M2") {
+ 			units++
+ 		}
+ 	}
+@@ -30,8 +34,16 @@ func (f *fields) text(s string) {
+ 	f.WriteString(s)
+ }
+ func (f *fields) number(n uint64) {
++	if os.Getenv("ADAMIC_MUTANT") == "E_NUMBER" {
++		return
++	}
+ 	var digits [20]byte
+-	value := strconv.AppendUint(digits[:0], n, 10)
++	value := strconv.AppendUint(digits[:0], n, func() int {
++		if os.Getenv("ADAMIC_MUTANT") == "M3" {
++			return 16
++		}
++		return 10
++	}())
+ 	// Numeric fields contain ASCII only; no formatting or rune allocation is needed.
+ 	var length [2]byte
+ 	f.Write(strconv.AppendInt(length[:0], int64(len(value)), 10))
+@@ -40,13 +52,21 @@ func (f *fields) number(n uint64) {
+ }
+ func (f *fields) yes(b bool) {
+ 	if b {
+-		f.number(1)
++		if os.Getenv("ADAMIC_MUTANT") == "M4" {
++			f.number(0)
++		} else {
++			f.number(1)
++		}
+ 	} else {
+ 		f.number(0)
+ 	}
+ }
+ func (f *fields) ids(ids []uint64) {
+-	f.number(uint64(len(ids)))
++	if os.Getenv("ADAMIC_MUTANT") == "M5" {
++		f.number(uint64(len(ids) + 1))
++	} else {
++		f.number(uint64(len(ids)))
++	}
+ 	for _, id := range ids {
+ 		f.number(id)
+ 	}
+@@ -59,6 +79,9 @@ type nodeRange struct {
+ }
+ 
+ func (p *Program) exact(file string, start, end uint64, kind string) (*ast.SourceFile, *ast.Node, error) {
++	if os.Getenv("ADAMIC_MUTANT") == "E_EXACT" {
++		return nil, nil, nil
++	}
+ 	path, err := Path(file)
+ 	if err != nil {
+ 		return nil, nil, err
+@@ -72,7 +95,7 @@ func (p *Program) exact(file string, start, end uint64, kind string) (*ast.Sourc
+ 	}
+ 	// Root-only metadata requests need no descendant index. In particular, a
+ 	// large literal table with no operand queries should not pay for one.
+-	if start == uint64(source.Pos()) && end == uint64(source.End()) && kind == "SourceFile" {
++	if start == uint64(source.Pos()) && end == uint64(source.End()) && ((kind == "SourceFile") != (os.Getenv("ADAMIC_MUTANT") == "M10")) {
+ 		return source, source.AsNode(), nil
+ 	}
+ 	ranges := p.exactRanges[source]
+@@ -92,7 +115,7 @@ func (p *Program) exact(file string, start, end uint64, kind string) (*ast.Sourc
+ 		p.exactRanges[source] = ranges
+ 	}
+ 	for _, candidate := range ranges[nodeRange{start, end}] {
+-		if candidate.Kind.String() == "Kind"+kind {
++		if (candidate.Kind.String() == "Kind"+kind) != (os.Getenv("ADAMIC_MUTANT") == "M9") {
+ 			return source, candidate, nil
+ 		}
+ 	}
+@@ -120,7 +143,11 @@ func (g *graph) id(t *checker.Type) uint64 {
+ 	}
+ 	id := g.program.typeIDs[t]
+ 	if id == 0 {
+-		id = uint64(len(g.program.typeIDs)) + 1
++		if os.Getenv("ADAMIC_MUTANT") == "M6" {
++			id = uint64(len(g.program.typeIDs)) + 2
++		} else {
++			id = uint64(len(g.program.typeIDs)) + 1
++		}
+ 		if id > (1<<53)-1 {
+ 			panic("type identity space exhausted")
+ 		}
+@@ -139,7 +166,7 @@ func (g *graph) add(t *checker.Type) uint64 {
+ 	index := len(g.records)
+ 	g.records = append(g.records, typeRecord{})
+ 	r := typeRecord{id: id, flags: uint64(t.Flags()), tupleFlags: -1}
+-	if g.names {
++	if g.names != (os.Getenv("ADAMIC_MUTANT") == "M7") {
+ 		r.name = g.checker.TypeToString(t)
+ 	}
+ 	r.errorType = t.Flags()&checker.TypeFlagsIntrinsic != 0 && t.AsIntrinsicType().IntrinsicName() == "error"
+@@ -173,7 +200,10 @@ func (g *graph) write(out *fields) {
+ 		out.number(r.flags)
+ 		out.text(r.name)
+ 		out.yes(r.errorType)
+-		out.number(r.target)
++		if os.Getenv("ADAMIC_MUTANT") != "M8" {
++			out.number(r.target)
++
++		}
+ 		out.yes(r.array)
+ 		out.text(strconv.Itoa(r.tupleFlags))
+ 		out.number(r.constraint)
+@@ -192,6 +222,9 @@ func constrained(c *checker.Checker, t *checker.Type) *checker.Type {
+ // Inspect's supported questions are documented in facts.md. Exact nodes and
+ // opaque per-program type identities are facts, never addresses or owned handles.
+ func (p *Program) Inspect(file string, start, end uint64, kind, question string) (string, error) {
++	if os.Getenv("ADAMIC_MUTANT") == "E_INSPECT" {
++		return "", nil
++	}
+ 	source, node, err := p.exact(file, start, end, kind)
+ 	if err != nil {
+ 		return "", err
+diff --git a/bridge/tsgo/checker/program.go b/bridge/tsgo/checker/program.go
+index 3e7e5ec7..8604158a 100644
+--- a/bridge/tsgo/checker/program.go
++++ b/bridge/tsgo/checker/program.go
+@@ -4,6 +4,7 @@ package checker
+ import (
+ 	"context"
+ 	"fmt"
++	"os"
+ 	"path/filepath"
+ 	"strings"
+ 	"unicode/utf16"
+@@ -43,6 +44,9 @@ func Path(path string) (string, error) {
+ }
+ 
+ func Open(configPath string, files []string) (*Program, error) {
++	if os.Getenv("ADAMIC_MUTANT") == "E_OPEN" {
++		return nil, nil
++	}
+ 	configPath, err := Path(configPath)
+ 	if err != nil {
+ 		return nil, err
+@@ -77,19 +81,25 @@ func Open(configPath string, files []string) (*Program, error) {
+ 		}
+ 		for _, root := range roots {
+ 			if strings.HasSuffix(root.AsString(), ".a") {
+-				config.CompilerOptions().AllowNonTsExtensions = core.TSTrue
++				if os.Getenv("ADAMIC_MUTANT") == "M12" {
++					config.CompilerOptions().AllowNonTsExtensions = core.TSFalse
++				} else {
++					config.CompilerOptions().AllowNonTsExtensions = core.TSTrue
++				}
+ 			}
+ 		}
+-		for _, declaration := range config.FileNames() {
+-			if strings.HasSuffix(declaration.AsString(), ".d.ts") {
+-				found := false
+-				for _, root := range roots {
+-					if root == declaration {
+-						found = true
++		if os.Getenv("ADAMIC_MUTANT") != "M11" {
++			for _, declaration := range config.FileNames() {
++				if strings.HasSuffix(declaration.AsString(), ".d.ts") {
++					found := false
++					for _, root := range roots {
++						if root == declaration {
++							found = true
++						}
++					}
++					if !found {
++						roots = append(roots, declaration)
+ 					}
+-				}
+-				if !found {
+-					roots = append(roots, declaration)
+ 				}
+ 			}
+ 		}

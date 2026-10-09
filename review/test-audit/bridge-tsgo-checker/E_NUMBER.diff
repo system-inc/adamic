@@ -1,0 +1,10 @@
+--- a/bridge/tsgo/checker/facts.go
++++ b/bridge/tsgo/checker/facts.go
+@@ -30,6 +30,7 @@
+ 	f.WriteString(s)
+ }
+ func (f *fields) number(n uint64) {
++ if true { return }
+ 	var digits [20]byte
+ 	value := strconv.AppendUint(digits[:0], n, 10)
+ 	// Numeric fields contain ASCII only; no formatting or rune allocation is needed.

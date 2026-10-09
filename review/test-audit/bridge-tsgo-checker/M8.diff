@@ -1,0 +1,10 @@
+--- a/bridge/tsgo/checker/facts.go
++++ b/bridge/tsgo/checker/facts.go
+@@ -173,7 +173,6 @@
+ 		out.number(r.flags)
+ 		out.text(r.name)
+ 		out.yes(r.errorType)
+-		out.number(r.target)
+ 		out.yes(r.array)
+ 		out.text(strconv.Itoa(r.tupleFlags))
+ 		out.number(r.constraint)

@@ -1,0 +1,230 @@
+[
+  {
+    "test": "TestFactEncoding",
+    "run": 1,
+    "seconds": 0.004,
+    "wall_seconds": 1.357814310998947,
+    "exit": 0,
+    "argv": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/checker/",
+      "-run",
+      "^TestFactEncoding$"
+    ]
+  },
+  {
+    "test": "TestFactEncoding",
+    "run": 2,
+    "seconds": 0.005,
+    "wall_seconds": 1.3169958570015297,
+    "exit": 0,
+    "argv": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/checker/",
+      "-run",
+      "^TestFactEncoding$"
+    ]
+  },
+  {
+    "test": "TestFactEncoding",
+    "run": 3,
+    "seconds": 0.005,
+    "wall_seconds": 1.3627511800004868,
+    "exit": 0,
+    "argv": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/checker/",
+      "-run",
+      "^TestFactEncoding$"
+    ]
+  },
+  {
+    "test": "TestShapeAndNameFacts",
+    "run": 1,
+    "seconds": 0.014,
+    "wall_seconds": 1.3413928949994443,
+    "exit": 0,
+    "argv": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/checker/",
+      "-run",
+      "^TestShapeAndNameFacts$"
+    ]
+  },
+  {
+    "test": "TestShapeAndNameFacts",
+    "run": 2,
+    "seconds": 0.014,
+    "wall_seconds": 1.417967667000994,
+    "exit": 0,
+    "argv": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/checker/",
+      "-run",
+      "^TestShapeAndNameFacts$"
+    ]
+  },
+  {
+    "test": "TestShapeAndNameFacts",
+    "run": 3,
+    "seconds": 0.012,
+    "wall_seconds": 1.3677535619990522,
+    "exit": 0,
+    "argv": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/checker/",
+      "-run",
+      "^TestShapeAndNameFacts$"
+    ]
+  },
+  {
+    "test": "TestExactIndexMatchesCompilerNodes",
+    "run": 1,
+    "seconds": 0.052,
+    "wall_seconds": 1.4374953690003167,
+    "exit": 0,
+    "argv": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/checker/",
+      "-run",
+      "^TestExactIndexMatchesCompilerNodes$"
+    ]
+  },
+  {
+    "test": "TestExactIndexMatchesCompilerNodes",
+    "run": 2,
+    "seconds": 0.046,
+    "wall_seconds": 1.374553540999841,
+    "exit": 0,
+    "argv": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/checker/",
+      "-run",
+      "^TestExactIndexMatchesCompilerNodes$"
+    ]
+  },
+  {
+    "test": "TestExactIndexMatchesCompilerNodes",
+    "run": 3,
+    "seconds": 0.059,
+    "wall_seconds": 1.3598268860005192,
+    "exit": 0,
+    "argv": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/checker/",
+      "-run",
+      "^TestExactIndexMatchesCompilerNodes$"
+    ]
+  },
+  {
+    "test": "TestAdamicRootKeepsConfigDeclarations",
+    "run": 1,
+    "seconds": 0.062,
+    "wall_seconds": 1.418421523001598,
+    "exit": 0,
+    "argv": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/checker/",
+      "-run",
+      "^TestAdamicRootKeepsConfigDeclarations$"
+    ]
+  },
+  {
+    "test": "TestAdamicRootKeepsConfigDeclarations",
+    "run": 2,
+    "seconds": 0.052,
+    "wall_seconds": 1.3319464750002226,
+    "exit": 0,
+    "argv": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/checker/",
+      "-run",
+      "^TestAdamicRootKeepsConfigDeclarations$"
+    ]
+  },
+  {
+    "test": "TestAdamicRootKeepsConfigDeclarations",
+    "run": 3,
+    "seconds": 0.051,
+    "wall_seconds": 1.297464087998378,
+    "exit": 0,
+    "argv": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/checker/",
+      "-run",
+      "^TestAdamicRootKeepsConfigDeclarations$"
+    ]
+  }
+]

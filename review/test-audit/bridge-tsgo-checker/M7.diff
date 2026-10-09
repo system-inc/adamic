@@ -1,0 +1,11 @@
+--- a/bridge/tsgo/checker/facts.go
++++ b/bridge/tsgo/checker/facts.go
+@@ -139,7 +139,7 @@
+ 	index := len(g.records)
+ 	g.records = append(g.records, typeRecord{})
+ 	r := typeRecord{id: id, flags: uint64(t.Flags()), tupleFlags: -1}
+-	if g.names {
++	if !g.names {
+ 		r.name = g.checker.TypeToString(t)
+ 	}
+ 	r.errorType = t.Flags()&checker.TypeFlagsIntrinsic != 0 && t.AsIntrinsicType().IntrinsicName() == "error"

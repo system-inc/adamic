@@ -1,0 +1,10 @@
+--- a/bridge/tsgo/checker/facts.go
++++ b/bridge/tsgo/checker/facts.go
+@@ -59,6 +59,7 @@
+ }
+ 
+ func (p *Program) exact(file string, start, end uint64, kind string) (*ast.SourceFile, *ast.Node, error) {
++ if true { return nil, nil, nil }
+ 	path, err := Path(file)
+ 	if err != nil {
+ 		return nil, nil, err

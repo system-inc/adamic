@@ -1,0 +1,23 @@
+--- a/bridge/tsgo/checker/program.go
++++ b/bridge/tsgo/checker/program.go
+@@ -80,19 +80,7 @@
+ 				config.CompilerOptions().AllowNonTsExtensions = core.TSTrue
+ 			}
+ 		}
+-		for _, declaration := range config.FileNames() {
+-			if strings.HasSuffix(declaration.AsString(), ".d.ts") {
+-				found := false
+-				for _, root := range roots {
+-					if root == declaration {
+-						found = true
+-					}
+-				}
+-				if !found {
+-					roots = append(roots, declaration)
+-				}
+-			}
+-		}
++
+ 		config = config.WithFileNames(roots)
+ 	}
+ 	if len(config.ContentMappers()) != 0 {

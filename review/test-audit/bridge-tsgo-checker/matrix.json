@@ -1,0 +1,750 @@
+[
+  {
+    "mutant": "M1",
+    "label": "matrix",
+    "environment": {
+      "ADAMIC_MUTANT": "M1"
+    },
+    "argv": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/checker/",
+      "-run",
+      "."
+    ],
+    "seconds": 1.4059133070004464,
+    "exit": 0,
+    "failed": [],
+    "observed": [
+      "TestAdamicRootKeepsConfigDeclarations",
+      "TestExactIndexMatchesCompilerNodes",
+      "TestFactEncoding",
+      "TestShapeAndNameFacts"
+    ]
+  },
+  {
+    "mutant": "M2",
+    "label": "matrix",
+    "environment": {
+      "ADAMIC_MUTANT": "M2"
+    },
+    "argv": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/checker/",
+      "-run",
+      "."
+    ],
+    "seconds": 1.4253454919999058,
+    "exit": 1,
+    "failed": [
+      "TestAdamicRootKeepsConfigDeclarations",
+      "TestFactEncoding",
+      "TestShapeAndNameFacts"
+    ],
+    "observed": [
+      "TestAdamicRootKeepsConfigDeclarations",
+      "TestExactIndexMatchesCompilerNodes",
+      "TestFactEncoding",
+      "TestShapeAndNameFacts"
+    ]
+  },
+  {
+    "mutant": "M3",
+    "label": "matrix",
+    "environment": {
+      "ADAMIC_MUTANT": "M3"
+    },
+    "argv": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/checker/",
+      "-run",
+      "."
+    ],
+    "seconds": 1.4035115740007313,
+    "exit": 1,
+    "failed": [
+      "TestFactEncoding"
+    ],
+    "observed": [
+      "TestAdamicRootKeepsConfigDeclarations",
+      "TestExactIndexMatchesCompilerNodes",
+      "TestFactEncoding",
+      "TestShapeAndNameFacts"
+    ]
+  },
+  {
+    "mutant": "M4",
+    "label": "matrix",
+    "environment": {
+      "ADAMIC_MUTANT": "M4"
+    },
+    "argv": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/checker/",
+      "-run",
+      "."
+    ],
+    "seconds": 1.4801057949989627,
+    "exit": 0,
+    "failed": [],
+    "observed": [
+      "TestAdamicRootKeepsConfigDeclarations",
+      "TestExactIndexMatchesCompilerNodes",
+      "TestFactEncoding",
+      "TestShapeAndNameFacts"
+    ]
+  },
+  {
+    "mutant": "M5",
+    "label": "matrix",
+    "environment": {
+      "ADAMIC_MUTANT": "M5"
+    },
+    "argv": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/checker/",
+      "-run",
+      "."
+    ],
+    "seconds": 1.372155183000359,
+    "exit": 0,
+    "failed": [],
+    "observed": [
+      "TestAdamicRootKeepsConfigDeclarations",
+      "TestExactIndexMatchesCompilerNodes",
+      "TestFactEncoding",
+      "TestShapeAndNameFacts"
+    ]
+  },
+  {
+    "mutant": "M6",
+    "label": "matrix",
+    "environment": {
+      "ADAMIC_MUTANT": "M6"
+    },
+    "argv": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/checker/",
+      "-run",
+      "."
+    ],
+    "seconds": 1.4956605779989331,
+    "exit": 1,
+    "failed": [
+      "TestShapeAndNameFacts"
+    ],
+    "observed": [
+      "TestAdamicRootKeepsConfigDeclarations",
+      "TestExactIndexMatchesCompilerNodes",
+      "TestFactEncoding",
+      "TestShapeAndNameFacts"
+    ]
+  },
+  {
+    "mutant": "M7",
+    "label": "matrix",
+    "environment": {
+      "ADAMIC_MUTANT": "M7"
+    },
+    "argv": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/checker/",
+      "-run",
+      "."
+    ],
+    "seconds": 1.5641954170005192,
+    "exit": 1,
+    "failed": [
+      "TestAdamicRootKeepsConfigDeclarations",
+      "TestShapeAndNameFacts"
+    ],
+    "observed": [
+      "TestAdamicRootKeepsConfigDeclarations",
+      "TestExactIndexMatchesCompilerNodes",
+      "TestFactEncoding",
+      "TestShapeAndNameFacts"
+    ]
+  },
+  {
+    "mutant": "M8",
+    "label": "matrix",
+    "environment": {
+      "ADAMIC_MUTANT": "M8"
+    },
+    "argv": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/checker/",
+      "-run",
+      "."
+    ],
+    "seconds": 1.490722308999466,
+    "exit": 1,
+    "failed": [
+      "TestAdamicRootKeepsConfigDeclarations",
+      "TestShapeAndNameFacts"
+    ],
+    "observed": [
+      "TestAdamicRootKeepsConfigDeclarations",
+      "TestExactIndexMatchesCompilerNodes",
+      "TestFactEncoding",
+      "TestShapeAndNameFacts"
+    ]
+  },
+  {
+    "mutant": "M9",
+    "label": "matrix",
+    "environment": {
+      "ADAMIC_MUTANT": "M9"
+    },
+    "argv": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/checker/",
+      "-run",
+      "."
+    ],
+    "seconds": 1.452281325999138,
+    "exit": 1,
+    "failed": [
+      "TestAdamicRootKeepsConfigDeclarations",
+      "TestExactIndexMatchesCompilerNodes",
+      "TestShapeAndNameFacts"
+    ],
+    "observed": [
+      "TestAdamicRootKeepsConfigDeclarations",
+      "TestExactIndexMatchesCompilerNodes",
+      "TestFactEncoding",
+      "TestShapeAndNameFacts"
+    ]
+  },
+  {
+    "mutant": "M10",
+    "label": "matrix",
+    "environment": {
+      "ADAMIC_MUTANT": "M10"
+    },
+    "argv": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/checker/",
+      "-run",
+      "."
+    ],
+    "seconds": 1.4786880760002532,
+    "exit": 1,
+    "failed": [
+      "TestExactIndexMatchesCompilerNodes"
+    ],
+    "observed": [
+      "TestAdamicRootKeepsConfigDeclarations",
+      "TestExactIndexMatchesCompilerNodes",
+      "TestFactEncoding",
+      "TestShapeAndNameFacts"
+    ]
+  },
+  {
+    "mutant": "M11",
+    "label": "matrix",
+    "environment": {
+      "ADAMIC_MUTANT": "M11"
+    },
+    "argv": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/checker/",
+      "-run",
+      "."
+    ],
+    "seconds": 1.33119956200062,
+    "exit": 1,
+    "failed": [
+      "TestAdamicRootKeepsConfigDeclarations"
+    ],
+    "observed": [
+      "TestAdamicRootKeepsConfigDeclarations",
+      "TestExactIndexMatchesCompilerNodes",
+      "TestFactEncoding",
+      "TestShapeAndNameFacts"
+    ]
+  },
+  {
+    "mutant": "M12",
+    "label": "matrix",
+    "environment": {
+      "ADAMIC_MUTANT": "M12"
+    },
+    "argv": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/checker/",
+      "-run",
+      "."
+    ],
+    "seconds": 1.4360620049992576,
+    "exit": 1,
+    "failed": [
+      "TestAdamicRootKeepsConfigDeclarations"
+    ],
+    "observed": [
+      "TestAdamicRootKeepsConfigDeclarations",
+      "TestExactIndexMatchesCompilerNodes",
+      "TestFactEncoding",
+      "TestShapeAndNameFacts"
+    ]
+  },
+  {
+    "mutant": "E_TEXT",
+    "label": "matrix",
+    "environment": {
+      "ADAMIC_MUTANT": "E_TEXT"
+    },
+    "argv": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/checker/",
+      "-run",
+      "."
+    ],
+    "seconds": 1.4147714029986673,
+    "exit": 1,
+    "failed": [
+      "TestAdamicRootKeepsConfigDeclarations",
+      "TestFactEncoding",
+      "TestShapeAndNameFacts"
+    ],
+    "observed": [
+      "TestAdamicRootKeepsConfigDeclarations",
+      "TestExactIndexMatchesCompilerNodes",
+      "TestFactEncoding",
+      "TestShapeAndNameFacts"
+    ]
+  },
+  {
+    "mutant": "E_NUMBER",
+    "label": "matrix",
+    "environment": {
+      "ADAMIC_MUTANT": "E_NUMBER"
+    },
+    "argv": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/checker/",
+      "-run",
+      "."
+    ],
+    "seconds": 1.4283928900003957,
+    "exit": 1,
+    "failed": [
+      "TestAdamicRootKeepsConfigDeclarations",
+      "TestFactEncoding",
+      "TestShapeAndNameFacts"
+    ],
+    "observed": [
+      "TestAdamicRootKeepsConfigDeclarations",
+      "TestExactIndexMatchesCompilerNodes",
+      "TestFactEncoding",
+      "TestShapeAndNameFacts"
+    ]
+  },
+  {
+    "mutant": "E_EXACT",
+    "label": "matrix",
+    "environment": {
+      "ADAMIC_MUTANT": "E_EXACT"
+    },
+    "argv": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/checker/",
+      "-run",
+      "."
+    ],
+    "seconds": 1.4197827740008506,
+    "exit": 1,
+    "failed": [
+      "TestShapeAndNameFacts"
+    ],
+    "observed": [
+      "TestFactEncoding",
+      "TestShapeAndNameFacts"
+    ]
+  },
+  {
+    "mutant": "E_EXACT",
+    "label": "alone-TestFactEncoding",
+    "environment": {
+      "ADAMIC_MUTANT": "E_EXACT"
+    },
+    "argv": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/checker/",
+      "-run",
+      "^TestFactEncoding$"
+    ],
+    "seconds": 1.4092521099992155,
+    "exit": 0,
+    "failed": [],
+    "observed": [
+      "TestFactEncoding"
+    ]
+  },
+  {
+    "mutant": "E_EXACT",
+    "label": "alone-TestShapeAndNameFacts",
+    "environment": {
+      "ADAMIC_MUTANT": "E_EXACT"
+    },
+    "argv": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/checker/",
+      "-run",
+      "^TestShapeAndNameFacts$"
+    ],
+    "seconds": 1.3016480299993418,
+    "exit": 1,
+    "failed": [
+      "TestShapeAndNameFacts"
+    ],
+    "observed": [
+      "TestShapeAndNameFacts"
+    ]
+  },
+  {
+    "mutant": "E_EXACT",
+    "label": "alone-TestExactIndexMatchesCompilerNodes",
+    "environment": {
+      "ADAMIC_MUTANT": "E_EXACT"
+    },
+    "argv": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/checker/",
+      "-run",
+      "^TestExactIndexMatchesCompilerNodes$"
+    ],
+    "seconds": 1.3733303970002453,
+    "exit": 1,
+    "failed": [
+      "TestExactIndexMatchesCompilerNodes"
+    ],
+    "observed": [
+      "TestExactIndexMatchesCompilerNodes"
+    ]
+  },
+  {
+    "mutant": "E_EXACT",
+    "label": "alone-TestAdamicRootKeepsConfigDeclarations",
+    "environment": {
+      "ADAMIC_MUTANT": "E_EXACT"
+    },
+    "argv": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/checker/",
+      "-run",
+      "^TestAdamicRootKeepsConfigDeclarations$"
+    ],
+    "seconds": 1.5808266500007448,
+    "exit": 1,
+    "failed": [
+      "TestAdamicRootKeepsConfigDeclarations"
+    ],
+    "observed": [
+      "TestAdamicRootKeepsConfigDeclarations"
+    ]
+  },
+  {
+    "mutant": "E_INSPECT",
+    "label": "matrix",
+    "environment": {
+      "ADAMIC_MUTANT": "E_INSPECT"
+    },
+    "argv": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/checker/",
+      "-run",
+      "."
+    ],
+    "seconds": 1.5551517080002668,
+    "exit": 1,
+    "failed": [
+      "TestAdamicRootKeepsConfigDeclarations",
+      "TestShapeAndNameFacts"
+    ],
+    "observed": [
+      "TestAdamicRootKeepsConfigDeclarations",
+      "TestExactIndexMatchesCompilerNodes",
+      "TestFactEncoding",
+      "TestShapeAndNameFacts"
+    ]
+  },
+  {
+    "mutant": "E_OPEN",
+    "label": "matrix",
+    "environment": {
+      "ADAMIC_MUTANT": "E_OPEN"
+    },
+    "argv": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/checker/",
+      "-run",
+      "."
+    ],
+    "seconds": 1.4026786930007802,
+    "exit": 1,
+    "failed": [
+      "TestExactIndexMatchesCompilerNodes"
+    ],
+    "observed": [
+      "TestExactIndexMatchesCompilerNodes",
+      "TestFactEncoding"
+    ]
+  },
+  {
+    "mutant": "E_OPEN",
+    "label": "alone-TestFactEncoding",
+    "environment": {
+      "ADAMIC_MUTANT": "E_OPEN"
+    },
+    "argv": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/checker/",
+      "-run",
+      "^TestFactEncoding$"
+    ],
+    "seconds": 1.465724603000126,
+    "exit": 0,
+    "failed": [],
+    "observed": [
+      "TestFactEncoding"
+    ]
+  },
+  {
+    "mutant": "E_OPEN",
+    "label": "alone-TestShapeAndNameFacts",
+    "environment": {
+      "ADAMIC_MUTANT": "E_OPEN"
+    },
+    "argv": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/checker/",
+      "-run",
+      "^TestShapeAndNameFacts$"
+    ],
+    "seconds": 1.4172086100006709,
+    "exit": 1,
+    "failed": [
+      "TestShapeAndNameFacts"
+    ],
+    "observed": [
+      "TestShapeAndNameFacts"
+    ]
+  },
+  {
+    "mutant": "E_OPEN",
+    "label": "alone-TestExactIndexMatchesCompilerNodes",
+    "environment": {
+      "ADAMIC_MUTANT": "E_OPEN"
+    },
+    "argv": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/checker/",
+      "-run",
+      "^TestExactIndexMatchesCompilerNodes$"
+    ],
+    "seconds": 1.3222583920014586,
+    "exit": 1,
+    "failed": [
+      "TestExactIndexMatchesCompilerNodes"
+    ],
+    "observed": [
+      "TestExactIndexMatchesCompilerNodes"
+    ]
+  },
+  {
+    "mutant": "E_OPEN",
+    "label": "alone-TestAdamicRootKeepsConfigDeclarations",
+    "environment": {
+      "ADAMIC_MUTANT": "E_OPEN"
+    },
+    "argv": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./bridge/tsgo/checker/",
+      "-run",
+      "^TestAdamicRootKeepsConfigDeclarations$"
+    ],
+    "seconds": 1.4696957819996896,
+    "exit": 1,
+    "failed": [
+      "TestAdamicRootKeepsConfigDeclarations"
+    ],
+    "observed": [
+      "TestAdamicRootKeepsConfigDeclarations"
+    ]
+  }
+]

@@ -1,0 +1,11 @@
+--- a/bridge/tsgo/checker/facts.go
++++ b/bridge/tsgo/checker/facts.go
+@@ -20,7 +20,7 @@
+ 	units := 0
+ 	for _, r := range s {
+ 		units++
+-		if r > 65535 {
++		if r <= 65535 {
+ 			units++
+ 		}
+ 	}

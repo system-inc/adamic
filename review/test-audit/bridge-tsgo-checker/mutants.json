@@ -1,0 +1,155 @@
+[
+  {
+    "id": "M1",
+    "file": "bridge/tsgo/checker/facts.go",
+    "line": 23,
+    "old": "if r > 65535 {",
+    "new": "if r >= 65535 {",
+    "menu": "condition",
+    "probe": false
+  },
+  {
+    "id": "M2",
+    "file": "bridge/tsgo/checker/facts.go",
+    "line": 23,
+    "old": "if r > 65535 {",
+    "new": "if r <= 65535 {",
+    "menu": "condition",
+    "probe": false
+  },
+  {
+    "id": "M3",
+    "file": "bridge/tsgo/checker/facts.go",
+    "line": 34,
+    "old": "strconv.AppendUint(digits[:0], n, 10)",
+    "new": "strconv.AppendUint(digits[:0], n, 16)",
+    "menu": "constant",
+    "probe": false
+  },
+  {
+    "id": "M4",
+    "file": "bridge/tsgo/checker/facts.go",
+    "line": 43,
+    "old": "\t\tf.number(1)",
+    "new": "\t\tf.number(0)",
+    "menu": "constant",
+    "probe": false
+  },
+  {
+    "id": "M5",
+    "file": "bridge/tsgo/checker/facts.go",
+    "line": 49,
+    "old": "f.number(uint64(len(ids)))",
+    "new": "f.number(uint64(len(ids) + 1))",
+    "menu": "bound",
+    "probe": false
+  },
+  {
+    "id": "M6",
+    "file": "bridge/tsgo/checker/facts.go",
+    "line": 123,
+    "old": "id = uint64(len(g.program.typeIDs)) + 1",
+    "new": "id = uint64(len(g.program.typeIDs)) + 2",
+    "menu": "constant",
+    "probe": false
+  },
+  {
+    "id": "M7",
+    "file": "bridge/tsgo/checker/facts.go",
+    "line": 142,
+    "old": "if g.names {",
+    "new": "if !g.names {",
+    "menu": "condition",
+    "probe": false
+  },
+  {
+    "id": "M8",
+    "file": "bridge/tsgo/checker/facts.go",
+    "line": 176,
+    "old": "\t\tout.number(r.target)\n",
+    "new": "",
+    "menu": "drop",
+    "probe": false
+  },
+  {
+    "id": "M9",
+    "file": "bridge/tsgo/checker/facts.go",
+    "line": 95,
+    "old": "candidate.Kind.String() == \"Kind\"+kind",
+    "new": "candidate.Kind.String() != \"Kind\"+kind",
+    "menu": "condition",
+    "probe": false
+  },
+  {
+    "id": "M10",
+    "file": "bridge/tsgo/checker/facts.go",
+    "line": 75,
+    "old": "end == uint64(source.End()) && kind == \"SourceFile\"",
+    "new": "end == uint64(source.End()) && kind != \"SourceFile\"",
+    "menu": "condition",
+    "probe": false
+  },
+  {
+    "id": "M11",
+    "file": "bridge/tsgo/checker/program.go",
+    "line": 83,
+    "old": "\t\tfor _, declaration := range config.FileNames() {\n\t\t\tif strings.HasSuffix(declaration.AsString(), \".d.ts\") {\n\t\t\t\tfound := false\n\t\t\t\tfor _, root := range roots {\n\t\t\t\t\tif root == declaration {\n\t\t\t\t\t\tfound = true\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t\tif !found {\n\t\t\t\t\troots = append(roots, declaration)\n\t\t\t\t}\n\t\t\t}\n\t\t}",
+    "new": "",
+    "menu": "drop-loop",
+    "probe": false
+  },
+  {
+    "id": "M12",
+    "file": "bridge/tsgo/checker/program.go",
+    "line": 80,
+    "old": "config.CompilerOptions().AllowNonTsExtensions = core.TSTrue",
+    "new": "config.CompilerOptions().AllowNonTsExtensions = core.TSFalse",
+    "menu": "option",
+    "probe": false
+  },
+  {
+    "id": "E_TEXT",
+    "file": "bridge/tsgo/checker/facts.go",
+    "line": 19,
+    "old": "func (f *fields) text(s string) {",
+    "new": "func (f *fields) text(s string) {\n if true { return }",
+    "menu": "entry",
+    "probe": true
+  },
+  {
+    "id": "E_NUMBER",
+    "file": "bridge/tsgo/checker/facts.go",
+    "line": 32,
+    "old": "func (f *fields) number(n uint64) {",
+    "new": "func (f *fields) number(n uint64) {\n if true { return }",
+    "menu": "entry",
+    "probe": true
+  },
+  {
+    "id": "E_EXACT",
+    "file": "bridge/tsgo/checker/facts.go",
+    "line": 61,
+    "old": "func (p *Program) exact(file string, start, end uint64, kind string) (*ast.SourceFile, *ast.Node, error) {",
+    "new": "func (p *Program) exact(file string, start, end uint64, kind string) (*ast.SourceFile, *ast.Node, error) {\n if true { return nil, nil, nil }",
+    "menu": "entry",
+    "probe": true
+  },
+  {
+    "id": "E_INSPECT",
+    "file": "bridge/tsgo/checker/facts.go",
+    "line": 194,
+    "old": "func (p *Program) Inspect(file string, start, end uint64, kind, question string) (string, error) {",
+    "new": "func (p *Program) Inspect(file string, start, end uint64, kind, question string) (string, error) {\n if true { return \"\", nil }",
+    "menu": "entry",
+    "probe": true
+  },
+  {
+    "id": "E_OPEN",
+    "file": "bridge/tsgo/checker/program.go",
+    "line": 45,
+    "old": "func Open(configPath string, files []string) (*Program, error) {",
+    "new": "func Open(configPath string, files []string) (*Program, error) {\n if true { return nil, nil }",
+    "menu": "entry",
+    "probe": true
+  }
+]

@@ -1,0 +1,1 @@
+{"argv": ["timeout", "120", "go", "test", "-count=1", "-timeout", "90s", "./bridge/tsgo/checker/", "-run", ".", "-coverprofile=/tmp/u005/coverage.out"], "seconds": 5.3118760459983605, "exit": 0}
