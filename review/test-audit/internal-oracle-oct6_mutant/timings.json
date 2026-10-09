@@ -1,0 +1,453 @@
+{
+  "nproc": 5,
+  "rows": {
+    "TestOct6InheritanceMutants": {
+      "samples": [
+        0.774,
+        0.124,
+        0.119
+      ],
+      "median": 0.124
+    },
+    "TestOct6ReleaseMutant": {
+      "samples": [
+        0.445,
+        0.346,
+        0.382
+      ],
+      "median": 0.382
+    },
+    "TestOmittedArgumentZeroMutantIsCaught": {
+      "samples": [
+        0.362,
+        0.087,
+        0.089
+      ],
+      "median": 0.089
+    },
+    "TestOmittedOriginalProbePolicy": {
+      "samples": [
+        0.42,
+        0.108,
+        0.117
+      ],
+      "median": 0.117
+    },
+    "TestOmittedReaderZeroMutantIsCaught": {
+      "samples": [
+        0.366,
+        0.082,
+        0.076
+      ],
+      "median": 0.082
+    },
+    "TestNativeAgreesWithNode": {
+      "samples": [],
+      "median": null,
+      "bounded_samples": [
+        2.301,
+        0.406,
+        0.407
+      ],
+      "bounded_median": 0.407,
+      "whole_row": "over budget at 90.039s; further whole-row timings stopped"
+    },
+    "TestTheOracleCatchesOneByte": {
+      "samples": [
+        0.333,
+        0.085,
+        0.083
+      ],
+      "median": 0.085
+    },
+    "TestOneFileHoldsNodesOrder": {
+      "samples": [
+        0.484,
+        0.112,
+        0.091
+      ],
+      "median": 0.112
+    },
+    "TestClosedStdoutEndsAsOnNode": {
+      "samples": [
+        0.71,
+        0.102,
+        0.117
+      ],
+      "median": 0.117
+    },
+    "TestFileWritesLandInNodesOrder": {
+      "samples": [
+        0.442,
+        0.092,
+        0.106
+      ],
+      "median": 0.106
+    },
+    "TestAPromptComesBeforeTheRead": {
+      "samples": [
+        0.405,
+        0.08,
+        0.093
+      ],
+      "median": 0.093
+    },
+    "TestASignalLeavesWhatWasPrinted": {
+      "samples": [
+        2.092,
+        0.177,
+        0.169
+      ],
+      "median": 0.177
+    },
+    "TestOverloadContractRulings": {
+      "samples": [
+        0.255,
+        0.165,
+        0.182
+      ],
+      "median": 0.182
+    },
+    "TestParameterPropertyMutants": {
+      "samples": [
+        0.418,
+        0.451,
+        0.421
+      ],
+      "median": 0.421
+    },
+    "TestParameterPropertyOwnershipMutant": {
+      "samples": [
+        0.326,
+        0.295,
+        0.307
+      ],
+      "median": 0.307
+    }
+  },
+  "timing_wall": 191.13995869999962,
+  "runs": [
+    {
+      "id": "clean",
+      "part": "rows",
+      "command": "ADAMIC_MUTANT= ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u066/cache/clean timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestOct6InheritanceMutants|TestOct6ReleaseMutant|TestOmittedArgumentZeroMutantIsCaught|TestOmittedOriginalProbePolicy|TestOmittedReaderZeroMutantIsCaught|TestTheOracleCatchesOneByte|TestOneFileHoldsNodesOrder|TestClosedStdoutEndsAsOnNode|TestFileWritesLandInNodesOrder|TestAPromptComesBeforeTheRead|TestASignalLeavesWhatWasPrinted|TestOverloadContractRulings|TestParameterPropertyMutants|TestParameterPropertyOwnershipMutant)$",
+      "seconds": 28.501534489999358,
+      "returncode": 0
+    },
+    {
+      "id": "clean",
+      "part": "native",
+      "command": "ADAMIC_MUTANT= ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u066/cache/clean timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^(interleaved\\.a|status_of_stdout\\.a|large_output\\.a|output_then_panic\\.a|write_stdout_order\\.a|write_stderr_order\\.a|prompt_then_read\\.a|killed_after_output\\.a|omitted_scanner\\.a|omitted_reader\\.a|class_oct6_deep\\.a|class_oct6_release\\.a|parameter_properties\\.a|parameter_properties_ownership\\.a)$",
+      "seconds": 7.268567350999547,
+      "returncode": 0
+    },
+    {
+      "id": "M1",
+      "part": "rows",
+      "command": "ADAMIC_MUTANT=M1 ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u066/cache/M1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestOct6InheritanceMutants|TestOct6ReleaseMutant|TestOmittedArgumentZeroMutantIsCaught|TestOmittedOriginalProbePolicy|TestOmittedReaderZeroMutantIsCaught|TestTheOracleCatchesOneByte|TestOneFileHoldsNodesOrder|TestClosedStdoutEndsAsOnNode|TestFileWritesLandInNodesOrder|TestAPromptComesBeforeTheRead|TestASignalLeavesWhatWasPrinted|TestOverloadContractRulings|TestParameterPropertyMutants|TestParameterPropertyOwnershipMutant)$",
+      "seconds": 6.605761290000373,
+      "returncode": 1
+    },
+    {
+      "id": "M1",
+      "part": "native",
+      "command": "ADAMIC_MUTANT=M1 ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u066/cache/M1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^(interleaved\\.a|status_of_stdout\\.a|large_output\\.a|output_then_panic\\.a|write_stdout_order\\.a|write_stderr_order\\.a|prompt_then_read\\.a|killed_after_output\\.a|omitted_scanner\\.a|omitted_reader\\.a|class_oct6_deep\\.a|class_oct6_release\\.a|parameter_properties\\.a|parameter_properties_ownership\\.a)$",
+      "seconds": 4.199120300000686,
+      "returncode": 0
+    },
+    {
+      "id": "M2",
+      "part": "rows",
+      "command": "ADAMIC_MUTANT=M2 ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u066/cache/M2 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestOct6InheritanceMutants|TestOct6ReleaseMutant|TestOmittedArgumentZeroMutantIsCaught|TestOmittedOriginalProbePolicy|TestOmittedReaderZeroMutantIsCaught|TestTheOracleCatchesOneByte|TestOneFileHoldsNodesOrder|TestClosedStdoutEndsAsOnNode|TestFileWritesLandInNodesOrder|TestAPromptComesBeforeTheRead|TestASignalLeavesWhatWasPrinted|TestOverloadContractRulings|TestParameterPropertyMutants|TestParameterPropertyOwnershipMutant)$",
+      "seconds": 5.5958767210004225,
+      "returncode": 1
+    },
+    {
+      "id": "M2",
+      "part": "native",
+      "command": "ADAMIC_MUTANT=M2 ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u066/cache/M2 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^(interleaved\\.a|status_of_stdout\\.a|large_output\\.a|output_then_panic\\.a|write_stdout_order\\.a|write_stderr_order\\.a|prompt_then_read\\.a|killed_after_output\\.a|omitted_scanner\\.a|omitted_reader\\.a|class_oct6_deep\\.a|class_oct6_release\\.a|parameter_properties\\.a|parameter_properties_ownership\\.a)$",
+      "seconds": 4.086851152000236,
+      "returncode": 0
+    },
+    {
+      "id": "M3",
+      "part": "rows",
+      "command": "ADAMIC_MUTANT=M3 ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u066/cache/M3 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestOct6InheritanceMutants|TestOct6ReleaseMutant|TestOmittedArgumentZeroMutantIsCaught|TestOmittedOriginalProbePolicy|TestOmittedReaderZeroMutantIsCaught|TestTheOracleCatchesOneByte|TestOneFileHoldsNodesOrder|TestClosedStdoutEndsAsOnNode|TestFileWritesLandInNodesOrder|TestAPromptComesBeforeTheRead|TestASignalLeavesWhatWasPrinted|TestOverloadContractRulings|TestParameterPropertyMutants|TestParameterPropertyOwnershipMutant)$",
+      "seconds": 6.268810128000041,
+      "returncode": 1
+    },
+    {
+      "id": "M3",
+      "part": "native",
+      "command": "ADAMIC_MUTANT=M3 ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u066/cache/M3 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^(interleaved\\.a|status_of_stdout\\.a|large_output\\.a|output_then_panic\\.a|write_stdout_order\\.a|write_stderr_order\\.a|prompt_then_read\\.a|killed_after_output\\.a|omitted_scanner\\.a|omitted_reader\\.a|class_oct6_deep\\.a|class_oct6_release\\.a|parameter_properties\\.a|parameter_properties_ownership\\.a)$",
+      "seconds": 4.529794462000609,
+      "returncode": 0
+    },
+    {
+      "id": "M4",
+      "part": "rows",
+      "command": "ADAMIC_MUTANT=M4 ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u066/cache/M4 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestOct6InheritanceMutants|TestOct6ReleaseMutant|TestOmittedArgumentZeroMutantIsCaught|TestOmittedOriginalProbePolicy|TestOmittedReaderZeroMutantIsCaught|TestTheOracleCatchesOneByte|TestOneFileHoldsNodesOrder|TestClosedStdoutEndsAsOnNode|TestFileWritesLandInNodesOrder|TestAPromptComesBeforeTheRead|TestASignalLeavesWhatWasPrinted|TestOverloadContractRulings|TestParameterPropertyMutants|TestParameterPropertyOwnershipMutant)$",
+      "seconds": 3.061769384999934,
+      "returncode": 1
+    },
+    {
+      "id": "M4",
+      "part": "native",
+      "command": "ADAMIC_MUTANT=M4 ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u066/cache/M4 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^(interleaved\\.a|status_of_stdout\\.a|large_output\\.a|output_then_panic\\.a|write_stdout_order\\.a|write_stderr_order\\.a|prompt_then_read\\.a|killed_after_output\\.a|omitted_scanner\\.a|omitted_reader\\.a|class_oct6_deep\\.a|class_oct6_release\\.a|parameter_properties\\.a|parameter_properties_ownership\\.a)$",
+      "seconds": 3.042419386999427,
+      "returncode": 1
+    },
+    {
+      "id": "W1",
+      "part": "rows",
+      "command": "ADAMIC_MUTANT=W1 ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u066/cache/W1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestOct6InheritanceMutants|TestOct6ReleaseMutant|TestOmittedArgumentZeroMutantIsCaught|TestOmittedOriginalProbePolicy|TestOmittedReaderZeroMutantIsCaught|TestTheOracleCatchesOneByte|TestOneFileHoldsNodesOrder|TestClosedStdoutEndsAsOnNode|TestFileWritesLandInNodesOrder|TestAPromptComesBeforeTheRead|TestASignalLeavesWhatWasPrinted|TestOverloadContractRulings|TestParameterPropertyMutants|TestParameterPropertyOwnershipMutant)$",
+      "seconds": 6.413082529999883,
+      "returncode": 1
+    },
+    {
+      "id": "W2",
+      "part": "rows",
+      "command": "ADAMIC_MUTANT=W2 ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u066/cache/W2 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestOct6InheritanceMutants|TestOct6ReleaseMutant|TestOmittedArgumentZeroMutantIsCaught|TestOmittedOriginalProbePolicy|TestOmittedReaderZeroMutantIsCaught|TestTheOracleCatchesOneByte|TestOneFileHoldsNodesOrder|TestClosedStdoutEndsAsOnNode|TestFileWritesLandInNodesOrder|TestAPromptComesBeforeTheRead|TestASignalLeavesWhatWasPrinted|TestOverloadContractRulings|TestParameterPropertyMutants|TestParameterPropertyOwnershipMutant)$",
+      "seconds": 5.703214465999736,
+      "returncode": 1
+    },
+    {
+      "id": "W3",
+      "part": "rows",
+      "command": "ADAMIC_MUTANT=W3 ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u066/cache/W3 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestOct6InheritanceMutants|TestOct6ReleaseMutant|TestOmittedArgumentZeroMutantIsCaught|TestOmittedOriginalProbePolicy|TestOmittedReaderZeroMutantIsCaught|TestTheOracleCatchesOneByte|TestOneFileHoldsNodesOrder|TestClosedStdoutEndsAsOnNode|TestFileWritesLandInNodesOrder|TestAPromptComesBeforeTheRead|TestASignalLeavesWhatWasPrinted|TestOverloadContractRulings|TestParameterPropertyMutants|TestParameterPropertyOwnershipMutant)$",
+      "seconds": 6.11695028899976,
+      "returncode": 1
+    },
+    {
+      "id": "P1",
+      "part": "rows",
+      "command": "ADAMIC_MUTANT=P1 ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u066/cache/P1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestOct6InheritanceMutants|TestOct6ReleaseMutant|TestOmittedArgumentZeroMutantIsCaught|TestOmittedOriginalProbePolicy|TestOmittedReaderZeroMutantIsCaught|TestTheOracleCatchesOneByte|TestOneFileHoldsNodesOrder|TestClosedStdoutEndsAsOnNode|TestFileWritesLandInNodesOrder|TestAPromptComesBeforeTheRead|TestASignalLeavesWhatWasPrinted|TestOverloadContractRulings|TestParameterPropertyMutants|TestParameterPropertyOwnershipMutant)$",
+      "seconds": 2.099856943999839,
+      "returncode": 1
+    },
+    {
+      "id": "P1",
+      "part": "native",
+      "command": "ADAMIC_MUTANT=P1 ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u066/cache/P1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^(interleaved\\.a|status_of_stdout\\.a|large_output\\.a|output_then_panic\\.a|write_stdout_order\\.a|write_stderr_order\\.a|prompt_then_read\\.a|killed_after_output\\.a|omitted_scanner\\.a|omitted_reader\\.a|class_oct6_deep\\.a|class_oct6_release\\.a|parameter_properties\\.a|parameter_properties_ownership\\.a)$",
+      "seconds": 2.2895109460005187,
+      "returncode": 1
+    },
+    {
+      "id": "P2",
+      "part": "rows",
+      "command": "ADAMIC_MUTANT=P2 ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u066/cache/P2 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestOct6InheritanceMutants|TestOct6ReleaseMutant|TestOmittedArgumentZeroMutantIsCaught|TestOmittedOriginalProbePolicy|TestOmittedReaderZeroMutantIsCaught|TestTheOracleCatchesOneByte|TestOneFileHoldsNodesOrder|TestClosedStdoutEndsAsOnNode|TestFileWritesLandInNodesOrder|TestAPromptComesBeforeTheRead|TestASignalLeavesWhatWasPrinted|TestOverloadContractRulings|TestParameterPropertyMutants|TestParameterPropertyOwnershipMutant)$",
+      "seconds": 13.3219629109999,
+      "returncode": 1
+    },
+    {
+      "id": "P2",
+      "part": "native",
+      "command": "ADAMIC_MUTANT=P2 ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u066/cache/P2 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^(interleaved\\.a|status_of_stdout\\.a|large_output\\.a|output_then_panic\\.a|write_stdout_order\\.a|write_stderr_order\\.a|prompt_then_read\\.a|killed_after_output\\.a|omitted_scanner\\.a|omitted_reader\\.a|class_oct6_deep\\.a|class_oct6_release\\.a|parameter_properties\\.a|parameter_properties_ownership\\.a)$",
+      "seconds": 3.9514240759999666,
+      "returncode": 1
+    },
+    {
+      "id": "P3",
+      "part": "rows",
+      "command": "ADAMIC_MUTANT=P3 ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u066/cache/P3 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestOct6InheritanceMutants|TestOct6ReleaseMutant|TestOmittedArgumentZeroMutantIsCaught|TestOmittedOriginalProbePolicy|TestOmittedReaderZeroMutantIsCaught|TestTheOracleCatchesOneByte|TestOneFileHoldsNodesOrder|TestClosedStdoutEndsAsOnNode|TestFileWritesLandInNodesOrder|TestAPromptComesBeforeTheRead|TestASignalLeavesWhatWasPrinted|TestOverloadContractRulings|TestParameterPropertyMutants|TestParameterPropertyOwnershipMutant)$",
+      "seconds": 13.030245750999711,
+      "returncode": 1
+    },
+    {
+      "id": "P3",
+      "part": "native",
+      "command": "ADAMIC_MUTANT=P3 ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u066/cache/P3 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^(interleaved\\.a|status_of_stdout\\.a|large_output\\.a|output_then_panic\\.a|write_stdout_order\\.a|write_stderr_order\\.a|prompt_then_read\\.a|killed_after_output\\.a|omitted_scanner\\.a|omitted_reader\\.a|class_oct6_deep\\.a|class_oct6_release\\.a|parameter_properties\\.a|parameter_properties_ownership\\.a)$",
+      "seconds": 4.305027600000358,
+      "returncode": 1
+    },
+    {
+      "id": "P4",
+      "part": "rows",
+      "command": "ADAMIC_MUTANT=P4 ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u066/cache/P4 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestOct6InheritanceMutants|TestOct6ReleaseMutant|TestOmittedArgumentZeroMutantIsCaught|TestOmittedOriginalProbePolicy|TestOmittedReaderZeroMutantIsCaught|TestTheOracleCatchesOneByte|TestOneFileHoldsNodesOrder|TestClosedStdoutEndsAsOnNode|TestFileWritesLandInNodesOrder|TestAPromptComesBeforeTheRead|TestASignalLeavesWhatWasPrinted|TestOverloadContractRulings|TestParameterPropertyMutants|TestParameterPropertyOwnershipMutant)$",
+      "seconds": 64.61020796499997,
+      "returncode": 1
+    },
+    {
+      "id": "P4",
+      "part": "native",
+      "command": "ADAMIC_MUTANT=P4 ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u066/cache/P4 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^(interleaved\\.a|status_of_stdout\\.a|large_output\\.a|output_then_panic\\.a|write_stdout_order\\.a|write_stderr_order\\.a|prompt_then_read\\.a|killed_after_output\\.a|omitted_scanner\\.a|omitted_reader\\.a|class_oct6_deep\\.a|class_oct6_release\\.a|parameter_properties\\.a|parameter_properties_ownership\\.a)$",
+      "seconds": 4.6773118129995055,
+      "returncode": 0
+    }
+  ],
+  "panic_reruns": [
+    {
+      "id": "P1",
+      "test": "TestOct6InheritanceMutants",
+      "command": "ADAMIC_MUTANT=P1 ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u066/cache/P1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestOct6InheritanceMutants$",
+      "seconds": 2.651808429999619,
+      "returncode": 1
+    },
+    {
+      "id": "P1",
+      "test": "TestOct6ReleaseMutant",
+      "command": "ADAMIC_MUTANT=P1 ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u066/cache/P1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestOct6ReleaseMutant$",
+      "seconds": 2.6586221830002614,
+      "returncode": 1
+    },
+    {
+      "id": "P1",
+      "test": "TestOmittedArgumentZeroMutantIsCaught",
+      "command": "ADAMIC_MUTANT=P1 ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u066/cache/P1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestOmittedArgumentZeroMutantIsCaught$",
+      "seconds": 2.519765242000176,
+      "returncode": 1
+    },
+    {
+      "id": "P1",
+      "test": "TestOmittedOriginalProbePolicy",
+      "command": "ADAMIC_MUTANT=P1 ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u066/cache/P1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestOmittedOriginalProbePolicy$",
+      "seconds": 2.660409879999861,
+      "returncode": 1
+    },
+    {
+      "id": "P1",
+      "test": "TestOmittedReaderZeroMutantIsCaught",
+      "command": "ADAMIC_MUTANT=P1 ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u066/cache/P1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestOmittedReaderZeroMutantIsCaught$",
+      "seconds": 2.5820074820003356,
+      "returncode": 1
+    },
+    {
+      "id": "P1",
+      "test": "TestNativeAgreesWithNode",
+      "command": "ADAMIC_MUTANT=P1 ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u066/cache/P1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^(interleaved\\.a|status_of_stdout\\.a|large_output\\.a|output_then_panic\\.a|write_stdout_order\\.a|write_stderr_order\\.a|prompt_then_read\\.a|killed_after_output\\.a|omitted_scanner\\.a|omitted_reader\\.a|class_oct6_deep\\.a|class_oct6_release\\.a|parameter_properties\\.a|parameter_properties_ownership\\.a)$",
+      "seconds": 2.8222969609996653,
+      "returncode": 1
+    },
+    {
+      "id": "P1",
+      "test": "TestTheOracleCatchesOneByte",
+      "command": "ADAMIC_MUTANT=P1 ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u066/cache/P1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestTheOracleCatchesOneByte$",
+      "seconds": 2.35254758299925,
+      "returncode": 1
+    },
+    {
+      "id": "P1",
+      "test": "TestOneFileHoldsNodesOrder",
+      "command": "ADAMIC_MUTANT=P1 ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u066/cache/P1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestOneFileHoldsNodesOrder$",
+      "seconds": 2.296712077999473,
+      "returncode": 1
+    },
+    {
+      "id": "P1",
+      "test": "TestClosedStdoutEndsAsOnNode",
+      "command": "ADAMIC_MUTANT=P1 ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u066/cache/P1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestClosedStdoutEndsAsOnNode$",
+      "seconds": 2.434808750999764,
+      "returncode": 1
+    },
+    {
+      "id": "P1",
+      "test": "TestFileWritesLandInNodesOrder",
+      "command": "ADAMIC_MUTANT=P1 ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u066/cache/P1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestFileWritesLandInNodesOrder$",
+      "seconds": 2.631427567999708,
+      "returncode": 1
+    },
+    {
+      "id": "P1",
+      "test": "TestAPromptComesBeforeTheRead",
+      "command": "ADAMIC_MUTANT=P1 ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u066/cache/P1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestAPromptComesBeforeTheRead$",
+      "seconds": 2.499204830999588,
+      "returncode": 1
+    },
+    {
+      "id": "P1",
+      "test": "TestASignalLeavesWhatWasPrinted",
+      "command": "ADAMIC_MUTANT=P1 ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u066/cache/P1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestASignalLeavesWhatWasPrinted$",
+      "seconds": 2.955548937000458,
+      "returncode": 1
+    },
+    {
+      "id": "P1",
+      "test": "TestOverloadContractRulings",
+      "command": "ADAMIC_MUTANT=P1 ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u066/cache/P1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestOverloadContractRulings$",
+      "seconds": 2.6895096300004298,
+      "returncode": 1
+    },
+    {
+      "id": "P1",
+      "test": "TestParameterPropertyMutants",
+      "command": "ADAMIC_MUTANT=P1 ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u066/cache/P1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestParameterPropertyMutants$",
+      "seconds": 2.934062262000225,
+      "returncode": 1
+    },
+    {
+      "id": "P1",
+      "test": "TestParameterPropertyOwnershipMutant",
+      "command": "ADAMIC_MUTANT=P1 ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u066/cache/P1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestParameterPropertyOwnershipMutant$",
+      "seconds": 1.8987277559999711,
+      "returncode": 1
+    }
+  ],
+  "validation": [
+    {
+      "id": "M1",
+      "returncode": 0,
+      "seconds": 0.0756761060001736,
+      "command": "clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -I /tmp/u066/runtime -c /tmp/u066/runtime/adamic.c -o /tmp/u066/check.o"
+    },
+    {
+      "id": "M2",
+      "returncode": 0,
+      "seconds": 0.10176229199987574,
+      "command": "clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -I /tmp/u066/runtime -c /tmp/u066/runtime/adamic.c -o /tmp/u066/check.o"
+    },
+    {
+      "id": "M3",
+      "returncode": 0,
+      "seconds": 0.07436687300014455,
+      "command": "clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -I /tmp/u066/runtime -c /tmp/u066/runtime/adamic.c -o /tmp/u066/check.o"
+    },
+    {
+      "id": "M4",
+      "returncode": 0,
+      "seconds": 0.8930361180000546,
+      "command": "go vet -overlay /tmp/u066/M4-overlay.json ./internal/lower/"
+    },
+    {
+      "id": "W1",
+      "returncode": 0,
+      "seconds": 0.3689901399993687,
+      "command": "go vet -overlay /tmp/u066/W1-overlay.json ./internal/oracle/"
+    },
+    {
+      "id": "W2",
+      "returncode": 0,
+      "seconds": 0.3012305000002016,
+      "command": "go vet -overlay /tmp/u066/W2-overlay.json ./internal/oracle/"
+    },
+    {
+      "id": "W3",
+      "returncode": 0,
+      "seconds": 0.3031450720000066,
+      "command": "go vet -overlay /tmp/u066/W3-overlay.json ./internal/oracle/"
+    },
+    {
+      "id": "P1",
+      "returncode": 0,
+      "seconds": 0.5557989340004497,
+      "command": "go vet -overlay /tmp/u066/P1-overlay.json ./internal/lower/"
+    },
+    {
+      "id": "P2",
+      "returncode": 0,
+      "seconds": 0.04565544199977012,
+      "command": "clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -I /tmp/u066/runtime -c /tmp/u066/runtime/adamic.c -o /tmp/u066/check.o"
+    },
+    {
+      "id": "P3",
+      "returncode": 0,
+      "seconds": 0.07293022099929658,
+      "command": "clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -I /tmp/u066/runtime -c /tmp/u066/runtime/adamic.c -o /tmp/u066/check.o"
+    },
+    {
+      "id": "P4",
+      "returncode": 0,
+      "seconds": 0.05978614000014204,
+      "command": "clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -I /tmp/u066/runtime -c /tmp/u066/runtime/adamic.c -o /tmp/u066/check.o"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+--- a/internal/native/runtime/adamic.c
++++ b/internal/native/runtime/adamic.c
+@@ -170,6 +170,7 @@
+ }
+ 
+ void adamic_write_line(enum adamic_stream stream, const adamic_string *string) {
++	return;
+ 	if (output_mode == 0) {
+ 		output_mode = isatty(adamic_stdout) ? 2 : 1;
+ 		atexit(finish);

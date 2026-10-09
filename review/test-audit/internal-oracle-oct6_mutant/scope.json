@@ -1,0 +1,66 @@
+{
+  "base": "6c60da091afddc9c2fe88b3a1067845b6dc79cb3",
+  "rows": [
+    "TestOct6InheritanceMutants",
+    "TestOct6ReleaseMutant",
+    "TestOmittedArgumentZeroMutantIsCaught",
+    "TestOmittedOriginalProbePolicy",
+    "TestOmittedReaderZeroMutantIsCaught",
+    "TestNativeAgreesWithNode",
+    "TestTheOracleCatchesOneByte",
+    "TestOneFileHoldsNodesOrder",
+    "TestClosedStdoutEndsAsOnNode",
+    "TestFileWritesLandInNodesOrder",
+    "TestAPromptComesBeforeTheRead",
+    "TestASignalLeavesWhatWasPrinted",
+    "TestOverloadContractRulings",
+    "TestParameterPropertyMutants",
+    "TestParameterPropertyOwnershipMutant"
+  ],
+  "regex": "^(TestOct6InheritanceMutants|TestOct6ReleaseMutant|TestOmittedArgumentZeroMutantIsCaught|TestOmittedOriginalProbePolicy|TestOmittedReaderZeroMutantIsCaught|TestTheOracleCatchesOneByte|TestOneFileHoldsNodesOrder|TestClosedStdoutEndsAsOnNode|TestFileWritesLandInNodesOrder|TestAPromptComesBeforeTheRead|TestASignalLeavesWhatWasPrinted|TestOverloadContractRulings|TestParameterPropertyMutants|TestParameterPropertyOwnershipMutant)$",
+  "native_regex": "^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^(interleaved\\.a|status_of_stdout\\.a|large_output\\.a|output_then_panic\\.a|write_stdout_order\\.a|write_stderr_order\\.a|prompt_then_read\\.a|killed_after_output\\.a|omitted_scanner\\.a|omitted_reader\\.a|class_oct6_deep\\.a|class_oct6_release\\.a|parameter_properties\\.a|parameter_properties_ownership\\.a)$",
+  "native_subcases": [
+    "interleaved.a",
+    "status_of_stdout.a",
+    "large_output.a",
+    "output_then_panic.a",
+    "write_stdout_order.a",
+    "write_stderr_order.a",
+    "prompt_then_read.a",
+    "killed_after_output.a",
+    "omitted_scanner.a",
+    "omitted_reader.a",
+    "class_oct6_deep.a",
+    "class_oct6_release.a",
+    "parameter_properties.a",
+    "parameter_properties_ownership.a"
+  ],
+  "nproc": 5,
+  "witness_rows": [
+    "TestOct6InheritanceMutants",
+    "TestOct6ReleaseMutant",
+    "TestOmittedArgumentZeroMutantIsCaught",
+    "TestOmittedReaderZeroMutantIsCaught",
+    "TestTheOracleCatchesOneByte",
+    "TestParameterPropertyMutants",
+    "TestParameterPropertyOwnershipMutant"
+  ],
+  "native_actual_subcases": [
+    "TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_deep.a",
+    "TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_release.a",
+    "TestNativeAgreesWithNode/internal/oracle/testdata/interleaved.a",
+    "TestNativeAgreesWithNode/internal/oracle/testdata/large_output.a",
+    "TestNativeAgreesWithNode/internal/oracle/testdata/omitted_reader.a",
+    "TestNativeAgreesWithNode/internal/oracle/testdata/omitted_scanner.a",
+    "TestNativeAgreesWithNode/internal/oracle/testdata/output_then_panic.a",
+    "TestNativeAgreesWithNode/internal/oracle/testdata/parameter_properties.a",
+    "TestNativeAgreesWithNode/internal/oracle/testdata/parameter_properties_ownership.a",
+    "TestNativeAgreesWithNode/internal/oracle/testdata/prompt_then_read.a",
+    "TestNativeAgreesWithNode/internal/oracle/testdata/write_stderr_order.a",
+    "TestNativeAgreesWithNode/internal/oracle/testdata/write_stdout_order.a"
+  ],
+  "native_unmatched_patterns": [
+    "status_of_stdout.a",
+    "killed_after_output.a"
+  ]
+}

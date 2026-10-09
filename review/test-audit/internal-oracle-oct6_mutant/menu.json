@@ -1,0 +1,90 @@
+[
+  {
+    "id": "M1",
+    "file": "internal/native/runtime/adamic.c",
+    "line": 83,
+    "before": "\t\t_exit(70);",
+    "after": "\t\t_exit(71);",
+    "kind": "change constant in finish"
+  },
+  {
+    "id": "M2",
+    "file": "internal/native/runtime/adamic.c",
+    "line": 177,
+    "before": "if (stream == adamic_stderr) {",
+    "after": "if (stream != adamic_stderr) {",
+    "kind": "flip condition in adamic_write_line"
+  },
+  {
+    "id": "M3",
+    "file": "internal/native/runtime/adamic.c",
+    "line": 113,
+    "before": "size_t whole = output_whole;",
+    "after": "size_t whole = output_whole - 1;",
+    "kind": "off-by-one signal byte bound"
+  },
+  {
+    "id": "M4",
+    "file": "internal/lower/lower.go",
+    "line": 22,
+    "before": "if len(files) != 1 {",
+    "after": "if len(files) == 1 {",
+    "kind": "flip condition in Lower"
+  },
+  {
+    "id": "W1",
+    "file": "internal/oracle/oracle_test.go",
+    "line": 716,
+    "before": "func disagreement(oracle run, native run) string {",
+    "after": "func disagreement(oracle run, native run) string {\n\tif oracle.exitCode == oracle.exitCode { return \"\" }",
+    "kind": "disable disagreement"
+  },
+  {
+    "id": "W2",
+    "file": "internal/oracle/oracle_test.go",
+    "line": 706,
+    "before": "func leakSanitizer(t *testing.T, binary string) string {",
+    "after": "func leakSanitizer(t *testing.T, binary string) string {\n\tif binary == binary { return \"\" }",
+    "kind": "disable leak report"
+  },
+  {
+    "id": "W3",
+    "file": "internal/oracle/parameter_properties_test.go",
+    "line": 108,
+    "before": "if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {",
+    "after": "if err := native.Build(code, binary, native.Options{Sanitize: false}); err != nil {",
+    "kind": "disable ASan in ownership witness"
+  },
+  {
+    "id": "P1",
+    "file": "internal/lower/lower.go",
+    "line": 20,
+    "before": "func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {",
+    "after": "func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {\n\tif program == program { return nil, nil }",
+    "kind": "empty Lower"
+  },
+  {
+    "id": "P2",
+    "file": "internal/native/runtime/adamic.c",
+    "line": 172,
+    "before": "void adamic_write_line(enum adamic_stream stream, const adamic_string *string) {",
+    "after": "void adamic_write_line(enum adamic_stream stream, const adamic_string *string) {\n\treturn;",
+    "kind": "empty write_line"
+  },
+  {
+    "id": "P3",
+    "file": "internal/native/runtime/adamic.c",
+    "line": 103,
+    "before": "void adamic_output_flush(void) {",
+    "after": "void adamic_output_flush(void) {\n\treturn;",
+    "kind": "empty output_flush"
+  },
+  {
+    "id": "P4",
+    "file": "internal/native/runtime/adamic.c",
+    "line": 161,
+    "before": "void adamic_start(int count, char **values) {",
+    "after": "void adamic_start(int count, char **values) {\n\treturn;",
+    "kind": "empty start"
+  }
+]

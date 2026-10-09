@@ -1,0 +1,68 @@
+[
+  {
+    "id": "M1",
+    "returncode": 0,
+    "seconds": 0.0756761060001736,
+    "command": "clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -I /tmp/u066/runtime -c /tmp/u066/runtime/adamic.c -o /tmp/u066/check.o"
+  },
+  {
+    "id": "M2",
+    "returncode": 0,
+    "seconds": 0.10176229199987574,
+    "command": "clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -I /tmp/u066/runtime -c /tmp/u066/runtime/adamic.c -o /tmp/u066/check.o"
+  },
+  {
+    "id": "M3",
+    "returncode": 0,
+    "seconds": 0.07436687300014455,
+    "command": "clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -I /tmp/u066/runtime -c /tmp/u066/runtime/adamic.c -o /tmp/u066/check.o"
+  },
+  {
+    "id": "M4",
+    "returncode": 0,
+    "seconds": 0.8930361180000546,
+    "command": "go vet -overlay /tmp/u066/M4-overlay.json ./internal/lower/"
+  },
+  {
+    "id": "W1",
+    "returncode": 0,
+    "seconds": 0.3689901399993687,
+    "command": "go vet -overlay /tmp/u066/W1-overlay.json ./internal/oracle/"
+  },
+  {
+    "id": "W2",
+    "returncode": 0,
+    "seconds": 0.3012305000002016,
+    "command": "go vet -overlay /tmp/u066/W2-overlay.json ./internal/oracle/"
+  },
+  {
+    "id": "W3",
+    "returncode": 0,
+    "seconds": 0.3031450720000066,
+    "command": "go vet -overlay /tmp/u066/W3-overlay.json ./internal/oracle/"
+  },
+  {
+    "id": "P1",
+    "returncode": 0,
+    "seconds": 0.5557989340004497,
+    "command": "go vet -overlay /tmp/u066/P1-overlay.json ./internal/lower/"
+  },
+  {
+    "id": "P2",
+    "returncode": 0,
+    "seconds": 0.04565544199977012,
+    "command": "clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -I /tmp/u066/runtime -c /tmp/u066/runtime/adamic.c -o /tmp/u066/check.o"
+  },
+  {
+    "id": "P3",
+    "returncode": 0,
+    "seconds": 0.07293022099929658,
+    "command": "clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -I /tmp/u066/runtime -c /tmp/u066/runtime/adamic.c -o /tmp/u066/check.o"
+  },
+  {
+    "id": "P4",
+    "returncode": 0,
+    "seconds": 0.05978614000014204,
+    "command": "clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -I /tmp/u066/runtime -c /tmp/u066/runtime/adamic.c -o /tmp/u066/check.o"
+  }
+]

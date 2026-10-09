@@ -1,0 +1,10 @@
+--- a/internal/native/runtime/adamic.c
++++ b/internal/native/runtime/adamic.c
+@@ -101,6 +101,7 @@
+ }
+ 
+ void adamic_output_flush(void) {
++	return;
+ 	flush();
+ }
+ 

@@ -1,0 +1,10 @@
+--- a/internal/native/runtime/adamic.c
++++ b/internal/native/runtime/adamic.c
+@@ -159,6 +159,7 @@
+ }
+ 
+ void adamic_start(int count, char **values) {
++	return;
+ 	adamic_arguments_save(count, values);
+ 	// Node ignores SIGPIPE, and a write to a pipe nobody reads is a failed write, not a killed process.
+ #ifndef ADAMIC_TARGET_WASI

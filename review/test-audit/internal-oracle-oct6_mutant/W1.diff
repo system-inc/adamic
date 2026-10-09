@@ -1,0 +1,10 @@
+--- a/internal/oracle/oracle_test.go
++++ b/internal/oracle/oracle_test.go
+@@ -714,6 +714,7 @@
+ 
+ // disagreement says how two runs differ, or "" when they don't.
+ func disagreement(oracle run, native run) string {
++	if oracle.exitCode == oracle.exitCode { return "" }
+ 	switch {
+ 	case oracle.exitCode != native.exitCode:
+ 		return "exit codes differ"

@@ -1,0 +1,35 @@
+{"Time":"2026-10-09T11:16:03.002280279Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-09T11:16:03.011499143Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOct6ReleaseMutant"}
+{"Time":"2026-10-09T11:16:03.011601945Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOct6ReleaseMutant","Output":"=== RUN   TestOct6ReleaseMutant\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:16:03.011652379Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOct6ReleaseMutant","Output":"=== PAUSE TestOct6ReleaseMutant\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:16:03.011655434Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOct6ReleaseMutant"}
+{"Time":"2026-10-09T11:16:03.011661693Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOct6ReleaseMutant"}
+{"Time":"2026-10-09T11:16:03.011664367Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOct6ReleaseMutant","Output":"=== CONT  TestOct6ReleaseMutant\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:16:03.075190118Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOct6ReleaseMutant","Output":"--- FAIL: TestOct6ReleaseMutant (0.06s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:16:03.075615796Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOct6ReleaseMutant","Output":"panic: runtime error: invalid memory address or nil pointer dereference [recovered, repanicked]\n"}
+{"Time":"2026-10-09T11:16:03.075624018Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOct6ReleaseMutant","Output":"[signal SIGSEGV: segmentation violation code=0x1 addr=0x108 pc=0xbdc726]\n"}
+{"Time":"2026-10-09T11:16:03.075629637Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOct6ReleaseMutant","Output":"\n"}
+{"Time":"2026-10-09T11:16:03.075633102Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOct6ReleaseMutant","Output":"goroutine 8 [running]:\n"}
+{"Time":"2026-10-09T11:16:03.075637047Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOct6ReleaseMutant","Output":"testing.tRunner.func1.2({0x1d641d8, 0x1e72930})\n"}
+{"Time":"2026-10-09T11:16:03.075640653Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOct6ReleaseMutant","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2123 +0x232\n"}
+{"Time":"2026-10-09T11:16:03.076656872Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOct6ReleaseMutant","Output":"testing.tRunner.func1()\n"}
+{"Time":"2026-10-09T11:16:03.076663282Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOct6ReleaseMutant","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2126 +0x329\n"}
+{"Time":"2026-10-09T11:16:03.076665836Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOct6ReleaseMutant","Output":"panic({0x1d641d8?, 0x1e72930?})\n"}
+{"Time":"2026-10-09T11:16:03.076669531Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOct6ReleaseMutant","Output":"\t/workspace/adamic-tools/go/src/runtime/panic.go:859 +0x125\n"}
+{"Time":"2026-10-09T11:16:03.076674048Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOct6ReleaseMutant","Output":"github.com/system-inc/adamic/internal/native.changingFunctions(0x0)\n"}
+{"Time":"2026-10-09T11:16:03.076676111Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOct6ReleaseMutant","Output":"\t/workspace/adamic/internal/native/element_borrow.go:121 +0x26\n"}
+{"Time":"2026-10-09T11:16:03.076678154Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOct6ReleaseMutant","Output":"github.com/system-inc/adamic/internal/native.planElementBorrows(0x0)\n"}
+{"Time":"2026-10-09T11:16:03.076687167Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOct6ReleaseMutant","Output":"\t/workspace/adamic/internal/native/element_borrow.go:25 +0x27\n"}
+{"Time":"2026-10-09T11:16:03.076690512Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOct6ReleaseMutant","Output":"github.com/system-inc/adamic/internal/native.cProgram(0x0, 0xffffffffffffffff)\n"}
+{"Time":"2026-10-09T11:16:03.076697442Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOct6ReleaseMutant","Output":"\t/workspace/adamic/internal/native/emit.go:28 +0x32\n"}
+{"Time":"2026-10-09T11:16:03.076699345Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOct6ReleaseMutant","Output":"github.com/system-inc/adamic/internal/native.C(...)\n"}
+{"Time":"2026-10-09T11:16:03.076714538Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOct6ReleaseMutant","Output":"\t/workspace/adamic/internal/native/emit.go:23\n"}
+{"Time":"2026-10-09T11:16:03.076719325Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOct6ReleaseMutant","Output":"github.com/system-inc/adamic/internal/oracle.TestOct6ReleaseMutant(0xf75c1758d88)\n"}
+{"Time":"2026-10-09T11:16:03.076721338Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOct6ReleaseMutant","Output":"\t/workspace/adamic/internal/oracle/oct6_mutant_test.go:92 +0x14d\n"}
+{"Time":"2026-10-09T11:16:03.07672283Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOct6ReleaseMutant","Output":"testing.tRunner(0xf75c1758d88, 0x1e10d20)\n"}
+{"Time":"2026-10-09T11:16:03.076724272Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOct6ReleaseMutant","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea\n"}
+{"Time":"2026-10-09T11:16:03.076725694Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOct6ReleaseMutant","Output":"created by testing.(*T).Run in goroutine 1\n"}
+{"Time":"2026-10-09T11:16:03.076727457Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOct6ReleaseMutant","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4\n"}
+{"Time":"2026-10-09T11:16:03.076773064Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOct6ReleaseMutant","Elapsed":0.06}
+{"Time":"2026-10-09T11:16:03.076789098Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\tgithub.com/system-inc/adamic/internal/oracle\t0.074s\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:16:03.076796519Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":0.075}

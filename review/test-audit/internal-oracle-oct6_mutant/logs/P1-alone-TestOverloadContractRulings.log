@@ -1,0 +1,42 @@
+{"Time":"2026-10-09T11:16:31.198495344Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-09T11:16:31.206935921Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadContractRulings"}
+{"Time":"2026-10-09T11:16:31.207053865Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadContractRulings","Output":"=== RUN   TestOverloadContractRulings\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:16:31.207087795Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadContractRulings","Output":"=== PAUSE TestOverloadContractRulings\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:16:31.20709084Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadContractRulings"}
+{"Time":"2026-10-09T11:16:31.207095687Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadContractRulings"}
+{"Time":"2026-10-09T11:16:31.20709786Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadContractRulings","Output":"=== CONT  TestOverloadContractRulings\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:16:31.207104069Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadContractRulings/token"}
+{"Time":"2026-10-09T11:16:31.207106122Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadContractRulings/token","Output":"=== RUN   TestOverloadContractRulings/token\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:16:31.207110128Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadContractRulings/token","Output":"=== PAUSE TestOverloadContractRulings/token\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:16:31.207112361Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadContractRulings/token"}
+{"Time":"2026-10-09T11:16:31.207119642Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadContractRulings/trampoline"}
+{"Time":"2026-10-09T11:16:31.207123438Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadContractRulings/trampoline","Output":"=== RUN   TestOverloadContractRulings/trampoline\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:16:31.207128365Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadContractRulings/trampoline","Output":"=== PAUSE TestOverloadContractRulings/trampoline\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:16:31.207130568Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadContractRulings/trampoline"}
+{"Time":"2026-10-09T11:16:31.207133593Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadContractRulings/serializer"}
+{"Time":"2026-10-09T11:16:31.207135576Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadContractRulings/serializer","Output":"=== RUN   TestOverloadContractRulings/serializer\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:16:31.20713848Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadContractRulings/serializer","Output":"=== PAUSE TestOverloadContractRulings/serializer\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:16:31.207140663Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadContractRulings/serializer"}
+{"Time":"2026-10-09T11:16:31.207142686Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadContractRulings/token"}
+{"Time":"2026-10-09T11:16:31.207144749Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadContractRulings/token","Output":"=== CONT  TestOverloadContractRulings/token\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:16:31.207148705Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadContractRulings/serializer"}
+{"Time":"2026-10-09T11:16:31.207155505Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadContractRulings/serializer","Output":"=== CONT  TestOverloadContractRulings/serializer\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:16:31.207160062Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadContractRulings/trampoline"}
+{"Time":"2026-10-09T11:16:31.207162956Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadContractRulings/trampoline","Output":"=== CONT  TestOverloadContractRulings/trampoline\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:16:31.512183776Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadContractRulings/token","Output":"    overload_contract_test.go:34: want refusal \"overload 1 of createToken result\", got \u003cnil\u003e\n","OutputType":"error"}
+{"Time":"2026-10-09T11:16:31.512254871Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadContractRulings/token","Output":"--- FAIL: TestOverloadContractRulings/token (0.31s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:16:31.51339243Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadContractRulings/token","Elapsed":0.31}
+{"Time":"2026-10-09T11:16:31.513429845Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadContractRulings/serializer","Output":"    overload_contract_test.go:34: want refusal \"overload 2 of setSerializerContextAnd parameter cb\", got \u003cnil\u003e\n","OutputType":"error"}
+{"Time":"2026-10-09T11:16:31.513441082Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadContractRulings/serializer","Output":"--- FAIL: TestOverloadContractRulings/serializer (0.31s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:16:31.517713398Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadContractRulings/serializer","Elapsed":0.31}
+{"Time":"2026-10-09T11:16:31.517759927Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadContractRulings/trampoline","Output":"    overload_contract_test.go:34: want refusal \"overload 1 of createBinaryExpressionTrampoline result\", got \u003cnil\u003e\n","OutputType":"error"}
+{"Time":"2026-10-09T11:16:31.517767277Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadContractRulings/trampoline","Output":"--- FAIL: TestOverloadContractRulings/trampoline (0.31s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:16:31.517777442Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadContractRulings/trampoline","Elapsed":0.31}
+{"Time":"2026-10-09T11:16:31.517779556Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadContractRulings","Output":"--- FAIL: TestOverloadContractRulings (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:16:31.517835067Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadContractRulings","Elapsed":0}
+{"Time":"2026-10-09T11:16:31.517837751Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:16:31.517848527Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: native hits=0 misses=0\n"}
+{"Time":"2026-10-09T11:16:31.517880765Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: node hits=0 misses=3\n"}
+{"Time":"2026-10-09T11:16:31.517882808Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: probe hits=0 misses=0\n"}
+{"Time":"2026-10-09T11:16:31.522289742Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\tgithub.com/system-inc/adamic/internal/oracle\t0.323s\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:16:31.522307719Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":0.324}

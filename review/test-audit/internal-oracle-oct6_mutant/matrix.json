@@ -1,0 +1,923 @@
+[
+  {
+    "id": "M1",
+    "kind": "production",
+    "results": {
+      "TestOct6InheritanceMutants": "pass",
+      "TestOct6ReleaseMutant": "pass",
+      "TestOmittedArgumentZeroMutantIsCaught": "pass",
+      "TestOmittedOriginalProbePolicy": "pass",
+      "TestOmittedReaderZeroMutantIsCaught": "pass",
+      "TestNativeAgreesWithNode": "pass",
+      "TestTheOracleCatchesOneByte": "pass",
+      "TestOneFileHoldsNodesOrder": "pass",
+      "TestClosedStdoutEndsAsOnNode": "fail",
+      "TestFileWritesLandInNodesOrder": "pass",
+      "TestAPromptComesBeforeTheRead": "pass",
+      "TestASignalLeavesWhatWasPrinted": "pass",
+      "TestOverloadContractRulings": "pass",
+      "TestParameterPropertyMutants": "pass",
+      "TestParameterPropertyOwnershipMutant": "pass"
+    },
+    "subcases": {
+      "TestParameterPropertyMutants/missing_store": "pass",
+      "TestParameterPropertyMutants/late_store": "pass",
+      "TestOct6InheritanceMutants/forget_override_inherited_past_second_level": "pass",
+      "TestClosedStdoutEndsAsOnNode/internal/oracle/testdata/large_output.a": "fail",
+      "TestClosedStdoutEndsAsOnNode/internal/oracle/testdata/interleaved.a": "fail",
+      "TestClosedStdoutEndsAsOnNode/internal/oracle/testdata/output_then_panic.a": "pass",
+      "TestOct6InheritanceMutants/lose_fourth_level_ancestry": "pass",
+      "TestOverloadContractRulings/token": "pass",
+      "TestFileWritesLandInNodesOrder/internal/oracle/testdata/write_stdout_order.a": "pass",
+      "TestOverloadContractRulings/serializer": "pass",
+      "TestOverloadContractRulings/trampoline": "pass",
+      "TestFileWritesLandInNodesOrder/internal/oracle/testdata/write_stderr_order.a": "pass",
+      "TestOneFileHoldsNodesOrder/internal/oracle/testdata/interleaved.a": "pass",
+      "TestOneFileHoldsNodesOrder/internal/oracle/testdata/status_of_stdout.a": "pass",
+      "TestASignalLeavesWhatWasPrinted/terminated_inherited_ignored": "pass",
+      "TestASignalLeavesWhatWasPrinted/terminated": "pass",
+      "TestASignalLeavesWhatWasPrinted/hangup_inherited_ignored": "pass",
+      "TestASignalLeavesWhatWasPrinted/hangup": "pass",
+      "TestASignalLeavesWhatWasPrinted/interrupt_inherited_ignored": "pass",
+      "TestASignalLeavesWhatWasPrinted/interrupt": "pass",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/write_stderr_order.a": "pass",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/write_stdout_order.a": "pass",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/output_then_panic.a": "pass",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/parameter_properties_ownership.a": "pass",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_deep.a": "pass",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/omitted_reader.a": "pass",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/interleaved.a": "pass",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/prompt_then_read.a": "pass",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/omitted_scanner.a": "pass",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/parameter_properties.a": "pass",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_release.a": "pass",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/large_output.a": "pass"
+    },
+    "failures": [
+      "TestClosedStdoutEndsAsOnNode"
+    ],
+    "production_kills": [
+      "TestClosedStdoutEndsAsOnNode"
+    ],
+    "evidence": {
+      "TestClosedStdoutEndsAsOnNode": "output_test.go:164: native: exit 71, stderr \"stderr, unbuffered\\n\"; Node: exit 70, stderr \"stderr, unbuffered\\n\""
+    },
+    "raw_evidence": {
+      "TestClosedStdoutEndsAsOnNode": "output_test.go:164: native: exit 71, stderr \"stderr, unbuffered\\n\"; Node: exit 70, stderr \"stderr, unbuffered\\n\""
+    },
+    "commands": [
+      {
+        "id": "M1",
+        "part": "rows",
+        "command": "ADAMIC_MUTANT=M1 ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u066/cache/M1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestOct6InheritanceMutants|TestOct6ReleaseMutant|TestOmittedArgumentZeroMutantIsCaught|TestOmittedOriginalProbePolicy|TestOmittedReaderZeroMutantIsCaught|TestTheOracleCatchesOneByte|TestOneFileHoldsNodesOrder|TestClosedStdoutEndsAsOnNode|TestFileWritesLandInNodesOrder|TestAPromptComesBeforeTheRead|TestASignalLeavesWhatWasPrinted|TestOverloadContractRulings|TestParameterPropertyMutants|TestParameterPropertyOwnershipMutant)$",
+        "seconds": 6.605761290000373,
+        "returncode": 1
+      },
+      {
+        "id": "M1",
+        "part": "native",
+        "command": "ADAMIC_MUTANT=M1 ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u066/cache/M1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^(interleaved\\.a|status_of_stdout\\.a|large_output\\.a|output_then_panic\\.a|write_stdout_order\\.a|write_stderr_order\\.a|prompt_then_read\\.a|killed_after_output\\.a|omitted_scanner\\.a|omitted_reader\\.a|class_oct6_deep\\.a|class_oct6_release\\.a|parameter_properties\\.a|parameter_properties_ownership\\.a)$",
+        "seconds": 4.199120300000686,
+        "returncode": 0
+      }
+    ]
+  },
+  {
+    "id": "M2",
+    "kind": "production",
+    "results": {
+      "TestOct6InheritanceMutants": "pass",
+      "TestOct6ReleaseMutant": "pass",
+      "TestOmittedArgumentZeroMutantIsCaught": "pass",
+      "TestOmittedOriginalProbePolicy": "pass",
+      "TestOmittedReaderZeroMutantIsCaught": "pass",
+      "TestNativeAgreesWithNode": "pass",
+      "TestTheOracleCatchesOneByte": "pass",
+      "TestOneFileHoldsNodesOrder": "fail",
+      "TestClosedStdoutEndsAsOnNode": "pass",
+      "TestFileWritesLandInNodesOrder": "pass",
+      "TestAPromptComesBeforeTheRead": "pass",
+      "TestASignalLeavesWhatWasPrinted": "pass",
+      "TestOverloadContractRulings": "pass",
+      "TestParameterPropertyMutants": "pass",
+      "TestParameterPropertyOwnershipMutant": "pass"
+    },
+    "subcases": {
+      "TestParameterPropertyMutants/late_store": "pass",
+      "TestParameterPropertyMutants/missing_store": "pass",
+      "TestOct6InheritanceMutants/forget_override_inherited_past_second_level": "pass",
+      "TestOneFileHoldsNodesOrder/internal/oracle/testdata/interleaved.a": "fail",
+      "TestOct6InheritanceMutants/lose_fourth_level_ancestry": "pass",
+      "TestOneFileHoldsNodesOrder/internal/oracle/testdata/status_of_stdout.a": "pass",
+      "TestClosedStdoutEndsAsOnNode/internal/oracle/testdata/large_output.a": "pass",
+      "TestClosedStdoutEndsAsOnNode/internal/oracle/testdata/interleaved.a": "pass",
+      "TestClosedStdoutEndsAsOnNode/internal/oracle/testdata/output_then_panic.a": "pass",
+      "TestASignalLeavesWhatWasPrinted/terminated": "pass",
+      "TestASignalLeavesWhatWasPrinted/terminated_inherited_ignored": "pass",
+      "TestASignalLeavesWhatWasPrinted/hangup_inherited_ignored": "pass",
+      "TestASignalLeavesWhatWasPrinted/interrupt_inherited_ignored": "pass",
+      "TestASignalLeavesWhatWasPrinted/interrupt": "pass",
+      "TestOverloadContractRulings/token": "pass",
+      "TestOverloadContractRulings/serializer": "pass",
+      "TestOverloadContractRulings/trampoline": "pass",
+      "TestFileWritesLandInNodesOrder/internal/oracle/testdata/write_stdout_order.a": "pass",
+      "TestFileWritesLandInNodesOrder/internal/oracle/testdata/write_stderr_order.a": "pass",
+      "TestASignalLeavesWhatWasPrinted/hangup": "pass",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/write_stderr_order.a": "pass",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/omitted_reader.a": "pass",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/parameter_properties_ownership.a": "pass",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_deep.a": "pass",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/parameter_properties.a": "pass",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/omitted_scanner.a": "pass",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/prompt_then_read.a": "pass",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/write_stdout_order.a": "pass",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/output_then_panic.a": "pass",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/interleaved.a": "pass",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_release.a": "pass",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/large_output.a": "pass"
+    },
+    "failures": [
+      "TestOneFileHoldsNodesOrder"
+    ],
+    "production_kills": [
+      "TestOneFileHoldsNodesOrder"
+    ],
+    "evidence": {
+      "TestOneFileHoldsNodesOrder": "output_test.go:111: native: exit 0, \"err 0\\nout 0\\nout 1\\nout 2\\nerr 3\\nout 3\\nout 4\\nout 5\\nerr 6\\nout 6\\nout 7\\nout 8\\nerr 9\\nout 9\\nout 10\\nout 11\\nerr 12\\nout 12\\nout 13\\nout 14\\nerr 15\\nout 15\\nout 16\\nout 17\\nerr 18\\nout 18\\nout 19\\nout 20\\nerr 21\\nout 21\\nout 22\\nout 23\\nerr 24\\nout 24\\nout 25\\nout 26\\nerr 27\\nout 27\\nout 28\\nout 29\\nerr 30\\nout 30\\nout 31\\nout 32\\nerr 33\\nout 33\\nout 34\\nout 35\\nerr 36\\nout 36\\nout 37\\nout 38\\nerr 39\\nout 39\\nout 40\\nout 41\\nerr 42\\nout 42\\nout 43\\nout 44\\nerr 45\\nout 45\\nout 46\\nout 47\\nerr 48\\nout 48\\nout 49\\nout 50\\nerr 51\\nout 51\\nout 52\\nout 53\\nerr 54\\nout 54\\nout 55\\nout 56\\nerr 57\\nout 57\\nout 58\\nout 59\\nerr 60\\nout 60\\nout 61\\nout 62\\nerr 63\\nout 63\\nout 64\\nout 65\\nerr 66\\nout 66\\nout 67\\nout 68\\nerr 69\\nout 69\\nout 70\\nout 71\\nerr 72\\nout 72\\nout 73\\nout 74\\nerr 75\\nout 75\\nout 76\\nout 77\\nerr 78\\nout 78\\nout 79\\nout 80\\nerr 81\\nout 81\\nout 82\\nout 83\\nerr 84\\nout 84\\nout 85\\nout 86\\nerr 87\\nout 87\\nout 88\\nout 89\\nerr 90\\nout 90\\nout 91\\nout 92\\nerr"
+    },
+    "raw_evidence": {
+      "TestOneFileHoldsNodesOrder": "output_test.go:111: native: exit 0, \"err 0\\nout 0\\nout 1\\nout 2\\nerr 3\\nout 3\\nout 4\\nout 5\\nerr 6\\nout 6\\nout 7\\nout 8\\nerr 9\\nout 9\\nout 10\\nout 11\\nerr 12\\nout 12\\nout 13\\nout 14\\nerr 15\\nout 15\\nout 16\\nout 17\\nerr 18\\nout 18\\nout 19\\nout 20\\nerr 21\\nout 21\\nout 22\\nout 23\\nerr 24\\nout 24\\nout 25\\nout 26\\nerr 27\\nout 27\\nout 28\\nout 29\\nerr 30\\nout 30\\nout 31\\nout 32\\nerr 33\\nout 33\\nout 34\\nout 35\\nerr 36\\nout 36\\nout 37\\nout 38\\nerr 39\\nout 39\\nout 40\\nout 41\\nerr 42\\nout 42\\nout 43\\nout 44\\nerr 45\\nout 45\\nout 46\\nout 47\\nerr 48\\nout 48\\nout 49\\nout 50\\nerr 51\\nout 51\\nout 52\\nout 53\\nerr 54\\nout 54\\nout 55\\nout 56\\nerr 57\\nout 57\\nout 58\\nout 59\\nerr 60\\nout 60\\nout 61\\nout 62\\nerr 63\\nout 63\\nout 64\\nout 65\\nerr 66\\nout 66\\nout 67\\nout 68\\nerr 69\\nout 69\\nout 70\\nout 71\\nerr 72\\nout 72\\nout 73\\nout 74\\nerr 75\\nout 75\\nout 76\\nout 77\\nerr 78\\nout 78\\nout 79\\nout 80\\nerr 81\\nout 81\\nout 82\\nout 83\\nerr 84\\nout 84\\nout 85\\nout 86\\nerr 87\\nout 87\\nout 88\\nout 89\\nerr 90\\nout 90\\nout 91\\nout 92\\nerr"
+    },
+    "commands": [
+      {
+        "id": "M2",
+        "part": "rows",
+        "command": "ADAMIC_MUTANT=M2 ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u066/cache/M2 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestOct6InheritanceMutants|TestOct6ReleaseMutant|TestOmittedArgumentZeroMutantIsCaught|TestOmittedOriginalProbePolicy|TestOmittedReaderZeroMutantIsCaught|TestTheOracleCatchesOneByte|TestOneFileHoldsNodesOrder|TestClosedStdoutEndsAsOnNode|TestFileWritesLandInNodesOrder|TestAPromptComesBeforeTheRead|TestASignalLeavesWhatWasPrinted|TestOverloadContractRulings|TestParameterPropertyMutants|TestParameterPropertyOwnershipMutant)$",
+        "seconds": 5.5958767210004225,
+        "returncode": 1
+      },
+      {
+        "id": "M2",
+        "part": "native",
+        "command": "ADAMIC_MUTANT=M2 ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u066/cache/M2 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^(interleaved\\.a|status_of_stdout\\.a|large_output\\.a|output_then_panic\\.a|write_stdout_order\\.a|write_stderr_order\\.a|prompt_then_read\\.a|killed_after_output\\.a|omitted_scanner\\.a|omitted_reader\\.a|class_oct6_deep\\.a|class_oct6_release\\.a|parameter_properties\\.a|parameter_properties_ownership\\.a)$",
+        "seconds": 4.086851152000236,
+        "returncode": 0
+      }
+    ]
+  },
+  {
+    "id": "M3",
+    "kind": "production",
+    "results": {
+      "TestOct6InheritanceMutants": "pass",
+      "TestOct6ReleaseMutant": "pass",
+      "TestOmittedArgumentZeroMutantIsCaught": "pass",
+      "TestOmittedOriginalProbePolicy": "pass",
+      "TestOmittedReaderZeroMutantIsCaught": "pass",
+      "TestNativeAgreesWithNode": "pass",
+      "TestTheOracleCatchesOneByte": "pass",
+      "TestOneFileHoldsNodesOrder": "pass",
+      "TestClosedStdoutEndsAsOnNode": "pass",
+      "TestFileWritesLandInNodesOrder": "pass",
+      "TestAPromptComesBeforeTheRead": "pass",
+      "TestASignalLeavesWhatWasPrinted": "fail",
+      "TestOverloadContractRulings": "pass",
+      "TestParameterPropertyMutants": "pass",
+      "TestParameterPropertyOwnershipMutant": "pass"
+    },
+    "subcases": {
+      "TestParameterPropertyMutants/missing_store": "pass",
+      "TestParameterPropertyMutants/late_store": "pass",
+      "TestOneFileHoldsNodesOrder/internal/oracle/testdata/interleaved.a": "pass",
+      "TestOct6InheritanceMutants/forget_override_inherited_past_second_level": "pass",
+      "TestOct6InheritanceMutants/lose_fourth_level_ancestry": "pass",
+      "TestOneFileHoldsNodesOrder/internal/oracle/testdata/status_of_stdout.a": "pass",
+      "TestClosedStdoutEndsAsOnNode/internal/oracle/testdata/large_output.a": "pass",
+      "TestASignalLeavesWhatWasPrinted/terminated": "fail",
+      "TestASignalLeavesWhatWasPrinted/hangup_inherited_ignored": "fail",
+      "TestASignalLeavesWhatWasPrinted/interrupt": "fail",
+      "TestASignalLeavesWhatWasPrinted/interrupt_inherited_ignored": "fail",
+      "TestClosedStdoutEndsAsOnNode/internal/oracle/testdata/output_then_panic.a": "pass",
+      "TestASignalLeavesWhatWasPrinted/terminated_inherited_ignored": "fail",
+      "TestClosedStdoutEndsAsOnNode/internal/oracle/testdata/interleaved.a": "pass",
+      "TestFileWritesLandInNodesOrder/internal/oracle/testdata/write_stdout_order.a": "pass",
+      "TestOverloadContractRulings/token": "pass",
+      "TestOverloadContractRulings/serializer": "pass",
+      "TestOverloadContractRulings/trampoline": "pass",
+      "TestASignalLeavesWhatWasPrinted/hangup": "fail",
+      "TestFileWritesLandInNodesOrder/internal/oracle/testdata/write_stderr_order.a": "pass",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/write_stderr_order.a": "pass",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/omitted_reader.a": "pass",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/output_then_panic.a": "pass",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/parameter_properties_ownership.a": "pass",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_deep.a": "pass",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/write_stdout_order.a": "pass",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_release.a": "pass",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/interleaved.a": "pass",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/parameter_properties.a": "pass",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/large_output.a": "pass",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/omitted_scanner.a": "pass",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/prompt_then_read.a": "pass"
+    },
+    "failures": [
+      "TestASignalLeavesWhatWasPrinted"
+    ],
+    "production_kills": [
+      "TestASignalLeavesWhatWasPrinted"
+    ],
+    "evidence": {
+      "TestASignalLeavesWhatWasPrinted": "output_test.go:359: program: killed by terminated, stderr \"\", stdout \"started, about to work for a long time\"; Node: killed by terminated, stderr \"\", stdout \"started, about to work for a long time\\n\""
+    },
+    "raw_evidence": {
+      "TestASignalLeavesWhatWasPrinted": "output_test.go:359: program: killed by terminated, stderr \"\", stdout \"started, about to work for a long time\"; Node: killed by terminated, stderr \"\", stdout \"started, about to work for a long time\\n\""
+    },
+    "commands": [
+      {
+        "id": "M3",
+        "part": "rows",
+        "command": "ADAMIC_MUTANT=M3 ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u066/cache/M3 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestOct6InheritanceMutants|TestOct6ReleaseMutant|TestOmittedArgumentZeroMutantIsCaught|TestOmittedOriginalProbePolicy|TestOmittedReaderZeroMutantIsCaught|TestTheOracleCatchesOneByte|TestOneFileHoldsNodesOrder|TestClosedStdoutEndsAsOnNode|TestFileWritesLandInNodesOrder|TestAPromptComesBeforeTheRead|TestASignalLeavesWhatWasPrinted|TestOverloadContractRulings|TestParameterPropertyMutants|TestParameterPropertyOwnershipMutant)$",
+        "seconds": 6.268810128000041,
+        "returncode": 1
+      },
+      {
+        "id": "M3",
+        "part": "native",
+        "command": "ADAMIC_MUTANT=M3 ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u066/cache/M3 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^(interleaved\\.a|status_of_stdout\\.a|large_output\\.a|output_then_panic\\.a|write_stdout_order\\.a|write_stderr_order\\.a|prompt_then_read\\.a|killed_after_output\\.a|omitted_scanner\\.a|omitted_reader\\.a|class_oct6_deep\\.a|class_oct6_release\\.a|parameter_properties\\.a|parameter_properties_ownership\\.a)$",
+        "seconds": 4.529794462000609,
+        "returncode": 0
+      }
+    ]
+  },
+  {
+    "id": "M4",
+    "kind": "production",
+    "results": {
+      "TestOct6InheritanceMutants": "fail",
+      "TestOct6ReleaseMutant": "fail",
+      "TestOmittedArgumentZeroMutantIsCaught": "fail",
+      "TestOmittedOriginalProbePolicy": "fail",
+      "TestOmittedReaderZeroMutantIsCaught": "fail",
+      "TestNativeAgreesWithNode": "fail",
+      "TestTheOracleCatchesOneByte": "fail",
+      "TestOneFileHoldsNodesOrder": "fail",
+      "TestClosedStdoutEndsAsOnNode": "fail",
+      "TestFileWritesLandInNodesOrder": "fail",
+      "TestAPromptComesBeforeTheRead": "fail",
+      "TestASignalLeavesWhatWasPrinted": "fail",
+      "TestOverloadContractRulings": "fail",
+      "TestParameterPropertyMutants": "fail",
+      "TestParameterPropertyOwnershipMutant": "fail"
+    },
+    "subcases": {
+      "TestParameterPropertyMutants/late_store": "fail",
+      "TestParameterPropertyMutants/missing_store": "fail",
+      "TestOct6InheritanceMutants/forget_override_inherited_past_second_level": "fail",
+      "TestOct6InheritanceMutants/lose_fourth_level_ancestry": "fail",
+      "TestClosedStdoutEndsAsOnNode/internal/oracle/testdata/output_then_panic.a": "fail",
+      "TestClosedStdoutEndsAsOnNode/internal/oracle/testdata/large_output.a": "fail",
+      "TestClosedStdoutEndsAsOnNode/internal/oracle/testdata/interleaved.a": "fail",
+      "TestASignalLeavesWhatWasPrinted/terminated": "fail",
+      "TestASignalLeavesWhatWasPrinted/interrupt_inherited_ignored": "fail",
+      "TestASignalLeavesWhatWasPrinted/terminated_inherited_ignored": "fail",
+      "TestASignalLeavesWhatWasPrinted/hangup": "fail",
+      "TestASignalLeavesWhatWasPrinted/hangup_inherited_ignored": "fail",
+      "TestASignalLeavesWhatWasPrinted/interrupt": "fail",
+      "TestOneFileHoldsNodesOrder/internal/oracle/testdata/interleaved.a": "fail",
+      "TestFileWritesLandInNodesOrder/internal/oracle/testdata/write_stdout_order.a": "fail",
+      "TestOverloadContractRulings/token": "fail",
+      "TestFileWritesLandInNodesOrder/internal/oracle/testdata/write_stderr_order.a": "fail",
+      "TestOneFileHoldsNodesOrder/internal/oracle/testdata/status_of_stdout.a": "fail",
+      "TestOverloadContractRulings/trampoline": "fail",
+      "TestOverloadContractRulings/serializer": "fail",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/write_stdout_order.a": "fail",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_release.a": "fail",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_deep.a": "fail",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/write_stderr_order.a": "fail",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/large_output.a": "fail",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/output_then_panic.a": "fail",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/omitted_reader.a": "fail",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/parameter_properties.a": "fail",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/parameter_properties_ownership.a": "fail",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/interleaved.a": "fail",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/omitted_scanner.a": "fail",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/prompt_then_read.a": "fail"
+    },
+    "failures": [
+      "TestOct6InheritanceMutants",
+      "TestOct6ReleaseMutant",
+      "TestOmittedArgumentZeroMutantIsCaught",
+      "TestOmittedOriginalProbePolicy",
+      "TestOmittedReaderZeroMutantIsCaught",
+      "TestNativeAgreesWithNode",
+      "TestTheOracleCatchesOneByte",
+      "TestOneFileHoldsNodesOrder",
+      "TestClosedStdoutEndsAsOnNode",
+      "TestFileWritesLandInNodesOrder",
+      "TestAPromptComesBeforeTheRead",
+      "TestASignalLeavesWhatWasPrinted",
+      "TestOverloadContractRulings",
+      "TestParameterPropertyMutants",
+      "TestParameterPropertyOwnershipMutant"
+    ],
+    "production_kills": [
+      "TestOmittedOriginalProbePolicy",
+      "TestNativeAgreesWithNode",
+      "TestOneFileHoldsNodesOrder",
+      "TestClosedStdoutEndsAsOnNode",
+      "TestFileWritesLandInNodesOrder",
+      "TestAPromptComesBeforeTheRead",
+      "TestASignalLeavesWhatWasPrinted",
+      "TestOverloadContractRulings"
+    ],
+    "evidence": {
+      "TestParameterPropertyMutants": "parameter_properties_test.go:45: lower: stage 0 compiles a program from one entry file, got 1",
+      "TestOmittedArgumentZeroMutantIsCaught": "omitted_arguments_test.go:30: lower: stage 0 compiles a program from one entry file, got 1",
+      "TestOmittedReaderZeroMutantIsCaught": "omitted_arguments_test.go:105: lower: stage 0 compiles a program from one entry file, got 1",
+      "TestParameterPropertyOwnershipMutant": "parameter_properties_test.go:94: lower: stage 0 compiles a program from one entry file, got 1",
+      "TestOct6InheritanceMutants": "oct6_mutant_test.go:64: lower: stage 0 compiles a program from one entry file, got 1",
+      "TestTheOracleCatchesOneByte": "oracle_test.go:804: lower: stage 0 compiles a program from one entry file, got 1",
+      "TestAPromptComesBeforeTheRead": "output_test.go:238: Lower: lower: stage 0 compiles a program from one entry file, got 1",
+      "TestOct6ReleaseMutant": "oct6_mutant_test.go:90: lower: stage 0 compiles a program from one entry file, got 1",
+      "TestClosedStdoutEndsAsOnNode": "output_test.go:136: Lower: lower: stage 0 compiles a program from one entry file, got 1",
+      "TestASignalLeavesWhatWasPrinted": "output_test.go:313: Lower: lower: stage 0 compiles a program from one entry file, got 1",
+      "TestOmittedOriginalProbePolicy": "omitted_arguments_test.go:82: lower: stage 0 compiles a program from one entry file, got 1",
+      "TestOneFileHoldsNodesOrder": "output_test.go:88: Lower: lower: stage 0 compiles a program from one entry file, got 1",
+      "TestFileWritesLandInNodesOrder": "output_test.go:213: Lower: lower: stage 0 compiles a program from one entry file, got 1",
+      "TestOverloadContractRulings": "overload_contract_test.go:34: want refusal \"overload 1 of createToken result\", got lower: stage 0 compiles a program from one entry file, got 1",
+      "TestNativeAgreesWithNode": "oracle_test.go:751: Lower: lower: stage 0 compiles a program from one entry file, got 1"
+    },
+    "raw_evidence": {
+      "TestParameterPropertyMutants": "parameter_properties_test.go:46: lower: stage 0 compiles a program from one entry file, got 1",
+      "TestOmittedArgumentZeroMutantIsCaught": "omitted_arguments_test.go:30: lower: stage 0 compiles a program from one entry file, got 1",
+      "TestOmittedReaderZeroMutantIsCaught": "omitted_arguments_test.go:105: lower: stage 0 compiles a program from one entry file, got 1",
+      "TestParameterPropertyOwnershipMutant": "parameter_properties_test.go:95: lower: stage 0 compiles a program from one entry file, got 1",
+      "TestOct6InheritanceMutants": "oct6_mutant_test.go:64: lower: stage 0 compiles a program from one entry file, got 1",
+      "TestTheOracleCatchesOneByte": "oracle_test.go:810: lower: stage 0 compiles a program from one entry file, got 1",
+      "TestAPromptComesBeforeTheRead": "output_test.go:238: Lower: lower: stage 0 compiles a program from one entry file, got 1",
+      "TestOct6ReleaseMutant": "oct6_mutant_test.go:90: lower: stage 0 compiles a program from one entry file, got 1",
+      "TestClosedStdoutEndsAsOnNode": "output_test.go:136: Lower: lower: stage 0 compiles a program from one entry file, got 1",
+      "TestASignalLeavesWhatWasPrinted": "output_test.go:313: Lower: lower: stage 0 compiles a program from one entry file, got 1",
+      "TestOmittedOriginalProbePolicy": "omitted_arguments_test.go:82: lower: stage 0 compiles a program from one entry file, got 1",
+      "TestOneFileHoldsNodesOrder": "output_test.go:88: Lower: lower: stage 0 compiles a program from one entry file, got 1",
+      "TestFileWritesLandInNodesOrder": "output_test.go:213: Lower: lower: stage 0 compiles a program from one entry file, got 1",
+      "TestOverloadContractRulings": "overload_contract_test.go:34: want refusal \"overload 1 of createToken result\", got lower: stage 0 compiles a program from one entry file, got 1",
+      "TestNativeAgreesWithNode": "oracle_test.go:757: Lower: lower: stage 0 compiles a program from one entry file, got 1"
+    },
+    "commands": [
+      {
+        "id": "M4",
+        "part": "rows",
+        "command": "ADAMIC_MUTANT=M4 ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u066/cache/M4 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestOct6InheritanceMutants|TestOct6ReleaseMutant|TestOmittedArgumentZeroMutantIsCaught|TestOmittedOriginalProbePolicy|TestOmittedReaderZeroMutantIsCaught|TestTheOracleCatchesOneByte|TestOneFileHoldsNodesOrder|TestClosedStdoutEndsAsOnNode|TestFileWritesLandInNodesOrder|TestAPromptComesBeforeTheRead|TestASignalLeavesWhatWasPrinted|TestOverloadContractRulings|TestParameterPropertyMutants|TestParameterPropertyOwnershipMutant)$",
+        "seconds": 3.061769384999934,
+        "returncode": 1
+      },
+      {
+        "id": "M4",
+        "part": "native",
+        "command": "ADAMIC_MUTANT=M4 ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u066/cache/M4 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^(interleaved\\.a|status_of_stdout\\.a|large_output\\.a|output_then_panic\\.a|write_stdout_order\\.a|write_stderr_order\\.a|prompt_then_read\\.a|killed_after_output\\.a|omitted_scanner\\.a|omitted_reader\\.a|class_oct6_deep\\.a|class_oct6_release\\.a|parameter_properties\\.a|parameter_properties_ownership\\.a)$",
+        "seconds": 3.042419386999427,
+        "returncode": 1
+      }
+    ]
+  },
+  {
+    "id": "W1",
+    "kind": "witness-check",
+    "results": {
+      "TestOct6InheritanceMutants": "fail",
+      "TestOct6ReleaseMutant": "pass",
+      "TestOmittedArgumentZeroMutantIsCaught": "fail",
+      "TestOmittedOriginalProbePolicy": "pass",
+      "TestOmittedReaderZeroMutantIsCaught": "fail",
+      "TestNativeAgreesWithNode": "unknown",
+      "TestTheOracleCatchesOneByte": "fail",
+      "TestOneFileHoldsNodesOrder": "pass",
+      "TestClosedStdoutEndsAsOnNode": "pass",
+      "TestFileWritesLandInNodesOrder": "pass",
+      "TestAPromptComesBeforeTheRead": "pass",
+      "TestASignalLeavesWhatWasPrinted": "pass",
+      "TestOverloadContractRulings": "pass",
+      "TestParameterPropertyMutants": "fail",
+      "TestParameterPropertyOwnershipMutant": "pass"
+    },
+    "subcases": {
+      "TestParameterPropertyMutants/late_store": "fail",
+      "TestParameterPropertyMutants/missing_store": "fail",
+      "TestOct6InheritanceMutants/forget_override_inherited_past_second_level": "fail",
+      "TestClosedStdoutEndsAsOnNode/internal/oracle/testdata/large_output.a": "pass",
+      "TestClosedStdoutEndsAsOnNode/internal/oracle/testdata/interleaved.a": "pass",
+      "TestOct6InheritanceMutants/lose_fourth_level_ancestry": "fail",
+      "TestClosedStdoutEndsAsOnNode/internal/oracle/testdata/output_then_panic.a": "pass",
+      "TestOneFileHoldsNodesOrder/internal/oracle/testdata/interleaved.a": "pass",
+      "TestOneFileHoldsNodesOrder/internal/oracle/testdata/status_of_stdout.a": "pass",
+      "TestASignalLeavesWhatWasPrinted/terminated": "pass",
+      "TestASignalLeavesWhatWasPrinted/terminated_inherited_ignored": "pass",
+      "TestASignalLeavesWhatWasPrinted/hangup": "pass",
+      "TestASignalLeavesWhatWasPrinted/hangup_inherited_ignored": "pass",
+      "TestOverloadContractRulings/token": "pass",
+      "TestASignalLeavesWhatWasPrinted/interrupt_inherited_ignored": "pass",
+      "TestOverloadContractRulings/trampoline": "pass",
+      "TestOverloadContractRulings/serializer": "pass",
+      "TestFileWritesLandInNodesOrder/internal/oracle/testdata/write_stdout_order.a": "pass",
+      "TestFileWritesLandInNodesOrder/internal/oracle/testdata/write_stderr_order.a": "pass",
+      "TestASignalLeavesWhatWasPrinted/interrupt": "pass"
+    },
+    "failures": [
+      "TestOct6InheritanceMutants",
+      "TestOmittedArgumentZeroMutantIsCaught",
+      "TestOmittedReaderZeroMutantIsCaught",
+      "TestTheOracleCatchesOneByte",
+      "TestParameterPropertyMutants"
+    ],
+    "production_kills": [],
+    "evidence": {
+      "TestParameterPropertyMutants": "parameter_properties_test.go:79: mutant not caught by Node: \"\"",
+      "TestTheOracleCatchesOneByte": "oracle_test.go:809: got \"\", want the mutant caught as \"stdout differs\"",
+      "TestOmittedReaderZeroMutantIsCaught": "omitted_arguments_test.go:136: want Node to catch method zero padding, got \"\"",
+      "TestOmittedArgumentZeroMutantIsCaught": "omitted_arguments_test.go:63: want Node to catch zero padding, got \"\"",
+      "TestOct6InheritanceMutants": "oct6_mutant_test.go:73: mutant survived: \"\""
+    },
+    "raw_evidence": {
+      "TestParameterPropertyMutants": "parameter_properties_test.go:80: mutant not caught by Node: \"\"",
+      "TestTheOracleCatchesOneByte": "oracle_test.go:815: got \"\", want the mutant caught as \"stdout differs\"",
+      "TestOmittedReaderZeroMutantIsCaught": "omitted_arguments_test.go:136: want Node to catch method zero padding, got \"\"",
+      "TestOmittedArgumentZeroMutantIsCaught": "omitted_arguments_test.go:63: want Node to catch zero padding, got \"\"",
+      "TestOct6InheritanceMutants": "oct6_mutant_test.go:73: mutant survived: \"\""
+    },
+    "commands": [
+      {
+        "id": "W1",
+        "part": "rows",
+        "command": "ADAMIC_MUTANT=W1 ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u066/cache/W1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestOct6InheritanceMutants|TestOct6ReleaseMutant|TestOmittedArgumentZeroMutantIsCaught|TestOmittedOriginalProbePolicy|TestOmittedReaderZeroMutantIsCaught|TestTheOracleCatchesOneByte|TestOneFileHoldsNodesOrder|TestClosedStdoutEndsAsOnNode|TestFileWritesLandInNodesOrder|TestAPromptComesBeforeTheRead|TestASignalLeavesWhatWasPrinted|TestOverloadContractRulings|TestParameterPropertyMutants|TestParameterPropertyOwnershipMutant)$",
+        "seconds": 6.413082529999883,
+        "returncode": 1
+      }
+    ]
+  },
+  {
+    "id": "W2",
+    "kind": "witness-check",
+    "results": {
+      "TestOct6InheritanceMutants": "pass",
+      "TestOct6ReleaseMutant": "fail",
+      "TestOmittedArgumentZeroMutantIsCaught": "pass",
+      "TestOmittedOriginalProbePolicy": "pass",
+      "TestOmittedReaderZeroMutantIsCaught": "pass",
+      "TestNativeAgreesWithNode": "unknown",
+      "TestTheOracleCatchesOneByte": "pass",
+      "TestOneFileHoldsNodesOrder": "pass",
+      "TestClosedStdoutEndsAsOnNode": "pass",
+      "TestFileWritesLandInNodesOrder": "pass",
+      "TestAPromptComesBeforeTheRead": "pass",
+      "TestASignalLeavesWhatWasPrinted": "pass",
+      "TestOverloadContractRulings": "pass",
+      "TestParameterPropertyMutants": "pass",
+      "TestParameterPropertyOwnershipMutant": "pass"
+    },
+    "subcases": {
+      "TestParameterPropertyMutants/late_store": "pass",
+      "TestParameterPropertyMutants/missing_store": "pass",
+      "TestOct6InheritanceMutants/forget_override_inherited_past_second_level": "pass",
+      "TestClosedStdoutEndsAsOnNode/internal/oracle/testdata/large_output.a": "pass",
+      "TestOct6InheritanceMutants/lose_fourth_level_ancestry": "pass",
+      "TestClosedStdoutEndsAsOnNode/internal/oracle/testdata/interleaved.a": "pass",
+      "TestOneFileHoldsNodesOrder/internal/oracle/testdata/interleaved.a": "pass",
+      "TestOneFileHoldsNodesOrder/internal/oracle/testdata/status_of_stdout.a": "pass",
+      "TestClosedStdoutEndsAsOnNode/internal/oracle/testdata/output_then_panic.a": "pass",
+      "TestASignalLeavesWhatWasPrinted/terminated": "pass",
+      "TestASignalLeavesWhatWasPrinted/hangup_inherited_ignored": "pass",
+      "TestASignalLeavesWhatWasPrinted/interrupt_inherited_ignored": "pass",
+      "TestASignalLeavesWhatWasPrinted/terminated_inherited_ignored": "pass",
+      "TestOverloadContractRulings/token": "pass",
+      "TestASignalLeavesWhatWasPrinted/hangup": "pass",
+      "TestOverloadContractRulings/serializer": "pass",
+      "TestOverloadContractRulings/trampoline": "pass",
+      "TestASignalLeavesWhatWasPrinted/interrupt": "pass",
+      "TestFileWritesLandInNodesOrder/internal/oracle/testdata/write_stdout_order.a": "pass",
+      "TestFileWritesLandInNodesOrder/internal/oracle/testdata/write_stderr_order.a": "pass"
+    },
+    "failures": [
+      "TestOct6ReleaseMutant"
+    ],
+    "production_kills": [],
+    "evidence": {
+      "TestOct6ReleaseMutant": "oct6_mutant_test.go:116: leak mutant survived:"
+    },
+    "raw_evidence": {
+      "TestOct6ReleaseMutant": "oct6_mutant_test.go:116: leak mutant survived:"
+    },
+    "commands": [
+      {
+        "id": "W2",
+        "part": "rows",
+        "command": "ADAMIC_MUTANT=W2 ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u066/cache/W2 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestOct6InheritanceMutants|TestOct6ReleaseMutant|TestOmittedArgumentZeroMutantIsCaught|TestOmittedOriginalProbePolicy|TestOmittedReaderZeroMutantIsCaught|TestTheOracleCatchesOneByte|TestOneFileHoldsNodesOrder|TestClosedStdoutEndsAsOnNode|TestFileWritesLandInNodesOrder|TestAPromptComesBeforeTheRead|TestASignalLeavesWhatWasPrinted|TestOverloadContractRulings|TestParameterPropertyMutants|TestParameterPropertyOwnershipMutant)$",
+        "seconds": 5.703214465999736,
+        "returncode": 1
+      }
+    ]
+  },
+  {
+    "id": "W3",
+    "kind": "witness-check",
+    "results": {
+      "TestOct6InheritanceMutants": "pass",
+      "TestOct6ReleaseMutant": "pass",
+      "TestOmittedArgumentZeroMutantIsCaught": "pass",
+      "TestOmittedOriginalProbePolicy": "pass",
+      "TestOmittedReaderZeroMutantIsCaught": "pass",
+      "TestNativeAgreesWithNode": "unknown",
+      "TestTheOracleCatchesOneByte": "pass",
+      "TestOneFileHoldsNodesOrder": "pass",
+      "TestClosedStdoutEndsAsOnNode": "pass",
+      "TestFileWritesLandInNodesOrder": "pass",
+      "TestAPromptComesBeforeTheRead": "pass",
+      "TestASignalLeavesWhatWasPrinted": "pass",
+      "TestOverloadContractRulings": "pass",
+      "TestParameterPropertyMutants": "pass",
+      "TestParameterPropertyOwnershipMutant": "fail"
+    },
+    "subcases": {
+      "TestParameterPropertyMutants/missing_store": "pass",
+      "TestParameterPropertyMutants/late_store": "pass",
+      "TestOct6InheritanceMutants/forget_override_inherited_past_second_level": "pass",
+      "TestClosedStdoutEndsAsOnNode/internal/oracle/testdata/large_output.a": "pass",
+      "TestClosedStdoutEndsAsOnNode/internal/oracle/testdata/interleaved.a": "pass",
+      "TestOct6InheritanceMutants/lose_fourth_level_ancestry": "pass",
+      "TestOverloadContractRulings/token": "pass",
+      "TestClosedStdoutEndsAsOnNode/internal/oracle/testdata/output_then_panic.a": "pass",
+      "TestOneFileHoldsNodesOrder/internal/oracle/testdata/interleaved.a": "pass",
+      "TestOneFileHoldsNodesOrder/internal/oracle/testdata/status_of_stdout.a": "pass",
+      "TestOverloadContractRulings/serializer": "pass",
+      "TestOverloadContractRulings/trampoline": "pass",
+      "TestFileWritesLandInNodesOrder/internal/oracle/testdata/write_stdout_order.a": "pass",
+      "TestASignalLeavesWhatWasPrinted/terminated": "pass",
+      "TestASignalLeavesWhatWasPrinted/interrupt_inherited_ignored": "pass",
+      "TestASignalLeavesWhatWasPrinted/hangup_inherited_ignored": "pass",
+      "TestASignalLeavesWhatWasPrinted/terminated_inherited_ignored": "pass",
+      "TestASignalLeavesWhatWasPrinted/hangup": "pass",
+      "TestFileWritesLandInNodesOrder/internal/oracle/testdata/write_stderr_order.a": "pass",
+      "TestASignalLeavesWhatWasPrinted/interrupt": "pass"
+    },
+    "failures": [
+      "TestParameterPropertyOwnershipMutant"
+    ],
+    "production_kills": [],
+    "evidence": {
+      "TestParameterPropertyOwnershipMutant": "parameter_properties_test.go:113: ownership mutant not caught by ASan: exit 0, stderr"
+    },
+    "raw_evidence": {
+      "TestParameterPropertyOwnershipMutant": "parameter_properties_test.go:114: ownership mutant not caught by ASan: exit 0, stderr"
+    },
+    "commands": [
+      {
+        "id": "W3",
+        "part": "rows",
+        "command": "ADAMIC_MUTANT=W3 ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u066/cache/W3 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestOct6InheritanceMutants|TestOct6ReleaseMutant|TestOmittedArgumentZeroMutantIsCaught|TestOmittedOriginalProbePolicy|TestOmittedReaderZeroMutantIsCaught|TestTheOracleCatchesOneByte|TestOneFileHoldsNodesOrder|TestClosedStdoutEndsAsOnNode|TestFileWritesLandInNodesOrder|TestAPromptComesBeforeTheRead|TestASignalLeavesWhatWasPrinted|TestOverloadContractRulings|TestParameterPropertyMutants|TestParameterPropertyOwnershipMutant)$",
+        "seconds": 6.11695028899976,
+        "returncode": 1
+      }
+    ]
+  },
+  {
+    "id": "P1",
+    "kind": "probe",
+    "results": {
+      "TestOct6InheritanceMutants": "fail",
+      "TestOct6ReleaseMutant": "fail",
+      "TestOmittedArgumentZeroMutantIsCaught": "fail",
+      "TestOmittedOriginalProbePolicy": "fail",
+      "TestOmittedReaderZeroMutantIsCaught": "fail",
+      "TestNativeAgreesWithNode": "fail",
+      "TestTheOracleCatchesOneByte": "fail",
+      "TestOneFileHoldsNodesOrder": "fail",
+      "TestClosedStdoutEndsAsOnNode": "fail",
+      "TestFileWritesLandInNodesOrder": "fail",
+      "TestAPromptComesBeforeTheRead": "fail",
+      "TestASignalLeavesWhatWasPrinted": "fail",
+      "TestOverloadContractRulings": "fail",
+      "TestParameterPropertyMutants": "fail",
+      "TestParameterPropertyOwnershipMutant": "fail"
+    },
+    "subcases": {
+      "TestParameterPropertyMutants/missing_store": "fail",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/omitted_reader.a": "fail",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/write_stdout_order.a": "fail"
+    },
+    "failures": [
+      "TestOct6InheritanceMutants",
+      "TestOct6ReleaseMutant",
+      "TestOmittedArgumentZeroMutantIsCaught",
+      "TestOmittedOriginalProbePolicy",
+      "TestOmittedReaderZeroMutantIsCaught",
+      "TestNativeAgreesWithNode",
+      "TestTheOracleCatchesOneByte",
+      "TestOneFileHoldsNodesOrder",
+      "TestClosedStdoutEndsAsOnNode",
+      "TestFileWritesLandInNodesOrder",
+      "TestAPromptComesBeforeTheRead",
+      "TestASignalLeavesWhatWasPrinted",
+      "TestOverloadContractRulings",
+      "TestParameterPropertyMutants",
+      "TestParameterPropertyOwnershipMutant"
+    ],
+    "production_kills": [],
+    "evidence": {
+      "TestOverloadContractRulings": "overload_contract_test.go:34: want refusal \"overload 1 of createToken result\", got <nil>"
+    },
+    "raw_evidence": {
+      "TestOverloadContractRulings": "overload_contract_test.go:34: want refusal \"overload 1 of createToken result\", got <nil>"
+    },
+    "commands": [
+      {
+        "id": "P1",
+        "part": "rows",
+        "command": "ADAMIC_MUTANT=P1 ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u066/cache/P1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestOct6InheritanceMutants|TestOct6ReleaseMutant|TestOmittedArgumentZeroMutantIsCaught|TestOmittedOriginalProbePolicy|TestOmittedReaderZeroMutantIsCaught|TestTheOracleCatchesOneByte|TestOneFileHoldsNodesOrder|TestClosedStdoutEndsAsOnNode|TestFileWritesLandInNodesOrder|TestAPromptComesBeforeTheRead|TestASignalLeavesWhatWasPrinted|TestOverloadContractRulings|TestParameterPropertyMutants|TestParameterPropertyOwnershipMutant)$",
+        "seconds": 2.099856943999839,
+        "returncode": 1
+      },
+      {
+        "id": "P1",
+        "part": "native",
+        "command": "ADAMIC_MUTANT=P1 ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u066/cache/P1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^(interleaved\\.a|status_of_stdout\\.a|large_output\\.a|output_then_panic\\.a|write_stdout_order\\.a|write_stderr_order\\.a|prompt_then_read\\.a|killed_after_output\\.a|omitted_scanner\\.a|omitted_reader\\.a|class_oct6_deep\\.a|class_oct6_release\\.a|parameter_properties\\.a|parameter_properties_ownership\\.a)$",
+        "seconds": 2.2895109460005187,
+        "returncode": 1
+      }
+    ]
+  },
+  {
+    "id": "P2",
+    "kind": "probe",
+    "results": {
+      "TestOct6InheritanceMutants": "pass",
+      "TestOct6ReleaseMutant": "fail",
+      "TestOmittedArgumentZeroMutantIsCaught": "pass",
+      "TestOmittedOriginalProbePolicy": "fail",
+      "TestOmittedReaderZeroMutantIsCaught": "pass",
+      "TestNativeAgreesWithNode": "fail",
+      "TestTheOracleCatchesOneByte": "pass",
+      "TestOneFileHoldsNodesOrder": "fail",
+      "TestClosedStdoutEndsAsOnNode": "fail",
+      "TestFileWritesLandInNodesOrder": "fail",
+      "TestAPromptComesBeforeTheRead": "fail",
+      "TestASignalLeavesWhatWasPrinted": "fail",
+      "TestOverloadContractRulings": "pass",
+      "TestParameterPropertyMutants": "pass",
+      "TestParameterPropertyOwnershipMutant": "pass"
+    },
+    "subcases": {
+      "TestParameterPropertyMutants/missing_store": "pass",
+      "TestParameterPropertyMutants/late_store": "pass",
+      "TestOverloadContractRulings/token": "pass",
+      "TestClosedStdoutEndsAsOnNode/internal/oracle/testdata/large_output.a": "fail",
+      "TestOct6InheritanceMutants/forget_override_inherited_past_second_level": "pass",
+      "TestOverloadContractRulings/serializer": "pass",
+      "TestOverloadContractRulings/trampoline": "pass",
+      "TestOct6InheritanceMutants/lose_fourth_level_ancestry": "pass",
+      "TestClosedStdoutEndsAsOnNode/internal/oracle/testdata/interleaved.a": "fail",
+      "TestClosedStdoutEndsAsOnNode/internal/oracle/testdata/output_then_panic.a": "pass",
+      "TestASignalLeavesWhatWasPrinted/terminated": "fail",
+      "TestASignalLeavesWhatWasPrinted/terminated_inherited_ignored": "fail",
+      "TestASignalLeavesWhatWasPrinted/hangup_inherited_ignored": "fail",
+      "TestASignalLeavesWhatWasPrinted/interrupt_inherited_ignored": "fail",
+      "TestFileWritesLandInNodesOrder/internal/oracle/testdata/write_stdout_order.a": "fail",
+      "TestFileWritesLandInNodesOrder/internal/oracle/testdata/write_stderr_order.a": "fail",
+      "TestASignalLeavesWhatWasPrinted/hangup": "fail",
+      "TestOneFileHoldsNodesOrder/internal/oracle/testdata/interleaved.a": "fail",
+      "TestASignalLeavesWhatWasPrinted/interrupt": "fail",
+      "TestOneFileHoldsNodesOrder/internal/oracle/testdata/status_of_stdout.a": "fail",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/write_stderr_order.a": "fail",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/omitted_reader.a": "fail",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/output_then_panic.a": "fail",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/parameter_properties_ownership.a": "fail",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_deep.a": "fail",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/omitted_scanner.a": "fail",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/parameter_properties.a": "fail",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/interleaved.a": "fail",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_release.a": "fail",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/large_output.a": "fail",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/write_stdout_order.a": "fail",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/prompt_then_read.a": "fail"
+    },
+    "failures": [
+      "TestOct6ReleaseMutant",
+      "TestOmittedOriginalProbePolicy",
+      "TestNativeAgreesWithNode",
+      "TestOneFileHoldsNodesOrder",
+      "TestClosedStdoutEndsAsOnNode",
+      "TestFileWritesLandInNodesOrder",
+      "TestAPromptComesBeforeTheRead",
+      "TestASignalLeavesWhatWasPrinted"
+    ],
+    "production_kills": [],
+    "evidence": {
+      "TestClosedStdoutEndsAsOnNode": "output_test.go:164: native: exit 0, stderr \"\"; Node: exit 70, stderr \"stderr, unbuffered\\n\"",
+      "TestOmittedOriginalProbePolicy": "omitted_arguments_test.go:88: native: stdout differs",
+      "TestOct6ReleaseMutant": "oct6_mutant_test.go:104: only the leak check should catch this: stdout differs, stderr \"\"",
+      "TestASignalLeavesWhatWasPrinted": "output_test.go:359: program: killed by terminated, stderr \"\", stdout \"\"; Node: killed by terminated, stderr \"\", stdout \"started, about to work for a long time\\n\"",
+      "TestFileWritesLandInNodesOrder": "output_test.go:222: program: exit 0, \"second\\n\"; Node: exit 0, \"first\\nsecond\\nthird\\n\"",
+      "TestOneFileHoldsNodesOrder": "output_test.go:111: native: exit 0, \"\"; Node: exit 0, \"out 0\\nerr 0\\nout 1\\nout 2\\nout 3\\nerr 3\\nout 4\\nout 5\\nout 6\\nerr 6\\nout 7\\nout 8\\nout 9\\nerr 9\\nout 10\\nout 11\\nout 12\\nerr 12\\nout 13\\nout 14\\nout 15\\nerr 15\\nout 16\\nout 17\\nout 18\\nerr 18\\nout 19\\nout 20\\nout 21\\nerr 21\\nout 22\\nout 23\\nout 24\\nerr 24\\nout 25\\nout 26\\nout 27\\nerr 27\\nout 28\\nout 29\\nout 30\\nerr 30\\nout 31\\nout 32\\nout 33\\nerr 33\\nout 34\\nout 35\\nout 36\\nerr 36\\nout 37\\nout 38\\nout 39\\nerr 39\\nout 40\\nout 41\\nout 42\\nerr 42\\nout 43\\nout 44\\nout 45\\nerr 45\\nout 46\\nout 47\\nout 48\\nerr 48\\nout 49\\nout 50\\nout 51\\nerr 51\\nout 52\\nout 53\\nout 54\\nerr 54\\nout 55\\nout 56\\nout 57\\nerr 57\\nout 58\\nout 59\\nout 60\\nerr 60\\nout 61\\nout 62\\nout 63\\nerr 63\\nout 64\\nout 65\\nout 66\\nerr 66\\nout 67\\nout 68\\nout 69\\nerr 69\\nout 70\\nout 71\\nout 72\\nerr 72\\nout 73\\nout 74\\nout 75\\nerr 75\\nout 76\\nout 77\\nout 78\\nerr 78\\nout 79\\nout 80\\nout 81\\nerr 81\\nout 82\\nout 83\\nout 84\\nerr 84\\nout 85\\nout 86\\nout 87\\nerr 87\\nout 88\\nout 89\\nout 90\\nerr 90\\nou",
+      "TestAPromptComesBeforeTheRead": "output_test.go:286: program: prompted before the read false, said \"\"; Node said \"ready\\ngot yes\\n\"",
+      "TestNativeAgreesWithNode": "oracle_test.go:774: stdout differs"
+    },
+    "raw_evidence": {
+      "TestClosedStdoutEndsAsOnNode": "output_test.go:164: native: exit 0, stderr \"\"; Node: exit 70, stderr \"stderr, unbuffered\\n\"",
+      "TestOmittedOriginalProbePolicy": "omitted_arguments_test.go:88: native: stdout differs",
+      "TestOct6ReleaseMutant": "oct6_mutant_test.go:104: only the leak check should catch this: stdout differs, stderr \"\"",
+      "TestASignalLeavesWhatWasPrinted": "output_test.go:359: program: killed by terminated, stderr \"\", stdout \"\"; Node: killed by terminated, stderr \"\", stdout \"started, about to work for a long time\\n\"",
+      "TestFileWritesLandInNodesOrder": "output_test.go:222: program: exit 0, \"second\\n\"; Node: exit 0, \"first\\nsecond\\nthird\\n\"",
+      "TestOneFileHoldsNodesOrder": "output_test.go:111: native: exit 0, \"\"; Node: exit 0, \"out 0\\nerr 0\\nout 1\\nout 2\\nout 3\\nerr 3\\nout 4\\nout 5\\nout 6\\nerr 6\\nout 7\\nout 8\\nout 9\\nerr 9\\nout 10\\nout 11\\nout 12\\nerr 12\\nout 13\\nout 14\\nout 15\\nerr 15\\nout 16\\nout 17\\nout 18\\nerr 18\\nout 19\\nout 20\\nout 21\\nerr 21\\nout 22\\nout 23\\nout 24\\nerr 24\\nout 25\\nout 26\\nout 27\\nerr 27\\nout 28\\nout 29\\nout 30\\nerr 30\\nout 31\\nout 32\\nout 33\\nerr 33\\nout 34\\nout 35\\nout 36\\nerr 36\\nout 37\\nout 38\\nout 39\\nerr 39\\nout 40\\nout 41\\nout 42\\nerr 42\\nout 43\\nout 44\\nout 45\\nerr 45\\nout 46\\nout 47\\nout 48\\nerr 48\\nout 49\\nout 50\\nout 51\\nerr 51\\nout 52\\nout 53\\nout 54\\nerr 54\\nout 55\\nout 56\\nout 57\\nerr 57\\nout 58\\nout 59\\nout 60\\nerr 60\\nout 61\\nout 62\\nout 63\\nerr 63\\nout 64\\nout 65\\nout 66\\nerr 66\\nout 67\\nout 68\\nout 69\\nerr 69\\nout 70\\nout 71\\nout 72\\nerr 72\\nout 73\\nout 74\\nout 75\\nerr 75\\nout 76\\nout 77\\nout 78\\nerr 78\\nout 79\\nout 80\\nout 81\\nerr 81\\nout 82\\nout 83\\nout 84\\nerr 84\\nout 85\\nout 86\\nout 87\\nerr 87\\nout 88\\nout 89\\nout 90\\nerr 90\\nou",
+      "TestAPromptComesBeforeTheRead": "output_test.go:286: program: prompted before the read false, said \"\"; Node said \"ready\\ngot yes\\n\"",
+      "TestNativeAgreesWithNode": "oracle_test.go:780: stdout differs"
+    },
+    "commands": [
+      {
+        "id": "P2",
+        "part": "rows",
+        "command": "ADAMIC_MUTANT=P2 ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u066/cache/P2 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestOct6InheritanceMutants|TestOct6ReleaseMutant|TestOmittedArgumentZeroMutantIsCaught|TestOmittedOriginalProbePolicy|TestOmittedReaderZeroMutantIsCaught|TestTheOracleCatchesOneByte|TestOneFileHoldsNodesOrder|TestClosedStdoutEndsAsOnNode|TestFileWritesLandInNodesOrder|TestAPromptComesBeforeTheRead|TestASignalLeavesWhatWasPrinted|TestOverloadContractRulings|TestParameterPropertyMutants|TestParameterPropertyOwnershipMutant)$",
+        "seconds": 13.3219629109999,
+        "returncode": 1
+      },
+      {
+        "id": "P2",
+        "part": "native",
+        "command": "ADAMIC_MUTANT=P2 ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u066/cache/P2 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^(interleaved\\.a|status_of_stdout\\.a|large_output\\.a|output_then_panic\\.a|write_stdout_order\\.a|write_stderr_order\\.a|prompt_then_read\\.a|killed_after_output\\.a|omitted_scanner\\.a|omitted_reader\\.a|class_oct6_deep\\.a|class_oct6_release\\.a|parameter_properties\\.a|parameter_properties_ownership\\.a)$",
+        "seconds": 3.9514240759999666,
+        "returncode": 1
+      }
+    ]
+  },
+  {
+    "id": "P3",
+    "kind": "probe",
+    "results": {
+      "TestOct6InheritanceMutants": "pass",
+      "TestOct6ReleaseMutant": "pass",
+      "TestOmittedArgumentZeroMutantIsCaught": "pass",
+      "TestOmittedOriginalProbePolicy": "pass",
+      "TestOmittedReaderZeroMutantIsCaught": "pass",
+      "TestNativeAgreesWithNode": "fail",
+      "TestTheOracleCatchesOneByte": "pass",
+      "TestOneFileHoldsNodesOrder": "fail",
+      "TestClosedStdoutEndsAsOnNode": "pass",
+      "TestFileWritesLandInNodesOrder": "fail",
+      "TestAPromptComesBeforeTheRead": "fail",
+      "TestASignalLeavesWhatWasPrinted": "pass",
+      "TestOverloadContractRulings": "pass",
+      "TestParameterPropertyMutants": "pass",
+      "TestParameterPropertyOwnershipMutant": "pass"
+    },
+    "subcases": {
+      "TestParameterPropertyMutants/missing_store": "pass",
+      "TestParameterPropertyMutants/late_store": "pass",
+      "TestOct6InheritanceMutants/forget_override_inherited_past_second_level": "pass",
+      "TestOverloadContractRulings/token": "pass",
+      "TestOct6InheritanceMutants/lose_fourth_level_ancestry": "pass",
+      "TestOverloadContractRulings/trampoline": "pass",
+      "TestOverloadContractRulings/serializer": "pass",
+      "TestASignalLeavesWhatWasPrinted/terminated": "pass",
+      "TestASignalLeavesWhatWasPrinted/terminated_inherited_ignored": "pass",
+      "TestASignalLeavesWhatWasPrinted/hangup_inherited_ignored": "pass",
+      "TestASignalLeavesWhatWasPrinted/interrupt_inherited_ignored": "pass",
+      "TestFileWritesLandInNodesOrder/internal/oracle/testdata/write_stderr_order.a": "fail",
+      "TestFileWritesLandInNodesOrder/internal/oracle/testdata/write_stdout_order.a": "fail",
+      "TestASignalLeavesWhatWasPrinted/hangup": "pass",
+      "TestOneFileHoldsNodesOrder/internal/oracle/testdata/interleaved.a": "pass",
+      "TestOneFileHoldsNodesOrder/internal/oracle/testdata/status_of_stdout.a": "fail",
+      "TestASignalLeavesWhatWasPrinted/interrupt": "pass",
+      "TestClosedStdoutEndsAsOnNode/internal/oracle/testdata/interleaved.a": "pass",
+      "TestClosedStdoutEndsAsOnNode/internal/oracle/testdata/large_output.a": "pass",
+      "TestClosedStdoutEndsAsOnNode/internal/oracle/testdata/output_then_panic.a": "pass",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/write_stdout_order.a": "fail",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/write_stderr_order.a": "pass",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/output_then_panic.a": "pass",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_deep.a": "pass",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/large_output.a": "pass",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/parameter_properties_ownership.a": "pass",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/omitted_reader.a": "pass",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/omitted_scanner.a": "pass",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/parameter_properties.a": "pass",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/prompt_then_read.a": "pass",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/interleaved.a": "pass",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_release.a": "pass"
+    },
+    "failures": [
+      "TestNativeAgreesWithNode",
+      "TestOneFileHoldsNodesOrder",
+      "TestFileWritesLandInNodesOrder",
+      "TestAPromptComesBeforeTheRead"
+    ],
+    "production_kills": [],
+    "evidence": {
+      "TestFileWritesLandInNodesOrder": "output_test.go:222: program: exit 0, \"second\\nfirst\\nthird\\n\"; Node: exit 0, \"first\\nsecond\\nthird\\n\"",
+      "TestOneFileHoldsNodesOrder": "output_test.go:111: native: exit 0, \"written before the status\\nfile 0\\nand before a listing\\nlisted true\\nfile 0\\n\"; Node: exit 0, \"written before the status\\nfile 26\\nand before a listing\\nlisted true\\nfile 67\\n\"; first difference at 31",
+      "TestAPromptComesBeforeTheRead": "output_test.go:286: program: prompted before the read false, said \"ready\\ngot yes\\n\"; Node said \"ready\\ngot yes\\n\"",
+      "TestNativeAgreesWithNode": "oracle_test.go:774: stdout differs"
+    },
+    "raw_evidence": {
+      "TestFileWritesLandInNodesOrder": "output_test.go:222: program: exit 0, \"second\\nfirst\\nthird\\n\"; Node: exit 0, \"first\\nsecond\\nthird\\n\"",
+      "TestOneFileHoldsNodesOrder": "output_test.go:111: native: exit 0, \"written before the status\\nfile 0\\nand before a listing\\nlisted true\\nfile 0\\n\"; Node: exit 0, \"written before the status\\nfile 26\\nand before a listing\\nlisted true\\nfile 67\\n\"; first difference at 31",
+      "TestAPromptComesBeforeTheRead": "output_test.go:286: program: prompted before the read false, said \"ready\\ngot yes\\n\"; Node said \"ready\\ngot yes\\n\"",
+      "TestNativeAgreesWithNode": "oracle_test.go:780: stdout differs"
+    },
+    "commands": [
+      {
+        "id": "P3",
+        "part": "rows",
+        "command": "ADAMIC_MUTANT=P3 ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u066/cache/P3 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestOct6InheritanceMutants|TestOct6ReleaseMutant|TestOmittedArgumentZeroMutantIsCaught|TestOmittedOriginalProbePolicy|TestOmittedReaderZeroMutantIsCaught|TestTheOracleCatchesOneByte|TestOneFileHoldsNodesOrder|TestClosedStdoutEndsAsOnNode|TestFileWritesLandInNodesOrder|TestAPromptComesBeforeTheRead|TestASignalLeavesWhatWasPrinted|TestOverloadContractRulings|TestParameterPropertyMutants|TestParameterPropertyOwnershipMutant)$",
+        "seconds": 13.030245750999711,
+        "returncode": 1
+      },
+      {
+        "id": "P3",
+        "part": "native",
+        "command": "ADAMIC_MUTANT=P3 ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u066/cache/P3 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^(interleaved\\.a|status_of_stdout\\.a|large_output\\.a|output_then_panic\\.a|write_stdout_order\\.a|write_stderr_order\\.a|prompt_then_read\\.a|killed_after_output\\.a|omitted_scanner\\.a|omitted_reader\\.a|class_oct6_deep\\.a|class_oct6_release\\.a|parameter_properties\\.a|parameter_properties_ownership\\.a)$",
+        "seconds": 4.305027600000358,
+        "returncode": 1
+      }
+    ]
+  },
+  {
+    "id": "P4",
+    "kind": "probe",
+    "results": {
+      "TestOct6InheritanceMutants": "pass",
+      "TestOct6ReleaseMutant": "pass",
+      "TestOmittedArgumentZeroMutantIsCaught": "pass",
+      "TestOmittedOriginalProbePolicy": "pass",
+      "TestOmittedReaderZeroMutantIsCaught": "pass",
+      "TestNativeAgreesWithNode": "pass",
+      "TestTheOracleCatchesOneByte": "pass",
+      "TestOneFileHoldsNodesOrder": "pass",
+      "TestClosedStdoutEndsAsOnNode": "fail",
+      "TestFileWritesLandInNodesOrder": "pass",
+      "TestAPromptComesBeforeTheRead": "pass",
+      "TestASignalLeavesWhatWasPrinted": "fail",
+      "TestOverloadContractRulings": "pass",
+      "TestParameterPropertyMutants": "pass",
+      "TestParameterPropertyOwnershipMutant": "pass"
+    },
+    "subcases": {
+      "TestParameterPropertyMutants/late_store": "pass",
+      "TestParameterPropertyMutants/missing_store": "pass",
+      "TestFileWritesLandInNodesOrder/internal/oracle/testdata/write_stdout_order.a": "pass",
+      "TestClosedStdoutEndsAsOnNode/internal/oracle/testdata/large_output.a": "fail",
+      "TestOct6InheritanceMutants/forget_override_inherited_past_second_level": "pass",
+      "TestClosedStdoutEndsAsOnNode/internal/oracle/testdata/interleaved.a": "fail",
+      "TestOct6InheritanceMutants/lose_fourth_level_ancestry": "pass",
+      "TestClosedStdoutEndsAsOnNode/internal/oracle/testdata/output_then_panic.a": "fail",
+      "TestFileWritesLandInNodesOrder/internal/oracle/testdata/write_stderr_order.a": "pass",
+      "TestOneFileHoldsNodesOrder/internal/oracle/testdata/interleaved.a": "pass",
+      "TestOneFileHoldsNodesOrder/internal/oracle/testdata/status_of_stdout.a": "pass",
+      "TestASignalLeavesWhatWasPrinted/terminated": "fail",
+      "TestASignalLeavesWhatWasPrinted/hangup": "fail",
+      "TestOverloadContractRulings/token": "pass",
+      "TestOverloadContractRulings/serializer": "pass",
+      "TestASignalLeavesWhatWasPrinted/interrupt": "fail",
+      "TestOverloadContractRulings/trampoline": "pass",
+      "TestASignalLeavesWhatWasPrinted/terminated_inherited_ignored": "fail",
+      "TestASignalLeavesWhatWasPrinted/hangup_inherited_ignored": "fail",
+      "TestASignalLeavesWhatWasPrinted/interrupt_inherited_ignored": "fail",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/write_stdout_order.a": "pass",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/output_then_panic.a": "pass",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/write_stderr_order.a": "pass",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_deep.a": "pass",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/large_output.a": "pass",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/interleaved.a": "pass",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/omitted_reader.a": "pass",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_release.a": "pass",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/parameter_properties_ownership.a": "pass",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/prompt_then_read.a": "pass",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/omitted_scanner.a": "pass",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/parameter_properties.a": "pass"
+    },
+    "failures": [
+      "TestClosedStdoutEndsAsOnNode",
+      "TestASignalLeavesWhatWasPrinted"
+    ],
+    "production_kills": [],
+    "evidence": {
+      "TestClosedStdoutEndsAsOnNode": "output_test.go:164: native: exit -1, stderr \"\"; Node: exit 70, stderr \"stderr, unbuffered\\n\"",
+      "TestASignalLeavesWhatWasPrinted": "output_test.go:359: program: killed by terminated, stderr \"\", stdout \"\"; Node: killed by terminated, stderr \"\", stdout \"started, about to work for a long time\\n\""
+    },
+    "raw_evidence": {
+      "TestClosedStdoutEndsAsOnNode": "output_test.go:164: native: exit -1, stderr \"\"; Node: exit 70, stderr \"stderr, unbuffered\\n\"",
+      "TestASignalLeavesWhatWasPrinted": "output_test.go:359: program: killed by terminated, stderr \"\", stdout \"\"; Node: killed by terminated, stderr \"\", stdout \"started, about to work for a long time\\n\""
+    },
+    "commands": [
+      {
+        "id": "P4",
+        "part": "rows",
+        "command": "ADAMIC_MUTANT=P4 ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u066/cache/P4 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestOct6InheritanceMutants|TestOct6ReleaseMutant|TestOmittedArgumentZeroMutantIsCaught|TestOmittedOriginalProbePolicy|TestOmittedReaderZeroMutantIsCaught|TestTheOracleCatchesOneByte|TestOneFileHoldsNodesOrder|TestClosedStdoutEndsAsOnNode|TestFileWritesLandInNodesOrder|TestAPromptComesBeforeTheRead|TestASignalLeavesWhatWasPrinted|TestOverloadContractRulings|TestParameterPropertyMutants|TestParameterPropertyOwnershipMutant)$",
+        "seconds": 64.61020796499997,
+        "returncode": 1
+      },
+      {
+        "id": "P4",
+        "part": "native",
+        "command": "ADAMIC_MUTANT=P4 ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u066/cache/P4 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^(interleaved\\.a|status_of_stdout\\.a|large_output\\.a|output_then_panic\\.a|write_stdout_order\\.a|write_stderr_order\\.a|prompt_then_read\\.a|killed_after_output\\.a|omitted_scanner\\.a|omitted_reader\\.a|class_oct6_deep\\.a|class_oct6_release\\.a|parameter_properties\\.a|parameter_properties_ownership\\.a)$",
+        "seconds": 4.6773118129995055,
+        "returncode": 0
+      }
+    ]
+  }
+]

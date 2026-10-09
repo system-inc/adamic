@@ -1,0 +1,11 @@
+--- a/internal/oracle/parameter_properties_test.go
++++ b/internal/oracle/parameter_properties_test.go
+@@ -105,7 +105,7 @@
+ 	}
+ 	code = strings.ReplaceAll(code, retain, strings.TrimSuffix(strings.TrimPrefix(retain, "adamic_retain("), ")"))
+ 	binary := filepath.Join(t.TempDir(), "mutant")
+-	if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
++	if err := native.Build(code, binary, native.Options{Sanitize: false}); err != nil {
+ 		t.Fatal(err)
+ 	}
+ 	result := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=0", "UBSAN_OPTIONS=halt_on_error=1"}, binary)

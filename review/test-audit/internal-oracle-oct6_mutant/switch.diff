@@ -1,0 +1,129 @@
+diff --git a/internal/lower/lower.go b/internal/lower/lower.go
+index daba343f..cd412c8a 100644
+--- a/internal/lower/lower.go
++++ b/internal/lower/lower.go
+@@ -13,13 +13,17 @@ import (
+ 	"github.com/microsoft/TypeScript/tsc/shim/checker"
+ 	"github.com/system-inc/adamic/internal/ir"
+ 	"github.com/system-inc/adamic/internal/load"
++	"os"
+ 	"path/filepath"
+ )
+ 
+ // Lower lowers a checked program from one entry, in ESM evaluation order.
+ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
++	if os.Getenv("ADAMIC_MUTANT") == "P1" {
++		return nil, nil
++	}
+ 	files := program.Files()
+-	if len(files) != 1 {
++	if (len(files) != 1) != (os.Getenv("ADAMIC_MUTANT") == "M4") {
+ 		return nil, fmt.Errorf("lower: stage 0 compiles a program from one entry file, got %d", len(files))
+ 	}
+ 	entry := files[0]
+diff --git a/internal/native/runtime/adamic.c b/internal/native/runtime/adamic.c
+index f772f907..b6ce588f 100644
+--- a/internal/native/runtime/adamic.c
++++ b/internal/native/runtime/adamic.c
+@@ -15,6 +15,8 @@
+ #include <string.h>
+ #include <unistd.h>
+ 
++static int u066_selected(const char *id) { const char *value = getenv("ADAMIC_MUTANT"); return value != NULL && strcmp(value, id) == 0; }
++
+ // write_all writes every byte, through partial writes and interrupted calls. It reports failure
+ // rather than retrying forever: a closed stdout is not something a program can wait out.
+ static int write_all(int descriptor, const char *bytes, size_t length) {
+@@ -80,7 +82,7 @@ static void flush(void) {
+ static void finish(void) {
+ 	flush();
+ 	if (broken[adamic_stdout] || broken[adamic_stderr]) {
+-		_exit(70);
++		_exit(u066_selected("M1") ? 71 : 70);
+ 	}
+ }
+ 
+@@ -101,6 +103,7 @@ static void buffer(const char *bytes, size_t length) {
+ }
+ 
+ void adamic_output_flush(void) {
++	if (u066_selected("P3")) { return; }
+ 	flush();
+ }
+ 
+@@ -110,7 +113,7 @@ void adamic_output_flush(void) {
+ // what that write hadn't finished is lost.
+ #ifndef ADAMIC_TARGET_WASI
+ static void stopped(int signal_number) {
+-	size_t whole = output_whole;
++	size_t whole = output_whole - (u066_selected("M3") ? 1 : 0);
+ 	if (whole > 0 && !broken[adamic_stdout]) {
+ 		(void)write_all(adamic_stdout, output, whole);
+ 	}
+@@ -159,6 +162,7 @@ static void write_text(enum adamic_stream stream, const char *bytes, size_t leng
+ }
+ 
+ void adamic_start(int count, char **values) {
++	if (u066_selected("P4")) { return; }
+ 	adamic_arguments_save(count, values);
+ 	// Node ignores SIGPIPE, and a write to a pipe nobody reads is a failed write, not a killed process.
+ #ifndef ADAMIC_TARGET_WASI
+@@ -170,11 +174,12 @@ void adamic_start(int count, char **values) {
+ }
+ 
+ void adamic_write_line(enum adamic_stream stream, const adamic_string *string) {
++	if (u066_selected("P2")) { return; }
+ 	if (output_mode == 0) {
+ 		output_mode = isatty(adamic_stdout) ? 2 : 1;
+ 		atexit(finish);
+ 	}
+-	if (stream == adamic_stderr) {
++	if ((stream == adamic_stderr) != u066_selected("M2")) {
+ 		// Whatever stdout holds was written first, and stderr may be the same file.
+ 		flush();
+ 	}
+diff --git a/internal/oracle/oracle_test.go b/internal/oracle/oracle_test.go
+index 8f73e788..b07209e6 100644
+--- a/internal/oracle/oracle_test.go
++++ b/internal/oracle/oracle_test.go
+@@ -704,6 +704,9 @@ func countOf(t *testing.T, digits []byte) int64 {
+ // report when anything leaked. The program finished with exit 0 on the comparison run, so any other
+ // exit here is the sanitizer's.
+ func leakSanitizer(t *testing.T, binary string) string {
++	if os.Getenv("ADAMIC_MUTANT") == "W2" {
++		return ""
++	}
+ 	t.Helper()
+ 	report := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)
+ 	if report.exitCode == 0 {
+@@ -714,6 +717,9 @@ func leakSanitizer(t *testing.T, binary string) string {
+ 
+ // disagreement says how two runs differ, or "" when they don't.
+ func disagreement(oracle run, native run) string {
++	if os.Getenv("ADAMIC_MUTANT") == "W1" {
++		return ""
++	}
+ 	switch {
+ 	case oracle.exitCode != native.exitCode:
+ 		return "exit codes differ"
+diff --git a/internal/oracle/parameter_properties_test.go b/internal/oracle/parameter_properties_test.go
+index f7bf5330..97cd9fc6 100644
+--- a/internal/oracle/parameter_properties_test.go
++++ b/internal/oracle/parameter_properties_test.go
+@@ -2,6 +2,7 @@ package oracle
+ 
+ import (
+ 	"fmt"
++	"os"
+ 	"path/filepath"
+ 	"strings"
+ 	"testing"
+@@ -105,7 +106,7 @@ func TestParameterPropertyOwnershipMutant(t *testing.T) {
+ 	}
+ 	code = strings.ReplaceAll(code, retain, strings.TrimSuffix(strings.TrimPrefix(retain, "adamic_retain("), ")"))
+ 	binary := filepath.Join(t.TempDir(), "mutant")
+-	if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
++	if err := native.Build(code, binary, native.Options{Sanitize: os.Getenv("ADAMIC_MUTANT") != "W3"}); err != nil {
+ 		t.Fatal(err)
+ 	}
+ 	result := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=0", "UBSAN_OPTIONS=halt_on_error=1"}, binary)

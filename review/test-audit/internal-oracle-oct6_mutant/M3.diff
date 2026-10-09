@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/adamic.c
++++ b/internal/native/runtime/adamic.c
+@@ -110,7 +110,7 @@
+ // what that write hadn't finished is lost.
+ #ifndef ADAMIC_TARGET_WASI
+ static void stopped(int signal_number) {
+-	size_t whole = output_whole;
++	size_t whole = output_whole - 1;
+ 	if (whole > 0 && !broken[adamic_stdout]) {
+ 		(void)write_all(adamic_stdout, output, whole);
+ 	}

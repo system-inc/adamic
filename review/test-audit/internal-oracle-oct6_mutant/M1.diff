@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/adamic.c
++++ b/internal/native/runtime/adamic.c
+@@ -80,7 +80,7 @@
+ static void finish(void) {
+ 	flush();
+ 	if (broken[adamic_stdout] || broken[adamic_stderr]) {
+-		_exit(70);
++		_exit(71);
+ 	}
+ }
+ 
