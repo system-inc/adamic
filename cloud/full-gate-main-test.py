@@ -258,6 +258,30 @@ class FullGateLoopTests(unittest.TestCase):
         self.record(due, 'green: %s full gate' % due, stamp='20261008T223000Z')
         self.assertEqual(self.call('mainTurn %s' % due)[0], 1)
 
+    def test_the_pool_grace_counts_from_the_first_main_without_a_whole_gate_not_from_each_main(self):
+        # Found by Kirk, Oct 9 21:37Z: main moved every few minutes, each landing restarted a per-sha grace, and main went
+        # unconfirmed for over an hour while the pool took none.
+        mains = []
+        for attempt in range(60):
+            sha = self.commit({'compiler.go': 'package compiler // grace %d\n' % attempt})
+            if int(sha[:8], 16) % 5:
+                mains.append(sha)
+            if len(mains) == 4:
+                break
+        (self.state / 'pool-promoted').write_text('parity proven\n')
+        turn = lambda sha, at: self.call('date() { echo %d; }; mainTurn %s' % (at, sha))[0]
+        first = 1000000
+        # Three mains in a row, five minutes apart, no pool record: the third takes the box ten minutes after the first.
+        self.assertEqual(turn(mains[0], first), 1)
+        self.assertEqual(turn(mains[1], first + 300), 1)
+        self.assertEqual(turn(mains[1], first + 599), 1, 'inside the grace')
+        self.assertEqual(turn(mains[2], first + 600), 0, 'ten minutes after the first main went without a whole gate')
+        # The box's record on the third ends that stretch: the fourth's grace counts from its own sighting.
+        self.record(mains[2], 'running: full gate of %s' % mains[2], finished=False)
+        self.assertEqual(turn(mains[3], first + 700), 1)
+        self.assertEqual(turn(mains[3], first + 1299), 1)
+        self.assertEqual(turn(mains[3], first + 1300), 0)
+
     def test_one_whole_gate_per_box_ever(self):
         # Oct 9 00:13Z: the requests loop took a second whole gate onto the Threadripper beside a hand-started one.
         script = self.work / 'cloud' / 'full-gate-main.sh'
@@ -342,7 +366,7 @@ esac
         self.assertFalse((Path(self.tmp.name) / 'gated').exists(), 'a conflict took the box')
         self.assertTrue(self.published(sha).startswith('red: %s full gate, first failure at merge' % sha), self.published(sha))
         self.assertIn('compiler.go', self.published(sha))
-        self.assertIn('system_adamic_integration', (Path(self.tmp.name) / 'sent').read_text())
+        self.assertIn('system_adamic_release_integration', (Path(self.tmp.name) / 'sent').read_text())
 
     def test_record_paths_are_push_main_s_three(self):
         self.assertEqual(self.call('recordOnly %s %s' % (self.code, self.records))[0], 0)

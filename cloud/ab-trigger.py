@@ -103,7 +103,7 @@ def collect():
             job['kind'], job['red'], job['package'].split('/adamic/', 1)[-1], job['leaf'], job['candidate'][:12],
             job['kind'], job['main'][:12], ' '.join(verdict.split()), reading))
         text = re.sub(r'[A-Z]{3,}', lambda match: match.group(0).lower(), text)
-        for name in job.get('notify') or ['system_adamic_integration']:
+        for name in job.get('notify') or ['system_adamic_release_integration']:
             subprocess.run(['ahra', 'os', 'send', name, text, '--from', 'system_adamic_developer_tools'], cwd=str(ahra), capture_output=True)
         marker.write_text(time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime()) + '\n')
         sent.append(text)

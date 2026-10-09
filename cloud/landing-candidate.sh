@@ -52,7 +52,7 @@ pass() {
   if [ "${code}" != 0 ] || [ -z "${tree}" ]; then
     echo "${tip} conflict ${main}" >> "${state}/built"
     echo "$(date -u +%H:%M:%S) ${source} ${tip} conflicts with main ${main}"
-    tell system_adamic_integration "Landing candidate for #${step} not built: ${source} at ${tip:0:12} conflicts with main ${main:0:12}. Integration's merge, by hand."
+    tell system_adamic_release_integration "Landing candidate for #${step} not built: ${source} at ${tip:0:12} conflicts with main ${main:0:12}. Integration's merge, by hand."
     return 0
   fi
   name=${glob%\*}-auto-${tip:0:8}

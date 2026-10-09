@@ -84,7 +84,7 @@ printf '%s|%s\\n' "$3" "$4" >> "$TEST_ROOT/sends"
         self.assertEqual(self.candidates(), {})
         sends = (self.root / 'sends').read_text().splitlines()
         self.assertEqual(len(sends), 1)
-        self.assertTrue(sends[0].startswith('system_adamic_integration|Landing candidate for #nsnehdz not built'))
+        self.assertTrue(sends[0].startswith('system_adamic_release_integration|Landing candidate for #nsnehdz not built'))
 
     def test_a_tip_integration_already_merged_by_hand_builds_nothing(self):
         main = git(self.root / 'origin.git', 'rev-parse', 'main')

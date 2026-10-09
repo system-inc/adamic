@@ -18,7 +18,7 @@ tell() {
   # ahra refuses all-caps words.
   local text recipient
   text=$(printf '%s' "$1" | awk '{ out = ""; while (match($0, /[A-Z][A-Z][A-Z]+/)) { out = out substr($0, 1, RSTART - 1) tolower(substr($0, RSTART, RLENGTH)); $0 = substr($0, RSTART + RLENGTH) } print out $0 }')
-  for recipient in system_adamic_developer_tools system_adamic_integration; do
+  for recipient in system_adamic_developer_tools system_adamic_release_integration; do
     (cd "${ahraDirectory}" && ahra os send "${recipient}" "${text}" --from system_adamic_developer_tools > /dev/null 2>&1) ||
       echo "$(date -u +%H:%M:%S) could not tell ${recipient}"
   done

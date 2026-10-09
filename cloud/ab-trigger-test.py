@@ -39,7 +39,7 @@ class AbTriggerTests(unittest.TestCase):
         self.env = dict(os.environ, PATH=str(self.root / 'bin') + ':' + os.environ['PATH'], SENDS=str(self.root / 'sends'),
                         ADAMIC_AB_JOBS=str(self.root / 'jobs'), ADAMIC_FAST_GATE_AHRA_DIR=str(self.root))
 
-    def write(self, text, notify='system_adamic_integration'):
+    def write(self, text, notify='system_adamic_release_integration'):
         (self.root / 'first-failure.txt').write_text(text)
         self.output = subprocess.run(['python3', str(script), 'write', '--candidate', candidate, '--main', main, '--red', 'gate-logs/cccccccccccc/x/full-main',
                                       '--first-failure', str(self.root / 'first-failure.txt'), '--notify', notify], env=self.env, check=True, capture_output=True, text=True).stdout
@@ -53,7 +53,7 @@ class AbTriggerTests(unittest.TestCase):
         self.assertEqual(job['package'], 'github.com/system-inc/adamic/stage1/cohere/tsprinter')
         # Leaf to leaf, never the parent: the -run pattern is the subtest itself.
         self.assertEqual(job['test'], '^TestMutants$/^yield_loses_delegation$')
-        self.assertEqual(job['notify'], ['system_adamic_integration'])
+        self.assertEqual(job['notify'], ['system_adamic_release_integration'])
         self.assertTrue(written[0].name.startswith(candidate[:12] + '-'))
         self.assertIn('wrote', self.output)
         self.assertEqual(len(self.write(stall)), 1)
@@ -104,14 +104,14 @@ class AbTriggerTests(unittest.TestCase):
         self.assertEqual(self.write(assertion), [])
 
     def test_a_verdict_goes_once_to_whoever_heard_the_red(self):
-        job = self.write(stall, notify='system_adamic_compiler,system_adamic_integration')[0]
+        job = self.write(stall, notify='system_adamic_compiler,system_adamic_release_integration')[0]
         subprocess.run(['python3', str(script), 'collect'], env=self.env, check=True, capture_output=True)
         self.assertFalse((self.root / 'sends').exists(), 'no verdict yet, nothing sent')
         job.with_suffix('.verdict').write_text('regression 37.2x main 1.4 s candidate 52.1 s, cpu 2.9 s against 125 s\n')
         subprocess.run(['python3', str(script), 'collect'], env=self.env, check=True, capture_output=True)
         subprocess.run(['python3', str(script), 'collect'], env=self.env, check=True, capture_output=True)
         sends = (self.root / 'sends').read_text().splitlines()
-        self.assertEqual([line.split('|')[0] for line in sends], ['system_adamic_compiler', 'system_adamic_integration'])
+        self.assertEqual([line.split('|')[0] for line in sends], ['system_adamic_compiler', 'system_adamic_release_integration'])
         self.assertIn('regression 37.2x main 1.4 s candidate 52.1 s', sends[0])
         self.assertIn('a regression in the candidate, not load', sends[0])
         self.assertIn('stage1/cohere/tsprinter TestMutants/yield_loses_delegation', sends[0])

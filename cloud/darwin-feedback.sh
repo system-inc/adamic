@@ -136,7 +136,7 @@ while true; do
     # ahra refuses all-caps words.
     message=$(printf '%s' "${message}" | awk '{ out = ""; while (match($0, /[A-Z][A-Z][A-Z]+/)) { out = out substr($0, 1, RSTART - 1) tolower(substr($0, RSTART, RLENGTH)); $0 = substr($0, RSTART + RLENGTH) } print out $0 }')
     (cd "${ADAMIC_FAST_GATE_AHRA_DIR:-/Users/kirkouimet/Projects/ahra}" &&
-      ahra os send system_adamic_integration "${message}" --from system_adamic_developer_tools > /dev/null 2>&1) || echo "$(date -u +%H:%M:%S) could not tell integration"
+      ahra os send system_adamic_release_integration "${message}" --from system_adamic_developer_tools > /dev/null 2>&1) || echo "$(date -u +%H:%M:%S) could not tell integration"
   done < "${state}/now"
   sleep 30
 done

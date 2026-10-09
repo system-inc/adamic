@@ -74,7 +74,7 @@ def once():
                 'review/agree/ or refused/, matched by content): %s. Commit each, with a pending skip if main still gets it wrong.'
                 % (len(outside), shown))
         try:
-            subprocess.run(['ahra', 'os', 'send', 'system_adamic_integration', text, '--from', 'system_adamic_developer_tools'],
+            subprocess.run(['ahra', 'os', 'send', 'system_adamic_release_integration', text, '--from', 'system_adamic_developer_tools'],
                            cwd=ahraDirectory, capture_output=True, check=True)
             (state / 'paged').write_text('\n'.join(outside) + '\n')
             print('%s paged integration' % stamp, flush=True)

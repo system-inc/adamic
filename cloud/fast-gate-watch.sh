@@ -9,7 +9,7 @@
 # branch isn't gated again), one per slot, on every box in the slot table. The queue is by priority, decided
 # when a gate starts: what integration is landing first (cloud/land-*, then area/* and any branch named in the state
 # directory's priority file, one per line, such as a fix-forward), then devtools/*, then workers'
-# codex/*, newest first within each, and only a branch's newest tip. Each tip is classed when queued:
+# codex/*, oldest first within each, and only a branch's newest tip. Each tip is classed when queued:
 # big (an area, a stage3/ change, which runs the stage 3 lane, or more than two touched packages) or
 # small. A big gate runs in an area slot (24 CPUs), a small one in a small slot (12 each), so a
 # worker's tip never waits behind an area. The slot table (${state}/slots, one "box class" per line,
@@ -181,7 +181,7 @@ suiteVerdict() {
 # Notifications are best effort, once per transition; uppercase runs are normalized because
 # ahra refuses all-caps words. Preserve mixed-case paths such as /Users.
 notifyStorm() {
-  local text=$1 recipients=${2:-system_adamic_developer_tools system_adamic_integration} recipient
+  local text=$1 recipients=${2:-system_adamic_developer_tools system_adamic_release_integration} recipient
   text=$(printf '%s\n' "${text}" | awk '{
     out = ""
     while (match($0, /[A-Z][A-Z][A-Z]+/)) {
@@ -310,8 +310,9 @@ stopOlderRuns() {
     [ "${runningSha}" = "${sha}" ] && [ "${runningBox:-threadripper}" != pool ] && ! isCanary "${runningBranch}" || continue
     # By what the box runs, not the commit: a Mac-only tools commit changes no gate.
     [ "$(boxTools "${token%%:*}")" != "$(boxTools "${tools}")" ] || continue
-    touch "${state}/race-lost/${pid}"
+    # Marked only once stopped (#ew97ec2): a run a failed stop left running ends with a real verdict.
     stopGate "${pid}" "${runningBranch}" "${sha}" "${runningBox:-threadripper}" "superseded by a newer run of the same sha (tools ${tools:0:9})" &&
+      touch "${state}/race-lost/${pid}" &&
       echo "$(date -u +%H:%M:%S) stopped ${runningBranch} ${sha} on ${runningBox:-threadripper} (tools ${token:0:9}): a newer run of the same sha starts with tools ${tools:0:9}"
   done
 }
@@ -326,8 +327,14 @@ goodTree=${ADAMIC_FAST_GATE_GOOD_TREE:-${state}/tools-good-tree}
 # commit: keyed on the commit, every watcher or alarm change restarted promotion, and staged tools never promoted
 # (Oct 8). The list over-includes on purpose; a path missing from it would skip the canary.
 boxSide="cloud/fast-gate.sh cloud/fast-gate cloud/darwin-leg.sh cloud/fast-gate-classify.sh cloud/idle-preempt.sh internal/skipcensus go.mod go.sum"
+# The fingerprint hashes every file under boxSide (ls-tree -r) except the Mac-only tests in cloud/fast-gate, the one
+# pattern cloud/fast-gate/*_test.py (clean_tree, merge, prune, run, trim and watch today; no *-test.py lives there): no
+# box runs them, and a watch_test.py edit staged as new box tools waiting on a canary (ruled by release_verdict, Oct 9
+# 22:21Z). An explicit exclusion, never a narrower boxSide, so a box file can't drop out and ship with no canary.
+# internal/skipcensus/census_test.go stays in. Every fingerprint changed once with this, but staging compares the good
+# tools' fingerprint with the head's, both taken this way, so the comparison stays consistent.
 boxTools() {
-  git -C "${here}" ls-tree "$1" -- ${boxSide} | shasum | cut -c1-40
+  git -C "${here}" ls-tree -r "$1" -- ${boxSide} | grep -vE $'\tcloud/fast-gate/[^/]*_test\.py$' | shasum | cut -c1-40
 }
 staging() {
   [ -s "${state}/canary-box" ] && [ -s "${state}/tools-good" ] && [ -f "${goodTree}/cloud/fast-gate.sh" ] &&
@@ -461,8 +468,10 @@ endRace() {
     pid=$(basename "${file}")
     read -r runningBranch runningSha runningSlot runningBox rest < "${file}"
     [ "${runningSha}" = "${sha}" ] || continue
-    touch "${state}/race-lost/${pid}"
+    # Marked lost only once stopped (#ew97ec2, Oct 9: a stop-gate.sh that failed silently left a run going on to a green
+    # that its mark then dropped). A route still running ends with a real verdict of its own.
     stopGate "${pid}" "${runningBranch}" "${sha}" "${runningBox:-threadripper}" "the race's other route (${winner}) answered first" &&
+      touch "${state}/race-lost/${pid}" &&
       echo "$(date -u +%H:%M:%S) stopped ${runningBranch} ${sha} on ${runningBox:-threadripper}: ${winner} answered the race first"
   done
 }
@@ -477,12 +486,13 @@ yieldRaceForCanary() {
     pid=$(basename "${file}")
     read -r branch sha slot box rest < "${file}"
     [ "${box:-threadripper}" != pool ] && [ -f "${state}/racing/${sha}" ] && [ ! -f "${state}/stopped-running/${pid}" ] || continue
+    # The race ends, the run is marked lost and the yield recorded only once the stop took (#ew97ec2): on a failed stop
+    # the run races on unchanged, and the next race may yield instead.
+    stopGate "${pid}" "${branch}" "${sha}" "${box:-threadripper}" "a canary of main takes the slot; the pool job answers alone" || continue
     rm -f "${state}/racing/${sha}"
     touch "${state}/race-lost/${pid}"
-    if stopGate "${pid}" "${branch}" "${sha}" "${box:-threadripper}" "a canary of main takes the slot; the pool job answers alone"; then
-      echo "${pid}" > "${state}/canary-yield"
-      echo "$(date -u +%H:%M:%S) stopped ${branch} ${sha}'s box race on ${box:-threadripper}: a canary takes its slot, and the pool job answers alone"
-    fi
+    echo "${pid}" > "${state}/canary-yield"
+    echo "$(date -u +%H:%M:%S) stopped ${branch} ${sha}'s box race on ${box:-threadripper}: a canary takes its slot, and the pool job answers alone"
     return 0
   done
 }
@@ -518,6 +528,11 @@ stopSkipped() {
 # area's complete run 90 minutes, since it runs every test to the end (the trio's took about 1.5 hours on Oct 9).
 boxCeiling=${ADAMIC_FAST_GATE_BOX_CEILING:-1800}
 canaryCeiling=${ADAMIC_FAST_GATE_CANARY_CEILING:-3600}
+# The whole-box stage canary gets two hours (@system_adamic 20:10Z, @system_adamic_release_verdict 20:14Z): c0232217's,
+# main b8bcadb2 against main~10 alone on workshop, had passed 8,603 of 18,917 tests with no failure when its hour ran out
+# (record 46eb7b96); main~10 pulls in json, markdowninline and lint, about 105 minutes of test wall there. It holds until the
+# canary's selection comes from the tools diff (#fyvmsy8, #6vvjzcq). A slot canary and a gate mutant keep the hour.
+wholeCanaryCeiling=${ADAMIC_FAST_GATE_WHOLE_CANARY_CEILING:-7200}
 completeCeiling=${ADAMIC_FAST_GATE_COMPLETE_CEILING:-5400}
 stopOverCeiling() {
   local file pid branch sha slot box rest started limit now
@@ -533,6 +548,7 @@ stopOverCeiling() {
     [[ ${started} =~ ^[0-9]+$ ]] || continue
     limit=${boxCeiling}
     isCanary "${branch}" && limit=${canaryCeiling}
+    [ "${branch}" = canary/main ] && [ -f "${state}/reserved-running/${pid}" ] && limit=${wholeCanaryCeiling}
     [[ ${branch} == cloud/land-* || ${branch} == area/* ]] && limit=${completeCeiling}
     [ $((now - started)) -ge "${limit}" ] || continue
     if stopGate "${pid}" "${branch}" "${sha}" "${box:-threadripper}" "over the box ceiling of ${limit} s"; then
@@ -659,21 +675,57 @@ publishEarlyRed() {
 # skipped by hand or by pattern, or superseded by a newer tip of their branch. Ranking reads the whole queue
 # for every pick (about 40 s at 150 queued, Oct 8 19:08Z), so each discard found there cost a full pass,
 # and a run of them kept the loop from reaping finished gates for minutes.
+# Three more leave here (asked by @system_adamic_release, Oct 9 21:36Z: integration found 21 superseded land-stack cuts in
+# the box queue, some at rank 0): a tip already on main (it landed by another route; read from one listing of main's
+# commits, no fork per tip), a cut whose name has a newer cut, and a second line for a sha already kept.
+# A cut is cloud/land-stack-<name>-<sha8>, a new branch per cut, so a recut never moves the old branch and the
+# superseded check never sees it. Newer means first queued later: the poll that saw it pushed. ${state}/cut-queued keeps
+# each cut's first queue time ("branch sha epoch"), since a void, preempt or pool-void requeue stamps the line afresh and
+# would make an older cut look newer. A cut on origin (seen) with a later first queue time supersedes an older one,
+# queued or already gated; a cut never queued (the backlog at the first start) has no time and supersedes nothing.
 pruneQueue() {
   [ -s "${state}/queue" ] || return 0
-  touch "${state}/seen" "${state}/gated" "${state}/skip"
+  touch "${state}/seen" "${state}/gated" "${state}/skip" "${state}/cut-queued"
   local verdict line class queued branch sha glob kept=${state}/queue.pruned skipped
   # A raced tip is gated (its pool job runs) and queued for its box run at once.
   ls "${state}/racing" > "${state}/racing.list"
   grep -vxF -f "${state}/racing.list" "${state}/gated" > "${state}/gated.prune"
-  awk 'FILENAME == ARGV[1] { seen[$1 " " $2] = 1; next }
+  git -C "${here}" fetch -q origin "+refs/heads/main:refs/remotes/origin/main" 2> /dev/null
+  git -C "${here}" rev-list refs/remotes/origin/main > "${state}/main-commits" 2> /dev/null || : > "${state}/main-commits"
+  awk -v records="${state}/cut-queued.tmp" '
+       function cutName(b,   n, i) {
+         if (substr(b, 1, 17) != "cloud/land-stack-") return ""
+         n = substr(b, 18); i = length(n) - 8
+         if (i < 2 || substr(n, i, 1) != "-" || substr(n, i + 1) !~ /^[0-9a-f]+$/) return ""
+         return substr(n, 1, i - 1)
+       }
+       FILENAME == ARGV[1] { seen[$1 " " $2] = 1; next }
        FILENAME == ARGV[2] { gated[$1] = 1; next }
        FILENAME == ARGV[3] { skip[$0] = 1; next }
-       { key = $3 " " $4
-         if ($4 in gated) print "gated\t" $0
-         else if (key in skip) print "skip\t" $0
-         else if (!(key in seen)) print "superseded\t" $0
-         else print "keep\t" $0 }' "${state}/seen" "${state}/gated.prune" "${state}/skip" "${state}/queue" > "${state}/queue.verdicts"
+       FILENAME == ARGV[4] { landed[$1] = 1; next }
+       FILENAME == ARGV[5] { first[$1 " " $2] = $3; next }
+       { lines[++count] = $0; key = $3 " " $4; queuedKey[key] = 1
+         if (cutName($3) != "" && !(key in first) && (!(key in fresh) || $2 < fresh[key])) fresh[key] = $2 }
+       END {
+         for (key in fresh) first[key] = fresh[key]
+         for (key in first) {
+           if (!(key in seen) && !(key in queuedKey)) continue
+           print key, first[key] > records
+           if (!(key in seen)) continue
+           split(key, part, " "); name = cutName(part[1])
+           if (!(name in newest) || first[key] > newest[name]) { newest[name] = first[key]; newestBranch[name] = part[1] }
+         }
+         for (row = 1; row <= count; row++) {
+           $0 = lines[row]; key = $3 " " $4; name = cutName($3)
+           if ($4 in gated) print "gated\t" $0
+           else if (key in skip) print "skip\t" $0
+           else if (!(key in seen)) print "superseded\t" $0
+           else if ($4 in landed) print "landed\t" $0
+           else if (name != "" && first[key] < newest[name]) print "recut " newestBranch[name] "\t" $0
+           else print "keep\t" $0
+         }
+       }' "${state}/seen" "${state}/gated.prune" "${state}/skip" "${state}/main-commits" "${state}/cut-queued" "${state}/queue" > "${state}/queue.verdicts"
+  mv "${state}/cut-queued.tmp" "${state}/cut-queued" 2> /dev/null || : > "${state}/cut-queued"
   : > "${kept}"
   while IFS=$'\t' read -r verdict line; do
     read -r class queued branch sha <<< "${line}"
@@ -681,6 +733,8 @@ pruneQueue() {
       gated) continue ;;
       skip) echo "$(date -u +%H:%M:%S) skipped by hand ${branch} ${sha}"; continue ;;
       superseded) echo "$(date -u +%H:%M:%S) superseded ${branch} ${sha}"; continue ;;
+      landed) echo "$(date -u +%H:%M:%S) already on main ${branch} ${sha}"; continue ;;
+      recut\ *) echo "$(date -u +%H:%M:%S) superseded ${branch} ${sha} by the newer cut ${verdict#recut }"; continue ;;
     esac
     skipped=""
     while read -r glob _; do
@@ -692,8 +746,13 @@ pruneQueue() {
     fi
     echo "${line}" >> "${kept}"
   done < "${state}/queue.verdicts"
-  mv "${kept}" "${state}/queue"
-  rm -f "${state}/queue.verdicts"
+  # One line per sha, the first queued: a requeue beside a line still waiting adds nothing but a second dispatch. In awk:
+  # a list of kept shas grown in this shell loop left macOS bash 3.2 spinning at full CPU a pass later (the realistic queue test).
+  awk -v dropped="${state}/queue.duplicates" '$4 in kept { print > dropped; next } { kept[$4] = 1; print }' "${kept}" > "${state}/queue"
+  while read -r class queued branch sha; do
+    echo "$(date -u +%H:%M:%S) dropped a second queue line for ${branch} ${sha}"
+  done < <(cat "${state}/queue.duplicates" 2> /dev/null)
+  rm -f "${kept}" "${state}/queue.verdicts" "${state}/queue.duplicates"
 }
 # ${state}/front (a glob per line, # comments) puts a tip ahead of every roadmap step, behind only a reserved
 # landing: a fix the parent ruled lands first, such as Oct 8's cloud/land-gate-speed. A front tip is the star,
@@ -885,7 +944,8 @@ matchesReservation() {
 }
 # The static part of each queued tip's rank, once per pass: position * 100 + rank, the time it was queued,
 # its class, branch and sha, and whether it matches a reservation. Sorted as the picks read it: lowest
-# first, newest first among equals.
+# first, oldest queued first among equals (ruled by @system_adamic, Oct 9 21:35Z: newest first, every later cut jumped
+# the older ones of its rank, and typescript's batch 6, 0fed6a91, starved 1h40m).
 rankQueue() {
   local class queued branch sha rank position reserved name
   while read -r class queued branch sha; do
@@ -901,12 +961,12 @@ rankQueue() {
     fi
     if [ "${rank}" = 0 ]; then position=0; else position=$(stepPosition "${branch}"); fi
     # Among equal keys the star's train runs bottom first: cloud/land-train-<n>, lower n first (@system_adamic, Oct 8
-    # 23:17Z: train-3 outranked train-2 because ties break newest first). Other tips sort as 0, newest first.
+    # 23:17Z: train-3 outranked train-2 because ties broke newest first). Other tips sort as 0, oldest first.
     train=0
     if [[ ${branch} =~ ^cloud/land-train-([0-9]+) ]]; then train=${BASH_REMATCH[1]}; fi
     isFront "${branch}" && train=$(( $(frontLine "${branch}") * 1000 + train ))
     echo "$(( position * 100 + rank )) ${train} ${queued} ${class} ${branch} ${sha} ${reserved}"
-  done < "${state}/queue" | sort -k1,1n -k2,2n -k3,3nr | cut -d' ' -f1,3- > "${state}/queue.ranked"
+  done < "${state}/queue" | sort -k1,1n -k2,2n -k3,3n | cut -d' ' -f1,3- > "${state}/queue.ranked"
 }
 # The box a big tip may borrow a small slot on: the first box among these slots' with a free small slot and
 # fewer big gates running than its limit.
@@ -990,7 +1050,7 @@ pickNext() {
       box=$(echo "${eligible}" | awk -v c="${slot}" '$2 == c && box == "" {box = $1} END {print box}')
     else box=${borrowable}; fi
     best="${score} ${queued} ${branch} ${sha} ${class} ${slot} ${box}" bestScore=${score} bestPosition=${position}
-    # The list is in key order, newest first among equals: with nothing added, nothing after can beat it.
+    # The list is in key order, oldest first among equals: with nothing added, nothing after can beat it.
     [ "${extra}" = 0 ] && break
   done < "${state}/queue.ranked"
   echo "${best}"
@@ -1139,6 +1199,13 @@ if staging || { [ -s "${state}/canary-box" ] && [ "$(boxTools "$(cat "${state}/t
   canaryRequired=0
 fi
 while true; do
+  # A watcher whose state directory is gone has nothing to schedule from, so it ends (#f3pnmrh): on Oct 9 one a
+  # watch_test.py run left behind ran 2h47m at 38% of a core after its temp state was deleted, its stub tools gone so it
+  # fell through to real ones, writing 795 MB to an unlinked output file. Under launchd it restarts on a fresh state.
+  if [ ! -d "${state}" ]; then
+    echo "$(/bin/date -u +%H:%M:%S) state directory ${state} is gone; exiting"
+    exit 1
+  fi
   now=$(date -u +%s)
   if { [ -z "${firstStepRefresh:-}" ] || [ "$((now - firstStepRefresh))" -ge 300 ]; } &&
      { [ -z "${firstStepPid:-}" ] || ! kill -0 "${firstStepPid}" 2>/dev/null; }; then
@@ -1248,7 +1315,16 @@ while true; do
       if [ -z "${cause}" ]; then
         endRace "${sha}" "${box:-threadripper}"
       elif [ "${box}" = pool ]; then
-        echo "$(date -u +%H:%M:%S) pool void ${branch} ${sha}: ${cause}; its box race goes on"
+        # The box run is the tip's only route now, so it is no race (#ew97ec2): on Oct 9 2aff1aa5's pool job voided at
+        # 15:48 with racing/<sha> left, a canary took its box run for a race to yield, and the run's green read as a lost
+        # race. pool-void keeps it off the pool as racing/<sha> did. A box run still queued is un-gated, or pruneQueue
+        # would drop it as gated and nothing would gate the tip.
+        rm -f "${state}/racing/${sha}"
+        echo "${sha}" >> "${state}/pool-void"
+        if grep -q " ${sha}\$" "${state}/queue"; then
+          grep -vx "${sha}" "${state}/gated" > "${state}/gated.tmp"; mv "${state}/gated.tmp" "${state}/gated"
+        fi
+        echo "$(date -u +%H:%M:%S) pool void ${branch} ${sha}: ${cause}; its box race goes on as the only route"
         continue
       fi
     fi
@@ -1372,7 +1448,7 @@ while true; do
       echo "$(date -u +%H:%M:%S) void ${branch} ${sha}: ${cause} (try ${tries} of 3), queued again"
     else
       echo "$(date -u +%H:%M:%S) void ${branch} ${sha}: ${cause}, three tries, given up"
-      (cd /Users/kirkouimet/Projects/ahra && ahra os send system_adamic_integration "Fast gate of ${branch} ${sha} died three times with no verdict (${cause}): a box problem, not the change. Log: ${state}/logs/${sha:0:12}.log on Kirk's Mac." > /dev/null 2>&1 || true)
+      (cd /Users/kirkouimet/Projects/ahra && ahra os send system_adamic_release_integration "Fast gate of ${branch} ${sha} died three times with no verdict (${cause}): a box problem, not the change. Log: ${state}/logs/${sha:0:12}.log on Kirk's Mac." > /dev/null 2>&1 || true)
     fi
   done
   promoteStaged

@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 """Exercise the real watcher with isolated state and no external side effects."""
+import atexit
 import os
 from pathlib import Path
 import shutil
 import signal
 import subprocess
+import sys
 import tempfile
 import time
 import unittest
@@ -14,6 +16,11 @@ MAIN = 'a' * 40
 
 
 class Watcher:
+    # Every watcher started and not yet closed (#f3pnmrh): on Oct 9 one this file started ran on for 2h47m after its test,
+    # its temp state deleted. Each test kills what it left (setUp), and so does exit after an interrupt, which skips cleanups.
+    live = []
+    atExit = False
+
     def __init__(self, count=6, staleLock=False, canaryBox=None, mode='void', slots=None, boxSides=None, mainCanary=100000, mutants=''):
         self.tmp = tempfile.TemporaryDirectory()
         self.root = Path(self.tmp.name)
@@ -39,7 +46,8 @@ class Watcher:
         self.put('mode', mode)
         self.put('initial', 'hold')
         self.put('canary', 'hold')
-        # A tools commit's box-side fingerprint (git ls-tree), its own name unless given.
+        # A tools commit's box-side listing (git ls-tree -r): tree-<commit> when a test writes one, else one line, its
+        # fingerprint, which is its own name unless given.
         for commit, side in (boxSides or {}).items():
             self.put('box-' + commit, side)
         self.tips = [(f'codex/test{i}', f'{i+1:012x}' + '0' * 28) for i in range(count)]
@@ -49,10 +57,12 @@ class Watcher:
         (self.state / 'slots').write_text(slots if slots is not None else ''.join(f'box{i % 2} S\n' for i in range(max(count, 1))))
         self.script(self.bin / 'git', '''case "$*" in
 *rev-parse*) cat "$TEST_ROOT/head" ;;
-*ls-tree*) echo "$(cat "$TEST_ROOT/box-$4" 2>/dev/null || echo "$4")" ;;
+*ls-tree*) commit=$5; [ "$4" = -r ] || commit=$4
+  cat "$TEST_ROOT/tree-$commit" 2>/dev/null || echo "$(cat "$TEST_ROOT/box-$commit" 2>/dev/null || echo "$commit")" ;;
 *'branch -r --contains'*) echo origin/devtools/fast-gate ;;
 *'ls-remote'*refs/heads/main*) printf '%s\\trefs/heads/main\\n' aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa ;;
 *'ls-remote'*refs/heads/codex*) cat "$TEST_ROOT/tips" ;;
+*'rev-list refs/remotes/origin/main'*) cat "$TEST_ROOT/main-commits" 2>/dev/null ;;
 *merge-base*) exit 1 ;;
 *trailers:key=Task*) cat "$TEST_ROOT/trailers-$5" 2>/dev/null ;;
 *trailers:key=Gate-tier*) cat "$TEST_ROOT/gate-tier-$5" 2>/dev/null ;;
@@ -71,9 +81,11 @@ printf '%s|%s|%s|%s\\n' "$3" "$text" "$5" "$6" >> "$TEST_ROOT/messages"
 *) /bin/date -u +%H:%M:%S ;;
 esac
 ''')
+        # A stop that fails (a dropped ssh, Oct 9's stop-gate.sh that matched nothing) exits nonzero and stops nothing.
         self.script(self.bin / 'ssh', '''box=$1; shift
 cat > "$TEST_ROOT/stop-command"
 sha=${4%% *}
+if [ -f "$TEST_ROOT/ssh-fails" ]; then printf '%s %s\\n' "$box" "$*" >> "$TEST_ROOT/failed-stops"; exit 255; fi
 printf '%s %s\\n' "$box" "$*" >> "$TEST_ROOT/stops"
 touch "$TEST_ROOT/stopped-$sha"
 ''')
@@ -150,6 +162,36 @@ fi
         self.output = open(self.root / 'output', 'w')
         self.proc = subprocess.Popen([os.environ.get('WATCH_TEST_BASH', 'bash'), str(cloud / 'fast-gate-watch.sh')], env=env,
                                      stdout=self.output, stderr=self.output, start_new_session=True)
+        if not Watcher.atExit:
+            # Registered after the first temp directory's finalizer, so at exit it runs first: watchers die before their state.
+            atexit.register(Watcher.closeAll)
+            Watcher.atExit = True
+        Watcher.live.append(self)
+
+    def stop(self):
+        """Kills the watcher's whole process group, it and every gate stub, waiter and refresh it started."""
+        # macOS answers a group left with only zombies with EPERM, not ESRCH: either way nothing is left to kill.
+        try:
+            os.killpg(self.proc.pid, signal.SIGTERM)
+        except (ProcessLookupError, PermissionError):
+            pass
+        try:
+            self.proc.wait(timeout=5)
+        except subprocess.TimeoutExpired:
+            pass
+        # Whatever outlived the leader, or ignored the signal, goes too.
+        try:
+            os.killpg(self.proc.pid, signal.SIGKILL)
+        except (ProcessLookupError, PermissionError):
+            pass
+        self.proc.wait(timeout=5)
+
+    @classmethod
+    def closeAll(cls):
+        for w in list(cls.live):
+            w.stop()
+        for w in list(cls.live):
+            w.close()
 
     def put(self, name, text):
         path = self.root / name
@@ -177,8 +219,10 @@ fi
         raise AssertionError(self.read('output'))
 
     def close(self):
-        os.killpg(self.proc.pid, signal.SIGTERM)
-        self.proc.wait(timeout=5)
+        if self not in Watcher.live:
+            return
+        Watcher.live.remove(self)
+        self.stop()
         self.output.close()
         # A gate child the signal reached mid-write can add a file while the tree is removed; retry briefly.
         for attempt in range(20):
@@ -190,7 +234,17 @@ fi
         self.tmp.cleanup()
 
 
+def interruptOnTermination():
+    """A runner killed by its caller (a timeout, a closed terminal) unwinds as an interrupt, so the exit hook kills every watcher."""
+    signal.signal(signal.SIGTERM, signal.default_int_handler)
+    signal.signal(signal.SIGHUP, signal.default_int_handler)
+
+
 class WatchTests(unittest.TestCase):
+    def setUp(self):
+        # Added first, so it runs last: any watcher the test didn't close, failed or not, is killed with the test.
+        self.addCleanup(Watcher.closeAll)
+
     def start(self, count=6):
         w = Watcher(count)
         self.addCleanup(w.close)
@@ -396,6 +450,45 @@ class WatchTests(unittest.TestCase):
         w.wait(lambda: 'canary/main' in w.read('starts'))
         self.assertIn('cleared a slot-table lock', w.read('output'))
 
+    def test_a_watcher_whose_state_directory_is_gone_exits_within_a_few_passes(self):
+        # #f3pnmrh (Oct 9): a watcher this file left behind ran 2h47m after its temp state was deleted, writing 795 MB.
+        w = self.start(0)
+        # Each pass ends in one sleep: counted, they number the passes.
+        w.script(w.bin / 'sleep', 'echo >> "$TEST_ROOT/passes-slept"\n/bin/sleep 0.03\n')
+        w.wait(lambda: len(w.read('passes-slept').splitlines()) >= 2)
+        before = len(w.read('passes-slept').splitlines())
+        # A gate stub still running can add a log while the tree is removed; retry briefly.
+        for attempt in range(20):
+            try:
+                shutil.rmtree(w.state)
+                break
+            except OSError:
+                time.sleep(.05)
+        w.proc.wait(timeout=10)
+        self.assertLessEqual(len(w.read('passes-slept').splitlines()) - before, 2, w.read('output'))
+        self.assertEqual(w.proc.returncode, 1)
+        self.assertIn('state directory %s is gone; exiting' % w.state, w.read('output'))
+
+    def test_a_runner_killed_mid_test_leaves_no_watcher_running(self):
+        # #f3pnmrh: an interrupt skips every cleanup, so the exit hook is what kills the watcher's group. The runner's temp
+        # state outlives it here (its finalizer detached), so a watcher left running couldn't end on its own state check.
+        script = ('import sys, time\nsys.path.insert(0, %r)\nimport watch_test\nwatch_test.interruptOnTermination()\n'
+                  'w = watch_test.Watcher(0)\nw.tmp._finalizer.detach()\nprint(w.proc.pid, w.root, flush=True)\ntime.sleep(60)\n'
+                  ) % str(Path(__file__).resolve().parent)
+        runner = subprocess.Popen([sys.executable, '-I', '-c', script], stdout=subprocess.PIPE, text=True)
+        self.addCleanup(runner.kill)
+        pid, root = runner.stdout.readline().split()
+        self.addCleanup(shutil.rmtree, root, True)
+        self.addCleanup(subprocess.run, ['pkill', '-KILL', '-g', pid])
+        time.sleep(.3)
+        os.killpg(int(pid), 0)
+        runner.send_signal(signal.SIGTERM)
+        runner.wait(timeout=20)
+        runner.stdout.close()
+        # Gone, or only zombies left (macOS answers those with EPERM).
+        with self.assertRaises((ProcessLookupError, PermissionError)):
+            os.killpg(int(pid), 0)
+
     def test_a_dead_holder_s_lock_is_taken_over_and_a_live_one_is_not(self):
         dead = subprocess.Popen(['true'])
         dead.wait()
@@ -551,6 +644,23 @@ class WatchTests(unittest.TestCase):
         self.assertEqual([x.split()[0] for x in w.read('starts').splitlines() if x.startswith('codex/')],
                          ['codex/step-a-x', 'codex/step-b-x', 'codex/other'])
 
+    def test_within_a_rank_the_oldest_queued_tip_goes_first(self):
+        # @system_adamic, Oct 9 21:35Z: ties broke newest first, so every later cut jumped the older ones of its rank and
+        # typescript's batch 6 (0fed6a91) starved 1h40m. The newer tip is first in the file, so file order can't pass this.
+        w = Watcher(0)
+        self.addCleanup(w.close)
+        w.put('initial', 'pass')
+        w.wait(lambda: 'done canary:' in w.read('output'))
+        w.put('mode', 'pass')
+        older, newer = '1' * 40, '2' * 40
+        (w.state / 'slots').write_text('box S\n')
+        (w.state / 'seen').write_text('codex/newer %s\ncodex/older %s\n' % (newer, older))
+        (w.state / 'queue').write_text('S 900 codex/newer %s\nS 800 codex/older %s\n' % (newer, older))
+        w.put('tips', '%s\trefs/heads/codex/newer\n%s\trefs/heads/codex/older\n' % (newer, older))
+        w.wait(lambda: len([x for x in w.read('starts').splitlines() if x.startswith('codex/')]) == 2)
+        self.assertEqual([x.split()[0] for x in w.read('starts').splitlines() if x.startswith('codex/')],
+                         ['codex/older', 'codex/newer'])
+
     def test_a_realistic_queue_fills_and_refills_every_slot_in_seconds(self):
         # @system_adamic, Oct 8: a watcher change is tested against a realistic queue before it deploys.
         # 150 tips, a run of discards, sixteen slots on four boxes, and every gate finishing at once: each
@@ -595,6 +705,44 @@ class WatchTests(unittest.TestCase):
         self.assertIn('skipped by hand codex/hand', output)
         self.assertIn('skipped by pattern codex/views-* codex/views-a', output)
         self.assertNotIn('codex/gone', w.read('starts'))
+
+    def test_a_queued_tip_already_on_main_leaves_the_queue(self):
+        # @system_adamic_release, Oct 9 21:36Z: landed tips sat in the box queue, at landing rank, until a pick reached them.
+        w = self.start(0)
+        landed, live = '3' * 40, '4' * 40
+        w.put('main-commits', '%s\n%s\n' % ('f' * 40, landed))
+        (w.state / 'seen').write_text('cloud/land-x %s\ncodex/live %s\n' % (landed, live))
+        (w.state / 'queue').write_text('B 800 cloud/land-x %s\nS 900 codex/live %s\n' % (landed, live))
+        # The log line comes before the pruned queue is written, so wait on the queue.
+        w.wait(lambda: (w.state / 'queue').read_text() == 'S 900 codex/live %s\n' % live)
+        self.assertIn('already on main cloud/land-x %s' % landed, w.read('output'))
+
+    def test_a_cut_with_a_newer_cut_of_its_name_leaves_the_queue(self):
+        # @system_adamic_release, Oct 9 21:36Z: 21 superseded land-stack cuts in the box queue, some at rank 0. A cut is
+        # cloud/land-stack-<name>-<sha8>, a new branch each time, and newer means first queued later.
+        w = self.start(0)
+        cut = lambda name, digit: ('cloud/land-stack-%s-%s' % (name, digit * 8), digit * 8 + '0' * 32)
+        views, viewsNewer = cut('views', '1'), cut('views', '2')
+        lint, lintNewer = cut('lint', '3'), cut('lint', '4')
+        solo, plain = cut('solo', '5'), ('cloud/land-stack-1-runtime-slice1', '6' * 40)
+        (w.state / 'seen').write_text(''.join('%s %s\n' % tip for tip in (views, viewsNewer, lint, lintNewer, solo, plain)))
+        # lint's newer cut is already gated (on origin, out of the queue), and its older cut was requeued at 950 by a void:
+        # its first queue time, 700, still makes it the older.
+        (w.state / 'cut-queued').write_text('%s %s 700\n%s %s 850\n' % (lint + lintNewer))
+        rows = [('B', 800) + views, ('B', 900) + viewsNewer, ('B', 950) + lint, ('B', 600) + solo, ('B', 610) + plain]
+        (w.state / 'queue').write_text(''.join('%s %d %s %s\n' % row for row in rows))
+        w.wait(lambda: (w.state / 'queue').read_text() == ''.join('%s %d %s %s\n' % row for row in (rows[1], rows[3], rows[4])))
+        self.assertIn('superseded %s %s by the newer cut %s' % (lint + (lintNewer[0],)), w.read('output'))
+        self.assertIn('superseded %s %s by the newer cut %s' % (views + (viewsNewer[0],)), w.read('output'))
+        self.assertIn('%s %s 900\n' % viewsNewer, (w.state / 'cut-queued').read_text())
+
+    def test_a_second_queue_line_for_a_sha_leaves_the_queue(self):
+        w = self.start(0)
+        dup, other = '7' * 40, '8' * 40
+        (w.state / 'seen').write_text('codex/dup %s\ncodex/other %s\n' % (dup, other))
+        (w.state / 'queue').write_text('S 800 codex/dup %s\nS 850 codex/other %s\nS 900 codex/dup %s\n' % (dup, other, dup))
+        w.wait(lambda: 'dropped a second queue line for codex/dup %s' % dup in w.read('output'))
+        self.assertEqual((w.state / 'queue').read_text(), 'S 800 codex/dup %s\nS 850 codex/other %s\n' % (dup, other))
 
     def test_front_outranks_every_step_and_skip_globs_take_a_family_out(self):
         # The steps' globs are known before any slot exists, so the second step's tip would go first without
@@ -842,6 +990,31 @@ class WatchTests(unittest.TestCase):
         w.wait(lambda: 'stopped codex/test0 %s on box0: over the box ceiling of 1800 s' % w.tips[0][1] in w.read('output'))
         self.assertIn('box0 ', w.read('stops'))
 
+    def test_a_whole_box_stage_canary_gets_two_hours_and_a_slot_canary_an_hour(self):
+        # Oct 9 20:14Z: c0232217's whole-box canary was stopped at the hour with no failure; main~10 runs about 105 minutes.
+        w = Watcher(1, mode='hold', slots='box0 S\nbox1 S\n')
+        self.addCleanup(w.close)
+        holders = {}
+        for directory in ('running', 'running-started', 'reserved-running', 'logs'):
+            (w.state / directory).mkdir(parents=True, exist_ok=True)
+        for name, box, whole in (('whole', 'box0', True), ('slot', 'box1', False)):
+            holder = subprocess.Popen(['sleep', '60'])
+            self.addCleanup(holder.kill)
+            holders[name] = holder.pid
+            (w.state / 'running' / str(holder.pid)).write_text('canary/main %s S %s S tools-zero:main %s\n' % ('a' * 40, box, w.state / 'logs' / (name + '.log')))
+            (w.state / 'running-started' / str(holder.pid)).write_text('1000\n')
+            if whole:
+                (w.state / 'reserved-running' / str(holder.pid)).write_text(box + '\n')
+        w.put('clock', '4700')
+        w.put('initial', 'pass')
+        w.wait(lambda: 'on box1: over the box ceiling of 3600 s' in w.read('output'))
+        self.assertNotIn('on box0: over the box ceiling', w.read('output'))
+        w.put('clock', '6400')
+        time.sleep(.3)
+        self.assertNotIn('on box0: over the box ceiling', w.read('output'))
+        w.put('clock', '8200')
+        w.wait(lambda: 'on box0: over the box ceiling of 7200 s' in w.read('output'))
+
     def test_a_newer_run_of_a_sha_stops_its_older_box_run_on_other_tools(self):
         # #z4emxxy: the old run is stopped on purpose and its partial record is no verdict; same tools would be a race.
         w = self.reservation('box0 S\nbox1 S\n', [], release=False)
@@ -916,6 +1089,99 @@ class WatchTests(unittest.TestCase):
         w.wait(lambda: 'ended codex/test0 %s on box0: it lost the race' % sha in w.read('output'))
         self.assertNotIn('done codex/test0: red', w.read('output'))
         self.assertTrue(w.read('stops').startswith('box0 '))
+
+    def test_a_box_race_whose_pool_job_voided_is_the_only_route_and_no_canary_yields_it(self):
+        # #ew97ec2 (Oct 9): 2aff1aa5's pool job voided at 15:48 with racing/<sha> left, a canary yielded its box run as a race,
+        # and the run's green read as a lost race.
+        w, sha = self.race(mainCanary=1800)
+        w.put('pool-mode', 'void')
+        w.wait(lambda: 'pool void codex/test0 %s: ' % sha in w.read('output'))
+        self.assertIn('its box race goes on as the only route', w.read('output'))
+        # The half-hourly canary finds no box slot, as in the race yield test: the box run is no race, so nothing yields it.
+        for started in (w.state / 'running-started').iterdir():
+            started.write_text('2700\n')
+        w.put('clock', '2800')
+        time.sleep(1)
+        self.assertNotIn("box race on box0", w.read('output'))
+        self.assertEqual(w.read('stops'), '')
+        w.put('mode', 'pass')
+        w.wait(lambda: 'done codex/test0: green: %s' % sha in w.read('output'))
+        self.assertNotIn('lost the race', w.read('output'))
+        self.assertEqual(w.read('pool-starts').count('codex/test0 '), 1)
+
+    def test_a_pool_void_before_its_box_race_starts_sends_the_tip_to_the_boxes(self):
+        # #ew97ec2: with racing/<sha> gone, a box run still queued would read as gated and leave the queue with nothing gating it.
+        w = Watcher(1, mode='hold', slots='box0 S\npool P\n')
+        self.addCleanup(w.close)
+        (w.state / 'pool-side').touch()
+        w.put('initial', 'pass')
+        w.wait(lambda: 'codex/test0 ' in w.read('pool-starts'))
+        sha = w.tips[0][1]
+        # box0's one slot is busy, so the race's box run waits in the queue.
+        holder = subprocess.Popen(['sleep', '30'])
+        self.addCleanup(holder.kill)
+        (w.state / 'running' / str(holder.pid)).write_text('codex/old %s S box0 S x %s\n' % ('c' * 40, w.state / 'logs/old.log'))
+        (w.state / 'race-wanted' / sha).write_text('codex/test0\n')
+        w.wait(lambda: 'racing codex/test0 %s' % sha in w.read('output'))
+        w.put('pool-mode', 'void')
+        w.wait(lambda: 'pool void codex/test0 %s: ' % sha in w.read('output'))
+        (w.state / 'slots').write_text('box0 S\nbox1 S\npool P\n')
+        w.wait(lambda: 'codex/test0 %s S box1' % sha in w.read('starts'))
+        self.assertEqual(w.read('pool-starts').count('codex/test0 '), 1)
+
+    def test_a_stop_that_fails_leaves_no_race_lost_mark_so_the_run_s_green_counts(self):
+        # #ew97ec2 (Oct 9): stop-gate.sh failed silently, the run went on to a green, and its race-lost mark dropped the green.
+        with self.subTest(stopper='yieldRaceForCanary'):
+            w, sha = self.race(mainCanary=1800)
+            w.put('ssh-fails', '')
+            for started in (w.state / 'running-started').iterdir():
+                started.write_text('2700\n')
+            w.put('clock', '2800')
+            w.wait(lambda: 'box0 bash -s -- ' + sha in w.read('failed-stops'))
+            time.sleep(.3)
+            self.assertEqual(list((w.state / 'race-lost').iterdir()), [])
+            self.assertNotIn("box race on box0", w.read('output'))
+            self.assertFalse((w.state / 'canary-yield').exists())
+            self.assertTrue((w.state / 'racing' / sha).exists(), 'the run races on')
+            w.put('mode', 'pass')
+            w.wait(lambda: 'done codex/test0: green: %s' % sha in w.read('output'))
+            self.assertNotIn('ended codex/test0 %s on box0: it lost the race' % sha, w.read('output'))
+        with self.subTest(stopper='endRace'):
+            w, sha = self.race()
+            w.put('ssh-fails', '')
+            w.put('pool-mode', 'green')
+            w.wait(lambda: 'done codex/test0: green: %s' % sha in w.read('output'))
+            w.wait(lambda: 'box0 bash -s -- ' + sha in w.read('failed-stops'))
+            time.sleep(.3)
+            self.assertEqual(list((w.state / 'race-lost').iterdir()), [])
+            self.assertNotIn('stopped codex/test0 %s on box0' % sha, w.read('output'))
+            w.put('mode', 'pass')
+            w.wait(lambda: w.read('output').count('done codex/test0: green: %s' % sha) == 2)
+            self.assertNotIn('lost the race', w.read('output'))
+        with self.subTest(stopper='stopOlderRuns'):
+            w = self.reservation('box0 S\nbox1 S\n', [], release=False)
+            w.put('ssh-fails', '')
+            sha = '7' * 40
+            holder = subprocess.Popen(['sleep', '30'])
+            self.addCleanup(holder.kill)
+            log = w.state / 'logs/old.log'
+            (w.state / 'running' / str(holder.pid)).write_text('codex/old %s S box1 S tools-old:1 %s\n' % (sha, log))
+            (w.state / 'running-started' / str(holder.pid)).write_text('1000\n')
+            w.tips = [('codex/old', sha)]
+            w.put('tips', '%s\trefs/heads/codex/old\n' % sha)
+            (w.state / 'seen').write_text('codex/old %s\n' % sha)
+            (w.state / 'queue').write_text('S 900 codex/old %s\n' % sha)
+            w.put('initial', 'pass')
+            w.wait(lambda: 'codex/old %s' % sha in w.read('starts'))
+            self.assertIn('box1 bash -s -- ' + sha, w.read('failed-stops'))
+            self.assertNotIn('a newer run of the same sha starts', w.read('output'))
+            self.assertFalse((w.state / 'race-lost' / str(holder.pid)).exists())
+            # The old run, never stopped, ends green: a verdict, not a lost race.
+            log.write_text('green: %s passed, 3 packages, 900 pass, 0 skip, smoke 1 fixtures\n' % sha)
+            holder.kill()
+            holder.wait()  # a zombie still answers kill -0
+            w.wait(lambda: 'done codex/old: ' in w.read('output'))
+            self.assertNotIn('lost the race', w.read('output'))
 
     def test_a_pool_green_reaches_its_owner_and_promotes_no_tools(self):
         w = Watcher(1, canaryBox='box1', mode='hold', slots='pool P\n')
@@ -1084,7 +1350,7 @@ class WatchTests(unittest.TestCase):
         w.wait(lambda: 'held tools tools-one' in w.read('output'))
         w.wait(lambda: 'system_adamic_developer_tools|' in w.read('messages'))
         self.assertIn('held', w.read('messages'))
-        self.assertNotIn('system_adamic_integration', w.read('messages'))
+        self.assertNotIn('system_adamic_release_integration', w.read('messages'))
         self.assertEqual((w.state / 'tools-good').read_text().strip(), 'tools-zero')
         # Held: no second canary for the same tools, ten minutes on or not.
         w.put('clock', '1700')
@@ -1328,7 +1594,7 @@ class WatchTests(unittest.TestCase):
         w.wait(lambda: 'misread: wrong: census' in w.read('output'))
         self.assertEqual(w.read('good-starts').count('gate-mutant/plain '), before + 1)
         w.wait(lambda: w.read('messages').count('gate-mutant suite misread') == 2)
-        for recipient in ('system_adamic_developer_tools', 'system_adamic_integration'):
+        for recipient in ('system_adamic_developer_tools', 'system_adamic_release_integration'):
             self.assertIn(recipient + '|', w.read('messages'))
         # The same misread half an hour on pages nobody again.
         w.put('clock', '4600')
@@ -1365,7 +1631,7 @@ class WatchTests(unittest.TestCase):
         self.assertIn('with the good tools, the half-hourly canary', w.read('output'))
         self.assertIn('with tools tools-one: red: %s failed' % MAIN, w.read('output'))
         w.wait(lambda: w.read('messages').count('canary is not green') == 2)
-        for recipient in ('system_adamic_developer_tools', 'system_adamic_integration'):
+        for recipient in ('system_adamic_developer_tools', 'system_adamic_release_integration'):
             self.assertIn(recipient + '|', w.read('messages'))
         # The same red half an hour on pages nobody again; a green clears it, and the next red pages again.
         w.put('clock', '4600')
@@ -1435,6 +1701,43 @@ class WatchTests(unittest.TestCase):
         w.wait(lambda: 'done codex/c' in w.read('output'))
         self.assertNotIn('canary/main', w.read('starts'))
 
+    boxListing = ('cloud/fast-gate.sh', 'cloud/fast-gate/run.py', 'cloud/fast-gate/tools.txt', 'cloud/fast-gate/census-extra.json',
+                  'cloud/fast-gate/heavy-units.tsv', 'cloud/fast-gate/run_test.py', 'cloud/fast-gate/watch_test.py',
+                  'internal/skipcensus/census.go', 'go.mod')
+
+    def toolsTree(self, w, commit, changed=None):
+        """A tools commit's ls-tree -r listing of the box side, every blob the same but the one changed."""
+        w.put('tree-' + commit, ''.join('100644 blob %s\t%s\n' % (('b' if path == changed else 'a') * 40, path) for path in self.boxListing))
+
+    def test_a_tools_commit_changing_only_a_fast_gate_test_file_is_mac_only(self):
+        # Ruled by release_verdict, Oct 9 22:21Z: a watch_test.py edit moved the box-tools hash and staged as new box
+        # tools waiting on a canary, though no box runs it.
+        w = Watcher(2, canaryBox='box1', mode='hold')
+        self.addCleanup(w.close)
+        for commit in ('tools-zero', 'tools-one'):
+            self.toolsTree(w, commit)
+        self.toolsTree(w, 'tools-two', 'cloud/fast-gate/watch_test.py')
+        w.wait(lambda: len(w.read('starts').splitlines()) + len(w.read('good-starts').splitlines()) >= 1)
+        w.put('head', 'tools-two')
+        w.wait(lambda: 'tools tools-two change only the Mac side' in w.read('output'))
+        self.assertNotIn('staging tools', w.read('output'))
+
+    def test_a_tools_commit_changing_a_box_file_in_fast_gate_stages_box_tools(self):
+        w = Watcher(2, canaryBox='box1', mode='hold')
+        self.addCleanup(w.close)
+        for commit in ('tools-zero', 'tools-one'):
+            self.toolsTree(w, commit)
+        w.wait(lambda: len(w.read('starts').splitlines()) + len(w.read('good-starts').splitlines()) >= 1)
+        for index, path in enumerate(('cloud/fast-gate/run.py', 'cloud/fast-gate/tools.txt', 'cloud/fast-gate/census-extra.json',
+                                      'cloud/fast-gate/heavy-units.tsv')):
+            with self.subTest(path=path):
+                # The staging line names a commit's first nine characters, so each name differs within them.
+                commit = 'box%d-tools' % index
+                self.toolsTree(w, commit, path)
+                w.put('head', commit)
+                w.wait(lambda: 'staging tools %s' % commit[:9] in w.read('output'))
+                self.assertNotIn('tools %s change only the Mac side' % commit, w.read('output'))
+
     def test_control_without_globs(self):
         w = self.reservation('server B\nserver S\n',
                              [('cloud/land-other', 'B'), ('codex/small', 'S')])
@@ -1490,7 +1793,7 @@ class WatchTests(unittest.TestCase):
         storm = (w.state / 'storm').read_text()
         first_log = (w.state / 'void-window').read_text().splitlines()[0].split(' ', 1)[1]
         self.assertIn(first_log, storm)
-        for recipient in ('system_adamic_developer_tools', 'system_adamic_integration'):
+        for recipient in ('system_adamic_developer_tools', 'system_adamic_release_integration'):
             self.assertEqual(w.read('messages').count(recipient + '|'), 1)
         self.assertIn('void failure', w.read('messages'))
         self.assertNotRegex(w.read('messages'), r'[A-Z]{3,}')
@@ -1553,4 +1856,5 @@ class WatchTests(unittest.TestCase):
 
 
 if __name__ == '__main__':
+    interruptOnTermination()
     unittest.main()

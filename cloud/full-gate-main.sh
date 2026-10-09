@@ -7,7 +7,7 @@
 #
 # Each run publishes to gate-logs/<sha12>/<UTC stamp>/full-main, and again every time its status
 # line changes: the first failure turns status.txt red at once and is sent to
-# @system_adamic_integration (landings pause on it); the rest of the run goes on for triage only,
+# @system_adamic_release_integration (landings pause on it); the rest of the run goes on for triage only,
 # and full.json ("finished": true) lands when it ends. The run owns the box's last quarter of CPUs at
 # normal priority (the fast gate's slots own the rest): under the idle class its own Node reference
 # processes starved whenever the slots were busy, and a 1 s node deadline went red on main.
@@ -380,9 +380,9 @@ BOX
           range="no green full gate recorded yet, so no range to bisect"
         fi
         if [ "${origin}" = request ]; then
-          (cd /Users/kirkouimet/Projects/ahra && ahra os send system_adamic_integration "Whole gate of the star's candidate ${sha} (a request, not main) is red: ${status}. Log: gate-logs/${sha:0:12}/${stamp}/full-main (first-failure.txt). It runs on for triage while the candidate stays in the requests file." >/dev/null 2>&1 || true)
+          (cd /Users/kirkouimet/Projects/ahra && ahra os send system_adamic_release_integration "Whole gate of the star's candidate ${sha} (a request, not main) is red: ${status}. Log: gate-logs/${sha:0:12}/${stamp}/full-main (first-failure.txt). It runs on for triage while the candidate stays in the requests file." >/dev/null 2>&1 || true)
         else
-          (cd /Users/kirkouimet/Projects/ahra && ahra os send system_adamic_integration "Full gate of main ${sha} is red: ${status}. Log: gate-logs/${sha:0:12}/${stamp}/full-main (first-failure.txt). ${range}. Bisect those on a fast slot. The rest keeps running for triage." >/dev/null 2>&1 || true)
+          (cd /Users/kirkouimet/Projects/ahra && ahra os send system_adamic_release_integration "Full gate of main ${sha} is red: ${status}. Log: gate-logs/${sha:0:12}/${stamp}/full-main (first-failure.txt). ${range}. Bisect those on a fast slot. The rest keeps running for triage." >/dev/null 2>&1 || true)
         fi
         # A red that may be load (a timeout, a stall, a kill) gets Loom's same-instance A/B against the candidate's first
         # parent, and the verdict comes back to integration (cloud/ab-trigger.py; @system_adamic from the witness, Oct 9).
@@ -390,7 +390,7 @@ BOX
         if ssh "${box}" "cat ~/${out}/first-failure.txt" > "${firstFailure}" 2> /dev/null; then
           git -C "${here}" fetch -q origin "${gated}" 2> /dev/null || true
           python3 "${here}/cloud/ab-trigger.py" write --candidate "${gated}" --main "$(git -C "${here}" rev-parse "${gated}^1" 2> /dev/null)" \
-            --red "gate-logs/${sha:0:12}/${stamp}/full-main" --first-failure "${firstFailure}" --notify system_adamic_integration || true
+            --red "gate-logs/${sha:0:12}/${stamp}/full-main" --first-failure "${firstFailure}" --notify system_adamic_release_integration || true
         fi
         rm -f "${firstFailure}"
       fi
@@ -529,21 +529,40 @@ dropRequest() {
 # confirms. Once the pool is promoted (Kirk, Oct 9: "we always need full gates to be running on loom"), a main the pool
 # has taken (running or finished) is the pool's, unless its sha is one the boxes spot-check; and a main the pool hasn't
 # taken yet waits ten minutes (ADAMIC_POOL_GRACE seconds) for it, so the pool goes first and a stalled pool still never
-# leaves main ungated.
+# leaves main ungated. The grace counts from when main first went without a whole gate (unconfirmedSince), not from this
+# sha's first sighting (found by Kirk, Oct 9 21:37Z: main moves every few minutes, so each landing restarted a per-sha
+# grace, the box never took main while the pool took none, and main went unconfirmed for over an hour).
 mainTurn() {
-  local main=$1 seen now
+  local main=$1 since now
+  now=$(date -u +%s)
+  # Every main checked is in mains-seen, in the order first seen, so one the box or pool gated bounds the stretch after it.
+  grep -q "^${main} " "${state}/mains-seen" 2> /dev/null || echo "${main} ${now}" >> "${state}/mains-seen"
   case $(recordState "${main}") in none | void) ;; *) return 1 ;; esac
   if poolPromoted && ! spotCheck "${main}"; then
     case $(recordState "${main}" pool) in green | red | running) return 1 ;; esac
-    now=$(date -u +%s)
-    seen=$(awk -v main="${main}" '$1 == main {print $2; exit}' "${state}/mains-seen" 2> /dev/null || true)
-    if [ -z "${seen}" ]; then
-      echo "${main} ${now}" >> "${state}/mains-seen"
-      seen=${now}
-    fi
-    [ $((now - seen)) -ge "${ADAMIC_POOL_GRACE:-600}" ] || return 1
+    since=$(unconfirmedSince "${main}")
+    [ $((now - ${since:-${now}})) -ge "${ADAMIC_POOL_GRACE:-600}" ] || return 1
   fi
   return 0
+}
+# When main first went without a whole gate: the first sighting of the oldest main seen since the newest seen main that
+# has a whole-gate record, a box's or the pool's, running or finished (a void confirms nothing), or that a green neighbor
+# confirmed. A finished record never changes, so a main found with one is kept in mains-recorded and not asked again.
+unconfirmedSince() {
+  local main=$1 sha seen since=""
+  while read -r sha seen; do
+    [ "${sha}" != "${main}" ] && mainRecorded "${sha}" && break
+    since=${seen}
+  done < <(awk '{ line[NR] = $0 } END { for (n = NR; n > 0; n--) print line[n] }' "${state}/mains-seen" 2> /dev/null)
+  echo "${since}"
+}
+mainRecorded() {
+  grep -qx "$1" "${state}/mains-recorded" "${state}/confirmed" 2> /dev/null && return 0
+  case $(recordState "$1" any) in
+    green | red) echo "$1" >> "${state}/mains-recorded"; return 0 ;;
+    running) return 0 ;;
+  esac
+  return 1
 }
 
 [ "${ADAMIC_FULL_GATE_LIBRARY:-}" = 1 ] && return 0

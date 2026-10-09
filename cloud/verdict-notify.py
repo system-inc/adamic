@@ -31,7 +31,7 @@ import time
 here = Path(__file__).resolve().parent.parent
 state = Path(os.environ.get('ADAMIC_FAST_GATE_WATCH_STATE', str(Path.home() / '.adamic-fast-gate-watch')))
 ahra = Path(os.environ.get('ADAMIC_FAST_GATE_AHRA_DIR', '/Users/kirkouimet/Projects/ahra'))
-integration = 'system_adamic_integration'
+integration = 'system_adamic_release_integration'
 tables = ('areas.tsv', 'area-routes.tsv', 'fleet-areas.tsv', 'census-owners.tsv', 'area-route.py')
 
 

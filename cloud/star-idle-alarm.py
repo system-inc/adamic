@@ -443,7 +443,12 @@ def checkConfirmation(now):
     # after landing while the loop was three minutes into e69fcba7). Quiet while that run is unfinished and younger than
     # busyLimit; a run past it, or a loop that isn't running anything, still pages.
     busy = busyWith(log, now)
+    seen = state / 'main-head-first-seen'
+    stretch = [line.split() for line in lines(seen) if len(line.split()) == 2]
     if busy:
+        # A main the box is running bounds the stretch: every main seen before its run is behind it, and only the head's
+        # own sighting carries over.
+        seen.write_text(''.join('%s %s\n' % tuple(entry) for entry in stretch if entry[0] == head))
         return 'main %s queued behind a running main gate, %s' % (head[:12], busy), None, None, []
     # The pool's record (or a box's published before its log line) confirms it as well as the loop's log does.
     if wholeGate(head)[0] in ('running', 'green', 'red'):
@@ -455,18 +460,26 @@ def checkConfirmation(now):
         if wholeGate(base)[0] in ('running', 'green', 'red'):
             return ('main %s covered by %s\'s %s whole gate (test-only landings since)' % (head[:12], base[:12], wholeGate(base)[0]),
                     None, None, [])
-    seen = state / 'main-head-first-seen'
-    fields = (lines(seen) or [''])[0].split()
-    if len(fields) != 2 or fields[0] != head:
-        seen.write_text('%s %d\n' % (head, now))
-        fields = [head, str(now)]
-    waited = now - int(fields[1])
-    limit = queuedLimit + (poolGrace if poolPromoted.exists() else 0)
+    # The unconfirmed stretch, as full-gate-main.sh's mainTurn counts its pool grace (found by Kirk, Oct 9 21:37Z): every
+    # main seen unconfirmed, in order, back to the newest one whose whole gate runs or ran (the pool may take a main after
+    # main moved on). Timed per head, a page never came, since main moves every few minutes (over an hour unconfirmed).
+    # It pages at the pool's grace, ten minutes (@system_adamic), once per stretch: its key is the stretch's first main.
+    if head not in [entry[0] for entry in stretch]:
+        stretch.append([head, str(now)])
+    for index in range(len(stretch) - 2, -1, -1):
+        if wholeGate(stretch[index][0])[0] in ('running', 'green', 'red'):
+            stretch = stretch[index + 1:]
+            break
+    seen.write_text(''.join('%s %s\n' % tuple(entry) for entry in stretch))
+    first, since = stretch[0][0], int(stretch[0][1])
+    waited = now - since
+    limit = poolGrace if poolPromoted.exists() else queuedLimit
     if waited < limit:
         return 'main %s not yet confirmed, %d s of %d' % (head[:12], waited, limit), None, None, []
-    return ('main %s unconfirmed %d s' % (head[:12], waited), 'unconfirmed:' + head,
-            "Main moved to %s %d s ago and no whole gate has started on it: the full-gate loop (com.adamic.full-gate-main, "
-            "Home) isn't confirming main, so a landing's red can't show." % (head[:12], waited), ['system_adamic_developer_tools'])
+    return ('main %s unconfirmed %d s' % (head[:12], waited), 'unconfirmed:' + first,
+            "Main moved to %s and no whole gate has started on it or on any main since %s went ungated %d s ago: the "
+            "full-gate loop (com.adamic.full-gate-main, Home) and Loom's pool aren't confirming main, so a landing's red "
+            "can't show." % (head[:12], first[:12], waited), ['system_adamic_developer_tools'])
 
 
 def mainRed():
@@ -514,7 +527,7 @@ def checkMain(now):
     row = mainRedRow(sha) or {'owner': '', 'fix': '', 'closed': False}
     if row['closed']:
         return 'main red %s, explained in main-reds.tsv' % sha[:12], None, None, []
-    owner = row['owner'] or 'system_adamic_integration'
+    owner = row['owner'] or 'system_adamic_release_integration'
     if not row['fix']:
         return ('main red %s, no fix-forward named' % sha[:12], 'main:' + sha,
                 'Main %s is red at %s (%s) and main-reds.tsv names no fix-forward for it (a row with "owner @<name>" and '
@@ -528,7 +541,7 @@ def checkMain(now):
     if key.startswith('green:'):
         return ('main red %s, fix-forward %s' % (sha[:12], summary), 'main:%s:%s' % (sha, key),
                 'Main %s is red at %s and its fix-forward %s is green but not landed (%s). Nothing lands until it does.'
-                % (sha[:12], where, row['fix'], summary), ['system_adamic_integration'])
+                % (sha[:12], where, row['fix'], summary), ['system_adamic_release_integration'])
     return ('main red %s, fix-forward %s' % (sha[:12], summary), 'main:%s:%s' % (sha, key),
             'Main %s is red at %s and its fix-forward %s has no live turn in the gate (%s). Nothing lands until it does.'
             % (sha[:12], where, row['fix'], summary), [owner])
@@ -552,7 +565,7 @@ def once(step, chain=()):
     quiet = checkQuiet(chain, now)
     if chain:
         print('%s chain: %s' % (time.strftime('%H:%M:%S', time.gmtime()), '; '.join(summary for summary, _, _, _ in quiet)), flush=True)
-    starOwners = ['system_adamic_integration'] if key and key.startswith('green:') else ([step['owner']] if step else [])
+    starOwners = ['system_adamic_release_integration'] if key and key.startswith('green:') else ([step['owner']] if step else [])
     alarms = [('star-idle-alarmed', key, text, starOwners),
               ('main-red-alarmed', mainKey, mainText, mainOwners),
               ('main-confirm-alarmed', confirmKey, confirmText, confirmOwners)]

@@ -83,7 +83,7 @@ exit 3 without a refusal is conflict; exit 0 without a refusal is merged.
 
 `<state>/area-held.tsv` lists active held branches and reasons. Per-branch JSON entries under
 `<state>/area-held` retain successful notification recipients across polls, restarts and new
-SHAs. A hold sends branch, SHA and reason once to `system_adamic_integration`, and once to each
+SHAs. A hold sends branch, SHA and reason once to `system_adamic_release_integration`, and once to each
 Circle named as `@name` or `system_*` in the reason, using `ahra os send` from
 `/Users/kirkouimet/Projects/ahra`. Failed sends retry without repeating successful recipients.
 Routing decisions are never inferred from changed files. No conflict is resolved here.
