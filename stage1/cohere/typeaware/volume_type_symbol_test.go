@@ -52,17 +52,7 @@ func typeSymbolMust(h *harness, label, name string, args ...string) result {
 }
 
 func typeSymbolOracle(h *harness) string {
-	virtual := filepath.Join(h.repository, "cohere/adamic_type_symbol_oracle.go")
-	overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: filepath.Join(h.repository, "stage1/cohere/typeaware/testdata/oracle_volume.go")}})
-	if err != nil {
-		h.t.Fatal(err)
-	}
-	binary := filepath.Join(h.directory, "type-symbol-oracle")
-	command, cancel := typeSymbolExec(90*time.Second, "go", "build", "-overlay", h.write("oracle-overlay.json", string(overlay)), "-o", binary, virtual)
-	defer cancel()
-	command.Dir = filepath.Join(h.repository, "cohere")
-	h.must("type-symbol-oracle", command)
-	return binary
+	return typeAwareOverlayOracle(h, "type-symbol-oracle-build", "type-symbol-oracle", "adamic_type_symbol_oracle.go", "oracle_volume.go", "oracle-overlay.json", false)
 }
 
 func typeSymbolFileHash(path string) (string, error) {
@@ -189,50 +179,65 @@ func TestVolumeTypeSymbolPlantedSurvivor(t *testing.T) {
 	t.Log("planted surviving type-symbol mutant caught exactly by TestVolumeTypeSymbol_000")
 }
 
-func TestVolumeTypeSymbol_000(t *testing.T) {
-	t.Parallel()
-	if selector := os.Getenv("ADAMIC_TEST_SHARD"); selector != "" {
-		var i, n int
-		if _, err := fmt.Sscanf(selector, "%d/%d", &i, &n); err != nil || n < 1 || i < 0 || i >= n {
-			t.Fatalf("invalid ADAMIC_TEST_SHARD %q", selector)
-		}
-		if i != 0 {
-			t.Skip("assigned to shard selector 0")
-		}
-	}
-	repository, err := filepath.Abs("../../..")
-	if err != nil {
-		t.Fatal(err)
-	}
-	h := &harness{t: t, repository: repository, directory: t.TempDir()}
-	// GoBuild is not on this main base yet. Go products build once per invocation;
-	// overlay mutant archives remain private, as required by buildcache.
-	stage0 := filepath.Join(h.directory, "adamic")
-	typeSymbolMust(h, "type-symbol-stage0", "go", "build", "-o", stage0, "./cmd/adamic")
-	oracle := typeSymbolOracle(h)
+func typeSymbolArchive(h *harness) string {
 	overlay := h.overlay("type-symbol", "bridge/tsgo/checker/facts.go", "name = symbol.Name", "name = symbol.Name + \"wrong\"")
-	archive := filepath.Join(h.directory, "type-symbol-checker.a")
-	typeSymbolMust(h, "type-symbol-checker", "go", "build", "-buildmode=c-archive", "-o", archive, "-overlay", overlay, "./bridge/tsgo/archive")
-	entry := filepath.Join(repository, "stage1/cohere/typeaware/volume_suite.ts")
-	inputs, build, err := typeSymbolNativeSpec(repository, stage0, "volume-type-symbol-native", entry, archive, false)
+	command := exec.Command("go", "build", "-buildmode=c-archive", "-o", filepath.Join(h.directory, "type-symbol-checker.a"), "-overlay", overlay, "./bridge/tsgo/archive")
+	return h.sixBuildProduct("type-symbol-checker", command)
+}
+
+func typeSymbolNativeProduct(h *harness) string {
+	stage0 := h.stage0()
+	archive := typeSymbolArchive(h)
+	inputs, build, err := typeSymbolNativeSpec(h.repository, stage0, "volume-type-symbol-native", filepath.Join(h.repository, "stage1/cohere/typeaware/volume_suite.ts"), archive, false)
 	if err != nil {
-		t.Fatal(err)
+		h.t.Fatal(err)
 	}
-	mutant := filepath.Join(buildcache.Product(t, inputs, build), "native")
-	config := filepath.Join(repository, "stage1/cohere/typeaware/testdata/tsconfig.json")
+	return filepath.Join(buildcache.Product(h.t, inputs, build), "native")
+}
+
+func typeSymbolFixtures(h *harness) ([]string, string) {
 	cases := typeSymbolCases()
-	var paths []string
-	for _, id := range typeSymbolIDs(0) {
-		name := fmt.Sprintf("control-%03d.ts", id)
-		if id == len(cases)-2 {
-			name = "native-globals.d.ts"
-		}
-		if id == len(cases)-1 {
-			name = "native-console.ts"
-		}
-		paths = append(paths, h.write(name, cases[id]))
+	data, err := json.Marshal(cases)
+	if err != nil {
+		h.t.Fatal(err)
 	}
-	manifest := h.write("controls.manifest", strings.Join(paths, "\n")+"\n")
+	directory := buildcache.Product(h.t, buildcache.Inputs{Name: "volume-type-symbol-fixtures", Flags: []string{string(data)}}, func(directory string) error {
+		local := &harness{t: h.t, repository: h.repository, directory: directory}
+		var paths []string
+		for _, id := range typeSymbolIDs(0) {
+			name := fmt.Sprintf("control-%03d.ts", id)
+			if id == len(cases)-2 {
+				name = "native-globals.d.ts"
+			}
+			if id == len(cases)-1 {
+				name = "native-console.ts"
+			}
+			paths = append(paths, local.write(name, cases[id]))
+		}
+		var names []string
+		for _, path := range paths {
+			names = append(names, filepath.Base(path))
+		}
+		manifest := local.write("controls.manifest", strings.Join(names, "\n")+"\n")
+
+		_ = manifest
+		return nil
+	})
+	manifest := filepath.Join(directory, "controls.manifest")
+	data, err = os.ReadFile(manifest)
+	if err != nil {
+		h.t.Fatal(err)
+	}
+	var paths []string
+	for _, name := range strings.Split(strings.TrimSpace(string(data)), "\n") {
+		paths = append(paths, filepath.Join(directory, name))
+	}
+	return paths, h.write("controls.manifest", strings.Join(paths, "\n")+"\n")
+}
+
+func typeSymbolTruth(h *harness, oracle string, paths []string, manifest string) result {
+	t, repository := h.t, h.repository
+	config := filepath.Join(repository, "stage1/cohere/typeaware/testdata/tsconfig.json")
 	// Every root and the config are product inputs; Go-oracle bytes cover its
 	// embedded standard-library declarations and compiled production rules.
 	oracleHash, err := typeSymbolFileHash(oracle)
@@ -264,7 +269,30 @@ func TestVolumeTypeSymbol_000(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	truth := result{stdout: truthBytes}
+	return result{stdout: truthBytes}
+}
+
+func TestVolumeTypeSymbol_000(t *testing.T) {
+	t.Parallel()
+	if selector := os.Getenv("ADAMIC_TEST_SHARD"); selector != "" {
+		var i, n int
+		if _, err := fmt.Sscanf(selector, "%d/%d", &i, &n); err != nil || n < 1 || i < 0 || i >= n {
+			t.Fatalf("invalid ADAMIC_TEST_SHARD %q", selector)
+		}
+		if i != 0 {
+			t.Skip("assigned to shard selector 0")
+		}
+	}
+	repository, err := filepath.Abs("../../..")
+	if err != nil {
+		t.Fatal(err)
+	}
+	h := &harness{t: t, repository: repository, directory: t.TempDir()}
+	oracle := typeSymbolOracle(h)
+	mutant := typeSymbolNativeProduct(h)
+	config := filepath.Join(repository, "stage1/cohere/typeaware/testdata/tsconfig.json")
+	paths, manifest := typeSymbolFixtures(h)
+	truth := typeSymbolTruth(h, oracle, paths, manifest)
 	observed := typeSymbolMust(h, "type-symbol-run", mutant, config, manifest)
 	if err := typeSymbolSurvived(observed, truth); err != nil {
 		t.Fatal(err)
