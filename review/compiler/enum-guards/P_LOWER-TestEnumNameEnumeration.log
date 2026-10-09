@@ -1,0 +1,8 @@
+=== RUN   TestEnumNameEnumeration
+=== PAUSE TestEnumNameEnumeration
+=== CONT  TestEnumNameEnumeration
+    enum_flags_test.go:130: lowering returned empty IR
+--- FAIL: TestEnumNameEnumeration (0.03s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.038s
+FAIL

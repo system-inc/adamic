@@ -1,0 +1,54 @@
+=== RUN   TestFlagEnumsDomain
+=== PAUSE TestFlagEnumsDomain
+=== RUN   TestEnumNeverDefault
+=== PAUSE TestEnumNeverDefault
+=== RUN   TestFlagEnumLiteralSpellings
+=== PAUSE TestFlagEnumLiteralSpellings
+=== RUN   TestFlagEnumMemberAliases
+=== PAUSE TestFlagEnumMemberAliases
+=== RUN   TestEnumNameEnumeration
+=== PAUSE TestEnumNameEnumeration
+=== RUN   TestFlagEnumInlineIteration
+=== PAUSE TestFlagEnumInlineIteration
+=== RUN   TestEnumMemberValuesAndReverseNameMatchNode
+=== PAUSE TestEnumMemberValuesAndReverseNameMatchNode
+=== RUN   TestNumericEnumsAreOpen
+=== PAUSE TestNumericEnumsAreOpen
+=== CONT  TestFlagEnumsDomain
+    enum_flags_test.go:72: bitwise_updates
+=== CONT  TestEnumNameEnumeration
+=== CONT  TestFlagEnumLiteralSpellings
+=== CONT  TestFlagEnumMemberAliases
+=== CONT  TestEnumNeverDefault
+=== NAME  TestFlagEnumMemberAliases
+    enum_flags_test.go:119: enum Flags fields = []lower.enumGuardField{lower.enumGuardField{name:"None", value:1}, lower.enumGuardField{name:"0", value:"None"}, lower.enumGuardField{name:"A", value:2}, lower.enumGuardField{name:"1", value:"Alias"}, lower.enumGuardField{name:"B", value:3}, lower.enumGuardField{name:"2", value:"Qualified"}, lower.enumGuardField{name:"Alias", value:2}, lower.enumGuardField{name:"Qualified", value:3}}, want []lower.enumGuardField{lower.enumGuardField{name:"None", value:0}, lower.enumGuardField{name:"0", value:"None"}, lower.enumGuardField{name:"A", value:1}, lower.enumGuardField{name:"1", value:"Alias"}, lower.enumGuardField{name:"B", value:2}, lower.enumGuardField{name:"2", value:"Qualified"}, lower.enumGuardField{name:"Alias", value:1}, lower.enumGuardField{name:"Qualified", value:2}}
+--- FAIL: TestFlagEnumMemberAliases (0.07s)
+=== CONT  TestEnumMemberValuesAndReverseNameMatchNode
+=== NAME  TestEnumNeverDefault
+    enum_flags_test.go:88: enum Color fields = []lower.enumGuardField{lower.enumGuardField{name:"Red", value:1}, lower.enumGuardField{name:"0", value:"Red"}, lower.enumGuardField{name:"Green", value:2}, lower.enumGuardField{name:"1", value:"Green"}, lower.enumGuardField{name:"Blue", value:3}, lower.enumGuardField{name:"2", value:"Blue"}}, want []lower.enumGuardField{lower.enumGuardField{name:"Red", value:0}, lower.enumGuardField{name:"0", value:"Red"}, lower.enumGuardField{name:"Green", value:1}, lower.enumGuardField{name:"1", value:"Green"}, lower.enumGuardField{name:"Blue", value:2}, lower.enumGuardField{name:"2", value:"Blue"}}
+--- FAIL: TestEnumNeverDefault (0.07s)
+=== CONT  TestNumericEnumsAreOpen
+    enums_open_test.go:23: singleton
+=== NAME  TestFlagEnumLiteralSpellings
+    enum_flags_test.go:108: enum Flags fields = []lower.enumGuardField{lower.enumGuardField{name:"None", value:1}, lower.enumGuardField{name:"0", value:"None"}, lower.enumGuardField{name:"A", value:2}, lower.enumGuardField{name:"1", value:"A"}, lower.enumGuardField{name:"High", value:1.073741825e+09}, lower.enumGuardField{name:"1073741824", value:"High"}}, want []lower.enumGuardField{lower.enumGuardField{name:"None", value:0}, lower.enumGuardField{name:"0", value:"None"}, lower.enumGuardField{name:"A", value:1}, lower.enumGuardField{name:"1", value:"A"}, lower.enumGuardField{name:"High", value:1.073741824e+09}, lower.enumGuardField{name:"1073741824", value:"High"}}
+--- FAIL: TestFlagEnumLiteralSpellings (0.07s)
+=== CONT  TestFlagEnumInlineIteration
+=== NAME  TestFlagEnumsDomain
+    enum_flags_test.go:77: enum Flags fields = []lower.enumGuardField{lower.enumGuardField{name:"None", value:1}, lower.enumGuardField{name:"0", value:"None"}, lower.enumGuardField{name:"A", value:2}, lower.enumGuardField{name:"1", value:"A"}, lower.enumGuardField{name:"B", value:3}, lower.enumGuardField{name:"2", value:"B"}, lower.enumGuardField{name:"High", value:1.073741825e+09}, lower.enumGuardField{name:"1073741824", value:"High"}, lower.enumGuardField{name:"Both", value:4}, lower.enumGuardField{name:"3", value:"Both"}}, want []lower.enumGuardField{lower.enumGuardField{name:"None", value:0}, lower.enumGuardField{name:"0", value:"None"}, lower.enumGuardField{name:"A", value:1}, lower.enumGuardField{name:"1", value:"A"}, lower.enumGuardField{name:"B", value:2}, lower.enumGuardField{name:"2", value:"B"}, lower.enumGuardField{name:"High", value:1.073741824e+09}, lower.enumGuardField{name:"1073741824", value:"High"}, lower.enumGuardField{name:"Both", value:3}, lower.enumGuardField{name:"3", value:"Both"}}
+--- FAIL: TestFlagEnumsDomain (0.07s)
+=== NAME  TestEnumNameEnumeration
+    enum_flags_test.go:130: enum Names fields = []lower.enumGuardField{lower.enumGuardField{name:"A", value:1}, lower.enumGuardField{name:"0", value:"A"}, lower.enumGuardField{name:"B", value:2}, lower.enumGuardField{name:"1", value:"Alias"}, lower.enumGuardField{name:"Alias", value:2}}, want []lower.enumGuardField{lower.enumGuardField{name:"A", value:0}, lower.enumGuardField{name:"0", value:"A"}, lower.enumGuardField{name:"B", value:1}, lower.enumGuardField{name:"1", value:"Alias"}, lower.enumGuardField{name:"Alias", value:1}}
+--- FAIL: TestEnumNameEnumeration (0.09s)
+=== NAME  TestFlagEnumInlineIteration
+    enum_flags_test.go:145: enum Flags fields = []lower.enumGuardField{lower.enumGuardField{name:"None", value:1}, lower.enumGuardField{name:"0", value:"None"}, lower.enumGuardField{name:"A", value:2}, lower.enumGuardField{name:"1", value:"A"}, lower.enumGuardField{name:"B", value:3}, lower.enumGuardField{name:"2", value:"B"}, lower.enumGuardField{name:"High", value:1.073741825e+09}, lower.enumGuardField{name:"1073741824", value:"High"}, lower.enumGuardField{name:"Both", value:4}, lower.enumGuardField{name:"3", value:"Both"}}, want []lower.enumGuardField{lower.enumGuardField{name:"None", value:0}, lower.enumGuardField{name:"0", value:"None"}, lower.enumGuardField{name:"A", value:1}, lower.enumGuardField{name:"1", value:"A"}, lower.enumGuardField{name:"B", value:2}, lower.enumGuardField{name:"2", value:"B"}, lower.enumGuardField{name:"High", value:1.073741824e+09}, lower.enumGuardField{name:"1073741824", value:"High"}, lower.enumGuardField{name:"Both", value:3}, lower.enumGuardField{name:"3", value:"Both"}}
+--- FAIL: TestFlagEnumInlineIteration (0.04s)
+=== NAME  TestNumericEnumsAreOpen
+    enums_open_test.go:45: enum E fields = []lower.enumGuardField{lower.enumGuardField{name:"A", value:1}, lower.enumGuardField{name:"0", value:"A"}}, want []lower.enumGuardField{lower.enumGuardField{name:"A", value:0}, lower.enumGuardField{name:"0", value:"A"}}
+--- FAIL: TestNumericEnumsAreOpen (0.05s)
+=== NAME  TestEnumMemberValuesAndReverseNameMatchNode
+    enum_guards_test.go:188: JavaScript backend stdout = "2 3 2 Alias\n", source Node = "1 2 1 Alias\n"
+    enum_guards_test.go:188: native backend stdout = "2 3 2 Alias\n", source Node = "1 2 1 Alias\n"
+--- FAIL: TestEnumMemberValuesAndReverseNameMatchNode (0.36s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.443s
+FAIL

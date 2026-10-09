@@ -1,0 +1,73 @@
+=== RUN   TestFlagEnumsDomain
+=== PAUSE TestFlagEnumsDomain
+=== RUN   TestEnumNeverDefault
+=== PAUSE TestEnumNeverDefault
+=== RUN   TestFlagEnumLiteralSpellings
+=== PAUSE TestFlagEnumLiteralSpellings
+=== RUN   TestFlagEnumMemberAliases
+=== PAUSE TestFlagEnumMemberAliases
+=== RUN   TestEnumNameEnumeration
+=== PAUSE TestEnumNameEnumeration
+=== RUN   TestFlagEnumInlineIteration
+=== PAUSE TestFlagEnumInlineIteration
+=== RUN   TestNumericEnumsAreOpen
+=== PAUSE TestNumericEnumsAreOpen
+=== CONT  TestFlagEnumsDomain
+    enum_flags_test.go:72: bitwise_updates
+=== CONT  TestEnumNameEnumeration
+=== CONT  TestFlagEnumLiteralSpellings
+=== CONT  TestNumericEnumsAreOpen
+=== CONT  TestFlagEnumInlineIteration
+=== NAME  TestNumericEnumsAreOpen
+    enums_open_test.go:23: singleton
+=== NAME  TestFlagEnumsDomain
+    enum_flags_test.go:72: alias
+--- PASS: TestFlagEnumLiteralSpellings (0.16s)
+=== CONT  TestFlagEnumMemberAliases
+=== NAME  TestNumericEnumsAreOpen
+    enums_open_test.go:23: member_tags
+=== NAME  TestFlagEnumsDomain
+    enum_flags_test.go:72: or
+    enum_flags_test.go:72: xor
+--- PASS: TestFlagEnumMemberAliases (0.10s)
+=== CONT  TestEnumNeverDefault
+=== NAME  TestFlagEnumsDomain
+    enum_flags_test.go:72: and_left
+=== NAME  TestNumericEnumsAreOpen
+    enums_open_test.go:23: coalesce
+--- PASS: TestEnumNeverDefault (0.04s)
+=== NAME  TestFlagEnumsDomain
+    enum_flags_test.go:72: and_right
+    enum_flags_test.go:72: and_complement
+=== NAME  TestNumericEnumsAreOpen
+    enums_open_test.go:23: arithmetic
+=== NAME  TestFlagEnumsDomain
+    enum_flags_test.go:72: nested
+    enum_flags_test.go:72: field
+=== NAME  TestNumericEnumsAreOpen
+    enums_open_test.go:23: signed_flags
+=== NAME  TestFlagEnumsDomain
+    enum_flags_test.go:72: array
+--- PASS: TestEnumNameEnumeration (0.50s)
+--- PASS: TestFlagEnumInlineIteration (0.50s)
+=== NAME  TestFlagEnumsDomain
+    enum_flags_test.go:72: map
+=== NAME  TestNumericEnumsAreOpen
+    enums_open_test.go:23: cast
+=== NAME  TestFlagEnumsDomain
+    enum_flags_test.go:72: parameter
+    enum_flags_test.go:72: optional
+=== NAME  TestNumericEnumsAreOpen
+    enums_open_test.go:23: containers
+=== NAME  TestFlagEnumsDomain
+    enum_flags_test.go:72: switch
+=== NAME  TestNumericEnumsAreOpen
+    enums_open_test.go:23: optional_object
+=== NAME  TestFlagEnumsDomain
+    enum_flags_test.go:79: left flag domain = false, want true
+    enum_flags_test.go:79: right flag domain = false, want true
+--- FAIL: TestFlagEnumsDomain (0.67s)
+--- PASS: TestNumericEnumsAreOpen (0.70s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.713s
+FAIL

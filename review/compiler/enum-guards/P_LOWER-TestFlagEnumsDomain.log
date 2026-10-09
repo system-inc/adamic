@@ -1,0 +1,9 @@
+=== RUN   TestFlagEnumsDomain
+=== PAUSE TestFlagEnumsDomain
+=== CONT  TestFlagEnumsDomain
+    enum_flags_test.go:72: bitwise_updates
+    enum_flags_test.go:77: lowering returned empty IR
+--- FAIL: TestFlagEnumsDomain (0.03s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.043s
+FAIL

@@ -1,0 +1,20 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/enums.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/enums.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/enums.a
+    oracle_test.go:774: stdout differs
+        node:   exit 0, stdout "0: zero First\n1: one Second\n4: four Alias\n-1: negative Negative\n1.5: fraction Fraction\nfirst second first\n0,1,4,First,Second,Fourth,Alias,Negative,-1,Fraction,1.5\nFirst,Second,Again\n4\nAlias 1 missing\ntrue 0 Alias\na\n7 seven Number\n7,Number,Text\nExponent Tiny NegativeZero\n0,Exponent,1e+21,Tiny,1e-7,NegativeZero\n0\n1\nfirst\nsecond\n0 1\n0 99 first missing\n", stderr ""
+        native: exit 0, stdout "1: zero Second\n2: one missing\n5: four missing\n0: negative Negative\n2.5: fraction missing\nfirst second first\n0,1,4,First,Second,Fourth,Alias,Negative,Fraction,1.5\nFirst,Second,Again\n5\nAlias 1 missing\ntrue 1 Alias\na\n8 seven Number\n7,Number,Text\nExponent Tiny NegativeZero\n0,Exponent,1e+21,Tiny,1e-7,NegativeZero\n1\n2\nfirst\nsecond\n1 1\n1 99 first missing\n", stderr ""
+    oracle_test.go:780: JavaScript backend: stdout differs
+        node:    exit 0, stdout "0: zero First\n1: one Second\n4: four Alias\n-1: negative Negative\n1.5: fraction Fraction\nfirst second first\n0,1,4,First,Second,Fourth,Alias,Negative,-1,Fraction,1.5\nFirst,Second,Again\n4\nAlias 1 missing\ntrue 0 Alias\na\n7 seven Number\n7,Number,Text\nExponent Tiny NegativeZero\n0,Exponent,1e+21,Tiny,1e-7,NegativeZero\n0\n1\nfirst\nsecond\n0 1\n0 99 first missing\n", stderr ""
+        backend: exit 0, stdout "1: zero Second\n2: one missing\n5: four missing\n0: negative Negative\n2.5: fraction missing\nfirst second first\n0,1,4,First,Second,Fourth,Alias,Negative,Fraction,1.5\nFirst,Second,Again\n5\nAlias 1 missing\ntrue 1 Alias\na\n8 seven Number\n7,Number,Text\nExponent Tiny NegativeZero\n0,Exponent,1e+21,Tiny,1e-7,NegativeZero\n1\n2\nfirst\nsecond\n1 1\n1 99 first missing\n", stderr ""
+--- FAIL: TestNativeAgreesWithNode (0.02s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/enums.a (0.60s)
+FAIL
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.637s
+FAIL

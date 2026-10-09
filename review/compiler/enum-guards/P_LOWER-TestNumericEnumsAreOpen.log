@@ -1,0 +1,9 @@
+=== RUN   TestNumericEnumsAreOpen
+=== PAUSE TestNumericEnumsAreOpen
+=== CONT  TestNumericEnumsAreOpen
+    enums_open_test.go:23: singleton
+    enums_open_test.go:45: lowering returned empty IR
+--- FAIL: TestNumericEnumsAreOpen (0.03s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.037s
+FAIL

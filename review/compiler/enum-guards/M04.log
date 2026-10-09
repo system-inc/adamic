@@ -1,0 +1,74 @@
+=== RUN   TestFlagEnumsDomain
+=== PAUSE TestFlagEnumsDomain
+=== RUN   TestEnumNeverDefault
+=== PAUSE TestEnumNeverDefault
+=== RUN   TestFlagEnumLiteralSpellings
+=== PAUSE TestFlagEnumLiteralSpellings
+=== RUN   TestFlagEnumMemberAliases
+=== PAUSE TestFlagEnumMemberAliases
+=== RUN   TestEnumNameEnumeration
+=== PAUSE TestEnumNameEnumeration
+=== RUN   TestFlagEnumInlineIteration
+=== PAUSE TestFlagEnumInlineIteration
+=== RUN   TestNumericEnumsAreOpen
+=== PAUSE TestNumericEnumsAreOpen
+=== CONT  TestFlagEnumsDomain
+    enum_flags_test.go:72: bitwise_updates
+=== CONT  TestEnumNameEnumeration
+=== CONT  TestFlagEnumInlineIteration
+=== CONT  TestNumericEnumsAreOpen
+=== CONT  TestEnumNeverDefault
+=== NAME  TestNumericEnumsAreOpen
+    enums_open_test.go:23: singleton
+=== NAME  TestFlagEnumsDomain
+    enum_flags_test.go:72: alias
+=== NAME  TestEnumNameEnumeration
+    enum_flags_test.go:130: enum Names fields = []lower.enumGuardField{lower.enumGuardField{name:"A", value:0}, lower.enumGuardField{name:"0", value:"A"}, lower.enumGuardField{name:"B", value:1}, lower.enumGuardField{name:"1", value:"B"}, lower.enumGuardField{name:"Alias", value:1}, lower.enumGuardField{name:"1", value:"Alias"}}, want []lower.enumGuardField{lower.enumGuardField{name:"A", value:0}, lower.enumGuardField{name:"0", value:"A"}, lower.enumGuardField{name:"B", value:1}, lower.enumGuardField{name:"1", value:"Alias"}, lower.enumGuardField{name:"Alias", value:1}}
+--- PASS: TestEnumNeverDefault (0.09s)
+=== CONT  TestFlagEnumLiteralSpellings
+--- FAIL: TestEnumNameEnumeration (0.09s)
+=== CONT  TestFlagEnumMemberAliases
+    enum_flags_test.go:119: enum Flags fields = []lower.enumGuardField{lower.enumGuardField{name:"None", value:0}, lower.enumGuardField{name:"0", value:"None"}, lower.enumGuardField{name:"A", value:1}, lower.enumGuardField{name:"1", value:"A"}, lower.enumGuardField{name:"B", value:2}, lower.enumGuardField{name:"2", value:"B"}, lower.enumGuardField{name:"Alias", value:1}, lower.enumGuardField{name:"1", value:"Alias"}, lower.enumGuardField{name:"Qualified", value:2}, lower.enumGuardField{name:"2", value:"Qualified"}}, want []lower.enumGuardField{lower.enumGuardField{name:"None", value:0}, lower.enumGuardField{name:"0", value:"None"}, lower.enumGuardField{name:"A", value:1}, lower.enumGuardField{name:"1", value:"Alias"}, lower.enumGuardField{name:"B", value:2}, lower.enumGuardField{name:"2", value:"Qualified"}, lower.enumGuardField{name:"Alias", value:1}, lower.enumGuardField{name:"Qualified", value:2}}
+--- FAIL: TestFlagEnumMemberAliases (0.06s)
+=== NAME  TestFlagEnumsDomain
+    enum_flags_test.go:72: or
+=== NAME  TestNumericEnumsAreOpen
+    enums_open_test.go:23: member_tags
+=== NAME  TestFlagEnumsDomain
+    enum_flags_test.go:72: xor
+--- PASS: TestFlagEnumLiteralSpellings (0.13s)
+=== NAME  TestFlagEnumsDomain
+    enum_flags_test.go:72: and_left
+=== NAME  TestNumericEnumsAreOpen
+    enums_open_test.go:23: coalesce
+=== NAME  TestFlagEnumsDomain
+    enum_flags_test.go:72: and_right
+    enum_flags_test.go:72: and_complement
+=== NAME  TestNumericEnumsAreOpen
+    enums_open_test.go:23: arithmetic
+=== NAME  TestFlagEnumsDomain
+    enum_flags_test.go:72: nested
+    enum_flags_test.go:72: field
+=== NAME  TestNumericEnumsAreOpen
+    enums_open_test.go:23: signed_flags
+=== NAME  TestFlagEnumsDomain
+    enum_flags_test.go:72: array
+--- PASS: TestFlagEnumInlineIteration (0.42s)
+=== NAME  TestFlagEnumsDomain
+    enum_flags_test.go:72: map
+=== NAME  TestNumericEnumsAreOpen
+    enums_open_test.go:23: cast
+=== NAME  TestFlagEnumsDomain
+    enum_flags_test.go:72: parameter
+    enum_flags_test.go:72: optional
+=== NAME  TestNumericEnumsAreOpen
+    enums_open_test.go:23: containers
+=== NAME  TestFlagEnumsDomain
+    enum_flags_test.go:72: switch
+=== NAME  TestNumericEnumsAreOpen
+    enums_open_test.go:23: optional_object
+--- PASS: TestFlagEnumsDomain (0.58s)
+--- PASS: TestNumericEnumsAreOpen (0.62s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.629s
+FAIL
