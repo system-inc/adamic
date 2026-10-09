@@ -1,0 +1,15 @@
+interface Reader { read(value: string): string; }
+class Both {
+    static prefix = 'static'; readonly prefix = 'instance';
+    static read(value: string): string { return this.prefix + value; }
+    read(value: string): string { return this.prefix + value; }
+}
+let receivers = 0; let argumentsMade = 0;
+function receiver(choice: number): Reader | undefined {
+    receivers += 1;
+    return choice === 0 ? undefined : choice === 1 ? Both : new Both();
+}
+function argument(): string { argumentsMade += 1; return '-argument'; }
+function report(choice: number): string { return receiver(choice)?.read(argument()) ?? 'missing'; }
+console.log(report(0)); console.log(report(1)); console.log(report(2));
+console.log(`${receivers} receivers ${argumentsMade} arguments`);

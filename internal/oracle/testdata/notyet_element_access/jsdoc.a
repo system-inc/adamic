@@ -1,0 +1,5 @@
+interface JSDoc { readonly text: string; }
+interface JSDocTag { readonly name: string; }
+interface JSDocArray extends Array<JSDoc> { jsDocCache?: readonly JSDocTag[] | undefined; }
+function read(values: JSDocArray, index: number): JSDoc | undefined { return values[index]; }
+console.log('witness');

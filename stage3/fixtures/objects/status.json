@@ -134,10 +134,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/objects/10_build_options.a:14:54: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added"
-    }
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/objects/10_build_options.a:8:5: stage 0 can't lower an indexed mutation without a closed const literal origin yet"}
   },
   {
     "file": "12_decorator_descriptor.a",
@@ -352,10 +349,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/objects/28_debugger.a:7:9: Adamic 0.1 refuses debugger; remove it"
-    }
+    "stage0": {"outcome":"Compiles","what":""}
   },
   {
     "file": "29_parameter_default.a",
@@ -368,10 +362,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/objects/29_parameter_default.a:11:1: stage 0 can't lower a destructured parameter beside a parameter with a default yet"
-    }
+    "stage0": {"outcome":"Refused","what":"stage3/fixtures/objects/29_parameter_default.a:6:13: Adamic 0.1 refuses 'a', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)"}
   },
   {
     "file": "30_host_optional_method.a",
