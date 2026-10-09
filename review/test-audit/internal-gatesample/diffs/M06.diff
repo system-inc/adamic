@@ -1,0 +1,11 @@
+--- a/internal/gatesample/sample.go
++++ b/internal/gatesample/sample.go
+@@ -51,7 +51,7 @@
+ 	if list := os.Getenv("ADAMIC_GATE_CHANGED"); list != "" {
+ 		data, err := os.ReadFile(list)
+ 		if err != nil {
+-			return Selection{}, fmt.Errorf("ADAMIC_GATE_CHANGED: %w", err)
++			return Selection{}, nil
+ 		}
+ 		for _, line := range strings.Split(string(data), "\n") {
+ 			line = strings.TrimSuffix(line, "\r")

@@ -1,0 +1,11 @@
+--- a/internal/gatesample/sample.go
++++ b/internal/gatesample/sample.go
+@@ -141,7 +141,7 @@
+ func (s Selection) Generated(count int, controls ...int) Selection {
+ 	keep := make(map[int]bool, len(controls))
+ 	for _, index := range controls {
+-		keep[index] = true
++		keep[index] = false
+ 	}
+ 	s.Total += count
+ 	for index := 0; index < count; index++ {

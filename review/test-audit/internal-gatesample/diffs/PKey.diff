@@ -1,0 +1,10 @@
+--- a/internal/gatesample/sample.go
++++ b/internal/gatesample/sample.go
+@@ -153,4 +153,6 @@
+ }
+ 
+ // GeneratedKey identifies an input without depending on its contents or label.
+-func GeneratedKey(index int) string { return fmt.Sprintf("generated-index/%d", index) }
++func GeneratedKey(index int) string {
++	return ""
++}

@@ -1,0 +1,124 @@
+[
+  {
+    "id": "M01",
+    "file": "internal/gatesample/sample.go",
+    "line": 25,
+    "old": "len(s.Paths), s.Total",
+    "new": "s.Total, len(s.Paths)",
+    "description": "swap log count arguments"
+  },
+  {
+    "id": "M02",
+    "file": "internal/gatesample/sample.go",
+    "line": 34,
+    "old": "Paths: append([]string(nil), paths...)",
+    "new": "Paths: nil",
+    "description": "drop full-corpus paths"
+  },
+  {
+    "id": "M03",
+    "file": "internal/gatesample/sample.go",
+    "line": 44,
+    "old": "strconv.ParseUint(sha[:8], 16, 32)",
+    "new": "strconv.ParseUint(sha[:8], 10, 32)",
+    "description": "change hexadecimal base to decimal"
+  },
+  {
+    "id": "M04",
+    "file": "internal/gatesample/sample.go",
+    "line": 45,
+    "old": "int(prefix % uint64(stride))",
+    "new": "int(prefix % uint64(stride)) * 0",
+    "description": "change offset multiplier to zero",
+    "supplemental": true,
+    "menu_note": "Adds a multiplier rather than changing an existing constant. Supplemental; no verdict rests on it."
+  },
+  {
+    "id": "M05",
+    "file": "internal/gatesample/sample.go",
+    "line": 48,
+    "old": "changed[name] = true",
+    "new": "changed[name] = false",
+    "description": "change physical control flag"
+  },
+  {
+    "id": "M06",
+    "file": "internal/gatesample/sample.go",
+    "line": 54,
+    "old": "return Selection{}, fmt.Errorf(\"ADAMIC_GATE_CHANGED: %w\", err)",
+    "new": "return Selection{}, nil",
+    "description": "return early without read error"
+  },
+  {
+    "id": "M07",
+    "file": "internal/gatesample/sample.go",
+    "line": 61,
+    "old": "if filepath.IsAbs(line) || strings.HasPrefix(filepath.ToSlash(filepath.Clean(line)), \"../\") || filepath.Clean(line) == \"..\" {",
+    "new": "if false {",
+    "description": "drop changed-path rejection condition"
+  },
+  {
+    "id": "M08",
+    "file": "internal/gatesample/sample.go",
+    "line": 65,
+    "old": "changed[name] = true",
+    "new": "changed[name] = false",
+    "description": "change direct changed flag"
+  },
+  {
+    "id": "M09",
+    "file": "internal/gatesample/sample.go",
+    "line": 71,
+    "old": "if part == \"testdata\" || part == \"fixtures\" {",
+    "new": "if part == \"testdata-disabled\" || part == \"fixtures-disabled\" {",
+    "description": "change fixture directory constants"
+  },
+  {
+    "id": "M10",
+    "file": "internal/gatesample/sample.go",
+    "line": 103,
+    "old": "sort.Strings(sorted)",
+    "new": "drop sort.Strings(sorted) and unused sort import",
+    "description": "drop sorting statement"
+  },
+  {
+    "id": "M11",
+    "file": "internal/gatesample/sample.go",
+    "line": 132,
+    "old": "if _, err := hex.DecodeString(sha); err != nil {",
+    "new": "if _, err := hex.DecodeString(sha); err != nil && false {",
+    "description": "drop malformed hexadecimal rejection"
+  },
+  {
+    "id": "M12",
+    "file": "internal/gatesample/sample.go",
+    "line": 144,
+    "old": "keep[index] = true",
+    "new": "keep[index] = false",
+    "description": "change generated control flag"
+  },
+  {
+    "id": "M13",
+    "file": "internal/gatesample/sample.go",
+    "line": 148,
+    "old": "!s.Sample || index%s.Stride == s.Offset || keep[index]",
+    "new": "s.Sample || index%s.Stride == s.Offset || keep[index]",
+    "description": "flip full generated mode condition"
+  },
+  {
+    "id": "M14",
+    "file": "internal/gatesample/sample.go",
+    "line": 147,
+    "old": "index < count",
+    "new": "index < count-1",
+    "description": "off-by-one generated bound"
+  },
+  {
+    "id": "M15",
+    "file": "internal/gatesample/sample.go",
+    "line": 156,
+    "old": "\"generated-index/%d\"",
+    "new": "\"generated-key/%d\"",
+    "description": "change generated key prefix constant"
+  }
+]

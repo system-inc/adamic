@@ -1,0 +1,24 @@
+{"Time":"2026-10-09T09:55:57.450305695Z","Action":"start","Package":"github.com/system-inc/adamic/internal/gatesample"}
+{"Time":"2026-10-09T09:55:57.459382145Z","Action":"run","Package":"github.com/system-inc/adamic/internal/gatesample","Test":"TestSelection"}
+{"Time":"2026-10-09T09:55:57.459458825Z","Action":"output","Package":"github.com/system-inc/adamic/internal/gatesample","Test":"TestSelection","Output":"=== RUN   TestSelection\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:55:57.459775654Z","Action":"output","Package":"github.com/system-inc/adamic/internal/gatesample","Test":"TestSelection","Output":"--- FAIL: TestSelection (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:55:57.462292495Z","Action":"output","Package":"github.com/system-inc/adamic/internal/gatesample","Test":"TestSelection","Output":"panic: runtime error: slice bounds out of range [:8] with length 0 [recovered, repanicked]\n"}
+{"Time":"2026-10-09T09:55:57.462311426Z","Action":"output","Package":"github.com/system-inc/adamic/internal/gatesample","Test":"TestSelection","Output":"\n"}
+{"Time":"2026-10-09T09:55:57.462315949Z","Action":"output","Package":"github.com/system-inc/adamic/internal/gatesample","Test":"TestSelection","Output":"goroutine 7 [running]:\n"}
+{"Time":"2026-10-09T09:55:57.462319656Z","Action":"output","Package":"github.com/system-inc/adamic/internal/gatesample","Test":"TestSelection","Output":"testing.tRunner.func1.2({0x6e3318, 0x1016061e6120})\n"}
+{"Time":"2026-10-09T09:55:57.462328217Z","Action":"output","Package":"github.com/system-inc/adamic/internal/gatesample","Test":"TestSelection","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2123 +0x232\n"}
+{"Time":"2026-10-09T09:55:57.462331007Z","Action":"output","Package":"github.com/system-inc/adamic/internal/gatesample","Test":"TestSelection","Output":"testing.tRunner.func1()\n"}
+{"Time":"2026-10-09T09:55:57.462333474Z","Action":"output","Package":"github.com/system-inc/adamic/internal/gatesample","Test":"TestSelection","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2126 +0x329\n"}
+{"Time":"2026-10-09T09:55:57.462337523Z","Action":"output","Package":"github.com/system-inc/adamic/internal/gatesample","Test":"TestSelection","Output":"panic({0x6e3318?, 0x1016061e6120?})\n"}
+{"Time":"2026-10-09T09:55:57.462341166Z","Action":"output","Package":"github.com/system-inc/adamic/internal/gatesample","Test":"TestSelection","Output":"\t/workspace/adamic-tools/go/src/runtime/panic.go:859 +0x125\n"}
+{"Time":"2026-10-09T09:55:57.462344066Z","Action":"output","Package":"github.com/system-inc/adamic/internal/gatesample","Test":"TestSelection","Output":"github.com/system-inc/adamic/internal/gatesample.Select({0x1016061ee240, 0x2c}, {0x101606319c90, 0x5, 0xb?}, 0x3, {0x0, 0x0, 0xa?})\n"}
+{"Time":"2026-10-09T09:55:57.462348819Z","Action":"output","Package":"github.com/system-inc/adamic/internal/gatesample","Test":"TestSelection","Output":"\t/workspace/adamic/internal/gatesample/sample.go:56 +0x13d2\n"}
+{"Time":"2026-10-09T09:55:57.462353748Z","Action":"output","Package":"github.com/system-inc/adamic/internal/gatesample","Test":"TestSelection","Output":"github.com/system-inc/adamic/internal/gatesample.TestSelection(0x101606308248)\n"}
+{"Time":"2026-10-09T09:55:57.462380234Z","Action":"output","Package":"github.com/system-inc/adamic/internal/gatesample","Test":"TestSelection","Output":"\t/workspace/adamic/internal/gatesample/sample_test.go:118 +0x199d\n"}
+{"Time":"2026-10-09T09:55:57.462383427Z","Action":"output","Package":"github.com/system-inc/adamic/internal/gatesample","Test":"TestSelection","Output":"testing.tRunner(0x101606308248, 0x6eeb80)\n"}
+{"Time":"2026-10-09T09:55:57.462386474Z","Action":"output","Package":"github.com/system-inc/adamic/internal/gatesample","Test":"TestSelection","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea\n"}
+{"Time":"2026-10-09T09:55:57.462392694Z","Action":"output","Package":"github.com/system-inc/adamic/internal/gatesample","Test":"TestSelection","Output":"created by testing.(*T).Run in goroutine 1\n"}
+{"Time":"2026-10-09T09:55:57.462396324Z","Action":"output","Package":"github.com/system-inc/adamic/internal/gatesample","Test":"TestSelection","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4\n"}
+{"Time":"2026-10-09T09:55:57.462781736Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/gatesample","Test":"TestSelection","Elapsed":0}
+{"Time":"2026-10-09T09:55:57.462811031Z","Action":"output","Package":"github.com/system-inc/adamic/internal/gatesample","Output":"FAIL\tgithub.com/system-inc/adamic/internal/gatesample\t0.008s\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:55:57.462821536Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/gatesample","Elapsed":0.013}

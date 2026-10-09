@@ -1,0 +1,11 @@
+--- a/internal/gatesample/sample.go
++++ b/internal/gatesample/sample.go
+@@ -68,7 +68,7 @@
+ 			directory := filepath.Dir(name)
+ 			parts := strings.Split(name, "/")
+ 			for index, part := range parts {
+-				if part == "testdata" || part == "fixtures" {
++				if part == "testdata-disabled" || part == "fixtures-disabled" {
+ 					directory = filepath.Join(parts[:index]...)
+ 					if directory == "" {
+ 						directory = "."

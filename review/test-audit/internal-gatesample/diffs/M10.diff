@@ -1,0 +1,18 @@
+--- a/internal/gatesample/sample.go
++++ b/internal/gatesample/sample.go
+@@ -7,7 +7,6 @@
+ 	"fmt"
+ 	"os"
+ 	"path/filepath"
+-	"sort"
+ 	"strconv"
+ 	"strings"
+ )
+@@ -100,7 +99,6 @@
+ 		}
+ 	}
+ 	sorted := append([]string(nil), paths...)
+-	sort.Strings(sorted)
+ 	selection.Paths = nil
+ 	for index, name := range sorted {
+ 		include := index%stride == selection.Offset || changed[name]

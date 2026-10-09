@@ -1,0 +1,12 @@
+{"Time":"2026-10-09T09:56:45.608807875Z","Action":"start","Package":"github.com/system-inc/adamic/internal/gatesample"}
+{"Time":"2026-10-09T09:56:45.612532205Z","Action":"run","Package":"github.com/system-inc/adamic/internal/gatesample","Test":"TestGeneratedSelection"}
+{"Time":"2026-10-09T09:56:45.612599449Z","Action":"output","Package":"github.com/system-inc/adamic/internal/gatesample","Test":"TestGeneratedSelection","Output":"=== RUN   TestGeneratedSelection\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:56:45.612627091Z","Action":"output","Package":"github.com/system-inc/adamic/internal/gatesample","Test":"TestGeneratedSelection","Output":"=== PAUSE TestGeneratedSelection\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:56:45.612630459Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/gatesample","Test":"TestGeneratedSelection"}
+{"Time":"2026-10-09T09:56:45.612634386Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/gatesample","Test":"TestGeneratedSelection"}
+{"Time":"2026-10-09T09:56:45.612637171Z","Action":"output","Package":"github.com/system-inc/adamic/internal/gatesample","Test":"TestGeneratedSelection","Output":"=== CONT  TestGeneratedSelection\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:56:45.61264811Z","Action":"output","Package":"github.com/system-inc/adamic/internal/gatesample","Test":"TestGeneratedSelection","Output":"--- PASS: TestGeneratedSelection (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:56:45.612666076Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/gatesample","Test":"TestGeneratedSelection","Elapsed":0}
+{"Time":"2026-10-09T09:56:45.612679049Z","Action":"output","Package":"github.com/system-inc/adamic/internal/gatesample","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:56:45.612938447Z","Action":"output","Package":"github.com/system-inc/adamic/internal/gatesample","Output":"ok  \tgithub.com/system-inc/adamic/internal/gatesample\t0.004s\n"}
+{"Time":"2026-10-09T09:56:45.612970632Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/gatesample","Elapsed":0.004}

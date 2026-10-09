@@ -1,0 +1,185 @@
+[
+  {
+    "test": "TestSelection",
+    "package": "github.com/system-inc/adamic/internal/gatesample",
+    "file": "internal/gatesample/sample_test.go:13",
+    "seconds": 0.003,
+    "oracle": "Self-written exact paths, offsets, log text, determinism and rotation count; malformed-switch rejection only asserts a non-nil error, not its diagnostic.",
+    "oracle_kind": "self",
+    "kills": [
+      "M01",
+      "M04",
+      "M05",
+      "M08",
+      "M09",
+      "M10",
+      "M11"
+    ],
+    "unique_kills": [
+      "M01",
+      "M05",
+      "M08",
+      "M09",
+      "M10",
+      "M11"
+    ],
+    "last_proven_fail": "M11 sample_test.go:119: accepted malformed switch \"gggggggggggggggggggggggggggggggggggggggg\"",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 15,
+    "probe_kills": [
+      "PSelect",
+      "PLog",
+      "PValidate"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [
+      "TestSelection",
+      "TestUnsetIsWholeCorpus",
+      "TestBadChangedList",
+      "TestHexOffset",
+      "TestGeneratedSelection"
+    ],
+    "evidence": "ADAMIC_MUTANT=M11 timeout 120 go test -json -count=1 -timeout 90s ./internal/gatesample/ -run . > M11.log 2>&1; sample_test.go:119: accepted malformed switch \"gggggggggggggggggggggggggggggggggggggggg\""
+  },
+  {
+    "test": "TestUnsetIsWholeCorpus",
+    "package": "github.com/system-inc/adamic/internal/gatesample",
+    "file": "internal/gatesample/sample_test.go:125",
+    "seconds": 0.002,
+    "oracle": "Self-written full-corpus order and Sample=false expectation.",
+    "oracle_kind": "self",
+    "kills": [
+      "M02"
+    ],
+    "unique_kills": [
+      "M02"
+    ],
+    "last_proven_fail": "M02 sample_test.go:144: unset changed full corpus: {Paths:[] Sample:false Total:2 Stride:3 Offset:0}",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 15,
+    "probe_kills": [
+      "PSelect"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [
+      "TestSelection",
+      "TestUnsetIsWholeCorpus",
+      "TestBadChangedList",
+      "TestHexOffset",
+      "TestGeneratedSelection"
+    ],
+    "evidence": "ADAMIC_MUTANT=M02 timeout 120 go test -json -count=1 -timeout 90s ./internal/gatesample/ -run . > M02.log 2>&1; sample_test.go:144: unset changed full corpus: {Paths:[] Sample:false Total:2 Stride:3 Offset:0}"
+  },
+  {
+    "test": "TestBadChangedList",
+    "package": "github.com/system-inc/adamic/internal/gatesample",
+    "file": "internal/gatesample/sample_test.go:149",
+    "seconds": 0.004,
+    "oracle": "Self-written rejection expectations, checking only err != nil. A different error can satisfy the oracle.",
+    "oracle_kind": "self",
+    "kills": [
+      "M06",
+      "M07"
+    ],
+    "unique_kills": [
+      "M06",
+      "M07"
+    ],
+    "last_proven_fail": "M07 sample_test.go:163: accepted non-repository path \"../outside.md\"",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 15,
+    "probe_kills": [
+      "PSelect"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [
+      "TestSelection",
+      "TestUnsetIsWholeCorpus",
+      "TestBadChangedList",
+      "TestHexOffset",
+      "TestGeneratedSelection"
+    ],
+    "evidence": "ADAMIC_MUTANT=M07 timeout 120 go test -json -count=1 -timeout 90s ./internal/gatesample/ -run . > M07.log 2>&1; sample_test.go:163: accepted non-repository path \"../outside.md\""
+  },
+  {
+    "test": "TestHexOffset",
+    "package": "github.com/system-inc/adamic/internal/gatesample",
+    "file": "internal/gatesample/sample_test.go:169",
+    "seconds": 0.003,
+    "oracle": "Self-written hexadecimal offset 1 and exact selected path b.",
+    "oracle_kind": "self",
+    "kills": [
+      "M03",
+      "M04"
+    ],
+    "unique_kills": [
+      "M03"
+    ],
+    "last_proven_fail": "M03 sample_test.go:178: offset must parse hexadecimal: {Paths:[a] Sample:true Total:3 Stride:3 Offset:0}",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 15,
+    "probe_kills": [
+      "PSelect"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [
+      "TestSelection",
+      "TestUnsetIsWholeCorpus",
+      "TestBadChangedList",
+      "TestHexOffset",
+      "TestGeneratedSelection"
+    ],
+    "evidence": "ADAMIC_MUTANT=M03 timeout 120 go test -json -count=1 -timeout 90s ./internal/gatesample/ -run . > M03.log 2>&1; sample_test.go:178: offset must parse hexadecimal: {Paths:[a] Sample:true Total:3 Stride:3 Offset:0}"
+  },
+  {
+    "test": "TestGeneratedSelection",
+    "package": "github.com/system-inc/adamic/internal/gatesample",
+    "file": "internal/gatesample/sample_test.go:183",
+    "seconds": 0.002,
+    "oracle": "Self-written indices/count/rotation. Expected keys call the same GeneratedKey implementation as production: M15 and PKey pass despite changed or empty key content.",
+    "oracle_kind": "self",
+    "kills": [
+      "M12",
+      "M13",
+      "M14"
+    ],
+    "unique_kills": [
+      "M12",
+      "M13",
+      "M14"
+    ],
+    "last_proven_fail": "M14 sample_test.go:188: indexed selection: gatesample.Selection{Paths:[]string{\"generated-index/0\", \"generated-index/1\", \"generated-index/4\"}, Sample:true, Total:8, Stride:3, Offset:1}",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 15,
+    "probe_kills": [
+      "PGenerated"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [
+      "TestSelection",
+      "TestUnsetIsWholeCorpus",
+      "TestBadChangedList",
+      "TestHexOffset",
+      "TestGeneratedSelection"
+    ],
+    "evidence": "ADAMIC_MUTANT=M14 timeout 120 go test -json -count=1 -timeout 90s ./internal/gatesample/ -run . > M14.log 2>&1; sample_test.go:188: indexed selection: gatesample.Selection{Paths:[]string{\"generated-index/0\", \"generated-index/1\", \"generated-index/4\"}, Sample:true, Total:8, Stride:3, Offset:1}",
+    "vacuous_subcases": [
+      "GeneratedKey content expectations (no named Go subtest)"
+    ]
+  }
+]

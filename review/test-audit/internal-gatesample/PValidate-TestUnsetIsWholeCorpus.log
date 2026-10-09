@@ -1,0 +1,8 @@
+{"Time":"2026-10-09T09:56:44.949389188Z","Action":"start","Package":"github.com/system-inc/adamic/internal/gatesample"}
+{"Time":"2026-10-09T09:56:44.95207076Z","Action":"run","Package":"github.com/system-inc/adamic/internal/gatesample","Test":"TestUnsetIsWholeCorpus"}
+{"Time":"2026-10-09T09:56:44.952138877Z","Action":"output","Package":"github.com/system-inc/adamic/internal/gatesample","Test":"TestUnsetIsWholeCorpus","Output":"=== RUN   TestUnsetIsWholeCorpus\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:56:44.952196029Z","Action":"output","Package":"github.com/system-inc/adamic/internal/gatesample","Test":"TestUnsetIsWholeCorpus","Output":"--- PASS: TestUnsetIsWholeCorpus (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:56:44.952202636Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/gatesample","Test":"TestUnsetIsWholeCorpus","Elapsed":0}
+{"Time":"2026-10-09T09:56:44.952220193Z","Action":"output","Package":"github.com/system-inc/adamic/internal/gatesample","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:56:44.953667954Z","Action":"output","Package":"github.com/system-inc/adamic/internal/gatesample","Output":"ok  \tgithub.com/system-inc/adamic/internal/gatesample\t0.004s\n"}
+{"Time":"2026-10-09T09:56:44.953687423Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/gatesample","Elapsed":0.004}

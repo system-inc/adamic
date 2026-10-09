@@ -1,0 +1,8 @@
+{"Time":"2026-10-09T09:56:45.151895821Z","Action":"start","Package":"github.com/system-inc/adamic/internal/gatesample"}
+{"Time":"2026-10-09T09:56:45.155889067Z","Action":"run","Package":"github.com/system-inc/adamic/internal/gatesample","Test":"TestBadChangedList"}
+{"Time":"2026-10-09T09:56:45.15596225Z","Action":"output","Package":"github.com/system-inc/adamic/internal/gatesample","Test":"TestBadChangedList","Output":"=== RUN   TestBadChangedList\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:56:45.156377442Z","Action":"output","Package":"github.com/system-inc/adamic/internal/gatesample","Test":"TestBadChangedList","Output":"--- PASS: TestBadChangedList (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:56:45.156385376Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/gatesample","Test":"TestBadChangedList","Elapsed":0}
+{"Time":"2026-10-09T09:56:45.156398838Z","Action":"output","Package":"github.com/system-inc/adamic/internal/gatesample","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:56:45.156822739Z","Action":"output","Package":"github.com/system-inc/adamic/internal/gatesample","Output":"ok  \tgithub.com/system-inc/adamic/internal/gatesample\t0.004s\n"}
+{"Time":"2026-10-09T09:56:45.156853551Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/gatesample","Elapsed":0.005}

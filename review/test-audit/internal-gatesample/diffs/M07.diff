@@ -1,0 +1,11 @@
+--- a/internal/gatesample/sample.go
++++ b/internal/gatesample/sample.go
+@@ -58,7 +58,7 @@
+ 			if line == "" {
+ 				continue
+ 			}
+-			if filepath.IsAbs(line) || strings.HasPrefix(filepath.ToSlash(filepath.Clean(line)), "../") || filepath.Clean(line) == ".." {
++			if false {
+ 				return Selection{}, fmt.Errorf("ADAMIC_GATE_CHANGED: not a repository path: %q", line)
+ 			}
+ 			name := filepath.ToSlash(filepath.Clean(line))

@@ -1,0 +1,11 @@
+--- a/internal/gatesample/sample.go
++++ b/internal/gatesample/sample.go
+@@ -42,7 +42,7 @@
+ 		return Selection{}, fmt.Errorf("gate sample stride must be positive: %d", stride)
+ 	}
+ 	prefix, _ := strconv.ParseUint(sha[:8], 16, 32)
+-	selection.Offset = int(prefix % uint64(stride))
++	selection.Offset = int(prefix % uint64(stride)) * 0
+ 	changed := map[string]bool{}
+ 	for _, name := range controls {
+ 		changed[name] = true

@@ -1,0 +1,32 @@
+{"Time":"2026-10-09T09:55:56.812242528Z","Action":"start","Package":"github.com/system-inc/adamic/internal/gatesample"}
+{"Time":"2026-10-09T09:55:56.81472921Z","Action":"run","Package":"github.com/system-inc/adamic/internal/gatesample","Test":"TestSelection"}
+{"Time":"2026-10-09T09:55:56.814797433Z","Action":"output","Package":"github.com/system-inc/adamic/internal/gatesample","Test":"TestSelection","Output":"=== RUN   TestSelection\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:55:56.814961938Z","Action":"output","Package":"github.com/system-inc/adamic/internal/gatesample","Test":"TestSelection","Output":"    sample_test.go:29: stride: [] want [other/a.md pkg/testdata/a.md]\n","OutputType":"error"}
+{"Time":"2026-10-09T09:55:56.815019428Z","Action":"output","Package":"github.com/system-inc/adamic/internal/gatesample","Test":"TestSelection","Output":"--- FAIL: TestSelection (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:55:56.815027509Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/gatesample","Test":"TestSelection","Elapsed":0}
+{"Time":"2026-10-09T09:55:56.815043682Z","Action":"run","Package":"github.com/system-inc/adamic/internal/gatesample","Test":"TestUnsetIsWholeCorpus"}
+{"Time":"2026-10-09T09:55:56.815045754Z","Action":"output","Package":"github.com/system-inc/adamic/internal/gatesample","Test":"TestUnsetIsWholeCorpus","Output":"=== RUN   TestUnsetIsWholeCorpus\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:55:56.815071855Z","Action":"output","Package":"github.com/system-inc/adamic/internal/gatesample","Test":"TestUnsetIsWholeCorpus","Output":"    sample_test.go:144: unset changed full corpus: {Paths:[] Sample:false Total:0 Stride:0 Offset:0}\n","OutputType":"error"}
+{"Time":"2026-10-09T09:55:56.815105005Z","Action":"output","Package":"github.com/system-inc/adamic/internal/gatesample","Test":"TestUnsetIsWholeCorpus","Output":"--- FAIL: TestUnsetIsWholeCorpus (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:55:56.815112878Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/gatesample","Test":"TestUnsetIsWholeCorpus","Elapsed":0}
+{"Time":"2026-10-09T09:55:56.815117051Z","Action":"run","Package":"github.com/system-inc/adamic/internal/gatesample","Test":"TestBadChangedList"}
+{"Time":"2026-10-09T09:55:56.815118879Z","Action":"output","Package":"github.com/system-inc/adamic/internal/gatesample","Test":"TestBadChangedList","Output":"=== RUN   TestBadChangedList\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:55:56.815155246Z","Action":"output","Package":"github.com/system-inc/adamic/internal/gatesample","Test":"TestBadChangedList","Output":"    sample_test.go:154: missing changed list silently ignored\n","OutputType":"error"}
+{"Time":"2026-10-09T09:55:56.815184005Z","Action":"output","Package":"github.com/system-inc/adamic/internal/gatesample","Test":"TestBadChangedList","Output":"--- FAIL: TestBadChangedList (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:55:56.815187607Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/gatesample","Test":"TestBadChangedList","Elapsed":0}
+{"Time":"2026-10-09T09:55:56.815190185Z","Action":"run","Package":"github.com/system-inc/adamic/internal/gatesample","Test":"TestHexOffset"}
+{"Time":"2026-10-09T09:55:56.815191979Z","Action":"output","Package":"github.com/system-inc/adamic/internal/gatesample","Test":"TestHexOffset","Output":"=== RUN   TestHexOffset\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:55:56.815238987Z","Action":"output","Package":"github.com/system-inc/adamic/internal/gatesample","Test":"TestHexOffset","Output":"    sample_test.go:178: offset must parse hexadecimal: {Paths:[] Sample:false Total:0 Stride:0 Offset:0}\n","OutputType":"error"}
+{"Time":"2026-10-09T09:55:56.815303842Z","Action":"output","Package":"github.com/system-inc/adamic/internal/gatesample","Test":"TestHexOffset","Output":"--- FAIL: TestHexOffset (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:55:56.815310415Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/gatesample","Test":"TestHexOffset","Elapsed":0}
+{"Time":"2026-10-09T09:55:56.815313284Z","Action":"run","Package":"github.com/system-inc/adamic/internal/gatesample","Test":"TestGeneratedSelection"}
+{"Time":"2026-10-09T09:55:56.815321215Z","Action":"output","Package":"github.com/system-inc/adamic/internal/gatesample","Test":"TestGeneratedSelection","Output":"=== RUN   TestGeneratedSelection\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:55:56.815324069Z","Action":"output","Package":"github.com/system-inc/adamic/internal/gatesample","Test":"TestGeneratedSelection","Output":"=== PAUSE TestGeneratedSelection\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:55:56.815325832Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/gatesample","Test":"TestGeneratedSelection"}
+{"Time":"2026-10-09T09:55:56.815328479Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/gatesample","Test":"TestGeneratedSelection"}
+{"Time":"2026-10-09T09:55:56.815330159Z","Action":"output","Package":"github.com/system-inc/adamic/internal/gatesample","Test":"TestGeneratedSelection","Output":"=== CONT  TestGeneratedSelection\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:55:56.815335803Z","Action":"output","Package":"github.com/system-inc/adamic/internal/gatesample","Test":"TestGeneratedSelection","Output":"--- PASS: TestGeneratedSelection (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:55:56.815358495Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/gatesample","Test":"TestGeneratedSelection","Elapsed":0}
+{"Time":"2026-10-09T09:55:56.815361383Z","Action":"output","Package":"github.com/system-inc/adamic/internal/gatesample","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:55:56.815673389Z","Action":"output","Package":"github.com/system-inc/adamic/internal/gatesample","Output":"FAIL\tgithub.com/system-inc/adamic/internal/gatesample\t0.003s\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:55:56.815693955Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/gatesample","Elapsed":0.003}

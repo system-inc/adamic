@@ -1,0 +1,11 @@
+--- a/internal/gatesample/sample.go
++++ b/internal/gatesample/sample.go
+@@ -31,7 +31,7 @@
+ // root locates packages for changed-path fixture inclusion; paths are relative to it.
+ func Select(root string, paths []string, stride int, controls ...string) (Selection, error) {
+ 	sha, enabled := os.LookupEnv("ADAMIC_GATE_SAMPLE")
+-	selection := Selection{Paths: append([]string(nil), paths...), Total: len(paths), Stride: stride, Sample: enabled}
++	selection := Selection{Paths: nil, Total: len(paths), Stride: stride, Sample: enabled}
+ 	if !enabled {
+ 		return selection, nil
+ 	}

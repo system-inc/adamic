@@ -1,0 +1,11 @@
+--- a/internal/gatesample/sample.go
++++ b/internal/gatesample/sample.go
+@@ -145,7 +145,7 @@
+ 	}
+ 	s.Total += count
+ 	for index := 0; index < count; index++ {
+-		if !s.Sample || index%s.Stride == s.Offset || keep[index] {
++		if s.Sample || index%s.Stride == s.Offset || keep[index] {
+ 			s.Paths = append(s.Paths, GeneratedKey(index))
+ 		}
+ 	}

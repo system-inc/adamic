@@ -1,0 +1,21 @@
+--- a/internal/gatesample/sample.go
++++ b/internal/gatesample/sample.go
+@@ -139,17 +139,7 @@
+ // controls are indices of explicit checks which run at every offset. Physical
+ // changed-path inclusion has already been resolved by Select.
+ func (s Selection) Generated(count int, controls ...int) Selection {
+-	keep := make(map[int]bool, len(controls))
+-	for _, index := range controls {
+-		keep[index] = true
+-	}
+-	s.Total += count
+-	for index := 0; index < count; index++ {
+-		if !s.Sample || index%s.Stride == s.Offset || keep[index] {
+-			s.Paths = append(s.Paths, GeneratedKey(index))
+-		}
+-	}
+-	return s
++	return Selection{}
+ }
+ 
+ // GeneratedKey identifies an input without depending on its contents or label.

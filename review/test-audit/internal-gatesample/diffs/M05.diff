@@ -1,0 +1,11 @@
+--- a/internal/gatesample/sample.go
++++ b/internal/gatesample/sample.go
+@@ -45,7 +45,7 @@
+ 	selection.Offset = int(prefix % uint64(stride))
+ 	changed := map[string]bool{}
+ 	for _, name := range controls {
+-		changed[name] = true
++		changed[name] = false
+ 	}
+ 	packages := map[string]bool{}
+ 	if list := os.Getenv("ADAMIC_GATE_CHANGED"); list != "" {

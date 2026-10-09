@@ -1,0 +1,59 @@
+{
+  "nproc": 5,
+  "rounds": {
+    "TestSelection": [
+      0.003,
+      0.003,
+      0.007
+    ],
+    "TestUnsetIsWholeCorpus": [
+      0.002,
+      0.002,
+      0.002
+    ],
+    "TestBadChangedList": [
+      0.004,
+      0.004,
+      0.003
+    ],
+    "TestHexOffset": [
+      0.002,
+      0.003,
+      0.003
+    ],
+    "TestGeneratedSelection": [
+      0.002,
+      0.002,
+      0.002
+    ]
+  },
+  "medians": {
+    "TestSelection": 0.003,
+    "TestUnsetIsWholeCorpus": 0.002,
+    "TestBadChangedList": 0.004,
+    "TestHexOffset": 0.003,
+    "TestGeneratedSelection": 0.002
+  },
+  "matrix_binary_elapsed": {
+    "M01": 0.008,
+    "M02": 0.005,
+    "M03": 0.008,
+    "M04": 0.006,
+    "M05": 0.003,
+    "M06": 0.004,
+    "M07": 0.004,
+    "M08": 0.003,
+    "M09": 0.003,
+    "M10": 0.003,
+    "M11": 0.004,
+    "M12": 0.003,
+    "M13": 0.004,
+    "M14": 0.004,
+    "M15": 0.004,
+    "PSelect": 0.003,
+    "PGenerated": 0.005,
+    "PLog": 0.003,
+    "PValidate": 0.013,
+    "PKey": 0.008
+  }
+}

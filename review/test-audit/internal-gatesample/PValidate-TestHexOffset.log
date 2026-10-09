@@ -1,0 +1,8 @@
+{"Time":"2026-10-09T09:56:45.380947392Z","Action":"start","Package":"github.com/system-inc/adamic/internal/gatesample"}
+{"Time":"2026-10-09T09:56:45.383337598Z","Action":"run","Package":"github.com/system-inc/adamic/internal/gatesample","Test":"TestHexOffset"}
+{"Time":"2026-10-09T09:56:45.383412004Z","Action":"output","Package":"github.com/system-inc/adamic/internal/gatesample","Test":"TestHexOffset","Output":"=== RUN   TestHexOffset\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:56:45.38353564Z","Action":"output","Package":"github.com/system-inc/adamic/internal/gatesample","Test":"TestHexOffset","Output":"--- PASS: TestHexOffset (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:56:45.383543865Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/gatesample","Test":"TestHexOffset","Elapsed":0}
+{"Time":"2026-10-09T09:56:45.383571355Z","Action":"output","Package":"github.com/system-inc/adamic/internal/gatesample","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:56:45.383878268Z","Action":"output","Package":"github.com/system-inc/adamic/internal/gatesample","Output":"ok  \tgithub.com/system-inc/adamic/internal/gatesample\t0.002s\n"}
+{"Time":"2026-10-09T09:56:45.383912434Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/gatesample","Elapsed":0.003}

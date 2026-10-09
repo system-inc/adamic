@@ -1,0 +1,27 @@
+--- a/internal/gatesample/sample.go
++++ b/internal/gatesample/sample.go
+@@ -3,7 +3,6 @@
+ package gatesample
+ 
+ import (
+-	"encoding/hex"
+ 	"fmt"
+ 	"os"
+ 	"path/filepath"
+@@ -122,16 +121,6 @@
+ 
+ // Validate rejects a malformed switch even when an optional oracle is absent.
+ func Validate() error {
+-	sha, enabled := os.LookupEnv("ADAMIC_GATE_SAMPLE")
+-	if !enabled {
+-		return nil
+-	}
+-	if len(sha) != 40 {
+-		return fmt.Errorf("ADAMIC_GATE_SAMPLE=%q: expected 40 hex characters", sha)
+-	}
+-	if _, err := hex.DecodeString(sha); err != nil {
+-		return fmt.Errorf("ADAMIC_GATE_SAMPLE=%q: expected 40 hex characters", sha)
+-	}
+ 	return nil
+ }
+ 

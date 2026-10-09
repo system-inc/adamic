@@ -1,0 +1,11 @@
+--- a/internal/gatesample/sample.go
++++ b/internal/gatesample/sample.go
+@@ -22,7 +22,7 @@
+ 
+ // Log returns the landing gate's stable diagnostic. Call it once per sampled test.
+ func (s Selection) Log(testName string) string {
+-	return fmt.Sprintf("gate-sample: %s %d/%d files, stride %d, offset %d", testName, len(s.Paths), s.Total, s.Stride, s.Offset)
++	return fmt.Sprintf("gate-sample: %s %d/%d files, stride %d, offset %d", testName, s.Total, len(s.Paths), s.Stride, s.Offset)
+ }
+ 
+ // Select reads the landing switches and selects from physical corpus files.

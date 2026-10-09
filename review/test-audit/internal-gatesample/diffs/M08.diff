@@ -1,0 +1,11 @@
+--- a/internal/gatesample/sample.go
++++ b/internal/gatesample/sample.go
+@@ -62,7 +62,7 @@
+ 				return Selection{}, fmt.Errorf("ADAMIC_GATE_CHANGED: not a repository path: %q", line)
+ 			}
+ 			name := filepath.ToSlash(filepath.Clean(line))
+-			changed[name] = true
++			changed[name] = false
+ 			// Fixture Go adapters belong to the package above testdata/fixtures,
+ 			// not to an apparent package inside that ignored corpus tree.
+ 			directory := filepath.Dir(name)
