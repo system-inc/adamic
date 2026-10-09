@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/scouts/step31/checker-native/verify.py", line 8, in <module>
+    assert d['driver_bytes_unchanged'] and not d['native_comparator_run']
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

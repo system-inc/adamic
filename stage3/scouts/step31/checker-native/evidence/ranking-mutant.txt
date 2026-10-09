@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/scouts/step31/checker-native/verify.py", line 19, in <module>
+    assert row['ranking_matches']==[r for r in reasons if row['reason']==r['kind']+': '+r['reason']]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

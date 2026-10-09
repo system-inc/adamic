@@ -1,0 +1,2 @@
+{"raw": "/tmp/step31-driver/checker-entry.a:2:1: error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.", "node-declarations": "adamic: /tmp/step31-driver/checker-node-declarations.a:3:1: stage 0 can't lower node:module.require yet"}
+Node 301 baseline retained; CommonJS witness and computed input mutant verified
