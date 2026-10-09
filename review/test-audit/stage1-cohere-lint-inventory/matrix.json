@@ -1,0 +1,306 @@
+[
+  {
+    "id": "M1",
+    "kind": "production",
+    "raw_failed_tests": [
+      "TestInventoryEngine_000",
+      "TestInventoryEngineShardMutant"
+    ],
+    "grouped_failed_rows": [
+      "TestInventoryEngine family",
+      "TestInventoryEngineShardMutant"
+    ],
+    "production_kills": [
+      "TestInventoryEngine family"
+    ],
+    "ignored_witness_precondition_failures": [
+      "TestInventoryEngineShardMutant"
+    ],
+    "package_seconds": 5.491
+  },
+  {
+    "id": "M2",
+    "kind": "production",
+    "raw_failed_tests": [
+      "TestInventoryEngine_000",
+      "TestInventoryEngineShardMutant"
+    ],
+    "grouped_failed_rows": [
+      "TestInventoryEngine family",
+      "TestInventoryEngineShardMutant"
+    ],
+    "production_kills": [
+      "TestInventoryEngine family"
+    ],
+    "ignored_witness_precondition_failures": [
+      "TestInventoryEngineShardMutant"
+    ],
+    "package_seconds": 4.978
+  },
+  {
+    "id": "M3",
+    "kind": "production",
+    "raw_failed_tests": [
+      "TestInventoryEngine_001",
+      "TestInventoryEngineShardMutant"
+    ],
+    "grouped_failed_rows": [
+      "TestInventoryEngine family",
+      "TestInventoryEngineShardMutant"
+    ],
+    "production_kills": [
+      "TestInventoryEngine family"
+    ],
+    "ignored_witness_precondition_failures": [
+      "TestInventoryEngineShardMutant"
+    ],
+    "package_seconds": 5.257
+  },
+  {
+    "id": "M4",
+    "kind": "production",
+    "raw_failed_tests": [
+      "TestInventoryEngine_004",
+      "TestInventoryEngineShardMutant"
+    ],
+    "grouped_failed_rows": [
+      "TestInventoryEngine family",
+      "TestInventoryEngineShardMutant"
+    ],
+    "production_kills": [
+      "TestInventoryEngine family"
+    ],
+    "ignored_witness_precondition_failures": [
+      "TestInventoryEngineShardMutant"
+    ],
+    "package_seconds": 5.198
+  },
+  {
+    "id": "M5",
+    "kind": "production",
+    "raw_failed_tests": [
+      "TestInventoryEngine_003",
+      "TestInventoryEngineShardMutant"
+    ],
+    "grouped_failed_rows": [
+      "TestInventoryEngine family",
+      "TestInventoryEngineShardMutant"
+    ],
+    "production_kills": [
+      "TestInventoryEngine family"
+    ],
+    "ignored_witness_precondition_failures": [
+      "TestInventoryEngineShardMutant"
+    ],
+    "package_seconds": 5.282
+  },
+  {
+    "id": "M6",
+    "kind": "production",
+    "raw_failed_tests": [
+      "TestInventoryEngine_000",
+      "TestInventoryEngineShardMutant"
+    ],
+    "grouped_failed_rows": [
+      "TestInventoryEngine family",
+      "TestInventoryEngineShardMutant"
+    ],
+    "production_kills": [],
+    "ignored_witness_precondition_failures": [
+      "TestInventoryEngineShardMutant"
+    ],
+    "package_seconds": 5.18
+  },
+  {
+    "id": "M7",
+    "kind": "production",
+    "raw_failed_tests": [
+      "TestInventoryEngine_000",
+      "TestInventoryEngineShardMutant"
+    ],
+    "grouped_failed_rows": [
+      "TestInventoryEngine family",
+      "TestInventoryEngineShardMutant"
+    ],
+    "production_kills": [
+      "TestInventoryEngine family"
+    ],
+    "ignored_witness_precondition_failures": [
+      "TestInventoryEngineShardMutant"
+    ],
+    "package_seconds": 4.967
+  },
+  {
+    "id": "P1",
+    "kind": "probe",
+    "raw_failed_tests": [
+      "TestInventoryEngine_000",
+      "TestInventoryEngineShardMutant"
+    ],
+    "grouped_failed_rows": [
+      "TestInventoryEngine family",
+      "TestInventoryEngineShardMutant"
+    ],
+    "production_kills": [],
+    "ignored_witness_precondition_failures": [
+      "TestInventoryEngineShardMutant"
+    ],
+    "package_seconds": 5.083
+  },
+  {
+    "id": "P2",
+    "kind": "probe",
+    "raw_failed_tests": [
+      "TestInventoryEngine_000",
+      "TestInventoryEngineShardMutant"
+    ],
+    "grouped_failed_rows": [
+      "TestInventoryEngine family",
+      "TestInventoryEngineShardMutant"
+    ],
+    "production_kills": [],
+    "ignored_witness_precondition_failures": [
+      "TestInventoryEngineShardMutant"
+    ],
+    "package_seconds": 5.2379999999999995
+  },
+  {
+    "id": "P3",
+    "kind": "probe",
+    "raw_failed_tests": [
+      "TestInventoryEngineShardMutant",
+      "TestInventoryEngine_003"
+    ],
+    "grouped_failed_rows": [
+      "TestInventoryEngine family",
+      "TestInventoryEngineShardMutant"
+    ],
+    "production_kills": [],
+    "ignored_witness_precondition_failures": [
+      "TestInventoryEngineShardMutant"
+    ],
+    "package_seconds": 5.753
+  },
+  {
+    "id": "P4",
+    "kind": "probe",
+    "raw_failed_tests": [
+      "TestInventoryEngine_004",
+      "TestInventoryEngineShardMutant"
+    ],
+    "grouped_failed_rows": [
+      "TestInventoryEngine family",
+      "TestInventoryEngineShardMutant"
+    ],
+    "production_kills": [],
+    "ignored_witness_precondition_failures": [
+      "TestInventoryEngineShardMutant"
+    ],
+    "package_seconds": 5.104
+  },
+  {
+    "id": "P5",
+    "kind": "probe",
+    "raw_failed_tests": [
+      "TestInventoryEngine_003",
+      "TestInventoryEngineShardMutant"
+    ],
+    "grouped_failed_rows": [
+      "TestInventoryEngine family",
+      "TestInventoryEngineShardMutant"
+    ],
+    "production_kills": [],
+    "ignored_witness_precondition_failures": [
+      "TestInventoryEngineShardMutant"
+    ],
+    "package_seconds": 5.041
+  },
+  {
+    "id": "P6",
+    "kind": "probe",
+    "raw_failed_tests": [
+      "TestInventoryEngine_001",
+      "TestInventoryEngine_000",
+      "TestInventoryEngine_004",
+      "TestInventoryEngineShardMutant"
+    ],
+    "grouped_failed_rows": [
+      "TestInventoryEngine family",
+      "TestInventoryEngineShardMutant"
+    ],
+    "production_kills": [],
+    "ignored_witness_precondition_failures": [
+      "TestInventoryEngineShardMutant"
+    ],
+    "package_seconds": 4.874
+  },
+  {
+    "id": "P7",
+    "kind": "probe",
+    "raw_failed_tests": [
+      "TestInventoryEngine_004",
+      "TestInventoryEngineShardMutant"
+    ],
+    "grouped_failed_rows": [
+      "TestInventoryEngine family",
+      "TestInventoryEngineShardMutant"
+    ],
+    "production_kills": [],
+    "ignored_witness_precondition_failures": [
+      "TestInventoryEngineShardMutant"
+    ],
+    "package_seconds": 5.154
+  },
+  {
+    "id": "S1",
+    "kind": "setup",
+    "raw_failed_tests": [
+      "TestInventoryEngineUnion",
+      "TestInventoryEngineShardAssignment",
+      "TestInventoryEngine_007",
+      "TestInventoryEngine_003",
+      "TestInventoryEngine_005",
+      "TestInventoryEngine_006",
+      "TestInventoryEngine_004",
+      "TestInventoryEngine_001",
+      "TestInventoryEngine_000",
+      "TestInventoryEngine_002",
+      "TestInventoryEngineShardMutant"
+    ],
+    "grouped_failed_rows": [
+      "TestInventoryEngine family",
+      "TestInventoryEngineShardAssignment",
+      "TestInventoryEngineShardMutant",
+      "TestInventoryEngineUnion"
+    ],
+    "production_kills": [],
+    "ignored_witness_precondition_failures": [],
+    "package_seconds": 5.206
+  },
+  {
+    "id": "S2",
+    "kind": "setup",
+    "raw_failed_tests": [
+      "TestInventoryEngineUnion"
+    ],
+    "grouped_failed_rows": [
+      "TestInventoryEngineUnion"
+    ],
+    "production_kills": [],
+    "ignored_witness_precondition_failures": [],
+    "package_seconds": 5.539
+  },
+  {
+    "id": "W1",
+    "kind": "witness",
+    "raw_failed_tests": [
+      "TestInventoryEngineShardMutant"
+    ],
+    "grouped_failed_rows": [
+      "TestInventoryEngineShardMutant"
+    ],
+    "production_kills": [],
+    "ignored_witness_precondition_failures": [],
+    "package_seconds": 5.036
+  }
+]

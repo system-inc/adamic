@@ -1,0 +1,11 @@
+--- a/stage1/cohere/lint/inventory/testdata/engine.go
++++ b/stage1/cohere/lint/inventory/testdata/engine.go
+@@ -845,7 +845,7 @@
+ 	}
+ 	out := []ranking{}
+ 	for symbol, names := range refs {
+-		r := ranking{Symbol: symbol, Package: pkgs[symbol], Count: len(names), Rules: []string{}}
++		r := ranking{Symbol: symbol, Package: pkgs[symbol], Count: len(names) + 1, Rules: []string{}}
+ 		for n := range names {
+ 			r.Rules = append(r.Rules, n)
+ 		}

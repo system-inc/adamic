@@ -1,0 +1,10 @@
+{"Time":"2026-10-09T12:27:53.407194278Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint/inventory"}
+{"Time":"2026-10-09T12:27:53.408929278Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint/inventory","Test":"TestInventoryEngineUnion"}
+{"Time":"2026-10-09T12:27:53.408990931Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/inventory","Test":"TestInventoryEngineUnion","Output":"=== RUN   TestInventoryEngineUnion\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:27:56.022830461Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/inventory","Test":"TestInventoryEngineUnion","Output":"    engine_shards_test.go:265: build inventory-engine private-overlay 2.613762s\n"}
+{"Time":"2026-10-09T12:27:56.033321835Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/inventory","Test":"TestInventoryEngineUnion","Output":"    engine_shards_test.go:266: union: 8 unique cases equal the complete live enumeration across 8 fixed shards\n"}
+{"Time":"2026-10-09T12:27:56.033362126Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/inventory","Test":"TestInventoryEngineUnion","Output":"--- PASS: TestInventoryEngineUnion (2.62s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:27:56.033372572Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint/inventory","Test":"TestInventoryEngineUnion","Elapsed":2.62}
+{"Time":"2026-10-09T12:27:56.033394895Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/inventory","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:27:56.033830587Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/inventory","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/lint/inventory\t2.626s\n"}
+{"Time":"2026-10-09T12:27:56.033850017Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint/inventory","Elapsed":2.627}

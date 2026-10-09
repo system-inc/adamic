@@ -1,0 +1,12 @@
+{"Time":"2026-10-09T12:27:58.727599433Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint/inventory"}
+{"Time":"2026-10-09T12:27:58.729968865Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint/inventory","Test":"TestInventoryEngineShardAssignment"}
+{"Time":"2026-10-09T12:27:58.730041103Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/inventory","Test":"TestInventoryEngineShardAssignment","Output":"=== RUN   TestInventoryEngineShardAssignment\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:27:58.730073783Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/inventory","Test":"TestInventoryEngineShardAssignment","Output":"=== PAUSE TestInventoryEngineShardAssignment\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:27:58.730075866Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint/inventory","Test":"TestInventoryEngineShardAssignment"}
+{"Time":"2026-10-09T12:27:58.73007877Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint/inventory","Test":"TestInventoryEngineShardAssignment"}
+{"Time":"2026-10-09T12:27:58.730080393Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/inventory","Test":"TestInventoryEngineShardAssignment","Output":"=== CONT  TestInventoryEngineShardAssignment\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:27:58.730086262Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/inventory","Test":"TestInventoryEngineShardAssignment","Output":"--- PASS: TestInventoryEngineShardAssignment (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:27:58.730090248Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint/inventory","Test":"TestInventoryEngineShardAssignment","Elapsed":0}
+{"Time":"2026-10-09T12:27:58.730099572Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/inventory","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:27:58.730120874Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/inventory","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/lint/inventory\t0.002s\n"}
+{"Time":"2026-10-09T12:27:58.730127083Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint/inventory","Elapsed":0.003}

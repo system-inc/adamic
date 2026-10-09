@@ -1,0 +1,9 @@
+--- a/stage1/cohere/lint/inventory/engine_shards_test.go
++++ b/stage1/cohere/lint/inventory/engine_shards_test.go
+@@ -303,5 +303,4 @@
+ 	TestInventoryEngine_004,
+ 	TestInventoryEngine_005,
+ 	TestInventoryEngine_006,
+-	TestInventoryEngine_007,
+-}
++}

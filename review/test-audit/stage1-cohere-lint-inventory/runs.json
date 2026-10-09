@@ -1,0 +1,979 @@
+[
+  {
+    "id": "timing-family-1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/inventory/",
+      "-run",
+      "^TestInventoryEngine_[0-9]+$"
+    ],
+    "environment": {},
+    "wall": 2.7495477729989943,
+    "exit": 0
+  },
+  {
+    "id": "timing-family-2",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/inventory/",
+      "-run",
+      "^TestInventoryEngine_[0-9]+$"
+    ],
+    "environment": {},
+    "wall": 2.7344939930007968,
+    "exit": 0
+  },
+  {
+    "id": "timing-family-3",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/inventory/",
+      "-run",
+      "^TestInventoryEngine_[0-9]+$"
+    ],
+    "environment": {},
+    "wall": 2.9316942320001544,
+    "exit": 0
+  },
+  {
+    "id": "timing-union-1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/inventory/",
+      "-run",
+      "^TestInventoryEngineUnion$"
+    ],
+    "environment": {},
+    "wall": 2.729003640000883,
+    "exit": 0
+  },
+  {
+    "id": "timing-union-2",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/inventory/",
+      "-run",
+      "^TestInventoryEngineUnion$"
+    ],
+    "environment": {},
+    "wall": 2.785831467999742,
+    "exit": 0
+  },
+  {
+    "id": "timing-union-3",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/inventory/",
+      "-run",
+      "^TestInventoryEngineUnion$"
+    ],
+    "environment": {},
+    "wall": 2.5616228929993667,
+    "exit": 0
+  },
+  {
+    "id": "timing-assignment-1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/inventory/",
+      "-run",
+      "^TestInventoryEngineShardAssignment$"
+    ],
+    "environment": {},
+    "wall": 0.13396951299910143,
+    "exit": 0
+  },
+  {
+    "id": "timing-assignment-2",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/inventory/",
+      "-run",
+      "^TestInventoryEngineShardAssignment$"
+    ],
+    "environment": {},
+    "wall": 0.13284111200118787,
+    "exit": 0
+  },
+  {
+    "id": "timing-assignment-3",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/inventory/",
+      "-run",
+      "^TestInventoryEngineShardAssignment$"
+    ],
+    "environment": {},
+    "wall": 0.13854925700070453,
+    "exit": 0
+  },
+  {
+    "id": "timing-witness-1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/inventory/",
+      "-run",
+      "^TestInventoryEngineShardMutant$"
+    ],
+    "environment": {},
+    "wall": 2.8756953440006328,
+    "exit": 0
+  },
+  {
+    "id": "timing-witness-2",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/inventory/",
+      "-run",
+      "^TestInventoryEngineShardMutant$"
+    ],
+    "environment": {},
+    "wall": 2.66584692700053,
+    "exit": 0
+  },
+  {
+    "id": "timing-witness-3",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/inventory/",
+      "-run",
+      "^TestInventoryEngineShardMutant$"
+    ],
+    "environment": {},
+    "wall": 2.7040277830001287,
+    "exit": 0
+  },
+  {
+    "id": "preliminary-M1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/inventory/",
+      "-run",
+      "."
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "M1"
+    },
+    "wall": 5.5474135049989854,
+    "exit": 1
+  },
+  {
+    "id": "preliminary-M2",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/inventory/",
+      "-run",
+      "."
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "M2"
+    },
+    "wall": 3.0375693360001605,
+    "exit": 1
+  },
+  {
+    "id": "preliminary-M3",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/inventory/",
+      "-run",
+      "."
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "M3"
+    },
+    "wall": 2.800706542999251,
+    "exit": 1
+  },
+  {
+    "id": "preliminary-M4",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/inventory/",
+      "-run",
+      "."
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "M4"
+    },
+    "wall": 2.467877081999177,
+    "exit": 1
+  },
+  {
+    "id": "preliminary-M5",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/inventory/",
+      "-run",
+      "."
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "M5"
+    },
+    "wall": 2.8098128519995953,
+    "exit": 1
+  },
+  {
+    "id": "preliminary-M6",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/inventory/",
+      "-run",
+      "."
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "M6"
+    },
+    "wall": 2.8922243309989426,
+    "exit": 1
+  },
+  {
+    "id": "preliminary-M7",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/inventory/",
+      "-run",
+      "."
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "M7"
+    },
+    "wall": 2.8277840609989653,
+    "exit": 1
+  },
+  {
+    "id": "preliminary-P1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/inventory/",
+      "-run",
+      "."
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "P1"
+    },
+    "wall": 3.063976666999224,
+    "exit": 1
+  },
+  {
+    "id": "preliminary-P2",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/inventory/",
+      "-run",
+      "."
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "P2"
+    },
+    "wall": 2.999934350998956,
+    "exit": 1
+  },
+  {
+    "id": "preliminary-P3",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/inventory/",
+      "-run",
+      "."
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "P3"
+    },
+    "wall": 2.6746992619991943,
+    "exit": 1
+  },
+  {
+    "id": "preliminary-P4",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/inventory/",
+      "-run",
+      "."
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "P4"
+    },
+    "wall": 2.8500266570008534,
+    "exit": 1
+  },
+  {
+    "id": "preliminary-P5",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/inventory/",
+      "-run",
+      "."
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "P5"
+    },
+    "wall": 2.7693694869994943,
+    "exit": 1
+  },
+  {
+    "id": "preliminary-P6",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/inventory/",
+      "-run",
+      "."
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "P6"
+    },
+    "wall": 2.7440641299999697,
+    "exit": 1
+  },
+  {
+    "id": "preliminary-P7",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/inventory/",
+      "-run",
+      "."
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "P7"
+    },
+    "wall": 2.9847788170009153,
+    "exit": 1
+  },
+  {
+    "id": "M1-vet",
+    "exit": 0,
+    "wall": 1.2950600980002491
+  },
+  {
+    "id": "M2-vet",
+    "exit": 0,
+    "wall": 0.17032161700080906
+  },
+  {
+    "id": "M3-vet",
+    "exit": 0,
+    "wall": 0.1670681429986871
+  },
+  {
+    "id": "M4-vet",
+    "exit": 0,
+    "wall": 0.16921121400082484
+  },
+  {
+    "id": "M5-vet",
+    "exit": 0,
+    "wall": 0.17060468400086393
+  },
+  {
+    "id": "M6-vet",
+    "exit": 0,
+    "wall": 0.16601981200074079
+  },
+  {
+    "id": "M7-vet",
+    "exit": 0,
+    "wall": 0.17500607399961154
+  },
+  {
+    "id": "P1-vet",
+    "exit": 0,
+    "wall": 0.16703665500062925
+  },
+  {
+    "id": "P2-vet",
+    "exit": 0,
+    "wall": 0.18565048600066802
+  },
+  {
+    "id": "P3-vet",
+    "exit": 0,
+    "wall": 0.17058907099999487
+  },
+  {
+    "id": "P4-vet",
+    "exit": 0,
+    "wall": 0.16130605599937553
+  },
+  {
+    "id": "P5-vet",
+    "exit": 0,
+    "wall": 0.16661739300070622
+  },
+  {
+    "id": "P6-vet",
+    "exit": 0,
+    "wall": 0.16197133899913752
+  },
+  {
+    "id": "P7-vet",
+    "exit": 0,
+    "wall": 0.18336210699999356
+  },
+  {
+    "id": "switch-clean",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/inventory/",
+      "-run",
+      "."
+    ],
+    "environment": {},
+    "wall": 12.10282350000125,
+    "exit": 0
+  },
+  {
+    "id": "M1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/inventory/",
+      "-run",
+      "."
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "M1"
+    },
+    "wall": 5.630268421999062,
+    "exit": 1
+  },
+  {
+    "id": "M2",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/inventory/",
+      "-run",
+      "."
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "M2"
+    },
+    "wall": 5.124452984000527,
+    "exit": 1
+  },
+  {
+    "id": "M3",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/inventory/",
+      "-run",
+      "."
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "M3"
+    },
+    "wall": 5.382439697999871,
+    "exit": 1
+  },
+  {
+    "id": "M4",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/inventory/",
+      "-run",
+      "."
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "M4"
+    },
+    "wall": 5.328986631000589,
+    "exit": 1
+  },
+  {
+    "id": "M5",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/inventory/",
+      "-run",
+      "."
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "M5"
+    },
+    "wall": 5.4336177250006585,
+    "exit": 1
+  },
+  {
+    "id": "M6",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/inventory/",
+      "-run",
+      "."
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "M6"
+    },
+    "wall": 5.315491974000906,
+    "exit": 1
+  },
+  {
+    "id": "M7",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/inventory/",
+      "-run",
+      "."
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "M7"
+    },
+    "wall": 5.097364326999013,
+    "exit": 1
+  },
+  {
+    "id": "P1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/inventory/",
+      "-run",
+      "."
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "P1"
+    },
+    "wall": 5.224541345000034,
+    "exit": 1
+  },
+  {
+    "id": "P2",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/inventory/",
+      "-run",
+      "."
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "P2"
+    },
+    "wall": 5.3759652739991,
+    "exit": 1
+  },
+  {
+    "id": "P3",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/inventory/",
+      "-run",
+      "."
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "P3"
+    },
+    "wall": 5.886347380999723,
+    "exit": 1
+  },
+  {
+    "id": "P4",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/inventory/",
+      "-run",
+      "."
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "P4"
+    },
+    "wall": 5.241347865001444,
+    "exit": 1
+  },
+  {
+    "id": "P5",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/inventory/",
+      "-run",
+      "."
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "P5"
+    },
+    "wall": 5.193969246998677,
+    "exit": 1
+  },
+  {
+    "id": "P6",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/inventory/",
+      "-run",
+      "."
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "P6"
+    },
+    "wall": 5.021822372000315,
+    "exit": 1
+  },
+  {
+    "id": "P7",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/inventory/",
+      "-run",
+      "."
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "P7"
+    },
+    "wall": 5.289987983998799,
+    "exit": 1
+  },
+  {
+    "id": "S1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-overlay=/tmp/u116/evidence/S1.overlay.json",
+      "./stage1/cohere/lint/inventory/",
+      "-run",
+      "."
+    ],
+    "environment": {},
+    "wall": 5.413007528999515,
+    "exit": 1
+  },
+  {
+    "id": "S1-vet",
+    "exit": 0
+  },
+  {
+    "id": "S2",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-overlay=/tmp/u116/evidence/S2.overlay.json",
+      "./stage1/cohere/lint/inventory/",
+      "-run",
+      "."
+    ],
+    "environment": {},
+    "wall": 5.766557939999984,
+    "exit": 1
+  },
+  {
+    "id": "S2-vet",
+    "exit": 0
+  },
+  {
+    "id": "W1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-overlay=/tmp/u116/evidence/W1.overlay.json",
+      "./stage1/cohere/lint/inventory/",
+      "-run",
+      "."
+    ],
+    "environment": {},
+    "wall": 5.229633847000514,
+    "exit": 1
+  },
+  {
+    "id": "W1-vet",
+    "exit": 0
+  }
+]

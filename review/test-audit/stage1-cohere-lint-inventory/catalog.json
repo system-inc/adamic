@@ -1,0 +1,139 @@
+[
+  {
+    "id": "M1",
+    "file": "stage1/cohere/lint/inventory/testdata/engine.go",
+    "line": 379,
+    "before": "Direct: depth == 0",
+    "after": "Direct: depth != 0",
+    "kind": "production"
+  },
+  {
+    "id": "M2",
+    "file": "stage1/cohere/lint/inventory/testdata/engine.go",
+    "line": 848,
+    "before": "Count: len(names)",
+    "after": "Count: len(names) + 1",
+    "kind": "production"
+  },
+  {
+    "id": "M3",
+    "file": "stage1/cohere/lint/inventory/testdata/engine.go",
+    "line": 745,
+    "before": "*report.Count++",
+    "after": "*report.Count += 2",
+    "kind": "production"
+  },
+  {
+    "id": "M4",
+    "file": "stage1/cohere/lint/inventory/testdata/engine.go",
+    "line": 513,
+    "before": "(?:enabled\\(",
+    "after": "(?:disabled\\(",
+    "kind": "production"
+  },
+  {
+    "id": "M5",
+    "file": "stage1/cohere/lint/inventory/testdata/engine.go",
+    "line": 701,
+    "before": "if strings.HasPrefix(line, \"ok  \\t\"+rulesPrefix+family+\"\\t\") {",
+    "after": "if !strings.HasPrefix(line, \"ok  \\t\"+rulesPrefix+family+\"\\t\") {",
+    "kind": "production"
+  },
+  {
+    "id": "M6",
+    "file": "stage1/cohere/lint/inventory/testdata/engine.go",
+    "line": 736,
+    "before": "+\": \"+fmt.Sprint(value)",
+    "after": "+\"; \"+fmt.Sprint(value)",
+    "kind": "production",
+    "supplemental": true
+  },
+  {
+    "id": "M7",
+    "file": "stage1/cohere/lint/inventory/testdata/engine.go",
+    "line": 384,
+    "before": "if next != nil {\n\t\t\t\twalk(next, depth+1)",
+    "after": "if false && next != nil {\n\t\t\t\twalk(next, depth+1)",
+    "kind": "production"
+  },
+  {
+    "id": "P1",
+    "file": "stage1/cohere/lint/inventory/testdata/engine.go",
+    "line": 333,
+    "before": "func (a *analyzer) trace(root *declaration) ([]dependency, []string, bool, bool) {",
+    "after": "return nil, nil, false, false at entry (conditional probe)",
+    "kind": "probe"
+  },
+  {
+    "id": "P2",
+    "file": "stage1/cohere/lint/inventory/testdata/engine.go",
+    "line": 831,
+    "before": "func rankings(items []entry) []ranking {",
+    "after": "return nil at entry (conditional probe)",
+    "kind": "probe"
+  },
+  {
+    "id": "P3",
+    "file": "stage1/cohere/lint/inventory/testdata/engine.go",
+    "line": 863,
+    "before": "func countText(f frequency) string {",
+    "after": "return \"\" at entry (conditional probe)",
+    "kind": "probe"
+  },
+  {
+    "id": "P4",
+    "file": "stage1/cohere/lint/inventory/testdata/engine.go",
+    "line": 512,
+    "before": "func hasSelector(text, name string) bool {",
+    "after": "return false at entry (conditional probe)",
+    "kind": "probe"
+  },
+  {
+    "id": "P5",
+    "file": "stage1/cohere/lint/inventory/testdata/engine.go",
+    "line": 699,
+    "before": "func familyPassed(log []byte, family string) bool {",
+    "after": "return false at entry (conditional probe)",
+    "kind": "probe"
+  },
+  {
+    "id": "P6",
+    "file": "stage1/cohere/lint/inventory/testdata/engine.go",
+    "line": 732,
+    "before": "func measured(subject rule.Registration, file *tsast.SourceFile, graph *program.Graph, report *frequency) {",
+    "after": "return at entry (conditional probe)",
+    "kind": "probe"
+  },
+  {
+    "id": "P7",
+    "file": "stage1/cohere/lint/inventory/testdata/engine.go",
+    "line": 770,
+    "before": "func measureCorpus(root, output, label string, paths []string, items []entry) []string {",
+    "after": "return nil at entry (conditional probe)",
+    "kind": "probe"
+  },
+  {
+    "id": "S1",
+    "file": "stage1/cohere/lint/inventory/engine_shards_test.go",
+    "line": 105,
+    "before": "\n\t\tif seen[name] {",
+    "after": "\n\t\tif !seen[name] {",
+    "kind": "setup"
+  },
+  {
+    "id": "S2",
+    "file": "stage1/cohere/lint/inventory/engine_shards_test.go",
+    "line": 306,
+    "before": "\tTestInventoryEngine_007,\n",
+    "after": "",
+    "kind": "setup"
+  },
+  {
+    "id": "W1",
+    "file": "stage1/cohere/lint/inventory/engine_shards_test.go",
+    "line": 198,
+    "before": "return command.CombinedOutput()",
+    "after": "output, _ := command.CombinedOutput()\n\treturn output, nil",
+    "kind": "witness"
+  }
+]

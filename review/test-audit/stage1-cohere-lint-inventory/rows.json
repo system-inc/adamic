@@ -1,0 +1,164 @@
+[
+  {
+    "test": "TestInventoryEngine family",
+    "package": "stage1/cohere/lint/inventory",
+    "file": "stage1/cohere/lint/inventory/engine_shards_test.go",
+    "seconds": 2.598,
+    "oracle": "Self-written dependency, ranking, string, path and denominator assertions. TestRegisteredCorpusControl executes Go cohere no-debugger, then checks self-written counts, not diagnostic identity; a different one-diagnostic failure could satisfy this count-only control. No outside authority was copied or checked.",
+    "oracle_kind": [
+      "self",
+      "external-run"
+    ],
+    "kills": [
+      "M1",
+      "M2",
+      "M3",
+      "M4",
+      "M5",
+      "M7"
+    ],
+    "unique_kills": [
+      "M1",
+      "M2",
+      "M3",
+      "M4",
+      "M5",
+      "M7"
+    ],
+    "last_proven_fail": "M7: engine_shards_test.go:289: case TestTransitiveSiblingAndMethodDependencies: exit status 1",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 6,
+    "probe_kills": [
+      "P1",
+      "P2",
+      "P3",
+      "P4",
+      "P5",
+      "P6",
+      "P7"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [
+      "TestInventoryEngine family",
+      "TestInventoryEngineUnion",
+      "TestInventoryEngineShardAssignment",
+      "TestInventoryEngineShardMutant"
+    ],
+    "members": [
+      "TestInventoryEngine_000",
+      "TestInventoryEngine_001",
+      "TestInventoryEngine_002",
+      "TestInventoryEngine_003",
+      "TestInventoryEngine_004",
+      "TestInventoryEngine_005",
+      "TestInventoryEngine_006",
+      "TestInventoryEngine_007"
+    ],
+    "supplemental_kills": [
+      "M6"
+    ],
+    "vacuous_subcases": [
+      "TestInventoryEngine_002 (empty shard)",
+      "TestInventoryEngine_007 (empty shard)",
+      "TestInventoryEngine_005 (empty shard)",
+      "TestInventoryEngine_006 (empty shard)"
+    ],
+    "entry_probes": {
+      "trace": "P1",
+      "rankings": "P2",
+      "countText": "P3",
+      "hasSelector": "P4",
+      "familyPassed": "P5",
+      "measured": "P6",
+      "measureCorpus": "P7"
+    },
+    "evidence": "ADAMIC_MUTANT=M7 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/inventory/ -run . > M7.log 2>&1; engine_shards_test.go:289: case TestTransitiveSiblingAndMethodDependencies: exit status 1"
+  },
+  {
+    "test": "TestInventoryEngineUnion",
+    "package": "stage1/cohere/lint/inventory",
+    "file": "stage1/cohere/lint/inventory/main_test.go",
+    "seconds": 2.5869999999999997,
+    "oracle": "Self-written eight-entry top-level table and exact live shard-union checks.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "S2: main_test.go:10: enumerated 7 top-level shards, want 8",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 6,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": false,
+    "matrix_rows": [
+      "TestInventoryEngine family",
+      "TestInventoryEngineUnion",
+      "TestInventoryEngineShardAssignment",
+      "TestInventoryEngineShardMutant"
+    ],
+    "evidence": " timeout 120 go test -json -count=1 -timeout 90s -overlay=/tmp/u116/evidence/S2.overlay.json ./stage1/cohere/lint/inventory/ -run . > S2.log 2>&1; main_test.go:10: enumerated 7 top-level shards, want 8",
+    "construction_kills": [
+      "S2"
+    ]
+  },
+  {
+    "test": "TestInventoryEngineShardAssignment",
+    "package": "stage1/cohere/lint/inventory",
+    "file": "stage1/cohere/lint/inventory/engine_shards_test.go",
+    "seconds": 0.002,
+    "oracle": "Self-written stable hash assignment, growth, empty/repeated-corpus rejection checks.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "S1: engine_shards_test.go:162: repeated case TestExistingA",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 6,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": false,
+    "matrix_rows": [
+      "TestInventoryEngine family",
+      "TestInventoryEngineUnion",
+      "TestInventoryEngineShardAssignment",
+      "TestInventoryEngineShardMutant"
+    ],
+    "evidence": " timeout 120 go test -json -count=1 -timeout 90s -overlay=/tmp/u116/evidence/S1.overlay.json ./stage1/cohere/lint/inventory/ -run . > S1.log 2>&1; engine_shards_test.go:162: repeated case TestExistingA",
+    "construction_kills": [
+      "S1"
+    ]
+  },
+  {
+    "test": "TestInventoryEngineShardMutant",
+    "package": "stage1/cohere/lint/inventory",
+    "file": "stage1/cohere/lint/inventory/engine_shards_test.go",
+    "seconds": 2.57,
+    "oracle": "Self-written expected singleton failure at TestUnknownFrequencyIsNotZero, with matching failure text and shard. W1 masks the subprocess error, so the expected catch disappears.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W1: engine_shards_test.go:238 on origin/main (overlay line 239): unknown-frequency mutant caught by [], want exactly shard-003",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 6,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": false,
+    "matrix_rows": [
+      "TestInventoryEngine family",
+      "TestInventoryEngineUnion",
+      "TestInventoryEngineShardAssignment",
+      "TestInventoryEngineShardMutant"
+    ],
+    "evidence": " timeout 120 go test -json -count=1 -timeout 90s -overlay=/tmp/u116/evidence/W1.overlay.json ./stage1/cohere/lint/inventory/ -run . > W1.log 2>&1; engine_shards_test.go:239: unknown-frequency mutant caught by [], want exactly shard-003; overlay line 239 maps to origin/main line 238",
+    "weakened_check_kills": [
+      "W1"
+    ]
+  }
+]
