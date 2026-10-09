@@ -1,0 +1,11 @@
+// a-check: NotYet Object.entries on a shape not proven by a plain literal or its const binding yet
+// From TypeScript 6.0.3 src/compiler/scanner.ts:222
+// Reduced witness; retained expressions, scaffolding and driver are explicit.
+// Parameter prevents a literal-only proof while preserving the actual expression.
+function keywords(textToKeywordObj: { readonly constructor: number }): Map<string, number> {
+    return new Map(Object.entries(textToKeywordObj));
+}
+const actual = { constructor: 137, extra: 1 };
+const view: { readonly constructor: number } = actual;
+const textToKeyword = keywords(view);
+console.log(`${typeof textToKeyword.get("extra")}`);

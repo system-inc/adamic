@@ -1,0 +1,5 @@
+// a-check: NotYet a computed field name yet
+// From TypeScript 6.0.3 src/compiler/scanner.ts:150
+// Reduced witness; retained expressions, scaffolding and driver are explicit.
+const textToKeywordObj = { ["" + "constructor"]: 137 };
+console.log(`${Object.keys(textToKeywordObj).join(",")}`);

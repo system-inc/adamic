@@ -1,0 +1,8 @@
+// a-check: NotYet new an Identifier yet
+// From TypeScript 6.0.3 src/compiler/core.ts:2198-2207
+// Reduced witness; retained expressions, scaffolding and driver are explicit.
+const s2 = "abc";
+let previous = new Array(s2.length + 1);
+console.log(`${previous.length} ${Object.keys(previous).length} ${previous[0]}`);
+for (let i = 0; i <= s2.length; i++) { previous[i] = i; }
+console.log(`${previous[s2.length]}`);

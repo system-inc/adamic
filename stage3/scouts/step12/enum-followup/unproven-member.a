@@ -1,0 +1,5 @@
+// a-check: refused; open numeric enum storage is not a member proof.
+// Negative boundary for scanner's Identifier return member; not an upstream body.
+const enum SyntaxKind { Unknown = 0, Identifier = 80, AbstractKeyword = 128, BreakKeyword = 83 }
+const token: SyntaxKind.Identifier = Math.trunc(99);
+console.log(`${token}`);

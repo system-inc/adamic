@@ -1,0 +1,122 @@
+[
+  {
+    "name": "namespace",
+    "node_exit": 0,
+    "node_stdout": "ok\n",
+    "mutant_exit": 1,
+    "caught": true,
+    "build_exit": 1,
+    "diagnostic": "adamic: /workspace/adamic/stage3/scouts/step12/fixtures/namespace.a:4:1: Adamic 0.1 refuses a namespace; use a module: a file of its own, with named exports\n",
+    "native_equal": null
+  },
+  {
+    "name": "mutable-namespace",
+    "node_exit": 0,
+    "node_stdout": "true\n",
+    "mutant_exit": 0,
+    "caught": true,
+    "build_exit": 1,
+    "diagnostic": "adamic: /workspace/adamic/stage3/scouts/step12/fixtures/mutable-namespace.a:4:1: Adamic 0.1 refuses a namespace; use a module: a file of its own, with named exports\n",
+    "native_equal": null
+  },
+  {
+    "name": "diagnostic-cast",
+    "node_exit": 0,
+    "node_stdout": "1002\n",
+    "mutant_exit": 0,
+    "caught": true,
+    "build_exit": 0,
+    "diagnostic": "",
+    "native_equal": true
+  },
+  {
+    "name": "string-cast",
+    "node_exit": 0,
+    "node_stdout": "2 55296\n",
+    "mutant_exit": 0,
+    "caught": true,
+    "build_exit": 1,
+    "diagnostic": "adamic: /workspace/adamic/stage3/scouts/step12/fixtures/string-cast.a:4:67: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+    "native_equal": null
+  },
+  {
+    "name": "set-cast",
+    "node_exit": 0,
+    "node_stdout": "true\ntrue\n",
+    "mutant_exit": 0,
+    "caught": true,
+    "build_exit": 1,
+    "diagnostic": "adamic: /workspace/adamic/stage3/scouts/step12/fixtures/set-cast.a:4:93: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\n",
+    "native_equal": null
+  },
+  {
+    "name": "enum-slot",
+    "node_exit": 0,
+    "node_stdout": "99\n",
+    "mutant_exit": 0,
+    "caught": true,
+    "build_exit": 0,
+    "diagnostic": "",
+    "native_equal": true
+  },
+  {
+    "name": "array-holes",
+    "node_exit": 0,
+    "node_stdout": "4 0 undefined\n3\n",
+    "mutant_exit": 0,
+    "caught": true,
+    "build_exit": 1,
+    "diagnostic": "adamic: /workspace/adamic/stage3/scouts/step12/fixtures/array-holes.a:5:16: stage 0 can't lower new an Identifier yet\n",
+    "native_equal": null
+  },
+  {
+    "name": "entries",
+    "node_exit": 0,
+    "node_stdout": "number\n",
+    "mutant_exit": 0,
+    "caught": true,
+    "build_exit": 1,
+    "diagnostic": "adamic: /workspace/adamic/stage3/scouts/step12/fixtures/entries.a:6:35: stage 0 can't lower Object.entries on a shape not proven by a plain literal or its const binding yet\n",
+    "native_equal": null
+  },
+  {
+    "name": "computed-field",
+    "node_exit": 0,
+    "node_stdout": "constructor\n",
+    "mutant_exit": 0,
+    "caught": true,
+    "build_exit": 1,
+    "diagnostic": "adamic: /workspace/adamic/stage3/scouts/step12/fixtures/computed-field.a:4:28: stage 0 can't lower a computed field name yet\n",
+    "native_equal": null
+  },
+  {
+    "name": "uint16",
+    "node_exit": 0,
+    "node_stdout": "0 1\n",
+    "mutant_exit": 0,
+    "caught": true,
+    "build_exit": 1,
+    "diagnostic": "stage3/scouts/step12/fixtures/uint16.a:10:15: error TS2532: Object is possibly 'undefined'.\nstage3/scouts/step12/fixtures/uint16.a:8:1: error TS2532: Object is possibly 'undefined'.\n",
+    "native_equal": null
+  },
+  {
+    "name": "generic-return",
+    "node_exit": 0,
+    "node_stdout": "1\n",
+    "mutant_exit": 0,
+    "caught": true,
+    "build_exit": 1,
+    "diagnostic": "adamic: /workspace/adamic/stage3/scouts/step12/fixtures/generic-return.a:4:17: stage 0 can't lower a function returning U | undefined yet\n",
+    "native_equal": null
+  },
+  {
+    "name": "error-cast",
+    "node_exit": 0,
+    "node_stdout": "function\n",
+    "mutant_exit": 0,
+    "caught": true,
+    "build_exit": 1,
+    "diagnostic": "adamic: /workspace/adamic/stage3/scouts/step12/fixtures/error-cast.a:4:24: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+    "native_equal": null
+  }
+]

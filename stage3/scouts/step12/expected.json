@@ -1,0 +1,74 @@
+[
+  {
+    "name": "namespace",
+    "build_exit": 1,
+    "diagnostic_contains": "Adamic 0.1 refuses a namespace; use a module: a file of its own, with named exports",
+    "node_stdout": "ok\n"
+  },
+  {
+    "name": "mutable-namespace",
+    "build_exit": 1,
+    "diagnostic_contains": "Adamic 0.1 refuses a namespace; use a module: a file of its own, with named exports",
+    "node_stdout": "true\n"
+  },
+  {
+    "name": "diagnostic-cast",
+    "build_exit": 0,
+    "diagnostic_contains": "",
+    "node_stdout": "1002\n"
+  },
+  {
+    "name": "string-cast",
+    "build_exit": 1,
+    "diagnostic_contains": "Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "node_stdout": "2 55296\n"
+  },
+  {
+    "name": "set-cast",
+    "build_exit": 1,
+    "diagnostic_contains": "Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case",
+    "node_stdout": "true\ntrue\n"
+  },
+  {
+    "name": "enum-slot",
+    "build_exit": 0,
+    "diagnostic_contains": "",
+    "node_stdout": "99\n"
+  },
+  {
+    "name": "array-holes",
+    "build_exit": 1,
+    "diagnostic_contains": "stage 0 can't lower new an Identifier yet",
+    "node_stdout": "4 0 undefined\n3\n"
+  },
+  {
+    "name": "entries",
+    "build_exit": 1,
+    "diagnostic_contains": "stage 0 can't lower Object.entries on a shape not proven by a plain literal or its const binding yet",
+    "node_stdout": "number\n"
+  },
+  {
+    "name": "computed-field",
+    "build_exit": 1,
+    "diagnostic_contains": "stage 0 can't lower a computed field name yet",
+    "node_stdout": "constructor\n"
+  },
+  {
+    "name": "uint16",
+    "build_exit": 1,
+    "diagnostic_contains": "error TS2532",
+    "node_stdout": "0 1\n"
+  },
+  {
+    "name": "generic-return",
+    "build_exit": 1,
+    "diagnostic_contains": "stage 0 can't lower a function returning U | undefined yet",
+    "node_stdout": "1\n"
+  },
+  {
+    "name": "error-cast",
+    "build_exit": 1,
+    "diagnostic_contains": "Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "node_stdout": "function\n"
+  }
+]

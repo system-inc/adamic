@@ -1,0 +1,7 @@
+// a-check: pass
+// From TypeScript 6.0.3 src/compiler/scanner.ts:427-432 (candidate, requested stop location unavailable)
+// Reduced witness; retained expressions, scaffolding and driver are explicit.
+enum CharacterCodes { a = 97, b = 98 }
+// Reduced incoming numeric value at an enum slot, not an assertion.
+const ch: CharacterCodes = Math.trunc(99);
+console.log(`${ch}`);

@@ -1,0 +1,11 @@
+// a-check: type error TS2532
+// From TypeScript 6.0.3 src/compiler/utilities.ts:10491-10507
+// Reduced witness; retained expressions, scaffolding and driver are explicit.
+const bitsNeeded = 20;
+const segments = new Uint16Array((bitsNeeded >>> 4) + (bitsNeeded & 15 ? 1 : 0));
+const segment = 0;
+const shiftedDigit = 0x10000;
+segments[segment] |= shiftedDigit;
+const residual = shiftedDigit >>> 16;
+if (residual) segments[segment + 1] |= residual;
+console.log(`${segments[0]} ${segments[1]}`);

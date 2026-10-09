@@ -1,0 +1,134 @@
+[
+  {
+    "proven_control": null,
+    "name": "identifier-return",
+    "compiler": "main-45487a80",
+    "node_stdout": "128 128\n83 83\n80 80\n80 80\n80 80\n",
+    "mutant_stdout": "83 83\n83 83\n80 80\n80 80\n80 80\n",
+    "mutant_caught": true,
+    "build_exit": 1,
+    "diagnostic": "adamic: /workspace/adamic/stage3/scouts/step12/enum-followup/identifier-return.a:16:24: stage 0 can't lower a BinaryExpression with a number and a number yet\n",
+    "native_equal": null
+  },
+  {
+    "proven_control": null,
+    "name": "identifier-return",
+    "compiler": "enum-tag-41231d51",
+    "node_stdout": "128 128\n83 83\n80 80\n80 80\n80 80\n",
+    "mutant_stdout": "83 83\n83 83\n80 80\n80 80\n80 80\n",
+    "mutant_caught": true,
+    "build_exit": 1,
+    "diagnostic": "adamic: /workspace/adamic/stage3/scouts/step12/enum-followup/identifier-return.a:16:24: stage 0 can't lower a BinaryExpression with a number and a number yet\n",
+    "native_equal": null
+  },
+  {
+    "proven_control": null,
+    "name": "identifier-return",
+    "compiler": "enum-tag-2-64952252",
+    "node_stdout": "128 128\n83 83\n80 80\n80 80\n80 80\n",
+    "mutant_stdout": "83 83\n83 83\n80 80\n80 80\n80 80\n",
+    "mutant_caught": true,
+    "build_exit": 1,
+    "diagnostic": "adamic: /workspace/adamic/stage3/scouts/step12/enum-followup/identifier-return.a:16:24: stage 0 can't lower a BinaryExpression with a number and a number yet\n",
+    "native_equal": null
+  },
+  {
+    "proven_control": null,
+    "name": "identifier-full-enum",
+    "compiler": "main-45487a80",
+    "node_stdout": "128 128\n83 83\n80 80\n80 80\n80 80\n",
+    "mutant_stdout": "83 83\n83 83\n80 80\n80 80\n80 80\n",
+    "mutant_caught": true,
+    "build_exit": 1,
+    "diagnostic": "adamic: /workspace/adamic/stage3/scouts/step12/enum-followup/identifier-full-enum.a:552:24: stage 0 can't lower a BinaryExpression with a number and a number yet\n",
+    "native_equal": null
+  },
+  {
+    "proven_control": null,
+    "name": "identifier-full-enum",
+    "compiler": "enum-tag-41231d51",
+    "node_stdout": "128 128\n83 83\n80 80\n80 80\n80 80\n",
+    "mutant_stdout": "83 83\n83 83\n80 80\n80 80\n80 80\n",
+    "mutant_caught": true,
+    "build_exit": 1,
+    "diagnostic": "adamic: /workspace/adamic/stage3/scouts/step12/enum-followup/identifier-full-enum.a:552:24: stage 0 can't lower a BinaryExpression with a number and a number yet\n",
+    "native_equal": null
+  },
+  {
+    "proven_control": null,
+    "name": "identifier-full-enum",
+    "compiler": "enum-tag-2-64952252",
+    "node_stdout": "128 128\n83 83\n80 80\n80 80\n80 80\n",
+    "mutant_stdout": "83 83\n83 83\n80 80\n80 80\n80 80\n",
+    "mutant_caught": true,
+    "build_exit": 1,
+    "diagnostic": "adamic: /workspace/adamic/stage3/scouts/step12/enum-followup/identifier-full-enum.a:552:24: stage 0 can't lower a BinaryExpression with a number and a number yet\n",
+    "native_equal": null
+  },
+  {
+    "proven_control": null,
+    "name": "identifier-split",
+    "compiler": "main-45487a80",
+    "node_stdout": "128 128\n83 83\n80 80\n80 80\n80 80\n",
+    "mutant_stdout": "128 80\n83 80\n80 80\n80 80\n80 80\n",
+    "mutant_caught": true,
+    "build_exit": 0,
+    "diagnostic": "",
+    "native_equal": true
+  },
+  {
+    "proven_control": null,
+    "name": "identifier-split",
+    "compiler": "enum-tag-41231d51",
+    "node_stdout": "128 128\n83 83\n80 80\n80 80\n80 80\n",
+    "mutant_stdout": "128 80\n83 80\n80 80\n80 80\n80 80\n",
+    "mutant_caught": true,
+    "build_exit": 0,
+    "diagnostic": "",
+    "native_equal": true
+  },
+  {
+    "proven_control": null,
+    "name": "identifier-split",
+    "compiler": "enum-tag-2-64952252",
+    "node_stdout": "128 128\n83 83\n80 80\n80 80\n80 80\n",
+    "mutant_stdout": "128 80\n83 80\n80 80\n80 80\n80 80\n",
+    "mutant_caught": true,
+    "build_exit": 0,
+    "diagnostic": "",
+    "native_equal": true
+  },
+  {
+    "proven_control": true,
+    "name": "unproven-member",
+    "compiler": "main-45487a80",
+    "node_stdout": "99\n",
+    "mutant_stdout": "100\n",
+    "mutant_caught": true,
+    "build_exit": 1,
+    "diagnostic": "adamic: /workspace/adamic/stage3/scouts/step12/enum-followup/unproven-member.a:4:38: Adamic 0.1 refuses an unproven value assigned to a numeric literal or enum member slot SyntaxKind.Identifier; compare with this literal and return that constant, or widen the slot to the whole numeric enum or number (adamic/enum-literal)\n",
+    "native_equal": null
+  },
+  {
+    "proven_control": true,
+    "name": "unproven-member",
+    "compiler": "enum-tag-41231d51",
+    "node_stdout": "99\n",
+    "mutant_stdout": "100\n",
+    "mutant_caught": true,
+    "build_exit": 1,
+    "diagnostic": "adamic: /workspace/adamic/stage3/scouts/step12/enum-followup/unproven-member.a:4:38: Adamic 0.1 refuses an unproven value assigned to a numeric literal or enum member slot SyntaxKind.Identifier; compare with this literal and return that constant, or widen the slot to the whole numeric enum or number (adamic/enum-literal)\n",
+    "native_equal": null
+  },
+  {
+    "proven_control": true,
+    "name": "unproven-member",
+    "compiler": "enum-tag-2-64952252",
+    "node_stdout": "99\n",
+    "mutant_stdout": "100\n",
+    "mutant_caught": true,
+    "build_exit": 1,
+    "diagnostic": "adamic: /workspace/adamic/stage3/scouts/step12/enum-followup/unproven-member.a:4:38: Adamic 0.1 refuses an unproven value assigned to a numeric literal or enum member slot SyntaxKind.Identifier; compare with this literal and return that constant, or widen the slot to the whole numeric enum or number (adamic/enum-literal)\n",
+    "native_equal": null
+  }
+]
