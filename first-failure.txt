@@ -1,0 +1,6 @@
+FIRST FAILURE (vet, at 4.9 s):
+# github.com/system-inc/adamic/stage1/cohere/lint
+# [github.com/system-inc/adamic/stage1/cohere/lint]
+vet: stage1/cohere/lint/harness_test.go:4:2: "bytes" imported and not used
+
+(box load 0.5 on 64 cores at first failure)
