@@ -263,13 +263,16 @@ func summary(data []byte) string {
 // check shards; unset runs every complete corpus and mutant check.
 const testTypeAwareAgreementAndMutantsShards = 21
 
-func TestTypeAwareAgreementAndMutants(t *testing.T) {
+func prepareTypeAwareAgreementAndMutants(t *testing.T) *typeAwarePlan {
 	started := time.Now()
 	repository, err := filepath.Abs("../../..")
 	if err != nil {
 		t.Fatal(err)
 	}
-	directory := t.TempDir()
+	directory := filepath.Join(productDirectory, "typeaware-plan")
+	if err := os.MkdirAll(directory, 0755); err != nil {
+		t.Fatal(err)
+	}
 	if artifacts := os.Getenv("ADAMIC_TYPEAWARE_ARTIFACTS"); artifacts != "" {
 		directory, err = filepath.Abs(artifacts)
 		if err != nil {
@@ -281,12 +284,12 @@ func TestTypeAwareAgreementAndMutants(t *testing.T) {
 	}
 	h := &harness{t: t, repository: repository, directory: directory, sixBuilds: true, setupStarted: started}
 	traceGroup(t)
-	stage0 := typeAwareStage0(h)
-	normal := typeAwareArchive(h, "checker", "", false)
-	sanitized := typeAwareArchive(h, "checker-asan", "", true)
+	stage0 := "" // Native builds use the in-process compiler; only refusal shards need stage zero.
+	normal := func(h *harness) string { return typeAwareArchive(h, "checker", "", false) }
+	sanitized := func(h *harness) string { return typeAwareArchive(h, "checker-asan", "", true) }
 	entry := filepath.Join(repository, "stage1/cohere/typeaware/main.ts")
-	binary := typeAwareBuild(h, stage0, "native-asan", entry, sanitized, true)
-	optimized := typeAwareBuild(h, stage0, "native", entry, normal, false)
+	binary := func(h *harness) string { return typeAwareBuild(h, stage0, "native-asan", entry, sanitized(h), true) }
+	optimized := func(h *harness) string { return typeAwareBuild(h, stage0, "native", entry, normal(h), false) }
 	oracle := filepath.Join(directory, "oracle")
 	virtual := filepath.Join(repository, "cohere/adamic_typeaware_oracle.go")
 	data, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: filepath.Join(repository, "stage1/cohere/typeaware/testdata/oracle.go")}})
@@ -305,12 +308,12 @@ func TestTypeAwareAgreementAndMutants(t *testing.T) {
 	if os.Getenv("ADAMIC_TYPEAWARE_BENCH") == "1" {
 		rounds = 3
 	}
-	finish := func(compiler []string, benchmark bool) {
+	finish := func(compiler []string, benchmark bool) *typeAwarePlan {
 		unsplit := typeAwareUnsplitIDs(generatedPathsForUnion, compiler, rounds, benchmark)
 		if err := sixUnion(unsplit, []sixShard{{name: "original-work", ids: expected}}); err != nil {
 			t.Fatal(err)
 		}
-		typeAwareRunShards(t, h, unsplit, shards, os.Getenv("ADAMIC_TEST_SHARD"), testTypeAwareAgreementAndMutantsShards)
+		return newTypeAwarePlan(t, h, unsplit, shards, testTypeAwareAgreementAndMutantsShards)
 	}
 	add := func(name string, ids []string, run func(*harness)) {
 		shards = append(shards, sixShard{name: name, ids: ids, run: run})
@@ -365,7 +368,7 @@ func TestTypeAwareAgreementAndMutants(t *testing.T) {
 	expected = append(expected, sixIDs("agreement/generated", generatedPaths)...)
 	add("agreement/generated", sixIDs("agreement/generated", generatedPaths), func(h *harness) {
 		t := h.t
-		truth := h.compare("generated", oracle, binary, config, manifest)
+		truth := h.compare("generated", oracle, binary(h), config, manifest)
 		if err := sixFindingUnion(truth.stdout, generatedPaths); err != nil {
 			t.Fatal(err)
 		}
@@ -383,6 +386,7 @@ func TestTypeAwareAgreementAndMutants(t *testing.T) {
 	// No bridge calls can reach an ordinary backend without explicit linkage.
 	expected = append(expected, "refusal/unlinked")
 	add("refusal/unlinked", []string{"refusal/unlinked"}, func(h *harness) {
+		stage0 := typeAwareStage0(h)
 		t := h.t
 		refusal := h.run("unlinked", exec.Command(stage0, "build", entry, "-o", filepath.Join(directory, "unlinked")))
 		if refusal.err == nil || !bytes.Contains(refusal.stderr, []byte("unlinked typescript-go library call")) {
@@ -393,6 +397,7 @@ func TestTypeAwareAgreementAndMutants(t *testing.T) {
 	partsOnly := h.write("parts-unlinked.ts", "import { tsgoTypeParts } from 'adamic'; console.log(tsgoTypeParts(1, 'source.ts', 0, 1, 'Identifier'));\n")
 	expected = append(expected, "refusal/parts-unlinked")
 	add("refusal/parts-unlinked", []string{"refusal/parts-unlinked"}, func(h *harness) {
+		stage0 := typeAwareStage0(h)
 		t := h.t
 		refusal := h.run("parts-unlinked", exec.Command(stage0, "build", partsOnly, "-o", filepath.Join(directory, "parts-unlinked")))
 		if refusal.err == nil || !bytes.Contains(refusal.stderr, []byte("unlinked typescript-go library call")) {
@@ -424,10 +429,10 @@ func TestTypeAwareAgreementAndMutants(t *testing.T) {
 	mainSource := strings.ReplaceAll(string(mainText), "../../typescript", filepath.Join(repository, "stage1/typescript"))
 	mainSource = strings.Replace(mainSource, "./unary_minus.ts", "./wrong-node.ts", 1)
 	mutantEntry := h.write("wrong-main.ts", mainSource)
-	wrong := typeAwareBuild(h, stage0, "wrong-node", mutantEntry, normal, true)
 	expected = append(expected, sixIDs("mutant/wrong-node", generatedPaths)...)
 	add("mutant/wrong-node", sixIDs("mutant/wrong-node", generatedPaths), func(h *harness) {
 		t := h.t
+		wrong := typeAwareBuild(h, stage0, "wrong-node", mutantEntry, normal(h), true)
 		observed := h.must("wrong-node-run", exec.Command(wrong, config, manifest))
 		if len(observed.stderr) != 0 || bytes.Equal(observed.stdout, truth.stdout) {
 			t.Fatal("wrong-node mutant was not caught by findings alone")
@@ -437,22 +442,22 @@ func TestTypeAwareAgreementAndMutants(t *testing.T) {
 
 	probe := h.write("cost-probe.ts", "-1;\n")
 	releasedEntry := filepath.Join(repository, "stage1/cohere/typeaware/testdata/released.ts")
-	released := typeAwareBuild(h, stage0, "released", releasedEntry, normal, false)
 	expected = append(expected, []string{"refusal/released"}...)
 	add("refusal/released", []string{"refusal/released"}, func(h *harness) {
 		t := h.t
+		released := typeAwareBuild(h, stage0, "released", releasedEntry, normal(h), false)
 		stale := h.run("released-run", exec.Command(released, config, probe))
 		if code, ok := stale.err.(*exec.ExitError); !ok || code.ExitCode() != 70 || string(stale.stderr) != "adamic: panic: invalid or released checker handle\n" {
 			t.Fatalf("released query escaped: %v %s", stale.err, stale.stderr)
 		}
 		t.Log("released program queried: native panic 70 with invalid or released checker handle")
 	})
-	staleOverlay := h.overlay("stale", "bridge/tsgo/archive/main.go", "delete(programs.live, uint64(handle))", "// Mutant retains released roots.")
-	staleArchive := typeAwareArchive(h, "stale-checker", staleOverlay, false)
-	staleBinary := typeAwareBuild(h, stage0, "stale-native", releasedEntry, staleArchive, false)
 	expected = append(expected, []string{"mutant/stale"}...)
 	add("mutant/stale", []string{"mutant/stale"}, func(h *harness) {
 		t := h.t
+		staleOverlay := h.overlay("stale", "bridge/tsgo/archive/main.go", "delete(programs.live, uint64(handle))", "// Mutant retains released roots.")
+		staleArchive := typeAwareArchive(h, "stale-checker", staleOverlay, false)
+		staleBinary := typeAwareBuild(h, stage0, "stale-native", releasedEntry, staleArchive, false)
 		stale := h.must("stale-mutant-run", exec.Command(staleBinary, config, probe))
 		if len(stale.stderr) != 0 {
 			t.Fatal("stale mutant did not finish cleanly")
@@ -466,13 +471,13 @@ func TestTypeAwareAgreementAndMutants(t *testing.T) {
 		{"missing-header", "x", "invalid checker type frame"},
 		{"bad-length", "1\n-1\n", "invalid checker type length or flags"},
 	} {
-		quoted := strconv.Quote(change.value)
-		overlay := h.overlay(change.name, "bridge/tsgo/archive/main.go", "*parts = buffer(answer)", "_ = answer; *parts = buffer("+quoted+")")
-		archive := typeAwareArchive(h, change.name+"-checker", overlay, false)
-		malformed := typeAwareBuild(h, stage0, change.name+"-native", entry, archive, false)
 		expected = append(expected, sixIDs("mutant/"+change.name, generatedPaths)...)
 		add("mutant/"+change.name, sixIDs("mutant/"+change.name, generatedPaths), func(h *harness) {
 			t := h.t
+			quoted := strconv.Quote(change.value)
+			overlay := h.overlay(change.name, "bridge/tsgo/archive/main.go", "*parts = buffer(answer)", "_ = answer; *parts = buffer("+quoted+")")
+			archive := typeAwareArchive(h, change.name+"-checker", overlay, false)
+			malformed := typeAwareBuild(h, stage0, change.name+"-native", entry, archive, false)
 			got := h.run(change.name+"-run", exec.Command(malformed, config, manifest))
 			if code, ok := got.err.(*exec.ExitError); !ok || code.ExitCode() != 70 || !bytes.Contains(got.stderr, []byte(change.message)) {
 				t.Fatalf("%s escaped: %v %s", change.name, got.err, got.stderr)
@@ -484,27 +489,27 @@ func TestTypeAwareAgreementAndMutants(t *testing.T) {
 
 	// A kind/span mismatch cannot silently select a neighboring or enclosing node.
 	costEntry := filepath.Join(repository, "stage1/cohere/typeaware/testdata/query_cost.ts")
-	cost := typeAwareBuild(h, stage0, "query-cost", costEntry, normal, false)
+	cost := func(h *harness) string { return typeAwareBuild(h, stage0, "query-cost", costEntry, normal(h), false) }
 	costText, err := os.ReadFile(costEntry)
 	if err != nil {
 		t.Fatal(err)
 	}
 	badSource := h.write("bad-kind.ts", strings.Replace(string(costText), "'PrefixUnaryExpression'", "'Identifier'", 1))
-	bad := typeAwareBuild(h, stage0, "bad-kind", badSource, normal, false)
 	expected = append(expected, []string{"refusal/bad-kind"}...)
 	add("refusal/bad-kind", []string{"refusal/bad-kind"}, func(h *harness) {
 		t := h.t
+		bad := typeAwareBuild(h, stage0, "bad-kind", badSource, normal(h), false)
 		got := h.run("bad-kind-run", exec.Command(bad, config, probe, "2"))
 		if code, ok := got.err.(*exec.ExitError); !ok || code.ExitCode() != 70 || !bytes.Contains(got.stderr, []byte("no exact Identifier node")) {
 			t.Fatalf("exact lookup mismatch escaped: %v %s", got.err, got.stderr)
 		}
 	})
-	ignoredKind := h.overlay("ignored-kind", "bridge/tsgo/checker/program.go", `strings.TrimPrefix(candidate.Kind.String(), "Kind") == kind`, `kind != ""`)
-	ignoredArchive := typeAwareArchive(h, "ignored-kind-checker", ignoredKind, false)
-	ignoredBinary := typeAwareBuild(h, stage0, "ignored-kind-native", badSource, ignoredArchive, false)
 	expected = append(expected, []string{"mutant/ignored-kind"}...)
 	add("mutant/ignored-kind", []string{"mutant/ignored-kind"}, func(h *harness) {
 		t := h.t
+		ignoredKind := h.overlay("ignored-kind", "bridge/tsgo/checker/program.go", `strings.TrimPrefix(candidate.Kind.String(), "Kind") == kind`, `kind != ""`)
+		ignoredArchive := typeAwareArchive(h, "ignored-kind-checker", ignoredKind, false)
+		ignoredBinary := typeAwareBuild(h, stage0, "ignored-kind-native", badSource, ignoredArchive, false)
 		ignored := h.must("ignored-kind-run", exec.Command(ignoredBinary, config, probe, "2"))
 		if len(ignored.stderr) != 0 {
 			t.Fatal("kind-guard mutant did not finish cleanly")
@@ -526,7 +531,7 @@ func TestTypeAwareAgreementAndMutants(t *testing.T) {
 				h.t.Skip("set ADAMIC_TYPEAWARE_BENCH=1")
 			}
 			t := h.t
-			cmd := exec.Command(cost, config, probe, "10000")
+			cmd := exec.Command(cost(h), config, probe, "10000")
 			cmd.Env = append(os.Environ(), "ADAMIC_TSGO_TIMING=1")
 			nativeCost := h.must(fmt.Sprintf("query-cost-native-%d", round), cmd)
 			direct := h.must(fmt.Sprintf("query-cost-go-%d", round), exec.Command(oracle, config, probeManifest, "--query-cost", "10000"))
@@ -555,7 +560,7 @@ func TestTypeAwareAgreementAndMutants(t *testing.T) {
 		if len(paths) == 0 {
 			h.t.Skip("set ADAMIC_TYPESCRIPT_SOURCE")
 		}
-		truth := h.compare("compiler", oracle, binary, compilerConfig, compilerManifest)
+		truth := h.compare("compiler", oracle, binary(h), compilerConfig, compilerManifest)
 		if err := sixFindingUnion(truth.stdout, paths); err != nil {
 			h.t.Fatal(err)
 		}
@@ -579,7 +584,7 @@ func TestTypeAwareAgreementAndMutants(t *testing.T) {
 					}
 					t := h.t
 					// Alternate order to avoid always assigning one implementation the warm cache.
-					binaries := []string{oracle, optimized}
+					binaries := []string{oracle, optimized(h)}
 					if round%2 == 0 {
 						binaries[0], binaries[1] = binaries[1], binaries[0]
 					}
@@ -603,7 +608,7 @@ func TestTypeAwareAgreementAndMutants(t *testing.T) {
 			}
 		}
 	}
-	finish(paths, rounds == 3 && len(paths) != 0)
+	return finish(paths, rounds == 3 && len(paths) != 0)
 }
 
 func TestPinnedTypeFlags(t *testing.T) {

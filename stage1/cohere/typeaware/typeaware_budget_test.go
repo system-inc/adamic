@@ -1,6 +1,8 @@
 package typeaware
 
 import (
+	"bytes"
+	"context"
 	"fmt"
 	"os"
 	"os/exec"
@@ -18,6 +20,10 @@ const typeAwareUnitKill = 75 * time.Second
 // every check shard has its own watchdog; one slow unit cannot hold the worker.
 // Exit 124 identifies cooked work separately from an assertion failure.
 func typeAwareDeadline(t *testing.T, name string) func() {
+	return typeAwareDeadlineWithin(t, name, typeAwareUnitBudget, typeAwareUnitKill)
+}
+
+func typeAwareDeadlineWithin(t *testing.T, name string, budget, kill time.Duration) func() {
 	t.Helper()
 	started := time.Now()
 	cooked := func() {
@@ -25,11 +31,11 @@ func typeAwareDeadline(t *testing.T, name string) func() {
 		typeAwareKillChildren(os.Getpid())
 		os.Exit(124)
 	}
-	timer := time.AfterFunc(typeAwareUnitKill, cooked)
+	timer := time.AfterFunc(kill, cooked)
 	return func() {
 		timer.Stop()
 		elapsed := time.Since(started)
-		if elapsed > typeAwareUnitBudget {
+		if elapsed > budget {
 			cooked()
 		}
 		t.Logf("unit-budget name=%s elapsed_s=%.6f cooked=false", name, elapsed.Seconds())
@@ -97,4 +103,54 @@ func typeAwareRunShards(t *testing.T, h *harness, expected []string, shards []si
 		}
 	}
 	sixRunShards(t, h, expected, bounded, value, required)
+}
+
+// A real nested subprocess must be killed before it can publish its marker.
+// This exercises the same watchdog as the setup products and check shards.
+func TestTypeAwareUnitDeadline(t *testing.T) {
+	mode := os.Getenv("ADAMIC_TYPEAWARE_DEADLINE_CHILD")
+	marker := os.Getenv("ADAMIC_TYPEAWARE_DEADLINE_MARKER")
+	if mode == "marker" {
+		time.Sleep(time.Second)
+		if err := os.WriteFile(marker, []byte("survived"), 0600); err != nil {
+			t.Fatal(err)
+		}
+		return
+	}
+	if mode != "" {
+		defer typeAwareDeadlineWithin(t, "watchdog-probe", 100*time.Millisecond, 200*time.Millisecond)()
+		if mode == "quick" {
+			return
+		}
+		command := exec.Command(os.Args[0], "-test.run=^TestTypeAwareUnitDeadline$")
+		command.Env = append(os.Environ(), "ADAMIC_TYPEAWARE_DEADLINE_CHILD=marker")
+		if err := command.Run(); err != nil {
+			t.Fatal(err)
+		}
+		return
+	}
+	for _, mode := range []string{"quick", "slow"} {
+		t.Run(mode, func(t *testing.T) {
+			marker := filepath.Join(t.TempDir(), "marker")
+			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+			defer cancel()
+			command := exec.CommandContext(ctx, os.Args[0], "-test.run=^TestTypeAwareUnitDeadline$", "-test.v")
+			command.Env = append(os.Environ(), "ADAMIC_TYPEAWARE_DEADLINE_CHILD="+mode, "ADAMIC_TYPEAWARE_DEADLINE_MARKER="+marker)
+			output, err := command.CombinedOutput()
+			if mode == "quick" {
+				if err != nil || !bytes.Contains(output, []byte("cooked=false")) {
+					t.Fatalf("quick unit: %v %s", err, output)
+				}
+				return
+			}
+			exit, ok := err.(*exec.ExitError)
+			if !ok || exit.ExitCode() != 124 || !bytes.Contains(output, []byte("cooked unit=watchdog-probe")) {
+				t.Fatalf("slow unit was not cooked: %v %s", err, output)
+			}
+			time.Sleep(time.Second)
+			if _, err := os.Stat(marker); !os.IsNotExist(err) {
+				t.Fatalf("cooked unit left its subprocess alive: %v", err)
+			}
+		})
+	}
 }

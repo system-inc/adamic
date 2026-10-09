@@ -128,7 +128,7 @@ func suiteTSMutant(h *harness, stage0, normal, entry, name, relative, from, to s
 // every unit. Full program roots and each mutant's original corpus are retained.
 const testSixRuleAgreementAndMutantsShards = 95
 
-func TestSixRuleAgreementAndMutants(t *testing.T) {
+func prepareSixRuleAgreementAndMutants(t *testing.T) *typeAwarePlan {
 	started := time.Now()
 	if _, _, err := sixSelection(os.Getenv("ADAMIC_TEST_SHARD")); err != nil {
 		t.Fatal(err)
@@ -141,7 +141,10 @@ func TestSixRuleAgreementAndMutants(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	directory := t.TempDir()
+	directory := filepath.Join(productDirectory, "six-plan")
+	if err := os.MkdirAll(directory, 0755); err != nil {
+		t.Fatal(err)
+	}
 	if path := os.Getenv("ADAMIC_SIX_ARTIFACTS"); path != "" {
 		directory, err = filepath.Abs(path)
 		if err != nil {
@@ -153,12 +156,12 @@ func TestSixRuleAgreementAndMutants(t *testing.T) {
 	}
 	h := &harness{t: t, repository: repository, directory: directory, sixBuilds: true, setupStarted: started}
 	traceGroup(t)
-	stage0 := typeAwareStage0(h)
-	normal := typeAwareArchive(h, "checker", "", false)
-	sanitized := typeAwareArchive(h, "checker-asan", "", true)
+	stage0 := "" // Native builds use the in-process compiler; only refusal shards need stage zero.
+	normal := func(h *harness) string { return typeAwareArchive(h, "checker", "", false) }
+	sanitized := func(h *harness) string { return typeAwareArchive(h, "checker-asan", "", true) }
 	entry := filepath.Join(repository, "stage1/cohere/typeaware/suite.ts")
-	binary := typeAwareBuild(h, stage0, "suite-asan", entry, sanitized, true)
-	optimized := typeAwareBuild(h, stage0, "suite", entry, normal, false)
+	binary := func(h *harness) string { return typeAwareBuild(h, stage0, "suite-asan", entry, sanitized(h), true) }
+	optimized := func(h *harness) string { return typeAwareBuild(h, stage0, "suite", entry, normal(h), false) }
 	oracle := filepath.Join(directory, "oracle")
 	virtual := filepath.Join(repository, "cohere/adamic_six_oracle.go")
 	data, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: filepath.Join(repository, "stage1/cohere/typeaware/testdata/oracle_six.go")}})
@@ -186,7 +189,7 @@ func TestSixRuleAgreementAndMutants(t *testing.T) {
 	// Generated fixtures are fixed by cohere 7945d102a6c18dd36adf9114a758ce646e8b2359
 	// and the explicit controls in suiteSources; contiguous ranges are stable.
 	for i, group := range sixRanges(paths, 32) {
-		add(fmt.Sprintf("agreement/generated-%02d", i), sixIDs("agreement/generated", group), func(h *harness) { h.sixCompare("generated", oracle, binary, config, manifest, group) })
+		add(fmt.Sprintf("agreement/generated-%02d", i), sixIDs("agreement/generated", group), func(h *harness) { h.sixCompare("generated", oracle, binary(h), config, manifest, group) })
 	}
 	add("controls/reporting", sixRuleControlIDs(), func(h *harness) {
 		t := h.t
@@ -204,7 +207,7 @@ func TestSixRuleAgreementAndMutants(t *testing.T) {
 	one := h.write("one.manifest", paths[0]+"\n")
 	add("agreement/nonstrict", sixIDs("agreement/nonstrict", paths[:1]), func(h *harness) {
 		t := h.t
-		strictTruth := h.compare("six-nonstrict", oracle, binary, nonstrict, one)
+		strictTruth := h.compare("six-nonstrict", oracle, binary(h), nonstrict, one)
 		if !bytes.Contains(strictTruth.stdout, []byte("\tnoStrictNullCheck\t")) {
 			t.Fatal("strict-null configuration control missing")
 		}
@@ -216,17 +219,17 @@ func TestSixRuleAgreementAndMutants(t *testing.T) {
 	globalTruth := h.must("global-truth", exec.Command(oracle, globalConfig, globalManifest))
 	add("agreement/cross-file", sixIDs("agreement/cross-file", globalPaths), func(h *harness) {
 		t := h.t
-		actual := h.sixCompare("cross-file", oracle, binary, globalConfig, globalManifest, globalPaths)
+		actual := h.sixCompare("cross-file", oracle, binary(h), globalConfig, globalManifest, globalPaths)
 		if !bytes.Contains(actual.stdout, []byte("\tunsafeMerging\t")) {
 			t.Fatal("cross-file declaration control missing")
 		}
 	})
 
-	globalOverlay := h.overlay("declaration-source", "bridge/tsgo/checker/facts.go", "scanner.GetTokenPosOfNode(name, source, false)", "scanner.GetTokenPosOfNode(name, f, false)")
-	globalArchive := typeAwareArchive(h, "declaration-source-checker", globalOverlay, false)
-	globalMutant := typeAwareBuild(h, stage0, "declaration-source-suite", entry, globalArchive, false)
 	add("mutant/declaration-source", sixIDs("mutant/declaration-source", globalPaths), func(h *harness) {
 		t := h.t
+		globalOverlay := h.overlay("declaration-source", "bridge/tsgo/checker/facts.go", "scanner.GetTokenPosOfNode(name, source, false)", "scanner.GetTokenPosOfNode(name, f, false)")
+		globalArchive := typeAwareArchive(h, "declaration-source-checker", globalOverlay, false)
+		globalMutant := typeAwareBuild(h, stage0, "declaration-source-suite", entry, globalArchive, false)
 		globalGot := h.must("declaration-source-run", exec.Command(globalMutant, globalConfig, globalManifest))
 		if len(globalGot.stderr) != 0 || bytes.Equal(globalGot.stdout, globalTruth.stdout) {
 			t.Fatal("cross-file declaration source mutant survived oracle")
@@ -235,6 +238,7 @@ func TestSixRuleAgreementAndMutants(t *testing.T) {
 	})
 
 	add("refusal/unlinked", []string{"refusal/unlinked"}, func(h *harness) {
+		stage0 := typeAwareStage0(h)
 		t := h.t
 		refusal := h.run("inspect-unlinked", exec.Command(stage0, "build", h.write("inspect-unlinked.ts", "import {tsgoInspect} from 'adamic'; console.log(tsgoInspect(1,'x',0,1,'Identifier','type'));\n"), "-o", filepath.Join(directory, "unlinked")))
 		if refusal.err == nil || !bytes.Contains(refusal.stderr, []byte("unlinked typescript-go library call")) {
@@ -247,9 +251,9 @@ func TestSixRuleAgreementAndMutants(t *testing.T) {
 		{"last-declaration", "if(use && pos < earliestPos)", "if(use)"},
 		{"nullable-default", "if(!plain || nullable)", "if(!plain && !nullable)"},
 	} {
-		mutant := typeAwareMutant(h, stage0, normal, entry, change.name, "rules.ts", change.from, change.to)
 		add("mutant/"+change.name, sixIDs("mutant/"+change.name, paths), func(h *harness) {
 			t := h.t
+			mutant := typeAwareMutant(h, stage0, normal(h), entry, change.name, "rules.ts", change.from, change.to)
 			got := h.must(change.name+"-run", exec.Command(mutant, config, manifest))
 			if len(got.stderr) != 0 || bytes.Equal(got.stdout, truth.stdout) {
 				t.Fatalf("%s not caught by oracle alone", change.name)
@@ -286,9 +290,9 @@ func TestSixRuleAgreementAndMutants(t *testing.T) {
 		t.Fatal(err)
 	}
 	parametersPath := h.write("union-parameters.ts", strings.Replace(string(parameters), "from './types.ts'", "from '"+factsPath+"'", 1))
-	unionBinary := typeAwareMutant(h, stage0, normal, entry, "union-members", "rules.ts", "from './facts.ts'", "from '"+decoderPath+"'", "from './types.ts'", "from '"+factsPath+"'", "from './parameters.ts'", "from '"+parametersPath+"'")
 	add("mutant/union-members", sixIDs("mutant/union-members", paths), func(h *harness) {
 		t := h.t
+		unionBinary := typeAwareMutant(h, stage0, normal(h), entry, "union-members", "rules.ts", "from './facts.ts'", "from '"+decoderPath+"'", "from './types.ts'", "from '"+factsPath+"'", "from './parameters.ts'", "from '"+parametersPath+"'")
 		unionGot := h.must("union-members-run", exec.Command(unionBinary, config, manifest))
 		if len(unionGot.stderr) != 0 || bytes.Equal(unionGot.stdout, truth.stdout) {
 			t.Fatal("union mutant not caught by oracle alone")
@@ -302,11 +306,11 @@ func TestSixRuleAgreementAndMutants(t *testing.T) {
 		{"assignability-direction", "checker.Checker_isTypeAssignableTo(c, c.GetTypeAtLocation(node), c.GetTypeAtLocation(target))", "checker.Checker_isTypeAssignableTo(c, c.GetTypeAtLocation(target), c.GetTypeAtLocation(node))"},
 		{"resolved-signature", "signature := c.GetResolvedSignature(node)", `var firstCall *ast.Node; var findCall func(*ast.Node) bool; findCall = func(n *ast.Node) bool { if n.Kind == ast.KindCallExpression { firstCall = n; return true }; return n.ForEachChild(findCall) }; findCall(source.AsNode()); selected := node; if node.Kind == ast.KindCallExpression && firstCall != nil { selected = firstCall }; signature := c.GetResolvedSignature(selected)`},
 	} {
-		overlay := h.overlay(change.name, "bridge/tsgo/checker/facts.go", change.from, change.to)
-		archive := typeAwareArchive(h, change.name+"-checker", overlay, false)
-		mutant := typeAwareBuild(h, stage0, change.name+"-suite", entry, archive, false)
 		add("mutant/"+change.name, sixIDs("mutant/"+change.name, paths), func(h *harness) {
 			t := h.t
+			overlay := h.overlay(change.name, "bridge/tsgo/checker/facts.go", change.from, change.to)
+			archive := typeAwareArchive(h, change.name+"-checker", overlay, false)
+			mutant := typeAwareBuild(h, stage0, change.name+"-suite", entry, archive, false)
 			got := h.must(change.name+"-run", exec.Command(mutant, config, manifest))
 			if len(got.stderr) != 0 || bytes.Equal(got.stdout, truth.stdout) {
 				t.Fatalf("%s not caught by oracle alone", change.name)
@@ -316,30 +320,30 @@ func TestSixRuleAgreementAndMutants(t *testing.T) {
 	}
 	probe := h.write("probe.ts", "-1;\n")
 	releasedEntry := h.write("released-inspect.ts", "import {panic,programArguments,tsgoProgram,tsgoRelease,tsgoInspect} from 'adamic';const a=programArguments();const p=tsgoProgram(a[0]??panic('config'),[a[1]??panic('file')]);tsgoRelease(p);console.log(tsgoInspect(p,a[1]??panic('file'),0,2,'PrefixUnaryExpression','type'));\n")
-	released := typeAwareBuild(h, stage0, "released-inspect", releasedEntry, normal, false)
 	add("control/released-handle", []string{"control/released-handle"}, func(h *harness) {
 		t := h.t
+		released := typeAwareBuild(h, stage0, "released-inspect", releasedEntry, normal(h), false)
 		got := h.run("released-inspect-run", exec.Command(released, config, probe))
 		if code, ok := got.err.(*exec.ExitError); !ok || code.ExitCode() != 70 || !bytes.Contains(got.stderr, []byte("invalid or released checker handle")) {
 			t.Fatalf("released inspect escaped: %v %s", got.err, got.stderr)
 		}
 	})
 
-	staleOverlay := h.overlay("retained-handle", "bridge/tsgo/archive/main.go", "delete(programs.live, uint64(handle))", "// Mutant retains released roots.")
-	staleArchive := typeAwareArchive(h, "retained-handle-checker", staleOverlay, false)
-	stale := typeAwareBuild(h, stage0, "retained-handle", releasedEntry, staleArchive, false)
 	add("mutant/retained-handle", []string{"mutant/retained-handle"}, func(h *harness) {
 		t := h.t
+		staleOverlay := h.overlay("retained-handle", "bridge/tsgo/archive/main.go", "delete(programs.live, uint64(handle))", "// Mutant retains released roots.")
+		staleArchive := typeAwareArchive(h, "retained-handle-checker", staleOverlay, false)
+		stale := typeAwareBuild(h, stage0, "retained-handle", releasedEntry, staleArchive, false)
 		h.must("retained-handle-run", exec.Command(stale, config, probe))
 		t.Log("released program: panic 70; retained-handle mutant exits 0 and fails the stale-query expectation")
 	})
 
 	// Explicit C allocation length, not the native path's extra terminator.
-	lengthOverlay := h.overlay("facts-length", "bridge/tsgo/archive/main.go", "*facts = buffer(answer)", "*facts = buffer(answer); facts.length++")
-	lengthArchive := typeAwareArchive(h, "facts-length-checker", lengthOverlay, true)
-	length := typeAwareBuild(h, stage0, "facts-length", entry, lengthArchive, true)
 	add("mutant/facts-length-asan", sixIDs("mutant/facts-length-asan", paths), func(h *harness) {
 		t := h.t
+		lengthOverlay := h.overlay("facts-length", "bridge/tsgo/archive/main.go", "*facts = buffer(answer)", "*facts = buffer(answer); facts.length++")
+		lengthArchive := typeAwareArchive(h, "facts-length-checker", lengthOverlay, true)
+		length := typeAwareBuild(h, stage0, "facts-length", entry, lengthArchive, true)
 		got := h.run("facts-length-run", exec.Command(length, config, manifest))
 		if got.err == nil || !bytes.Contains(got.stderr, []byte("AddressSanitizer: heap-buffer-overflow")) {
 			t.Fatalf("facts length mutant escaped ASan: %v %s", got.err, got.stderr)
@@ -353,11 +357,11 @@ func TestSixRuleAgreementAndMutants(t *testing.T) {
 		{"facts-length", "-1\n", "invalid checker facts length"},
 		{"facts-version", "1\n2", "unsupported checker facts schema"},
 	} {
-		overlay := h.overlay(change.name+"-bad", "bridge/tsgo/archive/main.go", "*facts = buffer(answer)", "_ = answer; *facts = buffer("+strconv.Quote(change.value)+")")
-		archive := typeAwareArchive(h, change.name+"-bad-checker", overlay, false)
-		malformed := typeAwareBuild(h, stage0, change.name+"-bad", entry, archive, false)
 		add("mutant/"+change.name+"-bad", sixIDs("mutant/"+change.name+"-bad", paths), func(h *harness) {
 			t := h.t
+			overlay := h.overlay(change.name+"-bad", "bridge/tsgo/archive/main.go", "*facts = buffer(answer)", "_ = answer; *facts = buffer("+strconv.Quote(change.value)+")")
+			archive := typeAwareArchive(h, change.name+"-bad-checker", overlay, false)
+			malformed := typeAwareBuild(h, stage0, change.name+"-bad", entry, archive, false)
 			r := h.run(change.name+"-bad-run", exec.Command(malformed, config, manifest))
 			if code, ok := r.err.(*exec.ExitError); !ok || code.ExitCode() != 70 || !bytes.Contains(r.stderr, []byte(change.message)) {
 				t.Fatalf("%s malformed facts escaped: %v %s", change.name, r.err, r.stderr)
@@ -365,9 +369,12 @@ func TestSixRuleAgreementAndMutants(t *testing.T) {
 			t.Logf("%s: panic 70, %s", change.name, change.message)
 		})
 	}
-	nativeCost := typeAwareBuild(h, stage0, "facts-cost", filepath.Join(repository, "stage1/cohere/typeaware/testdata/fact_cost.ts"), normal, false)
-	directCost := filepath.Join(directory, "direct-cost")
-	directCost = typeAwareProduct(h, "facts-cost-go-build", exec.Command("go", "build", "-o", directCost, "./bridge/tsgo/cost"))
+	nativeCost := func(h *harness) string {
+		return typeAwareBuild(h, stage0, "facts-cost", filepath.Join(repository, "stage1/cohere/typeaware/testdata/fact_cost.ts"), normal(h), false)
+	}
+	directCost := func(h *harness) string {
+		return typeAwareProduct(h, "facts-cost-go-build", exec.Command("go", "build", "-o", filepath.Join(h.directory, "direct-cost"), "./bridge/tsgo/cost"))
+	}
 	costSource := "-1;\ninterface Pair { get value(): number; set value(v: string); }\ninterface Merge {}\nclass Merge {}\ndeclare function accept(x:number):void;\ndeclare const x:any;\naccept(x);\ndeclare const nullable:boolean|undefined;\nnullable === true;\ndeclare const nr:number|bigint;\nnr + nr;\n"
 	costProbe := h.write("facts-probe.ts", costSource)
 	getter := strings.Index(costSource, "get value") - 1
@@ -411,10 +418,10 @@ func TestSixRuleAgreementAndMutants(t *testing.T) {
 				}
 				t := h.t
 				args := []string{config, costProbe, strconv.Itoa(probe.start), strconv.Itoa(probe.end), probe.kind, probe.question, "10000"}
-				cmd := exec.Command(nativeCost, args...)
+				cmd := exec.Command(nativeCost(h), args...)
 				cmd.Env = append(os.Environ(), "ADAMIC_TSGO_TIMING=1")
 				native := h.must(fmt.Sprintf("facts-cost-%s-%d-native", probe.name, round), cmd)
-				direct := h.must(fmt.Sprintf("facts-cost-%s-%d-go", probe.name, round), exec.Command(directCost, args...))
+				direct := h.must(fmt.Sprintf("facts-cost-%s-%d-go", probe.name, round), exec.Command(directCost(h), args...))
 				if !bytes.Equal(native.stdout, direct.stdout) {
 					t.Fatalf("%s fact cost checksums differ", probe.name)
 				}
@@ -442,7 +449,7 @@ func TestSixRuleAgreementAndMutants(t *testing.T) {
 			if len(group) == 0 {
 				h.t.Skip("set ADAMIC_TYPESCRIPT_SOURCE")
 			}
-			h.sixCompare("compiler", oracle, binary, compilerConfig, compilerManifest, group)
+			h.sixCompare("compiler", oracle, binary(h), compilerConfig, compilerManifest, group)
 		})
 		for round := 1; round <= 3; round++ {
 			ids := sixIDs(fmt.Sprintf("bench/compiler-%d", round), group)
@@ -455,7 +462,7 @@ func TestSixRuleAgreementAndMutants(t *testing.T) {
 				}
 				t := h.t
 				selected := h.write("selected.manifest", strings.Join(group, "\n")+"\n")
-				binaries := []string{optimized, oracle}
+				binaries := []string{optimized(h), oracle}
 				if round%2 == 0 {
 					binaries[0], binaries[1] = binaries[1], binaries[0]
 				}
@@ -475,7 +482,7 @@ func TestSixRuleAgreementAndMutants(t *testing.T) {
 	}
 	// Independent unsplit enumeration: membership is not derived from assignments.
 	expected := sixUnsplitIDs(paths, globalPaths, compilerPaths, rounds, os.Getenv("ADAMIC_TYPEAWARE_BENCH") == "1")
-	typeAwareRunShards(t, h, expected, shards, os.Getenv("ADAMIC_TEST_SHARD"), testSixRuleAgreementAndMutantsShards)
+	return newTypeAwarePlan(t, h, expected, shards, testSixRuleAgreementAndMutantsShards)
 }
 
 func TestSixPinnedFlags(t *testing.T) {
