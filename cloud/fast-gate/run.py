@@ -10,6 +10,11 @@ first, every other step is killed, and status.txt goes red naming it. Tests alwa
 Usage: run.py --tree <checkout of the candidate> --sha <candidate> --base <main sha>
               --tools <tools checkout> --out <directory>
 
+For pool work, --phase <name> runs one non-test stage, and --phases build,vet,smoke,census
+writes one record of those stages. Pass --census <pool test.jsonl> to include the pool's tests in
+that census. --list-units --tree <tree> lists the unconditional fast units; supply --base, --sha
+and --tools (as for --select) to include this change's conditional executors.
+
 With --full it is the whole uncached gate of main instead, run after landing: every package, the
 oracle whole, TestWASI with the WASI SDK's clang first. The first failure turns status.txt red at
 once (landings pause on it) and the rest keeps running for triage only; full.json is written when
@@ -171,7 +176,11 @@ def main():
         lister.add_argument("--full", action="store_true")
         lister.add_argument("--list-units", action="store_true")
         lister.add_argument("--tree", required=True)
-        print("\n".join(wholeUnits(lister.parse_args().tree)))
+        lister.add_argument("--base", help="include conditional fast phases selected by this base diff")
+        lister.add_argument("--sha")
+        lister.add_argument("--tools")
+        arguments = lister.parse_args()
+        print("\n".join(wholeUnits(arguments.tree) if arguments.full else fastUnits(arguments.tree, arguments.base, arguments.sha, arguments.tools)))
         return
     parser = argparse.ArgumentParser()
     parser.add_argument("--tree", required=True)
@@ -202,9 +211,11 @@ def main():
     parser.add_argument("--select", action="store_true", help="write the fast gate's package selection to <out>/select.json and stop")
     # Loom's pool runs the whole gate as units (Oct 9): one phase of it, optionally one unit of that phase, or the census
     # over the record the pool merged, each with this gate's own logic and record shape, so the pool never forks it.
-    parser.add_argument("--phase", choices=wholePhases, help="with --full: run only this phase of the whole gate")
+    phases = parser.add_mutually_exclusive_group()
+    phases.add_argument("--phase", help="run only this non-test phase of the selected gate")
+    phases.add_argument("--phases", help="run comma-separated non-test phases into one gate record")
     parser.add_argument("--unit", help="with --phase wasi, stage3 or catalog: run only this unit (a fixture, a stage 3 command, a catalog entry number)")
-    parser.add_argument("--census", metavar="TEST_JSONL", help="with --full: the census and deferred checks over a merged test.jsonl")
+    parser.add_argument("--census", metavar="TEST_JSONL", help="the census and deferred checks over a merged test.jsonl; may accompany --phases")
     arguments = parser.parse_args()
     os.makedirs(arguments.out, exist_ok=True)
     gate = Gate(arguments)
@@ -246,6 +257,14 @@ class Gate:
         self.watchers = []
         self.planned = (["coverage", "tools", "build", "vet", "tests", "wasi", "stage3", "catalog", "determinism", "census"] if arguments.full
                         else ["coverage", "tools", "build", "vet", "tests", "smoke", "determinism", "census"])
+        selected = vars(arguments).get("phases")
+        phase = vars(arguments).get("phase")
+        if selected is not None:
+            self.planned = list(dict.fromkeys(selected.split(",")))
+        elif phase is not None:
+            self.planned = [phase]
+        elif vars(arguments).get("census"):
+            self.planned = ["census"]
         self.result = {
             "sha": arguments.sha,
             "branch": arguments.branch,
@@ -295,13 +314,13 @@ class Gate:
             self.fail("setup", "the tree is at %s, not the candidate %s" % (head, self.arguments.sha))
             return
         selecting = vars(self.arguments).get("select") is True
+        if vars(self.arguments).get("phase") is not None or vars(self.arguments).get("phases") is not None or vars(self.arguments).get("census"):
+            self.runPhase()
+            return
         if not selecting:
             self.npmCli()
             if not self.npmPackages():
                 return
-        if self.arguments.full and (vars(self.arguments).get("phase") or vars(self.arguments).get("census")):
-            self.runPhase()
-            return
         if self.arguments.full:
             self.runFull()
             return
@@ -403,48 +422,138 @@ class Gate:
             return
         self.checkCensus()
 
+    def fastPhaseInputs(self, recordCoverage=False):
+        """The same base diff and executor map as a fast run, without running coverage as an extra phase."""
+        tree = self.arguments.tree
+        revision = "%s...%s" % (self.arguments.base, self.arguments.sha)
+        changed = [path for path in self.git(tree, "-c", "core.quotePath=false", "diff", "--name-only", revision).split("\n") if path]
+        _, unowned = self.touched(changed)
+        pathSetChanged = self.git(tree, "-c", "core.quotePath=false", "diff", "--name-only", "--no-renames", "--diff-filter=AD", revision).split("\n")
+        planned = list(self.planned)
+        executors = self.cover(unowned, changed, pathSetChanged, record=recordCoverage)
+        self.planned = planned
+        if recordCoverage and "darwin" not in planned and "darwin" in self.exits:
+            del self.exits["darwin"]
+            self.exits["coverage"] = 1
+        self.result["changed_files"] = changed
+        self.result["unowned_files"] = unowned
+        return changed, executors or set()
+
     def runPhase(self):
-        """One phase of the whole gate (--phase, optionally --unit), or its census over a merged record (--census), for
-        Loom's pool (Oct 9): the same code the whole gate runs, writing the same status.txt and full.json, with only
-        that phase planned, so a unit's exits are the gate's. The pool runs the Go test set itself."""
+        """Pool phases share the gate's stage implementations and fail-closed record writer.
+
+        A supplied pool log is copied before smoke appends to it; census runs last so it sees both.
+        """
         census = vars(self.arguments).get("census")
-        if census:
-            self.planned = ["census"]
-            shutil.copyfile(census, os.path.join(self.arguments.out, "test.jsonl"))
-            try:
-                self.checkCensus()
-                self.deferredRanWhole()
-            except BaseException:
-                self.fail("census", traceback.format_exc())
+        allowed = wholePhases + ["census"] if self.arguments.full else fastPhases
+        for phase in self.planned:
+            if phase not in allowed:
+                self.fail(phase or "phase", "%s gate has no phase %r" % (self.kind, phase))
+                return
+        unit = vars(self.arguments).get("unit")
+        if unit and (len(self.planned) != 1 or self.planned[0] not in ("wasi", "stage3", "catalog") or
+                     (not self.arguments.full and self.planned[0] == "catalog")):
+            self.fail(self.planned[0], "--unit is unsupported for these phases")
             return
-        phase = self.arguments.phase
-        self.planned = [phase]
-        try:
-            if phase == "coverage":
+        self.npmCli()
+        if not self.npmPackages():
+            return
+        logPath = os.path.join(self.arguments.out, "test.jsonl")
+        if census:
+            if "census" not in self.planned:
+                self.fail("census", "--census requires census in --phases")
+                return
+            try:
+                if os.path.abspath(census) != os.path.abspath(logPath):
+                    shutil.copyfile(census, logPath)
+            except OSError:
+                self.fail("census", traceback.format_exc())
+                return
+        elif any(phase in self.planned for phase in ("smoke", "wasi")):
+            # A reused output directory must not carry a previous run's test verdicts into this census.
+            with open(logPath, "w"):
+                pass
+        ordered = [phase for phase in self.planned if phase != "census"] + (["census"] if "census" in self.planned else [])
+        for phase in ordered:
+            if self.failure is not None:
+                break
+            try:
+                self.executePhase(phase, logPath)
+            except BaseException:
+                self.fail(phase, traceback.format_exc())
+
+    def executePhase(self, phase, logPath):
+        if phase == "coverage":
+            if self.arguments.full:
                 parents = self.git(self.arguments.tree, "rev-list", "--parents", "-n", "1", self.arguments.sha).split()[1:]
                 changed = [path for path in (self.git(self.arguments.tree, "-c", "core.quotePath=false", "diff", "--name-only", parents[0], self.arguments.sha).split("\n") if parents else []) if path]
                 _, unowned = self.touched(changed)
                 self.cover(unowned, changed)
-            elif phase == "tools":
-                self.toolsDeclared()
-            elif phase == "build":
-                self.result["build_ok"] = self.step("build", ["go", "build", "./..."])
-            elif phase == "vet":
-                self.vet()
-            elif phase == "wasi":
-                environment = None
-                if os.environ.get("WASI_SYSROOT"):
-                    environment = {"PATH": os.path.join(os.path.dirname(os.path.dirname(os.environ["WASI_SYSROOT"])), "bin") + os.pathsep + os.environ["PATH"]}
-                with open(os.path.join(self.arguments.out, "test.jsonl"), "w") as log:
-                    self.wasiSplit(log, environment)
-            elif phase == "stage3":
-                self.stage3()
-            elif phase == "catalog":
+            else:
+                self.fastPhaseInputs(recordCoverage=True)
+        elif phase == "tools":
+            self.toolsDeclared()
+        elif phase == "build":
+            self.build()
+        elif phase == "vet":
+            self.vet()
+        elif phase == "wasi":
+            environment = None
+            if os.environ.get("WASI_SYSROOT"):
+                environment = {"PATH": os.path.join(os.path.dirname(os.path.dirname(os.environ["WASI_SYSROOT"])), "bin") + os.pathsep + os.environ["PATH"]}
+            with open(logPath, "a") as log:
+                self.wasiSplit(log, environment)
+        elif phase == "stage3":
+            self.stage3()
+        elif phase == "catalog":
+            if self.arguments.full:
                 self.catalogFull()
-            elif phase == "determinism":
-                self.determinism(self.smokeList()[0])
-        except BaseException:
-            self.fail(phase, traceback.format_exc())
+            else:
+                self.step("catalog", ["bash", "-n", "verify/catalog/check.sh"])
+        elif phase in ("smoke", "determinism"):
+            smoke, source = self.smokeList()
+            if not smoke:
+                self.fail(phase, "no smoke list in the gated tree or the tools checkout")
+                return
+            self.result.update({"smoke_list": "cloud/fast-gate/smoke.txt", "smoke_list_source": source,
+                                "smoke_list_blob": self.git(source["root"], "hash-object", os.path.join(source["root"], "cloud/fast-gate/smoke.txt")),
+                                "smoke_fixtures": ["%s %s" % entry for entry in smoke]})
+            if phase == "smoke":
+                with open(logPath, "a") as log:
+                    self.smoke(smoke, log)
+            else:
+                self.determinism(smoke)
+        elif phase == "census":
+            if not os.path.isfile(logPath):
+                self.fail("census", "no test.jsonl: supply the pool's merged log with --census")
+                return
+            if self.arguments.full:
+                self.checkCensus()
+                self.deferredRanWhole()
+            else:
+                self.deferred = self.deferredList()
+                self.runRequested()
+                self.requestedRan()
+                if self.failure is None:
+                    self.checkCensus()
+        elif phase in ("workers", "a-check", "catalog-apply"):
+            changed, executors = self.fastPhaseInputs()
+            if phase == "workers":
+                if not executors & {"workers", "bench-workers"}:
+                    raise ValueError("workers has no work for this change")
+                self.workers(executors)
+            elif phase == "a-check":
+                paths = self.result.get("unchecked_a_files", [])
+                if not paths:
+                    raise ValueError("a-check has no work for this change")
+                self.aCheck(paths)
+            else:
+                patches = self.catalogEntriesTouched(changed)
+                if not patches:
+                    raise ValueError("catalog-apply has no work for this change")
+                self.catalogApply(patches)
+        elif phase == "darwin":
+            self.fail("darwin", "needs darwin leg: go test ./internal/apple/... on Kirk's Mac")
 
     def selectedUnits(self, phase, names):
         """The units of a phase this run takes: all of them, or the one --unit names (a catalog entry by its number).
@@ -528,7 +637,7 @@ class Gate:
             self.fail("census", "cloud/fast-gate/deferred.txt names tests the whole gate doesn't run to a verdict; take each off the list or give the gate its input:\n" +
                       "\n".join(["%s: census class %s, refused" % row for row in refused] + unrun))
 
-    def cover(self, unowned, changed=(), pathSetChanged=None):
+    def cover(self, unowned, changed=(), pathSetChanged=None, record=True):
         """Each changed path outside a Go package to its executor (cloud/fast-gate/executors.txt from the
         tools checkout, since what counts as inert is a ruling, not the candidate's to change). Any path
         with none turns the gate red before anything runs. Reads rules independently add tests for
@@ -594,8 +703,10 @@ class Gate:
         self.extraPackages = sorted(readerPackages | {module + "/" + name.split(":", 1)[1] for name in executors if name.startswith("package:")})
         self.result["executors"] = covered
         self.result["uncovered_files"] = uncovered
-        self.steps["coverage"] = 0.0
         self.result["coverage_enforced"] = enforce
+        if not record:
+            return executors
+        self.steps["coverage"] = 0.0
         if uncovered and enforce:
             self.exits["coverage"] = 1
             self.fail("coverage", "no gate covers %d changed path%s:\n%s" % (len(uncovered), "" if len(uncovered) == 1 else "s", "\n".join(uncovered[:200])))
@@ -2032,7 +2143,39 @@ def longTests(units):
 
 # The whole gate's phases a pool unit can run alone (run.py --full --phase); the Go test set is the pool's own.
 wholePhases = ["coverage", "tools", "build", "vet", "wasi", "stage3", "catalog", "determinism"]
+# The unconditional non-test units; conditional executors are listed with --base.
+fastBasePhases = ["coverage", "tools", "build", "vet", "smoke", "determinism", "census"]
+fastPhases = fastBasePhases + ["stage3", "workers", "a-check", "catalog-apply", "catalog", "darwin"]
 stage3Units = ["stage3-apply-tests", "stage3-lane-tests", "stage3-lane"]
+
+
+def fastUnits(tree, base=None, sha=None, tools=None):
+    """Fast non-test phases, adding change-dependent executors when --base is supplied.
+
+    The planner supplies the same base, sha and tools as --select to enumerate the exact stage set.
+    Enumeration reads the gate's executor map and catalog; it installs nothing and runs no stages.
+    """
+    units = list(fastBasePhases)
+    if base is None:
+        return units
+    with tempfile.TemporaryDirectory() as out:
+        gate = Gate(argparse.Namespace(tree=tree, base=base, sha=sha or git(tree, "rev-parse", "HEAD"),
+                                       tools=tools or tree, out=out, full=False, branch="", branch_source="",
+                                       session="", session_source=""))
+        changed, executors = gate.fastPhaseInputs()
+        if "stage3" in executors:
+            units.append("stage3")
+        if executors & {"workers", "bench-workers"}:
+            units.append("workers")
+        if "a-check" in executors and gate.result.get("unchecked_a_files"):
+            units.append("a-check")
+        if gate.catalogEntriesTouched(changed):
+            units.append("catalog-apply")
+        if "catalog" in executors:
+            units.append("catalog")
+        if "darwin" in executors:
+            units.append("darwin")
+    return units
 
 
 def wholeUnits(tree):
