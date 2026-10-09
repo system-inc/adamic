@@ -4,7 +4,12 @@ brief, manifest, unitId = sys.argv[1:4]
 if unitId.startswith("du"):
     import os, subprocess
     here = os.path.dirname(os.path.abspath(__file__))
-    sys.stdout.write(subprocess.run([sys.executable, "-I", os.path.join(here, "defender-for.py"), os.path.join(here, "defender-brief-v3.md"), manifest, os.path.join(here, "test-audit-ledger.json"), unitId[1:]], check=True, capture_output=True, text=True).stdout)
+    text = subprocess.run([sys.executable, "-I", os.path.join(here, "defender-for.py"), os.path.join(here, "defender-brief-v4.md"), manifest, os.path.join(here, "test-audit-ledger.json"), unitId[1:]], check=True, capture_output=True, text=True).stdout
+    # A keeper note for a defender run is keyed by its unit (fanout/notes/du052.md), so every chunk of the unit carries it.
+    notes = os.path.join(os.path.dirname(os.path.abspath(manifest)), "..", "fanout", "notes", "du" + unitId[2:].split(".")[0].split("=")[0] + ".md")
+    if os.path.exists(notes):
+        text += "\n\n## A note from the keeper for this unit\n" + open(notes).read()
+    sys.stdout.write(text)
     sys.exit(0)
 units = {u['unit']: u for u in json.load(open(manifest))['units']}
 u = units[unitId]

@@ -1,0 +1,4 @@
+{
+ "u156 TestJsxNode": {"defense": "twin", "keeper_note": "Node half of the TestJsxNative twin; port mutants fail both by construction (defender brief v4)."},
+ "u156 TestJsxNative": {"defense": "twin", "keeper_note": "Native half of the TestJsxNode twin; also guards the compiler, which du156.1's port mutants never touched."}
+}

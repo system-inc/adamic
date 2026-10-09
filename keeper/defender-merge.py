@@ -21,6 +21,13 @@ for reply in sorted(glob.glob(S + "/fanout/replies/du*.md")):
         row["unit"] = "u" + unit.group(1)
         row["defender_run"] = name
         ledger["%s %s" % (row["unit"], row["test"])] = row
+# The keeper's own rulings on returned rows (keeper-overrides.json, {"<unit> <test>": {field: value}}) apply after every
+# merge, so a re-merge of the replies never undoes them.
+overrides = S + "/keeper-overrides.json"
+if os.path.exists(overrides):
+    for key, fields in json.load(open(overrides)).items():
+        if key in ledger:
+            ledger[key].update(fields)
 json.dump(ledger, open(path + ".partial", "w"), indent=1)
 os.rename(path + ".partial", path)
 counts = {}
