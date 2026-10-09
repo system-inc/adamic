@@ -1,0 +1,2091 @@
+diff --git a/internal/ir/ir.go b/internal/ir/ir.go
+index 221ad9e9..15070637 100644
+--- a/internal/ir/ir.go
++++ b/internal/ir/ir.go
+@@ -376,6 +376,7 @@ type (
+ 		DictionaryKey Expression
+ 		// DictionaryPrimitive retains the original type ID but checks only scalar/nullish arms; reference arms stop at this read.
+ 		DictionaryPrimitive bool
++		DictionaryReference bool // Complete immediate selector; descendants remain checked read obligations.
+ 		// View names a required field read whose presence, readiness and representation are checked.
+ 		Nullish            bool
+ 		NullAllowed        bool
+@@ -521,11 +522,15 @@ type (
+ 	// that member's type To, which may be a Maybe pair (number | undefined, out of string | number |
+ 	// undefined).
+ 	Narrow struct {
+-		Value          Expression
+-		Tuple          bool // Native object slots; JavaScript array identity.
+-		Undefined      bool
+-		UndefinedWhere string
+-		To             Type
++		Dictionary           bool // Readonly dictionary: consumption checks the heap tag; each lookup checks storage.
++		DictionaryWhere      string
++		DictionaryExpression string
++		DictionaryType       string
++		Value                Expression
++		Tuple                bool // Native object slots; JavaScript array identity.
++		Undefined            bool
++		UndefinedWhere       string
++		To                   Type
+ 	}
+ 
+ 	// TypeOf is typeof Value: "number", "string", "boolean", "undefined", "object" or "function".
+diff --git a/internal/ir/view_dictionaries.go b/internal/ir/view_dictionaries.go
+index 3d398c35..58214e13 100644
+--- a/internal/ir/view_dictionaries.go
++++ b/internal/ir/view_dictionaries.go
+@@ -98,3 +98,12 @@ func PrimitiveDictionaryReadCertificate(program *Program, read Property) bool {
+ 	}
+ 	return true
+ }
++
++// A complete immediate selector preserves the original child graph for later reads.
++func SelectedDictionaryReadCertificate(program *Program, read Property) bool {
++	if !read.DictionaryPrimitive && !read.DictionaryReference || read.DictionaryKey == nil {
++		return false
++	}
++	kinds, ok := DictionaryReadKinds(program, read.ViewContract)
++	return ok && len(kinds) > 0
++}
+diff --git a/internal/javascript/javascript.go b/internal/javascript/javascript.go
+index 395b2195..8b29aad6 100644
+--- a/internal/javascript/javascript.go
++++ b/internal/javascript/javascript.go
+@@ -963,6 +963,9 @@ func (e *emitter) valueWithoutViewArrays(expression ir.Expression) string {
+ 	case ir.WeakTarget:
+ 		return e.value(expression.Value)
+ 	case ir.Narrow:
++		if expression.Dictionary {
++			return fmt.Sprintf("adamicViewDictionarySource(%s, %s, %s)", e.value(expression.Value), quote(expression.DictionaryExpression), quote(expression.DictionaryType))
++		}
+ 		if expression.Undefined {
+ 			return "((value) => value === undefined ? undefined : panic(" + quote("undefined storage conversion failed: "+expression.UndefinedWhere+" expected undefined, found present reference") + "))(" + e.value(expression.Value) + ")"
+ 		}
+diff --git a/internal/javascript/view_dictionaries.go b/internal/javascript/view_dictionaries.go
+index 4bc396e9..ec91909b 100644
+--- a/internal/javascript/view_dictionaries.go
++++ b/internal/javascript/view_dictionaries.go
+@@ -6,6 +6,14 @@ package javascript
+ func DictionaryRuntime() string { return viewDictionariesRuntime }
+ 
+ const viewDictionariesRuntime = `
++const adamicViewDictionarySource = (value, expression, declared) => {
++ const kind = value === JSON ? 'unsupported representation' : value === undefined ? 'undefined' : value === null ? 'null' : Array.isArray(value) ? 'array' : value instanceof Map ? 'Map' : typeof adamicTypeOf === 'function' ? adamicTypeOf(value) : typeof value;
++ const fail = found => panic('field read failed: ' + expression + '; expected ' + declared + ', found ' + found);
++ if (kind !== 'object') fail(kind);
++ if (typeof adamicClassIdentities !== 'undefined' && adamicClassIdentities.has(value)) fail('unsupported representation');
++ return value;
++};
++
+ const adamicViewDictionaryRead = (record, key, kinds, childContract, expression, declared) => {
+  const fail = found => panic('field read failed: ' + expression + '; expected ' + declared + ', found ' + found);
+  if (record === null || typeof record !== 'object' || Array.isArray(record) || record instanceof Map) fail(record === null ? 'null' : Array.isArray(record) ? 'array' : record instanceof Map ? 'Map' : typeof record);
+@@ -15,7 +23,7 @@ const adamicViewDictionaryRead = (record, key, kinds, childContract, expression,
+  if (slot !== undefined && !Object.hasOwn(slot, 'value')) fail('accessor');
+  if (typeof adamicFieldReadiness !== 'undefined' && adamicFieldReadiness.get(record)?.has(key)) fail('uninitialized');
+  const value = slot === undefined ? undefined : slot.value;
+- const kind = value === undefined ? 'undefined' : value === null ? 'null' : Array.isArray(value) ? 'array' : value instanceof Map ? 'Map' : typeof adamicTypeOf === 'function' ? adamicTypeOf(value) : typeof value;
++ const kind = value === JSON ? 'unsupported representation' : value === undefined ? 'undefined' : value === null ? 'null' : Array.isArray(value) ? 'array' : value instanceof Map ? 'Map' : typeof adamicTypeOf === 'function' ? adamicTypeOf(value) : typeof value;
+  if (!kinds.includes(kind)) fail(kind);
+  const reference = ['object','array','Map','function'].includes(kind);
+  if (reference && !childContract) fail('unsupported representation');
+diff --git a/internal/lower/cast.go b/internal/lower/cast.go
+index 7c7e14fb..08b0979b 100644
+--- a/internal/lower/cast.go
++++ b/internal/lower/cast.go
+@@ -14,6 +14,9 @@ import (
+ // (adamic/no-unchecked-cast).
+ func (l *lowering) cast(node *ast.Node) (ir.Expression, error) {
+ 	as := node.AsAsExpression()
++	if l.dictionaryReferenceConversion(node) {
++		return l.checkedDictionaryReferenceConversion(node)
++	}
+ 	if l.nodeRequirePerformanceProjection(node) {
+ 		return l.expression(as.Expression)
+ 	}
+diff --git a/internal/lower/cast_proof.go b/internal/lower/cast_proof.go
+index 6d1275e1..b50192c2 100644
+--- a/internal/lower/cast_proof.go
++++ b/internal/lower/cast_proof.go
+@@ -97,6 +97,9 @@ func castMembers(proven *checker.Type) []*checker.Type {
+ }
+ 
+ func (l *lowering) castProof(node *ast.Node) (castProof, error) {
++	if l.dictionaryReferenceConversion(node) {
++		return castProof{view: true}, nil
++	}
+ 	as := node.AsAsExpression()
+ 	if l.viewCallableDiscardedMarker(node) {
+ 		return castProof{}, nil
+diff --git a/internal/lower/readiness.go b/internal/lower/readiness.go
+index 424ecbc7..22e5f6db 100644
+--- a/internal/lower/readiness.go
++++ b/internal/lower/readiness.go
+@@ -362,7 +362,7 @@ func readinessStatement(statement ir.Statement, program *ir.Program, fields map[
+ 					expression.ViewAllowed = nil
+ 					expression.ViewContract = 0
+ 					expression.ViewTypeID = 0
+-				} else if expression.ViewTypeID != 0 && !expression.DictionaryPrimitive {
++				} else if expression.ViewTypeID != 0 && !expression.DictionaryPrimitive && !expression.DictionaryReference {
+ 					// A function read can precede the cast that interns its contract.
+ 					expression.ViewContract = program.ViewContractTypes[expression.ViewTypeID]
+ 				}
+diff --git a/internal/lower/records.go b/internal/lower/records.go
+index 946ee181..8ea59c6f 100644
+--- a/internal/lower/records.go
++++ b/internal/lower/records.go
+@@ -329,6 +329,9 @@ func (l *lowering) recordObjectCall(node *ast.Node, name string) (ir.Expression,
+ 
+ // Aliases cannot change the native storage kind, even when tsc accepts the structural view.
+ func (l *lowering) recordStorageView(node *ast.Node) error {
++	if l.dictionaryReferenceConversion(node) {
++		return nil
++	}
+ 	var source *ast.Node
+ 	var target *checker.Type
+ 	if node.Kind == ast.KindVariableDeclaration {
+diff --git a/internal/lower/view_dictionaries.go b/internal/lower/view_dictionaries.go
+index fa8ae3a8..6a969deb 100644
+--- a/internal/lower/view_dictionaries.go
++++ b/internal/lower/view_dictionaries.go
+@@ -103,9 +103,11 @@ func (l *lowering) dictionaryReadContract(node *ast.Node, object, key ir.Express
+ 	if err != nil {
+ 		return nil, err
+ 	}
+-	primitive := false
++	primitive, reference := false, false
+ 	if _, ok := ir.DictionaryReadKinds(l.result, id); !ok {
+-		if selected, supported := l.dictionaryPrimitiveReadContract(node, declared); supported {
++		if selected, supported := l.dictionaryReferenceReadContract(node, declared); supported && !l.dictionaryPrimitiveReadContext(node) {
++			id, reference = selected, true
++		} else if selected, supported := l.dictionaryPrimitiveReadContract(node, declared); supported {
+ 			id, primitive = selected, true
+ 		} else {
+ 			return nil, l.lazyReadRefusal(node, sourceExpression(node), "dictionary element "+l.checker.TypeToString(declared))
+@@ -132,7 +134,7 @@ func (l *lowering) dictionaryReadContract(node *ast.Node, object, key ir.Express
+ 	if err != nil {
+ 		return nil, err
+ 	}
+-	return ir.Property{Object: object, DictionaryKey: key, DictionaryPrimitive: primitive, Of: of, View: sourceExpression(node), ViewWhere: l.program.Where(node), ViewType: l.checker.TypeToString(declared), ViewContract: id, ViewTypeID: int(declared.Id()), ViewAllowed: dictionaryReadLiterals(l.viewLiterals(declared))}, nil
++	return ir.Property{Object: object, DictionaryKey: key, DictionaryPrimitive: primitive, DictionaryReference: reference, Of: of, View: sourceExpression(node), ViewWhere: l.program.Where(node), ViewType: l.checker.TypeToString(declared), ViewContract: id, ViewTypeID: int(declared.Id()), ViewAllowed: dictionaryReadLiterals(l.viewLiterals(declared))}, nil
+ }
+ 
+ // Resolved string-index signatures carry generic arguments that have no named
+diff --git a/internal/lower/view_dictionary_conversion.go b/internal/lower/view_dictionary_conversion.go
+new file mode 100644
+index 00000000..bc6cf375
+--- /dev/null
++++ b/internal/lower/view_dictionary_conversion.go
+@@ -0,0 +1,109 @@
++package lower
++
++import (
++	"github.com/microsoft/TypeScript/tsc/shim/ast"
++	"github.com/system-inc/adamic/internal/ir"
++)
++
++// Only readonly consumers can use a representation checked at lookup. A read
++// certificate never grants mutation of a fixed object's storage.
++func (l *lowering) dictionaryReferenceConversion(node *ast.Node) bool {
++	if node.Kind != ast.KindAsExpression {
++		return false
++	}
++	as := node.AsAsExpression()
++	source, target := l.concrete(l.checker.GetTypeAtLocation(as.Expression)), l.concrete(l.checker.GetTypeAtLocation(node))
++	if !l.primitiveDictionaryCandidate(source) || !l.stringDictionary(target) {
++		return false
++	}
++	infos := l.checker.GetIndexInfosOfType(target)
++	return len(infos) == 1 && infos[0].IsReadonly() && len(l.checker.GetPropertiesOfType(target)) == 0
++}
++
++func (l *lowering) checkedDictionaryReferenceConversion(node *ast.Node) (ir.Expression, error) {
++	value, err := l.expression(node.AsAsExpression().Expression)
++	if err != nil {
++		return nil, err
++	}
++	// Check the heap tag when this selected reference is consumed. Lookups
++	// independently check fixed slots or record.c storage and element types.
++	converted := ir.Narrow{Value: value, To: ir.Object, Dictionary: true, DictionaryWhere: l.program.Where(node), DictionaryExpression: sourceExpression(node.AsAsExpression().Expression), DictionaryType: l.checker.TypeToString(l.concrete(l.checker.GetTypeAtLocation(node)))}
++	return l.view(node, converted, l.concrete(l.checker.GetTypeAtLocation(node)))
++}
++
++// Follow the same allocation graph as checked reads. Aliases, erasure and
++// helper arguments cannot turn this read certificate into record storage.
++func dictionaryConversionRecordOperations(program *ir.Program, graph *allocationFlowGraph) error {
++	sites := map[int]bool{}
++	unknown := false
++	where := ""
++	visit := func(value any) bool {
++		if narrow, ok := value.(ir.Narrow); ok && narrow.Dictionary {
++			if where == "" {
++				where = narrow.DictionaryWhere
++			}
++			reaching := graph.ReachingAllocations(narrow.Value)
++			unknown = unknown || reaching.Unknown
++			for _, site := range reaching.Sites {
++				sites[site] = true
++			}
++		}
++		return true
++	}
++	walk(program.Main, visit)
++	for _, function := range program.Functions {
++		walk(function.Body, visit)
++	}
++	if where == "" {
++		return nil
++	}
++	var refused error
++	inspect := func(value any) bool {
++
++		var receiver ir.Expression
++		operation := ""
++		switch value := value.(type) {
++		case ir.RecordCall:
++			if len(value.Arguments) == 0 || value.Method == "get" && value.DictionaryRead != nil {
++				return true
++			}
++			receiver, operation = value.Arguments[0], "record "+value.Method
++		case ir.RecordCoalesce:
++			receiver, operation = value.Record, "record coalesce"
++		case ir.ObjectCall:
++			if len(value.Arguments) == 0 {
++				return true
++			}
++			receiver, operation = value.Arguments[0], "Object."+value.Method
++		case ir.ObjectKeys:
++			receiver, operation = value.Object, "key enumeration"
++		case ir.HasOwn:
++			receiver, operation = value.Object, "own-key probe"
++		case ir.SetProperty:
++			receiver, operation = value.Object, "field set"
++		case ir.ObjectLiteral:
++			receiver, operation = value.Spread, "object spread"
++		case ir.RecordLiteral:
++			receiver, operation = value.Spread, "record spread"
++		default:
++			return true
++		}
++		if receiver == nil {
++			return true
++		}
++		reaching := graph.ReachingAllocations(receiver)
++		demanded := unknown || reaching.Unknown
++		for _, site := range reaching.Sites {
++			demanded = demanded || sites[site]
++		}
++		if demanded && refused == nil {
++			refused = &Refused{Where: where, What: operation + " through a readonly dictionary view without a producer storage certificate", Fix: "prove the producer storage before this record operation; this conversion grants checked reads only"}
++		}
++		return true
++	}
++	walk(program.Main, inspect)
++	for _, function := range program.Functions {
++		walk(function.Body, inspect)
++	}
++	return refused
++}
+diff --git a/internal/lower/view_dictionary_conversion_test.go b/internal/lower/view_dictionary_conversion_test.go
+new file mode 100644
+index 00000000..74dd32bc
+--- /dev/null
++++ b/internal/lower/view_dictionary_conversion_test.go
+@@ -0,0 +1,72 @@
++package lower
++
++import (
++	"github.com/system-inc/adamic/internal/ir"
++	"strings"
++	"testing"
++)
++
++func TestDictionaryConversionRecordOperationOriginMutant(t *testing.T) {
++	for _, drop := range []bool{false, true} {
++		program := dictionaryConversionMutationProgram(!drop, 1)
++		err := dictionaryConversionRecordOperations(program, newAllocationFlowGraph(program))
++		if drop {
++			if err != nil {
++				t.Fatalf("origin mutant did not lose refusal: %v", err)
++			}
++			t.Log("dropping conversion origin loses pinned record set refusal")
++		} else if err == nil || !strings.Contains(err.Error(), "record set through a readonly dictionary view without a producer storage certificate") {
++			t.Fatalf("want producer refusal, got %v", err)
++		}
++	}
++}
++
++func dictionaryConversionMutationProgram(mark bool, receiver int) *ir.Program {
++	program := &ir.Program{
++		Locals: []ir.Local{{Type: ir.Union}, {Type: ir.Object}, {Type: ir.Record}},
++		Main: []ir.Statement{
++			ir.Declare{Local: 0, Value: ir.Box{Value: ir.ObjectLiteral{}}},
++			ir.Declare{Local: 1, Value: ir.Narrow{Value: ir.Read{Local: 0, Of: ir.Union}, To: ir.Object, Dictionary: mark, DictionaryWhere: "probe.a:2:1"}},
++			ir.Declare{Local: 2, Value: ir.RecordLiteral{Element: ir.Array}},
++			ir.Evaluate{Value: ir.RecordCall{Method: "set", Arguments: []ir.Expression{ir.Read{Local: receiver, Of: ir.Record}, ir.StringConstant{Index: 0}, ir.ArrayLiteral{Element: ir.String}}, Element: ir.Array, Returns: ir.Array}},
++		}, Strings: []string{"other"},
++	}
++	assignAllocationSites(program)
++	return program
++}
++
++func TestDictionaryReferenceProjectionKeepsOriginalContract(t *testing.T) {
++	l, target, release := mixedUnionLowering(t, `interface Ref {[key:string]:string[]} type Target=string|number|boolean|Ref|number[]|string[]|null|undefined;`)
++	defer release()
++	node := l.program.Files()[0].Statements.Nodes[0]
++	original, err := l.viewContract(node, target)
++	if err != nil {
++		t.Fatal(err)
++	}
++	unsupported := l.result.ViewContracts[original-1].Unsupported
++	if unsupported == "" {
++		t.Fatal("missing original member obligation")
++	}
++	selected, ok := l.dictionaryReferenceReadContract(node, target)
++	if !ok || selected == original {
++		t.Fatal("no distinct reference selector")
++	}
++	if l.result.ViewContractTypes[int(target.Id())] != original || l.result.ViewContracts[original-1].Unsupported != unsupported {
++		t.Fatal("original descriptor was weakened")
++	}
++	read := ir.Property{DictionaryReference: true, DictionaryKey: ir.Undefined{}, ViewContract: selected}
++	if !ir.SelectedDictionaryReadCertificate(l.result, read) || ir.PrimitiveDictionaryReadCertificate(l.result, read) {
++		t.Fatal("reference selector confused with primitive selector")
++	}
++}
++
++func TestDictionaryReferenceProjectionCannotTrustUnknown(t *testing.T) {
++	for _, source := range []string{`type Target=string|number|boolean|unknown;`, `type Target=string|number|boolean|any;`, `type Target<T>=string|number|boolean|T;`} {
++		l, target, release := mixedUnionLowering(t, source)
++		node := l.program.Files()[0].Statements.Nodes[0]
++		if _, ok := l.dictionaryReferenceReadContract(node, target); ok {
++			t.Fatal("opaque arm authorized reference selection")
++		}
++		release()
++	}
++}
+diff --git a/internal/lower/view_dictionary_references.go b/internal/lower/view_dictionary_references.go
+new file mode 100644
+index 00000000..9acc75ec
+--- /dev/null
++++ b/internal/lower/view_dictionary_references.go
+@@ -0,0 +1,51 @@
++package lower
++
++import (
++	"github.com/microsoft/TypeScript/tsc/shim/ast"
++	"github.com/microsoft/TypeScript/tsc/shim/checker"
++	"github.com/system-inc/adamic/internal/ir"
++)
++
++// A dictionary read checks its immediate member and retains every reference
++// child descriptor. Descendant reads still use the ordinary view machinery.
++// This certificate is separate from the original union's admission descriptor.
++func (l *lowering) dictionaryReferenceReadContract(node *ast.Node, target *checker.Type) (ir.ViewContractID, bool) {
++	if !l.primitiveDictionaryCandidate(target) {
++		return 0, false
++	}
++	selected := ir.ViewContract{Kind: ir.ViewUnion, Of: ir.Union, Name: l.checker.TypeToString(target)}
++	for _, member := range target.Types() {
++		id, err := l.viewContract(node, member)
++		if err != nil {
++			return 0, false
++		}
++		child := l.result.ViewContracts[id-1]
++		if child.Unsupported != "" || child.Nominal != "" || child.FixedTuple {
++			return 0, false
++		}
++		switch child.Kind {
++		case ir.ViewScalar, ir.ViewNull, ir.ViewUndefined, ir.ViewArray, ir.ViewObject, ir.ViewDictionary:
++		default:
++			return 0, false
++		}
++		selected.Members = append(selected.Members, id)
++	}
++	id := ir.ViewContractID(len(l.result.ViewContracts) + 1)
++	l.result.ViewContracts = append(l.result.ViewContracts, selected)
++	if _, ok := ir.DictionaryReadKinds(l.result, id); !ok {
++		l.result.ViewContracts = l.result.ViewContracts[:len(l.result.ViewContracts)-1]
++		return 0, false
++	}
++	return id, true
++}
++
++// A direct String consumer retains its primitive-only checked selector until
++// the reference families have their own ToPrimitive implementation.
++func (l *lowering) dictionaryPrimitiveReadContext(node *ast.Node) bool {
++	at := node
++	for at.Parent != nil && at.Parent.Kind == ast.KindParenthesizedExpression {
++		at = at.Parent
++	}
++	parent := at.Parent
++	return parent != nil && parent.Kind == ast.KindCallExpression && l.isLibraryGlobal(ast.SkipParentheses(parent.AsCallExpression().Expression), "String")
++}
+diff --git a/internal/lower/view_lazy.go b/internal/lower/view_lazy.go
+index 7d0a851e..17925a18 100644
+--- a/internal/lower/view_lazy.go
++++ b/internal/lower/view_lazy.go
+@@ -111,6 +111,9 @@ func (l *lowering) checkLazyViewReads() error {
+ 	}
+ 	assignAllocationSites(program)
+ 	graph := newAllocationFlowGraph(program)
++	if err := dictionaryConversionRecordOperations(program, graph); err != nil {
++		return err
++	}
+ 	viewed := map[int]bool{}
+ 	unknown := false
+ 	queue := []int{}
+@@ -195,7 +198,7 @@ func (l *lowering) checkLazyViewReads() error {
+ 				operationFamily = "dictionary enumeration"
+ 			} else if read.DictionaryRead == nil {
+ 				operationFamily = "dictionary read without a supported contract"
+-			} else if read.DictionaryRead.DictionaryPrimitive && ir.PrimitiveDictionaryReadCertificate(program, *read.DictionaryRead) {
++			} else if (read.DictionaryRead.DictionaryPrimitive || read.DictionaryRead.DictionaryReference) && ir.SelectedDictionaryReadCertificate(program, *read.DictionaryRead) {
+ 				selectedContract = read.DictionaryRead.ViewContract
+ 			} else if id := program.ViewContractTypes[typeID]; id != 0 {
+ 				if _, ok := ir.DictionaryReadKinds(program, id); !ok {
+diff --git a/internal/native/runtime/view_dictionaries.c b/internal/native/runtime/view_dictionaries.c
+index a3aef4d9..d3ab4107 100644
+--- a/internal/native/runtime/view_dictionaries.c
++++ b/internal/native/runtime/view_dictionaries.c
+@@ -35,7 +35,12 @@ adamic_view_dictionary_result adamic_view_dictionary_read(const adamic_record *r
+             break;
+         case adamic_kind_null: value.kind = adamic_view_union_null; break;
+         case adamic_kind_string: value.kind = adamic_view_union_string; break;
+-        case adamic_kind_object: value.kind = adamic_view_union_object; break;
++        case adamic_kind_object: {
++            if (boxed == adamic_library_identity(4)) { value.kind = adamic_view_union_unknown; break; }
++            const adamic_object *object = (const adamic_object *)boxed;
++            value.kind = object->class != NULL && object->class->is_static ? adamic_view_union_function : adamic_view_union_object;
++            break;
++        }
+         case adamic_kind_array: value.kind = adamic_view_union_array; break;
+         case adamic_kind_map: value.kind = adamic_view_union_map; break;
+         case adamic_kind_closure: value.kind = adamic_view_union_function; break;
+@@ -61,7 +66,12 @@ static adamic_view_union_value dictionary_boxed_value(const adamic_heap *boxed)
+     case adamic_kind_boolean: value.kind = adamic_view_union_boolean; value.payload.boolean = ((const adamic_boolean_box *)boxed)->boolean; break;
+     case adamic_kind_null: value.kind = adamic_view_union_null; break;
+     case adamic_kind_string: value.kind = adamic_view_union_string; break;
+-    case adamic_kind_object: value.kind = adamic_view_union_object; break;
++    case adamic_kind_object: {
++            if (boxed == adamic_library_identity(4)) { value.kind = adamic_view_union_unknown; break; }
++            const adamic_object *object = (const adamic_object *)boxed;
++            value.kind = object->class != NULL && object->class->is_static ? adamic_view_union_function : adamic_view_union_object;
++            break;
++        }
+     case adamic_kind_array: value.kind = adamic_view_union_array; break;
+     case adamic_kind_map: value.kind = adamic_view_union_map; break;
+     case adamic_kind_closure: value.kind = adamic_view_union_function; break;
+@@ -70,6 +80,16 @@ static adamic_view_union_value dictionary_boxed_value(const adamic_heap *boxed)
+     return value;
+ }
+ 
++// Conversion checks representation at the read that consumes the selected
++// reference. Record identity and element storage remain lookup obligations.
++adamic_object *adamic_view_dictionary_source_conversion(const adamic_heap *value, const char *expression, const char *declared) {
++    adamic_view_union_value selected = dictionary_boxed_value(value);
++    if (selected.kind != adamic_view_union_object) dictionary_failure(expression, declared, selected.kind);
++    adamic_object *object = (adamic_object *)value;
++    if (object->class != NULL) dictionary_failure(expression, declared, adamic_view_union_unknown);
++    return object;
++}
++
+ // Fixed-shape source objects keep their identity and existing storage. A target
+ // dictionary never reinterprets their scalar slots as a record table or boxes.
+ adamic_view_dictionary_result adamic_view_dictionary_source_read(const adamic_object *object, const adamic_string *key, unsigned int kinds, size_t child_contract, const char *expression, const char *declared) {
+diff --git a/internal/native/runtime/view_dictionaries.h b/internal/native/runtime/view_dictionaries.h
+index 65b8eee2..683e5435 100644
+--- a/internal/native/runtime/view_dictionaries.h
++++ b/internal/native/runtime/view_dictionaries.h
+@@ -14,6 +14,8 @@ typedef struct adamic_view_dictionary_result {
+ // applies the shared field/element checks at later reads. Admission scans no keys.
+ adamic_view_dictionary_result adamic_view_dictionary_read(const adamic_record *record, bool boxed_storage, const adamic_string *key, unsigned int kinds, size_t child_contract, const char *expression, const char *declared);
+ adamic_view_dictionary_result adamic_view_dictionary_source_read(const adamic_object *object, const adamic_string *key, unsigned int kinds, size_t child_contract, const char *expression, const char *declared);
++// Borrowed checked object reference. No keys or element values are inspected.
++adamic_object *adamic_view_dictionary_source_conversion(const adamic_heap *value, const char *expression, const char *declared);
+ adamic_heap *adamic_view_dictionary_box(adamic_view_union_value value);
+ // Owned key array. Element values and their representation are never read.
+ adamic_array *adamic_view_dictionary_source_keys(const adamic_object *object);
+diff --git a/internal/native/union.go b/internal/native/union.go
+index 996ed045..a5725af2 100644
+--- a/internal/native/union.go
++++ b/internal/native/union.go
+@@ -55,6 +55,10 @@ func (e *emitter) box(value ir.Expression) string {
+ // narrow emits a union the checker proved to be one member, as that member. A number or a boolean is
+ // read out of its box now, as JavaScript reads the variable; a reference is the union's, borrowed.
+ func (e *emitter) narrow(narrow ir.Narrow) string {
++	if narrow.Dictionary {
++		e.declarations = append(e.declarations, "#include \"view_dictionaries.h\"")
++		return fmt.Sprintf("adamic_view_dictionary_source_conversion((const adamic_heap *)%s, %s, %s)", e.value(narrow.Value), cString(narrow.DictionaryExpression), cString(narrow.DictionaryType))
++	}
+ 	if narrow.Undefined {
+ 		value := e.snapshot(ir.Object, fmt.Sprintf("((adamic_object *)%s)", e.value(narrow.Value)))
+ 		message := "undefined storage conversion failed: " + narrow.UndefinedWhere + " expected undefined, found present reference"
+diff --git a/internal/oracle/checked_view_dictionary_joint_test.go b/internal/oracle/checked_view_dictionary_joint_test.go
+new file mode 100644
+index 00000000..3b16a723
+--- /dev/null
++++ b/internal/oracle/checked_view_dictionary_joint_test.go
+@@ -0,0 +1,340 @@
++package oracle
++
++import (
++	"fmt"
++	"github.com/system-inc/adamic/internal/ir"
++	"github.com/system-inc/adamic/internal/javascript"
++	"github.com/system-inc/adamic/internal/native"
++	"os"
++	"path/filepath"
++	"strings"
++	"testing"
++)
++
++func TestCheckedViewDictionaryJoint(t *testing.T) {
++	directory := os.Getenv("ADAMIC_BRAND_ORIGINAL_DECLS")
++	if directory == "" {
++		t.Skip("set ADAMIC_BRAND_ORIGINAL_DECLS to the pinned original declarations")
++	}
++	verifyUnionTargetDeclarations(t, directory)
++	for _, group := range []string{"buildoptions", "compileroptions", "optionsbase"} {
++		for _, name := range []string{"good", "good-record", "missing", "missing-inferred", "wrong-element", "wrong-representation", "wrong-class", "wrong-value"} {
++			t.Run(group+"/"+name, func(t *testing.T) {
++				program, file := dictionaryJointFixture(t, directory, group, name)
++				root := "BuildOptions"
++				if group == "compileroptions" {
++					root = "CompilerOptions"
++				}
++				if group == "optionsbase" {
++					root = "OptionsBase"
++				}
++				assertOriginalDictionaryFields(t, program, root)
++				truth := onNode(t, file)
++				if truth.exitCode != 0 {
++					t.Fatalf("Node: %#v", truth)
++				}
++				want := truth
++				switch name {
++
++				case "wrong-element":
++					want = run{exitCode: 70, stderr: []byte("adamic: panic: element read failed: values[0] expected string, found number\n")}
++				case "wrong-representation":
++					want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: selected; expected { readonly [key: string]: string[] | undefined; }, found array\n")}
++				case "wrong-class":
++					want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: selected; expected { readonly [key: string]: string[] | undefined; }, found unsupported representation\n")}
++				case "wrong-value":
++					want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: dictionary['name']; expected string[] | undefined, found number\n")}
++				}
++				sanitized, binary := nativelyUncached(t, program)
++				for _, got := range []run{sanitized, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
++					if diff := disagreement(want, got); diff != "" {
++						t.Fatalf("%s: %#v", diff, got)
++					}
++				}
++				if name == "good" {
++					data, err := os.ReadFile(file)
++					if err != nil {
++						t.Fatal(err)
++					}
++					mutable := strings.ReplaceAll(string(data), "readonly [key:string]", "[key:string]")
++					path := filepath.Join(t.TempDir(), "mutable.a")
++					if err := os.WriteFile(path, []byte(mutable), 0600); err != nil {
++						t.Fatal(err)
++					}
++					_, err = lowered(t, path)
++					if err == nil || !strings.Contains(err.Error(), "fixed objects and records have different storage") {
++						t.Fatalf("mutable conversion must remain refused: %v", err)
++					}
++				}
++
++				if name == "good" {
++					data, err := os.ReadFile(file)
++					if err != nil {
++						t.Fatal(err)
++					}
++					source := string(data) + "\nconst writable=dictionary as {[key:string]:string[]|undefined};\nfunction mutate(table:{[key:string]:string[]|undefined}):void { table['other']=['unsafe']; }\nmutate(writable);\n"
++					path := filepath.Join(t.TempDir(), "helper-write.a")
++					if err := os.WriteFile(path, []byte(source), 0600); err != nil {
++						t.Fatal(err)
++					}
++					_, err = lowered(t, path)
++					if err == nil || !strings.Contains(err.Error(), "record set through a readonly dictionary view without a producer storage certificate") {
++						t.Fatalf("helper cannot acquire a write certificate: %v", err)
++					}
++				}
++
++				if name == "good" {
++					data, err := os.ReadFile(file)
++					if err != nil {
++						t.Fatal(err)
++					}
++					source := string(data) + "\nfor(const key in dictionary){console.log(key); }\n"
++					path := filepath.Join(t.TempDir(), "keys.a")
++					if err := os.WriteFile(path, []byte(source), 0600); err != nil {
++						t.Fatal(err)
++					}
++					_, err = lowered(t, path)
++					if err == nil || (!strings.Contains(err.Error(), "key enumeration through a readonly dictionary view without a producer storage certificate") && !strings.Contains(err.Error(), "for...in without a proven fixed plain-object origin")) {
++						t.Fatalf("key enumeration must not follow unchecked representation: %v", err)
++					}
++				}
++				if strings.HasPrefix(name, "wrong-") {
++					assertDictionaryJointMutant(t, program, name)
++				}
++				if want.exitCode == 0 {
++					if report := leaks(t, program, binary); report != "" {
++						t.Fatal(report)
++					}
++				}
++			})
++		}
++	}
++}
++
++// Mutants preserve safe physical extraction so a lost diagnostic, rather than
++// a compiler error or invalid dereference, kills each mutation.
++func assertDictionaryJointMutant(t *testing.T, program *ir.Program, name string) {
++	t.Helper()
++	c, js := native.C(program), javascript.JavaScript(program)
++	if name == "wrong-representation" || name == "wrong-class" {
++		anchor := "adamic_view_dictionary_source_conversion("
++		if !strings.Contains(c, anchor) {
++			t.Fatal("missing checked conversion")
++		}
++		wrapper := `#include "view_dictionaries.h"
++static adamic_object *joint_conversion_mutant(const adamic_heap *value,const char *expression,const char *declared) { (void)expression; (void)declared;return (adamic_object *)value; }
++`
++		c = wrapper + strings.ReplaceAll(c, anchor, "joint_conversion_mutant(")
++		if !strings.Contains(js, "adamicViewDictionarySource(") {
++			t.Fatal("missing JS checked conversion")
++		}
++		js = "const jointConversionMutant=value=>value;\n" + strings.ReplaceAll(js, "adamicViewDictionarySource(", "jointConversionMutant(")
++	} else if name == "wrong-element" {
++		anchor := "adamic_view_array_at("
++		if !strings.Contains(c, anchor) {
++			t.Fatal("missing transitive array check")
++		}
++		wrapper := `#include "adamic.h"
++#include "view_arrays.h"
++#include <string.h>
++static adamic_string joint_wrong_text = ADAMIC_STRING("42");
++static adamic_value *joint_array_mutant(const adamic_array *a,double i,bool relative,bool allowed,unsigned char wanted,const char *expected,const char *expression,adamic_value *snapshot,adamic_array *owner) {
++ if(strcmp(expression,"values[0]")==0) { snapshot->reference=&joint_wrong_text; return snapshot; }
++ return adamic_view_array_at(a,i,relative,allowed,wanted,expected,expression,snapshot,owner);
++}
++`
++		c = wrapper + strings.ReplaceAll(c, anchor, "joint_array_mutant(")
++		if !strings.Contains(js, "adamicViewArrayElement(") {
++			t.Fatal("missing JS transitive check")
++		}
++		js = "const jointElementMutant=(value,expression,...args)=>expression==='values[0]'?String(value):adamicViewArrayElement(value,expression,...args);\n" + strings.ReplaceAll(js, "adamicViewArrayElement(", "jointElementMutant(")
++	} else {
++		anchor := "adamic_view_dictionary_source_read("
++		if !strings.Contains(c, anchor) {
++			t.Fatal("missing representation read")
++		}
++		action := `adamic_view_dictionary_result r=adamic_view_dictionary_source_read(object,key,kinds | (1u<<adamic_view_union_number),child,expression,declared); if(r.value.kind==adamic_view_union_number) return (adamic_view_dictionary_result){{adamic_view_union_undefined,{.reference=NULL}},0}; return r;`
++		jsAction := `const r=adamicViewDictionaryRead(record,key,[...kinds,'number'],child,expression,declared);return typeof r.value==='number'?{value:undefined,contract:0}:r;`
++		if name == "wrong-representation" || name == "wrong-class" {
++			action = `if(object && object->heap.kind==adamic_kind_array)return (adamic_view_dictionary_result){{adamic_view_union_undefined,{.reference=NULL}},0}; return adamic_view_dictionary_source_read(object,key,kinds,child,expression,declared);`
++			jsAction = `if(Array.isArray(record))return {value:undefined,contract:0};return adamicViewDictionaryRead(record,key,kinds,child,expression,declared);`
++		}
++		wrapper := `#include "view_dictionaries.h"
++#include <string.h>
++static adamic_view_dictionary_result joint_dictionary_mutant(const adamic_object *object,const adamic_string *key,unsigned int kinds,size_t child,const char *expression,const char *declared) {
++ if(strcmp(expression,"dictionary['name']")==0){` + action + `}
++ return adamic_view_dictionary_source_read(object,key,kinds,child,expression,declared);
++}
++`
++		c = wrapper + strings.ReplaceAll(c, anchor, "joint_dictionary_mutant(")
++		if !strings.Contains(js, "adamicViewDictionaryRead(") {
++			t.Fatal("missing JS dictionary selector")
++		}
++		js = "const jointDictionaryMutant=(record,key,kinds,child,expression,declared)=>{if(expression===\"dictionary['name']\"){ " + jsAction + " }return adamicViewDictionaryRead(record,key,kinds,child,expression,declared);};\n" + strings.ReplaceAll(js, "adamicViewDictionaryRead(", "jointDictionaryMutant(")
++	}
++	binary := filepath.Join(t.TempDir(), "mutant")
++	if err := native.Build(c, binary, native.Options{Sanitize: true}); err != nil {
++		t.Fatal("mutant must compile", err)
++	}
++	file := filepath.Join(t.TempDir(), "mutant.mjs")
++	if err := os.WriteFile(file, []byte(js), 0600); err != nil {
++		t.Fatal(err)
++	}
++	output := "missing\n"
++	if name == "wrong-representation" || name == "wrong-class" {
++		output = "object\n"
++	}
++	if name == "wrong-element" {
++		output = "42\n"
++	}
++	for _, got := range []run{execute(t, binary), onNode(t, file)} {
++		if got.exitCode != 0 || string(got.stdout) != output || len(got.stderr) != 0 {
++			t.Fatalf("mutant must lose pinned refusal safely: %#v", got)
++		}
++		t.Logf("%s mutant caught: exit 0, stdout %q", name, got.stdout)
++	}
++}
++
++func dictionaryJointFixture(t *testing.T, directory, group, name string) (*ir.Program, string) {
++	t.Helper()
++	input, err := os.ReadFile(checkedViewFixturePath("../../stage3/interface-downcasts/dictionaries/joint/" + group + "-" + name + ".a"))
++	if err != nil {
++		t.Fatal(err)
++	}
++	bound := string(input)
++	for _, module := range []string{"types", "tsbuildPublic", "commandLineParser"} {
++		bound = strings.ReplaceAll(bound, "'original-tsc-"+module+"'", fmt.Sprintf("%q", filepath.Join(directory, "compiler", module+".d.ts")))
++	}
++	file := filepath.Join(t.TempDir(), "main.a")
++	if err := os.WriteFile(file, []byte(bound), 0600); err != nil {
++		t.Fatal(err)
++	}
++	program, err := lowered(t, file)
++	if err != nil {
++		t.Fatal(err)
++	}
++	return program, file
++}
++
++func TestCheckedViewDictionaryJointCounts(t *testing.T) {
++	directory := os.Getenv("ADAMIC_BRAND_ORIGINAL_DECLS")
++	if directory == "" {
++		t.Skip("set original declarations")
++	}
++	verifyUnionTargetDeclarations(t, directory)
++	table := "| Fixture | Allocations | Frees | Retains | Releases | Peak | Regions |\n| --- | --- | --- | --- | --- | --- | --- |\n"
++	for _, group := range []string{"buildoptions", "compileroptions", "optionsbase"} {
++		for _, name := range []string{"good", "good-record", "missing", "missing-inferred", "wrong-element", "wrong-representation", "wrong-class", "wrong-value"} {
++			program, _ := dictionaryJointFixture(t, directory, group, name)
++			binary := filepath.Join(t.TempDir(), "counted")
++			if err := native.Build(native.C(program), binary, native.Options{Count: true}); err != nil {
++				t.Fatal(err)
++			}
++			got := execute(t, binary)
++			match := countsLine.FindSubmatch(got.stderr)
++			if match == nil {
++				t.Fatalf("missing counts: %#v", got)
++			}
++			table += "| " + group + "-" + name + " | " + strings.Join([]string{string(match[1]), string(match[2]), string(match[3]), string(match[4]), string(match[5]), string(match[6])}, " | ") + " |\n"
++		}
++	}
++
++	program, _ := interfaceFixture(t, "dictionaries/joint/buildoptions-conversion")
++	binary := filepath.Join(t.TempDir(), "minimal-counted")
++	if err := native.Build(native.C(program), binary, native.Options{Count: true}); err != nil {
++		t.Fatal(err)
++	}
++	got := execute(t, binary)
++	match := countsLine.FindSubmatch(got.stderr)
++	if match == nil {
++		t.Fatalf("missing minimal counts: %#v", got)
++	}
++	table += "| buildoptions-conversion | " + strings.Join([]string{string(match[1]), string(match[2]), string(match[3]), string(match[4]), string(match[5]), string(match[6])}, " | ") + " |\n"
++	path := checkedViewFixturePath("../../stage3/interface-downcasts/dictionaries/joint/counts.md")
++	if *updateCounts {
++		if err := os.WriteFile(path, []byte(table), 0644); err != nil {
++			t.Fatal(err)
++		}
++	} else {
++		data, err := os.ReadFile(path)
++		if err != nil {
++			t.Fatal(err)
++		}
++		if string(data) != table {
++			t.Fatal("refresh joint counts with -args -update-counts")
++		}
++	}
++}
++
++func TestCheckedViewDictionaryJointRecheck(t *testing.T) {
++	for _, group := range []string{"buildoptions", "compileroptions"} {
++		for _, name := range []string{"array", "map", "source"} {
++			t.Run(group+"/"+name, func(t *testing.T) {
++				program, file := interfaceFixture(t, "dictionaries/recheck/"+group+"-"+name)
++				truth := onNode(t, file)
++				if truth.exitCode != 0 || string(truth.stdout) != "object\n" {
++					t.Fatalf("Node: %#v", truth)
++				}
++				sanitized, binary := nativelyUncached(t, program)
++				for _, got := range []run{sanitized, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
++					if diff := disagreement(truth, got); diff != "" {
++						t.Fatalf("%s: %#v", diff, got)
++					}
++				}
++				if report := leaks(t, program, binary); report != "" {
++					t.Fatal(report)
++				}
++			})
++		}
++	}
++	file, err := filepath.Abs(checkedViewFixturePath("../../stage3/interface-downcasts/dictionaries/recheck/any.a"))
++	if err != nil {
++		t.Fatal(err)
++	}
++	truth := onNode(t, file)
++	if truth.exitCode != 0 || string(truth.stdout) != "number\n" {
++		t.Fatalf("Node any: %#v", truth)
++	}
++	_, err = lowered(t, file)
++	if err == nil || !strings.Contains(err.Error(), "unsupported dictionary element any contract") {
++		t.Fatalf("any remains excluded: %v", err)
++	}
++	t.Logf("any remains excluded by shared frontend: %v", err)
++}
++
++func TestCheckedViewDictionaryJointArrayWrite(t *testing.T) {
++	directory := os.Getenv("ADAMIC_BRAND_ORIGINAL_DECLS")
++	if directory == "" {
++		t.Skip("set original declarations")
++	}
++	verifyUnionTargetDeclarations(t, directory)
++	for _, group := range []string{"buildoptions", "compileroptions", "optionsbase"} {
++		t.Run(group, func(t *testing.T) {
++			_, file := dictionaryJointFixture(t, directory, group, "wrong-element")
++			data, err := os.ReadFile(file)
++			if err != nil {
++				t.Fatal(err)
++			}
++			source := strings.ReplaceAll(string(data), "console.log(values===undefined ? 'missing' : values[0] ?? 'missing');", "if(values!==undefined){values.push('safe');console.log(typeof values);}")
++			path := filepath.Join(t.TempDir(), "write.a")
++			if err := os.WriteFile(path, []byte(source), 0600); err != nil {
++				t.Fatal(err)
++			}
++			program, err := lowered(t, path)
++			if err != nil {
++				t.Fatal(err)
++			}
++			truth := onNode(t, path)
++			if truth.exitCode != 0 || string(truth.stdout) != "object\n" {
++				t.Fatalf("Node: %#v", truth)
++			}
++			want := run{exitCode: 70, stderr: []byte("adamic: panic: element read failed: <array write> expected string, found number\n")}
++			sanitized, _ := nativelyUncached(t, program)
++			for _, got := range []run{sanitized, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
++				if diff := disagreement(want, got); diff != "" {
++					t.Fatalf("%s: %#v", diff, got)
++				}
++			}
++		})
++	}
++}
+diff --git a/internal/oracle/checked_views_primitive_dictionaries_test.go b/internal/oracle/checked_views_primitive_dictionaries_test.go
+index c9c5627f..b5bf5a70 100644
+--- a/internal/oracle/checked_views_primitive_dictionaries_test.go
++++ b/internal/oracle/checked_views_primitive_dictionaries_test.go
+@@ -14,7 +14,8 @@ import (
+ )
+ 
+ // These certify only the primitive/nullish selector component of the original
+-// rich dictionary contract. Object and array alternatives belong to other lanes.
++// rich dictionary contract. Joint reference selection now permits unread references;
++// their fields and elements remain obligations at subsequent reads.
+ func TestCheckedViewOriginalDictionaryPrimitiveComponents(t *testing.T) {
+ 	directory := os.Getenv("ADAMIC_BRAND_ORIGINAL_DECLS")
+ 	if directory == "" {
+@@ -63,7 +64,7 @@ func TestCheckedViewOriginalDictionaryPrimitiveComponents(t *testing.T) {
+ 					declared = "TsConfigSourceFile | CompilerOptionsValue"
+ 				}
+ 				want := truth
+-				if strings.HasPrefix(variant, "wrong") {
++				if variant == "wrong" {
+ 					found := map[string]string{"wrong": "function", "wrong-array": "array", "wrong-object": "object"}[variant]
+ 					want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: value[key]; expected " + declared + ", found " + found + "\n")}
+ 				}
+diff --git a/stage3/interface-downcasts/dictionaries/joint/REPORT.md b/stage3/interface-downcasts/dictionaries/joint/REPORT.md
+new file mode 100644
+index 00000000..ad2b3e65
+--- /dev/null
++++ b/stage3/interface-downcasts/dictionaries/joint/REPORT.md
+@@ -0,0 +1,127 @@
++Built checked readonly dictionary conversion and transitive reads: lane 4b 2 pairs / 11 reads, lane 4 3 / 14, lane 6 2 / 11.
++Commits: 8f5ac7cb shared consumption checks; dbeb7b5c original-pair certification; a1b0298c lane 6 recheck evidence; first-lane checkpoint bd3ede0d was pushed.
++Checks: joint suite passes in 50.460s with Node, sanitized native, release native, JavaScript, successful-case leaks and scoped counts; logs accompany this report.
++Mutants: skipped element-type checks, accepted array and nominal receiver shapes, and dropped transitive checks all lose pinned exit-70 refusals in both backends; allocation-origin guard removal also loses its named frontend refusal.
++Uncovered: lane 6 any 1 pair / 20 reads, six entry-tuple consumers, writable conversions and other storage-dependent consumers without producer certificates; global count refresh fails outside this unit.
++
++The boundary is internal/lower/records.go, recordStorageView, at its
++sameRecordStorage comparison. The selected CompilerOptionsValue arrives as
++ir.Union, a counted heap reference whose payload can be a scalar box, array,
++fixed object or record. The dictionary consumer needs an own string-key read
++that checks representation before following storage, then checks the returned
++element against its read contract. buildoptions-good.a is the smaller original
++pair's witness. Its essential consumption is:
++
++    const selected=carrier.child['item'];
++    const dictionary=selected as {readonly [key:string]:string[]|undefined};
++    const values=dictionary['name'];
++    console.log(values===undefined ? 'missing' : values[0] ?? 'missing');
++
++checkedDictionaryReferenceConversion in internal/lower/view_dictionary_conversion.go
++emits a marked ir.Narrow. Native lowering calls
++adamic_view_dictionary_source_conversion in runtime/view_dictionaries.c;
++JavaScript calls adamicViewDictionarySource. This checks the heap tag when
++the selected reference is consumed, before exposing it as a dictionary.
++Arrays, scalar boxes, Maps, functions, null, undefined and nominal or opaque
++objects stop with a pinned diagnostic. It returns the same borrowed object;
++it neither copies keys nor scans elements.
++
++Each later lookup calls adamic_view_dictionary_source_read. It independently
++checks the receiver and uses adamic_record_is to distinguish the existing
++runtime/record.c representation from fixed-object storage. Fixed-object fields
++use checked slots; records use the existing record lookup. Each result's type
++is checked when read. An absent key is undefined when the indexed read type
++allows it, including the checker's inferred undefined. A selected reference
++retains its child contract, so reading values[0] checks the string element.
++No second record representation was written and runtime/record.c was unchanged.
++
++The separate DictionaryReference selector retains the original descriptor
++and type ID, registers descendant schemas and survives readiness processing.
++Direct String consumers retain the primitive selector because reference
++ToPrimitive is outside this subset. Unsupported contracts are not widened.
++Only readonly dictionary targets without named properties qualify for this
++conversion. Mutable conversion retains its storage refusal. Allocation-flow
++inspection also refuses aliased writes, coalescing, spreads, probes and
++storage-dependent operations without a producer certificate. Unknown
++allocation origins conservatively refuse such operations, which can reject
++unrelated operations when the graph cannot establish separation. This is a
++restriction of the implemented read subset, not permission to mutate storage.
++
++The complete original TypeScript 6.0.3 declarations are from
++050880ce59e30b356b686bd3144efe24f875ebc8. Tests assert original field inventories.
++BuildOptions, CompilerOptions and OptionsBase each have eight controls:
++fixed-object and record producers, explicit and inferred missing-key cases,
++wrong dictionary element value, wrong array element value, array receiver and
++nominal receiver. Node establishes the source behavior. Both native modes and
++JavaScript must produce the pinned checked-view behavior; successful controls
++also pass leak checks. Stopping panic paths terminate before cleanup and their
++counts are recorded separately. Three array-write controls retain the checked
++producer guard. Six lane 6 array/map/source rechecks now compile and run in
++both backends and pass successful-case leaks.
++
++Pinned failures have prefix adamic: panic:, trailing newline and exit 70:
++
++    field read failed: selected; expected { readonly [key: string]: string[] | undefined; }, found array
++    field read failed: selected; expected { readonly [key: string]: string[] | undefined; }, found unsupported representation
++    field read failed: dictionary['name']; expected string[] | undefined, found number
++    element read failed: values[0] expected string, found number
++    element read failed: <array write> expected string, found number
++
++For every original pair, accepting a wrong array or nominal representation
++makes the typeof-only receiver control finish with object instead of stopping.
++Skipping the selected element check safely normalizes the numeric value to
++undefined and finishes with missing. Dropping the transitive array check
++safely returns string representation 42 and finishes with 42. All mutants
++compile; native mutants run with sanitizers. A compiler error or invalid
++memory access is never credited as a kill. Removing the conversion-origin
++marker from the allocation-guard unit control loses the frontend refusal.
++Existing primitive first-member, null/undefined and unsupported-function
++mutants remain covered by the prior lane's regression tests.
++
++| Lane | Newly certified pairs / candidate reads | Left in requested dictionary scope |
++| --- | --- | --- |
++| 4b | BuildOptions and CompilerOptions, 2 / 11 | 0 / 0 |
++| 4 | Those two plus OptionsBase, 3 / 14 | 0 / 0 |
++| 6 | BuildOptions and CompilerOptions, 2 / 11 | any, 1 / 20 |
++
++These are static candidate counts, not measured production tsc execution.
++The overlapping lanes must not be added. Lane 4b's overall ledger advances
++from 37 / 165 to 39 / 176; unrelated EmitHelper.text 1 / 3 and
++fileInfos.forEach 2 / 2 remain outside this dictionary unit. Lane 6's ledger
++advances from 26 / 197 to 28 / 208 of 29 / 228. The any-valued pair remains
++excluded because the subset has no checked erased-value contract; its named
++frontend refusal is asserted. The six excluded entry-tuple fixtures are
++entries-fixed-array-{good,wrong,empty}.a and
++entries-producer-array-{good,wrong,empty}.a. Each still produces the named
++unsupported tuple-contract refusal at result[element]. They require
++producer-specific ownership and per-position consumption contracts.
++
++Commands ran with source /workspace/adamic-tools/env.sh, original declarations
++at /tmp/views-dictionary-declarations and test output redirected to log files:
++
++    ADAMIC_BRAND_ORIGINAL_DECLS=/tmp/views-dictionary-declarations ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestCheckedViewDictionaryJoint($|Counts$|Recheck$|ArrayWrite$)' -count=1 -v
++    ADAMIC_BRAND_ORIGINAL_DECLS=/tmp/views-dictionary-declarations ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestCheckedViewOriginalDictionaryPrimitiveComponents$|^TestCheckedViewDictionaryValuesEntries$' -count=1 -v
++    go test ./internal/lower ./internal/ir -run 'TestDictionaryConversionRecordOperationOriginMutant|TestDictionaryReferenceProjection|TestSelectedDictionary' -count=1
++    go test ./internal/ir -run '^TestPrimitiveDictionary' -count=1
++    ADAMIC_BRAND_ORIGINAL_DECLS=/tmp/views-dictionary-declarations go test ./internal/oracle -run '^TestCheckedViewDictionaryJointCounts$' -count=1 -args -update-counts
++    go test ./internal/oracle -run TestCountsAreRecorded -args -update-counts
++
++The joint suite passes in 50.460s, scoped refresh in 14.546s, and lower proof
++controls in .420s; primitive/tuple regression in 47.913s and IR in .007s. The first lower/IR command matched no IR tests; the exact
++primitive IR tests were then run separately. joint/counts.md records all 25
++fixtures and the final suite verifies it. The required global refresh failed
++in 57.718s at FS evaluated option literals, process.exit values and other
++fixtures, leaving root counts.md unchanged. See global-counts.log for exact
++errors. Declaration-backed fixtures use their own count registration; no
++protected oracle registry was edited. No whole package or full gate was run.
++
++Setup: GOPROXY=https://proxy.golang.org|direct, bash cloud/setup.sh, then the
++printed env.sh. Timing lines: Node .061s, Go .093s, clang .503s, markdown
++1.942s, submodules 308.155s, Go build 482.968s, test binaries deferred
++483.060s, build cache warm 483.062s, done 483.093s. nproc=5, CPU quota four.
++No other lane branch was merged, no protected implementation file was edited,
++and no cohere code was copied. Shared boundary changes and lane 6 evidence
++have separate commits. Delivery is codex/views-dictionary-joint, based on
++1771221bd232bd08618669e587e4566be8c252b9. The first lane's passing checkpoint
++was pushed once; the completed unit carries the correction that checks
++representation before exposing the dictionary reference.
+diff --git a/stage3/interface-downcasts/dictionaries/joint/buildoptions-conversion.a b/stage3/interface-downcasts/dictionaries/joint/buildoptions-conversion.a
+new file mode 100644
+index 00000000..10df48c3
+--- /dev/null
++++ b/stage3/interface-downcasts/dictionaries/joint/buildoptions-conversion.a
+@@ -0,0 +1,14 @@
++interface MapLike<T> { [key:string]:T; }
++interface PluginImport { name:string; }
++interface ProjectReference { path:string; }
++type CompilerOptionsValue = string | number | boolean | (string|number)[] | string[] | MapLike<string[]> | PluginImport[] | ProjectReference[] | null | undefined;
++interface BuildOptions { [key:string]:CompilerOptionsValue; }
++interface Base { readonly kind:'options'; }
++interface Carrier extends Base { readonly child:BuildOptions; }
++const raw={kind:'options' as const,child:{item:{name:['built'.concat('-value')]}}};
++const base:Base=raw;
++const carrier=base as Carrier;
++const selected=carrier.child['item'];
++const dictionary=selected as {readonly [key:string]:string[]|undefined};
++const values=dictionary['name'];
++console.log(values===undefined ? 'missing' : values[0] ?? 'missing');
+diff --git a/stage3/interface-downcasts/dictionaries/joint/buildoptions-good-record.a b/stage3/interface-downcasts/dictionaries/joint/buildoptions-good-record.a
+new file mode 100644
+index 00000000..45cc24a2
+--- /dev/null
++++ b/stage3/interface-downcasts/dictionaries/joint/buildoptions-good-record.a
+@@ -0,0 +1,11 @@
++import type { BuildOptions } from 'original-tsc-tsbuildPublic';
++interface Base { readonly kind:'options'; }
++interface Carrier extends Base { readonly child:BuildOptions; }
++const entries:{[key:string]:string[]}={name:['built'.concat('-value')]};
++const raw={kind:'options' as const,child:{item:entries}};
++const base:Base=raw;
++const carrier=base as Carrier;
++const selected=carrier.child['item'];
++const dictionary=selected as {readonly [key:string]:string[]|undefined};
++const values=dictionary['name'];
++console.log(values===undefined ? 'missing' : values[0] ?? 'missing');
+diff --git a/stage3/interface-downcasts/dictionaries/joint/buildoptions-good.a b/stage3/interface-downcasts/dictionaries/joint/buildoptions-good.a
+new file mode 100644
+index 00000000..56493f59
+--- /dev/null
++++ b/stage3/interface-downcasts/dictionaries/joint/buildoptions-good.a
+@@ -0,0 +1,10 @@
++import type { BuildOptions } from 'original-tsc-tsbuildPublic';
++interface Base { readonly kind:'options'; }
++interface Carrier extends Base { readonly child:BuildOptions; }
++const raw={kind:'options' as const,child:{item:{name:['built'.concat('-value')]}}};
++const base:Base=raw;
++const carrier=base as Carrier;
++const selected=carrier.child['item'];
++const dictionary=selected as {readonly [key:string]:string[]|undefined};
++const values=dictionary['name'];
++console.log(values===undefined ? 'missing' : values[0] ?? 'missing');
+diff --git a/stage3/interface-downcasts/dictionaries/joint/buildoptions-missing-inferred.a b/stage3/interface-downcasts/dictionaries/joint/buildoptions-missing-inferred.a
+new file mode 100644
+index 00000000..fe55eae9
+--- /dev/null
++++ b/stage3/interface-downcasts/dictionaries/joint/buildoptions-missing-inferred.a
+@@ -0,0 +1,10 @@
++import type { BuildOptions } from 'original-tsc-tsbuildPublic';
++interface Base { readonly kind:'options'; }
++interface Carrier extends Base { readonly child:BuildOptions; }
++const raw={kind:'options' as const,child:{item:{}}};
++const base:Base=raw;
++const carrier=base as Carrier;
++const selected=carrier.child['item'];
++const dictionary=selected as {readonly [key:string]:string[]};
++const values=dictionary['name'];
++console.log(values===undefined ? 'missing' : values[0] ?? 'missing');
+diff --git a/stage3/interface-downcasts/dictionaries/joint/buildoptions-missing.a b/stage3/interface-downcasts/dictionaries/joint/buildoptions-missing.a
+new file mode 100644
+index 00000000..810a15aa
+--- /dev/null
++++ b/stage3/interface-downcasts/dictionaries/joint/buildoptions-missing.a
+@@ -0,0 +1,10 @@
++import type { BuildOptions } from 'original-tsc-tsbuildPublic';
++interface Base { readonly kind:'options'; }
++interface Carrier extends Base { readonly child:BuildOptions; }
++const raw={kind:'options' as const,child:{item:{}}};
++const base:Base=raw;
++const carrier=base as Carrier;
++const selected=carrier.child['item'];
++const dictionary=selected as {readonly [key:string]:string[]|undefined};
++const values=dictionary['name'];
++console.log(values===undefined ? 'missing' : values[0] ?? 'missing');
+diff --git a/stage3/interface-downcasts/dictionaries/joint/buildoptions-wrong-class.a b/stage3/interface-downcasts/dictionaries/joint/buildoptions-wrong-class.a
+new file mode 100644
+index 00000000..938b4cc6
+--- /dev/null
++++ b/stage3/interface-downcasts/dictionaries/joint/buildoptions-wrong-class.a
+@@ -0,0 +1,10 @@
++import type { BuildOptions } from 'original-tsc-tsbuildPublic';
++interface Base { readonly kind:'options'; }
++interface Carrier extends Base { readonly child:BuildOptions; }
++class Entry {}
++const raw={kind:'options' as const,child:{item:new Entry()}};
++const base:Base=raw;
++const carrier=base as Carrier;
++const selected=carrier.child['item'];
++const dictionary=selected as {readonly [key:string]:string[]|undefined};
++console.log(typeof dictionary);
+diff --git a/stage3/interface-downcasts/dictionaries/joint/buildoptions-wrong-element.a b/stage3/interface-downcasts/dictionaries/joint/buildoptions-wrong-element.a
+new file mode 100644
+index 00000000..81b1e825
+--- /dev/null
++++ b/stage3/interface-downcasts/dictionaries/joint/buildoptions-wrong-element.a
+@@ -0,0 +1,10 @@
++import type { BuildOptions } from 'original-tsc-tsbuildPublic';
++interface Base { readonly kind:'options'; }
++interface Carrier extends Base { readonly child:BuildOptions; }
++const raw={kind:'options' as const,child:{item:{name:[42]}}};
++const base:Base=raw;
++const carrier=base as Carrier;
++const selected=carrier.child['item'];
++const dictionary=selected as {readonly [key:string]:string[]|undefined};
++const values=dictionary['name'];
++console.log(values===undefined ? 'missing' : values[0] ?? 'missing');
+diff --git a/stage3/interface-downcasts/dictionaries/joint/buildoptions-wrong-representation.a b/stage3/interface-downcasts/dictionaries/joint/buildoptions-wrong-representation.a
+new file mode 100644
+index 00000000..8bb608f6
+--- /dev/null
++++ b/stage3/interface-downcasts/dictionaries/joint/buildoptions-wrong-representation.a
+@@ -0,0 +1,9 @@
++import type { BuildOptions } from 'original-tsc-tsbuildPublic';
++interface Base { readonly kind:'options'; }
++interface Carrier extends Base { readonly child:BuildOptions; }
++const raw={kind:'options' as const,child:{item:['array']}};
++const base:Base=raw;
++const carrier=base as Carrier;
++const selected=carrier.child['item'];
++const dictionary=selected as {readonly [key:string]:string[]|undefined};
++console.log(typeof dictionary);
+diff --git a/stage3/interface-downcasts/dictionaries/joint/buildoptions-wrong-value.a b/stage3/interface-downcasts/dictionaries/joint/buildoptions-wrong-value.a
+new file mode 100644
+index 00000000..eda4c120
+--- /dev/null
++++ b/stage3/interface-downcasts/dictionaries/joint/buildoptions-wrong-value.a
+@@ -0,0 +1,10 @@
++import type { BuildOptions } from 'original-tsc-tsbuildPublic';
++interface Base { readonly kind:'options'; }
++interface Carrier extends Base { readonly child:BuildOptions; }
++const raw={kind:'options' as const,child:{item:{name:42}}};
++const base:Base=raw;
++const carrier=base as Carrier;
++const selected=carrier.child['item'];
++const dictionary=selected as {readonly [key:string]:string[]|undefined};
++const values=dictionary['name'];
++console.log(values===undefined ? 'missing' : values[0] ?? 'missing');
+diff --git a/stage3/interface-downcasts/dictionaries/joint/compileroptions-good-record.a b/stage3/interface-downcasts/dictionaries/joint/compileroptions-good-record.a
+new file mode 100644
+index 00000000..81e4ccb3
+--- /dev/null
++++ b/stage3/interface-downcasts/dictionaries/joint/compileroptions-good-record.a
+@@ -0,0 +1,11 @@
++import type { CompilerOptions } from 'original-tsc-types';
++interface Base { readonly kind:'options'; }
++interface Carrier extends Base { readonly child:CompilerOptions; }
++const entries:{[key:string]:string[]}={name:['built'.concat('-value')]};
++const raw={kind:'options' as const,child:{item:entries}};
++const base:Base=raw;
++const carrier=base as Carrier;
++const selected=carrier.child['item'];
++const dictionary=selected as {readonly [key:string]:string[]|undefined};
++const values=dictionary['name'];
++console.log(values===undefined ? 'missing' : values[0] ?? 'missing');
+diff --git a/stage3/interface-downcasts/dictionaries/joint/compileroptions-good.a b/stage3/interface-downcasts/dictionaries/joint/compileroptions-good.a
+new file mode 100644
+index 00000000..bb303857
+--- /dev/null
++++ b/stage3/interface-downcasts/dictionaries/joint/compileroptions-good.a
+@@ -0,0 +1,10 @@
++import type { CompilerOptions } from 'original-tsc-types';
++interface Base { readonly kind:'options'; }
++interface Carrier extends Base { readonly child:CompilerOptions; }
++const raw={kind:'options' as const,child:{item:{name:['built'.concat('-value')]}}};
++const base:Base=raw;
++const carrier=base as Carrier;
++const selected=carrier.child['item'];
++const dictionary=selected as {readonly [key:string]:string[]|undefined};
++const values=dictionary['name'];
++console.log(values===undefined ? 'missing' : values[0] ?? 'missing');
+diff --git a/stage3/interface-downcasts/dictionaries/joint/compileroptions-missing-inferred.a b/stage3/interface-downcasts/dictionaries/joint/compileroptions-missing-inferred.a
+new file mode 100644
+index 00000000..fa45b992
+--- /dev/null
++++ b/stage3/interface-downcasts/dictionaries/joint/compileroptions-missing-inferred.a
+@@ -0,0 +1,10 @@
++import type { CompilerOptions } from 'original-tsc-types';
++interface Base { readonly kind:'options'; }
++interface Carrier extends Base { readonly child:CompilerOptions; }
++const raw={kind:'options' as const,child:{item:{}}};
++const base:Base=raw;
++const carrier=base as Carrier;
++const selected=carrier.child['item'];
++const dictionary=selected as {readonly [key:string]:string[]};
++const values=dictionary['name'];
++console.log(values===undefined ? 'missing' : values[0] ?? 'missing');
+diff --git a/stage3/interface-downcasts/dictionaries/joint/compileroptions-missing.a b/stage3/interface-downcasts/dictionaries/joint/compileroptions-missing.a
+new file mode 100644
+index 00000000..c5184fc8
+--- /dev/null
++++ b/stage3/interface-downcasts/dictionaries/joint/compileroptions-missing.a
+@@ -0,0 +1,10 @@
++import type { CompilerOptions } from 'original-tsc-types';
++interface Base { readonly kind:'options'; }
++interface Carrier extends Base { readonly child:CompilerOptions; }
++const raw={kind:'options' as const,child:{item:{}}};
++const base:Base=raw;
++const carrier=base as Carrier;
++const selected=carrier.child['item'];
++const dictionary=selected as {readonly [key:string]:string[]|undefined};
++const values=dictionary['name'];
++console.log(values===undefined ? 'missing' : values[0] ?? 'missing');
+diff --git a/stage3/interface-downcasts/dictionaries/joint/compileroptions-wrong-class.a b/stage3/interface-downcasts/dictionaries/joint/compileroptions-wrong-class.a
+new file mode 100644
+index 00000000..14ac0248
+--- /dev/null
++++ b/stage3/interface-downcasts/dictionaries/joint/compileroptions-wrong-class.a
+@@ -0,0 +1,10 @@
++import type { CompilerOptions } from 'original-tsc-types';
++interface Base { readonly kind:'options'; }
++interface Carrier extends Base { readonly child:CompilerOptions; }
++class Entry {}
++const raw={kind:'options' as const,child:{item:new Entry()}};
++const base:Base=raw;
++const carrier=base as Carrier;
++const selected=carrier.child['item'];
++const dictionary=selected as {readonly [key:string]:string[]|undefined};
++console.log(typeof dictionary);
+diff --git a/stage3/interface-downcasts/dictionaries/joint/compileroptions-wrong-element.a b/stage3/interface-downcasts/dictionaries/joint/compileroptions-wrong-element.a
+new file mode 100644
+index 00000000..17103932
+--- /dev/null
++++ b/stage3/interface-downcasts/dictionaries/joint/compileroptions-wrong-element.a
+@@ -0,0 +1,10 @@
++import type { CompilerOptions } from 'original-tsc-types';
++interface Base { readonly kind:'options'; }
++interface Carrier extends Base { readonly child:CompilerOptions; }
++const raw={kind:'options' as const,child:{item:{name:[42]}}};
++const base:Base=raw;
++const carrier=base as Carrier;
++const selected=carrier.child['item'];
++const dictionary=selected as {readonly [key:string]:string[]|undefined};
++const values=dictionary['name'];
++console.log(values===undefined ? 'missing' : values[0] ?? 'missing');
+diff --git a/stage3/interface-downcasts/dictionaries/joint/compileroptions-wrong-representation.a b/stage3/interface-downcasts/dictionaries/joint/compileroptions-wrong-representation.a
+new file mode 100644
+index 00000000..2c76d418
+--- /dev/null
++++ b/stage3/interface-downcasts/dictionaries/joint/compileroptions-wrong-representation.a
+@@ -0,0 +1,9 @@
++import type { CompilerOptions } from 'original-tsc-types';
++interface Base { readonly kind:'options'; }
++interface Carrier extends Base { readonly child:CompilerOptions; }
++const raw={kind:'options' as const,child:{item:['array']}};
++const base:Base=raw;
++const carrier=base as Carrier;
++const selected=carrier.child['item'];
++const dictionary=selected as {readonly [key:string]:string[]|undefined};
++console.log(typeof dictionary);
+diff --git a/stage3/interface-downcasts/dictionaries/joint/compileroptions-wrong-value.a b/stage3/interface-downcasts/dictionaries/joint/compileroptions-wrong-value.a
+new file mode 100644
+index 00000000..1e751be5
+--- /dev/null
++++ b/stage3/interface-downcasts/dictionaries/joint/compileroptions-wrong-value.a
+@@ -0,0 +1,10 @@
++import type { CompilerOptions } from 'original-tsc-types';
++interface Base { readonly kind:'options'; }
++interface Carrier extends Base { readonly child:CompilerOptions; }
++const raw={kind:'options' as const,child:{item:{name:42}}};
++const base:Base=raw;
++const carrier=base as Carrier;
++const selected=carrier.child['item'];
++const dictionary=selected as {readonly [key:string]:string[]|undefined};
++const values=dictionary['name'];
++console.log(values===undefined ? 'missing' : values[0] ?? 'missing');
+diff --git a/stage3/interface-downcasts/dictionaries/joint/counts.md b/stage3/interface-downcasts/dictionaries/joint/counts.md
+new file mode 100644
+index 00000000..eaaee6ae
+--- /dev/null
++++ b/stage3/interface-downcasts/dictionaries/joint/counts.md
+@@ -0,0 +1,27 @@
++| Fixture | Allocations | Frees | Retains | Releases | Peak | Regions |
++| --- | --- | --- | --- | --- | --- | --- |
++| buildoptions-good | 5 | 5 | 13 | 19 | 5 | 0 |
++| buildoptions-good-record | 6 | 6 | 16 | 22 | 6 | 0 |
++| buildoptions-missing | 3 | 3 | 10 | 16 | 3 | 0 |
++| buildoptions-missing-inferred | 3 | 3 | 10 | 16 | 3 | 0 |
++| buildoptions-wrong-element | 4 | 0 | 10 | 9 | 4 | 0 |
++| buildoptions-wrong-representation | 3 | 0 | 8 | 6 | 3 | 0 |
++| buildoptions-wrong-class | 3 | 0 | 8 | 7 | 3 | 0 |
++| buildoptions-wrong-value | 3 | 0 | 8 | 8 | 3 | 0 |
++| compileroptions-good | 5 | 5 | 13 | 19 | 5 | 0 |
++| compileroptions-good-record | 6 | 6 | 16 | 22 | 6 | 0 |
++| compileroptions-missing | 3 | 3 | 10 | 16 | 3 | 0 |
++| compileroptions-missing-inferred | 3 | 3 | 10 | 16 | 3 | 0 |
++| compileroptions-wrong-element | 4 | 0 | 10 | 9 | 4 | 0 |
++| compileroptions-wrong-representation | 3 | 0 | 8 | 6 | 3 | 0 |
++| compileroptions-wrong-class | 3 | 0 | 8 | 7 | 3 | 0 |
++| compileroptions-wrong-value | 3 | 0 | 8 | 8 | 3 | 0 |
++| optionsbase-good | 5 | 5 | 13 | 19 | 5 | 0 |
++| optionsbase-good-record | 6 | 6 | 16 | 22 | 6 | 0 |
++| optionsbase-missing | 3 | 3 | 10 | 16 | 3 | 0 |
++| optionsbase-missing-inferred | 3 | 3 | 10 | 16 | 3 | 0 |
++| optionsbase-wrong-element | 4 | 0 | 10 | 9 | 4 | 0 |
++| optionsbase-wrong-representation | 3 | 0 | 8 | 6 | 3 | 0 |
++| optionsbase-wrong-class | 3 | 0 | 8 | 7 | 3 | 0 |
++| optionsbase-wrong-value | 3 | 0 | 8 | 8 | 3 | 0 |
++| buildoptions-conversion | 5 | 5 | 13 | 19 | 5 | 0 |
+diff --git a/stage3/interface-downcasts/dictionaries/joint/final.log b/stage3/interface-downcasts/dictionaries/joint/final.log
+new file mode 100644
+index 00000000..ae907244
+--- /dev/null
++++ b/stage3/interface-downcasts/dictionaries/joint/final.log
+@@ -0,0 +1,105 @@
++=== RUN   TestCheckedViewDictionaryJoint
++=== RUN   TestCheckedViewDictionaryJoint/buildoptions/good
++=== RUN   TestCheckedViewDictionaryJoint/buildoptions/good-record
++=== RUN   TestCheckedViewDictionaryJoint/buildoptions/missing
++=== RUN   TestCheckedViewDictionaryJoint/buildoptions/missing-inferred
++=== RUN   TestCheckedViewDictionaryJoint/buildoptions/wrong-element
++    checked_view_dictionary_joint_test.go:102: wrong-element mutant caught: exit 0, stdout "42\n"
++    checked_view_dictionary_joint_test.go:102: wrong-element mutant caught: exit 0, stdout "42\n"
++=== RUN   TestCheckedViewDictionaryJoint/buildoptions/wrong-representation
++    checked_view_dictionary_joint_test.go:102: wrong-representation mutant caught: exit 0, stdout "object\n"
++    checked_view_dictionary_joint_test.go:102: wrong-representation mutant caught: exit 0, stdout "object\n"
++=== RUN   TestCheckedViewDictionaryJoint/buildoptions/wrong-class
++    checked_view_dictionary_joint_test.go:102: wrong-class mutant caught: exit 0, stdout "object\n"
++    checked_view_dictionary_joint_test.go:102: wrong-class mutant caught: exit 0, stdout "object\n"
++=== RUN   TestCheckedViewDictionaryJoint/buildoptions/wrong-value
++    checked_view_dictionary_joint_test.go:102: wrong-value mutant caught: exit 0, stdout "missing\n"
++    checked_view_dictionary_joint_test.go:102: wrong-value mutant caught: exit 0, stdout "missing\n"
++=== RUN   TestCheckedViewDictionaryJoint/compileroptions/good
++=== RUN   TestCheckedViewDictionaryJoint/compileroptions/good-record
++=== RUN   TestCheckedViewDictionaryJoint/compileroptions/missing
++=== RUN   TestCheckedViewDictionaryJoint/compileroptions/missing-inferred
++=== RUN   TestCheckedViewDictionaryJoint/compileroptions/wrong-element
++    checked_view_dictionary_joint_test.go:102: wrong-element mutant caught: exit 0, stdout "42\n"
++    checked_view_dictionary_joint_test.go:102: wrong-element mutant caught: exit 0, stdout "42\n"
++=== RUN   TestCheckedViewDictionaryJoint/compileroptions/wrong-representation
++    checked_view_dictionary_joint_test.go:102: wrong-representation mutant caught: exit 0, stdout "object\n"
++    checked_view_dictionary_joint_test.go:102: wrong-representation mutant caught: exit 0, stdout "object\n"
++=== RUN   TestCheckedViewDictionaryJoint/compileroptions/wrong-class
++    checked_view_dictionary_joint_test.go:102: wrong-class mutant caught: exit 0, stdout "object\n"
++    checked_view_dictionary_joint_test.go:102: wrong-class mutant caught: exit 0, stdout "object\n"
++=== RUN   TestCheckedViewDictionaryJoint/compileroptions/wrong-value
++    checked_view_dictionary_joint_test.go:102: wrong-value mutant caught: exit 0, stdout "missing\n"
++    checked_view_dictionary_joint_test.go:102: wrong-value mutant caught: exit 0, stdout "missing\n"
++=== RUN   TestCheckedViewDictionaryJoint/optionsbase/good
++=== RUN   TestCheckedViewDictionaryJoint/optionsbase/good-record
++=== RUN   TestCheckedViewDictionaryJoint/optionsbase/missing
++=== RUN   TestCheckedViewDictionaryJoint/optionsbase/missing-inferred
++=== RUN   TestCheckedViewDictionaryJoint/optionsbase/wrong-element
++    checked_view_dictionary_joint_test.go:102: wrong-element mutant caught: exit 0, stdout "42\n"
++    checked_view_dictionary_joint_test.go:102: wrong-element mutant caught: exit 0, stdout "42\n"
++=== RUN   TestCheckedViewDictionaryJoint/optionsbase/wrong-representation
++    checked_view_dictionary_joint_test.go:102: wrong-representation mutant caught: exit 0, stdout "object\n"
++    checked_view_dictionary_joint_test.go:102: wrong-representation mutant caught: exit 0, stdout "object\n"
++=== RUN   TestCheckedViewDictionaryJoint/optionsbase/wrong-class
++    checked_view_dictionary_joint_test.go:102: wrong-class mutant caught: exit 0, stdout "object\n"
++    checked_view_dictionary_joint_test.go:102: wrong-class mutant caught: exit 0, stdout "object\n"
++=== RUN   TestCheckedViewDictionaryJoint/optionsbase/wrong-value
++    checked_view_dictionary_joint_test.go:102: wrong-value mutant caught: exit 0, stdout "missing\n"
++    checked_view_dictionary_joint_test.go:102: wrong-value mutant caught: exit 0, stdout "missing\n"
++--- PASS: TestCheckedViewDictionaryJoint (26.68s)
++    --- PASS: TestCheckedViewDictionaryJoint/buildoptions/good (0.89s)
++    --- PASS: TestCheckedViewDictionaryJoint/buildoptions/good-record (0.52s)
++    --- PASS: TestCheckedViewDictionaryJoint/buildoptions/missing (0.48s)
++    --- PASS: TestCheckedViewDictionaryJoint/buildoptions/missing-inferred (0.51s)
++    --- PASS: TestCheckedViewDictionaryJoint/buildoptions/wrong-element (0.73s)
++    --- PASS: TestCheckedViewDictionaryJoint/buildoptions/wrong-representation (0.68s)
++    --- PASS: TestCheckedViewDictionaryJoint/buildoptions/wrong-class (0.71s)
++    --- PASS: TestCheckedViewDictionaryJoint/buildoptions/wrong-value (0.72s)
++    --- PASS: TestCheckedViewDictionaryJoint/compileroptions/good (1.67s)
++    --- PASS: TestCheckedViewDictionaryJoint/compileroptions/good-record (1.15s)
++    --- PASS: TestCheckedViewDictionaryJoint/compileroptions/missing (1.08s)
++    --- PASS: TestCheckedViewDictionaryJoint/compileroptions/missing-inferred (1.18s)
++    --- PASS: TestCheckedViewDictionaryJoint/compileroptions/wrong-element (1.43s)
++    --- PASS: TestCheckedViewDictionaryJoint/compileroptions/wrong-representation (1.35s)
++    --- PASS: TestCheckedViewDictionaryJoint/compileroptions/wrong-class (1.28s)
++    --- PASS: TestCheckedViewDictionaryJoint/compileroptions/wrong-value (1.39s)
++    --- PASS: TestCheckedViewDictionaryJoint/optionsbase/good (1.64s)
++    --- PASS: TestCheckedViewDictionaryJoint/optionsbase/good-record (1.12s)
++    --- PASS: TestCheckedViewDictionaryJoint/optionsbase/missing (1.12s)
++    --- PASS: TestCheckedViewDictionaryJoint/optionsbase/missing-inferred (1.13s)
++    --- PASS: TestCheckedViewDictionaryJoint/optionsbase/wrong-element (1.45s)
++    --- PASS: TestCheckedViewDictionaryJoint/optionsbase/wrong-representation (1.46s)
++    --- PASS: TestCheckedViewDictionaryJoint/optionsbase/wrong-class (1.42s)
++    --- PASS: TestCheckedViewDictionaryJoint/optionsbase/wrong-value (1.57s)
++=== RUN   TestCheckedViewDictionaryJointCounts
++--- PASS: TestCheckedViewDictionaryJointCounts (16.85s)
++=== RUN   TestCheckedViewDictionaryJointRecheck
++=== RUN   TestCheckedViewDictionaryJointRecheck/buildoptions/array
++=== RUN   TestCheckedViewDictionaryJointRecheck/buildoptions/map
++=== RUN   TestCheckedViewDictionaryJointRecheck/buildoptions/source
++=== RUN   TestCheckedViewDictionaryJointRecheck/compileroptions/array
++=== RUN   TestCheckedViewDictionaryJointRecheck/compileroptions/map
++=== RUN   TestCheckedViewDictionaryJointRecheck/compileroptions/source
++=== NAME  TestCheckedViewDictionaryJointRecheck
++    checked_view_dictionary_joint_test.go:302: any remains excluded by shared frontend: /workspace/adamic/stage3/interface-downcasts/dictionaries/recheck/any.a:3:124: Adamic 0.1 refuses checked view read of field view.table['item'] with unsupported dictionary element any contract; prove or implement the dictionary element any contract before reading this field
++--- PASS: TestCheckedViewDictionaryJointRecheck (2.55s)
++    --- PASS: TestCheckedViewDictionaryJointRecheck/buildoptions/array (0.39s)
++    --- PASS: TestCheckedViewDictionaryJointRecheck/buildoptions/map (0.42s)
++    --- PASS: TestCheckedViewDictionaryJointRecheck/buildoptions/source (0.39s)
++    --- PASS: TestCheckedViewDictionaryJointRecheck/compileroptions/array (0.40s)
++    --- PASS: TestCheckedViewDictionaryJointRecheck/compileroptions/map (0.41s)
++    --- PASS: TestCheckedViewDictionaryJointRecheck/compileroptions/source (0.41s)
++=== RUN   TestCheckedViewDictionaryJointArrayWrite
++=== RUN   TestCheckedViewDictionaryJointArrayWrite/buildoptions
++=== RUN   TestCheckedViewDictionaryJointArrayWrite/compileroptions
++=== RUN   TestCheckedViewDictionaryJointArrayWrite/optionsbase
++--- PASS: TestCheckedViewDictionaryJointArrayWrite (4.37s)
++    --- PASS: TestCheckedViewDictionaryJointArrayWrite/buildoptions (0.65s)
++    --- PASS: TestCheckedViewDictionaryJointArrayWrite/compileroptions (1.80s)
++    --- PASS: TestCheckedViewDictionaryJointArrayWrite/optionsbase (1.91s)
++PASS
++gate cache: native hits=0 misses=18
++gate cache: node hits=0 misses=79
++gate cache: probe hits=0 misses=0
++ok  	github.com/system-inc/adamic/internal/oracle	50.460s
+diff --git a/stage3/interface-downcasts/dictionaries/joint/global-counts.log b/stage3/interface-downcasts/dictionaries/joint/global-counts.log
+new file mode 100644
+index 00000000..1168943e
+--- /dev/null
++++ b/stage3/interface-downcasts/dictionaries/joint/global-counts.log
+@@ -0,0 +1,104 @@
++--- FAIL: TestCountsAreRecorded (57.69s)
++    --- FAIL: TestCountsAreRecorded/fixtures (0.02s)
++        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_mkdtemp.a (0.54s)
++            counts_test.go:201: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_mkdtemp.a:13:1: stage 0 can't lower rmSync: fs option literals containing evaluated expressions; bind a plain options object first yet
++        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_write_buffer.a (0.54s)
++            counts_test.go:201: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_write_buffer.a:8:1: stage 0 can't lower writeFileSync: fs option literals containing evaluated expressions; bind a plain options object first yet
++        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_rm.a (0.73s)
++            counts_test.go:201: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_rm.a:10:1: stage 0 can't lower rmSync: fs option literals containing evaluated expressions; bind a plain options object first yet
++        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_read_sync.a (0.67s)
++            counts_test.go:113: want an input fixture's counted run to finish, as TestInputAgreesWithNode wants it to on Node: exit 70, stderr "adamic: panic: field read failed: error.name is not a string; expected string, found unsupported representation\nadamic: counts: allocations 23 frees 17 retains 12 releases 29 peak 6 regions 0\n"
++        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_buffer.a (0.62s)
++            counts_test.go:108: native: clang failed: exit status 1
++                /tmp/adamic-gate/adamic-build-1729088806/main.c:288:3: error: void function 'adamic_function_5_deleteFile' should not return a value [-Wreturn-mismatch]
++                  288 |                 return adamic_temporary_41;
++                      |                 ^      ~~~~~~~~~~~~~~~~~~~
++                1 error generated.
++                
++        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_system.a (0.75s)
++            counts_test.go:108: native: clang failed: exit status 1
++                /tmp/adamic-gate/adamic-build-2764776268/main.c:284:3: error: void function 'adamic_function_5_deleteFile' should not return a value [-Wreturn-mismatch]
++                  284 |                 return adamic_temporary_41;
++                      |                 ^      ~~~~~~~~~~~~~~~~~~~
++                1 error generated.
++                
++        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_utimes.a (0.75s)
++            counts_test.go:113: want an input fixture's counted run to finish, as TestInputAgreesWithNode wants it to on Node: exit 70, stderr "adamic: panic: field read failed: errno.code matches no member of string | undefined; expected string | undefined, found unsupported representation\nadamic: counts: allocations 23 frees 18 retains 3 releases 16 peak 7 regions 0\n"
++        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_unlink.a (0.74s)
++            counts_test.go:113: want an input fixture's counted run to finish, as TestInputAgreesWithNode wants it to on Node: exit 70, stderr "adamic: panic: field read failed: errno.code matches no member of string | undefined; expected string | undefined, found unsupported representation\nadamic: counts: allocations 11 frees 6 retains 2 releases 7 peak 6 regions 0\n"
++        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_mkdir.a (0.78s)
++            counts_test.go:113: want an input fixture's counted run to finish, as TestInputAgreesWithNode wants it to on Node: exit 70, stderr "adamic: panic: field read failed: errno.code matches no member of string | undefined; expected string | undefined, found unsupported representation\nadamic: counts: allocations 19 frees 14 retains 5 releases 19 peak 6 regions 0\n"
++        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_stat.a (0.84s)
++            counts_test.go:113: want an input fixture's counted run to finish, as TestInputAgreesWithNode wants it to on Node: exit 70, stderr "adamic: panic: field read failed: errno.code matches no member of string | undefined; expected string | undefined, found unsupported representation\nadamic: counts: allocations 34 frees 19 retains 11 releases 37 peak 16 regions 0\n"
++        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_write_file.a (0.49s)
++            counts_test.go:201: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_write_file.a:8:1: stage 0 can't lower writeFileSync: fs option literals containing evaluated expressions; bind a plain options object first yet
++        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_write.a (0.55s)
++            counts_test.go:113: want an input fixture's counted run to finish, as TestInputAgreesWithNode wants it to on Node: exit 70, stderr "adamic: panic: field read failed: errno.code matches no member of string | undefined; expected string | undefined, found unsupported representation\nadamic: counts: allocations 13 frees 8 retains 2 releases 9 peak 5 regions 0\n"
++        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_close.a (0.62s)
++            counts_test.go:113: want an input fixture's counted run to finish, as TestInputAgreesWithNode wants it to on Node: exit 70, stderr "adamic: panic: field read failed: errno.code matches no member of string | undefined; expected string | undefined, found unsupported representation\nadamic: counts: allocations 7 frees 2 retains 2 releases 3 peak 5 regions 0\n"
++        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_open.a (0.55s)
++            counts_test.go:113: want an input fixture's counted run to finish, as TestInputAgreesWithNode wants it to on Node: exit 70, stderr "adamic: panic: field read failed: errno.code matches no member of string | undefined; expected string | undefined, found unsupported representation\nadamic: counts: allocations 16 frees 11 retains 2 releases 12 peak 6 regions 0\n"
++        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_read.a (0.75s)
++            counts_test.go:113: want an input fixture's counted run to finish, as TestInputAgreesWithNode wants it to on Node: exit 70, stderr "adamic: panic: field read failed: errno.code matches no member of string | undefined; expected string | undefined, found unsupported representation\nadamic: counts: allocations 20 frees 15 retains 2 releases 17 peak 6 regions 0\n"
++        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_directory_permissions.a (0.84s)
++            counts_test.go:113: want an input fixture's counted run to finish, as TestInputAgreesWithNode wants it to on Node: exit 70, stderr "adamic: panic: field read failed: failure.code matches no member of string | undefined; expected string | undefined, found unsupported representation\nadamic: counts: allocations 26 frees 19 retains 5 releases 15 peak 18 regions 0\n"
++        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_directory_realpath.a (0.60s)
++            counts_test.go:113: want an input fixture's counted run to finish, as TestInputAgreesWithNode wants it to on Node: exit 70, stderr "adamic: panic: field read failed: failure.code matches no member of string | undefined; expected string | undefined, found unsupported representation\nadamic: counts: allocations 14 frees 10 retains 17 releases 12 peak 6 regions 0\n"
++        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_directory_entries.a (0.68s)
++            counts_test.go:113: want an input fixture's counted run to finish, as TestInputAgreesWithNode wants it to on Node: exit 70, stderr "adamic: panic: field read failed: entry.name is not a string; expected string, found unsupported representation\nadamic: counts: allocations 45 frees 17 retains 7 releases 4 peak 29 regions 0\n"
++        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/fresh_refused/set_add.a (0.15s)
++            counts_test.go:182: no counts at the end of stderr (exit -1): "adamic: graph region: live 2 bytes 364 reachable 2 bytes 364 unreachable 0 bytes 0 metadata 96\nfree(): invalid pointer\n"
++        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/fresh_refused/set_iterator.a (0.24s)
++            counts_test.go:182: no counts at the end of stderr (exit -1): "adamic: graph region: live 7 bytes 638 reachable 7 bytes 638 unreachable 0 bytes 0 metadata 176\nfree(): invalid pointer\n"
++        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/fresh_refused/map_set.a (0.21s)
++            counts_test.go:182: no counts at the end of stderr (exit -1): "adamic: graph region: live 2 bytes 364 reachable 2 bytes 364 unreachable 0 bytes 0 metadata 96\nfree(): invalid pointer\n"
++        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/fresh_refused/map_key.a (0.20s)
++            counts_test.go:182: no counts at the end of stderr (exit -1): "adamic: graph region: live 2 bytes 364 reachable 2 bytes 364 unreachable 0 bytes 0 metadata 96\nfree(): invalid pointer\n"
++        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/fresh_refused/map_iterator_parenthesized.a (0.20s)
++            counts_test.go:182: no counts at the end of stderr (exit -1): "adamic: graph region: live 6 bytes 580 reachable 6 bytes 580 unreachable 0 bytes 0 metadata 160\nfree(): invalid pointer\n"
++        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/fresh_refused/map_iterator.a (0.19s)
++            counts_test.go:182: no counts at the end of stderr (exit -1): "adamic: graph region: live 6 bytes 580 reachable 6 bytes 580 unreachable 0 bytes 0 metadata 160\nfree(): invalid pointer\n"
++        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/fresh_refused/ctor_set.a (0.23s)
++            counts_test.go:182: no counts at the end of stderr (exit -1): "adamic: graph region: live 4 bytes 728 reachable 4 bytes 728 unreachable 0 bytes 0 metadata 192\nfree(): invalid pointer\n"
++        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/census_overload_contracts.a (0.08s)
++            counts_test.go:169: Lower: /workspace/adamic/internal/oracle/testdata/census_overload_contracts.a:13:16: stage 0 can't lower an overloaded call with more arguments than its implementation yet
++        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/census_small_boolean.a (0.03s)
++            counts_test.go:169: Lower: /workspace/adamic/internal/oracle/testdata/census_small_boolean.a:19:16: stage 0 can't lower a template interpolating an object, an array, a map, a function or undefined yet
++        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/nbody_field_values.a (0.06s)
++            counts_test.go:169: Lower: /workspace/adamic/internal/oracle/testdata/nbody_field_values.a:18:47: stage 0 can't lower a template interpolating an object, an array, a map, a function or undefined yet
++        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/maybe_number_slots.a (0.15s)
++            counts_test.go:118: native: clang failed: exit status 1
++                /tmp/adamic-gate/adamic-build-2925995306/main.c:654:68: error: passing 'adamic_object *' (aka 'struct adamic_object *') to parameter of incompatible type 'adamic_maybe_number' (aka 'struct adamic_maybe_number')
++                  654 |                                         adamic_string * adamic_temporary_179 = adamic_function_1_show(adamic_temporary_178);
++                      |                                                                                                       ^~~~~~~~~~~~~~~~~~~~
++                /tmp/adamic-gate/adamic-build-2925995306/main.c:125:67: note: passing argument to parameter 'adamic_local_11_value' here
++                  125 | static adamic_string * adamic_function_1_show(adamic_maybe_number adamic_local_11_value) {
++                      |                                                                   ^
++                1 error generated.
++                
++        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/graph_regions_symbols.a (0.36s)
++            counts_test.go:169: no counts at the end of stderr (exit -1): "adamic: graph region: live 4 bytes 528 reachable 4 bytes 528 unreachable 0 bytes 0 metadata 128\nfree(): invalid pointer\n"
++        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/graph_regions_literals.a (0.51s)
++            counts_test.go:169: no counts at the end of stderr (exit -1): "adamic: graph region: live 3 bytes 452 reachable 2 bytes 374 unreachable 1 bytes 78 metadata 112\nfree(): invalid pointer\n"
++        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/graph_regions_cache.a (0.34s)
++            counts_test.go:169: no counts at the end of stderr (exit -1): "adamic: graph region: live 2 bytes 364 reachable 1 bytes 68 unreachable 1 bytes 296 metadata 96\nfree(): invalid pointer\n"
++        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/graph_regions_regression_09.a (0.33s)
++            counts_test.go:169: no counts at the end of stderr (exit -1): "adamic: graph region: live 3 bytes 660 reachable 2 bytes 592 unreachable 1 bytes 68 metadata 112\nfree(): invalid pointer\n"
++        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/graph_regions_regression_08.a (0.32s)
++            counts_test.go:169: no counts at the end of stderr (exit -1): "adamic: graph region: live 2 bytes 364 reachable 2 bytes 364 unreachable 0 bytes 0 metadata 96\nfree(): invalid pointer\n"
++        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/graph_regions_regression_07.a (0.38s)
++            counts_test.go:169: no counts at the end of stderr (exit -1): "adamic: graph region: live 2 bytes 364 reachable 2 bytes 364 unreachable 0 bytes 0 metadata 96\nfree(): invalid pointer\n"
++        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/graph_regions_regression_06.a (0.43s)
++            counts_test.go:169: no counts at the end of stderr (exit -1): "adamic: graph region: live 2 bytes 354 reachable 2 bytes 354 unreachable 0 bytes 0 metadata 96\nfree(): invalid pointer\n"
++        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/process_bad_code.a (0.08s)
++            counts_test.go:169: Lower: /workspace/adamic/internal/oracle/testdata/process_bad_code.a:2:44: stage 0 can't lower process.exit as a value (use its supported process operation directly) yet
++        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/process_exit_default.a (0.08s)
++            counts_test.go:169: Lower: /workspace/adamic/internal/oracle/testdata/process_exit_default.a:3:26: stage 0 can't lower process.exit as a value (use its supported process operation directly) yet
++        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/process_exit.a (0.05s)
++            counts_test.go:169: Lower: /workspace/adamic/internal/oracle/testdata/process_exit.a:2:44: stage 0 can't lower process.exit as a value (use its supported process operation directly) yet
++FAIL
++gate cache: native hits=0 misses=0
++gate cache: node hits=0 misses=0
++gate cache: probe hits=0 misses=0
++FAIL	github.com/system-inc/adamic/internal/oracle	57.718s
++FAIL
+diff --git a/stage3/interface-downcasts/dictionaries/joint/ir.log b/stage3/interface-downcasts/dictionaries/joint/ir.log
+new file mode 100644
+index 00000000..09542c1b
+--- /dev/null
++++ b/stage3/interface-downcasts/dictionaries/joint/ir.log
+@@ -0,0 +1 @@
++ok  	github.com/system-inc/adamic/internal/ir	0.007s
+diff --git a/stage3/interface-downcasts/dictionaries/joint/optionsbase-good-record.a b/stage3/interface-downcasts/dictionaries/joint/optionsbase-good-record.a
+new file mode 100644
+index 00000000..3c02ff73
+--- /dev/null
++++ b/stage3/interface-downcasts/dictionaries/joint/optionsbase-good-record.a
+@@ -0,0 +1,11 @@
++import type { OptionsBase } from 'original-tsc-commandLineParser';
++interface Base { readonly kind:'options'; }
++interface Carrier extends Base { readonly child:OptionsBase; }
++const entries:{[key:string]:string[]}={name:['built'.concat('-value')]};
++const raw={kind:'options' as const,child:{item:entries}};
++const base:Base=raw;
++const carrier=base as Carrier;
++const selected=carrier.child['item'];
++const dictionary=selected as {readonly [key:string]:string[]|undefined};
++const values=dictionary['name'];
++console.log(values===undefined ? 'missing' : values[0] ?? 'missing');
+diff --git a/stage3/interface-downcasts/dictionaries/joint/optionsbase-good.a b/stage3/interface-downcasts/dictionaries/joint/optionsbase-good.a
+new file mode 100644
+index 00000000..a3ed0574
+--- /dev/null
++++ b/stage3/interface-downcasts/dictionaries/joint/optionsbase-good.a
+@@ -0,0 +1,10 @@
++import type { OptionsBase } from 'original-tsc-commandLineParser';
++interface Base { readonly kind:'options'; }
++interface Carrier extends Base { readonly child:OptionsBase; }
++const raw={kind:'options' as const,child:{item:{name:['built'.concat('-value')]}}};
++const base:Base=raw;
++const carrier=base as Carrier;
++const selected=carrier.child['item'];
++const dictionary=selected as {readonly [key:string]:string[]|undefined};
++const values=dictionary['name'];
++console.log(values===undefined ? 'missing' : values[0] ?? 'missing');
+diff --git a/stage3/interface-downcasts/dictionaries/joint/optionsbase-missing-inferred.a b/stage3/interface-downcasts/dictionaries/joint/optionsbase-missing-inferred.a
+new file mode 100644
+index 00000000..2f77f03c
+--- /dev/null
++++ b/stage3/interface-downcasts/dictionaries/joint/optionsbase-missing-inferred.a
+@@ -0,0 +1,10 @@
++import type { OptionsBase } from 'original-tsc-commandLineParser';
++interface Base { readonly kind:'options'; }
++interface Carrier extends Base { readonly child:OptionsBase; }
++const raw={kind:'options' as const,child:{item:{}}};
++const base:Base=raw;
++const carrier=base as Carrier;
++const selected=carrier.child['item'];
++const dictionary=selected as {readonly [key:string]:string[]};
++const values=dictionary['name'];
++console.log(values===undefined ? 'missing' : values[0] ?? 'missing');
+diff --git a/stage3/interface-downcasts/dictionaries/joint/optionsbase-missing.a b/stage3/interface-downcasts/dictionaries/joint/optionsbase-missing.a
+new file mode 100644
+index 00000000..be1ad4ff
+--- /dev/null
++++ b/stage3/interface-downcasts/dictionaries/joint/optionsbase-missing.a
+@@ -0,0 +1,10 @@
++import type { OptionsBase } from 'original-tsc-commandLineParser';
++interface Base { readonly kind:'options'; }
++interface Carrier extends Base { readonly child:OptionsBase; }
++const raw={kind:'options' as const,child:{item:{}}};
++const base:Base=raw;
++const carrier=base as Carrier;
++const selected=carrier.child['item'];
++const dictionary=selected as {readonly [key:string]:string[]|undefined};
++const values=dictionary['name'];
++console.log(values===undefined ? 'missing' : values[0] ?? 'missing');
+diff --git a/stage3/interface-downcasts/dictionaries/joint/optionsbase-wrong-class.a b/stage3/interface-downcasts/dictionaries/joint/optionsbase-wrong-class.a
+new file mode 100644
+index 00000000..39f11ebb
+--- /dev/null
++++ b/stage3/interface-downcasts/dictionaries/joint/optionsbase-wrong-class.a
+@@ -0,0 +1,10 @@
++import type { OptionsBase } from 'original-tsc-commandLineParser';
++interface Base { readonly kind:'options'; }
++interface Carrier extends Base { readonly child:OptionsBase; }
++class Entry {}
++const raw={kind:'options' as const,child:{item:new Entry()}};
++const base:Base=raw;
++const carrier=base as Carrier;
++const selected=carrier.child['item'];
++const dictionary=selected as {readonly [key:string]:string[]|undefined};
++console.log(typeof dictionary);
+diff --git a/stage3/interface-downcasts/dictionaries/joint/optionsbase-wrong-element.a b/stage3/interface-downcasts/dictionaries/joint/optionsbase-wrong-element.a
+new file mode 100644
+index 00000000..9fb0f4bc
+--- /dev/null
++++ b/stage3/interface-downcasts/dictionaries/joint/optionsbase-wrong-element.a
+@@ -0,0 +1,10 @@
++import type { OptionsBase } from 'original-tsc-commandLineParser';
++interface Base { readonly kind:'options'; }
++interface Carrier extends Base { readonly child:OptionsBase; }
++const raw={kind:'options' as const,child:{item:{name:[42]}}};
++const base:Base=raw;
++const carrier=base as Carrier;
++const selected=carrier.child['item'];
++const dictionary=selected as {readonly [key:string]:string[]|undefined};
++const values=dictionary['name'];
++console.log(values===undefined ? 'missing' : values[0] ?? 'missing');
+diff --git a/stage3/interface-downcasts/dictionaries/joint/optionsbase-wrong-representation.a b/stage3/interface-downcasts/dictionaries/joint/optionsbase-wrong-representation.a
+new file mode 100644
+index 00000000..4d4b0d11
+--- /dev/null
++++ b/stage3/interface-downcasts/dictionaries/joint/optionsbase-wrong-representation.a
+@@ -0,0 +1,9 @@
++import type { OptionsBase } from 'original-tsc-commandLineParser';
++interface Base { readonly kind:'options'; }
++interface Carrier extends Base { readonly child:OptionsBase; }
++const raw={kind:'options' as const,child:{item:['array']}};
++const base:Base=raw;
++const carrier=base as Carrier;
++const selected=carrier.child['item'];
++const dictionary=selected as {readonly [key:string]:string[]|undefined};
++console.log(typeof dictionary);
+diff --git a/stage3/interface-downcasts/dictionaries/joint/optionsbase-wrong-value.a b/stage3/interface-downcasts/dictionaries/joint/optionsbase-wrong-value.a
+new file mode 100644
+index 00000000..37c1d8ba
+--- /dev/null
++++ b/stage3/interface-downcasts/dictionaries/joint/optionsbase-wrong-value.a
+@@ -0,0 +1,10 @@
++import type { OptionsBase } from 'original-tsc-commandLineParser';
++interface Base { readonly kind:'options'; }
++interface Carrier extends Base { readonly child:OptionsBase; }
++const raw={kind:'options' as const,child:{item:{name:42}}};
++const base:Base=raw;
++const carrier=base as Carrier;
++const selected=carrier.child['item'];
++const dictionary=selected as {readonly [key:string]:string[]|undefined};
++const values=dictionary['name'];
++console.log(values===undefined ? 'missing' : values[0] ?? 'missing');
+diff --git a/stage3/interface-downcasts/dictionaries/joint/proof.log b/stage3/interface-downcasts/dictionaries/joint/proof.log
+new file mode 100644
+index 00000000..8c3196f4
+--- /dev/null
++++ b/stage3/interface-downcasts/dictionaries/joint/proof.log
+@@ -0,0 +1,2 @@
++ok  	github.com/system-inc/adamic/internal/lower	0.420s
++ok  	github.com/system-inc/adamic/internal/ir	0.010s [no tests to run]
+diff --git a/stage3/interface-downcasts/dictionaries/joint/regression.log b/stage3/interface-downcasts/dictionaries/joint/regression.log
+new file mode 100644
+index 00000000..a64ecbed
+--- /dev/null
++++ b/stage3/interface-downcasts/dictionaries/joint/regression.log
+@@ -0,0 +1,183 @@
++=== RUN   TestCheckedViewDictionaryValuesEntries
++=== RUN   TestCheckedViewDictionaryValuesEntries/values-fixed-string-good
++=== RUN   TestCheckedViewDictionaryValuesEntries/values-fixed-string-wrong
++=== RUN   TestCheckedViewDictionaryValuesEntries/values-fixed-string-empty
++=== RUN   TestCheckedViewDictionaryValuesEntries/values-fixed-number-good
++=== RUN   TestCheckedViewDictionaryValuesEntries/values-fixed-number-wrong
++=== RUN   TestCheckedViewDictionaryValuesEntries/values-fixed-number-empty
++=== RUN   TestCheckedViewDictionaryValuesEntries/values-fixed-object-good
++=== RUN   TestCheckedViewDictionaryValuesEntries/values-fixed-object-wrong
++=== RUN   TestCheckedViewDictionaryValuesEntries/values-fixed-object-empty
++=== RUN   TestCheckedViewDictionaryValuesEntries/values-fixed-array-good
++=== RUN   TestCheckedViewDictionaryValuesEntries/values-fixed-array-wrong
++=== RUN   TestCheckedViewDictionaryValuesEntries/values-fixed-array-empty
++=== RUN   TestCheckedViewDictionaryValuesEntries/values-producer-string-good
++=== RUN   TestCheckedViewDictionaryValuesEntries/values-producer-string-wrong
++=== RUN   TestCheckedViewDictionaryValuesEntries/values-producer-string-empty
++=== RUN   TestCheckedViewDictionaryValuesEntries/values-producer-number-good
++=== RUN   TestCheckedViewDictionaryValuesEntries/values-producer-number-wrong
++=== RUN   TestCheckedViewDictionaryValuesEntries/values-producer-number-empty
++=== RUN   TestCheckedViewDictionaryValuesEntries/values-producer-object-good
++=== RUN   TestCheckedViewDictionaryValuesEntries/values-producer-object-wrong
++=== RUN   TestCheckedViewDictionaryValuesEntries/values-producer-object-empty
++=== RUN   TestCheckedViewDictionaryValuesEntries/values-producer-array-good
++=== RUN   TestCheckedViewDictionaryValuesEntries/values-producer-array-wrong
++=== RUN   TestCheckedViewDictionaryValuesEntries/values-producer-array-empty
++=== RUN   TestCheckedViewDictionaryValuesEntries/entries-fixed-string-good
++=== RUN   TestCheckedViewDictionaryValuesEntries/entries-fixed-string-wrong
++=== RUN   TestCheckedViewDictionaryValuesEntries/entries-fixed-string-empty
++=== RUN   TestCheckedViewDictionaryValuesEntries/entries-fixed-number-good
++=== RUN   TestCheckedViewDictionaryValuesEntries/entries-fixed-number-wrong
++=== RUN   TestCheckedViewDictionaryValuesEntries/entries-fixed-number-empty
++=== RUN   TestCheckedViewDictionaryValuesEntries/entries-fixed-object-good
++=== RUN   TestCheckedViewDictionaryValuesEntries/entries-fixed-object-wrong
++=== RUN   TestCheckedViewDictionaryValuesEntries/entries-fixed-object-empty
++=== RUN   TestCheckedViewDictionaryValuesEntries/entries-fixed-array-good
++    checked_view_dictionary_enumeration_test.go:107: uncredited array-entry consumer remains a named tuple refusal: result[element]: Adamic 0.1 refuses checked view read of field [element] with unsupported tuple contract; prove or implement the tuple contract before reading this field
++=== RUN   TestCheckedViewDictionaryValuesEntries/entries-fixed-array-wrong
++    checked_view_dictionary_enumeration_test.go:107: uncredited array-entry consumer remains a named tuple refusal: result[element]: Adamic 0.1 refuses checked view read of field [element] with unsupported tuple contract; prove or implement the tuple contract before reading this field
++=== RUN   TestCheckedViewDictionaryValuesEntries/entries-fixed-array-empty
++    checked_view_dictionary_enumeration_test.go:107: uncredited array-entry consumer remains a named tuple refusal: result[element]: Adamic 0.1 refuses checked view read of field [element] with unsupported tuple contract; prove or implement the tuple contract before reading this field
++=== RUN   TestCheckedViewDictionaryValuesEntries/entries-producer-string-good
++=== RUN   TestCheckedViewDictionaryValuesEntries/entries-producer-string-wrong
++=== RUN   TestCheckedViewDictionaryValuesEntries/entries-producer-string-empty
++=== RUN   TestCheckedViewDictionaryValuesEntries/entries-producer-number-good
++=== RUN   TestCheckedViewDictionaryValuesEntries/entries-producer-number-wrong
++=== RUN   TestCheckedViewDictionaryValuesEntries/entries-producer-number-empty
++=== RUN   TestCheckedViewDictionaryValuesEntries/entries-producer-object-good
++=== RUN   TestCheckedViewDictionaryValuesEntries/entries-producer-object-wrong
++=== RUN   TestCheckedViewDictionaryValuesEntries/entries-producer-object-empty
++=== RUN   TestCheckedViewDictionaryValuesEntries/entries-producer-array-good
++    checked_view_dictionary_enumeration_test.go:107: uncredited array-entry consumer remains a named tuple refusal: result[element]: Adamic 0.1 refuses checked view read of field [element] with unsupported tuple contract; prove or implement the tuple contract before reading this field
++=== RUN   TestCheckedViewDictionaryValuesEntries/entries-producer-array-wrong
++    checked_view_dictionary_enumeration_test.go:107: uncredited array-entry consumer remains a named tuple refusal: result[element]: Adamic 0.1 refuses checked view read of field [element] with unsupported tuple contract; prove or implement the tuple contract before reading this field
++=== RUN   TestCheckedViewDictionaryValuesEntries/entries-producer-array-empty
++    checked_view_dictionary_enumeration_test.go:107: uncredited array-entry consumer remains a named tuple refusal: result[element]: Adamic 0.1 refuses checked view read of field [element] with unsupported tuple contract; prove or implement the tuple contract before reading this field
++--- PASS: TestCheckedViewDictionaryValuesEntries (18.63s)
++    --- PASS: TestCheckedViewDictionaryValuesEntries/values-fixed-string-good (0.48s)
++    --- PASS: TestCheckedViewDictionaryValuesEntries/values-fixed-string-wrong (0.41s)
++    --- PASS: TestCheckedViewDictionaryValuesEntries/values-fixed-string-empty (0.42s)
++    --- PASS: TestCheckedViewDictionaryValuesEntries/values-fixed-number-good (0.40s)
++    --- PASS: TestCheckedViewDictionaryValuesEntries/values-fixed-number-wrong (0.46s)
++    --- PASS: TestCheckedViewDictionaryValuesEntries/values-fixed-number-empty (0.50s)
++    --- PASS: TestCheckedViewDictionaryValuesEntries/values-fixed-object-good (0.42s)
++    --- PASS: TestCheckedViewDictionaryValuesEntries/values-fixed-object-wrong (0.41s)
++    --- PASS: TestCheckedViewDictionaryValuesEntries/values-fixed-object-empty (0.41s)
++    --- PASS: TestCheckedViewDictionaryValuesEntries/values-fixed-array-good (0.42s)
++    --- PASS: TestCheckedViewDictionaryValuesEntries/values-fixed-array-wrong (0.40s)
++    --- PASS: TestCheckedViewDictionaryValuesEntries/values-fixed-array-empty (0.42s)
++    --- PASS: TestCheckedViewDictionaryValuesEntries/values-producer-string-good (0.41s)
++    --- PASS: TestCheckedViewDictionaryValuesEntries/values-producer-string-wrong (0.40s)
++    --- PASS: TestCheckedViewDictionaryValuesEntries/values-producer-string-empty (0.41s)
++    --- PASS: TestCheckedViewDictionaryValuesEntries/values-producer-number-good (0.42s)
++    --- PASS: TestCheckedViewDictionaryValuesEntries/values-producer-number-wrong (0.40s)
++    --- PASS: TestCheckedViewDictionaryValuesEntries/values-producer-number-empty (0.40s)
++    --- PASS: TestCheckedViewDictionaryValuesEntries/values-producer-object-good (0.42s)
++    --- PASS: TestCheckedViewDictionaryValuesEntries/values-producer-object-wrong (0.40s)
++    --- PASS: TestCheckedViewDictionaryValuesEntries/values-producer-object-empty (0.42s)
++    --- PASS: TestCheckedViewDictionaryValuesEntries/values-producer-array-good (0.41s)
++    --- PASS: TestCheckedViewDictionaryValuesEntries/values-producer-array-wrong (0.39s)
++    --- PASS: TestCheckedViewDictionaryValuesEntries/values-producer-array-empty (0.42s)
++    --- PASS: TestCheckedViewDictionaryValuesEntries/entries-fixed-string-good (0.46s)
++    --- PASS: TestCheckedViewDictionaryValuesEntries/entries-fixed-string-wrong (0.42s)
++    --- PASS: TestCheckedViewDictionaryValuesEntries/entries-fixed-string-empty (0.42s)
++    --- PASS: TestCheckedViewDictionaryValuesEntries/entries-fixed-number-good (0.43s)
++    --- PASS: TestCheckedViewDictionaryValuesEntries/entries-fixed-number-wrong (0.43s)
++    --- PASS: TestCheckedViewDictionaryValuesEntries/entries-fixed-number-empty (0.44s)
++    --- PASS: TestCheckedViewDictionaryValuesEntries/entries-fixed-object-good (0.44s)
++    --- PASS: TestCheckedViewDictionaryValuesEntries/entries-fixed-object-wrong (0.44s)
++    --- PASS: TestCheckedViewDictionaryValuesEntries/entries-fixed-object-empty (0.44s)
++    --- PASS: TestCheckedViewDictionaryValuesEntries/entries-fixed-array-good (0.13s)
++    --- PASS: TestCheckedViewDictionaryValuesEntries/entries-fixed-array-wrong (0.12s)
++    --- PASS: TestCheckedViewDictionaryValuesEntries/entries-fixed-array-empty (0.12s)
++    --- PASS: TestCheckedViewDictionaryValuesEntries/entries-producer-string-good (0.42s)
++    --- PASS: TestCheckedViewDictionaryValuesEntries/entries-producer-string-wrong (0.41s)
++    --- PASS: TestCheckedViewDictionaryValuesEntries/entries-producer-string-empty (0.44s)
++    --- PASS: TestCheckedViewDictionaryValuesEntries/entries-producer-number-good (0.45s)
++    --- PASS: TestCheckedViewDictionaryValuesEntries/entries-producer-number-wrong (0.45s)
++    --- PASS: TestCheckedViewDictionaryValuesEntries/entries-producer-number-empty (0.45s)
++    --- PASS: TestCheckedViewDictionaryValuesEntries/entries-producer-object-good (0.44s)
++    --- PASS: TestCheckedViewDictionaryValuesEntries/entries-producer-object-wrong (0.42s)
++    --- PASS: TestCheckedViewDictionaryValuesEntries/entries-producer-object-empty (0.43s)
++    --- PASS: TestCheckedViewDictionaryValuesEntries/entries-producer-array-good (0.12s)
++    --- PASS: TestCheckedViewDictionaryValuesEntries/entries-producer-array-wrong (0.12s)
++    --- PASS: TestCheckedViewDictionaryValuesEntries/entries-producer-array-empty (0.12s)
++=== RUN   TestCheckedViewOriginalDictionaryPrimitiveComponents
++=== RUN   TestCheckedViewOriginalDictionaryPrimitiveComponents/compileroptions/string
++=== RUN   TestCheckedViewOriginalDictionaryPrimitiveComponents/compileroptions/number
++    checked_views_primitive_dictionaries_test.go:89: untested dictionary first member caught by Node control
++    checked_views_primitive_dictionaries_test.go:89: untested dictionary first member caught by Node control
++=== RUN   TestCheckedViewOriginalDictionaryPrimitiveComponents/compileroptions/boolean
++=== RUN   TestCheckedViewOriginalDictionaryPrimitiveComponents/compileroptions/null
++    checked_views_primitive_dictionaries_test.go:92: null/undefined erasure mutant caught by Node null control
++    checked_views_primitive_dictionaries_test.go:92: null/undefined erasure mutant caught by Node null control
++=== RUN   TestCheckedViewOriginalDictionaryPrimitiveComponents/compileroptions/undefined
++=== RUN   TestCheckedViewOriginalDictionaryPrimitiveComponents/compileroptions/missing
++=== RUN   TestCheckedViewOriginalDictionaryPrimitiveComponents/compileroptions/wrong
++    checked_views_primitive_dictionaries_test.go:86: actual function-member admission mutant caught by named read pin
++    checked_views_primitive_dictionaries_test.go:86: actual function-member admission mutant caught by named read pin
++=== RUN   TestCheckedViewOriginalDictionaryPrimitiveComponents/compileroptions/wrong-array
++=== RUN   TestCheckedViewOriginalDictionaryPrimitiveComponents/compileroptions/wrong-object
++=== RUN   TestCheckedViewOriginalDictionaryPrimitiveComponents/optionsbase/string
++=== RUN   TestCheckedViewOriginalDictionaryPrimitiveComponents/optionsbase/number
++    checked_views_primitive_dictionaries_test.go:89: untested dictionary first member caught by Node control
++    checked_views_primitive_dictionaries_test.go:89: untested dictionary first member caught by Node control
++=== RUN   TestCheckedViewOriginalDictionaryPrimitiveComponents/optionsbase/boolean
++=== RUN   TestCheckedViewOriginalDictionaryPrimitiveComponents/optionsbase/null
++    checked_views_primitive_dictionaries_test.go:92: null/undefined erasure mutant caught by Node null control
++    checked_views_primitive_dictionaries_test.go:92: null/undefined erasure mutant caught by Node null control
++=== RUN   TestCheckedViewOriginalDictionaryPrimitiveComponents/optionsbase/undefined
++=== RUN   TestCheckedViewOriginalDictionaryPrimitiveComponents/optionsbase/missing
++=== RUN   TestCheckedViewOriginalDictionaryPrimitiveComponents/optionsbase/wrong
++    checked_views_primitive_dictionaries_test.go:86: actual function-member admission mutant caught by named read pin
++    checked_views_primitive_dictionaries_test.go:86: actual function-member admission mutant caught by named read pin
++=== RUN   TestCheckedViewOriginalDictionaryPrimitiveComponents/optionsbase/wrong-array
++=== RUN   TestCheckedViewOriginalDictionaryPrimitiveComponents/optionsbase/wrong-object
++=== RUN   TestCheckedViewOriginalDictionaryPrimitiveComponents/buildoptions/string
++=== RUN   TestCheckedViewOriginalDictionaryPrimitiveComponents/buildoptions/number
++    checked_views_primitive_dictionaries_test.go:89: untested dictionary first member caught by Node control
++    checked_views_primitive_dictionaries_test.go:89: untested dictionary first member caught by Node control
++=== RUN   TestCheckedViewOriginalDictionaryPrimitiveComponents/buildoptions/boolean
++=== RUN   TestCheckedViewOriginalDictionaryPrimitiveComponents/buildoptions/null
++    checked_views_primitive_dictionaries_test.go:92: null/undefined erasure mutant caught by Node null control
++    checked_views_primitive_dictionaries_test.go:92: null/undefined erasure mutant caught by Node null control
++=== RUN   TestCheckedViewOriginalDictionaryPrimitiveComponents/buildoptions/undefined
++=== RUN   TestCheckedViewOriginalDictionaryPrimitiveComponents/buildoptions/missing
++=== RUN   TestCheckedViewOriginalDictionaryPrimitiveComponents/buildoptions/wrong
++    checked_views_primitive_dictionaries_test.go:86: actual function-member admission mutant caught by named read pin
++    checked_views_primitive_dictionaries_test.go:86: actual function-member admission mutant caught by named read pin
++=== RUN   TestCheckedViewOriginalDictionaryPrimitiveComponents/buildoptions/wrong-array
++=== RUN   TestCheckedViewOriginalDictionaryPrimitiveComponents/buildoptions/wrong-object
++--- PASS: TestCheckedViewOriginalDictionaryPrimitiveComponents (29.25s)
++    --- PASS: TestCheckedViewOriginalDictionaryPrimitiveComponents/compileroptions/string (1.15s)
++    --- PASS: TestCheckedViewOriginalDictionaryPrimitiveComponents/compileroptions/number (1.31s)
++    --- PASS: TestCheckedViewOriginalDictionaryPrimitiveComponents/compileroptions/boolean (1.25s)
++    --- PASS: TestCheckedViewOriginalDictionaryPrimitiveComponents/compileroptions/null (1.41s)
++    --- PASS: TestCheckedViewOriginalDictionaryPrimitiveComponents/compileroptions/undefined (1.25s)
++    --- PASS: TestCheckedViewOriginalDictionaryPrimitiveComponents/compileroptions/missing (1.18s)
++    --- PASS: TestCheckedViewOriginalDictionaryPrimitiveComponents/compileroptions/wrong (1.14s)
++    --- PASS: TestCheckedViewOriginalDictionaryPrimitiveComponents/compileroptions/wrong-array (1.26s)
++    --- PASS: TestCheckedViewOriginalDictionaryPrimitiveComponents/compileroptions/wrong-object (1.24s)
++    --- PASS: TestCheckedViewOriginalDictionaryPrimitiveComponents/optionsbase/string (1.29s)
++    --- PASS: TestCheckedViewOriginalDictionaryPrimitiveComponents/optionsbase/number (1.62s)
++    --- PASS: TestCheckedViewOriginalDictionaryPrimitiveComponents/optionsbase/boolean (1.36s)
++    --- PASS: TestCheckedViewOriginalDictionaryPrimitiveComponents/optionsbase/null (1.40s)
++    --- PASS: TestCheckedViewOriginalDictionaryPrimitiveComponents/optionsbase/undefined (1.23s)
++    --- PASS: TestCheckedViewOriginalDictionaryPrimitiveComponents/optionsbase/missing (1.46s)
++    --- PASS: TestCheckedViewOriginalDictionaryPrimitiveComponents/optionsbase/wrong (1.35s)
++    --- PASS: TestCheckedViewOriginalDictionaryPrimitiveComponents/optionsbase/wrong-array (1.29s)
++    --- PASS: TestCheckedViewOriginalDictionaryPrimitiveComponents/optionsbase/wrong-object (1.29s)
++    --- PASS: TestCheckedViewOriginalDictionaryPrimitiveComponents/buildoptions/string (0.64s)
++    --- PASS: TestCheckedViewOriginalDictionaryPrimitiveComponents/buildoptions/number (0.72s)
++    --- PASS: TestCheckedViewOriginalDictionaryPrimitiveComponents/buildoptions/boolean (0.60s)
++    --- PASS: TestCheckedViewOriginalDictionaryPrimitiveComponents/buildoptions/null (0.76s)
++    --- PASS: TestCheckedViewOriginalDictionaryPrimitiveComponents/buildoptions/undefined (0.61s)
++    --- PASS: TestCheckedViewOriginalDictionaryPrimitiveComponents/buildoptions/missing (0.61s)
++    --- PASS: TestCheckedViewOriginalDictionaryPrimitiveComponents/buildoptions/wrong (0.57s)
++    --- PASS: TestCheckedViewOriginalDictionaryPrimitiveComponents/buildoptions/wrong-array (0.61s)
++    --- PASS: TestCheckedViewOriginalDictionaryPrimitiveComponents/buildoptions/wrong-object (0.62s)
++PASS
++gate cache: native hits=0 misses=52
++gate cache: node hits=0 misses=153
++gate cache: probe hits=0 misses=0
++ok  	github.com/system-inc/adamic/internal/oracle	47.913s
+diff --git a/stage3/interface-downcasts/dictionaries/joint/scoped-counts.log b/stage3/interface-downcasts/dictionaries/joint/scoped-counts.log
+new file mode 100644
+index 00000000..444a83cb
+--- /dev/null
++++ b/stage3/interface-downcasts/dictionaries/joint/scoped-counts.log
+@@ -0,0 +1 @@
++ok  	github.com/system-inc/adamic/internal/oracle	14.546s
+diff --git a/stage3/interface-downcasts/dictionaries/recheck-results.json b/stage3/interface-downcasts/dictionaries/recheck-results.json
+index 94cc3fe1..b77f9b2e 100644
+--- a/stage3/interface-downcasts/dictionaries/recheck-results.json
++++ b/stage3/interface-downcasts/dictionaries/recheck-results.json
+@@ -23,23 +23,24 @@
+       "c": {
+         "compile_exit": 0,
+         "diagnostic": "",
+-        "exit": 70,
+-        "stdout": "",
+-        "stderr": "adamic: panic: field read failed: view.table['item']; expected CompilerOptionsValue, found array\n"
++        "exit": 0,
++        "stdout": "object\n",
++        "stderr": ""
+       },
+       "js": {
+         "compile_exit": 0,
+         "diagnostic": "",
+-        "exit": 70,
+-        "stdout": "",
+-        "stderr": "adamic: panic: field read failed: view.table['item']; expected CompilerOptionsValue, found array\n"
++        "exit": 0,
++        "stdout": "object\n",
++        "stderr": ""
+       }
+     },
+     "node": {
+       "exit": 0,
+       "stdout": "object\n",
+       "stderr": ""
+-    }
++    },
++    "evidence_test": "TestCheckedViewDictionaryJointRecheck"
+   },
+   {
+     "fixture": "stage3/interface-downcasts/dictionaries/recheck/buildoptions-boolean.a",
+@@ -71,23 +72,24 @@
+       "c": {
+         "compile_exit": 0,
+         "diagnostic": "",
+-        "exit": 70,
+-        "stdout": "",
+-        "stderr": "adamic: panic: field read failed: view.table['item']; expected CompilerOptionsValue, found object\n"
++        "exit": 0,
++        "stdout": "object\n",
++        "stderr": ""
+       },
+       "js": {
+         "compile_exit": 0,
+         "diagnostic": "",
+-        "exit": 70,
+-        "stdout": "",
+-        "stderr": "adamic: panic: field read failed: view.table['item']; expected CompilerOptionsValue, found object\n"
++        "exit": 0,
++        "stdout": "object\n",
++        "stderr": ""
+       }
+     },
+     "node": {
+       "exit": 0,
+       "stdout": "object\n",
+       "stderr": ""
+-    }
++    },
++    "evidence_test": "TestCheckedViewDictionaryJointRecheck"
+   },
+   {
+     "fixture": "stage3/interface-downcasts/dictionaries/recheck/buildoptions-null.a",
+@@ -143,23 +145,24 @@
+       "c": {
+         "compile_exit": 0,
+         "diagnostic": "",
+-        "exit": 70,
+-        "stdout": "",
+-        "stderr": "adamic: panic: field read failed: view.table['item']; expected CompilerOptionsValue, found object\n"
++        "exit": 0,
++        "stdout": "object\n",
++        "stderr": ""
+       },
+       "js": {
+         "compile_exit": 0,
+         "diagnostic": "",
+-        "exit": 70,
+-        "stdout": "",
+-        "stderr": "adamic: panic: field read failed: view.table['item']; expected CompilerOptionsValue, found object\n"
++        "exit": 0,
++        "stdout": "object\n",
++        "stderr": ""
+       }
+     },
+     "node": {
+       "exit": 0,
+       "stdout": "object\n",
+       "stderr": ""
+-    }
++    },
++    "evidence_test": "TestCheckedViewDictionaryJointRecheck"
+   },
+   {
+     "fixture": "stage3/interface-downcasts/dictionaries/recheck/buildoptions-string.a",
+@@ -191,23 +194,24 @@
+       "c": {
+         "compile_exit": 0,
+         "diagnostic": "",
+-        "exit": 70,
+-        "stdout": "",
+-        "stderr": "adamic: panic: field read failed: view.table['item']; expected TsConfigSourceFile | CompilerOptionsValue, found array\n"
++        "exit": 0,
++        "stdout": "object\n",
++        "stderr": ""
+       },
+       "js": {
+         "compile_exit": 0,
+         "diagnostic": "",
+-        "exit": 70,
+-        "stdout": "",
+-        "stderr": "adamic: panic: field read failed: view.table['item']; expected TsConfigSourceFile | CompilerOptionsValue, found array\n"
++        "exit": 0,
++        "stdout": "object\n",
++        "stderr": ""
+       }
+     },
+     "node": {
+       "exit": 0,
+       "stdout": "object\n",
+       "stderr": ""
+-    }
++    },
++    "evidence_test": "TestCheckedViewDictionaryJointRecheck"
+   },
+   {
+     "fixture": "stage3/interface-downcasts/dictionaries/recheck/compileroptions-boolean.a",
+@@ -239,23 +243,24 @@
+       "c": {
+         "compile_exit": 0,
+         "diagnostic": "",
+-        "exit": 70,
+-        "stdout": "",
+-        "stderr": "adamic: panic: field read failed: view.table['item']; expected TsConfigSourceFile | CompilerOptionsValue, found object\n"
++        "exit": 0,
++        "stdout": "object\n",
++        "stderr": ""
+       },
+       "js": {
+         "compile_exit": 0,
+         "diagnostic": "",
+-        "exit": 70,
+-        "stdout": "",
+-        "stderr": "adamic: panic: field read failed: view.table['item']; expected TsConfigSourceFile | CompilerOptionsValue, found object\n"
++        "exit": 0,
++        "stdout": "object\n",
++        "stderr": ""
+       }
+     },
+     "node": {
+       "exit": 0,
+       "stdout": "object\n",
+       "stderr": ""
+-    }
++    },
++    "evidence_test": "TestCheckedViewDictionaryJointRecheck"
+   },
+   {
+     "fixture": "stage3/interface-downcasts/dictionaries/recheck/compileroptions-null.a",
+@@ -311,23 +316,24 @@
+       "c": {
+         "compile_exit": 0,
+         "diagnostic": "",
+-        "exit": 70,
+-        "stdout": "",
+-        "stderr": "adamic: panic: field read failed: view.table['item']; expected TsConfigSourceFile | CompilerOptionsValue, found object\n"
++        "exit": 0,
++        "stdout": "object\n",
++        "stderr": ""
+       },
+       "js": {
+         "compile_exit": 0,
+         "diagnostic": "",
+-        "exit": 70,
+-        "stdout": "",
+-        "stderr": "adamic: panic: field read failed: view.table['item']; expected TsConfigSourceFile | CompilerOptionsValue, found object\n"
++        "exit": 0,
++        "stdout": "object\n",
++        "stderr": ""
+       }
+     },
+     "node": {
+       "exit": 0,
+       "stdout": "object\n",
+       "stderr": ""
+-    }
++    },
++    "evidence_test": "TestCheckedViewDictionaryJointRecheck"
+   },
+   {
+     "fixture": "stage3/interface-downcasts/dictionaries/recheck/compileroptions-string.a",
