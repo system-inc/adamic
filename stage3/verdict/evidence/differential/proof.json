@@ -1,0 +1,145 @@
+{
+  "function": "src/compiler/binder.ts/FunctionDeclaration:createBinder#0/FunctionDeclaration:getStrictModeBlockScopeFunctionDeclarationMessage#0",
+  "callers": 1,
+  "one_function_wall_seconds": 3.241,
+  "one_function": {
+    "changed_functions": [
+      "src/compiler/binder.ts/FunctionDeclaration:createBinder#0/FunctionDeclaration:getStrictModeBlockScopeFunctionDeclarationMessage#0"
+    ],
+    "outside_function_changes": [],
+    "coverage_gaps": [],
+    "sample_seed": "step34-differential-v1",
+    "sample_size": 8,
+    "schema": 1,
+    "mode": "differential",
+    "base": "050880ce59e30b356b686bd3144efe24f875ebc8",
+    "tsc": "/tmp/step34-final-proof/compiler/tsc",
+    "affected": 1,
+    "sampled": 8,
+    "selected": 9,
+    "deferred": 13684,
+    "baseline_report": {
+      "total": 9,
+      "passed": 9,
+      "failed": 0,
+      "excluded": 614,
+      "deferred": 13684,
+      "selected_inputs": 11830,
+      "configurations": 13693,
+      "excluded_configurations": 1274,
+      "census_total": 12444,
+      "exclusion_reasons": {
+        "API compiler version override @typescriptversion: 5.0": 3,
+        "API compiler version override @typescriptversion: 5.5": 1,
+        "all configurations need API diagnostic collection or harness formatting": 608,
+        "case-insensitive canonical path aliases require the API host": 1,
+        "harness directive @capturesuggestions: true": 1
+      },
+      "failures": [],
+      "seconds": 2.077
+    },
+    "seconds": 3.157,
+    "success": true,
+    "scope": "13,693 baseline configurations; acceptance and tiny suites are deferred"
+  },
+  "mapped_mutant": {
+    "changed_functions": [
+      "src/compiler/binder.ts/FunctionDeclaration:createBinder#0/FunctionDeclaration:getStrictModeBlockScopeFunctionDeclarationMessage#0"
+    ],
+    "outside_function_changes": [],
+    "coverage_gaps": [],
+    "sample_seed": "step34-differential-v1",
+    "sample_size": 8,
+    "schema": 1,
+    "mode": "differential",
+    "base": "050880ce59e30b356b686bd3144efe24f875ebc8",
+    "tsc": "/tmp/step34-final-proof/compiler/tsc",
+    "affected": 1,
+    "sampled": 8,
+    "selected": 9,
+    "deferred": 13684,
+    "baseline_report": {
+      "total": 9,
+      "passed": 8,
+      "failed": 1,
+      "excluded": 614,
+      "deferred": 13684,
+      "selected_inputs": 11830,
+      "configurations": 13693,
+      "excluded_configurations": 1274,
+      "census_total": 12444,
+      "exclusion_reasons": {
+        "API compiler version override @typescriptversion: 5.0": 3,
+        "API compiler version override @typescriptversion: 5.5": 1,
+        "all configurations need API diagnostic collection or harness formatting": 608,
+        "case-insensitive canonical path aliases require the API host": 1,
+        "harness directive @capturesuggestions: true": 1
+      },
+      "failures": [
+        {
+          "case": "tests/cases/conformance/statements/for-ofStatements/ES5For-of19.ts",
+          "configuration": "alwaysstrict=true,target=es5",
+          "capture": "00001_ES5For-of19",
+          "differences": {
+            "stdout": {
+              "byte_offset": 0,
+              "expected_size": 125,
+              "actual_size": 147,
+              "expected_context": "b'ES5For-of19.ts(3,14): error TS1250: Function declarations are not allowed inside'",
+              "actual_context": "b'step34 wrong function\\nES5For-of19.ts(3,14): error TS1250: Function declarations '"
+            }
+          }
+        }
+      ],
+      "seconds": 1.947
+    },
+    "seconds": 2.984,
+    "success": false,
+    "scope": "13,693 baseline configurations; acceptance and tiny suites are deferred"
+  },
+  "missing_function_mutant": {
+    "changed_functions": [
+      "src/compiler/binder.ts/FunctionDeclaration:createBinder#0/FunctionDeclaration:getStrictModeBlockScopeFunctionDeclarationMessage#0"
+    ],
+    "outside_function_changes": [],
+    "coverage_gaps": [
+      "src/compiler/binder.ts/FunctionDeclaration:createBinder#0/FunctionDeclaration:getStrictModeBlockScopeFunctionDeclarationMessage#0"
+    ],
+    "sample_seed": "step34-differential-v1",
+    "sample_size": 8,
+    "schema": 1,
+    "mode": "differential",
+    "base": "050880ce59e30b356b686bd3144efe24f875ebc8",
+    "tsc": "/tmp/step34-final-proof/compiler/tsc",
+    "affected": 0,
+    "sampled": 8,
+    "selected": 8,
+    "deferred": 13685,
+    "baseline_report": {
+      "total": 8,
+      "passed": 8,
+      "failed": 0,
+      "excluded": 614,
+      "deferred": 13685,
+      "selected_inputs": 11830,
+      "configurations": 13693,
+      "excluded_configurations": 1274,
+      "census_total": 12444,
+      "exclusion_reasons": {
+        "API compiler version override @typescriptversion: 5.0": 3,
+        "API compiler version override @typescriptversion: 5.5": 1,
+        "all configurations need API diagnostic collection or harness formatting": 608,
+        "case-insensitive canonical path aliases require the API host": 1,
+        "harness directive @capturesuggestions: true": 1
+      },
+      "failures": [],
+      "seconds": 1.823
+    },
+    "seconds": 2.919,
+    "success": false,
+    "scope": "13,693 baseline configurations; acceptance and tiny suites are deferred"
+  },
+  "stale_source_mutant": {
+    "harness_error": "stale coverage map: base source hash mismatch"
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "proved": true,
+  "controls": [
+    {
+      "case": "106_interfaceMergeWithNonGenericTypeArguments",
+      "Go_with_Node_6_0_3_libraries": "same diagnostics/stderr/exit as original Go measurement",
+      "still_differs_from_Node": true,
+      "command": [
+        "/tmp/verdict-go-shared-libraries/tsgo",
+        "--project",
+        "tsconfig.json",
+        "--noEmit",
+        "--pretty",
+        "false"
+      ]
+    },
+    {
+      "case": "116_recursivelyExpandingUnionNoStackoverflow",
+      "Go_with_Node_6_0_3_libraries": "same diagnostics/stderr/exit as original Go measurement",
+      "still_differs_from_Node": true,
+      "command": [
+        "/tmp/verdict-go-shared-libraries/tsgo",
+        "--project",
+        "tsconfig.json",
+        "--noEmit",
+        "--pretty",
+        "false"
+      ]
+    },
+    {
+      "case": "177_readonlyTupleAndArrayElaboration",
+      "Go_with_Node_6_0_3_libraries": "same diagnostics/stderr/exit as original Go measurement",
+      "still_differs_from_Node": true,
+      "command": [
+        "/tmp/verdict-go-shared-libraries/tsgo",
+        "--project",
+        "tsconfig.json",
+        "--noEmit",
+        "--pretty",
+        "false"
+      ]
+    }
+  ],
+  "binary_sha256": "138b9ab195ae0ad372dae2f952090e07d4c504bbccf63240172ae843116009ce"
+}

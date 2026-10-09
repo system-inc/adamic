@@ -1,0 +1,29 @@
+{
+  "total": 1,
+  "passed": 0,
+  "failed": 1,
+  "excluded": 0,
+  "deferred": 0,
+  "selected_inputs": 1,
+  "configurations": 1,
+  "excluded_configurations": 0,
+  "census_total": 1,
+  "exclusion_reasons": {},
+  "failures": [
+    {
+      "case": "tests/cases/compiler/commonSourceDir2.ts",
+      "configuration": "",
+      "capture": "00001_commonSourceDir2",
+      "differences": {
+        "stdout": {
+          "byte_offset": 0,
+          "expected_size": 76,
+          "actual_size": 76,
+          "expected_context": "b'error TS5009: Cannot find the common subdirectory path for the input files.\\n'",
+          "actual_context": "b'Error TS5009: Cannot find the common subdirectory path for the input files.\\n'"
+        }
+      }
+    }
+  ],
+  "seconds": 0.371
+}

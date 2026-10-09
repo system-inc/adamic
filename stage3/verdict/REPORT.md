@@ -131,3 +131,11 @@ for each suite, with identical stderr and exit. The five focused tests pass,
 and both disposable artifact hash mutants are caught and restored. Shell
 syntax, Python AST parsing and git diff whitespace checks pass. No full gate
 or whole Go package tests were run.
+
+## Next unit: expanded upstream CLI coverage
+
+See [UPSTREAM.md](UPSTREAM.md) for the 6,182-exclusion census, group proofs, remaining API/host boundaries and finished-unit evidence. The measurements above are the preserved first-unit history.
+
+## TypeScript-Go comparison unit
+
+See [TYPESCRIPT_GO.md](TYPESCRIPT_GO.md) for the pinned Go measurement, per-suite agreement, complete disagreement taxonomy, library controls and public --compare proof. Expected Node outputs remain unchanged.

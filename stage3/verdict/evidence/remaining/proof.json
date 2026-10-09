@@ -1,0 +1,84 @@
+{
+  "groups": [
+    {
+      "group": "absolute-source",
+      "inputs": 163,
+      "configurations": 183,
+      "A_passed": 183,
+      "A_failed": 0,
+      "B_total": 1,
+      "B_failed": 1,
+      "fixture_A_passed": null,
+      "mutant_source": "tests/cases/compiler/checkJsxNotSetError.ts",
+      "mutant_configuration": "",
+      "catch": "stdout diagnostic bytes only, exactly one byte changed"
+    },
+    {
+      "group": "drive-paths",
+      "inputs": 22,
+      "configurations": 22,
+      "A_passed": 22,
+      "A_failed": 0,
+      "B_total": 1,
+      "B_failed": 1,
+      "fixture_A_passed": null,
+      "mutant_source": "tests/cases/compiler/commonSourceDir2.ts",
+      "mutant_configuration": "",
+      "catch": "stdout diagnostic bytes only, exactly one byte changed"
+    },
+    {
+      "group": "absolute-package",
+      "inputs": 14,
+      "configurations": 14,
+      "A_passed": 14,
+      "A_failed": 0,
+      "B_total": 1,
+      "B_failed": 1,
+      "fixture_A_passed": null,
+      "mutant_source": "tests/cases/compiler/moduleResolutionWithExtensions_withPaths.ts",
+      "mutant_configuration": "",
+      "catch": "stdout diagnostic bytes only, exactly one byte changed"
+    },
+    {
+      "group": "output-path",
+      "inputs": 13,
+      "configurations": 13,
+      "A_passed": 13,
+      "A_failed": 0,
+      "B_total": 1,
+      "B_failed": 1,
+      "fixture_A_passed": null,
+      "mutant_source": "tests/cases/conformance/jsdoc/checkJsdocOptionalParamOrder.ts",
+      "mutant_configuration": "",
+      "catch": "stdout diagnostic bytes only, exactly one byte changed"
+    },
+    {
+      "group": "case-host",
+      "inputs": 4,
+      "configurations": 4,
+      "A_passed": 4,
+      "A_failed": 0,
+      "B_total": 1,
+      "B_failed": 1,
+      "fixture_A_passed": 1,
+      "mutant_source": "input.a",
+      "mutant_configuration": "",
+      "catch": "stdout diagnostic bytes only, exactly one byte changed"
+    },
+    {
+      "group": "library-placeholders",
+      "inputs": 4,
+      "configurations": 4,
+      "A_passed": 4,
+      "A_failed": 0,
+      "B_total": 1,
+      "B_failed": 1,
+      "fixture_A_passed": null,
+      "mutant_source": "tests/cases/compiler/variableDeclarationInStrictMode1.ts",
+      "mutant_configuration": "",
+      "catch": "stdout diagnostic bytes only, exactly one byte changed"
+    }
+  ],
+  "proved": true,
+  "case_host_proof_directory": "/tmp/verdict-remaining-case-host-fixture"
+}

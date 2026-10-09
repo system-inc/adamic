@@ -1,0 +1,5 @@
+// a-check: type error TS2322
+// @target: es2015
+// @useCaseSensitiveFileNames: false
+// @filename: host.ts
+const count: number = "wrong";

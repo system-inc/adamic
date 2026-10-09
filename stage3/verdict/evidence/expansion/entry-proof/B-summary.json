@@ -1,0 +1,90 @@
+{
+  "schema_version": 1,
+  "tsc": "/workspace/adamic/stage3/verdict/standins/mutant.sh",
+  "upstream_commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "success": false,
+  "suites": {
+    "acceptance": {
+      "total": 301,
+      "passed": 300,
+      "failed": 1,
+      "excluded": 0,
+      "failures": [
+        {
+          "case": "tiny",
+          "differences": {
+            "stdout": {
+              "byte_offset": 18,
+              "expected_size": 192,
+              "actual_size": 192,
+              "expected_context": "b\"argument.ts(2,6): error TS2345: Argument of type 'string' is not assignable to parameter of type '\"",
+              "actual_context": "b\"argument.ts(2,6): Error TS2345: Argument of type 'string' is not assignable to parameter of type '\""
+            }
+          }
+        }
+      ],
+      "seconds": 181.122
+    },
+    "tiny": {
+      "total": 1,
+      "passed": 0,
+      "failed": 1,
+      "excluded": 0,
+      "failures": [
+        {
+          "case": "tiny",
+          "differences": {
+            "stdout": {
+              "byte_offset": 18,
+              "expected_size": 192,
+              "actual_size": 192,
+              "expected_context": "b\"argument.ts(2,6): error TS2345: Argument of type 'string' is not assignable to parameter of type '\"",
+              "actual_context": "b\"argument.ts(2,6): Error TS2345: Argument of type 'string' is not assignable to parameter of type '\""
+            }
+          }
+        }
+      ],
+      "seconds": 1.67
+    },
+    "baselines": {
+      "total": 40,
+      "passed": 39,
+      "failed": 1,
+      "excluded": 834,
+      "deferred": 13411,
+      "selected_inputs": 11610,
+      "configurations": 13451,
+      "excluded_configurations": 1270,
+      "census_total": 12444,
+      "exclusion_reasons": {
+        "API compiler version override @typescriptversion: 5.0": 3,
+        "API compiler version override @typescriptversion: 5.5": 1,
+        "Windows virtual paths require drive and separator semantics unavailable on Linux": 23,
+        "absolute package/config paths require mounted virtual roots; source text is preserved": 14,
+        "absolute source references require mounted virtual roots; source text is preserved": 172,
+        "all configurations need API diagnostic collection or harness formatting": 603,
+        "case-insensitive virtual filesystem differs from Linux": 4,
+        "harness directive @capturesuggestions: true": 1,
+        "harness directive @suppressoutputpathcheck: true": 13
+      },
+      "failures": [
+        {
+          "case": "tests/cases/compiler/ArrowFunctionExpression1.ts",
+          "configuration": "",
+          "capture": "00002_ArrowFunctionExpression1",
+          "differences": {
+            "stdout": {
+              "byte_offset": 35,
+              "expected_size": 119,
+              "actual_size": 119,
+              "expected_context": "b'ArrowFunctionExpression1.ts(1,10): error TS2369: A parameter property is only allowed in a constructor implementati'",
+              "actual_context": "b'ArrowFunctionExpression1.ts(1,10): Error TS2369: A parameter property is only allowed in a constructor implementati'"
+            }
+          }
+        }
+      ],
+      "seconds": 19.941
+    }
+  },
+  "harness_errors": []
+}

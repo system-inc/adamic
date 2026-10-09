@@ -1,0 +1,30 @@
+{
+  "suite": "acceptance",
+  "case": "097_mappedTypeGenericWithKnownKeys",
+  "configuration": "",
+  "cause": "message wording/presentation",
+  "streams": [
+    "stdout",
+    "exit"
+  ],
+  "differences": {
+    "stdout": {
+      "byte_offset": 114,
+      "expected_size": 347,
+      "actual_size": 347,
+      "expected_context": "b'eralKey\\' does not exist on type \\'Record<keyof Shape | \"knownLiteralKey\", number>\\'. Did you mean \\'knownLiteralKey\\'?\\nmappe'",
+      "actual_context": "b'eralKey\\' does not exist on type \\'Record<\"knownLiteralKey\" | keyof Shape, number>\\'. Did you mean \\'knownLiteralKey\\'?\\nmappe'"
+    },
+    "exit": {
+      "byte_offset": 0,
+      "expected_size": 2,
+      "actual_size": 2,
+      "expected_context": "b'2\\n'",
+      "actual_context": "b'1\\n'"
+    }
+  },
+  "left_oracle_pass": true,
+  "right_oracle_pass": false,
+  "left_capture": "/tmp/verdict-compare-node-reused/acceptance/097_mappedTypeGenericWithKnownKeys",
+  "right_capture": "/tmp/verdict-compare-go/acceptance/097_mappedTypeGenericWithKnownKeys"
+}

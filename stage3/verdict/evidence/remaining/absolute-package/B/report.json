@@ -1,0 +1,29 @@
+{
+  "total": 1,
+  "passed": 0,
+  "failed": 1,
+  "excluded": 0,
+  "deferred": 0,
+  "selected_inputs": 1,
+  "configurations": 1,
+  "excluded_configurations": 0,
+  "census_total": 1,
+  "exclusion_reasons": {},
+  "failures": [
+    {
+      "case": "tests/cases/compiler/moduleResolutionWithExtensions_withPaths.ts",
+      "configuration": "",
+      "capture": "00001_moduleResolutionWithExtensions_withPaths",
+      "differences": {
+        "stdout": {
+          "byte_offset": 21,
+          "expected_size": 499,
+          "actual_size": 499,
+          "expected_context": "b\"/tsconfig.json(6,3): error TS5101: Option 'baseUrl' is deprecated and will stop functioning in TypeSc\"",
+          "actual_context": "b\"/tsconfig.json(6,3): Error TS5101: Option 'baseUrl' is deprecated and will stop functioning in TypeSc\""
+        }
+      }
+    }
+  ],
+  "seconds": 0.371
+}

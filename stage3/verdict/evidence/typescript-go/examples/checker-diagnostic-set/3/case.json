@@ -1,0 +1,30 @@
+{
+  "suite": "acceptance",
+  "case": "177_readonlyTupleAndArrayElaboration",
+  "configuration": "",
+  "cause": "checker diagnostic set",
+  "streams": [
+    "stdout",
+    "exit"
+  ],
+  "differences": {
+    "stdout": {
+      "byte_offset": 52,
+      "expected_size": 4106,
+      "actual_size": 3564,
+      "expected_context": "b\"eAndArrayElaboration.ts(10,20): error TS2345: Argument of type 'readonly [3, 4]' is not assignable to parameter of type \"",
+      "actual_context": "b\"eAndArrayElaboration.ts(10,20): error TS4104: The type 'readonly [3, 4]' is 'readonly' and cannot be assigned to the mut\""
+    },
+    "exit": {
+      "byte_offset": 0,
+      "expected_size": 2,
+      "actual_size": 2,
+      "expected_context": "b'2\\n'",
+      "actual_context": "b'1\\n'"
+    }
+  },
+  "left_oracle_pass": true,
+  "right_oracle_pass": false,
+  "left_capture": "/tmp/verdict-compare-node-reused/acceptance/177_readonlyTupleAndArrayElaboration",
+  "right_capture": "/tmp/verdict-compare-go/acceptance/177_readonlyTupleAndArrayElaboration"
+}

@@ -1,0 +1,35 @@
+{
+  "proved": true,
+  "runs": {
+    "A": "/tmp/verdict-final-A",
+    "B": "/tmp/verdict-final-B",
+    "C": "/tmp/verdict-final-C"
+  },
+  "A_passes": {
+    "acceptance": 301,
+    "tiny": 1,
+    "baselines": 13693
+  },
+  "B_failures": {
+    "acceptance": 1,
+    "tiny": 1,
+    "baselines": 1
+  },
+  "C_failures": {
+    "acceptance": 301,
+    "tiny": 1,
+    "baselines": 13693
+  },
+  "A_timed_inputs": [
+    "001_varianceCantBeStrictWhileStructureIsnt",
+    "024_genericTypeParameterEquivalence2",
+    "056_genericCallInferenceInConditionalTypes1",
+    "mitt",
+    "zod",
+    "typescript-compiler"
+  ],
+  "A_native_timed_processes": 60,
+  "B_performance_invoked": false,
+  "C_performance_invoked": false,
+  "catch": "one diagnostic byte in every B failure; no performance command, directory or log for B/C"
+}

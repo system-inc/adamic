@@ -1,0 +1,29 @@
+{
+  "total": 6260,
+  "passed": 6259,
+  "failed": 1,
+  "excluded": 0,
+  "deferred": 0,
+  "selected_inputs": 6260,
+  "configurations": 6260,
+  "excluded_configurations": 1280,
+  "census_total": 6260,
+  "exclusion_reasons": {},
+  "failures": [
+    {
+      "case": "tests/cases/compiler/jsxFactoryAndJsxFragmentFactoryNull.tsx",
+      "configuration": "",
+      "capture": "01988_jsxFactoryAndJsxFragmentFactoryNull",
+      "differences": {
+        "stdout": {
+          "byte_offset": 40,
+          "expected_size": 911,
+          "actual_size": 1449,
+          "expected_context": "b\"jsxFactoryAndJsxFragmentFactoryNull.tsx(4,3): error TS7026: JSX element implicitly has type 'any' because no interface '\"",
+          "actual_context": "b\"jsxFactoryAndJsxFragmentFactoryNull.tsx(3,1): error TS17016: The 'jsxFragmentFactory' compiler option must be provided t\""
+        }
+      }
+    }
+  ],
+  "seconds": 2186.801
+}

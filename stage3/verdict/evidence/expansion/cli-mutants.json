@@ -1,0 +1,23 @@
+{
+  "proved": true,
+  "mutants": [
+    {
+      "mutant": "literal-null bridge omitted",
+      "case": "tests/cases/compiler/jsxFactoryAndJsxFragmentFactoryNull.tsx",
+      "configuration": "",
+      "caught_only_by": "stdout"
+    },
+    {
+      "mutant": "declaration outputs-skipped exit becomes 2",
+      "case": "tests/cases/conformance/jsdoc/declarations/jsDeclarationsCrossfileMerge.ts",
+      "configuration": "target=es2015",
+      "caught_only_by": "exit"
+    },
+    {
+      "mutant": "provided type packages force explicit typeRoots",
+      "case": "tests/cases/compiler/nodeNextImportModeImplicitIndexResolution2.ts",
+      "configuration": "",
+      "caught_only_by": "stdout"
+    }
+  ]
+}

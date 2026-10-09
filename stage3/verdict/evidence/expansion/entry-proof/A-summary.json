@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "tsc": "/workspace/adamic/stage3/verdict/standins/node.sh",
+  "upstream_commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "success": true,
+  "suites": {
+    "acceptance": {
+      "total": 301,
+      "passed": 301,
+      "failed": 0,
+      "excluded": 0,
+      "failures": [],
+      "seconds": 191.929
+    },
+    "tiny": {
+      "total": 1,
+      "passed": 1,
+      "failed": 0,
+      "excluded": 0,
+      "failures": [],
+      "seconds": 2.461
+    },
+    "baselines": {
+      "total": 40,
+      "passed": 40,
+      "failed": 0,
+      "excluded": 834,
+      "deferred": 13411,
+      "selected_inputs": 11610,
+      "configurations": 13451,
+      "excluded_configurations": 1270,
+      "census_total": 12444,
+      "exclusion_reasons": {
+        "API compiler version override @typescriptversion: 5.0": 3,
+        "API compiler version override @typescriptversion: 5.5": 1,
+        "Windows virtual paths require drive and separator semantics unavailable on Linux": 23,
+        "absolute package/config paths require mounted virtual roots; source text is preserved": 14,
+        "absolute source references require mounted virtual roots; source text is preserved": 172,
+        "all configurations need API diagnostic collection or harness formatting": 603,
+        "case-insensitive virtual filesystem differs from Linux": 4,
+        "harness directive @capturesuggestions: true": 1,
+        "harness directive @suppressoutputpathcheck: true": 13
+      },
+      "failures": [],
+      "seconds": 23.299
+    }
+  },
+  "harness_errors": []
+}

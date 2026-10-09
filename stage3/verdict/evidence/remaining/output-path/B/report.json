@@ -1,0 +1,29 @@
+{
+  "total": 1,
+  "passed": 0,
+  "failed": 1,
+  "excluded": 0,
+  "deferred": 0,
+  "selected_inputs": 1,
+  "configurations": 1,
+  "excluded_configurations": 0,
+  "census_total": 1,
+  "exclusion_reasons": {},
+  "failures": [
+    {
+      "case": "tests/cases/conformance/jsdoc/checkJsdocOptionalParamOrder.ts",
+      "configuration": "",
+      "capture": "00001_checkJsdocOptionalParamOrder",
+      "differences": {
+        "stdout": {
+          "byte_offset": 12,
+          "expected_size": 84,
+          "actual_size": 84,
+          "expected_context": "b'0.js(7,20): error TS1016: A required parameter cannot follow an optional parameter.\\n'",
+          "actual_context": "b'0.js(7,20): Error TS1016: A required parameter cannot follow an optional parameter.\\n'"
+        }
+      }
+    }
+  ],
+  "seconds": 0.367
+}

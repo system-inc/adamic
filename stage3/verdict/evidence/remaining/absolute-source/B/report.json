@@ -1,0 +1,29 @@
+{
+  "total": 1,
+  "passed": 0,
+  "failed": 1,
+  "excluded": 0,
+  "deferred": 0,
+  "selected_inputs": 1,
+  "configurations": 1,
+  "excluded_configurations": 0,
+  "census_total": 1,
+  "exclusion_reasons": {},
+  "failures": [
+    {
+      "case": "tests/cases/compiler/checkJsxNotSetError.ts",
+      "configuration": "",
+      "capture": "00001_checkJsxNotSetError",
+      "differences": {
+        "stdout": {
+          "byte_offset": 16,
+          "expected_size": 261,
+          "actual_size": 261,
+          "expected_context": "b\"/bar.jsx(1,17): error TS6142: Module '/foo' was resolved to '/foo.jsx', but '--jsx' is not set.\\n\"",
+          "actual_context": "b\"/bar.jsx(1,17): Error TS6142: Module '/foo' was resolved to '/foo.jsx', but '--jsx' is not set.\\n\""
+        }
+      }
+    }
+  ],
+  "seconds": 0.42
+}
