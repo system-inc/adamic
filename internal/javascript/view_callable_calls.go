@@ -66,7 +66,7 @@ func (e *emitter) viewCallableDomain(id ir.ViewContractID, value string) string 
 
 // Passing an already formed argument array guarantees every argument expression
 // runs before checks. The callee snapshot precedes the argument array.
-func (e *emitter) emitDirectViewCallable(call ir.CallClosure, p ir.Property) string {
+func (e *emitter) viewCallableInvoke(call ir.CallClosure, p ir.Property) string {
 	target := e.program.ViewContracts[call.CallContract-1]
 	var b strings.Builder
 	b.WriteString("((prepared, arguments_) => { const {value, object} = prepared; const code = value instanceof AdamicClosure ? value.code : value;\n")
@@ -117,8 +117,12 @@ func (e *emitter) emitDirectViewCallable(call ir.CallClosure, p ir.Property) str
 		b.WriteString("return result; }\n")
 	}
 	b.WriteString("panic(" + quote("callable call failed: "+p.View+" at "+call.CallWhere+" has no checkable producer signature") + "); })")
+	return b.String()
+}
+
+func (e *emitter) emitDirectViewCallable(call ir.CallClosure, p ir.Property) string {
 	raw := "adamicViewCallablePreparedRead(object, " + quote(p.Name) + ", " + quote(p.View) + ", true, false, true, " + quote(p.ViewType) + ")"
-	invocation := b.String() + "({object, value: " + raw + "}, [" + e.callValues(call.Arguments, call.Spread) + "])"
+	invocation := e.viewCallableInvoke(call, p) + "({object, value: " + raw + "}, [" + e.callValues(call.Arguments, call.Spread) + "])"
 	if p.Optional {
 		invocation = "object === undefined ? undefined : " + invocation
 	}

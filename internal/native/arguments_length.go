@@ -175,7 +175,7 @@ func missingArgument(of ir.Type) string {
 }
 
 func (e *emitter) packedClosureCall(call ir.CallClosure, closure, packed, count string) string {
-	if e.program.PackedCountNeededFromCall(call) {
+	if e.program.PackedCountNeededFromCall(call) || e.program.ClosureConventionNeeded() {
 		return fmt.Sprintf("adamic_closure_call(%s, %s, %s)", closure, packed, count)
 	}
 	return fmt.Sprintf("%s->code(%s, %s)", closure, closure, packed)

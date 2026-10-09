@@ -6,6 +6,9 @@ import (
 )
 
 func (e *emitter) emitViewCallableRead(property ir.Property, receiver, method string) string {
+	if property.ViewEscape && !property.ViewEscapeAdamic {
+		return e.emitViewCallableEscape(property, receiver, method)
+	}
 	e.declarations = append(e.declarations, "#include \"view_callables.h\"")
 	contract := property.ViewContract
 	if contract == 0 || (e.program.ViewContracts[contract-1].Result == 0 && !e.program.ViewContracts[contract-1].DiscardResult) {

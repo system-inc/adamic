@@ -37,10 +37,10 @@ func checkViewCallableEscape(graph *allocationFlowGraph, read ir.Property, reach
 		}
 		return &Refused{Where: read.ViewWhere, What: "an unproven escaping callable read of " + read.View, Fix: "prove the producer parameter and result relation before this read, or call the member directly through the view"}
 	}
-	// weak.c has handles, and closure.c has an activation/code cache. Neither
-	// provides the underlying-function/view-type weak interning this read needs.
-	// Do not send it to the old read-time rejection or an uncached adapter.
-	return &NotYet{Where: read.ViewWhere, What: "an escaping callable checking adapter for " + read.View + "; awaits compiler/views-v4: weak adapter cache per underlying function and view type in internal/native/runtime/closure.c"}
+	if read.ViewEscapeContract == 0 || graph.viewCallableUncheckableProducer(read, reaches) {
+		return &Refused{Where: read.ViewWhere, What: "an escaping callable read of " + read.View + " with an unsupported value contract", Fix: "prove the callable relation or use a callable with runtime-checkable parameter and result types"}
+	}
+	return nil
 }
 
 // Unknown, missing fields and opaque callable sources are not empty proofs.

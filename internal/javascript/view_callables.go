@@ -24,7 +24,7 @@ const adamicViewCallablePreparedRead = (object, name, expression, method, option
     }
     return adamicReadField(holder, name, expression, optional, absent, expected);
 };
-` + viewCallableShapeRuntime
+` + viewCallableShapeRuntime + viewCallableAdapterRuntime
 
 func emitViewCallableRead(object, member, expression string, method bool) string {
 	return fmt.Sprintf("adamicViewCallableRead(%s, %s, %s, %t)", object, quote(member), quote(expression), method)
@@ -35,6 +35,9 @@ func emitViewCallableCall(value, receiver, arguments string, method bool) string
 }
 
 func (e *emitter) emitViewCallableProperty(property ir.Property) string {
+	if property.ViewEscape && !property.ViewEscapeAdamic {
+		return e.emitViewCallableEscape(property)
+	}
 	if property.ViewContract != 0 && (e.program.ViewContracts[property.ViewContract-1].Result != 0 || e.program.ViewContracts[property.ViewContract-1].DiscardResult) {
 		expected := e.program.ViewContracts[property.ViewContract-1].Name
 		raw := func(object string) string {

@@ -19,6 +19,11 @@ func (l *lowering) viewCallableValueDomain(node *ast.Node, target *checker.Type,
 	active[target] = true
 	defer delete(active, target)
 	c := ir.ViewContract{Name: l.checker.TypeToString(target)}
+	// An invocation domain also records the value ABI for an escaping adapter.
+	// Union/nullish branches need it just as scalar branches do.
+	if of, known := l.representation(target); known {
+		c.Of = of
+	}
 	flags := target.Flags()
 	switch {
 	case flags&(checker.TypeFlagsUnknown|checker.TypeFlagsNonPrimitive) != 0:

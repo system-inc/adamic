@@ -2,6 +2,7 @@ package oracle
 
 import (
 	"errors"
+	"fmt"
 	"os"
 	"path/filepath"
 	"reflect"
@@ -42,7 +43,7 @@ func v4EscapeAdmitted(t *testing.T, program *ir.Program, truth run) {
 	sanitized, binary := nativelyUncached(t, program)
 	for backend, got := range map[string]run{"native": releasedUncached(t, program), "sanitized": sanitized, "javascript": onJavaScriptBackend(t, program)} {
 		if difference := disagreement(truth, got); difference != "" {
-			t.Fatalf("guard mutant is not a clean admission in %s: %s", backend, difference)
+			t.Fatalf("control/admission differs in %s: %s; %#v", backend, difference, got)
 		}
 		t.Logf("guard mutant admitted in %s: exit %d output %q", backend, got.exitCode, got.stdout)
 	}
@@ -165,13 +166,10 @@ probe(raw);`
 		t.Fatalf("Node: %#v", truth)
 	}
 	program, err := lowered(t, path)
-	if err == nil {
-		v4EscapeAdmitted(t, program, truth)
+	if err != nil {
+		t.Fatal(err)
 	}
-	var pending *lower.NotYet
-	if !errors.As(err, &pending) || !strings.Contains(pending.Where, "escape.ts:") || !strings.Contains(pending.What, "weak adapter cache per underlying function and view type in internal/native/runtime/closure.c") {
-		t.Fatalf("adapter must remain explicitly unavailable: %v", err)
-	}
+	v4EscapeAdmitted(t, program, truth)
 }
 
 func TestV4EscapeOrdinaryRead(t *testing.T) {
@@ -185,12 +183,12 @@ const escaped=ordinary.run; console.log(escaped('ok'));`, "ok\n", "")
 
 func TestV4EscapeAdapterArgument(t *testing.T) {
 	t.Parallel()
-	t.Skip("awaits compiler/views-v4: weak adapter cache per underlying function and view type, then escaped argument checks and their omission mutant")
+	v4EscapeAdapterCheck(t, "argument")
 }
 
 func TestV4EscapeAdapterResult(t *testing.T) {
 	t.Parallel()
-	t.Skip("awaits compiler/views-v4: weak adapter cache per underlying function and view type, then escaped result checks and their omission mutant")
+	v4EscapeAdapterCheck(t, "result")
 }
 
 func TestV4EscapeAdapterIdentity(t *testing.T) {
@@ -201,4 +199,175 @@ func TestV4EscapeAdapterIdentity(t *testing.T) {
 func TestV4EscapeAdapterNoStacking(t *testing.T) {
 	t.Parallel()
 	t.Skip("awaits compiler/views-v4: adapter unwrapping or composition and bounded allocation and retain counts, with unconditional-wrap mutant")
+}
+
+// Source Node is the unchecked truth. The checked divergence is required only
+// when the escaped value is invoked, after the observable argument effects.
+func v4EscapeAdapterCheck(t *testing.T, relation string) {
+	t.Helper()
+	producer, target := "(value:'ok'):string=>{ console.log('producer'); return 'producer'; }", "(value:string)=>string"
+	checkedOut, nodeOut := "read\nargument\n", "read\nargument\nproducer\nproducer\n"
+	if relation == "result" {
+		producer, target = "(value:string):string=>{ console.log('producer'); return 'bad'; }", "(value:string)=>'ok'"
+		checkedOut, nodeOut = "read\nargument\nproducer\n", "read\nargument\nproducer\nbad\n"
+	}
+	source := "interface Base { readonly kind:'Receiver'; }\ninterface Target extends Base { readonly run:" + target + "; }\nconst raw={kind:'Receiver' as const,run:" + producer + "};\nfunction argument():string { console.log('argument'); return 'bad'; }\nfunction probe(base:Base):void { const view=base as Target; const escaped=view.run; console.log('read'); console.log(escaped(argument())); }\nprobe(raw);"
+	path := filepath.Join(t.TempDir(), "adapter.ts")
+	if err := os.WriteFile(path, []byte(source), 0600); err != nil {
+		t.Fatal(err)
+	}
+	truth := onNode(t, path)
+	if truth.exitCode != 0 || string(truth.stdout) != nodeOut || len(truth.stderr) != 0 {
+		t.Fatalf("source Node: %#v", truth)
+	}
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	var read ir.Property
+	find := func(expression ir.Expression) ir.Expression {
+		if p, ok := expression.(ir.Property); ok && p.ViewEscape && p.View != "" {
+			read = p
+		}
+		return expression
+	}
+	mutateStringExpressions(reflect.ValueOf(&program.Main).Elem(), find)
+	mutateStringExpressions(reflect.ValueOf(&program.Functions).Elem(), find)
+	if read.ViewEscapeContract == 0 || read.ViewEscapeAdamic {
+		t.Fatalf("lost adapter demand: %#v", read)
+	}
+	message := fmt.Sprintf("callable call failed: %s at escaping call (read at %s) argument 1 expected producer \"ok\", view string", read.View, read.ViewWhere)
+	if relation == "result" {
+		message = fmt.Sprintf("callable call failed: %s at escaping call (read at %s) result expected view \"ok\", producer string", read.View, read.ViewWhere)
+	}
+	want := run{exitCode: 70, stdout: []byte(checkedOut), stderr: []byte("adamic: panic: " + message + "\n")}
+	sanitized, _ := nativelyUncached(t, program)
+	for name, got := range map[string]run{"native": releasedUncached(t, program), "sanitized": sanitized, "javascript": onJavaScriptBackend(t, program)} {
+		if difference := disagreement(want, got); difference != "" {
+			t.Fatalf("%s: %s; %#v", name, difference, got)
+		}
+		t.Logf("%s %s check: exit=%d stdout=%q stderr=%q", name, relation, got.exitCode, got.stdout, got.stderr)
+	}
+	changed := 0
+	if relation == "argument" {
+		for _, f := range program.Functions {
+			for _, id := range f.CallableParameters {
+				if id != 0 && program.ViewContracts[id-1].Name == "\"ok\"" {
+					program.ViewContracts[id-1].Allowed = nil
+					changed++
+				}
+			}
+		}
+	} else {
+		id := program.ViewContracts[read.ViewEscapeContract-1].Result
+		program.ViewContracts[id-1].Allowed = nil
+		changed++
+	}
+	if changed != 1 {
+		t.Fatalf("omission changed %d domains", changed)
+	}
+	sanitized, binary := nativelyUncached(t, program)
+	for name, got := range map[string]run{"native": releasedUncached(t, program), "sanitized": sanitized, "javascript": onJavaScriptBackend(t, program)} {
+		if strings.Contains(string(got.stderr), "Sanitizer") || disagreement(truth, got) != "" || disagreement(want, got) == "" {
+			t.Fatalf("%s check omission must run cleanly like source Node: %#v", name, got)
+		}
+		t.Logf("%s %s omission caught: exit=%d stdout=%q", name, relation, got.exitCode, got.stdout)
+	}
+	if report := leaksUncached(t, program, binary); report != "" {
+		t.Fatal(report)
+	}
+}
+
+func v4EscapeSource(t *testing.T, source, output string) {
+	t.Helper()
+	path := filepath.Join(t.TempDir(), "control.ts")
+	if err := os.WriteFile(path, []byte(source), 0600); err != nil {
+		t.Fatal(err)
+	}
+	truth := onNode(t, path)
+	if truth.exitCode != 0 || string(truth.stdout) != output || len(truth.stderr) != 0 {
+		t.Fatalf("Node: %#v", truth)
+	}
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	v4EscapeAdmitted(t, program, truth)
+}
+
+func TestV4EscapeAdapterUnusedMisfit(t *testing.T) {
+	t.Parallel()
+	v4EscapeSource(t, `interface Base { readonly kind:'Receiver'; }
+interface Target extends Base { readonly run:(value:string)=>'ok'; }
+const raw={kind:'Receiver' as const,run:(value:'ok'):string=>'bad'};
+function probe(base:Base):void { const view=base as Target; const escaped=view.run; console.log('read'); }
+probe(raw);`, "read\n")
+}
+
+func TestV4EscapeAdapterReturned(t *testing.T) {
+	t.Parallel()
+	v4EscapeSource(t, v4EscapeDeclarations+`
+const raw={kind:'Receiver' as const,run:(value:'ok'):string=>value};
+function probe(base:Base):(value:string)=>string { const view=base as Target; return view.run; }
+function consume(callback:(value:string)=>string):void { console.log(callback('ok')); console.log(callback('ok')); }
+consume(probe(raw));`, "ok\nok\n")
+}
+
+func TestV4EscapeAdapterBoxed(t *testing.T) {
+	t.Parallel()
+	v4EscapeSource(t, `interface Base { readonly kind:'Receiver'; }
+interface Target extends Base { readonly run:(value:number|string)=>number|string; }
+const raw={kind:'Receiver' as const,run:(value:number):number=>value+1};
+function probe(base:Base):void { const view=base as Target; const escaped=view.run; console.log(`+"`${escaped(4)}`"+`); }
+probe(raw);`, "5\n")
+}
+
+func TestV4EscapeAdapterCounted(t *testing.T) {
+	t.Parallel()
+	v4EscapeSource(t, `interface Base { readonly kind:'Receiver'; }
+interface Target extends Base { readonly run:(value?:string)=>string; }
+const raw={kind:'Receiver' as const,run:function(value?:string):string { return `+"`${arguments.length}:${value ?? 'absent'}`"+`; }};
+function probe(base:Base):void { const view=base as Target; const escaped=view.run; console.log(escaped()); console.log(escaped('ok')); }
+probe(raw);`, "0:absent\n1:ok\n")
+}
+
+func TestV4EscapeAdapterUncheckableRefusal(t *testing.T) {
+	t.Parallel()
+	source := `interface Base { readonly kind:'Receiver'; }
+interface Link { readonly text:string; readonly next?:Link; }
+interface Target extends Base { readonly run:(value:Link)=>string; }
+const raw={kind:'Receiver' as const,run:(value:{readonly text:string}):string=>'ok'};
+function probe(base:Base):void { const view=base as Target; const escaped=view.run; console.log('read'); }
+probe(raw);`
+	path := filepath.Join(t.TempDir(), "unsupported.ts")
+	if err := os.WriteFile(path, []byte(source), 0600); err != nil {
+		t.Fatal(err)
+	}
+	truth := onNode(t, path)
+	if truth.exitCode != 0 || string(truth.stdout) != "read\n" {
+		t.Fatalf("Node: %#v", truth)
+	}
+	_, err := lowered(t, path)
+	var refusal *lower.Refused
+	if !errors.As(err, &refusal) || !strings.Contains(refusal.Where, "unsupported.ts:5:") || !strings.Contains(refusal.What, "escaping callable read of view.run with an unsupported value contract") || !strings.Contains(refusal.Fix, "runtime-checkable parameter and result types") {
+		t.Fatalf("unsupported relation needs path and fix: %v", err)
+	}
+}
+
+func TestV4EscapeAdapterNull(t *testing.T) {
+	t.Parallel()
+	v4EscapeSource(t, `interface Base { readonly kind:'Receiver'; }
+interface Target extends Base { readonly run:(value:null)=>null; }
+const raw={kind:'Receiver' as const,run:(value:null):null=>value};
+function probe(base:Base):void { const view=base as Target; const escaped=view.run; console.log(`+"`${escaped(null)===null}`"+`); }
+probe(raw);`, "true\n")
+}
+
+func TestV4EscapeAdapterVoid(t *testing.T) {
+	t.Parallel()
+	v4EscapeSource(t, `interface Base { readonly kind:'Receiver'; }
+interface Target extends Base { readonly run:(value:string)=>void; }
+const raw={kind:'Receiver' as const,run:(value:'ok'):string=>value+'!'};
+function probe(base:Base):void { const view=base as Target; const escaped=view.run; escaped('ok'); console.log('done'); }
+probe(raw);`, "done\n")
 }
