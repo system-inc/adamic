@@ -53,3 +53,8 @@ func checkedViewElementFixture(t *testing.T, name, diagnostic string) {
 		t.Fatal(err)
 	}
 }
+
+func TestCheckedViewSpread(t *testing.T) {
+	t.Parallel()
+	checkedViewElementFixture(t, "spread", "field read failed: ...view (field count) is not a number; expected number, found string")
+}

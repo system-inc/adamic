@@ -1,0 +1,23 @@
+=== RUN   TestClassFeaturesPrivateStorage
+=== PAUSE TestClassFeaturesPrivateStorage
+=== RUN   TestViewSpreadControl
+=== PAUSE TestViewSpreadControl
+=== CONT  TestClassFeaturesPrivateStorage
+=== CONT  TestViewSpreadControl
+--- PASS: TestClassFeaturesPrivateStorage (1.01s)
+--- PASS: TestViewSpreadControl (1.01s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	1.031s
+=== RUN   TestCheckedViewSpread
+=== PAUSE TestCheckedViewSpread
+=== CONT  TestCheckedViewSpread
+    view_element_reads_test.go:59: gate cache node hit
+    view_element_reads_test.go:59: gate cache node hit
+    oracle_test.go:596: gate cache native hit
+    oracle_test.go:589: gate cache native hit
+--- PASS: TestCheckedViewSpread (0.12s)
+PASS
+gate cache: native hits=2 misses=0
+gate cache: node hits=2 misses=0
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.145s

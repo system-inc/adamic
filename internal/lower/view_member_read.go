@@ -44,3 +44,44 @@ func (l *lowering) readViewMember(node *ast.Node, property ir.Property, field *a
 	}
 	return property
 }
+
+// checkedViewMembers holds the source once and checks declared own slots before
+// exposing their presence or copying values. Copies retain hidden fields and tags.
+func (l *lowering) checkedViewMembers(node, source *ast.Node, value ir.Expression, member string) (ir.Expression, error) {
+	receiver := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(source))
+	b := l.libraryArrayBuilder([]ir.Expression{value})
+	held := b.read(b.parameters[0])
+	checks := []ir.Statement{}
+	for _, field := range l.checker.GetPropertiesOfType(receiver) {
+		if member != "" && field.Name != member {
+			continue
+		}
+		if accessorSymbol(field) {
+			continue
+		}
+		prototype := false
+		for _, declaration := range field.Declarations {
+			if declaration.Kind == ast.KindMethodDeclaration || declaration.Name() != nil && declaration.Name().Kind == ast.KindPrivateIdentifier {
+				prototype = true
+			}
+		}
+		if prototype {
+			continue
+		}
+		of, known := l.representation(l.checker.GetTypeOfSymbol(field))
+		if !known || of == ir.Weak || censusFieldSlotless(of) {
+			return nil, l.notYet(node, "a view member operation with an unsupported field representation")
+		}
+		read := l.readViewMember(node, ir.Property{Object: held, Name: field.Name, Of: of, Absent: field.Flags&ast.SymbolFlagsOptional != 0, View: sourceExpression(node) + " (field " + field.Name + ")"}, field, receiver)
+		checks = append(checks, ir.Evaluate{Value: read})
+	}
+	if len(checks) == 0 {
+		return value, nil
+	}
+	if l.includesUndefined(l.checker.GetTypeAtLocation(source)) {
+		b.body = append(b.body, ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: ir.IsUndefined{Value: held}}, Then: checks})
+	} else {
+		b.body = append(b.body, checks...)
+	}
+	return b.finish("checked_view_members", held), nil
+}

@@ -1,0 +1,7 @@
+interface Root { readonly kind: 1; }
+interface View extends Root { readonly count: number; }
+const raw = { kind: 1 as const, count: 'seven' };
+const base: Root = raw;
+const view = base as View;
+const copy = {...view};
+console.log(Object.keys(copy).join(','));

@@ -74,3 +74,9 @@ func TestViewElementDestructuredUnionControl(t *testing.T) {
 	source := viewElementFixture(t, "destructured_union")
 	lowersAndAgreesWithNode(t, strings.Replace(source, "text: true", "text: 'seven'", 1))
 }
+
+func TestViewSpreadControl(t *testing.T) {
+	t.Parallel()
+	source := viewElementFixture(t, "spread")
+	lowersAndAgreesWithNode(t, strings.Replace(source, "count: 'seven'", "count: 7", 1))
+}

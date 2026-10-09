@@ -33,6 +33,10 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 				return nil, l.notYet(property, "spreading a "+typeName(spread.Type()))
 			}
 			literal.NoReuse = l.hasPrivateStorage(l.checker.GetTypeAtLocation(property.AsSpreadAssignment().Expression)) || l.hasAccessorStorage(l.checker.GetTypeAtLocation(property.AsSpreadAssignment().Expression))
+			spread, err = l.checkedViewMembers(property, property.AsSpreadAssignment().Expression, spread, "")
+			if err != nil {
+				return nil, err
+			}
 			literal.Spread = spread
 			literal.SpreadMaybeUndefined = l.includesUndefined(l.checker.GetTypeAtLocation(property.AsSpreadAssignment().Expression))
 		case ast.KindMethodDeclaration:
