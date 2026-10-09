@@ -9,7 +9,7 @@ import (
 	"testing"
 )
 
-// Not parallel: t.Setenv changes the process environment variable ADAMIC_GATE_UNCACHED; Build writes the shared adamic/runtime and adamic/units caches.
+// Not parallel: t.Setenv changes the process environment variable ADAMIC_GATE_UNCACHED.
 func TestUnitsPreserveSharedState(t *testing.T) {
 	source := `#include "adamic.h"
 #include <stdio.h>
@@ -45,8 +45,8 @@ int main(void) { int first = adamic_next(); int second = adamic_next(); printf("
 
 // The same bytes must be instrumented after a release compile. A flags-key mutant returns the
 // release object and loses UBSan's check, while linking and executing normally. No warning kills it.
-// Not parallel: compileUnit writes the package-level unitBuilds map.
 func TestUnitCacheFlagsHoldSanitizer(t *testing.T) {
+	t.Parallel()
 	compiler, err := exec.LookPath("clang")
 	if err != nil {
 		t.Fatal(err)

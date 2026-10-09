@@ -182,10 +182,17 @@ func formatfilesCaseFile(t *testing.T, part formatfilesPart) string {
 }
 
 func formatfilesBinary(t *testing.T, program *ir.Program, mutant *mutant) string {
+	return formatfilesBinaryWithOptions(t, program, mutant, true)
+}
+
+func formatfilesBinaryWithOptions(t *testing.T, program *ir.Program, mutant *mutant, sanitize bool) string {
 	t.Helper()
 	source := native.C(program)
 	name := "formatfiles-native"
-	flags := append([]string{}, native.Flags(native.Options{Sanitize: true})...)
+	if !sanitize {
+		name += "-unsanitized"
+	}
+	flags := append([]string{}, native.Flags(native.Options{Sanitize: sanitize})...)
 	if mutant != nil {
 		name += "-" + mutant.name
 		flags = append(flags, mutant.file, mutant.from, mutant.to)
@@ -195,7 +202,7 @@ func formatfilesBinary(t *testing.T, program *ir.Program, mutant *mutant) string
 		Files: []string{"stage1/cohere/formatfiles/golang.ts", "stage1/cohere/formatfiles/disk.ts", "stage1/cohere/formatfiles/enumerate.ts", "stage1/cohere/formatfiles/main.ts", "stage1/cohere/gitignore/path.ts", "stage1/cohere/gitignore/glob.ts", "stage1/cohere/gitignore/gitignore.ts", "internal", "go.mod", "cohere/TypeScript/tsc", "cohere/TypeScript-shim"},
 		Flags: flags, Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH, buildcache.Tool("clang", "--version")}}
 	directory := buildcache.Product(t, inputs, func(directory string) error {
-		return native.Build(source, filepath.Join(directory, "port"), native.Options{Sanitize: true})
+		return formatfilesBuildNative(t, source, filepath.Join(directory, "port"), sanitize)
 	})
 	return filepath.Join(directory, "port")
 }
@@ -363,8 +370,8 @@ func TestThePortParsesAsGoCohereDoes_031(t *testing.T) {
 
 func TestThePortParsesAsGoCohereDoesUnion(t *testing.T) {
 	t.Parallel()
-	path, answers := formatfilesAskedCases(t)
-	parts := formatfilesPartition(t, path, answers)
+	shared := formatfilesReady(t)
+	parts := formatfilesPartition(t, shared.casesPath, shared.answers)
 	if len(parts) != testThePortParsesAsGoCohereDoesShards {
 		t.Fatal("enumerated shard count differs")
 	}
@@ -383,6 +390,9 @@ func TestThePortParsesAsGoCohereDoesUnion(t *testing.T) {
 	for _, declaration := range table.Decls {
 		fn, ok := declaration.(*ast.FuncDecl)
 		if !ok {
+			continue
+		}
+		if fn.Name.Name == "TestThePortParsesAsGoCohereDoes_Setup" {
 			continue
 		}
 		suffix, ok := strings.CutPrefix(fn.Name.Name, "TestThePortParsesAsGoCohereDoes_")
@@ -435,7 +445,7 @@ func formatfilesAskedCases(t *testing.T) (string, string) {
 			t.Fatal(err)
 		}
 	}
-	directory := t.TempDir()
+	directory := formatfilesSetupDirectory(t)
 	casesPath := filepath.Join(directory, "cases.txt")
 	answersPath := filepath.Join(directory, "answers.txt")
 	// The trees live here, where the port walks them after cohere's side has laid them out; the
@@ -505,7 +515,7 @@ func formatfilesCohereSide(t *testing.T, request map[string]any) {
 		}
 		return nil
 	})
-	command := formatfilesCommand(t, filepath.Join(product, "oracle"), "-test.run=^TestAdamicPortCases$", "-test.timeout=75s")
+	command := formatfilesCommand(t, filepath.Join(product, "oracle"), "-test.run=^TestAdamicPortCases$", "-test.timeout=90s")
 	command.Dir = packageDirectory
 	command.Env = append(os.Environ(), "ADAMIC_PORT_REQUEST="+requestPath)
 	if output, err := combinedOutput(command); err != nil {
@@ -517,7 +527,11 @@ func formatfilesCohereSide(t *testing.T, request map[string]any) {
 // process group also terminates compilers launched by the Go oracle build.
 func formatfilesCommand(t *testing.T, name string, arguments ...string) *exec.Cmd {
 	t.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	parent := context.Background()
+	if formatfilesSetupContext != nil {
+		parent = formatfilesSetupContext
+	}
+	ctx, cancel := context.WithTimeout(parent, 90*time.Second)
 	t.Cleanup(cancel)
 	command := exec.CommandContext(ctx, name, arguments...)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}

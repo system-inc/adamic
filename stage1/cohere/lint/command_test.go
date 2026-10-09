@@ -31,6 +31,7 @@ func TestCommandDiagnosticsDropOnlyModuleDownloads(t *testing.T) {
 
 // Not parallel: each case runs this test binary again with a fake go first on PATH.
 // execute passes a go command whose only stderr is module downloads, and fails one that writes anything else.
+// Not parallel: t.Setenv changes the process-wide PATH in the stderr probe.
 func TestExecuteFailsOnStderrOtherThanModuleDownloads(t *testing.T) {
 	if lines := os.Getenv("ADAMIC_LINT_STDERR_PROBE"); lines != "" {
 		bin := t.TempDir()

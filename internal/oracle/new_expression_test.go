@@ -21,6 +21,7 @@ func init() {
 // Source Node demonstrates the conversion, while Adamic must stop before emission
 // until the runtime-owned Uint16 storage and conversions are integrated.
 func TestNewExpressionUint16RemainsNotYet(t *testing.T) {
+	t.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/new_expression_uint16_notyet.a"))
 	if err != nil {
 		t.Fatal(err)
@@ -39,6 +40,7 @@ func TestNewExpressionUint16RemainsNotYet(t *testing.T) {
 // A generated cache closure may capture only its cache cell. An initializer
 // supplied by the caller needs another capture and must remain unsupported.
 func TestNewExpressionCacheCaptureRemainsNotYet(t *testing.T) {
+	t.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/new_expression_class_cache_capture_notyet.a"))
 	if err != nil {
 		t.Fatal(err)

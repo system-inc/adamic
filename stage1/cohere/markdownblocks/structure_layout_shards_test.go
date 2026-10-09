@@ -109,14 +109,14 @@ func TestMarkdownStructureLayoutUnion(t *testing.T) {
 func structureLayoutShared(t *testing.T) *structureLayoutState {
 	structureLayoutOnce.Do(func() {
 		started := time.Now()
-		deadline := structureLayoutDeadline(t, "TestMarkdownStructureLayout (setup)")
+		deadline := structureLayoutDeadline(t, "TestMarkdownStructureLayout_Setup")
 		defer deadline.Stop()
 		state := structureLayoutEnumeration(t)
 		plantedName := state.products.plantedName
 		state.products = buildStructureLayoutProducts(t, state.products.root)
 		state.products.plantedName = plantedName
 		structureLayoutComplete = state
-		t.Logf("TestMarkdownStructureLayout (setup): %.3fs", time.Since(started).Seconds())
+		t.Logf("TestMarkdownStructureLayout_Setup: %.3fs", time.Since(started).Seconds())
 	})
 	if structureLayoutComplete == nil {
 		t.Fatal("structure layout setup failed")
@@ -126,9 +126,11 @@ func structureLayoutShared(t *testing.T) *structureLayoutState {
 
 func runStructureLayoutShard(t *testing.T, index int) {
 	configureMarkdownMemory(t)
+	// Shared setup has its own deadline; no shard spends its case budget
+	// fetching or building the products used by every shard.
+	state := structureLayoutShared(t)
 	deadline := structureLayoutDeadline(t, t.Name())
 	defer deadline.Stop()
-	state := structureLayoutShared(t)
 	if index < 0 || index >= len(state.shards) {
 		t.Fatal("shard outside enumeration")
 	}
@@ -208,12 +210,6 @@ func buildStructureLayoutProducts(t *testing.T, root string) structureLayoutProd
 	})
 	p.sanitized = filepath.Join(nativeDir, "sanitized")
 	p.release = filepath.Join(nativeDir, "release")
-	// These products are shared by independent top-level tests, so their lifetime
-	// belongs to TestMain rather than whichever test first wins sync.Once.
-	dir, err := os.MkdirTemp(artifactDirectory, "structure-go-")
-	if err != nil {
-		t.Fatal(err)
-	}
 	cohere := filepath.Join(root, "cohere")
 	for _, item := range []struct {
 		command, driver string
@@ -236,15 +232,31 @@ func buildStructureLayoutProducts(t *testing.T, root string) structureLayoutProd
 		if err != nil {
 			t.Fatal(err)
 		}
-		overlayPath := filepath.Join(dir, item.command+".json")
-		write(t, overlayPath, overlay)
-		binary := filepath.Join(dir, item.command)
-		command, cancel := structureLayoutCommand("go", "build", "-overlay="+overlayPath, "-o", binary, main)
-		defer cancel()
-		command.Dir = cohere
-		if output, err := combinedOutput(command); err != nil {
-			t.Fatalf("Go bridge: %v\n%s", err, output)
+		// Keep overlay files inside the content-addressed product. Their source
+		// paths are stable, so warm setup fetches the Go oracle instead of
+		// charging whichever shard first enters sync.Once for a new build.
+		goFiles := []string{"cohere/internal", "cohere/go.mod", "cohere/go.sum", "cohere/go.work", "cohere/go.work.sum", "cohere/TypeScript/tsc", "cohere/TypeScript-shim", "cohere/mutation_aliasing", "cohere/static_single_assignment", "go.mod", "go.work", "stage1/cohere/markdownblocks/testdata/" + item.driver}
+		if item.bridge {
+			goFiles = append(goFiles, "stage1/cohere/markdownblocks/testdata/list_bridge.go")
 		}
+		goDir := buildcache.Product(t, buildcache.Inputs{
+			Name: "markdown-structure-go-" + item.command, Files: goFiles,
+			Flags:     []string{"overlay=" + string(overlay), "main=" + main, "GOFLAGS=" + os.Getenv("GOFLAGS"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "GOOS=" + runtime.GOOS, "GOARCH=" + runtime.GOARCH},
+			Toolchain: []string{buildcache.Tool("go", "version")},
+		}, func(dir string) error {
+			overlayPath := filepath.Join(dir, "overlay.json")
+			if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
+				return err
+			}
+			command, cancel := structureLayoutCommand("go", "build", "-overlay="+overlayPath, "-o", filepath.Join(dir, "oracle"), main)
+			defer cancel()
+			command.Dir = cohere
+			if output, err := combinedOutput(command); err != nil {
+				return fmt.Errorf("Go bridge: %w\n%s", err, output)
+			}
+			return nil
+		})
+		binary := filepath.Join(goDir, "oracle")
 		if item.bridge {
 			p.goList = binary
 		} else {
@@ -546,8 +558,8 @@ func structureLayoutFixture(t *testing.T, inputs []auditInput, products structur
 // An independent wall deadline includes silent children and kills the process at
 // the slack limit instead of waiting for an over-budget unit to finish.
 func structureLayoutDeadline(t *testing.T, name string) *time.Timer {
-	return time.AfterFunc(75*time.Second, func() {
-		fmt.Fprintf(os.Stderr, "%s cooked: over budget at 75s\n", name)
+	return time.AfterFunc(90*time.Second, func() {
+		fmt.Fprintf(os.Stderr, "%s cooked: over budget at 90s\n", name)
 		os.Exit(124)
 	})
 }

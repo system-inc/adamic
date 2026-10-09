@@ -13,6 +13,7 @@ import (
 )
 
 // Parallel execution reserves memory: the exhaustive scalar corpus and sanitizer builds have a large peak working set.
+// Not parallel: shared markdownMemory configuration and artifacts build cache; existing helper controls parallel execution.
 func TestMarkdownUnicodeWidths(t *testing.T) {
 	parallelMarkdownMemory(t, 8)
 	widthDependencies := os.Getenv("ADAMIC_MARKDOWNWIDTH_DEPS")

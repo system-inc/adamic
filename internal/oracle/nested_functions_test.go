@@ -115,6 +115,7 @@ func TestNestedCycleRefusal(t *testing.T) {
 }
 
 func TestNestedRebindingCheckerRefusal(t *testing.T) {
+	t.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/refusals/nested_rebinding.a"))
 	if err != nil {
 		t.Fatal(err)
@@ -126,6 +127,7 @@ func TestNestedRebindingCheckerRefusal(t *testing.T) {
 }
 
 func TestNestedCallbackCarrierMutantIsCaught(t *testing.T) {
+	t.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/nested_callback_escaped.a"))
 	if err != nil {
 		t.Fatal(err)

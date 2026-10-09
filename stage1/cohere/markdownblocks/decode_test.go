@@ -17,6 +17,7 @@ import (
 )
 
 // Parallel execution reserves memory: the exhaustive numeric corpus and sanitizer run need a bounded peak working set.
+// Not parallel: shared markdownMemory configuration and artifacts build cache; existing helper controls parallel execution.
 func TestMarkdownSourceDecoding(t *testing.T) {
 	parallelMarkdownMemory(t, 8)
 	root, err := filepath.Abs(repository)

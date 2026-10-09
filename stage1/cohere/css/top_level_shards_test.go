@@ -2,10 +2,14 @@
 package css
 
 import (
+	"flag"
+	"fmt"
 	"os"
 	"path/filepath"
+	"regexp"
 	"sync"
 	"testing"
+	"time"
 )
 
 var cssParserTopSetup struct {
@@ -33,6 +37,8 @@ func cssParserTopTempDir(t *testing.T) string {
 // Shared build inputs outlive every parallel leaf and are removed after m.Run.
 // Not parallel: owns package-wide shared build-input lifetime and cleanup.
 func TestMain(m *testing.M) {
+	flag.Parse()
+	cssParserIncludeSetup()
 	code := m.Run()
 	if cssParserTopRoot != "" {
 		if err := os.RemoveAll(cssParserTopRoot); err != nil {
@@ -52,6 +58,42 @@ func cssParserTopPortDirectory(t *testing.T, applied *mutant) string {
 		t.Fatal(err)
 	}
 	return filepath.Join(destination, "css")
+}
+
+// Not parallel: prepares immutable inputs before the parallel shard leaves.
+func TestThePortParsesAsGoCohereDoes_Setup(t *testing.T) {
+	timer := time.AfterFunc(90*time.Second, func() { panic("cooked TestThePortParsesAsGoCohereDoes_Setup: shared setup exceeded 90s") })
+	defer timer.Stop()
+	prepareThePortParsesAsGoCohereDoesSetup(t)
+}
+
+// A gate-selected leaf must also run its named prerequisite. Keeping setup
+// serial and registered before the wrappers excludes it from each leaf's clock.
+func cssParserIncludeSetup() {
+	expression := flag.Lookup("test.run").Value.String()
+	match, err := regexp.Compile(expression)
+	if err != nil {
+		return
+	}
+	needed := match.MatchString("TestThePortParsesAsGoCohereDoesUnion") || match.MatchString("TestCSSParserPlantedDisagreement")
+	for i := 0; i < testThePortParsesAsGoCohereDoesShards && !needed; i++ {
+		needed = match.MatchString(fmt.Sprintf("TestThePortParsesAsGoCohereDoes_%03d", i))
+	}
+	if needed {
+		// Setup and the selected leaf each have their own 90s kill; the enclosing
+		// Go process must allow both units to finish independently.
+		if value := flag.Lookup("test.timeout"); value != nil {
+			duration, err := time.ParseDuration(value.Value.String())
+			if err == nil && duration > 0 {
+				if err := flag.Set("test.timeout", (duration + 90*time.Second).String()); err != nil {
+					panic(err)
+				}
+			}
+		}
+		if err := flag.Set("test.run", "(?:"+expression+")|^TestThePortParsesAsGoCohereDoes_Setup$"); err != nil {
+			panic(err)
+		}
+	}
 }
 
 func TestThePortParsesAsGoCohereDoes_000(t *testing.T) {
@@ -1613,7 +1655,7 @@ var cssParserTopCorpusSetup struct {
 	units  []cssParserShard
 }
 
-func cssParserTopCorpus(t *testing.T) cssParserCorpus {
+func prepareCSSParserTopCorpus(t *testing.T) {
 	t.Helper()
 	cssParserTopCorpusSetup.once.Do(func() {
 		oracle := cssParserOracle(t)
@@ -1621,6 +1663,10 @@ func cssParserTopCorpus(t *testing.T) cssParserCorpus {
 		cssParserTopCorpusSetup.corpus = readCSSParserCorpus(t, cases, answers)
 		cssParserTopCorpusSetup.units = cssParserShards(cssParserTopCorpusSetup.corpus.keys)
 	})
+}
+func cssParserTopCorpus(t *testing.T) cssParserCorpus {
+	t.Helper()
+
 	if len(cssParserTopCorpusSetup.corpus.keys) == 0 {
 		t.Fatal("shared corpus setup did not complete")
 	}

@@ -11,6 +11,7 @@ import (
 // These are backend primitives, not a claim that checked-view lowering is complete.
 // The failures are pinned independently; all mutants produce valid C and harmless scalar values.
 func TestRequiredViewFieldPrimitive(t *testing.T) {
+	t.Parallel()
 	for _, test := range []struct {
 		name   string
 		fields []ir.Field
@@ -26,6 +27,7 @@ func TestRequiredViewFieldPrimitive(t *testing.T) {
 		{"wrong type", []ir.Field{{Name: "value", Value: ir.NumberConstant{}}}, ir.Boolean, run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: node.value is not a boolean; expected boolean, found number\n")}},
 	} {
 		t.Run(test.name, func(t *testing.T) {
+			t.Parallel()
 			program := &ir.Program{Source: "view-field", Strings: []string{"name"}, Locals: []ir.Local{{Name: "node", Type: ir.Object, Function: -1}}}
 			property := ir.Property{Object: ir.Read{Local: 0, Of: ir.Object}, Name: "value", Of: test.wanted, View: "node.value"}
 			output := func(property ir.Property) ir.Statement {
@@ -89,6 +91,7 @@ func TestRequiredViewFieldPrimitive(t *testing.T) {
 }
 
 func TestRequiredViewFieldOperandOnce(t *testing.T) {
+	t.Parallel()
 	counter := ir.Read{Local: 0, Of: ir.Number}
 	program := &ir.Program{Source: "view-once", Locals: []ir.Local{{Name: "calls", Type: ir.Number, Global: true, Function: -1}}}
 	program.Functions = []ir.Function{{Name: "make", Returns: ir.Object, Body: []ir.Statement{
@@ -120,6 +123,7 @@ func TestRequiredViewFieldOperandOnce(t *testing.T) {
 // Unchanged storage sources now run as checked TypeScript; their initializers
 // stop eagerly. The shared field readiness primitives remain exercised above.
 func TestNarrowedFieldUsesSharedReadiness(t *testing.T) {
+	t.Parallel()
 	for _, probe := range []struct {
 		name, field, stdout string
 		initialized         bool
@@ -130,6 +134,7 @@ func TestNarrowedFieldUsesSharedReadiness(t *testing.T) {
 		{"number-uninitialized", "value", "number\n", false},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
 			path, err := filepath.Abs(filepath.Join(repository, "stage3/interface-downcasts/readiness-"+probe.name+".ts"))
 			if err != nil {
 				t.Fatal(err)
@@ -144,6 +149,7 @@ func TestNarrowedFieldUsesSharedReadiness(t *testing.T) {
 }
 
 func TestViewFieldInheritedStaticReadiness(t *testing.T) {
+	t.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/non_null_static_initialized.ts"))
 	if err != nil {
 		t.Fatal(err)
@@ -153,6 +159,7 @@ func TestViewFieldInheritedStaticReadiness(t *testing.T) {
 
 // These exercise real source casts and writes, without replacing any lowered IR.
 func TestDefaultTaggedSourceViews(t *testing.T) {
+	t.Parallel()
 	for _, probe := range []struct{ name, stdout, diagnostic string }{
 		{"default-staged", "okok\n", ""},
 		{"default-boxed-string", "okok\n", ""},
@@ -164,6 +171,7 @@ func TestDefaultTaggedSourceViews(t *testing.T) {
 		{"default-read-before-set", "", "field read failed: (held as Identifier).escapedText is not initialized; expected string, found uninitialized"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
 			if probe.name == "default-staged" || probe.name == "default-boxed-write" || probe.name == "default-read-before-set" {
 				path, err := filepath.Abs(filepath.Join(repository, interfaceFixturePath(probe.name)))
 				if err != nil {

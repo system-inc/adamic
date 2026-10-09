@@ -74,7 +74,7 @@ func build(t *testing.T, directory string) string {
 	return binary
 }
 
-// Not parallel: native.Build writes the shared user cache directory adamic/runtime (and adamic/units when split builds are enabled).
+// Not parallel: native.Build writes the shared adamic/runtime and adamic/units caches and native.runtimeBuilds map.
 func TestHelpersMatchCohere(t *testing.T) {
 	goOracle := oracle(t)
 	catalog := run(t, "", goOracle, "catalog")
@@ -114,7 +114,7 @@ func compare(t *testing.T, got, want []byte) {
 	t.Fatalf("output size: got %d Go %d", len(got), len(want))
 }
 
-// Not parallel: native.Build writes the shared user cache directory adamic/runtime (and adamic/units when split builds are enabled).
+// Not parallel: native.Build writes the shared adamic/runtime and adamic/units caches and native.runtimeBuilds map.
 func TestHelperMutants(t *testing.T) {
 	cases := fixture(t)
 	catalog, _ := filepath.Abs("testdata/catalog.json")
@@ -191,7 +191,7 @@ func smallFixture(t *testing.T, corpus any) string {
 	return path
 }
 
-// Not parallel: native.Build writes the shared user cache directory adamic/runtime (and adamic/units when split builds are enabled).
+// Not parallel: native.Build writes the shared adamic/runtime and adamic/units caches and native.runtimeBuilds map.
 func TestMessageRefusalsMatchGo(t *testing.T) {
 	binary := build(t, ".")
 	goOracle := oracle(t)
@@ -240,7 +240,7 @@ func TestMessageRefusalsMatchGo(t *testing.T) {
 	t.Logf("%d message refusal cases match Go on Node and sanitized native", len(cases))
 }
 
-// Not parallel: native.Build writes the shared user cache directory adamic/runtime (and adamic/units when split builds are enabled).
+// Not parallel: native.Build writes the shared adamic/runtime and adamic/units caches and native.runtimeBuilds map.
 func TestKnownGapsAreExplicit(t *testing.T) {
 	corpus := map[string]any{"Definitions": map[string]string{
 		"regex":  `{"type":"array","items":{"type":"string","pattern":"x"}}`,
