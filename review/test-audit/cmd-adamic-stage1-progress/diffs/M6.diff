@@ -1,0 +1,14 @@
+--- a/cmd/adamic-stage1-progress/main.go
++++ b/cmd/adamic-stage1-progress/main.go
+@@ -185,11 +185,6 @@
+ 			marks[n] = true
+ 		}
+ 	}
+-	for name, found := range wanted {
+-		if !found {
+-			return nil, fmt.Errorf("mapped declaration %s missing", name)
+-		}
+-	}
+ 	return marks, nil
+ }
+ func blob(root, ref, name string) ([]byte, error) { return git(root, "show", ref+":"+name) }

@@ -1,0 +1,11 @@
+--- a/cmd/adamic-stage1-progress/main.go
++++ b/cmd/adamic-stage1-progress/main.go
+@@ -433,7 +433,7 @@
+ 	}
+ 	var refs, integrated []string
+ 	for _, ref := range strings.Fields(string(output)) {
+-		if !strings.HasPrefix(ref, "origin/codex/stage1-") && ref != "origin/codex/typescript-scanner" {
++		if !strings.HasPrefix(ref, "origin/codex/stage2-") && ref != "origin/codex/typescript-scanner" {
+ 			continue
+ 		}
+ 		command := exec.Command("git", "-C", root, "merge-base", "--is-ancestor", ref, "origin/main")

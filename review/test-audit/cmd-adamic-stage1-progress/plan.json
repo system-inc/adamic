@@ -1,0 +1,164 @@
+[
+  {
+    "id": "M1",
+    "file": "cmd/adamic-stage1-progress/main.go",
+    "line": 80,
+    "kind": "production",
+    "menu": "change constant",
+    "before": "bytes.Count(source, []byte{'\\n'})",
+    "after": "bytes.Count(source, []byte{'\\r'})"
+  },
+  {
+    "id": "M2",
+    "file": "cmd/adamic-stage1-progress/main.go",
+    "line": 87,
+    "kind": "production",
+    "menu": "change constant",
+    "before": "strings.HasSuffix(name, \"_test.go\")",
+    "after": "strings.HasSuffix(name, \"_audit_test.go\")"
+  },
+  {
+    "id": "M3",
+    "file": "cmd/adamic-stage1-progress/main.go",
+    "line": 82,
+    "kind": "production",
+    "menu": "drop statement",
+    "before": "\t\tn++\n",
+    "after": ""
+  },
+  {
+    "id": "M4",
+    "file": "cmd/adamic-stage1-progress/main.go",
+    "line": 181,
+    "kind": "production",
+    "menu": "change condition option",
+    "before": "if function.Doc != nil {",
+    "after": "if false && function.Doc != nil {"
+  },
+  {
+    "id": "M5",
+    "file": "cmd/adamic-stage1-progress/main.go",
+    "line": 184,
+    "kind": "production",
+    "menu": "off-by-one bound",
+    "before": "n <= files.Position(function.End()).Line",
+    "after": "n < files.Position(function.End()).Line"
+  },
+  {
+    "id": "M6",
+    "file": "cmd/adamic-stage1-progress/main.go",
+    "line": 188,
+    "kind": "production",
+    "menu": "drop complete validation loop",
+    "before": "\tfor name, found := range wanted {\n\t\tif !found {\n\t\t\treturn nil, fmt.Errorf(\"mapped declaration %s missing\", name)\n\t\t}\n\t}\n",
+    "after": ""
+  },
+  {
+    "id": "M7",
+    "file": "cmd/adamic-stage1-progress/main.go",
+    "line": 348,
+    "kind": "production",
+    "menu": "change constant",
+    "before": "100 * float64(result.Ported) / float64(result.Total)",
+    "after": "1 * float64(result.Ported) / float64(result.Total)"
+  },
+  {
+    "id": "M8",
+    "file": "cmd/adamic-stage1-progress/main.go",
+    "line": 358,
+    "kind": "production",
+    "menu": "flip condition",
+    "before": "if report.Cohere != first.Cohere {",
+    "after": "if report.Cohere == first.Cohere {"
+  },
+  {
+    "id": "M9",
+    "file": "cmd/adamic-stage1-progress/main.go",
+    "line": 436,
+    "kind": "production",
+    "menu": "change constant",
+    "before": "strings.HasPrefix(ref, \"origin/codex/stage1-\")",
+    "after": "strings.HasPrefix(ref, \"origin/codex/stage2-\")"
+  },
+  {
+    "id": "M10",
+    "file": "cmd/adamic-stage1-progress/main.go",
+    "line": 419,
+    "kind": "production",
+    "menu": "change constant",
+    "before": "return strings.Join(paragraph, \" \")",
+    "after": "return strings.Join(paragraph, \"|\")"
+  },
+  {
+    "id": "M11",
+    "file": "cmd/adamic-stage1-progress/main.go",
+    "line": 139,
+    "kind": "production",
+    "menu": "off-by-one bound",
+    "before": "data := make([]byte, size+1)",
+    "after": "data := make([]byte, size)"
+  },
+  {
+    "id": "M12",
+    "file": "cmd/adamic-stage1-progress/main.go",
+    "line": 301,
+    "kind": "production",
+    "menu": "flip condition",
+    "before": "if !known[directory] {",
+    "after": "if known[directory] {"
+  },
+  {
+    "id": "P1",
+    "file": "cmd/adamic-stage1-progress/main.go",
+    "line": 79,
+    "kind": "probe",
+    "menu": "probe",
+    "before": "func physicalLines(source []byte) int {",
+    "after": "func physicalLines(source []byte) int {\n\tif true { return 0 }"
+  },
+  {
+    "id": "P2",
+    "file": "cmd/adamic-stage1-progress/main.go",
+    "line": 86,
+    "kind": "probe",
+    "menu": "probe",
+    "before": "func production(name string) bool {",
+    "after": "func production(name string) bool {\n\tif true { return false }"
+  },
+  {
+    "id": "P3",
+    "file": "cmd/adamic-stage1-progress/main.go",
+    "line": 150,
+    "kind": "probe",
+    "menu": "probe",
+    "before": "func credit(source []byte, declarations []string) (map[int]bool, error) {",
+    "after": "func credit(source []byte, declarations []string) (map[int]bool, error) {\n\tif true { return map[int]bool{}, nil }"
+  },
+  {
+    "id": "P4",
+    "file": "cmd/adamic-stage1-progress/main.go",
+    "line": 353,
+    "kind": "probe",
+    "menu": "probe",
+    "before": "func union(reports []*report) (*report, error) {",
+    "after": "func union(reports []*report) (*report, error) {\n\tif true { return &report{}, nil }"
+  },
+  {
+    "id": "P5",
+    "file": "cmd/adamic-stage1-progress/main.go",
+    "line": 196,
+    "kind": "probe",
+    "menu": "probe",
+    "before": "func measure(root, ref string, cache map[string]*inventory) (*report, error) {",
+    "after": "func measure(root, ref string, cache map[string]*inventory) (*report, error) {\n\tif true { return &report{}, nil }"
+  },
+  {
+    "id": "P6",
+    "file": "cmd/adamic-stage1-progress/main.go",
+    "line": 429,
+    "kind": "probe",
+    "menu": "probe",
+    "before": "func pending(root string) ([]string, []string, error) {",
+    "after": "func pending(root string) ([]string, []string, error) {\n\tif true { return nil, nil, nil }"
+  }
+]

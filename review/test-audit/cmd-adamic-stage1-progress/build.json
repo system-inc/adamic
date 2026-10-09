@@ -1,0 +1,13 @@
+{
+  "command": [
+    "timeout",
+    "90",
+    "go",
+    "build",
+    "-o",
+    "/tmp/u010-stage1-progress",
+    "./cmd/adamic-stage1-progress/"
+  ],
+  "exit": 0,
+  "wall_seconds": 0.7134985709999455
+}

@@ -1,0 +1,128 @@
+[
+  {
+    "id": "M1",
+    "applies": true,
+    "command": "timeout 90 go vet ./cmd/adamic-stage1-progress/",
+    "exit": 0,
+    "wall_seconds": 0.1652635740028927
+  },
+  {
+    "id": "M2",
+    "applies": true,
+    "command": "timeout 90 go vet ./cmd/adamic-stage1-progress/",
+    "exit": 0,
+    "wall_seconds": 0.1446039379989088
+  },
+  {
+    "id": "M3",
+    "applies": true,
+    "command": "timeout 90 go vet ./cmd/adamic-stage1-progress/",
+    "exit": 0,
+    "wall_seconds": 0.1417998990000342
+  },
+  {
+    "id": "M4",
+    "applies": true,
+    "command": "timeout 90 go vet ./cmd/adamic-stage1-progress/",
+    "exit": 0,
+    "wall_seconds": 0.2117329159991641
+  },
+  {
+    "id": "M5",
+    "applies": true,
+    "command": "timeout 90 go vet ./cmd/adamic-stage1-progress/",
+    "exit": 0,
+    "wall_seconds": 0.14699699700213387
+  },
+  {
+    "id": "M6",
+    "applies": true,
+    "command": "timeout 90 go vet ./cmd/adamic-stage1-progress/",
+    "exit": 0,
+    "wall_seconds": 0.11770815700219828
+  },
+  {
+    "id": "M7",
+    "applies": true,
+    "command": "timeout 90 go vet ./cmd/adamic-stage1-progress/",
+    "exit": 0,
+    "wall_seconds": 0.13602460300171515
+  },
+  {
+    "id": "M8",
+    "applies": true,
+    "command": "timeout 90 go vet ./cmd/adamic-stage1-progress/",
+    "exit": 0,
+    "wall_seconds": 0.119183441001951
+  },
+  {
+    "id": "M9",
+    "applies": true,
+    "command": "timeout 90 go vet ./cmd/adamic-stage1-progress/",
+    "exit": 0,
+    "wall_seconds": 0.1907719779992476
+  },
+  {
+    "id": "M10",
+    "applies": true,
+    "command": "timeout 90 go vet ./cmd/adamic-stage1-progress/",
+    "exit": 0,
+    "wall_seconds": 0.19748265300222556
+  },
+  {
+    "id": "M11",
+    "applies": true,
+    "command": "timeout 90 go vet ./cmd/adamic-stage1-progress/",
+    "exit": 0,
+    "wall_seconds": 0.16970204199969885
+  },
+  {
+    "id": "M12",
+    "applies": true,
+    "command": "timeout 90 go vet ./cmd/adamic-stage1-progress/",
+    "exit": 0,
+    "wall_seconds": 0.1347819789989444
+  },
+  {
+    "id": "P1",
+    "applies": true,
+    "command": "timeout 90 go vet ./cmd/adamic-stage1-progress/",
+    "exit": 0,
+    "wall_seconds": 0.13821308899787255
+  },
+  {
+    "id": "P2",
+    "applies": true,
+    "command": "timeout 90 go vet ./cmd/adamic-stage1-progress/",
+    "exit": 0,
+    "wall_seconds": 0.25092891399981454
+  },
+  {
+    "id": "P3",
+    "applies": true,
+    "command": "timeout 90 go vet ./cmd/adamic-stage1-progress/",
+    "exit": 0,
+    "wall_seconds": 0.15900244400108932
+  },
+  {
+    "id": "P4",
+    "applies": true,
+    "command": "timeout 90 go vet ./cmd/adamic-stage1-progress/",
+    "exit": 0,
+    "wall_seconds": 0.16987159599739243
+  },
+  {
+    "id": "P5",
+    "applies": true,
+    "command": "timeout 90 go vet ./cmd/adamic-stage1-progress/",
+    "exit": 0,
+    "wall_seconds": 0.1615005330022541
+  },
+  {
+    "id": "P6",
+    "applies": true,
+    "command": "timeout 90 go vet ./cmd/adamic-stage1-progress/",
+    "exit": 0,
+    "wall_seconds": 0.13867341600052896
+  }
+]

@@ -1,0 +1,11 @@
+--- a/cmd/adamic-stage1-progress/main.go
++++ b/cmd/adamic-stage1-progress/main.go
+@@ -178,7 +178,7 @@
+ 		}
+ 		wanted[name] = true
+ 		start := function.Pos()
+-		if function.Doc != nil {
++		if false && function.Doc != nil {
+ 			start = function.Doc.Pos()
+ 		}
+ 		for n := files.Position(start).Line; n <= files.Position(function.End()).Line; n++ {

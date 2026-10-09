@@ -1,0 +1,11 @@
+--- a/cmd/adamic-stage1-progress/main.go
++++ b/cmd/adamic-stage1-progress/main.go
+@@ -136,7 +136,7 @@
+ 		if err != nil {
+ 			return nil, err
+ 		}
+-		data := make([]byte, size+1)
++		data := make([]byte, size)
+ 		if _, err = io.ReadFull(reader, data); err != nil {
+ 			return nil, err
+ 		}

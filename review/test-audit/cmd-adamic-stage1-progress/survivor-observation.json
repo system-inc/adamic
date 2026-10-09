@@ -1,0 +1,14 @@
+[
+  {
+    "selector": "",
+    "command": "ADAMIC_MUTANT='' timeout 90 go run /tmp/adamic-gate/u010-observe-mr8ub5o0/implementation.go /tmp/adamic-gate/u010-observe-mr8ub5o0/coverage.go /tmp/adamic-gate/u010-observe-mr8ub5o0/observer.go > review/test-audit/cmd-adamic-stage1-progress/survivor-before.log 2>&1",
+    "exit": 0,
+    "wall_seconds": 0.6506559250010469
+  },
+  {
+    "selector": "M10",
+    "command": "ADAMIC_MUTANT=M10 timeout 90 go run /tmp/adamic-gate/u010-observe-mr8ub5o0/implementation.go /tmp/adamic-gate/u010-observe-mr8ub5o0/coverage.go /tmp/adamic-gate/u010-observe-mr8ub5o0/observer.go > review/test-audit/cmd-adamic-stage1-progress/survivor-after.log 2>&1",
+    "exit": 0,
+    "wall_seconds": 0.14260390900017228
+  }
+]

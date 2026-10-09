@@ -1,0 +1,10 @@
+--- a/cmd/adamic-stage1-progress/main.go
++++ b/cmd/adamic-stage1-progress/main.go
+@@ -148,6 +148,7 @@
+ 	return result, nil
+ }
+ func credit(source []byte, declarations []string) (map[int]bool, error) {
++	if true { return map[int]bool{}, nil }
+ 	marks := map[int]bool{}
+ 	if len(declarations) == 0 {
+ 		for n := 1; n <= physicalLines(source); n++ {

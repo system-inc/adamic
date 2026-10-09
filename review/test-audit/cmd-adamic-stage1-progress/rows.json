@@ -1,0 +1,156 @@
+[
+  {
+    "test": "TestPhysicalInventoryBoundaries",
+    "package": "cmd/adamic-stage1-progress",
+    "file": "cmd/adamic-stage1-progress/main_test.go:11",
+    "seconds": 0.003,
+    "oracle": "Hand-written physical line counts and production-path inclusion booleans.",
+    "oracle_kind": "self",
+    "kills": [
+      "M1",
+      "M2",
+      "M3"
+    ],
+    "unique_kills": [
+      "M3"
+    ],
+    "last_proven_fail": "M3 main_test.go:18: lines=0 want 1",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 12,
+    "probe_kills": [
+      "P1",
+      "P2"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT=M3 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-stage1-progress/ -run . > review/test-audit/cmd-adamic-stage1-progress/M3.log 2>&1; main_test.go:18: lines=0 want 1",
+    "timing_samples": [
+      0.003,
+      0.004,
+      0.003
+    ],
+    "own_entry_probes": [
+      "P1",
+      "P2"
+    ]
+  },
+  {
+    "test": "TestDeclarationCreditIsBoundedAndFailsClosed",
+    "package": "cmd/adamic-stage1-progress",
+    "file": "cmd/adamic-stage1-progress/main_test.go:27",
+    "seconds": 0.003,
+    "oracle": "Hand-written credited declaration line set, including attached documentation and closing line; missing name must return some error, without checking error identity.",
+    "oracle_kind": "self",
+    "kills": [
+      "M4",
+      "M5",
+      "M6"
+    ],
+    "unique_kills": [
+      "M4",
+      "M5",
+      "M6"
+    ],
+    "last_proven_fail": "M6 main_test.go:38: missing declaration silently credited",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 12,
+    "probe_kills": [
+      "P3"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT=M6 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-stage1-progress/ -run . > review/test-audit/cmd-adamic-stage1-progress/M6.log 2>&1; main_test.go:38: missing declaration silently credited",
+    "timing_samples": [
+      0.003,
+      0.003,
+      0.003
+    ],
+    "own_entry_probes": [
+      "P3"
+    ]
+  },
+  {
+    "test": "TestUnionDoesNotCountSharedLinesTwice",
+    "package": "cmd/adamic-stage1-progress",
+    "file": "cmd/adamic-stage1-progress/main_test.go:41",
+    "seconds": 0.005,
+    "oracle": "Hand-written deduplicated line count, denominator, 75 percent and complete count; incompatible pins must return some error, without checking error identity.",
+    "oracle_kind": "self",
+    "kills": [
+      "M7",
+      "M8"
+    ],
+    "unique_kills": [
+      "M7",
+      "M8"
+    ],
+    "last_proven_fail": "M8 main_test.go:49: cannot union different cohere pins",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 12,
+    "probe_kills": [
+      "P4"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT=M8 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-stage1-progress/ -run . > review/test-audit/cmd-adamic-stage1-progress/M8.log 2>&1; main_test.go:49: cannot union different cohere pins",
+    "timing_samples": [
+      0.005,
+      0.004,
+      0.008
+    ],
+    "own_entry_probes": [
+      "P4"
+    ]
+  },
+  {
+    "test": "TestGitSnapshotAndEvidenceBoundary",
+    "package": "cmd/adamic-stage1-progress",
+    "file": "cmd/adamic-stage1-progress/main_test.go:59",
+    "seconds": 0.19,
+    "oracle": "Hand-written progress totals/status counts and exact pending/integrated ref lists for committed Git fixtures. Git constructs and reads snapshots, not a second expected progress report. Unknown slices need some error, without checking error identity; gap-summary text is not asserted.",
+    "oracle_kind": "self",
+    "kills": [
+      "M1",
+      "M2",
+      "M9",
+      "M11",
+      "M12"
+    ],
+    "unique_kills": [
+      "M9",
+      "M11",
+      "M12"
+    ],
+    "last_proven_fail": "M12 main_test.go:109: unmapped stage1/cohere/gitignore: add reviewed source coverage before reporting",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 12,
+    "probe_kills": [
+      "P5",
+      "P6"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT=M12 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-stage1-progress/ -run . > review/test-audit/cmd-adamic-stage1-progress/M12.log 2>&1; main_test.go:109: unmapped stage1/cohere/gitignore: add reviewed source coverage before reporting",
+    "timing_samples": [
+      0.155,
+      0.19,
+      0.222
+    ],
+    "own_entry_probes": [
+      "P5",
+      "P6"
+    ]
+  }
+]

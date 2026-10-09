@@ -1,0 +1,11 @@
+--- a/cmd/adamic-stage1-progress/main.go
++++ b/cmd/adamic-stage1-progress/main.go
+@@ -416,7 +416,7 @@
+ 		started = true
+ 		paragraph = append(paragraph, line)
+ 	}
+-	return strings.Join(paragraph, " ")
++	return strings.Join(paragraph, "|")
+ }
+ func appendUnique(items []string, item string) []string {
+ 	for _, existing := range items {

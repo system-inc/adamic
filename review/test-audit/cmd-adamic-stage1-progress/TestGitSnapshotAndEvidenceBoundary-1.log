@@ -1,0 +1,12 @@
+{"Time":"2026-10-09T09:33:11.538745853Z","Action":"start","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress"}
+{"Time":"2026-10-09T09:33:11.541637612Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress","Test":"TestGitSnapshotAndEvidenceBoundary"}
+{"Time":"2026-10-09T09:33:11.54172055Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress","Test":"TestGitSnapshotAndEvidenceBoundary","Output":"=== RUN   TestGitSnapshotAndEvidenceBoundary\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:33:11.541749717Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress","Test":"TestGitSnapshotAndEvidenceBoundary","Output":"=== PAUSE TestGitSnapshotAndEvidenceBoundary\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:33:11.541752453Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress","Test":"TestGitSnapshotAndEvidenceBoundary"}
+{"Time":"2026-10-09T09:33:11.541757026Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress","Test":"TestGitSnapshotAndEvidenceBoundary"}
+{"Time":"2026-10-09T09:33:11.541759533Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress","Test":"TestGitSnapshotAndEvidenceBoundary","Output":"=== CONT  TestGitSnapshotAndEvidenceBoundary\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:33:11.693974912Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress","Test":"TestGitSnapshotAndEvidenceBoundary","Output":"--- PASS: TestGitSnapshotAndEvidenceBoundary (0.15s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:33:11.694033526Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress","Test":"TestGitSnapshotAndEvidenceBoundary","Elapsed":0.15}
+{"Time":"2026-10-09T09:33:11.694056758Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:33:11.694672839Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress","Output":"ok  \tgithub.com/system-inc/adamic/cmd/adamic-stage1-progress\t0.155s\n"}
+{"Time":"2026-10-09T09:33:11.694726234Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress","Elapsed":0.156}

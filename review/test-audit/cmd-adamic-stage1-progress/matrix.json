@@ -1,0 +1,343 @@
+[
+  {
+    "id": "control",
+    "command": "ADAMIC_MUTANT='' timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-stage1-progress/ -run . > review/test-audit/cmd-adamic-stage1-progress/control.log 2>&1",
+    "exit": 0,
+    "wall_seconds": 0.8101897840024321,
+    "failed": [],
+    "passed": [
+      "TestPhysicalInventoryBoundaries",
+      "TestUnionDoesNotCountSharedLinesTwice",
+      "TestDeclarationCreditIsBoundedAndFailsClosed",
+      "TestGitSnapshotAndEvidenceBoundary"
+    ],
+    "unknown": [],
+    "failure_lines": []
+  },
+  {
+    "id": "M1",
+    "command": "ADAMIC_MUTANT=M1 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-stage1-progress/ -run . > review/test-audit/cmd-adamic-stage1-progress/M1.log 2>&1",
+    "exit": 1,
+    "wall_seconds": 0.7370263090015214,
+    "failed": [
+      "TestPhysicalInventoryBoundaries",
+      "TestGitSnapshotAndEvidenceBoundary"
+    ],
+    "passed": [
+      "TestUnionDoesNotCountSharedLinesTwice",
+      "TestDeclarationCreditIsBoundedAndFailsClosed"
+    ],
+    "unknown": [],
+    "failure_lines": [
+      "main_test.go:18: lines=0 want 2",
+      "main_test.go:112: snapshot=&main.report{Ref:\"7f396914fbd7afe609cadf2bab7e9eb26ef2fede\", Commit:\"7f396914fbd7afe609cadf2bab7e9eb26ef2fede\", Cohere:\"2778f7f4a566e7f93f341171942c57faad41389d\", Packages:[]main.packageRow{main.packageRow{Package:\"internal/format/yaml\", GoLines:0, PortedLines:0, Status:\"ported and held byte-identical\", Evidence:[]string(nil)}, main.packageRow{Package:\"internal/gitignore\", GoLines:0, PortedLines:0, Status:\"ported and held byte-identical\", Evidence:[]string{\"stage1/cohere/gitignore/GAPS.md\"}}}, Slices:[]main.sliceRow{main.sliceRow{Directory:\"stage1/cohere/gitignore\", Credited:true, Note:\"Matcher and glob implementation; recorded native/Node/Go corpus, UTF-8 scope.\", GapSummary:\"Recorded native and Go parity.\"}, main.sliceRow{Directory:\"stage1/cohere/yaml\", Credited:false, Note:\"Baseline audit only: GAPS.md records no Adamic parser, printer or driver. YAML packages remain not started.\", GapSummary:\"No Adamic YAML implementation.\"}}, External:[]string(nil), Total:0, Ported:0, Perc"
+    ]
+  },
+  {
+    "id": "M2",
+    "command": "ADAMIC_MUTANT=M2 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-stage1-progress/ -run . > review/test-audit/cmd-adamic-stage1-progress/M2.log 2>&1",
+    "exit": 1,
+    "wall_seconds": 0.40052379999906407,
+    "failed": [
+      "TestPhysicalInventoryBoundaries",
+      "TestGitSnapshotAndEvidenceBoundary"
+    ],
+    "passed": [
+      "TestUnionDoesNotCountSharedLinesTwice",
+      "TestDeclarationCreditIsBoundedAndFailsClosed"
+    ],
+    "unknown": [],
+    "failure_lines": [
+      "main_test.go:23: production(\"internal/p/a_test.go\")",
+      "main_test.go:112: snapshot=&main.report{Ref:\"ff40e766fba3bc885216309cfdb7e0518e49f66a\", Commit:\"ff40e766fba3bc885216309cfdb7e0518e49f66a\", Cohere:\"2ccdf5dbb4e98f99c3c7e80d7cd77647566fd64a\", Packages:[]main.packageRow{main.packageRow{Package:\"internal/format/yaml\", GoLines:1, PortedLines:0, Status:\"not started\", Evidence:[]string(nil)}, main.packageRow{Package:\"internal/gitignore\", GoLines:5, PortedLines:3, Status:\"partly ported\", Evidence:[]string{\"stage1/cohere/gitignore/GAPS.md\"}}}, Slices:[]main.sliceRow{main.sliceRow{Directory:\"stage1/cohere/gitignore\", Credited:true, Note:\"Matcher and glob implementation; recorded native/Node/Go corpus, UTF-8 scope.\", GapSummary:\"Recorded native and Go parity.\"}, main.sliceRow{Directory:\"stage1/cohere/yaml\", Credited:false, Note:\"Baseline audit only: GAPS.md records no Adamic parser, printer or driver. YAML packages remain not started.\", GapSummary:\"No Adamic YAML implementation.\"}}, External:[]string(nil), Total:6, Ported:3, Percent:50, Complete:0, Partial:1, NotSt"
+    ]
+  },
+  {
+    "id": "M3",
+    "command": "ADAMIC_MUTANT=M3 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-stage1-progress/ -run . > review/test-audit/cmd-adamic-stage1-progress/M3.log 2>&1",
+    "exit": 1,
+    "wall_seconds": 0.41344653999840375,
+    "failed": [
+      "TestPhysicalInventoryBoundaries"
+    ],
+    "passed": [
+      "TestUnionDoesNotCountSharedLinesTwice",
+      "TestDeclarationCreditIsBoundedAndFailsClosed",
+      "TestGitSnapshotAndEvidenceBoundary"
+    ],
+    "unknown": [],
+    "failure_lines": [
+      "main_test.go:18: lines=0 want 1"
+    ]
+  },
+  {
+    "id": "M4",
+    "command": "ADAMIC_MUTANT=M4 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-stage1-progress/ -run . > review/test-audit/cmd-adamic-stage1-progress/M4.log 2>&1",
+    "exit": 1,
+    "wall_seconds": 0.4245933950005565,
+    "failed": [
+      "TestDeclarationCreditIsBoundedAndFailsClosed"
+    ],
+    "passed": [
+      "TestPhysicalInventoryBoundaries",
+      "TestUnionDoesNotCountSharedLinesTwice",
+      "TestGitSnapshotAndEvidenceBoundary"
+    ],
+    "unknown": [],
+    "failure_lines": [
+      "main_test.go:35: marks=map[4:true 5:true]"
+    ]
+  },
+  {
+    "id": "M5",
+    "command": "ADAMIC_MUTANT=M5 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-stage1-progress/ -run . > review/test-audit/cmd-adamic-stage1-progress/M5.log 2>&1",
+    "exit": 1,
+    "wall_seconds": 0.4700192629970843,
+    "failed": [
+      "TestDeclarationCreditIsBoundedAndFailsClosed"
+    ],
+    "passed": [
+      "TestPhysicalInventoryBoundaries",
+      "TestUnionDoesNotCountSharedLinesTwice",
+      "TestGitSnapshotAndEvidenceBoundary"
+    ],
+    "unknown": [],
+    "failure_lines": [
+      "main_test.go:35: marks=map[3:true 4:true]"
+    ]
+  },
+  {
+    "id": "M6",
+    "command": "ADAMIC_MUTANT=M6 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-stage1-progress/ -run . > review/test-audit/cmd-adamic-stage1-progress/M6.log 2>&1",
+    "exit": 1,
+    "wall_seconds": 0.3905940059994464,
+    "failed": [
+      "TestDeclarationCreditIsBoundedAndFailsClosed"
+    ],
+    "passed": [
+      "TestPhysicalInventoryBoundaries",
+      "TestUnionDoesNotCountSharedLinesTwice",
+      "TestGitSnapshotAndEvidenceBoundary"
+    ],
+    "unknown": [],
+    "failure_lines": [
+      "main_test.go:38: missing declaration silently credited"
+    ]
+  },
+  {
+    "id": "M7",
+    "command": "ADAMIC_MUTANT=M7 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-stage1-progress/ -run . > review/test-audit/cmd-adamic-stage1-progress/M7.log 2>&1",
+    "exit": 1,
+    "wall_seconds": 0.4675148719979916,
+    "failed": [
+      "TestUnionDoesNotCountSharedLinesTwice"
+    ],
+    "passed": [
+      "TestPhysicalInventoryBoundaries",
+      "TestDeclarationCreditIsBoundedAndFailsClosed",
+      "TestGitSnapshotAndEvidenceBoundary"
+    ],
+    "unknown": [],
+    "failure_lines": [
+      "main_test.go:52: union=&main.report{Ref:\"main + pending evidence union (not a merge)\", Commit:\"\", Cohere:\"pin\", Packages:[]main.packageRow{main.packageRow{Package:\"internal/p\", GoLines:4, PortedLines:3, Status:\"partly ported\", Evidence:[]string{\":gap\"}}}, Slices:[]main.sliceRow(nil), External:[]string(nil), Total:4, Ported:3, Percent:0.75, Complete:0, Partial:1, NotStarted:0, marks:map[string]map[int]bool{\"internal/p/a.go\":map[int]bool{1:true, 2:true, 3:true}}, partial:map[string]bool{}}"
+    ]
+  },
+  {
+    "id": "M8",
+    "command": "ADAMIC_MUTANT=M8 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-stage1-progress/ -run . > review/test-audit/cmd-adamic-stage1-progress/M8.log 2>&1",
+    "exit": 1,
+    "wall_seconds": 0.4904930430020613,
+    "failed": [
+      "TestUnionDoesNotCountSharedLinesTwice"
+    ],
+    "passed": [
+      "TestPhysicalInventoryBoundaries",
+      "TestDeclarationCreditIsBoundedAndFailsClosed",
+      "TestGitSnapshotAndEvidenceBoundary"
+    ],
+    "unknown": [],
+    "failure_lines": [
+      "main_test.go:49: cannot union different cohere pins"
+    ]
+  },
+  {
+    "id": "M9",
+    "command": "ADAMIC_MUTANT=M9 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-stage1-progress/ -run . > review/test-audit/cmd-adamic-stage1-progress/M9.log 2>&1",
+    "exit": 1,
+    "wall_seconds": 0.41823312699852977,
+    "failed": [
+      "TestGitSnapshotAndEvidenceBoundary"
+    ],
+    "passed": [
+      "TestPhysicalInventoryBoundaries",
+      "TestDeclarationCreditIsBoundedAndFailsClosed",
+      "TestUnionDoesNotCountSharedLinesTwice"
+    ],
+    "unknown": [],
+    "failure_lines": [
+      "main_test.go:137: pending=[origin/codex/typescript-scanner] integrated=[] err=<nil>"
+    ]
+  },
+  {
+    "id": "M10",
+    "command": "ADAMIC_MUTANT=M10 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-stage1-progress/ -run . > review/test-audit/cmd-adamic-stage1-progress/M10.log 2>&1",
+    "exit": 0,
+    "wall_seconds": 0.3823061519979092,
+    "failed": [],
+    "passed": [
+      "TestPhysicalInventoryBoundaries",
+      "TestDeclarationCreditIsBoundedAndFailsClosed",
+      "TestUnionDoesNotCountSharedLinesTwice",
+      "TestGitSnapshotAndEvidenceBoundary"
+    ],
+    "unknown": [],
+    "failure_lines": []
+  },
+  {
+    "id": "M11",
+    "command": "ADAMIC_MUTANT=M11 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-stage1-progress/ -run . > review/test-audit/cmd-adamic-stage1-progress/M11.log 2>&1",
+    "exit": 1,
+    "wall_seconds": 0.27544893600133946,
+    "failed": [
+      "TestGitSnapshotAndEvidenceBoundary"
+    ],
+    "passed": [
+      "TestPhysicalInventoryBoundaries",
+      "TestDeclarationCreditIsBoundedAndFailsClosed",
+      "TestUnionDoesNotCountSharedLinesTwice"
+    ],
+    "unknown": [],
+    "failure_lines": [
+      "main_test.go:109: invalid blob header \"\\n\""
+    ]
+  },
+  {
+    "id": "M12",
+    "command": "ADAMIC_MUTANT=M12 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-stage1-progress/ -run . > review/test-audit/cmd-adamic-stage1-progress/M12.log 2>&1",
+    "exit": 1,
+    "wall_seconds": 0.2993114049968426,
+    "failed": [
+      "TestGitSnapshotAndEvidenceBoundary"
+    ],
+    "passed": [
+      "TestPhysicalInventoryBoundaries",
+      "TestUnionDoesNotCountSharedLinesTwice",
+      "TestDeclarationCreditIsBoundedAndFailsClosed"
+    ],
+    "unknown": [],
+    "failure_lines": [
+      "main_test.go:109: unmapped stage1/cohere/gitignore: add reviewed source coverage before reporting"
+    ]
+  },
+  {
+    "id": "P1",
+    "command": "ADAMIC_MUTANT=P1 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-stage1-progress/ -run . > review/test-audit/cmd-adamic-stage1-progress/P1.log 2>&1",
+    "exit": 1,
+    "wall_seconds": 0.29511175800143974,
+    "failed": [
+      "TestPhysicalInventoryBoundaries",
+      "TestGitSnapshotAndEvidenceBoundary"
+    ],
+    "passed": [
+      "TestUnionDoesNotCountSharedLinesTwice",
+      "TestDeclarationCreditIsBoundedAndFailsClosed"
+    ],
+    "unknown": [],
+    "failure_lines": [
+      "main_test.go:18: lines=0 want 1",
+      "main_test.go:112: snapshot=&main.report{Ref:\"f01034b72f51cb312eb95dafc52feba2e70c5535\", Commit:\"f01034b72f51cb312eb95dafc52feba2e70c5535\", Cohere:\"5a92f0c13825a6c3bf80a9ba6185633acff1c44e\", Packages:[]main.packageRow{main.packageRow{Package:\"internal/format/yaml\", GoLines:0, PortedLines:0, Status:\"ported and held byte-identical\", Evidence:[]string(nil)}, main.packageRow{Package:\"internal/gitignore\", GoLines:0, PortedLines:0, Status:\"ported and held byte-identical\", Evidence:[]string{\"stage1/cohere/gitignore/GAPS.md\"}}}, Slices:[]main.sliceRow{main.sliceRow{Directory:\"stage1/cohere/gitignore\", Credited:true, Note:\"Matcher and glob implementation; recorded native/Node/Go corpus, UTF-8 scope.\", GapSummary:\"Recorded native and Go parity.\"}, main.sliceRow{Directory:\"stage1/cohere/yaml\", Credited:false, Note:\"Baseline audit only: GAPS.md records no Adamic parser, printer or driver. YAML packages remain not started.\", GapSummary:\"No Adamic YAML implementation.\"}}, External:[]string(nil), Total:0, Ported:0, Perc"
+    ]
+  },
+  {
+    "id": "P2",
+    "command": "ADAMIC_MUTANT=P2 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-stage1-progress/ -run . > review/test-audit/cmd-adamic-stage1-progress/P2.log 2>&1",
+    "exit": 1,
+    "wall_seconds": 0.28854368400061503,
+    "failed": [
+      "TestPhysicalInventoryBoundaries",
+      "TestGitSnapshotAndEvidenceBoundary"
+    ],
+    "passed": [
+      "TestUnionDoesNotCountSharedLinesTwice",
+      "TestDeclarationCreditIsBoundedAndFailsClosed"
+    ],
+    "unknown": [],
+    "failure_lines": [
+      "main_test.go:23: production(\"internal/p/generated.go\")",
+      "main_test.go:109: no cohere internal Go sources at 5a92f0c13825a6c3bf80a9ba6185633acff1c44e"
+    ]
+  },
+  {
+    "id": "P3",
+    "command": "ADAMIC_MUTANT=P3 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-stage1-progress/ -run . > review/test-audit/cmd-adamic-stage1-progress/P3.log 2>&1",
+    "exit": 1,
+    "wall_seconds": 0.2961752470000647,
+    "failed": [
+      "TestDeclarationCreditIsBoundedAndFailsClosed",
+      "TestGitSnapshotAndEvidenceBoundary"
+    ],
+    "passed": [
+      "TestPhysicalInventoryBoundaries",
+      "TestUnionDoesNotCountSharedLinesTwice"
+    ],
+    "unknown": [],
+    "failure_lines": [
+      "main_test.go:35: marks=map[]",
+      "main_test.go:112: snapshot=&main.report{Ref:\"d417a0d9cec5ccb44152e357c6e4c954f191d05a\", Commit:\"d417a0d9cec5ccb44152e357c6e4c954f191d05a\", Cohere:\"cd5194f5b52660cb795636034f309d31d25e732e\", Packages:[]main.packageRow{main.packageRow{Package:\"internal/format/yaml\", GoLines:1, PortedLines:0, Status:\"not started\", Evidence:[]string(nil)}, main.packageRow{Package:\"internal/gitignore\", GoLines:3, PortedLines:0, Status:\"partly ported\", Evidence:[]string{\"stage1/cohere/gitignore/GAPS.md\"}}}, Slices:[]main.sliceRow{main.sliceRow{Directory:\"stage1/cohere/gitignore\", Credited:true, Note:\"Matcher and glob implementation; recorded native/Node/Go corpus, UTF-8 scope.\", GapSummary:\"Recorded native and Go parity.\"}, main.sliceRow{Directory:\"stage1/cohere/yaml\", Credited:false, Note:\"Baseline audit only: GAPS.md records no Adamic parser, printer or driver. YAML packages remain not started.\", GapSummary:\"No Adamic YAML implementation.\"}}, External:[]string(nil), Total:4, Ported:0, Percent:0, Complete:0, Partial:1, NotSta"
+    ]
+  },
+  {
+    "id": "P4",
+    "command": "ADAMIC_MUTANT=P4 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-stage1-progress/ -run . > review/test-audit/cmd-adamic-stage1-progress/P4.log 2>&1",
+    "exit": 1,
+    "wall_seconds": 0.5140299269987736,
+    "failed": [
+      "TestUnionDoesNotCountSharedLinesTwice"
+    ],
+    "passed": [
+      "TestPhysicalInventoryBoundaries",
+      "TestDeclarationCreditIsBoundedAndFailsClosed",
+      "TestGitSnapshotAndEvidenceBoundary"
+    ],
+    "unknown": [],
+    "failure_lines": [
+      "main_test.go:52: union=&main.report{Ref:\"\", Commit:\"\", Cohere:\"\", Packages:[]main.packageRow(nil), Slices:[]main.sliceRow(nil), External:[]string(nil), Total:0, Ported:0, Percent:0, Complete:0, Partial:0, NotStarted:0, marks:map[string]map[int]bool(nil), partial:map[string]bool(nil)}"
+    ]
+  },
+  {
+    "id": "P5",
+    "command": "ADAMIC_MUTANT=P5 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-stage1-progress/ -run . > review/test-audit/cmd-adamic-stage1-progress/P5.log 2>&1",
+    "exit": 1,
+    "wall_seconds": 0.2616837109999324,
+    "failed": [
+      "TestGitSnapshotAndEvidenceBoundary"
+    ],
+    "passed": [
+      "TestPhysicalInventoryBoundaries",
+      "TestUnionDoesNotCountSharedLinesTwice",
+      "TestDeclarationCreditIsBoundedAndFailsClosed"
+    ],
+    "unknown": [],
+    "failure_lines": [
+      "main_test.go:112: snapshot=&main.report{Ref:\"\", Commit:\"\", Cohere:\"\", Packages:[]main.packageRow(nil), Slices:[]main.sliceRow(nil), External:[]string(nil), Total:0, Ported:0, Percent:0, Complete:0, Partial:0, NotStarted:0, marks:map[string]map[int]bool(nil), partial:map[string]bool(nil)}"
+    ]
+  },
+  {
+    "id": "P6",
+    "command": "ADAMIC_MUTANT=P6 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-stage1-progress/ -run . > review/test-audit/cmd-adamic-stage1-progress/P6.log 2>&1",
+    "exit": 1,
+    "wall_seconds": 0.4001632879990211,
+    "failed": [
+      "TestGitSnapshotAndEvidenceBoundary"
+    ],
+    "passed": [
+      "TestPhysicalInventoryBoundaries",
+      "TestDeclarationCreditIsBoundedAndFailsClosed",
+      "TestUnionDoesNotCountSharedLinesTwice"
+    ],
+    "unknown": [],
+    "failure_lines": [
+      "main_test.go:137: pending=[] integrated=[] err=<nil>"
+    ]
+  }
+]

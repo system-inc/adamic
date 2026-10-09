@@ -1,0 +1,11 @@
+--- a/cmd/adamic-stage1-progress/main.go
++++ b/cmd/adamic-stage1-progress/main.go
+@@ -355,7 +355,7 @@
+ 	result := &report{Ref: "main + pending evidence union (not a merge)", Commit: first.Commit, Cohere: first.Cohere, marks: map[string]map[int]bool{}, partial: map[string]bool{}}
+ 	rows := map[string]*packageRow{}
+ 	for _, report := range reports {
+-		if report.Cohere != first.Cohere {
++		if report.Cohere == first.Cohere {
+ 			return nil, fmt.Errorf("cannot union different cohere pins")
+ 		}
+ 		for file, marks := range report.marks {

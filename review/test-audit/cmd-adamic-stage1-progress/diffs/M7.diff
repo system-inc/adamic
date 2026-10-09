@@ -1,0 +1,11 @@
+--- a/cmd/adamic-stage1-progress/main.go
++++ b/cmd/adamic-stage1-progress/main.go
+@@ -345,7 +345,7 @@
+ 		}
+ 	}
+ 	if result.Total > 0 {
+-		result.Percent = 100 * float64(result.Ported) / float64(result.Total)
++		result.Percent = 1 * float64(result.Ported) / float64(result.Total)
+ 	}
+ }
+ 

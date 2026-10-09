@@ -1,0 +1,11 @@
+--- a/cmd/adamic-stage1-progress/main.go
++++ b/cmd/adamic-stage1-progress/main.go
+@@ -298,7 +298,7 @@
+ 		}
+ 	}
+ 	for directory := range directories {
+-		if !known[directory] {
++		if known[directory] {
+ 			return nil, fmt.Errorf("unmapped stage1/cohere/%s: add reviewed source coverage before reporting", directory)
+ 		}
+ 	}

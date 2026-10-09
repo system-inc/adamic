@@ -1,0 +1,230 @@
+[
+  {
+    "test": "TestPhysicalInventoryBoundaries",
+    "round": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic-stage1-progress/",
+      "-run",
+      "^TestPhysicalInventoryBoundaries$"
+    ],
+    "exit": 0,
+    "wall_seconds": 0.29363587900297716
+  },
+  {
+    "test": "TestPhysicalInventoryBoundaries",
+    "round": 2,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic-stage1-progress/",
+      "-run",
+      "^TestPhysicalInventoryBoundaries$"
+    ],
+    "exit": 0,
+    "wall_seconds": 0.2460931450004864
+  },
+  {
+    "test": "TestPhysicalInventoryBoundaries",
+    "round": 3,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic-stage1-progress/",
+      "-run",
+      "^TestPhysicalInventoryBoundaries$"
+    ],
+    "exit": 0,
+    "wall_seconds": 0.25115180099965073
+  },
+  {
+    "test": "TestDeclarationCreditIsBoundedAndFailsClosed",
+    "round": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic-stage1-progress/",
+      "-run",
+      "^TestDeclarationCreditIsBoundedAndFailsClosed$"
+    ],
+    "exit": 0,
+    "wall_seconds": 0.23334070200144197
+  },
+  {
+    "test": "TestDeclarationCreditIsBoundedAndFailsClosed",
+    "round": 2,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic-stage1-progress/",
+      "-run",
+      "^TestDeclarationCreditIsBoundedAndFailsClosed$"
+    ],
+    "exit": 0,
+    "wall_seconds": 0.27296554400163586
+  },
+  {
+    "test": "TestDeclarationCreditIsBoundedAndFailsClosed",
+    "round": 3,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic-stage1-progress/",
+      "-run",
+      "^TestDeclarationCreditIsBoundedAndFailsClosed$"
+    ],
+    "exit": 0,
+    "wall_seconds": 0.2384101460011152
+  },
+  {
+    "test": "TestUnionDoesNotCountSharedLinesTwice",
+    "round": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic-stage1-progress/",
+      "-run",
+      "^TestUnionDoesNotCountSharedLinesTwice$"
+    ],
+    "exit": 0,
+    "wall_seconds": 0.2564211989993055
+  },
+  {
+    "test": "TestUnionDoesNotCountSharedLinesTwice",
+    "round": 2,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic-stage1-progress/",
+      "-run",
+      "^TestUnionDoesNotCountSharedLinesTwice$"
+    ],
+    "exit": 0,
+    "wall_seconds": 0.2270038909991854
+  },
+  {
+    "test": "TestUnionDoesNotCountSharedLinesTwice",
+    "round": 3,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic-stage1-progress/",
+      "-run",
+      "^TestUnionDoesNotCountSharedLinesTwice$"
+    ],
+    "exit": 0,
+    "wall_seconds": 0.3008669890004967
+  },
+  {
+    "test": "TestGitSnapshotAndEvidenceBoundary",
+    "round": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic-stage1-progress/",
+      "-run",
+      "^TestGitSnapshotAndEvidenceBoundary$"
+    ],
+    "exit": 0,
+    "wall_seconds": 0.48366199700103607
+  },
+  {
+    "test": "TestGitSnapshotAndEvidenceBoundary",
+    "round": 2,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic-stage1-progress/",
+      "-run",
+      "^TestGitSnapshotAndEvidenceBoundary$"
+    ],
+    "exit": 0,
+    "wall_seconds": 0.41869583100196905
+  },
+  {
+    "test": "TestGitSnapshotAndEvidenceBoundary",
+    "round": 3,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic-stage1-progress/",
+      "-run",
+      "^TestGitSnapshotAndEvidenceBoundary$"
+    ],
+    "exit": 0,
+    "wall_seconds": 0.4722510459978366
+  }
+]

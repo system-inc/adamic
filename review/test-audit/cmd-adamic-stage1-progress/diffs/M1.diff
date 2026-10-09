@@ -1,0 +1,11 @@
+--- a/cmd/adamic-stage1-progress/main.go
++++ b/cmd/adamic-stage1-progress/main.go
+@@ -77,7 +77,7 @@
+ 	return output, nil
+ }
+ func physicalLines(source []byte) int {
+-	n := bytes.Count(source, []byte{'\n'})
++	n := bytes.Count(source, []byte{'\r'})
+ 	if len(source) > 0 && source[len(source)-1] != '\n' {
+ 		n++
+ 	}

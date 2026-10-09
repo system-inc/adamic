@@ -1,0 +1,10 @@
+--- a/cmd/adamic-stage1-progress/main.go
++++ b/cmd/adamic-stage1-progress/main.go
+@@ -427,6 +427,7 @@
+ 	return append(items, item)
+ }
+ func pending(root string) ([]string, []string, error) {
++	if true { return nil, nil, nil }
+ 	output, err := git(root, "for-each-ref", "--format=%(refname:short)", "refs/remotes/origin")
+ 	if err != nil {
+ 		return nil, nil, err

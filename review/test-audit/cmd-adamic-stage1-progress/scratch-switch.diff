@@ -1,0 +1,176 @@
+diff --git a/cmd/adamic-stage1-progress/main.go b/cmd/adamic-stage1-progress/main.go
+index 82e9d976..355badb9 100644
+--- a/cmd/adamic-stage1-progress/main.go
++++ b/cmd/adamic-stage1-progress/main.go
+@@ -77,14 +77,32 @@ func git(root string, args ...string) ([]byte, error) {
+ 	return output, nil
+ }
+ func physicalLines(source []byte) int {
+-	n := bytes.Count(source, []byte{'\n'})
++	if os.Getenv("ADAMIC_MUTANT") == "P1" {
++		return 0
++	}
++	n := bytes.Count(source, []byte{func() byte {
++		if os.Getenv("ADAMIC_MUTANT") == "M1" {
++			return '\r'
++		}
++		return '\n'
++	}()})
+ 	if len(source) > 0 && source[len(source)-1] != '\n' {
+-		n++
++		if !(os.Getenv("ADAMIC_MUTANT") == "M3") {
++			n++
++		}
+ 	}
+ 	return n
+ }
+ func production(name string) bool {
+-	if !strings.HasPrefix(name, "internal/") || !strings.HasSuffix(name, ".go") || strings.HasSuffix(name, "_test.go") {
++	if os.Getenv("ADAMIC_MUTANT") == "P2" {
++		return false
++	}
++	if !strings.HasPrefix(name, "internal/") || !strings.HasSuffix(name, ".go") || strings.HasSuffix(name, func() string {
++		if os.Getenv("ADAMIC_MUTANT") == "M2" {
++			return "_audit_test.go"
++		}
++		return "_test.go"
++	}()) {
+ 		return false
+ 	}
+ 	for _, part := range strings.Split(name, "/") {
+@@ -136,7 +154,12 @@ func loadInventory(root, pin string) (*inventory, error) {
+ 		if err != nil {
+ 			return nil, err
+ 		}
+-		data := make([]byte, size+1)
++		data := make([]byte, size+func() int {
++			if os.Getenv("ADAMIC_MUTANT") == "M11" {
++				return 0
++			}
++			return 1
++		}())
+ 		if _, err = io.ReadFull(reader, data); err != nil {
+ 			return nil, err
+ 		}
+@@ -148,6 +171,9 @@ func loadInventory(root, pin string) (*inventory, error) {
+ 	return result, nil
+ }
+ func credit(source []byte, declarations []string) (map[int]bool, error) {
++	if os.Getenv("ADAMIC_MUTANT") == "P3" {
++		return map[int]bool{}, nil
++	}
+ 	marks := map[int]bool{}
+ 	if len(declarations) == 0 {
+ 		for n := 1; n <= physicalLines(source); n++ {
+@@ -178,22 +204,32 @@ func credit(source []byte, declarations []string) (map[int]bool, error) {
+ 		}
+ 		wanted[name] = true
+ 		start := function.Pos()
+-		if function.Doc != nil {
++		if !(os.Getenv("ADAMIC_MUTANT") == "M4") && function.Doc != nil {
+ 			start = function.Doc.Pos()
+ 		}
+-		for n := files.Position(start).Line; n <= files.Position(function.End()).Line; n++ {
++		for n := files.Position(start).Line; n <= files.Position(function.End()).Line-func() int {
++			if os.Getenv("ADAMIC_MUTANT") == "M5" {
++				return 1
++			}
++			return 0
++		}(); n++ {
+ 			marks[n] = true
+ 		}
+ 	}
+-	for name, found := range wanted {
+-		if !found {
+-			return nil, fmt.Errorf("mapped declaration %s missing", name)
++	if !(os.Getenv("ADAMIC_MUTANT") == "M6") {
++		for name, found := range wanted {
++			if !found {
++				return nil, fmt.Errorf("mapped declaration %s missing", name)
++			}
+ 		}
+ 	}
+ 	return marks, nil
+ }
+ func blob(root, ref, name string) ([]byte, error) { return git(root, "show", ref+":"+name) }
+ func measure(root, ref string, cache map[string]*inventory) (*report, error) {
++	if os.Getenv("ADAMIC_MUTANT") == "P5" {
++		return &report{}, nil
++	}
+ 	commit, err := git(root, "rev-parse", ref+"^{commit}")
+ 	if err != nil {
+ 		return nil, err
+@@ -298,7 +334,7 @@ func measure(root, ref string, cache map[string]*inventory) (*report, error) {
+ 		}
+ 	}
+ 	for directory := range directories {
+-		if !known[directory] {
++		if (!known[directory]) != (os.Getenv("ADAMIC_MUTANT") == "M12") {
+ 			return nil, fmt.Errorf("unmapped stage1/cohere/%s: add reviewed source coverage before reporting", directory)
+ 		}
+ 	}
+@@ -345,17 +381,25 @@ func finish(result *report) {
+ 		}
+ 	}
+ 	if result.Total > 0 {
+-		result.Percent = 100 * float64(result.Ported) / float64(result.Total)
++		result.Percent = func() float64 {
++			if os.Getenv("ADAMIC_MUTANT") == "M7" {
++				return 1
++			}
++			return 100
++		}() * float64(result.Ported) / float64(result.Total)
+ 	}
+ }
+ 
+ // This is an evidence union, not a merge or a new executable composition.
+ func union(reports []*report) (*report, error) {
++	if os.Getenv("ADAMIC_MUTANT") == "P4" {
++		return &report{}, nil
++	}
+ 	first := reports[0]
+ 	result := &report{Ref: "main + pending evidence union (not a merge)", Commit: first.Commit, Cohere: first.Cohere, marks: map[string]map[int]bool{}, partial: map[string]bool{}}
+ 	rows := map[string]*packageRow{}
+ 	for _, report := range reports {
+-		if report.Cohere != first.Cohere {
++		if (report.Cohere != first.Cohere) != (os.Getenv("ADAMIC_MUTANT") == "M8") {
+ 			return nil, fmt.Errorf("cannot union different cohere pins")
+ 		}
+ 		for file, marks := range report.marks {
+@@ -416,7 +460,12 @@ func firstParagraph(text string) string {
+ 		started = true
+ 		paragraph = append(paragraph, line)
+ 	}
+-	return strings.Join(paragraph, " ")
++	return strings.Join(paragraph, func() string {
++		if os.Getenv("ADAMIC_MUTANT") == "M10" {
++			return "|"
++		}
++		return " "
++	}())
+ }
+ func appendUnique(items []string, item string) []string {
+ 	for _, existing := range items {
+@@ -427,13 +476,21 @@ func appendUnique(items []string, item string) []string {
+ 	return append(items, item)
+ }
+ func pending(root string) ([]string, []string, error) {
++	if os.Getenv("ADAMIC_MUTANT") == "P6" {
++		return nil, nil, nil
++	}
+ 	output, err := git(root, "for-each-ref", "--format=%(refname:short)", "refs/remotes/origin")
+ 	if err != nil {
+ 		return nil, nil, err
+ 	}
+ 	var refs, integrated []string
+ 	for _, ref := range strings.Fields(string(output)) {
+-		if !strings.HasPrefix(ref, "origin/codex/stage1-") && ref != "origin/codex/typescript-scanner" {
++		if !strings.HasPrefix(ref, func() string {
++			if os.Getenv("ADAMIC_MUTANT") == "M9" {
++				return "origin/codex/stage2-"
++			}
++			return "origin/codex/stage1-"
++		}()) && ref != "origin/codex/typescript-scanner" {
+ 			continue
+ 		}
+ 		command := exec.Command("git", "-C", root, "merge-base", "--is-ancestor", ref, "origin/main")

@@ -1,0 +1,11 @@
+--- a/cmd/adamic-stage1-progress/main.go
++++ b/cmd/adamic-stage1-progress/main.go
+@@ -84,7 +84,7 @@
+ 	return n
+ }
+ func production(name string) bool {
+-	if !strings.HasPrefix(name, "internal/") || !strings.HasSuffix(name, ".go") || strings.HasSuffix(name, "_test.go") {
++	if !strings.HasPrefix(name, "internal/") || !strings.HasSuffix(name, ".go") || strings.HasSuffix(name, "_audit_test.go") {
+ 		return false
+ 	}
+ 	for _, part := range strings.Split(name, "/") {
