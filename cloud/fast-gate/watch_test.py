@@ -822,6 +822,36 @@ class WatchTests(unittest.TestCase):
         self.assertIn('pool job refused: no tier (--priority)', result.stdout)
         self.assertEqual(os.listdir(jobs.name), [])
 
+    def test_a_box_gate_past_the_ceiling_is_stopped(self):
+        # #89ma1vf: 14383e9d's old merge held Home's slot 1 from 11:31Z to 14:38Z on Oct 9.
+        w = Watcher(1, mode='hold', slots='box0 S\n')
+        self.addCleanup(w.close)
+        w.put('initial', 'pass')
+        w.wait(lambda: 'codex/test0 ' in w.read('starts'))
+        w.put('clock', '2799')
+        time.sleep(.3)
+        self.assertNotIn('over the box ceiling', w.read('output'))
+        w.put('clock', '2800')
+        w.wait(lambda: 'stopped codex/test0 %s on box0: over the box ceiling of 1800 s' % w.tips[0][1] in w.read('output'))
+        self.assertIn('box0 ', w.read('stops'))
+
+    def test_a_newer_run_of_a_sha_stops_its_older_box_run_on_other_tools(self):
+        # #z4emxxy: the old run is stopped on purpose and its partial record is no verdict; same tools would be a race.
+        w = self.reservation('box0 S\nbox1 S\n', [], release=False)
+        sha = '7' * 40
+        holder = subprocess.Popen(['sleep', '30'])
+        self.addCleanup(holder.kill)
+        (w.state / 'running' / str(holder.pid)).write_text('codex/old %s S box1 S tools-old:1 %s\n' % (sha, w.state / 'logs/old.log'))
+        (w.state / 'running-started' / str(holder.pid)).write_text('1000\n')
+        w.tips = [('codex/old', sha)]
+        w.put('tips', '%s\trefs/heads/codex/old\n' % sha)
+        (w.state / 'seen').write_text('codex/old %s\n' % sha)
+        (w.state / 'queue').write_text('S 900 codex/old %s\n' % sha)
+        w.put('initial', 'pass')
+        w.wait(lambda: 'a newer run of the same sha starts' in w.read('output'))
+        self.assertIn('box1 ', w.read('stops'))
+        w.wait(lambda: 'codex/old %s' % sha in w.read('starts'))
+
     def test_every_pool_bound_tip_goes_to_the_pool_at_once_whatever_the_pool_lines(self):
         # #sp2wer3: Loom places the units; one "pool P" line no longer holds the second tip back for the boxes.
         w = Watcher(3, mode='hold', slots='pool P\nbox0 S\n')
@@ -858,6 +888,9 @@ class WatchTests(unittest.TestCase):
     def test_a_canary_with_no_box_slot_takes_a_race_s_and_the_pool_job_answers_alone(self):
         w, sha = self.race(mainCanary=1800)
         w.put('canary', 'hold')
+        # The half-hourly canary is half an hour on; the box race started well inside its ceiling of that (#89ma1vf).
+        for started in (w.state / 'running-started').iterdir():
+            started.write_text('2700\n')
         w.put('clock', '2800')
         w.wait(lambda: "stopped codex/test0 %s's box race on box0: a canary takes its slot" % sha in w.read('output'))
         w.wait(lambda: 'ended codex/test0 %s on box0: it lost the race' % sha in w.read('output'))

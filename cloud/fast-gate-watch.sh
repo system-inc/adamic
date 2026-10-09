@@ -231,6 +231,7 @@ dispatch() {
     token=${canaryToken}:staged
   fi
   [ "${tools}" = main ] && token=${token%%:*}:main
+  stopOlderRuns "${branch}" "${sha}" "${box}" "$([ "${box}" = pool ] && cat "${state}/tools-good" || echo "${token%%:*}")"
   if [ "${box}" = pool ]; then
     # Loom's side pool runs it with the good tools' selection (cloud/pool-job.sh): never a canary for new tools, so its
     # token names the good tools and a pool green promotes nothing.
@@ -280,6 +281,27 @@ poolTier() {
 # A task's owner's username, from its card, or developer tools when it has none.
 taskOwner() {
   (cd "${ADAMIC_FAST_GATE_AHRA_DIR:-/Users/kirkouimet/Projects/ahra}" && ahra tasks show "$1" 2> /dev/null) | sed -nE 's/^owner +@([a-z0-9_]+).*/\1/p' | head -1 | grep . || echo system_adamic_developer_tools
+}
+# A newer run of a sha stops an older box run of it on other tools (@system_adamic, Oct 9 14:44Z, #z4emxxy): 14383e9d's
+# old merge ran three hours on Home's slot 1 with tools 0a1ccadc while the same candidate had newer jobs. By reap, not
+# cancel-to-move: the old run is stopped on purpose and its partial record is no verdict. A race of the same sha on the
+# same tools (a box beside its pool job) is two routes to one answer and is left alone, and so is a canary of main.
+stopOlderRuns() {
+  local branch=$1 sha=$2 box=$3 tools=$4 file pid runningBranch runningSha slot runningBox class token rest
+  isCanary "${branch}" && return 0
+  for file in "${state}"/running/*; do
+    [ -f "${file}" ] || continue
+    pid=$(basename "${file}")
+    [ -f "${state}/stopped-running/${pid}" ] && continue
+    kill -0 "${pid}" 2> /dev/null || continue
+    read -r runningBranch runningSha slot runningBox class token rest < "${file}"
+    [ "${runningSha}" = "${sha}" ] && [ "${runningBox:-threadripper}" != pool ] && ! isCanary "${runningBranch}" || continue
+    # By what the box runs, not the commit: a Mac-only tools commit changes no gate.
+    [ "$(boxTools "${token%%:*}")" != "$(boxTools "${tools}")" ] || continue
+    touch "${state}/race-lost/${pid}"
+    stopGate "${pid}" "${runningBranch}" "${sha}" "${runningBox:-threadripper}" "superseded by a newer run of the same sha (tools ${tools:0:9})" &&
+      echo "$(date -u +%H:%M:%S) stopped ${runningBranch} ${sha} on ${runningBox:-threadripper} (tools ${token:0:9}): a newer run of the same sha starts with tools ${tools:0:9}"
+  done
 }
 # Staged rollout of the gate tools (@system_adamic, Oct 8, after three deploy incidents; gate the gate, Oct 9 10:21Z):
 # with a box named in ${state}/canary-box, new box tools run one gate only, a canary of main's tip on that box, while
@@ -475,6 +497,36 @@ stopSkipped() {
     [ -n "${why}" ] || continue
     stopGate "${pid}" "${branch}" "${sha}" "${box:-threadripper}" "${why}" &&
       echo "$(date -u +%H:%M:%S) stopped ${branch} ${sha}: ${why}"
+  done
+}
+# Every box gate has a whole-job ceiling, the pool's 30 minutes (@system_adamic, Oct 9 14:44Z, #89ma1vf): Home's slot 1 ran
+# 14383e9d's old merge from 11:31Z to 14:38Z until Loom stopped it by hand. Past it the gate is stopped through stop-gate.sh,
+# so it publishes what it had, and reads void with that cause: queued again, never counted toward a storm. A canary or a
+# gate mutant gets an hour, since main~10's canaries run about 40 minutes (#6vvjzcq narrows them), and a landing's or an
+# area's complete run 90 minutes, since it runs every test to the end (the trio's took about 1.5 hours on Oct 9).
+boxCeiling=${ADAMIC_FAST_GATE_BOX_CEILING:-1800}
+canaryCeiling=${ADAMIC_FAST_GATE_CANARY_CEILING:-3600}
+completeCeiling=${ADAMIC_FAST_GATE_COMPLETE_CEILING:-5400}
+stopOverCeiling() {
+  local file pid branch sha slot box rest started limit now
+  now=$(date -u +%s)
+  for file in "${state}"/running/*; do
+    [ -f "${file}" ] || continue
+    pid=$(basename "${file}")
+    [ -f "${state}/stopped-running/${pid}" ] && continue
+    kill -0 "${pid}" 2> /dev/null || continue
+    read -r branch sha slot box rest < "${file}"
+    [ "${box:-threadripper}" = pool ] && continue
+    started=$(cat "${state}/running-started/${pid}" 2> /dev/null)
+    [[ ${started} =~ ^[0-9]+$ ]] || continue
+    limit=${boxCeiling}
+    isCanary "${branch}" && limit=${canaryCeiling}
+    [[ ${branch} == cloud/land-* || ${branch} == area/* ]] && limit=${completeCeiling}
+    [ $((now - started)) -ge "${limit}" ] || continue
+    if stopGate "${pid}" "${branch}" "${sha}" "${box:-threadripper}" "over the box ceiling of ${limit} s"; then
+      echo "${limit}" > "${state}/ceiling/${pid}"
+      echo "$(date -u +%H:%M:%S) stopped ${branch} ${sha} on ${box:-threadripper}: over the box ceiling of ${limit} s"
+    fi
   done
 }
 # A stage canary whose tools are already the good tools (promoted by hand, or by another canary) can promote nothing, and
@@ -1017,7 +1069,7 @@ clearStaleSlotLock start
 watchStart=$(date -u +%s)
 touch "${state}/gated" "${state}/queue"
 # Running gates are pid files (macOS bash 3.2 has no associative arrays).
-mkdir -p "${state}/running" "${state}/logs" "${state}/reserved-running" "${state}/running-started" "${state}/stopped-running" "${state}/early-red" "${state}/preempted" "${state}/race-wanted" "${state}/racing" "${state}/race-lost" "${state}/mutant-running" "${state}/mutant-results"
+mkdir -p "${state}/running" "${state}/logs" "${state}/reserved-running" "${state}/running-started" "${state}/stopped-running" "${state}/early-red" "${state}/preempted" "${state}/race-wanted" "${state}/racing" "${state}/race-lost" "${state}/mutant-running" "${state}/mutant-results" "${state}/ceiling"
 echo "$(date -u +%H:%M:%S) watching codex/*, area/*, devtools/*, cloud/land-* (tools $(git -C "${here}" rev-parse --short HEAD))"
 toolsHead=$(git -C "${here}" rev-parse HEAD)
 canaryToken=${toolsHead}:$$
@@ -1089,6 +1141,7 @@ while true; do
   stopSkipped
   stopSuperseded
   stopPromotedCanary
+  stopOverCeiling
   reapStopped
   startRaces
   publishEarlyRed
@@ -1098,6 +1151,9 @@ while true; do
     stoppedOnPurpose=no preempted=no
     [ -f "${state}/stopped-running/$(basename "${file}")" ] && stoppedOnPurpose=yes
     [ -f "${state}/preempted/$(basename "${file}")" ] && preempted=yes
+    # A ceiling stop is the gate's fault, not a choice: it reads void and goes back to the queue, outside the storm count.
+    overCeiling=no
+    [ -f "${state}/ceiling/$(basename "${file}")" ] && { overCeiling=yes stoppedOnPurpose=no; rm -f "${state}/ceiling/$(basename "${file}")"; }
     rm -f "${state}/reserved-running/$(basename "${file}")" "${state}/running-started/$(basename "${file}")" "${state}/stopped-running/$(basename "${file}")" "${state}/early-red/$(basename "${file}")" "${state}/preempted/$(basename "${file}")"
     read -r branch sha class box original testedHead gateLog < "${file}"
     if [ -f "${state}/race-lost/$(basename "${file}")" ]; then
@@ -1166,7 +1222,7 @@ while true; do
         rm -f "${state}/main-canary-paged"
         continue
       fi
-      [ -n "${cause}" ] && countVoid "${gateLog}"
+      [ -n "${cause}" ] && [ "${overCeiling}" = no ] && countVoid "${gateLog}"
       said=${cause:+void (${cause})}
       said=${said:-${thin:+void (${thin})}}
       said=${said:-${verdict}}
@@ -1245,7 +1301,7 @@ while true; do
     fi
     # A void gate (it died before a real verdict, like the 33 a WSL restart killed at 08:23Z on Oct 8)
     # isn't served: un-mark it, queue it again, at most three tries, then tell integration it's the box.
-    countVoid "${gateLog}"
+    [ "${overCeiling}" = yes ] || countVoid "${gateLog}"
     (recordWait "${sha},${branch},${class},,$(date -u +%FT%TZ),,void:${cause// /_},${box:-threadripper}" > /dev/null 2>&1 &)
     if [ -f "${state}/storm" ]; then
       grep -vx "${sha}" "${state}/gated" > "${state}/gated.tmp"; mv "${state}/gated.tmp" "${state}/gated"
