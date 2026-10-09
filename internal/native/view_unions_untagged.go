@@ -101,7 +101,7 @@ func (e *emitter) viewUntaggedObjectUnion(property ir.Property, object string) {
 	e.line("(void)adamic_view_untagged_plain_select((const adamic_object *)%s, %s, %d, %d, %s, %s);", object, name, len(rows), property.ViewContract, cString(property.View), cString(property.ViewType))
 }
 
-// Preserve the existing shared-discriminant dispatch.
+// Select field-based membership when no common literal discriminant exists.
 func untaggedObjectUnion(contracts []ir.ViewContract, contract ir.ViewContract) bool {
 	return len(contract.Members) != 0 && !ir.ViewUnionHasDiscriminant(contracts, contract)
 }
