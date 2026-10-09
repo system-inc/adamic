@@ -100,18 +100,7 @@ func goOracle(t *testing.T) string {
 func goOracleFrom(t *testing.T, sourceRoot string) string {
 	t.Helper()
 	if isPackage(sourceRoot) {
-		value := shared("oracle", func(value *sharedValue) {
-			directory, err := os.MkdirTemp(sharedDirectory, "oracle-")
-			if err != nil {
-				value.err = err
-				return
-			}
-			value.path, value.err = goOracleIn(sourceRoot, directory)
-		})
-		if value.err != nil {
-			t.Fatal(value.err)
-		}
-		return value.path
+		return lintGoOracleProduct(t)
 	}
 	binary, err := goOracleIn(sourceRoot, t.TempDir())
 	if err != nil {
