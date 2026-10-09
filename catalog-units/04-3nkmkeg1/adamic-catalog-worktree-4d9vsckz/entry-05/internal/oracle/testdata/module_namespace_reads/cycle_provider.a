@@ -1,0 +1,4 @@
+import './cycle_consumer.a';
+export const value = 7;
+export function read(): number { return value; }
+export function pure(): number { return 4; }

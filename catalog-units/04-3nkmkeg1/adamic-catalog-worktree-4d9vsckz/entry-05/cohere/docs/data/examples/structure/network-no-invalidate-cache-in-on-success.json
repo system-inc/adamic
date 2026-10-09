@@ -1,0 +1,24 @@
+{
+    "rule": "structure/network-no-invalidate-cache-in-on-success",
+    "firing": {
+        "file": "/repository/source/api/Thing.ts",
+        "source": "declare const networkService: { cache: { invalidate(key: string): void } };\ndeclare const apiService: { cache: { invalidate(key: string): void } };\ndeclare function useMutation(options: unknown): void;\nexport function run(key: string) {\n    useMutation({ onSuccess: () => apiService.cache.invalidate(key) });\n}\n",
+        "findings": [
+            {
+                "line": 5,
+                "column": 36,
+                "endLine": 5,
+                "endColumn": 68,
+                "messageId": "noInvalidateCacheInOnSuccess",
+                "message": "This invalidates the cache from inside an `onSuccess` handler. Use the `invalidateOnSuccess` option instead, which puts the invalidation list next to the request that makes it necessary and runs it automatically. Hand-written invalidation in a handler drifts from the request over time: somebody adds a field the request now affects and the handler does not know about it, so the stale read appears somewhere unrelated and nobody connects it back to this line."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/api/Thing.ts",
+        "source": "declare const networkService: { cache: { invalidate(key: string): void } };\ndeclare const apiService: { cache: { invalidate(key: string): void } };\ndeclare function useMutation(options: unknown): void;\nexport const Value = 1;\n"
+    },
+    "assertedMessageIds": [
+        "noInvalidateCacheInOnSuccess"
+    ]
+}

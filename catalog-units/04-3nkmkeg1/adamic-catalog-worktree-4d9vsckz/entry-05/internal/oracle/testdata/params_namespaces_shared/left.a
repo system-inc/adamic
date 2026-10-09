@@ -1,0 +1,3 @@
+import { Shared as State } from './state.a';
+export function left(value: number): number { return State.add(value); }
+export const addLeft = State.add;

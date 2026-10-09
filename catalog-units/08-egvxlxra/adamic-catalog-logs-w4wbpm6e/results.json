@@ -1,0 +1,27 @@
+{
+  "target": "e3f2be21a5ba97d1fa9fec64088cbcd52ac03fdb",
+  "jobs": 1,
+  "total_wall_seconds": 174.52073650300008,
+  "load_before": "39.43 24.02 14.17 56/951 3202455",
+  "load_after": "50.81 40.62 22.66 35/1014 3257126",
+  "entries": [
+    {
+      "number": 9,
+      "made_against": "d772b5c990de4304de990e723835f19ebb613641",
+      "target": "e3f2be21a5ba97d1fa9fec64088cbcd52ac03fdb",
+      "worktree": "/home/cloud/full-gate/out/e3f2be21a5ba-20261009T022353Z/catalog-units/08-egvxlxra/adamic-catalog-worktree-3ka6fb7h/entry-09",
+      "setup_seconds": 79.7643729650008,
+      "ok": true,
+      "check_seconds": 87.74769720599579,
+      "cleanup_seconds": 5.987376159006089,
+      "wall_seconds": 174.46551348399953,
+      "load_before": "39.43 24.02 14.17 83/995 3202611",
+      "load_after": "50.81 40.62 22.66 34/1018 3257126",
+      "messages": [
+        "09 literal-undefined-field: applies-and-fails-as-recorded",
+        "09 made against=d772b5c990de4304de990e723835f19ebb613641",
+        "09 wall=174.466s setup=79.764s check=87.748s cleanup=5.987s load=39.43 24.02 14.17 83/995 3202611 -> 50.81 40.62 22.66 34/1018 3257126"
+      ]
+    }
+  ]
+}

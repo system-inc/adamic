@@ -1,0 +1,27 @@
+{
+    "rule": "better-tailwindcss/no-duplicate-classes",
+    "firing": {
+        "file": "Component.tsx",
+        "source": "const merged = cn('flex flex');\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 20,
+                "endLine": 1,
+                "endColumn": 29,
+                "messageId": "duplicateClass",
+                "message": "The class \"flex\" is listed more than once. The repeat has no effect, so it is either a leftover from an edit or a sign that two people added the same class from different ends of the string. Remove the later one.",
+                "fix": true
+            }
+        ],
+        "fixedSource": "const merged = cn('flex');\n"
+    },
+    "clean": {
+        "file": "Styles.ts",
+        "source": "const description = 'flex flex';"
+    },
+    "assertedMessageIds": [
+        "duplicateClass"
+    ],
+    "assertsFix": true
+}

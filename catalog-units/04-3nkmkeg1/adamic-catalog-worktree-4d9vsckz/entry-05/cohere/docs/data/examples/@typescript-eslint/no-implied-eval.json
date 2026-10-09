@@ -1,0 +1,25 @@
+{
+    "rule": "@typescript-eslint/no-implied-eval",
+    "firing": {
+        "file": "noImpliedEval.ts",
+        "source": "setTimeout(1, 0);\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 12,
+                "endLine": 1,
+                "endColumn": 13,
+                "messageId": "noImpliedEvalError",
+                "message": "Implied eval. Consider passing a function."
+            }
+        ]
+    },
+    "clean": {
+        "file": "noImpliedEval.ts",
+        "source": "foo();\n"
+    },
+    "assertedMessageIds": [
+        "noFunctionConstructor",
+        "noImpliedEvalError"
+    ]
+}

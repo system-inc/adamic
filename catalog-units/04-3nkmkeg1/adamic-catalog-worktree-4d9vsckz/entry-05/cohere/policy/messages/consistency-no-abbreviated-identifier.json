@@ -1,0 +1,23 @@
+{
+  "rules": {
+    "TypeScript": "nexus/consistency-no-abbreviated-identifier",
+    "Swift": "cohere-swift/consistency-no-abbreviated-identifier"
+  },
+  "phrases": {
+    "reasoning": "A name is written once and read everywhere, so the letters saved at the declaration are paid back at every call site by a reader who has to expand the abbreviation themselves and hope they expanded it the way the author meant."
+  },
+  "messages": {
+    "abbreviatedIdentifier": {
+      "text": "Identifier \"{{name}}\" should not be abbreviated. {{advice}} <<reasoning>>"
+    },
+    "abbreviatedSuffix": {
+      "text": "Identifier \"{{name}}\" should not end with \"{{suffix}}\". {{advice}} <<reasoning>>"
+    },
+    "millisecondSuffix": {
+      "text": "Identifier \"{{name}}\" should not abbreviate milliseconds as \"Ms\". Use \"{{suggestion}}\", which is how the rest of the tree spells a millisecond value: \"durationInMilliseconds\" outnumbers \"durationMs\" more than two to one for the identical value, so the rename follows what the codebase already decided rather than introducing a third spelling."
+    },
+    "abbreviatedWordSegment": {
+      "text": "Identifier \"{{name}}\" abbreviates \"{{word}}\". Use \"{{suggestion}}\". <<reasoning>>"
+    }
+  }
+}

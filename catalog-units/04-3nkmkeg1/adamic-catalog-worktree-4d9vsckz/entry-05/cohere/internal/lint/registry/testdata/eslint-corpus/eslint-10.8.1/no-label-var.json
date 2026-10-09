@@ -1,0 +1,7 @@
+[
+{"code":"function bar() { q: for(;;) { break q; } } function foo () { var q = t; }","eslint":[]},
+{"code":"function bar() { var x = foo; q: for(;;) { break q; } }","eslint":[]},
+{"code":"var x = foo; function bar() { x: for(;;) { break x; } }","eslint":[["identifierClashWithLabel",30,53]]},
+{"code":"function bar() { var x = foo; x: for(;;) { break x; } }","eslint":[["identifierClashWithLabel",30,53]]},
+{"code":"function bar(x) { x: for(;;) { break x; } }","eslint":[["identifierClashWithLabel",18,41]]}
+]

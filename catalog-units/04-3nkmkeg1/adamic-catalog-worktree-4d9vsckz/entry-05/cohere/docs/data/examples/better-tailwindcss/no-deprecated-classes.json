@@ -1,0 +1,28 @@
+{
+    "rule": "better-tailwindcss/no-deprecated-classes",
+    "firing": {
+        "file": "Component.tsx",
+        "source": "const element = <div className=\"flex-grow-2\" />;",
+        "findings": [
+            {
+                "line": 1,
+                "column": 33,
+                "endLine": 1,
+                "endColumn": 44,
+                "messageId": "deprecatedClassReplaceable",
+                "message": "The class \"flex-grow-2\" was renamed in a Tailwind release and \"grow-2\" is the current spelling. Both work today, which is the problem: the old name keeps compiling until the release that removes it, and by then it is spread across files nobody is looking at. Rename it while the two are still equivalent.",
+                "fix": true
+            }
+        ],
+        "fixedSource": "const element = <div className=\"grow-2\" />;"
+    },
+    "clean": {
+        "file": "Styles.ts",
+        "source": "const description = 'flex-shrink-0';"
+    },
+    "assertedMessageIds": [
+        "deprecatedClassIrreplaceable",
+        "deprecatedClassReplaceable"
+    ],
+    "assertsFix": true
+}

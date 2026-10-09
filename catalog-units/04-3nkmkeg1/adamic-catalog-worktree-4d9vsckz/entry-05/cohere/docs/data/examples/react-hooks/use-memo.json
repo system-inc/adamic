@@ -1,0 +1,30 @@
+{
+    "rule": "react-hooks/use-memo",
+    "firing": {
+        "file": "use_memo.tsx",
+        "source": "function Component(props) {\n  const x = useMemo();\n  return <div>{x}</div>;\n}\n",
+        "findings": [
+            {
+                "line": 2,
+                "column": 13,
+                "endLine": 2,
+                "endColumn": 22,
+                "messageId": "useMemoMissingCallback",
+                "message": "This `useMemo` or `useCallback` call was given no arguments at all, so there is nothing to memoize. The first argument is the function whose result gets cached between renders, and without it the call computes nothing and returns undefined. Pass the calculation as an inline function."
+            }
+        ]
+    },
+    "clean": {
+        "file": "use_memo.tsx",
+        "source": "const x = useMemo(fn, [a]);\n"
+    },
+    "assertedMessageIds": [
+        "useMemoCallbackAsyncOrGenerator",
+        "useMemoCallbackHasParameters",
+        "useMemoCallbackNotInline",
+        "useMemoCallbackReassignsOuterVariable",
+        "useMemoDependencyListNotArrayLiteral",
+        "useMemoDependencyNotSimple",
+        "useMemoMissingCallback"
+    ]
+}

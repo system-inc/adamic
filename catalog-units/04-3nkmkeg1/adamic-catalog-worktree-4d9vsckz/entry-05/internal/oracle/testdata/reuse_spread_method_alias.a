@@ -1,0 +1,27 @@
+// A method called on a spread's source while the literal is evaluated can keep this: then the object
+// reuse took over is reachable from where the method kept it, and the literal's writes show there.
+interface Tree {
+	tag: string;
+	keep(): string;
+}
+const kept: Tree[] = [];
+class Real implements Tree {
+	tag: string;
+	constructor() {
+		this.tag = `t${0}`;
+	}
+	keep(): string {
+		kept.push(this);
+		return `kept${1}`;
+	}
+}
+interface Plain {
+	tag: string;
+}
+function rebuild(tree: Tree): Plain {
+	return { ...tree, tag: tree.keep() };
+}
+const made = rebuild(new Real());
+for (const each of kept) {
+	console.log(`${each.tag} ${each instanceof Real} ${made.tag}`);
+}

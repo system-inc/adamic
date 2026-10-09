@@ -1,0 +1,18 @@
+// A method is lowered where a call to it is first met, here inside a closure inside a function. The
+// closure inside the method captures this, which belongs to the method alone: it must not land in the
+// environment of the closure the call was met in, whose C has no such cell. Found by adamic-fuzz
+// (seed 571): clang refused the C, an undeclared this cell.
+class Counter {
+	count = 2;
+	bump(step: number): number {
+		this.count += step;
+		return [1, 2].reduce((sum, item) => sum + this.count * item, 0);
+	}
+}
+const counter = new Counter();
+function effect(): number {
+	return [10, 20].reduce((sum, item) => sum + counter.bump(item), 1);
+}
+console.log(`${effect()} ${counter.count}`);
+const late = [5].map((item) => new Counter().bump(item));
+console.log(late.join(','));

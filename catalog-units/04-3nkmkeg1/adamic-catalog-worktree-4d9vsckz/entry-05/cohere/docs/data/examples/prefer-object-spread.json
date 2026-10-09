@@ -1,0 +1,28 @@
+{
+    "rule": "prefer-object-spread",
+    "firing": {
+        "file": "/repository/source/Spread.ts",
+        "source": "Object.assign({})\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 1,
+                "endLine": 1,
+                "endColumn": 18,
+                "messageId": "useLiteralMessage",
+                "message": "Use an object literal instead of `Object.assign`. eg: `{ foo: bar }`. Copying an object literal into a fresh object achieves nothing the literal did not already do.",
+                "fix": true
+            }
+        ],
+        "fixedSource": "({})\n"
+    },
+    "clean": {
+        "file": "/repository/source/Spread.ts",
+        "source": "Object.assign()\n"
+    },
+    "assertedMessageIds": [
+        "useLiteralMessage",
+        "useSpreadMessage"
+    ],
+    "assertsFix": true
+}

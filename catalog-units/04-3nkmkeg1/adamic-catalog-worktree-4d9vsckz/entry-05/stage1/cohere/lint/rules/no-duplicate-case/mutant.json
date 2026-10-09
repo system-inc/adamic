@@ -1,0 +1,5 @@
+{
+  "name": "duplicate case suppressed",
+  "from": "if(seen.has(signature))",
+  "to": "if(!seen.has(signature))"
+}

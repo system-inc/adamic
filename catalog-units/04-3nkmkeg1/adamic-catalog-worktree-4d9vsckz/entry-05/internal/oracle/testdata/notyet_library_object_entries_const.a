@@ -1,0 +1,9 @@
+let effects = '';
+function value(text: string): string { effects += text; return text; }
+const entries = Object.entries({zeta: value('first'), '10': value('ten'), '2': value('two'), '01': value('leading'), '🌍': value('world')} as const);
+console.log(effects);
+for (const pair of entries) { console.log(pair[0] + ':' + pair[1]); }
+const map = new Map(Object.entries({General_Category: 'General_Category', gc: 'General_Category', Script: 'Script', sc: 'Script'} as const));
+console.log(map.get('gc') ?? 'missing');
+console.log(map.get('sc') ?? 'missing');
+console.log(`${map.size}`);

@@ -1,0 +1,25 @@
+{
+    "rule": "nexus/consistency-no-utils-folder",
+    "firing": {
+        "file": "/project/source/_utils/Thing.ts",
+        "source": "export const Value = 1;\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 1,
+                "endLine": 1,
+                "endColumn": 1,
+                "messageId": "noUnderscoreUtils",
+                "message": "Folder name \"_utils\" is not allowed. Use \"_utilities\" instead."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/project/source/_utilities/Thing.ts",
+        "source": "export const Value = 1;\n"
+    },
+    "assertedMessageIds": [
+        "noUnderscoreUtils",
+        "noUtils"
+    ]
+}

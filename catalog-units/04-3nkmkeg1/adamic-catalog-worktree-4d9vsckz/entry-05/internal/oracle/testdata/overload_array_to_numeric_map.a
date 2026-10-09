@@ -1,0 +1,9 @@
+function arrayToNumericMap<T>(array: readonly T[], makeKey: (value: T) => number): T[];
+function arrayToNumericMap<T, U>(array: readonly T[], makeKey: (value: T) => number, makeValue: (value: T) => T | U = (value) => value): (T | U)[] {
+    // Prepopulate the reduced fixture to isolate binders from array growth.
+    const result: (T | U)[] = [...array];
+    for (const value of array) result[makeKey(value)] = makeValue(value);
+    return result;
+}
+const mapped = arrayToNumericMap([7, 9], (value) => value === 7 ? 1 : 0);
+console.log(mapped.join(','));

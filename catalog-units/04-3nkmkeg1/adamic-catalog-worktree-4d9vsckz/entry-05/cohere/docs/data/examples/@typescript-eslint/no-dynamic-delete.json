@@ -1,0 +1,24 @@
+{
+    "rule": "@typescript-eslint/no-dynamic-delete",
+    "firing": {
+        "file": "/repository/source/Container.js",
+        "source": "const container = {};\ndelete container[name];",
+        "findings": [
+            {
+                "line": 2,
+                "column": 18,
+                "endLine": 2,
+                "endColumn": 22,
+                "messageId": "dynamicDelete",
+                "message": "Do not delete dynamically computed property keys."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/Container.ts",
+        "source": "\nconst value = 1;\ndelete value;\n    "
+    },
+    "assertedMessageIds": [
+        "dynamicDelete"
+    ]
+}

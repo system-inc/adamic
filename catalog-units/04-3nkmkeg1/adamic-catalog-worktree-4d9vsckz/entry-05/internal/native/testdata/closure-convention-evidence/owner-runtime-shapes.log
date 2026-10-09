@@ -1,0 +1,6 @@
+node_process flags= compile exit=0
+parallel flags= compile exit=0
+node_process flags=-DADAMIC_CLOSURE_CONVENTION=1 compile exit=0
+parallel flags=-DADAMIC_CLOSURE_CONVENTION=1 compile exit=0
+node_process flags=-DADAMIC_CLOSURE_CONVENTION=1 -DADAMIC_CLOSURE_RECEIVERS=1 -DADAMIC_CANONICAL_CLOSURES=1 compile exit=0
+parallel flags=-DADAMIC_CLOSURE_CONVENTION=1 -DADAMIC_CLOSURE_RECEIVERS=1 -DADAMIC_CANONICAL_CLOSURES=1 compile exit=0

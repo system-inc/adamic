@@ -1,0 +1,16 @@
+{
+  "file": "types.ts",
+  "expression": "DiagnosticCategory[d.category]",
+  "results": {
+    "emit": {
+      "exit": 1,
+      "stdout": "PASS corePublic.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS performanceCore.ts: stock emitted JavaScript bytes, site contract, idempotence\n",
+      "stderr": "/workspace/adamic/stage3/adapt/32-indexed-reads-program/verify.cjs:24\n        throw new Error(`unexpected emitted JavaScript change in ${file}: ${hash(expected.outputText)} != ${hash(actual.outputText)}`);\n        ^\n\nError: unexpected emitted JavaScript change in types.ts: 4839bedc439cad06969bad2a3d805a7c0b480f06df73fcff62d2cd0957009fc3 != 125191efe51e52e623f8574f19888a04c578d1cf4ec649daab700e901460cbf3\n    at Object.<anonymous> (/workspace/adamic/stage3/adapt/32-indexed-reads-program/verify.cjs:24:15)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47\n\nNode.js v24.19.0\n"
+    },
+    "contract": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "required read defaulted: types.ts:7321:18\n"
+    }
+  }
+}

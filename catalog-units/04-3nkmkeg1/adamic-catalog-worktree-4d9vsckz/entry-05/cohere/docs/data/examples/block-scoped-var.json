@@ -1,0 +1,24 @@
+{
+    "rule": "block-scoped-var",
+    "firing": {
+        "file": "/repository/source/BlockScopedVar.ts",
+        "source": "{ var a = 0; } a;\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 16,
+                "endLine": 1,
+                "endColumn": 17,
+                "messageId": "outOfScope",
+                "message": "`a` is declared with `var` inside a block on line 1 column 7, and used here, outside it. That works because `var` is function-scoped rather than block-scoped, so the braces around the declaration say one thing and the binding does another. Declare it with `let` in the scope that actually needs it, or move the declaration out to where it is used."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/BlockScopedVar.ts",
+        "source": "a:;\n"
+    },
+    "assertedMessageIds": [
+        "outOfScope"
+    ]
+}

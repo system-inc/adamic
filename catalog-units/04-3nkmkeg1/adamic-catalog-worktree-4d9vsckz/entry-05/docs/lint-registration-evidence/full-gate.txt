@@ -1,0 +1,33 @@
+?   	github.com/system-inc/adamic/bench	[no test files]
+?   	github.com/system-inc/adamic/bench/regex	[no test files]
+?   	github.com/system-inc/adamic/cmd/adamic	[no test files]
+?   	github.com/system-inc/adamic/cmd/adamic-fuzz	[no test files]
+ok  	github.com/system-inc/adamic/cmd/adamic-meter	0.825s
+ok  	github.com/system-inc/adamic/cmd/adamic-test262	75.959s
+?   	github.com/system-inc/adamic/cmd/lint-registry	[no test files]
+ok  	github.com/system-inc/adamic/internal/flow	92.612s
+ok  	github.com/system-inc/adamic/internal/fresh	14.520s
+ok  	github.com/system-inc/adamic/internal/fuzz	5.294s
+?   	github.com/system-inc/adamic/internal/ir	[no test files]
+?   	github.com/system-inc/adamic/internal/javascript	[no test files]
+ok  	github.com/system-inc/adamic/internal/load	1.527s
+ok  	github.com/system-inc/adamic/internal/lower	15.167s
+ok  	github.com/system-inc/adamic/internal/native	232.685s
+ok  	github.com/system-inc/adamic/internal/oracle	201.524s
+ok  	github.com/system-inc/adamic/internal/regexp	4.185s
+ok  	github.com/system-inc/adamic/internal/unicodeproperties	705.404s
+ok  	github.com/system-inc/adamic/stage1/cohere/cssnumbers	55.169s
+ok  	github.com/system-inc/adamic/stage1/cohere/cssstrings	16.514s
+ok  	github.com/system-inc/adamic/stage1/cohere/formatfiles	45.971s
+ok  	github.com/system-inc/adamic/stage1/cohere/gitignore	36.976s
+ok  	github.com/system-inc/adamic/stage1/cohere/graphql	57.332s
+ok  	github.com/system-inc/adamic/stage1/cohere/json	590.435s
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	414.890s
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/registry	0.023s
+ok  	github.com/system-inc/adamic/stage1/cohere/mediaquery	13.691s
+ok  	github.com/system-inc/adamic/stage1/cohere/selector	27.570s
+ok  	github.com/system-inc/adamic/stage1/cohere/suppression	49.181s
+ok  	github.com/system-inc/adamic/stage1/cohere/values	51.733s
+ok  	github.com/system-inc/adamic/stage1/typescript/parser	385.085s
+ok  	github.com/system-inc/adamic/stage1/typescript/scanner	57.177s
+full frozen gate exit=0

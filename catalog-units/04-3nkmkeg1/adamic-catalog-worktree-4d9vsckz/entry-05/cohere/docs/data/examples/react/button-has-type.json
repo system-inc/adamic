@@ -1,0 +1,27 @@
+{
+    "rule": "react/button-has-type",
+    "firing": {
+        "file": "/repository/source/ButtonHasType.tsx",
+        "source": "const a = <button/>;\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 11,
+                "endLine": 1,
+                "endColumn": 20,
+                "messageId": "missingType",
+                "message": "This `button` has no `type`. HTML defaults a button inside a form to `type=\"submit\"`, so a button written for anything else submits the form and reloads the page the first time somebody clicks it. Write the type you meant, which is usually `type=\"button\"`."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/ButtonHasType.tsx",
+        "source": "const a = <button type=\"button\"/>;\n"
+    },
+    "assertedMessageIds": [
+        "complexType",
+        "forbiddenValue",
+        "invalidValue",
+        "missingType"
+    ]
+}

@@ -1,0 +1,23 @@
+{
+    "rule": "react/jsx-no-target-blank",
+    "firing": {
+        "file": "/repository/source/JsxNoTargetBlank.tsx",
+        "source": "<a target=\"_blank\" href={dynamicLink}></a>",
+        "findings": [
+            {
+                "line": 1,
+                "column": 1,
+                "endLine": 1,
+                "endColumn": 39,
+                "messageId": "noTargetBlankWithoutNoreferrer",
+                "message": "This link opens a new tab without `rel=\"noreferrer\"`. The page it opens receives a live `window.opener` handle back to this one and can navigate it anywhere, which is how a link to an external site becomes a phishing redirect the user never sees initiated. Add `rel=\"noreferrer\"`, which also implies `noopener` and is the wider supported spelling.",
+                "fix": true
+            }
+        ]
+    },
+    "assertedMessageIds": [
+        "noTargetBlankWithoutNoopener",
+        "noTargetBlankWithoutNoreferrer"
+    ],
+    "assertsFix": true
+}

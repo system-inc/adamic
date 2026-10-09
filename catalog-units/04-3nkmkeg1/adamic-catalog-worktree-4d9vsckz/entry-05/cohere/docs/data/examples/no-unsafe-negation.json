@@ -1,0 +1,26 @@
+{
+    "rule": "no-unsafe-negation",
+    "firing": {
+        "file": "/repository/source/UnsafeNegation.ts",
+        "source": "!a in b",
+        "findings": [
+            {
+                "line": 1,
+                "column": 1,
+                "endLine": 1,
+                "endColumn": 3,
+                "messageId": "unexpected",
+                "message": "The `!` binds tighter than the `in` after it, so this negates the left operand and then compares the resulting boolean, rather than negating the comparison. `!key in object` runs the `!` first and hands `in` a `true` or a `false`, which is almost never the question being asked, and it is a valid expression either way so nothing else reports it.",
+                "suggestions": 2
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/UnsafeNegation.ts",
+        "source": "!a + b"
+    },
+    "assertedMessageIds": [
+        "unexpected"
+    ],
+    "assertsSuggestion": true
+}

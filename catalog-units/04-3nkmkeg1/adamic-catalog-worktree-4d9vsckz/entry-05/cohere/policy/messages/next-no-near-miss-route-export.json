@@ -1,0 +1,16 @@
+{
+  "rules": {
+    "TypeScript": "structure/next-no-near-miss-route-export"
+  },
+  "phrases": {
+    "reasoning": "Next.js reads a route file's exports by exact name and ignores every other export without a warning, so this one is dead code and the route silently goes without what it was written to configure. Five phi web routes exported `generateStaticParameters` for fifteen months and never prerendered."
+  },
+  "messages": {
+    "nearMissRouteExport": {
+      "text": "`{{name}}` is not a name Next.js reads from this file, and it is one step from `{{contractName}}`, which it does. <<reasoning>> Rename it to `{{contractName}}`."
+    },
+    "pagesRouterExport": {
+      "text": "`{{name}}` is a Pages Router data function, and the App Router never calls it. <<reasoning>> Fetch in the component itself, and export `generateStaticParams` for the paths to prerender."
+    }
+  }
+}

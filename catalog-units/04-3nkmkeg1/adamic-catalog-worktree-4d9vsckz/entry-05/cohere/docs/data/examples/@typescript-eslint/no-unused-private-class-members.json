@@ -1,0 +1,24 @@
+{
+    "rule": "@typescript-eslint/no-unused-private-class-members",
+    "firing": {
+        "file": "/repository/source/Privates.ts",
+        "source": "class Foo {\n  #privateMember = 5;\n}\n",
+        "findings": [
+            {
+                "line": 2,
+                "column": 3,
+                "endLine": 2,
+                "endColumn": 17,
+                "messageId": "unusedPrivateClassMember",
+                "message": "Private class member '#privateMember' is defined but never used."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/Privates.ts",
+        "source": "class Foo {}\n"
+    },
+    "assertedMessageIds": [
+        "unusedPrivateClassMember"
+    ]
+}

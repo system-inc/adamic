@@ -1,0 +1,32 @@
+[
+  {
+    "configuration": "before",
+    "command": [
+      "/tmp/optional-indexing-pristine-census",
+      "/tmp/optional-indexing-adapted/src/compiler",
+      "/tmp/optional-indexing-before.jsonl"
+    ],
+    "environment": {
+      "LATENT_FULL": "1",
+      "LATENT_ASSERT_NO_OUTPUT": "1"
+    },
+    "exit": 0,
+    "binary_sha256": "ac8ae73851b413316018e9d0d49c66d07cf0b8af01ce469d18bbb03c1abbb851",
+    "raw_sha256": "ea283c385aabf864612c99e729a726e61815d0e87424543d57b52fc47e6de84d"
+  },
+  {
+    "configuration": "after",
+    "command": [
+      "/tmp/optional-indexing-delivery-census",
+      "/tmp/optional-indexing-adapted/src/compiler",
+      "/tmp/optional-indexing-delivery.jsonl"
+    ],
+    "environment": {
+      "LATENT_FULL": "1",
+      "LATENT_ASSERT_NO_OUTPUT": "1"
+    },
+    "exit": 0,
+    "binary_sha256": "59d1d81f9bfc8844bc8a827f2065bed038e9ac646ef3558b99ae4e531f7db150",
+    "raw_sha256": "6190cf0f6eb394a7a846ee6dfb4af4aac786f05e7f847eb623e8375d8ec06cb1"
+  }
+]

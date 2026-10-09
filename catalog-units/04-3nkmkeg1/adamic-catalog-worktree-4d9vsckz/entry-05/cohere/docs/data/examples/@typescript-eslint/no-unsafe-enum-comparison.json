@@ -1,0 +1,25 @@
+{
+    "rule": "@typescript-eslint/no-unsafe-enum-comparison",
+    "firing": {
+        "file": "/repository/source/NoUnsafeEnumComparison.ts",
+        "source": "enum Fruit {\n  Apple,\n}\nFruit.Apple < 1;\n",
+        "findings": [
+            {
+                "line": 4,
+                "column": 1,
+                "endLine": 4,
+                "endColumn": 16,
+                "messageId": "mismatchedCondition",
+                "message": "The two values in this comparison do not have a shared enum type. Comparing an enum member against a bare literal type-checks and then stops protecting you: the literal is not tied to the enum, so renaming a member, changing its value, or removing it leaves this comparison compiling and silently false. That is the failure enums exist to prevent. Compare against the enum member itself."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/NoUnsafeEnumComparison.ts",
+        "source": "1 < 2;\n"
+    },
+    "assertedMessageIds": [
+        "mismatchedCase",
+        "mismatchedCondition"
+    ]
+}

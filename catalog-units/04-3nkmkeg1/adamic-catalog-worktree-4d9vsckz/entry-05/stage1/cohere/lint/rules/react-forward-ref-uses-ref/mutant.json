@@ -1,0 +1,5 @@
+{
+  "name": "react-forward-ref-uses-ref mutant from batch 8",
+  "from": "if(counted !== 1)",
+  "to": "if(counted === 1)"
+}
