@@ -1,0 +1,1 @@
+First df: /tmp 8.8G total, 665M used, 8.2G available; /workspace 32G total, 17G used, 14G available. Removed only /tmp/defend-css and /tmp/adamic-gate, earlier-unit scratch/build products. Second df: /tmp 238M used, 8.6G available; /workspace unchanged. /tmp total capacity is below 15G. No repository or tools removed.

@@ -1,0 +1,26 @@
+[
+  {
+    "mutant": "D1",
+    "file": "internal/native/runtime/stack.c",
+    "old": "uintptr_t reserved = arguments + margin;",
+    "new": "uintptr_t reserved = ARGUMENTS_FLOOR;",
+    "change": "Change total reserved-stack constant to the 128 KiB argument floor.",
+    "file_line": "internal/native/runtime/stack.c:58"
+  },
+  {
+    "mutant": "D2",
+    "file": "internal/native/runtime/stack.c",
+    "old": "uintptr_t reserved = arguments + margin;",
+    "new": "uintptr_t reserved = margin;",
+    "change": "Drop argument reservation from total, retaining only the adaptive panic margin.",
+    "file_line": "internal/native/runtime/stack.c:58"
+  },
+  {
+    "mutant": "D3",
+    "file": "internal/native/runtime/stack.c",
+    "old": "uintptr_t reserved = arguments + margin;",
+    "new": "uintptr_t reserved = arguments;",
+    "change": "Drop the panic margin, retaining only argument reservation.",
+    "file_line": "internal/native/runtime/stack.c:58"
+  }
+]

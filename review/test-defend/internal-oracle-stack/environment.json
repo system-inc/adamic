@@ -1,0 +1,10 @@
+{
+  "go": "go version go1.27.1 linux/amd64",
+  "node": "v24.19.0",
+  "nproc": 5,
+  "ADAMIC_GATE_UNCACHED": "1",
+  "ADAMIC_NATIVE_SPLIT": "unset (default)",
+  "cache_pattern": "/tmp/defend-stack/cache/<mutant>",
+  "setup": "warm env.sh; no cloud setup",
+  "npm": "stage3/api npm ci"
+}

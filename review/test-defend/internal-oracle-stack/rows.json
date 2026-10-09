@@ -1,0 +1,48 @@
+[
+  {
+    "test": "TestLongArgumentsLeaveTheStackItsLimit",
+    "package": "internal/oracle",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestSmallStacksStillPanic"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D1 internal/native/runtime/stack.c:58",
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "internal/native/runtime/stack.c:58",
+        "change": "Change reserved stack from arguments + margin to the 128 KiB ARGUMENTS_FLOOR constant.",
+        "rows_failed": [
+          "TestLongArgumentsLeaveTheStackItsLimit"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/defend-stack/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run \"^(TestLongArgumentsLeaveTheStackItsLimit|TestSmallStacksStillPanic)$\"; stack_test.go:75: plain: exit codes differ; Node exit 70, native exit -1.",
+    "bounded": true,
+    "matrix_rows": [
+      "TestFractionalPowersReachRuntime",
+      "TestLongArgumentsLeaveTheStackItsLimit",
+      "TestNativeAgreesWithNode",
+      "TestReviewProgramsAgreeWithNode",
+      "TestReviewProgramsNoLooseFiles",
+      "TestReviewProgramsRefuse",
+      "TestReviewProgramsSelfTest",
+      "TestSmallStacksStillPanic"
+    ],
+    "passed": [
+      "TestFractionalPowersReachRuntime",
+      "TestNativeAgreesWithNode",
+      "TestReviewProgramsAgreeWithNode",
+      "TestReviewProgramsNoLooseFiles",
+      "TestReviewProgramsRefuse",
+      "TestReviewProgramsSelfTest",
+      "TestSmallStacksStillPanic"
+    ],
+    "corpus_subset": [
+      "TestNativeAgreesWithNode/internal/oracle/testdata/stack_overflow.a",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/library_fnexpr_recurse.a",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/route_targets_recursive.a"
+    ]
+  }
+]

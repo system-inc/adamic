@@ -1,0 +1,57 @@
+[
+  {
+    "id": "M01",
+    "file": "internal/native/runtime/stack.c",
+    "line": 56,
+    "old": "uintptr_t arguments = size / 4 > ARGUMENTS_FLOOR ? size / 4 : ARGUMENTS_FLOOR;",
+    "new": "uintptr_t arguments = 0;",
+    "kind": "change constant: argument reservation to zero",
+    "validation_commands": [
+      "clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O2 -I internal/native/runtime -c internal/native/runtime/stack.c -o /tmp/u069/M01-release.o",
+      "clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -I internal/native/runtime -c internal/native/runtime/stack.c -o /tmp/u069/M01-sanitized.o"
+    ],
+    "validation_seconds": 0.11627441399923555,
+    "validated": true
+  },
+  {
+    "id": "M02",
+    "file": "internal/native/runtime/stack.c",
+    "line": 57,
+    "old": "size / 8 < MARGIN ? size / 8 : MARGIN",
+    "new": "size / 8 > MARGIN ? size / 8 : MARGIN",
+    "kind": "flip condition",
+    "validation_commands": [
+      "clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O2 -I internal/native/runtime -c internal/native/runtime/stack.c -o /tmp/u069/M02-release.o",
+      "clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -I internal/native/runtime -c internal/native/runtime/stack.c -o /tmp/u069/M02-sanitized.o"
+    ],
+    "validation_seconds": 0.06775965300039388,
+    "validated": true
+  },
+  {
+    "id": "M03",
+    "file": "internal/native/emit_functions.go",
+    "line": 55,
+    "old": "\te.line(\"ADAMIC_CHECK_STACK();\")",
+    "new": "",
+    "kind": "drop statement",
+    "validation_commands": [
+      "go vet ./internal/native/"
+    ],
+    "validation_seconds": 0.36920891200043116,
+    "validated": true
+  },
+  {
+    "id": "M04",
+    "file": "internal/native/runtime/stack.c",
+    "line": 66,
+    "old": "\"RangeError: Maximum call stack size exceeded\"",
+    "new": "\"RangeError: stack limit exceeded\"",
+    "kind": "change constant",
+    "validation_commands": [
+      "clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O2 -I internal/native/runtime -c internal/native/runtime/stack.c -o /tmp/u069/M04-release.o",
+      "clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -I internal/native/runtime -c internal/native/runtime/stack.c -o /tmp/u069/M04-sanitized.o"
+    ],
+    "validation_seconds": 0.06273707899981673,
+    "validated": true
+  }
+]

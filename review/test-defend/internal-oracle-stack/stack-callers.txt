@@ -1,0 +1,13 @@
+internal/oracle/stack_test.go:19:	long := strings.Repeat("x", 120_000)
+internal/oracle/stack_test.go:36:			cacheProbe(t, "internal/oracle/testdata/stack_over.a", nil, "", func() {
+internal/oracle/stack_test.go:38:				path, binary, _ := sanitized(t, "internal/oracle/testdata/stack_over.a")
+internal/oracle/stack_test.go:97:		{256, []string{strings.Repeat("x", 100_000)}},
+internal/oracle/stack_test.go:102:			cacheProbe(t, "internal/oracle/testdata/stack_over.a", nil, "", func() {
+internal/oracle/stack_test.go:104:				path, binary, _ := sanitized(t, "internal/oracle/testdata/stack_over.a")
+internal/oracle/stack_test.go:115:					script := fmt.Sprintf(`ulimit -s %d && exec "$0" "$@"`, kibibytes)
+internal/oracle/counts_test.go:34:8 MiB stack (ulimit -s 8192), so a fixture's counts never depend on the stack of whoever runs it. This is the baseline borrow
+internal/oracle/counts_test.go:37:Not counted, though the oracle runs it as it runs every fixture: internal/oracle/testdata/stack_overflow.a, which recurses until
+internal/oracle/counts_test.go:52:// the stack's size (ulimit -s), and the table has to be the same on every machine. The shell's ulimit
+internal/oracle/counts_test.go:55:	return "/bin/sh", append([]string{"-c", `ulimit -s 8192 && exec "$0" "$@"`, name}, arguments...)
+internal/oracle/counts_test.go:61:	"internal/oracle/testdata/stack_overflow.a": true,
+internal/oracle/oracle_test.go:296:	{"internal/oracle/testdata/stack_overflow.a", true, false},
