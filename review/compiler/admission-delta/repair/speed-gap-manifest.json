@@ -1,0 +1,31 @@
+{
+  "sha": "ced32bf9b1f410b8be07f078adb78365a20a9f5b",
+  "generator": "",
+  "corpora": [
+    {
+      "name": "gaps",
+      "programs": [
+        {
+          "path": "stage1/cohere/css/gaps/printer_boundaries.ts",
+          "blob": "2c64353164ca9a868c115156b61d1bacfc28fbaf"
+        },
+        {
+          "path": "stage1/cohere/estree/gaps/deepBinary.ts",
+          "blob": "f1a106944a4c17bb76891fbdb1aa28e9c352ac2d"
+        },
+        {
+          "path": "stage1/cohere/estree/gaps/emptyGenerics.ts",
+          "blob": "9aa2653a643dcb61f86a265793800fdcf6f92ae0"
+        },
+        {
+          "path": "stage1/cohere/estree/gaps/portParserRecovery.ts",
+          "blob": "af7f5095579566c6144fab64ae83bae184c5cdb2"
+        },
+        {
+          "path": "stage1/cohere/estree/gaps/typeMemberInitializer.ts",
+          "blob": "a238f15dcad280184e3008014015f9fe663e598e"
+        }
+      ]
+    }
+  ]
+}

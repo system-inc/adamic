@@ -65,7 +65,7 @@ func commandFixture(t *testing.T) (string, string, string, string) {
 	}
 	write("manifest.json", string(data))
 	write("base", "#!/bin/sh\necho \"adamic: stage 0 can't lower witness yet\" >&2\nexit 1\n")
-	write("head", "#!/bin/sh\ncase \"$1\" in\nc) echo C;;\njs) echo \"console.log('42');\";;\nbuild) cp \"$0\" \"$4\"; printf '#!/bin/sh\\nprintf \"41\\\\n\"\\n' > \"$4\";;\nesac\n")
+	write("head", "#!/bin/sh\ncase \"$1\" in\nadmission-lower) exit 0;;\nc) echo C;;\njs) echo \"console.log('42');\";;\nbuild) cp \"$0\" \"$4\"; printf '#!/bin/sh\\nprintf \"41\\\\n\"\\n' > \"$4\";;\nesac\n")
 	return dir, sha, filepath.Join(dir, "base"), filepath.Join(dir, "head")
 }
 func invokeCommand(t *testing.T, dir string, args ...string) observation {
@@ -73,6 +73,15 @@ func invokeCommand(t *testing.T, dir string, args ...string) observation {
 	exe, err := os.Executable()
 	if err != nil {
 		t.Fatal(err)
+	}
+	// Fake compilers implement the lowering adapter contract explicitly.
+	for i := 0; i+1 < len(args); i++ {
+		if args[i] == "--base-binary" {
+			args = append(args, "--base-lower-binary", args[i+1])
+		}
+		if args[i] == "--head-binary" {
+			args = append(args, "--head-lower-binary", args[i+1])
+		}
 	}
 	data, err := json.Marshal(args)
 	if err != nil {
@@ -210,7 +219,7 @@ func TestBuildRevisions(t *testing.T) {
 	if err := os.MkdirAll(filepath.Join(dir, "cmd/adamic"), 0755); err != nil {
 		t.Fatal(err)
 	}
-	for path, text := range map[string]string{"go.mod": "module admission-fixture\n\ngo 1.27\n", "cmd/adamic/main.go": "package main\nimport \"fmt\"\nfunc main(){fmt.Println(\"C\")}\n"} {
+	for path, text := range map[string]string{"go.mod": "module github.com/system-inc/adamic\n\ngo 1.27\n", "cmd/adamic/main.go": "package main\nimport \"fmt\"\nfunc main(){fmt.Println(\"C\")}\nfunc compile(string)(*int,int){n:=0;return &n,0}\n"} {
 		if err := os.WriteFile(filepath.Join(dir, path), []byte(text), 0600); err != nil {
 			t.Fatal(err)
 		}

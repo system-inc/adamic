@@ -1,0 +1,16 @@
+--- classify.go
++++ classify.go
+@@ -15,11 +15,11 @@
+ 			defer group.Done()
+ 			for index := range jobs {
+ 				record := &programs[index]
+-				record.Base = execute(tree, limit, base, "admission-lower", record.Path)
++				record.Base = execute(tree, limit, base, "c", record.Path)
+ 				if base == head {
+ 					record.Head = record.Base
+ 				} else {
+-					record.Head = execute(tree, limit, head, "admission-lower", record.Path)
++					record.Head = execute(tree, limit, head, "c", record.Path)
+ 				}
+ 				record.Base.Stdout, record.Head.Stdout = "", ""
+ 				record.Class = classify(record.Base, record.Head)

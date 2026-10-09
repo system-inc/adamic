@@ -13,6 +13,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"runtime"
 	"sort"
 	"strings"
 	"syscall"
@@ -54,23 +55,27 @@ type entry struct {
 	Sampled           bool         `json:"sampled"`
 }
 type report struct {
-	Diff                  []program `json:"diff"`
-	DiffCount             int       `json:"diff_count"`
-	CompileTimeoutSeconds float64   `json:"compile_timeout_seconds"`
-	RuntimeTimeoutSeconds float64   `json:"runtime_timeout_seconds"`
-	Base                  string    `json:"base"`
-	Head                  string    `json:"head"`
-	GeneratorBlob         string    `json:"generator_blob"`
-	ManifestBlob          string    `json:"manifest_blob"`
-	Admitted              int       `json:"admitted"`
-	Programs              []entry   `json:"programs"`
-	Verdict               string    `json:"verdict"`
-	Corpora               []corpus  `json:"corpora"`
-	SamplingSeed          string    `json:"sampling_seed"`
-	SamplingSize          int       `json:"sampling_size"`
-	Omitted               int       `json:"omitted"`
-	BudgetSeconds         float64   `json:"budget_seconds"`
-	BudgetUsedSeconds     float64   `json:"budget_used_seconds"`
+	Phases                map[string]float64 `json:"phase_seconds"`
+	Workers               int                `json:"workers"`
+	Classification        string             `json:"classification"`
+	Diff                  []program          `json:"diff"`
+	DiffCount             int                `json:"diff_count"`
+	CompileTimeoutSeconds float64            `json:"compile_timeout_seconds"`
+	RuntimeTimeoutSeconds float64            `json:"runtime_timeout_seconds"`
+	Base                  string             `json:"base"`
+	Head                  string             `json:"head"`
+	GeneratorRevision     string             `json:"generator_revision"`
+	GeneratorBlob         string             `json:"generator_blob"`
+	ManifestBlob          string             `json:"manifest_blob"`
+	Admitted              int                `json:"admitted"`
+	Programs              []entry            `json:"programs"`
+	Verdict               string             `json:"verdict"`
+	Corpora               []corpus           `json:"corpora"`
+	SamplingSeed          string             `json:"sampling_seed"`
+	SamplingSize          int                `json:"sampling_size"`
+	Omitted               int                `json:"omitted"`
+	BudgetSeconds         float64            `json:"budget_seconds"`
+	BudgetUsedSeconds     float64            `json:"budget_used_seconds"`
 }
 
 func execute(dir string, limit time.Duration, name string, args ...string) observation {
@@ -78,6 +83,9 @@ func execute(dir string, limit time.Duration, name string, args ...string) obser
 	defer cancel()
 	command := exec.CommandContext(ctx, name, args...)
 	command.Dir = dir
+	if len(args) > 0 && args[0] == "admission-lower" {
+		command.Env = append(os.Environ(), "GOMAXPROCS=1")
+	}
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error { return syscall.Kill(-command.Process.Pid, syscall.SIGKILL) }
 	command.WaitDelay = time.Second
@@ -153,13 +161,17 @@ func run(args []string) error {
 	base := flags.String("base", "", "base revision")
 	head := flags.String("head", "HEAD", "head revision")
 	baseBinary := flags.String("base-binary", "", "built base compiler")
+	baseLowerBinary := flags.String("base-lower-binary", "", "base compiler with admission-lower adapter")
+	headLowerBinary := flags.String("head-lower-binary", "", "head compiler with admission-lower adapter")
 	headBinary := flags.String("head-binary", "", "built head compiler")
 	manifestPath := flags.String("manifest", "", "pinned JSON corpus manifest")
 	generator := flags.String("manifest-generator", "", "generator path at head")
+	generatorRevision := flags.String("manifest-generator-revision", "", "generator source revision, defaults to head")
 	corpusDir := flags.String("corpus", "", "ad hoc corpus directory relative to head")
 	budget := flags.Float64("budget", 0, "runtime budget in seconds; 0 means all, witnesses always run")
 	asJSON := flags.Bool("json", false, "emit JSON to stdout")
 	limit := flags.Duration("timeout", 10*time.Second, "per-runtime command timeout")
+	workers := flags.Int("workers", runtime.GOMAXPROCS(0), "parallel classification workers")
 	compileLimit := flags.Duration("compile-timeout", 45*time.Second, "per-program compiler timeout")
 	if err := flags.Parse(args); err != nil {
 		return err
@@ -170,6 +182,9 @@ func run(args []string) error {
 	if *budget < 0 {
 		return fmt.Errorf("budget must be nonnegative")
 	}
+	if *workers < 1 {
+		return fmt.Errorf("workers must be positive")
+	}
 	if *limit <= 0 || *compileLimit <= 0 {
 		return fmt.Errorf("timeout must be positive")
 	}
@@ -177,7 +192,8 @@ func run(args []string) error {
 	if err != nil {
 		return err
 	}
-	result := report{Programs: []entry{}, Verdict: "pass"}
+	startedAll := time.Now()
+	result := report{Programs: []entry{}, Verdict: "pass", Phases: map[string]float64{}, Workers: *workers, Classification: "lowering-only"}
 	result.Base, err = git(root, "rev-parse", *base+"^{commit}")
 	if err != nil {
 		return err
@@ -196,6 +212,7 @@ func run(args []string) error {
 		_, e := git(root, "worktree", "add", "--detach", path, sha)
 		return path, e
 	}
+	phaseStarted := time.Now()
 	headTree, err := checkout(result.Head, "head")
 	if err != nil {
 		return err
@@ -204,29 +221,29 @@ func run(args []string) error {
 	if err = prepareCheckout(headTree); err != nil {
 		return err
 	}
+	result.Phases["checkout_and_provision"] = time.Since(phaseStarted).Seconds()
+	phaseStarted = time.Now()
 	build := func(sha, name, supplied string) (string, error) {
 		if supplied != "" {
 			return filepath.Abs(supplied)
 		}
-		tree, e := checkout(sha, name)
-		if e != nil {
-			return "", e
-		}
-		defer git(root, "worktree", "remove", "--force", tree)
-		if _, e = git(tree, "submodule", "update", "--init", "--recursive"); e != nil {
-			return "", e
-		}
-		binary := filepath.Join(scratch, name+"-adamic")
-		o := execute(tree, 120*time.Second, "go", "build", "-o", binary, "./cmd/adamic")
-		if o.Exit != 0 || o.Error != "" {
-			return "", fmt.Errorf("build %s: %s %s", name, o.Error, o.Stderr)
-		}
-		return binary, nil
+		return cachedCompiler(root, scratch, sha, name)
 	}
 	b, err := build(result.Base, "base-build", *baseBinary)
 	if err != nil {
 		return err
 	}
+	baseLower := b
+	if *baseLowerBinary != "" {
+		baseLower, err = filepath.Abs(*baseLowerBinary)
+	} else if *baseBinary != "" {
+		baseLower, err = cachedCompiler(root, scratch, result.Base, "base-lower-build")
+	}
+	if err != nil {
+		return err
+	}
+	result.Phases["base_build"] = time.Since(phaseStarted).Seconds()
+	phaseStarted = time.Now()
 	h := b
 	if result.Base != result.Head || *baseBinary != "" || *headBinary != "" {
 		h, err = build(result.Head, "head-build", *headBinary)
@@ -234,6 +251,17 @@ func run(args []string) error {
 	if err != nil {
 		return err
 	}
+	headLower := h
+	if *headLowerBinary != "" {
+		headLower, err = filepath.Abs(*headLowerBinary)
+	} else if *headBinary != "" || *baseBinary != "" {
+		headLower, err = cachedCompiler(root, scratch, result.Head, "head-lower-build")
+	}
+	if err != nil {
+		return err
+	}
+	result.Phases["head_build"] = time.Since(phaseStarted).Seconds()
+	phaseStarted = time.Now()
 	var m manifest
 	if *manifestPath != "" {
 		data, e := os.ReadFile(*manifestPath)
@@ -285,7 +313,14 @@ func run(args []string) error {
 		*generator = m.Generator
 	}
 	if *generator != "" {
-		result.GeneratorBlob, err = git(root, "rev-parse", result.Head+":"+*generator)
+		result.GeneratorRevision = result.Head
+		if *generatorRevision != "" {
+			result.GeneratorRevision, err = git(root, "rev-parse", *generatorRevision+"^{commit}")
+			if err != nil {
+				return err
+			}
+		}
+		result.GeneratorBlob, err = git(root, "rev-parse", result.GeneratorRevision+":"+*generator)
 		if err != nil {
 			return err
 		}
@@ -334,21 +369,22 @@ func run(args []string) error {
 				continue
 			}
 			seen[p.Path] = p.Blob
-			a := execute(headTree, *compileLimit, b, "c", p.Path)
-			z := execute(headTree, *compileLimit, h, "c", p.Path)
-			a.Stdout = ""
-			z.Stdout = ""
-			record := entry{program: p, Corpus: c.Name, Class: classify(a, z), Base: a, Head: z}
-			if record.Class == "newly-accepted" {
-				result.Admitted++
-			}
-			if strings.HasPrefix(record.Class, "compiler-") {
-				result.Verdict = "fail"
-			}
-			result.Programs = append(result.Programs, record)
+			result.Programs = append(result.Programs, entry{program: p, Corpus: c.Name})
 		}
 	}
 
+	result.Phases["manifest_and_verification"] = time.Since(phaseStarted).Seconds()
+	phaseStarted = time.Now()
+	classifyPrograms(headTree, baseLower, headLower, result.Programs, *workers, *compileLimit)
+	for _, record := range result.Programs {
+		if record.Class == "newly-accepted" {
+			result.Admitted++
+		}
+		if strings.HasPrefix(record.Class, "compiler-") {
+			result.Verdict = "fail"
+		}
+	}
+	result.Phases["classification"] = time.Since(phaseStarted).Seconds()
 	selected, omitted := sample(result.Programs, result.Head, *budget, *limit)
 	result.Omitted = omitted
 	if omitted > 0 && result.Verdict == "pass" {
@@ -389,6 +425,8 @@ func run(args []string) error {
 	}
 	result.SamplingSize = len(selected)
 	result.BudgetUsedSeconds = time.Since(started).Seconds()
+	result.Phases["runtime"] = result.BudgetUsedSeconds
+	result.Phases["total"] = time.Since(startedAll).Seconds()
 	if *asJSON {
 		if err = json.NewEncoder(os.Stdout).Encode(result); err != nil {
 			return err

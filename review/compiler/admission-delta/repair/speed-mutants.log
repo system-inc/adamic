@@ -1,0 +1,20 @@
+--- FAIL: TestCompilerCacheIncludesSHA (0.00s)
+    speed_test.go:24: revision SHA missing from compiler cache key
+FAIL
+FAIL	github.com/system-inc/adamic/cmd/adamic-admission-delta	0.009s
+FAIL
+omit-sha mutant exit 1
+--- FAIL: TestParallelLoweringOnly (0.01s)
+    speed_test.go:45: parallel lowering failed: {program:{Path:one Blob:} Corpus: Class:compiler-crash Base:{WallSeconds:0.008317385 Exit:1 Stdout: Stderr:panic: C emission reached
+         Error:} Head:{WallSeconds:0.008317385 Exit:1 Stdout: Stderr:panic: C emission reached
+         Error:} Node:<nil> JavaScript:<nil> Native:<nil> JavaScriptCompile:<nil> NativeCompile:<nil> Agree:<nil> Sampled:false}
+FAIL
+FAIL	github.com/system-inc/adamic/cmd/adamic-admission-delta	0.013s
+FAIL
+emit-c mutant exit 1
+--- FAIL: TestParallelLoweringOnly (1.06s)
+    speed_test.go:45: parallel lowering failed: {program:{Path:one Blob:} Corpus: Class:compiler-timeout Base:{WallSeconds:1.018124814 Exit:-1 Stdout: Stderr: Error:timeout} Head:{WallSeconds:1.018124814 Exit:-1 Stdout: Stderr: Error:timeout} Node:<nil> JavaScript:<nil> Native:<nil> JavaScriptCompile:<nil> NativeCompile:<nil> Agree:<nil> Sampled:false}
+FAIL
+FAIL	github.com/system-inc/adamic/cmd/adamic-admission-delta	1.061s
+FAIL
+serialize mutant exit 1

@@ -15,8 +15,18 @@ go run ./cmd/adamic-admission-delta --base origin/main --head HEAD \
 
 Use `--base-binary /path/to/base-adamic --head-binary /path/to/head-adamic`
 with the corresponding `--base` and `--head` source revisions to skip compiler
-builds. Otherwise each compiler builds in its own detached checkout with its
-pinned submodules. Corpus programs and imports always come from a separate
+runtime compiler builds. A supplied compiler gets a cached lowering companion
+from its revision, or use `--base-lower-binary` / `--head-lower-binary` for
+companions that implement `admission-lower <path>`. Otherwise each compiler
+builds in its own detached checkout with its pinned submodules.
+Compiler products use `internal/buildcache`, keyed by SHA, lowering adapter,
+build settings and toolchain. `ADAMIC_BUILD_LOG` records hits and misses.
+Classification calls only the revision's own loader and lowerer, never the C
+emitter, in parallel (`--workers`, default available CPUs). Each classification
+process uses one Go CPU; identical binaries reuse the same observation.
+Only selected newly admitted programs build native executables. JSON
+`phase_seconds` records checkout/provision, both builds, input verification,
+classification, runtime checks and total wall times. Corpus programs and imports always come from a separate
 head checkout, including when supplied binaries are used. `--corpus <dir>`
 recursively selects `.a` and `.ts` files inside head for ad hoc runs.
 
@@ -24,7 +34,9 @@ The manifest's `sha` must equal resolved head. Its named `corpora` each have a
 `programs` list of `{ "path": "...", "blob": "git blob hash" }`. Empty corpora
 are retained in JSON. Every entry is verified against head. The result records
 the generator blob, the manifest's Git blob hash even for an external manifest,
-and every program blob. The tool also computes a `diff` corpus from every `.a`
+and every program blob. `--manifest-generator-revision <sha>` records an
+explicit generator revision when the generator has not landed at head yet.
+The default still verifies the generator at head. The tool also computes a `diff` corpus from every `.a`
 added or changed between base and head, in any directory, including rename
 destinations. Deleted programs are excluded. JSON always lists `diff` paths and
 blobs and `diff_count`, including an empty list and zero for equal revisions.
