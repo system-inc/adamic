@@ -1,0 +1,162 @@
+[
+  {
+    "id": "M01",
+    "file": "internal/native/emit.go",
+    "line": 52,
+    "old": "program.ClosureConventionNeeded()",
+    "new": "!program.ClosureConventionNeeded()",
+    "mode": "bool"
+  },
+  {
+    "id": "M02",
+    "file": "internal/native/emit.go",
+    "line": 40,
+    "old": "if regexCallbacks {",
+    "new": "if !regexCallbacks {",
+    "mode": "condition"
+  },
+  {
+    "id": "M03",
+    "file": "internal/native/library.go",
+    "line": 49,
+    "old": "strings.Contains(source, \"#define \"+feature+\" 1\\n\")",
+    "new": "strings.Contains(source, feature)",
+    "mode": "bool"
+  },
+  {
+    "id": "M04",
+    "file": "internal/native/native.go",
+    "line": 86,
+    "old": "\"-ffp-contract=off\"",
+    "new": "\"-ffp-contract=fast\"",
+    "mode": "string"
+  },
+  {
+    "id": "M05",
+    "file": "internal/native/borrow.go",
+    "line": 68,
+    "old": "case ir.Read, ir.Conditional, ir.Coalesce, ir.Box, ir.Narrow, ir.Unwrap, ir.CheckedCast, ir.MaybeOf, ir.Defined, ir.Undefined,\n\t\tir.NumberConstant, ir.BooleanConstant, ir.StringConstant:\n\t\treturn false",
+    "new": "case ir.Read, ir.Conditional, ir.Coalesce, ir.Box, ir.Narrow, ir.Unwrap, ir.CheckedCast, ir.MaybeOf, ir.Defined, ir.Undefined,\n\t\tir.NumberConstant, ir.BooleanConstant, ir.StringConstant:\n\t\treturn true",
+    "mode": "block"
+  },
+  {
+    "id": "M06",
+    "file": "internal/native/borrow.go",
+    "line": 101,
+    "old": "default:\n\t\treturn false\n\t}\n\treturn true",
+    "new": "default:\n\t\treturn true\n\t}\n\treturn true",
+    "mode": "block"
+  },
+  {
+    "id": "M07",
+    "file": "internal/native/borrow.go",
+    "line": 168,
+    "old": "expression.Method || expression.Optional || expression.Object.Type() == ir.Weak",
+    "new": "expression.Method || !expression.Optional || expression.Object.Type() == ir.Weak",
+    "mode": "bool"
+  },
+  {
+    "id": "M08",
+    "file": "internal/native/borrow.go",
+    "line": 200,
+    "old": "ok && names[write.Name]",
+    "new": "ok && !names[write.Name]",
+    "mode": "bool"
+  },
+  {
+    "id": "M09",
+    "file": "internal/native/borrow.go",
+    "line": 214,
+    "old": "if targets.Unknown {\n\t\t\t\t\t\tsafe = false",
+    "new": "if false && targets.Unknown {\n\t\t\t\t\t\tsafe = false",
+    "mode": "block"
+  },
+  {
+    "id": "M10",
+    "file": "internal/native/element_borrow.go",
+    "line": 40,
+    "old": "if element || chain {",
+    "new": "if element || false && chain {",
+    "mode": "condition"
+  },
+  {
+    "id": "M11",
+    "file": "internal/native/element_borrow.go",
+    "line": 267,
+    "old": "local.Global || local.Captured || local.Function != function || !lendable(local.Type) || assigned[declare.Local]",
+    "new": "local.Global || !local.Captured || local.Function != function || !lendable(local.Type) || assigned[declare.Local]",
+    "mode": "bool"
+  },
+  {
+    "id": "M12",
+    "file": "internal/native/region.go",
+    "line": 68,
+    "old": "!function.Closure && function.RestElement == 0 && function.Returns == ir.Object",
+    "new": "!function.Closure && function.RestElement == 0 && function.Returns != ir.Object",
+    "mode": "bool"
+  },
+  {
+    "id": "M13",
+    "file": "internal/native/region.go",
+    "line": 372,
+    "old": "if !known || escapes {",
+    "new": "if !known || !escapes {",
+    "mode": "condition"
+  },
+  {
+    "id": "M14",
+    "file": "internal/native/reuse.go",
+    "line": 126,
+    "old": "consumed = consumed || plan.consumed[program.Functions[target].Parameters[position]]",
+    "new": "consumed = consumed && plan.consumed[program.Functions[target].Parameters[position]]",
+    "mode": "statement"
+  },
+  {
+    "id": "M15",
+    "file": "internal/native/emit_objects.go",
+    "line": 344,
+    "old": "valueType == ir.Union || valueType == ir.MaybeBoolean && !needed",
+    "new": "valueType == ir.Union || valueType == ir.MaybeBoolean && needed",
+    "mode": "bool"
+  },
+  {
+    "id": "M16",
+    "file": "internal/native/emit_objects.go",
+    "line": 392,
+    "old": "\"(argument_count > %d ? %s : %s)\"",
+    "new": "\"(argument_count >= %d ? %s : %s)\"",
+    "mode": "string"
+  },
+  {
+    "id": "M17",
+    "file": "internal/native/emit_functions.go",
+    "line": 21,
+    "old": "count = \", size_t argument_count\"",
+    "new": "",
+    "mode": "statement"
+  },
+  {
+    "id": "M18",
+    "file": "internal/native/runtime/case.c",
+    "line": 198,
+    "old": "character - 'a' + 'A'",
+    "new": "character - 'a' + 'B'",
+    "mode": "c-expression"
+  },
+  {
+    "id": "M19",
+    "file": "internal/native/runtime/case.c",
+    "line": 172,
+    "old": "encode(0x3c2, out)",
+    "new": "encode(0x3c3, out)",
+    "mode": "c-expression"
+  },
+  {
+    "id": "M20",
+    "file": "internal/native/runtime/case_tables.h",
+    "line": 8,
+    "old": "#define CASE_UNICODE_VERSION \"17.0.0\"",
+    "new": "#define CASE_UNICODE_VERSION \"16.0.0\"",
+    "mode": "static"
+  }
+]

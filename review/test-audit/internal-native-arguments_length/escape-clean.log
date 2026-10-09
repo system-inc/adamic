@@ -1,0 +1,5 @@
+=== RUN   TestAuditObservation
+    audit_observation_test.go:7: escape summaries: safe=false storing=true mixed=true
+--- PASS: TestAuditObservation (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	0.008s

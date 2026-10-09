@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/case.c
++++ b/internal/native/runtime/case.c
+@@ -195,7 +195,7 @@
+ 		for (size_t at = 0; at < string->length; at++) {
+ 			char character = string->bytes[at];
+ 			if (upper && character >= 'a' && character <= 'z') {
+-				character = (char)(character - 'a' + 'A');
++				character = (char)(character - 'a' + 'B');
+ 			} else if (!upper && character >= 'A' && character <= 'Z') {
+ 				character = (char)(character - 'A' + 'a');
+ 			}

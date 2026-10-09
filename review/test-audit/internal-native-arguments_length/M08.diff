@@ -1,0 +1,11 @@
+--- a/internal/native/borrow.go
++++ b/internal/native/borrow.go
+@@ -197,7 +197,7 @@
+ 			if !safe {
+ 				return
+ 			}
+-			if write, ok := statement.(ir.SetProperty); ok && names[write.Name] {
++			if write, ok := statement.(ir.SetProperty); ok && !names[write.Name] {
+ 				safe = false
+ 			}
+ 			walkStatement(statement, func(expression ir.Expression) {

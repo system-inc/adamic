@@ -1,0 +1,11 @@
+--- a/internal/native/region.go
++++ b/internal/native/region.go
+@@ -65,7 +65,7 @@
+ 	// Fresh: start from every named function returning an object, and take away any that returns
+ 	// something else, until none changes.
+ 	for index, function := range program.Functions {
+-		if !function.Closure && function.RestElement == 0 && function.Returns == ir.Object {
++		if !function.Closure && function.RestElement == 0 && function.Returns != ir.Object {
+ 			plan.fresh[index] = true
+ 		}
+ 	}

@@ -1,0 +1,11 @@
+--- a/internal/native/region.go
++++ b/internal/native/region.go
+@@ -369,7 +369,7 @@
+ 	}
+ 	for _, target := range targets {
+ 		escapes, known := plan.escapes[target][position]
+-		if !known || escapes {
++		if !known || !escapes {
+ 			return true
+ 		}
+ 	}

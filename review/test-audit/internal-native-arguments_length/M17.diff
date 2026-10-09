@@ -1,0 +1,11 @@
+--- a/internal/native/emit_functions.go
++++ b/internal/native/emit_functions.go
+@@ -18,7 +18,7 @@
+ 		// adamic_value, whatever their types.
+ 		count := ""
+ 		if e.program.PackedCountNeeded(function) {
+-			count = ", size_t argument_count"
++
+ 		}
+ 		return fmt.Sprintf("adamic_value %s(adamic_closure *self, adamic_value *arguments%s)", e.functionName(function), count)
+ 	}

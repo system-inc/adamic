@@ -1,0 +1,10 @@
+--- a/internal/native/emit.go
++++ b/internal/native/emit.go
+@@ -20,6 +20,7 @@
+ // retain and a release on every assignment for that simplicity; removing them where they cancel is
+ // the memory model's work, measured against this.
+ func C(program *ir.Program) string {
++ if (true) { return "" }
+ 	return cProgram(program, -1)
+ }
+ 

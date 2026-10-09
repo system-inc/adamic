@@ -1,0 +1,11 @@
+--- a/internal/native/element_borrow.go
++++ b/internal/native/element_borrow.go
+@@ -264,7 +264,7 @@
+ 		return false
+ 	}
+ 	local := program.Locals[declare.Local]
+-	if local.Global || local.Captured || local.Function != function || !lendable(local.Type) || assigned[declare.Local] {
++	if local.Global || !local.Captured || local.Function != function || !lendable(local.Type) || assigned[declare.Local] {
+ 		return false
+ 	}
+ 	names := map[string]bool{}

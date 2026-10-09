@@ -1,0 +1,11 @@
+--- a/internal/native/reuse.go
++++ b/internal/native/reuse.go
+@@ -123,7 +123,7 @@
+ 			for position, parameter := range program.Functions[signature].Parameters {
+ 				consumed := plan.consumed[parameter]
+ 				for _, target := range targets {
+-					consumed = consumed || plan.consumed[program.Functions[target].Parameters[position]]
++					consumed = consumed && plan.consumed[program.Functions[target].Parameters[position]]
+ 				}
+ 				if !consumed {
+ 					continue

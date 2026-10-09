@@ -1,0 +1,11 @@
+--- a/internal/native/borrow.go
++++ b/internal/native/borrow.go
+@@ -165,7 +165,7 @@
+ func chainRoot(expression ir.Expression, names map[string]bool) (int, bool) {
+ 	switch expression := expression.(type) {
+ 	case ir.Property:
+-		if expression.Method || expression.Optional || expression.Object.Type() == ir.Weak {
++		if expression.Method || !expression.Optional || expression.Object.Type() == ir.Weak {
+ 			return 0, false
+ 		}
+ 		names[expression.Name] = true

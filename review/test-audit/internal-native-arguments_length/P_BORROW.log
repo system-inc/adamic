@@ -1,0 +1,23 @@
+{"Time":"2026-10-09T10:47:54.539630631Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T10:47:54.547668664Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestBorrowChainDeclarations"}
+{"Time":"2026-10-09T10:47:54.547741501Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestBorrowChainDeclarations","Output":"=== RUN   TestBorrowChainDeclarations\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:47:54.547767739Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestBorrowChainDeclarations","Output":"=== PAUSE TestBorrowChainDeclarations\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:47:54.547770042Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestBorrowChainDeclarations"}
+{"Time":"2026-10-09T10:47:54.547772236Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestInheritanceMemoryPlans"}
+{"Time":"2026-10-09T10:47:54.547773758Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestInheritanceMemoryPlans","Output":"=== RUN   TestInheritanceMemoryPlans\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:47:54.547777133Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestInheritanceMemoryPlans","Output":"=== PAUSE TestInheritanceMemoryPlans\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:47:54.547778645Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestInheritanceMemoryPlans"}
+{"Time":"2026-10-09T10:47:54.547811233Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestBorrowChainDeclarations"}
+{"Time":"2026-10-09T10:47:54.547813105Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestBorrowChainDeclarations","Output":"=== CONT  TestBorrowChainDeclarations\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:47:54.547833535Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestInheritanceMemoryPlans"}
+{"Time":"2026-10-09T10:47:54.547835378Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestInheritanceMemoryPlans","Output":"=== CONT  TestInheritanceMemoryPlans\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:47:54.607020136Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestInheritanceMemoryPlans","Output":"--- PASS: TestInheritanceMemoryPlans (0.06s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:47:54.607465887Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestInheritanceMemoryPlans","Elapsed":0.06}
+{"Time":"2026-10-09T10:47:54.607492837Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestBorrowChainDeclarations","Output":"    borrow_chain_test.go:39: walk: parent did not borrow\n","OutputType":"error"}
+{"Time":"2026-10-09T10:47:54.607496923Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestBorrowChainDeclarations","Output":"    borrow_chain_test.go:39: walk: kind did not borrow\n","OutputType":"error"}
+{"Time":"2026-10-09T10:47:54.607499396Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestBorrowChainDeclarations","Output":"    borrow_chain_test.go:39: walk: children did not borrow\n","OutputType":"error"}
+{"Time":"2026-10-09T10:47:54.69860345Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestBorrowChainDeclarations","Output":"--- FAIL: TestBorrowChainDeclarations (0.15s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:47:54.698649477Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/native","Test":"TestBorrowChainDeclarations","Elapsed":0.15}
+{"Time":"2026-10-09T10:47:54.698656397Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:47:54.701041981Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"FAIL\tgithub.com/system-inc/adamic/internal/native\t0.161s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:47:54.701079305Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/native","Elapsed":0.161}

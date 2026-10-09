@@ -1,0 +1,11 @@
+--- a/internal/native/borrow.go
++++ b/internal/native/borrow.go
+@@ -99,7 +99,7 @@
+ 		ir.MathCall, ir.NumberCall, ir.ToFixed, ir.NumberFormat, ir.Trim, ir.StringCall, ir.CodePoints,
+ 		ir.ArraySearch, ir.CheckedCast, ir.UnionToString, ir.MaybeToString, ir.Defined, ir.InstanceOf:
+ 	default:
+-		return false
++		return true
+ 	}
+ 	return true
+ }

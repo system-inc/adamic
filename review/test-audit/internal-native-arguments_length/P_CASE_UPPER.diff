@@ -1,0 +1,10 @@
+--- a/internal/native/runtime/case.c
++++ b/internal/native/runtime/case.c
+@@ -225,6 +225,7 @@
+ }
+ 
+ adamic_string *adamic_string_to_upper(const adamic_string *string) {
++ if (1) { return NULL; }
+ 	return convert(string, true);
+ }
+ 

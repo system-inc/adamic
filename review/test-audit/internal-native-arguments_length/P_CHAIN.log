@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T10:47:56.723049496Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T10:47:56.748517369Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestBorrowChainTargets"}
+{"Time":"2026-10-09T10:47:56.748671444Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestBorrowChainTargets","Output":"=== RUN   TestBorrowChainTargets\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:47:56.748710541Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestBorrowChainTargets","Output":"=== PAUSE TestBorrowChainTargets\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:47:56.748713205Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestBorrowChainTargets"}
+{"Time":"2026-10-09T10:47:56.748720366Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestBorrowChainTargets"}
+{"Time":"2026-10-09T10:47:56.748722209Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestBorrowChainTargets","Output":"=== CONT  TestBorrowChainTargets\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:47:56.748724552Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestBorrowChainTargets","Output":"    borrow_chain_test.go:56: read-only body changes a field\n","OutputType":"error"}
+{"Time":"2026-10-09T10:47:56.748733155Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestBorrowChainTargets","Output":"--- FAIL: TestBorrowChainTargets (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:47:56.748735047Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/native","Test":"TestBorrowChainTargets","Elapsed":0}
+{"Time":"2026-10-09T10:47:56.748746654Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:47:56.748930398Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"FAIL\tgithub.com/system-inc/adamic/internal/native\t0.025s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:47:56.748978749Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/native","Elapsed":0.026}

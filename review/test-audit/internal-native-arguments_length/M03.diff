@@ -1,0 +1,11 @@
+--- a/internal/native/library.go
++++ b/internal/native/library.go
+@@ -46,7 +46,7 @@
+ func featureFlags(source string) []string {
+ 	var flags []string
+ 	for _, feature := range []string{"ADAMIC_CLOSURE_CONVENTION", "ADAMIC_CANONICAL_CLOSURES", "ADAMIC_CLOSURE_RECEIVERS", "ADAMIC_REGEXP_REPLACE_CALLBACK", "ADAMIC_NODE_HOST"} {
+-		if strings.Contains(source, "#define "+feature+" 1\n") {
++		if strings.Contains(source, feature) {
+ 			flags = append(flags, "-D"+feature+"=1")
+ 		}
+ 	}

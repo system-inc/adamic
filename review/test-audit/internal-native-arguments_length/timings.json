@@ -1,0 +1,72 @@
+{
+  "TestNoReaderCallingConvention": [
+    0.16,
+    0.08,
+    0.082
+  ],
+  "TestBorrowChainDeclarations": [
+    0.153,
+    0.127,
+    0.149
+  ],
+  "TestBorrowChainTargets": [
+    0.01,
+    0.008,
+    0.007
+  ],
+  "TestPassThroughsAreNotConsumers": [
+    0.008,
+    0.011,
+    0.01
+  ],
+  "TestCaseMappingMatchesNode": [
+    12.235,
+    13.004,
+    12.626
+  ],
+  "TestCaseTablesMatchNodesUnicode": [
+    0.042,
+    0.042,
+    0.041
+  ],
+  "TestInheritanceMemoryPlans": [
+    0.041,
+    0.042,
+    0.051
+  ],
+  "TestClosureConventionDropCount": [
+    0.162,
+    0.163,
+    0.165
+  ],
+  "TestClosureConventionRuntimeDropCount": [
+    0.083,
+    0.086,
+    0.089
+  ],
+  "TestClosureConventionRuntimeFeaturesIgnoreLiterals": [
+    0.02,
+    0.029,
+    0.023
+  ],
+  "TestClosureConventionWrongOrder": [
+    0.105,
+    0.104,
+    0.111
+  ],
+  "TestParserHasNoUnusedOptionalMethodThunks": [
+    6.187,
+    6.202,
+    5.901
+  ],
+  "TestOptionalMethodThunksMatchNode": [
+    0.417,
+    0.414,
+    0.459
+  ],
+  "TestArithmeticIsNeverFused": [
+    0.302,
+    0.282,
+    0.29
+  ]
+}

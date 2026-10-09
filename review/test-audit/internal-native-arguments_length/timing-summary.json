@@ -1,0 +1,20 @@
+{
+  "whole_baseline_seconds": 90.023,
+  "scope_baseline_seconds": 18.635,
+  "scope_baseline_wall": 25.448207105,
+  "isolated_three_run_wall": 146.763058101,
+  "switched_go_build": {
+    "code": 0,
+    "wall": 6.668990922000376
+  },
+  "matrix_command_walls": 412.11558731200057,
+  "matrix_binary_seconds": 336.8460000000001,
+  "standalone_compile_validation_wall": 5.448557362989959,
+  "metadata_rebuild_observation": [
+    {
+      "wall": 30.084431933002634,
+      "binary_seconds": 23.355,
+      "overhead_including_embedded_rebuild": 6.729431933002633
+    }
+  ]
+}

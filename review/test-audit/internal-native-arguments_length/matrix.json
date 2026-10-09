@@ -1,0 +1,1342 @@
+{
+  "M01": {
+    "failed": [
+      "TestClosureConventionDropCount",
+      "TestClosureConventionWrongOrder",
+      "TestNoReaderCallingConvention",
+      "TestOptionalMethodThunksMatchNode"
+    ],
+    "eligible_failed": [
+      "TestNoReaderCallingConvention"
+    ],
+    "witness_precondition_failures": [
+      "TestClosureConventionDropCount",
+      "TestClosureConventionWrongOrder",
+      "TestOptionalMethodThunksMatchNode"
+    ],
+    "seen": [
+      "TestArithmeticIsNeverFused",
+      "TestBorrowChainDeclarations",
+      "TestBorrowChainTargets",
+      "TestCaseMappingMatchesNode",
+      "TestCaseTablesMatchNodesUnicode",
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "TestClosureConventionWrongOrder",
+      "TestInheritanceMemoryPlans",
+      "TestNoReaderCallingConvention",
+      "TestOptionalMethodThunksMatchNode",
+      "TestParserHasNoUnusedOptionalMethodThunks",
+      "TestPassThroughsAreNotConsumers"
+    ],
+    "passing_subcases": [
+      "TestClosureConventionWrongOrder/definition",
+      "TestClosureConventionWrongOrder/function-pointer-cast",
+      "TestClosureConventionWrongOrder/call",
+      "TestCaseMappingMatchesNode/contexts",
+      "TestCaseMappingMatchesNode/points"
+    ],
+    "code": 1,
+    "wall": 25.16450050000276,
+    "rows": [
+      "TestNoReaderCallingConvention",
+      "TestBorrowChainDeclarations",
+      "TestBorrowChainTargets",
+      "TestPassThroughsAreNotConsumers",
+      "TestCaseMappingMatchesNode",
+      "TestCaseTablesMatchNodesUnicode",
+      "TestInheritanceMemoryPlans",
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "TestClosureConventionWrongOrder",
+      "TestParserHasNoUnusedOptionalMethodThunks",
+      "TestOptionalMethodThunksMatchNode",
+      "TestArithmeticIsNeverFused"
+    ]
+  },
+  "M02": {
+    "failed": [
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals"
+    ],
+    "eligible_failed": [
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals"
+    ],
+    "witness_precondition_failures": [
+      "TestClosureConventionRuntimeDropCount"
+    ],
+    "seen": [
+      "TestArithmeticIsNeverFused",
+      "TestBorrowChainDeclarations",
+      "TestBorrowChainTargets",
+      "TestCaseMappingMatchesNode",
+      "TestCaseTablesMatchNodesUnicode",
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "TestClosureConventionWrongOrder",
+      "TestInheritanceMemoryPlans",
+      "TestNoReaderCallingConvention",
+      "TestOptionalMethodThunksMatchNode",
+      "TestParserHasNoUnusedOptionalMethodThunks",
+      "TestPassThroughsAreNotConsumers"
+    ],
+    "passing_subcases": [
+      "TestNoReaderCallingConvention/closure_convention_plain.a",
+      "TestNoReaderCallingConvention/arguments_length_unrelated_type.a",
+      "TestNoReaderCallingConvention/arguments_length_no_reader.a",
+      "TestClosureConventionWrongOrder/void-pointer-cast",
+      "TestClosureConventionWrongOrder/function-pointer-cast",
+      "TestClosureConventionWrongOrder/definition",
+      "TestClosureConventionWrongOrder/call",
+      "TestOptionalMethodThunksMatchNode/sanitize=false",
+      "TestCaseMappingMatchesNode/contexts",
+      "TestOptionalMethodThunksMatchNode/sanitize=true",
+      "TestCaseMappingMatchesNode/points"
+    ],
+    "code": 1,
+    "wall": 19.800991199001146,
+    "rows": [
+      "TestNoReaderCallingConvention",
+      "TestBorrowChainDeclarations",
+      "TestBorrowChainTargets",
+      "TestPassThroughsAreNotConsumers",
+      "TestCaseMappingMatchesNode",
+      "TestCaseTablesMatchNodesUnicode",
+      "TestInheritanceMemoryPlans",
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "TestClosureConventionWrongOrder",
+      "TestParserHasNoUnusedOptionalMethodThunks",
+      "TestOptionalMethodThunksMatchNode",
+      "TestArithmeticIsNeverFused"
+    ]
+  },
+  "M03": {
+    "failed": [],
+    "eligible_failed": [],
+    "witness_precondition_failures": [],
+    "seen": [
+      "TestArithmeticIsNeverFused",
+      "TestBorrowChainDeclarations",
+      "TestBorrowChainTargets",
+      "TestCaseMappingMatchesNode",
+      "TestCaseTablesMatchNodesUnicode",
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "TestClosureConventionWrongOrder",
+      "TestInheritanceMemoryPlans",
+      "TestNoReaderCallingConvention",
+      "TestOptionalMethodThunksMatchNode",
+      "TestParserHasNoUnusedOptionalMethodThunks",
+      "TestPassThroughsAreNotConsumers"
+    ],
+    "passing_subcases": [
+      "TestNoReaderCallingConvention/closure_convention_plain.a",
+      "TestNoReaderCallingConvention/arguments_length_unrelated_type.a",
+      "TestNoReaderCallingConvention/arguments_length_no_reader.a",
+      "TestClosureConventionWrongOrder/definition",
+      "TestClosureConventionWrongOrder/function-pointer-cast",
+      "TestClosureConventionWrongOrder/void-pointer-cast",
+      "TestClosureConventionWrongOrder/call",
+      "TestOptionalMethodThunksMatchNode/sanitize=false",
+      "TestOptionalMethodThunksMatchNode/sanitize=true",
+      "TestCaseMappingMatchesNode/contexts",
+      "TestCaseMappingMatchesNode/points"
+    ],
+    "code": 0,
+    "wall": 16.31887013300002,
+    "rows": [
+      "TestNoReaderCallingConvention",
+      "TestBorrowChainDeclarations",
+      "TestBorrowChainTargets",
+      "TestPassThroughsAreNotConsumers",
+      "TestCaseMappingMatchesNode",
+      "TestCaseTablesMatchNodesUnicode",
+      "TestInheritanceMemoryPlans",
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "TestClosureConventionWrongOrder",
+      "TestParserHasNoUnusedOptionalMethodThunks",
+      "TestOptionalMethodThunksMatchNode",
+      "TestArithmeticIsNeverFused"
+    ]
+  },
+  "M04": {
+    "failed": [
+      "TestArithmeticIsNeverFused"
+    ],
+    "eligible_failed": [
+      "TestArithmeticIsNeverFused"
+    ],
+    "witness_precondition_failures": [],
+    "seen": [
+      "TestArithmeticIsNeverFused",
+      "TestBorrowChainDeclarations",
+      "TestBorrowChainTargets",
+      "TestCaseMappingMatchesNode",
+      "TestCaseTablesMatchNodesUnicode",
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "TestClosureConventionWrongOrder",
+      "TestInheritanceMemoryPlans",
+      "TestNoReaderCallingConvention",
+      "TestOptionalMethodThunksMatchNode",
+      "TestParserHasNoUnusedOptionalMethodThunks",
+      "TestPassThroughsAreNotConsumers"
+    ],
+    "passing_subcases": [
+      "TestNoReaderCallingConvention/closure_convention_plain.a",
+      "TestNoReaderCallingConvention/arguments_length_unrelated_type.a",
+      "TestNoReaderCallingConvention/arguments_length_no_reader.a",
+      "TestClosureConventionWrongOrder/definition",
+      "TestClosureConventionWrongOrder/function-pointer-cast",
+      "TestClosureConventionWrongOrder/void-pointer-cast",
+      "TestClosureConventionWrongOrder/call",
+      "TestOptionalMethodThunksMatchNode/sanitize=false",
+      "TestOptionalMethodThunksMatchNode/sanitize=true",
+      "TestCaseMappingMatchesNode/contexts",
+      "TestCaseMappingMatchesNode/points"
+    ],
+    "code": 1,
+    "wall": 24.26765935500225,
+    "rows": [
+      "TestNoReaderCallingConvention",
+      "TestBorrowChainDeclarations",
+      "TestBorrowChainTargets",
+      "TestPassThroughsAreNotConsumers",
+      "TestCaseMappingMatchesNode",
+      "TestCaseTablesMatchNodesUnicode",
+      "TestInheritanceMemoryPlans",
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "TestClosureConventionWrongOrder",
+      "TestParserHasNoUnusedOptionalMethodThunks",
+      "TestOptionalMethodThunksMatchNode",
+      "TestArithmeticIsNeverFused"
+    ]
+  },
+  "M05": {
+    "failed": [
+      "TestPassThroughsAreNotConsumers"
+    ],
+    "eligible_failed": [
+      "TestPassThroughsAreNotConsumers"
+    ],
+    "witness_precondition_failures": [],
+    "seen": [
+      "TestArithmeticIsNeverFused",
+      "TestBorrowChainDeclarations",
+      "TestBorrowChainTargets",
+      "TestCaseMappingMatchesNode",
+      "TestCaseTablesMatchNodesUnicode",
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "TestClosureConventionWrongOrder",
+      "TestInheritanceMemoryPlans",
+      "TestNoReaderCallingConvention",
+      "TestOptionalMethodThunksMatchNode",
+      "TestParserHasNoUnusedOptionalMethodThunks",
+      "TestPassThroughsAreNotConsumers"
+    ],
+    "passing_subcases": [
+      "TestNoReaderCallingConvention/closure_convention_plain.a",
+      "TestNoReaderCallingConvention/arguments_length_unrelated_type.a",
+      "TestNoReaderCallingConvention/arguments_length_no_reader.a",
+      "TestClosureConventionWrongOrder/definition",
+      "TestClosureConventionWrongOrder/void-pointer-cast",
+      "TestClosureConventionWrongOrder/function-pointer-cast",
+      "TestClosureConventionWrongOrder/call",
+      "TestOptionalMethodThunksMatchNode/sanitize=false",
+      "TestOptionalMethodThunksMatchNode/sanitize=true",
+      "TestCaseMappingMatchesNode/contexts",
+      "TestCaseMappingMatchesNode/points"
+    ],
+    "code": 1,
+    "wall": 16.33136401700176,
+    "rows": [
+      "TestNoReaderCallingConvention",
+      "TestBorrowChainDeclarations",
+      "TestBorrowChainTargets",
+      "TestPassThroughsAreNotConsumers",
+      "TestCaseMappingMatchesNode",
+      "TestCaseTablesMatchNodesUnicode",
+      "TestInheritanceMemoryPlans",
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "TestClosureConventionWrongOrder",
+      "TestParserHasNoUnusedOptionalMethodThunks",
+      "TestOptionalMethodThunksMatchNode",
+      "TestArithmeticIsNeverFused"
+    ]
+  },
+  "M06": {
+    "failed": [],
+    "eligible_failed": [],
+    "witness_precondition_failures": [],
+    "seen": [
+      "TestArithmeticIsNeverFused",
+      "TestBorrowChainDeclarations",
+      "TestBorrowChainTargets",
+      "TestCaseMappingMatchesNode",
+      "TestCaseTablesMatchNodesUnicode",
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "TestClosureConventionWrongOrder",
+      "TestInheritanceMemoryPlans",
+      "TestNoReaderCallingConvention",
+      "TestOptionalMethodThunksMatchNode",
+      "TestParserHasNoUnusedOptionalMethodThunks",
+      "TestPassThroughsAreNotConsumers"
+    ],
+    "passing_subcases": [
+      "TestNoReaderCallingConvention/closure_convention_plain.a",
+      "TestNoReaderCallingConvention/arguments_length_unrelated_type.a",
+      "TestNoReaderCallingConvention/arguments_length_no_reader.a",
+      "TestClosureConventionWrongOrder/definition",
+      "TestClosureConventionWrongOrder/function-pointer-cast",
+      "TestClosureConventionWrongOrder/void-pointer-cast",
+      "TestClosureConventionWrongOrder/call",
+      "TestOptionalMethodThunksMatchNode/sanitize=false",
+      "TestOptionalMethodThunksMatchNode/sanitize=true",
+      "TestCaseMappingMatchesNode/contexts",
+      "TestCaseMappingMatchesNode/points"
+    ],
+    "code": 0,
+    "wall": 16.63723098400078,
+    "rows": [
+      "TestNoReaderCallingConvention",
+      "TestBorrowChainDeclarations",
+      "TestBorrowChainTargets",
+      "TestPassThroughsAreNotConsumers",
+      "TestCaseMappingMatchesNode",
+      "TestCaseTablesMatchNodesUnicode",
+      "TestInheritanceMemoryPlans",
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "TestClosureConventionWrongOrder",
+      "TestParserHasNoUnusedOptionalMethodThunks",
+      "TestOptionalMethodThunksMatchNode",
+      "TestArithmeticIsNeverFused"
+    ]
+  },
+  "M07": {
+    "failed": [
+      "TestBorrowChainDeclarations"
+    ],
+    "eligible_failed": [
+      "TestBorrowChainDeclarations"
+    ],
+    "witness_precondition_failures": [],
+    "seen": [
+      "TestArithmeticIsNeverFused",
+      "TestBorrowChainDeclarations",
+      "TestBorrowChainTargets",
+      "TestCaseMappingMatchesNode",
+      "TestCaseTablesMatchNodesUnicode",
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "TestClosureConventionWrongOrder",
+      "TestInheritanceMemoryPlans",
+      "TestNoReaderCallingConvention",
+      "TestOptionalMethodThunksMatchNode",
+      "TestParserHasNoUnusedOptionalMethodThunks",
+      "TestPassThroughsAreNotConsumers"
+    ],
+    "passing_subcases": [
+      "TestNoReaderCallingConvention/closure_convention_plain.a",
+      "TestNoReaderCallingConvention/arguments_length_unrelated_type.a",
+      "TestNoReaderCallingConvention/arguments_length_no_reader.a",
+      "TestClosureConventionWrongOrder/definition",
+      "TestClosureConventionWrongOrder/function-pointer-cast",
+      "TestClosureConventionWrongOrder/void-pointer-cast",
+      "TestClosureConventionWrongOrder/call",
+      "TestOptionalMethodThunksMatchNode/sanitize=false",
+      "TestOptionalMethodThunksMatchNode/sanitize=true",
+      "TestCaseMappingMatchesNode/contexts",
+      "TestCaseMappingMatchesNode/points"
+    ],
+    "code": 1,
+    "wall": 16.202473815999838,
+    "rows": [
+      "TestNoReaderCallingConvention",
+      "TestBorrowChainDeclarations",
+      "TestBorrowChainTargets",
+      "TestPassThroughsAreNotConsumers",
+      "TestCaseMappingMatchesNode",
+      "TestCaseTablesMatchNodesUnicode",
+      "TestInheritanceMemoryPlans",
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "TestClosureConventionWrongOrder",
+      "TestParserHasNoUnusedOptionalMethodThunks",
+      "TestOptionalMethodThunksMatchNode",
+      "TestArithmeticIsNeverFused"
+    ]
+  },
+  "M08": {
+    "failed": [
+      "TestBorrowChainDeclarations",
+      "TestBorrowChainTargets"
+    ],
+    "eligible_failed": [
+      "TestBorrowChainDeclarations",
+      "TestBorrowChainTargets"
+    ],
+    "witness_precondition_failures": [],
+    "seen": [
+      "TestArithmeticIsNeverFused",
+      "TestBorrowChainDeclarations",
+      "TestBorrowChainTargets",
+      "TestCaseMappingMatchesNode",
+      "TestCaseTablesMatchNodesUnicode",
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "TestClosureConventionWrongOrder",
+      "TestInheritanceMemoryPlans",
+      "TestNoReaderCallingConvention",
+      "TestOptionalMethodThunksMatchNode",
+      "TestParserHasNoUnusedOptionalMethodThunks",
+      "TestPassThroughsAreNotConsumers"
+    ],
+    "passing_subcases": [
+      "TestNoReaderCallingConvention/closure_convention_plain.a",
+      "TestNoReaderCallingConvention/arguments_length_unrelated_type.a",
+      "TestNoReaderCallingConvention/arguments_length_no_reader.a",
+      "TestClosureConventionWrongOrder/definition",
+      "TestClosureConventionWrongOrder/function-pointer-cast",
+      "TestClosureConventionWrongOrder/void-pointer-cast",
+      "TestClosureConventionWrongOrder/call",
+      "TestOptionalMethodThunksMatchNode/sanitize=false",
+      "TestOptionalMethodThunksMatchNode/sanitize=true",
+      "TestCaseMappingMatchesNode/contexts",
+      "TestCaseMappingMatchesNode/points"
+    ],
+    "code": 1,
+    "wall": 16.335184348998155,
+    "rows": [
+      "TestNoReaderCallingConvention",
+      "TestBorrowChainDeclarations",
+      "TestBorrowChainTargets",
+      "TestPassThroughsAreNotConsumers",
+      "TestCaseMappingMatchesNode",
+      "TestCaseTablesMatchNodesUnicode",
+      "TestInheritanceMemoryPlans",
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "TestClosureConventionWrongOrder",
+      "TestParserHasNoUnusedOptionalMethodThunks",
+      "TestOptionalMethodThunksMatchNode",
+      "TestArithmeticIsNeverFused"
+    ]
+  },
+  "M09": {
+    "failed": [
+      "TestBorrowChainTargets"
+    ],
+    "eligible_failed": [
+      "TestBorrowChainTargets"
+    ],
+    "witness_precondition_failures": [],
+    "seen": [
+      "TestArithmeticIsNeverFused",
+      "TestBorrowChainDeclarations",
+      "TestBorrowChainTargets",
+      "TestCaseMappingMatchesNode",
+      "TestCaseTablesMatchNodesUnicode",
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "TestClosureConventionWrongOrder",
+      "TestInheritanceMemoryPlans",
+      "TestNoReaderCallingConvention",
+      "TestOptionalMethodThunksMatchNode",
+      "TestParserHasNoUnusedOptionalMethodThunks",
+      "TestPassThroughsAreNotConsumers"
+    ],
+    "passing_subcases": [
+      "TestNoReaderCallingConvention/closure_convention_plain.a",
+      "TestNoReaderCallingConvention/arguments_length_unrelated_type.a",
+      "TestNoReaderCallingConvention/arguments_length_no_reader.a",
+      "TestClosureConventionWrongOrder/definition",
+      "TestClosureConventionWrongOrder/call",
+      "TestClosureConventionWrongOrder/function-pointer-cast",
+      "TestClosureConventionWrongOrder/void-pointer-cast",
+      "TestOptionalMethodThunksMatchNode/sanitize=false",
+      "TestOptionalMethodThunksMatchNode/sanitize=true",
+      "TestCaseMappingMatchesNode/contexts",
+      "TestCaseMappingMatchesNode/points"
+    ],
+    "code": 1,
+    "wall": 16.38547723800002,
+    "rows": [
+      "TestNoReaderCallingConvention",
+      "TestBorrowChainDeclarations",
+      "TestBorrowChainTargets",
+      "TestPassThroughsAreNotConsumers",
+      "TestCaseMappingMatchesNode",
+      "TestCaseTablesMatchNodesUnicode",
+      "TestInheritanceMemoryPlans",
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "TestClosureConventionWrongOrder",
+      "TestParserHasNoUnusedOptionalMethodThunks",
+      "TestOptionalMethodThunksMatchNode",
+      "TestArithmeticIsNeverFused"
+    ]
+  },
+  "M10": {
+    "failed": [
+      "TestBorrowChainDeclarations"
+    ],
+    "eligible_failed": [
+      "TestBorrowChainDeclarations"
+    ],
+    "witness_precondition_failures": [],
+    "seen": [
+      "TestArithmeticIsNeverFused",
+      "TestBorrowChainDeclarations",
+      "TestBorrowChainTargets",
+      "TestCaseMappingMatchesNode",
+      "TestCaseTablesMatchNodesUnicode",
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "TestClosureConventionWrongOrder",
+      "TestInheritanceMemoryPlans",
+      "TestNoReaderCallingConvention",
+      "TestOptionalMethodThunksMatchNode",
+      "TestParserHasNoUnusedOptionalMethodThunks",
+      "TestPassThroughsAreNotConsumers"
+    ],
+    "passing_subcases": [
+      "TestNoReaderCallingConvention/closure_convention_plain.a",
+      "TestNoReaderCallingConvention/arguments_length_unrelated_type.a",
+      "TestNoReaderCallingConvention/arguments_length_no_reader.a",
+      "TestClosureConventionWrongOrder/definition",
+      "TestClosureConventionWrongOrder/function-pointer-cast",
+      "TestClosureConventionWrongOrder/void-pointer-cast",
+      "TestClosureConventionWrongOrder/call",
+      "TestOptionalMethodThunksMatchNode/sanitize=false",
+      "TestOptionalMethodThunksMatchNode/sanitize=true",
+      "TestCaseMappingMatchesNode/contexts",
+      "TestCaseMappingMatchesNode/points"
+    ],
+    "code": 1,
+    "wall": 24.088464227999793,
+    "rows": [
+      "TestNoReaderCallingConvention",
+      "TestBorrowChainDeclarations",
+      "TestBorrowChainTargets",
+      "TestPassThroughsAreNotConsumers",
+      "TestCaseMappingMatchesNode",
+      "TestCaseTablesMatchNodesUnicode",
+      "TestInheritanceMemoryPlans",
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "TestClosureConventionWrongOrder",
+      "TestParserHasNoUnusedOptionalMethodThunks",
+      "TestOptionalMethodThunksMatchNode",
+      "TestArithmeticIsNeverFused"
+    ]
+  },
+  "M11": {
+    "failed": [
+      "TestBorrowChainDeclarations"
+    ],
+    "eligible_failed": [
+      "TestBorrowChainDeclarations"
+    ],
+    "witness_precondition_failures": [],
+    "seen": [
+      "TestArithmeticIsNeverFused",
+      "TestBorrowChainDeclarations",
+      "TestBorrowChainTargets",
+      "TestCaseMappingMatchesNode",
+      "TestCaseTablesMatchNodesUnicode",
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "TestClosureConventionWrongOrder",
+      "TestInheritanceMemoryPlans",
+      "TestNoReaderCallingConvention",
+      "TestOptionalMethodThunksMatchNode",
+      "TestParserHasNoUnusedOptionalMethodThunks",
+      "TestPassThroughsAreNotConsumers"
+    ],
+    "passing_subcases": [
+      "TestNoReaderCallingConvention/closure_convention_plain.a",
+      "TestNoReaderCallingConvention/arguments_length_unrelated_type.a",
+      "TestNoReaderCallingConvention/arguments_length_no_reader.a",
+      "TestClosureConventionWrongOrder/definition",
+      "TestClosureConventionWrongOrder/void-pointer-cast",
+      "TestClosureConventionWrongOrder/function-pointer-cast",
+      "TestClosureConventionWrongOrder/call",
+      "TestOptionalMethodThunksMatchNode/sanitize=false",
+      "TestOptionalMethodThunksMatchNode/sanitize=true",
+      "TestCaseMappingMatchesNode/contexts",
+      "TestCaseMappingMatchesNode/points"
+    ],
+    "code": 1,
+    "wall": 17.37796210399756,
+    "rows": [
+      "TestNoReaderCallingConvention",
+      "TestBorrowChainDeclarations",
+      "TestBorrowChainTargets",
+      "TestPassThroughsAreNotConsumers",
+      "TestCaseMappingMatchesNode",
+      "TestCaseTablesMatchNodesUnicode",
+      "TestInheritanceMemoryPlans",
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "TestClosureConventionWrongOrder",
+      "TestParserHasNoUnusedOptionalMethodThunks",
+      "TestOptionalMethodThunksMatchNode",
+      "TestArithmeticIsNeverFused"
+    ]
+  },
+  "M12": {
+    "failed": [
+      "TestInheritanceMemoryPlans"
+    ],
+    "eligible_failed": [
+      "TestInheritanceMemoryPlans"
+    ],
+    "witness_precondition_failures": [],
+    "seen": [
+      "TestArithmeticIsNeverFused",
+      "TestBorrowChainDeclarations",
+      "TestBorrowChainTargets",
+      "TestCaseMappingMatchesNode",
+      "TestCaseTablesMatchNodesUnicode",
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "TestClosureConventionWrongOrder",
+      "TestInheritanceMemoryPlans",
+      "TestNoReaderCallingConvention",
+      "TestOptionalMethodThunksMatchNode",
+      "TestParserHasNoUnusedOptionalMethodThunks",
+      "TestPassThroughsAreNotConsumers"
+    ],
+    "passing_subcases": [
+      "TestNoReaderCallingConvention/closure_convention_plain.a",
+      "TestNoReaderCallingConvention/arguments_length_unrelated_type.a",
+      "TestNoReaderCallingConvention/arguments_length_no_reader.a",
+      "TestOptionalMethodThunksMatchNode/sanitize=false",
+      "TestClosureConventionWrongOrder/definition",
+      "TestClosureConventionWrongOrder/function-pointer-cast",
+      "TestClosureConventionWrongOrder/void-pointer-cast",
+      "TestClosureConventionWrongOrder/call",
+      "TestOptionalMethodThunksMatchNode/sanitize=true",
+      "TestCaseMappingMatchesNode/contexts",
+      "TestCaseMappingMatchesNode/points"
+    ],
+    "code": 1,
+    "wall": 18.04598516600163,
+    "rows": [
+      "TestNoReaderCallingConvention",
+      "TestBorrowChainDeclarations",
+      "TestBorrowChainTargets",
+      "TestPassThroughsAreNotConsumers",
+      "TestCaseMappingMatchesNode",
+      "TestCaseTablesMatchNodesUnicode",
+      "TestInheritanceMemoryPlans",
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "TestClosureConventionWrongOrder",
+      "TestParserHasNoUnusedOptionalMethodThunks",
+      "TestOptionalMethodThunksMatchNode",
+      "TestArithmeticIsNeverFused"
+    ]
+  },
+  "M13": {
+    "failed": [],
+    "eligible_failed": [],
+    "witness_precondition_failures": [],
+    "seen": [
+      "TestArithmeticIsNeverFused",
+      "TestBorrowChainDeclarations",
+      "TestBorrowChainTargets",
+      "TestCaseMappingMatchesNode",
+      "TestCaseTablesMatchNodesUnicode",
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "TestClosureConventionWrongOrder",
+      "TestInheritanceMemoryPlans",
+      "TestNoReaderCallingConvention",
+      "TestOptionalMethodThunksMatchNode",
+      "TestParserHasNoUnusedOptionalMethodThunks",
+      "TestPassThroughsAreNotConsumers"
+    ],
+    "passing_subcases": [
+      "TestNoReaderCallingConvention/closure_convention_plain.a",
+      "TestNoReaderCallingConvention/arguments_length_unrelated_type.a",
+      "TestNoReaderCallingConvention/arguments_length_no_reader.a",
+      "TestClosureConventionWrongOrder/definition",
+      "TestClosureConventionWrongOrder/function-pointer-cast",
+      "TestClosureConventionWrongOrder/void-pointer-cast",
+      "TestClosureConventionWrongOrder/call",
+      "TestOptionalMethodThunksMatchNode/sanitize=false",
+      "TestOptionalMethodThunksMatchNode/sanitize=true",
+      "TestCaseMappingMatchesNode/contexts",
+      "TestCaseMappingMatchesNode/points"
+    ],
+    "code": 0,
+    "wall": 17.528108084999985,
+    "rows": [
+      "TestNoReaderCallingConvention",
+      "TestBorrowChainDeclarations",
+      "TestBorrowChainTargets",
+      "TestPassThroughsAreNotConsumers",
+      "TestCaseMappingMatchesNode",
+      "TestCaseTablesMatchNodesUnicode",
+      "TestInheritanceMemoryPlans",
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "TestClosureConventionWrongOrder",
+      "TestParserHasNoUnusedOptionalMethodThunks",
+      "TestOptionalMethodThunksMatchNode",
+      "TestArithmeticIsNeverFused"
+    ]
+  },
+  "M14": {
+    "failed": [
+      "TestInheritanceMemoryPlans"
+    ],
+    "eligible_failed": [
+      "TestInheritanceMemoryPlans"
+    ],
+    "witness_precondition_failures": [],
+    "seen": [
+      "TestArithmeticIsNeverFused",
+      "TestBorrowChainDeclarations",
+      "TestBorrowChainTargets",
+      "TestCaseMappingMatchesNode",
+      "TestCaseTablesMatchNodesUnicode",
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "TestClosureConventionWrongOrder",
+      "TestInheritanceMemoryPlans",
+      "TestNoReaderCallingConvention",
+      "TestOptionalMethodThunksMatchNode",
+      "TestParserHasNoUnusedOptionalMethodThunks",
+      "TestPassThroughsAreNotConsumers"
+    ],
+    "passing_subcases": [
+      "TestNoReaderCallingConvention/closure_convention_plain.a",
+      "TestNoReaderCallingConvention/arguments_length_unrelated_type.a",
+      "TestNoReaderCallingConvention/arguments_length_no_reader.a",
+      "TestClosureConventionWrongOrder/definition",
+      "TestClosureConventionWrongOrder/call",
+      "TestClosureConventionWrongOrder/void-pointer-cast",
+      "TestClosureConventionWrongOrder/function-pointer-cast",
+      "TestOptionalMethodThunksMatchNode/sanitize=false",
+      "TestOptionalMethodThunksMatchNode/sanitize=true",
+      "TestCaseMappingMatchesNode/contexts",
+      "TestCaseMappingMatchesNode/points"
+    ],
+    "code": 1,
+    "wall": 18.168363155000407,
+    "rows": [
+      "TestNoReaderCallingConvention",
+      "TestBorrowChainDeclarations",
+      "TestBorrowChainTargets",
+      "TestPassThroughsAreNotConsumers",
+      "TestCaseMappingMatchesNode",
+      "TestCaseTablesMatchNodesUnicode",
+      "TestInheritanceMemoryPlans",
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "TestClosureConventionWrongOrder",
+      "TestParserHasNoUnusedOptionalMethodThunks",
+      "TestOptionalMethodThunksMatchNode",
+      "TestArithmeticIsNeverFused"
+    ]
+  },
+  "M15": {
+    "failed": [
+      "TestOptionalMethodThunksMatchNode",
+      "TestParserHasNoUnusedOptionalMethodThunks"
+    ],
+    "eligible_failed": [
+      "TestParserHasNoUnusedOptionalMethodThunks"
+    ],
+    "witness_precondition_failures": [
+      "TestOptionalMethodThunksMatchNode"
+    ],
+    "seen": [
+      "TestArithmeticIsNeverFused",
+      "TestBorrowChainDeclarations",
+      "TestBorrowChainTargets",
+      "TestCaseMappingMatchesNode",
+      "TestCaseTablesMatchNodesUnicode",
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "TestClosureConventionWrongOrder",
+      "TestInheritanceMemoryPlans",
+      "TestNoReaderCallingConvention",
+      "TestOptionalMethodThunksMatchNode",
+      "TestParserHasNoUnusedOptionalMethodThunks",
+      "TestPassThroughsAreNotConsumers"
+    ],
+    "passing_subcases": [
+      "TestNoReaderCallingConvention/closure_convention_plain.a",
+      "TestNoReaderCallingConvention/arguments_length_unrelated_type.a",
+      "TestNoReaderCallingConvention/arguments_length_no_reader.a",
+      "TestClosureConventionWrongOrder/definition",
+      "TestClosureConventionWrongOrder/function-pointer-cast",
+      "TestClosureConventionWrongOrder/void-pointer-cast",
+      "TestClosureConventionWrongOrder/call",
+      "TestCaseMappingMatchesNode/contexts",
+      "TestCaseMappingMatchesNode/points"
+    ],
+    "code": 1,
+    "wall": 16.643080920999637,
+    "rows": [
+      "TestNoReaderCallingConvention",
+      "TestBorrowChainDeclarations",
+      "TestBorrowChainTargets",
+      "TestPassThroughsAreNotConsumers",
+      "TestCaseMappingMatchesNode",
+      "TestCaseTablesMatchNodesUnicode",
+      "TestInheritanceMemoryPlans",
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "TestClosureConventionWrongOrder",
+      "TestParserHasNoUnusedOptionalMethodThunks",
+      "TestOptionalMethodThunksMatchNode",
+      "TestArithmeticIsNeverFused"
+    ]
+  },
+  "M16": {
+    "failed": [],
+    "eligible_failed": [],
+    "witness_precondition_failures": [],
+    "seen": [
+      "TestArithmeticIsNeverFused",
+      "TestBorrowChainDeclarations",
+      "TestBorrowChainTargets",
+      "TestCaseMappingMatchesNode",
+      "TestCaseTablesMatchNodesUnicode",
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "TestClosureConventionWrongOrder",
+      "TestInheritanceMemoryPlans",
+      "TestNoReaderCallingConvention",
+      "TestOptionalMethodThunksMatchNode",
+      "TestParserHasNoUnusedOptionalMethodThunks",
+      "TestPassThroughsAreNotConsumers"
+    ],
+    "passing_subcases": [
+      "TestNoReaderCallingConvention/closure_convention_plain.a",
+      "TestNoReaderCallingConvention/arguments_length_unrelated_type.a",
+      "TestNoReaderCallingConvention/arguments_length_no_reader.a",
+      "TestClosureConventionWrongOrder/definition",
+      "TestClosureConventionWrongOrder/function-pointer-cast",
+      "TestClosureConventionWrongOrder/void-pointer-cast",
+      "TestClosureConventionWrongOrder/call",
+      "TestOptionalMethodThunksMatchNode/sanitize=false",
+      "TestOptionalMethodThunksMatchNode/sanitize=true",
+      "TestCaseMappingMatchesNode/contexts",
+      "TestCaseMappingMatchesNode/points"
+    ],
+    "code": 0,
+    "wall": 16.56960253700163,
+    "rows": [
+      "TestNoReaderCallingConvention",
+      "TestBorrowChainDeclarations",
+      "TestBorrowChainTargets",
+      "TestPassThroughsAreNotConsumers",
+      "TestCaseMappingMatchesNode",
+      "TestCaseTablesMatchNodesUnicode",
+      "TestInheritanceMemoryPlans",
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "TestClosureConventionWrongOrder",
+      "TestParserHasNoUnusedOptionalMethodThunks",
+      "TestOptionalMethodThunksMatchNode",
+      "TestArithmeticIsNeverFused"
+    ]
+  },
+  "M17": {
+    "failed": [
+      "TestClosureConventionDropCount",
+      "TestClosureConventionWrongOrder"
+    ],
+    "eligible_failed": [],
+    "witness_precondition_failures": [
+      "TestClosureConventionDropCount",
+      "TestClosureConventionWrongOrder"
+    ],
+    "seen": [
+      "TestArithmeticIsNeverFused",
+      "TestBorrowChainDeclarations",
+      "TestBorrowChainTargets",
+      "TestCaseMappingMatchesNode",
+      "TestCaseTablesMatchNodesUnicode",
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "TestClosureConventionWrongOrder",
+      "TestInheritanceMemoryPlans",
+      "TestNoReaderCallingConvention",
+      "TestOptionalMethodThunksMatchNode",
+      "TestParserHasNoUnusedOptionalMethodThunks",
+      "TestPassThroughsAreNotConsumers"
+    ],
+    "passing_subcases": [
+      "TestNoReaderCallingConvention/closure_convention_plain.a",
+      "TestNoReaderCallingConvention/arguments_length_no_reader.a",
+      "TestNoReaderCallingConvention/arguments_length_unrelated_type.a",
+      "TestOptionalMethodThunksMatchNode/sanitize=false",
+      "TestOptionalMethodThunksMatchNode/sanitize=true",
+      "TestCaseMappingMatchesNode/contexts",
+      "TestCaseMappingMatchesNode/points"
+    ],
+    "code": 1,
+    "wall": 16.417224179996992,
+    "rows": [
+      "TestNoReaderCallingConvention",
+      "TestBorrowChainDeclarations",
+      "TestBorrowChainTargets",
+      "TestPassThroughsAreNotConsumers",
+      "TestCaseMappingMatchesNode",
+      "TestCaseTablesMatchNodesUnicode",
+      "TestInheritanceMemoryPlans",
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "TestClosureConventionWrongOrder",
+      "TestParserHasNoUnusedOptionalMethodThunks",
+      "TestOptionalMethodThunksMatchNode",
+      "TestArithmeticIsNeverFused"
+    ]
+  },
+  "M18": {
+    "failed": [
+      "TestCaseMappingMatchesNode"
+    ],
+    "eligible_failed": [
+      "TestCaseMappingMatchesNode"
+    ],
+    "witness_precondition_failures": [],
+    "seen": [
+      "TestArithmeticIsNeverFused",
+      "TestBorrowChainDeclarations",
+      "TestBorrowChainTargets",
+      "TestCaseMappingMatchesNode",
+      "TestCaseTablesMatchNodesUnicode",
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "TestClosureConventionWrongOrder",
+      "TestInheritanceMemoryPlans",
+      "TestNoReaderCallingConvention",
+      "TestOptionalMethodThunksMatchNode",
+      "TestParserHasNoUnusedOptionalMethodThunks",
+      "TestPassThroughsAreNotConsumers"
+    ],
+    "passing_subcases": [
+      "TestNoReaderCallingConvention/closure_convention_plain.a",
+      "TestNoReaderCallingConvention/arguments_length_no_reader.a",
+      "TestNoReaderCallingConvention/arguments_length_unrelated_type.a",
+      "TestClosureConventionWrongOrder/definition",
+      "TestClosureConventionWrongOrder/void-pointer-cast",
+      "TestClosureConventionWrongOrder/function-pointer-cast",
+      "TestClosureConventionWrongOrder/call",
+      "TestOptionalMethodThunksMatchNode/sanitize=false",
+      "TestOptionalMethodThunksMatchNode/sanitize=true"
+    ],
+    "code": 1,
+    "wall": 16.08914668700163,
+    "rows": [
+      "TestNoReaderCallingConvention",
+      "TestBorrowChainDeclarations",
+      "TestBorrowChainTargets",
+      "TestPassThroughsAreNotConsumers",
+      "TestCaseMappingMatchesNode",
+      "TestCaseTablesMatchNodesUnicode",
+      "TestInheritanceMemoryPlans",
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "TestClosureConventionWrongOrder",
+      "TestParserHasNoUnusedOptionalMethodThunks",
+      "TestOptionalMethodThunksMatchNode",
+      "TestArithmeticIsNeverFused"
+    ]
+  },
+  "M19": {
+    "failed": [
+      "TestCaseMappingMatchesNode"
+    ],
+    "eligible_failed": [
+      "TestCaseMappingMatchesNode"
+    ],
+    "witness_precondition_failures": [],
+    "seen": [
+      "TestArithmeticIsNeverFused",
+      "TestBorrowChainDeclarations",
+      "TestBorrowChainTargets",
+      "TestCaseMappingMatchesNode",
+      "TestCaseTablesMatchNodesUnicode",
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "TestClosureConventionWrongOrder",
+      "TestInheritanceMemoryPlans",
+      "TestNoReaderCallingConvention",
+      "TestOptionalMethodThunksMatchNode",
+      "TestParserHasNoUnusedOptionalMethodThunks",
+      "TestPassThroughsAreNotConsumers"
+    ],
+    "passing_subcases": [
+      "TestNoReaderCallingConvention/closure_convention_plain.a",
+      "TestNoReaderCallingConvention/arguments_length_no_reader.a",
+      "TestNoReaderCallingConvention/arguments_length_unrelated_type.a",
+      "TestClosureConventionWrongOrder/definition",
+      "TestClosureConventionWrongOrder/call",
+      "TestClosureConventionWrongOrder/function-pointer-cast",
+      "TestClosureConventionWrongOrder/void-pointer-cast",
+      "TestOptionalMethodThunksMatchNode/sanitize=false",
+      "TestOptionalMethodThunksMatchNode/sanitize=true"
+    ],
+    "code": 1,
+    "wall": 16.197376617001282,
+    "rows": [
+      "TestNoReaderCallingConvention",
+      "TestBorrowChainDeclarations",
+      "TestBorrowChainTargets",
+      "TestPassThroughsAreNotConsumers",
+      "TestCaseMappingMatchesNode",
+      "TestCaseTablesMatchNodesUnicode",
+      "TestInheritanceMemoryPlans",
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "TestClosureConventionWrongOrder",
+      "TestParserHasNoUnusedOptionalMethodThunks",
+      "TestOptionalMethodThunksMatchNode",
+      "TestArithmeticIsNeverFused"
+    ]
+  },
+  "M20": {
+    "failed": [
+      "TestCaseTablesMatchNodesUnicode"
+    ],
+    "eligible_failed": [
+      "TestCaseTablesMatchNodesUnicode"
+    ],
+    "witness_precondition_failures": [],
+    "seen": [
+      "TestArithmeticIsNeverFused",
+      "TestBorrowChainDeclarations",
+      "TestBorrowChainTargets",
+      "TestCaseMappingMatchesNode",
+      "TestCaseTablesMatchNodesUnicode",
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "TestClosureConventionWrongOrder",
+      "TestInheritanceMemoryPlans",
+      "TestNoReaderCallingConvention",
+      "TestOptionalMethodThunksMatchNode",
+      "TestParserHasNoUnusedOptionalMethodThunks",
+      "TestPassThroughsAreNotConsumers"
+    ],
+    "passing_subcases": [
+      "TestNoReaderCallingConvention/closure_convention_plain.a",
+      "TestNoReaderCallingConvention/arguments_length_unrelated_type.a",
+      "TestNoReaderCallingConvention/arguments_length_no_reader.a",
+      "TestClosureConventionWrongOrder/void-pointer-cast",
+      "TestClosureConventionWrongOrder/function-pointer-cast",
+      "TestClosureConventionWrongOrder/definition",
+      "TestClosureConventionWrongOrder/call",
+      "TestOptionalMethodThunksMatchNode/sanitize=false",
+      "TestOptionalMethodThunksMatchNode/sanitize=true",
+      "TestCaseMappingMatchesNode/contexts",
+      "TestCaseMappingMatchesNode/points"
+    ],
+    "code": 1,
+    "wall": 30.084431933002634,
+    "rows": [
+      "TestNoReaderCallingConvention",
+      "TestBorrowChainDeclarations",
+      "TestBorrowChainTargets",
+      "TestPassThroughsAreNotConsumers",
+      "TestCaseMappingMatchesNode",
+      "TestCaseTablesMatchNodesUnicode",
+      "TestInheritanceMemoryPlans",
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "TestClosureConventionWrongOrder",
+      "TestParserHasNoUnusedOptionalMethodThunks",
+      "TestOptionalMethodThunksMatchNode",
+      "TestArithmeticIsNeverFused"
+    ]
+  },
+  "W_BUILD": {
+    "failed": [
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionWrongOrder"
+    ],
+    "eligible_failed": [
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionWrongOrder"
+    ],
+    "witness_precondition_failures": [],
+    "seen": [
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionWrongOrder"
+    ],
+    "passing_subcases": [],
+    "code": 1,
+    "wall": 2.119627075000608,
+    "rows": [
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionWrongOrder"
+    ]
+  },
+  "W_NODE": {
+    "failed": [
+      "TestOptionalMethodThunksMatchNode"
+    ],
+    "eligible_failed": [
+      "TestOptionalMethodThunksMatchNode"
+    ],
+    "witness_precondition_failures": [],
+    "seen": [
+      "TestOptionalMethodThunksMatchNode"
+    ],
+    "passing_subcases": [
+      "TestOptionalMethodThunksMatchNode/sanitize=false",
+      "TestOptionalMethodThunksMatchNode/sanitize=true"
+    ],
+    "code": 1,
+    "wall": 2.461410371997772,
+    "rows": [
+      "TestOptionalMethodThunksMatchNode"
+    ]
+  },
+  "P_C": {
+    "failed": [
+      "TestNoReaderCallingConvention"
+    ],
+    "eligible_failed": [
+      "TestNoReaderCallingConvention"
+    ],
+    "witness_precondition_failures": [],
+    "seen": [
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "TestNoReaderCallingConvention",
+      "TestParserHasNoUnusedOptionalMethodThunks"
+    ],
+    "passing_subcases": [
+      "TestNoReaderCallingConvention/closure_convention_plain.a"
+    ],
+    "code": 1,
+    "wall": 2.7644460429983155,
+    "rows": [
+      "TestNoReaderCallingConvention",
+      "TestParserHasNoUnusedOptionalMethodThunks",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals"
+    ]
+  },
+  "P_BORROW": {
+    "failed": [
+      "TestBorrowChainDeclarations"
+    ],
+    "eligible_failed": [
+      "TestBorrowChainDeclarations"
+    ],
+    "witness_precondition_failures": [],
+    "seen": [
+      "TestBorrowChainDeclarations",
+      "TestInheritanceMemoryPlans"
+    ],
+    "passing_subcases": [],
+    "code": 1,
+    "wall": 2.2232640529982746,
+    "rows": [
+      "TestBorrowChainDeclarations",
+      "TestInheritanceMemoryPlans"
+    ]
+  },
+  "P_CHAIN": {
+    "failed": [
+      "TestBorrowChainTargets"
+    ],
+    "eligible_failed": [
+      "TestBorrowChainTargets"
+    ],
+    "witness_precondition_failures": [],
+    "seen": [
+      "TestBorrowChainTargets"
+    ],
+    "passing_subcases": [],
+    "code": 1,
+    "wall": 2.0457656139988103,
+    "rows": [
+      "TestBorrowChainTargets"
+    ]
+  },
+  "P_CONSUMES": {
+    "failed": [
+      "TestPassThroughsAreNotConsumers"
+    ],
+    "eligible_failed": [
+      "TestPassThroughsAreNotConsumers"
+    ],
+    "witness_precondition_failures": [],
+    "seen": [
+      "TestPassThroughsAreNotConsumers"
+    ],
+    "passing_subcases": [],
+    "code": 1,
+    "wall": 2.080870387999312,
+    "rows": [
+      "TestPassThroughsAreNotConsumers"
+    ]
+  },
+  "P_REGIONS": {
+    "failed": [
+      "TestInheritanceMemoryPlans"
+    ],
+    "eligible_failed": [
+      "TestInheritanceMemoryPlans"
+    ],
+    "witness_precondition_failures": [],
+    "seen": [
+      "TestInheritanceMemoryPlans"
+    ],
+    "passing_subcases": [],
+    "code": 1,
+    "wall": 2.05576010599907,
+    "rows": [
+      "TestInheritanceMemoryPlans"
+    ]
+  },
+  "P_REUSE": {
+    "failed": [
+      "TestInheritanceMemoryPlans"
+    ],
+    "eligible_failed": [
+      "TestInheritanceMemoryPlans"
+    ],
+    "witness_precondition_failures": [],
+    "seen": [
+      "TestInheritanceMemoryPlans"
+    ],
+    "passing_subcases": [],
+    "code": 1,
+    "wall": 1.9512407629990776,
+    "rows": [
+      "TestInheritanceMemoryPlans"
+    ]
+  },
+  "P_LIBRARY": {
+    "failed": [
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals"
+    ],
+    "eligible_failed": [
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals"
+    ],
+    "witness_precondition_failures": [],
+    "seen": [
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals"
+    ],
+    "passing_subcases": [],
+    "code": 1,
+    "wall": 1.921592212998803,
+    "rows": [
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals"
+    ]
+  },
+  "P_BUILD": {
+    "failed": [
+      "TestArithmeticIsNeverFused"
+    ],
+    "eligible_failed": [
+      "TestArithmeticIsNeverFused"
+    ],
+    "witness_precondition_failures": [],
+    "seen": [
+      "TestArithmeticIsNeverFused"
+    ],
+    "passing_subcases": [],
+    "code": 1,
+    "wall": 1.9969974220002769,
+    "rows": [
+      "TestArithmeticIsNeverFused"
+    ]
+  },
+  "P_CASE_LOWER": {
+    "failed": [
+      "TestCaseMappingMatchesNode"
+    ],
+    "eligible_failed": [
+      "TestCaseMappingMatchesNode"
+    ],
+    "witness_precondition_failures": [],
+    "seen": [
+      "TestCaseMappingMatchesNode"
+    ],
+    "passing_subcases": [],
+    "code": 1,
+    "wall": 8.149299336000695,
+    "rows": [
+      "TestCaseMappingMatchesNode"
+    ]
+  },
+  "P_CASE_UPPER": {
+    "failed": [
+      "TestCaseMappingMatchesNode"
+    ],
+    "eligible_failed": [
+      "TestCaseMappingMatchesNode"
+    ],
+    "witness_precondition_failures": [],
+    "seen": [
+      "TestCaseMappingMatchesNode"
+    ],
+    "passing_subcases": [],
+    "code": 1,
+    "wall": 7.691816722999647,
+    "rows": [
+      "TestCaseMappingMatchesNode"
+    ]
+  }
+}

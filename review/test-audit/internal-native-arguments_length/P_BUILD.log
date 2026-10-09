@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T10:48:06.707531642Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T10:48:06.715224055Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestArithmeticIsNeverFused"}
+{"Time":"2026-10-09T10:48:06.715301108Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestArithmeticIsNeverFused","Output":"=== RUN   TestArithmeticIsNeverFused\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:48:06.71534327Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestArithmeticIsNeverFused","Output":"=== PAUSE TestArithmeticIsNeverFused\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:48:06.715345513Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestArithmeticIsNeverFused"}
+{"Time":"2026-10-09T10:48:06.715351782Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestArithmeticIsNeverFused"}
+{"Time":"2026-10-09T10:48:06.715353525Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestArithmeticIsNeverFused","Output":"=== CONT  TestArithmeticIsNeverFused\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:48:06.75772612Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestArithmeticIsNeverFused","Output":"    contract_test.go:85: /tmp/adamic-gate/TestArithmeticIsNeverFused1388922166/003/fused: fork/exec /tmp/adamic-gate/TestArithmeticIsNeverFused1388922166/003/fused: no such file or directory\n","OutputType":"error"}
+{"Time":"2026-10-09T10:48:06.757834568Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestArithmeticIsNeverFused","Output":"--- FAIL: TestArithmeticIsNeverFused (0.04s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:48:06.757841458Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/native","Test":"TestArithmeticIsNeverFused","Elapsed":0.04}
+{"Time":"2026-10-09T10:48:06.757868668Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:48:06.758587524Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"FAIL\tgithub.com/system-inc/adamic/internal/native\t0.051s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:48:06.758610207Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/native","Elapsed":0.051}

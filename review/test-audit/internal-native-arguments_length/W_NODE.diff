@@ -1,0 +1,11 @@
+--- a/internal/native/closure_convention_test.go
++++ b/internal/native/closure_convention_test.go
+@@ -251,7 +251,7 @@
+ 		t.Fatal(err)
+ 	}
+ 	output, err := exec.Command(binary).CombinedOutput()
+-	if err == nil && string(output) == want {
++	if true {
+ 		t.Fatal("Node failed to catch the omitted required method thunk")
+ 	}
+ 	t.Logf("Node catches compiled missing-thunk mutant: %v, output %q, Node %q", err, output, want)

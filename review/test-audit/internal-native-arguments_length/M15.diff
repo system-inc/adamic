@@ -1,0 +1,11 @@
+--- a/internal/native/emit_objects.go
++++ b/internal/native/emit_objects.go
+@@ -341,7 +341,7 @@
+ 			}
+ 		})
+ 	}
+-	slotless := func(valueType ir.Type) bool { return valueType == ir.Union || valueType == ir.MaybeBoolean && !needed }
++	slotless := func(valueType ir.Type) bool { return valueType == ir.Union || valueType == ir.MaybeBoolean && needed }
+ 	for index, parameter := range method.Parameters {
+ 		if index > 0 && slotless(e.program.Locals[parameter].Type) {
+ 			return false
