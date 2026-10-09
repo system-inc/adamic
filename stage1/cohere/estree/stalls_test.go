@@ -115,6 +115,7 @@ func boundedPortParserShard(t *testing.T, shard int) {
 }
 
 func TestBoundedPortParserPlantedDisagreement(t *testing.T) {
+	t.Parallel()
 	estreeTopPlantedProof(t, "TestBoundedPortParser", testBoundedPortParserShards, boundedPortIDs(boundedPortCases(t)))
 }
 
@@ -167,5 +168,6 @@ func portStallControlShard(t *testing.T, shard int) {
 }
 
 func TestPortStallControlPlantedSurvivor(t *testing.T) {
+	t.Parallel()
 	estreeTopPlantedProof(t, "TestPortStallControl", testPortStallControlShards, []string{"stage1/cohere/estree/stalls_test.go:0:guard-disabled"})
 }

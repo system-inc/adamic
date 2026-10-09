@@ -103,6 +103,7 @@ func estreeScopedRefusal(t *testing.T, argv []string, diagnostic string) {
 // A grandchild holds the output pipe open. Killing only its parent would leave
 // that pipe open until WaitDelay; group cancellation must close it promptly.
 func TestEstreeScopedProcessGroupDeadline(t *testing.T) {
+	t.Parallel()
 	marker := "ADAMIC_ESTREE_GROUP_DEADLINE"
 	switch os.Getenv(marker) {
 	case "grandchild":
