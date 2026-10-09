@@ -124,7 +124,7 @@ func TestExpressionsAgainstGoAndPrettier(t *testing.T) {
 		if !selected[number] {
 			continue
 		}
-		t.Run(fmt.Sprintf("unit-%03d", number), func(t *testing.T) {
+		t.Run(fmt.Sprintf("shard-%03d", number), func(t *testing.T) {
 			t.Parallel()
 			start := time.Now()
 			t.Cleanup(func() {
@@ -156,7 +156,7 @@ func TestExpressionsAgainstGoAndPrettier(t *testing.T) {
 		})
 	}
 	if selected[len(plan.shards)] {
-		t.Run(fmt.Sprintf("unit-%03d-gaps", len(plan.shards)), func(t *testing.T) {
+		t.Run(fmt.Sprintf("shard-%03d", len(plan.shards)), func(t *testing.T) {
 			t.Parallel()
 			start := time.Now()
 			t.Cleanup(func() {

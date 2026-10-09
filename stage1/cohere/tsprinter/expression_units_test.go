@@ -63,7 +63,7 @@ func TestExpressionUnitBoxSelection(t *testing.T) {
 		}
 		for unit, count := range seen {
 			if count != 1 {
-				t.Fatalf("unit-%03d assigned %d times across %d boxes", unit, count, boxes)
+				t.Fatalf("shard-%03d assigned %d times across %d boxes", unit, count, boxes)
 			}
 		}
 	}
@@ -78,7 +78,7 @@ func TestExpressionUnitBoxSelection(t *testing.T) {
 	}
 	for unit, runs := range selected {
 		if !runs {
-			t.Fatalf("unset selector omitted unit-%03d", unit)
+			t.Fatalf("unset selector omitted shard-%03d", unit)
 		}
 	}
 }
@@ -128,7 +128,7 @@ func expressionUnits(t *testing.T, path, want string, count int) (*corpusPlan, [
 	directory := t.TempDir()
 	var outputs [][]byte
 	for number, indices := range assignCorpus(weights, count) {
-		shard := corpusShard{indices: indices, text: filepath.Join(directory, fmt.Sprintf("unit-%03d.txt", number)), specs: filepath.Join(directory, fmt.Sprintf("unit-%03d.json", number))}
+		shard := corpusShard{indices: indices, text: filepath.Join(directory, fmt.Sprintf("shard-%03d.txt", number)), specs: filepath.Join(directory, fmt.Sprintf("shard-%03d.json", number))}
 		var protocol, expected bytes.Buffer
 		subset := make([]printerCase, 0, len(indices))
 		for _, i := range indices {
@@ -191,7 +191,7 @@ func expressionUnion(plan *corpusPlan, outputs [][]byte, want []byte) error {
 	for number, shard := range plan.shards {
 		for _, id := range shard.indices {
 			if id < 0 || id >= len(plan.labels) || seen[id] {
-				return fmt.Errorf("unit-%03d: missing, extra or repeated case id %d", number, id)
+				return fmt.Errorf("shard-%03d: missing, extra or repeated case id %d", number, id)
 			}
 			seen[id] = true
 			count++
@@ -217,7 +217,7 @@ func expressionUnion(plan *corpusPlan, outputs [][]byte, want []byte) error {
 
 func expressionDisagreement(plan *corpusPlan, number int, want []byte, result run) error {
 	if result.exitCode != 0 || len(result.stderr) != 0 {
-		return fmt.Errorf("unit-%03d: exit %d stderr %s", number, result.exitCode, result.stderr)
+		return fmt.Errorf("shard-%03d: exit %d stderr %s", number, result.exitCode, result.stderr)
 	}
 	if bytes.Equal(result.stdout, want) {
 		return nil
@@ -231,9 +231,9 @@ func expressionDisagreement(plan *corpusPlan, number int, want []byte, result ru
 		if i < len(plan.shards[number].indices) {
 			label = plan.labels[plan.shards[number].indices[i]]
 		}
-		return fmt.Errorf("unit-%03d %s: %s", number, label, firstDifference(string(result.stdout), string(want)))
+		return fmt.Errorf("shard-%03d %s: %s", number, label, firstDifference(string(result.stdout), string(want)))
 	}
-	return fmt.Errorf("unit-%03d: byte disagreement", number)
+	return fmt.Errorf("shard-%03d: byte disagreement", number)
 }
 
 // A real oracle process emits a planted wrong answer; only its owning unit
@@ -260,7 +260,7 @@ func TestExpressionUnitPlantedDisagreement(t *testing.T) {
 		err := expressionDisagreement(plan, number, []byte(want.String()), result)
 		if err != nil {
 			catches++
-			if !strings.Contains(err.Error(), "unit-000 case-2") {
+			if !strings.Contains(err.Error(), "shard-000 case-2") {
 				t.Fatal(err)
 			}
 			t.Logf("planted disagreement caught: %v", err)
