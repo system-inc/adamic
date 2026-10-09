@@ -22,8 +22,12 @@ func TestFuzzerSharesRuntimeLibrary(t *testing.T) {
 				if err != nil {
 					t.Fatal(err)
 				}
-				if checkout.runtime != library {
-					t.Fatalf("fuzzer uses %q, Build uses %q", checkout.runtime, library)
+				checkoutLibrary, err := native.RuntimeLibraryForSource(filepath.Join(checkout.Root, "internal", "native", "runtime"), "", native.Options{Sanitize: true})
+				if err != nil {
+					t.Fatal(err)
+				}
+				if checkoutLibrary != library {
+					t.Fatalf("fuzzer uses %q, Build uses %q", checkoutLibrary, library)
 				}
 				return
 			}
