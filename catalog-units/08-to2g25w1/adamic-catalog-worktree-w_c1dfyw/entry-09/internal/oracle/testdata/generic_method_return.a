@@ -1,0 +1,36 @@
+// A generic class method returning Value reads a Value | undefined from a map, rejects the
+// undefined case by throwing, and returns the narrowed local as each instantiation's concrete type.
+class Required<Value> {
+	private readonly values: ReadonlyMap<string, Value>;
+
+	constructor(values: ReadonlyMap<string, Value>) {
+		this.values = values;
+	}
+
+	get(key: string): Value {
+		const value = this.values.get(key);
+		if (value === undefined) {
+			throw new Error(`missing ${key}`);
+		}
+		return value;
+	}
+}
+
+interface Point {
+	readonly x: number;
+}
+
+console.log(`${new Required<number>(new Map([['number', 42]])).get('number')}`);
+console.log(new Required<string>(new Map([['string', 'word']])).get('string'));
+console.log(`${new Required<boolean>(new Map([['boolean', true]])).get('boolean')}`);
+console.log(`${new Required<Point>(new Map([['point', { x: 7 }]])).get('point').x}`);
+
+try {
+	new Required<string>(new Map<string, string>()).get('caught');
+} catch (error) {
+	if (error instanceof Error) {
+		console.log(`caught ${error.message}`);
+	}
+}
+
+new Required<number>(new Map<string, number>()).get('uncaught');

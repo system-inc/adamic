@@ -1,0 +1,9 @@
+{
+    "name": "cohere-vscode-gate-host",
+    "publisher": "system-inc",
+    "version": "0.0.0",
+    "engines": {
+        "vscode": "^1.80.0"
+    },
+    "main": "./host.js"
+}

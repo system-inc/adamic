@@ -1,0 +1,3 @@
+PASS: all 651 census locations and 11 recorded Node observations
+CAUGHT: dropped ledger node, by census coverage
+CAUGHT: wrong kind, by exact caller stdout: Node observation differs: wrong_kind.a: {'stdout': 'false\ntrue\ntrue\n', 'stderr': '', 'exit': 0}

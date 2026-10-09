@@ -1,0 +1,3 @@
+const Debug = { fail: (message: string): never => { throw new Error(message); } };
+function read(values: readonly number[]): number { return values[0] ?? Debug.fail("missing"); }
+console.log(`${read([1])}`);

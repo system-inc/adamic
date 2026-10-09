@@ -1,0 +1,19 @@
+[
+{"code":"var a = 'hello world';","eslint":[]},
+{"code":"0x1234","eslint":[]},
+{"code":"0X5;","eslint":[]},
+{"code":"a = 0;","eslint":[]},
+{"code":"0.1","eslint":[]},
+{"code":"0.5e1","eslint":[]},
+{"code":"var a = 01234;","skipped":"no parse under the TypeScript parser: Parsing error: Octal literals are not allowed. Use the syntax '0o1234'."},
+{"code":"a = 1 + 01234;","skipped":"no parse under the TypeScript parser: Parsing error: Octal literals are not allowed. Use the syntax '0o1234'."},
+{"code":"00","skipped":"no parse under the TypeScript parser: Parsing error: Octal literals are not allowed. Use the syntax '0o0'."},
+{"code":"08","skipped":"no parse under the TypeScript parser: Parsing error: Decimals with leading zeros are not allowed."},
+{"code":"09.1","skipped":"no parse under the TypeScript parser: Parsing error: Decimals with leading zeros are not allowed."},
+{"code":"09e1","skipped":"no parse under the TypeScript parser: Parsing error: Decimals with leading zeros are not allowed."},
+{"code":"09.1e1","skipped":"no parse under the TypeScript parser: Parsing error: Decimals with leading zeros are not allowed."},
+{"code":"018","skipped":"no parse under the TypeScript parser: Parsing error: Decimals with leading zeros are not allowed."},
+{"code":"019.1","skipped":"no parse under the TypeScript parser: Parsing error: Decimals with leading zeros are not allowed."},
+{"code":"019e1","skipped":"no parse under the TypeScript parser: Parsing error: Decimals with leading zeros are not allowed."},
+{"code":"019.1e1","skipped":"no parse under the TypeScript parser: Parsing error: Decimals with leading zeros are not allowed."}
+]

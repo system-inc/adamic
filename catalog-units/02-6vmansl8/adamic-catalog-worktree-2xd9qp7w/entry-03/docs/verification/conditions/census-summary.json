@@ -1,0 +1,361 @@
+{
+  "compiler_sha": "7e18441dfd2527304b47d78f396700ea256e2625",
+  "ledger_sha": "c6ea4131267ddd110e0b4c0df9367d38e2c86560",
+  "checker_diagnostics": 324,
+  "measurement": "measured on a checker-rejected program; no backend emission",
+  "compiler_files": 79,
+  "totals": {
+    "Refused": 4317,
+    "NotYet": 979
+  },
+  "condition_refusals": [],
+  "sites": [
+    {
+      "where": "src/compiler/builder.ts:642:13",
+      "exact_site_findings": []
+    },
+    {
+      "where": "src/compiler/commandLineParser.ts:4176:9",
+      "exact_site_findings": []
+    },
+    {
+      "where": "src/compiler/core.ts:1894:13",
+      "exact_site_findings": []
+    },
+    {
+      "where": "src/compiler/factory/emitNode.ts:273:9",
+      "exact_site_findings": []
+    },
+    {
+      "where": "src/compiler/moduleNameResolver.ts:480:9",
+      "exact_site_findings": []
+    },
+    {
+      "where": "src/compiler/semver.ts:216:13",
+      "exact_site_findings": []
+    },
+    {
+      "where": "src/compiler/moduleSpecifiers.ts:699:9",
+      "exact_site_findings": [
+        {
+          "kind": "Refused",
+          "where": "/tmp/conditions-ledger-source/src/compiler/moduleSpecifiers.ts:699:9",
+          "reason": "a method read as a value (getNearestAncestorDirectoryWithPackageJson would lose its object, and this with it)",
+          "text": "/tmp/conditions-ledger-source/src/compiler/moduleSpecifiers.ts:699:9: Adamic 0.1 refuses a method read as a value (getNearestAncestorDirectoryWithPackageJson would lose its object, and this with it); call it in an arrow that keeps the object: (value) => host.getNearestAncestorDirectoryWithPackageJson(value) (unbound-method)"
+        }
+      ]
+    },
+    {
+      "where": "src/compiler/program.ts:768:30",
+      "exact_site_findings": []
+    },
+    {
+      "where": "src/compiler/scanner.ts:469:12",
+      "exact_site_findings": [
+        {
+          "kind": "Refused",
+          "where": "/tmp/conditions-ledger-source/src/compiler/scanner.ts:469:12",
+          "reason": "a method read as a value (getPositionOfLineAndCharacter would lose its object, and this with it)",
+          "text": "/tmp/conditions-ledger-source/src/compiler/scanner.ts:469:12: Adamic 0.1 refuses a method read as a value (getPositionOfLineAndCharacter would lose its object, and this with it); call it in an arrow that keeps the object: (value) => sourceFile.getPositionOfLineAndCharacter(value) (unbound-method)"
+        }
+      ]
+    },
+    {
+      "where": "src/compiler/scanner.ts:763:9",
+      "exact_site_findings": []
+    },
+    {
+      "where": "src/compiler/scanner.ts:968:9",
+      "exact_site_findings": []
+    },
+    {
+      "where": "src/compiler/tsbuildPublic.ts:206:12",
+      "exact_site_findings": [
+        {
+          "kind": "Refused",
+          "where": "/tmp/conditions-ledger-source/src/compiler/tsbuildPublic.ts:206:12",
+          "reason": "a method read as a value (now would lose its object, and this with it)",
+          "text": "/tmp/conditions-ledger-source/src/compiler/tsbuildPublic.ts:206:12: Adamic 0.1 refuses a method read as a value (now would lose its object, and this with it); call it in an arrow that keeps the object: (value) => host.now(value) (unbound-method)"
+        }
+      ]
+    },
+    {
+      "where": "src/compiler/utilities.ts:2339:12",
+      "exact_site_findings": []
+    },
+    {
+      "where": "src/compiler/utilities.ts:2461:22",
+      "exact_site_findings": []
+    },
+    {
+      "where": "src/compiler/utilities.ts:2475:22",
+      "exact_site_findings": []
+    },
+    {
+      "where": "src/compiler/utilities.ts:2997:9",
+      "exact_site_findings": []
+    },
+    {
+      "where": "src/compiler/utilities.ts:3057:13",
+      "exact_site_findings": []
+    },
+    {
+      "where": "src/compiler/utilities.ts:3295:9",
+      "exact_site_findings": []
+    },
+    {
+      "where": "src/compiler/utilities.ts:4751:9",
+      "exact_site_findings": []
+    },
+    {
+      "where": "src/compiler/utilities.ts:5064:12",
+      "exact_site_findings": []
+    },
+    {
+      "where": "src/compiler/utilities.ts:6484:12",
+      "exact_site_findings": [
+        {
+          "kind": "Refused",
+          "where": "/tmp/conditions-ledger-source/src/compiler/utilities.ts:6484:12",
+          "reason": "a method read as a value (useCaseSensitiveFileNames would lose its object, and this with it)",
+          "text": "/tmp/conditions-ledger-source/src/compiler/utilities.ts:6484:12: Adamic 0.1 refuses a method read as a value (useCaseSensitiveFileNames would lose its object, and this with it); call it in an arrow that keeps the object: (value) => host.useCaseSensitiveFileNames(value) (unbound-method)"
+        }
+      ]
+    },
+    {
+      "where": "src/compiler/utilities.ts:7355:9",
+      "exact_site_findings": []
+    },
+    {
+      "where": "src/compiler/utilities.ts:8745:22",
+      "exact_site_findings": []
+    },
+    {
+      "where": "src/compiler/utilities.ts:8769:12",
+      "exact_site_findings": []
+    },
+    {
+      "where": "src/compiler/utilities.ts:9896:9",
+      "exact_site_findings": []
+    },
+    {
+      "where": "src/compiler/utilities.ts:10159:12",
+      "exact_site_findings": []
+    },
+    {
+      "where": "src/compiler/utilitiesPublic.ts:1037:9",
+      "exact_site_findings": []
+    },
+    {
+      "where": "src/compiler/watch.ts:114:69",
+      "exact_site_findings": []
+    },
+    {
+      "where": "src/compiler/watch.ts:790:9",
+      "exact_site_findings": []
+    },
+    {
+      "where": "src/compiler/emitter.ts:484:9",
+      "exact_site_findings": []
+    },
+    {
+      "where": "src/compiler/emitter.ts:554:12",
+      "exact_site_findings": []
+    },
+    {
+      "where": "src/compiler/emitter.ts:697:9",
+      "exact_site_findings": []
+    },
+    {
+      "where": "src/compiler/emitter.ts:725:9",
+      "exact_site_findings": []
+    },
+    {
+      "where": "src/compiler/executeCommandLine.ts:241:31",
+      "exact_site_findings": []
+    },
+    {
+      "where": "src/compiler/executeCommandLine.ts:448:9",
+      "exact_site_findings": []
+    },
+    {
+      "where": "src/compiler/moduleNameResolver.ts:2135:13",
+      "exact_site_findings": []
+    },
+    {
+      "where": "src/compiler/moduleSpecifiers.ts:398:9",
+      "exact_site_findings": []
+    },
+    {
+      "where": "src/compiler/parser.ts:10563:9",
+      "exact_site_findings": []
+    },
+    {
+      "where": "src/compiler/path.ts:385:12",
+      "exact_site_findings": []
+    },
+    {
+      "where": "src/compiler/path.ts:857:12",
+      "exact_site_findings": []
+    },
+    {
+      "where": "src/compiler/path.ts:872:9",
+      "exact_site_findings": []
+    },
+    {
+      "where": "src/compiler/program.ts:1142:33",
+      "exact_site_findings": []
+    },
+    {
+      "where": "src/compiler/utilities.ts:910:12",
+      "exact_site_findings": []
+    },
+    {
+      "where": "src/compiler/utilities.ts:6596:12",
+      "exact_site_findings": []
+    },
+    {
+      "where": "src/compiler/utilities.ts:7150:9",
+      "exact_site_findings": []
+    },
+    {
+      "where": "src/compiler/utilities.ts:9431:12",
+      "exact_site_findings": []
+    },
+    {
+      "where": "src/compiler/builder.ts:739:9",
+      "exact_site_findings": []
+    },
+    {
+      "where": "src/compiler/core.ts:2080:12",
+      "exact_site_findings": []
+    },
+    {
+      "where": "src/compiler/core.ts:2250:9",
+      "exact_site_findings": []
+    },
+    {
+      "where": "src/compiler/core.ts:2431:12",
+      "exact_site_findings": []
+    },
+    {
+      "where": "src/compiler/executeCommandLine.ts:1147:9",
+      "exact_site_findings": []
+    },
+    {
+      "where": "src/compiler/moduleNameResolver.ts:2061:40",
+      "exact_site_findings": []
+    },
+    {
+      "where": "src/compiler/program.ts:888:9",
+      "exact_site_findings": []
+    },
+    {
+      "where": "src/compiler/scanner.ts:477:13",
+      "exact_site_findings": []
+    },
+    {
+      "where": "src/compiler/scanner.ts:658:21",
+      "exact_site_findings": []
+    },
+    {
+      "where": "src/compiler/tsbuildPublic.ts:289:22",
+      "exact_site_findings": [
+        {
+          "kind": "NotYet",
+          "where": "/tmp/conditions-ledger-source/src/compiler/tsbuildPublic.ts:289:22",
+          "reason": "a boolean | undefined variable a function value captures",
+          "text": "/tmp/conditions-ledger-source/src/compiler/tsbuildPublic.ts:289:22: stage 0 can't lower a boolean | undefined variable a function value captures yet"
+        }
+      ]
+    },
+    {
+      "where": "src/compiler/utilities.ts:5046:19",
+      "exact_site_findings": []
+    },
+    {
+      "where": "src/compiler/utilities.ts:5647:20",
+      "exact_site_findings": []
+    },
+    {
+      "where": "src/compiler/utilities.ts:5954:20",
+      "exact_site_findings": []
+    },
+    {
+      "where": "src/compiler/utilities.ts:7477:13",
+      "exact_site_findings": []
+    },
+    {
+      "where": "src/compiler/watch.ts:194:12",
+      "exact_site_findings": []
+    },
+    {
+      "where": "src/compiler/factory/nodeFactory.ts:493:25",
+      "exact_site_findings": []
+    },
+    {
+      "where": "src/compiler/factory/utilities.ts:1740:9",
+      "exact_site_findings": []
+    },
+    {
+      "where": "src/compiler/moduleNameResolver.ts:195:9",
+      "exact_site_findings": []
+    },
+    {
+      "where": "src/compiler/moduleNameResolver.ts:204:9",
+      "exact_site_findings": []
+    },
+    {
+      "where": "src/compiler/moduleNameResolver.ts:301:12",
+      "exact_site_findings": []
+    },
+    {
+      "where": "src/compiler/parser.ts:485:12",
+      "exact_site_findings": []
+    },
+    {
+      "where": "src/compiler/utilities.ts:8041:12",
+      "exact_site_findings": []
+    },
+    {
+      "where": "src/compiler/utilities.ts:8069:12",
+      "exact_site_findings": []
+    },
+    {
+      "where": "src/compiler/utilities.ts:8267:9",
+      "exact_site_findings": []
+    },
+    {
+      "where": "src/compiler/utilities.ts:8281:12",
+      "exact_site_findings": []
+    },
+    {
+      "where": "src/compiler/utilities.ts:8884:9",
+      "exact_site_findings": []
+    },
+    {
+      "where": "src/compiler/utilities.ts:12439:17",
+      "exact_site_findings": []
+    },
+    {
+      "where": "src/compiler/moduleNameResolver.ts:3171:9",
+      "exact_site_findings": []
+    },
+    {
+      "where": "src/compiler/path.ts:438:9",
+      "exact_site_findings": []
+    },
+    {
+      "where": "src/compiler/transformer.ts:128:9",
+      "exact_site_findings": []
+    },
+    {
+      "where": "src/compiler/builder.ts:1630:9",
+      "exact_site_findings": []
+    },
+    {
+      "where": "src/compiler/program.ts:941:17",
+      "exact_site_findings": []
+    }
+  ]
+}

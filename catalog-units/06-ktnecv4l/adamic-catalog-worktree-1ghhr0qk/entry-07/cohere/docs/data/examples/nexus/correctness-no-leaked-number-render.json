@@ -1,0 +1,24 @@
+{
+    "rule": "nexus/correctness-no-leaked-number-render",
+    "firing": {
+        "file": "/repository/source/CorrectnessNoLeakedNumberRender.tsx",
+        "source": "declare namespace JSX {\n    interface Element {}\n    interface IntrinsicElements { [name: string]: Record<string, unknown> }\n}\ntype ReactNode = string | number | boolean | null | undefined | JSX.Element;\ndeclare function Badge(properties: { visible?: unknown }): JSX.Element;\ndeclare function addCommas(value: number): string;\ndeclare const count: number;\ndeclare const optionalCount: number | undefined;\ndeclare const nullableCount: number | null;\ndeclare const big: bigint;\ndeclare const flag: boolean;\ndeclare const label: string;\ndeclare const labelOrCount: string | number;\ndeclare const children: ReactNode;\ndeclare const columns: 1 | 2 | 3;\ndeclare const zeroOrOne: 0 | 1;\ndeclare const countOrFalse: number | false;\ndeclare const items: string[];\ndeclare const loose: any;\ndeclare const opaque: unknown;\ntype Pixels = number & { readonly unit: 'Pixels' };\ndeclare const width: Pixels;\nenum Level { Off, Low, High }\nenum Size { Small = 1, Large = 2 }\ndeclare const level: Level;\ndeclare const size: Size;\nexport const view = <>{count && <Badge />}</>;\n",
+        "findings": [
+            {
+                "line": 28,
+                "column": 24,
+                "endLine": 28,
+                "endColumn": 29,
+                "messageId": "leakedNumberRender",
+                "message": "This operand is a number, and `&&` hands back its own value when it is falsy, so when it is `0` (or `NaN`) React renders that number as text where nothing was meant to appear. Test the condition you mean instead, such as `count > 0 &&` or `count !== undefined &&`, so the operand is a boolean."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/CorrectnessNoLeakedNumberRender.tsx",
+        "source": "declare namespace JSX {\n    interface Element {}\n    interface IntrinsicElements { [name: string]: Record<string, unknown> }\n}\ntype ReactNode = string | number | boolean | null | undefined | JSX.Element;\ndeclare function Badge(properties: { visible?: unknown }): JSX.Element;\ndeclare function addCommas(value: number): string;\ndeclare const count: number;\ndeclare const optionalCount: number | undefined;\ndeclare const nullableCount: number | null;\ndeclare const big: bigint;\ndeclare const flag: boolean;\ndeclare const label: string;\ndeclare const labelOrCount: string | number;\ndeclare const children: ReactNode;\ndeclare const columns: 1 | 2 | 3;\ndeclare const zeroOrOne: 0 | 1;\ndeclare const countOrFalse: number | false;\ndeclare const items: string[];\ndeclare const loose: any;\ndeclare const opaque: unknown;\ntype Pixels = number & { readonly unit: 'Pixels' };\ndeclare const width: Pixels;\nenum Level { Off, Low, High }\nenum Size { Small = 1, Large = 2 }\ndeclare const level: Level;\ndeclare const size: Size;\nexport const view = <p>{count}</p>;\n"
+    },
+    "assertedMessageIds": [
+        "leakedNumberRender"
+    ]
+}

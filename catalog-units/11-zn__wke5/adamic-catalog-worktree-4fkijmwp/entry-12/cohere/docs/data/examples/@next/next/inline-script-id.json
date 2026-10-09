@@ -1,0 +1,24 @@
+{
+    "rule": "@next/next/inline-script-id",
+    "firing": {
+        "file": "pages/index.tsx",
+        "source": "import Script from 'next/script';\nexport default function TestPage() {\n  return (<Script>\n  </Script>)\n}\n",
+        "findings": [
+            {
+                "line": 3,
+                "column": 12,
+                "endLine": 3,
+                "endColumn": 18,
+                "messageId": "inlineScriptId",
+                "message": "This renders a next/script component with inline content but no id attribute. The framework deduplicates inline scripts by that id, so without one the same script is re-injected on every navigation and any one-time setup it performs runs again, which shows up as doubled analytics events or global state clobbered after a client transition. Give the script a stable id attribute."
+            }
+        ]
+    },
+    "clean": {
+        "file": "pages/index.tsx",
+        "source": "import Script from 'next/script';\nexport default function TestPage() {\n  return (<Script></Script>)\n}\n"
+    },
+    "assertedMessageIds": [
+        "inlineScriptId"
+    ]
+}

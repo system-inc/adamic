@@ -1,0 +1,34 @@
+{
+  "rules": {
+    "TypeScript": "nexus/consistency-no-utils-folder",
+    "Swift": "cohere-swift/consistency-no-utils-folder"
+  },
+  "messages": {
+    "noUnderscoreUtils": {
+      "text": "Folder name \"[[folder]]\" is not allowed. Use \"[[replacement]]\" instead.",
+      "terms": {
+        "folder": {
+          "TypeScript": "_utils",
+          "Swift": "{{folder}}"
+        },
+        "replacement": {
+          "TypeScript": "_utilities",
+          "Swift": "{{replacement}}"
+        }
+      }
+    },
+    "noUtils": {
+      "text": "Folder name \"[[folder]]\" is not allowed. Use \"[[replacement]]\" instead.",
+      "terms": {
+        "folder": {
+          "TypeScript": "utils",
+          "Swift": "{{folder}}"
+        },
+        "replacement": {
+          "TypeScript": "utilities",
+          "Swift": "{{replacement}}"
+        }
+      }
+    }
+  }
+}

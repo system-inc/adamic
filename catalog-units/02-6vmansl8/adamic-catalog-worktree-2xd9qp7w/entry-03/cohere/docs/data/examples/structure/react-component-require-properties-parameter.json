@@ -1,0 +1,26 @@
+{
+    "rule": "structure/react-component-require-properties-parameter",
+    "firing": {
+        "file": "/repository/source/components/Button.tsx",
+        "source": "export const Button = (props: { label: string }) => <button>{props.label}</button>;\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 24,
+                "endLine": 1,
+                "endColumn": 29,
+                "messageId": "usePropertiesNotProps",
+                "message": "Name a component's parameter `properties` rather than `props`. The abbreviation is the odd one out in a codebase that spells everything else in full, and the cost is not aesthetic: half the components reading `props.label` and half reading `properties.label` means every search for one spelling misses the other, which is the same drift the naming rules exist to prevent everywhere else.",
+                "suggestions": 1
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/components/Button.tsx",
+        "source": "export function Button() {\n    return <button />;\n}\n"
+    },
+    "assertedMessageIds": [
+        "usePropertiesNotProps"
+    ],
+    "assertsSuggestion": true
+}

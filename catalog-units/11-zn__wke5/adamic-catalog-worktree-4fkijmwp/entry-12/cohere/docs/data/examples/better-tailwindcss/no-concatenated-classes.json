@@ -1,0 +1,24 @@
+{
+    "rule": "better-tailwindcss/no-concatenated-classes",
+    "firing": {
+        "file": "Component.tsx",
+        "source": "const merged = cn(`px-${size}`);",
+        "findings": [
+            {
+                "line": 1,
+                "column": 19,
+                "endLine": 1,
+                "endColumn": 25,
+                "messageId": "concatenatedClass",
+                "message": "The fragment \"px-\" is joined to an interpolated value with no space between them, so the class name it forms never appears literally in the source. Tailwind finds classes by scanning text, so it will not generate this one and the style silently will not apply. Write the whole class names out and switch between them, rather than assembling one from pieces."
+            }
+        ]
+    },
+    "clean": {
+        "file": "Styles.ts",
+        "source": "const description = `px-${size}`;"
+    },
+    "assertedMessageIds": [
+        "concatenatedClass"
+    ]
+}

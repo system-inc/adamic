@@ -1,0 +1,25 @@
+{
+    "rule": "@next/next/google-font-display",
+    "firing": {
+        "file": "Component.tsx",
+        "source": "export const Test = () => <link href=\"https://fonts.googleapis.com/css2\" />;",
+        "findings": [
+            {
+                "line": 1,
+                "column": 27,
+                "endLine": 1,
+                "endColumn": 76,
+                "messageId": "googleFontDisplayMissing",
+                "message": "This Google Fonts <link> has no `display` parameter, so the browser uses the default and hides the text while the font downloads. On a slow connection that is a blank block where the words should be. Add `&display=optional` or `&display=swap` to the href so the text is painted in a fallback face first."
+            }
+        ]
+    },
+    "clean": {
+        "file": "Component.tsx",
+        "source": "export const Test = () => <link href={fontUrl} />;"
+    },
+    "assertedMessageIds": [
+        "googleFontDisplayMissing",
+        "googleFontDisplayNotRecommended"
+    ]
+}

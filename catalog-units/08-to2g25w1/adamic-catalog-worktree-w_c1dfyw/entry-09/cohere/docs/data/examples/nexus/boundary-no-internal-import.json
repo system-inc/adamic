@@ -1,0 +1,25 @@
+{
+    "rule": "nexus/boundary-no-internal-import",
+    "firing": {
+        "file": "/repo/source/widget/internal/Thing.ts",
+        "source": "import { Detail } from './deep/internal/Detail';\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 24,
+                "endLine": 1,
+                "endColumn": 48,
+                "messageId": "outsideInternal",
+                "message": "Only files inside the folder that owns this 'internal' directory may import from it. An internal folder is the one place a module may keep something it is free to change without warning, and that freedom lasts exactly as long as nobody outside reaches in."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repo/source/other/Thing.ts",
+        "source": "const detail = import(somePath);\n"
+    },
+    "assertedMessageIds": [
+        "aliasedInternal",
+        "outsideInternal"
+    ]
+}

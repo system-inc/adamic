@@ -1,0 +1,24 @@
+{
+    "rule": "nexus/performance-no-independent-await-in-loop",
+    "firing": {
+        "file": "/repository/source/AhraOsCommandLineInterface.ts",
+        "source": "// Shape from ahra modules/os/AhraOsCommandLineInterface.ts:120, the domain command loaders at boot.\n// Each loader is a dynamic import plus a pure table read, so the loads are independent. The\n// Object.assign into the accumulator depends on order only where two domains export the same verb,\n// and assigning the Promise.all results in sequence keeps that precedence exactly.\n// Expected: 1 finding.\ninterface CommandLineInterfaceCommandInterface {\n    description: string;\n}\ntype DomainCommandLoaderType = () => Promise<Record<string, CommandLineInterfaceCommandInterface>>;\ndeclare const domainCommandLoaders: Array<[string, DomainCommandLoaderType]>;\ndeclare function loadDomainCommands(\n    domainName: string,\n    load: DomainCommandLoaderType,\n): Promise<Record<string, CommandLineInterfaceCommandInterface>>;\n\nexport async function composeCommands(): Promise<Record<string, CommandLineInterfaceCommandInterface>> {\n    const composedCommands: Record<string, CommandLineInterfaceCommandInterface> = {};\n    for(const [domainName, load] of domainCommandLoaders) {\n        Object.assign(composedCommands, await loadDomainCommands(domainName, load));\n    }\n    return composedCommands;\n}\n",
+        "findings": [
+            {
+                "line": 18,
+                "column": 5,
+                "endLine": 18,
+                "endColumn": 58,
+                "messageId": "independentAwaitInLoop",
+                "message": "This loop awaits once per item, so the items run one after another, yet nothing carries from one iteration to the next: the awaited work reads only the item, its index and values the loop never changes, no outer variable is reassigned, nothing leaves the loop on an awaited result, and nothing prints, reports progress or sleeps between iterations. Start them together with `await Promise.all(items.map(async (item) => ...))`, or through a bounded concurrency helper when the collection can be large or the far side rate-limits. If the order is deliberate, say so where it lives: `// cohere-disable-next-line nexus/performance-no-independent-await-in-loop -- <why it is sequential>`."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/KlingApi.ts",
+        "source": "// Shape from ahra modules/kling/KlingApi.ts:253, the probe loop finding the next free index.\n// `while (true)`, each probe deciding whether there is another, `index` carried across iterations.\ndeclare const NodeFileSystemPromises: {\n    access(path: string): Promise<void>;\n    mkdir(path: string, options: { recursive: boolean }): Promise<void>;\n};\ndeclare const NodePath: { join(...parts: string[]): string };\n\nexport async function nextOutputPath(outputDirectory: string): Promise<string> {\n    await NodeFileSystemPromises.mkdir(outputDirectory, { recursive: true });\n\n    // Find next available index\n    let index = 0;\n    while(true) {\n        try {\n            await NodeFileSystemPromises.access(NodePath.join(outputDirectory, `${index}.mp4`));\n            index++;\n        }\n        catch {\n            break;\n        }\n    }\n\n    return NodePath.join(outputDirectory, `${index}.mp4`);\n}\n"
+    },
+    "assertedMessageIds": [
+        "independentAwaitInLoop"
+    ]
+}

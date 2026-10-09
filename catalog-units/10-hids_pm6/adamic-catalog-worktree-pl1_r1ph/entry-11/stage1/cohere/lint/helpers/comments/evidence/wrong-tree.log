@@ -1,0 +1,14 @@
+file
+0 SourceFile 0 31 0 0 -1 0 0				
+1 VariableStatement 0 31 0 0 -1 0 0				
+2 VariableDeclarationList 0 30 0 0 -1 0 0				2
+3 VariableDeclaration 5 30 0 0 -1 0 0				
+4 Identifier 5 7 0 0 -1 0 0		x		
+4 BinaryExpression 9 30 0 0 -1 0 0				
+5 TypeAssertionExpression 9 24 0 0 -1 0 0				
+6 TypeReference 11 14 0 0 -1 0 0				
+7 Identifier 11 14 0 0 -1 0 0		div		
+6 ObjectLiteralExpression 15 24 0 0 0 0 0				
+5 LessThanToken 24 25 0 0 -1 0 0				
+5 RegularExpressionLiteral 25 30 0 4 -1 0 0		/div>		
+1 EndOfFile 31 31 0 0 -1 0 0				

@@ -1,0 +1,73 @@
+// Regions meet exceptions (reviewer R, round 8): a statement with a region that a throw leaves must
+// end the region on its way out, or the region's blocks and the heap strings its nodes hold leak.
+// build is fresh and can throw: it throws on the call that spends its budget, after earlier calls
+// have made nodes in the statement's region. Thrown inside a try at the top level, out of a function
+// into its caller's catch, and out of a finally's try; and a region that finishes after each, to show
+// nothing was left half-ended. Labels are built at runtime, so a region has heap strings to let go of.
+interface Node {
+	readonly label: string;
+	readonly left: Node | undefined;
+	readonly right: Node | undefined;
+}
+
+let budget = -1;
+
+function build(depth: number): Node {
+	budget = budget - 1;
+	if (budget === 0) {
+		throw new Error(`budget spent at depth ${depth}`);
+	}
+	if (depth === 0) {
+		return { label: `leaf${depth}`, left: undefined, right: undefined };
+	}
+	return { label: `node${depth}`, left: build(depth - 1), right: build(depth - 1) };
+}
+
+function count(node: Node | undefined): number {
+	if (node === undefined) {
+		return 0;
+	}
+	return 1 + count(node.left) + count(node.right);
+}
+
+function measure(depth: number): number {
+	const counted = count(build(depth));
+	return counted;
+}
+
+let total = 0;
+budget = 6;
+try {
+	total += count(build(3));
+} catch (error) {
+	if (error instanceof Error) {
+		console.log(`top level: ${error.message}, total ${total}`);
+	}
+}
+budget = -1;
+total += count(build(2));
+console.log(`after: ${total}`);
+
+budget = 9;
+try {
+	console.log(`measured ${measure(4)}`);
+} catch (error) {
+	if (error instanceof Error) {
+		console.log(`from measure: ${error.message}`);
+	}
+}
+
+budget = 4;
+try {
+	try {
+		total += count(build(3));
+	} finally {
+		console.log(`finally, total ${total}`);
+	}
+} catch (error) {
+	if (error instanceof Error) {
+		console.log(`outer: ${error.message}`);
+	}
+}
+budget = -1;
+console.log(`measured ${measure(3)}`);

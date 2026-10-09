@@ -1,0 +1,24 @@
+{
+    "rule": "nexus/correctness-no-process-exit-after-output",
+    "firing": {
+        "file": "/repository/source/CorrectnessNoProcessExitAfterOutput.ts",
+        "source": "/// <reference lib=\"dom\" />\nimport * as NodeProcess from 'node:process';\ndeclare const flag: boolean;\ndeclare const output: string;\ndeclare const rows: string[];\ndeclare const report: { authorized: boolean; lines: string[] };\ndeclare const result: { lines: string[]; exitCode: number; allOk: boolean; sources: { ok: boolean; label: string }[] };\ndeclare const fileConsole: Console;\ndeclare const streams: { stdout: { write(text: string): void } };\ndeclare const runner: { exit(code: number): void };\ndeclare function run(): Promise<void>;\ndeclare function use(value: unknown): void;\ndeclare function printReport(): void;\ndeclare function runLinkCommand(commandArguments: string[]): Promise<number>;\n\nconsole.log(output);\nprocess.exit(0);\n",
+        "findings": [
+            {
+                "line": 17,
+                "column": 1,
+                "endLine": 17,
+                "endColumn": 16,
+                "messageId": "exitAfterOutput",
+                "message": "This calls `process.exit()` on a path that has already written to stdout or stderr in this function. `process.exit()` ends the process without waiting for writes still in flight, and a write to a pipe can be one: a reader piping this command (`| grep`, `execSync`, a spawned child) gets the output cut at 64 KB, with exit status 0 and no error. Set `process.exitCode = n` and return instead, so the process ends on its own once the output has drained."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/CorrectnessNoProcessExitAfterOutput.ts",
+        "source": "/// <reference lib=\"dom\" />\nimport * as NodeProcess from 'node:process';\ndeclare const flag: boolean;\ndeclare const output: string;\ndeclare const rows: string[];\ndeclare const report: { authorized: boolean; lines: string[] };\ndeclare const result: { lines: string[]; exitCode: number; allOk: boolean; sources: { ok: boolean; label: string }[] };\ndeclare const fileConsole: Console;\ndeclare const streams: { stdout: { write(text: string): void } };\ndeclare const runner: { exit(code: number): void };\ndeclare function run(): Promise<void>;\ndeclare function use(value: unknown): void;\ndeclare function printReport(): void;\ndeclare function runLinkCommand(commandArguments: string[]): Promise<number>;\n\nexport function main(): void {\n    console.log(output);\n    runner.exit(0);\n}\n"
+    },
+    "assertedMessageIds": [
+        "exitAfterOutput"
+    ]
+}

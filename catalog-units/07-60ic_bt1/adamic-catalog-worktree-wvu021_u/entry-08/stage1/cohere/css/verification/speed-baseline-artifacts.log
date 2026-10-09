@@ -1,0 +1,22 @@
+=== RUN   TestCSSProfileArtifacts
+    profile_test.go:24: Go oracle: === RUN   TestAdamicPortCases
+            adamic_port_side_test.go:148: corpus files: map[.css:158 .less:43 .scss:90]
+            adamic_port_side_test.go:216: 24076 cases, 5021 parsed
+            adamic_port_side_test.go:234: Go: 240760 stylesheets in 2.313552388s, 104065 stylesheets/s; 50210 parsed, 95850 children
+        --- PASS: TestAdamicPortCases (3.04s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/css/postcss	3.047s
+    profile_test.go:25: === RUN   TestAdamicPrinterCases
+            adamic_print_side_test.go:91: printed stylesheets: 24076 inputs, 4966 formatted, elapsed 1.011343481s
+        --- PASS: TestAdamicPrinterCases (1.01s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/css	1.019s
+    profile_test.go:26: === RUN   TestAdamicPrinterCases
+            adamic_print_side_test.go:91: printed stylesheets: 24076 inputs, 4966 formatted, elapsed 954.056863ms
+        --- PASS: TestAdamicPrinterCases (0.96s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/css	0.962s
+    profile_test.go:107: saved 4952 shared inputs and 341 profile inputs, 33232 output units
+--- PASS: TestCSSProfileArtifacts (33.84s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/css	33.848s

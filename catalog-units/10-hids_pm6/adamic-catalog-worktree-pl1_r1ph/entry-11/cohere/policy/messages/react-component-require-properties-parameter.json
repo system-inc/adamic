@@ -1,0 +1,13 @@
+{
+  "rules": {
+    "TypeScript": "structure/react-component-require-properties-parameter"
+  },
+  "messages": {
+    "usePropertiesNotProps": {
+      "text": "Name a component's parameter `properties` rather than `props`. The abbreviation is the odd one out in a codebase that spells everything else in full, and the cost is not aesthetic: half the components reading `props.label` and half reading `properties.label` means every search for one spelling misses the other, which is the same drift the naming rules exist to prevent everywhere else."
+    },
+    "renameToProperties": {
+      "text": "Rename the parameter to `properties`. The uses in the body have to be updated too, and only you can tell which `props` in there are this parameter."
+    }
+  }
+}

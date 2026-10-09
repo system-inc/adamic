@@ -1,0 +1,1 @@
+export { BarrelOnlyThing } from './thing';

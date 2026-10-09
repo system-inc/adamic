@@ -1,0 +1,24 @@
+{
+    "rule": "react/no-adjacent-inline-elements",
+    "firing": {
+        "file": "/repository/source/NoAdjacentInlineElements.tsx",
+        "source": "<div><br /><br /></div>;\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 1,
+                "endLine": 1,
+                "endColumn": 24,
+                "messageId": "inlineElement",
+                "message": "These two inline elements sit directly against each other with nothing between them, so the browser renders them as one run of text with no gap. What reads as two separate links or labels in the source arrives as a single unbroken word on the page, and the reader has no way to see where one ends. Put a space between them, or wrap them in block-level elements that separate themselves."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/NoAdjacentInlineElements.tsx",
+        "source": "<div />;\n"
+    },
+    "assertedMessageIds": [
+        "inlineElement"
+    ]
+}

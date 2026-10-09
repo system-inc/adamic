@@ -1,0 +1,11 @@
+{
+  "rules": {
+    "TypeScript": "nexus/consistency-no-stuttering-name",
+    "Swift": "cohere-swift/consistency-no-stuttering-name"
+  },
+  "messages": {
+    "stutteringName": {
+      "text": "\"{{name}}.{{name}}\" stutters, which means the name is carrying nothing: it repeats the field instead of saying which {{name}} this is. Rename the value for what it holds, the type it came back as or whatever distinguishes it from another {{name}} in this scope, so a reader forty lines down does not have to find the declaration."
+    }
+  }
+}

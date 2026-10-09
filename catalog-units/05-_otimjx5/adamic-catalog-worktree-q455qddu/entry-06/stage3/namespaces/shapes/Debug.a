@@ -1,0 +1,98 @@
+// Declaration shape only: external types, bodies and enum expressions are normalized.
+function shapeInitialize():number{return 1;}
+export namespace Debug {
+let currentAssertionLevel:number=1;
+export let currentLogLevel:number=1;
+export let isDebugging:boolean=false;
+export let loggingHost:number;
+type AssertionKeys = number;
+export function shouldLog(): number {return 0;}
+function logMessage(): number {return 0;}
+export function log(): number {return 0;}
+export namespace log {
+export function error(): number {return 0;}
+export function warn(): number {return 0;}
+export function log(): number {return 0;}
+export function trace(): number {return 0;}
+}
+const assertionCache:number=1;
+export function getAssertionLevel(): number {return 0;}
+export function setAssertionLevel(): number {return 0;}
+export function shouldAssert(): number {return 0;}
+function shouldAssertFunction<K>(): number {return 0;}
+export function fail(): number {return 0;}
+export function failBadSyntaxKind(): number {return 0;}
+export function assert(): number {return 0;}
+export function assertEqual<T>(): number {return 0;}
+export function assertLessThan(): number {return 0;}
+export function assertLessThanOrEqual(): number {return 0;}
+export function assertGreaterThanOrEqual(): number {return 0;}
+export function assertIsDefined<T>(): number {return 0;}
+export function checkDefined<T>(): number {return 0;}
+export function assertEachIsDefined<T>(): number;
+export function assertEachIsDefined<T>(): number;
+export function assertEachIsDefined<T>(): number {return 0;}
+export function checkEachDefined<T,A>(): number {return 0;}
+export function assertNever(): number {return 0;}
+export function assertEachNode<T,U>(): number;
+export function assertEachNode<T,U>(): number;
+export function assertEachNode<T,U>(): number;
+export function assertEachNode<T,U>(): number;
+export function assertEachNode(): number;
+export function assertEachNode(): number {return 0;}
+export function assertNode<T,U>(): number;
+export function assertNode(): number;
+export function assertNode(): number {return 0;}
+export function assertNotNode<T,U>(): number;
+export function assertNotNode(): number;
+export function assertNotNode(): number {return 0;}
+export function assertOptionalNode<T,U>(): number;
+export function assertOptionalNode<T,U>(): number;
+export function assertOptionalNode(): number;
+export function assertOptionalNode(): number {return 0;}
+export function assertOptionalToken<T,K>(): number;
+export function assertOptionalToken<T,K>(): number;
+export function assertOptionalToken(): number;
+export function assertOptionalToken(): number {return 0;}
+export function assertMissingNode(): number;
+export function assertMissingNode(): number {return 0;}
+export function type<T>(): number;
+export function type(): number {return 0;}
+export function getFunctionName(): number {return 0;}
+export function formatSymbol(): number {return 0;}
+export function formatEnum(): number {return 0;}
+const enumMemberCache:number=shapeInitialize();
+function getEnumMembers(): number {return 0;}
+export function formatSyntaxKind(): number {return 0;}
+export function formatSnippetKind(): number {return 0;}
+export function formatScriptKind(): number {return 0;}
+export function formatNodeFlags(): number {return 0;}
+export function formatNodeCheckFlags(): number {return 0;}
+export function formatModifierFlags(): number {return 0;}
+export function formatTransformFlags(): number {return 0;}
+export function formatEmitFlags(): number {return 0;}
+export function formatSymbolFlags(): number {return 0;}
+export function formatTypeFlags(): number {return 0;}
+export function formatSignatureFlags(): number {return 0;}
+export function formatObjectFlags(): number {return 0;}
+export function formatFlowFlags(): number {return 0;}
+export function formatRelationComparisonResult(): number {return 0;}
+export function formatCheckMode(): number {return 0;}
+export function formatSignatureCheckMode(): number {return 0;}
+export function formatTypeFacts(): number {return 0;}
+let isDebugInfoEnabled:boolean=false;
+let flowNodeProto:number;
+function attachFlowNodeDebugInfoWorker(): number {return 0;}
+export function attachFlowNodeDebugInfo(): number {return 0;}
+let nodeArrayProto:number;
+function attachNodeArrayDebugInfoWorker(): number {return 0;}
+export function attachNodeArrayDebugInfo(): number {return 0;}
+export function enableDebugInfo(): number {return 0;}
+export function formatVariance(): number {return 0;}
+export type DebugType = number;
+export class DebugTypeMapper {}
+export function attachDebugPrototypeIfDebug(): number {return 0;}
+export function printControlFlowGraph(): number {return 0;}
+export function formatControlFlowGraph(): number {return 0;}
+}
+console.log("shape:Debug");

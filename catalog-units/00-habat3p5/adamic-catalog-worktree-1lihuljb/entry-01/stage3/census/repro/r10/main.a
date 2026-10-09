@@ -1,0 +1,2 @@
+// a-check: type error TS2322
+const values: number[] = []; const value: number = values[0]; console.log(String(value));

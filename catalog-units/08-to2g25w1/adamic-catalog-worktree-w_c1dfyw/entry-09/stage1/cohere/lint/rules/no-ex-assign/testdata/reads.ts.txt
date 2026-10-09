@@ -1,0 +1,1 @@
+try {} catch(error) { error++; const a = -error; const b = typeof error; }

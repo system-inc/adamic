@@ -1,0 +1,26 @@
+{
+    "rule": "structure/react-hook-require-result-naming",
+    "firing": {
+        "file": "/repository/source/components/Panel.tsx",
+        "source": "declare function useAccountQuery(): unknown;\ndeclare function useWatch(): unknown;\ndeclare function useSprings(): unknown;\nexport function Panel() {\n    const ab = useAccountQuery();\n    return ab;\n}\n",
+        "findings": [
+            {
+                "line": 5,
+                "column": 11,
+                "endLine": 5,
+                "endColumn": 13,
+                "messageId": "hookResultNamingGeneric",
+                "message": "This hook result is named something generic. A hook's result carries its origin in its name or it carries nothing: twenty lines down, `data` says only that something was fetched, while `accountQuery` says which call produced it and where to look when it is wrong. Name it after the hook, or after what it holds."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/components/Panel.tsx",
+        "source": "declare function useAccountQuery(): unknown;\ndeclare function useWatch(): unknown;\ndeclare function useSprings(): unknown;\nexport const value = 1;\n"
+    },
+    "assertedMessageIds": [
+        "hookResultNamingBadSuffix",
+        "hookResultNamingGeneric",
+        "hookResultNamingMismatch"
+    ]
+}

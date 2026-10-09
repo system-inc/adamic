@@ -1,0 +1,7 @@
+=== RUN   TestParserHasNoUnusedOptionalMethodThunks
+--- PASS: TestParserHasNoUnusedOptionalMethodThunks (21.11s)
+=== RUN   TestOptionalMethodThunksMatchNode
+    closure_convention_test.go:289: Node catches compiled missing-thunk mutant: exit status 70, output "adamic: panic: compiler bug: a method the checker proved is there is missing\n", Node "yes yes no\nunused no\nfacade no\nbase no\n"
+--- PASS: TestOptionalMethodThunksMatchNode (0.79s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	21.931s

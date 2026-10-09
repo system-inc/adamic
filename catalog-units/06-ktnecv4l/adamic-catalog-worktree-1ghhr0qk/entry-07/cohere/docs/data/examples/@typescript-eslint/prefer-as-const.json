@@ -1,0 +1,27 @@
+{
+    "rule": "@typescript-eslint/prefer-as-const",
+    "firing": {
+        "file": "/repository/source/Thing.ts",
+        "source": "let foo: 2 = 2;",
+        "findings": [
+            {
+                "line": 1,
+                "column": 10,
+                "endLine": 1,
+                "endColumn": 11,
+                "messageId": "preferAsConst",
+                "message": "This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.",
+                "fix": true
+            }
+        ],
+        "fixedSource": "let foo = 2 as const;"
+    },
+    "clean": {
+        "file": "/repository/source/Thing.ts",
+        "source": "let a: '2' = 2;"
+    },
+    "assertedMessageIds": [
+        "preferAsConst"
+    ],
+    "assertsFix": true
+}

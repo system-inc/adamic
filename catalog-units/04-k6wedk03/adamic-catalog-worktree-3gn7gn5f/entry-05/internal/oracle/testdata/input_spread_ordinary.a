@@ -1,0 +1,6 @@
+// Aliased and parenthesized prelude calls without a call spread still lower.
+import { utf8Length as length, utf8At as byte } from 'adamic';
+const text = ['é', '🌍', '\uD800'].join('');
+console.log(`${(length)(text)} ${(byte)(text, 0)} ${byte(text, 1)}`);
+// A spread nested in an ordinary argument is not a spread argument.
+console.log(`${length([...['a', 'é']].join(''))}`);

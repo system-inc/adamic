@@ -1,0 +1,42 @@
+interface Color { readonly name: string; }
+namespace Color {
+    let paints = 0;
+    const prefix = 'color';
+    export function mix(name: string): Color {
+        paints += 1;
+        return { name: `${prefix} ${name}` };
+    }
+    export function count(): number { return paints; }
+    export namespace Dark {
+        let shades = 0;
+        export function mix(name: string): string {
+            shades += 1;
+            return `dark ${name}`;
+        }
+        export function count(): number { return shades; }
+        export namespace Deep {
+            let depth = 0;
+            export function mix(name: string): string {
+                depth += 1;
+                return `deep ${name}`;
+            }
+            export function count(): number { return depth; }
+        }
+    }
+}
+namespace Tone {
+    let uses = 0;
+    export function mix(name: string): string {
+        uses += 1;
+        return `tone ${name}`;
+    }
+    export function count(): number { return uses; }
+}
+const mixed = Color.mix('red');
+const again = Color.Dark.mix('red');
+const deep = Color.Dark.Deep.mix('red');
+const mix = Color.mix;
+const dark = Color.Dark.mix;
+const tone = Tone.mix;
+console.log(`${mixed.name} ${Color.count()} ${again} ${Color.Dark.count()} ${deep} ${Color.Dark.Deep.count()}`);
+console.log(`${mix === Color.mix} ${dark === Color.Dark.mix} ${tone === Tone.mix} ${mix('blue').name} ${tone('red')} ${Color.count()} ${Tone.count()}`);

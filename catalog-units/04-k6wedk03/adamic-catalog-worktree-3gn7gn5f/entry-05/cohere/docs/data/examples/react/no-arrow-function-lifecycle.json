@@ -1,0 +1,27 @@
+{
+    "rule": "react/no-arrow-function-lifecycle",
+    "firing": {
+        "file": "/repository/source/NoArrowFunctionLifecycle.tsx",
+        "source": "class H extends React.Component {\n  render = () => /* c */ <div />;\n}\n",
+        "findings": [
+            {
+                "line": 2,
+                "column": 3,
+                "endLine": 2,
+                "endColumn": 34,
+                "messageId": "lifecycle",
+                "message": "render is a React lifecycle method, and should not be an arrow function or in a class field. Use an instance method instead.",
+                "fix": true
+            }
+        ],
+        "fixedSource": "class H extends React.Component {\n  render() { return /* c */<div />; }\n}\n"
+    },
+    "clean": {
+        "file": "/repository/source/NoArrowFunctionLifecycle.tsx",
+        "source": "var H = { render: () => <div /> };"
+    },
+    "assertedMessageIds": [
+        "lifecycle"
+    ],
+    "assertsFix": true
+}

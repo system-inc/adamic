@@ -1,0 +1,24 @@
+{
+    "rule": "better-tailwindcss/enforce-shorthand-classes",
+    "firing": {
+        "file": "Component.tsx",
+        "source": "const element = <div className=\"w-4 h-4\" />;",
+        "findings": [
+            {
+                "line": 1,
+                "column": 33,
+                "endLine": 1,
+                "endColumn": 40,
+                "messageId": "shorthandClasses",
+                "message": "\"w-4 h-4\" is the longhand spelling of \"size-4\", which sets the same declarations in one class. The pair carries no information the single class does not, and it costs the next reader a moment working out whether the two halves were meant to move together or drifted apart. Write it as \"size-4\"."
+            }
+        ]
+    },
+    "clean": {
+        "file": "Component.tsx",
+        "source": "const element = <div className=\"ps-4\" />;"
+    },
+    "assertedMessageIds": [
+        "shorthandClasses"
+    ]
+}

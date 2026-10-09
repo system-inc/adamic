@@ -1,0 +1,62 @@
+{
+  "files": 3,
+  "propertyReads": 2,
+  "byteReads": 7,
+  "helperAdded": true,
+  "evidence": [
+    {
+      "file": "sys.ts",
+      "line": 1553,
+      "before": "e.code",
+      "after": "errorCode(e)"
+    },
+    {
+      "file": "tracing.ts",
+      "line": 66,
+      "before": "e.message",
+      "after": "errorMessage(e)"
+    },
+    {
+      "file": "sys.ts",
+      "line": 1796,
+      "before": "buffer[0]",
+      "after": "buffer[0]!"
+    },
+    {
+      "file": "sys.ts",
+      "line": 1796,
+      "before": "buffer[1]",
+      "after": "buffer[1]!"
+    },
+    {
+      "file": "sys.ts",
+      "line": 1807,
+      "before": "buffer[0]",
+      "after": "buffer[0]!"
+    },
+    {
+      "file": "sys.ts",
+      "line": 1807,
+      "before": "buffer[1]",
+      "after": "buffer[1]!"
+    },
+    {
+      "file": "sys.ts",
+      "line": 1811,
+      "before": "buffer[0]",
+      "after": "buffer[0]!"
+    },
+    {
+      "file": "sys.ts",
+      "line": 1811,
+      "before": "buffer[1]",
+      "after": "buffer[1]!"
+    },
+    {
+      "file": "sys.ts",
+      "line": 1811,
+      "before": "buffer[2]",
+      "after": "buffer[2]!"
+    }
+  ]
+}

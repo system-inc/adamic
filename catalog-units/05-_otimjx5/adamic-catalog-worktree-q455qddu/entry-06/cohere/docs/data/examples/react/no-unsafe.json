@@ -1,0 +1,22 @@
+{
+    "rule": "react/no-unsafe",
+    "firing": {
+        "file": "/repository/source/Unsafe.tsx",
+        "source": "class Foo extends Component {\n  UNSAFE_componentWillMount() {}\n}\n",
+        "findings": [
+            {
+                "line": 2,
+                "column": 3,
+                "endLine": 2,
+                "endColumn": 28,
+                "messageId": "unsafeComponentWillMount",
+                "message": "`componentWillMount` runs before the first render and is not guaranteed to run exactly once, so work started there can be discarded or repeated when React interrupts the render. Move the work to `componentDidMount`, which runs after the tree is committed and cannot be thrown away."
+            }
+        ]
+    },
+    "assertedMessageIds": [
+        "unsafeComponentWillMount",
+        "unsafeComponentWillReceiveProps",
+        "unsafeComponentWillUpdate"
+    ]
+}

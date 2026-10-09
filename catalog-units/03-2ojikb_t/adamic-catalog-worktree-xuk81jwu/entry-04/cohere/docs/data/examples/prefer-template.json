@@ -1,0 +1,27 @@
+{
+    "rule": "prefer-template",
+    "firing": {
+        "file": "/repository/source/PreferTemplate.tsx",
+        "source": "foo + '\\0'",
+        "findings": [
+            {
+                "line": 1,
+                "column": 1,
+                "endLine": 1,
+                "endColumn": 11,
+                "messageId": "unexpectedStringConcatenation",
+                "message": "This builds a string by concatenating a literal with something that is not one. The `+` operator does double duty in JavaScript, so a reader has to work out from the operands whether a line adds or joins, and a single non-string operand silently changes the answer for the whole expression. A template literal says which one is meant in its first character, keeps the literal text contiguous instead of split across quotes and plus signs, and does not change meaning when an operand's type does.",
+                "fix": true
+            }
+        ],
+        "fixedSource": "`${foo  }\\0`"
+    },
+    "clean": {
+        "file": "/repository/source/PreferTemplate.tsx",
+        "source": "'use strict';"
+    },
+    "assertedMessageIds": [
+        "unexpectedStringConcatenation"
+    ],
+    "assertsFix": true
+}

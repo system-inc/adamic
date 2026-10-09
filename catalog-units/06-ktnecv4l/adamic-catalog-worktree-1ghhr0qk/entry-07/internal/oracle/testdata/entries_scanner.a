@@ -1,0 +1,10 @@
+// Scanner's keyword table reduced from pinned scanner.ts:222.
+enum SyntaxKind { AbstractKeyword = 128, ConstructorKeyword = 137, OfKeyword = 165 }
+const textToKeywordObj: Readonly<Record<string, SyntaxKind>> = {
+ abstract: SyntaxKind.AbstractKeyword,
+ "constructor": SyntaxKind.ConstructorKeyword,
+ of: SyntaxKind.OfKeyword,
+};
+const textToKeyword = new Map(Object.entries(textToKeywordObj));
+console.log(`${textToKeyword.size} ${textToKeyword.get('constructor') ?? -1}`);
+console.log(Object.keys(textToKeywordObj).join(','));

@@ -1,0 +1,24 @@
+{
+    "rule": "base/consistency-no-console",
+    "firing": {
+        "file": "/repository/source/Thing.ts",
+        "source": "console.trace();",
+        "findings": [
+            {
+                "line": 1,
+                "column": 1,
+                "endLine": 1,
+                "endColumn": 14,
+                "messageId": "consistencyNoConsole",
+                "message": "Do not call 'console.trace'. Reach the tier that owns this failure and call '.log.error(identifier, data, error)' or '.log.warning(...)' for a row, or '.log.debug(message)' for a line that never becomes one."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/Thing.ts",
+        "source": "console;"
+    },
+    "assertedMessageIds": [
+        "consistencyNoConsole"
+    ]
+}

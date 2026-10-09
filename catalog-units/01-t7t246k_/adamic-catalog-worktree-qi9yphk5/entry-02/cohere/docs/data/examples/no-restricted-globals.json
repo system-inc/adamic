@@ -1,0 +1,15 @@
+{
+    "rule": "no-restricted-globals",
+    "firing": {
+        "file": "Probe.ts",
+        "source": "foo\n"
+    },
+    "clean": {
+        "file": "/repository/source/NoRestrictedGlobals.ts",
+        "source": "foo;\n"
+    },
+    "assertedMessageIds": [
+        "customMessage",
+        "defaultMessage"
+    ]
+}

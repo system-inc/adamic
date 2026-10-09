@@ -1,0 +1,26 @@
+{
+    "rule": "structure/network-no-invalidate-cache-literal-key",
+    "firing": {
+        "file": "/repository/source/api/Thing.ts",
+        "source": "declare const networkService: { cache: { invalidate(key: unknown): void } };\ndeclare const UserCacheKey: string;\ndeclare const PostCacheKey: string;\ndeclare const id: string;\nexport function run() {\n    networkService.cache.invalidate('users');\n}\n",
+        "findings": [
+            {
+                "line": 6,
+                "column": 37,
+                "endLine": 6,
+                "endColumn": 44,
+                "messageId": "noStringLiteralInvalidateCache",
+                "message": "cache.invalidate takes a string literal here rather than an imported key. Cache keys are strings that have to match exactly across the file that writes the cache and every file that invalidates it, and nothing checks that they do. A typo produces no error and no finding: the invalidation runs, matches nothing, and the stale value stays. Export the key from where the cache is created and import it, so a rename is a compiler error rather than a silent miss."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/api/Thing.ts",
+        "source": "declare const networkService: { cache: { invalidate(key: unknown): void } };\ndeclare const UserCacheKey: string;\ndeclare const PostCacheKey: string;\ndeclare const id: string;\nexport const Value = 1;\n"
+    },
+    "assertedMessageIds": [
+        "noArrayWithStringLiteralInvalidateCache",
+        "noStringLiteralInvalidateCache",
+        "noTemplateLiteralInvalidateCache"
+    ]
+}

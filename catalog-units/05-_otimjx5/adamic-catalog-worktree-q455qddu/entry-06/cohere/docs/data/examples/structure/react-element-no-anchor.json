@@ -1,0 +1,7 @@
+{
+    "rule": "structure/react-element-no-anchor",
+    "clean": {
+        "file": "/repository/source/api/Thing.ts",
+        "source": "export const value = 1;\n"
+    }
+}

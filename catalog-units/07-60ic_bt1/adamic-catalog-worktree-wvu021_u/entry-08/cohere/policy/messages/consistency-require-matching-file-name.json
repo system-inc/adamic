@@ -1,0 +1,37 @@
+{
+  "rules": {
+    "TypeScript": "structure/consistency-require-matching-file-name",
+    "Swift": "cohere-swift/consistency-require-matching-file-name"
+  },
+  "phrases": {
+    "alternative": {
+      "renameComponent": ", or rename the component to `{{fileBaseName}}` if the file's name is the right one",
+      "none": ""
+    },
+    "placement": {
+      "besideType": "An extension of {{extendedName}} in the file for {{typeName}}. Extensions of another type belong in that type's own file, such as {{suggestion}}, so everything added to {{extendedName}} is found together.",
+      "withoutType": "This file is {{fileName}} and extends {{extendedName}}. Name it {{suggestion}} after what it adds, so everything added to {{extendedName}} is found together."
+    }
+  },
+  "messages": {
+    "requireMatchingFileName": {
+      "text": "[[declared]] in `{{fileName}}`, and the file is not named for it. [[repairAndWhy]]<<alternative>>.",
+      "terms": {
+        "declared": {
+          "TypeScript": "`{{componentName}}` is the only component",
+          "Swift": "`{{typeName}}` is the first type declared"
+        },
+        "repairAndWhy": {
+          "TypeScript": "With one component per file, the file name is how a reader finds a component and the component name is how they know what a file holds, and that only works as an index when the two match exactly, case included. Rename the file to `{{componentFileName}}`",
+          "Swift": "Name it `{{typeName}}.swift`, so a reader looking for `{{typeName}}` opens it without a search"
+        }
+      }
+    },
+    "extensionOutsideItsFile": {
+      "text": "<<placement>>",
+      "languages": [
+        "Swift"
+      ]
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+    "rule": "@typescript-eslint/prefer-regexp-exec",
+    "firing": {
+        "file": "/repository/source/PreferRegexpExec.ts",
+        "source": "'something'.match(/thing/);\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 13,
+                "endLine": 1,
+                "endColumn": 18,
+                "messageId": "regExpExecOverStringMatch",
+                "message": "Use `RegExp#exec()` instead of `String#match()` here. Without a global flag the two return the same match object, but `exec` says what it does at the call site and is the faster of the two. `match` is the one to reach for when you want every match at once, which is what the `g` flag turns it into, and this call has no `g`.",
+                "fix": true
+            }
+        ],
+        "fixedSource": "/thing/.exec('something');\n"
+    },
+    "clean": {
+        "file": "/repository/source/PreferRegexpExec.ts",
+        "source": "declare const a: string;\na.match(/x/g);\n"
+    },
+    "assertedMessageIds": [
+        "regExpExecOverStringMatch"
+    ],
+    "assertsFix": true
+}

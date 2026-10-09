@@ -1,0 +1,21 @@
+{
+    "rule": "react/prefer-es6-class",
+    "firing": {
+        "file": "/repository/source/PreferEs6Class.tsx",
+        "source": "var Hello = createReactClass({ render: function() { return null; } });\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 30,
+                "endLine": 1,
+                "endColumn": 69,
+                "messageId": "shouldUseES6Class",
+                "message": "This component is built with the `createReactClass` factory, which React removed from the library and now ships as a separate package nobody maintains. It carries its own version of features the language has since grown, notably automatic binding of methods to the instance, so a reader who knows classes cannot predict what `this` is here. Write it as a class extending `React.Component` instead."
+            }
+        ]
+    },
+    "assertedMessageIds": [
+        "shouldUseCreateClass",
+        "shouldUseES6Class"
+    ]
+}

@@ -1,0 +1,6 @@
+const values: readonly number[] = [0, -0, 1, -1, 0.5, -0.5, 1.337, 16777217, 2147483648, 4294967295, 4294967296, 4294967297, -4294967297, 9007199254740991, 1e100, 1e-100, 1 / 0, -1 / 0, 0 / 0, 3.4028235677973362e38, 3.4028235677973366e38, -3.4028235677973362e38, 1.401298464324817e-45, 7.006492321624085e-46];
+for (const value of values) {
+ console.log(`${value} ${Math.clz32(value)} ${Math.fround(value)} ${1 / Math.fround(value)}`);
+ for (const other of values) console.log(`${Math.imul(value, other)}`);
+}
+console.log(`${Math.LN10} ${Math.LN2} ${Math.LOG10E} ${Math.LOG2E} ${Math.SQRT1_2} ${Math.SQRT2}`);

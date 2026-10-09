@@ -1,0 +1,19 @@
+// From TypeScript 6.0.3, src/compiler/builderState.ts:62
+// From TypeScript 6.0.3, src/compiler/builderState.ts:72
+// From TypeScript 6.0.3, src/compiler/builderState.ts:100
+// From TypeScript 6.0.3, src/compiler/builderState.ts:295
+// Census reason: a namespace
+// Support types retain only the state contract read by canReuseOldState.
+export interface BuilderState {
+    readonly referencedMap?: BuilderState.ReadonlyManyToManyPathMap | undefined;
+}
+export namespace BuilderState {
+    export interface ReadonlyManyToManyPathMap { readonly marker: number; }
+    export function canReuseOldState(newReferencedMap: ReadonlyManyToManyPathMap | undefined, oldState: BuilderState | undefined): boolean | undefined {
+        return oldState && !oldState.referencedMap === !newReferencedMap;
+    }
+}
+const map: BuilderState.ReadonlyManyToManyPathMap = { marker: 1 };
+for (const oldState of [undefined, {}, { referencedMap: map }]) {
+    console.log(`${BuilderState.canReuseOldState(undefined, oldState)} ${BuilderState.canReuseOldState(map, oldState)}`);
+}

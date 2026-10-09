@@ -1,0 +1,40 @@
+{
+    "rule": "react-hooks/exhaustive-deps",
+    "firing": {
+        "file": "/repository/source/ExhaustiveDeps.tsx",
+        "source": "function Thing() {\n          useEffect(async () => {});\n        }\n",
+        "findings": [
+            {
+                "line": 2,
+                "column": 21,
+                "endLine": 2,
+                "endColumn": 35,
+                "messageId": "exhaustiveDepsAsyncEffect",
+                "message": "An async effect callback returns a promise, and React expects the return value to be a cleanup function, so the cleanup never runs and overlapping runs race. Keep the callback synchronous and declare the async function inside it."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/ExhaustiveDeps.tsx",
+        "source": "function MyComponent({myEffect}) {\n          useEffect(myEffect);\n        }\n"
+    },
+    "assertedMessageIds": [
+        "exhaustiveDepsAsyncEffect",
+        "exhaustiveDepsComplexExpression",
+        "exhaustiveDepsConstruction",
+        "exhaustiveDepsDuplicate",
+        "exhaustiveDepsEffectEvent",
+        "exhaustiveDepsLiteral",
+        "exhaustiveDepsMissing",
+        "exhaustiveDepsMissingCallback",
+        "exhaustiveDepsNotArrayLiteral",
+        "exhaustiveDepsRequireExplicitEffectDeps",
+        "exhaustiveDepsSetStateNoDependencies",
+        "exhaustiveDepsSpread",
+        "exhaustiveDepsUnknownDependencies",
+        "exhaustiveDepsUnnecessary",
+        "exhaustiveDepsUselessWithoutDependencies"
+    ],
+    "assertsFix": true,
+    "assertsSuggestion": true
+}

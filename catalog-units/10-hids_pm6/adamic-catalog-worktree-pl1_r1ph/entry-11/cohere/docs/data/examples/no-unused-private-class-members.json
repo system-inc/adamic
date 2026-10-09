@@ -1,0 +1,24 @@
+{
+    "rule": "no-unused-private-class-members",
+    "firing": {
+        "file": "/repository/source/PrivateMembers.ts",
+        "source": "class A { static #m() {} }",
+        "findings": [
+            {
+                "line": 1,
+                "column": 18,
+                "endLine": 1,
+                "endColumn": 20,
+                "messageId": "noUnusedPrivateClassMember",
+                "message": "'#m' is declared but nothing in this class ever reads it. A private member is visible only inside its own class body, so a value no line here reads back can never be observed and the code that maintains it is dead too. Read it, or remove the member and its writes."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/PrivateMembers.ts",
+        "source": "class Foo {}"
+    },
+    "assertedMessageIds": [
+        "noUnusedPrivateClassMember"
+    ]
+}

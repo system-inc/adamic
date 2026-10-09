@@ -1,0 +1,24 @@
+{
+    "rule": "nexus/consistency-no-stuttering-name",
+    "firing": {
+        "file": "/repository/source/Thing.ts",
+        "source": "export const a = data.data;\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 23,
+                "endLine": 1,
+                "endColumn": 27,
+                "messageId": "stutteringName",
+                "message": "\"data.data\" stutters, which means the name is carrying nothing: it repeats the field instead of saying which data this is. Rename the value for what it holds, the type it came back as or whatever distinguishes it from another data in this scope, so a reader forty lines down does not have to find the declaration."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/Thing.ts",
+        "source": "export const a = 1;\n"
+    },
+    "assertedMessageIds": [
+        "stutteringName"
+    ]
+}

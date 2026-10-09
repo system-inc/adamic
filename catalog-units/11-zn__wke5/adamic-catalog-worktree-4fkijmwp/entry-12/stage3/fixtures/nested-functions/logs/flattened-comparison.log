@@ -1,0 +1,4 @@
+original main: NotYet
+flattened mutant main: Compiles, native exit 0, Node exit 0
+both stdout: 'const x = 1;\n'
+caught by the main outcome snapshot: NotYet changed to Compiles

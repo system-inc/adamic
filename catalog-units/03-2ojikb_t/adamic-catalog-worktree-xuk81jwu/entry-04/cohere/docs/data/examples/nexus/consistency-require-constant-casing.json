@@ -1,0 +1,31 @@
+{
+    "rule": "nexus/consistency-require-constant-casing",
+    "firing": {
+        "file": "/repository/source/Thing.ts",
+        "source": "const OrderColumns = [1, 2];\nexport const Table = { OrderColumns };\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 7,
+                "endLine": 1,
+                "endColumn": 19,
+                "messageId": "requireCamelCaseLocal",
+                "message": "Constant \"OrderColumns\" is file-local and should be camelCase (\"orderColumns\"). const already signals immutability, so casing signals scope instead: PascalCase means the value crosses files, camelCase means this file made it. A PascalCase local sends the reader looking for an import that is not there.",
+                "fix": true
+            }
+        ],
+        "fixedSource": "const orderColumns = [1, 2];\nexport const Table = { OrderColumns: orderColumns };\n"
+    },
+    "clean": {
+        "file": "/repository/source/Thing.ts",
+        "source": "const do_ = 1;\n"
+    },
+    "assertedMessageIds": [
+        "dropUnimportedExport",
+        "requireCamelCaseFunction",
+        "requireCamelCaseInstance",
+        "requireCamelCaseLocal",
+        "requirePascalCaseExported"
+    ],
+    "assertsFix": true
+}

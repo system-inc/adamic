@@ -1,0 +1,37 @@
+diff --cc internal/lower/expression.go
+index ce4d1f6f4,097196406..000000000
+--- a/internal/lower/expression.go
++++ b/internal/lower/expression.go
+@@@ -201,23 -163,12 +201,32 @@@ func (l *lowering) expression(node *ast
+    if err := l.regexUnsupportedUse(node); err != nil {
+        return nil, err
+    }
+++<<<<<<< HEAD
+ +  value, err := l.value(node)
+ +  if err == nil {
+ +      if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil {
+ +          if err := l.unknownView(node, l.checker.GetTypeAtLocation(node), contextual); err != nil {
+ +              return nil, err
+ +          }
+ +      }
+ +  }
+ +  if err == nil && value.Type() != ir.Weak && l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsUndefined != 0 {
+ +      if _, constant := value.(ir.Undefined); !constant {
+ +          if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil {
+ +              if to, known := l.representation(contextual); known && to != value.Type() && to != ir.Union && (to.IsMaybe() || to.IsReference()) {
+ +                  // Keep the read or call's effects when converting its only possible value.
+ +                  value = ir.Narrow{Value: ir.Box{Value: value}, To: to}
+ +              }
+ +          }
+ +      }
+++=======
++   var value ir.Expression
++   var err error
++   if node.Kind == ast.KindElementAccessExpression && node.Flags&ast.NodeFlagsOptionalChain != 0 && node.AsElementAccessExpression().QuestionDotToken == nil {
++       value, err = l.optionalPropertyChain(node)
++   } else {
++       value, err = l.value(node)
+++>>>>>>> 5414f7768 (Lower indexed optional chains with delayed key evaluation)
+    }
+    if literal := ast.SkipParentheses(node).Kind; err == nil && value.Type().IsReference() && literal != ast.KindArrayLiteralExpression && literal != ast.KindObjectLiteralExpression {
+        // The checker lets { v: Box } be seen as { v: Weak<Box> } and back, an array of Box as one of

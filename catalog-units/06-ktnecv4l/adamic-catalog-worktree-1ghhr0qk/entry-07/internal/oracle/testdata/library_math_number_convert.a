@@ -1,0 +1,11 @@
+const texts: readonly string[] = ['', ' ', '\u00a0\ufeff42\u2029', '0xabcdef', '0XFFFFFFFFFFFFFFFF', '0b101010', '0o777', '-0', '+0', '.5', '1.', '1e+3', '-Infinity', '+Infinity', 'Infinity', 'NaN', 'nan', 'inf', '1e', '1e+', '1.2junk', '1\0', '0x', '-0x1', '+0b1', '0b2', '0o8', '1_000', '0x1g', '1e999', '-1e-999', '9007199254740993'];
+for (const text of texts) console.log(`${text.length} ${Number(text)} ${1 / Number(text)} ${+text}`);
+console.log(`${Number()} ${Number(true)} ${Number(false)} ${Number(undefined)} ${Number(null)} ${typeof Number}`);
+function convert(value: number | boolean | string | undefined): number { return Number(value); }
+console.log(`${convert(5)} ${convert(true)} ${convert('3.25')} ${convert(undefined)}`);
+function maybeNumber(value: number | undefined): number { return Number(value); }
+function maybeBoolean(value: boolean | undefined): number { return Number(value); }
+console.log(`${maybeNumber(-0)} ${maybeNumber(undefined)} ${maybeBoolean(true)} ${maybeBoolean(undefined)}`);
+console.log(`${Number.hasOwnProperty('MAX_VALUE')} ${Number.hasOwnProperty('prototype')} ${Number.hasOwnProperty('toString')} ${Number.hasOwnProperty('isNaN')} ${Number.hasOwnProperty('missing')}`);
+
+console.log(`${Number.length} ${Number.name} ${Number.prototype.hasOwnProperty('constructor')} ${Number.prototype.hasOwnProperty('valueOf')} ${Number.prototype.hasOwnProperty('hasOwnProperty')} ${Number.prototype.hasOwnProperty('missing')}`);

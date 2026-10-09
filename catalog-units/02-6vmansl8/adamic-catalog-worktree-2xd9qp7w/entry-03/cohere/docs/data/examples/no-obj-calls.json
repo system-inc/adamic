@@ -1,0 +1,25 @@
+{
+    "rule": "no-obj-calls",
+    "firing": {
+        "file": "input.ts",
+        "source": "Math();\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 1,
+                "endLine": 1,
+                "endColumn": 7,
+                "messageId": "unexpectedCall",
+                "message": "This calls `Math`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead."
+            }
+        ]
+    },
+    "clean": {
+        "file": "input.ts",
+        "source": "Math();"
+    },
+    "assertedMessageIds": [
+        "unexpectedCall",
+        "unexpectedRefCall"
+    ]
+}

@@ -1,0 +1,24 @@
+{
+    "rule": "no-func-assign",
+    "firing": {
+        "file": "/repository/source/FuncAssign.ts",
+        "source": "function foo() {} --foo;\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 21,
+                "endLine": 1,
+                "endColumn": 24,
+                "messageId": "noFuncAssign",
+                "message": "This assigns to the name a function declares. The declaration is hoisted, so the assignment usually parses and runs without complaint, and what it costs shows up somewhere else: every later call of the name invokes whatever was assigned instead of the function. Inside the function's own body the mistake is quieter still, because the write happens on the first call and the second call reaches a different value. A named function expression is stricter, where the binding is immutable and the write throws in strict mode. Assign to a separate variable, or declare the function as a variable if it is meant to be replaced."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/FuncAssign.ts",
+        "source": "function foo() {} foo();\n"
+    },
+    "assertedMessageIds": [
+        "noFuncAssign"
+    ]
+}

@@ -1,0 +1,25 @@
+{
+    "rule": "no-empty-pattern",
+    "firing": {
+        "file": "pattern.ts",
+        "source": "let {} = foo;",
+        "findings": [
+            {
+                "line": 1,
+                "column": 5,
+                "endLine": 1,
+                "endColumn": 7,
+                "messageId": "unexpectedObject",
+                "message": "This destructuring pattern is empty, so it binds nothing. It reads like an object literal but is a pattern, which is why the mistake survives review: `const {} = foo` declares no variables at all and only asserts that `foo` is not null. Name the properties being pulled out, or drop the destructuring."
+            }
+        ]
+    },
+    "clean": {
+        "file": "clean.ts",
+        "source": "foo({});"
+    },
+    "assertedMessageIds": [
+        "unexpectedArray",
+        "unexpectedObject"
+    ]
+}

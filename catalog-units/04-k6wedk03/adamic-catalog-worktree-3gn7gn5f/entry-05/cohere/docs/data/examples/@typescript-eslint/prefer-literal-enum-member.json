@@ -1,0 +1,15 @@
+{
+    "rule": "@typescript-eslint/prefer-literal-enum-member",
+    "firing": {
+        "file": "/repository/source/Flags.ts",
+        "source": "enum Foo {\n  A = 1n,\n}\n"
+    },
+    "clean": {
+        "file": "/repository/source/Flags.ts",
+        "source": "\nenum ValidPlain {\n  A,\n}\n    "
+    },
+    "assertedMessageIds": [
+        "notLiteral",
+        "notLiteralOrBitwiseExpression"
+    ]
+}

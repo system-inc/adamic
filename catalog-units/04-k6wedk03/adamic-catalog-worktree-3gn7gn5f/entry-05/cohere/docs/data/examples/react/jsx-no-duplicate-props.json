@@ -1,0 +1,24 @@
+{
+    "rule": "react/jsx-no-duplicate-props",
+    "firing": {
+        "file": "/repository/source/Duplicate.tsx",
+        "source": "<App a a />;",
+        "findings": [
+            {
+                "line": 1,
+                "column": 6,
+                "endLine": 1,
+                "endColumn": 7,
+                "messageId": "jsxNoDuplicateProps",
+                "message": "This prop is written more than once on the same element. React builds the props object by assigning each attribute in order, so every earlier copy is overwritten and only the last one survives. The discarded values look like they are being passed and are not. Remove one of them, or rename them so each prop is distinct."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/Duplicate.tsx",
+        "source": "<App />;"
+    },
+    "assertedMessageIds": [
+        "jsxNoDuplicateProps"
+    ]
+}

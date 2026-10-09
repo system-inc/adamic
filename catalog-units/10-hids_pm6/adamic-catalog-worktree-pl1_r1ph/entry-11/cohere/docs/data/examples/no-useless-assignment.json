@@ -1,0 +1,24 @@
+{
+    "rule": "no-useless-assignment",
+    "firing": {
+        "file": "/repository/source/Component.tsx",
+        "source": "let v = 'used';\n                        console.log(v);\n                        v = 'unused'\n",
+        "findings": [
+            {
+                "line": 3,
+                "column": 25,
+                "endLine": 3,
+                "endColumn": 26,
+                "messageId": "noUselessAssignment",
+                "message": "This assigns a value that nothing ever reads. Every path leaving this line either ends or writes the variable again before any code looks at it, so the value computed here is discarded. That is usually a symptom rather than the bug: the write was meant to be read and an early return, a wrong branch, or a second assignment swallowed it, or the wrong variable was named on the left. Remove the assignment, or use the value it produces."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/Component.tsx",
+        "source": "let v = 'used variable';\n"
+    },
+    "assertedMessageIds": [
+        "noUselessAssignment"
+    ]
+}

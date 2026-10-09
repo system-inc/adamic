@@ -1,0 +1,29 @@
+import type { Weak } from 'adamic';
+
+// A spread whose source is unique by count, while a Weak also reaches it. The source is alive
+// throughout the statement, so native and Node must agree: JavaScript copies the spread's fields
+// first, then evaluates label, whose call writes count through the Weak into the source, not into
+// the result.
+interface Item {
+	label: string;
+	count: number;
+}
+interface Holder {
+	item: Weak<Item>;
+}
+const holder: Holder = { item: undefined };
+function touch(): string {
+	const item = holder.item;
+	if (item !== undefined) {
+		item.count = 100;
+		return `touched${item.count}`;
+	}
+	return 'untouched';
+}
+function run(): void {
+	const item: Item = { label: `first${1}`, count: 1 };
+	holder.item = item;
+	const next = { ...item, label: touch() };
+	console.log(`${next.count} ${next.label}`);
+}
+run();

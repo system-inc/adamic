@@ -1,0 +1,24 @@
+{
+  "meter_commit": "176a496",
+  "integration_commit": "634ef06",
+  "run": 0,
+  "cheap_win": {
+    "measurement": "measured on a checker-rejected program",
+    "file": "src/compiler/visitorPublic.ts",
+    "count": 1,
+    "diagnostics": [
+      {
+        "measurement": "measured on a checker-rejected program",
+        "file": "src/compiler/visitorPublic.ts",
+        "start": 16190,
+        "end": 16199,
+        "text": "src/compiler/visitorPublic.ts:424:59: error TS2345: Argument of type 'ParameterDeclaration | undefined' is not assignable to parameter of type 'ParameterDeclaration'.\n  Type 'undefined' is not assignable to type 'ParameterDeclaration'.",
+        "line": 424,
+        "column": 59,
+        "code": "TS2345",
+        "cause": "Argument of type 'ParameterDeclaration | undefined' is not assignable to parameter of type 'ParameterDeclaration'.",
+        "message": "Argument of type 'ParameterDeclaration | undefined' is not assignable to parameter of type 'ParameterDeclaration'.\n  Type 'undefined' is not assignable to type 'ParameterDeclaration'."
+      }
+    ]
+  }
+}

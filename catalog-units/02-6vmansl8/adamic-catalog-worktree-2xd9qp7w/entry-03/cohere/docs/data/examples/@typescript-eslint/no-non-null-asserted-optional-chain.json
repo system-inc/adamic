@@ -1,0 +1,26 @@
+{
+    "rule": "@typescript-eslint/no-non-null-asserted-optional-chain",
+    "firing": {
+        "file": "/repository/source/Thing.ts",
+        "source": "declare const foo: any;\nexport const r = foo?.[0]!;\n",
+        "findings": [
+            {
+                "line": 2,
+                "column": 18,
+                "endLine": 2,
+                "endColumn": 27,
+                "messageId": "noNonNullOptionalChain",
+                "message": "An optional chain returns `undefined` by design when a link is nullish, so asserting the result non-null contradicts the reason the `?.` was written. The assertion is erased at compile time and the `undefined` still arrives at runtime, which turns a guard the author asked for into a crash the types promised could not happen. Handle the `undefined` case instead, or drop the `?.` if the value cannot actually be nullish.",
+                "suggestions": 1
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/Thing.ts",
+        "source": "export let value!: number;\n"
+    },
+    "assertedMessageIds": [
+        "noNonNullOptionalChain"
+    ],
+    "assertsSuggestion": true
+}

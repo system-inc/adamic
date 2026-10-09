@@ -1,0 +1,930 @@
+{
+  "typescript": "6.0.3",
+  "checker_diagnostics": 1,
+  "sites": [
+    {
+      "where": "src/compiler/builder.ts:642:13",
+      "old_reason": "a value as a condition",
+      "expression": "affectedFiles",
+      "context": "IfStatement",
+      "type": "readonly SourceFile[] | undefined",
+      "families": [
+        "undefined",
+        "array"
+      ],
+      "source_sha256": "16f7d3712acb944b6007613979fc4606fd0e8cb6fc3524cfb1959f633fb6dd6c"
+    },
+    {
+      "where": "src/compiler/commandLineParser.ts:4176:9",
+      "old_reason": "a value as a condition",
+      "expression": "match",
+      "context": "IfStatement",
+      "type": "RegExpExecArray | null",
+      "families": [
+        "null",
+        "object"
+      ],
+      "source_sha256": "c6df29c7ad17642aba22380b7bf372b940490437f3ab5ed2aa4c160dd039acec"
+    },
+    {
+      "where": "src/compiler/core.ts:1894:13",
+      "old_reason": "a value as a condition",
+      "expression": "callback",
+      "context": "IfStatement",
+      "type": "(() => T) | undefined",
+      "families": [
+        "undefined",
+        "function"
+      ],
+      "source_sha256": "90530bdf22f00f5783c9e089adafe1c7596b9f7e438300a19f4ba3705a88f962"
+    },
+    {
+      "where": "src/compiler/factory/emitNode.ts:273:9",
+      "old_reason": "a value as a condition",
+      "expression": "helpers",
+      "context": "IfStatement",
+      "type": "EmitHelper[] | undefined",
+      "families": [
+        "undefined",
+        "array"
+      ],
+      "source_sha256": "528071d2a75956b4cc578b5d3a2344190d9a2ab5c31b56adfd84c10a2ce045cd"
+    },
+    {
+      "where": "src/compiler/moduleNameResolver.ts:480:9",
+      "old_reason": "a value as a condition",
+      "expression": "options.typeRoots",
+      "context": "IfStatement",
+      "type": "string[] | undefined",
+      "families": [
+        "undefined",
+        "array"
+      ],
+      "source_sha256": "3bf0e00267e0c17c6cf04383628328c5c87dcf159d0782b9daf73eec6dcd68f9"
+    },
+    {
+      "where": "src/compiler/semver.ts:216:13",
+      "old_reason": "a value as a condition",
+      "expression": "sets",
+      "context": "IfStatement",
+      "type": "Comparator[][] | undefined",
+      "families": [
+        "undefined",
+        "array"
+      ],
+      "source_sha256": "0a19b693308f3b71ea1dbb2054540e1d281e34bb321fbb0b20d78870640f49af"
+    },
+    {
+      "where": "src/compiler/moduleSpecifiers.ts:699:9",
+      "old_reason": "a value as a condition",
+      "expression": "host.getNearestAncestorDirectoryWithPackageJson",
+      "context": "IfStatement",
+      "type": "((fileName: string, rootDir?: string | undefined) => string | undefined) | undefined",
+      "families": [
+        "undefined",
+        "function"
+      ],
+      "source_sha256": "c47362305fba2170d24acf89f8e4ab97949639510fe4f4e9849a7a27ddeefccd"
+    },
+    {
+      "where": "src/compiler/program.ts:768:30",
+      "old_reason": "a value as a condition",
+      "expression": "host",
+      "context": "ConditionalExpression",
+      "type": "FormatDiagnosticsHost",
+      "families": [
+        "object"
+      ],
+      "source_sha256": "f81de55479a29c3d099270d7de21393fb78acf457f4f687ec49a54bda6055ebc"
+    },
+    {
+      "where": "src/compiler/scanner.ts:469:12",
+      "old_reason": "a value as a condition",
+      "expression": "sourceFile.getPositionOfLineAndCharacter",
+      "context": "ConditionalExpression",
+      "type": "((line: number, character: number, allowEdits?: true | undefined) => number) | undefined",
+      "families": [
+        "undefined",
+        "function"
+      ],
+      "source_sha256": "8f198325b227865b9142773e5ce10dc5a80dc593126e55a9fdf1605ca0a3dfe4"
+    },
+    {
+      "where": "src/compiler/scanner.ts:763:9",
+      "old_reason": "a value as a condition",
+      "expression": "error",
+      "context": "IfStatement",
+      "type": "((diag: DiagnosticMessage, pos?: number | undefined, len?: number | undefined) => void) | undefined",
+      "families": [
+        "undefined",
+        "function"
+      ],
+      "source_sha256": "8f198325b227865b9142773e5ce10dc5a80dc593126e55a9fdf1605ca0a3dfe4"
+    },
+    {
+      "where": "src/compiler/scanner.ts:968:9",
+      "old_reason": "a value as a condition",
+      "expression": "match",
+      "context": "IfStatement",
+      "type": "RegExpExecArray | null",
+      "families": [
+        "null",
+        "object"
+      ],
+      "source_sha256": "8f198325b227865b9142773e5ce10dc5a80dc593126e55a9fdf1605ca0a3dfe4"
+    },
+    {
+      "where": "src/compiler/tsbuildPublic.ts:206:12",
+      "old_reason": "a value as a condition",
+      "expression": "host.now",
+      "context": "ConditionalExpression",
+      "type": "(() => Date) | undefined",
+      "families": [
+        "undefined",
+        "function"
+      ],
+      "source_sha256": "e2c2bd1db5c720e1ae46fc93a8852e18ff993646822813687c4156ed6db24d88"
+    },
+    {
+      "where": "src/compiler/utilities.ts:2339:12",
+      "old_reason": "a value as a condition",
+      "expression": "container",
+      "context": "WhileStatement",
+      "type": "Node",
+      "families": [
+        "object"
+      ],
+      "source_sha256": "4245625714cb2f242510521fc622df53526373931f6e25edfc734f65d46e6cff"
+    },
+    {
+      "where": "src/compiler/utilities.ts:2461:22",
+      "old_reason": "a value as a condition",
+      "expression": "messageChain.next",
+      "context": "ConditionalExpression",
+      "type": "DiagnosticMessageChain[] | undefined",
+      "families": [
+        "undefined",
+        "array"
+      ],
+      "source_sha256": "4245625714cb2f242510521fc622df53526373931f6e25edfc734f65d46e6cff"
+    },
+    {
+      "where": "src/compiler/utilities.ts:2475:22",
+      "old_reason": "a value as a condition",
+      "expression": "messageChain.next",
+      "context": "ConditionalExpression",
+      "type": "DiagnosticMessageChain[] | undefined",
+      "families": [
+        "undefined",
+        "array"
+      ],
+      "source_sha256": "4245625714cb2f242510521fc622df53526373931f6e25edfc734f65d46e6cff"
+    },
+    {
+      "where": "src/compiler/utilities.ts:2997:9",
+      "old_reason": "a value as a condition",
+      "expression": "node",
+      "context": "IfStatement",
+      "type": "Node",
+      "families": [
+        "object"
+      ],
+      "source_sha256": "4245625714cb2f242510521fc622df53526373931f6e25edfc734f65d46e6cff"
+    },
+    {
+      "where": "src/compiler/utilities.ts:3057:13",
+      "old_reason": "a value as a condition",
+      "expression": "beforeUnwrapLabelCallback",
+      "context": "IfStatement",
+      "type": "((node: LabeledStatement) => void) | undefined",
+      "families": [
+        "undefined",
+        "function"
+      ],
+      "source_sha256": "4245625714cb2f242510521fc622df53526373931f6e25edfc734f65d46e6cff"
+    },
+    {
+      "where": "src/compiler/utilities.ts:3295:9",
+      "old_reason": "a value as a condition",
+      "expression": "container",
+      "context": "IfStatement",
+      "type": "ThisContainer",
+      "families": [
+        "object"
+      ],
+      "source_sha256": "4245625714cb2f242510521fc622df53526373931f6e25edfc734f65d46e6cff"
+    },
+    {
+      "where": "src/compiler/utilities.ts:4751:9",
+      "old_reason": "a value as a condition",
+      "expression": "node.symbol",
+      "context": "IfStatement",
+      "type": "Symbol",
+      "families": [
+        "object"
+      ],
+      "source_sha256": "4245625714cb2f242510521fc622df53526373931f6e25edfc734f65d46e6cff"
+    },
+    {
+      "where": "src/compiler/utilities.ts:5064:12",
+      "old_reason": "a value as a condition",
+      "expression": "node",
+      "context": "WhileStatement",
+      "type": "Node",
+      "families": [
+        "object"
+      ],
+      "source_sha256": "4245625714cb2f242510521fc622df53526373931f6e25edfc734f65d46e6cff"
+    },
+    {
+      "where": "src/compiler/utilities.ts:6484:12",
+      "old_reason": "a value as a condition",
+      "expression": "host.useCaseSensitiveFileNames",
+      "context": "ConditionalExpression",
+      "type": "(() => boolean) | undefined",
+      "families": [
+        "undefined",
+        "function"
+      ],
+      "source_sha256": "4245625714cb2f242510521fc622df53526373931f6e25edfc734f65d46e6cff"
+    },
+    {
+      "where": "src/compiler/utilities.ts:7355:9",
+      "old_reason": "a value as a condition",
+      "expression": "modifiers",
+      "context": "IfStatement",
+      "type": "readonly ModifierLike[] | undefined",
+      "families": [
+        "undefined",
+        "array"
+      ],
+      "source_sha256": "4245625714cb2f242510521fc622df53526373931f6e25edfc734f65d46e6cff"
+    },
+    {
+      "where": "src/compiler/utilities.ts:8745:22",
+      "old_reason": "a value as a condition",
+      "expression": "chain.next",
+      "context": "ConditionalExpression",
+      "type": "DiagnosticMessageChain[] | undefined",
+      "families": [
+        "undefined",
+        "array"
+      ],
+      "source_sha256": "4245625714cb2f242510521fc622df53526373931f6e25edfc734f65d46e6cff"
+    },
+    {
+      "where": "src/compiler/utilities.ts:8769:12",
+      "old_reason": "a value as a condition",
+      "expression": "lastChain.next",
+      "context": "WhileStatement",
+      "type": "DiagnosticMessageChain[] | undefined",
+      "families": [
+        "undefined",
+        "array"
+      ],
+      "source_sha256": "4245625714cb2f242510521fc622df53526373931f6e25edfc734f65d46e6cff"
+    },
+    {
+      "where": "src/compiler/utilities.ts:9896:9",
+      "old_reason": "a value as a condition",
+      "expression": "includes",
+      "context": "IfStatement",
+      "type": "readonly string[] | undefined",
+      "families": [
+        "undefined",
+        "array"
+      ],
+      "source_sha256": "4245625714cb2f242510521fc622df53526373931f6e25edfc734f65d46e6cff"
+    },
+    {
+      "where": "src/compiler/utilities.ts:10159:12",
+      "old_reason": "a value as a condition",
+      "expression": "match",
+      "context": "ConditionalExpression",
+      "type": "RegExpMatchArray | null",
+      "families": [
+        "null",
+        "object"
+      ],
+      "source_sha256": "4245625714cb2f242510521fc622df53526373931f6e25edfc734f65d46e6cff"
+    },
+    {
+      "where": "src/compiler/utilitiesPublic.ts:1037:9",
+      "old_reason": "a value as a condition",
+      "expression": "param.name",
+      "context": "IfStatement",
+      "type": "BindingName",
+      "families": [
+        "object"
+      ],
+      "source_sha256": "5cec72ffc4e4a90f651aae534f1edabde8b38868accb02a8b239a68403d4803f"
+    },
+    {
+      "where": "src/compiler/watch.ts:114:69",
+      "old_reason": "a value as a condition",
+      "expression": "sys",
+      "context": "ConditionalExpression",
+      "type": "System",
+      "families": [
+        "object"
+      ],
+      "source_sha256": "e5d9a85079a9cc08ba4919c594c92cc1ba6236a378cd4ac1293b750ce174084e"
+    },
+    {
+      "where": "src/compiler/watch.ts:790:9",
+      "old_reason": "a value as a condition",
+      "expression": "text.match(sourceMapCommentRegExpDontCareLineStart)",
+      "context": "IfStatement",
+      "type": "RegExpMatchArray | null",
+      "families": [
+        "null",
+        "object"
+      ],
+      "source_sha256": "e5d9a85079a9cc08ba4919c594c92cc1ba6236a378cd4ac1293b750ce174084e"
+    },
+    {
+      "where": "src/compiler/emitter.ts:484:9",
+      "old_reason": "a string as a condition",
+      "expression": "options.tsBuildInfoFile",
+      "context": "IfStatement",
+      "type": "string | undefined",
+      "families": [
+        "undefined",
+        "string"
+      ],
+      "source_sha256": "59401938eda9af4ffc71d0e31a8e5b559475d85155a01163fa8b8f08811d8a19"
+    },
+    {
+      "where": "src/compiler/emitter.ts:554:12",
+      "old_reason": "a string as a condition",
+      "expression": "outputDir",
+      "context": "ConditionalExpression",
+      "type": "string | undefined",
+      "families": [
+        "undefined",
+        "string"
+      ],
+      "source_sha256": "59401938eda9af4ffc71d0e31a8e5b559475d85155a01163fa8b8f08811d8a19"
+    },
+    {
+      "where": "src/compiler/emitter.ts:697:9",
+      "old_reason": "a string as a condition",
+      "expression": "configFile.options.outFile",
+      "context": "IfStatement",
+      "type": "string | undefined",
+      "families": [
+        "undefined",
+        "string"
+      ],
+      "source_sha256": "59401938eda9af4ffc71d0e31a8e5b559475d85155a01163fa8b8f08811d8a19"
+    },
+    {
+      "where": "src/compiler/emitter.ts:725:9",
+      "old_reason": "a string as a condition",
+      "expression": "configFile.options.outFile",
+      "context": "IfStatement",
+      "type": "string | undefined",
+      "families": [
+        "undefined",
+        "string"
+      ],
+      "source_sha256": "59401938eda9af4ffc71d0e31a8e5b559475d85155a01163fa8b8f08811d8a19"
+    },
+    {
+      "where": "src/compiler/executeCommandLine.ts:241:31",
+      "old_reason": "a string as a condition",
+      "expression": "option.shortName",
+      "context": "ConditionalExpression",
+      "type": "string | undefined",
+      "families": [
+        "undefined",
+        "string"
+      ],
+      "source_sha256": "fad881499aca4dab4659aafb6b3f56d1af7ffc7a5b5357885a266e4823df4ed9"
+    },
+    {
+      "where": "src/compiler/executeCommandLine.ts:448:9",
+      "old_reason": "a string as a condition",
+      "expression": "beforeOptionsDescription",
+      "context": "IfStatement",
+      "type": "string | undefined",
+      "families": [
+        "undefined",
+        "string"
+      ],
+      "source_sha256": "fad881499aca4dab4659aafb6b3f56d1af7ffc7a5b5357885a266e4823df4ed9"
+    },
+    {
+      "where": "src/compiler/moduleNameResolver.ts:2135:13",
+      "old_reason": "a string as a condition",
+      "expression": "directory",
+      "context": "IfStatement",
+      "type": "string",
+      "families": [
+        "string"
+      ],
+      "source_sha256": "3bf0e00267e0c17c6cf04383628328c5c87dcf159d0782b9daf73eec6dcd68f9"
+    },
+    {
+      "where": "src/compiler/moduleSpecifiers.ts:398:9",
+      "old_reason": "a string as a condition",
+      "expression": "ambient",
+      "context": "IfStatement",
+      "type": "string | undefined",
+      "families": [
+        "undefined",
+        "string"
+      ],
+      "source_sha256": "c47362305fba2170d24acf89f8e4ab97949639510fe4f4e9849a7a27ddeefccd"
+    },
+    {
+      "where": "src/compiler/parser.ts:10563:9",
+      "old_reason": "a string as a condition",
+      "expression": "standardExtension",
+      "context": "IfStatement",
+      "type": "string",
+      "families": [
+        "string"
+      ],
+      "source_sha256": "9c8e41e143294677580750ada80e5ba18128645e280e7950b001e054b4ae0df4"
+    },
+    {
+      "where": "src/compiler/path.ts:385:12",
+      "old_reason": "a string as a condition",
+      "expression": "extension",
+      "context": "ConditionalExpression",
+      "type": "string | undefined",
+      "families": [
+        "undefined",
+        "string"
+      ],
+      "source_sha256": "b65d50d3fc8378ae7d9a2fc42501eefd70e234e5dabc5ec83fc9aef2a0995677"
+    },
+    {
+      "where": "src/compiler/path.ts:857:12",
+      "old_reason": "a string as a condition",
+      "expression": "pathext",
+      "context": "ConditionalExpression",
+      "type": "string",
+      "families": [
+        "string"
+      ],
+      "source_sha256": "b65d50d3fc8378ae7d9a2fc42501eefd70e234e5dabc5ec83fc9aef2a0995677"
+    },
+    {
+      "where": "src/compiler/path.ts:872:9",
+      "old_reason": "a string as a condition",
+      "expression": "declarationExtension",
+      "context": "IfStatement",
+      "type": "string | undefined",
+      "families": [
+        "undefined",
+        "string"
+      ],
+      "source_sha256": "b65d50d3fc8378ae7d9a2fc42501eefd70e234e5dabc5ec83fc9aef2a0995677"
+    },
+    {
+      "where": "src/compiler/program.ts:1142:33",
+      "old_reason": "a string as a condition",
+      "expression": "options.configFilePath",
+      "context": "ConditionalExpression",
+      "type": "string | undefined",
+      "families": [
+        "undefined",
+        "string"
+      ],
+      "source_sha256": "f81de55479a29c3d099270d7de21393fb78acf457f4f687ec49a54bda6055ebc"
+    },
+    {
+      "where": "src/compiler/utilities.ts:910:12",
+      "old_reason": "a string as a condition",
+      "expression": "subModuleName",
+      "context": "ConditionalExpression",
+      "type": "string",
+      "families": [
+        "string"
+      ],
+      "source_sha256": "4245625714cb2f242510521fc622df53526373931f6e25edfc734f65d46e6cff"
+    },
+    {
+      "where": "src/compiler/utilities.ts:6596:12",
+      "old_reason": "a string as a condition",
+      "expression": "outputDir",
+      "context": "ConditionalExpression",
+      "type": "string | undefined",
+      "families": [
+        "undefined",
+        "string"
+      ],
+      "source_sha256": "4245625714cb2f242510521fc622df53526373931f6e25edfc734f65d46e6cff"
+    },
+    {
+      "where": "src/compiler/utilities.ts:7150:9",
+      "old_reason": "a string as a condition",
+      "expression": "currentLineText",
+      "context": "IfStatement",
+      "type": "string",
+      "families": [
+        "string"
+      ],
+      "source_sha256": "4245625714cb2f242510521fc622df53526373931f6e25edfc734f65d46e6cff"
+    },
+    {
+      "where": "src/compiler/utilities.ts:9431:12",
+      "old_reason": "a string as a condition",
+      "expression": "base",
+      "context": "ConditionalExpression",
+      "type": "string | undefined",
+      "families": [
+        "undefined",
+        "string"
+      ],
+      "source_sha256": "4245625714cb2f242510521fc622df53526373931f6e25edfc734f65d46e6cff"
+    },
+    {
+      "where": "src/compiler/builder.ts:739:9",
+      "old_reason": "a boolean | undefined as a condition",
+      "expression": "emitOnlyDtsFiles",
+      "context": "IfStatement",
+      "type": "boolean | undefined",
+      "families": [
+        "undefined",
+        "boolean"
+      ],
+      "source_sha256": "16f7d3712acb944b6007613979fc4606fd0e8cb6fc3524cfb1959f633fb6dd6c"
+    },
+    {
+      "where": "src/compiler/core.ts:2080:12",
+      "old_reason": "a boolean | undefined as a condition",
+      "expression": "ignoreCase",
+      "context": "ConditionalExpression",
+      "type": "boolean | undefined",
+      "families": [
+        "undefined",
+        "boolean"
+      ],
+      "source_sha256": "90530bdf22f00f5783c9e089adafe1c7596b9f7e438300a19f4ba3705a88f962"
+    },
+    {
+      "where": "src/compiler/core.ts:2250:9",
+      "old_reason": "a boolean | undefined as a condition",
+      "expression": "ignoreCase",
+      "context": "ConditionalExpression",
+      "type": "boolean | undefined",
+      "families": [
+        "undefined",
+        "boolean"
+      ],
+      "source_sha256": "90530bdf22f00f5783c9e089adafe1c7596b9f7e438300a19f4ba3705a88f962"
+    },
+    {
+      "where": "src/compiler/core.ts:2431:12",
+      "old_reason": "a boolean | undefined as a condition",
+      "expression": "ignoreCase",
+      "context": "ConditionalExpression",
+      "type": "boolean | undefined",
+      "families": [
+        "undefined",
+        "boolean"
+      ],
+      "source_sha256": "90530bdf22f00f5783c9e089adafe1c7596b9f7e438300a19f4ba3705a88f962"
+    },
+    {
+      "where": "src/compiler/executeCommandLine.ts:1147:9",
+      "old_reason": "a boolean | undefined as a condition",
+      "expression": "canReportDiagnostics(system, compilerOptions)",
+      "context": "IfStatement",
+      "type": "boolean | undefined",
+      "families": [
+        "undefined",
+        "boolean"
+      ],
+      "source_sha256": "fad881499aca4dab4659aafb6b3f56d1af7ffc7a5b5357885a266e4823df4ed9"
+    },
+    {
+      "where": "src/compiler/moduleNameResolver.ts:2061:40",
+      "old_reason": "a boolean | undefined as a condition",
+      "expression": "isFolder",
+      "context": "ConditionalExpression",
+      "type": "boolean | undefined",
+      "families": [
+        "undefined",
+        "boolean"
+      ],
+      "source_sha256": "3bf0e00267e0c17c6cf04383628328c5c87dcf159d0782b9daf73eec6dcd68f9"
+    },
+    {
+      "where": "src/compiler/program.ts:888:9",
+      "old_reason": "a boolean | undefined as a condition",
+      "expression": "decl.importClause?.isTypeOnly",
+      "context": "IfStatement",
+      "type": "boolean | undefined",
+      "families": [
+        "undefined",
+        "boolean"
+      ],
+      "source_sha256": "f81de55479a29c3d099270d7de21393fb78acf457f4f687ec49a54bda6055ebc"
+    },
+    {
+      "where": "src/compiler/scanner.ts:477:13",
+      "old_reason": "a boolean | undefined as a condition",
+      "expression": "allowEdits",
+      "context": "IfStatement",
+      "type": "true | undefined",
+      "families": [
+        "undefined",
+        "boolean"
+      ],
+      "source_sha256": "8f198325b227865b9142773e5ce10dc5a80dc593126e55a9fdf1605ca0a3dfe4"
+    },
+    {
+      "where": "src/compiler/scanner.ts:658:21",
+      "old_reason": "a boolean | undefined as a condition",
+      "expression": "stopAfterLineBreak",
+      "context": "IfStatement",
+      "type": "boolean | undefined",
+      "families": [
+        "undefined",
+        "boolean"
+      ],
+      "source_sha256": "8f198325b227865b9142773e5ce10dc5a80dc593126e55a9fdf1605ca0a3dfe4"
+    },
+    {
+      "where": "src/compiler/tsbuildPublic.ts:289:22",
+      "old_reason": "a boolean | undefined as a condition",
+      "expression": "pretty",
+      "context": "ConditionalExpression",
+      "type": "boolean | undefined",
+      "families": [
+        "undefined",
+        "boolean"
+      ],
+      "source_sha256": "e2c2bd1db5c720e1ae46fc93a8852e18ff993646822813687c4156ed6db24d88"
+    },
+    {
+      "where": "src/compiler/utilities.ts:5046:19",
+      "old_reason": "a boolean | undefined as a condition",
+      "expression": "excludeJSDocTypeAssertions",
+      "context": "ConditionalExpression",
+      "type": "boolean | undefined",
+      "families": [
+        "undefined",
+        "boolean"
+      ],
+      "source_sha256": "4245625714cb2f242510521fc622df53526373931f6e25edfc734f65d46e6cff"
+    },
+    {
+      "where": "src/compiler/utilities.ts:5647:20",
+      "old_reason": "a boolean | undefined as a condition",
+      "expression": "hasArguments",
+      "context": "ConditionalExpression",
+      "type": "boolean | undefined",
+      "families": [
+        "undefined",
+        "boolean"
+      ],
+      "source_sha256": "4245625714cb2f242510521fc622df53526373931f6e25edfc734f65d46e6cff"
+    },
+    {
+      "where": "src/compiler/utilities.ts:5954:20",
+      "old_reason": "a boolean | undefined as a condition",
+      "expression": "hasArguments",
+      "context": "ConditionalExpression",
+      "type": "boolean | undefined",
+      "families": [
+        "undefined",
+        "boolean"
+      ],
+      "source_sha256": "4245625714cb2f242510521fc622df53526373931f6e25edfc734f65d46e6cff"
+    },
+    {
+      "where": "src/compiler/utilities.ts:7477:13",
+      "old_reason": "a boolean | undefined as a condition",
+      "expression": "excludeCompoundAssignment",
+      "context": "ConditionalExpression",
+      "type": "boolean | undefined",
+      "families": [
+        "undefined",
+        "boolean"
+      ],
+      "source_sha256": "4245625714cb2f242510521fc622df53526373931f6e25edfc734f65d46e6cff"
+    },
+    {
+      "where": "src/compiler/watch.ts:194:12",
+      "old_reason": "a boolean | undefined as a condition",
+      "expression": "pretty",
+      "context": "ConditionalExpression",
+      "type": "boolean | undefined",
+      "families": [
+        "undefined",
+        "boolean"
+      ],
+      "source_sha256": "e5d9a85079a9cc08ba4919c594c92cc1ba6236a378cd4ac1293b750ce174084e"
+    },
+    {
+      "where": "src/compiler/factory/nodeFactory.ts:493:25",
+      "old_reason": "a number as a condition",
+      "expression": "flags & NodeFactoryFlags.NoOriginalNode",
+      "context": "ConditionalExpression",
+      "type": "number",
+      "families": [
+        "number"
+      ],
+      "enum_constant": 8,
+      "source_sha256": "6719964224eebda39ea2aea8447bdbbf1858e579430abe1f11555f0891d49ce3"
+    },
+    {
+      "where": "src/compiler/factory/utilities.ts:1740:9",
+      "old_reason": "a number as a condition",
+      "expression": "node.transformFlags & TransformFlags.ContainsObjectRestOrSpread",
+      "context": "IfStatement",
+      "type": "number",
+      "families": [
+        "number"
+      ],
+      "enum_constant": 65536,
+      "source_sha256": "9d914a1f8339cb44701fc5d8027820b25f1a132c94124a34f55ee40cf607296a"
+    },
+    {
+      "where": "src/compiler/moduleNameResolver.ts:195:9",
+      "old_reason": "a number as a condition",
+      "expression": "extensions & Extensions.TypeScript",
+      "context": "IfStatement",
+      "type": "number",
+      "families": [
+        "number"
+      ],
+      "enum_constant": 1,
+      "source_sha256": "3bf0e00267e0c17c6cf04383628328c5c87dcf159d0782b9daf73eec6dcd68f9"
+    },
+    {
+      "where": "src/compiler/moduleNameResolver.ts:204:9",
+      "old_reason": "a number as a condition",
+      "expression": "extensions & Extensions.TypeScript",
+      "context": "IfStatement",
+      "type": "number",
+      "families": [
+        "number"
+      ],
+      "enum_constant": 1,
+      "source_sha256": "3bf0e00267e0c17c6cf04383628328c5c87dcf159d0782b9daf73eec6dcd68f9"
+    },
+    {
+      "where": "src/compiler/moduleNameResolver.ts:301:12",
+      "old_reason": "a number as a condition",
+      "expression": "value.length",
+      "context": "ConditionalExpression",
+      "type": "number",
+      "families": [
+        "number"
+      ],
+      "source_sha256": "3bf0e00267e0c17c6cf04383628328c5c87dcf159d0782b9daf73eec6dcd68f9"
+    },
+    {
+      "where": "src/compiler/parser.ts:485:12",
+      "old_reason": "a number as a condition",
+      "expression": "sourceFile.flags & NodeFlags.PossiblyContainsImportMeta",
+      "context": "ConditionalExpression",
+      "type": "number",
+      "families": [
+        "number"
+      ],
+      "enum_constant": 8388608,
+      "source_sha256": "9c8e41e143294677580750ada80e5ba18128645e280e7950b001e054b4ae0df4"
+    },
+    {
+      "where": "src/compiler/utilities.ts:8041:12",
+      "old_reason": "a number as a condition",
+      "expression": "symbol.flags & SymbolFlags.Transient",
+      "context": "ConditionalExpression",
+      "type": "number",
+      "families": [
+        "number"
+      ],
+      "enum_constant": 33554432,
+      "source_sha256": "4245625714cb2f242510521fc622df53526373931f6e25edfc734f65d46e6cff"
+    },
+    {
+      "where": "src/compiler/utilities.ts:8069:12",
+      "old_reason": "a number as a condition",
+      "expression": "symbol.flags & SymbolFlags.Alias",
+      "context": "ConditionalExpression",
+      "type": "number",
+      "families": [
+        "number"
+      ],
+      "enum_constant": 2097152,
+      "source_sha256": "4245625714cb2f242510521fc622df53526373931f6e25edfc734f65d46e6cff"
+    },
+    {
+      "where": "src/compiler/utilities.ts:8267:9",
+      "old_reason": "a number as a condition",
+      "expression": "symbol.flags & SymbolFlags.Class",
+      "context": "IfStatement",
+      "type": "number",
+      "families": [
+        "number"
+      ],
+      "enum_constant": 32,
+      "source_sha256": "4245625714cb2f242510521fc622df53526373931f6e25edfc734f65d46e6cff"
+    },
+    {
+      "where": "src/compiler/utilities.ts:8281:12",
+      "old_reason": "a number as a condition",
+      "expression": "type.flags & TypeFlags.ObjectFlagsType",
+      "context": "ConditionalExpression",
+      "type": "number",
+      "families": [
+        "number"
+      ],
+      "enum_constant": 403963917,
+      "source_sha256": "4245625714cb2f242510521fc622df53526373931f6e25edfc734f65d46e6cff"
+    },
+    {
+      "where": "src/compiler/utilities.ts:8884:9",
+      "old_reason": "a number as a condition",
+      "expression": "res",
+      "context": "IfStatement",
+      "type": "Comparison",
+      "families": [
+        "number"
+      ],
+      "source_sha256": "4245625714cb2f242510521fc622df53526373931f6e25edfc734f65d46e6cff"
+    },
+    {
+      "where": "src/compiler/utilities.ts:12439:17",
+      "old_reason": "a number as a condition",
+      "expression": "getCombinedNodeFlags(node.declarationList) & NodeFlags.BlockScoped",
+      "context": "IfStatement",
+      "type": "number",
+      "families": [
+        "number"
+      ],
+      "enum_constant": 7,
+      "source_sha256": "4245625714cb2f242510521fc622df53526373931f6e25edfc734f65d46e6cff"
+    },
+    {
+      "where": "src/compiler/moduleNameResolver.ts:3171:9",
+      "old_reason": "a union of differently held members as a condition",
+      "expression": "matchedPattern",
+      "context": "IfStatement",
+      "type": "string | Pattern | undefined",
+      "families": [
+        "undefined",
+        "string",
+        "object"
+      ],
+      "source_sha256": "3bf0e00267e0c17c6cf04383628328c5c87dcf159d0782b9daf73eec6dcd68f9"
+    },
+    {
+      "where": "src/compiler/path.ts:438:9",
+      "old_reason": "a union of differently held members as a condition",
+      "expression": "extensions",
+      "context": "IfStatement",
+      "type": "string | readonly string[] | undefined",
+      "families": [
+        "undefined",
+        "string",
+        "array"
+      ],
+      "source_sha256": "b65d50d3fc8378ae7d9a2fc42501eefd70e234e5dabc5ec83fc9aef2a0995677"
+    },
+    {
+      "where": "src/compiler/transformer.ts:128:9",
+      "old_reason": "a union of differently held members as a condition",
+      "expression": "emitOnly",
+      "context": "IfStatement",
+      "type": "boolean | EmitOnly | undefined",
+      "families": [
+        "undefined",
+        "boolean",
+        "number"
+      ],
+      "source_sha256": "497fa463cff55a2f9a3cdadfb8bdddeba363ab36a6ede4ef6cf28c460455c72c"
+    },
+    {
+      "where": "src/compiler/builder.ts:1630:9",
+      "old_reason": "a number | undefined as a condition",
+      "expression": "data?.diagnostics?.length",
+      "context": "IfStatement",
+      "type": "number | undefined",
+      "families": [
+        "undefined",
+        "number"
+      ],
+      "source_sha256": "16f7d3712acb944b6007613979fc4606fd0e8cb6fc3524cfb1959f633fb6dd6c"
+    },
+    {
+      "where": "src/compiler/program.ts:941:17",
+      "old_reason": "a number | undefined as a condition",
+      "expression": "override",
+      "context": "IfStatement",
+      "type": "ResolutionMode",
+      "families": [
+        "undefined",
+        "number"
+      ],
+      "source_sha256": "f81de55479a29c3d099270d7de21393fb78acf457f4f687ec49a54bda6055ebc"
+    }
+  ]
+}

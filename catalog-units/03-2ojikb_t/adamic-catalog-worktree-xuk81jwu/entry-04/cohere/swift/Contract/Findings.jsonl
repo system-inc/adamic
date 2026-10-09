@@ -1,0 +1,12 @@
+{"kind":"provenance","contract":3,"engine":"cohere-swift","version":"0.1.0","commit":"dev","sourceTreeModified":true,"toolchain":"swiftlang-6.4.0.34.1","swiftSyntax":"604.0.0","swiftFormat":"604.0.0"}
+{"kind":"project","root":"/project","package":"Example","elapsedMilliseconds":400,"filesInPackage":2,"filesOurs":2,"filesInScope":2,"scopeDescription":"","targets":[{"name":"Example","kind":"library","files":2,"languageMode":"6"}],"excluded":[]}
+{"kind":"fix","filesConsidered":2,"filesRewritten":1,"fixesApplied":1,"fixesRefused":0,"refusalsByReason":{},"filesReformatted":1,"filesNotFormatted":0,"notFormattedReasons":{},"formatScope":"changed files (working tree against HEAD): 2","changedFiles":[{"file":"/project/Sources/Example/ByteRing.swift","fixedBy":{"cohere-swift/legacy-constructors":1},"formatted":true}]}
+{"kind":"phase","name":"fix","outcome":"ran","elapsedMilliseconds":44,"detail":""}
+{"kind":"finding","source":"compiler","file":"/project/Sources/Example/Warning.swift","line":2,"column":9,"endLine":2,"endColumn":21,"severity":"warning","rule":"VariableNeverMutated","messageId":"variable_never_mutated","message":"variable 'neverMutated' was never mutated; consider changing to 'let' constant","fixes":[{"start":30,"end":33,"text":"let"}],"suggestions":[]}
+{"kind":"types","diagnostics":1,"files":2,"elapsedMilliseconds":900,"filesWithoutRecord":[],"build":"swift build, scratch /cache/cohere/swift/0000"}
+{"kind":"phase","name":"types","outcome":"ran","elapsedMilliseconds":900,"detail":""}
+{"kind":"finding","source":"rule","file":"/project/Sources/Example/ByteRing.swift","line":159,"column":61,"endLine":159,"endColumn":62,"severity":"error","rule":"cohere-swift/force-unwrapping","messageId":"forceUnwrap","message":"A force unwrap crashes the process when the value is nil.\nSay what happens on nil with guard let or if let.","fixes":[],"suggestions":[]}
+{"kind":"lint","findings":1,"rulesRun":4,"filesWalked":2,"nodesVisited":640,"elapsedMilliseconds":12,"reusedFrom":"","rulesSilent":["cohere-swift/force-cast"],"rulesWatchedAndQuiet":2,"crashes":[],"rulesScopedOff":{},"rulesNotConfigured":[],"configNote":""}
+{"kind":"phase","name":"lint","outcome":"ran","elapsedMilliseconds":12,"detail":""}
+{"kind":"phase","name":"unused","outcome":"skipped","elapsedMilliseconds":0,"detail":"not requested — this is a report, ask for it with --unused"}
+{"kind":"summary","findings":2,"complete":true,"exitCode":1}

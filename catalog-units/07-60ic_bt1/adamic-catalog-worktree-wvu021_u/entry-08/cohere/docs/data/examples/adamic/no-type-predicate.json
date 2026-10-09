@@ -1,0 +1,24 @@
+{
+    "rule": "adamic/no-type-predicate",
+    "firing": {
+        "file": "Case.ts",
+        "source": "class Tree { readonly leaf = true; isLeaf(): this is { readonly leaf: true } { return this.leaf; } }\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 46,
+                "endLine": 1,
+                "endColumn": 77,
+                "messageId": "typePredicate",
+                "message": "A written type predicate is trusted and never checked: tsc narrows the argument on this function's word, and nothing makes its body agree, so a guard that returns true for the wrong value turns every narrowed use into a TypeError. Narrow where you use the value (`if (pet.kind === 'Cat')`), or drop the annotation and let TypeScript infer the predicate, which it does only when the body proves it (`(x) => x !== undefined`)."
+            }
+        ]
+    },
+    "clean": {
+        "file": "Case.ts",
+        "source": "function isEven(value: number): boolean { return value % 2 === 0; }\n"
+    },
+    "assertedMessageIds": [
+        "typePredicate"
+    ]
+}

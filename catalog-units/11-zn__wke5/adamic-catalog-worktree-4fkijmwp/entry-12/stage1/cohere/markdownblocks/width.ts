@@ -1,0 +1,55 @@
+// Cohere StringWidth, including its UTF-16 emoji matching and ASCII DEL shortcut.
+import { panic } from 'adamic';
+import { EmojiMatcher, inRanges, mappedUnit } from './emojiMatcher.ts';
+import {
+    emojiInstructions,
+    emojiStart,
+    emojiStarts,
+    narrowInstructions,
+    narrowStart,
+    wideRanges,
+} from './widthTables.ts';
+const emoji = new EmojiMatcher(emojiInstructions, emojiStart);
+const narrow = new EmojiMatcher(narrowInstructions, narrowStart);
+export function stringWidth(text: string): number {
+    let ascii = true;
+    for(let index = 0; index < text.length; index++) {
+        const code = text.charCodeAt(index);
+        if(code < 0x20 || code > 0x7f) {
+            ascii = false;
+            break;
+        }
+    }
+    if(ascii) return text.length;
+    const remaining: number[] = [];
+    let width = 0;
+    for(let index = 0; index < text.length;) {
+        const unit = text.charCodeAt(index);
+        const end = inRanges(mappedUnit(unit), emojiStarts) ? emoji.match(text, index, text.length) : -1;
+        if(end >= 0) {
+            width += narrow.match(text, index, end) === end ? 1 : 2;
+            index = end;
+        }
+        else {
+            remaining.push(unit);
+            index++;
+        }
+    }
+    for(let index = 0; index < remaining.length; index++) {
+        let code = remaining[index] ?? panic('remaining code unit');
+        const next = remaining[index + 1] ?? -1;
+        if(code >= 0xd800 && code <= 0xdbff && next >= 0xdc00 && next <= 0xdfff) {
+            code = 0x10000 + (code - 0xd800) * 0x400 + next - 0xdc00;
+            index++;
+        }
+        if(
+            code <= 0x1f ||
+            (code >= 0x7f && code <= 0x9f) ||
+            (code >= 0x300 && code <= 0x36f) ||
+            (code >= 0xfe00 && code <= 0xfe0f)
+        )
+            continue;
+        width += inRanges(code, wideRanges) ? 2 : 1;
+    }
+    return width;
+}

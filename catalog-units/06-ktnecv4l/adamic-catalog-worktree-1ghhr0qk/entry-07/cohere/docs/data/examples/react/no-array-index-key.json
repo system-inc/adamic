@@ -1,0 +1,14 @@
+{
+    "rule": "react/no-array-index-key",
+    "firing": {
+        "file": "/repository/source/Keys.tsx",
+        "source": "foo.map(cb)\n"
+    },
+    "clean": {
+        "file": "/repository/source/Keys.tsx",
+        "source": "<Foo key />;\n"
+    },
+    "assertedMessageIds": [
+        "noArrayIndex"
+    ]
+}

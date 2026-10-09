@@ -1,0 +1,30 @@
+// Original body: tsc utilities.ts:2349, with small node stubs.
+interface Name { readonly width: number; readonly text: string; }
+type DeclarationName = Name;
+type QualifiedName = Name;
+function getFullWidth(name: Name): number { return name.width; }
+function getTextOfNode(name: Name): string { return name.text; }
+function declarationNameToString(name: DeclarationName | QualifiedName | undefined): string {
+    return !name || getFullWidth(name) === 0 ? "(Missing)" : getTextOfNode(name);
+}
+console.log(declarationNameToString(undefined));
+console.log(declarationNameToString({ width: 0, text: 'empty' }));
+console.log(declarationNameToString({ width: 3, text: 'name' }));
+function primitive(value: string | number | boolean | undefined): void {
+    console.log(`${!value}:${!!value}`);
+    if (value) { console.log('yes'); } else { console.log('no'); }
+}
+primitive(''); primitive('0'); primitive('false'); primitive(0); primitive(-0);
+primitive(NaN); primitive(Infinity); primitive(-1); primitive(false); primitive(true); primitive(undefined);
+function reference(value: Name | undefined): void { console.log(`${!value}:${!!value}`); }
+reference(undefined); reference({ width: 0, text: '' });
+const empty: number[] = [];
+const fn = (): number => 0;
+const map = new Map<string, number>();
+console.log(`${!empty}:${!!empty}:${!fn}:${!map}`);
+let calls = 0;
+function read(): string { calls += 1; return calls % 2 === 0 ? 'x' : ''; }
+console.log(String(!read())); console.log(String(!!read()));
+if (read()) { console.log('branch'); } else { console.log('empty'); }
+while (read()) { console.log('loop'); if (calls >= 10) { break; } }
+console.log(`${calls}:${read() ? 'yes' : 'no'}`);

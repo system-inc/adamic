@@ -1,0 +1,24 @@
+{
+    "rule": "no-unmodified-loop-condition",
+    "firing": {
+        "file": "/repository/source/LoopConditions.ts",
+        "source": "var foo = 0; while (foo) { }\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 21,
+                "endLine": 1,
+                "endColumn": 24,
+                "messageId": "loopConditionNotModified",
+                "message": "This variable is read by the loop condition and never changed inside the loop, so the condition evaluates to the same thing every time and the loop either runs forever or never runs at all. Whatever was meant to end the loop is not happening: either the variable should be updated in the body, or the condition should be reading something that does change. The variable is 'foo'."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/LoopConditions.ts",
+        "source": "var foo; if (foo) { }\n"
+    },
+    "assertedMessageIds": [
+        "loopConditionNotModified"
+    ]
+}

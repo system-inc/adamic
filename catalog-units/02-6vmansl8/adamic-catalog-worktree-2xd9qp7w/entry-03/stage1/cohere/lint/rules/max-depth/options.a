@@ -1,0 +1,20 @@
+import { panic } from 'adamic';
+
+// Captured options are cohere's decoded MaxDepthSettings, not the config's union.
+export function integer(value: string): number {
+    let result = 0;
+    let sign = 1;
+    let position = 0;
+    if(value[0] === '-') {
+        sign = -1;
+        position++;
+    }
+    for(; position < value.length; position++) {
+        const digit = '0123456789'.indexOf(value[position] ?? '');
+        if(digit < 0) {
+            panic('invalid integer option');
+        }
+        result = result * 10 + digit;
+    }
+    return result * sign;
+}

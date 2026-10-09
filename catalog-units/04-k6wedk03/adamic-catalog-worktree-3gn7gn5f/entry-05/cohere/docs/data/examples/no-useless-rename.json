@@ -1,0 +1,22 @@
+{
+    "rule": "no-useless-rename",
+    "firing": {
+        "file": "/repository/source/UselessRename.ts",
+        "source": "let {foo: foo} = obj;",
+        "findings": [
+            {
+                "line": 1,
+                "column": 6,
+                "endLine": 1,
+                "endColumn": 14,
+                "messageId": "unnecessarilyRenamed",
+                "message": "This renames a binding to the name it already had, so the rename does nothing and the longer spelling only invites a reader to look for a difference that is not there.",
+                "fix": true
+            }
+        ]
+    },
+    "assertedMessageIds": [
+        "unnecessarilyRenamed"
+    ],
+    "assertsFix": true
+}

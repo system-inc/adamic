@@ -1,0 +1,14 @@
+--- a/internal/lower/readiness.go
++++ b/internal/lower/readiness.go
+@@ -42,9 +42,9 @@
+ func (l *lowering) uninitializedDeclaration(node *ast.Node) bool {
+ 	switch node.Kind {
+ 	case ast.KindVariableDeclaration:
+-		return node.AsVariableDeclaration().ExclamationToken != nil || l.uninitializedInitializer(node.AsVariableDeclaration().Initializer)
++		return l.uninitializedInitializer(node.AsVariableDeclaration().Initializer)
+ 	case ast.KindPropertyDeclaration:
+-		return node.PostfixToken() != nil && node.PostfixToken().Kind == ast.KindExclamationToken || l.uninitializedInitializer(node.AsPropertyDeclaration().Initializer)
++		return l.uninitializedInitializer(node.AsPropertyDeclaration().Initializer)
+ 	}
+ 	return false
+ }

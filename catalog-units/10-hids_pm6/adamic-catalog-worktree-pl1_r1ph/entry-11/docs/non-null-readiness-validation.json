@@ -1,0 +1,81 @@
+{
+  "summary": [
+    "Shared field representation pushed first in 6ae58a03b94fa03d86f728807a4be779cf916a79.",
+    "Built initializer readiness, lazy computed assertion initializers, captured cells, checked field reads, definite assertions and Weak diagnostics.",
+    "Current origin/main e8ba3d5d81de4d3773c723914fccd4c76248b965 merged into feature branch in 7302e61. No main or area branch writes.",
+    "Scoped package, oracle, count and mutant gates pass; the full gate was attempted and its write-recording failures fixed.",
+    "Latent non-null reasons fall from 180 Refused and 25 NotYet to zero at checkpoint b99710c; no whole-tsc build claim."
+  ],
+  "shared_helpers": {
+    "native": "adamic_value *adamic_object_read(const adamic_object *object, const char *name, adamic_slot_cache *cache, const char *expression)",
+    "javascript": "adamicReadField(object, name, expression, optional = false, allowAbsent = false)"
+  },
+  "toolchain": {
+    "command": "bash cloud/setup.sh; source /workspace/adamic-tools/env.sh",
+    "setup_seconds": 67,
+    "build_cache_seconds": 67,
+    "go_ready_seconds": 0,
+    "clang_ready_seconds": 0,
+    "node_ready_seconds": 0,
+    "submodules_ready_seconds": 0,
+    "nproc": 5,
+    "log": "/tmp/readiness-setup.log"
+  },
+  "validation": [
+    {
+      "command": "go test ./internal/lower ./internal/fresh ./internal/flow ./internal/ir -count=1",
+      "result": "PASS: lower 42.445s, fresh 61.600s, flow 109.974s, ir 22.570s",
+      "log": "/tmp/readiness-lazy-green-packages.log"
+    },
+    {
+      "command": "ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run \"TestNativeAgreesWithNode/internal/oracle/testdata/non_null|TestReadinessMutants|TestUninitializedIsNotNullishMutant|TestNonNullWeakFreedNamesExpression|TestFieldReadinessRepresentation|TestLazyInitializerIsNotEagerMutant\" -count=1 -v",
+      "result": "PASS 13.647s; native misses 81, Node misses 89",
+      "log": "/tmp/readiness-lazy-latest-oracles.log"
+    },
+    {
+      "command": "go test ./internal/oracle -run \"^TestCountsAreRecorded$\" -count=1 -args -update-counts",
+      "result": "PASS 24.124s",
+      "log": "/tmp/readiness-lazy-latest-counts.log"
+    },
+    {
+      "command": "go test ./internal/lower ./internal/fresh ./internal/native -count=1",
+      "result": "PASS: lower 34.321s, fresh 56.378s, native 222.860s; before the final Hoisted metadata guard, which is exercised by the latest oracle",
+      "log": "/tmp/readiness-lazy-packages.log"
+    },
+    {
+      "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m ./...",
+      "result": "Not fully green. Fresh write-site accounting failed, then was fixed and rerun green. Long remaining Unicode/CSS suites stopped for the scanner priority. Native and oracle packages passed before the lazy extension.",
+      "log": "/tmp/readiness-final-current-gate.log"
+    }
+  ],
+  "mutants": {
+    "remove_non_null_check": "checked failing oracle fixtures",
+    "reject_zero": "source Node output",
+    "reject_false": "source Node output",
+    "reject_empty_string": "source Node output",
+    "evaluate_operand_twice": "source Node output",
+    "wrong_non_null_message": "exact-text lowering assertion, moved to an eager argument position",
+    "drop_local_readiness_check": "pinned runtime exit, stdout and stderr",
+    "drop_field_readiness_check": "TestFieldReadinessRepresentation pinned runtime output",
+    "erase_without_dominance_proof": "zero-iteration fixture pinned runtime output",
+    "initialize_to_zero": "pinned runtime output",
+    "miss_captured_read": "pinned runtime output",
+    "miss_exception_path": "pinned runtime output",
+    "literal_marker_as_ordinary_non_null": "source Node success output",
+    "weak_generic_message": "exact runtime stderr",
+    "freed_weak_generic_message": "exact runtime stderr",
+    "computed_initializer_eager_again": "source Node output: eager mutant exits 70 before scanner assignment"
+  },
+  "counts": {
+    "new_rows_vs_main": 38,
+    "changed_existing_rows": {},
+    "explanation": "Readiness bits share existing object and cell allocations; new rows record the new success and terminal-check fixtures."
+  },
+  "limits": [
+    "Cross-function assignment proofs remain conservative.",
+    "Ordinary var declarations and repeated assertion var declarations remain refused; function-local pre-declaration var reads are unsupported.",
+    "The native Weak lifetime fixture is pinned separately because source Node retains the target; explicit clearing is a checked differential fixture.",
+    "The latent census is measured on a checker-rejected corpus, not a whole compiler build; its checkpoint precedes the subsequently ruled computed-lazy extension.",
+    "General nullable-reference representation is owned by the other worker; representation() was not changed."
+  ]
+}

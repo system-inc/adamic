@@ -1,0 +1,13 @@
+{
+    "rule": "@typescript-eslint/no-meaningless-void-operator",
+    "clean": {
+        "file": "/repository/source/Discarding.ts",
+        "source": "function foo() {}\nvoid foo();"
+    },
+    "assertedMessageIds": [
+        "meaninglessVoidOnNonCall",
+        "meaninglessVoidOperator"
+    ],
+    "assertsFix": true,
+    "assertsSuggestion": true
+}

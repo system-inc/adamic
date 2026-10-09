@@ -1,0 +1,104 @@
+[
+  {
+    "Name": "original/eslint-default-case",
+    "Pattern": "^no default$",
+    "Flags": "iu",
+    "Inputs": [
+      "no default",
+      "shadow",
+      "useEffect",
+      "eslint-disable-next-line no-warning-comments -- explanation",
+      "return undefined;",
+      "bg-opacity-50",
+      "ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ",
+      "import React from 'react';\nconst x = useState(0);",
+      "\t* @example 'CAPITAL TOKEN' ```code```"
+    ],
+    "Calls": 9000
+  },
+  {
+    "Name": "original/typescript-switch-exhaustiveness",
+    "Pattern": "^no default$",
+    "Flags": "iu",
+    "Inputs": [
+      "no default",
+      "shadow",
+      "useEffect",
+      "eslint-disable-next-line no-warning-comments -- explanation",
+      "return undefined;",
+      "bg-opacity-50",
+      "ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ",
+      "import React from 'react';\nconst x = useState(0);",
+      "\t* @example 'CAPITAL TOKEN' ```code```"
+    ],
+    "Calls": 9000
+  },
+  {
+    "Name": "original/typescript-ban-tslint-comment",
+    "Pattern": "^\\s*tslint:(enable|disable)(?:-(line|next-line))?(:|\\s|$)",
+    "Flags": "",
+    "Inputs": [
+      "tslint:disable",
+      "shadow",
+      "useEffect",
+      "eslint-disable-next-line no-warning-comments -- explanation",
+      "return undefined;",
+      "bg-opacity-50",
+      "ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ",
+      "import React from 'react';\nconst x = useState(0);",
+      "\t* @example 'CAPITAL TOKEN' ```code```"
+    ],
+    "Calls": 9000
+  },
+  {
+    "Name": "original/react-nested-components",
+    "Pattern": "^use[A-Z0-9].*$",
+    "Flags": "",
+    "Inputs": [
+      "useEffect",
+      "shadow",
+      "useEffect",
+      "eslint-disable-next-line no-warning-comments -- explanation",
+      "return undefined;",
+      "bg-opacity-50",
+      "ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ",
+      "import React from 'react';\nconst x = useState(0);",
+      "\t* @example 'CAPITAL TOKEN' ```code```"
+    ],
+    "Calls": 9000
+  },
+  {
+    "Name": "original/react-sort-comp",
+    "Pattern": "/(.*)/([gimsuy]*)",
+    "Flags": "",
+    "Inputs": [
+      "/abc/gi",
+      "shadow",
+      "useEffect",
+      "eslint-disable-next-line no-warning-comments -- explanation",
+      "return undefined;",
+      "bg-opacity-50",
+      "ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ",
+      "import React from 'react';\nconst x = useState(0);",
+      "\t* @example 'CAPITAL TOKEN' ```code```"
+    ],
+    "Calls": 9000
+  },
+  {
+    "Name": "original/typescript-template-dollar",
+    "Pattern": "(?<!(?:[^\\\\]|^)(?:\\\\\\\\)*\\\\)\\$$",
+    "Flags": "",
+    "Inputs": [
+      "value$",
+      "shadow",
+      "useEffect",
+      "eslint-disable-next-line no-warning-comments -- explanation",
+      "return undefined;",
+      "bg-opacity-50",
+      "ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ordinary prose without a directive ",
+      "import React from 'react';\nconst x = useState(0);",
+      "\t* @example 'CAPITAL TOKEN' ```code```"
+    ],
+    "Calls": 9000
+  }
+]

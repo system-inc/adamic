@@ -1,0 +1,24 @@
+{
+    "rule": "no-octal",
+    "firing": {
+        "file": "/repository/source/Octal.ts",
+        "source": "a[0755];",
+        "findings": [
+            {
+                "line": 1,
+                "column": 3,
+                "endLine": 1,
+                "endColumn": 7,
+                "messageId": "noOctal",
+                "message": "This number is written in the legacy octal form, a bare leading zero, so `0755` is 493 rather than seven hundred fifty five. The zero is easy to miss and the value the program runs with is not the one the digits appear to spell. The form is also a syntax error in strict mode and in every module, so the same literal is silently reinterpreted in one file and rejected outright in another. Write `0o755` when octal is meant, which says so, or drop the leading zero when it is not."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/Octal.ts",
+        "source": "var a = 0;"
+    },
+    "assertedMessageIds": [
+        "noOctal"
+    ]
+}

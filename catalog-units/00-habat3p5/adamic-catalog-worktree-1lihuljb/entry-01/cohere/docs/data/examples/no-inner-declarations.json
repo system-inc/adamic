@@ -1,0 +1,24 @@
+{
+    "rule": "no-inner-declarations",
+    "firing": {
+        "file": "file.ts",
+        "source": "if (test) { function doSomething() { } }",
+        "findings": [
+            {
+                "line": 1,
+                "column": 13,
+                "endLine": 1,
+                "endColumn": 39,
+                "messageId": "moveDeclToRoot",
+                "message": "Move function declaration to program root. A declaration written inside a block does not belong to that block: `var` reaches the whole enclosing function regardless of the braces around it, and a hoisted function binding has been three different things across engines and editions. Writing it at the root says what actually happens."
+            }
+        ]
+    },
+    "clean": {
+        "file": "file.ts",
+        "source": "if (test) { var foo; }"
+    },
+    "assertedMessageIds": [
+        "moveDeclToRoot"
+    ]
+}

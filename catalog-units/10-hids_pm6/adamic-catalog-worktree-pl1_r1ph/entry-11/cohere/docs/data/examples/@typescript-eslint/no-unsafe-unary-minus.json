@@ -1,0 +1,24 @@
+{
+    "rule": "@typescript-eslint/no-unsafe-unary-minus",
+    "firing": {
+        "file": "/repository/source/Negate.ts",
+        "source": "-'hello';\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 1,
+                "endLine": 1,
+                "endColumn": 9,
+                "messageId": "unaryMinus",
+                "message": "Argument of unary negation should be assignable to number | bigint but is \"hello\" instead."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/Negate.ts",
+        "source": "+42;\n"
+    },
+    "assertedMessageIds": [
+        "unaryMinus"
+    ]
+}

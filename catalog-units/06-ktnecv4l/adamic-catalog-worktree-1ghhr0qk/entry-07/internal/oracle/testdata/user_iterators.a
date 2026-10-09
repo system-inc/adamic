@@ -1,0 +1,483 @@
+interface Step {
+    readonly value: number;
+    readonly done: boolean;
+}
+class CounterIterator {
+    index = 0;
+    calls = 0;
+    [Symbol.iterator](): CounterIterator {
+        return this;
+    }
+    readonly limit: number;
+    readonly name: string;
+    readonly failClose: boolean;
+    readonly failNext: boolean;
+    constructor(limit: number, name: string, failClose: boolean, failNext: boolean) {
+        this.limit = limit;
+        this.name = name;
+        this.failClose = failClose;
+        this.failNext = failNext;
+    }
+    next(): Step {
+        this.calls++;
+        console.log(`${this.name}:next:${this.index}`);
+        if(this.failNext || this.calls > this.limit + 3) {
+            throw new Error('next failed');
+        }
+        if(this.index >= this.limit) {
+            return { value: 999, done: true };
+        }
+        const value = this.index;
+        this.index++;
+        return { value, done: false };
+    }
+    return(): Step {
+        console.log(`${this.name}:return`);
+        if(this.failClose) {
+            throw new Error('close failed');
+        }
+        return { value: 777, done: true };
+    }
+}
+class Range {
+    readonly limit: number;
+    readonly name: string;
+    readonly failClose: boolean;
+    readonly failNext: boolean;
+    constructor(limit: number, name: string, failClose: boolean, failNext: boolean) {
+        this.limit = limit;
+        this.name = name;
+        this.failClose = failClose;
+        this.failNext = failNext;
+    }
+    [Symbol.iterator](): CounterIterator {
+        console.log(`${this.name}:open`);
+        return new CounterIterator(this.limit, this.name, this.failClose, this.failNext);
+    }
+}
+function range(limit: number, name: string): Range {
+    return new Range(limit, name, false, false);
+}
+for(const value of range(3, 'normal')) {
+    console.log(`${value}`);
+}
+for(const value of range(0, 'empty')) {
+    console.log(`wrong:${value}`);
+}
+for(const value of range(3, 'break')) {
+    console.log(`${value}`);
+    break;
+}
+for(const value of range(3, 'continue')) {
+    if(value === 1) {
+        continue;
+    }
+    console.log(`${value}`);
+}
+function earlyReturn(): number {
+    for(const value of range(4, 'return')) {
+        return value + 10;
+    }
+    return -1;
+}
+console.log(`${earlyReturn()}`);
+try {
+    for(const value of range(2, 'throw')) {
+        throw new Error(`body:${value}`);
+    }
+}
+catch(error) {
+    if(error instanceof Error) {
+        console.log(error.message);
+    }
+}
+try {
+    for(const value of new Range(2, 'close-break', true, false)) {
+        console.log(`${value}`);
+        break;
+    }
+}
+catch(error) {
+    if(error instanceof Error) {
+        console.log(error.message);
+    }
+}
+try {
+    for(const value of new Range(2, 'close-throw', true, false)) {
+        throw new Error(`original:${value}`);
+    }
+}
+catch(error) {
+    if(error instanceof Error) {
+        console.log(error.message);
+    }
+}
+try {
+    for(const value of new Range(2, 'next-throw', false, true)) {
+        console.log(`${value}`);
+    }
+}
+catch(error) {
+    if(error instanceof Error) {
+        console.log(error.message);
+    }
+}
+console.log([...range(3, 'spread')].join(','));
+console.log([9, ...range(2, 'mixed-spread'), 8, ...range(1, 'second-spread')].join(','));
+console.log(Array.from(range(2, 'from')).join(','));
+console.log(
+    Array.from(range(3, 'mapped'), (value, index) => {
+        console.log(`map:${value}:${index}`);
+        return value + index;
+    }).join(','),
+);
+try {
+    Array.from(range(3, 'map-throw'), (value): number => {
+        throw new Error(`mapper:${value}`);
+    });
+}
+catch(error) {
+    if(error instanceof Error) {
+        console.log(error.message);
+    }
+}
+function objectRange(limit: number) {
+    return {
+        limit,
+        [Symbol.iterator]() {
+            let index = 0;
+            const count = this.limit;
+            return {
+                next(): Step {
+                    const value = index;
+                    index++;
+                    console.log(`object:${value}`);
+                    return { value, done: value >= count };
+                },
+                return(): Step {
+                    console.log('object:return');
+                    return { value: 0, done: true };
+                },
+            };
+        },
+    };
+}
+for(const value of objectRange(3)) {
+    console.log(`${value}`);
+    break;
+}
+console.log([...objectRange(2)].join(','));
+const iterator = objectRange(1)[Symbol.iterator]();
+console.log(`${iterator.next().value}`);
+console.log(`${iterator.return().done}`);
+const [first = -1, second = -2] = range(4, 'destructure');
+console.log(`${first}:${second}`);
+const [missing = 20, missingToo = 30] = range(0, 'exhausted');
+console.log(`${missing}:${missingToo}`);
+const [, skipped = 100] = range(3, 'hole');
+console.log(`${skipped}`);
+const [head = -1, ...tail] = range(3, 'rest');
+console.log(`${head}:${tail.join(',')}`);
+const [] = range(2, 'empty-pattern');
+const [fallback = first + 100] = range(0, 'default-order');
+console.log(`${fallback}`);
+
+function iteratorFromFunction(): CounterIterator {
+    return new CounterIterator(2, 'factory-iterator', false, false);
+}
+for(const value of iteratorFromFunction()) {
+    console.log(`${value}`);
+}
+console.log([...range(1, 'explicit-factory')[Symbol.iterator]()].join(','));
+const closures: (() => number)[] = [];
+for(const value of range(3, 'captures')) {
+    closures.push(() => value);
+}
+for(const closure of closures) {
+    console.log(`${closure()}`);
+}
+function returnExpressionFails(): number {
+    for(const value of range(2, 'return-expression')) {
+        return ((): number => {
+            throw new Error(`expression:${value}`);
+        })();
+    }
+    return -1;
+}
+try {
+    returnExpressionFails();
+}
+catch(error) {
+    if(error instanceof Error) {
+        console.log(error.message);
+    }
+}
+function closeReplacesReturn(): number {
+    for(const value of new Range(2, 'close-return', true, false)) {
+        return value;
+    }
+    return -1;
+}
+try {
+    closeReplacesReturn();
+}
+catch(error) {
+    if(error instanceof Error) {
+        console.log(error.message);
+    }
+}
+for(const outer of range(2, 'outer')) {
+    for(const inner of range(2, `inner${outer}`)) {
+        console.log(`${inner}`);
+        break;
+    }
+}
+function maybeRange(limit: number) {
+    return {
+        kind: 'maybe-range' as const,
+        [Symbol.iterator]() {
+            let index = 0;
+            return {
+                kind: 'maybe-stepper' as const,
+                next(): { readonly value: number | undefined; readonly done: boolean } {
+                    const value = index;
+                    index++;
+                    return { value: value === 0 ? undefined : value, done: value >= limit };
+                },
+                return() {
+                    console.log('maybe:return');
+                    return { value: undefined, done: true };
+                },
+            };
+        },
+    };
+}
+console.log([...maybeRange(3)].join(','));
+const [maybeFirst = 40, maybeSecond = 50, ...maybeTail] = maybeRange(3);
+console.log(`${maybeFirst}:${maybeSecond}:${maybeTail.join(',')}`);
+const [plainMaybe] = maybeRange(0);
+console.log(`${plainMaybe ?? 70}`);
+function strings(limit: number) {
+    return {
+        kind: 'strings-range' as const,
+        [Symbol.iterator]() {
+            let index = 0;
+            return {
+                kind: 'strings-stepper' as const,
+                next() {
+                    const value = index;
+                    index++;
+                    return { value: `built-${value}`, done: value >= limit };
+                },
+                return() {
+                    console.log('strings:return');
+                    return { value: '', done: true };
+                },
+            };
+        },
+    };
+}
+console.log([...strings(3)].join(','));
+for(const value of strings(3)) {
+    console.log(value);
+    break;
+}
+const [text = 'fallback'] = strings(0);
+console.log(text);
+function noClose() {
+    return {
+        kind: 'no-close-range' as const,
+        [Symbol.iterator]() {
+            let index = 0;
+            return {
+                kind: 'no-close-stepper' as const,
+                next() {
+                    const value = index;
+                    index++;
+                    return { value, done: value >= 2 };
+                },
+            };
+        },
+    };
+}
+for(const value of noClose()) {
+    console.log(`no-close:${value}`);
+    break;
+}
+
+function failDefault(): number {
+    throw new Error('default failed');
+}
+try {
+    const [failed = failDefault()] = maybeRange(2);
+    console.log(`${failed}`);
+}
+catch(error) {
+    if(error instanceof Error) {
+        console.log(error.message);
+    }
+}
+function throwingObject(failNext: boolean) {
+    return {
+        kind: 'throw-range' as const,
+        [Symbol.iterator]() {
+            return {
+                kind: 'throw-stepper' as const,
+                next(): Step {
+                    console.log('throw-object:next');
+                    if(failNext) {
+                        throw new Error('object next');
+                    }
+                    return { value: 5, done: false };
+                },
+                return(): Step {
+                    console.log('throw-object:return');
+                    throw new Error('object close');
+                },
+            };
+        },
+    };
+}
+try {
+    for(const value of throwingObject(false)) {
+        throw new Error(`object original:${value}`);
+    }
+}
+catch(error) {
+    if(error instanceof Error) {
+        console.log(error.message);
+    }
+}
+try {
+    for(const value of throwingObject(false)) {
+        console.log(`${value}`);
+        break;
+    }
+}
+catch(error) {
+    if(error instanceof Error) {
+        console.log(error.message);
+    }
+}
+try {
+    for(const value of throwingObject(true)) {
+        console.log(`${value}`);
+    }
+}
+catch(error) {
+    if(error instanceof Error) {
+        console.log(error.message);
+    }
+}
+for(const value of range(2, 'finally-continue')) {
+    try {
+        throw new Error(`overridden:${value}`);
+    }
+    finally {
+        continue;
+    }
+}
+const arrowSource = {
+    kind: 'arrow-range' as const,
+    [Symbol.iterator]: () => {
+        let index = 0;
+        return {
+            kind: 'arrow-stepper' as const,
+            next: () => {
+                const value = index;
+                index++;
+                return { value, done: value >= 2 };
+            },
+            return: () => {
+                console.log('arrow:return');
+                return { value: 0, done: true };
+            },
+        };
+    },
+};
+for(const value of arrowSource) {
+    console.log(`${value}`);
+    break;
+}
+console.log([...arrowSource].join(','));
+const arrowFactory = () => new CounterIterator(2, 'arrow-factory', false, false);
+for(const value of arrowFactory()) {
+    console.log(`${value}`);
+}
+const aliasedFactory = arrowFactory;
+console.log([...aliasedFactory()].join(','));
+class GenericSequence<T> {
+    readonly data: readonly T[];
+    index = 0;
+    constructor(data: readonly T[]) {
+        this.data = data;
+    }
+    [Symbol.iterator](): GenericSequence<T> {
+        return this;
+    }
+    next(): { readonly value: T | undefined; readonly done: boolean } {
+        const index = this.index;
+        this.index++;
+        return { value: this.data[index], done: index >= this.data.length };
+    }
+    return(): { readonly value: T | undefined; readonly done: boolean } {
+        console.log('generic:return');
+        return { value: undefined, done: true };
+    }
+}
+for(const value of new GenericSequence([10, 20])) {
+    console.log(`${value ?? -1}`);
+    break;
+}
+console.log([...new GenericSequence(['a', 'b'])].join(','));
+class BooleanIterator {
+    index = 0;
+    next(): { value: boolean; done: boolean } {
+        this.index++;
+        return { value: this.index === 1, done: this.index > 2 };
+    }
+    return(): { value: boolean; done: boolean } {
+        console.log('boolean:return');
+        return { value: false, done: true };
+    }
+}
+const booleans = {
+    [Symbol.iterator](): BooleanIterator {
+        return new BooleanIterator();
+    },
+};
+console.log(Array.from(booleans).join(','));
+const [boolean = true] = booleans;
+console.log(`${boolean}`);
+class Item {
+    readonly label: string;
+    constructor(label: string) {
+        this.label = label;
+    }
+}
+for(const value of new GenericSequence([new Item(`item-${2}`), new Item(`item-${3}`)])) {
+    console.log(value?.label ?? 'missing');
+    break;
+}
+function pairs() {
+    return {
+        [Symbol.iterator]() {
+            let index = 0;
+            return {
+                next(): { readonly value: readonly [number, string]; readonly done: boolean } {
+                    const value = index;
+                    index++;
+                    return { value: [value, `pair-${value}`], done: value >= 2 };
+                },
+                return() {
+                    console.log('pairs:return');
+                    return { value: [0, 'end'] as const, done: true };
+                },
+            };
+        },
+    };
+}
+for(const [number, label] of pairs()) {
+    console.log(`${number}:${label}`);
+    break;
+}

@@ -1,0 +1,30 @@
+{
+    "rule": "preserve-caught-error",
+    "firing": {
+        "file": "input.ts",
+        "source": "try { a(); } catch (err) { throw new Error(\"m\"); }\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 28,
+                "endLine": 1,
+                "endColumn": 49,
+                "messageId": "missingCause",
+                "message": "This throws a new error out of a catch block without attaching the error that was caught. The original stack, the original message, and whatever the underlying library said about what actually went wrong are all discarded at this line, and what reaches the log is a sentence somebody wrote by hand months ago. The failure that matters is the one you can no longer see. Pass the caught error as the `cause` option so both halves survive.",
+                "suggestions": 1
+            }
+        ]
+    },
+    "clean": {
+        "file": "input.ts",
+        "source": "try { a(); } catch { throw new Error(\"m\"); }\n"
+    },
+    "assertedMessageIds": [
+        "caughtErrorShadowed",
+        "incorrectCause",
+        "missingCatchErrorParam",
+        "missingCause",
+        "partiallyLostError"
+    ],
+    "assertsSuggestion": true
+}

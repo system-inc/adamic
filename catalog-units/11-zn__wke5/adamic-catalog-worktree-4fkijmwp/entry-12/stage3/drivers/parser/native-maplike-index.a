@@ -1,0 +1,5 @@
+// a-check: refused an index signature
+// From TypeScript 6.0.3, src/compiler/corePublic.ts:9
+interface MapLike<T> { [index: string]: T; }
+const values: MapLike<number> = { first: 1 };
+console.log(`${values['first']}`);

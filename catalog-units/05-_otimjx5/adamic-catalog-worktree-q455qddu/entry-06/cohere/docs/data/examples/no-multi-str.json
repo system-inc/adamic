@@ -1,0 +1,24 @@
+{
+    "rule": "no-multi-str",
+    "firing": {
+        "file": "/repository/source/MultiStr.ts",
+        "source": "'foo\\\rbar';",
+        "findings": [
+            {
+                "line": 1,
+                "column": 1,
+                "endLine": 2,
+                "endColumn": 5,
+                "messageId": "multilineString",
+                "message": "This string is continued onto the next line with a trailing backslash, which the language accepts and almost no reader expects. Whatever indentation the next line carries goes into the value, so the string changes meaning when somebody reformats the file, and the backslash has to be the last character on its line or the file stops parsing. Concatenation or a template literal says the same thing without either hazard."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/MultiStr.ts",
+        "source": "var a = 12;"
+    },
+    "assertedMessageIds": [
+        "multilineString"
+    ]
+}

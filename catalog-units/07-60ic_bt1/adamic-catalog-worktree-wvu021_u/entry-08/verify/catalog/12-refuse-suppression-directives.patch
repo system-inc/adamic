@@ -1,0 +1,20 @@
+--- a/internal/lower/refusals.go
++++ b/internal/lower/refusals.go
+@@ -43,17 +43,6 @@ var refusedOperators = map[ast.Kind]refusal{
+ 
+ // refuse walks a module for what 0.1 refuses and returns the first, with where it is and the fix.
+ func (l *lowering) refuse(module *ast.SourceFile) error {
+-	// Use the parser's directives, which also recognize the block forms honored by the checker.
+-	// Text in a string or a prose comment never enters this list.
+-	if len(module.CommentDirectives) > 0 {
+-		directive := module.CommentDirectives[0]
+-		name := "@ts-ignore"
+-		if directive.Kind == ast.CommentDirectiveKindExpectError {
+-			name = "@ts-expect-error"
+-		}
+-		line, column := scanner.GetLineAndCharacterOfPosition(module, directive.Loc.Pos())
+-		return &Refused{Where: fmt.Sprintf("%s:%d:%d", l.program.FileName(module), line+1, column+1), What: name + " suppression directive", Fix: "remove it and fix the type error"}
+-	}
+ 	// File-level checking pragmas are separate from line-suppression directives. Use every
+ 	// parsed pragma, including one overridden by a later pragma, rather than just CheckJsDirective.
+ 	for _, pragma := range module.Pragmas {

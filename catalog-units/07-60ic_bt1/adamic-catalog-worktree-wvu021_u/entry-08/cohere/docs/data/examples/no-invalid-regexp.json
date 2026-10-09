@@ -1,0 +1,24 @@
+{
+    "rule": "no-invalid-regexp",
+    "firing": {
+        "file": "/repository/source/Patterns.ts",
+        "source": "new RegExp('[');\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 1,
+                "endLine": 1,
+                "endColumn": 16,
+                "messageId": "invalidRegexp",
+                "message": "Invalid regular expression: /[/: unsupported regexp syntax: [ that no ] closes"
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/Patterns.ts",
+        "source": "export const a = other('[');\n"
+    },
+    "assertedMessageIds": [
+        "invalidRegexp"
+    ]
+}

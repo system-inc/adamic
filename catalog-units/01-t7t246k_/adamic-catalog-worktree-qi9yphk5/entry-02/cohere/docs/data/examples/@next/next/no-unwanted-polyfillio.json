@@ -1,0 +1,25 @@
+{
+    "rule": "@next/next/no-unwanted-polyfillio",
+    "firing": {
+        "file": "Component.tsx",
+        "source": "export const A = () => <script src='https://polyfill.io/v3/polyfill.min.js' />;",
+        "findings": [
+            {
+                "line": 1,
+                "column": 32,
+                "endLine": 1,
+                "endColumn": 76,
+                "messageId": "noUnwantedPolyfillioSecurity",
+                "message": "This script loads from polyfill.io, whose domain was sold in 2024 and then used to serve malicious code to the sites embedding it. Every visitor runs whatever that domain returns, so this is a live supply chain risk rather than a stale dependency. Point it at https://cdnjs.cloudflare.com/polyfill/ or drop the polyfill and use the browser feature directly."
+            }
+        ]
+    },
+    "clean": {
+        "file": "Component.tsx",
+        "source": "export const A = (p) => <script {...p} />;"
+    },
+    "assertedMessageIds": [
+        "noUnwantedPolyfillioDuplicate",
+        "noUnwantedPolyfillioSecurity"
+    ]
+}

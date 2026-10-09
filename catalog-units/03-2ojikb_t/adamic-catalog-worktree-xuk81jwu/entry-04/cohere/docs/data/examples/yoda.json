@@ -1,0 +1,23 @@
+{
+    "rule": "yoda",
+    "firing": {
+        "file": "/repository/source/Yoda.ts",
+        "source": "0 < f()in obj",
+        "findings": [
+            {
+                "line": 1,
+                "column": 1,
+                "endLine": 1,
+                "endColumn": 8,
+                "messageId": "expected",
+                "message": "Expected literal to be on the right side of <. The literal is on the side a reader does not expect. A condition reads as a question about the variable, so putting the constant first inverts the sentence and costs a beat on every read.",
+                "fix": true
+            }
+        ],
+        "fixedSource": "f() > 0 in obj"
+    },
+    "assertedMessageIds": [
+        "expected"
+    ],
+    "assertsFix": true
+}

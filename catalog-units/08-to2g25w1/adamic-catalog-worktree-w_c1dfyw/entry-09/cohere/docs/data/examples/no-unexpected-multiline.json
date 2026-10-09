@@ -1,0 +1,27 @@
+{
+    "rule": "no-unexpected-multiline",
+    "firing": {
+        "file": "file.ts",
+        "source": "foo\n/ bar /g.x",
+        "findings": [
+            {
+                "line": 2,
+                "column": 1,
+                "endLine": 2,
+                "endColumn": 2,
+                "messageId": "division",
+                "message": "A newline sits between the numerator and the `/` that follows it, and what comes after reads as a regular expression with flags rather than a division. The two parse differently and only one of them is what the line above looks like."
+            }
+        ]
+    },
+    "clean": {
+        "file": "file.ts",
+        "source": "f(\n(x)\n)"
+    },
+    "assertedMessageIds": [
+        "division",
+        "function",
+        "property",
+        "taggedTemplate"
+    ]
+}

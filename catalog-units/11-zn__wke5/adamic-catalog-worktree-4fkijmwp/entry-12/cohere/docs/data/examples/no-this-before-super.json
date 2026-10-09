@@ -1,0 +1,24 @@
+{
+    "rule": "no-this-before-super",
+    "firing": {
+        "file": "/repository/source/Derived.tsx",
+        "source": "class A extends B { constructor() { this.c(); } }",
+        "findings": [
+            {
+                "line": 1,
+                "column": 21,
+                "endLine": 1,
+                "endColumn": 48,
+                "messageId": "thisBeforeSuper",
+                "message": "This derived constructor reads `this` or `super` on a path that has not called `super()` yet, which throws a ReferenceError because the `this` binding does not exist until `super()` returns."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/Derived.tsx",
+        "source": "class A { }"
+    },
+    "assertedMessageIds": [
+        "thisBeforeSuper"
+    ]
+}

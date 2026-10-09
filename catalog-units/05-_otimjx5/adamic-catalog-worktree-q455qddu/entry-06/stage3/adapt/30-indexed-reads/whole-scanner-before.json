@@ -1,0 +1,10 @@
+{
+  "file": "scanner.ts",
+  "roots": 78,
+  "code_filter": null,
+  "total": 2,
+  "diagnostics": [
+    "src/compiler/scanner.ts:491:22: error TS2532: Object is possibly 'undefined'.",
+    "src/compiler/scanner.ts:491:45: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'."
+  ]
+}

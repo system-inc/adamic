@@ -1,0 +1,23 @@
+{
+    "rule": "@typescript-eslint/consistent-generic-constructors",
+    "firing": {
+        "file": "/repository/source/Constructing.ts",
+        "source": "const a: Map<string, number> = new Map();\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 7,
+                "endLine": 1,
+                "endColumn": 41,
+                "messageId": "preferConstructor",
+                "message": "The generic type arguments should be specified as part of the constructor type arguments.",
+                "fix": true
+            }
+        ]
+    },
+    "assertedMessageIds": [
+        "preferConstructor",
+        "preferTypeAnnotation"
+    ],
+    "assertsFix": true
+}

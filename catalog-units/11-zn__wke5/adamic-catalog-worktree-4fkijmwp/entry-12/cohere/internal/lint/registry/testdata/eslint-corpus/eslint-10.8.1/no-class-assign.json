@@ -1,0 +1,20 @@
+[
+{"code":"class A { } foo(A);","eslint":[]},
+{"code":"let A = class A { }; foo(A);","eslint":[]},
+{"code":"class A { b(A) { A = 0; } }","eslint":[]},
+{"code":"class A { b() { let A; A = 0; } }","eslint":[]},
+{"code":"let A = class { b() { A = 0; } }","eslint":[]},
+{"code":"var x = 0; x = 1;","eslint":[]},
+{"code":"let x = 0; x = 1;","eslint":[]},
+{"code":"const x = 0; x = 1;","eslint":[]},
+{"code":"function x() {} x = 1;","eslint":[]},
+{"code":"function foo(x) { x = 1; }","eslint":[]},
+{"code":"try {} catch (x) { x = 1; }","eslint":[]},
+{"code":"class A { } A = 0;","eslint":[["class",12,13]]},
+{"code":"class A { } ({A} = 0);","eslint":[["class",14,15]]},
+{"code":"class A { } ({b: A = 0} = {});","eslint":[["class",17,18]]},
+{"code":"A = 0; class A { }","eslint":[["class",0,1]]},
+{"code":"class A { b() { A = 0; } }","eslint":[["class",16,17]]},
+{"code":"let A = class A { b() { A = 0; } }","eslint":[["class",24,25]]},
+{"code":"class A { } A = 0; A = 1;","eslint":[["class",12,13],["class",19,20]]}
+]

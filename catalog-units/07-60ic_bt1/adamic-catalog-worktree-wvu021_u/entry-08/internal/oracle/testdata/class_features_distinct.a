@@ -1,0 +1,47 @@
+class Seal {
+    readonly stamp: string;
+    readonly payload: { text: string };
+    #code: string;
+    constructor(stamp: string) {
+        this.stamp = stamp;
+        this.payload = { text: `body${1}` };
+        this.stamp = `${stamp}!`;
+        this.#code = `base${2}`;
+    }
+    #open(): string { return this.#code; }
+    reveal(): string {
+        const helper = (): string => this.#open();
+        return helper();
+    }
+    passed(): string {
+        const helper = (box: Seal): string => box.#code;
+        return helper(this);
+    }
+    retitle(value: string): void { this.#code = value; }
+}
+class ChildSeal extends Seal {
+    #code = `child${3}`;
+    #open(): string { return `m${this.#code}`; }
+    revealChild(): string {
+        const helper = (): string => this.#open();
+        return helper();
+    }
+    passedChild(): string {
+        const helper = (box: ChildSeal): string => box.#code;
+        return helper(this);
+    }
+    rewrite(value: string): void { this.#code = value; }
+}
+function show(box: Seal): string {
+    return `${box.stamp}/${box.payload.text}/${box.reveal()}/${box.passed()}`;
+}
+const child = new ChildSeal(`start${4}`);
+console.log(show(child));
+console.log(`${child.revealChild()}/${child.passedChild()}`);
+child.retitle(`base${5}`);
+child.rewrite(`derived${6}`);
+child.payload.text = `changed${7}`;
+console.log(show(child));
+console.log(`${child.revealChild()}/${child.passedChild()}`);
+const seal = new Seal(`plain${8}`);
+console.log(show(seal));

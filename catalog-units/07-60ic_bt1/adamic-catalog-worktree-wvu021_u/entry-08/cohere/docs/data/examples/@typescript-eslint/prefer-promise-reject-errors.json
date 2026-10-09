@@ -1,0 +1,24 @@
+{
+    "rule": "@typescript-eslint/prefer-promise-reject-errors",
+    "firing": {
+        "file": "/repository/source/Rejections.ts",
+        "source": "Promise.reject();\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 1,
+                "endLine": 1,
+                "endColumn": 17,
+                "messageId": "rejectAnError",
+                "message": "This rejects a promise with something that is not an Error, so whatever catches it gets no stack trace and no message. A rejection is the failure path, and the handler that receives a bare string or object has no record of where the failure came from. Reject with `new Error(...)` instead."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/Rejections.ts",
+        "source": "new Promise();\n"
+    },
+    "assertedMessageIds": [
+        "rejectAnError"
+    ]
+}

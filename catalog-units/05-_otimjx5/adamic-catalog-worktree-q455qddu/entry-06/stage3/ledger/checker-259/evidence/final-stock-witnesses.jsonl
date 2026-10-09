@@ -1,0 +1,31 @@
+{"file":"callback.a","mode":"stock","diagnostics":[]}
+{"file":"callback.a","mode":"adamic-prelude","diagnostics":[{"line":2,"column":53,"code":"TS18048","message":"'item' is possibly 'undefined'."}]}
+{"file":"catch.a","mode":"stock","diagnostics":[{"line":1,"column":47,"code":"TS18046","message":"'error' is of type 'unknown'."}]}
+{"file":"catch.a","mode":"adamic-prelude","diagnostics":[{"line":1,"column":47,"code":"TS18046","message":"'error' is of type 'unknown'."}]}
+{"file":"catch.a","mode":"without-useUnknownInCatchVariables","diagnostics":[]}
+{"file":"entries.a","mode":"stock","diagnostics":[]}
+{"file":"entries.a","mode":"adamic-prelude","diagnostics":[{"line":2,"column":12,"code":"TS2488","message":"Type '[string, number] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator."}]}
+{"file":"green-control.a","mode":"stock","diagnostics":[]}
+{"file":"green-control.a","mode":"adamic-prelude","diagnostics":[]}
+{"file":"index-read.a","mode":"stock","diagnostics":[{"line":2,"column":7,"code":"TS2322","message":"Type 'string | undefined' is not assignable to type 'string'.\n  Type 'undefined' is not assignable to type 'string'."}]}
+{"file":"index-read.a","mode":"adamic-prelude","diagnostics":[{"line":2,"column":7,"code":"TS2322","message":"Type 'string | undefined' is not assignable to type 'string'.\n  Type 'undefined' is not assignable to type 'string'."}]}
+{"file":"index-read.a","mode":"without-noUncheckedIndexedAccess","diagnostics":[]}
+{"file":"iterable.a","mode":"stock","diagnostics":[]}
+{"file":"iterable.a","mode":"adamic-prelude","diagnostics":[{"line":2,"column":7,"code":"TS2322","message":"Type '(string | undefined)[]' is not assignable to type 'string[]'.\n  Type 'string | undefined' is not assignable to type 'string'.\n    Type 'undefined' is not assignable to type 'string'."}]}
+{"file":"json.a","mode":"stock","diagnostics":[]}
+{"file":"json.a","mode":"adamic-prelude","diagnostics":[{"line":1,"column":7,"code":"TS2322","message":"Type 'string | undefined' is not assignable to type 'string'.\n  Type 'undefined' is not assignable to type 'string'."}]}
+{"file":"nested-entries.a","mode":"stock","diagnostics":[]}
+{"file":"nested-entries.a","mode":"adamic-prelude","diagnostics":[{"line":3,"column":12,"code":"TS2488","message":"Type '[string, Map<string, { name: string; }>] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator."},{"line":4,"column":40,"code":"TS18046","message":"'item' is of type 'unknown'."}]}
+{"file":"optional-write.a","mode":"stock","diagnostics":[{"line":1,"column":7,"code":"TS2375","message":"Type '{ item: undefined; }' is not assignable to type '{ item?: string; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'item' are incompatible.\n    Type 'undefined' is not assignable to type 'string'."}]}
+{"file":"optional-write.a","mode":"adamic-prelude","diagnostics":[{"line":1,"column":7,"code":"TS2375","message":"Type '{ item: undefined; }' is not assignable to type '{ item?: string; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'item' are incompatible.\n    Type 'undefined' is not assignable to type 'string'."}]}
+{"file":"optional-write.a","mode":"without-exactOptionalPropertyTypes","diagnostics":[]}
+{"file":"repeated-destructure.a","mode":"stock","diagnostics":[]}
+{"file":"repeated-destructure.a","mode":"adamic-prelude","diagnostics":[]}
+{"file":"set-copy.a","mode":"stock","diagnostics":[]}
+{"file":"set-copy.a","mode":"adamic-prelude","diagnostics":[{"line":2,"column":7,"code":"TS2322","message":"Type 'Set<string | undefined>' is not assignable to type 'Set<string>'.\n  Type 'string | undefined' is not assignable to type 'string'.\n    Type 'undefined' is not assignable to type 'string'."}]}
+{"file":"set-shape.a","mode":"stock","diagnostics":[]}
+{"file":"set-shape.a","mode":"adamic-prelude","diagnostics":[{"line":2,"column":7,"code":"TS2740","message":"Type 'Omit<Set<string>, \"union\" | \"intersection\" | \"difference\" | \"symmetricDifference\" | \"isSubsetOf\" | \"isSupersetOf\" | \"isDisjointFrom\">' is missing the following properties from type 'Set<string>': union, intersection, difference, symmetricDifference, and 3 more."}]}
+{"file":"single-destructure.a","mode":"stock","diagnostics":[{"line":3,"column":20,"code":"TS2488","message":"Type '[string, number] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator."}]}
+{"file":"single-destructure.a","mode":"adamic-prelude","diagnostics":[{"line":3,"column":20,"code":"TS2488","message":"Type '[string, number] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator."}]}
+{"file":"type-error.a","mode":"stock","diagnostics":[{"line":1,"column":7,"code":"TS2322","message":"Type 'string' is not assignable to type 'number'."}]}
+{"file":"type-error.a","mode":"adamic-prelude","diagnostics":[{"line":1,"column":7,"code":"TS2322","message":"Type 'string' is not assignable to type 'number'."}]}

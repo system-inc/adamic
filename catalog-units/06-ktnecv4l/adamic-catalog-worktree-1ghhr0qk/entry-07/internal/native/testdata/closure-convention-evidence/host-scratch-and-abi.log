@@ -1,0 +1,348 @@
+=== RUN   TestNodeFSFileOptionsBorrow
+--- PASS: TestNodeFSFileOptionsBorrow (2.06s)
+=== RUN   TestNodeFSFileDoesNotAuthorizeMutableWidening
+--- PASS: TestNodeFSFileDoesNotAuthorizeMutableWidening (0.58s)
+=== RUN   TestNodeFSFileRefusesOptionEffects
+--- PASS: TestNodeFSFileRefusesOptionEffects (0.60s)
+=== RUN   TestNodeFSFileRefusesVoidValues
+--- PASS: TestNodeFSFileRefusesVoidValues (1.03s)
+=== RUN   TestNodeFSFileRefusesPinnedUnsupportedOverloads
+=== RUN   TestNodeFSFileRefusesPinnedUnsupportedOverloads/readFileSync
+=== RUN   TestNodeFSFileRefusesPinnedUnsupportedOverloads/openSync
+=== RUN   TestNodeFSFileRefusesPinnedUnsupportedOverloads/statSync
+=== RUN   TestNodeFSFileRefusesPinnedUnsupportedOverloads/readSync
+=== RUN   TestNodeFSFileRefusesPinnedUnsupportedOverloads/writeFileSync
+--- PASS: TestNodeFSFileRefusesPinnedUnsupportedOverloads (4.04s)
+    --- PASS: TestNodeFSFileRefusesPinnedUnsupportedOverloads/readFileSync (0.72s)
+    --- PASS: TestNodeFSFileRefusesPinnedUnsupportedOverloads/openSync (0.91s)
+    --- PASS: TestNodeFSFileRefusesPinnedUnsupportedOverloads/statSync (0.77s)
+    --- PASS: TestNodeFSFileRefusesPinnedUnsupportedOverloads/readSync (0.67s)
+    --- PASS: TestNodeFSFileRefusesPinnedUnsupportedOverloads/writeFileSync (0.97s)
+=== RUN   TestNodeFSFileNamespaceImport
+--- PASS: TestNodeFSFileNamespaceImport (0.72s)
+=== RUN   TestNodeFSFileQualifiedErrorType
+--- PASS: TestNodeFSFileQualifiedErrorType (0.45s)
+=== RUN   TestNodeFSFileKeepsDetachedMethodRefusal
+--- PASS: TestNodeFSFileKeepsDetachedMethodRefusal (0.52s)
+=== RUN   TestNodeFSFileBufferBorrow
+--- PASS: TestNodeFSFileBufferBorrow (1.01s)
+=== RUN   TestNodeFSFileScratchOptionsBorrow
+--- PASS: TestNodeFSFileScratchOptionsBorrow (1.11s)
+=== RUN   TestNodeFSFileScratchOverloadsAreNamed
+--- PASS: TestNodeFSFileScratchOverloadsAreNamed (2.29s)
+=== RUN   TestRegExpNativeRefusals
+--- PASS: TestRegExpNativeRefusals (0.40s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	14.837s
+=== RUN   TestNoReaderCallingConvention
+=== RUN   TestNoReaderCallingConvention/closure_convention_plain.a
+=== RUN   TestNoReaderCallingConvention/arguments_length_no_reader.a
+=== RUN   TestNoReaderCallingConvention/arguments_length_unrelated_type.a
+--- PASS: TestNoReaderCallingConvention (0.27s)
+    --- PASS: TestNoReaderCallingConvention/closure_convention_plain.a (0.11s)
+    --- PASS: TestNoReaderCallingConvention/arguments_length_no_reader.a (0.08s)
+    --- PASS: TestNoReaderCallingConvention/arguments_length_unrelated_type.a (0.09s)
+=== RUN   TestClosureConventionDropCount
+    closure_convention_test.go:50: drop-count mutant rejected by clang under -Werror: expected 3, have 2
+--- PASS: TestClosureConventionDropCount (0.42s)
+=== RUN   TestClosureConventionRuntimeDropCount
+    closure_convention_test.go:78: runtime callback drop-count mutant rejected by clang under -Werror: expected 3, have 2
+--- PASS: TestClosureConventionRuntimeDropCount (8.30s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	9.020s
+=== RUN   TestNodeFSFileAgreesWithNode
+=== PAUSE TestNodeFSFileAgreesWithNode
+=== RUN   TestNodeFSFileMutants
+=== PAUSE TestNodeFSFileMutants
+=== CONT  TestNodeFSFileAgreesWithNode
+=== RUN   TestNodeFSFileAgreesWithNode/read
+=== CONT  TestNodeFSFileMutants
+=== PAUSE TestNodeFSFileAgreesWithNode/read
+=== RUN   TestNodeFSFileMutants/writeFileSync_Buffer_bytes
+=== RUN   TestNodeFSFileAgreesWithNode/open
+=== PAUSE TestNodeFSFileAgreesWithNode/open
+=== PAUSE TestNodeFSFileMutants/writeFileSync_Buffer_bytes
+=== RUN   TestNodeFSFileAgreesWithNode/write
+=== RUN   TestNodeFSFileMutants/writeFileSync_Buffer_fd
+=== PAUSE TestNodeFSFileAgreesWithNode/write
+=== PAUSE TestNodeFSFileMutants/writeFileSync_Buffer_fd
+=== RUN   TestNodeFSFileAgreesWithNode/close
+=== RUN   TestNodeFSFileMutants/readSync_byte_count
+=== PAUSE TestNodeFSFileAgreesWithNode/close
+=== RUN   TestNodeFSFileAgreesWithNode/write_file
+=== PAUSE TestNodeFSFileAgreesWithNode/write_file
+=== RUN   TestNodeFSFileAgreesWithNode/exists
+=== PAUSE TestNodeFSFileAgreesWithNode/exists
+=== RUN   TestNodeFSFileAgreesWithNode/stat
+=== PAUSE TestNodeFSFileAgreesWithNode/stat
+=== RUN   TestNodeFSFileAgreesWithNode/mkdir
+=== PAUSE TestNodeFSFileAgreesWithNode/mkdir
+=== RUN   TestNodeFSFileAgreesWithNode/unlink
+=== PAUSE TestNodeFSFileAgreesWithNode/unlink
+=== RUN   TestNodeFSFileAgreesWithNode/utimes
+=== PAUSE TestNodeFSFileAgreesWithNode/utimes
+=== PAUSE TestNodeFSFileMutants/readSync_byte_count
+=== RUN   TestNodeFSFileAgreesWithNode/date
+=== PAUSE TestNodeFSFileAgreesWithNode/date
+=== RUN   TestNodeFSFileAgreesWithNode/system
+=== PAUSE TestNodeFSFileAgreesWithNode/system
+=== RUN   TestNodeFSFileAgreesWithNode/buffer
+=== PAUSE TestNodeFSFileAgreesWithNode/buffer
+=== RUN   TestNodeFSFileAgreesWithNode/read_sync
+=== PAUSE TestNodeFSFileAgreesWithNode/read_sync
+=== RUN   TestNodeFSFileAgreesWithNode/write_buffer
+=== PAUSE TestNodeFSFileAgreesWithNode/write_buffer
+=== RUN   TestNodeFSFileAgreesWithNode/mkdtemp
+=== PAUSE TestNodeFSFileAgreesWithNode/mkdtemp
+=== RUN   TestNodeFSFileAgreesWithNode/rm
+=== PAUSE TestNodeFSFileAgreesWithNode/rm
+=== CONT  TestNodeFSFileAgreesWithNode/read
+=== CONT  TestNodeFSFileAgreesWithNode/rm
+=== CONT  TestNodeFSFileAgreesWithNode/mkdtemp
+=== CONT  TestNodeFSFileAgreesWithNode/write_buffer
+=== RUN   TestNodeFSFileMutants/readFileSync_raw_bytes
+=== PAUSE TestNodeFSFileMutants/readFileSync_raw_bytes
+=== RUN   TestNodeFSFileMutants/readFileSync_raw_fd
+=== PAUSE TestNodeFSFileMutants/readFileSync_raw_fd
+=== RUN   TestNodeFSFileMutants/readFileSync_UTF8
+=== PAUSE TestNodeFSFileMutants/readFileSync_UTF8
+=== RUN   TestNodeFSFileMutants/readFileSync_fd
+=== PAUSE TestNodeFSFileMutants/readFileSync_fd
+=== RUN   TestNodeFSFileMutants/openSync_truncation
+=== PAUSE TestNodeFSFileMutants/openSync_truncation
+=== RUN   TestNodeFSFileMutants/writeSync_byte_count
+=== PAUSE TestNodeFSFileMutants/writeSync_byte_count
+=== RUN   TestNodeFSFileMutants/closeSync_swallowed_failure
+=== PAUSE TestNodeFSFileMutants/closeSync_swallowed_failure
+=== RUN   TestNodeFSFileMutants/writeFileSync_append_flag
+=== PAUSE TestNodeFSFileMutants/writeFileSync_append_flag
+=== RUN   TestNodeFSFileMutants/existsSync_directories
+=== PAUSE TestNodeFSFileMutants/existsSync_directories
+=== RUN   TestNodeFSFileMutants/statSync_missing_option
+=== PAUSE TestNodeFSFileMutants/statSync_missing_option
+=== RUN   TestNodeFSFileMutants/Stats_size
+=== PAUSE TestNodeFSFileMutants/Stats_size
+=== RUN   TestNodeFSFileMutants/Stats_mtimeMs
+=== PAUSE TestNodeFSFileMutants/Stats_mtimeMs
+=== RUN   TestNodeFSFileMutants/Stats_atime
+=== PAUSE TestNodeFSFileMutants/Stats_atime
+=== RUN   TestNodeFSFileMutants/Stats_mtime
+=== PAUSE TestNodeFSFileMutants/Stats_mtime
+=== RUN   TestNodeFSFileMutants/Stats_isFile
+=== PAUSE TestNodeFSFileMutants/Stats_isFile
+=== RUN   TestNodeFSFileMutants/Stats_isDirectory
+=== PAUSE TestNodeFSFileMutants/Stats_isDirectory
+=== RUN   TestNodeFSFileMutants/Stats_isSymbolicLink_follows
+=== PAUSE TestNodeFSFileMutants/Stats_isSymbolicLink_follows
+=== RUN   TestNodeFSFileMutants/mkdirSync_first_directory
+=== PAUSE TestNodeFSFileMutants/mkdirSync_first_directory
+=== RUN   TestNodeFSFileMutants/unlinkSync_swallowed_failure
+=== PAUSE TestNodeFSFileMutants/unlinkSync_swallowed_failure
+=== RUN   TestNodeFSFileMutants/utimesSync_milliseconds
+=== PAUSE TestNodeFSFileMutants/utimesSync_milliseconds
+=== RUN   TestNodeFSFileMutants/Date_timestamp
+=== PAUSE TestNodeFSFileMutants/Date_timestamp
+=== RUN   TestNodeFSFileMutants/System_fileExists
+=== PAUSE TestNodeFSFileMutants/System_fileExists
+=== RUN   TestNodeFSFileMutants/System_getFileSize
+=== PAUSE TestNodeFSFileMutants/System_getFileSize
+=== RUN   TestNodeFSFileMutants/System_getModifiedTime
+=== PAUSE TestNodeFSFileMutants/System_getModifiedTime
+=== RUN   TestNodeFSFileMutants/System_setModifiedTime
+=== PAUSE TestNodeFSFileMutants/System_setModifiedTime
+=== RUN   TestNodeFSFileMutants/System_deleteFile
+=== PAUSE TestNodeFSFileMutants/System_deleteFile
+=== RUN   TestNodeFSFileMutants/System_createDirectory
+=== PAUSE TestNodeFSFileMutants/System_createDirectory
+=== RUN   TestNodeFSFileMutants/System_writeFile_BOM
+=== PAUSE TestNodeFSFileMutants/System_writeFile_BOM
+=== CONT  TestNodeFSFileAgreesWithNode/read_sync
+    node_fs_file_test.go:140: Node bytes, effects, ASan/UBSan and leak check passed
+=== CONT  TestNodeFSFileAgreesWithNode/buffer
+=== NAME  TestNodeFSFileAgreesWithNode/read
+    node_fs_file_test.go:140: Node bytes, effects, ASan/UBSan and leak check passed
+=== CONT  TestNodeFSFileAgreesWithNode/system
+=== NAME  TestNodeFSFileAgreesWithNode/write_buffer
+    node_fs_file_test.go:140: Node bytes, effects, ASan/UBSan and leak check passed
+=== CONT  TestNodeFSFileAgreesWithNode/date
+    node_fs_file_test.go:140: Node bytes, effects, ASan/UBSan and leak check passed
+=== CONT  TestNodeFSFileAgreesWithNode/utimes
+=== NAME  TestNodeFSFileAgreesWithNode/buffer
+    node_fs_file_test.go:140: Node bytes, effects, ASan/UBSan and leak check passed
+=== CONT  TestNodeFSFileAgreesWithNode/unlink
+=== NAME  TestNodeFSFileAgreesWithNode/system
+    node_fs_file_test.go:140: Node bytes, effects, ASan/UBSan and leak check passed
+=== CONT  TestNodeFSFileAgreesWithNode/mkdir
+=== NAME  TestNodeFSFileAgreesWithNode/utimes
+    node_fs_file_test.go:140: Node bytes, effects, ASan/UBSan and leak check passed
+=== CONT  TestNodeFSFileAgreesWithNode/stat
+=== NAME  TestNodeFSFileAgreesWithNode/unlink
+    node_fs_file_test.go:140: Node bytes, effects, ASan/UBSan and leak check passed
+=== CONT  TestNodeFSFileAgreesWithNode/exists
+=== NAME  TestNodeFSFileAgreesWithNode/mkdir
+    node_fs_file_test.go:140: Node bytes, effects, ASan/UBSan and leak check passed
+=== CONT  TestNodeFSFileAgreesWithNode/write_file
+=== NAME  TestNodeFSFileAgreesWithNode/stat
+    node_fs_file_test.go:140: Node bytes, effects, ASan/UBSan and leak check passed
+=== CONT  TestNodeFSFileAgreesWithNode/close
+=== NAME  TestNodeFSFileAgreesWithNode/exists
+    node_fs_file_test.go:140: Node bytes, effects, ASan/UBSan and leak check passed
+=== CONT  TestNodeFSFileAgreesWithNode/write
+=== NAME  TestNodeFSFileAgreesWithNode/write_file
+    node_fs_file_test.go:140: Node bytes, effects, ASan/UBSan and leak check passed
+=== CONT  TestNodeFSFileAgreesWithNode/open
+=== NAME  TestNodeFSFileAgreesWithNode/close
+    node_fs_file_test.go:140: Node bytes, effects, ASan/UBSan and leak check passed
+=== CONT  TestNodeFSFileMutants/writeFileSync_Buffer_bytes
+=== NAME  TestNodeFSFileAgreesWithNode/write
+    node_fs_file_test.go:140: Node bytes, effects, ASan/UBSan and leak check passed
+=== CONT  TestNodeFSFileMutants/System_writeFile_BOM
+=== NAME  TestNodeFSFileAgreesWithNode/open
+    node_fs_file_test.go:140: Node bytes, effects, ASan/UBSan and leak check passed
+=== CONT  TestNodeFSFileMutants/System_createDirectory
+=== NAME  TestNodeFSFileMutants/writeFileSync_Buffer_bytes
+    node_fs_file_test.go:218: caught only by Node stdout; exit 0, no sanitizer findings or leaks
+=== CONT  TestNodeFSFileMutants/System_deleteFile
+=== NAME  TestNodeFSFileMutants/System_writeFile_BOM
+    node_fs_file_test.go:218: caught only by Node stdout; exit 0, no sanitizer findings or leaks
+=== CONT  TestNodeFSFileMutants/System_setModifiedTime
+=== NAME  TestNodeFSFileMutants/System_createDirectory
+    node_fs_file_test.go:218: caught only by Node stdout; exit 0, no sanitizer findings or leaks
+=== CONT  TestNodeFSFileMutants/System_getModifiedTime
+=== NAME  TestNodeFSFileMutants/System_deleteFile
+    node_fs_file_test.go:218: caught only by Node stdout; exit 0, no sanitizer findings or leaks
+=== CONT  TestNodeFSFileMutants/System_getFileSize
+=== NAME  TestNodeFSFileMutants/System_setModifiedTime
+    node_fs_file_test.go:218: caught only by Node stdout; exit 0, no sanitizer findings or leaks
+=== CONT  TestNodeFSFileMutants/System_fileExists
+=== NAME  TestNodeFSFileMutants/System_getModifiedTime
+    node_fs_file_test.go:218: caught only by Node stdout; exit 0, no sanitizer findings or leaks
+=== CONT  TestNodeFSFileMutants/Date_timestamp
+=== NAME  TestNodeFSFileMutants/System_getFileSize
+    node_fs_file_test.go:218: caught only by Node stdout; exit 0, no sanitizer findings or leaks
+=== CONT  TestNodeFSFileMutants/utimesSync_milliseconds
+=== NAME  TestNodeFSFileMutants/System_fileExists
+    node_fs_file_test.go:218: caught only by Node stdout; exit 0, no sanitizer findings or leaks
+=== CONT  TestNodeFSFileMutants/unlinkSync_swallowed_failure
+=== NAME  TestNodeFSFileMutants/Date_timestamp
+    node_fs_file_test.go:218: caught only by Node stdout; exit 0, no sanitizer findings or leaks
+=== CONT  TestNodeFSFileMutants/mkdirSync_first_directory
+=== NAME  TestNodeFSFileMutants/utimesSync_milliseconds
+    node_fs_file_test.go:218: caught only by Node stdout; exit 0, no sanitizer findings or leaks
+=== CONT  TestNodeFSFileMutants/Stats_isSymbolicLink_follows
+=== NAME  TestNodeFSFileMutants/unlinkSync_swallowed_failure
+    node_fs_file_test.go:218: caught only by Node stdout; exit 0, no sanitizer findings or leaks
+=== CONT  TestNodeFSFileMutants/Stats_isDirectory
+=== NAME  TestNodeFSFileMutants/mkdirSync_first_directory
+    node_fs_file_test.go:218: caught only by Node stdout; exit 0, no sanitizer findings or leaks
+=== CONT  TestNodeFSFileMutants/Stats_isFile
+=== NAME  TestNodeFSFileAgreesWithNode/rm
+    node_fs_file_test.go:140: Node bytes, effects, ASan/UBSan and leak check passed
+=== CONT  TestNodeFSFileMutants/Stats_mtime
+=== NAME  TestNodeFSFileAgreesWithNode/mkdtemp
+    node_fs_file_test.go:140: Node bytes, effects, ASan/UBSan and leak check passed
+=== CONT  TestNodeFSFileMutants/Stats_atime
+--- PASS: TestNodeFSFileAgreesWithNode (0.00s)
+    --- PASS: TestNodeFSFileAgreesWithNode/read (2.51s)
+    --- PASS: TestNodeFSFileAgreesWithNode/read_sync (2.49s)
+    --- PASS: TestNodeFSFileAgreesWithNode/write_buffer (2.71s)
+    --- PASS: TestNodeFSFileAgreesWithNode/date (1.00s)
+    --- PASS: TestNodeFSFileAgreesWithNode/buffer (1.70s)
+    --- PASS: TestNodeFSFileAgreesWithNode/system (1.89s)
+    --- PASS: TestNodeFSFileAgreesWithNode/utimes (1.31s)
+    --- PASS: TestNodeFSFileAgreesWithNode/unlink (1.33s)
+    --- PASS: TestNodeFSFileAgreesWithNode/mkdir (1.72s)
+    --- PASS: TestNodeFSFileAgreesWithNode/stat (1.76s)
+    --- PASS: TestNodeFSFileAgreesWithNode/exists (1.66s)
+    --- PASS: TestNodeFSFileAgreesWithNode/write_file (1.60s)
+    --- PASS: TestNodeFSFileAgreesWithNode/close (1.84s)
+    --- PASS: TestNodeFSFileAgreesWithNode/write (1.53s)
+    --- PASS: TestNodeFSFileAgreesWithNode/open (1.86s)
+    --- PASS: TestNodeFSFileAgreesWithNode/rm (15.20s)
+    --- PASS: TestNodeFSFileAgreesWithNode/mkdtemp (15.35s)
+=== NAME  TestNodeFSFileMutants/Stats_isSymbolicLink_follows
+    node_fs_file_test.go:218: caught only by Node stdout; exit 0, no sanitizer findings or leaks
+=== CONT  TestNodeFSFileMutants/Stats_mtimeMs
+=== NAME  TestNodeFSFileMutants/Stats_isFile
+    node_fs_file_test.go:218: caught only by Node stdout; exit 0, no sanitizer findings or leaks
+=== CONT  TestNodeFSFileMutants/Stats_size
+=== NAME  TestNodeFSFileMutants/Stats_isDirectory
+    node_fs_file_test.go:218: caught only by Node stdout; exit 0, no sanitizer findings or leaks
+=== CONT  TestNodeFSFileMutants/statSync_missing_option
+=== NAME  TestNodeFSFileMutants/Stats_mtime
+    node_fs_file_test.go:218: caught only by Node stdout; exit 0, no sanitizer findings or leaks
+=== CONT  TestNodeFSFileMutants/existsSync_directories
+=== NAME  TestNodeFSFileMutants/Stats_atime
+    node_fs_file_test.go:218: caught only by Node stdout; exit 0, no sanitizer findings or leaks
+=== CONT  TestNodeFSFileMutants/writeFileSync_append_flag
+=== NAME  TestNodeFSFileMutants/Stats_mtimeMs
+    node_fs_file_test.go:218: caught only by Node stdout; exit 0, no sanitizer findings or leaks
+=== CONT  TestNodeFSFileMutants/closeSync_swallowed_failure
+=== NAME  TestNodeFSFileMutants/Stats_size
+    node_fs_file_test.go:218: caught only by Node stdout; exit 0, no sanitizer findings or leaks
+=== CONT  TestNodeFSFileMutants/writeSync_byte_count
+=== NAME  TestNodeFSFileMutants/statSync_missing_option
+    node_fs_file_test.go:218: caught only by Node stdout; exit 0, no sanitizer findings or leaks
+=== CONT  TestNodeFSFileMutants/openSync_truncation
+=== NAME  TestNodeFSFileMutants/existsSync_directories
+    node_fs_file_test.go:218: caught only by Node stdout; exit 0, no sanitizer findings or leaks
+=== CONT  TestNodeFSFileMutants/readFileSync_fd
+=== NAME  TestNodeFSFileMutants/writeFileSync_append_flag
+    node_fs_file_test.go:218: caught only by Node stdout; exit 0, no sanitizer findings or leaks
+=== CONT  TestNodeFSFileMutants/readFileSync_UTF8
+=== NAME  TestNodeFSFileMutants/closeSync_swallowed_failure
+    node_fs_file_test.go:218: caught only by Node stdout; exit 0, no sanitizer findings or leaks
+=== CONT  TestNodeFSFileMutants/readFileSync_raw_fd
+=== NAME  TestNodeFSFileMutants/writeSync_byte_count
+    node_fs_file_test.go:218: caught only by Node stdout; exit 0, no sanitizer findings or leaks
+=== CONT  TestNodeFSFileMutants/readFileSync_raw_bytes
+=== NAME  TestNodeFSFileMutants/openSync_truncation
+    node_fs_file_test.go:218: caught only by Node stdout; exit 0, no sanitizer findings or leaks
+=== CONT  TestNodeFSFileMutants/readSync_byte_count
+=== NAME  TestNodeFSFileMutants/readFileSync_fd
+    node_fs_file_test.go:218: caught only by Node stdout; exit 0, no sanitizer findings or leaks
+=== CONT  TestNodeFSFileMutants/writeFileSync_Buffer_fd
+=== NAME  TestNodeFSFileMutants/readFileSync_UTF8
+    node_fs_file_test.go:218: caught only by Node stdout; exit 0, no sanitizer findings or leaks
+=== NAME  TestNodeFSFileMutants/readFileSync_raw_bytes
+    node_fs_file_test.go:218: caught only by Node stdout; exit 0, no sanitizer findings or leaks
+=== NAME  TestNodeFSFileMutants/readFileSync_raw_fd
+    node_fs_file_test.go:218: caught only by Node stdout; exit 0, no sanitizer findings or leaks
+=== NAME  TestNodeFSFileMutants/readSync_byte_count
+    node_fs_file_test.go:218: caught only by Node stdout; exit 0, no sanitizer findings or leaks
+=== NAME  TestNodeFSFileMutants/writeFileSync_Buffer_fd
+    node_fs_file_test.go:218: caught only by Node stdout; exit 0, no sanitizer findings or leaks
+--- PASS: TestNodeFSFileMutants (0.01s)
+    --- PASS: TestNodeFSFileMutants/writeFileSync_Buffer_bytes (1.22s)
+    --- PASS: TestNodeFSFileMutants/System_writeFile_BOM (1.26s)
+    --- PASS: TestNodeFSFileMutants/System_createDirectory (1.60s)
+    --- PASS: TestNodeFSFileMutants/System_deleteFile (1.64s)
+    --- PASS: TestNodeFSFileMutants/System_setModifiedTime (1.65s)
+    --- PASS: TestNodeFSFileMutants/System_getModifiedTime (1.32s)
+    --- PASS: TestNodeFSFileMutants/System_getFileSize (1.62s)
+    --- PASS: TestNodeFSFileMutants/System_fileExists (1.69s)
+    --- PASS: TestNodeFSFileMutants/Date_timestamp (0.89s)
+    --- PASS: TestNodeFSFileMutants/utimesSync_milliseconds (1.13s)
+    --- PASS: TestNodeFSFileMutants/unlinkSync_swallowed_failure (1.09s)
+    --- PASS: TestNodeFSFileMutants/mkdirSync_first_directory (1.07s)
+    --- PASS: TestNodeFSFileMutants/Stats_isSymbolicLink_follows (1.42s)
+    --- PASS: TestNodeFSFileMutants/Stats_isFile (1.27s)
+    --- PASS: TestNodeFSFileMutants/Stats_isDirectory (1.36s)
+    --- PASS: TestNodeFSFileMutants/Stats_mtime (1.27s)
+    --- PASS: TestNodeFSFileMutants/Stats_atime (1.15s)
+    --- PASS: TestNodeFSFileMutants/Stats_mtimeMs (1.16s)
+    --- PASS: TestNodeFSFileMutants/Stats_size (1.09s)
+    --- PASS: TestNodeFSFileMutants/statSync_missing_option (1.07s)
+    --- PASS: TestNodeFSFileMutants/existsSync_directories (1.41s)
+    --- PASS: TestNodeFSFileMutants/writeFileSync_append_flag (1.59s)
+    --- PASS: TestNodeFSFileMutants/closeSync_swallowed_failure (1.47s)
+    --- PASS: TestNodeFSFileMutants/writeSync_byte_count (1.50s)
+    --- PASS: TestNodeFSFileMutants/openSync_truncation (1.74s)
+    --- PASS: TestNodeFSFileMutants/readFileSync_fd (1.23s)
+    --- PASS: TestNodeFSFileMutants/readFileSync_UTF8 (1.22s)
+    --- PASS: TestNodeFSFileMutants/readFileSync_raw_bytes (1.10s)
+    --- PASS: TestNodeFSFileMutants/readFileSync_raw_fd (1.17s)
+    --- PASS: TestNodeFSFileMutants/readSync_byte_count (0.92s)
+    --- PASS: TestNodeFSFileMutants/writeFileSync_Buffer_fd (0.98s)
+PASS
+ok  	github.com/system-inc/adamic/internal/oracle	20.127s

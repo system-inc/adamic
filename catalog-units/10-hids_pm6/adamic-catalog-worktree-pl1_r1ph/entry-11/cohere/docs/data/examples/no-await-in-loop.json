@@ -1,0 +1,24 @@
+{
+    "rule": "no-await-in-loop",
+    "firing": {
+        "file": "/repository/source/NoAwaitInLoop.ts",
+        "source": "for (await using resource of resources) {}",
+        "findings": [
+            {
+                "line": 1,
+                "column": 6,
+                "endLine": 1,
+                "endColumn": 26,
+                "messageId": "unexpectedAwait",
+                "message": "This waits inside a loop, so each iteration blocks on the one before it and the work runs one at a time. Where the iterations do not depend on each other, collecting the promises and awaiting them together turns a sum of latencies into a maximum. Where they do depend on each other, the sequencing is deliberate and the loop is the right shape, which is why this reports rather than repairs."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/NoAwaitInLoop.ts",
+        "source": "while (true) { let value = 0; }"
+    },
+    "assertedMessageIds": [
+        "unexpectedAwait"
+    ]
+}

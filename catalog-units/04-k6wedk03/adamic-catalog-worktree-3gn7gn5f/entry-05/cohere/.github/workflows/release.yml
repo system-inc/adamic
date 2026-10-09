@@ -1,0 +1,563 @@
+# Builds every platform binary and stages the npm packages for one version.
+#
+# There is no build matrix, which is the whole point of writing cohere in Go: one machine
+# cross-compiles all six targets in a couple of minutes, so there is no fan-out to keep in sync and
+# no chance of six jobs disagreeing about the version they stamped. The single job also means the
+# release is atomic by construction — a target that fails to build fails the job rather than leaving
+# five published packages and one missing platform.
+#
+# It runs on macOS rather than Linux for two reasons. Codesigning needs `codesign` and the Apple
+# toolchain, and a signature applied on a machine other than the one that built the binary is one
+# more seam. And the two macOS packages carry cohere-swift beside cohere, which only Swift on a Mac
+# builds. Everything else about the build is platform-independent.
+#
+# Proofs follow the build, and none of them builds anything. `swift-on-intel` runs the x64 Mac package
+# on an Intel Mac, `windows` runs the Windows package on Windows, and `clean-machine` installs the
+# macOS and Linux packages on fresh runners with no Go and no checkout: the proofs the release runner
+# cannot give. `publish` runs only after all of them, so the registry never receives a package a proof
+# refused, and the VS Code extension publishes after that.
+#
+# Every release is verifiable from outside (README.md, "Verifying a release"). The packages carry a
+# SHA256SUMS the launcher checks before it runs a binary, every file is attested, and npm publishes with
+# provenance. Each check is shown here refusing a file with one byte flipped before anything publishes.
+name: release
+
+on:
+    workflow_dispatch:
+        inputs:
+            version:
+                description: The version to stamp and publish, like 1.0.0. Versions start at 1.0.0, and the release refuses anything below it
+                required: true
+                type: string
+            publish:
+                description: Publish to npm rather than only staging the packages
+                required: false
+                default: false
+                type: boolean
+
+# A release writes to the registry, so two of them running at once could interleave and publish a
+# half-matched set. Concurrency is serialized rather than cancelled: cancelling a release mid-publish
+# is worse than making the second one wait.
+concurrency:
+    group: release
+    cancel-in-progress: false
+
+jobs:
+    release:
+        # macos-26 for Xcode 26 and Swift 6.3, the oldest stable toolchain the engine's Package.swift
+        # (tools 6.2) builds with. Never the xcode-27 preview image: a release is not built on a beta.
+        runs-on: macos-26
+        # The module check, then two cold Swift engine builds (16 and 13 minutes on an M-series desk
+        # machine, and a runner is slower), then the proofs. The dry run 37238149770 spent 34 minutes in
+        # the module check alone before its tests hit Go's default timeout, so 90 left no room.
+        timeout-minutes: 150
+
+        # Naming any permission drops every other to none. id-token mints the identity Sigstore certifies,
+        # for the build attestations and the provenance proof; attestations stores the attestations on the
+        # repository, and artifact-metadata their storage records.
+        permissions:
+            contents: read
+            id-token: write
+            attestations: write
+            artifact-metadata: write
+
+        # Secrets are lifted to job-level environment variables because the `secrets` context is not
+        # available in an `if:` conditional — referencing it there is a parse-time error
+        # ("Unrecognized named-value: 'secrets'"), not a condition that evaluates false. Mapping to
+        # `env` and testing that is the documented way to make a step conditional on a secret
+        # existing, which is what lets an unsigned staging run work for someone without credentials.
+        env:
+            MACOS_CERTIFICATE: ${{ secrets.MACOS_CERTIFICATE }}
+            MACOS_CERTIFICATE_PASSWORD: ${{ secrets.MACOS_CERTIFICATE_PASSWORD }}
+            MACOS_SIGNING_IDENTITY: ${{ secrets.MACOS_SIGNING_IDENTITY }}
+            KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
+            APPLE_ID: ${{ secrets.APPLE_ID }}
+            APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+            APPLE_APP_PASSWORD: ${{ secrets.APPLE_APP_PASSWORD }}
+
+        steps:
+            - uses: actions/checkout@v4
+              with:
+                  # The vendored compiler is most of the code in the binary, and the version stamp
+                  # records which commit it was. Without the submodule the build fails outright,
+                  # which is the correct outcome but a confusing one to debug from a clone error.
+                  submodules: true
+                  # `--version` reports the pinned compiler commit, read from this commit's gitlink, and
+                  # the release refuses a submodule checked out anywhere else. A shallow submodule still
+                  # resolves HEAD, so depth is left at the default only for the outer repository.
+                  fetch-depth: 0
+
+            - uses: actions/setup-go@v5
+              with:
+                  go-version-file: go.mod
+                  cache: true
+
+            # The module's tests run the launcher with Node, and the provenance proof calls the npm that
+            # ships with it, so both are the Node and npm the publish job uses rather than the image's.
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: 22
+
+            - name: Check the module before building anything
+              # A release is not the place to discover a formatting or vet failure. These are the
+              # same checks the repository is gated by, run first so a bad tree never reaches the
+              # signing keys.
+              # The cross-compile guard only type-checks the targets here, as it does locally. The build
+              # proof is "Stage every platform package", which builds all six right after and fails the
+              # job on any that does not build, so building them inside a test as well cost the runner
+              # 600 seconds for nothing (dry run 37238149770).
+              run: |
+                  # Prove the check looked at something before trusting that it found nothing.
+                  #
+                  # The original `test -z "$(gofmt -l ...)"` accepted a typo'd or renamed path: the
+                  # error goes to stderr, so the captured string is empty and `test -z` passes over
+                  # a tree nobody examined.
+                  #
+                  # The mechanism is worth stating exactly, because the obvious explanation is
+                  # wrong. `gofmt` does report the failure — it exits 2 — and `$(...)` preserves
+                  # that status. The defect is that `test -z` never consults it: it tests the
+                  # captured text, and the text is empty. So the fix is to read the status that was
+                  # there all along, not to pattern-match the message.
+                  # The paths are the module's real ones. `./cmd` became `./command` on 08-27 and
+                  # `./tools` is gone, and from then until this was corrected every release failed
+                  # here. That was the guard working, but it was also the only thing that ran.
+                  if ! formatted=$(gofmt -l ./command ./internal); then
+                      echo "gofmt could not read a path it was given (exit above)"
+                      exit 1
+                  fi
+
+                  # And the population is asserted separately, because a readable path that holds no
+                  # Go files is a different failure: gofmt exits 0 with nothing to say, which is
+                  # indistinguishable from a formatted tree.
+                  examined=$(find ./command ./internal -name '*.go' | wc -l)
+                  echo "gofmt examined $examined Go files (must be > 0)"
+                  if [ "$examined" -eq 0 ]; then
+                      echo "no Go files found, so a clean result here would mean nothing"
+                      exit 1
+                  fi
+
+                  if [ -n "$formatted" ]; then
+                      echo "unformatted files:"
+                      echo "$formatted"
+                      exit 1
+                  fi
+
+                  go vet ./command/... ./internal/...
+                  # Go's default is 10 minutes per package, and on the runner five packages passed it in
+                  # dry run 37238149770 (the slowest, command/cohere, takes 4.5 minutes on a 16-core
+                  # desk machine). 30 minutes is room for a three-core runner, and still a ceiling.
+                  go test -timeout 30m ./command/... ./internal/...
+
+                  # The website's data, checked against the lint tests themselves. -check recaptures every
+                  # example by rerunning ./internal/lint/... with capture on, which the run above can't
+                  # stand in for, because capture changes what the tests record (#d7vx76v). Measured on the
+                  # desk machine at load 151: 85 seconds, 2.6 GB peak resident. GOFLAGS carries the same
+                  # per-package ceiling into the go test it runs, and only go test takes -timeout.
+                  GOFLAGS=-timeout=30m go run ./internal/docsdata/tools/generate -check
+
+            - name: Import the signing certificate
+              # Skipped when the secret is absent, so a fork or a contributor without credentials
+              # still gets a working staged release. What it must never do is appear to sign and
+              # not sign, which is why the build reports its own signing state at the end.
+              if: env.MACOS_CERTIFICATE != ''
+              run: |
+                  # A dedicated keychain rather than the login one: it is created for this run and
+                  # dies with the runner, so the certificate never persists anywhere.
+                  security create-keychain -p "$KEYCHAIN_PASSWORD" build.keychain
+                  security default-keychain -s build.keychain
+                  security unlock-keychain -p "$KEYCHAIN_PASSWORD" build.keychain
+                  # Without a timeout the keychain relocks partway through a long build and
+                  # codesign starts failing halfway down the target list.
+                  security set-keychain-settings -t 3600 -u build.keychain
+
+                  echo "$MACOS_CERTIFICATE" | base64 --decode > certificate.p12
+                  security import certificate.p12 \
+                      -k build.keychain \
+                      -P "$MACOS_CERTIFICATE_PASSWORD" \
+                      -T /usr/bin/codesign
+                  rm certificate.p12
+
+                  # Without this, codesign prompts for keychain access and hangs a headless runner
+                  # until the job times out.
+                  security set-key-partition-list \
+                      -S apple-tool:,apple:,codesign: \
+                      -s -k "$KEYCHAIN_PASSWORD" build.keychain
+
+            - name: Store the notarization credentials
+              if: env.APPLE_ID != ''
+              run: |
+                  # Stored as a profile rather than passed on the command line, because a command
+                  # line is visible to every process on the machine and lands in the run log.
+                  xcrun notarytool store-credentials cohere-notary \
+                      --apple-id "$APPLE_ID" \
+                      --team-id "$APPLE_TEAM_ID" \
+                      --password "$APPLE_APP_PASSWORD" \
+                      --keychain build.keychain
+
+            - name: Make sure this Mac can run an Intel binary
+              # The release runs each staged pair to check they speak one Swift contract, which runs
+              # the darwin-x64 package under Rosetta. A runner image without it fails the staging
+              # step by name; installing it here keeps that failure about the release, not the image.
+              run: |
+                  if ! arch -x86_64 /usr/bin/true 2>/dev/null; then
+                      softwareupdate --install-rosetta --agree-to-license
+                  fi
+                  arch -x86_64 /usr/bin/true
+
+            - name: Stage every platform package
+              run: |
+                  # The notary profile name is only meaningful if the credentials step actually ran,
+                  # and that is decided in the shell rather than in an expression because `secrets`
+                  # cannot appear in a workflow conditional at all.
+                  notary_profile=""
+                  if [ -n "$APPLE_ID" ]; then
+                      notary_profile="cohere-notary"
+                  fi
+
+                  go run ./command/cohere-release \
+                      --version "${{ inputs.version }}" \
+                      --output dist \
+                      --signing-identity "$MACOS_SIGNING_IDENTITY" \
+                      --notary-profile "$notary_profile"
+
+            - name: Prove the binary this run produced actually runs
+              # The build already checks that a file exists and is a plausible size. This checks
+              # that the artifact for this machine executes and reports the version that was asked
+              # for. A binary that builds, packages, and cannot run is the failure that reaches
+              # users, and it is invisible to every check that does not execute it.
+              run: |
+                  ./dist/cohere-darwin-arm64/bin/cohere --version
+                  reported=$(./dist/cohere-darwin-arm64/bin/cohere --version | head -1 | awk '{print $2}')
+                  if [ "$reported" != "${{ inputs.version }}" ]; then
+                      echo "the binary reports $reported but this release is ${{ inputs.version }}"
+                      exit 1
+                  fi
+
+            - name: Prove each Mac package checks Swift with no checkout on the machine
+              # This workspace is the tree the engines were built in, so it is the checkout a released
+              # engine must never read. The x64 package runs under Rosetta here and can only lint, since
+              # Xcode on Apple silicon ships libclang for arm64 only: its types phase is proven by the
+              # Intel job below, on an x86_64 Xcode. The script says why each run is shaped as it is.
+              run: |
+                  script=$(mktemp)
+                  cp .github/scripts/check-swift-packages.sh "$script"
+                  bash "$script" "$GITHUB_WORKSPACE" darwin-arm64:--no-fix darwin-x64:--lint
+
+            - name: Prove a missing platform binary fails loudly
+              # The rule this whole package exists to hold, checked on every release rather than
+              # trusted. A dispatcher that resolves nothing must exit non-zero; the failure that
+              # cost days was a resolver that exited zero having run nothing.
+              run: |
+                  mkdir -p /tmp/no-platform && cd /tmp/no-platform
+                  echo '{"name":"no-platform","version":"1.0.0","private":true}' > package.json
+                  npm install --no-audit --no-fund --omit=optional \
+                      "$GITHUB_WORKSPACE/dist/cohere"
+
+                  if ./node_modules/.bin/cohere --version; then
+                      echo "the dispatcher exited zero with no platform binary installed"
+                      echo "that is the green-over-nothing failure this tool exists to prevent"
+                      exit 1
+                  fi
+                  echo "a missing platform binary correctly failed"
+
+            - name: Prove SHA256SUMS checks what ships, and refuses a flipped byte
+              # The copy beside the packages is the one the GitHub release carries, and the dispatcher's is
+              # the one the launcher checks before it runs a binary. The release writes one rendering to
+              # both, and this holds them equal. The launcher's own refusal runs on every clean machine and
+              # on Windows (check-platform-package.sh) and in the module's tests.
+              run: |
+                  cmp dist/SHA256SUMS dist/cohere/SHA256SUMS
+                  (cd dist && shasum -a 256 -c SHA256SUMS)
+
+                  tampered="$RUNNER_TEMP/tampered-sums"
+                  mkdir -p "$tampered"
+                  cp -R dist/cohere-darwin-arm64 dist/SHA256SUMS "$tampered/"
+                  node .github/scripts/flip-byte.js "$tampered/cohere-darwin-arm64/bin/cohere"
+                  if (cd "$tampered" && shasum -a 256 -c --ignore-missing SHA256SUMS); then
+                      echo "shasum passed a binary with a flipped byte"
+                      exit 1
+                  fi
+                  echo "a flipped byte correctly failed its checksum"
+
+            - uses: actions/upload-artifact@v4
+              with:
+                  name: cohere-${{ inputs.version }}
+                  path: dist/
+                  # Long enough to investigate a bad release without keeping six 43 MB binaries
+                  # per run forever.
+                  retention-days: 14
+
+            - name: Package the VS Code extension, versioned with this release
+              # One .vsix for both registries, built beside the npm packages so it rides the same tar to
+              # the publish job. The script stamps the version and checks the .vsix it made.
+              run: bash .github/scripts/package-vscode-extension.sh "${{ inputs.version }}" dist
+
+            - name: Attest every binary, the checksums and the extension
+              # A build attestation per file, signed through Sigstore with this run's identity and stored on
+              # the repository, so `gh attestation verify <file> --repo system-inc/cohere` traces any of them
+              # to this workflow and commit. A dry run attests too, since that is the only way to prove this
+              # step and the refusal below before a release depends on them; each attestation is a public
+              # entry in Sigstore's transparency log.
+              uses: actions/attest@v4
+              with:
+                  subject-path: |
+                      dist/cohere-*/bin/*
+                      dist/SHA256SUMS
+                      dist/*.vsix
+
+            - name: Prove every attestation verifies, and a flipped byte does not
+              env:
+                  GH_TOKEN: ${{ github.token }}
+              run: |
+                  attested=0
+                  for file in dist/cohere-*/bin/* dist/SHA256SUMS dist/*.vsix; do
+                      gh attestation verify "$file" --repo "$GITHUB_REPOSITORY" > /dev/null
+                      attested=$((attested + 1))
+                  done
+                  # Every binary SHA256SUMS lists, plus the checksums and the extension. A glob that matched
+                  # short would otherwise verify fewer files and pass.
+                  expected=$(($(wc -l < dist/SHA256SUMS) + 2))
+                  echo "verified $attested attestations, of $expected files"
+                  if [ "$attested" -ne "$expected" ]; then
+                      exit 1
+                  fi
+
+                  tampered="$RUNNER_TEMP/tampered-cohere"
+                  cp dist/cohere-darwin-arm64/bin/cohere "$tampered"
+                  node .github/scripts/flip-byte.js "$tampered"
+                  if gh attestation verify "$tampered" --repo "$GITHUB_REPOSITORY"; then
+                      echo "an attestation verified a binary with a flipped byte"
+                      exit 1
+                  fi
+                  echo "a flipped byte correctly has no attestation"
+
+            - name: Prove the npm provenance this release will publish, and that it refuses a flipped byte
+              # `npm publish --dry-run` stops before npm makes provenance, so the script signs it the way the
+              # publish job's npm will and checks it the way npm does. Its header says what it holds.
+              run: node .github/scripts/check-npm-provenance.js dist
+
+            - name: Pack the staged packages for the jobs after this one
+              # An artifact directory comes back without its executable bits, and a published package
+              # whose binary cannot execute is the failure the launcher reports as "not executable" on
+              # every machine. A tar keeps the modes, so the jobs below unpack exactly what was staged.
+              run: tar -cf cohere-dist.tar dist
+
+            - uses: actions/upload-artifact@v4
+              with:
+                  name: cohere-${{ inputs.version }}-tar
+                  path: cohere-dist.tar
+                  retention-days: 14
+
+    # The x64 Mac package's types phase, run natively. Rosetta on the release runner cannot load an
+    # arm64-only libclang into an x86_64 engine, so only an Intel Mac with an x86_64 Xcode shows that
+    # phase working. macos-26-intel carries Xcode 26, whose Swift 6.3 reads the engine's tools 6.2.
+    swift-on-intel:
+        needs: release
+        runs-on: macos-26-intel
+        timeout-minutes: 30
+
+        steps:
+            - uses: actions/checkout@v4
+              with:
+                  # The script and nothing else. The engine's own sources are what it must not read,
+                  # so they are not put here, and the workspace is made unreadable all the same.
+                  sparse-checkout: .github/scripts
+
+            - uses: actions/download-artifact@v4
+              with:
+                  name: cohere-${{ inputs.version }}-tar
+
+            - name: Prove the x64 package checks Swift natively, every phase
+              run: |
+                  tar -xf cohere-dist.tar
+                  script=$(mktemp)
+                  cp .github/scripts/check-swift-packages.sh "$script"
+                  bash "$script" "$GITHUB_WORKSPACE" darwin-x64:--no-fix
+
+    # The Windows x64 package, run on Windows: installed with npm, then checked, fixed and formatted
+    # through npm's shim, the Node launcher and cohere.exe. Then the tests written for what differs on
+    # Windows: the rename retry, the ignore walk, and the run cache's file identity (#0kfa508). The
+    # whole go test suite is not run, since much of it uses /bin/sh, symlinks and `/`-absolute fixtures.
+    # win32-arm64 is built and not run, since there is no runner for it here.
+    windows:
+        needs: release
+        runs-on: windows-latest
+        timeout-minutes: 30
+        defaults:
+            run:
+                shell: bash
+
+        steps:
+            - uses: actions/checkout@v4
+              with:
+                  # The tests build against the compiler, which is the submodule.
+                  submodules: true
+
+            - uses: actions/setup-go@v5
+              with:
+                  go-version-file: go.mod
+
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: 22
+
+            - uses: actions/download-artifact@v4
+              with:
+                  name: cohere-${{ inputs.version }}-tar
+
+            - name: Prove the Windows package checks, fixes and formats a project
+              run: |
+                  tar -xf cohere-dist.tar
+                  bash .github/scripts/check-platform-package.sh win32-x64
+
+            - name: Run the tests written for what differs on Windows
+              run: |
+                  go test ./internal/replace/ ./internal/format/formatfiles/ ./internal/types/program/ \
+                      -run 'TestFileReplacesAFileHeldOpenBriefly|TestIgnorePatternsCoverNestedPaths|TestASameSizeEditUnderARestoredModificationTimeIsAMiss'
+
+    # A clean machine, by construction: a fresh runner per platform, installing the packed packages
+    # into an empty project the way a user's npm install does, with no checkout of cohere and no Go.
+    # The runner images ship Go, so a `go` that fails loudly goes first on PATH: if cohere ever ran it,
+    # the check fails naming it, rather than passing on a toolchain no user has. The project has known
+    # findings, a type error, unformatted files and a CRLF file, and every exit code and message is
+    # checked (check-platform-package.sh). macOS and Linux here; Windows is the job above.
+    clean-machine:
+        needs: release
+        strategy:
+            fail-fast: false
+            matrix:
+                include:
+                    - runner: macos-26
+                      platform: darwin-arm64
+                    - runner: ubuntu-latest
+                      platform: linux-x64
+                    - runner: ubuntu-24.04-arm
+                      platform: linux-arm64
+        runs-on: ${{ matrix.runner }}
+        timeout-minutes: 20
+
+        steps:
+            - uses: actions/checkout@v4
+              with:
+                  # The scripts and nothing else: what is under test is the install, not the tree.
+                  sparse-checkout: .github/scripts
+
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: 22
+
+            - uses: actions/download-artifact@v4
+              with:
+                  name: cohere-${{ inputs.version }}-tar
+
+            - name: Install the packages into an empty project and check it, with no Go
+              run: |
+                  tar -xf cohere-dist.tar
+
+                  nogo="$RUNNER_TEMP/no-go"
+                  mkdir -p "$nogo"
+                  printf '#!/bin/sh\necho "cohere ran go ($*), which no user'"'"'s machine has" >&2\nexit 97\n' > "$nogo/go"
+                  chmod 755 "$nogo/go"
+                  export PATH="$nogo:$PATH"
+                  unset GOROOT GOPATH GOFLAGS
+                  if go version 2> /dev/null; then
+                      echo "a working go is still first on PATH, so this would not prove cohere needs none"
+                      exit 1
+                  fi
+
+                  bash .github/scripts/check-platform-package.sh "${{ matrix.platform }}"
+
+    publish:
+        # After every proof, so a package one of them refused is never on the registry.
+        needs: [release, swift-on-intel, windows, clean-machine]
+        if: ${{ inputs.publish }}
+        runs-on: ubuntu-latest
+        timeout-minutes: 15
+        # id-token for npm's provenance, which signs each package with this run's identity; contents: write
+        # to create the GitHub release that carries SHA256SUMS.
+        permissions:
+            contents: write
+            id-token: write
+
+        steps:
+            - uses: actions/download-artifact@v4
+              with:
+                  name: cohere-${{ inputs.version }}-tar
+
+            # The npm the release job's provenance proof ran, so what was proven is what publishes.
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: 22
+
+            - name: Publish to npm
+              # Publishing is opt-in per run rather than automatic on a tag, because it cannot be
+              # undone. The platform packages go first: the dispatcher depends on them, so
+              # publishing it first opens a window where an install resolves a dispatcher whose
+              # binaries do not exist yet.
+              env:
+                  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+              run: |
+                  tar -xf cohere-dist.tar
+                  echo "//registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN" > ~/.npmrc
+
+                  # Every path starts with ./ because npm reads `dist/cohere` as the GitHub repository
+                  # dist/cohere. Measured in a dry run: the six platform packages published, and then the
+                  # dispatcher, the one package a user installs, failed on a git clone, which would have
+                  # left a version half on the registry.
+                  #
+                  # --provenance links each version to this run and commit, shown on npm as a provenance
+                  # badge and checked by `npm audit signatures` on any machine that installs it.
+                  for package in ./dist/*/; do
+                      if [ "$(basename "$package")" = "cohere" ]; then
+                          continue
+                      fi
+                      npm publish "$package" --access public --provenance
+                  done
+
+                  npm publish ./dist/cohere --access public --provenance
+
+            - name: Create the GitHub release, carrying SHA256SUMS
+              # After npm, so a release page never points at packages that failed to publish. The checksums
+              # here and the ones inside @system-inc/cohere are one file, held equal by the release job, so
+              # a reader can check an install against a copy that did not come through npm.
+              env:
+                  GH_TOKEN: ${{ github.token }}
+              run: |
+                  gh release create "v${{ inputs.version }}" dist/SHA256SUMS \
+                      --repo "$GITHUB_REPOSITORY" \
+                      --target "$GITHUB_SHA" \
+                      --title "cohere ${{ inputs.version }}" \
+                      --notes "Install with \`npm install --save-dev @system-inc/cohere@${{ inputs.version }}\`. What changed is in CHANGELOG.md, and how to verify what you installed is under \"Verifying a release\" in README.md."
+
+    publish-vscode-extension:
+        # After the cohere packages are on npm, so the extension never reaches a registry before the
+        # cohere it runs. `publish` already waits on every proof, so this does too.
+        needs: publish
+        runs-on: ubuntu-latest
+        timeout-minutes: 15
+
+        steps:
+            - uses: actions/download-artifact@v4
+              with:
+                  name: cohere-${{ inputs.version }}-tar
+
+            - name: Publish to the Visual Studio Marketplace and Open VSX
+              # The Marketplace serves VS Code; Open VSX serves Cursor, VSCodium and Windsurf. Each token
+              # is a secret Kirk creates: VSCE_PAT from Azure DevOps with Marketplace Manage scope for the
+              # system-inc publisher, OVSX_PAT from open-vsx.org. A missing one fails here by name rather
+              # than publishing to one registry and not the other without saying so.
+              env:
+                  VSCE_PAT: ${{ secrets.VSCE_PAT }}
+                  OVSX_PAT: ${{ secrets.OVSX_PAT }}
+              run: |
+                  tar -xf cohere-dist.tar
+                  vsix="dist/cohere-${{ inputs.version }}.vsix"
+                  for token in VSCE_PAT OVSX_PAT; do
+                      if [ -z "${!token}" ]; then
+                          echo "the $token secret is not set, so the extension was published to neither registry"
+                          exit 1
+                      fi
+                  done
+
+                  npx --yes @vscode/vsce@4.0.0 publish --packagePath "$vsix"
+                  npx --yes ovsx@1.2.0 publish "$vsix" --pat "$OVSX_PAT"

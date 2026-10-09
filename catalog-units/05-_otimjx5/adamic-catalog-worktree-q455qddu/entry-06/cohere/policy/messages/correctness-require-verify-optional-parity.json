@@ -1,0 +1,13 @@
+{
+  "rules": {
+    "TypeScript": "base/correctness-require-verify-optional-parity"
+  },
+  "messages": {
+    "optionalButTypeNot": {
+      "text": "@VerifyIsOptional() is present but type '{{typeText}}' does not include null/undefined. The validator is configured to tolerate a missing value here and the type is not, so TypeScript forbids the very values the validation would have let through. One of the two is wrong and a reader cannot tell which."
+    },
+    "typeOptionalButNoVerify": {
+      "text": "Type '{{typeText}}' is nullable but @VerifyIsOptional() is missing. The type says this value may be missing and the validator does not, so passing undefined fails validation at runtime while the compiler was happy with it. That gap only shows up in production data."
+    }
+  }
+}

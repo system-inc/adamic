@@ -1,0 +1,51 @@
+{
+  "tree": "/workspace/adaptation41-final-tree",
+  "nproc": 5,
+  "workers": 1,
+  "runners": "compiler",
+  "tests": "forInStatement1",
+  "node": "v24.19.0",
+  "phases": {
+    "install": {
+      "command": [
+        "npm",
+        "ci",
+        "--no-audit",
+        "--no-fund"
+      ],
+      "exit": 0,
+      "seconds": 2.731
+    },
+    "build": {
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exit": 0,
+      "seconds": 1.93
+    },
+    "tests": {
+      "command": [
+        "npm",
+        "test",
+        "--",
+        "--workers=1",
+        "--lint=false",
+        "--no-colors",
+        "--runners=compiler",
+        "--tests=forInStatement1"
+      ],
+      "exit": 0,
+      "seconds": 3.08
+    }
+  },
+  "status": "pass",
+  "counts": {
+    "passing": 6,
+    "failing": 0,
+    "pending": 0
+  },
+  "baseline_diffs": [],
+  "wall_seconds": 7.747
+}

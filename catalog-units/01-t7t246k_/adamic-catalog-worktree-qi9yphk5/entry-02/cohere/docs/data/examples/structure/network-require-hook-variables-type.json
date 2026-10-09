@@ -1,0 +1,25 @@
+{
+    "rule": "structure/network-require-hook-variables-type",
+    "firing": {
+        "file": "/repository/source/api/UserRequest.ts",
+        "source": "import { networkService } from './NetworkService.ts';\ndeclare const Document: unknown;\ntype UserQueryVariablesType = { identifier: string; slug: string };\ntype SaveMutationVariablesType = { input: string };\ntype InferUseGraphQlQueryOptions<T> = { enabled?: boolean; document?: T };\ntype UserProfileType = { displayName: string };\nexport function useSaveRequest(input: { input: string }) {\n    return networkService.useGraphQlMutation(Document, input);\n}\n",
+        "findings": [
+            {
+                "line": 7,
+                "column": 32,
+                "endLine": 7,
+                "endColumn": 56,
+                "messageId": "inlineVariablesType",
+                "message": "This hook types its variables parameter inline rather than with the generated QueryVariablesType or MutationVariablesType from GraphQlOperations. An inline type is a second, hand-maintained statement of what the document already declares, so when the document gains a required argument the hand-written type still compiles and the caller still omits it. The generated type changes with the document; a copy of it does not."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/api/UserRequest.ts",
+        "source": "import { networkService } from './NetworkService.ts';\ndeclare const Document: unknown;\ntype UserQueryVariablesType = { identifier: string; slug: string };\ntype SaveMutationVariablesType = { input: string };\ntype InferUseGraphQlQueryOptions<T> = { enabled?: boolean; document?: T };\ntype UserProfileType = { displayName: string };\nexport const value = 1;\n"
+    },
+    "assertedMessageIds": [
+        "inlineVariablesType",
+        "unnecessaryVariablesDestructuring"
+    ]
+}

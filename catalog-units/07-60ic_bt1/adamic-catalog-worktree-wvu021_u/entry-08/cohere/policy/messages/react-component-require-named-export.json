@@ -1,0 +1,10 @@
+{
+  "rules": {
+    "TypeScript": "structure/react-component-require-named-export"
+  },
+  "messages": {
+    "componentRequiresNamedExport": {
+      "text": "This file declares a component and exports nothing by name, so a consumer can only reach it through a default import, which lets every importer choose its own name for the same component. That makes the codebase impossible to grep: the thing is called one name where it is written and another wherever it is used, and a rename never propagates. Put `export` on the declaration."
+    }
+  }
+}

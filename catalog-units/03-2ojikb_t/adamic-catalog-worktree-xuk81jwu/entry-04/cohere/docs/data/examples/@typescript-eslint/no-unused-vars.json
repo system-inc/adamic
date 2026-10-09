@@ -1,0 +1,28 @@
+{
+    "rule": "@typescript-eslint/no-unused-vars",
+    "firing": {
+        "file": "a.ts",
+        "source": "const _ = 1;\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 7,
+                "endLine": 1,
+                "endColumn": 8,
+                "messageId": "noUnusedVars",
+                "message": "'_' is assigned a value and nothing ever reads it. A name that is written but never read is almost always the residue of an edit that moved on: an import whose call site was deleted, a parameter left behind when a signature changed, a variable holding a value nobody asked for. It costs nothing at runtime, which is what lets it accumulate, and it costs the next reader real time, because an unused name reads exactly like a used one until you search the file and find nothing. Delete it."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/TypeOnly.ts",
+        "source": "import { foo } from 'foo';\nexport type Foo = typeof foo;\n"
+    },
+    "assertedMessageIds": [
+        "noUnusedVars",
+        "usedIgnoredVar",
+        "usedOnlyAsType"
+    ],
+    "assertsFix": true,
+    "assertsSuggestion": true
+}

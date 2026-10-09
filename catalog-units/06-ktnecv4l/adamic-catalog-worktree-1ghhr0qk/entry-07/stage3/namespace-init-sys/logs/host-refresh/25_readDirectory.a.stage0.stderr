@@ -1,0 +1,27 @@
+stage3/fixtures/host/25_readDirectory.a:1001:23: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.
+  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.
+stage3/fixtures/host/25_readDirectory.a:1041:17: error TS2532: Object is possibly 'undefined'.
+stage3/fixtures/host/25_readDirectory.a:1046:21: error TS2532: Object is possibly 'undefined'.
+stage3/fixtures/host/25_readDirectory.a:408:27: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.
+  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.
+stage3/fixtures/host/25_readDirectory.a:430:21: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.
+  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.
+stage3/fixtures/host/25_readDirectory.a:449:29: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.
+  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.
+stage3/fixtures/host/25_readDirectory.a:513:31: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.
+  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.
+stage3/fixtures/host/25_readDirectory.a:543:5: error TS2322: Type '(string | undefined)[]' is not assignable to type 'string[]'.
+  Type 'string | undefined' is not assignable to type 'string'.
+    Type 'undefined' is not assignable to type 'string'.
+stage3/fixtures/host/25_readDirectory.a:587:5: error TS2775: Assertions require every name in the call target to be declared with an explicit type annotation.
+stage3/fixtures/host/25_readDirectory.a:588:5: error TS2322: Type 'T | undefined' is not assignable to type 'T'.
+  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.
+stage3/fixtures/host/25_readDirectory.a:613:54: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+stage3/fixtures/host/25_readDirectory.a:709:34: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.
+  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.
+stage3/fixtures/host/25_readDirectory.a:851:27: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.
+  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.
+stage3/fixtures/host/25_readDirectory.a:879:31: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+exit status 1

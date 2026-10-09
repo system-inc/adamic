@@ -1,0 +1,38 @@
+// sort with a function value: an arrow, or a variable holding one, stable, NaN read as equal.
+interface Task {
+	readonly name: string;
+	readonly priority: number;
+}
+
+const numbers = [5, 3, 9, 1, 3, 7];
+console.log(numbers.sort((left, right) => left - right).join(','));
+console.log(numbers.sort((left, right) => right - left).join(','));
+const words = ['pear', 'fig', 'apple', 'kiwi', 'date'];
+const byLength = (left: string, right: string): number => left.length - right.length;
+console.log(words.sort(byLength).join(','));
+console.log(words.sort((left, right) => (left < right ? -1 : left > right ? 1 : 0)).join(','));
+
+const tasks: Task[] = [
+	{ name: 'write', priority: 2 },
+	{ name: 'test', priority: 1 },
+	{ name: 'ship', priority: 2 },
+	{ name: 'plan', priority: 1 },
+];
+let descending = false;
+const byPriority = (left: Task, right: Task): number => (descending ? right.priority - left.priority : left.priority - right.priority);
+console.log(tasks.sort(byPriority).map((task) => task.name).join(','));
+descending = true;
+const sorted = tasks.sort(byPriority);
+console.log(`${sorted.map((task) => task.name).join(',')} ${sorted === tasks}`);
+console.log([3, 1, 2].sort(() => 0 / 0).join(','));
+
+// The comparator empties the array it's sorting; the sort keeps every element it was given, and
+// writes them back.
+const names = ['delta', 'alpha', 'charlie', 'bravo'].map((name) => `${name}!`);
+const emptied = names.sort((left, right) => {
+	while (names.length > 0) {
+		names.pop();
+	}
+	return left < right ? -1 : 1;
+});
+console.log(`${emptied.join(',')} ${names.length}`);

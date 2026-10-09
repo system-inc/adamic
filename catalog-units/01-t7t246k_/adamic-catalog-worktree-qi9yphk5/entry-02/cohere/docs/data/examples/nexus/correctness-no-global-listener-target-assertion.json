@@ -1,0 +1,24 @@
+{
+    "rule": "nexus/correctness-no-global-listener-target-assertion",
+    "firing": {
+        "file": "/repository/source/CorrectnessNoGlobalListenerTargetAssertion.ts",
+        "source": "/// <reference lib=\"dom\" />\ndeclare function use(value: unknown): void;\ndeclare const textarea: HTMLTextAreaElement;\ndeclare const textareaReference: { current: HTMLTextAreaElement | null };\nexport function attachTabHandler(code: string, setCode?: (code: string) => void) {\n    function handleKeyDown(event: KeyboardEvent) {\n        if(event.key !== 'Tab') return;\n        event.preventDefault();\n        const target = event.target as HTMLTextAreaElement;\n        const start = target.selectionStart;\n        setCode?.(code.substring(0, target.selectionStart) + '    ' + code.substring(target.selectionEnd));\n        target.selectionStart = target.selectionEnd = start + 2;\n    }\n    document.addEventListener('keydown', handleKeyDown);\n    return function() {\n        document.removeEventListener('keydown', handleKeyDown);\n    };\n}\n",
+        "findings": [
+            {
+                "line": 9,
+                "column": 24,
+                "endLine": 9,
+                "endColumn": 59,
+                "messageId": "globalListenerTargetAssertion",
+                "message": "This asserts `event.target` to a specific element type inside a listener on `document` or `window`. A listener that high up hears the event from every element on the page, so the target is whatever was clicked or focused, and a member read through the assertion (`selectionStart`, `value`, `checked`) is `undefined` on any other element. Check it with `instanceof` first, which narrows the type and makes the assertion unnecessary, or listen on the element itself and read `event.currentTarget`."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/CorrectnessNoGlobalListenerTargetAssertion.ts",
+        "source": "/// <reference lib=\"dom\" />\ndeclare function use(value: unknown): void;\ndeclare const textarea: HTMLTextAreaElement;\ndeclare const textareaReference: { current: HTMLTextAreaElement | null };\ndeclare global {\n    interface Document { addEventListener(type: 'editor-ready', listener: (event: CustomEvent) => void): void }\n}\ndocument.addEventListener('keydown', function(event) { use((event.target as HTMLTextAreaElement).selectionStart); });\n"
+    },
+    "assertedMessageIds": [
+        "globalListenerTargetAssertion"
+    ]
+}

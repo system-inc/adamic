@@ -1,0 +1,13 @@
+{
+  "rules": {
+    "TypeScript": "base/correctness-require-matching-operation-context"
+  },
+  "messages": {
+    "mismatch": {
+      "text": "@InjectGraphQlOperationContext parameter is GraphQlOperationContext<{{parameterGeneric}}> but the method returns '{{returnType}}'"
+    },
+    "wrongBaseType": {
+      "text": "Parameter decorated with @InjectGraphQlOperationContext must be typed as GraphQlOperationContext<...>, got '{{parameterType}}'"
+    }
+  }
+}

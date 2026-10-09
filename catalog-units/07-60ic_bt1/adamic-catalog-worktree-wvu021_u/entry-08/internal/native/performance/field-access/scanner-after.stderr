@@ -1,0 +1,11 @@
+==136206== Callgrind, a call-graph generating cache profiler
+==136206== Copyright (C) 2002-2017, and GNU GPL'd, by Josef Weidendorfer et al.
+==136206== Using Valgrind-3.24.0 and LibVEX; rerun with -h for copyright info
+==136206== Command: /tmp/adamic-field-perf/scanner-after --manifest /tmp/adamic-utf16-perf/scanner-before/compiler.txt --count
+==136206==
+==136206== For interactive control, run 'callgrind_control -h'.
+==136206==
+==136206== Events    : Ir
+==136206== Collected : 2342851635
+==136206==
+==136206== I   refs:      2,342,851,635

@@ -1,0 +1,3908 @@
+[
+  {
+    "id": "C0003",
+    "file": "src/compiler/builder.ts",
+    "line": 1246,
+    "column": 69,
+    "origin_class": "a generic inference shape",
+    "review": "Value is inferred through collection keys/values, iterable-to-array conversion, or its callback/filtered/merged result, as recorded in the source trace. The expanded chain carries undefined in the inferred element/key type. This is an iterator/generic shape boundary, not an unchecked numeric indexed argument. Correct element-contract ownership remains unresolved.",
+    "adaptation": null
+  },
+  {
+    "id": "C0006",
+    "file": "src/compiler/builder.ts",
+    "line": 1345,
+    "column": 64,
+    "origin_class": "a generic inference shape",
+    "review": "Value is inferred through collection keys/values, iterable-to-array conversion, or its callback/filtered/merged result, as recorded in the source trace. The expanded chain carries undefined in the inferred element/key type. This is an iterator/generic shape boundary, not an unchecked numeric indexed argument. Correct element-contract ownership remains unresolved.",
+    "adaptation": null
+  },
+  {
+    "id": "C0007",
+    "file": "src/compiler/builder.ts",
+    "line": 1347,
+    "column": 41,
+    "origin_class": "a generic inference shape",
+    "review": "Value is inferred through collection keys/values, iterable-to-array conversion, or its callback/filtered/merged result, as recorded in the source trace. The expanded chain carries undefined in the inferred element/key type. This is an iterator/generic shape boundary, not an unchecked numeric indexed argument. Correct element-contract ownership remains unresolved.",
+    "adaptation": null
+  },
+  {
+    "id": "C0008",
+    "file": "src/compiler/builder.ts",
+    "line": 1347,
+    "column": 97,
+    "origin_class": "a generic inference shape",
+    "review": "Value is inferred through collection keys/values, iterable-to-array conversion, or its callback/filtered/merged result, as recorded in the source trace. The expanded chain carries undefined in the inferred element/key type. This is an iterator/generic shape boundary, not an unchecked numeric indexed argument. Correct element-contract ownership remains unresolved.",
+    "adaptation": null
+  },
+  {
+    "id": "C0009",
+    "file": "src/compiler/builder.ts",
+    "line": 1493,
+    "column": 60,
+    "origin_class": "a generic inference shape",
+    "review": "Value is inferred through collection keys/values, iterable-to-array conversion, or its callback/filtered/merged result, as recorded in the source trace. The expanded chain carries undefined in the inferred element/key type. This is an iterator/generic shape boundary, not an unchecked numeric indexed argument. Correct element-contract ownership remains unresolved.",
+    "adaptation": null
+  },
+  {
+    "id": "C0010",
+    "file": "src/compiler/builder.ts",
+    "line": 1495,
+    "column": 26,
+    "origin_class": "a generic inference shape",
+    "review": "Value is inferred through collection keys/values, iterable-to-array conversion, or its callback/filtered/merged result, as recorded in the source trace. The expanded chain carries undefined in the inferred element/key type. This is an iterator/generic shape boundary, not an unchecked numeric indexed argument. Correct element-contract ownership remains unresolved.",
+    "adaptation": null
+  },
+  {
+    "id": "C0011",
+    "file": "src/compiler/builder.ts",
+    "line": 1496,
+    "column": 45,
+    "origin_class": "a generic inference shape",
+    "review": "Value is inferred through collection keys/values, iterable-to-array conversion, or its callback/filtered/merged result, as recorded in the source trace. The expanded chain carries undefined in the inferred element/key type. This is an iterator/generic shape boundary, not an unchecked numeric indexed argument. Correct element-contract ownership remains unresolved.",
+    "adaptation": null
+  },
+  {
+    "id": "C0013",
+    "file": "src/compiler/builder.ts",
+    "line": 1562,
+    "column": 64,
+    "origin_class": "a generic inference shape",
+    "review": "Value is inferred through collection keys/values, iterable-to-array conversion, or its callback/filtered/merged result, as recorded in the source trace. The expanded chain carries undefined in the inferred element/key type. This is an iterator/generic shape boundary, not an unchecked numeric indexed argument. Correct element-contract ownership remains unresolved.",
+    "adaptation": null
+  },
+  {
+    "id": "C0014",
+    "file": "src/compiler/builder.ts",
+    "line": 1926,
+    "column": 33,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0015",
+    "file": "src/compiler/builder.ts",
+    "line": 2271,
+    "column": 27,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0018",
+    "file": "src/compiler/builder.ts",
+    "line": 2293,
+    "column": 27,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0019",
+    "file": "src/compiler/builder.ts",
+    "line": 2294,
+    "column": 79,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0020",
+    "file": "src/compiler/builder.ts",
+    "line": 2297,
+    "column": 57,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0021",
+    "file": "src/compiler/builder.ts",
+    "line": 2301,
+    "column": 21,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0022",
+    "file": "src/compiler/builder.ts",
+    "line": 2304,
+    "column": 46,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0024",
+    "file": "src/compiler/builder.ts",
+    "line": 2369,
+    "column": 66,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0026",
+    "file": "src/compiler/builder.ts",
+    "line": 2383,
+    "column": 61,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0027",
+    "file": "src/compiler/builder.ts",
+    "line": 2384,
+    "column": 42,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0030",
+    "file": "src/compiler/builder.ts",
+    "line": 395,
+    "column": 118,
+    "origin_class": "a generic inference shape",
+    "review": "Value is inferred through collection keys/values, iterable-to-array conversion, or its callback/filtered/merged result, as recorded in the source trace. The expanded chain carries undefined in the inferred element/key type. This is an iterator/generic shape boundary, not an unchecked numeric indexed argument. Correct element-contract ownership remains unresolved.",
+    "adaptation": null
+  },
+  {
+    "id": "C0031",
+    "file": "src/compiler/builder.ts",
+    "line": 395,
+    "column": 85,
+    "origin_class": "a generic inference shape",
+    "review": "Value is inferred through collection keys/values, iterable-to-array conversion, or its callback/filtered/merged result, as recorded in the source trace. The expanded chain carries undefined in the inferred element/key type. This is an iterator/generic shape boundary, not an unchecked numeric indexed argument. Correct element-contract ownership remains unresolved.",
+    "adaptation": null
+  },
+  {
+    "id": "C0032",
+    "file": "src/compiler/builder.ts",
+    "line": 657,
+    "column": 25,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0033",
+    "file": "src/compiler/builder.ts",
+    "line": 991,
+    "column": 17,
+    "origin_class": "a generic inference shape",
+    "review": "Value is inferred through collection keys/values, iterable-to-array conversion, or its callback/filtered/merged result, as recorded in the source trace. The expanded chain carries undefined in the inferred element/key type. This is an iterator/generic shape boundary, not an unchecked numeric indexed argument. Correct element-contract ownership remains unresolved.",
+    "adaptation": null
+  },
+  {
+    "id": "C0034",
+    "file": "src/compiler/builderState.ts",
+    "line": 493,
+    "column": 108,
+    "origin_class": "a generic inference shape",
+    "review": "Value is inferred through collection keys/values, iterable-to-array conversion, or its callback/filtered/merged result, as recorded in the source trace. The expanded chain carries undefined in the inferred element/key type. This is an iterator/generic shape boundary, not an unchecked numeric indexed argument. Correct element-contract ownership remains unresolved.",
+    "adaptation": null
+  },
+  {
+    "id": "C0036",
+    "file": "src/compiler/checker.ts",
+    "line": 10022,
+    "column": 63,
+    "origin_class": "a generic inference shape",
+    "review": "Value is inferred through collection keys/values, iterable-to-array conversion, or its callback/filtered/merged result, as recorded in the source trace. The expanded chain carries undefined in the inferred element/key type. This is an iterator/generic shape boundary, not an unchecked numeric indexed argument. Correct element-contract ownership remains unresolved.",
+    "adaptation": null
+  },
+  {
+    "id": "C0037",
+    "file": "src/compiler/checker.ts",
+    "line": 10026,
+    "column": 97,
+    "origin_class": "a generic inference shape",
+    "review": "Value is inferred through collection keys/values, iterable-to-array conversion, or its callback/filtered/merged result, as recorded in the source trace. The expanded chain carries undefined in the inferred element/key type. This is an iterator/generic shape boundary, not an unchecked numeric indexed argument. Correct element-contract ownership remains unresolved.",
+    "adaptation": null
+  },
+  {
+    "id": "C0038",
+    "file": "src/compiler/checker.ts",
+    "line": 10053,
+    "column": 53,
+    "origin_class": "a generic inference shape",
+    "review": "Value is inferred through collection keys/values, iterable-to-array conversion, or its callback/filtered/merged result, as recorded in the source trace. The expanded chain carries undefined in the inferred element/key type. This is an iterator/generic shape boundary, not an unchecked numeric indexed argument. Correct element-contract ownership remains unresolved.",
+    "adaptation": null
+  },
+  {
+    "id": "C0039",
+    "file": "src/compiler/checker.ts",
+    "line": 10063,
+    "column": 69,
+    "origin_class": "a generic inference shape",
+    "review": "Value is inferred through collection keys/values, iterable-to-array conversion, or its callback/filtered/merged result, as recorded in the source trace. The expanded chain carries undefined in the inferred element/key type. This is an iterator/generic shape boundary, not an unchecked numeric indexed argument. Correct element-contract ownership remains unresolved.",
+    "adaptation": null
+  },
+  {
+    "id": "C0040",
+    "file": "src/compiler/checker.ts",
+    "line": 10064,
+    "column": 93,
+    "origin_class": "a generic inference shape",
+    "review": "Value is inferred through collection keys/values, iterable-to-array conversion, or its callback/filtered/merged result, as recorded in the source trace. The expanded chain carries undefined in the inferred element/key type. This is an iterator/generic shape boundary, not an unchecked numeric indexed argument. Correct element-contract ownership remains unresolved.",
+    "adaptation": null
+  },
+  {
+    "id": "C0041",
+    "file": "src/compiler/checker.ts",
+    "line": 10066,
+    "column": 103,
+    "origin_class": "a generic inference shape",
+    "review": "Value is inferred through collection keys/values, iterable-to-array conversion, or its callback/filtered/merged result, as recorded in the source trace. The expanded chain carries undefined in the inferred element/key type. This is an iterator/generic shape boundary, not an unchecked numeric indexed argument. Correct element-contract ownership remains unresolved.",
+    "adaptation": null
+  },
+  {
+    "id": "C0042",
+    "file": "src/compiler/checker.ts",
+    "line": 10070,
+    "column": 50,
+    "origin_class": "a generic inference shape",
+    "review": "Value is inferred through collection keys/values, iterable-to-array conversion, or its callback/filtered/merged result, as recorded in the source trace. The expanded chain carries undefined in the inferred element/key type. This is an iterator/generic shape boundary, not an unchecked numeric indexed argument. Correct element-contract ownership remains unresolved.",
+    "adaptation": null
+  },
+  {
+    "id": "C0043",
+    "file": "src/compiler/checker.ts",
+    "line": 10319,
+    "column": 83,
+    "origin_class": "a generic inference shape",
+    "review": "Value is inferred through collection keys/values, iterable-to-array conversion, or its callback/filtered/merged result, as recorded in the source trace. The expanded chain carries undefined in the inferred element/key type. This is an iterator/generic shape boundary, not an unchecked numeric indexed argument. Correct element-contract ownership remains unresolved.",
+    "adaptation": null
+  },
+  {
+    "id": "C0044",
+    "file": "src/compiler/checker.ts",
+    "line": 10320,
+    "column": 51,
+    "origin_class": "a generic inference shape",
+    "review": "Value is inferred through collection keys/values, iterable-to-array conversion, or its callback/filtered/merged result, as recorded in the source trace. The expanded chain carries undefined in the inferred element/key type. This is an iterator/generic shape boundary, not an unchecked numeric indexed argument. Correct element-contract ownership remains unresolved.",
+    "adaptation": null
+  },
+  {
+    "id": "C0046",
+    "file": "src/compiler/checker.ts",
+    "line": 10336,
+    "column": 86,
+    "origin_class": "a generic inference shape",
+    "review": "Value is inferred through collection keys/values, iterable-to-array conversion, or its callback/filtered/merged result, as recorded in the source trace. The expanded chain carries undefined in the inferred element/key type. This is an iterator/generic shape boundary, not an unchecked numeric indexed argument. Correct element-contract ownership remains unresolved.",
+    "adaptation": null
+  },
+  {
+    "id": "C0050",
+    "file": "src/compiler/checker.ts",
+    "line": 11206,
+    "column": 29,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0054",
+    "file": "src/compiler/checker.ts",
+    "line": 12343,
+    "column": 51,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0055",
+    "file": "src/compiler/checker.ts",
+    "line": 13162,
+    "column": 93,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0059",
+    "file": "src/compiler/checker.ts",
+    "line": 13986,
+    "column": 47,
+    "origin_class": "a generic inference shape",
+    "review": "Value is inferred through collection keys/values, iterable-to-array conversion, or its callback/filtered/merged result, as recorded in the source trace. The expanded chain carries undefined in the inferred element/key type. This is an iterator/generic shape boundary, not an unchecked numeric indexed argument. Correct element-contract ownership remains unresolved.",
+    "adaptation": null
+  },
+  {
+    "id": "C0060",
+    "file": "src/compiler/checker.ts",
+    "line": 13990,
+    "column": 49,
+    "origin_class": "a generic inference shape",
+    "review": "Value is inferred through collection keys/values, iterable-to-array conversion, or its callback/filtered/merged result, as recorded in the source trace. The expanded chain carries undefined in the inferred element/key type. This is an iterator/generic shape boundary, not an unchecked numeric indexed argument. Correct element-contract ownership remains unresolved.",
+    "adaptation": null
+  },
+  {
+    "id": "C0061",
+    "file": "src/compiler/checker.ts",
+    "line": 14191,
+    "column": 46,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0062",
+    "file": "src/compiler/checker.ts",
+    "line": 14193,
+    "column": 88,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0063",
+    "file": "src/compiler/checker.ts",
+    "line": 14196,
+    "column": 142,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0069",
+    "file": "src/compiler/checker.ts",
+    "line": 14379,
+    "column": 138,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0070",
+    "file": "src/compiler/checker.ts",
+    "line": 14379,
+    "column": 67,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0074",
+    "file": "src/compiler/checker.ts",
+    "line": 14554,
+    "column": 54,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0075",
+    "file": "src/compiler/checker.ts",
+    "line": 14564,
+    "column": 83,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0076",
+    "file": "src/compiler/checker.ts",
+    "line": 14565,
+    "column": 57,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0077",
+    "file": "src/compiler/checker.ts",
+    "line": 14643,
+    "column": 66,
+    "origin_class": "a generic inference shape",
+    "review": "Value is inferred through collection keys/values, iterable-to-array conversion, or its callback/filtered/merged result, as recorded in the source trace. The expanded chain carries undefined in the inferred element/key type. This is an iterator/generic shape boundary, not an unchecked numeric indexed argument. Correct element-contract ownership remains unresolved.",
+    "adaptation": null
+  },
+  {
+    "id": "C0080",
+    "file": "src/compiler/checker.ts",
+    "line": 15701,
+    "column": 42,
+    "origin_class": "a generic inference shape",
+    "review": "Value is inferred through collection keys/values, iterable-to-array conversion, or its callback/filtered/merged result, as recorded in the source trace. The expanded chain carries undefined in the inferred element/key type. This is an iterator/generic shape boundary, not an unchecked numeric indexed argument. Correct element-contract ownership remains unresolved.",
+    "adaptation": null
+  },
+  {
+    "id": "C0081",
+    "file": "src/compiler/checker.ts",
+    "line": 15704,
+    "column": 43,
+    "origin_class": "a generic inference shape",
+    "review": "Value is inferred through collection keys/values, iterable-to-array conversion, or its callback/filtered/merged result, as recorded in the source trace. The expanded chain carries undefined in the inferred element/key type. This is an iterator/generic shape boundary, not an unchecked numeric indexed argument. Correct element-contract ownership remains unresolved.",
+    "adaptation": null
+  },
+  {
+    "id": "C0082",
+    "file": "src/compiler/checker.ts",
+    "line": 15706,
+    "column": 52,
+    "origin_class": "a generic inference shape",
+    "review": "Value is inferred through collection keys/values, iterable-to-array conversion, or its callback/filtered/merged result, as recorded in the source trace. The expanded chain carries undefined in the inferred element/key type. This is an iterator/generic shape boundary, not an unchecked numeric indexed argument. Correct element-contract ownership remains unresolved.",
+    "adaptation": null
+  },
+  {
+    "id": "C0086",
+    "file": "src/compiler/checker.ts",
+    "line": 16204,
+    "column": 57,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0087",
+    "file": "src/compiler/checker.ts",
+    "line": 16210,
+    "column": 50,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0088",
+    "file": "src/compiler/checker.ts",
+    "line": 16229,
+    "column": 71,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0089",
+    "file": "src/compiler/checker.ts",
+    "line": 16230,
+    "column": 33,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0090",
+    "file": "src/compiler/checker.ts",
+    "line": 16230,
+    "column": 80,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0092",
+    "file": "src/compiler/checker.ts",
+    "line": 16689,
+    "column": 70,
+    "origin_class": "a generic inference shape",
+    "review": "Value is inferred through collection keys/values, iterable-to-array conversion, or its callback/filtered/merged result, as recorded in the source trace. The expanded chain carries undefined in the inferred element/key type. This is an iterator/generic shape boundary, not an unchecked numeric indexed argument. Correct element-contract ownership remains unresolved.",
+    "adaptation": null
+  },
+  {
+    "id": "C0103",
+    "file": "src/compiler/checker.ts",
+    "line": 17966,
+    "column": 32,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0104",
+    "file": "src/compiler/checker.ts",
+    "line": 17968,
+    "column": 97,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0105",
+    "file": "src/compiler/checker.ts",
+    "line": 17970,
+    "column": 32,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0106",
+    "file": "src/compiler/checker.ts",
+    "line": 17972,
+    "column": 38,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0108",
+    "file": "src/compiler/checker.ts",
+    "line": 17988,
+    "column": 48,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0109",
+    "file": "src/compiler/checker.ts",
+    "line": 17988,
+    "column": 76,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0110",
+    "file": "src/compiler/checker.ts",
+    "line": 17993,
+    "column": 28,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0111",
+    "file": "src/compiler/checker.ts",
+    "line": 18149,
+    "column": 87,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0112",
+    "file": "src/compiler/checker.ts",
+    "line": 18150,
+    "column": 41,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0113",
+    "file": "src/compiler/checker.ts",
+    "line": 18159,
+    "column": 46,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0114",
+    "file": "src/compiler/checker.ts",
+    "line": 18184,
+    "column": 45,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0115",
+    "file": "src/compiler/checker.ts",
+    "line": 18185,
+    "column": 64,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0116",
+    "file": "src/compiler/checker.ts",
+    "line": 18187,
+    "column": 51,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0117",
+    "file": "src/compiler/checker.ts",
+    "line": 18212,
+    "column": 36,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0118",
+    "file": "src/compiler/checker.ts",
+    "line": 18226,
+    "column": 132,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0120",
+    "file": "src/compiler/checker.ts",
+    "line": 18270,
+    "column": 79,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0125",
+    "file": "src/compiler/checker.ts",
+    "line": 18524,
+    "column": 44,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0126",
+    "file": "src/compiler/checker.ts",
+    "line": 18568,
+    "column": 41,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0127",
+    "file": "src/compiler/checker.ts",
+    "line": 18573,
+    "column": 47,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0129",
+    "file": "src/compiler/checker.ts",
+    "line": 18601,
+    "column": 32,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0132",
+    "file": "src/compiler/checker.ts",
+    "line": 18721,
+    "column": 115,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0133",
+    "file": "src/compiler/checker.ts",
+    "line": 18724,
+    "column": 60,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0134",
+    "file": "src/compiler/checker.ts",
+    "line": 18729,
+    "column": 59,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0136",
+    "file": "src/compiler/checker.ts",
+    "line": 18732,
+    "column": 116,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0137",
+    "file": "src/compiler/checker.ts",
+    "line": 18736,
+    "column": 52,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0139",
+    "file": "src/compiler/checker.ts",
+    "line": 18852,
+    "column": 175,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0141",
+    "file": "src/compiler/checker.ts",
+    "line": 19057,
+    "column": 41,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0142",
+    "file": "src/compiler/checker.ts",
+    "line": 19059,
+    "column": 23,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0145",
+    "file": "src/compiler/checker.ts",
+    "line": 19080,
+    "column": 54,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0146",
+    "file": "src/compiler/checker.ts",
+    "line": 19088,
+    "column": 45,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0147",
+    "file": "src/compiler/checker.ts",
+    "line": 19088,
+    "column": 83,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0148",
+    "file": "src/compiler/checker.ts",
+    "line": 19089,
+    "column": 35,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0149",
+    "file": "src/compiler/checker.ts",
+    "line": 19090,
+    "column": 35,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0152",
+    "file": "src/compiler/checker.ts",
+    "line": 20195,
+    "column": 44,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0153",
+    "file": "src/compiler/checker.ts",
+    "line": 20196,
+    "column": 109,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0155",
+    "file": "src/compiler/checker.ts",
+    "line": 20544,
+    "column": 45,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0159",
+    "file": "src/compiler/checker.ts",
+    "line": 20618,
+    "column": 50,
+    "origin_class": "other",
+    "review": "Object literal supplies debugInfo as function | undefined to TypeMapper optional slot that excludes present undefined. The argument is the whole constructed object, not an optional field read.",
+    "adaptation": null
+  },
+  {
+    "id": "C0160",
+    "file": "src/compiler/checker.ts",
+    "line": 20743,
+    "column": 36,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0161",
+    "file": "src/compiler/checker.ts",
+    "line": 20752,
+    "column": 62,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0162",
+    "file": "src/compiler/checker.ts",
+    "line": 20760,
+    "column": 111,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0163",
+    "file": "src/compiler/checker.ts",
+    "line": 21437,
+    "column": 21,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0167",
+    "file": "src/compiler/checker.ts",
+    "line": 21591,
+    "column": 48,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0168",
+    "file": "src/compiler/checker.ts",
+    "line": 21597,
+    "column": 66,
+    "origin_class": "undefined from an indexed read",
+    "review": "targetNode is targetProp.declarations![0] or target.symbol.declarations![0]; getSourceFileOfNode preserves optional input (utilities.ts:980-985).",
+    "adaptation": 30
+  },
+  {
+    "id": "C0169",
+    "file": "src/compiler/checker.ts",
+    "line": 21599,
+    "column": 37,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0170",
+    "file": "src/compiler/checker.ts",
+    "line": 21601,
+    "column": 41,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0171",
+    "file": "src/compiler/checker.ts",
+    "line": 21691,
+    "column": 59,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0172",
+    "file": "src/compiler/checker.ts",
+    "line": 21778,
+    "column": 67,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0173",
+    "file": "src/compiler/checker.ts",
+    "line": 21829,
+    "column": 37,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0174",
+    "file": "src/compiler/checker.ts",
+    "line": 21831,
+    "column": 53,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0177",
+    "file": "src/compiler/checker.ts",
+    "line": 22550,
+    "column": 57,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0178",
+    "file": "src/compiler/checker.ts",
+    "line": 22566,
+    "column": 53,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0179",
+    "file": "src/compiler/checker.ts",
+    "line": 22570,
+    "column": 53,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0183",
+    "file": "src/compiler/checker.ts",
+    "line": 23236,
+    "column": 49,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0184",
+    "file": "src/compiler/checker.ts",
+    "line": 23242,
+    "column": 45,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0185",
+    "file": "src/compiler/checker.ts",
+    "line": 23272,
+    "column": 154,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0186",
+    "file": "src/compiler/checker.ts",
+    "line": 23272,
+    "column": 79,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0187",
+    "file": "src/compiler/checker.ts",
+    "line": 23280,
+    "column": 51,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0188",
+    "file": "src/compiler/checker.ts",
+    "line": 23283,
+    "column": 51,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0189",
+    "file": "src/compiler/checker.ts",
+    "line": 23290,
+    "column": 51,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0190",
+    "file": "src/compiler/checker.ts",
+    "line": 23292,
+    "column": 55,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0191",
+    "file": "src/compiler/checker.ts",
+    "line": 23299,
+    "column": 51,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0192",
+    "file": "src/compiler/checker.ts",
+    "line": 23301,
+    "column": 56,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0198",
+    "file": "src/compiler/checker.ts",
+    "line": 24222,
+    "column": 70,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0199",
+    "file": "src/compiler/checker.ts",
+    "line": 24243,
+    "column": 75,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0203",
+    "file": "src/compiler/checker.ts",
+    "line": 24518,
+    "column": 138,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0204",
+    "file": "src/compiler/checker.ts",
+    "line": 24519,
+    "column": 47,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0210",
+    "file": "src/compiler/checker.ts",
+    "line": 25252,
+    "column": 50,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0211",
+    "file": "src/compiler/checker.ts",
+    "line": 25417,
+    "column": 153,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0212",
+    "file": "src/compiler/checker.ts",
+    "line": 25417,
+    "column": 94,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0213",
+    "file": "src/compiler/checker.ts",
+    "line": 25418,
+    "column": 142,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0214",
+    "file": "src/compiler/checker.ts",
+    "line": 25418,
+    "column": 86,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0216",
+    "file": "src/compiler/checker.ts",
+    "line": 25573,
+    "column": 56,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0217",
+    "file": "src/compiler/checker.ts",
+    "line": 25749,
+    "column": 110,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0218",
+    "file": "src/compiler/checker.ts",
+    "line": 25749,
+    "column": 35,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0225",
+    "file": "src/compiler/checker.ts",
+    "line": 26725,
+    "column": 41,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0226",
+    "file": "src/compiler/checker.ts",
+    "line": 26725,
+    "column": 85,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0227",
+    "file": "src/compiler/checker.ts",
+    "line": 26737,
+    "column": 50,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0231",
+    "file": "src/compiler/checker.ts",
+    "line": 27296,
+    "column": 74,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0233",
+    "file": "src/compiler/checker.ts",
+    "line": 27320,
+    "column": 167,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0234",
+    "file": "src/compiler/checker.ts",
+    "line": 27335,
+    "column": 66,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0235",
+    "file": "src/compiler/checker.ts",
+    "line": 27342,
+    "column": 36,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0238",
+    "file": "src/compiler/checker.ts",
+    "line": 27402,
+    "column": 106,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0239",
+    "file": "src/compiler/checker.ts",
+    "line": 27402,
+    "column": 48,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0254",
+    "file": "src/compiler/checker.ts",
+    "line": 27614,
+    "column": 92,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0255",
+    "file": "src/compiler/checker.ts",
+    "line": 27615,
+    "column": 106,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0256",
+    "file": "src/compiler/checker.ts",
+    "line": 27651,
+    "column": 53,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0265",
+    "file": "src/compiler/checker.ts",
+    "line": 29837,
+    "column": 52,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0268",
+    "file": "src/compiler/checker.ts",
+    "line": 30128,
+    "column": 45,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0275",
+    "file": "src/compiler/checker.ts",
+    "line": 33202,
+    "column": 110,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0279",
+    "file": "src/compiler/checker.ts",
+    "line": 33345,
+    "column": 46,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0280",
+    "file": "src/compiler/checker.ts",
+    "line": 33382,
+    "column": 64,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0281",
+    "file": "src/compiler/checker.ts",
+    "line": 33385,
+    "column": 157,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0282",
+    "file": "src/compiler/checker.ts",
+    "line": 33388,
+    "column": 71,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0283",
+    "file": "src/compiler/checker.ts",
+    "line": 33501,
+    "column": 67,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0284",
+    "file": "src/compiler/checker.ts",
+    "line": 33502,
+    "column": 67,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0285",
+    "file": "src/compiler/checker.ts",
+    "line": 33503,
+    "column": 68,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0290",
+    "file": "src/compiler/checker.ts",
+    "line": 35291,
+    "column": 79,
+    "origin_class": "a generic inference shape",
+    "review": "Value is inferred through collection keys/values, iterable-to-array conversion, or its callback/filtered/merged result, as recorded in the source trace. The expanded chain carries undefined in the inferred element/key type. This is an iterator/generic shape boundary, not an unchecked numeric indexed argument. Correct element-contract ownership remains unresolved.",
+    "adaptation": null
+  },
+  {
+    "id": "C0291",
+    "file": "src/compiler/checker.ts",
+    "line": 35910,
+    "column": 71,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0292",
+    "file": "src/compiler/checker.ts",
+    "line": 35969,
+    "column": 67,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0294",
+    "file": "src/compiler/checker.ts",
+    "line": 36001,
+    "column": 25,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0295",
+    "file": "src/compiler/checker.ts",
+    "line": 36188,
+    "column": 67,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0296",
+    "file": "src/compiler/checker.ts",
+    "line": 36193,
+    "column": 74,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0299",
+    "file": "src/compiler/checker.ts",
+    "line": 36297,
+    "column": 72,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0300",
+    "file": "src/compiler/checker.ts",
+    "line": 36302,
+    "column": 40,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0302",
+    "file": "src/compiler/checker.ts",
+    "line": 36690,
+    "column": 78,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0303",
+    "file": "src/compiler/checker.ts",
+    "line": 36696,
+    "column": 65,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0308",
+    "file": "src/compiler/checker.ts",
+    "line": 36798,
+    "column": 73,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0309",
+    "file": "src/compiler/checker.ts",
+    "line": 36801,
+    "column": 64,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0311",
+    "file": "src/compiler/checker.ts",
+    "line": 36810,
+    "column": 108,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0312",
+    "file": "src/compiler/checker.ts",
+    "line": 36810,
+    "column": 50,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0313",
+    "file": "src/compiler/checker.ts",
+    "line": 36820,
+    "column": 64,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0314",
+    "file": "src/compiler/checker.ts",
+    "line": 36828,
+    "column": 70,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0315",
+    "file": "src/compiler/checker.ts",
+    "line": 36831,
+    "column": 64,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0316",
+    "file": "src/compiler/checker.ts",
+    "line": 36834,
+    "column": 45,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0318",
+    "file": "src/compiler/checker.ts",
+    "line": 36853,
+    "column": 76,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0319",
+    "file": "src/compiler/checker.ts",
+    "line": 36854,
+    "column": 68,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0320",
+    "file": "src/compiler/checker.ts",
+    "line": 36857,
+    "column": 49,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0323",
+    "file": "src/compiler/checker.ts",
+    "line": 36962,
+    "column": 44,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0324",
+    "file": "src/compiler/checker.ts",
+    "line": 36963,
+    "column": 83,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0327",
+    "file": "src/compiler/checker.ts",
+    "line": 36991,
+    "column": 50,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0328",
+    "file": "src/compiler/checker.ts",
+    "line": 36992,
+    "column": 43,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0330",
+    "file": "src/compiler/checker.ts",
+    "line": 37943,
+    "column": 53,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0334",
+    "file": "src/compiler/checker.ts",
+    "line": 37970,
+    "column": 62,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0335",
+    "file": "src/compiler/checker.ts",
+    "line": 37972,
+    "column": 72,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0336",
+    "file": "src/compiler/checker.ts",
+    "line": 37976,
+    "column": 116,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0337",
+    "file": "src/compiler/checker.ts",
+    "line": 37977,
+    "column": 126,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0338",
+    "file": "src/compiler/checker.ts",
+    "line": 38392,
+    "column": 46,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0339",
+    "file": "src/compiler/checker.ts",
+    "line": 38430,
+    "column": 64,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0340",
+    "file": "src/compiler/checker.ts",
+    "line": 38442,
+    "column": 66,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0347",
+    "file": "src/compiler/checker.ts",
+    "line": 38689,
+    "column": 37,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0348",
+    "file": "src/compiler/checker.ts",
+    "line": 39139,
+    "column": 50,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0349",
+    "file": "src/compiler/checker.ts",
+    "line": 39152,
+    "column": 50,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0351",
+    "file": "src/compiler/checker.ts",
+    "line": 40247,
+    "column": 61,
+    "origin_class": "an optional field passed to a required parameter",
+    "review": "name = property.name; NamedDeclaration.name is optional (types.ts:1982). property = properties[propertyIndex], followed by existing kind checks. Optional name is the immediate value origin; failed receiver narrowing must also be investigated. No missing discriminant is asserted.",
+    "adaptation": null
+  },
+  {
+    "id": "C0352",
+    "file": "src/compiler/checker.ts",
+    "line": 40253,
+    "column": 48,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0353",
+    "file": "src/compiler/checker.ts",
+    "line": 40256,
+    "column": 133,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0354",
+    "file": "src/compiler/checker.ts",
+    "line": 40257,
+    "column": 53,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0356",
+    "file": "src/compiler/checker.ts",
+    "line": 40266,
+    "column": 46,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0358",
+    "file": "src/compiler/checker.ts",
+    "line": 40315,
+    "column": 91,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0359",
+    "file": "src/compiler/checker.ts",
+    "line": 40316,
+    "column": 135,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0360",
+    "file": "src/compiler/checker.ts",
+    "line": 40317,
+    "column": 58,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0361",
+    "file": "src/compiler/checker.ts",
+    "line": 40318,
+    "column": 61,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0362",
+    "file": "src/compiler/checker.ts",
+    "line": 40319,
+    "column": 57,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0363",
+    "file": "src/compiler/checker.ts",
+    "line": 40321,
+    "column": 53,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0365",
+    "file": "src/compiler/checker.ts",
+    "line": 41430,
+    "column": 109,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0366",
+    "file": "src/compiler/checker.ts",
+    "line": 41430,
+    "column": 56,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0367",
+    "file": "src/compiler/checker.ts",
+    "line": 41430,
+    "column": 78,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0368",
+    "file": "src/compiler/checker.ts",
+    "line": 41432,
+    "column": 42,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0369",
+    "file": "src/compiler/checker.ts",
+    "line": 41432,
+    "column": 65,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0370",
+    "file": "src/compiler/checker.ts",
+    "line": 41433,
+    "column": 39,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0381",
+    "file": "src/compiler/checker.ts",
+    "line": 42849,
+    "column": 65,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0385",
+    "file": "src/compiler/checker.ts",
+    "line": 46114,
+    "column": 128,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0386",
+    "file": "src/compiler/checker.ts",
+    "line": 46114,
+    "column": 208,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0387",
+    "file": "src/compiler/checker.ts",
+    "line": 46128,
+    "column": 128,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0388",
+    "file": "src/compiler/checker.ts",
+    "line": 46159,
+    "column": 176,
+    "origin_class": "other",
+    "review": "Declared ErrorOutputContainer parameter is forwarded whole; errors slot permits present undefined while target inline errors?: Diagnostic[] does not. Outer undefined is already accepted.",
+    "adaptation": null
+  },
+  {
+    "id": "C0392",
+    "file": "src/compiler/checker.ts",
+    "line": 46517,
+    "column": 52,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0393",
+    "file": "src/compiler/checker.ts",
+    "line": 46734,
+    "column": 64,
+    "origin_class": "a generic inference shape",
+    "review": "Value is inferred through collection keys/values, iterable-to-array conversion, or its callback/filtered/merged result, as recorded in the source trace. The expanded chain carries undefined in the inferred element/key type. This is an iterator/generic shape boundary, not an unchecked numeric indexed argument. Correct element-contract ownership remains unresolved.",
+    "adaptation": null
+  },
+  {
+    "id": "C0394",
+    "file": "src/compiler/checker.ts",
+    "line": 46736,
+    "column": 167,
+    "origin_class": "a generic inference shape",
+    "review": "Value is inferred through collection keys/values, iterable-to-array conversion, or its callback/filtered/merged result, as recorded in the source trace. The expanded chain carries undefined in the inferred element/key type. This is an iterator/generic shape boundary, not an unchecked numeric indexed argument. Correct element-contract ownership remains unresolved.",
+    "adaptation": null
+  },
+  {
+    "id": "C0395",
+    "file": "src/compiler/checker.ts",
+    "line": 46915,
+    "column": 36,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0396",
+    "file": "src/compiler/checker.ts",
+    "line": 46917,
+    "column": 70,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0398",
+    "file": "src/compiler/checker.ts",
+    "line": 47006,
+    "column": 74,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0399",
+    "file": "src/compiler/checker.ts",
+    "line": 47008,
+    "column": 71,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0400",
+    "file": "src/compiler/checker.ts",
+    "line": 47018,
+    "column": 67,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0401",
+    "file": "src/compiler/checker.ts",
+    "line": 47153,
+    "column": 66,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0402",
+    "file": "src/compiler/checker.ts",
+    "line": 47177,
+    "column": 145,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0403",
+    "file": "src/compiler/checker.ts",
+    "line": 47181,
+    "column": 63,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0405",
+    "file": "src/compiler/checker.ts",
+    "line": 49309,
+    "column": 137,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0406",
+    "file": "src/compiler/checker.ts",
+    "line": 49309,
+    "column": 54,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0407",
+    "file": "src/compiler/checker.ts",
+    "line": 49309,
+    "column": 96,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0408",
+    "file": "src/compiler/checker.ts",
+    "line": 49313,
+    "column": 50,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0409",
+    "file": "src/compiler/checker.ts",
+    "line": 49319,
+    "column": 54,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0410",
+    "file": "src/compiler/checker.ts",
+    "line": 49319,
+    "column": 95,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0411",
+    "file": "src/compiler/checker.ts",
+    "line": 49323,
+    "column": 50,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0414",
+    "file": "src/compiler/checker.ts",
+    "line": 5045,
+    "column": 102,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0415",
+    "file": "src/compiler/checker.ts",
+    "line": 5051,
+    "column": 77,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0416",
+    "file": "src/compiler/checker.ts",
+    "line": 5076,
+    "column": 98,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0417",
+    "file": "src/compiler/checker.ts",
+    "line": 51465,
+    "column": 110,
+    "origin_class": "a generic inference shape",
+    "review": "Value is inferred through collection keys/values, iterable-to-array conversion, or its callback/filtered/merged result, as recorded in the source trace. The expanded chain carries undefined in the inferred element/key type. This is an iterator/generic shape boundary, not an unchecked numeric indexed argument. Correct element-contract ownership remains unresolved.",
+    "adaptation": null
+  },
+  {
+    "id": "C0419",
+    "file": "src/compiler/checker.ts",
+    "line": 52342,
+    "column": 48,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0421",
+    "file": "src/compiler/checker.ts",
+    "line": 52429,
+    "column": 35,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0424",
+    "file": "src/compiler/checker.ts",
+    "line": 52852,
+    "column": 47,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0427",
+    "file": "src/compiler/checker.ts",
+    "line": 53653,
+    "column": 43,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0430",
+    "file": "src/compiler/checker.ts",
+    "line": 6585,
+    "column": 57,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0431",
+    "file": "src/compiler/checker.ts",
+    "line": 6586,
+    "column": 51,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0432",
+    "file": "src/compiler/checker.ts",
+    "line": 6603,
+    "column": 57,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0437",
+    "file": "src/compiler/checker.ts",
+    "line": 7377,
+    "column": 85,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0438",
+    "file": "src/compiler/checker.ts",
+    "line": 7383,
+    "column": 85,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0441",
+    "file": "src/compiler/checker.ts",
+    "line": 7447,
+    "column": 41,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0443",
+    "file": "src/compiler/checker.ts",
+    "line": 7452,
+    "column": 123,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0449",
+    "file": "src/compiler/checker.ts",
+    "line": 7525,
+    "column": 89,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0450",
+    "file": "src/compiler/checker.ts",
+    "line": 7526,
+    "column": 80,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0455",
+    "file": "src/compiler/checker.ts",
+    "line": 8246,
+    "column": 56,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0457",
+    "file": "src/compiler/checker.ts",
+    "line": 8482,
+    "column": 59,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0458",
+    "file": "src/compiler/checker.ts",
+    "line": 8493,
+    "column": 64,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0459",
+    "file": "src/compiler/checker.ts",
+    "line": 8504,
+    "column": 131,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0460",
+    "file": "src/compiler/checker.ts",
+    "line": 8560,
+    "column": 42,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0462",
+    "file": "src/compiler/checker.ts",
+    "line": 8573,
+    "column": 35,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0463",
+    "file": "src/compiler/checker.ts",
+    "line": 8575,
+    "column": 25,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0464",
+    "file": "src/compiler/checker.ts",
+    "line": 8575,
+    "column": 79,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0465",
+    "file": "src/compiler/checker.ts",
+    "line": 8581,
+    "column": 84,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0470",
+    "file": "src/compiler/checker.ts",
+    "line": 8762,
+    "column": 59,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0471",
+    "file": "src/compiler/checker.ts",
+    "line": 8770,
+    "column": 62,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0472",
+    "file": "src/compiler/checker.ts",
+    "line": 8787,
+    "column": 59,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0473",
+    "file": "src/compiler/checker.ts",
+    "line": 8794,
+    "column": 99,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0476",
+    "file": "src/compiler/checker.ts",
+    "line": 8893,
+    "column": 61,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0478",
+    "file": "src/compiler/checker.ts",
+    "line": 8918,
+    "column": 59,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0479",
+    "file": "src/compiler/checker.ts",
+    "line": 8925,
+    "column": 67,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0483",
+    "file": "src/compiler/checker.ts",
+    "line": 9382,
+    "column": 54,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0487",
+    "file": "src/compiler/checker.ts",
+    "line": 9591,
+    "column": 37,
+    "origin_class": "a generic inference shape",
+    "review": "Value is inferred through collection keys/values, iterable-to-array conversion, or its callback/filtered/merged result, as recorded in the source trace. The expanded chain carries undefined in the inferred element/key type. This is an iterator/generic shape boundary, not an unchecked numeric indexed argument. Correct element-contract ownership remains unresolved.",
+    "adaptation": null
+  },
+  {
+    "id": "C0490",
+    "file": "src/compiler/commandLineParser.ts",
+    "line": 1874,
+    "column": 96,
+    "origin_class": "a generic inference shape",
+    "review": "Value is inferred through collection keys/values, iterable-to-array conversion, or its callback/filtered/merged result, as recorded in the source trace. The expanded chain carries undefined in the inferred element/key type. This is an iterator/generic shape boundary, not an unchecked numeric indexed argument. Correct element-contract ownership remains unresolved.",
+    "adaptation": null
+  },
+  {
+    "id": "C0491",
+    "file": "src/compiler/commandLineParser.ts",
+    "line": 2001,
+    "column": 32,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0495",
+    "file": "src/compiler/commandLineParser.ts",
+    "line": 2689,
+    "column": 66,
+    "origin_class": "a generic inference shape",
+    "review": "Value is inferred through collection keys/values, iterable-to-array conversion, or its callback/filtered/merged result, as recorded in the source trace. The expanded chain carries undefined in the inferred element/key type. This is an iterator/generic shape boundary, not an unchecked numeric indexed argument. Correct element-contract ownership remains unresolved.",
+    "adaptation": null
+  },
+  {
+    "id": "C0499",
+    "file": "src/compiler/commandLineParser.ts",
+    "line": 3338,
+    "column": 9,
+    "origin_class": "other",
+    "review": "JSON.stringify return contract includes undefined; argument is its call result. Input is includeSpecs || [], but a narrower return contract was not established.",
+    "adaptation": null
+  },
+  {
+    "id": "C0504",
+    "file": "src/compiler/commandLineParser.ts",
+    "line": 4249,
+    "column": 35,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0505",
+    "file": "src/compiler/commandLineParser.ts",
+    "line": 4252,
+    "column": 67,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0517",
+    "file": "src/compiler/core.ts",
+    "line": 1413,
+    "column": 29,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0518",
+    "file": "src/compiler/core.ts",
+    "line": 1414,
+    "column": 58,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0519",
+    "file": "src/compiler/core.ts",
+    "line": 1428,
+    "column": 24,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0520",
+    "file": "src/compiler/core.ts",
+    "line": 1428,
+    "column": 44,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0521",
+    "file": "src/compiler/core.ts",
+    "line": 1442,
+    "column": 28,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0522",
+    "file": "src/compiler/core.ts",
+    "line": 1442,
+    "column": 46,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0523",
+    "file": "src/compiler/core.ts",
+    "line": 1469,
+    "column": 40,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0524",
+    "file": "src/compiler/core.ts",
+    "line": 1471,
+    "column": 24,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0528",
+    "file": "src/compiler/core.ts",
+    "line": 170,
+    "column": 23,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0529",
+    "file": "src/compiler/core.ts",
+    "line": 1721,
+    "column": 28,
+    "origin_class": "a generic inference shape",
+    "review": "Value is inferred through collection keys/values, iterable-to-array conversion, or its callback/filtered/merged result, as recorded in the source trace. The expanded chain carries undefined in the inferred element/key type. This is an iterator/generic shape boundary, not an unchecked numeric indexed argument. Correct element-contract ownership remains unresolved.",
+    "adaptation": null
+  },
+  {
+    "id": "C0530",
+    "file": "src/compiler/core.ts",
+    "line": 186,
+    "column": 23,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0538",
+    "file": "src/compiler/core.ts",
+    "line": 2419,
+    "column": 36,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0539",
+    "file": "src/compiler/core.ts",
+    "line": 247,
+    "column": 27,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0540",
+    "file": "src/compiler/core.ts",
+    "line": 2502,
+    "column": 40,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0541",
+    "file": "src/compiler/core.ts",
+    "line": 2504,
+    "column": 22,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0542",
+    "file": "src/compiler/core.ts",
+    "line": 2509,
+    "column": 21,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0543",
+    "file": "src/compiler/core.ts",
+    "line": 2514,
+    "column": 23,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0549",
+    "file": "src/compiler/core.ts",
+    "line": 287,
+    "column": 23,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0550",
+    "file": "src/compiler/core.ts",
+    "line": 288,
+    "column": 33,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0554",
+    "file": "src/compiler/core.ts",
+    "line": 354,
+    "column": 30,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0559",
+    "file": "src/compiler/core.ts",
+    "line": 463,
+    "column": 34,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0563",
+    "file": "src/compiler/core.ts",
+    "line": 567,
+    "column": 29,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0569",
+    "file": "src/compiler/core.ts",
+    "line": 699,
+    "column": 31,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0574",
+    "file": "src/compiler/core.ts",
+    "line": 742,
+    "column": 26,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0575",
+    "file": "src/compiler/core.ts",
+    "line": 756,
+    "column": 27,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0585",
+    "file": "src/compiler/debug.ts",
+    "line": 1072,
+    "column": 34,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0586",
+    "file": "src/compiler/debug.ts",
+    "line": 1111,
+    "column": 41,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0588",
+    "file": "src/compiler/debug.ts",
+    "line": 1191,
+    "column": 53,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0591",
+    "file": "src/compiler/emitter.ts",
+    "line": 1000,
+    "column": 46,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0597",
+    "file": "src/compiler/emitter.ts",
+    "line": 2057,
+    "column": 45,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0598",
+    "file": "src/compiler/emitter.ts",
+    "line": 2059,
+    "column": 47,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0599",
+    "file": "src/compiler/emitter.ts",
+    "line": 2060,
+    "column": 50,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0600",
+    "file": "src/compiler/emitter.ts",
+    "line": 2912,
+    "column": 69,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0603",
+    "file": "src/compiler/emitter.ts",
+    "line": 4111,
+    "column": 27,
+    "origin_class": "other",
+    "review": "line is a for-of element of text.split(/\\r\\n?|\\n/). Regex split element contract contains undefined; no indexed read supplies this argument.",
+    "adaptation": null
+  },
+  {
+    "id": "C0605",
+    "file": "src/compiler/emitter.ts",
+    "line": 4382,
+    "column": 37,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0606",
+    "file": "src/compiler/emitter.ts",
+    "line": 4475,
+    "column": 40,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0607",
+    "file": "src/compiler/emitter.ts",
+    "line": 4693,
+    "column": 30,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0608",
+    "file": "src/compiler/emitter.ts",
+    "line": 4720,
+    "column": 30,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0609",
+    "file": "src/compiler/emitter.ts",
+    "line": 4779,
+    "column": 105,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0610",
+    "file": "src/compiler/emitter.ts",
+    "line": 4789,
+    "column": 62,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0611",
+    "file": "src/compiler/emitter.ts",
+    "line": 4803,
+    "column": 54,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0612",
+    "file": "src/compiler/emitter.ts",
+    "line": 4811,
+    "column": 26,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0613",
+    "file": "src/compiler/emitter.ts",
+    "line": 4977,
+    "column": 46,
+    "origin_class": "other",
+    "review": "lines is text.split(/\\r\\n?|\\n/); the entire inferred array includes undefined elements and is passed to emitLiteralLines.",
+    "adaptation": null
+  },
+  {
+    "id": "C0614",
+    "file": "src/compiler/emitter.ts",
+    "line": 4982,
+    "column": 23,
+    "origin_class": "other",
+    "review": "line comes from lineText or lineText.slice(indentation); lineText is a for-of element of regex-split lines. No indexed read supplies it.",
+    "adaptation": null
+  },
+  {
+    "id": "C0620",
+    "file": "src/compiler/factory/emitHelpers.ts",
+    "line": 475,
+    "column": 53,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0621",
+    "file": "src/compiler/factory/emitHelpers.ts",
+    "line": 477,
+    "column": 29,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0622",
+    "file": "src/compiler/factory/emitHelpers.ts",
+    "line": 479,
+    "column": 47,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0626",
+    "file": "src/compiler/factory/emitNode.ts",
+    "line": 298,
+    "column": 23,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0629",
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 6898,
+    "column": 37,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0630",
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 6928,
+    "column": 30,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0631",
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 6928,
+    "column": 78,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0641",
+    "file": "src/compiler/moduleNameResolver.ts",
+    "line": 1450,
+    "column": 97,
+    "origin_class": "other",
+    "review": "Declared cache parameter ModuleResolutionCache | undefined is forwarded whole. Its isReadonly slot permits present undefined; target NonRelativeModuleNameResolutionCache optional slot excludes it.",
+    "adaptation": null
+  },
+  {
+    "id": "C0644",
+    "file": "src/compiler/moduleNameResolver.ts",
+    "line": 3035,
+    "column": 85,
+    "origin_class": "other",
+    "review": "Declared cache parameter ModuleResolutionCache | undefined is forwarded whole; expanded chain identifies isReadonly optional-slot incompatibility.",
+    "adaptation": null
+  },
+  {
+    "id": "C0646",
+    "file": "src/compiler/moduleNameResolver.ts",
+    "line": 642,
+    "column": 143,
+    "origin_class": "other",
+    "review": "result is assigned the constructed resolution object immediately before this call (moduleNameResolver.ts:635). Earlier cache lookup permits undefined, but current assignment is not an indexed read; unresolved flow/assignment checking.",
+    "adaptation": null
+  },
+  {
+    "id": "C0647",
+    "file": "src/compiler/moduleNameResolver.ts",
+    "line": 644,
+    "column": 144,
+    "origin_class": "other",
+    "review": "result is the resolution object assigned at moduleNameResolver.ts:635, then forwarded to cache.set; unresolved flow/assignment checking retains earlier optional cache-result type.",
+    "adaptation": null
+  },
+  {
+    "id": "C0648",
+    "file": "src/compiler/moduleNameResolver.ts",
+    "line": 647,
+    "column": 35,
+    "origin_class": "other",
+    "review": "result is the resolution object assigned at moduleNameResolver.ts:635, then forwarded to traceResult; unresolved flow/assignment checking retains earlier optional cache-result type.",
+    "adaptation": null
+  },
+  {
+    "id": "C0663",
+    "file": "src/compiler/path.ts",
+    "line": 1077,
+    "column": 49,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0679",
+    "file": "src/compiler/program.ts",
+    "line": 1862,
+    "column": 64,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0680",
+    "file": "src/compiler/program.ts",
+    "line": 2263,
+    "column": 56,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0681",
+    "file": "src/compiler/program.ts",
+    "line": 2264,
+    "column": 56,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0682",
+    "file": "src/compiler/program.ts",
+    "line": 2285,
+    "column": 47,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0683",
+    "file": "src/compiler/program.ts",
+    "line": 2290,
+    "column": 56,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0684",
+    "file": "src/compiler/program.ts",
+    "line": 2308,
+    "column": 42,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0686",
+    "file": "src/compiler/program.ts",
+    "line": 2325,
+    "column": 72,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0693",
+    "file": "src/compiler/program.ts",
+    "line": 3784,
+    "column": 65,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0694",
+    "file": "src/compiler/program.ts",
+    "line": 3785,
+    "column": 51,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0695",
+    "file": "src/compiler/program.ts",
+    "line": 3786,
+    "column": 59,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0700",
+    "file": "src/compiler/program.ts",
+    "line": 4157,
+    "column": 64,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0701",
+    "file": "src/compiler/program.ts",
+    "line": 4158,
+    "column": 160,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0702",
+    "file": "src/compiler/program.ts",
+    "line": 4160,
+    "column": 69,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0703",
+    "file": "src/compiler/program.ts",
+    "line": 4160,
+    "column": 95,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0704",
+    "file": "src/compiler/program.ts",
+    "line": 4165,
+    "column": 158,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0706",
+    "file": "src/compiler/program.ts",
+    "line": 4595,
+    "column": 50,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0709",
+    "file": "src/compiler/program.ts",
+    "line": 4988,
+    "column": 28,
+    "origin_class": "a generic inference shape",
+    "review": "Value is inferred through collection keys/values, iterable-to-array conversion, or its callback/filtered/merged result, as recorded in the source trace. The expanded chain carries undefined in the inferred element/key type. This is an iterator/generic shape boundary, not an unchecked numeric indexed argument. Correct element-contract ownership remains unresolved.",
+    "adaptation": null
+  },
+  {
+    "id": "C0712",
+    "file": "src/compiler/programDiagnostics.ts",
+    "line": 193,
+    "column": 52,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0720",
+    "file": "src/compiler/resolutionCache.ts",
+    "line": 1616,
+    "column": 118,
+    "origin_class": "a generic inference shape",
+    "review": "Value is inferred through collection keys/values, iterable-to-array conversion, or its callback/filtered/merged result, as recorded in the source trace. The expanded chain carries undefined in the inferred element/key type. This is an iterator/generic shape boundary, not an unchecked numeric indexed argument. Correct element-contract ownership remains unresolved.",
+    "adaptation": null
+  },
+  {
+    "id": "C0721",
+    "file": "src/compiler/resolutionCache.ts",
+    "line": 1619,
+    "column": 46,
+    "origin_class": "a generic inference shape",
+    "review": "Value is inferred through collection keys/values, iterable-to-array conversion, or its callback/filtered/merged result, as recorded in the source trace. The expanded chain carries undefined in the inferred element/key type. This is an iterator/generic shape boundary, not an unchecked numeric indexed argument. Correct element-contract ownership remains unresolved.",
+    "adaptation": null
+  },
+  {
+    "id": "C0722",
+    "file": "src/compiler/resolutionCache.ts",
+    "line": 1619,
+    "column": 74,
+    "origin_class": "a generic inference shape",
+    "review": "Value is inferred through collection keys/values, iterable-to-array conversion, or its callback/filtered/merged result, as recorded in the source trace. The expanded chain carries undefined in the inferred element/key type. This is an iterator/generic shape boundary, not an unchecked numeric indexed argument. Correct element-contract ownership remains unresolved.",
+    "adaptation": null
+  },
+  {
+    "id": "C0727",
+    "file": "src/compiler/semver.ts",
+    "line": 149,
+    "column": 25,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0728",
+    "file": "src/compiler/semver.ts",
+    "line": 175,
+    "column": 60,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0729",
+    "file": "src/compiler/semver.ts",
+    "line": 176,
+    "column": 61,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0732",
+    "file": "src/compiler/semver.ts",
+    "line": 302,
+    "column": 20,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0733",
+    "file": "src/compiler/semver.ts",
+    "line": 302,
+    "column": 42,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0734",
+    "file": "src/compiler/semver.ts",
+    "line": 303,
+    "column": 20,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0735",
+    "file": "src/compiler/semver.ts",
+    "line": 304,
+    "column": 20,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0736",
+    "file": "src/compiler/semver.ts",
+    "line": 319,
+    "column": 21,
+    "origin_class": "undefined from an indexed read",
+    "review": "leftResult = parsePartial(left); returned major is destructured capture 1 of partialRegExp.exec (semver.ts:296-311).",
+    "adaptation": 30
+  },
+  {
+    "id": "C0737",
+    "file": "src/compiler/semver.ts",
+    "line": 323,
+    "column": 21,
+    "origin_class": "undefined from an indexed read",
+    "review": "rightResult = parsePartial(right); returned major is destructured capture 1 of partialRegExp.exec (semver.ts:296-311).",
+    "adaptation": 30
+  },
+  {
+    "id": "C0738",
+    "file": "src/compiler/semver.ts",
+    "line": 339,
+    "column": 21,
+    "origin_class": "undefined from an indexed read",
+    "review": "major is object-destructured from parsePartial(text), whose major is capture 1 (semver.ts:296-311).",
+    "adaptation": 30
+  },
+  {
+    "id": "C0755",
+    "file": "src/compiler/tracing.ts",
+    "line": 238,
+    "column": 58,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0756",
+    "file": "src/compiler/tracing.ts",
+    "line": 306,
+    "column": 73,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0764",
+    "file": "src/compiler/transformers/classFields.ts",
+    "line": 2297,
+    "column": 52,
+    "origin_class": "undefined from an indexed read",
+    "review": "getOriginalNode receives statement = statementsIn[statementOffset] (classFields.ts:2296).",
+    "adaptation": 30
+  },
+  {
+    "id": "C0765",
+    "file": "src/compiler/transformers/classFields.ts",
+    "line": 2376,
+    "column": 56,
+    "origin_class": "undefined from an indexed read",
+    "review": "getOriginalNode receives statement = constructor.body.statements[statementOffset] (classFields.ts:2375).",
+    "adaptation": 30
+  },
+  {
+    "id": "C0766",
+    "file": "src/compiler/transformers/classFields.ts",
+    "line": 2864,
+    "column": 52,
+    "origin_class": "other",
+    "review": "Accessor object literal explicitly writes setterName: undefined. Target optional setterName excludes present undefined; kind discriminant is already present.",
+    "adaptation": null
+  },
+  {
+    "id": "C0767",
+    "file": "src/compiler/transformers/classFields.ts",
+    "line": 2896,
+    "column": 52,
+    "origin_class": "other",
+    "review": "Accessor object literal explicitly writes getterName: undefined. Target optional getterName excludes present undefined; kind discriminant is already present.",
+    "adaptation": null
+  },
+  {
+    "id": "C0768",
+    "file": "src/compiler/transformers/classThis.ts",
+    "line": 78,
+    "column": 34,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0770",
+    "file": "src/compiler/transformers/destructuring.ts",
+    "line": 401,
+    "column": 59,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0771",
+    "file": "src/compiler/transformers/destructuring.ts",
+    "line": 402,
+    "column": 78,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0772",
+    "file": "src/compiler/transformers/destructuring.ts",
+    "line": 406,
+    "column": 60,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0773",
+    "file": "src/compiler/transformers/destructuring.ts",
+    "line": 420,
+    "column": 67,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0774",
+    "file": "src/compiler/transformers/destructuring.ts",
+    "line": 429,
+    "column": 63,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0776",
+    "file": "src/compiler/transformers/destructuring.ts",
+    "line": 486,
+    "column": 168,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0777",
+    "file": "src/compiler/transformers/destructuring.ts",
+    "line": 500,
+    "column": 38,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0778",
+    "file": "src/compiler/transformers/destructuring.ts",
+    "line": 503,
+    "column": 64,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0779",
+    "file": "src/compiler/transformers/destructuring.ts",
+    "line": 505,
+    "column": 63,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0780",
+    "file": "src/compiler/transformers/destructuring.ts",
+    "line": 509,
+    "column": 63,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0782",
+    "file": "src/compiler/transformers/es2015.ts",
+    "line": 1461,
+    "column": 51,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0783",
+    "file": "src/compiler/transformers/es2015.ts",
+    "line": 1478,
+    "column": 43,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0784",
+    "file": "src/compiler/transformers/es2015.ts",
+    "line": 1485,
+    "column": 54,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0785",
+    "file": "src/compiler/transformers/es2015.ts",
+    "line": 1574,
+    "column": 35,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0786",
+    "file": "src/compiler/transformers/es2015.ts",
+    "line": 1578,
+    "column": 43,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0787",
+    "file": "src/compiler/transformers/es2015.ts",
+    "line": 1585,
+    "column": 92,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0789",
+    "file": "src/compiler/transformers/es2015.ts",
+    "line": 4100,
+    "column": 83,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0790",
+    "file": "src/compiler/transformers/es2015.ts",
+    "line": 4108,
+    "column": 90,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0791",
+    "file": "src/compiler/transformers/es2015.ts",
+    "line": 4112,
+    "column": 78,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0792",
+    "file": "src/compiler/transformers/es2015.ts",
+    "line": 4116,
+    "column": 87,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0798",
+    "file": "src/compiler/transformers/es2018.ts",
+    "line": 636,
+    "column": 29,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0807",
+    "file": "src/compiler/transformers/esnext.ts",
+    "line": 183,
+    "column": 34,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0808",
+    "file": "src/compiler/transformers/esnext.ts",
+    "line": 205,
+    "column": 52,
+    "origin_class": "a generic inference shape",
+    "review": "Value is inferred through collection keys/values, iterable-to-array conversion, or its callback/filtered/merged result, as recorded in the source trace. The expanded chain carries undefined in the inferred element/key type. This is an iterator/generic shape boundary, not an unchecked numeric indexed argument. Correct element-contract ownership remains unresolved.",
+    "adaptation": null
+  },
+  {
+    "id": "C0809",
+    "file": "src/compiler/transformers/esnext.ts",
+    "line": 344,
+    "column": 44,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0810",
+    "file": "src/compiler/transformers/esnext.ts",
+    "line": 384,
+    "column": 36,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0814",
+    "file": "src/compiler/transformers/generators.ts",
+    "line": 1374,
+    "column": 70,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0821",
+    "file": "src/compiler/transformers/generators.ts",
+    "line": 2446,
+    "column": 48,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0822",
+    "file": "src/compiler/transformers/generators.ts",
+    "line": 2469,
+    "column": 56,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0823",
+    "file": "src/compiler/transformers/generators.ts",
+    "line": 2472,
+    "column": 53,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0824",
+    "file": "src/compiler/transformers/generators.ts",
+    "line": 2480,
+    "column": 48,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0825",
+    "file": "src/compiler/transformers/generators.ts",
+    "line": 2499,
+    "column": 51,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0826",
+    "file": "src/compiler/transformers/generators.ts",
+    "line": 2507,
+    "column": 51,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0843",
+    "file": "src/compiler/transformers/namedEvaluation.ts",
+    "line": 145,
+    "column": 34,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0845",
+    "file": "src/compiler/transformers/typeSerializer.ts",
+    "line": 220,
+    "column": 58,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0846",
+    "file": "src/compiler/transformers/utilities.ts",
+    "line": 550,
+    "column": 39,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0847",
+    "file": "src/compiler/transformers/utilities.ts",
+    "line": 554,
+    "column": 33,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0849",
+    "file": "src/compiler/transformers/utilities.ts",
+    "line": 661,
+    "column": 45,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0850",
+    "file": "src/compiler/transformers/utilities.ts",
+    "line": 666,
+    "column": 47,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0851",
+    "file": "src/compiler/tsbuildPublic.ts",
+    "line": 1214,
+    "column": 61,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0852",
+    "file": "src/compiler/tsbuildPublic.ts",
+    "line": 1223,
+    "column": 47,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0853",
+    "file": "src/compiler/tsbuildPublic.ts",
+    "line": 1231,
+    "column": 36,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0854",
+    "file": "src/compiler/tsbuildPublic.ts",
+    "line": 1233,
+    "column": 45,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0855",
+    "file": "src/compiler/tsbuildPublic.ts",
+    "line": 1234,
+    "column": 36,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0856",
+    "file": "src/compiler/tsbuildPublic.ts",
+    "line": 1235,
+    "column": 42,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0858",
+    "file": "src/compiler/tsbuildPublic.ts",
+    "line": 1242,
+    "column": 17,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0859",
+    "file": "src/compiler/tsbuildPublic.ts",
+    "line": 1247,
+    "column": 36,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0860",
+    "file": "src/compiler/tsbuildPublic.ts",
+    "line": 1248,
+    "column": 42,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0861",
+    "file": "src/compiler/tsbuildPublic.ts",
+    "line": 1254,
+    "column": 51,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0862",
+    "file": "src/compiler/tsbuildPublic.ts",
+    "line": 1260,
+    "column": 78,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0864",
+    "file": "src/compiler/tsbuildPublic.ts",
+    "line": 1279,
+    "column": 47,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0865",
+    "file": "src/compiler/tsbuildPublic.ts",
+    "line": 1288,
+    "column": 21,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0866",
+    "file": "src/compiler/tsbuildPublic.ts",
+    "line": 1296,
+    "column": 47,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0868",
+    "file": "src/compiler/tsbuildPublic.ts",
+    "line": 1776,
+    "column": 54,
+    "origin_class": "a generic inference shape",
+    "review": "Value is inferred through collection keys/values, iterable-to-array conversion, or its callback/filtered/merged result, as recorded in the source trace. The expanded chain carries undefined in the inferred element/key type. This is an iterator/generic shape boundary, not an unchecked numeric indexed argument. Correct element-contract ownership remains unresolved.",
+    "adaptation": null
+  },
+  {
+    "id": "C0869",
+    "file": "src/compiler/tsbuildPublic.ts",
+    "line": 1906,
+    "column": 65,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0870",
+    "file": "src/compiler/tsbuildPublic.ts",
+    "line": 1909,
+    "column": 58,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0875",
+    "file": "src/compiler/utilities.ts",
+    "line": 10634,
+    "column": 23,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0883",
+    "file": "src/compiler/utilities.ts",
+    "line": 3857,
+    "column": 69,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0889",
+    "file": "src/compiler/utilities.ts",
+    "line": 6786,
+    "column": 36,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0891",
+    "file": "src/compiler/utilities.ts",
+    "line": 7115,
+    "column": 119,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0892",
+    "file": "src/compiler/utilities.ts",
+    "line": 7136,
+    "column": 77,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0895",
+    "file": "src/compiler/utilities.ts",
+    "line": 7715,
+    "column": 43,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0898",
+    "file": "src/compiler/utilities.ts",
+    "line": 7733,
+    "column": 43,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0904",
+    "file": "src/compiler/utilities.ts",
+    "line": 8807,
+    "column": 44,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0905",
+    "file": "src/compiler/utilities.ts",
+    "line": 941,
+    "column": 48,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0910",
+    "file": "src/compiler/utilitiesPublic.ts",
+    "line": 433,
+    "column": 67,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0911",
+    "file": "src/compiler/utilitiesPublic.ts",
+    "line": 435,
+    "column": 46,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0913",
+    "file": "src/compiler/utilitiesPublic.ts",
+    "line": 440,
+    "column": 21,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0915",
+    "file": "src/compiler/utilitiesPublic.ts",
+    "line": 713,
+    "column": 94,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0916",
+    "file": "src/compiler/utilitiesPublic.ts",
+    "line": 714,
+    "column": 36,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  },
+  {
+    "id": "C0917",
+    "file": "src/compiler/visitorPublic.ts",
+    "line": 424,
+    "column": 59,
+    "origin_class": "undefined from an indexed read",
+    "review": "Argument follows aliases/destructuring/helper returns to the recorded indexed source; expanded diagnostic requires removing undefined, not choosing another union member.",
+    "adaptation": 30
+  }
+]

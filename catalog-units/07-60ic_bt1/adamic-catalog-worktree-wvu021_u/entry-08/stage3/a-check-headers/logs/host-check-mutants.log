@@ -1,0 +1,125 @@
+01_readFile_utf8.a: Node exit=0, stage0=Checker
+02_readFile_utf16le.a: Node exit=0, stage0=Checker
+03_readFile_utf16be.a: Node exit=0, stage0=Checker
+04_readFile_missing.a: Node exit=0, stage0=Checker
+05_writeFile.a: Node exit=0, stage0=Checker
+06_fileExists.a: Node exit=0, stage0=Checker
+07_directoryExists.a: Node exit=0, stage0=Checker
+08_getDirectories.a: Node exit=0, stage0=Checker
+09_realpath.a: Node exit=0, stage0=Checker
+10_getModifiedTime.a: Node exit=0, stage0=Checker
+11_setModifiedTime.a: Node exit=0, stage0=Checker
+12_deleteFile.a: Node exit=0, stage0=Checker
+13_createDirectory.a: Node exit=0, stage0=Checker
+14_getCurrentDirectory.a: Node exit=0, stage0=Checker
+15_getExecutingFilePath.a: Node exit=0, stage0=Checker
+16_getEnvironmentVariable.a: Node exit=0, stage0=Checker
+17_write.a: Node exit=0, stage0=Checker
+18_exit_0.a: Node exit=0, stage0=Checker
+19_exit_1.a: Node exit=1, stage0=Checker
+20_exit_2.a: Node exit=2, stage0=Checker
+21_createHash.a: Node exit=0, stage0=Checker
+22_createHash_fallback.a: Node exit=0, stage0=Checker
+23_newLine.a: Node exit=0, stage0=Checker
+24_useCaseSensitiveFileNames.a: Node exit=0, stage0=Checker
+25_readDirectory.a: Node exit=0, stage0=Checker
+01_readFile_utf8.a: caught mutant return buffer.toString("utf8", 3); -> return buffer.toString("utf8", 0);
+02_readFile_utf16le.a: caught mutant if (len >= 2 && buffer[0] === 0xFF && buffer[1] === 0xFE) -> if (false)
+03_readFile_utf16be.a: caught mutant buffer[i] = buffer[i + 1]; -> buffer[i] = temp;
+04_readFile_missing.a: caught mutant return undefined; -> return "";
+05_writeFile.a: caught mutant data = byteOrderMarkIndicator + data; -> data = data;
+06_fileExists.a: caught mutant return stat.isFile(); -> return stat.isDirectory();
+07_directoryExists.a: caught mutant return stat.isDirectory(); -> return stat.isFile();
+08_getDirectories.a: caught mutant directories.sort(); -> directories.reverse();
+09_realpath.a: caught mutant return path; -> return _path.resolve(path);
+10_getModifiedTime.a: caught mutant return statSync(path)?.mtime; -> return undefined;
+11_setModifiedTime.a: caught mutant _fs.utimesSync(path, time, time); -> _fs.utimesSync(path, new Date(0), new Date(0));
+12_deleteFile.a: caught mutant return _fs.unlinkSync(path); -> return;
+13_createDirectory.a: caught mutant if (!nodeSystem.directoryExists(directoryName)) -> if (false)
+14_getCurrentDirectory.a: caught mutant callback = undefined!; -> // callback stays live
+15_getExecutingFilePath.a: caught mutant __filename.endsWith("sys.js") -> __filename.endsWith("sys.cjs")
+16_getEnvironmentVariable.a: caught mutant return process.env[name] || ""; -> return "";
+17_write.a: caught mutant process.stdout.write(s); -> process.stdout.write(s + "?");
+18_exit_0.a: caught mutant nodeSystem.exit(0); -> nodeSystem.exit(1);
+19_exit_1.a: caught mutant nodeSystem.exit(1); -> nodeSystem.exit(2);
+20_exit_2.a: caught mutant nodeSystem.exit(2); -> nodeSystem.exit(0);
+21_createHash.a: caught mutant createHash("sha256") -> createHash("sha1")
+22_createHash_fallback.a: caught mutant let acc = 5381; -> let acc = 5382;
+23_newLine.a: caught mutant newLine: _os.EOL -> newLine: "\r\n"
+24_useCaseSensitiveFileNames.a: caught mutant return !fileExists(swapCase(__filename)); -> return fileExists(swapCase(__filename));
+25_readDirectory.a: caught mutant if (extensions && !fileExtensionIsOneOf(name, extensions)) continue; -> if (false) continue;
+01_readFile_utf8.a: caught stage0 diagnostic mutant after normalization
+01_readFile_utf8.a: caught stage0 line mutant after normalization
+01_readFile_utf8.a: caught stage0 code mutant after normalization
+02_readFile_utf16le.a: caught stage0 diagnostic mutant after normalization
+02_readFile_utf16le.a: caught stage0 line mutant after normalization
+02_readFile_utf16le.a: caught stage0 code mutant after normalization
+03_readFile_utf16be.a: caught stage0 diagnostic mutant after normalization
+03_readFile_utf16be.a: caught stage0 line mutant after normalization
+03_readFile_utf16be.a: caught stage0 code mutant after normalization
+04_readFile_missing.a: caught stage0 diagnostic mutant after normalization
+04_readFile_missing.a: caught stage0 line mutant after normalization
+04_readFile_missing.a: caught stage0 code mutant after normalization
+05_writeFile.a: caught stage0 diagnostic mutant after normalization
+05_writeFile.a: caught stage0 line mutant after normalization
+05_writeFile.a: caught stage0 code mutant after normalization
+06_fileExists.a: caught stage0 diagnostic mutant after normalization
+06_fileExists.a: caught stage0 line mutant after normalization
+06_fileExists.a: caught stage0 code mutant after normalization
+07_directoryExists.a: caught stage0 diagnostic mutant after normalization
+07_directoryExists.a: caught stage0 line mutant after normalization
+07_directoryExists.a: caught stage0 code mutant after normalization
+08_getDirectories.a: caught stage0 diagnostic mutant after normalization
+08_getDirectories.a: caught stage0 line mutant after normalization
+08_getDirectories.a: caught stage0 code mutant after normalization
+09_realpath.a: caught stage0 diagnostic mutant after normalization
+09_realpath.a: caught stage0 line mutant after normalization
+09_realpath.a: caught stage0 code mutant after normalization
+10_getModifiedTime.a: caught stage0 diagnostic mutant after normalization
+10_getModifiedTime.a: caught stage0 line mutant after normalization
+10_getModifiedTime.a: caught stage0 code mutant after normalization
+11_setModifiedTime.a: caught stage0 diagnostic mutant after normalization
+11_setModifiedTime.a: caught stage0 line mutant after normalization
+11_setModifiedTime.a: caught stage0 code mutant after normalization
+12_deleteFile.a: caught stage0 diagnostic mutant after normalization
+12_deleteFile.a: caught stage0 line mutant after normalization
+12_deleteFile.a: caught stage0 code mutant after normalization
+13_createDirectory.a: caught stage0 diagnostic mutant after normalization
+13_createDirectory.a: caught stage0 line mutant after normalization
+13_createDirectory.a: caught stage0 code mutant after normalization
+14_getCurrentDirectory.a: caught stage0 diagnostic mutant after normalization
+14_getCurrentDirectory.a: caught stage0 line mutant after normalization
+14_getCurrentDirectory.a: caught stage0 code mutant after normalization
+15_getExecutingFilePath.a: caught stage0 diagnostic mutant after normalization
+15_getExecutingFilePath.a: caught stage0 line mutant after normalization
+15_getExecutingFilePath.a: caught stage0 code mutant after normalization
+16_getEnvironmentVariable.a: caught stage0 diagnostic mutant after normalization
+16_getEnvironmentVariable.a: caught stage0 line mutant after normalization
+16_getEnvironmentVariable.a: caught stage0 code mutant after normalization
+17_write.a: caught stage0 diagnostic mutant after normalization
+17_write.a: caught stage0 line mutant after normalization
+17_write.a: caught stage0 code mutant after normalization
+18_exit_0.a: caught stage0 diagnostic mutant after normalization
+18_exit_0.a: caught stage0 line mutant after normalization
+18_exit_0.a: caught stage0 code mutant after normalization
+19_exit_1.a: caught stage0 diagnostic mutant after normalization
+19_exit_1.a: caught stage0 line mutant after normalization
+19_exit_1.a: caught stage0 code mutant after normalization
+20_exit_2.a: caught stage0 diagnostic mutant after normalization
+20_exit_2.a: caught stage0 line mutant after normalization
+20_exit_2.a: caught stage0 code mutant after normalization
+21_createHash.a: caught stage0 diagnostic mutant after normalization
+21_createHash.a: caught stage0 line mutant after normalization
+21_createHash.a: caught stage0 code mutant after normalization
+22_createHash_fallback.a: caught stage0 diagnostic mutant after normalization
+22_createHash_fallback.a: caught stage0 line mutant after normalization
+22_createHash_fallback.a: caught stage0 code mutant after normalization
+23_newLine.a: caught stage0 diagnostic mutant after normalization
+23_newLine.a: caught stage0 line mutant after normalization
+23_newLine.a: caught stage0 code mutant after normalization
+24_useCaseSensitiveFileNames.a: caught stage0 diagnostic mutant after normalization
+24_useCaseSensitiveFileNames.a: caught stage0 line mutant after normalization
+24_useCaseSensitiveFileNames.a: caught stage0 code mutant after normalization
+25_readDirectory.a: caught stage0 diagnostic mutant after normalization
+25_readDirectory.a: caught stage0 line mutant after normalization
+25_readDirectory.a: caught stage0 code mutant after normalization

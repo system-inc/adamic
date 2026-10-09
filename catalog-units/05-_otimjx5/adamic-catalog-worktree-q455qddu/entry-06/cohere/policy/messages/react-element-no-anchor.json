@@ -1,0 +1,10 @@
+{
+  "rules": {
+    "TypeScript": "structure/react-element-no-anchor"
+  },
+  "messages": {
+    "noAnchorElement": {
+      "text": "This is a raw <a> element. Use the Link component from @structure/source/components/navigation/Link instead. Link is where client-side navigation, prefetching, and the external-link handling live, so an <a> written directly does a full page load and drops all of it, and it does so without failing anything."
+    }
+  }
+}

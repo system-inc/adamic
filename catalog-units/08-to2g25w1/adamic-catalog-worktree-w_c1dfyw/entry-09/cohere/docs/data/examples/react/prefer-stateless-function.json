@@ -1,0 +1,20 @@
+{
+    "rule": "react/prefer-stateless-function",
+    "firing": {
+        "file": "/repository/source/Pure.tsx",
+        "source": "class Foo extends React.PureComponent { render() { return <div/>; } }",
+        "findings": [
+            {
+                "line": 1,
+                "column": 1,
+                "endLine": 1,
+                "endColumn": 70,
+                "messageId": "componentShouldBePure",
+                "message": "This class component uses nothing a class provides. It has a render method, and beyond the members React reads as configuration it has no state, no lifecycle, no refs and no other use of `this`, so the class body is ceremony around a single function of its props. Written as a function it is shorter, it cannot accidentally grow instance state, and React can treat it as a plain call. Rewrite it as a function component."
+            }
+        ]
+    },
+    "assertedMessageIds": [
+        "componentShouldBePure"
+    ]
+}

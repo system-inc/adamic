@@ -1,0 +1,24 @@
+{
+    "rule": "no-loop-func",
+    "firing": {
+        "file": "/repository/source/LoopFunctions.ts",
+        "source": "for (var i in {}) { (function() { i; }) }\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 22,
+                "endLine": 1,
+                "endColumn": 39,
+                "messageId": "unsafeRefs",
+                "message": "This function is created inside a loop and closes over a variable the loop reassigns, so every iteration builds a function sharing one binding rather than capturing the value it was made with. By the time any of them runs the variable holds whatever the last iteration left, which is why the callbacks all report the same index. Declare the variable with `let` or `const` inside the loop body so each iteration gets its own, or pass the value in as an argument. The unsafe reference is to 'i'."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/LoopFunctions.ts",
+        "source": "string = 'function a() {}';\n"
+    },
+    "assertedMessageIds": [
+        "unsafeRefs"
+    ]
+}

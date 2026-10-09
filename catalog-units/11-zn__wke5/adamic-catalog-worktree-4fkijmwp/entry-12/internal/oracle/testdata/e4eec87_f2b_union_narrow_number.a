@@ -1,0 +1,14 @@
+function first(useText: boolean): string | number {
+	return useText ? 'text' : 7;
+}
+let shared: string | number = first(false);
+function toText(): void {
+	shared = 'words'.repeat(3);
+}
+function check(): void {
+	if (typeof shared === 'number') {
+		toText();
+		console.log(`after toText: ${shared + 1}`);
+	}
+}
+check();

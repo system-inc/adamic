@@ -1,0 +1,13 @@
+{
+  "rules": {
+    "TypeScript": "structure/network-require-hook-variables-type"
+  },
+  "messages": {
+    "inlineVariablesType": {
+      "text": "This hook types its variables parameter inline rather than with the generated QueryVariablesType or MutationVariablesType from GraphQlOperations. An inline type is a second, hand-maintained statement of what the document already declares, so when the document gains a required argument the hand-written type still compiles and the caller still omits it. The generated type changes with the document; a copy of it does not."
+    },
+    "unnecessaryVariablesDestructuring": {
+      "text": "This call rebuilds the variables object property by property out of the parameter it was handed, producing the same object it already had. Beyond the noise, the rebuild is a place a property can be dropped: adding one to the type and forgetting it here compiles and silently sends a query without it. Pass the parameter through instead."
+    }
+  }
+}

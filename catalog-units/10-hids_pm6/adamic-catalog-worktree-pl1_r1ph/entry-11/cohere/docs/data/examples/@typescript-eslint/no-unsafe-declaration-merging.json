@@ -1,0 +1,24 @@
+{
+    "rule": "@typescript-eslint/no-unsafe-declaration-merging",
+    "firing": {
+        "file": "/repository/source/Merged.ts",
+        "source": "class Foo {}\nexport interface Foo {}\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 7,
+                "endLine": 1,
+                "endColumn": 10,
+                "messageId": "unsafeMerging",
+                "message": "A class and an interface sharing a name are merged into one type, and the members the interface contributes are never initialized by the class constructor. TypeScript does not check them, so reading one compiles and returns undefined at runtime. Give the interface a different name, or declare the members on the class."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/Merged.ts",
+        "source": "const Foo = class {};\n"
+    },
+    "assertedMessageIds": [
+        "unsafeMerging"
+    ]
+}

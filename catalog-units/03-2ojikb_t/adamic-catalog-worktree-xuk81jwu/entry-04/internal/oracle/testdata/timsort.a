@@ -1,0 +1,80 @@
+// Sort is V8's TimSort, step for step. A comparator that isn't consistent (NaN read as equal, or an
+// answer that depends on how often it's been asked) gives whatever order the algorithm makes, so
+// only V8's algorithm gives Node's. Every comparison is counted and folded into a trace, so the
+// calls themselves, in order, must be V8's too. Lengths cross the minimum run (64), and runs of
+// presorted data make the merges gallop. Found by adamic-fuzz (seed 238): a comparator giving NaN
+// sorted 24 numbers differently natively, where the runtime merged bottom-up.
+let calls = 0;
+let trace = 0;
+function note(left: number, right: number): void {
+	calls++;
+	trace = (trace * 31 + left * 7 + right) % 1000003;
+}
+
+let seed = 17;
+function next(): number {
+	seed = (seed * 75 + 74) % 65537;
+	return seed;
+}
+
+function numbers(length: number, shape: number): number[] {
+	const made: number[] = [];
+	for (let index = 0; index < length; index++) {
+		if (shape === 0) {
+			made.push(next() % 100);
+		} else if (shape === 1) {
+			// Runs, ascending and descending, of a few lengths: what galloping is for.
+			const block = Math.floor(index / 23);
+			made.push(block % 2 === 0 ? index % 23 + block * 3 : 100 - (index % 23) - block);
+		} else {
+			made.push(index % 7 === 0 ? next() % 50 : index);
+		}
+	}
+	return made;
+}
+
+function report(label: string, sorted: number[]): void {
+	let sum = 0;
+	for (let index = 0; index < sorted.length; index++) {
+		sum = (sum * 3 + (sorted[index] ?? 0) * (index + 1)) % 1000003;
+	}
+	console.log(`${label}: ${sorted.length} sum ${sum} calls ${calls} trace ${trace} first ${sorted.slice(0, 6).join(',')}`);
+	calls = 0;
+	trace = 0;
+}
+
+const lengths = [0, 1, 2, 3, 5, 8, 24, 31, 32, 63, 64, 65, 100, 127, 128, 129, 200, 513, 1000, 2500];
+for (const length of lengths) {
+	for (let shape = 0; shape < 3; shape++) {
+		const consistent = numbers(length, shape);
+		consistent.sort((left, right) => {
+			note(left, right);
+			return left - right;
+		});
+		report(`consistent ${length}/${shape}`, consistent);
+
+		const unordered = numbers(length, shape);
+		unordered.sort((left, right) => {
+			note(left, right);
+			return left % 3 === 0 ? 0 / 0 : left - right;
+		});
+		report(`nan ${length}/${shape}`, unordered);
+
+		const fickle = numbers(length, shape);
+		fickle.sort((left, right) => {
+			note(left, right);
+			return ((left * 7 + right * 13 + calls) % 5) - 2;
+		});
+		report(`fickle ${length}/${shape}`, fickle);
+	}
+}
+
+const words: string[] = [];
+for (let index = 0; index < 300; index++) {
+	words.push(`w${next() % 40}`);
+}
+words.sort((left, right) => {
+	calls++;
+	return left.length === right.length ? 0 : left < right ? -1 : 1;
+});
+console.log(`${calls} ${words.slice(0, 12).join(' ')} ${words.slice(-6).join(' ')}`);

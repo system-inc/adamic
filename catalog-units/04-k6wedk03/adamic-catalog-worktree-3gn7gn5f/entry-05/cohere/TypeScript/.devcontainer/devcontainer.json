@@ -1,0 +1,28 @@
+{
+    "name": "TypeScript Compiler Development",
+    "image": "mcr.microsoft.com/devcontainers/go:1.27-bookworm",
+    "features": {
+        "ghcr.io/devcontainers/features/node:2": {
+            "version": "24",
+            "pnpmVersion": "latest",
+            "nvmVersion": "latest"
+        },
+        "ghcr.io/devcontainers-extra/features/dprint-asdf:2": {
+            "version": "latest"
+        },
+        "ghcr.io/devcontainers/features/github-cli:1": {}
+    },
+    "postCreateCommand": {
+        "Install Go Dependencies": "go -C ./tsc mod download && go -C ./tools mod download",
+        "Install npm Dependencies & Go Tools": "npm ci && npx hereby install-tools",
+        "Install Graphviz": "sudo apt update -y && sudo apt install -y graphviz"
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "dprint.dprint",
+                "golang.go"
+            ]
+        }
+    }
+}

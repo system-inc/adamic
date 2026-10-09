@@ -1,0 +1,14 @@
+// A parameter nobody reads is JavaScript, and a linter's business, not a reason the C can't compile.
+// Found by adamic-fuzz: an unused number parameter was C that clang refused under -Werror.
+class Counter {
+	bump(amount: number): number {
+		return 0;
+	}
+}
+
+function constant(ignored: number, unread: string): number {
+	return 7;
+}
+
+const always = (value: number): string => 'same';
+console.log(`${new Counter().bump(5)} ${constant(1, 'x')} ${always(2)}`);

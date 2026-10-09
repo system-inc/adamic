@@ -1,0 +1,24 @@
+{
+    "rule": "@next/next/no-styled-jsx-in-document",
+    "firing": {
+        "file": "pages/_document.tsx",
+        "source": "export const a = <style jsx />;\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 18,
+                "endLine": 1,
+                "endColumn": 31,
+                "messageId": "noStyledJsxInDocument",
+                "message": "This is styled-jsx inside the custom document. The document shell renders once, outside the React tree that styled-jsx instruments, so the styles it collects here are never injected and the rule that looks correct in a page silently produces nothing. Move the styles into a page or a component, or emit plain CSS with a raw <style> element."
+            }
+        ]
+    },
+    "clean": {
+        "file": "pages/_document.tsx",
+        "source": "export const C = () => <div jsx>{\"x\"}</div>;"
+    },
+    "assertedMessageIds": [
+        "noStyledJsxInDocument"
+    ]
+}

@@ -1,0 +1,24 @@
+{
+    "rule": "no-dupe-class-members",
+    "firing": {
+        "file": "/repository/source/Members.ts",
+        "source": "class A { 10() {} 1e1() {} }",
+        "findings": [
+            {
+                "line": 1,
+                "column": 19,
+                "endLine": 1,
+                "endColumn": 22,
+                "messageId": "noDupeClassMembers",
+                "message": "This class already declares a member named number:10. The later declaration wins silently, so the earlier one is dead code that reads as live, and nothing in the language or at runtime tells the two apart."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/Members.ts",
+        "source": "class A { 1() {} 2() {} }"
+    },
+    "assertedMessageIds": [
+        "noDupeClassMembers"
+    ]
+}

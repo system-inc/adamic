@@ -1,0 +1,27 @@
+{
+    "rule": "sort-vars",
+    "firing": {
+        "file": "/repository/source/SortVars.ts",
+        "source": "var b, a",
+        "findings": [
+            {
+                "line": 1,
+                "column": 8,
+                "endLine": 1,
+                "endColumn": 9,
+                "messageId": "sortVars",
+                "message": "A declaration block in a fixed order is one a reader can scan instead of search. Sort the names, or split the block so each declaration stands where it is used.",
+                "fix": true
+            }
+        ],
+        "fixedSource": "var a, b"
+    },
+    "clean": {
+        "file": "/repository/source/SortVars.ts",
+        "source": "var A, a"
+    },
+    "assertedMessageIds": [
+        "sortVars"
+    ],
+    "assertsFix": true
+}

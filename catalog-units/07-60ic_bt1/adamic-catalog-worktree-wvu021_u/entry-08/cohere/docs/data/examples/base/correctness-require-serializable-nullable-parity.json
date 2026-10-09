@@ -1,0 +1,25 @@
+{
+    "rule": "base/correctness-require-serializable-nullable-parity",
+    "firing": {
+        "file": "/repository/source/Entity.ts",
+        "source": "declare function OrmColumn(o?: any): any;\ndeclare function SerializableField(o?: any): any;\nfunction SerializableField(o?: any): any { return null; }\nclass A { @SerializableField({ optional: true }) x!: string; }\n",
+        "findings": [
+            {
+                "line": 4,
+                "column": 50,
+                "endLine": 4,
+                "endColumn": 51,
+                "messageId": "decoratorOptionalButTypeNot",
+                "message": "@SerializableField declares 'optional: true' but type 'string' does not include null/undefined"
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/Entity.ts",
+        "source": "declare function OrmColumn(o?: any): any;\ndeclare function SerializableField(o?: any): any;\nnamespace N { export function SerializableField(o?: any): any { return null; } }\nclass A { @N.SerializableField({ optional: true }) x!: string; }\n"
+    },
+    "assertedMessageIds": [
+        "decoratorOptionalButTypeNot",
+        "typeOptionalButDecoratorNot"
+    ]
+}

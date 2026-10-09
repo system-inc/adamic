@@ -1,0 +1,203 @@
+interface Item {
+	readonly label: string;
+}
+
+function make(count: number): Item[] {
+	const items: Item[] = [];
+	for (let index = 0; index < count; index++) {
+		items.push({ label: `item${index}` });
+	}
+	return items;
+}
+
+function remove(items: Item[]): void {
+	items.pop();
+}
+
+function popBody(): void {
+	const items = make(1);
+	for (const item of items) {
+		items.pop();
+		console.log(item.label);
+	}
+}
+
+function spliceBody(): void {
+	const items = make(1);
+	for (const item of items) {
+		items.splice(0, 1);
+		console.log(item.label);
+	}
+}
+
+function storeBody(): void {
+	const items = make(1);
+	for (const item of items) {
+		items[0] = { label: `store${items.length}` };
+		console.log(item.label);
+	}
+}
+
+function callBody(): void {
+	const items = make(1);
+	for (const item of items) {
+		remove(items);
+		console.log(item.label);
+	}
+}
+
+function closureBody(): void {
+	const items = make(1);
+	const alias = items;
+	const clear = (): void => { alias.pop(); };
+	for (const item of items) {
+		clear();
+		console.log(item.label);
+	}
+}
+
+function reassignBody(): void {
+	let items = make(1);
+	for (const item of items) {
+		items = make(0);
+		console.log(item.label);
+	}
+	console.log(`${items.length}`);
+}
+
+function pushBody(): void {
+	const items = make(1);
+	for (const item of items) {
+		items.push({ label: `push${items.length}` });
+		console.log(item.label);
+		break;
+	}
+	console.log(`${items.length}`);
+}
+
+function throwBody(): void {
+	const items = make(1);
+	try {
+		for (const item of items) {
+			console.log(item.label);
+			throw new Error(`throw${items.length}`);
+		}
+	} catch (error) {
+		if (error instanceof Error) { console.log(error.message); }
+	}
+	console.log(items[0]?.label ?? `missing`);
+}
+
+function caughtBody(): void {
+	const items = make(1);
+	for (const item of items) {
+		try { throw new Error(`caught${items.length}`); }
+		catch (error) { if (error instanceof Error) { console.log(error.message); } }
+		console.log(item.label);
+	}
+}
+
+function grown(item: Item): Item { return { ...item, label: `${item.label}+` }; }
+function bindingReuse(): void {
+	const items = make(1);
+	for (const item of items) {
+		const changed = grown(item);
+		console.log(changed.label);
+	}
+	console.log(items[0]?.label ?? `missing`);
+}
+
+function assignedBinding(): void {
+	const items = make(1);
+	for (let item of items) {
+		item = { label: `assigned${items.length}` };
+		console.log(item.label);
+	}
+}
+
+function capturedBinding(): void {
+	const items = make(1);
+	for (const item of items) {
+		const read = (): string => item.label;
+		console.log(item.label);
+	}
+}
+
+class Reader {
+	read(items: Item[]): number { return items.length; }
+}
+class Remover extends Reader {
+	read(items: Item[]): number { items.pop(); return items.length; }
+}
+function virtualBody(reader: Reader): void {
+	const items = make(1);
+	for (const item of items) {
+		reader.read(items);
+		console.log(item.label);
+	}
+}
+
+virtualBody(new Reader());
+virtualBody(new Remover());
+bindingReuse();
+assignedBinding();
+capturedBinding();
+popBody();
+spliceBody();
+storeBody();
+callBody();
+closureBody();
+reassignBody();
+pushBody();
+throwBody();
+caughtBody();
+
+function freshBody(): void {
+	for (const item of make(1)) { console.log(item.label); }
+}
+freshBody();
+
+// Replacing the captured variable must not replace the array the iterator visits.
+function closureReassignBody(): void {
+	let items = make(2);
+	const replace = (): void => { items = make(0); };
+	for (const item of items) {
+		replace();
+		console.log(item.label);
+	}
+	console.log(`${items.length}`);
+}
+
+let globalItems = make(2);
+function replaceGlobalItems(): void { globalItems = make(0); }
+function globalReassignBody(): void {
+	for (const item of globalItems) {
+		replaceGlobalItems();
+		console.log(item.label);
+	}
+	console.log(`${globalItems.length}`);
+}
+
+// This iterator owns the old array when the assignment frees the variable's count.
+// The only executed exit after the assignment is the throw, not the next length test.
+function throwHeldBody(): void {
+	let items = make(1);
+	try {
+		for (const item of items) {
+			items = make(0);
+			throw new Error(`held:${item.label}`);
+		}
+	} catch (error) {
+		if (error instanceof Error) { console.log(error.message); }
+	}
+	console.log(`${items.length}`);
+}
+
+function parameterBody(items: Item[]): void {
+	for (const item of items) { console.log(item.label); }
+}
+
+closureReassignBody();
+globalReassignBody();
+throwHeldBody();
+parameterBody(make(2));

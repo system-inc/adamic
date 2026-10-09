@@ -1,0 +1,2 @@
+adamic: /workspace/adamic/stage3/adapt/48-memoize/b-explicit.a:3:9: Adamic 0.1 refuses 'pending', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; write the function as a function declaration (function pending() {}), which captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)
+exit status 1

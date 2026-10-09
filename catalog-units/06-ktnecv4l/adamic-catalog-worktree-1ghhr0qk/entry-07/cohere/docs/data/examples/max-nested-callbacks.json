@@ -1,0 +1,10 @@
+{
+    "rule": "max-nested-callbacks",
+    "clean": {
+        "file": "file.ts",
+        "source": "foo(function(){ foo(function(){}) })"
+    },
+    "assertedMessageIds": [
+        "exceed"
+    ]
+}

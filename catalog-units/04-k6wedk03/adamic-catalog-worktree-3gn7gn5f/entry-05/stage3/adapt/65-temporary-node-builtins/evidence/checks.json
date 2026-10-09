@@ -1,0 +1,13 @@
+{
+  "before_sha256": "009c0d08cf4346ed350c0194dea68c4572e8c4e3c186a5e1608f5832cf5c32c3",
+  "after_sha256": "d082e0bec1c52ab289034528a7be8e0b360a0d9da4dc2fdc9cc63eacd45346c6",
+  "idempotence_exit": 0,
+  "runtime_mutant_exit": 1,
+  "runtime_mutant_caught_by": "emitted JavaScript equality before writing",
+  "loader_types_exit": 0,
+  "wrong_node_type_exit": 1,
+  "wrong_node_type_diagnostic": "/workspace/scratch/parser-temp65-final-checks/wrong-next-tick.a:14:36: error TS2322: Type '(callback: Function, ...args: any[]) => void' is not assignable to type 'number'.\n",
+  "wrong_node_version_exit": 1,
+  "wrong_node_version_caught_by": "adapter exact-version guard, before source writes",
+  "node_types_version": "25.3.3"
+}

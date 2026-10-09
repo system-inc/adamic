@@ -1,0 +1,1 @@
+adamic: /workspace/adamic/stage3/drivers/parser/native-generic-assert-non-nullable.a:3:90: Adamic 0.1 refuses a type predicate whose return is not proven (normal return has not narrowed value to NonNullable<T>); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)

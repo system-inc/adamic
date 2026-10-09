@@ -1,0 +1,19 @@
+{
+  "rules": {
+    "TypeScript": "nexus/localization-no-untranslated-value"
+  },
+  "messages": {
+    "ambiguousEnglishSibling": {
+      "text": "This translation file has two English tables, {{first}} and {{second}}, so which English it should match would be a guess, and none of its values are checked. Keep one: a set moving to Adamic holds its English in en.ts or en.a, not both."
+    },
+    "identicalToSource": {
+      "text": "Translation for '{{key}}' is identical to English (\"{{preview}}\"). A copied English string reads as a finished translation to everything downstream, so it never appears in a coverage count and nobody is told the '{{locale}}' reader is still seeing English."
+    },
+    "missingEnglishSibling": {
+      "text": "This translation file has no English table beside it: neither {{expected}} nor {{alternative}} is in its directory, so none of its values are checked, and an untranslated set reads as clean. Add the set's {{expected}}, or move this file into the set it translates."
+    },
+    "missingTranslation": {
+      "text": "Translation for '{{key}}' is empty while English has content. An empty string is not a missing translation at runtime, it is a blank rendered where a word belongs, so provide a '{{locale}}' translation or remove the key."
+    }
+  }
+}

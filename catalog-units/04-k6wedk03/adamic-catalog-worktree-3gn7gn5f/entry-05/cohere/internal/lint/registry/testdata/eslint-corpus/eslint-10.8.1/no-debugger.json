@@ -1,0 +1,4 @@
+[
+{"code":"var test = { debugger: 1 }; test.debugger;","eslint":[]},
+{"code":"if (foo) debugger","eslint":[["unexpected",9,17]]}
+]

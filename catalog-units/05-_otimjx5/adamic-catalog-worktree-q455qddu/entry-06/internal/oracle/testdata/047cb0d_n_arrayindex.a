@@ -1,0 +1,8 @@
+let list: number[] | undefined = [1, 2];
+function drop(): void {
+	list = undefined;
+}
+if (list !== undefined) {
+	drop();
+	console.log(`${list[0]}`);
+}

@@ -1,0 +1,11 @@
+classification: caught by verify-mode.py
+missing-stop: caught by verify-mode.py
+split-result: caught by verify-mode.py
+first-diagnostic: caught by verify-mode.py
+source-identity: caught by verify-mode.py
+control-identity: caught by verify-mode.py
+ledger-scope: caught by verify-mode.py
+node-oracle: caught by verify-mode.py
+outside-scheduled-check: caught by verify-mode.py
+ordinary-error: caught by verify-mode.py
+PASS: all ten mutants rejected

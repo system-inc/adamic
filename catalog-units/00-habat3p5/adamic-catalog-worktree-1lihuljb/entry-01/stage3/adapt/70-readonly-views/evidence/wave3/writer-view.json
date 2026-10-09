@@ -1,0 +1,5 @@
+{
+  "mutant": "writer-view",
+  "upstream_build_exit": 1,
+  "diagnostic": "scanner.ts(504,46): error TS2540: Cannot assign to 'lineMap' because it is a read-only property."
+}

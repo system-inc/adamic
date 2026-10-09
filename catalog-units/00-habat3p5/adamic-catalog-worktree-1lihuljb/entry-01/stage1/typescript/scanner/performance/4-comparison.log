@@ -1,0 +1,28 @@
+=== RUN   TestGapStandsWhereGapsMdSays
+--- PASS: TestGapStandsWhereGapsMdSays (0.09s)
+=== RUN   TestBigintGapStandsWhereGapsMdSays
+--- PASS: TestBigintGapStandsWhereGapsMdSays (0.08s)
+=== RUN   TestProfileArtifacts
+    profile_test.go:92: release, counted and -O2 -g profiling builds saved in /workspace/scratch/scanner-perf/4-bmp-read
+--- PASS: TestProfileArtifacts (8.79s)
+=== RUN   TestScannerAgreesWithTypescriptGo
+    scanner_test.go:339: 77 compiler files, 61 stage1 files, 18224 generated inputs
+    scanner_test.go:356: 23833971 answer bytes identical
+=== RUN   TestScannerAgreesWithTypescriptGo/punctuator_!=_scanned_as_==
+    scanner_test.go:379: Node caught by byte comparison: line 348: port "EqualsEqualsToken 0 2 0", Go "ExclamationEqualsToken 0 2 0"
+    scanner_test.go:379: native caught by byte comparison: line 348: port "EqualsEqualsToken 0 2 0", Go "ExclamationEqualsToken 0 2 0"
+=== RUN   TestScannerAgreesWithTypescriptGo/invalid_decimal_separator_accepted
+    scanner_test.go:379: Node caught by byte comparison: line 689: port "NumericLiteral 0 4 512\t12", Go "error 6189 2 1"
+    scanner_test.go:379: native caught by byte comparison: line 689: port "NumericLiteral 0 4 512\t12", Go "error 6189 2 1"
+=== RUN   TestScannerAgreesWithTypescriptGo/regex_rescan_skipped
+    scanner_test.go:379: Node caught by byte comparison: line 126195: port "SlashToken 0 1 0", Go "RegularExpressionLiteral 0 6 0\t/abc/g"
+    scanner_test.go:379: native caught by byte comparison: line 126195: port "SlashToken 0 1 0", Go "RegularExpressionLiteral 0 6 0\t/abc/g"
+--- PASS: TestScannerAgreesWithTypescriptGo (37.49s)
+    --- PASS: TestScannerAgreesWithTypescriptGo/punctuator_!=_scanned_as_== (7.34s)
+    --- PASS: TestScannerAgreesWithTypescriptGo/invalid_decimal_separator_accepted (7.56s)
+    --- PASS: TestScannerAgreesWithTypescriptGo/regex_rescan_skipped (7.19s)
+=== RUN   TestPerformance
+    scanner_test.go:388: set ADAMIC_SCANNER_BENCH=1 for best-of-five throughput
+--- SKIP: TestPerformance (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/typescript/scanner	46.475s

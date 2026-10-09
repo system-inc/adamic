@@ -1,0 +1,12 @@
+// Reductions of TypeScript v6.0.3 path.ts:385:12 and core.ts:2080:12.
+function extensionName(name: string, extension: string | undefined): string {
+    return extension ? name.slice(0, name.length - extension.length) : name;
+}
+function getStringComparer(ignoreCase?: boolean): string {
+    return ignoreCase ? 'insensitive' : 'sensitive';
+}
+console.log(extensionName('file.ts', '.ts'));
+console.log(extensionName('file.ts', ''));
+console.log(getStringComparer(undefined));
+console.log(getStringComparer(false));
+console.log(getStringComparer(true));

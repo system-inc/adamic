@@ -1,0 +1,10 @@
+{
+  "rules": {
+    "TypeScript": "nexus/consistency-no-for-in"
+  },
+  "messages": {
+    "forIn": {
+      "text": "Iterate an object with `for (const [key, value] of Object.entries(object))`, or `Object.keys(object)` when only the key matters, rather than `for...in`. `for...in` walks the prototype chain, so it needs a guard to be correct, and a guard is a line someone forgets; it also hands back every key as a bare `string`, which is why these loops grow `key as keyof typeof object` casts to read the value. `Object.entries` returns own keys only, with the value already in hand, so there is nothing to guard and nothing to cast, and every loop over an object has one shape."
+    }
+  }
+}

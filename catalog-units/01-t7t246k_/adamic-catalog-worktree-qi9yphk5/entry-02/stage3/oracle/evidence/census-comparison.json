@@ -1,0 +1,810 @@
+{
+  "command": "/tmp/stage3-census <tree>/src/compiler <output.jsonl>",
+  "profiles": "stock Adamic, unchanged compiler options",
+  "observations": 82,
+  "normalized_equal": true,
+  "entries": [
+    {
+      "roots": [
+        "<tree>/src/compiler/_namespaces/ts.moduleSpecifiers.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "b942b11141c57c8debd88839c0016eaa1f9b6a2217b6eabc6fdf5ca9d6f571d9"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/_namespaces/ts.performance.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "65f1271049c5d839ca5a806f849d75a38dd3a08f21917f9272e5454574c560bd"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/_namespaces/ts.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "cc622a8af3fa345659da986511196bd3195626e8b329266cbbea42f2fea58156"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/binder.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "1b20c5b90df3f3d8766af59eab833c11d489b982933e4e866e47490728cb94fc"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/builder.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "007ab8a0fb59ea25a298d01850c79c3e22a57e9d37f3dd00e209f50d77be576d"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/builderPublic.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "1707b1472a1ff6205fe8920fb130d9c42adf8617cb76b09d3b0992f95f02138c"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/builderState.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "b6f7b03afbac39c0fa36adfde743491a87d374dd7cc2202a00fb59a0213a4b31"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/builderStatePublic.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "925766ecc793377885b16f7533a433aa8a4c2214fa003ad8fe73d4ef7736a037"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/checker.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "a9c333079333247cd3d89f66678a69249c7997f0b75060c922af90ff11255d22"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/commandLineParser.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "ca97f6323f845c855f1951a04e6ed67afe8d02604e03c00dcbae39f40bef3f73"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/core.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "2bde2cb2e93f50def3caf2ee1925cb87e691c8fb6e9aad8f2d6b3572e1ec9c0c"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/corePublic.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 1,
+      "normalized_sha256": "becfcb14c18046ff7257fd81a14d1188fcea0f271f82c2bd5ab02346e665b56a"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/debug.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "c2bfbf5ce51c72cc710ee744131da7112784a0c49a50894bb412c78b533b462e"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/diagnosticInformationMap.generated.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "88ab215060045ea12af8d6c4bfc15baf8a9ccb12e0fe1bd43072b4396ce6712f"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/diagnosticMessages.generated.json"
+      ],
+      "kind": "error",
+      "diagnostics": 0,
+      "normalized_sha256": "9b0a16ac257ef19d9ac052ab633296ae7ae23381d468b2f1e0fd0b9192784c98"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/diagnosticMessages.json"
+      ],
+      "kind": "error",
+      "diagnostics": 0,
+      "normalized_sha256": "63460d912602b203fcdaa778f982cf1295be3cf1387762804368b87f2c87cecb"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/emitter.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "ee6a3e659e6c7865b1e876e29f99013ca74a1b592884c2ee87c50340405f3bad"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/executeCommandLine.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "ee02bd39c65617130d3e3c5de0c8760764f5ce430a6d41099eb89a99eb1dd0c7"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/expressionToTypeNode.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "b6849f36ab130c126eff191cfbe13f4bde4f9b3117c40acbf32f0d89291ba95a"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/factory/baseNodeFactory.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "10221cc82e1c1f8334ed53b9cdb30788903d50059d07bcc0a4163955a78f1249"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/factory/emitHelpers.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "61c2c38feafe1792e1c8b1f5d7f0f09f95ccc7115baf3429e46718f9f2bcbc3a"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/factory/emitNode.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "3de0b2302b54cdfa4c107f91626954b9d0905183b3a5365e6cd70339eb0d00f2"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/factory/nodeChildren.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "f0d72ea4f22d6ada00ee7eb31cdb523c0fd9af92c1b2628730050726069f8b4e"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/factory/nodeConverters.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "1ae01b948d10f5911abe1c43fbc74cb22d609a156b03a9d3e05ab0c8b99a43ee"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/factory/nodeFactory.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "3d2b6cefca0fe38ffe7f929967ee9bba0c240224e2d20a4bba9b5e4e466ff760"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/factory/nodeTests.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "59902dec77638ee78b23f9bfc351ae0f0c16e2e8f72704e3885b3fc7ab623edd"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/factory/parenthesizerRules.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "d7dbc76a1e75806163ec8eb9f90415672a2059a0d97edf8bcfebb34d4e2d901e"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/factory/utilities.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "b63d95af0257aa2b371b393e4838849cc7d532ab56953fde922530fc27fa9840"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/factory/utilitiesPublic.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "90edbedf6e119283ca8994c1ea5c2c37dfde8ce92e6b25cd200ba04b85194954"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/moduleNameResolver.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "473e741df4ce925d223628543c2119ea28478fa1caa1a342c706753bbb0ebdc9"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/moduleSpecifiers.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "f4a0e3b1bd85d7937baaebf235ffeca0ef613bbe6789631eec3759f4384e6b75"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/parser.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "606c67e27212502b6ed5bf71e4553f25b62bea7d9729fab83fefd191f50deaa0"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/path.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "4e5696ee77e30a980161b396cf4d47f1fe87a0beec03d8d9f10ef2256b5c8a30"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/performance.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "bb4afa18446d7fc44b10a3070ed56f005003bacfb14d843274964a4c4ab97d56"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/performanceCore.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "7beb5820c3bc4c29b2d0508b2aab3b0a5f3e2ccf7316826d8976b42c8b558622"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/program.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "a3170040a3edbd064776022a512e942b85fcb95ec9ca2e6b5adbcd5b799141b7"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/programDiagnostics.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "a26a303fd0111b237dbb191c303ffaaa29f7d38c5dc648d5cba629dc59a36d9b"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/resolutionCache.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "d0059d4160f5ec2a384b8c6815ce5c1009dc66afd5281a7c5a4f356abfc3b7bb"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/scanner.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "c9dcb416802080e6a8395c12df7b6b8b7bc58f4cdf70a4c922c40b561ea44354"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/semver.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "6537a16c07f2d808c6433beb8d1416c8068410b69b132839ae7c205bd8ef8f4c"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/sourcemap.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "cb83f0520895dfd5fbf04132e565142b83d320f60b779bde88679f8df33b1dfa"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/symbolWalker.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "b3b2b10c63ef42fea9d5d265dad8244cbb6c893983adf4569f6e90b3cbf5fd9c"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/sys.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "7fea4a7a4909b72cdf84096292393f676f835e9cdf3132f898f661afd1083576"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/tracing.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "7f7de34d20a07d473783a0e710017aaa23f0a84e9b4d911b581c972f776297f9"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/transformer.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "b6eb9e0b875d298db887965385313a928885a12d147367aecaf5fa3b4ddb3c9f"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/transformers/classFields.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "ae5f4ab9940af150b62eb14eb984d1e896eea24fa140e34f24f0d7f896971dc2"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/transformers/classThis.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "76adf99848b0150879d1315c96cf3b8785d8163ac1e0174a8e47f00fe262a5dc"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/transformers/declarations.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "1869c866bc08abb29f03939253e8a05f8c8f2314787126bffabc5c4cb917e2b0"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/transformers/declarations/diagnostics.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "c4320ea1b49d5aeeeaba69682fe75aafc173340858d6f9a510f570ededd36f0e"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/transformers/destructuring.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "16c586ba345a5baf5186dc69e0ab9e5992323ef425f1a61b26651b15313ca442"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/transformers/es2015.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "fa1de7120efce73b145e154f3d340175427be9a3653fec66325452f8f29acea8"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/transformers/es2016.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "bb9f66fd51154dae5f5d9fc373d60e7f42a75569522fe75471f4b11ff40b6fef"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/transformers/es2017.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "da35246a707e1865ec21becd5785687d30df4b1422fe6b0bf0b8f9232c929a44"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/transformers/es2018.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "c73358de83541414d7ae3d5cc56a3d1cc660eca6c3eb91bf139593bfee19c96f"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/transformers/es2019.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "006a83c094b929331fa34c4d0d02df5223372a0aa41fd7a73dbd98529d246e1b"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/transformers/es2020.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "4f12cfb7b061133579f865285fa989ff105bde7499f13a1265f0f00598d5f021"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/transformers/es2021.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "0dec19186c48745a4c9c6be6ef4f962555af3522eeb8e17e8b8a27ff07dda660"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/transformers/esDecorators.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "29166712201c9dda12763bb84d0d3118f261fe5130e573dca456b6c469df48ac"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/transformers/esnext.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "957c400c0129d0db8f1293f79e1d6ecfad491c3dab354c866444263a57c5feaf"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/transformers/generators.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "de22e0c37217feafb4065d3cf74d5b23b215a2132a54e4732d0dc1f81512519a"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/transformers/jsx.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "3c3557c91f524b63d7362f44f5eb7ea6ec5fba18185a5743069049194f5dffe7"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/transformers/legacyDecorators.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "bbca3f41ec6358df845e92b0ac734dfaa54a08eb962de17cdd00a94116e4fe4a"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/transformers/module/esnextAnd2015.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "e0694b17a7f262e588404e8d0a37ca8f4d2a720d54399df8388674b7e6486c32"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/transformers/module/impliedNodeFormatDependent.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "03ead026562a260bb2a79652d4f802f32853a961478e5fa93937d53cfbb6d033"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/transformers/module/module.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "7b80b0bcf99840d57ffd953d9f4684bded8f83cd4f53ac2417f0bdb1229b945c"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/transformers/module/system.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "f674f701c683b3c96241a967c4496b5e3bc94d04d10417eb031503bc2ec10284"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/transformers/namedEvaluation.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "e47422a367347beafb2dc306c1e09d581cad7b5c03b5afee3997924bb7f0747d"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/transformers/taggedTemplate.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "1019c78ed9e58945534962b47eaa119a48a01cd6b79c7886eed155ccd60b734e"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/transformers/ts.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "7c3a5319704eed4849655c56c97d5ba6a65b13d63dd6a111453bbdae3aad91ce"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/transformers/typeSerializer.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "3e4d2ab45f11f02d05b35d034f122a6709d82651a089001282fa5970f9fdc0c3"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/transformers/utilities.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "9d82d1b36b32d237e851b24533318a96dd11d22f74f8d5894e2b06357574852e"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/tsbuild.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "e132d48b2cc611ac9f098d1e1c1780f0d47b313a89ef1a080f6c1634f22ff266"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/tsbuildPublic.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "6d95101fa1807fb76e4ec7746016a71dcb288ad9d2db0fc91391c92904b8dd63"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/tsconfig.json"
+      ],
+      "kind": "error",
+      "diagnostics": 0,
+      "normalized_sha256": "2268a0b7bed13a558473c8f002436763af7539201e09457b1c84ff7d35391822"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/types.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "9fb4b9ca279ce84d5e17d45c32898115f59e89c578add2e2f79b16a0744b4238"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/utilities.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "2c9ebe9c382352e5a9c6b576e950599575031bffac5cedc71c87c9b2d9b3ebe5"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/utilitiesPublic.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "2adf358f4076e798495c222748e7123372754ff405b88abe7114a961ae0a9e8b"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/visitorPublic.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "56739e7a89a98ebaade69b6313def36029b57064879292fcb169655c44e660a8"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/watch.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "e52ade7590ad9597c92f0fb94182388d7d6825e8937dc74e7dd733c2c819c4fb"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/watchPublic.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "4d7756bac922c78811b5580ba31c24200ef029bf4f1ba69bdeacd7272e21953d"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/watchUtilities.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "84ef76115f2cab41496652f96386f9e1bf9fd9d4494849cd96eb489e61f63a4e"
+    },
+    {
+      "roots": [
+        "<tree>/src/compiler/_namespaces/ts.moduleSpecifiers.ts",
+        "<tree>/src/compiler/_namespaces/ts.performance.ts",
+        "<tree>/src/compiler/_namespaces/ts.ts",
+        "<tree>/src/compiler/binder.ts",
+        "<tree>/src/compiler/builder.ts",
+        "<tree>/src/compiler/builderPublic.ts",
+        "<tree>/src/compiler/builderState.ts",
+        "<tree>/src/compiler/builderStatePublic.ts",
+        "<tree>/src/compiler/checker.ts",
+        "<tree>/src/compiler/commandLineParser.ts",
+        "<tree>/src/compiler/core.ts",
+        "<tree>/src/compiler/corePublic.ts",
+        "<tree>/src/compiler/debug.ts",
+        "<tree>/src/compiler/diagnosticInformationMap.generated.ts",
+        "<tree>/src/compiler/emitter.ts",
+        "<tree>/src/compiler/executeCommandLine.ts",
+        "<tree>/src/compiler/expressionToTypeNode.ts",
+        "<tree>/src/compiler/factory/baseNodeFactory.ts",
+        "<tree>/src/compiler/factory/emitHelpers.ts",
+        "<tree>/src/compiler/factory/emitNode.ts",
+        "<tree>/src/compiler/factory/nodeChildren.ts",
+        "<tree>/src/compiler/factory/nodeConverters.ts",
+        "<tree>/src/compiler/factory/nodeFactory.ts",
+        "<tree>/src/compiler/factory/nodeTests.ts",
+        "<tree>/src/compiler/factory/parenthesizerRules.ts",
+        "<tree>/src/compiler/factory/utilities.ts",
+        "<tree>/src/compiler/factory/utilitiesPublic.ts",
+        "<tree>/src/compiler/moduleNameResolver.ts",
+        "<tree>/src/compiler/moduleSpecifiers.ts",
+        "<tree>/src/compiler/parser.ts",
+        "<tree>/src/compiler/path.ts",
+        "<tree>/src/compiler/performance.ts",
+        "<tree>/src/compiler/performanceCore.ts",
+        "<tree>/src/compiler/program.ts",
+        "<tree>/src/compiler/programDiagnostics.ts",
+        "<tree>/src/compiler/resolutionCache.ts",
+        "<tree>/src/compiler/scanner.ts",
+        "<tree>/src/compiler/semver.ts",
+        "<tree>/src/compiler/sourcemap.ts",
+        "<tree>/src/compiler/symbolWalker.ts",
+        "<tree>/src/compiler/sys.ts",
+        "<tree>/src/compiler/tracing.ts",
+        "<tree>/src/compiler/transformer.ts",
+        "<tree>/src/compiler/transformers/classFields.ts",
+        "<tree>/src/compiler/transformers/classThis.ts",
+        "<tree>/src/compiler/transformers/declarations.ts",
+        "<tree>/src/compiler/transformers/declarations/diagnostics.ts",
+        "<tree>/src/compiler/transformers/destructuring.ts",
+        "<tree>/src/compiler/transformers/es2015.ts",
+        "<tree>/src/compiler/transformers/es2016.ts",
+        "<tree>/src/compiler/transformers/es2017.ts",
+        "<tree>/src/compiler/transformers/es2018.ts",
+        "<tree>/src/compiler/transformers/es2019.ts",
+        "<tree>/src/compiler/transformers/es2020.ts",
+        "<tree>/src/compiler/transformers/es2021.ts",
+        "<tree>/src/compiler/transformers/esDecorators.ts",
+        "<tree>/src/compiler/transformers/esnext.ts",
+        "<tree>/src/compiler/transformers/generators.ts",
+        "<tree>/src/compiler/transformers/jsx.ts",
+        "<tree>/src/compiler/transformers/legacyDecorators.ts",
+        "<tree>/src/compiler/transformers/module/esnextAnd2015.ts",
+        "<tree>/src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+        "<tree>/src/compiler/transformers/module/module.ts",
+        "<tree>/src/compiler/transformers/module/system.ts",
+        "<tree>/src/compiler/transformers/namedEvaluation.ts",
+        "<tree>/src/compiler/transformers/taggedTemplate.ts",
+        "<tree>/src/compiler/transformers/ts.ts",
+        "<tree>/src/compiler/transformers/typeSerializer.ts",
+        "<tree>/src/compiler/transformers/utilities.ts",
+        "<tree>/src/compiler/tsbuild.ts",
+        "<tree>/src/compiler/tsbuildPublic.ts",
+        "<tree>/src/compiler/types.ts",
+        "<tree>/src/compiler/utilities.ts",
+        "<tree>/src/compiler/utilitiesPublic.ts",
+        "<tree>/src/compiler/visitorPublic.ts",
+        "<tree>/src/compiler/watch.ts",
+        "<tree>/src/compiler/watchPublic.ts",
+        "<tree>/src/compiler/watchUtilities.ts"
+      ],
+      "kind": "checker",
+      "diagnostics": 6552,
+      "normalized_sha256": "aec80566e80a5c2c3fa6512dfa9807f4f6c7362fce489aec0199576d30aeff37"
+    }
+  ],
+  "summed_gate_seconds": {
+    "before": 450.384,
+    "after": 189.818
+  },
+  "kinds": {
+    "checker": 79,
+    "error": 3
+  },
+  "whole_program": {
+    "roots": 78,
+    "before_diagnostics": 6552,
+    "after_diagnostics": 6552,
+    "before_reasons": {
+      "TS1294": 180,
+      "TS1484": 3719,
+      "TS18046": 8,
+      "TS18048": 380,
+      "TS2304": 6,
+      "TS2322": 120,
+      "TS2339": 28,
+      "TS2345": 733,
+      "TS2366": 1,
+      "TS2375": 77,
+      "TS2379": 31,
+      "TS2412": 617,
+      "TS2420": 1,
+      "TS2488": 11,
+      "TS2532": 225,
+      "TS2538": 7,
+      "TS2556": 2,
+      "TS2591": 54,
+      "TS2684": 2,
+      "TS2722": 2,
+      "TS2740": 1,
+      "TS2769": 10,
+      "TS7006": 1,
+      "TS7029": 83,
+      "TS7030": 252,
+      "TS7031": 1
+    },
+    "after_reasons": {
+      "TS1294": 180,
+      "TS1484": 3719,
+      "TS18046": 8,
+      "TS18048": 380,
+      "TS2304": 6,
+      "TS2322": 120,
+      "TS2339": 28,
+      "TS2345": 733,
+      "TS2366": 1,
+      "TS2375": 77,
+      "TS2379": 31,
+      "TS2412": 617,
+      "TS2420": 1,
+      "TS2488": 11,
+      "TS2532": 225,
+      "TS2538": 7,
+      "TS2556": 2,
+      "TS2591": 54,
+      "TS2684": 2,
+      "TS2722": 2,
+      "TS2740": 1,
+      "TS2769": 10,
+      "TS7006": 1,
+      "TS7029": 83,
+      "TS7030": 252,
+      "TS7031": 1
+    }
+  }
+}

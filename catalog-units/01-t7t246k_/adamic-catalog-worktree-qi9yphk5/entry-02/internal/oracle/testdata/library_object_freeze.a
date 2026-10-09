@@ -1,0 +1,16 @@
+const object = { value: 1, nested: { value: 2 } };
+console.log(`${Object.isFrozen(object)}`);
+const frozen = Object.freeze(object);
+console.log(`${Object.isFrozen(object)} ${Object.isFrozen(frozen)} ${Object.is(object, frozen)}`);
+object.nested.value = 3;
+console.log(`${object.nested.value} ${Object.isFrozen(object.nested)}`);
+console.log(`${Object.isFrozen(0)} ${Object.isFrozen('text')} ${Object.isFrozen(true)} ${Object.isFrozen(undefined)}`);
+console.log(`${Object.isFrozen([1])} ${Object.isFrozen(new Map<string, number>())}`);
+function copied(): boolean {
+ const source = { value: 2 };
+ Object.freeze(source);
+ const copy = { ...source, value: 4 };
+ return Object.isFrozen(copy);
+}
+console.log(`${copied()}`);
+console.log(`${Object.freeze(1)} ${Object.freeze(true)} ${Object.freeze('abc')} ${Object.is(Object.freeze(undefined), undefined)}`);

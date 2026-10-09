@@ -1,0 +1,26 @@
+{
+    "rule": "use-isnan",
+    "firing": {
+        "file": "/repository/source/Thing.ts",
+        "source": "declare const value: number;\nexport const Bad = value < NaN;\n",
+        "findings": [
+            {
+                "line": 2,
+                "column": 20,
+                "endLine": 2,
+                "endColumn": 31,
+                "messageId": "comparisonWithNaN",
+                "message": "Comparing against NaN is always false, including `NaN === NaN`, because NaN is the one value in the language that is not equal to itself. So this comparison does not test what it reads as testing: it is a check for NaN that can never succeed, and the branch behind it is dead. Use Number.isNaN(value) instead, which is the only reliable test. Note the Number. prefix: the global isNaN coerces its argument first, so isNaN('hello') is true."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/Thing.ts",
+        "source": "declare const value: number;\nexport const Ok = value + NaN;\n"
+    },
+    "assertedMessageIds": [
+        "caseWithNaN",
+        "comparisonWithNaN",
+        "switchOnNaN"
+    ]
+}

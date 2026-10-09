@@ -1,0 +1,20 @@
+{
+    "rule": "react/sort-default-props",
+    "firing": {
+        "file": "/repository/source/SortDefaultProps.tsx",
+        "source": "class C extends React.Component { static defaultProps = { b: 1, a: 2 }; }\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 65,
+                "endLine": 1,
+                "endColumn": 69,
+                "messageId": "propsNotSorted",
+                "message": "Default prop declarations should be sorted alphabetically. A sorted list is one a reader can scan for a name instead of reading end to end, and it keeps two people adding a default in the same week from colliding in the same spot."
+            }
+        ]
+    },
+    "assertedMessageIds": [
+        "propsNotSorted"
+    ]
+}

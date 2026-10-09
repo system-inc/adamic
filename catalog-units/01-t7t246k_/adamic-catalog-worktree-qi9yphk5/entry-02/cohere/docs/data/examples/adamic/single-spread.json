@@ -1,0 +1,24 @@
+{
+    "rule": "adamic/single-spread",
+    "firing": {
+        "file": "Case.ts",
+        "source": "declare const a: { x: number }; declare const b: { y: number }; declare const c: { z: number };\nconst merged = { ...a, ...b };\n",
+        "findings": [
+            {
+                "line": 2,
+                "column": 24,
+                "endLine": 2,
+                "endColumn": 28,
+                "messageId": "laterSpread",
+                "message": "This spread follows another spread, so it can overwrite it with a property its type does not mention: a value typed '{ y: number }' may still carry an `x` of any type at runtime, and the spread copies it over the `x` before it, which the result's type then calls a number. Spread once, first, and write the rest as fields ({ ...base, x: 1 }), or build the object from fields you name."
+            }
+        ]
+    },
+    "clean": {
+        "file": "Case.ts",
+        "source": "const point = { x: 1, y: 2 };\n"
+    },
+    "assertedMessageIds": [
+        "laterSpread"
+    ]
+}

@@ -1,0 +1,65 @@
+{
+  "configs": [
+    {
+      "name": "/tmp/tsc-entry-reference-unit/two-project-source/app/tsconfig.json",
+      "roots": [
+        "/tmp/tsc-entry-reference-unit/two-project-source/app/main.ts"
+      ],
+      "options": {
+        "composite": true,
+        "strict": true,
+        "module": 99,
+        "moduleResolution": 100,
+        "target": 7,
+        "types": [],
+        "skipLibCheck": true,
+        "declaration": true,
+        "rootDir": "/tmp/tsc-entry-reference-unit/two-project-source/app",
+        "outDir": "/tmp/tsc-entry-reference-unit/two-project-source/out/app",
+        "configFilePath": "/tmp/tsc-entry-reference-unit/two-project-source/app/tsconfig.json"
+      }
+    },
+    {
+      "name": "/tmp/tsc-entry-reference-unit/two-project-source/dependency/tsconfig.json",
+      "roots": [
+        "/tmp/tsc-entry-reference-unit/two-project-source/dependency/value.ts"
+      ],
+      "options": {
+        "composite": true,
+        "strict": true,
+        "module": 99,
+        "moduleResolution": 100,
+        "target": 7,
+        "types": [],
+        "skipLibCheck": true,
+        "declaration": true,
+        "rootDir": "/tmp/tsc-entry-reference-unit/two-project-source/dependency",
+        "outDir": "/tmp/tsc-entry-reference-unit/two-project-source/out/dependency",
+        "configFilePath": "/tmp/tsc-entry-reference-unit/two-project-source/dependency/tsconfig.json"
+      }
+    }
+  ],
+  "roots": [
+    "/tmp/tsc-entry-reference-unit/two-project-source/app/main.ts",
+    "/tmp/tsc-entry-reference-unit/two-project-source/dependency/value.ts"
+  ],
+  "options": {
+    "composite": true,
+    "strict": true,
+    "module": 99,
+    "moduleResolution": 100,
+    "target": 7,
+    "types": [],
+    "skipLibCheck": true,
+    "declaration": true,
+    "rootDir": "/tmp/tsc-entry-reference-unit/two-project-source",
+    "outDir": "/tmp/tsc-entry-reference-unit/two-project-source/out/app",
+    "configFilePath": "/tmp/tsc-entry-reference-unit/two-project-source/app/tsconfig.json",
+    "noEmit": true
+  },
+  "sources": [
+    "/tmp/tsc-entry-reference-unit/two-project-source/dependency/value.ts",
+    "/tmp/tsc-entry-reference-unit/two-project-source/app/main.ts"
+  ],
+  "diagnostics": []
+}

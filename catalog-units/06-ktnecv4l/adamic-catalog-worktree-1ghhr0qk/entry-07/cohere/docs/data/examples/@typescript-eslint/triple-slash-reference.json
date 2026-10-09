@@ -1,0 +1,24 @@
+{
+    "rule": "@typescript-eslint/triple-slash-reference",
+    "firing": {
+        "file": "/repository/source/Thing.ts",
+        "source": "/// <reference path=\"foo\" />\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 1,
+                "endLine": 1,
+                "endColumn": 29,
+                "messageId": "tripleSlashReference",
+                "message": "This file pulls in `foo` with a triple-slash reference directive. A directive is a global instruction to the compiler with no binding and no local name, so nothing in the file records that the dependency is used here and no tool can follow it the way it follows an import. Write an `import` instead, which names what it brings in and participates in module resolution."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/Thing.ts",
+        "source": "/// <reference lib=\"foo\" />\n"
+    },
+    "assertedMessageIds": [
+        "tripleSlashReference"
+    ]
+}

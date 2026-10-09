@@ -1,0 +1,5 @@
+Numeric hash from internal/native/runtime/map.c, bucket_count = 2 * key count.
+(1024, 1, 1024)
+(4096, 2, 3072)
+(65536, 512, 704)
+Columns: keys, occupied initial buckets, maximum population.

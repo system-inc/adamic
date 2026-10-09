@@ -1,0 +1,26 @@
+{
+    "rule": "@typescript-eslint/no-unnecessary-type-parameters",
+    "firing": {
+        "file": "/repository/source/TypeParameters.ts",
+        "source": "declare class C<V> {}\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 17,
+                "endLine": 1,
+                "endColumn": 18,
+                "messageId": "sole",
+                "message": "Type parameter V is never used in the class signature.",
+                "suggestions": 1
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/TypeParameters.ts",
+        "source": "declare class C<V> {}\n"
+    },
+    "assertedMessageIds": [
+        "sole"
+    ],
+    "assertsSuggestion": true
+}

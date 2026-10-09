@@ -1,0 +1,10 @@
+{
+  "rules": {
+    "TypeScript": "structure/network-no-direct-fetch"
+  },
+  "messages": {
+    "noDirectFetch": {
+      "text": "This calls `fetch` directly. Every network request goes through NetworkService instead, which is where retries, timeouts, error shaping, authentication headers and cache invalidation live. A direct call gets none of them and fails differently from every other request in the application, which is the kind of inconsistency that only shows up under a flaky connection. NetworkService.ts itself is exempt, since it is the one place the raw primitive is allowed."
+    }
+  }
+}

@@ -1,0 +1,12 @@
+// A fresh-looking value that spreads an old one: copy's nodes is node's own array.
+interface Node {
+	readonly kind: string;
+	readonly nodes: Node[];
+}
+function run(n: number): number {
+	const node: Node = { kind: `n${n}`, nodes: [] };
+	const copy: Node = { ...node, kind: `copy${n}` };
+	node.nodes.push(copy); // closes the cycle
+	return node.nodes.length;
+}
+console.log(`${run(1)}`);

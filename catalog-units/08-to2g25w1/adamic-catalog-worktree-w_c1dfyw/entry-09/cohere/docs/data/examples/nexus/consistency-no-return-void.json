@@ -1,0 +1,27 @@
+{
+    "rule": "nexus/consistency-no-return-void",
+    "firing": {
+        "file": "/repository/source/ConsistencyNoReturnVoid.ts",
+        "source": "async function run() {\n    return void await this.save();\n}\n",
+        "findings": [
+            {
+                "line": 2,
+                "column": 5,
+                "endLine": 2,
+                "endColumn": 35,
+                "messageId": "returnVoid",
+                "message": "`return void <expression>;` folds two statements into one: it runs the expression, throws its value away, and exits. Write the expression as its own statement, then `return;`. The `void` operator is how this codebase marks a promise dropped on purpose, so spending it to squeeze a `console.log` into a return makes the reader stop and work out which of the two is meant, and it hides a second statement inside a line that looks like an exit.",
+                "fix": true
+            }
+        ],
+        "fixedSource": "async function run() {\n    await this.save();\n    return;\n}\n"
+    },
+    "clean": {
+        "file": "/repository/source/ConsistencyNoReturnVoid.tsx",
+        "source": "function run() {\n    return [void start(), 1];\n}\n"
+    },
+    "assertedMessageIds": [
+        "returnVoid"
+    ],
+    "assertsFix": true
+}

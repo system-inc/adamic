@@ -1,0 +1,26 @@
+{
+    "rule": "no-fallthrough",
+    "firing": {
+        "file": "/repository/source/Fallthrough.tsx",
+        "source": "switch(foo) { case 0:\n\n default: b() }",
+        "findings": [
+            {
+                "line": 3,
+                "column": 2,
+                "endLine": 3,
+                "endColumn": 14,
+                "messageId": "default",
+                "message": "Control runs from the previous case into this one, which is almost always a missing break. Add a break, or say the fallthrough is deliberate with a `falls through` comment."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/Fallthrough.tsx",
+        "source": "switch(foo) { }"
+    },
+    "assertedMessageIds": [
+        "case",
+        "default",
+        "unusedFallthroughComment"
+    ]
+}

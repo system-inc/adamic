@@ -1,0 +1,24 @@
+{
+    "rule": "no-delete-var",
+    "firing": {
+        "file": "/repository/source/Thing.ts",
+        "source": "export function run(value: number) {\n    delete value;\n}\n",
+        "findings": [
+            {
+                "line": 2,
+                "column": 5,
+                "endLine": 2,
+                "endColumn": 17,
+                "messageId": "unexpectedDeleteVar",
+                "message": "`delete` removes a property from an object; it cannot remove a variable. Applied to a bare name this does nothing in strict mode and throws a SyntaxError where strict mode is enforced, which every module in this codebase is. So the line either has no effect or breaks the file, and neither is what it reads as doing. To drop a reference, assign undefined; to remove a property, delete the property."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/Thing.ts",
+        "source": "export function run() {\n    return 1;\n}\n"
+    },
+    "assertedMessageIds": [
+        "unexpectedDeleteVar"
+    ]
+}

@@ -1,0 +1,10 @@
+{
+  "file": "/tmp/tsc-entry-refresh-src/compiler/checker.ts",
+  "line": 11768,
+  "column": 30,
+  "function": "getFlowTypeFromCommonJSExport",
+  "start": 681632,
+  "end": 682643,
+  "original": "{\r\n        const file = getSourceFileOfNode(symbol.declarations![0]);\r\n        const accessName = unescapeLeadingUnderscores(symbol.escapedName);\r\n        const areAllModuleExports = symbol.declarations!.every(d => isInJSFile(d) && isAccessExpression(d) && isModuleExportsAccessExpression(d.expression));\r\n        const reference = areAllModuleExports\r\n            ? factory.createPropertyAccessExpression(factory.createPropertyAccessExpression(factory.createIdentifier(\"module\"), factory.createIdentifier(\"exports\")), accessName)\r\n            : factory.createPropertyAccessExpression(factory.createIdentifier(\"exports\"), accessName);\r\n        if (areAllModuleExports) {\r\n            setParent((reference.expression as PropertyAccessExpression).expression, reference.expression);\r\n        }\r\n        setParent(reference.expression, reference);\r\n        setParent(reference, file);\r\n        reference.flowNode = file.endFlowNode;\r\n        return getFlowTypeOfReference(reference, autoType, undefinedType);\r\n    }",
+  "replacement": "{ throw new Error(\"tsc-entry scratch placeholder\"); }"
+}

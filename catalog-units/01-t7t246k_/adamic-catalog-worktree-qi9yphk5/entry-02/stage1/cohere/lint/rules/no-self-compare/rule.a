@@ -1,0 +1,34 @@
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { comparingToSelf } from './messages.a';
+
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) {
+        this.context = context;
+    }
+    visit(node: ParseNode, index: number): void {
+        const operator = this.context.kind(node.children[1] ?? -1);
+        if(!['EqualsEqualsEqualsToken', 'EqualsEqualsToken', 'ExclamationEqualsEqualsToken',
+            'ExclamationEqualsToken', 'GreaterThanToken', 'LessThanToken',
+            'GreaterThanEqualsToken', 'LessThanEqualsToken'].includes(operator)) {
+            return;
+        }
+        const left = node.children[0] ?? -1;
+        const right = node.children[2] ?? -1;
+        if(left < 0 || right < 0) {
+            return;
+        }
+        const a = this.context.node(left);
+        const b = this.context.node(right);
+        const empty = a.children.length === 0 && b.children.length === 0 &&
+            ['ArrayLiteralExpression', 'ObjectLiteralExpression'].includes(a.kind) && a.kind === b.kind;
+        if(empty || this.context.signature(left) === this.context.signature(right)) {
+            this.context.report(index, 'no-self-compare', 'comparingToSelf', comparingToSelf, '', '', '');
+        }
+    }
+}
+
+export function create(context: RuleContext): Rule {
+    return new Rule(context);
+}

@@ -1,0 +1,26 @@
+{
+    "rule": "adamic/invariant-mutable",
+    "firing": {
+        "file": "Case.ts",
+        "source": "const circle: { kind: 'Circle' } = { kind: 'Circle' };\nconst shape: { kind: string } = circle;\n",
+        "findings": [
+            {
+                "line": 2,
+                "column": 33,
+                "endLine": 2,
+                "endColumn": 39,
+                "messageId": "mutableWidening",
+                "message": "'{ kind: \"Circle\"; }' is seen here as '{ kind: string; }', and `circle.kind` is mutable. Through the wider type anything that is a 'string' can be written there, and the original, still typed '\"Circle\"', then holds it: TypeScript accepts this, and it is a TypeError at runtime. Make the slot read-only in the target type (`readonly T[]`, a `readonly` property, `ReadonlyMap`), so the narrower value is only read through it, or copy the value ([...items], { ...record })."
+            }
+        ]
+    },
+    "clean": {
+        "file": "Case.ts",
+        "source": "declare const loose: any[]; const strict: string[] = loose;\n"
+    },
+    "assertedMessageIds": [
+        "methodParameterNarrowed",
+        "mutableWidening",
+        "readonlyMadeWritable"
+    ]
+}

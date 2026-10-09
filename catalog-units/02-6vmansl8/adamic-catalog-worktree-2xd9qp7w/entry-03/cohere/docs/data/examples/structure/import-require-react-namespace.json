@@ -1,0 +1,35 @@
+{
+    "rule": "structure/import-require-react-namespace",
+    "firing": {
+        "file": "/repository/source/components/Field.tsx",
+        "source": "import { useState } from 'react';\nexport const value = 1;\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 10,
+                "endLine": 1,
+                "endColumn": 18,
+                "messageId": "noNamedImport",
+                "message": "This imports a name out of react directly. Reach it through the React namespace instead. A bare `useState` or `Ref` at a call site says nothing about where it came from, so a reader has to go to the import block to find out, and a local binding with the same name shadows it silently. React.useState carries its provenance with it."
+            },
+            {
+                "line": 1,
+                "column": 1,
+                "endLine": 1,
+                "endColumn": 34,
+                "messageId": "noDestructuringFromReact",
+                "message": "This import takes names out of react without importing React itself, so there is no namespace to reach through and every use in the file has to be a bare name. Import React as the default and use React.* instead."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/components/Field.tsx",
+        "source": "export const value = 1;\n"
+    },
+    "assertedMessageIds": [
+        "noCallWithoutPrefix",
+        "noDestructuringFromReact",
+        "noNamedImport",
+        "noTypeReferenceWithoutPrefix"
+    ]
+}

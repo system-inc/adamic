@@ -1,0 +1,13 @@
+let count: number | undefined = 1;
+interface Link {
+	value: number;
+}
+let chain: Link | undefined = { value: 1 };
+function drop(): void {
+	count = undefined;
+	chain = undefined;
+}
+if (count !== undefined && chain !== undefined) {
+	drop();
+	console.log(`${(count) === undefined} ${(chain) === undefined}`);
+}

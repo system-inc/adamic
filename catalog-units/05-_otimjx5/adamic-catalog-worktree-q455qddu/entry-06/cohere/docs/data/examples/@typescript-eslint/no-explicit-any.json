@@ -1,0 +1,25 @@
+{
+    "rule": "@typescript-eslint/no-explicit-any",
+    "firing": {
+        "file": "/repository/source/Thing.ts",
+        "source": "let x: any = 1",
+        "findings": [
+            {
+                "line": 1,
+                "column": 8,
+                "endLine": 1,
+                "endColumn": 11,
+                "messageId": "unexpectedAny",
+                "message": "This annotation is `any`, which switches the type system off for every value that flows through it: no property is checked, no argument is checked, and no assignment is refused. The compiler stops answering questions about this value and reports nothing when it is used wrongly. Write the type it actually holds, or `unknown` when the shape is genuinely not known yet, which keeps the value opaque until it is narrowed rather than treating it as anything at all."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/Thing.ts",
+        "source": "// any"
+    },
+    "assertedMessageIds": [
+        "unexpectedAny"
+    ],
+    "assertsFix": true
+}

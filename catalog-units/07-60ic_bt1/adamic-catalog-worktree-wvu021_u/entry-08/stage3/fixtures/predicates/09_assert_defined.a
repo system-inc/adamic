@@ -1,0 +1,22 @@
+// From TypeScript 6.0.3, src/compiler/debug.ts:248
+// From TypeScript 6.0.3, src/compiler/debug.ts:255
+// Census reason: a type predicate
+
+type AnyFunction = (...args: never[]) => unknown;
+function fail(message?: string, stackCrawlMark?: AnyFunction): never { throw new Error(message); }
+
+export function assertIsDefined<T>(value: T, message?: string, stackCrawlMark?: AnyFunction): asserts value is NonNullable<T> {
+        // eslint-disable-next-line no-restricted-syntax
+        if (value === undefined || value === null) {
+            fail(message, stackCrawlMark || assertIsDefined);
+        }
+    }
+
+export function checkDefined<T>(value: T | null | undefined, message?: string, stackCrawlMark?: AnyFunction): T { // eslint-disable-line no-restricted-syntax
+        assertIsDefined(value, message, stackCrawlMark || checkDefined);
+        return value;
+    }
+
+console.log(checkDefined('present'));
+console.log(String(checkDefined(0)));
+try { checkDefined(undefined, 'missing'); } catch (error) { if (error instanceof Error) console.log(error.message); }

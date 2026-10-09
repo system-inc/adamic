@@ -1,0 +1,25 @@
+{
+    "rule": "react/jsx-props-no-spread-multi",
+    "firing": {
+        "file": "/repository/source/Spread.tsx",
+        "source": "const a = <App {.../r/.source} {.../r/.source} />;\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 16,
+                "endLine": 1,
+                "endColumn": 31,
+                "messageId": "jsxPropsNoSpreadMultiMemberExpression",
+                "message": "This property is spread into the same element more than once. React builds the props object by applying each spread in order, so any prop written between the two spreads is overwritten by the second one and never reaches the component. Even where nothing sits between them, the second spread recomputes work the first already did. Remove all but one spread."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/Spread.tsx",
+        "source": "const a = <App />;\n"
+    },
+    "assertedMessageIds": [
+        "jsxPropsNoSpreadMultiIdentifier",
+        "jsxPropsNoSpreadMultiMemberExpression"
+    ]
+}

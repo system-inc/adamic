@@ -1,0 +1,24 @@
+{
+    "rule": "max-classes-per-file",
+    "firing": {
+        "file": "/repository/source/MaxClassesPerFile.ts",
+        "source": "class A {}\n{ class B {} }",
+        "findings": [
+            {
+                "line": 1,
+                "column": 1,
+                "endLine": 2,
+                "endColumn": 15,
+                "messageId": "maximumExceeded",
+                "message": "File has too many classes (2). Maximum allowed is 1. A file holding several classes makes the reader hold several vocabularies at once, and the import that names the file no longer says which one it wanted. Split them into a file each, named for the class."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/MaxClassesPerFile.ts",
+        "source": "var x = 5;"
+    },
+    "assertedMessageIds": [
+        "maximumExceeded"
+    ]
+}

@@ -1,0 +1,24 @@
+{
+    "rule": "no-warning-comments",
+    "firing": {
+        "file": "/repository/source/NoWarningComments.ts",
+        "source": "// XXX x",
+        "findings": [
+            {
+                "line": 1,
+                "column": 1,
+                "endLine": 1,
+                "endColumn": 9,
+                "messageId": "unexpectedComment",
+                "message": "This comment opens with `xxx`, which marks the code as knowingly unfinished: \"XXX x\". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/NoWarningComments.ts",
+        "source": "// HACK x"
+    },
+    "assertedMessageIds": [
+        "unexpectedComment"
+    ]
+}

@@ -1,0 +1,24 @@
+{
+    "rule": "@typescript-eslint/no-mixed-enums",
+    "firing": {
+        "file": "/repository/source/Enums.ts",
+        "source": "enum E {\n  A = 'a',\n  B = 1,\n}\n",
+        "findings": [
+            {
+                "line": 3,
+                "column": 7,
+                "endLine": 3,
+                "endColumn": 8,
+                "messageId": "mixed",
+                "message": "This enum has both number members and string members. A reader reaches for an enum expecting one kind of value, and a mixed one silently changes what comparison, serialization, and reverse lookup mean from member to member: numeric members get a reverse mapping and string members do not. Pick one kind for the whole enum."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/Enums.ts",
+        "source": "enum Fruit {}\n"
+    },
+    "assertedMessageIds": [
+        "mixed"
+    ]
+}

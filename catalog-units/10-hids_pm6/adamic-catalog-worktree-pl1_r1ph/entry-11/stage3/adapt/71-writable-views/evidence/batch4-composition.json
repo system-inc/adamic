@@ -1,0 +1,159 @@
+{
+  "family-guards": [
+    {
+      "family": "diagnostics",
+      "owner": "convertToJson",
+      "statement": "errors.push(undefined);",
+      "exit": 1,
+      "source_unchanged_after_rejection": true
+    },
+    {
+      "family": "tuples",
+      "owner": "getTypeArguments",
+      "statement": "type.target = type.target;",
+      "exit": 1,
+      "source_unchanged_after_rejection": true
+    },
+    {
+      "family": "empty-arrays",
+      "owner": "addAntecedent",
+      "statement": "label.antecedent = [label];",
+      "exit": 1,
+      "source_unchanged_after_rejection": true
+    }
+  ],
+  "plan-mutants": [
+    {
+      "name": "holder-type",
+      "exit": 1,
+      "guard": "fresh array holder type changed",
+      "source_unchanged": true
+    },
+    {
+      "name": "runtime-copy",
+      "exit": 1,
+      "guard": "adaptation changes runtime syntax",
+      "source_unchanged": true
+    },
+    {
+      "name": "any-type",
+      "exit": 1,
+      "guard": "adaptation adds any or unknown",
+      "source_unchanged": true
+    },
+    {
+      "name": "unknown-type",
+      "exit": 1,
+      "guard": "adaptation adds any or unknown",
+      "source_unchanged": true
+    }
+  ],
+  "lane": {
+    "status": "pass",
+    "errors": [],
+    "counts": {
+      "passing": 106366,
+      "failing": 1,
+      "pending": 0
+    },
+    "failed_tests": [
+      "unittests:: Public APIs for typescript.d.ts should be acknowledged when they change"
+    ],
+    "baseline_diffs": [
+      "api/typescript.d.ts"
+    ],
+    "api": {
+      "reference_declarations": 28,
+      "composed_declarations": 222,
+      "sanctioned_declarations": 222,
+      "added_lines": 194,
+      "removed_lines": 193
+    },
+    "platform": {
+      "os": "linux",
+      "arch": "x64",
+      "node": "v24.19.0"
+    },
+    "execution": {
+      "commit": "da2a76e7df1d3ab1d2bb271c4d78fe97ac4d73dc",
+      "apply_exit": 0,
+      "oracle_exit": 1,
+      "platform": {
+        "os": "linux",
+        "arch": "x64",
+        "node": "v24.19.0"
+      },
+      "wall_seconds": 504.209
+    },
+    "results": "/tmp/stage3-batch4-fixed-lane",
+    "verdict": "PASS stage3 landing lane"
+  },
+  "emitted_identity": [
+    {
+      "file": "_tsc.js",
+      "identical": false,
+      "main_sha256": "dab59db4053464359a4461e8111591f15a1d0d737abe752ff4261c8c87ddf95f",
+      "merged_sha256": "b417a99c04e260697084064c2b7d74b7de4955d3506a17733bf9415fa9beef05"
+    },
+    {
+      "file": "_tsserver.js",
+      "identical": true,
+      "main_sha256": "1992fc3518a4aa5443638a25794281995ec3ce84820692713296262997d5443b",
+      "merged_sha256": "1992fc3518a4aa5443638a25794281995ec3ce84820692713296262997d5443b"
+    },
+    {
+      "file": "_typingsInstaller.js",
+      "identical": true,
+      "main_sha256": "71515c1c1aa29c8616309f7dea4d3a32eed662df3a4dbcf4345e7522ece56ac1",
+      "merged_sha256": "71515c1c1aa29c8616309f7dea4d3a32eed662df3a4dbcf4345e7522ece56ac1"
+    },
+    {
+      "file": "run.js",
+      "identical": false,
+      "main_sha256": "bfa89ce905ad036e9338450b9001ec57bc89dee6611faef2974678c3a7b38412",
+      "merged_sha256": "a08c22362067a1b4d033c888f83c25196d6cd9bfe8f53ae02675142fe904e3f9"
+    },
+    {
+      "file": "tsc.js",
+      "identical": true,
+      "main_sha256": "2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983",
+      "merged_sha256": "2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983"
+    },
+    {
+      "file": "tsserver.js",
+      "identical": true,
+      "main_sha256": "e3ccfeec65ec5c470b8ffc5611878a31182650c7e8a062c38a719f83b523edcb",
+      "merged_sha256": "e3ccfeec65ec5c470b8ffc5611878a31182650c7e8a062c38a719f83b523edcb"
+    },
+    {
+      "file": "tsserverlibrary.js",
+      "identical": true,
+      "main_sha256": "6a0b343fa3a3f53cf198c83a18035c104b6990b2a260272654f9a6b2f2380fdf",
+      "merged_sha256": "6a0b343fa3a3f53cf198c83a18035c104b6990b2a260272654f9a6b2f2380fdf"
+    },
+    {
+      "file": "typescript.js",
+      "identical": false,
+      "main_sha256": "c608261af17bf4b95fc1527c62ba34eb2c44e3f8f0c6944d045ec61b23fc156c",
+      "merged_sha256": "c9acd28100a49f7c55bc30624d0cbc208c7347f162fe728ad4c7608acceeede6"
+    },
+    {
+      "file": "typingsInstaller.js",
+      "identical": true,
+      "main_sha256": "2d48a038523ea7c626fa2796a30fa5fdc07612ea5fab83544423009d7683a213",
+      "merged_sha256": "2d48a038523ea7c626fa2796a30fa5fdc07612ea5fab83544423009d7683a213"
+    },
+    {
+      "file": "watchGuard.js",
+      "identical": true,
+      "main_sha256": "008f2ceb504ee9b8c5d47054d43033e1ec3f2fef03f18d8aa1b2dd70cba6fc88",
+      "merged_sha256": "008f2ceb504ee9b8c5d47054d43033e1ec3f2fef03f18d8aa1b2dd70cba6fc88"
+    },
+    {
+      "file": "typescript.d.ts",
+      "identical": true,
+      "main_sha256": "edd733bf256465ddcbbd753a76cfe14cf4ef0a872ce5da7aa53072e1c9f93a9d",
+      "merged_sha256": "edd733bf256465ddcbbd753a76cfe14cf4ef0a872ce5da7aa53072e1c9f93a9d"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "argv": [
+    "/usr/bin/timeout",
+    "--signal=TERM",
+    "--kill-after=5s",
+    "300s",
+    "/tmp/performance-results/dependencies/node_modules/@typescript/native-preview-linux-x64/lib/tsgo",
+    "--singleThreaded",
+    "-p",
+    "src/compiler",
+    "--noEmit",
+    "--pretty",
+    "false",
+    "--extendedDiagnostics"
+  ],
+  "cwd": "/tmp/performance-results/inputs/typescript"
+}

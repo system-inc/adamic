@@ -1,0 +1,24 @@
+{
+    "rule": "no-global-assign",
+    "firing": {
+        "file": "/repository/source/GlobalAssign.ts",
+        "source": "NaN = 1;\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 1,
+                "endLine": 1,
+                "endColumn": 4,
+                "messageId": "noGlobalAssign",
+                "message": "This assigns to `NaN`, which is a read-only global that the whole program shares. Nothing fails here: the failure lands later and elsewhere, when other code reaches for `NaN` and gets whatever was written instead. In a module or a class body the write throws instead of landing at all. Use a local variable."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/GlobalAssign.ts",
+        "source": "a = 1\n"
+    },
+    "assertedMessageIds": [
+        "noGlobalAssign"
+    ]
+}

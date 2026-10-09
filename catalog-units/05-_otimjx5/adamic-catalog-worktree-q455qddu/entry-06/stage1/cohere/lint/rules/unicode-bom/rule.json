@@ -1,0 +1,13 @@
+{
+  "name": "unicode-bom",
+  "kinds": [
+    "SourceFile"
+  ],
+  "visit": "visit",
+  "node": true,
+  "oracle": "oracleUnicodeBom",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestUnicodeBom",
+  "factory": "create",
+  "class": "Rule"
+}

@@ -1,0 +1,26 @@
+{
+    "rule": "consistent-return",
+    "firing": {
+        "file": "/repository/source/ConsistentReturn.ts",
+        "source": "if (a) return true;",
+        "findings": [
+            {
+                "line": 1,
+                "column": 1,
+                "endLine": 1,
+                "endColumn": 1,
+                "messageId": "missingReturn",
+                "message": "Expected to return a value at the end of program. Some paths through this function return a value and some run off the end, which returns undefined. A caller reading one branch cannot tell which kind of function this is, so the undefined arrives somewhere far from here."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/ConsistentReturn.ts",
+        "source": "f(function() { return; })"
+    },
+    "assertedMessageIds": [
+        "missingReturn",
+        "missingReturnValue",
+        "unexpectedReturnValue"
+    ]
+}

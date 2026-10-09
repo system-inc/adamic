@@ -1,0 +1,25 @@
+{
+    "rule": "adamic/nominal-class",
+    "firing": {
+        "file": "Case.ts",
+        "source": "class Token {} const token: Token = 42;\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 37,
+                "endLine": 1,
+                "endColumn": 39,
+                "messageId": "notAnInstance",
+                "message": "`42` is a '42', accepted here as the class 'Token', and it is not an instance of that class. tsc compares classes by shape, and it compares a method's parameters in both directions, so a method that takes only a narrower type passes as one that takes any of the wider type, and fails at runtime when it gets one. In Adamic a class type means an instance of that class. Pass an instance of 'Token', or type the slot as an interface whose members are written property-style (`readonly admit: (animal: Animal) => string`), which tsc checks strictly."
+            }
+        ]
+    },
+    "clean": {
+        "file": "Case.ts",
+        "source": "class Chain { next(): Chain { return this; } }\n"
+    },
+    "assertedMessageIds": [
+        "notAnInstance",
+        "typeArgumentsDiffer"
+    ]
+}

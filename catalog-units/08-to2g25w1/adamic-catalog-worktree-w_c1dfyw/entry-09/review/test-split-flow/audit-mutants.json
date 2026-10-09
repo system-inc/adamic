@@ -1,0 +1,26 @@
+[
+  {
+    "name": "missing-measurement",
+    "exit": 1,
+    "catcher": "len(new) == len(after",
+    "log": "/tmp/test-split-flow/audit-mutants/missing-measurement/audit.log"
+  },
+  {
+    "name": "changed-fixture-hash",
+    "exit": 1,
+    "catcher": "before['inputs'][r['program']]",
+    "log": "/tmp/test-split-flow/audit-mutants/changed-fixture-hash/audit.log"
+  },
+  {
+    "name": "changed-measured-test-hash",
+    "exit": 1,
+    "catcher": "measured input changed",
+    "log": "/tmp/test-split-flow/audit-mutants/changed-measured-test-hash/audit.log"
+  },
+  {
+    "name": "lost-write-checks",
+    "exit": 1,
+    "catcher": "Writes",
+    "log": "/tmp/test-split-flow/audit-mutants/lost-write-checks/audit.log"
+  }
+]

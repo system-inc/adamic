@@ -1,0 +1,52 @@
+// From TypeScript 6.0.3, src/compiler/sys.ts:1787
+// Census reason: TS2591
+
+import * as _fs from "node:fs";
+import * as _path from "node:path";
+import { tmpdir } from "node:os";
+import process from "node:process";
+const scratch = _fs.mkdtempSync(_path.join(tmpdir(), "adamic-host-"));
+import { Buffer } from "node:buffer";
+function readFile(fileName: string, _encoding?: string): string | undefined {
+    let buffer: Buffer;
+    try {
+        buffer = _fs.readFileSync(fileName);
+    }
+    catch {
+        return undefined;
+    }
+    let len = buffer.length;
+    if (len >= 2 && buffer[0] === 0xFE && buffer[1] === 0xFF) {
+        // Big endian UTF-16 byte order mark detected. Since big endian is not supported by node.js,
+        // flip all byte pairs and treat as little endian.
+        len &= ~1; // Round down to a multiple of 2
+        for (let i = 0; i < len; i += 2) {
+            const temp = buffer[i];
+            buffer[i] = buffer[i + 1];
+            buffer[i + 1] = temp;
+        }
+        return buffer.toString("utf16le", 2);
+    }
+    if (len >= 2 && buffer[0] === 0xFF && buffer[1] === 0xFE) {
+        // Little endian UTF-16 byte order mark detected
+        return buffer.toString("utf16le", 2);
+    }
+    if (len >= 3 && buffer[0] === 0xEF && buffer[1] === 0xBB && buffer[2] === 0xBF) {
+        // UTF-8 byte order mark detected
+        return buffer.toString("utf8", 3);
+    }
+    // Default is UTF-8 with no byte order mark
+    return buffer.toString("utf8");
+}
+
+try {
+    const cases = [[0xfe,0xff], [0xfe,0xff,0,0x61], [0xfe,0xff,0xd8,0x3d,0xde,0], [0xfe,0xff,0,0x61,0x62]];
+    for (let i = 0; i < cases.length; i++) {
+        const file = _path.join(scratch, String(i));
+        _fs.writeFileSync(file, Buffer.from(cases[i]!));
+        console.log(JSON.stringify(readFile(file, "latin1")));
+    }
+}
+finally {
+    _fs.rmSync(scratch, { recursive: true, force: true });
+}

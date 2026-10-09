@@ -1,0 +1,28 @@
+{
+    "rule": "nexus/consistency-require-matching-return-type",
+    "firing": {
+        "file": "/repository/source/ConsistencyRequireMatchingReturnType.ts",
+        "source": "declare const ready: boolean;\ndeclare function work(): void;\ndeclare function name(): string;\ntype Destructor = () => void;\ntype EffectCallback = () => void | Destructor;\ndeclare function useEffect(effect: EffectCallback, dependencies?: unknown[]): void;\ndeclare function compute<T>(factory: () => T): T;\ndeclare function on(listener: (...values: any[]) => any): void;\ndeclare function mount(options: { onReady?: () => void; onClick?: (event: string) => void }): void;\ndeclare function choose(callback: () => string | undefined): void;\ntype Shape = 'Circle' | 'Square';\ndeclare function forEachChild<T>(node: string, callback: (child: string) => T | undefined): T | undefined;\ndeclare function log(text: string): void;\nexport function nothing(): undefined {\n    return;\n}\n",
+        "findings": [
+            {
+                "line": 15,
+                "column": 5,
+                "endLine": 15,
+                "endColumn": 12,
+                "messageId": "bareReturnInValueFunction",
+                "message": "This function returns a value: its return type is `undefined` (from its annotation), so a bare `return;` hides that this path hands back `undefined`. Write `return undefined;`. A bare return is reserved for functions whose type says `void`, so a reader can tell at the return which kind of function this is.",
+                "fix": true
+            }
+        ],
+        "fixedSource": "declare const ready: boolean;\ndeclare function work(): void;\ndeclare function name(): string;\ntype Destructor = () => void;\ntype EffectCallback = () => void | Destructor;\ndeclare function useEffect(effect: EffectCallback, dependencies?: unknown[]): void;\ndeclare function compute<T>(factory: () => T): T;\ndeclare function on(listener: (...values: any[]) => any): void;\ndeclare function mount(options: { onReady?: () => void; onClick?: (event: string) => void }): void;\ndeclare function choose(callback: () => string | undefined): void;\ntype Shape = 'Circle' | 'Square';\ndeclare function forEachChild<T>(node: string, callback: (child: string) => T | undefined): T | undefined;\ndeclare function log(text: string): void;\nexport function nothing(): undefined {\n    return undefined;\n}\n"
+    },
+    "clean": {
+        "file": "/repository/source/ConsistencyRequireMatchingReturnType.ts",
+        "source": "declare const ready: boolean;\ndeclare function work(): void;\ndeclare function name(): string;\ntype Destructor = () => void;\ntype EffectCallback = () => void | Destructor;\ndeclare function useEffect(effect: EffectCallback, dependencies?: unknown[]): void;\ndeclare function compute<T>(factory: () => T): T;\ndeclare function on(listener: (...values: any[]) => any): void;\ndeclare function mount(options: { onReady?: () => void; onClick?: (event: string) => void }): void;\ndeclare function choose(callback: () => string | undefined): void;\ntype Shape = 'Circle' | 'Square';\ndeclare function forEachChild<T>(node: string, callback: (child: string) => T | undefined): T | undefined;\ndeclare function log(text: string): void;\non(function() {\n    if (!ready) return;\n    work();\n});\n"
+    },
+    "assertedMessageIds": [
+        "bareReturnInValueFunction",
+        "undefinedReturnInVoidFunction"
+    ],
+    "assertsFix": true
+}

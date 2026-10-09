@@ -1,0 +1,24 @@
+{
+    "rule": "react-hooks/config",
+    "firing": {
+        "file": "/repository/source/Config.tsx",
+        "source": "import {useHookNotTypedAsHook as safe} from 'ReactCompilerTest';\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 9,
+                "endLine": 1,
+                "endColumn": 38,
+                "messageId": "invalidTypeConfiguration",
+                "message": "A module's compiler type configuration disagrees with the name it is attached to. The React Compiler decides whether something is a hook from its name, using the same `use` prefix a reader does, and it decides again from the type the configuration declares. When the two disagree the compiler has no way to choose, so it stops rather than memoizing against a guess. Fix the configuration entry: either declare the type as a hook, or rename so the name no longer claims to be one."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/Config.tsx",
+        "source": "import 'ReactCompilerTest';\n"
+    },
+    "assertedMessageIds": [
+        "invalidTypeConfiguration"
+    ]
+}

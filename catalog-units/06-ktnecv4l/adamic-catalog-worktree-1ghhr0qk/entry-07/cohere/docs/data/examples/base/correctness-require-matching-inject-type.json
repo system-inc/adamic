@@ -1,0 +1,24 @@
+{
+    "rule": "base/correctness-require-matching-inject-type",
+    "firing": {
+        "file": "/repository/source/Injection.ts",
+        "source": "type TypedParameterDecorator<TResolved> = ParameterDecorator & {\n    readonly __resolvedType?: TResolved;\n};\ndeclare function TypedInject<T>(): TypedParameterDecorator<T>;\nclass Service { serviceMarker = 1; }\nclass Other { otherMarker = 'x'; }\nexport class C { constructor(@TypedInject<Service>() private wrong: Other) {} }\n",
+        "findings": [
+            {
+                "line": 7,
+                "column": 62,
+                "endLine": 7,
+                "endColumn": 74,
+                "messageId": "mismatch",
+                "message": "@TypedInject resolves to 'Service' but parameter is typed as 'Other'"
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/Injection.ts",
+        "source": "type TypedParameterDecorator<TResolved> = ParameterDecorator & {\n    readonly __resolvedType?: TResolved;\n};\ndeclare function TypedInject<T>(): TypedParameterDecorator<T>;\nclass Service { serviceMarker = 1; }\nclass Other { otherMarker = 'x'; }\n@TypedInject<Service>() export class C { x = 1; }\n"
+    },
+    "assertedMessageIds": [
+        "mismatch"
+    ]
+}

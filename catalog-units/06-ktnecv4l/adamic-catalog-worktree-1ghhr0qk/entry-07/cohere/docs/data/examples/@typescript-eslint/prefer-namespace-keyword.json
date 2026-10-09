@@ -1,0 +1,27 @@
+{
+    "rule": "@typescript-eslint/prefer-namespace-keyword",
+    "firing": {
+        "file": "/repository/source/Namespaces.ts",
+        "source": "module A.B {}",
+        "findings": [
+            {
+                "line": 1,
+                "column": 1,
+                "endLine": 1,
+                "endColumn": 14,
+                "messageId": "preferNamespaceKeyword",
+                "message": "This declares a namespace with the `module` keyword, which TypeScript has deprecated and plans to make a parse error. It means the same thing as `namespace` and reads as an ECMAScript module, which it is not. Write `namespace` instead.",
+                "fix": true
+            }
+        ],
+        "fixedSource": "namespace A.B {}"
+    },
+    "clean": {
+        "file": "/repository/source/Namespaces.ts",
+        "source": "module \"foo\" {}"
+    },
+    "assertedMessageIds": [
+        "preferNamespaceKeyword"
+    ],
+    "assertsFix": true
+}

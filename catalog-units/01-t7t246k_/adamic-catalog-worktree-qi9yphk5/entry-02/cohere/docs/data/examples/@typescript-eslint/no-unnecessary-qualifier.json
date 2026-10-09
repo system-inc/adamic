@@ -1,0 +1,27 @@
+{
+    "rule": "@typescript-eslint/no-unnecessary-qualifier",
+    "firing": {
+        "file": "/repository/source/Qualifiers.ts",
+        "source": "enum A {\n  B,\n  C = A.B,\n}\n",
+        "findings": [
+            {
+                "line": 3,
+                "column": 7,
+                "endLine": 3,
+                "endColumn": 8,
+                "messageId": "unnecessaryQualifier",
+                "message": "Qualifier is unnecessary since 'B' is in scope.",
+                "fix": true
+            }
+        ],
+        "fixedSource": "enum A {\n  B,\n  C = B,\n}\n"
+    },
+    "clean": {
+        "file": "/repository/source/Qualifiers.ts",
+        "source": "const x: A.B = 3;\n"
+    },
+    "assertedMessageIds": [
+        "unnecessaryQualifier"
+    ],
+    "assertsFix": true
+}

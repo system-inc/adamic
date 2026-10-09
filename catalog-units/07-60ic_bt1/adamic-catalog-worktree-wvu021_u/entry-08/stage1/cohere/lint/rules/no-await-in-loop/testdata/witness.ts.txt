@@ -1,0 +1,8 @@
+async function run(items) {
+    for(const item of items) {
+        await item.save();
+        const later = async () => {
+            await item.load();
+        };
+    }
+}

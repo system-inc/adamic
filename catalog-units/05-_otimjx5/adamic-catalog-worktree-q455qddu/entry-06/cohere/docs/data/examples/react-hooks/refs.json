@@ -1,0 +1,27 @@
+{
+    "rule": "react-hooks/refs",
+    "firing": {
+        "file": "component.tsx",
+        "source": "import {useRef, useState, useCallback, useMemo, useReducer, useEffect} from 'react';\n// @validateRefAccessDuringRender\nfunction Component(props) {\n  const ref = useRef(null);\n  return <Foo ref={ref.current} />;\n}\n",
+        "findings": [
+            {
+                "line": 5,
+                "column": 20,
+                "endLine": 5,
+                "endColumn": 31,
+                "messageId": "refValueAccess",
+                "message": "Cannot access ref value during render. A ref is deliberately outside React's data flow: writing one does not schedule a render, and during render the ref may not yet point at the element it will point at once the tree commits. Reading it here therefore gives a value that is stale or not yet attached, and because the read creates no subscription nothing re-renders when it changes. Move the access into an event handler or an effect, where the ref is attached and a stale read cannot be observed."
+            }
+        ]
+    },
+    "clean": {
+        "file": "component.tsx",
+        "source": "import {useRef, useState, useCallback, useMemo, useReducer, useEffect} from 'react';\nfunction helper(props) {\n  return props.ref.current;\n}\n"
+    },
+    "assertedMessageIds": [
+        "functionAccessesRef",
+        "refPassedToFunction",
+        "refUpdate",
+        "refValueAccess"
+    ]
+}

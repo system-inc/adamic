@@ -1,0 +1,15 @@
+{
+  "name": "no-empty",
+  "order": 2,
+  "kinds": [
+    "Block",
+    "SwitchStatement"
+  ],
+  "visit": "visit",
+  "oracle": "oracleNoEmpty",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestNoEmpty",
+  "factory": "create",
+  "class": "Rule",
+  "parent": true
+}

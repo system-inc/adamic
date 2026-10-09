@@ -1,0 +1,23 @@
+function helper(x: unknown, y?: unknown): x is string {
+  return typeof x === "string";
+}
+function guard(v: string | number): v is string {
+  return helper(v);
+}
+function describe(v: string | number): string {
+  if (guard(v)) return v.toUpperCase();
+  return String(v + 1);
+}
+console.log(describe("abc"));
+console.log(describe(41));
+function isNumber(n: number | undefined): n is number {
+  return n !== undefined;
+}
+const optional: (number | undefined)[] = [2, undefined, 4];
+const numbers = optional.filter(isNumber);
+console.log(numbers.join(","));
+console.log(String(optional.find(isNumber)));
+console.log(String(optional.find((n) => n === undefined)));
+const mixed: (string | number)[] = ["a", 2];
+const unchanged = mixed.filter((v): boolean => typeof v === "number");
+for (const value of unchanged) console.log(String(value));

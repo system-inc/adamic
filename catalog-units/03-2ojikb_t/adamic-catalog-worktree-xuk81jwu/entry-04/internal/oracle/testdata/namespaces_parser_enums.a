@@ -1,0 +1,15 @@
+namespace Parser {
+ enum ParsingContext { SourceElements, BlockStatements, Alias = BlockStatements }
+ const enum Tristate { False, True, Unknown }
+ export namespace JSDocParser {
+  enum Save { Off, On }
+  export function parse(): string { return `${Save.On}:${Tristate.Unknown}`; }
+ }
+ export function parse(): string { return `${ParsingContext.SourceElements}:${ParsingContext[1] ?? 'missing'}:${JSDocParser.parse()}`; }
+}
+namespace IncrementalParser {
+ enum State { Initial, Parsing, Done }
+ export function finish(): number {return State.Done;}
+}
+console.log(Parser.parse());
+console.log(`${IncrementalParser.finish()}`);

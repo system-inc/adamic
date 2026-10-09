@@ -1,0 +1,24 @@
+{
+    "rule": "react/void-dom-elements-no-children",
+    "firing": {
+        "file": "/repository/source/VoidDomElements.tsx",
+        "source": "<br>\n</br>;",
+        "findings": [
+            {
+                "line": 1,
+                "column": 2,
+                "endLine": 1,
+                "endColumn": 4,
+                "messageId": "voidDomElementsNoChildren",
+                "message": "Void DOM element <br /> cannot receive children."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/VoidDomElements.tsx",
+        "source": "<br></br>;"
+    },
+    "assertedMessageIds": [
+        "voidDomElementsNoChildren"
+    ]
+}

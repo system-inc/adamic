@@ -1,0 +1,24 @@
+{
+    "rule": "nexus/correctness-require-blocking-standard-streams",
+    "firing": {
+        "file": "/repository/modules/subject/Subject.ts",
+        "source": "process.stdout.write(output);\nprocess.exit(0);\n",
+        "findings": [
+            {
+                "line": 2,
+                "column": 1,
+                "endLine": 2,
+                "endColumn": 16,
+                "messageId": "exitBeforeBlockingStandardStreams",
+                "message": "This file runs as a process (nothing in the program imports it), and this `process.exit()` runs after a write to stdout or stderr before the process has called `blockStandardStreams()`. Node writes to a pipe asynchronously, and `process.exit()` does not wait: a reader piping this process gets the output cut off (measured: 65,536 of 1 MiB), with exit status 0 and no error. Call Nexus's `blockStandardStreams()` (`source/system/StandardStreams`) before anything that can exit: first in the module, or first in the main it runs."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/modules/subject/Subject.ts",
+        "source": "console.log(output);\nprocess.exitCode = 1;\n"
+    },
+    "assertedMessageIds": [
+        "exitBeforeBlockingStandardStreams"
+    ]
+}

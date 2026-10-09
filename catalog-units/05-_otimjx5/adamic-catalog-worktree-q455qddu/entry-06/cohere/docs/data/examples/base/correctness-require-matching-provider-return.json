@@ -1,0 +1,24 @@
+{
+    "rule": "base/correctness-require-matching-provider-return",
+    "firing": {
+        "file": "/repository/source/ProviderReturn.ts",
+        "source": "type ObjectFactory<T> = { create(): T };\ntype BrandedMethodDecoratorType<TExpectedReturn> = MethodDecorator & {\n    readonly __expectedReturnType?: TExpectedReturn;\n};\ndeclare class TypedInjectionKey<T = unknown> { private brand?: T; }\ndeclare function Provider<T = unknown>(\n    token: TypedInjectionKey<T>,\n): BrandedMethodDecoratorType<T | ObjectFactory<T> | undefined>;\ndeclare function Plain(): MethodDecorator;\ndeclare function Loose(): BrandedMethodDecoratorType<any>;\ndeclare function Unknowable(): BrandedMethodDecoratorType<unknown>;\ndeclare function Strict(): BrandedMethodDecoratorType<string>;\ndeclare const stringToken: TypedInjectionKey<string>;\ndeclare namespace Namespace {\n    function Strict(): BrandedMethodDecoratorType<string>;\n}\nclass C { @Strict() m(): number { return 1; } }\n",
+        "findings": [
+            {
+                "line": 17,
+                "column": 11,
+                "endLine": 17,
+                "endColumn": 46,
+                "messageId": "mismatch",
+                "message": "@Strict expects a return type assignable to `string | undefined`, and this method returns `number`. The decorator's token is the contract every caller resolves through, so a method that does not satisfy it is registered under a promise it cannot keep."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/ProviderReturn.ts",
+        "source": "type ObjectFactory<T> = { create(): T };\ntype BrandedMethodDecoratorType<TExpectedReturn> = MethodDecorator & {\n    readonly __expectedReturnType?: TExpectedReturn;\n};\ndeclare class TypedInjectionKey<T = unknown> { private brand?: T; }\ndeclare function Provider<T = unknown>(\n    token: TypedInjectionKey<T>,\n): BrandedMethodDecoratorType<T | ObjectFactory<T> | undefined>;\ndeclare function Plain(): MethodDecorator;\ndeclare function Loose(): BrandedMethodDecoratorType<any>;\ndeclare function Unknowable(): BrandedMethodDecoratorType<unknown>;\ndeclare function Strict(): BrandedMethodDecoratorType<string>;\ndeclare const stringToken: TypedInjectionKey<string>;\ndeclare namespace Namespace {\n    function Strict(): BrandedMethodDecoratorType<string>;\n}\nclass C { plain(): number { return 1; } }\n"
+    },
+    "assertedMessageIds": [
+        "mismatch"
+    ]
+}

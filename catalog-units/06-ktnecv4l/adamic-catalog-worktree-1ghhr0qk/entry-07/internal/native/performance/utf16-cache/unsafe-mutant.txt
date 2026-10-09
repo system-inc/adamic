@@ -1,0 +1,5 @@
+Replace both conditions:
+    if (index == NULL || index == ADAMIC_LITERAL_INDEX) {
+with:
+    if (index == NULL) {
+Run the unchanged cache-state Node test through a Go overlay.

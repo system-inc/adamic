@@ -1,0 +1,12 @@
+// core/no_fallthrough.go:170; "(?i)" + pattern
+import { observe } from '../observe.a';
+const pattern = "falls? through";
+const flags = "gui";
+const regex = new RegExp(pattern, flags);
+observe(regex, "", 0);
+observe(regex, "🌍", 1);
+observe(regex, "TODO\n", 2);
+observe(regex, " TODO", 3);
+observe(regex, "FALL THROUGH", 4);
+observe(regex, "xFALL THROUGH", 5);
+observe(regex, "FALL THROUGH\n", 6);

@@ -1,0 +1,27 @@
+{
+    "rule": "constructor-super",
+    "firing": {
+        "file": "/repository/source/Subject.js",
+        "source": "class A extends B { constructor() { } }",
+        "findings": [
+            {
+                "line": 1,
+                "column": 21,
+                "endLine": 1,
+                "endColumn": 38,
+                "messageId": "missingAll",
+                "message": "This derived constructor never calls `super()`, so constructing the class throws a ReferenceError before the body finishes."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/Subject.js",
+        "source": "class A { }"
+    },
+    "assertedMessageIds": [
+        "badSuper",
+        "duplicate",
+        "missingAll",
+        "missingSome"
+    ]
+}

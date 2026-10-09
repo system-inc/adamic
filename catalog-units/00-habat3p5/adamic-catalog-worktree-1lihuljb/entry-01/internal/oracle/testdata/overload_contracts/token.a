@@ -1,0 +1,7 @@
+interface Token<K> { readonly kind: K; }
+interface SuperExpression extends Token<'super'> { readonly special: string; }
+function createToken(kind: 'super'): SuperExpression;
+function createToken<K extends string>(kind: K): Token<K> {
+    return { kind };
+}
+console.log(createToken('super').special);

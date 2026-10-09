@@ -1,0 +1,25 @@
+{
+  "rules": {
+    "TypeScript": "structure/react-component-no-destructuring"
+  },
+  "phrases": {
+    "reasoning": "Reading properties.name at each use keeps the origin of a value visible: a bare `label` could come from anywhere, while `properties.label` says where it came from and survives a rename of the parameter. Destructuring is allowed only where it earns its keep, gathering the remaining properties to spread onto an element."
+  },
+  "messages": {
+    "noDestructuring": {
+      "text": "This destructures a component's properties without gathering a rest. <<reasoning>>"
+    },
+    "noDestructuringFromPropsSource": {
+      "text": "This destructures out of the properties object inside the component body, which is the same thing as destructuring the parameter and reads worse, since the properties were already named. <<reasoning>>"
+    },
+    "requirePropertiesSuffix": {
+      "text": "The rest variable must end in Properties. It is going to be spread onto an element, and the name is the only thing at the spread site that says what it holds: `{...rest}` says nothing, `{...buttonProperties}` says which element it belongs to."
+    },
+    "semanticSpreadName": {
+      "text": "The rest variable is named for being a rest rather than for what it holds. Name it for the element it will be spread onto, such as buttonProperties or inputProperties, so the spread site says which element the properties are for."
+    },
+    "spreadMustBeUsed": {
+      "text": "This gathers a rest variable and never uses it, so the destructuring buys nothing and the gathered properties are silently dropped rather than reaching an element. Remove the destructuring and read properties directly."
+    }
+  }
+}

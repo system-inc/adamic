@@ -1,0 +1,8 @@
+source /workspace/adamic-tools/env.sh
+bash cloud/setup.sh
+nproc
+gofmt -w stage1/cohere/lint/rules/no-empty-pattern/oracle.go
+gofmt -l cmd internal stage1/cohere/lint/rules/no-empty-pattern/oracle.go
+go run ./cmd/lint-registry
+go vet ./...
+TMPDIR=/workspace/wave-26-bridge-scratch go test ./stage1/cohere/lint -run '^(TestOwnedWitnesses|TestRulesAgree|TestMutants)$' -count=1 -v -timeout 30m

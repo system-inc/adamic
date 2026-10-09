@@ -1,0 +1,18 @@
+const cases: number[][] = [[]];
+for(const values of cases) {
+    console.log(`${values.length} ${values[0]}`);
+    values.push(42);
+    console.log(`${values.length} ${values[0]}`);
+}
+const words: string[][] = [[]];
+const first = words[0];
+if(first !== undefined) {
+    first.push('owned'.repeat(2));
+    console.log(`${first.length} ${first[0]}`);
+}
+function empty<T>(): T[] {
+    return [] as T[];
+}
+const fresh = empty<string>();
+fresh.push('generic'.repeat(2));
+console.log(`${fresh[0]} ${empty<number>().length}`);

@@ -1,0 +1,9 @@
+[
+{"code":"\ufeff var a = 123;","options":["always"],"eslint":[]},
+{"code":"var a = 123;","options":["never"],"eslint":[]},
+{"code":"var a = 123; \ufeff","options":["never"],"eslint":[]},
+{"code":"var a = 123;","options":["always"],"eslint":[["expected",0,0]]},
+{"code":" // here's a comment \nvar a = 123;","options":["always"],"eslint":[["expected",0,0]]},
+{"code":"\ufeff var a = 123;","eslint":[["unexpected",0,0]]},
+{"code":"\ufeff var a = 123;","options":["never"],"eslint":[["unexpected",0,0]]}
+]

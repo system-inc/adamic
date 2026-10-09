@@ -1,0 +1,24 @@
+{
+    "rule": "prefer-promise-reject-errors",
+    "firing": {
+        "file": "input.ts",
+        "source": "Promise.reject()\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 1,
+                "endLine": 1,
+                "endColumn": 17,
+                "messageId": "rejectAnError",
+                "message": "Expected the Promise rejection reason to be an Error. A rejection carrying a string or a plain object arrives at the catch with no stack, so the line that failed is lost and the handler cannot tell one failure from another."
+            }
+        ]
+    },
+    "clean": {
+        "file": "input.ts",
+        "source": "Foo.reject(5)\n"
+    },
+    "assertedMessageIds": [
+        "rejectAnError"
+    ]
+}

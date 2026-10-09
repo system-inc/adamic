@@ -1,0 +1,14 @@
+{
+    "rule": "@typescript-eslint/adjacent-overload-signatures",
+    "firing": {
+        "file": "/repository/source/Thing.ts",
+        "source": "export default function foo(): void {}"
+    },
+    "clean": {
+        "file": "/repository/source/Thing.ts",
+        "source": "export default function <T>(foo: T) {}"
+    },
+    "assertedMessageIds": [
+        "adjacentSignature"
+    ]
+}

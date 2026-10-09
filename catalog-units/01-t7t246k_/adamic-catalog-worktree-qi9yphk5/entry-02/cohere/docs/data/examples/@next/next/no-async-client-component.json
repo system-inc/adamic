@@ -1,0 +1,24 @@
+{
+    "rule": "@next/next/no-async-client-component",
+    "firing": {
+        "file": "/repository/app/Component.tsx",
+        "source": "\"use client\"\nexport default async function Фoo() { return null }\n",
+        "findings": [
+            {
+                "line": 2,
+                "column": 31,
+                "endLine": 2,
+                "endColumn": 35,
+                "messageId": "noAsyncClientComponent",
+                "message": "A client component declared as an async function is rendered on the client, where React cannot await it the way the server can. The promise it returns is not an element, so rendering fails or hydration diverges from what the server produced. Move the awaiting into an effect or an event handler and keep the component itself synchronous."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/app/Component.tsx",
+        "source": "\"use client\"\nlet MyThing: unknown\nexport default MyThing\n"
+    },
+    "assertedMessageIds": [
+        "noAsyncClientComponent"
+    ]
+}

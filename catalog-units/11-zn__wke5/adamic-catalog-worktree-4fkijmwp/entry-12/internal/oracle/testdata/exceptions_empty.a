@@ -1,0 +1,9 @@
+// An error with no message is "Error" alone when nothing catches it; here a catch throws it again.
+try {
+	throw new Error();
+} catch (error) {
+	console.log(`caught "${error instanceof Error ? error.message : '?'}", throwing it again`);
+	if (error instanceof Error) {
+		throw error;
+	}
+}

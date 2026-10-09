@@ -1,0 +1,11 @@
+// Nested gaps: a number, a string, the 10-character clamp, and a gap that is not escaped.
+console.log(JSON.stringify({ a: [1, { b: [2, { c: 3 }], d: [] }], e: {} }, undefined, 2) ?? '<undefined>');
+console.log(JSON.stringify({ a: [1, { b: [2, { c: 3 }], d: [] }], e: {} }, null, '->') ?? '<undefined>');
+console.log(JSON.stringify({ a: [1, { b: [2] }] }, undefined, 11) ?? '<undefined>');
+console.log(JSON.stringify({ a: [1, { b: [2] }] }, undefined, 10) ?? '<undefined>');
+console.log(JSON.stringify({ a: [1, { b: [2] }] }, undefined, '1234567890X') ?? '<undefined>');
+console.log(JSON.stringify({ a: [1, { b: [2] }] }, undefined, '1234567890') ?? '<undefined>');
+console.log(JSON.stringify({ a: [1] }, undefined, '"\\\n\u2028') ?? '<undefined>');
+console.log(JSON.stringify({}, undefined, 2) ?? '<undefined>');
+console.log(JSON.stringify([], undefined, 2) ?? '<undefined>');
+console.log(JSON.stringify({ a: [], b: {} }, undefined, 4) ?? '<undefined>');

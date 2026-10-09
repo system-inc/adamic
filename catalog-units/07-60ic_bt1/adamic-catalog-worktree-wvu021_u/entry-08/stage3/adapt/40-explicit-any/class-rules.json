@@ -1,0 +1,544 @@
+{
+  "filesystem": [
+    {
+      "id": 138,
+      "file": "src/compiler/sys.ts",
+      "line": 1853,
+      "column": 31,
+      "originalLine": "                    let stat: any;",
+      "replacement": "import(\"fs\").Stats | import(\"fs\").Dirent | undefined",
+      "parentKind": "VariableDeclaration"
+    }
+  ],
+  "brands": [
+    {
+      "id": 1,
+      "file": "src/compiler/builder.ts",
+      "key": "__incrementalBuildInfoFileIdBrand",
+      "line": 1074,
+      "replacement": "void"
+    },
+    {
+      "id": 2,
+      "file": "src/compiler/builder.ts",
+      "key": "__incrementalBuildInfoFileIdListIdBrand",
+      "line": 1076,
+      "replacement": "void"
+    },
+    {
+      "id": 3,
+      "file": "src/compiler/checker.ts",
+      "key": "_symbolLinksBrand",
+      "line": 1452,
+      "replacement": "void"
+    },
+    {
+      "id": 62,
+      "file": "src/compiler/corePublic.ts",
+      "key": " __sortedArrayBrand",
+      "line": 18,
+      "replacement": "void"
+    },
+    {
+      "id": 63,
+      "file": "src/compiler/corePublic.ts",
+      "key": " __sortedArrayBrand",
+      "line": 22,
+      "replacement": "void"
+    },
+    {
+      "id": 96,
+      "file": "src/compiler/moduleNameResolver.ts",
+      "key": "__compilerOptionsKey",
+      "line": 975,
+      "replacement": "void"
+    },
+    {
+      "id": 97,
+      "file": "src/compiler/moduleNameResolver.ts",
+      "key": "__modeAwareCacheKey",
+      "line": 1113,
+      "replacement": "void"
+    },
+    {
+      "id": 103,
+      "file": "src/compiler/path.ts",
+      "key": "__pathComponensBrand",
+      "line": 457,
+      "replacement": "void"
+    },
+    {
+      "id": 142,
+      "file": "src/compiler/transformers/esnext.ts",
+      "key": "_usingBrand",
+      "line": 774,
+      "replacement": "void"
+    },
+    {
+      "id": 147,
+      "file": "src/compiler/types.ts",
+      "key": "__pathBrand",
+      "line": 23,
+      "replacement": "void"
+    },
+    {
+      "id": 148,
+      "file": "src/compiler/types.ts",
+      "key": "_jsdocContainerBrand",
+      "line": 958,
+      "replacement": "void"
+    },
+    {
+      "id": 149,
+      "file": "src/compiler/types.ts",
+      "key": "_localsContainerBrand",
+      "line": 968,
+      "replacement": "void"
+    },
+    {
+      "id": 150,
+      "file": "src/compiler/types.ts",
+      "key": "_flowContainerBrand",
+      "line": 974,
+      "replacement": "void"
+    },
+    {
+      "id": 151,
+      "file": "src/compiler/types.ts",
+      "key": "_declarationBrand",
+      "line": 1757,
+      "replacement": "void"
+    },
+    {
+      "id": 152,
+      "file": "src/compiler/types.ts",
+      "key": "_autoAccessorBrand",
+      "line": 1944,
+      "replacement": "void"
+    },
+    {
+      "id": 153,
+      "file": "src/compiler/types.ts",
+      "key": "_objectLiteralBrand",
+      "line": 1981,
+      "replacement": "void"
+    },
+    {
+      "id": 154,
+      "file": "src/compiler/types.ts",
+      "key": "_functionLikeDeclarationBrand",
+      "line": 2064,
+      "replacement": "void"
+    },
+    {
+      "id": 155,
+      "file": "src/compiler/types.ts",
+      "key": "_typeNodeBrand",
+      "line": 2185,
+      "replacement": "void"
+    },
+    {
+      "id": 156,
+      "file": "src/compiler/types.ts",
+      "key": "_expressionBrand",
+      "line": 2397,
+      "replacement": "void"
+    },
+    {
+      "id": 157,
+      "file": "src/compiler/types.ts",
+      "key": "_unaryExpressionBrand",
+      "line": 2412,
+      "replacement": "void"
+    },
+    {
+      "id": 158,
+      "file": "src/compiler/types.ts",
+      "key": "_updateExpressionBrand",
+      "line": 2418,
+      "replacement": "void"
+    },
+    {
+      "id": 159,
+      "file": "src/compiler/types.ts",
+      "key": "_leftHandSideExpressionBrand",
+      "line": 2449,
+      "replacement": "void"
+    },
+    {
+      "id": 160,
+      "file": "src/compiler/types.ts",
+      "key": "_memberExpressionBrand",
+      "line": 2453,
+      "replacement": "void"
+    },
+    {
+      "id": 161,
+      "file": "src/compiler/types.ts",
+      "key": "_primaryExpressionBrand",
+      "line": 2457,
+      "replacement": "void"
+    },
+    {
+      "id": 162,
+      "file": "src/compiler/types.ts",
+      "key": "_literalExpressionBrand",
+      "line": 2785,
+      "replacement": "void"
+    },
+    {
+      "id": 163,
+      "file": "src/compiler/types.ts",
+      "key": "_optionalChainBrand",
+      "line": 2982,
+      "replacement": "void"
+    },
+    {
+      "id": 164,
+      "file": "src/compiler/types.ts",
+      "key": "_propertyAccessExpressionLikeQualifiedNameBrand",
+      "line": 2997,
+      "replacement": "void"
+    },
+    {
+      "id": 165,
+      "file": "src/compiler/types.ts",
+      "key": "_optionalChainBrand",
+      "line": 3010,
+      "replacement": "void"
+    },
+    {
+      "id": 166,
+      "file": "src/compiler/types.ts",
+      "key": "_optionalChainBrand",
+      "line": 3034,
+      "replacement": "void"
+    },
+    {
+      "id": 167,
+      "file": "src/compiler/types.ts",
+      "key": "_optionalChainBrand",
+      "line": 3168,
+      "replacement": "void"
+    },
+    {
+      "id": 168,
+      "file": "src/compiler/types.ts",
+      "key": "_statementBrand",
+      "line": 3322,
+      "replacement": "void"
+    },
+    {
+      "id": 169,
+      "file": "src/compiler/types.ts",
+      "key": "_classElementBrand",
+      "line": 3568,
+      "replacement": "void"
+    },
+    {
+      "id": 170,
+      "file": "src/compiler/types.ts",
+      "key": "_typeElementBrand",
+      "line": 3573,
+      "replacement": "void"
+    },
+    {
+      "id": 171,
+      "file": "src/compiler/types.ts",
+      "key": "_jsDocTypeBrand",
+      "line": 3903,
+      "replacement": "void"
+    },
+    {
+      "id": 172,
+      "file": "src/compiler/types.ts",
+      "key": "_symbolLinksBrand",
+      "line": 6059,
+      "replacement": "void"
+    },
+    {
+      "id": 179,
+      "file": "src/compiler/utilities.ts",
+      "key": "_prototypePropertyAssignmentBrand",
+      "line": 4289,
+      "replacement": "void"
+    }
+  ],
+  "enum-display": [
+    {
+      "id": 69,
+      "file": "src/compiler/debug.ts",
+      "line": 389,
+      "column": 55,
+      "originalLine": "    export function formatEnum(value = 0, enumObject: any, isFlags?: boolean): string {",
+      "replacement": "Record<string, string | number>",
+      "parentKind": "Parameter"
+    },
+    {
+      "id": 70,
+      "file": "src/compiler/debug.ts",
+      "line": 420,
+      "column": 37,
+      "originalLine": "    const enumMemberCache = new Map<any, SortedReadonlyArray<[number, string]>>();",
+      "replacement": "Record<string, string | number>",
+      "parentKind": "NewExpression"
+    },
+    {
+      "id": 71,
+      "file": "src/compiler/debug.ts",
+      "line": 422,
+      "column": 41,
+      "originalLine": "    function getEnumMembers(enumObject: any) {",
+      "replacement": "Record<string, string | number>",
+      "parentKind": "Parameter"
+    },
+    {
+      "id": 72,
+      "file": "src/compiler/debug.ts",
+      "line": 445,
+      "column": 40,
+      "originalLine": "        return formatEnum(kind, (ts as any).SyntaxKind, /*isFlags*/ false);",
+      "replacement": "Record<\"SyntaxKind\", Record<string, string | number>>",
+      "parentKind": "AsExpression"
+    },
+    {
+      "id": 73,
+      "file": "src/compiler/debug.ts",
+      "line": 449,
+      "column": 40,
+      "originalLine": "        return formatEnum(kind, (ts as any).SnippetKind, /*isFlags*/ false);",
+      "replacement": "Record<\"SnippetKind\", Record<string, string | number>>",
+      "parentKind": "AsExpression"
+    },
+    {
+      "id": 74,
+      "file": "src/compiler/debug.ts",
+      "line": 453,
+      "column": 40,
+      "originalLine": "        return formatEnum(kind, (ts as any).ScriptKind, /*isFlags*/ false);",
+      "replacement": "Record<\"ScriptKind\", Record<string, string | number>>",
+      "parentKind": "AsExpression"
+    },
+    {
+      "id": 75,
+      "file": "src/compiler/debug.ts",
+      "line": 457,
+      "column": 41,
+      "originalLine": "        return formatEnum(flags, (ts as any).NodeFlags, /*isFlags*/ true);",
+      "replacement": "Record<\"NodeFlags\", Record<string, string | number>>",
+      "parentKind": "AsExpression"
+    },
+    {
+      "id": 76,
+      "file": "src/compiler/debug.ts",
+      "line": 461,
+      "column": 41,
+      "originalLine": "        return formatEnum(flags, (ts as any).NodeCheckFlags, /*isFlags*/ true);",
+      "replacement": "Record<\"NodeCheckFlags\", Record<string, string | number>>",
+      "parentKind": "AsExpression"
+    },
+    {
+      "id": 77,
+      "file": "src/compiler/debug.ts",
+      "line": 465,
+      "column": 41,
+      "originalLine": "        return formatEnum(flags, (ts as any).ModifierFlags, /*isFlags*/ true);",
+      "replacement": "Record<\"ModifierFlags\", Record<string, string | number>>",
+      "parentKind": "AsExpression"
+    },
+    {
+      "id": 78,
+      "file": "src/compiler/debug.ts",
+      "line": 469,
+      "column": 41,
+      "originalLine": "        return formatEnum(flags, (ts as any).TransformFlags, /*isFlags*/ true);",
+      "replacement": "Record<\"TransformFlags\", Record<string, string | number>>",
+      "parentKind": "AsExpression"
+    },
+    {
+      "id": 79,
+      "file": "src/compiler/debug.ts",
+      "line": 473,
+      "column": 41,
+      "originalLine": "        return formatEnum(flags, (ts as any).EmitFlags, /*isFlags*/ true);",
+      "replacement": "Record<\"EmitFlags\", Record<string, string | number>>",
+      "parentKind": "AsExpression"
+    },
+    {
+      "id": 80,
+      "file": "src/compiler/debug.ts",
+      "line": 477,
+      "column": 41,
+      "originalLine": "        return formatEnum(flags, (ts as any).SymbolFlags, /*isFlags*/ true);",
+      "replacement": "Record<\"SymbolFlags\", Record<string, string | number>>",
+      "parentKind": "AsExpression"
+    },
+    {
+      "id": 81,
+      "file": "src/compiler/debug.ts",
+      "line": 481,
+      "column": 41,
+      "originalLine": "        return formatEnum(flags, (ts as any).TypeFlags, /*isFlags*/ true);",
+      "replacement": "Record<\"TypeFlags\", Record<string, string | number>>",
+      "parentKind": "AsExpression"
+    },
+    {
+      "id": 82,
+      "file": "src/compiler/debug.ts",
+      "line": 485,
+      "column": 41,
+      "originalLine": "        return formatEnum(flags, (ts as any).SignatureFlags, /*isFlags*/ true);",
+      "replacement": "Record<\"SignatureFlags\", Record<string, string | number>>",
+      "parentKind": "AsExpression"
+    },
+    {
+      "id": 83,
+      "file": "src/compiler/debug.ts",
+      "line": 489,
+      "column": 41,
+      "originalLine": "        return formatEnum(flags, (ts as any).ObjectFlags, /*isFlags*/ true);",
+      "replacement": "Record<\"ObjectFlags\", Record<string, string | number>>",
+      "parentKind": "AsExpression"
+    },
+    {
+      "id": 84,
+      "file": "src/compiler/debug.ts",
+      "line": 493,
+      "column": 41,
+      "originalLine": "        return formatEnum(flags, (ts as any).FlowFlags, /*isFlags*/ true);",
+      "replacement": "Record<\"FlowFlags\", Record<string, string | number>>",
+      "parentKind": "AsExpression"
+    },
+    {
+      "id": 85,
+      "file": "src/compiler/debug.ts",
+      "line": 497,
+      "column": 42,
+      "originalLine": "        return formatEnum(result, (ts as any).RelationComparisonResult, /*isFlags*/ true);",
+      "replacement": "Record<\"RelationComparisonResult\", Record<string, string | number>>",
+      "parentKind": "AsExpression"
+    },
+    {
+      "id": 86,
+      "file": "src/compiler/debug.ts",
+      "line": 501,
+      "column": 40,
+      "originalLine": "        return formatEnum(mode, (ts as any).CheckMode, /*isFlags*/ true);",
+      "replacement": "Record<\"CheckMode\", Record<string, string | number>>",
+      "parentKind": "AsExpression"
+    },
+    {
+      "id": 87,
+      "file": "src/compiler/debug.ts",
+      "line": 505,
+      "column": 40,
+      "originalLine": "        return formatEnum(mode, (ts as any).SignatureCheckMode, /*isFlags*/ true);",
+      "replacement": "Record<\"SignatureCheckMode\", Record<string, string | number>>",
+      "parentKind": "AsExpression"
+    },
+    {
+      "id": 88,
+      "file": "src/compiler/debug.ts",
+      "line": 509,
+      "column": 41,
+      "originalLine": "        return formatEnum(facts, (ts as any).TypeFacts, /*isFlags*/ true);",
+      "replacement": "Record<\"TypeFacts\", Record<string, string | number>>",
+      "parentKind": "AsExpression"
+    },
+    {
+      "id": 89,
+      "file": "src/compiler/debug.ts",
+      "line": 540,
+      "column": 62,
+      "originalLine": "                        return formatEnum(this.flags, (ts as any).FlowFlags, /*isFlags*/ true);",
+      "replacement": "Record<\"FlowFlags\", Record<string, string | number>>",
+      "parentKind": "AsExpression"
+    },
+    {
+      "id": 91,
+      "file": "src/compiler/emitter.ts",
+      "line": 5790,
+      "column": 147,
+      "originalLine": "        return Debug.fail(`Unsupported GeneratedIdentifierKind: ${Debug.formatEnum(autoGenerate.flags & GeneratedIdentifierFlags.KindMask, (ts as any).GeneratedIdentifierFlags, /*isFlags*/ true)}.`);",
+      "replacement": "Record<\"GeneratedIdentifierFlags\", Record<string, string | number>>",
+      "parentKind": "AsExpression"
+    },
+    {
+      "id": 106,
+      "file": "src/compiler/program.ts",
+      "line": 3526,
+      "column": 50,
+      "originalLine": "            fileIncludeKind: (FileIncludeKind as any)[reason.kind],",
+      "replacement": "Record<number, string>",
+      "parentKind": "AsExpression"
+    }
+  ],
+  "diagnostic": [
+    {
+      "id": 8,
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 2206,
+      "column": 72,
+      "originalLine": "export function getDiagnosticText(message: DiagnosticMessage, ...args: any[]): string {",
+      "replacement": "DiagnosticArguments[number]",
+      "parentKind": "ArrayType",
+      "owner": "getDiagnosticText",
+      "key": "args"
+    },
+    {
+      "id": 94,
+      "file": "src/compiler/moduleNameResolver.ts",
+      "line": 118,
+      "column": 88,
+      "originalLine": "export function trace(host: ModuleResolutionHost, message: DiagnosticMessage, ...args: any[]): void {",
+      "replacement": "DiagnosticArguments[number]",
+      "parentKind": "ArrayType",
+      "owner": "trace",
+      "key": "args"
+    },
+    {
+      "id": 100,
+      "file": "src/compiler/parser.ts",
+      "line": 2176,
+      "column": 75,
+      "originalLine": "    function scanError(message: DiagnosticMessage, length: number, arg0?: any): void {",
+      "replacement": "string | number",
+      "parentKind": "Parameter",
+      "owner": "scanError",
+      "key": "arg0"
+    },
+    {
+      "id": 112,
+      "file": "src/compiler/scanner.ts",
+      "line": 39,
+      "column": 81,
+      "originalLine": "export type ErrorCallback = (message: DiagnosticMessage, length: number, arg0?: any) => void;",
+      "replacement": "string | number",
+      "parentKind": "Parameter",
+      "owner": "ErrorCallback",
+      "key": "arg0"
+    },
+    {
+      "id": 114,
+      "file": "src/compiler/scanner.ts",
+      "line": 1161,
+      "column": 87,
+      "originalLine": "    function error(message: DiagnosticMessage, errPos: number, length: number, arg0?: any): void;",
+      "replacement": "string | number",
+      "parentKind": "Parameter",
+      "owner": "error",
+      "key": "arg0"
+    },
+    {
+      "id": 115,
+      "file": "src/compiler/scanner.ts",
+      "line": 1162,
+      "column": 94,
+      "originalLine": "    function error(message: DiagnosticMessage, errPos: number = pos, length?: number, arg0?: any): void {",
+      "replacement": "string | number",
+      "parentKind": "Parameter",
+      "owner": "error",
+      "key": "arg0"
+    }
+  ]
+}

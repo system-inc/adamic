@@ -1,0 +1,11 @@
+[
+{"code":"var a = test[__proto__];","eslint":[]},
+{"code":"var __proto__ = null;","eslint":[]},
+{"code":"foo[`__proto`] = null;","eslint":[]},
+{"code":"foo[`__proto__\n`] = null;","eslint":[]},
+{"code":"class C { #__proto__; foo() { this.#__proto__; } }","eslint":[]},
+{"code":"var a = test.__proto__;","eslint":[["unexpectedProto",8,22]]},
+{"code":"var a = test['__proto__'];","eslint":[["unexpectedProto",8,25]]},
+{"code":"var a = test[`__proto__`];","eslint":[["unexpectedProto",8,25]]},
+{"code":"test[`__proto__`] = function () {};","eslint":[["unexpectedProto",0,17]]}
+]

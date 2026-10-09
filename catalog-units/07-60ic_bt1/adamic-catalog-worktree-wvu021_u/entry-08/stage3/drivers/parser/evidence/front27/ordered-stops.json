@@ -1,0 +1,217 @@
+[
+  {
+    "step": 1,
+    "exit": 1,
+    "diagnostic": "adamic: /workspace/scratch/parser-front27-discovery-slice/src/compiler/core.ts:11:52: stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet\n",
+    "stub_exit": 0,
+    "stub": {
+      "file": "/workspace/scratch/parser-front27-discovery-slice/src/compiler/core.ts",
+      "line": 11,
+      "column": 52,
+      "name": "emptyMap",
+      "start": 386,
+      "end": 409,
+      "replacement": "undefined!"
+    },
+    "ordered_step": 1,
+    "minimal_program": "native-enum-map.a",
+    "found_behind_stubs": false,
+    "also_behind_reduceLeft_stub": true
+  },
+  {
+    "step": 2,
+    "exit": 1,
+    "diagnostic": "adamic: /workspace/scratch/parser-front27-discovery-slice/src/compiler/debug.ts:333:29: stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet\n",
+    "stub_exit": 0,
+    "stub": {
+      "file": "/workspace/scratch/parser-front27-discovery-slice/src/compiler/debug.ts",
+      "line": 333,
+      "column": 29,
+      "name": "enumMemberCache",
+      "start": 17770,
+      "end": 17869,
+      "replacement": "enumMemberCache: Map<Record<string, string | number>, SortedReadonlyArray<[number, string]>> = undefined!"
+    },
+    "ordered_step": 2,
+    "minimal_program": "native-enum-map.a",
+    "found_behind_stubs": true,
+    "also_behind_reduceLeft_stub": true
+  },
+  {
+    "step": 3,
+    "exit": 1,
+    "diagnostic": "adamic: /workspace/scratch/parser-front27-discovery-slice/src/compiler/performanceCore.ts:37:37: stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet\n",
+    "stub_exit": 0,
+    "stub": {
+      "file": "/workspace/scratch/parser-front27-discovery-slice/src/compiler/performanceCore.ts",
+      "line": 37,
+      "column": 37,
+      "name": "tryGetPerformance",
+      "edits": [
+        {
+          "start": 942,
+          "end": 2004,
+          "replacement": "{ throw \"scratch-only discovery stub\";\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n}"
+        }
+      ]
+    },
+    "ordered_step": 3,
+    "minimal_program": "native-call-before-enum.a",
+    "found_behind_stubs": true,
+    "also_behind_reduceLeft_stub": true
+  },
+  {
+    "step": 1,
+    "exit": 1,
+    "diagnostic": "adamic: /workspace/scratch/parser-front27-discovery-slice/src/compiler/performance.ts:15:18: stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet\n",
+    "stub_exit": 0,
+    "stub": {
+      "file": "/workspace/scratch/parser-front27-discovery-slice/src/compiler/performance.ts",
+      "line": 15,
+      "column": 18,
+      "name": "timeorigin",
+      "start": 597,
+      "end": 621,
+      "replacement": "timeorigin: timestamp = undefined!"
+    },
+    "ordered_step": 4,
+    "minimal_program": "native-call-before-enum.a",
+    "found_behind_stubs": true,
+    "also_behind_reduceLeft_stub": true
+  },
+  {
+    "step": 1,
+    "exit": 1,
+    "diagnostic": "adamic: /workspace/scratch/parser-front27-discovery-slice/src/compiler/performance.ts:16:15: stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet\n",
+    "stub_exit": 0,
+    "stub": {
+      "file": "/workspace/scratch/parser-front27-discovery-slice/src/compiler/performance.ts",
+      "line": 16,
+      "column": 15,
+      "name": "marks",
+      "start": 637,
+      "end": 670,
+      "replacement": "marks: Map<string, number> = undefined!"
+    },
+    "ordered_step": 5,
+    "minimal_program": "native-enum-map.a",
+    "found_behind_stubs": true,
+    "also_behind_reduceLeft_stub": true
+  },
+  {
+    "step": 2,
+    "exit": 1,
+    "diagnostic": "adamic: /workspace/scratch/parser-front27-discovery-slice/src/compiler/performance.ts:17:16: stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet\n",
+    "stub_exit": 0,
+    "stub": {
+      "file": "/workspace/scratch/parser-front27-discovery-slice/src/compiler/performance.ts",
+      "line": 17,
+      "column": 16,
+      "name": "counts",
+      "start": 685,
+      "end": 719,
+      "replacement": "counts: Map<string, number> = undefined!"
+    },
+    "ordered_step": 6,
+    "minimal_program": "native-enum-map.a",
+    "found_behind_stubs": true,
+    "also_behind_reduceLeft_stub": true
+  },
+  {
+    "step": 3,
+    "exit": 1,
+    "diagnostic": "adamic: /workspace/scratch/parser-front27-discovery-slice/src/compiler/performance.ts:18:19: stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet\n",
+    "stub_exit": 0,
+    "stub": {
+      "file": "/workspace/scratch/parser-front27-discovery-slice/src/compiler/performance.ts",
+      "line": 18,
+      "column": 19,
+      "name": "durations",
+      "start": 734,
+      "end": 771,
+      "replacement": "durations: Map<string, number> = undefined!"
+    },
+    "ordered_step": 7,
+    "minimal_program": "native-enum-map.a",
+    "found_behind_stubs": true,
+    "also_behind_reduceLeft_stub": true
+  },
+  {
+    "step": 4,
+    "exit": 1,
+    "diagnostic": "adamic: /workspace/scratch/parser-front27-discovery-slice/src/compiler/core.ts:230:22: Adamic 0.1 refuses a value of type never seen as U, a type parameter whose constraint {} can be written, so it can write what never can't hold; take it as never, or constrain U to something readonly, which can't write (adamic/invariant-mutable)\n",
+    "stub_exit": 0,
+    "stub": {
+      "file": "/workspace/scratch/parser-front27-discovery-slice/src/compiler/core.ts",
+      "line": 230,
+      "column": 22,
+      "name": "flatMap",
+      "edits": [
+        {
+          "start": 8340,
+          "end": 8790,
+          "replacement": "{ throw \"scratch-only discovery stub\";\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n}"
+        }
+      ]
+    },
+    "ordered_step": 8,
+    "minimal_program": "native-generic-empty-array.a",
+    "found_behind_stubs": true,
+    "also_behind_reduceLeft_stub": true
+  },
+  {
+    "step": 5,
+    "exit": 1,
+    "diagnostic": "adamic: /workspace/scratch/parser-front27-discovery-slice/src/compiler/core.ts:594:5: Adamic 0.1 refuses a type predicate whose return is not proven (return expression is not a trusted check on value); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\n",
+    "stub_exit": 0,
+    "stub": {
+      "file": "/workspace/scratch/parser-front27-discovery-slice/src/compiler/core.ts",
+      "line": 594,
+      "column": 5,
+      "name": "isArray",
+      "edits": [
+        {
+          "start": 21048,
+          "end": 21152,
+          "replacement": "{ throw \"scratch-only discovery stub\";\n\n\n}"
+        }
+      ]
+    },
+    "ordered_step": 9,
+    "minimal_program": "native-array-is-array-predicate.a",
+    "found_behind_stubs": true,
+    "also_behind_reduceLeft_stub": true
+  },
+  {
+    "step": 6,
+    "exit": 1,
+    "diagnostic": "adamic: /workspace/scratch/parser-front27-discovery-slice/src/compiler/core.ts:889:14: Adamic 0.1 refuses a method read as a value (nextTick would lose its object, and this with it); call it in an arrow that keeps the object: (callback, args) => process.nextTick(callback, args) (unbound-method)\n",
+    "stub_exit": 0,
+    "stub": {
+      "file": "/workspace/scratch/parser-front27-discovery-slice/src/compiler/core.ts",
+      "line": 889,
+      "column": 14,
+      "name": "isNodeLikeSystem",
+      "edits": [
+        {
+          "start": 30670,
+          "end": 30935,
+          "replacement": "{ throw \"scratch-only discovery stub\";\n\n\n\n\n\n\n}"
+        }
+      ]
+    },
+    "ordered_step": 10,
+    "minimal_program": "native-process-next-tick-read.a",
+    "found_behind_stubs": true,
+    "also_behind_reduceLeft_stub": true
+  },
+  {
+    "step": 7,
+    "exit": 1,
+    "diagnostic": "adamic: /workspace/scratch/parser-front27-discovery-slice/src/compiler/debug.ts:26:1: Adamic 0.1 refuses a namespace; use a module: a file of its own, with named exports\n",
+    "ordered_step": 11,
+    "minimal_program": "native-debug-namespace.a",
+    "found_behind_stubs": true,
+    "also_behind_reduceLeft_stub": true
+  }
+]

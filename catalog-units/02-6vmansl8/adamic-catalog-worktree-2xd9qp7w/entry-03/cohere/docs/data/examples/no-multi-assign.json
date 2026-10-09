@@ -1,0 +1,24 @@
+{
+    "rule": "no-multi-assign",
+    "firing": {
+        "file": "/repository/source/MultiAssign.ts",
+        "source": "a=b=c",
+        "findings": [
+            {
+                "line": 1,
+                "column": 3,
+                "endLine": 1,
+                "endColumn": 6,
+                "messageId": "unexpectedChain",
+                "message": "This chains one assignment inside another, so a single statement writes to two names and only one of them is where a reader looks. In `let a = b = c` the `b` is not declared at all, so a chain inside a declaration silently creates or writes an outer binding. Write each assignment on its own line."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/MultiAssign.ts",
+        "source": "var a;"
+    },
+    "assertedMessageIds": [
+        "unexpectedChain"
+    ]
+}

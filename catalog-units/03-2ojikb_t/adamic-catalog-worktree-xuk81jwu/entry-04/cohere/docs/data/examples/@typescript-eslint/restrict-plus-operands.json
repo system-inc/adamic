@@ -1,0 +1,26 @@
+{
+    "rule": "@typescript-eslint/restrict-plus-operands",
+    "firing": {
+        "file": "file.ts",
+        "source": "let foo = 1 + 1n;\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 11,
+                "endLine": 1,
+                "endColumn": 17,
+                "messageId": "bigintAndNumber",
+                "message": "Numeric '+' operations must either be both bigints or both numbers. Got `number` + `bigint`."
+            }
+        ]
+    },
+    "clean": {
+        "file": "file.ts",
+        "source": "let x = 5;\n"
+    },
+    "assertedMessageIds": [
+        "bigintAndNumber",
+        "invalid",
+        "mismatched"
+    ]
+}

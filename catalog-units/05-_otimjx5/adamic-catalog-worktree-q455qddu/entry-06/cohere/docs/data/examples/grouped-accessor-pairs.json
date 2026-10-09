@@ -1,0 +1,25 @@
+{
+    "rule": "grouped-accessor-pairs",
+    "firing": {
+        "file": "/repository/source/GroupedAccessorPairs.ts",
+        "source": "({ get a(){}, b:1, set a(foo){} })",
+        "findings": [
+            {
+                "line": 1,
+                "column": 20,
+                "endLine": 1,
+                "endColumn": 25,
+                "messageId": "notGrouped",
+                "message": "Accessor pair getter 'a' and setter 'a' should be grouped."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/GroupedAccessorPairs.ts",
+        "source": "({})"
+    },
+    "assertedMessageIds": [
+        "invalidOrder",
+        "notGrouped"
+    ]
+}

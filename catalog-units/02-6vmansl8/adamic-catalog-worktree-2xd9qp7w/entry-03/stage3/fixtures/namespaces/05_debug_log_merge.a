@@ -1,0 +1,70 @@
+// From TypeScript 6.0.3, src/compiler/debug.ts:99
+// From TypeScript 6.0.3, src/compiler/debug.ts:113
+// From TypeScript 6.0.3, src/compiler/debug.ts:123
+// From TypeScript 6.0.3, src/compiler/debug.ts:137
+// Census reason: a namespace
+export enum LogLevel {
+    Off,
+    Error,
+    Warning,
+    Info,
+    Verbose,
+}
+
+/** @internal */
+export interface LoggingHost {
+    log(level: LogLevel, s: string): void;
+}
+export namespace Debug {
+    export let currentLogLevel: LogLevel = LogLevel.Warning;
+    export let isDebugging = false;
+    export let loggingHost: LoggingHost | undefined;
+    /* eslint-enable prefer-const */
+
+
+    export function shouldLog(level: LogLevel): boolean {
+        return currentLogLevel <= level;
+    }
+
+    function logMessage(level: LogLevel, s: string): void {
+        if (loggingHost && shouldLog(level)) {
+            loggingHost.log(level, s);
+        }
+    }
+
+    export function log(s: string): void {
+        logMessage(LogLevel.Info, s);
+    }
+
+    export namespace log {
+        export function error(s: string): void {
+            logMessage(LogLevel.Error, s);
+        }
+
+        export function warn(s: string): void {
+            logMessage(LogLevel.Warning, s);
+        }
+
+        export function log(s: string): void {
+            logMessage(LogLevel.Info, s);
+        }
+
+        export function trace(s: string): void {
+            logMessage(LogLevel.Verbose, s);
+        }
+    }
+}
+const messages: string[] = [];
+Debug.loggingHost = { log: (level, s) => { messages.push(`${level}:${s}`); } };
+Debug.log("info at warning");
+Debug.log.error("error");
+Debug.log.warn("warning");
+Debug.currentLogLevel = LogLevel.Verbose;
+Debug.log("info");
+Debug.log.log("nested info");
+Debug.log.trace("trace");
+console.log(messages.join("|"));
+console.log(`${Debug.log === Debug.log} ${Debug.log === Debug.log.log}`);
+Debug.loggingHost = undefined;
+Debug.log.error("no host");
+console.log(`${messages.length}`);

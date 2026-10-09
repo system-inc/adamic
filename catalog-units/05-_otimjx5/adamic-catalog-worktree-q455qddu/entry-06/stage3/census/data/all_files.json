@@ -1,0 +1,397 @@
+[
+  {
+    "bytes": 111,
+    "file": "src/compiler/_namespaces/ts.moduleSpecifiers.ts",
+    "source": true
+  },
+  {
+    "bytes": 101,
+    "file": "src/compiler/_namespaces/ts.performance.ts",
+    "source": true
+  },
+  {
+    "bytes": 3288,
+    "file": "src/compiler/_namespaces/ts.ts",
+    "source": true
+  },
+  {
+    "bytes": 194463,
+    "file": "src/compiler/binder.ts",
+    "source": true
+  },
+  {
+    "bytes": 116984,
+    "file": "src/compiler/builder.ts",
+    "source": true
+  },
+  {
+    "bytes": 11523,
+    "file": "src/compiler/builderPublic.ts",
+    "source": true
+  },
+  {
+    "bytes": 26090,
+    "file": "src/compiler/builderState.ts",
+    "source": true
+  },
+  {
+    "bytes": 382,
+    "file": "src/compiler/builderStatePublic.ts",
+    "source": true
+  },
+  {
+    "bytes": 3151774,
+    "file": "src/compiler/checker.ts",
+    "source": true
+  },
+  {
+    "bytes": 183461,
+    "file": "src/compiler/commandLineParser.ts",
+    "source": true
+  },
+  {
+    "bytes": 92419,
+    "file": "src/compiler/core.ts",
+    "source": true
+  },
+  {
+    "bytes": 1318,
+    "file": "src/compiler/corePublic.ts",
+    "source": true
+  },
+  {
+    "bytes": 56593,
+    "file": "src/compiler/debug.ts",
+    "source": true
+  },
+  {
+    "bytes": 299061,
+    "file": "src/compiler/diagnosticMessages.json",
+    "source": false
+  },
+  {
+    "bytes": 273338,
+    "file": "src/compiler/emitter.ts",
+    "source": true
+  },
+  {
+    "bytes": 54026,
+    "file": "src/compiler/executeCommandLine.ts",
+    "source": true
+  },
+  {
+    "bytes": 70053,
+    "file": "src/compiler/expressionToTypeNode.ts",
+    "source": true
+  },
+  {
+    "bytes": 2677,
+    "file": "src/compiler/factory/baseNodeFactory.ts",
+    "source": true
+  },
+  {
+    "bytes": 69094,
+    "file": "src/compiler/factory/emitHelpers.ts",
+    "source": true
+  },
+  {
+    "bytes": 12719,
+    "file": "src/compiler/factory/emitNode.ts",
+    "source": true
+  },
+  {
+    "bytes": 2237,
+    "file": "src/compiler/factory/nodeChildren.ts",
+    "source": true
+  },
+  {
+    "bytes": 7205,
+    "file": "src/compiler/factory/nodeConverters.ts",
+    "source": true
+  },
+  {
+    "bytes": 334930,
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "source": true
+  },
+  {
+    "bytes": 36796,
+    "file": "src/compiler/factory/nodeTests.ts",
+    "source": true
+  },
+  {
+    "bytes": 34012,
+    "file": "src/compiler/factory/parenthesizerRules.ts",
+    "source": true
+  },
+  {
+    "bytes": 76114,
+    "file": "src/compiler/factory/utilities.ts",
+    "source": true
+  },
+  {
+    "bytes": 2101,
+    "file": "src/compiler/factory/utilitiesPublic.ts",
+    "source": true
+  },
+  {
+    "bytes": 181609,
+    "file": "src/compiler/moduleNameResolver.ts",
+    "source": true
+  },
+  {
+    "bytes": 79619,
+    "file": "src/compiler/moduleSpecifiers.ts",
+    "source": true
+  },
+  {
+    "bytes": 539685,
+    "file": "src/compiler/parser.ts",
+    "source": true
+  },
+  {
+    "bytes": 44162,
+    "file": "src/compiler/path.ts",
+    "source": true
+  },
+  {
+    "bytes": 6146,
+    "file": "src/compiler/performance.ts",
+    "source": true
+  },
+  {
+    "bytes": 3255,
+    "file": "src/compiler/performanceCore.ts",
+    "source": true
+  },
+  {
+    "bytes": 270697,
+    "file": "src/compiler/program.ts",
+    "source": true
+  },
+  {
+    "bytes": 21298,
+    "file": "src/compiler/programDiagnostics.ts",
+    "source": true
+  },
+  {
+    "bytes": 82036,
+    "file": "src/compiler/resolutionCache.ts",
+    "source": true
+  },
+  {
+    "bytes": 219162,
+    "file": "src/compiler/scanner.ts",
+    "source": true
+  },
+  {
+    "bytes": 17933,
+    "file": "src/compiler/semver.ts",
+    "source": true
+  },
+  {
+    "bytes": 32104,
+    "file": "src/compiler/sourcemap.ts",
+    "source": true
+  },
+  {
+    "bytes": 8177,
+    "file": "src/compiler/symbolWalker.ts",
+    "source": true
+  },
+  {
+    "bytes": 86142,
+    "file": "src/compiler/sys.ts",
+    "source": true
+  },
+  {
+    "bytes": 15028,
+    "file": "src/compiler/tracing.ts",
+    "source": true
+  },
+  {
+    "bytes": 29755,
+    "file": "src/compiler/transformer.ts",
+    "source": true
+  },
+  {
+    "bytes": 156326,
+    "file": "src/compiler/transformers/classFields.ts",
+    "source": true
+  },
+  {
+    "bytes": 5504,
+    "file": "src/compiler/transformers/classThis.ts",
+    "source": true
+  },
+  {
+    "bytes": 46162,
+    "file": "src/compiler/transformers/declarations/diagnostics.ts",
+    "source": true
+  },
+  {
+    "bytes": 99437,
+    "file": "src/compiler/transformers/declarations.ts",
+    "source": true
+  },
+  {
+    "bytes": 30755,
+    "file": "src/compiler/transformers/destructuring.ts",
+    "source": true
+  },
+  {
+    "bytes": 231365,
+    "file": "src/compiler/transformers/es2015.ts",
+    "source": true
+  },
+  {
+    "bytes": 4484,
+    "file": "src/compiler/transformers/es2016.ts",
+    "source": true
+  },
+  {
+    "bytes": 49966,
+    "file": "src/compiler/transformers/es2017.ts",
+    "source": true
+  },
+  {
+    "bytes": 69751,
+    "file": "src/compiler/transformers/es2018.ts",
+    "source": true
+  },
+  {
+    "bytes": 1533,
+    "file": "src/compiler/transformers/es2019.ts",
+    "source": true
+  },
+  {
+    "bytes": 13066,
+    "file": "src/compiler/transformers/es2020.ts",
+    "source": true
+  },
+  {
+    "bytes": 4104,
+    "file": "src/compiler/transformers/es2021.ts",
+    "source": true
+  },
+  {
+    "bytes": 126995,
+    "file": "src/compiler/transformers/esDecorators.ts",
+    "source": true
+  },
+  {
+    "bytes": 32554,
+    "file": "src/compiler/transformers/esnext.ts",
+    "source": true
+  },
+  {
+    "bytes": 123796,
+    "file": "src/compiler/transformers/generators.ts",
+    "source": true
+  },
+  {
+    "bytes": 36065,
+    "file": "src/compiler/transformers/jsx.ts",
+    "source": true
+  },
+  {
+    "bytes": 36625,
+    "file": "src/compiler/transformers/legacyDecorators.ts",
+    "source": true
+  },
+  {
+    "bytes": 18606,
+    "file": "src/compiler/transformers/module/esnextAnd2015.ts",
+    "source": true
+  },
+  {
+    "bytes": 3725,
+    "file": "src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+    "source": true
+  },
+  {
+    "bytes": 111460,
+    "file": "src/compiler/transformers/module/module.ts",
+    "source": true
+  },
+  {
+    "bytes": 85159,
+    "file": "src/compiler/transformers/module/system.ts",
+    "source": true
+  },
+  {
+    "bytes": 22186,
+    "file": "src/compiler/transformers/namedEvaluation.ts",
+    "source": true
+  },
+  {
+    "bytes": 5424,
+    "file": "src/compiler/transformers/taggedTemplate.ts",
+    "source": true
+  },
+  {
+    "bytes": 116394,
+    "file": "src/compiler/transformers/ts.ts",
+    "source": true
+  },
+  {
+    "bytes": 28796,
+    "file": "src/compiler/transformers/typeSerializer.ts",
+    "source": true
+  },
+  {
+    "bytes": 35618,
+    "file": "src/compiler/transformers/utilities.ts",
+    "source": true
+  },
+  {
+    "bytes": 5322,
+    "file": "src/compiler/tsbuild.ts",
+    "source": true
+  },
+  {
+    "bytes": 114409,
+    "file": "src/compiler/tsbuildPublic.ts",
+    "source": true
+  },
+  {
+    "bytes": 155,
+    "file": "src/compiler/tsconfig.json",
+    "source": false
+  },
+  {
+    "bytes": 487846,
+    "file": "src/compiler/types.ts",
+    "source": true
+  },
+  {
+    "bytes": 512951,
+    "file": "src/compiler/utilities.ts",
+    "source": true
+  },
+  {
+    "bytes": 103769,
+    "file": "src/compiler/utilitiesPublic.ts",
+    "source": true
+  },
+  {
+    "bytes": 88048,
+    "file": "src/compiler/visitorPublic.ts",
+    "source": true
+  },
+  {
+    "bytes": 45654,
+    "file": "src/compiler/watch.ts",
+    "source": true
+  },
+  {
+    "bytes": 60845,
+    "file": "src/compiler/watchPublic.ts",
+    "source": true
+  },
+  {
+    "bytes": 34758,
+    "file": "src/compiler/watchUtilities.ts",
+    "source": true
+  }
+]

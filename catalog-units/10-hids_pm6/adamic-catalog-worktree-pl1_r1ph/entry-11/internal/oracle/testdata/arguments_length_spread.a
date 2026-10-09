@@ -1,0 +1,30 @@
+function count(...values: number[]): string {
+	return `${arguments.length}:${values.join(',')}`;
+}
+const none: number[] = [];
+const values = [1, 2, 3];
+console.log(count(...none));
+console.log(count(...values));
+console.log(count(0, ...values, 4, ...[5, 6]));
+function extend(): number {
+	values.push(9);
+	return 7;
+}
+console.log(count(...values, extend()));
+console.log(count(...values));
+const value: (...items: number[]) => string = count;
+console.log(value(...none));
+console.log(value(...values, 10));
+const expression = function (...items: number[]): string {
+	return `${arguments.length}:${items.join(',')}`;
+};
+console.log(expression(0, ...values, 10));
+function text(...items: string[]): string {
+	return `${arguments.length}:${items.join(',')}`;
+}
+const words = [`a${1}`, `b${2}`];
+function replace(): string {
+	words[0] = `c${3}`;
+	return `d${4}`;
+}
+console.log(text(...words, replace()));

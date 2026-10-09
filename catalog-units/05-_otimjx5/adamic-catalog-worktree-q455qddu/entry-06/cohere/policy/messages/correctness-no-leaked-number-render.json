@@ -1,0 +1,10 @@
+{
+  "rules": {
+    "TypeScript": "nexus/correctness-no-leaked-number-render"
+  },
+  "messages": {
+    "leakedNumberRender": {
+      "text": "This operand is a number, and `&&` hands back its own value when it is falsy, so when it is `0` (or `NaN`) React renders that number as text where nothing was meant to appear. Test the condition you mean instead, such as `count > 0 &&` or `count !== undefined &&`, so the operand is a boolean."
+    }
+  }
+}

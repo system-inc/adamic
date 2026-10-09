@@ -1,0 +1,13 @@
+{
+    "rule": "@typescript-eslint/consistent-indexed-object-style",
+    "clean": {
+        "file": "/repository/source/Indexing.ts",
+        "source": "type T = Record<string, number>;\n"
+    },
+    "assertedMessageIds": [
+        "preferIndexSignature",
+        "preferRecord"
+    ],
+    "assertsFix": true,
+    "assertsSuggestion": true
+}

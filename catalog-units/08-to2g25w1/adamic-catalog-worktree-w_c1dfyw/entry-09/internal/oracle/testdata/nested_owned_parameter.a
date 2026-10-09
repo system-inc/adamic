@@ -1,0 +1,13 @@
+function make(text: string): () => string {
+ function read(): string { return text; }
+ function change(): void { text = text + "!"; }
+ change();
+ return read;
+}
+function build(value: number): string { return "value" + String(value); }
+const original = build(42);
+const read = make(original);
+console.log(read());
+console.log(original);
+function keep(text: string): () => string { function read(): string { return text; } return read; }
+console.log(keep(build(17))());

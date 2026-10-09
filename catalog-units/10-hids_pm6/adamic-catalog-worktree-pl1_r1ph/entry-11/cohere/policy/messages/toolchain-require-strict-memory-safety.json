@@ -1,0 +1,10 @@
+{
+  "rules": {
+    "Swift": "cohere-swift/toolchain-require-strict-memory-safety"
+  },
+  "messages": {
+    "strictMemorySafetyMissing": {
+      "text": "{{target}} does not compile under strict memory safety. Add .strictMemorySafety() to its swiftSettings, so every unsafe construct is visible where it is used; then replace each flagged site with a safe API where one exists, and mark unsafe only what must be."
+    }
+  }
+}

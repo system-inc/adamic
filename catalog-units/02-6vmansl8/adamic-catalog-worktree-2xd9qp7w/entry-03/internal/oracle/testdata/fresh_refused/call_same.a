@@ -1,0 +1,14 @@
+// The holder proof across calls: a helper given the same node as parent and child.
+interface Node {
+	readonly kind: string;
+	readonly nodes: Node[];
+}
+function addChild(parent: Node, child: Node): void {
+	parent.nodes.push(child); // closes the cycle
+}
+function run(n: number): number {
+	const node: Node = { kind: `n${n}`, nodes: [] };
+	addChild(node, node);
+	return node.nodes.length;
+}
+console.log(`${run(1)}`);

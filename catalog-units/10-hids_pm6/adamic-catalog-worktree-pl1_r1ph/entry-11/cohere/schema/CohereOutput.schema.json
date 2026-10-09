@@ -1,0 +1,135 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "cohere --json",
+    "description": "One line of `cohere --json`: newline-delimited JSON, one object per line, told apart by `kind`. Findings and changed files come first, in any order; the summary is always the last line, so a reader that never sees one knows the run did not finish.",
+    "oneOf": [
+        { "$ref": "#/$defs/finding" },
+        { "$ref": "#/$defs/changedFile" },
+        { "$ref": "#/$defs/crash" },
+        { "$ref": "#/$defs/summary" }
+    ],
+    "$defs": {
+        "finding": {
+            "description": "One finding: a rule's, or a type error, whose rule is its TypeScript code (TS2322).",
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["kind", "path", "line", "column", "severity", "rule", "message"],
+            "properties": {
+                "kind": { "const": "finding" },
+                "path": { "type": "string", "description": "The file, as an absolute path." },
+                "line": { "type": "integer", "minimum": 1 },
+                "column": { "type": "integer", "minimum": 1 },
+                "severity": { "enum": ["error", "warn"] },
+                "rule": { "type": "string", "description": "The rule's name, or the TypeScript code for a type error." },
+                "messageId": { "type": "string", "description": "Which of the rule's messages this is. Absent for a type error." },
+                "message": { "type": "string", "description": "The message, on one line." }
+            }
+        },
+        "changedFile": {
+            "description": "One file the run rewrote, by fixing or by formatting.",
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["kind", "path"],
+            "properties": {
+                "kind": { "enum": ["fixed", "formatted"] },
+                "path": { "type": "string" },
+                "rules": { "type": "array", "items": { "type": "string" }, "description": "The rules whose fixes were applied, for a fixed file." }
+            }
+        },
+        "crash": {
+            "description": "A rule that could not finish a file, or a file nothing could check, because cohere crashed. A bug in cohere, not in the code checked, and it fails the run.",
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["kind", "path", "cause"],
+            "properties": {
+                "kind": { "const": "crash" },
+                "path": { "type": "string" },
+                "rule": { "type": "string", "description": "The rule that crashed. Absent when the whole file was lost." },
+                "cause": { "type": "string", "description": "The panic, as cohere caught it." }
+            }
+        },
+        "summary": {
+            "description": "The run, the last line. `verdict` is what the exit code says; `gaps` is every way the run fell short of checking everything, which a reader deciding whether a passing run can be trusted reads too.",
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["kind", "schemaVersion", "verdict", "seconds", "graphSeconds", "rules", "phases", "cache", "typeErrors", "findings", "filesFixed", "filesFormatted", "wouldChange", "cohered", "filesInScope", "checked", "cached", "nodes", "gaps"],
+            "properties": {
+                "kind": { "const": "summary" },
+                "schemaVersion": { "const": 1, "description": "Raised by any change a reader could notice; a new optional field does not raise it." },
+                "label": { "type": "string", "description": "The project's path, in a repository with several projects." },
+                "verdict": { "enum": ["pass", "fail"] },
+                "seconds": { "type": "number", "description": "The run's wall clock." },
+                "graphSeconds": { "type": "number", "description": "Reading, parsing and binding the program; zero when no graph was built." },
+                "rules": { "type": "integer", "description": "The rules that ran." },
+                "phases": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": ["name", "outcome", "seconds"],
+                        "properties": {
+                            "name": { "enum": ["fix", "types", "lint", "unused"] },
+                            "outcome": { "enum": ["ran", "skipped", "not reached", "reused", "checked"] },
+                            "seconds": { "type": "number" },
+                            "detail": { "type": "string" }
+                        }
+                    }
+                },
+                "formattingSeconds": { "type": "number", "description": "The part of the fix phase's seconds with a format in flight; the fix phase's seconds include it. Absent when no formatter ran." },
+                "cache": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": ["replayed", "filesReplayed", "off"],
+                    "properties": {
+                        "replayed": { "type": "boolean", "description": "The run was answered whole from the run cache, and ran no phase." },
+                        "filesReplayed": { "type": "integer", "description": "Files whose findings came from the cache: in a run that computed the rest, those it did not; in a whole replay, every file in scope. Zero only when no file's findings came from the cache." },
+                        "off": { "type": "boolean", "description": "`--no-cache`: nothing read, nothing written." },
+                        "missReason": { "type": "string", "description": "Why a run the cache could have answered whole was not: no run on record for these arguments, a key and which of its parts moved (the cohere binary, the project root, the arguments, the configuration), or the input that changed. Absent when it was answered whole or reads no cache." },
+                        "findingsMissReason": { "type": "string", "description": "Why files' findings were not replayed: none on record, a key and which of its parts moved, or how many files had no entry, changed bytes or rules, or were taken without measuring readiness. Absent when every file looked up was replayed." }
+                    }
+                },
+                "typeErrors": { "type": "integer" },
+                "findings": { "type": "integer", "description": "Rule findings, type errors not included." },
+                "filesFixed": { "type": "integer" },
+                "filesFormatted": { "type": "integer" },
+                "wouldChange": { "type": "integer", "description": "Under `--no-fix`, the files a fix or formatting would rewrite. They fail the run." },
+                "cohered": { "type": "integer", "description": "The files the run rewrote, fixed or formatted: the `fixed` and `formatted` lines' files, each once." },
+                "filesInScope": { "type": "integer", "description": "Every file the run was to account for: checked plus cached." },
+                "checked": { "type": "integer", "description": "The files examined fresh this run." },
+                "cached": { "type": "integer", "description": "The files the cache answered for." },
+                "nodes": { "type": "integer", "description": "The syntax nodes walked this run, in the checked files." },
+                "gaps": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": ["programFiles", "crashedFiles", "ruleCrashes", "rulesSkippingEverything", "formattingNotChecked", "nothingToCheck", "modifiedBuild"],
+                    "properties": {
+                        "programFiles": { "type": "integer", "description": "The program's size when the run was narrowed to fewer of its files; zero otherwise." },
+                        "crashedFiles": { "type": "integer", "description": "Files nothing could check, because cohere crashed on them. They fail the run." },
+                        "ruleCrashes": { "type": "integer", "description": "Rules that crashed on a file, each leaving its verdict there missing. They fail the run." },
+                        "rulesSkippingEverything": { "type": "integer", "description": "Rules that declined every file they were offered." },
+                        "formattingNotChecked": { "type": "boolean" },
+                        "nothingToCheck": { "type": "boolean", "description": "The project had no files to check." },
+                        "modifiedBuild": { "type": "boolean", "description": "The binary was built from a modified tree, so no commit reproduces these findings." },
+                        "unread": { "type": "string", "description": "Files the run could not check for any other reason, as the run said it." },
+                        "adamicIgnored": { "type": "integer", "description": "Adamic .a files the program holds that git's ignore rules leave out of the format walk: type-checked and linted, never formatted. Absent when there are none." }
+                    }
+                },
+                "adamic": {
+                    "description": "Adamic readiness: the files whose types are true, with no type error and no cohere:adamic finding before suppression, whatever the project's rules enable. Present only under --adamic-readiness, and then always: a run that asked and could not measure it says so.",
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": ["measured", "files", "ready", "unmeasured", "optionsMissing", "failingFilesByRule"],
+                    "properties": {
+                        "measured": { "type": "boolean" },
+                        "reason": { "type": "string", "description": "Why readiness was not measured, in a clause; present only when it was not." },
+                        "files": { "type": "integer", "description": "The files the lint walk measured or tried to." },
+                        "ready": { "type": "integer", "description": "The files with no type error and no cohere:adamic finding." },
+                        "unmeasured": { "type": "integer", "description": "Files a cohere:adamic rule skipped for a missing precondition, or the cache replayed without a count. Never counted ready." },
+                        "optionsMissing": { "type": "array", "items": { "enum": ["strict", "noUncheckedIndexedAccess", "exactOptionalPropertyTypes"] }, "description": "The compiler options Adamic sets that the project's tsconfig leaves off, so the files were measured under weaker options than Adamic's." },
+                        "failingFilesByRule": { "type": "object", "additionalProperties": { "type": "integer" }, "description": "By cohere:adamic rule, the files it found something in." }
+                    }
+                }
+            }
+        }
+    }
+}

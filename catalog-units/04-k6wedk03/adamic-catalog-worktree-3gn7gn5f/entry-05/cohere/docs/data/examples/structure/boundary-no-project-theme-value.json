@@ -1,0 +1,24 @@
+{
+    "rule": "structure/boundary-no-project-theme-value",
+    "firing": {
+        "file": "/repository/libraries/structure/source/components/buttons/UseButton.tsx",
+        "source": "export const a = <Button variant=\"\" />;\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 34,
+                "endLine": 1,
+                "endColumn": 36,
+                "messageId": "forbiddenThemeValue",
+                "message": "<Button variant=\"\"> uses a value the library does not define. A shared component that renders a project's value has a dependency pointing the wrong way: the library would need the project to build, and the next project to use this component finds a value that means nothing to it. Use one the library defines: Ghost, Outline. If the value belongs in the library, add it to the theme first."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/libraries/structure/source/components/buttons/UseButton.tsx",
+        "source": "export const a = <Button variant />;\n"
+    },
+    "assertedMessageIds": [
+        "forbiddenThemeValue"
+    ]
+}

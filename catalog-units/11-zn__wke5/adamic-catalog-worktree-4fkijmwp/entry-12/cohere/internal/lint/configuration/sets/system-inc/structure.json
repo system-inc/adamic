@@ -1,0 +1,256 @@
+{
+    "extends": "cohere:typescript",
+    "plugins": [
+        "@typescript-eslint"
+    ],
+    "departures": {
+        "@typescript-eslint/ban-ts-comment": "Allows @ts-expect-error with a description, and @ts-check, as before the cohere:adamic split, which bans all four directives: www-phi-health has 3 at cohere 5f65dd9d, so this holds until its fix wave reads 0 in every consumer (#cwycf2h).",
+        "@typescript-eslint/unbound-method": "Measured, not a gap: 79 findings across the repos, none a defect. 52 are expect(mock.method) in tests, where the method is passed to the assertion, never called unbound (#smnjh4c). cohere:adamic turns it on for outsiders.",
+        "adamic/invariant-mutable": "cohere:adamic turns it on, and our code has 519 findings in ahra, 397 in www-phi-health and 289 in www-ahra-ai at cohere 5f65dd9d, so it is off here until its fix wave reads 0 in every consumer (#phhrgfw). Outsiders get it on.",
+        "adamic/no-definite-assignment": "cohere:adamic turns it on, and our code has 43 findings in ahra, 5 in www-phi-health and 5 in www-ahra-ai at cohere 5f65dd9d, so it is off here until its fix wave reads 0 in every consumer (#vk7621w). Outsiders get it on.",
+        "adamic/no-optional-widening": "cohere:adamic turns it on, and our code has 349 findings in ahra, 244 in www-phi-health and 163 in www-ahra-ai at cohere 5f65dd9d, so it is off here until its fix wave reads 0 in every consumer (#aaajpke). Outsiders get it on.",
+        "adamic/no-type-predicate": "cohere:adamic turns it on, and our code has 352 findings in ahra, 138 in www-phi-health and 123 in www-ahra-ai at cohere 5f65dd9d, so it is off here until its fix wave reads 0 in every consumer (#05k4swm). Outsiders get it on.",
+        "adamic/no-unchecked-cast": "cohere:adamic turns it on, and our code has 916 findings in ahra, 270 in www-phi-health and 218 in www-ahra-ai at cohere 5f65dd9d, so it is off here until its fix wave reads 0 in every consumer (#v2r1xst). Outsiders get it on.",
+        "adamic/nominal-class": "cohere:adamic turns it on, and our code has 9 findings in ahra, 4 in www-phi-health and 4 in www-ahra-ai at cohere 5f65dd9d, so it is off here until its fix wave reads 0 in every consumer (#zeqjfyx). Outsiders get it on.",
+        "adamic/single-spread": "cohere:adamic turns it on, and our code has 259 findings in ahra, 163 in www-phi-health and 108 in www-ahra-ai at cohere 5f65dd9d, so it is off here until its fix wave reads 0 in every consumer (#hzk757e). Outsiders get it on.",
+        "no-restricted-globals": "Adds Buffer to the house list: our code runs on Cloudflare Workers, where @cloudflare/workers-types declares Buffer as any, and @nexus/source/encoding/ByteEncoding replaces it. Every other entry is cohere:typescript's."
+    },
+    "rules": {
+        "@typescript-eslint/ban-ts-comment": [
+            "error",
+            {
+                "ts-expect-error": "allow-with-description",
+                "ts-ignore": true,
+                "ts-nocheck": true,
+                "ts-check": false
+            }
+        ],
+        "@typescript-eslint/unbound-method": "off",
+        "adamic/invariant-mutable": "off",
+        "adamic/no-definite-assignment": "off",
+        "adamic/no-optional-widening": "off",
+        "adamic/no-type-predicate": "off",
+        "adamic/no-unchecked-cast": "off",
+        "adamic/nominal-class": "off",
+        "adamic/single-spread": "off",
+        "nexus/boundary-no-nexus-outside-import": "error",
+        "nexus/import-no-forbidden-source": "error",
+        "no-restricted-properties": [
+            "error",
+            {
+                "object": "JSON",
+                "property": "parse",
+                "message": "`JSON.parse` returns `any`, and that `any` flows unchecked into every read downstream, which is where most no-unsafe findings come from. Parse through @nexus/source/structured-text/json/Json instead: `parseJsonOrThrow(text, context, isValue)` with a guard from @nexus/source/validation/Guard when the code reads fields, or `parseJson(text, context)` and handle its 'Invalid' outcome where bad input already falls back. Name the source in `context`. For a deep clone, use `structuredClone`."
+            }
+        ],
+        "no-restricted-globals": [
+            "error",
+            {
+                "name": "Buffer",
+                "message": "`Buffer` is the Node global, and it does not exist on Cloudflare Workers, which is why @cloudflare/workers-types declares it `any`: nothing read through it is checked. Use the byte helpers in @nexus/source/encoding/ByteEncoding instead: utf8ToBytes / bytesToUtf8, base64ToBytes / bytesToBase64, base64UrlToBytes / bytesToBase64Url, hexToBytes / bytesToHex, concatenateBytes, utf8ByteLength, byteView, and `new Uint8Array(length)` for Buffer.alloc. A Buffer a Node API hands back (readFileSync, cipher.update) is already typed; keep using it as the Uint8Array it is.."
+            },
+            "addEventListener",
+            "blur",
+            "close",
+            "closed",
+            "confirm",
+            "defaultStatus",
+            "defaultstatus",
+            "event",
+            "external",
+            "find",
+            "focus",
+            "frameElement",
+            "frames",
+            "history",
+            "innerHeight",
+            "innerWidth",
+            "length",
+            "location",
+            "locationbar",
+            "menubar",
+            "moveBy",
+            "moveTo",
+            "name",
+            "onblur",
+            "onerror",
+            "onfocus",
+            "onload",
+            "onresize",
+            "onunload",
+            "open",
+            "opener",
+            "opera",
+            "outerHeight",
+            "outerWidth",
+            "pageXOffset",
+            "pageYOffset",
+            "parent",
+            "print",
+            "removeEventListener",
+            "resizeBy",
+            "resizeTo",
+            "screen",
+            "screenLeft",
+            "screenTop",
+            "screenX",
+            "screenY",
+            "scroll",
+            "scrollbars",
+            "scrollBy",
+            "scrollTo",
+            "scrollX",
+            "scrollY",
+            "self",
+            "status",
+            "statusbar",
+            "stop",
+            "toolbar",
+            "top"
+        ],
+        "nexus/consistency-no-abbreviated-identifier": [
+            "error",
+            {
+                "frameworkParameterFilePatterns": [
+                    "/page.tsx",
+                    "/page.jsx",
+                    "/layout.tsx",
+                    "/layout.jsx",
+                    "/route.ts"
+                ],
+                "frameworkConstantFilePatterns": [
+                    "/middleware.ts",
+                    "middleware.ts"
+                ],
+                "frameworkParameterScopeNames": [
+                    "generateMetadata",
+                    "generateStaticParams",
+                    "generateViewport"
+                ],
+                "frameworkParameterScopeSuffixes": [
+                    "PageRoute"
+                ]
+            }
+        ],
+        "nexus/consistency-require-constant-casing": [
+            "error",
+            {
+                "frameworkConstantNames": [
+                    "dynamic",
+                    "dynamicParams",
+                    "revalidate",
+                    "fetchCache",
+                    "runtime",
+                    "preferredRegion",
+                    "maxDuration",
+                    "metadata",
+                    "viewport",
+                    "generateMetadata",
+                    "config",
+                    "alt",
+                    "size",
+                    "contentType",
+                    "plugin",
+                    "schema"
+                ]
+            }
+        ],
+        "nexus/import-require-path-alias": [
+            "error",
+            {
+                "aliasesFromTsconfigPaths": true
+            }
+        ],
+        "structure/boundary-no-project-theme-value": "error",
+        "structure/consistency-require-organized-imports": "error",
+        "structure/network-no-direct-fetch": "error",
+        "structure/network-no-forbidden-import": "error",
+        "structure/network-no-invalidate-cache-in-on-success": "error",
+        "structure/network-no-invalidate-cache-literal-key": "error",
+        "structure/network-no-string-literal-query": "error",
+        "structure/network-require-hook-options-parameter": "error",
+        "structure/network-require-hook-request-suffix": "error",
+        "structure/network-require-hook-variables-type": "error",
+        "structure/next-no-near-miss-route-export": "error",
+        "structure/next-no-page-state": "error",
+        "structure/next-require-api-parameter-name": "error",
+        "structure/next-require-page-default-export": "error",
+        "structure/react-component-no-const-assignment": "error",
+        "structure/react-component-no-destructuring": "error",
+        "structure/react-component-no-forward-ref": "error",
+        "structure/react-component-require-properties-type-suffix": "error",
+        "structure/react-hook-require-result-naming": "error",
+        "structure/import-require-react-namespace": "error",
+        "structure/react-element-no-anchor": "error",
+        "structure/react-element-no-horizontal-rule": "error",
+        "structure/storage-no-direct-local-storage": "error",
+        "structure/tailwind-no-physical-direction": "error",
+        "base/security-require-context-access": "off",
+        "base/correctness-require-graphql-nullable-parity": "off",
+        "base/correctness-require-matching-operation-context": "off",
+        "base/correctness-require-matching-inject-type": "off",
+        "base/consistency-no-bare-throw": "off",
+        "base/consistency-no-console": "off",
+        "base/consistency-no-hand-built-declared-error": "off",
+        "base/boundary-no-global-container": "off",
+        "base/correctness-require-orm-column-nullable-parity": "off",
+        "base/correctness-require-orm-column-declare": "off",
+        "base/consistency-require-pagination-argument-name": "off",
+        "base/correctness-require-matching-provider-return": "off",
+        "base/correctness-require-optional-relation": "off",
+        "base/correctness-require-serializable-nullable-parity": "off",
+        "base/correctness-require-verify-array-parity": "off",
+        "base/correctness-require-verify-optional-parity": "off",
+        "boundaries/dependencies": "off"
+    },
+    "reasons": {
+        "base/security-require-context-access": "A Structure project has no Base request contexts, so there are no context keys to require access for (#e4cn6wq Block 4).",
+        "base/correctness-require-graphql-nullable-parity": "Base's GraphQL only, and a Structure project has none (#e4cn6wq Block 4).",
+        "base/correctness-require-matching-operation-context": "Base's GraphQL only, and a Structure project has none (#e4cn6wq Block 4).",
+        "base/correctness-require-matching-inject-type": "Base's dependency injection only, and a Structure project has none (#e4cn6wq Block 4).",
+        "base/consistency-no-bare-throw": "A Structure project has no declared module errors to throw instead (#e4cn6wq Block 4).",
+        "base/consistency-no-console": "A Structure project has no Base logging tiers to route to (#e4cn6wq Block 4).",
+        "base/consistency-no-hand-built-declared-error": "Base's declared errors only, and a Structure project has none (#e4cn6wq Block 4).",
+        "base/boundary-no-global-container": "Base's dependency injection only, and a Structure project has none (#e4cn6wq Block 4).",
+        "base/correctness-require-orm-column-nullable-parity": "Base's ORM only, and a Structure project has none (#e4cn6wq Block 4).",
+        "base/correctness-require-orm-column-declare": "Base's ORM only, and a Structure project has none (#e4cn6wq Block 4).",
+        "base/consistency-require-pagination-argument-name": "Base's GraphQL only, and a Structure project has none (#e4cn6wq Block 4).",
+        "base/correctness-require-matching-provider-return": "Base's dependency injection only, and a Structure project has none (#e4cn6wq Block 4).",
+        "base/correctness-require-optional-relation": "Base's ORM only, and a Structure project has none (#e4cn6wq Block 4).",
+        "base/correctness-require-serializable-nullable-parity": "Base's serialization only, and a Structure project has none (#e4cn6wq Block 4).",
+        "base/correctness-require-verify-array-parity": "Base's validation only, and a Structure project has none (#e4cn6wq Block 4).",
+        "base/correctness-require-verify-optional-parity": "Base's validation only, and a Structure project has none (#e4cn6wq Block 4).",
+        "boundaries/dependencies": "It needs a map of which folder is which layer, and no Structure project has written one (#e4cn6wq Block 4)."
+    },
+    "ignorePatterns": [
+        "code-quality/fixtures/**",
+        "node_modules/**",
+        "public/**",
+        "**/.wrangler/**",
+        "**/build/**",
+        "**/dist/**",
+        "**/*.code.js",
+        ".vscode/**",
+        ".claude/worktrees/**"
+    ],
+    "overrides": [
+        {
+            "files": [
+                "**/graphql/GraphQl*.generated.ts"
+            ],
+            "reason": "Interim, until the last open decision on the generated-code ruling (#c076xbg) lands: the GraphQL schema itself names fields like min, max and idx, a wire change waiting on Kirk because the Phi mobile app may read them. When it lands, this override is deleted.",
+            "rules": {
+                "nexus/consistency-no-abbreviated-identifier": "off"
+            }
+        },
+        {
+            "files": [
+                "**/next-env.d.ts"
+            ],
+            "rules": {
+                "@typescript-eslint/triple-slash-reference": "off",
+                "structure/consistency-require-organized-imports": "off"
+            }
+        }
+    ]
+}

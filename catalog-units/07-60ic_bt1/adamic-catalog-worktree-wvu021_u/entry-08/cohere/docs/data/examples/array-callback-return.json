@@ -1,0 +1,28 @@
+{
+    "rule": "array-callback-return",
+    "firing": {
+        "file": "async.ts",
+        "source": "foo.map(function() {})",
+        "findings": [
+            {
+                "line": 1,
+                "column": 9,
+                "endLine": 1,
+                "endColumn": 19,
+                "messageId": "expectedInside",
+                "message": "This callback never returns a value, and the array method it is passed to is built entirely around the value each call produces. Every element gets undefined, so a filter keeps nothing, a map fills with undefined, and a sort orders nothing. Either return the value the method needs, or use a method that does not want one. Here Array.prototype.map() is being passed function."
+            }
+        ]
+    },
+    "clean": {
+        "file": "o.ts",
+        "source": "foo.forEach(x => x)"
+    },
+    "assertedMessageIds": [
+        "expectedAtEnd",
+        "expectedInside",
+        "expectedNoReturnValue",
+        "expectedReturnValue"
+    ],
+    "assertsSuggestion": true
+}

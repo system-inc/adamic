@@ -1,0 +1,24 @@
+{
+    "rule": "nexus/consistency-no-property-alias",
+    "firing": {
+        "file": "/repository/source/Thing.ts",
+        "source": "export function run(a: AInterface) {\n    const value = a.one.two.three.value;\n    return value;\n}\n",
+        "findings": [
+            {
+                "line": 2,
+                "column": 11,
+                "endLine": 2,
+                "endColumn": 40,
+                "messageId": "noPropertyAlias",
+                "message": "`value` is a pure alias for `a.one.two.three.value`. Reach for the property directly, so the value keeps the object it came from and a naked local still means this scope created it. Allowed only when the local is read inside a hook dependency array."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/Thing.ts",
+        "source": "export const Foo = Bar.Foo;\n"
+    },
+    "assertedMessageIds": [
+        "noPropertyAlias"
+    ]
+}

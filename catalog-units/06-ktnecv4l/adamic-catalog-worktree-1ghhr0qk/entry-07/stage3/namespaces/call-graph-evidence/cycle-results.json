@@ -1,0 +1,28 @@
+[
+  {
+    "name": "cycle-refusal",
+    "source": "function one(n:number):boolean {return n > 0 ? two(n-1) : Debug.ready;}\nfunction two(n:number):boolean {return n > 0 ? one(n-1) : Debug.ready;}\nconsole.log(`${two(3)}`);\nnamespace Debug {export let ready=true;}\n",
+    "node": {
+      "stdout": "",
+      "stderr": "adamic: panic: TypeError: Cannot read properties of undefined (reading 'ready')\n",
+      "exit": 70
+    },
+    "compiler": {
+      "stderr": "adamic: /workspace/adamic/internal/lower/testdata/namespaces_notyet/reaching_cycle.a:2:59: stage 0 can't lower a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration yet\n",
+      "exit": 1
+    }
+  },
+  {
+    "name": "safe-cycle",
+    "source": "function one(n:number):boolean {return n > 0 ? two(n-1) : Debug.ready;}\nfunction two(n:number):boolean {return n > 0 ? one(n-1) : Debug.ready;}\nnamespace Debug {export let ready=true;}\nconsole.log(`${one(4)}:${two(5)}`);\nDebug.ready=false;\nconsole.log(`${one(3)}:${two(2)}`);\n",
+    "node": {
+      "stdout": "true:true\nfalse:false\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "compiler": {
+      "stderr": "",
+      "exit": 0
+    }
+  }
+]

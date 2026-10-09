@@ -1,0 +1,32 @@
+{
+    "rule": "@typescript-eslint/no-invalid-this",
+    "firing": {
+        "file": "/repository/source/InvalidThis.ts",
+        "source": "\nconsole.log(this);\nz(x => console.log(x, this));\n      ",
+        "findings": [
+            {
+                "line": 2,
+                "column": 13,
+                "endLine": 2,
+                "endColumn": 17,
+                "messageId": "unexpectedThis",
+                "message": "This function is called rather than constructed and nothing binds `this` to it, so `this` is `undefined` here and every property read off it throws at runtime. The usual cause is a method that was moved out of a class or an object literal and left its `this.` prefixes behind. Take what it needs as a parameter, give the function a `this` parameter so TypeScript can check the call sites, or make it a method again."
+            },
+            {
+                "line": 3,
+                "column": 23,
+                "endLine": 3,
+                "endColumn": 27,
+                "messageId": "unexpectedThis",
+                "message": "This function is called rather than constructed and nothing binds `this` to it, so `this` is `undefined` here and every property read off it throws at runtime. The usual cause is a method that was moved out of a class or an object literal and left its `this.` prefixes behind. Take what it needs as a parameter, give the function a `this` parameter so TypeScript can check the call sites, or make it a method again."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/InvalidThis.ts",
+        "source": "function Foo() {\n  this.x = 1;\n}"
+    },
+    "assertedMessageIds": [
+        "unexpectedThis"
+    ]
+}

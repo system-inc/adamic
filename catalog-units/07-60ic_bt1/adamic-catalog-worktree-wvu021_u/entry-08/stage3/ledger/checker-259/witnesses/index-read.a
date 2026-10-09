@@ -1,0 +1,3 @@
+// a-check: type error TS2322
+const values: string[] = [];
+const result: string = values[0];

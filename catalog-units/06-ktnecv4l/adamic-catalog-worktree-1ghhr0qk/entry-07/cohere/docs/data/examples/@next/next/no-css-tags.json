@@ -1,0 +1,24 @@
+{
+    "rule": "@next/next/no-css-tags",
+    "firing": {
+        "file": "Component.tsx",
+        "source": "export const C = () => <link rel=\"stylesheet\" href=\"/a.css\" />;",
+        "findings": [
+            {
+                "line": 1,
+                "column": 24,
+                "endLine": 1,
+                "endColumn": 63,
+                "messageId": "noCssTags",
+                "message": "This is a manual stylesheet <link>. Next builds and versions its own CSS, so a hand-written link to a local stylesheet is not fingerprinted, not bundled, and will serve a stale file from cache after a deploy. Import the stylesheet instead and let the framework emit the tag."
+            }
+        ]
+    },
+    "clean": {
+        "file": "Component.tsx",
+        "source": "export const C = (props) => <link {...props} />;"
+    },
+    "assertedMessageIds": [
+        "noCssTags"
+    ]
+}

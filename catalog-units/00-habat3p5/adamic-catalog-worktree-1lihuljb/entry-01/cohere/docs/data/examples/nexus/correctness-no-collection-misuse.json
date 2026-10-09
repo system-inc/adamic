@@ -1,0 +1,51 @@
+{
+    "rule": "nexus/correctness-no-collection-misuse",
+    "firing": {
+        "file": "/repository/source/CorrectnessNoCollectionMisuse.ts",
+        "source": "type Role = 'Admin' | 'Member';\ndeclare const roles: Role[];\ndeclare const role: Role;\ndeclare const pair: readonly ['first', 'second'];\ndeclare const sparse: (number | undefined)[];\ndeclare const index: number;\ndeclare const wideKey: string;\ndeclare const items: string[];\ndeclare const optionalItems: string[] | undefined;\ndeclare const text: string;\ndeclare const bytes: Uint8Array;\ndeclare const cache: Map<string, number>;\ndeclare const lookup: ReadonlyMap<string, number>;\ndeclare const seen: Set<string>;\ndeclare const weak: WeakMap<object, number>;\ndeclare const record: Record<string, number>;\ndeclare const lengthy: { length: number };\ndeclare const arrayLike: ArrayLike<number>;\ndeclare const count: number;\ndeclare function use(value: unknown): void;\nif('Admin' in roles) use(1);\nif(roles.includes('Admin')) use(1);\nuse(role in roles);\nuse(roles.includes(role));\nuse('third' in pair);\nuse(('Admin') in (roles));\n",
+        "findings": [
+            {
+                "line": 21,
+                "column": 4,
+                "endLine": 21,
+                "endColumn": 20,
+                "messageId": "inOnArray",
+                "message": "This uses `in` to look for a value in an array. `in` asks whether the array has a property or index of that name, never whether it holds that element, and this name is neither, so the test is always false. Use `.includes()` for membership."
+            },
+            {
+                "line": 23,
+                "column": 5,
+                "endLine": 23,
+                "endColumn": 18,
+                "messageId": "inOnArray",
+                "message": "This uses `in` to look for a value in an array. `in` asks whether the array has a property or index of that name, never whether it holds that element, and this name is neither, so the test is always false. Use `.includes()` for membership."
+            },
+            {
+                "line": 25,
+                "column": 5,
+                "endLine": 25,
+                "endColumn": 20,
+                "messageId": "inOnArray",
+                "message": "This uses `in` to look for a value in an array. `in` asks whether the array has a property or index of that name, never whether it holds that element, and this name is neither, so the test is always false. Use `.includes()` for membership."
+            },
+            {
+                "line": 26,
+                "column": 5,
+                "endLine": 26,
+                "endColumn": 25,
+                "messageId": "inOnArray",
+                "message": "This uses `in` to look for a value in an array. `in` asks whether the array has a property or index of that name, never whether it holds that element, and this name is neither, so the test is always false. Use `.includes()` for membership."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/CorrectnessNoCollectionMisuse.ts",
+        "source": "type Role = 'Admin' | 'Member';\ndeclare const roles: Role[];\ndeclare const role: Role;\ndeclare const pair: readonly ['first', 'second'];\ndeclare const sparse: (number | undefined)[];\ndeclare const index: number;\ndeclare const wideKey: string;\ndeclare const items: string[];\ndeclare const optionalItems: string[] | undefined;\ndeclare const text: string;\ndeclare const bytes: Uint8Array;\ndeclare const cache: Map<string, number>;\ndeclare const lookup: ReadonlyMap<string, number>;\ndeclare const seen: Set<string>;\ndeclare const weak: WeakMap<object, number>;\ndeclare const record: Record<string, number>;\ndeclare const lengthy: { length: number };\ndeclare const arrayLike: ArrayLike<number>;\ndeclare const count: number;\ndeclare function use(value: unknown): void;\nuse(items.length === 0);\nuse(items.length > 0);\nuse(items.length >= 1);\nuse(items.length <= 0);\nuse(cache.size < 1);\nuse(items.length !== count);\nuse(optionalItems?.length < 0);\nuse(lengthy.length < 0);\nuse(arrayLike.length < 0);\nuse(use.length < 0);\nuse(count < 0);\n"
+    },
+    "assertedMessageIds": [
+        "bracketAccessOnCollection",
+        "impossibleSizeComparison",
+        "inOnArray",
+        "objectMethodOnCollection"
+    ]
+}

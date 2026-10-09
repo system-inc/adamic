@@ -1,0 +1,24 @@
+{
+    "rule": "better-tailwindcss/enforce-consistent-variable-syntax",
+    "firing": {
+        "file": "Component.tsx",
+        "source": "const element = <div className=\"text-[--v]/50\" />;",
+        "findings": [
+            {
+                "line": 1,
+                "column": 33,
+                "endLine": 1,
+                "endColumn": 46,
+                "messageId": "variableSyntax",
+                "message": "The custom property in \"text-[--v]/50\" is written as an arbitrary value. Tailwind v4 reads parentheses as a custom property and square brackets as an arbitrary value that happens to look like one, so \"text-(--v)/50\" is the spelling that says what this means. Both resolve today, which is why the two forms accumulate side by side until a reader cannot tell whether a difference between two classes is deliberate. Write it as \"text-(--v)/50\"."
+            }
+        ]
+    },
+    "clean": {
+        "file": "Component.tsx",
+        "source": "const element = <div className=\"text-(--my-var)\" />;"
+    },
+    "assertedMessageIds": [
+        "variableSyntax"
+    ]
+}

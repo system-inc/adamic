@@ -1,0 +1,24 @@
+{
+    "rule": "base/correctness-require-verify-array-parity",
+    "firing": {
+        "file": "/repository/source/Entity.ts",
+        "source": "declare function VerifyIsArray(): PropertyDecorator & ParameterDecorator;\ndeclare function VerifyArrayMinimumSize(size: number): PropertyDecorator & ParameterDecorator;\ndeclare function VerifyIsNotEmpty(): PropertyDecorator & ParameterDecorator;\ndeclare function VerifyIsString(): PropertyDecorator & ParameterDecorator;\ndeclare function VerifyIsNumber(): PropertyDecorator & ParameterDecorator;\ndeclare function VerifyIsOptional(): PropertyDecorator & ParameterDecorator;\ndeclare function VerifyBy(check: unknown): PropertyDecorator & ParameterDecorator;\ndeclare function VerifySomethingCustom(): PropertyDecorator & ParameterDecorator;\ndeclare function NotAVerifyDecorator(): PropertyDecorator & ParameterDecorator;\ndeclare function OrmColumn(): PropertyDecorator & ParameterDecorator;\nclass Entity { @VerifyIsString() names: string[]; }\n",
+        "findings": [
+            {
+                "line": 11,
+                "column": 34,
+                "endLine": 11,
+                "endColumn": 39,
+                "messageId": "missingArrayRule",
+                "message": "Array-typed property 'names' has value-level @Verify rules but no array-level rule. The validation engine applies a value-level rule per element only when the property also declares an array-level rule. Without that pairing the rule evaluates the whole array instead of each item, so every legitimate array fails validation."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/Entity.ts",
+        "source": "declare function VerifyIsArray(): PropertyDecorator & ParameterDecorator;\ndeclare function VerifyArrayMinimumSize(size: number): PropertyDecorator & ParameterDecorator;\ndeclare function VerifyIsNotEmpty(): PropertyDecorator & ParameterDecorator;\ndeclare function VerifyIsString(): PropertyDecorator & ParameterDecorator;\ndeclare function VerifyIsNumber(): PropertyDecorator & ParameterDecorator;\ndeclare function VerifyIsOptional(): PropertyDecorator & ParameterDecorator;\ndeclare function VerifyBy(check: unknown): PropertyDecorator & ParameterDecorator;\ndeclare function VerifySomethingCustom(): PropertyDecorator & ParameterDecorator;\ndeclare function NotAVerifyDecorator(): PropertyDecorator & ParameterDecorator;\ndeclare function OrmColumn(): PropertyDecorator & ParameterDecorator;\nclass Entity { names: string[]; }\n"
+    },
+    "assertedMessageIds": [
+        "missingArrayRule"
+    ]
+}

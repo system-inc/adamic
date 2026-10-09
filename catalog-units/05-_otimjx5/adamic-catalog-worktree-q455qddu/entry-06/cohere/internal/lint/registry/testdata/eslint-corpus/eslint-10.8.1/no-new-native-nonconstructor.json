@@ -1,0 +1,16 @@
+[
+{"code":"var foo = Symbol('foo');","eslint":[]},
+{"code":"function bar(Symbol) { var baz = new Symbol('baz');}","eslint":[]},
+{"code":"function Symbol() {} new Symbol();","eslint":[]},
+{"code":"new foo(Symbol);","eslint":[]},
+{"code":"new foo(bar, Symbol);","eslint":[]},
+{"code":"var foo = BigInt(9007199254740991);","eslint":[]},
+{"code":"function bar(BigInt) { var baz = new BigInt(9007199254740991);}","eslint":[]},
+{"code":"function BigInt() {} new BigInt();","eslint":[]},
+{"code":"new foo(BigInt);","eslint":[]},
+{"code":"new foo(bar, BigInt);","eslint":[]},
+{"code":"var foo = new Symbol('foo');","eslint":[["noNewNonconstructor",14,20]]},
+{"code":"function bar() { return function Symbol() {}; } var baz = new Symbol('baz');","eslint":[["noNewNonconstructor",62,68]]},
+{"code":"var foo = new BigInt(9007199254740991);","eslint":[["noNewNonconstructor",14,20]]},
+{"code":"function bar() { return function BigInt() {}; } var baz = new BigInt(9007199254740991);","eslint":[["noNewNonconstructor",62,68]]}
+]

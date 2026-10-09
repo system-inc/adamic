@@ -1,0 +1,24 @@
+{
+    "rule": "@next/next/no-title-in-document-head",
+    "firing": {
+        "file": "pages/_document.tsx",
+        "source": "import { Head } from \"next/document\";\nexport const C = () => <Head><title /></Head>;\n",
+        "findings": [
+            {
+                "line": 2,
+                "column": 25,
+                "endLine": 2,
+                "endColumn": 29,
+                "messageId": "noTitleInDocumentHead",
+                "message": "A <title> here is emitted once for every page in the application, because the `Head` from `next/document` renders the shared document shell rather than a page. A page that then sets its own title competes with this one and which wins depends on order. Set the title per page, with `Head` from `next/head`."
+            }
+        ]
+    },
+    "clean": {
+        "file": "pages/_document.tsx",
+        "source": "export const C = () => <Head><title>x</title></Head>;\n"
+    },
+    "assertedMessageIds": [
+        "noTitleInDocumentHead"
+    ]
+}

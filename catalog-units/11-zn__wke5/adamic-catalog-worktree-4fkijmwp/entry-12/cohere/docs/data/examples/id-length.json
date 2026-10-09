@@ -1,0 +1,27 @@
+{
+    "rule": "id-length",
+    "firing": {
+        "file": "/repository/source/IdLength.ts",
+        "source": "var x;",
+        "findings": [
+            {
+                "line": 1,
+                "column": 5,
+                "endLine": 1,
+                "endColumn": 6,
+                "messageId": "tooShort",
+                "message": "Identifier name 'x' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/IdLength.ts",
+        "source": "abc = d;"
+    },
+    "assertedMessageIds": [
+        "tooLong",
+        "tooLongPrivate",
+        "tooShort",
+        "tooShortPrivate"
+    ]
+}

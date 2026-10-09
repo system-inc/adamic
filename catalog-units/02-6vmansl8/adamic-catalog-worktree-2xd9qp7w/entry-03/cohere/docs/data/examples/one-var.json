@@ -1,0 +1,13 @@
+{
+    "rule": "one-var",
+    "assertedMessageIds": [
+        "combine",
+        "combineInitialized",
+        "combineUninitialized",
+        "split",
+        "splitInitialized",
+        "splitRequires",
+        "splitUninitialized"
+    ],
+    "assertsFix": true
+}

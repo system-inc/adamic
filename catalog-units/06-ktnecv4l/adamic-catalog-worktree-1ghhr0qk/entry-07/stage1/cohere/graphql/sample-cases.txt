@@ -1,0 +1,10 @@
+>{ a }
+>query Q($a: [Int!] = [1]) { b: f(x: $a) @d }
+>"é😀" scalar S
+># one 😀\n{ a # two\n}\n#
+>{ a(s: "\\u{1F600}x \\uD83D\\uDE00 \\n\\t\\"\\\\") }
+>
+>{ a(s: "\\u{1😀}") }
+>{\r\n a 😀 }
+>enum E { null }
+>type T { f(a: Int = $v): Int }

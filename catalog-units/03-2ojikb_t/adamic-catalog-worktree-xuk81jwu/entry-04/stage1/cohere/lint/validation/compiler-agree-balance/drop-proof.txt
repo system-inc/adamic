@@ -1,0 +1,13 @@
+=== RUN   TestCompilerAndStage1Agree
+    lint_test.go:418: compiler and stage1: 868 files
+    lint_test.go:429: compiler shard 0/5: 1 files, 3151774 bytes
+    lint_test.go:429: compiler shard 0/5 only file: /workspace/scratch/typescript-6.0.3/src/compiler/checker.ts
+    lint_test.go:429: compiler shard 1/5: 216 files, 2360783 bytes
+    lint_test.go:429: compiler shard 2/5: 216 files, 2360790 bytes
+    lint_test.go:429: compiler shard 3/5: 218 files, 2360785 bytes
+    lint_test.go:429: compiler shard 4/5: 217 files, 2360791 bytes
+    lint_test.go:443: Node: /workspace/scratch/typescript-6.0.3/src/compiler/checker.ts: missing from every shard
+--- FAIL: TestCompilerAndStage1Agree (157.09s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	157.175s
+FAIL

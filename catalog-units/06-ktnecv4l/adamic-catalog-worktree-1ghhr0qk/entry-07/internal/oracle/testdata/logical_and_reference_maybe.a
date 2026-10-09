@@ -1,0 +1,17 @@
+// && keeps a falsy left value; a missing reference is the absent boolean | undefined.
+class Item {
+	value = 1;
+	ready = true;
+}
+function pick(flag: boolean): Item | undefined {
+	return flag ? new Item() : undefined;
+}
+const present = pick(true);
+const absent = pick(false);
+console.log(`${present && present.value === 1}`);
+console.log(`${absent && absent.value === 1}`);
+console.log(`${absent && absent.ready}`);
+const items: (Item | undefined)[] = [new Item(), undefined];
+for (const item of items) {
+	console.log(`${item && item.ready}`);
+}

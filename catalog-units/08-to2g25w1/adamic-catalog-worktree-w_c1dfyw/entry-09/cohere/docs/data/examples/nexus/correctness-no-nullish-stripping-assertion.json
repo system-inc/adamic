@@ -1,0 +1,24 @@
+{
+    "rule": "nexus/correctness-no-nullish-stripping-assertion",
+    "firing": {
+        "file": "/repository/source/CorrectnessNoNullishStrippingAssertion.ts",
+        "source": "type PendingCommandArgumentFlagValueType = { pendingCommandArgumentFlagValue: true; candidateValue: string; candidateIndex: number };\ntype CommandArgumentFlagsType = Record<string, string | boolean | PendingCommandArgumentFlagValueType>;\ndeclare function numberFlag(flags: CommandArgumentFlagsType, key: string, fallback: number): number;\ndeclare function required<T>(value: T, message: string): NonNullable<T>;\ndeclare function use(value: unknown): void;\ndeclare const maybe: string | undefined;\ndeclare const nullable: string | null;\ndeclare const cache: Map<string, string>;\ndeclare const parts: string[];\ndeclare const record: Record<string, unknown>;\ndeclare const formData: FormData;\nexport const state = maybe as 'Ready';\n",
+        "findings": [
+            {
+                "line": 12,
+                "column": 22,
+                "endLine": 12,
+                "endColumn": 38,
+                "messageId": "nullishStrippedByAssertion",
+                "message": "This assertion removes `undefined` or `null` from the value's type without a check, the same claim a `!` makes. From here on the type says the value is present, so the compiler stops asking, and a fallback after it (`?? fallback`) reads as dead code. Fix it in this order. If the value can really be missing, guard it: check it first, or keep `| undefined` in the asserted type and handle it, so the missing case has code. If it cannot, fix the type that says it can, so there is no claim left to check; a command-line flag reads through `stringFlag` or `numberFlag`, whose types are already honest. Where neither fits, state the proof with `required(value, 'why it is present')` from `@nexus/source/errors/Assert`, which narrows the same way and throws that sentence if the proof is ever wrong."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/CorrectnessNoNullishStrippingAssertion.ts",
+        "source": "type PendingCommandArgumentFlagValueType = { pendingCommandArgumentFlagValue: true; candidateValue: string; candidateIndex: number };\ntype CommandArgumentFlagsType = Record<string, string | boolean | PendingCommandArgumentFlagValueType>;\ndeclare function numberFlag(flags: CommandArgumentFlagsType, key: string, fallback: number): number;\ndeclare function required<T>(value: T, message: string): NonNullable<T>;\ndeclare function use(value: unknown): void;\ndeclare const maybe: string | undefined;\ndeclare const nullable: string | null;\ndeclare const cache: Map<string, string>;\ndeclare const parts: string[];\ndeclare const record: Record<string, unknown>;\ndeclare const formData: FormData;\nexport const name = maybe!;\n"
+    },
+    "assertedMessageIds": [
+        "nullishStrippedByAssertion"
+    ]
+}

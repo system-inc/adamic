@@ -1,0 +1,10 @@
+{
+  "rules": {
+    "TypeScript": "structure/react-component-no-const-assignment"
+  },
+  "messages": {
+    "noConstAssignment": {
+      "text": "This declares a component as a const holding a function. Write `{{declaration}}` instead. A function declaration is hoisted, so helpers can be ordered for reading rather than for initialization; it carries its own name, so it survives in a stack trace and in React DevTools without a displayName; and it puts the name where a reader scanning the left margin finds it, rather than behind a const whose value happens to be a function."
+    }
+  }
+}

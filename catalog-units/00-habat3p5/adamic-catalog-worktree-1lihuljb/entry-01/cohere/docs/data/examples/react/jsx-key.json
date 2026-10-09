@@ -1,0 +1,29 @@
+{
+    "rule": "react/jsx-key",
+    "firing": {
+        "file": "/repository/source/JsxKey.tsx",
+        "source": "[<App />];",
+        "findings": [
+            {
+                "line": 1,
+                "column": 2,
+                "endLine": 1,
+                "endColumn": 9,
+                "messageId": "missingArrayKey",
+                "message": "This element sits in an array literal and carries no `key`. React reconciles the array by position when it has no key, so changing the order or the length makes the surviving elements adopt their neighbours' state. Give each element a `key` that identifies it rather than its position."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/JsxKey.tsx",
+        "source": "[1,2,3].map(x => <>{x}</>);"
+    },
+    "assertedMessageIds": [
+        "keyBeforeSpread",
+        "missingArrayKey",
+        "missingArrayKeyUsePrag",
+        "missingIterKey",
+        "missingIterKeyUsePrag",
+        "nonUniqueKeys"
+    ]
+}

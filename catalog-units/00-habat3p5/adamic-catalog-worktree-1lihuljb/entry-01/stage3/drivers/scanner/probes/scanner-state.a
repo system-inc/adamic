@@ -1,0 +1,16 @@
+import { createScanner, characterCodeToRegularExpressionFlag } from './adapted/src/compiler/scanner.ts';
+import { ScriptTarget, LanguageVariant } from './adapted/src/compiler/types.ts';
+const scanner = createScanner(ScriptTarget.Latest, true, LanguageVariant.Standard, 'one two');
+console.log('initial value', typeof scanner.getTokenValue());
+scanner.scan();
+console.log('lookAhead', scanner.lookAhead(() => { scanner.scan(); return scanner.getTokenText(); }), scanner.getTokenText(), scanner.getTokenEnd());
+console.log('tryScan false', scanner.tryScan(() => { scanner.scan(); return false; }), scanner.getTokenText(), scanner.getTokenEnd());
+console.log('scanRange', scanner.scanRange(4, 3, () => { scanner.scan(); return scanner.getTokenText(); }), scanner.getTokenText(), scanner.getTokenEnd());
+console.log('tryScan true', scanner.tryScan(() => { scanner.scan(); return scanner.getTokenText(); }), scanner.getTokenText(), scanner.getTokenEnd());
+scanner.setText('ab\nc');
+scanner.reScanJsxToken();
+console.log('JSX default', JSON.stringify(scanner.getTokenText()));
+scanner.setText('ab\nc');
+scanner.reScanJsxToken(false);
+console.log('JSX false', JSON.stringify(scanner.getTokenText()));
+console.log('regex flags', JSON.stringify([100,103,105,109,115,117,118,121,113,0x3b1].map(characterCodeToRegularExpressionFlag)));

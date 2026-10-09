@@ -1,0 +1,9 @@
+// From TypeScript 6.0.3, src/compiler/commandLineParser.ts:3038
+// Census reason: a type predicate
+
+
+function isNullOrUndefined(x: any): x is null | undefined { // eslint-disable-line no-restricted-syntax
+    return x === undefined || x === null; // eslint-disable-line no-restricted-syntax
+}
+
+for (const value of [undefined, null, false, 0, '']) console.log(String(isNullOrUndefined(value)));

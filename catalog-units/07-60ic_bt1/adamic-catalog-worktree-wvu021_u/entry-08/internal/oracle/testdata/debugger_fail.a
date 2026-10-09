@@ -1,0 +1,11 @@
+// Debug.fail's debugger-then-throw shape, with a required message.
+function fail(message: string): never {
+    // eslint-disable-next-line no-debugger
+    debugger;
+    throw new Error(`Debug Failure. ${message}`);
+}
+try {
+    fail('Invalid version');
+} catch (error) {
+    if (error instanceof Error) { console.log(error.message); }
+}

@@ -1,0 +1,9 @@
+Mutant: remove C0921 src/compiler/watch.ts:544:151 and recompute aggregate counts.
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/triage/audit_contracts.py", line 47, in <module>
+    audit(sys.argv[1], json.loads(Path(sys.argv[2]).read_text()))
+  File "/workspace/adamic/stage3/triage/audit_contracts.py", line 36, in audit
+    assert not missing and not extra, f'dropped/changed rows: {list(missing.items())[:3]}; extra: {list(extra.items())[:3]}'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: dropped/changed rows: [(('src/compiler/watch.ts', 544, 151, 2345, "Argument of type 'string | undefined' is not assignable to parameter of type 'string | number'.\n  Type 'undefined' is not assignable to type 'string | number'."), 1)]; extra: []
+mutant exit=1

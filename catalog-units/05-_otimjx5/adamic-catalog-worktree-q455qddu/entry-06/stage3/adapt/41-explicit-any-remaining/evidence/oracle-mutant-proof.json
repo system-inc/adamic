@@ -1,0 +1,26 @@
+{
+  "mutant": "append number = string to actual forInStatement1.ts input",
+  "control": {
+    "passing": 6,
+    "failing": 0,
+    "pending": 0
+  },
+  "mutantCounts": {
+    "passing": 3,
+    "failing": 3,
+    "pending": 0
+  },
+  "mutantBaselineDiffs": [
+    "forInStatement1.errors.txt",
+    "forInStatement1.js",
+    "forInStatement1.symbols",
+    "forInStatement1.types"
+  ],
+  "restored": {
+    "passing": 6,
+    "failing": 0,
+    "pending": 0
+  },
+  "restoredBaselineDiffs": [],
+  "fixtureSHA256": "e5806b463fcd47cfa817120bfbf0bd014b1d16eb81f96920ee8a808e8af934a9"
+}

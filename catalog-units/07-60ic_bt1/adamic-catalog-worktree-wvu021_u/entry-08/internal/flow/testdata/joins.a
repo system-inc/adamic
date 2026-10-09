@@ -1,0 +1,93 @@
+// Every shape of join single assignment has to get right, each printing what it computed so the
+// program means something on Node too: if and else, a loop's header, a do...while, a for...of left
+// by break and continue, a switch, nested loops, and a reassigned parameter.
+function clamp(value: number, low: number, high: number): number {
+	let result = value;
+	if (value < low) {
+		result = low;
+	} else if (value > high) {
+		result = high;
+	}
+	return result;
+}
+
+function sumTo(limit: number): number {
+	let total = 0;
+	for (let index = 1; index <= limit; index++) {
+		if (index % 3 === 0) {
+			continue;
+		}
+		total += index;
+	}
+	return total;
+}
+
+function digits(value: number): number {
+	let count = 0;
+	let rest = value;
+	do {
+		count++;
+		rest = Math.floor(rest / 10);
+	} while (rest > 0);
+	return count;
+}
+
+function firstLong(words: readonly string[], length: number): string {
+	let found = '';
+	let seen = 0;
+	for (const word of words) {
+		seen++;
+		if (word.length < length) {
+			continue;
+		}
+		found = word;
+		break;
+	}
+	return `${found}@${seen}`;
+}
+
+function describe(kind: string): string {
+	let text = 'other';
+	switch (kind) {
+		case 'a':
+		case 'b':
+			text = 'early';
+			break;
+		case 'z':
+			text = 'late';
+			break;
+		default:
+			if (kind.length > 1) {
+				text = 'long';
+			}
+	}
+	return text;
+}
+
+function grid(size: number): number {
+	let cells = 0;
+	let row = 0;
+	while (row < size) {
+		let column = 0;
+		while (column < row) {
+			cells += row * column;
+			column++;
+		}
+		row++;
+	}
+	return cells;
+}
+
+function shout(text: string, times: number): string {
+	while (times > 0) {
+		text = `${text}!`;
+		times--;
+	}
+	return text;
+}
+
+console.log(`${clamp(5, 0, 3)} ${clamp(-1, 0, 3)} ${clamp(2, 0, 3)}`);
+console.log(`${sumTo(10)} ${digits(0)} ${digits(12345)}`);
+console.log(`${firstLong(['a', 'bb', 'ccc', 'dddd'], 3)} ${firstLong([], 1)}`);
+console.log(`${describe('a')} ${describe('z')} ${describe('mm')} ${describe('q')}`);
+console.log(`${grid(4)} ${shout('hey', 3)}`);

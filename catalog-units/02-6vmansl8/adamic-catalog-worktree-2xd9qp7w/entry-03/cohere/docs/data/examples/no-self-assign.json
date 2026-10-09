@@ -1,0 +1,24 @@
+{
+    "rule": "no-self-assign",
+    "firing": {
+        "file": "/repository/source/Assign.ts",
+        "source": "declare let a: any, b: any, c: any, i: number;\ndeclare const o: any;\ndeclare function f(): any;\nexport function run() { a = a; }\n",
+        "findings": [
+            {
+                "line": 4,
+                "column": 29,
+                "endLine": 4,
+                "endColumn": 30,
+                "messageId": "selfAssignment",
+                "message": "This assigns a value to itself, so it does nothing. The statement is not merely redundant: it is almost always a typo for an assignment that was meant to happen, so the value the author intended to write is still missing and nothing reports that it is."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/Assign.ts",
+        "source": "declare let a: any, b: any, c: any, i: number;\ndeclare const o: any;\ndeclare function f(): any;\nexport const value = 1;\n"
+    },
+    "assertedMessageIds": [
+        "selfAssignment"
+    ]
+}

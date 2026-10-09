@@ -1,0 +1,1 @@
+const method = String.prototype.trim; console.log(method.call(new String(' x ')));

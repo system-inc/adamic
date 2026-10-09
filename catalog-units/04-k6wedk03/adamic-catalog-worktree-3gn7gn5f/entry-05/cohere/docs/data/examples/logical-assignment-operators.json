@@ -1,0 +1,31 @@
+{
+    "rule": "logical-assignment-operators",
+    "firing": {
+        "file": "logical.ts",
+        "source": "a = a || b\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 1,
+                "endLine": 1,
+                "endColumn": 11,
+                "messageId": "assignment",
+                "message": "Assignment (=) can be replaced with operator assignment (||=). Writing the target on both sides makes a reader compare the two spellings to see they match, and the shorthand also stops evaluating the target twice.",
+                "fix": true
+            }
+        ],
+        "fixedSource": "a ||= b\n"
+    },
+    "clean": {
+        "file": "logical.ts",
+        "source": "if (a) a = b\n"
+    },
+    "assertedMessageIds": [
+        "assignment",
+        "if",
+        "logical",
+        "unexpected"
+    ],
+    "assertsFix": true,
+    "assertsSuggestion": true
+}

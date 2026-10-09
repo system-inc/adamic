@@ -1,0 +1,27 @@
+{
+    "rule": "no-extra-label",
+    "firing": {
+        "file": "/repository/source/ExtraLabel.ts",
+        "source": "A: while (a) break A;",
+        "findings": [
+            {
+                "line": 1,
+                "column": 20,
+                "endLine": 1,
+                "endColumn": 21,
+                "messageId": "unexpected",
+                "message": "This label is unnecessary. The nearest enclosing breakable statement is already the one this jump targets, so naming it changes nothing and only invites the reader to go looking for the outer statement it appears to reach.",
+                "fix": true
+            }
+        ],
+        "fixedSource": "A: while (a) break;"
+    },
+    "clean": {
+        "file": "/repository/source/ExtraLabel.ts",
+        "source": "A: break A;"
+    },
+    "assertedMessageIds": [
+        "unexpected"
+    ],
+    "assertsFix": true
+}

@@ -1,0 +1,8 @@
+{
+    "rule": "react/jsx-curly-brace-presence",
+    "assertedMessageIds": [
+        "MissingCurly",
+        "UnnecessaryCurly"
+    ],
+    "assertsFix": true
+}

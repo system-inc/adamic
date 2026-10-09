@@ -1,0 +1,24 @@
+{
+    "rule": "no-invalid-this",
+    "firing": {
+        "file": "/repository/source/NoInvalidThis.ts",
+        "source": "this.eval('foo');",
+        "findings": [
+            {
+                "line": 1,
+                "column": 1,
+                "endLine": 1,
+                "endColumn": 5,
+                "messageId": "unexpectedThis",
+                "message": "Nothing binds `this` here, so it is `undefined` at runtime and every property read off it throws. The usual cause is a method that was moved out of a class or an object literal and left its `this.` prefixes behind. Take what it needs as a parameter, give the function a `this` parameter so TypeScript can check the call sites, or make it a method again."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/NoInvalidThis.ts",
+        "source": "class C { field = this }"
+    },
+    "assertedMessageIds": [
+        "unexpectedThis"
+    ]
+}

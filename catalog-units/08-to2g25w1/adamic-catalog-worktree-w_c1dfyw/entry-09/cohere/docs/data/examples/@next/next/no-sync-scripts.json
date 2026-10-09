@@ -1,0 +1,24 @@
+{
+    "rule": "@next/next/no-sync-scripts",
+    "firing": {
+        "file": "Component.tsx",
+        "source": "export const C = () => <script src=\"/a.js\" />;",
+        "findings": [
+            {
+                "line": 1,
+                "column": 24,
+                "endLine": 1,
+                "endColumn": 46,
+                "messageId": "noSyncScripts",
+                "message": "This <script> has a src and neither `async` nor `defer`, so the browser stops parsing the document, fetches the script, and runs it before continuing. Everything below it waits on the network. Add `defer` to run it after parsing, `async` if it does not depend on the document, or use the `Script` component from `next/script`."
+            }
+        ]
+    },
+    "clean": {
+        "file": "Component.tsx",
+        "source": "export const C = () => <Foo.script src=\"/a.js\" />;"
+    },
+    "assertedMessageIds": [
+        "noSyncScripts"
+    ]
+}

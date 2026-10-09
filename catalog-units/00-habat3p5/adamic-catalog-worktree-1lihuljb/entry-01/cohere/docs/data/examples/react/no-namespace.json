@@ -1,0 +1,24 @@
+{
+    "rule": "react/no-namespace",
+    "firing": {
+        "file": "/repository/source/Namespace.jsx",
+        "source": "<ns:x />;",
+        "findings": [
+            {
+                "line": 1,
+                "column": 1,
+                "endLine": 1,
+                "endColumn": 9,
+                "messageId": "noNamespace",
+                "message": "This element names a namespace, and React has no notion of one. The colon in a tag like `svg:circle` is meaningful in XML and in real XHTML documents, and JSX borrows the syntax without borrowing the meaning: React reads the whole string as a single tag name and hands it to the host, which has no element by that name. Nothing renders and nothing warns. Write the element without the prefix."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/Namespace.tsx",
+        "source": "<a.b />;\n"
+    },
+    "assertedMessageIds": [
+        "noNamespace"
+    ]
+}

@@ -1,0 +1,27 @@
+{
+    "rule": "better-tailwindcss/no-unnecessary-whitespace",
+    "firing": {
+        "file": "Component.tsx",
+        "source": "const element = <div className=\"   \" />;",
+        "findings": [
+            {
+                "line": 1,
+                "column": 33,
+                "endLine": 1,
+                "endColumn": 36,
+                "messageId": "unnecessaryWhitespace",
+                "message": "This class string carries whitespace that does nothing: a leading or trailing run, or more than one space between two classes. It is invisible in the rendered output and it makes the string a worse thing to diff and search, because two literals that mean the same list stop being the same text.",
+                "fix": true
+            }
+        ],
+        "fixedSource": "const element = <div className=\"\" />;"
+    },
+    "clean": {
+        "file": "Component.tsx",
+        "source": "const element = <div className=\"\" />;"
+    },
+    "assertedMessageIds": [
+        "unnecessaryWhitespace"
+    ],
+    "assertsFix": true
+}

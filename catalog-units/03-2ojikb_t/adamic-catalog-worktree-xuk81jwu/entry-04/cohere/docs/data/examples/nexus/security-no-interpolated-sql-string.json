@@ -1,0 +1,25 @@
+{
+    "rule": "nexus/security-no-interpolated-sql-string",
+    "firing": {
+        "file": "/repository/source/SecurityNoInterpolatedSqlString.ts",
+        "source": "export function find(row: any) {\n    return `SELECT id FROM Contact WHERE name = '${row.name}'`;\n}\n",
+        "findings": [
+            {
+                "line": 2,
+                "column": 52,
+                "endLine": 2,
+                "endColumn": 60,
+                "messageId": "interpolatedSqlString",
+                "message": "This value is written between the single quotes of a SQL string, so a quote in it ends the string early: the query breaks on ordinary input like `O'Brien`, and a crafted value runs as SQL. Pass it as a bound parameter (`WHERE name LIKE ?` with the value beside the query). Where the query language has no parameters, give the value a type that cannot hold a quote (a number, a union of literals, a template literal type such as `${number}-${number}-${number}`), or escape it in place with `.replace(/\\\\/g, '\\\\\\\\').replace(/'/g, \"''\")`, which doubles backslashes as well as quotes."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/SecurityNoInterpolatedSqlString.ts",
+        "source": "export function open(name: string) {\n    return `WHERE name = '${name}` + `'`;\n}\n"
+    },
+    "assertedMessageIds": [
+        "interpolatedSqlString",
+        "interpolatedSqlValue"
+    ]
+}

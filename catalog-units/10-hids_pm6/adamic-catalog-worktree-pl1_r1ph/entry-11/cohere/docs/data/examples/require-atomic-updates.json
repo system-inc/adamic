@@ -1,0 +1,25 @@
+{
+    "rule": "require-atomic-updates",
+    "firing": {
+        "file": "escape.ts",
+        "source": "let foo; async function x() { foo += await amount; }\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 31,
+                "endLine": 1,
+                "endColumn": 50,
+                "messageId": "nonAtomicUpdate",
+                "message": "This reassignment is not atomic. The value it is computed from was read before an await or a yield, and the function is suspended in between, so anything else that runs during the suspension can write the variable and have its write overwritten by this line. The read and the write look adjacent in the source and are not adjacent in time. Read the variable after the suspension, or keep the whole update on one side of it. Here the variable is foo."
+            }
+        ]
+    },
+    "clean": {
+        "file": "escape.ts",
+        "source": "async function f(foo) { foo = await bar; }\n"
+    },
+    "assertedMessageIds": [
+        "nonAtomicObjectUpdate",
+        "nonAtomicUpdate"
+    ]
+}

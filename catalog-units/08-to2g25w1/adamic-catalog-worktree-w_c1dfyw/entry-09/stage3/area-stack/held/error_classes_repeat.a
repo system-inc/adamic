@@ -1,0 +1,1 @@
+try { console.log('x'.repeat(-1)); } catch(error) { console.log('caught'); }

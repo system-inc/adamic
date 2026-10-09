@@ -1,0 +1,10 @@
+{
+  "rules": {
+    "TypeScript": "adamic/no-definite-assignment"
+  },
+  "messages": {
+    "definiteAssignment": {
+      "text": "`!` here tells tsc this is assigned before it is read, and nothing checks it: read early, it is undefined while its type says otherwise. Assign it where it is declared or in the constructor, or type it with `| undefined` and handle the missing case."
+    }
+  }
+}

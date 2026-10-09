@@ -1,0 +1,36 @@
+{
+    "rule": "strict",
+    "firing": {
+        "file": "/repository/source/Strict.ts",
+        "source": "'use strict';\nconst a: number = 1;",
+        "findings": [
+            {
+                "line": 1,
+                "column": 1,
+                "endLine": 1,
+                "endColumn": 14,
+                "messageId": "implied",
+                "message": "The compiler already makes this file strict: `alwaysStrict`, which `strict` turns on, has TypeScript check it as strict code and emit the directive itself. This one does nothing, so a reader has to check the tsconfig to learn that it is redundant rather than load-bearing. Delete it.",
+                "fix": true
+            }
+        ],
+        "fixedSource": "\nconst a: number = 1;"
+    },
+    "clean": {
+        "file": "/repository/source/Strict.js",
+        "source": "export const a = 1;"
+    },
+    "assertedMessageIds": [
+        "function",
+        "global",
+        "implied",
+        "module",
+        "multiple",
+        "never",
+        "nonSimpleParameterList",
+        "unnecessary",
+        "unnecessaryInClasses",
+        "wrap"
+    ],
+    "assertsFix": true
+}

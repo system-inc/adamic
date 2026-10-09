@@ -1,0 +1,59 @@
+Boxed callable arguments and results are held to Node for number, string, object and undefined.
+Commits: 03db4467 supplies the union-slot rule; 52eba88a restores c41 after the views reverts.
+Checks: all seven fixtures pass uncached in both backends with ASan/UBSan and leaks; counts pass.
+Mutants: skip call boxing, skip return boxing, corrupt forwarding result, corrupt forwarding arguments, remove scalar ABI guard are all caught.
+Limits: two examples certify the new census rule; original 43 units advance; unrelated stops remain.
+
+The latest census e8c283b5 measured 154 passing-union roots and 20 union-return roots without
+this branch's already-pushed callable union-slot fix. These two kinds are census echoes.
+The production code already fits each callable argument to its signature (ir.Box for unions),
+keeps the resulting union pointer across forwarding calls, and boxes union return members.
+JavaScript preserves the original values; native code uses the existing boxed union ABI.
+No second boxing representation, views implementation or runtime C helper was introduced.
+
+New fixture: internal/oracle/testdata/function_values_boundary.a, registered in its own
+internal/oracle/function_values_test.go. It checks named and arrow function values, four mixed
+members, object identity, function identity and scalar/reference return members. The IR
+contract additionally checks four argument boxes and all union return representations.
+Both restored mutants intentionally fail that fixture's ABI assertion before unsafe native
+execution. Original behavioral mutants fail the Node oracle for all six original fixtures;
+removing the scalar ABI guard admits all four previously unsafe signature views.
+An overbroad experimental mutant that removed every fit box stopped at an unrelated union
+comparison; it was replaced with the targeted return mutant and is not counted as evidence.
+
+Before/after replays, same 81 manifest-matched source files:
+checker.ts:10140:21, serializeEnum: passing-union stop reproduces before; after it reaches
+'a method call through a structural signature in a program with statics; use typeof the
+declaring class'. Imported filter overload refusal and reading memberProps also remain.
+checker.ts:10979:24, serializePropertySymbolForInterface: union-return stop reproduces before;
+after its selected unit has no findings. Missing-signature exits after lowering are expected.
+The unpushed synthetic census commit was unavailable from GitHub; its published pins were
+reconstructed sequentially in a detached worktree, never pushed. NET-BOXING.json records them.
+
+Original ranked kinds, on the corrected c41 base:
+38 union-return roots: assigned stop absent in all 38 replays; 10 units clear, 28 next stops.
+1 CreateSourceFileOptions | ScriptTarget: assigned stop absent, named next stops recorded.
+1 EmitSignature | undefined: assigned stop absent, unknown/BinaryExpression/read stops remain.
+1 string | DiagnosticMessageChain | undefined: assigned stop absent, imported unknown remains.
+1 string | number | boolean | DiagnosticMessage | undefined: assigned stop absent, overload refusal remains.
+1 string | string[]: assigned stop absent, imported rest-array stop remains.
+All seven fixtures are independently held to Node. Root-unit advancement does not certify
+whole-file compilation or every real site in a backend. Four scalar/union signature views
+remain deliberately NotYet: the correction removed the views adapters they would require.
+
+Views correction: adfb8384 reverts the combined resolution; c9d6e23a reverts b29e9e4f.
+Both were pushed without force. 52eba88a reapplies only ae4fe9e6 and c41c0e06. Adamic .a !
+remains refused; historical .ts ! checks eagerly and reports source sites. The integration
+failures observed with views are superseded: full count regeneration is green after reverts.
+
+Commands, all output captured in logs (full positive output is in NET-BOXING.json):
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestFunctionValueBoundaryBoxing|TestNativeAgreesWithNode/internal/oracle/testdata/function_values_' -count=1 -timeout 10m -v
+python internal/oracle/testdata/run-function-values-boundary-mutants.py
+python internal/oracle/testdata/run-function-values-mutants.py
+go test ./internal/oracle ./internal/lower -run 'TestFunctionValueBoundaryBoxing|TestFunctionValueUnionViewsStayNotYet|TestNativeAgreesWithNode/internal/oracle/testdata/function_values_' -count=1 -timeout 10m
+go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -timeout 10m -args -update-counts
+go vet ./internal/lower ./internal/oracle ./cmd/adamic ./internal/ir ./internal/flow
+Replay workers were built with the guarded stage3/census/latent/make_overlay.py and invoked
+with -project, -where, -kind NotYet and exact -reason; every finding is retained in JSON.
+No whole-package or full-gate command was run. Setup: Go 0.337s, Node 0.321s, markdown 0.908s,
+submodules 0.980s, clang 1.792s, Go build 55.772s, warm cache 55.906s, done 55.937s; nproc 5.

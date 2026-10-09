@@ -1,0 +1,514 @@
+id,file,line,column,code,message,class,family,owner,owner_line,option,kind,source_expression,cause,evidence,witness,removed_by,already_checked,check_location,stock_unmodified_reports,stock_message,witness_for_input_difference
+D095,src/compiler/checker.ts,5311,45,TS2322,"Type 'Symbol | undefined' is not assignable to type 'Symbol'.
+  Type 'undefined' is not assignable to type 'Symbol'.",2,,createTypeChecker.getMergedSymbol,5309,noUncheckedIndexedAccess,indexed read,merged,"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: return symbol && symbol.mergeId && (merged = mergedSymbols[symbol.mergeId]) ? merged : symbol;
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,"Type 'Symbol | undefined' is not assignable to type 'Symbol'.
+  Type 'undefined' is not assignable to type 'Symbol'.",
+D037,src/compiler/checker.ts,12034,30,TS18048,'file' is possibly 'undefined'.,2,,createTypeChecker.getFlowTypeFromCommonJSExport,12022,noUncheckedIndexedAccess,indexed read,file.endFlowNode,"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: reference.flowNode = file.endFlowNode;
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,'file' is possibly 'undefined'.,
+D054,src/compiler/checker.ts,17946,29,TS2769,"No overload matches this call.
+  The last overload gave the following error.
+    Argument of type 'Type | undefined' is not assignable to parameter of type 'Type'.
+      Type 'undefined' is not assignable to type 'Type'.",2,,createTypeChecker.createNormalizedTupleType,17936,noUncheckedIndexedAccess,indexed read,elementTypes[unionIndex],"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: return checkCrossProductUnion(map(elementTypes, (t, i) => target.elementFlags[i]! & ElementFlags.Variadic ? t : unknownType)) ?
+                    mapType(elementTypes[unionIndex], t => createNormalizedTupleType(target, replaceElement(elementTypes, unionIndex, t))) :
+                    errorType;
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,"No overload matches this call.
+  Overload 1 of 2, '(type: Type, mapper: (t: Type) => Type, noReductions?: boolean | undefined): Type', gave the following error.
+    Argument of type 'Type | undefined' is not assignable to parameter of type 'Type'.
+      Type 'undefined' is not assignable to type 'Type'.
+  Overload 2 of 2, '(type: Type, mapper: (t: Type) => Type | undefined, noReductions?: boolean | undefined): Type | undefined', gave the following error.
+    Argument of type 'Type | undefined' is not assignable to parameter of type 'Type'.
+      Type 'undefined' is not assignable to type 'Type'.",
+D056,src/compiler/checker.ts,19044,25,TS2769,"No overload matches this call.
+  The last overload gave the following error.
+    Argument of type 'Type | undefined' is not assignable to parameter of type 'Type'.
+      Type 'undefined' is not assignable to type 'Type'.",2,,createTypeChecker.getTemplateLiteralType,19040,noUncheckedIndexedAccess,indexed read,types[unionIndex],"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: return checkCrossProductUnion(types) ?
+                mapType(types[unionIndex], t => getTemplateLiteralType(texts, replaceElement(types, unionIndex, t))) :
+                errorType;
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,"No overload matches this call.
+  Overload 1 of 2, '(type: Type, mapper: (t: Type) => Type, noReductions?: boolean | undefined): Type', gave the following error.
+    Argument of type 'Type | undefined' is not assignable to parameter of type 'Type'.
+      Type 'undefined' is not assignable to type 'Type'.
+  Overload 2 of 2, '(type: Type, mapper: (t: Type) => Type | undefined, noReductions?: boolean | undefined): Type | undefined', gave the following error.
+    Argument of type 'Type | undefined' is not assignable to parameter of type 'Type'.
+      Type 'undefined' is not assignable to type 'Type'.",
+D057,src/compiler/checker.ts,20595,32,TS2722,Cannot invoke an object which is possibly 'undefined'.,2,,createTypeChecker.getMappedType,20576,noUncheckedIndexedAccess,indexed read,targets[i],"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: return targets[i]();
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,Cannot invoke an object which is possibly 'undefined'.,
+D060,src/compiler/checker.ts,22498,29,TS2556,A spread argument must either have a tuple type or be passed to a rest parameter.,2,,createTypeChecker.checkTypeRelatedTo.reportIncompatibleStack,22492,noUncheckedIndexedAccess,indexed read,reportError(...stack[0]),"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: reportError(...stack[0]);
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,A spread argument must either have a tuple type or be passed to a rest parameter.,
+D061,src/compiler/checker.ts,22498,32,TS2488,"Type '[message: DiagnosticMessage, ...args: (string | number | boolean | readonly string[] | SourceFile | undefined)[]] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator.",2,,createTypeChecker.checkTypeRelatedTo.reportIncompatibleStack,22492,noUncheckedIndexedAccess,indexed read,stack[0],"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: reportError(...stack[0]);
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,"Type '[message: DiagnosticMessage, ...args: (string | number | boolean | readonly string[] | SourceFile | undefined)[]] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator.",
+D067,src/compiler/checker.ts,38430,64,TS2345,"Argument of type 'ElementFlags | undefined' is not assignable to parameter of type 'ElementFlags'.
+  Type 'undefined' is not assignable to type 'ElementFlags'.",2,,createTypeChecker.getParameterNameAtPosition,38418,noUncheckedIndexedAccess,indexed read,"getTupleElementLabel(associatedName, index, elementFlags, restParameter)","Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: return getTupleElementLabel(associatedName, index, elementFlags, restParameter);
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,"Argument of type 'ElementFlags | undefined' is not assignable to parameter of type 'ElementFlags'.
+  Type 'undefined' is not assignable to type 'ElementFlags'.",
+D068,src/compiler/checker.ts,42849,65,TS2345,"Argument of type 'TypeParameter | undefined' is not assignable to parameter of type 'TypeParameter'.
+  Type 'undefined' is not assignable to type 'TypeParameter'.",2,,createTypeChecker.getTypeArgumentConstraint,42802,noUncheckedIndexedAccess,indexed read,getConstraintOfTypeParameter(relevantTypeParameter),"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: constraint = getConstraintOfTypeParameter(relevantTypeParameter)
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,"Argument of type 'TypeParameter | undefined' is not assignable to parameter of type 'TypeParameter'.
+  Type 'undefined' is not assignable to type 'TypeParameter'.",
+D069,src/compiler/checker.ts,43517,20,TS2412,"Type 'Type | undefined' is not assignable to type 'Type' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  Type 'undefined' is not assignable to type 'Type'.",2,,createTypeChecker.getPromisedTypeOfPromise,43496,noUncheckedIndexedAccess,indexed read,typeAsPromise.promisedTypeOfPromise,"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: return typeAsPromise.promisedTypeOfPromise = getTypeArguments(type as GenericType)[0];
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess;exactOptionalPropertyTypes. Indexed-read primary attribution; exact optional assignment is the second contributing constraint.",,noUncheckedIndexedAccess;exactOptionalPropertyTypes,not assessed: no class 1 rows,,true,"Type 'Type | undefined' is not assignable to type 'Type' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  Type 'undefined' is not assignable to type 'Type'.",
+D071,src/compiler/checker.ts,46114,128,TS2345,"Argument of type 'Type | undefined' is not assignable to parameter of type 'Type'.
+  Type 'undefined' is not assignable to type 'Type'.",2,,createTypeChecker.getIterationTypesOfIterableFast,46100,noUncheckedIndexedAccess,indexed read,"resolver.resolveIterationType(yieldType, /*errorNode*/ undefined)","Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: return setCachedIterationTypes(type, resolver.iterableCacheKey, createIterationTypes(resolver.resolveIterationType(yieldType, /*errorNode*/ undefined) || yieldType, resolver.resolveIterationType(returnType, /*errorNode*/ undefined) || returnType, nextType));
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,"Argument of type 'Type | undefined' is not assignable to parameter of type 'Type'.
+  Type 'undefined' is not assignable to type 'Type'.",
+D072,src/compiler/checker.ts,46114,208,TS2345,"Argument of type 'Type | undefined' is not assignable to parameter of type 'Type'.
+  Type 'undefined' is not assignable to type 'Type'.",2,,createTypeChecker.getIterationTypesOfIterableFast,46100,noUncheckedIndexedAccess,indexed read,"resolver.resolveIterationType(returnType, /*errorNode*/ undefined)","Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: return setCachedIterationTypes(type, resolver.iterableCacheKey, createIterationTypes(resolver.resolveIterationType(yieldType, /*errorNode*/ undefined) || yieldType, resolver.resolveIterationType(returnType, /*errorNode*/ undefined) || returnType, nextType));
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,"Argument of type 'Type | undefined' is not assignable to parameter of type 'Type'.
+  Type 'undefined' is not assignable to type 'Type'.",
+D073,src/compiler/checker.ts,46128,128,TS2345,"Argument of type 'Type | undefined' is not assignable to parameter of type 'Type'.
+  Type 'undefined' is not assignable to type 'Type'.",2,,createTypeChecker.getIterationTypesOfIterableFast,46100,noUncheckedIndexedAccess,indexed read,"resolver.resolveIterationType(yieldType, /*errorNode*/ undefined)","Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: return setCachedIterationTypes(type, resolver.iterableCacheKey, createIterationTypes(resolver.resolveIterationType(yieldType, /*errorNode*/ undefined) || yieldType, resolver.resolveIterationType(returnType, /*errorNode*/ undefined) || returnType, nextType));
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,"Argument of type 'Type | undefined' is not assignable to parameter of type 'Type'.
+  Type 'undefined' is not assignable to type 'Type'.",
+D077,src/compiler/checker.ts,50153,121,TS2532,Object is possibly 'undefined'.,2,,createTypeChecker.getApplicableIndexSymbol,50133,noUncheckedIndexedAccess,indexed read,copy.declarations,"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: copy.parent = type.aliasSymbol ? type.aliasSymbol : type.symbol ? type.symbol : getSymbolAtLocation(copy.declarations[0].parent);
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,Object is possibly 'undefined'.,
+D082,src/compiler/checker.ts,52426,13,TS18048,'parameter' is possibly 'undefined'.,2,,createTypeChecker.checkGrammarIndexSignatureParameters,52415,noUncheckedIndexedAccess,indexed read,parameter.dotDotDotToken,"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: if (parameter.dotDotDotToken) {
+            return grammarErrorOnNode(parameter.dotDotDotToken, Diagnostics.An_index_signature_cannot_have_a_rest_parameter);
+        }
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,'parameter' is possibly 'undefined'.,
+D083,src/compiler/checker.ts,52427,39,TS18048,'parameter' is possibly 'undefined'.,2,,createTypeChecker.checkGrammarIndexSignatureParameters,52415,noUncheckedIndexedAccess,indexed read,parameter.dotDotDotToken,"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: return grammarErrorOnNode(parameter.dotDotDotToken, Diagnostics.An_index_signature_cannot_have_a_rest_parameter);
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,'parameter' is possibly 'undefined'.,
+D084,src/compiler/checker.ts,52429,35,TS2345,"Argument of type 'ParameterDeclaration | undefined' is not assignable to parameter of type 'Node'.
+  Type 'undefined' is not assignable to type 'Node'.",2,,createTypeChecker.checkGrammarIndexSignatureParameters,52415,noUncheckedIndexedAccess,indexed read,hasEffectiveModifiers(parameter),"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: if (hasEffectiveModifiers(parameter)) {
+            return grammarErrorOnNode(parameter.name, Diagnostics.An_index_signature_parameter_cannot_have_an_accessibility_modifier);
+        }
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,"Argument of type 'ParameterDeclaration | undefined' is not assignable to parameter of type 'Node'.
+  Type 'undefined' is not assignable to type 'Node'.",
+D085,src/compiler/checker.ts,52430,39,TS18048,'parameter' is possibly 'undefined'.,2,,createTypeChecker.checkGrammarIndexSignatureParameters,52415,noUncheckedIndexedAccess,indexed read,parameter.name,"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: return grammarErrorOnNode(parameter.name, Diagnostics.An_index_signature_parameter_cannot_have_an_accessibility_modifier);
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,'parameter' is possibly 'undefined'.,
+D086,src/compiler/checker.ts,52432,13,TS18048,'parameter' is possibly 'undefined'.,2,,createTypeChecker.checkGrammarIndexSignatureParameters,52415,noUncheckedIndexedAccess,indexed read,parameter.questionToken,"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: if (parameter.questionToken) {
+            return grammarErrorOnNode(parameter.questionToken, Diagnostics.An_index_signature_parameter_cannot_have_a_question_mark);
+        }
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,'parameter' is possibly 'undefined'.,
+D087,src/compiler/checker.ts,52433,39,TS18048,'parameter' is possibly 'undefined'.,2,,createTypeChecker.checkGrammarIndexSignatureParameters,52415,noUncheckedIndexedAccess,indexed read,parameter.questionToken,"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: return grammarErrorOnNode(parameter.questionToken, Diagnostics.An_index_signature_parameter_cannot_have_a_question_mark);
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,'parameter' is possibly 'undefined'.,
+D088,src/compiler/checker.ts,52435,13,TS18048,'parameter' is possibly 'undefined'.,2,,createTypeChecker.checkGrammarIndexSignatureParameters,52415,noUncheckedIndexedAccess,indexed read,parameter.initializer,"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: if (parameter.initializer) {
+            return grammarErrorOnNode(parameter.name, Diagnostics.An_index_signature_parameter_cannot_have_an_initializer);
+        }
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,'parameter' is possibly 'undefined'.,
+D089,src/compiler/checker.ts,52436,39,TS18048,'parameter' is possibly 'undefined'.,2,,createTypeChecker.checkGrammarIndexSignatureParameters,52415,noUncheckedIndexedAccess,indexed read,parameter.name,"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: return grammarErrorOnNode(parameter.name, Diagnostics.An_index_signature_parameter_cannot_have_an_initializer);
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,'parameter' is possibly 'undefined'.,
+D090,src/compiler/checker.ts,52438,14,TS18048,'parameter' is possibly 'undefined'.,2,,createTypeChecker.checkGrammarIndexSignatureParameters,52415,noUncheckedIndexedAccess,indexed read,parameter.type,"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: if (!parameter.type) {
+            return grammarErrorOnNode(parameter.name, Diagnostics.An_index_signature_parameter_must_have_a_type_annotation);
+        }
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,'parameter' is possibly 'undefined'.,
+D091,src/compiler/checker.ts,52439,39,TS18048,'parameter' is possibly 'undefined'.,2,,createTypeChecker.checkGrammarIndexSignatureParameters,52415,noUncheckedIndexedAccess,indexed read,parameter.name,"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: return grammarErrorOnNode(parameter.name, Diagnostics.An_index_signature_parameter_must_have_a_type_annotation);
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,'parameter' is possibly 'undefined'.,
+D092,src/compiler/checker.ts,52441,42,TS18048,'parameter' is possibly 'undefined'.,2,,createTypeChecker.checkGrammarIndexSignatureParameters,52415,noUncheckedIndexedAccess,indexed read,parameter.type,"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: type = getTypeFromTypeNode(parameter.type)
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,'parameter' is possibly 'undefined'.,
+D093,src/compiler/checker.ts,52443,39,TS18048,'parameter' is possibly 'undefined'.,2,,createTypeChecker.checkGrammarIndexSignatureParameters,52415,noUncheckedIndexedAccess,indexed read,parameter.name,"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: return grammarErrorOnNode(parameter.name, Diagnostics.An_index_signature_parameter_type_cannot_be_a_literal_type_or_generic_type_Consider_using_a_mapped_object_type_instead);
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,'parameter' is possibly 'undefined'.,
+D094,src/compiler/checker.ts,52446,39,TS18048,'parameter' is possibly 'undefined'.,2,,createTypeChecker.checkGrammarIndexSignatureParameters,52415,noUncheckedIndexedAccess,indexed read,parameter.name,"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: return grammarErrorOnNode(parameter.name, Diagnostics.An_index_signature_parameter_type_must_be_string_number_symbol_or_a_template_literal_type);
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,'parameter' is possibly 'undefined'.,
+D107,src/compiler/commandLineParser.ts,2077,79,TS2345,"Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.",2,,parseOptionValue,2039,noUncheckedIndexedAccess,indexed read,args[i],"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: options[opt.name] = validateJsonOptionValue(opt, parseInt(args[i]), errors);
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,"Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.",
+D119,src/compiler/moduleNameResolver.ts,474,36,TS2322,"Type 'MapLike<string[]> | undefined' is not assignable to type 'MapLike<string[]>'.
+  Type 'undefined' is not assignable to type 'MapLike<string[]>'.",2,,getPackageJsonTypesVersionsPaths,461,noUncheckedIndexedAccess,indexed read,paths,"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: return { version: key, paths: typesVersions[key] };
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,"Type 'MapLike<string[]> | undefined' is not assignable to type 'MapLike<string[]>'.
+  Type 'undefined' is not assignable to type 'MapLike<string[]>'.",
+D129,src/compiler/program.ts,4157,64,TS2345,"Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.",2,,createProgram.verifyCompilerOptions,4075,noUncheckedIndexedAccess,indexed read,hasZeroOrOneAsteriskCharacter(subst),"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: if (!hasZeroOrOneAsteriskCharacter(subst)) {
+                                createDiagnosticForOptionPathKeyValue(key, i, Diagnostics.Substitution_0_in_pattern_1_can_have_at_most_one_Asterisk_character, subst, key);
+                            }
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,"Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.",
+D130,src/compiler/program.ts,4160,69,TS2345,"Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.",2,,createProgram.verifyCompilerOptions,4075,noUncheckedIndexedAccess,indexed read,pathIsRelative(subst),"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: if (!options.baseUrl && !pathIsRelative(subst) && !pathIsAbsolute(subst)) {
+                                createDiagnosticForOptionPathKeyValue(key, i, Diagnostics.Non_relative_paths_are_not_allowed_when_baseUrl_is_not_set_Did_you_forget_a_leading_Slash);
+                            }
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,"Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.",
+D131,src/compiler/program.ts,4160,95,TS2345,"Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.",2,,createProgram.verifyCompilerOptions,4075,noUncheckedIndexedAccess,indexed read,pathIsAbsolute(subst),"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: if (!options.baseUrl && !pathIsRelative(subst) && !pathIsAbsolute(subst)) {
+                                createDiagnosticForOptionPathKeyValue(key, i, Diagnostics.Non_relative_paths_are_not_allowed_when_baseUrl_is_not_set_Did_you_forget_a_leading_Slash);
+                            }
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,"Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.",
+D151,src/compiler/sourcemap.ts,216,58,TS2345,"Argument of type 'string | null | undefined' is not assignable to parameter of type 'string | null'.
+  Type 'undefined' is not assignable to type 'string | null'.",2,,createSourceMapGenerator.appendSourceMap,176,noUncheckedIndexedAccess,indexed read,map.sourcesContent,"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: setSourceContent(newSourceIndex, map.sourcesContent[raw.sourceIndex]);
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,"Argument of type 'string | null | undefined' is not assignable to parameter of type 'string | null'.
+  Type 'undefined' is not assignable to type 'string | null'.",
+D155,src/compiler/transformer.ts,367,9,TS2532,Object is possibly 'undefined'.,2,,transformNodes.enableSubstitution,365,noUncheckedIndexedAccess,indexed read,enabledSyntaxKindFeatures[kind],"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: enabledSyntaxKindFeatures[kind] |= SyntaxKindFeatureFlags.Substitution;
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,Object is possibly 'undefined'.,
+D156,src/compiler/transformer.ts,395,9,TS2532,Object is possibly 'undefined'.,2,,transformNodes.enableEmitNotification,393,noUncheckedIndexedAccess,indexed read,enabledSyntaxKindFeatures[kind],"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: enabledSyntaxKindFeatures[kind] |= SyntaxKindFeatureFlags.EmitNotifications;
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,Object is possibly 'undefined'.,
+D157,src/compiler/transformer.ts,563,9,TS2322,"Type 'VariableDeclaration[] | undefined' is not assignable to type 'VariableDeclaration[]'.
+  Type 'undefined' is not assignable to type 'VariableDeclaration[]'.",2,,transformNodes.endLexicalEnvironment,520,noUncheckedIndexedAccess,indexed read,lexicalEnvironmentVariableDeclarations,"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: lexicalEnvironmentVariableDeclarations = lexicalEnvironmentVariableDeclarationsStack[lexicalEnvironmentStackOffset];
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,"Type 'VariableDeclaration[] | undefined' is not assignable to type 'VariableDeclaration[]'.
+  Type 'undefined' is not assignable to type 'VariableDeclaration[]'.",
+D158,src/compiler/transformer.ts,564,9,TS2322,"Type 'FunctionDeclaration[] | undefined' is not assignable to type 'FunctionDeclaration[]'.
+  Type 'undefined' is not assignable to type 'FunctionDeclaration[]'.",2,,transformNodes.endLexicalEnvironment,520,noUncheckedIndexedAccess,indexed read,lexicalEnvironmentFunctionDeclarations,"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: lexicalEnvironmentFunctionDeclarations = lexicalEnvironmentFunctionDeclarationsStack[lexicalEnvironmentStackOffset];
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,"Type 'FunctionDeclaration[] | undefined' is not assignable to type 'FunctionDeclaration[]'.
+  Type 'undefined' is not assignable to type 'FunctionDeclaration[]'.",
+D159,src/compiler/transformer.ts,565,9,TS2322,"Type 'Statement[] | undefined' is not assignable to type 'Statement[]'.
+  Type 'undefined' is not assignable to type 'Statement[]'.",2,,transformNodes.endLexicalEnvironment,520,noUncheckedIndexedAccess,indexed read,lexicalEnvironmentStatements,"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: lexicalEnvironmentStatements = lexicalEnvironmentStatementsStack[lexicalEnvironmentStackOffset];
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,"Type 'Statement[] | undefined' is not assignable to type 'Statement[]'.
+  Type 'undefined' is not assignable to type 'Statement[]'.",
+D160,src/compiler/transformer.ts,614,9,TS2322,"Type 'Identifier[] | undefined' is not assignable to type 'Identifier[]'.
+  Type 'undefined' is not assignable to type 'Identifier[]'.",2,,transformNodes.endBlockScope,600,noUncheckedIndexedAccess,indexed read,blockScopedVariableDeclarations,"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: blockScopedVariableDeclarations = blockScopedVariableDeclarationsStack[blockScopeStackOffset];
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,"Type 'Identifier[] | undefined' is not assignable to type 'Identifier[]'.
+  Type 'undefined' is not assignable to type 'Identifier[]'.",
+D161,src/compiler/transformers/classFields.ts,1835,21,TS2532,Object is possibly 'undefined'.,2,,transformClassFields.visitInNewClassLexicalEnvironment,1796,noUncheckedIndexedAccess,indexed read,privateInstanceMethodsAndAccessors[0],"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: getPrivateIdentifierEnvironment().data.weakSetName = createHoistedVariableForClass(
+                    ""instances"",
+                    privateInstanceMethodsAndAccessors[0].name,
+                );
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,Object is possibly 'undefined'.,
+D162,src/compiler/transformers/classFields.ts,2251,45,TS2538,Type 'undefined' cannot be used as an index type.,2,,transformClassFields.transformConstructorBodyWorker,2249,noUncheckedIndexedAccess,indexed read,statementsIn[superStatementIndex],"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: superStatement = statementsIn[superStatementIndex]
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,Type 'undefined' cannot be used as an index type.,
+D163,src/compiler/transformers/classFields.ts,2252,97,TS18048,'superStatementIndex' is possibly 'undefined'.,2,,transformClassFields.transformConstructorBodyWorker,2249,noUncheckedIndexedAccess,indexed read,"visitNodes(statementsIn, visitor, isStatement, statementOffset, superStatementIndex - statementOffset)","Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: addRange(statementsOut, visitNodes(statementsIn, visitor, isStatement, statementOffset, superStatementIndex - statementOffset));
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,'superStatementIndex' is possibly 'undefined'.,
+D164,src/compiler/transformers/classFields.ts,2253,27,TS18048,'superStatementIndex' is possibly 'undefined'.,2,,transformClassFields.transformConstructorBodyWorker,2249,noUncheckedIndexedAccess,indexed read,superStatementIndex,"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: statementOffset = superStatementIndex + 1;
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,'superStatementIndex' is possibly 'undefined'.,
+D165,src/compiler/transformers/classFields.ts,2297,52,TS2345,"Argument of type 'Node | undefined' is not assignable to parameter of type 'Node'.
+  Type 'undefined' is not assignable to type 'Node'.",2,,transformClassFields.transformConstructorBodyWorker,2249,noUncheckedIndexedAccess,indexed read,getOriginalNode(statement),"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: if (isParameterPropertyDeclaration(getOriginalNode(statement), constructor)) {
+                    statementOffset++;
+                }
+                else {
+                    break;
+                }
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,"Argument of type 'Node | undefined' is not assignable to parameter of type 'Node'.
+  Type 'undefined' is not assignable to type 'Node'.",
+D166,src/compiler/transformers/classFields.ts,2376,56,TS2345,"Argument of type 'Node | undefined' is not assignable to parameter of type 'Node'.
+  Type 'undefined' is not assignable to type 'Node'.",2,,transformClassFields.transformConstructorBody,2311,noUncheckedIndexedAccess,indexed read,getOriginalNode(statement),"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: if (isParameterPropertyDeclaration(getOriginalNode(statement), constructor)) {
+                        statementOffset++;
+                    }
+                    else {
+                        break;
+                    }
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,"Argument of type 'Node | undefined' is not assignable to parameter of type 'Node'.
+  Type 'undefined' is not assignable to type 'Node'.",
+D170,src/compiler/transformers/declarations.ts,1678,110,TS2345,"Argument of type 'ExpressionWithTypeArguments | undefined' is not assignable to parameter of type 'DeclarationDiagnosticProducing'.
+  Type 'undefined' is not assignable to type 'DeclarationDiagnosticProducing'.",2,,transformDeclarations.transformTopLevelDeclaration.heritageClauses,1675,noUncheckedIndexedAccess,indexed read,clause.types,"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: getSymbolAccessibilityDiagnostic = createGetSymbolAccessibilityDiagnosticForNode(clause.types[0]);
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,"Argument of type 'ExpressionWithTypeArguments | undefined' is not assignable to parameter of type 'DeclarationDiagnosticProducing'.
+  Type 'undefined' is not assignable to type 'DeclarationDiagnosticProducing'.",
+D171,src/compiler/transformers/es2015.ts,2803,38,TS2532,Object is possibly 'undefined'.,2,,transformES2015.visitVariableDeclarationList,2780,noUncheckedIndexedAccess,indexed read,node.declarations,"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: if (
+                node.transformFlags & TransformFlags.ContainsBindingPattern
+                && (isBindingPattern(node.declarations[0].name) || isBindingPattern(last(node.declarations).name))
+            ) {
+                setSourceMapRange(declarationList, getRangeUnion(declarations));
+            }
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,Object is possibly 'undefined'.,
+D172,src/compiler/transformers/es2015.ts,3046,64,TS2532,Object is possibly 'undefined'.,2,,transformES2015.convertForOfStatementHead,3021,noUncheckedIndexedAccess,indexed read,declarations[0],"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: setSourceMapRange(declarationList, createRange(declarations[0].pos, last(declarations).end));
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,Object is possibly 'undefined'.,
+D173,src/compiler/transformers/es2015.ts,4437,29,TS2345,"Argument of type 'Statement | undefined' is not assignable to parameter of type 'Statement'.
+  Type 'undefined' is not assignable to type 'Statement'.",2,,transformES2015.visitTypeScriptClassWrapper,4343,noUncheckedIndexedAccess,indexed read,funcStatements[classBodyStart],"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: statements.push(funcStatements[classBodyStart]);
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,"Argument of type 'Statement | undefined' is not assignable to parameter of type 'Statement'.
+  Type 'undefined' is not assignable to type 'Statement'.",
+D174,src/compiler/transformers/es2015.ts,4691,34,TS2532,Object is possibly 'undefined'.,2,,transformES2015.transformAndSpreadElements,4633,noUncheckedIndexedAccess,indexed read,segments[0],"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: startsWithSpread = segments[0].kind !== SpreadSegmentKind.None
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,Object is possibly 'undefined'.,
+D175,src/compiler/transformers/es2015.ts,4693,13,TS2532,Object is possibly 'undefined'.,2,,transformES2015.transformAndSpreadElements,4633,noUncheckedIndexedAccess,indexed read,segments[0],"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: expression: Expression = startsWithSpread ? factory.createArrayLiteralExpression() :
+            segments[0].expression
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,Object is possibly 'undefined'.,
+D178,src/compiler/transformers/es2017.ts,599,86,TS2532,Object is possibly 'undefined'.,2,,transformES2017.visitVariableDeclarationListWithCollidingNames,593,noUncheckedIndexedAccess,indexed read,node.declarations,"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: return visitNode(factory.converters.convertToAssignmentElementTarget(node.declarations[0].name), visitor, isExpression);
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,Object is possibly 'undefined'.,
+D179,src/compiler/transformers/es2017.ts,764,38,TS18048,'outerParameter' is possibly 'undefined'.,2,,transformES2017.transformAsyncFunctionBody,738,noUncheckedIndexedAccess,indexed read,outerParameter.name,"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: Debug.assertNode(outerParameter.name, isIdentifier);
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,'outerParameter' is possibly 'undefined'.,
+D180,src/compiler/transformers/es2017.ts,765,25,TS18048,'originalParameter' is possibly 'undefined'.,2,,transformES2017.transformAsyncFunctionBody,738,noUncheckedIndexedAccess,indexed read,originalParameter.initializer,"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: if (originalParameter.initializer || originalParameter.dotDotDotToken) {
+                        Debug.assert(i === outerParameters.length - 1);
+                        parameterBindings.push(factory.createSpreadElement(outerParameter.name));
+                        break;
+                    }
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,'originalParameter' is possibly 'undefined'.,
+D181,src/compiler/transformers/es2017.ts,765,58,TS18048,'originalParameter' is possibly 'undefined'.,2,,transformES2017.transformAsyncFunctionBody,738,noUncheckedIndexedAccess,indexed read,originalParameter.dotDotDotToken,"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: if (originalParameter.initializer || originalParameter.dotDotDotToken) {
+                        Debug.assert(i === outerParameters.length - 1);
+                        parameterBindings.push(factory.createSpreadElement(outerParameter.name));
+                        break;
+                    }
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,'originalParameter' is possibly 'undefined'.,
+D182,src/compiler/transformers/es2017.ts,767,76,TS18048,'outerParameter' is possibly 'undefined'.,2,,transformES2017.transformAsyncFunctionBody,738,noUncheckedIndexedAccess,indexed read,outerParameter.name,"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: parameterBindings.push(factory.createSpreadElement(outerParameter.name));
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,'outerParameter' is possibly 'undefined'.,
+D183,src/compiler/transformers/es2017.ts,770,44,TS18048,'outerParameter' is possibly 'undefined'.,2,,transformES2017.transformAsyncFunctionBody,738,noUncheckedIndexedAccess,indexed read,outerParameter.name,"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: parameterBindings.push(outerParameter.name);
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,'outerParameter' is possibly 'undefined'.,
+D184,src/compiler/transformers/esDecorators.ts,1164,45,TS2538,Type 'undefined' cannot be used as an index type.,2,,transformESDecorators.transformConstructorBodyWorker,1162,noUncheckedIndexedAccess,indexed read,statementsIn[superStatementIndex],"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: superStatement = statementsIn[superStatementIndex]
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,Type 'undefined' cannot be used as an index type.,
+D185,src/compiler/transformers/esDecorators.ts,1165,97,TS18048,'superStatementIndex' is possibly 'undefined'.,2,,transformESDecorators.transformConstructorBodyWorker,1162,noUncheckedIndexedAccess,indexed read,"visitNodes(statementsIn, visitor, isStatement, statementOffset, superStatementIndex - statementOffset)","Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: addRange(statementsOut, visitNodes(statementsIn, visitor, isStatement, statementOffset, superStatementIndex - statementOffset));
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,'superStatementIndex' is possibly 'undefined'.,
+D186,src/compiler/transformers/esDecorators.ts,1192,80,TS18048,'superStatementIndex' is possibly 'undefined'.,2,,transformESDecorators.transformConstructorBodyWorker,1162,noUncheckedIndexedAccess,indexed read,"visitNodes(statementsIn, visitor, isStatement, superStatementIndex + 1)","Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: addRange(statementsOut, visitNodes(statementsIn, visitor, isStatement, superStatementIndex + 1));
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,'superStatementIndex' is possibly 'undefined'.,
+D189,src/compiler/transformers/esnext.ts,183,34,TS2345,"Argument of type 'Statement | undefined' is not assignable to parameter of type 'Statement'.
+  Type 'undefined' is not assignable to type 'Statement'.",2,,transformESNext.visitSourceFile,128,noUncheckedIndexedAccess,indexed read,getUsingKind(statement),"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: if (getUsingKind(statement) !== UsingKind.None) {
+                    if (pos > prologueCount) {
+                        addRange(topLevelStatements, visitNodes(node.statements, visitor, isStatement, prologueCount, pos - prologueCount));
+                    }
+                    break;
+                }
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,"Argument of type 'Statement | undefined' is not assignable to parameter of type 'Statement'.
+  Type 'undefined' is not assignable to type 'Statement'.",
+D191,src/compiler/transformers/esnext.ts,344,44,TS2345,"Argument of type 'Statement | undefined' is not assignable to parameter of type 'Statement'.
+  Type 'undefined' is not assignable to type 'Statement'.",2,,transformESNext.transformUsingDeclarations,339,noUncheckedIndexedAccess,indexed read,getUsingKind(statement),"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: usingKind = getUsingKind(statement)
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,"Argument of type 'Statement | undefined' is not assignable to parameter of type 'Statement'.
+  Type 'undefined' is not assignable to type 'Statement'.",
+D192,src/compiler/transformers/esnext.ts,384,36,TS2345,"Argument of type 'Statement | undefined' is not assignable to parameter of type 'Node'.
+  Type 'undefined' is not assignable to type 'Node'.",2,,transformESNext.transformUsingDeclarations,339,noUncheckedIndexedAccess,indexed read,visitor(statement),"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: result = visitor(statement)
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,"Argument of type 'Statement | undefined' is not assignable to parameter of type 'Node'.
+  Type 'undefined' is not assignable to type 'Node'.",
+D193,src/compiler/transformers/esnext.ts,767,34,TS2345,"Argument of type 'Statement | undefined' is not assignable to parameter of type 'Node'.
+  Type 'undefined' is not assignable to type 'Node'.",2,,countPrologueStatements,765,noUncheckedIndexedAccess,indexed read,statements[i],"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: if (!isPrologueDirective(statements[i]) && !isCustomPrologue(statements[i])) {
+            return i;
+        }
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,"Argument of type 'Statement | undefined' is not assignable to parameter of type 'Node'.
+  Type 'undefined' is not assignable to type 'Node'.",
+D194,src/compiler/transformers/esnext.ts,767,70,TS2345,"Argument of type 'Statement | undefined' is not assignable to parameter of type 'Statement'.
+  Type 'undefined' is not assignable to type 'Statement'.",2,,countPrologueStatements,765,noUncheckedIndexedAccess,indexed read,statements[i],"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: if (!isPrologueDirective(statements[i]) && !isCustomPrologue(statements[i])) {
+            return i;
+        }
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,"Argument of type 'Statement | undefined' is not assignable to parameter of type 'Statement'.
+  Type 'undefined' is not assignable to type 'Statement'.",
+D195,src/compiler/transformers/generators.ts,1283,39,TS2345,"Argument of type 'Statement | undefined' is not assignable to parameter of type 'Statement'.
+  Type 'undefined' is not assignable to type 'Statement'.",2,,transformGenerators.transformAndEmitStatements,1280,noUncheckedIndexedAccess,indexed read,statements[i],"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: transformAndEmitStatement(statements[i]);
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,"Argument of type 'Statement | undefined' is not assignable to parameter of type 'Statement'.
+  Type 'undefined' is not assignable to type 'Statement'.",
+D196,src/compiler/transformers/generators.ts,1370,35,TS18048,'variable' is possibly 'undefined'.,2,,transformGenerators.transformAndEmitVariableDeclarationList,1356,noUncheckedIndexedAccess,indexed read,variable.initializer,"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: if (containsYield(variable.initializer) && pendingExpressions.length > 0) {
+                    break;
+                }
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,'variable' is possibly 'undefined'.,
+D197,src/compiler/transformers/generators.ts,1374,70,TS2345,"Argument of type 'InitializedVariableDeclaration | undefined' is not assignable to parameter of type 'InitializedVariableDeclaration'.
+  Type 'undefined' is not assignable to type 'InitializedVariableDeclaration'.
+    Type 'undefined' is not assignable to type 'VariableDeclaration'.",2,,transformGenerators.transformAndEmitVariableDeclarationList,1356,noUncheckedIndexedAccess,indexed read,transformInitializedVariable(variable),"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: pendingExpressions.push(transformInitializedVariable(variable));
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,"Argument of type 'InitializedVariableDeclaration | undefined' is not assignable to parameter of type 'InitializedVariableDeclaration'.
+  Type 'undefined' is not assignable to type 'InitializedVariableDeclaration'.
+    Type 'undefined' is not assignable to type 'VariableDeclaration'.",
+D198,src/compiler/transformers/generators.ts,1684,46,TS2532,Object is possibly 'undefined'.,2,,transformGenerators.transformAndEmitForInStatement,1617,noUncheckedIndexedAccess,indexed read,initializer.declarations,"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: variable = factory.cloneNode(initializer.declarations[0].name) as Identifier;
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,Object is possibly 'undefined'.,
+D199,src/compiler/transformers/generators.ts,1729,55,TS2532,Object is possibly 'undefined'.,2,,transformGenerators.visitForInStatement,1705,noUncheckedIndexedAccess,indexed read,initializer.declarations,"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: node = factory.updateForInStatement(node, initializer.declarations[0].name as Identifier, Debug.checkDefined(visitNode(node.expression, visitor, isExpression)), Debug.checkDefined(visitNode(node.statement, visitor, isStatement, factory.liftToBlock)));
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,Object is possibly 'undefined'.,
+D200,src/compiler/transformers/generators.ts,1866,21,TS18048,'clause' is possibly 'undefined'.,2,,transformGenerators.transformAndEmitSwitchStatement,1820,noUncheckedIndexedAccess,indexed read,clause.kind,"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: if (clause.kind === SyntaxKind.DefaultClause && defaultClauseIndex === -1) {
+                    defaultClauseIndex = i;
+                }
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,'clause' is possibly 'undefined'.,
+D201,src/compiler/transformers/generators.ts,1880,25,TS18048,'clause' is possibly 'undefined'.,2,,transformGenerators.transformAndEmitSwitchStatement,1820,noUncheckedIndexedAccess,indexed read,clause.kind,"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: if (clause.kind === SyntaxKind.CaseClause) {
+                        if (containsYield(clause.expression) && pendingClauses.length > 0) {
+                            break;
+                        }
+
+                        pendingClauses.push(
+                            factory.createCaseClause(
+                                Debug.checkDefined(visitNode(clause.expression, visitor, isExpression)),
+                                [
+                                    createInlineBreak(clauseLabels[i], /*location*/ clause.expression),
+                                ],
+                            ),
+                        );
+                    }
+                    else {
+                        defaultClausesSkipped++;
+                    }
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,'clause' is possibly 'undefined'.,
+D202,src/compiler/transformers/generators.ts,1881,43,TS18048,'clause' is possibly 'undefined'.,2,,transformGenerators.transformAndEmitSwitchStatement,1820,noUncheckedIndexedAccess,indexed read,clause.expression,"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: if (containsYield(clause.expression) && pendingClauses.length > 0) {
+                            break;
+                        }
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,'clause' is possibly 'undefined'.,
+D203,src/compiler/transformers/generators.ts,1881,50,TS2339,"Property 'expression' does not exist on type 'CaseOrDefaultClause'.
+  Property 'expression' does not exist on type 'DefaultClause'.",2,,transformGenerators.transformAndEmitSwitchStatement,1820,noUncheckedIndexedAccess,indexed read,clause.expression,"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: if (containsYield(clause.expression) && pendingClauses.length > 0) {
+                            break;
+                        }
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,"Property 'expression' does not exist on type 'CaseOrDefaultClause'.
+  Property 'expression' does not exist on type 'DefaultClause'.",
+D204,src/compiler/transformers/generators.ts,1887,62,TS18048,'clause' is possibly 'undefined'.,2,,transformGenerators.transformAndEmitSwitchStatement,1820,noUncheckedIndexedAccess,indexed read,clause.expression,"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: pendingClauses.push(
+                            factory.createCaseClause(
+                                Debug.checkDefined(visitNode(clause.expression, visitor, isExpression)),
+                                [
+                                    createInlineBreak(clauseLabels[i], /*location*/ clause.expression),
+                                ],
+                            ),
+                        );
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,'clause' is possibly 'undefined'.,
+D205,src/compiler/transformers/generators.ts,1887,69,TS2339,"Property 'expression' does not exist on type 'CaseOrDefaultClause'.
+  Property 'expression' does not exist on type 'DefaultClause'.",2,,transformGenerators.transformAndEmitSwitchStatement,1820,noUncheckedIndexedAccess,indexed read,clause.expression,"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: pendingClauses.push(
+                            factory.createCaseClause(
+                                Debug.checkDefined(visitNode(clause.expression, visitor, isExpression)),
+                                [
+                                    createInlineBreak(clauseLabels[i], /*location*/ clause.expression),
+                                ],
+                            ),
+                        );
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,"Property 'expression' does not exist on type 'CaseOrDefaultClause'.
+  Property 'expression' does not exist on type 'DefaultClause'.",
+D206,src/compiler/transformers/generators.ts,1889,55,TS2345,"Argument of type 'number | undefined' is not assignable to parameter of type 'number'.
+  Type 'undefined' is not assignable to type 'number'.",2,,transformGenerators.transformAndEmitSwitchStatement,1820,noUncheckedIndexedAccess,indexed read,clauseLabels[i],"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: pendingClauses.push(
+                            factory.createCaseClause(
+                                Debug.checkDefined(visitNode(clause.expression, visitor, isExpression)),
+                                [
+                                    createInlineBreak(clauseLabels[i], /*location*/ clause.expression),
+                                ],
+                            ),
+                        );
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,"Argument of type 'number | undefined' is not assignable to parameter of type 'number'.
+  Type 'undefined' is not assignable to type 'number'.",
+D207,src/compiler/transformers/generators.ts,1889,85,TS18048,'clause' is possibly 'undefined'.,2,,transformGenerators.transformAndEmitSwitchStatement,1820,noUncheckedIndexedAccess,indexed read,clause.expression,"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: pendingClauses.push(
+                            factory.createCaseClause(
+                                Debug.checkDefined(visitNode(clause.expression, visitor, isExpression)),
+                                [
+                                    createInlineBreak(clauseLabels[i], /*location*/ clause.expression),
+                                ],
+                            ),
+                        );
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,'clause' is possibly 'undefined'.,
+D208,src/compiler/transformers/generators.ts,1889,92,TS2339,"Property 'expression' does not exist on type 'CaseOrDefaultClause'.
+  Property 'expression' does not exist on type 'DefaultClause'.",2,,transformGenerators.transformAndEmitSwitchStatement,1820,noUncheckedIndexedAccess,indexed read,clause.expression,"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: pendingClauses.push(
+                            factory.createCaseClause(
+                                Debug.checkDefined(visitNode(clause.expression, visitor, isExpression)),
+                                [
+                                    createInlineBreak(clauseLabels[i], /*location*/ clause.expression),
+                                ],
+                            ),
+                        );
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,"Property 'expression' does not exist on type 'CaseOrDefaultClause'.
+  Property 'expression' does not exist on type 'DefaultClause'.",
+D209,src/compiler/transformers/generators.ts,1911,27,TS2345,"Argument of type 'number | undefined' is not assignable to parameter of type 'number'.
+  Type 'undefined' is not assignable to type 'number'.",2,,transformGenerators.transformAndEmitSwitchStatement,1820,noUncheckedIndexedAccess,indexed read,clauseLabels[defaultClauseIndex],"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: emitBreak(clauseLabels[defaultClauseIndex]);
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,"Argument of type 'number | undefined' is not assignable to parameter of type 'number'.
+  Type 'undefined' is not assignable to type 'number'.",
+D210,src/compiler/transformers/generators.ts,1918,27,TS2345,"Argument of type 'number | undefined' is not assignable to parameter of type 'number'.
+  Type 'undefined' is not assignable to type 'number'.",2,,transformGenerators.transformAndEmitSwitchStatement,1820,noUncheckedIndexedAccess,indexed read,clauseLabels[i],"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: markLabel(clauseLabels[i]);
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,"Argument of type 'number | undefined' is not assignable to parameter of type 'number'.
+  Type 'undefined' is not assignable to type 'number'.",
+D211,src/compiler/transformers/generators.ts,1919,44,TS2532,Object is possibly 'undefined'.,2,,transformGenerators.transformAndEmitSwitchStatement,1820,noUncheckedIndexedAccess,indexed read,caseBlock.clauses,"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: transformAndEmitStatements(caseBlock.clauses[i].statements);
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,Object is possibly 'undefined'.,
+D212,src/compiler/transformers/generators.ts,2446,48,TS2345,"Argument of type 'CodeBlock | undefined' is not assignable to parameter of type 'CodeBlock'.
+  Type 'undefined' is not assignable to type 'CodeBlock'.",2,,transformGenerators.hasImmediateContainingLabeledBlock,2443,noUncheckedIndexedAccess,indexed read,supportsLabeledBreakOrContinue(containingBlock),"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: if (supportsLabeledBreakOrContinue(containingBlock)) {
+                if (containingBlock.labelText === labelText) {
+                    return true;
+                }
+            }
+            else {
+                break;
+            }
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,"Argument of type 'CodeBlock | undefined' is not assignable to parameter of type 'CodeBlock'.
+  Type 'undefined' is not assignable to type 'CodeBlock'.",
+D213,src/compiler/transformers/generators.ts,2469,56,TS2345,"Argument of type 'CodeBlock | undefined' is not assignable to parameter of type 'CodeBlock'.
+  Type 'undefined' is not assignable to type 'CodeBlock'.",2,,transformGenerators.findBreakTarget,2464,noUncheckedIndexedAccess,indexed read,supportsLabeledBreakOrContinue(block),"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: if (supportsLabeledBreakOrContinue(block) && block.labelText === labelText) {
+                        return block.breakLabel;
+                    }
+                    else if (supportsUnlabeledBreak(block) && hasImmediateContainingLabeledBlock(labelText, i - 1)) {
+                        return block.breakLabel;
+                    }
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,"Argument of type 'CodeBlock | undefined' is not assignable to parameter of type 'CodeBlock'.
+  Type 'undefined' is not assignable to type 'CodeBlock'.",
+D214,src/compiler/transformers/generators.ts,2472,53,TS2345,"Argument of type 'CodeBlock | undefined' is not assignable to parameter of type 'CodeBlock'.
+  Type 'undefined' is not assignable to type 'CodeBlock'.",2,,transformGenerators.findBreakTarget,2464,noUncheckedIndexedAccess,indexed read,supportsUnlabeledBreak(block),"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: if (supportsUnlabeledBreak(block) && hasImmediateContainingLabeledBlock(labelText, i - 1)) {
+                        return block.breakLabel;
+                    }
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,"Argument of type 'CodeBlock | undefined' is not assignable to parameter of type 'CodeBlock'.
+  Type 'undefined' is not assignable to type 'CodeBlock'.",
+D215,src/compiler/transformers/generators.ts,2480,48,TS2345,"Argument of type 'CodeBlock | undefined' is not assignable to parameter of type 'CodeBlock'.
+  Type 'undefined' is not assignable to type 'CodeBlock'.",2,,transformGenerators.findBreakTarget,2464,noUncheckedIndexedAccess,indexed read,supportsUnlabeledBreak(block),"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: if (supportsUnlabeledBreak(block)) {
+                        return block.breakLabel;
+                    }
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,"Argument of type 'CodeBlock | undefined' is not assignable to parameter of type 'CodeBlock'.
+  Type 'undefined' is not assignable to type 'CodeBlock'.",
+D216,src/compiler/transformers/generators.ts,2499,51,TS2345,"Argument of type 'CodeBlock | undefined' is not assignable to parameter of type 'CodeBlock'.
+  Type 'undefined' is not assignable to type 'CodeBlock'.",2,,transformGenerators.findContinueTarget,2494,noUncheckedIndexedAccess,indexed read,supportsUnlabeledContinue(block),"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: if (supportsUnlabeledContinue(block) && hasImmediateContainingLabeledBlock(labelText, i - 1)) {
+                        return block.continueLabel;
+                    }
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,"Argument of type 'CodeBlock | undefined' is not assignable to parameter of type 'CodeBlock'.
+  Type 'undefined' is not assignable to type 'CodeBlock'.",
+D217,src/compiler/transformers/generators.ts,2507,51,TS2345,"Argument of type 'CodeBlock | undefined' is not assignable to parameter of type 'CodeBlock'.
+  Type 'undefined' is not assignable to type 'CodeBlock'.",2,,transformGenerators.findContinueTarget,2494,noUncheckedIndexedAccess,indexed read,supportsUnlabeledContinue(block),"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: if (supportsUnlabeledContinue(block)) {
+                        return block.continueLabel;
+                    }
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,"Argument of type 'CodeBlock | undefined' is not assignable to parameter of type 'CodeBlock'.
+  Type 'undefined' is not assignable to type 'CodeBlock'.",
+D218,src/compiler/transformers/generators.ts,2880,63,TS18048,'withBlock' is possibly 'undefined'.,2,,transformGenerators.appendLabel,2869,noUncheckedIndexedAccess,indexed read,withBlock.expression,"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: statements = [factory.createWithStatement(withBlock.expression, factory.createBlock(statements))];
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,'withBlock' is possibly 'undefined'.,
+D219,src/compiler/transformers/generators.ts,2951,21,TS2532,Object is possibly 'undefined'.,2,,transformGenerators.tryEnterLabel,2936,noUncheckedIndexedAccess,indexed read,labelNumbers[labelNumber],"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: labelNumbers[labelNumber].push(label);
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,Object is possibly 'undefined'.,
+D220,src/compiler/transformers/generators.ts,2983,57,TS2532,Object is possibly 'undefined'.,2,,transformGenerators.tryEnterOrLeaveBlock,2981,noUncheckedIndexedAccess,indexed read,blockOffsets![blockIndex],"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: for (; blockIndex < blockActions!.length && blockOffsets![blockIndex] <= operationIndex; blockIndex++) {
+                const block: CodeBlock = blocks[blockIndex];
+                const blockAction = blockActions![blockIndex];
+                switch (block.kind) {
+                    case CodeBlockKind.Exception:
+                        if (blockAction === BlockAction.Open) {
+                            if (!exceptionBlockStack) {
+                                exceptionBlockStack = [];
+                            }
+
+                            if (!statements) {
+                                statements = [];
+                            }
+
+                            exceptionBlockStack.push(currentExceptionBlock!);
+                            currentExceptionBlock = block;
+                        }
+                        else if (blockAction === BlockAction.Close) {
+                            currentExceptionBlock = exceptionBlockStack!.pop();
+                        }
+                        break;
+                    case CodeBlockKind.With:
+                        if (blockAction === BlockAction.Open) {
+                            if (!withBlockStack) {
+                                withBlockStack = [];
+                            }
+
+                            withBlockStack.push(block);
+                        }
+                        else if (blockAction === BlockAction.Close) {
+                            withBlockStack!.pop();
+                        }
+                        break;
+                        // default: do nothing
+                }
+            }
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,Object is possibly 'undefined'.,
+D221,src/compiler/transformers/generators.ts,2984,23,TS2322,"Type 'CodeBlock | undefined' is not assignable to type 'CodeBlock'.
+  Type 'undefined' is not assignable to type 'CodeBlock'.",2,,transformGenerators.tryEnterOrLeaveBlock,2981,noUncheckedIndexedAccess,indexed read,block,"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: block: CodeBlock = blocks[blockIndex]
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,"Type 'CodeBlock | undefined' is not assignable to type 'CodeBlock'.
+  Type 'undefined' is not assignable to type 'CodeBlock'.",
+D225,src/compiler/transformers/jsx.ts,309,58,TS2345,"Argument of type 'JsxChild | undefined' is not assignable to parameter of type 'JsxChild'.
+  Type 'undefined' is not assignable to type 'JsxChild'.",2,,transformJsx.convertJsxChildrenToChildrenPropAssignment,306,noUncheckedIndexedAccess,indexed read,nonWhitespaceChildren[0],"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: result = transformJsxChildToExpression(nonWhitespaceChildren[0])
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,"Argument of type 'JsxChild | undefined' is not assignable to parameter of type 'JsxChild'.
+  Type 'undefined' is not assignable to type 'JsxChild'.",
+D226,src/compiler/transformers/jsx.ts,502,62,TS2345,"Argument of type 'Expression | undefined' is not assignable to parameter of type 'Node'.
+  Type 'undefined' is not assignable to type 'Node'.",2,,transformJsx.transformJsxAttributesToExpression,470,noUncheckedIndexedAccess,indexed read,expressions[0],"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: if (expressions.length && !isObjectLiteralExpression(expressions[0])) {
+            // We must always emit at least one object literal before a spread attribute
+            // as the JSX always factory expects a fresh object, so we need to make a copy here
+            // we also avoid mutating an external reference by doing this (first expression is used as assign's target)
+            expressions.unshift(factory.createObjectLiteralExpression());
+        }
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,"Argument of type 'Expression | undefined' is not assignable to parameter of type 'Node'.
+  Type 'undefined' is not assignable to type 'Node'.",
+D227,src/compiler/transformers/module/esnextAnd2015.ts,100,46,TS2345,"Argument of type 'Expression | undefined' is not assignable to parameter of type 'FileReference | Node'.
+  Type 'undefined' is not assignable to type 'FileReference | Node'.",2,,transformECMAScriptModule.transformSourceFile,99,noUncheckedIndexedAccess,indexed read,node.arguments,"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: if (!isStringLiteralLike(node.arguments[0]) || shouldRewriteModuleSpecifier(node.arguments[0].text, compilerOptions)) {
+                        importsAndRequiresToRewriteOrShim = append(importsAndRequiresToRewriteOrShim, node);
+                    }
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,"Argument of type 'Expression | undefined' is not assignable to parameter of type 'Node | FileReference'.
+  Type 'undefined' is not assignable to type 'Node | FileReference'.",
+D228,src/compiler/transformers/module/esnextAnd2015.ts,163,91,TS2345,"Argument of type 'CallExpression | undefined' is not assignable to parameter of type 'TextRange'.
+  Type 'undefined' is not assignable to type 'TextRange'.",2,,transformECMAScriptModule.visitor,143,noUncheckedIndexedAccess,indexed read,importsAndRequiresToRewriteOrShim[0],"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: if (importsAndRequiresToRewriteOrShim?.length && rangeContainsRange(node, importsAndRequiresToRewriteOrShim[0])) {
+                    return visitEachChild(node, visitor, context);
+                }
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,"Argument of type 'CallExpression | undefined' is not assignable to parameter of type 'TextRange'.
+  Type 'undefined' is not assignable to type 'TextRange'.",
+D229,src/compiler/transformers/module/esnextAnd2015.ts,194,37,TS2345,"Argument of type 'Expression | undefined' is not assignable to parameter of type 'FileReference | Node'.
+  Type 'undefined' is not assignable to type 'FileReference | Node'.",2,,transformECMAScriptModule.visitImportOrRequireCall,188,noUncheckedIndexedAccess,indexed read,node.arguments,"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: return factory.updateCallExpression(
+            node,
+            node.expression,
+            node.typeArguments,
+            [
+                isStringLiteralLike(node.arguments[0])
+                    ? rewriteModuleSpecifier(node.arguments[0], compilerOptions)
+                    : emitHelpers().createRewriteRelativeImportExtensionsHelper(node.arguments[0]),
+                ...node.arguments.slice(1),
+            ],
+        );
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,"Argument of type 'Expression | undefined' is not assignable to parameter of type 'Node | FileReference'.
+  Type 'undefined' is not assignable to type 'Node | FileReference'.",
+D230,src/compiler/transformers/module/esnextAnd2015.ts,196,81,TS2345,"Argument of type 'Expression | undefined' is not assignable to parameter of type 'Expression'.
+  Type 'undefined' is not assignable to type 'Expression'.",2,,transformECMAScriptModule.visitImportOrRequireCall,188,noUncheckedIndexedAccess,indexed read,node.arguments,"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: return factory.updateCallExpression(
+            node,
+            node.expression,
+            node.typeArguments,
+            [
+                isStringLiteralLike(node.arguments[0])
+                    ? rewriteModuleSpecifier(node.arguments[0], compilerOptions)
+                    : emitHelpers().createRewriteRelativeImportExtensionsHelper(node.arguments[0]),
+                ...node.arguments.slice(1),
+            ],
+        );
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,"Argument of type 'Expression | undefined' is not assignable to parameter of type 'Expression'.
+  Type 'undefined' is not assignable to type 'Expression'.",
+D231,src/compiler/transformers/module/esnextAnd2015.ts,251,22,TS2532,Object is possibly 'undefined'.,2,,transformECMAScriptModule.createRequireCall,207,noUncheckedIndexedAccess,indexed read,importRequireStatements[1],"Unchecked element/index-signature read contributes undefined, directly or through a local/result.","Adapted source: name = importRequireStatements[1].declarationList.declarations[0].name
+2026-10-08 project-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",,noUncheckedIndexedAccess,not assessed: no class 1 rows,,true,Object is possibly 'undefined'.,

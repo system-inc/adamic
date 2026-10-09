@@ -1,0 +1,11 @@
+@theme {
+    /* Colour keys outside the framework palette, one with a double dash. */
+    --color-brand: #0f766e;
+    --color-x--2: #1e293b;
+
+    /* The scales behind the two roots declared both ways in utilities.css. */
+    --pane-narrow: 12rem;
+    --pane-wide: 40rem;
+    --rail-thin: 1px;
+    --rail-thick: 4px;
+}

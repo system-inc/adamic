@@ -1,0 +1,24 @@
+{
+    "rule": "nexus/correctness-no-import-cycle-load-time-read",
+    "firing": {
+        "file": "/repository/source/A.ts",
+        "source": "export const fromA = 1;\nexport type FromAType = number;\ndeclare function use(value: unknown): void;\nimport DefaultThing from './B';\nuse(DefaultThing);\n",
+        "findings": [
+            {
+                "line": 5,
+                "column": 5,
+                "endLine": 5,
+                "endColumn": 17,
+                "messageId": "loadTimeReadInImportCycle",
+                "message": "`default` is read while this module loads, and it is declared in `B.ts`, which is in an import cycle with this file (A.ts → B.ts → A.ts). If `B.ts` is loaded first, this line runs before `default` is initialized and throws `Cannot access 'default' before initialization`. Break the cycle, or move the read into a function that runs after load."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/A.ts",
+        "source": "export const fromA = 1;\nexport type FromAType = number;\ndeclare function use(value: unknown): void;\nimport * as b from './B';\nuse(b);\n"
+    },
+    "assertedMessageIds": [
+        "loadTimeReadInImportCycle"
+    ]
+}

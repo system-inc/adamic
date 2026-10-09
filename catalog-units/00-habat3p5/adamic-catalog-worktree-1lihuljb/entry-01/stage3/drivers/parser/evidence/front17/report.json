@@ -1,0 +1,40 @@
+{
+  "status": "requested adapted isArray runtime probe green",
+  "scratch_head": "80aef6975133d8a2dcf147c684b1ad1225bc525c",
+  "inputs": [
+    {
+      "ref": "scratch base",
+      "sha": "e54b417988a8165a06ec21d5e8d746a719781320",
+      "scratch_contains": true
+    },
+    {
+      "ref": "codex/host-blockers",
+      "sha": "a85a9cb194bdfb1bac962d5529d019762b09a389",
+      "scratch_contains": true
+    }
+  ],
+  "compiler_final_exit": 0,
+  "signature_change": "Only parameter annotation any -> unknown in native-array-is-array-predicate.a, expressly sanctioned and consistent with adaptation 40; statements unchanged. Validated slice source unchanged.",
+  "pinned_typescript": "6.0.3",
+  "emitted_javascript_cmp": 0,
+  "erasure_guard_mutant": "Negate actual return expression; emitted JavaScript comparison exits 1",
+  "native_byte_mutant_cmp": 1,
+  "probe_report": "probe/report.json",
+  "tests": {
+    "command": "GOWORK=off TMPDIR=/workspace/scratch/parser-build-tmp go test ./internal/lower -run 'TestArrayPredicate|TestUnknownArrayPredicate' -count=1",
+    "exit": 0,
+    "output": "ok  \tgithub.com/system-inc/adamic/internal/lower\t0.356s\n"
+  },
+  "merge_conflicts": [
+    "Predicate proof: merge trusted Array.isArray check and member narrowing into current predicateFlowProof/predicateFlowPath names, preserving admitted generic instantiation and existing concrete flow proof. No proof bypass.",
+    "Expression/type dispatch: preserve current numeric enum identity, Buffer/fs/process, detached own-property, records, phantom and namespace paths; add opaque unknown array handling and arrayPredicateObservedType. Retain current localRead checked module/union/readiness helper while using observed array types.",
+    "Locals: combine incoming evolving-object inference with namespace var readiness and detached-own alias markers. Keep current module initialization order and enum registration rather than older incoming enum algorithm.",
+    "Calls: add arrayIsArray and optionalJoin without dropping existing Node and detached-own dispatch. Keep current enumExpression path instead of stale enumElement call (initial build failed on undefined helper; corrected).",
+    "Taste label/void conflicts: combine IR ForOf ViewRead and Labels fields; retain Break.Depth alongside new Label; take incoming label handlers and flow label lookup, preserving native breakable depth in cleanup calls. Add void handling without removing non-null expression statements.",
+    "Refusal pass: retain namespace, records, pinned Node, checked cast preflight and phantom checks; remove old void refusal for incoming ruled void lowering. Preserve landed fallthrough/implicit-return loader options.",
+    "Export handler: remove duplicate old ExportDeclaration switch case, keeping incoming named-export handler. Initial duplicate-case build error retained. Counts/docs combine existing/incoming content; no counts gate claimed."
+  ],
+  "full_slice": "Held for lane 2. No full slice, all-eleven-probe or parser-reference rerun. Last observed real slice stop core.ts:204:12.",
+  "scope": "Only row 8 rerun on adapted signature; historical probe counts are not newly validated. Runtime coverage is direct isArray on array and object. Other imported taste paths not comprehensively tested.",
+  "limits": "No full gate, complete oracle, counts gate or sanitizer run. Compiler changes remain in scratch and unpushed; only parser evidence and approved probe signature committed."
+}

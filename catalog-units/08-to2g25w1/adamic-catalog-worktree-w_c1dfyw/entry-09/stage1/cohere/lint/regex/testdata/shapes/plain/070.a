@@ -1,0 +1,14 @@
+// tailwind/collapse/utility_nodes.go:140; `\s+`
+import { observe } from '../observe.a';
+const pattern = "[ \\t\\n\\f\\r]+";
+const flags = "gu";
+const regex = new RegExp(pattern, flags);
+observe(regex, "", 0);
+observe(regex, "🌍", 1);
+observe(regex, "TODO\n", 2);
+observe(regex, " TODO", 3);
+observe(regex, "\t", 4);
+observe(regex, "x\t", 5);
+observe(regex, "\t\n", 6);
+observe(regex, "foo\r", 7);
+observe(regex, "a\nb", 8);

@@ -1,0 +1,25 @@
+{
+    "rule": "no-unsafe-optional-chaining",
+    "firing": {
+        "file": "/repository/source/Chain.ts",
+        "source": "(obj?.foo)();",
+        "findings": [
+            {
+                "line": 1,
+                "column": 2,
+                "endLine": 1,
+                "endColumn": 10,
+                "messageId": "unsafeOptionalChain",
+                "message": "This optional chain can evaluate to `undefined`, and the code around it then reaches into that `undefined` rather than short-circuiting with it. The `?.` protects only the links inside its own chain: once the chain ends, the result is an ordinary value and the next access, call, spread, or destructuring throws a TypeError. Either extend the chain so the whole expression short-circuits, or supply a fallback with `??`."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/Chain.ts",
+        "source": "var foo;"
+    },
+    "assertedMessageIds": [
+        "unsafeArithmetic",
+        "unsafeOptionalChain"
+    ]
+}

@@ -1,0 +1,56 @@
+function makeGreeter(greeting: string): (name: string) => string {
+	let count = 0;
+	return (name) => {
+		count += 1;
+		greeting = greeting + '!';
+		return `${greeting} ${name} #${count}`;
+	};
+}
+
+const hello = makeGreeter('hello');
+console.log(hello('Kirk'));
+console.log(hello('Ahra'));
+
+function adder(base: number): (value: number) => (scale: number) => number {
+	return (value) => (scale) => (base + value) * scale;
+}
+
+console.log(`${adder(1)(2)(3)} ${adder(10)(0)(2)}`);
+
+let total = 0;
+const record = (amount: number): void => {
+	total += amount;
+};
+record(5);
+record(7);
+console.log(`${total}`);
+
+const words = ['a', 'bb', 'ccc'];
+const lengths = words.map((word, index) => word.length * 10 + index);
+console.log(lengths.join(' '));
+
+const labels: (() => string)[] = [];
+for (let index = 0; index < 3; index += 1) {
+	const label = `#${index}`;
+	labels.push(() => `${label}${index}`);
+	if (index === 1) {
+		continue;
+	}
+}
+console.log(labels.map((made) => made()).join(' '));
+
+class Tally {
+	private sum = 0;
+
+	adder(): (amount: number) => number {
+		return (amount) => {
+			this.sum = this.sum + amount;
+			return this.sum;
+		};
+	}
+}
+
+const tally = new Tally();
+const add = tally.adder();
+add(2);
+console.log(`${add(3)}`);

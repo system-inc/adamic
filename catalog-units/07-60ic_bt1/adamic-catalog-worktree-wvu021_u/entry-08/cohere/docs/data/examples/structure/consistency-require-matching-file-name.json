@@ -1,0 +1,24 @@
+{
+    "rule": "structure/consistency-require-matching-file-name",
+    "firing": {
+        "file": "/repository/source/components/Table.tsx",
+        "source": "export const TableRow = () => <div />;\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 14,
+                "endLine": 1,
+                "endColumn": 22,
+                "messageId": "requireMatchingFileName",
+                "message": "`TableRow` is the only component in `Table.tsx`, and the file is not named for it. With one component per file, the file name is how a reader finds a component and the component name is how they know what a file holds, and that only works as an index when the two match exactly, case included. Rename the file to `TableRow.tsx`, or rename the component to `Table` if the file's name is the right one."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/components/Toggle.tsx",
+        "source": "let Button;\n"
+    },
+    "assertedMessageIds": [
+        "requireMatchingFileName"
+    ]
+}

@@ -1,0 +1,13 @@
+=== RUN   TestRulesAgree
+    lint_test.go:276: cohere cases: 873 unique source/rule/options combinations
+    lint_test.go:303: Go, Node, native identical: 578745 bytes
+--- PASS: TestRulesAgree (21.52s)
+=== RUN   TestCompilerAndStage1Agree
+    lint_test.go:339: compiler and stage1: 161 files
+    lint_test.go:340: Go, Node, native identical: 15550195 bytes
+--- PASS: TestCompilerAndStage1Agree (37.43s)
+=== RUN   TestProfileArtifacts
+    profile_test.go:114: release, counted and -O2 -g profiling builds saved in /workspace/scratch/lint-perf/3-filled-masks
+--- PASS: TestProfileArtifacts (18.78s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	77.731s

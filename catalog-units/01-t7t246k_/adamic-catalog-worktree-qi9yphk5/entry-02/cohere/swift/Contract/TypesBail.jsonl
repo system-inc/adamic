@@ -1,0 +1,9 @@
+{"kind":"provenance","contract":3,"engine":"cohere-swift","version":"0.1.0","commit":"dev","sourceTreeModified":false,"toolchain":"swiftlang-6.4.0.34.1","swiftSyntax":"604.0.0","swiftFormat":"604.0.0"}
+{"kind":"project","root":"/project","package":"Example","elapsedMilliseconds":405,"filesInPackage":2,"filesOurs":2,"filesInScope":2,"scopeDescription":"","targets":[{"name":"Example","kind":"library","files":2,"languageMode":"6"}],"excluded":[]}
+{"kind":"phase","name":"fix","outcome":"skipped","elapsedMilliseconds":0,"detail":"--no-fix"}
+{"kind":"finding","source":"compiler","file":"/project/Sources/Example/Broken.swift","line":3,"column":23,"endLine":3,"endColumn":29,"severity":"error","rule":"","messageId":"cannot_convert_initializer_value","message":"cannot convert value of type 'String' to specified type 'Int'","fixes":[],"suggestions":[]}
+{"kind":"types","diagnostics":1,"files":2,"elapsedMilliseconds":1500,"filesWithoutRecord":[],"build":"swift build, scratch /cache/cohere/swift/0000"}
+{"kind":"phase","name":"types","outcome":"ran","elapsedMilliseconds":1500,"detail":""}
+{"kind":"phase","name":"lint","outcome":"notReached","elapsedMilliseconds":0,"detail":"types bailed: 1 type errors — lint findings against wrong semantics are noise"}
+{"kind":"phase","name":"unused","outcome":"skipped","elapsedMilliseconds":0,"detail":"not requested — this is a report, ask for it with --unused"}
+{"kind":"summary","findings":1,"complete":false,"exitCode":1}

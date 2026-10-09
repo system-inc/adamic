@@ -1,0 +1,26 @@
+{
+    "rule": "structure/network-require-hook-options-parameter",
+    "firing": {
+        "file": "/repository/source/api/UserRequest.ts",
+        "source": "import { networkService } from './NetworkService.ts';\ndeclare const Document: unknown;\ntype InferUseGraphQlQueryOptions<T> = { enabled?: boolean; document?: T };\ntype InferUseGraphQlMutationOptions<T> = { onSuccess?: () => void; document?: T };\ntype OtherOptionsType = { enabled?: boolean };\ntype UserQueryVariablesType = { identifier: string };\nexport function useUserRequest() {\n    return networkService.useGraphQlQuery(Document);\n}\n",
+        "findings": [
+            {
+                "line": 7,
+                "column": 1,
+                "endLine": 9,
+                "endColumn": 2,
+                "messageId": "missingOptionsParameter",
+                "message": "This hook wraps a NetworkService query or mutation but takes no options parameter, so a caller cannot reach anything the underlying call supports: no enabling and disabling, no cache policy, no success or error handler. The wrapper becomes a narrower thing than what it wraps, and the only repair available to a caller is to stop using it. Accept an options parameter last and forward it."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/api/UserRequest.ts",
+        "source": "import { networkService } from './NetworkService.ts';\ndeclare const Document: unknown;\ntype InferUseGraphQlQueryOptions<T> = { enabled?: boolean; document?: T };\ntype InferUseGraphQlMutationOptions<T> = { onSuccess?: () => void; document?: T };\ntype OtherOptionsType = { enabled?: boolean };\ntype UserQueryVariablesType = { identifier: string };\nexport const value = 1;\n"
+    },
+    "assertedMessageIds": [
+        "incorrectOptionsParameterType",
+        "missingOptionsParameter",
+        "optionsParameterNotPassedThrough"
+    ]
+}

@@ -1,0 +1,27 @@
+{
+    "rule": "@typescript-eslint/no-extra-non-null-assertion",
+    "firing": {
+        "file": "/repository/source/Thing.ts",
+        "source": "declare const foo: any;\nexport const r = foo!!;\n",
+        "findings": [
+            {
+                "line": 2,
+                "column": 18,
+                "endLine": 2,
+                "endColumn": 22,
+                "messageId": "noExtraNonNullAssertion",
+                "message": "This non-null assertion is redundant: the value it asserts on has already been asserted non-null, or is about to be checked at runtime by the `?.` that follows it. Either way the second `!` narrows nothing the first one did not, so it is noise that reads as a claim. Remove it.",
+                "fix": true
+            }
+        ],
+        "fixedSource": "declare const foo: any;\nexport const r = foo!;\n"
+    },
+    "clean": {
+        "file": "/repository/source/Thing.ts",
+        "source": "export let value!: number;\n"
+    },
+    "assertedMessageIds": [
+        "noExtraNonNullAssertion"
+    ],
+    "assertsFix": true
+}

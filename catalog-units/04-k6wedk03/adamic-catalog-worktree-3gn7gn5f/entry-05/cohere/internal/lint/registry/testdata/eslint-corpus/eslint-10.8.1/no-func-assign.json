@@ -1,0 +1,17 @@
+[
+{"code":"function foo() { var foo = bar; }","eslint":[]},
+{"code":"function foo(foo) { foo = bar; }","eslint":[]},
+{"code":"function foo() { var foo; foo = bar; }","eslint":[]},
+{"code":"var foo = () => {}; foo = bar;","eslint":[]},
+{"code":"var foo = function() {}; foo = bar;","eslint":[]},
+{"code":"var foo = function() { foo = bar; };","eslint":[]},
+{"code":"import bar from 'bar'; function foo() { var foo = bar; }","eslint":[]},
+{"code":"function foo() {}; foo = bar;","eslint":[["isAFunction",19,22]]},
+{"code":"function foo() { foo = bar; }","eslint":[["isAFunction",17,20]]},
+{"code":"foo = bar; function foo() { };","eslint":[["isAFunction",0,3]]},
+{"code":"[foo] = bar; function foo() { };","eslint":[["isAFunction",1,4]]},
+{"code":"({x: foo = 0} = bar); function foo() { };","eslint":[["isAFunction",5,8]]},
+{"code":"function foo() { [foo] = bar; }","eslint":[["isAFunction",18,21]]},
+{"code":"(function() { ({x: foo = 0} = bar); function foo() { }; })();","eslint":[["isAFunction",19,22]]},
+{"code":"var a = function foo() { foo = 123; };","eslint":[["isAFunction",25,28]]}
+]

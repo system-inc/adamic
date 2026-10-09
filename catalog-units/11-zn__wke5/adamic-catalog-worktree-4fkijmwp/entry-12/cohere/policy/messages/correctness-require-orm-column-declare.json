@@ -1,0 +1,10 @@
+{
+  "rules": {
+    "TypeScript": "base/correctness-require-orm-column-declare"
+  },
+  "messages": {
+    "missingDeclare": {
+      "text": "Property '{{propertyName}}' decorated with @{{decoratorName}}() must use 'declare' (e.g. `declare {{propertyName}}: ...`)"
+    }
+  }
+}

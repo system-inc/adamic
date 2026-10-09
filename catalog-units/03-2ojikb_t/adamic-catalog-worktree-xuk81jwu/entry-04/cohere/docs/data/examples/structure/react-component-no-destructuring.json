@@ -1,0 +1,28 @@
+{
+    "rule": "structure/react-component-no-destructuring",
+    "firing": {
+        "file": "/repository/source/components/Button.tsx",
+        "source": "import React from 'react';\ndeclare function useImperativeHandle(reference: unknown, create: () => unknown): void;\nexport const Button = ({ label }: { label: string }) => <button>{label}</button>;\n",
+        "findings": [
+            {
+                "line": 3,
+                "column": 24,
+                "endLine": 3,
+                "endColumn": 33,
+                "messageId": "noDestructuring",
+                "message": "This destructures a component's properties without gathering a rest. Reading properties.name at each use keeps the origin of a value visible: a bare `label` could come from anywhere, while `properties.label` says where it came from and survives a rename of the parameter. Destructuring is allowed only where it earns its keep, gathering the remaining properties to spread onto an element."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/components/Button.tsx",
+        "source": "import React from 'react';\ndeclare function useImperativeHandle(reference: unknown, create: () => unknown): void;\nexport function Button() {\n    return <button />;\n}\n"
+    },
+    "assertedMessageIds": [
+        "noDestructuring",
+        "noDestructuringFromPropsSource",
+        "requirePropertiesSuffix",
+        "semanticSpreadName",
+        "spreadMustBeUsed"
+    ]
+}

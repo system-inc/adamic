@@ -1,0 +1,26 @@
+{
+    "rule": "no-object-constructor",
+    "firing": {
+        "file": "/repository/source/ObjectConstructor.ts",
+        "source": "Object();\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 1,
+                "endLine": 1,
+                "endColumn": 9,
+                "messageId": "preferLiteral",
+                "message": "This calls the `Object` constructor with no argument, which builds the same empty object `{}` builds, more slowly and less legibly. The constructor form also does something different from what it looks like when it is given an argument, since `Object(x)` returns `x` itself rather than a copy, so a reader has to check the argument list before knowing what the line means. Write the literal.",
+                "suggestions": 1
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/ObjectConstructor.ts",
+        "source": "Object(x)\n"
+    },
+    "assertedMessageIds": [
+        "preferLiteral"
+    ],
+    "assertsSuggestion": true
+}

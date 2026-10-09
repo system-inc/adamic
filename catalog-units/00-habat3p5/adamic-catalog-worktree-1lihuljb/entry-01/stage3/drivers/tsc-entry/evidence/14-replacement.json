@@ -1,0 +1,10 @@
+{
+  "file": "/tmp/tsc-entry-progress-src/compiler/checker.ts",
+  "line": 12579,
+  "column": 13,
+  "function": "getTypeOfAlias",
+  "start": 728525,
+  "end": 730190,
+  "original": "{\r\n        const links = getSymbolLinks(symbol);\r\n        if (!links.type) {\r\n            if (!pushTypeResolution(symbol, TypeSystemPropertyName.Type)) {\r\n                return errorType;\r\n            }\r\n            const targetSymbol = resolveAlias(symbol);\r\n            const exportSymbol = symbol.declarations && getTargetOfAliasDeclaration(getDeclarationOfAliasSymbol(symbol)!, /*dontRecursivelyResolve*/ true);\r\n            const declaredType = firstDefined(exportSymbol?.declarations, d => isExportAssignment(d) ? tryGetTypeFromEffectiveTypeNode(d) : undefined);\r\n\r\n            // It only makes sense to get the type of a value symbol. If the result of resolving\r\n            // the alias is not a value, then it has no type. To get the type associated with a\r\n            // type symbol, call getDeclaredTypeOfSymbol.\r\n            // This check is important because without it, a call to getTypeOfSymbol could end\r\n            // up recursively calling getTypeOfAlias, causing a stack overflow.\r\n            links.type ??= exportSymbol?.declarations && isDuplicatedCommonJSExport(exportSymbol.declarations) && symbol.declarations!.length ? getFlowTypeFromCommonJSExport(exportSymbol)\r\n                : isDuplicatedCommonJSExport(symbol.declarations) ? autoType\r\n                : declaredType ? declaredType\r\n                : getSymbolFlags(targetSymbol) & SymbolFlags.Value ? getTypeOfSymbol(targetSymbol)\r\n                : errorType;\r\n\r\n            if (!popTypeResolution()) {\r\n                reportCircularityError(exportSymbol ?? symbol);\r\n                return links.type ??= errorType;\r\n            }\r\n        }\r\n        return links.type;\r\n    }",
+  "replacement": "{ throw new Error(\"tsc-entry scratch placeholder\"); }"
+}

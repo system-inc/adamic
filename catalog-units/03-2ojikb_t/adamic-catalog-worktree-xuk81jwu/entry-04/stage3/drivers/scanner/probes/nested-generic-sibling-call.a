@@ -1,0 +1,8 @@
+// Reduced from TypeScript 6.0.3, src/compiler/scanner.ts:2604
+function outer(): void {
+    function worker(): void { console.log("x"); }
+    function scanRange<T>(callback: () => T): T { return callback(); }
+    function scan(): void { scanRange(() => worker()); }
+    scan();
+}
+outer();

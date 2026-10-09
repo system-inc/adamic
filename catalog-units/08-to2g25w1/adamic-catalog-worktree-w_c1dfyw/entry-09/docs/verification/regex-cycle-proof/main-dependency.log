@@ -1,0 +1,7 @@
+=== RUN   TestRegexCycleFixtureHasItsNativeDependency
+=== PAUSE TestRegexCycleFixtureHasItsNativeDependency
+=== CONT  TestRegexCycleFixtureHasItsNativeDependency
+    regexp_cycle_test.go:32: native regex lowering/emission is on codex/stage1-css; run this fixture on the scratch merge
+--- SKIP: TestRegexCycleFixtureHasItsNativeDependency (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/internal/oracle	0.005s

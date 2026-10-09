@@ -1,0 +1,24 @@
+{
+    "rule": "no-const-assign",
+    "firing": {
+        "file": "/repository/source/ConstAssign.ts",
+        "source": "const x = 0; ++x;\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 16,
+                "endLine": 1,
+                "endColumn": 17,
+                "messageId": "noConstAssign",
+                "message": "This assigns to a binding declared `const`, `using`, or `await using`, which is immutable. The assignment throws a TypeError at runtime rather than storing anything, so the line does not do what it reads as doing and everything after it in that function is skipped. TypeScript reports this too, but only where the file is type checked, and the failure is a hard one at the moment it runs. Declare the binding `let` if it needs to change, or assign to a new binding."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/ConstAssign.ts",
+        "source": "var x = 0; x++;\n"
+    },
+    "assertedMessageIds": [
+        "noConstAssign"
+    ]
+}

@@ -1,0 +1,2 @@
+// a-check: refused &&=
+let value = true; value &&= false; console.log(String(value));

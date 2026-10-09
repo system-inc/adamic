@@ -1,0 +1,24 @@
+{
+    "rule": "adamic/no-definite-assignment",
+    "firing": {
+        "file": "Case.ts",
+        "source": "let total!: number; function read(): number { return total; }\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 5,
+                "endLine": 1,
+                "endColumn": 10,
+                "messageId": "definiteAssignment",
+                "message": "`!` here tells tsc this is assigned before it is read, and nothing checks it: read early, it is undefined while its type says otherwise. Assign it where it is declared or in the constructor, or type it with `| undefined` and handle the missing case."
+            }
+        ]
+    },
+    "clean": {
+        "file": "Case.ts",
+        "source": "class Account { balance = 0; }\n"
+    },
+    "assertedMessageIds": [
+        "definiteAssignment"
+    ]
+}

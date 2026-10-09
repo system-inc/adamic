@@ -1,0 +1,22 @@
+[
+{"code":"var a = 1 + 1;","eslint":[]},
+{"code":"var a = 1 * '2';","eslint":[]},
+{"code":"var a = 1 - 2;","eslint":[]},
+{"code":"var a = foo + bar;","eslint":[]},
+{"code":"var a = 'foo' + bar;","eslint":[]},
+{"code":"var foo = 'foo' +\n 'bar';","eslint":[]},
+{"code":"var string = (number + 1) + 'px';","eslint":[]},
+{"code":"'a' + 1","eslint":[]},
+{"code":"1 + '1'","eslint":[]},
+{"code":"1 + `1`","eslint":[]},
+{"code":"`1` + 1","eslint":[]},
+{"code":"(1 + +2) + `b`","eslint":[]},
+{"code":"'a' + 'b'","eslint":[["unexpectedConcat",4,5]]},
+{"code":"'a' +\n'b' + 'c'","eslint":[["unexpectedConcat",10,11]]},
+{"code":"foo + 'a' + 'b'","eslint":[["unexpectedConcat",10,11]]},
+{"code":"'a' + 'b' + 'c'","eslint":[["unexpectedConcat",4,5],["unexpectedConcat",10,11]]},
+{"code":"(foo + 'a') + ('b' + 'c')","eslint":[["unexpectedConcat",12,13],["unexpectedConcat",19,20]]},
+{"code":"`a` + 'b'","eslint":[["unexpectedConcat",4,5]]},
+{"code":"`a` + `b`","eslint":[["unexpectedConcat",4,5]]},
+{"code":"foo + `a` + `b`","eslint":[["unexpectedConcat",10,11]]}
+]

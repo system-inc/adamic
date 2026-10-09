@@ -1,0 +1,33 @@
+{
+    "rule": "structure/network-require-hook-request-suffix",
+    "firing": {
+        "file": "/repository/source/api/User.ts",
+        "source": "import { networkService } from './NetworkService.ts';\ndeclare const gqlDocument: unknown;\nexport function useUser() {\n    return networkService.useGraphQlQuery(gqlDocument);\n}\n",
+        "findings": [
+            {
+                "line": 3,
+                "column": 17,
+                "endLine": 3,
+                "endColumn": 24,
+                "messageId": "hookShouldEndWithRequest",
+                "message": "This hook calls NetworkService but its name does not end in Request. The suffix is what makes a network call visible at the import site: a caller reading `useUser()` cannot tell it reaches the server, and so cannot know it needs loading and error handling until the hook is already wired in. Rename it to end in Request."
+            },
+            {
+                "line": 3,
+                "column": 17,
+                "endLine": 3,
+                "endColumn": 24,
+                "messageId": "fileShouldEndWithRequest",
+                "message": "This file declares a hook that calls NetworkService, but the file name does not end in Request. The name is the only signal a grep or a file tree gives, so a network module that does not carry the suffix is invisible to anyone auditing what talks to the server. Rename the file to end in Request."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/api/User.ts",
+        "source": "import { networkService } from './NetworkService.ts';\ndeclare const gqlDocument: unknown;\nexport const value = 1;\n"
+    },
+    "assertedMessageIds": [
+        "fileShouldEndWithRequest",
+        "hookShouldEndWithRequest"
+    ]
+}

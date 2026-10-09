@@ -1,0 +1,34 @@
+{
+    "rule": "no-labels",
+    "firing": {
+        "file": "/repository/source/NoLabels.ts",
+        "source": "A: break A;",
+        "findings": [
+            {
+                "line": 1,
+                "column": 1,
+                "endLine": 1,
+                "endColumn": 12,
+                "messageId": "unexpectedLabel",
+                "message": "This labels a statement. A label is a second naming system that only `break` and `continue` can read, so control can leave from a line that carries no visible marker and land somewhere the reader has to search the file to find. Reading the code top to bottom no longer tells you where it goes. Extract the labeled region into a function and return from it, or restructure the loops so the exit is local."
+            },
+            {
+                "line": 1,
+                "column": 4,
+                "endLine": 1,
+                "endColumn": 12,
+                "messageId": "unexpectedLabelInBreak",
+                "message": "This `break` names a label, so it exits an enclosing block or loop rather than the nearest one. The jump target is not on this line and not adjacent to it, which is what makes the reading cost real: the reader has to find the label before they know what was left. Return from an extracted function, or use a flag the loops already test."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/NoLabels.ts",
+        "source": "while (true) {}"
+    },
+    "assertedMessageIds": [
+        "unexpectedLabel",
+        "unexpectedLabelInBreak",
+        "unexpectedLabelInContinue"
+    ]
+}

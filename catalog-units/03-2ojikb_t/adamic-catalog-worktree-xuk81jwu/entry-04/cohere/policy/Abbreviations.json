@@ -1,0 +1,274 @@
+{
+    "about": "The abbreviation vocabulary for nexus/consistency-no-abbreviated-identifier, read by the Go rule through go:embed and by the Swift engine directly. Each entry is one abbreviated word: `expansion` is the word it stands in for, and each form says where in a name the word is judged. A suffix or segment form matches the word capitalized, and suggests the expansion capitalized. ORDER IS OBSERVABLE: within each form the rule reports the first entry that matches, so `ms` sits between `params` and `ref`, the early prefixes run `ctx` through `prev` in this order, and `vars` precedes `var`. Framework exemptions (`params` in route files, `ref` in React property positions, `config` in middleware, a `...args` rest, TanStack's `queryFn`) are policy rather than vocabulary and stay in the Go rule.",
+    "abbreviations": [
+        {
+            "abbreviation": "prop",
+            "expansion": "property",
+            "whole": { "style": "orDescriptive" },
+            "prefix": { "phase": "late" },
+            "suffix": {}
+        },
+        {
+            "abbreviation": "props",
+            "expansion": "properties",
+            "whole": { "style": "orDescriptive" },
+            "prefix": { "phase": "late" },
+            "suffix": {}
+        },
+        {
+            "abbreviation": "param",
+            "expansion": "parameter",
+            "whole": { "style": "orDescriptive" },
+            "prefix": { "phase": "late" },
+            "suffix": {}
+        },
+        {
+            "abbreviation": "params",
+            "expansion": "parameters",
+            "whole": { "style": "orDescriptive" },
+            "prefix": { "phase": "late" },
+            "suffix": {}
+        },
+        {
+            "abbreviation": "ms",
+            "expansion": "milliseconds",
+            "reason": "A millisecond unit read as a camelCase word: a lowercase letter before it, and the end of the name or the next word after, so `maximumAgeMsHalf` counts while `SMS`, `LLMs` and `msgText` do not. The tree spells the unit `InMilliseconds`, more than two to one over `Ms` for the identical value.",
+            "suffix": { "matcher": "millisecondWord", "replacement": "InMilliseconds" }
+        },
+        {
+            "abbreviation": "ref",
+            "expansion": "reference",
+            "whole": { "style": "orDescriptive" },
+            "prefix": { "phase": "late" },
+            "suffix": {}
+        },
+        {
+            "abbreviation": "config",
+            "expansion": "configuration",
+            "whole": { "style": "orDescriptive" },
+            "prefix": { "phase": "late" },
+            "suffix": {}
+        },
+        {
+            "abbreviation": "idx",
+            "expansion": "index",
+            "whole": { "style": "orDescriptive" },
+            "prefix": { "phase": "late" },
+            "suffix": {}
+        },
+        {
+            "abbreviation": "arg",
+            "expansion": "argument",
+            "advice": "Use \"argument\", \"commandArgument\", or a more descriptive name.",
+            "reason": "The whole word and the prefix give advice rather than one rename, because the right name depends on what the argument is.",
+            "whole": { "style": "advice" },
+            "prefix": { "phase": "late", "style": "advice" },
+            "suffix": {}
+        },
+        {
+            "abbreviation": "args",
+            "expansion": "arguments",
+            "advice": "Use \"arguments\", \"commandArguments\", \"commandLineArguments\", or a more descriptive name.",
+            "reason": "`arguments` is a reserved binding, so the whole word and the prefix give advice rather than the bare expansion.",
+            "whole": { "style": "advice" },
+            "prefix": { "phase": "late", "style": "advice" },
+            "suffix": {}
+        },
+        {
+            "abbreviation": "acc",
+            "advice": "Pick a name that describes what is being accumulated, \"total\", \"sum\", \"groupedItems\", or whatever fits the reduce.",
+            "reason": "A reduce accumulator has no single expansion: the right name is whatever it accumulates.",
+            "whole": { "style": "advice" }
+        },
+        {
+            "abbreviation": "char",
+            "expansion": "character",
+            "whole": { "style": "orDescriptive" },
+            "prefix": { "phase": "late" },
+            "suffix": {}
+        },
+        {
+            "abbreviation": "fn",
+            "advice": "Use \"callback\", \"handler\", \"factory\", or a more descriptive name.",
+            "reason": "A function wants a role rather than an expansion: `function` names the kind, not the job.",
+            "whole": { "style": "advice" },
+            "prefix": { "phase": "late", "style": "advice" },
+            "suffix": {
+                "advice": "Use a more descriptive name, drop the \"Fn\" suffix or rename to a role like \"Handler\", \"Callback\", \"Factory\"."
+            }
+        },
+        {
+            "abbreviation": "str",
+            "expansion": "string",
+            "whole": { "style": "orDescriptive" },
+            "prefix": { "phase": "late" },
+            "suffix": {}
+        },
+        {
+            "abbreviation": "val",
+            "expansion": "value",
+            "whole": { "style": "orDescriptive" },
+            "prefix": { "phase": "late" },
+            "suffix": {}
+        },
+        {
+            "abbreviation": "arr",
+            "expansion": "array",
+            "whole": { "style": "orDescriptive" },
+            "prefix": { "phase": "late" },
+            "suffix": {}
+        },
+        {
+            "abbreviation": "obj",
+            "expansion": "object",
+            "whole": { "style": "orDescriptive" },
+            "prefix": { "phase": "late" },
+            "suffix": {}
+        },
+        {
+            "abbreviation": "num",
+            "expansion": "number",
+            "whole": { "style": "orDescriptive" },
+            "prefix": { "phase": "late" },
+            "suffix": {}
+        },
+        {
+            "abbreviation": "res",
+            "expansion": "response",
+            "whole": { "style": "orDescriptive" },
+            "prefix": { "phase": "late" },
+            "suffix": {}
+        },
+        {
+            "abbreviation": "err",
+            "expansion": "error",
+            "whole": { "style": "orDescriptive" },
+            "prefix": { "phase": "late" },
+            "suffix": {}
+        },
+        {
+            "abbreviation": "req",
+            "expansion": "request",
+            "whole": { "style": "orDescriptive" },
+            "prefix": { "phase": "late" },
+            "suffix": {}
+        },
+        {
+            "abbreviation": "msg",
+            "expansion": "message",
+            "whole": { "style": "orDescriptive" },
+            "prefix": { "phase": "late" },
+            "suffix": {}
+        },
+        {
+            "abbreviation": "min",
+            "expansion": "minimum",
+            "whole": { "style": "orDescriptive" },
+            "prefix": { "phase": "late" },
+            "suffix": {}
+        },
+        {
+            "abbreviation": "max",
+            "expansion": "maximum",
+            "whole": { "style": "orDescriptive" },
+            "prefix": { "phase": "late" },
+            "suffix": {}
+        },
+        {
+            "abbreviation": "ctx",
+            "expansion": "context",
+            "reason": "An early prefix: judged before any suffix, so a name starting with it reports the prefix even when it also ends with an abbreviation.",
+            "whole": { "style": "plain" },
+            "prefix": { "phase": "early" }
+        },
+        {
+            "abbreviation": "cwd",
+            "expansion": "workingDirectory",
+            "segment": {}
+        },
+        {
+            "abbreviation": "dir",
+            "expansion": "directory",
+            "reason": "A segment ends at the end of the name or the start of the next word, which is what keeps `Direction` from reading as `Dir`.",
+            "segment": {}
+        },
+        {
+            "abbreviation": "env",
+            "expansion": "environment",
+            "segment": {}
+        },
+        {
+            "abbreviation": "cli",
+            "expansion": "commandLineInterface",
+            "segment": {}
+        },
+        {
+            "abbreviation": "len",
+            "expansion": "length",
+            "segment": {}
+        },
+        {
+            "abbreviation": "seq",
+            "expansion": "sequence",
+            "segment": {}
+        },
+        {
+            "abbreviation": "db",
+            "expansion": "database",
+            "whole": { "style": "plain" },
+            "prefix": { "phase": "early" },
+            "segment": {}
+        },
+        {
+            "abbreviation": "tx",
+            "expansion": "transaction",
+            "whole": { "style": "plain" },
+            "prefix": { "phase": "early" },
+            "segment": {}
+        },
+        {
+            "abbreviation": "opts",
+            "expansion": "options",
+            "whole": { "style": "plain" },
+            "prefix": { "phase": "early" }
+        },
+        {
+            "abbreviation": "cur",
+            "expansion": "current",
+            "whole": { "style": "plain" },
+            "prefix": { "phase": "early" }
+        },
+        {
+            "abbreviation": "pct",
+            "expansion": "percent",
+            "whole": { "style": "plain" },
+            "prefix": { "phase": "early" }
+        },
+        {
+            "abbreviation": "prev",
+            "expansion": "previous",
+            "whole": { "style": "plain" },
+            "prefix": { "phase": "early" }
+        },
+        {
+            "abbreviation": "vars",
+            "expansion": "variables",
+            "reason": "Before `var`, so the longer word wins.",
+            "segment": {}
+        },
+        {
+            "abbreviation": "var",
+            "expansion": "variable",
+            "segment": {}
+        }
+    ],
+    "allowedNames": [
+        { "name": "URLSearchParams", "reason": "A Web API, and not ours to rename." }
+    ],
+    "allowedSegments": [
+        {
+            "segment": "InnoDb",
+            "reason": "MySQL's storage engine, a proper noun. The `Db` in it stands in for nothing, and `InnoDatabase` names a thing that does not exist. Matched as a segment because it appears inside longer names like `InnoDbMaximumIndexKeyBytes`."
+        }
+    ]
+}

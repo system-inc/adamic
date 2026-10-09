@@ -1,0 +1,24 @@
+{
+    "rule": "react-hooks/set-state-in-effect",
+    "firing": {
+        "file": "a.tsx",
+        "source": "import {useEffect as useFx, useState} from \"./react\";\nfunction Component() {\n  const [state, setState] = useState(0);\n  useFx(() => {\n    setState(1);\n  });\n  return state;\n}\n",
+        "findings": [
+            {
+                "line": 5,
+                "column": 5,
+                "endLine": 5,
+                "endColumn": 13,
+                "messageId": "setStateInEffect",
+                "message": "This effect calls a state setter synchronously in its body, so every time the effect runs React starts another render, which runs the effect's dependencies again. Effects are for synchronizing React with something outside it, such as the document title, a subscription, or a network request, and a setter called straight from the body is usually a value that could have been computed during render instead. Derive the value while rendering, pass the initial value to `useState`, or set it from the event that actually caused the change. Calling the setter from a callback the effect registers, such as a subscription or a timer, is fine and is not reported."
+            }
+        ]
+    },
+    "clean": {
+        "file": "a.tsx",
+        "source": "import {useEffect, useState} from \"./react\";\nfunction Component() {\n  const [state, setState] = useState(0);\n  useEffect(() => {\n    setState(1);\n  });\n  return state;\n}\n"
+    },
+    "assertedMessageIds": [
+        "setStateInEffect"
+    ]
+}

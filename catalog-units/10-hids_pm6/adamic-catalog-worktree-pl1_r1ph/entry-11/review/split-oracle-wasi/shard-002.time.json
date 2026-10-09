@@ -1,0 +1,20 @@
+{
+  "label": "shard-002",
+  "wall_seconds": 33.956,
+  "exit_code": 0,
+  "cooked": false,
+  "command": [
+    "go",
+    "test",
+    "./internal/oracle",
+    "-run",
+    "^TestWASIAgreesWithNode$/^shard-002$",
+    "-parallel",
+    "4",
+    "-count=1",
+    "-timeout",
+    "75s",
+    "-json"
+  ],
+  "empty_runtime_cache": true
+}

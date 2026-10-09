@@ -1,0 +1,24 @@
+{
+    "rule": "no-new-native-nonconstructor",
+    "firing": {
+        "file": "/repository/source/Nonconstructor.ts",
+        "source": "var foo = new Symbol('foo');\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 15,
+                "endLine": 1,
+                "endColumn": 21,
+                "messageId": "noNewNativeNonconstructor",
+                "message": "This calls `new Symbol()`. Symbol is a function that returns a primitive and throws a TypeError when constructed, so this line fails at runtime every time it is reached. Call it without `new`."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/Nonconstructor.ts",
+        "source": "new foo(BigInt);\n"
+    },
+    "assertedMessageIds": [
+        "noNewNativeNonconstructor"
+    ]
+}

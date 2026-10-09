@@ -1,0 +1,149 @@
+{
+  "code_sha": "4678c7302cae4ab51e2378156e228e9a771e73b4",
+  "mode": "normal",
+  "command": [
+    "go",
+    "test",
+    "./stage1/cohere/lint",
+    "-count=1",
+    "-json",
+    "-v",
+    "-timeout=0"
+  ],
+  "exit": 0,
+  "test_and_subtest_counts": {
+    "pass": 112,
+    "fail": 0,
+    "skip": 0
+  },
+  "top_level_counts": {
+    "pass": 34,
+    "fail": 0,
+    "skip": 0
+  },
+  "skips_named": [],
+  "failures_named": [],
+  "wall_seconds": 1878.3190684318542,
+  "nproc": 5,
+  "cpu_max": "400000 100000",
+  "load_before": "0.75 1.33 1.80 2/163 132674",
+  "load_after": "1.73 1.88 2.08 1/163 218689",
+  "load_1m_range": [
+    0.75,
+    7.02
+  ],
+  "agreement_seconds": 281.88,
+  "longest_shard": {
+    "backend": "sanitized native",
+    "index": 0,
+    "count": 5,
+    "seconds": 210.769589782,
+    "only_input": "/workspace/scratch/typescript-6.0.3/src/compiler/checker.ts"
+  },
+  "shards": [
+    {
+      "backend": "Node",
+      "index": 0,
+      "count": 5,
+      "seconds": 18.728073196
+    },
+    {
+      "backend": "Node",
+      "index": 1,
+      "count": 5,
+      "seconds": 11.547790552
+    },
+    {
+      "backend": "Node",
+      "index": 2,
+      "count": 5,
+      "seconds": 11.460934246
+    },
+    {
+      "backend": "Node",
+      "index": 3,
+      "count": 5,
+      "seconds": 12.255767607
+    },
+    {
+      "backend": "Node",
+      "index": 4,
+      "count": 5,
+      "seconds": 10.377260808
+    },
+    {
+      "backend": "emitted JavaScript",
+      "index": 0,
+      "count": 5,
+      "seconds": 35.798383833
+    },
+    {
+      "backend": "emitted JavaScript",
+      "index": 1,
+      "count": 5,
+      "seconds": 19.951152952
+    },
+    {
+      "backend": "emitted JavaScript",
+      "index": 2,
+      "count": 5,
+      "seconds": 18.135543867
+    },
+    {
+      "backend": "emitted JavaScript",
+      "index": 3,
+      "count": 5,
+      "seconds": 21.40250795
+    },
+    {
+      "backend": "emitted JavaScript",
+      "index": 4,
+      "count": 5,
+      "seconds": 19.181186529999998
+    },
+    {
+      "backend": "sanitized native",
+      "index": 0,
+      "count": 5,
+      "seconds": 210.769589782
+    },
+    {
+      "backend": "sanitized native",
+      "index": 1,
+      "count": 5,
+      "seconds": 92.70451786199999
+    },
+    {
+      "backend": "sanitized native",
+      "index": 2,
+      "count": 5,
+      "seconds": 92.54593973
+    },
+    {
+      "backend": "sanitized native",
+      "index": 3,
+      "count": 5,
+      "seconds": 109.18219029
+    },
+    {
+      "backend": "sanitized native",
+      "index": 4,
+      "count": 5,
+      "seconds": 89.703105839
+    }
+  ],
+  "guard_proofs": [
+    "deadlines_test.go:61: planted endless loop killed and named in 1.138843625s: node /tmp/adamic-gate/TestChildCPUHangGuard1615880818/001/planted-endless-loop.js: child CPU hang guard exceeded: CPU 1.141838s, budget 1s: signal: CPU time limit exceeded",
+    "deadlines_test.go:71: separate backstop in 202.054303ms: node -e setTimeout(()=>{},100000): wall backstop exceeded: ceiling 200ms",
+    "deadlines_test.go:87: silent healthy child survived: wall 1.637914877s CPU 450.688ms, budget 1s"
+  ],
+  "burners_final": [],
+  "all_burners_alive_throughout": null,
+  "inputs": {
+    "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/scratch/typescript-6.0.3",
+    "ADAMIC_LINT_BENCH": "1",
+    "ADAMIC_LINT_PROFILE_DIR": "/workspace/scratch/lint-guard-normal-profile",
+    "ADAMIC_LINT_PROFILE_SNAPSHOTS": "/workspace/scratch/lint-guard-normal-profile",
+    "ADAMIC_GATE_UNCACHED": "1"
+  }
+}

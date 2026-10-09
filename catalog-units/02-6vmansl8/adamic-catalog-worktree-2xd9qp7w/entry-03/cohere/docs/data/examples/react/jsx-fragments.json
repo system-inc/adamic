@@ -1,0 +1,21 @@
+{
+    "rule": "react/jsx-fragments",
+    "firing": {
+        "file": "/repository/source/JsxFragments.tsx",
+        "source": "<React.Fragment><Foo /></React.Fragment>;\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 1,
+                "endLine": 1,
+                "endColumn": 41,
+                "messageId": "preferFragment",
+                "message": "Prefer fragment shorthand over React.Fragment. The shorthand `<>` says the same thing with less to read, and a named fragment that carries no props is only the long spelling of it."
+            }
+        ]
+    },
+    "assertedMessageIds": [
+        "preferFragment",
+        "preferPragma"
+    ]
+}

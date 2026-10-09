@@ -1,0 +1,20 @@
+// From TypeScript 6.0.3, src/compiler/checker.ts:54223
+// From TypeScript 6.0.3, src/compiler/types.ts:6196
+// Census reason: a namespace
+// Keep the string arm of the upstream escaped-name type.
+type __String = string & { __escapedIdentifier: void; };
+namespace JsxNames {
+    export const JSX = "JSX" as __String;
+    export const IntrinsicElements = "IntrinsicElements" as __String;
+    export const ElementClass = "ElementClass" as __String;
+    export const ElementAttributesPropertyNameContainer = "ElementAttributesProperty" as __String; // TODO: Deprecate and remove support
+    export const ElementChildrenAttributeNameContainer = "ElementChildrenAttribute" as __String;
+    export const Element = "Element" as __String;
+    export const ElementType = "ElementType" as __String;
+    export const IntrinsicAttributes = "IntrinsicAttributes" as __String;
+    export const IntrinsicClassAttributes = "IntrinsicClassAttributes" as __String;
+    export const LibraryManagedAttributes = "LibraryManagedAttributes" as __String;
+}
+console.log(`${JsxNames.JSX} ${JsxNames.IntrinsicElements} ${JsxNames.ElementClass}`);
+console.log(`${JsxNames.ElementAttributesPropertyNameContainer} ${JsxNames.ElementChildrenAttributeNameContainer}`);
+console.log(`${JsxNames.Element} ${JsxNames.ElementType} ${JsxNames.IntrinsicAttributes} ${JsxNames.IntrinsicClassAttributes} ${JsxNames.LibraryManagedAttributes}`);

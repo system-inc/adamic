@@ -1,0 +1,10 @@
+{
+  "rules": {
+    "TypeScript": "base/security-require-context-access"
+  },
+  "messages": {
+    "missingProtector": {
+      "text": "This injects `{{contextKey}}` from the request context but carries no decorator establishing access to it, so the value arrives whether or not anyone verified the request and any authorization decision made from it is made on unverified input. Add {{protectors}}, to this member or to its class."
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+    "rule": "@typescript-eslint/no-base-to-string",
+    "firing": {
+        "file": "/repository/source/Stringify.ts",
+        "source": "'' + {};\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 6,
+                "endLine": 1,
+                "endColumn": 8,
+                "messageId": "baseToString",
+                "message": "'{}' will use Object's default stringification format ('[object Object]') when stringified."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/Stringify.ts",
+        "source": "'' + 1;\n"
+    },
+    "assertedMessageIds": [
+        "baseArrayJoin",
+        "baseToString"
+    ]
+}

@@ -1,0 +1,4 @@
+// a-check: type error TS2345
+function textLength(text: string): number { return text.length; }
+const values: readonly string[] = ["ok"];
+console.log(textLength(values[0]));

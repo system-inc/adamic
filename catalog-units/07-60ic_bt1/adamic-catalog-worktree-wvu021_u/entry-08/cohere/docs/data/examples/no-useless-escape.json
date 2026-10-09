@@ -1,0 +1,27 @@
+{
+    "rule": "no-useless-escape",
+    "firing": {
+        "file": "/repository/source/UselessEscape.tsx",
+        "source": "/[\\$]/v",
+        "findings": [
+            {
+                "line": 1,
+                "column": 3,
+                "endLine": 1,
+                "endColumn": 5,
+                "messageId": "noUselessEscape",
+                "message": "The backslash before $ does nothing here: the language reads this as the plain character either way. An escape that is not needed says the character is special at this position when it is not, which is the signal a reader follows when deciding whether something subtle is happening. Write $.",
+                "fix": true
+            }
+        ],
+        "fixedSource": "/[$]/v"
+    },
+    "clean": {
+        "file": "/repository/source/UselessEscape.tsx",
+        "source": "/]/"
+    },
+    "assertedMessageIds": [
+        "noUselessEscape"
+    ],
+    "assertsFix": true
+}

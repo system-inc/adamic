@@ -1,0 +1,12 @@
+[
+{"code":"class Foo { static { bar(); } }","eslint":[]},
+{"code":"class Foo { static { /* comments */ } }","eslint":[]},
+{"code":"class Foo { static {\n// comment\n} }","eslint":[]},
+{"code":"class Foo { static { bar(); } static { bar(); } }","eslint":[]},
+{"code":"class Foo { static {} }","eslint":[["unexpected",19,21]]},
+{"code":"class Foo { static { } }","eslint":[["unexpected",19,22]]},
+{"code":"class Foo { static { \n\n } }","eslint":[["unexpected",19,25]]},
+{"code":"class Foo { static { bar(); } static {} }","eslint":[["unexpected",37,39]]},
+{"code":"class Foo { static // comment\n {} }","eslint":[["unexpected",31,33]]},
+{"code":"class Foo { static /* empty */ {} /* empty */ }","eslint":[["unexpected",31,33]]}
+]

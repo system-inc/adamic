@@ -1,0 +1,14 @@
+// Detached halves become WTF-8 strings and remain searchable after nesting and storage.
+function split(): string[] {
+    const parent = ['x', '🌍', 'y', '🌍', '\ud800', 'z', '\udfff'].join('');
+    const outer = parent.slice(1, -1);
+    return [outer.slice(0, 1), outer.slice(1, 2), outer.slice(1, 4), outer.slice(0, 4), outer.substring(4, 1), outer.slice(-2), parent.slice(-1)];
+}
+const parts = split();
+for (const part of parts) {
+    const codes: number[] = [];
+    for (let index = 0; index < part.length; index++) { codes.push(part.charCodeAt(index)); }
+    console.log(`${part.length} ${codes.join(',')} ${part}`);
+    for (const needle of parts) { console.log(`${part.indexOf(needle)} ${part.lastIndexOf(needle)}`); }
+}
+console.log(`${(parts[0] ?? '') + (parts[1] ?? '') === '🌍'}`);

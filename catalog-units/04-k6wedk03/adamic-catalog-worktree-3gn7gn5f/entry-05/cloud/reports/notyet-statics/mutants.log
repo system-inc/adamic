@@ -1,0 +1,8 @@
+blanket-guard: caught, exit 1, Lower:; /tmp/notyet-statics-mutants/blanket-guard.log
+missing-static-map: caught, exit 1, native; /tmp/notyet-statics-mutants/missing-static-map.log
+guess-static-side: caught, exit 1, stdout; /tmp/notyet-statics-mutants/guess-static-side.log
+missing-inherited-map: caught, exit 1, native; /tmp/notyet-statics-mutants/missing-inherited-map.log
+lose-optional-short-circuit: caught, exit 1, native; /tmp/notyet-statics-mutants/lose-optional-short-circuit.log
+missing-generic-static-map: caught, exit 1, native; /tmp/notyet-statics-mutants/missing-generic-static-map.log
+javascript-loses-static-map: caught, exit 1, JavaScript backend; /tmp/notyet-statics-mutants/javascript-loses-static-map.log
+javascript-late-main-maps: caught, exit 1, JavaScript backend; /tmp/notyet-statics-mutants/javascript-late-main-maps.log

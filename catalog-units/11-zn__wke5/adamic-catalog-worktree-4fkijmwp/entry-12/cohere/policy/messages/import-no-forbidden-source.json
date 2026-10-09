@@ -1,0 +1,19 @@
+{
+  "rules": {
+    "TypeScript": "nexus/import-no-forbidden-source"
+  },
+  "messages": {
+    "forbiddenImageImport": {
+      "text": "Importing from 'next/image' is not allowed. Use '@structure/source/components/images/Image' instead, so an image renders the same way whichever framework is underneath it."
+    },
+    "forbiddenLinkImport": {
+      "text": "Importing from 'next/link' is not allowed. Use '@structure/source/components/navigation/Link' instead, so a link renders the same way whichever framework is underneath it."
+    },
+    "forbiddenMotionImport": {
+      "text": "Importing from 'framer-motion' is not allowed. Use 'motion/react', which is the same library under the name it ships as now."
+    },
+    "forbiddenNavigationImport": {
+      "text": "Importing from 'next/navigation' is not allowed. Use '@structure/source/router/Navigation', which is the same navigation without binding the file to one framework's router."
+    }
+  }
+}

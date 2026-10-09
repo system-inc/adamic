@@ -1,0 +1,48 @@
+// Port of pinned Go cohere's no-empty-pattern.
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { messageEmptyObjectPattern, messageEmptyArrayPattern } from './messages.a';
+
+export class Rule {
+    readonly context: RuleContext;
+    readonly allowObjectPatternsAsParameters: boolean;
+    constructor(context: RuleContext) {
+        this.context = context;
+        this.allowObjectPatternsAsParameters =
+            context.settings.read('allowobjectpatternsasparameters', 'false') === 'true';
+    }
+    visit(node: ParseNode, index: number, parent: number): void {
+        if(node.children.length !== 0) {
+            return;
+        }
+        // Both subscribed patterns are relevant; the shape chooses the message and option.
+        const object = node.kind === 'ObjectBindingPattern';
+        if(object && this.allowObjectPatternsAsParameters && this.allowedParameter(parent)) {
+            return;
+        }
+        this.context.report(
+            index,
+            'no-empty-pattern',
+            object ? 'unexpectedObject' : 'unexpectedArray',
+            object ? messageEmptyObjectPattern : messageEmptyArrayPattern,
+            '',
+            '',
+            '',
+        );
+    }
+    allowedParameter(parent: number): boolean {
+        if(parent < 0 || this.context.node(parent).kind !== 'Parameter') {
+            return false;
+        }
+        const value = this.context.initializer(parent);
+        if(value < 0) {
+            return true;
+        }
+        const initializer = this.context.node(value);
+        return initializer.kind === 'ObjectLiteralExpression' && initializer.children.length === 0;
+    }
+}
+
+export function create(context: RuleContext): Rule {
+    return new Rule(context);
+}

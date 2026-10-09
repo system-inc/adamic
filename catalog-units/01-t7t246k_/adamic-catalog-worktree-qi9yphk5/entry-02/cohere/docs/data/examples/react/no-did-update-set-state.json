@@ -1,0 +1,10 @@
+{
+    "rule": "react/no-did-update-set-state",
+    "clean": {
+        "file": "/repository/source/DidUpdate.tsx",
+        "source": "\nclass Hello extends React.Component {\n  componentDidUpdate() {\n    someClass.on(function() {\n      this.setState({ data: 123 });\n    });\n  }\n}\n"
+    },
+    "assertedMessageIds": [
+        "noSetStateInComponentDidUpdate"
+    ]
+}

@@ -1,0 +1,5 @@
+/workspace/scratch/parser-front25-temporary-audit/61/src/compiler/factory/nodeFactory.ts:5037:9: error TS2412: Type 'JSDocTypeExpression | undefined' is not assignable to type 'T["typeExpression"]' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  'JSDocTypeExpression | undefined' is assignable to the constraint of type 'T["typeExpression"]', but 'T["typeExpression"]' could be instantiated with a different subtype of constraint 'JSDocTypeExpression | undefined'.
+    Type 'undefined' is not assignable to type 'T["typeExpression"]'.
+      'undefined' is assignable to the constraint of type 'T["typeExpression"]', but 'T["typeExpression"]' could be instantiated with a different subtype of constraint 'JSDocTypeExpression | undefined'.
+        Type 'undefined' is not assignable to type 'JSDocTypeExpression'.

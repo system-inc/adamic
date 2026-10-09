@@ -1,0 +1,5 @@
+try { run(); } catch (e) { report(e); }
+const n = 1;
+const _ = 2;
+const a = 3;
+const onClick = (e) => report(e);

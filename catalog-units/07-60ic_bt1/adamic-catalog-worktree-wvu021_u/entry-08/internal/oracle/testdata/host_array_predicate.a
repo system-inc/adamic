@@ -1,0 +1,28 @@
+function isNumbers(value: string | readonly number[]): value is readonly number[] {
+ return Array.isArray(value);
+}
+function inspect(value: string | readonly number[]): string {
+ if (isNumbers(value)) { return `array ${value.length} ${value[0] ?? -1}`; }
+ return `string ${value}`;
+}
+console.log(inspect([0, 2]));
+const empty: number[] = [];
+console.log(inspect(empty));
+console.log(inspect('text'));
+console.log(`${Array.isArray([1])} ${Array.isArray({})} ${Array.isArray(null)} ${Array.isArray(undefined)}`);
+let effects = 0;
+function next(value: string | number[]): string | number[] { effects += 1; return value; }
+console.log(`${Array.isArray(next([1]))} ${Array.isArray(next('x'))} ${effects}`);
+
+function direct(value: string | number[]): string {
+ if (Array.isArray(value)) { return `direct ${value[0] ?? -1}`; }
+ return `other ${value}`;
+}
+console.log(direct([3]));
+console.log(direct('x'));
+function directReadonly(value: string | readonly number[]): string {
+ if (Array.isArray(value)) { return `readonly ${value[0] ?? -1}`; }
+ return `readonly other ${value}`;
+}
+console.log(directReadonly([4]));
+console.log(directReadonly('z'));

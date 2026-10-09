@@ -1,0 +1,10 @@
+{
+  "rules": {
+    "Swift": "cohere-swift/toolchain-require-upcoming-features"
+  },
+  "messages": {
+    "upcomingFeatureMissing": {
+      "text": "{{target}} does not enable {{features}}. Add {{settings}} to its swiftSettings. {{reasons}}."
+    }
+  }
+}

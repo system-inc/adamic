@@ -1,0 +1,11 @@
+--- FAIL: TestNativeAgreesWithNode (0.01s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/new_expression_uint16.a (0.41s)
+        oracle_test.go:761: stdout differs
+            node:   exit 0, stdout "65535,0,1,65535,65535,3,65533,0,0,0,1,65535,\n65534,2,0,65535,65535,3,65533,0,0,0,1,65535,\n65534,2,0,65533,65533,65533,65533,0,0,0,1,65535,\n65534,4,65534,4,0,5,65533,0,0,0,1,65535,\n4,65534,4,0,\n-99\n65535,65534,\n0 3 0\n0,0,0,\nlength 1\nvalue 2\n0,6,\n", stderr ""
+            native: exit 0, stdout "65535,0,1,65535,65535,3,65533,0,0,0,1,65535,\n65534,2,0,65535,65535,3,65533,0,0,0,1,65535,\n65534,2,0,-65539,-65539,-65539,65533,0,0,0,1,65535,\n65534,4,65534,4,0,65541,65533,0,0,0,1,65535,\n4,65534,4,0,\n-99\n65535,65534,\n0 3 0\n0,0,0,\nlength 1\nvalue 2\n0,6,\n", stderr ""
+FAIL
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.424s
+FAIL

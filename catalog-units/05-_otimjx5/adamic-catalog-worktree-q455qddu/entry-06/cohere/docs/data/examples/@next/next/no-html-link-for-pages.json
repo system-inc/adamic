@@ -1,0 +1,24 @@
+{
+    "rule": "@next/next/no-html-link-for-pages",
+    "firing": {
+        "file": "foo.tsx",
+        "source": "export const C = () => (<a href='/about' />);\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 25,
+                "endLine": 1,
+                "endColumn": 44,
+                "messageId": "noHtmlLinkForPages",
+                "message": "This is a raw <a> element navigating to `/about/`, a route this project's pages or app directory defines. Use `Link` from `next/link`, which navigates on the client and prefetches the destination. A plain <a> does a full document load instead, so the application is torn down and rebuilt and every piece of in-memory state goes with it."
+            }
+        ]
+    },
+    "clean": {
+        "file": "foo.tsx",
+        "source": "export const C = () => (<a href=\"/contact\">Contact</a>);\n"
+    },
+    "assertedMessageIds": [
+        "noHtmlLinkForPages"
+    ]
+}

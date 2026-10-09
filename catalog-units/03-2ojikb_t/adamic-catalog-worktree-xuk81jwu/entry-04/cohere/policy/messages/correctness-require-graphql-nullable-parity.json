@@ -1,0 +1,16 @@
+{
+  "rules": {
+    "TypeScript": "base/correctness-require-graphql-nullable-parity"
+  },
+  "messages": {
+    "decoratorNullableButInputExcludesNull": {
+      "text": "Decorator declares 'nullable: true' on an input, so a client can send null, but the type '{{typeText}}' does not admit null. Add '| null' so the code's checks follow what can arrive"
+    },
+    "decoratorNullableButTypeNot": {
+      "text": "Decorator declares 'nullable: true' but the type '{{typeText}}' is not nullable"
+    },
+    "typeNullableButDecoratorNot": {
+      "text": "Type '{{typeText}}' is nullable but the decorator does not have 'nullable: true'"
+    }
+  }
+}

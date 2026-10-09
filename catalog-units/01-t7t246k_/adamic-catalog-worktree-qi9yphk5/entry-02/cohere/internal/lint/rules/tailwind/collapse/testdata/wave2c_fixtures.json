@@ -1,0 +1,4159 @@
+{
+  "tailwindVersion": "4.3.3",
+  "entryPoint": "ahra:app/_theme/styles/theme.css",
+  "groundTruth": "compileAstNodes propertySort, via readingOf",
+  "rootCount": 18,
+  "caseCount": 459,
+  "answered": 221,
+  "rejected": 238,
+  "distinctByRoot": {
+    "aspect": [
+      {
+        "order": [
+          41
+        ],
+        "count": 1
+      }
+    ],
+    "auto-cols": [
+      {
+        "order": [
+          117
+        ],
+        "count": 1
+      }
+    ],
+    "auto-rows": [
+      {
+        "order": [
+          119
+        ],
+        "count": 1
+      }
+    ],
+    "col-span": [
+      {
+        "order": [
+          18
+        ],
+        "count": 1
+      }
+    ],
+    "content": [
+      {
+        "order": [
+          357
+        ],
+        "count": 2
+      }
+    ],
+    "divide-x": [
+      {
+        "order": [
+          135
+        ],
+        "count": 5
+      }
+    ],
+    "divide-y": [
+      {
+        "order": [
+          136
+        ],
+        "count": 6
+      }
+    ],
+    "font-stretch": [
+      {
+        "order": [
+          300
+        ],
+        "count": 1
+      }
+    ],
+    "grid-cols": [
+      {
+        "order": [
+          120
+        ],
+        "count": 1
+      }
+    ],
+    "grid-rows": [
+      {
+        "order": [
+          121
+        ],
+        "count": 1
+      }
+    ],
+    "line-clamp": [
+      {
+        "order": [
+          39,
+          143
+        ],
+        "count": 4
+      }
+    ],
+    "mask-conic": [
+      {
+        "order": [
+          209,
+          244,
+          245,
+          257
+        ],
+        "count": 4
+      }
+    ],
+    "mask-linear": [
+      {
+        "order": [
+          209,
+          230,
+          231,
+          257
+        ],
+        "count": 4
+      }
+    ],
+    "mask-radial": [
+      {
+        "order": [
+          209,
+          236,
+          238,
+          257
+        ],
+        "count": 4
+      }
+    ],
+    "row-span": [
+      {
+        "order": [
+          21
+        ],
+        "count": 1
+      }
+    ],
+    "tracking": [
+      {
+        "order": [
+          289
+        ],
+        "count": 2
+      }
+    ],
+    "transition": [
+      {
+        "order": [
+          350,
+          353,
+          354
+        ],
+        "count": 3
+      },
+      {
+        "order": [
+          350
+        ],
+        "count": 1
+      }
+    ],
+    "underline-offset": [
+      {
+        "order": [
+          306
+        ],
+        "count": 1
+      }
+    ]
+  },
+  "cases": [
+    {
+      "root": "aspect",
+      "className": "aspect-auto",
+      "parsedRoot": "aspect",
+      "reading": {
+        "order": [
+          41
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "aspect",
+      "className": "aspect-square",
+      "parsedRoot": "aspect",
+      "reading": {
+        "order": [
+          41
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "aspect",
+      "className": "aspect-video",
+      "parsedRoot": "aspect",
+      "reading": {
+        "order": [
+          41
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "aspect",
+      "className": "aspect",
+      "parsedRoot": "aspect",
+      "reading": null
+    },
+    {
+      "root": "aspect",
+      "className": "aspect-4",
+      "parsedRoot": "aspect",
+      "reading": null
+    },
+    {
+      "root": "aspect",
+      "className": "aspect-0",
+      "parsedRoot": "aspect",
+      "reading": null
+    },
+    {
+      "root": "aspect",
+      "className": "aspect-1",
+      "parsedRoot": "aspect",
+      "reading": null
+    },
+    {
+      "root": "aspect",
+      "className": "aspect-50",
+      "parsedRoot": "aspect",
+      "reading": null
+    },
+    {
+      "root": "aspect",
+      "className": "aspect-90",
+      "parsedRoot": "aspect",
+      "reading": null
+    },
+    {
+      "root": "aspect",
+      "className": "aspect-100",
+      "parsedRoot": "aspect",
+      "reading": null
+    },
+    {
+      "root": "aspect",
+      "className": "aspect-sm",
+      "parsedRoot": "aspect",
+      "reading": null
+    },
+    {
+      "root": "aspect",
+      "className": "aspect-none",
+      "parsedRoot": "aspect",
+      "reading": null
+    },
+    {
+      "root": "aspect",
+      "className": "aspect-linear",
+      "parsedRoot": "aspect",
+      "reading": null
+    },
+    {
+      "root": "aspect",
+      "className": "aspect-[3px]",
+      "parsedRoot": "aspect",
+      "reading": {
+        "order": [
+          41
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "aspect",
+      "className": "aspect-[var(--a)]",
+      "parsedRoot": "aspect",
+      "reading": {
+        "order": [
+          41
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "aspect",
+      "className": "aspect-2.5",
+      "parsedRoot": "aspect",
+      "reading": null
+    },
+    {
+      "root": "aspect",
+      "className": "aspect-1.3",
+      "parsedRoot": "aspect",
+      "reading": null
+    },
+    {
+      "root": "aspect",
+      "className": "aspect/50",
+      "parsedRoot": "aspect",
+      "reading": null
+    },
+    {
+      "root": "aspect",
+      "className": "aspect-16/9",
+      "parsedRoot": "aspect",
+      "reading": {
+        "order": [
+          41
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "aspect",
+      "className": "aspect-3/2",
+      "parsedRoot": "aspect",
+      "reading": {
+        "order": [
+          41
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "aspect",
+      "className": "aspect-1.3/2",
+      "parsedRoot": "aspect",
+      "reading": null
+    },
+    {
+      "root": "aspect",
+      "className": "aspect-7/3",
+      "parsedRoot": "aspect",
+      "reading": {
+        "order": [
+          41
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "aspect",
+      "className": "-aspect-3",
+      "parsedRoot": null,
+      "reading": null
+    },
+    {
+      "root": "auto-cols",
+      "className": "auto-cols-auto",
+      "parsedRoot": "auto-cols",
+      "reading": {
+        "order": [
+          117
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "auto-cols",
+      "className": "auto-cols-fr",
+      "parsedRoot": "auto-cols",
+      "reading": {
+        "order": [
+          117
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "auto-cols",
+      "className": "auto-cols-max",
+      "parsedRoot": "auto-cols",
+      "reading": {
+        "order": [
+          117
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "auto-cols",
+      "className": "auto-cols-min",
+      "parsedRoot": "auto-cols",
+      "reading": {
+        "order": [
+          117
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "auto-cols",
+      "className": "auto-cols",
+      "parsedRoot": "auto-cols",
+      "reading": null
+    },
+    {
+      "root": "auto-cols",
+      "className": "auto-cols-4",
+      "parsedRoot": "auto-cols",
+      "reading": {
+        "order": [
+          117
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "auto-cols",
+      "className": "auto-cols-0",
+      "parsedRoot": "auto-cols",
+      "reading": {
+        "order": [
+          117
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "auto-cols",
+      "className": "auto-cols-1",
+      "parsedRoot": "auto-cols",
+      "reading": {
+        "order": [
+          117
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "auto-cols",
+      "className": "auto-cols-50",
+      "parsedRoot": "auto-cols",
+      "reading": {
+        "order": [
+          117
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "auto-cols",
+      "className": "auto-cols-90",
+      "parsedRoot": "auto-cols",
+      "reading": {
+        "order": [
+          117
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "auto-cols",
+      "className": "auto-cols-100",
+      "parsedRoot": "auto-cols",
+      "reading": {
+        "order": [
+          117
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "auto-cols",
+      "className": "auto-cols-sm",
+      "parsedRoot": "auto-cols",
+      "reading": null
+    },
+    {
+      "root": "auto-cols",
+      "className": "auto-cols-none",
+      "parsedRoot": "auto-cols",
+      "reading": null
+    },
+    {
+      "root": "auto-cols",
+      "className": "auto-cols-linear",
+      "parsedRoot": "auto-cols",
+      "reading": null
+    },
+    {
+      "root": "auto-cols",
+      "className": "auto-cols-[3px]",
+      "parsedRoot": "auto-cols",
+      "reading": {
+        "order": [
+          117
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "auto-cols",
+      "className": "auto-cols-[var(--a)]",
+      "parsedRoot": "auto-cols",
+      "reading": {
+        "order": [
+          117
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "auto-cols",
+      "className": "auto-cols-2.5",
+      "parsedRoot": "auto-cols",
+      "reading": {
+        "order": [
+          117
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "auto-cols",
+      "className": "auto-cols-1.3",
+      "parsedRoot": "auto-cols",
+      "reading": null
+    },
+    {
+      "root": "auto-cols",
+      "className": "auto-cols/50",
+      "parsedRoot": "auto-cols",
+      "reading": null
+    },
+    {
+      "root": "auto-cols",
+      "className": "auto-cols-16/9",
+      "parsedRoot": "auto-cols",
+      "reading": null
+    },
+    {
+      "root": "auto-cols",
+      "className": "auto-cols-3/2",
+      "parsedRoot": "auto-cols",
+      "reading": null
+    },
+    {
+      "root": "auto-cols",
+      "className": "auto-cols-1.3/2",
+      "parsedRoot": "auto-cols",
+      "reading": null
+    },
+    {
+      "root": "auto-cols",
+      "className": "auto-cols-7/3",
+      "parsedRoot": "auto-cols",
+      "reading": null
+    },
+    {
+      "root": "auto-cols",
+      "className": "-auto-cols-3",
+      "parsedRoot": null,
+      "reading": null
+    },
+    {
+      "root": "auto-rows",
+      "className": "auto-rows-auto",
+      "parsedRoot": "auto-rows",
+      "reading": {
+        "order": [
+          119
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "auto-rows",
+      "className": "auto-rows-fr",
+      "parsedRoot": "auto-rows",
+      "reading": {
+        "order": [
+          119
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "auto-rows",
+      "className": "auto-rows-max",
+      "parsedRoot": "auto-rows",
+      "reading": {
+        "order": [
+          119
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "auto-rows",
+      "className": "auto-rows-min",
+      "parsedRoot": "auto-rows",
+      "reading": {
+        "order": [
+          119
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "auto-rows",
+      "className": "auto-rows",
+      "parsedRoot": "auto-rows",
+      "reading": null
+    },
+    {
+      "root": "auto-rows",
+      "className": "auto-rows-4",
+      "parsedRoot": "auto-rows",
+      "reading": {
+        "order": [
+          119
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "auto-rows",
+      "className": "auto-rows-0",
+      "parsedRoot": "auto-rows",
+      "reading": {
+        "order": [
+          119
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "auto-rows",
+      "className": "auto-rows-1",
+      "parsedRoot": "auto-rows",
+      "reading": {
+        "order": [
+          119
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "auto-rows",
+      "className": "auto-rows-50",
+      "parsedRoot": "auto-rows",
+      "reading": {
+        "order": [
+          119
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "auto-rows",
+      "className": "auto-rows-90",
+      "parsedRoot": "auto-rows",
+      "reading": {
+        "order": [
+          119
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "auto-rows",
+      "className": "auto-rows-100",
+      "parsedRoot": "auto-rows",
+      "reading": {
+        "order": [
+          119
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "auto-rows",
+      "className": "auto-rows-sm",
+      "parsedRoot": "auto-rows",
+      "reading": null
+    },
+    {
+      "root": "auto-rows",
+      "className": "auto-rows-none",
+      "parsedRoot": "auto-rows",
+      "reading": null
+    },
+    {
+      "root": "auto-rows",
+      "className": "auto-rows-linear",
+      "parsedRoot": "auto-rows",
+      "reading": null
+    },
+    {
+      "root": "auto-rows",
+      "className": "auto-rows-[3px]",
+      "parsedRoot": "auto-rows",
+      "reading": {
+        "order": [
+          119
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "auto-rows",
+      "className": "auto-rows-[var(--a)]",
+      "parsedRoot": "auto-rows",
+      "reading": {
+        "order": [
+          119
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "auto-rows",
+      "className": "auto-rows-2.5",
+      "parsedRoot": "auto-rows",
+      "reading": {
+        "order": [
+          119
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "auto-rows",
+      "className": "auto-rows-1.3",
+      "parsedRoot": "auto-rows",
+      "reading": null
+    },
+    {
+      "root": "auto-rows",
+      "className": "auto-rows/50",
+      "parsedRoot": "auto-rows",
+      "reading": null
+    },
+    {
+      "root": "auto-rows",
+      "className": "auto-rows-16/9",
+      "parsedRoot": "auto-rows",
+      "reading": null
+    },
+    {
+      "root": "auto-rows",
+      "className": "auto-rows-3/2",
+      "parsedRoot": "auto-rows",
+      "reading": null
+    },
+    {
+      "root": "auto-rows",
+      "className": "auto-rows-1.3/2",
+      "parsedRoot": "auto-rows",
+      "reading": null
+    },
+    {
+      "root": "auto-rows",
+      "className": "auto-rows-7/3",
+      "parsedRoot": "auto-rows",
+      "reading": null
+    },
+    {
+      "root": "auto-rows",
+      "className": "-auto-rows-3",
+      "parsedRoot": null,
+      "reading": null
+    },
+    {
+      "root": "col-span",
+      "className": "col-span-1",
+      "parsedRoot": "col-span",
+      "reading": {
+        "order": [
+          18
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "col-span",
+      "className": "col-span-2",
+      "parsedRoot": "col-span",
+      "reading": {
+        "order": [
+          18
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "col-span",
+      "className": "col-span-3",
+      "parsedRoot": "col-span",
+      "reading": {
+        "order": [
+          18
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "col-span",
+      "className": "col-span-4",
+      "parsedRoot": "col-span",
+      "reading": {
+        "order": [
+          18
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "col-span",
+      "className": "col-span-5",
+      "parsedRoot": "col-span",
+      "reading": {
+        "order": [
+          18
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "col-span",
+      "className": "col-span-6",
+      "parsedRoot": "col-span",
+      "reading": {
+        "order": [
+          18
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "col-span",
+      "className": "col-span-7",
+      "parsedRoot": "col-span",
+      "reading": {
+        "order": [
+          18
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "col-span",
+      "className": "col-span-8",
+      "parsedRoot": "col-span",
+      "reading": {
+        "order": [
+          18
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "col-span",
+      "className": "col-span-9",
+      "parsedRoot": "col-span",
+      "reading": {
+        "order": [
+          18
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "col-span",
+      "className": "col-span-10",
+      "parsedRoot": "col-span",
+      "reading": {
+        "order": [
+          18
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "col-span",
+      "className": "col-span-11",
+      "parsedRoot": "col-span",
+      "reading": {
+        "order": [
+          18
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "col-span",
+      "className": "col-span-12",
+      "parsedRoot": "col-span",
+      "reading": {
+        "order": [
+          18
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "col-span",
+      "className": "col-span-full",
+      "parsedRoot": "col-span",
+      "reading": {
+        "order": [
+          18
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "col-span",
+      "className": "col-span",
+      "parsedRoot": "col-span",
+      "reading": null
+    },
+    {
+      "root": "col-span",
+      "className": "col-span-0",
+      "parsedRoot": "col-span",
+      "reading": {
+        "order": [
+          18
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "col-span",
+      "className": "col-span-50",
+      "parsedRoot": "col-span",
+      "reading": {
+        "order": [
+          18
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "col-span",
+      "className": "col-span-90",
+      "parsedRoot": "col-span",
+      "reading": {
+        "order": [
+          18
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "col-span",
+      "className": "col-span-100",
+      "parsedRoot": "col-span",
+      "reading": {
+        "order": [
+          18
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "col-span",
+      "className": "col-span-sm",
+      "parsedRoot": "col-span",
+      "reading": null
+    },
+    {
+      "root": "col-span",
+      "className": "col-span-none",
+      "parsedRoot": "col-span",
+      "reading": null
+    },
+    {
+      "root": "col-span",
+      "className": "col-span-linear",
+      "parsedRoot": "col-span",
+      "reading": null
+    },
+    {
+      "root": "col-span",
+      "className": "col-span-[3px]",
+      "parsedRoot": "col-span",
+      "reading": {
+        "order": [
+          18
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "col-span",
+      "className": "col-span-[var(--a)]",
+      "parsedRoot": "col-span",
+      "reading": {
+        "order": [
+          18
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "col-span",
+      "className": "col-span-2.5",
+      "parsedRoot": "col-span",
+      "reading": null
+    },
+    {
+      "root": "col-span",
+      "className": "col-span-1.3",
+      "parsedRoot": "col-span",
+      "reading": null
+    },
+    {
+      "root": "col-span",
+      "className": "col-span/50",
+      "parsedRoot": "col-span",
+      "reading": null
+    },
+    {
+      "root": "col-span",
+      "className": "col-span-16/9",
+      "parsedRoot": "col-span",
+      "reading": null
+    },
+    {
+      "root": "col-span",
+      "className": "col-span-3/2",
+      "parsedRoot": "col-span",
+      "reading": null
+    },
+    {
+      "root": "col-span",
+      "className": "col-span-1.3/2",
+      "parsedRoot": "col-span",
+      "reading": null
+    },
+    {
+      "root": "col-span",
+      "className": "col-span-7/3",
+      "parsedRoot": "col-span",
+      "reading": null
+    },
+    {
+      "root": "col-span",
+      "className": "-col-span-3",
+      "parsedRoot": "-col",
+      "reading": null
+    },
+    {
+      "root": "content",
+      "className": "content",
+      "parsedRoot": "content",
+      "reading": null
+    },
+    {
+      "root": "content",
+      "className": "content-4",
+      "parsedRoot": "content",
+      "reading": null
+    },
+    {
+      "root": "content",
+      "className": "content-0",
+      "parsedRoot": "content",
+      "reading": null
+    },
+    {
+      "root": "content",
+      "className": "content-1",
+      "parsedRoot": "content",
+      "reading": null
+    },
+    {
+      "root": "content",
+      "className": "content-50",
+      "parsedRoot": "content",
+      "reading": null
+    },
+    {
+      "root": "content",
+      "className": "content-90",
+      "parsedRoot": "content",
+      "reading": null
+    },
+    {
+      "root": "content",
+      "className": "content-100",
+      "parsedRoot": "content",
+      "reading": null
+    },
+    {
+      "root": "content",
+      "className": "content-sm",
+      "parsedRoot": "content",
+      "reading": null
+    },
+    {
+      "root": "content",
+      "className": "content-none",
+      "parsedRoot": "content-none",
+      "reading": {
+        "order": [
+          357
+        ],
+        "count": 2
+      }
+    },
+    {
+      "root": "content",
+      "className": "content-linear",
+      "parsedRoot": "content",
+      "reading": null
+    },
+    {
+      "root": "content",
+      "className": "content-[3px]",
+      "parsedRoot": "content",
+      "reading": {
+        "order": [
+          357
+        ],
+        "count": 2
+      }
+    },
+    {
+      "root": "content",
+      "className": "content-[var(--a)]",
+      "parsedRoot": "content",
+      "reading": {
+        "order": [
+          357
+        ],
+        "count": 2
+      }
+    },
+    {
+      "root": "content",
+      "className": "content-2.5",
+      "parsedRoot": "content",
+      "reading": null
+    },
+    {
+      "root": "content",
+      "className": "content-1.3",
+      "parsedRoot": "content",
+      "reading": null
+    },
+    {
+      "root": "content",
+      "className": "content/50",
+      "parsedRoot": "content",
+      "reading": null
+    },
+    {
+      "root": "content",
+      "className": "content-16/9",
+      "parsedRoot": "content",
+      "reading": null
+    },
+    {
+      "root": "content",
+      "className": "content-3/2",
+      "parsedRoot": "content",
+      "reading": null
+    },
+    {
+      "root": "content",
+      "className": "content-1.3/2",
+      "parsedRoot": "content",
+      "reading": null
+    },
+    {
+      "root": "content",
+      "className": "content-7/3",
+      "parsedRoot": "content",
+      "reading": null
+    },
+    {
+      "root": "content",
+      "className": "-content-3",
+      "parsedRoot": null,
+      "reading": null
+    },
+    {
+      "root": "divide-x",
+      "className": "divide-x",
+      "parsedRoot": "divide-x",
+      "reading": {
+        "order": [
+          135
+        ],
+        "count": 5
+      }
+    },
+    {
+      "root": "divide-x",
+      "className": "divide-x-0",
+      "parsedRoot": "divide-x",
+      "reading": {
+        "order": [
+          135
+        ],
+        "count": 5
+      }
+    },
+    {
+      "root": "divide-x",
+      "className": "divide-x-2",
+      "parsedRoot": "divide-x",
+      "reading": {
+        "order": [
+          135
+        ],
+        "count": 5
+      }
+    },
+    {
+      "root": "divide-x",
+      "className": "divide-x-4",
+      "parsedRoot": "divide-x",
+      "reading": {
+        "order": [
+          135
+        ],
+        "count": 5
+      }
+    },
+    {
+      "root": "divide-x",
+      "className": "divide-x-8",
+      "parsedRoot": "divide-x",
+      "reading": {
+        "order": [
+          135
+        ],
+        "count": 5
+      }
+    },
+    {
+      "root": "divide-x",
+      "className": "divide-x-1",
+      "parsedRoot": "divide-x",
+      "reading": {
+        "order": [
+          135
+        ],
+        "count": 5
+      }
+    },
+    {
+      "root": "divide-x",
+      "className": "divide-x-50",
+      "parsedRoot": "divide-x",
+      "reading": {
+        "order": [
+          135
+        ],
+        "count": 5
+      }
+    },
+    {
+      "root": "divide-x",
+      "className": "divide-x-90",
+      "parsedRoot": "divide-x",
+      "reading": {
+        "order": [
+          135
+        ],
+        "count": 5
+      }
+    },
+    {
+      "root": "divide-x",
+      "className": "divide-x-100",
+      "parsedRoot": "divide-x",
+      "reading": {
+        "order": [
+          135
+        ],
+        "count": 5
+      }
+    },
+    {
+      "root": "divide-x",
+      "className": "divide-x-sm",
+      "parsedRoot": "divide-x",
+      "reading": null
+    },
+    {
+      "root": "divide-x",
+      "className": "divide-x-none",
+      "parsedRoot": "divide-x",
+      "reading": null
+    },
+    {
+      "root": "divide-x",
+      "className": "divide-x-linear",
+      "parsedRoot": "divide-x",
+      "reading": null
+    },
+    {
+      "root": "divide-x",
+      "className": "divide-x-[3px]",
+      "parsedRoot": "divide-x",
+      "reading": {
+        "order": [
+          135
+        ],
+        "count": 5
+      }
+    },
+    {
+      "root": "divide-x",
+      "className": "divide-x-[var(--a)]",
+      "parsedRoot": "divide-x",
+      "reading": {
+        "order": [
+          135
+        ],
+        "count": 5
+      }
+    },
+    {
+      "root": "divide-x",
+      "className": "divide-x-2.5",
+      "parsedRoot": "divide-x",
+      "reading": null
+    },
+    {
+      "root": "divide-x",
+      "className": "divide-x-1.3",
+      "parsedRoot": "divide-x",
+      "reading": null
+    },
+    {
+      "root": "divide-x",
+      "className": "divide-x/50",
+      "parsedRoot": "divide-x",
+      "reading": null
+    },
+    {
+      "root": "divide-x",
+      "className": "divide-x-16/9",
+      "parsedRoot": "divide-x",
+      "reading": null
+    },
+    {
+      "root": "divide-x",
+      "className": "divide-x-3/2",
+      "parsedRoot": "divide-x",
+      "reading": null
+    },
+    {
+      "root": "divide-x",
+      "className": "divide-x-1.3/2",
+      "parsedRoot": "divide-x",
+      "reading": null
+    },
+    {
+      "root": "divide-x",
+      "className": "divide-x-7/3",
+      "parsedRoot": "divide-x",
+      "reading": null
+    },
+    {
+      "root": "divide-x",
+      "className": "-divide-x-3",
+      "parsedRoot": null,
+      "reading": null
+    },
+    {
+      "root": "divide-y",
+      "className": "divide-y",
+      "parsedRoot": "divide-y",
+      "reading": {
+        "order": [
+          136
+        ],
+        "count": 6
+      }
+    },
+    {
+      "root": "divide-y",
+      "className": "divide-y-0",
+      "parsedRoot": "divide-y",
+      "reading": {
+        "order": [
+          136
+        ],
+        "count": 6
+      }
+    },
+    {
+      "root": "divide-y",
+      "className": "divide-y-2",
+      "parsedRoot": "divide-y",
+      "reading": {
+        "order": [
+          136
+        ],
+        "count": 6
+      }
+    },
+    {
+      "root": "divide-y",
+      "className": "divide-y-4",
+      "parsedRoot": "divide-y",
+      "reading": {
+        "order": [
+          136
+        ],
+        "count": 6
+      }
+    },
+    {
+      "root": "divide-y",
+      "className": "divide-y-8",
+      "parsedRoot": "divide-y",
+      "reading": {
+        "order": [
+          136
+        ],
+        "count": 6
+      }
+    },
+    {
+      "root": "divide-y",
+      "className": "divide-y-1",
+      "parsedRoot": "divide-y",
+      "reading": {
+        "order": [
+          136
+        ],
+        "count": 6
+      }
+    },
+    {
+      "root": "divide-y",
+      "className": "divide-y-50",
+      "parsedRoot": "divide-y",
+      "reading": {
+        "order": [
+          136
+        ],
+        "count": 6
+      }
+    },
+    {
+      "root": "divide-y",
+      "className": "divide-y-90",
+      "parsedRoot": "divide-y",
+      "reading": {
+        "order": [
+          136
+        ],
+        "count": 6
+      }
+    },
+    {
+      "root": "divide-y",
+      "className": "divide-y-100",
+      "parsedRoot": "divide-y",
+      "reading": {
+        "order": [
+          136
+        ],
+        "count": 6
+      }
+    },
+    {
+      "root": "divide-y",
+      "className": "divide-y-sm",
+      "parsedRoot": "divide-y",
+      "reading": null
+    },
+    {
+      "root": "divide-y",
+      "className": "divide-y-none",
+      "parsedRoot": "divide-y",
+      "reading": null
+    },
+    {
+      "root": "divide-y",
+      "className": "divide-y-linear",
+      "parsedRoot": "divide-y",
+      "reading": null
+    },
+    {
+      "root": "divide-y",
+      "className": "divide-y-[3px]",
+      "parsedRoot": "divide-y",
+      "reading": {
+        "order": [
+          136
+        ],
+        "count": 6
+      }
+    },
+    {
+      "root": "divide-y",
+      "className": "divide-y-[var(--a)]",
+      "parsedRoot": "divide-y",
+      "reading": {
+        "order": [
+          136
+        ],
+        "count": 6
+      }
+    },
+    {
+      "root": "divide-y",
+      "className": "divide-y-2.5",
+      "parsedRoot": "divide-y",
+      "reading": null
+    },
+    {
+      "root": "divide-y",
+      "className": "divide-y-1.3",
+      "parsedRoot": "divide-y",
+      "reading": null
+    },
+    {
+      "root": "divide-y",
+      "className": "divide-y/50",
+      "parsedRoot": "divide-y",
+      "reading": null
+    },
+    {
+      "root": "divide-y",
+      "className": "divide-y-16/9",
+      "parsedRoot": "divide-y",
+      "reading": null
+    },
+    {
+      "root": "divide-y",
+      "className": "divide-y-3/2",
+      "parsedRoot": "divide-y",
+      "reading": null
+    },
+    {
+      "root": "divide-y",
+      "className": "divide-y-1.3/2",
+      "parsedRoot": "divide-y",
+      "reading": null
+    },
+    {
+      "root": "divide-y",
+      "className": "divide-y-7/3",
+      "parsedRoot": "divide-y",
+      "reading": null
+    },
+    {
+      "root": "divide-y",
+      "className": "-divide-y-3",
+      "parsedRoot": null,
+      "reading": null
+    },
+    {
+      "root": "font-stretch",
+      "className": "font-stretch-50%",
+      "parsedRoot": "font-stretch",
+      "reading": {
+        "order": [
+          300
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "font-stretch",
+      "className": "font-stretch-75%",
+      "parsedRoot": "font-stretch",
+      "reading": {
+        "order": [
+          300
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "font-stretch",
+      "className": "font-stretch-90%",
+      "parsedRoot": "font-stretch",
+      "reading": {
+        "order": [
+          300
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "font-stretch",
+      "className": "font-stretch-95%",
+      "parsedRoot": "font-stretch",
+      "reading": {
+        "order": [
+          300
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "font-stretch",
+      "className": "font-stretch-100%",
+      "parsedRoot": "font-stretch",
+      "reading": {
+        "order": [
+          300
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "font-stretch",
+      "className": "font-stretch-105%",
+      "parsedRoot": "font-stretch",
+      "reading": {
+        "order": [
+          300
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "font-stretch",
+      "className": "font-stretch-110%",
+      "parsedRoot": "font-stretch",
+      "reading": {
+        "order": [
+          300
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "font-stretch",
+      "className": "font-stretch-125%",
+      "parsedRoot": "font-stretch",
+      "reading": {
+        "order": [
+          300
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "font-stretch",
+      "className": "font-stretch-150%",
+      "parsedRoot": "font-stretch",
+      "reading": {
+        "order": [
+          300
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "font-stretch",
+      "className": "font-stretch-200%",
+      "parsedRoot": "font-stretch",
+      "reading": {
+        "order": [
+          300
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "font-stretch",
+      "className": "font-stretch",
+      "parsedRoot": "font-stretch",
+      "reading": null
+    },
+    {
+      "root": "font-stretch",
+      "className": "font-stretch-4",
+      "parsedRoot": "font-stretch",
+      "reading": null
+    },
+    {
+      "root": "font-stretch",
+      "className": "font-stretch-0",
+      "parsedRoot": "font-stretch",
+      "reading": null
+    },
+    {
+      "root": "font-stretch",
+      "className": "font-stretch-1",
+      "parsedRoot": "font-stretch",
+      "reading": null
+    },
+    {
+      "root": "font-stretch",
+      "className": "font-stretch-50",
+      "parsedRoot": "font-stretch",
+      "reading": null
+    },
+    {
+      "root": "font-stretch",
+      "className": "font-stretch-90",
+      "parsedRoot": "font-stretch",
+      "reading": null
+    },
+    {
+      "root": "font-stretch",
+      "className": "font-stretch-100",
+      "parsedRoot": "font-stretch",
+      "reading": null
+    },
+    {
+      "root": "font-stretch",
+      "className": "font-stretch-sm",
+      "parsedRoot": "font-stretch",
+      "reading": null
+    },
+    {
+      "root": "font-stretch",
+      "className": "font-stretch-none",
+      "parsedRoot": "font-stretch",
+      "reading": null
+    },
+    {
+      "root": "font-stretch",
+      "className": "font-stretch-linear",
+      "parsedRoot": "font-stretch",
+      "reading": null
+    },
+    {
+      "root": "font-stretch",
+      "className": "font-stretch-[3px]",
+      "parsedRoot": "font-stretch",
+      "reading": {
+        "order": [
+          300
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "font-stretch",
+      "className": "font-stretch-[var(--a)]",
+      "parsedRoot": "font-stretch",
+      "reading": {
+        "order": [
+          300
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "font-stretch",
+      "className": "font-stretch-2.5",
+      "parsedRoot": "font-stretch",
+      "reading": null
+    },
+    {
+      "root": "font-stretch",
+      "className": "font-stretch-1.3",
+      "parsedRoot": "font-stretch",
+      "reading": null
+    },
+    {
+      "root": "font-stretch",
+      "className": "font-stretch/50",
+      "parsedRoot": "font-stretch",
+      "reading": null
+    },
+    {
+      "root": "font-stretch",
+      "className": "font-stretch-16/9",
+      "parsedRoot": "font-stretch",
+      "reading": null
+    },
+    {
+      "root": "font-stretch",
+      "className": "font-stretch-3/2",
+      "parsedRoot": "font-stretch",
+      "reading": null
+    },
+    {
+      "root": "font-stretch",
+      "className": "font-stretch-1.3/2",
+      "parsedRoot": "font-stretch",
+      "reading": null
+    },
+    {
+      "root": "font-stretch",
+      "className": "font-stretch-7/3",
+      "parsedRoot": "font-stretch",
+      "reading": null
+    },
+    {
+      "root": "font-stretch",
+      "className": "-font-stretch-3",
+      "parsedRoot": null,
+      "reading": null
+    },
+    {
+      "root": "grid-cols",
+      "className": "grid-cols-1",
+      "parsedRoot": "grid-cols",
+      "reading": {
+        "order": [
+          120
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "grid-cols",
+      "className": "grid-cols-2",
+      "parsedRoot": "grid-cols",
+      "reading": {
+        "order": [
+          120
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "grid-cols",
+      "className": "grid-cols-3",
+      "parsedRoot": "grid-cols",
+      "reading": {
+        "order": [
+          120
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "grid-cols",
+      "className": "grid-cols-4",
+      "parsedRoot": "grid-cols",
+      "reading": {
+        "order": [
+          120
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "grid-cols",
+      "className": "grid-cols-5",
+      "parsedRoot": "grid-cols",
+      "reading": {
+        "order": [
+          120
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "grid-cols",
+      "className": "grid-cols-6",
+      "parsedRoot": "grid-cols",
+      "reading": {
+        "order": [
+          120
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "grid-cols",
+      "className": "grid-cols-7",
+      "parsedRoot": "grid-cols",
+      "reading": {
+        "order": [
+          120
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "grid-cols",
+      "className": "grid-cols-8",
+      "parsedRoot": "grid-cols",
+      "reading": {
+        "order": [
+          120
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "grid-cols",
+      "className": "grid-cols-9",
+      "parsedRoot": "grid-cols",
+      "reading": {
+        "order": [
+          120
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "grid-cols",
+      "className": "grid-cols-10",
+      "parsedRoot": "grid-cols",
+      "reading": {
+        "order": [
+          120
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "grid-cols",
+      "className": "grid-cols-11",
+      "parsedRoot": "grid-cols",
+      "reading": {
+        "order": [
+          120
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "grid-cols",
+      "className": "grid-cols-12",
+      "parsedRoot": "grid-cols",
+      "reading": {
+        "order": [
+          120
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "grid-cols",
+      "className": "grid-cols-none",
+      "parsedRoot": "grid-cols",
+      "reading": {
+        "order": [
+          120
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "grid-cols",
+      "className": "grid-cols-subgrid",
+      "parsedRoot": "grid-cols",
+      "reading": {
+        "order": [
+          120
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "grid-cols",
+      "className": "grid-cols",
+      "parsedRoot": "grid-cols",
+      "reading": null
+    },
+    {
+      "root": "grid-cols",
+      "className": "grid-cols-0",
+      "parsedRoot": "grid-cols",
+      "reading": null
+    },
+    {
+      "root": "grid-cols",
+      "className": "grid-cols-50",
+      "parsedRoot": "grid-cols",
+      "reading": {
+        "order": [
+          120
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "grid-cols",
+      "className": "grid-cols-90",
+      "parsedRoot": "grid-cols",
+      "reading": {
+        "order": [
+          120
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "grid-cols",
+      "className": "grid-cols-100",
+      "parsedRoot": "grid-cols",
+      "reading": {
+        "order": [
+          120
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "grid-cols",
+      "className": "grid-cols-sm",
+      "parsedRoot": "grid-cols",
+      "reading": null
+    },
+    {
+      "root": "grid-cols",
+      "className": "grid-cols-linear",
+      "parsedRoot": "grid-cols",
+      "reading": null
+    },
+    {
+      "root": "grid-cols",
+      "className": "grid-cols-[3px]",
+      "parsedRoot": "grid-cols",
+      "reading": {
+        "order": [
+          120
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "grid-cols",
+      "className": "grid-cols-[var(--a)]",
+      "parsedRoot": "grid-cols",
+      "reading": {
+        "order": [
+          120
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "grid-cols",
+      "className": "grid-cols-2.5",
+      "parsedRoot": "grid-cols",
+      "reading": null
+    },
+    {
+      "root": "grid-cols",
+      "className": "grid-cols-1.3",
+      "parsedRoot": "grid-cols",
+      "reading": null
+    },
+    {
+      "root": "grid-cols",
+      "className": "grid-cols/50",
+      "parsedRoot": "grid-cols",
+      "reading": null
+    },
+    {
+      "root": "grid-cols",
+      "className": "grid-cols-16/9",
+      "parsedRoot": "grid-cols",
+      "reading": null
+    },
+    {
+      "root": "grid-cols",
+      "className": "grid-cols-3/2",
+      "parsedRoot": "grid-cols",
+      "reading": null
+    },
+    {
+      "root": "grid-cols",
+      "className": "grid-cols-1.3/2",
+      "parsedRoot": "grid-cols",
+      "reading": null
+    },
+    {
+      "root": "grid-cols",
+      "className": "grid-cols-7/3",
+      "parsedRoot": "grid-cols",
+      "reading": null
+    },
+    {
+      "root": "grid-cols",
+      "className": "-grid-cols-3",
+      "parsedRoot": null,
+      "reading": null
+    },
+    {
+      "root": "grid-rows",
+      "className": "grid-rows-1",
+      "parsedRoot": "grid-rows",
+      "reading": {
+        "order": [
+          121
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "grid-rows",
+      "className": "grid-rows-2",
+      "parsedRoot": "grid-rows",
+      "reading": {
+        "order": [
+          121
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "grid-rows",
+      "className": "grid-rows-3",
+      "parsedRoot": "grid-rows",
+      "reading": {
+        "order": [
+          121
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "grid-rows",
+      "className": "grid-rows-4",
+      "parsedRoot": "grid-rows",
+      "reading": {
+        "order": [
+          121
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "grid-rows",
+      "className": "grid-rows-5",
+      "parsedRoot": "grid-rows",
+      "reading": {
+        "order": [
+          121
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "grid-rows",
+      "className": "grid-rows-6",
+      "parsedRoot": "grid-rows",
+      "reading": {
+        "order": [
+          121
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "grid-rows",
+      "className": "grid-rows-7",
+      "parsedRoot": "grid-rows",
+      "reading": {
+        "order": [
+          121
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "grid-rows",
+      "className": "grid-rows-8",
+      "parsedRoot": "grid-rows",
+      "reading": {
+        "order": [
+          121
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "grid-rows",
+      "className": "grid-rows-9",
+      "parsedRoot": "grid-rows",
+      "reading": {
+        "order": [
+          121
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "grid-rows",
+      "className": "grid-rows-10",
+      "parsedRoot": "grid-rows",
+      "reading": {
+        "order": [
+          121
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "grid-rows",
+      "className": "grid-rows-11",
+      "parsedRoot": "grid-rows",
+      "reading": {
+        "order": [
+          121
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "grid-rows",
+      "className": "grid-rows-12",
+      "parsedRoot": "grid-rows",
+      "reading": {
+        "order": [
+          121
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "grid-rows",
+      "className": "grid-rows-none",
+      "parsedRoot": "grid-rows",
+      "reading": {
+        "order": [
+          121
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "grid-rows",
+      "className": "grid-rows-subgrid",
+      "parsedRoot": "grid-rows",
+      "reading": {
+        "order": [
+          121
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "grid-rows",
+      "className": "grid-rows",
+      "parsedRoot": "grid-rows",
+      "reading": null
+    },
+    {
+      "root": "grid-rows",
+      "className": "grid-rows-0",
+      "parsedRoot": "grid-rows",
+      "reading": null
+    },
+    {
+      "root": "grid-rows",
+      "className": "grid-rows-50",
+      "parsedRoot": "grid-rows",
+      "reading": {
+        "order": [
+          121
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "grid-rows",
+      "className": "grid-rows-90",
+      "parsedRoot": "grid-rows",
+      "reading": {
+        "order": [
+          121
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "grid-rows",
+      "className": "grid-rows-100",
+      "parsedRoot": "grid-rows",
+      "reading": {
+        "order": [
+          121
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "grid-rows",
+      "className": "grid-rows-sm",
+      "parsedRoot": "grid-rows",
+      "reading": null
+    },
+    {
+      "root": "grid-rows",
+      "className": "grid-rows-linear",
+      "parsedRoot": "grid-rows",
+      "reading": null
+    },
+    {
+      "root": "grid-rows",
+      "className": "grid-rows-[3px]",
+      "parsedRoot": "grid-rows",
+      "reading": {
+        "order": [
+          121
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "grid-rows",
+      "className": "grid-rows-[var(--a)]",
+      "parsedRoot": "grid-rows",
+      "reading": {
+        "order": [
+          121
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "grid-rows",
+      "className": "grid-rows-2.5",
+      "parsedRoot": "grid-rows",
+      "reading": null
+    },
+    {
+      "root": "grid-rows",
+      "className": "grid-rows-1.3",
+      "parsedRoot": "grid-rows",
+      "reading": null
+    },
+    {
+      "root": "grid-rows",
+      "className": "grid-rows/50",
+      "parsedRoot": "grid-rows",
+      "reading": null
+    },
+    {
+      "root": "grid-rows",
+      "className": "grid-rows-16/9",
+      "parsedRoot": "grid-rows",
+      "reading": null
+    },
+    {
+      "root": "grid-rows",
+      "className": "grid-rows-3/2",
+      "parsedRoot": "grid-rows",
+      "reading": null
+    },
+    {
+      "root": "grid-rows",
+      "className": "grid-rows-1.3/2",
+      "parsedRoot": "grid-rows",
+      "reading": null
+    },
+    {
+      "root": "grid-rows",
+      "className": "grid-rows-7/3",
+      "parsedRoot": "grid-rows",
+      "reading": null
+    },
+    {
+      "root": "grid-rows",
+      "className": "-grid-rows-3",
+      "parsedRoot": null,
+      "reading": null
+    },
+    {
+      "root": "line-clamp",
+      "className": "line-clamp-1",
+      "parsedRoot": "line-clamp",
+      "reading": {
+        "order": [
+          39,
+          143
+        ],
+        "count": 4
+      }
+    },
+    {
+      "root": "line-clamp",
+      "className": "line-clamp-2",
+      "parsedRoot": "line-clamp",
+      "reading": {
+        "order": [
+          39,
+          143
+        ],
+        "count": 4
+      }
+    },
+    {
+      "root": "line-clamp",
+      "className": "line-clamp-3",
+      "parsedRoot": "line-clamp",
+      "reading": {
+        "order": [
+          39,
+          143
+        ],
+        "count": 4
+      }
+    },
+    {
+      "root": "line-clamp",
+      "className": "line-clamp-4",
+      "parsedRoot": "line-clamp",
+      "reading": {
+        "order": [
+          39,
+          143
+        ],
+        "count": 4
+      }
+    },
+    {
+      "root": "line-clamp",
+      "className": "line-clamp-5",
+      "parsedRoot": "line-clamp",
+      "reading": {
+        "order": [
+          39,
+          143
+        ],
+        "count": 4
+      }
+    },
+    {
+      "root": "line-clamp",
+      "className": "line-clamp-6",
+      "parsedRoot": "line-clamp",
+      "reading": {
+        "order": [
+          39,
+          143
+        ],
+        "count": 4
+      }
+    },
+    {
+      "root": "line-clamp",
+      "className": "line-clamp-none",
+      "parsedRoot": "line-clamp",
+      "reading": {
+        "order": [
+          39,
+          143
+        ],
+        "count": 4
+      }
+    },
+    {
+      "root": "line-clamp",
+      "className": "line-clamp",
+      "parsedRoot": "line-clamp",
+      "reading": null
+    },
+    {
+      "root": "line-clamp",
+      "className": "line-clamp-0",
+      "parsedRoot": "line-clamp",
+      "reading": {
+        "order": [
+          39,
+          143
+        ],
+        "count": 4
+      }
+    },
+    {
+      "root": "line-clamp",
+      "className": "line-clamp-50",
+      "parsedRoot": "line-clamp",
+      "reading": {
+        "order": [
+          39,
+          143
+        ],
+        "count": 4
+      }
+    },
+    {
+      "root": "line-clamp",
+      "className": "line-clamp-90",
+      "parsedRoot": "line-clamp",
+      "reading": {
+        "order": [
+          39,
+          143
+        ],
+        "count": 4
+      }
+    },
+    {
+      "root": "line-clamp",
+      "className": "line-clamp-100",
+      "parsedRoot": "line-clamp",
+      "reading": {
+        "order": [
+          39,
+          143
+        ],
+        "count": 4
+      }
+    },
+    {
+      "root": "line-clamp",
+      "className": "line-clamp-sm",
+      "parsedRoot": "line-clamp",
+      "reading": null
+    },
+    {
+      "root": "line-clamp",
+      "className": "line-clamp-linear",
+      "parsedRoot": "line-clamp",
+      "reading": null
+    },
+    {
+      "root": "line-clamp",
+      "className": "line-clamp-[3px]",
+      "parsedRoot": "line-clamp",
+      "reading": {
+        "order": [
+          39,
+          143
+        ],
+        "count": 4
+      }
+    },
+    {
+      "root": "line-clamp",
+      "className": "line-clamp-[var(--a)]",
+      "parsedRoot": "line-clamp",
+      "reading": {
+        "order": [
+          39,
+          143
+        ],
+        "count": 4
+      }
+    },
+    {
+      "root": "line-clamp",
+      "className": "line-clamp-2.5",
+      "parsedRoot": "line-clamp",
+      "reading": null
+    },
+    {
+      "root": "line-clamp",
+      "className": "line-clamp-1.3",
+      "parsedRoot": "line-clamp",
+      "reading": null
+    },
+    {
+      "root": "line-clamp",
+      "className": "line-clamp/50",
+      "parsedRoot": "line-clamp",
+      "reading": null
+    },
+    {
+      "root": "line-clamp",
+      "className": "line-clamp-16/9",
+      "parsedRoot": "line-clamp",
+      "reading": null
+    },
+    {
+      "root": "line-clamp",
+      "className": "line-clamp-3/2",
+      "parsedRoot": "line-clamp",
+      "reading": null
+    },
+    {
+      "root": "line-clamp",
+      "className": "line-clamp-1.3/2",
+      "parsedRoot": "line-clamp",
+      "reading": null
+    },
+    {
+      "root": "line-clamp",
+      "className": "line-clamp-7/3",
+      "parsedRoot": "line-clamp",
+      "reading": null
+    },
+    {
+      "root": "line-clamp",
+      "className": "-line-clamp-3",
+      "parsedRoot": null,
+      "reading": null
+    },
+    {
+      "root": "mask-conic",
+      "className": "mask-conic-0",
+      "parsedRoot": "mask-conic",
+      "reading": {
+        "order": [
+          209,
+          244,
+          245,
+          257
+        ],
+        "count": 4
+      }
+    },
+    {
+      "root": "mask-conic",
+      "className": "mask-conic-1",
+      "parsedRoot": "mask-conic",
+      "reading": {
+        "order": [
+          209,
+          244,
+          245,
+          257
+        ],
+        "count": 4
+      }
+    },
+    {
+      "root": "mask-conic",
+      "className": "mask-conic-2",
+      "parsedRoot": "mask-conic",
+      "reading": {
+        "order": [
+          209,
+          244,
+          245,
+          257
+        ],
+        "count": 4
+      }
+    },
+    {
+      "root": "mask-conic",
+      "className": "mask-conic-3",
+      "parsedRoot": "mask-conic",
+      "reading": {
+        "order": [
+          209,
+          244,
+          245,
+          257
+        ],
+        "count": 4
+      }
+    },
+    {
+      "root": "mask-conic",
+      "className": "mask-conic-6",
+      "parsedRoot": "mask-conic",
+      "reading": {
+        "order": [
+          209,
+          244,
+          245,
+          257
+        ],
+        "count": 4
+      }
+    },
+    {
+      "root": "mask-conic",
+      "className": "mask-conic-12",
+      "parsedRoot": "mask-conic",
+      "reading": {
+        "order": [
+          209,
+          244,
+          245,
+          257
+        ],
+        "count": 4
+      }
+    },
+    {
+      "root": "mask-conic",
+      "className": "mask-conic-45",
+      "parsedRoot": "mask-conic",
+      "reading": {
+        "order": [
+          209,
+          244,
+          245,
+          257
+        ],
+        "count": 4
+      }
+    },
+    {
+      "root": "mask-conic",
+      "className": "mask-conic-90",
+      "parsedRoot": "mask-conic",
+      "reading": {
+        "order": [
+          209,
+          244,
+          245,
+          257
+        ],
+        "count": 4
+      }
+    },
+    {
+      "root": "mask-conic",
+      "className": "mask-conic-180",
+      "parsedRoot": "mask-conic",
+      "reading": {
+        "order": [
+          209,
+          244,
+          245,
+          257
+        ],
+        "count": 4
+      }
+    },
+    {
+      "root": "mask-conic",
+      "className": "mask-conic",
+      "parsedRoot": "mask-conic",
+      "reading": null
+    },
+    {
+      "root": "mask-conic",
+      "className": "mask-conic-4",
+      "parsedRoot": "mask-conic",
+      "reading": {
+        "order": [
+          209,
+          244,
+          245,
+          257
+        ],
+        "count": 4
+      }
+    },
+    {
+      "root": "mask-conic",
+      "className": "mask-conic-50",
+      "parsedRoot": "mask-conic",
+      "reading": {
+        "order": [
+          209,
+          244,
+          245,
+          257
+        ],
+        "count": 4
+      }
+    },
+    {
+      "root": "mask-conic",
+      "className": "mask-conic-100",
+      "parsedRoot": "mask-conic",
+      "reading": {
+        "order": [
+          209,
+          244,
+          245,
+          257
+        ],
+        "count": 4
+      }
+    },
+    {
+      "root": "mask-conic",
+      "className": "mask-conic-sm",
+      "parsedRoot": "mask-conic",
+      "reading": null
+    },
+    {
+      "root": "mask-conic",
+      "className": "mask-conic-none",
+      "parsedRoot": "mask-conic",
+      "reading": null
+    },
+    {
+      "root": "mask-conic",
+      "className": "mask-conic-linear",
+      "parsedRoot": "mask-conic",
+      "reading": null
+    },
+    {
+      "root": "mask-conic",
+      "className": "mask-conic-[3px]",
+      "parsedRoot": "mask-conic",
+      "reading": {
+        "order": [
+          209,
+          244,
+          245,
+          257
+        ],
+        "count": 4
+      }
+    },
+    {
+      "root": "mask-conic",
+      "className": "mask-conic-[var(--a)]",
+      "parsedRoot": "mask-conic",
+      "reading": {
+        "order": [
+          209,
+          244,
+          245,
+          257
+        ],
+        "count": 4
+      }
+    },
+    {
+      "root": "mask-conic",
+      "className": "mask-conic-2.5",
+      "parsedRoot": "mask-conic",
+      "reading": null
+    },
+    {
+      "root": "mask-conic",
+      "className": "mask-conic-1.3",
+      "parsedRoot": "mask-conic",
+      "reading": null
+    },
+    {
+      "root": "mask-conic",
+      "className": "mask-conic/50",
+      "parsedRoot": "mask-conic",
+      "reading": null
+    },
+    {
+      "root": "mask-conic",
+      "className": "mask-conic-16/9",
+      "parsedRoot": "mask-conic",
+      "reading": null
+    },
+    {
+      "root": "mask-conic",
+      "className": "mask-conic-3/2",
+      "parsedRoot": "mask-conic",
+      "reading": null
+    },
+    {
+      "root": "mask-conic",
+      "className": "mask-conic-1.3/2",
+      "parsedRoot": "mask-conic",
+      "reading": null
+    },
+    {
+      "root": "mask-conic",
+      "className": "mask-conic-7/3",
+      "parsedRoot": "mask-conic",
+      "reading": null
+    },
+    {
+      "root": "mask-conic",
+      "className": "-mask-conic-3",
+      "parsedRoot": "-mask-conic",
+      "reading": {
+        "order": [
+          209,
+          244,
+          245,
+          257
+        ],
+        "count": 4
+      }
+    },
+    {
+      "root": "mask-linear",
+      "className": "mask-linear-0",
+      "parsedRoot": "mask-linear",
+      "reading": {
+        "order": [
+          209,
+          230,
+          231,
+          257
+        ],
+        "count": 4
+      }
+    },
+    {
+      "root": "mask-linear",
+      "className": "mask-linear-1",
+      "parsedRoot": "mask-linear",
+      "reading": {
+        "order": [
+          209,
+          230,
+          231,
+          257
+        ],
+        "count": 4
+      }
+    },
+    {
+      "root": "mask-linear",
+      "className": "mask-linear-2",
+      "parsedRoot": "mask-linear",
+      "reading": {
+        "order": [
+          209,
+          230,
+          231,
+          257
+        ],
+        "count": 4
+      }
+    },
+    {
+      "root": "mask-linear",
+      "className": "mask-linear-3",
+      "parsedRoot": "mask-linear",
+      "reading": {
+        "order": [
+          209,
+          230,
+          231,
+          257
+        ],
+        "count": 4
+      }
+    },
+    {
+      "root": "mask-linear",
+      "className": "mask-linear-6",
+      "parsedRoot": "mask-linear",
+      "reading": {
+        "order": [
+          209,
+          230,
+          231,
+          257
+        ],
+        "count": 4
+      }
+    },
+    {
+      "root": "mask-linear",
+      "className": "mask-linear-12",
+      "parsedRoot": "mask-linear",
+      "reading": {
+        "order": [
+          209,
+          230,
+          231,
+          257
+        ],
+        "count": 4
+      }
+    },
+    {
+      "root": "mask-linear",
+      "className": "mask-linear-45",
+      "parsedRoot": "mask-linear",
+      "reading": {
+        "order": [
+          209,
+          230,
+          231,
+          257
+        ],
+        "count": 4
+      }
+    },
+    {
+      "root": "mask-linear",
+      "className": "mask-linear-90",
+      "parsedRoot": "mask-linear",
+      "reading": {
+        "order": [
+          209,
+          230,
+          231,
+          257
+        ],
+        "count": 4
+      }
+    },
+    {
+      "root": "mask-linear",
+      "className": "mask-linear-180",
+      "parsedRoot": "mask-linear",
+      "reading": {
+        "order": [
+          209,
+          230,
+          231,
+          257
+        ],
+        "count": 4
+      }
+    },
+    {
+      "root": "mask-linear",
+      "className": "mask-linear",
+      "parsedRoot": "mask-linear",
+      "reading": null
+    },
+    {
+      "root": "mask-linear",
+      "className": "mask-linear-4",
+      "parsedRoot": "mask-linear",
+      "reading": {
+        "order": [
+          209,
+          230,
+          231,
+          257
+        ],
+        "count": 4
+      }
+    },
+    {
+      "root": "mask-linear",
+      "className": "mask-linear-50",
+      "parsedRoot": "mask-linear",
+      "reading": {
+        "order": [
+          209,
+          230,
+          231,
+          257
+        ],
+        "count": 4
+      }
+    },
+    {
+      "root": "mask-linear",
+      "className": "mask-linear-100",
+      "parsedRoot": "mask-linear",
+      "reading": {
+        "order": [
+          209,
+          230,
+          231,
+          257
+        ],
+        "count": 4
+      }
+    },
+    {
+      "root": "mask-linear",
+      "className": "mask-linear-sm",
+      "parsedRoot": "mask-linear",
+      "reading": null
+    },
+    {
+      "root": "mask-linear",
+      "className": "mask-linear-none",
+      "parsedRoot": "mask-linear",
+      "reading": null
+    },
+    {
+      "root": "mask-linear",
+      "className": "mask-linear-linear",
+      "parsedRoot": "mask-linear",
+      "reading": null
+    },
+    {
+      "root": "mask-linear",
+      "className": "mask-linear-[3px]",
+      "parsedRoot": "mask-linear",
+      "reading": {
+        "order": [
+          209,
+          230,
+          231,
+          257
+        ],
+        "count": 4
+      }
+    },
+    {
+      "root": "mask-linear",
+      "className": "mask-linear-[var(--a)]",
+      "parsedRoot": "mask-linear",
+      "reading": {
+        "order": [
+          209,
+          230,
+          231,
+          257
+        ],
+        "count": 4
+      }
+    },
+    {
+      "root": "mask-linear",
+      "className": "mask-linear-2.5",
+      "parsedRoot": "mask-linear",
+      "reading": null
+    },
+    {
+      "root": "mask-linear",
+      "className": "mask-linear-1.3",
+      "parsedRoot": "mask-linear",
+      "reading": null
+    },
+    {
+      "root": "mask-linear",
+      "className": "mask-linear/50",
+      "parsedRoot": "mask-linear",
+      "reading": null
+    },
+    {
+      "root": "mask-linear",
+      "className": "mask-linear-16/9",
+      "parsedRoot": "mask-linear",
+      "reading": null
+    },
+    {
+      "root": "mask-linear",
+      "className": "mask-linear-3/2",
+      "parsedRoot": "mask-linear",
+      "reading": null
+    },
+    {
+      "root": "mask-linear",
+      "className": "mask-linear-1.3/2",
+      "parsedRoot": "mask-linear",
+      "reading": null
+    },
+    {
+      "root": "mask-linear",
+      "className": "mask-linear-7/3",
+      "parsedRoot": "mask-linear",
+      "reading": null
+    },
+    {
+      "root": "mask-linear",
+      "className": "-mask-linear-3",
+      "parsedRoot": "-mask-linear",
+      "reading": {
+        "order": [
+          209,
+          230,
+          231,
+          257
+        ],
+        "count": 4
+      }
+    },
+    {
+      "root": "mask-radial",
+      "className": "mask-radial",
+      "parsedRoot": "mask-radial",
+      "reading": null
+    },
+    {
+      "root": "mask-radial",
+      "className": "mask-radial-4",
+      "parsedRoot": "mask-radial",
+      "reading": null
+    },
+    {
+      "root": "mask-radial",
+      "className": "mask-radial-0",
+      "parsedRoot": "mask-radial",
+      "reading": null
+    },
+    {
+      "root": "mask-radial",
+      "className": "mask-radial-1",
+      "parsedRoot": "mask-radial",
+      "reading": null
+    },
+    {
+      "root": "mask-radial",
+      "className": "mask-radial-50",
+      "parsedRoot": "mask-radial",
+      "reading": null
+    },
+    {
+      "root": "mask-radial",
+      "className": "mask-radial-90",
+      "parsedRoot": "mask-radial",
+      "reading": null
+    },
+    {
+      "root": "mask-radial",
+      "className": "mask-radial-100",
+      "parsedRoot": "mask-radial",
+      "reading": null
+    },
+    {
+      "root": "mask-radial",
+      "className": "mask-radial-sm",
+      "parsedRoot": "mask-radial",
+      "reading": null
+    },
+    {
+      "root": "mask-radial",
+      "className": "mask-radial-none",
+      "parsedRoot": "mask-radial",
+      "reading": null
+    },
+    {
+      "root": "mask-radial",
+      "className": "mask-radial-linear",
+      "parsedRoot": "mask-radial",
+      "reading": null
+    },
+    {
+      "root": "mask-radial",
+      "className": "mask-radial-[3px]",
+      "parsedRoot": "mask-radial",
+      "reading": {
+        "order": [
+          209,
+          236,
+          238,
+          257
+        ],
+        "count": 4
+      }
+    },
+    {
+      "root": "mask-radial",
+      "className": "mask-radial-[var(--a)]",
+      "parsedRoot": "mask-radial",
+      "reading": {
+        "order": [
+          209,
+          236,
+          238,
+          257
+        ],
+        "count": 4
+      }
+    },
+    {
+      "root": "mask-radial",
+      "className": "mask-radial-2.5",
+      "parsedRoot": "mask-radial",
+      "reading": null
+    },
+    {
+      "root": "mask-radial",
+      "className": "mask-radial-1.3",
+      "parsedRoot": "mask-radial",
+      "reading": null
+    },
+    {
+      "root": "mask-radial",
+      "className": "mask-radial/50",
+      "parsedRoot": "mask-radial",
+      "reading": null
+    },
+    {
+      "root": "mask-radial",
+      "className": "mask-radial-16/9",
+      "parsedRoot": "mask-radial",
+      "reading": null
+    },
+    {
+      "root": "mask-radial",
+      "className": "mask-radial-3/2",
+      "parsedRoot": "mask-radial",
+      "reading": null
+    },
+    {
+      "root": "mask-radial",
+      "className": "mask-radial-1.3/2",
+      "parsedRoot": "mask-radial",
+      "reading": null
+    },
+    {
+      "root": "mask-radial",
+      "className": "mask-radial-7/3",
+      "parsedRoot": "mask-radial",
+      "reading": null
+    },
+    {
+      "root": "mask-radial",
+      "className": "-mask-radial-3",
+      "parsedRoot": null,
+      "reading": null
+    },
+    {
+      "root": "row-span",
+      "className": "row-span-1",
+      "parsedRoot": "row-span",
+      "reading": {
+        "order": [
+          21
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "row-span",
+      "className": "row-span-2",
+      "parsedRoot": "row-span",
+      "reading": {
+        "order": [
+          21
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "row-span",
+      "className": "row-span-3",
+      "parsedRoot": "row-span",
+      "reading": {
+        "order": [
+          21
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "row-span",
+      "className": "row-span-4",
+      "parsedRoot": "row-span",
+      "reading": {
+        "order": [
+          21
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "row-span",
+      "className": "row-span-5",
+      "parsedRoot": "row-span",
+      "reading": {
+        "order": [
+          21
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "row-span",
+      "className": "row-span-6",
+      "parsedRoot": "row-span",
+      "reading": {
+        "order": [
+          21
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "row-span",
+      "className": "row-span-7",
+      "parsedRoot": "row-span",
+      "reading": {
+        "order": [
+          21
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "row-span",
+      "className": "row-span-8",
+      "parsedRoot": "row-span",
+      "reading": {
+        "order": [
+          21
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "row-span",
+      "className": "row-span-9",
+      "parsedRoot": "row-span",
+      "reading": {
+        "order": [
+          21
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "row-span",
+      "className": "row-span-10",
+      "parsedRoot": "row-span",
+      "reading": {
+        "order": [
+          21
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "row-span",
+      "className": "row-span-11",
+      "parsedRoot": "row-span",
+      "reading": {
+        "order": [
+          21
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "row-span",
+      "className": "row-span-12",
+      "parsedRoot": "row-span",
+      "reading": {
+        "order": [
+          21
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "row-span",
+      "className": "row-span-full",
+      "parsedRoot": "row-span",
+      "reading": {
+        "order": [
+          21
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "row-span",
+      "className": "row-span",
+      "parsedRoot": "row-span",
+      "reading": null
+    },
+    {
+      "root": "row-span",
+      "className": "row-span-0",
+      "parsedRoot": "row-span",
+      "reading": {
+        "order": [
+          21
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "row-span",
+      "className": "row-span-50",
+      "parsedRoot": "row-span",
+      "reading": {
+        "order": [
+          21
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "row-span",
+      "className": "row-span-90",
+      "parsedRoot": "row-span",
+      "reading": {
+        "order": [
+          21
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "row-span",
+      "className": "row-span-100",
+      "parsedRoot": "row-span",
+      "reading": {
+        "order": [
+          21
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "row-span",
+      "className": "row-span-sm",
+      "parsedRoot": "row-span",
+      "reading": null
+    },
+    {
+      "root": "row-span",
+      "className": "row-span-none",
+      "parsedRoot": "row-span",
+      "reading": null
+    },
+    {
+      "root": "row-span",
+      "className": "row-span-linear",
+      "parsedRoot": "row-span",
+      "reading": null
+    },
+    {
+      "root": "row-span",
+      "className": "row-span-[3px]",
+      "parsedRoot": "row-span",
+      "reading": {
+        "order": [
+          21
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "row-span",
+      "className": "row-span-[var(--a)]",
+      "parsedRoot": "row-span",
+      "reading": {
+        "order": [
+          21
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "row-span",
+      "className": "row-span-2.5",
+      "parsedRoot": "row-span",
+      "reading": null
+    },
+    {
+      "root": "row-span",
+      "className": "row-span-1.3",
+      "parsedRoot": "row-span",
+      "reading": null
+    },
+    {
+      "root": "row-span",
+      "className": "row-span/50",
+      "parsedRoot": "row-span",
+      "reading": null
+    },
+    {
+      "root": "row-span",
+      "className": "row-span-16/9",
+      "parsedRoot": "row-span",
+      "reading": null
+    },
+    {
+      "root": "row-span",
+      "className": "row-span-3/2",
+      "parsedRoot": "row-span",
+      "reading": null
+    },
+    {
+      "root": "row-span",
+      "className": "row-span-1.3/2",
+      "parsedRoot": "row-span",
+      "reading": null
+    },
+    {
+      "root": "row-span",
+      "className": "row-span-7/3",
+      "parsedRoot": "row-span",
+      "reading": null
+    },
+    {
+      "root": "row-span",
+      "className": "-row-span-3",
+      "parsedRoot": "-row",
+      "reading": null
+    },
+    {
+      "root": "tracking",
+      "className": "tracking-normal",
+      "parsedRoot": "tracking",
+      "reading": {
+        "order": [
+          289
+        ],
+        "count": 2
+      }
+    },
+    {
+      "root": "tracking",
+      "className": "tracking-tight",
+      "parsedRoot": "tracking",
+      "reading": {
+        "order": [
+          289
+        ],
+        "count": 2
+      }
+    },
+    {
+      "root": "tracking",
+      "className": "tracking-tighter",
+      "parsedRoot": "tracking",
+      "reading": {
+        "order": [
+          289
+        ],
+        "count": 2
+      }
+    },
+    {
+      "root": "tracking",
+      "className": "tracking-wide",
+      "parsedRoot": "tracking",
+      "reading": {
+        "order": [
+          289
+        ],
+        "count": 2
+      }
+    },
+    {
+      "root": "tracking",
+      "className": "tracking-wider",
+      "parsedRoot": "tracking",
+      "reading": {
+        "order": [
+          289
+        ],
+        "count": 2
+      }
+    },
+    {
+      "root": "tracking",
+      "className": "tracking-widest",
+      "parsedRoot": "tracking",
+      "reading": {
+        "order": [
+          289
+        ],
+        "count": 2
+      }
+    },
+    {
+      "root": "tracking",
+      "className": "tracking",
+      "parsedRoot": "tracking",
+      "reading": null
+    },
+    {
+      "root": "tracking",
+      "className": "tracking-4",
+      "parsedRoot": "tracking",
+      "reading": null
+    },
+    {
+      "root": "tracking",
+      "className": "tracking-0",
+      "parsedRoot": "tracking",
+      "reading": null
+    },
+    {
+      "root": "tracking",
+      "className": "tracking-1",
+      "parsedRoot": "tracking",
+      "reading": null
+    },
+    {
+      "root": "tracking",
+      "className": "tracking-50",
+      "parsedRoot": "tracking",
+      "reading": null
+    },
+    {
+      "root": "tracking",
+      "className": "tracking-90",
+      "parsedRoot": "tracking",
+      "reading": null
+    },
+    {
+      "root": "tracking",
+      "className": "tracking-100",
+      "parsedRoot": "tracking",
+      "reading": null
+    },
+    {
+      "root": "tracking",
+      "className": "tracking-sm",
+      "parsedRoot": "tracking",
+      "reading": null
+    },
+    {
+      "root": "tracking",
+      "className": "tracking-none",
+      "parsedRoot": "tracking",
+      "reading": null
+    },
+    {
+      "root": "tracking",
+      "className": "tracking-linear",
+      "parsedRoot": "tracking",
+      "reading": null
+    },
+    {
+      "root": "tracking",
+      "className": "tracking-[3px]",
+      "parsedRoot": "tracking",
+      "reading": {
+        "order": [
+          289
+        ],
+        "count": 2
+      }
+    },
+    {
+      "root": "tracking",
+      "className": "tracking-[var(--a)]",
+      "parsedRoot": "tracking",
+      "reading": {
+        "order": [
+          289
+        ],
+        "count": 2
+      }
+    },
+    {
+      "root": "tracking",
+      "className": "tracking-2.5",
+      "parsedRoot": "tracking",
+      "reading": null
+    },
+    {
+      "root": "tracking",
+      "className": "tracking-1.3",
+      "parsedRoot": "tracking",
+      "reading": null
+    },
+    {
+      "root": "tracking",
+      "className": "tracking/50",
+      "parsedRoot": "tracking",
+      "reading": null
+    },
+    {
+      "root": "tracking",
+      "className": "tracking-16/9",
+      "parsedRoot": "tracking",
+      "reading": null
+    },
+    {
+      "root": "tracking",
+      "className": "tracking-3/2",
+      "parsedRoot": "tracking",
+      "reading": null
+    },
+    {
+      "root": "tracking",
+      "className": "tracking-1.3/2",
+      "parsedRoot": "tracking",
+      "reading": null
+    },
+    {
+      "root": "tracking",
+      "className": "tracking-7/3",
+      "parsedRoot": "tracking",
+      "reading": null
+    },
+    {
+      "root": "tracking",
+      "className": "-tracking-3",
+      "parsedRoot": "-tracking",
+      "reading": null
+    },
+    {
+      "root": "transition",
+      "className": "transition",
+      "parsedRoot": "transition",
+      "reading": {
+        "order": [
+          350,
+          353,
+          354
+        ],
+        "count": 3
+      }
+    },
+    {
+      "root": "transition",
+      "className": "transition-all",
+      "parsedRoot": "transition",
+      "reading": {
+        "order": [
+          350,
+          353,
+          354
+        ],
+        "count": 3
+      }
+    },
+    {
+      "root": "transition",
+      "className": "transition-colors",
+      "parsedRoot": "transition",
+      "reading": {
+        "order": [
+          350,
+          353,
+          354
+        ],
+        "count": 3
+      }
+    },
+    {
+      "root": "transition",
+      "className": "transition-none",
+      "parsedRoot": "transition",
+      "reading": {
+        "order": [
+          350
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "transition",
+      "className": "transition-opacity",
+      "parsedRoot": "transition",
+      "reading": {
+        "order": [
+          350,
+          353,
+          354
+        ],
+        "count": 3
+      }
+    },
+    {
+      "root": "transition",
+      "className": "transition-shadow",
+      "parsedRoot": "transition",
+      "reading": {
+        "order": [
+          350,
+          353,
+          354
+        ],
+        "count": 3
+      }
+    },
+    {
+      "root": "transition",
+      "className": "transition-transform",
+      "parsedRoot": "transition",
+      "reading": {
+        "order": [
+          350,
+          353,
+          354
+        ],
+        "count": 3
+      }
+    },
+    {
+      "root": "transition",
+      "className": "transition-4",
+      "parsedRoot": "transition",
+      "reading": null
+    },
+    {
+      "root": "transition",
+      "className": "transition-0",
+      "parsedRoot": "transition",
+      "reading": null
+    },
+    {
+      "root": "transition",
+      "className": "transition-1",
+      "parsedRoot": "transition",
+      "reading": null
+    },
+    {
+      "root": "transition",
+      "className": "transition-50",
+      "parsedRoot": "transition",
+      "reading": null
+    },
+    {
+      "root": "transition",
+      "className": "transition-90",
+      "parsedRoot": "transition",
+      "reading": null
+    },
+    {
+      "root": "transition",
+      "className": "transition-100",
+      "parsedRoot": "transition",
+      "reading": null
+    },
+    {
+      "root": "transition",
+      "className": "transition-sm",
+      "parsedRoot": "transition",
+      "reading": null
+    },
+    {
+      "root": "transition",
+      "className": "transition-linear",
+      "parsedRoot": "transition",
+      "reading": null
+    },
+    {
+      "root": "transition",
+      "className": "transition-[3px]",
+      "parsedRoot": "transition",
+      "reading": {
+        "order": [
+          350,
+          353,
+          354
+        ],
+        "count": 3
+      }
+    },
+    {
+      "root": "transition",
+      "className": "transition-[var(--a)]",
+      "parsedRoot": "transition",
+      "reading": {
+        "order": [
+          350,
+          353,
+          354
+        ],
+        "count": 3
+      }
+    },
+    {
+      "root": "transition",
+      "className": "transition-2.5",
+      "parsedRoot": "transition",
+      "reading": null
+    },
+    {
+      "root": "transition",
+      "className": "transition-1.3",
+      "parsedRoot": "transition",
+      "reading": null
+    },
+    {
+      "root": "transition",
+      "className": "transition/50",
+      "parsedRoot": "transition",
+      "reading": null
+    },
+    {
+      "root": "transition",
+      "className": "transition-16/9",
+      "parsedRoot": "transition",
+      "reading": null
+    },
+    {
+      "root": "transition",
+      "className": "transition-3/2",
+      "parsedRoot": "transition",
+      "reading": null
+    },
+    {
+      "root": "transition",
+      "className": "transition-1.3/2",
+      "parsedRoot": "transition",
+      "reading": null
+    },
+    {
+      "root": "transition",
+      "className": "transition-7/3",
+      "parsedRoot": "transition",
+      "reading": null
+    },
+    {
+      "root": "transition",
+      "className": "-transition-3",
+      "parsedRoot": null,
+      "reading": null
+    },
+    {
+      "root": "underline-offset",
+      "className": "underline-offset-0",
+      "parsedRoot": "underline-offset",
+      "reading": {
+        "order": [
+          306
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "underline-offset",
+      "className": "underline-offset-1",
+      "parsedRoot": "underline-offset",
+      "reading": {
+        "order": [
+          306
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "underline-offset",
+      "className": "underline-offset-2",
+      "parsedRoot": "underline-offset",
+      "reading": {
+        "order": [
+          306
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "underline-offset",
+      "className": "underline-offset-4",
+      "parsedRoot": "underline-offset",
+      "reading": {
+        "order": [
+          306
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "underline-offset",
+      "className": "underline-offset-8",
+      "parsedRoot": "underline-offset",
+      "reading": {
+        "order": [
+          306
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "underline-offset",
+      "className": "underline-offset-auto",
+      "parsedRoot": "underline-offset",
+      "reading": {
+        "order": [
+          306
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "underline-offset",
+      "className": "underline-offset",
+      "parsedRoot": "underline-offset",
+      "reading": null
+    },
+    {
+      "root": "underline-offset",
+      "className": "underline-offset-50",
+      "parsedRoot": "underline-offset",
+      "reading": {
+        "order": [
+          306
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "underline-offset",
+      "className": "underline-offset-90",
+      "parsedRoot": "underline-offset",
+      "reading": {
+        "order": [
+          306
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "underline-offset",
+      "className": "underline-offset-100",
+      "parsedRoot": "underline-offset",
+      "reading": {
+        "order": [
+          306
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "underline-offset",
+      "className": "underline-offset-sm",
+      "parsedRoot": "underline-offset",
+      "reading": null
+    },
+    {
+      "root": "underline-offset",
+      "className": "underline-offset-none",
+      "parsedRoot": "underline-offset",
+      "reading": null
+    },
+    {
+      "root": "underline-offset",
+      "className": "underline-offset-linear",
+      "parsedRoot": "underline-offset",
+      "reading": null
+    },
+    {
+      "root": "underline-offset",
+      "className": "underline-offset-[3px]",
+      "parsedRoot": "underline-offset",
+      "reading": {
+        "order": [
+          306
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "underline-offset",
+      "className": "underline-offset-[var(--a)]",
+      "parsedRoot": "underline-offset",
+      "reading": {
+        "order": [
+          306
+        ],
+        "count": 1
+      }
+    },
+    {
+      "root": "underline-offset",
+      "className": "underline-offset-2.5",
+      "parsedRoot": "underline-offset",
+      "reading": null
+    },
+    {
+      "root": "underline-offset",
+      "className": "underline-offset-1.3",
+      "parsedRoot": "underline-offset",
+      "reading": null
+    },
+    {
+      "root": "underline-offset",
+      "className": "underline-offset/50",
+      "parsedRoot": "underline-offset",
+      "reading": null
+    },
+    {
+      "root": "underline-offset",
+      "className": "underline-offset-16/9",
+      "parsedRoot": "underline-offset",
+      "reading": null
+    },
+    {
+      "root": "underline-offset",
+      "className": "underline-offset-3/2",
+      "parsedRoot": "underline-offset",
+      "reading": null
+    },
+    {
+      "root": "underline-offset",
+      "className": "underline-offset-1.3/2",
+      "parsedRoot": "underline-offset",
+      "reading": null
+    },
+    {
+      "root": "underline-offset",
+      "className": "underline-offset-7/3",
+      "parsedRoot": "underline-offset",
+      "reading": null
+    },
+    {
+      "root": "underline-offset",
+      "className": "-underline-offset-3",
+      "parsedRoot": "-underline-offset",
+      "reading": {
+        "order": [
+          306
+        ],
+        "count": 1
+      }
+    }
+  ]
+}

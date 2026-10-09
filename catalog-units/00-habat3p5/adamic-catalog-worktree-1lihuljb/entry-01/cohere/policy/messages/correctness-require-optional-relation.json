@@ -1,0 +1,10 @@
+{
+  "rules": {
+    "TypeScript": "base/correctness-require-optional-relation"
+  },
+  "messages": {
+    "mustBeOptional": {
+      "text": "Relation property must be optional ('{{propertyName}}?: {{propertyType}}') because TypeORM relations are undefined when not loaded"
+    }
+  }
+}

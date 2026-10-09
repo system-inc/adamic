@@ -1,0 +1,24 @@
+{
+    "rule": "nexus/correctness-no-uncleared-race-timeout",
+    "firing": {
+        "file": "/repository/source/Load.ts",
+        "source": "/// <reference lib=\"dom\" />\ndeclare function work(): Promise<string>;\nexport async function load(milliseconds: number) {\n    return Promise.race([work(), new Promise<never>((_resolve, reject) => { window.setTimeout(reject, milliseconds); })]);\n}\n",
+        "findings": [
+            {
+                "line": 4,
+                "column": 77,
+                "endLine": 4,
+                "endColumn": 116,
+                "messageId": "unclearedRaceTimeout",
+                "message": "This `setTimeout` arms the losing side of a `Promise.race`, and its handle is thrown away, so nothing can ever clear it. When the work wins the race, the timer stays armed for its whole duration: in Node it holds the process open (a batch that finished its last item sits until the timeout elapses), and its callback still runs, rejecting a promise nobody is waiting on. Keep the handle (`timer = setTimeout(...)`) and `clearTimeout(timer)` in a `finally` around the race."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/CorrectnessNoUnclearedRaceTimeout.ts",
+        "source": "declare function generateImage(prompt: string): Promise<{ path: string }>;\ndeclare function work(): Promise<string>;\ndeclare function timeoutAfter(milliseconds: number): Promise<never>;\ndeclare function use(value: unknown): void;\ndeclare const milliseconds: number;\nexport async function load() {\n    return Promise.race([work(), timeoutAfter(milliseconds)]);\n}\n"
+    },
+    "assertedMessageIds": [
+        "unclearedRaceTimeout"
+    ]
+}

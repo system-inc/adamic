@@ -1,0 +1,24 @@
+{
+    "rule": "@next/next/no-location-assign-relative-destination",
+    "firing": {
+        "file": "/repository/source/Navigate.tsx",
+        "source": "location.assign('');\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 1,
+                "endLine": 1,
+                "endColumn": 20,
+                "messageId": "noLocationAssign",
+                "message": "Navigating to an internal page through `location.assign` or by writing `location.href` tears down the running application and reloads it from the server, so client state, the router's history entry and any in-flight data are all discarded. Use `redirect()` in the render phase, or `useRouter().push()` in a Client Component's event handler."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/Navigate.tsx",
+        "source": "location.assign();\n"
+    },
+    "assertedMessageIds": [
+        "noLocationAssign"
+    ]
+}

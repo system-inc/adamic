@@ -1,0 +1,10 @@
+=== RUN   TestNamespaceCallGraphLinearWork
+=== PAUSE TestNamespaceCallGraphLinearWork
+=== CONT  TestNamespaceCallGraphLinearWork
+=== RUN   TestNamespaceCallGraphLinearWork/12
+    namespaces_call_graph_test.go:44: nonlinear function walks: got 8191, want 13
+--- FAIL: TestNamespaceCallGraphLinearWork (0.07s)
+    --- FAIL: TestNamespaceCallGraphLinearWork/12 (0.07s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.084s
+FAIL

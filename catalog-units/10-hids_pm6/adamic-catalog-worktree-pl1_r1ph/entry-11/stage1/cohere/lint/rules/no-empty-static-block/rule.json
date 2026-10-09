@@ -1,0 +1,13 @@
+{
+  "name": "no-empty-static-block",
+  "kinds": [
+    "ClassStaticBlockDeclaration"
+  ],
+  "visit": "visit",
+  "node": true,
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleNoEmptyStaticBlock",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestNoEmptyStaticBlock"
+}

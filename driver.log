@@ -1,0 +1,7 @@
+idle preemption: 0 marked, 0 survivors in their sessions, 5 ms
+FIRST FAILURE (tests, at 125.5 s):
+github.com/system-inc/adamic/stage1/cohere/markdownblocks (package)
+FAIL	github.com/system-inc/adamic/stage1/cohere/markdownblocks	90.472s
+
+(box load 76.3 on 64 cores at first failure)
+red: 0cf557e27755dede15dd3a6130faceacba587a25 full gate, first failure at tests after 125.5 s, under load (load 76.3 on 64 cores at first failure), cancelled after first failure (coverage=0.0s build=9.0s tools=0.1s determinism=13.9s vet=32.0s wasi=111.7s stage3=114.4s tests=114.7s catalog=114.7s; 2 units over 30 s (92 s, 2 on the burn-down, 0 drifted over); box load 13.5 on 64 cores at start, load 76.3 on 64 cores at first failure, load 76.3 on 64 cores at end), 0 fail, 1395 pass

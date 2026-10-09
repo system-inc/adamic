@@ -1,0 +1,8 @@
+[
+{"code":"var x = arguments.length","eslint":[]},
+{"code":"var x = arguments","eslint":[]},
+{"code":"var x = arguments[0]","eslint":[]},
+{"code":"var x = arguments[caller]","eslint":[]},
+{"code":"var x = arguments.callee","eslint":[["unexpected",8,24]]},
+{"code":"var x = arguments.caller","eslint":[["unexpected",8,24]]}
+]

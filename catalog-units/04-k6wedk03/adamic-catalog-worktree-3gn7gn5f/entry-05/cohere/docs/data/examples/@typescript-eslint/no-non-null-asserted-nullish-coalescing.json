@@ -1,0 +1,26 @@
+{
+    "rule": "@typescript-eslint/no-non-null-asserted-nullish-coalescing",
+    "firing": {
+        "file": "/repository/source/Coalescing.ts",
+        "source": "foo! ?? bar;\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 1,
+                "endLine": 1,
+                "endColumn": 5,
+                "messageId": "noNonNullAssertedNullishCoalescing",
+                "message": "The nullish coalescing operator is designed to handle undefined and null - using a non-null assertion is not needed.",
+                "suggestions": 1
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/Coalescing.ts",
+        "source": "foo ?? bar;\n"
+    },
+    "assertedMessageIds": [
+        "noNonNullAssertedNullishCoalescing"
+    ],
+    "assertsSuggestion": true
+}

@@ -1,0 +1,24 @@
+{
+    "rule": "no-setter-return",
+    "firing": {
+        "file": "/repository/source/SetterReturn.js",
+        "source": "({ set a(val) { return 1; } })",
+        "findings": [
+            {
+                "line": 1,
+                "column": 17,
+                "endLine": 1,
+                "endColumn": 26,
+                "messageId": "noSetterReturn",
+                "message": "This returns a value from a setter, and the language discards it: an assignment evaluates to the value assigned, never to what the setter returned, so nothing can ever read this. Either the value is dead and the return should be bare, or it was meant to reach a caller and this is a bug that stays silent at runtime."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/SetterReturn.js",
+        "source": "return 1;"
+    },
+    "assertedMessageIds": [
+        "noSetterReturn"
+    ]
+}

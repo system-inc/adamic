@@ -1,0 +1,24 @@
+{
+    "rule": "react/no-danger",
+    "firing": {
+        "file": "/repository/source/Danger.tsx",
+        "source": "<div dangerouslySetInnerHTML={{__html:''}} />;",
+        "findings": [
+            {
+                "line": 1,
+                "column": 6,
+                "endLine": 1,
+                "endColumn": 43,
+                "messageId": "dangerousProp",
+                "message": "This element sets dangerouslySetInnerHTML, which hands React a raw string and tells it to skip escaping. React named the property this way on purpose: any value reaching it that a user can influence is a cross-site scripting hole, and the danger is invisible at the render site because the markup arrives from somewhere else. Render the content as children instead, or sanitize it and say at the call site who did."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/Danger.tsx",
+        "source": "<App dangerouslySetInnerHTML={{__html:''}} />;"
+    },
+    "assertedMessageIds": [
+        "dangerousProp"
+    ]
+}

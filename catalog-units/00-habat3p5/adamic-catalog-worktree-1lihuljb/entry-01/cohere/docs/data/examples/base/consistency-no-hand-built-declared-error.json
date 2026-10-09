@@ -1,0 +1,24 @@
+{
+    "rule": "base/consistency-no-hand-built-declared-error",
+    "firing": {
+        "file": "/repository/source/a/b/MyBaseError.ts",
+        "source": "declare class BaseError { constructor(m: string, o?: object); }\nconst e = new BaseError('boom', { identifier: 'X' });\n",
+        "findings": [
+            {
+                "line": 2,
+                "column": 11,
+                "endLine": 2,
+                "endColumn": 53,
+                "messageId": "consistencyNoHandBuiltDeclaredError",
+                "message": "Do not build a BaseError that names a declared failure. Call the tier that declares it: 'AccountModule.error(identifier, data, cause)', 'ApiWorker.error(...)', or 'Base.error(...)'. The status comes from the declaration, so writing it here is how one failure ends up answering two."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/Probe.ts",
+        "source": "declare class BaseError { constructor(m: string, o?: object); }\nconst e = new BaseError('boom');\n"
+    },
+    "assertedMessageIds": [
+        "consistencyNoHandBuiltDeclaredError"
+    ]
+}

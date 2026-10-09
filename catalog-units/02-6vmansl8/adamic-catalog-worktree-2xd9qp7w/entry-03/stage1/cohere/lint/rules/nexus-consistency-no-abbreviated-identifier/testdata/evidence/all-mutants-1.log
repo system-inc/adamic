@@ -1,0 +1,536 @@
+=== RUN   TestMutants
+=== RUN   TestMutants/no-octal-escape_mutant_from_batch_8
+    lint_test.go:759: no-octal-escape mutant from batch 8 caught on Node: case 145 line 2762: port "recovery findings only", Go "/tmp/adamic-gate/TestMutantsno-octal-escape_mutant_from_batch_83229869246/016/no-octal-escape-0.ts:1:26"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsno-octal-escape_mutant_from_batch_83229869246/016/no-octal-escape-0.ts:1:26
+          no-octal-escape  Do not use the octal escape `\123`. This is a legacy octal escape, a numbering the language kept only for old web pages and forbids outright in strict mode and in modules, where it is a syntax error rather than a character. It also reads as decimal to almost everybody: the escape here is not the number it looks like. A unicode escape says the same character in a numbering that is unambiguous and legal everywhere.
+        
+        range 25 35 octalEscapeSequence 			25 35
+        recovery findings only
+    lint_test.go:759: no-octal-escape mutant from batch 8 caught on emitted JavaScript: case 145 line 2762: port "recovery findings only", Go "/tmp/adamic-gate/TestMutantsno-octal-escape_mutant_from_batch_83229869246/016/no-octal-escape-0.ts:1:26"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsno-octal-escape_mutant_from_batch_83229869246/016/no-octal-escape-0.ts:1:26
+          no-octal-escape  Do not use the octal escape `\123`. This is a legacy octal escape, a numbering the language kept only for old web pages and forbids outright in strict mode and in modules, where it is a syntax error rather than a character. It also reads as decimal to almost everybody: the escape here is not the number it looks like. A unicode escape says the same character in a numbering that is unambiguous and legal everywhere.
+        
+        range 25 35 octalEscapeSequence 			25 35
+        recovery findings only
+    lint_test.go:759: no-octal-escape mutant from batch 8 caught on native: case 145 line 2762: port "recovery findings only", Go "/tmp/adamic-gate/TestMutantsno-octal-escape_mutant_from_batch_83229869246/016/no-octal-escape-0.ts:1:26"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsno-octal-escape_mutant_from_batch_83229869246/016/no-octal-escape-0.ts:1:26
+          no-octal-escape  Do not use the octal escape `\123`. This is a legacy octal escape, a numbering the language kept only for old web pages and forbids outright in strict mode and in modules, where it is a syntax error rather than a character. It also reads as decimal to almost everybody: the escape here is not the number it looks like. A unicode escape says the same character in a numbering that is unambiguous and legal everywhere.
+        
+        range 25 35 octalEscapeSequence 			25 35
+        recovery findings only
+=== RUN   TestMutants/no-unexpected-multiline_mutant_from_batch_8
+    lint_test.go:759: no-unexpected-multiline mutant from batch 8 caught on Node: case 40 line 934: port "/tmp/adamic-gate/TestMutantsno-unexpected-multiline_mutant_from_batch_83808404493/005/generated-4.ts:1:17", Go "/tmp/adamic-gate/TestMutantsno-unexpected-multiline_mutant_from_batch_83808404493/005/generated-4.ts:1:42"
+        Go context:
+        case 38
+        fixed	var a; for(var x=0;x<3;x++){}; for(var y in z){}; for(var q of z){}; declare var b; declare global{ var c; namespace N{var d;} } namespace M{var e;}
+        case 39
+        fixed	var a; for(var x=0;x<3;x++){}; for(var y in z){}; for(var q of z){}; declare var b; declare global{ var c; namespace N{var d;} } namespace M{var e;}
+        case 40
+        /tmp/adamic-gate/TestMutantsno-unexpected-multiline_mutant_from_batch_83808404493/005/generated-4.ts:1:42
+          no-duplicate-case  Duplicate case label: an earlier arm in this switch tests the same expression, so this one can never run. Almost always a clause was copied and its test never updated, which means the body here is dead and the case it was meant to handle falls through to `default`. Change the test to the value this arm was written for, or delete the arm.
+        
+        range 41 45 unexpected 			41 45
+        /tmp/adamic-gate/TestMutantsno-unexpected-multiline_mutant_from_batch_83808404493/005/generated-4.ts:1:135
+    lint_test.go:759: no-unexpected-multiline mutant from batch 8 caught on emitted JavaScript: case 40 line 934: port "/tmp/adamic-gate/TestMutantsno-unexpected-multiline_mutant_from_batch_83808404493/005/generated-4.ts:1:17", Go "/tmp/adamic-gate/TestMutantsno-unexpected-multiline_mutant_from_batch_83808404493/005/generated-4.ts:1:42"
+        Go context:
+        case 38
+        fixed	var a; for(var x=0;x<3;x++){}; for(var y in z){}; for(var q of z){}; declare var b; declare global{ var c; namespace N{var d;} } namespace M{var e;}
+        case 39
+        fixed	var a; for(var x=0;x<3;x++){}; for(var y in z){}; for(var q of z){}; declare var b; declare global{ var c; namespace N{var d;} } namespace M{var e;}
+        case 40
+        /tmp/adamic-gate/TestMutantsno-unexpected-multiline_mutant_from_batch_83808404493/005/generated-4.ts:1:42
+          no-duplicate-case  Duplicate case label: an earlier arm in this switch tests the same expression, so this one can never run. Almost always a clause was copied and its test never updated, which means the body here is dead and the case it was meant to handle falls through to `default`. Change the test to the value this arm was written for, or delete the arm.
+        
+        range 41 45 unexpected 			41 45
+        /tmp/adamic-gate/TestMutantsno-unexpected-multiline_mutant_from_batch_83808404493/005/generated-4.ts:1:135
+    lint_test.go:759: no-unexpected-multiline mutant from batch 8 caught on native: case 40 line 934: port "/tmp/adamic-gate/TestMutantsno-unexpected-multiline_mutant_from_batch_83808404493/005/generated-4.ts:1:17", Go "/tmp/adamic-gate/TestMutantsno-unexpected-multiline_mutant_from_batch_83808404493/005/generated-4.ts:1:42"
+        Go context:
+        case 38
+        fixed	var a; for(var x=0;x<3;x++){}; for(var y in z){}; for(var q of z){}; declare var b; declare global{ var c; namespace N{var d;} } namespace M{var e;}
+        case 39
+        fixed	var a; for(var x=0;x<3;x++){}; for(var y in z){}; for(var q of z){}; declare var b; declare global{ var c; namespace N{var d;} } namespace M{var e;}
+        case 40
+        /tmp/adamic-gate/TestMutantsno-unexpected-multiline_mutant_from_batch_83808404493/005/generated-4.ts:1:42
+          no-duplicate-case  Duplicate case label: an earlier arm in this switch tests the same expression, so this one can never run. Almost always a clause was copied and its test never updated, which means the body here is dead and the case it was meant to handle falls through to `default`. Change the test to the value this arm was written for, or delete the arm.
+        
+        range 41 45 unexpected 			41 45
+        /tmp/adamic-gate/TestMutantsno-unexpected-multiline_mutant_from_batch_83808404493/005/generated-4.ts:1:135
+=== RUN   TestMutants/no-useless-constructor_mutant_from_batch_8
+    lint_test.go:759: no-useless-constructor mutant from batch 8 caught on Node: case 145 line 2762: port "fixed\tclass D extends Base{constructor(p: A<B<C>> = make()){super(p)}}\\u000aclass C{field: <T=string>()=>T\\u000aconstructor(){}\\u000a[0](){}}", Go "/tmp/adamic-gate/TestMutantsno-useless-constructor_mutant_from_batch_81642174124/016/no-useless-constructor-0.ts:3:1"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsno-useless-constructor_mutant_from_batch_81642174124/016/no-useless-constructor-0.ts:3:1
+          no-useless-constructor  This constructor does nothing the language would not do without it. An empty constructor on a base class, or one whose only statement forwards its own parameters to `super`, is exactly the behaviour a class gets when it declares no constructor at all, so the code reads as though something happens at construction time when nothing does.
+        
+        range 96 107 noUselessConstructor suggestion-edits:removeConstructor	96:111:	Remove the constructor, leaving the behaviour the class already had.	96 107
+        fixed	class D extends Base{constructor(p: A<B<C>> = make()){super(p)}}\u000aclass C{field: <T=string>()=>T\u000aconstructor(){}\u000a[0](){}}
+    lint_test.go:759: no-useless-constructor mutant from batch 8 caught on emitted JavaScript: case 145 line 2762: port "fixed\tclass D extends Base{constructor(p: A<B<C>> = make()){super(p)}}\\u000aclass C{field: <T=string>()=>T\\u000aconstructor(){}\\u000a[0](){}}", Go "/tmp/adamic-gate/TestMutantsno-useless-constructor_mutant_from_batch_81642174124/016/no-useless-constructor-0.ts:3:1"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsno-useless-constructor_mutant_from_batch_81642174124/016/no-useless-constructor-0.ts:3:1
+          no-useless-constructor  This constructor does nothing the language would not do without it. An empty constructor on a base class, or one whose only statement forwards its own parameters to `super`, is exactly the behaviour a class gets when it declares no constructor at all, so the code reads as though something happens at construction time when nothing does.
+        
+        range 96 107 noUselessConstructor suggestion-edits:removeConstructor	96:111:	Remove the constructor, leaving the behaviour the class already had.	96 107
+        fixed	class D extends Base{constructor(p: A<B<C>> = make()){super(p)}}\u000aclass C{field: <T=string>()=>T\u000aconstructor(){}\u000a[0](){}}
+    lint_test.go:759: no-useless-constructor mutant from batch 8 caught on native: case 145 line 2762: port "fixed\tclass D extends Base{constructor(p: A<B<C>> = make()){super(p)}}\\u000aclass C{field: <T=string>()=>T\\u000aconstructor(){}\\u000a[0](){}}", Go "/tmp/adamic-gate/TestMutantsno-useless-constructor_mutant_from_batch_81642174124/016/no-useless-constructor-0.ts:3:1"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsno-useless-constructor_mutant_from_batch_81642174124/016/no-useless-constructor-0.ts:3:1
+          no-useless-constructor  This constructor does nothing the language would not do without it. An empty constructor on a base class, or one whose only statement forwards its own parameters to `super`, is exactly the behaviour a class gets when it declares no constructor at all, so the code reads as though something happens at construction time when nothing does.
+        
+        range 96 107 noUselessConstructor suggestion-edits:removeConstructor	96:111:	Remove the constructor, leaving the behaviour the class already had.	96 107
+        fixed	class D extends Base{constructor(p: A<B<C>> = make()){super(p)}}\u000aclass C{field: <T=string>()=>T\u000aconstructor(){}\u000a[0](){}}
+=== RUN   TestMutants/react-jsx-no-comment-textnodes_mutant_from_batch_8
+    lint_test.go:759: react-jsx-no-comment-textnodes mutant from batch 8 caught on Node: case 146 line 2768: port "fixed\tconst view = <div>// comment</div>;\\u000a", Go "/tmp/adamic-gate/TestMutantsreact-jsx-no-comment-textnodes_mutant_from_batch_83081388855/017/react-jsx-no-comment-textnodes-1.tsx:1:19"
+        Go context:
+          react/jsx-no-comment-textnodes  This looks like a comment but it is not one. Inside a tag's children, `//` and `/*` are ordinary text, so React renders them to the page and the words the author meant only for other developers become part of the interface. The failure is silent: nothing errors, nothing warns, and the text shows up in the product. Wrap it in braces as `{/* ... */}`, which is the form React reads as a comment and drops.
+        
+        range 29 68 putCommentInBraces 			29 68
+        fixed	const \u00e9='\ud83d\ude00';const C=<div>\u000a // \u03b2 \ud83d\ude00\u000a text // clean\u000a /* next */</div>;
+        case 146
+        /tmp/adamic-gate/TestMutantsreact-jsx-no-comment-textnodes_mutant_from_batch_83081388855/017/react-jsx-no-comment-textnodes-1.tsx:1:19
+          react/jsx-no-comment-textnodes  This looks like a comment but it is not one. Inside a tag's children, `//` and `/*` are ordinary text, so React renders them to the page and the words the author meant only for other developers become part of the interface. The failure is silent: nothing errors, nothing warns, and the text shows up in the product. Wrap it in braces as `{/* ... */}`, which is the form React reads as a comment and drops.
+        
+        range 18 28 putCommentInBraces 			18 28
+        fixed	const view = <div>// comment</div>;\u000a
+    lint_test.go:759: react-jsx-no-comment-textnodes mutant from batch 8 caught on emitted JavaScript: case 146 line 2768: port "fixed\tconst view = <div>// comment</div>;\\u000a", Go "/tmp/adamic-gate/TestMutantsreact-jsx-no-comment-textnodes_mutant_from_batch_83081388855/017/react-jsx-no-comment-textnodes-1.tsx:1:19"
+        Go context:
+          react/jsx-no-comment-textnodes  This looks like a comment but it is not one. Inside a tag's children, `//` and `/*` are ordinary text, so React renders them to the page and the words the author meant only for other developers become part of the interface. The failure is silent: nothing errors, nothing warns, and the text shows up in the product. Wrap it in braces as `{/* ... */}`, which is the form React reads as a comment and drops.
+        
+        range 29 68 putCommentInBraces 			29 68
+        fixed	const \u00e9='\ud83d\ude00';const C=<div>\u000a // \u03b2 \ud83d\ude00\u000a text // clean\u000a /* next */</div>;
+        case 146
+        /tmp/adamic-gate/TestMutantsreact-jsx-no-comment-textnodes_mutant_from_batch_83081388855/017/react-jsx-no-comment-textnodes-1.tsx:1:19
+          react/jsx-no-comment-textnodes  This looks like a comment but it is not one. Inside a tag's children, `//` and `/*` are ordinary text, so React renders them to the page and the words the author meant only for other developers become part of the interface. The failure is silent: nothing errors, nothing warns, and the text shows up in the product. Wrap it in braces as `{/* ... */}`, which is the form React reads as a comment and drops.
+        
+        range 18 28 putCommentInBraces 			18 28
+        fixed	const view = <div>// comment</div>;\u000a
+    lint_test.go:759: react-jsx-no-comment-textnodes mutant from batch 8 caught on native: case 146 line 2768: port "fixed\tconst view = <div>// comment</div>;\\u000a", Go "/tmp/adamic-gate/TestMutantsreact-jsx-no-comment-textnodes_mutant_from_batch_83081388855/017/react-jsx-no-comment-textnodes-1.tsx:1:19"
+        Go context:
+          react/jsx-no-comment-textnodes  This looks like a comment but it is not one. Inside a tag's children, `//` and `/*` are ordinary text, so React renders them to the page and the words the author meant only for other developers become part of the interface. The failure is silent: nothing errors, nothing warns, and the text shows up in the product. Wrap it in braces as `{/* ... */}`, which is the form React reads as a comment and drops.
+        
+        range 29 68 putCommentInBraces 			29 68
+        fixed	const \u00e9='\ud83d\ude00';const C=<div>\u000a // \u03b2 \ud83d\ude00\u000a text // clean\u000a /* next */</div>;
+        case 146
+        /tmp/adamic-gate/TestMutantsreact-jsx-no-comment-textnodes_mutant_from_batch_83081388855/017/react-jsx-no-comment-textnodes-1.tsx:1:19
+          react/jsx-no-comment-textnodes  This looks like a comment but it is not one. Inside a tag's children, `//` and `/*` are ordinary text, so React renders them to the page and the words the author meant only for other developers become part of the interface. The failure is silent: nothing errors, nothing warns, and the text shows up in the product. Wrap it in braces as `{/* ... */}`, which is the form React reads as a comment and drops.
+        
+        range 18 28 putCommentInBraces 			18 28
+        fixed	const view = <div>// comment</div>;\u000a
+=== RUN   TestMutants/react-no-redundant-should-component-update_mutant_from_batch_8
+    lint_test.go:759: react-no-redundant-should-component-update mutant from batch 8 caught on Node: case 145 line 2762: port "fixed\tconst \\u00e9='\\ud83d\\ude00';const C=class extends (React.PureComponent){#shouldComponentUpdate(){}};", Go "/tmp/adamic-gate/TestMutantsreact-no-redundant-should-component-update_mutant_fr2144356577/016/react-no-redundant-should-component-update-0.ts:1:25"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsreact-no-redundant-should-component-update_mutant_fr2144356577/016/react-no-redundant-should-component-update-0.ts:1:25
+          react/no-redundant-should-component-update  C extends PureComponent and also writes shouldComponentUpdate. PureComponent's whole contribution IS an implementation of that method, a shallow comparison of props and state, and defining your own replaces it rather than adding to it. So the class pays for the base class and then discards what it bought, and a reader who sees PureComponent in the heritage will believe a shallow compare is happening when it is not. Extend Component instead, or delete the method.
+        
+        range 24 87 noShouldCompUpdate 			24 87
+        fixed	const \u00e9='\ud83d\ude00';const C=class extends (React.PureComponent){#shouldComponentUpdate(){}};
+    lint_test.go:759: react-no-redundant-should-component-update mutant from batch 8 caught on emitted JavaScript: case 145 line 2762: port "fixed\tconst \\u00e9='\\ud83d\\ude00';const C=class extends (React.PureComponent){#shouldComponentUpdate(){}};", Go "/tmp/adamic-gate/TestMutantsreact-no-redundant-should-component-update_mutant_fr2144356577/016/react-no-redundant-should-component-update-0.ts:1:25"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsreact-no-redundant-should-component-update_mutant_fr2144356577/016/react-no-redundant-should-component-update-0.ts:1:25
+          react/no-redundant-should-component-update  C extends PureComponent and also writes shouldComponentUpdate. PureComponent's whole contribution IS an implementation of that method, a shallow comparison of props and state, and defining your own replaces it rather than adding to it. So the class pays for the base class and then discards what it bought, and a reader who sees PureComponent in the heritage will believe a shallow compare is happening when it is not. Extend Component instead, or delete the method.
+        
+        range 24 87 noShouldCompUpdate 			24 87
+        fixed	const \u00e9='\ud83d\ude00';const C=class extends (React.PureComponent){#shouldComponentUpdate(){}};
+    lint_test.go:759: react-no-redundant-should-component-update mutant from batch 8 caught on native: case 145 line 2762: port "fixed\tconst \\u00e9='\\ud83d\\ude00';const C=class extends (React.PureComponent){#shouldComponentUpdate(){}};", Go "/tmp/adamic-gate/TestMutantsreact-no-redundant-should-component-update_mutant_fr2144356577/016/react-no-redundant-should-component-update-0.ts:1:25"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsreact-no-redundant-should-component-update_mutant_fr2144356577/016/react-no-redundant-should-component-update-0.ts:1:25
+          react/no-redundant-should-component-update  C extends PureComponent and also writes shouldComponentUpdate. PureComponent's whole contribution IS an implementation of that method, a shallow comparison of props and state, and defining your own replaces it rather than adding to it. So the class pays for the base class and then discards what it bought, and a reader who sees PureComponent in the heritage will believe a shallow compare is happening when it is not. Extend Component instead, or delete the method.
+        
+        range 24 87 noShouldCompUpdate 			24 87
+        fixed	const \u00e9='\ud83d\ude00';const C=class extends (React.PureComponent){#shouldComponentUpdate(){}};
+=== RUN   TestMutants/wrapper_Number_ignored
+    lint_test.go:759: wrapper Number ignored caught on Node: case 140 line 2700: port "/tmp/adamic-gate/TestMutantswrapper_Number_ignored2944665558/015/options.ts:1:483", Go "/tmp/adamic-gate/TestMutantswrapper_Number_ignored2944665558/015/options.ts:1:452"
+        Go context:
+        range 414 420 unexpected 			414 420
+        /tmp/adamic-gate/TestMutantswrapper_Number_ignored2944665558/015/options.ts:1:423
+          @typescript-eslint/prefer-literal-enum-member  Explicit enum value must only be a literal value (string or number).
+        
+        range 422 427 notLiteral 			422 427
+        /tmp/adamic-gate/TestMutantswrapper_Number_ignored2944665558/015/options.ts:1:452
+          @typescript-eslint/no-wrapper-object-types  This names the boxed object rather than the primitive: `String` is what `new String('x')` produces, and `string` is what `'x'` is. The wrapper accepts the object and behaves differently from the primitive under comparison and truthiness, which is the reverse of what the annotation almost always means. Use the lowercase primitive.
+        
+        range 451 457 bannedWrapperObjectType fix	number		451 457
+        /tmp/adamic-gate/TestMutantswrapper_Number_ignored2944665558/015/options.ts:1:483
+    lint_test.go:759: wrapper Number ignored caught on emitted JavaScript: case 140 line 2700: port "/tmp/adamic-gate/TestMutantswrapper_Number_ignored2944665558/015/options.ts:1:483", Go "/tmp/adamic-gate/TestMutantswrapper_Number_ignored2944665558/015/options.ts:1:452"
+        Go context:
+        range 414 420 unexpected 			414 420
+        /tmp/adamic-gate/TestMutantswrapper_Number_ignored2944665558/015/options.ts:1:423
+          @typescript-eslint/prefer-literal-enum-member  Explicit enum value must only be a literal value (string or number).
+        
+        range 422 427 notLiteral 			422 427
+        /tmp/adamic-gate/TestMutantswrapper_Number_ignored2944665558/015/options.ts:1:452
+          @typescript-eslint/no-wrapper-object-types  This names the boxed object rather than the primitive: `String` is what `new String('x')` produces, and `string` is what `'x'` is. The wrapper accepts the object and behaves differently from the primitive under comparison and truthiness, which is the reverse of what the annotation almost always means. Use the lowercase primitive.
+        
+        range 451 457 bannedWrapperObjectType fix	number		451 457
+        /tmp/adamic-gate/TestMutantswrapper_Number_ignored2944665558/015/options.ts:1:483
+    lint_test.go:759: wrapper Number ignored caught on native: case 140 line 2700: port "/tmp/adamic-gate/TestMutantswrapper_Number_ignored2944665558/015/options.ts:1:483", Go "/tmp/adamic-gate/TestMutantswrapper_Number_ignored2944665558/015/options.ts:1:452"
+        Go context:
+        range 414 420 unexpected 			414 420
+        /tmp/adamic-gate/TestMutantswrapper_Number_ignored2944665558/015/options.ts:1:423
+          @typescript-eslint/prefer-literal-enum-member  Explicit enum value must only be a literal value (string or number).
+        
+        range 422 427 notLiteral 			422 427
+        /tmp/adamic-gate/TestMutantswrapper_Number_ignored2944665558/015/options.ts:1:452
+          @typescript-eslint/no-wrapper-object-types  This names the boxed object rather than the primitive: `String` is what `new String('x')` produces, and `string` is what `'x'` is. The wrapper accepts the object and behaves differently from the primitive under comparison and truthiness, which is the reverse of what the annotation almost always means. Use the lowercase primitive.
+        
+        range 451 457 bannedWrapperObjectType fix	number		451 457
+        /tmp/adamic-gate/TestMutantswrapper_Number_ignored2944665558/015/options.ts:1:483
+=== RUN   TestMutants/console_receiver_widened
+    lint_test.go:759: console receiver widened caught on Node: case 40 line 938: port "/tmp/adamic-gate/TestMutantsconsole_receiver_widened2323700558/005/generated-4.ts:1:58", Go "/tmp/adamic-gate/TestMutantsconsole_receiver_widened2323700558/005/generated-4.ts:1:135"
+        Go context:
+        case 40
+        /tmp/adamic-gate/TestMutantsconsole_receiver_widened2323700558/005/generated-4.ts:1:42
+          no-duplicate-case  Duplicate case label: an earlier arm in this switch tests the same expression, so this one can never run. Almost always a clause was copied and its test never updated, which means the body here is dead and the case it was meant to handle falls through to `default`. Change the test to the value this arm was written for, or delete the arm.
+        
+        range 41 45 unexpected 			41 45
+        /tmp/adamic-gate/TestMutantsconsole_receiver_widened2323700558/005/generated-4.ts:1:135
+          no-duplicate-case  Duplicate case label: an earlier arm in this switch tests the same expression, so this one can never run. Almost always a clause was copied and its test never updated, which means the body here is dead and the case it was meant to handle falls through to `default`. Change the test to the value this arm was written for, or delete the arm.
+        
+        range 134 140 unexpected 			134 140
+        fixed	switch(x){case f( a /* c */ ):break;case f(a):break;case a?.b:break;case a.b:break;case (a):break;case a:break;case /[/*]/:break;case /[/*]/:break;case -1:break;case +1:break;case 1.0:break;case 1:break;}
+    lint_test.go:759: console receiver widened caught on emitted JavaScript: case 40 line 938: port "/tmp/adamic-gate/TestMutantsconsole_receiver_widened2323700558/005/generated-4.ts:1:58", Go "/tmp/adamic-gate/TestMutantsconsole_receiver_widened2323700558/005/generated-4.ts:1:135"
+        Go context:
+        case 40
+        /tmp/adamic-gate/TestMutantsconsole_receiver_widened2323700558/005/generated-4.ts:1:42
+          no-duplicate-case  Duplicate case label: an earlier arm in this switch tests the same expression, so this one can never run. Almost always a clause was copied and its test never updated, which means the body here is dead and the case it was meant to handle falls through to `default`. Change the test to the value this arm was written for, or delete the arm.
+        
+        range 41 45 unexpected 			41 45
+        /tmp/adamic-gate/TestMutantsconsole_receiver_widened2323700558/005/generated-4.ts:1:135
+          no-duplicate-case  Duplicate case label: an earlier arm in this switch tests the same expression, so this one can never run. Almost always a clause was copied and its test never updated, which means the body here is dead and the case it was meant to handle falls through to `default`. Change the test to the value this arm was written for, or delete the arm.
+        
+        range 134 140 unexpected 			134 140
+        fixed	switch(x){case f( a /* c */ ):break;case f(a):break;case a?.b:break;case a.b:break;case (a):break;case a:break;case /[/*]/:break;case /[/*]/:break;case -1:break;case +1:break;case 1.0:break;case 1:break;}
+    lint_test.go:759: console receiver widened caught on native: case 40 line 938: port "/tmp/adamic-gate/TestMutantsconsole_receiver_widened2323700558/005/generated-4.ts:1:58", Go "/tmp/adamic-gate/TestMutantsconsole_receiver_widened2323700558/005/generated-4.ts:1:135"
+        Go context:
+        case 40
+        /tmp/adamic-gate/TestMutantsconsole_receiver_widened2323700558/005/generated-4.ts:1:42
+          no-duplicate-case  Duplicate case label: an earlier arm in this switch tests the same expression, so this one can never run. Almost always a clause was copied and its test never updated, which means the body here is dead and the case it was meant to handle falls through to `default`. Change the test to the value this arm was written for, or delete the arm.
+        
+        range 41 45 unexpected 			41 45
+        /tmp/adamic-gate/TestMutantsconsole_receiver_widened2323700558/005/generated-4.ts:1:135
+          no-duplicate-case  Duplicate case label: an earlier arm in this switch tests the same expression, so this one can never run. Almost always a clause was copied and its test never updated, which means the body here is dead and the case it was meant to handle falls through to `default`. Change the test to the value this arm was written for, or delete the arm.
+        
+        range 134 140 unexpected 			134 140
+        fixed	switch(x){case f( a /* c */ ):break;case f(a):break;case a?.b:break;case a.b:break;case (a):break;case a:break;case /[/*]/:break;case /[/*]/:break;case -1:break;case +1:break;case 1.0:break;case 1:break;}
+=== RUN   TestMutants/enum_reported_at_its_declaration_rather_than_its_name
+    lint_test.go:759: enum reported at its declaration rather than its name caught on Node: case 140 line 2684: port "/tmp/adamic-gate/TestMutantsenum_reported_at_its_declaration_rather_than_its_nam2892749304/015/options.ts:1:384", Go "/tmp/adamic-gate/TestMutantsenum_reported_at_its_declaration_rather_than_its_nam2892749304/015/options.ts:1:389"
+        Go context:
+        range 289 301 noInterfaceSuffix 			289 301
+        /tmp/adamic-gate/TestMutantsenum_reported_at_its_declaration_rather_than_its_nam2892749304/015/options.ts:1:305
+          @typescript-eslint/method-signature-style  This is written as a shorthand method signature, which TypeScript checks bivariantly: a parameter can be narrowed by an implementer and the compiler will not object, so a call that type-checks can still be wrong at runtime. A function property is checked the strict way and catches that.
+        
+        range 304 334 errorMethod fix	method: (value: string) => number;		304 334
+        /tmp/adamic-gate/TestMutantsenum_reported_at_its_declaration_rather_than_its_nam2892749304/015/options.ts:1:389
+          nexus/consistency-no-enum  TypeScript enum is banned. Use `as const` with the Kind and KindType pattern instead: `export const FooKind = { A: 'A' } as const; export type FooKindType = (typeof FooKind)[keyof typeof FooKind];`
+        
+        range 388 397 noEnum 			388 397
+        /tmp/adamic-gate/TestMutantsenum_reported_at_its_declaration_rather_than_its_nam2892749304/015/options.ts:1:409
+    lint_test.go:759: enum reported at its declaration rather than its name caught on emitted JavaScript: case 140 line 2684: port "/tmp/adamic-gate/TestMutantsenum_reported_at_its_declaration_rather_than_its_nam2892749304/015/options.ts:1:384", Go "/tmp/adamic-gate/TestMutantsenum_reported_at_its_declaration_rather_than_its_nam2892749304/015/options.ts:1:389"
+        Go context:
+        range 289 301 noInterfaceSuffix 			289 301
+        /tmp/adamic-gate/TestMutantsenum_reported_at_its_declaration_rather_than_its_nam2892749304/015/options.ts:1:305
+          @typescript-eslint/method-signature-style  This is written as a shorthand method signature, which TypeScript checks bivariantly: a parameter can be narrowed by an implementer and the compiler will not object, so a call that type-checks can still be wrong at runtime. A function property is checked the strict way and catches that.
+        
+        range 304 334 errorMethod fix	method: (value: string) => number;		304 334
+        /tmp/adamic-gate/TestMutantsenum_reported_at_its_declaration_rather_than_its_nam2892749304/015/options.ts:1:389
+          nexus/consistency-no-enum  TypeScript enum is banned. Use `as const` with the Kind and KindType pattern instead: `export const FooKind = { A: 'A' } as const; export type FooKindType = (typeof FooKind)[keyof typeof FooKind];`
+        
+        range 388 397 noEnum 			388 397
+        /tmp/adamic-gate/TestMutantsenum_reported_at_its_declaration_rather_than_its_nam2892749304/015/options.ts:1:409
+    lint_test.go:759: enum reported at its declaration rather than its name caught on native: case 140 line 2684: port "/tmp/adamic-gate/TestMutantsenum_reported_at_its_declaration_rather_than_its_nam2892749304/015/options.ts:1:384", Go "/tmp/adamic-gate/TestMutantsenum_reported_at_its_declaration_rather_than_its_nam2892749304/015/options.ts:1:389"
+        Go context:
+        range 289 301 noInterfaceSuffix 			289 301
+        /tmp/adamic-gate/TestMutantsenum_reported_at_its_declaration_rather_than_its_nam2892749304/015/options.ts:1:305
+          @typescript-eslint/method-signature-style  This is written as a shorthand method signature, which TypeScript checks bivariantly: a parameter can be narrowed by an implementer and the compiler will not object, so a call that type-checks can still be wrong at runtime. A function property is checked the strict way and catches that.
+        
+        range 304 334 errorMethod fix	method: (value: string) => number;		304 334
+        /tmp/adamic-gate/TestMutantsenum_reported_at_its_declaration_rather_than_its_nam2892749304/015/options.ts:1:389
+          nexus/consistency-no-enum  TypeScript enum is banned. Use `as const` with the Kind and KindType pattern instead: `export const FooKind = { A: 'A' } as const; export type FooKindType = (typeof FooKind)[keyof typeof FooKind];`
+        
+        range 388 397 noEnum 			388 397
+        /tmp/adamic-gate/TestMutantsenum_reported_at_its_declaration_rather_than_its_nam2892749304/015/options.ts:1:409
+=== RUN   TestMutants/int32_hint_option_ignored
+    lint_test.go:759: int32 hint option ignored caught on Node: case 80 line 1614: port "/tmp/adamic-gate/TestMutantsint32_hint_option_ignored209631766/009/generated-8.ts:1:99", Go "/tmp/adamic-gate/TestMutantsint32_hint_option_ignored209631766/009/generated-8.ts:1:94"
+        Go context:
+        range 18 28 unexpectedTemplateExpression 			18 28
+        /tmp/adamic-gate/TestMutantsint32_hint_option_ignored209631766/009/generated-8.ts:1:62
+          no-div-regex  This regular expression begins with an equals sign, so its first two characters are the divide-assign operator spelled backwards, and a reader scanning the line has to work out which one it is. Writing the equals sign as a one-member character class matches exactly the same input and can only be read one way.
+        
+        range 61 68 unexpected fix	[=]		62 63
+        /tmp/adamic-gate/TestMutantsint32_hint_option_ignored209631766/009/generated-8.ts:1:94
+          no-bitwise  Unexpected use of '|'. A bitwise operator here is usually a typo for its logical twin: `&` for `&&`, `|` for `||`. When it is deliberate the intent is worth stating, because the reader has to decide which of the two you meant every time they pass it.
+        
+        range 93 96 unexpected 			93 96
+        /tmp/adamic-gate/TestMutantsint32_hint_option_ignored209631766/009/generated-8.ts:1:99
+    lint_test.go:759: int32 hint option ignored caught on emitted JavaScript: case 80 line 1614: port "/tmp/adamic-gate/TestMutantsint32_hint_option_ignored209631766/009/generated-8.ts:1:99", Go "/tmp/adamic-gate/TestMutantsint32_hint_option_ignored209631766/009/generated-8.ts:1:94"
+        Go context:
+        range 18 28 unexpectedTemplateExpression 			18 28
+        /tmp/adamic-gate/TestMutantsint32_hint_option_ignored209631766/009/generated-8.ts:1:62
+          no-div-regex  This regular expression begins with an equals sign, so its first two characters are the divide-assign operator spelled backwards, and a reader scanning the line has to work out which one it is. Writing the equals sign as a one-member character class matches exactly the same input and can only be read one way.
+        
+        range 61 68 unexpected fix	[=]		62 63
+        /tmp/adamic-gate/TestMutantsint32_hint_option_ignored209631766/009/generated-8.ts:1:94
+          no-bitwise  Unexpected use of '|'. A bitwise operator here is usually a typo for its logical twin: `&` for `&&`, `|` for `||`. When it is deliberate the intent is worth stating, because the reader has to decide which of the two you meant every time they pass it.
+        
+        range 93 96 unexpected 			93 96
+        /tmp/adamic-gate/TestMutantsint32_hint_option_ignored209631766/009/generated-8.ts:1:99
+    lint_test.go:759: int32 hint option ignored caught on native: case 80 line 1614: port "/tmp/adamic-gate/TestMutantsint32_hint_option_ignored209631766/009/generated-8.ts:1:99", Go "/tmp/adamic-gate/TestMutantsint32_hint_option_ignored209631766/009/generated-8.ts:1:94"
+        Go context:
+        range 18 28 unexpectedTemplateExpression 			18 28
+        /tmp/adamic-gate/TestMutantsint32_hint_option_ignored209631766/009/generated-8.ts:1:62
+          no-div-regex  This regular expression begins with an equals sign, so its first two characters are the divide-assign operator spelled backwards, and a reader scanning the line has to work out which one it is. Writing the equals sign as a one-member character class matches exactly the same input and can only be read one way.
+        
+        range 61 68 unexpected fix	[=]		62 63
+        /tmp/adamic-gate/TestMutantsint32_hint_option_ignored209631766/009/generated-8.ts:1:94
+          no-bitwise  Unexpected use of '|'. A bitwise operator here is usually a typo for its logical twin: `&` for `&&`, `|` for `||`. When it is deliberate the intent is worth stating, because the reader has to decide which of the two you meant every time they pass it.
+        
+        range 93 96 unexpected 			93 96
+        /tmp/adamic-gate/TestMutantsint32_hint_option_ignored209631766/009/generated-8.ts:1:99
+=== RUN   TestMutants/regex_fix_eats_extra_byte
+    lint_test.go:759: regex fix eats extra byte caught on Node: case 80 line 1613: port "range 61 68 unexpected fix\t[=]\t\t62 64", Go "range 61 68 unexpected fix\t[=]\t\t62 63"
+        Go context:
+        
+        range 18 28 unexpectedTemplateExpression 			18 28
+        /tmp/adamic-gate/TestMutantsregex_fix_eats_extra_byte468175355/009/generated-8.ts:1:62
+          no-div-regex  This regular expression begins with an equals sign, so its first two characters are the divide-assign operator spelled backwards, and a reader scanning the line has to work out which one it is. Writing the equals sign as a one-member character class matches exactly the same input and can only be read one way.
+        
+        range 61 68 unexpected fix	[=]		62 63
+        /tmp/adamic-gate/TestMutantsregex_fix_eats_extra_byte468175355/009/generated-8.ts:1:94
+          no-bitwise  Unexpected use of '|'. A bitwise operator here is usually a typo for its logical twin: `&` for `&&`, `|` for `||`. When it is deliberate the intent is worth stating, because the reader has to decide which of the two you meant every time they pass it.
+        
+        range 93 96 unexpected 			93 96
+    lint_test.go:759: regex fix eats extra byte caught on emitted JavaScript: case 80 line 1613: port "range 61 68 unexpected fix\t[=]\t\t62 64", Go "range 61 68 unexpected fix\t[=]\t\t62 63"
+        Go context:
+        
+        range 18 28 unexpectedTemplateExpression 			18 28
+        /tmp/adamic-gate/TestMutantsregex_fix_eats_extra_byte468175355/009/generated-8.ts:1:62
+          no-div-regex  This regular expression begins with an equals sign, so its first two characters are the divide-assign operator spelled backwards, and a reader scanning the line has to work out which one it is. Writing the equals sign as a one-member character class matches exactly the same input and can only be read one way.
+        
+        range 61 68 unexpected fix	[=]		62 63
+        /tmp/adamic-gate/TestMutantsregex_fix_eats_extra_byte468175355/009/generated-8.ts:1:94
+          no-bitwise  Unexpected use of '|'. A bitwise operator here is usually a typo for its logical twin: `&` for `&&`, `|` for `||`. When it is deliberate the intent is worth stating, because the reader has to decide which of the two you meant every time they pass it.
+        
+        range 93 96 unexpected 			93 96
+    lint_test.go:759: regex fix eats extra byte caught on native: case 80 line 1613: port "range 61 68 unexpected fix\t[=]\t\t62 64", Go "range 61 68 unexpected fix\t[=]\t\t62 63"
+        Go context:
+        
+        range 18 28 unexpectedTemplateExpression 			18 28
+        /tmp/adamic-gate/TestMutantsregex_fix_eats_extra_byte468175355/009/generated-8.ts:1:62
+          no-div-regex  This regular expression begins with an equals sign, so its first two characters are the divide-assign operator spelled backwards, and a reader scanning the line has to work out which one it is. Writing the equals sign as a one-member character class matches exactly the same input and can only be read one way.
+        
+        range 61 68 unexpected fix	[=]		62 63
+        /tmp/adamic-gate/TestMutantsregex_fix_eats_extra_byte468175355/009/generated-8.ts:1:94
+          no-bitwise  Unexpected use of '|'. A bitwise operator here is usually a typo for its logical twin: `&` for `&&`, `|` for `||`. When it is deliberate the intent is worth stating, because the reader has to decide which of the two you meant every time they pass it.
+        
+        range 93 96 unexpected 			93 96
+=== RUN   TestMutants/label_option_widened
+    lint_test.go:759: label option widened caught on Node: case 60 line 1090: port "/tmp/adamic-gate/TestMutantslabel_option_widened4272613069/007/generated-6.ts:1:17", Go "/tmp/adamic-gate/TestMutantslabel_option_widened4272613069/007/generated-6.ts:1:1"
+        Go context:
+        case 58
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a debugger;\u000d\u000a if(\u00e9){} // outside\u000a
+        case 59
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a debugger;\u000d\u000a if(\u00e9){} // outside\u000a
+        case 60
+        /tmp/adamic-gate/TestMutantslabel_option_widened4272613069/007/generated-6.ts:1:1
+          no-labels  This labels a statement. A label is a second naming system that only `break` and `continue` can read, so control can leave from a line that carries no visible marker and land somewhere the reader has to search the file to find. Reading the code top to bottom no longer tells you where it goes. Extract the labeled region into a function and return from it, or restructure the loops so the exit is local.
+        
+        range 0 92 unexpectedLabel 			0 92
+        /tmp/adamic-gate/TestMutantslabel_option_widened4272613069/007/generated-6.ts:1:17
+    lint_test.go:759: label option widened caught on emitted JavaScript: case 60 line 1090: port "/tmp/adamic-gate/TestMutantslabel_option_widened4272613069/007/generated-6.ts:1:17", Go "/tmp/adamic-gate/TestMutantslabel_option_widened4272613069/007/generated-6.ts:1:1"
+        Go context:
+        case 58
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a debugger;\u000d\u000a if(\u00e9){} // outside\u000a
+        case 59
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a debugger;\u000d\u000a if(\u00e9){} // outside\u000a
+        case 60
+        /tmp/adamic-gate/TestMutantslabel_option_widened4272613069/007/generated-6.ts:1:1
+          no-labels  This labels a statement. A label is a second naming system that only `break` and `continue` can read, so control can leave from a line that carries no visible marker and land somewhere the reader has to search the file to find. Reading the code top to bottom no longer tells you where it goes. Extract the labeled region into a function and return from it, or restructure the loops so the exit is local.
+        
+        range 0 92 unexpectedLabel 			0 92
+        /tmp/adamic-gate/TestMutantslabel_option_widened4272613069/007/generated-6.ts:1:17
+    lint_test.go:759: label option widened caught on native: case 60 line 1090: port "/tmp/adamic-gate/TestMutantslabel_option_widened4272613069/007/generated-6.ts:1:17", Go "/tmp/adamic-gate/TestMutantslabel_option_widened4272613069/007/generated-6.ts:1:1"
+        Go context:
+        case 58
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a debugger;\u000d\u000a if(\u00e9){} // outside\u000a
+        case 59
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a debugger;\u000d\u000a if(\u00e9){} // outside\u000a
+        case 60
+        /tmp/adamic-gate/TestMutantslabel_option_widened4272613069/007/generated-6.ts:1:1
+          no-labels  This labels a statement. A label is a second naming system that only `break` and `continue` can read, so control can leave from a line that carries no visible marker and land somewhere the reader has to search the file to find. Reading the code top to bottom no longer tells you where it goes. Extract the labeled region into a function and return from it, or restructure the loops so the exit is local.
+        
+        range 0 92 unexpectedLabel 			0 92
+        /tmp/adamic-gate/TestMutantslabel_option_widened4272613069/007/generated-6.ts:1:17
+=== RUN   TestMutants/comma_chain_reports_inner
+    lint_test.go:759: comma chain reports inner caught on Node: case 80 line 1634: port "/tmp/adamic-gate/TestMutantscomma_chain_reports_inner1946312406/009/generated-8.ts:1:128", Go "/tmp/adamic-gate/TestMutantscomma_chain_reports_inner1946312406/009/generated-8.ts:1:135"
+        Go context:
+        range 110 116 unexpected 			110 116
+        /tmp/adamic-gate/TestMutantscomma_chain_reports_inner1946312406/009/generated-8.ts:1:119
+          no-bitwise  Unexpected use of '~'. A bitwise operator here is usually a typo for its logical twin: `&` for `&&`, `|` for `||`. When it is deliberate the intent is worth stating, because the reader has to decide which of the two you meant every time they pass it.
+        
+        range 118 120 unexpected 			118 120
+        /tmp/adamic-gate/TestMutantscomma_chain_reports_inner1946312406/009/generated-8.ts:1:135
+          no-sequences  This uses the comma operator, which evaluates the expression on its left, throws the result away, and yields the expression on its right. Two statements are hiding inside one, and the discarded half is the part a reader skips: `a = b(), c()` calls both and assigns only the second, which reads as a typo for `a = b()`. Split it into separate statements, or wrap it in its own parentheses to say the sequencing was deliberate.
+        
+        range 134 135 unexpectedCommaExpression 			134 135
+        /tmp/adamic-gate/TestMutantscomma_chain_reports_inner1946312406/009/generated-8.ts:1:139
+    lint_test.go:759: comma chain reports inner caught on emitted JavaScript: case 80 line 1634: port "/tmp/adamic-gate/TestMutantscomma_chain_reports_inner1946312406/009/generated-8.ts:1:128", Go "/tmp/adamic-gate/TestMutantscomma_chain_reports_inner1946312406/009/generated-8.ts:1:135"
+        Go context:
+        range 110 116 unexpected 			110 116
+        /tmp/adamic-gate/TestMutantscomma_chain_reports_inner1946312406/009/generated-8.ts:1:119
+          no-bitwise  Unexpected use of '~'. A bitwise operator here is usually a typo for its logical twin: `&` for `&&`, `|` for `||`. When it is deliberate the intent is worth stating, because the reader has to decide which of the two you meant every time they pass it.
+        
+        range 118 120 unexpected 			118 120
+        /tmp/adamic-gate/TestMutantscomma_chain_reports_inner1946312406/009/generated-8.ts:1:135
+          no-sequences  This uses the comma operator, which evaluates the expression on its left, throws the result away, and yields the expression on its right. Two statements are hiding inside one, and the discarded half is the part a reader skips: `a = b(), c()` calls both and assigns only the second, which reads as a typo for `a = b()`. Split it into separate statements, or wrap it in its own parentheses to say the sequencing was deliberate.
+        
+        range 134 135 unexpectedCommaExpression 			134 135
+        /tmp/adamic-gate/TestMutantscomma_chain_reports_inner1946312406/009/generated-8.ts:1:139
+    lint_test.go:759: comma chain reports inner caught on native: case 80 line 1634: port "/tmp/adamic-gate/TestMutantscomma_chain_reports_inner1946312406/009/generated-8.ts:1:128", Go "/tmp/adamic-gate/TestMutantscomma_chain_reports_inner1946312406/009/generated-8.ts:1:135"
+        Go context:
+        range 110 116 unexpected 			110 116
+        /tmp/adamic-gate/TestMutantscomma_chain_reports_inner1946312406/009/generated-8.ts:1:119
+          no-bitwise  Unexpected use of '~'. A bitwise operator here is usually a typo for its logical twin: `&` for `&&`, `|` for `||`. When it is deliberate the intent is worth stating, because the reader has to decide which of the two you meant every time they pass it.
+        
+        range 118 120 unexpected 			118 120
+        /tmp/adamic-gate/TestMutantscomma_chain_reports_inner1946312406/009/generated-8.ts:1:135
+          no-sequences  This uses the comma operator, which evaluates the expression on its left, throws the result away, and yields the expression on its right. Two statements are hiding inside one, and the discarded half is the part a reader skips: `a = b(), c()` calls both and assigns only the second, which reads as a typo for `a = b()`. Split it into separate statements, or wrap it in its own parentheses to say the sequencing was deliberate.
+        
+        range 134 135 unexpectedCommaExpression 			134 135
+        /tmp/adamic-gate/TestMutantscomma_chain_reports_inner1946312406/009/generated-8.ts:1:139
+=== RUN   TestMutants/with_statement_underlined_whole
+    lint_test.go:759: with statement underlined whole caught on Node: case 60 line 1113: port "range 93 106 noWith \t\t\t93 106", Go "range 93 97 noWith \t\t\t93 97"
+        Go context:
+        
+        range 45 54 unexpectedAwait 			45 54
+        /tmp/adamic-gate/TestMutantswith_statement_underlined_whole3429735096/007/generated-6.ts:1:94
+          no-with  A `with` block splices an object's properties into the local scope, so a bare name inside it cannot be resolved by reading the code: whether `x` means the object's property or an outer variable is decided at runtime by what the object happens to hold. That defeats the checker and every reader. Bind what you need to a name instead, as in `const { x, y } = point;`.
+        
+        range 93 97 noWith 			93 97
+        /tmp/adamic-gate/TestMutantswith_statement_underlined_whole3429735096/007/generated-6.ts:1:108
+          no-new  This constructs an object and then throws it away, so the only thing the line can accomplish is whatever the constructor does on the side. A constructor that works by side effect is doing a function's job under a name that promises a value, and the next reader cannot tell the discarded result from a mistake. Call a function instead, or keep the object and use it.
+        
+        range 107 115 noNewStatement 			107 115
+    lint_test.go:759: with statement underlined whole caught on emitted JavaScript: case 60 line 1113: port "range 93 106 noWith \t\t\t93 106", Go "range 93 97 noWith \t\t\t93 97"
+        Go context:
+        
+        range 45 54 unexpectedAwait 			45 54
+        /tmp/adamic-gate/TestMutantswith_statement_underlined_whole3429735096/007/generated-6.ts:1:94
+          no-with  A `with` block splices an object's properties into the local scope, so a bare name inside it cannot be resolved by reading the code: whether `x` means the object's property or an outer variable is decided at runtime by what the object happens to hold. That defeats the checker and every reader. Bind what you need to a name instead, as in `const { x, y } = point;`.
+        
+        range 93 97 noWith 			93 97
+        /tmp/adamic-gate/TestMutantswith_statement_underlined_whole3429735096/007/generated-6.ts:1:108
+          no-new  This constructs an object and then throws it away, so the only thing the line can accomplish is whatever the constructor does on the side. A constructor that works by side effect is doing a function's job under a name that promises a value, and the next reader cannot tell the discarded result from a mistake. Call a function instead, or keep the object and use it.
+        
+        range 107 115 noNewStatement 			107 115
+    lint_test.go:759: with statement underlined whole caught on native: case 60 line 1113: port "range 93 106 noWith \t\t\t93 106", Go "range 93 97 noWith \t\t\t93 97"
+        Go context:
+        
+        range 45 54 unexpectedAwait 			45 54
+        /tmp/adamic-gate/TestMutantswith_statement_underlined_whole3429735096/007/generated-6.ts:1:94
+          no-with  A `with` block splices an object's properties into the local scope, so a bare name inside it cannot be resolved by reading the code: whether `x` means the object's property or an outer variable is decided at runtime by what the object happens to hold. That defeats the checker and every reader. Bind what you need to a name instead, as in `const { x, y } = point;`.
+        
+        range 93 97 noWith 			93 97
+        /tmp/adamic-gate/TestMutantswith_statement_underlined_whole3429735096/007/generated-6.ts:1:108
+          no-new  This constructs an object and then throws it away, so the only thing the line can accomplish is whatever the constructor does on the side. A constructor that works by side effect is doing a function's job under a name that promises a value, and the next reader cannot tell the discarded result from a mistake. Call a function instead, or keep the object and use it.
+        
+        range 107 115 noNewStatement 			107 115
+=== RUN   TestMutants/directive_prefix_ignored
+    lint_test.go:759: directive prefix ignored caught on Node: case 70 line 1386: port "/tmp/adamic-gate/TestMutantsdirective_prefix_ignored4170022113/008/generated-7.ts:1:192", Go "/tmp/adamic-gate/TestMutantsdirective_prefix_ignored4170022113/008/generated-7.ts:1:206"
+        Go context:
+        range 148 160 unexpectedAwait 			148 160
+        /tmp/adamic-gate/TestMutantsdirective_prefix_ignored4170022113/008/generated-7.ts:1:192
+          no-var  This is a `var` declaration, which is function-scoped and hoisted rather than block-scoped. The binding exists from the top of the enclosing function, so it is readable above the line that declares it and it leaks out of the block it looks like it belongs to: a `var` inside an `if` is still in scope after the `if` ends. A `var` in a loop is one binding shared by every iteration, which is why a closure created in the loop sees the final value rather than its own. Use `let`, or `const` when nothing reassigns it.
+        
+        range 191 198 unexpectedVar 			191 198
+        /tmp/adamic-gate/TestMutantsdirective_prefix_ignored4170022113/008/generated-7.ts:1:206
+          no-var  This is a `var` declaration, which is function-scoped and hoisted rather than block-scoped. The binding exists from the top of the enclosing function, so it is readable above the line that declares it and it leaks out of the block it looks like it belongs to: a `var` inside an `if` is still in scope after the `if` ends. A `var` in a loop is one binding shared by every iteration, which is why a closure created in the loop sees the final value rather than its own. Use `let`, or `const` when nothing reassigns it.
+        
+        range 205 213 unexpectedVar 			205 213
+        /tmp/adamic-gate/TestMutantsdirective_prefix_ignored4170022113/008/generated-7.ts:1:206
+    lint_test.go:759: directive prefix ignored caught on emitted JavaScript: case 70 line 1386: port "/tmp/adamic-gate/TestMutantsdirective_prefix_ignored4170022113/008/generated-7.ts:1:192", Go "/tmp/adamic-gate/TestMutantsdirective_prefix_ignored4170022113/008/generated-7.ts:1:206"
+        Go context:
+        range 148 160 unexpectedAwait 			148 160
+        /tmp/adamic-gate/TestMutantsdirective_prefix_ignored4170022113/008/generated-7.ts:1:192
+          no-var  This is a `var` declaration, which is function-scoped and hoisted rather than block-scoped. The binding exists from the top of the enclosing function, so it is readable above the line that declares it and it leaks out of the block it looks like it belongs to: a `var` inside an `if` is still in scope after the `if` ends. A `var` in a loop is one binding shared by every iteration, which is why a closure created in the loop sees the final value rather than its own. Use `let`, or `const` when nothing reassigns it.
+        
+        range 191 198 unexpectedVar 			191 198
+        /tmp/adamic-gate/TestMutantsdirective_prefix_ignored4170022113/008/generated-7.ts:1:206
+          no-var  This is a `var` declaration, which is function-scoped and hoisted rather than block-scoped. The binding exists from the top of the enclosing function, so it is readable above the line that declares it and it leaks out of the block it looks like it belongs to: a `var` inside an `if` is still in scope after the `if` ends. A `var` in a loop is one binding shared by every iteration, which is why a closure created in the loop sees the final value rather than its own. Use `let`, or `const` when nothing reassigns it.
+        
+        range 205 213 unexpectedVar 			205 213
+        /tmp/adamic-gate/TestMutantsdirective_prefix_ignored4170022113/008/generated-7.ts:1:206
+    lint_test.go:759: directive prefix ignored caught on native: case 70 line 1386: port "/tmp/adamic-gate/TestMutantsdirective_prefix_ignored4170022113/008/generated-7.ts:1:192", Go "/tmp/adamic-gate/TestMutantsdirective_prefix_ignored4170022113/008/generated-7.ts:1:206"
+        Go context:
+        range 148 160 unexpectedAwait 			148 160
+        /tmp/adamic-gate/TestMutantsdirective_prefix_ignored4170022113/008/generated-7.ts:1:192
+          no-var  This is a `var` declaration, which is function-scoped and hoisted rather than block-scoped. The binding exists from the top of the enclosing function, so it is readable above the line that declares it and it leaks out of the block it looks like it belongs to: a `var` inside an `if` is still in scope after the `if` ends. A `var` in a loop is one binding shared by every iteration, which is why a closure created in the loop sees the final value rather than its own. Use `let`, or `const` when nothing reassigns it.
+        
+        range 191 198 unexpectedVar 			191 198
+        /tmp/adamic-gate/TestMutantsdirective_prefix_ignored4170022113/008/generated-7.ts:1:206
+          no-var  This is a `var` declaration, which is function-scoped and hoisted rather than block-scoped. The binding exists from the top of the enclosing function, so it is readable above the line that declares it and it leaks out of the block it looks like it belongs to: a `var` inside an `if` is still in scope after the `if` ends. A `var` in a loop is one binding shared by every iteration, which is why a closure created in the loop sees the final value rather than its own. Use `let`, or `const` when nothing reassigns it.
+        
+        range 205 213 unexpectedVar 			205 213
+        /tmp/adamic-gate/TestMutantsdirective_prefix_ignored4170022113/008/generated-7.ts:1:206
+--- PASS: TestMutants (312.87s)
+    --- PASS: TestMutants/no-octal-escape_mutant_from_batch_8 (22.73s)
+    --- PASS: TestMutants/no-unexpected-multiline_mutant_from_batch_8 (24.39s)
+    --- PASS: TestMutants/no-useless-constructor_mutant_from_batch_8 (22.61s)
+    --- PASS: TestMutants/react-jsx-no-comment-textnodes_mutant_from_batch_8 (22.67s)
+    --- PASS: TestMutants/react-no-redundant-should-component-update_mutant_from_batch_8 (21.22s)
+    --- PASS: TestMutants/wrapper_Number_ignored (22.72s)
+    --- PASS: TestMutants/console_receiver_widened (23.57s)
+    --- PASS: TestMutants/enum_reported_at_its_declaration_rather_than_its_name (22.53s)
+    --- PASS: TestMutants/int32_hint_option_ignored (20.78s)
+    --- PASS: TestMutants/regex_fix_eats_extra_byte (22.02s)
+    --- PASS: TestMutants/label_option_widened (21.87s)
+    --- PASS: TestMutants/comma_chain_reports_inner (21.07s)
+    --- PASS: TestMutants/with_statement_underlined_whole (20.89s)
+    --- PASS: TestMutants/directive_prefix_ignored (21.15s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	312.890s

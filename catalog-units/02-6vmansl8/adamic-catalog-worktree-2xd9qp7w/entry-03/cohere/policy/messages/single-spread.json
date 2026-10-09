@@ -1,0 +1,10 @@
+{
+  "rules": {
+    "TypeScript": "adamic/single-spread"
+  },
+  "messages": {
+    "laterSpread": {
+      "text": "This spread follows {{what}}, so it can overwrite it with a property its type does not mention: a value typed '{ y: number }' may still carry an `x` of any type at runtime, and the spread copies it over the `x` before it, which the result's type then calls a number. Spread once, first, and write the rest as fields ({ ...base, x: 1 }), or build the object from fields you name."
+    }
+  }
+}

@@ -1,0 +1,191 @@
+{
+  "previous_commit": "ebae9b2f9e58f2ff42264ba8e075b9f117729d4c",
+  "typescript": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "adaptation10": "a3ef0dc93d5b2a6cf58f74669c763dc83a1aad0e",
+  "adaptation20": false,
+  "scanner_proof_commit": "21cad99e86bef769d29d86710ee71a9d5600726a",
+  "setup": {
+    "Go_seconds": 0,
+    "clang_seconds": 0,
+    "Node_seconds": 0,
+    "submodules_seconds": 0,
+    "build_cache_seconds": 30,
+    "total_seconds": 30,
+    "nproc": 5,
+    "cpu_quota": 4
+  },
+  "wave3": {
+    "files": [
+      "debug.ts",
+      "path.ts"
+    ],
+    "inventory_indexed_expressions": 63,
+    "assertions": 37,
+    "declines": 9,
+    "additional_decline": "utilities.ts:9402:9",
+    "zero_defaults": 0,
+    "census_before": 44,
+    "census_after": 1
+  },
+  "combined": {
+    "scoped_files": 17,
+    "assertions": 227,
+    "zero_defaults": 4,
+    "declines": 89,
+    "sites": 320
+  },
+  "idempotence": [
+    {
+      "file": "core.ts",
+      "assertions": 0,
+      "zeros": 0,
+      "declined": 15
+    },
+    {
+      "file": "utilities.ts",
+      "assertions": 0,
+      "zeros": 0,
+      "declined": 23
+    },
+    {
+      "file": "utilitiesPublic.ts",
+      "assertions": 0,
+      "zeros": 0,
+      "declined": 6
+    },
+    {
+      "file": "parser.ts",
+      "assertions": 0,
+      "zeros": 0,
+      "declined": 13
+    },
+    {
+      "file": "scanner.ts",
+      "assertions": 0,
+      "zeros": 0,
+      "declined": 7
+    },
+    {
+      "file": "factory/baseNodeFactory.ts",
+      "assertions": 0,
+      "zeros": 0,
+      "declined": 0
+    },
+    {
+      "file": "factory/emitHelpers.ts",
+      "assertions": 0,
+      "zeros": 0,
+      "declined": 0
+    },
+    {
+      "file": "factory/emitNode.ts",
+      "assertions": 0,
+      "zeros": 0,
+      "declined": 2
+    },
+    {
+      "file": "factory/nodeChildren.ts",
+      "assertions": 0,
+      "zeros": 0,
+      "declined": 0
+    },
+    {
+      "file": "factory/nodeConverters.ts",
+      "assertions": 0,
+      "zeros": 0,
+      "declined": 0
+    },
+    {
+      "file": "factory/nodeFactory.ts",
+      "assertions": 0,
+      "zeros": 0,
+      "declined": 4
+    },
+    {
+      "file": "factory/nodeTests.ts",
+      "assertions": 0,
+      "zeros": 0,
+      "declined": 0
+    },
+    {
+      "file": "factory/parenthesizerRules.ts",
+      "assertions": 0,
+      "zeros": 0,
+      "declined": 0
+    },
+    {
+      "file": "factory/utilities.ts",
+      "assertions": 0,
+      "zeros": 0,
+      "declined": 10
+    },
+    {
+      "file": "factory/utilitiesPublic.ts",
+      "assertions": 0,
+      "zeros": 0,
+      "declined": 0
+    },
+    {
+      "file": "debug.ts",
+      "assertions": 0,
+      "zeros": 0,
+      "declined": 5
+    },
+    {
+      "file": "path.ts",
+      "assertions": 0,
+      "zeros": 0,
+      "declined": 4
+    }
+  ],
+  "fresh_apply_sha256": {
+    "core.ts": "a47a2101267f7d23cb2360dfdd95e9c8d381a6e6d5f36f86869a9272e68539e4",
+    "utilities.ts": "2cd6200ccb1ae5dc918d2e627b8f8e7731d024c7319d5ba7d4c555d85442f561",
+    "utilitiesPublic.ts": "5cec72ffc4e4a90f651aae534f1edabde8b38868accb02a8b239a68403d4803f",
+    "parser.ts": "0bf490731a9fd1133724cabad1451a22fd1da2b70158cbbb022a49498f27c4d3",
+    "scanner.ts": "6aa06c0b96961e7c18b145c1b3df20e13ce5706ed300ed4f8f76e15aecfb584c",
+    "factory/baseNodeFactory.ts": "df7514118add76c4eb81106635f9cd3f3e0fcb5e3b1fb6627fac717f537fc4d8",
+    "factory/emitHelpers.ts": "38cea8a954b72931a4d245d5909faa27b33a1ab48862840248ed4ac40f84f8d7",
+    "factory/emitNode.ts": "528071d2a75956b4cc578b5d3a2344190d9a2ab5c31b56adfd84c10a2ce045cd",
+    "factory/nodeChildren.ts": "bdca6c9b147ecfbe4ec11fc9c09ab5ceeba04e94626ee470d7256d5698c6cf86",
+    "factory/nodeConverters.ts": "0a602b0797c341c03a053276f778d7b245fc7cd8160c0a04e8c96fcf67ddcf19",
+    "factory/nodeFactory.ts": "75bed603e4a3986d038cce3a20aad29d593e79f32be7769cc750e05eadf02670",
+    "factory/nodeTests.ts": "76e4df7ca846537338824b3e797f41bea972414342cc50af974143e6ff00dd9d",
+    "factory/parenthesizerRules.ts": "5da381eef0cade341e64da61e13adc45f5757234d0ad02c99a4f03047aa16c09",
+    "factory/utilities.ts": "4f81ac7ff1df30b368dde225874e60ba6b34b6c1d825dc1174bd5cae79766b25",
+    "factory/utilitiesPublic.ts": "d26ce806051739e30dd82b5246b8fb649f71c8598786247be0bdb080ad95a17a",
+    "debug.ts": "f21fe0e2b82093ed008813dbd0262cc89c1a263f3453d06dc96a007891caf15c",
+    "path.ts": "919632344bf19080bc834406333fca579a3c42b769c3b3e73183ca9270fcb082"
+  },
+  "mutants": [
+    {
+      "site": "debug.ts:1059:48",
+      "replacement": "columns[node.level]! -> (columns[node.level] ?? 0)",
+      "census": "missed: unchanged 1, identical diagnostics",
+      "stock_emitted_javascript_exit": 1,
+      "site_contract_exit": 1,
+      "oracle": "not rerun on mutant"
+    },
+    {
+      "site": "scanner.ts:360:16",
+      "replacement": "map[0]! -> (map[0] ?? 0)",
+      "check": "regenerated matching slice manifest, then slice-audit.cjs",
+      "exit": 1,
+      "diagnostic": "required assertion missing: src/compiler/scanner.ts:360"
+    }
+  ],
+  "slice_audit": {
+    "scanner": {
+      "files": 8,
+      "indexed_expressions": 29,
+      "unresolved": 0
+    },
+    "parser": {
+      "files": 78,
+      "indexed_expressions": 1715,
+      "unresolved_external_candidates": 988,
+      "unreviewed_in_30": 0
+    },
+    "ownership_31_32_33": "not published in fetched branches; verification incomplete"
+  }
+}

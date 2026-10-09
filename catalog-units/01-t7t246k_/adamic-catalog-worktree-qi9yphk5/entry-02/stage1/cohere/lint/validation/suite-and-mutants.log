@@ -1,0 +1,497 @@
+=== RUN   TestNestedConstructorGap
+    gaps_test.go:35: Node prints 1; native lowering refuses: /workspace/adamic/stage1/cohere/lint/gaps/1_nested_constructor.ts:7:16: Adamic 0.1 refuses this escaping a constructor before every field is set (stored, passed, or a method called on it, which could read a field that holds undefined while its type says otherwise); assign every field first, then use this
+--- PASS: TestNestedConstructorGap (0.09s)
+=== RUN   TestOptionAndComparatorGaps
+=== PAUSE TestOptionAndComparatorGaps
+=== RUN   TestRulesAgree
+    lint_test.go:275: cohere cases: 873 unique source/rule/options combinations
+    lint_test.go:302: Go, Node, native identical: 554050 bytes
+--- PASS: TestRulesAgree (19.32s)
+=== RUN   TestCompilerAndStage1Agree
+    lint_test.go:336: compiler and stage1: 161 files
+    lint_test.go:337: Go, Node, native identical: 15546719 bytes
+--- PASS: TestCompilerAndStage1Agree (47.33s)
+=== RUN   TestMutants
+=== RUN   TestMutants/suggestion_applied_as_fix
+    lint_test.go:400: suggestion applied as fix caught on Node: case 14 line 345: port "range 2 4 unexpected fix\t===\tUse `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.\t2 4", Go "range 2 4 unexpected suggestion\t===\tUse `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.\t2 4"
+        Go context:
+        fixed	if(x){} else { /* intent */ } try{}catch(e){}finally{}; switch('/*'){}; switch(x){/* intent */}; class C{static{}}
+        case 14
+        /tmp/adamic-gate/TestMutants758278388/003/generated-2.ts:1:3
+          eqeqeq  This compares with `==`, which coerces its operands to a common type before comparing. That makes the comparison non-transitive, which is the one property every reader assumes a comparison has: `0 == '0'` and `'0' == []` disagree while `0 == []` is true. Write `===`, which compares without coercing.
+        
+        range 2 4 unexpected suggestion	===	Use `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.	2 4
+        /tmp/adamic-gate/TestMutants758278388/003/generated-2.ts:1:11
+          eqeqeq  This compares with `==`, which coerces its operands to a common type before comparing. That makes the comparison non-transitive, which is the one property every reader assumes a comparison has: `0 == '0'` and `'0' == []` disagree while `0 == []` is true. Write `===`, which compares without coercing.
+        
+        range 10 12 unexpected fix	===		10 12
+    lint_test.go:400: suggestion applied as fix caught on native: case 14 line 345: port "range 2 4 unexpected fix\t===\tUse `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.\t2 4", Go "range 2 4 unexpected suggestion\t===\tUse `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.\t2 4"
+        Go context:
+        fixed	if(x){} else { /* intent */ } try{}catch(e){}finally{}; switch('/*'){}; switch(x){/* intent */}; class C{static{}}
+        case 14
+        /tmp/adamic-gate/TestMutants758278388/003/generated-2.ts:1:3
+          eqeqeq  This compares with `==`, which coerces its operands to a common type before comparing. That makes the comparison non-transitive, which is the one property every reader assumes a comparison has: `0 == '0'` and `'0' == []` disagree while `0 == []` is true. Write `===`, which compares without coercing.
+        
+        range 2 4 unexpected suggestion	===	Use `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.	2 4
+        /tmp/adamic-gate/TestMutants758278388/003/generated-2.ts:1:11
+          eqeqeq  This compares with `==`, which coerces its operands to a common type before comparing. That makes the comparison non-transitive, which is the one property every reader assumes a comparison has: `0 == '0'` and `'0' == []` disagree while `0 == []` is true. Write `===`, which compares without coercing.
+        
+        range 10 12 unexpected fix	===		10 12
+=== RUN   TestMutants/empty_function_body_reported
+    lint_test.go:400: empty function body reported caught on Node: case 0 line 26: port "/tmp/adamic-gate/TestMutants758278388/001/generated-0.ts:1:104", Go "/tmp/adamic-gate/TestMutants758278388/001/generated-0.ts:1:125"
+        Go context:
+        range 52 61 unexpectedDebugger 			52 61
+        /tmp/adamic-gate/TestMutants758278388/001/generated-0.ts:1:77
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 76 85 unexpectedDebugger fix			76 85
+        /tmp/adamic-gate/TestMutants758278388/001/generated-0.ts:1:125
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 124 133 unexpectedDebugger fix			124 133
+        fixed	 if(x) debugger; while(x) debugger; label: debugger; function f(){  } function noop(){} switch(x){case 1: }
+    lint_test.go:400: empty function body reported caught on native: case 0 line 26: port "/tmp/adamic-gate/TestMutants758278388/001/generated-0.ts:1:104", Go "/tmp/adamic-gate/TestMutants758278388/001/generated-0.ts:1:125"
+        Go context:
+        range 52 61 unexpectedDebugger 			52 61
+        /tmp/adamic-gate/TestMutants758278388/001/generated-0.ts:1:77
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 76 85 unexpectedDebugger fix			76 85
+        /tmp/adamic-gate/TestMutants758278388/001/generated-0.ts:1:125
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 124 133 unexpectedDebugger fix			124 133
+        fixed	 if(x) debugger; while(x) debugger; label: debugger; function f(){  } function noop(){} switch(x){case 1: }
+=== RUN   TestMutants/duplicate_case_suppressed
+    lint_test.go:400: duplicate case suppressed caught on Node: case 0 line 26: port "/tmp/adamic-gate/TestMutants758278388/001/generated-0.ts:1:122", Go "/tmp/adamic-gate/TestMutants758278388/001/generated-0.ts:1:125"
+        Go context:
+        range 52 61 unexpectedDebugger 			52 61
+        /tmp/adamic-gate/TestMutants758278388/001/generated-0.ts:1:77
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 76 85 unexpectedDebugger fix			76 85
+        /tmp/adamic-gate/TestMutants758278388/001/generated-0.ts:1:125
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 124 133 unexpectedDebugger fix			124 133
+        fixed	 if(x) debugger; while(x) debugger; label: debugger; function f(){  } function noop(){} switch(x){case 1: }
+    lint_test.go:400: duplicate case suppressed caught on native: case 0 line 26: port "/tmp/adamic-gate/TestMutants758278388/001/generated-0.ts:1:122", Go "/tmp/adamic-gate/TestMutants758278388/001/generated-0.ts:1:125"
+        Go context:
+        range 52 61 unexpectedDebugger 			52 61
+        /tmp/adamic-gate/TestMutants758278388/001/generated-0.ts:1:77
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 76 85 unexpectedDebugger fix			76 85
+        /tmp/adamic-gate/TestMutants758278388/001/generated-0.ts:1:125
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 124 133 unexpectedDebugger fix			124 133
+        fixed	 if(x) debugger; while(x) debugger; label: debugger; function f(){  } function noop(){} switch(x){case 1: }
+=== RUN   TestMutants/control_statement_omitted
+    lint_test.go:400: control statement omitted caught on Node: case 28 line 886: port "/tmp/adamic-gate/TestMutants758278388/005/generated-4.ts:1:31", Go "/tmp/adamic-gate/TestMutants758278388/005/generated-4.ts:1:42"
+        Go context:
+        range 141 147 top 			141 147
+        fixed	\ufeffvar a; for(var x=0;x<3;x++){}; for(var y in z){}; for(var q of z){}; declare var b; declare global{ var c; namespace N{var d;} } namespace M{var e;}
+        case 27
+        fixed	var a; for(var x=0;x<3;x++){}; for(var y in z){}; for(var q of z){}; declare var b; declare global{ var c; namespace N{var d;} } namespace M{var e;}
+        case 28
+        /tmp/adamic-gate/TestMutants758278388/005/generated-4.ts:1:42
+          no-duplicate-case  Duplicate case label: an earlier arm in this switch tests the same expression, so this one can never run. Almost always a clause was copied and its test never updated, which means the body here is dead and the case it was meant to handle falls through to `default`. Change the test to the value this arm was written for, or delete the arm.
+        
+        range 41 45 unexpected 			41 45
+        /tmp/adamic-gate/TestMutants758278388/005/generated-4.ts:1:135
+    lint_test.go:400: control statement omitted caught on native: case 28 line 886: port "/tmp/adamic-gate/TestMutants758278388/005/generated-4.ts:1:31", Go "/tmp/adamic-gate/TestMutants758278388/005/generated-4.ts:1:42"
+        Go context:
+        range 141 147 top 			141 147
+        fixed	\ufeffvar a; for(var x=0;x<3;x++){}; for(var y in z){}; for(var q of z){}; declare var b; declare global{ var c; namespace N{var d;} } namespace M{var e;}
+        case 27
+        fixed	var a; for(var x=0;x<3;x++){}; for(var y in z){}; for(var q of z){}; declare var b; declare global{ var c; namespace N{var d;} } namespace M{var e;}
+        case 28
+        /tmp/adamic-gate/TestMutants758278388/005/generated-4.ts:1:42
+          no-duplicate-case  Duplicate case label: an earlier arm in this switch tests the same expression, so this one can never run. Almost always a clause was copied and its test never updated, which means the body here is dead and the case it was meant to handle falls through to `default`. Change the test to the value this arm was written for, or delete the arm.
+        
+        range 41 45 unexpected 			41 45
+        /tmp/adamic-gate/TestMutants758278388/005/generated-4.ts:1:135
+=== RUN   TestMutants/destructuring_hole_reported
+    lint_test.go:400: destructuring hole reported caught on Node: case 42 line 1062: port "/tmp/adamic-gate/TestMutants758278388/007/generated-6.ts:1:151", Go "/tmp/adamic-gate/TestMutants758278388/007/generated-6.ts:1:160"
+        Go context:
+        range 107 115 noNewStatement 			107 115
+        /tmp/adamic-gate/TestMutants758278388/007/generated-6.ts:1:143
+          no-sparse-arrays  This array literal has a hole: two commas with nothing between them. A hole is not undefined, it is an absent index, and the difference is visible exactly where it is least expected. `map` and `forEach` skip holes while `for...of` and spread produce undefined for them, so the same array reads as two different lengths of data depending on how it is walked. Almost every hole is a typo for one comma. If the absence is deliberate, write undefined and say so.
+        
+        range 142 147 unexpectedSparseArray 			142 147
+        /tmp/adamic-gate/TestMutants758278388/007/generated-6.ts:1:160
+          require-yield  This generator function contains no `yield`, so calling it returns an iterator that finishes immediately with the function's return value and never produces anything. A caller writing `for(const item of generate())` gets zero iterations. Either the asterisk is left over from a refactor and the function should be a plain one, or a `yield` is missing.
+        
+        range 159 217 missingYield 			159 217
+        /tmp/adamic-gate/TestMutants758278388/007/generated-6.ts:1:251
+    lint_test.go:400: destructuring hole reported caught on native: case 42 line 1062: port "/tmp/adamic-gate/TestMutants758278388/007/generated-6.ts:1:151", Go "/tmp/adamic-gate/TestMutants758278388/007/generated-6.ts:1:160"
+        Go context:
+        range 107 115 noNewStatement 			107 115
+        /tmp/adamic-gate/TestMutants758278388/007/generated-6.ts:1:143
+          no-sparse-arrays  This array literal has a hole: two commas with nothing between them. A hole is not undefined, it is an absent index, and the difference is visible exactly where it is least expected. `map` and `forEach` skip holes while `for...of` and spread produce undefined for them, so the same array reads as two different lengths of data depending on how it is walked. Almost every hole is a typo for one comma. If the absence is deliberate, write undefined and say so.
+        
+        range 142 147 unexpectedSparseArray 			142 147
+        /tmp/adamic-gate/TestMutants758278388/007/generated-6.ts:1:160
+          require-yield  This generator function contains no `yield`, so calling it returns an iterator that finishes immediately with the function's return value and never produces anything. A caller writing `for(const item of generate())` gets zero iterations. Either the asterisk is left over from a refactor and the function should be a plain one, or a `yield` is missing.
+        
+        range 159 217 missingYield 			159 217
+        /tmp/adamic-gate/TestMutants758278388/007/generated-6.ts:1:251
+=== RUN   TestMutants/nested_generator_owns_outer_yield
+    lint_test.go:400: nested generator owns outer yield caught on Node: case 42 line 1062: port "/tmp/adamic-gate/TestMutants758278388/007/generated-6.ts:1:251", Go "/tmp/adamic-gate/TestMutants758278388/007/generated-6.ts:1:160"
+        Go context:
+        range 107 115 noNewStatement 			107 115
+        /tmp/adamic-gate/TestMutants758278388/007/generated-6.ts:1:143
+          no-sparse-arrays  This array literal has a hole: two commas with nothing between them. A hole is not undefined, it is an absent index, and the difference is visible exactly where it is least expected. `map` and `forEach` skip holes while `for...of` and spread produce undefined for them, so the same array reads as two different lengths of data depending on how it is walked. Almost every hole is a typo for one comma. If the absence is deliberate, write undefined and say so.
+        
+        range 142 147 unexpectedSparseArray 			142 147
+        /tmp/adamic-gate/TestMutants758278388/007/generated-6.ts:1:160
+          require-yield  This generator function contains no `yield`, so calling it returns an iterator that finishes immediately with the function's return value and never produces anything. A caller writing `for(const item of generate())` gets zero iterations. Either the asterisk is left over from a refactor and the function should be a plain one, or a `yield` is missing.
+        
+        range 159 217 missingYield 			159 217
+        /tmp/adamic-gate/TestMutants758278388/007/generated-6.ts:1:251
+    lint_test.go:400: nested generator owns outer yield caught on native: case 42 line 1062: port "/tmp/adamic-gate/TestMutants758278388/007/generated-6.ts:1:251", Go "/tmp/adamic-gate/TestMutants758278388/007/generated-6.ts:1:160"
+        Go context:
+        range 107 115 noNewStatement 			107 115
+        /tmp/adamic-gate/TestMutants758278388/007/generated-6.ts:1:143
+          no-sparse-arrays  This array literal has a hole: two commas with nothing between them. A hole is not undefined, it is an absent index, and the difference is visible exactly where it is least expected. `map` and `forEach` skip holes while `for...of` and spread produce undefined for them, so the same array reads as two different lengths of data depending on how it is walked. Almost every hole is a typo for one comma. If the absence is deliberate, write undefined and say so.
+        
+        range 142 147 unexpectedSparseArray 			142 147
+        /tmp/adamic-gate/TestMutants758278388/007/generated-6.ts:1:160
+          require-yield  This generator function contains no `yield`, so calling it returns an iterator that finishes immediately with the function's return value and never produces anything. A caller writing `for(const item of generate())` gets zero iterations. Either the asterisk is left over from a refactor and the function should be a plain one, or a `yield` is missing.
+        
+        range 159 217 missingYield 			159 217
+        /tmp/adamic-gate/TestMutants758278388/007/generated-6.ts:1:251
+=== RUN   TestMutants/await_crosses_function_boundary
+    lint_test.go:400: await crosses function boundary caught on Node: case 42 line 1050: port "/tmp/adamic-gate/TestMutants758278388/007/generated-6.ts:1:81", Go "/tmp/adamic-gate/TestMutants758278388/007/generated-6.ts:1:94"
+        Go context:
+        range 32 44 unexpectedLabelInBreak 			32 44
+        /tmp/adamic-gate/TestMutants758278388/007/generated-6.ts:1:46
+          no-await-in-loop  This waits inside a loop, so each iteration blocks on the one before it and the work runs one at a time. Where the iterations do not depend on each other, collecting the promises and awaiting them together turns a sum of latencies into a maximum. Where they do depend on each other, the sequencing is deliberate and the loop is the right shape, which is why this reports rather than repairs.
+        
+        range 45 54 unexpectedAwait 			45 54
+        /tmp/adamic-gate/TestMutants758278388/007/generated-6.ts:1:94
+          no-with  A `with` block splices an object's properties into the local scope, so a bare name inside it cannot be resolved by reading the code: whether `x` means the object's property or an outer variable is decided at runtime by what the object happens to hold. That defeats the checker and every reader. Bind what you need to a name instead, as in `const { x, y } = point;`.
+        
+        range 93 97 noWith 			93 97
+        /tmp/adamic-gate/TestMutants758278388/007/generated-6.ts:1:108
+    lint_test.go:400: await crosses function boundary caught on native: case 42 line 1050: port "/tmp/adamic-gate/TestMutants758278388/007/generated-6.ts:1:81", Go "/tmp/adamic-gate/TestMutants758278388/007/generated-6.ts:1:94"
+        Go context:
+        range 32 44 unexpectedLabelInBreak 			32 44
+        /tmp/adamic-gate/TestMutants758278388/007/generated-6.ts:1:46
+          no-await-in-loop  This waits inside a loop, so each iteration blocks on the one before it and the work runs one at a time. Where the iterations do not depend on each other, collecting the promises and awaiting them together turns a sum of latencies into a maximum. Where they do depend on each other, the sequencing is deliberate and the loop is the right shape, which is why this reports rather than repairs.
+        
+        range 45 54 unexpectedAwait 			45 54
+        /tmp/adamic-gate/TestMutants758278388/007/generated-6.ts:1:94
+          no-with  A `with` block splices an object's properties into the local scope, so a bare name inside it cannot be resolved by reading the code: whether `x` means the object's property or an outer variable is decided at runtime by what the object happens to hold. That defeats the checker and every reader. Bind what you need to a name instead, as in `const { x, y } = point;`.
+        
+        range 93 97 noWith 			93 97
+        /tmp/adamic-gate/TestMutants758278388/007/generated-6.ts:1:108
+=== RUN   TestMutants/option_ignored
+    lint_test.go:400: option ignored caught on Node: case 56 line 1542: port "/tmp/adamic-gate/TestMutants758278388/009/generated-8.ts:1:99", Go "/tmp/adamic-gate/TestMutants758278388/009/generated-8.ts:1:94"
+        Go context:
+        range 18 28 unexpectedTemplateExpression 			18 28
+        /tmp/adamic-gate/TestMutants758278388/009/generated-8.ts:1:62
+          no-div-regex  This regular expression begins with an equals sign, so its first two characters are the divide-assign operator spelled backwards, and a reader scanning the line has to work out which one it is. Writing the equals sign as a one-member character class matches exactly the same input and can only be read one way.
+        
+        range 61 68 unexpected fix	[=]		62 63
+        /tmp/adamic-gate/TestMutants758278388/009/generated-8.ts:1:94
+          no-bitwise  Unexpected use of '|'. A bitwise operator here is usually a typo for its logical twin: `&` for `&&`, `|` for `||`. When it is deliberate the intent is worth stating, because the reader has to decide which of the two you meant every time they pass it.
+        
+        range 93 96 unexpected 			93 96
+        /tmp/adamic-gate/TestMutants758278388/009/generated-8.ts:1:99
+    lint_test.go:400: option ignored caught on native: case 56 line 1542: port "/tmp/adamic-gate/TestMutants758278388/009/generated-8.ts:1:99", Go "/tmp/adamic-gate/TestMutants758278388/009/generated-8.ts:1:94"
+        Go context:
+        range 18 28 unexpectedTemplateExpression 			18 28
+        /tmp/adamic-gate/TestMutants758278388/009/generated-8.ts:1:62
+          no-div-regex  This regular expression begins with an equals sign, so its first two characters are the divide-assign operator spelled backwards, and a reader scanning the line has to work out which one it is. Writing the equals sign as a one-member character class matches exactly the same input and can only be read one way.
+        
+        range 61 68 unexpected fix	[=]		62 63
+        /tmp/adamic-gate/TestMutants758278388/009/generated-8.ts:1:94
+          no-bitwise  Unexpected use of '|'. A bitwise operator here is usually a typo for its logical twin: `&` for `&&`, `|` for `||`. When it is deliberate the intent is worth stating, because the reader has to decide which of the two you meant every time they pass it.
+        
+        range 93 96 unexpected 			93 96
+        /tmp/adamic-gate/TestMutants758278388/009/generated-8.ts:1:99
+=== RUN   TestMutants/regex_fix_eats_extra_byte
+    lint_test.go:400: regex fix eats extra byte caught on Node: case 56 line 1541: port "range 61 68 unexpected fix\t[=]\t\t62 64", Go "range 61 68 unexpected fix\t[=]\t\t62 63"
+        Go context:
+        
+        range 18 28 unexpectedTemplateExpression 			18 28
+        /tmp/adamic-gate/TestMutants758278388/009/generated-8.ts:1:62
+          no-div-regex  This regular expression begins with an equals sign, so its first two characters are the divide-assign operator spelled backwards, and a reader scanning the line has to work out which one it is. Writing the equals sign as a one-member character class matches exactly the same input and can only be read one way.
+        
+        range 61 68 unexpected fix	[=]		62 63
+        /tmp/adamic-gate/TestMutants758278388/009/generated-8.ts:1:94
+          no-bitwise  Unexpected use of '|'. A bitwise operator here is usually a typo for its logical twin: `&` for `&&`, `|` for `||`. When it is deliberate the intent is worth stating, because the reader has to decide which of the two you meant every time they pass it.
+        
+        range 93 96 unexpected 			93 96
+    lint_test.go:400: regex fix eats extra byte caught on native: case 56 line 1541: port "range 61 68 unexpected fix\t[=]\t\t62 64", Go "range 61 68 unexpected fix\t[=]\t\t62 63"
+        Go context:
+        
+        range 18 28 unexpectedTemplateExpression 			18 28
+        /tmp/adamic-gate/TestMutants758278388/009/generated-8.ts:1:62
+          no-div-regex  This regular expression begins with an equals sign, so its first two characters are the divide-assign operator spelled backwards, and a reader scanning the line has to work out which one it is. Writing the equals sign as a one-member character class matches exactly the same input and can only be read one way.
+        
+        range 61 68 unexpected fix	[=]		62 63
+        /tmp/adamic-gate/TestMutants758278388/009/generated-8.ts:1:94
+          no-bitwise  Unexpected use of '|'. A bitwise operator here is usually a typo for its logical twin: `&` for `&&`, `|` for `||`. When it is deliberate the intent is worth stating, because the reader has to decide which of the two you meant every time they pass it.
+        
+        range 93 96 unexpected 			93 96
+=== RUN   TestMutants/boolean_inverse_changed
+    lint_test.go:400: boolean inverse changed caught on Node: case 63 line 1799: port "range 51 72 unnecessaryConditionalExpression fix\ta !== b\t\t51 72", Go "range 51 72 unnecessaryConditionalExpression fix\ta != b\t\t51 72"
+        Go context:
+        
+        range 14 26 unnecessaryConditionalExpression fix	!!a		14 26
+        /tmp/adamic-gate/TestMutants758278388/010/generated-9.ts:1:52
+          no-unneeded-ternary  This conditional returns a boolean literal on both branches, so the whole ternary is a long way of writing the condition itself. The branches carry no information the test does not already have, and a reader has to check both to learn that. Write the condition, negated if the branches are the other way round.
+        
+        range 51 72 unnecessaryConditionalExpression fix	a != b		51 72
+        /tmp/adamic-gate/TestMutants758278388/010/generated-9.ts:1:54
+          eqeqeq  This compares with `==`, which coerces its operands to a common type before comparing. That makes the comparison non-transitive, which is the one property every reader assumes a comparison has: `0 == '0'` and `'0' == []` disagree while `0 == []` is true. Write `===`, which compares without coercing.
+        
+        range 53 55 unexpected suggestion	===	Use `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.	53 55
+    lint_test.go:400: boolean inverse changed caught on native: case 63 line 1799: port "range 51 72 unnecessaryConditionalExpression fix\ta !== b\t\t51 72", Go "range 51 72 unnecessaryConditionalExpression fix\ta != b\t\t51 72"
+        Go context:
+        
+        range 14 26 unnecessaryConditionalExpression fix	!!a		14 26
+        /tmp/adamic-gate/TestMutants758278388/010/generated-9.ts:1:52
+          no-unneeded-ternary  This conditional returns a boolean literal on both branches, so the whole ternary is a long way of writing the condition itself. The branches carry no information the test does not already have, and a reader has to check both to learn that. Write the condition, negated if the branches are the other way round.
+        
+        range 51 72 unnecessaryConditionalExpression fix	a != b		51 72
+        /tmp/adamic-gate/TestMutants758278388/010/generated-9.ts:1:54
+          eqeqeq  This compares with `==`, which coerces its operands to a common type before comparing. That makes the comparison non-transitive, which is the one property every reader assumes a comparison has: `0 == '0'` and `'0' == []` disagree while `0 == []` is true. Write `===`, which compares without coercing.
+        
+        range 53 55 unexpected suggestion	===	Use `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.	53 55
+=== RUN   TestMutants/comment_self_directive_exemption_removed
+    lint_test.go:400: comment self directive exemption removed caught on Node: case 74 line 2092: port "/tmp/adamic-gate/TestMutants758278388/011/generated-10.ts:2:104", Go "/tmp/adamic-gate/TestMutants758278388/011/generated-10.ts:3:1"
+        Go context:
+        range 0 21 unexpectedComment 			0 21
+        /tmp/adamic-gate/TestMutants758278388/011/generated-10.ts:2:79
+          no-warning-comments  This comment opens with `fixme`, which marks the code as knowingly unfinished: "FIXME". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.
+        
+        range 100 111 unexpectedComment 			100 111
+        /tmp/adamic-gate/TestMutants758278388/011/generated-10.ts:3:1
+          no-warning-comments  This comment opens with `todo`, which marks the code as knowingly unfinished: "TODOé and fixme". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.
+        
+        range 170 189 unexpectedComment 			170 189
+        /tmp/adamic-gate/TestMutants758278388/011/generated-10.ts:3:1
+    lint_test.go:400: comment self directive exemption removed caught on native: case 74 line 2092: port "/tmp/adamic-gate/TestMutants758278388/011/generated-10.ts:2:104", Go "/tmp/adamic-gate/TestMutants758278388/011/generated-10.ts:3:1"
+        Go context:
+        range 0 21 unexpectedComment 			0 21
+        /tmp/adamic-gate/TestMutants758278388/011/generated-10.ts:2:79
+          no-warning-comments  This comment opens with `fixme`, which marks the code as knowingly unfinished: "FIXME". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.
+        
+        range 100 111 unexpectedComment 			100 111
+        /tmp/adamic-gate/TestMutants758278388/011/generated-10.ts:3:1
+          no-warning-comments  This comment opens with `todo`, which marks the code as knowingly unfinished: "TODOé and fixme". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.
+        
+        range 170 189 unexpectedComment 			170 189
+        /tmp/adamic-gate/TestMutants758278388/011/generated-10.ts:3:1
+=== RUN   TestMutants/bom_removes_two_marks
+    lint_test.go:400: bom removes two marks caught on Node: case 77 line 2133: port "range 0 0 unexpected fix\t\t\t0 6", Go "range 0 0 unexpected fix\t\t\t0 3"
+        Go context:
+        fixed	// TODO: fix this xxx\u000aconst url='http://todo'; const fake=/[/*]TODO/; const template=`// TODO ${f() /* FIXME */} /* XXX */`; /* eslint no-warning-comments: error todo */\u000a// TODO\u00e9 and fixme\u000a/** TODO decorated */ const arr=[1, // FIXME trailing comma\u000a]; import data from 'data' with {/* TODO attributes */}; type Empty=import('data', {with:{/* TODO import type */}});
+        case 77
+        /tmp/adamic-gate/TestMutants758278388/012/generated-11.ts:1:1
+          unicode-bom  This file starts with a byte order mark. In a project that is already UTF-8 everywhere the mark carries no information and is invisible in an editor, while tools that read the first bytes literally see it: a shell script stops being executable, a concatenated bundle gains a stray character mid-file, and a diff shows a change on a line nobody edited.
+        
+        range 0 0 unexpected fix			0 3
+        fixed	 // TODO two marks\u000aconst x=1;
+        case 78
+        /tmp/adamic-gate/TestMutants758278388/012/generated-11.ts:1:1
+          unicode-bom  This file starts with a byte order mark. In a project that is already UTF-8 everywhere the mark carries no information and is invisible in an editor, while tools that read the first bytes literally see it: a shell script stops being executable, a concatenated bundle gains a stray character mid-file, and a diff shows a change on a line nobody edited.
+    lint_test.go:400: bom removes two marks caught on native: case 77 line 2133: port "range 0 0 unexpected fix\t\t\t0 6", Go "range 0 0 unexpected fix\t\t\t0 3"
+        Go context:
+        fixed	// TODO: fix this xxx\u000aconst url='http://todo'; const fake=/[/*]TODO/; const template=`// TODO ${f() /* FIXME */} /* XXX */`; /* eslint no-warning-comments: error todo */\u000a// TODO\u00e9 and fixme\u000a/** TODO decorated */ const arr=[1, // FIXME trailing comma\u000a]; import data from 'data' with {/* TODO attributes */}; type Empty=import('data', {with:{/* TODO import type */}});
+        case 77
+        /tmp/adamic-gate/TestMutants758278388/012/generated-11.ts:1:1
+          unicode-bom  This file starts with a byte order mark. In a project that is already UTF-8 everywhere the mark carries no information and is invisible in an editor, while tools that read the first bytes literally see it: a shell script stops being executable, a concatenated bundle gains a stray character mid-file, and a diff shows a change on a line nobody edited.
+        
+        range 0 0 unexpected fix			0 3
+        fixed	 // TODO two marks\u000aconst x=1;
+        case 78
+        /tmp/adamic-gate/TestMutants758278388/012/generated-11.ts:1:1
+          unicode-bom  This file starts with a byte order mark. In a project that is already UTF-8 everywhere the mark carries no information and is invisible in an editor, while tools that read the first bytes literally see it: a shell script stops being executable, a concatenated bundle gains a stray character mid-file, and a diff shows a change on a line nobody edited.
+=== RUN   TestMutants/label_option_widened
+    lint_test.go:400: label option widened caught on Node: case 42 line 1030: port "/tmp/adamic-gate/TestMutants758278388/007/generated-6.ts:1:17", Go "/tmp/adamic-gate/TestMutants758278388/007/generated-6.ts:1:1"
+        Go context:
+        range 52 54 unexpectedBlock 			52 54
+        fixed	\ufeffconst \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 41
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a debugger;\u000d\u000a if(\u00e9){} // outside\u000a
+        case 42
+        /tmp/adamic-gate/TestMutants758278388/007/generated-6.ts:1:1
+          no-labels  This labels a statement. A label is a second naming system that only `break` and `continue` can read, so control can leave from a line that carries no visible marker and land somewhere the reader has to search the file to find. Reading the code top to bottom no longer tells you where it goes. Extract the labeled region into a function and return from it, or restructure the loops so the exit is local.
+        
+        range 0 92 unexpectedLabel 			0 92
+        /tmp/adamic-gate/TestMutants758278388/007/generated-6.ts:1:17
+    lint_test.go:400: label option widened caught on native: case 42 line 1030: port "/tmp/adamic-gate/TestMutants758278388/007/generated-6.ts:1:17", Go "/tmp/adamic-gate/TestMutants758278388/007/generated-6.ts:1:1"
+        Go context:
+        range 52 54 unexpectedBlock 			52 54
+        fixed	\ufeffconst \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 41
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a debugger;\u000d\u000a if(\u00e9){} // outside\u000a
+        case 42
+        /tmp/adamic-gate/TestMutants758278388/007/generated-6.ts:1:1
+          no-labels  This labels a statement. A label is a second naming system that only `break` and `continue` can read, so control can leave from a line that carries no visible marker and land somewhere the reader has to search the file to find. Reading the code top to bottom no longer tells you where it goes. Extract the labeled region into a function and return from it, or restructure the loops so the exit is local.
+        
+        range 0 92 unexpectedLabel 			0 92
+        /tmp/adamic-gate/TestMutants758278388/007/generated-6.ts:1:17
+=== RUN   TestMutants/directive_prefix_ignored
+    lint_test.go:400: directive prefix ignored caught on Node: case 49 line 1320: port "/tmp/adamic-gate/TestMutants758278388/008/generated-7.ts:1:192", Go "/tmp/adamic-gate/TestMutants758278388/008/generated-7.ts:1:206"
+        Go context:
+        range 148 160 unexpectedAwait 			148 160
+        /tmp/adamic-gate/TestMutants758278388/008/generated-7.ts:1:192
+          no-var  This is a `var` declaration, which is function-scoped and hoisted rather than block-scoped. The binding exists from the top of the enclosing function, so it is readable above the line that declares it and it leaks out of the block it looks like it belongs to: a `var` inside an `if` is still in scope after the `if` ends. A `var` in a loop is one binding shared by every iteration, which is why a closure created in the loop sees the final value rather than its own. Use `let`, or `const` when nothing reassigns it.
+        
+        range 191 198 unexpectedVar 			191 198
+        /tmp/adamic-gate/TestMutants758278388/008/generated-7.ts:1:206
+          no-var  This is a `var` declaration, which is function-scoped and hoisted rather than block-scoped. The binding exists from the top of the enclosing function, so it is readable above the line that declares it and it leaks out of the block it looks like it belongs to: a `var` inside an `if` is still in scope after the `if` ends. A `var` in a loop is one binding shared by every iteration, which is why a closure created in the loop sees the final value rather than its own. Use `let`, or `const` when nothing reassigns it.
+        
+        range 205 213 unexpectedVar 			205 213
+        /tmp/adamic-gate/TestMutants758278388/008/generated-7.ts:1:206
+    lint_test.go:400: directive prefix ignored caught on native: case 49 line 1320: port "/tmp/adamic-gate/TestMutants758278388/008/generated-7.ts:1:192", Go "/tmp/adamic-gate/TestMutants758278388/008/generated-7.ts:1:206"
+        Go context:
+        range 148 160 unexpectedAwait 			148 160
+        /tmp/adamic-gate/TestMutants758278388/008/generated-7.ts:1:192
+          no-var  This is a `var` declaration, which is function-scoped and hoisted rather than block-scoped. The binding exists from the top of the enclosing function, so it is readable above the line that declares it and it leaks out of the block it looks like it belongs to: a `var` inside an `if` is still in scope after the `if` ends. A `var` in a loop is one binding shared by every iteration, which is why a closure created in the loop sees the final value rather than its own. Use `let`, or `const` when nothing reassigns it.
+        
+        range 191 198 unexpectedVar 			191 198
+        /tmp/adamic-gate/TestMutants758278388/008/generated-7.ts:1:206
+          no-var  This is a `var` declaration, which is function-scoped and hoisted rather than block-scoped. The binding exists from the top of the enclosing function, so it is readable above the line that declares it and it leaks out of the block it looks like it belongs to: a `var` inside an `if` is still in scope after the `if` ends. A `var` in a loop is one binding shared by every iteration, which is why a closure created in the loop sees the final value rather than its own. Use `let`, or `const` when nothing reassigns it.
+        
+        range 205 213 unexpectedVar 			205 213
+        /tmp/adamic-gate/TestMutants758278388/008/generated-7.ts:1:206
+=== RUN   TestMutants/comma_chain_reports_inner
+    lint_test.go:400: comma chain reports inner caught on Node: case 56 line 1562: port "/tmp/adamic-gate/TestMutants758278388/009/generated-8.ts:1:128", Go "/tmp/adamic-gate/TestMutants758278388/009/generated-8.ts:1:135"
+        Go context:
+        range 110 116 unexpected 			110 116
+        /tmp/adamic-gate/TestMutants758278388/009/generated-8.ts:1:119
+          no-bitwise  Unexpected use of '~'. A bitwise operator here is usually a typo for its logical twin: `&` for `&&`, `|` for `||`. When it is deliberate the intent is worth stating, because the reader has to decide which of the two you meant every time they pass it.
+        
+        range 118 120 unexpected 			118 120
+        /tmp/adamic-gate/TestMutants758278388/009/generated-8.ts:1:135
+          no-sequences  This uses the comma operator, which evaluates the expression on its left, throws the result away, and yields the expression on its right. Two statements are hiding inside one, and the discarded half is the part a reader skips: `a = b(), c()` calls both and assigns only the second, which reads as a typo for `a = b()`. Split it into separate statements, or wrap it in its own parentheses to say the sequencing was deliberate.
+        
+        range 134 135 unexpectedCommaExpression 			134 135
+        /tmp/adamic-gate/TestMutants758278388/009/generated-8.ts:1:165
+    lint_test.go:400: comma chain reports inner caught on native: case 56 line 1562: port "/tmp/adamic-gate/TestMutants758278388/009/generated-8.ts:1:128", Go "/tmp/adamic-gate/TestMutants758278388/009/generated-8.ts:1:135"
+        Go context:
+        range 110 116 unexpected 			110 116
+        /tmp/adamic-gate/TestMutants758278388/009/generated-8.ts:1:119
+          no-bitwise  Unexpected use of '~'. A bitwise operator here is usually a typo for its logical twin: `&` for `&&`, `|` for `||`. When it is deliberate the intent is worth stating, because the reader has to decide which of the two you meant every time they pass it.
+        
+        range 118 120 unexpected 			118 120
+        /tmp/adamic-gate/TestMutants758278388/009/generated-8.ts:1:135
+          no-sequences  This uses the comma operator, which evaluates the expression on its left, throws the result away, and yields the expression on its right. Two statements are hiding inside one, and the discarded half is the part a reader skips: `a = b(), c()` calls both and assigns only the second, which reads as a typo for `a = b()`. Split it into separate statements, or wrap it in its own parentheses to say the sequencing was deliberate.
+        
+        range 134 135 unexpectedCommaExpression 			134 135
+        /tmp/adamic-gate/TestMutants758278388/009/generated-8.ts:1:165
+=== RUN   TestMutants/empty_placeholder_reported
+    lint_test.go:400: empty placeholder reported caught on Node: case 56 line 1538: port "/tmp/adamic-gate/TestMutants758278388/009/generated-8.ts:1:43", Go "/tmp/adamic-gate/TestMutants758278388/009/generated-8.ts:1:62"
+        Go context:
+        case 56
+        /tmp/adamic-gate/TestMutants758278388/009/generated-8.ts:1:19
+          no-template-curly-in-string  This ordinary string contains a template placeholder, so the placeholder is not a placeholder: it is four literal characters that will be sent, rendered, or stored exactly as written. The failure is silent, because the string is a perfectly valid string and nothing at runtime objects to it. Backticks are almost always what was meant.
+        
+        range 18 28 unexpectedTemplateExpression 			18 28
+        /tmp/adamic-gate/TestMutants758278388/009/generated-8.ts:1:62
+          no-div-regex  This regular expression begins with an equals sign, so its first two characters are the divide-assign operator spelled backwards, and a reader scanning the line has to work out which one it is. Writing the equals sign as a one-member character class matches exactly the same input and can only be read one way.
+        
+        range 61 68 unexpected fix	[=]		62 63
+        /tmp/adamic-gate/TestMutants758278388/009/generated-8.ts:1:94
+    lint_test.go:400: empty placeholder reported caught on native: case 56 line 1538: port "/tmp/adamic-gate/TestMutants758278388/009/generated-8.ts:1:43", Go "/tmp/adamic-gate/TestMutants758278388/009/generated-8.ts:1:62"
+        Go context:
+        case 56
+        /tmp/adamic-gate/TestMutants758278388/009/generated-8.ts:1:19
+          no-template-curly-in-string  This ordinary string contains a template placeholder, so the placeholder is not a placeholder: it is four literal characters that will be sent, rendered, or stored exactly as written. The failure is silent, because the string is a perfectly valid string and nothing at runtime objects to it. Backticks are almost always what was meant.
+        
+        range 18 28 unexpectedTemplateExpression 			18 28
+        /tmp/adamic-gate/TestMutants758278388/009/generated-8.ts:1:62
+          no-div-regex  This regular expression begins with an equals sign, so its first two characters are the divide-assign operator spelled backwards, and a reader scanning the line has to work out which one it is. Writing the equals sign as a one-member character class matches exactly the same input and can only be read one way.
+        
+        range 61 68 unexpected fix	[=]		62 63
+        /tmp/adamic-gate/TestMutants758278388/009/generated-8.ts:1:94
+=== RUN   TestMutants/overlap_winner_misreported
+    lint_test.go:400: overlap winner misreported caught on Node: case 63 line 1820: port "rejected no-unneeded-ternary 14 26 all overlaps another fix", Go "rejected no-unneeded-ternary 14 26 no-unneeded-ternary overlaps another fix"
+        Go context:
+        range 150 171 unnecessaryConditionalExpression fix	!((a as any))		150 171
+        /tmp/adamic-gate/TestMutants758278388/010/generated-9.ts:1:213
+          no-unneeded-ternary  This conditional returns a boolean literal on both branches, so the whole ternary is a long way of writing the condition itself. The branches carry no information the test does not already have, and a reader has to check both to learn that. Write the condition, negated if the branches are the other way round.
+        
+        range 212 225 unnecessaryConditionalExpression fix	!!(a!)		212 225
+        rejected no-unneeded-ternary 14 26 no-unneeded-ternary overlaps another fix
+        fixed	const nested=!((!!a)); const bool=a != b; const same=f()?true:true; const coerced=!!((a + b)); const assertion=!((a as any)); const fallback=a?a:b??c; const nonnull=!!(a!);
+        case 64
+        /tmp/adamic-gate/TestMutants758278388/010/generated-9.ts:1:14
+          no-unneeded-ternary  This conditional returns a boolean literal on both branches, so the whole ternary is a long way of writing the condition itself. The branches carry no information the test does not already have, and a reader has to check both to learn that. Write the condition, negated if the branches are the other way round.
+    lint_test.go:400: overlap winner misreported caught on native: case 63 line 1820: port "rejected no-unneeded-ternary 14 26 all overlaps another fix", Go "rejected no-unneeded-ternary 14 26 no-unneeded-ternary overlaps another fix"
+        Go context:
+        range 150 171 unnecessaryConditionalExpression fix	!((a as any))		150 171
+        /tmp/adamic-gate/TestMutants758278388/010/generated-9.ts:1:213
+          no-unneeded-ternary  This conditional returns a boolean literal on both branches, so the whole ternary is a long way of writing the condition itself. The branches carry no information the test does not already have, and a reader has to check both to learn that. Write the condition, negated if the branches are the other way round.
+        
+        range 212 225 unnecessaryConditionalExpression fix	!!(a!)		212 225
+        rejected no-unneeded-ternary 14 26 no-unneeded-ternary overlaps another fix
+        fixed	const nested=!((!!a)); const bool=a != b; const same=f()?true:true; const coerced=!!((a + b)); const assertion=!((a as any)); const fallback=a?a:b??c; const nonnull=!!(a!);
+        case 64
+        /tmp/adamic-gate/TestMutants758278388/010/generated-9.ts:1:14
+          no-unneeded-ternary  This conditional returns a boolean literal on both branches, so the whole ternary is a long way of writing the condition itself. The branches carry no information the test does not already have, and a reader has to check both to learn that. Write the condition, negated if the branches are the other way round.
+--- PASS: TestMutants (273.04s)
+    --- PASS: TestMutants/suggestion_applied_as_fix (15.50s)
+    --- PASS: TestMutants/empty_function_body_reported (15.24s)
+    --- PASS: TestMutants/duplicate_case_suppressed (15.46s)
+    --- PASS: TestMutants/control_statement_omitted (15.18s)
+    --- PASS: TestMutants/destructuring_hole_reported (16.20s)
+    --- PASS: TestMutants/nested_generator_owns_outer_yield (15.38s)
+    --- PASS: TestMutants/await_crosses_function_boundary (15.92s)
+    --- PASS: TestMutants/option_ignored (17.19s)
+    --- PASS: TestMutants/regex_fix_eats_extra_byte (18.16s)
+    --- PASS: TestMutants/boolean_inverse_changed (16.97s)
+    --- PASS: TestMutants/comment_self_directive_exemption_removed (15.76s)
+    --- PASS: TestMutants/bom_removes_two_marks (15.54s)
+    --- PASS: TestMutants/label_option_widened (16.26s)
+    --- PASS: TestMutants/directive_prefix_ignored (16.15s)
+    --- PASS: TestMutants/comma_chain_reports_inner (15.54s)
+    --- PASS: TestMutants/empty_placeholder_reported (14.81s)
+    --- PASS: TestMutants/overlap_winner_misreported (15.83s)
+=== RUN   TestCountGuardMutant
+=== PAUSE TestCountGuardMutant
+=== RUN   TestThroughput
+    lint_test.go:477: machine Linux 6d3a2813751b 6.18.44 #1 SMP Sat Sep 26 20:02:31 UTC 2026 x86_64 GNU/Linux; model name	: AMD EPYC 9V74 80-Core Processor; load before 1.09 1.13 0.84 3/195 125835
+    lint_test.go:500: round 1 Go 491.923479ms findings=8215
+    lint_test.go:500: round 1 native 3.324549867s findings=8215
+    lint_test.go:500: round 1 Node 1.518299416s findings=8215
+    lint_test.go:500: round 2 Go 507.956438ms findings=8215
+    lint_test.go:500: round 2 native 3.245653681s findings=8215
+    lint_test.go:500: round 2 Node 1.475472813s findings=8215
+    lint_test.go:500: round 3 Go 502.796228ms findings=8215
+    lint_test.go:500: round 3 native 3.506577978s findings=8215
+    lint_test.go:500: round 3 Node 1.585139181s findings=8215
+    lint_test.go:500: round 4 Go 535.933768ms findings=8215
+    lint_test.go:500: round 4 native 3.379967806s findings=8215
+    lint_test.go:500: round 4 Node 1.572695814s findings=8215
+    lint_test.go:500: round 5 Go 493.871001ms findings=8215
+    lint_test.go:500: round 5 native 3.280829952s findings=8215
+    lint_test.go:500: round 5 Node 1.448167945s findings=8215
+    lint_test.go:508: best of 5 Go: 0.491923s, 16699.75 findings/s (77 files, 8215 findings)
+    lint_test.go:508: best of 5 native: 3.245654s, 2531.08 findings/s (77 files, 8215 findings)
+    lint_test.go:508: best of 5 Node: 1.448168s, 5672.68 findings/s (77 files, 8215 findings)
+    lint_test.go:511: load after 1.06 1.12 0.85 2/194 125937
+--- PASS: TestThroughput (34.02s)
+=== CONT  TestOptionAndComparatorGaps
+=== RUN   TestOptionAndComparatorGaps/2_optional_index.ts
+=== CONT  TestCountGuardMutant
+=== NAME  TestOptionAndComparatorGaps/2_optional_index.ts
+    gaps_test.go:66: Node prints "1\n"; stage 0 refuses: /workspace/adamic/stage1/cohere/lint/gaps/2_optional_index.ts:3:16: stage 0 can't lower ?.[] on a value yet
+=== RUN   TestOptionAndComparatorGaps/3_numeric_or.ts
+    gaps_test.go:66: Node prints "2\n"; stage 0 refuses: /workspace/adamic/stage1/cohere/lint/gaps/3_numeric_or.ts:2:12: stage 0 can't lower a BinaryExpression with a number and a number yet
+--- PASS: TestOptionAndComparatorGaps (0.20s)
+    --- PASS: TestOptionAndComparatorGaps/2_optional_index.ts (0.11s)
+    --- PASS: TestOptionAndComparatorGaps/3_numeric_or.ts (0.09s)
+=== NAME  TestCountGuardMutant
+    lint_test.go:431: count check alone caught Node: mutant="3\n" Go="2\n"; ordinary output remains identical
+    lint_test.go:431: count check alone caught native: mutant="3\n" Go="2\n"; ordinary output remains identical
+--- PASS: TestCountGuardMutant (16.83s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	390.639s

@@ -1,0 +1,1133 @@
+{
+  "source_commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "normalized_changes": [
+    {
+      "declaration": "FunctionDeclaration:[\"ts\",\"parseConfigFileTextToJson\"]#0",
+      "before": "[\"FunctionDeclaration\",[\"Identifier\",\"parseConfigFileTextToJson\"],[\"Parameter\",[\"Identifier\",\"fileName\"],[\"StringKeyword\"]],[\"Parameter\",[\"Identifier\",\"jsonText\"],[\"StringKeyword\"]],[\"TypeLiteral\",[\"PropertySignature\",[\"Identifier\",\"config\"],[\"QuestionToken\"],[\"AnyKeyword\"]],[\"PropertySignature\",[\"Identifier\",\"error\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"Diagnostic\"]]]]]",
+      "after": "[\"FunctionDeclaration\",[\"Identifier\",\"parseConfigFileTextToJson\"],[\"Parameter\",[\"Identifier\",\"fileName\"],[\"StringKeyword\"]],[\"Parameter\",[\"Identifier\",\"jsonText\"],[\"StringKeyword\"]],[\"TypeLiteral\",[\"PropertySignature\",[\"Identifier\",\"config\"],[\"QuestionToken\"],[\"AnyKeyword\"]],[\"PropertySignature\",[\"Identifier\",\"error\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"Diagnostic\"]],[\"UndefinedKeyword\"]]]]]"
+    },
+    {
+      "declaration": "FunctionDeclaration:[\"ts\",\"readConfigFile\"]#0",
+      "before": "[\"FunctionDeclaration\",[\"Identifier\",\"readConfigFile\"],[\"Parameter\",[\"Identifier\",\"fileName\"],[\"StringKeyword\"]],[\"Parameter\",[\"Identifier\",\"readFile\"],[\"FunctionType\",[\"Parameter\",[\"Identifier\",\"path\"],[\"StringKeyword\"]],[\"UnionType\",[\"StringKeyword\"],[\"UndefinedKeyword\"]]]],[\"TypeLiteral\",[\"PropertySignature\",[\"Identifier\",\"config\"],[\"QuestionToken\"],[\"AnyKeyword\"]],[\"PropertySignature\",[\"Identifier\",\"error\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"Diagnostic\"]]]]]",
+      "after": "[\"FunctionDeclaration\",[\"Identifier\",\"readConfigFile\"],[\"Parameter\",[\"Identifier\",\"fileName\"],[\"StringKeyword\"]],[\"Parameter\",[\"Identifier\",\"readFile\"],[\"FunctionType\",[\"Parameter\",[\"Identifier\",\"path\"],[\"StringKeyword\"]],[\"UnionType\",[\"StringKeyword\"],[\"UndefinedKeyword\"]]]],[\"TypeLiteral\",[\"PropertySignature\",[\"Identifier\",\"config\"],[\"QuestionToken\"],[\"AnyKeyword\"]],[\"PropertySignature\",[\"Identifier\",\"error\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"Diagnostic\"]],[\"UndefinedKeyword\"]]]]]"
+    },
+    {
+      "declaration": "FunctionDeclaration:[\"ts\",\"setTextRange\"]#0",
+      "before": "[\"FunctionDeclaration\",[\"Identifier\",\"setTextRange\"],[\"TypeParameter\",[\"Identifier\",\"T\"],[\"TypeReference\",[\"Identifier\",\"TextRange\"]]],[\"Parameter\",[\"Identifier\",\"range\"],[\"TypeReference\",[\"Identifier\",\"T\"]]],[\"Parameter\",[\"Identifier\",\"location\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"TextRange\"]],[\"UndefinedKeyword\"]]],[\"TypeReference\",[\"Identifier\",\"T\"]]]",
+      "after": "[\"FunctionDeclaration\",[\"Identifier\",\"setTextRange\"],[\"TypeParameter\",[\"Identifier\",\"T\"],[\"TypeReference\",[\"Identifier\",\"TextRange\"]]],[\"Parameter\",[\"Identifier\",\"range\"],[\"TypeReference\",[\"Identifier\",\"T\"]]],[\"Parameter\",[\"Identifier\",\"location\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"Readonly\"],[\"TypeReference\",[\"Identifier\",\"TextRange\"]]],[\"UndefinedKeyword\"]]],[\"TypeReference\",[\"Identifier\",\"T\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"AmdDependency\",\"name\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"name\"],[\"QuestionToken\"],[\"StringKeyword\"]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"name\"],[\"QuestionToken\"],[\"UnionType\",[\"StringKeyword\"],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"ArrowFunction\",\"modifiers\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"modifiers\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"Modifier\"]]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"modifiers\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"Modifier\"]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"AutoAccessorPropertyDeclaration\",\"_autoAccessorBrand\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"_autoAccessorBrand\"],[\"AnyKeyword\"]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"_autoAccessorBrand\"],[\"UndefinedKeyword\"]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"BindingElement\",\"dotDotDotToken\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"dotDotDotToken\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"DotDotDotToken\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"dotDotDotToken\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"DotDotDotToken\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"BindingElement\",\"initializer\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"initializer\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"Expression\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"initializer\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"Expression\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"BindingElement\",\"propertyName\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"propertyName\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"PropertyName\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"propertyName\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"PropertyName\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"BreakStatement\",\"label\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"label\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"Identifier\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"label\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"Identifier\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"BuilderProgramHost\",\"createHash\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"createHash\"],[\"QuestionToken\"],[\"FunctionType\",[\"Parameter\",[\"Identifier\",\"data\"],[\"StringKeyword\"]],[\"StringKeyword\"]]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"createHash\"],[\"QuestionToken\"],[\"UnionType\",[\"FunctionType\",[\"Parameter\",[\"Identifier\",\"data\"],[\"StringKeyword\"]],[\"StringKeyword\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"CallChain\",\"_optionalChainBrand\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"_optionalChainBrand\"],[\"AnyKeyword\"]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"_optionalChainBrand\"],[\"UndefinedKeyword\"]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"CallExpression\",\"questionDotToken\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"questionDotToken\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"QuestionDotToken\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"questionDotToken\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"QuestionDotToken\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"CallExpression\",\"typeArguments\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"typeArguments\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"TypeNode\"]]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"typeArguments\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"TypeNode\"]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"CatchClause\",\"variableDeclaration\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"variableDeclaration\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"VariableDeclaration\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"variableDeclaration\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"VariableDeclaration\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"ClassDeclaration\",\"modifiers\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"modifiers\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"ModifierLike\"]]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"modifiers\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"ModifierLike\"]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"ClassDeclaration\",\"name\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"name\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"Identifier\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"name\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"Identifier\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"ClassElement\",\"_classElementBrand\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"_classElementBrand\"],[\"AnyKeyword\"]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"_classElementBrand\"],[\"UndefinedKeyword\"]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"ClassElement\",\"name\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"name\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"PropertyName\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"name\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"PropertyName\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"ClassExpression\",\"modifiers\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"modifiers\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"ModifierLike\"]]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"modifiers\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"ModifierLike\"]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"ClassLikeDeclarationBase\",\"heritageClauses\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"heritageClauses\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"HeritageClause\"]]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"heritageClauses\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"HeritageClause\"]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"ClassLikeDeclarationBase\",\"name\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"name\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"Identifier\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"name\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"Identifier\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"ClassLikeDeclarationBase\",\"typeParameters\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"typeParameters\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"TypeParameterDeclaration\"]]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"typeParameters\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"TypeParameterDeclaration\"]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"CommentRange\",\"hasTrailingNewLine\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"hasTrailingNewLine\"],[\"QuestionToken\"],[\"BooleanKeyword\"]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"hasTrailingNewLine\"],[\"QuestionToken\"],[\"UnionType\",[\"BooleanKeyword\"],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"CompilerHost\",\"jsDocParsingMode\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"jsDocParsingMode\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"JSDocParsingMode\"]]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"jsDocParsingMode\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"JSDocParsingMode\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"CompilerOptions\",\"module\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"module\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"ModuleKind\"]]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"module\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"ModuleKind\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"CompilerOptions\",\"target\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"target\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"ScriptTarget\"]]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"target\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"ScriptTarget\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"CompilerOptions\",\"traceResolution\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"traceResolution\"],[\"QuestionToken\"],[\"BooleanKeyword\"]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"traceResolution\"],[\"QuestionToken\"],[\"UnionType\",[\"BooleanKeyword\"],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"ConditionalRoot\",\"aliasSymbol\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"aliasSymbol\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"Symbol\"]]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"aliasSymbol\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"Symbol\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"ConditionalRoot\",\"aliasTypeArguments\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"aliasTypeArguments\"],[\"QuestionToken\"],[\"ArrayType\",[\"TypeReference\",[\"Identifier\",\"Type\"]]]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"aliasTypeArguments\"],[\"QuestionToken\"],[\"UnionType\",[\"ArrayType\",[\"TypeReference\",[\"Identifier\",\"Type\"]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"ConditionalRoot\",\"inferTypeParameters\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"inferTypeParameters\"],[\"QuestionToken\"],[\"ArrayType\",[\"TypeReference\",[\"Identifier\",\"TypeParameter\"]]]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"inferTypeParameters\"],[\"QuestionToken\"],[\"UnionType\",[\"ArrayType\",[\"TypeReference\",[\"Identifier\",\"TypeParameter\"]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"ConditionalRoot\",\"instantiations\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"instantiations\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"Map\"],[\"StringKeyword\"],[\"TypeReference\",[\"Identifier\",\"Type\"]]]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"instantiations\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"Map\"],[\"StringKeyword\"],[\"TypeReference\",[\"Identifier\",\"Type\"]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"ConditionalRoot\",\"outerTypeParameters\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"outerTypeParameters\"],[\"QuestionToken\"],[\"ArrayType\",[\"TypeReference\",[\"Identifier\",\"TypeParameter\"]]]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"outerTypeParameters\"],[\"QuestionToken\"],[\"UnionType\",[\"ArrayType\",[\"TypeReference\",[\"Identifier\",\"TypeParameter\"]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"ConstructorTypeNode\",\"modifiers\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"modifiers\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"Modifier\"]]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"modifiers\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"Modifier\"]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"ContinueStatement\",\"label\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"label\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"Identifier\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"label\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"Identifier\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"CreateProgramOptions\",\"configFileParsingDiagnostics\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"configFileParsingDiagnostics\"],[\"QuestionToken\"],[\"TypeOperator\",[\"ArrayType\",[\"TypeReference\",[\"Identifier\",\"Diagnostic\"]]]]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"configFileParsingDiagnostics\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeOperator\",[\"ArrayType\",[\"TypeReference\",[\"Identifier\",\"Diagnostic\"]]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"CreateProgramOptions\",\"host\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"host\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"CompilerHost\"]]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"host\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"CompilerHost\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"CreateProgramOptions\",\"oldProgram\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"oldProgram\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"Program\"]]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"oldProgram\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"Program\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"CreateProgramOptions\",\"projectReferences\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"projectReferences\"],[\"QuestionToken\"],[\"TypeOperator\",[\"ArrayType\",[\"TypeReference\",[\"Identifier\",\"ProjectReference\"]]]]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"projectReferences\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeOperator\",[\"ArrayType\",[\"TypeReference\",[\"Identifier\",\"ProjectReference\"]]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"CreateSourceFileOptions\",\"jsDocParsingMode\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"jsDocParsingMode\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"JSDocParsingMode\"]]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"jsDocParsingMode\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"JSDocParsingMode\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"Declaration\",\"_declarationBrand\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"_declarationBrand\"],[\"AnyKeyword\"]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"_declarationBrand\"],[\"UndefinedKeyword\"]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"DeclarationStatement\",\"name\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"name\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"Identifier\"]],[\"TypeReference\",[\"Identifier\",\"StringLiteral\"]],[\"TypeReference\",[\"Identifier\",\"NumericLiteral\"]]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"name\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"Identifier\"]],[\"TypeReference\",[\"Identifier\",\"StringLiteral\"]],[\"TypeReference\",[\"Identifier\",\"NumericLiteral\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"Diagnostic\",\"relatedInformation\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"relatedInformation\"],[\"QuestionToken\"],[\"ArrayType\",[\"TypeReference\",[\"Identifier\",\"DiagnosticRelatedInformation\"]]]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"relatedInformation\"],[\"QuestionToken\"],[\"UnionType\",[\"ArrayType\",[\"TypeReference\",[\"Identifier\",\"DiagnosticRelatedInformation\"]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"Diagnostic\",\"reportsDeprecated\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"reportsDeprecated\"],[\"QuestionToken\"],[\"TypeLiteral\"]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"reportsDeprecated\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeLiteral\"],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"Diagnostic\",\"reportsUnnecessary\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"reportsUnnecessary\"],[\"QuestionToken\"],[\"TypeLiteral\"]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"reportsUnnecessary\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeLiteral\"],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"Diagnostic\",\"source\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"source\"],[\"QuestionToken\"],[\"StringKeyword\"]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"source\"],[\"QuestionToken\"],[\"UnionType\",[\"StringKeyword\"],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"DiagnosticMessage\",\"reportsDeprecated\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"reportsDeprecated\"],[\"QuestionToken\"],[\"TypeLiteral\"]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"reportsDeprecated\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeLiteral\"],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"DiagnosticMessage\",\"reportsUnnecessary\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"reportsUnnecessary\"],[\"QuestionToken\"],[\"TypeLiteral\"]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"reportsUnnecessary\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeLiteral\"],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"DiagnosticMessageChain\",\"next\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"next\"],[\"QuestionToken\"],[\"ArrayType\",[\"TypeReference\",[\"Identifier\",\"DiagnosticMessageChain\"]]]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"next\"],[\"QuestionToken\"],[\"UnionType\",[\"ArrayType\",[\"TypeReference\",[\"Identifier\",\"DiagnosticMessageChain\"]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"ElementAccessChain\",\"_optionalChainBrand\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"_optionalChainBrand\"],[\"AnyKeyword\"]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"_optionalChainBrand\"],[\"UndefinedKeyword\"]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"ElementAccessExpression\",\"questionDotToken\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"questionDotToken\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"QuestionDotToken\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"questionDotToken\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"QuestionDotToken\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"EmitResult\",\"emittedFiles\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"emittedFiles\"],[\"QuestionToken\"],[\"ArrayType\",[\"StringKeyword\"]]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"emittedFiles\"],[\"QuestionToken\"],[\"UnionType\",[\"ArrayType\",[\"StringKeyword\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"EnumDeclaration\",\"modifiers\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"modifiers\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"ModifierLike\"]]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"modifiers\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"ModifierLike\"]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"EnumMember\",\"initializer\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"initializer\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"Expression\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"initializer\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"Expression\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"ExportAssignment\",\"isExportEquals\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"isExportEquals\"],[\"QuestionToken\"],[\"BooleanKeyword\"]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"isExportEquals\"],[\"QuestionToken\"],[\"UnionType\",[\"BooleanKeyword\"],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"ExportAssignment\",\"modifiers\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"modifiers\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"ModifierLike\"]]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"modifiers\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"ModifierLike\"]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"ExportDeclaration\",\"assertClause\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"assertClause\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"AssertClause\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"assertClause\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"AssertClause\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"ExportDeclaration\",\"attributes\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"attributes\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"ImportAttributes\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"attributes\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"ImportAttributes\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"ExportDeclaration\",\"exportClause\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"exportClause\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"NamedExportBindings\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"exportClause\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"NamedExportBindings\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"ExportDeclaration\",\"modifiers\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"modifiers\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"ModifierLike\"]]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"modifiers\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"ModifierLike\"]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"ExportDeclaration\",\"moduleSpecifier\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"moduleSpecifier\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"Expression\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"moduleSpecifier\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"Expression\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"ExportSpecifier\",\"propertyName\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"propertyName\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"ModuleExportName\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"propertyName\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"ModuleExportName\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"Expression\",\"_expressionBrand\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"_expressionBrand\"],[\"AnyKeyword\"]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"_expressionBrand\"],[\"UndefinedKeyword\"]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"FlowContainer\",\"_flowContainerBrand\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"_flowContainerBrand\"],[\"AnyKeyword\"]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"_flowContainerBrand\"],[\"UndefinedKeyword\"]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"ForOfStatement\",\"awaitModifier\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"awaitModifier\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"AwaitKeyword\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"awaitModifier\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"AwaitKeyword\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"ForStatement\",\"condition\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"condition\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"Expression\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"condition\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"Expression\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"ForStatement\",\"incrementor\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"incrementor\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"Expression\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"incrementor\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"Expression\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"ForStatement\",\"initializer\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"initializer\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"ForInitializer\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"initializer\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"ForInitializer\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"FunctionDeclaration\",\"body\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"body\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"FunctionBody\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"body\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"FunctionBody\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"FunctionDeclaration\",\"modifiers\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"modifiers\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"ModifierLike\"]]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"modifiers\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"ModifierLike\"]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"FunctionDeclaration\",\"name\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"name\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"Identifier\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"name\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"Identifier\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"FunctionExpression\",\"modifiers\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"modifiers\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"Modifier\"]]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"modifiers\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"Modifier\"]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"FunctionExpression\",\"name\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"name\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"Identifier\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"name\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"Identifier\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"FunctionLikeDeclarationBase\",\"_functionLikeDeclarationBrand\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"_functionLikeDeclarationBrand\"],[\"AnyKeyword\"]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"_functionLikeDeclarationBrand\"],[\"UndefinedKeyword\"]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"GetAccessorDeclaration\",\"body\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"body\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"FunctionBody\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"body\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"FunctionBody\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"GetAccessorDeclaration\",\"modifiers\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"modifiers\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"ModifierLike\"]]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"modifiers\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"ModifierLike\"]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"IfStatement\",\"elseStatement\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"elseStatement\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"Statement\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"elseStatement\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"Statement\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"ImportAttributes\",\"multiLine\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"multiLine\"],[\"QuestionToken\"],[\"BooleanKeyword\"]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"multiLine\"],[\"QuestionToken\"],[\"UnionType\",[\"BooleanKeyword\"],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"ImportClause\",\"name\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"name\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"Identifier\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"name\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"Identifier\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"ImportClause\",\"namedBindings\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"namedBindings\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"NamedImportBindings\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"namedBindings\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"NamedImportBindings\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"ImportDeclaration\",\"assertClause\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"assertClause\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"AssertClause\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"assertClause\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"AssertClause\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"ImportDeclaration\",\"attributes\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"attributes\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"ImportAttributes\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"attributes\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"ImportAttributes\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"ImportDeclaration\",\"importClause\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"importClause\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"ImportClause\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"importClause\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"ImportClause\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"ImportDeclaration\",\"modifiers\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"modifiers\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"ModifierLike\"]]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"modifiers\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"ModifierLike\"]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"ImportEqualsDeclaration\",\"modifiers\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"modifiers\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"ModifierLike\"]]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"modifiers\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"ModifierLike\"]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"ImportSpecifier\",\"propertyName\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"propertyName\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"ModuleExportName\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"propertyName\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"ModuleExportName\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"ImportTypeAssertionContainer\",\"multiLine\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"multiLine\"],[\"QuestionToken\"],[\"BooleanKeyword\"]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"multiLine\"],[\"QuestionToken\"],[\"UnionType\",[\"BooleanKeyword\"],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"ImportTypeNode\",\"attributes\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"attributes\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"ImportAttributes\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"attributes\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"ImportAttributes\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"ImportTypeNode\",\"qualifier\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"qualifier\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"EntityName\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"qualifier\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"EntityName\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"IncrementalProgramOptions\",\"projectReferences\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"projectReferences\"],[\"QuestionToken\"],[\"TypeOperator\",[\"ArrayType\",[\"TypeReference\",[\"Identifier\",\"ProjectReference\"]]]]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"projectReferences\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeOperator\",[\"ArrayType\",[\"TypeReference\",[\"Identifier\",\"ProjectReference\"]]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"IndexInfo\",\"components\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"components\"],[\"QuestionToken\"],[\"ArrayType\",[\"TypeReference\",[\"Identifier\",\"ElementWithComputedPropertyName\"]]]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"components\"],[\"QuestionToken\"],[\"UnionType\",[\"ArrayType\",[\"TypeReference\",[\"Identifier\",\"ElementWithComputedPropertyName\"]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"IndexInfo\",\"declaration\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"declaration\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"IndexSignatureDeclaration\"]]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"declaration\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"IndexSignatureDeclaration\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"IndexSignatureDeclaration\",\"modifiers\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"modifiers\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"ModifierLike\"]]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"modifiers\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"ModifierLike\"]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"InterfaceDeclaration\",\"heritageClauses\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"heritageClauses\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"HeritageClause\"]]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"heritageClauses\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"HeritageClause\"]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"InterfaceDeclaration\",\"modifiers\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"modifiers\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"ModifierLike\"]]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"modifiers\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"ModifierLike\"]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"InterfaceDeclaration\",\"typeParameters\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"typeParameters\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"TypeParameterDeclaration\"]]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"typeParameters\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"TypeParameterDeclaration\"]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"JSDoc\",\"comment\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"comment\"],[\"QuestionToken\"],[\"UnionType\",[\"StringKeyword\"],[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"JSDocComment\"]]]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"comment\"],[\"QuestionToken\"],[\"UnionType\",[\"StringKeyword\"],[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"JSDocComment\"]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"JSDoc\",\"tags\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"tags\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"JSDocTag\"]]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"tags\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"JSDocTag\"]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"JSDocCallbackTag\",\"fullName\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"fullName\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"JSDocNamespaceDeclaration\"]],[\"TypeReference\",[\"Identifier\",\"Identifier\"]]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"fullName\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"JSDocNamespaceDeclaration\"]],[\"TypeReference\",[\"Identifier\",\"Identifier\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"JSDocCallbackTag\",\"name\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"name\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"Identifier\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"name\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"Identifier\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"JSDocContainer\",\"_jsdocContainerBrand\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"_jsdocContainerBrand\"],[\"AnyKeyword\"]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"_jsdocContainerBrand\"],[\"UndefinedKeyword\"]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"JSDocImportTag\",\"attributes\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"attributes\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"ImportAttributes\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"attributes\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"ImportAttributes\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"JSDocImportTag\",\"importClause\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"importClause\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"ImportClause\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"importClause\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"ImportClause\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"JSDocLink\",\"name\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"name\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"EntityName\"]],[\"TypeReference\",[\"Identifier\",\"JSDocMemberName\"]]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"name\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"EntityName\"]],[\"TypeReference\",[\"Identifier\",\"JSDocMemberName\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"JSDocLinkCode\",\"name\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"name\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"EntityName\"]],[\"TypeReference\",[\"Identifier\",\"JSDocMemberName\"]]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"name\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"EntityName\"]],[\"TypeReference\",[\"Identifier\",\"JSDocMemberName\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"JSDocLinkPlain\",\"name\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"name\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"EntityName\"]],[\"TypeReference\",[\"Identifier\",\"JSDocMemberName\"]]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"name\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"EntityName\"]],[\"TypeReference\",[\"Identifier\",\"JSDocMemberName\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"JSDocPropertyLikeTag\",\"typeExpression\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"typeExpression\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"JSDocTypeExpression\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"typeExpression\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"JSDocTypeExpression\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"JSDocSeeTag\",\"name\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"name\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"JSDocNameReference\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"name\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"JSDocNameReference\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"JSDocSignature\",\"typeParameters\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"typeParameters\"],[\"QuestionToken\"],[\"TypeOperator\",[\"ArrayType\",[\"TypeReference\",[\"Identifier\",\"JSDocTemplateTag\"]]]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"typeParameters\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeOperator\",[\"ArrayType\",[\"TypeReference\",[\"Identifier\",\"JSDocTemplateTag\"]]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"JSDocTag\",\"comment\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"comment\"],[\"QuestionToken\"],[\"UnionType\",[\"StringKeyword\"],[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"JSDocComment\"]]]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"comment\"],[\"QuestionToken\"],[\"UnionType\",[\"StringKeyword\"],[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"JSDocComment\"]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"JSDocType\",\"_jsDocTypeBrand\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"_jsDocTypeBrand\"],[\"AnyKeyword\"]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"_jsDocTypeBrand\"],[\"UndefinedKeyword\"]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"JSDocTypedefTag\",\"fullName\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"fullName\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"JSDocNamespaceDeclaration\"]],[\"TypeReference\",[\"Identifier\",\"Identifier\"]]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"fullName\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"JSDocNamespaceDeclaration\"]],[\"TypeReference\",[\"Identifier\",\"Identifier\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"JSDocTypedefTag\",\"name\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"name\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"Identifier\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"name\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"Identifier\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"JSDocTypedefTag\",\"typeExpression\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"typeExpression\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"JSDocTypeExpression\"]],[\"TypeReference\",[\"Identifier\",\"JSDocTypeLiteral\"]]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"typeExpression\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"JSDocTypeExpression\"]],[\"TypeReference\",[\"Identifier\",\"JSDocTypeLiteral\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"JSDocTypeLiteral\",\"jsDocPropertyTags\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"jsDocPropertyTags\"],[\"QuestionToken\"],[\"TypeOperator\",[\"ArrayType\",[\"TypeReference\",[\"Identifier\",\"JSDocPropertyLikeTag\"]]]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"jsDocPropertyTags\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeOperator\",[\"ArrayType\",[\"TypeReference\",[\"Identifier\",\"JSDocPropertyLikeTag\"]]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"JsonSourceFile\",\"extendedSourceFiles\"]#0",
+      "before": null,
+      "after": "[\"PropertySignature\",[\"Identifier\",\"extendedSourceFiles\"],[\"QuestionToken\"],[\"ArrayType\",[\"StringKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"JsxAttribute\",\"initializer\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"initializer\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"JsxAttributeValue\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"initializer\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"JsxAttributeValue\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"JsxExpression\",\"dotDotDotToken\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"dotDotDotToken\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"Token\"],[\"TypeReference\",[\"FirstNode\",[\"Identifier\",\"SyntaxKind\"],[\"Identifier\",\"DotDotDotToken\"]]]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"dotDotDotToken\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"Token\"],[\"TypeReference\",[\"FirstNode\",[\"Identifier\",\"SyntaxKind\"],[\"Identifier\",\"DotDotDotToken\"]]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"JsxExpression\",\"expression\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"expression\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"Expression\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"expression\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"Expression\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"JsxOpeningElement\",\"typeArguments\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"typeArguments\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"TypeNode\"]]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"typeArguments\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"TypeNode\"]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"JsxSelfClosingElement\",\"typeArguments\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"typeArguments\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"TypeNode\"]]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"typeArguments\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"TypeNode\"]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"LeftHandSideExpression\",\"_leftHandSideExpressionBrand\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"_leftHandSideExpressionBrand\"],[\"AnyKeyword\"]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"_leftHandSideExpressionBrand\"],[\"UndefinedKeyword\"]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"LiteralExpression\",\"_literalExpressionBrand\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"_literalExpressionBrand\"],[\"AnyKeyword\"]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"_literalExpressionBrand\"],[\"UndefinedKeyword\"]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"LiteralLikeNode\",\"hasExtendedUnicodeEscape\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"hasExtendedUnicodeEscape\"],[\"QuestionToken\"],[\"BooleanKeyword\"]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"hasExtendedUnicodeEscape\"],[\"QuestionToken\"],[\"UnionType\",[\"BooleanKeyword\"],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"LocalsContainer\",\"_localsContainerBrand\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"_localsContainerBrand\"],[\"AnyKeyword\"]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"_localsContainerBrand\"],[\"UndefinedKeyword\"]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"MappedTypeNode\",\"members\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"members\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"TypeElement\"]]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"members\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"TypeElement\"]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"MappedTypeNode\",\"nameType\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"nameType\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"TypeNode\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"nameType\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"TypeNode\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"MappedTypeNode\",\"questionToken\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"questionToken\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"QuestionToken\"]],[\"TypeReference\",[\"Identifier\",\"PlusToken\"]],[\"TypeReference\",[\"Identifier\",\"MinusToken\"]]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"questionToken\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"QuestionToken\"]],[\"TypeReference\",[\"Identifier\",\"PlusToken\"]],[\"TypeReference\",[\"Identifier\",\"MinusToken\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"MappedTypeNode\",\"readonlyToken\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"readonlyToken\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"ReadonlyKeyword\"]],[\"TypeReference\",[\"Identifier\",\"PlusToken\"]],[\"TypeReference\",[\"Identifier\",\"MinusToken\"]]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"readonlyToken\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"ReadonlyKeyword\"]],[\"TypeReference\",[\"Identifier\",\"PlusToken\"]],[\"TypeReference\",[\"Identifier\",\"MinusToken\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"MappedTypeNode\",\"type\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"type\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"TypeNode\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"type\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"TypeNode\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"MemberExpression\",\"_memberExpressionBrand\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"_memberExpressionBrand\"],[\"AnyKeyword\"]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"_memberExpressionBrand\"],[\"UndefinedKeyword\"]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"MethodSignature\",\"modifiers\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"modifiers\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"Modifier\"]]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"modifiers\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"Modifier\"]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"ModuleDeclaration\",\"body\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"body\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"ModuleBody\"]],[\"TypeReference\",[\"Identifier\",\"JSDocNamespaceDeclaration\"]]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"body\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"ModuleBody\"]],[\"TypeReference\",[\"Identifier\",\"JSDocNamespaceDeclaration\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"ModuleDeclaration\",\"modifiers\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"modifiers\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"ModifierLike\"]]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"modifiers\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"ModifierLike\"]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"NamedDeclaration\",\"name\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"name\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"DeclarationName\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"name\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"DeclarationName\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"NamedTupleMember\",\"dotDotDotToken\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"dotDotDotToken\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"Token\"],[\"TypeReference\",[\"FirstNode\",[\"Identifier\",\"SyntaxKind\"],[\"Identifier\",\"DotDotDotToken\"]]]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"dotDotDotToken\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"Token\"],[\"TypeReference\",[\"FirstNode\",[\"Identifier\",\"SyntaxKind\"],[\"Identifier\",\"DotDotDotToken\"]]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"NamedTupleMember\",\"questionToken\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"questionToken\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"Token\"],[\"TypeReference\",[\"FirstNode\",[\"Identifier\",\"SyntaxKind\"],[\"Identifier\",\"QuestionToken\"]]]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"questionToken\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"Token\"],[\"TypeReference\",[\"FirstNode\",[\"Identifier\",\"SyntaxKind\"],[\"Identifier\",\"QuestionToken\"]]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"NewExpression\",\"arguments\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"arguments\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"Expression\"]]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"arguments\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"Expression\"]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"NewExpression\",\"typeArguments\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"typeArguments\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"TypeNode\"]]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"typeArguments\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"TypeNode\"]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"NodeWithTypeArguments\",\"typeArguments\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"typeArguments\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"TypeNode\"]]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"typeArguments\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"TypeNode\"]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"NonNullChain\",\"_optionalChainBrand\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"_optionalChainBrand\"],[\"AnyKeyword\"]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"_optionalChainBrand\"],[\"UndefinedKeyword\"]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"ObjectLiteralElement\",\"_objectLiteralBrand\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"_objectLiteralBrand\"],[\"AnyKeyword\"]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"_objectLiteralBrand\"],[\"UndefinedKeyword\"]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"ObjectLiteralElement\",\"name\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"name\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"PropertyName\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"name\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"PropertyName\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"ParameterDeclaration\",\"dotDotDotToken\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"dotDotDotToken\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"DotDotDotToken\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"dotDotDotToken\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"DotDotDotToken\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"ParameterDeclaration\",\"initializer\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"initializer\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"Expression\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"initializer\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"Expression\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"ParameterDeclaration\",\"modifiers\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"modifiers\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"ModifierLike\"]]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"modifiers\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"ModifierLike\"]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"ParameterDeclaration\",\"questionToken\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"questionToken\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"QuestionToken\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"questionToken\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"QuestionToken\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"ParameterDeclaration\",\"type\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"type\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"TypeNode\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"type\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"TypeNode\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"ParsedCommandLine\",\"projectReferences\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"projectReferences\"],[\"QuestionToken\"],[\"TypeOperator\",[\"ArrayType\",[\"TypeReference\",[\"Identifier\",\"ProjectReference\"]]]]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"projectReferences\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeOperator\",[\"ArrayType\",[\"TypeReference\",[\"Identifier\",\"ProjectReference\"]]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"ParsedCommandLine\",\"watchOptions\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"watchOptions\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"WatchOptions\"]]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"watchOptions\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"WatchOptions\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"ParsedTsconfig\",\"extendedConfigPath\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"extendedConfigPath\"],[\"QuestionToken\"],[\"UnionType\",[\"StringKeyword\"],[\"ArrayType\",[\"StringKeyword\"]]]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"extendedConfigPath\"],[\"QuestionToken\"],[\"UnionType\",[\"StringKeyword\"],[\"ArrayType\",[\"StringKeyword\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"ParsedTsconfig\",\"watchOptions\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"watchOptions\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"WatchOptions\"]]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"watchOptions\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"WatchOptions\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"PrimaryExpression\",\"_primaryExpressionBrand\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"_primaryExpressionBrand\"],[\"AnyKeyword\"]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"_primaryExpressionBrand\"],[\"UndefinedKeyword\"]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"PrinterOptions\",\"newLine\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"newLine\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"NewLineKind\"]]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"newLine\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"NewLineKind\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"PrinterOptions\",\"noEmitHelpers\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"noEmitHelpers\"],[\"QuestionToken\"],[\"BooleanKeyword\"]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"noEmitHelpers\"],[\"QuestionToken\"],[\"UnionType\",[\"BooleanKeyword\"],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"PrinterOptions\",\"removeComments\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"removeComments\"],[\"QuestionToken\"],[\"BooleanKeyword\"]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"removeComments\"],[\"QuestionToken\"],[\"UnionType\",[\"BooleanKeyword\"],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"ProjectReference\",\"circular\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"circular\"],[\"QuestionToken\"],[\"BooleanKeyword\"]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"circular\"],[\"QuestionToken\"],[\"UnionType\",[\"BooleanKeyword\"],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"ProjectReference\",\"prepend\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"prepend\"],[\"QuestionToken\"],[\"BooleanKeyword\"]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"prepend\"],[\"QuestionToken\"],[\"UnionType\",[\"BooleanKeyword\"],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"PropertyAccessChain\",\"_optionalChainBrand\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"_optionalChainBrand\"],[\"AnyKeyword\"]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"_optionalChainBrand\"],[\"UndefinedKeyword\"]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"PropertyAccessEntityNameExpression\",\"_propertyAccessExpressionLikeQualifiedNameBrand\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"_propertyAccessExpressionLikeQualifiedNameBrand\"],[\"QuestionToken\"],[\"AnyKeyword\"]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"_propertyAccessExpressionLikeQualifiedNameBrand\"],[\"QuestionToken\"],[\"UndefinedKeyword\"]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"PropertyAccessExpression\",\"questionDotToken\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"questionDotToken\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"QuestionDotToken\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"questionDotToken\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"QuestionDotToken\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"PropertyDeclaration\",\"exclamationToken\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"exclamationToken\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"ExclamationToken\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"exclamationToken\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"ExclamationToken\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"PropertyDeclaration\",\"initializer\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"initializer\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"Expression\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"initializer\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"Expression\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"PropertyDeclaration\",\"modifiers\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"modifiers\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"ModifierLike\"]]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"modifiers\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"ModifierLike\"]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"PropertyDeclaration\",\"questionToken\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"questionToken\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"QuestionToken\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"questionToken\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"QuestionToken\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"PropertyDeclaration\",\"type\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"type\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"TypeNode\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"type\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"TypeNode\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"PropertySignature\",\"modifiers\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"modifiers\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"Modifier\"]]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"modifiers\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"Modifier\"]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"PropertySignature\",\"questionToken\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"questionToken\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"QuestionToken\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"questionToken\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"QuestionToken\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"PropertySignature\",\"type\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"type\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"TypeNode\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"type\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"TypeNode\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"ReturnStatement\",\"expression\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"expression\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"Expression\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"expression\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"Expression\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"SetAccessorDeclaration\",\"body\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"body\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"FunctionBody\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"body\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"FunctionBody\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"SetAccessorDeclaration\",\"modifiers\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"modifiers\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"ModifierLike\"]]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"modifiers\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"ModifierLike\"]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"ShorthandPropertyAssignment\",\"equalsToken\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"equalsToken\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"EqualsToken\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"equalsToken\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"EqualsToken\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"ShorthandPropertyAssignment\",\"objectAssignmentInitializer\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"objectAssignmentInitializer\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"Expression\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"objectAssignmentInitializer\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"Expression\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"Signature\",\"declaration\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"declaration\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"SignatureDeclaration\"]],[\"TypeReference\",[\"Identifier\",\"JSDocSignature\"]]]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"declaration\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"SignatureDeclaration\"]],[\"TypeReference\",[\"Identifier\",\"JSDocSignature\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"Signature\",\"thisParameter\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"thisParameter\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"Symbol\"]]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"thisParameter\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"Symbol\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"Signature\",\"typeParameters\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"typeParameters\"],[\"QuestionToken\"],[\"TypeOperator\",[\"ArrayType\",[\"TypeReference\",[\"Identifier\",\"TypeParameter\"]]]]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"typeParameters\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeOperator\",[\"ArrayType\",[\"TypeReference\",[\"Identifier\",\"TypeParameter\"]]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"SignatureDeclarationBase\",\"name\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"name\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"PropertyName\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"name\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"PropertyName\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"SolutionBuilderHost\",\"reportErrorSummary\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"reportErrorSummary\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"ReportEmitErrorSummary\"]]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"reportErrorSummary\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"ReportEmitErrorSummary\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"SortedArray\",\" __sortedArrayBrand\"]#0",
+      "before": "[\"PropertySignature\",[\"StringLiteral\",\" __sortedArrayBrand\"],[\"AnyKeyword\"]]",
+      "after": "[\"PropertySignature\",[\"StringLiteral\",\" __sortedArrayBrand\"],[\"UndefinedKeyword\"]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"SortedReadonlyArray\",\" __sortedArrayBrand\"]#0",
+      "before": "[\"PropertySignature\",[\"StringLiteral\",\" __sortedArrayBrand\"],[\"AnyKeyword\"]]",
+      "after": "[\"PropertySignature\",[\"StringLiteral\",\" __sortedArrayBrand\"],[\"UndefinedKeyword\"]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"Statement\",\"_statementBrand\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"_statementBrand\"],[\"AnyKeyword\"]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"_statementBrand\"],[\"UndefinedKeyword\"]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"Symbol\",\"declarations\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"declarations\"],[\"QuestionToken\"],[\"ArrayType\",[\"TypeReference\",[\"Identifier\",\"Declaration\"]]]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"declarations\"],[\"QuestionToken\"],[\"UnionType\",[\"ArrayType\",[\"TypeReference\",[\"Identifier\",\"Declaration\"]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"Symbol\",\"exports\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"exports\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"SymbolTable\"]]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"exports\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"SymbolTable\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"Symbol\",\"members\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"members\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"SymbolTable\"]]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"members\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"SymbolTable\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"Symbol\",\"valueDeclaration\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"valueDeclaration\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"Declaration\"]]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"valueDeclaration\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"Declaration\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"SyntheticExpression\",\"tupleNameSource\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"tupleNameSource\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"ParameterDeclaration\"]],[\"TypeReference\",[\"Identifier\",\"NamedTupleMember\"]]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"tupleNameSource\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"ParameterDeclaration\"]],[\"TypeReference\",[\"Identifier\",\"NamedTupleMember\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"TaggedTemplateExpression\",\"typeArguments\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"typeArguments\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"TypeNode\"]]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"typeArguments\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"TypeNode\"]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"TemplateLiteralLikeNode\",\"rawText\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"rawText\"],[\"QuestionToken\"],[\"StringKeyword\"]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"rawText\"],[\"QuestionToken\"],[\"UnionType\",[\"StringKeyword\"],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"TryStatement\",\"catchClause\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"catchClause\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"CatchClause\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"catchClause\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"CatchClause\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"TryStatement\",\"finallyBlock\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"finallyBlock\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"Block\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"finallyBlock\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"Block\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"Type\",\"aliasSymbol\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"aliasSymbol\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"Symbol\"]]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"aliasSymbol\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"Symbol\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"Type\",\"aliasTypeArguments\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"aliasTypeArguments\"],[\"QuestionToken\"],[\"TypeOperator\",[\"ArrayType\",[\"TypeReference\",[\"Identifier\",\"Type\"]]]]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"aliasTypeArguments\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeOperator\",[\"ArrayType\",[\"TypeReference\",[\"Identifier\",\"Type\"]]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"TypeAliasDeclaration\",\"modifiers\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"modifiers\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"ModifierLike\"]]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"modifiers\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"ModifierLike\"]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"TypeAliasDeclaration\",\"typeParameters\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"typeParameters\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"TypeParameterDeclaration\"]]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"typeParameters\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"TypeParameterDeclaration\"]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"TypeElement\",\"_typeElementBrand\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"_typeElementBrand\"],[\"AnyKeyword\"]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"_typeElementBrand\"],[\"UndefinedKeyword\"]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"TypeElement\",\"name\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"name\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"PropertyName\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"name\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"PropertyName\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"TypeNode\",\"_typeNodeBrand\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"_typeNodeBrand\"],[\"AnyKeyword\"]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"_typeNodeBrand\"],[\"UndefinedKeyword\"]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"TypeParameterDeclaration\",\"constraint\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"constraint\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"TypeNode\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"constraint\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"TypeNode\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"TypeParameterDeclaration\",\"default\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"default\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"TypeNode\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"default\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"TypeNode\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"TypeParameterDeclaration\",\"expression\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"expression\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"Expression\"]]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"expression\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"Expression\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"TypeParameterDeclaration\",\"modifiers\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"modifiers\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"Modifier\"]]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"modifiers\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"Modifier\"]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"TypePredicateNode\",\"assertsModifier\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"assertsModifier\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"AssertsKeyword\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"assertsModifier\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"AssertsKeyword\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"TypePredicateNode\",\"type\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"type\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"TypeNode\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"type\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"TypeNode\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"UnaryExpression\",\"_unaryExpressionBrand\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"_unaryExpressionBrand\"],[\"AnyKeyword\"]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"_unaryExpressionBrand\"],[\"UndefinedKeyword\"]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"UpdateExpression\",\"_updateExpressionBrand\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"_updateExpressionBrand\"],[\"AnyKeyword\"]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"_updateExpressionBrand\"],[\"UndefinedKeyword\"]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"UserPreferences\",\"importModuleSpecifierEnding\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"importModuleSpecifierEnding\"],[\"QuestionToken\"],[\"UnionType\",[\"LiteralType\",[\"StringLiteral\",\"auto\"]],[\"LiteralType\",[\"StringLiteral\",\"minimal\"]],[\"LiteralType\",[\"StringLiteral\",\"index\"]],[\"LiteralType\",[\"StringLiteral\",\"js\"]]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"importModuleSpecifierEnding\"],[\"QuestionToken\"],[\"UnionType\",[\"LiteralType\",[\"StringLiteral\",\"auto\"]],[\"LiteralType\",[\"StringLiteral\",\"minimal\"]],[\"LiteralType\",[\"StringLiteral\",\"index\"]],[\"LiteralType\",[\"StringLiteral\",\"js\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"VariableDeclaration\",\"exclamationToken\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"exclamationToken\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"ExclamationToken\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"exclamationToken\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"ExclamationToken\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"VariableDeclaration\",\"initializer\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"initializer\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"Expression\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"initializer\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"Expression\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"VariableDeclaration\",\"type\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"type\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"TypeNode\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"type\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"TypeNode\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"VariableStatement\",\"modifiers\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"modifiers\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"ModifierLike\"]]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"modifiers\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"ModifierLike\"]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"WatchCompilerHostOfConfigFile\",\"extraFileExtensions\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"extraFileExtensions\"],[\"QuestionToken\"],[\"TypeOperator\",[\"ArrayType\",[\"TypeReference\",[\"Identifier\",\"FileExtensionInfo\"]]]]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"extraFileExtensions\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeOperator\",[\"ArrayType\",[\"TypeReference\",[\"Identifier\",\"FileExtensionInfo\"]]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"WatchCompilerHostOfConfigFile\",\"optionsToExtend\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"optionsToExtend\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"CompilerOptions\"]]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"optionsToExtend\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"CompilerOptions\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"WatchCompilerHostOfConfigFile\",\"watchOptionsToExtend\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"watchOptionsToExtend\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"WatchOptions\"]]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"watchOptionsToExtend\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"WatchOptions\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"WatchCompilerHostOfFilesAndCompilerOptions\",\"projectReferences\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"projectReferences\"],[\"QuestionToken\"],[\"TypeOperator\",[\"ArrayType\",[\"TypeReference\",[\"Identifier\",\"ProjectReference\"]]]]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"projectReferences\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeOperator\",[\"ArrayType\",[\"TypeReference\",[\"Identifier\",\"ProjectReference\"]]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"WatchCompilerHostOfFilesAndCompilerOptions\",\"watchOptions\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"watchOptions\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"WatchOptions\"]]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"watchOptions\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"WatchOptions\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"WatchHost\",\"preferNonRecursiveWatch\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"preferNonRecursiveWatch\"],[\"QuestionToken\"],[\"BooleanKeyword\"]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"preferNonRecursiveWatch\"],[\"QuestionToken\"],[\"UnionType\",[\"BooleanKeyword\"],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"WatchOptions\",\"fallbackPolling\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"fallbackPolling\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"PollingWatchKind\"]]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"fallbackPolling\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"PollingWatchKind\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"YieldExpression\",\"asteriskToken\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"asteriskToken\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"AsteriskToken\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"asteriskToken\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"AsteriskToken\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"YieldExpression\",\"expression\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"expression\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"Expression\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"expression\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"Expression\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "TypeAliasDeclaration:[\"ts\",\"ErrorCallback\"]#0",
+      "before": "[\"TypeAliasDeclaration\",[\"Identifier\",\"ErrorCallback\"],[\"FunctionType\",[\"Parameter\",[\"Identifier\",\"message\"],[\"TypeReference\",[\"Identifier\",\"DiagnosticMessage\"]]],[\"Parameter\",[\"Identifier\",\"length\"],[\"NumberKeyword\"]],[\"Parameter\",[\"Identifier\",\"arg0\"],[\"QuestionToken\"],[\"AnyKeyword\"]],[\"VoidKeyword\"]]]",
+      "after": "[\"TypeAliasDeclaration\",[\"Identifier\",\"ErrorCallback\"],[\"FunctionType\",[\"Parameter\",[\"Identifier\",\"message\"],[\"TypeReference\",[\"Identifier\",\"DiagnosticMessage\"]]],[\"Parameter\",[\"Identifier\",\"length\"],[\"NumberKeyword\"]],[\"Parameter\",[\"Identifier\",\"arg0\"],[\"QuestionToken\"],[\"UnionType\",[\"StringKeyword\"],[\"NumberKeyword\"]]],[\"VoidKeyword\"]]]"
+    },
+    {
+      "declaration": "TypeAliasDeclaration:[\"ts\",\"Path\"]#0",
+      "before": "[\"TypeAliasDeclaration\",[\"Identifier\",\"Path\"],[\"IntersectionType\",[\"StringKeyword\"],[\"TypeLiteral\",[\"PropertySignature\",[\"Identifier\",\"__pathBrand\"],[\"AnyKeyword\"]]]]]",
+      "after": "[\"TypeAliasDeclaration\",[\"Identifier\",\"Path\"],[\"IntersectionType\",[\"StringKeyword\"],[\"TypeLiteral\",[\"PropertySignature\",[\"Identifier\",\"__pathBrand\"],[\"UndefinedKeyword\"]]]]]"
+    }
+  ],
+  "additional_sanctions": {
+    "adaptation": 32,
+    "owners": [
+      [
+        "AmdDependency",
+        "name"
+      ],
+      [
+        "CommentRange",
+        "hasTrailingNewLine"
+      ],
+      [
+        "BuilderProgramHost",
+        "createHash"
+      ]
+    ],
+    "proof": "Original property form retained; truthful undefined unions sanctioned per owner; exact full API reconstruction in public-api.cjs"
+  }
+}

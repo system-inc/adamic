@@ -1,0 +1,28 @@
+{
+    "rule": "eqeqeq",
+    "firing": {
+        "file": "/repository/source/Eqeqeq.ts",
+        "source": "2 == 3",
+        "findings": [
+            {
+                "line": 1,
+                "column": 3,
+                "endLine": 1,
+                "endColumn": 5,
+                "messageId": "unexpected",
+                "message": "This compares with `==`, which coerces its operands to a common type before comparing. That makes the comparison non-transitive, which is the one property every reader assumes a comparison has: `0 == '0'` and `'0' == []` disagree while `0 == []` is true. Write `===`, which compares without coercing.",
+                "fix": true
+            }
+        ],
+        "fixedSource": "2 === 3"
+    },
+    "clean": {
+        "file": "/repository/source/Eqeqeq.ts",
+        "source": "a !== b"
+    },
+    "assertedMessageIds": [
+        "unexpected"
+    ],
+    "assertsFix": true,
+    "assertsSuggestion": true
+}

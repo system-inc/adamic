@@ -1,0 +1,24 @@
+{
+    "rule": "@next/next/no-head-import-in-document",
+    "firing": {
+        "file": "pages/_document.tsx",
+        "source": "import 'next/head';\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 1,
+                "endLine": 1,
+                "endColumn": 20,
+                "messageId": "noHeadImportInDocument",
+                "message": "This is the custom document and it imports `next/head`. That component collects what individual pages contribute to the head and merges it during the page render, which is a phase the document has already finished by the time it runs, so what it gathers here is silently dropped or duplicated into the shell. The document has its own `Head`, exported from `next/document`, and that is the one that writes the shell."
+            }
+        ]
+    },
+    "clean": {
+        "file": "pages/_document.tsx",
+        "source": "import Head from ;\n"
+    },
+    "assertedMessageIds": [
+        "noHeadImportInDocument"
+    ]
+}

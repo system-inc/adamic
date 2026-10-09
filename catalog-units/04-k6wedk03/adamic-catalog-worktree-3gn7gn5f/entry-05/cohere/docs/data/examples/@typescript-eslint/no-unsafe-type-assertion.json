@@ -1,0 +1,28 @@
+{
+    "rule": "@typescript-eslint/no-unsafe-type-assertion",
+    "firing": {
+        "file": "/repository/source/Asserting.ts",
+        "source": "declare const u: unknown;\nconst v = <any>u;\n",
+        "findings": [
+            {
+                "line": 2,
+                "column": 11,
+                "endLine": 2,
+                "endColumn": 17,
+                "messageId": "unsafeToAnyTypeAssertion",
+                "message": "Unsafe assertion to `any` detected: consider using a more specific type to ensure safety."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/Asserting.ts",
+        "source": "declare const x: any;\nconst y = x as any;\n"
+    },
+    "assertedMessageIds": [
+        "unsafeOfAnyTypeAssertion",
+        "unsafeToAnyTypeAssertion",
+        "unsafeToUnconstrainedTypeAssertion",
+        "unsafeTypeAssertion",
+        "unsafeTypeAssertionAssignableToConstraint"
+    ]
+}

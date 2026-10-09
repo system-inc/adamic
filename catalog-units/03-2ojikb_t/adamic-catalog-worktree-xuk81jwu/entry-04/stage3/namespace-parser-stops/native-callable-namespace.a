@@ -1,0 +1,6 @@
+// Reduced from TypeScript 6.0.3, Debug.log.
+namespace Debug {
+    export function log(s: string): void {}
+    export namespace log { export function error(s: string): void {} }
+}
+console.log("callable namespace loaded");

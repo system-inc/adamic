@@ -1,0 +1,27 @@
+{
+    "rule": "structure/consistency-require-organized-imports",
+    "firing": {
+        "file": "Component.tsx",
+        "source": "import alpha from 'alpha';\nimport React from 'react';\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 1,
+                "endLine": 1,
+                "endColumn": 27,
+                "messageId": "importsNotOrganized",
+                "message": "The imports in this file are not grouped and ordered the way the rest of the tree is. Every file opens with the same twenty-three named blocks in the same sequence, each under its own comment header and alphabetized inside itself, so a reader looking for where a symbol comes from goes to the block rather than reading the whole list, and a reviewer sees a new dependency land in the block that says what kind of dependency it is.",
+                "fix": true
+            }
+        ],
+        "fixedSource": "// Dependencies - Frameworks\nimport React from 'react';\n\n// Dependencies - Third-party\nimport alpha from 'alpha';\n"
+    },
+    "clean": {
+        "file": "/repository/app/Thing.tsx",
+        "source": "export const X = 1;\n"
+    },
+    "assertedMessageIds": [
+        "importsNotOrganized"
+    ],
+    "assertsFix": true
+}

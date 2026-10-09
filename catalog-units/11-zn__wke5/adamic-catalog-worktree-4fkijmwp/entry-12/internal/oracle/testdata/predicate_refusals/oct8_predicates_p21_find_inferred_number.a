@@ -1,0 +1,5 @@
+const items: (string | number)[] = ["a", 2, "bc", 4];
+const found = items.find((x) => typeof x === "number");
+console.log("found " + String(found));
+const all = items.filter((x) => typeof x === "string");
+console.log(all.join("|"));

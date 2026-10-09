@@ -1,0 +1,26 @@
+{
+    "rule": "nexus/consistency-no-ambiguous-identifier",
+    "firing": {
+        "file": "/repository/source/Thing.tsx",
+        "source": "const _ = 1;\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 7,
+                "endLine": 1,
+                "endColumn": 8,
+                "messageId": "noUnderscore",
+                "message": "Identifier \"_\" is not descriptive enough. Name it explicitly, or prefix an underscore to a real name such as \"_event\" when the point is that the value is deliberately unused."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/Thing.tsx",
+        "source": "const _event = 1;\n"
+    },
+    "assertedMessageIds": [
+        "noAmbiguousE",
+        "noSingleLetter",
+        "noUnderscore"
+    ]
+}

@@ -1,0 +1,5 @@
+[
+{"code":"var f = function() { return /foo/ig.test('bar'); };","eslint":[]},
+{"code":"var f = function() { return /\\=foo/; };","eslint":[]},
+{"code":"var f = function() { return /=foo/; };","eslint":[["unexpected",28,34]]}
+]

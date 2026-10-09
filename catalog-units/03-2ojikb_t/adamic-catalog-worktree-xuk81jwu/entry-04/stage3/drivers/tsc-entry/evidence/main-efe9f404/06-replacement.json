@@ -1,0 +1,10 @@
+{
+  "file": "/tmp/tsc-entry-refresh-src/compiler/checker.ts",
+  "line": 10022,
+  "column": 63,
+  "function": "<anonymous>",
+  "start": 575307,
+  "end": 575393,
+  "original": "isNamespaceMember(m) && isIdentifierText(m.escapedName as string, ScriptTarget.ESNext)",
+  "replacement": "{ throw new Error(\"tsc-entry scratch placeholder\"); }"
+}

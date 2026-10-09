@@ -1,0 +1,34 @@
+{
+    "rules": {
+        "@typescript-eslint/ban-ts-comment": [
+            "error",
+            {
+                "ts-expect-error": true,
+                "ts-ignore": true,
+                "ts-nocheck": true,
+                "ts-check": true
+            }
+        ],
+        "@typescript-eslint/method-signature-style": [
+            "error",
+            "property"
+        ],
+        "@typescript-eslint/no-explicit-any": "error",
+        "@typescript-eslint/no-non-null-assertion": "error",
+        "@typescript-eslint/no-unsafe-argument": "error",
+        "@typescript-eslint/no-unsafe-assignment": "error",
+        "@typescript-eslint/no-unsafe-call": "error",
+        "@typescript-eslint/no-unsafe-declaration-merging": "error",
+        "@typescript-eslint/no-unsafe-function-type": "error",
+        "@typescript-eslint/no-unsafe-member-access": "error",
+        "@typescript-eslint/no-unsafe-return": "error",
+        "@typescript-eslint/unbound-method": "error",
+        "adamic/invariant-mutable": "error",
+        "adamic/no-definite-assignment": "error",
+        "adamic/no-optional-widening": "error",
+        "adamic/no-type-predicate": "error",
+        "adamic/no-unchecked-cast": "error",
+        "adamic/nominal-class": "error",
+        "adamic/single-spread": "error"
+    }
+}

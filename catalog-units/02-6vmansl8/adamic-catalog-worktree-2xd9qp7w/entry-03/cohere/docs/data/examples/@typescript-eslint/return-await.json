@@ -1,0 +1,10 @@
+{
+    "rule": "@typescript-eslint/return-await",
+    "assertedMessageIds": [
+        "disallowedPromiseAwait",
+        "nonPromiseAwait",
+        "requiredPromiseAwait"
+    ],
+    "assertsFix": true,
+    "assertsSuggestion": true
+}

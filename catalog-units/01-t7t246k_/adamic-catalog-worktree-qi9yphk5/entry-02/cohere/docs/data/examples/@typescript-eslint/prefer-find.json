@@ -1,0 +1,26 @@
+{
+    "rule": "@typescript-eslint/prefer-find",
+    "firing": {
+        "file": "/repository/source/Searching.ts",
+        "source": "([]?.filter(f))[0];\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 1,
+                "endLine": 1,
+                "endColumn": 19,
+                "messageId": "preferFind",
+                "message": "Prefer .find(...) instead of .filter(...)[0].",
+                "suggestions": 1
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/Searching.ts",
+        "source": "null?.filter(x => x)[0];\n"
+    },
+    "assertedMessageIds": [
+        "preferFind"
+    ],
+    "assertsSuggestion": true
+}

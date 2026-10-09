@@ -1,0 +1,27 @@
+go 1.27
+
+// Every module the repository builds. cohere-dev's landing gate and its whole-module test run read
+// this list, minus any module inside a submodule (TypeScript/tsc is upstream's, tested upstream), and
+// gate every one of them in one go invocation (workspace.go). A module left out of this list is a
+// module no gate tests.
+use (
+	.
+	./TypeScript/tsc
+	./TypeScript-shim/ast
+	./TypeScript-shim/bundled
+	./TypeScript-shim/checker
+	./TypeScript-shim/compiler
+	./TypeScript-shim/core
+	./TypeScript-shim/format
+	./TypeScript-shim/incremental
+	./TypeScript-shim/locale
+	./TypeScript-shim/parser
+	./TypeScript-shim/scanner
+	./TypeScript-shim/tsoptions
+	./TypeScript-shim/tspath
+	./TypeScript-shim/vfs
+	./TypeScript-shim/vfs/cachedvfs
+	./TypeScript-shim/vfs/osvfs
+	./mutation_aliasing
+	./static_single_assignment
+)

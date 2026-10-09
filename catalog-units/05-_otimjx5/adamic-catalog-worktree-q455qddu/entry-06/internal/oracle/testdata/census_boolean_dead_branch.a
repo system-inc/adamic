@@ -1,0 +1,13 @@
+// A branch the checker knows is dead: flag is false here, so inside if (flag) it is never, and so
+// is flag && flag. Two booleans still give a boolean, and the branch lowers.
+let flag: boolean = false;
+if (flag) {
+	if ((flag && flag) || flag) {
+		console.log("unreachable");
+	}
+}
+let other: boolean = true;
+if (!other) {
+	console.log(String((other && other) || other));
+}
+console.log("done");

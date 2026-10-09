@@ -1,0 +1,25 @@
+{
+    "rule": "no-throw-literal",
+    "firing": {
+        "file": "/repository/source/ThrowLiteral.ts",
+        "source": "throw 0;\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 1,
+                "endLine": 1,
+                "endColumn": 9,
+                "messageId": "object",
+                "message": "This throws something that cannot be an Error, so whatever catches it gets no message and no stack trace. The failure then surfaces as a bare string or object with no record of where it came from, which is the difference between reading one line and reading the whole call path. Throw `new Error(...)` instead."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/ThrowLiteral.ts",
+        "source": "throw a;\n"
+    },
+    "assertedMessageIds": [
+        "object",
+        "undef"
+    ]
+}

@@ -1,0 +1,32 @@
+{
+    "rule": "better-tailwindcss/no-conflicting-classes",
+    "firing": {
+        "file": "Styles.ts",
+        "source": "const className = 'px-4 px-8';\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 20,
+                "endLine": 1,
+                "endColumn": 29,
+                "messageId": "conflictingClasses",
+                "message": "The class \"px-4\" and \"px-8\" set the same CSS property (padding-inline), so only one of them takes effect and which one depends on the order Tailwind emitted them in rather than the order they are written here. Keep the one that was meant and remove the rest."
+            },
+            {
+                "line": 1,
+                "column": 20,
+                "endLine": 1,
+                "endColumn": 29,
+                "messageId": "conflictingClasses",
+                "message": "The class \"px-8\" and \"px-4\" set the same CSS property (padding-inline), so only one of them takes effect and which one depends on the order Tailwind emitted them in rather than the order they are written here. Keep the one that was meant and remove the rest."
+            }
+        ]
+    },
+    "clean": {
+        "file": "Component.tsx",
+        "source": "const element = <div className=\"flex\" />;\n"
+    },
+    "assertedMessageIds": [
+        "conflictingClasses"
+    ]
+}

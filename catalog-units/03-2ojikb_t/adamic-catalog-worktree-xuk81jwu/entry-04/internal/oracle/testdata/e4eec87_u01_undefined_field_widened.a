@@ -1,0 +1,12 @@
+interface Reading {
+	readonly value: number | undefined;
+	readonly label: string;
+}
+const raw = { value: undefined, label: 'x' };
+const reading: Reading = raw;
+console.log(`${reading.value} ${reading.value === undefined}`);
+function make(): { value: undefined; label: string } {
+	return { value: undefined, label: 'y' };
+}
+const made: Reading = make();
+console.log(`${made.value}`);

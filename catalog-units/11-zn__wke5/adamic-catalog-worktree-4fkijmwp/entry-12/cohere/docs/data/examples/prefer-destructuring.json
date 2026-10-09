@@ -1,0 +1,27 @@
+{
+    "rule": "prefer-destructuring",
+    "firing": {
+        "file": "/repository/source/PreferDestructuring.ts",
+        "source": "var foo = (f()).foo;",
+        "findings": [
+            {
+                "line": 1,
+                "column": 5,
+                "endLine": 1,
+                "endColumn": 20,
+                "messageId": "preferDestructuring",
+                "message": "Use object destructuring. Pulling one name out of an object or array by hand repeats the name on both sides, so a rename touches two places and the two can drift. Destructuring writes it once.",
+                "fix": true
+            }
+        ],
+        "fixedSource": "var {foo} = f();"
+    },
+    "clean": {
+        "file": "/repository/source/PreferDestructuring.ts",
+        "source": "var foo;"
+    },
+    "assertedMessageIds": [
+        "preferDestructuring"
+    ],
+    "assertsFix": true
+}

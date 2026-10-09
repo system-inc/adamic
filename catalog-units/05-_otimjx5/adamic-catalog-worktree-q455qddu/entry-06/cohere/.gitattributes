@@ -1,0 +1,4 @@
+# Every text file is LF in the working tree on every platform. The house format is LF, and git's
+# core.autocrlf, the default on Windows, would otherwise write CRLF on checkout, so a Windows clone of
+# this repository would fail its own format gate on every file. Binary files are detected and left alone.
+* text=auto eol=lf

@@ -1,0 +1,10 @@
+{
+  "rules": {
+    "TypeScript": "nexus/correctness-no-discarded-pure-result"
+  },
+  "messages": {
+    "discardedPureResult": {
+      "text": "This call computes a new value and changes nothing, and its result is thrown away, so the statement does nothing. Strings are immutable (`name.trim()` returns a trimmed copy and leaves `name` as it was), and these array methods return a new array or a value without touching the original (`list.concat(more)` does not add to `list`). Assign the result (`name = name.trim()`, `list = list.concat(more)`), use the mutating form (`list.push(...more)`), or delete the statement."
+    }
+  }
+}

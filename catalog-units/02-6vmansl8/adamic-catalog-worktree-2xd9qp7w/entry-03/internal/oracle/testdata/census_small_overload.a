@@ -1,0 +1,30 @@
+// TypeScript 6.0.3 path.ts:806, original implementation body.
+// Keep the string overload; the branded Path overload is a separate refusal probe.
+const directorySeparator = '/';
+function hasTrailingDirectorySeparator(path: string): boolean { return path.endsWith('/'); }
+function ensureTrailingDirectorySeparator(path: string): string;
+function ensureTrailingDirectorySeparator(path: string) {
+    if (!hasTrailingDirectorySeparator(path)) {
+        return path + directorySeparator;
+    }
+    return path;
+}
+console.log(ensureTrailingDirectorySeparator(''));
+console.log(ensureTrailingDirectorySeparator('/a'));
+console.log(ensureTrailingDirectorySeparator('/a/'));
+
+// Wider overload results must use the caller's representation.
+function answer(value: boolean): boolean | undefined;
+function answer(value: boolean): boolean { return value; }
+console.log(`${answer(false) === undefined}`);
+console.log(`${answer(false)}`);
+console.log(`${answer(true)}`);
+function count(value: number): number | undefined;
+function count(value: number): number { return value; }
+console.log(`${count(0) === undefined}`);
+console.log(`${count(2)}`);
+function mixed(value: number): number | string;
+function mixed(value: number): number { return value; }
+console.log(`${typeof mixed(3)}`);
+console.log(`${mixed(3)}`);
+console.log(`${mixed(3) === 'other'}`);

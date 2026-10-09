@@ -1,0 +1,11 @@
+{"kind":"provenance","contract":3,"engine":"cohere-swift","version":"0.1.0","commit":"dev","sourceTreeModified":false,"toolchain":"swiftlang-6.4.0.34.1","swiftSyntax":"604.0.0","swiftFormat":"604.0.0"}
+{"kind":"project","root":"/project","package":"Example","elapsedMilliseconds":412,"filesInPackage":3,"filesOurs":2,"filesInScope":2,"scopeDescription":"","targets":[{"name":"Example","kind":"executable","files":3,"languageMode":"6"}],"excluded":[{"file":"/project/Sources/Example/Generated.swift","reason":"marked // @generated"}]}
+{"kind":"unreadable","file":"/project/Sources/Example/Latin1.swift","error":"it is not valid UTF-8 or could not be opened (Foundation could not decode it as UTF-8)"}
+{"kind":"fix","filesConsidered":1,"filesRewritten":0,"fixesApplied":0,"fixesRefused":0,"refusalsByReason":{},"filesReformatted":0,"filesNotFormatted":0,"notFormattedReasons":{},"formatScope":"changed files (working tree against HEAD): 0"}
+{"kind":"phase","name":"fix","outcome":"ran","elapsedMilliseconds":31,"detail":""}
+{"kind":"types","diagnostics":0,"files":2,"elapsedMilliseconds":820,"filesWithoutRecord":[],"build":"swift build, scratch /cache/cohere/swift/0000"}
+{"kind":"phase","name":"types","outcome":"ran","elapsedMilliseconds":820,"detail":""}
+{"kind":"lint","findings":0,"rulesRun":4,"filesWalked":1,"nodesVisited":512,"elapsedMilliseconds":0,"reusedFrom":"fix","rulesSilent":[],"rulesWatchedAndQuiet":4,"crashes":[],"rulesScopedOff":{},"rulesNotConfigured":[],"configNote":"config: no CohereSettings.json beside Package.swift, so every house rule ran at error — put one at /project/CohereSettings.json to change that"}
+{"kind":"phase","name":"lint","outcome":"reused","elapsedMilliseconds":0,"detail":"the fix phase's walk (nothing was rewritten)"}
+{"kind":"phase","name":"unused","outcome":"skipped","elapsedMilliseconds":0,"detail":"not requested — this is a report, ask for it with --unused"}
+{"kind":"summary","findings":0,"complete":false,"exitCode":1}

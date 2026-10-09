@@ -1,0 +1,754 @@
+diff --git a/internal/lower/class_inheritance.go b/internal/lower/class_inheritance.go
+index 77b772a..732c589 100644
+--- a/internal/lower/class_inheritance.go
++++ b/internal/lower/class_inheritance.go
+@@ -42,10 +42,13 @@ func (l *lowering) checkOverrides(declaration *ast.Node, classType *checker.Type
+ 	if len(bases) == 0 {
+ 		return nil
+ 	}
+-	base := bases[0]
+-	checkABI := len(declaration.TypeParameters()) == 0 || classType != l.checker.GetTypeAtLocation(declaration.Name())
++	return l.checkMemberOverrides(declaration, classType, bases[0], false)
++}
++
++func (l *lowering) checkMemberOverrides(declaration *ast.Node, classType, base *checker.Type, static bool) error {
++	checkABI := static || len(declaration.TypeParameters()) == 0 || classType != l.checker.GetTypeAtLocation(declaration.Name())
+ 	for _, member := range classMembersWithParameters(declaration) {
+-		if member.Name() == nil || ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) {
++		if member.Name() == nil || ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) != static {
+ 			continue
+ 		}
+ 		inherited := l.checker.GetPropertyOfType(base, member.Name().Text())
+@@ -61,6 +64,46 @@ func (l *lowering) checkOverrides(declaration *ast.Node, classType *checker.Type
+ 		if (member.Kind == ast.KindMethodDeclaration) != (inherited.Flags&ast.SymbolFlagsMethod != 0) {
+ 			return refuse("an inherited method replaced by a field, or a field replaced by a method", "keep the inherited member kind; use a different name for the new member")
+ 		}
++		if accessorMember(member) != accessorSymbol(inherited) {
++			return refuse("an inherited data property replaced by an accessor, or an accessor replaced by data", "keep the inherited member kind; use another name for the new property")
++		}
++		if accessorMember(member) {
++			ownGet, ownSet, baseGet, baseSet := false, false, false, false
++			for _, candidate := range declaration.Members() {
++				if candidate.Name() != nil && candidate.Name().Text() == member.Name().Text() && ast.HasSyntacticModifier(candidate, ast.ModifierFlagsStatic) == static {
++					ownGet = ownGet || candidate.Kind == ast.KindGetAccessor
++					ownSet = ownSet || candidate.Kind == ast.KindSetAccessor
++				}
++			}
++			for _, candidate := range inherited.Declarations {
++				baseGet = baseGet || candidate.Kind == ast.KindGetAccessor
++				baseSet = baseSet || candidate.Kind == ast.KindSetAccessor
++			}
++			if (baseGet && !ownGet) || (baseSet && !ownSet) {
++				return refuse("an accessor override that hides the inherited getter or setter", "override both halves of the inherited descriptor; delegate an unchanged half to super")
++			}
++			if member.Kind == ast.KindSetAccessor {
++				for _, candidate := range inherited.Declarations {
++					if candidate.Kind != ast.KindSetAccessor {
++						continue
++					}
++					old := l.checker.GetSignatureFromDeclaration(candidate)
++					next := l.checker.GetSignatureFromDeclaration(member)
++					accepts := l.checker.GetTypeOfSymbol(old.Parameters()[0])
++					override := l.checker.GetTypeOfSymbol(next.Parameters()[0])
++					if !static {
++						accepts = instantiateType(l.checker, accepts, l.typeMapperOf(candidate.Parent, base))
++						override = instantiateType(l.checker, override, l.typeMapperOf(declaration, classType))
++					}
++					if !l.classAssignable(accepts, override) || l.widened(accepts, override, map[[2]*checker.Type]bool{}) != nil {
++						return refuse("an accessor override that narrows a setter parameter (adamic/contravariant-override)", "accept the base setter's parameter type or a wider type; narrow it inside the setter")
++					}
++				}
++			}
++			if ownGet && (!l.classAssignable(own, previous) || l.widened(own, previous, map[[2]*checker.Type]bool{}) != nil) {
++				return refuse("an accessor override with an unsafe read or write type (adamic/invariant-mutable)", "keep the inherited accessor type; narrow values inside the accessor")
++			}
++		}
+ 		if member.Kind == ast.KindPropertyDeclaration || parameterProperty(member) {
+ 			if !l.checker.IsReadonlySymbol(inherited) && (!l.classAssignable(previous, own) || !l.classAssignable(own, previous) || l.widened(previous, own, map[[2]*checker.Type]bool{}) != nil || l.widened(own, previous, map[[2]*checker.Type]bool{}) != nil) {
+ 				return refuse("a mutable inherited field redeclared with a different type (adamic/invariant-mutable)", "keep the base field's type; narrow a local after reading it, or make the field readonly in the base")
+@@ -160,7 +203,7 @@ func (l *lowering) inheritanceConstructor(index int, declaration *ast.Node) erro
+ 			return l.notYet(member, "a declare or abstract class field")
+ 		}
+ 		if ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) {
+-			return l.notYet(member, "a static field")
++			continue
+ 		}
+ 		if !ast.IsIdentifier(member.Name()) && member.Name().Kind != ast.KindPrivateIdentifier {
+ 			return l.notYet(member, "a field with a computed name")
+@@ -172,7 +215,7 @@ func (l *lowering) inheritanceConstructor(index int, declaration *ast.Node) erro
+ 		if slotless(of) {
+ 			return l.notYet(member, "a field of type "+l.checker.TypeToString(l.checker.GetTypeAtLocation(member.Name())))
+ 		}
+-		field := ir.Field{Name: l.fieldName(member.Name()), Value: zeroValue(of)}
++		field := ir.Field{Name: l.fieldName(member.Name()), Value: zeroValue(of), Private: member.Name().Kind == ast.KindPrivateIdentifier}
+ 		// An uninitialized reference still has its declared representation for the shape bitmap.
+ 		if of.IsReference() {
+ 			field.Value = ir.Undefined{Of: of}
+@@ -216,51 +259,25 @@ func (l *lowering) inheritanceConstructor(index int, declaration *ast.Node) erro
+ 		if returnValue != nil {
+ 			return l.notYet(returnValue, "a constructor returning a replacement value")
+ 		}
++		state := uint8(0)
+ 		if instance.base != nil {
+-			// Conditional and repeated super need definite-initialization dataflow, not a guessed order.
+-			var invalid *ast.Node
+-			totalSuper := 0
+-			var visit ast.Visitor
+-			visit = func(node *ast.Node) bool {
+-				if ast.IsFunctionLike(node) {
+-					return false
+-				}
+-				if node.Kind == ast.KindCallExpression && ast.SkipParentheses(node.AsCallExpression().Expression).Kind == ast.KindSuperKeyword {
+-					totalSuper++
+-				}
+-				if node.Kind == ast.KindReturnStatement {
+-					invalid = node
+-					return true
+-				}
+-				return node.ForEachChild(visit)
+-			}
+-			constructor.Body().ForEachChild(visit)
+-			if invalid != nil {
+-				return l.notYet(invalid, "an explicit return from a derived constructor")
+-			}
+-			count := 0
+-			for _, statement := range constructor.Body().AsBlock().Statements.Nodes {
+-				if statement.Kind != ast.KindExpressionStatement {
+-					continue
+-				}
+-				call := ast.SkipParentheses(statement.AsExpressionStatement().Expression)
+-				if call.Kind == ast.KindCallExpression && ast.SkipParentheses(call.AsCallExpression().Expression).Kind == ast.KindSuperKeyword {
+-					count++
+-					instance.beforeSuper = statement.End()
+-				}
+-			}
+-			if count != 1 || totalSuper != 1 {
+-				return l.notYet(constructor, "a derived constructor without exactly one unconditional super(...) statement")
++			var err error
++			state, err = l.prepareSuper(constructor, initializer)
++			if err != nil {
++				return err
+ 			}
+ 		}
++
+ 		outerUnset := l.unsetUntil
+ 		l.unsetUntil = lastFieldAssignment(declaration, constructor)
+ 		err := l.lowerFunction(initializer, constructor, this)
+ 		l.unsetUntil = outerUnset
+-		instance.beforeSuper = 0
+ 		if err != nil {
+ 			return err
+ 		}
++		if state&superUninitialized != 0 {
++			l.result.Functions[initializer].Body = append(l.result.Functions[initializer].Body, l.superEnd())
++		}
+ 	} else if instance.base != nil {
+ 		arguments := []ir.Expression{}
+ 		for _, parameter := range l.result.Functions[initializer].Parameters {
+@@ -374,13 +391,18 @@ func (l *lowering) superStatement(node *ast.Node) ([]ir.Statement, error) {
+ 	if err != nil {
+ 		return nil, err
+ 	}
+-	statements := []ir.Statement{ir.Evaluate{Value: call}}
++	statements := []ir.Statement{}
++	if l.instance.superStates[node]&superInitialized != 0 {
++		// JavaScript constructs another base object before rejecting a second binding.
++		// Do not overwrite the already initialized object's fields on this path.
++		base := call.(ir.Call)
++		second := ir.Call{Function: l.instance.base.constructor, Arguments: base.Arguments[1:], Returns: ir.Object}
++		statements = append(statements, ir.If{Condition: ir.Read{Local: l.instance.superReady, Of: ir.Boolean}, Then: []ir.Statement{ir.Evaluate{Value: second}, l.superError("Super constructor may only be called once")}})
++	}
++	statements = append(statements, ir.Evaluate{Value: call}, ir.Assign{Local: l.instance.superReady, Value: ir.BooleanConstant{Value: true}})
+ 	// Fields run only once super has returned, and before the next derived-body statement.
+-	before := l.instance.beforeSuper
+-	l.instance.beforeSuper = 0
+ 	declaration := l.classNode.Parent
+ 	initialized, err := l.fieldInitializers(declaration, l.this)
+-	l.instance.beforeSuper = before
+ 	if err != nil {
+ 		return nil, err
+ 	}
+@@ -487,7 +509,7 @@ func (l *lowering) classViewRefusal(node *ast.Node) error {
+ 	return &Refused{Where: l.program.Where(node), What: "a value without nominal ancestry seen as " + l.checker.TypeToString(target), Fix: "construct that class or a subclass; use an interface for structural values (adamic/nominal-class)"}
+ }
+ 
+-func (l *lowering) nominalAncestor(source, target *checker.Type) bool {
++func (l *lowering) nominalAncestor(source, target *checker.Type, seen map[[2]*checker.Type]bool) bool {
+ 	if source.Flags()&checker.TypeFlagsTypeParameter != 0 {
+ 		if constraint := l.checker.GetBaseConstraintOfType(source); constraint != nil {
+ 			source = constraint
+@@ -505,14 +527,14 @@ func (l *lowering) nominalAncestor(source, target *checker.Type) bool {
+ 			return false
+ 		}
+ 		for index := range from {
+-			if !l.enumAssignable(from[index], to[index]) || !l.enumAssignable(to[index], from[index]) || !l.checker.IsTypeAssignableTo(from[index], to[index]) || !l.checker.IsTypeAssignableTo(to[index], from[index]) {
++			if !l.enumAssignable(from[index], to[index]) || !l.enumAssignable(to[index], from[index]) || !l.checker.IsTypeAssignableTo(from[index], to[index]) || !l.checker.IsTypeAssignableTo(to[index], from[index]) || l.nominalMismatch(from[index], to[index], seen) != nil || l.nominalMismatch(to[index], from[index], seen) != nil {
+ 				return false
+ 			}
+ 		}
+ 		return true
+ 	}
+ 	for _, base := range l.classBases(source) {
+-		if l.nominalAncestor(base, target) {
++		if l.nominalAncestor(base, target, seen) {
+ 			return true
+ 		}
+ 	}
+@@ -549,6 +571,11 @@ func (l *lowering) fieldName(name *ast.Node) string {
+ 	symbol := l.checker.GetSymbolAtLocation(name)
+ 	if symbol != nil && len(symbol.Declarations) > 0 {
+ 		class := symbol.Declarations[0].Parent
++		if class != nil && ast.HasSyntacticModifier(symbol.Declarations[0], ast.ModifierFlagsStatic) {
++			if lowered := l.statics[l.symbol(class.Name())]; lowered != nil {
++				return memberKey(name, lowered.class)
++			}
++		}
+ 		if class != nil && class.Kind == ast.KindClassDeclaration {
+ 			if l.instance != nil && l.classNode != nil && l.classNode.Parent == class {
+ 				return name.Text() + "@" + strconv.Itoa(l.instance.class)
+@@ -609,11 +636,22 @@ func (l *lowering) nominalMismatch(from, to *checker.Type, seen map[[2]*checker.
+ 		}
+ 		return nil
+ 	}
++	if l.isStaticType(to) {
++		wanted := l.staticClass(to, nil)
++		actual := l.staticClass(from, nil)
++		for actual != nil {
++			if actual == wanted {
++				return nil
++			}
++			actual = l.staticBase(actual)
++		}
++		return to
++	}
+ 	if isClassInstance(to) {
+ 		if symbol := to.Symbol(); symbol != nil && len(symbol.Declarations) > 0 && load.IsPrelude(ast.GetSourceFileOfNode(symbol.Declarations[0])) {
+ 			return nil
+ 		}
+-		if !l.nominalAncestor(from, to) {
++		if !l.nominalAncestor(from, to, seen) {
+ 			return to
+ 		}
+ 		return nil
+@@ -716,6 +754,11 @@ func (l *lowering) cycleFieldMatches(holder *checker.Type, field, written string
+ 		return false
+ 	}
+ 	class := property.Declarations[0].Parent
++	if ast.HasSyntacticModifier(property.Declarations[0], ast.ModifierFlagsStatic) {
++		if lowered := l.statics[l.symbol(class.Name())]; lowered != nil {
++			return written == memberKey(name, lowered.class)
++		}
++	}
+ 	prefix := l.program.Where(class) + ":" + class.Name().Text()
+ 	for key, instance := range l.instances {
+ 		if key != prefix && !strings.HasPrefix(key, prefix+",") {
+@@ -769,6 +812,14 @@ func (l *lowering) classIdentity(declaration *ast.Node) int {
+ // An inherited method's receiver can be a descendant with different type arguments.
+ // Find the declaration's actual instantiated view instead of substituting by position.
+ func (l *lowering) classView(proven *checker.Type, declaration *ast.Node) *checker.Type {
++	if proven.Flags()&checker.TypeFlagsTypeParameter != 0 {
++		if constraint := l.checker.GetBaseConstraintOfType(proven); constraint != nil {
++			proven = constraint
++		}
++	}
++	if weak := l.weakTarget(proven); weak != nil {
++		proven = weak
++	}
+ 	if proven.Symbol() == l.symbol(declaration.Name()) {
+ 		return proven
+ 	}
+diff --git a/internal/lower/enums.go b/internal/lower/enums.go
+index 947287e..a914512 100644
+--- a/internal/lower/enums.go
++++ b/internal/lower/enums.go
+@@ -313,6 +313,11 @@ func (l *lowering) enumRefusal(node *ast.Node) error {
+ 		if ast.HasSyntacticModifier(node, ast.ModifierFlagsAmbient) {
+ 			return l.notYet(node, "an ambient enum without a runtime definition")
+ 		}
++		for _, member := range node.AsEnumDeclaration().Members.Nodes {
++			if err := l.flagInitializerBound(member.AsEnumMember().Initializer); err != nil {
++				return err
++			}
++		}
+ 		_, err := l.enumFields(node)
+ 		return err
+ 	}
+@@ -332,6 +337,12 @@ func (l *lowering) enumRefusal(node *ast.Node) error {
+ 		}
+ 	}
+ 	if updated != nil && l.checker.GetTypeAtLocation(updated).Flags()&checker.TypeFlagsEnumLike != 0 {
++		if l.flagUpdate(node, updated) {
++			return nil
++		}
++		if l.flagEnum(l.enumIdentity(l.checker.GetTypeAtLocation(updated))) {
++			return l.flagWriteRefusal(node, l.checker.GetTypeAtLocation(updated))
++		}
+ 		return &Refused{Where: l.program.Where(node), What: "arithmetic assigned back into an enum; the result need not be one of its members", Fix: "assign a declared member, or keep arithmetic results in a number (adamic/enum-members)"}
+ 	}
+ 	return nil
+@@ -357,6 +368,9 @@ func (l *lowering) enumSwitch(node *ast.Node) error {
+ 			covered[value.AsLiteralType().Value()] = true
+ 		}
+ 	}
++	if l.flagEnum(l.enumIdentity(proven)) {
++		return &Refused{Where: l.program.Where(node), What: "a flag-enum switch without a default", Fix: "add a default for combinations and zero (adamic/enum-flags)"}
++	}
+ 	members := []*checker.Type{proven}
+ 	if proven.Flags()&checker.TypeFlagsUnion != 0 {
+ 		members = proven.Types()
+@@ -371,3 +385,35 @@ func (l *lowering) enumSwitch(node *ast.Node) error {
+ 	}
+ 	return nil
+ }
++
++// A closed enum default is unreachable only when every possible runtime value has a case.
++// This permits the never-default idiom without inventing a machine representation for never.
++func (l *lowering) enumDefaultUnreachable(node *ast.Node) bool {
++	statement := node.AsSwitchStatement()
++	proven := l.checker.GetTypeAtLocation(statement.Expression)
++	if proven.Flags()&checker.TypeFlagsEnumLike == 0 || l.flagEnum(l.enumIdentity(proven)) {
++		return false
++	}
++	covered := map[any]bool{}
++	for _, clause := range statement.CaseBlock.AsCaseBlock().Clauses.Nodes {
++		if clause.Kind == ast.KindDefaultClause {
++			continue
++		}
++		test := clause.AsCaseOrDefaultClause().Expression
++		if member := l.enumMember(test); member != nil {
++			covered[l.checker.GetConstantValue(member)] = true
++		} else if value := l.checker.GetTypeAtLocation(test); value.Flags()&checker.TypeFlagsLiteral != 0 {
++			covered[value.AsLiteralType().Value()] = true
++		}
++	}
++	members := []*checker.Type{proven}
++	if proven.Flags()&checker.TypeFlagsUnion != 0 {
++		members = proven.Types()
++	}
++	for _, member := range members {
++		if member.Flags()&checker.TypeFlagsLiteral == 0 || !covered[member.AsLiteralType().Value()] {
++			return false
++		}
++	}
++	return true
++}
+diff --git a/internal/lower/expression.go b/internal/lower/expression.go
+index 37517cd..2882b2b 100644
+--- a/internal/lower/expression.go
++++ b/internal/lower/expression.go
+@@ -13,6 +13,9 @@ import (
+ // typeOf is what's left at runtime of the type the checker proved for a node: a number, a boolean or
+ // a string. A union counts when every member is the same one ('Fizz' | 'Buzz' is a string).
+ func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {
++	if l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsUndefined != 0 && (node.Kind == ast.KindVoidExpression || voidInitializer(node)) {
++		return ir.Object, nil
++	}
+ 	if valueType, isKnown := l.representation(l.checker.GetTypeAtLocation(node)); isKnown {
+ 		return valueType, nil
+ 	}
+@@ -35,6 +38,8 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
+ 		return l.objectIntersection(proven)
+ 	}
+ 	switch {
++	case flags&checker.TypeFlagsVoid != 0:
++		return ir.Object, true
+ 	case flags&checker.TypeFlagsNumberLike != 0:
+ 		return ir.Number, true
+ 	case flags&checker.TypeFlagsStringLike != 0:
+@@ -53,13 +58,16 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
+ 		return ir.Closure, true
+ 	case flags&checker.TypeFlagsUnion != 0:
+ 		if l.includesNull(proven) {
+-			// A nullable match result uses NULL. A type also holding undefined needs a tag.
++			// A nullable object reference uses NULL. Null and undefined together need distinct tags.
+ 			if l.includesUndefined(proven) {
+ 				return 0, false
+ 			}
+ 			for _, member := range proven.Types() {
+-				if member.Flags()&checker.TypeFlagsNull == 0 && !l.isLibraryType(member, "RegExpExecArray", "RegExpMatchArray") {
+-					return 0, false
++				if member.Flags()&checker.TypeFlagsNull == 0 {
++					of, known := l.representation(member)
++					if !known || !of.IsReference() || of == ir.String || of == ir.Union {
++						return 0, false
++					}
+ 				}
+ 			}
+ 		}
+@@ -364,6 +372,12 @@ func (l *lowering) weakTarget(proven *checker.Type) *checker.Type {
+ // value lowers a value, as expression does, but leaves a Weak as it's kept.
+ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
+ 	node = ast.SkipParentheses(node)
++	if value, known, err := l.enumExpression(node); known {
++		return value, err
++	}
++	if value, known, err := l.namespaceExpression(node); known {
++		return value, err
++	}
+ 	if observed, known := l.libraryArrayObservation(node); known {
+ 		return observed, nil
+ 	}
+@@ -407,20 +421,13 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
+ 		if !isLocal {
+ 			return nil, l.notYet(node, "reading "+node.Text())
+ 		}
+-		read := ir.Expression(ir.Read{Local: local, Of: l.result.Locals[local].Type, Checked: l.checked(local)})
+-		if l.result.Locals[local].Type == ir.Union {
+-			// Where the checker has narrowed it to fewer members held one way, it's read as that.
+-			if narrowed, isKnown := l.representation(l.checker.GetTypeAtLocation(node)); isKnown && narrowed != ir.Union {
+-				read = ir.Narrow{Value: read, To: narrowed}
+-			}
+-		}
+-		if declared := l.result.Locals[local].Type; declared.IsMaybe() {
+-			// Where the checker has narrowed it to what it holds, it's read as that.
+-			if narrowed, _ := l.representation(l.checker.GetTypeAtLocation(node)); narrowed == declared.Present() && !comparedWithUndefined(node) {
+-				read = ir.Unwrap{Value: read}
+-			}
++		return l.localRead(node, local), nil
++	case ast.KindVoidExpression:
++		operand, err := l.discardedValue(node.AsVoidExpression().Expression)
++		if err != nil {
++			return nil, err
+ 		}
+-		return l.defined(node, read), nil
++		return ir.Void{Value: operand}, nil
+ 	case ast.KindPrefixUnaryExpression:
+ 		return l.prefix(node)
+ 	case ast.KindTypeOfExpression:
+@@ -437,6 +444,12 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
+ 		return ir.TypeOf{Value: operand}, nil
+ 	case ast.KindBinaryExpression:
+ 		binary := node.AsBinaryExpression()
++		if binary.OperatorToken.Kind == ast.KindCommaToken {
++			return l.comma(node)
++		}
++		if logicalAssignment(binary.OperatorToken.Kind) {
++			return l.logicalAssignment(node)
++		}
+ 		if binary.OperatorToken.Kind == ast.KindQuestionQuestionToken {
+ 			return l.coalesce(node)
+ 		}
+@@ -518,6 +531,10 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
+ // number | undefined or boolean | undefined goes, since that is two words and they are one. It also
+ // unwraps a maybe value the checker narrowed to its present type. Anything else is left as it is.
+ func fit(value ir.Expression, to ir.Type) ir.Expression {
++	if discarded, ok := value.(ir.Void); ok && (to.IsMaybe() || to.IsReference()) {
++		discarded.Of = to
++		return discarded
++	}
+ 	if to == ir.Weak && value != nil && value.Type() != ir.Weak {
+ 		return ir.WeakOf{Value: value}
+ 	}
+@@ -575,8 +592,8 @@ func (l *lowering) prefix(node *ast.Node) (ir.Expression, error) {
+ 		return ir.Unary{Operator: ir.Negate, Operand: operand}, nil
+ 	case prefix.Operator == ast.KindPlusToken && operand.Type() == ir.Number:
+ 		return ir.Unary{Operator: ir.Plus, Operand: operand}, nil
+-	case prefix.Operator == ast.KindExclamationToken && operand.Type() == ir.Boolean:
+-		return ir.Unary{Operator: ir.Not, Operand: operand}, nil
++	case prefix.Operator == ast.KindExclamationToken:
++		return ir.Unary{Operator: ir.Not, Operand: truthy(operand)}, nil
+ 	case prefix.Operator == ast.KindTildeToken && operand.Type() == ir.Number:
+ 		return ir.Unary{Operator: ir.BitNot, Operand: operand}, nil
+ 	}
+@@ -694,7 +711,14 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
+ 		}
+ 		return ir.Binary{Operator: lowered, Left: left, Right: right}, nil
+ 	}
+-	if (operator == ast.KindAmpersandAmpersandToken || operator == ast.KindBarBarToken) && both(ir.Boolean) {
++	if operator == ast.KindAmpersandAmpersandToken || operator == ast.KindBarBarToken {
++		if !both(ir.Boolean) {
++			of, err := l.typeOf(node)
++			if err != nil {
++				return nil, err
++			}
++			return ir.Logical{Left: left, Right: fit(right, of), Of: of, KeepTruthy: operator == ast.KindBarBarToken}, nil
++		}
+ 		lowered := ir.And
+ 		if operator == ast.KindBarBarToken {
+ 			lowered = ir.Or
+@@ -855,7 +879,8 @@ func (l *lowering) call(node *ast.Node) (ir.Expression, error) {
+ 		}
+ 		return ir.CallClosure{Closure: ir.ClosureSelf{}, Direct: direct + 1, Arguments: arguments, Returns: l.result.Functions[direct].Returns}, nil
+ 	}
+-	if declaration, isGeneric := l.generics[l.symbol(callee)]; ast.IsIdentifier(callee) && isGeneric {
++	qualified := l.namespaceMember(callee)
++	if declaration, isGeneric := l.generics[l.symbol(callee)]; (ast.IsIdentifier(callee) || qualified) && isGeneric {
+ 		instance, err := l.instantiateFunction(node, declaration)
+ 		if err != nil {
+ 			return nil, err
+@@ -863,7 +888,7 @@ func (l *lowering) call(node *ast.Node) (ir.Expression, error) {
+ 		return l.callFunction(call, instance)
+ 	}
+ 	function, isFunction := l.functions[l.symbol(callee)]
+-	if !ast.IsIdentifier(callee) || !isFunction {
++	if (!ast.IsIdentifier(callee) && !qualified) || !isFunction {
+ 		if calleeType, _ := l.representation(l.checker.GetTypeAtLocation(callee)); calleeType == ir.Closure {
+ 			return l.callClosure(node)
+ 		}
+@@ -950,6 +975,9 @@ func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, err
+ 	}
+ 	symbol := l.symbol(node)
+ 	for _, parameter := range symbol.Declarations[0].Parameters() {
++		if parameter.Name().Text() == "this" {
++			return nil, l.notYet(parameter, "a function with a this parameter used as a value; pass the receiver explicitly or use an arrow")
++		}
+ 		declared := parameter.AsParameterDeclaration()
+ 		if declared.Initializer != nil || declared.QuestionToken != nil || declared.DotDotDotToken != nil {
+ 			return nil, l.notYet(node, "a function with an optional or rest parameter, as a value")
+diff --git a/internal/lower/invariance.go b/internal/lower/invariance.go
+index 2d6bc14..75af0f1 100644
+--- a/internal/lower/invariance.go
++++ b/internal/lower/invariance.go
+@@ -453,6 +453,9 @@ func (l *lowering) refuseWidening(node *ast.Node) error {
+ 		if enumObjectSymbol(found.target) != nil {
+ 			return &Refused{Where: l.program.Where(node), What: "a structural object seen as " + l.checker.TypeToString(found.target) + "; the complete enum shape is unproven", Fix: "use the enum's runtime object or a typeof alias, or give the ordinary object an explicit interface"}
+ 		}
++		if l.flagEnum(l.enumIdentity(found.target)) {
++			return l.flagWriteRefusal(node, found.target)
++		}
+ 		return &Refused{Where: l.program.Where(node), What: "an arbitrary number or a value from another enum assigned to " + l.checker.TypeToString(found.target) + "; its members are a closed union", Fix: "use a declared member of this enum, or compare the number with its members and return the matching member (adamic/enum-members)"}
+ 	}
+ 	what := "a value of type " + l.checker.TypeToString(own) + " seen as " + l.checker.TypeToString(contextual) + ", which can write " + l.checker.TypeToString(found.target) + " where " + l.checker.TypeToString(found.source) + " is read"
+@@ -477,6 +480,12 @@ func (l *lowering) refuseWidening(node *ast.Node) error {
+ // covariant, and only what's inside it, held elsewhere too, is walked as a view.
+ func (l *lowering) freshOrWidened(node *ast.Node, own *checker.Type, contextual *checker.Type) *widening {
+ 	node = ast.SkipParentheses(node)
++	if found := l.flagMemberWidened(node, contextual); found != nil {
++		return found
++	}
++	if target := l.flagTarget(contextual); target != nil && l.flagDomain(node, target) {
++		return nil
++	}
+ 	switch node.Kind {
+ 	case ast.KindObjectLiteralExpression, ast.KindArrayLiteralExpression:
+ 		// Made as the type it's written into, held by nothing else: its own parts are sites.
+diff --git a/internal/lower/locals.go b/internal/lower/locals.go
+index 563b0d5..c7f4d8f 100644
+--- a/internal/lower/locals.go
++++ b/internal/lower/locals.go
+@@ -11,7 +11,7 @@ import (
+ 
+ // variables lowers const and let declarations, each to a local of its own.
+ func (l *lowering) variables(list *ast.Node) ([]ir.Statement, error) {
+-	if list.Flags&ast.NodeFlagsBlockScoped == 0 {
++	if list.Flags&ast.NodeFlagsBlockScoped == 0 && !namespaceVariable(list) {
+ 		return nil, &Refused{Where: l.program.Where(list), What: "var", Fix: "use const or let"}
+ 	}
+ 	statements := []ir.Statement{}
+@@ -49,7 +49,16 @@ func (l *lowering) variables(list *ast.Node) ([]ir.Statement, error) {
+ 			// is undefined, not the backend's unobservable storage placeholder.
+ 			value = ir.Undefined{Of: ir.Object}
+ 		}
+-		statements = append(statements, ir.Declare{Local: local, Value: fit(value, l.result.Locals[local].Type)})
++		if l.result.Locals[local].NamespaceVar {
++			if value != nil {
++				statements = append(statements, ir.Assign{Local: local, Value: fit(value, l.result.Locals[local].Type)})
++			}
++		} else {
++			if value == nil && l.result.Locals[local].NamespaceState && l.includesUndefined(l.checker.GetTypeAtLocation(name)) {
++				value = fit(ir.Undefined{Of: l.result.Locals[local].Type}, l.result.Locals[local].Type)
++			}
++			statements = append(statements, ir.Declare{Local: local, Value: fit(value, l.result.Locals[local].Type)})
++		}
+ 	}
+ 	return statements, nil
+ }
+@@ -165,7 +174,7 @@ func (l *lowering) touch(local int) {
+ // checked reports whether touching a local must be checked against the temporal dead zone: a
+ // global, from inside a function, which may run before the global's declaration has.
+ func (l *lowering) checked(local int) bool {
+-	return l.function != nil && (l.result.Locals[local].Global || (l.result.Locals[local].Preallocated && l.result.Locals[local].Captured))
++	return l.result.Locals[local].NamespaceState || l.function != nil && (l.result.Locals[local].Global || (l.result.Locals[local].Preallocated && l.result.Locals[local].Captured))
+ }
+ 
+ func (l *lowering) constant(value string) int {
+@@ -179,3 +188,21 @@ func (l *lowering) constant(value string) int {
+ 	l.result.Strings = append(l.result.Strings, value)
+ 	return l.strings[value]
+ }
++
++// localRead preserves checker narrowing for both private and qualified singleton reads.
++func (l *lowering) localRead(node *ast.Node, local int) ir.Expression {
++	read := ir.Expression(ir.Read{Local: local, Of: l.result.Locals[local].Type, Checked: l.checked(local)})
++	if l.result.Locals[local].Type == ir.Union {
++		// Where the checker has narrowed it to fewer members held one way, it's read as that.
++		if narrowed, isKnown := l.representation(l.checker.GetTypeAtLocation(node)); isKnown && narrowed != ir.Union {
++			read = ir.Narrow{Value: read, To: narrowed}
++		}
++	}
++	if declared := l.result.Locals[local].Type; declared.IsMaybe() {
++		// Where the checker has narrowed it to what it holds, it's read as that.
++		if narrowed, _ := l.representation(l.checker.GetTypeAtLocation(node)); narrowed == declared.Present() && !comparedWithUndefined(node) {
++			read = ir.Unwrap{Value: read}
++		}
++	}
++	return l.defined(node, read)
++}
+diff --git a/internal/lower/lower.go b/internal/lower/lower.go
+index 505687e..d08a24e 100644
+--- a/internal/lower/lower.go
++++ b/internal/lower/lower.go
+@@ -35,6 +35,10 @@ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
+ 		return nil, err
+ 	}
+ 	lowering.noteInheritance(modules)
++	lowering.noteAccessorNames(modules)
++	if err := lowering.enumInitialization(modules); err != nil {
++		return nil, err
++	}
+ 	if err := lowering.namespaceInitialization(modules); err != nil {
+ 		return nil, err
+ 	}
+@@ -60,9 +64,15 @@ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
+ 	}
+ 	lowering.result.Main = append(lowering.forwarderValues, lowering.result.Main...)
+ 	lowering.finishClassCalls()
++	if err := lowering.finishAccessors(); err != nil {
++		return nil, err
++	}
+ 	if err := lowering.exceptions(); err != nil {
+ 		return nil, err
+ 	}
++	if err := lowering.checkAccessorSpreads(); err != nil {
++		return nil, err
++	}
+ 	if err := lowering.findCycles(modules); err != nil {
+ 		return nil, err
+ 	}
+@@ -99,6 +109,8 @@ type lowering struct {
+ 	// classes maps each module class's symbol to its declaration, and instances each instantiation
+ 	// already lowered (class.go).
+ 	classes          map[*ast.Symbol]*ast.Node
++	statics          map[*ast.Symbol]*instance
++	staticGlobals    map[*ast.Symbol]int
+ 	instances        map[string]*instance
+ 	derivedAncestors map[*ast.Symbol]bool
+ 
+@@ -133,9 +145,10 @@ type lowering struct {
+ 	// generics maps each generic module function's symbol to its declaration, and genericInstances
+ 	// each instantiation already lowered to its function (generic.go). genericDepth counts the
+ 	// instantiations being lowered inside one another.
+-	generics         map[*ast.Symbol]*ast.Node
+-	genericInstances map[string]int
+-	genericDepth     int
++	generics              map[*ast.Symbol]*ast.Node
++	genericInstances      map[string]int
++	classGenericInstances map[string]map[string]int
++	genericDepth          int
+ 
+ 	// caught are the variables a catch binds, each always an Error; tries are the try statements
+ 	// lowered (exceptions.go).
+@@ -160,5 +173,7 @@ type lowering struct {
+ 	instantiated []*checker.Type
+ 
+ 	// writeSites is every write into a slot lowering made, by its IR node's Site less one (fresh.go).
+-	writeSites []writeSite
++	writeSites       []writeSite
++	accessorCaptures []accessorCapture
++	accessorNames    map[string]bool
+ }
+diff --git a/internal/lower/refusals.go b/internal/lower/refusals.go
+index 181aa2c..7fb3a7f 100644
+--- a/internal/lower/refusals.go
++++ b/internal/lower/refusals.go
+@@ -1,10 +1,12 @@
+ package lower
+ 
+ import (
++	"fmt"
+ 	"strings"
+ 
+ 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+ 	"github.com/microsoft/TypeScript/tsc/shim/checker"
++	"github.com/microsoft/TypeScript/tsc/shim/scanner"
+ )
+ 
+ // refusal is one construct Adamic 0.1 doesn't allow (docs/0.1.md, "What's refused in 0.1"), and the
+@@ -20,13 +22,9 @@ var refusals = map[ast.Kind]refusal{
+ 	ast.KindAwaitExpression:   {"await", "0.1 has no async; it arrives with the concurrency model"},
+ 	ast.KindYieldExpression:   {"yield (generators)", "build an array, or call a function per item"},
+ 	ast.KindDecorator:         {"a decorator", "write the behavior where it applies; 0.1 doesn't rewrite classes at runtime"},
+-	ast.KindGetAccessor:       {"a getter", "write a method: in 0.1 reading a property is just a read"},
+-	ast.KindSetAccessor:       {"a setter", "write a method: in 0.1 writing a property is just a write"},
+-	ast.KindLabeledStatement:  {"a label", "move the loop into a function and return from it"},
+ 	ast.KindWithStatement:     {"with", "name the object you mean"},
+ 	ast.KindDeleteExpression:  {"delete", "an object's shape is fixed; use a Map for keys that come and go"},
+ 	ast.KindDebuggerStatement: {"debugger", "remove it"},
+-	ast.KindVoidExpression:    {"the void operator", "evaluate the expression as a statement"},
+ 	ast.KindIndexSignature:    {"an index signature", "use a Map, which keeps keys in the order they were added"},
+ 	ast.KindExportAssignment:  {"export default", "export by name: one name for one thing"},
+ 	ast.KindTypePredicate:     {"a type predicate", "narrow where you use it, with ===, typeof or instanceof (adamic/no-type-predicate)"},
+@@ -35,16 +33,24 @@ var refusals = map[ast.Kind]refusal{
+ 
+ // refusedOperators are binary operators 0.1 refuses.
+ var refusedOperators = map[ast.Kind]refusal{
+-	ast.KindEqualsEqualsToken:             {"==", "use ===, which doesn't coerce"},
+-	ast.KindExclamationEqualsToken:        {"!=", "use !==, which doesn't coerce"},
+-	ast.KindInKeyword:                     {"in", "an object's shape is known; use a discriminant, or a Map"},
+-	ast.KindCommaToken:                    {"the comma operator", "write each expression as its own statement"},
+-	ast.KindAmpersandAmpersandEqualsToken: {"&&=", "write the if"},
+-	ast.KindBarBarEqualsToken:             {"||=", "write the if"},
++	ast.KindEqualsEqualsToken:      {"==", "use ===, which doesn't coerce"},
++	ast.KindExclamationEqualsToken: {"!=", "use !==, which doesn't coerce"},
++	ast.KindInKeyword:              {"in", "an object's shape is known; use a discriminant, or a Map"},
+ }
+ 
+ // refuse walks a module for what 0.1 refuses and returns the first, with where it is and the fix.
+ func (l *lowering) refuse(module *ast.SourceFile) error {
++	// Use the parser's directives, which also recognize the block forms honored by the checker.
++	// Text in a string or a prose comment never enters this list.
++	if len(module.CommentDirectives) > 0 {
++		directive := module.CommentDirectives[0]
++		name := "@ts-ignore"
++		if directive.Kind == ast.CommentDirectiveKindExpectError {
++			name = "@ts-expect-error"
++		}
++		line, column := scanner.GetLineAndCharacterOfPosition(module, directive.Loc.Pos())
++		return &Refused{Where: fmt.Sprintf("%s:%d:%d", l.program.FileName(module), line+1, column+1), What: name + " suppression directive", Fix: "remove it and fix the type error"}
++	}
+ 	var found error
+ 	var visit ast.Visitor
+ 	visit = func(node *ast.Node) bool {
+@@ -55,6 +61,22 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
+ 			found = &Refused{Where: l.program.Where(node), What: refused.what, Fix: refused.fix}
+ 			return true
+ 		}
++		var assertion *ast.Node
++		if node.Kind == ast.KindPropertyDeclaration {
++			if token := node.PostfixToken(); token != nil && token.Kind == ast.KindExclamationToken {
++				assertion = token
++			}
++		}
++		if node.Kind == ast.KindVariableDeclaration {
++			assertion = node.AsVariableDeclaration().ExclamationToken
++		}
++		if assertion != nil {
++			found = &Refused{Where: l.program.Where(assertion), What: "a definite assignment assertion !", Fix: "remove ! and initialize it where it is declared or in the constructor, or type it T | undefined"}
++			return true
++		}
++		if err := l.enumRefusal(node); err != nil {
++			return true
++		}
+ 		if err := l.enumRefusal(node); err != nil {
+ 			found = err
+ 			return true
+@@ -69,6 +91,19 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
+ 				return true
+ 			}
+ 		}
++		generator := false
++		switch node.Kind {
++		case ast.KindFunctionDeclaration:
++			generator = node.AsFunctionDeclaration().AsteriskToken != nil
++		case ast.KindFunctionExpression:
++			generator = node.AsFunctionExpression().AsteriskToken != nil
++		case ast.KindMethodDeclaration:
++			generator = node.AsMethodDeclaration().AsteriskToken != nil
++		}
++		if generator {
++			found = &Refused{Where: l.program.Where(node), What: "a generator function", Fix: "use an explicit iterator object; suspended frames need ownership and cancellation rules before generators can be compiled without a collector (docs/user-iterators.md)"}
++			return true
++		}
+ 		if ast.IsFunctionLike(node) && ast.HasSyntacticModifier(node, ast.ModifierFlagsAsync) {
+ 			found = &Refused{Where: l.program.Where(node), What: "an async function", Fix: "0.1 has no async; it arrives with the concurrency model"}
+ 			return true

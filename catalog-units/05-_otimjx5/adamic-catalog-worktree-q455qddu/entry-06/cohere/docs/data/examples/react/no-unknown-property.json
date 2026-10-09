@@ -1,0 +1,10 @@
+{
+    "rule": "react/no-unknown-property",
+    "assertedMessageIds": [
+        "dataLowercaseRequired",
+        "invalidPropOnTag",
+        "unknownProp",
+        "unknownPropWithStandardName"
+    ],
+    "assertsFix": true
+}

@@ -1,0 +1,27 @@
+{
+    "rule": "prefer-numeric-literals",
+    "firing": {
+        "file": "file.ts",
+        "source": "parseInt('11', 2)\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 1,
+                "endLine": 1,
+                "endColumn": 18,
+                "messageId": "useLiteral",
+                "message": "Use binary literals instead of parseInt(). A literal says the value in the base it was written in, with no call to read and no radix argument to get wrong, and the engine reads it at parse time rather than at every evaluation.",
+                "fix": true
+            }
+        ],
+        "fixedSource": "0b11\n"
+    },
+    "clean": {
+        "file": "file.ts",
+        "source": "parseInt(1);\n"
+    },
+    "assertedMessageIds": [
+        "useLiteral"
+    ],
+    "assertsFix": true
+}

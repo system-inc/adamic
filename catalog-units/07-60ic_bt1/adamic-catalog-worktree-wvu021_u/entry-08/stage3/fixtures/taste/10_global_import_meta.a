@@ -1,0 +1,16 @@
+// From TypeScript 6.0.3, src/compiler/checker.ts:17510
+// Census reason: ||=
+type __String = string;
+interface Type {flags: number;}
+let deferredGlobalImportMetaType: Type | undefined;
+const emptyObjectType: Type = {flags: 0};
+let calls = 0;
+function getGlobalType(name: string, arity: number, reportErrors: boolean): Type | undefined {calls++; return undefined;}
+function getGlobalImportMetaType() {
+        // We always report an error, so store a result in the event we could not resolve the symbol to prevent reporting it multiple times
+        return deferredGlobalImportMetaType ||= getGlobalType("ImportMeta" as __String, /*arity*/ 0, /*reportErrors*/ true) || emptyObjectType;
+    }
+
+console.log(String(getGlobalImportMetaType() === emptyObjectType));
+console.log(String(getGlobalImportMetaType() === emptyObjectType));
+console.log(String(calls));

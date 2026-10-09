@@ -1,0 +1,24 @@
+{
+    "rule": "@typescript-eslint/no-duplicate-enum-values",
+    "firing": {
+        "file": "/repository/source/Values.ts",
+        "source": "enum E { A = 1, B = 1 }\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 14,
+                "endLine": 1,
+                "endColumn": 15,
+                "messageId": "noDuplicateEnumValues",
+                "message": "Two members of this enum are initialized to the same value. TypeScript permits it, but a reader expects members of one enum to name distinct things, and a reverse lookup by value can only return one of them, so the later member silently wins. The usual cause is a copied line whose value was never changed. Give each member its own value."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/Values.ts",
+        "source": "enum E { A = -1, B = -1 }\n"
+    },
+    "assertedMessageIds": [
+        "noDuplicateEnumValues"
+    ]
+}

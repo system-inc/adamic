@@ -1,0 +1,2 @@
+// a-check: refused the void operator
+console.log(String(void 0));

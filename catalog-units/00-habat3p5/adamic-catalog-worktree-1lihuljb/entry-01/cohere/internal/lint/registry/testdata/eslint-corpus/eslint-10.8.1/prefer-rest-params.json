@@ -1,0 +1,13 @@
+[
+{"code":"arguments;","eslint":[]},
+{"code":"function foo(arguments) { arguments; }","eslint":[]},
+{"code":"function foo() { var arguments; arguments; }","eslint":[]},
+{"code":"var foo = () => arguments;","eslint":[]},
+{"code":"function foo(...args) { args; }","eslint":[]},
+{"code":"function foo() { arguments.length; }","eslint":[]},
+{"code":"function foo() { arguments.callee; }","eslint":[]},
+{"code":"function foo() { arguments; }","eslint":[["preferRestParams",17,26]]},
+{"code":"function foo() { arguments[0]; }","eslint":[["preferRestParams",17,26]]},
+{"code":"function foo() { arguments[1]; }","eslint":[["preferRestParams",17,26]]},
+{"code":"function foo() { arguments[Symbol.iterator]; }","eslint":[["preferRestParams",17,26]]}
+]

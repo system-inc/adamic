@@ -1,0 +1,15 @@
+{
+  "name": "require-yield",
+  "kinds": [
+    "FunctionDeclaration",
+    "FunctionExpression",
+    "MethodDeclaration"
+  ],
+  "visit": "visit",
+  "node": true,
+  "oracle": "oracleRequireYield",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestRequireYield",
+  "factory": "create",
+  "class": "Rule"
+}

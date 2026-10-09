@@ -1,0 +1,22 @@
+[
+{"code":"function fn() { return }","eslint":[]},
+{"code":"function fn(kumiko) { if (kumiko) { return kumiko } }","eslint":[]},
+{"code":"const fn = function () { return }","eslint":[]},
+{"code":"const fn = function () { if (kumiko) { return kumiko } }","eslint":[]},
+{"code":"const fn = () => { return }","eslint":[]},
+{"code":"const fn = () => { if (kumiko) { return kumiko } }","eslint":[]},
+{"code":"return 'Kumiko Oumae'","eslint":[]},
+{"code":"class C {  }","eslint":[]},
+{"code":"class C { constructor() {} }","eslint":[]},
+{"code":"class C { constructor() { let v } }","eslint":[]},
+{"code":"class C { method() { return '' } }","eslint":[]},
+{"code":"class C { get value() { return '' } }","eslint":[]},
+{"code":"class C { constructor(a) { if (!a) { return } else { a() } } }","eslint":[]},
+{"code":"class C { constructor() { function fn() { return true } } }","eslint":[]},
+{"code":"class C { constructor() { this.fn = function () { return true } } }","eslint":[]},
+{"code":"class C { constructor() { this.fn = () => { return true } } }","eslint":[]},
+{"code":"class C { constructor() { return } }","eslint":[]},
+{"code":"class C { constructor() { { return } } }","eslint":[]},
+{"code":"class C { constructor() { return '' } }","eslint":[["unexpected",26,35]]},
+{"code":"class C { constructor(a) { if (!a) { return '' } else { a() } } }","eslint":[["unexpected",37,46]]}
+]

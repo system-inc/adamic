@@ -1,0 +1,5 @@
+{"kind":"formatted","path":"source/a.ts"}
+{"kind":"formatted","path":"source/b.ts"}
+{"kind":"formatted","path":"source/c.ts"}
+{"kind":"formatted","path":"tsconfig.json"}
+{"kind":"summary","schemaVersion":1,"verdict":"pass","seconds":0.128009667,"graphSeconds":0.019440583,"rules":276,"phases":[{"name":"fix","outcome":"ran","seconds":0.053661625},{"name":"types","outcome":"ran","seconds":0.008629999},{"name":"lint","outcome":"ran","seconds":0.001833667},{"name":"unused","outcome":"skipped","seconds":0,"detail":"not requested — this is a report, ask for it with --unused"}],"formattingSeconds":0.0031765,"cache":{"replayed":false,"filesReplayed":0,"off":true},"typeErrors":0,"findings":0,"filesFixed":0,"filesFormatted":4,"wouldChange":0,"cohered":4,"filesInScope":3,"checked":3,"cached":0,"nodes":69,"gaps":{"programFiles":0,"crashedFiles":0,"ruleCrashes":0,"rulesSkippingEverything":0,"formattingNotChecked":false,"nothingToCheck":false,"modifiedBuild":false},"adamic":{"measured":true,"files":3,"ready":3,"unmeasured":0,"optionsMissing":["noUncheckedIndexedAccess","exactOptionalPropertyTypes"],"failingFilesByRule":{}}}

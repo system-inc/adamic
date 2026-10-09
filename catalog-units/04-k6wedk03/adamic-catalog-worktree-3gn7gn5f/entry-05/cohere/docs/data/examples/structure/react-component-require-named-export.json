@@ -1,0 +1,24 @@
+{
+    "rule": "structure/react-component-require-named-export",
+    "firing": {
+        "file": "/repository/source/components/Button.tsx",
+        "source": "export default function Button() {\n    return <div />;\n}\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 25,
+                "endLine": 1,
+                "endColumn": 31,
+                "messageId": "componentRequiresNamedExport",
+                "message": "This file declares a component and exports nothing by name, so a consumer can only reach it through a default import, which lets every importer choose its own name for the same component. That makes the codebase impossible to grep: the thing is called one name where it is written and another wherever it is used, and a rename never propagates. Put `export` on the declaration."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/components/Button.tsx",
+        "source": "export default 42;\n"
+    },
+    "assertedMessageIds": [
+        "componentRequiresNamedExport"
+    ]
+}

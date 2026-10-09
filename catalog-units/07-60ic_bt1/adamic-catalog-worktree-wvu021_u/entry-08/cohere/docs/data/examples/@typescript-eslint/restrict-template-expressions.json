@@ -1,0 +1,24 @@
+{
+    "rule": "@typescript-eslint/restrict-template-expressions",
+    "firing": {
+        "file": "/repository/source/Templating.ts",
+        "source": "declare const o: object;\n`${o}`;\n",
+        "findings": [
+            {
+                "line": 2,
+                "column": 4,
+                "endLine": 2,
+                "endColumn": 5,
+                "messageId": "invalidType",
+                "message": "Invalid type \"object\" of template literal expression."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/Templating.ts",
+        "source": "declare const e: Error;\n`${e}`;\n"
+    },
+    "assertedMessageIds": [
+        "invalidType"
+    ]
+}

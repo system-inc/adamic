@@ -1,0 +1,24 @@
+{
+    "rule": "better-tailwindcss/enforce-canonical-classes",
+    "firing": {
+        "file": "Styles.ts",
+        "source": "const className = 'w-8 h-8';\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 20,
+                "endLine": 1,
+                "endColumn": 27,
+                "messageId": "canonicalCollapse",
+                "message": "The classes \"w-8\", \"h-8\" say the same thing as \"size-8\". Class names are the one part of this codebase with no compiler, so the only way anyone finds them is by reading and searching text, and two files that mean the same layout should say it the same way. Otherwise a search for one spelling misses the other and the design system's vocabulary quietly forks."
+            }
+        ]
+    },
+    "clean": {
+        "file": "Component.tsx",
+        "source": "const element = <div className=\"ml-2\" />;\n"
+    },
+    "assertedMessageIds": [
+        "canonicalCollapse"
+    ]
+}

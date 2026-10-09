@@ -1,0 +1,26 @@
+{
+    "rule": "no-implicit-globals",
+    "firing": {
+        "file": "/repository/source/ImplicitGlobals.ts",
+        "source": "var a = 1;",
+        "findings": [
+            {
+                "line": 1,
+                "column": 5,
+                "endLine": 1,
+                "endColumn": 10,
+                "messageId": "globalNonLexicalBinding",
+                "message": "This declaration lands in the global scope, where every other script on the page can see it and any of them can replace it. Wrap it in an immediately invoked function for a local, or assign it as a property of the global object if it is meant to be shared."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/ImplicitGlobals.ts",
+        "source": "const a = 1;"
+    },
+    "assertedMessageIds": [
+        "globalLexicalBinding",
+        "globalNonLexicalBinding",
+        "globalVariableLeak"
+    ]
+}

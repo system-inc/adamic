@@ -1,0 +1,193 @@
+=== RUN   TestArgumentLayouts
+--- PASS: TestArgumentLayouts (0.00s)
+=== RUN   TestCallTargetReaders
+=== PAUSE TestCallTargetReaders
+=== CONT  TestCallTargetReaders
+--- PASS: TestCallTargetReaders (24.70s)
+PASS
+ok  	github.com/system-inc/adamic/internal/ir	24.715s
+=== RUN   TestNonNullAssertionLowersToNullishPanic
+=== PAUSE TestNonNullAssertionLowersToNullishPanic
+=== RUN   TestNonNullAssertionOnPresentTypeIsErased
+=== PAUSE TestNonNullAssertionOnPresentTypeIsErased
+=== CONT  TestNonNullAssertionLowersToNullishPanic
+=== CONT  TestNonNullAssertionOnPresentTypeIsErased
+--- PASS: TestNonNullAssertionLowersToNullishPanic (0.06s)
+--- PASS: TestNonNullAssertionOnPresentTypeIsErased (0.07s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.093s
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== RUN   TestNonNullWeakFreedNamesExpression
+=== PAUSE TestNonNullWeakFreedNamesExpression
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/non_null.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/non_null.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/non_null_map.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/non_null_map.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/non_null_catch.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/non_null_catch.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/non_null_field.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/non_null_field.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/non_null_capture.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/non_null_capture.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/non_null_array.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/non_null_array.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/non_null_union.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/non_null_union.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/non_null_boolean.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/non_null_boolean.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/non_null_null.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/non_null_null.a
+=== CONT  TestNonNullWeakFreedNamesExpression
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_f2_union_narrow_call.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_f2_union_narrow_call.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_f2b_union_narrow_number.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_f2b_union_narrow_number.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/non_null_initialized.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/non_null_initialized.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/non_null_uninitialized.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/non_null_uninitialized.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/non_null_uninitialized_field.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/non_null_uninitialized_field.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/non_null_uninitialized_capture.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/non_null_uninitialized_capture.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/non_null_uninitialized_exception.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/non_null_uninitialized_exception.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/non_null_uninitialized_loop.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/non_null_uninitialized_loop.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/non_null_uninitialized_default.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/non_null_uninitialized_default.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/non_null_uninitialized_const.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/non_null_uninitialized_const.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/non_null_weak.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/non_null_weak.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/non_null_definite.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/non_null_definite.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/non_null_definite_local.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/non_null_definite_local.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/non_null_definite_field.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/non_null_definite_field.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/non_null_static_initialized.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/non_null_static_initialized.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/non_null_static_uninitialized.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/non_null_static_uninitialized.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/non_null_uninitialized_optional.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/non_null_uninitialized_optional.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/non_null_uninitialized_spread.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/non_null_uninitialized_spread.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/non_null_literal_return.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/non_null_literal_return.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/non_null_literal_assignment.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/non_null_literal_assignment.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/non_null_literal_statement.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/non_null_literal_statement.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/non_null_uninitialized_iteration.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/non_null_uninitialized_iteration.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/non_null_uninitialized_catch.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/non_null_uninitialized_catch.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/non_null_uninitialized_interface.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/non_null_uninitialized_interface.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/non_null_uninitialized_append.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/non_null_uninitialized_append.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/non_null_uninitialized_map_entry.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/non_null_uninitialized_map_entry.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/non_null_lazy_initialized.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/non_null_lazy_initialized.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/non_null_lazy_read.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/non_null_lazy_read.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/non_null_lazy_field.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/non_null_lazy_field.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/non_null_lazy_static.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/non_null_lazy_static.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/non_null_lazy_default.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/non_null_lazy_default.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/non_null.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_definite.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_lazy_default.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_lazy_static.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_lazy_field.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_lazy_read.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_lazy_initialized.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_uninitialized_map_entry.a
+=== NAME  TestNonNullWeakFreedNamesExpression
+    readiness_test.go:220: freed Weak diagnostic mutant caught: adamic: panic: a weak reference was read after what it pointed to was freed
+--- PASS: TestNonNullWeakFreedNamesExpression (1.81s)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_uninitialized_append.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_uninitialized_interface.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_uninitialized_catch.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_uninitialized_iteration.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_literal_statement.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_literal_assignment.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_literal_return.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_uninitialized_spread.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_uninitialized_optional.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_static_uninitialized.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_static_initialized.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_definite_field.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_definite_local.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_f2b_union_narrow_number.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_weak.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_uninitialized_const.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_uninitialized_default.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_uninitialized_loop.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_uninitialized_exception.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_uninitialized_capture.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_uninitialized_field.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_uninitialized.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_initialized.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_array.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_f2_union_narrow_call.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_null.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_boolean.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_union.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_field.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_capture.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_catch.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/non_null_map.a
+--- PASS: TestNativeAgreesWithNode (0.06s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/non_null_lazy_default.a (1.39s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/non_null_definite.a (1.65s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/non_null_lazy_static.a (1.66s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/non_null.a (1.74s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/non_null_lazy_field.a (1.37s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/non_null_uninitialized_map_entry.a (1.40s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/non_null_lazy_initialized.a (1.68s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/non_null_lazy_read.a (1.79s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/non_null_uninitialized_append.a (1.70s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/non_null_uninitialized_interface.a (1.31s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/non_null_uninitialized_catch.a (1.17s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/non_null_literal_statement.a (1.11s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/non_null_literal_assignment.a (1.32s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/non_null_uninitialized_iteration.a (1.44s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/non_null_literal_return.a (1.38s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/non_null_uninitialized_spread.a (1.63s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/non_null_uninitialized_optional.a (1.65s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/non_null_static_uninitialized.a (1.46s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/non_null_static_initialized.a (2.29s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/non_null_definite_field.a (2.82s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/non_null_definite_local.a (2.62s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_f2b_union_narrow_number.a (2.60s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/non_null_weak.a (2.91s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/non_null_uninitialized_const.a (2.61s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/non_null_uninitialized_exception.a (2.35s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/non_null_uninitialized_default.a (3.22s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/non_null_uninitialized_loop.a (3.03s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/non_null_uninitialized_capture.a (3.51s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/non_null_uninitialized_field.a (3.05s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/non_null_uninitialized.a (2.10s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/non_null_array.a (2.05s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/non_null_initialized.a (3.02s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/non_null_null.a (2.20s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_f2_union_narrow_call.a (2.68s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/non_null_union.a (1.81s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/non_null_boolean.a (2.28s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/non_null_field.a (1.77s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/non_null_capture.a (1.64s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/non_null_catch.a (1.31s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/non_null_map.a (1.32s)
+PASS
+gate cache: native hits=0 misses=85
+gate cache: node hits=0 misses=82
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	16.829s

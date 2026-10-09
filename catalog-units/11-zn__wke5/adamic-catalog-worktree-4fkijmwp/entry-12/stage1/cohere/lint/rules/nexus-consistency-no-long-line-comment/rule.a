@@ -1,0 +1,106 @@
+import { panic, utf8Length } from 'adamic';
+import type { RuleContext } from '../../context.ts';
+import type { CommentRange } from '../../comment_ranges.a';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { SuggestionEdit } from '../../suggestions.a';
+import { messageLongLineComment } from './messages.a';
+import { commentRanges, trim } from './comments.a';
+
+function report(context: RuleContext, run: readonly CommentRange[], maximum: number): void {
+    if(run.length <= maximum) {
+        return;
+    }
+    const first = run[0] ?? panic('empty comment run');
+    const last = run[run.length - 1] ?? panic('empty comment run');
+    const indent = ' '.repeat(first.column);
+    let replacement = '/*\n';
+    let safe = true;
+    for(const comment of run) {
+        if(comment.text.includes('*/')) {
+            safe = false;
+        }
+        let text = comment.text.slice(2);
+        if(text.startsWith(' ')) {
+            text = text.slice(1);
+        }
+        replacement += `${indent} *${trim(text) === '' ? '' : ` ${text}`}\n`;
+    }
+    replacement += `${indent} */`;
+    const edits: SuggestionEdit[] = [];
+    if(safe) { edits.push(new SuggestionEdit(first.start, last.end, replacement)); }
+    context.reportRange(
+        first.start,
+        last.end,
+        'nexus/consistency-no-long-line-comment',
+        'longLineComment',
+        messageLongLineComment(run.length.toString()),
+        edits,
+    );
+}
+export function noLongLineComment(context: RuleContext, ranges: readonly CommentRange[]): void {
+    const configured = parseInt(context.settings.read('maximumlinecount', '4'), 10);
+    const maximum = configured > 0 ? configured : 4;
+    const sourceLines = context.source.split('\n');
+    let run: CommentRange[] = [];
+    for(const comment of ranges) {
+        const body = trim(comment.text.slice(2));
+        let directive = false;
+        for(const prefix of [
+            'eslint-',
+            '@ts-',
+            'prettier-ignore',
+            'istanbul ',
+            'c8 ',
+            'v8 ',
+            '#__PURE__',
+            'global ',
+            'globals ',
+            'exported ',
+        ]) {
+            if(body.startsWith(prefix)) {
+                directive = true;
+            }
+        }
+        const line = sourceLines[comment.line];
+        let prefix = '';
+        let bytes = 0;
+        if(line !== undefined) {
+            for(let cursor = 0; cursor < line.length && bytes < comment.column; cursor++) {
+                const point = line.codePointAt(cursor) ?? 0;
+                const character = String.fromCodePoint(point);
+                prefix += character;
+                bytes += utf8Length(character);
+                if(point > 65535) {
+                    cursor++;
+                }
+            }
+        }
+        if(
+            !comment.text.startsWith('//') ||
+            directive ||
+            line === undefined ||
+            bytes !== comment.column ||
+            trim(prefix) !== ''
+        ) {
+            report(context, run, maximum);
+            run = [];
+            continue;
+        }
+        const previous = run[run.length - 1];
+        if(previous !== undefined && (previous.endLine + 1 !== comment.line || previous.column !== comment.column)) {
+            report(context, run, maximum);
+            run = [];
+        }
+        run.push(comment);
+    }
+    report(context, run, maximum);
+}
+
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) { this.context = context; }
+    visit(node: ParseNode, index: number): void {
+        noLongLineComment(this.context, commentRanges(this.context, node, index));
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

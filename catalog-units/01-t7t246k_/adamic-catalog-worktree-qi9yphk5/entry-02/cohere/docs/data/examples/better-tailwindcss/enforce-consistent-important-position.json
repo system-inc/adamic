@@ -1,0 +1,24 @@
+{
+    "rule": "better-tailwindcss/enforce-consistent-important-position",
+    "firing": {
+        "file": "Component.tsx",
+        "source": "const element = <div className=\"!-mt-4\" />;",
+        "findings": [
+            {
+                "line": 1,
+                "column": 33,
+                "endLine": 1,
+                "endColumn": 39,
+                "messageId": "importantPosition",
+                "message": "The important marker on \"!-mt-4\" is written where Tailwind v3 put it. Tailwind v4 moved it to the end of the utility, so this is spelled \"-mt-4!\" now. Both still compile, which is exactly why a v3 habit survives a paste and then sits next to the v4 spelling with nothing to say which one the file means. Write it as \"-mt-4!\"."
+            }
+        ]
+    },
+    "clean": {
+        "file": "Component.tsx",
+        "source": "const element = <div className=\"!\" />;"
+    },
+    "assertedMessageIds": [
+        "importantPosition"
+    ]
+}

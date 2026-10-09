@@ -1,0 +1,24 @@
+{
+    "rule": "react/require-optimization",
+    "firing": {
+        "file": "/repository/source/RequireOptimization.tsx",
+        "source": "declare const React: any;\nclass C extends React.Component {}\n",
+        "findings": [
+            {
+                "line": 2,
+                "column": 1,
+                "endLine": 2,
+                "endColumn": 35,
+                "messageId": "noShouldComponentUpdate",
+                "message": "This class component re-renders whenever its parent does, even when nothing it displays has changed. React cannot know that on its own, so the component has to say so: add a `shouldComponentUpdate` method, or extend `React.PureComponent`, which compares props and state shallowly for you."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/RequireOptimization.tsx",
+        "source": "declare const React: any;\nclass C extends React.PureComponent {}\n"
+    },
+    "assertedMessageIds": [
+        "noShouldComponentUpdate"
+    ]
+}

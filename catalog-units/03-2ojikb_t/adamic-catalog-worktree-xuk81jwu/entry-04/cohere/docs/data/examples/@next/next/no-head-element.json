@@ -1,0 +1,24 @@
+{
+    "rule": "@next/next/no-head-element",
+    "firing": {
+        "file": "components/Shell.tsx",
+        "source": "export const C = () => <div><head /></div>;",
+        "findings": [
+            {
+                "line": 1,
+                "column": 29,
+                "endLine": 1,
+                "endColumn": 37,
+                "messageId": "noHeadElement",
+                "message": "This is a raw <head> element. Use the `Head` component from `next/head`, which merges what every page contributes and deduplicates it, so two components asking for a title do not both emit one. A hand-written <head> is emitted as-is and silently competes with whatever the framework already put there."
+            }
+        ]
+    },
+    "clean": {
+        "file": "components/Shell.tsx",
+        "source": "export const C = () => <Foo.head />;"
+    },
+    "assertedMessageIds": [
+        "noHeadElement"
+    ]
+}

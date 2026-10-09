@@ -1,0 +1,22 @@
+=== RUN   TestOwnedWitnesses
+    registration_test.go:45: Go, Node, emitted JavaScript, native identical: 18044 bytes
+--- PASS: TestOwnedWitnesses (15.18s)
+=== RUN   TestNextSupported
+    lint_test.go:324: cohere cases: 417 unique source/rule/options combinations
+    wave07_overlay_test.go:21: no-this-alias upstream cases 38; all supported 415; JSX excluded 2
+    wave07_overlay_test.go:22: Go, Node, emitted JavaScript, native identical: 131001 bytes
+--- PASS: TestNextSupported (22.24s)
+=== RUN   TestNextCorpus
+    wave07_overlay_test.go:34: compiler plus stage1: 200 file/rule rows
+    wave07_overlay_test.go:35: Go, Node, emitted JavaScript, native identical: 12214489 bytes
+--- PASS: TestNextCorpus (28.21s)
+=== RUN   TestNextOptions
+    wave07_overlay_test.go:43: Go, Node, emitted JavaScript, native identical: 10165 bytes
+--- PASS: TestNextOptions (14.80s)
+=== RUN   TestNextThroughput
+    wave07_overlay_test.go:57: no-this-alias Go 0.008800s 113642.50 findings/s; best of 5 including startup, 1000 synthetic declarations
+    wave07_overlay_test.go:57: no-this-alias native 0.006237s 160329.12 findings/s; best of 5 including startup, 1000 synthetic declarations
+    wave07_overlay_test.go:57: no-this-alias Node 0.110662s 9036.54 findings/s; best of 5 including startup, 1000 synthetic declarations
+--- PASS: TestNextThroughput (5.90s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	86.345s

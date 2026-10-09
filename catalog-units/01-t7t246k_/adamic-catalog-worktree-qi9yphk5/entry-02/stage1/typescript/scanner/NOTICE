@@ -1,0 +1,7 @@
+Adamic scanner port of typescript-go.
+Copyright (c) Microsoft Corporation. All rights reserved.
+Source: cohere/TypeScript/tsc, commit 8d550c837c90bd1805b047b7eeccc2baac2d5e7a.
+Licensed under the Apache License, Version 2.0; see LICENSE.
+Unicode identifier tables derive from Unicode 15.1. See the Unicode-3.0
+notice and license in the repository THIRD_PARTY_NOTICES.md.
+The port changes implementation language, string representation and driver.

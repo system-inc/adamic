@@ -1,0 +1,93 @@
+{
+	"ExtraFunctions": [
+		"isNonDeferredTypeReference",
+		"newTypeMapper"
+	],
+	"ExtraMethods": {
+		"Checker": [
+			"getBaseConstraintOfType",
+			"getImmediateAliasedSymbol",
+			"resolveAlias",
+			"getDeclaredTypeOfSymbol",
+			"getBaseTypes",
+			"getSignaturesOfType",
+			"getApparentType",
+			"getIndexTypeOfType",
+			"getPropertyOfType",
+			"getPropertiesOfType",
+			"getSignaturesOfType",
+			"getPropertyNameForKnownSymbolName",
+			"getTypeFromTypeNode",
+			"getAccessedPropertyName",
+			"isArrayOrTupleType",
+			"isArrayType",
+			"getTypeArguments",
+			"getContextualType",
+			"getAwaitedType",
+			"getTypeOfSymbol",
+			"getReturnTypeOfSignature",
+			"getContextualTypeForArgumentAtIndex",
+			"getResolvedSignature",
+			"getBaseTypeOfLiteralType",
+			"getWidenedType",
+			"isTypeAssignableTo",
+			"isTypeIdenticalTo",
+			"isReadonlySymbol",
+			"isTypeStrictSubtypeOf",
+			"functionHasImplicitReturn",
+			"isUnwrappedReturnTypeUndefinedVoidOrAny",
+			"getReturnTypeFromAnnotation",
+			"unwrapReturnType",
+			"maybeTypeOfKind",
+			"getSignatureFromDeclaration",
+			"getTypeOfAccessors",
+			"getNonMissingTypeOfSymbol",
+			"instantiateType",
+			"getCanonicalSignature",
+			"instantiateSignatureInContextOf"
+		]
+	},
+	"ExtraFields": {
+		"Type": [
+			"alias",
+			"flags",
+			"symbol",
+			"objectFlags"
+		],
+		"TupleType": [
+			"combinedFlags"
+		],
+		"Signature": [
+			"parameters",
+			"declaration"
+		],
+		"Checker": [
+			"numberType",
+			"stringType",
+			"booleanType",
+			"globalRegExpType",
+			"undefinedType"
+		],
+		"InterfaceType": [
+			"thisType"
+		]
+	},
+	"TypeSubstitutions": {
+		"checker.thisAssignmentDeclarationKind": "int32",
+		"checker.symbolTableID": "uint64",
+		"checker.nodeLinkStore": "core.PagedLinkStore",
+		"checker.symbolArenaLinkStore": "arenaPagedLinkStore"
+	},
+	"ExtraDeclarations": [
+		"// arenaPagedLinkStore stands in for checker.symbolArenaLinkStore, whose name is unexported.",
+		"//",
+		"// It must match that type's size and alignment exactly, because the mirror it appears in is read",
+		"// through unsafe.Pointer by field offset. Upstream is a PagedLinkStore of pointers plus an Arena of",
+		"// values (TypeScript/tsc/internal/checker/links.go), and substituting the store half alone left",
+		"// the mirror 24 bytes short, which silently corrupted every field declared after it.",
+		"type arenaPagedLinkStore[V any] struct {",
+		"\tstore core.PagedLinkStore[*V]",
+		"\tarena core.Arena[V]",
+		"}"
+	]
+}

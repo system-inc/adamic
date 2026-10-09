@@ -1,0 +1,12 @@
+{
+    "rule": "@typescript-eslint/no-restricted-types",
+    "clean": {
+        "file": "/repository/source/Restricted.ts",
+        "source": "let value: string;\n"
+    },
+    "assertedMessageIds": [
+        "bannedTypeMessage"
+    ],
+    "assertsFix": true,
+    "assertsSuggestion": true
+}

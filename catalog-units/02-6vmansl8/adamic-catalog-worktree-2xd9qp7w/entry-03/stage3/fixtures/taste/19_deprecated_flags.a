@@ -1,0 +1,9 @@
+// From TypeScript 6.0.3, src/compiler/checker.ts:2617
+// Census reason: non-boolean control condition
+interface Declaration {flags: number;}
+const NodeFlags = {Deprecated: 536870912};
+function getCombinedNodeFlagsCached(declaration: Declaration): number {return declaration.flags;}
+function isDeprecatedDeclaration(declaration: Declaration) {
+        return !!(getCombinedNodeFlagsCached(declaration) & NodeFlags.Deprecated);
+    }
+for (const flags of [0, 1, 536870912, 536870913]) {console.log(String(isDeprecatedDeclaration({flags})));}

@@ -1,0 +1,34 @@
+{
+  "family": "diagnostics",
+  "reason": "Two private JSON conversion sinks expose only push(DiagnosticWithLocation), which is the only operation performed. Captured generic diagnostic views into wider mutable storage are excluded.",
+  "edits": [
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "before": "    type Diagnostic,",
+      "after": "    type Diagnostic, type DiagnosticWithLocation,"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "before": "function convertConfigFileToObject(\r\n    sourceFile: JsonSourceFile,\r\n    errors: Diagnostic[],\r\n    jsonConversionNotifier: JsonConversionNotifier | undefined,\r\n): any ",
+      "after": "function convertConfigFileToObject(\r\n    sourceFile: JsonSourceFile,\r\n    errors: Pick<DiagnosticWithLocation[], \"push\">,\r\n    jsonConversionNotifier: JsonConversionNotifier | undefined,\r\n): any "
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "before": "export function convertToJson(\r\n    sourceFile: JsonSourceFile,\r\n    rootExpression: Expression | undefined,\r\n    errors: Diagnostic[],\r\n    returnValue: boolean,\r\n    jsonConversionNotifier: JsonConversionNotifier | undefined,\r\n): any ",
+      "after": "export function convertToJson(\r\n    sourceFile: JsonSourceFile,\r\n    rootExpression: Expression | undefined,\r\n    errors: Pick<DiagnosticWithLocation[], \"push\">,\r\n    returnValue: boolean,\r\n    jsonConversionNotifier: JsonConversionNotifier | undefined,\r\n): any "
+    }
+  ],
+  "owners": [
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "function": "convertConfigFileToObject",
+      "runtime_sha256": "91947d1277534294038595087066bf9463ac8a7e0a797ab00f0f047420b86e6e"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "function": "convertToJson",
+      "runtime_sha256": "762a2b67b9c9b9f07e5336ee893fcaa9a3f821a809949cbb19def9d66046de7a"
+    }
+  ],
+  "undo_index": 1
+}

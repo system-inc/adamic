@@ -1,0 +1,27 @@
+{
+    "rule": "no-unsafe-finally",
+    "firing": {
+        "file": "finally.ts",
+        "source": "for (;;) try {} finally { break; }",
+        "findings": [
+            {
+                "line": 1,
+                "column": 27,
+                "endLine": 1,
+                "endColumn": 33,
+                "messageId": "unsafeBreak",
+                "message": "A `break` inside `finally` leaves the try statement before the pending return or throw can complete, so the value is discarded and the exception never surfaces. Execution continues after the loop as though nothing had failed."
+            }
+        ]
+    },
+    "clean": {
+        "file": "clean.ts",
+        "source": "var foo = function() { try {} finally { while (true) break; } };"
+    },
+    "assertedMessageIds": [
+        "unsafeBreak",
+        "unsafeContinue",
+        "unsafeReturn",
+        "unsafeThrow"
+    ]
+}

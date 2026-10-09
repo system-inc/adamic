@@ -1,0 +1,4 @@
+// From TypeScript 6.0.3, src/compiler/core.ts:1794
+// Census reason: an import cycle
+import { nullTimer } from './_namespaces/ts.a';
+export function noop(_?: unknown): void {}

@@ -1,0 +1,24 @@
+{
+    "rule": "structure/react-element-no-horizontal-rule",
+    "firing": {
+        "file": "/repository/source/components/Page.tsx",
+        "source": "export function Page() {\n    return <div><hr /></div>;\n}\n",
+        "findings": [
+            {
+                "line": 2,
+                "column": 17,
+                "endLine": 2,
+                "endColumn": 23,
+                "messageId": "noHrElement",
+                "message": "This is a raw <hr> element. Use the HorizontalRule component from @structure/source/components/layout/HorizontalRule instead, so a change to how a divider looks lands everywhere at once rather than in the files somebody remembered."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/components/layout/HorizontalRule.tsx",
+        "source": "export function HorizontalRule() {\n    return <hr />;\n}\n"
+    },
+    "assertedMessageIds": [
+        "noHrElement"
+    ]
+}

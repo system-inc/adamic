@@ -1,0 +1,1676 @@
+{
+  "tailwindVersion": "4.3.3",
+  "fixtures": [
+    {
+      "literal": "px-4 py-4",
+      "classes": [
+        "px-4",
+        "py-4"
+      ],
+      "engineCollapses": [
+        {
+          "input": [
+            "px-4",
+            "py-4"
+          ],
+          "output": "p-4"
+        }
+      ],
+      "bucketKeys": {
+        "px-4": "||4",
+        "py-4": "||4"
+      },
+      "parsedCandidates": {
+        "px-4": [
+          {
+            "Kind": "Functional",
+            "Root": "px",
+            "Value": {
+              "Kind": "Named",
+              "Value": "4",
+              "Fraction": ""
+            },
+            "Important": false,
+            "Variants": []
+          }
+        ],
+        "py-4": [
+          {
+            "Kind": "Functional",
+            "Root": "py",
+            "Value": {
+              "Kind": "Named",
+              "Value": "4",
+              "Fraction": ""
+            },
+            "Important": false,
+            "Variants": []
+          }
+        ]
+      },
+      "declaredValues": {
+        "px-4": [
+          "calc(var(--spacing) * 4)"
+        ],
+        "py-4": [
+          "calc(var(--spacing) * 4)"
+        ]
+      },
+      "declaredProperties": {
+        "px-4": [
+          "padding-inline"
+        ],
+        "py-4": [
+          "padding-block"
+        ]
+      }
+    },
+    {
+      "literal": "w-8 h-8",
+      "classes": [
+        "w-8",
+        "h-8"
+      ],
+      "engineCollapses": [
+        {
+          "input": [
+            "w-8",
+            "h-8"
+          ],
+          "output": "size-8"
+        }
+      ],
+      "bucketKeys": {
+        "w-8": "||8",
+        "h-8": "||8"
+      },
+      "parsedCandidates": {
+        "w-8": [
+          {
+            "Kind": "Functional",
+            "Root": "w",
+            "Value": {
+              "Kind": "Named",
+              "Value": "8",
+              "Fraction": ""
+            },
+            "Important": false,
+            "Variants": []
+          }
+        ],
+        "h-8": [
+          {
+            "Kind": "Functional",
+            "Root": "h",
+            "Value": {
+              "Kind": "Named",
+              "Value": "8",
+              "Fraction": ""
+            },
+            "Important": false,
+            "Variants": []
+          }
+        ]
+      },
+      "declaredValues": {
+        "w-8": [
+          "calc(var(--spacing) * 8)"
+        ],
+        "h-8": [
+          "calc(var(--spacing) * 8)"
+        ]
+      },
+      "declaredProperties": {
+        "w-8": [
+          "width"
+        ],
+        "h-8": [
+          "height"
+        ]
+      }
+    },
+    {
+      "literal": "mt-1 mb-1 ml-1 mr-1",
+      "classes": [
+        "mt-1",
+        "mb-1",
+        "ml-1",
+        "mr-1"
+      ],
+      "engineCollapses": [
+        {
+          "input": [
+            "mt-1",
+            "mb-1",
+            "ml-1",
+            "mr-1"
+          ],
+          "output": "m-1"
+        }
+      ],
+      "bucketKeys": {
+        "mt-1": "||1",
+        "mb-1": "||1",
+        "ml-1": "||1",
+        "mr-1": "||1"
+      },
+      "parsedCandidates": {
+        "mt-1": [
+          {
+            "Kind": "Functional",
+            "Root": "mt",
+            "Value": {
+              "Kind": "Named",
+              "Value": "1",
+              "Fraction": ""
+            },
+            "Important": false,
+            "Variants": []
+          }
+        ],
+        "mb-1": [
+          {
+            "Kind": "Functional",
+            "Root": "mb",
+            "Value": {
+              "Kind": "Named",
+              "Value": "1",
+              "Fraction": ""
+            },
+            "Important": false,
+            "Variants": []
+          }
+        ],
+        "ml-1": [
+          {
+            "Kind": "Functional",
+            "Root": "ml",
+            "Value": {
+              "Kind": "Named",
+              "Value": "1",
+              "Fraction": ""
+            },
+            "Important": false,
+            "Variants": []
+          }
+        ],
+        "mr-1": [
+          {
+            "Kind": "Functional",
+            "Root": "mr",
+            "Value": {
+              "Kind": "Named",
+              "Value": "1",
+              "Fraction": ""
+            },
+            "Important": false,
+            "Variants": []
+          }
+        ]
+      },
+      "declaredValues": {
+        "mt-1": [
+          "var(--spacing)"
+        ],
+        "mb-1": [
+          "var(--spacing)"
+        ],
+        "ml-1": [
+          "var(--spacing)"
+        ],
+        "mr-1": [
+          "var(--spacing)"
+        ]
+      },
+      "declaredProperties": {
+        "mt-1": [
+          "margin-top"
+        ],
+        "mb-1": [
+          "margin-bottom"
+        ],
+        "ml-1": [
+          "margin-left"
+        ],
+        "mr-1": [
+          "margin-right"
+        ]
+      }
+    },
+    {
+      "literal": "gap-x-2 gap-y-2",
+      "classes": [
+        "gap-x-2",
+        "gap-y-2"
+      ],
+      "engineCollapses": [
+        {
+          "input": [
+            "gap-x-2",
+            "gap-y-2"
+          ],
+          "output": "gap-2"
+        }
+      ],
+      "bucketKeys": {
+        "gap-x-2": "||2",
+        "gap-y-2": "||2"
+      },
+      "parsedCandidates": {
+        "gap-x-2": [
+          {
+            "Kind": "Functional",
+            "Root": "gap-x",
+            "Value": {
+              "Kind": "Named",
+              "Value": "2",
+              "Fraction": ""
+            },
+            "Important": false,
+            "Variants": []
+          },
+          {
+            "Kind": "Functional",
+            "Root": "gap",
+            "Value": {
+              "Kind": "Named",
+              "Value": "x-2",
+              "Fraction": ""
+            },
+            "Important": false,
+            "Variants": []
+          }
+        ],
+        "gap-y-2": [
+          {
+            "Kind": "Functional",
+            "Root": "gap-y",
+            "Value": {
+              "Kind": "Named",
+              "Value": "2",
+              "Fraction": ""
+            },
+            "Important": false,
+            "Variants": []
+          },
+          {
+            "Kind": "Functional",
+            "Root": "gap",
+            "Value": {
+              "Kind": "Named",
+              "Value": "y-2",
+              "Fraction": ""
+            },
+            "Important": false,
+            "Variants": []
+          }
+        ]
+      },
+      "declaredValues": {
+        "gap-x-2": [
+          "calc(var(--spacing) * 2)"
+        ],
+        "gap-y-2": [
+          "calc(var(--spacing) * 2)"
+        ]
+      },
+      "declaredProperties": {
+        "gap-x-2": [
+          "column-gap"
+        ],
+        "gap-y-2": [
+          "row-gap"
+        ]
+      }
+    },
+    {
+      "literal": "border-l border-r",
+      "classes": [
+        "border-l",
+        "border-r"
+      ],
+      "engineCollapses": [
+        {
+          "input": [
+            "border-l",
+            "border-r"
+          ],
+          "output": "border-x"
+        }
+      ],
+      "bucketKeys": {
+        "border-l": "||",
+        "border-r": "||"
+      },
+      "parsedCandidates": {
+        "border-l": [
+          {
+            "Kind": "Functional",
+            "Root": "border-l",
+            "Value": {
+              "Kind": "None",
+              "Value": "",
+              "Fraction": ""
+            },
+            "Important": false,
+            "Variants": []
+          },
+          {
+            "Kind": "Functional",
+            "Root": "border",
+            "Value": {
+              "Kind": "Named",
+              "Value": "l",
+              "Fraction": ""
+            },
+            "Important": false,
+            "Variants": []
+          }
+        ],
+        "border-r": [
+          {
+            "Kind": "Functional",
+            "Root": "border-r",
+            "Value": {
+              "Kind": "None",
+              "Value": "",
+              "Fraction": ""
+            },
+            "Important": false,
+            "Variants": []
+          },
+          {
+            "Kind": "Functional",
+            "Root": "border",
+            "Value": {
+              "Kind": "Named",
+              "Value": "r",
+              "Fraction": ""
+            },
+            "Important": false,
+            "Variants": []
+          }
+        ]
+      },
+      "declaredValues": {
+        "border-l": [
+          "\"*\"",
+          "1px",
+          "false",
+          "solid",
+          "var(--tw-border-style)"
+        ],
+        "border-r": [
+          "\"*\"",
+          "1px",
+          "false",
+          "solid",
+          "var(--tw-border-style)"
+        ]
+      },
+      "declaredProperties": {
+        "border-l": [
+          "border-left-style",
+          "border-left-width",
+          "inherits",
+          "initial-value",
+          "syntax"
+        ],
+        "border-r": [
+          "border-right-style",
+          "border-right-width",
+          "inherits",
+          "initial-value",
+          "syntax"
+        ]
+      }
+    },
+    {
+      "literal": "rounded-tl-md rounded-tr-md",
+      "classes": [
+        "rounded-tl-md",
+        "rounded-tr-md"
+      ],
+      "engineCollapses": [
+        {
+          "input": [
+            "rounded-tl-md",
+            "rounded-tr-md"
+          ],
+          "output": "rounded-t-md"
+        }
+      ],
+      "bucketKeys": {
+        "rounded-tl-md": "||md",
+        "rounded-tr-md": "||md"
+      },
+      "parsedCandidates": {
+        "rounded-tl-md": [
+          {
+            "Kind": "Functional",
+            "Root": "rounded-tl",
+            "Value": {
+              "Kind": "Named",
+              "Value": "md",
+              "Fraction": ""
+            },
+            "Important": false,
+            "Variants": []
+          },
+          {
+            "Kind": "Functional",
+            "Root": "rounded",
+            "Value": {
+              "Kind": "Named",
+              "Value": "tl-md",
+              "Fraction": ""
+            },
+            "Important": false,
+            "Variants": []
+          }
+        ],
+        "rounded-tr-md": [
+          {
+            "Kind": "Functional",
+            "Root": "rounded-tr",
+            "Value": {
+              "Kind": "Named",
+              "Value": "md",
+              "Fraction": ""
+            },
+            "Important": false,
+            "Variants": []
+          },
+          {
+            "Kind": "Functional",
+            "Root": "rounded",
+            "Value": {
+              "Kind": "Named",
+              "Value": "tr-md",
+              "Fraction": ""
+            },
+            "Important": false,
+            "Variants": []
+          }
+        ]
+      },
+      "declaredValues": {
+        "rounded-tl-md": [
+          "var(--radius-md)"
+        ],
+        "rounded-tr-md": [
+          "var(--radius-md)"
+        ]
+      },
+      "declaredProperties": {
+        "rounded-tl-md": [
+          "border-top-left-radius"
+        ],
+        "rounded-tr-md": [
+          "border-top-right-radius"
+        ]
+      }
+    },
+    {
+      "literal": "overflow-x-hidden overflow-y-hidden",
+      "classes": [
+        "overflow-x-hidden",
+        "overflow-y-hidden"
+      ],
+      "engineCollapses": [
+        {
+          "input": [
+            "overflow-x-hidden",
+            "overflow-y-hidden"
+          ],
+          "output": "overflow-hidden"
+        }
+      ],
+      "bucketKeys": {
+        "overflow-x-hidden": "static:hidden",
+        "overflow-y-hidden": "static:hidden"
+      },
+      "parsedCandidates": {
+        "overflow-x-hidden": [
+          {
+            "Kind": "Static",
+            "Root": "overflow-x-hidden",
+            "Value": {
+              "Kind": "None",
+              "Value": "",
+              "Fraction": ""
+            },
+            "Important": false,
+            "Variants": []
+          }
+        ],
+        "overflow-y-hidden": [
+          {
+            "Kind": "Static",
+            "Root": "overflow-y-hidden",
+            "Value": {
+              "Kind": "None",
+              "Value": "",
+              "Fraction": ""
+            },
+            "Important": false,
+            "Variants": []
+          }
+        ]
+      },
+      "declaredValues": {
+        "overflow-x-hidden": [
+          "hidden"
+        ],
+        "overflow-y-hidden": [
+          "hidden"
+        ]
+      },
+      "declaredProperties": {
+        "overflow-x-hidden": [
+          "overflow-x"
+        ],
+        "overflow-y-hidden": [
+          "overflow-y"
+        ]
+      }
+    },
+    {
+      "literal": "sm:px-4 sm:py-4",
+      "classes": [
+        "sm:px-4",
+        "sm:py-4"
+      ],
+      "engineCollapses": [
+        {
+          "input": [
+            "sm:px-4",
+            "sm:py-4"
+          ],
+          "output": "sm:p-4"
+        }
+      ],
+      "bucketKeys": {
+        "sm:px-4": "static:sm:||4",
+        "sm:py-4": "static:sm:||4"
+      },
+      "parsedCandidates": {
+        "sm:px-4": [
+          {
+            "Kind": "Functional",
+            "Root": "px",
+            "Value": {
+              "Kind": "Named",
+              "Value": "4",
+              "Fraction": ""
+            },
+            "Important": false,
+            "Variants": [
+              {
+                "Kind": "static",
+                "Root": "sm",
+                "Value": ""
+              }
+            ]
+          }
+        ],
+        "sm:py-4": [
+          {
+            "Kind": "Functional",
+            "Root": "py",
+            "Value": {
+              "Kind": "Named",
+              "Value": "4",
+              "Fraction": ""
+            },
+            "Important": false,
+            "Variants": [
+              {
+                "Kind": "static",
+                "Root": "sm",
+                "Value": ""
+              }
+            ]
+          }
+        ]
+      },
+      "declaredValues": {
+        "sm:px-4": [
+          "px-4 {\n    padding-inline: calc(var(--spacing) * 4)"
+        ],
+        "sm:py-4": [
+          "py-4 {\n    padding-block: calc(var(--spacing) * 4)"
+        ]
+      },
+      "declaredProperties": {
+        "sm:px-4": [
+          "padding-inline"
+        ],
+        "sm:py-4": [
+          "padding-block"
+        ]
+      }
+    },
+    {
+      "literal": "start-0 end-0",
+      "classes": [
+        "start-0",
+        "end-0"
+      ],
+      "engineCollapses": [
+        {
+          "input": [
+            "start-0"
+          ],
+          "output": "inset-s-0"
+        },
+        {
+          "input": [
+            "end-0"
+          ],
+          "output": "inset-e-0"
+        }
+      ],
+      "bucketKeys": {
+        "start-0": "||0",
+        "end-0": "||0"
+      },
+      "parsedCandidates": {
+        "start-0": [
+          {
+            "Kind": "Functional",
+            "Root": "start",
+            "Value": {
+              "Kind": "Named",
+              "Value": "0",
+              "Fraction": ""
+            },
+            "Important": false,
+            "Variants": []
+          }
+        ],
+        "end-0": [
+          {
+            "Kind": "Functional",
+            "Root": "end",
+            "Value": {
+              "Kind": "Named",
+              "Value": "0",
+              "Fraction": ""
+            },
+            "Important": false,
+            "Variants": []
+          }
+        ]
+      },
+      "declaredValues": {
+        "start-0": [
+          "calc(var(--spacing) * 0)"
+        ],
+        "end-0": [
+          "calc(var(--spacing) * 0)"
+        ]
+      },
+      "declaredProperties": {
+        "start-0": [
+          "inset-inline-start"
+        ],
+        "end-0": [
+          "inset-inline-end"
+        ]
+      }
+    },
+    {
+      "literal": "-mt-1 -mb-1",
+      "classes": [
+        "-mt-1",
+        "-mb-1"
+      ],
+      "engineCollapses": [
+        {
+          "input": [
+            "-mt-1",
+            "-mb-1"
+          ],
+          "output": "-my-1"
+        }
+      ],
+      "bucketKeys": {
+        "-mt-1": "||1",
+        "-mb-1": "||1"
+      },
+      "parsedCandidates": {
+        "-mt-1": [
+          {
+            "Kind": "Functional",
+            "Root": "-mt",
+            "Value": {
+              "Kind": "Named",
+              "Value": "1",
+              "Fraction": ""
+            },
+            "Important": false,
+            "Variants": []
+          }
+        ],
+        "-mb-1": [
+          {
+            "Kind": "Functional",
+            "Root": "-mb",
+            "Value": {
+              "Kind": "Named",
+              "Value": "1",
+              "Fraction": ""
+            },
+            "Important": false,
+            "Variants": []
+          }
+        ]
+      },
+      "declaredValues": {
+        "-mt-1": [
+          "calc(var(--spacing) * -1)"
+        ],
+        "-mb-1": [
+          "calc(var(--spacing) * -1)"
+        ]
+      },
+      "declaredProperties": {
+        "-mt-1": [
+          "margin-top"
+        ],
+        "-mb-1": [
+          "margin-bottom"
+        ]
+      }
+    },
+    {
+      "literal": "px-[3px] py-[3px]",
+      "classes": [
+        "px-[3px]",
+        "py-[3px]"
+      ],
+      "engineCollapses": [
+        {
+          "input": [
+            "px-[3px]",
+            "py-[3px]"
+          ],
+          "output": "p-[3px]"
+        }
+      ],
+      "bucketKeys": {
+        "px-[3px]": "||[3px]",
+        "py-[3px]": "||[3px]"
+      },
+      "parsedCandidates": {
+        "px-[3px]": [
+          {
+            "Kind": "Functional",
+            "Root": "px",
+            "Value": {
+              "Kind": "Arbitrary",
+              "Value": "3px",
+              "Fraction": ""
+            },
+            "Important": false,
+            "Variants": []
+          }
+        ],
+        "py-[3px]": [
+          {
+            "Kind": "Functional",
+            "Root": "py",
+            "Value": {
+              "Kind": "Arbitrary",
+              "Value": "3px",
+              "Fraction": ""
+            },
+            "Important": false,
+            "Variants": []
+          }
+        ]
+      },
+      "declaredValues": {
+        "px-[3px]": [
+          "3px"
+        ],
+        "py-[3px]": [
+          "3px"
+        ]
+      },
+      "declaredProperties": {
+        "px-[3px]": [
+          "padding-inline"
+        ],
+        "py-[3px]": [
+          "padding-block"
+        ]
+      }
+    },
+    {
+      "literal": "z-[1]",
+      "classes": [
+        "z-[1]"
+      ],
+      "engineCollapses": [
+        {
+          "input": [
+            "z-[1]"
+          ],
+          "output": "z-1"
+        }
+      ],
+      "bucketKeys": {
+        "z-[1]": "||[1]"
+      },
+      "parsedCandidates": {
+        "z-[1]": [
+          {
+            "Kind": "Functional",
+            "Root": "z",
+            "Value": {
+              "Kind": "Arbitrary",
+              "Value": "1",
+              "Fraction": ""
+            },
+            "Important": false,
+            "Variants": []
+          }
+        ]
+      },
+      "declaredValues": {
+        "z-[1]": [
+          "1"
+        ]
+      },
+      "declaredProperties": {
+        "z-[1]": [
+          "z-index"
+        ]
+      }
+    },
+    {
+      "literal": "order-none",
+      "classes": [
+        "order-none"
+      ],
+      "engineCollapses": [
+        {
+          "input": [
+            "order-none"
+          ],
+          "output": "order-0"
+        }
+      ],
+      "bucketKeys": {
+        "order-none": "static:0"
+      },
+      "parsedCandidates": {
+        "order-none": [
+          {
+            "Kind": "Static",
+            "Root": "order-none",
+            "Value": {
+              "Kind": "None",
+              "Value": "",
+              "Fraction": ""
+            },
+            "Important": false,
+            "Variants": []
+          },
+          {
+            "Kind": "Functional",
+            "Root": "order",
+            "Value": {
+              "Kind": "Named",
+              "Value": "none",
+              "Fraction": ""
+            },
+            "Important": false,
+            "Variants": []
+          }
+        ]
+      },
+      "declaredValues": {
+        "order-none": [
+          "0"
+        ]
+      },
+      "declaredProperties": {
+        "order-none": [
+          "order"
+        ]
+      }
+    },
+    {
+      "literal": "break-words",
+      "classes": [
+        "break-words"
+      ],
+      "engineCollapses": [
+        {
+          "input": [
+            "break-words"
+          ],
+          "output": "wrap-break-word"
+        }
+      ],
+      "bucketKeys": {
+        "break-words": "static:break-word"
+      },
+      "parsedCandidates": {
+        "break-words": [
+          {
+            "Kind": "Static",
+            "Root": "break-words",
+            "Value": {
+              "Kind": "None",
+              "Value": "",
+              "Fraction": ""
+            },
+            "Important": false,
+            "Variants": []
+          }
+        ]
+      },
+      "declaredValues": {
+        "break-words": [
+          "break-word"
+        ]
+      },
+      "declaredProperties": {
+        "break-words": [
+          "overflow-wrap"
+        ]
+      }
+    },
+    {
+      "literal": "px-4 py-2",
+      "classes": [
+        "px-4",
+        "py-2"
+      ],
+      "engineCollapses": [],
+      "bucketKeys": {
+        "px-4": "||4",
+        "py-2": "||2"
+      },
+      "parsedCandidates": {
+        "px-4": [
+          {
+            "Kind": "Functional",
+            "Root": "px",
+            "Value": {
+              "Kind": "Named",
+              "Value": "4",
+              "Fraction": ""
+            },
+            "Important": false,
+            "Variants": []
+          }
+        ],
+        "py-2": [
+          {
+            "Kind": "Functional",
+            "Root": "py",
+            "Value": {
+              "Kind": "Named",
+              "Value": "2",
+              "Fraction": ""
+            },
+            "Important": false,
+            "Variants": []
+          }
+        ]
+      },
+      "declaredValues": {
+        "px-4": [
+          "calc(var(--spacing) * 4)"
+        ],
+        "py-2": [
+          "calc(var(--spacing) * 2)"
+        ]
+      },
+      "declaredProperties": {
+        "px-4": [
+          "padding-inline"
+        ],
+        "py-2": [
+          "padding-block"
+        ]
+      }
+    },
+    {
+      "literal": "w-8 h-4",
+      "classes": [
+        "w-8",
+        "h-4"
+      ],
+      "engineCollapses": [],
+      "bucketKeys": {
+        "w-8": "||8",
+        "h-4": "||4"
+      },
+      "parsedCandidates": {
+        "w-8": [
+          {
+            "Kind": "Functional",
+            "Root": "w",
+            "Value": {
+              "Kind": "Named",
+              "Value": "8",
+              "Fraction": ""
+            },
+            "Important": false,
+            "Variants": []
+          }
+        ],
+        "h-4": [
+          {
+            "Kind": "Functional",
+            "Root": "h",
+            "Value": {
+              "Kind": "Named",
+              "Value": "4",
+              "Fraction": ""
+            },
+            "Important": false,
+            "Variants": []
+          }
+        ]
+      },
+      "declaredValues": {
+        "w-8": [
+          "calc(var(--spacing) * 8)"
+        ],
+        "h-4": [
+          "calc(var(--spacing) * 4)"
+        ]
+      },
+      "declaredProperties": {
+        "w-8": [
+          "width"
+        ],
+        "h-4": [
+          "height"
+        ]
+      }
+    },
+    {
+      "literal": "px-4 sm:py-4",
+      "classes": [
+        "px-4",
+        "sm:py-4"
+      ],
+      "engineCollapses": [],
+      "bucketKeys": {
+        "px-4": "||4",
+        "sm:py-4": "static:sm:||4"
+      },
+      "parsedCandidates": {
+        "px-4": [
+          {
+            "Kind": "Functional",
+            "Root": "px",
+            "Value": {
+              "Kind": "Named",
+              "Value": "4",
+              "Fraction": ""
+            },
+            "Important": false,
+            "Variants": []
+          }
+        ],
+        "sm:py-4": [
+          {
+            "Kind": "Functional",
+            "Root": "py",
+            "Value": {
+              "Kind": "Named",
+              "Value": "4",
+              "Fraction": ""
+            },
+            "Important": false,
+            "Variants": [
+              {
+                "Kind": "static",
+                "Root": "sm",
+                "Value": ""
+              }
+            ]
+          }
+        ]
+      },
+      "declaredValues": {
+        "px-4": [
+          "calc(var(--spacing) * 4)"
+        ],
+        "sm:py-4": [
+          "py-4 {\n    padding-block: calc(var(--spacing) * 4)"
+        ]
+      },
+      "declaredProperties": {
+        "px-4": [
+          "padding-inline"
+        ],
+        "sm:py-4": [
+          "padding-block"
+        ]
+      }
+    },
+    {
+      "literal": "ml-2",
+      "classes": [
+        "ml-2"
+      ],
+      "engineCollapses": [],
+      "bucketKeys": {
+        "ml-2": "||2"
+      },
+      "parsedCandidates": {
+        "ml-2": [
+          {
+            "Kind": "Functional",
+            "Root": "ml",
+            "Value": {
+              "Kind": "Named",
+              "Value": "2",
+              "Fraction": ""
+            },
+            "Important": false,
+            "Variants": []
+          }
+        ]
+      },
+      "declaredValues": {
+        "ml-2": [
+          "calc(var(--spacing) * 2)"
+        ]
+      },
+      "declaredProperties": {
+        "ml-2": [
+          "margin-left"
+        ]
+      }
+    },
+    {
+      "literal": "text-left",
+      "classes": [
+        "text-left"
+      ],
+      "engineCollapses": [],
+      "bucketKeys": {
+        "text-left": "static:left"
+      },
+      "parsedCandidates": {
+        "text-left": [
+          {
+            "Kind": "Static",
+            "Root": "text-left",
+            "Value": {
+              "Kind": "None",
+              "Value": "",
+              "Fraction": ""
+            },
+            "Important": false,
+            "Variants": []
+          },
+          {
+            "Kind": "Functional",
+            "Root": "text",
+            "Value": {
+              "Kind": "Named",
+              "Value": "left",
+              "Fraction": ""
+            },
+            "Important": false,
+            "Variants": []
+          }
+        ]
+      },
+      "declaredValues": {
+        "text-left": [
+          "left"
+        ]
+      },
+      "declaredProperties": {
+        "text-left": [
+          "text-align"
+        ]
+      }
+    },
+    {
+      "literal": "space-x-2",
+      "classes": [
+        "space-x-2"
+      ],
+      "engineCollapses": [],
+      "bucketKeys": {
+        "space-x-2": "||2"
+      },
+      "parsedCandidates": {
+        "space-x-2": [
+          {
+            "Kind": "Functional",
+            "Root": "space-x",
+            "Value": {
+              "Kind": "Named",
+              "Value": "2",
+              "Fraction": ""
+            },
+            "Important": false,
+            "Variants": []
+          }
+        ]
+      },
+      "declaredValues": {
+        "space-x-2": [
+          "\"*\"",
+          "0",
+          "calc(calc(var(--spacing) * 2) * calc(1 - var(--tw-space-x-reverse)))",
+          "calc(calc(var(--spacing) * 2) * var(--tw-space-x-reverse))",
+          "false",
+          "where(.space-x-2 > :not(:last-child)) {\n  --tw-space-x-reverse: 0"
+        ]
+      },
+      "declaredProperties": {
+        "space-x-2": [
+          "inherits",
+          "initial-value",
+          "margin-inline-end",
+          "margin-inline-start",
+          "syntax"
+        ]
+      }
+    },
+    {
+      "literal": "truncate",
+      "classes": [
+        "truncate"
+      ],
+      "engineCollapses": [],
+      "bucketKeys": {
+        "truncate": "static:ellipsis|hidden|nowrap"
+      },
+      "parsedCandidates": {
+        "truncate": [
+          {
+            "Kind": "Static",
+            "Root": "truncate",
+            "Value": {
+              "Kind": "None",
+              "Value": "",
+              "Fraction": ""
+            },
+            "Important": false,
+            "Variants": []
+          }
+        ]
+      },
+      "declaredValues": {
+        "truncate": [
+          "ellipsis",
+          "hidden",
+          "nowrap"
+        ]
+      },
+      "declaredProperties": {
+        "truncate": [
+          "overflow",
+          "text-overflow",
+          "white-space"
+        ]
+      }
+    },
+    {
+      "literal": "flex relative",
+      "classes": [
+        "flex",
+        "relative"
+      ],
+      "engineCollapses": [],
+      "bucketKeys": {
+        "flex": "static:flex",
+        "relative": "static:relative"
+      },
+      "parsedCandidates": {
+        "flex": [
+          {
+            "Kind": "Static",
+            "Root": "flex",
+            "Value": {
+              "Kind": "None",
+              "Value": "",
+              "Fraction": ""
+            },
+            "Important": false,
+            "Variants": []
+          },
+          {
+            "Kind": "Functional",
+            "Root": "flex",
+            "Value": {
+              "Kind": "None",
+              "Value": "",
+              "Fraction": ""
+            },
+            "Important": false,
+            "Variants": []
+          }
+        ],
+        "relative": [
+          {
+            "Kind": "Static",
+            "Root": "relative",
+            "Value": {
+              "Kind": "None",
+              "Value": "",
+              "Fraction": ""
+            },
+            "Important": false,
+            "Variants": []
+          }
+        ]
+      },
+      "declaredValues": {
+        "flex": [
+          "flex"
+        ],
+        "relative": [
+          "relative"
+        ]
+      },
+      "declaredProperties": {
+        "flex": [
+          "display"
+        ],
+        "relative": [
+          "position"
+        ]
+      }
+    },
+    {
+      "literal": "items-center justify-center",
+      "classes": [
+        "items-center",
+        "justify-center"
+      ],
+      "engineCollapses": [],
+      "bucketKeys": {
+        "items-center": "static:center",
+        "justify-center": "static:center"
+      },
+      "parsedCandidates": {
+        "items-center": [
+          {
+            "Kind": "Static",
+            "Root": "items-center",
+            "Value": {
+              "Kind": "None",
+              "Value": "",
+              "Fraction": ""
+            },
+            "Important": false,
+            "Variants": []
+          }
+        ],
+        "justify-center": [
+          {
+            "Kind": "Static",
+            "Root": "justify-center",
+            "Value": {
+              "Kind": "None",
+              "Value": "",
+              "Fraction": ""
+            },
+            "Important": false,
+            "Variants": []
+          }
+        ]
+      },
+      "declaredValues": {
+        "items-center": [
+          "center"
+        ],
+        "justify-center": [
+          "center"
+        ]
+      },
+      "declaredProperties": {
+        "items-center": [
+          "align-items"
+        ],
+        "justify-center": [
+          "justify-content"
+        ]
+      }
+    },
+    {
+      "literal": "px-4! py-4",
+      "classes": [
+        "px-4!",
+        "py-4"
+      ],
+      "engineCollapses": [],
+      "bucketKeys": {
+        "px-4!": "|!|4",
+        "py-4": "||4"
+      },
+      "parsedCandidates": {
+        "px-4!": [
+          {
+            "Kind": "Functional",
+            "Root": "px",
+            "Value": {
+              "Kind": "Named",
+              "Value": "4",
+              "Fraction": ""
+            },
+            "Important": true,
+            "Variants": []
+          }
+        ],
+        "py-4": [
+          {
+            "Kind": "Functional",
+            "Root": "py",
+            "Value": {
+              "Kind": "Named",
+              "Value": "4",
+              "Fraction": ""
+            },
+            "Important": false,
+            "Variants": []
+          }
+        ]
+      },
+      "declaredValues": {
+        "px-4!": [
+          "calc(var(--spacing) * 4) !important"
+        ],
+        "py-4": [
+          "calc(var(--spacing) * 4)"
+        ]
+      },
+      "declaredProperties": {
+        "px-4!": [
+          "padding-inline"
+        ],
+        "py-4": [
+          "padding-block"
+        ]
+      }
+    },
+    {
+      "literal": "hover:sm:px-4 sm:hover:px-4",
+      "classes": [
+        "hover:sm:px-4",
+        "sm:hover:px-4"
+      ],
+      "engineCollapses": [],
+      "bucketKeys": {
+        "hover:sm:px-4": "static:sm:&static:hover:||4",
+        "sm:hover:px-4": "static:hover:&static:sm:||4"
+      },
+      "parsedCandidates": {
+        "hover:sm:px-4": [
+          {
+            "Kind": "Functional",
+            "Root": "px",
+            "Value": {
+              "Kind": "Named",
+              "Value": "4",
+              "Fraction": ""
+            },
+            "Important": false,
+            "Variants": [
+              {
+                "Kind": "static",
+                "Root": "sm",
+                "Value": ""
+              },
+              {
+                "Kind": "static",
+                "Root": "hover",
+                "Value": ""
+              }
+            ]
+          }
+        ],
+        "sm:hover:px-4": [
+          {
+            "Kind": "Functional",
+            "Root": "px",
+            "Value": {
+              "Kind": "Named",
+              "Value": "4",
+              "Fraction": ""
+            },
+            "Important": false,
+            "Variants": [
+              {
+                "Kind": "static",
+                "Root": "hover",
+                "Value": ""
+              },
+              {
+                "Kind": "static",
+                "Root": "sm",
+                "Value": ""
+              }
+            ]
+          }
+        ]
+      },
+      "declaredValues": {
+        "hover:sm:px-4": [
+          "hover) {\n  @media (width >= 40rem) {\n    .hover\\:sm\\:px-4:hover {\n      padding-inline: calc(var(--spacing) * 4)"
+        ],
+        "sm:hover:px-4": [
+          "hover) {\n    .sm\\:hover\\:px-4:hover {\n      padding-inline: calc(var(--spacing) * 4)"
+        ]
+      },
+      "declaredProperties": {
+        "hover:sm:px-4": [
+          "hover"
+        ],
+        "sm:hover:px-4": [
+          "hover"
+        ]
+      }
+    },
+    {
+      "literal": "w-1/2 h-1/3",
+      "classes": [
+        "w-1/2",
+        "h-1/3"
+      ],
+      "engineCollapses": [],
+      "bucketKeys": {
+        "w-1/2": "||1/1/2",
+        "h-1/3": "||1/1/3"
+      },
+      "parsedCandidates": {
+        "w-1/2": [
+          {
+            "Kind": "Functional",
+            "Root": "w",
+            "Value": {
+              "Kind": "Named",
+              "Value": "1",
+              "Fraction": "1/2"
+            },
+            "Important": false,
+            "Variants": []
+          }
+        ],
+        "h-1/3": [
+          {
+            "Kind": "Functional",
+            "Root": "h",
+            "Value": {
+              "Kind": "Named",
+              "Value": "1",
+              "Fraction": "1/3"
+            },
+            "Important": false,
+            "Variants": []
+          }
+        ]
+      },
+      "declaredValues": {
+        "w-1/2": [
+          "calc(1 / 2 * 100%)"
+        ],
+        "h-1/3": [
+          "calc(1 / 3 * 100%)"
+        ]
+      },
+      "declaredProperties": {
+        "w-1/2": [
+          "width"
+        ],
+        "h-1/3": [
+          "height"
+        ]
+      }
+    },
+    {
+      "literal": "background--2/50 not-a-real-class-xyz",
+      "classes": [
+        "background--2/50",
+        "not-a-real-class-xyz"
+      ],
+      "engineCollapses": [],
+      "bucketKeys": {
+        "background--2/50": "||2/2/50",
+        "not-a-real-class-xyz": "unparsed:not-a-real-class-xyz"
+      },
+      "parsedCandidates": {
+        "background--2/50": [
+          {
+            "Kind": "Functional",
+            "Root": "background-",
+            "Value": {
+              "Kind": "Named",
+              "Value": "2",
+              "Fraction": "2/50"
+            },
+            "Important": false,
+            "Variants": []
+          }
+        ],
+        "not-a-real-class-xyz": []
+      },
+      "declaredValues": {
+        "background--2/50": [],
+        "not-a-real-class-xyz": []
+      },
+      "declaredProperties": {
+        "background--2/50": [],
+        "not-a-real-class-xyz": []
+      }
+    }
+  ]
+}

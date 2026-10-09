@@ -1,0 +1,28 @@
+// Migrated from batch4:nexus_consistency_no_stuttering_name.ts.
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { stutteringName } from './messages.a';
+
+export class Rule {
+    readonly context: RuleContext;
+    readonly names = new Set<string>();
+    constructor(context: RuleContext) {
+        this.context = context;
+        const defaults = ['outcome', 'result', 'data', 'value', 'output', 'response', 'state', 'item', 'thing'];
+        const configured = context.settings.list('genericnames', defaults);
+        const names = configured.length === 0 ? defaults : configured;
+        for(const name of names) { this.names.add(name); }
+    }
+    visit(node: ParseNode, _index: number): void {
+        const receiverIndex = node.children[0] ?? -1;
+        const propertyIndex = node.children[node.children.length - 1] ?? -1;
+        if(receiverIndex < 0 || propertyIndex < 0) { return; }
+        const receiver = this.context.node(receiverIndex);
+        const property = this.context.node(propertyIndex);
+        if(receiver.kind !== 'Identifier' || property.kind !== 'Identifier') { return; }
+        if(receiver.text !== property.text) { return; }
+        if(!this.names.has(property.text)) { return; }
+        this.context.report(propertyIndex, 'nexus/consistency-no-stuttering-name', 'stutteringName', stutteringName(property.text), '', '', '');
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

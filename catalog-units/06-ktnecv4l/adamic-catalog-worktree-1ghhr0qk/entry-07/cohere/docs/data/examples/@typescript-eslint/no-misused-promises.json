@@ -1,0 +1,32 @@
+{
+    "rule": "@typescript-eslint/no-misused-promises",
+    "firing": {
+        "file": "noMisusedPromises.ts",
+        "source": "if (Promise.resolve()) {\n}\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 5,
+                "endLine": 1,
+                "endColumn": 22,
+                "messageId": "conditional",
+                "message": "Expected non-Promise value in a boolean conditional."
+            }
+        ]
+    },
+    "clean": {
+        "file": "noMisusedPromises.ts",
+        "source": "for (;;) {}\n"
+    },
+    "assertedMessageIds": [
+        "conditional",
+        "predicate",
+        "spread",
+        "voidReturnArgument",
+        "voidReturnAttribute",
+        "voidReturnInheritedMethod",
+        "voidReturnProperty",
+        "voidReturnReturnValue",
+        "voidReturnVariable"
+    ]
+}

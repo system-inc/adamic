@@ -1,0 +1,56 @@
+{
+  "findings": 8215,
+  "rounds": {
+    "native": [
+      1.781250813997758,
+      1.7331057010014774,
+      1.8546910830009438,
+      1.6445905879991187,
+      1.7417442749974725
+    ],
+    "Go": [
+      0.5404131920004147,
+      0.5117301739992399,
+      0.5229702389988233,
+      0.5180032190000929,
+      0.5094195210003818
+    ],
+    "Node": [
+      1.4473334340000292,
+      1.5042597409992595,
+      1.4220343249980942,
+      1.398676320000959,
+      1.4069347700024082
+    ]
+  },
+  "best": {
+    "native": {
+      "seconds": 1.6445905879991187,
+      "findings_per_second": 4995.164182469712
+    },
+    "Go": {
+      "seconds": 0.5094195210003818,
+      "findings_per_second": 16126.197880810781
+    },
+    "Node": {
+      "seconds": 1.398676320000959,
+      "findings_per_second": 5873.410368450627
+    }
+  },
+  "machine": {
+    "system": "Linux",
+    "node": "6d3a2813751b",
+    "release": "6.18.44",
+    "version": "#1 SMP Sat Sep 26 20:02:31 UTC 2026",
+    "machine": "x86_64",
+    "processor": ""
+  },
+  "cpu": "model name\t: AMD EPYC 9V74 80-Core Processor",
+  "nproc": 5,
+  "cpu_max": "400000 100000",
+  "load_before": "0.41 0.22 0.19 1/180 134605",
+  "load_after": "0.71 0.30 0.21 1/180 134689",
+  "allocation_counts": "adamic: counts: allocations 4212758 frees 4212758 retains 81800854 releases 80327957 peak 738337 regions 0",
+  "instructions": 15617555059,
+  "instructions_per_finding": 1901102.259160073
+}

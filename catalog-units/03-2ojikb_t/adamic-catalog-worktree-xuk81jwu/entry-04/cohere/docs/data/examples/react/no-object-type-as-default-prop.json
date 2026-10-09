@@ -1,0 +1,24 @@
+{
+    "rule": "react/no-object-type-as-default-prop",
+    "firing": {
+        "file": "/repository/source/Suffix.ts",
+        "source": "function C({a = {}}) { return null; }\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 13,
+                "endLine": 1,
+                "endColumn": 19,
+                "messageId": "forbiddenTypeDefaultParam",
+                "message": "a has a/an object literal as default prop. This could lead to potential infinite render loop in React. Use a variable reference instead of object literal."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/NoObjectTypeAsDefaultProp.tsx",
+        "source": "function C({a = {}}) { return <div/>; }"
+    },
+    "assertedMessageIds": [
+        "forbiddenTypeDefaultParam"
+    ]
+}

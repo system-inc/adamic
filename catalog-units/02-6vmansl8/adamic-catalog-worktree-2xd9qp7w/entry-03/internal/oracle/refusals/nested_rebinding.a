@@ -1,0 +1,6 @@
+function outer(): number {
+    function inner(): number { return 1; }
+    inner = () => 2;
+    return inner();
+}
+console.log(String(outer()));

@@ -1,0 +1,2 @@
+console.log('a whole type-only export must not run this');
+export interface Shape { readonly value: number; }

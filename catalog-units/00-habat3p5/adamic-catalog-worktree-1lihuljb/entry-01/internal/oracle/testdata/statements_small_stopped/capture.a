@@ -1,0 +1,8 @@
+function build(): number {
+    const map: { readonly get: () => number; readonly size: () => number } = {
+        get: () => map.size(),
+        size: () => 7,
+    };
+    return map.get();
+}
+console.log(`${build()}`);

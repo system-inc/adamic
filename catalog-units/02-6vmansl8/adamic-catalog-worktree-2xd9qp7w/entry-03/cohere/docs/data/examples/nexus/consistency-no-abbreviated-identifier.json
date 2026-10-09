@@ -1,0 +1,27 @@
+{
+    "rule": "nexus/consistency-no-abbreviated-identifier",
+    "firing": {
+        "file": "/repository/source/Thing.tsx",
+        "source": "use(args);\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 5,
+                "endLine": 1,
+                "endColumn": 9,
+                "messageId": "abbreviatedIdentifier",
+                "message": "Identifier \"args\" should not be abbreviated. Use \"arguments\", \"commandArguments\", \"commandLineArguments\", or a more descriptive name. A name is written once and read everywhere, so the letters saved at the declaration are paid back at every call site by a reader who has to expand the abbreviation themselves and hope they expanded it the way the author meant."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/Thing.tsx",
+        "source": "const sendSMS = 1;\n"
+    },
+    "assertedMessageIds": [
+        "abbreviatedIdentifier",
+        "abbreviatedSuffix",
+        "abbreviatedWordSegment",
+        "millisecondSuffix"
+    ]
+}

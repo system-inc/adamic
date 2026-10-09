@@ -1,0 +1,48 @@
+const emptyMap = new Map<number, string>(null);
+const emptySet = new Set<string>(undefined);
+console.log(`${emptyMap.size} ${emptySet.size}`);
+const points = new Set('a🌍aé');
+console.log(`${points.size} ${[...points].join('|')}`);
+const copiedPoints = new Set(points.values());
+console.log(`${copiedPoints.size} ${[...copiedPoints].join('|')}`);
+const pairs: (readonly [string, number])[] = [['a', 1], ['b', 2], ['a', 3]];
+const fromPairs = new Map(pairs);
+const fromMap = new Map(fromPairs);
+const iterator = fromMap.entries();
+iterator.next();
+const fromIterator = new Map(iterator);
+console.log(`${fromIterator.size} ${fromIterator.get('a')} ${fromIterator.get('b')}`);
+const setPairs = new Set(pairs);
+console.log(`${new Map(setPairs).size} ${new Map(setPairs).get('a')}`);
+const duplicateEntries = points.entries();
+const fromSetEntries = new Map(duplicateEntries);
+console.log(`${fromSetEntries.size} ${fromSetEntries.get('🌍')}`);
+const entriesArray = [...points.entries()];
+for (const entry of entriesArray) { console.log(`${entry[0]} ${entry[1]}`); }
+const keys = fromMap.keys();
+keys.next();
+console.log(`${new Set(keys).size}`);
+const live = new Set<number>([1, 2, 3]);
+const liveIterator = live.values();
+const seen: number[] = [];
+for (const value of liveIterator) {
+	seen.push(value);
+	if (value === 1) { live.delete(2); live.add(4); }
+}
+console.log(seen.join(','));
+for (const entry of fromMap) { console.log(`${entry[0]}=${entry[1]}`); }
+for (const entry of points.entries()) { console.log(`${entry[0]}:${entry[1]}`); }
+// Both forEach families must skip a deleted entry, visit appended entries.
+const map = new Map<number, string>([[1, 'a'.repeat(2)], [2, 'b'.repeat(2)], [3, 'c'.repeat(2)]]);
+let contextCalls = 0;
+function context(): string { contextCalls += 1; map.set(4, 'd'); return 'unused'.repeat(2); }
+map.forEach((value: string, key: number, all: Map<number, string>) => {
+	console.log(`${key}=${value} ${all === map} ${contextCalls}`);
+	if (key === 1) { all.delete(2); all.set(5, 'e'); }
+}, context());
+const set = new Set<string>(['a'.repeat(2), 'b'.repeat(2), 'c'.repeat(2)]);
+set.forEach((value: string, key: string, all: Set<string>) => {
+	console.log(`${value} ${key} ${all === set}`);
+	if (value === 'aa') { all.delete('bb'); all.add('dd'); }
+}, 42);
+console.log(`${map.size} ${set.size}`);

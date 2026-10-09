@@ -1,0 +1,5 @@
+{
+  "name": "ambiguous-identifier-span",
+  "from": "node.end, name, id, message",
+  "to": "node.end + 1, name, id, message"
+}

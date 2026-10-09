@@ -1,0 +1,10 @@
+{
+  "rules": {
+    "TypeScript": "base/boundary-no-global-container"
+  },
+  "messages": {
+    "boundaryNoGlobalContainer": {
+      "text": "Usage of 'getGlobalContainer' is not allowed."
+    }
+  }
+}

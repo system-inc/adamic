@@ -1,0 +1,2 @@
+// a-check: type error TS2538
+const values: {[key: string]: number} = {}; const keys: string[] = []; console.log(String(values[keys[0]]));

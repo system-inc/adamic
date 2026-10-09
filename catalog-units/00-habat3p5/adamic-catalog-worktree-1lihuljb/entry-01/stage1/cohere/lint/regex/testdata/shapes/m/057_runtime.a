@@ -1,0 +1,14 @@
+// react/conformance/classify.go:95; `(?m)(?:^|\n)\s*import\b[^\n;]*?['"]react['"]|require\(\s*['"]react['"]\s*\)`
+import { observe } from '../observe.a';
+import { programArguments } from 'adamic';
+const argumentsList = programArguments();
+const pattern = argumentsList[0] ?? '';
+const flags = argumentsList[1] ?? '';
+const regex = new RegExp(pattern, flags);
+observe(regex, "", 0);
+observe(regex, "🌍", 1);
+observe(regex, "TODO\n", 2);
+observe(regex, " TODO", 3);
+observe(regex, "import\"react\"", 4);
+observe(regex, "ximport\"react\"", 5);
+observe(regex, "import\"react\"\n", 6);

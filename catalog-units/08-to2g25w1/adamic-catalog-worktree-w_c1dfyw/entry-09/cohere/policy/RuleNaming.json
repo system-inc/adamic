@@ -1,0 +1,40 @@
+{
+  "about": "How a house rule is named, in every namespace and both languages: <category>-<verb>-<object> after the namespace, with the category and the verb from these closed lists. Ported rules keep their upstream names and are not judged here. Adding a category or a verb is a decision about the scheme, so it is made here, once, and both engines read it.",
+  "verbs": [
+    { "name": "no", "definition": "The construct must not appear." },
+    { "name": "require", "definition": "The construct must appear, or take this shape." }
+  ],
+  "categories": [
+    { "name": "boundary", "definition": "Which module, library or layer may reach into which." },
+    { "name": "concurrency", "definition": "Work that interleaves: races, suspension points, isolation escapes." },
+    { "name": "consistency", "definition": "One house spelling for names, comments, folders and syntax, where two forms would work." },
+    { "name": "correctness", "definition": "Code that compiles but doesn't do what it reads as doing." },
+    { "name": "import", "definition": "How an import is written: alias, namespace, source." },
+    { "name": "localization", "definition": "Translation files hold real translations." },
+    { "name": "network", "definition": "Structure's NetworkService is the only door to the network and its cache." },
+    { "name": "next", "definition": "Next.js App Router file and export conventions." },
+    { "name": "performance", "definition": "Cost the code pays for nothing." },
+    { "name": "react-component", "definition": "How a React component is declared, named, typed and exported." },
+    { "name": "react-element", "definition": "JSX elements that have a house component instead." },
+    { "name": "react-hook", "definition": "How hooks are called, named and given dependencies." },
+    { "name": "security", "definition": "Untrusted values reaching a shell, SQL, or other interpreter." },
+    { "name": "storage", "definition": "Browser storage goes through its service." },
+    { "name": "tailwind", "definition": "Tailwind class conventions." },
+    { "name": "toolchain", "definition": "Compiler, language mode and package settings every target must carry." }
+  ],
+  "namespaces": [
+    {
+      "name": "adamic",
+      "definition": "The soundness holes tsc leaves open and Adamic closes. Each name is Adamic's own, from adamic docs/0.1.md, so one rule has one name in both projects; the list is closed, and a name joins it there first.",
+      "names": [
+        { "name": "invariant-mutable", "definition": "A mutable location (an element, a mutable property, a map value) is not seen through a wider type." },
+        { "name": "no-definite-assignment", "definition": "No definite assignment assertion, `field!: T`, which reads undefined as T." },
+        { "name": "no-optional-widening", "definition": "A value is not seen as a type with an optional property its own type does not declare." },
+        { "name": "no-type-predicate", "definition": "No written type predicate, which the checker trusts and never verifies." },
+        { "name": "no-unchecked-cast", "definition": "No cast the runtime cannot check; an upcast and a checked downcast to a union member are allowed." },
+        { "name": "nominal-class", "definition": "A class type accepts only instances of that class, with identical type arguments." },
+        { "name": "single-spread", "definition": "An object literal spreads at most once, as its first member." }
+      ]
+    }
+  ]
+}

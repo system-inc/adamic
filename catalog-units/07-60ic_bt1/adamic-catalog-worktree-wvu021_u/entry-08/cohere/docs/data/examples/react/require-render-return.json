@@ -1,0 +1,24 @@
+{
+    "rule": "react/require-render-return",
+    "firing": {
+        "file": "/repository/source/RequireRenderReturn.tsx",
+        "source": "class Hello extends Component {\n  render() {}\n}\n",
+        "findings": [
+            {
+                "line": 2,
+                "column": 3,
+                "endLine": 2,
+                "endColumn": 14,
+                "messageId": "noRenderReturn",
+                "message": "A class component's `render` returns nothing, so React receives `undefined` where it expected an element. React treats that as an error rather than as an empty component, and the whole subtree fails to mount with a message naming the class rather than the missing return. The usual cause is a body that builds the element and forgets to hand it back, or an arrow whose braces turned an implicit return into a statement. Return the element, or return `null` to render nothing on purpose."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/RequireRenderReturn.tsx",
+        "source": "var Hello = createReactClass({});"
+    },
+    "assertedMessageIds": [
+        "noRenderReturn"
+    ]
+}

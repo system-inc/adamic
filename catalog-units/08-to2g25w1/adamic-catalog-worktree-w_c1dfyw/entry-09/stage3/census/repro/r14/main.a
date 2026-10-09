@@ -1,0 +1,2 @@
+// a-check: type error TS18048
+const values: number[] = []; const value = values[0]; console.log(String(value.toString()));

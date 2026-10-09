@@ -1,0 +1,2 @@
+stage3/drivers/tsc-entry/probes/01-indexed-path.a:4:8: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.

@@ -1,0 +1,23 @@
+{
+  "roots": 78,
+  "file": "transformers/module/module.ts",
+  "code_filter": null,
+  "counts": {
+    "TS2322": 2
+  },
+  "total": 2,
+  "diagnostics": [
+    {
+      "code": "TS2322",
+      "line": 2262,
+      "column": 13,
+      "diagnostic": "src/compiler/transformers/module/module.ts:2262:13: error TS2322: Type 'ExternalModuleInfo | undefined' is not assignable to type 'ExternalModuleInfo'.\n  Type 'undefined' is not assignable to type 'ExternalModuleInfo'."
+    },
+    {
+      "code": "TS2322",
+      "line": 2481,
+      "column": 21,
+      "diagnostic": "src/compiler/transformers/module/module.ts:2481:21: error TS2322: Type '(Identifier | undefined)[]' is not assignable to type 'ModuleExportName[]'.\n  Type 'Identifier | undefined' is not assignable to type 'ModuleExportName'.\n    Type 'undefined' is not assignable to type 'ModuleExportName'."
+    }
+  ]
+}

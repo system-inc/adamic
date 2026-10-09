@@ -1,0 +1,5 @@
+// From TypeScript 6.0.3, src/compiler/_namespaces/ts.ts:4
+// Census reason: an ExportDeclaration
+export * from "./support/core.a";
+import {equateStringsCaseInsensitive} from "./support/core.a";
+console.log(String(equateStringsCaseInsensitive("compiler.ts", "COMPILER.TS")));

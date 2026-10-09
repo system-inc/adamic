@@ -1,0 +1,24 @@
+{
+    "rule": "no-prototype-builtins",
+    "firing": {
+        "file": "/repository/source/PrototypeBuiltins.ts",
+        "source": "foo.isPrototypeOf('bar')",
+        "findings": [
+            {
+                "line": 1,
+                "column": 1,
+                "endLine": 1,
+                "endColumn": 18,
+                "messageId": "noPrototypeBuiltins",
+                "message": "This calls an `Object.prototype` method directly on an object that may not have inherited it. `Object.create(null)` produces objects with no prototype at all, and any object can carry a property that shadows the builtin, so parsed JSON like `{\"hasOwnProperty\": 1}` turns this call into a crash. Call it through the prototype instead: `Object.prototype.hasOwnProperty.call(target, key)`."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/PrototypeBuiltins.ts",
+        "source": "foo[1]('bar')"
+    },
+    "assertedMessageIds": [
+        "noPrototypeBuiltins"
+    ]
+}

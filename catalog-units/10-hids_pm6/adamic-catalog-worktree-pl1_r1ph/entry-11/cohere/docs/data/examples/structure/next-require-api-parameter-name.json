@@ -1,0 +1,28 @@
+{
+    "rule": "structure/next-require-api-parameter-name",
+    "firing": {
+        "file": "/repository/app/account/page.tsx",
+        "source": "export async function generateMetadata(argument: { parameters: unknown }) {\n    return argument;\n}\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 52,
+                "endLine": 1,
+                "endColumn": 62,
+                "messageId": "useParamsNotParameters",
+                "message": "Next reads this argument by name, so calling the field `parameters` means the framework passes `params` and the function receives undefined. Nothing fails: the type says the field exists, the code compiles, and the value is simply absent at runtime. This is the one place the house naming convention has to yield, because the name is an external contract rather than a style choice.",
+                "fix": true
+            }
+        ],
+        "fixedSource": "export async function generateMetadata(argument: { params: unknown }) {\n    return argument;\n}\n"
+    },
+    "clean": {
+        "file": "/repository/app/account/page.tsx",
+        "source": "export async function generateMetadata() {\n    return {};\n}\n"
+    },
+    "assertedMessageIds": [
+        "useParamsNotParameters",
+        "useSearchParamsNotSearchParameters"
+    ],
+    "assertsFix": true
+}

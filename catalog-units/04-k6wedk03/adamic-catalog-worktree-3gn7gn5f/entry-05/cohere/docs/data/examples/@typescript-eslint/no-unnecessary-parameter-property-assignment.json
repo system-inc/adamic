@@ -1,0 +1,26 @@
+{
+    "rule": "@typescript-eslint/no-unnecessary-parameter-property-assignment",
+    "firing": {
+        "file": "/repository/source/ParameterProperty.ts",
+        "source": "class Foo {\n  constructor(public foo: string) {\n    this.foo = (foo);\n  }\n}\n",
+        "findings": [
+            {
+                "line": 3,
+                "column": 5,
+                "endLine": 3,
+                "endColumn": 21,
+                "messageId": "unnecessaryAssign",
+                "message": "A constructor parameter carrying `public`, `private`, `protected`, `readonly` or `override` is already assigned to the matching property before the constructor body runs. Writing it again does nothing, and it invites the next reader to believe the two names could diverge. Delete the assignment.",
+                "suggestions": 1
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/ParameterProperty.ts",
+        "source": "\n        const foo = 'foo';\n        this.foo = foo;\n        "
+    },
+    "assertedMessageIds": [
+        "unnecessaryAssign"
+    ],
+    "assertsSuggestion": true
+}

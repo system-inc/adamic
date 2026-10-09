@@ -1,0 +1,13 @@
+{
+  "rules": {
+    "TypeScript": "base/correctness-require-serializable-nullable-parity"
+  },
+  "messages": {
+    "decoratorOptionalButTypeNot": {
+      "text": "@SerializableField declares 'optional: true' but type '{{typeText}}' does not include null/undefined"
+    },
+    "typeOptionalButDecoratorNot": {
+      "text": "Type '{{typeText}}' is nullable but @SerializableField does not declare 'optional: true'"
+    }
+  }
+}

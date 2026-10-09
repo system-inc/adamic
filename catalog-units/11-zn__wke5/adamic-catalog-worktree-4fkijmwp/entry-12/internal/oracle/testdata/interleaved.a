@@ -1,0 +1,9 @@
+// stdout and stderr in turns. The oracle also runs this with both on one file, where Node's order
+// is what lands (output_test.go): native must flush stdout before each write to stderr.
+for (let turn = 0; turn < 2000; turn += 1) {
+	console.log(`out ${turn}`);
+	if (turn % 3 === 0) {
+		console.error(`err ${turn}`);
+	}
+}
+console.log('last');

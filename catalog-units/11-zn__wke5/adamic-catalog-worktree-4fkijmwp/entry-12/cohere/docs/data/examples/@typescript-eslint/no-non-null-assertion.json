@@ -1,0 +1,25 @@
+{
+    "rule": "@typescript-eslint/no-non-null-assertion",
+    "firing": {
+        "file": "/repository/source/Thing.ts",
+        "source": "declare const foo: any;\nexport const r = foo!;\n",
+        "findings": [
+            {
+                "line": 2,
+                "column": 18,
+                "endLine": 2,
+                "endColumn": 22,
+                "messageId": "noNonNull",
+                "message": "A non-null assertion tells the compiler to stop checking, and it is erased before the code runs, so when the value is missing anyway the failure lands somewhere else, as a property access on `undefined` in code the types promised was safe. Fix it in this order. If the value can really be missing on a reachable path (input, disk, the network, an external API), guard it: return early, `continue`, or throw an error that says what was missing, because that is the case the type is warning about. If it cannot, fix the type that says it can (a type predicate in `.filter`, a tuple type, a field made required), so there is no claim left to check. If an index is what makes it optional, restructure so the index goes away (`for...of`, `.entries()`, a destructured head checked once), because a value you never index is never possibly missing. Where none of those fit, state the proof with `assert(value !== undefined, 'why it holds')` or, in an expression, `required(value, 'why it holds')` from `@nexus/source/errors/Assert`, which narrows the same way and throws that sentence if the proof is ever wrong. `?.`, `?? ''` and `as T` are not repairs on their own: each makes the missing value disappear instead of handling it."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/Thing.ts",
+        "source": "export const r = 'hello!';\n"
+    },
+    "assertedMessageIds": [
+        "noNonNull"
+    ],
+    "assertsSuggestion": true
+}

@@ -1,0 +1,24 @@
+{
+    "rule": "nexus/concurrency-no-check-then-write",
+    "firing": {
+        "file": "source/Subject.ts",
+        "source": "import * as NodeFileSystem from 'node:fs';\nimport * as NodePath from 'node:path';\nexport function save(directory: string, bytes: Uint8Array): void {\n    let index = 0;\n    while(NodeFileSystem.existsSync(NodePath.join(directory, `${index}.png`))) index++;\n    NodeFileSystem.writeFileSync(NodePath.join(directory, `${index}.png`), bytes);\n}\n",
+        "findings": [
+            {
+                "line": 5,
+                "column": 11,
+                "endLine": 5,
+                "endColumn": 78,
+                "messageId": "checkThenWrite",
+                "message": "This loop looks for a file name that is free, and the `writeFileSync` after it creates that file in a separate step, so two saves running at once (in this process or in two) can both find the same name free and the second silently overwrites the first. Claim the name in the step that creates the file: `writeFile(path, bytes, { flag: 'wx' })` fails with `EEXIST` when the name is taken, so retry with the next name on that error instead of checking first."
+            }
+        ]
+    },
+    "clean": {
+        "file": "source/Subject.ts",
+        "source": "import * as NodeFileSystem from 'node:fs';\nimport * as NodePath from 'node:path';\ndeclare function existsSync(path: string): boolean;\nexport function save(directory: string, bytes: Uint8Array): void {\n    let index = 0;\n    while(existsSync(NodePath.join(directory, `${index}.png`))) index++;\n    NodeFileSystem.writeFileSync(NodePath.join(directory, `${index}.png`), bytes);\n}\n"
+    },
+    "assertedMessageIds": [
+        "checkThenWrite"
+    ]
+}

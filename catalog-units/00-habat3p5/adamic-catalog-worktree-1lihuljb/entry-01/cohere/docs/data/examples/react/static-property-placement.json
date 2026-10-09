@@ -1,0 +1,22 @@
+{
+    "rule": "react/static-property-placement",
+    "firing": {
+        "file": "/repository/source/StaticPropertyPlacement.tsx",
+        "source": "class MyComponent extends React.Component { propTypes = {}; render(){ return null; } }\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 45,
+                "endLine": 1,
+                "endColumn": 60,
+                "messageId": "notStaticClassProp",
+                "message": "'propTypes' should be declared as a static class property. This file's configuration puts React statics in the class body as static fields, and a reader looking for them will look there."
+            }
+        ]
+    },
+    "assertedMessageIds": [
+        "declareOutsideClass",
+        "notGetterClassFunc",
+        "notStaticClassProp"
+    ]
+}

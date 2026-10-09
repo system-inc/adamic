@@ -1,0 +1,44 @@
+{
+    "name": "cohere",
+    "displayName": "cohere",
+    "description": "Format on save with cohere: the same lint fixes and formatting as the cohere gate, computed from the buffer, so the editor and CI never disagree.",
+    "publisher": "system-inc",
+    "version": "1.0.0",
+    "license": "MIT OR Apache-2.0",
+    "author": "System, Inc.",
+    "icon": "icon.png",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/system-inc/cohere"
+    },
+    "homepage": "https://github.com/system-inc/cohere/tree/main/editors/vscode",
+    "bugs": {
+        "url": "https://github.com/system-inc/cohere/issues"
+    },
+    "engines": {
+        "vscode": "^1.80.0"
+    },
+    "categories": [
+        "Formatters",
+        "Linters"
+    ],
+    "keywords": [
+        "cohere",
+        "formatter",
+        "format on save",
+        "typescript",
+        "prettier",
+        "lint"
+    ],
+    "galleryBanner": {
+        "color": "#111111",
+        "theme": "dark"
+    },
+    "activationEvents": [
+        "onStartupFinished"
+    ],
+    "main": "./extension.js",
+    "scripts": {
+        "test": "node --test cohere-format.test.js"
+    }
+}

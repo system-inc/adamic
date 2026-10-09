@@ -1,0 +1,27 @@
+{
+    "rule": "prefer-const",
+    "firing": {
+        "file": "/repository/source/PreferConst.ts",
+        "source": "let x = 1; foo(x);\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 5,
+                "endLine": 1,
+                "endColumn": 6,
+                "messageId": "preferConst",
+                "message": "This binding is declared `let` but nothing ever reassigns it, so the `let` claims a mutability the code does not use. A reader has to hold open the possibility that the value changes somewhere, and has to scan the rest of the scope to find out that it does not. `const` answers that question at the declaration and lets the compiler reject a future write that was not intended. Declare it `const`.",
+                "fix": true
+            }
+        ],
+        "fixedSource": "const x = 1; foo(x);\n"
+    },
+    "clean": {
+        "file": "/repository/source/PreferConst.ts",
+        "source": "let x;\n"
+    },
+    "assertedMessageIds": [
+        "preferConst"
+    ],
+    "assertsFix": true
+}

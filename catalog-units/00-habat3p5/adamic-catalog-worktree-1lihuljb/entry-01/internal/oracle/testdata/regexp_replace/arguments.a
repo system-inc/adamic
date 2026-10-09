@@ -1,0 +1,1 @@
+console.log('!ab'.replace(/(?<first>a)(?<second>b)/, (match: string, first: string, second: string, offset: number, input: string, groups: { readonly first: string; readonly second: string } | undefined) => `${match}:${first}:${second}:${offset}:${input}:${groups?.first ?? 'missing'}:${groups?.second ?? 'missing'}`));

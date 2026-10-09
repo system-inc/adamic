@@ -1,0 +1,89 @@
+
+Top 20 inclusive instructions (same-name inline records collapsed):
+ 7,855,874,289 100.00% main
+ 7,855,149,966  99.99% adamic_function_9_run
+ 5,286,225,846  67.29% adamic_function_22_Scanner_scan
+ 4,608,742,637  58.66% adamic_string_code_point_at
+ 3,616,275,928  46.03% adamic_function_11_Scanner_code
+ 2,696,157,733  34.32% adamic_function_19_Scanner_template
+ 2,690,959,274  34.25% adamic_string_locate
+ 1,992,294,730  25.36% adamic_function_12_Scanner_advance
+ 1,588,551,758  20.22% unit_at
+ 1,074,751,711  13.68% adamic_function_17_Scanner_identifier
+   570,735,578   7.26% usable
+   339,734,868   4.32% adamic_string_slice
+   251,888,985   3.21% adamic_string_units
+   226,539,960   2.88% adamic_read_text_file
+   225,777,127   2.87% decode
+   176,084,968   2.24% adamic_release
+   168,261,231   2.14% adamic_array_push
+   103,767,095   1.32% adamic_map_get
+   102,293,901   1.30% adamic_array_join
+   100,133,740   1.27% adamic_string_share
+
+Top 20 self instructions (same-name inline records collapsed):
+ 2,120,223,696  26.99% adamic_string_locate
+ 1,463,437,128  18.63% adamic_string_code_point_at
+   578,768,909   7.37% adamic_function_11_Scanner_code
+   570,733,023   7.26% usable
+   486,970,422   6.20% adamic_function_9_run
+   373,137,482   4.75% unit_at
+   337,296,436   4.29% adamic_function_12_Scanner_advance
+   251,888,985   3.21% adamic_string_units
+   225,747,630   2.87% decode
+   187,570,859   2.39% adamic_function_22_Scanner_scan
+   160,336,553   2.04% adamic_release
+   154,446,557   1.97% adamic_array_push
+   129,927,701   1.65% adamic_function_19_Scanner_template
+   117,585,815   1.50% adamic_string_slice
+    83,263,995   1.06% adamic_string_join_halves
+    76,756,671   0.98% find
+    68,442,501   0.87% adamic_function_1_isIdentifierStart
+    63,328,996   0.81% adamic_string_equal
+    53,474,289   0.68% adamic_function_17_Scanner_identifier
+    40,270,758   0.51% adamic_allocate
+
+{
+  "tokens": 434790,
+  "rounds": {
+    "native": [
+      0.6308705189999273,
+      0.645739826999943,
+      0.618874598000275,
+      0.6152719000001525,
+      0.621438426000168
+    ],
+    "Go": [
+      0.0362212099998942,
+      0.04019552299996576,
+      0.03832555000008142,
+      0.041233833999740455,
+      0.03514014299980772
+    ],
+    "Node": [
+      0.4846171750000394,
+      0.47870867499977976,
+      0.44749061999982587,
+      0.48140448700041816,
+      0.4731495000000905
+    ]
+  },
+  "best": {
+    "native": {
+      "seconds": 0.6152719000001525,
+      "tokens_per_second": 706663.1841953
+    },
+    "Go": {
+      "seconds": 0.03514014299980772,
+      "tokens_per_second": 12373028.760935295
+    },
+    "Node": {
+      "seconds": 0.44749061999982587,
+      "tokens_per_second": 971618.131348025
+    }
+  },
+  "loadavg": "0.52 0.54 2.00 1/138 44761",
+  "counts": "adamic: counts: allocations 1118972 frees 1118972 retains 2441827 releases 3769584 peak 2262 regions 0",
+  "instructions": 7856053472,
+  "instructions_per_token": 18068.615819131075
+}

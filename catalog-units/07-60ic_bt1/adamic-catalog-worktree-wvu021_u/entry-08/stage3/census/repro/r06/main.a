@@ -1,0 +1,2 @@
+// a-check: type error TS2345
+function take(value: number): number { return value; } const values: number[] = []; console.log(String(take(values[0])));

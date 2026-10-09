@@ -1,0 +1,15 @@
+{
+    "rule": "react/no-unused-class-component-methods",
+    "firing": {
+        "file": "/repository/source/NoUnusedClassComponentMethods.tsx",
+        "source": "class Foo { render() { return null; } handleClick() {} }\n"
+    },
+    "clean": {
+        "file": "/repository/source/NoUnusedClassComponentMethods.tsx",
+        "source": "\n        class Foo {\n          action = () => {}\n          anotherAction = () => this.action()\n        }\n      "
+    },
+    "assertedMessageIds": [
+        "unused",
+        "unusedWithClass"
+    ]
+}

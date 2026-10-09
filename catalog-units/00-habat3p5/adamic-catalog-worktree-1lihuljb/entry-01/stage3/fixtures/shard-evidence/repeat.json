@@ -1,0 +1,172 @@
+[
+  {
+    "unit": "github.com/system-inc/adamic/stage3/fixtures::TestFixtures",
+    "command": [
+      "/workspace/stage3-measurements/github.com_system-inc_adamic_stage3_fixtures.test",
+      "-test.run=^TestFixtures$",
+      "-test.count=1",
+      "-test.timeout=30m",
+      "-test.parallel=4"
+    ],
+    "cwd": "/workspace/adamic/stage3/fixtures",
+    "seconds": 18.79,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/repeat-0.log"
+  },
+  {
+    "unit": "stage3/meter/report_test.py::LatentCensusTests.test_overlay_planted_notyet_moves_only_its_reason_count",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "report_test.LatentCensusTests.test_overlay_planted_notyet_moves_only_its_reason_count",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/meter",
+    "seconds": 0.147,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/repeat-1.log"
+  },
+  {
+    "unit": "stage3/meter/report_test.py::CensusAttributionTests.test_type_error_in_dependency_changes_only_dependency_own_file",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "report_test.CensusAttributionTests.test_type_error_in_dependency_changes_only_dependency_own_file",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/meter",
+    "seconds": 0.26,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/repeat-2.log"
+  },
+  {
+    "unit": "stage3/meter/entry_test.py::EntryCensusTests.test_reach_includes_dependency_outside_compiler_and_excludes_unused_file",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "entry_test.EntryCensusTests.test_reach_includes_dependency_outside_compiler_and_excludes_unused_file",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/meter",
+    "seconds": 0.285,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/repeat-3.log"
+  },
+  {
+    "unit": "stage3/meter/entry_test.py::FullEntryCensusTests.test_rejected_entry_measures_clean_nested_body_and_catches_first_error_mutant",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "entry_test.FullEntryCensusTests.test_rejected_entry_measures_clean_nested_body_and_catches_first_error_mutant",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/meter",
+    "seconds": 0.278,
+    "exit": 1,
+    "log": "/workspace/stage3-measurements/repeat-4.log"
+  },
+  {
+    "unit": "stage3/census/latent/replay/replay_test.py::ReplayTests.test_nested_findings_match_full_census_in_order",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "replay_test.ReplayTests.test_nested_findings_match_full_census_in_order",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/census/latent/replay",
+    "seconds": 3.919,
+    "exit": 5,
+    "log": "/workspace/stage3-measurements/repeat-5.log"
+  },
+  {
+    "unit": "stage3/census/latent/replay/replay_test.py::ReplayTests.test_parent_sibling_boundary_fails_signature_assertion",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "replay_test.ReplayTests.test_parent_sibling_boundary_fails_signature_assertion",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic/stage3/census/latent/replay",
+    "seconds": 3.885,
+    "exit": 5,
+    "log": "/workspace/stage3-measurements/repeat-6.log"
+  },
+  {
+    "unit": "stage3/lane::python discovery",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "stage3/lane",
+      "-p",
+      "test_*.py",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic",
+    "seconds": 7.315,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/repeat-7.log"
+  },
+  {
+    "unit": "stage3/verdict::python discovery",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "stage3/verdict",
+      "-p",
+      "test_*.py",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic",
+    "seconds": 0.097,
+    "exit": 0,
+    "log": "/workspace/stage3-measurements/repeat-8.log"
+  },
+  {
+    "unit": "stage3/meter::python discovery",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "stage3/meter",
+      "-p",
+      "*_test.py",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic",
+    "seconds": 4.213,
+    "exit": 1,
+    "log": "/workspace/stage3-measurements/repeat-9.log"
+  },
+  {
+    "unit": "stage3/census/latent/replay::python discovery",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "stage3/census/latent/replay",
+      "-p",
+      "*_test.py",
+      "-v"
+    ],
+    "cwd": "/workspace/adamic",
+    "seconds": 3.922,
+    "exit": 5,
+    "log": "/workspace/stage3-measurements/repeat-10.log"
+  }
+]

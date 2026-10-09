@@ -1,0 +1,39 @@
+Auto-merging internal/ir/ir.go
+Auto-merging internal/javascript/javascript.go
+Auto-merging internal/javascript/records.go
+Auto-merging internal/lower/expression.go
+Auto-merging internal/lower/records.go
+Auto-merging internal/lower/refusals.go
+Auto-merging internal/native/emit_expressions.go
+Auto-merging internal/native/emit_values.go
+Merge made by the 'ort' strategy.
+ internal/ir/ir.go                                  |   9 +-
+ internal/javascript/javascript.go                  |   6 +
+ internal/lower/expression.go                       |  21 +-
+ internal/lower/indexed_checks.go                   |   7 +-
+ internal/native/emit_expressions.go                |  12 +-
+ internal/native/emit_slots.go                      |   6 +-
+ internal/native/emit_values.go                     |   2 +
+ stage3/stricter-records/REPORT.md                  | 225 ++++++++++++++++++++
+ stage3/stricter-records/boundaries_test.go         | 168 +++++++++++++++
+ stage3/stricter-records/evidence/nested-lower.log  |   1 +
+ stage3/stricter-records/evidence/nested-oracle.log |  41 ++++
+ .../stricter-records/evidence/nested-runtime.log   | 129 ++++++++++++
+ stage3/stricter-records/evidence/nested-setup.log  |  16 ++
+ stage3/stricter-records/evidence/nested-vet.log    |   0
+ .../evidence/nested-whitespace.log                 |   0
+ .../stricter-records/evidence/nested-witnesses.log | 191 +++++++++++++++++
+ stage3/stricter-records/sites.json                 |  88 ++++++++
+ stage3/stricter-records/witness_test.go            | 229 +++++++++++++++++++++
+ 18 files changed, 1145 insertions(+), 6 deletions(-)
+ create mode 100644 stage3/stricter-records/REPORT.md
+ create mode 100644 stage3/stricter-records/boundaries_test.go
+ create mode 100644 stage3/stricter-records/evidence/nested-lower.log
+ create mode 100644 stage3/stricter-records/evidence/nested-oracle.log
+ create mode 100644 stage3/stricter-records/evidence/nested-runtime.log
+ create mode 100644 stage3/stricter-records/evidence/nested-setup.log
+ create mode 100644 stage3/stricter-records/evidence/nested-vet.log
+ create mode 100644 stage3/stricter-records/evidence/nested-whitespace.log
+ create mode 100644 stage3/stricter-records/evidence/nested-witnesses.log
+ create mode 100644 stage3/stricter-records/sites.json
+ create mode 100644 stage3/stricter-records/witness_test.go

@@ -1,0 +1,31 @@
+{
+    "rule": "@typescript-eslint/no-unnecessary-boolean-literal-compare",
+    "firing": {
+        "file": "/repository/source/Thing.ts",
+        "source": "true === true;\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 1,
+                "endLine": 1,
+                "endColumn": 14,
+                "messageId": "direct",
+                "message": "This compares a boolean to a boolean literal, which asks the same question the value already answers. Use the expression on its own.",
+                "fix": true
+            }
+        ],
+        "fixedSource": "true;\n"
+    },
+    "clean": {
+        "file": "/repository/source/Thing.ts",
+        "source": "'false' === true;\n"
+    },
+    "assertedMessageIds": [
+        "comparingNullableToFalse",
+        "comparingNullableToTrueDirect",
+        "comparingNullableToTrueNegated",
+        "direct",
+        "negated"
+    ],
+    "assertsFix": true
+}

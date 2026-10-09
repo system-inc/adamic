@@ -1,0 +1,10 @@
+[
+{"code":"Symbol(\"Foo\");","eslint":[]},
+{"code":"var foo = \"foo\"; Symbol(foo);","eslint":[]},
+{"code":"var Symbol = function () {}; Symbol();","eslint":[]},
+{"code":"Symbol(); var Symbol = function () {};","eslint":[]},
+{"code":"function bar() { var Symbol = function () {}; Symbol(); }","eslint":[]},
+{"code":"function bar(Symbol) { Symbol(); }","eslint":[]},
+{"code":"Symbol();","eslint":[["expected",0,8]]},
+{"code":"Symbol(); Symbol = function () {};","eslint":[["expected",0,8]]}
+]

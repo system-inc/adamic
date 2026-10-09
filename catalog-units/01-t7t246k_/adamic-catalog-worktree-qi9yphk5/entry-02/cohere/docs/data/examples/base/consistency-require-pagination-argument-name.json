@@ -1,0 +1,14 @@
+{
+    "rule": "base/consistency-require-pagination-argument-name",
+    "firing": {
+        "file": "/repository/source/ConsistencyRequirePaginationArgumentName.ts",
+        "source": "class C { m(@GraphQlArgument('bad') p: Pagination) {} }"
+    },
+    "clean": {
+        "file": "/repository/source/ConsistencyRequirePaginationArgumentName.ts",
+        "source": "@GraphQlArgument('bad') class C {}"
+    },
+    "assertedMessageIds": [
+        "invalidName"
+    ]
+}

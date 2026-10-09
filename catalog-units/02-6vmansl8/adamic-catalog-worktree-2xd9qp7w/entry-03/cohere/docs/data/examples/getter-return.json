@@ -1,0 +1,25 @@
+{
+    "rule": "getter-return",
+    "firing": {
+        "file": "Getter.ts",
+        "source": "class foo { get bar(){} }\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 13,
+                "endLine": 1,
+                "endColumn": 20,
+                "messageId": "expected",
+                "message": "This getter never returns a value, so reading the property yields undefined. Return the value it stands for."
+            }
+        ]
+    },
+    "clean": {
+        "file": "Getter.ts",
+        "source": "var foo = { bar(){} };\n"
+    },
+    "assertedMessageIds": [
+        "expected",
+        "expectedAlways"
+    ]
+}

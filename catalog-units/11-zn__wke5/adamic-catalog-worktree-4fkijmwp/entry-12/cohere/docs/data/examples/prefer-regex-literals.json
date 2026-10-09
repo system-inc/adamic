@@ -1,0 +1,27 @@
+{
+    "rule": "prefer-regex-literals",
+    "firing": {
+        "file": "prefer_regex_literals.ts",
+        "source": "RegExp('*');\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 1,
+                "endLine": 1,
+                "endColumn": 12,
+                "messageId": "unexpectedRegExp",
+                "message": "This builds a regular expression by handing constant strings to the `RegExp` constructor, which does at runtime what a literal does at parse time. The constructor form costs a parse on every evaluation, hides syntax errors until the line is reached rather than surfacing them when the file is read, and doubles every backslash so the pattern stops looking like the pattern. Write the regular expression literal."
+            }
+        ]
+    },
+    "clean": {
+        "file": "prefer_regex_literals.ts",
+        "source": "/abc/\n"
+    },
+    "assertedMessageIds": [
+        "unexpectedRedundantRegExp",
+        "unexpectedRedundantRegExpWithFlags",
+        "unexpectedRegExp"
+    ],
+    "assertsSuggestion": true
+}

@@ -1,0 +1,20 @@
+{
+    "rule": "react/sort-comp",
+    "firing": {
+        "file": "/repository/source/SortComp.tsx",
+        "source": "class Hello extends React.Component {\n  render() { return <div>Hello</div>; }\n  componentDidMount() {}\n}\n",
+        "findings": [
+            {
+                "line": 2,
+                "column": 3,
+                "endLine": 2,
+                "endColumn": 40,
+                "messageId": "unsortedProps",
+                "message": "render should be placed after componentDidMount. A component read top to bottom tells a story in a fixed order: what it is, what it takes, how it sets itself up, how it responds to the outside, and last what it draws. When members arrive out of that order the reader has to hold the whole class in their head to find the piece they came for, and `render` in particular stops being the place the file ends. Move it."
+            }
+        ]
+    },
+    "assertedMessageIds": [
+        "unsortedProps"
+    ]
+}

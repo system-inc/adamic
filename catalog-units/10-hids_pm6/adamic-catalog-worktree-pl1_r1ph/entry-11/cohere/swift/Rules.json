@@ -1,0 +1,300 @@
+[
+  {
+    "name": "cohere-swift/always-use-lower-camel-case",
+    "origin": "swift-format",
+    "upstreamName": "AlwaysUseLowerCamelCase",
+    "typeAware": false
+  },
+  {
+    "name": "cohere-swift/concurrency-no-check-then-write",
+    "origin": "house",
+    "typeAware": true
+  },
+  {
+    "name": "cohere-swift/concurrency-no-lost-update",
+    "origin": "house",
+    "typeAware": false
+  },
+  {
+    "name": "cohere-swift/concurrency-require-escape-hatch-reason",
+    "origin": "house",
+    "typeAware": false
+  },
+  {
+    "name": "cohere-swift/consistency-no-abbreviated-identifier",
+    "origin": "house",
+    "typeAware": false
+  },
+  {
+    "name": "cohere-swift/consistency-no-ambiguous-identifier",
+    "origin": "house",
+    "typeAware": false
+  },
+  {
+    "name": "cohere-swift/consistency-no-bare-throw",
+    "origin": "house",
+    "typeAware": false
+  },
+  {
+    "name": "cohere-swift/consistency-no-boolean-outcome",
+    "origin": "house",
+    "typeAware": false
+  },
+  {
+    "name": "cohere-swift/consistency-no-hand-rolled-delay",
+    "origin": "house",
+    "typeAware": false
+  },
+  {
+    "name": "cohere-swift/consistency-no-iso-string-date-cut",
+    "origin": "house",
+    "typeAware": true
+  },
+  {
+    "name": "cohere-swift/consistency-no-print",
+    "origin": "house",
+    "typeAware": false
+  },
+  {
+    "name": "cohere-swift/consistency-no-property-alias",
+    "origin": "house",
+    "typeAware": false
+  },
+  {
+    "name": "cohere-swift/consistency-no-stuttering-name",
+    "origin": "house",
+    "typeAware": false
+  },
+  {
+    "name": "cohere-swift/consistency-no-utils-folder",
+    "origin": "house",
+    "typeAware": false
+  },
+  {
+    "name": "cohere-swift/consistency-require-matching-file-name",
+    "origin": "house",
+    "typeAware": false
+  },
+  {
+    "name": "cohere-swift/contains-over-filter",
+    "origin": "swiftlint",
+    "upstreamName": "contains_over_filter_count",
+    "typeAware": true
+  },
+  {
+    "name": "cohere-swift/contains-over-first-not-nil",
+    "origin": "swiftlint",
+    "upstreamName": "contains_over_first_not_nil",
+    "typeAware": true
+  },
+  {
+    "name": "cohere-swift/correctness-no-default-for-owned-enum",
+    "origin": "house",
+    "typeAware": true
+  },
+  {
+    "name": "cohere-swift/correctness-no-discarded-try-optional",
+    "origin": "house",
+    "typeAware": true
+  },
+  {
+    "name": "cohere-swift/correctness-no-identical-branches",
+    "origin": "house",
+    "typeAware": false
+  },
+  {
+    "name": "cohere-swift/correctness-no-uncleared-race-timeout",
+    "origin": "house",
+    "typeAware": false
+  },
+  {
+    "name": "cohere-swift/correctness-no-write-only-collection",
+    "origin": "house",
+    "typeAware": true
+  },
+  {
+    "name": "cohere-swift/correctness-require-response-status-check",
+    "origin": "house",
+    "typeAware": true
+  },
+  {
+    "name": "cohere-swift/duplicate-conditions",
+    "origin": "swiftlint",
+    "upstreamName": "duplicate_conditions",
+    "typeAware": false
+  },
+  {
+    "name": "cohere-swift/duplicate-imports",
+    "origin": "swiftlint",
+    "upstreamName": "duplicate_imports",
+    "typeAware": false
+  },
+  {
+    "name": "cohere-swift/duplicated-key-in-dictionary-literal",
+    "origin": "swiftlint",
+    "upstreamName": "duplicated_key_in_dictionary_literal",
+    "typeAware": false
+  },
+  {
+    "name": "cohere-swift/empty-count",
+    "origin": "swiftlint",
+    "upstreamName": "empty_count",
+    "typeAware": true
+  },
+  {
+    "name": "cohere-swift/fatal-error-message",
+    "origin": "swiftlint",
+    "upstreamName": "fatal_error_message",
+    "typeAware": false
+  },
+  {
+    "name": "cohere-swift/file-length",
+    "origin": "swiftlint",
+    "upstreamName": "file_length",
+    "typeAware": false
+  },
+  {
+    "name": "cohere-swift/first-where",
+    "origin": "swiftlint",
+    "upstreamName": "first_where",
+    "typeAware": true
+  },
+  {
+    "name": "cohere-swift/force-cast",
+    "origin": "swiftlint",
+    "upstreamName": "force_cast",
+    "typeAware": false
+  },
+  {
+    "name": "cohere-swift/force-try",
+    "origin": "swiftlint",
+    "upstreamName": "force_try",
+    "typeAware": false
+  },
+  {
+    "name": "cohere-swift/force-unwrapping",
+    "origin": "swiftlint",
+    "upstreamName": "force_unwrapping",
+    "typeAware": false
+  },
+  {
+    "name": "cohere-swift/identical-operands",
+    "origin": "swiftlint",
+    "upstreamName": "identical_operands",
+    "typeAware": false
+  },
+  {
+    "name": "cohere-swift/implicitly-unwrapped-optional",
+    "origin": "swiftlint",
+    "upstreamName": "implicitly_unwrapped_optional",
+    "typeAware": false
+  },
+  {
+    "name": "cohere-swift/is-disjoint",
+    "origin": "swiftlint",
+    "upstreamName": "is_disjoint",
+    "typeAware": true
+  },
+  {
+    "name": "cohere-swift/last-where",
+    "origin": "swiftlint",
+    "upstreamName": "last_where",
+    "typeAware": true
+  },
+  {
+    "name": "cohere-swift/legacy-constructors",
+    "origin": "swiftlint",
+    "upstreamName": "legacy_constructor",
+    "typeAware": false
+  },
+  {
+    "name": "cohere-swift/no-leading-underscores",
+    "origin": "swift-format",
+    "upstreamName": "NoLeadingUnderscores",
+    "typeAware": false
+  },
+  {
+    "name": "cohere-swift/performance-no-independent-await-in-loop",
+    "origin": "house",
+    "typeAware": false
+  },
+  {
+    "name": "cohere-swift/private-over-fileprivate",
+    "origin": "swiftlint",
+    "upstreamName": "private_over_fileprivate",
+    "typeAware": false
+  },
+  {
+    "name": "cohere-swift/reduce-into",
+    "origin": "swiftlint",
+    "upstreamName": "reduce_into",
+    "typeAware": true
+  },
+  {
+    "name": "cohere-swift/redundant-type-annotation",
+    "origin": "swiftlint",
+    "upstreamName": "redundant_type_annotation",
+    "typeAware": true
+  },
+  {
+    "name": "cohere-swift/security-no-interpolated-shell-command",
+    "origin": "house",
+    "typeAware": true
+  },
+  {
+    "name": "cohere-swift/security-no-interpolated-sql-string",
+    "origin": "house",
+    "typeAware": true
+  },
+  {
+    "name": "cohere-swift/sorted-first-last",
+    "origin": "swiftlint",
+    "upstreamName": "sorted_first_last",
+    "typeAware": true
+  },
+  {
+    "name": "cohere-swift/todo",
+    "origin": "swiftlint",
+    "upstreamName": "todo",
+    "typeAware": false
+  },
+  {
+    "name": "cohere-swift/toolchain-require-strict-memory-safety",
+    "origin": "house",
+    "typeAware": false
+  },
+  {
+    "name": "cohere-swift/toolchain-require-swift-6-language-mode",
+    "origin": "house",
+    "typeAware": false
+  },
+  {
+    "name": "cohere-swift/toolchain-require-upcoming-features",
+    "origin": "house",
+    "typeAware": false
+  },
+  {
+    "name": "cohere-swift/unhandled-throwing-task",
+    "origin": "swiftlint",
+    "upstreamName": "unhandled_throwing_task",
+    "typeAware": true
+  },
+  {
+    "name": "cohere-swift/unowned-variable-capture",
+    "origin": "swiftlint",
+    "upstreamName": "unowned_variable_capture",
+    "typeAware": false
+  },
+  {
+    "name": "cohere-swift/unused-closure-parameter",
+    "origin": "swiftlint",
+    "upstreamName": "unused_closure_parameter",
+    "typeAware": false
+  },
+  {
+    "name": "cohere-swift/unused-optional-binding",
+    "origin": "swiftlint",
+    "upstreamName": "unused_optional_binding",
+    "typeAware": false
+  }
+]

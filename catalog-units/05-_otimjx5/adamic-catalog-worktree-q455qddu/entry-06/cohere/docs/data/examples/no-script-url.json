@@ -1,0 +1,24 @@
+{
+    "rule": "no-script-url",
+    "firing": {
+        "file": "/repository/source/ScriptUrl.ts",
+        "source": "var a = 'javascript:';",
+        "findings": [
+            {
+                "line": 1,
+                "column": 9,
+                "endLine": 1,
+                "endColumn": 22,
+                "messageId": "unexpectedScriptURL",
+                "message": "A `javascript:` URL runs whatever follows the colon as code, so this string is an eval that happens to be spelled as a link. Anything that can reach the value that builds it can execute in the page, and a content security policy that blocks inline script blocks this too, so it tends to fail in production rather than in review. A real handler does the same work without turning a string into a program."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/ScriptUrl.ts",
+        "source": "var a = '';"
+    },
+    "assertedMessageIds": [
+        "unexpectedScriptURL"
+    ]
+}

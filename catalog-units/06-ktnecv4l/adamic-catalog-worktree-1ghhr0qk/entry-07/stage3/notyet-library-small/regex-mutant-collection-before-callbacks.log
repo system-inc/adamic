@@ -1,0 +1,20 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/notyet_library_regex_callback.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/notyet_library_regex_callback.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/notyet_library_regex_callback.a
+    oracle_test.go:761: stdout differs
+        node:   exit 0, stdout "one two\na[b]c\n$&b$&\n0:ab0:a\n0\n1:ab2:a\n99\n-a-b-c-\n-😀-x-\n-�-�-x-\nbaa\n2\nno match\n!aa\n", stderr ""
+        native: exit 0, stdout "one two\na[b]c\n$&b$&\n0:ab0:a\n0\n2:aba\n99\n-a-b-c-\n-😀-x-\n-�-�-x-\nbaa\n2\nno match\n!aa\n", stderr ""
+    oracle_test.go:767: JavaScript backend: stdout differs
+        node:    exit 0, stdout "one two\na[b]c\n$&b$&\n0:ab0:a\n0\n1:ab2:a\n99\n-a-b-c-\n-😀-x-\n-�-�-x-\nbaa\n2\nno match\n!aa\n", stderr ""
+        backend: exit 0, stdout "one two\na[b]c\n$&b$&\n0:ab0:a\n0\n2:aba\n99\n-a-b-c-\n-😀-x-\n-�-�-x-\nbaa\n2\nno match\n!aa\n", stderr ""
+--- FAIL: TestNativeAgreesWithNode (0.02s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/notyet_library_regex_callback.a (1.83s)
+FAIL
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	1.862s
+FAIL

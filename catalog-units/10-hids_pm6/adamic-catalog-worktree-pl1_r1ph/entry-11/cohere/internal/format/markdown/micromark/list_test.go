@@ -1,0 +1,216 @@
+package micromark
+
+import "testing"
+
+// listFixtures hold no block quote, fenced code, html, definition, setext, emphasis, code text, link,
+// autolink, math, liquid, wiki-link or GFM (table, strikethrough, footnote, task list item, autolink
+// literal) syntax: those constructs are still pending stubs, so a fixture leaning on them would differ for
+// reasons that are not the list's. Asterisks appear only as markers or thematic breaks, never in text, and
+// no lone `-` line follows a paragraph (that is a setext underline).
+var listFixtures = []string{
+	// CommonMark examples, the ones that stay inside ported constructs (Tabs, List items, Lists).
+	"  - foo\n\n\tbar\n",
+	"- foo\n\n\t\tbar\n",
+	"-\t\tfoo\n",
+	" - foo\n   - bar\n\t - baz\n",
+	"*\t*\t*\t\n",
+	"- one\n\n two\n",
+	"- one\n\n  two\n",
+	" -    one\n\n     two\n",
+	" -    one\n\n      two\n",
+	"-one\n\n2.two\n",
+	"- foo\n\n\n  bar\n",
+	"- Foo\n\n      bar\n\n\n      baz\n",
+	"123456789. ok\n",
+	"1234567890. not ok\n",
+	"0. ok\n",
+	"003. ok\n",
+	"-1. not ok\n",
+	"- foo\n\n      bar\n",
+	"  10.  foo\n\n           bar\n",
+	"1.     indented code\n\n   paragraph\n\n       more code\n",
+	"1.      indented code\n\n   paragraph\n\n       more code\n",
+	"-    foo\n\n  bar\n",
+	"-  foo\n\n   bar\n",
+	"-   \n  foo\n",
+	"-\n\n  foo\n",
+	"- foo\n-\n- bar\n",
+	"- foo\n-   \n- bar\n",
+	"1. foo\n2.\n3. bar\n",
+	"*\n",
+	"foo\n*\n\nfoo\n1.\n",
+	"  1.  A paragraph\n    with two lines.\n",
+	"- foo\n  - bar\n    - baz\n      - boo\n",
+	"- foo\n - bar\n  - baz\n   - boo\n",
+	"10) foo\n    - bar\n",
+	"10) foo\n   - bar\n",
+	"- - foo\n",
+	"1. - 2. foo\n",
+	"- foo\n- bar\n+ baz\n",
+	"1. foo\n2. bar\n3) baz\n",
+	"Foo\n- bar\n- baz\n",
+	"The number of windows in my house is\n14.  The number of doors is 6.\n",
+	"The number of windows in my house is\n1.  The number of doors is 6.\n",
+	"- foo\n\n- bar\n\n\n- baz\n",
+	"- foo\n  - bar\n    - baz\n\n\n      bim\n",
+	"- a\n - b\n  - c\n   - d\n  - e\n - f\n- g\n",
+	"1. a\n\n  2. b\n\n   3. c\n",
+	"- a\n - b\n  - c\n   - d\n    - e\n",
+	"1. a\n\n  2. b\n\n    3. c\n",
+	"- a\n- b\n\n- c\n",
+	"* a\n*\n\n* c\n",
+	"- a\n- b\n\n  c\n- d\n",
+	"- a\n  - b\n\n    c\n- d\n",
+	"- a\n",
+	"- a\n  - b\n",
+	"* foo\n  * bar\n\n  baz\n",
+	"- a\n  - b\n  - c\n\n- d\n  - e\n  - f\n",
+
+	// Each bullet, and a marker that changes the list.
+	"- a",
+	"* a",
+	"+ a",
+	"+ a\n+ b",
+	"- a\n* b\n+ c",
+	"* a\n- b",
+	"1. a\n1) b",
+	"1) a\n2) b\n3. c",
+
+	// End of input right after the marker or inside the value.
+	"-",
+	"*",
+	"+",
+	"1.",
+	"1)",
+	"1",
+	"12",
+	"1a.",
+	"1.a",
+	"-a",
+	"- ",
+	"-\t",
+	"1. ",
+
+	// The 10-digit limit and one past it, with both markers.
+	"999999999) a",
+	"9999999999) a",
+	"0000000001. a",
+	"000000001. a",
+
+	// The thematic break check: `*` and `-` are checked, `+` is not.
+	"- - -",
+	"* * *",
+	"-\t-\t-",
+	"+ + +",
+	"- * * *",
+	"* - - -",
+	"-- a",
+	"++ a",
+	"+- a",
+
+	// Interrupting a paragraph: only a non-empty item, and an ordered one only at 1.
+	"a\n- b",
+	"a\n+",
+	"a\n+ ",
+	"a\n*\t",
+	"a\n1. b",
+	"a\n2. b",
+	"a\n1.",
+	"a\n10. b",
+	"a\n01. b",
+	"a\n1) b",
+	"a\n+ b",
+
+	// Whitespace after the marker: 1 to 4 columns, 5 and more, tabs.
+	"-  a",
+	"-   a",
+	"-    a",
+	"-     a",
+	"-      a",
+	"1.     a",
+	"1.      a",
+	"-\ta",
+	" -\ta",
+	"  -\ta",
+	"   -\ta",
+	"1.\ta",
+	"10.\ta",
+	"- \ta",
+	"-\t\ta",
+	"-  \t a",
+
+	// Indentation before the marker.
+	" - a",
+	"  - a",
+	"   - a",
+	"    - a",
+	"\t- a",
+	"   1. a\n      b",
+
+	// Blank-line starts and continuation.
+	"-\n  a",
+	"-\n a",
+	"-\n\n  a",
+	"-\n\n\n  a",
+	"1.\n   a",
+	"1.\n  a",
+	"-   \n  a\n\n  b",
+	"- a\n\n\n  b",
+	"- a\n  \n  b",
+	"- a\n \n  b",
+	"- a\n\t\n  b",
+
+	// Continuation by indent, with spaces and tabs.
+	"- a\n  b",
+	"- a\n   b",
+	"- a\n\tb",
+	"-\ta\n\tb",
+	"1. a\n\tb",
+	"10. a\n\tb",
+	"- a\n      b",
+	"- a\n\n      code",
+	"- a\n\n\tcode",
+
+	// Lazy continuation.
+	"- a\nb",
+	"- a\n  b\nc",
+	"1. a\nb\n\nc",
+	"- a\n\nb",
+	"- a\n  - b\nc",
+	"- a\n  - b\n  c\nd",
+	"- a\n# b",
+	"- a\n    b",
+
+	// Nesting.
+	"- a\n  - b\n    - c",
+	"1. a\n   1. b\n      1. c",
+	"- a\n  1. b\n  2. c\n- d",
+	"- - - a",
+	"1. 2. 3. a",
+	"- # a\n  b",
+	"- ***\n- a",
+	"-\t- a\n\t- b",
+
+	// Line endings.
+	"- a\r\n- b\r\n",
+	"- a\r- b\r",
+	"-\r\n  a",
+	"1.\r   a\r\rb",
+	"a\r\n1. b",
+
+	// Non-ASCII and astral characters next to the marker.
+	"- é",
+	"-é",
+	"- 𝔸",
+	"-𝔸",
+	"1.𝔸",
+	"1. 𝔸\n   𝔸",
+	"é\n- a",
+	"- a\u00a0b",
+	"-\u00a0a",
+}
+
+func TestListEvents(t *testing.T) {
+	t.Parallel()
+	compareEvents(t, listFixtures)
+}

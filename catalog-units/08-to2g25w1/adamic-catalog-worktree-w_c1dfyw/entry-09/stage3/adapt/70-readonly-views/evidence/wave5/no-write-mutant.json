@@ -1,0 +1,13 @@
+{
+  "mutant": "replace scratch built setTextRange body with return range",
+  "exit": 1,
+  "check": "Node observation assertion",
+  "observed": [
+    0,
+    0
+  ],
+  "expected": [
+    1,
+    2
+  ]
+}

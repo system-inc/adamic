@@ -1,0 +1,8 @@
+// From TypeScript 6.0.3, src/compiler/core.ts:2247
+// From TypeScript 6.0.3, src/compiler/core.ts:2430
+// From TypeScript 6.0.3, src/compiler/core.ts:1951
+// From TypeScript 6.0.3, src/compiler/core.ts:1828
+// From TypeScript 6.0.3, src/compiler/path.ts:120
+// Census reason: an import cycle
+import { path } from './_namespaces/ts.a';
+console.log(`${path.fileExtensionIs('scanner.ts', '.ts')} ${path.fileExtensionIs('package.json', '.ts')}`);

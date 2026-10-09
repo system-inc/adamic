@@ -1,0 +1,24 @@
+{
+    "rule": "structure/tailwind-no-physical-direction",
+    "firing": {
+        "file": "/repository/source/components/Thing.tsx",
+        "source": "export const c = 'flex ml-4';\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 18,
+                "endLine": 1,
+                "endColumn": 29,
+                "messageId": "useLogicalClass",
+                "message": "The class \"ml-4\" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use \"ms-4\", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/components/Thing.tsx",
+        "source": "export const c = '';\n"
+    },
+    "assertedMessageIds": [
+        "useLogicalClass"
+    ]
+}

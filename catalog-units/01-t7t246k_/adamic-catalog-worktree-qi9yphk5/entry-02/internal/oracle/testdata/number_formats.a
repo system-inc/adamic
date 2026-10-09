@@ -1,0 +1,52 @@
+// A lab notebook: measurements written in scientific notation and to significant figures, as a
+// paper prints them, with toExponential and toPrecision.
+
+interface Measurement {
+	readonly name: string;
+	readonly value: number;
+	readonly figures: number;
+}
+
+const measurements: readonly Measurement[] = [
+	{ name: 'speed of light (m/s)', value: 299792458, figures: 6 },
+	{ name: 'Planck constant (J s)', value: 6.62607015e-34, figures: 4 },
+	{ name: 'electron mass (kg)', value: 9.1093837015e-31, figures: 3 },
+	{ name: 'Avogadro constant', value: 6.02214076e23, figures: 5 },
+	{ name: 'gravity (m/s^2)', value: 9.80665, figures: 2 },
+	{ name: 'a tie, 2.5', value: 2.5, figures: 1 },
+	{ name: 'a tie, 0.125', value: 0.125, figures: 2 },
+	{ name: 'below zero', value: -0.000123456, figures: 3 },
+	{ name: 'nothing', value: 0, figures: 3 },
+	{ name: 'negative nothing', value: -0, figures: 2 },
+];
+
+for (const measurement of measurements) {
+	const name = measurement.name;
+	const value = measurement.value;
+	const figures = measurement.figures;
+	console.log(`${name.padEnd(24, '.')} ${value.toExponential()} | ${value.toExponential(figures - 1)} | ${value.toPrecision(figures)} | ${value.toPrecision()}`);
+}
+
+// Every count of digits, on one value and its negative.
+let row = '';
+for (let digits = 0; digits <= 20; digits += 1) {
+	row += `${(1 / 3).toExponential(digits)} `;
+}
+console.log(row);
+row = '';
+for (let digits = 1; digits <= 21; digits += 1) {
+	row += `${(-2 / 3).toPrecision(digits)} `;
+}
+console.log(row);
+console.log(`${(123.456).toPrecision(100)}`);
+console.log(`${(5e-324).toExponential(100)}`);
+console.log(`${Number.MAX_SAFE_INTEGER.toExponential(3)} ${(1e21).toPrecision(3)} ${(1e-7).toPrecision(2)} ${(0.000001).toPrecision(2)}`);
+console.log(`${(0 / 0).toExponential(500)} ${(1 / 0).toPrecision(0)} ${(-1 / 0).toExponential(-3)} ${(1.25).toExponential(1.9)} ${(15).toPrecision(1)}`);
+
+// The receiver is read before the argument is evaluated.
+let reading = 1.5;
+function next(): number {
+	reading = 2.5;
+	return 3;
+}
+console.log(`${reading.toExponential(next())} ${reading.toPrecision(next())}`);

@@ -1,0 +1,24 @@
+{
+    "rule": "@next/next/no-typos",
+    "firing": {
+        "file": "pages/test.tsx",
+        "source": "export const getStaticProp = 1;",
+        "findings": [
+            {
+                "line": 1,
+                "column": 14,
+                "endLine": 1,
+                "endColumn": 27,
+                "messageId": "noTypos",
+                "message": "`getStaticProp` may be a typo. Did you mean `getStaticProps`? Next.js calls its data fetching functions by exact name, so a misspelled export is never called and the page renders with no data at all. There is no error: the function is simply dead code the framework never looks for."
+            }
+        ]
+    },
+    "clean": {
+        "file": "pages/test.tsx",
+        "source": "export const getStaticPro = 1;"
+    },
+    "assertedMessageIds": [
+        "noTypos"
+    ]
+}

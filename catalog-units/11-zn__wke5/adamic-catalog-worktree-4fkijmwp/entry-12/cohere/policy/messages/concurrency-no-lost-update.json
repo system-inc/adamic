@@ -1,0 +1,22 @@
+{
+  "rules": {
+    "TypeScript": "nexus/concurrency-no-lost-update",
+    "Swift": "cohere-swift/concurrency-no-lost-update"
+  },
+  "phrases": {
+    "suspendedRead": {
+      "variable": {
+        "TypeScript": "`{{target}}` as it was before an await or a yield, and the function is suspended in between, so anything else that changes `{{target}}` during the suspension is overwritten by this line. Read `{{target}}` after the suspension, or keep the whole read, compute and write on one side of it.",
+        "Swift": "`{{target}}` as it was before an await, and the function is suspended in between, so anything else that changes `{{target}}` during the suspension (another call on this actor, another task on the main actor) is overwritten by this line. Read `{{target}}` after the suspension, or keep the whole read, compute and write on one side of it."
+      },
+      "storeEntry": {
+        "TypeScript": "what `{{read}}` returned before an await or a yield, and the function is suspended in between, so anything else that writes that entry during the suspension is overwritten by this call. Read it again after the suspension and change only what this function owns, or keep the whole read, compute and write on one side of it."
+      }
+    }
+  },
+  "messages": {
+    "lostUpdate": {
+      "text": "This write loses updates. Its new value is computed from <<suspendedRead>>"
+    }
+  }
+}

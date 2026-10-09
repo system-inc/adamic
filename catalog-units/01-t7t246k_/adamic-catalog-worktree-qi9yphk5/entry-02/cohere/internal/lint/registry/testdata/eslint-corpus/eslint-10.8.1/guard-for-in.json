@@ -1,0 +1,14 @@
+[
+{"code":"for (var x in o);","eslint":[]},
+{"code":"for (var x in o) {}","eslint":[]},
+{"code":"for (var x in o) if (x) f();","eslint":[]},
+{"code":"for (var x in o) { if (x) { f(); } }","eslint":[]},
+{"code":"for (var x in o) { if (x) continue; f(); }","eslint":[]},
+{"code":"for (var x in o) { if (x) { continue; } f(); }","eslint":[]},
+{"code":"for (var x in o) { if (x) { f(); continue; } g(); }","eslint":[["wrap",0,51]]},
+{"code":"for (var x in o) { if (x) { continue; f(); } g(); }","eslint":[["wrap",0,51]]},
+{"code":"for (var x in o) { if (x) { f(); } g(); }","eslint":[["wrap",0,41]]},
+{"code":"for (var x in o) { if (x) f(); g(); }","eslint":[["wrap",0,37]]},
+{"code":"for (var x in o) { foo() }","eslint":[["wrap",0,26]]},
+{"code":"for (var x in o) foo();","eslint":[["wrap",0,23]]}
+]

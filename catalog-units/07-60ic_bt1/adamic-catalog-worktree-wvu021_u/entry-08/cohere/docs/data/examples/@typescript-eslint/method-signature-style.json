@@ -1,0 +1,29 @@
+{
+    "rule": "@typescript-eslint/method-signature-style",
+    "firing": {
+        "file": "/repository/source/Thing.ts",
+        "source": "interface I { m(a: string); }",
+        "findings": [
+            {
+                "line": 1,
+                "column": 15,
+                "endLine": 1,
+                "endColumn": 28,
+                "messageId": "errorMethod",
+                "message": "This is written as a shorthand method signature, which TypeScript checks bivariantly: a parameter can be narrowed by an implementer and the compiler will not object, so a call that type-checks can still be wrong at runtime. A function property is checked the strict way and catches that.",
+                "fix": true
+            }
+        ],
+        "fixedSource": "interface I { m: (a: string) => any; }"
+    },
+    "clean": {
+        "file": "/repository/source/Thing.ts",
+        "source": "type Test = { get f(): number };"
+    },
+    "assertedMessageIds": [
+        "errorMethod",
+        "errorProperty"
+    ],
+    "assertsFix": true,
+    "assertsSuggestion": true
+}

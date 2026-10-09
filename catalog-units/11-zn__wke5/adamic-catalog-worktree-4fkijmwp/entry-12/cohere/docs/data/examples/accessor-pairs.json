@@ -1,0 +1,31 @@
+{
+    "rule": "accessor-pairs",
+    "firing": {
+        "file": "/repository/source/AccessorPairs.ts",
+        "source": "class A { set a(v) {} }\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 11,
+                "endLine": 1,
+                "endColumn": 16,
+                "messageId": "missingGetterInClass",
+                "message": "This declares setter 'a' with no matching getter beside it, so the property can be written but always reads back as undefined. Declare both halves of the pair, or drop the accessor and use a plain property."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/AccessorPairs.ts",
+        "source": "var o = { get a() {} }\n"
+    },
+    "assertedMessageIds": [
+        "missingGetterInClass",
+        "missingGetterInObjectLiteral",
+        "missingGetterInPropertyDescriptor",
+        "missingGetterInType",
+        "missingSetterInClass",
+        "missingSetterInObjectLiteral",
+        "missingSetterInPropertyDescriptor",
+        "missingSetterInType"
+    ]
+}

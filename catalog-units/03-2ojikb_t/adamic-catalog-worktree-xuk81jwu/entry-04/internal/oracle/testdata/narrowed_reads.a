@@ -1,0 +1,16 @@
+// A narrowing outlives a call: the checker narrowed undefined out of chain at the if, and keeps it
+// past drop(), which assigns chain again. Reading through it is JavaScript's TypeError, and native,
+// which read through a null pointer, now panics with the same words. Found by adamic-fuzz.
+interface Link {
+	value: number;
+	label: string;
+}
+let chain: Link | undefined = { value: 1, label: `built ${1}` };
+function drop(): void {
+	chain = undefined;
+}
+if (chain !== undefined) {
+	console.log(`${chain.value} ${chain.label}`);
+	drop();
+	console.log(`${chain.value}`);
+}

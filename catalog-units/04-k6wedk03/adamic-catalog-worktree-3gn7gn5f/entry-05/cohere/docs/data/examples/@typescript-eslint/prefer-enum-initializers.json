@@ -1,0 +1,26 @@
+{
+    "rule": "@typescript-eslint/prefer-enum-initializers",
+    "firing": {
+        "file": "/repository/source/Direction.ts",
+        "source": "enum D { Up }",
+        "findings": [
+            {
+                "line": 1,
+                "column": 10,
+                "endLine": 1,
+                "endColumn": 12,
+                "messageId": "defineInitializer",
+                "message": "The value of the member 'Up' should be explicitly defined.",
+                "suggestions": 3
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/Direction.ts",
+        "source": "\nenum Direction {}\n    "
+    },
+    "assertedMessageIds": [
+        "defineInitializer"
+    ],
+    "assertsSuggestion": true
+}

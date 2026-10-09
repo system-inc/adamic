@@ -1,0 +1,24 @@
+{
+    "rule": "react/jsx-no-undef",
+    "firing": {
+        "file": "/repository/source/JsxNoUndef.tsx",
+        "source": "let x = <A.B />;\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 10,
+                "endLine": 1,
+                "endColumn": 11,
+                "messageId": "jsxIdentifierNotDefined",
+                "message": "This JSX tag names a component that has no declaration in scope, so React receives `undefined` where a component was meant and throws at render rather than at build. Almost always a misspelling or a missing import. Import the component, or fix the spelling to match the binding you meant."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/JsxNoUndef.tsx",
+        "source": "var React; React.render(<App />);"
+    },
+    "assertedMessageIds": [
+        "jsxIdentifierNotDefined"
+    ]
+}

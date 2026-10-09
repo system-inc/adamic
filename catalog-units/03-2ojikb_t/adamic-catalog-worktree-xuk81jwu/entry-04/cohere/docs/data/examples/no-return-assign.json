@@ -1,0 +1,25 @@
+{
+    "rule": "no-return-assign",
+    "firing": {
+        "file": "/repository/source/Thing.ts",
+        "source": "() => result = a * b",
+        "findings": [
+            {
+                "line": 1,
+                "column": 1,
+                "endLine": 1,
+                "endColumn": 21,
+                "messageId": "arrowAssignment",
+                "message": "This arrow function's body is an assignment, so calling it writes to something outside itself and returns what it wrote. A concise arrow body reads as a value, which is what makes the write easy to miss at the call site. Give the arrow a block body and assign inside it, or wrap the assignment in its own parentheses to say the write was meant."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/Thing.ts",
+        "source": "var result = a * b;"
+    },
+    "assertedMessageIds": [
+        "arrowAssignment",
+        "returnAssignment"
+    ]
+}

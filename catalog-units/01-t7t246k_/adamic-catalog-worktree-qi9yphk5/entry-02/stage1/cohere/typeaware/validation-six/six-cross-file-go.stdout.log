@@ -1,0 +1,4 @@
+file	/tmp/tsgo-six-final-full/global-interface.ts
+file	/tmp/tsgo-six-final-full/global-class.ts
+26	33	@typescript-eslint/no-unsafe-declaration-merging	unsafeMerging	A class and an interface sharing a name are merged into one type, and the members the interface contributes are never initialized by the class constructor. TypeScript does not check them, so reading one compiles and returns undefined at runtime. Give the interface a different name, or declare the members on the class.	0	0
+findings 1

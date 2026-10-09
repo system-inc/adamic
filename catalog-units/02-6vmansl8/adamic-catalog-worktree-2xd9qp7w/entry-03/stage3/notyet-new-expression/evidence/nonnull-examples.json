@@ -1,0 +1,516 @@
+[
+  {
+    "site": "binder.ts:632:16",
+    "requested_reason": "new an Identifier",
+    "exit": 1,
+    "arguments": [
+      "/tmp/new-expression-nonnull-replay",
+      "-project",
+      "/tmp/new-expression-adapted/src/tsc/tsc.ts",
+      "-where",
+      "/tmp/new-expression-adapted/src/compiler/binder.ts:632:16",
+      "-kind",
+      "NotYet",
+      "-reason",
+      "new an Identifier"
+    ],
+    "units": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "where": "/tmp/new-expression-adapted/src/compiler/binder.ts:630:5",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 22664,
+        "body_end": 22738,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "createSymbol",
+        "parent": "/tmp/new-expression-adapted/src/compiler/binder.ts:509:1",
+        "top": "/tmp/new-expression-adapted/src/compiler/binder.ts:509:1",
+        "depth": 1
+      }
+    ],
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/new-expression-adapted/src/compiler/binder.ts:630:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/new-expression-adapted/src/compiler/binder.ts:630:47",
+        "reason": "a value of type __String",
+        "text": "/tmp/new-expression-adapted/src/compiler/binder.ts:630:47: stage 0 can't lower a value of type __String yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/new-expression-adapted/src/compiler/binder.ts:630:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/new-expression-adapted/src/compiler/binder.ts:630:5",
+        "reason": "function signature or prologue failed; continued at next declaration",
+        "text": "/tmp/new-expression-adapted/src/compiler/binder.ts:630:47: stage 0 can't lower a value of type __String yet",
+        "start": 22664,
+        "end": 22738
+      }
+    ],
+    "messages": [
+      "replay load/register/lower: 4.242403664s",
+      "replay signature did not reproduce: NotYet new an Identifier at /tmp/new-expression-adapted/src/compiler/binder.ts:632:16 (selected /tmp/new-expression-adapted/src/compiler/binder.ts:630:5)"
+    ]
+  },
+  {
+    "site": "checker.ts:2635:24",
+    "requested_reason": "new an Identifier",
+    "exit": 1,
+    "arguments": [
+      "/tmp/new-expression-nonnull-replay",
+      "-project",
+      "/tmp/new-expression-adapted/src/tsc/tsc.ts",
+      "-where",
+      "/tmp/new-expression-adapted/src/compiler/checker.ts:2635:24",
+      "-kind",
+      "NotYet",
+      "-reason",
+      "new an Identifier"
+    ],
+    "units": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "where": "/tmp/new-expression-adapted/src/compiler/checker.ts:2633:5",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 109130,
+        "body_end": 109412,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "createSymbol",
+        "parent": "/tmp/new-expression-adapted/src/compiler/checker.ts:1486:1",
+        "top": "/tmp/new-expression-adapted/src/compiler/checker.ts:1486:1",
+        "depth": 1
+      }
+    ],
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/new-expression-adapted/src/compiler/checker.ts:2633:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/new-expression-adapted/src/compiler/checker.ts:2633:47",
+        "reason": "a value of type __String",
+        "text": "/tmp/new-expression-adapted/src/compiler/checker.ts:2633:47: stage 0 can't lower a value of type __String yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/new-expression-adapted/src/compiler/checker.ts:2633:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/new-expression-adapted/src/compiler/checker.ts:2633:5",
+        "reason": "function signature or prologue failed; continued at next declaration",
+        "text": "/tmp/new-expression-adapted/src/compiler/checker.ts:2633:47: stage 0 can't lower a value of type __String yet",
+        "start": 109130,
+        "end": 109412
+      }
+    ],
+    "messages": [
+      "replay load/register/lower: 2.628519311s",
+      "replay signature did not reproduce: NotYet new an Identifier at /tmp/new-expression-adapted/src/compiler/checker.ts:2635:24 (selected /tmp/new-expression-adapted/src/compiler/checker.ts:2633:5)"
+    ]
+  },
+  {
+    "site": "checker.ts:2935:36",
+    "requested_reason": "new an Identifier",
+    "exit": 0,
+    "arguments": [
+      "/tmp/new-expression-nonnull-replay",
+      "-project",
+      "/tmp/new-expression-adapted/src/tsc/tsc.ts",
+      "-where",
+      "/tmp/new-expression-adapted/src/compiler/checker.ts:2935:36",
+      "-kind",
+      "NotYet",
+      "-reason",
+      "new an Identifier"
+    ],
+    "units": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "where": "/tmp/new-expression-adapted/src/compiler/checker.ts:2932:5",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 126681,
+        "body_end": 126879,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "getSymbolLinks",
+        "parent": "/tmp/new-expression-adapted/src/compiler/checker.ts:1486:1",
+        "top": "/tmp/new-expression-adapted/src/compiler/checker.ts:1486:1",
+        "depth": 1
+      }
+    ],
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/new-expression-adapted/src/compiler/checker.ts:2932:5",
+        "phase": "lowering",
+        "kind": "Refused",
+        "where": "/tmp/new-expression-adapted/src/compiler/checker.ts:2933:59",
+        "reason": "a cast the runtime can't check",
+        "text": "/tmp/new-expression-adapted/src/compiler/checker.ts:2933:59: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/new-expression-adapted/src/compiler/checker.ts:2932:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/new-expression-adapted/src/compiler/checker.ts:2933:51",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/new-expression-adapted/src/compiler/checker.ts:2933:59: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "start": 126734,
+        "end": 126776
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/new-expression-adapted/src/compiler/checker.ts:2932:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/new-expression-adapted/src/compiler/checker.ts:2935:36",
+        "reason": "new an Identifier",
+        "text": "/tmp/new-expression-adapted/src/compiler/checker.ts:2935:36: stage 0 can't lower new an Identifier yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/new-expression-adapted/src/compiler/checker.ts:2932:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/new-expression-adapted/src/compiler/checker.ts:2935:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/new-expression-adapted/src/compiler/checker.ts:2935:36: stage 0 can't lower new an Identifier yet",
+        "start": 126817,
+        "end": 126872
+      }
+    ],
+    "messages": [
+      "replay load/register/lower: 3.654555658s",
+      "reproduced NotYet: new an Identifier at /tmp/new-expression-adapted/src/compiler/checker.ts:2935:36"
+    ]
+  },
+  {
+    "site": "checker.ts:2940:58",
+    "requested_reason": "new a ParenthesizedExpression",
+    "exit": 0,
+    "arguments": [
+      "/tmp/new-expression-nonnull-replay",
+      "-project",
+      "/tmp/new-expression-adapted/src/tsc/tsc.ts",
+      "-where",
+      "/tmp/new-expression-adapted/src/compiler/checker.ts:2940:58",
+      "-kind",
+      "NotYet",
+      "-reason",
+      "new a ParenthesizedExpression"
+    ],
+    "units": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "where": "/tmp/new-expression-adapted/src/compiler/checker.ts:2938:5",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 126931,
+        "body_end": 127066,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "getNodeLinks",
+        "parent": "/tmp/new-expression-adapted/src/compiler/checker.ts:1486:1",
+        "top": "/tmp/new-expression-adapted/src/compiler/checker.ts:1486:1",
+        "depth": 1
+      }
+    ],
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/new-expression-adapted/src/compiler/checker.ts:2938:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/new-expression-adapted/src/compiler/checker.ts:2940:58",
+        "reason": "new a ParenthesizedExpression",
+        "text": "/tmp/new-expression-adapted/src/compiler/checker.ts:2940:58: stage 0 can't lower new a ParenthesizedExpression yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/new-expression-adapted/src/compiler/checker.ts:2938:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/new-expression-adapted/src/compiler/checker.ts:2940:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/new-expression-adapted/src/compiler/checker.ts:2940:58: stage 0 can't lower new a ParenthesizedExpression yet",
+        "start": 126974,
+        "end": 127059
+      }
+    ],
+    "messages": [
+      "replay load/register/lower: 4.829785167s",
+      "reproduced NotYet: new a ParenthesizedExpression at /tmp/new-expression-adapted/src/compiler/checker.ts:2940:58"
+    ]
+  },
+  {
+    "site": "factory/baseNodeFactory.ts:42:16",
+    "requested_reason": "new a ParenthesizedExpression",
+    "exit": 0,
+    "arguments": [
+      "/tmp/new-expression-nonnull-replay",
+      "-project",
+      "/tmp/new-expression-adapted/src/tsc/tsc.ts",
+      "-where",
+      "/tmp/new-expression-adapted/src/compiler/factory/baseNodeFactory.ts:42:16",
+      "-kind",
+      "NotYet",
+      "-reason",
+      "new a ParenthesizedExpression"
+    ],
+    "units": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "where": "/tmp/new-expression-adapted/src/compiler/factory/baseNodeFactory.ts:41:5",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 1628,
+        "body_end": 1784,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "createBaseSourceFileNode",
+        "parent": "/tmp/new-expression-adapted/src/compiler/factory/baseNodeFactory.ts:26:1",
+        "top": "/tmp/new-expression-adapted/src/compiler/factory/baseNodeFactory.ts:26:1",
+        "depth": 1
+      }
+    ],
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/new-expression-adapted/src/compiler/factory/baseNodeFactory.ts:41:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/new-expression-adapted/src/compiler/factory/baseNodeFactory.ts:42:16",
+        "reason": "new a ParenthesizedExpression",
+        "text": "/tmp/new-expression-adapted/src/compiler/factory/baseNodeFactory.ts:42:16: stage 0 can't lower new a ParenthesizedExpression yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/new-expression-adapted/src/compiler/factory/baseNodeFactory.ts:41:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/new-expression-adapted/src/compiler/factory/baseNodeFactory.ts:42:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/new-expression-adapted/src/compiler/factory/baseNodeFactory.ts:42:16: stage 0 can't lower new a ParenthesizedExpression yet",
+        "start": 1630,
+        "end": 1777
+      }
+    ],
+    "messages": [
+      "replay load/register/lower: 4.493103912s",
+      "reproduced NotYet: new a ParenthesizedExpression at /tmp/new-expression-adapted/src/compiler/factory/baseNodeFactory.ts:42:16"
+    ]
+  },
+  {
+    "site": "sys.ts:1656:29",
+    "requested_reason": "new a PropertyAccessExpression",
+    "exit": 1,
+    "arguments": [
+      "/tmp/new-expression-nonnull-replay",
+      "-project",
+      "/tmp/new-expression-adapted/src/tsc/tsc.ts",
+      "-where",
+      "/tmp/new-expression-adapted/src/compiler/sys.ts:1656:29",
+      "-kind",
+      "NotYet",
+      "-reason",
+      "new a PropertyAccessExpression"
+    ],
+    "units": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "where": "/tmp/new-expression-adapted/src/compiler/sys.ts:1463:1",
+        "kind": "KindVariableStatement",
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "top": "/tmp/new-expression-adapted/src/compiler/sys.ts:1463:1"
+      }
+    ],
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/new-expression-adapted/src/compiler/sys.ts:1463:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/new-expression-adapted/src/compiler/sys.ts:1469:5",
+        "reason": "a function inside a function (a closure)",
+        "text": "/tmp/new-expression-adapted/src/compiler/sys.ts:1469:5: stage 0 can't lower a function inside a function (a closure) yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/new-expression-adapted/src/compiler/sys.ts:1463:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/new-expression-adapted/src/compiler/sys.ts:1469:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/new-expression-adapted/src/compiler/sys.ts:1469:5: stage 0 can't lower a function inside a function (a closure) yet",
+        "start": 64687,
+        "end": 85564
+      }
+    ],
+    "messages": [
+      "replay load/register/lower: 5.239835465s",
+      "replay signature did not reproduce: NotYet new a PropertyAccessExpression at /tmp/new-expression-adapted/src/compiler/sys.ts:1656:29 (selected /tmp/new-expression-adapted/src/compiler/sys.ts:1463:1)"
+    ]
+  },
+  {
+    "site": "checker.ts:1456:5",
+    "requested_reason": "this outside a method",
+    "exit": 0,
+    "arguments": [
+      "/tmp/new-expression-nonnull-replay",
+      "-project",
+      "/tmp/new-expression-adapted/src/tsc/tsc.ts",
+      "-where",
+      "/tmp/new-expression-adapted/src/compiler/checker.ts:1456:5",
+      "-kind",
+      "NotYet",
+      "-reason",
+      "this outside a method"
+    ],
+    "units": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "where": "/tmp/new-expression-adapted/src/compiler/checker.ts:1455:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 45632,
+        "body_end": 45676,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "NodeLinks",
+        "top": "/tmp/new-expression-adapted/src/compiler/checker.ts:1455:1"
+      }
+    ],
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/new-expression-adapted/src/compiler/checker.ts:1455:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/new-expression-adapted/src/compiler/checker.ts:1456:5",
+        "reason": "this outside a method",
+        "text": "/tmp/new-expression-adapted/src/compiler/checker.ts:1456:5: stage 0 can't lower this outside a method yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/new-expression-adapted/src/compiler/checker.ts:1455:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/new-expression-adapted/src/compiler/checker.ts:1456:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/new-expression-adapted/src/compiler/checker.ts:1456:5: stage 0 can't lower this outside a method yet",
+        "start": 45634,
+        "end": 45673
+      }
+    ],
+    "messages": [
+      "replay load/register/lower: 6.047459295s",
+      "reproduced NotYet: this outside a method at /tmp/new-expression-adapted/src/compiler/checker.ts:1456:5"
+    ]
+  },
+  {
+    "site": "utilities.ts:10514:46",
+    "requested_reason": "a NonNullExpression",
+    "arguments": [
+      "/tmp/new-expression-nonnull-replay",
+      "-project",
+      "/tmp/new-expression-adapted/src/tsc/tsc.ts",
+      "-where",
+      "/tmp/new-expression-adapted/src/compiler/utilities.ts:10514:46",
+      "-kind",
+      "NotYet",
+      "-reason",
+      "a NonNullExpression"
+    ],
+    "exit": 1,
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/new-expression-adapted/src/compiler/utilities.ts:10461:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/new-expression-adapted/src/compiler/utilities.ts:10477:13",
+        "reason": "a declaration directly in a case (wrap the case in a block)",
+        "text": "/tmp/new-expression-adapted/src/compiler/utilities.ts:10477:13: stage 0 can't lower a declaration directly in a case (wrap the case in a block) yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/new-expression-adapted/src/compiler/utilities.ts:10461:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/new-expression-adapted/src/compiler/utilities.ts:10463:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/new-expression-adapted/src/compiler/utilities.ts:10477:13: stage 0 can't lower a declaration directly in a case (wrap the case in a block) yet",
+        "start": 418849,
+        "end": 419661
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/new-expression-adapted/src/compiler/utilities.ts:10461:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/new-expression-adapted/src/compiler/utilities.ts:10493:64",
+        "reason": "a BinaryExpression as a statement",
+        "text": "/tmp/new-expression-adapted/src/compiler/utilities.ts:10493:64: stage 0 can't lower a BinaryExpression as a statement yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/new-expression-adapted/src/compiler/utilities.ts:10461:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/new-expression-adapted/src/compiler/utilities.ts:10493:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/new-expression-adapted/src/compiler/utilities.ts:10493:64: stage 0 can't lower a BinaryExpression as a statement yet",
+        "start": 420097,
+        "end": 420830
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/new-expression-adapted/src/compiler/utilities.ts:10461:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/new-expression-adapted/src/compiler/utilities.ts:10518:17",
+        "reason": "a BinaryExpression with a number and a boolean",
+        "text": "/tmp/new-expression-adapted/src/compiler/utilities.ts:10518:17: stage 0 can't lower a BinaryExpression with a number and a boolean yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/new-expression-adapted/src/compiler/utilities.ts:10461:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/new-expression-adapted/src/compiler/utilities.ts:10518:13",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/new-expression-adapted/src/compiler/utilities.ts:10518:17: stage 0 can't lower a BinaryExpression with a number and a boolean yet",
+        "start": 421410,
+        "end": 421571
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/new-expression-adapted/src/compiler/utilities.ts:10461:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/new-expression-adapted/src/compiler/utilities.ts:10523:23",
+        "reason": "a BinaryExpression with a number and a string",
+        "text": "/tmp/new-expression-adapted/src/compiler/utilities.ts:10523:23: stage 0 can't lower a BinaryExpression with a number and a string yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/new-expression-adapted/src/compiler/utilities.ts:10461:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/new-expression-adapted/src/compiler/utilities.ts:10523:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/new-expression-adapted/src/compiler/utilities.ts:10523:23: stage 0 can't lower a BinaryExpression with a number and a string yet",
+        "start": 421582,
+        "end": 421626
+      }
+    ],
+    "messages": [
+      "replay load/register/lower: 7.156852914s",
+      "replay signature did not reproduce: NotYet a NonNullExpression at /tmp/new-expression-adapted/src/compiler/utilities.ts:10514:46 (selected /tmp/new-expression-adapted/src/compiler/utilities.ts:10461:1)"
+    ]
+  }
+]

@@ -1,0 +1,66 @@
+{
+  "status": "requested process.nextTick truthiness probe green",
+  "scratch_head": "16d0caa79f06e78cc36b60201a5678e4479b3525",
+  "inputs": [
+    {
+      "ref": "scratch base",
+      "sha": "290f216b064eabd2abc84c2fa319aaafa376b912",
+      "scratch_contains": true
+    },
+    {
+      "ref": "codex/host-method-presence",
+      "sha": "51761b03bfaf820fc121a9fbc6ed758db4ab8e7b",
+      "scratch_contains": true
+    },
+    {
+      "ref": "codex/method-presence-test",
+      "sha": "722a1c5afb5c070354af2f149030ae65feec7f32",
+      "scratch_contains": true
+    }
+  ],
+  "compiler_build_exit": 0,
+  "source": "native-process-next-tick-read.a unchanged",
+  "runtime": {
+    "stdout": "true\n",
+    "stderr": "",
+    "node_exit": 0,
+    "native_exit": 0,
+    "stdout_cmp": 0,
+    "stderr_cmp": 0,
+    "native_byte_mutant_cmp": 1,
+    "binary_bytes": 441056
+  },
+  "loader": {
+    "types_exit": 0,
+    "output": "/workspace/adamic/stage3/drivers/parser/native-process-next-tick-read.a:5:15: variable process: Process\n",
+    "node_types_version": "25.3.3"
+  },
+  "tests": {
+    "lower": {
+      "command": "GOWORK=off TMPDIR=/workspace/scratch/parser-build-tmp go test ./internal/lower -run '^TestMethodPresence' -count=1",
+      "exit": 0,
+      "output": "ok  \tgithub.com/system-inc/adamic/internal/lower\t0.229s\n"
+    },
+    "oracle": {
+      "command": "GOWORK=off TMPDIR=/workspace/scratch/parser-build-tmp ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestNodeProcessMethodPresence$' -count=1 -timeout 5m",
+      "exit": 0,
+      "output": "ok  \tgithub.com/system-inc/adamic/internal/oracle\t14.489s\n",
+      "fixtures": [
+        "node_process_method_presence.a",
+        "node_process_global_presence.a",
+        "node_process_parser_presence.a"
+      ],
+      "checks": "Node source against sanitized native and emitted JavaScript; SSA verification; descriptor-presence C anchor and JavaScript anchor; both forced-absent descriptor mutants run cleanly and differ only in stdout, for each fixture",
+      "mutants": "3 native C anchor substitutions to false and 3 JavaScript !!process.nextTick substitutions to false, all caught by Node stdout disagreement; plus requested one-byte output mutant"
+    }
+  },
+  "merge_conflicts": [
+    "Loader/library helpers: keep SDK-compatible currentDirectory.ResolveFile and string(FileName) calls, retaining the require typing root.",
+    "Cast/expression/refusal: retain deferred view/phantom and reconciled interface-view dispatch, qualified-name guard, records/namespace/Node expression paths, and detached-own/method-observation admission. Incoming host descriptor path auto-merged into methodPresence and library_node_process.go.",
+    "Native compiler selection: retain compiler/GCC split validation. string_index.c: retain current nonzero empty allocation and literal-index handling.",
+    "Oracle/stage1 conflicting helpers: retain current compatibility code; count rows union incoming. No counts or stage1 gate claimed."
+  ],
+  "full_slice": "held for namespace fix or front-3; last observed first slice stop core.ts:11:52, not rerun this turn",
+  "coverage": "Only this presence witness and focused method-presence tests; no fresh all-eleven-probe count",
+  "limits": "No full gate, counts gate, complete oracle, WASI or native parser references run. No compiler edits pushed. No source adaptation or proof bypass."
+}

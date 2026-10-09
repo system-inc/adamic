@@ -1,0 +1,10 @@
+{
+    "rule": "@typescript-eslint/require-array-sort-compare",
+    "clean": {
+        "file": "/repository/source/Sorting.ts",
+        "source": "['foo', 'bar', 'baz'].sort();\n"
+    },
+    "assertedMessageIds": [
+        "requireCompare"
+    ]
+}

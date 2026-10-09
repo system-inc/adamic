@@ -1,0 +1,26 @@
+/* Static, and only this theme declares it. */
+@utility surface-card {
+    display: flex;
+    border-radius: 0.5rem;
+}
+
+/* Static, declaring only a custom property: a real class that no property table lists. */
+@utility glow-soft {
+    --glow-strength: 0.4;
+}
+
+/* One root declared both ways, the static block first. */
+@utility pane {
+    display: block;
+}
+@utility pane-* {
+    width: --value(--pane-*);
+}
+
+/* And one declared both ways in the other order. */
+@utility rail-* {
+    border-width: --value(--rail-*);
+}
+@utility rail {
+    border-style: solid;
+}

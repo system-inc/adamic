@@ -1,0 +1,18 @@
+class Base {
+	value(): number { return 1; }
+}
+class Child extends Base {
+	value(): number { return 2; }
+}
+class Grandchild extends Child {
+	value(): number { return 3; }
+}
+class Sibling extends Base {
+	value(): number { return 4; }
+}
+function call(base: Base): number { return base.value(); }
+const fixed = () => 1;
+let mutable = () => 2;
+function named(): number { return 5; }
+const namedBinding = named;
+console.log(`${call(new Base())} ${call(new Child())} ${call(new Grandchild())} ${call(new Sibling())} ${fixed()} ${mutable()}`);

@@ -1,0 +1,24 @@
+{
+    "rule": "no-class-assign",
+    "firing": {
+        "file": "/repository/source/ClassAssign.ts",
+        "source": "class A { } --A;\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 15,
+                "endLine": 1,
+                "endColumn": 16,
+                "messageId": "noClassAssign",
+                "message": "This assigns to a class binding. The binding is const-like inside the class body and the assignment throws in strict mode, which every module and every class body already is, so the line fails at runtime rather than rebinding anything. Where it does not throw it is worse: every later use of the name gets the new value instead of the class, so `new A()` constructs something else and `instanceof A` answers about something else. Use a separate variable for the new value."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/ClassAssign.ts",
+        "source": "class A { } A = 0;"
+    },
+    "assertedMessageIds": [
+        "noClassAssign"
+    ]
+}

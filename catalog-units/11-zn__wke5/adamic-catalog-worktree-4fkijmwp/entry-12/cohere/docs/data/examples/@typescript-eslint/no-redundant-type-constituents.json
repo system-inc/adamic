@@ -1,0 +1,28 @@
+{
+    "rule": "@typescript-eslint/no-redundant-type-constituents",
+    "firing": {
+        "file": "/repository/source/Types.ts",
+        "source": "type T = number & 0;\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 10,
+                "endLine": 1,
+                "endColumn": 16,
+                "messageId": "primitiveOverridden",
+                "message": "number is overridden by the 0 in this intersection type."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/Types.ts",
+        "source": "type T = 1 | 2;\n"
+    },
+    "assertedMessageIds": [
+        "errorTypeOverrides",
+        "literalOverridden",
+        "overridden",
+        "overrides",
+        "primitiveOverridden"
+    ]
+}

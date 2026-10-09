@@ -1,0 +1,22 @@
+{
+    "rule": "react/self-closing-comp",
+    "firing": {
+        "file": "/repository/source/SelfClosingComp.tsx",
+        "source": "var a = <Foo></Foo>;",
+        "findings": [
+            {
+                "line": 1,
+                "column": 9,
+                "endLine": 1,
+                "endColumn": 14,
+                "messageId": "notSelfClosing",
+                "message": "Empty components are self-closing",
+                "fix": true
+            }
+        ]
+    },
+    "assertedMessageIds": [
+        "notSelfClosing"
+    ],
+    "assertsFix": true
+}

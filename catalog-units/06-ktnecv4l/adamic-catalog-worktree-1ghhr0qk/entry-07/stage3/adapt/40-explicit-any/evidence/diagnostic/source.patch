@@ -1,0 +1,95 @@
+--- a/src/compiler/commandLineParser.ts
++++ b/src/compiler/commandLineParser.ts
+@@ -2203,7 +2203,7 @@
+ }
+ 
+ /** @internal */
+-export function getDiagnosticText(message: DiagnosticMessage, ...args: any[]): string {
++export function getDiagnosticText(message: DiagnosticMessage, ...args: DiagnosticArguments[number][]): string {
+     return cast(createCompilerDiagnostic(message, ...args).messageText, isString);
+ }
+ 
+--- a/src/compiler/moduleNameResolver.ts
++++ b/src/compiler/moduleNameResolver.ts
+@@ -18,7 +18,7 @@
+     Debug,
+     deduplicate,
+     type Diagnostic,
+-    type DiagnosticMessage,
++    type DiagnosticArguments, type DiagnosticMessage,
+     type DiagnosticReporter,
+     Diagnostics,
+     directoryProbablyExists,
+@@ -115,7 +115,7 @@
+ } from "./_namespaces/ts.js";
+ 
+ /** @internal */
+-export function trace(host: ModuleResolutionHost, message: DiagnosticMessage, ...args: any[]): void {
++export function trace(host: ModuleResolutionHost, message: DiagnosticMessage, ...args: DiagnosticArguments[number][]): void {
+     host.trace!(formatMessage(message, ...args));
+ }
+ 
+--- a/src/compiler/parser.ts
++++ b/src/compiler/parser.ts
+@@ -2173,7 +2173,7 @@
+         parseErrorAt(range.pos, range.end, message, ...args);
+     }
+ 
+-    function scanError(message: DiagnosticMessage, length: number, arg0?: any): void {
++    function scanError(message: DiagnosticMessage, length: number, arg0?: string | number): void {
+         parseErrorAtPosition(scanner.getTokenEnd(), length, message, arg0);
+     }
+ 
+--- a/src/compiler/program.ts
++++ b/src/compiler/program.ts
+@@ -2211,7 +2211,7 @@
+         });
+     }
+ 
+-    interface ResolveNamesReusingOldStateInput<Entry, SourceFileOrString, SourceFileOrUndefined extends SourceFile | undefined, Resolution> {
++    interface ResolveNamesReusingOldStateInput<Entry, SourceFileOrString extends SourceFile | string, SourceFileOrUndefined extends SourceFile | undefined, Resolution> {
+         entries: readonly Entry[];
+         containingFile: SourceFileOrString;
+         containingSourceFile: SourceFileOrUndefined;
+@@ -2228,7 +2228,7 @@
+         resolveToOwnAmbientModule?: true;
+     }
+ 
+-    function resolveNamesReusingOldState<Entry, SourceFileOrString, SourceFileOrUndefined extends SourceFile | undefined, Resolution>({
++    function resolveNamesReusingOldState<Entry, SourceFileOrString extends SourceFile | string, SourceFileOrUndefined extends SourceFile | undefined, Resolution>({
+         entries,
+         containingFile,
+         containingSourceFile,
+--- a/src/compiler/scanner.ts
++++ b/src/compiler/scanner.ts
+@@ -36,7 +36,7 @@
+     TokenFlags,
+ } from "./_namespaces/ts.js";
+ 
+-export type ErrorCallback = (message: DiagnosticMessage, length: number, arg0?: any) => void;
++export type ErrorCallback = (message: DiagnosticMessage, length: number, arg0?: string | number) => void;
+ 
+ /** @internal */
+ export function tokenIsIdentifierOrKeyword(token: SyntaxKind): boolean {
+@@ -1158,8 +1158,8 @@
+     }
+ 
+     function error(message: DiagnosticMessage): void;
+-    function error(message: DiagnosticMessage, errPos: number, length: number, arg0?: any): void;
+-    function error(message: DiagnosticMessage, errPos: number = pos, length?: number, arg0?: any): void {
++    function error(message: DiagnosticMessage, errPos: number, length: number, arg0?: string | number): void;
++    function error(message: DiagnosticMessage, errPos: number = pos, length?: number, arg0?: string | number): void {
+         if (onError) {
+             const oldPos = pos;
+             pos = errPos;
+--- a/src/compiler/types.ts
++++ b/src/compiler/types.ts
+@@ -7282,7 +7282,7 @@
+ }
+ 
+ /** @internal */
+-export type DiagnosticArguments = (string | number)[];
++export type DiagnosticArguments = (string | number | boolean | readonly string[] | SourceFile | undefined)[];
+ 
+ /** @internal */
+ export type DiagnosticAndArguments = [message: DiagnosticMessage, ...args: DiagnosticArguments];

@@ -1,0 +1,24 @@
+{
+    "rule": "no-use-before-define",
+    "firing": {
+        "file": "fixture.ts",
+        "source": "var a = a;\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 9,
+                "endLine": 1,
+                "endColumn": 10,
+                "messageId": "usedBeforeDefined",
+                "message": "'a' is read above the `var` that declares it. The binding is hoisted without its value, so this read silently yields `undefined`, and the failure surfaces later and somewhere else. Move the declaration above its first use."
+            }
+        ]
+    },
+    "clean": {
+        "file": "fixture.ts",
+        "source": "Array\n"
+    },
+    "assertedMessageIds": [
+        "usedBeforeDefined"
+    ]
+}

@@ -1,0 +1,24 @@
+{
+    "rule": "base/correctness-require-orm-column-declare",
+    "firing": {
+        "file": "/repository/source/Column.ts",
+        "source": "declare const OrmColumn: any;\ndeclare const OrmColumnIndex: any;\ndeclare const OrmPrimaryKey: any;\nclass E { @OrmColumn() @OrmColumnIndex() name: string; }\n",
+        "findings": [
+            {
+                "line": 4,
+                "column": 42,
+                "endLine": 4,
+                "endColumn": 46,
+                "messageId": "missingDeclare",
+                "message": "Property 'name' decorated with @OrmColumn() must use 'declare' (e.g. `declare name: ...`)"
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/Column.ts",
+        "source": "declare const OrmColumn: any;\ndeclare const OrmPrimaryKey: any;\ndeclare const OrmPrimaryAutoColumn: any;\ndeclare const OrmCreateDateColumn: any;\ndeclare const OrmUpdateDateColumn: any;\ndeclare const OrmColumnIndex: any;\ndeclare const OrmColumnUnique: any;\ndeclare const OrmColumnUniqueIndex: any;\ndeclare const OrmManyToOne: any;\ndeclare const Orm: any;\nclass E { name: string; }\n"
+    },
+    "assertedMessageIds": [
+        "missingDeclare"
+    ]
+}

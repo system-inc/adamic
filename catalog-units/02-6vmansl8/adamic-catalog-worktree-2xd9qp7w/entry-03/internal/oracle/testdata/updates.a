@@ -1,0 +1,68 @@
+// Compound writes to fields: object.name op= value, and ++ and --. JavaScript evaluates the object
+// once, reads the field, and only then evaluates the value.
+class Counter {
+	count = 0;
+	#hidden = 10;
+	label = 'n';
+	bump(): number {
+		this.count++;
+		this.count += 2;
+		--this.count;
+		this.#hidden *= 2;
+		this.label += `${this.count}`;
+		return this.#hidden;
+	}
+}
+
+interface Box {
+	total: number;
+	name: string;
+}
+
+let made = 0;
+function make(box: Box): Box {
+	made++;
+	return box;
+}
+
+const box: Box = { total: 1, name: 'a' };
+box.total *= 3;
+box.total -= 0.5;
+box.total /= 2;
+box.total **= 2;
+box.total %= 2;
+box.name += 'b';
+box.name += box.name;
+make(box).total++;
+make(box).name += '!';
+console.log(`${box.total} ${box.name} made ${made}`);
+
+// The field is read before the value runs: bump sees 5 and sets 100, then the write gives 5 + 1.
+const holder = { value: 5 };
+function interfere(): number {
+	holder.value = 100;
+	return 1;
+}
+holder.value += interfere();
+console.log(`${holder.value}`);
+
+const counter = new Counter();
+console.log(`${counter.bump()} ${counter.bump()} ${counter.count} ${counter.label}`);
+
+// A field of a captured object, from inside a closure, and of a global, from inside a function.
+const shared = { hits: 0 };
+const hit = (): void => {
+	shared.hits++;
+};
+hit();
+hit();
+function hitAgain(): void {
+	shared.hits += 10;
+}
+hitAgain();
+console.log(`${shared.hits}`);
+
+for (let index = 0; index < 3; index++) {
+	box.total -= 1;
+}
+console.log(`${box.total}`);

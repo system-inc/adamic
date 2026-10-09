@@ -1,0 +1,15 @@
+/workspace/scratch/scanner-members-run1/adapted/src/compiler/core.ts:127:42: error TS2532: Object is possibly 'undefined'.
+/workspace/scratch/scanner-members-run1/adapted/src/compiler/core.ts:127:70: error TS2532: Object is possibly 'undefined'.
+/workspace/scratch/scanner-members-run1/adapted/src/compiler/core.ts:14:37: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.
+  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.
+/workspace/scratch/scanner-members-run1/adapted/src/compiler/diagnosticInformationMap.generated.ts:6:5: error TS2375: Type '{ code: number; category: DiagnosticCategory; key: string; message: string; reportsUnnecessary: {} | undefined; elidedInCompatabilityPyramid: boolean | undefined; reportsDeprecated: ... | undefined; }' is not assignable to type 'DiagnosticMessage' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'reportsUnnecessary' are incompatible.
+    Type '{} | undefined' is not assignable to type '{}'.
+      Type 'undefined' is not assignable to type '{}'.
+/workspace/scratch/scanner-members-run1/adapted/src/compiler/scanner.ts:261:16: error TS2532: Object is possibly 'undefined'.
+/workspace/scratch/scanner-members-run1/adapted/src/compiler/scanner.ts:274:13: error TS2532: Object is possibly 'undefined'.
+/workspace/scratch/scanner-members-run1/adapted/src/compiler/scanner.ts:274:41: error TS2532: Object is possibly 'undefined'.
+/workspace/scratch/scanner-members-run1/adapted/src/compiler/scanner.ts:278:20: error TS2532: Object is possibly 'undefined'.
+/workspace/scratch/scanner-members-run1/adapted/src/compiler/utilities.ts:75:9: error TS2532: Object is possibly 'undefined'.
+/workspace/scratch/scanner-members-run1/adapted/src/compiler/utilities.ts:77:23: error TS2532: Object is possibly 'undefined'.
+/workspace/scratch/scanner-members-run1/adapted/src/compiler/utilities.ts:87:46: error TS2532: Object is possibly 'undefined'.

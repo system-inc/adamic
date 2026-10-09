@@ -1,0 +1,31 @@
+interface Box { readonly text: string; }
+type Value = number | string | Box | undefined;
+function identity(value: Value): Value { return value; }
+function describe(value: Value): string {
+    if (value === undefined) return 'missing';
+    if (typeof value === 'number') return `number:${value * 2}`;
+    if (typeof value === 'string') return `string:${value.length}:${value}`;
+    return `object:${value.text}`;
+}
+const forward = identity;
+const held: Box = { text: `held${3}` };
+console.log(describe(forward(7)));
+console.log(describe(forward(`text${2}`)));
+console.log(describe(forward(held)));
+console.log(describe(forward(undefined)));
+console.log(`${forward(held) === held}:${forward === identity}`);
+const captured = (value: Value): Value => value;
+console.log(`${describe(captured(11))}:${describe(captured(`arrow${4}`))}:${describe(captured(held))}:${describe(captured(undefined))}`);
+function select(index: number): Value {
+    if (index === 0) return 13;
+    if (index === 1) return `result${5}`;
+    if (index === 2) return held;
+    return undefined;
+}
+const result = select;
+for (let index = 0; index < 4; index++) console.log(describe(result(index)));
+const consume = describe;
+console.log(consume(19));
+console.log(consume(`call${6}`));
+console.log(consume(held));
+console.log(consume(undefined));

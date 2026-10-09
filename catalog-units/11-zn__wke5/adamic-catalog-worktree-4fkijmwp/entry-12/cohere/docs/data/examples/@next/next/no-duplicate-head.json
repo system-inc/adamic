@@ -1,0 +1,24 @@
+{
+    "rule": "@next/next/no-duplicate-head",
+    "firing": {
+        "file": "components/Shell.tsx",
+        "source": "import * as Head from 'next/head'\nconst a = <div><Head/><Head/></div>\n",
+        "findings": [
+            {
+                "line": 2,
+                "column": 17,
+                "endLine": 2,
+                "endColumn": 21,
+                "messageId": "noDuplicateHead",
+                "message": "This file renders the imported `Head` component more than once. Next.js merges one document head, so a second `Head` does not add to the first, it competes with it: whichever the framework resolves last wins and the other one's tags are silently dropped. Render a single `Head` and put every tag inside it."
+            }
+        ]
+    },
+    "clean": {
+        "file": "components/Shell.tsx",
+        "source": "const a = <div><Head/><Head/></div>\n"
+    },
+    "assertedMessageIds": [
+        "noDuplicateHead"
+    ]
+}

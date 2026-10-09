@@ -1,0 +1,26 @@
+{
+    "rule": "nexus/consistency-no-long-line-comment",
+    "firing": {
+        "file": "/repository/source/Thing.ts",
+        "source": "// one\n// two\n//\n// four\n// five\nexport const value = 1;\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 1,
+                "endLine": 5,
+                "endColumn": 8,
+                "messageId": "longLineComment",
+                "message": "A run of five or more double-slash lines should be a block comment. Past four lines a stack of slashes stops reading as one thought and starts reading as a wall, with no cue where the passage ends. This run is 5 lines.",
+                "fix": true
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/Thing.ts",
+        "source": "export const value = 1;\n"
+    },
+    "assertedMessageIds": [
+        "longLineComment"
+    ],
+    "assertsFix": true
+}

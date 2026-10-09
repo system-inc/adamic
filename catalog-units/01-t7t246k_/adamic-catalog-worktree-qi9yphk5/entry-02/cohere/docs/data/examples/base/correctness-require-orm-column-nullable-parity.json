@@ -1,0 +1,24 @@
+{
+    "rule": "base/correctness-require-orm-column-nullable-parity",
+    "firing": {
+        "file": "/repository/source/Entity.ts",
+        "source": "declare function OrmColumn(o?: any): any;\ndeclare function SerializableField(o?: any): any;\nfunction OrmColumn(o?: any): any { return null; }\nclass A { @OrmColumn({ nullable: true }) x!: string; }\n",
+        "findings": [
+            {
+                "line": 4,
+                "column": 42,
+                "endLine": 4,
+                "endColumn": 43,
+                "messageId": "columnNullableButTypeNot",
+                "message": "Column declares 'nullable: true' but the type 'string' does not include null/undefined — a NULL row value will not match this type"
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/Entity.ts",
+        "source": "declare function OrmColumn(o?: any): any;\ndeclare function SerializableField(o?: any): any;\nnamespace N { export function OrmColumn(o?: any): any { return null; } }\nclass A { @N.OrmColumn({ nullable: true }) x!: string; }\n"
+    },
+    "assertedMessageIds": [
+        "columnNullableButTypeNot"
+    ]
+}

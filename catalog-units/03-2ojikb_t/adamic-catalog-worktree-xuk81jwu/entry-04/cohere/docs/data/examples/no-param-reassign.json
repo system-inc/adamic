@@ -1,0 +1,25 @@
+{
+    "rule": "no-param-reassign",
+    "firing": {
+        "file": "/repository/source/ParamReassign.ts",
+        "source": "const f = (a) => a = 1;\n",
+        "findings": [
+            {
+                "line": 1,
+                "column": 18,
+                "endLine": 1,
+                "endColumn": 19,
+                "messageId": "assignmentToFunctionParam",
+                "message": "Assignment to function parameter 'a'."
+            }
+        ]
+    },
+    "clean": {
+        "file": "/repository/source/ParamReassign.ts",
+        "source": "function foo(a = 1) { }\n"
+    },
+    "assertedMessageIds": [
+        "assignmentToFunctionParam",
+        "assignmentToFunctionParamProp"
+    ]
+}

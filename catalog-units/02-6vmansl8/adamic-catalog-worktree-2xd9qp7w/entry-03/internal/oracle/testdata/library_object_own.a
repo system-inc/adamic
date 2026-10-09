@@ -1,0 +1,12 @@
+// Own fields are declared on the instance. Methods live on the prototype, so hasOwn is false for them.
+class Item {
+	value: number = 3;
+	readonly name: string = 'item';
+	describe(): string { return this.name; }
+	label(): string { return this.name; }
+}
+const item = new Item();
+console.log(`${Object.hasOwn(item, 'value')} ${Object.hasOwn(item, 'name')} ${Object.hasOwn(item, 'describe')} ${Object.hasOwn(item, 'label')}`);
+const object = { value: 3, '2': 2, '01': 1, name: 'built' + '-name' };
+console.log(`${Object.hasOwn(object, 'value')} ${Object.hasOwn(object, '2')} ${Object.hasOwn(object, '01')} ${Object.hasOwn(object, 'name')}`);
+

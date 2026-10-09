@@ -1,0 +1,16 @@
+{
+  "rules": {
+    "TypeScript": "structure/next-require-page-default-export"
+  },
+  "messages": {
+    "pageRequireDefaultExport": {
+      "text": "A Next.js page file has no default export, so the route it defines does not exist. Next resolves a route by this export and by nothing else, so the failure is a missing page at runtime rather than anything the compiler reports: every other export in the file type-checks fine. Add a default-exported function ending in PageRoute."
+    },
+    "pageDefaultExportInline": {
+      "text": "This page's default export is a separate statement rather than being on the function itself. Writing `export default function NameOfPageRoute()` puts the route's identity on the declaration, where a reader opening the file sees it first, instead of in a line at the bottom that a refactor can leave pointing at the wrong function."
+    },
+    "pageDefaultExportNameSuffix": {
+      "text": "A page's default export must be a named function ending in PageRoute. Every page in the app is a file called page.tsx, so the function name is the only thing that distinguishes one in a stack trace, a profiler flame graph, or the React tree."
+    }
+  }
+}

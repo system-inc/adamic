@@ -1,0 +1,7 @@
+/tmp/closure-exact-parser-enforced.c:39:40: error: controlling expression type 'adamic_counted_code_function *' (aka 'union adamic_value (*)(struct adamic_closure *, union adamic_value *, unsigned long)') not compatible with any generic association type
+   39 |         adamic_closure * adamic_temporary_4 = adamic_closure_new(adamic_function_1_reader_value, 0);
+      |                                               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+internal/native/runtime/adamic.h:980:69: note: expanded from macro 'adamic_closure_new'
+  980 | #define adamic_closure_new(code, ...) (adamic_closure_new)(_Generic((code), adamic_code: (code)), __VA_ARGS__)
+      |                                                                     ^~~~~~
+1 error generated.

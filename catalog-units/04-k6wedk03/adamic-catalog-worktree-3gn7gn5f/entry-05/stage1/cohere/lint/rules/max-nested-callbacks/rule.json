@@ -1,0 +1,14 @@
+{
+  "name": "max-nested-callbacks",
+  "kinds": [
+    "FunctionExpression",
+    "ArrowFunction"
+  ],
+  "node": true,
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleMaxNestedCallbacks",
+  "upstreamPackage": "core",
+  "upstreamTest": "Test"
+}
