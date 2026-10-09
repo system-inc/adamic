@@ -57,10 +57,19 @@ func nativeCType(native ir.NativeType) string {
 	return "id"
 }
 
+// objcCasts and objcCastsEnd bracket the C that calls through objc_msgSend or hands Apple an IMP or a
+// block's invoke. Apple's runtime is called by casting objc_msgSend to each message's own type, which
+// -Wcast-function-type-strict refuses everywhere else in a program (Flags): the exception is scoped
+// to the bridge's C, never the program's own.
+const objcCasts = "#pragma clang diagnostic push\n#pragma clang diagnostic ignored \"-Wcast-function-type-strict\"\n"
+const objcCastsEnd = "#pragma clang diagnostic pop\n"
+
 // foreignBody emits a foreign function's body: the native arguments, the message, what it gives
 // back. Every reference parameter is borrowed: the caller keeps it alive for the call.
 func (e *emitter) foreignBody(function ir.Function) {
 	foreign := function.Foreign
+	e.out.WriteString(objcCasts)
+	defer e.out.WriteString(objcCastsEnd)
 	e.line("ADAMIC_CHECK_STACK();")
 	parameter := func(argument ir.ForeignArgument) string {
 		return e.localName(function.Parameters[argument.Parameter])
@@ -346,7 +355,7 @@ func (e *emitter) blockFunctions(block ir.NativeType) string {
 	builder.WriteString("\tobjc_release(call->holder);\n\tadamic_apple_call_free(call);\n}\n\n")
 	fmt.Fprintf(&builder, "static void %s_invoke(%s) {\n\tstruct %s_call *call = adamic_apple_call_new(sizeof *call);\n%s\n\tadamic_apple_on_main(call, %s_deliver);\n}\n\n", name, strings.Join(parameters, ", "), name, strings.Join(held, "\n"), name)
 	fmt.Fprintf(&builder, "static const adamic_apple_block_descriptor %s_descriptor = {0, sizeof(adamic_apple_block), adamic_apple_block_copy, adamic_apple_block_dispose, %s, NULL};", name, cString(signature))
-	e.declarations = append(e.declarations, builder.String())
+	e.declarations = append(e.declarations, objcCasts+builder.String()+"\n"+objcCastsEnd)
 	return name
 }
 
@@ -448,7 +457,7 @@ func (e *emitter) delegateClass(delegate *ir.Delegate) string {
 	}
 	fmt.Fprintf(&builder, "static const adamic_apple_delegate_method %s_methods[] = {%s};\n", name, strings.Join(entries, ", "))
 	fmt.Fprintf(&builder, "static adamic_apple_delegate_class %s = {%s, %d, %s_protocols, %d, %s_methods, Nil, 0};\n", name, cString(delegate.Name), len(delegate.Protocols), name, len(delegate.Methods), name)
-	e.declarations = append(e.declarations, builder.String())
+	e.declarations = append(e.declarations, objcCasts+builder.String()+"\n"+objcCastsEnd)
 	return name
 }
 

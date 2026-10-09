@@ -12,6 +12,11 @@
 #include <string.h>
 #include <unistd.h>
 
+// Apple's runtime is called by casting objc_msgSend (and objc_msgSendSuper) to each message's own
+// type, and handed methods as IMP: the casts -Wcast-function-type-strict refuses in Adamic's own C
+// are this file's whole job, so it's off here and only here (foreign.go brackets the program's).
+#pragma clang diagnostic ignored "-Wcast-function-type-strict"
+
 // libobjc's autorelease pool, as ARC uses it.
 void *objc_autoreleasePoolPush(void);
 void objc_autoreleasePoolPop(void *pool);
