@@ -1,0 +1,8 @@
+=== RUN   TestInheritanceDerivedFieldOrder
+=== PAUSE TestInheritanceDerivedFieldOrder
+=== CONT  TestInheritanceDerivedFieldOrder
+    inherited_fields_guard_test.go:40: B.Fields = [y], want inherited x before own y
+--- FAIL: TestInheritanceDerivedFieldOrder (0.04s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.046s
+FAIL

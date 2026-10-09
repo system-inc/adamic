@@ -1,0 +1,38 @@
+=== RUN   TestInheritanceAllowsSoundOverrides
+=== PAUSE TestInheritanceAllowsSoundOverrides
+=== RUN   TestInheritanceKeepsNominalTupleDestructuring
+=== PAUSE TestInheritanceKeepsNominalTupleDestructuring
+=== RUN   TestInheritanceNativeSignatureNeighbors
+=== PAUSE TestInheritanceNativeSignatureNeighbors
+=== RUN   TestInheritanceDerivedFieldOrder
+=== PAUSE TestInheritanceDerivedFieldOrder
+=== RUN   TestInheritanceVoidBooleanOverrideReason
+=== PAUSE TestInheritanceVoidBooleanOverrideReason
+=== CONT  TestInheritanceAllowsSoundOverrides
+=== CONT  TestInheritanceDerivedFieldOrder
+=== CONT  TestInheritanceNativeSignatureNeighbors
+=== CONT  TestInheritanceKeepsNominalTupleDestructuring
+=== RUN   TestInheritanceNativeSignatureNeighbors/identical_default
+=== CONT  TestInheritanceVoidBooleanOverrideReason
+=== PAUSE TestInheritanceNativeSignatureNeighbors/identical_default
+=== RUN   TestInheritanceNativeSignatureNeighbors/wider_same_representation
+=== PAUSE TestInheritanceNativeSignatureNeighbors/wider_same_representation
+=== RUN   TestInheritanceNativeSignatureNeighbors/identical_optional
+=== PAUSE TestInheritanceNativeSignatureNeighbors/identical_optional
+=== RUN   TestInheritanceNativeSignatureNeighbors/void_result
+=== PAUSE TestInheritanceNativeSignatureNeighbors/void_result
+=== CONT  TestInheritanceNativeSignatureNeighbors/identical_default
+--- PASS: TestInheritanceDerivedFieldOrder (0.10s)
+=== CONT  TestInheritanceNativeSignatureNeighbors/void_result
+--- PASS: TestInheritanceVoidBooleanOverrideReason (0.10s)
+=== CONT  TestInheritanceNativeSignatureNeighbors/identical_optional
+--- PASS: TestInheritanceKeepsNominalTupleDestructuring (0.11s)
+=== CONT  TestInheritanceNativeSignatureNeighbors/wider_same_representation
+--- PASS: TestInheritanceAllowsSoundOverrides (0.11s)
+--- PASS: TestInheritanceNativeSignatureNeighbors (0.00s)
+    --- PASS: TestInheritanceNativeSignatureNeighbors/identical_default (0.11s)
+    --- PASS: TestInheritanceNativeSignatureNeighbors/identical_optional (0.05s)
+    --- PASS: TestInheritanceNativeSignatureNeighbors/wider_same_representation (0.04s)
+    --- PASS: TestInheritanceNativeSignatureNeighbors/void_result (0.06s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.164s

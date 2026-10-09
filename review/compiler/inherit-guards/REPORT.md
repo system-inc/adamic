@@ -25,3 +25,5 @@ Each exact audit diff was applied independently and reversed before restored che
 Setup succeeded: node 0.022s; Go 0.024s; markdown dependencies 0.091s; submodules 0.093s; clang 0.193s; Go build 36.889s; cache warm 37.122s; total 37.151s. nproc=5; cpu.max=400000 100000 (4 CPUs). Setup log includes tool versions and individual timing lines.
 
 Counts regeneration passed in 50.712 seconds. Only inherited_fields_guard.a was added: this records the new inherited-instance witness; existing fixture rows did not change. Exact allocation, free, retain, release, peak and region values are in counts.diff. Vet succeeded with empty output.
+
+Integration lane checks passed: "lane checks 1.1 s: gofmt and tools on 3 Go files, t.Parallel on 2 test packages; vet 2 packages". Test commit: 1bf711d5a. Counts row: allocations 2, frees 2, retains 1, releases 4, peak live 2, in regions 0.
