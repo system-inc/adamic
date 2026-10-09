@@ -1,0 +1,11 @@
+--- a/internal/lower/namespaces_call_graph.go
++++ b/internal/lower/namespaces_call_graph.go
+@@ -40,7 +40,7 @@
+ 		entry.edges = append(entry.edges, edge)
+ 		if edge.active {
+ 			if previous == nil {
+-				entry.low = min(entry.low, edge.low)
++				entry.low = min(entry.low, edge.index)
+ 			} else {
+ 				entry.low = min(entry.low, edge.index)
+ 			}

@@ -1,0 +1,510 @@
+Unit u037: internal/lower, starting origin/main f91994f019703ba25d2918cf529c0e0b0c05d93c.
+All 14 requested names exist in their listed files; none moved, vanished, or skipped.
+15 production mutants: 4 sacred, 7 subsumed, 3 untrue within this fixed menu; one survivor.
+Two fully vacuous rows; ambient preflight and several positive shape subcases also accept empty answers.
+Evidence: test-audit/internal-lower-module_namespace, review/test-audit/internal-lower-module_namespace/.
+
+[
+  {
+    "test": "TestModuleNamespaceLimitsStayLoud",
+    "package": "internal/lower",
+    "file": "internal/lower/module_namespace_test.go:15",
+    "seconds": 0.133,
+    "oracle": "Self-written NotYet type and diagnostic substrings; export-write subcase only requires Load to return any error and never calls Lower.",
+    "oracle_kind": "self",
+    "kills": [
+      "M01",
+      "M03"
+    ],
+    "unique_kills": [
+      "M01"
+    ],
+    "last_proven_fail": "M03: module_namespace_test.go:46: got /tmp/adamic-gate/TestModuleNamespaceLimitsStayLoudconsole.log(${performance.rea1458413250/001/provider.a:1:64: stage 0 can't lower this outside a method yet, want NotYet observing its receiver",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 15,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; ADAMIC_MUTANT=M03; module_namespace_test.go:46: got /tmp/adamic-gate/TestModuleNamespaceLimitsStayLoudconsole.log(${performance.rea1458413250/001/provider.a:1:64: stage 0 can't lower this outside a method yet, want NotYet observing its receiver",
+    "entry_probe_passes": {
+      "P01": false
+    },
+    "unprobed_subcases": [
+      "performance.value = 2; is a Load/checker assertion outside lowering"
+    ],
+    "unique_kill_evidence": {
+      "M01": "module_namespace_test.go:46: got /tmp/adamic-gate/TestModuleNamespaceLimitsStayLoudconst_escaped_=_performance1200656614/001/main.a:2:17: stage 0 can't lower reading performance yet, want NotYet ESM namespace object"
+    }
+  },
+  {
+    "test": "TestModuleNamespaceInitializedReadProof",
+    "package": "internal/lower",
+    "file": "internal/lower/module_namespace_test.go:52",
+    "seconds": 0.042,
+    "oracle": "Self-written absence of one ReferenceError string in emitted C; does not require the value read or output to exist.",
+    "oracle_kind": "self",
+    "kills": [
+      "M14"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M14: module_namespace_test.go:64: provider initialized before consumer, but the qualified read retained a readiness check",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestUndecidedCycleReadsUseReadyChecks"
+    ],
+    "mutants_in_matrix": 15,
+    "probe_kills": [],
+    "subsumer_seconds": 2.519,
+    "vacuous": true,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; ADAMIC_MUTANT=M14; module_namespace_test.go:64: provider initialized before consumer, but the qualified read retained a readiness check",
+    "entry_probe_passes": {
+      "P01": true
+    },
+    "subsumption_basis": "1 production mutants; hint, not deletion",
+    "unique_kill_evidence": {}
+  },
+  {
+    "test": "TestCallableNamespaceLimitsStayLoud",
+    "package": "internal/lower",
+    "file": "internal/lower/namespace_callable_test.go:9",
+    "seconds": 0.161,
+    "oracle": "Self-written NotYet type and reason substrings for six unsupported observations.",
+    "oracle_kind": "self",
+    "kills": [
+      "M04",
+      "M05",
+      "M09",
+      "M15"
+    ],
+    "unique_kills": [
+      "M15"
+    ],
+    "last_proven_fail": "M15: namespace_callable_test.go:24: got <nil>, want function intrinsic",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 15,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; ADAMIC_MUTANT=M15; namespace_callable_test.go:24: got <nil>, want function intrinsic",
+    "entry_probe_passes": {
+      "P01": false
+    },
+    "unique_kill_evidence": {
+      "M15": "namespace_callable_test.go:24: got <nil>, want function intrinsic"
+    }
+  },
+  {
+    "test": "TestCallableNamespaceReceiverStaysLoud",
+    "package": "internal/lower",
+    "file": "internal/lower/namespace_callable_test.go:30",
+    "seconds": 0.039,
+    "oracle": "Self-written Refused type and different receivers substring.",
+    "oracle_kind": "self",
+    "kills": [
+      "M03"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M03: namespace_callable_test.go:35: got /tmp/adamic-gate/TestCallableNamespaceReceiverStaysLoud3859545830/001/main.a:1:12: stage 0 can't lower an explicit callable-namespace this parameter; pass state explicitly yet",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestNamespaceReceiverArrowInheritsScope"
+    ],
+    "mutants_in_matrix": 15,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": 0.041,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; ADAMIC_MUTANT=M03; namespace_callable_test.go:35: got /tmp/adamic-gate/TestCallableNamespaceReceiverStaysLoud3859545830/001/main.a:1:12: stage 0 can't lower an explicit callable-namespace this parameter; pass state explicitly yet",
+    "entry_probe_passes": {
+      "P01": false
+    },
+    "subsumption_basis": "1 production mutants; hint, not deletion",
+    "unique_kill_evidence": {}
+  },
+  {
+    "test": "TestNamespaceClassEarlyConstructionStaysLoud",
+    "package": "internal/lower",
+    "file": "internal/lower/namespace_class_test.go:9",
+    "seconds": 0.042,
+    "oracle": "Self-written NotYet type and namespace initialization substring.",
+    "oracle_kind": "self",
+    "kills": [
+      "M04",
+      "M05",
+      "M09"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M09: namespace_class_test.go:14: early constructor read trusted: <nil>",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestCallableNamespaceLimitsStayLoud"
+    ],
+    "mutants_in_matrix": 15,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": 0.161,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; ADAMIC_MUTANT=M09; namespace_class_test.go:14: early constructor read trusted: <nil>",
+    "entry_probe_passes": {
+      "P01": false
+    },
+    "subsumption_basis": "3 production mutants; hint, not deletion",
+    "unique_kill_evidence": {}
+  },
+  {
+    "test": "TestNamespaceReceiverArrowInheritsScope",
+    "package": "internal/lower",
+    "file": "internal/lower/namespace_receiver_scope_test.go:9",
+    "seconds": 0.041,
+    "oracle": "Self-written Refused type and different receivers substring.",
+    "oracle_kind": "self",
+    "kills": [
+      "M02",
+      "M03"
+    ],
+    "unique_kills": [
+      "M02"
+    ],
+    "last_proven_fail": "M03: namespace_receiver_scope_test.go:14: namespace arrow receiver escaped its scope check: /tmp/adamic-gate/TestNamespaceReceiverArrowInheritsScope2162658221/001/main.a:1:53: stage 0 can't lower an explicit namespace-function this parameter; pass state explicitly yet",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 15,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; ADAMIC_MUTANT=M03; namespace_receiver_scope_test.go:14: namespace arrow receiver escaped its scope check: /tmp/adamic-gate/TestNamespaceReceiverArrowInheritsScope2162658221/001/main.a:1:53: stage 0 can't lower an explicit namespace-function this parameter; pass state explicitly yet",
+    "entry_probe_passes": {
+      "P01": false
+    },
+    "unique_kill_evidence": {
+      "M02": "namespace_receiver_scope_test.go:14: namespace arrow receiver escaped its scope check: /tmp/adamic-gate/TestNamespaceReceiverArrowInheritsScope4058881408/001/main.a:1:53: stage 0 can't lower an explicit namespace-function this parameter; pass state explicitly yet"
+    }
+  },
+  {
+    "test": "TestNamespaceAmbientHostInitialization",
+    "package": "internal/lower",
+    "file": "internal/lower/namespaces_ambient_test.go:14",
+    "seconds": 0.919,
+    "oracle": "Self-written nil preflight expectation and host error text; cwd also accepts an independent cycle-capable Refused, so another stop may satisfy it.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "untrue",
+    "subsumed_by": [],
+    "mutants_in_matrix": 15,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": null,
+    "entry_probe_passes": {
+      "P01": false,
+      "P02": true
+    },
+    "limitation": "No production mutant in this fixed 15-mutant menu made this row fail; this finding is limited to the planted menu.",
+    "unique_kill_evidence": {}
+  },
+  {
+    "test": "TestNamespaceAmbientContextsDoNotExecute",
+    "package": "internal/lower",
+    "file": "internal/lower/namespaces_ambient_test.go:42",
+    "seconds": 0.05,
+    "oracle": "Self-written booleans for ambient, executable, and declaration-file namespace contexts.",
+    "oracle_kind": "self",
+    "kills": [
+      "M04"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M04: namespaces_ambient_test.go:54: executable namespace erased",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestNamespaceCallGraphCycleUnion"
+    ],
+    "mutants_in_matrix": 15,
+    "probe_kills": [
+      "P03"
+    ],
+    "subsumer_seconds": 0.039,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; ADAMIC_MUTANT=M04; namespaces_ambient_test.go:54: executable namespace erased",
+    "entry_probe_passes": {
+      "P03": false
+    },
+    "vacuous_subcases": [
+      "ambient namespace",
+      "inherited ambient namespace",
+      "declaration-file namespace"
+    ],
+    "subsumption_basis": "1 production mutants; hint, not deletion",
+    "unique_kill_evidence": {}
+  },
+  {
+    "test": "TestNamespaceCallGraphLinearWork",
+    "package": "internal/lower",
+    "file": "internal/lower/namespaces_call_graph_test.go:32",
+    "seconds": 0.099,
+    "oracle": "Self-written exact discovery counter values, not measured asymptotic work; counts can change without traversal changing.",
+    "oracle_kind": "self",
+    "kills": [
+      "M07"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M07: namespaces_call_graph_test.go:44: nonlinear function walks: got 50, want 25",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestNamespaceCallGraphCycleUnion"
+    ],
+    "mutants_in_matrix": 15,
+    "probe_kills": [
+      "P04"
+    ],
+    "subsumer_seconds": 0.039,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; ADAMIC_MUTANT=M07; namespaces_call_graph_test.go:44: nonlinear function walks: got 50, want 25",
+    "entry_probe_passes": {
+      "P04": false
+    },
+    "subsumption_basis": "1 production mutants; hint, not deletion",
+    "unique_kill_evidence": {}
+  },
+  {
+    "test": "TestNamespaceCallGraphCycleUnion",
+    "package": "internal/lower",
+    "file": "internal/lower/namespaces_call_graph_test.go:56",
+    "seconds": 0.039,
+    "oracle": "Self-written exact namespace identity set and discovery count for one three-node cycle.",
+    "oracle_kind": "self",
+    "kills": [
+      "M04",
+      "M07",
+      "M08",
+      "M09"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M09: namespaces_call_graph_test.go:67: partial cycle reach for one: 0 namespaces",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestEnumNamespaceSharedCycle"
+    ],
+    "mutants_in_matrix": 15,
+    "probe_kills": [
+      "P04"
+    ],
+    "subsumer_seconds": 0.048,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; ADAMIC_MUTANT=M09; namespaces_call_graph_test.go:67: partial cycle reach for one: 0 namespaces",
+    "entry_probe_passes": {
+      "P04": false
+    },
+    "subsumption_basis": "4 production mutants; hint, not deletion",
+    "unique_kill_evidence": {}
+  },
+  {
+    "test": "TestNamespaceEnumInitializationIndependentOfModuleAnalysis",
+    "package": "internal/lower",
+    "file": "internal/lower/namespaces_call_graph_test.go:80",
+    "seconds": 0.039,
+    "oracle": "Self-written NotYet type and enum initialization substring.",
+    "oracle_kind": "self",
+    "kills": [
+      "M05",
+      "M10"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M10: namespaces_call_graph_test.go:86: namespace enum lost its independent refusal: <nil>",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestEnumInitializationReach"
+    ],
+    "mutants_in_matrix": 15,
+    "probe_kills": [
+      "P02"
+    ],
+    "subsumer_seconds": 0.289,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; ADAMIC_MUTANT=M10; namespaces_call_graph_test.go:86: namespace enum lost its independent refusal: <nil>",
+    "entry_probe_passes": {
+      "P02": false
+    },
+    "subsumption_basis": "2 production mutants; hint, not deletion",
+    "unique_kill_evidence": {}
+  },
+  {
+    "test": "TestParserFactoryBindingHoisting",
+    "package": "internal/lower",
+    "file": "internal/lower/namespaces_factory_test.go:16",
+    "seconds": 0.042,
+    "oracle": "Self-written nil errors from declaration and body lowering; returned statements and bindings are not asserted.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "untrue",
+    "subsumed_by": [],
+    "mutants_in_matrix": 15,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": null,
+    "entry_probe_passes": {
+      "P05": true,
+      "P06": true,
+      "P08": true
+    },
+    "limitation": "No production mutant in this fixed 15-mutant menu made this row fail; this finding is limited to the planted menu.",
+    "unique_kill_evidence": {}
+  },
+  {
+    "test": "TestMissingBindingSymbolHasStructuredLocation",
+    "package": "internal/lower",
+    "file": "internal/lower/namespaces_factory_test.go:44",
+    "seconds": 0.041,
+    "oracle": "Self-written NotYet type, exact program location, and missing-symbol substring.",
+    "oracle_kind": "self",
+    "kills": [
+      "M13"
+    ],
+    "unique_kills": [
+      "M13"
+    ],
+    "last_proven_fail": "M13: namespaces_factory_test.go:62: got /tmp/adamic-gate/TestMissingBindingSymbolHasStructuredLocation1421095666/001/main.a:1:7: stage 0 can't lower the checker gave a declaration no binding yet, want a structured missing-symbol diagnostic at /tmp/adamic-gate/TestMissingBindingSymbolHasStructuredLocation1421095666/001/main.a:1:7",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 15,
+    "probe_kills": [
+      "P07"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; ADAMIC_MUTANT=M13; namespaces_factory_test.go:62: got /tmp/adamic-gate/TestMissingBindingSymbolHasStructuredLocation1421095666/001/main.a:1:7: stage 0 can't lower the checker gave a declaration no binding yet, want a structured missing-symbol diagnostic at /tmp/adamic-gate/TestMissingBindingSymbolHasStructuredLocation1421095666/001/main.a:1:7",
+    "entry_probe_passes": {
+      "P07": false
+    },
+    "unique_kill_evidence": {
+      "M13": "namespaces_factory_test.go:62: got /tmp/adamic-gate/TestMissingBindingSymbolHasStructuredLocation1421095666/001/main.a:1:7: stage 0 can't lower the checker gave a declaration no binding yet, want a structured missing-symbol diagnostic at /tmp/adamic-gate/TestMissingBindingSymbolHasStructuredLocation1421095666/001/main.a:1:7"
+    }
+  },
+  {
+    "test": "TestTscNamespaceDeclarationShapes",
+    "package": "internal/lower",
+    "file": "internal/lower/namespaces_shapes_test.go:12",
+    "seconds": 0.242,
+    "oracle": "Self-written success and diagnostic expectations for normalized TypeScript shapes; overload expectation is derived from Adamic itself, not tsc.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "untrue",
+    "subsumed_by": [],
+    "mutants_in_matrix": 15,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": null,
+    "entry_probe_passes": {
+      "P01": false
+    },
+    "vacuous_subcases": [
+      "module overload policy",
+      "BuilderState",
+      "JsxNames",
+      "ReactNames",
+      "BinaryExpressionState",
+      "Parser.JSDocParser",
+      "Debug",
+      "Debug.log",
+      "Parser",
+      "IncrementalParser"
+    ],
+    "limitation": "No production mutant in this fixed 15-mutant menu made this row fail; this finding is limited to the planted menu.",
+    "unique_kill_evidence": {}
+  }
+]
+
+Mutant table (all positions on the starting commit)
+
+| ID | File:line | Change | Failed package rows |
+|---|---|---|---|
+| M01 | internal/lower/module_namespace.go:24 | if l.namespaceValueNode(node) && l.moduleNamespace(node) { -> if false { | TestModuleNamespaceLimitsStayLoud |
+| M02 | internal/lower/namespace_receiver_scope.go:13 | node.Kind != ast.KindArrowFunction -> node.Kind == ast.KindArrowFunction | TestNamespaceReceiverArrowInheritsScope |
+| M03 | internal/lower/namespace_receiver_scope.go:17 | if node.Kind == ast.KindThisKeyword { return true -> if node.Kind == ast.KindThisKeyword { return false | TestCallableNamespaceReceiverStaysLoud, TestModuleNamespaceLimitsStayLoud, TestNamespaceReceiverArrowInheritsScope, TestNamespaceReceiverRefusal |
+| M04 | internal/lower/namespaces.go:22 | ast.GetSourceFileOfNode(declaration).IsDeclarationFile -> !ast.GetSourceFileOfNode(declaration).IsDeclarationFile | TestCallableNamespaceLimitsStayLoud, TestEnumNamespaceSharedCycle, TestNamespaceAmbientContextsDoNotExecute, TestNamespaceCallGraphCycleUnion, TestNamespaceClassEarlyConstructionStaysLoud, TestNamespaceClosedCallGraphEdges, TestNamespaceInitializationReachability, TestNamespaceLimitsStayLoud |
+| M05 | internal/lower/namespaces.go:250 | if !initialized[declaration] { -> if initialized[declaration] { | TestCallableNamespaceLimitsStayLoud, TestEnumInitializationReach, TestEnumLimitsStayLoud, TestNamespaceClassEarlyConstructionStaysLoud, TestNamespaceClosedCallGraphEdges, TestNamespaceEnumInitializationIndependentOfModuleAnalysis, TestNamespaceInitializationReachability, TestNamespaceLimitsStayLoud, TestNumericEnumLiteralPromises, TestNumericEnumsAreOpen, TestTracingNamespaceEscapeStaysNotYet |
+| M06 | internal/lower/namespaces.go:309 | if node.Kind == ast.KindCallExpression \|\| node.Kind == ast.KindNewExpression { -> if node.Kind == ast.KindCallExpression { | TestEnumInitializationReach |
+| M07 | internal/lower/namespaces_call_graph.go:32 | g.walks++ -> g.walks += 2 | TestEnumInitializationGraphMemo, TestEnumNamespaceSharedCycle, TestNamespaceCallGraphCycleUnion, TestNamespaceCallGraphLinearWork |
+| M08 | internal/lower/namespaces_call_graph.go:140 | member.reaches = reaches -> member.reaches = member.reads | TestEnumInitializationGraphMemo, TestEnumInitializationReach, TestEnumLimitsStayLoud, TestEnumNamespaceSharedCycle, TestNamespaceCallGraphCycleUnion, TestNamespaceInitializationReachability |
+| M09 | internal/lower/namespaces_call_graph.go:103 | entry.reads[declaration] = node } } if node.Kind ->  } } if node.Kind | TestCallableNamespaceLimitsStayLoud, TestEnumNamespaceSharedCycle, TestNamespaceCallGraphCycleUnion, TestNamespaceClassEarlyConstructionStaysLoud, TestNamespaceClosedCallGraphEdges, TestNamespaceInitializationReachability, TestNamespaceLimitsStayLoud |
+| M10 | internal/lower/namespaces_call_graph.go:149 | declaration == nil \|\| ast.HasSyntacticModifier(declaration, ast.ModifierFlagsConst) -> declaration == nil \|\| !ast.HasSyntacticModifier(declaration, ast.ModifierFlagsConst) | TestEnumInitializationGraphMemo, TestEnumInitializationReach, TestEnumLimitsStayLoud, TestEnumNamespaceSharedCycle, TestNamespaceEnumInitializationIndependentOfModuleAnalysis, TestNamespaceLimitsStayLoud |
+| M11 | internal/lower/modules.go:76 | statements = namespaceDeclarations(statements) ->  | TestDebugNamespaceMergedCapabilities, TestNamespaceReturnedAssignmentLimits |
+| M12 | internal/lower/modules.go:100 | l.result.Locals[local].NamespaceVar = true -> l.result.Locals[local].NamespaceVar = false |  |
+| M13 | internal/lower/locals.go:114 | "the checker gave a declaration no symbol" -> "the checker gave a declaration no binding" | TestMissingBindingSymbolHasStructuredLocation |
+| M14 | internal/lower/load_time_reads.go:102 | return !l.provenModuleReads[node] && l.checked(local) -> return l.checked(local) | TestModuleNamespaceInitializedReadProof, TestUndecidedCycleReadsUseReadyChecks |
+| M15 | internal/lower/namespace_callable.go:67 | case "name", "length", "prototype", "caller", "arguments", "call", "apply", "bind", "toString": return true -> case "name", "length", "prototype", "caller", "arguments", "call", "apply", "bind", "toString": return false | TestCallableNamespaceLimitsStayLoud |
+
+Survivors
+M12: unguarded IR behavior. On namespaces_parser_factory.a, declareModule produces two NamespaceVar bindings before the mutation and zero afterward. Both observation runs pass. Every original package test survives this change. This proves changed IR metadata, not a native runtime consequence. Observation source and before/after commands are saved under probes/ and logs/.
+
+Probe entries
+P01 Lower returns a fresh zero-valued ir.Program and nil error, so C can inspect an empty program without dereferencing nil. P02 namespaceInitialization returns nil. P03 namespaceRuntime returns false. P04 namespaceCallGraph.reach returns nil. P05 declareModule returns nil. P06 namespaceBody returns nil, nil. P07 declareLocal returns zero, nil. P08 jointly applies P05 and P06. Probe diffs are separate from production mutants and never contribute kills, uniqueness, or subsumption.
+
+Brief ambiguities, limitations, and costs
+1. The reference commit 8de93800f4 is older than fetched origin/main. The audit starts at f91994f019703ba25d2918cf529c0e0b0c05d93c, as required by the branch instruction. All 14 names still exist in the same listed files. The test-function locations and mutation locations in this report use that actual starting commit.
+2. The target of roughly three mutants per row implies 42 mutations, while the cap is 20. This fixed menu uses 15 spread over reached production functions. The brief also mentions at most four mutants when rebuilding separately. Here one Go switch build serves all 15 selectors; each selector receives a distinct native build cache. Native compilation occurs inside package tests, so separate native rebuild times cannot be extracted from their output. Each full command wall time is recorded, including rebuilds.
+3. The fixed-menu option changes include selecting direct rather than transitive reach sets (M08) and retaining readiness checks for proven reads (M14). The other mutations flip conditions, change constants, or drop statements. No inserted production statement supports a verdict. M11 initially used a self-assignment placeholder that go vet rejected; it was repaired to the intended deletion before any mutant run. M09's unnecessary blank-identifier placeholder was removed from its standalone diff and revalidated; its switch run already omitted the assignment without that placeholder.
+4. Empty means a usable zero IR program for Lower, rather than a nil pointer that would panic in the C emitter. This exposes the initialized-read row's negative-only assertion: no requested read need exist for it to pass. The parser-factory row ignores all returned statements and accepts each empty entry individually as well as jointly. Those are findings, even though their overall verdicts differ.
+5. The ambient-host row calls two production entries. Its namespaceInitialization empty probe passes, while its Lower empty probe fails. The row is therefore not fully vacuous; entry_probe_passes records the weaker component. Likewise, the shape row's positive cases and self-derived overload policy pass empty Lower, but its tracingEnabled negative case fails. The ambient boolean row's false-expected branches pass while its executable branch fails.
+6. The ESM export-write subcase stops at Load and never calls Lower. It only checks that some checker error occurs. No lowering probe or mutant can judge that subcase's checker protection; it is explicitly outside this lowering audit. Neither Load nor the TypeScript checker was mutated.
+7. Fixture provenance is not an oracle execution. The normalized TypeScript shape row does not run tsc, and its overload policy is derived from Adamic's own output. All 14 oracles are classified self. The host row admits an independent ownership refusal, and the graph complexity row checks a counter rather than elapsed asymptotic work. These limits are stated in each relevant oracle field.
+8. Subsumption rests on one to four menu mutations per row. It is a hint for the defender wave, not a deletion recommendation. Three outside-unit subsumers were read and timed three times within internal/lower. No other package was run. The three untrue labels mean this fixed production menu caught no failure in those rows, not that every conceivable lowering fault would survive.
+9. No unit row is a subprocess helper, witness, or construction-only check. The graph rows assert production reachability and counters. Shared loading helpers do not make these different assertions one family. The enum-and-namespace cycle subsumer additionally checks enum reachability; it is a distinct row. No family grouping changes the recorded failure sets.
+10. Three non-unit baseline rows skip: TestOriginalCycleLedger needs a separately pinned pristine TypeScript 6.0.3 tree with generated diagnostics; TestOptionalWideningCensus needs an external caller project; TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=Node|readonly_Node[] is deferred compiler implementation. No selected row has an opt-in tool gate. These external inputs were not supplied or manufactured for this unit.
+
+Timing and coverage
+Warm toolchain worked; setup skipped (zero setup work). npm ci in stage3/api reported 376 ms. nproc: 5. Clean baseline binary: 25.988 s. The 42 selected solo binary runs totaled 5.798 s; rows.json records all three values and the median per row. Standalone production go vet validations totaled 4.027 s. The full mutation matrix used 437.335 s wall time, including 405.673 s in test binaries and 31.662 s of command/build overhead. Individual run wall times are in matrix.json. Entry-probe commands totaled 37.170 s wall time. Final restored full-package binary: 29.378 s. Total session work was about 21 minutes; separate initial coverage build time and native rebuild times were not measured.
+
+The selected clean coverage run reached 331 production functions, all listed in reached-functions.txt with function-definition positions and percentages. Coverage is a reach inventory, not proof that every branch was audited. Every mutant ran the whole package within 90 s. No timeout, Go panic, bounded fallback, or unknown later row occurred. Repo-wide uniqueness, other packages, native consequences of the survivor, skipped external-input checks, and mutation completeness are not covered.
+
+Evidence layout
+report.json holds the per-row result. rows.json holds medians, raw timing samples, and current test locations. mutant-plan.json is the fixed menu with origin/main positions and vet results. matrix.json records commands, all failed rows, all rows observed running, binary and wall times, and relevant failing events. logs/*.log.gz preserve complete original output losslessly. diffs/M01.diff through M15.diff apply independently to the starting origin/main. probes/ contains independent entry diffs and the survivor observer source. coverage.out and reached-functions.txt inventory reached production functions. audit.py, probes.py, survivors.py, and report.py preserve the execution and reporting logic. The observer is an additional measurement harness, not a changed audited test, oracle, or production mutant. SHA256SUMS covers the evidence files.

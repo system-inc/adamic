@@ -1,0 +1,44 @@
+[
+  {
+    "test": "TestNamespaceCallGraphCycleUnion",
+    "package": "internal/lower",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestEnumNamespaceSharedCycle"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D01 internal/lower/namespaces_call_graph.go:43",
+    "attempts": [
+      {
+        "mutant": "D01",
+        "file_line": "internal/lower/namespaces_call_graph.go:43",
+        "change": "use child discovery index instead of transitive low link",
+        "rows_failed": [
+          "TestNamespaceCallGraphCycleUnion"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/workspace/lower-namespace-defend-cache/D01 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D01.log 2>&1; namespaces_call_graph_test.go:67: partial cycle reach for two: 1 namespaces"
+  },
+  {
+    "test": "TestNamespaceEnumInitializationIndependentOfModuleAnalysis",
+    "package": "internal/lower",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestEnumInitializationReach"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D02 internal/lower/namespaces.go:251",
+    "attempts": [
+      {
+        "mutant": "D02",
+        "file_line": "internal/lower/namespaces.go:251",
+        "change": "gate enum-specific initialization refusal on prepared IR state",
+        "rows_failed": [
+          "TestNamespaceEnumInitializationIndependentOfModuleAnalysis"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/workspace/lower-namespace-defend-cache/D02 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D02.log 2>&1; namespaces_call_graph_test.go:86: namespace enum lost its independent refusal: /tmp/adamic-gate/TestNamespaceEnumInitializationIndependentOfModuleAnalysis3132913384/001/graph.a:1:44: stage 0 can't lower a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration yet"
+  }
+]

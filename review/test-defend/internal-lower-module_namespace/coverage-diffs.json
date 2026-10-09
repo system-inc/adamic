@@ -1,0 +1,15 @@
+{
+  "TestNamespaceCallGraphCycleUnion": [],
+  "TestNamespaceEnumInitializationIndependentOfModuleAnalysis": [
+    "github.com/system-inc/adamic/internal/lower/diagnostics.go:17",
+    "github.com/system-inc/adamic/internal/lower/diagnostics.go:18",
+    "github.com/system-inc/adamic/internal/lower/namespaces.go:10",
+    "github.com/system-inc/adamic/internal/lower/namespaces.go:13",
+    "github.com/system-inc/adamic/internal/lower/namespaces.go:16",
+    "github.com/system-inc/adamic/internal/lower/namespaces.go:289",
+    "github.com/system-inc/adamic/internal/lower/namespaces.go:290",
+    "github.com/system-inc/adamic/internal/lower/namespaces.go:291",
+    "github.com/system-inc/adamic/internal/lower/namespaces.go:292",
+    "github.com/system-inc/adamic/internal/lower/namespaces.go:9"
+  ]
+}
