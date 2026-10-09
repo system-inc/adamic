@@ -24,8 +24,10 @@ func init() {
 
 // Each mutant changes the reached sibling/ancestor implementation. Both compiled
 // backends run normally; only the independent source Node comparison catches it.
+// Not parallel: lowered writes sourceImports; Node and native helpers write the shared adamic/gate and adamic/runtime cache directories.
 func TestScannerNestedReferenceMutants(t *testing.T) {
 	for _, name := range scannerNestedReferenceProbes {
+		// Not parallel: lowered writes sourceImports; helpers write the shared adamic/gate and adamic/runtime cache directories.
 		t.Run(name, func(t *testing.T) {
 			path, err := filepath.Abs(filepath.Join(repository, "stage3/drivers/scanner/probes", name+".a"))
 			if err != nil {
@@ -76,12 +78,14 @@ func TestScannerNestedReferenceMutants(t *testing.T) {
 	}
 }
 
+// Not parallel: lowered writes sourceImports; Node and native helpers write the shared adamic/gate and adamic/runtime cache directories.
 func TestScannerNestedReferences(t *testing.T) {
 	paths := []string{"internal/oracle/testdata/nested_reference_identity.a"}
 	for _, name := range scannerNestedReferenceProbes {
 		paths = append(paths, "stage3/drivers/scanner/probes/"+name+".a")
 	}
 	for _, source := range paths {
+		// Not parallel: lowered writes sourceImports; helpers write the shared adamic/gate and adamic/runtime cache directories.
 		t.Run(filepath.Base(source), func(t *testing.T) {
 			path, err := filepath.Abs(filepath.Join(repository, source))
 			if err != nil {
@@ -106,6 +110,7 @@ func TestScannerNestedReferences(t *testing.T) {
 	}
 }
 
+// Not parallel: lowered writes sourceImports; Node and native helpers write the shared adamic/gate and adamic/runtime cache directories.
 func TestNestedReferenceIdentityMutant(t *testing.T) {
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/nested_reference_identity.a"))
 	if err != nil {
