@@ -888,11 +888,7 @@ func (e *emitter) value(expression ir.Expression) string {
 		return object
 	case ir.Property:
 		if expression.View != "" {
-			expected := expression.ViewType
-			if expected == "" {
-				expected = map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string", ir.Object: "object", ir.Array: "array", ir.Map: "Map"}[expression.Of]
-			}
-			return fmt.Sprintf("adamicViewField(%s, %s, %s, %d, %s, [%s])", e.value(expression.Object), quote(expression.Name), quote(expression.View), expression.Of, quote(expected), e.values(expression.ViewAllowed))
+			return e.checkedViewField(expression)
 		}
 		if expression.Readiness != "" {
 			return fmt.Sprintf("adamicReadField(%s, %s, %s, %t, %t)", e.value(expression.Object), quote(expression.Name), quote(expression.Readiness), expression.Optional, expression.Absent)
