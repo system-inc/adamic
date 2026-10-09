@@ -1,0 +1,14 @@
+{"Time":"2026-10-09T08:34:09.217406318Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T08:34:09.234157131Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestWASIUnit18"}
+{"Time":"2026-10-09T08:34:09.234233376Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestWASIUnit18","Output":"=== RUN   TestWASIUnit18\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:34:15.938028562Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestWASIUnit18","Output":"    wasm_test.go:373: strict C11 runtime: 60 translation units compiled\n"}
+{"Time":"2026-10-09T08:34:27.980092824Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestWASIUnit18/internal/oracle/testdata/reuse_weak_after_reuse.a"}
+{"Time":"2026-10-09T08:34:27.98014342Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestWASIUnit18/internal/oracle/testdata/reuse_weak_after_reuse.a","Output":"=== RUN   TestWASIUnit18/internal/oracle/testdata/reuse_weak_after_reuse.a\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:34:28.309836335Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestWASIUnit18/internal/oracle/testdata/reuse_weak_after_reuse.a","Output":"--- PASS: TestWASIUnit18/internal/oracle/testdata/reuse_weak_after_reuse.a (0.33s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:34:28.309883957Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestWASIUnit18/internal/oracle/testdata/reuse_weak_after_reuse.a","Elapsed":0.33}
+{"Time":"2026-10-09T08:34:28.309904087Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestWASIUnit18","Output":"    wasm_test.go:373: WASI oracle: 1/35 equivalent\n"}
+{"Time":"2026-10-09T08:34:28.31321908Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestWASIUnit18","Output":"--- PASS: TestWASIUnit18 (19.08s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:34:28.313263067Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestWASIUnit18","Elapsed":19.08}
+{"Time":"2026-10-09T08:34:28.314708643Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:34:28.315991554Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"ok  \tgithub.com/system-inc/adamic/internal/native\t19.098s\n"}
+{"Time":"2026-10-09T08:34:28.316011645Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Elapsed":19.099}

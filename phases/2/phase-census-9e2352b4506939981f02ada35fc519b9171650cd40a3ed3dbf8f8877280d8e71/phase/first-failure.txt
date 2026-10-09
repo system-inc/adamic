@@ -1,0 +1,41 @@
+known	github.com/system-inc/adamic/internal/native	TestWASIUnit08
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit09
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit10
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit11
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit12
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit13
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit14
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit15
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit16
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit17
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit18
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit19
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit20
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit21
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit22
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit23
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit24
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit25
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit26
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit27
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit28
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit29
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit30
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit31
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit32
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit33
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit34
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit35
+unknown	github.com/system-inc/adamic/stage1/cohere/graphql/printer	TestProduct_GraphQLPrinterRelease
+measurement	github.com/system-inc/adamic/stage1/cohere/css	TestCSSProfileSnapshotsAgree	TestCSSProfileSnapshotsAgree:3bd24aa7ec39b0814f83da55e2fa69db6694d0b9024893cf146dc5f7e1cbb1b4	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+measurement	github.com/system-inc/adamic/stage1/cohere/graphql/printer	TestPrinterThroughput	TestPrinterThroughput:extra	Opt-in throughput measurement; does not replace correctness verification.
+measurement	github.com/system-inc/adamic/stage1/cohere/lint	TestJsxLintReleaseAndThroughput	TestJsxLintReleaseAndThroughput:0ac2731cc03aa88aa1db988e0910063d36067cbcb25e2a776be9408d8e4d1ebf	ADAMIC_LINT_BENCH=1 enables five-round JSX throughput comparisons; ordinary JSX correctness is held separately by TestJsxLintTrees and the lint oracle.
+measurement	github.com/system-inc/adamic/stage1/cohere/lint	TestThroughput	TestThroughput:0ac2731cc03aa88aa1db988e0910063d36067cbcb25e2a776be9408d8e4d1ebf	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+measurement	github.com/system-inc/adamic/stage1/cohere/lint	TestProfileArtifacts	TestProfileArtifacts:03683169fb662d98215fb4465dea1cc535cddd2f3b736fc257b8ceee2618bd70	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+measurement	github.com/system-inc/adamic/stage1/typescript/scanner	TestProfileArtifacts	TestProfileArtifacts:03683169fb662d98215fb4465dea1cc535cddd2f3b736fc257b8ceee2618bd70	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+measurement	github.com/system-inc/adamic/stage1/typescript/scanner	TestPerformance	TestPerformance:fc2cecddef6499ecfc230850eb4569d7b20ef412ad51c601308d2654dfebb2e1	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+skips=6519 required-input=0 unknown=6476 pending=1
+gate skipped 0 required-input tests; 6476 unclassified skips; 0 pending skips past or unsure of their reason
+exit status 1
+
+(box load 4.7 on 5 cores at first failure)
