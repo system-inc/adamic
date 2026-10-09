@@ -68,13 +68,22 @@ def action_key(repository):
     return hashlib.sha256(json.dumps(key, sort_keys=True).encode()).hexdigest()
 
 
+def manifest_product(store, manifest, key):
+    data = json.loads(manifest.read_text())
+    digest = data['sha256']
+    if data['action'] != key or len(digest) != 64 or any(c not in '0123456789abcdef' for c in digest):
+        raise RuntimeError('invalid oracle build manifest')
+    return store / digest
+
+
 def fetch(repository, store, prepare):
     store.mkdir(parents=True, exist_ok=True)
     key = action_key(repository)
     with (store / (key + '.lock')).open('a') as lock:
         fcntl.flock(lock, fcntl.LOCK_EX)
         manifest = store / (key + '.json')
-        if not manifest.exists():
+        product = manifest_product(store, manifest, key) if manifest.exists() else None
+        if product is None or not product.is_file():
             if not prepare:
                 raise RuntimeError('oracle hook not prepared; run python3 stage3/fixtures/build-hook.py --prepare')
             with tempfile.TemporaryDirectory(dir=store) as scratch:
@@ -94,12 +103,8 @@ def fetch(repository, store, prepare):
                 temporary = Path(scratch) / 'manifest.json'
                 temporary.write_text(json.dumps({'action': key, 'sha256': digest}) + '\n')
                 os.replace(temporary, manifest)
-        data = json.loads(manifest.read_text())
-        digest = data['sha256']
-        if data['action'] != key or len(digest) != 64 or any(c not in '0123456789abcdef' for c in digest):
-            raise RuntimeError('invalid oracle build manifest')
-        product = store / digest
-        if hashlib.sha256(product.read_bytes()).hexdigest() != digest:
+        product = manifest_product(store, manifest, key)
+        if hashlib.sha256(product.read_bytes()).hexdigest() != product.name:
             raise RuntimeError('oracle build product hash mismatch')
         return product
 
