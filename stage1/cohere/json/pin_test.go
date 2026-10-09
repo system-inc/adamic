@@ -202,8 +202,48 @@ func TestCorpusPinRejectsMissingProvisionedInputs(t *testing.T) {
 	t.Logf("caught the 18-input provisioning mutant: %v", err)
 }
 
-// Not parallel: this proves the process-wide sample switch cannot bypass the pin.
+const testCorpusPinBeforeSamplingShards = 1
+
+// ADAMIC_TEST_SHARD=i/n selects ordinal modulo n; unset runs every shard.
+// The sampling probe uses a subprocess so its process-wide environment is isolated.
 func TestCorpusPinBeforeSampling(t *testing.T) {
+	if os.Getenv("ADAMIC_JSON_PIN_PROBE") == "1" {
+		jsonCorpusPinSamplingProbe(t)
+		return
+	}
+	t.Parallel()
+	cases := corpusCases(t)
+	shards := []nativeChunk{{start: 0, end: len(cases)}}
+	if len(shards) != testCorpusPinBeforeSamplingShards {
+		t.Fatal("corpus-pin shard count changed")
+	}
+	if err := jsonPortUnion(cases, shards); err != nil {
+		t.Fatal(err)
+	}
+	index, count, err := jsonPortSelection(os.Getenv("ADAMIC_TEST_SHARD"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	for ordinal, shard := range shards {
+		if ordinal%count != index {
+			continue
+		}
+		t.Run(fmt.Sprintf("shard-%03d", ordinal), func(t *testing.T) {
+			t.Parallel()
+			binary, err := os.Executable()
+			if err != nil {
+				t.Fatal(err)
+			}
+			result := execute(t, []string{"ADAMIC_JSON_PIN_PROBE=1"}, binary, "-test.run=^TestCorpusPinBeforeSampling$", "-test.v", "-test.timeout=30s")
+			if result.exitCode != 0 || len(result.stderr) != 0 {
+				t.Fatalf("%s sampling probe: exit %d stderr %s output %s", t.Name(), result.exitCode, result.stderr, result.stdout)
+			}
+			t.Logf("case range [%d:%d]; union %d cases; isolated probe:\n%s", shard.start, shard.end, len(cases), result.stdout)
+		})
+	}
+}
+
+func jsonCorpusPinSamplingProbe(t *testing.T) {
 	t.Setenv("ADAMIC_GATE_SAMPLE", "00000008"+strings.Repeat("0", 32))
 	changed := t.TempDir() + "/changed.txt"
 	named := "stage3/api/node_modules/typescript/package.json"
