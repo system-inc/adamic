@@ -147,6 +147,9 @@ func TestJsxLintReleaseAndThroughput(t *testing.T) {
 
 const testJsxLintTreesShards = 16
 
+// The live registry can grow independently of cohere's pin. Sixteen fixed shards
+// use SHA-256 of the upstream test's repository-relative file and fixture/mode
+// identity; adding or renumbering captured cases never reassigns existing cases.
 // ADAMIC_TEST_SHARD=i/n selects shard indices congruent to i modulo n;
 // unset runs all shards. Builds are shared inputs, made once per run until
 // internal/buildcache is available. Every shard compares Go, Node and ASan/UBSan
@@ -156,7 +159,7 @@ func TestJsxLintTrees(t *testing.T) {
 	skipWhenRuleScoped(t)
 	started := time.Now()
 	paths := jsxSources(t)
-	shards, err := jsxTreeShards(paths)
+	shards, err := jsxTreeShards(paths, jsxStableCaseKeys(t, paths))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -177,6 +180,9 @@ func TestJsxLintTrees(t *testing.T) {
 		}
 		t.Run(fmt.Sprintf("shard-%03d", i), func(t *testing.T) {
 			t.Parallel()
+			if len(cases) == 0 {
+				return
+			}
 			path := manifest(t, cases)
 			want := execute(t, "", oracle, "--manifest", path, "--whole", "--jsx-recovery")
 			node := execute(t, "", "node", "--disable-warning=ExperimentalWarning", runner, filepath.Join(directory, "main.ts"), "--manifest", path, "--whole")
