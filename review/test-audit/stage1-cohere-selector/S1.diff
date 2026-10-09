@@ -1,0 +1,13 @@
+diff --git a/stage1/cohere/selector/testdata/library.mjs b/stage1/cohere/selector/testdata/library.mjs
+index 94590ffe..3a5606f7 100644
+--- a/stage1/cohere/selector/testdata/library.mjs
++++ b/stage1/cohere/selector/testdata/library.mjs
+@@ -61,7 +61,7 @@ if(mode === 'corpus') {
+             if(typeof node.selector === 'string') {
+                 let selector = node.raws.selector?.scss ?? node.raws.selector?.raw ?? node.selector;
+                 if(node.raws.between?.trim()) selector += node.raws.between;
+-                if(selector.trim()) selectors.push(selector);
++                
+             }
+             if(node.type === 'atrule') {
+                 let params = node.raws.params?.scss ?? node.raws.params?.raw ?? node.params;

@@ -1,0 +1,88 @@
+diff --git a/internal/lower/lower.go b/internal/lower/lower.go
+index daba343f..0b3ae092 100644
+--- a/internal/lower/lower.go
++++ b/internal/lower/lower.go
+@@ -8,82 +8,15 @@ package lower
+ 
+ import (
+ 	"context"
+-	"fmt"
+ 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+ 	"github.com/microsoft/TypeScript/tsc/shim/checker"
+ 	"github.com/system-inc/adamic/internal/ir"
+ 	"github.com/system-inc/adamic/internal/load"
+-	"path/filepath"
+ )
+ 
+ // Lower lowers a checked program from one entry, in ESM evaluation order.
+ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
+-	files := program.Files()
+-	if len(files) != 1 {
+-		return nil, fmt.Errorf("lower: stage 0 compiles a program from one entry file, got %d", len(files))
+-	}
+-	entry := files[0]
+-	// Stage 0 checks single-threaded, so one checker answers for every file.
+-	typeChecker, release := program.Checker(ctx, entry)
+-	defer release()
+-
+-	lowering := &lowering{program: program, checker: typeChecker, result: &ir.Program{}, this: -1, functionIndex: -1}
+-	// The base name only, so the same program emits the same C on every machine.
+-	lowering.result.Source = filepath.Base(program.FileName(entry))
+-	modules, err := lowering.moduleOrder(entry)
+-	if err != nil {
+-		return nil, err
+-	}
+-	lowering.noteInheritance(modules)
+-	if err := lowering.enumInitialization(modules); err != nil {
+-		return nil, err
+-	}
+-	lowering.noteAccessorNames(modules)
+-	lowering.noteOmittedOptionals(modules)
+-	if err := lowering.namespaceInitialization(modules); err != nil {
+-		return nil, err
+-	}
+-	for _, module := range modules {
+-		if err := lowering.refuse(module); err != nil {
+-			return nil, err
+-		}
+-	}
+-	// Link every declaration before lowering any function body, including across back edges.
+-	var declarations []*ast.Node
+-	for _, module := range modules {
+-		declarations = append(declarations, module.Statements.Nodes...)
+-	}
+-	if err := lowering.declareModule(declarations); err != nil {
+-		return nil, err
+-	}
+-	for _, module := range modules {
+-		body, err := lowering.statements(module.Statements.Nodes)
+-		if err != nil {
+-			return nil, err
+-		}
+-		lowering.result.Main = append(lowering.result.Main, body...)
+-	}
+-	if lowering.unlowerable != nil {
+-		return nil, lowering.unlowerable
+-	}
+-	lowering.result.Main = append(lowering.forwarderValues, lowering.result.Main...)
+-	lowering.finishClassCalls()
+-	if err := lowering.finishAccessors(); err != nil {
+-		return nil, err
+-	}
+-	if err := lowering.exceptions(); err != nil {
+-		return nil, err
+-	}
+-	if err := lowering.checkAccessorSpreads(); err != nil {
+-		return nil, err
+-	}
+-	if err := lowering.findCycles(modules); err != nil {
+-		return nil, err
+-	}
+-	readiness(lowering.result)
+-	borrow(lowering.result)
+-	counters(lowering.result)
+-	return lowering.result, nil
++ return nil, nil
+ }
+ 
+ type lowering struct {

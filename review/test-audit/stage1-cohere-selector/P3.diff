@@ -1,0 +1,75 @@
+diff --git a/stage1/cohere/selector/testdata/library.mjs b/stage1/cohere/selector/testdata/library.mjs
+index 94590ffe..9e90fc4b 100644
+--- a/stage1/cohere/selector/testdata/library.mjs
++++ b/stage1/cohere/selector/testdata/library.mjs
+@@ -52,69 +52,7 @@ const expectedCSSErrors = new Set([
+     'internal/format/css/testdata/prettier/css/yaml/without-newline-after.css',
+     'internal/format/css/testdata/prettier/css/yaml/yaml.css',
+ ]);
+-if(mode === 'corpus') {
+-    let files = 0,
+-        expectedErrors = 0;
+-    const selectors = [];
+-    function extract(text, file) {
+-        postcss.parse(text, { from: file }).walk((node) => {
+-            if(typeof node.selector === 'string') {
+-                let selector = node.raws.selector?.scss ?? node.raws.selector?.raw ?? node.selector;
+-                if(node.raws.between?.trim()) selector += node.raws.between;
+-                if(selector.trim()) selectors.push(selector);
+-            }
+-            if(node.type === 'atrule') {
+-                let params = node.raws.params?.scss ?? node.raws.params?.raw ?? node.params;
+-                if(node.raws.afterName?.trim()) params = node.raws.afterName + params;
+-                if(node.raws.between?.trim()) params += node.raws.between;
+-                if(
+-                    ['extend', 'nest', 'at-root'].includes(node.name) &&
+-                    params.trim() &&
+-                    !(node.name === 'at-root' && /^\(\s*(?:without|with)\s*:.+\)$/s.test(params))
+-                )
+-                    selectors.push(params.trim());
+-                if(node.name === 'custom-selector') {
+-                    const match = node.params.match(/:--\S+\s+/);
+-                    if(match) selectors.push(node.params.slice(match[0].trim().length).trim());
+-                }
+-            }
+-        });
+-    }
+-    if(!fileList) throw new Error('corpus requires an explicit Git-selected file list');
+-    for(const file of JSON.parse(readFileSync(fileList, 'utf8'))) {
+-        files++;
+-        const expectedError = expectedCSSErrors.has(relative(root, file).split('\\').join('/'));
+-        try {
+-            extract(readFileSync(file, 'utf8'), file);
+-            if(expectedError) throw new Error(`expected CSS error became parseable: ${file}`);
+-        }
+-        catch(error) {
+-            if(error.name !== 'CssSyntaxError' || !expectedError) throw error;
+-            expectedErrors++;
+-            console.log(`expected CSS error: ${file}: ${error.reason}`);
+-        }
+-    }
+-    const fileSelectors = selectors.length;
+-    let candidates = 0,
+-        invalidSnippets = 0;
+-    if(testTexts) {
+-        for(const text of JSON.parse(readFileSync(testTexts, 'utf8'))) {
+-            if(!text.includes('{')) continue;
+-            candidates++;
+-            try {
+-                extract(text, '<Go CSS test constant>');
+-            }
+-            catch {
+-                invalidSnippets++;
+-            }
+-        }
+-    }
+-    console.log(
+-        `${candidates} brace-containing CSS test constants, ${invalidSnippets} not valid stylesheets, ${selectors.length - fileSelectors} extracted test selectors`,
+-    );
+-    writeFileSync(destination, selectors.map((s) => JSON.stringify(s)).join('\n') + '\n');
+-    console.log(`${files} CSS files, ${expectedErrors} expected CSS errors, ${selectors.length} selectors (including repeats)`);
+-}
++if(mode === 'corpus') {}
+ else if(mode === 'count') {
+     const texts = readFileSync(root, 'utf8').split('\n').filter(Boolean).map(decode);
+     const answers = readFileSync(destination, 'utf8').split('\n');

@@ -1,0 +1,35 @@
+diff --git a/stage1/cohere/selector/selector_test.go b/stage1/cohere/selector/selector_test.go
+index fd3dc05d..cc2ba0f9 100644
+--- a/stage1/cohere/selector/selector_test.go
++++ b/stage1/cohere/selector/selector_test.go
+@@ -277,29 +277,7 @@ func portDirectory(t *testing.T, applied *mutant) string {
+ 
+ // firstDifference says where two outputs first differ, line by line, or "" when they don't.
+ func firstDifference(got string, want string) string {
+-	if got == want {
+-		return ""
+-	}
+-	gotLines, wantLines := strings.Split(got, "\n"), strings.Split(want, "\n")
+-	for index := 0; index < len(gotLines) || index < len(wantLines); index++ {
+-		var gotLine, wantLine string
+-		if index < len(gotLines) {
+-			gotLine = gotLines[index]
+-		}
+-		if index < len(wantLines) {
+-			wantLine = wantLines[index]
+-		}
+-		if gotLine != wantLine {
+-			prefix := 0
+-			for prefix < len(gotLine) && prefix < len(wantLine) && gotLine[prefix] == wantLine[prefix] {
+-				prefix++
+-			}
+-			start := max(0, prefix-40)
+-			return fmt.Sprintf("line %d, byte %d: %q, Go cohere %q", index+1, prefix+1,
+-				gotLine[start:min(len(gotLine), prefix+120)], wantLine[start:min(len(wantLine), prefix+120)])
+-		}
+-	}
+-	return "the same lines, not the same bytes"
++ return ""
+ }
+ 
+ // lowered checks and lowers a program, failing the test with stage 0's refusal if it can't.

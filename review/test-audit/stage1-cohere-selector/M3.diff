@@ -1,0 +1,13 @@
+diff --git a/stage1/cohere/selector/nodes.ts b/stage1/cohere/selector/nodes.ts
+index b25fea95..447d8695 100644
+--- a/stage1/cohere/selector/nodes.ts
++++ b/stage1/cohere/selector/nodes.ts
+@@ -39,7 +39,7 @@ export function quote(text: string): string {
+     for(let index = 0; index < text.length; index++) {
+         const code = text.charCodeAt(index);
+         let escape = '';
+-        if(code === 34) {
++        if(code === 35) {
+             escape = '\\"';
+         }
+         else if(code === 92) {

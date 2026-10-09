@@ -1,0 +1,178 @@
+[
+  {
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes",
+    "package": "stage1/cohere/selector",
+    "file": "stage1/cohere/selector/gaps_test.go:28",
+    "seconds": 0.419,
+    "timing_runs": [
+      0.452,
+      0.419,
+      0.413
+    ],
+    "oracle": "Node executes six fixtures; self-written GAPS.md exact NotYet labels and expected stdout; closed gap also runs sanitized native.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M4"
+    ],
+    "unique_kills": [
+      "M4"
+    ],
+    "last_proven_fail": "M4: gaps_test.go:57: stage 0 refuses with \"push with other than two values\" now, where GAPS.md records \"push with other than one value\"",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P2"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "env ADAMIC_SELECTOR_LIBRARY=/tmp/u134/library ADAMIC_SELECTOR_BENCH=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u134/cache/M4 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/selector/ -run . > /workspace/adamic/review/test-audit/stage1-cohere-selector/M4.log 2>&1; gaps_test.go:57: stage 0 refuses with \"push with other than two values\" now, where GAPS.md records \"push with other than one value\""
+  },
+  {
+    "test": "TestThePortParsesAsGoCohereDoes",
+    "package": "stage1/cohere/selector",
+    "file": "stage1/cohere/selector/selector_test.go:49",
+    "seconds": 17.379,
+    "timing_runs": [
+      18.566,
+      16.694,
+      17.379
+    ],
+    "oracle": "Full canonical output compared with live Go cohere, Node, native, JS backend and postcss-selector-parser 2.2.3; upstream known hangs explicitly excluded.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M1",
+      "M2",
+      "M3"
+    ],
+    "unique_kills": [
+      "M1",
+      "M3"
+    ],
+    "last_proven_fail": "M3: selector_test.go:68: Node and Go cohere differ: line 338, byte 163: \"\\\":\\\"\\\",\\\"before\\\":\\\"\\\"},\\\"type\\\":\\\"tag\\\",\\\"value\\\":\\\"\\\\\\\"{}\\\"},{\\\"source\\\":{\\\"end\\\":{\\\"column\\\":4,\\\"line\\\":1},\\\"start\\\":{\\\"column\\\":4,\\\"line\\\":1}},\\\"sourceIndex\\\":3,\\\"spaces\\\":{\\\"after\\\":\\\"\\\",\\\"befor\", Go cohere \"\\\":\\\"\\\",\\\"before\\\":\\\"\\\"},\\\"type\\\":\\\"tag\\\",\\\"value\\\":\\\"#{}\\\"},{\\\"source\\\":{\\\"end\\\":{\\\"column\\\":4,\\\"line\\\":1},\\\"start\\\":{\\\"column\\\":4,\\\"line\\\":1}},\\\"sourceIndex\\\":3,\\\"spaces\\\":{\\\"after\\\":\\\"\\\",\\\"before\"",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "env ADAMIC_SELECTOR_LIBRARY=/tmp/u134/library ADAMIC_SELECTOR_BENCH=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u134/cache/M3 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/selector/ -run . > /workspace/adamic/review/test-audit/stage1-cohere-selector/M3.log 2>&1; selector_test.go:68: Node and Go cohere differ: line 338, byte 163: \"\\\":\\\"\\\",\\\"before\\\":\\\"\\\"},\\\"type\\\":\\\"tag\\\",\\\"value\\\":\\\"\\\\\\\"{}\\\"},{\\\"source\\\":{\\\"end\\\":{\\\"column\\\":4,\\\"line\\\":1},\\\"start\\\":{\\\"column\\\":4,\\\"line\\\":1}},\\\"sourceIndex\\\":3,\\\"spaces\\\":{\\\"after\\\":\\\"\\\",\\\"befor\", Go cohere \"\\\":\\\"\\\",\\\"before\\\":\\\"\\\"},\\\"type\\\":\\\"tag\\\",\\\"value\\\":\\\"#{}\\\"},{\\\"source\\\":{\\\"end\\\":{\\\"column\\\":4,\\\"line\\\":1},\\\"start\\\":{\\\"column\\\":4,\\\"line\\\":1}},\\\"sourceIndex\\\":3,\\\"spaces\\\":{\\\"after\\\":\\\"\\\",\\\"before\"",
+    "witness_evidence": "env ADAMIC_SELECTOR_LIBRARY=/tmp/u134/library ADAMIC_SELECTOR_BENCH=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u134/cache/W1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/selector/ -run '^TestThePortParsesAsGoCohereDoes$' > /workspace/adamic/review/test-audit/stage1-cohere-selector/W1.log 2>&1; selector_test.go:125: natively the mutant agrees with Go cohere: the comparison cannot see it",
+    "vacuous_subcases": [
+      "TestThePortParsesAsGoCohereDoes/catches_the_suffix_operator_loses_|=",
+      "TestThePortParsesAsGoCohereDoes/catches_a_merged_word_uses_its_first_token_position",
+      "TestThePortParsesAsGoCohereDoes/as_postcss-selector-parser",
+      "TestThePortParsesAsGoCohereDoes/catches_a_quote_ignores_escape_parity"
+    ],
+    "probe_scope_note": "Passing upstream-only subcase does not reach the port; compiled-mutant subcases pass despite empty driver."
+  },
+  {
+    "test": "TestSelectorThroughput",
+    "package": "stage1/cohere/selector",
+    "file": "stage1/cohere/selector/selector_test.go:421",
+    "seconds": 20.645,
+    "timing_runs": [
+      21.227,
+      20.645,
+      20.307
+    ],
+    "oracle": "Only aggregate parsed/attempt/root-child counts: native supplies initial expectation, Node source and live upstream library compare. M1/M3 AST defects survive.",
+    "oracle_kind": [
+      "self",
+      "external-run"
+    ],
+    "kills": [
+      "M2"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M2: selector_test.go:464: throughput checksums differ: \"108150 of 280750 selectors parsed, 8940 nodes\\n\" and \"108150 of 280750 selectors parsed, 117090 nodes\\n\"",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestThePortParsesAsGoCohereDoes"
+    ],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": 17.379,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "env ADAMIC_SELECTOR_LIBRARY=/tmp/u134/library ADAMIC_SELECTOR_BENCH=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u134/cache/M2 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/selector/ -run . > /workspace/adamic/review/test-audit/stage1-cohere-selector/M2.log 2>&1; selector_test.go:464: throughput checksums differ: \"108150 of 280750 selectors parsed, 8940 nodes\\n\" and \"108150 of 280750 selectors parsed, 117090 nodes\\n\"",
+    "vacuous_subcases": [
+      "round 1 native checksum",
+      "round 1 Node source checksum"
+    ],
+    "vacuous_without_library": true
+  },
+  {
+    "test": "TestCorpusKeepsEveryParseableFile",
+    "package": "stage1/cohere/selector",
+    "file": "stage1/cohere/selector/selector_test.go:474",
+    "seconds": 0.237,
+    "timing_runs": [
+      0.209,
+      0.287,
+      0.237
+    ],
+    "oracle": "Live PostCSS extracts synthetic CSS; self-written exact selectors, counts, exclusion errors and explicit file-list contract.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "S1: selector_test.go:522: parseable files lost selectors: \"\\n\"",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P3"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "env ADAMIC_SELECTOR_LIBRARY=/tmp/u134/library ADAMIC_SELECTOR_BENCH=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u134/cache/S1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/selector/ -run '^TestCorpusKeepsEveryParseableFile$' > /workspace/adamic/review/test-audit/stage1-cohere-selector/S1.log 2>&1; selector_test.go:522: parseable files lost selectors: \"\\n\""
+  },
+  {
+    "test": "TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars",
+    "package": "stage1/cohere/selector",
+    "file": "stage1/cohere/selector/selector_test.go:576",
+    "seconds": 1.053,
+    "timing_runs": [
+      1.053,
+      1.052,
+      1.062
+    ],
+    "oracle": "Live pinned upstream parser invoked on four inputs; self-written marker and no-return observation for one second. This proves bounded observation, not infinite execution.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "S2: selector_test.go:608: the parser returned within 1s of entering: exit <nil>, output after entering \"returned\\n\", stderr \"\"",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P4"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "env ADAMIC_SELECTOR_LIBRARY=/tmp/u134/library ADAMIC_SELECTOR_BENCH=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u134/cache/S2 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/selector/ -run '^TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars$' > /workspace/adamic/review/test-audit/stage1-cohere-selector/S2.log 2>&1; selector_test.go:608: the parser returned within 1s of entering: exit <nil>, output after entering \"returned\\n\", stderr \"\"",
+    "classification_note": "Upstream invocation and exception-observation setup; S2 drops the call without editing the external parser."
+  }
+]

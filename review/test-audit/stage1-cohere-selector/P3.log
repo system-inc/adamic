@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T13:00:50.983452945Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/selector"}
+{"Time":"2026-10-09T13:00:50.990520975Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/selector","Test":"TestCorpusKeepsEveryParseableFile"}
+{"Time":"2026-10-09T13:00:50.990585611Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/selector","Test":"TestCorpusKeepsEveryParseableFile","Output":"=== RUN   TestCorpusKeepsEveryParseableFile\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:00:50.990627823Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/selector","Test":"TestCorpusKeepsEveryParseableFile","Output":"=== PAUSE TestCorpusKeepsEveryParseableFile\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:00:50.990630267Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/selector","Test":"TestCorpusKeepsEveryParseableFile"}
+{"Time":"2026-10-09T13:00:50.99063254Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/selector","Test":"TestCorpusKeepsEveryParseableFile"}
+{"Time":"2026-10-09T13:00:50.990634303Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/selector","Test":"TestCorpusKeepsEveryParseableFile","Output":"=== CONT  TestCorpusKeepsEveryParseableFile\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:00:51.041517754Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/selector","Test":"TestCorpusKeepsEveryParseableFile","Output":"    selector_test.go:519: open /tmp/adamic-gate/TestCorpusKeepsEveryParseableFile2364712444/002/corpus.txt: no such file or directory\n","OutputType":"error"}
+{"Time":"2026-10-09T13:00:51.04158918Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/selector","Test":"TestCorpusKeepsEveryParseableFile","Output":"--- FAIL: TestCorpusKeepsEveryParseableFile (0.05s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:00:51.04160286Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/selector","Test":"TestCorpusKeepsEveryParseableFile","Elapsed":0.05}
+{"Time":"2026-10-09T13:00:51.041622329Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/selector","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:00:51.042379725Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/selector","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/cohere/selector\t0.059s\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:00:51.04241718Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/selector","Elapsed":0.059}

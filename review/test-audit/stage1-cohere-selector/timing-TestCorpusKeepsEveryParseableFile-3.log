@@ -1,0 +1,12 @@
+{"Time":"2026-10-09T12:57:16.574752508Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/selector"}
+{"Time":"2026-10-09T12:57:16.582325117Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/selector","Test":"TestCorpusKeepsEveryParseableFile"}
+{"Time":"2026-10-09T12:57:16.582396533Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/selector","Test":"TestCorpusKeepsEveryParseableFile","Output":"=== RUN   TestCorpusKeepsEveryParseableFile\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:57:16.582416072Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/selector","Test":"TestCorpusKeepsEveryParseableFile","Output":"=== PAUSE TestCorpusKeepsEveryParseableFile\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:57:16.582418395Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/selector","Test":"TestCorpusKeepsEveryParseableFile"}
+{"Time":"2026-10-09T12:57:16.582422591Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/selector","Test":"TestCorpusKeepsEveryParseableFile"}
+{"Time":"2026-10-09T12:57:16.582424304Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/selector","Test":"TestCorpusKeepsEveryParseableFile","Output":"=== CONT  TestCorpusKeepsEveryParseableFile\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:57:16.811275588Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/selector","Test":"TestCorpusKeepsEveryParseableFile","Output":"--- PASS: TestCorpusKeepsEveryParseableFile (0.23s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:57:16.811319793Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/selector","Test":"TestCorpusKeepsEveryParseableFile","Elapsed":0.23}
+{"Time":"2026-10-09T12:57:16.811340494Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/selector","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:57:16.812171043Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/selector","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/selector\t0.237s\n"}
+{"Time":"2026-10-09T12:57:16.812201117Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/selector","Elapsed":0.237}

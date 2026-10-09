@@ -1,0 +1,247 @@
+[
+  {
+    "file": "stage1/cohere/selector/main.ts",
+    "line": 7,
+    "declaration": "function unescapeLetter(letter: string | undefined): string {"
+  },
+  {
+    "file": "stage1/cohere/selector/main.ts",
+    "line": 9,
+    "declaration": "if(letter === undefined) {"
+  },
+  {
+    "file": "stage1/cohere/selector/main.ts",
+    "line": 12,
+    "declaration": "switch(letter) {"
+  },
+  {
+    "file": "stage1/cohere/selector/main.ts",
+    "line": 26,
+    "declaration": "function unescape(line: string): string {"
+  },
+  {
+    "file": "stage1/cohere/selector/main.ts",
+    "line": 29,
+    "declaration": "for(let index = 0; index < line.length; index++) {"
+  },
+  {
+    "file": "stage1/cohere/selector/main.ts",
+    "line": 50,
+    "declaration": "if(line !== '') {"
+  },
+  {
+    "file": "stage1/cohere/selector/main.ts",
+    "line": 58,
+    "declaration": "for(const css of texts) {"
+  },
+  {
+    "file": "stage1/cohere/selector/nodes.ts",
+    "line": 28,
+    "declaration": "constructor(type: string, value: string | undefined, source: Source | undefined, sourceIndex: number | undefined) {"
+  },
+  {
+    "file": "stage1/cohere/selector/nodes.ts",
+    "line": 36,
+    "declaration": "export function quote(text: string): string {"
+  },
+  {
+    "file": "stage1/cohere/selector/nodes.ts",
+    "line": 39,
+    "declaration": "for(let index = 0; index < text.length; index++) {"
+  },
+  {
+    "file": "stage1/cohere/selector/nodes.ts",
+    "line": 88,
+    "declaration": "function numeric(value: number | undefined): string {"
+  },
+  {
+    "file": "stage1/cohere/selector/nodes.ts",
+    "line": 94,
+    "declaration": "export function convertSourceIndexes(nodes: readonly SelectorNode[], text: string): void {"
+  },
+  {
+    "file": "stage1/cohere/selector/nodes.ts",
+    "line": 97,
+    "declaration": "for(const character of text) {"
+  },
+  {
+    "file": "stage1/cohere/selector/nodes.ts",
+    "line": 105,
+    "declaration": "for(const node of nodes) {"
+  },
+  {
+    "file": "stage1/cohere/selector/nodes.ts",
+    "line": 117,
+    "declaration": "export function render(nodes: readonly SelectorNode[], index: number, text: string): string {"
+  },
+  {
+    "file": "stage1/cohere/selector/nodes.ts",
+    "line": 122,
+    "declaration": "if(node.type === 'root' || node.type === 'selector' || node.type === 'pseudo') {"
+  },
+  {
+    "file": "stage1/cohere/selector/nodes.ts",
+    "line": 129,
+    "declaration": "if(node.type !== 'root' && node.type !== 'selector') {"
+  },
+  {
+    "file": "stage1/cohere/selector/nodes.ts",
+    "line": 139,
+    "declaration": "if(node.namespace !== undefined) {"
+  },
+  {
+    "file": "stage1/cohere/selector/nodes.ts",
+    "line": 142,
+    "declaration": "if(node.namespaceTrue) {"
+  },
+  {
+    "file": "stage1/cohere/selector/nodes.ts",
+    "line": 145,
+    "declaration": "if(node.type === 'attribute') {"
+  },
+  {
+    "file": "stage1/cohere/selector/nodes.ts",
+    "line": 163,
+    "declaration": "if(node.trailingComma) {"
+  },
+  {
+    "file": "stage1/cohere/selector/nodes.ts",
+    "line": 168,
+    "declaration": "for(const key of fields.keys()) {"
+  },
+  {
+    "file": "stage1/cohere/selector/nodes.ts",
+    "line": 173,
+    "declaration": "for(const key of keys) {"
+  },
+  {
+    "file": "stage1/cohere/selector/parser.ts",
+    "line": 13,
+    "declaration": "function added(left: number | undefined, right: number): number {"
+  },
+  {
+    "file": "stage1/cohere/selector/parser.ts",
+    "line": 23,
+    "declaration": "constructor(css: string) {"
+  },
+  {
+    "file": "stage1/cohere/selector/parser.ts",
+    "line": 32,
+    "declaration": "node(index: number): SelectorNode {"
+  },
+  {
+    "file": "stage1/cohere/selector/parser.ts",
+    "line": 35,
+    "declaration": "token(index: number): Token | undefined {"
+  },
+  {
+    "file": "stage1/cohere/selector/parser.ts",
+    "line": 38,
+    "declaration": "curr(): Token {"
+  },
+  {
+    "file": "stage1/cohere/selector/parser.ts",
+    "line": 42,
+    "declaration": "append(container: number, node: SelectorNode): number {"
+  },
+  {
+    "file": "stage1/cohere/selector/parser.ts",
+    "line": 50,
+    "declaration": "newNode(node: SelectorNode, namespace: string | undefined): void {"
+  },
+  {
+    "file": "stage1/cohere/selector/parser.ts",
+    "line": 65,
+    "declaration": "last(): SelectorNode | undefined {"
+  },
+  {
+    "file": "stage1/cohere/selector/parser.ts",
+    "line": 70,
+    "declaration": "simple(type: string, long: boolean): void {"
+  },
+  {
+    "file": "stage1/cohere/selector/parser.ts",
+    "line": 83,
+    "declaration": "attribute(): void {"
+  },
+  {
+    "file": "stage1/cohere/selector/parser.ts",
+    "line": 133,
+    "declaration": "splitWord(namespace: string | undefined, pseudo: string | undefined, starting: Token): void {"
+  },
+  {
+    "file": "stage1/cohere/selector/parser.ts",
+    "line": 190,
+    "declaration": "word(namespace: string | undefined): void {"
+  },
+  {
+    "file": "stage1/cohere/selector/parser.ts",
+    "line": 222,
+    "declaration": "combinator(): void {"
+  },
+  {
+    "file": "stage1/cohere/selector/parser.ts",
+    "line": 264,
+    "declaration": "parse(throwOnParenthesis: boolean): void {"
+  },
+  {
+    "file": "stage1/cohere/selector/parser.ts",
+    "line": 393,
+    "declaration": "loop(): void {"
+  },
+  {
+    "file": "stage1/cohere/selector/parser.ts",
+    "line": 403,
+    "declaration": "export function parse(css: string): ParseResultType {"
+  },
+  {
+    "file": "stage1/cohere/selector/parser.ts",
+    "line": 410,
+    "declaration": "catch(error) {"
+  },
+  {
+    "file": "stage1/cohere/selector/source.ts",
+    "line": 6,
+    "declaration": "constructor("
+  },
+  {
+    "file": "stage1/cohere/selector/tokenize.ts",
+    "line": 6,
+    "declaration": "constructor(kind: string, value: string, rest: readonly number[]) {"
+  },
+  {
+    "file": "stage1/cohere/selector/tokenize.ts",
+    "line": 11,
+    "declaration": "at(index: number): number | undefined {"
+  },
+  {
+    "file": "stage1/cohere/selector/tokenize.ts",
+    "line": 16,
+    "declaration": "function whitespace(code: number): boolean {"
+  },
+  {
+    "file": "stage1/cohere/selector/tokenize.ts",
+    "line": 19,
+    "declaration": "function combinator(code: number): boolean {"
+  },
+  {
+    "file": "stage1/cohere/selector/tokenize.ts",
+    "line": 22,
+    "declaration": "function atEnd(code: number): boolean {"
+  },
+  {
+    "file": "stage1/cohere/selector/tokenize.ts",
+    "line": 38,
+    "declaration": "function wordEnd(css: string, index: number): boolean {"
+  },
+  {
+    "file": "stage1/cohere/selector/tokenize.ts",
+    "line": 64,
+    "declaration": "export function tokenize(css: string): Token[] {"
+  },
+  {
+    "file": "stage1/cohere/selector/tokenize.ts",
+    "line": 68,
+    "declaration": "for(let pos = 0; pos < css.length; pos++) {"
+  }
+]

@@ -1,0 +1,13 @@
+diff --git a/stage1/cohere/selector/tokenize.ts b/stage1/cohere/selector/tokenize.ts
+index a454a040..93ecd7cd 100644
+--- a/stage1/cohere/selector/tokenize.ts
++++ b/stage1/cohere/selector/tokenize.ts
+@@ -64,7 +64,7 @@ function wordEnd(css: string, index: number): boolean {
+ export function tokenize(css: string): Token[] {
+     const tokens: Token[] = [];
+     let offset = -1;
+-    let line = 1;
++    let line = 2;
+     for(let pos = 0; pos < css.length; pos++) {
+         let code = css.charCodeAt(pos);
+         if(code === 10) {

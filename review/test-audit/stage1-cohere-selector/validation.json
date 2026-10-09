@@ -1,0 +1,128 @@
+[
+  {
+    "id": "P2",
+    "kind": "corrected probe",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/selector/ -run .",
+    "exit": 1,
+    "seconds": 17.309078411999508
+  },
+  {
+    "id": "P2-TestEachGapStandsWhereGapsMdSaysItDoes",
+    "kind": "corrected probe",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/selector/ -run '^TestEachGapStandsWhereGapsMdSaysItDoes$'",
+    "exit": 1,
+    "seconds": 2.0290431289995468
+  },
+  {
+    "id": "P2-TestThePortParsesAsGoCohereDoes",
+    "kind": "corrected probe",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/selector/ -run '^TestThePortParsesAsGoCohereDoes$'",
+    "exit": 1,
+    "seconds": 8.8841413680002
+  },
+  {
+    "id": "P2-TestSelectorThroughput",
+    "kind": "corrected probe",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/selector/ -run '^TestSelectorThroughput$'",
+    "exit": 1,
+    "seconds": 8.74869624799976
+  },
+  {
+    "id": "P2-TestCorpusKeepsEveryParseableFile",
+    "kind": "corrected probe",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/selector/ -run '^TestCorpusKeepsEveryParseableFile$'",
+    "exit": 0,
+    "seconds": 1.9990758759995515
+  },
+  {
+    "id": "P2-TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars",
+    "kind": "corrected probe",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/selector/ -run '^TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars$'",
+    "exit": 0,
+    "seconds": 2.913216016999286
+  },
+  {
+    "id": "M1",
+    "kind": "standalone compile",
+    "command": "timeout 90 go run ./cmd/adamic build /workspace/adamic/stage1/cohere/selector/main.ts -o /tmp/u134/M1-native --sanitize",
+    "exit": 0,
+    "seconds": 1.5679870499989192
+  },
+  {
+    "id": "M2",
+    "kind": "standalone compile",
+    "command": "timeout 90 go run ./cmd/adamic build /workspace/adamic/stage1/cohere/selector/main.ts -o /tmp/u134/M2-native --sanitize",
+    "exit": 0,
+    "seconds": 1.7081845909997355
+  },
+  {
+    "id": "M3",
+    "kind": "standalone compile",
+    "command": "timeout 90 go run ./cmd/adamic build /workspace/adamic/stage1/cohere/selector/main.ts -o /tmp/u134/M3-native --sanitize",
+    "exit": 0,
+    "seconds": 1.6173433530002512
+  },
+  {
+    "id": "M4",
+    "kind": "standalone compile",
+    "command": "go vet ./internal/lower/",
+    "exit": 0,
+    "seconds": 0.478395290001572
+  },
+  {
+    "id": "P1",
+    "kind": "standalone compile",
+    "command": "timeout 90 go run ./cmd/adamic build /workspace/adamic/stage1/cohere/selector/main.ts -o /tmp/u134/P1-native --sanitize",
+    "exit": 0,
+    "seconds": 0.5731306669986225
+  },
+  {
+    "id": "P1-no-library",
+    "kind": "supplemental environment probe",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/selector/ -run '^TestSelectorThroughput$'",
+    "exit": 0,
+    "seconds": 5.79922202600028
+  },
+  {
+    "id": "P2",
+    "kind": "standalone compile",
+    "command": "go vet ./internal/lower/",
+    "exit": 0,
+    "seconds": 0.46882030200140434
+  },
+  {
+    "id": "W1",
+    "kind": "standalone compile",
+    "command": "go vet ./stage1/cohere/selector/",
+    "exit": 0,
+    "seconds": 0.15318403700075578
+  },
+  {
+    "id": "S1",
+    "kind": "standalone compile",
+    "command": "node --check /workspace/adamic/stage1/cohere/selector/testdata/library.mjs",
+    "exit": 0,
+    "seconds": 0.0266604999997071
+  },
+  {
+    "id": "S2",
+    "kind": "standalone compile",
+    "command": "node --check /workspace/adamic/stage1/cohere/selector/testdata/nontermination.mjs",
+    "exit": 0,
+    "seconds": 0.023986472000615322
+  },
+  {
+    "id": "P3",
+    "kind": "standalone compile",
+    "command": "node --check /workspace/adamic/stage1/cohere/selector/testdata/library.mjs",
+    "exit": 0,
+    "seconds": 0.02431449799951224
+  },
+  {
+    "id": "P4",
+    "kind": "standalone compile",
+    "command": "node --check /workspace/adamic/stage1/cohere/selector/testdata/nontermination.mjs",
+    "exit": 0,
+    "seconds": 0.02480036699853372
+  }
+]

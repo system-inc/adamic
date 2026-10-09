@@ -1,0 +1,355 @@
+[
+  {
+    "id": "timing-TestEachGapStandsWhereGapsMdSaysItDoes-1",
+    "command": "env ADAMIC_SELECTOR_LIBRARY=/tmp/u134/library ADAMIC_SELECTOR_BENCH=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u134/cache/timing-TestEachGapStandsWhereGapsMdSaysItDoes-1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/selector/ -run '^TestEachGapStandsWhereGapsMdSaysItDoes$' > /workspace/adamic/review/test-audit/stage1-cohere-selector/timing-TestEachGapStandsWhereGapsMdSaysItDoes-1.log 2>&1",
+    "env": {
+      "ADAMIC_SELECTOR_LIBRARY": "/tmp/u134/library",
+      "ADAMIC_SELECTOR_BENCH": "1",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u134/cache/timing-TestEachGapStandsWhereGapsMdSaysItDoes-1"
+    },
+    "exit": 0,
+    "wall_seconds": 2.6356659390003188
+  },
+  {
+    "id": "timing-TestEachGapStandsWhereGapsMdSaysItDoes-2",
+    "command": "env ADAMIC_SELECTOR_LIBRARY=/tmp/u134/library ADAMIC_SELECTOR_BENCH=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u134/cache/timing-TestEachGapStandsWhereGapsMdSaysItDoes-2 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/selector/ -run '^TestEachGapStandsWhereGapsMdSaysItDoes$' > /workspace/adamic/review/test-audit/stage1-cohere-selector/timing-TestEachGapStandsWhereGapsMdSaysItDoes-2.log 2>&1",
+    "env": {
+      "ADAMIC_SELECTOR_LIBRARY": "/tmp/u134/library",
+      "ADAMIC_SELECTOR_BENCH": "1",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u134/cache/timing-TestEachGapStandsWhereGapsMdSaysItDoes-2"
+    },
+    "exit": 0,
+    "wall_seconds": 2.430635442999119
+  },
+  {
+    "id": "timing-TestEachGapStandsWhereGapsMdSaysItDoes-3",
+    "command": "env ADAMIC_SELECTOR_LIBRARY=/tmp/u134/library ADAMIC_SELECTOR_BENCH=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u134/cache/timing-TestEachGapStandsWhereGapsMdSaysItDoes-3 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/selector/ -run '^TestEachGapStandsWhereGapsMdSaysItDoes$' > /workspace/adamic/review/test-audit/stage1-cohere-selector/timing-TestEachGapStandsWhereGapsMdSaysItDoes-3.log 2>&1",
+    "env": {
+      "ADAMIC_SELECTOR_LIBRARY": "/tmp/u134/library",
+      "ADAMIC_SELECTOR_BENCH": "1",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u134/cache/timing-TestEachGapStandsWhereGapsMdSaysItDoes-3"
+    },
+    "exit": 0,
+    "wall_seconds": 2.3076264720002655
+  },
+  {
+    "id": "timing-TestThePortParsesAsGoCohereDoes-1",
+    "command": "env ADAMIC_SELECTOR_LIBRARY=/tmp/u134/library ADAMIC_SELECTOR_BENCH=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u134/cache/timing-TestThePortParsesAsGoCohereDoes-1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/selector/ -run '^TestThePortParsesAsGoCohereDoes$' > /workspace/adamic/review/test-audit/stage1-cohere-selector/timing-TestThePortParsesAsGoCohereDoes-1.log 2>&1",
+    "env": {
+      "ADAMIC_SELECTOR_LIBRARY": "/tmp/u134/library",
+      "ADAMIC_SELECTOR_BENCH": "1",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u134/cache/timing-TestThePortParsesAsGoCohereDoes-1"
+    },
+    "exit": 0,
+    "wall_seconds": 20.524687058999916
+  },
+  {
+    "id": "timing-TestThePortParsesAsGoCohereDoes-2",
+    "command": "env ADAMIC_SELECTOR_LIBRARY=/tmp/u134/library ADAMIC_SELECTOR_BENCH=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u134/cache/timing-TestThePortParsesAsGoCohereDoes-2 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/selector/ -run '^TestThePortParsesAsGoCohereDoes$' > /workspace/adamic/review/test-audit/stage1-cohere-selector/timing-TestThePortParsesAsGoCohereDoes-2.log 2>&1",
+    "env": {
+      "ADAMIC_SELECTOR_LIBRARY": "/tmp/u134/library",
+      "ADAMIC_SELECTOR_BENCH": "1",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u134/cache/timing-TestThePortParsesAsGoCohereDoes-2"
+    },
+    "exit": 0,
+    "wall_seconds": 18.97976959799962
+  },
+  {
+    "id": "timing-TestThePortParsesAsGoCohereDoes-3",
+    "command": "env ADAMIC_SELECTOR_LIBRARY=/tmp/u134/library ADAMIC_SELECTOR_BENCH=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u134/cache/timing-TestThePortParsesAsGoCohereDoes-3 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/selector/ -run '^TestThePortParsesAsGoCohereDoes$' > /workspace/adamic/review/test-audit/stage1-cohere-selector/timing-TestThePortParsesAsGoCohereDoes-3.log 2>&1",
+    "env": {
+      "ADAMIC_SELECTOR_LIBRARY": "/tmp/u134/library",
+      "ADAMIC_SELECTOR_BENCH": "1",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u134/cache/timing-TestThePortParsesAsGoCohereDoes-3"
+    },
+    "exit": 0,
+    "wall_seconds": 19.467717647001336
+  },
+  {
+    "id": "timing-TestSelectorThroughput-1",
+    "command": "env ADAMIC_SELECTOR_LIBRARY=/tmp/u134/library ADAMIC_SELECTOR_BENCH=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u134/cache/timing-TestSelectorThroughput-1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/selector/ -run '^TestSelectorThroughput$' > /workspace/adamic/review/test-audit/stage1-cohere-selector/timing-TestSelectorThroughput-1.log 2>&1",
+    "env": {
+      "ADAMIC_SELECTOR_LIBRARY": "/tmp/u134/library",
+      "ADAMIC_SELECTOR_BENCH": "1",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u134/cache/timing-TestSelectorThroughput-1"
+    },
+    "exit": 0,
+    "wall_seconds": 23.40794006000033
+  },
+  {
+    "id": "timing-TestSelectorThroughput-2",
+    "command": "env ADAMIC_SELECTOR_LIBRARY=/tmp/u134/library ADAMIC_SELECTOR_BENCH=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u134/cache/timing-TestSelectorThroughput-2 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/selector/ -run '^TestSelectorThroughput$' > /workspace/adamic/review/test-audit/stage1-cohere-selector/timing-TestSelectorThroughput-2.log 2>&1",
+    "env": {
+      "ADAMIC_SELECTOR_LIBRARY": "/tmp/u134/library",
+      "ADAMIC_SELECTOR_BENCH": "1",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u134/cache/timing-TestSelectorThroughput-2"
+    },
+    "exit": 0,
+    "wall_seconds": 22.538675669999066
+  },
+  {
+    "id": "timing-TestSelectorThroughput-3",
+    "command": "env ADAMIC_SELECTOR_LIBRARY=/tmp/u134/library ADAMIC_SELECTOR_BENCH=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u134/cache/timing-TestSelectorThroughput-3 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/selector/ -run '^TestSelectorThroughput$' > /workspace/adamic/review/test-audit/stage1-cohere-selector/timing-TestSelectorThroughput-3.log 2>&1",
+    "env": {
+      "ADAMIC_SELECTOR_LIBRARY": "/tmp/u134/library",
+      "ADAMIC_SELECTOR_BENCH": "1",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u134/cache/timing-TestSelectorThroughput-3"
+    },
+    "exit": 0,
+    "wall_seconds": 22.280766652998864
+  },
+  {
+    "id": "timing-TestCorpusKeepsEveryParseableFile-1",
+    "command": "env ADAMIC_SELECTOR_LIBRARY=/tmp/u134/library ADAMIC_SELECTOR_BENCH=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u134/cache/timing-TestCorpusKeepsEveryParseableFile-1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/selector/ -run '^TestCorpusKeepsEveryParseableFile$' > /workspace/adamic/review/test-audit/stage1-cohere-selector/timing-TestCorpusKeepsEveryParseableFile-1.log 2>&1",
+    "env": {
+      "ADAMIC_SELECTOR_LIBRARY": "/tmp/u134/library",
+      "ADAMIC_SELECTOR_BENCH": "1",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u134/cache/timing-TestCorpusKeepsEveryParseableFile-1"
+    },
+    "exit": 0,
+    "wall_seconds": 2.1566955449998204
+  },
+  {
+    "id": "timing-TestCorpusKeepsEveryParseableFile-2",
+    "command": "env ADAMIC_SELECTOR_LIBRARY=/tmp/u134/library ADAMIC_SELECTOR_BENCH=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u134/cache/timing-TestCorpusKeepsEveryParseableFile-2 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/selector/ -run '^TestCorpusKeepsEveryParseableFile$' > /workspace/adamic/review/test-audit/stage1-cohere-selector/timing-TestCorpusKeepsEveryParseableFile-2.log 2>&1",
+    "env": {
+      "ADAMIC_SELECTOR_LIBRARY": "/tmp/u134/library",
+      "ADAMIC_SELECTOR_BENCH": "1",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u134/cache/timing-TestCorpusKeepsEveryParseableFile-2"
+    },
+    "exit": 0,
+    "wall_seconds": 2.184756025999377
+  },
+  {
+    "id": "timing-TestCorpusKeepsEveryParseableFile-3",
+    "command": "env ADAMIC_SELECTOR_LIBRARY=/tmp/u134/library ADAMIC_SELECTOR_BENCH=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u134/cache/timing-TestCorpusKeepsEveryParseableFile-3 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/selector/ -run '^TestCorpusKeepsEveryParseableFile$' > /workspace/adamic/review/test-audit/stage1-cohere-selector/timing-TestCorpusKeepsEveryParseableFile-3.log 2>&1",
+    "env": {
+      "ADAMIC_SELECTOR_LIBRARY": "/tmp/u134/library",
+      "ADAMIC_SELECTOR_BENCH": "1",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u134/cache/timing-TestCorpusKeepsEveryParseableFile-3"
+    },
+    "exit": 0,
+    "wall_seconds": 2.207347077999657
+  },
+  {
+    "id": "timing-TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars-1",
+    "command": "env ADAMIC_SELECTOR_LIBRARY=/tmp/u134/library ADAMIC_SELECTOR_BENCH=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u134/cache/timing-TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars-1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/selector/ -run '^TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars$' > /workspace/adamic/review/test-audit/stage1-cohere-selector/timing-TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars-1.log 2>&1",
+    "env": {
+      "ADAMIC_SELECTOR_LIBRARY": "/tmp/u134/library",
+      "ADAMIC_SELECTOR_BENCH": "1",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u134/cache/timing-TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars-1"
+    },
+    "exit": 0,
+    "wall_seconds": 2.7160803349997877
+  },
+  {
+    "id": "timing-TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars-2",
+    "command": "env ADAMIC_SELECTOR_LIBRARY=/tmp/u134/library ADAMIC_SELECTOR_BENCH=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u134/cache/timing-TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars-2 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/selector/ -run '^TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars$' > /workspace/adamic/review/test-audit/stage1-cohere-selector/timing-TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars-2.log 2>&1",
+    "env": {
+      "ADAMIC_SELECTOR_LIBRARY": "/tmp/u134/library",
+      "ADAMIC_SELECTOR_BENCH": "1",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u134/cache/timing-TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars-2"
+    },
+    "exit": 0,
+    "wall_seconds": 2.863550617999863
+  },
+  {
+    "id": "timing-TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars-3",
+    "command": "env ADAMIC_SELECTOR_LIBRARY=/tmp/u134/library ADAMIC_SELECTOR_BENCH=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u134/cache/timing-TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars-3 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/selector/ -run '^TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars$' > /workspace/adamic/review/test-audit/stage1-cohere-selector/timing-TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars-3.log 2>&1",
+    "env": {
+      "ADAMIC_SELECTOR_LIBRARY": "/tmp/u134/library",
+      "ADAMIC_SELECTOR_BENCH": "1",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u134/cache/timing-TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars-3"
+    },
+    "exit": 0,
+    "wall_seconds": 2.8362782830008655
+  },
+  {
+    "id": "M1",
+    "command": "env ADAMIC_SELECTOR_LIBRARY=/tmp/u134/library ADAMIC_SELECTOR_BENCH=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u134/cache/M1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/selector/ -run . > /workspace/adamic/review/test-audit/stage1-cohere-selector/M1.log 2>&1",
+    "env": {
+      "ADAMIC_SELECTOR_LIBRARY": "/tmp/u134/library",
+      "ADAMIC_SELECTOR_BENCH": "1",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u134/cache/M1"
+    },
+    "exit": 1,
+    "wall_seconds": 40.482877250000456
+  },
+  {
+    "id": "M2",
+    "command": "env ADAMIC_SELECTOR_LIBRARY=/tmp/u134/library ADAMIC_SELECTOR_BENCH=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u134/cache/M2 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/selector/ -run . > /workspace/adamic/review/test-audit/stage1-cohere-selector/M2.log 2>&1",
+    "env": {
+      "ADAMIC_SELECTOR_LIBRARY": "/tmp/u134/library",
+      "ADAMIC_SELECTOR_BENCH": "1",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u134/cache/M2"
+    },
+    "exit": 1,
+    "wall_seconds": 28.132557191998785
+  },
+  {
+    "id": "M3",
+    "command": "env ADAMIC_SELECTOR_LIBRARY=/tmp/u134/library ADAMIC_SELECTOR_BENCH=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u134/cache/M3 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/selector/ -run . > /workspace/adamic/review/test-audit/stage1-cohere-selector/M3.log 2>&1",
+    "env": {
+      "ADAMIC_SELECTOR_LIBRARY": "/tmp/u134/library",
+      "ADAMIC_SELECTOR_BENCH": "1",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u134/cache/M3"
+    },
+    "exit": 1,
+    "wall_seconds": 39.856537431000106
+  },
+  {
+    "id": "M4",
+    "command": "env ADAMIC_SELECTOR_LIBRARY=/tmp/u134/library ADAMIC_SELECTOR_BENCH=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u134/cache/M4 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/selector/ -run . > /workspace/adamic/review/test-audit/stage1-cohere-selector/M4.log 2>&1",
+    "env": {
+      "ADAMIC_SELECTOR_LIBRARY": "/tmp/u134/library",
+      "ADAMIC_SELECTOR_BENCH": "1",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u134/cache/M4"
+    },
+    "exit": 1,
+    "wall_seconds": 47.601139423999484
+  },
+  {
+    "id": "P1",
+    "command": "env ADAMIC_SELECTOR_LIBRARY=/tmp/u134/library ADAMIC_SELECTOR_BENCH=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u134/cache/P1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/selector/ -run . > /workspace/adamic/review/test-audit/stage1-cohere-selector/P1.log 2>&1",
+    "env": {
+      "ADAMIC_SELECTOR_LIBRARY": "/tmp/u134/library",
+      "ADAMIC_SELECTOR_BENCH": "1",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u134/cache/P1"
+    },
+    "exit": 1,
+    "wall_seconds": 20.920840079999834
+  },
+  {
+    "id": "P2",
+    "command": "env ADAMIC_SELECTOR_LIBRARY=/tmp/u134/library ADAMIC_SELECTOR_BENCH=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u134/cache/P2 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/selector/ -run . > /workspace/adamic/review/test-audit/stage1-cohere-selector/P2.log 2>&1",
+    "env": {
+      "ADAMIC_SELECTOR_LIBRARY": "/tmp/u134/library",
+      "ADAMIC_SELECTOR_BENCH": "1",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u134/cache/P2"
+    },
+    "exit": 1,
+    "wall_seconds": 0.23699964700062992,
+    "invalid_draft": true,
+    "note": "Unused-import compile failure; not a vacuity result. Corrected reruns in validation.json and replacement P2 logs."
+  },
+  {
+    "id": "P2-TestEachGapStandsWhereGapsMdSaysItDoes",
+    "command": "env ADAMIC_SELECTOR_LIBRARY=/tmp/u134/library ADAMIC_SELECTOR_BENCH=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u134/cache/P2-TestEachGapStandsWhereGapsMdSaysItDoes timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/selector/ -run '^TestEachGapStandsWhereGapsMdSaysItDoes$' > /workspace/adamic/review/test-audit/stage1-cohere-selector/P2-TestEachGapStandsWhereGapsMdSaysItDoes.log 2>&1",
+    "env": {
+      "ADAMIC_SELECTOR_LIBRARY": "/tmp/u134/library",
+      "ADAMIC_SELECTOR_BENCH": "1",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u134/cache/P2-TestEachGapStandsWhereGapsMdSaysItDoes"
+    },
+    "exit": 1,
+    "wall_seconds": 0.24456662999909895,
+    "invalid_draft": true,
+    "note": "Unused-import compile failure; not a vacuity result. Corrected reruns in validation.json and replacement P2 logs."
+  },
+  {
+    "id": "P2-TestThePortParsesAsGoCohereDoes",
+    "command": "env ADAMIC_SELECTOR_LIBRARY=/tmp/u134/library ADAMIC_SELECTOR_BENCH=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u134/cache/P2-TestThePortParsesAsGoCohereDoes timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/selector/ -run '^TestThePortParsesAsGoCohereDoes$' > /workspace/adamic/review/test-audit/stage1-cohere-selector/P2-TestThePortParsesAsGoCohereDoes.log 2>&1",
+    "env": {
+      "ADAMIC_SELECTOR_LIBRARY": "/tmp/u134/library",
+      "ADAMIC_SELECTOR_BENCH": "1",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u134/cache/P2-TestThePortParsesAsGoCohereDoes"
+    },
+    "exit": 1,
+    "wall_seconds": 0.2539673529990978,
+    "invalid_draft": true,
+    "note": "Unused-import compile failure; not a vacuity result. Corrected reruns in validation.json and replacement P2 logs."
+  },
+  {
+    "id": "P2-TestSelectorThroughput",
+    "command": "env ADAMIC_SELECTOR_LIBRARY=/tmp/u134/library ADAMIC_SELECTOR_BENCH=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u134/cache/P2-TestSelectorThroughput timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/selector/ -run '^TestSelectorThroughput$' > /workspace/adamic/review/test-audit/stage1-cohere-selector/P2-TestSelectorThroughput.log 2>&1",
+    "env": {
+      "ADAMIC_SELECTOR_LIBRARY": "/tmp/u134/library",
+      "ADAMIC_SELECTOR_BENCH": "1",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u134/cache/P2-TestSelectorThroughput"
+    },
+    "exit": 1,
+    "wall_seconds": 0.25231071100097324,
+    "invalid_draft": true,
+    "note": "Unused-import compile failure; not a vacuity result. Corrected reruns in validation.json and replacement P2 logs."
+  },
+  {
+    "id": "P2-TestCorpusKeepsEveryParseableFile",
+    "command": "env ADAMIC_SELECTOR_LIBRARY=/tmp/u134/library ADAMIC_SELECTOR_BENCH=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u134/cache/P2-TestCorpusKeepsEveryParseableFile timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/selector/ -run '^TestCorpusKeepsEveryParseableFile$' > /workspace/adamic/review/test-audit/stage1-cohere-selector/P2-TestCorpusKeepsEveryParseableFile.log 2>&1",
+    "env": {
+      "ADAMIC_SELECTOR_LIBRARY": "/tmp/u134/library",
+      "ADAMIC_SELECTOR_BENCH": "1",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u134/cache/P2-TestCorpusKeepsEveryParseableFile"
+    },
+    "exit": 1,
+    "wall_seconds": 0.24035800199999358,
+    "invalid_draft": true,
+    "note": "Unused-import compile failure; not a vacuity result. Corrected reruns in validation.json and replacement P2 logs."
+  },
+  {
+    "id": "P2-TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars",
+    "command": "env ADAMIC_SELECTOR_LIBRARY=/tmp/u134/library ADAMIC_SELECTOR_BENCH=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u134/cache/P2-TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/selector/ -run '^TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars$' > /workspace/adamic/review/test-audit/stage1-cohere-selector/P2-TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars.log 2>&1",
+    "env": {
+      "ADAMIC_SELECTOR_LIBRARY": "/tmp/u134/library",
+      "ADAMIC_SELECTOR_BENCH": "1",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u134/cache/P2-TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars"
+    },
+    "exit": 1,
+    "wall_seconds": 0.2597193649999099,
+    "invalid_draft": true,
+    "note": "Unused-import compile failure; not a vacuity result. Corrected reruns in validation.json and replacement P2 logs."
+  },
+  {
+    "id": "W1",
+    "command": "env ADAMIC_SELECTOR_LIBRARY=/tmp/u134/library ADAMIC_SELECTOR_BENCH=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u134/cache/W1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/selector/ -run '^TestThePortParsesAsGoCohereDoes$' > /workspace/adamic/review/test-audit/stage1-cohere-selector/W1.log 2>&1",
+    "env": {
+      "ADAMIC_SELECTOR_LIBRARY": "/tmp/u134/library",
+      "ADAMIC_SELECTOR_BENCH": "1",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u134/cache/W1"
+    },
+    "exit": 1,
+    "wall_seconds": 21.273162415000115
+  },
+  {
+    "id": "S1",
+    "command": "env ADAMIC_SELECTOR_LIBRARY=/tmp/u134/library ADAMIC_SELECTOR_BENCH=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u134/cache/S1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/selector/ -run '^TestCorpusKeepsEveryParseableFile$' > /workspace/adamic/review/test-audit/stage1-cohere-selector/S1.log 2>&1",
+    "env": {
+      "ADAMIC_SELECTOR_LIBRARY": "/tmp/u134/library",
+      "ADAMIC_SELECTOR_BENCH": "1",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u134/cache/S1"
+    },
+    "exit": 1,
+    "wall_seconds": 1.9930571330005478
+  },
+  {
+    "id": "S2",
+    "command": "env ADAMIC_SELECTOR_LIBRARY=/tmp/u134/library ADAMIC_SELECTOR_BENCH=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u134/cache/S2 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/selector/ -run '^TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars$' > /workspace/adamic/review/test-audit/stage1-cohere-selector/S2.log 2>&1",
+    "env": {
+      "ADAMIC_SELECTOR_LIBRARY": "/tmp/u134/library",
+      "ADAMIC_SELECTOR_BENCH": "1",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u134/cache/S2"
+    },
+    "exit": 1,
+    "wall_seconds": 1.9050685490001342
+  },
+  {
+    "id": "P3",
+    "command": "env ADAMIC_SELECTOR_LIBRARY=/tmp/u134/library ADAMIC_SELECTOR_BENCH=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u134/cache/P3 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/selector/ -run '^TestCorpusKeepsEveryParseableFile$' > /workspace/adamic/review/test-audit/stage1-cohere-selector/P3.log 2>&1",
+    "env": {
+      "ADAMIC_SELECTOR_LIBRARY": "/tmp/u134/library",
+      "ADAMIC_SELECTOR_BENCH": "1",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u134/cache/P3"
+    },
+    "exit": 1,
+    "wall_seconds": 1.858123756999703
+  },
+  {
+    "id": "P4",
+    "command": "env ADAMIC_SELECTOR_LIBRARY=/tmp/u134/library ADAMIC_SELECTOR_BENCH=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u134/cache/P4 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/selector/ -run '^TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars$' > /workspace/adamic/review/test-audit/stage1-cohere-selector/P4.log 2>&1",
+    "env": {
+      "ADAMIC_SELECTOR_LIBRARY": "/tmp/u134/library",
+      "ADAMIC_SELECTOR_BENCH": "1",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u134/cache/P4"
+    },
+    "exit": 1,
+    "wall_seconds": 1.9226045909999812
+  }
+]

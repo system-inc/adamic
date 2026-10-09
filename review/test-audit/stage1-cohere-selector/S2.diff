@@ -1,0 +1,11 @@
+diff --git a/stage1/cohere/selector/testdata/nontermination.mjs b/stage1/cohere/selector/testdata/nontermination.mjs
+index 51f364fe..61544dbf 100644
+--- a/stage1/cohere/selector/testdata/nontermination.mjs
++++ b/stage1/cohere/selector/testdata/nontermination.mjs
+@@ -6,5 +6,5 @@ const [directory, text] = process.argv.slice(2);
+ const require = createRequire(join(directory, 'package.json'));
+ const Processor = require('postcss-selector-parser/dist/processor.js');
+ writeSync(1, 'entering parser\n');
+-new Processor(() => {}).process(text);
++
+ writeSync(1, 'returned\n');

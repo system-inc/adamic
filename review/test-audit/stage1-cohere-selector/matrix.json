@@ -1,0 +1,59 @@
+[
+  {
+    "id": "M1",
+    "failed": [
+      "TestThePortParsesAsGoCohereDoes"
+    ],
+    "bounded": false,
+    "matrix_rows": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes",
+      "TestThePortParsesAsGoCohereDoes",
+      "TestSelectorThroughput",
+      "TestCorpusKeepsEveryParseableFile",
+      "TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars"
+    ]
+  },
+  {
+    "id": "M2",
+    "failed": [
+      "TestSelectorThroughput",
+      "TestThePortParsesAsGoCohereDoes"
+    ],
+    "bounded": false,
+    "matrix_rows": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes",
+      "TestThePortParsesAsGoCohereDoes",
+      "TestSelectorThroughput",
+      "TestCorpusKeepsEveryParseableFile",
+      "TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars"
+    ]
+  },
+  {
+    "id": "M3",
+    "failed": [
+      "TestThePortParsesAsGoCohereDoes"
+    ],
+    "bounded": false,
+    "matrix_rows": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes",
+      "TestThePortParsesAsGoCohereDoes",
+      "TestSelectorThroughput",
+      "TestCorpusKeepsEveryParseableFile",
+      "TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars"
+    ]
+  },
+  {
+    "id": "M4",
+    "failed": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes"
+    ],
+    "bounded": false,
+    "matrix_rows": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes",
+      "TestThePortParsesAsGoCohereDoes",
+      "TestSelectorThroughput",
+      "TestCorpusKeepsEveryParseableFile",
+      "TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars"
+    ]
+  }
+]

@@ -1,0 +1,12 @@
+diff --git a/stage1/cohere/selector/parser.ts b/stage1/cohere/selector/parser.ts
+index 9316537d..51423862 100644
+--- a/stage1/cohere/selector/parser.ts
++++ b/stage1/cohere/selector/parser.ts
+@@ -25,7 +25,6 @@ class Parser {
+         const root = new SelectorNode('root', undefined, undefined, undefined);
+         const selector = new SelectorNode('selector', undefined, undefined, undefined);
+         selector.parent = 0;
+-        root.children.push(1);
+         this.nodes.push(root);
+         this.nodes.push(selector);
+     }

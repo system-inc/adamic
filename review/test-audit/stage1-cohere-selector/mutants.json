@@ -1,0 +1,47 @@
+[
+  {
+    "id": "M1",
+    "file": "stage1/cohere/selector/tokenize.ts",
+    "old": "let line = 1;",
+    "new": "let line = 2;",
+    "menu": "change constant",
+    "line": 67,
+    "failed": [
+      "TestThePortParsesAsGoCohereDoes"
+    ]
+  },
+  {
+    "id": "M2",
+    "file": "stage1/cohere/selector/parser.ts",
+    "old": "        root.children.push(1);\n",
+    "new": "",
+    "menu": "drop statement",
+    "line": 28,
+    "failed": [
+      "TestSelectorThroughput",
+      "TestThePortParsesAsGoCohereDoes"
+    ]
+  },
+  {
+    "id": "M3",
+    "file": "stage1/cohere/selector/nodes.ts",
+    "old": "if(code === 34) {",
+    "new": "if(code === 35) {",
+    "menu": "change constant",
+    "line": 42,
+    "failed": [
+      "TestThePortParsesAsGoCohereDoes"
+    ]
+  },
+  {
+    "id": "M4",
+    "file": "internal/lower/object.go",
+    "old": "push with other than one value",
+    "new": "push with other than two values",
+    "menu": "change constant",
+    "line": 1266,
+    "failed": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes"
+    ]
+  }
+]
