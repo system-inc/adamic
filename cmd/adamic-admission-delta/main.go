@@ -194,6 +194,9 @@ func run(args []string) error {
 		return err
 	}
 	defer git(root, "worktree", "remove", "--force", headTree)
+	if err = prepareCheckout(headTree); err != nil {
+		return err
+	}
 	build := func(sha, name, supplied string) (string, error) {
 		if supplied != "" {
 			return filepath.Abs(supplied)
