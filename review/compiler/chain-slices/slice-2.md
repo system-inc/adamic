@@ -73,9 +73,12 @@ containment from the isolated original runtime fault. Source code was never left
 nproc=5; cgroup quota is four CPUs. Initial setup reported Go 0.085s, Node 0.087s,
 clang 0.522s, markdown 2.026s, submodules 26.500s, shared cache 34.676s. Its bounded
 240-second attempt did not reach build/done lines. The environment file was usable;
-focused builds warmed compiler dependencies. The retry log records final setup state.
-The integration lane command runs on the committed branch and is saved in
-../chain-slice-2/lane-checks.log. Git diff --check passes.
+focused builds warmed compiler dependencies. Retry completed successfully: Node 0.032s, Go 0.034s, markdown 0.092s, submodules 0.095s, clang 0.213s, shared cache 12.971s, go build 68.375s, cache warm 68.503s, done 68.538s. Its full timing output is in setup-retry.log within logs.tar.gz.
+The integration lane command ran on the committed branch and passed:
+`lane checks 13.1 s: gofmt and tools on 23 Go files, t.Parallel on 6 test packages; vet skipped, over 10 s`.
+The complete output is lane-checks.log in logs.tar.gz. A separate bounded vet command
+covers internal/lower, internal/native, internal/ir, internal/flow, internal/fresh,
+internal/oracle and stage3/fixtures. It exited 0 with no diagnostics. Git diff --check passes.
 
 No code was copied from cohere. No protected orchestration file changed. The delivery
 advances #wj4pmt1's independent green slice work; the supplied brief does not assign
