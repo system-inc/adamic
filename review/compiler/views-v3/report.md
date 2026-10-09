@@ -34,3 +34,5 @@ Tool setup: node 0.022s, Go 0.024s, markdown step 0.011s/ready 0.071s, clang 0.1
 Not covered: differing-storage indexed array union boxing; boolean|undefined array producers (existing frontend refusal). No V4/V5 re-skips needed. No non-view runtime files changed. Evidence is confined to review/compiler/views-v3/. Integration lane check follows the committed implementation.
 
 Counts: go test ./internal/oracle -run "^TestCountsAreRecorded$" -args -update-counts passed (76.400s package); counts.md unchanged, zero moved rows. This existing census test was not added or touched.
+
+Committed implementation b6093b70c: integration lane checks passed after the exact repository-root fetch/show command. Output: `lane checks 10.0 s: gofmt and tools on 56 Go files, t.Parallel on 6 test packages; no t.Parallel analyzer on this tree; vet 6 packages`. Each added or touched test function has t.Parallel first; the analyzer absence is reported rather than treated as validation by an analyzer.
