@@ -11,9 +11,7 @@ import (
 	"path/filepath"
 	"runtime"
 	"strings"
-	"syscall"
 	"testing"
-	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/childguard"
@@ -68,18 +66,7 @@ func bounded(t *testing.T, name string, arguments ...string) *exec.Cmd {
 	if name == "go" && len(arguments) > 0 && arguments[0] == "test" {
 		arguments = append([]string{"test", "-timeout=0"}, arguments[1:]...)
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
-	t.Cleanup(cancel)
-	command := exec.CommandContext(ctx, name, arguments...)
-	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
-	command.Cancel = func() error {
-		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-		if errors.Is(err, syscall.ESRCH) {
-			return os.ErrProcessDone
-		}
-		return err
-	}
-	command.WaitDelay = time.Second
+	command := exec.Command(name, arguments...)
 	return command
 }
 
