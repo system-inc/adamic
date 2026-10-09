@@ -1,0 +1,57 @@
+=== RUN   TestFX7WrongAbortP17
+=== PAUSE TestFX7WrongAbortP17
+=== RUN   TestFX7WrongAbortP18
+=== PAUSE TestFX7WrongAbortP18
+=== RUN   TestFX7WrongAbortP20
+=== PAUSE TestFX7WrongAbortP20
+=== RUN   TestFX7WrongAbortP26
+=== PAUSE TestFX7WrongAbortP26
+=== RUN   TestFX7WrongAbortP33
+=== PAUSE TestFX7WrongAbortP33
+=== RUN   TestFX7WrongAbortP34
+=== PAUSE TestFX7WrongAbortP34
+=== RUN   TestFX7WrongAbortP35
+=== PAUSE TestFX7WrongAbortP35
+=== RUN   TestFX7WrongAbortP68
+=== PAUSE TestFX7WrongAbortP68
+=== RUN   TestFX7WrongAbortP69
+=== PAUSE TestFX7WrongAbortP69
+=== CONT  TestFX7WrongAbortP17
+=== CONT  TestFX7WrongAbortP34
+=== CONT  TestFX7WrongAbortP68
+=== CONT  TestFX7WrongAbortP35
+=== CONT  TestFX7WrongAbortP26
+=== NAME  TestFX7WrongAbortP68
+    fx7_wrong_aborts_test.go:76: JavaScript backend stdout = "", source Node = "first:1\n"
+--- FAIL: TestFX7WrongAbortP68 (0.46s)
+=== CONT  TestFX7WrongAbortP33
+=== NAME  TestFX7WrongAbortP17
+    fx7_wrong_aborts_test.go:22: Native backend stdout = "", source Node = "16:109\n"
+--- FAIL: TestFX7WrongAbortP17 (1.60s)
+=== CONT  TestFX7WrongAbortP69
+=== NAME  TestFX7WrongAbortP26
+    fx7_wrong_aborts_test.go:46: Native backend stdout = "", source Node = "true\n2\n"
+--- FAIL: TestFX7WrongAbortP26 (1.61s)
+=== CONT  TestFX7WrongAbortP20
+=== NAME  TestFX7WrongAbortP34
+    fx7_wrong_aborts_test.go:62: Native backend stdout = "", source Node = "3\n"
+=== NAME  TestFX7WrongAbortP35
+    fx7_wrong_aborts_test.go:70: Native backend stdout = "", source Node = "3\n"
+--- FAIL: TestFX7WrongAbortP35 (1.63s)
+=== CONT  TestFX7WrongAbortP18
+--- FAIL: TestFX7WrongAbortP34 (1.63s)
+=== NAME  TestFX7WrongAbortP33
+    fx7_wrong_aborts_test.go:54: Native backend stdout = "", source Node = "1\n"
+--- FAIL: TestFX7WrongAbortP33 (1.28s)
+=== NAME  TestFX7WrongAbortP69
+    fx7_wrong_aborts_test.go:84: JavaScript backend stdout = "", source Node = "true\n"
+--- FAIL: TestFX7WrongAbortP69 (0.35s)
+=== NAME  TestFX7WrongAbortP20
+    fx7_wrong_aborts_test.go:38: Native backend stdout = "", source Node = "3\n12\n"
+--- FAIL: TestFX7WrongAbortP20 (0.82s)
+=== NAME  TestFX7WrongAbortP18
+    fx7_wrong_aborts_test.go:30: Native backend stdout = "", source Node = "8\n"
+--- FAIL: TestFX7WrongAbortP18 (0.84s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	2.480s
+FAIL

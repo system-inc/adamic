@@ -450,6 +450,9 @@ func (e *emitter) fieldTypesNeeded() bool {
 	}
 	needed := false
 	walkExpressions(e.program, func(expression ir.Expression) {
+		if cast, ok := expression.(ir.CheckedCast); ok && cast.CheckedFields {
+			needed = true
+		}
 		if property, ok := expression.(ir.Property); ok && property.View != "" {
 			needed = true
 		}
