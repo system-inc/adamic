@@ -28,7 +28,7 @@ adamic_object *adamic_object_copy_checked(const adamic_object *source, const cha
 		adamic_slot_cache cache = {NULL, 0};
 		const adamic_accessor *accessor = adamic_accessor_find(source, shape->names[index]);
 		object->slots[index] = accessor == NULL ? *(expression == NULL ? adamic_object_field(source, shape->names[index], &cache) : adamic_object_read(source, shape->names[index], &cache, expression)) : adamic_accessor_get((adamic_object *)source, shape->names[index]);
-		if (adamic_thrown != NULL) {
+		if (accessor != NULL && adamic_thrown != NULL) {
 			adamic_release(object);
 			return NULL;
 		}

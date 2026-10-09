@@ -1,0 +1,58 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_first.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_first.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_middle.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_middle.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_last.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_last.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_first.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_last.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_middle.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_last.a
+    oracle_test.go:788: leaks:
+        exit 1
+        
+        =================================================================
+        ==92274==ERROR: LeakSanitizer: detected memory leaks
+        
+        Direct leak of 376 byte(s) in 5 object(s) allocated from:
+            #0 0x55f2cb4a2274 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3
+            #1 0x55f2cb4f989f in adamic_allocate /home/agent/.cache/adamic/runtime/.build-2363948594/heap.c:196:10
+        
+        SUMMARY: AddressSanitizer: 376 byte(s) leaked in 5 allocation(s).
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_first.a
+    oracle_test.go:788: leaks:
+        exit 1
+        
+        =================================================================
+        ==92278==ERROR: LeakSanitizer: detected memory leaks
+        
+        Direct leak of 225 byte(s) in 3 object(s) allocated from:
+            #0 0x55bb6cbc8274 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3
+            #1 0x55bb6cc1f89f in adamic_allocate /home/agent/.cache/adamic/runtime/.build-2363948594/heap.c:196:10
+        
+        SUMMARY: AddressSanitizer: 225 byte(s) leaked in 3 allocation(s).
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_middle.a
+    oracle_test.go:788: leaks:
+        exit 1
+        
+        =================================================================
+        ==92280==ERROR: LeakSanitizer: detected memory leaks
+        
+        Direct leak of 300 byte(s) in 4 object(s) allocated from:
+            #0 0x56318a52e274 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3
+            #1 0x56318a58589f in adamic_allocate /home/agent/.cache/adamic/runtime/.build-2363948594/heap.c:196:10
+        
+        SUMMARY: AddressSanitizer: 300 byte(s) leaked in 4 allocation(s).
+--- FAIL: TestNativeAgreesWithNode (0.02s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_last.a (19.32s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_first.a (19.33s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_middle.a (19.33s)
+FAIL
+gate cache: native hits=0 misses=9
+gate cache: node hits=0 misses=6
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	19.366s
+FAIL

@@ -1,0 +1,5 @@
+Runtime approved follow-up to 552ff0d1: object.c line 31 now short-circuits the pending-exception load when accessor == NULL. This is the only production-source change.
+
+First, middle and last throwing witnesses pass uncached Node source, JavaScript backend, native ASan/UBSan, release and LSan checks (19.90, 19.89 and 19.89 seconds). Plain-data emitted C is byte-identical to both main and the cleared tip, checked by cmp. All 12 prior mutants were rerun and caught; summary.json records them. Owned-return/trailing-slot instrumentation and accessor-on-main-alone also pass. All mutant sources were restored.
+
+Commands: ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run the four accessor/plain-data fixture leaves -count=1 -timeout=90s -v; go build ./cmd/adamic; adamic c plain_data_spread.a and two cmp checks; the three recorded Python mutant runners with hard limits; go test with accessor-leaf-overlay.json -run TestClassFeaturesThrowingAccessorSpread -count=1 -timeout=90s -v. No counts update or fixture changes were needed. Lane output is in lane.log.

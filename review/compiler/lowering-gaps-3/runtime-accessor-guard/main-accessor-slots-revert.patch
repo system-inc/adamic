@@ -1,0 +1,10 @@
+--- internal/native/runtime/object.c
++++ internal/native/runtime/object.c
+@@ -13,7 +13,6 @@
+ 	object->class = NULL;
+ 	object->frozen = false;
+ 	object->tuple = false;
+-	memset(object->slots, 0, shape->count * sizeof object->slots[0]);
+ 	memset(adamic_object_initialized(object), 1, shape->count);
+ 	memset(adamic_object_field_types(object), 0, shape->count);
+ 	return object;

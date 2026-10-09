@@ -1,0 +1,11 @@
+--- internal/lower/class_accessors.go
++++ internal/lower/class_accessors.go
+@@ -387,7 +387,7 @@
+ 	check := func(node any) bool {
+ 		if literal, ok := node.(ir.ObjectLiteral); ok && literal.Spread != nil {
+ 			spread = true
+-			staticSpread = staticSpread || !plainDataSpreadSource(literal.Spread)
++			staticSpread = true
+ 		}
+ 		return true
+ 	}

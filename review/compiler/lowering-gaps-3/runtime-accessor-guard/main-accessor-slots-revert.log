@@ -1,0 +1,47 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_first.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_first.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_middle.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_middle.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_last.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_last.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_first.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_last.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_middle.a
+    oracle_test.go:759: the release build: exit codes differ
+        sanitized: exit 1, stdout "", stderr "/home/agent/.cache/adamic/runtime/.build-1124844677/class_inheritance.c:27:30: runtime error: member access within misaligned address 0xbebebebebebebebe for type 'adamic_heap' (aka 'struct adamic_heap'), which requires 8 byte alignment\n0xbebebebebebebebe: note: pointer points here\n<memory cannot be printed>\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/agent/.cache/adamic/runtime/.build-1124844677/class_inheritance.c:27:30 \n"
+        release:   exit 0, stdout "get first\nget middle\nfailure1\nafter\nget first\nget middle\nget last\nownedfirst3ownedmiddle3ownedlast3\nafter\n", stderr ""
+    oracle_test.go:775: exit codes differ
+        node:   exit 0, stdout "get first\nget middle\nfailure1\nafter\nget first\nget middle\nget last\nownedfirst3ownedmiddle3ownedlast3\nafter\n", stderr ""
+        native: exit 1, stdout "", stderr "/home/agent/.cache/adamic/runtime/.build-1124844677/class_inheritance.c:27:30: runtime error: member access within misaligned address 0xbebebebebebebebe for type 'adamic_heap' (aka 'struct adamic_heap'), which requires 8 byte alignment\n0xbebebebebebebebe: note: pointer points here\n<memory cannot be printed>\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/agent/.cache/adamic/runtime/.build-1124844677/class_inheritance.c:27:30 \n"
+    oracle_test.go:788: leaks:
+        exit 1
+        /home/agent/.cache/adamic/runtime/.build-1124844677/class_inheritance.c:27:30: runtime error: member access within misaligned address 0xbebebebebebebebe for type 'adamic_heap' (aka 'struct adamic_heap'), which requires 8 byte alignment
+        0xbebebebebebebebe: note: pointer points here
+        <memory cannot be printed>
+        SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/agent/.cache/adamic/runtime/.build-1124844677/class_inheritance.c:27:30 
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_first.a
+    oracle_test.go:759: the release build: exit codes differ
+        sanitized: exit 1, stdout "", stderr "/home/agent/.cache/adamic/runtime/.build-1124844677/class_inheritance.c:27:30: runtime error: member access within misaligned address 0xbebebebebebebebe for type 'adamic_heap' (aka 'struct adamic_heap'), which requires 8 byte alignment\n0xbebebebebebebebe: note: pointer points here\n<memory cannot be printed>\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/agent/.cache/adamic/runtime/.build-1124844677/class_inheritance.c:27:30 \n"
+        release:   exit 0, stdout "get first\nfailure0\nafter\nget first\nget middle\nget last\nownedfirst3ownedmiddle3ownedlast3\nafter\n", stderr ""
+    oracle_test.go:775: exit codes differ
+        node:   exit 0, stdout "get first\nfailure0\nafter\nget first\nget middle\nget last\nownedfirst3ownedmiddle3ownedlast3\nafter\n", stderr ""
+        native: exit 1, stdout "", stderr "/home/agent/.cache/adamic/runtime/.build-1124844677/class_inheritance.c:27:30: runtime error: member access within misaligned address 0xbebebebebebebebe for type 'adamic_heap' (aka 'struct adamic_heap'), which requires 8 byte alignment\n0xbebebebebebebebe: note: pointer points here\n<memory cannot be printed>\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/agent/.cache/adamic/runtime/.build-1124844677/class_inheritance.c:27:30 \n"
+    oracle_test.go:788: leaks:
+        exit 1
+        /home/agent/.cache/adamic/runtime/.build-1124844677/class_inheritance.c:27:30: runtime error: member access within misaligned address 0xbebebebebebebebe for type 'adamic_heap' (aka 'struct adamic_heap'), which requires 8 byte alignment
+        0xbebebebebebebebe: note: pointer points here
+        <memory cannot be printed>
+        SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/agent/.cache/adamic/runtime/.build-1124844677/class_inheritance.c:27:30 
+--- FAIL: TestNativeAgreesWithNode (0.02s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_middle.a (19.35s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_last.a (19.36s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/accessor_spread_throw_first.a (19.36s)
+FAIL
+gate cache: native hits=0 misses=9
+gate cache: node hits=0 misses=6
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	19.394s
+FAIL
