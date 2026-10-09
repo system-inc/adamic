@@ -1,4 +1,2 @@
-idle preemption: 0 marked, 0 survivors in their sessions, 4 ms
-FIRST FAILURE (wasi/TestWASIUnit03, at 30.0 s):
 {"name": "TestWASIUnit03", "command": ["go", "test", "-count=1", "-json", "-timeout", "3h", "-p", "1", "-parallel", "1", "-run", "^TestWASIUnit03$", "./internal/native"], "status": "failed", "scratch": "/home/cloud/full-gate/out/c9df51ed6949-20261009T064632Z/wasi-units/03-3qvbbhfr", "exit": 0, "ok": false, "test": "TestWASIUnit03", "unexpected": ["TestWASIUnit03/internal/load/testdata/0.1/compile/04_closures.ts"], "passed": true, "wall_seconds": 24.648572, "over_budget": false}
 (box load 28.7 on 64 cores at first failure)
