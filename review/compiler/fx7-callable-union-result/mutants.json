@@ -1,0 +1,100 @@
+[
+  {
+    "fixture": "number",
+    "node": {
+      "exit": 0,
+      "stdout": "6\n"
+    },
+    "initial_build_without_runtime": {
+      "exit": 1,
+      "stderr": "/usr/bin/ld: /tmp/adamic-gate/fx7-number-mutant-19f942.o: in function `main':\nfx7-number-mutant.c:(.text+0x10): undefined reference to `adamic_start'\n/usr/bin/ld: fx7-number-mutant.c:(.text+0x21): undefined reference to `adamic_closure_new'\n/usr/bin/ld: fx7-number-mutant.c:(.text+0x34): undefined reference to `adamic_release'\n/usr/bin/ld: fx7-number-mutant.c:(.text+0x40): undefined reference to `adamic_retain'\n/usr/bin/ld: fx7-number-mutant.c:(.text+0x4a): undefined reference to `adamic_stack_limit'\n/usr/bin/ld: fx7-number-mutant.c:(.text+0x7f): undefined reference to `adamic_union_to_string'\n/usr/bin/ld: fx7-number-mutant.c:(.text+0x94): undefined reference to `adamic_string_concat'\n/usr/bin/ld: fx7-number-mutant.c:(.text+0xa4): undefined reference to `adamic_write_line'\n/usr/bin/ld: fx7-number-mutant.c:(.text+0xac): undefined reference to `adamic_release'\n/usr/bin/ld: fx7-number-mutant.c:(.text+0xb4): undefined reference to `adamic_release'\n/usr/bin/ld: fx7-number-mutant.c:(.text+0xbc): undefined reference to `adamic_release'\n/usr/bin/ld: fx7-number-mutant.c:(.text+0xc4): undefined reference to `adamic_release'\n/usr/bin/ld: fx7-number-mutant.c:(.text+0xd0): undefined reference to `adamic_release'\n/usr/bin/ld: fx7-number-mutant.c:(.text+0xef): undefined reference to `adamic_stack_overflow'\n/usr/bin/ld: fx7-number-mutant.c:(.text+0xf4): undefined reference to `adamic_unreachable'\n/usr/bin/ld: /tmp/adamic-gate/fx7-number-mutant-19f942.o: in function `adamic_function_1_closure':\nfx7-number-mutant.c:(.text+0x107): undefined reference to `adamic_stack_limit'\n/usr/bin/ld: fx7-number-mutant.c:(.text+0x124): undefined reference to `adamic_stack_overflow'\nclang: error: linker command failed with exit code 1 (use -v to see invocation)\n"
+    },
+    "mutant_build": {
+      "exit": 0,
+      "stderr": "",
+      "command": [
+        "clang",
+        "-std=c11",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-Wcast-function-type-strict",
+        "-pedantic",
+        "-O2",
+        "-ffp-contract=off",
+        "-fno-optimize-sibling-calls",
+        "-I/home/agent/.cache/adamic/runtime/092f927d904b310f1a341208c0f3aeec8c9904e497df88d0c0c72128f695dfc0",
+        "/tmp/fx7-number-mutant.c",
+        "-Xlinker",
+        "--whole-archive",
+        "/home/agent/.cache/adamic/runtime/092f927d904b310f1a341208c0f3aeec8c9904e497df88d0c0c72128f695dfc0/runtime.a",
+        "-Xlinker",
+        "--no-whole-archive",
+        "-lm",
+        "-o",
+        "/tmp/fx7-number-mutant"
+      ]
+    },
+    "mutant": {
+      "exit": -11,
+      "stdout": "",
+      "stderr": ""
+    }
+  },
+  {
+    "fixture": "string",
+    "node": {
+      "exit": 0,
+      "stdout": "value:5\n"
+    }
+  },
+  {
+    "fixture": "zero",
+    "node": {
+      "exit": 0,
+      "stdout": "0\n"
+    },
+    "initial_build_without_runtime": {
+      "exit": 1,
+      "stderr": "/usr/bin/ld: /tmp/adamic-gate/fx7-zero-mutant-c100c5.o: in function `main':\nfx7-zero-mutant.c:(.text+0x10): undefined reference to `adamic_start'\n/usr/bin/ld: fx7-zero-mutant.c:(.text+0x21): undefined reference to `adamic_closure_new'\n/usr/bin/ld: fx7-zero-mutant.c:(.text+0x34): undefined reference to `adamic_release'\n/usr/bin/ld: fx7-zero-mutant.c:(.text+0x40): undefined reference to `adamic_retain'\n/usr/bin/ld: fx7-zero-mutant.c:(.text+0x4a): undefined reference to `adamic_stack_limit'\n/usr/bin/ld: fx7-zero-mutant.c:(.text+0x7f): undefined reference to `adamic_union_to_string'\n/usr/bin/ld: fx7-zero-mutant.c:(.text+0x94): undefined reference to `adamic_string_concat'\n/usr/bin/ld: fx7-zero-mutant.c:(.text+0xa4): undefined reference to `adamic_write_line'\n/usr/bin/ld: fx7-zero-mutant.c:(.text+0xac): undefined reference to `adamic_release'\n/usr/bin/ld: fx7-zero-mutant.c:(.text+0xb4): undefined reference to `adamic_release'\n/usr/bin/ld: fx7-zero-mutant.c:(.text+0xbc): undefined reference to `adamic_release'\n/usr/bin/ld: fx7-zero-mutant.c:(.text+0xc4): undefined reference to `adamic_release'\n/usr/bin/ld: fx7-zero-mutant.c:(.text+0xd0): undefined reference to `adamic_release'\n/usr/bin/ld: fx7-zero-mutant.c:(.text+0xef): undefined reference to `adamic_stack_overflow'\n/usr/bin/ld: fx7-zero-mutant.c:(.text+0xf4): undefined reference to `adamic_unreachable'\n/usr/bin/ld: /tmp/adamic-gate/fx7-zero-mutant-c100c5.o: in function `adamic_function_1_closure':\nfx7-zero-mutant.c:(.text+0x107): undefined reference to `adamic_stack_limit'\n/usr/bin/ld: fx7-zero-mutant.c:(.text+0x120): undefined reference to `adamic_stack_overflow'\nclang: error: linker command failed with exit code 1 (use -v to see invocation)\n"
+    },
+    "mutant_build": {
+      "exit": 0,
+      "stderr": "",
+      "command": [
+        "clang",
+        "-std=c11",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-Wcast-function-type-strict",
+        "-pedantic",
+        "-O2",
+        "-ffp-contract=off",
+        "-fno-optimize-sibling-calls",
+        "-I/home/agent/.cache/adamic/runtime/092f927d904b310f1a341208c0f3aeec8c9904e497df88d0c0c72128f695dfc0",
+        "/tmp/fx7-zero-mutant.c",
+        "-Xlinker",
+        "--whole-archive",
+        "/home/agent/.cache/adamic/runtime/092f927d904b310f1a341208c0f3aeec8c9904e497df88d0c0c72128f695dfc0/runtime.a",
+        "-Xlinker",
+        "--no-whole-archive",
+        "-lm",
+        "-o",
+        "/tmp/fx7-zero-mutant"
+      ]
+    },
+    "mutant": {
+      "exit": 0,
+      "stdout": "undefined\n",
+      "stderr": ""
+    }
+  },
+  {
+    "fixture": "both",
+    "node": {
+      "exit": 0,
+      "stdout": "6\nvalue:5\n6\n6\n"
+    }
+  }
+]

@@ -1,0 +1,37 @@
+=== RUN   TestCallableUnionResultNumber
+=== PAUSE TestCallableUnionResultNumber
+=== RUN   TestCallableUnionResultString
+=== PAUSE TestCallableUnionResultString
+=== RUN   TestCallableUnionResultZero
+=== PAUSE TestCallableUnionResultZero
+=== RUN   TestCallableUnionResultBoth
+=== PAUSE TestCallableUnionResultBoth
+=== CONT  TestCallableUnionResultNumber
+=== CONT  TestCallableUnionResultZero
+=== CONT  TestCallableUnionResultBoth
+=== CONT  TestCallableUnionResultString
+=== NAME  TestCallableUnionResultNumber
+    callable_union_result_test.go:43: gate cache node miss
+=== NAME  TestCallableUnionResultString
+    callable_union_result_test.go:48: gate cache node miss
+=== NAME  TestCallableUnionResultBoth
+    callable_union_result_test.go:58: gate cache node miss
+=== NAME  TestCallableUnionResultZero
+    callable_union_result_test.go:53: gate cache node miss
+=== NAME  TestCallableUnionResultString
+    callable_union_result_test.go:48: gate cache node miss
+=== NAME  TestCallableUnionResultZero
+    callable_union_result_test.go:53: gate cache node miss
+--- PASS: TestCallableUnionResultString (0.60s)
+=== NAME  TestCallableUnionResultNumber
+    callable_union_result_test.go:43: gate cache node miss
+--- PASS: TestCallableUnionResultZero (0.64s)
+--- PASS: TestCallableUnionResultNumber (0.66s)
+=== NAME  TestCallableUnionResultBoth
+    callable_union_result_test.go:58: gate cache node miss
+--- PASS: TestCallableUnionResultBoth (9.30s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=8
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	9.320s
