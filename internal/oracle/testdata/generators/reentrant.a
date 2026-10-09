@@ -1,0 +1,7 @@
+let active: Generator<string, string, undefined> | undefined;
+function again(): string {
+ try {if(active) active.next();} catch(error) {if(error instanceof Error) return error.name;return 'wrong error';}
+ return 'missing error';
+}
+function* once(): Generator<string, string, undefined> {yield again();return 'done';}
+active=once();console.log(`${active.next().value}`);console.log(`${active.next().value}`);

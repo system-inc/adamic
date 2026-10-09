@@ -1,0 +1,15 @@
+// a-check: refused cycle-capable generator frame slot saved without weak
+let active:Generator<number,number,undefined>|undefined;
+function* cycle():Generator<number,number,undefined> {
+ let saved:Generator<number,number,undefined>|undefined;
+ yield 1;
+ if(active) saved=active;
+ yield 2;
+ return saved===undefined?0:3;
+}
+active=cycle();
+const kept=active;
+console.log(`${kept.next().value}`);
+console.log(`${kept.next().value}`);
+active=undefined;
+console.log('dropped');

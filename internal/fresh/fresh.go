@@ -1271,6 +1271,8 @@ func (a *analysis) value(expression ir.Expression) value {
 			a.value(expression.Name)
 		}
 		return a.fresh(anyField, value{})
+	case ir.GeneratorFrame:
+		return a.value(expression.Value)
 	case ir.ObjectLiteral:
 		var copied value
 		if expression.Spread != nil {

@@ -101,6 +101,9 @@ func (l *lowering) findCycles(modules []*ast.SourceFile) error {
 			return err
 		}
 	}
+	if err := finder.generatorFrames(); err != nil {
+		return err
+	}
 	for local, declared := range l.result.Locals {
 		if !declared.Captured || declared.Global {
 			continue

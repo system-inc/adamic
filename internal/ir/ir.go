@@ -119,6 +119,8 @@ type Accessor struct {
 
 // Function is a function declaration.
 type Function struct {
+	Generator *GeneratorTypes
+
 	// CheckedUnionNarrow marks a synthetic checked load so non-null assertions can use its stored input.
 	CheckedUnionNarrow bool
 	Name               string

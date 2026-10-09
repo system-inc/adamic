@@ -72,6 +72,9 @@ func (l *lowering) iterationLocal(name string, of ir.Type, function int) int {
 // memberReceiver rejects erased method origins: a class method, a literal method and an arrow
 // field have different calling conventions, which a bare structural interface does not preserve.
 func (l *lowering) memberReceiver(where *ast.Node, member *ast.Symbol) (bool, error) {
+	if member != nil && l.generatorLibraryMember(member) {
+		return true, nil
+	}
 	if member == nil || member.Flags&ast.SymbolFlagsOptional != 0 {
 		return false, l.notYet(where, "an optional iterator method (runtime method presence is not represented)")
 	}
@@ -171,10 +174,28 @@ type iterationPlan struct {
 	entry, next, close     *ast.Symbol
 	element                ir.Type
 	value                  *checker.Type
+	generator              bool
 }
 
 func (l *lowering) planIteration(where *ast.Node) (*iterationPlan, error) {
 	source := l.concrete(l.checker.GetTypeAtLocation(where))
+	if l.generatorType(source) {
+		if !l.generatorOrigin(where, 0) {
+			return nil, l.notYet(where, "generator suspension iterator has no proved generator factory origin")
+		}
+		if err := l.generatorProtocolStable(where); err != nil {
+			return nil, err
+		}
+		arguments := l.checker.GetTypeArguments(source)
+		if len(arguments) != 3 {
+			return nil, l.notYet(where, "generator iteration has no separate yield type")
+		}
+		element, known := l.representation(arguments[0])
+		if !known {
+			return nil, l.notYet(where, "generator iteration has no represented yield type")
+		}
+		return &iterationPlan{source: source, iterator: source, next: l.checker.GetPropertyOfType(source, "next"), close: l.checker.GetPropertyOfType(source, "return"), element: element, value: arguments[0], generator: true}, nil
+	}
 	if l.checker.IsArrayType(source) || checker.IsTupleType(source) || l.isLibraryType(source, "Map", "ReadonlyMap", "Set", "ReadonlySet", "MapIterator", "SetIterator", "RegExpStringIterator") {
 		return nil, nil
 	}
@@ -324,6 +345,14 @@ type iterationState struct {
 }
 
 func (l *lowering) startIteration(where *ast.Node, plan *iterationPlan, source ir.Expression) ([]ir.Statement, *iterationState, error) {
+	if plan.generator {
+		iterator := l.iterationLocal("iterator", ir.Object, l.functionIndex)
+		active := l.iterationLocal("iterator_close_needed", ir.Boolean, l.functionIndex)
+		cached := l.iterationLocal("iterator_next", ir.Closure, l.functionIndex)
+		read := ir.Read{Local: iterator, Of: ir.Object}
+		setup := []ir.Statement{ir.Declare{Local: iterator, Value: source}, ir.Declare{Local: active, Value: ir.BooleanConstant{Value: false}}, ir.Declare{Local: cached, Value: ir.Property{Object: read, Name: "next", Of: ir.Closure}}}
+		return setup, &iterationState{plan: plan, iterator: read, next: ir.Read{Local: cached, Of: ir.Closure}, receiver: true, direct: -1, active: active}, nil
+	}
 	iterator := l.iterationLocal("iterator", ir.Object, l.functionIndex)
 	active := l.iterationLocal("iterator_close_needed", ir.Boolean, l.functionIndex)
 	read := ir.Read{Local: iterator, Of: ir.Object}
@@ -337,22 +366,40 @@ func (l *lowering) startIteration(where *ast.Node, plan *iterationPlan, source i
 func (l *lowering) iterationStep(state *iterationState) ([]ir.Statement, ir.Expression) {
 	step := l.iterationLocal("iterator_result", ir.Object, l.functionIndex)
 	read := ir.Read{Local: step, Of: ir.Object}
+	var arguments []ir.Expression
+	if state.plan.generator {
+		arguments = []ir.Expression{ir.Undefined{Of: ir.Union}}
+	}
 	statements := []ir.Statement{
 		ir.Assign{Local: state.active, Value: ir.BooleanConstant{Value: false}},
-		ir.Declare{Local: step, Value: invokeMember(state.next, state.receiver, state.direct, state.iterator, nil, ir.Object)},
+		ir.Declare{Local: step, Value: invokeMember(state.next, state.receiver, state.direct, state.iterator, arguments, ir.Object)},
 		ir.If{Condition: ir.Truthy{Value: ir.IteratorField{Object: read, Name: "done", Of: ir.MaybeBoolean, Absent: true}}, Then: []ir.Statement{ir.Break{}}},
 	}
-	value := ir.IteratorField{Object: read, Name: "value", Of: state.plan.element}
+	value := ir.Expression(ir.IteratorField{Object: read, Name: "value", Of: state.plan.element})
+	if state.plan.generator {
+		value = ir.Narrow{Value: ir.DynamicProperty{Object: fit(read, ir.Union), Name: "value"}, To: state.plan.element}
+	}
 	return statements, value
 }
 
 // IteratorClose preserves an incoming throw even if return throws. Break and return instead let
 // that close failure replace their completion. The active flag excludes exhaustion and next errors.
 func (l *lowering) closeIteration(where *ast.Node, state *iterationState, body []ir.Statement) ([]ir.Statement, error) {
+	var arguments []ir.Expression
+	if state.plan.generator {
+		arguments = []ir.Expression{ir.Undefined{Of: ir.Union}}
+	}
 	cached := l.iterationLocal("iterator_return", ir.Closure, l.functionIndex)
 	close := []ir.Statement{
 		ir.Declare{Local: cached, Value: ir.IteratorMethod{Object: state.iterator, Name: "return", Optional: true}},
-		ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: ir.IsUndefined{Value: ir.Read{Local: cached, Of: ir.Closure}}}, Then: []ir.Statement{ir.Evaluate{Value: ir.CallClosure{Closure: ir.Read{Local: cached, Of: ir.Closure}, Returns: ir.Object}}}},
+		ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: ir.IsUndefined{Value: ir.Read{Local: cached, Of: ir.Closure}}}, Then: []ir.Statement{ir.Evaluate{Value: ir.CallClosure{Closure: ir.Read{Local: cached, Of: ir.Closure}, Arguments: arguments, Returns: ir.Object}}}},
+	}
+	if state.plan.generator {
+		function, receiver, direct, err := l.memberFunction(where, state.plan.iterator, state.iterator, state.plan.close)
+		if err != nil {
+			return nil, err
+		}
+		close = []ir.Statement{ir.Evaluate{Value: invokeMember(function, receiver, direct, state.iterator, arguments, ir.Object)}}
 	}
 	thrown := l.iterationLocal("iterator_pending_throw", ir.Boolean, l.functionIndex)
 	caught := l.iterationLocal("iterator_error", ir.Object, l.functionIndex)
