@@ -122,14 +122,11 @@ const testStatementsAgainstGoAndPrettierShards = 16
 // unset runs all shards. The mixed live repository/pinned TypeScript corpus uses
 // a fixed 16 shards and SHA-256(relative path, file/mode-local index) modulo 16.
 // Build products are prepared once and shared by leaves.
-func statementAgainstGoAndPrettierShard(t *testing.T, shardNumber int) {
+func statementPrepareCommon(t *testing.T) statementSharedProducts {
 	t.Helper()
-	if !statementShardSelection(t)(shardNumber) {
-		return
-	}
 	setup := time.Now()
 	cpu := statementCPU()
-	t.Cleanup(func() { t.Logf("CPU including builds: %.3fs", statementCPU()-cpu) })
+	t.Cleanup(func() { t.Logf("shared setup CPU including builds: %.3fs", statementCPU()-cpu) })
 	cases, want, specs := statementCorpus(t)
 	shards := statementShards(t, cases, want, specs)
 	library := os.Getenv("ADAMIC_TS_PRETTIER")
@@ -202,6 +199,27 @@ func statementAgainstGoAndPrettierShard(t *testing.T, shardNumber int) {
 			}
 		}
 	}
+	libraryHash := statementDirectoryHash(t, library)
+	elapsed := time.Since(setup).Seconds()
+	t.Logf("shared setup: %.3fs, %d cases in %d shards", elapsed, strings.Count(want, "\n"), len(shards))
+	return statementSharedProducts{Cases: cases, Want: want, Specs: specs, Port: port, CompilerHash: compilerHash, LoweredDir: loweredDir, Binary: binary, Release: release, Library: library, LibraryHash: libraryHash, Elapsed: elapsed}
+}
+
+func statementAgainstGoAndPrettierShard(t *testing.T, shardNumber int) {
+	t.Helper()
+	if !statementShardSelection(t)(shardNumber) {
+		return
+	}
+	products := statementReadyShared(t)
+	setup := time.Now()
+	cpu := statementCPU()
+	t.Cleanup(func() { t.Logf("shard CPU: %.3fs", statementCPU()-cpu) })
+	cases, want, specs := products.Cases, products.Want, products.Specs
+	shards := statementShards(t, cases, want, specs)
+	port, compilerHash := products.Port, products.CompilerHash
+	binary, release, library := products.Binary, products.Release, products.Library
+	loweredDir := products.LoweredDir
+
 	gapInput := ">const x:number=1;\n>const {x}=value;\n>export const x=1;\n>if(x)f();\n>#!/usr/bin/env node\\nf();\n"
 	gapWant := "notyet\tvariable-types\nnotyet\tvariable-pattern\nnotyet\tvariable-modifiers\nnotyet\tIfStatement\nnotyet\tcomment-attachment\n"
 	gapPath := filepath.Join(t.TempDir(), "statement-gaps.txt")
@@ -213,7 +231,7 @@ func statementAgainstGoAndPrettierShard(t *testing.T, shardNumber int) {
 	bundles, _ := filepath.Abs(filepath.Join(repository, "cohere/internal/format/prettier/bundles"))
 	backend := filepath.Join(loweredDir, "program.mjs")
 	selected := func(number int) bool { return number == shardNumber }
-	libraryHash := statementDirectoryHash(t, library)
+	libraryHash := products.LibraryHash
 	oracleAnswers := make([][2][]byte, len(shards))
 	for number, shard := range shards {
 		if !selected(number) {
@@ -246,7 +264,15 @@ func statementAgainstGoAndPrettierShard(t *testing.T, shardNumber int) {
 			oracleAnswers[number][side] = answers
 		}
 	}
-	t.Logf("setup including builds: %.3fs; union: %d cases in %d shards", time.Since(setup).Seconds(), strings.Count(want, "\n"), len(shards))
+	t.Logf("shard-local input preparation: %.3fs; union: %d cases in %d shards", time.Since(setup).Seconds(), strings.Count(want, "\n"), len(shards))
+	caseStart := time.Now()
+	caseContext, cancelCases := context.WithTimeout(context.Background(), 90*time.Second)
+	statementCaseContexts.Store(t, caseContext)
+	t.Cleanup(func() {
+		cancelCases()
+		statementCaseContexts.Delete(t)
+		t.Logf("case time after shared setup: %.3fs", time.Since(caseStart).Seconds())
+	})
 	for number, shard := range shards {
 		if !selected(number) {
 			continue
