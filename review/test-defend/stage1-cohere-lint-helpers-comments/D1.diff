@@ -1,0 +1,13 @@
+diff --git a/stage1/cohere/lint/helpers/comments/collect_list_interiors.ts b/stage1/cohere/lint/helpers/comments/collect_list_interiors.ts
+index c60f63cd..5a661aff 100644
+--- a/stage1/cohere/lint/helpers/comments/collect_list_interiors.ts
++++ b/stage1/cohere/lint/helpers/comments/collect_list_interiors.ts
+@@ -107,7 +107,7 @@ export function collectListInteriors(parser: Parser, index: number): number[] {
+         }
+     }
+     if(node.kind === 'JsxExpression' && node.children.length === 0) {
+-        anchors.push(node.pos + 1);
++        anchors.push(node.pos + 0);
+     }
+     return anchors;
+ }

@@ -1,0 +1,8 @@
+{
+  "baseline": "source /workspace/adamic-tools/env.sh; npm ci --prefix stage3/api; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/",
+  "coverage": [
+    "timeout 120 go test -json -count=1 -timeout 90s -run ^TestCommentsMatchCohere$ -coverpkg=./internal/lower,./internal/native,./internal/load -coverprofile=subsumer.cover ./stage1/cohere/lint/helpers/comments/",
+    "timeout 120 go test -json -count=1 -timeout 90s -run ^TestConsumerCommentHelpers$ -coverpkg=./internal/lower,./internal/native,./internal/load -coverprofile=consumer.cover ./stage1/cohere/lint/helpers/comments/"
+  ],
+  "D1": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-comments/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run '^(TestCommentsMatchCohere|TestConsumerCommentHelpers|TestJsxParserGapIsExplicit)$'"
+}

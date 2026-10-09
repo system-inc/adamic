@@ -1,0 +1,9 @@
+{
+  "difference": "Go AST adapter includes empty JsxExpression with comment; independent parser corpus has no JSX AST",
+  "example": {
+    "name": "@eslint-community/eslint-comments/require-description:RequireDescription.tsx",
+    "source": "const a = <div>{/* eslint-disable-line */}</div>;"
+  },
+  "planned_mutant": "D1: change empty JSX anchor node.pos + 1 to node.pos + 0 (off by one)",
+  "origin_line": 110
+}

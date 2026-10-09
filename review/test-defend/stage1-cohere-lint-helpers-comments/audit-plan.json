@@ -1,0 +1,66 @@
+{
+  "base": "ce1c5a2fd91e40b05160e587ea5d88ed5bdfedb2",
+  "code_under_test": "TypeScript comments port and module driver compiled natively",
+  "oracle": "live Go cohere; JSX exit 70 and NotYet label are self-written refusal contract",
+  "functions": [
+    "main module entry",
+    "read",
+    "all",
+    "Comment.constructor",
+    "FileCommentCache.constructor",
+    "FileCommentCache.get",
+    "forFile",
+    "canBeginAt",
+    "sortByPosition",
+    "tokenStart",
+    "isParameterListKind",
+    "isBracedListKind",
+    "collectListInteriors"
+  ],
+  "menu": [
+    [
+      "M1",
+      "can_begin_at.ts",
+      "code > 13",
+      "code > 12",
+      "change constant"
+    ],
+    [
+      "M2",
+      "all.ts",
+      "point > 65535 ? 2 : 1",
+      "point > 65535 ? 1 : 1",
+      "change constant"
+    ],
+    [
+      "M3",
+      "sort_by_position.ts",
+      "let outer = 1;",
+      "let outer = 2;",
+      "off-by-one bound"
+    ],
+    [
+      "M4",
+      "main.ts",
+      "        panic('NotYet: stage-1 JSX parser adapter');\n",
+      "",
+      "drop statement"
+    ]
+  ],
+  "witness_and_setup_code_under_test": [
+    "requireCommentMutantKilled",
+    "matchesGapRefusal",
+    "commentMutants",
+    "TestCommentMutantsUnion shard ID enumeration",
+    "TestCommentMutantsPlantedFailure child failure protocol"
+  ],
+  "witness_and_setup_oracle": "Self-written child failure protocol, independent ID set, and rejection of known wrong native output; live Go cohere supplies agreement answers.",
+  "controlled_checks": {
+    "W1": "Treat all answers as equal in requireCommentMutantKilled; run numbered witness family",
+    "W2": "Disable rejection in requireCommentMutantKilled; run planted-failure parent",
+    "W3": "Accept every result as a JSX refusal; run guard-drop witness",
+    "S1": "Off-by-one final shard bound in actual ID construction",
+    "P1": "Empty module entry: delete driver module body, preserve imports and read helper",
+    "P2": "Empty commentMutants entry: return nil"
+  }
+}

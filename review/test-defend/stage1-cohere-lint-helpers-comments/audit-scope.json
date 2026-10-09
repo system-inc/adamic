@@ -1,0 +1,65 @@
+{
+  "rows": [
+    [
+      "TestCommentMutants family",
+      [
+        "TestCommentMutants_000",
+        "TestCommentMutants_001",
+        "TestCommentMutants_002",
+        "TestCommentMutants_003",
+        "TestCommentMutants_004"
+      ],
+      "witness"
+    ],
+    [
+      "TestCommentMutantsUnion",
+      [
+        "TestCommentMutantsUnion"
+      ],
+      "setup-check"
+    ],
+    [
+      "TestCommentMutantsPlantedFailure",
+      [
+        "TestCommentMutantsPlantedFailure"
+      ],
+      "witness"
+    ],
+    [
+      "TestCommentsMatchCohere",
+      [
+        "TestCommentsMatchCohere"
+      ],
+      "production"
+    ],
+    [
+      "TestConsumerCommentHelpers",
+      [
+        "TestConsumerCommentHelpers"
+      ],
+      "production"
+    ],
+    [
+      "TestJsxParserGapIsExplicit",
+      [
+        "TestJsxParserGapIsExplicit"
+      ],
+      "production"
+    ],
+    [
+      "TestJsxAdapterGuardMutant",
+      [
+        "TestJsxAdapterGuardMutant"
+      ],
+      "witness"
+    ]
+  ],
+  "scope_source": "go test -list . ./stage1/cohere/lint/helpers/comments/ at ce1c5a2fd91e40b05160e587ea5d88ed5bdfedb2",
+  "matrix_rows": [
+    "TestCommentsMatchCohere",
+    "TestConsumerCommentHelpers",
+    "TestJsxParserGapIsExplicit"
+  ],
+  "outside_matrix": "production effects on witness/setup rows are not used; no other packages run",
+  "grouping": "Five numbered wrappers share runCommentMutant. Union independently checks shard ID set construction, so is separate under the distinct-assertion exception."
+}

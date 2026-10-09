@@ -1,0 +1,40 @@
+[
+  {
+    "test": "TestConsumerCommentHelpers",
+    "package": "stage1/cohere/lint/helpers/comments",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestCommentsMatchCohere"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D1: stage1/cohere/lint/helpers/comments/collect_list_interiors.ts:110",
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "stage1/cohere/lint/helpers/comments/collect_list_interiors.ts:110",
+        "change": "anchors.push(node.pos + 1) -> anchors.push(node.pos + 0), off-by-one JSX interior anchor",
+        "rows_failed": [
+          "TestConsumerCommentHelpers"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-comments/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run '^(TestCommentsMatchCohere|TestConsumerCommentHelpers|TestJsxParserGapIsExplicit)$'; comments_test.go:115: output line 695: got \"cached 0 0\", Go \"cached 1 1\"",
+    "rows_passed": [
+      "TestCommentsMatchCohere",
+      "TestJsxParserGapIsExplicit",
+      "TestJsxAdapterGuardMutant",
+      "TestCommentMutantsPlantedFailure",
+      "TestCommentMutantsUnion",
+      "TestCommentMutants_000",
+      "TestCommentMutants_002",
+      "TestCommentMutants_004",
+      "TestCommentMutants_003",
+      "TestCommentMutants_001"
+    ],
+    "code_under_test": "TypeScript comments port compiled natively and run under Node, especially collectListInteriors JSX interior anchor",
+    "oracle": "Live Go cohere complete output, with Go AST geometry supplied as adapter input",
+    "coverage_limit": "Go compiler profiles have zero consumer-exclusive blocks; TypeScript port is not Go-instrumentable. Defense uses semantic input difference.",
+    "bounded": false,
+    "matrix_partitioned": true
+  }
+]
