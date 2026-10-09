@@ -99,7 +99,8 @@ func (l *lowering) supportsUntaggedRead(root ir.ViewContract) bool {
 		seen[id] = true
 		defer delete(seen, id)
 		if contract.Kind == ir.ViewArray {
-			return supported(contract.Element)
+			// Array membership checks represented elements; payload reads stay lazy.
+			return contract.Element != 0 && supported(contract.Element)
 		}
 		if contract.Kind == ir.ViewUnion {
 			if len(contract.Members) == 0 {
@@ -133,7 +134,7 @@ func (l *lowering) supportsUntaggedRead(root ir.ViewContract) bool {
 		}
 		return true
 	}
-	if root.Kind != ir.ViewUnion || root.Of != ir.Object || len(root.Members) == 0 {
+	if root.Kind != ir.ViewUnion || len(root.Members) == 0 {
 		return false
 	}
 	for _, id := range root.Members {
