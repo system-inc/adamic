@@ -135,10 +135,27 @@ func TestCacheBypass(t *testing.T) {
 func TestParallelCachedMatchesSerial(t *testing.T) {
 	// Not parallel: compare both modes while changing the bypass environment.
 	t.Setenv("ADAMIC_GATE_UNCACHED", "1")
-	e, err := prepare("../..", "testdata/mini", t.TempDir())
+	e, err := prepareSplitTest262(t, "testdata/mini")
 	if err != nil {
 		t.Fatal(err)
 	}
+	files, err := listTests("testdata/mini", "")
+	if err != nil {
+		t.Fatal(err)
+	}
+	var names []string
+	for _, file := range files {
+		name, err := filepath.Rel("testdata/mini/test", file)
+		if err != nil {
+			t.Fatal(err)
+		}
+		names = append(names, filepath.ToSlash(name))
+	}
+	wantNames := []string{"crash/stderr.js", "fail/uncaught.js", "pass/pad.js", "refuse/var.js", "skip/negative.js"}
+	if !reflect.DeepEqual(names, wantNames) {
+		t.Fatalf("mini cases %v, want %v", names, wantNames)
+	}
+	t.Logf("%d cases: %v", len(names), names)
 	e.cache = &resultCache{directory: t.TempDir()}
 	var serialLog bytes.Buffer
 	e.log = &serialLog
@@ -157,39 +174,57 @@ func TestParallelCachedMatchesSerial(t *testing.T) {
 	}
 	printTables(&serialTable, document)
 	t.Setenv("ADAMIC_GATE_UNCACHED", "0")
-	e.jobs = 4
-	e.inProcess = true
-	for round := 0; round < 2; round++ {
-		var log, encoded, table bytes.Buffer
-		e.log = &log
-		parallel, err := e.runFilter("", 0, false)
-		if err != nil {
-			t.Fatal(err)
-		}
-		document.Filters = []filterReport{parallel}
-		if err := writeJSON(&encoded, document); err != nil {
-			t.Fatal(err)
-		}
-		printTables(&table, document)
-		if !bytes.Equal(serialJSON.Bytes(), encoded.Bytes()) || !bytes.Equal(serialTable.Bytes(), table.Bytes()) || !bytes.Equal(serialLog.Bytes(), log.Bytes()) {
-			t.Fatalf("round %d differs:\nserial=%s\nparallel=%s", round, serialJSON.Bytes(), encoded.Bytes())
-		}
-	}
-	// The limit selects the same attempted files before workers are scheduled.
-	e.jobs = 1
-	var log bytes.Buffer
-	e.log = &log
-	limited, err := e.runFilter("", 1, false)
-	if err != nil {
-		t.Fatal(err)
-	}
-	e.jobs = 4
-	parallel, err := e.runFilter("", 1, false)
-	if err != nil {
-		t.Fatal(err)
-	}
-	if !reflect.DeepEqual(limited, parallel) {
-		t.Fatal("parallel limit selected different tests")
+	// Each child owns a fresh engine work directory and observation cache. Warm primes its own
+	// cache, so selecting it alone cannot inherit observations from the cold child.
+	for _, mode := range []string{"cold", "warm", "limit"} {
+		t.Run(mode, func(t *testing.T) {
+			local := *e
+			e := &local
+			e.work = t.TempDir()
+			e.cache = &resultCache{directory: t.TempDir()}
+			e.jobs = 4
+			e.inProcess = true
+			if mode == "limit" {
+				// The limit selects the same attempted files before workers are scheduled.
+				e.jobs = 1
+				var log bytes.Buffer
+				e.log = &log
+				limited, err := e.runFilter("", 1, false)
+				if err != nil {
+					t.Fatal(err)
+				}
+				e.jobs = 4
+				parallel, err := e.runFilter("", 1, false)
+				if err != nil {
+					t.Fatal(err)
+				}
+				if !reflect.DeepEqual(limited, parallel) {
+					t.Fatal("parallel limit selected different tests")
+				}
+				return
+			}
+			if mode == "warm" {
+				var prime bytes.Buffer
+				e.log = &prime
+				if _, err := e.runFilter("", 0, false); err != nil {
+					t.Fatal(err)
+				}
+			}
+			var log, encoded, table bytes.Buffer
+			e.log = &log
+			parallel, err := e.runFilter("", 0, false)
+			if err != nil {
+				t.Fatal(err)
+			}
+			document := reportDocument{Filters: []filterReport{parallel}}
+			if err := writeJSON(&encoded, document); err != nil {
+				t.Fatal(err)
+			}
+			printTables(&table, document)
+			if !bytes.Equal(serialJSON.Bytes(), encoded.Bytes()) || !bytes.Equal(serialTable.Bytes(), table.Bytes()) || !bytes.Equal(serialLog.Bytes(), log.Bytes()) {
+				t.Fatalf("%s differs:\nserial=%s\nparallel=%s", mode, serialJSON.Bytes(), encoded.Bytes())
+			}
+		})
 	}
 }
 

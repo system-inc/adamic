@@ -1,0 +1,41 @@
+{
+  "base": "54cbc125422d4e1d64c1ffe782445b2cbc2bc5b8",
+  "large": {
+    "name": "large.js",
+    "assertions": 1800,
+    "source_sha256": "912c6eaf12794bac2081b6521c710a0296b011303fcd6a9cdfaa35b870d59691"
+  },
+  "mini_count": 5,
+  "mini": [
+    {
+      "name": "crash/stderr.js",
+      "sha256": "caf98fab5f394d2db3c057de1eded82952cc85aa01f012e96a4827678cebdc3d"
+    },
+    {
+      "name": "fail/uncaught.js",
+      "sha256": "83ad0b1f2c44bc09ef3a1aa10ffb03f07858ca7db26a9ebc31a69a7110a0b363"
+    },
+    {
+      "name": "pass/pad.js",
+      "sha256": "7c284966607ff2f9404639d53cad1a3498868d32f18b844ddd3dd84b9537b30c"
+    },
+    {
+      "name": "refuse/var.js",
+      "sha256": "a6e7b741b6ada226fd345776076eefca585c430c8f55c456e7af1688f4cf523d"
+    },
+    {
+      "name": "skip/negative.js",
+      "sha256": "be4fd4c48fdc461adadde29cab4c4208a32717ca0b8fa980af5bebe11e68fed4"
+    }
+  ],
+  "checks_before": [
+    "cold JSON/table/progress",
+    "warm JSON/table/progress",
+    "limit report equality"
+  ],
+  "checks_after": [
+    "cold JSON/table/progress",
+    "warm JSON/table/progress",
+    "limit report equality"
+  ]
+}

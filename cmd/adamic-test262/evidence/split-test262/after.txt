@@ -1,0 +1,49 @@
+{"label": "after", "test": "^TestLargeCompilerOutputIsComplete$/^large.js$", "wall": 11.619705702999966, "exit": 0}
+=== RUN   TestLargeCompilerOutputIsComplete
+=== RUN   TestLargeCompilerOutputIsComplete/large.js
+large.js 1/1 pass=1 fail=0 refused=0 crashed=0 skipped=0
+--- PASS: TestLargeCompilerOutputIsComplete (11.57s)
+    --- PASS: TestLargeCompilerOutputIsComplete/large.js (5.78s)
+PASS
+
+{"label": "after", "test": "^TestParallelCachedMatchesSerial$/^cold$", "wall": 4.279143865999913, "exit": 0}
+=== RUN   TestParallelCachedMatchesSerial
+    cache_test.go:158: 5 cases: [crash/stderr.js fail/uncaught.js pass/pad.js refuse/var.js skip/negative.js]
+=== RUN   TestParallelCachedMatchesSerial/cold
+--- PASS: TestParallelCachedMatchesSerial (4.23s)
+    --- PASS: TestParallelCachedMatchesSerial/cold (0.32s)
+PASS
+
+{"label": "after", "test": "^TestParallelCachedMatchesSerial$/^warm$", "wall": 4.29871115100002, "exit": 0}
+=== RUN   TestParallelCachedMatchesSerial
+    cache_test.go:158: 5 cases: [crash/stderr.js fail/uncaught.js pass/pad.js refuse/var.js skip/negative.js]
+=== RUN   TestParallelCachedMatchesSerial/warm
+--- PASS: TestParallelCachedMatchesSerial (4.26s)
+    --- PASS: TestParallelCachedMatchesSerial/warm (0.34s)
+PASS
+
+{"label": "after", "test": "^TestParallelCachedMatchesSerial$/^limit$", "wall": 4.386807840000074, "exit": 0}
+=== RUN   TestParallelCachedMatchesSerial
+    cache_test.go:158: 5 cases: [crash/stderr.js fail/uncaught.js pass/pad.js refuse/var.js skip/negative.js]
+=== RUN   TestParallelCachedMatchesSerial/limit
+--- PASS: TestParallelCachedMatchesSerial (4.35s)
+    --- PASS: TestParallelCachedMatchesSerial/limit (0.31s)
+PASS
+
+{"label": "after", "test": "^TestLargeCompilerOutputIsComplete$|^TestParallelCachedMatchesSerial$", "wall": 11.247183375000077, "exit": 0}
+=== RUN   TestParallelCachedMatchesSerial
+    cache_test.go:158: 5 cases: [crash/stderr.js fail/uncaught.js pass/pad.js refuse/var.js skip/negative.js]
+=== RUN   TestParallelCachedMatchesSerial/cold
+=== RUN   TestParallelCachedMatchesSerial/warm
+=== RUN   TestParallelCachedMatchesSerial/limit
+--- PASS: TestParallelCachedMatchesSerial (4.70s)
+    --- PASS: TestParallelCachedMatchesSerial/cold (0.30s)
+    --- PASS: TestParallelCachedMatchesSerial/warm (0.32s)
+    --- PASS: TestParallelCachedMatchesSerial/limit (0.26s)
+=== RUN   TestLargeCompilerOutputIsComplete
+=== RUN   TestLargeCompilerOutputIsComplete/large.js
+large.js 1/1 pass=1 fail=0 refused=0 crashed=0 skipped=0
+--- PASS: TestLargeCompilerOutputIsComplete (6.50s)
+    --- PASS: TestLargeCompilerOutputIsComplete/large.js (5.90s)
+PASS
+

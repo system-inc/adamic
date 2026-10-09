@@ -1,0 +1,11 @@
+{"label": "final-before", "test": "^TestLargeCompilerOutputIsComplete$", "wall": 9.259440827000049, "exit": 0}
+=== RUN   TestLargeCompilerOutputIsComplete
+large.js 1/1 pass=1 fail=0 refused=0 crashed=0 skipped=0
+--- PASS: TestLargeCompilerOutputIsComplete (9.22s)
+PASS
+
+{"label": "final-before", "test": "^TestParallelCachedMatchesSerial$", "wall": 4.653937343000052, "exit": 0}
+=== RUN   TestParallelCachedMatchesSerial
+--- PASS: TestParallelCachedMatchesSerial (4.62s)
+PASS
+

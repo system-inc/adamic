@@ -54,12 +54,19 @@ func prepareProfile(root string, test262 string, work string, profile *runProfil
 }
 
 func prepareMode(root string, test262 string, work string, profile *runProfile, inProcess bool) (*engine, error) {
+	return prepareModeWithCompiler(root, test262, work, profile, inProcess, "")
+}
+
+// A supplied compiler is a previously built product; each engine still owns fresh work and caches.
+func prepareModeWithCompiler(root string, test262 string, work string, profile *runProfile, inProcess bool, compiler string) (*engine, error) {
 	done := profile.preparing("go-build")
 	if err := os.MkdirAll(work, 0o755); err != nil {
 		return nil, err
 	}
 	adamic := filepath.Join(work, "adamic")
-	if !inProcess {
+	if compiler != "" {
+		adamic = compiler
+	} else if !inProcess {
 		build := exec.Command("go", "build", "-o", adamic, "./cmd/adamic")
 		build.Dir = root
 		if output, err := build.CombinedOutput(); err != nil {

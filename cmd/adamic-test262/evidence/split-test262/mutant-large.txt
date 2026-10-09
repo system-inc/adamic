@@ -1,0 +1,9 @@
+{"label": "mutant", "test": "^TestLargeCompilerOutputIsComplete$/^large.js$", "wall": 3.315373216000012, "exit": 1}
+=== RUN   TestLargeCompilerOutputIsComplete
+=== RUN   TestLargeCompilerOutputIsComplete/large.js
+large.js 1/1 pass=0 fail=0 refused=0 crashed=1 skipped=0
+    corpus_test.go:238: large program: {Path:large.js Pass:0 Fail:0 Refused:0 Crashed:1 Skipped:0 Unrun:0 Total:1 Directories:[{Path:. Pass:0 Fail:0 Refused:0 Crashed:1 Skipped:0 Unrun:0 Total:1}] RefusalReasons:[] SkipReasons:[] CrashReasons:[{Reason:large.js: command output exceeded capture limit Count:1}] FailReasons:[] Passes:[] Adaptations:[] directories:map[.:0x1aeca60a1e0] refusalReasons:map[] skipReasons:map[] crashReasons:map[large.js: command output exceeded capture limit:1] failReasons:map[] adaptations:map[]}
+--- FAIL: TestLargeCompilerOutputIsComplete (3.28s)
+    --- FAIL: TestLargeCompilerOutputIsComplete/large.js (0.12s)
+FAIL
+

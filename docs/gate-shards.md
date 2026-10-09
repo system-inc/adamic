@@ -37,6 +37,9 @@ the following audited parents have independently selectable, enumerable children
   `TestFreshWriteProbesStayRefused`.
 - `stage1/cohere/typeaware`: the 15 literal `changes` rows of `TestVolumeAgreementAndMutants`.
 - `internal/native`: `TestNormalizeMatchesNode` and `TestStringIndexMatchesNode`.
+- `cmd/adamic-test262`: `TestLargeCompilerOutputIsComplete` (`large.js`) and
+  `TestParallelCachedMatchesSerial` (`cold`, `warm`, `limit`). Compiler setup is shared;
+  each cache comparison child owns fresh work and observations, and `warm` primes itself.
 - `stage1/cohere/lint`: `TestMutants` and `TestVolumeMutants`.
 - `stage1/cohere/css`: the two modes of `TestCSSPrinterAgreesWithGo`, including each mode's nested mutants.
 

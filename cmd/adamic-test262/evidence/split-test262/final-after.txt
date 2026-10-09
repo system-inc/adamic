@@ -1,0 +1,32 @@
+{"label": "final-after", "test": "^TestLargeCompilerOutputIsComplete$/^large.js$", "wall": 9.17992589000005, "exit": 0}
+=== RUN   TestLargeCompilerOutputIsComplete
+=== RUN   TestLargeCompilerOutputIsComplete/large.js
+large.js 1/1 pass=1 fail=0 refused=0 crashed=0 skipped=0
+--- PASS: TestLargeCompilerOutputIsComplete (9.14s)
+    --- PASS: TestLargeCompilerOutputIsComplete/large.js (5.93s)
+PASS
+
+{"label": "final-after", "test": "^TestParallelCachedMatchesSerial$/^cold$", "wall": 4.516336526000032, "exit": 0}
+=== RUN   TestParallelCachedMatchesSerial
+    cache_test.go:158: 5 cases: [crash/stderr.js fail/uncaught.js pass/pad.js refuse/var.js skip/negative.js]
+=== RUN   TestParallelCachedMatchesSerial/cold
+--- PASS: TestParallelCachedMatchesSerial (4.47s)
+    --- PASS: TestParallelCachedMatchesSerial/cold (0.33s)
+PASS
+
+{"label": "final-after", "test": "^TestParallelCachedMatchesSerial$/^warm$", "wall": 4.439899421000064, "exit": 0}
+=== RUN   TestParallelCachedMatchesSerial
+    cache_test.go:158: 5 cases: [crash/stderr.js fail/uncaught.js pass/pad.js refuse/var.js skip/negative.js]
+=== RUN   TestParallelCachedMatchesSerial/warm
+--- PASS: TestParallelCachedMatchesSerial (4.39s)
+    --- PASS: TestParallelCachedMatchesSerial/warm (0.37s)
+PASS
+
+{"label": "final-after", "test": "^TestParallelCachedMatchesSerial$/^limit$", "wall": 4.3842371770000454, "exit": 0}
+=== RUN   TestParallelCachedMatchesSerial
+    cache_test.go:158: 5 cases: [crash/stderr.js fail/uncaught.js pass/pad.js refuse/var.js skip/negative.js]
+=== RUN   TestParallelCachedMatchesSerial/limit
+--- PASS: TestParallelCachedMatchesSerial (4.34s)
+    --- PASS: TestParallelCachedMatchesSerial/limit (0.25s)
+PASS
+
