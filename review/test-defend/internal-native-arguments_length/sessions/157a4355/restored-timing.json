@@ -1,0 +1,17 @@
+{
+  "command": [
+    "timeout",
+    "120",
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "./internal/native/",
+    "-run",
+    "^(TestCEndsInNewline|TestClosureConventionDropCount|TestClosureConventionRuntimeDropCount|TestClosureConventionRuntimeFeaturesIgnoreLiterals|TestClosureConventionWrongOrder|TestDevirtualizedCalls|TestLoopArrayHoldC|TestLoopCallCoverage|TestNbodyBorrowedLoopC|TestNbodyIndexedElementsBorrow|TestNoReaderCallingConvention|TestNodeBufferRuntimeWithoutDeclarations|TestOptionalMethodThunksMatchNode|TestParserHasNoUnusedOptionalMethodThunks|TestRegexProgramsKeepCheckedFieldReads|TestTSGoBuildSeesTheProgramsFeatures|TestUniformFieldsMatchNode)$"
+  ],
+  "exit": 0,
+  "wall_seconds": 7.656985894001991
+}

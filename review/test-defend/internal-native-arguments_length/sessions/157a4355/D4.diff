@@ -1,0 +1,13 @@
+diff --git a/internal/native/emit_objects.go b/internal/native/emit_objects.go
+index 9b114e20..049b47da 100644
+--- a/internal/native/emit_objects.go
++++ b/internal/native/emit_objects.go
+@@ -324,7 +324,7 @@ func (e *emitter) shapeWith(fieldNames []string, fieldTypes []ir.Type, methods [
+ func (e *emitter) dispatchable(function int) bool {
+ 	method := e.program.Functions[function]
+ 	needed := e.program.StructuralMethodThunks[function]
+-	if e.program.StructuralMethodThunks == nil {
++	if e.program.StructuralMethodThunks != nil {
+ 		walkExpressions(e.program, func(expression ir.Expression) {
+ 			call, ok := expression.(ir.CallClosure)
+ 			if !ok {

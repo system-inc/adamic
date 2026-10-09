@@ -1,0 +1,19 @@
+{
+  "command": [
+    "timeout",
+    "120",
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "./internal/native/",
+    "-run",
+    "^(TestCEndsInNewline|TestClosureConventionDropCount|TestClosureConventionRuntimeDropCount|TestClosureConventionRuntimeFeaturesIgnoreLiterals|TestClosureConventionWrongOrder|TestDevirtualizedCalls|TestLoopArrayHoldC|TestLoopCallCoverage|TestNbodyBorrowedLoopC|TestNbodyIndexedElementsBorrow|TestNoReaderCallingConvention|TestNodeBufferRuntimeWithoutDeclarations|TestOptionalMethodThunksMatchNode|TestRegexProgramsKeepCheckedFieldReads|TestTSGoBuildSeesTheProgramsFeatures|TestUniformFieldsMatchNode)$",
+    "-coverpkg=github.com/system-inc/adamic/internal/native,github.com/system-inc/adamic/internal/ir",
+    "-coverprofile=/tmp/defend-native-args/parser-rest.cover"
+  ],
+  "exit": 0,
+  "wall_seconds": 2.9073468250026053
+}

@@ -1,0 +1,282 @@
+[
+  {
+    "mutant": "D1",
+    "runs": [
+      {
+        "command": [
+          "go",
+          "vet",
+          "./internal/native/"
+        ],
+        "cache": "/tmp/defend-native-args/cache/D1",
+        "exit": 0,
+        "wall_seconds": 0.3520698430002085
+      },
+      {
+        "command": [
+          "timeout",
+          "120",
+          "go",
+          "test",
+          "-json",
+          "-count=1",
+          "-timeout",
+          "90s",
+          "./internal/native/",
+          "-run",
+          "^(TestCEndsInNewline|TestClosureConventionDropCount|TestClosureConventionRuntimeDropCount|TestClosureConventionRuntimeFeaturesIgnoreLiterals|TestClosureConventionWrongOrder|TestDevirtualizedCalls|TestLoopArrayHoldC|TestLoopCallCoverage|TestNbodyBorrowedLoopC|TestNbodyIndexedElementsBorrow|TestNoReaderCallingConvention|TestNodeBufferRuntimeWithoutDeclarations|TestOptionalMethodThunksMatchNode|TestParserHasNoUnusedOptionalMethodThunks|TestRegexProgramsKeepCheckedFieldReads|TestTSGoBuildSeesTheProgramsFeatures|TestUniformFieldsMatchNode)$"
+        ],
+        "cache": "/tmp/defend-native-args/cache/D1",
+        "exit": 1,
+        "wall_seconds": 12.305023195000103
+      }
+    ],
+    "failed": [
+      "TestNoReaderCallingConvention"
+    ],
+    "passed": [
+      "TestCEndsInNewline",
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "TestClosureConventionWrongOrder",
+      "TestDevirtualizedCalls",
+      "TestLoopArrayHoldC",
+      "TestLoopCallCoverage",
+      "TestNbodyBorrowedLoopC",
+      "TestNbodyIndexedElementsBorrow",
+      "TestNodeBufferRuntimeWithoutDeclarations",
+      "TestOptionalMethodThunksMatchNode",
+      "TestParserHasNoUnusedOptionalMethodThunks",
+      "TestRegexProgramsKeepCheckedFieldReads",
+      "TestTSGoBuildSeesTheProgramsFeatures",
+      "TestUniformFieldsMatchNode"
+    ],
+    "skipped": [],
+    "unknown": []
+  },
+  {
+    "mutant": "D2",
+    "runs": [
+      {
+        "command": [
+          "go",
+          "vet",
+          "./internal/native/"
+        ],
+        "cache": "/tmp/defend-native-args/cache/D2",
+        "exit": 0,
+        "wall_seconds": 0.23545510699841543
+      },
+      {
+        "command": [
+          "timeout",
+          "120",
+          "go",
+          "test",
+          "-json",
+          "-count=1",
+          "-timeout",
+          "90s",
+          "./internal/native/",
+          "-run",
+          "^(TestCEndsInNewline|TestClosureConventionDropCount|TestClosureConventionRuntimeDropCount|TestClosureConventionRuntimeFeaturesIgnoreLiterals|TestClosureConventionWrongOrder|TestDevirtualizedCalls|TestLoopArrayHoldC|TestLoopCallCoverage|TestNbodyBorrowedLoopC|TestNbodyIndexedElementsBorrow|TestNoReaderCallingConvention|TestNodeBufferRuntimeWithoutDeclarations|TestOptionalMethodThunksMatchNode|TestParserHasNoUnusedOptionalMethodThunks|TestRegexProgramsKeepCheckedFieldReads|TestTSGoBuildSeesTheProgramsFeatures|TestUniformFieldsMatchNode)$"
+        ],
+        "cache": "/tmp/defend-native-args/cache/D2",
+        "exit": 1,
+        "wall_seconds": 14.566909300003317
+      }
+    ],
+    "failed": [
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals"
+    ],
+    "passed": [
+      "TestCEndsInNewline",
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionWrongOrder",
+      "TestDevirtualizedCalls",
+      "TestLoopArrayHoldC",
+      "TestLoopCallCoverage",
+      "TestNbodyBorrowedLoopC",
+      "TestNbodyIndexedElementsBorrow",
+      "TestNoReaderCallingConvention",
+      "TestNodeBufferRuntimeWithoutDeclarations",
+      "TestOptionalMethodThunksMatchNode",
+      "TestParserHasNoUnusedOptionalMethodThunks",
+      "TestRegexProgramsKeepCheckedFieldReads",
+      "TestTSGoBuildSeesTheProgramsFeatures",
+      "TestUniformFieldsMatchNode"
+    ],
+    "skipped": [],
+    "unknown": []
+  },
+  {
+    "mutant": "D3",
+    "runs": [
+      {
+        "command": [
+          "go",
+          "vet",
+          "./internal/native/"
+        ],
+        "cache": "/tmp/defend-native-args/cache/D3",
+        "exit": 0,
+        "wall_seconds": 0.25817935000304715
+      },
+      {
+        "command": [
+          "timeout",
+          "120",
+          "go",
+          "test",
+          "-json",
+          "-count=1",
+          "-timeout",
+          "90s",
+          "./internal/native/",
+          "-run",
+          "^(TestCEndsInNewline|TestClosureConventionDropCount|TestClosureConventionRuntimeDropCount|TestClosureConventionRuntimeFeaturesIgnoreLiterals|TestClosureConventionWrongOrder|TestDevirtualizedCalls|TestLoopArrayHoldC|TestLoopCallCoverage|TestNbodyBorrowedLoopC|TestNbodyIndexedElementsBorrow|TestNoReaderCallingConvention|TestNodeBufferRuntimeWithoutDeclarations|TestOptionalMethodThunksMatchNode|TestParserHasNoUnusedOptionalMethodThunks|TestRegexProgramsKeepCheckedFieldReads|TestTSGoBuildSeesTheProgramsFeatures|TestUniformFieldsMatchNode)$"
+        ],
+        "cache": "/tmp/defend-native-args/cache/D3",
+        "exit": 1,
+        "wall_seconds": 11.079338653999002
+      }
+    ],
+    "failed": [
+      "TestOptionalMethodThunksMatchNode",
+      "TestParserHasNoUnusedOptionalMethodThunks"
+    ],
+    "passed": [
+      "TestCEndsInNewline",
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "TestClosureConventionWrongOrder",
+      "TestDevirtualizedCalls",
+      "TestLoopArrayHoldC",
+      "TestLoopCallCoverage",
+      "TestNbodyBorrowedLoopC",
+      "TestNbodyIndexedElementsBorrow",
+      "TestNoReaderCallingConvention",
+      "TestNodeBufferRuntimeWithoutDeclarations",
+      "TestRegexProgramsKeepCheckedFieldReads",
+      "TestTSGoBuildSeesTheProgramsFeatures",
+      "TestUniformFieldsMatchNode"
+    ],
+    "skipped": [],
+    "unknown": []
+  },
+  {
+    "mutant": "D4",
+    "runs": [
+      {
+        "command": [
+          "go",
+          "vet",
+          "./internal/native/"
+        ],
+        "cache": "/tmp/defend-native-args/cache/D4",
+        "exit": 0,
+        "wall_seconds": 0.3025378240017744
+      },
+      {
+        "command": [
+          "timeout",
+          "120",
+          "go",
+          "test",
+          "-json",
+          "-count=1",
+          "-timeout",
+          "90s",
+          "./internal/native/",
+          "-run",
+          "^(TestCEndsInNewline|TestClosureConventionDropCount|TestClosureConventionRuntimeDropCount|TestClosureConventionRuntimeFeaturesIgnoreLiterals|TestClosureConventionWrongOrder|TestDevirtualizedCalls|TestLoopArrayHoldC|TestLoopCallCoverage|TestNbodyBorrowedLoopC|TestNbodyIndexedElementsBorrow|TestNoReaderCallingConvention|TestNodeBufferRuntimeWithoutDeclarations|TestOptionalMethodThunksMatchNode|TestParserHasNoUnusedOptionalMethodThunks|TestRegexProgramsKeepCheckedFieldReads|TestTSGoBuildSeesTheProgramsFeatures|TestUniformFieldsMatchNode)$"
+        ],
+        "cache": "/tmp/defend-native-args/cache/D4",
+        "exit": 1,
+        "wall_seconds": 11.441761771999154
+      }
+    ],
+    "failed": [
+      "TestOptionalMethodThunksMatchNode",
+      "TestParserHasNoUnusedOptionalMethodThunks"
+    ],
+    "passed": [
+      "TestCEndsInNewline",
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "TestClosureConventionWrongOrder",
+      "TestDevirtualizedCalls",
+      "TestLoopArrayHoldC",
+      "TestLoopCallCoverage",
+      "TestNbodyBorrowedLoopC",
+      "TestNbodyIndexedElementsBorrow",
+      "TestNoReaderCallingConvention",
+      "TestNodeBufferRuntimeWithoutDeclarations",
+      "TestRegexProgramsKeepCheckedFieldReads",
+      "TestTSGoBuildSeesTheProgramsFeatures",
+      "TestUniformFieldsMatchNode"
+    ],
+    "skipped": [],
+    "unknown": []
+  },
+  {
+    "mutant": "D5",
+    "runs": [
+      {
+        "command": [
+          "go",
+          "vet",
+          "./internal/native/"
+        ],
+        "cache": "/tmp/defend-native-args/cache/D5",
+        "exit": 0,
+        "wall_seconds": 0.25970502700147335
+      },
+      {
+        "command": [
+          "timeout",
+          "120",
+          "go",
+          "test",
+          "-json",
+          "-count=1",
+          "-timeout",
+          "90s",
+          "./internal/native/",
+          "-run",
+          "^(TestCEndsInNewline|TestClosureConventionDropCount|TestClosureConventionRuntimeDropCount|TestClosureConventionRuntimeFeaturesIgnoreLiterals|TestClosureConventionWrongOrder|TestDevirtualizedCalls|TestLoopArrayHoldC|TestLoopCallCoverage|TestNbodyBorrowedLoopC|TestNbodyIndexedElementsBorrow|TestNoReaderCallingConvention|TestNodeBufferRuntimeWithoutDeclarations|TestOptionalMethodThunksMatchNode|TestParserHasNoUnusedOptionalMethodThunks|TestRegexProgramsKeepCheckedFieldReads|TestTSGoBuildSeesTheProgramsFeatures|TestUniformFieldsMatchNode)$"
+        ],
+        "cache": "/tmp/defend-native-args/cache/D5",
+        "exit": 1,
+        "wall_seconds": 11.982894340999337
+      }
+    ],
+    "failed": [
+      "TestOptionalMethodThunksMatchNode",
+      "TestParserHasNoUnusedOptionalMethodThunks"
+    ],
+    "passed": [
+      "TestCEndsInNewline",
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "TestClosureConventionWrongOrder",
+      "TestDevirtualizedCalls",
+      "TestLoopArrayHoldC",
+      "TestLoopCallCoverage",
+      "TestNbodyBorrowedLoopC",
+      "TestNbodyIndexedElementsBorrow",
+      "TestNoReaderCallingConvention",
+      "TestNodeBufferRuntimeWithoutDeclarations",
+      "TestRegexProgramsKeepCheckedFieldReads",
+      "TestTSGoBuildSeesTheProgramsFeatures",
+      "TestUniformFieldsMatchNode"
+    ],
+    "skipped": [],
+    "unknown": []
+  }
+]

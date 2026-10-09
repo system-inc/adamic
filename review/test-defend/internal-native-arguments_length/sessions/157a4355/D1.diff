@@ -1,0 +1,16 @@
+diff --git a/internal/native/arguments_length.go b/internal/native/arguments_length.go
+index 07d078e8..973fc7dd 100644
+--- a/internal/native/arguments_length.go
++++ b/internal/native/arguments_length.go
+@@ -175,10 +175,7 @@ func missingArgument(of ir.Type) string {
+ }
+ 
+ func (e *emitter) packedClosureCall(call ir.CallClosure, closure, packed, count string) string {
+-	if e.program.PackedCountNeededFromCall(call) {
+-		return fmt.Sprintf("adamic_closure_call(%s, %s, %s)", closure, packed, count)
+-	}
+-	return fmt.Sprintf("%s->code(%s, %s)", closure, closure, packed)
++	return fmt.Sprintf("adamic_closure_call(%s, %s, %s)", closure, packed, count)
+ }
+ 
+ // A receiver is prefixed to every stored slot, including reserved rest tails.

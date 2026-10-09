@@ -1,0 +1,53 @@
+{
+  "base": "157a43552015f41a79331949c2e82b6f8c7caaab",
+  "code_under_test": "Native C emission: packedClosureCall counted-call selection; cProgram runtime feature detection; emitter.dispatchable optional method table eligibility. Lower prepares real IR; it is not mutated.",
+  "oracle": "self: emitted C count/absence checks and runtime header feature absence; Node execution in the subsumer and other agreement rows. No oracle/harness/test edits.",
+  "bounded_matrix": "All 17 current top-level rows directly calling C or RuntimeLibraryForSource/featureFlags. Static C search finds no indirect local C helper callers. Whole package baseline timed out at 90.031 seconds without individual failures; bounded baseline passed. Other runtime-only/package rows are outside the matrix, unknown.",
+  "mutants": [
+    {
+      "id": "D1",
+      "file": "internal/native/arguments_length.go",
+      "old": "\tif e.program.PackedCountNeededFromCall(call) {\n\t\treturn fmt.Sprintf(\"adamic_closure_call(%s, %s, %s)\", closure, packed, count)\n\t}\n\treturn fmt.Sprintf(\"%s->code(%s, %s)\", closure, closure, packed)",
+      "new": "\treturn fmt.Sprintf(\"adamic_closure_call(%s, %s, %s)\", closure, packed, count)",
+      "menu": "return early",
+      "aim": "Use counted helper for every call, including unrelated types and wholly unobserved programs. Actual counts are ignored for uncounted closures, so answers stay correct; NoReader rejects the excess convention machinery.",
+      "line": 178
+    },
+    {
+      "id": "D2",
+      "file": "internal/native/emit.go",
+      "old": "regexCallbacks, nodeHost := false, false",
+      "new": "regexCallbacks, nodeHost := true, false",
+      "menu": "change a constant",
+      "aim": "Compile unused regexp callback runtime support for programs containing only source literals. Other callers may remain semantically correct; the targeted row checks this excess runtime work.",
+      "line": 31
+    },
+    {
+      "id": "D3",
+      "file": "internal/native/emit_objects.go",
+      "old": "\tfor index, parameter := range method.Parameters {\n\t\tif index > 0 && slotless(e.program.Locals[parameter].Type) {\n\t\t\treturn false\n\t\t}\n\t}",
+      "new": "",
+      "menu": "drop a statement (whole parameter-filter loop)",
+      "aim": "Keep optional method thunks even when never needed. This increases emitted C and compiler work while preserving program answers where these tables are unused. Cost-oriented unused-thunk check should catch this.",
+      "line": 345
+    },
+    {
+      "id": "D4",
+      "file": "internal/native/emit_objects.go",
+      "old": "if e.program.StructuralMethodThunks == nil {",
+      "new": "if e.program.StructuralMethodThunks != nil {",
+      "menu": "flip a condition",
+      "aim": "Run legacy function-type fallback when a precise structural receiver map exists, potentially reintroducing parser callback methods.",
+      "line": 327
+    },
+    {
+      "id": "D5",
+      "file": "internal/native/emit_objects.go",
+      "old": "valueType == ir.MaybeBoolean && !needed",
+      "new": "valueType == ir.MaybeNumber && !needed",
+      "menu": "change a constant",
+      "aim": "Mistake optional Boolean slot restrictions for optional Number slots, emitting unnecessary parser thunks.",
+      "line": 344
+    }
+  ]
+}

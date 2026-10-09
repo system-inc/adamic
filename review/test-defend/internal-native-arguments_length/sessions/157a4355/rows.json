@@ -1,0 +1,239 @@
+[
+  {
+    "test": "TestNoReaderCallingConvention",
+    "package": "internal/native",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [],
+    "defense": "defended",
+    "unique_mutant": "D1 internal/native/arguments_length.go:178",
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "internal/native/arguments_length.go:178",
+        "change": "Return the counted helper call at entry for every closure call.",
+        "rows_failed": [
+          "TestNoReaderCallingConvention"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-native-args/cache/<id> timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestCEndsInNewline|TestClosureConventionDropCount|TestClosureConventionRuntimeDropCount|TestClosureConventionRuntimeFeaturesIgnoreLiterals|TestClosureConventionWrongOrder|TestDevirtualizedCalls|TestLoopArrayHoldC|TestLoopCallCoverage|TestNbodyBorrowedLoopC|TestNbodyIndexedElementsBorrow|TestNoReaderCallingConvention|TestNodeBufferRuntimeWithoutDeclarations|TestOptionalMethodThunksMatchNode|TestParserHasNoUnusedOptionalMethodThunks|TestRegexProgramsKeepCheckedFieldReads|TestTSGoBuildSeesTheProgramsFeatures|TestUniformFieldsMatchNode)$; D1: arguments_length_test.go:44: unobserved program contains a count binding; D1: arguments_length_test.go:41: count reached an unrelated function type",
+    "bounded": true,
+    "matrix_rows": [
+      "TestCEndsInNewline",
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "TestClosureConventionWrongOrder",
+      "TestDevirtualizedCalls",
+      "TestLoopArrayHoldC",
+      "TestLoopCallCoverage",
+      "TestNbodyBorrowedLoopC",
+      "TestNbodyIndexedElementsBorrow",
+      "TestNoReaderCallingConvention",
+      "TestNodeBufferRuntimeWithoutDeclarations",
+      "TestOptionalMethodThunksMatchNode",
+      "TestParserHasNoUnusedOptionalMethodThunks",
+      "TestRegexProgramsKeepCheckedFieldReads",
+      "TestTSGoBuildSeesTheProgramsFeatures",
+      "TestUniformFieldsMatchNode"
+    ],
+    "rows_passed_by_mutant": {
+      "D1": [
+        "TestCEndsInNewline",
+        "TestClosureConventionDropCount",
+        "TestClosureConventionRuntimeDropCount",
+        "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+        "TestClosureConventionWrongOrder",
+        "TestDevirtualizedCalls",
+        "TestLoopArrayHoldC",
+        "TestLoopCallCoverage",
+        "TestNbodyBorrowedLoopC",
+        "TestNbodyIndexedElementsBorrow",
+        "TestNodeBufferRuntimeWithoutDeclarations",
+        "TestOptionalMethodThunksMatchNode",
+        "TestParserHasNoUnusedOptionalMethodThunks",
+        "TestRegexProgramsKeepCheckedFieldReads",
+        "TestTSGoBuildSeesTheProgramsFeatures",
+        "TestUniformFieldsMatchNode"
+      ]
+    },
+    "current_verdict": "defended",
+    "oracle_kind": "self"
+  },
+  {
+    "test": "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+    "package": "internal/native",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [],
+    "defense": "defended",
+    "unique_mutant": "D2 internal/native/emit.go:31",
+    "attempts": [
+      {
+        "mutant": "D2",
+        "file_line": "internal/native/emit.go:31",
+        "change": "Change regexCallbacks initial constant from false to true.",
+        "rows_failed": [
+          "TestClosureConventionRuntimeFeaturesIgnoreLiterals"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-native-args/cache/<id> timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestCEndsInNewline|TestClosureConventionDropCount|TestClosureConventionRuntimeDropCount|TestClosureConventionRuntimeFeaturesIgnoreLiterals|TestClosureConventionWrongOrder|TestDevirtualizedCalls|TestLoopArrayHoldC|TestLoopCallCoverage|TestNbodyBorrowedLoopC|TestNbodyIndexedElementsBorrow|TestNoReaderCallingConvention|TestNodeBufferRuntimeWithoutDeclarations|TestOptionalMethodThunksMatchNode|TestParserHasNoUnusedOptionalMethodThunks|TestRegexProgramsKeepCheckedFieldReads|TestTSGoBuildSeesTheProgramsFeatures|TestUniformFieldsMatchNode)$; D2: closure_convention_test.go:99: a source literal selected unused runtime support: #define ADAMIC_REGEXP_REPLACE_CALLBACK 1",
+    "bounded": true,
+    "matrix_rows": [
+      "TestCEndsInNewline",
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "TestClosureConventionWrongOrder",
+      "TestDevirtualizedCalls",
+      "TestLoopArrayHoldC",
+      "TestLoopCallCoverage",
+      "TestNbodyBorrowedLoopC",
+      "TestNbodyIndexedElementsBorrow",
+      "TestNoReaderCallingConvention",
+      "TestNodeBufferRuntimeWithoutDeclarations",
+      "TestOptionalMethodThunksMatchNode",
+      "TestParserHasNoUnusedOptionalMethodThunks",
+      "TestRegexProgramsKeepCheckedFieldReads",
+      "TestTSGoBuildSeesTheProgramsFeatures",
+      "TestUniformFieldsMatchNode"
+    ],
+    "rows_passed_by_mutant": {
+      "D2": [
+        "TestCEndsInNewline",
+        "TestClosureConventionDropCount",
+        "TestClosureConventionRuntimeDropCount",
+        "TestClosureConventionWrongOrder",
+        "TestDevirtualizedCalls",
+        "TestLoopArrayHoldC",
+        "TestLoopCallCoverage",
+        "TestNbodyBorrowedLoopC",
+        "TestNbodyIndexedElementsBorrow",
+        "TestNoReaderCallingConvention",
+        "TestNodeBufferRuntimeWithoutDeclarations",
+        "TestOptionalMethodThunksMatchNode",
+        "TestParserHasNoUnusedOptionalMethodThunks",
+        "TestRegexProgramsKeepCheckedFieldReads",
+        "TestTSGoBuildSeesTheProgramsFeatures",
+        "TestUniformFieldsMatchNode"
+      ]
+    },
+    "current_verdict": "defended",
+    "oracle_kind": "self"
+  },
+  {
+    "test": "TestParserHasNoUnusedOptionalMethodThunks",
+    "package": "internal/native",
+    "prior_verdict": "untrue",
+    "subsumed_by": [
+      "TestOptionalMethodThunksMatchNode"
+    ],
+    "defense": "not defended",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D3",
+        "file_line": "internal/native/emit_objects.go:345",
+        "change": "Drop the whole dispatchable parameter-filter loop.",
+        "rows_failed": [
+          "TestOptionalMethodThunksMatchNode",
+          "TestParserHasNoUnusedOptionalMethodThunks"
+        ]
+      },
+      {
+        "mutant": "D4",
+        "file_line": "internal/native/emit_objects.go:327",
+        "change": "Flip StructuralMethodThunks == nil to != nil.",
+        "rows_failed": [
+          "TestOptionalMethodThunksMatchNode",
+          "TestParserHasNoUnusedOptionalMethodThunks"
+        ]
+      },
+      {
+        "mutant": "D5",
+        "file_line": "internal/native/emit_objects.go:344",
+        "change": "Change the slotless type constant from ir.MaybeBoolean to ir.MaybeNumber.",
+        "rows_failed": [
+          "TestOptionalMethodThunksMatchNode",
+          "TestParserHasNoUnusedOptionalMethodThunks"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-native-args/cache/<id> timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestCEndsInNewline|TestClosureConventionDropCount|TestClosureConventionRuntimeDropCount|TestClosureConventionRuntimeFeaturesIgnoreLiterals|TestClosureConventionWrongOrder|TestDevirtualizedCalls|TestLoopArrayHoldC|TestLoopCallCoverage|TestNbodyBorrowedLoopC|TestNbodyIndexedElementsBorrow|TestNoReaderCallingConvention|TestNodeBufferRuntimeWithoutDeclarations|TestOptionalMethodThunksMatchNode|TestParserHasNoUnusedOptionalMethodThunks|TestRegexProgramsKeepCheckedFieldReads|TestTSGoBuildSeesTheProgramsFeatures|TestUniformFieldsMatchNode)$; D3: closure_convention_test.go:193: unused optional method thunk: Parser_type; D4: closure_convention_test.go:193: unused optional method thunk: Parser_type; D5: closure_convention_test.go:193: unused optional method thunk: Parser_assignment",
+    "bounded": true,
+    "matrix_rows": [
+      "TestCEndsInNewline",
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "TestClosureConventionWrongOrder",
+      "TestDevirtualizedCalls",
+      "TestLoopArrayHoldC",
+      "TestLoopCallCoverage",
+      "TestNbodyBorrowedLoopC",
+      "TestNbodyIndexedElementsBorrow",
+      "TestNoReaderCallingConvention",
+      "TestNodeBufferRuntimeWithoutDeclarations",
+      "TestOptionalMethodThunksMatchNode",
+      "TestParserHasNoUnusedOptionalMethodThunks",
+      "TestRegexProgramsKeepCheckedFieldReads",
+      "TestTSGoBuildSeesTheProgramsFeatures",
+      "TestUniformFieldsMatchNode"
+    ],
+    "rows_passed_by_mutant": {
+      "D3": [
+        "TestCEndsInNewline",
+        "TestClosureConventionDropCount",
+        "TestClosureConventionRuntimeDropCount",
+        "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+        "TestClosureConventionWrongOrder",
+        "TestDevirtualizedCalls",
+        "TestLoopArrayHoldC",
+        "TestLoopCallCoverage",
+        "TestNbodyBorrowedLoopC",
+        "TestNbodyIndexedElementsBorrow",
+        "TestNoReaderCallingConvention",
+        "TestNodeBufferRuntimeWithoutDeclarations",
+        "TestRegexProgramsKeepCheckedFieldReads",
+        "TestTSGoBuildSeesTheProgramsFeatures",
+        "TestUniformFieldsMatchNode"
+      ],
+      "D4": [
+        "TestCEndsInNewline",
+        "TestClosureConventionDropCount",
+        "TestClosureConventionRuntimeDropCount",
+        "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+        "TestClosureConventionWrongOrder",
+        "TestDevirtualizedCalls",
+        "TestLoopArrayHoldC",
+        "TestLoopCallCoverage",
+        "TestNbodyBorrowedLoopC",
+        "TestNbodyIndexedElementsBorrow",
+        "TestNoReaderCallingConvention",
+        "TestNodeBufferRuntimeWithoutDeclarations",
+        "TestRegexProgramsKeepCheckedFieldReads",
+        "TestTSGoBuildSeesTheProgramsFeatures",
+        "TestUniformFieldsMatchNode"
+      ],
+      "D5": [
+        "TestCEndsInNewline",
+        "TestClosureConventionDropCount",
+        "TestClosureConventionRuntimeDropCount",
+        "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+        "TestClosureConventionWrongOrder",
+        "TestDevirtualizedCalls",
+        "TestLoopArrayHoldC",
+        "TestLoopCallCoverage",
+        "TestNbodyBorrowedLoopC",
+        "TestNbodyIndexedElementsBorrow",
+        "TestNoReaderCallingConvention",
+        "TestNodeBufferRuntimeWithoutDeclarations",
+        "TestRegexProgramsKeepCheckedFieldReads",
+        "TestTSGoBuildSeesTheProgramsFeatures",
+        "TestUniformFieldsMatchNode"
+      ]
+    },
+    "current_verdict": "subsumed",
+    "oracle_kind": "self"
+  }
+]

@@ -1,0 +1,13 @@
+diff --git a/internal/native/emit.go b/internal/native/emit.go
+index 8842056c..df0e3f89 100644
+--- a/internal/native/emit.go
++++ b/internal/native/emit.go
+@@ -28,7 +28,7 @@ func cProgram(program *ir.Program, handler int) string {
+ 	elementBorrows, lending := planElementBorrows(program)
+ 	emitter := &emitter{program: program, reuse: planReuse(program, lending), regions: planRegions(program), elementBorrows: elementBorrows}
+ 	var builder strings.Builder
+-	regexCallbacks, nodeHost := false, false
++	regexCallbacks, nodeHost := true, false
+ 	walkExpressions(program, func(expression ir.Expression) {
+ 		switch call := expression.(type) {
+ 		case ir.RegExpCall:

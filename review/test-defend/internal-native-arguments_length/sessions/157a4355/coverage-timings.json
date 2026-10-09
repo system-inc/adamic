@@ -1,0 +1,82 @@
+[
+  {
+    "row": "TestNoReaderCallingConvention",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/native/",
+      "-run",
+      "^TestNoReaderCallingConvention$",
+      "-coverpkg=github.com/system-inc/adamic/internal/native,github.com/system-inc/adamic/internal/ir",
+      "-coverprofile=/tmp/defend-native-args/TestNoReaderCallingConvention.cover"
+    ],
+    "exit": 0,
+    "wall_seconds": 11.483225601998129
+  },
+  {
+    "row": "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/native/",
+      "-run",
+      "^TestClosureConventionRuntimeFeaturesIgnoreLiterals$",
+      "-coverpkg=github.com/system-inc/adamic/internal/native,github.com/system-inc/adamic/internal/ir",
+      "-coverprofile=/tmp/defend-native-args/TestClosureConventionRuntimeFeaturesIgnoreLiterals.cover"
+    ],
+    "exit": 0,
+    "wall_seconds": 1.825330016999942
+  },
+  {
+    "row": "TestParserHasNoUnusedOptionalMethodThunks",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/native/",
+      "-run",
+      "^TestParserHasNoUnusedOptionalMethodThunks$",
+      "-coverpkg=github.com/system-inc/adamic/internal/native,github.com/system-inc/adamic/internal/ir",
+      "-coverprofile=/tmp/defend-native-args/TestParserHasNoUnusedOptionalMethodThunks.cover"
+    ],
+    "exit": 0,
+    "wall_seconds": 7.379204441000184
+  },
+  {
+    "row": "TestOptionalMethodThunksMatchNode",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/native/",
+      "-run",
+      "^TestOptionalMethodThunksMatchNode$",
+      "-coverpkg=github.com/system-inc/adamic/internal/native,github.com/system-inc/adamic/internal/ir",
+      "-coverprofile=/tmp/defend-native-args/TestOptionalMethodThunksMatchNode.cover"
+    ],
+    "exit": 0,
+    "wall_seconds": 2.0214878610022424
+  }
+]

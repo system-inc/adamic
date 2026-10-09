@@ -1,0 +1,73 @@
+[
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "run",
+      "review/test-defend/internal-native-arguments_length/.scratch/main.go",
+      "internal/native/testdata/optional_method_thunks.a",
+      "/tmp/defend-native-args/clean-optional"
+    ],
+    "exit": 0,
+    "wall_seconds": 5.005770223997388
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "run",
+      "review/test-defend/internal-native-arguments_length/.scratch/main.go",
+      "stage1/typescript/parser/main.ts"
+    ],
+    "exit": 0,
+    "wall_seconds": 5.442044886000076
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "run",
+      "review/test-defend/internal-native-arguments_length/.scratch/main.go",
+      "internal/native/testdata/optional_method_thunks.a",
+      "/tmp/defend-native-args/D3-optional"
+    ],
+    "exit": 0,
+    "wall_seconds": 5.046615829996881
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "run",
+      "review/test-defend/internal-native-arguments_length/.scratch/main.go",
+      "stage1/typescript/parser/main.ts"
+    ],
+    "exit": 0,
+    "wall_seconds": 5.541723179998371
+  },
+  {
+    "command": [
+      "/tmp/defend-native-args/clean-optional"
+    ],
+    "exit": 0
+  },
+  {
+    "command": [
+      "/tmp/defend-native-args/D3-optional"
+    ],
+    "exit": 0
+  },
+  {
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "-e",
+      "const fs=require('fs'),m=require('module');eval(m.stripTypeScriptTypes(fs.readFileSync('internal/native/testdata/optional_method_thunks.a','utf8')))"
+    ],
+    "exit": 0
+  }
+]

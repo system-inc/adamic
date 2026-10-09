@@ -1,0 +1,14 @@
+{
+  "TestNoReaderCallingConvention": {
+    "exclusive_blocks": 96,
+    "comparison": "TestOptionalMethodThunksMatchNode.cover"
+  },
+  "TestClosureConventionRuntimeFeaturesIgnoreLiterals": {
+    "exclusive_blocks": 0,
+    "comparison": "TestOptionalMethodThunksMatchNode.cover"
+  },
+  "TestParserHasNoUnusedOptionalMethodThunks": {
+    "exclusive_blocks": 196,
+    "comparison": "parser-rest.cover"
+  }
+}
