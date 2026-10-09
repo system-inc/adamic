@@ -180,6 +180,8 @@ adamic_view_union_value adamic_object_view_union_snapshot(const adamic_object *o
         adamic_view_union_kind expected = storage == adamic_rep_string ? adamic_view_union_string : storage == adamic_rep_object || storage == adamic_rep_weak ? adamic_view_union_object : storage == adamic_rep_array ? adamic_view_union_array : storage == adamic_rep_map ? adamic_view_union_map : storage == adamic_rep_closure ? adamic_view_union_function : value.kind;
         if (value.kind != adamic_view_union_undefined && value.kind != expected) { value.kind = adamic_view_union_unknown; }
     }
+    // These counted references have no named mixed-union kind yet.
+    if (storage >= adamic_rep_record) { value.payload.reference = slot->reference; }
     return value;
 }
 

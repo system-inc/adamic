@@ -42,3 +42,23 @@ index 13653e1b..c4a9ee0a 100644
 ```
 
 Independent evidence: runtime-alone.log restores the old compiler retain and agrees with Node. runtime-mutant.log restores the raw slot only for maybe-boolean and restores the old compiler retain; release native crashes and UBSan diagnoses a misaligned adamic_heap access at heap.c:226, address 0x4045000000000002. The final direct sanitized payload test also covers scalar, maybe, nullish, optional absence and raw unknown slots (native-views.log).
+
+## Counted-reference clearance condition
+
+Record, uint8, int32 and float64 storage preserve `slot->reference` in the snapshot while keeping kind unknown. They have no named mixed-union kinds; naming them here would change admission and failure output. This takes only the member their storage tag owns, and does not restore raw stale bytes for scalar or nullish storage.
+
+```diff
+diff --git a/internal/native/runtime/object.c b/internal/native/runtime/object.c
+index c4a9ee0a..1c0b5307 100644
+--- a/internal/native/runtime/object.c
++++ b/internal/native/runtime/object.c
+@@ -180,6 +180,8 @@ adamic_view_union_value adamic_object_view_union_snapshot(const adamic_object *o
+         adamic_view_union_kind expected = storage == adamic_rep_string ? adamic_view_union_string : storage == adamic_rep_object || storage == adamic_rep_weak ? adamic_view_union_object : storage == adamic_rep_array ? adamic_view_union_array : storage == adamic_rep_map ? adamic_view_union_map : storage == adamic_rep_closure ? adamic_view_union_function : value.kind;
+         if (value.kind != adamic_view_union_undefined && value.kind != expected) { value.kind = adamic_view_union_unknown; }
+     }
++    // These counted references have no named mixed-union kind yet.
++    if (storage >= adamic_rep_record) { value.payload.reference = slot->reference; }
+     return value;
+ }
+ 
+```

@@ -1,0 +1,10 @@
+--- a/internal/native/runtime/object.c
++++ b/internal/native/runtime/object.c
+@@ -181,7 +181,6 @@
+         if (value.kind != adamic_view_union_undefined && value.kind != expected) { value.kind = adamic_view_union_unknown; }
+     }
+     // These counted references have no named mixed-union kind yet.
+-    if (storage >= adamic_rep_record) { value.payload.reference = slot->reference; }
+     return value;
+ }
+ 
