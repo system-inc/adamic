@@ -696,6 +696,31 @@ class Products(unittest.TestCase):
             _, status, _ = self.gate(unowned=("stage3/probe.py",))
         self.assertTrue(status.startswith("green:"), status)
 
+    def test_declared_upstream_products_run_before_the_rest(self):
+        # One pool worker, so the order is the submission order: TestProduct_A sorts first and runs first unless the
+        # declared upstream holds it back (#r7rdv2t).
+        names = ("TestProduct_A", "TestProduct_Up", "TestX")
+        with mock.patch.object(run, "slotCPUs", return_value=4):
+            with mock.patch.object(run, "upstreamProducts", {"p": {"TestProduct_Up"}}):
+                _, status, _, _, order = self.probe(names=names)
+            self.assertTrue(status.startswith("green:"), status)
+            self.assertEqual(order, ["TestProduct_Up", "TestProduct_A", "TestX"])
+            with mock.patch.object(run, "upstreamProducts", {}):
+                _, status, _, _, order = self.probe(names=names)
+            self.assertTrue(status.startswith("green:"), status)
+            self.assertEqual(order, ["TestProduct_A", "TestProduct_Up", "TestX"])
+
+    def test_an_upstream_not_in_this_run_strands_nothing(self):
+        # Declared for this package but not among its products, or declared for a package this run doesn't touch: every
+        # product still runs, and the gate is green.
+        for declared in ({"p": {"TestProduct_Missing"}}, {"q": {"TestProduct_A"}}):
+            with self.subTest(declared=declared), mock.patch.object(run, "slotCPUs", return_value=4), \
+                    mock.patch.object(run, "upstreamProducts", declared):
+                _, status, result, _, order = self.probe(names=("TestProduct_A", "TestProduct_B", "TestX"))
+                self.assertTrue(status.startswith("green:"), status)
+                self.assertEqual(order, ["TestProduct_A", "TestProduct_B", "TestX"])
+                self.assertEqual(result["stages_exit"]["products"], 0)
+
     def test_no_products_plan_no_stage(self):
         _, status, result, _, order = self.probe(names=("TestX",))
         self.assertTrue(status.startswith("green:"), status)

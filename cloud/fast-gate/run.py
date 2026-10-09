@@ -68,6 +68,15 @@ unitKillSeconds = 90
 # budget is listed beside the verdict, never red (@system_adamic, Oct 9 00:41 MDT, live on Loom's pool first: the boxes'
 # 90 s product kill at load 53 redded every candidate on main's own products).
 productKillSeconds = 600
+# The products other products build from run as a first wave, and the rest are submitted once those have finished
+# (#r7rdv2t). A product's ceiling is its own process's clock, so a product that waited on a sibling's cold stage0 or
+# checker archive spent its 600 s on that build (Oct 9: typeaware's corpus_native_asan was killed after a 220.9 s cold
+# stage0 and a 189.3 s wait on checker_archive_asan's single-flight build). Declared here, never inferred: a product not
+# listed runs as before, only not in the first wave.
+upstreamProducts = {
+    module + "/bridge/tsgo": {"TestProduct_Stage0", "TestProduct_TsgoArchive", "TestProduct_TsgoSanitizedArchive"},
+    module + "/stage1/cohere/typeaware": {"TestProduct_stage0", "TestProduct_checker", "TestProduct_checker_asan"},
+}
 smokeTest = "TestNativeAgreesWithNode"
 oracle = module + "/internal/oracle"
 # A command run by literal name: exec.Command("x", exec.CommandContext(ctx, "x", exec.LookPath("x").
@@ -1756,10 +1765,47 @@ class Gate:
         else:
             productsReady.set()
         productPool = ThreadPoolExecutor(max_workers=max(1, slotCPUs() // 4))
+        # The first wave: this run's declared upstream products. Every other product is held, never submitted to wait
+        # inside the pool (where it would hold a worker an upstream needs), until the wave has finished, or until no
+        # package is left to build, so a missing or broken upstream never strands it.
+        upstreamsPending = sum(1 for row in productRows if row["test"] in upstreamProducts.get(row["package"], ()))
+        upstreamsUnsubmitted = upstreamsPending
+        waveDone = threading.Event()
+        if not upstreamsPending:
+            waveDone.set()
+        held = []
+
+        def submitProduct(row, binary):
+            nonlocal upstreamsUnsubmitted
+            with self.lock:
+                if row["test"] in upstreamProducts.get(row["package"], ()):
+                    upstreamsUnsubmitted -= 1
+                elif not waveDone.is_set():
+                    held.append((row, binary))
+                    return
+            productPool.submit(runProduct, row, binary)
+
+        def settleUpstreams(count):
+            nonlocal upstreamsPending
+            with self.lock:
+                upstreamsPending -= count
+                if upstreamsPending > 0:
+                    return
+                waveDone.set()
+            releaseHeld()
+
+        def releaseHeld():
+            with self.lock:
+                released = held[:]
+                held.clear()
+            for row, binary in released:
+                productPool.submit(runProduct, row, binary)
 
         def runProduct(row, binary):
             self.productUnit(row, binary, log)
             nonlocal productsRemaining
+            if row["test"] in upstreamProducts.get(row["package"], ()):
+                settleUpstreams(1)
             with self.lock:
                 if row["status"] == "passed":
                     productsRemaining -= 1
@@ -1816,7 +1862,7 @@ class Gate:
                 return
             for row in productRows:
                 if row["package"] == importPath:
-                    productPool.submit(runProduct, row, binary)
+                    submitProduct(row, binary)
             names = [] if productsOnly else [name for name in names if not name.startswith("TestProduct_")]
             if importPath in getattr(self, "onlyTests", {}):
                 names = [name for name in names if inFamily(name, self.onlyTests[importPath])]
@@ -1910,6 +1956,10 @@ class Gate:
             threads.append(thread)
         for thread in threads:
             thread.join()
+        # Every package has built. An upstream that was never submitted (its package failed to build or list) counts as
+        # settled; the ones still running release the rest as they finish, before the pool may close.
+        settleUpstreams(upstreamsUnsubmitted)
+        waveDone.wait()
         productPool.shutdown(wait=True)
         if productRows:
             self.steps.setdefault("products", round(time.monotonic() - productStarted, 3))
