@@ -1,0 +1,56 @@
+[
+  {
+    "name": "control",
+    "exit": 0,
+    "report": {
+      "success": true,
+      "timeout": false,
+      "differences": {}
+    }
+  },
+  {
+    "name": "stdout-byte",
+    "exit": 1,
+    "report": {
+      "success": false,
+      "timeout": false,
+      "differences": {
+        "stdout": {
+          "first_byte": 0,
+          "expected_bytes": 3475070,
+          "actual_bytes": 3475070
+        }
+      }
+    }
+  },
+  {
+    "name": "stderr-byte",
+    "exit": 1,
+    "report": {
+      "success": false,
+      "timeout": false,
+      "differences": {
+        "stderr": {
+          "first_byte": 0,
+          "expected_bytes": 0,
+          "actual_bytes": 1
+        }
+      }
+    }
+  },
+  {
+    "name": "exit-byte",
+    "exit": 1,
+    "report": {
+      "success": false,
+      "timeout": false,
+      "differences": {
+        "exit": {
+          "first_byte": 0,
+          "expected_bytes": 2,
+          "actual_bytes": 2
+        }
+      }
+    }
+  }
+]

@@ -1,0 +1,4 @@
+// a-check: type error TS2339
+const error = new Error('ok');
+Error.captureStackTrace(error);
+console.log(error.message);

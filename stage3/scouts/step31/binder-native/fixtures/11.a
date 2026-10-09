@@ -1,0 +1,4 @@
+// NotYet witness; see fixtures.json for the exact measured message.
+namespace Debug { export const cache = new Map<string, number>(); }
+namespace Later { export const ready = 1; }
+console.log(String(Debug.cache.size));

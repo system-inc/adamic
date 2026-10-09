@@ -1,0 +1,4 @@
+// NotYet witness; see fixtures.json for the exact measured message.
+const cache = new Map<Readonly<Record<string, string | number>>, readonly [number, string][]>();
+enum Phase { Ready = 1 }
+console.log(String(cache.size));

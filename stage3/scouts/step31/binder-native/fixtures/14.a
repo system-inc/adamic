@@ -1,0 +1,4 @@
+// a-check: type error TS18048
+let clock: { now: () => number } | undefined = { now: () => 1 };
+function timestamp(): number { return clock.now(); }
+console.log(String(timestamp()));
