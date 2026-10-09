@@ -128,7 +128,29 @@ func bridgeProductInputs(t testing.TB, repository, name string) buildcache.Input
 			inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool(fields[0], "--version"))
 		}
 	}
+	// Stage 0, the oracle and the checker archive are plain go builds: with -trimpath and -buildvcs=false in effect
+	// (cloud/setup.sh exports both, @system_adamic's ruling, Oct 9) their bytes don't depend on where the checkout sits,
+	// so their key names the repository by role and a checkout at any path fetches what main's gate published
+	// (cmd/productidentity -elsewhere proves it). Every other product keeps the path: clang's debug information names
+	// it, and an overlay's map does.
+	if bridgePathFreeProducts[name] && bridgeBuildsArePathFree() {
+		for index, flag := range inputs.Flags {
+			inputs.Flags[index] = strings.ReplaceAll(flag, repository, "<repository>")
+		}
+	}
 	return inputs
+}
+
+var bridgePathFreeProducts = map[string]bool{"stage0": true, "oracle": true, "tsgo.a": true}
+
+// bridgeBuildsArePathFree says whether go builds here leave out the checkout's path and commit, as GOFLAGS says.
+func bridgeBuildsArePathFree() bool {
+	var trimmed, unstamped bool
+	for _, flag := range strings.Fields(strings.TrimPrefix(buildcache.Tool("go", "env", "GOFLAGS"), "go env GOFLAGS: ")) {
+		trimmed = trimmed || flag == "-trimpath" || flag == "-trimpath=true"
+		unstamped = unstamped || flag == "-buildvcs=false"
+	}
+	return trimmed && unstamped
 }
 
 func bridgeProduct(t testing.TB, repository, name string) string {

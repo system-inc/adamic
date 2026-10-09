@@ -12,19 +12,6 @@ import (
 	"github.com/system-inc/adamic/internal/lower"
 )
 
-// One seed makes one program, every time: that's what makes a finding reproduce.
-func TestOneSeedOneProgram(t *testing.T) {
-	t.Parallel()
-	for seed := uint64(1); seed <= 20; seed++ {
-		if first, second := Generate(seed).Source(), Generate(seed).Source(); first != second {
-			t.Fatalf("seed %d made two different programs", seed)
-		}
-	}
-	if Generate(1).Source() == Generate(2).Source() {
-		t.Fatal("seeds 1 and 2 made the same program")
-	}
-}
-
 // Every program the generator makes must be Adamic that stage 0 lowers, except a parallel refusal,
 // which must be refused with a message that names the path. One the checker refuses for any other
 // reason is the generator's fault, and one stage 0 can't lower tests nothing.

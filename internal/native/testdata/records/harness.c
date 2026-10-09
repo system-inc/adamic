@@ -272,6 +272,14 @@ static void numeric(size_t count) {
 	pairs(record);
 	adamic_release(record);
 }
+// Exactly two index keys, inserted out of order: the smallest count that needs the index sort.
+static void two_indices(void) {
+	adamic_record *record = adamic_record_new(false);
+	put(record, "10", 0);
+	put(record, "2", 1);
+	snapshot(record);
+	adamic_release(record);
+}
 static double now(void) {
 	struct timespec time;
 	if (clock_gettime(CLOCK_MONOTONIC, &time) != 0) abort();
@@ -345,6 +353,7 @@ int main(int argc, char **argv) {
 	}
 	else if (strcmp(argv[1], "iteration") == 0) iteration();
 	else if (strcmp(argv[1], "numeric") == 0) numeric(100000);
+	else if (strcmp(argv[1], "two-indices") == 0) two_indices();
 	else if (strcmp(argv[1], "workload") == 0 || strcmp(argv[1], "bench") == 0) {
 		if (argc != 3) return 2;
 		workload((size_t)strtoull(argv[2], NULL, 10), strcmp(argv[1], "bench") == 0);
