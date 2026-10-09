@@ -1,0 +1,83 @@
+run adamic-gate-pilot-again-20261009T113802-1a3adbf1: void, 5418 tests in 337 units, 5 failed, 31 units broken, 4 killed over budget
+BROKEN product-69: no results (exited true, last output "none            8.8G  5.4G  3.5G  61% /tmp")
+BROKEN product-89: killed in its opening, before any test began: Loom's fault (last output "loom-runner: still running after 540 s")
+BROKEN product-111: no results (exited true, last output "none            8.8G  5.4G  3.5G  61% /tmp")
+BROKEN product-115: no results (exited true, last output "none            8.8G  5.4G  3.5G  61% /tmp")
+BROKEN product-126: no results (exited true, last output "none            8.8G  5.4G  3.5G  61% /tmp")
+BROKEN product-145: killed in its opening, before any test began: Loom's fault (last output "loom-runner: still running after 510 s")
+BROKEN product-204: killed in its opening, before any test began: Loom's fault (last output "loom-runner: still running after 540 s")
+BROKEN product-218: no results (exited true, last output "loom-pilot: checkout of 60397548dd8a9494a7d2aaa874b7648b8e625607 failed")
+BROKEN product-255: no results (exited true, last output "none            8.8G  5.4G  3.5G  61% /tmp")
+BROKEN product-274: killed in its opening, before any test began: Loom's fault (last output "loom-runner: still running after 540 s")
+BROKEN product-282: killed in its opening, before any test began: Loom's fault (last output "loom-runner: still running after 510 s")
+BROKEN product-286: no results (exited true, last output "none            8.8G  5.4G  3.5G  61% /tmp")
+BROKEN product-442: no results (exited true, last output "none            8.8G  5.4G  3.5G  61% /tmp")
+BROKEN product-482: no results (exited true, last output "none            8.8G  5.4G  3.5G  61% /tmp")
+BROKEN product-508: no results (exited true, last output "none            8.8G  5.4G  3.5G  61% /tmp")
+BROKEN product-510: killed in its opening, before any test began: Loom's fault (last output "loom-runner: still running after 510 s")
+BROKEN tests-750: killed in its opening, before any test began: Loom's fault (last output "")
+BROKEN tests-753: killed in its opening, before any test began: Loom's fault (last output "")
+BROKEN tests-759: killed in its opening, before any test began: Loom's fault (last output "")
+BROKEN tests-780: killed in its opening, before any test began: Loom's fault (last output "")
+BROKEN tests-785: killed in its opening, before any test began: Loom's fault (last output "")
+BROKEN tests-795: killed in its opening, before any test began: Loom's fault (last output "")
+BROKEN tests-798: killed in its opening, before any test began: Loom's fault (last output "")
+BROKEN tests-799: no results (exited true, last output "none            8.8G  5.4G  3.5G  61% /tmp")
+BROKEN tests-802: killed in its opening, before any test began: Loom's fault (last output "")
+BROKEN tests-815: no results (exited true, last output "none            8.8G  5.4G  3.5G  61% /tmp")
+BROKEN tests-821: killed in its opening, before any test began: Loom's fault (last output "fatal: Failed to recurse into submodule path 'cohere'")
+BROKEN tests-834: no results (exited true, last output "none            8.8G  5.4G  3.5G  61% /tmp")
+BROKEN tests-958: killed in its opening, before any test began: Loom's fault (last output "")
+BROKEN tests-1042: no results (exited true, last output "none            8.8G  5.4G  3.5G  61% /tmp")
+BROKEN tests-1451: no results (exited true, last output "none            8.8G  5.4G  3.5G  61% /tmp")
+PRODUCT OVER 60 S product-00 github.com/system-inc/adamic/bridge/tsgo TestProduct_ApiDriver: 125 s
+PRODUCT OVER 60 S product-03 github.com/system-inc/adamic/bridge/tsgo TestProduct_LeakDriver: 118 s
+PRODUCT OVER 60 S product-11 github.com/system-inc/adamic/bridge/tsgo TestProduct_SanitizedNative: 180 s
+PRODUCT OVER 60 S product-37 github.com/system-inc/adamic/stage1/cohere/css TestProduct_CSSPrinterParserOracle: 592 s
+PRODUCT OVER 60 S product-67 github.com/system-inc/adamic/stage1/cohere/estree TestProduct_AcceptanceOracle: 434 s
+PRODUCT OVER 60 S product-90 github.com/system-inc/adamic/stage1/cohere/estree TestProduct_SyntaxMutantsSetup: 105 s
+PRODUCT OVER 60 S product-109 github.com/system-inc/adamic/stage1/cohere/formatfiles TestProduct_FormatfilesNativeLinkLoop: 232 s
+PRODUCT OVER 60 S product-135 github.com/system-inc/adamic/stage1/cohere/graphql/printer TestProduct_GraphQLPrinterTight: 198 s
+PRODUCT OVER 60 S product-151 github.com/system-inc/adamic/stage1/cohere/lint TestProduct_DecodedOptionsNative: 85 s
+PRODUCT OVER 60 S product-158 github.com/system-inc/adamic/stage1/cohere/lint TestProduct_NodeTableCapture: 78 s
+PRODUCT OVER 60 S product-159 github.com/system-inc/adamic/stage1/cohere/lint TestProduct_NodeTableEmitted: 82 s
+PRODUCT OVER 60 S product-161 github.com/system-inc/adamic/stage1/cohere/lint TestProduct_NodeTableNative: 83 s
+PRODUCT OVER 60 S product-163 github.com/system-inc/adamic/stage1/cohere/lint TestProduct_ProfileCompilationC: 66 s
+PRODUCT OVER 60 S product-168 github.com/system-inc/adamic/stage1/cohere/lint TestProduct_ProfileCompilationOracleOutputs: 150 s
+PRODUCT OVER 60 S product-176 github.com/system-inc/adamic/stage1/cohere/lint TestProduct_ShardsAgreePrepared: 128 s
+PRODUCT OVER 60 S product-197 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestProduct_MarkdownLeafNativeSanitized: 73 s
+PRODUCT OVER 60 S product-205 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestProduct_MarkdownQuote_native_true: 77 s
+PRODUCT OVER 60 S product-209 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestProduct_MarkdownStructure_native: 97 s
+PRODUCT OVER 60 S product-214 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestProduct_MarkdownTable_native_true: 93 s
+PRODUCT OVER 60 S product-218 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestProduct_MarkdownTextLowered: 117 s
+PRODUCT OVER 60 S product-225 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestProduct_MarkdownWhitespace_native_false: 208 s
+PRODUCT OVER 60 S product-226 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestProduct_MarkdownWhitespace_native_true: 71 s
+PRODUCT OVER 60 S product-278 github.com/system-inc/adamic/stage1/cohere/tsprinter TestProduct_TSPrinterMutantNative_020: 188 s
+PRODUCT OVER 60 S product-284 github.com/system-inc/adamic/stage1/cohere/tsprinter TestProduct_TSPrinterMutantNative_026: 447 s
+PRODUCT OVER 60 S product-314 github.com/system-inc/adamic/stage1/cohere/tsprinter TestProduct_TSPrinterMutantOracle_027: 457 s
+PRODUCT OVER 60 S product-317 github.com/system-inc/adamic/stage1/cohere/tsprinter TestProduct_TSPrinterStatementsEmbedded_000: 61 s
+PRODUCT OVER 60 S product-355 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_checker: 286 s
+PRODUCT OVER 60 S product-356 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_checker_asan: 155 s
+PRODUCT OVER 60 S product-361 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_corpus_native_asan: 167 s
+PRODUCT OVER 60 S product-370 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_profile_controls_native_asan: 179 s
+PRODUCT OVER 60 S product-373 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_profile_mutant_first_binding: 159 s
+PRODUCT OVER 60 S product-376 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_query_cost_native: 127 s
+PRODUCT OVER 60 S product-419 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_agreement_scope_locals_native: 524 s
+PRODUCT OVER 60 S product-423 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_agreement_type_origin_native: 184 s
+PRODUCT OVER 60 S product-430 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_guard_archive_checker_asan: 121 s
+PRODUCT OVER 60 S product-435 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_guard_volume: 164 s
+KILLED product-173 github.com/system-inc/adamic/stage1/cohere/lint TestProduct_ShardsAgreeLowered: over budget, P0
+KILLED tests-755: over budget, P0
+KILLED tests-782 github.com/system-inc/adamic/internal/native TestSplitTSGoAgreesUnit01: over budget, P0
+KILLED tests-959 github.com/system-inc/adamic/stage1/cohere/gitignore TestThePortAnswersAsGoCohereAndGitDo_023: over budget, P0
+KILLED tests-959 github.com/system-inc/adamic/stage1/cohere/gitignore TestThePortAnswersAsGoCohereAndGitDo_016: over budget, P0
+FAIL product-173 (killed at 600 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/lint TestProduct_ShardsAgreeLowered
+FAIL tests-755 (killed at 90 s, over budget)
+    last output "Terminated"
+FAIL tests-782 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/internal/native TestSplitTSGoAgreesUnit01
+FAIL tests-959 (killed at 90 s, over budget)
+    running at the kill: github.com/system-inc/adamic/stage1/cohere/gitignore TestThePortAnswersAsGoCohereAndGitDo_023; github.com/system-inc/adamic/stage1/cohere/gitignore TestThePortAnswersAsGoCohereAndGitDo_016
+FAIL github.com/system-inc/adamic/internal/ir TestCallTargetReaders (tests-1659)
+    call_targets_guard_test.go:169: unapproved call-target read internal/lower/class_static_guard_test.go:TestClassStaticInitializerCallIsEmitted:Call.Function at /tmp/adamic/internal/lower/class_static_guard_test.go:42:13; use CallTargets or ClosureTargets
