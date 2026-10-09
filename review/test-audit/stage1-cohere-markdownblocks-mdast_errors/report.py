@@ -43,7 +43,7 @@ def failure(mid,name):
  e=events(mid); failed=[n for n,r in raw_matrix[mid].items()if r=='fail'and byname.get(n,n)==name]
  for x in e:
   out=x.get('Output','').strip()
-  if x.get('Test','').split('/')[0]in failed and re.search(r'_test\.go:\d+:',out)and not any(v in out for v in ['build ','corpus-files:','setup):','planted failure caught','build cache']):return out
+  if x.get('Test','').split('/')[0] in failed and re.search(r'_test\.go:\d+:',out) and any(v in out for v in ['first byte difference',' got',' differs','output byte','did not reach','survived byte comparison','quote native setup failed','lost fixed','indexed corpus/control','Go errors: exit status']):return out
  if mid=='G1':return next(x['Output'].strip()for x in e if 'Go errors: exit status'in x.get('Output',''))
  return next((x['Output'].strip()for x in e if x.get('Output','').startswith('panic:')),'No assertion line; inspect raw log.')
 results=[]

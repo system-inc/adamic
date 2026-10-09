@@ -16,7 +16,7 @@ CODE UNDER TEST AND ORACLES were named in commentary before mutation. Port entri
     "oracle_kind": "self",
     "kills": [],
     "unique_kills": [],
-    "last_proven_fail": "G1 support_test.go:60: markdownblocks memory capacity: 16 units (512 MiB each)",
+    "last_proven_fail": "G1 malformed_events_independent_test.go:252: build markdownblocks-malformed-events-go-errors: Go errors: exit status 2",
     "verdict": "setup-check",
     "subsumed_by": [],
     "mutants_in_matrix": 1,
@@ -29,7 +29,7 @@ CODE UNDER TEST AND ORACLES were named in commentary before mutation. Port entri
       "TestMdastMalformedEvents_Setup",
       "TestNativeMdastConstruction"
     ],
-    "evidence": "timeout 120 go test -overlay=/tmp/u128/G1-overlay.json -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestMdastMalformedEvents_Setup)$ > /workspace/adamic/review/test-audit/stage1-cohere-markdownblocks-mdast_errors/G1.log 2>&1; support_test.go:60: markdownblocks memory capacity: 16 units (512 MiB each)",
+    "evidence": "timeout 120 go test -overlay=/tmp/u128/G1-overlay.json -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestMdastMalformedEvents_Setup)$ > /workspace/adamic/review/test-audit/stage1-cohere-markdownblocks-mdast_errors/G1.log 2>&1; malformed_events_independent_test.go:252: build markdownblocks-malformed-events-go-errors: Go errors: exit status 2",
     "members": [
       "TestMdastMalformedEvents_Setup"
     ],
@@ -61,7 +61,7 @@ CODE UNDER TEST AND ORACLES were named in commentary before mutation. Port entri
       "M1"
     ],
     "unique_kills": [],
-    "last_proven_fail": "M1 support_test.go:60: markdownblocks memory capacity: 16 units (512 MiB each)",
+    "last_proven_fail": "M1 mdast_gap_test.go:84: native Go-held identifier witness first byte difference at 48 (lengths 1757/1754)",
     "verdict": "subsumed",
     "subsumed_by": [
       "TestNativeMdastConstruction"
@@ -78,7 +78,7 @@ CODE UNDER TEST AND ORACLES were named in commentary before mutation. Port entri
       "TestMdastMalformedEvents_Setup",
       "TestNativeMdastConstruction"
     ],
-    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestMdastMalformedEvents_Setup|TestMdastIdentifierWitnesses|TestNativeMdastConstruction)$ > /workspace/adamic/review/test-audit/stage1-cohere-markdownblocks-mdast_errors/M1.log 2>&1; support_test.go:60: markdownblocks memory capacity: 16 units (512 MiB each)",
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestMdastMalformedEvents_Setup|TestMdastIdentifierWitnesses|TestNativeMdastConstruction)$ > /workspace/adamic/review/test-audit/stage1-cohere-markdownblocks-mdast_errors/M1.log 2>&1; mdast_gap_test.go:84: native Go-held identifier witness first byte difference at 48 (lengths 1757/1754)",
     "members": [
       "TestMdastIdentifierWitnesses"
     ],
@@ -199,7 +199,7 @@ CODE UNDER TEST AND ORACLES were named in commentary before mutation. Port entri
     "unique_kills": [
       "M2"
     ],
-    "last_proven_fail": "M2 support_test.go:60: markdownblocks memory capacity: 16 units (512 MiB each)",
+    "last_proven_fail": "M2 path_test.go:130: native stage1/cohere/markdownblocks/GAPS.md byte28 got \"N0|N0||-1|U|0|-1|-1|0|-1|-1|false|false|false|false||0,-1,-1,-1,-1|-1|-1|false|true|true|false|false|false\\\\nN0,Pchildren,A0|A0|c\" want \"N0|N0||-1|U|0|-1|-1|0|-1|-1|true|false|false|false||0,-1,-1,-1,-1|-1|-1|false|true|true|false|false|false\\\\nN0,Pchildren,A0|A0|ch\"",
     "verdict": "slow-worthy",
     "subsumed_by": [],
     "mutants_in_matrix": 1,
@@ -212,7 +212,7 @@ CODE UNDER TEST AND ORACLES were named in commentary before mutation. Port entri
     "matrix_rows": [
       "TestMarkdownAstPath"
     ],
-    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestMarkdownAstPath)$ > /workspace/adamic/review/test-audit/stage1-cohere-markdownblocks-mdast_errors/M2.log 2>&1; support_test.go:60: markdownblocks memory capacity: 16 units (512 MiB each)",
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestMarkdownAstPath)$ > /workspace/adamic/review/test-audit/stage1-cohere-markdownblocks-mdast_errors/M2.log 2>&1; path_test.go:130: native stage1/cohere/markdownblocks/GAPS.md byte28 got \"N0|N0||-1|U|0|-1|-1|0|-1|-1|false|false|false|false||0,-1,-1,-1,-1|-1|-1|false|true|true|false|false|false\\\\nN0,Pchildren,A0|A0|c\" want \"N0|N0||-1|U|0|-1|-1|0|-1|-1|true|false|false|false||0,-1,-1,-1,-1|-1|-1|false|true|true|false|false|false\\\\nN0,Pchildren,A0|A0|ch\"",
     "members": [
       "TestMarkdownAstPath"
     ],
@@ -240,7 +240,7 @@ CODE UNDER TEST AND ORACLES were named in commentary before mutation. Port entri
     "unique_kills": [
       "M3"
     ],
-    "last_proven_fail": "M3 support_test.go:60: markdownblocks memory capacity: 16 units (512 MiB each)",
+    "last_proven_fail": "M3 prefix_test.go:104: native parser prefixes differs at byte 86172 in \"generated/prefix/aa\\x00\"",
     "verdict": "sacred",
     "subsumed_by": [],
     "mutants_in_matrix": 1,
@@ -253,7 +253,7 @@ CODE UNDER TEST AND ORACLES were named in commentary before mutation. Port entri
     "matrix_rows": [
       "TestMarkdownParserPrefixes"
     ],
-    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestMarkdownParserPrefixes)$ > /workspace/adamic/review/test-audit/stage1-cohere-markdownblocks-mdast_errors/M3.log 2>&1; support_test.go:60: markdownblocks memory capacity: 16 units (512 MiB each)",
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestMarkdownParserPrefixes)$ > /workspace/adamic/review/test-audit/stage1-cohere-markdownblocks-mdast_errors/M3.log 2>&1; prefix_test.go:104: native parser prefixes differs at byte 86172 in \"generated/prefix/aa\\x00\"",
     "members": [
       "TestMarkdownParserPrefixes"
     ],
@@ -277,7 +277,7 @@ CODE UNDER TEST AND ORACLES were named in commentary before mutation. Port entri
     "oracle_kind": "external-run",
     "kills": [],
     "unique_kills": [],
-    "last_proven_fail": "W2 preflight_shards_test.go:334: TestWholeDocumentOraclePreflight_Setup (setup) 1.083361s",
+    "last_proven_fail": "W2 preflight_shards_test.go:458: mutant survived byte comparison",
     "verdict": "witness",
     "subsumed_by": [],
     "mutants_in_matrix": 0,
@@ -288,7 +288,7 @@ CODE UNDER TEST AND ORACLES were named in commentary before mutation. Port entri
     "matrix_rows": [
       "TestWholeDocumentOraclePreflightMutants"
     ],
-    "evidence": "timeout 120 go test -overlay=/tmp/u128/W2-overlay.json -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestWholeDocumentOraclePreflightMutants)$ > /workspace/adamic/review/test-audit/stage1-cohere-markdownblocks-mdast_errors/W2.log 2>&1; preflight_shards_test.go:334: TestWholeDocumentOraclePreflight_Setup (setup) 1.083361s",
+    "evidence": "timeout 120 go test -overlay=/tmp/u128/W2-overlay.json -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestWholeDocumentOraclePreflightMutants)$ > /workspace/adamic/review/test-audit/stage1-cohere-markdownblocks-mdast_errors/W2.log 2>&1; preflight_shards_test.go:458: mutant survived byte comparison",
     "members": [
       "TestWholeDocumentOraclePreflightMutants"
     ],
@@ -391,7 +391,7 @@ CODE UNDER TEST AND ORACLES were named in commentary before mutation. Port entri
     "oracle_kind": "self",
     "kills": [],
     "unique_kills": [],
-    "last_proven_fail": "G3 support_test.go:60: markdownblocks memory capacity: 16 units (512 MiB each)",
+    "last_proven_fail": "G3 sample_test.go:125: lost fixed inputs: [{false b.md }] (1 files)",
     "verdict": "setup-check",
     "subsumed_by": [],
     "mutants_in_matrix": 0,
@@ -407,7 +407,7 @@ CODE UNDER TEST AND ORACLES were named in commentary before mutation. Port entri
       "TestGeneratedLayoutSelection",
       "TestSampleRetainsFixedMarkdownInputs"
     ],
-    "evidence": "timeout 120 go test -overlay=/tmp/u128/G3-overlay.json -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestSampleRetainsFixedMarkdownInputs|TestGeneratedLayoutSelection)$ > /workspace/adamic/review/test-audit/stage1-cohere-markdownblocks-mdast_errors/G3.log 2>&1; support_test.go:60: markdownblocks memory capacity: 16 units (512 MiB each)",
+    "evidence": "timeout 120 go test -overlay=/tmp/u128/G3-overlay.json -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestSampleRetainsFixedMarkdownInputs|TestGeneratedLayoutSelection)$ > /workspace/adamic/review/test-audit/stage1-cohere-markdownblocks-mdast_errors/G3.log 2>&1; sample_test.go:125: lost fixed inputs: [{false b.md }] (1 files)",
     "members": [
       "TestSampleRetainsFixedMarkdownInputs"
     ],
@@ -496,7 +496,7 @@ CODE UNDER TEST AND ORACLES were named in commentary before mutation. Port entri
     ],
     "kills": [],
     "unique_kills": [],
-    "last_proven_fail": "W1 preflight_shards_test.go:334: TestWholeDocumentOraclePreflight_Setup (setup) 1.118368s",
+    "last_proven_fail": "W1 preflight_shards_test.go:385: planted disagreement did not reach exactly one shard",
     "verdict": "witness",
     "subsumed_by": [],
     "mutants_in_matrix": 0,
@@ -507,7 +507,7 @@ CODE UNDER TEST AND ORACLES were named in commentary before mutation. Port entri
     "matrix_rows": [
       "TestWholeDocumentOraclePreflight family"
     ],
-    "evidence": "timeout 120 go test -overlay=/tmp/u128/W1-overlay.json -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestWholeDocumentOraclePreflightUnion|TestWholeDocumentOraclePreflight_000|TestWholeDocumentOraclePreflight_001|TestWholeDocumentOraclePreflight_002|TestWholeDocumentOraclePreflight_003)$ > /workspace/adamic/review/test-audit/stage1-cohere-markdownblocks-mdast_errors/W1.log 2>&1; preflight_shards_test.go:334: TestWholeDocumentOraclePreflight_Setup (setup) 1.118368s",
+    "evidence": "timeout 120 go test -overlay=/tmp/u128/W1-overlay.json -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestWholeDocumentOraclePreflightUnion|TestWholeDocumentOraclePreflight_000|TestWholeDocumentOraclePreflight_001|TestWholeDocumentOraclePreflight_002|TestWholeDocumentOraclePreflight_003)$ > /workspace/adamic/review/test-audit/stage1-cohere-markdownblocks-mdast_errors/W1.log 2>&1; preflight_shards_test.go:385: planted disagreement did not reach exactly one shard",
     "members": [
       "TestWholeDocumentOraclePreflightUnion",
       "TestWholeDocumentOraclePreflight_000",
@@ -546,7 +546,7 @@ CODE UNDER TEST AND ORACLES were named in commentary before mutation. Port entri
     "unique_kills": [
       "M4"
     ],
-    "last_proven_fail": "M4 quote_layout_shards_test.go:113: TestMarkdownQuoteLayout_Setup: 62.972s",
+    "last_proven_fail": "M4 quote_layout_shards_test.go:491: source Node lists output byte 53 in generated/block/> ```",
     "verdict": "sacred",
     "subsumed_by": [],
     "mutants_in_matrix": 1,
@@ -561,7 +561,7 @@ CODE UNDER TEST AND ORACLES were named in commentary before mutation. Port entri
       "TestMarkdownQuoteLayoutNative",
       "TestMarkdownQuoteLayout_Setup"
     ],
-    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestMarkdownQuoteLayoutNative|TestMarkdownQuoteLayout_Setup|TestMarkdownQuoteLayoutUnion|TestMarkdownQuoteLayout_000|TestMarkdownQuoteLayout_001|TestMarkdownQuoteLayout_002|TestMarkdownQuoteLayout_003|TestMarkdownQuoteLayout_004|TestMarkdownQuoteLayout_005|TestMarkdownQuoteLayout_006|TestMarkdownQuoteLayout_007|TestMarkdownQuoteLayout_008|TestMarkdownQuoteLayout_009|TestMarkdownQuoteLayout_010|TestMarkdownQuoteLayout_011)$ > /workspace/adamic/review/test-audit/stage1-cohere-markdownblocks-mdast_errors/M4.log 2>&1; quote_layout_shards_test.go:113: TestMarkdownQuoteLayout_Setup: 62.972s",
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestMarkdownQuoteLayoutNative|TestMarkdownQuoteLayout_Setup|TestMarkdownQuoteLayoutUnion|TestMarkdownQuoteLayout_000|TestMarkdownQuoteLayout_001|TestMarkdownQuoteLayout_002|TestMarkdownQuoteLayout_003|TestMarkdownQuoteLayout_004|TestMarkdownQuoteLayout_005|TestMarkdownQuoteLayout_006|TestMarkdownQuoteLayout_007|TestMarkdownQuoteLayout_008|TestMarkdownQuoteLayout_009|TestMarkdownQuoteLayout_010|TestMarkdownQuoteLayout_011)$ > /workspace/adamic/review/test-audit/stage1-cohere-markdownblocks-mdast_errors/M4.log 2>&1; quote_layout_shards_test.go:491: source Node lists output byte 53 in generated/block/> ```",
     "members": [
       "TestMarkdownQuoteLayoutUnion",
       "TestMarkdownQuoteLayout_000",
