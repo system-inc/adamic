@@ -1,0 +1,15 @@
+{
+  "finished": true,
+  "verdict": "void",
+  "runner": "pool",
+  "pool": "codex-side",
+  "pool_run": "unit",
+  "covers": "go-tests",
+  "uncached_tests": false,
+  "sha": "8aa6ec55d84db37f7b7d20dcaf629bd24a170bd4",
+  "branch": "codex/step12-wiring",
+  "base": "6d890e0129beecb2df9f65c89b7733a6f02b5248",
+  "candidate": "8aa6ec55d84db37f7b7d20dcaf629bd24a170bd4",
+  "gated": "3983d0b4343f974099fb39bc632e4c552dc98a65",
+  "unplanned_packages_not_run": 54
+}
