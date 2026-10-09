@@ -8,6 +8,7 @@ import (
 	"go/parser"
 	"go/token"
 	"hash/fnv"
+	"io/fs"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -60,11 +61,44 @@ func emittedMismatchSetup(t *testing.T) {
 			path, err := goOracleIn(packageDirectory, oracleDirectory)
 			oracleDone <- oracleResult{path, err}
 		}()
-		files := []string{"stage1/typescript", "stage1/cohere/lint/registry", "internal", "go.mod", "cohere/TypeScript/tsc", "cohere/static_single_assignment", "cohere/mutation_aliasing"}
+		files := []string{"stage1/typescript", "stage1/cohere/lint/registry", "internal", "go.mod", "cohere/TypeScript/tsc/internal", "cohere/TypeScript-shim", "cohere/TypeScript/tsc/go.mod", "cohere/TypeScript/tsc/go.sum", "cohere/static_single_assignment", "cohere/mutation_aliasing"}
 		for _, path := range portFiles(t) {
 			files = append(files, filepath.ToSlash(filepath.Join("stage1/cohere/lint", path)))
 		}
 
+		// Checker baselines are not build inputs. Hash production sources and embeds,
+		// skipping corpus directories before visiting their tens of thousands of files.
+		var production []string
+		root, err := filepath.Abs(repository)
+		if err != nil {
+			t.Fatal(err)
+		}
+		for _, input := range files {
+			err := filepath.WalkDir(filepath.Join(root, input), func(path string, entry fs.DirEntry, err error) error {
+				if err != nil {
+					return err
+				}
+				if entry.IsDir() {
+					if entry.Name() == "testdata" || entry.Name() == "performance" {
+						return filepath.SkipDir
+					}
+					return nil
+				}
+				if strings.HasSuffix(path, "_test.go") {
+					return nil
+				}
+				relative, err := filepath.Rel(root, path)
+				if err != nil {
+					return err
+				}
+				production = append(production, filepath.ToSlash(relative))
+				return nil
+			})
+			if err != nil {
+				t.Fatal(err)
+			}
+		}
+		files = production
 		lowered := buildcache.Product(t, buildcache.Inputs{Name: "emitted-mismatch-lowered", Files: files, Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH}}, func(out string) error {
 			if _, err := registry.Generate(packageDirectory); err != nil {
 				return err
