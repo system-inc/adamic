@@ -287,6 +287,6 @@ console.log(written('copied'));
 
 // TestDecodedOptionsAndMutant measures the shared Go-oracle setup separately.
 func TestDecodedOptionsAndMutant(t *testing.T) {
- t.Parallel()
- goOracle(t)
+	t.Parallel()
+	goOracle(t)
 }
