@@ -205,15 +205,24 @@ func (l *lowering) overloadMembership(node *ast.Node, value ir.Expression, sourc
 // is kept until its contract is proven or checked, then converted for the caller.
 func (l *lowering) overloadSpecialization(call *ast.CallExpression, value ir.Expression, implementation, overload *ast.Node, ordinal int, produced, promised *checker.Type) (ir.Expression, error) {
 	invoked, direct := value.(ir.Call)
-	var closure *ir.CallClosure
-	if candidate, known := value.(ir.CallClosure); known {
-		function := candidate.Direct - 1
-		if function < 0 {
-			if maker, known := candidate.Closure.(ir.MakeClosure); known {
-				function = maker.Function
-			}
+	// Virtual target sets are finalized after lowering all classes; this
+	// boundary can specialize only a closed implementation known now.
+	direct = direct && invoked.Virtual == 0
+	function := -1
+	if direct {
+		targets := l.result.CallTargets(invoked)
+		direct = len(targets) == 1
+		if direct {
+			function = targets[0]
 		}
-		if function >= 0 {
+	}
+	var closure *ir.CallClosure
+	var callee ir.Expression
+	if candidate, known := value.(ir.CallClosure); known {
+		targets := l.result.ClosureTargets(candidate)
+		if !targets.Unknown && len(targets.Functions) == 1 {
+			function = targets.Functions[0]
+			callee = targets.Value
 			closure = &candidate
 			invoked = ir.Call{Function: function, Arguments: candidate.Arguments, Spread: candidate.Spread, Returns: candidate.Returns}
 			direct = true
@@ -252,7 +261,7 @@ func (l *lowering) overloadSpecialization(call *ast.CallExpression, value ir.Exp
 	if !known {
 		return nil, l.notYet(call.AsNode(), "an overload result without a representation")
 	}
-	key := fmt.Sprintf("overload-result:%d:%d:%s", invoked.Function, ordinal, l.genericTypeKey(promised))
+	key := fmt.Sprintf("overload-result:%d:%d:%s", function, ordinal, l.genericTypeKey(promised))
 	key += ":" + l.genericTypeKey(produced)
 	if closure != nil {
 		key += ":closure"
@@ -271,7 +280,7 @@ func (l *lowering) overloadSpecialization(call *ast.CallExpression, value ir.Exp
 			invoked.Arguments[i] = fit(invoked.Arguments[i], l.result.Locals[parameter].Type)
 		}
 		if closure != nil {
-			invoked.Arguments = append([]ir.Expression{closure.Closure}, invoked.Arguments...)
+			invoked.Arguments = append([]ir.Expression{callee}, invoked.Arguments...)
 		}
 		return ir.Call{Function: existing, Arguments: invoked.Arguments, Returns: of}, nil
 	}
@@ -310,7 +319,7 @@ func (l *lowering) overloadSpecialization(call *ast.CallExpression, value ir.Exp
 		}
 		given := l.concrete(l.checker.GetTypeOfSymbol(resolved.Parameters()[position]))
 		takes := l.overloadImplementationType(implementation, resolved, l.censusCallableParameterType(l.symbol(implementation.Parameters()[position].Name())))
-		held := l.result.Locals[l.result.Functions[invoked.Function].Parameters[position]].Type
+		held := l.result.Locals[l.result.Functions[function].Parameters[position]].Type
 		if l.overloadNullableParameter(given, takes) {
 			message := fmt.Sprintf("overload %d of %s parameter %d %s cannot be served by implementation parameter %s", ordinal, implementation.Name().Text(), position+1, l.checker.TypeToString(given), l.checker.TypeToString(takes))
 			checked.Arguments[position] = ir.Coalesce{Value: argument, Of: held, Panic: ir.StringConstant{Index: l.constant(message)}}
@@ -322,7 +331,7 @@ func (l *lowering) overloadSpecialization(call *ast.CallExpression, value ir.Exp
 	if closure != nil {
 		carrier := local("callee", ir.Closure)
 		l.result.Functions[wrapper].Parameters = append([]int{carrier}, l.result.Functions[wrapper].Parameters...)
-		invoked.Arguments = append([]ir.Expression{closure.Closure}, invoked.Arguments...)
+		invoked.Arguments = append([]ir.Expression{callee}, invoked.Arguments...)
 		implementationCall = ir.CallClosure{Closure: ir.Read{Local: carrier, Of: ir.Closure}, Direct: closure.Direct, Arguments: checked.Arguments, Returns: checked.Returns, FunctionType: closure.FunctionType}
 	}
 	body = append(body, ir.Declare{Local: result, Value: implementationCall})

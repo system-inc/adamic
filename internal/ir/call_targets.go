@@ -31,6 +31,10 @@ func (p *Program) CallMayThrow(call Call) bool {
 type FunctionTargets struct {
 	Functions []int
 	Unknown   bool
+	// Value is the original closure operand, retained even when targets are
+	// unknown. Specialization forwards it without recreating identity or captures.
+	// A named sort comparator has no closure operand.
+	Value Expression
 }
 
 // ClosureTargets answers which functions a function-value call can run. Only a
@@ -42,10 +46,10 @@ func (p *Program) ClosureTargets(call Expression) FunctionTargets {
 	var value Expression
 	switch call := call.(type) {
 	case CallClosure:
-		if call.Direct > 0 {
-			return FunctionTargets{Functions: []int{call.Direct - 1}}
-		}
 		value = call.Closure
+		if call.Direct > 0 {
+			return FunctionTargets{Functions: []int{call.Direct - 1}, Value: value}
+		}
 	case ArrayMap:
 		value = call.Callback
 	case ArrayVisit:
@@ -66,13 +70,13 @@ func (p *Program) ClosureTargets(call Expression) FunctionTargets {
 	}
 	switch value := value.(type) {
 	case MakeClosure:
-		return FunctionTargets{Functions: []int{value.Function}}
+		return FunctionTargets{Functions: []int{value.Function}, Value: value}
 	case Read:
 		if target := p.Locals[value.Local].ConstantClosure; target != 0 {
-			return FunctionTargets{Functions: []int{target - 1}}
+			return FunctionTargets{Functions: []int{target - 1}, Value: value}
 		}
 	}
-	return FunctionTargets{Unknown: true}
+	return FunctionTargets{Unknown: true, Value: value}
 }
 
 // ClosureMayThrow treats Unknown as anything in the program, including methods

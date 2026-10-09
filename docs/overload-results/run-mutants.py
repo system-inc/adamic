@@ -15,7 +15,7 @@ key_end = original.index('\tfor _, argument := range invoked.Arguments', key_sta
 mutations = [
  ('trust-optional-property', original.replace('sourceProperty == nil || sourceProperty.Flags&ast.SymbolFlagsOptional != 0 || accessorSymbol(sourceProperty)', 'sourceProperty == nil || accessorSymbol(sourceProperty)'), './internal/lower', '^TestOverloadResultsRefuses$/optional_result_property$'),
  ('trust-result', original.replace('if !l.censusProveOverloadResult(implementation, overload) && !l.censusRelated(produced, promised) {', 'if false && !l.censusProveOverloadResult(implementation, overload) && !l.censusRelated(produced, promised) {'), './internal/lower', '^TestOverloadResultsLiarStops$'),
- ('drop-specialization', original[:key_start] + '\tkey := fmt.Sprintf("overload-result:%d:%d:erased", invoked.Function, ordinal)\n' + original[key_end:], './internal/oracle', '^TestNativeAgreesWithNode$/internal/oracle/testdata/overload_results_binding.a$'),
+ ('drop-specialization', original[:key_start] + '\tkey := fmt.Sprintf("overload-result:%d:%d:erased", function, ordinal)\n' + original[key_end:], './internal/oracle', '^TestNativeAgreesWithNode$/internal/oracle/testdata/overload_results_binding.a$'),
  ('drop-parameter-check', original.replace('checked.Arguments[position] = ir.Coalesce{Value: argument, Of: held, Panic: ir.StringConstant{Index: l.constant(message)}}', '_ = message\nchecked.Arguments[position] = fit(argument, held)'), './internal/lower', '^TestOverloadResultsLiarStops$/parameter-liar$'),
  ('trust-shared-result', original.replace('if !l.overloadFreshResult(implementation, map[*ast.Node]bool{}) {', 'if false && !l.overloadFreshResult(implementation, map[*ast.Node]bool{}) {'), './internal/lower', '^TestOverloadResultsRefuses$'),
 ]

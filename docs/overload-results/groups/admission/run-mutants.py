@@ -11,7 +11,9 @@ parameter='if !l.censusRelated(given, takes) && !l.overloadDeferredParameter(giv
 mutants=[
  ('drop-fixed-return-proof',call,a.replace('return l.censusRelated(produced, promised)','_ = produced; return false'),'TestOverloadStructuralResults','result Block'),
  ('reverse-result-covariance',call,a.replace('return l.censusRelated(produced, promised)','return l.checker.IsTypeAssignableTo(promised, produced)'),'TestOverloadStructuralRefuses/factory_literal_covariance','got <nil>'),
- ('trust-visitor-input',census,b.replace(parameter,parameter[:-1]+'&& len(l.checker.GetSignaturesOfType(l.concrete(given), checker.SignatureKindCall)) == 0 {'),'TestOverloadStructuralRefuses/visitor_domain_liar','got <nil>'),
+ # Later invocation proof still refuses this .a liar; removing admission
+ # contravariance changes the diagnostic path, rather than admitting it.
+ ('trust-visitor-input',census,b.replace(parameter,parameter[:-1]+'&& len(l.checker.GetSignaturesOfType(l.concrete(given), checker.SignatureKindCall)) == 0 {'),'TestOverloadStructuralRefuses/visitor_domain_liar','visitor argument path is unproven'),
  ('trust-writable-result',call,a.replace('return l.censusRelated(produced, promised)','return l.classAssignable(produced, promised)'),'TestOverloadStructuralRefuses/factory_writable_invariance','got <nil>'),
  ('drop-return-storage',call,a.replace(' && l.overloadReturnStorage(produced, promised)',''),'TestOverloadStructuralRefuses/factory_field_storage','got <nil>'),
  ('drop-relation-diagnostic',census,b.replace(' + "; " + l.overloadResultRelation(produced, promised)',''),'TestOverloadStructuralRefuses/factory_result_covariance','wanted refusal naming readonly covariance'),

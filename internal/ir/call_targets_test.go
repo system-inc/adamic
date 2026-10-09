@@ -79,3 +79,35 @@ func TestClosureTargetsBoundOnlyProvenValues(t *testing.T) {
 		}
 	}
 }
+
+// Specialization must carry the original operand, including a sibling's captured
+// environment, instead of rebuilding a closure from the resolved function index.
+func TestClosureTargetsPreserveValue(t *testing.T) {
+	t.Parallel()
+	program := &ir.Program{Locals: []ir.Local{{ConstantClosure: 2}, {}}}
+	captured := &ir.Read{Local: 1, Of: ir.Closure}
+	for _, test := range []struct {
+		name    string
+		value   ir.Expression
+		direct  int
+		unknown bool
+	}{
+		{"literal", ir.MakeClosure{Function: 1}, 0, false},
+		{"const", ir.Read{Local: 0, Of: ir.Closure}, 0, false},
+		{"sibling_environment", captured, 2, false},
+		{"unknown", captured, 0, true},
+	} {
+		t.Run(test.name, func(t *testing.T) {
+			targets := program.ClosureTargets(ir.CallClosure{Closure: test.value, Direct: test.direct})
+			if targets.Unknown != test.unknown || !reflect.DeepEqual(targets.Value, test.value) {
+				t.Fatalf("closure operand or proof changed: %+v", targets)
+			}
+			if test.value == captured && targets.Value != captured {
+				t.Fatal("reader replaced the original closure operand")
+			}
+			if !test.unknown && !reflect.DeepEqual(targets.Functions, []int{1}) {
+				t.Fatalf("wrong target proof: %+v", targets)
+			}
+		})
+	}
+}
