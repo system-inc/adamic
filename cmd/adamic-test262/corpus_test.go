@@ -202,6 +202,7 @@ func TestMiniRunner(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	t.Cleanup(engine.oracle.close)
 	passed, err := engine.runFilter("pass", 0, false)
 	if err != nil {
 		t.Fatal(err)
@@ -243,6 +244,7 @@ func TestLargeCompilerOutputIsComplete(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	t.Cleanup(engine.oracle.close)
 	report, err := engine.runFilter("large.js", 0, false)
 	if err != nil {
 		t.Fatal(err)

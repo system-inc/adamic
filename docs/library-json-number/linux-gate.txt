@@ -1,0 +1,53 @@
+?   	github.com/system-inc/adamic/bench	[no test files]
+?   	github.com/system-inc/adamic/bench/regex	[no test files]
+?   	github.com/system-inc/adamic/cmd/adamic	[no test files]
+?   	github.com/system-inc/adamic/cmd/adamic-fuzz	[no test files]
+ok  	github.com/system-inc/adamic/cmd/adamic-meter	0.635s
+ok  	github.com/system-inc/adamic/cmd/adamic-test262	67.654s
+--- FAIL: TestEveryFunctionIsInSingleAssignment (15.08s)
+    flow_test.go:82: Lower: /workspace/adamic/internal/oracle/testdata/library_json_generic.a:2:72: stage 0 can't lower JSON.stringify a generic union without per-instantiation container metadata yet
+--- FAIL: TestEveryPathNodeTakesIsInTheGraph (0.05s)
+    --- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_json_generic_shared.a (0.09s)
+        trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/library_json_generic_shared.a:3:72: stage 0 can't lower JSON.stringify a generic union without per-instantiation container metadata yet
+    --- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/library_json_generic.a (0.17s)
+        trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/library_json_generic.a:2:72: stage 0 can't lower JSON.stringify a generic union without per-instantiation container metadata yet
+--- FAIL: TestLivenessHoldsOnEveryPath (82.98s)
+    --- FAIL: TestLivenessHoldsOnEveryPath/programs (0.00s)
+        --- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_json_generic_shared.a (0.14s)
+            trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/library_json_generic_shared.a:3:72: stage 0 can't lower JSON.stringify a generic union without per-instantiation container metadata yet
+        --- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/library_json_generic.a (0.17s)
+            trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/library_json_generic.a:2:72: stage 0 can't lower JSON.stringify a generic union without per-instantiation container metadata yet
+    trace_test.go:426: 18087760 variable-and-point pairs checked
+--- FAIL: TestEveryMutationIsInItsRange (86.70s)
+    --- FAIL: TestEveryMutationIsInItsRange/programs (0.07s)
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_json_generic.a (0.18s)
+            ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/library_json_generic.a:2:72: stage 0 can't lower JSON.stringify a generic union without per-instantiation container metadata yet
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/library_json_generic_shared.a (0.19s)
+            ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/library_json_generic_shared.a:3:72: stage 0 can't lower JSON.stringify a generic union without per-instantiation container metadata yet
+    ranges_test.go:78: 77384 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+FAIL
+FAIL	github.com/system-inc/adamic/internal/flow	100.543s
+ok  	github.com/system-inc/adamic/internal/fresh	41.914s
+ok  	github.com/system-inc/adamic/internal/fuzz	10.169s
+?   	github.com/system-inc/adamic/internal/ir	[no test files]
+?   	github.com/system-inc/adamic/internal/javascript	[no test files]
+ok  	github.com/system-inc/adamic/internal/load	1.792s
+ok  	github.com/system-inc/adamic/internal/lower	26.304s
+ok  	github.com/system-inc/adamic/internal/native	213.872s
+ok  	github.com/system-inc/adamic/internal/oracle	180.000s
+ok  	github.com/system-inc/adamic/internal/regexp	9.680s
+ok  	github.com/system-inc/adamic/internal/unicodeproperties	696.261s
+ok  	github.com/system-inc/adamic/stage1/cohere/cssnumbers	147.116s
+ok  	github.com/system-inc/adamic/stage1/cohere/cssstrings	18.280s
+ok  	github.com/system-inc/adamic/stage1/cohere/formatfiles	46.096s
+ok  	github.com/system-inc/adamic/stage1/cohere/gitignore	27.957s
+ok  	github.com/system-inc/adamic/stage1/cohere/graphql	107.685s
+ok  	github.com/system-inc/adamic/stage1/cohere/json	460.155s
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	269.092s
+ok  	github.com/system-inc/adamic/stage1/cohere/mediaquery	29.802s
+ok  	github.com/system-inc/adamic/stage1/cohere/selector	59.358s
+ok  	github.com/system-inc/adamic/stage1/cohere/suppression	58.376s
+ok  	github.com/system-inc/adamic/stage1/cohere/values	55.115s
+ok  	github.com/system-inc/adamic/stage1/typescript/parser	174.830s
+ok  	github.com/system-inc/adamic/stage1/typescript/scanner	57.366s
+FAIL

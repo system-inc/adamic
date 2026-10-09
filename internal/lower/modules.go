@@ -141,6 +141,9 @@ func (l *lowering) declareModule(statements []*ast.Node) error {
 				l.staticStorage(statement)
 			}
 		case ast.KindFunctionDeclaration:
+			if nodeCryptoAmbientHashDeclaration(statement) {
+				continue
+			}
 			if statement.Body() == nil && l.censusImplementation(statement) != nil {
 				continue
 			}

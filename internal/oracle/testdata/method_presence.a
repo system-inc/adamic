@@ -1,0 +1,61 @@
+// Every method observation is consumed as a boolean, never as a detached function.
+class Present {
+	value = 'present';
+	method?(): string { return this.value; }
+	call(): string { return this.value; }
+}
+class Absent {
+	value = 'absent';
+}
+interface Methods {
+	value: string;
+	method?(): string;
+}
+let receivers = 0;
+function receiver(value: Methods): Methods {
+	receivers += 1;
+	return value;
+}
+let rightSides = 0;
+function right(): boolean { rightSides += 1; return true; }
+function observe(value: Methods): void {
+	console.log(`double ${!!(receiver(value).method)}`);
+	if (receiver(value).method) { console.log('if true'); } else { console.log('if false'); }
+	console.log(`and ${!!(receiver(value).method && right())}`);
+	console.log(`or ${!!(receiver(value).method || right())}`);
+	console.log(`ternary ${receiver(value).method ? 'yes' : 'no'}`);
+	console.log(`undefined ${receiver(value).method === undefined} ${undefined !== receiver(value).method}`);
+	console.log(`null ${receiver(value).method === null} ${null !== receiver(value).method}`);
+	console.log(`nested ${!!(true && (receiver(value).method || false))}`);
+	console.log(`right operand ${!!(false || receiver(value).method)} ${!!(true && receiver(value).method)}`);
+	console.log(`short circuit ${!!(true || receiver(value).method)} ${!!(false && receiver(value).method)}`);
+}
+const present = new Present();
+console.log(`class double ${!!present.method}`);
+if (present.method) { console.log('class if'); }
+console.log(`class and ${!!(present.method && right())}`);
+console.log(`class or ${!!(present.method || right())}`);
+console.log(`class ternary ${present.method ? 'yes' : 'no'}`);
+console.log(`class undefined ${present.method === undefined} ${present.method !== undefined}`);
+console.log(`class null ${present.method === null} ${present.method !== null}`);
+observe(present);
+observe(new Absent());
+observe({ value: 'literal', method(): string { return 'literal'; } });
+observe({ value: 'empty' });
+function optional(value: Methods | undefined): void {
+	console.log(`optional ${!!value?.method} ${value?.method === undefined} ${value?.method === null}`);
+}
+optional(present);
+optional({ value: 'empty' });
+optional(undefined);
+console.log(`effects ${receivers} ${rightSides}`);
+// Ordinary calls still keep their receiver.
+console.log(present.call());
+
+// Presence needs the name even when the signature cannot use a closure slot.
+class Wide {
+	method(value: boolean | undefined): boolean | undefined { return value; }
+}
+interface WideMethods { method(value: boolean | undefined): boolean | undefined; }
+function wide(value: WideMethods): void { console.log(`wide ${!!value.method}`); }
+wide(new Wide());

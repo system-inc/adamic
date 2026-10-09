@@ -1,0 +1,18 @@
+// The same inspect cases without mkdtempSync, for the admitted WASI path API.
+import { openSync, closeSync } from 'node:fs';
+function code(error: unknown): string { return typeof error === 'object' && error !== null && 'code' in error && typeof error.code === 'string' ? error.code : ''; }
+for (const value of ['x\ud800\0', 'x\udfff\0', 'x\u0085\0', 'x\u2028\0', '\0\n\t\b\v\f\r', "'\"`$\0", 'a'.repeat(130) + '\0']) {
+    try { closeSync(openSync(value, 'r')); }
+    catch(error) { if(error instanceof Error) console.log(`${error.name}|${code(error)}|${error.message}`); }
+}
+// The full C0/C1 table, paired surrogates, quote fallbacks and preview cuts.
+for (let unit = 0; unit < 160; unit++) {
+    if (unit < 32 || unit >= 127) {
+        try { openSync(String.fromCharCode(unit) + '\0', 'r'); }
+        catch(error) { if(error instanceof Error) console.log(error.message); }
+    }
+}
+for (const value of ["'\"$\0", "'\"${\0", 'x\ud800\udc00\0', '\ud800\ud800\udfff\udfff\0', 'a'.repeat(126) + '🌍\0', 'a'.repeat(10000) + "'\0", 'a'.repeat(70) + '\n' + "'\"\0xxxxxx", '\n'.repeat(80) + '\0']) {
+    try { openSync(value, 'r'); }
+    catch(error) { if(error instanceof Error) console.log(error.message); }
+}

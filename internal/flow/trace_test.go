@@ -75,6 +75,7 @@ const adamicPrint = (value, seen) => {
 	if (seen.has(value)) return '@' + adamicIdentity(value);
 	seen.add(value);
 	if (typeof value.code === 'function') return 'closure' + adamicIdentity(value);
+	if (value instanceof Date) return 'date(' + String(value.getTime()) + ')';
 	if (value instanceof Map) return 'map(' + [...value].map(([key, entry]) => adamicPrint(key, seen) + '=>' + adamicPrint(entry, seen)).join(',') + ')';
 	if (Array.isArray(value)) return '[' + value.map((element) => adamicPrint(element, seen)).join(',') + ']';
 	return '{' + Object.keys(value).map((key) => key + ':' + adamicPrint(value[key], seen)).join(',') + '}';
@@ -133,6 +134,9 @@ func prepareTrace(t *testing.T, path string) traceSetup {
 		t.Fatal(err)
 	}
 	program := lowered(t, path)
+	if program.Async != nil {
+		t.Skip("suspension-state tracing is NotYet; these programs use no synchronous lifetime proofs and have a separate async Node oracle")
+	}
 	result := run{graphs: map[int]*Function{}}
 	points := map[*ir.Statement]map[int]point{}
 	// variables is, per function, the JavaScript that reads each of its tracked variables that can

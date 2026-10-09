@@ -1,0 +1,18 @@
+function repeated(text: string, count: number): void {
+    try {
+        const result = text.repeat(count);
+        console.log(`ok ${result.length} ${result}`);
+    } catch (error) {
+        if (error instanceof Error) console.log(`${error.name}: ${error.message}`);
+    }
+}
+const built = 'ab' + String(7);
+for (const count of [0, 1, 2, 3, 7, 16, NaN, -0.5, 2.5, -1.5, Infinity, -Infinity, 536870889]) repeated(built, count);
+repeated('', 1e100);
+repeated('', Infinity);
+repeated('\uDC00\uD800', 3);
+repeated('🌍', 536870888);
+let order = '';
+function text(): string { order += 'text '; return built; }
+function count(): number { order += 'count '; return -1; }
+try { text().repeat(count()); } catch (error) { if (error instanceof Error) console.log(`${order}${error.name}`); }

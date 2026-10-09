@@ -1097,6 +1097,8 @@ func (a *analysis) value(expression ir.Expression) value {
 		}
 		// Patterns are compiled constants; the runtime object holds only immutable strings.
 		return a.fresh(anyField, value{})
+	case ir.NodeHostCall:
+		return a.call(a.operands(expression), expression.Type())
 	case ir.RegExpCall:
 		return a.regexCall(expression)
 	case ir.RegExpProperty:
@@ -1183,6 +1185,15 @@ func (a *analysis) value(expression ir.Expression) value {
 			a.value(argument)
 		}
 		return value{}
+	case ir.DateCall:
+		a.value(expression.Receiver)
+		for _, argument := range expression.Arguments {
+			a.value(argument)
+		}
+		if expression.Returns == ir.Object {
+			return a.fresh("", value{})
+		}
+		return value{}
 	case ir.ObjectCall:
 		return a.objectCall(expression)
 	case ir.NumberCall:
@@ -1203,6 +1214,10 @@ func (a *analysis) value(expression ir.Expression) value {
 		return value{}
 	case ir.MaybeToString:
 		a.value(expression.Value)
+		return value{}
+	case ir.MethodPresence:
+		// Presence evaluates the receiver and returns a boolean without retaining a method.
+		a.value(expression.Object)
 		return value{}
 	case ir.ArrayIsArray:
 		a.value(expression.Value)
@@ -1331,6 +1346,9 @@ func (a *analysis) value(expression ir.Expression) value {
 		return a.fresh(anyField, a.fresh(elementKey, value{}))
 	case ir.NodeFSFile:
 		return a.nodeFSFile(expression)
+	case ir.RealPath:
+		a.value(expression.Path)
+		return a.fresh(anyField, value{})
 	case ir.FileStatus:
 		a.value(expression.Path)
 		return a.fresh(anyField, value{})
@@ -1480,6 +1498,9 @@ func (a *analysis) value(expression ir.Expression) value {
 		// Cells and structural receivers are outside this summary's model. The
 		// union for any bounded target set, and for Unknown, is an arbitrary call.
 		return a.call(a.operands(expression), expression.Returns)
+	case ir.ParallelMap:
+		// Tasks have a separate effect proof; results may alias shared inputs.
+		return a.call([]value{a.value(expression.Items), a.value(expression.Work)}, ir.Array)
 	case ir.ArrayMap:
 		return a.call([]value{a.value(expression.Array), a.value(expression.Callback)}, ir.Array)
 	case ir.ArrayVisit:
