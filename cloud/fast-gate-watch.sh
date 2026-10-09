@@ -111,7 +111,7 @@ countVoid() {
 }
 # Worker and canary gates share slot selection and launch. Canary logs are separate
 # even when a queued worker has main's sha, and carry the tools version they test. A seventh argument "staged" runs
-# the staged tools: only the stage canary passes it.
+# the staged tools: only the stage canary passes it. "main" marks main's half-hourly canary, run with the good tools.
 dispatch() {
   local branch=$1 sha=$2 slot=$3 box=$4 class=$5 log=$6 tools=${7:-} started whole="" script=${here}/cloud/fast-gate.sh token=${canaryToken}
   started=$(date -u +%s)
@@ -124,6 +124,7 @@ dispatch() {
   elif [ "${tools}" = staged ]; then
     token=${canaryToken}:staged
   fi
+  [ "${tools}" = main ] && token=${token%%:*}:main
   if [ "${box}" = pool ]; then
     # Loom's side pool runs it with the good tools' selection (cloud/pool-job.sh): never a canary for new tools, so its
     # token names the good tools and a pool green promotes nothing.
@@ -846,6 +847,8 @@ echo "$(date -u +%H:%M:%S) watching codex/*, area/*, devtools/*, cloud/land-* (t
 toolsHead=$(git -C "${here}" rev-parse HEAD)
 canaryToken=${toolsHead}:$$
 canaryRequired=1
+mainCanarySeconds=${ADAMIC_FAST_GATE_MAIN_CANARY_SECONDS:-1800}
+[ -s "${state}/main-canary-started" ] || date -u +%s > "${state}/main-canary-started"
 [ -s "${state}/tools-good" ] || echo "${toolsHead}" > "${state}/tools-good"
 [ -s "${state}/canary-box" ] && placeGoodTree
 # Staged, the other boxes keep gating on the good tools: no fleet-wide deploy barrier to wait out. Nor when the
@@ -958,6 +961,28 @@ while true; do
       grep -vx "${sha}" "${state}/gated" > "${state}/gated.tmp"; mv "${state}/gated.tmp" "${state}/gated"
       echo "${class} $(date -u +%s) ${branch} ${sha}" >> "${state}/queue"
       echo "$(date -u +%H:%M:%S) pool void ${branch} ${sha}: ${cause}; queued again for ${where}"
+      continue
+    fi
+    if [ "${branch}" = canary/main ] && [[ ${testedHead} == *:main ]]; then
+      # Main's half-hourly canary (#aptcka1): main's tip is the one sha whose answer we already know, so a red or a
+      # void here is the gate's own fault until shown otherwise. It pages developer tools and integration once per
+      # first failure; a green clears it. A void counts toward a storm like any box void.
+      verdict=$(grep -E '^(green|red):' "${gateLog}" | tail -1)
+      if [ -z "${cause}" ] && [[ ${verdict} == "green: ${sha} "* ]]; then
+        echo "$(date -u +%H:%M:%S) main canary green: ${sha} on ${box} with tools ${testedHead%%:*}"
+        rm -f "${state}/main-canary-paged"
+        continue
+      fi
+      [ -n "${cause}" ] && countVoid "${gateLog}"
+      said=${cause:+void (${cause})}
+      said=${said:-${verdict}}
+      echo "$(date -u +%H:%M:%S) main canary not green: ${sha} on ${box} with tools ${testedHead%%:*}: ${said}"
+      # One page per failure, whatever main's sha or the seconds it took.
+      key=$(printf '%s\n' "${said#* ${sha} }" | sed -E 's/[0-9]+(\.[0-9]+)? s//g')
+      if [ "$(cat "${state}/main-canary-paged" 2>/dev/null)" != "${key}" ]; then
+        echo "${key}" > "${state}/main-canary-paged"
+        notifyStorm "main's canary is not green, so the gate itself is suspect: main ${sha:0:12} on ${box} with box tools ${testedHead%%:*}: ${said}. Log: ${gateLog}"
+      fi
       continue
     fi
     if [ "${branch}" = canary/main ] && [[ ${testedHead} == *:staged ]]; then
@@ -1088,6 +1113,22 @@ while true; do
         echo "${now}" > "${state}/canary-started"
         echo "$(date -u +%H:%M:%S) gating canary/main ${sha} with staged tools ${toolsHead:0:9} (${canarySlot} on ${box}, log ${log})"
       fi
+    fi
+  fi
+  # Main's canary every half hour with the good tools (#aptcka1, @system_adamic, Oct 9 10:21Z), so drift (disk, workers,
+  # cache) shows on main first. Ahead of the queue, on a box, one canary at a time, never in a storm (the storm has its
+  # own probe). Its clock survives restarts and starts a full interval after the first watcher, so a deploy is no page.
+  if [ ! -f "${state}/storm" ] && ! grep -q '^canary/main ' "${state}"/running/* 2>/dev/null &&
+     [ "$(( $(date -u +%s) - $(cat "${state}/main-canary-started") ))" -ge "${mainCanarySeconds}" ]; then
+    now=$(date -u +%s)
+    free=$(freeSlots) draining=$(drainingBoxes)
+    read -r box canarySlot <<< "$(usableSlots canary/main | awk '$1 == "pool" {next} $2 == "S" && small == "" {small = $1} big == "" {big = $1 " " $2} END {print (small != "" ? small " S" : big)}')"
+    sha=$(git -C "${here}" ls-remote origin refs/heads/main | awk '$2 == "refs/heads/main" {print $1; exit}')
+    if [ -n "${box}" ] && [ -n "${sha}" ]; then
+      log=$(mktemp "${state}/logs/canary-${sha:0:12}-${now}.XXXXXX")
+      dispatch canary/main "${sha}" "${canarySlot}" "${box}" S "${log}" main
+      echo "${now}" > "${state}/main-canary-started"
+      echo "$(date -u +%H:%M:%S) gating canary/main ${sha} with the good tools, the half-hourly canary (${canarySlot} on ${box}, log ${log})"
     fi
   fi
   pruneQueue

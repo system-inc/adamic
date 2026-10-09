@@ -14,7 +14,7 @@ MAIN = 'a' * 40
 
 
 class Watcher:
-    def __init__(self, count=6, staleLock=False, canaryBox=None, mode='void', slots=None, boxSides=None):
+    def __init__(self, count=6, staleLock=False, canaryBox=None, mode='void', slots=None, boxSides=None, mainCanary=100000):
         self.tmp = tempfile.TemporaryDirectory()
         self.root = Path(self.tmp.name)
         self.repo = self.root / 'repo'
@@ -133,6 +133,7 @@ fi
         env = dict(os.environ, **extra, PATH=str(self.bin) + ':' + os.environ['PATH'],
                    TEST_ROOT=str(self.root), ADAMIC_FAST_GATE_WATCH_STATE=str(self.state), LOOM_FAST_JOBS=str(self.root / 'loom-jobs'),
                    ADAMIC_FULL_GATE_REQUESTS=str(self.root / 'requests'),
+                   ADAMIC_FAST_GATE_MAIN_CANARY_SECONDS=str(mainCanary),
                    ADAMIC_FAST_GATE_AHRA_DIR=str(self.root))
         self.output = open(self.root / 'output', 'w')
         self.proc = subprocess.Popen([os.environ.get('WATCH_TEST_BASH', 'bash'), str(cloud / 'fast-gate-watch.sh')], env=env,
@@ -985,6 +986,53 @@ class WatchTests(unittest.TestCase):
         self.assertIn('tools-two stages beyond them', w.read('output'))
         # tools-two gets its own canary at once.
         w.wait(lambda: w.read('starts').count('canary/main ') == 2)
+
+    def test_main_s_canary_runs_every_half_hour_with_the_good_tools_and_a_red_pages_once(self):
+        # Gate the gate (@system_adamic, Oct 9 10:21Z): main's tip is the one sha whose answer we know, so drift shows there first.
+        w = Watcher(0, canaryBox='box1', mode='hold', slots='box0 S\nbox1 S\n', mainCanary=1800)
+        self.addCleanup(w.close)
+        w.wait(lambda: 'canary/main ' in w.read('starts'))
+        w.put('initial', 'pass')
+        w.wait(lambda: 'promoted tools tools-one' in w.read('output'))
+        # Not before half an hour from the watcher's first start, and with the good tools: tools-one, now promoted.
+        w.put('clock', '2799')
+        time.sleep(.3)
+        self.assertNotIn('half-hourly', w.read('output'))
+        w.put('canary', 'red')
+        w.put('clock', '2800')
+        w.wait(lambda: 'main canary not green' in w.read('output'))
+        self.assertIn('with the good tools, the half-hourly canary', w.read('output'))
+        self.assertIn('with tools tools-one: red: %s failed' % MAIN, w.read('output'))
+        w.wait(lambda: w.read('messages').count('canary is not green') == 2)
+        for recipient in ('system_adamic_developer_tools', 'system_adamic_integration'):
+            self.assertIn(recipient + '|', w.read('messages'))
+        # The same red half an hour on pages nobody again; a green clears it, and the next red pages again.
+        w.put('clock', '4600')
+        w.wait(lambda: w.read('output').count('main canary not green') == 2)
+        time.sleep(.3)
+        self.assertEqual(w.read('messages').count('canary is not green'), 2)
+        w.put('canary', 'pass')
+        w.put('clock', '6400')
+        w.wait(lambda: 'main canary green' in w.read('output'))
+        w.put('canary', 'red')
+        w.put('clock', '8200')
+        w.wait(lambda: w.read('output').count('main canary not green') == 3)
+        time.sleep(.3)
+        self.assertEqual(w.read('messages').count('canary is not green'), 4)
+        self.assertFalse((w.state / 'storm').exists())
+
+    def test_main_s_canary_runs_the_good_tools_while_new_ones_are_staged(self):
+        w = Watcher(0, canaryBox='box1', mode='hold', slots='box0 S\nbox1 S\n', mainCanary=1800)
+        self.addCleanup(w.close)
+        w.wait(lambda: 'canary/main ' in w.read('starts'))
+        w.put('initial', 'red')
+        w.wait(lambda: 'held tools tools-one' in w.read('output'))
+        w.put('canary', 'pass')
+        w.put('clock', '2800')
+        w.wait(lambda: 'main canary green' in w.read('output'))
+        self.assertIn('canary/main ', w.read('good-starts'))
+        self.assertEqual(w.read('starts').count('canary/main '), 1)
+        self.assertIn('with tools tools-zero', w.read('output'))
 
     def test_a_tools_commit_that_leaves_the_box_side_alone_neither_stages_nor_waits_on_a_canary(self):
         # Staged tools: good is tools-zero, head tools-one, but tools-one changes only the Mac side.
