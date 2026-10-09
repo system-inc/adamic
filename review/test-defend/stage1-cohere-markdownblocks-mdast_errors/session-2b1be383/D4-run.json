@@ -1,0 +1,18 @@
+{
+  "command": [
+    "timeout",
+    "120",
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "./stage1/cohere/markdownblocks/",
+    "-run",
+    "^(TestMdastIdentifierWitnesses|TestNativeMdastConstruction|TestMdastMalformedEvents.*|TestProduct_MarkdownMalformedEvents.*)$"
+  ],
+  "cache": "/tmp/defend-mdast/cache/D4",
+  "exit": 1,
+  "wall": 19.58786455199879
+}

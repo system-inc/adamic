@@ -1,0 +1,208 @@
+{
+  "D1": {
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-mdast/cache/D1-expanded timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run '^(TestMdastIdentifierWitnesses|TestNativeMdastConstruction|TestMdastMalformedEvents.*|TestProduct_MarkdownMalformedEvents.*|TestMdastIdentifierScalars|TestProduct_MarkdownIdentifier.*)$' > D1-expanded.log 2>&1",
+    "rows": [
+      "TestMdastIdentifierScalars",
+      "TestMdastIdentifierWitnesses",
+      "TestMdastMalformedEventsUnion",
+      "TestMdastMalformedEvents_000",
+      "TestMdastMalformedEvents_001",
+      "TestMdastMalformedEvents_002",
+      "TestMdastMalformedEvents_Setup",
+      "TestNativeMdastConstruction",
+      "TestProduct_MarkdownIdentifierGo",
+      "TestProduct_MarkdownIdentifierLowered",
+      "TestProduct_MarkdownIdentifierNativeRelease",
+      "TestProduct_MarkdownIdentifierNativeSanitized",
+      "TestProduct_MarkdownMalformedEventsGo",
+      "TestProduct_MarkdownMalformedEventsLowered",
+      "TestProduct_MarkdownMalformedEventsNative"
+    ],
+    "rows_failed": [
+      "TestNativeMdastConstruction"
+    ],
+    "rows_passed": [
+      "TestMdastIdentifierScalars",
+      "TestMdastIdentifierWitnesses",
+      "TestMdastMalformedEventsUnion",
+      "TestMdastMalformedEvents_000",
+      "TestMdastMalformedEvents_001",
+      "TestMdastMalformedEvents_002",
+      "TestMdastMalformedEvents_Setup",
+      "TestProduct_MarkdownIdentifierGo",
+      "TestProduct_MarkdownIdentifierLowered",
+      "TestProduct_MarkdownIdentifierNativeRelease",
+      "TestProduct_MarkdownIdentifierNativeSanitized",
+      "TestProduct_MarkdownMalformedEventsGo",
+      "TestProduct_MarkdownMalformedEventsLowered",
+      "TestProduct_MarkdownMalformedEventsNative"
+    ],
+    "unknown": [],
+    "failure_output": {
+      "TestNativeMdastConstruction": [
+        "mdast_test.go:128: native generated/block/---",
+        "a: b",
+        "--- byte216 got\"\\\\t-\\\\t\\\\t\\\\t\\\\t\\\\nfrontMatter\\\\t-1\\\\tfalse\\\\tfalse\\\\t\\\\t0\\\\tfalse\\\\t-\\\\tfalse\\\\t-\\\\t-\\\\t-\\\\t\\\\t-\\\\t-\\\\t-\\\\t\\\\t\\\\t\\\\t1,1,0,3,5,12\\\\t+yaml\\\\t-\\\\ta: b\\\\t---\\\\t---\\\\t---\\\\\\\\na: b\\\\\\\\n---\" want\"\\\\t-\\\\t\\\\t\\\\t\\\\t\\\\nfrontMatter\\\\t-1\\\\tfalse\\\\tfalse\\\\t\\\\t0\\\\tfalse\\\\t-\\\\tfalse\\\\t-\\\\t-\\\\t-\\\\t\\\\t-\\\\t-\\\\t-\\\\t\\\\t\\\\t\\\\t1,1,0,3,4,12\\\\t+yaml\\\\t-\\\\ta: b\\\\t---\\\\t---\\\\t---\\\\\\\\na: b\\\\\\\\n---\""
+      ]
+    },
+    "binary_seconds": 18.87,
+    "wall_seconds": 20.86104390499895,
+    "cache": "/tmp/defend-mdast/cache/D1-expanded"
+  },
+  "D2": {
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-mdast/cache/D2 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run '^(TestMdastIdentifierWitnesses|TestNativeMdastConstruction|TestMdastMalformedEvents.*|TestProduct_MarkdownMalformedEvents.*|TestMdastIdentifierScalars|TestProduct_MarkdownIdentifier.*)$' > D2.log 2>&1",
+    "rows": [
+      "TestMdastIdentifierScalars",
+      "TestMdastIdentifierWitnesses",
+      "TestMdastMalformedEventsUnion",
+      "TestMdastMalformedEvents_000",
+      "TestMdastMalformedEvents_001",
+      "TestMdastMalformedEvents_002",
+      "TestMdastMalformedEvents_Setup",
+      "TestNativeMdastConstruction",
+      "TestProduct_MarkdownIdentifierGo",
+      "TestProduct_MarkdownIdentifierLowered",
+      "TestProduct_MarkdownIdentifierNativeRelease",
+      "TestProduct_MarkdownIdentifierNativeSanitized",
+      "TestProduct_MarkdownMalformedEventsGo",
+      "TestProduct_MarkdownMalformedEventsLowered",
+      "TestProduct_MarkdownMalformedEventsNative"
+    ],
+    "rows_failed": [
+      "TestMdastIdentifierScalars",
+      "TestMdastIdentifierWitnesses"
+    ],
+    "rows_passed": [
+      "TestMdastMalformedEventsUnion",
+      "TestMdastMalformedEvents_000",
+      "TestMdastMalformedEvents_001",
+      "TestMdastMalformedEvents_002",
+      "TestMdastMalformedEvents_Setup",
+      "TestNativeMdastConstruction",
+      "TestProduct_MarkdownIdentifierGo",
+      "TestProduct_MarkdownIdentifierLowered",
+      "TestProduct_MarkdownIdentifierNativeRelease",
+      "TestProduct_MarkdownIdentifierNativeSanitized",
+      "TestProduct_MarkdownMalformedEventsGo",
+      "TestProduct_MarkdownMalformedEventsLowered",
+      "TestProduct_MarkdownMalformedEventsNative"
+    ],
+    "unknown": [],
+    "failure_output": {
+      "TestMdastIdentifierScalars": [
+        "identifier_independent_test.go:27: identifier scalar oracle first byte difference at 1130 (lengths 7789593/7789593)"
+      ],
+      "TestMdastIdentifierWitnesses": [
+        "mdast_gap_test.go:84: native Go-held identifier witness first byte difference at 813 (lengths 1756/1754)"
+      ]
+    },
+    "binary_seconds": 32.841,
+    "wall_seconds": 34.51582792299814,
+    "cache": "/tmp/defend-mdast/cache/D2"
+  },
+  "D3": {
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-mdast/cache/D3 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run '^(TestMdastIdentifierWitnesses|TestNativeMdastConstruction|TestMdastMalformedEvents.*|TestProduct_MarkdownMalformedEvents.*|TestMdastIdentifierScalars|TestProduct_MarkdownIdentifier.*)$' > D3.log 2>&1",
+    "rows": [
+      "TestMdastIdentifierScalars",
+      "TestMdastIdentifierWitnesses",
+      "TestMdastMalformedEventsUnion",
+      "TestMdastMalformedEvents_000",
+      "TestMdastMalformedEvents_001",
+      "TestMdastMalformedEvents_002",
+      "TestMdastMalformedEvents_Setup",
+      "TestNativeMdastConstruction",
+      "TestProduct_MarkdownIdentifierGo",
+      "TestProduct_MarkdownIdentifierLowered",
+      "TestProduct_MarkdownIdentifierNativeRelease",
+      "TestProduct_MarkdownIdentifierNativeSanitized",
+      "TestProduct_MarkdownMalformedEventsGo",
+      "TestProduct_MarkdownMalformedEventsLowered",
+      "TestProduct_MarkdownMalformedEventsNative"
+    ],
+    "rows_failed": [
+      "TestMdastIdentifierScalars",
+      "TestMdastIdentifierWitnesses"
+    ],
+    "rows_passed": [
+      "TestMdastMalformedEventsUnion",
+      "TestMdastMalformedEvents_000",
+      "TestMdastMalformedEvents_001",
+      "TestMdastMalformedEvents_002",
+      "TestMdastMalformedEvents_Setup",
+      "TestNativeMdastConstruction",
+      "TestProduct_MarkdownIdentifierGo",
+      "TestProduct_MarkdownIdentifierLowered",
+      "TestProduct_MarkdownIdentifierNativeRelease",
+      "TestProduct_MarkdownIdentifierNativeSanitized",
+      "TestProduct_MarkdownMalformedEventsGo",
+      "TestProduct_MarkdownMalformedEventsLowered",
+      "TestProduct_MarkdownMalformedEventsNative"
+    ],
+    "unknown": [],
+    "failure_output": {
+      "TestMdastIdentifierScalars": [
+        "identifier_independent_test.go:27: identifier scalar oracle first byte difference at 3645 (lengths 7789593/7789593)"
+      ],
+      "TestMdastIdentifierWitnesses": [
+        "mdast_gap_test.go:84: native Go-held identifier witness first byte difference at 1387 (lengths 1754/1754)"
+      ]
+    },
+    "binary_seconds": 33.18,
+    "wall_seconds": 34.84849388799921,
+    "cache": "/tmp/defend-mdast/cache/D3"
+  },
+  "D4": {
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-mdast/cache/D4-expanded timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run '^(TestMdastIdentifierWitnesses|TestNativeMdastConstruction|TestMdastMalformedEvents.*|TestProduct_MarkdownMalformedEvents.*|TestMdastIdentifierScalars|TestProduct_MarkdownIdentifier.*)$' > D4-expanded.log 2>&1",
+    "rows": [
+      "TestMdastIdentifierScalars",
+      "TestMdastIdentifierWitnesses",
+      "TestMdastMalformedEventsUnion",
+      "TestMdastMalformedEvents_000",
+      "TestMdastMalformedEvents_001",
+      "TestMdastMalformedEvents_002",
+      "TestMdastMalformedEvents_Setup",
+      "TestNativeMdastConstruction",
+      "TestProduct_MarkdownIdentifierGo",
+      "TestProduct_MarkdownIdentifierLowered",
+      "TestProduct_MarkdownIdentifierNativeRelease",
+      "TestProduct_MarkdownIdentifierNativeSanitized",
+      "TestProduct_MarkdownMalformedEventsGo",
+      "TestProduct_MarkdownMalformedEventsLowered",
+      "TestProduct_MarkdownMalformedEventsNative"
+    ],
+    "rows_failed": [
+      "TestMdastIdentifierWitnesses",
+      "TestNativeMdastConstruction"
+    ],
+    "rows_passed": [
+      "TestMdastIdentifierScalars",
+      "TestMdastMalformedEventsUnion",
+      "TestMdastMalformedEvents_000",
+      "TestMdastMalformedEvents_001",
+      "TestMdastMalformedEvents_002",
+      "TestMdastMalformedEvents_Setup",
+      "TestProduct_MarkdownIdentifierGo",
+      "TestProduct_MarkdownIdentifierLowered",
+      "TestProduct_MarkdownIdentifierNativeRelease",
+      "TestProduct_MarkdownIdentifierNativeSanitized",
+      "TestProduct_MarkdownMalformedEventsGo",
+      "TestProduct_MarkdownMalformedEventsLowered",
+      "TestProduct_MarkdownMalformedEventsNative"
+    ],
+    "unknown": [],
+    "failure_output": {
+      "TestMdastIdentifierWitnesses": [
+        "mdast_gap_test.go:84: native Go-held identifier witness first byte difference at 459 (lengths 1757/1754)"
+      ],
+      "TestNativeMdastConstruction": [
+        "mdast_test.go:128: native generated/leaves/edge/![a][b] [a][b] ![b][] [b][] ![b] [b]",
+        "",
+        "[b]: /x 'title'",
+        "byte1448 got\",28\\\\t-\\\\t-\\\\t\\\\t\\\\t\\\\t\\\\nimageReference\\\\t-1\\\\tfalse\\\\tfalse\\\\t\\\\t0\\\\tfalse\\\\t-\\\\tfalse\\\\t-\\\\t-\\\\t-\\\\t\\\\t-\\\\t+b\\\\t+b\\\\tb\\\\tcollapsed\\\\t\\\\t1,29,28,1,33,32\\\\t-\\\\t-\\\\t\\\\t\\\\t\\\\t\\\\ntext\\\\t-1\\\\ttrue\\\\tfalse\\\\t \\\\t0\\\\tfalse\\\\t-\\\\tfalse\\\\t-\\\\t-\\\\t-\\\\t\\\\\" want\",28\\\\t-\\\\t-\\\\t\\\\t\\\\t\\\\t\\\\nimageReference\\\\t-1\\\\tfalse\\\\tfalse\\\\t\\\\t0\\\\tfalse\\\\t-\\\\tfalse\\\\t-\\\\t-\\\\t-\\\\t\\\\t-\\\\t+b\\\\t+b\\\\tb\\\\tshortcut\\\\t\\\\t1,29,28,1,33,32\\\\t-\\\\t-\\\\t\\\\t\\\\t\\\\t\\\\ntext\\\\t-1\\\\ttrue\\\\tfalse\\\\t \\\\t0\\\\tfalse\\\\t-\\\\tfalse\\\\t-\\\\t-\\\\t-\\\\t\\\\t\""
+      ]
+    },
+    "binary_seconds": 17.581,
+    "wall_seconds": 19.268896776000474,
+    "cache": "/tmp/defend-mdast/cache/D4-expanded"
+  }
+}

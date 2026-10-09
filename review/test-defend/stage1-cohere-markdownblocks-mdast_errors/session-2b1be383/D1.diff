@@ -1,0 +1,11 @@
+--- a/stage1/cohere/markdownblocks/mdastArena.ts
++++ b/stage1/cohere/markdownblocks/mdastArena.ts
+@@ -25,7 +25,7 @@
+         node.start.column = 1;
+         const lines = front.raw.split('\n');
+         node.end.line = lines.length;
+-        node.end.column = (lines[lines.length - 1] ?? panic('front matter last line')).length + 1;
++        node.end.column = (lines[lines.length - 1] ?? panic('front matter last line')).length + 2;
+         node.end.offset = front.raw.length;
+         this.node(0).children.splice(0, 0, id);
+     }

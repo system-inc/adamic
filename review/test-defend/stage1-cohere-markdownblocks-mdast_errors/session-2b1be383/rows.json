@@ -1,0 +1,120 @@
+[
+  {
+    "test": "TestMdastIdentifierWitnesses",
+    "package": "stage1/cohere/markdownblocks",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestNativeMdastConstruction"
+    ],
+    "defense": "not defended",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D2",
+        "file_line": "stage1/cohere/markdownblocks/identifierCaseValues.ts:5",
+        "change": "301, 303, 105, 105, 307 -> 301, 303, 304, 105, 307",
+        "rows_failed": [
+          "TestMdastIdentifierScalars",
+          "TestMdastIdentifierWitnesses"
+        ]
+      },
+      {
+        "mutant": "D3",
+        "file_line": "stage1/cohere/markdownblocks/identifierCaseValues.ts:13",
+        "change": "957, 958, 959, 960, 961, 963, 964 -> 957, 958, 959, 960, 961, 962, 964",
+        "rows_failed": [
+          "TestMdastIdentifierScalars",
+          "TestMdastIdentifierWitnesses"
+        ]
+      },
+      {
+        "mutant": "D4",
+        "file_line": "stage1/cohere/markdownblocks/mdastCompile.ts:109",
+        "change": "this.referenceType === '' ? 'shortcut' : this.referenceType -> this.referenceType === '' ? 'collapsed' : this.referenceType",
+        "rows_failed": [
+          "TestMdastIdentifierWitnesses",
+          "TestNativeMdastConstruction"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-mdast/cache/D4-expanded timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run '^(TestMdastIdentifierWitnesses|TestNativeMdastConstruction|TestMdastMalformedEvents.*|TestProduct_MarkdownMalformedEvents.*|TestMdastIdentifierScalars|TestProduct_MarkdownIdentifier.*)$' > D4-expanded.log 2>&1; mdast_gap_test.go:84: native Go-held identifier witness first byte difference at 459 (lengths 1757/1754)",
+    "bounded": true,
+    "matrix_rows": [
+      "TestMdastIdentifierScalars",
+      "TestMdastIdentifierWitnesses",
+      "TestMdastMalformedEventsUnion",
+      "TestMdastMalformedEvents_000",
+      "TestMdastMalformedEvents_001",
+      "TestMdastMalformedEvents_002",
+      "TestMdastMalformedEvents_Setup",
+      "TestNativeMdastConstruction",
+      "TestProduct_MarkdownIdentifierGo",
+      "TestProduct_MarkdownIdentifierLowered",
+      "TestProduct_MarkdownIdentifierNativeRelease",
+      "TestProduct_MarkdownIdentifierNativeSanitized",
+      "TestProduct_MarkdownMalformedEventsGo",
+      "TestProduct_MarkdownMalformedEventsLowered",
+      "TestProduct_MarkdownMalformedEventsNative"
+    ],
+    "rows_passed": [],
+    "code_under_test": "Native/source/backend execution of the TypeScript mdast construction port: MdastCompiler, MdastArena.attachFrontMatter and the identifier normalization tables.",
+    "oracle": "Actual Go cohere mdast and pinned Node fork. Identifier also checks retained Go/fork snapshot bytes and verifies their disagreement; all port executors must match Go. The Node execution of the port is another product executor, not the expected-answer oracle."
+  },
+  {
+    "test": "TestNativeMdastConstruction",
+    "package": "stage1/cohere/markdownblocks",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestMdastIdentifierWitnesses"
+    ],
+    "defense": "defended",
+    "unique_mutant": "stage1/cohere/markdownblocks/mdastArena.ts:28 (D1)",
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "stage1/cohere/markdownblocks/mdastArena.ts:28",
+        "change": "node.end.column = (lines[lines.length - 1] ?? panic('front matter last line')).length + 1; -> node.end.column = (lines[lines.length - 1] ?? panic('front matter last line')).length + 2;",
+        "rows_failed": [
+          "TestNativeMdastConstruction"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-mdast/cache/D1-expanded timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run '^(TestMdastIdentifierWitnesses|TestNativeMdastConstruction|TestMdastMalformedEvents.*|TestProduct_MarkdownMalformedEvents.*|TestMdastIdentifierScalars|TestProduct_MarkdownIdentifier.*)$' > D1-expanded.log 2>&1; mdast_test.go:128: native generated/block/--- a: b --- byte216 got\"\\\\t-\\\\t\\\\t\\\\t\\\\t\\\\nfrontMatter\\\\t-1\\\\tfalse\\\\tfalse\\\\t\\\\t0\\\\tfalse\\\\t-\\\\tfalse\\\\t-\\\\t-\\\\t-\\\\t\\\\t-\\\\t-\\\\t-\\\\t\\\\t\\\\t\\\\t1,1,0,3,5,12\\\\t+yaml\\\\t-\\\\ta: b\\\\t---\\\\t---\\\\t---\\\\\\\\na: b\\\\\\\\n---\" want\"\\\\t-\\\\t\\\\t\\\\t\\\\t\\\\nfrontMatter\\\\t-1\\\\tfalse\\\\tfalse\\\\t\\\\t0\\\\tfalse\\\\t-\\\\tfalse\\\\t-\\\\t-\\\\t-\\\\t\\\\t-\\\\t-\\\\t-\\\\t\\\\t\\\\t\\\\t1,1,0,3,4,12\\\\t+yaml\\\\t-\\\\ta: b\\\\t---\\\\t---\\\\t---\\\\\\\\na: b\\\\\\\\n---\"",
+    "bounded": true,
+    "matrix_rows": [
+      "TestMdastIdentifierScalars",
+      "TestMdastIdentifierWitnesses",
+      "TestMdastMalformedEventsUnion",
+      "TestMdastMalformedEvents_000",
+      "TestMdastMalformedEvents_001",
+      "TestMdastMalformedEvents_002",
+      "TestMdastMalformedEvents_Setup",
+      "TestNativeMdastConstruction",
+      "TestProduct_MarkdownIdentifierGo",
+      "TestProduct_MarkdownIdentifierLowered",
+      "TestProduct_MarkdownIdentifierNativeRelease",
+      "TestProduct_MarkdownIdentifierNativeSanitized",
+      "TestProduct_MarkdownMalformedEventsGo",
+      "TestProduct_MarkdownMalformedEventsLowered",
+      "TestProduct_MarkdownMalformedEventsNative"
+    ],
+    "rows_passed": [
+      "TestMdastIdentifierScalars",
+      "TestMdastIdentifierWitnesses",
+      "TestMdastMalformedEventsUnion",
+      "TestMdastMalformedEvents_000",
+      "TestMdastMalformedEvents_001",
+      "TestMdastMalformedEvents_002",
+      "TestMdastMalformedEvents_Setup",
+      "TestProduct_MarkdownIdentifierGo",
+      "TestProduct_MarkdownIdentifierLowered",
+      "TestProduct_MarkdownIdentifierNativeRelease",
+      "TestProduct_MarkdownIdentifierNativeSanitized",
+      "TestProduct_MarkdownMalformedEventsGo",
+      "TestProduct_MarkdownMalformedEventsLowered",
+      "TestProduct_MarkdownMalformedEventsNative"
+    ],
+    "code_under_test": "Native/source/backend execution of the TypeScript mdast construction port: MdastCompiler, MdastArena.attachFrontMatter and the identifier normalization tables.",
+    "oracle": "Actual Go cohere mdast and pinned Node fork. Identifier also checks retained Go/fork snapshot bytes and verifies their disagreement; all port executors must match Go. The Node execution of the port is another product executor, not the expected-answer oracle."
+  }
+]

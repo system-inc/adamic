@@ -1,0 +1,42 @@
+[
+  {
+    "id": "D1",
+    "target": "TestNativeMdastConstruction",
+    "file": "stage1/cohere/markdownblocks/mdastArena.ts",
+    "line": 28,
+    "before": "node.end.column = (lines[lines.length - 1] ?? panic('front matter last line')).length + 1;",
+    "after": "node.end.column = (lines[lines.length - 1] ?? panic('front matter last line')).length + 2;",
+    "menu": "change constant",
+    "lead": "Construction supplies front-matter cases; all three identifier witnesses have no front matter."
+  },
+  {
+    "id": "D2",
+    "target": "TestMdastIdentifierWitnesses",
+    "file": "stage1/cohere/markdownblocks/identifierCaseValues.ts",
+    "line": 5,
+    "before": "301, 303, 105, 105, 307",
+    "after": "301, 303, 304, 105, 307",
+    "menu": "change constant",
+    "lead": "Change the simple-case value for U+0130, the dotted-i witness. The construction row uses different labels."
+  },
+  {
+    "id": "D3",
+    "target": "TestMdastIdentifierWitnesses",
+    "file": "stage1/cohere/markdownblocks/identifierCaseValues.ts",
+    "line": 13,
+    "before": "957, 958, 959, 960, 961, 963, 964",
+    "after": "957, 958, 959, 960, 961, 962, 964",
+    "menu": "change constant",
+    "lead": "Change the simple-case mapping of uppercase Sigma to final sigma, targeting the multi-character final-sigma gap."
+  },
+  {
+    "id": "D4",
+    "target": "TestMdastIdentifierWitnesses",
+    "file": "stage1/cohere/markdownblocks/mdastCompile.ts",
+    "line": 109,
+    "before": "this.referenceType === '' ? 'shortcut' : this.referenceType",
+    "after": "this.referenceType === '' ? 'collapsed' : this.referenceType",
+    "menu": "change constant",
+    "lead": "The identifier witnesses use bare shortcut references. Break the integration reference classification, which the scalar test does not reach."
+  }
+]

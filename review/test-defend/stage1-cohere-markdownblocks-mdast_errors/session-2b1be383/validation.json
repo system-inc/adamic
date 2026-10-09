@@ -1,0 +1,11 @@
+{
+  "origin": "2b1be38362046455e0e5454d8b0e674a8630e95d",
+  "standalone_apply_check": [
+    "D1",
+    "D2",
+    "D3",
+    "D4"
+  ],
+  "native_compilation": "All four variants compiled and executed under the existing native sanitized build flags; observed failures are output differences, not build errors.",
+  "restoration": "All production source changes reversed before evidence commit."
+}
