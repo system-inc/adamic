@@ -176,6 +176,34 @@ class FullGateLoopTests(unittest.TestCase):
             (self.state / 'requests').write_text(due[0] + '\n')
             self.assertEqual(self.call('nextRequest'), (0, due[0]))
 
+    def test_after_promotion_the_pool_gates_main_first_and_a_box_only_spot_checks(self):
+        # Kirk, Oct 9: "we always need full gates to be running on loom". Before promotion the box gates every main.
+        undue = due = None
+        for attempt in range(60):
+            sha = self.commit({'compiler.go': 'package compiler // %d\n' % attempt})
+            if int(sha[:8], 16) % 5 == 0:
+                due = due or sha
+            else:
+                undue = undue or sha
+            if undue and due:
+                break
+        self.assertEqual(self.call('mainTurn %s' % undue)[0], 0)
+        (self.state / 'pool-promoted').write_text('parity proven\n')
+        # Promoted, the pool goes first: a main it hasn't taken waits its grace, then a box takes it.
+        self.assertEqual(self.call('mainTurn %s' % undue)[0], 1)
+        rows = (self.state / 'mains-seen').read_text().split()
+        (self.state / 'mains-seen').write_text('%s %d\n' % (undue, int(rows[1]) - 601))
+        self.assertEqual(self.call('mainTurn %s' % undue)[0], 0)
+        # Taken by the pool, it's the pool's.
+        self.record(undue, 'running: full gate of %s on the pool' % undue, finished=False, runner='pool')
+        self.assertEqual(self.call('mainTurn %s' % undue)[0], 1)
+        # A sha the boxes spot-check runs on a box beside the pool's green.
+        self.record(due, 'green: %s full gate on the pool' % due, runner='pool', stamp='20261008T221500Z')
+        self.assertEqual(self.call('mainTurn %s' % due)[0], 0)
+        # A box record of its own ends a main's turn either way.
+        self.record(due, 'green: %s full gate' % due, stamp='20261008T223000Z')
+        self.assertEqual(self.call('mainTurn %s' % due)[0], 1)
+
     def test_one_whole_gate_per_box_ever(self):
         # Oct 9 00:13Z: the requests loop took a second whole gate onto the Threadripper beside a hand-started one.
         script = self.work / 'cloud' / 'full-gate-main.sh'

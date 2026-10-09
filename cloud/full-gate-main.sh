@@ -466,6 +466,27 @@ dropRequest() {
   esac
 }
 
+# Whether this loop's box gates main whole now: a main with no finished or running box record that no green neighbor
+# confirms. Once the pool is promoted (Kirk, Oct 9: "we always need full gates to be running on loom"), a main the pool
+# has taken (running or finished) is the pool's, unless its sha is one the boxes spot-check; and a main the pool hasn't
+# taken yet waits ten minutes (ADAMIC_POOL_GRACE seconds) for it, so the pool goes first and a stalled pool still never
+# leaves main ungated.
+mainTurn() {
+  local main=$1 seen now
+  case $(recordState "${main}") in none | void) ;; *) return 1 ;; esac
+  if poolPromoted && ! spotCheck "${main}"; then
+    case $(recordState "${main}" pool) in green | red | running) return 1 ;; esac
+    now=$(date -u +%s)
+    seen=$(awk -v main="${main}" '$1 == main {print $2; exit}' "${state}/mains-seen" 2> /dev/null || true)
+    if [ -z "${seen}" ]; then
+      echo "${main} ${now}" >> "${state}/mains-seen"
+      seen=${now}
+    fi
+    [ $((now - seen)) -ge "${ADAMIC_POOL_GRACE:-600}" ] || return 1
+  fi
+  return 0
+}
+
 [ "${ADAMIC_FULL_GATE_LIBRARY:-}" = 1 ] && return 0
 if [ -n "${once}" ]; then
   run "${once}"
@@ -480,9 +501,8 @@ while true; do
   fi
   # A network blip or one failed run never ends the loop: it says so and tries again next minute.
   main=$(git -C "${here}" ls-remote origin refs/heads/main | cut -f1) || main=""
-  # A main with no whole gate, or only a void one, is confirmed or run; one that is running or finished is done.
-  mainState=$( [ -n "${main}" ] && [ "${role}" = all ] && recordState "${main}" || echo unknown)
-  if [ "${role}" = all ] && { [ "${mainState}" = none ] || [ "${mainState}" = void ]; } && ! grep -qx "${main}" "${state}/confirmed" 2> /dev/null; then
+  # A main with no whole gate, or only a void one, is confirmed or run; one that is running or finished is done (mainTurn).
+  if [ "${role}" = all ] && [ -n "${main}" ] && mainTurn "${main}" && ! grep -qx "${main}" "${state}/confirmed" 2> /dev/null; then
     if confirmed=$(confirmedBy "${main}"); then
       echo "${main}" >> "${state}/confirmed"
       echo "$(date -u +%H:%M:%S) full gate of main ${main} confirmed by ${confirmed}'s green whole gate: they differ only in record paths, so it isn't run"
