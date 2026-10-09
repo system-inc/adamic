@@ -1,0 +1,45 @@
+1 TestLiteralOptionalOracleCatchesMutant$ 0 8.597
+2 TestOptionalFieldCheckedViewWrites$ 0 8.887
+3 TestOptionalFieldCheckedViewMisfit$ 0 11.141
+4 TestOptionalFieldCheckedViewCatchesDroppedStore$ 0 9.563
+5 TestOptionalFieldCheckedViewCatchesMissingPublication$ 0 15.125
+6 TestOptionalFieldCheckedViewCatchesMissingWriteGuard$ 0 12.661
+7 TestOptionalFieldCheckedViewCatchesAbsentReadAsZero$ 0 16.406
+8 TestOptionalFieldCheckedViewLiteral$ 0 13.774
+9 TestOptionalFieldCheckedViewEnumeration$ 0 9.524
+10 TestOptionalFieldCheckedViewCatchesBooleanRead$ 0 15.152
+11 TestOptionalFieldCheckedViewCatchesMissingBoxing$ 0 25.009
+12 TestOptionalFieldCheckedViewStringUndefinedMutant$ 0 22.894
+13 TestOptionalFieldCheckedViewStringSelf$ 0 15.006
+14 TestOptionalFieldCheckedViewRequiredString$ 0 10.339
+15 TestOptionalFieldCheckedViewRequiredStringMutant$ 0 6.09
+16 TestOptionalFieldWriteCatchesDroppedSlot$ 0 3.83
+17 TestOptionalFieldPresenceCatchesMutants$ 0 5.793
+18 TestOptionalFieldConstructionCatchesDroppedReservation$ 0 4.68
+19 TestOptionalFieldAliasCatchesStaticEnumeration$ 0 4.267
+20 TestOptionalFieldCopyState$ 0 10.038
+Traceback (most recent call last):
+  File "/workspace/adamic/review/compiler/optional-presence-next/run-optional.py", line 19, in <module>
+    for i,result in enumerate(pool.map(run,plan),1):
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/concurrent/futures/_base.py", line 619, in result_iterator
+    yield _result_or_cancel(fs.pop())
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/concurrent/futures/_base.py", line 317, in _result_or_cancel
+    return fut.result(timeout)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/concurrent/futures/_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/concurrent/futures/_base.py", line 401, in __get_result
+    raise self._exception
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/concurrent/futures/thread.py", line 59, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/adamic/review/compiler/optional-presence-next/run-optional.py", line 7, in run
+    with log.open('w') as output:
+         ^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/workspace/adamic/review/compiler/optional-presence-next/optional-TestNativeAgreesWithNodeexact/internal/oracle/testdata/optional_field.log'

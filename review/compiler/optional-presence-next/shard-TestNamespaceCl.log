@@ -1,0 +1,20 @@
+{"Time":"2026-10-09T17:56:55.43392284Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T17:56:55.447324378Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceClassEarlyConstructionStaysLoud"}
+{"Time":"2026-10-09T17:56:55.447483148Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceClassEarlyConstructionStaysLoud","Output":"=== RUN   TestNamespaceClassEarlyConstructionStaysLoud\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:56:55.447514036Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceClassEarlyConstructionStaysLoud","Output":"=== PAUSE TestNamespaceClassEarlyConstructionStaysLoud\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:56:55.447516789Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceClassEarlyConstructionStaysLoud"}
+{"Time":"2026-10-09T17:56:55.447520708Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceClosedCallGraphEdges"}
+{"Time":"2026-10-09T17:56:55.447523221Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceClosedCallGraphEdges","Output":"=== RUN   TestNamespaceClosedCallGraphEdges\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:56:55.447528066Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceClosedCallGraphEdges","Output":"=== PAUSE TestNamespaceClosedCallGraphEdges\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:56:55.447530281Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceClosedCallGraphEdges"}
+{"Time":"2026-10-09T17:56:55.447532644Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceClassEarlyConstructionStaysLoud"}
+{"Time":"2026-10-09T17:56:55.447534675Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceClassEarlyConstructionStaysLoud","Output":"=== CONT  TestNamespaceClassEarlyConstructionStaysLoud\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:56:55.450051951Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceClosedCallGraphEdges"}
+{"Time":"2026-10-09T17:56:55.450070065Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceClosedCallGraphEdges","Output":"=== CONT  TestNamespaceClosedCallGraphEdges\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:56:55.570445247Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceClassEarlyConstructionStaysLoud","Output":"--- PASS: TestNamespaceClassEarlyConstructionStaysLoud (0.12s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:56:55.706874752Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceClassEarlyConstructionStaysLoud","Elapsed":0.12}
+{"Time":"2026-10-09T17:56:55.706943149Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceClosedCallGraphEdges","Output":"--- PASS: TestNamespaceClosedCallGraphEdges (0.26s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:56:55.706951765Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceClosedCallGraphEdges","Elapsed":0.26}
+{"Time":"2026-10-09T17:56:55.706954912Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:56:55.711131689Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"ok  \tgithub.com/system-inc/adamic/internal/lower\t0.277s\n"}
+{"Time":"2026-10-09T17:56:55.711169352Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.277}

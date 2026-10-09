@@ -1,0 +1,204 @@
+{"Time":"2026-10-09T17:54:49.021902339Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T17:54:49.038390267Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews"}
+{"Time":"2026-10-09T17:54:49.03878182Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews","Output":"=== RUN   TestEnumSlotViews\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:49.038862924Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews","Output":"=== PAUSE TestEnumSlotViews\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:49.038867801Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews"}
+{"Time":"2026-10-09T17:54:49.038968251Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSwitchExhaustiveness"}
+{"Time":"2026-10-09T17:54:49.03897644Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSwitchExhaustiveness","Output":"=== RUN   TestEnumSwitchExhaustiveness\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:49.038985341Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSwitchExhaustiveness","Output":"=== PAUSE TestEnumSwitchExhaustiveness\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:49.038987921Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSwitchExhaustiveness"}
+{"Time":"2026-10-09T17:54:49.038990876Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews"}
+{"Time":"2026-10-09T17:54:49.038993655Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews","Output":"=== CONT  TestEnumSlotViews\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:49.038996587Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/variable"}
+{"Time":"2026-10-09T17:54:49.038998786Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/variable","Output":"=== RUN   TestEnumSlotViews/variable\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:49.039005133Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/variable","Output":"=== PAUSE TestEnumSlotViews/variable\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:49.039007493Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/variable"}
+{"Time":"2026-10-09T17:54:49.03901048Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSwitchExhaustiveness"}
+{"Time":"2026-10-09T17:54:49.03901276Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSwitchExhaustiveness","Output":"=== CONT  TestEnumSwitchExhaustiveness\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:49.039015416Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/initializer"}
+{"Time":"2026-10-09T17:54:49.039017568Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/initializer","Output":"=== RUN   TestEnumSlotViews/initializer\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:49.039045531Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/initializer","Output":"=== PAUSE TestEnumSlotViews/initializer\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:49.039050876Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/initializer"}
+{"Time":"2026-10-09T17:54:49.039054371Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/member_initializer"}
+{"Time":"2026-10-09T17:54:49.03905672Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/member_initializer","Output":"=== RUN   TestEnumSlotViews/member_initializer\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:49.03906741Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/member_initializer","Output":"=== PAUSE TestEnumSlotViews/member_initializer\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:49.039070259Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/member_initializer"}
+{"Time":"2026-10-09T17:54:49.039077826Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/argument"}
+{"Time":"2026-10-09T17:54:49.039080226Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/argument","Output":"=== RUN   TestEnumSlotViews/argument\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:49.03908342Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/argument","Output":"=== PAUSE TestEnumSlotViews/argument\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:49.039085692Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/argument"}
+{"Time":"2026-10-09T17:54:49.039088249Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/assignment"}
+{"Time":"2026-10-09T17:54:49.039090352Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/assignment","Output":"=== RUN   TestEnumSlotViews/assignment\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:49.039093297Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/assignment","Output":"=== PAUSE TestEnumSlotViews/assignment\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:49.039095611Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/assignment"}
+{"Time":"2026-10-09T17:54:49.039098107Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/literal_property"}
+{"Time":"2026-10-09T17:54:49.039100298Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/literal_property","Output":"=== RUN   TestEnumSlotViews/literal_property\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:49.039105873Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/literal_property","Output":"=== PAUSE TestEnumSlotViews/literal_property\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:49.039108207Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/literal_property"}
+{"Time":"2026-10-09T17:54:49.03911102Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/array_literal"}
+{"Time":"2026-10-09T17:54:49.039113268Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/array_literal","Output":"=== RUN   TestEnumSlotViews/array_literal\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:49.039116273Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/array_literal","Output":"=== PAUSE TestEnumSlotViews/array_literal\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:49.039118587Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/array_literal"}
+{"Time":"2026-10-09T17:54:49.039121156Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/increment"}
+{"Time":"2026-10-09T17:54:49.039123281Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/increment","Output":"=== RUN   TestEnumSlotViews/increment\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:49.039130153Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/increment","Output":"=== PAUSE TestEnumSlotViews/increment\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:49.039135279Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/increment"}
+{"Time":"2026-10-09T17:54:49.039138049Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/compound"}
+{"Time":"2026-10-09T17:54:49.03914028Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/compound","Output":"=== RUN   TestEnumSlotViews/compound\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:49.039143438Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/compound","Output":"=== PAUSE TestEnumSlotViews/compound\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:49.03914609Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/compound"}
+{"Time":"2026-10-09T17:54:49.039148864Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/array_alias"}
+{"Time":"2026-10-09T17:54:49.039151362Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/array_alias","Output":"=== RUN   TestEnumSlotViews/array_alias\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:49.03915667Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/array_alias","Output":"=== PAUSE TestEnumSlotViews/array_alias\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:49.039159002Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/array_alias"}
+{"Time":"2026-10-09T17:54:49.039163423Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/readonly_into_enum_array"}
+{"Time":"2026-10-09T17:54:49.039167687Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/readonly_into_enum_array","Output":"=== RUN   TestEnumSlotViews/readonly_into_enum_array\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:49.039171263Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/readonly_into_enum_array","Output":"=== PAUSE TestEnumSlotViews/readonly_into_enum_array\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:49.039173795Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/readonly_into_enum_array"}
+{"Time":"2026-10-09T17:54:49.03917673Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/function_view"}
+{"Time":"2026-10-09T17:54:49.039178974Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/function_view","Output":"=== RUN   TestEnumSlotViews/function_view\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:49.039186845Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/function_view","Output":"=== PAUSE TestEnumSlotViews/function_view\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:49.039189208Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/function_view"}
+{"Time":"2026-10-09T17:54:49.039191747Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/object_assign"}
+{"Time":"2026-10-09T17:54:49.039193843Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/object_assign","Output":"=== RUN   TestEnumSlotViews/object_assign\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:49.039196775Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/object_assign","Output":"=== PAUSE TestEnumSlotViews/object_assign\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:49.039198898Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/object_assign"}
+{"Time":"2026-10-09T17:54:49.039226241Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/override"}
+{"Time":"2026-10-09T17:54:49.039229248Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/override","Output":"=== RUN   TestEnumSlotViews/override\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:49.039232624Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/override","Output":"=== PAUSE TestEnumSlotViews/override\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:49.03923511Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/override"}
+{"Time":"2026-10-09T17:54:49.03923895Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/class_field"}
+{"Time":"2026-10-09T17:54:49.03924146Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/class_field","Output":"=== RUN   TestEnumSlotViews/class_field\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:49.039244421Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/class_field","Output":"=== PAUSE TestEnumSlotViews/class_field\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:49.039246669Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/class_field"}
+{"Time":"2026-10-09T17:54:49.039249352Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/optional_union"}
+{"Time":"2026-10-09T17:54:49.039251519Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/optional_union","Output":"=== RUN   TestEnumSlotViews/optional_union\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:49.039254516Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/optional_union","Output":"=== PAUSE TestEnumSlotViews/optional_union\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:49.039256692Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/optional_union"}
+{"Time":"2026-10-09T17:54:49.039259117Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/map_alias"}
+{"Time":"2026-10-09T17:54:49.039261574Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/map_alias","Output":"=== RUN   TestEnumSlotViews/map_alias\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:49.039264805Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/map_alias","Output":"=== PAUSE TestEnumSlotViews/map_alias\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:49.039267275Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/map_alias"}
+{"Time":"2026-10-09T17:54:49.039270198Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/mutable_field_alias"}
+{"Time":"2026-10-09T17:54:49.03927263Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/mutable_field_alias","Output":"=== RUN   TestEnumSlotViews/mutable_field_alias\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:49.039276293Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/mutable_field_alias","Output":"=== PAUSE TestEnumSlotViews/mutable_field_alias\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:49.039278852Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/mutable_field_alias"}
+{"Time":"2026-10-09T17:54:49.039282089Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/generic_class_invariant"}
+{"Time":"2026-10-09T17:54:49.03928511Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/generic_class_invariant","Output":"=== RUN   TestEnumSlotViews/generic_class_invariant\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:49.039291232Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/generic_class_invariant","Output":"=== PAUSE TestEnumSlotViews/generic_class_invariant\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:49.039293842Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/generic_class_invariant"}
+{"Time":"2026-10-09T17:54:49.039296865Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/structural_numeric_enum_object"}
+{"Time":"2026-10-09T17:54:49.039299517Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/structural_numeric_enum_object","Output":"=== RUN   TestEnumSlotViews/structural_numeric_enum_object\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:49.039305808Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/structural_numeric_enum_object","Output":"=== PAUSE TestEnumSlotViews/structural_numeric_enum_object\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:49.039308546Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/structural_numeric_enum_object"}
+{"Time":"2026-10-09T17:54:49.043580356Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/structural_string_enum_object"}
+{"Time":"2026-10-09T17:54:49.043603616Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/structural_string_enum_object","Output":"=== RUN   TestEnumSlotViews/structural_string_enum_object\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:49.043612269Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/structural_string_enum_object","Output":"=== PAUSE TestEnumSlotViews/structural_string_enum_object\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:49.043615475Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/structural_string_enum_object"}
+{"Time":"2026-10-09T17:54:49.043621137Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/structural_enum_object_array"}
+{"Time":"2026-10-09T17:54:49.043624214Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/structural_enum_object_array","Output":"=== RUN   TestEnumSlotViews/structural_enum_object_array\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:49.043667388Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/structural_enum_object_array","Output":"=== PAUSE TestEnumSlotViews/structural_enum_object_array\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:49.043671103Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/structural_enum_object_array"}
+{"Time":"2026-10-09T17:54:49.043676537Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/enum_object_writable_view"}
+{"Time":"2026-10-09T17:54:49.043679515Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/enum_object_writable_view","Output":"=== RUN   TestEnumSlotViews/enum_object_writable_view\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:49.043684153Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/enum_object_writable_view","Output":"=== PAUSE TestEnumSlotViews/enum_object_writable_view\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:49.043687087Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/enum_object_writable_view"}
+{"Time":"2026-10-09T17:54:49.043690717Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/variable"}
+{"Time":"2026-10-09T17:54:49.043700309Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/variable","Output":"=== CONT  TestEnumSlotViews/variable\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:49.044161145Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/enum_object_writable_view"}
+{"Time":"2026-10-09T17:54:49.044176739Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/enum_object_writable_view","Output":"=== CONT  TestEnumSlotViews/enum_object_writable_view\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:49.047179083Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/structural_enum_object_array"}
+{"Time":"2026-10-09T17:54:49.047242771Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/structural_enum_object_array","Output":"=== CONT  TestEnumSlotViews/structural_enum_object_array\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:49.047263371Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/structural_string_enum_object"}
+{"Time":"2026-10-09T17:54:49.047268418Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/structural_string_enum_object","Output":"=== CONT  TestEnumSlotViews/structural_string_enum_object\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:49.304932854Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/structural_enum_object_array","Output":"--- PASS: TestEnumSlotViews/structural_enum_object_array (0.26s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:49.305010203Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/structural_enum_object_array","Elapsed":0.26}
+{"Time":"2026-10-09T17:54:49.305043406Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/structural_numeric_enum_object"}
+{"Time":"2026-10-09T17:54:49.305047929Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/structural_numeric_enum_object","Output":"=== CONT  TestEnumSlotViews/structural_numeric_enum_object\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:49.318943798Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/structural_string_enum_object","Output":"--- PASS: TestEnumSlotViews/structural_string_enum_object (0.27s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:49.318979591Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/structural_string_enum_object","Elapsed":0.27}
+{"Time":"2026-10-09T17:54:49.318987118Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/generic_class_invariant"}
+{"Time":"2026-10-09T17:54:49.318991546Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/generic_class_invariant","Output":"=== CONT  TestEnumSlotViews/generic_class_invariant\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:49.336924337Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/enum_object_writable_view","Output":"--- PASS: TestEnumSlotViews/enum_object_writable_view (0.29s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:49.336972658Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/enum_object_writable_view","Elapsed":0.29}
+{"Time":"2026-10-09T17:54:49.336980204Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/mutable_field_alias"}
+{"Time":"2026-10-09T17:54:49.33698968Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/mutable_field_alias","Output":"=== CONT  TestEnumSlotViews/mutable_field_alias\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:49.48972391Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/generic_class_invariant","Output":"--- PASS: TestEnumSlotViews/generic_class_invariant (0.17s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:49.489777171Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/generic_class_invariant","Elapsed":0.17}
+{"Time":"2026-10-09T17:54:49.489785361Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/map_alias"}
+{"Time":"2026-10-09T17:54:49.489789039Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/map_alias","Output":"=== CONT  TestEnumSlotViews/map_alias\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:49.492449815Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/structural_numeric_enum_object","Output":"--- PASS: TestEnumSlotViews/structural_numeric_enum_object (0.19s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:49.492517213Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/structural_numeric_enum_object","Elapsed":0.19}
+{"Time":"2026-10-09T17:54:49.492524773Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/optional_union"}
+{"Time":"2026-10-09T17:54:49.49252869Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/optional_union","Output":"=== CONT  TestEnumSlotViews/optional_union\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:49.743715142Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/variable","Output":"--- PASS: TestEnumSlotViews/variable (0.70s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:49.743767123Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/variable","Elapsed":0.7}
+{"Time":"2026-10-09T17:54:49.743775821Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/class_field"}
+{"Time":"2026-10-09T17:54:49.743779757Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/class_field","Output":"=== CONT  TestEnumSlotViews/class_field\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:49.805417831Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/map_alias","Output":"--- PASS: TestEnumSlotViews/map_alias (0.31s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:49.805470833Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/map_alias","Elapsed":0.31}
+{"Time":"2026-10-09T17:54:49.805480623Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/override"}
+{"Time":"2026-10-09T17:54:49.805488683Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/override","Output":"=== CONT  TestEnumSlotViews/override\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:49.860469485Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/mutable_field_alias","Output":"--- PASS: TestEnumSlotViews/mutable_field_alias (0.52s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:49.860520019Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/mutable_field_alias","Elapsed":0.52}
+{"Time":"2026-10-09T17:54:49.860528109Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/object_assign"}
+{"Time":"2026-10-09T17:54:49.860531813Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/object_assign","Output":"=== CONT  TestEnumSlotViews/object_assign\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:50.000482083Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/object_assign","Output":"--- PASS: TestEnumSlotViews/object_assign (0.14s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:50.000539717Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/object_assign","Elapsed":0.14}
+{"Time":"2026-10-09T17:54:50.000547524Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/function_view"}
+{"Time":"2026-10-09T17:54:50.000550824Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/function_view","Output":"=== CONT  TestEnumSlotViews/function_view\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:50.05114287Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/optional_union","Output":"--- PASS: TestEnumSlotViews/optional_union (0.56s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:50.051186049Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/optional_union","Elapsed":0.56}
+{"Time":"2026-10-09T17:54:50.051194106Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/readonly_into_enum_array"}
+{"Time":"2026-10-09T17:54:50.051197338Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/readonly_into_enum_array","Output":"=== CONT  TestEnumSlotViews/readonly_into_enum_array\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:50.304771142Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/class_field","Output":"--- PASS: TestEnumSlotViews/class_field (0.56s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:50.304822319Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/class_field","Elapsed":0.56}
+{"Time":"2026-10-09T17:54:50.304830779Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/array_alias"}
+{"Time":"2026-10-09T17:54:50.30483581Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/array_alias","Output":"=== CONT  TestEnumSlotViews/array_alias\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:50.376887789Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/override","Output":"--- PASS: TestEnumSlotViews/override (0.57s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:50.377077473Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/override","Elapsed":0.57}
+{"Time":"2026-10-09T17:54:50.377091163Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/compound"}
+{"Time":"2026-10-09T17:54:50.377095497Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/compound","Output":"=== CONT  TestEnumSlotViews/compound\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:50.644143526Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/readonly_into_enum_array","Output":"--- PASS: TestEnumSlotViews/readonly_into_enum_array (0.59s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:50.644359293Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/readonly_into_enum_array","Elapsed":0.59}
+{"Time":"2026-10-09T17:54:50.644372474Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/increment"}
+{"Time":"2026-10-09T17:54:50.644403536Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/increment","Output":"=== CONT  TestEnumSlotViews/increment\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:50.659602246Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/function_view","Output":"--- PASS: TestEnumSlotViews/function_view (0.66s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:50.659632834Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/function_view","Elapsed":0.66}
+{"Time":"2026-10-09T17:54:50.659639593Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/array_literal"}
+{"Time":"2026-10-09T17:54:50.659643143Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/array_literal","Output":"=== CONT  TestEnumSlotViews/array_literal\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:50.882558777Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/compound","Output":"--- PASS: TestEnumSlotViews/compound (0.51s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:50.882590903Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/compound","Elapsed":0.51}
+{"Time":"2026-10-09T17:54:50.882597092Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/literal_property"}
+{"Time":"2026-10-09T17:54:50.882600978Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/literal_property","Output":"=== CONT  TestEnumSlotViews/literal_property\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:50.962796576Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/array_alias","Output":"--- PASS: TestEnumSlotViews/array_alias (0.66s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:50.963633647Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/array_alias","Elapsed":0.66}
+{"Time":"2026-10-09T17:54:50.963659898Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/assignment"}
+{"Time":"2026-10-09T17:54:50.96366463Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/assignment","Output":"=== CONT  TestEnumSlotViews/assignment\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:51.275602003Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/increment","Output":"--- PASS: TestEnumSlotViews/increment (0.63s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:51.275687107Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/increment","Elapsed":0.63}
+{"Time":"2026-10-09T17:54:51.2756954Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/argument"}
+{"Time":"2026-10-09T17:54:51.275699374Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/argument","Output":"=== CONT  TestEnumSlotViews/argument\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:51.293633196Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/array_literal","Output":"--- PASS: TestEnumSlotViews/array_literal (0.63s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:51.293671556Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/array_literal","Elapsed":0.63}
+{"Time":"2026-10-09T17:54:51.293678978Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/member_initializer"}
+{"Time":"2026-10-09T17:54:51.293685993Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/member_initializer","Output":"=== CONT  TestEnumSlotViews/member_initializer\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:51.58960812Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/literal_property","Output":"--- PASS: TestEnumSlotViews/literal_property (0.71s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:51.589720652Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/literal_property","Elapsed":0.71}
+{"Time":"2026-10-09T17:54:51.589730369Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/initializer"}
+{"Time":"2026-10-09T17:54:51.589735048Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/initializer","Output":"=== CONT  TestEnumSlotViews/initializer\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:51.675999908Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/assignment","Output":"--- PASS: TestEnumSlotViews/assignment (0.71s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:51.852764155Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/assignment","Elapsed":0.71}
+{"Time":"2026-10-09T17:54:51.85280683Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/member_initializer","Output":"--- PASS: TestEnumSlotViews/member_initializer (0.56s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:51.853644617Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/member_initializer","Elapsed":0.56}
+{"Time":"2026-10-09T17:54:51.853668902Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/argument","Output":"--- PASS: TestEnumSlotViews/argument (0.58s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:51.915595074Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/argument","Elapsed":0.58}
+{"Time":"2026-10-09T17:54:51.915633287Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSwitchExhaustiveness","Output":"--- PASS: TestEnumSwitchExhaustiveness (2.88s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:51.99159738Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSwitchExhaustiveness","Elapsed":2.88}
+{"Time":"2026-10-09T17:54:51.991639226Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/initializer","Output":"--- PASS: TestEnumSlotViews/initializer (0.40s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:51.991656341Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews/initializer","Elapsed":0.4}
+{"Time":"2026-10-09T17:54:51.991660175Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews","Output":"--- PASS: TestEnumSlotViews (0.01s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:51.991664144Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumSlotViews","Elapsed":0.01}
+{"Time":"2026-10-09T17:54:51.991674857Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:51.994897784Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"ok  \tgithub.com/system-inc/adamic/internal/lower\t2.973s\n"}
+{"Time":"2026-10-09T17:54:51.99498691Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":2.973}

@@ -1,0 +1,20 @@
+{"Time":"2026-10-09T17:57:28.299721845Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T17:57:28.310570005Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeLibraryDoesNotRefuseTypeOnlyOrUserNames"}
+{"Time":"2026-10-09T17:57:28.310644829Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeLibraryDoesNotRefuseTypeOnlyOrUserNames","Output":"=== RUN   TestNodeLibraryDoesNotRefuseTypeOnlyOrUserNames\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:28.310670544Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeLibraryDoesNotRefuseTypeOnlyOrUserNames","Output":"=== PAUSE TestNodeLibraryDoesNotRefuseTypeOnlyOrUserNames\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:28.310673719Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeLibraryDoesNotRefuseTypeOnlyOrUserNames"}
+{"Time":"2026-10-09T17:57:28.310676586Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeLibraryDistinguishesReceiverOwners"}
+{"Time":"2026-10-09T17:57:28.310678633Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeLibraryDistinguishesReceiverOwners","Output":"=== RUN   TestNodeLibraryDistinguishesReceiverOwners\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:28.310681879Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeLibraryDistinguishesReceiverOwners","Output":"=== PAUSE TestNodeLibraryDistinguishesReceiverOwners\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:28.310683763Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeLibraryDistinguishesReceiverOwners"}
+{"Time":"2026-10-09T17:57:28.310685808Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeLibraryDoesNotRefuseTypeOnlyOrUserNames"}
+{"Time":"2026-10-09T17:57:28.310703484Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeLibraryDoesNotRefuseTypeOnlyOrUserNames","Output":"=== CONT  TestNodeLibraryDoesNotRefuseTypeOnlyOrUserNames\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:28.31076046Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeLibraryDistinguishesReceiverOwners"}
+{"Time":"2026-10-09T17:57:28.310763088Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeLibraryDistinguishesReceiverOwners","Output":"=== CONT  TestNodeLibraryDistinguishesReceiverOwners\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:28.809529495Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeLibraryDistinguishesReceiverOwners","Output":"--- PASS: TestNodeLibraryDistinguishesReceiverOwners (0.50s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:29.421010083Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeLibraryDistinguishesReceiverOwners","Elapsed":0.5}
+{"Time":"2026-10-09T17:57:29.421059862Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeLibraryDoesNotRefuseTypeOnlyOrUserNames","Output":"--- PASS: TestNodeLibraryDoesNotRefuseTypeOnlyOrUserNames (1.11s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:29.421069883Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeLibraryDoesNotRefuseTypeOnlyOrUserNames","Elapsed":1.11}
+{"Time":"2026-10-09T17:57:29.421072616Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:29.439144159Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"ok  \tgithub.com/system-inc/adamic/internal/lower\t1.139s\n"}
+{"Time":"2026-10-09T17:57:29.439180703Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":1.139}

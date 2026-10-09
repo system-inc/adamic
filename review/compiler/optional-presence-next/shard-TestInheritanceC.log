@@ -1,0 +1,20 @@
+{"Time":"2026-10-09T17:55:46.32639615Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T17:55:46.340126176Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceCycleFinderIncludesInheritedFields"}
+{"Time":"2026-10-09T17:55:46.34024432Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceCycleFinderIncludesInheritedFields","Output":"=== RUN   TestInheritanceCycleFinderIncludesInheritedFields\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:55:46.340365376Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceCycleFinderIncludesInheritedFields","Output":"=== PAUSE TestInheritanceCycleFinderIncludesInheritedFields\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:55:46.340370027Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceCycleFinderIncludesInheritedFields"}
+{"Time":"2026-10-09T17:55:46.340379701Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceConditionalThisRules"}
+{"Time":"2026-10-09T17:55:46.340383737Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceConditionalThisRules","Output":"=== RUN   TestInheritanceConditionalThisRules\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:55:46.340390153Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceConditionalThisRules","Output":"=== PAUSE TestInheritanceConditionalThisRules\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:55:46.340393496Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceConditionalThisRules"}
+{"Time":"2026-10-09T17:55:46.340396926Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceCycleFinderIncludesInheritedFields"}
+{"Time":"2026-10-09T17:55:46.340400036Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceCycleFinderIncludesInheritedFields","Output":"=== CONT  TestInheritanceCycleFinderIncludesInheritedFields\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:55:46.340403519Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceConditionalThisRules"}
+{"Time":"2026-10-09T17:55:46.340406195Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceConditionalThisRules","Output":"=== CONT  TestInheritanceConditionalThisRules\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:55:46.441682301Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceCycleFinderIncludesInheritedFields","Output":"--- PASS: TestInheritanceCycleFinderIncludesInheritedFields (0.10s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:55:46.51656456Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceCycleFinderIncludesInheritedFields","Elapsed":0.1}
+{"Time":"2026-10-09T17:55:46.516615626Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceConditionalThisRules","Output":"--- PASS: TestInheritanceConditionalThisRules (0.18s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:55:46.516622664Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceConditionalThisRules","Elapsed":0.18}
+{"Time":"2026-10-09T17:55:46.516625679Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:55:46.519162163Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"ok  \tgithub.com/system-inc/adamic/internal/lower\t0.192s\n"}
+{"Time":"2026-10-09T17:55:46.519196381Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.193}
