@@ -26,12 +26,12 @@ int main(void) {
     static const bool references[] = {false, false, false};
     static const adamic_shape shape = {3, names, references, NULL};
     static const int types[] = {1, 7, 1};
-    static adamic_shape_types metadata = {&shape, types, NULL};
+    static adamic_shape_types metadata = {&shape, types, NULL, false};
     static const char *const extra_names[] = {"extra"};
     static const bool extra_references[] = {false};
     static const adamic_shape extra = {1, extra_names, extra_references, NULL};
     static const int extra_types[] = {7};
-    static adamic_shape_types extra_metadata = {&extra, extra_types, NULL};
+    static adamic_shape_types extra_metadata = {&extra, extra_types, NULL, false};
     adamic_register_shape_types(&metadata);
     adamic_register_shape_types(&extra_metadata);
     adamic_object *source = adamic_object_new(&shape);
@@ -53,11 +53,11 @@ int main(void) {
         adamic_object *copy = dynamic ? adamic_object_copy_reserving_checked(source, &extra, "copy") : adamic_object_copy_checked(source, "copy");
         printf("types %u %u %u\n", adamic_object_field_types(copy)[0], adamic_object_field_types(copy)[1], adamic_object_field_types(copy)[2]);
         printf("%d %d %d\n", adamic_has_property(&copy->heap, "slot"), adamic_object_initialized(copy)[0], adamic_has_property(&copy->heap, "pending"));
-        adamic_slot_cache cache = {NULL, 0};
+        adamic_slot_cache cache = {0};
         adamic_value *slot = adamic_object_write_field(copy, "pending", &cache);
         slot->number = 0;
         adamic_heap *value = adamic_dynamic_property(&copy->heap, "pending");
-        printf("%d %d\n", adamic_object_initialized(copy)[cache.index], value != NULL && value->kind == adamic_kind_number && ((adamic_number_box *)value)->number == 0);
+        printf("%d %d\n", adamic_object_initialized(copy)[adamic_slot_index(copy, slot)], value != NULL && value->kind == adamic_kind_number && ((adamic_number_box *)value)->number == 0);
         adamic_release(value);
         adamic_release(copy);
     }
@@ -69,7 +69,7 @@ int main(void) {
 	original := string(implementation)
 	// Compile the production implementation under private symbol names. Runtime
 	// link flags load the complete archive, so replacing public symbols would clash.
-	definitions := regexp.MustCompile(`(?m)^(?:adamic_object \*|adamic_value \*|adamic_closure \*|adamic_maybe_number |adamic_maybe_boolean |adamic_value |void |bool )((?:adamic_object_|adamic_view_)[a-z_]+)\(`)
+	definitions := regexp.MustCompile(`(?m)^(?:adamic_object \*|adamic_value \*|adamic_closure \*|adamic_maybe_number |adamic_maybe_boolean |adamic_value |void |bool )((?:adamic_object_|adamic_view_|adamic_slot_)[a-z_]+)\(`)
 	prefix := ""
 	for _, match := range definitions.FindAllStringSubmatch(original, -1) {
 		prefix += "#define " + match[1] + " probe_" + match[1] + "\n"
@@ -78,9 +78,9 @@ int main(void) {
 		name, from, to string
 	}{
 		{"baseline", "", ""},
-		{"drop presence on checked copy", "if (source->class == NULL) adamic_object_orders(object)[index] = adamic_object_orders(source)[cache.index];", "(void)source;"},
-		{"drop readiness on checked copy", "adamic_object_initialized(object)[index] = adamic_object_initialized(source)[cache.index];", "(void)source;"},
-		{"drop representation on checked copy", "adamic_object_field_types(object)[index] = adamic_object_field_types(source)[cache.index];", "(void)source;"},
+		{"drop presence on checked copy", "if (source->class == NULL) adamic_object_orders(object)[index] = adamic_object_orders(owner)[at];", "(void)source;"},
+		{"drop readiness on checked copy", "adamic_object_initialized(object)[index] = adamic_object_initialized(owner)[at];", "(void)source;"},
+		{"drop representation on checked copy", "adamic_object_field_types(object)[index] = adamic_object_field_types(owner)[at];", "(void)source;"},
 		{"overlap presence and readiness", "#include \"adamic.h\"", "#include \"adamic.h\"\n#define adamic_object_initialized(object) ((unsigned char *)(void *)adamic_object_orders(object))"},
 	} {
 		t.Run(mutation.name, func(t *testing.T) {

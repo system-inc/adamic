@@ -84,10 +84,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/real/structural-method-statics/main.a:8:36: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
-    }
+    "stage0": {"outcome":"Compiles","what":""}
   },
   {
     "file": "generic-optional-return/main.a",
@@ -102,10 +99,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/real/generic-optional-return/main.a:7:68: stage 0 can't lower an array of never yet"
-    }
+    "stage0": {"outcome":"Compiles","what":""}
   },
   {
     "file": "value-condition/main.a",

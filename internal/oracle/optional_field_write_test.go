@@ -73,7 +73,7 @@ func TestOptionalFieldPresenceCatchesMutants(t *testing.T) {
 	layoutOrder := `#include "adamic.h"
 static adamic_value *mutant_layout_write(adamic_object *object, const char *name, adamic_slot_cache *cache) {
     adamic_value *slot = adamic_object_write_field(object, name, cache);
-    adamic_object_orders(object)[cache->index] = cache->index + 1;
+    adamic_object_orders(object)[adamic_slot_index(object, slot)] = adamic_slot_index(object, slot) + 1;
     return slot;
 }
 ` + strings.ReplaceAll(source, "adamic_object_write_field(", "mutant_layout_write(")
