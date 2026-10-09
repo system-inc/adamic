@@ -87,6 +87,13 @@ for (;;) {
         const values = parts(value);
         if (!values.some(undefinedPart)) return;
         const owners = symbol.declarations;
+        if (finding.resolution === 'nullable contextual target') {
+            for (const owner of owners) {
+                let container = owner.parent;
+                while (container && !(ts.isInterfaceDeclaration(container) || ts.isTypeAliasDeclaration(container) || ts.isFunctionDeclaration(container) || ts.isClassDeclaration(container))) container = container.parent;
+                if (!container || ((ts.getCombinedModifierFlags(container) & ts.ModifierFlags.Export) && !ts.getJSDocTags(container).some(t => t.tagName.text === 'internal'))) return;
+            }
+        }
         for (const owner of owners) {
             if (!(ts.isPropertySignature(owner) || ts.isPropertyDeclaration(owner) || ts.isMethodSignature(owner)) ||
                 !owner.questionToken || !owner.type || !owned.has(path.resolve(owner.getSourceFile().fileName))) return;
@@ -145,7 +152,8 @@ for (;;) {
                 if (ts.isVariableDeclaration(n)) expression = n.initializer;
                 if (ts.isBinaryExpression(n) && n.operatorToken.kind === ts.SyntaxKind.EqualsToken) expression = n.right;
                 if (!expression || !ts.isExpressionNode(expression)) continue;
-                const target = checker.getContextualType(expression);
+                const rawTarget = checker.getContextualType(expression);
+                const target = rawTarget && checker.getNonNullableType(rawTarget);
                 if (!target || (target.flags & forbidden)) continue;
                 const properties = checker.getPropertiesOfType(target);
                 if (!properties.length) continue;
@@ -160,7 +168,7 @@ for (;;) {
                         if (actual.declarations?.length !== 1 || !declaration.type) continue;
                         value = checker.getTypeFromTypeNode(declaration.type);
                     }
-                    resolved = select(property, value, finding) || resolved;
+                    resolved = select(property, value, target !== rawTarget ? { ...finding, resolution: 'nullable contextual target' } : finding) || resolved;
                 }
                 break;
             }

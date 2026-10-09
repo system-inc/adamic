@@ -610,3 +610,23 @@ by `builder optional value contract drift: outSignature`; original bytes are
 restored. Full composition results and exact commands are recorded in
 ../../scouts/step24/remaining-67/README.md. No public declaration is widened
 by this pattern, and no compiler or shared harness changes are included.
+
+## Nullable contextual targets, October 9
+
+A contextual target such as `Options | undefined` has no common properties.
+Selection now examines its non-null object constituent. This changes neither
+that target union nor the runtime value. The same typed optional-property and
+compatible present-undefined evidence rules still select declarations; methods,
+required members, generic receiver resets and indexed seeds remain declined.
+For this newly traversed pattern, owners must be local or explicitly internal.
+Public contracts remain untouched because the unit requires API byte equality.
+The restriction is an additional compatibility boundary, not a claim that a
+public present-undefined field has a different runtime meaning.
+
+On the fully adapted control, seven internal declarations qualify: two
+SignatureToSignatureDeclarationOptions slots, checkTypeAssignableTo's errors
+slot, getPromisedTypeOfPromise's value slot, SymbolVisibilityResult's
+aliasesToMakeVisible, SymbolTracker's moduleResolverHost, and
+DirectoryWatchesOfFailedLookup.nonRecursive. The ordinary iterative dependency
+recheck and inherited-owner pass remain in force. Raw owner evidence, the
+per-stop dispositions and the selector mutant are in the remaining-67 scout.
