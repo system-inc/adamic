@@ -675,7 +675,151 @@
       "run": 2,
       "wall": 4.664,
       "returncode": 0
+    },
+    {
+      "unit": "TestVolumeConfigGuardAndMutant_013",
+      "run": 1,
+      "wall": 39.085,
+      "returncode": 0
+    },
+    {
+      "unit": "TestVolumeConfigGuardAndMutant_013",
+      "run": 2,
+      "wall": 4.789,
+      "returncode": 0
+    },
+    {
+      "unit": "TestVolumeConfigGuardAndMutant_015",
+      "run": 1,
+      "wall": 4.574,
+      "returncode": 0
+    },
+    {
+      "unit": "TestVolumeConfigGuardAndMutant_015",
+      "run": 2,
+      "wall": 4.484,
+      "returncode": 0
+    },
+    {
+      "unit": "TestVolumeProfileMutants_001",
+      "run": 1,
+      "wall": 3.551,
+      "returncode": 0
+    },
+    {
+      "unit": "TestVolumeProfileMutants_001",
+      "run": 2,
+      "wall": 3.539,
+      "returncode": 0
+    },
+    {
+      "unit": "TestVolumeProfileMutants_000",
+      "run": 1,
+      "wall": 3.85,
+      "returncode": 0
+    },
+    {
+      "unit": "TestVolumeProfileMutants_000",
+      "run": 2,
+      "wall": 3.605,
+      "returncode": 0
+    },
+    {
+      "unit": "TestVolumeProfileMutants_002",
+      "run": 1,
+      "wall": 3.607,
+      "returncode": 0
+    },
+    {
+      "unit": "TestVolumeProfileMutants_002",
+      "run": 2,
+      "wall": 3.675,
+      "returncode": 0
+    },
+    {
+      "unit": "TestSixRuleAgreementAndMutants_031",
+      "run": 1,
+      "wall": 21.334,
+      "returncode": 0
+    },
+    {
+      "unit": "TestSixRuleAgreementAndMutants_031",
+      "run": 2,
+      "wall": 12.457,
+      "returncode": 0
+    },
+    {
+      "unit": "TestSixRuleAgreementAndMutants_028",
+      "run": 1,
+      "wall": 24.678,
+      "returncode": 0
+    },
+    {
+      "unit": "TestSixRuleAgreementAndMutants_028",
+      "run": 2,
+      "wall": 20.869,
+      "returncode": 0
+    },
+    {
+      "unit": "TestVolumeProfileControls_001",
+      "run": 1,
+      "wall": 3.346,
+      "returncode": 0
+    },
+    {
+      "unit": "TestVolumeProfileControls_001",
+      "run": 2,
+      "wall": 3.496,
+      "returncode": 0
+    },
+    {
+      "unit": "TestVolumeTypeSymbol_000",
+      "run": 1,
+      "wall": 29.737,
+      "returncode": 0
+    },
+    {
+      "unit": "TestVolumeTypeSymbol_000",
+      "run": 2,
+      "wall": 3.054,
+      "returncode": 0
+    },
+    {
+      "unit": "TestShadowIndexMissingBinding_000",
+      "run": 1,
+      "wall": 3.136,
+      "returncode": 0
+    },
+    {
+      "unit": "TestShadowIndexMissingBinding_000",
+      "run": 2,
+      "wall": 3.148,
+      "returncode": 0
+    },
+    {
+      "unit": "TestInspectRequestRefusals",
+      "run": 1,
+      "wall": 28.875,
+      "returncode": 0
+    },
+    {
+      "unit": "TestInspectRequestRefusals",
+      "run": 2,
+      "wall": 15.017,
+      "returncode": 0
+    },
+    {
+      "unit": "TestVolumeConfigGuardAndMutant_013",
+      "run": 3,
+      "wall": 5.397,
+      "returncode": 0
+    },
+    {
+      "unit": "TestVolumeConfigGuardAndMutant_013",
+      "run": 4,
+      "wall": 5.145,
+      "returncode": 0
     }
   ],
-  "status": "Measurements ongoing; no test changes. TestProduct_checker exceeds product 60s budget."
+  "status": "All 31 listed units passed twice below 30s. Guard 013 runs 1/2 retained for audit; runs 3/4 repeat after scratch-file cache-key interference. No test changes required. Vet passed. Lane check pending explicit remote tracking ref fetch."
 }
