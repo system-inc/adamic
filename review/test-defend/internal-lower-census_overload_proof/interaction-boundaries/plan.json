@@ -1,0 +1,32 @@
+[
+  {
+    "id": "D1",
+    "row": "TestCensusPredicateInteractionBoundary",
+    "file": "internal/lower/predicates.go",
+    "old": "Fix: \"inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\"",
+    "new": "Fix: \"inline the check where you use it, or return a discriminant comparison on the unmodified parameter\"",
+    "menu": "change constant",
+    "aim": "Lose the actionable rule label while preserving the refusal and its reason.",
+    "line": 37
+  },
+  {
+    "id": "D2",
+    "row": "TestCensusPredicateInteractionEscapes",
+    "file": "internal/lower/predicates.go",
+    "old": "function.Kind != ast.KindFunctionDeclaration || !ast.IsIdentifier(function.Name()) || ast.HasSyntacticModifier(function, ast.ModifierFlagsExport)",
+    "new": "function.Kind != ast.KindFunctionDeclaration || !ast.IsIdentifier(function.Name())",
+    "menu": "change condition",
+    "aim": "Treat exported callback owners with local direct callers as closed.",
+    "line": 442
+  },
+  {
+    "id": "D3",
+    "row": "TestCensusPredicateMarkerKeepsProofBoundaries",
+    "file": "internal/lower/census_predicate_marker.go",
+    "old": "accepted = len(signatures) == 1 && l.censusNeverRestSignature(signatures[0])",
+    "new": "accepted = len(signatures) == 1",
+    "menu": "change condition",
+    "aim": "Admit a number-rest slot as erased, despite its observable parameter contract.",
+    "line": 60
+  }
+]

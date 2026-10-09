@@ -1,0 +1,11 @@
+--- a/internal/lower/predicates.go
++++ b/internal/lower/predicates.go
+@@ -439,7 +439,7 @@
+ // Every producer is checked by predicateArguments before annotations are admitted.
+ // Keep that proof within direct calls, and do not let a callback escape its body.
+ func (l *lowering) predicateCallbackCallers(function *ast.Node, callback *ast.Symbol) bool {
+-	if function.Kind != ast.KindFunctionDeclaration || !ast.IsIdentifier(function.Name()) || ast.HasSyntacticModifier(function, ast.ModifierFlagsExport) {
++	if function.Kind != ast.KindFunctionDeclaration || !ast.IsIdentifier(function.Name()) {
+ 		return false
+ 	}
+ 	owner := l.symbol(function.Name())

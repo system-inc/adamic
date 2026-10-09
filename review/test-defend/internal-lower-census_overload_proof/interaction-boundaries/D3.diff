@@ -1,0 +1,11 @@
+--- a/internal/lower/census_predicate_marker.go
++++ b/internal/lower/census_predicate_marker.go
+@@ -57,7 +57,7 @@
+ 					for index, given := range call.AsCallExpression().Arguments.Nodes {
+ 						if given == argument && index < len(resolved.Parameters()) {
+ 							signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeOfSymbol(resolved.Parameters()[index]), checker.SignatureKindCall)
+-							accepted = len(signatures) == 1 && l.censusNeverRestSignature(signatures[0])
++							accepted = len(signatures) == 1
+ 						}
+ 					}
+ 				}

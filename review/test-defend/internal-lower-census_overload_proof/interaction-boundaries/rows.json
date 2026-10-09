@@ -1,0 +1,95 @@
+[
+  {
+    "test": "TestCensusPredicateInteractionBoundary",
+    "package": "internal/lower",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestCensusPredicateInteractionEscapes"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D1 internal/lower/predicates.go:37",
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "internal/lower/predicates.go:37",
+        "change": "Fix: \"inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\" -> Fix: \"inline the check where you use it, or return a discriminant comparison on the unmodified parameter\"",
+        "rows_failed": [
+          "TestCensusPredicateInteractionBoundary"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend027/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D1.log 2>&1; census_predicate_interaction_test.go:33: want marker proof boundary diagnostic, got /tmp/adamic-gate/TestCensusPredicateInteractionBoundary3050099025/001/main.a:3:53: Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter",
+    "passed_rows": "matrix.json: D1.rows_passed (273)",
+    "skipped_rows": [
+      "TestOriginalCycleLedger",
+      "TestOptionalWideningCensus"
+    ]
+  },
+  {
+    "test": "TestCensusPredicateInteractionEscapes",
+    "package": "internal/lower",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestCensusPredicateInteractionBoundary"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D2 internal/lower/predicates.go:442",
+    "attempts": [
+      {
+        "mutant": "D2",
+        "file_line": "internal/lower/predicates.go:442",
+        "change": "function.Kind != ast.KindFunctionDeclaration || !ast.IsIdentifier(function.Name()) || ast.HasSyntacticModifier(function, ast.ModifierFlagsExport) -> function.Kind != ast.KindFunctionDeclaration || !ast.IsIdentifier(function.Name())",
+        "rows_failed": [
+          "TestCensusPredicateInteractionEscapes"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend027/cache/D2 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D2.log 2>&1; census_predicate_interaction_test.go:55: want unproven live callback refused, got <nil>",
+    "passed_rows": "matrix.json: D2.rows_passed (273)",
+    "skipped_rows": [
+      "TestOriginalCycleLedger",
+      "TestOptionalWideningCensus"
+    ]
+  },
+  {
+    "test": "TestCensusPredicateMarkerKeepsProofBoundaries",
+    "package": "internal/lower",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestCensusPredicateInteractionEscapes"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D5 internal/lower/census_small.go:429",
+    "attempts": [
+      {
+        "mutant": "D3",
+        "file_line": "internal/lower/census_predicate_marker.go:60",
+        "change": "accepted = len(signatures) == 1 && l.censusNeverRestSignature(signatures[0]) -> accepted = len(signatures) == 1",
+        "rows_failed": []
+      },
+      {
+        "mutant": "D4",
+        "file_line": "internal/lower/census_small.go:429",
+        "change": "return parameter.Flags()&checker.TypeFlagsNever != 0 -> return parameter.Flags()&(checker.TypeFlagsNever|checker.TypeFlagsNumber) != 0",
+        "rows_failed": [
+          "TestCensusPredicateMarkerKeepsProofBoundaries",
+          "TestNestedRestIsSupported"
+        ]
+      },
+      {
+        "mutant": "D5",
+        "file_line": "internal/lower/census_small.go:429",
+        "change": "return parameter.Flags()&checker.TypeFlagsNever != 0 -> return parameter.Flags()&checker.TypeFlagsNever != 0 || (signature.Declaration() != nil && signature.Declaration().Kind == ast.KindFunctionType && parameter.Flags()&checker.TypeFlagsNumber != 0)",
+        "rows_failed": [
+          "TestCensusPredicateMarkerKeepsProofBoundaries"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend027/cache/D5 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D5.log 2>&1; census_predicate_marker_test.go:20: unobservable marker exception escaped its boundary: <nil>",
+    "passed_rows": "matrix.json: D5.rows_passed (273)",
+    "skipped_rows": [
+      "TestOriginalCycleLedger",
+      "TestOptionalWideningCensus"
+    ]
+  }
+]

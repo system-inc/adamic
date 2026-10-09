@@ -1,0 +1,12 @@
+[
+  {
+    "id": "D4",
+    "row": "TestCensusPredicateMarkerKeepsProofBoundaries",
+    "file": "internal/lower/census_small.go",
+    "old": "return parameter.Flags()&checker.TypeFlagsNever != 0",
+    "new": "return parameter.Flags()&(checker.TypeFlagsNever|checker.TypeFlagsNumber) != 0",
+    "menu": "change constant",
+    "aim": "Classify number-rest slots as erased in both marker admission and function assignment, avoiding the independent refusal that masked D3.",
+    "line": 429
+  }
+]

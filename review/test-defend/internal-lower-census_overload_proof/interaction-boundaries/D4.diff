@@ -1,0 +1,10 @@
+--- a/internal/lower/census_small.go
++++ b/internal/lower/census_small.go
+@@ -426,5 +426,5 @@
+ 	if l.checker.IsArrayType(parameter) {
+ 		parameter = l.checker.GetElementTypeOfArrayType(parameter)
+ 	}
+-	return parameter.Flags()&checker.TypeFlagsNever != 0
+-}
++	return parameter.Flags()&(checker.TypeFlagsNever|checker.TypeFlagsNumber) != 0
++}

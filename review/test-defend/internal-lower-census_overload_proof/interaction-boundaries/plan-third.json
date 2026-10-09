@@ -1,0 +1,12 @@
+[
+  {
+    "id": "D5",
+    "row": "TestCensusPredicateMarkerKeepsProofBoundaries",
+    "file": "internal/lower/census_small.go",
+    "old": "return parameter.Flags()&checker.TypeFlagsNever != 0",
+    "new": "return parameter.Flags()&checker.TypeFlagsNever != 0 || (signature.Declaration() != nil && signature.Declaration().Kind == ast.KindFunctionType && parameter.Flags()&checker.TypeFlagsNumber != 0)",
+    "menu": "flip condition",
+    "aim": "Widen erasure to number-rest explicit callable types, while keeping actual function declarations subject to ordinary rest-call rules.",
+    "line": 429
+  }
+]

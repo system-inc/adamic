@@ -1,0 +1,32 @@
+[
+  {
+    "mutant": "D1",
+    "applies_to_starting_main": true,
+    "go_vet": "passed, D1.vet.log",
+    "go_test_build": "passed; observed package test outcomes in D1.log"
+  },
+  {
+    "mutant": "D2",
+    "applies_to_starting_main": true,
+    "go_vet": "passed, D2.vet.log",
+    "go_test_build": "passed; observed package test outcomes in D2.log"
+  },
+  {
+    "mutant": "D3",
+    "applies_to_starting_main": true,
+    "go_vet": "passed, D3.vet.log",
+    "go_test_build": "passed; observed package test outcomes in D3.log"
+  },
+  {
+    "mutant": "D4",
+    "applies_to_starting_main": true,
+    "go_vet": "passed, D4.vet.log",
+    "go_test_build": "passed; observed package test outcomes in D4.log"
+  },
+  {
+    "mutant": "D5",
+    "applies_to_starting_main": true,
+    "go_vet": "passed, D5.vet.log",
+    "go_test_build": "passed; observed package test outcomes in D5.log"
+  }
+]

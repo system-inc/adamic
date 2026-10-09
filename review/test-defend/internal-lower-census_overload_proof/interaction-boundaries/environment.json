@@ -1,0 +1,17 @@
+{
+  "toolchain": "warm, setup skipped",
+  "nproc": 5,
+  "initial_disk": {
+    "tmp_free": "8.8G",
+    "tmp_capacity": "8.8G",
+    "workspace_free": "18G"
+  },
+  "removed_previous_scratch": [
+    "/tmp/defend042",
+    "/tmp/adamic-gate"
+  ],
+  "after_cleanup_tmp_used": "12M",
+  "threshold_note": "15 GB cannot be reached on the 8.8 GB tmp mount",
+  "npm_seconds_reported": 0.773,
+  "baseline_binary_seconds": 66.8
+}
