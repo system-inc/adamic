@@ -55,7 +55,7 @@ func runBridgeCase(t *testing.T, index int) {
 		t.Fatal(err)
 	}
 	if !bridgeCaseActive(index) {
-		t.Skip("piece belongs to another corpus mode or shard")
+		t.Skip("not applicable: another ADAMIC_TSGO_CORPUS mode or ADAMIC_TEST_SHARD owns this piece")
 	}
 	// A unit is held to the 30-second budget where it's measured: on the reference box (one Codex
 	// instance, 4 CPUs, cold), which sets ADAMIC_UNIT_BUDGET=1. Elsewhere a loaded machine only
