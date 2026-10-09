@@ -1,0 +1,8 @@
+target cb4f1219161877454a45918fd99b847445a07745
+logs /home/ahra/full-gate/out/cb4f12191618-20261009T072849Z/catalog-units/15-orsmktlm/adamic-catalog-logs-n4wtfh3m
+build flags: commit=cb4f1219161877454a45918fd99b847445a07745; nproc=64; cpu.max=max 100000; go version go1.27.1 linux/amd64; clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261); v24.19.0; ADAMIC_GATE_UNCACHED=1; go test -trimpath -count=1; native C11 strict warnings, -ffp-contract=off -fno-optimize-sibling-calls; release -O2; sanitizer -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all
+jobs 1; Go -trimpath shares only content-keyed build artifacts; test results uncached
+16 proven-guards-relations: skipped (Supplied SHA changes only whitespace in a log. Nearby cbcc765c adds coverage, no compiler fix; mutable_kind_guard.a is an unresolved disagreement kept under notes, absent from main and from the registered oracle fixtures.)
+16 made against=e011f8f60899586d6373a5ccb07335ad82cfbf3c
+16 wall=0.003s setup=0.000s check=0.000s cleanup=0.000s load=16.60 17.02 13.30 66/1032 1521071 -> 16.60 17.02 13.30 65/1033 1521072
+total wall=0.069s load=16.60 17.02 13.30 64/1019 1520945 -> 16.60 17.02 13.30 68/1033 1521073
