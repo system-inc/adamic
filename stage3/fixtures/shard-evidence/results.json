@@ -1,0 +1,427 @@
+[
+  {
+    "unit": "manifest",
+    "seconds": 0.013,
+    "exit": 0,
+    "command": [
+      "/workspace/stage3-products/fixtures.test",
+      "-test.run=^TestFixtureShardManifest$",
+      "-test.count=1",
+      "-test.parallel=4",
+      "-test.timeout=30m",
+      "-test.v",
+      "-fixtures",
+      "/workspace/adamic/stage3/fixtures"
+    ],
+    "shard": "0/8",
+    "log": "/workspace/stage3-fixture-shards-final/manifest.log"
+  },
+  {
+    "unit": "shard-0",
+    "seconds": 2.459,
+    "exit": 0,
+    "command": [
+      "/workspace/stage3-products/fixtures.test",
+      "-test.run=^TestFixtures$",
+      "-test.count=1",
+      "-test.parallel=4",
+      "-test.timeout=30m",
+      "-test.v",
+      "-fixtures",
+      "/workspace/adamic/stage3/fixtures"
+    ],
+    "shard": "0/8",
+    "log": "/workspace/stage3-fixture-shards-final/shard-0.log"
+  },
+  {
+    "unit": "shard-1",
+    "seconds": 2.521,
+    "exit": 0,
+    "command": [
+      "/workspace/stage3-products/fixtures.test",
+      "-test.run=^TestFixtures$",
+      "-test.count=1",
+      "-test.parallel=4",
+      "-test.timeout=30m",
+      "-test.v",
+      "-fixtures",
+      "/workspace/adamic/stage3/fixtures"
+    ],
+    "shard": "1/8",
+    "log": "/workspace/stage3-fixture-shards-final/shard-1.log"
+  },
+  {
+    "unit": "shard-2",
+    "seconds": 1.687,
+    "exit": 0,
+    "command": [
+      "/workspace/stage3-products/fixtures.test",
+      "-test.run=^TestFixtures$",
+      "-test.count=1",
+      "-test.parallel=4",
+      "-test.timeout=30m",
+      "-test.v",
+      "-fixtures",
+      "/workspace/adamic/stage3/fixtures"
+    ],
+    "shard": "2/8",
+    "log": "/workspace/stage3-fixture-shards-final/shard-2.log"
+  },
+  {
+    "unit": "shard-3",
+    "seconds": 1.936,
+    "exit": 0,
+    "command": [
+      "/workspace/stage3-products/fixtures.test",
+      "-test.run=^TestFixtures$",
+      "-test.count=1",
+      "-test.parallel=4",
+      "-test.timeout=30m",
+      "-test.v",
+      "-fixtures",
+      "/workspace/adamic/stage3/fixtures"
+    ],
+    "shard": "3/8",
+    "log": "/workspace/stage3-fixture-shards-final/shard-3.log"
+  },
+  {
+    "unit": "shard-4",
+    "seconds": 2.412,
+    "exit": 0,
+    "command": [
+      "/workspace/stage3-products/fixtures.test",
+      "-test.run=^TestFixtures$",
+      "-test.count=1",
+      "-test.parallel=4",
+      "-test.timeout=30m",
+      "-test.v",
+      "-fixtures",
+      "/workspace/adamic/stage3/fixtures"
+    ],
+    "shard": "4/8",
+    "log": "/workspace/stage3-fixture-shards-final/shard-4.log"
+  },
+  {
+    "unit": "shard-5",
+    "seconds": 1.84,
+    "exit": 0,
+    "command": [
+      "/workspace/stage3-products/fixtures.test",
+      "-test.run=^TestFixtures$",
+      "-test.count=1",
+      "-test.parallel=4",
+      "-test.timeout=30m",
+      "-test.v",
+      "-fixtures",
+      "/workspace/adamic/stage3/fixtures"
+    ],
+    "shard": "5/8",
+    "log": "/workspace/stage3-fixture-shards-final/shard-5.log"
+  },
+  {
+    "unit": "shard-6",
+    "seconds": 2.134,
+    "exit": 0,
+    "command": [
+      "/workspace/stage3-products/fixtures.test",
+      "-test.run=^TestFixtures$",
+      "-test.count=1",
+      "-test.parallel=4",
+      "-test.timeout=30m",
+      "-test.v",
+      "-fixtures",
+      "/workspace/adamic/stage3/fixtures"
+    ],
+    "shard": "6/8",
+    "log": "/workspace/stage3-fixture-shards-final/shard-6.log"
+  },
+  {
+    "unit": "shard-7",
+    "seconds": 2.194,
+    "exit": 0,
+    "command": [
+      "/workspace/stage3-products/fixtures.test",
+      "-test.run=^TestFixtures$",
+      "-test.count=1",
+      "-test.parallel=4",
+      "-test.timeout=30m",
+      "-test.v",
+      "-fixtures",
+      "/workspace/adamic/stage3/fixtures"
+    ],
+    "shard": "7/8",
+    "log": "/workspace/stage3-fixture-shards-final/shard-7.log"
+  },
+  {
+    "unit": "mutant-0",
+    "seconds": 2.146,
+    "exit": 0,
+    "command": [
+      "/workspace/stage3-products/fixtures.test",
+      "-test.run=^TestFixtures$",
+      "-test.count=1",
+      "-test.parallel=4",
+      "-test.timeout=30m",
+      "-test.v",
+      "-fixtures",
+      "/workspace/stage3-fixture-shards-final/mutant-fixtures"
+    ],
+    "shard": "0/8",
+    "log": "/workspace/stage3-fixture-shards-final/mutant-0.log"
+  },
+  {
+    "unit": "mutant-1",
+    "seconds": 2.758,
+    "exit": 0,
+    "command": [
+      "/workspace/stage3-products/fixtures.test",
+      "-test.run=^TestFixtures$",
+      "-test.count=1",
+      "-test.parallel=4",
+      "-test.timeout=30m",
+      "-test.v",
+      "-fixtures",
+      "/workspace/stage3-fixture-shards-final/mutant-fixtures"
+    ],
+    "shard": "1/8",
+    "log": "/workspace/stage3-fixture-shards-final/mutant-1.log"
+  },
+  {
+    "unit": "mutant-2",
+    "seconds": 1.582,
+    "exit": 0,
+    "command": [
+      "/workspace/stage3-products/fixtures.test",
+      "-test.run=^TestFixtures$",
+      "-test.count=1",
+      "-test.parallel=4",
+      "-test.timeout=30m",
+      "-test.v",
+      "-fixtures",
+      "/workspace/stage3-fixture-shards-final/mutant-fixtures"
+    ],
+    "shard": "2/8",
+    "log": "/workspace/stage3-fixture-shards-final/mutant-2.log"
+  },
+  {
+    "unit": "mutant-3",
+    "seconds": 2.107,
+    "exit": 0,
+    "command": [
+      "/workspace/stage3-products/fixtures.test",
+      "-test.run=^TestFixtures$",
+      "-test.count=1",
+      "-test.parallel=4",
+      "-test.timeout=30m",
+      "-test.v",
+      "-fixtures",
+      "/workspace/stage3-fixture-shards-final/mutant-fixtures"
+    ],
+    "shard": "3/8",
+    "log": "/workspace/stage3-fixture-shards-final/mutant-3.log"
+  },
+  {
+    "unit": "mutant-4",
+    "seconds": 2.53,
+    "exit": 0,
+    "command": [
+      "/workspace/stage3-products/fixtures.test",
+      "-test.run=^TestFixtures$",
+      "-test.count=1",
+      "-test.parallel=4",
+      "-test.timeout=30m",
+      "-test.v",
+      "-fixtures",
+      "/workspace/stage3-fixture-shards-final/mutant-fixtures"
+    ],
+    "shard": "4/8",
+    "log": "/workspace/stage3-fixture-shards-final/mutant-4.log"
+  },
+  {
+    "unit": "mutant-5",
+    "seconds": 2.178,
+    "exit": 0,
+    "command": [
+      "/workspace/stage3-products/fixtures.test",
+      "-test.run=^TestFixtures$",
+      "-test.count=1",
+      "-test.parallel=4",
+      "-test.timeout=30m",
+      "-test.v",
+      "-fixtures",
+      "/workspace/stage3-fixture-shards-final/mutant-fixtures"
+    ],
+    "shard": "5/8",
+    "log": "/workspace/stage3-fixture-shards-final/mutant-5.log"
+  },
+  {
+    "unit": "mutant-6",
+    "seconds": 2.195,
+    "exit": 0,
+    "command": [
+      "/workspace/stage3-products/fixtures.test",
+      "-test.run=^TestFixtures$",
+      "-test.count=1",
+      "-test.parallel=4",
+      "-test.timeout=30m",
+      "-test.v",
+      "-fixtures",
+      "/workspace/stage3-fixture-shards-final/mutant-fixtures"
+    ],
+    "shard": "6/8",
+    "log": "/workspace/stage3-fixture-shards-final/mutant-6.log"
+  },
+  {
+    "unit": "mutant-7",
+    "seconds": 2.076,
+    "exit": 1,
+    "command": [
+      "/workspace/stage3-products/fixtures.test",
+      "-test.run=^TestFixtures$",
+      "-test.count=1",
+      "-test.parallel=4",
+      "-test.timeout=30m",
+      "-test.v",
+      "-fixtures",
+      "/workspace/stage3-fixture-shards-final/mutant-fixtures"
+    ],
+    "shard": "7/8",
+    "log": "/workspace/stage3-fixture-shards-final/mutant-7.log"
+  },
+  {
+    "unit": "invalid-0",
+    "seconds": 0.007,
+    "exit": 1,
+    "command": [
+      "/workspace/stage3-products/fixtures.test",
+      "-test.run=^TestFixtureShardManifest$",
+      "-test.count=1",
+      "-test.parallel=4",
+      "-test.timeout=30m",
+      "-test.v",
+      "-fixtures",
+      "/workspace/adamic/stage3/fixtures"
+    ],
+    "shard": "bad",
+    "log": "/workspace/stage3-fixture-shards-final/invalid-0.log"
+  },
+  {
+    "unit": "invalid-1",
+    "seconds": 0.006,
+    "exit": 1,
+    "command": [
+      "/workspace/stage3-products/fixtures.test",
+      "-test.run=^TestFixtureShardManifest$",
+      "-test.count=1",
+      "-test.parallel=4",
+      "-test.timeout=30m",
+      "-test.v",
+      "-fixtures",
+      "/workspace/adamic/stage3/fixtures"
+    ],
+    "shard": "0/0",
+    "log": "/workspace/stage3-fixture-shards-final/invalid-1.log"
+  },
+  {
+    "unit": "invalid-2",
+    "seconds": 0.007,
+    "exit": 1,
+    "command": [
+      "/workspace/stage3-products/fixtures.test",
+      "-test.run=^TestFixtureShardManifest$",
+      "-test.count=1",
+      "-test.parallel=4",
+      "-test.timeout=30m",
+      "-test.v",
+      "-fixtures",
+      "/workspace/adamic/stage3/fixtures"
+    ],
+    "shard": "-1/8",
+    "log": "/workspace/stage3-fixture-shards-final/invalid-2.log"
+  },
+  {
+    "unit": "invalid-3",
+    "seconds": 0.006,
+    "exit": 1,
+    "command": [
+      "/workspace/stage3-products/fixtures.test",
+      "-test.run=^TestFixtureShardManifest$",
+      "-test.count=1",
+      "-test.parallel=4",
+      "-test.timeout=30m",
+      "-test.v",
+      "-fixtures",
+      "/workspace/adamic/stage3/fixtures"
+    ],
+    "shard": "8/8",
+    "log": "/workspace/stage3-fixture-shards-final/invalid-3.log"
+  },
+  {
+    "unit": "invalid-4",
+    "seconds": 0.006,
+    "exit": 1,
+    "command": [
+      "/workspace/stage3-products/fixtures.test",
+      "-test.run=^TestFixtureShardManifest$",
+      "-test.count=1",
+      "-test.parallel=4",
+      "-test.timeout=30m",
+      "-test.v",
+      "-fixtures",
+      "/workspace/adamic/stage3/fixtures"
+    ],
+    "shard": "0/2/3",
+    "log": "/workspace/stage3-fixture-shards-final/invalid-4.log"
+  },
+  {
+    "unit": "TestFixturePaths",
+    "seconds": 0.006,
+    "exit": 0,
+    "command": [
+      "/workspace/stage3-products/fixtures.test",
+      "-test.run=^TestFixturePaths$",
+      "-test.count=1",
+      "-test.parallel=4",
+      "-test.timeout=30m",
+      "-test.v",
+      "-fixtures",
+      "/workspace/adamic/stage3/fixtures"
+    ],
+    "shard": "",
+    "log": "/workspace/stage3-fixture-shards-final/TestFixturePaths.log"
+  },
+  {
+    "unit": "TestTransformedNodeRunnerGuard",
+    "seconds": 0.026,
+    "exit": 0,
+    "command": [
+      "/workspace/stage3-products/fixtures.test",
+      "-test.run=^TestTransformedNodeRunnerGuard$",
+      "-test.count=1",
+      "-test.parallel=4",
+      "-test.timeout=30m",
+      "-test.v",
+      "-fixtures",
+      "/workspace/adamic/stage3/fixtures"
+    ],
+    "shard": "",
+    "log": "/workspace/stage3-fixture-shards-final/TestTransformedNodeRunnerGuard.log"
+  },
+  {
+    "unit": "TestTransformedNodeRunnerGuardHook",
+    "seconds": 0.006,
+    "exit": 0,
+    "command": [
+      "/workspace/stage3-products/fixtures.test",
+      "-test.run=^TestTransformedNodeRunnerGuardHook$",
+      "-test.count=1",
+      "-test.parallel=4",
+      "-test.timeout=30m",
+      "-test.v",
+      "-fixtures",
+      "/workspace/adamic/stage3/fixtures"
+    ],
+    "shard": "",
+    "log": "/workspace/stage3-fixture-shards-final/TestTransformedNodeRunnerGuardHook.log"
+  }
+]

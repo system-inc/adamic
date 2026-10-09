@@ -272,20 +272,5 @@ func compilerManifest(t *testing.T) (string, int) {
 }
 
 func TestCompilerExpressionsAgree(t *testing.T) {
-	path, files := compilerManifest(t)
-	oracle := goOracle(t)
-	want := execute(t, "", oracle, "--manifest", path)
-	absolute, err := filepath.Abs(".")
-	if err != nil {
-		t.Fatal(err)
-	}
-	got := node(t, absolute, path, false)
-	if diff := difference(got.output, want.output); diff != "" {
-		t.Fatalf("Node: %s", diff)
-	}
-	got = execute(t, "", buildPort(t, absolute, true), "--manifest", path)
-	if diff := difference(got.output, want.output); diff != "" {
-		t.Fatalf("native: %s", diff)
-	}
-	t.Logf("%d whole compiler files, %d identical expression tree bytes", files, len(want.output))
+	compilerExpressionsSetup(t)
 }

@@ -1,5 +1,5 @@
 Built step 20 general dispatch for proven object iterables under ruling #85genag.
-Base: 1104ae2e8d50d89268368fdbba9ba1944f1847fc; delivery SHA is in the integration reply.
+Implementation: 8925709412da5ba42879dd4a86fe3c47e7cde47c on 1104ae2e; merged main e511df280248e408109103396292b5958da94c68.
 Validation: fresh Node in both backends, native ASan/UBSan/leaks, the required sweep and Linux counts.
 Mutants: all six caught by stdout disagreement in both backends, with exit 0 and clean stderr.
 Pending: malformed .ts protocols need compiler/per-backend-stops 5f3b2e36; built-in storage views need adapters.
@@ -80,8 +80,8 @@ for the .ts terminal-exit-70/backend-divergence proof. Their fresh Node TypeErro
 the unchecked casts in their .a versions are refused before code generation. No catchable
 TypeError or malformed .ts backend outcome is claimed.
 
-Object views of array or tuple storage need a protocol adapter. Actual protocol methods
-with parameters, overloads, hidden non-object returns, or absent declared result fields stop
+Object views of array, tuple or built-in iterator storage need a protocol adapter. Actual protocol methods
+with parameters, overloads, hidden non-object/undefined returns, or absent declared runtime fields stop
 explicitly. Zero required arguments alone is insufficient for this native ABI: optional or
 default parameters also need padding before admission. Generic classes retain invariant
 native arguments. Generators still need owned suspended frames; a generator-shaped ordinary
@@ -111,7 +111,20 @@ change in `stage3/fixtures/iteration/outcomes.json`:
 | user_forwarding.a | NotYet, erased concrete method origin | accepted | Runtime receiver dispatch |
 | iterable_view.a | NotYet, for...of over an object | NotYet, object view of built-in storage needing a protocol adapter | Stronger explicit stop; array storage is not an object protocol |
 
-No other stage3 status record changes.
+The dispatch commit changes no other stage3 status record. Current main status records are preserved by the merge.
+
+## Merge with current main
+
+The branch merged current main **e511df280248e408109103396292b5958da94c68**, without
+rebasing. There were no textual conflicts. Automatic merges preserve both meanings:
+JavaScript keeps views v2 checked reads plus iterator accessor dispatch; native reuse keeps
+union ownership rules plus getter effects; lowering keeps the earlier array-view iteration
+and computed iterator slots plus current view boxing/contracts. Counts retain main's new
+proofs and are regenerated on the merged Linux tip. The required build, vet, stage1, stage3,
+a-check, Node witnesses and six mutants were rerun on this merge.
+
+The delivered branch also carries the already approved iteration rebuild 1104ae2e. Its six
+positive fixture count rows are new relative to main, separately identified below.
 
 ## Commands and observed results
 
@@ -145,26 +158,32 @@ New positive proofs add rows; existing custom iterator rows move because cached 
 bindings allocate ordinary closure/cell ownership. The TDZ row terminates deliberately,
 so its counts stop at the observed panic. Built-in collection rows do not move.
 
-| Fixture | Previous six counts | Regenerated six counts | Explanation |
+| Fixture | Previous six counts on main | Regenerated six counts | Explanation |
 |---|---|---|---|
-| stage3/fixtures/iteration-dispatch/class.a | new | 22, 22, 11, 22, 7, 0 | New proven fixture |
-| stage3/fixtures/iteration-dispatch/object.a | new | 26, 26, 14, 28, 11, 0 | New proven fixture |
-| stage3/fixtures/iteration-dispatch/break.a | new | 20, 20, 11, 18, 10, 0 | New proven fixture |
-| stage3/fixtures/iteration-dispatch/return.a | new | 21, 21, 11, 18, 13, 0 | New proven fixture |
-| stage3/fixtures/iteration-dispatch/labeled_continue.a | new | 44, 44, 22, 38, 12, 0 | New proven fixture |
-| stage3/fixtures/iteration-dispatch/body_throw.a | new | 22, 22, 17, 24, 12, 0 | New proven fixture |
-| stage3/fixtures/iteration-dispatch/next_throw.a | new | 12, 12, 13, 16, 7, 0 | New proven fixture |
-| stage3/fixtures/iteration-dispatch/close_throw_body.a | new | 22, 22, 20, 26, 12, 0 | New proven fixture |
-| stage3/fixtures/iteration-dispatch/close_throw_break.a | new | 20, 20, 16, 21, 10, 0 | New proven fixture |
-| stage3/fixtures/iteration-dispatch/cached_next.a | new | 29, 29, 17, 34, 12, 0 | New proven fixture |
-| stage3/fixtures/iteration-dispatch/completion.a | new | 20, 20, 10, 20, 11, 0 | New proven fixture |
-| stage3/fixtures/iteration-dispatch/done_throw.a | new | 13, 13, 14, 16, 10, 0 | New proven fixture |
-| stage3/fixtures/iteration-dispatch/value_throw.a | new | 13, 13, 14, 16, 10, 0 | New proven fixture |
-| stage3/fixtures/iteration-dispatch/method_getters.a | new | 26, 26, 16, 24, 15, 0 | New proven fixture |
-| internal/oracle/testdata/class_wrong_output_refused/iterators_override_this.a | new | 57, 57, 31, 49, 9, 0 | New proven fixture |
-| internal/oracle/testdata/class_wrong_output_refused/iterators_hidden_return.a | new | 28, 28, 16, 20, 8, 0 | New proven fixture |
+| stage3/fixtures/iteration-dispatch/class.a | new | 22, 22, 11, 22, 7, 0 | New dispatch proof |
+| stage3/fixtures/iteration-dispatch/object.a | new | 26, 26, 14, 28, 11, 0 | New dispatch proof |
+| stage3/fixtures/iteration-dispatch/break.a | new | 20, 20, 11, 18, 10, 0 | New dispatch proof |
+| stage3/fixtures/iteration-dispatch/return.a | new | 21, 21, 11, 18, 13, 0 | New dispatch proof |
+| stage3/fixtures/iteration-dispatch/labeled_continue.a | new | 44, 44, 22, 38, 12, 0 | New dispatch proof |
+| stage3/fixtures/iteration-dispatch/body_throw.a | new | 22, 22, 17, 24, 12, 0 | New dispatch proof |
+| stage3/fixtures/iteration-dispatch/next_throw.a | new | 12, 12, 13, 16, 7, 0 | New dispatch proof |
+| stage3/fixtures/iteration-dispatch/close_throw_body.a | new | 22, 22, 20, 26, 12, 0 | New dispatch proof |
+| stage3/fixtures/iteration-dispatch/close_throw_break.a | new | 20, 20, 16, 21, 10, 0 | New dispatch proof |
+| stage3/fixtures/iteration-dispatch/cached_next.a | new | 29, 29, 17, 34, 12, 0 | New dispatch proof |
+| stage3/fixtures/iteration-dispatch/completion.a | new | 20, 20, 10, 20, 11, 0 | New dispatch proof |
+| stage3/fixtures/iteration-dispatch/done_throw.a | new | 13, 13, 14, 16, 10, 0 | New dispatch proof |
+| stage3/fixtures/iteration-dispatch/value_throw.a | new | 13, 13, 14, 16, 10, 0 | New dispatch proof |
+| stage3/fixtures/iteration-dispatch/method_getters.a | new | 26, 26, 16, 24, 15, 0 | New dispatch proof |
+| internal/oracle/testdata/class_wrong_output_refused/iterators_override_this.a | new | 57, 57, 31, 49, 9, 0 | New dispatch proof |
+| internal/oracle/testdata/class_wrong_output_refused/iterators_hidden_return.a | new | 28, 28, 16, 20, 8, 0 | New dispatch proof |
 | internal/oracle/testdata/user_iterators.a | 663, 663, 455, 904, 64, 0 | 1050, 1050, 677, 994, 97, 0 | Runtime method binding and its owned receiver/cached closure |
 | internal/oracle/testdata/user_iterators_rest_tdz.a | 5, 0, 5, 3, 5, 0 | 11, 3, 7, 3, 8, 0 | Runtime method binding and its owned receiver/cached closure |
-| stage3/fixtures/iteration/user_forwarding.a | new | 22, 22, 7, 17, 14, 0 | New proven fixture |
+| stage3/fixtures/iteration/collections.a | new | 35, 35, 24, 47, 11, 0 | Previously approved rebuild 1104ae2e, carried on this branch |
+| stage3/fixtures/iteration/strings.a | new | 20, 20, 14, 27, 9, 0 | Previously approved rebuild 1104ae2e, carried on this branch |
+| stage3/fixtures/iteration/object_iteration.a | new | 5, 5, 1, 6, 3, 0 | Previously approved rebuild 1104ae2e, carried on this branch |
+| stage3/fixtures/iteration/array_view_stress.a | new | 34, 34, 50, 72, 16, 0 | Previously approved rebuild 1104ae2e, carried on this branch |
+| stage3/fixtures/iteration/test262_array_views.a | new | 11, 11, 25, 38, 11, 0 | Previously approved rebuild 1104ae2e, carried on this branch |
+| stage3/fixtures/iteration/array_view_weak.a | new | 5, 5, 8, 13, 4, 0 | Previously approved rebuild 1104ae2e, carried on this branch |
+| stage3/fixtures/iteration/user_forwarding.a | new | 22, 22, 7, 17, 14, 0 | New dispatch proof |
 
 Evidence: [logs.tar.gz](iteration-dispatch-evidence/logs.tar.gz).

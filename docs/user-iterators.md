@@ -26,7 +26,7 @@ completion values never enter the body. Concrete protocol methods must take zero
 and return represented objects. Generic class views still need invariant native arguments.
 Conservative whole-program checks refuse hidden incompatible methods and declared result
 fields absent at runtime. Optional/default method parameters need argument padding before
-admission. Object views of built-in storage still need a protocol adapter; direct built-in
+admission. Object views of built-in storage and native iterator objects still need a protocol adapter; direct built-in
 arrays, tuples, strings, maps, sets and their iterators keep their existing lowering.
 
 Malformed `.ts` protocols and non-object close results await the named ruled-divergence

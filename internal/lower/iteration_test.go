@@ -202,7 +202,7 @@ func TestIteratorSymbolKeysAreNotStringKeys(t *testing.T) {
 }
 
 func TestIteratorBuiltInStorageViewsArePending(t *testing.T) {
-	for _, storage := range []string{"const storage:number[]=[1,2];", "const storage:readonly [number,number]=[1,2];"} {
+	for _, storage := range []string{"const storage:number[]=[1,2];", "const storage:readonly [number,number]=[1,2];", "const storage=new Set([1,2]).values();"} {
 		t.Run(storage, func(t *testing.T) {
 			_, err := lowerSource(t, storage+`function consume(source:Iterable<number>):void {for(const value of source){console.log(String(value));}} consume(storage);`)
 			var gap *NotYet
@@ -210,5 +210,22 @@ func TestIteratorBuiltInStorageViewsArePending(t *testing.T) {
 				t.Fatalf("got %v, want a storage adapter stop", err)
 			}
 		})
+	}
+}
+
+func TestIteratorOptionalCloseResultMustBeObject(t *testing.T) {
+	source := `interface Step {value:number;done:boolean;} interface Cursor {next():Step;return?:()=>Step|undefined;} const cursor:Cursor={next():Step{return {value:1,done:false};},return():Step|undefined{return undefined;}};const source={[Symbol.iterator]():Cursor{return cursor;}};for(const value of source){break;}`
+	_, err := lowerSource(t, source)
+	var gap *NotYet
+	if !errors.As(err, &gap) || !strings.Contains(err.Error(), "represented object") {
+		t.Fatalf("got %v, want an object result stop", err)
+	}
+}
+
+func TestIteratorDeclaredNextHasNoRuntimeMethod(t *testing.T) {
+	_, err := lowerSource(t, `interface Step {value:number;done:boolean;} class Cursor {declare next:()=>Step;} const source={[Symbol.iterator]():Cursor{return new Cursor();}};for(const value of source){break;}`)
+	var gap *NotYet
+	if !errors.As(err, &gap) || !strings.Contains(err.Error(), "declare") {
+		t.Fatalf("got %v, want an absent method stop", err)
 	}
 }

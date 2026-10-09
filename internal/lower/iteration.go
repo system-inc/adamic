@@ -146,6 +146,15 @@ func invokeMember(function ir.Expression, receiver bool, direct int, value ir.Ex
 }
 
 func (l *lowering) memberResult(where *ast.Node, member *ast.Symbol) (*checker.Type, error) {
+	if member != nil && !l.librarySymbol(member) {
+		for _, root := range l.checker.GetRootSymbols(member) {
+			for _, declaration := range root.Declarations {
+				if ast.HasSyntacticModifier(declaration, ast.ModifierFlagsAmbient) {
+					return nil, l.notYet(where, "a declared iterator method with no runtime field")
+				}
+			}
+		}
+	}
 	signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeOfSymbol(member), checker.SignatureKindCall)
 	if len(signatures) != 1 || signatures[0].MinArgumentCount() != 0 || (!l.librarySymbol(member) && len(signatures[0].Parameters()) != 0) {
 		return nil, l.notYet(where, "an iterator protocol method with arguments or overloads")
@@ -236,7 +245,7 @@ func (l *lowering) planIteration(where *ast.Node) (*iterationPlan, error) {
 			own := l.checker.GetTypeAtLocation(node)
 			of, known := l.representation(own)
 			to, represented := l.representation(contextual)
-			if known && represented && (of != ir.Object || checker.IsTupleType(own)) && to == ir.Object && of.IsReference() {
+			if known && represented && (of != ir.Object || checker.IsTupleType(own) || l.isLibraryType(own, "MapIterator", "SetIterator", "RegExpStringIterator")) && to == ir.Object && of.IsReference() {
 				hazard = l.notYet(where, "an iterable object view of built-in storage needing a protocol adapter")
 				return true
 			}
@@ -262,7 +271,8 @@ func (l *lowering) planIteration(where *ast.Node) (*iterationPlan, error) {
 						hazard = l.notYet(where, "an iterator protocol method with arguments or overloads")
 						return true
 					}
-					if result, known := l.representation(l.concrete(l.checker.GetReturnTypeOfSignature(signatures[0]))); !known || result != ir.Object {
+					returned := l.concrete(l.checker.GetReturnTypeOfSignature(signatures[0]))
+					if result, known := l.representation(returned); !known || result != ir.Object || l.includesUndefined(returned) {
 						hazard = l.notYet(where, "an iterator protocol method that does not return a represented object")
 						return true
 					}
