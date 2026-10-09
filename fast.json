@@ -1,0 +1,26 @@
+{
+  "finished": true,
+  "verdict": "red",
+  "runner": "pool",
+  "pool": "codex-side",
+  "pool_run": "adamic-select-20261009T220047-3b068673",
+  "covers": "go-tests",
+  "uncached_tests": false,
+  "sha": "41a86c09414a7b1e5f2905782e0cd521d67bf005",
+  "branch": "devtools/floor1-identity",
+  "base": "7b9d4272c28f59530ab13daa5c49067e47933b06",
+  "candidate": "24d372af28c6c2c6a6ef914ee2034c8a339f3cc8",
+  "gated": "41a86c09414a7b1e5f2905782e0cd521d67bf005",
+  "loom_tools": "068776c1ebc118fdcac26e9708fbba81d0e9f779bb208454856287b87c22ee0a",
+  "loom_tools_promoted": "d0c80ee6a1d426c42ef3414264d87e6478902c5aa9b5b81e46ae9c81c81b0e3e",
+  "gate_tools": "ec73409fe1b06a2f75c71c7837a8262a428c8051",
+  "pass": 0,
+  "fail": 0,
+  "skip": 0,
+  "planned_stages": [
+    "tests"
+  ],
+  "stages_exit": {
+    "tests": 1
+  }
+}
