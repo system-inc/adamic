@@ -1,0 +1,53 @@
+{
+  "source_area": "89ac4a8c1de0b02d95965be72f7f8bf1c92433d2",
+  "source_pin": {
+    "repository": "https://github.com/microsoft/TypeScript.git",
+    "tag": "v6.0.3",
+    "commit": "050880ce59e30b356b686bd3144efe24f875ebc8"
+  },
+  "summary": {
+    "typescript": "6.0.3",
+    "tree": "/workspace/scratch/parser-samemap-lane-76/adapted-tree",
+    "entries": [
+      "src/compiler/parser.ts:createSourceFile",
+      "src/compiler/parser.ts:forEachChild",
+      "src/compiler/program.ts:flattenDiagnosticMessageText",
+      "src/compiler/utilitiesPublic.ts:unescapeLeadingUnderscores",
+      "src/compiler/types.ts:ScriptKind",
+      "src/compiler/types.ts:ScriptTarget",
+      "src/compiler/types.ts:SyntaxKind"
+    ],
+    "declarations": 2070,
+    "copied_spans": 2082,
+    "namespace_wrapper_spans": 12,
+    "value_declarations": 1406,
+    "type_declarations": 664,
+    "files": 79,
+    "declaration_files": 27,
+    "code_declarations": 1993,
+    "export_facade_records": 77,
+    "evaluation_only_files": 52,
+    "preserves_evaluation": true,
+    "declaration_lines": 41857,
+    "declaration_bytes": 2358778,
+    "rewritten_import_lines": 236
+  },
+  "archive_sha256": "153a044c5a9e725169eece7e196079c41951aba41fe35dd77acbf518f1347189",
+  "temporary_adaptations_retained": [
+    60,
+    61,
+    62,
+    63,
+    64,
+    65
+  ],
+  "temporary_adaptations_dropped": [],
+  "retired_scanner_temporary_80": "absent from current area and not reapplied",
+  "dump_reference": "../reference.json",
+  "case_reference": "../cases-reference.json",
+  "warning": "No discovery stubs. 81-file extended dump verified full/slice on Node. Native build checker-red. Existing 10406-case manifest not rerun.",
+  "source_base": "origin/main",
+  "permanent_adaptation_76": "six assertion-cache keys only; sameMap proposal not applied",
+  "compiler_scratch": "2c7d9fd22bdd5f2d2d9cda0a892b7ec734c3d758",
+  "adaptation_source": "fresh prior current-main lane tree at 89ac4a8c with 65 and 76; sameMap unchanged"
+}

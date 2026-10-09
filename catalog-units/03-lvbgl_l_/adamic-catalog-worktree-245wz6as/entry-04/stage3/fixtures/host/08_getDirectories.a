@@ -1,0 +1,249 @@
+// a-check: checked
+// From TypeScript 6.0.3, src/compiler/sys.ts:1487; adapted line 1488
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/sys.ts:1629; adapted line 1630
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/path.ts:28; adapted line 28
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/path.ts:30; adapted line 30
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/path.ts:31; adapted line 31
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/path.ts:32; adapted line 32
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/path.ts:526; adapted line 526
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/path.ts:146; adapted line 146
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/path.ts:151; adapted line 151
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/path.ts:165; adapted line 165
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/path.ts:250; adapted line 250
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/path.ts:41; adapted line 41
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/path.ts:140; adapted line 140
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/path.ts:807; adapted line 807
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/path.ts:579; adapted line 579
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/sys.ts:1838; adapted line 1839
+// Adaptations: 40-explicit-any
+// From TypeScript 6.0.3, src/compiler/sys.ts:1909; adapted line 1910
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/utilities.ts:10312; adapted line 10312
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/types.ts:23; adapted line 23
+// Adaptations: 40-explicit-any
+// Census reason: TS2591
+
+export type Path = string & { __pathBrand: void; };
+
+import * as _fs from "node:fs";
+import * as _path from "node:path";
+import { tmpdir } from "node:os";
+import process from "node:process";
+const scratch = _fs.mkdtempSync(_path.join(tmpdir(), "adamic-host-"));
+const statSyncOptions = { throwIfNoEntry: false } as const;
+function statSync(path: string): import("fs").Stats | undefined {
+    // throwIfNoEntry is available in Node 14.17 and above, which matches our supported range.
+    try {
+        return _fs.statSync(path, statSyncOptions);
+    }
+    catch {
+        // This should never happen as we are passing throwIfNoEntry: false,
+        // but guard against this just in case (e.g. a polyfill doesn't check this flag).
+        return undefined;
+    }
+}
+interface FileSystemEntries { files: string[]; directories: string[]; }
+const emptyFileSystemEntries: FileSystemEntries = { files: [], directories: [] };
+export const directorySeparator = "/";
+export const altDirectorySeparator = "\\";
+const urlSchemeSeparator = "://";
+const backslashRegExp = /\\/g;
+// Numeric enum constants are driver scaffolding; no enum syntax is required.
+const CharacterCodes = { a:97, z:122, A:65, Z:90, colon:58, percent:37, _3:51, slash:47, backslash:92 };
+export function normalizeSlashes(path: string): string {
+    return path.includes("\\")
+        ? path.replace(backslashRegExp, directorySeparator)
+        : path;
+}
+
+function isVolumeCharacter(charCode: number) {
+    return (charCode >= CharacterCodes.a && charCode <= CharacterCodes.z) ||
+        (charCode >= CharacterCodes.A && charCode <= CharacterCodes.Z);
+}
+
+function getFileUrlVolumeSeparatorEnd(url: string, start: number) {
+    const ch0 = url.charCodeAt(start);
+    if (ch0 === CharacterCodes.colon) return start + 1;
+    if (ch0 === CharacterCodes.percent && url.charCodeAt(start + 1) === CharacterCodes._3) {
+        const ch2 = url.charCodeAt(start + 2);
+        if (ch2 === CharacterCodes.a || ch2 === CharacterCodes.A) return start + 3;
+    }
+    return -1;
+}
+
+function getEncodedRootLength(path: string): number {
+    if (!path) return 0;
+    const ch0 = path.charCodeAt(0);
+
+    // POSIX or UNC
+    if (ch0 === CharacterCodes.slash || ch0 === CharacterCodes.backslash) {
+        if (path.charCodeAt(1) !== ch0) return 1; // POSIX: "/" (or non-normalized "\")
+
+        const p1 = path.indexOf(ch0 === CharacterCodes.slash ? directorySeparator : altDirectorySeparator, 2);
+        if (p1 < 0) return path.length; // UNC: "//server" or "\\server"
+
+        return p1 + 1; // UNC: "//server/" or "\\server\"
+    }
+
+    // DOS
+    if (isVolumeCharacter(ch0) && path.charCodeAt(1) === CharacterCodes.colon) {
+        const ch2 = path.charCodeAt(2);
+        if (ch2 === CharacterCodes.slash || ch2 === CharacterCodes.backslash) return 3; // DOS: "c:/" or "c:\"
+        if (path.length === 2) return 2; // DOS: "c:" (but not "c:d")
+    }
+
+    // URL
+    const schemeEnd = path.indexOf(urlSchemeSeparator);
+    if (schemeEnd !== -1) {
+        const authorityStart = schemeEnd + urlSchemeSeparator.length;
+        const authorityEnd = path.indexOf(directorySeparator, authorityStart);
+        if (authorityEnd !== -1) { // URL: "file:///", "file://server/", "file://server/path"
+            // For local "file" URLs, include the leading DOS volume (if present).
+            // Per https://www.ietf.org/rfc/rfc1738.txt, a host of "" or "localhost" is a
+            // special case interpreted as "the machine from which the URL is being interpreted".
+            const scheme = path.slice(0, schemeEnd);
+            const authority = path.slice(authorityStart, authorityEnd);
+            if (
+                scheme === "file" && (authority === "" || authority === "localhost") &&
+                isVolumeCharacter(path.charCodeAt(authorityEnd + 1))
+            ) {
+                const volumeSeparatorEnd = getFileUrlVolumeSeparatorEnd(path, authorityEnd + 2);
+                if (volumeSeparatorEnd !== -1) {
+                    if (path.charCodeAt(volumeSeparatorEnd) === CharacterCodes.slash) {
+                        // URL: "file:///c:/", "file://localhost/c:/", "file:///c%3a/", "file://localhost/c%3a/"
+                        return ~(volumeSeparatorEnd + 1);
+                    }
+                    if (volumeSeparatorEnd === path.length) {
+                        // URL: "file:///c:", "file://localhost/c:", "file:///c$3a", "file://localhost/c%3a"
+                        // but not "file:///c:d" or "file:///c%3ad"
+                        return ~volumeSeparatorEnd;
+                    }
+                }
+            }
+            return ~(authorityEnd + 1); // URL: "file://server/", "http://server/"
+        }
+        return ~path.length; // URL: "file://server", "http://server"
+    }
+
+    // relative
+    return 0;
+}
+
+export function getRootLength(path: string): number {
+    const rootLength = getEncodedRootLength(path);
+    return rootLength < 0 ? ~rootLength : rootLength;
+}
+
+export function isAnyDirectorySeparator(charCode: number): boolean {
+    return charCode === CharacterCodes.slash || charCode === CharacterCodes.backslash;
+}
+
+export function hasTrailingDirectorySeparator(path: string): boolean {
+    return path.length > 0 && isAnyDirectorySeparator(path.charCodeAt(path.length - 1));
+}
+
+export function ensureTrailingDirectorySeparator(path: Path): Path;
+export function ensureTrailingDirectorySeparator(path: string): string;
+export function ensureTrailingDirectorySeparator(path: string) {
+    if (!hasTrailingDirectorySeparator(path)) {
+        return path + directorySeparator;
+    }
+
+    return path;
+}
+
+export function combinePaths(path: string, ...paths: (string | undefined)[]): string {
+    if (path) path = normalizeSlashes(path);
+    for (let relativePath of paths) {
+        if (!relativePath) continue;
+        relativePath = normalizeSlashes(relativePath);
+        if (!path || getRootLength(relativePath) !== 0) {
+            path = relativePath;
+        }
+        else {
+            path = ensureTrailingDirectorySeparator(path) + relativePath;
+        }
+    }
+    return path;
+}
+function getAccessibleFileSystemEntries(path: string): FileSystemEntries {
+    try {
+        const entries = _fs.readdirSync(path || ".", { withFileTypes: true });
+        const files: string[] = [];
+        const directories: string[] = [];
+        for (const dirent of entries) {
+            // withFileTypes is not supported before Node 10.10.
+            const entry = typeof dirent === "string" ? dirent : dirent.name;
+
+            // This is necessary because on some file system node fails to exclude
+            // "." and "..". See https://github.com/nodejs/node/issues/4002
+            if (entry === "." || entry === "..") {
+                continue;
+            }
+
+            let stat: import("fs").Stats | import("fs").Dirent | undefined;
+            if (typeof dirent === "string" || dirent.isSymbolicLink()) {
+                const name = combinePaths(path, entry);
+
+                stat = statSync(name);
+                if (!stat) {
+                    continue;
+                }
+            }
+            else {
+                stat = dirent;
+            }
+
+            if (stat.isFile()) {
+                files.push(entry);
+            }
+            else if (stat.isDirectory()) {
+                directories.push(entry);
+            }
+        }
+        files.sort();
+        directories.sort();
+        return { files, directories };
+    }
+    catch {
+        return emptyFileSystemEntries;
+    }
+}
+function getDirectories(path: string): string[] {
+    return getAccessibleFileSystemEntries(path).directories.slice();
+}
+
+try {
+    _fs.mkdirSync(_path.join(scratch,"z"));
+    _fs.mkdirSync(_path.join(scratch,"a"));
+    _fs.writeFileSync(_path.join(scratch,"file"), "x");
+    _fs.symlinkSync("a",_path.join(scratch,"link"));
+    _fs.symlinkSync("absent",_path.join(scratch,"broken"));
+    console.log(getDirectories(scratch).join(","));
+    const first = getDirectories(scratch);
+    first.push("changed");
+    console.log(getDirectories(scratch).join(","));
+    console.log(getDirectories(_path.join(scratch,"missing")).join(","));
+    const previous = process.cwd();
+    try { process.chdir(scratch); console.log(getDirectories("").join(",")); }
+    finally { process.chdir(previous); }
+}
+finally {
+    _fs.rmSync(scratch, { recursive: true, force: true });
+}

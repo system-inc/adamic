@@ -1,0 +1,9 @@
+=== RUN   TestViewsProbeClassCounts
+    new_expression_views_probe_test.go:13: gate cache native miss
+    new_expression_views_probe_test.go:13: | internal/oracle/testdata/new_expression_class_value.a | 72 | 72 | 31 | 114 | 14 | 0 | 0 | 0 |
+--- PASS: TestViewsProbeClassCounts (0.19s)
+PASS
+gate cache: native hits=0 misses=1
+gate cache: node hits=0 misses=0
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.205s

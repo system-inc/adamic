@@ -1,0 +1,2 @@
+const source = new Set<string>();
+const result: Set<string> = new Set(source);

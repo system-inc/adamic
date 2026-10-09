@@ -1,0 +1,20 @@
+// a-check: checked
+// From TypeScript 6.0.3, src/compiler/sys.ts:1525; adapted line 1526
+// Adaptations: none
+// Census reason: TS2591
+
+import * as _fs from "node:fs";
+import * as _path from "node:path";
+import { tmpdir } from "node:os";
+import process from "node:process";
+const scratch = _fs.mkdtempSync(_path.join(tmpdir(), "adamic-host-"));
+import * as _os from "node:os";
+const nodeSystem = { newLine: _os.EOL };
+
+try {
+    console.log(JSON.stringify(nodeSystem.newLine));
+    console.log("Version 6.0.3" + nodeSystem.newLine + "diagnostic" + nodeSystem.newLine);
+}
+finally {
+    _fs.rmSync(scratch, { recursive: true, force: true });
+}

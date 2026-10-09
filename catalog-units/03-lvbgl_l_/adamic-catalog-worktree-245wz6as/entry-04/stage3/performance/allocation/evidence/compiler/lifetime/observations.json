@@ -1,0 +1,216 @@
+{
+  "mode": "lifetime",
+  "peak": {
+    "rss": 1479585792,
+    "heapTotal": 635252736,
+    "heapUsed": 564135648,
+    "external": 8413084,
+    "arrayBuffers": 143791,
+    "events": 1509632,
+    "phase": "check",
+    "location": "constructor"
+  },
+  "counters": {
+    "bootstrap": {
+      "Node4": 79,
+      "Token": 16
+    },
+    "parse": {
+      "Identifier2": 437955,
+      "Node4": 543981,
+      "Token": 102513
+    },
+    "bind": {
+      "Symbol4": 122977,
+      "Type3": 83,
+      "Signature2": 4
+    },
+    "check": {
+      "Type3": 107337,
+      "Signature2": 42622,
+      "Symbol4": 142166,
+      "Node4": 28634,
+      "Token": 4743,
+      "Identifier2": 9034
+    }
+  },
+  "events": 1542144,
+  "boundaries": [
+    {
+      "name": "baseline",
+      "phase": "bootstrap",
+      "events": 95,
+      "before": {
+        "rss": 118218752,
+        "heapTotal": 139112448,
+        "heapUsed": 73642664,
+        "external": 2114169,
+        "arrayBuffers": 143827
+      },
+      "after": {
+        "rss": 132841472,
+        "heapTotal": 22589440,
+        "heapUsed": 20888424,
+        "external": 2109542,
+        "arrayBuffers": 143793
+      },
+      "counters": {
+        "bootstrap": {
+          "Node4": 79,
+          "Token": 16
+        }
+      }
+    },
+    {
+      "name": "parse",
+      "phase": "parse",
+      "events": 1084544,
+      "before": {
+        "rss": 430346240,
+        "heapTotal": 319393792,
+        "heapUsed": 225349552,
+        "external": 8887869,
+        "arrayBuffers": 618576
+      },
+      "after": {
+        "rss": 887963648,
+        "heapTotal": 223186944,
+        "heapUsed": 220712184,
+        "external": 8413086,
+        "arrayBuffers": 143793
+      },
+      "counters": {
+        "bootstrap": {
+          "Node4": 79,
+          "Token": 16
+        },
+        "parse": {
+          "Identifier2": 437955,
+          "Node4": 543981,
+          "Token": 102513
+        }
+      }
+    },
+    {
+      "name": "bind",
+      "phase": "bind",
+      "events": 1207608,
+      "before": {
+        "rss": 992034816,
+        "heapTotal": 325685248,
+        "heapUsed": 289599120,
+        "external": 8413084,
+        "arrayBuffers": 143791
+      },
+      "after": {
+        "rss": 1100943360,
+        "heapTotal": 280334336,
+        "heapUsed": 276365944,
+        "external": 8413086,
+        "arrayBuffers": 143793
+      },
+      "counters": {
+        "bootstrap": {
+          "Node4": 79,
+          "Token": 16
+        },
+        "parse": {
+          "Identifier2": 437955,
+          "Node4": 543981,
+          "Token": 102513
+        },
+        "bind": {
+          "Symbol4": 122977,
+          "Type3": 83,
+          "Signature2": 4
+        }
+      }
+    },
+    {
+      "name": "check",
+      "phase": "check",
+      "events": 1542144,
+      "before": {
+        "rss": 1481551872,
+        "heapTotal": 637874176,
+        "heapUsed": 553151832,
+        "external": 8413084,
+        "arrayBuffers": 143791
+      },
+      "after": {
+        "rss": 2460016640,
+        "heapTotal": 446345216,
+        "heapUsed": 442704784,
+        "external": 8413086,
+        "arrayBuffers": 143793
+      },
+      "counters": {
+        "bootstrap": {
+          "Node4": 79,
+          "Token": 16
+        },
+        "parse": {
+          "Identifier2": 437955,
+          "Node4": 543981,
+          "Token": 102513
+        },
+        "bind": {
+          "Symbol4": 122977,
+          "Type3": 83,
+          "Signature2": 4
+        },
+        "check": {
+          "Type3": 107337,
+          "Signature2": 42622,
+          "Symbol4": 142166,
+          "Node4": 28634,
+          "Token": 4743,
+          "Identifier2": 9034
+        }
+      }
+    },
+    {
+      "name": "released",
+      "phase": "released",
+      "events": 1542144,
+      "before": {
+        "rss": 2460016640,
+        "heapTotal": 446345216,
+        "heapUsed": 442726088,
+        "external": 8413086,
+        "arrayBuffers": 143793
+      },
+      "after": {
+        "rss": 2020282368,
+        "heapTotal": 7270400,
+        "heapUsed": 5015712,
+        "external": 2109542,
+        "arrayBuffers": 143793
+      },
+      "counters": {
+        "bootstrap": {
+          "Node4": 79,
+          "Token": 16
+        },
+        "parse": {
+          "Identifier2": 437955,
+          "Node4": 543981,
+          "Token": 102513
+        },
+        "bind": {
+          "Symbol4": 122977,
+          "Type3": 83,
+          "Signature2": 4
+        },
+        "check": {
+          "Type3": 107337,
+          "Signature2": 42622,
+          "Symbol4": 142166,
+          "Node4": 28634,
+          "Token": 4743,
+          "Identifier2": 9034
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+// a-check: checked
+// From TypeScript 6.0.3, src/compiler/sys.ts:1560; adapted line 1561
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/sys.ts:1498; adapted line 1499
+// Adaptations: none
+// Census reason: TS2591
+
+import * as _fs from "node:fs";
+import * as _path from "node:path";
+import { tmpdir } from "node:os";
+import process from "node:process";
+const scratch = _fs.mkdtempSync(_path.join(tmpdir(), "adamic-host-"));
+const nodeSystem = {
+getExecutingFilePath() {
+    return executingFilePath;
+}
+};
+let executingFilePath: string;
+
+try {
+    for (const filename of [_path.join(scratch,"sys.js"), _path.join(scratch,"_tsc.js"), _path.join(scratch,"sys.cjs")]) {
+        const __filename=filename; const __dirname=_path.dirname(filename);
+        executingFilePath = __filename.endsWith("sys.js") ? _path.join(_path.dirname(__dirname), "__fake__.js") : __filename;
+        console.log(_path.basename(nodeSystem.getExecutingFilePath()));
+    }
+}
+finally {
+    _fs.rmSync(scratch, { recursive: true, force: true });
+}

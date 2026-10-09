@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/home/ahra/full-gate/tools/cloud/fast-gate/run.py", line 1002, in body
+    target(*arguments)
+  File "/home/ahra/full-gate/tools/cloud/fast-gate/run.py", line 859, in wasiSplit
+    names = self.selectedUnits("wasi", wasiFixtures(self.arguments.tree))
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ahra/full-gate/tools/cloud/fast-gate/run.py", line 2074, in wasiFixtures
+    raise ValueError("cannot enumerate TestWASI fixtures")
+ValueError: cannot enumerate TestWASI fixtures
+
+(box load 12.1 on 64 cores at first failure)

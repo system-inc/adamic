@@ -1,0 +1,89 @@
+// a-check: checked
+// From TypeScript 6.0.3, src/compiler/sys.ts:1487; adapted line 1488
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/sys.ts:1629; adapted line 1630
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/sys.ts:1886; adapted line 1887
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/sys.ts:1901; adapted line 1902
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/sys.ts:1732; adapted line 1733
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/sys.ts:1722; adapted line 1723
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/sys.ts:901; adapted line 902
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/sys.ts:1489; adapted line 1490
+// Adaptations: none
+// Census reason: TS2591
+
+import * as _fs from "node:fs";
+import * as _path from "node:path";
+import { tmpdir } from "node:os";
+import process from "node:process";
+const scratch = _fs.mkdtempSync(_path.join(tmpdir(), "adamic-host-"));
+const statSyncOptions = { throwIfNoEntry: false } as const;
+function statSync(path: string): import("fs").Stats | undefined {
+    // throwIfNoEntry is available in Node 14.17 and above, which matches our supported range.
+    try {
+        return _fs.statSync(path, statSyncOptions);
+    }
+    catch {
+        // This should never happen as we are passing throwIfNoEntry: false,
+        // but guard against this just in case (e.g. a polyfill doesn't check this flag).
+        return undefined;
+    }
+}
+type FileSystemEntryKind = number;
+const FileSystemEntryKind = { File: 0, Directory: 1 };
+function fileSystemEntryExists(path: string, entryKind: FileSystemEntryKind): boolean {
+    const stat = statSync(path);
+    if (!stat) {
+        return false;
+    }
+    switch (entryKind) {
+        case FileSystemEntryKind.File:
+            return stat.isFile();
+        case FileSystemEntryKind.Directory:
+            return stat.isDirectory();
+        default:
+            return false;
+    }
+}
+function fileExists(path: string): boolean {
+    return fileSystemEntryExists(path, FileSystemEntryKind.File);
+}
+function swapCase(s: string): string {
+    return s.replace(/\w/g, ch => {
+        const up = ch.toUpperCase();
+        return ch === up ? ch.toLowerCase() : up;
+    });
+}
+function isFileSystemCaseSensitive(): boolean {
+    // win32\win64 are case insensitive platforms
+    if (platform === "win32" || platform === "win64") {
+        return false;
+    }
+    // If this file exists under a different case, we must be case-insensitve.
+    return !fileExists(swapCase(__filename));
+}
+let platform: string;
+let __filename: string;
+
+const previous = process.cwd();
+try {
+    process.chdir(scratch);
+    __filename="CaseProbe";
+    _fs.writeFileSync(__filename,"x");
+    platform="win32"; console.log(String(isFileSystemCaseSensitive()));
+    platform="win64"; console.log(String(isFileSystemCaseSensitive()));
+    platform="linux"; console.log(String(isFileSystemCaseSensitive()));
+    _fs.writeFileSync(swapCase(__filename),"x");
+    console.log(String(isFileSystemCaseSensitive()));
+    console.log(swapCase("AbC_09.ts"));
+}
+
+finally {
+    process.chdir(previous);
+    _fs.rmSync(scratch, { recursive: true, force: true });
+}
