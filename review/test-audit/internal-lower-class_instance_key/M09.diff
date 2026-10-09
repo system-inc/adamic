@@ -1,0 +1,13 @@
+diff --git a/internal/lower/clock_generic_returns_t_01.go b/internal/lower/clock_generic_returns_t_01.go
+index 7eda4a13..df86001d 100644
+--- a/internal/lower/clock_generic_returns_t_01.go
++++ b/internal/lower/clock_generic_returns_t_01.go
+@@ -71,7 +71,7 @@ func (l *lowering) clockGenericReturnsT01Shape(proven *checker.Type, active map[
+ 		return len(arguments) == 1 && l.concrete(arguments[0]).Flags()&checker.TypeFlagsStringLike != 0
+ 	}
+ 	if checker.IsTupleType(proven) || isClassInstance(proven) ||
+-		len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) != 0 ||
++		len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) < 0 ||
+ 		len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) != 0 ||
+ 		len(l.checker.GetIndexInfosOfType(proven)) != 0 {
+ 		return false

@@ -1,0 +1,178 @@
+[
+  {
+    "id": "M01",
+    "file": "internal/lower/generic.go",
+    "old": "identicalTypes(l.checker, proven, representative)",
+    "new": "!identicalTypes(l.checker, proven, representative)",
+    "kind": "replace",
+    "line": 167
+  },
+  {
+    "id": "M02",
+    "file": "internal/lower/generic.go",
+    "old": "\tl.instantiated = append(l.instantiated, proven)\n",
+    "new": "",
+    "kind": "drop",
+    "line": 172
+  },
+  {
+    "id": "M03",
+    "file": "internal/lower/class.go",
+    "old": "\tfor _, argument := range arguments {\n\t\tkey += \",\" + l.genericTypeKey(argument)\n\t}\n",
+    "new": "",
+    "kind": "drop",
+    "line": 801
+  },
+  {
+    "id": "M04",
+    "file": "internal/lower/iteration.go",
+    "old": "l.iterationFactoryReturnsThis(entry) && l.iteratorReceiverOverrides(modules, iterator, next, close)",
+    "new": "l.iterationFactoryReturnsThis(entry) && !l.iteratorReceiverOverrides(modules, iterator, next, close)",
+    "kind": "replace",
+    "line": 223
+  },
+  {
+    "id": "M05",
+    "file": "internal/lower/class_features.go",
+    "old": "fresh := argument.Kind == ast.KindObjectLiteralExpression",
+    "new": "fresh := argument.Kind != ast.KindObjectLiteralExpression",
+    "kind": "replace",
+    "line": 83
+  },
+  {
+    "id": "M06",
+    "file": "internal/lower/class_static_private.go",
+    "old": "name.Kind != ast.KindPrivateIdentifier",
+    "new": "name.Kind == ast.KindPrivateIdentifier",
+    "kind": "replace",
+    "line": 9
+  },
+  {
+    "id": "M07",
+    "file": "internal/lower/clock_generic_returns_t_01.go",
+    "old": "len(result.Types()) != 2",
+    "new": "len(result.Types()) < 2",
+    "kind": "replace",
+    "line": 16
+  },
+  {
+    "id": "M08",
+    "file": "internal/lower/clock_generic_returns_t_01.go",
+    "old": "len(l.checker.GetIndexInfosOfType(proven)) != 0",
+    "new": "len(l.checker.GetIndexInfosOfType(proven)) < 0",
+    "kind": "replace",
+    "line": 76
+  },
+  {
+    "id": "M09",
+    "file": "internal/lower/clock_generic_returns_t_01.go",
+    "old": "len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) != 0",
+    "new": "len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) < 0",
+    "kind": "replace",
+    "line": 74
+  },
+  {
+    "id": "M10",
+    "file": "internal/lower/clock_generic_returns_t_01.go",
+    "old": "part.Flags()&checker.TypeFlagsObject != 0 && part.ObjectFlags()&checker.ObjectFlagsReference != 0 && len(l.checker.GetTypeArguments(part)) != 0",
+    "new": "len(l.checker.GetTypeArguments(part)) != 0",
+    "kind": "replace",
+    "line": 42
+  },
+  {
+    "id": "M11",
+    "file": "internal/lower/lower.go",
+    "old": "\treadiness(lowering.result)\n",
+    "new": "",
+    "kind": "drop",
+    "line": 83
+  },
+  {
+    "id": "M12",
+    "file": "internal/lower/readiness.go",
+    "old": "node.AsVariableDeclaration().ExclamationToken != nil",
+    "new": "node.AsVariableDeclaration().ExclamationToken == nil",
+    "kind": "replace",
+    "line": 45
+  },
+  {
+    "id": "M13",
+    "file": "internal/lower/object.go",
+    "old": "\tproperty.Readiness = sourceExpression(node)\n",
+    "new": "",
+    "kind": "drop",
+    "line": 577
+  },
+  {
+    "id": "M14",
+    "file": "internal/lower/class.go",
+    "old": "field.Declarations[0].Kind == ast.KindPropertyDeclaration",
+    "new": "field.Declarations[0].Kind != ast.KindPropertyDeclaration",
+    "kind": "replace",
+    "line": 769
+  },
+  {
+    "id": "M15",
+    "file": "internal/lower/empty_literal.go",
+    "old": "if l.checker.IsArrayType(proven) {",
+    "new": "if !l.checker.IsArrayType(proven) {",
+    "kind": "replace",
+    "line": 13
+  },
+  {
+    "id": "M16",
+    "file": "internal/lower/object.go",
+    "old": "\t\t\tcontexts = append(contexts, l.impliedTarget(literal))\n",
+    "new": "",
+    "kind": "drop",
+    "line": 306
+  },
+  {
+    "id": "M17",
+    "file": "internal/lower/entries_provenance.go",
+    "old": "if l.enumerationBindingWritten(symbol) {",
+    "new": "if !l.enumerationBindingWritten(symbol) {",
+    "kind": "replace",
+    "line": 58
+  },
+  {
+    "id": "M18",
+    "file": "internal/lower/entries_provenance.go",
+    "old": "\t\t\t\t\twritten = true",
+    "new": "\t\t\t\t\twritten = false",
+    "kind": "replace",
+    "line": 89
+  },
+  {
+    "id": "M19",
+    "file": "internal/lower/entries_records.go",
+    "old": "\treturn written\n",
+    "new": "\treturn !written\n",
+    "kind": "replace",
+    "line": 117
+  },
+  {
+    "id": "M20",
+    "file": "internal/lower/entries_records.go",
+    "old": "\"an indexed mutation without a closed const literal origin\"",
+    "new": "\"an indexed mutation without a proven allocation origin\"",
+    "kind": "replace",
+    "line": 213
+  },
+  {
+    "id": "P1",
+    "file": "internal/lower/lower.go",
+    "old": "func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {",
+    "new": "func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {\n if program == program { return nil, nil }",
+    "kind": "probe",
+    "line": 20
+  },
+  {
+    "id": "P2",
+    "file": "internal/lower/clock_generic_returns_t_01.go",
+    "old": "func (l *lowering) clockGenericReturnsT01(result *checker.Type) (ir.Type, bool) {",
+    "new": "func (l *lowering) clockGenericReturnsT01(result *checker.Type) (ir.Type, bool) {\n if result == result { return 0, false }",
+    "kind": "probe",
+    "line": 14
+  }
+]

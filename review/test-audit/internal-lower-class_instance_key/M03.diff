@@ -1,0 +1,14 @@
+diff --git a/internal/lower/class.go b/internal/lower/class.go
+index 0c955352..94608065 100644
+--- a/internal/lower/class.go
++++ b/internal/lower/class.go
+@@ -798,9 +798,6 @@ func (l *lowering) sameClassArguments(from, to []*checker.Type) bool {
+ func (l *lowering) classInstanceKey(declaration *ast.Node, arguments []*checker.Type) string {
+ 	prefix := l.classKeyPrefix(declaration)
+ 	key := prefix
+-	for _, argument := range arguments {
+-		key += "," + l.genericTypeKey(argument)
+-	}
+ 	return key
+ }
+ 

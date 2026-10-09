@@ -1,0 +1,13 @@
+diff --git a/internal/lower/class_features.go b/internal/lower/class_features.go
+index d6ec6223..f059a8b5 100644
+--- a/internal/lower/class_features.go
++++ b/internal/lower/class_features.go
+@@ -80,7 +80,7 @@ func (l *lowering) objectKeys(node *ast.Node) (ir.Expression, bool, error) {
+ 	// A structural view does not remove the iterable literal's hidden symbol slot.
+ 	// Fresh explicit string-keyed literals cannot carry storage erased by a view.
+ 	argument := ast.SkipParentheses(arguments[0])
+-	fresh := argument.Kind == ast.KindObjectLiteralExpression
++	fresh := argument.Kind != ast.KindObjectLiteralExpression
+ 	if fresh {
+ 		for _, property := range argument.AsObjectLiteralExpression().Properties.Nodes {
+ 			fresh = fresh && property.Kind != ast.KindSpreadAssignment

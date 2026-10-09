@@ -1,0 +1,16 @@
+=== RUN   TestAuditU030SurvivorWitness
+=== RUN   TestAuditU030SurvivorWitness/private-static-recognition
+    audit_u030_witness_test.go:7: privateStaticMember(#secret) present=true
+    audit_u030_witness_test.go:7: privateStaticMember(field) present=false
+=== RUN   TestAuditU030SurvivorWitness/readiness-origin
+    audit_u030_witness_test.go:9: property n readiness="new Box().n"
+=== RUN   TestAuditU030SurvivorWitness/empty-layouts
+    audit_u030_witness_test.go:10: const cases=[[],[1]]; empty kinds=[1]
+    audit_u030_witness_test.go:10: const cases: (number[] | string[])[]=[[]]; empty kinds=[3]
+    audit_u030_witness_test.go:10: function empty<T>():T[]{return [] as T[];} interface Item {readonly text:string;} empty<number>();empty<Item>(); empty kinds=[1 4]
+--- PASS: TestAuditU030SurvivorWitness (0.13s)
+    --- PASS: TestAuditU030SurvivorWitness/private-static-recognition (0.03s)
+    --- PASS: TestAuditU030SurvivorWitness/readiness-origin (0.03s)
+    --- PASS: TestAuditU030SurvivorWitness/empty-layouts (0.08s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.139s

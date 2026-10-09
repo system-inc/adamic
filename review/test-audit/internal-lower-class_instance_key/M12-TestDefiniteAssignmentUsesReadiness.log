@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T10:20:11.944187993Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T10:20:11.9509367Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestDefiniteAssignmentUsesReadiness"}
+{"Time":"2026-10-09T10:20:11.951002136Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestDefiniteAssignmentUsesReadiness","Output":"=== RUN   TestDefiniteAssignmentUsesReadiness\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:11.951026021Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestDefiniteAssignmentUsesReadiness","Output":"=== PAUSE TestDefiniteAssignmentUsesReadiness\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:11.951028215Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestDefiniteAssignmentUsesReadiness"}
+{"Time":"2026-10-09T10:20:11.951030448Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestDefiniteAssignmentUsesReadiness"}
+{"Time":"2026-10-09T10:20:11.951032201Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestDefiniteAssignmentUsesReadiness","Output":"=== CONT  TestDefiniteAssignmentUsesReadiness\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:12.002807646Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestDefiniteAssignmentUsesReadiness","Output":"    definite_assignment_test.go:42: 0 checked reads, want 1\n","OutputType":"error"}
+{"Time":"2026-10-09T10:20:12.002886693Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestDefiniteAssignmentUsesReadiness","Output":"--- FAIL: TestDefiniteAssignmentUsesReadiness (0.05s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:12.002889968Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestDefiniteAssignmentUsesReadiness","Elapsed":0.05}
+{"Time":"2026-10-09T10:20:12.002907634Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:12.004048262Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.059s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:20:12.004070305Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.06}

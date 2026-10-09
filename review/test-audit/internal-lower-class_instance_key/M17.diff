@@ -1,0 +1,13 @@
+diff --git a/internal/lower/entries_provenance.go b/internal/lower/entries_provenance.go
+index 3c78438b..aa7eb1c6 100644
+--- a/internal/lower/entries_provenance.go
++++ b/internal/lower/entries_provenance.go
+@@ -55,7 +55,7 @@ func (l *lowering) enumerationProven(node *ast.Node, element *checker.Type, dept
+ 	if declaration.Kind != ast.KindVariableDeclaration {
+ 		return false
+ 	}
+-	if l.enumerationBindingWritten(symbol) {
++	if !l.enumerationBindingWritten(symbol) {
+ 		return false
+ 	}
+ 	return l.enumerationProven(declaration.AsVariableDeclaration().Initializer, element, depth+1)

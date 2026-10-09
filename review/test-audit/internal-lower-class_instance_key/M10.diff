@@ -1,0 +1,13 @@
+diff --git a/internal/lower/clock_generic_returns_t_01.go b/internal/lower/clock_generic_returns_t_01.go
+index 7eda4a13..0b89233e 100644
+--- a/internal/lower/clock_generic_returns_t_01.go
++++ b/internal/lower/clock_generic_returns_t_01.go
+@@ -39,7 +39,7 @@ func (l *lowering) clockGenericReturnsT01(result *checker.Type) (ir.Type, bool)
+ 		// Only a type reference has type arguments; the checker dereferences nil for anything
+ 		// else, such as the string in a branded string & { __brand: void }.
+ 		part = l.concrete(part)
+-		generic = generic || part.Flags()&checker.TypeFlagsObject != 0 && part.ObjectFlags()&checker.ObjectFlagsReference != 0 && len(l.checker.GetTypeArguments(part)) != 0
++		generic = generic || len(l.checker.GetTypeArguments(part)) != 0
+ 	}
+ 	if !generic {
+ 		return 0, false

@@ -1,0 +1,2460 @@
+{
+  "TestClassArgumentsUseCheckerIdentity-1": {
+    "wall": 2.138,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestClassArgumentsUseCheckerIdentity$"
+    ]
+  },
+  "TestClassArgumentsUseCheckerIdentity-2": {
+    "wall": 2.124,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestClassArgumentsUseCheckerIdentity$"
+    ]
+  },
+  "TestClassArgumentsUseCheckerIdentity-3": {
+    "wall": 2.008,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestClassArgumentsUseCheckerIdentity$"
+    ]
+  },
+  "TestClassWrongOutputIteratorReceiver-1": {
+    "wall": 1.954,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestClassWrongOutputIteratorReceiver$"
+    ]
+  },
+  "TestClassWrongOutputIteratorReceiver-2": {
+    "wall": 2.07,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestClassWrongOutputIteratorReceiver$"
+    ]
+  },
+  "TestClassWrongOutputIteratorReceiver-3": {
+    "wall": 1.846,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestClassWrongOutputIteratorReceiver$"
+    ]
+  },
+  "TestClassWrongOutputKeysRepair-1": {
+    "wall": 1.732,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestClassWrongOutputKeysRepair$"
+    ]
+  },
+  "TestClassWrongOutputKeysRepair-2": {
+    "wall": 1.749,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestClassWrongOutputKeysRepair$"
+    ]
+  },
+  "TestClassWrongOutputKeysRepair-3": {
+    "wall": 1.846,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestClassWrongOutputKeysRepair$"
+    ]
+  },
+  "TestClassWrongOutputPrivateRepair-1": {
+    "wall": 1.8,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestClassWrongOutputPrivateRepair$"
+    ]
+  },
+  "TestClassWrongOutputPrivateRepair-2": {
+    "wall": 1.886,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestClassWrongOutputPrivateRepair$"
+    ]
+  },
+  "TestClassWrongOutputPrivateRepair-3": {
+    "wall": 1.767,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestClassWrongOutputPrivateRepair$"
+    ]
+  },
+  "TestClockGenericReturnsT01Shapes-1": {
+    "wall": 1.875,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestClockGenericReturnsT01Shapes$"
+    ]
+  },
+  "TestClockGenericReturnsT01Shapes-2": {
+    "wall": 1.827,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestClockGenericReturnsT01Shapes$"
+    ]
+  },
+  "TestClockGenericReturnsT01Shapes-3": {
+    "wall": 1.821,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestClockGenericReturnsT01Shapes$"
+    ]
+  },
+  "TestClockGenericReturnsT01DeclinesBrandedPrimitives-1": {
+    "wall": 1.769,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestClockGenericReturnsT01DeclinesBrandedPrimitives$"
+    ]
+  },
+  "TestClockGenericReturnsT01DeclinesBrandedPrimitives-2": {
+    "wall": 1.748,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestClockGenericReturnsT01DeclinesBrandedPrimitives$"
+    ]
+  },
+  "TestClockGenericReturnsT01DeclinesBrandedPrimitives-3": {
+    "wall": 1.701,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestClockGenericReturnsT01DeclinesBrandedPrimitives$"
+    ]
+  },
+  "TestClockGenericReturnsT01RejectsNullBeforeBody-1": {
+    "wall": 1.766,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestClockGenericReturnsT01RejectsNullBeforeBody$"
+    ]
+  },
+  "TestClockGenericReturnsT01RejectsNullBeforeBody-2": {
+    "wall": 1.81,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestClockGenericReturnsT01RejectsNullBeforeBody$"
+    ]
+  },
+  "TestClockGenericReturnsT01RejectsNullBeforeBody-3": {
+    "wall": 1.83,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestClockGenericReturnsT01RejectsNullBeforeBody$"
+    ]
+  },
+  "TestClockGenericReturnsT01RejectsIndexBeforeBody-1": {
+    "wall": 1.796,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestClockGenericReturnsT01RejectsIndexBeforeBody$"
+    ]
+  },
+  "TestClockGenericReturnsT01RejectsIndexBeforeBody-2": {
+    "wall": 1.767,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestClockGenericReturnsT01RejectsIndexBeforeBody$"
+    ]
+  },
+  "TestClockGenericReturnsT01RejectsIndexBeforeBody-3": {
+    "wall": 1.762,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestClockGenericReturnsT01RejectsIndexBeforeBody$"
+    ]
+  },
+  "TestDefiniteAssignmentUsesReadiness-1": {
+    "wall": 1.757,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestDefiniteAssignmentUsesReadiness$"
+    ]
+  },
+  "TestDefiniteAssignmentUsesReadiness-2": {
+    "wall": 1.764,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestDefiniteAssignmentUsesReadiness$"
+    ]
+  },
+  "TestDefiniteAssignmentUsesReadiness-3": {
+    "wall": 1.88,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestDefiniteAssignmentUsesReadiness$"
+    ]
+  },
+  "TestDefiniteAssignmentSoundNeighbors-1": {
+    "wall": 1.895,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestDefiniteAssignmentSoundNeighbors$"
+    ]
+  },
+  "TestDefiniteAssignmentSoundNeighbors-2": {
+    "wall": 1.76,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestDefiniteAssignmentSoundNeighbors$"
+    ]
+  },
+  "TestDefiniteAssignmentSoundNeighbors-3": {
+    "wall": 1.774,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestDefiniteAssignmentSoundNeighbors$"
+    ]
+  },
+  "TestNestedEmptyArrayElementKinds-1": {
+    "wall": 1.735,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestNestedEmptyArrayElementKinds$"
+    ]
+  },
+  "TestNestedEmptyArrayElementKinds-2": {
+    "wall": 1.767,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestNestedEmptyArrayElementKinds$"
+    ]
+  },
+  "TestNestedEmptyArrayElementKinds-3": {
+    "wall": 1.792,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestNestedEmptyArrayElementKinds$"
+    ]
+  },
+  "TestEmptyLiteralGenericReturnUsesSamePath-1": {
+    "wall": 1.758,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestEmptyLiteralGenericReturnUsesSamePath$"
+    ]
+  },
+  "TestEmptyLiteralGenericReturnUsesSamePath-2": {
+    "wall": 1.71,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestEmptyLiteralGenericReturnUsesSamePath$"
+    ]
+  },
+  "TestEmptyLiteralGenericReturnUsesSamePath-3": {
+    "wall": 1.752,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestEmptyLiteralGenericReturnUsesSamePath$"
+    ]
+  },
+  "TestEntriesAllocationProof-1": {
+    "wall": 1.988,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestEntriesAllocationProof$"
+    ]
+  },
+  "TestEntriesAllocationProof-2": {
+    "wall": 1.898,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestEntriesAllocationProof$"
+    ]
+  },
+  "TestEntriesAllocationProof-3": {
+    "wall": 2.014,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestEntriesAllocationProof$"
+    ]
+  },
+  "TestEntriesRecordBoundaries-1": {
+    "wall": 1.758,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestEntriesRecordBoundaries$"
+    ]
+  },
+  "TestEntriesRecordBoundaries-2": {
+    "wall": 1.713,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestEntriesRecordBoundaries$"
+    ]
+  },
+  "TestEntriesRecordBoundaries-3": {
+    "wall": 1.837,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestEntriesRecordBoundaries$"
+    ]
+  },
+  "M01-vet": {
+    "wall": 1.139,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ]
+  },
+  "M02-vet": {
+    "wall": 0.477,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ]
+  },
+  "M03-vet": {
+    "wall": 0.465,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ]
+  },
+  "M04-vet": {
+    "wall": 0.488,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ]
+  },
+  "M05-vet": {
+    "wall": 0.487,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ]
+  },
+  "M06-vet": {
+    "wall": 0.452,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ]
+  },
+  "M07-vet": {
+    "wall": 0.472,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ]
+  },
+  "M08-vet": {
+    "wall": 0.556,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ]
+  },
+  "M09-vet": {
+    "wall": 0.473,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ]
+  },
+  "M10-vet": {
+    "wall": 0.465,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ]
+  },
+  "M11-vet": {
+    "wall": 0.502,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ]
+  },
+  "M12-vet": {
+    "wall": 0.476,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ]
+  },
+  "M13-vet": {
+    "wall": 0.44,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ]
+  },
+  "M14-vet": {
+    "wall": 0.452,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ]
+  },
+  "M15-vet": {
+    "wall": 0.454,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ]
+  },
+  "M16-vet": {
+    "wall": 0.506,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ]
+  },
+  "M17-vet": {
+    "wall": 0.503,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ]
+  },
+  "M18-vet": {
+    "wall": 0.473,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ]
+  },
+  "M19-vet": {
+    "wall": 0.434,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ]
+  },
+  "M20-vet": {
+    "wall": 0.447,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ]
+  },
+  "P1-vet": {
+    "wall": 0.516,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ]
+  },
+  "P2-vet": {
+    "wall": 0.492,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ]
+  },
+  "switch-build": {
+    "wall": 7.573,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-c",
+      "-o",
+      "/tmp/u030/lower.test",
+      "./internal/lower/"
+    ]
+  },
+  "M01": {
+    "wall": 33.026,
+    "exit": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "."
+    ]
+  },
+  "M02": {
+    "wall": 32.14,
+    "exit": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "."
+    ]
+  },
+  "M03": {
+    "wall": 33.882,
+    "exit": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "."
+    ]
+  },
+  "M04": {
+    "wall": 32.749,
+    "exit": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "."
+    ]
+  },
+  "M05": {
+    "wall": 18.861,
+    "exit": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "."
+    ]
+  },
+  "M05-TestClassArgumentsUseCheckerIdentity": {
+    "wall": 1.872,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestClassArgumentsUseCheckerIdentity$"
+    ]
+  },
+  "M05-TestClassWrongOutputIteratorReceiver": {
+    "wall": 1.894,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestClassWrongOutputIteratorReceiver$"
+    ]
+  },
+  "M05-TestClassWrongOutputKeysRepair": {
+    "wall": 1.769,
+    "exit": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestClassWrongOutputKeysRepair$"
+    ]
+  },
+  "M05-TestClassWrongOutputPrivateRepair": {
+    "wall": 1.792,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestClassWrongOutputPrivateRepair$"
+    ]
+  },
+  "M05-TestClockGenericReturnsT01Shapes": {
+    "wall": 1.82,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestClockGenericReturnsT01Shapes$"
+    ]
+  },
+  "M05-TestClockGenericReturnsT01DeclinesBrandedPrimitives": {
+    "wall": 1.788,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestClockGenericReturnsT01DeclinesBrandedPrimitives$"
+    ]
+  },
+  "M05-TestClockGenericReturnsT01RejectsNullBeforeBody": {
+    "wall": 1.782,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestClockGenericReturnsT01RejectsNullBeforeBody$"
+    ]
+  },
+  "M05-TestClockGenericReturnsT01RejectsIndexBeforeBody": {
+    "wall": 2.004,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestClockGenericReturnsT01RejectsIndexBeforeBody$"
+    ]
+  },
+  "M05-TestDefiniteAssignmentUsesReadiness": {
+    "wall": 1.919,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestDefiniteAssignmentUsesReadiness$"
+    ]
+  },
+  "M05-TestDefiniteAssignmentSoundNeighbors": {
+    "wall": 1.872,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestDefiniteAssignmentSoundNeighbors$"
+    ]
+  },
+  "M05-TestNestedEmptyArrayElementKinds": {
+    "wall": 1.958,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestNestedEmptyArrayElementKinds$"
+    ]
+  },
+  "M05-TestEmptyLiteralGenericReturnUsesSamePath": {
+    "wall": 1.825,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestEmptyLiteralGenericReturnUsesSamePath$"
+    ]
+  },
+  "M05-TestEntriesAllocationProof": {
+    "wall": 1.862,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestEntriesAllocationProof$"
+    ]
+  },
+  "M05-TestEntriesRecordBoundaries": {
+    "wall": 1.758,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestEntriesRecordBoundaries$"
+    ]
+  },
+  "M06": {
+    "wall": 33.537,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "."
+    ]
+  },
+  "M07": {
+    "wall": 33.414,
+    "exit": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "."
+    ]
+  },
+  "M08": {
+    "wall": 34.593,
+    "exit": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "."
+    ]
+  },
+  "M09": {
+    "wall": 34.127,
+    "exit": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "."
+    ]
+  },
+  "M10": {
+    "wall": 13.414,
+    "exit": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "."
+    ]
+  },
+  "M10-TestClassArgumentsUseCheckerIdentity": {
+    "wall": 1.907,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestClassArgumentsUseCheckerIdentity$"
+    ]
+  },
+  "M10-TestClassWrongOutputIteratorReceiver": {
+    "wall": 1.92,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestClassWrongOutputIteratorReceiver$"
+    ]
+  },
+  "M10-TestClassWrongOutputKeysRepair": {
+    "wall": 1.808,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestClassWrongOutputKeysRepair$"
+    ]
+  },
+  "M10-TestClassWrongOutputPrivateRepair": {
+    "wall": 1.636,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestClassWrongOutputPrivateRepair$"
+    ]
+  },
+  "M10-TestClockGenericReturnsT01Shapes": {
+    "wall": 1.794,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestClockGenericReturnsT01Shapes$"
+    ]
+  },
+  "M10-TestClockGenericReturnsT01DeclinesBrandedPrimitives": {
+    "wall": 1.664,
+    "exit": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestClockGenericReturnsT01DeclinesBrandedPrimitives$"
+    ]
+  },
+  "M10-TestClockGenericReturnsT01RejectsNullBeforeBody": {
+    "wall": 1.67,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestClockGenericReturnsT01RejectsNullBeforeBody$"
+    ]
+  },
+  "M10-TestClockGenericReturnsT01RejectsIndexBeforeBody": {
+    "wall": 1.72,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestClockGenericReturnsT01RejectsIndexBeforeBody$"
+    ]
+  },
+  "M10-TestDefiniteAssignmentUsesReadiness": {
+    "wall": 1.679,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestDefiniteAssignmentUsesReadiness$"
+    ]
+  },
+  "M10-TestDefiniteAssignmentSoundNeighbors": {
+    "wall": 1.704,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestDefiniteAssignmentSoundNeighbors$"
+    ]
+  },
+  "M10-TestNestedEmptyArrayElementKinds": {
+    "wall": 1.791,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestNestedEmptyArrayElementKinds$"
+    ]
+  },
+  "M10-TestEmptyLiteralGenericReturnUsesSamePath": {
+    "wall": 1.714,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestEmptyLiteralGenericReturnUsesSamePath$"
+    ]
+  },
+  "M10-TestEntriesAllocationProof": {
+    "wall": 1.785,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestEntriesAllocationProof$"
+    ]
+  },
+  "M10-TestEntriesRecordBoundaries": {
+    "wall": 1.839,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestEntriesRecordBoundaries$"
+    ]
+  },
+  "M11": {
+    "wall": 32.63,
+    "exit": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "."
+    ]
+  },
+  "M11-TestClassArgumentsUseCheckerIdentity": {
+    "wall": 1.88,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestClassArgumentsUseCheckerIdentity$"
+    ]
+  },
+  "M11-TestClassWrongOutputIteratorReceiver": {
+    "wall": 1.799,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestClassWrongOutputIteratorReceiver$"
+    ]
+  },
+  "M11-TestClassWrongOutputKeysRepair": {
+    "wall": 1.679,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestClassWrongOutputKeysRepair$"
+    ]
+  },
+  "M11-TestClassWrongOutputPrivateRepair": {
+    "wall": 1.777,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestClassWrongOutputPrivateRepair$"
+    ]
+  },
+  "M11-TestClockGenericReturnsT01Shapes": {
+    "wall": 1.96,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestClockGenericReturnsT01Shapes$"
+    ]
+  },
+  "M11-TestClockGenericReturnsT01DeclinesBrandedPrimitives": {
+    "wall": 1.879,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestClockGenericReturnsT01DeclinesBrandedPrimitives$"
+    ]
+  },
+  "M11-TestClockGenericReturnsT01RejectsNullBeforeBody": {
+    "wall": 1.767,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestClockGenericReturnsT01RejectsNullBeforeBody$"
+    ]
+  },
+  "M11-TestClockGenericReturnsT01RejectsIndexBeforeBody": {
+    "wall": 1.964,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestClockGenericReturnsT01RejectsIndexBeforeBody$"
+    ]
+  },
+  "M11-TestDefiniteAssignmentUsesReadiness": {
+    "wall": 1.951,
+    "exit": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestDefiniteAssignmentUsesReadiness$"
+    ]
+  },
+  "M11-TestDefiniteAssignmentSoundNeighbors": {
+    "wall": 1.881,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestDefiniteAssignmentSoundNeighbors$"
+    ]
+  },
+  "M11-TestNestedEmptyArrayElementKinds": {
+    "wall": 1.778,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestNestedEmptyArrayElementKinds$"
+    ]
+  },
+  "M11-TestEmptyLiteralGenericReturnUsesSamePath": {
+    "wall": 1.77,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestEmptyLiteralGenericReturnUsesSamePath$"
+    ]
+  },
+  "M11-TestEntriesAllocationProof": {
+    "wall": 1.939,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestEntriesAllocationProof$"
+    ]
+  },
+  "M11-TestEntriesRecordBoundaries": {
+    "wall": 1.73,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestEntriesRecordBoundaries$"
+    ]
+  },
+  "M12": {
+    "wall": 27.37,
+    "exit": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "."
+    ]
+  },
+  "M12-TestClassArgumentsUseCheckerIdentity": {
+    "wall": 1.982,
+    "exit": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestClassArgumentsUseCheckerIdentity$"
+    ]
+  },
+  "M12-TestClassWrongOutputIteratorReceiver": {
+    "wall": 1.941,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestClassWrongOutputIteratorReceiver$"
+    ]
+  },
+  "M12-TestClassWrongOutputKeysRepair": {
+    "wall": 1.706,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestClassWrongOutputKeysRepair$"
+    ]
+  },
+  "M12-TestClassWrongOutputPrivateRepair": {
+    "wall": 1.675,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestClassWrongOutputPrivateRepair$"
+    ]
+  },
+  "M12-TestClockGenericReturnsT01Shapes": {
+    "wall": 1.812,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestClockGenericReturnsT01Shapes$"
+    ]
+  },
+  "M12-TestClockGenericReturnsT01DeclinesBrandedPrimitives": {
+    "wall": 1.695,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestClockGenericReturnsT01DeclinesBrandedPrimitives$"
+    ]
+  },
+  "M12-TestClockGenericReturnsT01RejectsNullBeforeBody": {
+    "wall": 1.642,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestClockGenericReturnsT01RejectsNullBeforeBody$"
+    ]
+  },
+  "M12-TestClockGenericReturnsT01RejectsIndexBeforeBody": {
+    "wall": 1.702,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestClockGenericReturnsT01RejectsIndexBeforeBody$"
+    ]
+  },
+  "M12-TestDefiniteAssignmentUsesReadiness": {
+    "wall": 1.847,
+    "exit": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestDefiniteAssignmentUsesReadiness$"
+    ]
+  },
+  "M12-TestDefiniteAssignmentSoundNeighbors": {
+    "wall": 1.759,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestDefiniteAssignmentSoundNeighbors$"
+    ]
+  },
+  "M12-TestNestedEmptyArrayElementKinds": {
+    "wall": 1.903,
+    "exit": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestNestedEmptyArrayElementKinds$"
+    ]
+  },
+  "M12-TestEmptyLiteralGenericReturnUsesSamePath": {
+    "wall": 1.689,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestEmptyLiteralGenericReturnUsesSamePath$"
+    ]
+  },
+  "M12-TestEntriesAllocationProof": {
+    "wall": 1.762,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestEntriesAllocationProof$"
+    ]
+  },
+  "M12-TestEntriesRecordBoundaries": {
+    "wall": 1.726,
+    "exit": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestEntriesRecordBoundaries$"
+    ]
+  },
+  "M13": {
+    "wall": 35.151,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "."
+    ]
+  },
+  "M14": {
+    "wall": 35.187,
+    "exit": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "."
+    ]
+  },
+  "M15": {
+    "wall": 33.48,
+    "exit": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "."
+    ]
+  },
+  "M16": {
+    "wall": 34.145,
+    "exit": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "."
+    ]
+  },
+  "M17": {
+    "wall": 33.804,
+    "exit": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "."
+    ]
+  },
+  "M18": {
+    "wall": 34.644,
+    "exit": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "."
+    ]
+  },
+  "M19": {
+    "wall": 35.338,
+    "exit": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "."
+    ]
+  },
+  "M20": {
+    "wall": 33.275,
+    "exit": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "."
+    ]
+  },
+  "P1-TestClassArgumentsUseCheckerIdentity": {
+    "wall": 1.995,
+    "exit": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestClassArgumentsUseCheckerIdentity$"
+    ]
+  },
+  "P1-TestClassWrongOutputIteratorReceiver": {
+    "wall": 1.791,
+    "exit": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestClassWrongOutputIteratorReceiver$"
+    ]
+  },
+  "P1-TestClassWrongOutputKeysRepair": {
+    "wall": 1.882,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestClassWrongOutputKeysRepair$"
+    ]
+  },
+  "P1-TestClassWrongOutputPrivateRepair": {
+    "wall": 1.719,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestClassWrongOutputPrivateRepair$"
+    ]
+  },
+  "P1-TestClockGenericReturnsT01Shapes": {
+    "wall": 2.001,
+    "exit": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestClockGenericReturnsT01Shapes$"
+    ]
+  },
+  "P1-TestClockGenericReturnsT01DeclinesBrandedPrimitives": {
+    "wall": 1.87,
+    "exit": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestClockGenericReturnsT01DeclinesBrandedPrimitives$"
+    ]
+  },
+  "P1-TestDefiniteAssignmentUsesReadiness": {
+    "wall": 1.837,
+    "exit": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestDefiniteAssignmentUsesReadiness$"
+    ]
+  },
+  "P1-TestDefiniteAssignmentSoundNeighbors": {
+    "wall": 2.01,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestDefiniteAssignmentSoundNeighbors$"
+    ]
+  },
+  "P1-TestNestedEmptyArrayElementKinds": {
+    "wall": 1.804,
+    "exit": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestNestedEmptyArrayElementKinds$"
+    ]
+  },
+  "P1-TestEmptyLiteralGenericReturnUsesSamePath": {
+    "wall": 1.836,
+    "exit": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestEmptyLiteralGenericReturnUsesSamePath$"
+    ]
+  },
+  "P1-TestEntriesAllocationProof": {
+    "wall": 1.947,
+    "exit": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestEntriesAllocationProof$"
+    ]
+  },
+  "P1-TestEntriesRecordBoundaries": {
+    "wall": 2.093,
+    "exit": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestEntriesRecordBoundaries$"
+    ]
+  },
+  "P2-TestClockGenericReturnsT01RejectsNullBeforeBody": {
+    "wall": 1.999,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestClockGenericReturnsT01RejectsNullBeforeBody$"
+    ]
+  },
+  "P2-TestClockGenericReturnsT01RejectsIndexBeforeBody": {
+    "wall": 1.983,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "^TestClockGenericReturnsT01RejectsIndexBeforeBody$"
+    ]
+  }
+}

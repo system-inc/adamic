@@ -1,0 +1,13 @@
+diff --git a/internal/lower/generic.go b/internal/lower/generic.go
+index 6620fee8..d79b07c3 100644
+--- a/internal/lower/generic.go
++++ b/internal/lower/generic.go
+@@ -164,7 +164,7 @@ func (l *lowering) genericTypeKey(proven *checker.Type) string {
+ 		return "unread"
+ 	}
+ 	for index, representative := range l.instantiated {
+-		if identicalTypes(l.checker, proven, representative) {
++		if !identicalTypes(l.checker, proven, representative) {
+ 			return typeName(held) + ":" + strconv.Itoa(index)
+ 		}
+ 	}

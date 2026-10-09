@@ -1,0 +1,12 @@
+diff --git a/internal/lower/lower.go b/internal/lower/lower.go
+index daba343f..ddd13e53 100644
+--- a/internal/lower/lower.go
++++ b/internal/lower/lower.go
+@@ -80,7 +80,6 @@ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
+ 	if err := lowering.findCycles(modules); err != nil {
+ 		return nil, err
+ 	}
+-	readiness(lowering.result)
+ 	borrow(lowering.result)
+ 	counters(lowering.result)
+ 	return lowering.result, nil

@@ -1,0 +1,7 @@
+u030: all 14 assigned names exist in their original files; none moved or vanished.
+Base: origin/main 8171b3173bdbfce1f7982d3c4f731279307ece37.
+Clean enabled baseline: PASS, 32.623 test-binary seconds; nproc=5.
+Verdicts: 7 sacred, 5 subsumed, 1 overlapping, 1 cannot-judge; five vacuous rows.
+Evidence: test-audit/internal-lower-class_instance_key, review/test-audit/internal-lower-class_instance_key/.
+
+Counter({'sacred': 7, 'subsumed': 5, 'overlapping': 1, 'cannot-judge': 1})

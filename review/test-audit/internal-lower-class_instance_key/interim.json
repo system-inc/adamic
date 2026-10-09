@@ -1,0 +1,179 @@
+[
+  {
+    "test": "TestClassArgumentsUseCheckerIdentity",
+    "kills": [
+      "M01",
+      "M02",
+      "M03",
+      "M12"
+    ],
+    "unique": [],
+    "verdict": "overlapping",
+    "subsumed_by": [
+      "TestInheritanceGenericMonomorphizations",
+      "TestGenericFunctionPolymorphicRecursionIsRefused"
+    ],
+    "vacuous": false
+  },
+  {
+    "test": "TestClassWrongOutputIteratorReceiver",
+    "kills": [
+      "M04"
+    ],
+    "unique": [
+      "M04"
+    ],
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "vacuous": false
+  },
+  {
+    "test": "TestClassWrongOutputKeysRepair",
+    "kills": [
+      "M05",
+      "M19"
+    ],
+    "unique": [],
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestClassFeaturesPrivateStorage"
+    ],
+    "vacuous": true
+  },
+  {
+    "test": "TestClassWrongOutputPrivateRepair",
+    "kills": [
+      "M14"
+    ],
+    "unique": [],
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestDefiniteAssignmentSoundNeighbors"
+    ],
+    "vacuous": true
+  },
+  {
+    "test": "TestClockGenericReturnsT01Shapes",
+    "kills": [
+      "M09"
+    ],
+    "unique": [
+      "M09"
+    ],
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "vacuous": false
+  },
+  {
+    "test": "TestClockGenericReturnsT01DeclinesBrandedPrimitives",
+    "kills": [],
+    "unique": [],
+    "verdict": "cannot-judge",
+    "subsumed_by": [],
+    "vacuous": false
+  },
+  {
+    "test": "TestClockGenericReturnsT01RejectsNullBeforeBody",
+    "kills": [
+      "M07"
+    ],
+    "unique": [
+      "M07"
+    ],
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "vacuous": true
+  },
+  {
+    "test": "TestClockGenericReturnsT01RejectsIndexBeforeBody",
+    "kills": [
+      "M08"
+    ],
+    "unique": [
+      "M08"
+    ],
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "vacuous": true
+  },
+  {
+    "test": "TestDefiniteAssignmentUsesReadiness",
+    "kills": [
+      "M11",
+      "M12"
+    ],
+    "unique": [],
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestReadinessElisionRequiresDominatingAssignment"
+    ],
+    "vacuous": false
+  },
+  {
+    "test": "TestDefiniteAssignmentSoundNeighbors",
+    "kills": [
+      "M14"
+    ],
+    "unique": [],
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestClassWrongOutputPrivateRepair"
+    ],
+    "vacuous": true
+  },
+  {
+    "test": "TestNestedEmptyArrayElementKinds",
+    "kills": [
+      "M12",
+      "M15",
+      "M16"
+    ],
+    "unique": [
+      "M16"
+    ],
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "vacuous": false
+  },
+  {
+    "test": "TestEmptyLiteralGenericReturnUsesSamePath",
+    "kills": [
+      "M15"
+    ],
+    "unique": [],
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestNestedEmptyArrayElementKinds"
+    ],
+    "vacuous": false
+  },
+  {
+    "test": "TestEntriesAllocationProof",
+    "kills": [
+      "M17",
+      "M18",
+      "M19"
+    ],
+    "unique": [
+      "M17",
+      "M18"
+    ],
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "vacuous": false
+  },
+  {
+    "test": "TestEntriesRecordBoundaries",
+    "kills": [
+      "M12",
+      "M19",
+      "M20"
+    ],
+    "unique": [
+      "M20"
+    ],
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "vacuous": false
+  }
+]

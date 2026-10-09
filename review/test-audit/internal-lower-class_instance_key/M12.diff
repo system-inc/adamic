@@ -1,0 +1,13 @@
+diff --git a/internal/lower/readiness.go b/internal/lower/readiness.go
+index 1955c537..5b3879c2 100644
+--- a/internal/lower/readiness.go
++++ b/internal/lower/readiness.go
+@@ -42,7 +42,7 @@ func (l *lowering) uninitializedInitializer(node *ast.Node) bool {
+ func (l *lowering) uninitializedDeclaration(node *ast.Node) bool {
+ 	switch node.Kind {
+ 	case ast.KindVariableDeclaration:
+-		return node.AsVariableDeclaration().ExclamationToken != nil || l.uninitializedInitializer(node.AsVariableDeclaration().Initializer)
++		return node.AsVariableDeclaration().ExclamationToken == nil || l.uninitializedInitializer(node.AsVariableDeclaration().Initializer)
+ 	case ast.KindPropertyDeclaration:
+ 		return node.PostfixToken() != nil && node.PostfixToken().Kind == ast.KindExclamationToken || l.uninitializedInitializer(node.AsPropertyDeclaration().Initializer)
+ 	}

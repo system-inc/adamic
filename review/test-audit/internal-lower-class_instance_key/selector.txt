@@ -1,0 +1,239 @@
+diff --git a/internal/lower/class.go b/internal/lower/class.go
+index 0c955352..33f841c0 100644
+--- a/internal/lower/class.go
++++ b/internal/lower/class.go
+@@ -766,7 +766,7 @@ func (l *lowering) useOfThis(node *ast.Node) error {
+ 		return nil
+ 	}
+ 	if parent := node.Parent; parent != nil && parent.Kind == ast.KindPropertyAccessExpression && parent.AsPropertyAccessExpression().Expression == node {
+-		if field := l.checker.GetSymbolAtLocation(parent.Name()); field != nil && len(field.Declarations) > 0 && (field.Declarations[0].Kind == ast.KindPropertyDeclaration || parameterProperty(field.Declarations[0])) {
++		if field := l.checker.GetSymbolAtLocation(parent.Name()); field != nil && len(field.Declarations) > 0 && (func() bool { if auditMutation("M14") { return field.Declarations[0].Kind != ast.KindPropertyDeclaration }; return field.Declarations[0].Kind == ast.KindPropertyDeclaration }() || parameterProperty(field.Declarations[0])) {
+ 			return nil
+ 		}
+ 	}
+@@ -798,9 +798,11 @@ func (l *lowering) sameClassArguments(from, to []*checker.Type) bool {
+ func (l *lowering) classInstanceKey(declaration *ast.Node, arguments []*checker.Type) string {
+ 	prefix := l.classKeyPrefix(declaration)
+ 	key := prefix
++if !auditMutation("M03") {
+ 	for _, argument := range arguments {
+ 		key += "," + l.genericTypeKey(argument)
+ 	}
++}
+ 	return key
+ }
+ 
+diff --git a/internal/lower/class_features.go b/internal/lower/class_features.go
+index d6ec6223..59b52c92 100644
+--- a/internal/lower/class_features.go
++++ b/internal/lower/class_features.go
+@@ -80,7 +80,7 @@ func (l *lowering) objectKeys(node *ast.Node) (ir.Expression, bool, error) {
+ 	// A structural view does not remove the iterable literal's hidden symbol slot.
+ 	// Fresh explicit string-keyed literals cannot carry storage erased by a view.
+ 	argument := ast.SkipParentheses(arguments[0])
+-	fresh := argument.Kind == ast.KindObjectLiteralExpression
++	fresh := func() bool { if auditMutation("M05") { return argument.Kind != ast.KindObjectLiteralExpression }; return argument.Kind == ast.KindObjectLiteralExpression }()
+ 	if fresh {
+ 		for _, property := range argument.AsObjectLiteralExpression().Properties.Nodes {
+ 			fresh = fresh && property.Kind != ast.KindSpreadAssignment
+diff --git a/internal/lower/class_static_private.go b/internal/lower/class_static_private.go
+index 60e1020b..b687c0ce 100644
+--- a/internal/lower/class_static_private.go
++++ b/internal/lower/class_static_private.go
+@@ -6,7 +6,7 @@ import (
+ )
+ 
+ func (l *lowering) privateStaticMember(name *ast.Node) *ast.Node {
+-	if name.Kind != ast.KindPrivateIdentifier {
++	if func() bool { if auditMutation("M06") { return name.Kind == ast.KindPrivateIdentifier }; return name.Kind != ast.KindPrivateIdentifier }() {
+ 		return nil
+ 	}
+ 	symbol := l.checker.GetSymbolAtLocation(name)
+diff --git a/internal/lower/clock_generic_returns_t_01.go b/internal/lower/clock_generic_returns_t_01.go
+index 7eda4a13..c937b794 100644
+--- a/internal/lower/clock_generic_returns_t_01.go
++++ b/internal/lower/clock_generic_returns_t_01.go
+@@ -12,8 +12,9 @@ import (
+ // no constituent or type argument is erased to choose the pointer representation.
+ // Undefined uses the existing missing object pointer; null is never admitted.
+ func (l *lowering) clockGenericReturnsT01(result *checker.Type) (ir.Type, bool) {
++if auditMutation("P2") { return 0, false }
+ 	result = l.concrete(result)
+-	if result.Flags()&checker.TypeFlagsUnion == 0 || len(result.Types()) != 2 {
++	if result.Flags()&checker.TypeFlagsUnion == 0 || func() bool { if auditMutation("M07") { return len(result.Types()) < 2 }; return len(result.Types()) != 2 }() {
+ 		return 0, false
+ 	}
+ 	var object *checker.Type
+@@ -39,7 +40,7 @@ func (l *lowering) clockGenericReturnsT01(result *checker.Type) (ir.Type, bool)
+ 		// Only a type reference has type arguments; the checker dereferences nil for anything
+ 		// else, such as the string in a branded string & { __brand: void }.
+ 		part = l.concrete(part)
+-		generic = generic || part.Flags()&checker.TypeFlagsObject != 0 && part.ObjectFlags()&checker.ObjectFlagsReference != 0 && len(l.checker.GetTypeArguments(part)) != 0
++		generic = generic || func() bool { if auditMutation("M10") { return len(l.checker.GetTypeArguments(part)) != 0 }; return part.Flags()&checker.TypeFlagsObject != 0 && part.ObjectFlags()&checker.ObjectFlagsReference != 0 && len(l.checker.GetTypeArguments(part)) != 0 }()
+ 	}
+ 	if !generic {
+ 		return 0, false
+@@ -71,9 +72,9 @@ func (l *lowering) clockGenericReturnsT01Shape(proven *checker.Type, active map[
+ 		return len(arguments) == 1 && l.concrete(arguments[0]).Flags()&checker.TypeFlagsStringLike != 0
+ 	}
+ 	if checker.IsTupleType(proven) || isClassInstance(proven) ||
+-		len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) != 0 ||
++		func() bool { if auditMutation("M09") { return len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) < 0 }; return len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) != 0 }() ||
+ 		len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) != 0 ||
+-		len(l.checker.GetIndexInfosOfType(proven)) != 0 {
++		func() bool { if auditMutation("M08") { return len(l.checker.GetIndexInfosOfType(proven)) < 0 }; return len(l.checker.GetIndexInfosOfType(proven)) != 0 }() {
+ 		return false
+ 	}
+ 	if symbol := proven.Symbol(); symbol != nil {
+diff --git a/internal/lower/empty_literal.go b/internal/lower/empty_literal.go
+index edb1eeb6..80f0caa6 100644
+--- a/internal/lower/empty_literal.go
++++ b/internal/lower/empty_literal.go
+@@ -10,7 +10,7 @@ func (l *lowering) literalArrayElement(proven *checker.Type) *checker.Type {
+ 		return nil
+ 	}
+ 	proven = l.concrete(proven)
+-	if l.checker.IsArrayType(proven) {
++	if func() bool { if auditMutation("M15") { return !l.checker.IsArrayType(proven) }; return l.checker.IsArrayType(proven) }() {
+ 		return l.checker.GetElementTypeOfArrayType(proven)
+ 	}
+ 	if proven.Flags()&checker.TypeFlagsUnion == 0 {
+diff --git a/internal/lower/entries_provenance.go b/internal/lower/entries_provenance.go
+index 3c78438b..4c826d31 100644
+--- a/internal/lower/entries_provenance.go
++++ b/internal/lower/entries_provenance.go
+@@ -55,7 +55,7 @@ func (l *lowering) enumerationProven(node *ast.Node, element *checker.Type, dept
+ 	if declaration.Kind != ast.KindVariableDeclaration {
+ 		return false
+ 	}
+-	if l.enumerationBindingWritten(symbol) {
++	if func() bool { if auditMutation("M17") { return !l.enumerationBindingWritten(symbol) }; return l.enumerationBindingWritten(symbol) }() {
+ 		return false
+ 	}
+ 	return l.enumerationProven(declaration.AsVariableDeclaration().Initializer, element, depth+1)
+@@ -86,7 +86,7 @@ func (l *lowering) enumerationBindingWritten(symbol *ast.Symbol) bool {
+ 			var inspect ast.Visitor
+ 			inspect = func(part *ast.Node) bool {
+ 				if ast.IsIdentifier(part) && l.symbol(part) == symbol {
+-					written = true
++					written = func() bool { if auditMutation("M18") { return false }; return true }()
+ 				}
+ 				return part.ForEachChild(inspect)
+ 			}
+diff --git a/internal/lower/entries_records.go b/internal/lower/entries_records.go
+index edc928f8..77cdbe2a 100644
+--- a/internal/lower/entries_records.go
++++ b/internal/lower/entries_records.go
+@@ -114,7 +114,7 @@ func (l *lowering) entriesRecordLiteral(literal *ast.Node) bool {
+ 	for _, module := range modules {
+ 		module.AsNode().ForEachChild(visit)
+ 	}
+-	return written
++	return func() bool { if auditMutation("M19") { return !written }; return written }()
+ }
+ 
+ func (l *lowering) entriesRecordWrite(target, valueNode *ast.Node) ([]ir.Statement, bool, error) {
+@@ -210,5 +210,5 @@ func (l *lowering) enumerationIndexedWriteRefusal(node *ast.Node) error {
+ 	if receiver == nil || !l.entriesStringIndexed(receiver) || l.entriesLiteralOrigin(receiver, 0) != nil {
+ 		return nil
+ 	}
+-	return l.notYet(node, "an indexed mutation without a closed const literal origin")
++	return l.notYet(node, func() string { if auditMutation("M20") { return "an indexed mutation without a proven allocation origin" }; return "an indexed mutation without a closed const literal origin" }())
+ }
+diff --git a/internal/lower/generic.go b/internal/lower/generic.go
+index 6620fee8..ab5c7706 100644
+--- a/internal/lower/generic.go
++++ b/internal/lower/generic.go
+@@ -164,12 +164,14 @@ func (l *lowering) genericTypeKey(proven *checker.Type) string {
+ 		return "unread"
+ 	}
+ 	for index, representative := range l.instantiated {
+-		if identicalTypes(l.checker, proven, representative) {
++		if func() bool { if auditMutation("M01") { return !identicalTypes(l.checker, proven, representative) }; return identicalTypes(l.checker, proven, representative) }() {
+ 			return typeName(held) + ":" + strconv.Itoa(index)
+ 		}
+ 	}
+ 	index := len(l.instantiated)
++if !auditMutation("M02") {
+ 	l.instantiated = append(l.instantiated, proven)
++}
+ 	return typeName(held) + ":" + strconv.Itoa(index)
+ }
+ 
+diff --git a/internal/lower/iteration.go b/internal/lower/iteration.go
+index daed8156..9a52fd59 100644
+--- a/internal/lower/iteration.go
++++ b/internal/lower/iteration.go
+@@ -220,7 +220,7 @@ func (l *lowering) planIteration(where *ast.Node) (*iterationPlan, error) {
+ 	}
+ 	// Until protocol calls dispatch virtually, prove that a returned receiver cannot
+ 	// override next/return or introduce a close method hidden by the return annotation.
+-	if l.iterationFactoryReturnsThis(entry) && l.iteratorReceiverOverrides(modules, iterator, next, close) {
++	if func() bool { if auditMutation("M04") { return l.iterationFactoryReturnsThis(entry) && !l.iteratorReceiverOverrides(modules, iterator, next, close) }; return l.iterationFactoryReturnsThis(entry) && l.iteratorReceiverOverrides(modules, iterator, next, close) }() {
+ 		members := []*ast.Symbol{next}
+ 		if close != nil {
+ 			members = append(members, close)
+diff --git a/internal/lower/lower.go b/internal/lower/lower.go
+index daba343f..a450efde 100644
+--- a/internal/lower/lower.go
++++ b/internal/lower/lower.go
+@@ -18,6 +18,7 @@ import (
+ 
+ // Lower lowers a checked program from one entry, in ESM evaluation order.
+ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
++if auditMutation("P1") { return nil, nil }
+ 	files := program.Files()
+ 	if len(files) != 1 {
+ 		return nil, fmt.Errorf("lower: stage 0 compiles a program from one entry file, got %d", len(files))
+@@ -80,7 +81,9 @@ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
+ 	if err := lowering.findCycles(modules); err != nil {
+ 		return nil, err
+ 	}
++if !auditMutation("M11") {
+ 	readiness(lowering.result)
++}
+ 	borrow(lowering.result)
+ 	counters(lowering.result)
+ 	return lowering.result, nil
+diff --git a/internal/lower/object.go b/internal/lower/object.go
+index 92c69d6d..c5750ff8 100644
+--- a/internal/lower/object.go
++++ b/internal/lower/object.go
+@@ -303,7 +303,9 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
+ 				// the enclosing array has an explicit union-of-arrays destination.
+ 				contexts = append(contexts, l.literalArrayElement(l.checker.GetContextualType(parent, checker.ContextFlagsNone)))
+ 			}
++if !auditMutation("M16") {
+ 			contexts = append(contexts, l.impliedTarget(literal))
++}
+ 			for _, contextual := range contexts {
+ 				if element := l.literalArrayElement(contextual); element != nil {
+ 					if held, known := l.kept(element); known && !slotless(held) {
+@@ -574,7 +576,9 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
+ // Absence is a read result, never a synthetic own field: hasOwnProperty and object spread still see
+ // the shape that was actually made. A narrowed number checks the declared optional representation.
+ func (l *lowering) readObjectField(node *ast.Node, property ir.Property) ir.Expression {
++if !auditMutation("M13") {
+ 	property.Readiness = sourceExpression(node)
++}
+ 	property.View = sourceExpression(node)
+ 	property.ViewWhere = l.program.Where(node)
+ 	if node.Kind == ast.KindPropertyAccessExpression {
+diff --git a/internal/lower/readiness.go b/internal/lower/readiness.go
+index 1955c537..337ab75d 100644
+--- a/internal/lower/readiness.go
++++ b/internal/lower/readiness.go
+@@ -42,7 +42,7 @@ func (l *lowering) uninitializedInitializer(node *ast.Node) bool {
+ func (l *lowering) uninitializedDeclaration(node *ast.Node) bool {
+ 	switch node.Kind {
+ 	case ast.KindVariableDeclaration:
+-		return node.AsVariableDeclaration().ExclamationToken != nil || l.uninitializedInitializer(node.AsVariableDeclaration().Initializer)
++		return func() bool { if auditMutation("M12") { return node.AsVariableDeclaration().ExclamationToken == nil }; return node.AsVariableDeclaration().ExclamationToken != nil }() || l.uninitializedInitializer(node.AsVariableDeclaration().Initializer)
+ 	case ast.KindPropertyDeclaration:
+ 		return node.PostfixToken() != nil && node.PostfixToken().Kind == ast.KindExclamationToken || l.uninitializedInitializer(node.AsPropertyDeclaration().Initializer)
+ 	}
+
+# Supplemental selector helper: internal/lower/audit_u030_mutant.go
+package lower
+import "os"
+func auditMutation(id string) bool { return os.Getenv("ADAMIC_MUTANT") == id }

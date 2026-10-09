@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T10:25:07.139157917Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T10:25:07.145856765Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClockGenericReturnsT01DeclinesBrandedPrimitives"}
+{"Time":"2026-10-09T10:25:07.14595494Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClockGenericReturnsT01DeclinesBrandedPrimitives","Output":"=== RUN   TestClockGenericReturnsT01DeclinesBrandedPrimitives\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:25:07.146010071Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClockGenericReturnsT01DeclinesBrandedPrimitives","Output":"=== PAUSE TestClockGenericReturnsT01DeclinesBrandedPrimitives\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:25:07.146012675Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClockGenericReturnsT01DeclinesBrandedPrimitives"}
+{"Time":"2026-10-09T10:25:07.146014968Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClockGenericReturnsT01DeclinesBrandedPrimitives"}
+{"Time":"2026-10-09T10:25:07.146017011Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClockGenericReturnsT01DeclinesBrandedPrimitives","Output":"=== CONT  TestClockGenericReturnsT01DeclinesBrandedPrimitives\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:25:07.176023811Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClockGenericReturnsT01DeclinesBrandedPrimitives","Output":"    clock_generic_returns_t_01_test.go:69: want an explicit NotYet for a branded primitive result, got \u003cnil\u003e\n","OutputType":"error"}
+{"Time":"2026-10-09T10:25:07.176142145Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClockGenericReturnsT01DeclinesBrandedPrimitives","Output":"--- FAIL: TestClockGenericReturnsT01DeclinesBrandedPrimitives (0.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:25:07.176149627Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClockGenericReturnsT01DeclinesBrandedPrimitives","Elapsed":0.03}
+{"Time":"2026-10-09T10:25:07.176173742Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:25:07.177336537Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.038s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:25:07.177359441Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.038}

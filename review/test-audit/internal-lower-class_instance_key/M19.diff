@@ -1,0 +1,13 @@
+diff --git a/internal/lower/entries_records.go b/internal/lower/entries_records.go
+index edc928f8..f39998cc 100644
+--- a/internal/lower/entries_records.go
++++ b/internal/lower/entries_records.go
+@@ -114,7 +114,7 @@ func (l *lowering) entriesRecordLiteral(literal *ast.Node) bool {
+ 	for _, module := range modules {
+ 		module.AsNode().ForEachChild(visit)
+ 	}
+-	return written
++	return !written
+ }
+ 
+ func (l *lowering) entriesRecordWrite(target, valueNode *ast.Node) ([]ir.Statement, bool, error) {

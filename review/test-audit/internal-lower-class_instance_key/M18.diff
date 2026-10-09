@@ -1,0 +1,13 @@
+diff --git a/internal/lower/entries_provenance.go b/internal/lower/entries_provenance.go
+index 3c78438b..385c60f4 100644
+--- a/internal/lower/entries_provenance.go
++++ b/internal/lower/entries_provenance.go
+@@ -86,7 +86,7 @@ func (l *lowering) enumerationBindingWritten(symbol *ast.Symbol) bool {
+ 			var inspect ast.Visitor
+ 			inspect = func(part *ast.Node) bool {
+ 				if ast.IsIdentifier(part) && l.symbol(part) == symbol {
+-					written = true
++					written = false
+ 				}
+ 				return part.ForEachChild(inspect)
+ 			}

@@ -1,0 +1,9 @@
+survivor-original {'exit': 0, 'wall': 7.776, 'command': ['timeout', '120', 'go', 'test', '-v', '-count=1', '-timeout', '90s', './internal/lower/', '-run', '^TestAuditU030SurvivorWitness$']}
+survivor-M06 {'exit': 0, 'wall': 7.992, 'command': ['timeout', '120', 'go', 'test', '-v', '-count=1', '-timeout', '90s', './internal/lower/', '-run', '^TestAuditU030SurvivorWitness$']}
+survivor-M13 {'exit': 0, 'wall': 8.251, 'command': ['timeout', '120', 'go', 'test', '-v', '-count=1', '-timeout', '90s', './internal/lower/', '-run', '^TestAuditU030SurvivorWitness$']}
+TestClassFeaturesPrivateStorage-1 {'exit': 0, 'wall': 2.298, 'command': ['timeout', '120', 'go', 'test', '-count=1', '-timeout', '90s', './internal/lower/', '-run', '^TestClassFeaturesPrivateStorage$']}
+TestClassFeaturesPrivateStorage-2 {'exit': 0, 'wall': 2.25, 'command': ['timeout', '120', 'go', 'test', '-count=1', '-timeout', '90s', './internal/lower/', '-run', '^TestClassFeaturesPrivateStorage$']}
+TestClassFeaturesPrivateStorage-3 {'exit': 0, 'wall': 2.256, 'command': ['timeout', '120', 'go', 'test', '-count=1', '-timeout', '90s', './internal/lower/', '-run', '^TestClassFeaturesPrivateStorage$']}
+TestReadinessElisionRequiresDominatingAssignment-1 {'exit': 0, 'wall': 2.522, 'command': ['timeout', '120', 'go', 'test', '-count=1', '-timeout', '90s', './internal/lower/', '-run', '^TestReadinessElisionRequiresDominatingAssignment$']}
+TestReadinessElisionRequiresDominatingAssignment-2 {'exit': 0, 'wall': 2.07, 'command': ['timeout', '120', 'go', 'test', '-count=1', '-timeout', '90s', './internal/lower/', '-run', '^TestReadinessElisionRequiresDominatingAssignment$']}
+TestReadinessElisionRequiresDominatingAssignment-3 {'exit': 0, 'wall': 2.161, 'command': ['timeout', '120', 'go', 'test', '-count=1', '-timeout', '90s', './internal/lower/', '-run', '^TestReadinessElisionRequiresDominatingAssignment$']}

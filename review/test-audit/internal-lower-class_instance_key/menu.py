@@ -1,0 +1,27 @@
+from pathlib import Path
+# Fixed before any mutation results. kind is replacement, drop, or entry probe.
+menu=[]
+def add(i,file,old,new,kind='replace'):
+ menu.append(dict(id=i,file='internal/lower/'+file,old=old,new=new,kind=kind))
+add('M01','generic.go','identicalTypes(l.checker, proven, representative)','!identicalTypes(l.checker, proven, representative)')
+add('M02','generic.go','\tl.instantiated = append(l.instantiated, proven)\n','','drop')
+add('M03','class.go','\tfor _, argument := range arguments {\n\t\tkey += "," + l.genericTypeKey(argument)\n\t}\n','','drop')
+add('M04','iteration.go','l.iterationFactoryReturnsThis(entry) && l.iteratorReceiverOverrides(modules, iterator, next, close)','l.iterationFactoryReturnsThis(entry) && !l.iteratorReceiverOverrides(modules, iterator, next, close)')
+add('M05','class_features.go','fresh := argument.Kind == ast.KindObjectLiteralExpression','fresh := argument.Kind != ast.KindObjectLiteralExpression')
+add('M06','class_static_private.go','name.Kind != ast.KindPrivateIdentifier','name.Kind == ast.KindPrivateIdentifier')
+add('M07','clock_generic_returns_t_01.go','len(result.Types()) != 2','len(result.Types()) < 2')
+add('M08','clock_generic_returns_t_01.go','len(l.checker.GetIndexInfosOfType(proven)) != 0','len(l.checker.GetIndexInfosOfType(proven)) < 0')
+add('M09','clock_generic_returns_t_01.go','len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) != 0','len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) < 0')
+add('M10','clock_generic_returns_t_01.go','part.Flags()&checker.TypeFlagsObject != 0 && part.ObjectFlags()&checker.ObjectFlagsReference != 0 && len(l.checker.GetTypeArguments(part)) != 0','len(l.checker.GetTypeArguments(part)) != 0')
+add('M11','lower.go','\treadiness(lowering.result)\n','','drop')
+add('M12','readiness.go','node.AsVariableDeclaration().ExclamationToken != nil','node.AsVariableDeclaration().ExclamationToken == nil')
+add('M13','object.go','\tproperty.Readiness = sourceExpression(node)\n','','drop')
+add('M14','class.go','field.Declarations[0].Kind == ast.KindPropertyDeclaration','field.Declarations[0].Kind != ast.KindPropertyDeclaration')
+add('M15','empty_literal.go','if l.checker.IsArrayType(proven) {','if !l.checker.IsArrayType(proven) {')
+add('M16','object.go','\t\t\tcontexts = append(contexts, l.impliedTarget(literal))\n','','drop')
+add('M17','entries_provenance.go','if l.enumerationBindingWritten(symbol) {','if !l.enumerationBindingWritten(symbol) {')
+add('M18','entries_provenance.go','\t\t\t\t\twritten = true','\t\t\t\t\twritten = false')
+add('M19','entries_records.go','\treturn written\n','\treturn !written\n')
+add('M20','entries_records.go','"an indexed mutation without a closed const literal origin"','"an indexed mutation without a proven allocation origin"')
+add('P1','lower.go','func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {','func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {\n if program == program { return nil, nil }','probe')
+add('P2','clock_generic_returns_t_01.go','func (l *lowering) clockGenericReturnsT01(result *checker.Type) (ir.Type, bool) {','func (l *lowering) clockGenericReturnsT01(result *checker.Type) (ir.Type, bool) {\n if result == result { return 0, false }','probe')

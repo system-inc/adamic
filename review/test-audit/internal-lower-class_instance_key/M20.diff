@@ -1,0 +1,11 @@
+diff --git a/internal/lower/entries_records.go b/internal/lower/entries_records.go
+index edc928f8..f90f1292 100644
+--- a/internal/lower/entries_records.go
++++ b/internal/lower/entries_records.go
+@@ -210,5 +210,5 @@ func (l *lowering) enumerationIndexedWriteRefusal(node *ast.Node) error {
+ 	if receiver == nil || !l.entriesStringIndexed(receiver) || l.entriesLiteralOrigin(receiver, 0) != nil {
+ 		return nil
+ 	}
+-	return l.notYet(node, "an indexed mutation without a closed const literal origin")
++	return l.notYet(node, "an indexed mutation without a proven allocation origin")
+ }

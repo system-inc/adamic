@@ -1,0 +1,13 @@
+diff --git a/internal/lower/clock_generic_returns_t_01.go b/internal/lower/clock_generic_returns_t_01.go
+index 7eda4a13..a86b2980 100644
+--- a/internal/lower/clock_generic_returns_t_01.go
++++ b/internal/lower/clock_generic_returns_t_01.go
+@@ -13,7 +13,7 @@ import (
+ // Undefined uses the existing missing object pointer; null is never admitted.
+ func (l *lowering) clockGenericReturnsT01(result *checker.Type) (ir.Type, bool) {
+ 	result = l.concrete(result)
+-	if result.Flags()&checker.TypeFlagsUnion == 0 || len(result.Types()) != 2 {
++	if result.Flags()&checker.TypeFlagsUnion == 0 || len(result.Types()) < 2 {
+ 		return 0, false
+ 	}
+ 	var object *checker.Type

@@ -1,0 +1,12 @@
+diff --git a/internal/lower/object.go b/internal/lower/object.go
+index 92c69d6d..375e9176 100644
+--- a/internal/lower/object.go
++++ b/internal/lower/object.go
+@@ -303,7 +303,6 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
+ 				// the enclosing array has an explicit union-of-arrays destination.
+ 				contexts = append(contexts, l.literalArrayElement(l.checker.GetContextualType(parent, checker.ContextFlagsNone)))
+ 			}
+-			contexts = append(contexts, l.impliedTarget(literal))
+ 			for _, contextual := range contexts {
+ 				if element := l.literalArrayElement(contextual); element != nil {
+ 					if held, known := l.kept(element); known && !slotless(held) {
