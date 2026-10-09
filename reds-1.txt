@@ -1,0 +1,4 @@
+run adamic-gate-phases-20261009T044412-95f074cf: void, 0 tests in 60 units, 1 failed, 1 units broken, 0 killed over budget
+BROKEN phase-wasi-internal-load-testdata-0-1-compile-10-unicode-ts: the stage broke (exited true, code 2, last output "cloud/setup.sh: line 40: /home/agent/.adamic-tools/setup.lock: Read-only file system")
+FAIL phase-catalog-4 (stage)
+    red: 0615623a13efb65b5a769ca9310b46bcdd4c0606 full gate, first failure at catalog/04 borrowed-array-move after 261.4 s, cancelled after first failure (catalog=261.4s; 0 units over 30 s (0 s, 0 on the burn-down, 0 drifted over); box load 0.6 on 5 cores at start, load 1.0 on 5 cores at first failure, load 1.0 on 5 cores at end), 0 fail, 0 pass

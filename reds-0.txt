@@ -1,0 +1,84 @@
+run adamic-gate-pilot-20261009T044413-e1e7fc6c: void, 12703 tests in 144 units, 8 failed, 45 units broken, 0 killed over budget
+BROKEN tests-01: no results (exited true, last output "cloud/setup.sh: line 40: /home/agent/.adamic-tools/setup.lock: Read-only file system")
+BROKEN tests-02: no results (exited true, last output "cloud/setup.sh: line 40: /home/agent/.adamic-tools/setup.lock: Read-only file system")
+BROKEN tests-03: no results (exited true, last output "cloud/setup.sh: line 40: /home/agent/.adamic-tools/setup.lock: Read-only file system")
+BROKEN tests-04: no results (exited true, last output "cloud/setup.sh: line 40: /home/agent/.adamic-tools/setup.lock: Read-only file system")
+BROKEN tests-07: no results (exited true, last output "cloud/setup.sh: line 40: /home/agent/.adamic-tools/setup.lock: Read-only file system")
+BROKEN tests-10: no results (exited true, last output "cloud/setup.sh: line 40: /home/agent/.adamic-tools/setup.lock: Read-only file system")
+BROKEN tests-16: no results (exited true, last output "cloud/setup.sh: line 40: /home/agent/.adamic-tools/setup.lock: Read-only file system")
+BROKEN tests-22: no results (exited true, last output "cloud/setup.sh: line 40: /home/agent/.adamic-tools/setup.lock: Read-only file system")
+BROKEN tests-24: no results (exited true, last output "cloud/setup.sh: line 40: /home/agent/.adamic-tools/setup.lock: Read-only file system")
+BROKEN tests-25: no results (exited true, last output "cloud/setup.sh: line 40: /home/agent/.adamic-tools/setup.lock: Read-only file system")
+BROKEN tests-31: no results (exited true, last output "cloud/setup.sh: line 40: /home/agent/.adamic-tools/setup.lock: Read-only file system")
+BROKEN tests-34: no results (exited true, last output "cloud/setup.sh: line 40: /home/agent/.adamic-tools/setup.lock: Read-only file system")
+BROKEN tests-35: no results (exited true, last output "cloud/setup.sh: line 40: /home/agent/.adamic-tools/setup.lock: Read-only file system")
+BROKEN tests-38: no results (exited true, last output "cloud/setup.sh: line 40: /home/agent/.adamic-tools/setup.lock: Read-only file system")
+BROKEN tests-40: no results (exited true, last output "cloud/setup.sh: line 40: /home/agent/.adamic-tools/setup.lock: Read-only file system")
+BROKEN tests-44: no results (exited true, last output "cloud/setup.sh: line 40: /home/agent/.adamic-tools/setup.lock: Read-only file system")
+BROKEN tests-47: no results (exited true, last output "cloud/setup.sh: line 40: /home/agent/.adamic-tools/setup.lock: Read-only file system")
+BROKEN tests-49: no results (exited true, last output "cloud/setup.sh: line 40: /home/agent/.adamic-tools/setup.lock: Read-only file system")
+BROKEN tests-50: no results (exited true, last output "cloud/setup.sh: line 40: /home/agent/.adamic-tools/setup.lock: Read-only file system")
+BROKEN tests-56: no results (exited true, last output "cloud/setup.sh: line 40: /home/agent/.adamic-tools/setup.lock: Read-only file system")
+BROKEN tests-59: no results (exited true, last output "cloud/setup.sh: line 40: /home/agent/.adamic-tools/setup.lock: Read-only file system")
+BROKEN tests-64: no results (exited true, last output "cloud/setup.sh: line 40: /home/agent/.adamic-tools/setup.lock: Read-only file system")
+BROKEN tests-67: no results (exited true, last output "cloud/setup.sh: line 40: /home/agent/.adamic-tools/setup.lock: Read-only file system")
+BROKEN tests-68: no results (exited true, last output "cloud/setup.sh: line 40: /home/agent/.adamic-tools/setup.lock: Read-only file system")
+BROKEN tests-70: no results (exited true, last output "cloud/setup.sh: line 40: /home/agent/.adamic-tools/setup.lock: Read-only file system")
+BROKEN tests-74: no results (exited true, last output "cloud/setup.sh: line 40: /home/agent/.adamic-tools/setup.lock: Read-only file system")
+BROKEN tests-85: no results (exited true, last output "cloud/setup.sh: line 40: /home/agent/.adamic-tools/setup.lock: Read-only file system")
+BROKEN tests-87: no results (exited true, last output "cloud/setup.sh: line 40: /home/agent/.adamic-tools/setup.lock: Read-only file system")
+BROKEN tests-90: no results (exited true, last output "cloud/setup.sh: line 40: /home/agent/.adamic-tools/setup.lock: Read-only file system")
+BROKEN tests-93: no results (exited true, last output "cloud/setup.sh: line 40: /home/agent/.adamic-tools/setup.lock: Read-only file system")
+BROKEN tests-95: no results (exited true, last output "cloud/setup.sh: line 40: /home/agent/.adamic-tools/setup.lock: Read-only file system")
+BROKEN tests-99: no results (exited true, last output "cloud/setup.sh: line 40: /home/agent/.adamic-tools/setup.lock: Read-only file system")
+BROKEN tests-101: no results (exited true, last output "cloud/setup.sh: line 40: /home/agent/.adamic-tools/setup.lock: Read-only file system")
+BROKEN tests-104: no results (exited true, last output "cloud/setup.sh: line 40: /home/agent/.adamic-tools/setup.lock: Read-only file system")
+BROKEN tests-105: no results (exited true, last output "cloud/setup.sh: line 40: /home/agent/.adamic-tools/setup.lock: Read-only file system")
+BROKEN tests-108: no results (exited true, last output "cloud/setup.sh: line 40: /home/agent/.adamic-tools/setup.lock: Read-only file system")
+BROKEN tests-109: no results (exited true, last output "cloud/setup.sh: line 40: /home/agent/.adamic-tools/setup.lock: Read-only file system")
+BROKEN tests-112: no results (exited true, last output "cloud/setup.sh: line 40: /home/agent/.adamic-tools/setup.lock: Read-only file system")
+BROKEN tests-123: no results (exited true, last output "cloud/setup.sh: line 40: /home/agent/.adamic-tools/setup.lock: Read-only file system")
+BROKEN tests-124: no results (exited true, last output "cloud/setup.sh: line 40: /home/agent/.adamic-tools/setup.lock: Read-only file system")
+BROKEN tests-125: no results (exited true, last output "cloud/setup.sh: line 40: /home/agent/.adamic-tools/setup.lock: Read-only file system")
+BROKEN tests-129: no results (exited true, last output "cloud/setup.sh: line 40: /home/agent/.adamic-tools/setup.lock: Read-only file system")
+BROKEN tests-132: no results (exited true, last output "cloud/setup.sh: line 40: /home/agent/.adamic-tools/setup.lock: Read-only file system")
+BROKEN tests-133: no results (exited true, last output "cloud/setup.sh: line 40: /home/agent/.adamic-tools/setup.lock: Read-only file system")
+BROKEN tests-141: no results (exited true, last output "cloud/setup.sh: line 40: /home/agent/.adamic-tools/setup.lock: Read-only file system")
+FAIL github.com/system-inc/adamic/stage1/cohere/estree TestDeepMutants_001 (tests-51)
+    deep_mutants_split_test.go:279: union: 3 mutants, 6 mode checks exactly once; planted disagreement caught only by TestDeepMutants_001
+    deep_mutants_split_test.go:279: TestDeepMutants_001 worker: signal: killed (deadline: context deadline exceeded)
+    deep_mutants_split_test.go:279: union: 3 mutants, 6 mode checks exactly once; planted disagreement caught only by TestDeepMutants_001
+    deep_mutants_split_test.go:279: build deep-mutants-lowered-v1 ad837bf8e251 miss 76.81
+FAIL github.com/system-inc/adamic/stage1/cohere/estree TestDeepMutants_002 (tests-51)
+    deep_mutants_split_test.go:280: union: 3 mutants, 6 mode checks exactly once; planted disagreement caught only by TestDeepMutants_001
+    deep_mutants_split_test.go:280: TestDeepMutants_002 worker: signal: killed (deadline: context deadline exceeded)
+    deep_mutants_split_test.go:280: union: 3 mutants, 6 mode checks exactly once; planted disagreement caught only by TestDeepMutants_001
+FAIL github.com/system-inc/adamic/stage1/cohere/json (package) (tests-51)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/json	231.480s
+    PASS
+    ok  	github.com/system-inc/adamic/stage1/cohere/json	0.760s
+FAIL github.com/system-inc/adamic/stage1/cohere/markdownblocks (package) (tests-51)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/markdownblocks	204.351s
+    PASS
+    ok  	github.com/system-inc/adamic/stage1/cohere/markdownblocks	7.646s
+FAIL github.com/system-inc/adamic/stage1/cohere/typeaware (package) (tests-51)
+    PASS
+    ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	0.008s
+    FAIL	github.com/system-inc/adamic/stage1/cohere/typeaware	92.664s
+FAIL github.com/system-inc/adamic/stage1/cohere/yaml (package) (tests-51)
+    PASS
+    ok  	github.com/system-inc/adamic/stage1/cohere/yaml	17.633s
+    FAIL	github.com/system-inc/adamic/stage1/cohere/yaml	90.064s
+FAIL github.com/system-inc/adamic/stage1/typescript/parser TestWholeMutantsRejectsSurvivor (tests-51)
+    whole_mutants_split_test.go:299: plant must fail exactly TestWholeMutants_002, got []: exit status 2
+    whole_mutants_test.go:35: build typescript-parser-oracle 25a220acf2b0 hit 2.67
+    whole_mutants_test.go:35: build typescript-parser-oracle 25a220acf2b0 hit 2.61
+    whole_mutants_test.go:35: build typescript-parser-oracle 25a220acf2b0 hit 2.68
+    whole_mutants_test.go:36: build typescript-parser-lowered 27854e1ffb82 hit 19.53
+    whole_mutants_test.go:36: build typescript-parser-lowered 27854e1ffb82 hit 19.59
+    whole_mutants_test.go:36: build typescript-parser-lowered 27854e1ffb82 hit 19.46
+    whole_mutants_test.go:36: build typescript-parser-native d32db19c7997 hit 21.68
+FAIL github.com/system-inc/adamic/stage1/cohere/typeaware TestVolumeAgreementAndMutants (tests-110)
+    volume_test.go:105: phase command stage0 1.774823s
+    typeaware_test.go:153: phase command checker 90.090564s
+    volume_test.go:106: checker: signal: killed
