@@ -1,0 +1,50 @@
+[
+  {
+    "path": "stage1/cohere/lint/helpers/next/testdata/calls.json",
+    "bytes": 17282,
+    "sha256": "b8b8c0028ceb97b991a1f3200332ae70cf5bb4bb94b3c8199ac88bd0a9e90989",
+    "compressed": "stage1__cohere__lint__helpers__next__testdata__calls.json.gz"
+  },
+  {
+    "path": "stage1/cohere/lint/helpers/next/testdata/counts.json",
+    "bytes": 212,
+    "sha256": "3d80da5bbd303cb06f19c47737b53c89e439c8ecf2daeebea8e9ff5de2589520",
+    "compressed": "stage1__cohere__lint__helpers__next__testdata__counts.json.gz"
+  },
+  {
+    "path": "stage1/cohere/lint/helpers/next/testdata/go-output.txt",
+    "bytes": 1116,
+    "sha256": "90c23fa436f855340223788a439dcf02aac1d0afe4aa4b06215677327bc7a871",
+    "compressed": "stage1__cohere__lint__helpers__next__testdata__go-output.txt.gz"
+  },
+  {
+    "path": "stage1/cohere/lint/helpers/property/testdata/tagged/calls.json",
+    "bytes": 172781,
+    "sha256": "de2077988403d5d1f9234f153c7e2b730e5be839535051171803af26dae5710c",
+    "compressed": "stage1__cohere__lint__helpers__property__testdata__tagged__calls.json.gz"
+  },
+  {
+    "path": "stage1/cohere/lint/helpers/property/testdata/tagged/capture-core.jsonl",
+    "bytes": 79796,
+    "sha256": "ee6d43807a45f0e443c7061c84427a6683c448591efa2c3186b094811818c5c9",
+    "compressed": "stage1__cohere__lint__helpers__property__testdata__tagged__capture-core.jsonl.gz"
+  },
+  {
+    "path": "stage1/cohere/lint/helpers/property/testdata/tagged/capture-property.jsonl",
+    "bytes": 13647,
+    "sha256": "b058984b76097b56db81606d87bedda919af2a0b4f58fd063453133b9cacffed",
+    "compressed": "stage1__cohere__lint__helpers__property__testdata__tagged__capture-property.jsonl.gz"
+  },
+  {
+    "path": "stage1/cohere/lint/helpers/property/testdata/tagged/capture-react.jsonl",
+    "bytes": 113286,
+    "sha256": "5a381254510853e318bfa43a2ba0a72dc0668f9fd0b440781c20d616500393c7",
+    "compressed": "stage1__cohere__lint__helpers__property__testdata__tagged__capture-react.jsonl.gz"
+  },
+  {
+    "path": "stage1/cohere/lint/helpers/property/testdata/tagged/capture-typescript.jsonl",
+    "bytes": 64141,
+    "sha256": "775de9553cd93ae335b175d72a44db2acc6c1747a212252a77a033eb9b03d721",
+    "compressed": "stage1__cohere__lint__helpers__property__testdata__tagged__capture-typescript.jsonl.gz"
+  }
+]

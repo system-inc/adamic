@@ -1,0 +1,782 @@
+[
+  {
+    "slug": "base-consistency-no-bare-throw",
+    "name": "base/consistency-no-bare-throw",
+    "typed": false,
+    "branch": "lint-rules/wave1-02-ready@179e22d22",
+    "mutant": {
+      "name": "AggregateError container reported",
+      "file": "rule.a",
+      "from": "'EvalError', 'URIError'",
+      "to": "'EvalError', 'URIError', 'AggregateError'"
+    }
+  },
+  {
+    "slug": "class-methods-use-this",
+    "name": "class-methods-use-this",
+    "typed": false,
+    "branch": "lint-rules/wave1-03-ready@2920f4dbf",
+    "mutant": {
+      "name": "empty_method_silenced",
+      "file": "rule.a",
+      "from": "member >= 0 && !used && this.included(member)",
+      "to": "member >= 0 && used && this.included(member)"
+    }
+  },
+  {
+    "slug": "constructor-super",
+    "name": "constructor-super",
+    "typed": false,
+    "branch": "constructor-super@bdb23f59",
+    "mutant": {
+      "name": "constructor-super-conditional-call-guaranteed",
+      "from": "return first === second ? first : 1;",
+      "to": "return first === second ? first : 2;"
+    }
+  },
+  {
+    "slug": "default-case-last",
+    "name": "default-case-last",
+    "typed": false,
+    "branch": "lint-rules/wave1-13-unparked@d308a2b46",
+    "mutant": {
+      "name": "default-case-last-semantic-mutant",
+      "file": "rule.a",
+      "from": "position !== clauses.length - 1",
+      "to": "position === clauses.length - 1"
+    }
+  },
+  {
+    "slug": "eslint-comments-require-description",
+    "name": "@eslint-community/eslint-comments/require-description",
+    "typed": false,
+    "branch": "codex/lint-wave1-05-clean@e4b228c4d",
+    "mutant": {
+      "name": "reason ignored",
+      "file": "rule.a",
+      "from": "if((pieces[1] ?? '').trim() !== '') { return; }",
+      "to": "if((pieces[1] ?? '').trim() === 'impossible-reason') { return; }"
+    }
+  },
+  {
+    "slug": "for-direction",
+    "name": "for-direction",
+    "typed": false,
+    "branch": "lint-rules/wave1-13-unparked@d308a2b46",
+    "mutant": {
+      "name": "for-direction-semantic-mutant",
+      "file": "rule.a",
+      "from": "return -1; // Decrement.",
+      "to": "return 1; // Decrement."
+    }
+  },
+  {
+    "slug": "grouped-accessor-pairs",
+    "name": "grouped-accessor-pairs",
+    "typed": false,
+    "branch": "lint-rules/wave1-02-ready@179e22d22",
+    "mutant": {
+      "name": "ignore duplicate getter exemption",
+      "file": "rule.a",
+      "from": "entry.getters !== 1 || entry.setters !== 1",
+      "to": "entry.getters === 0 || entry.setters !== 1"
+    }
+  },
+  {
+    "slug": "guard-for-in",
+    "name": "guard-for-in",
+    "typed": false,
+    "branch": "lint-rules/wave1-13-unparked@d308a2b46",
+    "mutant": {
+      "name": "guard-for-in-semantic-mutant",
+      "file": "rule.a",
+      "from": "if(!this.guarded(body))",
+      "to": "if(this.guarded(body))"
+    }
+  },
+  {
+    "slug": "next-google-font-display",
+    "name": "@next/next/google-font-display",
+    "typed": false,
+    "branch": "lint-helpers/rules-next@9325a8efd",
+    "mutant": {
+      "name": "next-google-font-display-discouraged-value-lost",
+      "from": "['auto', 'block', 'fallback'].includes(display)",
+      "to": "['auto', 'fallback'].includes(display)"
+    }
+  },
+  {
+    "slug": "next-no-assign-module-variable",
+    "name": "@next/next/no-assign-module-variable",
+    "typed": false,
+    "branch": "lint-rules/wave15-landing@7edc01d8e",
+    "mutant": {
+      "name": "module_name_ignored",
+      "file": "rule.a",
+      "from": "this.context.node(name).text === 'module'",
+      "to": "this.context.node(name).text === 'moduleNever'"
+    }
+  },
+  {
+    "slug": "next-no-document-import-in-page",
+    "name": "@next/next/no-document-import-in-page",
+    "typed": false,
+    "branch": "lint-helpers/ecmascript-nextjs@71ec7caf",
+    "mutant": {
+      "name": "module-equality",
+      "from": "specifier.text==='next/document'",
+      "to": "specifier.text==='next/head'"
+    }
+  },
+  {
+    "slug": "nexus-consistency-no-hand-rolled-delay",
+    "name": "nexus/consistency-no-hand-rolled-delay",
+    "typed": false,
+    "branch": "lint-rules/wave1-13-unparked@d308a2b46",
+    "mutant": {
+      "name": "delay-resolve-name-ignored",
+      "file": "rule.a",
+      "from": "this.resolves(callback, resolve)",
+      "to": "this.resolves(callback, 'wrongResolve')"
+    }
+  },
+  {
+    "slug": "nexus-import-require-module-alias",
+    "name": "nexus/import-require-module-alias",
+    "typed": false,
+    "branch": "lint-rules/wave1-14@10b2a42c0",
+    "mutant": {
+      "name": "namespace style silently accepted",
+      "file": "rule.a",
+      "from": "if(!expectsNamespace) {",
+      "to": "if(!expectsNamespace && source === '') {"
+    }
+  },
+  {
+    "slug": "nexus-import-require-node-namespace",
+    "name": "nexus/import-require-node-namespace",
+    "typed": false,
+    "branch": "lint-rules/wave15-landing@7edc01d8e",
+    "mutant": {
+      "name": "nexus-import-require-node-namespace_semantic",
+      "file": "rule.a",
+      "from": "'NodeFileSystem'",
+      "to": "'NodeWrongFileSystem'"
+    }
+  },
+  {
+    "slug": "no-async-promise-executor",
+    "name": "no-async-promise-executor",
+    "typed": false,
+    "branch": "lint-rules/wave1-03-ready@2920f4dbf",
+    "mutant": {
+      "name": "async_executor_ignored",
+      "file": "rule.a",
+      "from": ".text !== 'Promise'",
+      "to": ".text !== 'PromiseName'"
+    }
+  },
+  {
+    "slug": "no-case-declarations",
+    "name": "no-case-declarations",
+    "typed": false,
+    "branch": "lint-rules/wave1-03-ready@2920f4dbf",
+    "mutant": {
+      "name": "closing_brace_missing",
+      "file": "rule.a",
+      "from": "new Edit(closing, closing, ' }')",
+      "to": "new Edit(closing, closing, '')"
+    }
+  },
+  {
+    "slug": "no-compare-neg-zero",
+    "name": "no-compare-neg-zero",
+    "typed": false,
+    "branch": "lint-rules/wave1-03-ready@2920f4dbf",
+    "mutant": {
+      "name": "negative_zero_ignored",
+      "file": "rule.a",
+      "from": "literal.text === '0'",
+      "to": "literal.text === '1'"
+    }
+  },
+  {
+    "slug": "no-constructor-return",
+    "name": "no-constructor-return",
+    "typed": false,
+    "branch": "lint-rules/wave1-13-unparked@d308a2b46",
+    "mutant": {
+      "name": "no-constructor-return-semantic-mutant",
+      "file": "rule.a",
+      "from": "if(functionKinds.includes(ancestor.kind)) return false;",
+      "to": "if(functionKinds.includes(ancestor.kind)) return true;"
+    }
+  },
+  {
+    "slug": "no-delete-var",
+    "name": "no-delete-var",
+    "typed": false,
+    "branch": "lint-rules/wave1-13-unparked@d308a2b46",
+    "mutant": {
+      "name": "no-delete-var-semantic-mutant",
+      "file": "rule.a",
+      "from": "context.node(context.unwrap(operand)).kind",
+      "to": "context.node(operand).kind"
+    }
+  },
+  {
+    "slug": "no-eq-null",
+    "name": "no-eq-null",
+    "typed": false,
+    "branch": "lint-rules/wave1-13-unparked@d308a2b46",
+    "mutant": {
+      "name": "no-eq-null-semantic-mutant",
+      "file": "rule.a",
+      "from": "this.nullOperand(left) || this.nullOperand(right)",
+      "to": "this.nullOperand(left) && this.nullOperand(right)"
+    }
+  },
+  {
+    "slug": "no-irregular-whitespace",
+    "name": "no-irregular-whitespace",
+    "typed": false,
+    "branch": "lint-landing/no-irregular-whitespace-wave2-02@19795e9e",
+    "mutant": {
+      "name": "split irregular runs",
+      "from": "else if(start < 0) {",
+      "to": "else if(start >= 0) {\n                this.report(start, position);\n                start = position;\n            }\n            else if(start < 0) {"
+    }
+  },
+  {
+    "slug": "no-lone-blocks",
+    "name": "no-lone-blocks",
+    "typed": false,
+    "branch": "lint-rules/wave1-14@10b2a42c0",
+    "mutant": {
+      "file": "rule.a",
+      "name": "bound sole block exemption widened",
+      "from": "const only = above.kind === 'Block' && above.children.length === 1;",
+      "to": "const only = false;"
+    }
+  },
+  {
+    "slug": "no-lonely-if",
+    "name": "no-lonely-if",
+    "typed": false,
+    "branch": "lint-rules/wave1-14@10b2a42c0",
+    "mutant": {
+      "file": "rule.a",
+      "name": "BOM_is_not_whitespace",
+      "from": "this.context.source.slice(blockStart + 1, start).trim()",
+      "to": "this.context.source.slice(blockStart + 1, start).replaceAll('\\ufeff', 'x').trim()"
+    }
+  },
+  {
+    "slug": "no-loss-of-precision",
+    "name": "no-loss-of-precision",
+    "typed": false,
+    "branch": "lint-rules/wave1-14@10b2a42c0",
+    "mutant": {
+      "file": "rule.a",
+      "name": "normalized text hides lost precision",
+      "from": "const raw = this.context.source.slice(this.context.start(index), node.end);",
+      "to": "const raw = node.text;"
+    }
+  },
+  {
+    "slug": "no-multi-str",
+    "name": "no-multi-str",
+    "typed": false,
+    "branch": "lint-rules/wave15-landing@7edc01d8e",
+    "mutant": {
+      "name": "no-multi-str semantic mutant",
+      "file": "rule.a",
+      "from": "raw.includes('\\u2029')",
+      "to": "raw.includes('NEVER')"
+    }
+  },
+  {
+    "slug": "no-nonoctal-decimal-escape",
+    "name": "no-nonoctal-decimal-escape",
+    "typed": false,
+    "branch": "lint-rules/wave15-landing@7edc01d8e",
+    "mutant": {
+      "name": "no-nonoctal-decimal-escape semantic mutant",
+      "file": "rule.a",
+      "from": "previousNull = digit === '0'",
+      "to": "previousNull = true"
+    }
+  },
+  {
+    "slug": "no-octal",
+    "name": "no-octal",
+    "typed": false,
+    "branch": "lint-rules/wave15-landing@7edc01d8e",
+    "mutant": {
+      "name": "no-octal semantic mutant",
+      "file": "rule.a",
+      "from": "digit <= '9'",
+      "to": "digit <= '7'"
+    }
+  },
+  {
+    "slug": "no-this-before-super",
+    "name": "no-this-before-super",
+    "typed": false,
+    "branch": "no-this-before-super@fac54961e",
+    "mutant": {
+      "name": "no-this-before-super-violation-reversed",
+      "from": "if(!violated) { return; }",
+      "to": "if(violated) { return; }"
+    }
+  },
+  {
+    "slug": "no-useless-call",
+    "name": "no-useless-call",
+    "typed": false,
+    "branch": "no-useless-call@5efaf862f",
+    "mutant": {
+      "name": "no-useless-call-single-argument-lost",
+      "from": "if(node.list < 1)",
+      "to": "if(node.list < 2)"
+    }
+  },
+  {
+    "slug": "one-var",
+    "name": "one-var",
+    "typed": false,
+    "branch": "one-var@b5bca97f8",
+    "mutant": {
+      "name": "one-var-combine-message",
+      "file": "messages.a",
+      "from": "Combine this with the previous '${kind}' statement.",
+      "to": "Mutant combine '${kind}' statement."
+    }
+  },
+  {
+    "slug": "prefer-spread",
+    "name": "prefer-spread",
+    "typed": false,
+    "branch": "prefer-spread@f1490cf7c",
+    "mutant": {
+      "name": "prefer-spread-null-receiver-reversed",
+      "from": "if(!isNullOrUndefined(arena, thisArgument))",
+      "to": "if(isNullOrUndefined(arena, thisArgument))"
+    }
+  },
+  {
+    "slug": "react-default-props-match-prop-types",
+    "name": "react/default-props-match-prop-types",
+    "typed": false,
+    "branch": "react-default-props-match-prop-types@168f4f53e",
+    "mutant": {
+      "name": "required_defaults_allowed",
+      "from": "this.context.settings.read('allowrequireddefaults','false')==='true'",
+      "to": "true"
+    }
+  },
+  {
+    "slug": "react-forbid-dom-props",
+    "name": "react/forbid-dom-props",
+    "typed": false,
+    "branch": "react-forbid-dom-props@b5c8169df",
+    "mutant": {
+      "name": "forbidden-prop-restriction-inverted",
+      "from": "entry.restricted && !entry.tags.includes(tagName)",
+      "to": "entry.restricted && entry.tags.includes(tagName)"
+    }
+  },
+  {
+    "slug": "react-hooks-void-use-memo",
+    "name": "react-hooks/void-use-memo",
+    "typed": false,
+    "branch": "react-hooks-void-use-memo@b2e5f9a65",
+    "mutant": {
+      "name": "memo_return_detection_inverted",
+      "from": "if(!this.nonVoid(callback))",
+      "to": "if(this.nonVoid(callback))"
+    }
+  },
+  {
+    "slug": "react-jsx-no-duplicate-props",
+    "name": "react/jsx-no-duplicate-props",
+    "typed": false,
+    "branch": "react-jsx-no-duplicate-props@e98e9024e",
+    "mutant": {
+      "name": "duplicate-props-earlier-inverted",
+      "from": "ctx.report(earlier,'react/jsx-no-duplicate-props'",
+      "to": "ctx.report(ni,'react/jsx-no-duplicate-props'"
+    }
+  },
+  {
+    "slug": "react-jsx-no-script-url",
+    "name": "react/jsx-no-script-url",
+    "typed": false,
+    "branch": "react-jsx-no-script-url@65acae9f0",
+    "mutant": {
+      "name": "script-url-protocol-inverted",
+      "from": "if(code!==wanted) {return false;}",
+      "to": "if(code===wanted) {return false;}"
+    }
+  },
+  {
+    "slug": "react-jsx-no-target-blank",
+    "name": "react/jsx-no-target-blank",
+    "typed": false,
+    "branch": "react-jsx-no-target-blank@24f173097",
+    "mutant": {
+      "name": "target-blank-external-inverted",
+      "from": "if (text.startsWith('//')) { return true; }",
+      "to": "if (text.startsWith('//')) { return false; }"
+    }
+  },
+  {
+    "slug": "react-no-access-state-in-setstate",
+    "name": "react/no-access-state-in-setstate",
+    "typed": false,
+    "branch": "react-no-access-state-in-setstate@fb0387acb",
+    "mutant": {
+      "name": "state_read_receiver_inverted",
+      "from": "if(this.kind(this.child(index,0))!=='ThisKeyword'){return;}",
+      "to": "if(this.kind(this.child(index,0))==='ThisKeyword'){return;}"
+    }
+  },
+  {
+    "slug": "react-no-danger",
+    "name": "react/no-danger",
+    "typed": false,
+    "branch": "react-no-danger@32f795310",
+    "mutant": {
+      "name": "dangerous-prop-inverted",
+      "from": "ctx.node(ni).text!=='dangerouslySetInnerHTML'",
+      "to": "ctx.node(ni).text==='dangerouslySetInnerHTML'"
+    }
+  },
+  {
+    "slug": "react-no-set-state",
+    "name": "react/no-set-state",
+    "typed": false,
+    "branch": "react-no-set-state@f123fc6b2",
+    "mutant": {
+      "name": "set_state_name_inverted",
+      "from": "if(text!=='setState')",
+      "to": "if(text==='setState')"
+    }
+  },
+  {
+    "slug": "react-no-unknown-property",
+    "name": "react/no-unknown-property",
+    "typed": false,
+    "branch": "react-no-unknown-property@811208db0",
+    "mutant": {
+      "name": "unknown-property-canonical-inverted",
+      "from": "if (canonical === name) { return; }",
+      "to": "if (canonical !== name) { return; }"
+    }
+  },
+  {
+    "slug": "react-no-unused-state",
+    "name": "react/no-unused-state",
+    "typed": false,
+    "branch": "react-no-unused-state@9b9f4b62c",
+    "mutant": {
+      "name": "unused_state_read_inverted",
+      "from": "if(info.used.includes(field.name)){continue;}",
+      "to": "if(!info.used.includes(field.name)){continue;}"
+    }
+  },
+  {
+    "slug": "structure-network-no-invalidate-cache-literal-key",
+    "name": "structure/network-no-invalidate-cache-literal-key",
+    "typed": false,
+    "branch": "lint-rules/wave15-landing@7edc01d8e",
+    "mutant": {
+      "name": "structure-network-no-invalidate-cache-literal-key_semantic",
+      "file": "rule.a",
+      "from": ".text !== 'invalidate'",
+      "to": ".text !== 'invalidateNever'"
+    }
+  },
+  {
+    "slug": "structure-network-no-string-literal-query",
+    "name": "structure/network-no-string-literal-query",
+    "typed": false,
+    "branch": "lint-rules/wave15-landing@7edc01d8e",
+    "mutant": {
+      "name": "structure-network-no-string-literal-query_semantic",
+      "file": "rule.a",
+      "from": "this.binding(unwrapped, node.text)",
+      "to": "-1"
+    }
+  },
+  {
+    "slug": "structure-next-require-api-parameter-name",
+    "name": "structure/next-require-api-parameter-name",
+    "typed": false,
+    "branch": "structure-next-require-api-parameter-name@a0c743509",
+    "mutant": {
+      "name": "next-search-parameters-repair-wrong",
+      "from": "'fix','searchParams',''",
+      "to": "'fix','params',''"
+    }
+  },
+  {
+    "slug": "structure-react-hook-require-effect-comment",
+    "name": "structure/react-hook-require-effect-comment",
+    "typed": false,
+    "branch": "lint-helpers/ecmascript-comments@967d8feaf",
+    "mutant": {
+      "name": "effect-comment-claim-inverted",
+      "from": "name==='useEffect'",
+      "to": "name!=='useEffect'"
+    }
+  },
+  {
+    "slug": "structure-react-hook-require-result-naming",
+    "name": "structure/react-hook-require-result-naming",
+    "typed": false,
+    "branch": "structure-react-hook-require-result-naming@406cf23be",
+    "mutant": {
+      "name": "hook-single-invocation-gate-reversed",
+      "from": "if((this.counts.get(hook) ?? 0) !== 1)",
+      "to": "if((this.counts.get(hook) ?? 0) === 1)"
+    }
+  },
+  {
+    "slug": "structure-storage-no-direct-local-storage",
+    "name": "structure/storage-no-direct-local-storage",
+    "typed": false,
+    "branch": "structure-storage-no-direct-local-storage@3f5515631",
+    "mutant": {
+      "name": "storage-window-receiver-wrong",
+      "from": "this.context.node(receiver).text==='window'",
+      "to": "this.context.node(receiver).text==='globalThis'"
+    }
+  },
+  {
+    "slug": "structure-tailwind-no-physical-direction",
+    "name": "structure/tailwind-no-physical-direction",
+    "typed": false,
+    "branch": "codex/lint-wave1-05-clean@e4b228c4d",
+    "mutant": {
+      "name": "rtl exemption removed",
+      "file": "rule.a",
+      "from": "parts.includes('rtl') || parts.includes('ltr')",
+      "to": "parts.includes('ltr')"
+    }
+  },
+  {
+    "slug": "typescript-default-param-last",
+    "name": "@typescript-eslint/default-param-last",
+    "typed": false,
+    "branch": "lint-rules/wave15-landing@7edc01d8e",
+    "mutant": {
+      "name": "optional_parameter_ignored",
+      "file": "rule.a",
+      "from": "this.defaulted(parameter) || this.flag(parameter, 'QuestionToken')",
+      "to": "this.defaulted(parameter) || this.flag(parameter, 'NeverQuestion')"
+    }
+  },
+  {
+    "slug": "typescript-eslint-no-confusing-non-null-assertion",
+    "name": "@typescript-eslint/no-confusing-non-null-assertion",
+    "typed": false,
+    "branch": "lint-rules/wave1-14@10b2a42c0",
+    "mutant": {
+      "file": "rule.a",
+      "name": "wrap close parenthesis changed",
+      "from": "end, end, ')'",
+      "to": "end, end, ']'"
+    }
+  },
+  {
+    "slug": "typescript-eslint-no-duplicate-enum-values",
+    "name": "@typescript-eslint/no-duplicate-enum-values",
+    "typed": false,
+    "branch": "lint-rules/wave1-14@10b2a42c0",
+    "mutant": {
+      "file": "rule.a",
+      "name": "numeric duplicate anchor advances",
+      "from": "earlier === undefined || value.kind === 'StringLiteral'",
+      "to": "true"
+    }
+  },
+  {
+    "slug": "typescript-eslint-no-dynamic-delete",
+    "name": "@typescript-eslint/no-dynamic-delete",
+    "typed": false,
+    "branch": "lint-rules/wave1-14@10b2a42c0",
+    "mutant": {
+      "file": "rule.a",
+      "name": "unary plus accepted as static key",
+      "from": "node.operator === 'MinusToken'",
+      "to": "(node.operator === 'MinusToken' || node.operator === 'PlusToken')"
+    }
+  },
+  {
+    "slug": "typescript-eslint-no-extra-non-null-assertion",
+    "name": "@typescript-eslint/no-extra-non-null-assertion",
+    "typed": false,
+    "branch": "lint-rules/wave1-14@10b2a42c0",
+    "mutant": {
+      "file": "rule.a",
+      "name": "extra bang deleted from wrong position",
+      "from": "node.end - 1",
+      "to": "node.end - 2"
+    }
+  },
+  {
+    "slug": "typescript-eslint-no-misused-new",
+    "name": "@typescript-eslint/no-misused-new",
+    "typed": false,
+    "branch": "lint-rules/wave1-14@10b2a42c0",
+    "mutant": {
+      "file": "rule.a",
+      "name": "getter named new silently skipped",
+      "from": "kind !== 'MethodDeclaration' && kind !== 'GetAccessor'",
+      "to": "kind !== 'MethodDeclaration'"
+    }
+  },
+  {
+    "slug": "typescript-eslint-no-unnecessary-parameter-property-assignment",
+    "name": "@typescript-eslint/no-unnecessary-parameter-property-assignment",
+    "typed": false,
+    "branch": "lint-rules/wave1-14@10b2a42c0",
+    "mutant": {
+      "file": "rule.a",
+      "name": "trailing semicolon retained",
+      "from": "node.end + 1",
+      "to": "node.end"
+    }
+  },
+  {
+    "slug": "typescript-no-explicit-any",
+    "name": "@typescript-eslint/no-explicit-any",
+    "typed": false,
+    "branch": "no-explicit-any@35a930bbf7",
+    "mutant": {
+      "name": "typescript-no-explicit-any-message",
+      "file": "rule.a",
+      "from": "'unexpectedAny', messageNoExplicitAny",
+      "to": "'unexpectedAny', messageNoExplicitAny + '!'"
+    }
+  },
+  {
+    "slug": "typescript-no-non-null-asserted-optional-chain",
+    "name": "@typescript-eslint/no-non-null-asserted-optional-chain",
+    "typed": false,
+    "branch": "codex/lint-wave1-05-clean@e4b228c4d",
+    "mutant": {
+      "name": "parenthesized chain missed",
+      "file": "rule.a",
+      "from": "this.optional(this.context.unwrap(operand))",
+      "to": "this.optional(operand)"
+    }
+  },
+  {
+    "slug": "typescript-no-non-null-assertion",
+    "name": "@typescript-eslint/no-non-null-assertion",
+    "typed": false,
+    "branch": "codex/lint-wave1-05-clean@e4b228c4d",
+    "mutant": {
+      "name": "postfix assignment suggestion",
+      "file": "rule.a",
+      "from": "'PlusPlusToken', 'MinusMinusToken'",
+      "to": "'MinusMinusToken'"
+    }
+  },
+  {
+    "slug": "typescript-no-restricted-types",
+    "name": "@typescript-eslint/no-restricted-types",
+    "typed": false,
+    "branch": "lint-rules/wave1-02-ready@179e22d22",
+    "mutant": {
+      "name": "allowed restricted type ban reported",
+      "file": "rule.a",
+      "from": "ban === undefined || ban.allowed",
+      "to": "ban === undefined"
+    }
+  },
+  {
+    "slug": "typescript-no-unused-expressions",
+    "name": "@typescript-eslint/no-unused-expressions",
+    "typed": false,
+    "branch": "lint-rules/wave1-03-ready@2920f4dbf",
+    "mutant": {
+      "name": "identifier_expression_ignored",
+      "file": "rule.a",
+      "from": "case 'NullKeyword': case 'Identifier':",
+      "to": "case 'NullKeyword':"
+    }
+  },
+  {
+    "slug": "typescript-prefer-function-type",
+    "name": "@typescript-eslint/prefer-function-type",
+    "typed": false,
+    "branch": "codex/lint-wave1-05-clean@e4b228c4d",
+    "mutant": {
+      "name": "array function type unwrapped",
+      "file": "rule.a",
+      "from": "['UnionType', 'IntersectionType', 'ArrayType']",
+      "to": "['UnionType', 'IntersectionType']"
+    }
+  },
+  {
+    "slug": "typescript-prefer-namespace-keyword",
+    "name": "@typescript-eslint/prefer-namespace-keyword",
+    "typed": false,
+    "branch": "codex/lint-wave1-05-clean@e4b228c4d",
+    "mutant": {
+      "name": "export report span misplaced",
+      "file": "rule.a",
+      "from": "item.kind === 'ExportKeyword'",
+      "to": "item.kind === 'DeclareKeyword'"
+    }
+  },
+  {
+    "slug": "typescript-prefer-reduce-type-parameter",
+    "name": "@typescript-eslint/prefer-reduce-type-parameter",
+    "typed": true,
+    "branch": "codex/lint-land-wave-23@25bccfc59",
+    "mutant": {
+      "name": "@typescript-eslint/prefer-reduce-type-parameter verdict omitted",
+      "from": "this.engine.visit(node, index);",
+      "to": "if(index < 0) { this.engine.visit(node, index); }"
+    }
+  },
+  {
+    "slug": "typescript-triple-slash-reference",
+    "name": "@typescript-eslint/triple-slash-reference",
+    "typed": false,
+    "branch": "codex/lint-wave1-05-clean@e4b228c4d",
+    "mutant": {
+      "name": "first repeated directive kept",
+      "file": "rule.a",
+      "from": "pending.set(value, comment)",
+      "to": "if(!pending.has(value)) { pending.set(value, comment); }"
+    }
+  },
+  {
+    "slug": "typescript-unified-signatures",
+    "name": "@typescript-eslint/unified-signatures",
+    "typed": false,
+    "branch": "lint-rules/wave1-03-ready@2920f4dbf",
+    "mutant": {
+      "name": "parameter_difference_silenced",
+      "file": "rule.a",
+      "from": "'singleParameterDifference'",
+      "to": "'allParametersAreSame'"
+    }
+  },
+  {
+    "slug": "yoda",
+    "name": "yoda",
+    "typed": false,
+    "branch": "yoda@0eb2a004",
+    "mutant": {
+      "name": "ignore-yoda-range-exemption",
+      "from": "this.exceptRange && this.range(parent)",
+      "to": "false"
+    }
+  }
+]

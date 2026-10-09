@@ -1,0 +1,33 @@
+{
+  "sources": [
+    "const a=1;\u00a0const b=2;",
+    "let a;\u00a0let b",
+    "var a;\u00a0var b;",
+    "let a;\u2002let b;",
+    "let a;\ufefflet b;",
+    "\ufeffconst \u00e9 = 1;\u00a0\u2002\u2003\nconst x =\u000b\u000b1;\u2028\u2029"
+  ],
+  "results": [
+    {
+      "backend": "Go",
+      "exit": 0,
+      "command": [
+        "/tmp/wave2-07-repro/oracle",
+        "--manifest",
+        "/tmp/wave2-07-repro/fixer-manifest"
+      ]
+    },
+    {
+      "backend": "Node",
+      "exit": 0,
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "/workspace/scratch/lint-batch-wave2-07/oracle/node.mjs",
+        "/workspace/scratch/lint-batch-wave2-07/stage1/cohere/lint/main.ts",
+        "--manifest",
+        "/tmp/wave2-07-repro/fixer-manifest"
+      ]
+    }
+  ]
+}

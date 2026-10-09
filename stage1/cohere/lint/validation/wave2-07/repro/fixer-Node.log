@@ -1,0 +1,214 @@
+case 0
+/tmp/wave2-07-repro/fixer-0.ts:1:13
+  one-var  Combine this with the previous 'const' statement. This declares variables in a second statement where the scope already has one. Reading the declarations of a scope means finding every statement that declares, and one list per scope makes that a single place to look.
+
+range 12 22 combine fix	,		12 12
+fix-edit	12 17	
+fixed	const a=1;\u00a0, b=2;
+case 1
+skipped @typescript-eslint/no-array-delete no program
+skipped @typescript-eslint/no-redundant-type-constituents no program
+skipped @typescript-eslint/no-unnecessary-boolean-literal-compare no program
+skipped @typescript-eslint/prefer-find no program
+skipped @typescript-eslint/prefer-reduce-type-parameter no program
+skipped base/correctness-require-verify-optional-parity no program
+skipped no-throw-literal no program
+/tmp/wave2-07-repro/fixer-0.ts:1:7
+  nexus/consistency-no-ambiguous-identifier  Single-letter identifier "a" is not descriptive enough. The name is read everywhere it is used and declared only once, so the saving is at the declaration and the cost is at every call site.
+
+range 6 7 noSingleLetter 			6 7
+/tmp/wave2-07-repro/fixer-0.ts:1:11
+  no-irregular-whitespace  This is an irregular whitespace character, not a space or a tab. It is invisible in every editor and in every diff, so the code reads as if it holds an ordinary space while the parser sees something else. That is how a no-break space between two tokens turns a correct-looking line into a syntax error nobody can see, and how two identical-looking names become different bindings. Replace it with an ordinary space, or write it as an escape if the character is genuinely wanted.
+
+range 10 12 noIrregularWhitespace 			10 12
+/tmp/wave2-07-repro/fixer-0.ts:1:13
+  one-var  Combine this with the previous 'const' statement. This declares variables in a second statement where the scope already has one. Reading the declarations of a scope means finding every statement that declares, and one list per scope makes that a single place to look.
+
+range 12 22 combine fix	,		12 12
+fix-edit	12 17	
+/tmp/wave2-07-repro/fixer-0.ts:1:19
+  nexus/consistency-no-ambiguous-identifier  Single-letter identifier "b" is not descriptive enough. The name is read everywhere it is used and declared only once, so the saving is at the declaration and the cost is at every call site.
+
+range 18 19 noSingleLetter 			18 19
+fixed	const a=1;\u00a0, b=2;
+case 2
+/tmp/wave2-07-repro/fixer-1.ts:1:9
+  one-var  Combine this with the previous 'let' statement. This declares variables in a second statement where the scope already has one. Reading the declarations of a scope means finding every statement that declares, and one list per scope makes that a single place to look.
+
+range 8 13 combine fix	,		8 8
+fix-edit	8 11	
+fixed	let a;\u00a0, b
+case 3
+skipped @typescript-eslint/no-array-delete no program
+skipped @typescript-eslint/no-redundant-type-constituents no program
+skipped @typescript-eslint/no-unnecessary-boolean-literal-compare no program
+skipped @typescript-eslint/prefer-find no program
+skipped @typescript-eslint/prefer-reduce-type-parameter no program
+skipped base/correctness-require-verify-optional-parity no program
+skipped no-throw-literal no program
+/tmp/wave2-07-repro/fixer-1.ts:1:5
+  nexus/consistency-no-ambiguous-identifier  Single-letter identifier "a" is not descriptive enough. The name is read everywhere it is used and declared only once, so the saving is at the declaration and the cost is at every call site.
+
+range 4 5 noSingleLetter 			4 5
+/tmp/wave2-07-repro/fixer-1.ts:1:7
+  no-irregular-whitespace  This is an irregular whitespace character, not a space or a tab. It is invisible in every editor and in every diff, so the code reads as if it holds an ordinary space while the parser sees something else. That is how a no-break space between two tokens turns a correct-looking line into a syntax error nobody can see, and how two identical-looking names become different bindings. Replace it with an ordinary space, or write it as an escape if the character is genuinely wanted.
+
+range 6 8 noIrregularWhitespace 			6 8
+/tmp/wave2-07-repro/fixer-1.ts:1:9
+  one-var  Combine this with the previous 'let' statement. This declares variables in a second statement where the scope already has one. Reading the declarations of a scope means finding every statement that declares, and one list per scope makes that a single place to look.
+
+range 8 13 combine fix	,		8 8
+fix-edit	8 11	
+/tmp/wave2-07-repro/fixer-1.ts:1:13
+  nexus/consistency-no-ambiguous-identifier  Single-letter identifier "b" is not descriptive enough. The name is read everywhere it is used and declared only once, so the saving is at the declaration and the cost is at every call site.
+
+range 12 13 noSingleLetter 			12 13
+fixed	let a;\u00a0, b
+case 4
+/tmp/wave2-07-repro/fixer-2.ts:1:9
+  one-var  Combine this with the previous 'var' statement. This declares variables in a second statement where the scope already has one. Reading the declarations of a scope means finding every statement that declares, and one list per scope makes that a single place to look.
+
+range 8 14 combine fix	,		8 8
+fix-edit	8 11	
+fixed	var a;\u00a0, b;
+case 5
+skipped @typescript-eslint/no-array-delete no program
+skipped @typescript-eslint/no-redundant-type-constituents no program
+skipped @typescript-eslint/no-unnecessary-boolean-literal-compare no program
+skipped @typescript-eslint/prefer-find no program
+skipped @typescript-eslint/prefer-reduce-type-parameter no program
+skipped base/correctness-require-verify-optional-parity no program
+skipped no-throw-literal no program
+/tmp/wave2-07-repro/fixer-2.ts:1:1
+  no-var  This is a `var` declaration, which is function-scoped and hoisted rather than block-scoped. The binding exists from the top of the enclosing function, so it is readable above the line that declares it and it leaks out of the block it looks like it belongs to: a `var` inside an `if` is still in scope after the `if` ends. A `var` in a loop is one binding shared by every iteration, which is why a closure created in the loop sees the final value rather than its own. Use `let`, or `const` when nothing reassigns it.
+
+range 0 5 unexpectedVar 			0 5
+/tmp/wave2-07-repro/fixer-2.ts:1:5
+  nexus/consistency-no-ambiguous-identifier  Single-letter identifier "a" is not descriptive enough. The name is read everywhere it is used and declared only once, so the saving is at the declaration and the cost is at every call site.
+
+range 4 5 noSingleLetter 			4 5
+/tmp/wave2-07-repro/fixer-2.ts:1:7
+  no-irregular-whitespace  This is an irregular whitespace character, not a space or a tab. It is invisible in every editor and in every diff, so the code reads as if it holds an ordinary space while the parser sees something else. That is how a no-break space between two tokens turns a correct-looking line into a syntax error nobody can see, and how two identical-looking names become different bindings. Replace it with an ordinary space, or write it as an escape if the character is genuinely wanted.
+
+range 6 8 noIrregularWhitespace 			6 8
+/tmp/wave2-07-repro/fixer-2.ts:1:9
+  one-var  Combine this with the previous 'var' statement. This declares variables in a second statement where the scope already has one. Reading the declarations of a scope means finding every statement that declares, and one list per scope makes that a single place to look.
+
+range 8 14 combine fix	,		8 8
+fix-edit	8 11	
+/tmp/wave2-07-repro/fixer-2.ts:1:9
+  no-var  This is a `var` declaration, which is function-scoped and hoisted rather than block-scoped. The binding exists from the top of the enclosing function, so it is readable above the line that declares it and it leaks out of the block it looks like it belongs to: a `var` inside an `if` is still in scope after the `if` ends. A `var` in a loop is one binding shared by every iteration, which is why a closure created in the loop sees the final value rather than its own. Use `let`, or `const` when nothing reassigns it.
+
+range 8 13 unexpectedVar 			8 13
+/tmp/wave2-07-repro/fixer-2.ts:1:13
+  nexus/consistency-no-ambiguous-identifier  Single-letter identifier "b" is not descriptive enough. The name is read everywhere it is used and declared only once, so the saving is at the declaration and the cost is at every call site.
+
+range 12 13 noSingleLetter 			12 13
+fixed	var a;\u00a0, b;
+case 6
+/tmp/wave2-07-repro/fixer-3.ts:1:10
+  one-var  Combine this with the previous 'let' statement. This declares variables in a second statement where the scope already has one. Reading the declarations of a scope means finding every statement that declares, and one list per scope makes that a single place to look.
+
+range 9 15 combine fix	,		9 9
+fix-edit	9 12	
+fixed	let a;\u2002, b;
+case 7
+skipped @typescript-eslint/no-array-delete no program
+skipped @typescript-eslint/no-redundant-type-constituents no program
+skipped @typescript-eslint/no-unnecessary-boolean-literal-compare no program
+skipped @typescript-eslint/prefer-find no program
+skipped @typescript-eslint/prefer-reduce-type-parameter no program
+skipped base/correctness-require-verify-optional-parity no program
+skipped no-throw-literal no program
+/tmp/wave2-07-repro/fixer-3.ts:1:5
+  nexus/consistency-no-ambiguous-identifier  Single-letter identifier "a" is not descriptive enough. The name is read everywhere it is used and declared only once, so the saving is at the declaration and the cost is at every call site.
+
+range 4 5 noSingleLetter 			4 5
+/tmp/wave2-07-repro/fixer-3.ts:1:7
+  no-irregular-whitespace  This is an irregular whitespace character, not a space or a tab. It is invisible in every editor and in every diff, so the code reads as if it holds an ordinary space while the parser sees something else. That is how a no-break space between two tokens turns a correct-looking line into a syntax error nobody can see, and how two identical-looking names become different bindings. Replace it with an ordinary space, or write it as an escape if the character is genuinely wanted.
+
+range 6 9 noIrregularWhitespace 			6 9
+/tmp/wave2-07-repro/fixer-3.ts:1:10
+  one-var  Combine this with the previous 'let' statement. This declares variables in a second statement where the scope already has one. Reading the declarations of a scope means finding every statement that declares, and one list per scope makes that a single place to look.
+
+range 9 15 combine fix	,		9 9
+fix-edit	9 12	
+/tmp/wave2-07-repro/fixer-3.ts:1:14
+  nexus/consistency-no-ambiguous-identifier  Single-letter identifier "b" is not descriptive enough. The name is read everywhere it is used and declared only once, so the saving is at the declaration and the cost is at every call site.
+
+range 13 14 noSingleLetter 			13 14
+fixed	let a;\u2002, b;
+case 8
+/tmp/wave2-07-repro/fixer-4.ts:1:10
+  one-var  Combine this with the previous 'let' statement. This declares variables in a second statement where the scope already has one. Reading the declarations of a scope means finding every statement that declares, and one list per scope makes that a single place to look.
+
+range 9 15 combine fix	,		9 9
+fix-edit	9 12	
+fixed	let a;\ufeff, b;
+case 9
+skipped @typescript-eslint/no-array-delete no program
+skipped @typescript-eslint/no-redundant-type-constituents no program
+skipped @typescript-eslint/no-unnecessary-boolean-literal-compare no program
+skipped @typescript-eslint/prefer-find no program
+skipped @typescript-eslint/prefer-reduce-type-parameter no program
+skipped base/correctness-require-verify-optional-parity no program
+skipped no-throw-literal no program
+/tmp/wave2-07-repro/fixer-4.ts:1:5
+  nexus/consistency-no-ambiguous-identifier  Single-letter identifier "a" is not descriptive enough. The name is read everywhere it is used and declared only once, so the saving is at the declaration and the cost is at every call site.
+
+range 4 5 noSingleLetter 			4 5
+/tmp/wave2-07-repro/fixer-4.ts:1:7
+  no-irregular-whitespace  This is an irregular whitespace character, not a space or a tab. It is invisible in every editor and in every diff, so the code reads as if it holds an ordinary space while the parser sees something else. That is how a no-break space between two tokens turns a correct-looking line into a syntax error nobody can see, and how two identical-looking names become different bindings. Replace it with an ordinary space, or write it as an escape if the character is genuinely wanted.
+
+range 6 9 noIrregularWhitespace 			6 9
+/tmp/wave2-07-repro/fixer-4.ts:1:10
+  one-var  Combine this with the previous 'let' statement. This declares variables in a second statement where the scope already has one. Reading the declarations of a scope means finding every statement that declares, and one list per scope makes that a single place to look.
+
+range 9 15 combine fix	,		9 9
+fix-edit	9 12	
+/tmp/wave2-07-repro/fixer-4.ts:1:14
+  nexus/consistency-no-ambiguous-identifier  Single-letter identifier "b" is not descriptive enough. The name is read everywhere it is used and declared only once, so the saving is at the declaration and the cost is at every call site.
+
+range 13 14 noSingleLetter 			13 14
+fixed	let a;\ufeff, b;
+case 10
+/tmp/wave2-07-repro/fixer-5.ts:2:1
+  one-var  Combine this with the previous 'const' statement. This declares variables in a second statement where the scope already has one. Reading the declarations of a scope means finding every statement that declares, and one list per scope makes that a single place to look.
+
+range 25 38 combine fix	,		24 24
+fix-edit	25 30	
+fixed	\ufeffconst \u00e9 = 1;\u00a0\u2002\u2003,\u000a x =\u000b\u000b1;\u2028\u2029
+case 11
+skipped @typescript-eslint/no-array-delete no program
+skipped @typescript-eslint/no-redundant-type-constituents no program
+skipped @typescript-eslint/no-unnecessary-boolean-literal-compare no program
+skipped @typescript-eslint/prefer-find no program
+skipped @typescript-eslint/prefer-reduce-type-parameter no program
+skipped base/correctness-require-verify-optional-parity no program
+skipped no-throw-literal no program
+/tmp/wave2-07-repro/fixer-5.ts:1:1
+  unicode-bom  This file starts with a byte order mark. In a project that is already UTF-8 everywhere the mark carries no information and is invisible in an editor, while tools that read the first bytes literally see it: a shell script stops being executable, a concatenated bundle gains a stray character mid-file, and a diff shows a change on a line nobody edited.
+
+range 0 0 unexpected fix			0 3
+/tmp/wave2-07-repro/fixer-5.ts:1:17
+  no-irregular-whitespace  This is an irregular whitespace character, not a space or a tab. It is invisible in every editor and in every diff, so the code reads as if it holds an ordinary space while the parser sees something else. That is how a no-break space between two tokens turns a correct-looking line into a syntax error nobody can see, and how two identical-looking names become different bindings. Replace it with an ordinary space, or write it as an escape if the character is genuinely wanted.
+
+range 16 24 noIrregularWhitespace 			16 24
+/tmp/wave2-07-repro/fixer-5.ts:2:1
+  one-var  Combine this with the previous 'const' statement. This declares variables in a second statement where the scope already has one. Reading the declarations of a scope means finding every statement that declares, and one list per scope makes that a single place to look.
+
+range 25 38 combine fix	,		24 24
+fix-edit	25 30	
+/tmp/wave2-07-repro/fixer-5.ts:2:10
+  no-irregular-whitespace  This is an irregular whitespace character, not a space or a tab. It is invisible in every editor and in every diff, so the code reads as if it holds an ordinary space while the parser sees something else. That is how a no-break space between two tokens turns a correct-looking line into a syntax error nobody can see, and how two identical-looking names become different bindings. Replace it with an ordinary space, or write it as an escape if the character is genuinely wanted.
+
+range 34 36 noIrregularWhitespace 			34 36
+/tmp/wave2-07-repro/fixer-5.ts:2:14
+  no-irregular-whitespace  This is an irregular whitespace character, not a space or a tab. It is invisible in every editor and in every diff, so the code reads as if it holds an ordinary space while the parser sees something else. That is how a no-break space between two tokens turns a correct-looking line into a syntax error nobody can see, and how two identical-looking names become different bindings. Replace it with an ordinary space, or write it as an escape if the character is genuinely wanted.
+
+range 38 41 noIrregularWhitespace 			38 41
+/tmp/wave2-07-repro/fixer-5.ts:2:17
+  no-irregular-whitespace  This is an irregular whitespace character, not a space or a tab. It is invisible in every editor and in every diff, so the code reads as if it holds an ordinary space while the parser sees something else. That is how a no-break space between two tokens turns a correct-looking line into a syntax error nobody can see, and how two identical-looking names become different bindings. Replace it with an ordinary space, or write it as an escape if the character is genuinely wanted.
+
+range 41 44 noIrregularWhitespace 			41 44
+fixed	const \u00e9 = 1;\u00a0\u2002\u2003,\u000a x =\u000b\u000b1;\u2028\u2029

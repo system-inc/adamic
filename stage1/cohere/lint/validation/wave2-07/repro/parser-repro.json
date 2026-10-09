@@ -1,0 +1,26 @@
+[
+  {
+    "backend": "Go-tree",
+    "command": [
+      "/tmp/wave2-07-repro/parser-oracle",
+      "/tmp/wave2-07-repro/adjacent.tsx",
+      "--whole",
+      "--jsx-recovery"
+    ],
+    "exit": 0,
+    "output": "file\n0 SourceFile 0 8 0 0 -1 0 0\t\t\t\t\n1 ExpressionStatement 0 8 0 0 -1 0 0\t\t\t\t\n2 BinaryExpression 0 8 0 0 -1 0 0\t\t\t\t\n3 JsxSelfClosingElement 0 4 0 0 -1 0 0\t\t\t\t-1:0\n4 Identifier 1 2 0 0 -1 0 0\t\ta\t\t\n4 JsxAttributes 2 2 0 0 0 0 0\t\t\t\t\n3 CommaToken 4 4 0 0 -1 0 0\t\t\t\t\n3 JsxSelfClosingElement 4 8 0 0 -1 0 0\t\t\t\t-1:0\n4 Identifier 5 6 0 0 -1 0 0\t\ta\t\t\n4 JsxAttributes 6 6 0 0 0 0 0\t\t\t\t\n1 EndOfFile 8 8 0 0 -1 0 0\t\t\t\t\n"
+  },
+  {
+    "backend": "Node-tree",
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "/workspace/scratch/lint-batch-wave2-07/oracle/node.mjs",
+      "/workspace/scratch/lint-batch-wave2-07/stage1/typescript/parser/main.ts",
+      "/tmp/wave2-07-repro/adjacent.tsx",
+      "--whole"
+    ],
+    "exit": 70,
+    "output": "adamic: panic: source has parse diagnostics; use --recovery to inspect the recovered tree\n"
+  }
+]

@@ -1,0 +1,156 @@
+{
+  "head": "251e5625e15ff69a96ebf19e356241f71c025663",
+  "inputs": {
+    "ADAMIC_MARKDOWNWIDTH_DEPS": "/workspace/adamic-tools/markdown-width",
+    "GOPROXY": "https://proxy.golang.org|direct",
+    "ADAMIC_TOOLS": "/workspace/adamic-tools",
+    "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/scratch/typescript-6.0.3",
+    "ADAMIC_LINT_BENCH": "1",
+    "ADAMIC_PARSER_BENCH": "1",
+    "ADAMIC_LINT_PROFILE_DIR": "/tmp/wave2-07-profile-796384",
+    "ADAMIC_LINT_PROFILE_SNAPSHOTS": "/tmp/wave2-07-profile-796384",
+    "WASI_SYSROOT": "/workspace/adamic-tools/wasi-sdk/share/wasi-sysroot",
+    "ADAMIC_GATE_UNCACHED": "1"
+  },
+  "nproc": "5",
+  "quota": "400000 100000",
+  "typescript_sha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "typescript_status": "",
+  "packages": [
+    {
+      "package": "./stage1/cohere/lint",
+      "command": [
+        "go",
+        "test",
+        "./stage1/cohere/lint",
+        "-count=1",
+        "-v",
+        "-json",
+        "-timeout=3h"
+      ],
+      "start": "2026-10-08T20:57:48.678440+00:00",
+      "end": "2026-10-08T23:28:48.775642+00:00",
+      "wall": 9060.097314187995,
+      "exit": 1,
+      "load_before": "2.03 5.61 7.84 1/568 796409",
+      "load_after": "4.41 4.85 4.94 1/571 1062363",
+      "log": "/tmp/wave2-07-gate/stage1-cohere-lint.jsonl"
+    },
+    {
+      "package": "./stage1/cohere/lint/helpers",
+      "command": [
+        "go",
+        "test",
+        "./stage1/cohere/lint/helpers",
+        "-count=1",
+        "-v",
+        "-json",
+        "-timeout=3h"
+      ],
+      "start": "2026-10-08T23:28:48.779552+00:00",
+      "end": "2026-10-08T23:47:14.790966+00:00",
+      "wall": 1106.0114695240045,
+      "exit": 0,
+      "load_before": "4.41 4.85 4.94 1/571 1062363",
+      "load_after": "1.72 2.51 3.49 1/570 1066625",
+      "log": "/tmp/wave2-07-gate/stage1-cohere-lint-helpers.jsonl"
+    },
+    {
+      "package": "./stage1/cohere/lint/helpers/comments",
+      "command": [
+        "go",
+        "test",
+        "./stage1/cohere/lint/helpers/comments",
+        "-count=1",
+        "-v",
+        "-json",
+        "-timeout=3h"
+      ],
+      "start": "2026-10-08T23:47:14.792770+00:00",
+      "end": "2026-10-08T23:54:12.461572+00:00",
+      "wall": 417.6688692650059,
+      "exit": 0,
+      "load_before": "1.72 2.51 3.49 1/570 1066625",
+      "load_after": "1.17 1.48 2.64 1/565 1067488",
+      "log": "/tmp/wave2-07-gate/stage1-cohere-lint-helpers-comments.jsonl"
+    },
+    {
+      "package": "./stage1/cohere/lint/helpers/property",
+      "command": [
+        "go",
+        "test",
+        "./stage1/cohere/lint/helpers/property",
+        "-count=1",
+        "-v",
+        "-json",
+        "-timeout=3h"
+      ],
+      "start": "2026-10-08T23:54:12.463063+00:00",
+      "end": "2026-10-08T23:57:01.201218+00:00",
+      "wall": 168.7382174799859,
+      "exit": 0,
+      "load_before": "1.17 1.48 2.64 2/565 1067488",
+      "load_after": "2.24 2.15 2.72 1/568 1068008",
+      "log": "/tmp/wave2-07-gate/stage1-cohere-lint-helpers-property.jsonl"
+    },
+    {
+      "package": "./stage1/cohere/lint/helpers/next",
+      "command": [
+        "go",
+        "test",
+        "./stage1/cohere/lint/helpers/next",
+        "-count=1",
+        "-v",
+        "-json",
+        "-timeout=3h"
+      ],
+      "start": "2026-10-08T23:57:01.202222+00:00",
+      "end": "2026-10-08T23:57:27.424045+00:00",
+      "wall": 26.22186448299908,
+      "exit": 0,
+      "load_before": "2.24 2.15 2.72 1/568 1068008",
+      "load_after": "2.40 2.20 2.72 1/568 1068190",
+      "log": "/tmp/wave2-07-gate/stage1-cohere-lint-helpers-next.jsonl"
+    },
+    {
+      "package": "./stage1/cohere/lint/shards",
+      "command": [
+        "go",
+        "test",
+        "./stage1/cohere/lint/shards",
+        "-count=1",
+        "-v",
+        "-json",
+        "-timeout=3h"
+      ],
+      "start": "2026-10-08T23:57:27.425120+00:00",
+      "end": "2026-10-08T23:57:28.086395+00:00",
+      "wall": 0.6613293100090232,
+      "exit": 0,
+      "load_before": "2.40 2.20 2.72 1/568 1068190",
+      "load_after": "2.40 2.20 2.72 1/568 1068263",
+      "log": "/tmp/wave2-07-gate/stage1-cohere-lint-shards.jsonl"
+    },
+    {
+      "package": "./stage1/typescript/parser",
+      "command": [
+        "go",
+        "test",
+        "./stage1/typescript/parser",
+        "-count=1",
+        "-v",
+        "-json",
+        "-timeout=3h"
+      ],
+      "start": "2026-10-08T23:57:28.087140+00:00",
+      "end": "2026-10-09T00:42:07.452298+00:00",
+      "wall": 2679.365591572976,
+      "exit": 0,
+      "load_before": "2.40 2.20 2.72 1/568 1068263",
+      "load_after": "5.55 5.54 5.79 1/571 1107876",
+      "log": "/tmp/wave2-07-gate/stage1-typescript-parser.jsonl"
+    }
+  ],
+  "typescript_status_after": "",
+  "complete": true
+}

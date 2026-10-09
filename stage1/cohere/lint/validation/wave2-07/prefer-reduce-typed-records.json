@@ -1,0 +1,338 @@
+[
+  {
+    "Rule": "@typescript-eslint/prefer-reduce-type-parameter",
+    "File": "/repository/source/Reducing.ts",
+    "Source": "[1, 2, 3][null]((sum, num) => sum + num, 0);\n",
+    "TsConfig": "{\n\t\"compilerOptions\": {\n\t\t\"strict\": true,\n\t\t\"target\": \"ES2022\",\n\t\t\"lib\": [\"ES2022\"],\n\t\t\"moduleDetection\": \"force\",\n\t\t\"types\": []\n\t},\n\t\"sourceExtensions\": [\".a\"],\n\t\"include\": [\"**/*.ts\", \"**/*.tsx\", \"**/*.a\"]\n}",
+    "Findings": 0,
+    "OtherFiles": 1
+  },
+  {
+    "Rule": "@typescript-eslint/prefer-reduce-type-parameter",
+    "File": "/repository/source/Reducing.ts",
+    "Source": "[1, 2, 3].reduce((sum, num) => sum + num, 0);\n",
+    "TsConfig": "{\n\t\"compilerOptions\": {\n\t\t\"strict\": true,\n\t\t\"target\": \"ES2022\",\n\t\t\"lib\": [\"ES2022\"],\n\t\t\"moduleDetection\": \"force\",\n\t\t\"types\": []\n\t},\n\t\"sourceExtensions\": [\".a\"],\n\t\"include\": [\"**/*.ts\", \"**/*.tsx\", \"**/*.a\"]\n}",
+    "Findings": 0,
+    "OtherFiles": 1
+  },
+  {
+    "Rule": "@typescript-eslint/prefer-reduce-type-parameter",
+    "File": "/repository/source/Reducing.ts",
+    "Source": "[1, 2, 3]?.[null]((sum, num) => sum + num, 0);\n",
+    "TsConfig": "{\n\t\"compilerOptions\": {\n\t\t\"strict\": true,\n\t\t\"target\": \"ES2022\",\n\t\t\"lib\": [\"ES2022\"],\n\t\t\"moduleDetection\": \"force\",\n\t\t\"types\": []\n\t},\n\t\"sourceExtensions\": [\".a\"],\n\t\"include\": [\"**/*.ts\", \"**/*.tsx\", \"**/*.a\"]\n}",
+    "Findings": 0,
+    "OtherFiles": 1
+  },
+  {
+    "Rule": "@typescript-eslint/prefer-reduce-type-parameter",
+    "File": "/repository/source/Reducing.ts",
+    "Source": "[1, 2, 3]['reduce']((sum, num) => sum + num, 0);\n",
+    "TsConfig": "{\n\t\"compilerOptions\": {\n\t\t\"strict\": true,\n\t\t\"target\": \"ES2022\",\n\t\t\"lib\": [\"ES2022\"],\n\t\t\"moduleDetection\": \"force\",\n\t\t\"types\": []\n\t},\n\t\"sourceExtensions\": [\".a\"],\n\t\"include\": [\"**/*.ts\", \"**/*.tsx\", \"**/*.a\"]\n}",
+    "Findings": 0,
+    "OtherFiles": 1
+  },
+  {
+    "Rule": "@typescript-eslint/prefer-reduce-type-parameter",
+    "File": "/repository/source/Reducing.ts",
+    "Source": "declare const a: number[];\na.reduce((x, s) => x + s);\n",
+    "TsConfig": "{\n\t\"compilerOptions\": {\n\t\t\"strict\": true,\n\t\t\"target\": \"ES2022\",\n\t\t\"lib\": [\"ES2022\"],\n\t\t\"moduleDetection\": \"force\",\n\t\t\"types\": []\n\t},\n\t\"sourceExtensions\": [\".a\"],\n\t\"include\": [\"**/*.ts\", \"**/*.tsx\", \"**/*.a\"]\n}",
+    "Findings": 0,
+    "OtherFiles": 1
+  },
+  {
+    "Rule": "@typescript-eslint/prefer-reduce-type-parameter",
+    "File": "/repository/source/Reducing.ts",
+    "Source": "[1, 2, 3].reduce((a, s) => a.concat(s * 2), <number[]>[]);\n",
+    "TsConfig": "{\n\t\"compilerOptions\": {\n\t\t\"strict\": true,\n\t\t\"target\": \"ES2022\",\n\t\t\"lib\": [\"ES2022\"],\n\t\t\"moduleDetection\": \"force\",\n\t\t\"types\": []\n\t},\n\t\"sourceExtensions\": [\".a\"],\n\t\"include\": [\"**/*.ts\", \"**/*.tsx\", \"**/*.a\"]\n}",
+    "Findings": 1,
+    "OtherFiles": 1
+  },
+  {
+    "Rule": "@typescript-eslint/prefer-reduce-type-parameter",
+    "File": "/repository/source/Reducing.ts",
+    "Source": "[1, 2, 3].reduce<number[]>((a, s) => a.concat(s * 2), []);\n",
+    "TsConfig": "{\n\t\"compilerOptions\": {\n\t\t\"strict\": true,\n\t\t\"target\": \"ES2022\",\n\t\t\"lib\": [\"ES2022\"],\n\t\t\"moduleDetection\": \"force\",\n\t\t\"types\": []\n\t},\n\t\"sourceExtensions\": [\".a\"],\n\t\"include\": [\"**/*.ts\", \"**/*.tsx\", \"**/*.a\"]\n}",
+    "Findings": 0,
+    "OtherFiles": 1
+  },
+  {
+    "Rule": "@typescript-eslint/prefer-reduce-type-parameter",
+    "File": "/repository/source/Reducing.ts",
+    "Source": "[1, 2, 3]?.reduce((a, s) => a.concat(s * 2), <number[]>[]);\n",
+    "TsConfig": "{\n\t\"compilerOptions\": {\n\t\t\"strict\": true,\n\t\t\"target\": \"ES2022\",\n\t\t\"lib\": [\"ES2022\"],\n\t\t\"moduleDetection\": \"force\",\n\t\t\"types\": []\n\t},\n\t\"sourceExtensions\": [\".a\"],\n\t\"include\": [\"**/*.ts\", \"**/*.tsx\", \"**/*.a\"]\n}",
+    "Findings": 1,
+    "OtherFiles": 1
+  },
+  {
+    "Rule": "@typescript-eslint/prefer-reduce-type-parameter",
+    "File": "/repository/source/Reducing.ts",
+    "Source": "[1, 2, 3]?.reduce<number[]>((a, s) => a.concat(s * 2), []);\n",
+    "TsConfig": "{\n\t\"compilerOptions\": {\n\t\t\"strict\": true,\n\t\t\"target\": \"ES2022\",\n\t\t\"lib\": [\"ES2022\"],\n\t\t\"moduleDetection\": \"force\",\n\t\t\"types\": []\n\t},\n\t\"sourceExtensions\": [\".a\"],\n\t\"include\": [\"**/*.ts\", \"**/*.tsx\", \"**/*.a\"]\n}",
+    "Findings": 0,
+    "OtherFiles": 1
+  },
+  {
+    "Rule": "@typescript-eslint/prefer-reduce-type-parameter",
+    "File": "/repository/source/Reducing.ts",
+    "Source": "[1, 2, 3].reduce((a, s) => a.concat(s * 2), [] as number[]);\n",
+    "TsConfig": "{\n\t\"compilerOptions\": {\n\t\t\"strict\": true,\n\t\t\"target\": \"ES2022\",\n\t\t\"lib\": [\"ES2022\"],\n\t\t\"moduleDetection\": \"force\",\n\t\t\"types\": []\n\t},\n\t\"sourceExtensions\": [\".a\"],\n\t\"include\": [\"**/*.ts\", \"**/*.tsx\", \"**/*.a\"]\n}",
+    "Findings": 1,
+    "OtherFiles": 1
+  },
+  {
+    "Rule": "@typescript-eslint/prefer-reduce-type-parameter",
+    "File": "/repository/source/Reducing.ts",
+    "Source": "[1, 2, 3]?.reduce((a, s) => a.concat(s * 2), [] as number[]);\n",
+    "TsConfig": "{\n\t\"compilerOptions\": {\n\t\t\"strict\": true,\n\t\t\"target\": \"ES2022\",\n\t\t\"lib\": [\"ES2022\"],\n\t\t\"moduleDetection\": \"force\",\n\t\t\"types\": []\n\t},\n\t\"sourceExtensions\": [\".a\"],\n\t\"include\": [\"**/*.ts\", \"**/*.tsx\", \"**/*.a\"]\n}",
+    "Findings": 1,
+    "OtherFiles": 1
+  },
+  {
+    "Rule": "@typescript-eslint/prefer-reduce-type-parameter",
+    "File": "/repository/source/Reducing.ts",
+    "Source": "new (class Mine {\n  reduce() {}\n})().reduce(() => {}, 1 as any);\n",
+    "TsConfig": "{\n\t\"compilerOptions\": {\n\t\t\"strict\": true,\n\t\t\"target\": \"ES2022\",\n\t\t\"lib\": [\"ES2022\"],\n\t\t\"moduleDetection\": \"force\",\n\t\t\"types\": []\n\t},\n\t\"sourceExtensions\": [\".a\"],\n\t\"include\": [\"**/*.ts\", \"**/*.tsx\", \"**/*.a\"]\n}",
+    "Findings": 0,
+    "OtherFiles": 1
+  },
+  {
+    "Rule": "@typescript-eslint/prefer-reduce-type-parameter",
+    "File": "/repository/source/Reducing.ts",
+    "Source": "['a', 'b'].reduce((accum, name) => `${accum} | hello ${name}!`);\n",
+    "TsConfig": "{\n\t\"compilerOptions\": {\n\t\t\"strict\": true,\n\t\t\"target\": \"ES2022\",\n\t\t\"lib\": [\"ES2022\"],\n\t\t\"moduleDetection\": \"force\",\n\t\t\"types\": []\n\t},\n\t\"sourceExtensions\": [\".a\"],\n\t\"include\": [\"**/*.ts\", \"**/*.tsx\", \"**/*.a\"]\n}",
+    "Findings": 0,
+    "OtherFiles": 1
+  },
+  {
+    "Rule": "@typescript-eslint/prefer-reduce-type-parameter",
+    "File": "/repository/source/Reducing.ts",
+    "Source": "class Mine {\n  reduce() {}\n}\n\nnew Mine().reduce(() => {}, 1 as any);\n",
+    "TsConfig": "{\n\t\"compilerOptions\": {\n\t\t\"strict\": true,\n\t\t\"target\": \"ES2022\",\n\t\t\"lib\": [\"ES2022\"],\n\t\t\"moduleDetection\": \"force\",\n\t\t\"types\": []\n\t},\n\t\"sourceExtensions\": [\".a\"],\n\t\"include\": [\"**/*.ts\", \"**/*.tsx\", \"**/*.a\"]\n}",
+    "Findings": 0,
+    "OtherFiles": 1
+  },
+  {
+    "Rule": "@typescript-eslint/prefer-reduce-type-parameter",
+    "File": "/repository/source/Reducing.ts",
+    "Source": "declare const a: number[];\na.reduce((x, s) => x.concat(s), [] as const);\n",
+    "TsConfig": "{\n\t\"compilerOptions\": {\n\t\t\"strict\": true,\n\t\t\"target\": \"ES2022\",\n\t\t\"lib\": [\"ES2022\"],\n\t\t\"moduleDetection\": \"force\",\n\t\t\"types\": []\n\t},\n\t\"sourceExtensions\": [\".a\"],\n\t\"include\": [\"**/*.ts\", \"**/*.tsx\", \"**/*.a\"]\n}",
+    "Findings": 0,
+    "OtherFiles": 1
+  },
+  {
+    "Rule": "@typescript-eslint/prefer-reduce-type-parameter",
+    "File": "/repository/source/Reducing.ts",
+    "Source": "declare const a: number[];\na.reduce((x, s) => x.concat(s), ([] as number[]));\n",
+    "TsConfig": "{\n\t\"compilerOptions\": {\n\t\t\"strict\": true,\n\t\t\"target\": \"ES2022\",\n\t\t\"lib\": [\"ES2022\"],\n\t\t\"moduleDetection\": \"force\",\n\t\t\"types\": []\n\t},\n\t\"sourceExtensions\": [\".a\"],\n\t\"include\": [\"**/*.ts\", \"**/*.tsx\", \"**/*.a\"]\n}",
+    "Findings": 1,
+    "OtherFiles": 1
+  },
+  {
+    "Rule": "@typescript-eslint/prefer-reduce-type-parameter",
+    "File": "/repository/source/Reducing.ts",
+    "Source": "declare const a: number[];\n(a.reduce)((x, s) => x.concat(s), [] as number[]);\n",
+    "TsConfig": "{\n\t\"compilerOptions\": {\n\t\t\"strict\": true,\n\t\t\"target\": \"ES2022\",\n\t\t\"lib\": [\"ES2022\"],\n\t\t\"moduleDetection\": \"force\",\n\t\t\"types\": []\n\t},\n\t\"sourceExtensions\": [\".a\"],\n\t\"include\": [\"**/*.ts\", \"**/*.tsx\", \"**/*.a\"]\n}",
+    "Findings": 1,
+    "OtherFiles": 1
+  },
+  {
+    "Rule": "@typescript-eslint/prefer-reduce-type-parameter",
+    "File": "/repository/source/Reducing.ts",
+    "Source": "declare const a: number[];\na.reduce((x, s) => x.concat(s), [] as number[], 1);\n",
+    "TsConfig": "{\n\t\"compilerOptions\": {\n\t\t\"strict\": true,\n\t\t\"target\": \"ES2022\",\n\t\t\"lib\": [\"ES2022\"],\n\t\t\"moduleDetection\": \"force\",\n\t\t\"types\": []\n\t},\n\t\"sourceExtensions\": [\".a\"],\n\t\"include\": [\"**/*.ts\", \"**/*.tsx\", \"**/*.a\"]\n}",
+    "Findings": 1,
+    "OtherFiles": 1
+  },
+  {
+    "Rule": "@typescript-eslint/prefer-reduce-type-parameter",
+    "File": "/repository/source/Reducing.ts",
+    "Source": "declare const a: number[];\na?.['reduce']((x, s) => x.concat(s), [] as number[]);\n",
+    "TsConfig": "{\n\t\"compilerOptions\": {\n\t\t\"strict\": true,\n\t\t\"target\": \"ES2022\",\n\t\t\"lib\": [\"ES2022\"],\n\t\t\"moduleDetection\": \"force\",\n\t\t\"types\": []\n\t},\n\t\"sourceExtensions\": [\".a\"],\n\t\"include\": [\"**/*.ts\", \"**/*.tsx\", \"**/*.a\"]\n}",
+    "Findings": 1,
+    "OtherFiles": 1
+  },
+  {
+    "Rule": "@typescript-eslint/prefer-reduce-type-parameter",
+    "File": "/repository/source/Reducing.ts",
+    "Source": "declare const a: number[];\na.reduceRight((x, s) => x.concat(s), [] as number[]);\n",
+    "TsConfig": "{\n\t\"compilerOptions\": {\n\t\t\"strict\": true,\n\t\t\"target\": \"ES2022\",\n\t\t\"lib\": [\"ES2022\"],\n\t\t\"moduleDetection\": \"force\",\n\t\t\"types\": []\n\t},\n\t\"sourceExtensions\": [\".a\"],\n\t\"include\": [\"**/*.ts\", \"**/*.tsx\", \"**/*.a\"]\n}",
+    "Findings": 0,
+    "OtherFiles": 1
+  },
+  {
+    "Rule": "@typescript-eslint/prefer-reduce-type-parameter",
+    "File": "/repository/source/Reducing.ts",
+    "Source": "import { Reducable } from './class';\n\nnew Reducable().reduce(() => {}, 1 as any);\n",
+    "TsConfig": "{\n\t\"compilerOptions\": {\n\t\t\"strict\": true,\n\t\t\"target\": \"ES2022\",\n\t\t\"lib\": [\"ES2022\"],\n\t\t\"moduleDetection\": \"force\",\n\t\t\"types\": []\n\t},\n\t\"sourceExtensions\": [\".a\"],\n\t\"include\": [\"**/*.ts\", \"**/*.tsx\", \"**/*.a\"]\n}",
+    "Findings": 0,
+    "OtherFiles": 1
+  },
+  {
+    "Rule": "@typescript-eslint/prefer-reduce-type-parameter",
+    "File": "/repository/source/Reducing.ts",
+    "Source": "declare const a: number[];\na.reduce((x, s) => x.concat(s), [] satisfies number[]);\n",
+    "TsConfig": "{\n\t\"compilerOptions\": {\n\t\t\"strict\": true,\n\t\t\"target\": \"ES2022\",\n\t\t\"lib\": [\"ES2022\"],\n\t\t\"moduleDetection\": \"force\",\n\t\t\"types\": []\n\t},\n\t\"sourceExtensions\": [\".a\"],\n\t\"include\": [\"**/*.ts\", \"**/*.tsx\", \"**/*.a\"]\n}",
+    "Findings": 0,
+    "OtherFiles": 1
+  },
+  {
+    "Rule": "@typescript-eslint/prefer-reduce-type-parameter",
+    "File": "/repository/source/Reducing.ts",
+    "Source": "declare const a: readonly number[];\na.reduce((x, s) => x.concat(s), [] as number[]);\n",
+    "TsConfig": "{\n\t\"compilerOptions\": {\n\t\t\"strict\": true,\n\t\t\"target\": \"ES2022\",\n\t\t\"lib\": [\"ES2022\"],\n\t\t\"moduleDetection\": \"force\",\n\t\t\"types\": []\n\t},\n\t\"sourceExtensions\": [\".a\"],\n\t\"include\": [\"**/*.ts\", \"**/*.tsx\", \"**/*.a\"]\n}",
+    "Findings": 1,
+    "OtherFiles": 1
+  },
+  {
+    "Rule": "@typescript-eslint/prefer-reduce-type-parameter",
+    "File": "/repository/source/Reducing.ts",
+    "Source": "declare const a: number[];\na.reduce((x, s) => x.concat(s), ...([[] as number[]] as [number[]]));\n",
+    "TsConfig": "{\n\t\"compilerOptions\": {\n\t\t\"strict\": true,\n\t\t\"target\": \"ES2022\",\n\t\t\"lib\": [\"ES2022\"],\n\t\t\"moduleDetection\": \"force\",\n\t\t\"types\": []\n\t},\n\t\"sourceExtensions\": [\".a\"],\n\t\"include\": [\"**/*.ts\", \"**/*.tsx\", \"**/*.a\"]\n}",
+    "Findings": 0,
+    "OtherFiles": 1
+  },
+  {
+    "Rule": "@typescript-eslint/prefer-reduce-type-parameter",
+    "File": "/repository/source/Reducing.ts",
+    "Source": "function f<T, U extends T[]>(a: U) {\n  return a.reduce(() => {}, {} as Record<string, boolean>);\n}\n",
+    "TsConfig": "{\n\t\"compilerOptions\": {\n\t\t\"strict\": true,\n\t\t\"target\": \"ES2022\",\n\t\t\"lib\": [\"ES2022\"],\n\t\t\"moduleDetection\": \"force\",\n\t\t\"types\": []\n\t},\n\t\"sourceExtensions\": [\".a\"],\n\t\"include\": [\"**/*.ts\", \"**/*.tsx\", \"**/*.a\"]\n}",
+    "Findings": 1,
+    "OtherFiles": 1
+  },
+  {
+    "Rule": "@typescript-eslint/prefer-reduce-type-parameter",
+    "File": "/repository/source/Reducing.ts",
+    "Source": "declare const tuple: [number, number, number];\ntuple.reduce<number[]>((a, s) => a.concat(s * 2), []);\n",
+    "TsConfig": "{\n\t\"compilerOptions\": {\n\t\t\"strict\": true,\n\t\t\"target\": \"ES2022\",\n\t\t\"lib\": [\"ES2022\"],\n\t\t\"moduleDetection\": \"force\",\n\t\t\"types\": []\n\t},\n\t\"sourceExtensions\": [\".a\"],\n\t\"include\": [\"**/*.ts\", \"**/*.tsx\", \"**/*.a\"]\n}",
+    "Findings": 0,
+    "OtherFiles": 1
+  },
+  {
+    "Rule": "@typescript-eslint/prefer-reduce-type-parameter",
+    "File": "/repository/source/Reducing.ts",
+    "Source": "declare const tuple: [number, number, number];\ntuple.reduce((a, s) => a.concat(s * 2), [] as number[]);\n",
+    "TsConfig": "{\n\t\"compilerOptions\": {\n\t\t\"strict\": true,\n\t\t\"target\": \"ES2022\",\n\t\t\"lib\": [\"ES2022\"],\n\t\t\"moduleDetection\": \"force\",\n\t\t\"types\": []\n\t},\n\t\"sourceExtensions\": [\".a\"],\n\t\"include\": [\"**/*.ts\", \"**/*.tsx\", \"**/*.a\"]\n}",
+    "Findings": 1,
+    "OtherFiles": 1
+  },
+  {
+    "Rule": "@typescript-eslint/prefer-reduce-type-parameter",
+    "File": "/repository/source/Reducing.ts",
+    "Source": "declare const arr: string[];\narr.reduce<string | undefined>(acc => acc, arr.shift() as string | undefined);\n",
+    "TsConfig": "{\n\t\"compilerOptions\": {\n\t\t\"strict\": true,\n\t\t\"target\": \"ES2022\",\n\t\t\"lib\": [\"ES2022\"],\n\t\t\"moduleDetection\": \"force\",\n\t\t\"types\": []\n\t},\n\t\"sourceExtensions\": [\".a\"],\n\t\"include\": [\"**/*.ts\", \"**/*.tsx\", \"**/*.a\"]\n}",
+    "Findings": 1,
+    "OtherFiles": 1
+  },
+  {
+    "Rule": "@typescript-eslint/prefer-reduce-type-parameter",
+    "File": "/repository/source/Reducing.ts",
+    "Source": "declare const a: number[];\nconst reduceKey = 'reduce';\na[reduceKey]((x, s) => x.concat(s), [] as number[]);\n",
+    "TsConfig": "{\n\t\"compilerOptions\": {\n\t\t\"strict\": true,\n\t\t\"target\": \"ES2022\",\n\t\t\"lib\": [\"ES2022\"],\n\t\t\"moduleDetection\": \"force\",\n\t\t\"types\": []\n\t},\n\t\"sourceExtensions\": [\".a\"],\n\t\"include\": [\"**/*.ts\", \"**/*.tsx\", \"**/*.a\"]\n}",
+    "Findings": 0,
+    "OtherFiles": 1
+  },
+  {
+    "Rule": "@typescript-eslint/prefer-reduce-type-parameter",
+    "File": "/repository/source/Reducing.ts",
+    "Source": "['a', 'b'].reduce(\n  (accum, name) => ({\n    ...accum,\n    [name]: true,\n  }),\n  <Record<string, boolean>>{},\n);\n",
+    "TsConfig": "{\n\t\"compilerOptions\": {\n\t\t\"strict\": true,\n\t\t\"target\": \"ES2022\",\n\t\t\"lib\": [\"ES2022\"],\n\t\t\"moduleDetection\": \"force\",\n\t\t\"types\": []\n\t},\n\t\"sourceExtensions\": [\".a\"],\n\t\"include\": [\"**/*.ts\", \"**/*.tsx\", \"**/*.a\"]\n}",
+    "Findings": 1,
+    "OtherFiles": 1
+  },
+  {
+    "Rule": "@typescript-eslint/prefer-reduce-type-parameter",
+    "File": "/repository/source/Reducing.ts",
+    "Source": "['a', 'b'].reduce(\n  (accum, name) => ({\n    ...accum,\n    [name]: true,\n  }),\n  {} as Record<string, boolean>,\n);\n",
+    "TsConfig": "{\n\t\"compilerOptions\": {\n\t\t\"strict\": true,\n\t\t\"target\": \"ES2022\",\n\t\t\"lib\": [\"ES2022\"],\n\t\t\"moduleDetection\": \"force\",\n\t\t\"types\": []\n\t},\n\t\"sourceExtensions\": [\".a\"],\n\t\"include\": [\"**/*.ts\", \"**/*.tsx\", \"**/*.a\"]\n}",
+    "Findings": 1,
+    "OtherFiles": 1
+  },
+  {
+    "Rule": "@typescript-eslint/prefer-reduce-type-parameter",
+    "File": "/repository/source/Reducing.ts",
+    "Source": "declare const tuple: [number, number, number] & number[];\ntuple.reduce((a, s) => a.concat(s * 2), [] as number[]);\n",
+    "TsConfig": "{\n\t\"compilerOptions\": {\n\t\t\"strict\": true,\n\t\t\"target\": \"ES2022\",\n\t\t\"lib\": [\"ES2022\"],\n\t\t\"moduleDetection\": \"force\",\n\t\t\"types\": []\n\t},\n\t\"sourceExtensions\": [\".a\"],\n\t\"include\": [\"**/*.ts\", \"**/*.tsx\", \"**/*.a\"]\n}",
+    "Findings": 1,
+    "OtherFiles": 1
+  },
+  {
+    "Rule": "@typescript-eslint/prefer-reduce-type-parameter",
+    "File": "/repository/source/Reducing.ts",
+    "Source": "['a', 'b'].reduce(\n  (accum, name) => ({\n    ...accum,\n    [name]: true,\n  }),\n  {} as Record<'a' | 'b', boolean>,\n);\n",
+    "TsConfig": "{\n\t\"compilerOptions\": {\n\t\t\"strict\": true,\n\t\t\"target\": \"ES2022\",\n\t\t\"lib\": [\"ES2022\"],\n\t\t\"moduleDetection\": \"force\",\n\t\t\"types\": []\n\t},\n\t\"sourceExtensions\": [\".a\"],\n\t\"include\": [\"**/*.ts\", \"**/*.tsx\", \"**/*.a\"]\n}",
+    "Findings": 0,
+    "OtherFiles": 1
+  },
+  {
+    "Rule": "@typescript-eslint/prefer-reduce-type-parameter",
+    "File": "/repository/source/Reducing.ts",
+    "Source": "['a', 'b']['reduce'](\n  (accum, name) => ({\n    ...accum,\n    [name]: true,\n  }),\n  {} as Record<string, boolean>,\n);\n",
+    "TsConfig": "{\n\t\"compilerOptions\": {\n\t\t\"strict\": true,\n\t\t\"target\": \"ES2022\",\n\t\t\"lib\": [\"ES2022\"],\n\t\t\"moduleDetection\": \"force\",\n\t\t\"types\": []\n\t},\n\t\"sourceExtensions\": [\".a\"],\n\t\"include\": [\"**/*.ts\", \"**/*.tsx\", \"**/*.a\"]\n}",
+    "Findings": 1,
+    "OtherFiles": 1
+  },
+  {
+    "Rule": "@typescript-eslint/prefer-reduce-type-parameter",
+    "File": "/repository/source/Reducing.ts",
+    "Source": "function f<T>() {\n  ['a', 'b'].reduce(\n    (accum, name) => ({\n      ...accum,\n      [name]: true,\n    }),\n    {} as T,\n  );\n}\n",
+    "TsConfig": "{\n\t\"compilerOptions\": {\n\t\t\"strict\": true,\n\t\t\"target\": \"ES2022\",\n\t\t\"lib\": [\"ES2022\"],\n\t\t\"moduleDetection\": \"force\",\n\t\t\"types\": []\n\t},\n\t\"sourceExtensions\": [\".a\"],\n\t\"include\": [\"**/*.ts\", \"**/*.tsx\", \"**/*.a\"]\n}",
+    "Findings": 0,
+    "OtherFiles": 1
+  },
+  {
+    "Rule": "@typescript-eslint/prefer-reduce-type-parameter",
+    "File": "/repository/source/Reducing.ts",
+    "Source": "declare const tupleOrArray: [number, number, number] | number[];\ntupleOrArray.reduce((a, s) => a.concat(s * 2), [] as number[]);\n",
+    "TsConfig": "{\n\t\"compilerOptions\": {\n\t\t\"strict\": true,\n\t\t\"target\": \"ES2022\",\n\t\t\"lib\": [\"ES2022\"],\n\t\t\"moduleDetection\": \"force\",\n\t\t\"types\": []\n\t},\n\t\"sourceExtensions\": [\".a\"],\n\t\"include\": [\"**/*.ts\", \"**/*.tsx\", \"**/*.a\"]\n}",
+    "Findings": 1,
+    "OtherFiles": 1
+  },
+  {
+    "Rule": "@typescript-eslint/prefer-reduce-type-parameter",
+    "File": "/repository/source/Reducing.ts",
+    "Source": "const names = ['a', 'b', 'c'];\n\nnames.reduce(\n  (accum, name) => ({\n    ...accum,\n    [name]: true,\n  }),\n  {} as Record<string, boolean>,\n);\n",
+    "TsConfig": "{\n\t\"compilerOptions\": {\n\t\t\"strict\": true,\n\t\t\"target\": \"ES2022\",\n\t\t\"lib\": [\"ES2022\"],\n\t\t\"moduleDetection\": \"force\",\n\t\t\"types\": []\n\t},\n\t\"sourceExtensions\": [\".a\"],\n\t\"include\": [\"**/*.ts\", \"**/*.tsx\", \"**/*.a\"]\n}",
+    "Findings": 1,
+    "OtherFiles": 1
+  },
+  {
+    "Rule": "@typescript-eslint/prefer-reduce-type-parameter",
+    "File": "/repository/source/Reducing.ts",
+    "Source": "['a', 'b'].reduce(\n  (accum, name) => ({\n    ...accum,\n    [name]: true,\n  }),\n  { a: true, b: false, c: true } as Record<'a' | 'b', boolean>,\n);\n",
+    "TsConfig": "{\n\t\"compilerOptions\": {\n\t\t\"strict\": true,\n\t\t\"target\": \"ES2022\",\n\t\t\"lib\": [\"ES2022\"],\n\t\t\"moduleDetection\": \"force\",\n\t\t\"types\": []\n\t},\n\t\"sourceExtensions\": [\".a\"],\n\t\"include\": [\"**/*.ts\", \"**/*.tsx\", \"**/*.a\"]\n}",
+    "Findings": 0,
+    "OtherFiles": 1
+  },
+  {
+    "Rule": "@typescript-eslint/prefer-reduce-type-parameter",
+    "File": "/repository/source/Reducing.ts",
+    "Source": "function f<T extends Record<string, boolean>>() {\n  ['a', 'b'].reduce(\n    (accum, name) => ({\n      ...accum,\n      [name]: true,\n    }),\n    {} as T,\n  );\n}\n",
+    "TsConfig": "{\n\t\"compilerOptions\": {\n\t\t\"strict\": true,\n\t\t\"target\": \"ES2022\",\n\t\t\"lib\": [\"ES2022\"],\n\t\t\"moduleDetection\": \"force\",\n\t\t\"types\": []\n\t},\n\t\"sourceExtensions\": [\".a\"],\n\t\"include\": [\"**/*.ts\", \"**/*.tsx\", \"**/*.a\"]\n}",
+    "Findings": 0,
+    "OtherFiles": 1
+  },
+  {
+    "Rule": "@typescript-eslint/prefer-reduce-type-parameter",
+    "File": "/repository/source/Reducing.ts",
+    "Source": "function f<T extends Record<string, boolean>>(t: T) {\n  ['a', 'b'].reduce(\n    (accum, name) => ({\n      ...accum,\n      [name]: true,\n    }),\n    t as Record<string, boolean | number>,\n  );\n}\n",
+    "TsConfig": "{\n\t\"compilerOptions\": {\n\t\t\"strict\": true,\n\t\t\"target\": \"ES2022\",\n\t\t\"lib\": [\"ES2022\"],\n\t\t\"moduleDetection\": \"force\",\n\t\t\"types\": []\n\t},\n\t\"sourceExtensions\": [\".a\"],\n\t\"include\": [\"**/*.ts\", \"**/*.tsx\", \"**/*.a\"]\n}",
+    "Findings": 1,
+    "OtherFiles": 1
+  },
+  {
+    "Rule": "@typescript-eslint/prefer-reduce-type-parameter",
+    "File": "/repository/source/Reducing.ts",
+    "Source": "type Reducer = { reduce: (callback: (arg: any) => any, arg: any) => any };\ndeclare const tuple: [number, number, number] | Reducer;\ntuple.reduce(a => {\n  return a.concat(1);\n}, [] as number[]);\n",
+    "TsConfig": "{\n\t\"compilerOptions\": {\n\t\t\"strict\": true,\n\t\t\"target\": \"ES2022\",\n\t\t\"lib\": [\"ES2022\"],\n\t\t\"moduleDetection\": \"force\",\n\t\t\"types\": []\n\t},\n\t\"sourceExtensions\": [\".a\"],\n\t\"include\": [\"**/*.ts\", \"**/*.tsx\", \"**/*.a\"]\n}",
+    "Findings": 0,
+    "OtherFiles": 1
+  },
+  {
+    "Rule": "@typescript-eslint/prefer-reduce-type-parameter",
+    "File": "/repository/source/Reducing.ts",
+    "Source": "type Reducer = { reduce: (callback: (arg: any) => any, arg: any) => any };\ndeclare const arrayOrReducer: number[] & Reducer;\narrayOrReducer.reduce(a => {\n  return a.concat(1);\n}, [] as number[]);\n",
+    "TsConfig": "{\n\t\"compilerOptions\": {\n\t\t\"strict\": true,\n\t\t\"target\": \"ES2022\",\n\t\t\"lib\": [\"ES2022\"],\n\t\t\"moduleDetection\": \"force\",\n\t\t\"types\": []\n\t},\n\t\"sourceExtensions\": [\".a\"],\n\t\"include\": [\"**/*.ts\", \"**/*.tsx\", \"**/*.a\"]\n}",
+    "Findings": 0,
+    "OtherFiles": 1
+  }
+]

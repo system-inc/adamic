@@ -1,0 +1,2499 @@
+[
+  {
+    "rule": "adamic/no-type-predicate",
+    "slug": "adamic-no-type-predicate",
+    "mutant": "predicate finding widened to its owner",
+    "test": "TestMutants/predicate_finding_widened_to_its_owner",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "base/boundary-no-global-container",
+    "slug": "base-boundary-no-global-container",
+    "mutant": "global container name judgement reversed",
+    "test": "TestMutants/global_container_name_judgement_reversed",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "base/consistency-no-bare-throw",
+    "slug": "base-consistency-no-bare-throw",
+    "mutant": "AggregateError container reported",
+    "test": "TestMutants/AggregateError_container_reported",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "base/consistency-no-console",
+    "slug": "base-consistency-no-console",
+    "mutant": "console receiver widened",
+    "test": "TestMutants/console_receiver_widened",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "base/consistency-no-hand-built-declared-error",
+    "slug": "base-consistency-no-hand-built-declared-error",
+    "mutant": "declared BaseError constructor ignored",
+    "test": "TestMutants/declared_BaseError_constructor_ignored",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "base/consistency-require-pagination-argument-name",
+    "slug": "base-consistency-require-pagination-argument-name",
+    "mutant": "pagination_bad_name_accepted",
+    "test": "TestMutants/pagination_bad_name_accepted",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "class-methods-use-this",
+    "slug": "class-methods-use-this",
+    "mutant": "empty_method_silenced",
+    "test": "TestMutants/empty_method_silenced",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "constructor-super",
+    "slug": "constructor-super",
+    "mutant": "constructor-super-conditional-call-guaranteed",
+    "test": "TestMutants/constructor-super-conditional-call-guaranteed",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "default-case-last",
+    "slug": "default-case-last",
+    "mutant": "default-case-last-semantic-mutant",
+    "test": "TestMutants/default-case-last-semantic-mutant",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "eqeqeq",
+    "slug": "eqeqeq",
+    "mutant": "suggestion applied as fix",
+    "test": "TestMutants/suggestion_applied_as_fix",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "slug": "eslint-comments-require-description",
+    "mutant": "reason ignored",
+    "test": "TestMutants/reason_ignored",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "for-direction",
+    "slug": "for-direction",
+    "mutant": "for-direction-semantic-mutant",
+    "test": "TestMutants/for-direction-semantic-mutant",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "grouped-accessor-pairs",
+    "slug": "grouped-accessor-pairs",
+    "mutant": "ignore duplicate getter exemption",
+    "test": "TestMutants/ignore_duplicate_getter_exemption",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "guard-for-in",
+    "slug": "guard-for-in",
+    "mutant": "guard-for-in-semantic-mutant",
+    "test": "TestMutants/guard-for-in-semantic-mutant",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "max-classes-per-file",
+    "slug": "max-classes-per-file",
+    "mutant": "one excess class is silently allowed",
+    "test": "TestMutants/one_excess_class_is_silently_allowed",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "max-depth",
+    "slug": "max-depth",
+    "mutant": "max-depth-keyword-span",
+    "test": "TestMutants/max-depth-keyword-span",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "max-nested-callbacks",
+    "slug": "max-nested-callbacks",
+    "mutant": "callback at the limit is reported",
+    "test": "TestMutants/callback_at_the_limit_is_reported",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "@next/next/google-font-display",
+    "slug": "next-google-font-display",
+    "mutant": "next-google-font-display-discouraged-value-lost",
+    "test": "TestMutants/next-google-font-display-discouraged-value-lost",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "@next/next/no-assign-module-variable",
+    "slug": "next-no-assign-module-variable",
+    "mutant": "module_name_ignored",
+    "test": "TestMutants/module_name_ignored",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "@next/next/no-document-import-in-page",
+    "slug": "next-no-document-import-in-page",
+    "mutant": "module-equality",
+    "test": "TestMutants/module-equality",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "@next/next/no-sync-scripts",
+    "slug": "next-no-sync-scripts",
+    "mutant": "inline-script-presence-inverted",
+    "test": "TestMutants/inline-script-presence-inverted",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "@next/next/no-typos",
+    "slug": "next-no-typos",
+    "mutant": "next-no-typos-threshold",
+    "test": "TestMutants/next-no-typos-threshold",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "nexus/consistency-no-abbreviated-identifier",
+    "slug": "nexus-consistency-no-abbreviated-identifier",
+    "mutant": "nexus-abbreviated-identifier whole-word finding suppressed",
+    "test": "TestMutants/nexus-abbreviated-identifier_whole-word_finding_suppressed",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "nexus/consistency-no-ambiguous-identifier",
+    "slug": "nexus-consistency-no-ambiguous-identifier",
+    "mutant": "ambiguous-identifier-span",
+    "test": "TestMutants/ambiguous-identifier-span",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "nexus/consistency-no-enum",
+    "slug": "nexus-consistency-no-enum",
+    "mutant": "enum reported at its declaration rather than its name",
+    "test": "TestMutants/enum_reported_at_its_declaration_rather_than_its_name",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "nexus/consistency-no-for-in",
+    "slug": "nexus-consistency-no-for-in",
+    "mutant": "nexus-for-in-message",
+    "test": "TestMutants/nexus-for-in-message",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "nexus/consistency-no-hand-rolled-delay",
+    "slug": "nexus-consistency-no-hand-rolled-delay",
+    "mutant": "delay-resolve-name-ignored",
+    "test": "TestMutants/delay-resolve-name-ignored",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "nexus/consistency-no-long-line-comment",
+    "slug": "nexus-consistency-no-long-line-comment",
+    "mutant": "nexus long line comment configured threshold ignored",
+    "test": "TestMutants/nexus_long_line_comment_configured_threshold_ignored",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "nexus/consistency-no-multiline-arrow-function",
+    "slug": "nexus-consistency-no-multiline-arrow-function",
+    "mutant": "multiline-arrow-single-line-exemption-removed",
+    "test": "TestMutants/multiline-arrow-single-line-exemption-removed",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "nexus/consistency-no-shouting",
+    "slug": "nexus-consistency-no-shouting",
+    "mutant": "shouting_fourth_token_omitted",
+    "test": "TestMutants/shouting_fourth_token_omitted",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "nexus/consistency-no-single-line-jsdoc",
+    "slug": "nexus-consistency-no-single-line-jsdoc",
+    "mutant": "empty JSX comment anchor dropped",
+    "test": "TestMutants/empty_JSX_comment_anchor_dropped",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "nexus/consistency-no-stuttering-name",
+    "slug": "nexus-consistency-no-stuttering-name",
+    "mutant": "nexus-stuttering-name-equality",
+    "test": "TestMutants/nexus-stuttering-name-equality",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "nexus/consistency-require-type-suffix",
+    "slug": "nexus-consistency-require-type-suffix",
+    "mutant": "interface accepts type suffix",
+    "test": "TestMutants/interface_accepts_type_suffix",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "nexus/import-require-module-alias",
+    "slug": "nexus-import-require-module-alias",
+    "mutant": "namespace style silently accepted",
+    "test": "TestMutants/namespace_style_silently_accepted",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "nexus/import-require-node-namespace",
+    "slug": "nexus-import-require-node-namespace",
+    "mutant": "nexus-import-require-node-namespace_semantic",
+    "test": "TestMutants/nexus-import-require-node-namespace_semantic",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "no-async-promise-executor",
+    "slug": "no-async-promise-executor",
+    "mutant": "async_executor_ignored",
+    "test": "TestMutants/async_executor_ignored",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "no-await-in-loop",
+    "slug": "no-await-in-loop",
+    "mutant": "await crosses function boundary",
+    "test": "TestMutants/await_crosses_function_boundary",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "no-bitwise",
+    "slug": "no-bitwise",
+    "mutant": "int32 hint option ignored",
+    "test": "TestMutants/int32_hint_option_ignored",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "no-caller",
+    "slug": "no-caller",
+    "mutant": "no-caller-property",
+    "test": "TestMutants/no-caller-property",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "no-case-declarations",
+    "slug": "no-case-declarations",
+    "mutant": "closing_brace_missing",
+    "test": "TestMutants/closing_brace_missing",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "no-compare-neg-zero",
+    "slug": "no-compare-neg-zero",
+    "mutant": "negative_zero_ignored",
+    "test": "TestMutants/negative_zero_ignored",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "no-constructor-return",
+    "slug": "no-constructor-return",
+    "mutant": "no-constructor-return-semantic-mutant",
+    "test": "TestMutants/no-constructor-return-semantic-mutant",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "no-continue",
+    "slug": "no-continue",
+    "mutant": "continue finding stops before its semicolon",
+    "test": "TestMutants/continue_finding_stops_before_its_semicolon",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "no-control-regex",
+    "slug": "no-control-regex",
+    "mutant": "control-range-lost",
+    "test": "TestMutants/control-range-lost",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "no-debugger",
+    "slug": "no-debugger",
+    "mutant": "debugger fix suppressed",
+    "test": "TestMutants/debugger_fix_suppressed",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "no-delete-var",
+    "slug": "no-delete-var",
+    "mutant": "no-delete-var-semantic-mutant",
+    "test": "TestMutants/no-delete-var-semantic-mutant",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "no-div-regex",
+    "slug": "no-div-regex",
+    "mutant": "regex fix eats extra byte",
+    "test": "TestMutants/regex_fix_eats_extra_byte",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "no-dupe-else-if",
+    "slug": "no-dupe-else-if",
+    "mutant": "duplicate-else-if-keeps-covered-group",
+    "test": "TestMutants/duplicate-else-if-keeps-covered-group",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "no-duplicate-case",
+    "slug": "no-duplicate-case",
+    "mutant": "duplicate case suppressed",
+    "test": "TestMutants/duplicate_case_suppressed",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "no-empty",
+    "slug": "no-empty",
+    "mutant": "empty function body reported",
+    "test": "TestMutants/empty_function_body_reported",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "no-empty-character-class",
+    "slug": "no-empty-character-class",
+    "mutant": "empty_character_class_silenced",
+    "test": "TestMutants/empty_character_class_silenced",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "no-empty-pattern",
+    "slug": "no-empty-pattern",
+    "mutant": "no-empty-pattern reports real bindings",
+    "test": "TestMutants/no-empty-pattern_reports_real_bindings",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "no-empty-static-block",
+    "slug": "no-empty-static-block",
+    "mutant": "comment exemption removed",
+    "test": "TestMutants/comment_exemption_removed",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "no-eq-null",
+    "slug": "no-eq-null",
+    "mutant": "no-eq-null-semantic-mutant",
+    "test": "TestMutants/no-eq-null-semantic-mutant",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "no-ex-assign",
+    "slug": "no-ex-assign",
+    "mutant": "miss-postfix-writes",
+    "test": "TestMutants/miss-postfix-writes",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "no-irregular-whitespace",
+    "slug": "no-irregular-whitespace",
+    "mutant": "split irregular runs",
+    "test": "TestMutants/split_irregular_runs",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "no-iterator",
+    "slug": "no-iterator",
+    "mutant": "no-iterator-static-key",
+    "test": "TestMutants/no-iterator-static-key",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "no-labels",
+    "slug": "no-labels",
+    "mutant": "label option widened",
+    "test": "TestMutants/label_option_widened",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "no-lone-blocks",
+    "slug": "no-lone-blocks",
+    "mutant": "bound sole block exemption widened",
+    "test": "TestMutants/bound_sole_block_exemption_widened",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "no-lonely-if",
+    "slug": "no-lonely-if",
+    "mutant": "BOM_is_not_whitespace",
+    "test": "TestMutants/BOM_is_not_whitespace",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "no-loss-of-precision",
+    "slug": "no-loss-of-precision",
+    "mutant": "normalized text hides lost precision",
+    "test": "TestMutants/normalized_text_hides_lost_precision",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "no-multi-assign",
+    "slug": "no-multi-assign",
+    "mutant": "no-multi-assign-option-reversed",
+    "test": "TestMutants/no-multi-assign-option-reversed",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "no-multi-str",
+    "slug": "no-multi-str",
+    "mutant": "no-multi-str semantic mutant",
+    "test": "TestMutants/no-multi-str_semantic_mutant",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "no-negated-condition",
+    "slug": "no-negated-condition",
+    "mutant": "condition polarity reversed",
+    "test": "TestMutants/condition_polarity_reversed",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "no-new",
+    "slug": "no-new",
+    "mutant": "parentheses around a discarded construction not seen through",
+    "test": "TestMutants/parentheses_around_a_discarded_construction_not_seen_through",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "no-nonoctal-decimal-escape",
+    "slug": "no-nonoctal-decimal-escape",
+    "mutant": "no-nonoctal-decimal-escape semantic mutant",
+    "test": "TestMutants/no-nonoctal-decimal-escape_semantic_mutant",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "no-octal",
+    "slug": "no-octal",
+    "mutant": "no-octal semantic mutant",
+    "test": "TestMutants/no-octal_semantic_mutant",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "no-octal-escape",
+    "slug": "no-octal-escape",
+    "mutant": "no-octal-escape mutant from batch 8",
+    "test": "TestMutants/no-octal-escape_mutant_from_batch_8",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "no-plusplus",
+    "slug": "no-plusplus",
+    "mutant": "for update option ignored",
+    "test": "TestMutants/for_update_option_ignored",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "no-proto",
+    "slug": "no-proto",
+    "mutant": "proto accessor suppressed",
+    "test": "TestMutants/proto_accessor_suppressed",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "no-prototype-builtins",
+    "slug": "no-prototype-builtins",
+    "mutant": "omit-is-prototype-of",
+    "test": "TestMutants/omit-is-prototype-of",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-redundant-type-constituents",
+    "slug": "no-redundant-type-constituents",
+    "mutant": "no-redundant-type-constituents-decision",
+    "test": "TestMutants/no-redundant-type-constituents-decision",
+    "caught": [
+      "Node",
+      "emitted JavaScript",
+      "native"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "no-regex-spaces",
+    "slug": "no-regex-spaces",
+    "mutant": "regex-spaces-first-run-lost",
+    "test": "TestMutants/regex-spaces-first-run-lost",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "no-return-assign",
+    "slug": "no-return-assign",
+    "mutant": "return parentheses option reversed",
+    "test": "TestMutants/return_parentheses_option_reversed",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "no-script-url",
+    "slug": "no-script-url",
+    "mutant": "no-script-url-case-fold",
+    "test": "TestMutants/no-script-url-case-fold",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "no-self-compare",
+    "slug": "no-self-compare",
+    "mutant": "self-comparison-equality-reversed",
+    "test": "TestMutants/self-comparison-equality-reversed",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "no-sequences",
+    "slug": "no-sequences",
+    "mutant": "comma chain reports inner",
+    "test": "TestMutants/comma_chain_reports_inner",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "no-sparse-arrays",
+    "slug": "no-sparse-arrays",
+    "mutant": "destructuring hole reported",
+    "test": "TestMutants/destructuring_hole_reported",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "no-template-curly-in-string",
+    "slug": "no-template-curly-in-string",
+    "mutant": "empty placeholder reported",
+    "test": "TestMutants/empty_placeholder_reported",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "no-this-before-super",
+    "slug": "no-this-before-super",
+    "mutant": "no-this-before-super-violation-reversed",
+    "test": "TestMutants/no-this-before-super-violation-reversed",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "no-throw-literal",
+    "slug": "no-throw-literal",
+    "mutant": "non Error throw suppressed",
+    "test": "TestMutants/non_Error_throw_suppressed",
+    "caught": [
+      "Node",
+      "emitted JavaScript",
+      "native"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "no-underscore-dangle",
+    "slug": "no-underscore-dangle",
+    "mutant": "constructor-property-name-ignored",
+    "test": "TestMutants/constructor-property-name-ignored",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "no-unexpected-multiline",
+    "slug": "no-unexpected-multiline",
+    "mutant": "no-unexpected-multiline mutant from batch 8",
+    "test": "TestMutants/no-unexpected-multiline_mutant_from_batch_8",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-unnecessary-boolean-literal-compare",
+    "slug": "no-unnecessary-boolean-literal-compare",
+    "mutant": "boolean type verdict inverted",
+    "test": "TestMutants/boolean_type_verdict_inverted",
+    "caught": [
+      "Node",
+      "emitted JavaScript",
+      "native"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "no-unneeded-ternary",
+    "slug": "no-unneeded-ternary",
+    "mutant": "boolean inverse changed",
+    "test": "TestMutants/boolean_inverse_changed",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "no-unsafe-finally",
+    "slug": "no-unsafe-finally",
+    "mutant": "finally continue incorrectly absorbed by switch",
+    "test": "TestMutants/finally_continue_incorrectly_absorbed_by_switch",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "no-unsafe-negation",
+    "slug": "no-unsafe-negation",
+    "mutant": "ordering-relations-ignored",
+    "test": "TestMutants/ordering-relations-ignored",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "no-unsafe-optional-chaining",
+    "slug": "no-unsafe-optional-chaining",
+    "mutant": "and-left-undefined-ignored",
+    "test": "TestMutants/and-left-undefined-ignored",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "no-unused-labels",
+    "slug": "no-unused-labels",
+    "mutant": "continue target ignored",
+    "test": "TestMutants/continue_target_ignored",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "no-unused-private-class-members",
+    "slug": "no-unused-private-class-members",
+    "mutant": "no-unused-private-class-members mutant from batch 8",
+    "test": "TestMutants/no-unused-private-class-members_mutant_from_batch_8",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "no-useless-call",
+    "slug": "no-useless-call",
+    "mutant": "no-useless-call-single-argument-lost",
+    "test": "TestMutants/no-useless-call-single-argument-lost",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "no-useless-catch",
+    "slug": "no-useless-catch",
+    "mutant": "no-useless-catch finally repair range reversed",
+    "test": "TestMutants/no-useless-catch_finally_repair_range_reversed",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "no-useless-concat",
+    "slug": "no-useless-concat",
+    "mutant": "concat substituted template ignored",
+    "test": "TestMutants/concat_substituted_template_ignored",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "no-useless-constructor",
+    "slug": "no-useless-constructor",
+    "mutant": "no-useless-constructor mutant from batch 8",
+    "test": "TestMutants/no-useless-constructor_mutant_from_batch_8",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "no-useless-escape",
+    "slug": "no-useless-escape",
+    "mutant": "no-useless-escape drops quoted findings",
+    "test": "TestMutants/no-useless-escape_drops_quoted_findings",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "no-useless-rename",
+    "slug": "no-useless-rename",
+    "mutant": "no-useless-rename-import-side",
+    "test": "TestMutants/no-useless-rename-import-side",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "no-var",
+    "slug": "no-var",
+    "mutant": "var declaration suppressed",
+    "test": "TestMutants/var_declaration_suppressed",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "no-warning-comments",
+    "slug": "no-warning-comments",
+    "mutant": "comment self directive exemption removed",
+    "test": "TestMutants/comment_self_directive_exemption_removed",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "no-with",
+    "slug": "no-with",
+    "mutant": "with statement underlined whole",
+    "test": "TestMutants/with_statement_underlined_whole",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "one-var",
+    "slug": "one-var",
+    "mutant": "one-var-combine-message",
+    "test": "TestMutants/one-var-combine-message",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "operator-assignment",
+    "slug": "operator-assignment",
+    "mutant": "operator-assignment-reversed-fix",
+    "test": "TestMutants/operator-assignment-reversed-fix",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "prefer-destructuring",
+    "slug": "prefer-destructuring",
+    "mutant": "prefer-destructuring-object-fix",
+    "test": "TestMutants/prefer-destructuring-object-fix",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/prefer-find",
+    "slug": "prefer-find",
+    "mutant": "prefer-find array verdict suppressed",
+    "test": "TestMutants/prefer-find_array_verdict_suppressed",
+    "caught": [
+      "Node",
+      "emitted JavaScript",
+      "native"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "prefer-spread",
+    "slug": "prefer-spread",
+    "mutant": "prefer-spread-null-receiver-reversed",
+    "test": "TestMutants/prefer-spread-null-receiver-reversed",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "prefer-template",
+    "slug": "prefer-template",
+    "mutant": "prefer-template mutant from batch 8",
+    "test": "TestMutants/prefer-template_mutant_from_batch_8",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "react/default-props-match-prop-types",
+    "slug": "react-default-props-match-prop-types",
+    "mutant": "required_defaults_allowed",
+    "test": "TestMutants/required_defaults_allowed",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "react/forbid-dom-props",
+    "slug": "react-forbid-dom-props",
+    "mutant": "forbidden-prop-restriction-inverted",
+    "test": "TestMutants/forbidden-prop-restriction-inverted",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "react/forward-ref-uses-ref",
+    "slug": "react-forward-ref-uses-ref",
+    "mutant": "react-forward-ref-uses-ref mutant from batch 8",
+    "test": "TestMutants/react-forward-ref-uses-ref_mutant_from_batch_8",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "react-hooks/error-boundaries",
+    "slug": "react-hooks-error-boundaries",
+    "mutant": "try block omitted",
+    "test": "TestMutants/try_block_omitted",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "react-hooks/void-use-memo",
+    "slug": "react-hooks-void-use-memo",
+    "mutant": "memo_return_detection_inverted",
+    "test": "TestMutants/memo_return_detection_inverted",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "react/jsx-curly-brace-presence",
+    "slug": "react-jsx-curly-brace-presence",
+    "mutant": "empty-string-is-whitespace",
+    "test": "TestMutants/empty-string-is-whitespace",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "react/jsx-no-comment-textnodes",
+    "slug": "react-jsx-no-comment-textnodes",
+    "mutant": "react-jsx-no-comment-textnodes mutant from batch 8",
+    "test": "TestMutants/react-jsx-no-comment-textnodes_mutant_from_batch_8",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": true,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "react/jsx-no-duplicate-props",
+    "slug": "react-jsx-no-duplicate-props",
+    "mutant": "duplicate-props-earlier-inverted",
+    "test": "TestMutants/duplicate-props-earlier-inverted",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "react/jsx-no-script-url",
+    "slug": "react-jsx-no-script-url",
+    "mutant": "script-url-protocol-inverted",
+    "test": "TestMutants/script-url-protocol-inverted",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "react/jsx-no-target-blank",
+    "slug": "react-jsx-no-target-blank",
+    "mutant": "target-blank-external-inverted",
+    "test": "TestMutants/target-blank-external-inverted",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "react/no-access-state-in-setstate",
+    "slug": "react-no-access-state-in-setstate",
+    "mutant": "state_read_receiver_inverted",
+    "test": "TestMutants/state_read_receiver_inverted",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "react/no-danger",
+    "slug": "react-no-danger",
+    "mutant": "dangerous-prop-inverted",
+    "test": "TestMutants/dangerous-prop-inverted",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "react/no-find-dom-node",
+    "slug": "react-no-find-dom-node",
+    "mutant": "react-no-find-dom-node mutant from batch 8",
+    "test": "TestMutants/react-no-find-dom-node_mutant_from_batch_8",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "react/no-is-mounted",
+    "slug": "react-no-is-mounted",
+    "mutant": "react-no-is-mounted mutant from batch 8",
+    "test": "TestMutants/react-no-is-mounted_mutant_from_batch_8",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "react/no-redundant-should-component-update",
+    "slug": "react-no-redundant-should-component-update",
+    "mutant": "react-no-redundant-should-component-update mutant from batch 8",
+    "test": "TestMutants/react-no-redundant-should-component-update_mutant_from_batch_8",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "react/no-set-state",
+    "slug": "react-no-set-state",
+    "mutant": "set_state_name_inverted",
+    "test": "TestMutants/set_state_name_inverted",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "react/no-unknown-property",
+    "slug": "react-no-unknown-property",
+    "mutant": "unknown-property-canonical-inverted",
+    "test": "TestMutants/unknown-property-canonical-inverted",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "react/no-unused-state",
+    "slug": "react-no-unused-state",
+    "mutant": "unused_state_read_inverted",
+    "test": "TestMutants/unused_state_read_inverted",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "react/require-optimization",
+    "slug": "react-require-optimization",
+    "mutant": "require-optimization-accept-class-field",
+    "test": "TestMutants/require-optimization-accept-class-field",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "react/state-in-constructor",
+    "slug": "react-state-in-constructor",
+    "mutant": "accept-plain-classes",
+    "test": "TestMutants/accept-plain-classes",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "require-yield",
+    "slug": "require-yield",
+    "mutant": "nested generator owns outer yield",
+    "test": "TestMutants/nested_generator_owns_outer_yield",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "structure/network-no-direct-fetch",
+    "slug": "structure-network-no-direct-fetch",
+    "mutant": "bare-fetch-omitted",
+    "test": "TestMutants/bare-fetch-omitted",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "structure/network-no-invalidate-cache-literal-key",
+    "slug": "structure-network-no-invalidate-cache-literal-key",
+    "mutant": "structure-network-no-invalidate-cache-literal-key_semantic",
+    "test": "TestMutants/structure-network-no-invalidate-cache-literal-key_semantic",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "structure/network-no-string-literal-query",
+    "slug": "structure-network-no-string-literal-query",
+    "mutant": "structure-network-no-string-literal-query_semantic",
+    "test": "TestMutants/structure-network-no-string-literal-query_semantic",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "structure/next-require-api-parameter-name",
+    "slug": "structure-next-require-api-parameter-name",
+    "mutant": "next-search-parameters-repair-wrong",
+    "test": "TestMutants/next-search-parameters-repair-wrong",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "structure/react-hook-require-effect-comment",
+    "slug": "structure-react-hook-require-effect-comment",
+    "mutant": "effect-comment-claim-inverted",
+    "test": "TestMutants/effect-comment-claim-inverted",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "structure/react-hook-require-result-naming",
+    "slug": "structure-react-hook-require-result-naming",
+    "mutant": "hook-single-invocation-gate-reversed",
+    "test": "TestMutants/hook-single-invocation-gate-reversed",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "structure/storage-no-direct-local-storage",
+    "slug": "structure-storage-no-direct-local-storage",
+    "mutant": "storage-window-receiver-wrong",
+    "test": "TestMutants/storage-window-receiver-wrong",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "structure/tailwind-no-physical-direction",
+    "slug": "structure-tailwind-no-physical-direction",
+    "mutant": "rtl exemption removed",
+    "test": "TestMutants/rtl_exemption_removed",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/adjacent-overload-signatures",
+    "slug": "typescript-adjacent-overload-signatures",
+    "mutant": "adjacent overload separation ignored",
+    "test": "TestMutants/adjacent_overload_separation_ignored",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/default-param-last",
+    "slug": "typescript-default-param-last",
+    "mutant": "optional_parameter_ignored",
+    "test": "TestMutants/optional_parameter_ignored",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/consistent-type-definitions",
+    "slug": "typescript-eslint-consistent-type-definitions",
+    "mutant": "object-alias-message-changed",
+    "test": "TestMutants/object-alias-message-changed",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-confusing-non-null-assertion",
+    "slug": "typescript-eslint-no-confusing-non-null-assertion",
+    "mutant": "wrap close parenthesis changed",
+    "test": "TestMutants/wrap_close_parenthesis_changed",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-duplicate-enum-values",
+    "slug": "typescript-eslint-no-duplicate-enum-values",
+    "mutant": "numeric duplicate anchor advances",
+    "test": "TestMutants/numeric_duplicate_anchor_advances",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-dynamic-delete",
+    "slug": "typescript-eslint-no-dynamic-delete",
+    "mutant": "unary plus accepted as static key",
+    "test": "TestMutants/unary_plus_accepted_as_static_key",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-extra-non-null-assertion",
+    "slug": "typescript-eslint-no-extra-non-null-assertion",
+    "mutant": "extra bang deleted from wrong position",
+    "test": "TestMutants/extra_bang_deleted_from_wrong_position",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-inferrable-types",
+    "slug": "typescript-eslint-no-inferrable-types",
+    "mutant": "number-inference",
+    "test": "TestMutants/number-inference",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-misused-new",
+    "slug": "typescript-eslint-no-misused-new",
+    "mutant": "getter named new silently skipped",
+    "test": "TestMutants/getter_named_new_silently_skipped",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-unnecessary-parameter-property-assignment",
+    "slug": "typescript-eslint-no-unnecessary-parameter-property-assignment",
+    "mutant": "trailing semicolon retained",
+    "test": "TestMutants/trailing_semicolon_retained",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/init-declarations",
+    "slug": "typescript-init-declarations",
+    "mutant": "init_declarations_always_span_includes_annotation",
+    "test": "TestMutants/init_declarations_always_span_includes_annotation",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/method-signature-style",
+    "slug": "typescript-method-signature-style",
+    "mutant": "method listener lost",
+    "test": "TestMutants/method_listener_lost",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-array-delete",
+    "slug": "typescript-no-array-delete",
+    "mutant": "wave14-no_array_delete",
+    "test": "TestMutants/wave14-no_array_delete",
+    "caught": [
+      "Node",
+      "emitted JavaScript",
+      "native"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-explicit-any",
+    "slug": "typescript-no-explicit-any",
+    "mutant": "typescript-no-explicit-any-message",
+    "test": "TestMutants/typescript-no-explicit-any-message",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-import-type-side-effects",
+    "slug": "typescript-no-import-type-side-effects",
+    "mutant": "inline type gate",
+    "test": "TestMutants/inline_type_gate",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-non-null-asserted-optional-chain",
+    "slug": "typescript-no-non-null-asserted-optional-chain",
+    "mutant": "parenthesized chain missed",
+    "test": "TestMutants/parenthesized_chain_missed",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-non-null-assertion",
+    "slug": "typescript-no-non-null-assertion",
+    "mutant": "postfix assignment suggestion",
+    "test": "TestMutants/postfix_assignment_suggestion",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-restricted-types",
+    "slug": "typescript-no-restricted-types",
+    "mutant": "allowed restricted type ban reported",
+    "test": "TestMutants/allowed_restricted_type_ban_reported",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-this-alias",
+    "slug": "typescript-no-this-alias",
+    "mutant": "parenthesized alias lost",
+    "test": "TestMutants/parenthesized_alias_lost",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-unused-expressions",
+    "slug": "typescript-no-unused-expressions",
+    "mutant": "identifier_expression_ignored",
+    "test": "TestMutants/identifier_expression_ignored",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-useless-empty-export",
+    "slug": "typescript-no-useless-empty-export",
+    "mutant": "module empty export fix suppressed",
+    "test": "TestMutants/module_empty_export_fix_suppressed",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/no-wrapper-object-types",
+    "slug": "typescript-no-wrapper-object-types",
+    "mutant": "wrapper Number ignored",
+    "test": "TestMutants/wrapper_Number_ignored",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/prefer-function-type",
+    "slug": "typescript-prefer-function-type",
+    "mutant": "array function type unwrapped",
+    "test": "TestMutants/array_function_type_unwrapped",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/prefer-literal-enum-member",
+    "slug": "typescript-prefer-literal-enum-member",
+    "mutant": "enum bitwise option ignored",
+    "test": "TestMutants/enum_bitwise_option_ignored",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/prefer-namespace-keyword",
+    "slug": "typescript-prefer-namespace-keyword",
+    "mutant": "export report span misplaced",
+    "test": "TestMutants/export_report_span_misplaced",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/prefer-reduce-type-parameter",
+    "slug": "typescript-prefer-reduce-type-parameter",
+    "mutant": "@typescript-eslint/prefer-reduce-type-parameter verdict omitted",
+    "test": "TestMutants/@typescript-eslint/prefer-reduce-type-parameter_verdict_omitted",
+    "caught": [
+      "Node",
+      "emitted JavaScript",
+      "native"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/triple-slash-reference",
+    "slug": "typescript-triple-slash-reference",
+    "mutant": "first repeated directive kept",
+    "test": "TestMutants/first_repeated_directive_kept",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "@typescript-eslint/unified-signatures",
+    "slug": "typescript-unified-signatures",
+    "mutant": "parameter_difference_silenced",
+    "test": "TestMutants/parameter_difference_silenced",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "unicode-bom",
+    "slug": "unicode-bom",
+    "mutant": "bom removes two marks",
+    "test": "TestMutants/bom_removes_two_marks",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "vars-on-top",
+    "slug": "vars-on-top",
+    "mutant": "directive prefix ignored",
+    "test": "TestMutants/directive_prefix_ignored",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "base/correctness-require-verify-optional-parity",
+    "slug": "verify-optional-parity",
+    "mutant": "Only root nullability accepted",
+    "test": "TestMutants/Only_root_nullability_accepted",
+    "caught": [
+      "Node",
+      "emitted JavaScript",
+      "native"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  },
+  {
+    "rule": "yoda",
+    "slug": "yoda",
+    "mutant": "ignore-yoda-range-exemption",
+    "test": "TestMutants/ignore-yoda-range-exemption",
+    "caught": [
+      "Node",
+      "emitted JavaScript"
+    ],
+    "native_canary": false,
+    "run_event": true,
+    "terminal": [
+      "pass"
+    ]
+  }
+]
