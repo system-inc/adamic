@@ -1,0 +1,16 @@
+// A narrowed global read (ir.Defined) is a consumer in borrow.go, so its Read is lent without a
+// count, and Defined hands that uncounted pointer up to a call whose later argument frees it.
+interface Box {
+	v: string;
+}
+let g: Box | undefined = { v: `a${1}` };
+function reset(): number {
+	g = { v: `b${2}` };
+	return 0;
+}
+function show(box: Box, n: number): string {
+	return `${box.v}${n}`;
+}
+if (g !== undefined) {
+	console.log(show(g, reset()));
+}

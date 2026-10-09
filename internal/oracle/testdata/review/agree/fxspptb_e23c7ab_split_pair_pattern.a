@@ -1,0 +1,12 @@
+const high = '\ud83c';
+const joined = new RegExp(high + '\udf0d', 'u');
+console.log(`${joined.test('\u{1F30D}')} ${joined.test('🌍')}`);
+const quantified = new RegExp(high + '\udf0d+', 'u');
+const run = quantified.exec('\u{1F30D}\u{1F30D}');
+console.log(run === null ? 'null' : `${run[0].length}`);
+const plain = new RegExp('🌍', 'u');
+console.log(`${plain.test('\u{1F30D}')}`);
+const legacy = new RegExp(high + '\udf0d+');
+const legacyRun = legacy.exec('\u{1F30D}\udf0d');
+console.log(legacyRun === null ? 'null' : `${legacyRun[0].length}`);
+console.log(`${joined.source === '\u{1F30D}'} ${joined.source.length}`);

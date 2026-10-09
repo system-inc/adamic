@@ -1,0 +1,5 @@
+function convert<T extends string | undefined>(value: T): string {
+ return String(value);
+}
+console.log(convert<string>('a'));
+console.log(convert<string | undefined>(undefined));

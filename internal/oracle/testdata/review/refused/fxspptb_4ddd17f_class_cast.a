@@ -1,0 +1,15 @@
+// Ways a value without the class's layout might be seen as the class: a cast, a generic, a spread.
+class Point {
+	y = 0;
+	x = 0;
+	label = 'p'.repeat(1);
+}
+function read(point: Point): string {
+	return `${point.label} ${point.x} ${point.y}`;
+}
+const made = new Point();
+const cast = { x: 1, label: 'cast'.repeat(1), y: 2 } as Point;
+console.log(read(cast));
+console.log(`${cast.label} ${cast.x} ${cast.y}`);
+cast.y += 5;
+console.log(`${cast.label} ${cast.x} ${cast.y}`);

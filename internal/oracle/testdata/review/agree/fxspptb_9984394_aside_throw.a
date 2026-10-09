@@ -1,0 +1,32 @@
+// A throw from inside the branch of a ?:, an && and a ??, while the statement already owns strings it
+// built before the branch: each is let go on the way out.
+function checked(text: string): string {
+	if (text.length > 4) {
+		throw new Error(`too long: ${text}`);
+	}
+	return `${text}.`;
+}
+function passes(text: string): boolean {
+	return checked(text).length > 0;
+}
+function lookup(table: Map<string, string>, key: string): string {
+	return `${key}=` + (table.get(key) ?? checked(key));
+}
+const table = new Map<string, string>([['a', 'one']]);
+for (const word of ['ab', 'abcdef']) {
+	try {
+		console.log(`${word}:` + (word.length > 0 ? checked(word) : 'empty'));
+	} catch (error) {
+		console.log(error instanceof Error ? error.message : '?');
+	}
+	try {
+		console.log(`${word};` + `${word.length > 1 && passes(word)}`);
+	} catch (error) {
+		console.log(error instanceof Error ? error.message : '?');
+	}
+	try {
+		console.log(lookup(table, `${word}`));
+	} catch (error) {
+		console.log(error instanceof Error ? error.message : '?');
+	}
+}
