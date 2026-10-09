@@ -347,7 +347,7 @@ class LandingTests(unittest.TestCase):
         self.assertLanded(self.push('--test-only', beside, 'beside'), moved, beside)
 
 
-    def publish(self, sha, name, record, failing=(), kind='fast', jsonOnly=False, extra=None):
+    def publish(self, sha, name, record, failing=(), kind='fast', jsonOnly=False, extra=None, outputs=None):
         # A gate-logs record on origin: status.txt, its json and a test record, in a commit of their own.
         tree = Path(self.tmp.name) / ('record-' + name + sha[:6])
         tree.mkdir()
@@ -361,6 +361,8 @@ class LandingTests(unittest.TestCase):
             (tree / (kind + '.json')).write_text(json.dumps(record))
         else:
             events = [{'Action': 'fail', 'Package': 'github.com/system-inc/adamic/' + package, 'Test': test} for package, test in failing]
+            for (package, test), lines in (outputs or {}).items():
+                events += [{'Action': 'output', 'Package': 'github.com/system-inc/adamic/' + package, 'Test': test, 'Output': line} for line in lines]
             events.append({'Action': 'pass', 'Package': 'github.com/system-inc/adamic/other', 'Test': 'TestFine'})
             (tree / 'test.jsonl.gz').write_bytes(gzip.compress('\n'.join(json.dumps(event) for event in events).encode()))
         index = str(Path(self.tmp.name) / ('index-' + name))
@@ -416,7 +418,8 @@ class LandingTests(unittest.TestCase):
                                    'build_ok': True, 'vet_ok': True, 'uncached_tests': True, 'wall_seconds': 60,
                                    'steps_seconds': {stage: 5 for stage in ('build', 'vet', 'tests', 'smoke', 'census')},
                                    'stages_exit': dict({stage: 0 for stage in ('build', 'vet', 'smoke', 'census')}, tests=1),
-                                   'planned_stages': ['build', 'vet', 'tests', 'smoke', 'census']}, failing=[known, ('code', 'TestRuled')])
+                                   'planned_stages': ['build', 'vet', 'tests', 'smoke', 'census']}, failing=[known, ('code', 'TestRuled')],
+                                   outputs={('code', 'TestRuled'): ['    ruled_test.go:9: phase command oracle 90.04s\n', '    ruled_test.go:9: oracle: signal: killed\n']})
         self.assertIn('new reds against main: code TestRuled', self.push('--fast-gate', ruledRecord, '--main-reds', main, ruled, 'ruled').stderr)
         self.assertIn('new reds against main: code TestNew', self.push('--fast-gate', freshRecord, '--main-reds', main, '--infra-red', 'code TestRuled=#t4b9j71', fresh, 'fresh').stderr)
         landed = self.assertLanded(self.push('--fast-gate', ruledRecord, '--main-reds', main, '--infra-red', 'code TestRuled=#t4b9j71 timing kill', ruled, 'ruled'),
@@ -430,10 +433,20 @@ class LandingTests(unittest.TestCase):
                                 'build_ok': True, 'vet_ok': True, 'uncached_tests': True, 'wall_seconds': 60,
                                 'steps_seconds': {stage: 5 for stage in ('build', 'vet', 'tests', 'smoke', 'census')},
                                 'stages_exit': dict({stage: 0 for stage in ('build', 'vet', 'smoke', 'census')}, tests=1),
-                                'planned_stages': ['build', 'vet', 'tests', 'smoke', 'census']}, failing=failing)
+                                'planned_stages': ['build', 'vet', 'tests', 'smoke', 'census']}, failing=failing,
+                                outputs={('code', 'TestRuled'): ['    ruled_test.go:9: watchdog: package exceeded 90s\n']})
         twoReds = aloneRecord('two', [('code', 'TestRuled'), ('code', 'TestOther')])
         self.assertIn('reds not ruled infra: code TestOther', self.push('--fast-gate', twoReds, '--infra-red', 'code TestRuled=#t4b9j71', alone, 'two').stderr)
         oneRed = aloneRecord('one', [('code', 'TestRuled')])
+        # The class is checked on the output: a ruled name whose failure asserts is the candidate's, whatever the ruling.
+        asserted = self.publish(alone, 'asserted', {'sha': alone, 'base': now, 'finished': True, 'skip': 0, 'packages': ['other'], 'fail': 1, 'pass': 10,
+                                'build_ok': True, 'vet_ok': True, 'uncached_tests': True, 'wall_seconds': 60,
+                                'steps_seconds': {stage: 5 for stage in ('build', 'vet', 'tests', 'smoke', 'census')},
+                                'stages_exit': dict({stage: 0 for stage in ('build', 'vet', 'smoke', 'census')}, tests=1),
+                                'planned_stages': ['build', 'vet', 'tests', 'smoke', 'census']}, failing=[('code', 'TestRuled')],
+                                outputs={('code', 'TestRuled'): ['    ruled_test.go:12: got 3, want 4\n', '    ruled_test.go:9: oracle: signal: killed\n']})
+        self.assertIn('is named infra but its output asserts: ruled_test.go:12: got 3, want 4',
+                      self.push('--fast-gate', asserted, '--infra-red', 'code TestRuled=#t4b9j71', alone, 'asserted').stderr)
         # Its one red is excused, so it reaches the pause rule, which main's red record here still holds.
         self.assertIn('landings are paused', self.push('--fast-gate', oneRed, '--infra-red', 'code TestRuled=#t4b9j71', alone, 'one').stderr)
 

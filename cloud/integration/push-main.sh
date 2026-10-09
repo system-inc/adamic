@@ -343,6 +343,40 @@ for ref in records:
     if names is None and ref == records[0]:
         sys.exit("%s has no test record to compare" % ref)
     ours |= names or set()
+# The standing class (@system_adamic, Oct 9 05:38): a red is infra by exact name only when its output is a test-owned
+# time limit (a per-command kill, a package watchdog) with no assertion text at all. --infra-red names it and its
+# evidence; this checks the output so a ruled name can't hide a real failure of the same test.
+import re
+timeLimit = re.compile(r"signal: killed|exceeded|watchdog|deadline|timed out|cooked")
+assertion = re.compile(r"\b(want|got|expected|mismatch|differs?|disagree)\b", re.I)
+def outputOf(ref, package, test):
+    raw = subprocess.run(["git", "show", ref + ":test.jsonl.gz"], capture_output=True).stdout
+    if not raw:
+        return None
+    lines = []
+    for line in gzip.decompress(raw).decode(errors="replace").splitlines():
+        try:
+            event = json.loads(line)
+        except ValueError:
+            continue
+        name = event.get("Test") or ""
+        if event.get("Action") == "output" and event.get("Package", "").endswith("/" + package) and (name == test or name.startswith(test + "/")):
+            lines.append(event.get("Output", ""))
+    return lines
+for name in sorted(ruled & ours):
+    package, test = name.split(" ", 1)
+    lines = None
+    for ref in records:
+        lines = outputOf(ref, package, test)
+        if lines:
+            break
+    if not lines:
+        sys.exit("%s is named infra but its output isn't in the record to check" % name)
+    if not any(timeLimit.search(line) for line in lines):
+        sys.exit("%s is named infra but its output shows no test-owned time limit" % name)
+    asserted = [line.strip() for line in lines if assertion.search(line)]
+    if asserted:
+        sys.exit("%s is named infra but its output asserts: %s" % (name, asserted[0][:120]))
 new = sorted(ours - onMain)
 if new:
     sys.exit(("new reds against main: " if mainRef != "origin/" else "reds not ruled infra: ") + "; ".join(new[:8]))
@@ -357,7 +391,7 @@ fast["stages_exit"] = {stage: (0 if stage == "tests" else code) for stage, code 
 json.dump(fast, open(path, "w"))
 print(len(ours))
 MAINREDS
-) || { echo "refused: ${mainReds:+--main-reds ${mainReds}}${mainReds:---infra-red}: ${known}" >&2; exit 1; }
+) || { echo "refused: $([ -n "$mainReds" ] && echo "--main-reds ${mainReds}" || echo "--infra-red"): ${known}" >&2; exit 1; }
 		statusLine="green: ${sha} with ${known} reds main already has or ruled infra (${mainReds:-no main record})"
 		[ -z "$mainReds" ] || branches="${branches}; lands with ${known} reds main already has or ruled infra (${mainReds}), owned on main's red list"
 		[ "${#ruledReds[@]}" -eq 0 ] || branches="${branches}; ruled infra, not the candidate's: $(printf '%s; ' "${ruledReds[@]}" | sed 's/; $//')"
