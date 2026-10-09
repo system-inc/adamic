@@ -2,9 +2,9 @@
 
 Source rows on base 571e74cf555b9db994c5dec6c2f8dbee676e5111. Numbered rows use original table order. Refuse includes NotYet and direct proof diagnostics. IR-only means assertions of internal facts, including proof analysis. Helper definitions and shared source prefixes are not rows. Fixture extensions are separate source rows.
 
-{'accept': 71, 'refuse': 194, 'IR-only': 33}; total 298.
+{'accept': 71, 'refuse': 198, 'IR-only': 33}; total 302.
 
-Scope is the eight named files; helper-copy examples outside this territory were not edited. No new oracle fixture, so counts.md needs no refresh. Skipped conversions preserve every original row and assertion.
+Scope is the eight named files plus the added census_predicate_interaction_test.go; helper-copy examples outside this territory were not edited. No new oracle fixture, so counts.md needs no refresh. Skipped conversions preserve every original row and assertion.
 
 | file | test | row | class | what I did | why |
 |---|---|---|---|---|---|
@@ -306,3 +306,7 @@ Scope is the eight named files; helper-copy examples outside this territory were
 | lower_test.go | TestAMethodReadAsAValueIsRefused | called through parentheses | accept | agreement | Execute original method call and print result |
 | lower_test.go | TestAMethodReadAsAValueIsRefused | called in an arrow | accept | agreement | Execute original method call and print result |
 | lower_test.go | TestAMethodReadAsAValueIsRefused | a field holding a function | accept | skipped conversion | Observed NotYet: method through view erases prototype origin; old assertion permits it |
+| census_predicate_interaction_test.go | TestCensusPredicateInteractionBoundary | 1 | refuse | shared bounded source runner | All rows in this file require Refused; acceptance helper cannot represent required refusal; preserve independent source declaration observation |
+| census_predicate_interaction_test.go | TestCensusPredicateInteractionEscapes | function alias | refuse | unchanged | Pinned lowering or proof refusal |
+| census_predicate_interaction_test.go | TestCensusPredicateInteractionEscapes | callback escape | refuse | unchanged | Pinned lowering or proof refusal |
+| census_predicate_interaction_test.go | TestCensusPredicateInteractionEscapes | exported function | refuse | unchanged | Pinned lowering or proof refusal |

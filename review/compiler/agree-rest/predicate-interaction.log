@@ -1,0 +1,22 @@
+=== RUN   TestCensusPredicateInteractionBoundary
+=== PAUSE TestCensusPredicateInteractionBoundary
+=== RUN   TestCensusPredicateInteractionEscapes
+=== PAUSE TestCensusPredicateInteractionEscapes
+=== CONT  TestCensusPredicateInteractionBoundary
+=== CONT  TestCensusPredicateInteractionEscapes
+=== RUN   TestCensusPredicateInteractionEscapes/function_alias
+=== PAUSE TestCensusPredicateInteractionEscapes/function_alias
+=== RUN   TestCensusPredicateInteractionEscapes/callback_escape
+=== PAUSE TestCensusPredicateInteractionEscapes/callback_escape
+=== RUN   TestCensusPredicateInteractionEscapes/exported_function
+=== PAUSE TestCensusPredicateInteractionEscapes/exported_function
+=== CONT  TestCensusPredicateInteractionEscapes/function_alias
+=== CONT  TestCensusPredicateInteractionEscapes/exported_function
+=== CONT  TestCensusPredicateInteractionEscapes/callback_escape
+--- PASS: TestCensusPredicateInteractionEscapes (0.00s)
+    --- PASS: TestCensusPredicateInteractionEscapes/function_alias (0.06s)
+    --- PASS: TestCensusPredicateInteractionEscapes/callback_escape (0.06s)
+    --- PASS: TestCensusPredicateInteractionEscapes/exported_function (0.07s)
+--- PASS: TestCensusPredicateInteractionBoundary (0.09s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.104s

@@ -1,0 +1,30 @@
+=== RUN   TestCensusPredicateInteractionBoundary
+=== PAUSE TestCensusPredicateInteractionBoundary
+=== RUN   TestCensusPredicateInteractionEscapes
+=== PAUSE TestCensusPredicateInteractionEscapes
+=== CONT  TestCensusPredicateInteractionBoundary
+=== CONT  TestCensusPredicateInteractionEscapes
+=== RUN   TestCensusPredicateInteractionEscapes/function_alias
+=== PAUSE TestCensusPredicateInteractionEscapes/function_alias
+=== RUN   TestCensusPredicateInteractionEscapes/callback_escape
+=== PAUSE TestCensusPredicateInteractionEscapes/callback_escape
+=== RUN   TestCensusPredicateInteractionEscapes/exported_function
+=== PAUSE TestCensusPredicateInteractionEscapes/exported_function
+=== CONT  TestCensusPredicateInteractionEscapes/function_alias
+=== CONT  TestCensusPredicateInteractionEscapes/exported_function
+=== CONT  TestCensusPredicateInteractionEscapes/callback_escape
+    census_predicate_interaction_test.go:55: want unproven live callback refused, got <nil>
+=== NAME  TestCensusPredicateInteractionEscapes/exported_function
+    census_predicate_interaction_test.go:55: want unproven live callback refused, got <nil>
+=== NAME  TestCensusPredicateInteractionEscapes/function_alias
+    census_predicate_interaction_test.go:55: want unproven live callback refused, got <nil>
+--- FAIL: TestCensusPredicateInteractionEscapes (0.00s)
+    --- FAIL: TestCensusPredicateInteractionEscapes/callback_escape (0.06s)
+    --- FAIL: TestCensusPredicateInteractionEscapes/exported_function (0.07s)
+    --- FAIL: TestCensusPredicateInteractionEscapes/function_alias (0.07s)
+=== NAME  TestCensusPredicateInteractionBoundary
+    census_predicate_interaction_test.go:33: want marker proof boundary diagnostic, got <nil>
+--- FAIL: TestCensusPredicateInteractionBoundary (0.11s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.116s
+FAIL
