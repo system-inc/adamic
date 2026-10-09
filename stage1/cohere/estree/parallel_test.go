@@ -30,7 +30,6 @@ var buildGuard = childguard.Options{FirstOutput: 5 * time.Minute, Stall: 5 * tim
 
 var artifactsRoot string
 var artifactsMu sync.Mutex
-var sharedOracle string
 var sharedSource, sharedScript string
 var sharedBuilds = make(map[bool]string)
 
@@ -72,15 +71,6 @@ func artifactDir(t *testing.T) string {
 		t.Fatal(err)
 	}
 	return dir
-}
-func goOracle(t *testing.T) string {
-	t.Helper()
-	artifactsMu.Lock()
-	defer artifactsMu.Unlock()
-	if sharedOracle == "" {
-		sharedOracle = buildGoOracle(t)
-	}
-	return sharedOracle
 }
 func build(t *testing.T, path string, sanitize bool) (string, string) {
 	t.Helper()

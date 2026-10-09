@@ -58,8 +58,9 @@ func TestDecoratedExportMutant(t *testing.T) {
 	cases := decoratedExports()
 	ids := miscIDs("stage1/cohere/estree/exports_test.go:export-mutant", cases)
 	oracle := miscOracle(t)
-	path := miscMutant(t, "convert.ts", "this.arena.node(wrapper).start = this.start(exported);", "this.arena.node(wrapper).start = this.start(id);")
-	binary, script := miscBuild(t, path)
+	path := estreeExportMutantPath(t)
+	binary, _ := miscBuild(t, path)
+	script := mutantEmittedProduct(t, path)
 	answers := miscTextAnswers(t, oracle, cases, ".ts")
 	finishSetup()
 	miscRunShards(t, testDecoratedExportMutantShards, ids, func(t *testing.T, i int) {

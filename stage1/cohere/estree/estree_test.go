@@ -42,27 +42,6 @@ func root(t *testing.T) string {
 	}
 	return path
 }
-func buildGoOracle(t *testing.T) string {
-	t.Helper()
-	repo := root(t)
-	source, err := filepath.Abs("testdata/oracle.go")
-	if err != nil {
-		t.Fatal(err)
-	}
-	virtual := filepath.Join(repo, "cohere/adamic_estree_oracle.go")
-	overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: source}})
-	if err != nil {
-		t.Fatal(err)
-	}
-	dir := artifactDir(t)
-	path := filepath.Join(dir, "overlay.json")
-	if err := os.WriteFile(path, overlay, 0644); err != nil {
-		t.Fatal(err)
-	}
-	binary := filepath.Join(dir, "oracle")
-	execute(t, filepath.Join(repo, "cohere"), "go", "build", "-overlay="+path, "-o", binary, virtual)
-	return binary
-}
 func onNode(t *testing.T, path string, args ...string) []byte {
 	t.Helper()
 	argv := []string{"--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), path}
