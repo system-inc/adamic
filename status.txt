@@ -1,1 +1,1 @@
-red: 6b2c73f937fb5b9603668ede18c467bc0b3535fb first failure at tests after 606.7 s (parity: running to the end)
+red: 6b2c73f937fb5b9603668ede18c467bc0b3535fb full gate, first failure at tests after 606.7 s (coverage=0.0s build=4.2s tools=0.1s vet=0.8s wasi=47.2s catalog=95.0s stage3=566.2s tests=2985.5s census=11.6s; 235 units over 30 s (26846 s, 172 on the burn-down, 63 drifted over); pending skips: oracle TestEntriesAcceptance (awaits codex/step12-entries-fixtures)), 1 fail, 10250 pass
