@@ -1,0 +1,346 @@
+[
+  {
+    "test": "TestProduct_YamlScalarsLowered",
+    "package": "stage1/cohere/yaml",
+    "file": "stage1/cohere/yaml/scalars_match_go_shards_test.go",
+    "seconds": 0.115,
+    "oracle": "Product construction success and nonempty directory guard; no output comparison, empty helper return is ignored",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "S1: scalars_match_go_shards_test.go:115: build yaml-scalars-lowered: load: no file at /workspace/adamic/stage1/cohere/yaml/missing.ts",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": true,
+    "matrix_rows": [
+      "TestProduct_YamlScalarsLowered"
+    ],
+    "evidence": "ADAMIC_YAML_LIBRARY=/tmp/u153/library ADAMIC_AUDIT_SELECTOR=S1 ADAMIC_BUILD_CACHE_DIR=/tmp/u153/cache/S1 timeout 95 go test -overlay=/tmp/u153/harness-overlay.json -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^TestProduct_YamlScalarsLowered$; scalars_match_go_shards_test.go:115: build yaml-scalars-lowered: load: no file at /workspace/adamic/stage1/cohere/yaml/missing.ts",
+    "construction_kills": [
+      "S1"
+    ]
+  },
+  {
+    "test": "TestProduct_YamlScalarsNative",
+    "package": "stage1/cohere/yaml",
+    "file": "stage1/cohere/yaml/scalars_match_go_shards_test.go",
+    "seconds": 0.213,
+    "oracle": "Product construction success and nonempty directory guard; no output comparison, empty helper return is ignored",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "S2: scalars_match_go_shards_test.go:152: build yaml-scalars-native: open /tmp/u153/cache/S2/51de8eea2ef43418018d3550824b4eb66fb8aa363d72096501c6f9a4b55fc80e/missing.c: no such file or directory",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": true,
+    "matrix_rows": [
+      "TestProduct_YamlScalarsNative"
+    ],
+    "evidence": "ADAMIC_YAML_LIBRARY=/tmp/u153/library ADAMIC_AUDIT_SELECTOR=S2 ADAMIC_BUILD_CACHE_DIR=/tmp/u153/cache/S2 timeout 95 go test -overlay=/tmp/u153/harness-overlay.json -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^TestProduct_YamlScalarsNative$; scalars_match_go_shards_test.go:152: build yaml-scalars-native: open /tmp/u153/cache/S2/51de8eea2ef43418018d3550824b4eb66fb8aa363d72096501c6f9a4b55fc80e/missing.c: no such file or directory",
+    "construction_kills": [
+      "S2"
+    ]
+  },
+  {
+    "test": "TestProduct_YamlScalarsGo",
+    "package": "stage1/cohere/yaml",
+    "file": "stage1/cohere/yaml/scalars_match_go_shards_test.go",
+    "seconds": 0.118,
+    "oracle": "Product construction success and nonempty directory guard; no output comparison, empty helper return is ignored",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "S3: scalars_match_go_shards_test.go:175: build yaml-scalars-go: Go scalar build: exit status 2",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": true,
+    "matrix_rows": [
+      "TestProduct_YamlScalarsGo"
+    ],
+    "evidence": "ADAMIC_YAML_LIBRARY=/tmp/u153/library ADAMIC_AUDIT_SELECTOR=S3 ADAMIC_BUILD_CACHE_DIR=/tmp/u153/cache/S3 timeout 95 go test -overlay=/tmp/u153/harness-overlay.json -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^TestProduct_YamlScalarsGo$; scalars_match_go_shards_test.go:175: build yaml-scalars-go: Go scalar build: exit status 2",
+    "construction_kills": [
+      "S3"
+    ]
+  },
+  {
+    "test": "TestScalarsMatchGo family",
+    "package": "stage1/cohere/yaml",
+    "file": "stage1/cohere/yaml/scalars_match_go_shards_test.go",
+    "seconds": 5.348,
+    "oracle": "Complete output bytes against unchanged Go cohere and yaml@2.9.0; native sanitized, source Node and emitted JavaScript also run",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M1",
+      "M4"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M4-leaf-000: scalars_match_go_shards_test.go:362: /tmp/u153/cache/M4/158f71da413a05a1f62b6bd0db01687b09bf6e2395a50dd9260cce20ab3e05aa/scalars: signal: killed",
+    "verdict": "overlapping",
+    "subsumed_by": [
+      "TestUnistMatchesGo",
+      "TestSpeedCostProbes"
+    ],
+    "mutants_in_matrix": 2,
+    "probe_kills": [
+      "P4"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestScalarsMatchGo family",
+      "TestSchemaMatchesGo",
+      "TestSpeedCostProbes",
+      "TestUnistMatchesGo",
+      "TestWidthsMatchGo"
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/u153/cache/M4 ADAMIC_YAML_LIBRARY=/tmp/u153/library timeout 95 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run '^TestScalarsMatchGo_000$'; scalars_match_go_shards_test.go:362: /tmp/u153/cache/M4/158f71da413a05a1f62b6bd0db01687b09bf6e2395a50dd9260cce20ab3e05aa/scalars: signal: killed",
+    "members": [
+      "TestScalarsMatchGoUnion",
+      "TestScalarsMatchGo_000",
+      "TestScalarsMatchGo_001",
+      "TestScalarsMatchGo_002",
+      "TestScalarsMatchGo_003",
+      "TestScalarsMatchGo_004",
+      "TestScalarsMatchGo_005",
+      "TestScalarsMatchGo_006",
+      "TestScalarsMatchGo_007"
+    ],
+    "vacuous_subcases": [
+      "TestScalarsMatchGoUnion"
+    ],
+    "bounded_member_observations": {
+      "M4": "Only _000 completed with its own subprocess deadline; other shard results unknown"
+    }
+  },
+  {
+    "test": "TestScalarsMatchGoPlantedFailure",
+    "package": "stage1/cohere/yaml",
+    "file": "stage1/cohere/yaml/scalars_match_go_shards_test.go",
+    "seconds": 0.766,
+    "oracle": "Go cohere control plus deliberate stdout corruption; exactly one owning shard must report disagreement",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W1: scalars_match_go_shards_test.go:357: planted stdout disagreement caught by []; want one owner",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestScalarsMatchGoPlantedFailure"
+    ],
+    "evidence": "ADAMIC_YAML_LIBRARY=/tmp/u153/library ADAMIC_AUDIT_SELECTOR=W1 timeout 95 go test -overlay=/tmp/u153/harness-overlay.json -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^TestScalarsMatchGoPlantedFailure$; scalars_match_go_shards_test.go:357: planted stdout disagreement caught by []; want one owner",
+    "witness_kills": [
+      "W1"
+    ]
+  },
+  {
+    "test": "TestSchemaMatchesGo",
+    "package": "stage1/cohere/yaml",
+    "file": "stage1/cohere/yaml/schema_test.go",
+    "seconds": 2.647,
+    "oracle": "Complete schema bitmap bytes against Go cohere and yaml@2.9.0",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M2"
+    ],
+    "unique_kills": [
+      "M2"
+    ],
+    "last_proven_fail": "M2: schema_test.go:102: native ASan/UBSan/LSan: byte 968: got \"0000000000000000000\\n34|00000000000000000000000\\n35|00000000000000000000000\\n36|10010000010000000000000\\n37|10010000010000000000000\\n38|10010000010000000000000\\n39|10\", want \"0000000000000000000\\n34|00000000000000000000000\\n35|00000000000000000000000\\n36|10000000010000000000000\\n37|10000000010000000000000\\n38|10000000010000000000000\\n39|10\"",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 2,
+    "probe_kills": [
+      "P5"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestScalarsMatchGo family",
+      "TestSchemaMatchesGo",
+      "TestSpeedCostProbes",
+      "TestUnistMatchesGo",
+      "TestWidthsMatchGo"
+    ],
+    "evidence": "ADAMIC_YAML_LIBRARY=/tmp/u153/library ADAMIC_BUILD_CACHE_DIR=/tmp/u153/cache/M2 timeout 95 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^(TestSchemaMatchesGo|TestUnistMatchesGo)$; schema_test.go:102: native ASan/UBSan/LSan: byte 968: got \"0000000000000000000\\n34|00000000000000000000000\\n35|00000000000000000000000\\n36|10010000010000000000000\\n37|10010000010000000000000\\n38|10010000010000000000000\\n39|10\", want \"0000000000000000000\\n34|00000000000000000000000\\n35|00000000000000000000000\\n36|10000000010000000000000\\n37|10000000010000000000000\\n38|10000000010000000000000\\n39|10\""
+  },
+  {
+    "test": "TestSchemaMutants",
+    "package": "stage1/cohere/yaml",
+    "file": "stage1/cohere/yaml/schema_test.go",
+    "seconds": 3.067,
+    "oracle": "Deliberately changed native and Node ports must differ from Go cohere on every built-in mutation",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W2: schema_test.go:168: native missed mutant",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestSchemaMutants"
+    ],
+    "evidence": "ADAMIC_YAML_LIBRARY=/tmp/u153/library ADAMIC_AUDIT_SELECTOR=W2 timeout 95 go test -overlay=/tmp/u153/harness-overlay.json -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^TestSchemaMutants$; schema_test.go:168: native missed mutant",
+    "witness_kills": [
+      "W2"
+    ]
+  },
+  {
+    "test": "TestSpeedCostProbes",
+    "package": "stage1/cohere/yaml",
+    "file": "stage1/cohere/yaml/speed_gap_test.go",
+    "seconds": 2.615,
+    "oracle": "Native, original Node and emitted JavaScript each match handwritten checksums; different errors with the same sum can escape",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M4"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M4-TestSpeedCostProbes: speed_gap_test.go:69: slice native ASan/UBSan/LSan: got \"398400000\\n\", want \"52998400000\\n\"",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestScalarsMatchGo family"
+    ],
+    "mutants_in_matrix": 1,
+    "probe_kills": [
+      "P8"
+    ],
+    "subsumer_seconds": 5.348,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestScalarsMatchGo family",
+      "TestSchemaMatchesGo",
+      "TestSpeedCostProbes",
+      "TestUnistMatchesGo",
+      "TestWidthsMatchGo"
+    ],
+    "evidence": "ADAMIC_YAML_LIBRARY=/tmp/u153/library ADAMIC_BUILD_CACHE_DIR=/tmp/u153/cache/M4 timeout 95 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^TestSpeedCostProbes$; speed_gap_test.go:69: slice native ASan/UBSan/LSan: got \"398400000\\n\", want \"52998400000\\n\""
+  },
+  {
+    "test": "TestUnistMatchesGo",
+    "package": "stage1/cohere/yaml",
+    "file": "stage1/cohere/yaml/unist_test.go",
+    "seconds": 33.605,
+    "oracle": "Complete AST, spans, comments and errors against Go cohere and yaml-unist-parser@3.2.1 with yaml@2.9.0",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M1"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M1: unist_test.go:80: native ASan/UBSan/LSan: byte 37599: got \"alue|109,18,6273|157,1,9436|mappingItem,109,15,6270,157,1,9436|||-1|0|0|||[blockFolded|109,20,6275|157,1,9436|mappingValue,109,18,6273,157,1,9436|00230020005000\", want \"alue|109,18,6273|157,1,9436|mappingItem,109,15,6270,157,1,9436|||-1|0|0|||[blockLiteral|109,20,6275|157,1,9436|mappingValue,109,18,6273,157,1,9436|0023002000500\"",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestScalarsMatchGo family"
+    ],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P6"
+    ],
+    "subsumer_seconds": 5.348,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestScalarsMatchGo family",
+      "TestSchemaMatchesGo",
+      "TestSpeedCostProbes",
+      "TestUnistMatchesGo",
+      "TestWidthsMatchGo"
+    ],
+    "evidence": "ADAMIC_YAML_LIBRARY=/tmp/u153/library ADAMIC_BUILD_CACHE_DIR=/tmp/u153/cache/M1 timeout 95 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^(TestScalarsMatchGo(Union|_[0-9]{3})|TestUnistMatchesGo)$; unist_test.go:80: native ASan/UBSan/LSan: byte 37599: got \"alue|109,18,6273|157,1,9436|mappingItem,109,15,6270,157,1,9436|||-1|0|0|||[blockFolded|109,20,6275|157,1,9436|mappingValue,109,18,6273,157,1,9436|00230020005000\", want \"alue|109,18,6273|157,1,9436|mappingItem,109,15,6270,157,1,9436|||-1|0|0|||[blockLiteral|109,20,6275|157,1,9436|mappingValue,109,18,6273,157,1,9436|0023002000500\"",
+    "unknown_mutants": [
+      "M4"
+    ]
+  },
+  {
+    "test": "TestUnistMutants",
+    "package": "stage1/cohere/yaml",
+    "file": "stage1/cohere/yaml/unist_test.go",
+    "seconds": 53.948,
+    "oracle": "Deliberately changed native and Node ports must differ from Go cohere on every built-in mutation",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W3: unist_test.go:149: native missed mutant",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestUnistMutants"
+    ],
+    "evidence": "ADAMIC_YAML_LIBRARY=/tmp/u153/library ADAMIC_AUDIT_SELECTOR=W3 timeout 95 go test -overlay=/tmp/u153/harness-overlay.json -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^TestUnistMutants$; unist_test.go:149: native missed mutant",
+    "witness_kills": [
+      "W3"
+    ]
+  },
+  {
+    "test": "TestWidthsMatchGo",
+    "package": "stage1/cohere/yaml",
+    "file": "stage1/cohere/yaml/width_test.go",
+    "seconds": 15.555,
+    "oracle": "Complete width output bytes against Go cohere; all Unicode scalars and 256 emoji contexts",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M4"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M4-TestWidthsMatchGo: width_test.go:108: native ASan/UBSan/LSan: byte 19514: got \"1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n2\\n2\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n2\\n2\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n\", want \"1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n2\\n2\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n2\\n2\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n2\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n\"",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestSpeedCostProbes"
+    ],
+    "mutants_in_matrix": 1,
+    "probe_kills": [
+      "P7"
+    ],
+    "subsumer_seconds": 2.615,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestScalarsMatchGo family",
+      "TestSchemaMatchesGo",
+      "TestSpeedCostProbes",
+      "TestUnistMatchesGo",
+      "TestWidthsMatchGo"
+    ],
+    "evidence": "ADAMIC_YAML_LIBRARY=/tmp/u153/library ADAMIC_BUILD_CACHE_DIR=/tmp/u153/cache/M4 timeout 95 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^TestWidthsMatchGo$; width_test.go:108: native ASan/UBSan/LSan: byte 19514: got \"1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n2\\n2\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n2\\n2\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n\", want \"1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n2\\n2\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n2\\n2\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n2\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n2\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n1\\n\""
+  }
+]

@@ -1,0 +1,42 @@
+[
+  {
+    "test": "TestSpeedCostProbes",
+    "package": "stage1/cohere/yaml",
+    "prior_verdict": "subsumed",
+    "subsumed_by": "TestScalarsMatchGo family",
+    "defense": "defended",
+    "unique_mutant": "D2 internal/native/runtime/map.c:101, bounded matrix only",
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "internal/native/runtime/string_index.c:31",
+        "change": "MINIMUM64 ->65536: disable UTF16 indexing for the probe, preserve answers and grow work",
+        "rows_failed": [],
+        "status": "cost run cooked90.026s, row outcome unknown; complete scalar family passed separately14.702s"
+      },
+      {
+        "mutant": "D2",
+        "file_line": "internal/native/runtime/map.c:101",
+        "change": "numeric SameValueZero equality == -> !=",
+        "rows_failed": [
+          "TestSpeedCostProbes"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_YAML_LIBRARY=/tmp/yaml-defense/library ADAMIC_BUILD_CACHE_DIR=/tmp/yaml-defense/cache/D2 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run '^(TestSpeedCostProbes|TestScalarsMatchGo(Union|_[0-9]{3})|TestSchemaMatchesGo|TestWidthsMatchGo)$'; speed_gap_test.go:69: integer native ASan/UBSan/LSan: got \"716900\\n\", want \"1702000\\n\"",
+    "bounded": true,
+    "rows_passed": [
+      "TestSchemaMatchesGo",
+      "TestWidthsMatchGo",
+      "TestScalarsMatchGoUnion",
+      "TestScalarsMatchGo_004",
+      "TestScalarsMatchGo_000",
+      "TestScalarsMatchGo_002",
+      "TestScalarsMatchGo_003",
+      "TestScalarsMatchGo_001",
+      "TestScalarsMatchGo_006",
+      "TestScalarsMatchGo_007",
+      "TestScalarsMatchGo_005"
+    ]
+  }
+]

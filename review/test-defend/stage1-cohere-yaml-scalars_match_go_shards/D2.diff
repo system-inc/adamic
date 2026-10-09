@@ -1,0 +1,13 @@
+diff --git a/internal/native/runtime/map.c b/internal/native/runtime/map.c
+index 715141f2..69a56f0d 100644
+--- a/internal/native/runtime/map.c
++++ b/internal/native/runtime/map.c
+@@ -98,7 +98,7 @@ static bool same_key(const adamic_map *map, adamic_value left, adamic_value righ
+ 	if (map->reference_keys) {
+ 		return left.reference == right.reference;
+ 	}
+-	return left.number == right.number || (isnan(left.number) && isnan(right.number));
++	return left.number != right.number || (isnan(left.number) && isnan(right.number));
+ }
+ 
+ // find is the entry index for a key, or SIZE_MAX.

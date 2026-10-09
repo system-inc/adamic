@@ -1,0 +1,13 @@
+diff --git a/internal/native/runtime/string_index.c b/internal/native/runtime/string_index.c
+index 4fd948fd..423732bb 100644
+--- a/internal/native/runtime/string_index.c
++++ b/internal/native/runtime/string_index.c
+@@ -28,7 +28,7 @@
+ #define STEP 32
+ #endif
+ #ifndef MINIMUM
+-#define MINIMUM 64
++#define MINIMUM 65536
+ #endif
+ #ifndef CURSOR
+ #define CURSOR 1

@@ -1,0 +1,54 @@
+{
+  "rows": [
+    "TestScalarsMatchGo family",
+    "TestSchemaMatchesGo",
+    "TestSpeedCostProbes",
+    "TestUnistMatchesGo",
+    "TestWidthsMatchGo"
+  ],
+  "members": [
+    "TestScalarsMatchGoUnion",
+    "TestScalarsMatchGo_000",
+    "TestScalarsMatchGo_001",
+    "TestScalarsMatchGo_002",
+    "TestScalarsMatchGo_003",
+    "TestScalarsMatchGo_004",
+    "TestScalarsMatchGo_005",
+    "TestScalarsMatchGo_006",
+    "TestScalarsMatchGo_007"
+  ],
+  "M1": {
+    "fail": [
+      "TestScalarsMatchGo family",
+      "TestUnistMatchesGo"
+    ]
+  },
+  "M2": {
+    "fail": [
+      "TestSchemaMatchesGo"
+    ],
+    "pass": [
+      "TestUnistMatchesGo"
+    ]
+  },
+  "M3": {
+    "pass": [
+      "TestUnistMatchesGo"
+    ],
+    "survivor": true
+  },
+  "M4": {
+    "fail": [
+      "TestScalarsMatchGo family",
+      "TestSpeedCostProbes",
+      "TestWidthsMatchGo"
+    ],
+    "pass": [
+      "TestSchemaMatchesGo"
+    ],
+    "unknown": [
+      "TestUnistMatchesGo"
+    ],
+    "scalar_evidence": "Isolated _000 failed at its own 55s subprocess deadline; family matrix otherwise cooked"
+  }
+}

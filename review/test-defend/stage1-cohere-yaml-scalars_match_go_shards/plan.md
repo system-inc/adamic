@@ -1,0 +1,3 @@
+CODE UNDER TEST: Adamic lowering and native C runtime used by stringUnitScan, arenaNodeRead, numericMapLookup. ORACLE: hand-written checksums tested on native sanitized, original Node and emitted JS. Scalar family uses unchanged Go cohere and yaml2.9.0 full-byte answers.
+
+Planned before mutants: D1 constant MINIMUM64->65536 in runtime/string_index.c31 disables UTF16 index for the 40000-byte probe input, keeps answers but grows sequential reads to scans. D2 condition flip numeric same_key == to != in runtime/map.c101, reached by the numeric-map probe while YAML maps use string keys. D3 optional fallback drop/alter map-get missing-bound handling. Stop on unique bounded kill. No harness, test or oracle edit.

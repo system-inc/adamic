@@ -1,0 +1,44 @@
+{
+  "D1": {
+    "failed": [],
+    "passed": [],
+    "timed_out": true,
+    "elapsed": 90.026
+  },
+  "D1-scalars": {
+    "failed": [],
+    "passed": [
+      "TestScalarsMatchGoUnion",
+      "TestScalarsMatchGo_006",
+      "TestScalarsMatchGo_007",
+      "TestScalarsMatchGo_005",
+      "TestScalarsMatchGo_001",
+      "TestScalarsMatchGo_002",
+      "TestScalarsMatchGo_004",
+      "TestScalarsMatchGo_000",
+      "TestScalarsMatchGo_003"
+    ],
+    "timed_out": false,
+    "elapsed": 14.702
+  },
+  "D2": {
+    "failed": [
+      "TestSpeedCostProbes"
+    ],
+    "passed": [
+      "TestSchemaMatchesGo",
+      "TestWidthsMatchGo",
+      "TestScalarsMatchGoUnion",
+      "TestScalarsMatchGo_004",
+      "TestScalarsMatchGo_000",
+      "TestScalarsMatchGo_002",
+      "TestScalarsMatchGo_003",
+      "TestScalarsMatchGo_001",
+      "TestScalarsMatchGo_006",
+      "TestScalarsMatchGo_007",
+      "TestScalarsMatchGo_005"
+    ],
+    "timed_out": false,
+    "elapsed": 42.538
+  }
+}
