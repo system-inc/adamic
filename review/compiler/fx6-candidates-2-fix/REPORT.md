@@ -57,3 +57,16 @@ checked-read retain/release pair; the wrong fixture stops before allocating the
 result it previously returned unchecked. Compiler scope is interface_cast.go
 and view_member_read.go. Other gate scheduling and lint failures in reds.txt
 are outside this repair unit.
+
+The delivery merge is ad81d9b7, including origin/main 157a4355. The newer main
+commits add test-only changes outside lowering and oracle emission. Required
+checks were repeated after this merge. The final lowering package passed in
+80.922s. The preceding restored-source run also passed: lowering 81.769s,
+oracle regressions plus counts 93.533s, reader guard 13.213s, and stage3 0.861s.
+Delivery lane output: "lane checks 3.5 s: gofmt and tools on 15 Go files,
+t.Parallel on 2 test packages; vet 2 packages".
+
+Delivery oracle regressions plus counts passed in 91.642s; reader guard passed
+in 1.079s; stage3 assertion passed in 0.830s. All three mutants exited nonzero
+with their expected behavioral catcher; the runner exited 0. The final
+counts table still changes only the two generic rows.
