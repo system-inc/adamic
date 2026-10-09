@@ -1,0 +1,122 @@
+// Compiled only with the no-output census overlay.
+package main
+
+import (
+	"context"
+	"encoding/json"
+	"flag"
+	"fmt"
+	"github.com/system-inc/adamic/internal/load"
+	"github.com/system-inc/adamic/internal/lower"
+	"os"
+	"path/filepath"
+	"sort"
+	"time"
+)
+
+func main() {
+	started := time.Now()
+	project := flag.String("project", "", "same source directory or entry file used by the census")
+	where := flag.String("where", "", "exact census diagnostic node position: file:line:column")
+	attempt := flag.String("attempt", "", "optional exact recorded caller unit: file:line:column")
+	region := flag.String("region-file", "", "optional file for a partial hidden-region census; not a diagnostic reproduction")
+	start := flag.Int("region-start", -1, "region UTF-8 byte start, inclusive")
+	end := flag.Int("region-end", -1, "region UTF-8 byte end, exclusive")
+	kind := flag.String("kind", "", "exact census kind: NotYet or Refused")
+	reason := flag.String("reason", "", "exact census refusal reason")
+	flag.Parse()
+	valid := *where != "" && (*kind == "NotYet" || *kind == "Refused") && *reason != "" && *region == "" && *start == -1 && *end == -1
+	if *region != "" {
+		valid = *where == "" && *kind == "" && *reason == "" && *attempt == "" && *start >= 0 && *end > *start
+	}
+	if *project == "" || !valid || flag.NArg() != 0 {
+		flag.Usage()
+		os.Exit(2)
+	}
+	if err := os.Setenv("LATENT_FULL", "1"); err != nil {
+		panic(err)
+	}
+	paths := []string{}
+	info, err := os.Stat(*project)
+	if err != nil {
+		panic(err)
+	}
+	if info.IsDir() {
+		err = filepath.WalkDir(*project, func(path string, entry os.DirEntry, failure error) error {
+			if failure != nil {
+				return failure
+			}
+			if !entry.IsDir() && (filepath.Ext(path) == ".ts" || filepath.Ext(path) == ".a") {
+				paths = append(paths, path)
+			}
+			return nil
+		})
+		if err != nil {
+			panic(err)
+		}
+		sort.Strings(paths)
+	} else {
+		entry, err := filepath.Abs(*project)
+		if err != nil {
+			panic(err)
+		}
+		paths = append(paths, entry)
+	}
+	program, err := load.LatentLoad(paths)
+	if err != nil {
+		panic(err)
+	}
+	if !info.IsDir() {
+		program.LatentReplayEntryReach()
+	}
+	// The replay worker always checks the census output guards.
+	output, failure := lower.Lower(context.Background(), program)
+	if output != nil || failure == nil || failure.Error() != "latent census: measurement only; no IR output" {
+		panic("measurement returned usable IR")
+	}
+	exposed, failure := load.Load(paths)
+	if exposed != nil || failure == nil {
+		panic("measurement loader exposed an output program")
+	}
+	var record lower.LatentFile
+	if *region != "" {
+		record, failure = lower.LatentRegion(context.Background(), program, *region, *start, *end)
+	} else {
+		record, failure = lower.LatentReplayAttempt(context.Background(), program, *attempt, *where, *kind, *reason)
+	}
+	if !info.IsDir() {
+		label := "measured on a checker-clean entry-root program"
+		if len(program.LatentDiagnostics()) > 0 {
+			label = "measured on a checker-rejected entry-root program"
+		}
+		record.Measurement = label
+		for index := range record.Declarations {
+			record.Declarations[index].Measurement = label
+		}
+		for index := range record.Units {
+			record.Units[index].Measurement = label
+		}
+		for index := range record.Findings {
+			record.Findings[index].Measurement = label
+		}
+	}
+	encoder := json.NewEncoder(os.Stdout)
+	if *region != "" {
+		if err := encoder.Encode(map[string]any{"measurement": record.Measurement, "latent_mode": "full", "checker_rejected": len(program.LatentDiagnostics()) > 0, "region_file": *region, "region_start": *start, "region_end": *end, "diagnostics": program.LatentDiagnostics(), "diagnostic_sites": program.LatentDiagnosticSites()}); err != nil {
+			panic(err)
+		}
+	}
+	if err := encoder.Encode(record); err != nil {
+		panic(err)
+	}
+	fmt.Fprintf(os.Stderr, "replay load/register/lower: %s\n", time.Since(started))
+	if failure != nil {
+		fmt.Fprintln(os.Stderr, failure)
+		os.Exit(1)
+	}
+	if *region != "" {
+		fmt.Fprintf(os.Stderr, "partial region census: %s [%d,%d), %d units; no diagnostic reproduction claimed\n", *region, *start, *end, len(record.Units))
+	} else {
+		fmt.Fprintf(os.Stderr, "reproduced %s: %s at %s\n", *kind, *reason, *where)
+	}
+}

@@ -1,0 +1,173 @@
+// Replay shares the full census attempt path and never returns usable IR.
+package lower
+
+import (
+	"context"
+	"fmt"
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/scanner"
+	"github.com/system-inc/adamic/internal/load"
+	"os"
+	"path/filepath"
+	"strconv"
+	"strings"
+	"unicode/utf16"
+)
+
+type latentReplaySelection struct {
+	file       *ast.SourceFile
+	node       *ast.Node
+	start, end int
+}
+
+// LatentRegion retains the complete project and attempts every declaration that
+// overlaps a UTF-8 byte interval, including its enclosing declarations. Only
+// coverage inside that interval is measured from the returned partial ledger.
+func LatentRegion(ctx context.Context, program *load.Program, name string, start, end int) (LatentFile, error) {
+	if !latentFullEnabled() {
+		return LatentFile{}, fmt.Errorf("region census requires LATENT_FULL=1")
+	}
+	name, err := filepath.Abs(name)
+	if err != nil {
+		return LatentFile{}, err
+	}
+	for _, file := range program.Files() {
+		actual, err := filepath.Abs(program.FileName(file))
+		if err != nil || actual != name {
+			continue
+		}
+		if start < 0 || end <= start || end > len(file.Text()) {
+			return LatentFile{}, fmt.Errorf("invalid region [%d,%d) in %s", start, end, name)
+		}
+		var record LatentFile
+		latentFullSelected(ctx, program, func(value LatentFile) { record = value }, &latentReplaySelection{file: file, start: start, end: end})
+		return record, nil
+	}
+	return LatentFile{}, fmt.Errorf("region file is not in the loaded census project: %s", name)
+}
+
+// LatentReplay selects the smallest attempted unit containing where. Signature
+// matching is exact on the diagnostic node's position, kind and reason.
+func LatentReplay(ctx context.Context, program *load.Program, where, kind, reason string) (LatentFile, error) {
+	return LatentReplayAttempt(ctx, program, "", where, kind, reason)
+}
+
+// LatentReplayAttempt selects a separately recorded caller while retaining the
+// exact diagnostic signature. The caller must name the selected unit itself,
+// rather than any position incidentally contained in that unit.
+func LatentReplayAttempt(ctx context.Context, program *load.Program, attempt, where, kind, reason string) (LatentFile, error) {
+	if !latentFullEnabled() {
+		return LatentFile{}, fmt.Errorf("replay requires LATENT_FULL=1")
+	}
+	selector := where
+	if attempt != "" {
+		selector = attempt
+	}
+	selection, err := latentReplaySelect(program, selector)
+	if err != nil {
+		return LatentFile{}, err
+	}
+	if attempt != "" && program.Where(selection.node) != attempt {
+		return LatentFile{}, fmt.Errorf("replay attempt mismatch: requested %s, selected %s", attempt, program.Where(selection.node))
+	}
+	var record LatentFile
+	latentFullSelected(ctx, program, func(value LatentFile) { record = value }, selection)
+	for _, finding := range record.Findings {
+		if finding.Phase == "lowering" && finding.Where == where && finding.Kind == kind && finding.Reason == reason {
+			return record, nil
+		}
+	}
+	return record, fmt.Errorf("replay signature did not reproduce: %s %s at %s (selected %s)", kind, reason, where, program.Where(selection.node))
+}
+
+func latentReplaySelect(program *load.Program, where string) (*latentReplaySelection, error) {
+	last := strings.LastIndex(where, ":")
+	if last < 0 {
+		return nil, fmt.Errorf("want file:line:column: %q", where)
+	}
+	column, err := strconv.Atoi(where[last+1:])
+	if err != nil || column < 1 {
+		return nil, fmt.Errorf("invalid column in %q", where)
+	}
+	prefix := where[:last]
+	last = strings.LastIndex(prefix, ":")
+	if last < 0 {
+		return nil, fmt.Errorf("want file:line:column: %q", where)
+	}
+	line, err := strconv.Atoi(prefix[last+1:])
+	if err != nil || line < 1 {
+		return nil, fmt.Errorf("invalid line in %q", where)
+	}
+	name, err := filepath.Abs(prefix[:last])
+	if err != nil {
+		return nil, err
+	}
+	for _, file := range program.Files() {
+		actual, err := filepath.Abs(program.FileName(file))
+		if err != nil || actual != name {
+			continue
+		}
+		starts := scanner.GetECMALineStarts(file)
+		if line > len(starts) {
+			return nil, fmt.Errorf("line outside file: %s", where)
+		}
+		start, end := int(starts[line-1]), len(file.Text())
+		if line < len(starts) {
+			end = int(starts[line])
+		}
+		position, units := start, 1
+		found := false
+		for offset, character := range file.Text()[start:end] {
+			if units == column {
+				position = start + offset
+				found = true
+				break
+			}
+			units += len(utf16.Encode([]rune{character}))
+		}
+		if !found && units == column {
+			position = end
+			found = true
+		}
+		if !found {
+			return nil, fmt.Errorf("column outside file or inside a surrogate pair: %s", where)
+		}
+		var chosen *ast.Node
+		candidates := latentCandidates(program, file)
+		for _, candidate := range candidates {
+			node := candidate.node
+			// Pos includes leading trivia. The token start keeps an adjacent unit's
+			// whitespace from claiming the diagnostic node.
+			if scanner.GetTokenPosOfNode(node, file, false) > position || position >= node.End() {
+				continue
+			}
+			if node.Kind == ast.KindFunctionDeclaration && node.Body() != nil && len(program.LatentOwnDiagnosticsIn(node.Body())) > 0 {
+				continue
+			}
+			if chosen == nil || node.End()-node.Pos() < chosen.End()-chosen.Pos() {
+				chosen = node
+			}
+		}
+		if chosen == nil {
+			return nil, fmt.Errorf("no attempted census unit contains %s", where)
+		}
+		// Test-only selection mutant: attempt the top container's sibling instead.
+		if os.Getenv("LATENT_REPLAY_MUTANT_PARENT_SIBLING") == "1" {
+			top := ""
+			for _, candidate := range candidates {
+				if candidate.node == chosen {
+					top = candidate.top
+					break
+				}
+			}
+			for _, candidate := range candidates {
+				if candidate.parent == "" && candidate.top != top && candidate.node.Kind == ast.KindFunctionDeclaration {
+					chosen = candidate.node
+					break
+				}
+			}
+		}
+		return &latentReplaySelection{file: file, node: chosen}, nil
+	}
+	return nil, fmt.Errorf("finding file is not in the loaded census project: %s", name)
+}

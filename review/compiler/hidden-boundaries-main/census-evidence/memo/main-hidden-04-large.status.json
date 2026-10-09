@@ -1,0 +1,22 @@
+{
+  "side": "main",
+  "query": {
+    "label": "hidden-04-large",
+    "file": "checker.ts",
+    "start": 620304,
+    "end": 627479
+  },
+  "command": [
+    "/tmp/hidden-census-main-memo",
+    "-project",
+    "/tmp/any-returns-adapted/src/compiler",
+    "-region-file",
+    "/tmp/any-returns-adapted/src/compiler/checker.ts",
+    "-region-start",
+    "620304",
+    "-region-end",
+    "627479"
+  ],
+  "exit": 0,
+  "seconds": 13.769
+}
