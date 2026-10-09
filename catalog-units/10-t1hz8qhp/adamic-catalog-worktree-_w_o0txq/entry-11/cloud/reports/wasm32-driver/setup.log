@@ -1,0 +1,11 @@
+go version go1.27.1 linux/amd64
+setup: go ready (0s)
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (1s)
+v24.19.0
+setup: node ready (1s)
+clang version 20.1.8-wasi-sdk (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: wasi sdk ready (/workspace/adamic-tools/wasi-sdk) (8s)
+setup: submodules ready (8s)
+setup: build cache warm (83s)
+setup: done in 83s on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB

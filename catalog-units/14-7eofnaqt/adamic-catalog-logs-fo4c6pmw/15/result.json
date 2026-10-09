@@ -1,0 +1,17 @@
+{
+  "number": 15,
+  "made_against": "e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+  "target": "313af4d720533db17dc802d0f44dc34140c3a024",
+  "ok": true,
+  "setup_seconds": 0,
+  "check_seconds": 0,
+  "cleanup_seconds": 0,
+  "wall_seconds": 0.003192238000337966,
+  "load_before": "15.98 12.57 10.67 53/1007 3532437",
+  "load_after": "15.98 12.57 10.67 52/998 3532441",
+  "messages": [
+    "15 class-instance-key: skipped (Fix and its oracle fixtures are not on target main. Main already uses representation-based instantiation keys, so cannot undo the absent fix.)",
+    "15 made against=e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+    "15 wall=0.003s setup=0.000s check=0.000s cleanup=0.000s load=15.98 12.57 10.67 53/1007 3532437 -> 15.98 12.57 10.67 52/998 3532441"
+  ]
+}

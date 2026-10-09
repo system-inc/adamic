@@ -1,0 +1,28 @@
+const original = new Error('stored '.repeat(2));
+const alias = original;
+function raise(): void {
+    const localAlias = alias;
+    throw localAlias;
+}
+try {
+    raise();
+} catch (error) {
+    if (error instanceof Error) {
+        console.log(`${error === original}/${error.name}/${error.message}`);
+    }
+}
+function rethrow(): void {
+    const failure = new Error('inner'.repeat(2));
+    try {
+        throw failure;
+    } finally {
+        console.log('finally');
+    }
+}
+try {
+    rethrow();
+} catch (error) {
+    if (error instanceof Error) {
+        console.log(error.message);
+    }
+}

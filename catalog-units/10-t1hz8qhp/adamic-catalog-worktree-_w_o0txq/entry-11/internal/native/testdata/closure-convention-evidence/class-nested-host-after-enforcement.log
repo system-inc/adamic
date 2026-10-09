@@ -1,0 +1,257 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_deep.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_deep.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_parameters.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_parameters.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_release.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_release.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_subclass_holder.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_subclass_holder.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/class_layouts.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/class_layouts.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/size_class_churn.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/size_class_churn.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/class_as_interface.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/class_as_interface.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/optional_class_method.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/optional_class_method.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/cast_class_fails.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/cast_class_fails.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/cast_class_union_fails.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/cast_class_union_fails.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/cast_class_generic_fails.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/cast_class_generic_fails.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/class_features_static.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/class_features_static.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/class_features_static_private.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/class_features_static_private.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/class_features_private.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/class_features_private.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/class_features_accessors.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/class_features_accessors.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/class_features_twice.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/class_features_twice.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/class_features_retained.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/class_features_retained.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/class_features_distinct.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/class_features_distinct.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance_exceptions.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance_exceptions.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance_order.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance_order.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/class_identity.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/class_identity.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance_memory.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance_memory.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance_generic.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance_generic.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance_interface.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance_interface.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance_conditional.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance_conditional.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/class_instance_key_throw.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/class_instance_key_throw.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/class_instance_key_region.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/class_instance_key_region.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/class_instance_key_consume.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/class_instance_key_consume.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/class_instance_key_region_alias.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/class_instance_key_region_alias.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/closure_convention_host24.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/closure_convention_host24.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/closure_convention_regexp_count.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/closure_convention_regexp_count.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/closure_convention_nested.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/closure_convention_nested.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/fallthrough_nested.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/fallthrough_nested.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_f1_class_narrowed.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_f1_class_narrowed.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/nested_minimal.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/nested_minimal.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/nested_captures.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/nested_captures.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/nested_hoisting.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/nested_hoisting.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/nested_mutual.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/nested_mutual.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/nested_returned.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/nested_returned.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/nested_array.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/nested_array.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/nested_three_levels.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/nested_three_levels.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/nested_tdz.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/nested_tdz.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/nested_tdz_write.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/nested_tdz_write.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/nested_weak.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/nested_weak.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/nested_destructured.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/nested_destructured.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/nested_destructured_tdz.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/nested_destructured_tdz.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/nested_mixed.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/nested_mixed.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/nested_pattern_parameter.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/nested_pattern_parameter.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/nested_owned_parameter.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/nested_owned_parameter.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/nested_generic_capture.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/nested_generic_capture.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/nested_assignment_return.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/nested_assignment_return.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/nested_reduced_parameter_unused.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/nested_reduced_parameter_unused.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/nested_reduced_parameter_unreachable.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/nested_reduced_parameter_unreachable.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/nested_reduced_parameter_escaped.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/nested_reduced_parameter_escaped.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/nested_callback_recursive.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/nested_callback_recursive.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/nested_callback_escaped.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/nested_callback_escaped.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/nested_callback_levels.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/nested_callback_levels.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/nested_callback_late_capture.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/nested_callback_late_capture.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/proven_class_guards.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/proven_class_guards.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/scanner_nested_overload.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/scanner_nested_overload.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/nested_reference_identity.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/nested_reference_identity.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_deep.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/closure_convention_regexp_count.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/nested_mixed.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/nested_callback_recursive.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/class_features_retained.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/class_features_twice.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/class_features_accessors.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/class_features_private.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/class_features_static_private.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/class_features_static.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/nested_reduced_parameter_escaped.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/cast_class_generic_fails.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/nested_reduced_parameter_unreachable.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/nested_reduced_parameter_unused.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/nested_assignment_return.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/nested_generic_capture.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/nested_owned_parameter.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/nested_pattern_parameter.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/nested_callback_late_capture.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/cast_class_union_fails.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/nested_reference_identity.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/cast_class_fails.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/scanner_nested_overload.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/optional_class_method.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/proven_class_guards.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/class_as_interface.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_release.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_parameters.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_subclass_holder.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/size_class_churn.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance_generic.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/closure_convention_host24.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/class_layouts.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/class_instance_key_region_alias.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/class_instance_key_consume.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/class_instance_key_region.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/nested_returned.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/class_instance_key_throw.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/nested_destructured_tdz.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance_conditional.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance_interface.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/nested_callback_escaped.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/nested_destructured.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/nested_weak.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/nested_tdz_write.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/nested_tdz.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/nested_three_levels.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/nested_array.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/nested_callback_levels.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/nested_minimal.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/fallthrough_nested.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_f1_class_narrowed.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/nested_mutual.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/nested_hoisting.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/closure_convention_nested.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/nested_captures.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance_exceptions.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance_memory.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/class_identity.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance_order.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/class_features_distinct.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance.a
+--- PASS: TestNativeAgreesWithNode (0.03s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_deep.a (0.91s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/class_features_retained.a (0.94s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/class_features_twice.a (0.81s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/class_features_private.a (0.86s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/class_features_static_private.a (0.78s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/class_features_static.a (1.20s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/closure_convention_regexp_count.a (8.69s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/cast_class_generic_fails.a (0.48s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/nested_callback_recursive.a (11.87s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/nested_reduced_parameter_escaped.a (7.32s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/nested_reduced_parameter_unreachable.a (2.72s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/nested_mixed.a (11.92s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/nested_reduced_parameter_unused.a (0.74s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/nested_owned_parameter.a (0.72s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/nested_assignment_return.a (0.78s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/nested_generic_capture.a (0.79s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/class_features_accessors.a (12.19s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/nested_pattern_parameter.a (0.66s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/cast_class_union_fails.a (0.68s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/nested_callback_late_capture.a (0.70s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/nested_reference_identity.a (0.89s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/cast_class_fails.a (0.73s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/scanner_nested_overload.a (0.67s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/proven_class_guards.a (0.71s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/optional_class_method.a (0.86s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_release.a (1.08s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_parameters.a (1.13s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_subclass_holder.a (1.14s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/class_as_interface.a (1.79s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/class_instance_key_region_alias.a (0.84s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/class_layouts.a (1.24s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance_generic.a (1.54s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/class_instance_key_consume.a (0.85s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/class_instance_key_region.a (0.85s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/nested_returned.a (0.86s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/class_instance_key_throw.a (0.88s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/size_class_churn.a (3.77s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/nested_destructured_tdz.a (0.71s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance_conditional.a (1.28s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/nested_destructured.a (0.71s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/nested_callback_escaped.a (0.78s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance_interface.a (0.87s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/nested_weak.a (0.83s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/nested_tdz_write.a (0.79s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/nested_tdz.a (0.75s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/nested_three_levels.a (0.88s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/nested_minimal.a (0.70s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/nested_array.a (0.76s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/nested_callback_levels.a (0.75s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/fallthrough_nested.a (0.70s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/nested_mutual.a (0.67s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_f1_class_narrowed.a (0.70s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/nested_hoisting.a (0.70s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/nested_captures.a (0.78s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance_exceptions.a (0.89s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance_memory.a (0.92s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/class_identity.a (0.72s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance_order.a (0.71s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/class_features_distinct.a (0.74s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance.a (0.74s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/closure_convention_host24.a (14.61s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/closure_convention_nested.a (12.47s)
+PASS
+gate cache: native hits=0 misses=179
+gate cache: node hits=0 misses=124
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	32.880s

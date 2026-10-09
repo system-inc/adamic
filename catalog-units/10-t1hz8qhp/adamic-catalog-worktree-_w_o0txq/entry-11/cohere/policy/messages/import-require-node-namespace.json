@@ -1,0 +1,16 @@
+{
+  "rules": {
+    "TypeScript": "nexus/import-require-node-namespace"
+  },
+  "messages": {
+    "requireCorrectAlias": {
+      "text": "Node namespace alias must be '{{expected}}', got '{{actual}}'. The alias is the Node-prefixed expansion of the module, so a reader forty lines down knows what they are looking at without finding the import. Use: import * as {{expected}} from 'node:{{bare}}'"
+    },
+    "requireNamespaceImport": {
+      "text": "Node built-in '{{source}}' must use a namespace import, so every call site says which module it came from. Use: import * as {{expected}} from 'node:{{bare}}'"
+    },
+    "requireNodePrefix": {
+      "text": "Node built-in '{{source}}' must use the 'node:' prefix, which says the module is Node's rather than a package that happens to share its name. Use: import * as {{expected}} from 'node:{{bare}}'"
+    }
+  }
+}

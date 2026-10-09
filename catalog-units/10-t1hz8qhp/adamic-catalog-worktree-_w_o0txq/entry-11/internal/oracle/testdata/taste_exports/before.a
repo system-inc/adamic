@@ -1,0 +1,3 @@
+console.log('module before');
+const value = 'before';
+export { value };

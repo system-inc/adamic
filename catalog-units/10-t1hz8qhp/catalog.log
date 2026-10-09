@@ -1,0 +1,8 @@
+target 313af4d720533db17dc802d0f44dc34140c3a024
+logs /home/cloud/full-gate/out/313af4d72053-20261009T031322Z/catalog-units/10-t1hz8qhp/adamic-catalog-logs-e7zj2f1y
+build flags: commit=313af4d720533db17dc802d0f44dc34140c3a024; nproc=64; cpu.max=max 100000; go version go1.27.1 linux/amd64; clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261); v24.19.0; ADAMIC_GATE_UNCACHED=1; go test -trimpath -count=1; native C11 strict warnings, -ffp-contract=off -fno-optimize-sibling-calls; release -O2; sanitizer -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all
+jobs 1; Go -trimpath shares only content-keyed build artifacts; test results uncached
+11 refuse-definite-assignment: applies-and-fails-as-recorded
+11 made against=d772b5c990de4304de990e723835f19ebb613641
+11 wall=179.363s setup=76.661s check=94.567s cleanup=6.684s load=15.98 12.57 10.67 54/1002 3532447 -> 77.78 45.98 24.20 73/1474 3579316
+total wall=179.426s load=15.98 12.57 10.67 54/996 3532366 -> 77.78 45.98 24.20 69/1473 3579316

@@ -1,0 +1,16 @@
+=== RUN   TestCountsAreRecorded
+=== PAUSE TestCountsAreRecorded
+=== CONT  TestCountsAreRecorded
+=== RUN   TestCountsAreRecorded/fixtures
+=== RUN   TestCountsAreRecorded/fixtures/internal/fresh/testdata/regexp_tree.ts
+=== PAUSE TestCountsAreRecorded/fixtures/internal/fresh/testdata/regexp_tree.ts
+=== CONT  TestCountsAreRecorded/fixtures/internal/fresh/testdata/regexp_tree.ts
+--- PASS: TestCountsAreRecorded (0.17s)
+    --- PASS: TestCountsAreRecorded/fixtures (0.01s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/fresh/testdata/regexp_tree.ts (0.16s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=0
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.177s
+counts exit=0

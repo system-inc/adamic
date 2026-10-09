@@ -1,0 +1,16 @@
+{
+  "rules": {
+    "TypeScript": "structure/react-hook-no-any-type"
+  },
+  "phrases": {
+    "blindedRules": {
+      "named": "These rules identify a React value by asking the checker for its type, so they cannot analyse this file and will report nothing in it: {{rules}}. Suppressing this finding turns those off for the file rather than tidying a type. ",
+      "unlinked": "Every rule that identifies a React value by its type is disabled for this file, and this build linked none of them so none can be named. "
+    }
+  },
+  "messages": {
+    "reactHookNoAnyType": {
+      "text": "`{{hookName}}` here resolves to `any`, so the type checker cannot see what this hook returns. <<blindedRules>>React's types are probably not resolving here: check that `@types/react` is installed and current, that no ambient declaration is shadowing it, and that the path mapping for `react` resolves."
+    }
+  }
+}

@@ -1,0 +1,14 @@
+// tailwind/no_deprecated_classes.go:76; `^divide-opacity-(.*)$`
+import { observe } from '../observe.a';
+import { programArguments } from 'adamic';
+const argumentsList = programArguments();
+const pattern = argumentsList[0] ?? '';
+const flags = argumentsList[1] ?? '';
+const regex = new RegExp(pattern, flags);
+observe(regex, "", 0);
+observe(regex, "🌍", 1);
+observe(regex, "TODO\n", 2);
+observe(regex, " TODO", 3);
+observe(regex, "divide-opacity-", 4);
+observe(regex, "xdivide-opacity-", 5);
+observe(regex, "divide-opacity-\n", 6);

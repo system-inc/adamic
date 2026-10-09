@@ -1,0 +1,2 @@
+// The intrinsic supplies undefined although the callback's annotation says string.
+console.log('b'.replace(/(a)?b/, (match: string, capture: string) => capture ?? 'absent'));

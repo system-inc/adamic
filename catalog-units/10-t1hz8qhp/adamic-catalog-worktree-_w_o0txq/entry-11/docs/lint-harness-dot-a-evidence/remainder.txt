@@ -1,0 +1,176 @@
+=== RUN   TestRulesAgree
+    lint_test.go:359: cohere cases: 1273 unique source/rule/options combinations
+    lint_test.go:392: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree3169468247/019/case-079/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"method"}	unsupported-recovery
+    lint_test.go:393: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:393: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree3169468247/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /tmp/adamic-gate/TestRulesAgree3169468247/019/case-079/Thing.ts
+    lint_test.go:393: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /tmp/adamic-gate/TestRulesAgree3169468247/019/case-079/Thing.ts
+    lint_test.go:392: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree3169468247/019/case-081/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"method"}	unsupported-recovery
+    lint_test.go:393: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:393: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree3169468247/003/scanner: timeout=true: signal: killed: 
+    lint_test.go:393: explicit unsupported recovery: node: timeout=true: signal: killed: 
+    lint_test.go:392: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree3169468247/019/case-085/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"method"}	unsupported-recovery
+    lint_test.go:393: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:393: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree3169468247/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /tmp/adamic-gate/TestRulesAgree3169468247/019/case-085/Thing.ts
+    lint_test.go:393: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /tmp/adamic-gate/TestRulesAgree3169468247/019/case-085/Thing.ts
+    lint_test.go:392: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree3169468247/019/case-086/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"method"}	unsupported-recovery
+    lint_test.go:393: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:393: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree3169468247/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /tmp/adamic-gate/TestRulesAgree3169468247/019/case-086/Thing.ts
+    lint_test.go:393: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /tmp/adamic-gate/TestRulesAgree3169468247/019/case-086/Thing.ts
+    lint_test.go:392: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree3169468247/019/case-095/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"property"}	unsupported-recovery
+    lint_test.go:393: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:393: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree3169468247/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /tmp/adamic-gate/TestRulesAgree3169468247/019/case-095/Thing.ts
+    lint_test.go:393: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /tmp/adamic-gate/TestRulesAgree3169468247/019/case-095/Thing.ts
+    lint_test.go:392: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree3169468247/019/case-097/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"property"}	unsupported-recovery
+    lint_test.go:393: Go recovered output: case 0
+        /tmp/adamic-gate/TestRulesAgree3169468247/019/case-097/Thing.ts:1:15
+          @typescript-eslint/method-signature-style  This is written as a shorthand method signature, which TypeScript checks bivariantly: a parameter can be narrowed by an implementer and the compiler will not object, so a call that type-checks can still be wrong at runtime. A function property is checked the strict way and catches that.
+        
+        range 14 33 errorMethod fix	m: (a: string) => void;		14 33
+        recovery findings only
+    lint_test.go:393: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree3169468247/003/scanner: timeout=true: signal: killed: 
+    lint_test.go:393: explicit unsupported recovery: node: timeout=true: signal: killed: 
+    lint_test.go:392: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree3169468247/019/case-099/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"property"}	unsupported-recovery
+    lint_test.go:393: Go recovered output: case 0
+        /tmp/adamic-gate/TestRulesAgree3169468247/019/case-099/Thing.ts:1:15
+          @typescript-eslint/method-signature-style  This is written as a shorthand method signature, which TypeScript checks bivariantly: a parameter can be narrowed by an implementer and the compiler will not object, so a call that type-checks can still be wrong at runtime. A function property is checked the strict way and catches that.
+        
+        range 14 34 errorMethod fix	m: (a: string) => void;		14 34
+        recovery findings only
+    lint_test.go:393: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree3169468247/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /tmp/adamic-gate/TestRulesAgree3169468247/019/case-099/Thing.ts
+    lint_test.go:393: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /tmp/adamic-gate/TestRulesAgree3169468247/019/case-099/Thing.ts
+    lint_test.go:392: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree3169468247/019/case-100/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"property"}	unsupported-recovery
+    lint_test.go:393: Go recovered output: case 0
+        /tmp/adamic-gate/TestRulesAgree3169468247/019/case-100/Thing.ts:1:15
+          @typescript-eslint/method-signature-style  This is written as a shorthand method signature, which TypeScript checks bivariantly: a parameter can be narrowed by an implementer and the compiler will not object, so a call that type-checks can still be wrong at runtime. A function property is checked the strict way and catches that.
+        
+        range 14 27 errorMethod 			14 27
+        recovery findings only
+    lint_test.go:393: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree3169468247/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /tmp/adamic-gate/TestRulesAgree3169468247/019/case-100/Thing.ts
+    lint_test.go:393: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /tmp/adamic-gate/TestRulesAgree3169468247/019/case-100/Thing.ts
+    lint_test.go:398: Go, Node, emitted JavaScript, native identical: 759147 bytes
+--- PASS: TestRulesAgree (40.48s)
+=== RUN   TestDecorationOptionMutant
+=== PAUSE TestDecorationOptionMutant
+=== RUN   TestCountGuardMutant
+=== PAUSE TestCountGuardMutant
+=== RUN   TestCommentFoldMutant
+=== PAUSE TestCommentFoldMutant
+=== RUN   TestPositionIndexMutant
+=== PAUSE TestPositionIndexMutant
+=== CONT  TestDecorationOptionMutant
+=== CONT  TestPositionIndexMutant
+=== CONT  TestCountGuardMutant
+=== CONT  TestCommentFoldMutant
+=== NAME  TestDecorationOptionMutant
+    lint_test.go:549: decoration range collapsed to one character caught on Node: case 127 line 2514: port "fixed\t// \\u017fomething\\u000a// \\u212a\\u000a// \\u017fa\\u000a// \\u03a3 \\u03c3 \\u03c2\\u000a// TODO \\u00e9\\u00e9\\u00e9\\u00e9\\u00e9\\u00e9\\u00e9\\u00e9\\u00e9\\u00e9\\u00e9\\u00e9\\u00e9\\u00e9\\u00e9\\u00e9\\u00e9\\u00e9\\u00e9\\u00e9 \\u00e9\\u000a// TODO \\u005c quoted \"text\"\\u000a// ABC TODO\\u000a// \\u212a \\u017f TODO\\u000a// -/ TODO\\u000a", Go "/tmp/adamic-gate/TestDecorationOptionMutant1606214733/013/generated-12.ts:7:1"
+        Go context:
+        range 40 91 unexpectedComment 			40 91
+        /tmp/adamic-gate/TestDecorationOptionMutant1606214733/013/generated-12.ts:6:1
+          no-warning-comments  This comment opens with `todo`, which marks the code as knowingly unfinished: "TODO \\ quoted \"text\"". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.
+        
+        range 92 115 unexpectedComment 			92 115
+        /tmp/adamic-gate/TestDecorationOptionMutant1606214733/013/generated-12.ts:7:1
+          no-warning-comments  This comment opens with `todo`, which marks the code as knowingly unfinished: "ABC TODO". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.
+        
+        range 116 127 unexpectedComment 			116 127
+        /tmp/adamic-gate/TestDecorationOptionMutant1606214733/013/generated-12.ts:8:1
+    lint_test.go:549: decoration range collapsed to one character caught on native: case 127 line 2514: port "fixed\t// \\u017fomething\\u000a// \\u212a\\u000a// \\u017fa\\u000a// \\u03a3 \\u03c3 \\u03c2\\u000a// TODO \\u00e9\\u00e9\\u00e9\\u00e9\\u00e9\\u00e9\\u00e9\\u00e9\\u00e9\\u00e9\\u00e9\\u00e9\\u00e9\\u00e9\\u00e9\\u00e9\\u00e9\\u00e9\\u00e9\\u00e9 \\u00e9\\u000a// TODO \\u005c quoted \"text\"\\u000a// ABC TODO\\u000a// \\u212a \\u017f TODO\\u000a// -/ TODO\\u000a", Go "/tmp/adamic-gate/TestDecorationOptionMutant1606214733/013/generated-12.ts:7:1"
+        Go context:
+        range 40 91 unexpectedComment 			40 91
+        /tmp/adamic-gate/TestDecorationOptionMutant1606214733/013/generated-12.ts:6:1
+          no-warning-comments  This comment opens with `todo`, which marks the code as knowingly unfinished: "TODO \\ quoted \"text\"". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.
+        
+        range 92 115 unexpectedComment 			92 115
+        /tmp/adamic-gate/TestDecorationOptionMutant1606214733/013/generated-12.ts:7:1
+          no-warning-comments  This comment opens with `todo`, which marks the code as knowingly unfinished: "ABC TODO". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.
+        
+        range 116 127 unexpectedComment 			116 127
+        /tmp/adamic-gate/TestDecorationOptionMutant1606214733/013/generated-12.ts:8:1
+--- PASS: TestDecorationOptionMutant (35.47s)
+=== NAME  TestCountGuardMutant
+    lint_test.go:578: count check alone caught Node: mutant="3\n" Go="2\n"; ordinary output remains identical
+    lint_test.go:578: count check alone caught native: mutant="3\n" Go="2\n"; ordinary output remains identical
+--- PASS: TestCountGuardMutant (36.15s)
+=== NAME  TestCommentFoldMutant
+    profile_test.go:180: fold mutant caught on Node: case 100 line 2188: port "/tmp/adamic-gate/TestCommentFoldMutant2371327198/011/generated-10.ts:5:63", Go "/tmp/adamic-gate/TestCommentFoldMutant2371327198/011/generated-10.ts:1:1"
+        Go context:
+        case 98
+        fixed	const nested=(a?true:false)?false:true; const bool=a == b ? false : true; const same=f()?true:true; const coerced=(a + b)?true:false; const assertion=(a as any)?false:true; const fallback=a?a:b??c; const nonnull=a!?true:false;
+        case 99
+        fixed	const nested=(a?true:false)?false:true; const bool=a == b ? false : true; const same=f()?true:true; const coerced=(a + b)?true:false; const assertion=(a as any)?false:true; const fallback=a?a:b??c; const nonnull=a!?true:false;
+        case 100
+        /tmp/adamic-gate/TestCommentFoldMutant2371327198/011/generated-10.ts:1:1
+          no-warning-comments  This comment opens with `todo`, which marks the code as knowingly unfinished: "TODO: fix this xxx". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.
+        
+        range 0 21 unexpectedComment 			0 21
+        /tmp/adamic-gate/TestCommentFoldMutant2371327198/011/generated-10.ts:2:79
+    profile_test.go:180: fold mutant caught on emitted JavaScript: case 100 line 2188: port "/tmp/adamic-gate/TestCommentFoldMutant2371327198/011/generated-10.ts:5:63", Go "/tmp/adamic-gate/TestCommentFoldMutant2371327198/011/generated-10.ts:1:1"
+        Go context:
+        case 98
+        fixed	const nested=(a?true:false)?false:true; const bool=a == b ? false : true; const same=f()?true:true; const coerced=(a + b)?true:false; const assertion=(a as any)?false:true; const fallback=a?a:b??c; const nonnull=a!?true:false;
+        case 99
+        fixed	const nested=(a?true:false)?false:true; const bool=a == b ? false : true; const same=f()?true:true; const coerced=(a + b)?true:false; const assertion=(a as any)?false:true; const fallback=a?a:b??c; const nonnull=a!?true:false;
+        case 100
+        /tmp/adamic-gate/TestCommentFoldMutant2371327198/011/generated-10.ts:1:1
+          no-warning-comments  This comment opens with `todo`, which marks the code as knowingly unfinished: "TODO: fix this xxx". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.
+        
+        range 0 21 unexpectedComment 			0 21
+        /tmp/adamic-gate/TestCommentFoldMutant2371327198/011/generated-10.ts:2:79
+    profile_test.go:180: fold mutant caught on native: case 100 line 2188: port "/tmp/adamic-gate/TestCommentFoldMutant2371327198/011/generated-10.ts:5:63", Go "/tmp/adamic-gate/TestCommentFoldMutant2371327198/011/generated-10.ts:1:1"
+        Go context:
+        case 98
+        fixed	const nested=(a?true:false)?false:true; const bool=a == b ? false : true; const same=f()?true:true; const coerced=(a + b)?true:false; const assertion=(a as any)?false:true; const fallback=a?a:b??c; const nonnull=a!?true:false;
+        case 99
+        fixed	const nested=(a?true:false)?false:true; const bool=a == b ? false : true; const same=f()?true:true; const coerced=(a + b)?true:false; const assertion=(a as any)?false:true; const fallback=a?a:b??c; const nonnull=a!?true:false;
+        case 100
+        /tmp/adamic-gate/TestCommentFoldMutant2371327198/011/generated-10.ts:1:1
+          no-warning-comments  This comment opens with `todo`, which marks the code as knowingly unfinished: "TODO: fix this xxx". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.
+        
+        range 0 21 unexpectedComment 			0 21
+        /tmp/adamic-gate/TestCommentFoldMutant2371327198/011/generated-10.ts:2:79
+--- PASS: TestCommentFoldMutant (37.14s)
+=== NAME  TestPositionIndexMutant
+    profile_test.go:201: position mutant caught on Node: case 100 line 2188: port "/tmp/adamic-gate/TestPositionIndexMutant2573731857/011/generated-10.ts:2:79", Go "/tmp/adamic-gate/TestPositionIndexMutant2573731857/011/generated-10.ts:1:1"
+        Go context:
+        case 98
+        fixed	const nested=(a?true:false)?false:true; const bool=a == b ? false : true; const same=f()?true:true; const coerced=(a + b)?true:false; const assertion=(a as any)?false:true; const fallback=a?a:b??c; const nonnull=a!?true:false;
+        case 99
+        fixed	const nested=(a?true:false)?false:true; const bool=a == b ? false : true; const same=f()?true:true; const coerced=(a + b)?true:false; const assertion=(a as any)?false:true; const fallback=a?a:b??c; const nonnull=a!?true:false;
+        case 100
+        /tmp/adamic-gate/TestPositionIndexMutant2573731857/011/generated-10.ts:1:1
+          no-warning-comments  This comment opens with `todo`, which marks the code as knowingly unfinished: "TODO: fix this xxx". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.
+        
+        range 0 21 unexpectedComment 			0 21
+        /tmp/adamic-gate/TestPositionIndexMutant2573731857/011/generated-10.ts:2:79
+    profile_test.go:201: position mutant caught on emitted JavaScript: case 100 line 2188: port "/tmp/adamic-gate/TestPositionIndexMutant2573731857/011/generated-10.ts:2:79", Go "/tmp/adamic-gate/TestPositionIndexMutant2573731857/011/generated-10.ts:1:1"
+        Go context:
+        case 98
+        fixed	const nested=(a?true:false)?false:true; const bool=a == b ? false : true; const same=f()?true:true; const coerced=(a + b)?true:false; const assertion=(a as any)?false:true; const fallback=a?a:b??c; const nonnull=a!?true:false;
+        case 99
+        fixed	const nested=(a?true:false)?false:true; const bool=a == b ? false : true; const same=f()?true:true; const coerced=(a + b)?true:false; const assertion=(a as any)?false:true; const fallback=a?a:b??c; const nonnull=a!?true:false;
+        case 100
+        /tmp/adamic-gate/TestPositionIndexMutant2573731857/011/generated-10.ts:1:1
+          no-warning-comments  This comment opens with `todo`, which marks the code as knowingly unfinished: "TODO: fix this xxx". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.
+        
+        range 0 21 unexpectedComment 			0 21
+        /tmp/adamic-gate/TestPositionIndexMutant2573731857/011/generated-10.ts:2:79
+    profile_test.go:201: position mutant caught on native: case 100 line 2188: port "/tmp/adamic-gate/TestPositionIndexMutant2573731857/011/generated-10.ts:2:79", Go "/tmp/adamic-gate/TestPositionIndexMutant2573731857/011/generated-10.ts:1:1"
+        Go context:
+        case 98
+        fixed	const nested=(a?true:false)?false:true; const bool=a == b ? false : true; const same=f()?true:true; const coerced=(a + b)?true:false; const assertion=(a as any)?false:true; const fallback=a?a:b??c; const nonnull=a!?true:false;
+        case 99
+        fixed	const nested=(a?true:false)?false:true; const bool=a == b ? false : true; const same=f()?true:true; const coerced=(a + b)?true:false; const assertion=(a as any)?false:true; const fallback=a?a:b??c; const nonnull=a!?true:false;
+        case 100
+        /tmp/adamic-gate/TestPositionIndexMutant2573731857/011/generated-10.ts:1:1
+          no-warning-comments  This comment opens with `todo`, which marks the code as knowingly unfinished: "TODO: fix this xxx". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.
+        
+        range 0 21 unexpectedComment 			0 21
+        /tmp/adamic-gate/TestPositionIndexMutant2573731857/011/generated-10.ts:2:79
+--- PASS: TestPositionIndexMutant (37.18s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	77.675s

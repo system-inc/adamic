@@ -1,0 +1,10 @@
+{
+  "rules": {
+    "TypeScript": "structure/react-hook-no-destructuring"
+  },
+  "messages": {
+    "noDestructuringInHook": {
+      "text": "This destructures inside a custom hook. Store the value in a variable and read its properties instead. A hook's returned object is the thing callers pass around and log, and destructuring inside the hook breaks the chain between a value and where it came from: a reader seeing a bare name has to find which of several calls produced it."
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "number": 4,
+  "made_against": "d772b5c990de4304de990e723835f19ebb613641",
+  "target": "313af4d720533db17dc802d0f44dc34140c3a024",
+  "worktree": "/home/cloud/full-gate/out/313af4d72053-20261009T031322Z/catalog-units/03-6e1tc5hy/adamic-catalog-worktree-5shhwcar/entry-04",
+  "setup_seconds": 74.69872766499611,
+  "ok": true,
+  "check_seconds": 110.06252678400051,
+  "cleanup_seconds": 7.9421688390066265,
+  "wall_seconds": 194.36678026799927,
+  "load_before": "15.98 12.57 10.67 58/984 3532297",
+  "load_after": "79.32 47.90 25.18 63/1216 3582011",
+  "messages": [
+    "04 borrowed-array-move: applies-and-fails-as-recorded",
+    "04 made against=d772b5c990de4304de990e723835f19ebb613641",
+    "04 wall=194.367s setup=74.699s check=110.063s cleanup=7.942s load=15.98 12.57 10.67 58/984 3532297 -> 79.32 47.90 25.18 63/1216 3582011"
+  ]
+}

@@ -1,0 +1,19 @@
+// Adversarial reading, numbers near the edges: indexes that are -0, fractions, NaN, infinite or past
+// 2 ** 64, relative indexes far out of range, splice's start and count at the extremes, and toFixed
+// and number formatting at the boundaries of their forms.
+const list = [1, 2, 3];
+console.log(`${list[-0] ?? -1} ${list[1e300] ?? -1} ${list[-1e300] ?? -1} ${list[2 ** 64] ?? -1} ${list[NaN] ?? -1} ${list[Infinity] ?? -1} ${list.at(-Infinity) ?? -1} ${list.at(1e300) ?? -1} ${list[0.5] ?? -1}`);
+console.log(`${list.slice(-1e300, 1e300).join(',')} ${list.slice(2 ** 64).length} ${'abc'.slice(-1e300, 1e300)} ${'abc'.at(-1e300) ?? 'none'} ${'abc'[1e300] ?? 'none'} ${'abc'.charCodeAt(1e300)} ${'abc'.codePointAt(-1e300) ?? -1}`);
+console.log(`${'ab'.padStart(-1e300, 'x')} ${'ab'.padEnd(NaN)} ${'abc'.indexOf('')} ${[1, 2].indexOf(NaN)} ${[NaN].includes(NaN)} ${[-0].includes(0)} ${[0].indexOf(-0)}`);
+const filled: number[] = new Array<number>(3).fill(-0);
+console.log(`${1 / (filled[0] ?? 1)} ${[3, 1, 2].fill(9, -1e300, 1e300).join(',')} ${[3, 1, 2].fill(9, 1.5, 2.9).join(',')}`);
+
+const spliced = [1, 2, 3, 4];
+console.log(`${spliced.splice(-1e300, 1).join(',')} ${spliced.join(',')}`);
+console.log(`${spliced.splice(1, -5).join(',')} ${spliced.join(',')}`);
+console.log(`${spliced.splice(1e300, 1, 9).join(',')} ${spliced.join(',')}`);
+console.log(`${spliced.splice(1, Infinity).join(',')} ${spliced.join(',')}`);
+console.log(`${spliced.splice(NaN, NaN, 7).join(',')} ${spliced.join(',')}`);
+
+console.log(`${(1e21).toFixed(2)} ${(-1.5).toFixed(0)} ${(0.5).toFixed(0)} ${(2.5).toFixed(0)} ${(1.005).toFixed(2)} ${(-0).toFixed(2)} ${(1e-7).toFixed(20)} ${(123.456).toFixed(100).length}`);
+console.log(`${Number.MAX_SAFE_INTEGER + 2} ${-Number.MIN_SAFE_INTEGER} ${2 ** 1023 * 2} ${5e-324 / 2} ${-5e-324} ${(-0).toString()} ${1e21} ${1e-7} ${123456789012345680000}`);

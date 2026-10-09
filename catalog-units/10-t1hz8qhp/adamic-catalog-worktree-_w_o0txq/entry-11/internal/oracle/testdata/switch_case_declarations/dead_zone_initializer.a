@@ -1,0 +1,13 @@
+function show(input: number): string {
+	switch (input) {
+		case 1:
+			const value: string = read();
+			return value;
+		default:
+			function read(): string { return value; }
+			return 'other';
+	}
+}
+console.log('before');
+console.log(show(1));
+console.log('unreachable');

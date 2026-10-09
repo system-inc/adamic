@@ -1,0 +1,17 @@
+{
+  "argv": [
+    "/usr/bin/timeout",
+    "--signal=TERM",
+    "--kill-after=5s",
+    "300s",
+    "/workspace/adamic-tools/bin/node",
+    "/tmp/performance-results/dependencies/node_modules/typescript/lib/tsc.js",
+    "-p",
+    "src/compiler",
+    "--noEmit",
+    "--pretty",
+    "false",
+    "--extendedDiagnostics"
+  ],
+  "cwd": "/tmp/performance-results/inputs/typescript"
+}

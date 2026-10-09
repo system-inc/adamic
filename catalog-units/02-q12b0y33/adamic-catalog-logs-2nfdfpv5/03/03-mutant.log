@@ -1,0 +1,75 @@
+--- FAIL: TestNativeAgreesWithNode (0.12s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/borrow_defined_lent.a (1.66s)
+        oracle_test.go:758: the release build: exit codes differ
+            sanitized: exit 1, stdout "", stderr "=================================================================\n==3580354==ERROR: AddressSanitizer: heap-use-after-free on address 0x7705371e0048 at pc 0x5b7d0fc88cba bp 0x7ffe13b87410 sp 0x7ffe13b87408\nREAD of size 8 at 0x7705371e0048 thread T0\n    #0 0x5b7d0fc88cb9 in adamic_function_1_show /home/cloud/full-gate/out/313af4d72053-20261009T031322Z/catalog-units/02-q12b0y33/adamic-build-502816832/main.c:42:90\n    #1 0x5b7d0fc88cb9 in main /home/cloud/full-gate/out/313af4d72053-20261009T031322Z/catalog-units/02-q12b0y33/adamic-build-502816832/main.c:72:42\n    #2 0x7aa53802a1c9  (/lib/x86_64-linux-gnu/libc.so.6+0x2a1c9) (BuildId: a4a7992a8e66555c8141ab2a08a8465ff6e0ea65)\n    #3 0x7aa53802a28a in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x2a28a) (BuildId: a4a7992a8e66555c8141ab2a08a8465ff6e0ea65)\n    #4 0x5b7d0fba2464 in _start (/home/cloud/full-gate/out/313af4d72053-20261009T031322Z/catalog-units/02-q12b0y33/TestNativeAgreesWithNodeinternaloracletestdataborrow_defined903026260/002/program+0x5a464)\n\n0x7705371e0048 is located 40 bytes inside of 58-byte region [0x7705371e0020,0x7705371e005a)\nfreed by thread T0 here:\n    #0 0x5b7d0fc44fd6 in free /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:51:3\n    #1 0x5b7d0fc9c1ef in deallocate /home/cloud/.cache/adamic/runtime/.build-2457317787/heap.c:212:3\n    #2 0x5b7d0fc9c1ef in free_one /home/cloud/.cache/adamic/runtime/.build-2457317787/heap.c:353:2\n    #3 0x5b7d0fc9c1ef in release_last /home/cloud/.cache/adamic/runtime/.build-2457317787/heap.c:366:3\n    #4 0x7aa53802a1c9  (/lib/x86_64-linux-gnu/libc.so.6+0x2a1c9) (BuildId: a4a7992a8e66555c8141ab2a08a8465ff6e0ea65)\n    #5 0x7aa53802a28a in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x2a28a) (BuildId: a4a7992a8e66555c8141ab2a08a8465ff6e0ea65)\n    #6 0x5b7d0fba2464 in _start (/home/cloud/full-gate/out/313af4d72053-20261009T031322Z/catalog-units/02-q12b0y33/TestNativeAgreesWithNodeinternaloracletestdataborrow_defined903026260/002/program+0x5a464)\n\npreviously allocated by thread T0 here:\n    #0 0x5b7d0fc45274 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3\n    #1 0x5b7d0fc9b90f in adamic_allocate /home/cloud/.cache/adamic/runtime/.build-2457317787/heap.c:196:10\n    #2 0x7aa53802a1c9  (/lib/x86_64-linux-gnu/libc.so.6+0x2a1c9) (BuildId: a4a7992a8e66555c8141ab2a08a8465ff6e0ea65)\n    #3 0x7aa53802a28a in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x2a28a) (BuildId: a4a7992a8e66555c8141ab2a08a8465ff6e0ea65)\n    #4 0x5b7d0fba2464 in _start (/home/cloud/full-gate/out/313af4d72053-20261009T031322Z/catalog-units/02-q12b0y33/TestNativeAgreesWithNodeinternaloracletestdataborrow_defined903026260/002/program+0x5a464)\n\nSUMMARY: AddressSanitizer: heap-use-after-free /home/cloud/full-gate/out/313af4d72053-20261009T031322Z/catalog-units/02-q12b0y33/adamic-build-502816832/main.c:42:90 in adamic_function_1_show\nShadow bytes around the buggy address:\n  0x7705371dfd80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7705371dfe00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7705371dfe80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7705371dff00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7705371dff80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n=>0x7705371e0000: fa fa fa fa fd fd fd fd fd[fd]fd fd fa fa fa fa\n  0x7705371e0080: 00 00 00 00 00 00 00 02 fa fa fa fa fa fa fa fa\n  0x7705371e0100: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7705371e0180: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7705371e0200: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7705371e0280: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\nShadow byte legend (one shadow byte represents 8 application bytes):\n  Addressable:           00\n  Partially addressable: 01 02 03 04 05 06 07 \n  Heap left redzone:       fa\n  Freed heap region:       fd\n  Stack left redzone:      f1\n  Stack mid redzone:       f2\n  Stack right redzone:     f3\n  Stack after return:      f5\n  Stack use after scope:   f8\n  Global redzone:          f9\n  Global init order:       f6\n  Poisoned by user:        f7\n  Container overflow:      fc\n  Array cookie:            ac\n  Intra object redzone:    bb\n  ASan internal:           fe\n  Left alloca redzone:     ca\n  Right alloca redzone:    cb\n==3580354==ABORTING\n"
+            release:   exit 0, stdout "a1\x000\n", stderr ""
+        oracle_test.go:774: exit codes differ
+            node:   exit 0, stdout "a10\n", stderr ""
+            native: exit 1, stdout "", stderr "=================================================================\n==3580354==ERROR: AddressSanitizer: heap-use-after-free on address 0x7705371e0048 at pc 0x5b7d0fc88cba bp 0x7ffe13b87410 sp 0x7ffe13b87408\nREAD of size 8 at 0x7705371e0048 thread T0\n    #0 0x5b7d0fc88cb9 in adamic_function_1_show /home/cloud/full-gate/out/313af4d72053-20261009T031322Z/catalog-units/02-q12b0y33/adamic-build-502816832/main.c:42:90\n    #1 0x5b7d0fc88cb9 in main /home/cloud/full-gate/out/313af4d72053-20261009T031322Z/catalog-units/02-q12b0y33/adamic-build-502816832/main.c:72:42\n    #2 0x7aa53802a1c9  (/lib/x86_64-linux-gnu/libc.so.6+0x2a1c9) (BuildId: a4a7992a8e66555c8141ab2a08a8465ff6e0ea65)\n    #3 0x7aa53802a28a in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x2a28a) (BuildId: a4a7992a8e66555c8141ab2a08a8465ff6e0ea65)\n    #4 0x5b7d0fba2464 in _start (/home/cloud/full-gate/out/313af4d72053-20261009T031322Z/catalog-units/02-q12b0y33/TestNativeAgreesWithNodeinternaloracletestdataborrow_defined903026260/002/program+0x5a464)\n\n0x7705371e0048 is located 40 bytes inside of 58-byte region [0x7705371e0020,0x7705371e005a)\nfreed by thread T0 here:\n    #0 0x5b7d0fc44fd6 in free /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:51:3\n    #1 0x5b7d0fc9c1ef in deallocate /home/cloud/.cache/adamic/runtime/.build-2457317787/heap.c:212:3\n    #2 0x5b7d0fc9c1ef in free_one /home/cloud/.cache/adamic/runtime/.build-2457317787/heap.c:353:2\n    #3 0x5b7d0fc9c1ef in release_last /home/cloud/.cache/adamic/runtime/.build-2457317787/heap.c:366:3\n    #4 0x7aa53802a1c9  (/lib/x86_64-linux-gnu/libc.so.6+0x2a1c9) (BuildId: a4a7992a8e66555c8141ab2a08a8465ff6e0ea65)\n    #5 0x7aa53802a28a in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x2a28a) (BuildId: a4a7992a8e66555c8141ab2a08a8465ff6e0ea65)\n    #6 0x5b7d0fba2464 in _start (/home/cloud/full-gate/out/313af4d72053-20261009T031322Z/catalog-units/02-q12b0y33/TestNativeAgreesWithNodeinternaloracletestdataborrow_defined903026260/002/program+0x5a464)\n\npreviously allocated by thread T0 here:\n    #0 0x5b7d0fc45274 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3\n    #1 0x5b7d0fc9b90f in adamic_allocate /home/cloud/.cache/adamic/runtime/.build-2457317787/heap.c:196:10\n    #2 0x7aa53802a1c9  (/lib/x86_64-linux-gnu/libc.so.6+0x2a1c9) (BuildId: a4a7992a8e66555c8141ab2a08a8465ff6e0ea65)\n    #3 0x7aa53802a28a in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x2a28a) (BuildId: a4a7992a8e66555c8141ab2a08a8465ff6e0ea65)\n    #4 0x5b7d0fba2464 in _start (/home/cloud/full-gate/out/313af4d72053-20261009T031322Z/catalog-units/02-q12b0y33/TestNativeAgreesWithNodeinternaloracletestdataborrow_defined903026260/002/program+0x5a464)\n\nSUMMARY: AddressSanitizer: heap-use-after-free /home/cloud/full-gate/out/313af4d72053-20261009T031322Z/catalog-units/02-q12b0y33/adamic-build-502816832/main.c:42:90 in adamic_function_1_show\nShadow bytes around the buggy address:\n  0x7705371dfd80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7705371dfe00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7705371dfe80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7705371dff00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7705371dff80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n=>0x7705371e0000: fa fa fa fa fd fd fd fd fd[fd]fd fd fa fa fa fa\n  0x7705371e0080: 00 00 00 00 00 00 00 02 fa fa fa fa fa fa fa fa\n  0x7705371e0100: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7705371e0180: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7705371e0200: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7705371e0280: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\nShadow byte legend (one shadow byte represents 8 application bytes):\n  Addressable:           00\n  Partially addressable: 01 02 03 04 05 06 07 \n  Heap left redzone:       fa\n  Freed heap region:       fd\n  Stack left redzone:      f1\n  Stack mid redzone:       f2\n  Stack right redzone:     f3\n  Stack after return:      f5\n  Stack use after scope:   f8\n  Global redzone:          f9\n  Global init order:       f6\n  Poisoned by user:        f7\n  Container overflow:      fc\n  Array cookie:            ac\n  Intra object redzone:    bb\n  ASan internal:           fe\n  Left alloca redzone:     ca\n  Right alloca redzone:    cb\n==3580354==ABORTING\n"
+        oracle_test.go:787: leaks:
+            exit 1
+            =================================================================
+            ==3580423==ERROR: AddressSanitizer: heap-use-after-free on address 0x7237be7e0048 at pc 0x5fddcbde5cba bp 0x7ffda35e9c30 sp 0x7ffda35e9c28
+            READ of size 8 at 0x7237be7e0048 thread T0
+                #0 0x5fddcbde5cb9 in adamic_function_1_show /home/cloud/full-gate/out/313af4d72053-20261009T031322Z/catalog-units/02-q12b0y33/adamic-build-502816832/main.c:42:90
+                #1 0x5fddcbde5cb9 in main /home/cloud/full-gate/out/313af4d72053-20261009T031322Z/catalog-units/02-q12b0y33/adamic-build-502816832/main.c:72:42
+                #2 0x75d7bf62a1c9  (/lib/x86_64-linux-gnu/libc.so.6+0x2a1c9) (BuildId: a4a7992a8e66555c8141ab2a08a8465ff6e0ea65)
+                #3 0x75d7bf62a28a in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x2a28a) (BuildId: a4a7992a8e66555c8141ab2a08a8465ff6e0ea65)
+                #4 0x5fddcbcff464 in _start (/home/cloud/full-gate/out/313af4d72053-20261009T031322Z/catalog-units/02-q12b0y33/TestNativeAgreesWithNodeinternaloracletestdataborrow_defined903026260/002/program+0x5a464)
+            
+            0x7237be7e0048 is located 40 bytes inside of 58-byte region [0x7237be7e0020,0x7237be7e005a)
+            freed by thread T0 here:
+                #0 0x5fddcbda1fd6 in free /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:51:3
+                #1 0x5fddcbdf91ef in deallocate /home/cloud/.cache/adamic/runtime/.build-2457317787/heap.c:212:3
+                #2 0x5fddcbdf91ef in free_one /home/cloud/.cache/adamic/runtime/.build-2457317787/heap.c:353:2
+                #3 0x5fddcbdf91ef in release_last /home/cloud/.cache/adamic/runtime/.build-2457317787/heap.c:366:3
+                #4 0x75d7bf62a1c9  (/lib/x86_64-linux-gnu/libc.so.6+0x2a1c9) (BuildId: a4a7992a8e66555c8141ab2a08a8465ff6e0ea65)
+                #5 0x75d7bf62a28a in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x2a28a) (BuildId: a4a7992a8e66555c8141ab2a08a8465ff6e0ea65)
+                #6 0x5fddcbcff464 in _start (/home/cloud/full-gate/out/313af4d72053-20261009T031322Z/catalog-units/02-q12b0y33/TestNativeAgreesWithNodeinternaloracletestdataborrow_defined903026260/002/program+0x5a464)
+            
+            previously allocated by thread T0 here:
+                #0 0x5fddcbda2274 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3
+                #1 0x5fddcbdf890f in adamic_allocate /home/cloud/.cache/adamic/runtime/.build-2457317787/heap.c:196:10
+                #2 0x75d7bf62a1c9  (/lib/x86_64-linux-gnu/libc.so.6+0x2a1c9) (BuildId: a4a7992a8e66555c8141ab2a08a8465ff6e0ea65)
+                #3 0x75d7bf62a28a in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x2a28a) (BuildId: a4a7992a8e66555c8141ab2a08a8465ff6e0ea65)
+                #4 0x5fddcbcff464 in _start (/home/cloud/full-gate/out/313af4d72053-20261009T031322Z/catalog-units/02-q12b0y33/TestNativeAgreesWithNodeinternaloracletestdataborrow_defined903026260/002/program+0x5a464)
+            
+            SUMMARY: AddressSanitizer: heap-use-after-free /home/cloud/full-gate/out/313af4d72053-20261009T031322Z/catalog-units/02-q12b0y33/adamic-build-502816832/main.c:42:90 in adamic_function_1_show
+            Shadow bytes around the buggy address:
+              0x7237be7dfd80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+              0x7237be7dfe00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+              0x7237be7dfe80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+              0x7237be7dff00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+              0x7237be7dff80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+            =>0x7237be7e0000: fa fa fa fa fd fd fd fd fd[fd]fd fd fa fa fa fa
+              0x7237be7e0080: 00 00 00 00 00 00 00 02 fa fa fa fa fa fa fa fa
+              0x7237be7e0100: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+              0x7237be7e0180: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+              0x7237be7e0200: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+              0x7237be7e0280: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+            Shadow byte legend (one shadow byte represents 8 application bytes):
+              Addressable:           00
+              Partially addressable: 01 02 03 04 05 06 07 
+              Heap left redzone:       fa
+              Freed heap region:       fd
+              Stack left redzone:      f1
+              Stack mid redzone:       f2
+              Stack right redzone:     f3
+              Stack after return:      f5
+              Stack use after scope:   f8
+              Global redzone:          f9
+              Global init order:       f6
+              Poisoned by user:        f7
+              Container overflow:      fc
+              Array cookie:            ac
+              Intra object redzone:    bb
+              ASan internal:           fe
+              Left alloca redzone:     ca
+              Right alloca redzone:    cb
+            ==3580423==ABORTING
+FAIL
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	1.845s
+FAIL

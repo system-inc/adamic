@@ -1,0 +1,192 @@
+// JSON.parse is not compiled yet. This bounded recursive-descent parser returns errors as values.
+class Value {
+	kind: string = 'null';
+	text: string = '';
+	number: number = 0;
+	readonly items: Value[] = [];
+	readonly fields: Map<string, Value> = new Map<string, Value>();
+}
+
+class Parser {
+	readonly source: string;
+	index: number = 0;
+	valid: boolean = true;
+	constructor(source: string) { this.source = source; }
+	peek(): string { return this.source[this.index] ?? ''; }
+	space(): void {
+		while (this.peek() === ' ' || this.peek() === '\t' || this.peek() === '\r' || this.peek() === '\n') { this.index++; }
+	}
+	string(): string {
+		this.index++;
+		let result = '';
+		while (this.index < this.source.length) {
+			const character = this.peek();
+			this.index++;
+			if (character === '"') { return result; }
+			if (character.charCodeAt(0) < 32) { this.valid = false; return ''; }
+			if (character !== '\\') { result += character; continue; }
+			const escape = this.peek();
+			this.index++;
+			if (escape === '"' || escape === '\\' || escape === '/') { result += escape; }
+			else if (escape === 'b') { result += '\b'; }
+			else if (escape === 'f') { result += '\f'; }
+			else if (escape === 'n') { result += '\n'; }
+			else if (escape === 'r') { result += '\r'; }
+			else if (escape === 't') { result += '\t'; }
+			else if (escape === 'u') {
+				let code = 0;
+				for (let digit = 0; digit < 4; digit++) {
+					const hex = '0123456789abcdef'.indexOf(this.peek().toLowerCase());
+					if (this.peek() === '' || hex < 0) { this.valid = false; return ''; }
+					code = code * 16 + hex;
+					this.index++;
+				}
+				result += String.fromCharCode(code);
+			} else { this.valid = false; return ''; }
+		}
+		this.valid = false;
+		return '';
+	}
+	digits(): void {
+		const start = this.index;
+		while (this.peek() !== '' && this.peek() >= '0' && this.peek() <= '9') { this.index++; }
+		if (start === this.index) { this.valid = false; }
+	}
+	value(depth: number): Value {
+		const result = new Value();
+		this.space();
+		if (depth > 24 || !this.valid) { this.valid = false; return result; }
+		const character = this.peek();
+		if (character === '"') { result.kind = 'string'; result.text = this.string(); return result; }
+		if (character === '{' || character === '[') {
+			const object = character === '{';
+			result.kind = object ? 'object' : 'array';
+			const end = object ? '}' : ']';
+			this.index++; this.space();
+			if (this.peek() === end) { this.index++; return result; }
+			while (this.valid) {
+				let key = '';
+				if (object) {
+					if (this.peek() !== '"') { this.valid = false; return result; }
+					key = this.string(); this.space();
+					if (this.peek() !== ':') { this.valid = false; return result; }
+					this.index++;
+				}
+				const child = this.value(depth + 1);
+				if (object) { result.fields.set(key, child); } else { result.items.push(child); }
+				this.space();
+				if (this.peek() === end) { this.index++; return result; }
+				if (this.peek() !== ',') { this.valid = false; return result; }
+				this.index++; this.space();
+			}
+			return result;
+		}
+		for (const literal of ['true', 'false', 'null']) {
+			if (this.source.slice(this.index, this.index + literal.length) === literal) {
+				result.kind = literal; this.index += literal.length; return result;
+			}
+		}
+		const start = this.index;
+		if (this.peek() === '-') { this.index++; }
+		if (this.peek() === '0') { this.index++; } else { this.digits(); }
+		if (this.peek() === '.') { this.index++; this.digits(); }
+		if (this.peek() === 'e' || this.peek() === 'E') {
+			this.index++;
+			if (this.peek() === '+' || this.peek() === '-') { this.index++; }
+			this.digits();
+		}
+		result.kind = 'number';
+		result.number = Number.parseFloat(this.source.slice(start, this.index));
+		if (!Number.isFinite(result.number)) { this.valid = false; }
+		return result;
+	}
+}
+
+function error(status: number, message: string): string {
+	return JSON.stringify({ status: status, error: message }) ?? '';
+}
+function text(value: Value | undefined): string { return value?.kind === 'string' ? value.text : ''; }
+function compare(left: string, right: string): number { return left < right ? -1 : left > right ? 1 : 0; }
+
+class OrderLine {
+	readonly sku: string;
+	readonly quantity: number;
+	readonly cents: number;
+	constructor(sku: string, quantity: number, cents: number) {
+		this.sku = sku; this.quantity = quantity; this.cents = cents;
+	}
+	total(): number { return this.quantity * this.cents; }
+}
+
+function serve(root: Value): string {
+	if (root.kind !== 'object') { return error(400, 'request must be an object'); }
+	const method = text(root.fields.get('method'));
+	const path = text(root.fields.get('path'));
+	if (method === '' || path === '') { return error(400, 'method and path must be nonempty strings'); }
+	if (method === 'GET' && path === '/health') { return '{"status":200,"service":"orders"}'; }
+	const prices = new Map<string, number>([['tea', 425], ['bread', 299], ['coffee', 875], ['梨', 155]]);
+	if (method === 'GET' && path === '/catalog') {
+		const names: string[] = [...prices.keys()]; names.sort(compare);
+		return JSON.stringify({ status: 200, products: names }) ?? '';
+	}
+	const body = root.fields.get('body');
+	if (method === 'POST' && (path === '/orders' || path === '/summary' || path === '/listing' || path === '/quote')) {
+		if (body === undefined || body.kind !== 'object') { return error(422, 'body must be an object'); }
+		if (path === '/orders') {
+			const items = body.fields.get('items');
+			const customer = text(body.fields.get('customer'));
+			if (customer.length === 0 || customer.length > 128) { return error(422, 'customer length must be 1..128'); }
+			if (items === undefined || items.kind !== 'array' || items.items.length === 0 || items.items.length > 128) { return error(422, 'items length must be 1..128'); }
+			const lines: OrderLine[] = [];
+			for (const item of items.items) {
+				const sku = text(item.fields.get('sku'));
+				const price = prices.get(sku);
+				const quantity = item.fields.get('quantity');
+				if (item.kind !== 'object' || price === undefined) { return error(422, 'unknown product'); }
+				if (quantity === undefined || quantity.kind !== 'number' || !Number.isInteger(quantity.number) || quantity.number < 1 || quantity.number > 100) { return error(422, 'quantity must be an integer 1..100'); }
+				lines.push(new OrderLine(sku, quantity.number, price));
+			}
+			let subtotal = 0;
+			for (const line of lines) { subtotal += line.total(); }
+			const tax = Math.round(subtotal * 0.0825);
+			return JSON.stringify({ status: 201, customer: customer, lines: lines.length, subtotal: subtotal, tax: tax, total: subtotal + tax, summary: `ありがとう ${customer} 🌍` }) ?? '';
+		}
+		if (path === '/summary') {
+			const content = body.fields.get('text');
+			if (content === undefined || content.kind !== 'string') { return error(422, 'text must be a string'); }
+			const counts = new Map<string, number>();
+			for (const word of content.text.trim().split(' ')) {
+				if (word !== '') { counts.set(word, (counts.get(word) ?? 0) + 1); }
+			}
+			const words: string[] = [...counts.keys()]; words.sort(compare);
+			const listing: string[] = [];
+			for (const word of words) { listing.push(`${word}: ${counts.get(word) ?? 0}`); }
+			return JSON.stringify({ status: 200, units: content.text.length, distinct: counts.size, summary: listing.join(' · ') }) ?? '';
+		}
+		if (path === '/listing') {
+			const values = body.fields.get('names');
+			if (values === undefined || values.kind !== 'array' || values.items.length > 256) { return error(422, 'names must be an array of at most 256 strings'); }
+			const names: string[] = [];
+			for (const value of values.items) {
+				if (value.kind !== 'string') { return error(422, 'names must contain strings'); }
+				names.push(value.text);
+			}
+			names.sort(compare);
+			return JSON.stringify({ status: 200, names: names }) ?? '';
+		}
+		const amount = body.fields.get('amount');
+		if (amount === undefined || amount.kind !== 'number' || amount.number < 0 || amount.number > 1000000) { return error(422, 'amount must be between 0 and 1000000'); }
+		const cents = Math.round(amount.number * 100);
+		return JSON.stringify({ status: 200, cents: cents, tax: Math.round(cents * 0.0825) }) ?? '';
+	}
+	return error(404, 'route not found');
+}
+
+export function handleRequest(request: string): string {
+	if (request.length > 65536) { return error(413, 'request too large'); }
+	const parser = new Parser(request);
+	const root = parser.value(0);
+	parser.space();
+	if (!parser.valid || parser.index !== request.length) { return error(400, 'invalid JSON'); }
+	return serve(root);
+}

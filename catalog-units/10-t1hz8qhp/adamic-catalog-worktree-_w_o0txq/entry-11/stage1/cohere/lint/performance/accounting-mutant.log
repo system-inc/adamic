@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/workspace/adamic/stage1/cohere/lint/profile.py", line 79, in <module>
+    main()
+  File "/workspace/adamic/stage1/cohere/lint/profile.py", line 67, in main
+    result = accounting.summarize(directory / 'callgrind.out')
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/adamic/stage1/typescript/scanner/profile.py", line 69, in summarize
+    raise RuntimeError("callgrind self costs do not sum to summary")
+RuntimeError: callgrind self costs do not sum to summary

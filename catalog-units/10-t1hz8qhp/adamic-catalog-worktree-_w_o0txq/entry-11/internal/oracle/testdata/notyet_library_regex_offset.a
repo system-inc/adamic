@@ -1,0 +1,24 @@
+function replacement(match: string, offset: number, input: string): string {
+ return `[${match}:${offset}:${input.length}:${input.slice(offset + match.length)}]`;
+}
+const plain = /a/g;
+const alternate = /b+/g;
+function replace(input: string, useAlternate: boolean): string {
+ const chosen = useAlternate ? alternate : plain;
+ return input.replace(chosen, replacement);
+}
+console.log(replace('🌍aa', false));
+console.log(replace('abbba', true));
+console.log(replace('none', false));
+console.log('aa'.replace(/a/g, (match: string, offset: number) => `${match}${offset}`));
+console.log('🌍'.replace(/(?:)/gu, replacement));
+console.log('abc'.replace(/b/y, replacement));
+const sticky = /b/y;
+sticky.lastIndex = 1;
+console.log('abc'.replace(sticky, replacement));
+let effects = '';
+function receiver(): string { effects += 'r'; return 'aba'; }
+function pattern(): RegExp { effects += 'p'; return plain; }
+function callback(): (match: string) => string { effects += 'c'; return (match: string) => { effects += 'x'; return match.toUpperCase(); }; }
+console.log(receiver().replace(pattern(), callback()));
+console.log(effects);

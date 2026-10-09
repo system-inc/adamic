@@ -1,0 +1,40 @@
+const patterns: RegExp[] = [/\d+/, /[a-z]+/g];
+patterns.push(/A/i);
+const hits: string[] = [];
+for (const pattern of patterns) {
+    hits.push(pattern.test('a1B') ? 'yes' : 'no');
+}
+console.log(hits.join('|'));
+const nested: RegExp[][] = [[/x/]];
+const row = nested[0];
+const first = row === undefined ? undefined : row[0];
+console.log(first === undefined ? 'missing' : `${first.test('x')}`);
+
+const byName = new Map<string, RegExp>();
+byName.set(`digits`, /\d+/);
+byName.set(`word`, /[a-z]+/);
+const digits = byName.get(`digits`);
+const word = byName.get(`word`);
+console.log(`${digits === undefined ? 'missing' : digits.test('12')} ${word === undefined ? 'missing' : word.source}`);
+const byPattern = new Map<RegExp, string>();
+const key = /a/g;
+byPattern.set(key, `letter${1}`);
+console.log(`${byPattern.get(key) ?? 'missing'} ${byPattern.get(/a/g) ?? 'other'}`);
+
+interface Shelf {
+    name: string;
+    byName: Map<string, RegExp>;
+    next: Shelf | undefined;
+}
+function shelf(depth: number): Shelf {
+    const patterns = new Map<string, RegExp>();
+    patterns.set(`digits`, /\d+/);
+    const node: Shelf = { name: `s${depth}`, byName: patterns, next: undefined };
+    if (depth > 0) node.next = shelf(depth - 1);
+    return node;
+}
+const top = shelf(1);
+const found = top.byName.get(`digits`);
+const child = top.next;
+const childFound = child === undefined ? undefined : child.byName.get(`digits`);
+console.log(`${top.name}:${found === undefined ? 'missing' : found.test('9')}:${child === undefined ? 'none' : child.name}:${childFound === undefined ? 'missing' : childFound.source}`);

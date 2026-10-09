@@ -1,0 +1,16 @@
+{
+  "argv": [
+    "/usr/bin/timeout",
+    "--signal=TERM",
+    "--kill-after=5s",
+    "300s",
+    "/tmp/performance-mutant-final/dependencies/node_modules/@typescript/native-preview-linux-x64/lib/tsgo",
+    "--singleThreaded",
+    "-p",
+    "tsconfig.json",
+    "--noEmit",
+    "--pretty",
+    "false"
+  ],
+  "cwd": "/tmp/performance-mutant-final/inputs/061_constEnumErrors"
+}

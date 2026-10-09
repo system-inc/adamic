@@ -1,0 +1,16 @@
+{
+  "rules": {
+    "TypeScript": "nexus/consistency-no-multiline-arrow-function"
+  },
+  "messages": {
+    "reactHookArrow": {
+      "text": "Use a regular function instead of an arrow function with React.{{hookName}}. A named function shows up in a stack trace and in the React devtools as itself."
+    },
+    "addEventListenerArrow": {
+      "text": "Use a regular function instead of an arrow function with addEventListener. A listener you cannot name is a listener you cannot remove, since removeEventListener needs the same reference back."
+    },
+    "multilineArrow": {
+      "text": "Use a regular function instead of a multi-line arrow function. An arrow earns its terseness on a single-line implicit return, and past that a named function declaration reads better and hoists. Arrows that use `this` are exempt, since a function would rebind it."
+    }
+  }
+}
