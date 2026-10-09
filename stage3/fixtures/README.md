@@ -31,7 +31,9 @@ outcome and complete diagnostic. A change says `gap changed: update status.json
 and check the native output`. Newly compiling gaps run natively even when their
 record still says NotYet or Refused, so a gap closure cannot hide wrong output.
 
-TestFixtures prepares a missing oracle test binary with `build-hook.py --prepare`.
+TestPrepareFixtureOracleHook prepares a missing oracle test binary before the
+parallel fixture workers; TestFixtures also prepares on demand when run alone.
+Both share sync.Once within one package process. The named preparation unit uses `build-hook.py --prepare`.
 The build tier may use that same command to prefetch it.
 Its key covers effective Go dependency file lists and contents, embedded runtime
 inputs, module/workspace manifests, compiler/linker bytes and Go flags. Tests fetch

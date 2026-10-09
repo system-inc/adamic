@@ -162,13 +162,7 @@ func TestFixtures(t *testing.T) {
 	if len(statuses) == 0 {
 		t.Fatal("no fixture status.json files found")
 	}
-	// Prepare missing products under the same input-key lock. A warm gate only
-	// verifies and fetches the product, without rebuilding it.
-	fetched := execute(t, repository, nil, "python3", "stage3/fixtures/build-hook.py", "--prepare")
-	if fetched.Exit != 0 {
-		t.Fatalf("preparing or fetching oracle hook: %s%s", fetched.Stdout, fetched.Stderr)
-	}
-	hook := strings.TrimSpace(fetched.Stdout)
+	hook := fixtureOracleHook(t, repository)
 	shard, count := fixtureShard(t)
 	transformedRunner := transformedNodeRunner(t, repository)
 	for _, status := range statuses {
@@ -362,6 +356,33 @@ func TestFixtures(t *testing.T) {
 			}
 		})
 	}
+}
+
+var oracleHookOnce sync.Once
+var oracleHookResult behavior
+
+func fixtureOracleHook(t *testing.T, repository string) string {
+	t.Helper()
+	oracleHookOnce.Do(func() {
+		oracleHookResult = execute(t, repository, nil, "python3", "stage3/fixtures/build-hook.py", "--prepare")
+	})
+	if oracleHookResult.Exit != 0 || strings.TrimSpace(oracleHookResult.Stdout) == "" {
+		t.Fatalf("preparing or fetching oracle hook: %s%s", oracleHookResult.Stdout, oracleHookResult.Stderr)
+	}
+	return strings.TrimSpace(oracleHookResult.Stdout)
+}
+
+// Not parallel: prepare before this package's parallel fixture workers. The
+// gate can dispatch this named build unit separately; TestFixtures also prepares
+// on demand when it is dispatched alone on a fresh worker.
+func TestPrepareFixtureOracleHook(t *testing.T) {
+	repository, err := filepath.Abs("../..")
+	if err != nil {
+		t.Fatal(err)
+	}
+	started := time.Now()
+	fixtureOracleHook(t, repository)
+	t.Logf("keyed oracle hook preparation/fetch: %s", time.Since(started))
 }
 
 func TestFixturePaths(t *testing.T) {
