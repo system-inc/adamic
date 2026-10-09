@@ -1233,11 +1233,12 @@ type (
 
 	// SetProperty is object.name = value: the field takes the value, and lets go of what it held.
 	SetProperty struct {
-		Record        bool // write into counted own-key storage
-		Uninitialized bool
-		Object        Expression
-		Name          string
-		Value         Expression
+		ViewWriteUnrelated bool // every reaching receiver is proven outside the viewed allocation graph
+		Record             bool // write into counted own-key storage
+		Uninitialized      bool
+		Object             Expression
+		Name               string
+		Value              Expression
 		// Class is as Property's.
 		Class int
 		// Site is which write of the program this is, for the cycle finder (lowering keeps the type of

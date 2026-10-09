@@ -166,6 +166,7 @@ func (l *lowering) checkLazyViewReads() error {
 			}
 		}
 	}
+	l.certifyUnrelatedViewWrites(graph, viewed, unknown)
 	if err := l.activateViewArrayReads(graph, viewed, unknown); err != nil {
 		return err
 	}

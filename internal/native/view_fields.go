@@ -13,6 +13,10 @@ type checkedViewReadHook func(*emitter, ir.Property) (string, bool)
 var checkedViewReadAdapter checkedViewReadHook
 
 func (e *emitter) viewField(property ir.Property) string {
+	if property.ViewOrdinary {
+		property.View = ""
+		return e.evaluateWithoutViewArrays(property)
+	}
 	if property.Of == ir.Closure && property.ViewContract > 0 && e.program.ViewContracts[property.ViewContract-1].Kind == ir.ViewCallable {
 		method := e.temporary()
 		if e.program.ClosureConventionNeeded() {

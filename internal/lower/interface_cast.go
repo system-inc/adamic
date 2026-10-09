@@ -74,7 +74,7 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Typ
 		if part.Kind == ast.KindPropertyAccessExpression && fields[part.Name().Text()] && ast.IsAssignmentTarget(part) {
 			if symbol := l.checker.GetSymbolAtLocation(part.Name()); symbol != nil {
 				of, _ := l.representation(l.checker.GetTypeOfSymbol(symbol))
-				if of == ir.Object || of == ir.Array {
+				if of == ir.Object || of == ir.Array && l.viewSchemaArrayField(target, part.Name().Text()) {
 					refused = l.notYet(part, "writing a checked object field without its source-slot type certificate")
 				}
 			}

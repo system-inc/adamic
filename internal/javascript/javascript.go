@@ -481,7 +481,7 @@ func (e *emitter) statement(at *ir.Statement) {
 	case ir.Panic:
 		e.line("panic(%s);", e.value(statement.Message))
 	case ir.SetProperty:
-		if e.program.CheckedFields[statement.Name] && !statement.Define && !statement.Uninitialized {
+		if e.program.CheckedFields[statement.Name] && !statement.ViewWriteUnrelated && !statement.Define && !statement.Uninitialized {
 			e.line("adamicViewWrite(%s, %s, %s, %d);", e.value(statement.Object), quote(statement.Name), e.value(statement.Value), viewFieldRepresentation(statement.Value))
 			break
 		}
@@ -905,7 +905,7 @@ func (e *emitter) valueWithoutViewArrays(expression ir.Expression) string {
 		if expression.Object.Type() == ir.Closure {
 			return e.closureSurface(expression)
 		}
-		if expression.View != "" {
+		if expression.View != "" && !expression.ViewOrdinary {
 			return e.checkedViewField(expression)
 		}
 		if expression.Readiness != "" {

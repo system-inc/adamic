@@ -244,7 +244,7 @@ func (e *emitter) statement(statement ir.Statement) {
 		if e.fieldTypesNeeded() {
 			cache = e.cache()
 		}
-		if e.program.CheckedFields[statement.Name] {
+		if e.program.CheckedFields[statement.Name] && !statement.ViewWriteUnrelated {
 			e.line("adamic_object_view_write(%s, %s, &%s, %d, %s, %s);", object, cString(statement.Name), cache, fieldRepresentation(statement.Value), cString(map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string"}[statement.Value.Type()]), cString("<write>."+statement.Name))
 		}
 		if e.fieldTypesNeeded() {
