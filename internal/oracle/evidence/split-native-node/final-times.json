@@ -1,0 +1,546 @@
+[
+  {
+    "test": "TestNativeAgreesWithNode/shard-000",
+    "wall_seconds": 40.116,
+    "killed_at_deadline": false,
+    "exit_code": 0,
+    "assertions_passed": true,
+    "gate_passed": true,
+    "under_45_seconds": true,
+    "fixture_count": 30,
+    "shared_setup_seconds": 16.167,
+    "cache_hits": {
+      "native": 0,
+      "node": 0,
+      "probe": 0
+    }
+  },
+  {
+    "test": "TestNativeAgreesWithNode/shard-001",
+    "wall_seconds": 41.013,
+    "killed_at_deadline": false,
+    "exit_code": 0,
+    "assertions_passed": true,
+    "gate_passed": true,
+    "under_45_seconds": true,
+    "fixture_count": 30,
+    "shared_setup_seconds": 15.316,
+    "cache_hits": {
+      "native": 0,
+      "node": 0,
+      "probe": 0
+    }
+  },
+  {
+    "test": "TestNativeAgreesWithNode/shard-002",
+    "wall_seconds": 40.209,
+    "killed_at_deadline": false,
+    "exit_code": 0,
+    "assertions_passed": true,
+    "gate_passed": true,
+    "under_45_seconds": true,
+    "fixture_count": 30,
+    "shared_setup_seconds": 13.413,
+    "cache_hits": {
+      "native": 0,
+      "node": 0,
+      "probe": 0
+    }
+  },
+  {
+    "test": "TestNativeAgreesWithNode/shard-003-0",
+    "wall_seconds": 30.582,
+    "killed_at_deadline": false,
+    "exit_code": 0,
+    "assertions_passed": true,
+    "gate_passed": true,
+    "under_45_seconds": true,
+    "fixture_count": 15,
+    "shared_setup_seconds": 15.77,
+    "cache_hits": {
+      "native": 0,
+      "node": 0,
+      "probe": 0
+    }
+  },
+  {
+    "test": "TestNativeAgreesWithNode/shard-003-1",
+    "wall_seconds": 35.233,
+    "killed_at_deadline": false,
+    "exit_code": 0,
+    "assertions_passed": true,
+    "gate_passed": true,
+    "under_45_seconds": true,
+    "fixture_count": 15,
+    "shared_setup_seconds": 16.178,
+    "cache_hits": {
+      "native": 0,
+      "node": 0,
+      "probe": 0
+    }
+  },
+  {
+    "test": "TestNativeAgreesWithNode/shard-004",
+    "wall_seconds": 41.056,
+    "killed_at_deadline": false,
+    "exit_code": 0,
+    "assertions_passed": true,
+    "gate_passed": true,
+    "under_45_seconds": true,
+    "fixture_count": 30,
+    "shared_setup_seconds": 16.12,
+    "cache_hits": {
+      "native": 0,
+      "node": 0,
+      "probe": 0
+    }
+  },
+  {
+    "test": "TestNativeAgreesWithNode/shard-005",
+    "wall_seconds": 36.934,
+    "killed_at_deadline": false,
+    "exit_code": 0,
+    "assertions_passed": true,
+    "gate_passed": true,
+    "under_45_seconds": true,
+    "fixture_count": 29,
+    "shared_setup_seconds": 15.928,
+    "cache_hits": {
+      "native": 0,
+      "node": 0,
+      "probe": 0
+    }
+  },
+  {
+    "test": "TestNativeAgreesWithNode/shard-006",
+    "wall_seconds": 37.757,
+    "killed_at_deadline": false,
+    "exit_code": 0,
+    "assertions_passed": true,
+    "gate_passed": true,
+    "under_45_seconds": true,
+    "fixture_count": 29,
+    "shared_setup_seconds": 16.117,
+    "cache_hits": {
+      "native": 0,
+      "node": 0,
+      "probe": 0
+    }
+  },
+  {
+    "test": "TestNativeAgreesWithNode/shard-007",
+    "wall_seconds": 29.376,
+    "killed_at_deadline": false,
+    "exit_code": 0,
+    "assertions_passed": true,
+    "gate_passed": true,
+    "under_45_seconds": true,
+    "fixture_count": 29,
+    "shared_setup_seconds": 13.303,
+    "cache_hits": {
+      "native": 0,
+      "node": 0,
+      "probe": 0
+    }
+  },
+  {
+    "test": "TestNativeAgreesWithNode/shard-008",
+    "wall_seconds": 33.086,
+    "killed_at_deadline": false,
+    "exit_code": 0,
+    "assertions_passed": true,
+    "gate_passed": true,
+    "under_45_seconds": true,
+    "fixture_count": 29,
+    "shared_setup_seconds": 13.179,
+    "cache_hits": {
+      "native": 0,
+      "node": 0,
+      "probe": 0
+    }
+  },
+  {
+    "test": "TestNativeAgreesWithNode/shard-009",
+    "wall_seconds": 35.68,
+    "killed_at_deadline": false,
+    "exit_code": 0,
+    "assertions_passed": true,
+    "gate_passed": true,
+    "under_45_seconds": true,
+    "fixture_count": 29,
+    "shared_setup_seconds": 13.281,
+    "cache_hits": {
+      "native": 0,
+      "node": 0,
+      "probe": 0
+    }
+  },
+  {
+    "test": "TestNativeAgreesWithNode/shard-010",
+    "wall_seconds": 39.262,
+    "killed_at_deadline": false,
+    "exit_code": 0,
+    "assertions_passed": true,
+    "gate_passed": true,
+    "under_45_seconds": true,
+    "fixture_count": 29,
+    "shared_setup_seconds": 18.088,
+    "cache_hits": {
+      "native": 0,
+      "node": 0,
+      "probe": 0
+    }
+  },
+  {
+    "test": "TestNativeAgreesWithNode/shard-011",
+    "wall_seconds": 40.014,
+    "killed_at_deadline": false,
+    "exit_code": 0,
+    "assertions_passed": true,
+    "gate_passed": true,
+    "under_45_seconds": true,
+    "fixture_count": 29,
+    "shared_setup_seconds": 15.868,
+    "cache_hits": {
+      "native": 0,
+      "node": 0,
+      "probe": 0
+    }
+  },
+  {
+    "test": "TestNativeAgreesWithNode/shard-012",
+    "wall_seconds": 38.409,
+    "killed_at_deadline": false,
+    "exit_code": 0,
+    "assertions_passed": true,
+    "gate_passed": true,
+    "under_45_seconds": true,
+    "fixture_count": 29,
+    "shared_setup_seconds": 15.14,
+    "cache_hits": {
+      "native": 0,
+      "node": 0,
+      "probe": 0
+    }
+  },
+  {
+    "test": "TestNativeAgreesWithNode/shard-013",
+    "wall_seconds": 35.483,
+    "killed_at_deadline": false,
+    "exit_code": 0,
+    "assertions_passed": true,
+    "gate_passed": true,
+    "under_45_seconds": true,
+    "fixture_count": 29,
+    "shared_setup_seconds": 16.863,
+    "cache_hits": {
+      "native": 0,
+      "node": 0,
+      "probe": 0
+    }
+  },
+  {
+    "test": "TestNativeAgreesWithNode/shard-014",
+    "wall_seconds": 34.834,
+    "killed_at_deadline": false,
+    "exit_code": 0,
+    "assertions_passed": true,
+    "gate_passed": true,
+    "under_45_seconds": true,
+    "fixture_count": 29,
+    "shared_setup_seconds": 15.162,
+    "cache_hits": {
+      "native": 0,
+      "node": 0,
+      "probe": 0
+    }
+  },
+  {
+    "test": "TestNativeAgreesWithNode/shard-015",
+    "wall_seconds": 28.731,
+    "killed_at_deadline": false,
+    "exit_code": 0,
+    "assertions_passed": true,
+    "gate_passed": true,
+    "under_45_seconds": true,
+    "fixture_count": 29,
+    "shared_setup_seconds": 18.605,
+    "cache_hits": {
+      "native": 0,
+      "node": 0,
+      "probe": 0
+    }
+  },
+  {
+    "test": "TestNativeAgreesWithNode/shard-016",
+    "wall_seconds": 35.574,
+    "killed_at_deadline": false,
+    "exit_code": 0,
+    "assertions_passed": true,
+    "gate_passed": true,
+    "under_45_seconds": true,
+    "fixture_count": 29,
+    "shared_setup_seconds": 17.715,
+    "cache_hits": {
+      "native": 0,
+      "node": 0,
+      "probe": 0
+    }
+  },
+  {
+    "test": "TestNativeAgreesWithNode/shard-017",
+    "wall_seconds": 39.562,
+    "killed_at_deadline": false,
+    "exit_code": 0,
+    "assertions_passed": true,
+    "gate_passed": true,
+    "under_45_seconds": true,
+    "fixture_count": 29,
+    "shared_setup_seconds": 15.529,
+    "cache_hits": {
+      "native": 0,
+      "node": 0,
+      "probe": 0
+    }
+  },
+  {
+    "test": "TestNativeAgreesWithNode/shard-018",
+    "wall_seconds": 34.608,
+    "killed_at_deadline": false,
+    "exit_code": 0,
+    "assertions_passed": true,
+    "gate_passed": true,
+    "under_45_seconds": true,
+    "fixture_count": 29,
+    "shared_setup_seconds": 16.081,
+    "cache_hits": {
+      "native": 0,
+      "node": 0,
+      "probe": 0
+    }
+  },
+  {
+    "test": "TestNativeAgreesWithNode/shard-019-0",
+    "wall_seconds": 22.032,
+    "killed_at_deadline": false,
+    "exit_code": 0,
+    "assertions_passed": true,
+    "gate_passed": true,
+    "under_45_seconds": true,
+    "fixture_count": 15,
+    "shared_setup_seconds": 16.686,
+    "cache_hits": {
+      "native": 0,
+      "node": 0,
+      "probe": 0
+    }
+  },
+  {
+    "test": "TestNativeAgreesWithNode/shard-019-1",
+    "wall_seconds": 43.454,
+    "killed_at_deadline": false,
+    "exit_code": 0,
+    "assertions_passed": true,
+    "gate_passed": true,
+    "under_45_seconds": true,
+    "fixture_count": 14,
+    "shared_setup_seconds": 15.812,
+    "cache_hits": {
+      "native": 0,
+      "node": 0,
+      "probe": 0
+    }
+  },
+  {
+    "test": "TestNativeAgreesWithNode/shard-020",
+    "wall_seconds": 31.481,
+    "killed_at_deadline": false,
+    "exit_code": 0,
+    "assertions_passed": true,
+    "gate_passed": true,
+    "under_45_seconds": true,
+    "fixture_count": 29,
+    "shared_setup_seconds": 13.57,
+    "cache_hits": {
+      "native": 0,
+      "node": 0,
+      "probe": 0
+    }
+  },
+  {
+    "test": "TestNativeAgreesWithNode/shard-021",
+    "wall_seconds": 31.239,
+    "killed_at_deadline": false,
+    "exit_code": 0,
+    "assertions_passed": true,
+    "gate_passed": true,
+    "under_45_seconds": true,
+    "fixture_count": 29,
+    "shared_setup_seconds": 13.66,
+    "cache_hits": {
+      "native": 0,
+      "node": 0,
+      "probe": 0
+    }
+  },
+  {
+    "test": "TestNativeAgreesWithNode/shard-022",
+    "wall_seconds": 28.86,
+    "killed_at_deadline": false,
+    "exit_code": 0,
+    "assertions_passed": true,
+    "gate_passed": true,
+    "under_45_seconds": true,
+    "fixture_count": 29,
+    "shared_setup_seconds": 13.702,
+    "cache_hits": {
+      "native": 0,
+      "node": 0,
+      "probe": 0
+    }
+  },
+  {
+    "test": "TestNativeAgreesWithNode/shard-023",
+    "wall_seconds": 27.728,
+    "killed_at_deadline": false,
+    "exit_code": 0,
+    "assertions_passed": true,
+    "gate_passed": true,
+    "under_45_seconds": true,
+    "fixture_count": 29,
+    "shared_setup_seconds": 13.512,
+    "cache_hits": {
+      "native": 0,
+      "node": 0,
+      "probe": 0
+    }
+  },
+  {
+    "test": "TestNativeAgreesWithNode/shard-024",
+    "wall_seconds": 26.378,
+    "killed_at_deadline": false,
+    "exit_code": 0,
+    "assertions_passed": true,
+    "gate_passed": true,
+    "under_45_seconds": true,
+    "fixture_count": 29,
+    "shared_setup_seconds": 13.985,
+    "cache_hits": {
+      "native": 0,
+      "node": 0,
+      "probe": 0
+    }
+  },
+  {
+    "test": "TestNativeAgreesWithNode/shard-025",
+    "wall_seconds": 32.448,
+    "killed_at_deadline": false,
+    "exit_code": 0,
+    "assertions_passed": true,
+    "gate_passed": true,
+    "under_45_seconds": true,
+    "fixture_count": 29,
+    "shared_setup_seconds": 13.709,
+    "cache_hits": {
+      "native": 0,
+      "node": 0,
+      "probe": 0
+    }
+  },
+  {
+    "test": "TestNativeAgreesWithNode/shard-026",
+    "wall_seconds": 32.181,
+    "killed_at_deadline": false,
+    "exit_code": 0,
+    "assertions_passed": true,
+    "gate_passed": true,
+    "under_45_seconds": true,
+    "fixture_count": 29,
+    "shared_setup_seconds": 13.428,
+    "cache_hits": {
+      "native": 0,
+      "node": 0,
+      "probe": 0
+    }
+  },
+  {
+    "test": "TestNativeAgreesWithNode/shard-027",
+    "wall_seconds": 26.309,
+    "killed_at_deadline": false,
+    "exit_code": 0,
+    "assertions_passed": true,
+    "gate_passed": true,
+    "under_45_seconds": true,
+    "fixture_count": 29,
+    "shared_setup_seconds": 13.438,
+    "cache_hits": {
+      "native": 0,
+      "node": 0,
+      "probe": 0
+    }
+  },
+  {
+    "test": "TestNativeAgreesWithNode/shard-028",
+    "wall_seconds": 27.796,
+    "killed_at_deadline": false,
+    "exit_code": 0,
+    "assertions_passed": true,
+    "gate_passed": true,
+    "under_45_seconds": true,
+    "fixture_count": 29,
+    "shared_setup_seconds": 13.38,
+    "cache_hits": {
+      "native": 0,
+      "node": 0,
+      "probe": 0
+    }
+  },
+  {
+    "test": "TestNativeAgreesWithNode/shard-029",
+    "wall_seconds": 26.063,
+    "killed_at_deadline": false,
+    "exit_code": 0,
+    "assertions_passed": true,
+    "gate_passed": true,
+    "under_45_seconds": true,
+    "fixture_count": 29,
+    "shared_setup_seconds": 13.789,
+    "cache_hits": {
+      "native": 0,
+      "node": 0,
+      "probe": 0
+    }
+  },
+  {
+    "test": "TestNativeAgreesWithNode/shard-030",
+    "wall_seconds": 27.705,
+    "killed_at_deadline": false,
+    "exit_code": 0,
+    "assertions_passed": true,
+    "gate_passed": true,
+    "under_45_seconds": true,
+    "fixture_count": 29,
+    "shared_setup_seconds": 13.307,
+    "cache_hits": {
+      "native": 0,
+      "node": 0,
+      "probe": 0
+    }
+  },
+  {
+    "test": "TestNativeAgreesWithNode/shard-031",
+    "wall_seconds": 29.185,
+    "killed_at_deadline": false,
+    "exit_code": 0,
+    "assertions_passed": true,
+    "gate_passed": true,
+    "under_45_seconds": true,
+    "fixture_count": 29,
+    "shared_setup_seconds": 13.407,
+    "cache_hits": {
+      "native": 0,
+      "node": 0,
+      "probe": 0
+    }
+  }
+]
