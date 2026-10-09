@@ -462,6 +462,16 @@ class LandingTests(unittest.TestCase):
                                 outputs={('code', 'TestRuled'): ['    ruled_test.go:12: got 3, want 4\n', '    ruled_test.go:9: oracle: signal: killed\n']})
         self.assertIn('is named infra but its output asserts: ruled_test.go:12: got 3, want 4',
                       self.push('--fast-gate', asserted, '--infra-red', 'code TestRuled=#t4b9j71', alone, 'asserted').stderr)
+        # A red that never ran its own check, because a step it depends on died first, is unknown: naming it infra doesn't
+        # excuse it, even when its text also mentions the deadline that killed the step (the trio's TestShardsAgree, Oct 9).
+        dependent = self.publish(alone, 'dependent', {'sha': alone, 'base': now, 'finished': True, 'skip': 0, 'packages': ['other'], 'fail': 1, 'pass': 10,
+                                 'build_ok': True, 'vet_ok': True, 'uncached_tests': True, 'wall_seconds': 60,
+                                 'steps_seconds': {stage: 5 for stage in ('build', 'vet', 'tests', 'smoke', 'census')},
+                                 'stages_exit': dict({stage: 0 for stage in ('build', 'vet', 'smoke', 'census')}, tests=1),
+                                 'planned_stages': ['build', 'vet', 'tests', 'smoke', 'census']}, failing=[('code', 'TestRuled')],
+                                 outputs={('code', 'TestRuled'): ['    shards_test.go:256: build prepared: shared setup missing: run TestRuled_Setup before selecting leaves (setup deadline exceeded)\n']})
+        self.assertIn("unknown, not excused: code TestRuled didn't run its check",
+                      self.push('--fast-gate', dependent, '--infra-red', 'code TestRuled=#t4b9j71', alone, 'dependent').stderr)
         # Its one red is excused, so it reaches the pause rule, which main's red record here still holds.
         self.assertIn('landings are paused', self.push('--fast-gate', oneRed, '--infra-red', 'code TestRuled=#t4b9j71', alone, 'one').stderr)
 

@@ -390,6 +390,27 @@ for name in sorted(ruled & ours):
     asserted = [line.strip() for line in lines if assertion.search(line)]
     if asserted:
         sys.exit("%s is named infra but its output asserts: %s" % (name, asserted[0][:120]))
+# A red whose output says a step it depends on never ran (a shard reading "shared setup missing: run X first") checked
+# nothing, so its verdict is unknown: never infra and never main's, settled only by a rerun (@system_adamic, Oct 9 06:57,
+# the trio's 32 TestShardsAgree shards behind a setup killed at its deadline).
+dependency = re.compile(r"shared setup missing|setup (?:did not|didn't|never) run|run Test[A-Za-z0-9_]+ (?:first|before)", re.I)
+excused = ours & onMain
+dependents = {}
+for ref in records:
+    raw = subprocess.run(["git", "show", ref + ":test.jsonl.gz"], capture_output=True).stdout
+    if not raw:
+        continue
+    for line in gzip.decompress(raw).decode(errors="replace").splitlines():
+        try:
+            event = json.loads(line)
+        except ValueError:
+            continue
+        name = (event.get("Package") or "").split("/adamic/")[-1] + " " + (event.get("Test") or "").split("/")[0]
+        if event.get("Action") == "output" and name in excused and dependency.search(event.get("Output", "")):
+            dependents.setdefault(name, event["Output"].strip())
+if dependents:
+    sys.exit("unknown, not excused: %s didn't run its check (%s); only a rerun settles it" % (
+        "; ".join(sorted(dependents)[:8]), dependents[sorted(dependents)[0]][:120]))
 new = sorted(ours - onMain)
 if new:
     sys.exit(("new reds against main: " if mainRef != "origin/" else "reds not ruled infra: ") + "; ".join(new[:8]))
