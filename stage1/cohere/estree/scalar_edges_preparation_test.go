@@ -10,6 +10,7 @@ import (
 	"path/filepath"
 	"runtime"
 	"strings"
+	"sync"
 	"syscall"
 	"testing"
 	"time"
@@ -32,14 +33,17 @@ func scalarEdgeRanges(count int) [testScalarEdgesShards][2]int {
 	return ranges
 }
 
-func scalarEdgeProducts(t *testing.T, main string) (string, string) {
-	t.Helper()
-	inputs := buildcache.Inputs{
+func scalarEdgeInputs() buildcache.Inputs {
+	return buildcache.Inputs{
 		Name:      "scalar-edges-lowered",
 		Files:     []string{"stage1/cohere/estree", "stage1/typescript", "internal", "cohere", "go.mod"},
 		Toolchain: []string{runtime.Version()},
 	}
-	lowered := buildcache.Product(t, inputs, func(dir string) error {
+}
+
+func scalarEdgeLowered(t *testing.T, main string) string {
+	t.Helper()
+	return buildcache.Product(t, scalarEdgeInputs(), func(dir string) error {
 		program, err := load.Load([]string{main})
 		if err != nil {
 			return err
@@ -53,6 +57,11 @@ func scalarEdgeProducts(t *testing.T, main string) (string, string) {
 		}
 		return os.WriteFile(filepath.Join(dir, "port.mjs"), []byte(javascript.JavaScript(ir)), 0644)
 	})
+}
+
+func scalarEdgeNative(t *testing.T, lowered string) string {
+	t.Helper()
+	inputs := scalarEdgeInputs()
 	inputs.Name = "scalar-edges-sanitized-native"
 	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
 	inputs.Flags = append(native.Flags(native.Options{Sanitize: true}), []string{"Sanitize=true", "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT"), "ADAMIC_NATIVE_JOBS=" + os.Getenv("ADAMIC_NATIVE_JOBS"), "ADAMIC_GATE_UNCACHED=" + os.Getenv("ADAMIC_GATE_UNCACHED")}...)
@@ -63,7 +72,13 @@ func scalarEdgeProducts(t *testing.T, main string) (string, string) {
 		}
 		return native.Build(string(source), filepath.Join(dir, "port"), native.Options{Sanitize: true})
 	})
-	return filepath.Join(product, "port"), filepath.Join(lowered, "port.mjs")
+	return filepath.Join(product, "port")
+}
+
+func scalarEdgeProducts(t *testing.T, main string) (string, string) {
+	t.Helper()
+	lowered := scalarEdgeLowered(t, main)
+	return scalarEdgeNative(t, lowered), filepath.Join(lowered, "port.mjs")
 }
 
 func scalarEdgeOracle(t *testing.T) string {
@@ -83,9 +98,7 @@ func scalarEdgeOracle(t *testing.T) string {
 		if err := os.WriteFile(path, overlay, 0644); err != nil {
 			return err
 		}
-		ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
-		defer cancel()
-		command := exec.CommandContext(ctx, "go", "build", "-overlay="+path, "-o", filepath.Join(dir, "oracle"), virtual)
+		command := exec.CommandContext(context.Background(), "go", "build", "-overlay="+path, "-o", filepath.Join(dir, "oracle"), virtual)
 		command.Dir = filepath.Join(repo, "cohere")
 		output, err := command.CombinedOutput()
 		if err != nil {
@@ -98,47 +111,27 @@ func scalarEdgeOracle(t *testing.T) string {
 
 type scalarEdgeReady struct{ Oracle, Binary, Script string }
 
-func scalarEdgeReadyPath(t *testing.T) string {
+var scalarEdgePreparation struct {
+	once  sync.Once
+	ready scalarEdgeReady
+}
+
+// Every selected test prepares its products before starting its case deadline.
+// Product owns cross-process caching; Once shares the products within this process.
+func scalarEdgePrepare(t *testing.T) scalarEdgeReady {
 	t.Helper()
-	key, err := buildcache.Key(root(t), buildcache.Inputs{
-		Name:      "scalar-edges-ready-v1",
-		Files:     []string{"stage1/cohere/estree", "stage1/typescript", "internal", "cohere", "go.mod"},
-		Flags:     []string{os.Getenv("ADAMIC_NATIVE_SPLIT"), os.Getenv("ADAMIC_NATIVE_JOBS"), os.Getenv("ADAMIC_GATE_UNCACHED")},
-		Toolchain: []string{runtime.Version(), buildcache.Tool("go", "version"), buildcache.Tool("clang", "--version")},
-	})
-	if err != nil {
-		t.Fatal(err)
-	}
-	dir := os.Getenv("ADAMIC_BUILD_CACHE_DIR")
-	if dir == "" {
-		user, err := os.UserCacheDir()
+	scalarEdgePreparation.once.Do(func() {
+		main, err := filepath.Abs("main.ts")
 		if err != nil {
 			t.Fatal(err)
 		}
-		dir = filepath.Join(user, "adamic-build")
-	}
-	return filepath.Join(dir, key+"-scalar-edges-ready.json")
-}
-
-// Shards read published products only: no builder, lock or lazy initialization.
-func scalarEdgeFetch(t *testing.T) scalarEdgeReady {
-	t.Helper()
-	path := scalarEdgeReadyPath(t)
-	data, err := os.ReadFile(path)
-	if err != nil {
-		t.Fatalf("run TestScalarEdges_Setup before the leaves: %v", err)
-	}
-	var ready scalarEdgeReady
-	if err := json.Unmarshal(data, &ready); err != nil {
-		t.Fatal(err)
-	}
-	for _, path := range []string{ready.Oracle, ready.Binary, ready.Script} {
-		if path == "" {
-			t.Fatal("incomplete scalar-edge setup")
-		}
-		if _, err := os.Stat(path); err != nil {
-			t.Fatalf("rerun TestScalarEdges_Setup: %v", err)
-		}
+		ready := scalarEdgeReady{Oracle: scalarEdgeOracle(t)}
+		ready.Binary, ready.Script = scalarEdgeProducts(t, main)
+		scalarEdgePreparation.ready = ready
+	})
+	ready := scalarEdgePreparation.ready
+	if ready.Oracle == "" || ready.Binary == "" || ready.Script == "" {
+		t.Fatal("scalar-edge preparation failed")
 	}
 	return ready
 }
@@ -156,56 +149,15 @@ func scalarEdgeCommand(ctx context.Context, name string, args ...string) *exec.C
 	return command
 }
 
-// Not parallel: publishes shared oracle, lowered and native products before the parallel leaves run.
 func TestScalarEdges_Setup(t *testing.T) {
-	started := time.Now()
-	if os.Getenv("ADAMIC_SCALAR_EDGES_SETUP_WORKER") == "1" {
-		main, err := filepath.Abs("main.ts")
-		if err != nil {
-			t.Fatal(err)
-		}
-		ready := scalarEdgeReady{Oracle: scalarEdgeOracle(t)}
-		ready.Binary, ready.Script = scalarEdgeProducts(t, main)
-		data, err := json.Marshal(ready)
-		if err != nil {
-			t.Fatal(err)
-		}
-		path := scalarEdgeReadyPath(t)
-		if err := os.MkdirAll(filepath.Dir(path), 0755); err != nil {
-			t.Fatal(err)
-		}
-		file, err := os.CreateTemp(filepath.Dir(path), ".scalar-edges-ready-")
-		if err != nil {
-			t.Fatal(err)
-		}
-		defer os.Remove(file.Name())
-		if _, err := file.Write(data); err != nil {
-			file.Close()
-			t.Fatal(err)
-		}
-		if err := file.Close(); err != nil {
-			t.Fatal(err)
-		}
-		if err := os.Rename(file.Name(), path); err != nil {
-			t.Fatal(err)
-		}
-	} else {
-		ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
-		defer cancel()
-		command := scalarEdgeCommand(ctx, os.Args[0], "-test.run=^TestScalarEdges_Setup$", "-test.timeout=90s", "-test.v")
-		command.Env = append(os.Environ(), "ADAMIC_SCALAR_EDGES_SETUP_WORKER=1")
-		output, err := command.CombinedOutput()
-		if err != nil {
-			t.Fatalf("shared setup (90 s limit): %v\n%s", err, output)
-		}
-		t.Logf("%s", output)
-	}
-	t.Logf("TestScalarEdges_Setup: %.3fs", time.Since(started).Seconds())
+	t.Parallel()
+	scalarEdgePrepare(t)
 }
 
-func runScalarEdges(t *testing.T, main string) {
-	// Preserve the original setup entry point; preparation never runs inside a leaf.
-	TestScalarEdges_Setup(t)
+// Retain the original selection as a preparation-only compatibility entry point.
+func TestScalarEdges(t *testing.T) {
+	t.Parallel()
+	scalarEdgePrepare(t)
 }
 
 func scalarEdgeExecute(t *testing.T, ctx context.Context, name string, args ...string) []byte {
@@ -251,7 +203,7 @@ func TestScalarEdgesUnion(t *testing.T) {
 
 func TestScalarEdgesPlantedFailure(t *testing.T) {
 	t.Parallel()
-	ready := scalarEdgeFetch(t)
+	ready := scalarEdgePrepare(t)
 	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
 	oracle := ready.Oracle
@@ -289,7 +241,7 @@ func scalarEdgeShard(t *testing.T, shard int) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	ready := scalarEdgeFetch(t)
+	ready := scalarEdgePrepare(t)
 	// Only case work below is charged to the shard deadline.
 	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
@@ -327,4 +279,21 @@ func TestScalarEdges_002(t *testing.T) {
 func TestScalarEdges_003(t *testing.T) {
 	t.Parallel()
 	scalarEdgeShard(t, 3)
+}
+
+// Build-phase units use the same recipes and keys as standalone shards.
+func TestProduct_scalar_edges_go_oracle(t *testing.T) {
+	t.Parallel()
+	scalarEdgeOracle(t)
+}
+
+func TestProduct_scalar_edges_lowered(t *testing.T) {
+	t.Parallel()
+	scalarEdgeLowered(t, filepath.Join(root(t), "stage1/cohere/estree/main.ts"))
+}
+
+func TestProduct_scalar_edges_sanitized_native(t *testing.T) {
+	t.Parallel()
+	lowered := scalarEdgeLowered(t, filepath.Join(root(t), "stage1/cohere/estree/main.ts"))
+	scalarEdgeNative(t, lowered)
 }

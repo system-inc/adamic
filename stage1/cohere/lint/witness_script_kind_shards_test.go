@@ -15,15 +15,12 @@ import (
 	"path/filepath"
 	"runtime"
 	"strings"
+	"sync"
 	"syscall"
 	"testing"
 	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
-	"github.com/system-inc/adamic/internal/javascript"
-	"github.com/system-inc/adamic/internal/load"
-	"github.com/system-inc/adamic/internal/lower"
-	"github.com/system-inc/adamic/internal/native"
 	"github.com/system-inc/adamic/stage1/cohere/lint/registry"
 )
 
@@ -37,6 +34,7 @@ type witnessScriptKindProducts struct {
 }
 
 var witnessScriptKindState witnessScriptKindProducts
+var witnessScriptKindOnce sync.Once
 
 func witnessScriptKindShard(key string) int {
 	h := sha256.Sum256([]byte(key))
@@ -45,118 +43,54 @@ func witnessScriptKindShard(key string) int {
 
 // Products depend on code, not the renamed raw-text witness. The copied port
 // changes only that witness; its rules and generated registry are identical.
-func witnessScriptKindSetup(t *testing.T, ctx context.Context) {
+func witnessScriptKindSetup(t *testing.T) {
 	t.Helper()
-	witnessScriptKindState = witnessScriptKindProducts{}
-	s := &witnessScriptKindState
-	directory, err := os.MkdirTemp(sharedDirectory, "witness-kind-")
-	if err != nil {
-		t.Fatal(err)
-	}
-	s.Directory = copyPort(t, directory, "", "")
-	// Build the same full Go oracle while lowering/clang use the other CPUs.
-	type oracleResult struct {
-		path string
-		err  error
-	}
-	oracleDone := make(chan oracleResult, 1)
-	go func() {
-		inputs := witnessScriptKindInputs()
-		inputs.Name = "witness-script-kind-go-oracle-v1"
-		inputs.Flags = []string{"go build", "overlay=full-rule-registry", "GOTOOLCHAIN=" + os.Getenv("GOTOOLCHAIN"), "GOFLAGS=" + os.Getenv("GOFLAGS"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED")}
-		inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("go", "version"))
-		product, err := buildcache.Get(inputs, func(out string) error {
-			_, err := witnessScriptKindGoOracleIn(ctx, packageDirectory, out)
-			return err
-		})
-		oracleDone <- oracleResult{filepath.Join(product, "oracle"), err}
-	}()
-	witness := filepath.Join(directory, "rules/no-debugger/testdata/witness.ts.txt")
-	renamed := strings.TrimSuffix(witness, ".ts.txt") + ".tsx.txt"
-	if err := os.Rename(witness, renamed); err != nil {
-		t.Fatal(err)
-	}
-	if err := os.WriteFile(renamed, []byte("const node = 1; debugger;\n"), 0644); err != nil {
-		t.Fatal(err)
-	}
-	paths, err := registry.Witnesses(filepath.Join(directory, "rules/no-debugger"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	for i, path := range paths {
-		key, err := filepath.Rel(directory, path)
+	witnessScriptKindOnce.Do(func() {
+		s := &witnessScriptKindState
+		directory, err := os.MkdirTemp(sharedDirectory, "witness-kind-")
 		if err != nil {
 			t.Fatal(err)
 		}
-		data, err := os.ReadFile(path)
+		s.Directory = copyPort(t, directory, "", "")
+		witness := filepath.Join(directory, "rules/no-debugger/testdata/witness.ts.txt")
+		renamed := strings.TrimSuffix(witness, ".ts.txt") + ".tsx.txt"
+		if err := os.Rename(witness, renamed); err != nil {
+			t.Fatal(err)
+		}
+		if err := os.WriteFile(renamed, []byte("const node = 1; debugger;\n"), 0644); err != nil {
+			t.Fatal(err)
+		}
+		paths, err := registry.Witnesses(filepath.Join(directory, "rules/no-debugger"))
 		if err != nil {
 			t.Fatal(err)
 		}
-		source := filepath.Join(directory, fmt.Sprintf("source-%d%s", i, filepath.Ext(strings.TrimSuffix(path, ".txt"))))
-		if err := os.WriteFile(source, data, 0644); err != nil {
-			t.Fatal(err)
-		}
-		if path == renamed && filepath.Ext(source) != ".tsx" {
-			t.Fatal("witness script kind lost")
-		}
-		s.Keys = append(s.Keys, filepath.ToSlash(key))
-		s.Sources = append(s.Sources, source)
-	}
-	// Include the checker and every lowering/runtime input. Test edits may cause
-	// conservative misses, but cannot reuse a stale native or lowered product.
-	inputs := witnessScriptKindInputs()
-	lowered := buildcache.Product(t, inputs, func(out string) error {
-		// The manifest selects only no-debugger. Compile that unchanged rule
-		// with the unchanged scanner and serializers, avoiding every unrelated
-		// rule's lowering. Node and Go still use the complete registry.
-		source := copyPort(t, filepath.Join(out, "source"), "", "")
-		var selected []registry.Descriptor
-		for _, descriptor := range prepareRegistry(t, ".") {
-			if descriptor.Slug == "no-debugger" {
-				selected = append(selected, descriptor)
+		for i, path := range paths {
+			key, err := filepath.Rel(directory, path)
+			if err != nil {
+				t.Fatal(err)
 			}
+			data, err := os.ReadFile(path)
+			if err != nil {
+				t.Fatal(err)
+			}
+			source := filepath.Join(directory, fmt.Sprintf("source-%d%s", i, filepath.Ext(strings.TrimSuffix(path, ".txt"))))
+			if err := os.WriteFile(source, data, 0644); err != nil {
+				t.Fatal(err)
+			}
+			if path == renamed && filepath.Ext(source) != ".tsx" {
+				t.Fatal("witness script kind lost")
+			}
+			s.Keys = append(s.Keys, filepath.ToSlash(key))
+			s.Sources = append(s.Sources, source)
 		}
-		if len(selected) != 1 {
-			return fmt.Errorf("no-debugger descriptor count: %d", len(selected))
-		}
-		ts, _ := registry.Render(selected)
-		if err := os.WriteFile(filepath.Join(source, ".generated/registry.ts"), ts, 0644); err != nil {
-			return err
-		}
-		program, err := load.Load([]string{filepath.Join(source, "main.ts")})
-		if err != nil {
-			return err
-		}
-		result, err := lower.Lower(ctx, program)
-		if err != nil {
-			return err
-		}
-		if err := os.WriteFile(filepath.Join(out, "main.c"), []byte(native.C(result)), 0644); err != nil {
-			return err
-		}
-		return os.WriteFile(filepath.Join(out, "lint.mjs"), []byte(javascript.JavaScript(result)), 0644)
+		lowered := witnessScriptKindLoweredProduct(t)
+		s.Module = filepath.Join(lowered, "lint.mjs")
+		s.Binary = filepath.Join(witnessScriptKindNativeProduct(t), "scanner")
+		s.Oracle = filepath.Join(witnessScriptKindOracleProduct(t), "oracle")
+		s.ready = true
 	})
-	s.Module = filepath.Join(lowered, "lint.mjs")
-	options := native.Options{Sanitize: true, Split: true}
-	inputs.Name = "witness-script-kind-native-no-debugger-v1"
-	inputs.Flags = append(native.Flags(options), "Split=true", "ADAMIC_NATIVE_JOBS="+os.Getenv("ADAMIC_NATIVE_JOBS"), "ADAMIC_GATE_UNCACHED="+os.Getenv("ADAMIC_GATE_UNCACHED"))
-	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
-	product := buildcache.Product(t, inputs, func(out string) error {
-		data, err := os.ReadFile(filepath.Join(lowered, "main.c"))
-		if err != nil {
-			return err
-		}
-		return native.Build(string(data), filepath.Join(out, "scanner"), options)
-	})
-	s.Binary = filepath.Join(product, "scanner")
-	// The full Go oracle is fetched once by this explicit setup.
-	oracle := <-oracleDone
-	if oracle.err != nil {
-		t.Fatal(oracle.err)
-	}
-	s.Oracle = oracle.path
-	s.ready = true
-	if s.Oracle == "" || s.Binary == "" || len(s.Sources) == 0 {
+	s := &witnessScriptKindState
+	if !s.ready || s.Oracle == "" || s.Binary == "" || s.Module == "" || len(s.Sources) == 0 || len(s.Keys) != len(s.Sources) {
 		t.Fatal("witness setup incomplete")
 	}
 }
@@ -221,7 +155,7 @@ func TestWitnessScriptKind_001(t *testing.T) {
 
 func witnessScriptKindRun(t *testing.T, shard int) {
 	t.Helper()
-	witnessScriptKindRequireReady(t)
+	witnessScriptKindSetup(t)
 	stop := witnessScriptKindDeadline(t)
 	defer stop()
 	s := &witnessScriptKindState
@@ -250,16 +184,12 @@ func witnessScriptKindRun(t *testing.T, shard int) {
 
 func TestWitnessScriptKindPlantedFailure(t *testing.T) {
 	t.Parallel()
-	witnessScriptKindRequireReady(t)
+	witnessScriptKindSetup(t)
 	key := witnessScriptKindState.Keys[0]
 	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
-	command := witnessScriptKindCommand(ctx, os.Args[0], "-test.run=^TestWitnessScriptKind_(Setup|[0-9]+)$", "-test.timeout=90s", "-test.v")
-	snapshot, err := json.Marshal(witnessScriptKindState)
-	if err != nil {
-		t.Fatal(err)
-	}
-	command.Env = append(os.Environ(), "ADAMIC_WITNESS_KIND_PLANT="+key, "ADAMIC_WITNESS_KIND_READY="+string(snapshot))
+	command := witnessScriptKindCommand(ctx, os.Args[0], "-test.run=^TestWitnessScriptKind_[0-9]+$", "-test.timeout=90s", "-test.v")
+	command.Env = append(os.Environ(), "ADAMIC_WITNESS_KIND_PLANT="+key)
 	output, err := command.CombinedOutput()
 	if ctx.Err() != nil {
 		t.Fatalf("P0 cooked planted-failure shard: %v", ctx.Err())
@@ -279,14 +209,6 @@ func witnessScriptKindInputs() buildcache.Inputs {
 	}
 }
 
-func witnessScriptKindRequireReady(t *testing.T) {
-	t.Helper()
-	s := &witnessScriptKindState
-	if !s.ready || s.Oracle == "" || s.Binary == "" || s.Module == "" || len(s.Sources) == 0 || len(s.Keys) != len(s.Sources) {
-		t.Fatal("shared witness setup is not ready; select TestWitnessScriptKind_Setup together with the leaves")
-	}
-}
-
 // Start only after setup is ready: a leaf's budget belongs to its own cases.
 func witnessScriptKindDeadline(t *testing.T) func() {
 	t.Helper()
@@ -294,24 +216,10 @@ func witnessScriptKindDeadline(t *testing.T) func() {
 	return func() { timer.Stop() }
 }
 
-// Not parallel: publishes shared witness products before the parallel leaves run.
+// Optional entry point; every leaf prepares these same products independently.
 func TestWitnessScriptKind_Setup(t *testing.T) {
-	stop := witnessScriptKindDeadline(t)
-	defer stop()
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
-	defer cancel()
-	if snapshot := os.Getenv("ADAMIC_WITNESS_KIND_READY"); snapshot != "" {
-		// The planted-failure child receives its parent's already-built products.
-		// No child shard prepares state or rebuilds an oracle.
-		if err := json.Unmarshal([]byte(snapshot), &witnessScriptKindState); err != nil {
-			t.Fatal(err)
-		}
-		witnessScriptKindState.ready = true
-	} else {
-		witnessScriptKindSetup(t, ctx)
-	}
-	witnessScriptKindRequireReady(t)
-	witnessScriptKindUnion(t)
+	t.Parallel()
+	witnessScriptKindSetup(t)
 }
 
 // POSIX process groups keep compiler descendants within the context cancellation.
@@ -383,17 +291,18 @@ func witnessScriptKindGoOracleIn(ctx context.Context, sourceRoot, directory stri
 	return binary, nil
 }
 
-func TestWitnessScriptKindRequiresSetup(t *testing.T) {
+func TestWitnessScriptKindStandalone(t *testing.T) {
 	t.Parallel()
+	witnessScriptKindSetup(t)
 	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
-	// Selecting a leaf alone must reject missing setup, never build it lazily.
+	// A new process selects only one leaf and fetches its own shared products.
 	command := witnessScriptKindCommand(ctx, os.Args[0], "-test.run=^TestWitnessScriptKind_000$", "-test.timeout=90s", "-test.v")
 	output, err := command.CombinedOutput()
 	if ctx.Err() != nil {
-		t.Fatalf("P0 cooked missing-setup probe: %v", ctx.Err())
+		t.Fatalf("P0 cooked standalone probe: %v", ctx.Err())
 	}
-	if err == nil || !bytes.Contains(output, []byte("shared witness setup is not ready")) || bytes.Contains(output, []byte("build witness-script-kind-")) {
-		t.Fatalf("leaf did not reject missing setup before building: %v\n%s", err, output)
+	if err != nil || !bytes.Contains(output, []byte("--- PASS: TestWitnessScriptKind_000")) {
+		t.Fatalf("standalone leaf failed: %v\n%s", err, output)
 	}
 }
