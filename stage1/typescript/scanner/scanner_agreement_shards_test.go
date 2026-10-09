@@ -2,8 +2,6 @@ package scanner
 
 import (
 	"bytes"
-	"context"
-	"encoding/json"
 	"fmt"
 	"os"
 	"os/exec"
@@ -16,9 +14,6 @@ import (
 
 	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/corpusfiles"
-	"github.com/system-inc/adamic/internal/load"
-	"github.com/system-inc/adamic/internal/lower"
-	"github.com/system-inc/adamic/internal/native"
 )
 
 const repository = "../../.."
@@ -59,44 +54,12 @@ func execute(t *testing.T, directory, name string, args ...string) execution {
 
 func goOracle(t *testing.T) string {
 	t.Helper()
-	root, err := filepath.Abs(filepath.Join(repository, "cohere/TypeScript/tsc"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	side, err := filepath.Abs("testdata/oracle.go")
-	if err != nil {
-		t.Fatal(err)
-	}
-	virtual := filepath.Join(root, "adamic_scanner_oracle.go")
-	overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: side}})
-	if err != nil {
-		t.Fatal(err)
-	}
-	directory := t.TempDir()
-	path := filepath.Join(directory, "overlay.json")
-	if err := os.WriteFile(path, overlay, 0644); err != nil {
-		t.Fatal(err)
-	}
-	binary := filepath.Join(directory, "oracle")
-	execute(t, root, "go", "build", "-overlay="+path, "-o", binary, virtual)
-	return binary
+	return filepath.Join(scannerOracleProduct(t), "oracle")
 }
 
 func buildPort(t *testing.T, directory string, sanitize bool) string {
 	t.Helper()
-	program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
-	if err != nil {
-		t.Fatal(err)
-	}
-	lowered, err := lower.Lower(context.Background(), program)
-	if err != nil {
-		t.Fatal(err)
-	}
-	binary := filepath.Join(t.TempDir(), "scanner")
-	if err := native.Build(native.C(lowered), binary, native.Options{Sanitize: sanitize}); err != nil {
-		t.Fatal(err)
-	}
-	return binary
+	return filepath.Join(scannerPortProduct(t, directory, sanitize), "scanner")
 }
 
 func copyPort(t *testing.T, file, from, to string) string {
@@ -323,57 +286,6 @@ func askedCorpus(t *testing.T) corpus {
 	}
 	t.Logf("%d compiler files, %d stage1 files, %d generated inputs", len(compilerFiles), len(stageFiles), generated)
 	return corpus{write("all.txt", all.String()), write("edges.txt", edges.String()), write("compiler.txt", compiler.String()), len(compilerFiles) + len(stageFiles), generated}
-}
-
-func TestScannerAgreesWithTypescriptGo(t *testing.T) {
-	t.Parallel()
-	asked := askedCorpus(t)
-	oracle := goOracle(t)
-	directory := copyPort(t, "", "", "")
-	binary := buildPort(t, directory, true)
-	want := execute(t, "", oracle, "--manifest", asked.all)
-	for _, side := range []struct {
-		name string
-		run  execution
-	}{
-		{"Node", node(t, directory, asked.all, false)},
-		{"native under ASan, UBSan and LeakSanitizer", execute(t, "", binary, "--manifest", asked.all)},
-	} {
-		if diff := difference(side.run.output, want.output); diff != "" {
-			t.Errorf("%s: %s", side.name, diff)
-		}
-	}
-	if !t.Failed() {
-		t.Logf("%d answer bytes identical", len(want.output))
-	}
-	edgeWant := execute(t, "", oracle, "--manifest", asked.edges)
-	mutants := []struct{ name, file, from, to string }{
-		{"source scanned as Identifier", "tokens.ts", `['source', 'SourceKeyword']`, `['source', 'Identifier']`},
-		{"punctuator != scanned as ==", "tokens.ts", `['!=', 'ExclamationEqualsToken']`, `['!=', 'EqualsEqualsToken']`},
-		{"invalid decimal separator accepted", "scanner.ts", "this.error(previous ? 6189 : 6188, this.pos, 1);", "if (base !== 10) { this.error(previous ? 6189 : 6188, this.pos, 1); } else { this.flags &= ~16384; }"},
-		{"regex rescan skipped", "main.ts", "scanner.rescanSlash();", "scanner.code();"},
-	}
-	for _, mutant := range mutants {
-		t.Run(mutant.name, func(t *testing.T) {
-			t.Parallel()
-			mutated := copyPort(t, mutant.file, mutant.from, mutant.to)
-			nativeMutant := buildPort(t, mutated, true)
-			for _, side := range []struct {
-				name string
-				run  execution
-			}{
-				{"Node", node(t, mutated, asked.edges, false)},
-				{"native", execute(t, "", nativeMutant, "--manifest", asked.edges)},
-			} {
-				diff := difference(side.run.output, edgeWant.output)
-				if diff == "" {
-					t.Errorf("%s: mutant survives comparison", side.name)
-				} else {
-					t.Logf("%s caught by byte comparison: %s", side.name, diff)
-				}
-			}
-		})
-	}
 }
 
 // Not parallel: best-of-five scanner throughput timing requires exclusive CPU use.
