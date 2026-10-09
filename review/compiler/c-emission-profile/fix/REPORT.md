@@ -1,5 +1,5 @@
 Built: per-emitter dynamicProperties and fieldTypesNeeded caches computed together in one program walk.
-Commits: baseline a75e71dd0fa2472680cb65cbbbd2f8f2dd803786; fix SHA is reported with the pushed branch.
+Commits: baseline a75e71dd0fa2472680cb65cbbbd2f8f2dd803786; fix c13e106c; evidence follow-up SHA is reported with the pushed branch.
 Commands and outputs: 387 C files compared, diff exit 0 and 0 bytes; emission timings below; focused tests and go vet passed.
 Mutants: wrong field-type key, wrong dynamic key, and stale source key each failed the intended emitted-C assertion; the field-type key also changed two oracle C files.
 Not covered: newly provisioned cold-instance timings; measurements use fresh processes on the existing four-CPU instance; remaining readiness and record scans are unchanged.
@@ -144,3 +144,5 @@ Lane-check output is preserved after committing the complete change. This lands
 the measured metadata cache improvement toward C emission unit #3he8f8g. The
 remaining whole-program scans and newly provisioned cold-instance measurements
 are the explicit limits of this delivery.
+
+Final lane checks passed: `lane checks 1.1 s: gofmt and tools on 3 Go files, t.Parallel on 1 test packages; vet 1 packages`. The initial lane invocation lacked gofmt on PATH; sourcing /workspace/adamic-tools/env.sh resolved it. The rerun used a 90-second hard limit.
