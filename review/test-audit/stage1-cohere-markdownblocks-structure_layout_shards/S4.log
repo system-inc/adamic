@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T13:24:41.766407505Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks"}
+{"Time":"2026-10-09T13:24:41.775480784Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownWhitespaceLayout_Setup"}
+{"Time":"2026-10-09T13:24:41.775607911Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownWhitespaceLayout_Setup","Output":"=== RUN   TestMarkdownWhitespaceLayout_Setup\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:24:41.775645215Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownWhitespaceLayout_Setup","Output":"=== PAUSE TestMarkdownWhitespaceLayout_Setup\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:24:41.775647319Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownWhitespaceLayout_Setup"}
+{"Time":"2026-10-09T13:24:41.775718253Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownWhitespaceLayout_Setup"}
+{"Time":"2026-10-09T13:24:41.775722179Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownWhitespaceLayout_Setup","Output":"=== CONT  TestMarkdownWhitespaceLayout_Setup\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:24:41.775725183Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownWhitespaceLayout_Setup","Output":"    whitespace_layout_split_test.go:110: whitespace layout setup failed\n","OutputType":"error"}
+{"Time":"2026-10-09T13:24:41.775740746Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownWhitespaceLayout_Setup","Output":"--- FAIL: TestMarkdownWhitespaceLayout_Setup (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:24:41.775742949Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownWhitespaceLayout_Setup","Elapsed":0}
+{"Time":"2026-10-09T13:24:41.7757572Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:24:41.775798241Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/cohere/markdownblocks\t0.009s\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:24:41.775806983Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Elapsed":0.009}

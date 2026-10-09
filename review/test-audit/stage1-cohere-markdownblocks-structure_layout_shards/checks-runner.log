@@ -1,0 +1,12 @@
+S1 vet 0 0.1749666139985493
+{'id': 'S1', 'command': ['timeout', '120', 'go', 'test', '-json', '-count=1', '-timeout', '90s', './stage1/cohere/markdownblocks/', '-run', '^TestNativeBuildModesAreDistinct$'], 'wall': 8.6597964399989, 'exit': 1, 'fails': ['TestNativeBuildModesAreDistinct'], 'cooked': False}
+S2 vet 0 0.3237494919994788
+{'id': 'S2', 'command': ['timeout', '120', 'go', 'test', '-json', '-count=1', '-timeout', '90s', './stage1/cohere/markdownblocks/', '-run', '^TestMarkdownTableLayout_Setup$'], 'wall': 7.699477107998973, 'exit': 1, 'fails': ['TestMarkdownTableLayout_Setup'], 'cooked': False}
+S3 vet 0 0.3158220910008822
+{'id': 'S3', 'command': ['timeout', '120', 'go', 'test', '-json', '-count=1', '-timeout', '90s', './stage1/cohere/markdownblocks/', '-run', '^TestMarkdownTextSplitting_Setup$'], 'wall': 7.1421466280007735, 'exit': 1, 'fails': ['TestMarkdownTextSplitting_Setup'], 'cooked': False}
+S4 vet 0 0.32485195600020234
+{'id': 'S4', 'command': ['timeout', '120', 'go', 'test', '-json', '-count=1', '-timeout', '90s', './stage1/cohere/markdownblocks/', '-run', '^TestMarkdownWhitespaceLayout_Setup$'], 'wall': 7.645344169999589, 'exit': 1, 'fails': ['TestMarkdownWhitespaceLayout_Setup'], 'cooked': False}
+W1 vet 0 0.32557700100005604
+{'id': 'W1', 'command': ['timeout', '120', 'go', 'test', '-json', '-count=1', '-timeout', '90s', './stage1/cohere/markdownblocks/', '-run', '^TestMarkdownTextShardDisagreement$'], 'wall': 8.21620374000122, 'exit': 1, 'fails': ['TestMarkdownTextShardDisagreement'], 'cooked': False}
+W2 vet 0 0.26751811600115616
+{'id': 'W2', 'command': ['timeout', '120', 'go', 'test', '-json', '-count=1', '-timeout', '90s', './stage1/cohere/markdownblocks/', '-run', '^TestMarkdownWhitespaceLayoutMutants$'], 'wall': 18.45189776299958, 'exit': 1, 'fails': ['TestMarkdownWhitespaceLayoutMutants'], 'cooked': False}

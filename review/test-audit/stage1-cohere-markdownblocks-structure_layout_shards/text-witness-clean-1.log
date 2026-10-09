@@ -1,0 +1,14 @@
+{"Time":"2026-10-09T13:02:05.802476173Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks"}
+{"Time":"2026-10-09T13:02:05.810147204Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownTextShardDisagreement"}
+{"Time":"2026-10-09T13:02:05.810232159Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownTextShardDisagreement","Output":"=== RUN   TestMarkdownTextShardDisagreement\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:02:05.810272529Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownTextShardDisagreement","Output":"=== PAUSE TestMarkdownTextShardDisagreement\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:02:05.810275183Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownTextShardDisagreement"}
+{"Time":"2026-10-09T13:02:05.810282563Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownTextShardDisagreement"}
+{"Time":"2026-10-09T13:02:05.810286009Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownTextShardDisagreement","Output":"=== CONT  TestMarkdownTextShardDisagreement\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:02:05.810288342Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownTextShardDisagreement","Output":"    text_independent_shards_test.go:428: live union: 2 unique cases, 64 shards\n"}
+{"Time":"2026-10-09T13:02:05.810295042Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownTextShardDisagreement","Output":"    text_independent_shards_test.go:446: planted disagreement caught only by shard-025\n"}
+{"Time":"2026-10-09T13:02:05.810301331Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownTextShardDisagreement","Output":"--- PASS: TestMarkdownTextShardDisagreement (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:02:05.810303474Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownTextShardDisagreement","Elapsed":0}
+{"Time":"2026-10-09T13:02:05.810314881Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:02:05.810455528Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/markdownblocks\t0.008s\n"}
+{"Time":"2026-10-09T13:02:05.810475247Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Elapsed":0.008}

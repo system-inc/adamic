@@ -1,0 +1,14 @@
+{"Time":"2026-10-09T13:24:18.143081637Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks"}
+{"Time":"2026-10-09T13:24:18.15275673Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestNativeBuildModesAreDistinct"}
+{"Time":"2026-10-09T13:24:18.152877888Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestNativeBuildModesAreDistinct","Output":"=== RUN   TestNativeBuildModesAreDistinct\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:24:18.152961231Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestNativeBuildModesAreDistinct","Output":"    support_test.go:60: markdownblocks memory capacity: 16 units (512 MiB each)\n"}
+{"Time":"2026-10-09T13:24:18.152971226Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestNativeBuildModesAreDistinct","Output":"=== PAUSE TestNativeBuildModesAreDistinct\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:24:18.152974521Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestNativeBuildModesAreDistinct"}
+{"Time":"2026-10-09T13:24:18.152978056Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestNativeBuildModesAreDistinct"}
+{"Time":"2026-10-09T13:24:18.15298061Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestNativeBuildModesAreDistinct","Output":"=== CONT  TestNativeBuildModesAreDistinct\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:24:18.310752259Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestNativeBuildModesAreDistinct","Output":"    support_test.go:221: clang build mode first byte difference at 0 (lengths 10/8)\n","OutputType":"error"}
+{"Time":"2026-10-09T13:24:18.310829743Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestNativeBuildModesAreDistinct","Output":"--- FAIL: TestNativeBuildModesAreDistinct (0.16s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:24:18.310839237Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestNativeBuildModesAreDistinct","Elapsed":0.16}
+{"Time":"2026-10-09T13:24:18.31086146Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:24:18.312529534Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/cohere/markdownblocks\t0.169s\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:24:18.312546098Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Elapsed":0.169}

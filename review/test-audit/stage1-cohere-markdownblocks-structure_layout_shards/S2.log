@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T13:24:26.323666693Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks"}
+{"Time":"2026-10-09T13:24:26.331674298Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownTableLayout_Setup"}
+{"Time":"2026-10-09T13:24:26.331744572Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownTableLayout_Setup","Output":"=== RUN   TestMarkdownTableLayout_Setup\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:24:26.331787365Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownTableLayout_Setup","Output":"=== PAUSE TestMarkdownTableLayout_Setup\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:24:26.331789708Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownTableLayout_Setup"}
+{"Time":"2026-10-09T13:24:26.331792022Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownTableLayout_Setup"}
+{"Time":"2026-10-09T13:24:26.331793864Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownTableLayout_Setup","Output":"=== CONT  TestMarkdownTableLayout_Setup\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:24:26.33180466Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownTableLayout_Setup","Output":"    table_layout_shards_test.go:50: table layout setup failed\n","OutputType":"error"}
+{"Time":"2026-10-09T13:24:26.331813253Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownTableLayout_Setup","Output":"--- FAIL: TestMarkdownTableLayout_Setup (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:24:26.331815556Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownTableLayout_Setup","Elapsed":0}
+{"Time":"2026-10-09T13:24:26.331828455Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:24:26.332023462Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/cohere/markdownblocks\t0.008s\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:24:26.332040998Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Elapsed":0.008}

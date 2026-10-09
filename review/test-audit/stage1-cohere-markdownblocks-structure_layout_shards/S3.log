@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T13:24:33.793297209Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks"}
+{"Time":"2026-10-09T13:24:33.800933878Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownTextSplitting_Setup"}
+{"Time":"2026-10-09T13:24:33.801069267Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownTextSplitting_Setup","Output":"=== RUN   TestMarkdownTextSplitting_Setup\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:24:33.801118119Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownTextSplitting_Setup","Output":"=== PAUSE TestMarkdownTextSplitting_Setup\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:24:33.801120412Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownTextSplitting_Setup"}
+{"Time":"2026-10-09T13:24:33.801123036Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownTextSplitting_Setup"}
+{"Time":"2026-10-09T13:24:33.801124769Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownTextSplitting_Setup","Output":"=== CONT  TestMarkdownTextSplitting_Setup\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:24:33.801127383Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownTextSplitting_Setup","Output":"    text_independent_test.go:57: shared text setup did not complete\n","OutputType":"error"}
+{"Time":"2026-10-09T13:24:33.801155554Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownTextSplitting_Setup","Output":"--- FAIL: TestMarkdownTextSplitting_Setup (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:24:33.801157847Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownTextSplitting_Setup","Elapsed":0}
+{"Time":"2026-10-09T13:24:33.801169925Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:24:33.801424605Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/cohere/markdownblocks\t0.008s\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:24:33.801461239Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Elapsed":0.008}
