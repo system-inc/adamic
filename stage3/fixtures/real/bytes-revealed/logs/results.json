@@ -1,0 +1,67 @@
+{
+  "compiler_commit": "ed6e29751ee47d86fad450cd1674139883bc0f70",
+  "checks": [
+    {
+      "check": "fixtures",
+      "exit": 0,
+      "node_passes": 10,
+      "diagnostic_passes": 10,
+      "command": [
+        "go",
+        "test",
+        "./stage3/fixtures",
+        "-run",
+        "^TestFixtures$/^real$",
+        "-count=1",
+        "-timeout",
+        "10m",
+        "-v",
+        "-args",
+        "-fixtures",
+        "/tmp/adamic-gate/adamic-real-bytes-u1s_0okx"
+      ]
+    },
+    {
+      "check": "output-byte",
+      "exit": 1,
+      "bytes_changed": 1,
+      "caught_by": "recorded Node byte comparison failed",
+      "independent_check_passed": "stage0",
+      "command": [
+        "go",
+        "test",
+        "./stage3/fixtures",
+        "-run",
+        "^TestFixtures$/^real$/^bytes-revealed$/^escaped-string$/^main.a$",
+        "-count=1",
+        "-timeout",
+        "10m",
+        "-v",
+        "-args",
+        "-fixtures",
+        "/tmp/adamic-gate/adamic-real-bytes-2tsu0p0v"
+      ]
+    },
+    {
+      "check": "diagnostic-byte",
+      "exit": 1,
+      "bytes_changed": 1,
+      "caught_by": "gap changed:",
+      "independent_check_passed": "node",
+      "command": [
+        "go",
+        "test",
+        "./stage3/fixtures",
+        "-run",
+        "^TestFixtures$/^real$/^bytes-revealed$/^escaped-string$/^main.a$",
+        "-count=1",
+        "-timeout",
+        "10m",
+        "-v",
+        "-args",
+        "-fixtures",
+        "/tmp/adamic-gate/adamic-real-bytes-cf2ockw1"
+      ]
+    }
+  ]
+}

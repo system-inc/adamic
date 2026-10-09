@@ -1,0 +1,22 @@
+// a-check: checked
+// From src/compiler/path.ts:310 (TypeScript 6.0.3, main adaptations).
+
+const directorySeparator = '/';
+function normalizeSlashes(path: string): string { return path.replace(/\\/g, '/'); }
+function getRootLength(path: string): number { return path.startsWith('/') ? 1 : 0; }
+function removeTrailingDirectorySeparator(path: string): string { return path.endsWith('/') ? path.slice(0,-1) : path; }
+export function getDirectoryPath(path: string): string;
+/** @internal */
+export function getDirectoryPath(path: string): string {
+    path = normalizeSlashes(path);
+
+    // If the path provided is itself the root, then return it.
+    const rootLength = getRootLength(path);
+    if (rootLength === path.length) return path;
+
+    // return the leading portion of the path up to the last (non-terminal) directory separator
+    // but not including any trailing directory separator.
+    path = removeTrailingDirectorySeparator(path);
+    return path.slice(0, Math.max(rootLength, path.lastIndexOf(directorySeparator)));
+}
+console.log(`${getDirectoryPath('/a/b')}:${getDirectoryPath('/a/')}:${getDirectoryPath('/')}`);

@@ -1,0 +1,38 @@
+[
+  {
+    "name": "private-concrete",
+    "exit": 1,
+    "diagnostic": "adamic: /workspace/scratch/scanner-any-sites/adapted/src/compiler/scanner.ts:696:32: stage 0 can't lower a BinaryExpression with a string and a number yet\n",
+    "timing": "not recorded"
+  },
+  {
+    "name": "private-restored-any",
+    "exit": 1,
+    "wall_seconds": 27.754229858001054,
+    "diagnostic": "adamic: /workspace/scratch/scanner-any-sites/adapted/src/compiler/scanner.ts:608:87: stage 0 can't lower a value of type any yet\n"
+  },
+  {
+    "name": "map-concrete",
+    "exit": 1,
+    "wall_seconds": 21.07103560900032,
+    "diagnostic": "adamic: /workspace/scratch/scanner-any-sites/adapted/src/compiler/scanner.ts:100:58: stage 0 can't lower new Map from something that isn't [key, value] pairs yet\n"
+  },
+  {
+    "name": "map-restored-inference",
+    "exit": 1,
+    "wall_seconds": 23.37592108299941,
+    "diagnostic": "adamic: /workspace/scratch/scanner-any-sites/adapted/src/compiler/scanner.ts:100:23: stage 0 can't lower a Map of any yet\n"
+  },
+  {
+    "name": "driver-concrete",
+    "exit": 1,
+    "wall_seconds": 23.0368737639983,
+    "diagnostic": "adamic: /workspace/scratch/scanner-any-sites/main.a:14:156: stage 0 can't lower JSON.stringify a value of type string | number | null yet\n"
+  },
+  {
+    "name": "driver-restored-any",
+    "exit": 1,
+    "wall_seconds": 8.448596828999143,
+    "diagnostic": "adamic: /workspace/scratch/scanner-any-sites/main.a:13:42: stage 0 can't lower a value of type any yet\n"
+  }
+]

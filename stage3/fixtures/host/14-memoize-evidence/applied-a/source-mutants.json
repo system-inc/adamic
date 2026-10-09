@@ -1,0 +1,16 @@
+[
+  {
+    "mutant": "stale-assertion",
+    "change": "callback = undefined; -> callback = undefined!;",
+    "exit": 1,
+    "caught": true,
+    "catcher": "full source audit canonical declaration comparison"
+  },
+  {
+    "mutant": "stale-parameter",
+    "change": "callback: (() => T) | undefined -> callback: () => T",
+    "exit": 1,
+    "caught": true,
+    "catcher": "full source audit canonical declaration comparison"
+  }
+]

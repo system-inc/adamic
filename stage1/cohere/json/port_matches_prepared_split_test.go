@@ -68,29 +68,32 @@ func portMatchesPartition(t *testing.T) [][]textCase {
 		t.Fatalf("union %d of %d", count, len(cases))
 	}
 	// Check the actual top-level enumeration, including wrapper ordinals.
-	file, err := parser.ParseFile(token.NewFileSet(), "port_matches_prepared_split_test.go", nil, 0)
-	if err != nil {
-		t.Fatal(err)
-	}
 	declared := make(map[string]bool)
-	for _, d := range file.Decls {
-		if f, ok := d.(*ast.FuncDecl); ok {
-			declared[f.Name.Name] = true
+	for _, path := range []string{"port_matches_prepared_split_test.go", "grain30_json_test.go"} {
+		file, err := parser.ParseFile(token.NewFileSet(), path, nil, 0)
+		if err != nil {
+			t.Fatal(err)
+		}
+		for _, d := range file.Decls {
+			if f, ok := d.(*ast.FuncDecl); ok {
+				declared[f.Name.Name] = true
+			}
 		}
 	}
 	for n := 0; n < testPortMatchesGoCohereSplitShards; n++ {
-		name := fmt.Sprintf("TestPortMatchesGoCohere_%03d", n)
-		if !declared[name] {
-			t.Fatalf("missing %s", name)
+		for _, name := range jsonGrain30Names(n) {
+			if !declared[name] {
+				t.Fatalf("missing %s", name)
+			}
+			delete(declared, name)
 		}
-		delete(declared, name)
 	}
 	for name := range declared {
 		if strings.HasPrefix(name, "TestPortMatchesGoCohere_") {
 			t.Fatalf("unexpected shard %s", name)
 		}
 	}
-	t.Logf("shard union: %d cases exactly once across %d shards", count, len(shards))
+	t.Logf("shard union: %d cases exactly once across %d parent buckets", count, len(shards))
 	return shards
 }
 
@@ -158,9 +161,13 @@ func portMatchesPrepareProducts(t *testing.T) {
 func portMatchesRun(t *testing.T, ordinal int) {
 	t.Helper()
 	portMatchesPrepare(t)
+	portMatchesRunItems(t, ordinal, portMatchesShared.shards[ordinal], false, true)
+}
+
+func portMatchesRunItems(t *testing.T, ordinal int, items []textCase, concurrent, leak bool) {
+	t.Helper()
 	deadline := portMatchesDeadline(t.Name())
 	defer deadline.Stop()
-	items := portMatchesShared.shards[ordinal]
 	if len(items) == 0 {
 		t.Log("empty hash bucket")
 		return
@@ -171,7 +178,13 @@ func portMatchesRun(t *testing.T, ordinal int) {
 	if err := os.WriteFile(path, []byte(input), 0644); err != nil {
 		t.Fatal(err)
 	}
-	reference := execute(t, nil, portMatchesShared.oracle, "--cases", path)
+	var reference, node, release, backend run
+	if concurrent {
+		sides := jsonGrain30Sides(t, path)
+		reference, node, release, backend = sides[0], sides[1], sides[2], sides[3]
+	} else {
+		reference = execute(t, nil, portMatchesShared.oracle, "--cases", path)
+	}
 	if reference.exitCode != 0 || len(reference.stderr) != 0 {
 		t.Fatalf("Go oracle exit %d: %s", reference.exitCode, reference.stderr)
 	}
@@ -179,18 +192,21 @@ func portMatchesRun(t *testing.T, ordinal int) {
 	if len(strings.Split(strings.TrimSuffix(expected, "\n"), "\n")) != len(items) {
 		t.Fatalf("Go oracle did not answer %d cases", len(items))
 	}
-	compare(t, "Node", onNode(t, portMatchesShared.entry, "--cases", path), expected, items)
-	release := execute(t, nil, portMatchesShared.release, "--cases", path)
+	if !concurrent {
+		node = onNode(t, portMatchesShared.entry, "--cases", path)
+		release = execute(t, nil, portMatchesShared.release, "--cases", path)
+	}
+	compare(t, "Node", node, expected, items)
 	compare(t, "release", release, expected, items)
 	// Bound sanitizer inputs exactly as the original test does.
 	answers := portMatchesAnswers(t, expected, len(items))
 	chunks := nativeChunks(t, items, answers)
 	sanitized := runNativeChunks(t, portMatchesShared.sanitized, []string{"ASAN_OPTIONS=detect_leaks=0"}, chunks, release, items, "native ASan/UBSan")
 	compare(t, "native ASan/UBSan", sanitized, expected, items)
-	if runtime.GOOS == "linux" {
+	if leak && runtime.GOOS == "linux" {
 		leaked := runNativeChunks(t, portMatchesShared.sanitized, []string{"ASAN_OPTIONS=detect_leaks=1"}, chunks, release, items, "LeakSanitizer")
 		compare(t, "LeakSanitizer", leaked, expected, items)
-	} else {
+	} else if leak {
 		for _, chunk := range chunks {
 			report := execute(t, nil, "leaks", "--atExit", "--", portMatchesShared.release, "--cases", chunk.path)
 			if report.exitCode != 0 {
@@ -198,7 +214,10 @@ func portMatchesRun(t *testing.T, ordinal int) {
 			}
 		}
 	}
-	compare(t, "JavaScript backend", onNode(t, portMatchesShared.script, "--cases", path), expected, items)
+	if !concurrent {
+		backend = onNode(t, portMatchesShared.script, "--cases", path)
+	}
+	compare(t, "JavaScript backend", backend, expected, items)
 	if os.Getenv("ADAMIC_JSON_GUARD_CALIBRATE") == "1" {
 		calibrateNativeCases(t, portMatchesShared.sanitized, items, answers)
 	}
@@ -446,10 +465,8 @@ func portMatchesBuildJSONSanitizedPort(source string) func(string) error {
 }
 
 func TestPortMatchesGoCohere_000(t *testing.T) { t.Parallel(); portMatchesRun(t, 0) }
-func TestPortMatchesGoCohere_001(t *testing.T) { t.Parallel(); portMatchesRun(t, 1) }
 func TestPortMatchesGoCohere_002(t *testing.T) { t.Parallel(); portMatchesRun(t, 2) }
 func TestPortMatchesGoCohere_003(t *testing.T) { t.Parallel(); portMatchesRun(t, 3) }
-func TestPortMatchesGoCohere_004(t *testing.T) { t.Parallel(); portMatchesRun(t, 4) }
 func TestPortMatchesGoCohere_005(t *testing.T) { t.Parallel(); portMatchesRun(t, 5) }
 func TestPortMatchesGoCohere_006(t *testing.T) { t.Parallel(); portMatchesRun(t, 6) }
 func TestPortMatchesGoCohere_007(t *testing.T) { t.Parallel(); portMatchesRun(t, 7) }
@@ -506,7 +523,6 @@ func TestPortMatchesGoCohere_057(t *testing.T) { t.Parallel(); portMatchesRun(t,
 func TestPortMatchesGoCohere_058(t *testing.T) { t.Parallel(); portMatchesRun(t, 58) }
 func TestPortMatchesGoCohere_059(t *testing.T) { t.Parallel(); portMatchesRun(t, 59) }
 func TestPortMatchesGoCohere_060(t *testing.T) { t.Parallel(); portMatchesRun(t, 60) }
-func TestPortMatchesGoCohere_061(t *testing.T) { t.Parallel(); portMatchesRun(t, 61) }
 func TestPortMatchesGoCohere_062(t *testing.T) { t.Parallel(); portMatchesRun(t, 62) }
 func TestPortMatchesGoCohere_063(t *testing.T) { t.Parallel(); portMatchesRun(t, 63) }
 func TestPortMatchesGoCohere_064(t *testing.T) { t.Parallel(); portMatchesRun(t, 64) }
@@ -555,7 +571,6 @@ func TestPortMatchesGoCohere_106(t *testing.T) { t.Parallel(); portMatchesRun(t,
 func TestPortMatchesGoCohere_107(t *testing.T) { t.Parallel(); portMatchesRun(t, 107) }
 func TestPortMatchesGoCohere_108(t *testing.T) { t.Parallel(); portMatchesRun(t, 108) }
 func TestPortMatchesGoCohere_109(t *testing.T) { t.Parallel(); portMatchesRun(t, 109) }
-func TestPortMatchesGoCohere_110(t *testing.T) { t.Parallel(); portMatchesRun(t, 110) }
 func TestPortMatchesGoCohere_111(t *testing.T) { t.Parallel(); portMatchesRun(t, 111) }
 func TestPortMatchesGoCohere_112(t *testing.T) { t.Parallel(); portMatchesRun(t, 112) }
 func TestPortMatchesGoCohere_113(t *testing.T) { t.Parallel(); portMatchesRun(t, 113) }

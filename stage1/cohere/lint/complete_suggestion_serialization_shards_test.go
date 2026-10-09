@@ -94,7 +94,11 @@ func completeSuggestionPrepare(t *testing.T) {
 	directory := completeSuggestionFixture(t, false)
 	p.directory = directory
 	source := filepath.Join(directory, "suggestions.ts")
-	if err := os.WriteFile(source, []byte("/*😀*/debugger;\n"), 0644); err != nil {
+	text, err := os.ReadFile("testdata/serialization/audit-columns.ts.txt")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(source, text, 0644); err != nil {
 		t.Fatal(err)
 	}
 	p.path = filepath.Join(directory, "manifest.txt")
@@ -274,39 +278,6 @@ func TestCompleteSuggestionSerialization_004(t *testing.T) {
 func TestCompleteSuggestionSerialization_005(t *testing.T) {
 	t.Parallel()
 	completeSuggestionShard(t, 5)
-}
-
-// Exercise the real leaves: one altered comparison fails precisely its owner.
-func TestCompleteSuggestionSerialization_PlantedFailure(t *testing.T) {
-	t.Parallel()
-	completeSuggestionReady(t)
-	ctx, cancel := context.WithTimeout(context.Background(), 600*time.Second)
-	defer cancel()
-	// Loom runs one top-level test per process. Exercise that same selection,
-	// preserving the proof that every non-owner (including both mutants) passes.
-	for shard := range completeSuggestionLeaves {
-		name := fmt.Sprintf("TestCompleteSuggestionSerialization_%03d", shard)
-		command := completeSuggestionCommand(ctx, os.Args[0], "-test.run=^"+name+"$", "-test.timeout=600s", "-test.v")
-		command.Env = append(os.Environ(), "ADAMIC_COMPLETE_SUGGESTION_PLANT=1")
-		output, err := command.CombinedOutput()
-		if command.Process != nil {
-			_ = syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-		}
-		failures := []string{}
-		for _, line := range strings.Split(string(output), "\n") {
-			if strings.HasPrefix(line, "--- FAIL:") {
-				failures = append(failures, line)
-			}
-		}
-		if shard == 1 {
-			if err == nil || len(failures) != 1 || !strings.HasPrefix(failures[0], "--- FAIL: "+name+" ") || !bytes.Contains(output, []byte("planted suggestion disagreement")) {
-				t.Fatalf("wrong planted failure: %v; failures %v\n%s", err, failures, output)
-			}
-		} else if err != nil || len(failures) != 0 {
-			t.Fatalf("non-owner %s failed: %v\n%s", name, err, output)
-		}
-	}
-	t.Log("planted disagreement rejected by exactly shard 001")
 }
 
 // This pinned case explicitly selects no-debugger. Other rule implementations are

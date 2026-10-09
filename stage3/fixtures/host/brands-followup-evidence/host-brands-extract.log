@@ -1,0 +1,35 @@
+{
+  "sourceCommit": "bb89005ad09d72cc5474df5e60c30ac7b141f2cd",
+  "fixtures": [
+    {
+      "file": "08_getDirectories.a",
+      "declarations": [
+        {
+          "name": "Path",
+          "file": "src/compiler/types.ts"
+        }
+      ]
+    },
+    {
+      "file": "25_readDirectory.a",
+      "declarations": [
+        {
+          "name": "SortedReadonlyArray",
+          "file": "src/compiler/corePublic.ts"
+        },
+        {
+          "name": "isArray",
+          "file": "src/compiler/core.ts"
+        },
+        {
+          "name": "Path",
+          "file": "src/compiler/types.ts"
+        },
+        {
+          "name": "PathPathComponents",
+          "file": "src/compiler/path.ts"
+        }
+      ]
+    }
+  ]
+}
