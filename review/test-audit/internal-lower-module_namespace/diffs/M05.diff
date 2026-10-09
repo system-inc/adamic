@@ -1,0 +1,11 @@
+--- a/internal/lower/namespaces.go
++++ b/internal/lower/namespaces.go
+@@ -247,7 +247,7 @@
+ 	graph := namespaceCallGraph{lowering: l, functions: map[*ast.Node]*namespaceCallNode{}}
+ 	checkCall := func(target *ast.Node) error {
+ 		for declaration, read := range graph.reach(target) {
+-			if !initialized[declaration] {
++			if initialized[declaration] {
+ 				if declaration.Kind == ast.KindEnumDeclaration {
+ 					return l.notYet(read, "reading an enum before its runtime initialization; move the call after the enum declaration")
+ 				}

@@ -1,0 +1,11 @@
+--- a/internal/lower/namespace_callable.go
++++ b/internal/lower/namespace_callable.go
+@@ -64,7 +64,7 @@
+ func callableNamespaceIntrinsic(name string) bool {
+ 	switch name {
+ 	case "name", "length", "prototype", "caller", "arguments", "call", "apply", "bind", "toString":
+-		return true
++		return false
+ 	}
+ 	return false
+ }

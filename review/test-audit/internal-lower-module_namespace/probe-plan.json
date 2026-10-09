@@ -1,0 +1,74 @@
+[
+  {
+    "id": "P01",
+    "file": "internal/lower/lower.go",
+    "entry": "func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {",
+    "empty": "return &ir.Program{}, nil",
+    "rows": [
+      "TestModuleNamespaceLimitsStayLoud",
+      "TestModuleNamespaceInitializedReadProof",
+      "TestCallableNamespaceLimitsStayLoud",
+      "TestCallableNamespaceReceiverStaysLoud",
+      "TestNamespaceClassEarlyConstructionStaysLoud",
+      "TestNamespaceReceiverArrowInheritsScope",
+      "TestNamespaceAmbientHostInitialization",
+      "TestTscNamespaceDeclarationShapes"
+    ]
+  },
+  {
+    "id": "P02",
+    "file": "internal/lower/namespaces.go",
+    "entry": "func (l *lowering) namespaceInitialization(modules []*ast.SourceFile) error {",
+    "empty": "return nil",
+    "rows": [
+      "TestNamespaceAmbientHostInitialization",
+      "TestNamespaceEnumInitializationIndependentOfModuleAnalysis"
+    ]
+  },
+  {
+    "id": "P03",
+    "file": "internal/lower/namespaces.go",
+    "entry": "func namespaceRuntime(declaration *ast.Node) bool {",
+    "empty": "return false",
+    "rows": [
+      "TestNamespaceAmbientContextsDoNotExecute"
+    ]
+  },
+  {
+    "id": "P04",
+    "file": "internal/lower/namespaces_call_graph.go",
+    "entry": "func (g *namespaceCallGraph) reach(function *ast.Node) map[*ast.Node]*ast.Node {",
+    "empty": "return nil",
+    "rows": [
+      "TestNamespaceCallGraphLinearWork",
+      "TestNamespaceCallGraphCycleUnion"
+    ]
+  },
+  {
+    "id": "P05",
+    "file": "internal/lower/modules.go",
+    "entry": "func (l *lowering) declareModule(statements []*ast.Node) error {",
+    "empty": "return nil",
+    "rows": [
+      "TestParserFactoryBindingHoisting"
+    ]
+  },
+  {
+    "id": "P06",
+    "file": "internal/lower/namespaces.go",
+    "entry": "func (l *lowering) namespaceBody(node *ast.Node) ([]ir.Statement, error) {",
+    "empty": "return nil, nil",
+    "rows": [
+      "TestParserFactoryBindingHoisting"
+    ]
+  },
+  {
+    "id": "P07",
+    "file": "internal/lower/locals.go",
+    "entry": "func (l *lowering) declareLocal(name *ast.Node) (int, error) {",
+    "empty": "return 0, nil",
+    "rows": [
+      "TestMissingBindingSymbolHasStructuredLocation"
+    ]
+  }
+]

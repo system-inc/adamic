@@ -1,0 +1,11 @@
+--- a/internal/lower/namespaces_call_graph.go
++++ b/internal/lower/namespaces_call_graph.go
+@@ -100,7 +100,7 @@
+ 				entry.reads[declaration] = node
+ 			}
+ 			if declaration := g.lowering.namespaceDeclaration(node); declaration != nil && namespaceRuntime(declaration) {
+-				entry.reads[declaration] = node
++				
+ 			}
+ 		}
+ 		if node.Kind == ast.KindCallExpression || node.Kind == ast.KindNewExpression {

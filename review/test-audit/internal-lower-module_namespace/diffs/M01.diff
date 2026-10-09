@@ -1,0 +1,11 @@
+--- a/internal/lower/module_namespace.go
++++ b/internal/lower/module_namespace.go
+@@ -21,7 +21,7 @@
+ }
+ 
+ func (l *lowering) moduleNamespaceRefusal(node *ast.Node) error {
+-	if l.namespaceValueNode(node) && l.moduleNamespace(node) {
++	if false {
+ 		parent := node.Parent
+ 		if parent == nil || parent.Kind != ast.KindPropertyAccessExpression || parent.Expression() != node {
+ 			return l.notYet(node, "an ESM namespace object used as a value; use qualified live bindings")

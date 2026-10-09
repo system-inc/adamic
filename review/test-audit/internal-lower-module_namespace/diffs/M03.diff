@@ -1,0 +1,11 @@
+--- a/internal/lower/namespace_receiver_scope.go
++++ b/internal/lower/namespace_receiver_scope.go
+@@ -14,7 +14,7 @@
+ 			return false
+ 		}
+ 		if node.Kind == ast.KindThisKeyword {
+-			return true
++			return false
+ 		}
+ 		return node.ForEachChild(visit)
+ 	}

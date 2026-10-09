@@ -1,0 +1,11 @@
+--- a/internal/lower/namespaces_call_graph.go
++++ b/internal/lower/namespaces_call_graph.go
+@@ -146,7 +146,7 @@
+ // Both module and namespace enums participate in the same initialization graph.
+ func (l *lowering) namespaceRuntimeEnum(node *ast.Node) *ast.Node {
+ 	declaration := l.enumObject(node)
+-	if declaration == nil || ast.HasSyntacticModifier(declaration, ast.ModifierFlagsConst) {
++	if declaration == nil || !ast.HasSyntacticModifier(declaration, ast.ModifierFlagsConst) {
+ 		return nil
+ 	}
+ 	return declaration
