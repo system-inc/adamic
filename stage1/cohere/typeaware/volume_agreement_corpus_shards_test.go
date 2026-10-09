@@ -1,10 +1,12 @@
 package typeaware
 
 import (
+	"bytes"
 	"context"
 	"crypto/sha256"
 	"fmt"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"strings"
 	"testing"
@@ -137,7 +139,18 @@ func runVolumeAgreementCorpusShard(t *testing.T, kind string, groups, unit int) 
 	h := volumeGuardPreparationHarness(t)
 	h.ctx = ctx
 	manifest := h.write(fmt.Sprintf("%s-%s-%03d.manifest", kind, mode, group), strings.Join(paths, "\n")+"\n")
-	volumeGuardCompare(h, kind+"-"+mode, oracle, binary, config, manifest)
+	var allPaths []string
+	for _, file := range files {
+		allPaths = append(allPaths, file.path)
+	}
+	all := h.write("program-roots.manifest", strings.Join(allPaths, "\n")+"\n")
+	args := []string{config, manifest, "--program-roots", all}
+	truth := volumeGuardMust(h, kind+"-"+mode+"-go", exec.Command(oracle, args...))
+	got := volumeGuardMust(h, kind+"-"+mode+"-native", exec.Command(binary, args...))
+	if len(got.stderr) != 0 || !bytes.Equal(got.stdout, truth.stdout) {
+		t.Fatalf("%s %s mismatch byte %d: %s", kind, mode, firstDifference(got.stdout, truth.stdout), got.stderr)
+	}
+	t.Logf("%s %s: %s", kind, mode, summary(truth.stdout))
 }
 func TestVolumeAgreementCompilerUnion(t *testing.T) {
 	t.Parallel()

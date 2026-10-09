@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"crypto/sha256"
+	"encoding/json"
 	"fmt"
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/load"
@@ -107,6 +108,54 @@ func volumeAgreementInputs(name string, sanitize bool) buildcache.Inputs {
 	}
 	return inputs
 }
+
+// The oracle retains every original program root while its walk visits only
+// the shard manifest. Its unchanged production rules still decide the findings.
+func volumeAgreementOracle(h *volumeGuardHarness) string {
+	data, err := os.ReadFile(filepath.Join(h.repository, "stage1/cohere/typeaware/testdata/oracle_volume.go"))
+	if err != nil {
+		h.t.Fatal(err)
+	}
+	from := "program := compiler.NewProgram(compiler.ProgramOptions{Config: config.WithFileNames(roots), Host: host, SingleThreaded: core.TSTrue})"
+	to := `programRoots := roots
+ if len(args)>3 {
+  all,err:=os.ReadFile(args[3]); if err!=nil { panic(err) }
+  programRoots=nil
+  for _,path:=range strings.Split(string(all),"\n") { if path!="" { programRoots=append(programRoots,tspath.RootedFilePathFromAbsolute(filepath.ToSlash(path))) } }
+  for _,path:=range config.FileNames() { if strings.HasSuffix(path.AsString(),".d.ts") && !slices.Contains(programRoots,path) { programRoots=append(programRoots,path) } }
+ }
+ program := compiler.NewProgram(compiler.ProgramOptions{Config: config.WithFileNames(programRoots), Host: host, SingleThreaded: core.TSTrue})`
+	text := string(data)
+	if strings.Count(text, from) != 1 {
+		h.t.Fatal("nonunique oracle program-root adapter")
+	}
+	text = strings.Replace(text, from, to, 1)
+	inputs := volumeAgreementInputs("oracle", false)
+	dir := buildcache.Product(h.t, inputs, func(dir string) error {
+		virtual := filepath.Join(h.repository, "cohere/adamic_volume_shard_oracle.go")
+		source := filepath.Join(dir, "oracle.go")
+		if err := os.WriteFile(source, []byte(text), 0444); err != nil {
+			return err
+		}
+		data, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: source}})
+		if err != nil {
+			return err
+		}
+		overlay := filepath.Join(dir, "overlay.json")
+		if err := os.WriteFile(overlay, data, 0444); err != nil {
+			return err
+		}
+		cmd, cancel := volumeGuardCommand(context.Background(), "go", "build", "-overlay", overlay, "-o", filepath.Join(dir, "oracle"), virtual)
+		defer cancel()
+		cmd.Dir = filepath.Join(h.repository, "cohere")
+		output, err := volumeGuardOutput(cmd)
+		if err != nil {
+			return fmt.Errorf("oracle: %w %s", err, output)
+		}
+		return nil
+	})
+	return filepath.Join(dir, "oracle")
+}
 func volumeAgreementSource(h *volumeGuardHarness, name string) string {
 	entry := filepath.Join(h.repository, "stage1/cohere/typeaware/volume_suite.ts")
 	if name == "released-source" {
@@ -153,7 +202,9 @@ func volumeAgreementNative(h *volumeGuardHarness, name, archive, source string, 
 }
 func volumeAgreementProduct(h *volumeGuardHarness, name string) string {
 	switch name {
-	case "oracle", "archive-checker", "archive-checker-asan":
+	case "oracle":
+		return volumeAgreementOracle(h)
+	case "archive-checker", "archive-checker-asan":
 		return volumeGuardProduct(h, name)
 	case "volume-source", "released-source":
 		return volumeAgreementSource(h, name)
