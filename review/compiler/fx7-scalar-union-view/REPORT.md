@@ -24,3 +24,5 @@ Commands (all test outputs captured in this directory):
 - Integration lane command after commit: git fetch -q origin main devtools/fast-gate cloud/merge-tree && git show origin/cloud/merge-tree:cloud/integration/lane-checks.py | python3 -.
 
 This implements item 144's checked maybe-scalar conversion. Optional/absent view members and arbitrary narrowed scalar unions outside these representations are not changed. No full oracle package or repository gate was run, no cohere source was copied, and no PR was opened.
+
+Lane checks PASS 1.7s: gofmt/tools on 19 Go files, t.Parallel on 2 test packages, vet 2 packages.
