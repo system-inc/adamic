@@ -62,8 +62,8 @@ func firstRow(a, b []byte) int {
 	}
 	return 0
 }
+// Not parallel: native.Build writes the shared user cache directory adamic/runtime (and adamic/units when split builds are enabled).
 func TestFixedPatterns(t *testing.T) {
-	// Not parallel: recompiles the same sizable generated corpus for a semantic mutant.
 	root, _ := filepath.Abs(".")
 	cohere, _ := filepath.Abs("../../../../cohere")
 	expected := run(t, cohere, "go", "run", filepath.Join(root, "testdata/oracle.go"), filepath.Join(root, "table.json"), filepath.Join(root, "testdata/corpus.json"))

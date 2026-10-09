@@ -8,6 +8,7 @@ import (
 )
 
 func TestTransformedNodeRunnerGuardHook(t *testing.T) {
+	t.Parallel()
 	repository := os.Getenv("ADAMIC_RUNNER_GUARD_REPOSITORY")
 	if repository == "" {
 		t.Skip("subprocess hook")

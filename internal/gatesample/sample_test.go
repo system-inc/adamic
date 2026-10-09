@@ -181,6 +181,7 @@ func TestHexOffset(t *testing.T) {
 }
 
 func TestGeneratedSelection(t *testing.T) {
+	t.Parallel()
 	s := Selection{Sample: true, Stride: 3, Offset: 1}.Generated(8, 0, 7)
 	want := []string{GeneratedKey(0), GeneratedKey(1), GeneratedKey(4), GeneratedKey(7)}
 	if !reflect.DeepEqual(s.Paths, want) || s.Total != 8 {

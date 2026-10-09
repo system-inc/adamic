@@ -368,73 +368,9 @@ func leaks(t *testing.T, program *ir.Program, sanitized string, arguments ...str
 }
 
 // Hold the complete composed implementation against the external Go tree.
+// Not parallel: compositionOnce/compositionBuilt and the shared buildcache directory.
 func TestCompositionMatchesGo(t *testing.T) {
-	cases, _ := askedCases(t)
-	directory := t.TempDir()
-	answers := filepath.Join(directory, "answers.txt")
-	repo, _ := filepath.Abs(repository)
-	side, _ := filepath.Abs("testdata/compose_side_test.go")
-	request, _ := json.Marshal(map[string]string{"Cases": cases, "Answers": answers})
-	requestPath := filepath.Join(directory, "request.json")
-	if err := os.WriteFile(requestPath, request, 0644); err != nil {
-		t.Fatal(err)
-	}
-	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{filepath.Join(repo, "cohere", "internal", "format", "css", "adamic_compose_side_test.go"): side}})
-	overlayPath := filepath.Join(directory, "overlay.json")
-	if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
-		t.Fatal(err)
-	}
-	command := bounded(t, "go", "test", "-timeout=0", "-v", "-count=1", "-overlay="+overlayPath, "-run=^TestAdamicCompositionCases$", "./internal/format/css")
-	command.Dir = filepath.Join(repo, "cohere")
-	command.Env = append(os.Environ(), "ADAMIC_PORT_REQUEST="+requestPath)
-	output, err := childguard.CombinedOutput(command, childguard.Options{Stall: childStall})
-	if err != nil {
-		t.Fatalf("Go composition oracle: %v\n%s", err, output)
-	}
-	t.Logf("%s", output)
-	data, err := os.ReadFile(answers)
-	if err != nil {
-		t.Fatal(err)
-	}
-	source, _ := filepath.Abs("compose_main.ts")
-	program := lowered(t, source)
-	nativeRun, sanitized := natively(t, program, cases)
-	for _, side := range []struct {
-		name   string
-		result run
-	}{
-		{"native ASan/UBSan", nativeRun}, {"Node", onNode(t, source, cases)}, {"JavaScript backend", onJavaScriptBackend(t, program, cases)},
-	} {
-		if side.result.exitCode != 0 || len(side.result.stderr) != 0 {
-			t.Fatalf("%s: %d %s", side.name, side.result.exitCode, side.result.stderr)
-		}
-		if difference := firstDifference(string(side.result.stdout), string(data)); difference != "" {
-			t.Fatalf("%s: %s", side.name, difference)
-		}
-	}
-	if report := leaks(t, program, sanitized, cases); report != "" {
-		t.Fatal(report)
-	}
-	t.Logf("%d composed trees/error positions agree with Go on native ASan/UBSan, Node and JavaScript backend; LeakSanitizer clean", strings.Count(string(data), "\n")/2)
-	if keep := os.Getenv("ADAMIC_CSS_KEEP_COMPOSED"); keep != "" {
-		if err := os.WriteFile(keep, data, 0644); err != nil {
-			t.Fatal(err)
-		}
-	}
-	for _, mutation := range mutants {
-		t.Run("catches "+mutation.name, func(t *testing.T) {
-			mutated := portDirectory(t, &mutation)
-			result := onNode(t, filepath.Join(mutated, "compose_main.ts"), cases)
-			if result.exitCode != 0 || len(result.stderr) != 0 {
-				t.Fatalf("composed mutant must terminate: %s", result.stderr)
-			}
-			difference := firstDifference(string(result.stdout), string(data))
-			if difference == "" {
-				t.Fatal("composition comparison missed the mutant")
-			}
-			t.Logf("Node composition caught: %s", difference)
-		})
-	}
+	compositionSetup(t)
 }
 
 // Not parallel: parser throughput runs alone, after agreement has been checked.

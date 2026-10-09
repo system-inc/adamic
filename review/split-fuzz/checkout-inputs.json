@@ -1,0 +1,72 @@
+{
+  "checkout-before": {
+    "TestReduceKeepsTheSignature": [
+      "again sha256=fcf8a8f51be1404346c4c3f4522b2c97698193c410e915c507f2cb9c23b0291e",
+      "candidate sha256=01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "candidate sha256=0bb5e5619a33e6f0a18a9232c18ce5dafdef163297b41269848135b36b85735d",
+      "candidate sha256=1ba92ca98abe3468fb9f3f5b2a88eee27ac58f93aed0baf7228967d012a0b7e7",
+      "candidate sha256=3ed4d1534b730c84dfb4d5ff666213ce71003cc919a3aa2391ec8b1eac7671b7",
+      "candidate sha256=4ee744c7cc1ce59ac58080dac9a116beb7a73aba6e0ba874dc49e7a505079b50",
+      "candidate sha256=6970629ddfd2bf582c899e4cda3b077bbc4013e0b7ab226ec458ab730c64eb8c",
+      "candidate sha256=6d6d30b86f40673ab3b93a9e4984093c154e8a2ffac68d66af3739ff81df0ec3",
+      "candidate sha256=77a1ec98682929621ea4f898218917ea264d4798f565aaa04789d1d5d35c6dc4",
+      "candidate sha256=78f446abbfac690cc7c6dfafb91c544e1c908d4ee227c1c0d5f1e4d233605207",
+      "candidate sha256=8d0cbbfab9cd6b1b49efe6d69c7d272ed9d7481e1f4cb55a781c6450218c18c7",
+      "candidate sha256=9f0ce705395c5e96fbe1288e29ad6d182b0e65cd8d0e32bf75507fa6932b9014",
+      "candidate sha256=a9461d4cf0c49e15d873d3d9fbbef964558399bbc1bd9b0ac2f80083ec8f4d55",
+      "candidate sha256=af75e22b2812653d24645facff5606e5da0e5d005b280e006d1392696e68ea01",
+      "candidate sha256=b44a7bfb7c2195552f95201cc3f022ebe5c254aa939d4ddc53ca795ed1a0ef43",
+      "candidate sha256=b989f03f19f6605280e9cfbe542cf33ddab89aaefbd4947850ecdd746ae91e6a",
+      "candidate sha256=ce53b4e5126df2ca9fb1f145f36a3ada796bd1661c2345e399bb90730fc5cc9e",
+      "candidate sha256=cf77ca7f826f846c87095c8741016141953fe7713bbdd8846c5be548be5e6f57",
+      "candidate sha256=d901d5277acf3b72110a355db07dd2b349af87ddf76ae3c9f9ab906908e0f875",
+      "candidate sha256=dac3862ffbac5ee1290218bd8a8208c7c97f972737932523ff6b413d5bb9e050",
+      "candidate sha256=fc852c62652b6a5b07407b4341bb3fbc99ba1aef992b0371f06098ce9185a565",
+      "candidate sha256=fcf8a8f51be1404346c4c3f4522b2c97698193c410e915c507f2cb9c23b0291e",
+      "derive",
+      "original sha256=8e9b259741c543f595e423c77f1b3b400697fd03a624fa16b1ddf1be80c50ec4",
+      "prepare",
+      "reduced tried=21 sha256=fcf8a8f51be1404346c4c3f4522b2c97698193c410e915c507f2cb9c23b0291e"
+    ],
+    "TestFuzzerSharesRuntimeLibrary": [
+      "library",
+      "prepare",
+      "program"
+    ]
+  },
+  "checkout-after": {
+    "TestReduceKeepsTheSignature": [
+      "again sha256=fcf8a8f51be1404346c4c3f4522b2c97698193c410e915c507f2cb9c23b0291e",
+      "candidate sha256=01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "candidate sha256=0bb5e5619a33e6f0a18a9232c18ce5dafdef163297b41269848135b36b85735d",
+      "candidate sha256=1ba92ca98abe3468fb9f3f5b2a88eee27ac58f93aed0baf7228967d012a0b7e7",
+      "candidate sha256=3ed4d1534b730c84dfb4d5ff666213ce71003cc919a3aa2391ec8b1eac7671b7",
+      "candidate sha256=4ee744c7cc1ce59ac58080dac9a116beb7a73aba6e0ba874dc49e7a505079b50",
+      "candidate sha256=6970629ddfd2bf582c899e4cda3b077bbc4013e0b7ab226ec458ab730c64eb8c",
+      "candidate sha256=6d6d30b86f40673ab3b93a9e4984093c154e8a2ffac68d66af3739ff81df0ec3",
+      "candidate sha256=77a1ec98682929621ea4f898218917ea264d4798f565aaa04789d1d5d35c6dc4",
+      "candidate sha256=78f446abbfac690cc7c6dfafb91c544e1c908d4ee227c1c0d5f1e4d233605207",
+      "candidate sha256=8d0cbbfab9cd6b1b49efe6d69c7d272ed9d7481e1f4cb55a781c6450218c18c7",
+      "candidate sha256=9f0ce705395c5e96fbe1288e29ad6d182b0e65cd8d0e32bf75507fa6932b9014",
+      "candidate sha256=a9461d4cf0c49e15d873d3d9fbbef964558399bbc1bd9b0ac2f80083ec8f4d55",
+      "candidate sha256=af75e22b2812653d24645facff5606e5da0e5d005b280e006d1392696e68ea01",
+      "candidate sha256=b44a7bfb7c2195552f95201cc3f022ebe5c254aa939d4ddc53ca795ed1a0ef43",
+      "candidate sha256=b989f03f19f6605280e9cfbe542cf33ddab89aaefbd4947850ecdd746ae91e6a",
+      "candidate sha256=ce53b4e5126df2ca9fb1f145f36a3ada796bd1661c2345e399bb90730fc5cc9e",
+      "candidate sha256=cf77ca7f826f846c87095c8741016141953fe7713bbdd8846c5be548be5e6f57",
+      "candidate sha256=d901d5277acf3b72110a355db07dd2b349af87ddf76ae3c9f9ab906908e0f875",
+      "candidate sha256=dac3862ffbac5ee1290218bd8a8208c7c97f972737932523ff6b413d5bb9e050",
+      "candidate sha256=fc852c62652b6a5b07407b4341bb3fbc99ba1aef992b0371f06098ce9185a565",
+      "candidate sha256=fcf8a8f51be1404346c4c3f4522b2c97698193c410e915c507f2cb9c23b0291e",
+      "derive",
+      "original sha256=8e9b259741c543f595e423c77f1b3b400697fd03a624fa16b1ddf1be80c50ec4",
+      "prepare",
+      "reduced tried=21 sha256=fcf8a8f51be1404346c4c3f4522b2c97698193c410e915c507f2cb9c23b0291e"
+    ],
+    "TestFuzzerSharesRuntimeLibrary": [
+      "library",
+      "prepare",
+      "program"
+    ]
+  }
+}

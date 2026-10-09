@@ -161,6 +161,7 @@ func whitespaceShards(cases []printerCase) []printerShard {
 }
 
 func TestPrinterWhitespacePlantedDisagreement(t *testing.T) {
+	t.Parallel()
 	var whole []printerCase
 	for i := range 5 {
 		whole = append(whole, printerCase{id: whitespaceCaseID(i), want: "error\trefused"})
@@ -194,6 +195,7 @@ func TestPrinterWhitespacePlantedDisagreement(t *testing.T) {
 }
 
 func TestPrinterWhitespaceShardGrowth(t *testing.T) {
+	t.Parallel()
 	original := []printerCase{{id: whitespaceCaseID(0)}, {id: whitespaceCaseID(1)}}
 	grown := append(append([]printerCase(nil), original...), printerCase{id: whitespaceCaseID(2)})
 	before, after := whitespaceShards(original), whitespaceShards(grown)
