@@ -3,12 +3,13 @@ package css
 import (
 	"context"
 	"crypto/sha256"
+	"encoding/binary"
 	"encoding/json"
 	"fmt"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"runtime"
-	"sort"
 	"strconv"
 	"strings"
 	"syscall"
@@ -22,9 +23,44 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 )
 
-// These inputs sit beside each build callback for migration to internal/buildcache.
-// That package is absent on this base: build once per test run, then share products.
-// No package-local cache is used.
+// Build once per run outside leaf clocks, with no package-local cache.
+type cssTesting interface {
+	Helper()
+	TempDir() string
+	Fatal(...any)
+	Fatalf(string, ...any)
+	Logf(string, ...any)
+	Cleanup(func())
+}
+
+func cssCommand(t cssTesting, name string, args ...string) *exec.Cmd {
+	return cssCommandLimit(t, 90*time.Second, name, args...)
+}
+func cssCommandLimit(t cssTesting, limit time.Duration, name string, args ...string) *exec.Cmd {
+	ctx, cancel := context.WithTimeout(context.Background(), limit)
+	command := exec.CommandContext(ctx, name, args...)
+	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+	command.Cancel = func() error {
+		if command.Process == nil {
+			return os.ErrProcessDone
+		}
+		if err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL); err != nil {
+			if err == syscall.ESRCH {
+				return os.ErrProcessDone
+			}
+			return err
+		}
+		return nil
+	}
+	t.Cleanup(func() {
+		cancel()
+		if command.Process != nil && command.ProcessState == nil {
+			_ = command.Cancel()
+		}
+	})
+	return command
+}
+
 type cssBuildInputs struct {
 	Name         string
 	Files, Flags []string
@@ -45,7 +81,7 @@ func cssMeasurement(t *testing.T) func() {
 	return func() { t.Logf("setup including products: %s", time.Since(started)) }
 }
 
-func cssProduct(t *testing.T, inputs cssBuildInputs, build func(string) error) string {
+func cssProduct(t cssTesting, inputs cssBuildInputs, build func(string) error) string {
 	t.Helper()
 	directory := t.TempDir()
 	started, cpu := time.Now(), cssCPU()
@@ -56,7 +92,7 @@ func cssProduct(t *testing.T, inputs cssBuildInputs, build func(string) error) s
 	return directory
 }
 
-func cssSourceInputs(t *testing.T, directory string) []string {
+func cssSourceInputs(t cssTesting, directory string) []string {
 	t.Helper()
 	var files []string
 	for _, slice := range []string{"css", "selector", "values", "mediaquery", "cssstrings", "cssnumbers"} {
@@ -75,7 +111,7 @@ func cssSourceInputs(t *testing.T, directory string) []string {
 
 type cssExecutable struct{ binary, javascript, source string }
 
-func cssPrinterProduct(t *testing.T, path, name string, sanitize bool) cssExecutable {
+func cssPrinterProduct(t cssTesting, path, name string, sanitize bool) cssExecutable {
 	t.Helper()
 	inputs := cssBuildInputs{Name: name, Files: cssSourceInputs(t, filepath.Dir(path)), Flags: native.Flags(native.Options{Sanitize: sanitize}), Toolchain: runtime.Version() + "; clang"}
 	directory := cssProduct(t, inputs, func(dir string) error {
@@ -94,15 +130,15 @@ func cssPrinterProduct(t *testing.T, path, name string, sanitize bool) cssExecut
 		if err := os.WriteFile(filepath.Join(dir, "main.mjs"), []byte(javascript.JavaScript(program)), 0644); err != nil {
 			return err
 		}
-		return native.Build(code, filepath.Join(dir, "native"), native.Options{Sanitize: sanitize})
+		return cssPrinterNativeBuild(t, dir, sanitize)
 	})
 	return cssExecutable{filepath.Join(directory, "native"), filepath.Join(directory, "main.mjs"), path}
 }
 
-func cssOracleProduct(t *testing.T, printer bool) string {
+func cssOracleProduct(t cssTesting, printer bool) string {
 	t.Helper()
 	repo, _ := filepath.Abs(repository)
-	side, pkg, test := "cohere_side_test.go", "postcss", "TestAdamicPortCases"
+	side, pkg, test := "printer_keyed_side_test.go", "postcss", "TestAdamicPortCases"
 	target := "adamic_port_side_test.go"
 	if printer {
 		side, pkg, test, target = "print_side_test.go", "", "TestAdamicPrinterCases", "adamic_print_side_test.go"
@@ -119,7 +155,7 @@ func cssOracleProduct(t *testing.T, printer bool) string {
 		if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
 			return err
 		}
-		cmd := bounded(t, "go", "test", "-c", "-overlay="+overlayPath, "-o", filepath.Join(dir, "oracle"), "./internal/format/css/"+pkg)
+		cmd := cssCommand(t, "go", "test", "-c", "-overlay="+overlayPath, "-o", filepath.Join(dir, "oracle"), "./internal/format/css/"+pkg)
 		cmd.Dir = filepath.Join(repo, "cohere")
 		output, err := childguard.CombinedOutput(cmd, childguard.Options{Stall: childStall})
 		if err != nil {
@@ -130,7 +166,7 @@ func cssOracleProduct(t *testing.T, printer bool) string {
 	return filepath.Join(directory, "oracle")
 }
 
-func cssOracleRun(t *testing.T, binary, test string, request any) {
+func cssOracleRun(t cssTesting, binary, test string, request any) {
 	t.Helper()
 	data, err := json.Marshal(request)
 	if err != nil {
@@ -140,7 +176,7 @@ func cssOracleRun(t *testing.T, binary, test string, request any) {
 	if err := os.WriteFile(path, data, 0644); err != nil {
 		t.Fatal(err)
 	}
-	cmd := bounded(t, binary, "-test.run=^"+test+"$", "-test.timeout=0", "-test.v")
+	cmd := cssCommand(t, binary, "-test.run=^"+test+"$", "-test.timeout=0", "-test.v")
 	repo, _ := filepath.Abs(repository)
 	cmd.Dir = filepath.Join(repo, "cohere", "internal", "format", "css")
 	if test == "TestAdamicPortCases" {
@@ -154,13 +190,13 @@ func cssOracleRun(t *testing.T, binary, test string, request any) {
 	t.Logf("%s", output)
 }
 
-func cssPrinterCases(t *testing.T, oracle string) string {
+func cssPrinterCases(t cssTesting, oracle string) string {
 	t.Helper()
 	directory := t.TempDir()
 	cases := filepath.Join(directory, "cases.txt")
 	answers := filepath.Join(directory, "answers.txt")
 	repo, _ := filepath.Abs(repository)
-	cssOracleRun(t, oracle, "TestAdamicPortCases", map[string]string{"Cases": cases, "Answers": answers, "Repository": repo, "Fixtures": os.Getenv("ADAMIC_CSS_FIXTURES")})
+	cssOracleRun(t, oracle, "TestAdamicPortCases", map[string]string{"Cases": cases, "Answers": answers, "Repository": repo, "Fixtures": os.Getenv("ADAMIC_CSS_FIXTURES"), "Keys": cases + ".keys"})
 	return cases
 }
 
@@ -180,41 +216,12 @@ type cssCase struct {
 	line string
 }
 
-func cssPartition(lines []string, count int) [][]cssCase {
+func cssPartition(lines, keys []string, count int) [][]cssCase {
 	shards := make([][]cssCase, count)
-	// Keep the existing mutant witness IDs in their named units. Assign the
-	// remaining cases largest first to the least loaded shard. Stable ID ties
-	// make the partition independent of map iteration and execution order.
-	weights := make([]int, count)
-	var pending []int
 	for id, line := range lines {
-		if id < 13 {
-			shard := id % count
-			shards[shard] = append(shards[shard], cssCase{id, line})
-			weights[shard] += len(line)
-		} else {
-			pending = append(pending, id)
-		}
-	}
-	sort.Slice(pending, func(i, j int) bool {
-		a, b := pending[i], pending[j]
-		if len(lines[a]) != len(lines[b]) {
-			return len(lines[a]) > len(lines[b])
-		}
-		return a < b
-	})
-	for _, id := range pending {
-		shard := 0
-		for candidate := 1; candidate < count; candidate++ {
-			if weights[candidate] < weights[shard] || (weights[candidate] == weights[shard] && len(shards[candidate]) < len(shards[shard])) {
-				shard = candidate
-			}
-		}
-		shards[shard] = append(shards[shard], cssCase{id, lines[id]})
-		weights[shard] += len(lines[id])
-	}
-	for _, shard := range shards {
-		sort.Slice(shard, func(i, j int) bool { return shard[i].id < shard[j].id })
+		hash := sha256.Sum256([]byte(keys[id]))
+		shard := int(binary.BigEndian.Uint64(hash[:8]) % uint64(count))
+		shards[shard] = append(shards[shard], cssCase{id, line})
 	}
 	return shards
 }
@@ -248,7 +255,7 @@ func cssUnion(lines []string, shards [][]cssCase, count int) error {
 	return nil
 }
 
-func cssShards(t *testing.T, cases string, count int) [][]cssCase {
+func cssShards(t cssTesting, cases string, count int) [][]cssCase {
 	t.Helper()
 	data, err := os.ReadFile(cases)
 	if err != nil {
@@ -260,7 +267,22 @@ func cssShards(t *testing.T, cases string, count int) [][]cssCase {
 			t.Fatalf("invalid corpus case %d", id)
 		}
 	}
-	shards := cssPartition(lines, count)
+	keyData, err := os.ReadFile(cases + ".keys")
+	if err != nil {
+		t.Fatal(err)
+	}
+	keys := strings.Split(strings.TrimSuffix(string(keyData), "\n"), "\n")
+	if len(keys) != len(lines) {
+		t.Fatal("case keys differ from live enumeration")
+	}
+	seenKeys := map[string]bool{}
+	for _, key := range keys {
+		if key == "" || seenKeys[key] {
+			t.Fatalf("empty or repeated stable key %q", key)
+		}
+		seenKeys[key] = true
+	}
+	shards := cssPartition(lines, keys, count)
 	if err := cssUnion(lines, shards, count); err != nil {
 		t.Fatal(err)
 	}
@@ -316,8 +338,8 @@ type cssModeShard struct {
 	cases  []cssCase
 }
 
-func cssModePlan(lines []string, count int) []cssModeShard {
-	parts := cssPartition(lines, count/8)
+func cssModePlan(lines, keys []string, count int) []cssModeShard {
+	parts := cssPartition(lines, keys, count/8)
 	var plan []cssModeShard
 	for variant := -1; variant < len(printerMutants); variant++ {
 		for modeIndex, mode := range []string{"default", "narrow"} {
@@ -345,7 +367,7 @@ func cssModeUnion(lines []string, plan []cssModeShard, count int) error {
 	return cssUnion(enumeration, units, count)
 }
 
-func cssPrinterModeShards(t *testing.T, path string, count int) []cssModeShard {
+func cssPrinterModeShards(t cssTesting, path string, count int) []cssModeShard {
 	t.Helper()
 	parts := cssShards(t, path, count/8)
 	total := 0
@@ -358,7 +380,12 @@ func cssPrinterModeShards(t *testing.T, path string, count int) []cssModeShard {
 			lines[c.id] = c.line
 		}
 	}
-	plan := cssModePlan(lines, count)
+	keyData, err := os.ReadFile(path + ".keys")
+	if err != nil {
+		t.Fatal(err)
+	}
+	keys := strings.Split(strings.TrimSuffix(string(keyData), "\n"), "\n")
+	plan := cssModePlan(lines, keys, count)
 	if err := cssModeUnion(lines, plan, count); err != nil {
 		t.Fatal(err)
 	}
@@ -367,11 +394,31 @@ func cssPrinterModeShards(t *testing.T, path string, count int) []cssModeShard {
 }
 
 func TestCSSPrinterShardingCatchesDisagreement(t *testing.T) {
+	t.Parallel()
 	lines := make([]string, 256)
+	keys := make([]string, len(lines))
 	for id := range lines {
 		lines[id] = fmt.Sprintf(">Ccase-%d", id)
+		keys[id] = fmt.Sprintf("repository/synthetic.css/%d/C", id)
 	}
-	plan := cssModePlan(lines, testCSSPrinterAgreesWithGoShards)
+	original := cssPartition(lines, keys, testCSSPrinterAgreesWithGoShards/8)
+	expandedLines := append([]string{">Cnew file"}, lines...)
+	expandedKeys := append([]string{"repository/new.css/0/C"}, keys...)
+	expanded := cssPartition(expandedLines, expandedKeys, testCSSPrinterAgreesWithGoShards/8)
+	owners := map[string]int{}
+	for shard, cases := range original {
+		for _, c := range cases {
+			owners[keys[c.id]] = shard
+		}
+	}
+	for shard, cases := range expanded {
+		for _, c := range cases {
+			if old, ok := owners[expandedKeys[c.id]]; ok && old != shard {
+				t.Fatalf("stable key %q moved", expandedKeys[c.id])
+			}
+		}
+	}
+	plan := cssModePlan(lines, keys, testCSSPrinterAgreesWithGoShards)
 	if err := cssModeUnion(lines, plan, testCSSPrinterAgreesWithGoShards); err != nil {
 		t.Fatal(err)
 	}
@@ -388,19 +435,21 @@ func TestCSSPrinterShardingCatchesDisagreement(t *testing.T) {
 			fmt.Fprintf(&got, "case %d\n%s\n", c.id, line)
 		}
 		if cssAgreement(run{stdout: []byte(got.String())}, want.String()) != nil {
-			caught = append(caught, fmt.Sprintf("shard-%03d", id))
+			caught = append(caught, fmt.Sprintf("TestCSSPrinterAgreesWithGo_%03d", id))
 		}
 	}
-	if len(caught) != 1 || caught[0] != "shard-000" {
-		t.Fatalf("planted mode/case %d caught by %v, want exactly shard-000", planted, caught)
+	hash := sha256.Sum256([]byte(keys[planted]))
+	expectedShard := fmt.Sprintf("TestCSSPrinterAgreesWithGo_%03d", binary.BigEndian.Uint64(hash[:8])%uint64(testCSSPrinterAgreesWithGoShards/8))
+	if len(caught) != 1 || caught[0] != expectedShard {
+		t.Fatalf("planted mode/case %d caught by %v, want exactly %s", planted, caught, expectedShard)
 	}
 	t.Logf("planted disagreement mode/case %d caught exactly by %s", planted, caught[0])
-	broken := cssModePlan(lines, testCSSPrinterAgreesWithGoShards)
+	broken := cssModePlan(lines, keys, testCSSPrinterAgreesWithGoShards)
 	broken[0].cases = append(broken[0].cases, broken[1].cases[0])
 	if cssModeUnion(lines, broken, testCSSPrinterAgreesWithGoShards) == nil {
 		t.Fatal("repeated case accepted")
 	}
-	broken = cssModePlan(lines, testCSSPrinterAgreesWithGoShards)
+	broken = cssModePlan(lines, keys, testCSSPrinterAgreesWithGoShards)
 	broken[0].cases = broken[0].cases[1:]
 	if cssModeUnion(lines, broken, testCSSPrinterAgreesWithGoShards) == nil {
 		t.Fatal("missing case accepted")
