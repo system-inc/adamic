@@ -29,3 +29,5 @@ Validation commands, output in the named log files:
 No new test leaves were added. No full oracle package or full repository gate was run; integration owns the gate. This combines the item 132 routing, items 134/136 valid view fixes, and item 137 narrow refusal toward the requested valid-view unit. Full tuple/object view interoperability remains outstanding. No PR opened.
 
 Restored focused fixtures: timeout 120 go test ./internal/lower -run "^TestTupleObjectView|^TestFX6|^TestView.*Element" -count=1 -v -timeout 90s: PASS 0.992s; all leaves under one second, archived in focused.log.
+
+Lane checks PASS 1.6s: gofmt/tools on 15 Go files, t.Parallel on 2 test packages, vet 2 packages. The lane fetch confirmed main remained cf735d9f.
