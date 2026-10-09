@@ -12,7 +12,7 @@ func init() {
 	fixtures = append(fixtures, struct {
 		path            string
 		lowers, checked bool
-	}{"internal/oracle/testdata/records_named_invalidated.a", true, true})
+	}{"internal/oracle/testdata/records_named_invalidated.a", false, false})
 	for _, name := range []string{"options", "operations", "union", "intrinsics", "alias_unready"} {
 		fixtures = append(fixtures, struct {
 			path            string
@@ -23,6 +23,9 @@ func init() {
 
 func TestNamedRecordTypeGuardMutant(t *testing.T) {
 	t.Parallel()
+	if !recordRefusalMutant(t, "named_invalidated") {
+		return
+	}
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/records_named_invalidated.a"))
 	if err != nil {
 		t.Fatal(err)

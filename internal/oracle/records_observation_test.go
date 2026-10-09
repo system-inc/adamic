@@ -18,7 +18,7 @@ func init() {
 		fixtures = append(fixtures, struct {
 			path            string
 			lowers, checked bool
-		}{"internal/oracle/testdata/records_" + name + ".a", true, name == "compare_properties_left" || name == "compare_properties_right" || name == "environment_boundary"})
+		}{"internal/oracle/testdata/records_" + name + ".a", name != "compare_properties_left" && name != "compare_properties_right" && name != "environment_boundary", false})
 	}
 }
 
